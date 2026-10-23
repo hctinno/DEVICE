@@ -13,7 +13,9 @@ run_intake_supervisor(store, source_ids, provider, *, worker_id,
     lease_seconds=10, can_continue=None) -> dict
 ```
 
-`store`는 기존 Store 객체다. `source_ids`는 중복 없는 1~8개 식별자의 list/tuple이며 호출 시 사본으로 고정한다. 전체 source의 존재와 `synthetic=1`을 단일 읽기 snapshot에서 첫 scan 전에 검증하고, 각 source를 스캔하기 직전에도 합성 범위를 다시 확인한다. provider는 기존 worker의 읽기 전용 preflight를 통과한 신뢰할 수 있는 fixture 제공자만 허용한다. 임의 코드를 격리하는 sandbox는 아니다.
+`store`는 기존 Store 객체다. `source_ids`는 중복 없는 1~8개 식별자의 list/tuple이며 호출 시 사본으로 고정한다. 전체 source의 존재와 `synthetic=1`을 단일 읽기 snapshot에서 첫 scan 전에 검증하고, 각 source를 스캔하기 직전에도 합성 범위를 다시 확인한다. 실제 파일 접근은 항상 `scan_source(..., synthetic_only=True)`로 요청한다. scanner의 `BEGIN IMMEDIATE` 안에서 실제 source 행을 조회한 직후 합성 표지를 검사하므로 사전 조회와 scan 사이에서 표지가 바뀌어도 파일 접근·revision·event 쓰기 전에 거절한다. 검사부터 파일 접근까지 같은 SQLite 쓰기 잠금이 유지된다.
+
+`synthetic_only` 키워드를 명시적으로 지원하지 않는 구형 scanner는 scan/claim 전에 `supervisor_scanner_invalid` ValueError로 거절한다. scanner의 기존 직접 호출은 `synthetic_only=False`가 기본값이므로 real source의 기존 의미를 유지한다. bool 이외의 옵션 값은 DB/파일 접근 전에 거절한다. provider는 기존 worker의 읽기 전용 preflight를 통과한 신뢰할 수 있는 fixture 제공자만 허용한다. 임의 코드를 격리하는 sandbox는 아니다.
 
 **source_ids는 scan 범위다. 분석 범위는 같은 Store의 모든 synthetic job이며 `analysis_scope="all_synthetic_jobs"`로 표시한다. 선택 source 밖의 기존 합성 분석 job도 `max_jobs_per_cycle` 예산 안에서 처리될 수 있다.** 기존 worker의 원자적인 `synthetic_only=True` 선택과 real job 격리를 그대로 사용한다. source별 분석 필터는 제공하지 않는다.
 
@@ -86,4 +88,4 @@ python -X utf8 -B -m unittest discover -s tests -q
 python scripts/check_artifacts.py
 ```
 
-전용 검사는 실제 TXT 2-cycle·중복 방지·중간 새 bundle·settle 대기·선택 밖 합성 job·real queued/만료 running job 격리·실제 child provider 실패/timeout을 확인한다. 시간과 오류 경계는 독립 clock과 제한된 대역으로 추가 검사한다. PDF 페이지 근거 검사는 총괄의 PDF/worker 공통 변경이 있는 환경에서 실행하며, 해당 의존성이 없는 사본에서는 skip으로 구별한다. 실자료 source·실제 모델·fixture 시험·실장비를 실행한 검사로 세지 않는다.
+전용 검사는 실제 TXT 2-cycle·중복 방지·중간 새 bundle·settle 대기·선택 밖 합성 job·real queued/만료 running job 격리·실제 child provider 실패/timeout을 확인한다. [원자적 scope 회귀](../../tests/test_intake_scan_scope.py)는 조회 직후 표지 변경, 실제 SQLite 쓰기 잠금, real 거절 시 파일 접근 0·원본/행/기존 알림 불변, 기본 False 호환, 구형 scanner 거절을 확인한다. 시간과 오류 경계는 독립 clock과 제한된 대역으로 추가 검사한다. PDF 페이지 근거 검사는 총괄의 PDF/worker 공통 변경이 있는 환경에서 실행하며, 해당 의존성이 없는 사본에서는 skip으로 구별한다. 실자료 source·실제 모델·fixture 시험·실장비를 실행한 검사로 세지 않는다.
