@@ -1,0 +1,63 @@
+{
+  "carry_forward_batch": "FCC-20261023A-S04-B0002",
+  "carry_forward_document_issues": [
+    "DOC-INIT-QUERY",
+    "DOC-TRIGGER-EXT",
+    "DOC-UNIT-TABLE",
+    "DOC-PM-BYTEORDER-TRACE",
+    "DOC-AN-STATUS-EXAMPLE"
+  ],
+  "status": "unresolved_no_new_corrective_primary_source",
+  "new_observations": [
+    {
+      "id": "DOC-ZERO-ON-FAMILY",
+      "finding": "N1913-90008 개요 31쪽은 U2000/U2040에 ON을 설명하지만 상세 244쪽은 U2000만 적는다.",
+      "handling": "U2040 전체 지원을 확정하거나 한 절을 삭제하지 않는다. 실제 센서/펌웨어와 공식 보완 근거가 필요하다.",
+      "part": "N1913-90008",
+      "pages": [
+        31,
+        244
+      ]
+    },
+    {
+      "id": "DOC-LOCKOUT-SCOPE",
+      "finding": "N1913-90001 105쪽은 lockout의 두 채널 공통 설정을 설명하고 N1913-90008 240/241쪽은 채널 접미사 명령을 제공한다.",
+      "handling": "UI와 원격 동작이 같은 범위인지 미확정이다. 독립 채널 설정이나 전역 상태 중 하나로 임의 구현하지 않는다.",
+      "sources": [
+        {
+          "part": "N1913-90001",
+          "pages": [
+            105
+          ]
+        },
+        {
+          "part": "N1913-90008",
+          "pages": [
+            240,
+            241
+          ]
+        }
+      ]
+    }
+  ],
+  "remaining_gaps": [
+    "N1914A NORMal/SWAPped의 절대 바이트 순서",
+    "N1914A 독립 waveform/trace 원시 파일과 실제 binary 캡처",
+    "INIT/UNIT/EXT 및 분석기 상태 예제의 문서 불일치",
+    "진행 중 영점/교정의 ABORt/DCL 취소 결과와 재시도 정책",
+    "실제 센서·옵션·펌웨어·교정/보정 원본과 RF 연결 상태"
+  ],
+  "existing_input_connection": {
+    "group": "INPUT-ASSETS",
+    "request_ids": [
+      "LOCAL-016"
+    ],
+    "prior_questions": [
+      "S04-Q001",
+      "S04-Q002",
+      "S04-B0002-Q01",
+      "S04-B0002-Q02"
+    ]
+  },
+  "policy": "근거 없는 수치·오류·지원 모델/펌웨어를 만들지 않고 미확정으로 유지한다. 새 문의·로그인·구매·현장 명령은 수행하지 않았다."
+}

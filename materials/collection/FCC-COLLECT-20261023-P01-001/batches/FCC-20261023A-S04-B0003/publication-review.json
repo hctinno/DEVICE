@@ -1,0 +1,71 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S04-B0003",
+  "task_id": "FCC-20261023-S04-B0003",
+  "owner_session": "S04",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v006",
+  "snapshot_inventory_sha256": "72b33100c842b7460fddb3650f116b3f98ff3e34716c5cfe0bafa6988b512b5d",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S04-B0003",
+    "owner": "P01",
+    "decision": "content_approved_for_existing_source_gap_supplement",
+    "source_inventory_verified": true,
+    "findings": [
+      "P01 independently reverified six frozen manual hashes and all13 supplement citation anchors.",
+      "Pages236,240,244,619 were visually checked: combined calibration query initiates work and returns0 pass/1 fail; standalone zero query always0 is not success proof; lockout and the low-power/filter timeout example remain distinct.",
+      "Four sensor families and two additional scope inconsistencies retain actual model/FW/option uncertainty. No calibration values or instrument captures were generated.",
+      "Three HTTP403 responses and a form-gated HTML response remain private diagnostics. No new source original or raw measurement was acquired."
+    ],
+    "request_outcome": {
+      "completed": 1,
+      "limited": 0,
+      "not_started": 0
+    },
+    "rights_public_document_ids": [],
+    "publication_metadata_files": [
+      "gap-supplements.json",
+      "sensor-prerequisites.json",
+      "example-provenance.json",
+      "unresolved.json"
+    ],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [],
+  "redacted_local_reference_fields": [
+    "/source_index_path",
+    "/prior_contract_path",
+    "/access_responses/0/path",
+    "/access_responses/1/path",
+    "/access_responses/2/path",
+    "/access_responses/3/path",
+    "/0/source_snapshot",
+    "/0/source_path_in_snapshot",
+    "/1/source_snapshot",
+    "/1/source_path_in_snapshot",
+    "/2/source_snapshot",
+    "/2/source_path_in_snapshot",
+    "/3/source_snapshot",
+    "/3/source_path_in_snapshot",
+    "/4/source_snapshot",
+    "/4/source_path_in_snapshot",
+    "/5/source_snapshot",
+    "/5/source_path_in_snapshot"
+  ],
+  "package": null,
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "gap-supplements.json",
+    "sensor-prerequisites.json",
+    "example-provenance.json",
+    "unresolved.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

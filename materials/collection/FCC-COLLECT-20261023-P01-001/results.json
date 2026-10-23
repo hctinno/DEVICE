@@ -1,10 +1,10 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "updated_at": "2026-10-23T23:07:55.107700+09:00",
+  "updated_at": "2026-10-23T23:13:17.250202+09:00",
   "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
-  "reviewed_batches": 16,
+  "reviewed_batches": 17,
   "reviewed_request_outcomes": {
-    "completed": 19,
+    "completed": 20,
     "limited": 6,
     "not_started": 0
   },
@@ -206,6 +206,24 @@
         "not_started": 0
       },
       "metadata_path": "batches/FCC-20261023A-S04-B0002",
+      "new_local_originals": 0,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": null
+    },
+    {
+      "batch_id": "FCC-20261023A-S04-B0003",
+      "task_id": "FCC-20261023-S04-B0003",
+      "owner_session": "S04",
+      "assignment_version": "v006",
+      "snapshot_inventory_sha256": "72b33100c842b7460fddb3650f116b3f98ff3e34716c5cfe0bafa6988b512b5d",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S04-B0003",
       "new_local_originals": 0,
       "public_collector_originals": 0,
       "public_extracted_documents": 0,

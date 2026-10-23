@@ -1,0 +1,114 @@
+{
+  "actual_sensor_model": "not_selected_or_verified",
+  "actual_firmware_options": "not_provided",
+  "calibration_values_generated": false,
+  "families": [
+    {
+      "family": "8480 / N8480 with CFT",
+      "preconditions": "RF가 없는 영점, 외부 기준을 이용한 교정, 활성 표/수동 기준계수의 우선순위 확인. 개별 모델의 감쇠기·어댑터 연결 요건을 별도 적용.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            234,
+            238,
+            242,
+            243
+          ],
+          "section": "See named source section",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "part_number": "N1913-90001",
+          "pdf_pages_1based": [
+            108,
+            109
+          ],
+          "section": "See named source section",
+          "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9"
+        }
+      ]
+    },
+    {
+      "family": "E-Series / N8480 without CFT / N8486Dx",
+      "preconditions": "센서 EEPROM의 보정 표를 이용한다. EEPROM 표가 있다는 사실이 선행 영점/외부 기준 교정의 완료를 뜻하지 않는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            234,
+            238,
+            392
+          ],
+          "section": "See named source section",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "part_number": "N1913-90001",
+          "pdf_pages_1based": [
+            106,
+            107
+          ],
+          "section": "See named source section",
+          "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9"
+        }
+      ]
+    },
+    {
+      "family": "U2000 / U2040 USB",
+      "preconditions": "USB 옵션·C/D 채널과 내부/외부 영점 구별. U2000 사용자 안내는 교정이 내부 수행되어 별도 교정 불필요라고 설명한다. 자동 영점 ON의 U2040 범위는 개요/상세 절 차이가 남는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            31,
+            244,
+            248,
+            249
+          ],
+          "section": "See named source section",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "part_number": "N1913-90001",
+          "pdf_pages_1based": [
+            202,
+            203
+          ],
+          "section": "See named source section",
+          "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9"
+        }
+      ]
+    },
+    {
+      "family": "U8480 USB",
+      "preconditions": "내부 기준 회로 교정과 50 MHz 1 mW 외부 기준 교정을 구별한다. 전원 투입/리셋 시 내부 교정 모드. 설치 옵션·지원 펌웨어는 현장 확인 필요.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            246,
+            247
+          ],
+          "section": "See named source section",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    }
+  ],
+  "existing_input_group": "INPUT-ASSETS",
+  "existing_input_request": "LOCAL-016",
+  "required_actual_inputs": [
+    "실제 센서 모델/옵션/일련번호와 전력계 채널 대응",
+    "설치 펌웨어·USB 옵션·제어 언어",
+    "교정 유효성·기준/주파수 보정 원본과 적용일",
+    "RF 연결·기준원·감쇠기/어댑터·온도/워밍업 상태"
+  ]
+}

@@ -1,0 +1,379 @@
+{
+  "task_id": "FCC-20261023-S04-B0003",
+  "source_request_id": "DEV-EVIDENCE-20261023-002",
+  "source_index_path": "[local-only reference retained by P01]",
+  "source_index_sha256": "8b612566cae37d078f5183068ebab710739fea6041efd2ddcf59db81d95447fa",
+  "prior_contract_path": "[local-only reference retained by P01]",
+  "prior_contract_sha256": "6414bb39d93e0e50590e8a63c7969d763d9c0acf1fd1ebc9252abd505466e265",
+  "supplement_locations": [
+    {
+      "id": "ZC-01",
+      "status": "documented_conditions_actual_sensor_pending",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            232
+          ],
+          "section": "4 CALibration Subsystem",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "Every 24 hours"
+        }
+      ]
+    },
+    {
+      "id": "ZC-02",
+      "status": "documented",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            31,
+            244,
+            245
+          ],
+          "section": "1 Zeroing / 4 ZERO AUTO",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "always returns a value of 0"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "part_number": "N1913-90001",
+          "pdf_pages_1based": [
+            104
+          ],
+          "section": "2 Zeroing the Power Meter",
+          "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9",
+          "verified_anchor": "approximately 10 seconds"
+        }
+      ]
+    },
+    {
+      "id": "ZC-03",
+      "status": "documented",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            32,
+            234,
+            235,
+            236,
+            237
+          ],
+          "section": "1 Calibration Sequence / 4 CAL ALL",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "0, the calibration has passed"
+        }
+      ]
+    },
+    {
+      "id": "ZC-04",
+      "status": "documented_conditions",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            238,
+            239
+          ],
+          "section": "4 CALibration AUTO",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "1 mW reference signal"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "part_number": "N1913-90001",
+          "pdf_pages_1based": [
+            106,
+            107
+          ],
+          "section": "2 Calibration",
+          "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9",
+          "verified_anchor": "50 MHz 1 mW"
+        }
+      ]
+    },
+    {
+      "id": "ZC-05",
+      "status": "documented_with_scope_gap",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            240,
+            241
+          ],
+          "section": "4 RCALibration lockout",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "does not return a result"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "part_number": "N1913-90001",
+          "pdf_pages_1based": [
+            105
+          ],
+          "section": "2 Zero/Cal Lockout",
+          "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9",
+          "verified_anchor": "both channels"
+        }
+      ]
+    },
+    {
+      "id": "ZC-06",
+      "status": "documented_conditions",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            234,
+            238,
+            242,
+            243,
+            392
+          ],
+          "section": "4 RCFactor / 11 FREQuency",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "most recently set"
+        }
+      ]
+    },
+    {
+      "id": "ZC-07",
+      "status": "documented_conditions_actual_options_pending",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            246,
+            247,
+            248,
+            249
+          ],
+          "section": "4 TYPE / ZERO TYPE",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "internal reference circuit"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "part_number": "N1913-90001",
+          "pdf_pages_1based": [
+            202,
+            203
+          ],
+          "section": "7 U2000 Measurement Accuracy",
+          "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9",
+          "verified_anchor": "Calibration is not required"
+        }
+      ]
+    },
+    {
+      "id": "ZC-08",
+      "status": "documented_conditions_actual_setup_pending",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+          "part_number": "N1913-90009",
+          "pdf_pages_1based": [
+            22,
+            25
+          ],
+          "section": "1 Specifications / Power Sensor Specifications",
+          "source_sha256": "c9b6b27d187cf72ba01934fa3ff9b48c6a39e1e8db6922fa15cb654939d3a4db",
+          "verified_anchor": "30 minutes"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "part_number": "N1913-90001",
+          "pdf_pages_1based": [
+            108,
+            109
+          ],
+          "section": "2 Calibration / Table 2-5",
+          "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9",
+          "verified_anchor": "11708A"
+        }
+      ]
+    },
+    {
+      "id": "RAW-01",
+      "status": "partially_resolved",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            69,
+            95,
+            96,
+            281,
+            282,
+            283,
+            284
+          ],
+          "section": "1 Output / SCPI Types / 6 FORMat",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "9.91 E37"
+        }
+      ]
+    },
+    {
+      "id": "EXEC-01",
+      "status": "documented",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            85,
+            86,
+            89,
+            232,
+            236,
+            597,
+            623
+          ],
+          "section": "Status / Calibration / OPC / Example 8",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "CALibrating"
+        }
+      ]
+    },
+    {
+      "id": "EXEC-02",
+      "status": "documented_example_not_general_limit",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            68,
+            619
+          ],
+          "section": "Trigger with Delay / Example 5 Low Power Measurement",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "55 s"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "part_number": "N1913-90001",
+          "pdf_pages_1based": [
+            104
+          ],
+          "section": "Zeroing",
+          "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9",
+          "verified_anchor": "approximately 10 seconds"
+        }
+      ]
+    },
+    {
+      "id": "EXEC-03",
+      "status": "measurement_semantics_documented_calibration_cancel_unconfirmed",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            546,
+            607,
+            608
+          ],
+          "section": "15 ABORt / 17 WAI and GPIB DCL",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            548,
+            609,
+            610
+          ],
+          "verified_anchor": "output buffer is cleared"
+        }
+      ]
+    },
+    {
+      "id": "EXEC-04",
+      "status": "sample_description_only_source_file_unavailable",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+          "part_number": "N9020-90112",
+          "pdf_pages_1based": [
+            40,
+            41,
+            42,
+            43,
+            45
+          ],
+          "section": "4 Program Samples",
+          "source_sha256": "354463a721ff57298576d6c059c9637d5e58bb16d854ace86303de31a55c8f3e",
+          "verified_anchor": "bintrace.bas"
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "pdf_pages_1based": [
+            749,
+            750,
+            1025,
+            1026
+          ],
+          "section": "8 Format / Query Trace Data",
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "TRACe[:DATA]?"
+        }
+      ]
+    }
+  ],
+  "access_responses": [
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "sha256": "b36dda8ac63589c0638ae34e85db2d313dbe7991bfc2837df1a9b5c684c28f1e",
+      "bytes": 278,
+      "source_url": "https://www.keysight.com/ca/en/lib/software-detail/instrument-firmware-software/epm-series-power-meter-firmware-upgrade-1783747.html",
+      "http_status": 403,
+      "classification": "HTTP_403_error_body_not_source_document",
+      "is_new_original_document": false,
+      "publication": "private_diagnostic_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "sha256": "b572b06f35792c9e6c3d42867dcee406e2d4534acd8decbfab04e0d9b834a738",
+      "bytes": 650512,
+      "source_url": "https://www.keysight.com/se/en/assets/9018-18292/release-notes/9018-18292.txt",
+      "http_status": 200,
+      "classification": "form_gate_html_not_release_notes",
+      "is_new_original_document": false,
+      "publication": "private_diagnostic_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "sha256": "1ce00f1a39002acc3d7fb025fa9d248541322d2917f15be930ccd8f8bc5c6c22",
+      "bytes": 278,
+      "source_url": "https://www.keysight.com/ca/en/lib/software-detail/driver/rf-power-meter-ivi-instrument-drivers-1627801.html",
+      "http_status": 403,
+      "classification": "HTTP_403_error_body_not_source_document",
+      "is_new_original_document": false,
+      "publication": "private_diagnostic_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "sha256": "a76c4a0a417278a6fb1695ed2cf37f028e921bb0deafc3b32fcc6071c2d46afa",
+      "bytes": 278,
+      "source_url": "https://www.keysight.com/dk/en/lib/software-detail/driver/rf-power-meter-ivi-instrument-drivers.html",
+      "http_status": 403,
+      "classification": "HTTP_403_error_body_not_source_document",
+      "is_new_original_document": false,
+      "publication": "private_diagnostic_only"
+    }
+  ],
+  "new_originals": 0,
+  "raw_example_files": 0,
+  "synthetic_values": 0
+}

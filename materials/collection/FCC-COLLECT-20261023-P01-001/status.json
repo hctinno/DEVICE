@@ -1,6 +1,6 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "checked_at": "2026-10-23T23:07:55.107700+09:00",
+  "checked_at": "2026-10-23T23:13:17.250202+09:00",
   "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
   "latest_assignment_version": "v006",
   "published_branch": "collect/fcc-p0-smartphone-20261023-001",
@@ -16,8 +16,8 @@
     {
       "role": "S01",
       "latest_collector_task": "FCC-20261023-S01-B0004",
-      "collector_status": "in_progress",
-      "collector_status_updated_at": "2026-10-23T23:06:34.212552+09:00",
+      "collector_status": "local_ready_frozen_waiting_P01_receipt",
+      "collector_status_updated_at": "2026-10-23T23:12:55.019868+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -71,7 +71,7 @@
             "ADD-S01-METHOD-ERRATA-ACCESS-004"
           ],
           "acknowledgement_file_present": true,
-          "execution_state": "in_progress",
+          "execution_state": "local_ready_frozen_waiting_P01_receipt",
           "P01_intake_state": "not_received",
           "included_in_results": false,
           "publication_state": "not_published",
@@ -157,8 +157,8 @@
     {
       "role": "S04",
       "latest_collector_task": "FCC-20261023-S04-B0003",
-      "collector_status": "in_progress",
-      "collector_status_updated_at": "2026-10-23T23:06:19.426468+09:00",
+      "collector_status": "complete_pending_P01_intake",
+      "collector_status_updated_at": "2026-10-23T23:11:46.581418+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -199,10 +199,10 @@
             "ADD-S04-RAW-ZERO-CAL-EVIDENCE-003"
           ],
           "acknowledgement_file_present": true,
-          "execution_state": "in_progress",
-          "P01_intake_state": "not_received",
-          "included_in_results": false,
-          "publication_state": "not_published",
+          "execution_state": "complete_pending_P01_intake",
+          "P01_intake_state": "content_approved",
+          "included_in_results": true,
+          "publication_state": "included_in_this_revision",
           "prior_publication_sha": null
         }
       ]
@@ -233,9 +233,9 @@
     },
     {
       "role": "S06",
-      "latest_collector_task": "FCC-20261023-S06-B0001",
-      "collector_status": "published_waiting_assignment",
-      "collector_status_updated_at": "2026-10-23T22:25:55+09:00",
+      "latest_collector_task": "FCC-20261023-S06-B0002",
+      "collector_status": "in_progress",
+      "collector_status_updated_at": "2026-10-23T23:12:52+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -248,7 +248,7 @@
             "EQ-MOD-6b92cbf630670c77"
           ],
           "acknowledgement_file_present": true,
-          "execution_state": "published_waiting_assignment",
+          "execution_state": "completed_prior_batch",
           "P01_intake_state": "published",
           "included_in_results": true,
           "publication_state": "verified_in_prior_commit",
@@ -261,8 +261,8 @@
           "request_ids": [
             "ADD-S06-OFFICIAL-ARCHIVE-MANUAL-GAPS-002"
           ],
-          "acknowledgement_file_present": false,
-          "execution_state": "queued_or_not_observed",
+          "acknowledgement_file_present": true,
+          "execution_state": "in_progress",
           "P01_intake_state": "not_received",
           "included_in_results": false,
           "publication_state": "not_published",
@@ -375,10 +375,9 @@
       ]
     }
   ],
-  "included_reviewed_batches": 16,
+  "included_reviewed_batches": 17,
   "pending_intake_task_ids": [
     "FCC-20261023-S07-B0003",
-    "FCC-20261023-S04-B0003",
     "FCC-20261023-S01-B0004",
     "FCC-20261023-S06-B0002"
   ],

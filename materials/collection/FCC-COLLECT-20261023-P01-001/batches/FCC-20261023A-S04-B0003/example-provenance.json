@@ -1,0 +1,100 @@
+{
+  "actual_public_raw_measurement_files_acquired": 0,
+  "manufacturer_example_files_acquired": 0,
+  "new_example_files_executed": 0,
+  "synthetic_measurement_values_generated": 0,
+  "items": [
+    {
+      "id": "EX-CAL-RESULT",
+      "classification": "manufacturer_documented_response_semantics",
+      "description": "CAL:ALL?의 0/1 성공·실패 반환 정의. 실제 캡처가 아님.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            236,
+            237
+          ],
+          "section": "See named source section",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    },
+    {
+      "id": "EX-LOW-POWER",
+      "classification": "manufacturer_documented_example_not_executed",
+      "description": "저전력·필터 1024·단일 트리거와 약 55초의 예제 조건. 새 수치 측정을 생성하지 않음.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            619
+          ],
+          "section": "See named source section",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            621
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EX-CAL-STATUS",
+      "classification": "manufacturer_documented_example_not_executed",
+      "description": "Operation CAL 상태 조회의 +0/+2 예제는 문서의 예시이며 해당 현장 장비 응답이 아님.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "pdf_pages_1based": [
+            623
+          ],
+          "section": "See named source section",
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            625
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EX-AN-BINARY",
+      "classification": "manufacturer_example_description_only",
+      "description": "bintrace.bas 등의 이름·동작 설명만 기존 PDF에 있음. 원 소스 파일·bintrace.txt 데이터 파일은 미확보.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+          "part_number": "N9020-90112",
+          "pdf_pages_1based": [
+            40,
+            41,
+            42,
+            43,
+            45
+          ],
+          "section": "See named source section",
+          "source_sha256": "354463a721ff57298576d6c059c9637d5e58bb16d854ace86303de31a55c8f3e"
+        }
+      ]
+    },
+    {
+      "id": "EX-ASCII-BLOCK",
+      "classification": "prior_manufacturer_printed_example_referenced",
+      "description": "B0002의 네 점 ASCII/블록 예제를 참조만 함. 다른 장비나 실측 데이터로 재분류하지 않음.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "pdf_pages_1based": [
+            1025,
+            1026
+          ],
+          "section": "See named source section",
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401"
+        }
+      ]
+    }
+  ]
+}

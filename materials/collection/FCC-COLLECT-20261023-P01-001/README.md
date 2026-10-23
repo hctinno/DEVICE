@@ -1,10 +1,10 @@
 # FCC 병렬 수집 운영 기록
 
-기준 시각: 2026-10-23T23:07:55.107700+09:00 (Asia/Seoul). 실행 ID: `FCC-COLLECT-20261023-P01-001`.
+기준 시각: 2026-10-23T23:13:17.250202+09:00 (Asia/Seoul). 실행 ID: `FCC-COLLECT-20261023-P01-001`.
 
 고정 지시: [MAIN_AGENT_PROMPT.md](https://github.com/hctinno/DEVICE/blob/fb1767b367c0c1595560c2845d447ab30cecdce3/handoff/parallel/MAIN_AGENT_PROMPT.md).
 
-검수된 배치 16개를 취합했다. 수집 결과는 문서 조사 완료 19개·제한 조사 6개이며, 아래 후속 배정 중 미인수 작업은 별도로 표시한다.
+검수된 배치 17개를 취합했다. 수집 결과는 문서 조사 완료 20개·제한 조사 6개이며, 아래 후속 배정 중 미인수 작업은 별도로 표시한다.
 
 |담당·배치|문서 조사 완료/제한|공개 결과|
 |---|---|---|
@@ -17,6 +17,7 @@
 |S03-B0002|1/0|[근거·한계](batches/FCC-20261023A-S03-B0002/summary.json)|
 |S04-B0001|3/0|[근거·한계](batches/FCC-20261023A-S04-B0001/summary.json)|
 |S04-B0002|1/0|[근거·한계](batches/FCC-20261023A-S04-B0002/summary.json)|
+|S04-B0003|1/0|[근거·한계](batches/FCC-20261023A-S04-B0003/summary.json)|
 |S05-B0001|0/2|[근거·한계](batches/FCC-20261023A-S05-B0001/summary.json)|
 |S06-B0001|0/3|[근거·한계](batches/FCC-20261023A-S06-B0001/summary.json)|
 |S07-B0001|2/0|[근거·한계](batches/FCC-20261023A-S07-B0001/summary.json)|
