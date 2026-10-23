@@ -1,0 +1,2974 @@
+{
+  "schema_version": 1,
+  "catalog_id": "sm-a176u-unlicensed-v1",
+  "source_basis": "provided_report_equipment",
+  "profiles": [
+    {
+      "profile_id": "11667b-1839151d7a",
+      "profile_kind": "report_equipment",
+      "model": "11667B",
+      "manufacturer": "Hewlett Packard",
+      "role": "splitter",
+      "variant": "Power Splitter",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {
+        "ways": 2
+      },
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf_1": "rf",
+          "rf_2": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 10,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 10,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 9,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 9,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 9,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "1513-80ab3903a5",
+      "profile_kind": "report_equipment",
+      "model": "1513",
+      "manufacturer": "Schwarzbeck",
+      "role": "antenna",
+      "variant": "Loop Antenna",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 6,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 6,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 5,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "18b-03-3dbb169d1c",
+      "profile_kind": "report_equipment",
+      "model": "18B-03",
+      "manufacturer": "Api tech.",
+      "role": "attenuator",
+      "variant": "Attenuator(3 dB)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 26,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 26,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 11,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 11,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 11,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "18n-20db-dd3d425fd0",
+      "profile_kind": "report_equipment",
+      "model": "18N-20dB",
+      "manufacturer": "Rohde & Schwarz",
+      "role": "attenuator",
+      "variant": "Attenuator(20 dB)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 14,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 14,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "310n-e761178ee6",
+      "profile_kind": "report_equipment",
+      "model": "310N",
+      "manufacturer": "SONOMA INSTRUMENT",
+      "role": "amplifier",
+      "variant": "Power Amplifier",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 10,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "4456-4-444a9789eb",
+      "profile_kind": "report_equipment",
+      "model": "4456-4",
+      "manufacturer": "NARDA",
+      "role": "splitter",
+      "variant": "4 Way Power Divider",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {
+        "ways": 4
+      },
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "rf_3": "rf",
+          "rf_4": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "3783cb0e7c449a51a68eafd89f820db7d59c0fbbecf64a86d30842ff8d8f9850",
+          "kind": "docx_table",
+          "table": 13,
+          "row": 5,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "8493c-e14da53349",
+      "profile_kind": "report_equipment",
+      "model": "8493C",
+      "manufacturer": "HP",
+      "role": "attenuator",
+      "variant": "Attenuator(10 dB)(DC-26.5 GHz)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 13,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 13,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 24,
+          "row": 7,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "8493c-0895ae7dc8",
+      "profile_kind": "report_equipment",
+      "model": "8493C",
+      "manufacturer": "Hewlett Packard",
+      "role": "attenuator",
+      "variant": "Attenuator(10 dB)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 11,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 11,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 11,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "8494b-66d3c3da72",
+      "profile_kind": "report_equipment",
+      "model": "8494B",
+      "manufacturer": "HP",
+      "role": "attenuator",
+      "variant": "Step Attenuator(11 dB)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "3783cb0e7c449a51a68eafd89f820db7d59c0fbbecf64a86d30842ff8d8f9850",
+          "kind": "docx_table",
+          "table": 13,
+          "row": 7,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "8495b-2cdb6e081b",
+      "profile_kind": "report_equipment",
+      "model": "8495B",
+      "manufacturer": "Agilent",
+      "role": "attenuator",
+      "variant": "Step Attenuator(70 dB)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "3783cb0e7c449a51a68eafd89f820db7d59c0fbbecf64a86d30842ff8d8f9850",
+          "kind": "docx_table",
+          "table": 13,
+          "row": 6,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "87300b-3d280d10e3",
+      "profile_kind": "report_equipment",
+      "model": "87300B",
+      "manufacturer": "Agilent",
+      "role": "coupler",
+      "variant": "Directional Coupler",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf",
+          "coupled": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 9,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 9,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 8,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 8,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 8,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "bbha-9120d-b1ac72f3f6",
+      "profile_kind": "report_equipment",
+      "model": "BBHA 9120D",
+      "manufacturer": "Schwarzbeck",
+      "role": "antenna",
+      "variant": "Horn Antenna",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 8,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 9,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 8,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 9,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 7,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 7,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 7,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 7,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "bbha9170-ed1215e70c",
+      "profile_kind": "report_equipment",
+      "model": "BBHA9170",
+      "manufacturer": "Schwarzbeck",
+      "role": "antenna",
+      "variant": "Horn Antenna(15 GHz ~ 40 GHz)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 10,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 10,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "bbha9170-03b804e918",
+      "profile_kind": "report_equipment",
+      "model": "BBHA9170",
+      "manufacturer": "Schwarzbeck",
+      "role": "antenna",
+      "variant": "Horn Antenna(15GHz ~ 40 GHz)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 8,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 8,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 8,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "cbl18265035-c9cc16b70f",
+      "profile_kind": "report_equipment",
+      "model": "CBL18265035",
+      "manufacturer": "CERNEX",
+      "role": "amplifier",
+      "variant": "Power Amplifier",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 16,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 16,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 21,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 11,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 21,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 21,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "cbl26405040-8a8f961bfd",
+      "profile_kind": "report_equipment",
+      "model": "CBL26405040",
+      "manufacturer": "CERNEX",
+      "role": "amplifier",
+      "variant": "Power Amplifier",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 17,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 17,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 22,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 22,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 22,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "cbt-e0ec3cf386",
+      "profile_kind": "report_equipment",
+      "model": "CBT",
+      "manufacturer": "Rohde & Schwarz",
+      "role": "bluetooth_tester",
+      "variant": "Bluetooth Tester",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "rf": "rf",
+          "measurement": "measurement",
+          "data": "data"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 16,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 16,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 12,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "co3000-d89f5da7d4",
+      "profile_kind": "report_equipment",
+      "model": "CO3000",
+      "manufacturer": "Innco system",
+      "role": "position_controller",
+      "variant": "Controller",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "power": "power",
+          "control": "control"
+        },
+        "outputs": {
+          "position": "position",
+          "control": "control"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 2,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 2,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 2,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "co3000-f2e94dd3d6",
+      "profile_kind": "report_equipment",
+      "model": "CO3000",
+      "manufacturer": "Innco system",
+      "role": "position_controller",
+      "variant": "Controller(Antenna mast & Turn Table)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "power": "power",
+          "control": "control"
+        },
+        "outputs": {
+          "position": "position",
+          "control": "control"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 2,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 2,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 2,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "ds2000-s-bf128bea69",
+      "profile_kind": "report_equipment",
+      "model": "DS2000-S",
+      "manufacturer": "Innco system",
+      "role": "turntable",
+      "variant": "Turn Table",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "power": "power",
+          "control": "control"
+        },
+        "outputs": {
+          "position": "position"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 4,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 4,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 4,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "ds2000-s-1t-91409c0111",
+      "profile_kind": "report_equipment",
+      "model": "DS2000-S-1t",
+      "manufacturer": "Innco system",
+      "role": "turntable",
+      "variant": "Turn Table",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "power": "power",
+          "control": "control"
+        },
+        "outputs": {
+          "position": "position"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 4,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 4,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 4,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "e3632a-ba5f7c3ee5",
+      "profile_kind": "report_equipment",
+      "model": "E3632A",
+      "manufacturer": "Agilent",
+      "role": "power_supply",
+      "variant": "DC Power Supply",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {},
+        "outputs": {
+          "power": "power"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 11,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 11,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 24,
+          "row": 6,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "e3632a-ebca10ffe2",
+      "profile_kind": "report_equipment",
+      "model": "E3632A",
+      "manufacturer": "H.P",
+      "role": "power_supply",
+      "variant": "DC Power Supply",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {},
+        "outputs": {
+          "power": "power"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 10,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 10,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 10,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "emc32-183ccac742",
+      "profile_kind": "report_equipment",
+      "model": "EMC32",
+      "manufacturer": "Rohde & Schwarz",
+      "role": "test_software",
+      "variant": "Software",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "measurement": "measurement",
+          "data": "data"
+        },
+        "outputs": {
+          "control": "control",
+          "data": "data"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 15,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 15,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 24,
+          "row": 8,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 13,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 13,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "env216-125afaae1d",
+      "profile_kind": "report_equipment",
+      "model": "ENV216",
+      "manufacturer": "Rohde & Schwarz",
+      "role": "lisn",
+      "variant": "LISN",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "rf": "rf",
+          "power": "power"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 2,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 2,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 2,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 24,
+          "row": 2,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 2,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 2,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "esr-a5a9490c05",
+      "profile_kind": "report_equipment",
+      "model": "ESR",
+      "manufacturer": "Rohde & Schwarz",
+      "role": "emi_receiver",
+      "variant": "EMI Test Receiver",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 3,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 3,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 3,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 24,
+          "row": 3,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 3,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 3,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fbsm-01b-3afe38d4b7",
+      "profile_kind": "report_equipment",
+      "model": "FBSM-01B",
+      "manufacturer": "T&M system",
+      "role": "rf_switch",
+      "variant": "Amp & Filter Bank Switch Controller",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {
+        "controller_only": true
+      },
+      "ports": {
+        "inputs": {
+          "control": "control"
+        },
+        "outputs": {
+          "control": "control"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 5,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 5,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fcc-bluetooth-conducted-775a18f62a",
+      "profile_kind": "report_equipment",
+      "model": "FCC Bluetooth Conducted",
+      "manufacturer": "HCT CO., LTD",
+      "role": "test_software",
+      "variant": "Automation Software",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "measurement": "measurement",
+          "data": "data"
+        },
+        "outputs": {
+          "control": "control",
+          "data": "data"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 18,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 18,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 14,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 15,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 15,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fcc-wlan-conducted-484ba227fa",
+      "profile_kind": "report_equipment",
+      "model": "FCC WLAN Conducted",
+      "manufacturer": "HCT CO., LTD",
+      "role": "test_software",
+      "variant": "Automation Software",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "measurement": "measurement",
+          "data": "data"
+        },
+        "outputs": {
+          "control": "control",
+          "data": "data"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 17,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 17,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 13,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 14,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 14,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fcc-wlan-radiated-55ecb81942",
+      "profile_kind": "report_equipment",
+      "model": "FCC WLAN Radiated",
+      "manufacturer": "HCT CO., LTD",
+      "role": "test_software",
+      "variant": "Automation Software",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "measurement": "measurement",
+          "data": "data"
+        },
+        "outputs": {
+          "control": "control",
+          "data": "data"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 25,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 25,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 23,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 24,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 24,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-05b-att-10db-lna1-1-18ghz-669dd3f3ef",
+      "profile_kind": "report_equipment",
+      "model": "FMSR -05B (ATT(10dB) + LNA1(1~18GHz))",
+      "manufacturer": "T&M system",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 20,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 20,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-05b-att-3db-lna1-1-18ghz-d2453257fe",
+      "profile_kind": "report_equipment",
+      "model": "FMSR -05B (ATT(3dB) + LNA1(1~18GHz))",
+      "manufacturer": "T&M system",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 21,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 21,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-05b-hpf-7-18ghz-lna2-6-18ghz-aad53257ed",
+      "profile_kind": "report_equipment",
+      "model": "FMSR -05B (HPF(7~18GHz) + LNA2(6~18GHz))",
+      "manufacturer": "T&M system",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 23,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 23,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-05b-lna1-1-18ghz-e725ab97e1",
+      "profile_kind": "report_equipment",
+      "model": "FMSR -05B (LNA1(1~18GHz))",
+      "manufacturer": "T&M system",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 22,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 22,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-05b-thru-30mhz-18ghz-935cc8927e",
+      "profile_kind": "report_equipment",
+      "model": "FMSR -05B (Thru(30MHz ~ 18GHz))",
+      "manufacturer": "T&M system",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 24,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 24,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-04b-10db-att-lna-0405eb1ae4",
+      "profile_kind": "report_equipment",
+      "model": "FMSR-04B (10dB ATT+LNA)",
+      "manufacturer": "T&M SYSTEM",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 17,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 17,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 17,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-04b-3g-hpf-lna-f986699302",
+      "profile_kind": "report_equipment",
+      "model": "FMSR-04B (3G HPF+LNA)",
+      "manufacturer": "T&M SYSTEM",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 16,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 16,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 16,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-04b-3db-att-lna-2dd24cc906",
+      "profile_kind": "report_equipment",
+      "model": "FMSR-04B (3dB ATT+LNA)",
+      "manufacturer": "T&M SYSTEM",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 18,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 18,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 18,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-04b-7g-hpf-lna-1ea18cf07c",
+      "profile_kind": "report_equipment",
+      "model": "FMSR-04B (7G HPF+LNA)",
+      "manufacturer": "T&M SYSTEM",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 20,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 20,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 20,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-04b-lna-7c976b5256",
+      "profile_kind": "report_equipment",
+      "model": "FMSR-04B (LNA)",
+      "manufacturer": "T&M SYSTEM",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 19,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 19,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 19,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmsr-05b-hpf-3-18ghz-lna1-1-18ghz-4450af3686",
+      "profile_kind": "report_equipment",
+      "model": "FMSR-05B (HPF(3~18GHz) + LNA1(1~18GHz))",
+      "manufacturer": "T&M system",
+      "role": "rf_switch",
+      "variant": "RF Switching System",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 19,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 19,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fmzb-1513-590e930707",
+      "profile_kind": "report_equipment",
+      "model": "FMZB 1513",
+      "manufacturer": "Rohde & Schwarz",
+      "role": "antenna",
+      "variant": "Loop Antenna",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 5,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 5,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 5,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fsv-10-hz-40-ghz-c342c2ea78",
+      "profile_kind": "report_equipment",
+      "model": "FSV(10 Hz ~ 40 GHz)",
+      "manufacturer": "Rohde & Schwarz",
+      "role": "signal_analyzer",
+      "variant": "Spectrum Analyzer",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 11,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 11,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 8,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "fsv40-dc6e428d29",
+      "profile_kind": "report_equipment",
+      "model": "FSV40",
+      "manufacturer": "Rohde & Schwarz",
+      "role": "signal_analyzer",
+      "variant": "Spectrum Analyzer",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 9,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 9,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 9,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "gt-axe11000-31d400b199",
+      "profile_kind": "report_equipment",
+      "model": "GT-AXE11000",
+      "manufacturer": "ASUS",
+      "role": "wireless_ap",
+      "variant": "Wireless AP",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "rf": "rf",
+          "measurement": "measurement",
+          "data": "data"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "3783cb0e7c449a51a68eafd89f820db7d59c0fbbecf64a86d30842ff8d8f9850",
+          "kind": "docx_table",
+          "table": 13,
+          "row": 2,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "ma4640-32a14e8a8d",
+      "profile_kind": "report_equipment",
+      "model": "MA4640",
+      "manufacturer": "Innco system",
+      "role": "antenna_mast",
+      "variant": "Antenna Mast",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "power": "power",
+          "control": "control"
+        },
+        "outputs": {
+          "position": "position"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 3,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 3,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 3,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "ma4640-800-xp-ep-84ede0db65",
+      "profile_kind": "report_equipment",
+      "model": "MA4640/800-XP-EP",
+      "manufacturer": "Innco system",
+      "role": "antenna_mast",
+      "variant": "Antenna Position Tower",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "power": "power",
+          "control": "control"
+        },
+        "outputs": {
+          "position": "position"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 3,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 3,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 3,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "n1911a-7e6c83fb30",
+      "profile_kind": "report_equipment",
+      "model": "N1911A",
+      "manufacturer": "Agilent",
+      "role": "power_meter",
+      "variant": "Power Meter",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "sensor": "measurement",
+          "power": "power"
+        },
+        "outputs": {
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 7,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 7,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 6,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 6,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 6,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "n1921a-508b0b7652",
+      "profile_kind": "report_equipment",
+      "model": "N1921A",
+      "manufacturer": "Agilent",
+      "role": "power_sensor",
+      "variant": "Power Sensor",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 8,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 8,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 7,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 7,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 7,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "n9030a-49f214c7ff",
+      "profile_kind": "report_equipment",
+      "model": "N9030A",
+      "manufacturer": "Agilent",
+      "role": "signal_analyzer",
+      "variant": "Signal Analyzer",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 5,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 5,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 5,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 10,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 24,
+          "row": 5,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 9,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 5,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 10,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 5,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 10,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "n9030a-a7a01970fa",
+      "profile_kind": "report_equipment",
+      "model": "N9030A",
+      "manufacturer": "Keysight",
+      "role": "signal_analyzer",
+      "variant": "Signal Analyzer",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "3783cb0e7c449a51a68eafd89f820db7d59c0fbbecf64a86d30842ff8d8f9850",
+          "kind": "docx_table",
+          "table": 13,
+          "row": 8,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "osp-120-cf74dfa9ca",
+      "profile_kind": "report_equipment",
+      "model": "OSP 120",
+      "manufacturer": "Rohde & Schwarz",
+      "role": "rf_switch",
+      "variant": "Power Measurement Set",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf_1": "rf",
+          "rf_2": "rf",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 6,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 6,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "pxi-206a7d81ec",
+      "profile_kind": "report_equipment",
+      "model": "PXI",
+      "manufacturer": "ADLINK",
+      "role": "dfs_system",
+      "variant": "DFS Measurement System(S/A)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {
+        "function": "analyzer"
+      },
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "rf": "rf",
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "3783cb0e7c449a51a68eafd89f820db7d59c0fbbecf64a86d30842ff8d8f9850",
+          "kind": "docx_table",
+          "table": 13,
+          "row": 4,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "pxi-a96b74aca9",
+      "profile_kind": "report_equipment",
+      "model": "PXI",
+      "manufacturer": "ADLINK",
+      "role": "dfs_system",
+      "variant": "DFS Measurement System(S/G)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {
+        "function": "generator"
+      },
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "rf": "rf",
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "3783cb0e7c449a51a68eafd89f820db7d59c0fbbecf64a86d30842ff8d8f9850",
+          "kind": "docx_table",
+          "table": 13,
+          "row": 3,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "su-642-6698cb9e3f",
+      "profile_kind": "report_equipment",
+      "model": "SU-642",
+      "manufacturer": "ESPEC",
+      "role": "temperature_chamber",
+      "variant": "Temperature Chamber",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "power": "power"
+        },
+        "outputs": {
+          "environment": "environment"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 44,
+          "row": 4,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 4,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 4,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 24,
+          "row": 4,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 4,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 78,
+          "row": 4,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "tc-3000c-736b17ea88",
+      "profile_kind": "report_equipment",
+      "model": "TC-3000C",
+      "manufacturer": "TESCOM",
+      "role": "bluetooth_tester",
+      "variant": "Bluetooth Tester",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf",
+          "power": "power"
+        },
+        "outputs": {
+          "rf": "rf",
+          "measurement": "measurement",
+          "data": "data"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 18,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 18,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 23,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 23,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "vulb-9168-4bfa667a1c",
+      "profile_kind": "report_equipment",
+      "model": "VULB 9168",
+      "manufacturer": "Schwarzbeck",
+      "role": "antenna",
+      "variant": "Hybrid Antenna",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 7,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 7,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 6,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "9b0da44d7680624b73c42e6ab621296dd453f31a7c1873e2a38a14b5632e176c",
+          "kind": "docx_table",
+          "table": 25,
+          "row": 6,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 6,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 6,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "whkx10-7150-8000-18000-50ss-e0c3fb2c17",
+      "profile_kind": "report_equipment",
+      "model": "WHKX10-7150-8000-18000-50SS",
+      "manufacturer": "Wainwright Instruments",
+      "role": "filter",
+      "variant": "High Pass Filter(7 GHz ~ 18 GHz)",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 15,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 15,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "wrcjv12-4900-5100-5900-6100-50ss-4d3d7a5bd7",
+      "profile_kind": "report_equipment",
+      "model": "WRCJV12-4900-5100-5900-6100-50SS",
+      "manufacturer": "Wainwright Instruments",
+      "role": "filter",
+      "variant": "Band Reject Filter",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 13,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 14,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 13,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 14,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 13,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 13,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 13,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "wrcjv2400-2483-5-2370-2520-60-12ss-4153ff495e",
+      "profile_kind": "report_equipment",
+      "model": "WRCJV2400/2483.5-2370/2520-60/12SS",
+      "manufacturer": "Wainwright Instruments",
+      "role": "filter",
+      "variant": "Band Reject Filter",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "50b20f55d85e0d4221137c479a6d8940a2dd6561a93cb98335b44bc11ba5991c",
+          "kind": "docx_table",
+          "table": 45,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "725e47f5309dcc7ccbbd85cca41c9917e0f6a555e79ca5309676143514546fb0",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 12,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 14,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 14,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 14,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "wrcjv5100-5850-40-50-8eek-fbef0372c7",
+      "profile_kind": "report_equipment",
+      "model": "WRCJV5100/5850-40/50-8EEK",
+      "manufacturer": "Wainwright Instruments",
+      "role": "filter",
+      "variant": "Band Reject Filter",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "rf": "rf"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "8d942c66bc59d7a840a3ba8596237e780534f20cd88658a4adb573abd7971b8c",
+          "kind": "docx_table",
+          "table": 46,
+          "row": 15,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "b9eff914a1f30db56c86112594d96782b294768be79fe13f4c27957cb702dc53",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 15,
+          "part": "word/document.xml"
+        },
+        {
+          "sha256": "ca8254b6bff5355329b3780af0fbf067e586874fb76da36322975c8a8fae6f0a",
+          "kind": "docx_table",
+          "table": 79,
+          "row": 15,
+          "part": "word/document.xml"
+        }
+      ]
+    },
+    {
+      "profile_id": "sm-a176u-dut",
+      "profile_kind": "dut_context",
+      "model": "SM-A176U",
+      "manufacturer": "Samsung",
+      "role": "dut",
+      "variant": "provided_product_identity_with_synthetic_control",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "power": "power",
+          "environment": "environment",
+          "control": "control"
+        },
+        "outputs": {
+          "rf": "rf"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "aa957fb1841ed921c7c16285e25c4220cfccfd82db4118daf694555b2b93b001",
+          "kind": "docx_table",
+          "table": 1,
+          "row": 1
+        }
+      ]
+    },
+    {
+      "profile_id": "hp8753d-cable-reference",
+      "profile_kind": "auxiliary",
+      "model": "HP8753D",
+      "manufacturer": "not stated in source",
+      "role": "network_analyzer",
+      "variant": "auxiliary_cable_verification_reference",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "reference": "rf",
+          "test": "rf",
+          "path": "data",
+          "power": "power"
+        },
+        "outputs": {
+          "measurement": "measurement"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "5be534e9332f79aca69e7f7313756fc03563b14f6a05244db635ce23a9f3a105",
+          "kind": "pdf_page",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "profile_id": "nh32-ztx-e-cable-reference",
+      "profile_kind": "auxiliary",
+      "model": "NH32-ZTX-E",
+      "manufacturer": "not stated in source",
+      "role": "inspection_microscope",
+      "variant": "auxiliary_cable_verification_reference",
+      "simulation_basis": "role_domain_model",
+      "capability_scope": "virtual_case_actions",
+      "simulation_parameters": {},
+      "ports": {
+        "inputs": {
+          "power": "power",
+          "sample": "data"
+        },
+        "outputs": {
+          "data": "data"
+        }
+      },
+      "evidence_refs": [
+        {
+          "sha256": "5be534e9332f79aca69e7f7313756fc03563b14f6a05244db635ce23a9f3a105",
+          "kind": "pdf_page",
+          "page": 3
+        }
+      ]
+    }
+  ]
+}

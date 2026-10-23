@@ -4,11 +4,15 @@
 
 ## 총괄 설계 결정
 
+2026-10-24 최신 결정: 우선 **Un-licensed 전체**를 구축 기준으로 한다. 원시데이터 확보/복호 완료는 기능·가상환경 개발의 선행조건이 아니다. 원시데이터는 후속 계산 재현·보고값 대조·가상/실측 독립 비교에 사용한다. Licensed 추가 암호/최종 raw 확인은 보류하고 이미 인수한 결과는 보존한다. 아래 DOCX 전체 후보는 감사 이력이며 현 단계의 필수 catalog는 Un-licensed 최종 6종/대안 판본의 장비표와 장비 master를 대조해 만든다.
+
 기존 `VirtualLab`/`VirtualSession`의 첫 프로필과 검증을 보존하면서, 다중 모델·역할·연결 토폴로지를 지원하는 별도 `virtual_fleet` 계층을 추가한다. 특정 모델 ID를 기존 N1914A 이름에 덮어쓰는 방식은 사용하지 않는다. 보고서의 모든 모델/변형/시험 소프트웨어를 출처와 연결한 catalog를 만들고 각각 실행 가능한 역할 구현과 연결한다.
 
 대안은 기존 단일 장비를 계속 확장하는 방식, 장비별 독립 mock 서버, 공유 가상 시계/연결/유효성을 가진 다중 장비 런타임이었다. 총괄은 세 번째를 선택한다. 정상·고장·복구를 같은 가상 업무에서 검증하고 장비 간 설정 변경과 결과 무효화를 일관되게 처리할 수 있다. 실제 네트워크나 장비에 연결하는 fallback은 없다.
 
 ## 전체 목록과 완료 게이트
+
+현재 고정 catalog는 [Un-licensed 프로필](../../../virtual_profiles/README.md)의 64항목/24역할이다. 최종 6종/대안 판본 218사용행을 61모델·제조사·용도 변형으로 보존하고 DUT 및 보조 케이블 검증 3항목을 더했다. 이는 물리 장비 대수 또는 실행 검증 완료 수가 아니다. 장비 master 66행과도 대조했다. 아래 91쌍은 Licensed까지 포함한 초기 후보 감사 이력이다.
 
 DOCX 52개의 장비표에서 1,118행과 모델/제조사 표기 91쌍을 후보로 추출했다. 이는 최종 정규화 수가 아니다. PDF 장비표, 최종 시험기록지/장비 Excel과 대조하고 공백·제조사 표기·옵션·복합 장비를 보존하여 정규화한다. 과거 serial/교정일·실측 수치/원문은 private mapping에 남기고 공개 catalog는 모델/역할/근거 식별과 가상 구성만 담는다.
 
@@ -41,13 +45,15 @@ runtime은 선언된 DAG의 연결 port를 가상 tick마다 순서대로 전달
 
 | 담당 | 소유 모듈 | 고정 role |
 |---|---|---|
-| 개발3 | `virtual_fleet/core.py`, `facility.py`, `__init__.py`, 공통 계약 사용법/검사 | `power_supply`, `temperature_chamber`, `position_controller`, `antenna_mast`, `turntable` |
+| 개발3 | `virtual_fleet/core.py`, `facility.py`, `__init__.py`, 공통 계약 사용법/검사 | `power_supply`, `temperature_chamber`, `position_controller`, `antenna_mast`, `turntable`, `inspection_microscope` |
 | 개발1 | `virtual_fleet/rf.py`, 전용 검사/사용법 | `dut`, `power_sensor`, `attenuator`, `coupler`, `splitter`, `antenna`, `amplifier`, `filter`, `rf_switch`, `lisn` |
-| 개발2 | `virtual_fleet/instruments.py`, 전용 검사/사용법 | `power_meter`, `signal_analyzer`, `emi_receiver`, `signal_generator`, `communication_tester`, `bluetooth_tester`, `wireless_ap`, `dfs_system`, `network_test_station`, `test_software` |
+| 개발2 | `virtual_fleet/instruments.py`, 전용 검사/사용법 | `power_meter`, `signal_analyzer`, `emi_receiver`, `signal_generator`, `communication_tester`, `bluetooth_tester`, `wireless_ap`, `dfs_system`, `network_test_station`, `test_software`, `network_analyzer` |
 | 개발4 | `virtual_fleet_server.py`, `frontend/virtual_fleet/`, 전용 검사/사용법 | 가상 모드 UI·loopback API, 관측과 역할별 동작·진행·오류·지원/근거 조회 |
-| 총괄 | `virtual_fleet/integration.py`, `virtual_profiles/` catalog, 통합 수용/coverage | factory 통합·전체 목록/시험별 토폴로지·근거/미지원 대조 |
+| 총괄 | `virtual_fleet/catalog.py`, `integration.py`, `virtual_profiles/` catalog, 통합 수용/coverage | factory 통합·전체 목록/시험별 토폴로지·근거/미지원 대조 |
 
 새 역할이 필요한 실제 행은 기존 role에 억지로 넣지 않고 총괄에 제시한다. 세부 action은 각 담당이 `actions()` 같은 임의 공통 함수를 추가하는 대신 module의 `ROLE_ACTIONS` dict로 선언한다. 각 action의 인수/단위·완료/실패 의미를 사용법에 고정한다. 공통 runtime은 해당 선언을 조회하며 표준 API 외 내부 상태를 열람하지 않는다.
+
+시설 포트는 전원 출력 `power:power`, 환경 출력 `environment:environment`, 위치 출력 `position:position`이다. 환경계는 선택적 전원 입력, 위치계는 선택적 전원/제어 입력을 선언하며 `requires_power`/`requires_control` 정책을 명시하면 해당 입력을 필수로 검사한다. 위치 제어기는 `control:control` 출력도 갖는다. 보조 현미경은 `power:power`/`sample:data` 입력과 `data:data` 출력을 사용한다. FBSM-01B는 `controller_only=true`와 제어 입출력을 사용하고 RF 신호 경로와 구별한다. 이번 단위의 토폴로지는 생성 시 고정 DAG다.
 
 ## UI와 수용
 
