@@ -99,17 +99,34 @@ export function validateSnapshot(payload) {
     value.forEach((item, index) => check(item, `${path}[${index}]`));
   };
   const optionalText = (value, path) => { if (value !== undefined) text(value, path, true); };
-  const citation = (value, path) => {
+  const citation = (value, path, version = 1) => {
     object(value, path);
+    if (version === 2) {
+      const fields = value.kind === 'text_line' ? ['kind', 'path', 'sha256', 'line_start', 'line_end', 'quote', 'role']
+        : value.kind === 'pdf_page' ? ['kind', 'path', 'sha256', 'extraction_id', 'page_number', 'text_sha256', 'line_start', 'line_end', 'quote', 'role'] : [];
+      if (!fields.length || Object.keys(value).length !== fields.length || Object.keys(value).some(key => !fields.includes(key))) fail(path);
+      for (const key of ['path', 'sha256', 'quote', 'role']) text(value[key], `${path}.${key}`);
+      if (!['request', 'product', 'reference'].includes(value.role)) fail(`${path}.role`);
+      if (!/^[a-f0-9]{64}$/.test(value.sha256)) fail(`${path}.sha256`);
+      for (const key of ['line_start', 'line_end']) number(value[key], `${path}.${key}`, true, 1);
+      if (value.line_end < value.line_start) fail(`${path}.line_end`);
+      if (value.kind === 'pdf_page') {
+        text(value.extraction_id, `${path}.extraction_id`);
+        if (value.extraction_id.length > 256) fail(`${path}.extraction_id`);
+        number(value.page_number, `${path}.page_number`, true, 1);
+        text(value.text_sha256, `${path}.text_sha256`);
+        if (!/^[a-f0-9]{64}$/.test(value.text_sha256)) fail(`${path}.text_sha256`);
+      }
+    } else if (value.kind !== undefined) fail(`${path}.kind`);
     for (const key of ['path', 'sha256', 'quote', 'role']) optionalText(value[key], `${path}.${key}`);
     for (const key of ['line_start', 'line_end']) {
       if (value[key] !== undefined) number(value[key], `${path}.${key}`, true, 1);
     }
   };
-  const candidate = (value, path) => {
+  const candidate = (value, path, version) => {
     object(value, path);
     for (const key of ['field', 'value', 'status']) text(value[key], `${path}.${key}`);
-    if (value.evidence !== undefined) array(value.evidence, `${path}.evidence`, citation);
+    if (value.evidence !== undefined) array(value.evidence, `${path}.evidence`, (source, location) => citation(source, location, version));
   };
   const question = (value, path) => {
     object(value, path);
@@ -133,7 +150,13 @@ export function validateSnapshot(payload) {
     text(value.next_action, `${path}.next_action`);
     if (value.submitted !== undefined) {
       object(value.submitted, `${path}.submitted`);
-      array(value.submitted.facts, `${path}.submitted.facts`, candidate);
+      const version = value.submitted.schema_version === undefined ? 1 : value.submitted.schema_version;
+      if (![1, 2].includes(version)) fail(`${path}.submitted.schema_version`);
+      if (version === 2) {
+        text(value.submitted.context_id, `${path}.submitted.context_id`);
+        if (value.submitted.context_id.length > 256) fail(`${path}.submitted.context_id`);
+      } else if (value.submitted.context_id !== undefined) fail(`${path}.submitted.context_id`);
+      array(value.submitted.facts, `${path}.submitted.facts`, (fact, location) => candidate(fact, location, version));
       if (value.submitted.producer !== undefined) {
         object(value.submitted.producer, `${path}.submitted.producer`);
         for (const key of ['kind', 'name']) text(value.submitted.producer[key], `${path}.submitted.producer.${key}`);

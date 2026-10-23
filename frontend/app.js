@@ -1,7 +1,10 @@
 import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot} from './model.mjs';
+import {validateFixtureRuns, describeFixtureRecord, requireStableFixtureRecords, createFixtureReadGate} from './intake_flow_model.mjs';
 
 const $ = selector => document.querySelector(selector);
 const state = {records: [], notices: [], selected: location.hash.slice(1), loaded: false, request: 0, view: 'intakes'};
+const flow = {gate:createFixtureReadGate(), context:null, payload:null, selected:'', pending:false,
+  stale:false, status:'가상 기록 조회 대기', updatedText:'아직 조회하지 않음'};
 const roles = {request: '의뢰 자료', product: '제품 자료', reference: '참고 자료'};
 const producerKinds = {fixture: '합성 분석 예시', manual: '수동 분석', model: '모델 분석자 선언'};
 const errorMessages = {
@@ -45,8 +48,9 @@ function sources(citations) {
   for (const source of citations) {
     const node = el('div', 'source');
     node.append(el('strong', '', source.path || '파일 경로 미확인'),
-      el('div', '', `${roles[source.role] || `역할 미확인 (${source.role || '없음'})`} · ${source.line_start ?? '?'}–${source.line_end ?? '?'}행`),
+      el('div', '', `${roles[source.role] || `역할 미확인 (${source.role || '없음'})`} · ${source.kind === 'pdf_page' ? `PDF ${source.page_number}쪽 · 페이지 안 ` : ''}${source.line_start ?? '?'}–${source.line_end ?? '?'}행`),
       el('blockquote', '', source.quote || '인용문 없음'), el('p', 'mono', `SHA-256 ${source.sha256 || '없음'}`));
+    if (source.kind === 'pdf_page') node.append(el('p', 'mono', `추출 ID ${source.extraction_id}`), el('p', 'mono', `페이지 텍스트 SHA-256 ${source.text_sha256}`));
     details.append(node);
   }
   return details;
@@ -59,6 +63,138 @@ function metadata(entries) {
     list.append(item);
   }
   return list;
+}
+
+function fixtureContext(view = state) {
+  const record = view.records.find(item => item.intake_id === view.selected);
+  return record ? {intake_id:record.intake_id, revision:record.revision,
+    generation:view.snapshotGeneration || 0, request_id:flow.selected} : null;
+}
+function sameFixtureSource(a, b) {
+  return a && b && a.intake_id === b.intake_id && a.revision === b.revision;
+}
+function buildFixturePanel(record, view, current = flow) {
+  const panel = section('가상 실행 기록', '합성 시도 · 실측·FCC 판정 미검증');
+  panel.id = 'fixture-panel';
+  const context = fixtureContext(view);
+  const matched = sameFixtureSource(current.context, context);
+  const payload = matched ? current.payload : null;
+  const stale = current.stale || (matched && current.context.generation !== context.generation);
+  const controls = el('div', 'section-heading');
+  const status = el('p', 'inline-note', matched ? current.status : '가상 기록 조회 대기'); status.id = 'fixture-status'; status.setAttribute('role', 'status');
+  const refresh = el('button', 'button', '가상 기록 새로고침'); refresh.id = 'fixture-refresh'; refresh.type = 'button';
+  refresh.disabled = matched && current.pending;
+  refresh.addEventListener('click', refreshFixtureRuns);
+  controls.append(status, refresh);
+  const updated = el('p', 'inline-note', matched ? current.updatedText : '아직 조회하지 않음'); updated.id = 'fixture-updated';
+  const content = el('div'); content.id = 'fixture-records';
+  if (!payload) content.append(el('p', 'muted', '이 접수·자료 버전의 가상 기록을 아직 확인하지 못했습니다.'));
+  else if (!payload.storage_available) content.append(el('p', 'muted', '가상 기록 저장 기능이 없는 이전 저장소입니다. 조회로 초기화하거나 자료를 변경하지 않습니다.'));
+  else if (!payload.records.length) content.append(el('p', 'muted', '이 접수에 저장된 가상 실행 기록이 없습니다.'));
+  else {
+    if (stale) content.append(el('p', 'state-note warning', '마지막 성공 기록입니다. 현재 준비 상태와의 관계는 다시 확인해야 합니다.'));
+    const list = el('div', 'fixture-list');
+    for (const entry of payload.records) {
+      const description = describeFixtureRecord(entry, record.revision);
+      const button = el('button', 'button fixture-request'); button.type = 'button'; button.dataset.requestId = entry.request_id;
+      button.setAttribute('aria-pressed', String(entry.request_id === current.selected));
+      button.append(el('span', 'mono', entry.request_id), badge(description.state.label, description.state.tone),
+        el('span', 'inline-note', stale ? `v${entry.revision} · 이전 조회 당시 문맥` : description.context));
+      button.addEventListener('click', () => {
+        flow.gate.invalidate(); flow.controller?.abort();
+        const next = {...flow, selected:entry.request_id, pending:false,
+          status:flow.stale ? '마지막 성공 기록 · 현재 준비 상태 미확인' : '기록 선택 완료'};
+        try {publishFixturePanel(next);} catch {fixtureFailure('화면 구성 실패');}
+      });
+      list.append(button);
+    }
+    content.append(list);
+    if (payload.more_available) content.append(el('p', 'inline-note', '최신 20건을 표시합니다. 더 오래된 기록이 저장돼 있습니다.'));
+    const selected = payload.records.find(entry => entry.request_id === current.selected);
+    if (selected) content.append(buildFixtureResult(selected, record.revision, stale));
+  }
+  panel.append(controls, updated, content, el('p', 'inline-note', '실제 AI 호출 없음 · 실장비 검증 없음 · runtime 재개 지원 없음 · case/plan 자동 생성 없음'));
+  return panel;
+}
+function buildFixtureResult(record, revision, stale) {
+  const node = el('article', 'fixture-result'); node.id = 'fixture-result';
+  const description = describeFixtureRecord(record, revision), result = description.result;
+  node.append(el('h4', '', '선택한 과거 실행'), metadata([
+    ['요청 / 자료 버전', `${record.request_id} / v${record.revision}`],
+    ['준비 상태 관계', stale ? '이전 조회 당시 문맥 · 현재 관계 미확인' : description.context],
+    ['기술 작업 상태', description.state.label], ['선택 recipe', record.recipe_id],
+    ['원본 자료 구분', record.source_synthetic ? '합성 접수 자료' : '제공 접수 자료 · 실행은 합성'],
+    ['오류 코드', record.error_code || '기록된 오류 없음'],
+    ['run ID', record.run_id || '예약 전'], ['runtime instance ID', record.runtime_instance_id || '예약 전'],
+    ['준비 fingerprint', record.readiness_fingerprint],
+  ]));
+  if (!result) {node.append(el('p', 'state-note', '게시된 공개 결과가 없습니다. 작업 상태를 측정 성공으로 해석하지 않습니다.')); return node;}
+  const report = record.report;
+  node.append(metadata([
+    ['하네스 종료', result.termination.label], ['정책 주장', result.policyClaim],
+    ['독립 가상 평가', result.assessment.label], ['작업 결과', result.taskOutcome],
+    ['정책 ID', report.policy.id], ['평가기 ID', report.assessment.evaluator_id || '기록 없음'],
+    ['평가 요약 코드', report.assessment.summary_code || '기록 없음'],
+    ['정리', result.cleanup.label], ['미결 요청', `${result.unresolvedCount}개`],
+    ['논리 요청 / 재전송', `${report.usage.logical_requests} / ${report.usage.transport_retries}`],
+    ['가상 tick / 예약 tick', `${report.usage.tick_delta} / ${report.usage.reserved_ticks}`],
+    ['판단 / 소요 ms', `${report.usage.decisions} / ${report.usage.elapsed_ms}`],
+  ]));
+  const refs = el('ul', 'fixture-refs');
+  for (const [label, values] of [
+    ['측정 근거', report.evidence.measurement_refs], ['운영 journal', [report.evidence.operator_transcript_ref]],
+    ['평가 근거', report.assessment.evidence_refs], ['정리 근거', report.cleanup.evidence_refs], ['미결 요청', report.unresolved_request_ids],
+  ]) {
+    for (const reference of values) refs.append(el('li', 'mono', `${label}: ${reference}`));
+  }
+  node.append(el('p', 'inline-note', '근거는 opaque ref로 표시합니다. fresh 여부·측정 단위·기준면과 원본 내용은 이 화면에서 확인되지 않았습니다.'), refs);
+  return node;
+}
+function publishFixturePanel(next) {
+  const record = state.records.find(item => item.intake_id === state.selected);
+  const target = $('#fixture-panel');
+  if (!record || !target) return;
+  const prepared = buildFixturePanel(record, state, next);
+  target.replaceChildren(...prepared.childNodes);
+  Object.assign(flow, next);
+}
+function fixtureFailure(reason) {
+  flow.pending = false;
+  flow.status = `${reason} · ${flow.payload ? '마지막 성공 기록 유지' : '기록 조회 불가'}`;
+  const status = $('#fixture-status'); if (status) status.textContent = flow.status;
+  const refresh = $('#fixture-refresh'); if (refresh) refresh.disabled = false;
+}
+async function refreshFixtureRuns() {
+  const context = fixtureContext(); if (!context) return;
+  const ticket = flow.gate.begin(context);
+  flow.controller?.abort();
+  const controller = new AbortController(); flow.controller = controller;
+  const timer = setTimeout(() => controller.abort(), 10000);
+  flow.pending = true;
+  $('#fixture-refresh').disabled = true; $('#fixture-status').textContent = '가상 기록 조회 중…';
+  try {
+    const response = await fetch(`/api/intakes/${encodeURIComponent(context.intake_id)}/fixture-runs`, {signal:controller.signal, cache:'no-store'});
+    const raw = await response.json();
+    if (!flow.gate.isCurrent(ticket, fixtureContext() || {})) return;
+    if (!response.ok) throw new Error('fixture_read_failed');
+    const payload = validateFixtureRuns(raw, context);
+    requireStableFixtureRecords(flow.payload, payload);
+    const selected = payload.records.some(record => record.request_id === flow.selected) ? flow.selected : payload.records[0]?.request_id || '';
+    const next = {...flow, context, payload, selected, pending:false, stale:false, status:'가상 기록 조회 완료',
+      updatedText:`${seoulTime(new Date().toISOString())} KST 가상 기록 조회`};
+    publishFixturePanel(next);
+  } catch {
+    if (flow.gate.isCurrent(ticket, fixtureContext() || {})) fixtureFailure('가상 기록 조회·검증·화면 구성 실패');
+  } finally {clearTimeout(timer);}
+}
+function syncFixtureContext() {
+  const context = fixtureContext();
+  if (context && sameFixtureSource(context, flow.context) && context.generation === flow.context.generation) return;
+  flow.gate.invalidate(); flow.controller?.abort();
+  const retain = sameFixtureSource(context, flow.context);
+  Object.assign(flow, {context, payload:retain ? flow.payload : null, selected:retain ? flow.selected : '',
+    pending:false, stale:retain && Boolean(flow.payload), status:'가상 기록 조회 대기', updatedText:retain ? flow.updatedText : '아직 조회하지 않음'});
+  if (context) refreshFixtureRuns();
 }
 
 function buildMetrics(view) {
@@ -119,6 +255,7 @@ function renderFacts(record) {
     grid.append(card);
   }
   factsSection.append(grid);
+  if (analysis?.submitted?.schema_version === 2) factsSection.append(el('p', 'mono', `분석 문맥 ID ${analysis.submitted.context_id}`));
   const submitted = analysis?.submitted?.facts || [];
   if (submitted.length) {
     const details = el('details', 'history');
@@ -243,7 +380,7 @@ function buildDetail(view) {
     ['시료 · 물리 위치', '제공 안 됨'], ['실측 지원', `미검증 (${record.measurement_support})`],
     ['접수 / 후속 상태 코드', `${record.status} / ${record.analysis?.next_action || '없음'}`],
     ['보류 의사', record.deferred ? '저장됨' : '저장된 보류 없음'],
-  ]), renderFacts(record), renderQuestions(record), renderJobs(record), renderFiles(record));
+  ]), renderFacts(record), renderQuestions(record), buildFixturePanel(record, view), renderJobs(record), renderFiles(record));
   const notices = section('이 접수의 알림 기록', '전송·읽음 상태 미제공');
   const related = view.notices.filter(notice => notice.intake_id === record.intake_id);
   if (!related.length) notices.append(el('p', 'muted', '저장된 알림이 없습니다.'));
@@ -276,6 +413,7 @@ function publishView(prepared) {
   $('#notice-count').textContent = prepared.view.notices.length;
   $('#last-updated').textContent = prepared.view.updatedText;
   Object.assign(state, prepared.view);
+  syncFixtureContext();
 }
 
 function changeView(view) {
@@ -303,7 +441,7 @@ async function refresh() {
     if (request !== state.request) return;
     let prepared;
     try { prepared = prepareView({...state, records: payload.intakes, notices: payload.notifications, loaded: true,
-      updatedText: `${seoulTime(payload.generated_at)} KST 조회`}); }
+      updatedText: `${seoulTime(payload.generated_at)} KST 조회`, snapshotGeneration:(state.snapshotGeneration || 0) + 1}); }
     catch { throw new Error('render_failed'); }
     publishView(prepared);
     $('#error-banner').hidden = true;
