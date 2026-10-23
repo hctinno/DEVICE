@@ -32,3 +32,17 @@ CREATE TABLE IF NOT EXISTS intake_jobs(
  result_json TEXT, error_code TEXT, created_at REAL NOT NULL,
  UNIQUE(intake_id,revision),
  FOREIGN KEY(intake_id,revision) REFERENCES intake_revisions(intake_id,revision));
+CREATE TABLE IF NOT EXISTS intake_questions(
+ intake_id TEXT NOT NULL REFERENCES intakes, question_key TEXT NOT NULL,
+ question_json TEXT NOT NULL, state TEXT NOT NULL, last_revision INTEGER NOT NULL,
+ PRIMARY KEY(intake_id,question_key));
+CREATE TABLE IF NOT EXISTS intake_answers(
+ intake_id TEXT NOT NULL REFERENCES intakes, field TEXT NOT NULL, value TEXT NOT NULL,
+ basis_json TEXT NOT NULL, event_id TEXT NOT NULL, PRIMARY KEY(intake_id,field));
+CREATE TABLE IF NOT EXISTS intake_responses(
+ event_id TEXT PRIMARY KEY, request_json TEXT NOT NULL, result_json TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS intake_notifications(
+ notification_id INTEGER PRIMARY KEY, intake_id TEXT NOT NULL REFERENCES intakes,
+ revision INTEGER NOT NULL, signature TEXT NOT NULL, payload_json TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS intake_notice_state(
+ intake_id TEXT PRIMARY KEY REFERENCES intakes, signature TEXT NOT NULL);
