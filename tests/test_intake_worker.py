@@ -350,9 +350,28 @@ class IntakeWorkerTests(unittest.TestCase):
         self.assertEqual(report['results'][0]['status'], 'lease_lost')
         self.assertEqual(self.job()['state'], 'running')
         self.assertEqual(self.job()['attempt'], 1)
-        recovered = self.run_jobs()
+        # Recovery starts after the DB wall-clock lease, independently of the
+        # monotonic provider budget and the platform's timer resolution.
+        with patch('labflow.intake_worker.time.time', return_value=self.job()['lease_until'] + 1):
+            recovered = self.run_jobs()
         self.assertEqual(recovered['results'][0]['status'], 'completed')
         self.assertEqual(self.job()['attempt'], 2)
+
+    def test_local_lease_budget_expiry_preserves_wall_clock_valid_job(self):
+        from labflow.intake_worker import _failure
+        job = claim_job(self.store, 'clock-boundary', now=100, lease_seconds=0.2, synthetic_only=True)
+        with patch('labflow.intake_worker.time.time', return_value=100.19), \
+                patch('labflow.intake_worker.fail_job') as fail:
+            result = _failure(self.store, job, 'lease_expired')
+        fail.assert_not_called()
+        self.assertEqual(result['status'], 'lease_lost')
+        self.assertEqual(result['reason'], 'lease_budget_elapsed')
+        self.assertEqual(self.job()['state'], 'running')
+        self.assertEqual(self.job()['attempt'], 1)
+        with patch('labflow.intake_worker.time.time', return_value=100.2):
+            expired = _failure(self.store, job, 'lease_expired')
+        self.assertEqual(expired['reason'], 'lease_expired')
+        self.assertEqual(self.job()['state'], 'running')
 
     def test_restart_reclaims_crashed_worker_and_completion_is_idempotent(self):
         crashed = claim_job(self.store, 'crashed', now=time.time() - 5, lease_seconds=1)
@@ -517,6 +536,55 @@ class IntakeWorkerTests(unittest.TestCase):
             states = sorted(tuple(row) for row in con.execute('SELECT state,attempt FROM intake_jobs'))
         self.assertEqual(states, [('completed', 1), ('queued', 0)], result.stderr)
         self.assertEqual(len(notifications(self.store)), 1)
+
+
+class ProviderDeadlineTests(unittest.TestCase):
+    def test_early_join_return_does_not_mean_provider_deadline_has_expired(self):
+        from labflow.intake_worker import _invoke
+
+        class EarlyJoinProcess:
+            def __init__(self, output):
+                self.output = Path(output)
+                self.pid = None
+                self.exitcode = None
+                self.alive = False
+                self.joins = 0
+
+            def start(self):
+                self.pid = 1
+                self.alive = True
+
+            def join(self, timeout):
+                self.joins += 1
+                if self.alive and self.joins == 2:
+                    self.output.write_text(json.dumps({'status': 'ok', 'analysis': {'ready': True}}),
+                                           encoding='utf-8')
+                    self.exitcode = 0
+                    self.alive = False
+
+            def is_alive(self):
+                return self.alive
+
+            def terminate(self):
+                self.alive = False
+                self.exitcode = -15
+
+            kill = terminate
+
+            def close(self):
+                pass
+
+        def spawn(**kwargs):
+            return EarlyJoinProcess(kwargs['args'][2])
+
+        with tempfile.TemporaryDirectory() as tmp, \
+                patch('labflow.intake_worker.multiprocessing.get_context',
+                      return_value=SimpleNamespace(Process=spawn)), \
+                patch('labflow.intake_worker.time.monotonic', return_value=10):
+            analysis, reason, fatal = _invoke(SyntheticTextProvider(), {}, Path(tmp), 1, 'lease_expired')
+        self.assertEqual(analysis, {'ready': True})
+        self.assertIsNone(reason)
+        self.assertFalse(fatal)
 
 
 if __name__ == '__main__':

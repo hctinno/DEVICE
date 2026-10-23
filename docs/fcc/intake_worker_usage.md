@@ -85,6 +85,8 @@ stdin(`python -`), REPL, 노트북에서 `run_worker`를 직접 호출하는 방
 
 제공자 실행 시간은 설정 한도·남은 실행 시간·남은 임대 시간 중 가장 짧은 값이다. `spawn` 시작 시간도 이 한도에 포함한다. 시간 초과 시 실제 프로세스를 종료하고 늦은 응답은 사용하지 않는다. 종료 확인에 실패하면 새 작업을 인수하지 않고 `state_error`로 중단한다. 종료 정리는 terminate/kill 각각 최대 0.25초 대기를 사용한다.
 
+프로세스 대기가 일찍 반환하면 단조 시계를 다시 확인해 남은 한도까지 기다린다. 임대 실행 한도가 끝났지만 벽시계 기준 DB 임대가 아직 유효하면 `lease_lost`/`lease_budget_elapsed`로 해당 작업자의 사용을 포기하고 완료/실패를 쓰지 않는다. DB에는 running을 보존하며 실제 임대가 만료된 뒤 다시 인수할 수 있다. 제공자/실행 한도 종료의 유효 임대 실패 처리는 그대로 유지한다.
+
 실행 시간 한도는 새 인수와 제공자 실행의 마감이다. 기존 동기 SQLite 연결/검증·파일 읽기·OS 프로세스 정리 전체에 대한 실시간 상한은 아니다. DB가 잠기면 기존 Store의 대기 정책을 사용한다. 임대 갱신은 없으므로 실제 분석 시간이 긴 제공자는 적절한 임대 시간 안에서만 운영할 수 있다.
 
 실제 작업자의 `claim_job`·`complete_job`·`fail_job` 호출은 명시적 `now`를 전달하지 않고 공통 API의 실시간 기본 시각을 사용한다. 결정적 테스트/재생만 명시적 시각을 사용할 수 있다. 잠금 대기와 검증 지연 뒤의 임대 만료 판정은 공통 API 보완과 함께 검증해야 한다.
@@ -93,11 +95,11 @@ stdin(`python -`), REPL, 노트북에서 `run_worker`를 직접 호출하는 방
 |---|---|
 | `completed` | 현재 임대와 revision의 응답이 기존 근거 검증을 통과해 저장됨 |
 | `failed` | 현재 임대에 대해 `fail_job` 수행, `job_state`는 `queued` 또는 `failed` |
-| `lease_lost` | 만료·다른 token·상태 변경, 이전 작업자는 완료/실패를 쓰지 않음 |
+| `lease_lost` | DB 임대 만료·다른 token·상태 변경 또는 로컬 임대 실행 한도 종료로 사용 포기, 이전 작업자는 완료/실패를 쓰지 않음 |
 | `revision_changed` | 보완 또는 미완성 업로드로 이전 문맥이 무효화됨 |
 | `state_error` | 공통 상태/범위 또는 종료 통제가 어긋나 추가 인수 중단 |
 
-세부 `reason`은 `provider_error`, `invalid_response`, `provider_timeout`, `run_timeout`, `lease_expired`, `lease_replaced`, `revision_changed` 등으로 구분한다. DB 오류 코드는 기존 `model_error`/`attempt_limit`를 유지한다. 기존 최대 3회 시도 한도를 우회하거나 실패 원본을 지우지 않는다. 자동 재시도는 설정된 실행 한도 안에서만 수행한다.
+세부 `reason`은 `provider_error`, `invalid_response`, `provider_timeout`, `run_timeout`, `lease_expired`, `lease_budget_elapsed`, `lease_replaced`, `revision_changed` 등으로 구분한다. DB 오류 코드는 기존 `model_error`/`attempt_limit`를 유지한다. 기존 최대 3회 시도 한도를 우회하거나 실패 원본을 지우지 않는다. 자동 재시도는 설정된 실행 한도 안에서만 수행한다.
 
 작업자 자체가 종료되면 임대가 만료된 뒤 같은 DB를 새 프로세스에서 열어 재개한다. 같은 완료 작업은 재인수되지 않으며 기존 `complete_job`의 완료 멱등성도 유지된다. 서로 다른 작업자는 공통 SQLite 트랜잭션으로 중복 인수를 막는다.
 

@@ -159,7 +159,14 @@ def _invoke(provider, context, root, timeout, timeout_reason):
         stopped = None
         try:
             process.start()
-            process.join(max(0, deadline - time.monotonic()))
+            # A timed process wait can return before the requested deadline
+            # (for example, after platform timer rounding). Recheck the clock
+            # instead of treating one early return as an expired lease.
+            while process.is_alive():
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    break
+                process.join(remaining)
             if process.is_alive() or time.monotonic() >= deadline:
                 stopped = _stop_process(process)
                 return None, timeout_reason if stopped else 'termination_failed', not stopped
@@ -207,6 +214,11 @@ def _failure(store, job, reason):
     issue = _lease_issue(store, job)
     if issue:
         return {'status': issue[0], 'reason': issue[1], 'job_state': None}
+    if reason == 'lease_expired':
+        # The monotonic execution budget can end before the wall-clock lease
+        # expires. Relinquish this worker's attempt without a failure write;
+        # another worker can reclaim it after the DB lease actually expires.
+        return {'status': 'lease_lost', 'reason': 'lease_budget_elapsed', 'job_state': None}
     try:
         failed = fail_job(store, job['job_id'], job['token'])
     except ValueError:
