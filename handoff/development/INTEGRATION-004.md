@@ -11,7 +11,7 @@
 | 개발1 | `d0a0e06318e082f86b433302f60f24e446a74b4b` / `adcb02e9c3752ec3f238508ff9a6544c6fea1eb0` | `5930af9`, `fdb1228` |
 | 개발2 | `9f73e620fc99a5505e0cf6618968adcf1e449383` / `ab9234d073a3248c7a449a8aee42dbdcf70d0fbd` | `f37b827`, `9ad383a` |
 | 개발3 | `87664534026cfd9a8a1c42a4a7ee9c07ed1fed93` / `7d8a3344d131e4a116d36c06d474484b71e58a2f` | `0250726`, `e953d75` |
-| 개발4 | `d668744ba5ab20c823d819c2e08122efef57b1d8` / `8f12881ccc99258d07118b529e8805284dfcb8e1` / 수용 도구 `841878a3844ffcbdf2e000107585e27681596a0c` | `d15ad75`, `8f7e062`, `de99f83` |
+| 개발4 | UI `d668744ba5ab20c823d819c2e08122efef57b1d8` / `8f12881ccc99258d07118b529e8805284dfcb8e1`; 도구 `841878a3844ffcbdf2e000107585e27681596a0c` / `ede1dd398b853e00a72541ea3324f1ef57ed8820` | `d15ad75`, `8f7e062`, `de99f83`, `eda7367` |
 | 총괄 | 공통 queue `b97712eafc6c21e497d65c57ab863e63965f1771`, 실제 CLI·종단 검사·통합 문서 | 이 기록과 함께 개발 브랜치에 게시 |
 
 각 담당의 clone·전용 브랜치·원격 SHA를 확인했다. 총괄은 공통 설계·queue·CLI·인수·통합 검증을 맡고 리뷰 수정은 해당 소유 담당이 수행했다. 공유 수집 폴더와 이전 완료 브랜치를 보존했다. 게시 대상은 `codex/pipeline-dev-20261023-intake`이며 push 후 원격 HEAD를 실제 대조한다.
@@ -36,8 +36,9 @@
 | adapter 공개 결과 | evaluator_id/summary_code 중첩 객체·평가기 원본 변경의 공개 유출을 차단했다. 기존 순수 v1 검증·복사본·마지막 유효 결과 보존을 적용했다. |
 | V1 화면 | 빈/추가 citation 키·잘못된 hash/role/줄의 정상 화면 교체를 차단했다. exact 6키 검증과 malformed 6종 DOM 보존 회귀를 추가했다. |
 | CLI 현재성 | 실제 완료 직후 defer 경쟁을 재현하고 같은 읽기 snapshot의 revision/readiness와 연결했다. |
+| 재사용 도구 | Windows 대소문자 경로의 무한 순회와 외부 source의 로컬 fallback을 차단했다. 경로 동등성/root 종료 방어와 실제 package/module import binding을 CLI·defer 양쪽에서 검증한다. |
 
-네 담당의 수정과 CLI는 독립 재검토 Yes, 잔여 Critical/Important 0건을 확인했다. 실제 브라우저 도구는 별도 독립 검토를 거친다. 하위 사례 수를 테스트 메서드 수에 중복 합산하지 않는다.
+네 담당의 수정·CLI·재사용 브라우저 도구는 독립 재검토 Yes, 잔여 Critical/Important 0건을 확인했다. 하위 사례 수를 테스트 메서드 수에 중복 합산하지 않는다.
 
 ## 총괄 검증
 
@@ -48,11 +49,11 @@
 | 접수 UI 브라우저 | **신규 13개 + 기존 9개 PASS**. malformed V1/V2·교차 binding·늦은 응답·렌더 오류·XSS·과거/미상/실패·모바일. |
 | 실제 종단 브라우저 | **TXT/PDF 각 5개, 합계 10개 PASS**. 실제 CLI·분석·단일 시험·Store·API·DOM/PDF 인용·GET 무변경·같은 revision defer·모바일/오류/외부 요청 0. |
 | 추가 실제 경계 | defer/intent 후 임대 상실 2조건에서 uncertain·추가 runtime/reclaim 0·증거 보존. -30dBm 입력의 저장 sensor ON mean·단위·tick·revision도 확인. |
-| 정적·문서 | 루트 8문서/170링크 PASS. 별도 변경 52 UTF-8 파일·19 Python AST·24문서/170링크·7 Node syntax와 diff PASS. 문서/코드 무결성 검사이며 계측 정확도 증거는 아니다. |
+| 정적·문서 | 루트 8문서/170링크 PASS. 별도 변경 54 UTF-8 파일·19 Python AST·26문서/174링크·7 Node syntax와 diff PASS. 문서/코드 무결성 검사이며 계측 정확도 증거는 아니다. |
 
 브라우저 합계는 **32개 검사 그룹(13+9+10)**이다. 앞 단위의 36개와 더해 새 전체 결과로 쓰지 않는다. 기존 UI 스크립트의 bytes가 같은 사본을 private runner에서 실행해 이전 증거를 보존했다. HTTP/UI는 실제 모듈이며 fixture 응답 기반 UI와 실제 실행 종단을 구별했다. 데스크톱·모바일 이미지를 직접 확인했다.
 
-비공개 증거는 `.local/flow003-python-full-20261024-01.{log,json}`, `.local/flow003-node-final-20261024-01.log`, `.local/flow003-ui-regression-01/`, `.local/flow003-integrated/actual-{text,pdf}-browser-v5/`, 실제 재사용 도구 `.local/ib-IMydEx/`다. Python 로그 SHA-256: `41b044c3f1091210d3e7f82cd9bfcd55442fc32829189e6b83e39dde2505e153`. 새 도구의 실제 both 10개도 통과했으며 동일 수용 범위를 중복 가산하지 않는다. 원본·해제 파일·private author·제한 metadata는 공개 커밋에서 제외했다.
+비공개 증거는 `.local/flow003-python-full-20261024-01.{log,json}`, `.local/flow003-node-final-20261024-01.log`, `.local/flow003-ui-regression-01/`, `.local/flow003-integrated/actual-{text,pdf}-browser-v5/`와 실제 재사용 도구의 최종 `.local/ib-RQO6tK/`다. Python 로그 SHA-256: `41b044c3f1091210d3e7f82cd9bfcd55442fc32829189e6b83e39dde2505e153`. 도구 수정 뒤 실제 both 10개와 내장 import/경로 self-test 8개(`.local/ib-KoFWBr/`)를 통과했다. 이전 `.local/ib-IMydEx/`도 보존하며 같은 수용 범위를 중복 가산하지 않는다. 전체 Python 이후 바뀐 것은 새 브라우저 검사 도구와 문서이며 검증한 기존 소스 hash를 다시 대조한다. 원본·해제 파일·private author·제한 metadata는 공개 커밋에서 제외했다.
 
 ## 준비 자료와 다음 배정
 

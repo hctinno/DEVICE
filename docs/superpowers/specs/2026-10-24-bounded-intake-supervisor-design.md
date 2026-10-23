@@ -6,6 +6,8 @@
 
 개발2는 신규 `labflow/intake_supervisor.py`, 전용 tests/usage만 소유한다. 이미 등록된 **명시적 합성 source**를 반복 scan하고 기존 synthetic-only 분석 worker를 호출한다. 기존 `respond`·fixture 실행·실장비·실제 모델·알림 전달은 호출하지 않는다. 모든 source를 자동 탐색하거나 무한 daemon/OS 서비스를 설치하는 방식은 이 단위에서 선택하지 않는다.
 
+독립 리뷰 후 소유 확장: 별도 선행 scope 조회와 실제 scan 사이에 source의 합성 표지가 바뀌는 경합을 재현했다. 이번 수정에 한해 개발2는 기존 `active_intake.scan_source(store, source_id, *, now=None, synthetic_only=False)`와 정확한 atomic gate 회귀도 소유한다. 기본 False의 기존 동작은 유지하고 bool 외 값은 거절한다. True이면 기존 BEGIN IMMEDIATE 안의 실제 source SELECT 직후 synthetic=1을 확인하여 파일/원본 읽기·revision/event 쓰기 전에 실패해야 한다. supervisor는 True를 명시하며 구형 scanner로 조용히 fallback하지 않는다. schema/Store/그 밖의 함수 확장은 하지 않는다.
+
 ```python
 run_intake_supervisor(store, source_ids, provider, *, worker_id,
     max_cycles=2, max_run_seconds=30, poll_seconds=1,
