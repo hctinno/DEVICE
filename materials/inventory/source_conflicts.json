@@ -1,0 +1,62 @@
+{
+  "checked_at": "2026-10-23T20:09:11+09:00",
+  "version_conflicts": [
+    {
+      "document_id": "KDB-273109-273109-D01-Equip-Auth-Guid-Part-25-TXReceiver-v02ro2-c4776d294c",
+      "publication_number": "273109",
+      "listing_title": "273109 D01 Equip Auth Guid Part 25 TXReceiver v02ro2",
+      "listing_version": "v02",
+      "cover_version": "v02r02",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=39017",
+      "action": "Do not silently resolve; compare full document, change note and publisher page before using as an accepted method."
+    },
+    {
+      "document_id": "KDB-640677-640677-D01-RF-LED-LIGHTING-v02-ebd8db8940",
+      "publication_number": "640677",
+      "listing_title": "640677 D01 RF LED LIGHTING v02",
+      "listing_version": "v02",
+      "cover_version": "v01",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20518",
+      "action": "Do not silently resolve; compare full document, change note and publisher page before using as an accepted method."
+    },
+    {
+      "document_id": "KDB-653005-653005-D01-76-81-GHz-Radars-v01r02-ab6ff37727",
+      "publication_number": "653005",
+      "listing_title": "653005 D01 76-81 GHz Radars v01r02",
+      "listing_version": "v01r02",
+      "cover_version": "v01r01",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=230830",
+      "action": "Do not silently resolve; compare full document, change note and publisher page before using as an accepted method."
+    },
+    {
+      "document_id": "KDB-772105-772105-D01-Exempt-Devices-v01r01-ec91ae3761",
+      "publication_number": "772105",
+      "listing_title": "772105 D01 Exempt Devices v01r01",
+      "listing_version": "v01r01",
+      "cover_version": "v01",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=33062",
+      "action": "Do not silently resolve; compare full document, change note and publisher page before using as an accepted method."
+    },
+    {
+      "document_id": "KDB-974614-974614-D01-Accredited-Test-Lab-Roles-and-Resp-v05r04-e5148262f2",
+      "publication_number": "974614",
+      "listing_title": "974614 D01 Accredited Test Lab Roles and Resp v05r04",
+      "listing_version": "v05r04",
+      "cover_version": "v05r03",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=44684",
+      "action": "Do not silently resolve; compare full document, change note and publisher page before using as an accepted method."
+    }
+  ],
+  "other_conflicts": [
+    {
+      "publication": "662911",
+      "issue": "Legacy internal-host link and current public D03 link have conflicting labels; only public attachment-list D03 was acquired."
+    }
+  ],
+  "rights_withheld": [
+    {
+      "publication": "453097",
+      "issue": "Third-party Keyssa letter; original is local-only."
+    }
+  ]
+}

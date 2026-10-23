@@ -1,0 +1,26 @@
+{
+  "package_id": "FCC-GENERAL-20261023-002",
+  "archive_bytes": 16861894,
+  "archive_sha256": "7a814a308a0288e7971b793d7c2b29ba8dd3ef1374e79188f39dbb322e33e72d",
+  "status_counts": {
+    "downloaded": 234,
+    "read_only": 1
+  },
+  "original_types": {
+    "text/html": 158,
+    "application/pdf": 66,
+    "application/xml": 10
+  },
+  "linked_prior_documents": 2,
+  "regulatory_state_counts": {
+    "files_acquired_review_pending": 260,
+    "not_started": 24,
+    "partial_or_rights_restricted": 2,
+    "purchase_required": 17,
+    "public_case_downloaded_locally_rights_unconfirmed": 1
+  },
+  "equipment_state_counts": {
+    "not_started": 2853,
+    "partial_references_found": 14
+  }
+}

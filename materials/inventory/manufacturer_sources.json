@@ -1,0 +1,1255 @@
+{
+  "records": [
+    {
+      "model": "NRP6A",
+      "title": "user manual family",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6017_01/NRPxxAN_UserManual_en_17.pdf",
+      "retrieved_at": "2026-10-23T20:08:03+09:00",
+      "http_status": 404,
+      "request_ids": [
+        "EQ-MOD-30f028e95971f65b",
+        "EQ-MOD-929d5518c29accd9"
+      ],
+      "model_ids": [
+        "MOD-30f028e95971f65b",
+        "MOD-929d5518c29accd9"
+      ],
+      "rights": "unknown",
+      "status": "unavailable",
+      "installed_firmware_options_calibration": "not verified",
+      "reason": "HTTP access failed: 404"
+    },
+    {
+      "model": "E3632A",
+      "title": "user guide",
+      "url": "https://www.keysight.com/us/en/assets/9018-01309/user-manuals/9018-01309.pdf",
+      "retrieved_at": "2026-10-23T20:08:03+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-482597dfaf9bac80",
+        "EQ-MOD-de1160b677844261"
+      ],
+      "model_ids": [
+        "MOD-482597dfaf9bac80",
+        "MOD-de1160b677844261"
+      ],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 650392,
+      "sha256": "95b589f7574f14732128c63fa6cb5501200b491943cccdf3a074a69a201a5c53",
+      "local_only_path": "materials/work/20261023/restricted/vendors/E3632A-user-guide.html",
+      "listing_title": "E3632A DC Power Supply User's Guide | Keysight",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": [
+        {
+          "title": "",
+          "url": "https://www.keysight.com/us/en/more-countries.html?prev_url=https%3A%2F%2Fwww.keysight.com%2Fus%2Fen%2Fassets%2F9018-01309%2Fuser-manuals%2F9018-01309.pdf"
+        },
+        {
+          "title": "中国",
+          "url": "https://www.keysight.com.cn/cn/zh/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "日本",
+          "url": "https://www.keysight.com/jp/ja/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "繁體中文",
+          "url": "https://www.keysight.com/tw/zh/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "한국",
+          "url": "https://www.keysight.com/kr/ko/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Brasil",
+          "url": "https://www.keysight.com/br/pt/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Canada",
+          "url": "https://www.keysight.com/ca/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Deutschland",
+          "url": "https://www.keysight.com/de/de/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "France",
+          "url": "https://www.keysight.com/fr/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "India",
+          "url": "https://www.keysight.com/in/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Malaysia",
+          "url": "https://www.keysight.com/my/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "United Kingdom",
+          "url": "https://www.keysight.com/gb/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "United States",
+          "url": "https://www.keysight.com/us/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Australia",
+          "url": "https://www.keysight.com/au/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Austria",
+          "url": "https://www.keysight.com/at/de/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Belgium",
+          "url": "https://www.keysight.com/be/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Denmark",
+          "url": "https://www.keysight.com/dk/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Finland",
+          "url": "https://www.keysight.com/fi/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Hong Kong,\n                                                        China",
+          "url": "https://www.keysight.com/hk/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Ireland",
+          "url": "https://www.keysight.com/ie/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Israel",
+          "url": "https://www.keysight.com/il/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Italy",
+          "url": "https://www.keysight.com/it/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Mexico",
+          "url": "https://www.keysight.com/mx/en/assets/9018-01309/user-manuals/9018-01309.pdf?"
+        },
+        {
+          "title": "Netherlands",
+          "url": "https://www.keysight.com/nl/en/assets/9018-01309/user-manuals/9018-01309.pdf?"
+        },
+        {
+          "title": "Singapore",
+          "url": "https://www.keysight.com/sg/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Spain",
+          "url": "https://www.keysight.com/es/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Sweden",
+          "url": "https://www.keysight.com/se/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Switzerland (German)",
+          "url": "https://www.keysight.com/ch/de/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Thailand",
+          "url": "https://www.keysight.com/th/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        },
+        {
+          "title": "Vietnam",
+          "url": "https://www.keysight.com/vn/en/assets/9018-01309/user-manuals/9018-01309.pdf"
+        }
+      ]
+    },
+    {
+      "model": "E3632A",
+      "title": "service guide",
+      "url": "https://www.keysight.com/us/en/assets/9018-01459/user-manuals/9018-01459.pdf",
+      "retrieved_at": "2026-10-23T20:08:03+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-482597dfaf9bac80",
+        "EQ-MOD-de1160b677844261"
+      ],
+      "model_ids": [
+        "MOD-482597dfaf9bac80",
+        "MOD-de1160b677844261"
+      ],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 650526,
+      "sha256": "54937d52b52805fb0870e8d100a692941a66a63e40a82c736343cf4ab3ef332a",
+      "local_only_path": "materials/work/20261023/restricted/vendors/E3632A-service-guide.html",
+      "listing_title": "E3632A DC Power Supply Service Guide | Keysight",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": [
+        {
+          "title": "",
+          "url": "https://www.keysight.com/us/en/more-countries.html?prev_url=https%3A%2F%2Fwww.keysight.com%2Fus%2Fen%2Fassets%2F9018-01459%2Fuser-manuals%2F9018-01459.pdf"
+        },
+        {
+          "title": "中国",
+          "url": "https://www.keysight.com.cn/cn/zh/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "日本",
+          "url": "https://www.keysight.com/jp/ja/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "繁體中文",
+          "url": "https://www.keysight.com/tw/zh/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "한국",
+          "url": "https://www.keysight.com/kr/ko/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Brasil",
+          "url": "https://www.keysight.com/br/pt/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Canada",
+          "url": "https://www.keysight.com/ca/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Deutschland",
+          "url": "https://www.keysight.com/de/de/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "France",
+          "url": "https://www.keysight.com/fr/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "India",
+          "url": "https://www.keysight.com/in/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Malaysia",
+          "url": "https://www.keysight.com/my/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "United Kingdom",
+          "url": "https://www.keysight.com/gb/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "United States",
+          "url": "https://www.keysight.com/us/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Australia",
+          "url": "https://www.keysight.com/au/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Austria",
+          "url": "https://www.keysight.com/at/de/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Belgium",
+          "url": "https://www.keysight.com/be/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Denmark",
+          "url": "https://www.keysight.com/dk/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Finland",
+          "url": "https://www.keysight.com/fi/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Hong Kong,\n                                                        China",
+          "url": "https://www.keysight.com/hk/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Ireland",
+          "url": "https://www.keysight.com/ie/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Israel",
+          "url": "https://www.keysight.com/il/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Italy",
+          "url": "https://www.keysight.com/it/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Mexico",
+          "url": "https://www.keysight.com/mx/en/assets/9018-01459/user-manuals/9018-01459.pdf?"
+        },
+        {
+          "title": "Netherlands",
+          "url": "https://www.keysight.com/nl/en/assets/9018-01459/user-manuals/9018-01459.pdf?"
+        },
+        {
+          "title": "Singapore",
+          "url": "https://www.keysight.com/sg/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Spain",
+          "url": "https://www.keysight.com/es/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Sweden",
+          "url": "https://www.keysight.com/se/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Switzerland (German)",
+          "url": "https://www.keysight.com/ch/de/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Thailand",
+          "url": "https://www.keysight.com/th/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        },
+        {
+          "title": "Vietnam",
+          "url": "https://www.keysight.com/vn/en/assets/9018-01459/user-manuals/9018-01459.pdf"
+        }
+      ]
+    },
+    {
+      "model": "N9020A",
+      "title": "real-time option user/programmer reference",
+      "url": "https://www.keysight.com/zz/en/assets/9018-03890/user-manuals/9018-03890.pdf",
+      "retrieved_at": "2026-10-23T20:08:06+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-2da7c231a9ce264c",
+        "EQ-MOD-cac5f7bfb188c317"
+      ],
+      "model_ids": [
+        "MOD-2da7c231a9ce264c",
+        "MOD-cac5f7bfb188c317"
+      ],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 651189,
+      "sha256": "a2716294387419da11198870faa5462a67ad7de7baa43135eebadfbaa96ecc0c",
+      "local_only_path": "materials/work/20261023/restricted/vendors/N9020A-real-time-option-user-programmer-reference.html",
+      "listing_title": "X-Series Real-Time Spectrum Analyzer User's & Programmer's Reference | Keysight",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": [
+        {
+          "title": "",
+          "url": "https://www.keysight.com/zz/en/more-countries.html?prev_url=https%3A%2F%2Fwww.keysight.com%2Fzz%2Fen%2Fassets%2F9018-03890%2Fuser-manuals%2F9018-03890.pdf"
+        },
+        {
+          "title": "中国",
+          "url": "https://www.keysight.com.cn/cn/zh/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "日本",
+          "url": "https://www.keysight.com/jp/ja/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "繁體中文",
+          "url": "https://www.keysight.com/tw/zh/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "한국",
+          "url": "https://www.keysight.com/kr/ko/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Brasil",
+          "url": "https://www.keysight.com/br/pt/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Canada",
+          "url": "https://www.keysight.com/ca/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Deutschland",
+          "url": "https://www.keysight.com/de/de/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "France",
+          "url": "https://www.keysight.com/fr/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "India",
+          "url": "https://www.keysight.com/in/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Malaysia",
+          "url": "https://www.keysight.com/my/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "United Kingdom",
+          "url": "https://www.keysight.com/gb/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "United States",
+          "url": "https://www.keysight.com/us/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Australia",
+          "url": "https://www.keysight.com/au/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Austria",
+          "url": "https://www.keysight.com/at/de/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Belgium",
+          "url": "https://www.keysight.com/be/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Denmark",
+          "url": "https://www.keysight.com/dk/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Finland",
+          "url": "https://www.keysight.com/fi/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Hong Kong,\n                                                        China",
+          "url": "https://www.keysight.com/hk/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Ireland",
+          "url": "https://www.keysight.com/ie/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Israel",
+          "url": "https://www.keysight.com/il/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Italy",
+          "url": "https://www.keysight.com/it/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Mexico",
+          "url": "https://www.keysight.com/mx/en/assets/9018-03890/user-manuals/9018-03890.pdf?"
+        },
+        {
+          "title": "Netherlands",
+          "url": "https://www.keysight.com/nl/en/assets/9018-03890/user-manuals/9018-03890.pdf?"
+        },
+        {
+          "title": "Singapore",
+          "url": "https://www.keysight.com/sg/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Spain",
+          "url": "https://www.keysight.com/es/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Sweden",
+          "url": "https://www.keysight.com/se/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Switzerland (German)",
+          "url": "https://www.keysight.com/ch/de/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Thailand",
+          "url": "https://www.keysight.com/th/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        },
+        {
+          "title": "Vietnam",
+          "url": "https://www.keysight.com/vn/en/assets/9018-03890/user-manuals/9018-03890.pdf"
+        }
+      ]
+    },
+    {
+      "model": "N9020A",
+      "title": "service guide",
+      "url": "https://www.keysight.com/zz/en/assets/9018-04008/service-manuals/9018-04008.pdf",
+      "retrieved_at": "2026-10-23T20:08:07+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-2da7c231a9ce264c",
+        "EQ-MOD-cac5f7bfb188c317"
+      ],
+      "model_ids": [
+        "MOD-2da7c231a9ce264c",
+        "MOD-cac5f7bfb188c317"
+      ],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 650774,
+      "sha256": "8dc12eb42a20371d77bff2728a373dfc2ce2235b0843cf61a896234c9e0ad0a2",
+      "local_only_path": "materials/work/20261023/restricted/vendors/N9020A-service-guide.html",
+      "listing_title": "N9020A MXA Signal Analyzer Service Guide | Keysight",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": [
+        {
+          "title": "",
+          "url": "https://www.keysight.com/zz/en/more-countries.html?prev_url=https%3A%2F%2Fwww.keysight.com%2Fzz%2Fen%2Fassets%2F9018-04008%2Fservice-manuals%2F9018-04008.pdf"
+        },
+        {
+          "title": "中国",
+          "url": "https://www.keysight.com.cn/cn/zh/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "日本",
+          "url": "https://www.keysight.com/jp/ja/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "繁體中文",
+          "url": "https://www.keysight.com/tw/zh/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "한국",
+          "url": "https://www.keysight.com/kr/ko/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Brasil",
+          "url": "https://www.keysight.com/br/pt/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Canada",
+          "url": "https://www.keysight.com/ca/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Deutschland",
+          "url": "https://www.keysight.com/de/de/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "France",
+          "url": "https://www.keysight.com/fr/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "India",
+          "url": "https://www.keysight.com/in/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Malaysia",
+          "url": "https://www.keysight.com/my/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "United Kingdom",
+          "url": "https://www.keysight.com/gb/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "United States",
+          "url": "https://www.keysight.com/us/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Australia",
+          "url": "https://www.keysight.com/au/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Austria",
+          "url": "https://www.keysight.com/at/de/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Belgium",
+          "url": "https://www.keysight.com/be/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Denmark",
+          "url": "https://www.keysight.com/dk/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Finland",
+          "url": "https://www.keysight.com/fi/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Hong Kong,\n                                                        China",
+          "url": "https://www.keysight.com/hk/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Ireland",
+          "url": "https://www.keysight.com/ie/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Israel",
+          "url": "https://www.keysight.com/il/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Italy",
+          "url": "https://www.keysight.com/it/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Mexico",
+          "url": "https://www.keysight.com/mx/en/assets/9018-04008/service-manuals/9018-04008.pdf?"
+        },
+        {
+          "title": "Netherlands",
+          "url": "https://www.keysight.com/nl/en/assets/9018-04008/service-manuals/9018-04008.pdf?"
+        },
+        {
+          "title": "Singapore",
+          "url": "https://www.keysight.com/sg/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Spain",
+          "url": "https://www.keysight.com/es/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Sweden",
+          "url": "https://www.keysight.com/se/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Switzerland (German)",
+          "url": "https://www.keysight.com/ch/de/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Thailand",
+          "url": "https://www.keysight.com/th/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        },
+        {
+          "title": "Vietnam",
+          "url": "https://www.keysight.com/vn/en/assets/9018-04008/service-manuals/9018-04008.pdf"
+        }
+      ]
+    },
+    {
+      "model": "EX3DV4",
+      "title": "product page",
+      "url": "https://speag.swiss/components/probes-2/dosimetric/ex3dv4-isotropic-dos-probe-3",
+      "retrieved_at": "2026-10-23T20:08:07+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-85d8f604e0feafdd"
+      ],
+      "model_ids": [
+        "MOD-85d8f604e0feafdd"
+      ],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 25800,
+      "sha256": "95d2085e20d6e3ce91dbeb74e06528951e5572a0553af8abc77e87df5c87cc25",
+      "local_only_path": "materials/work/20261023/restricted/vendors/EX3DV4-product-page.html",
+      "listing_title": "EX3DV4 - Isotropic Dos-Probe » SPEAG, Schmid & Partner Engineering AG",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": []
+    },
+    {
+      "model": "EX3DV4 / DASY",
+      "title": "6-10 GHz application note",
+      "url": "https://speag.swiss/assets/downloads/products/dasy/application-notes/Measurements-6-10-GHz/AppNote_6-10GHz_230810.pdf",
+      "retrieved_at": "2026-10-23T20:08:09+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-85d8f604e0feafdd"
+      ],
+      "model_ids": [
+        "MOD-85d8f604e0feafdd"
+      ],
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "application/pdf",
+      "bytes": 15470970,
+      "sha256": "e3fa873d428c56ebe47b62f0e7394f8da5e15dfb186337dccb860abb56be8eb7",
+      "local_only_path": "materials/work/20261023/restricted/vendors/EX3DV4-DASY-6-10-GHz-application-note.pdf",
+      "pages": 22,
+      "first_page_models_found": [
+        "DASY"
+      ],
+      "reason": "Official original downloaded for local review; public redistribution permission is unconfirmed. Exact firmware, option and model-suffix applicability require further review."
+    },
+    {
+      "model": "NNHV8123 / NNBM8124 families",
+      "title": "family manual / exact suffix must be matched",
+      "url": "https://www.schwarzbeck.de/Datenblatt/k8123.pdf",
+      "retrieved_at": "2026-10-23T20:08:10+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-78852893cf4e7c0a"
+      ],
+      "model_ids": [
+        "MOD-78852893cf4e7c0a"
+      ],
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "application/pdf",
+      "bytes": 741032,
+      "sha256": "e00806dcdefba9d5577411e667718be732e675331bc3955ecba1ab6681a300a7",
+      "local_only_path": "materials/work/20261023/restricted/vendors/NNHV8123-NNBM8124-families-family-manual-exact-suffix-must-be-matched.pdf",
+      "pages": 6,
+      "first_page_models_found": [
+        "NNHV8123"
+      ],
+      "reason": "Official original downloaded for local review; public redistribution permission is unconfirmed. Exact firmware, option and model-suffix applicability require further review."
+    },
+    {
+      "model": "E7515B",
+      "title": "UXM 5G Getting Started Guide",
+      "url": "https://www.keysight.com/zz/en/assets/9018-04860/user-manuals/9018-04860.pdf",
+      "retrieved_at": "2026-10-23T20:08:11+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-a87553a4a1cd4adc"
+      ],
+      "model_ids": [
+        "MOD-a87553a4a1cd4adc"
+      ],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 651366,
+      "sha256": "f21633b4edfbeab944b15beb307432e7ee47497518d74dc385e8ba8a56dca497",
+      "local_only_path": "materials/work/20261023/restricted/vendors/E7515B-UXM-5G-Getting-Started-Guide.html",
+      "listing_title": "E7515B UXM 5G Wireless Test Platform Getting Started Guide | Keysight",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": [
+        {
+          "title": "",
+          "url": "https://www.keysight.com/zz/en/more-countries.html?prev_url=https%3A%2F%2Fwww.keysight.com%2Fzz%2Fen%2Fassets%2F9018-04860%2Fuser-manuals%2F9018-04860.pdf"
+        },
+        {
+          "title": "中国",
+          "url": "https://www.keysight.com.cn/cn/zh/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "日本",
+          "url": "https://www.keysight.com/jp/ja/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "繁體中文",
+          "url": "https://www.keysight.com/tw/zh/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "한국",
+          "url": "https://www.keysight.com/kr/ko/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Brasil",
+          "url": "https://www.keysight.com/br/pt/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Canada",
+          "url": "https://www.keysight.com/ca/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Deutschland",
+          "url": "https://www.keysight.com/de/de/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "France",
+          "url": "https://www.keysight.com/fr/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "India",
+          "url": "https://www.keysight.com/in/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Malaysia",
+          "url": "https://www.keysight.com/my/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "United Kingdom",
+          "url": "https://www.keysight.com/gb/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "United States",
+          "url": "https://www.keysight.com/us/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Australia",
+          "url": "https://www.keysight.com/au/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Austria",
+          "url": "https://www.keysight.com/at/de/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Belgium",
+          "url": "https://www.keysight.com/be/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Denmark",
+          "url": "https://www.keysight.com/dk/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Finland",
+          "url": "https://www.keysight.com/fi/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Hong Kong,\n                                                        China",
+          "url": "https://www.keysight.com/hk/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Ireland",
+          "url": "https://www.keysight.com/ie/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Israel",
+          "url": "https://www.keysight.com/il/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Italy",
+          "url": "https://www.keysight.com/it/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Mexico",
+          "url": "https://www.keysight.com/mx/en/assets/9018-04860/user-manuals/9018-04860.pdf?"
+        },
+        {
+          "title": "Netherlands",
+          "url": "https://www.keysight.com/nl/en/assets/9018-04860/user-manuals/9018-04860.pdf?"
+        },
+        {
+          "title": "Singapore",
+          "url": "https://www.keysight.com/sg/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Spain",
+          "url": "https://www.keysight.com/es/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Sweden",
+          "url": "https://www.keysight.com/se/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Switzerland (German)",
+          "url": "https://www.keysight.com/ch/de/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Thailand",
+          "url": "https://www.keysight.com/th/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        },
+        {
+          "title": "Vietnam",
+          "url": "https://www.keysight.com/vn/en/assets/9018-04860/user-manuals/9018-04860.pdf"
+        }
+      ]
+    },
+    {
+      "model": "E7515B",
+      "title": "UXM 5G Firmware Update Tool Installation and User Guide",
+      "url": "https://www.keysight.com/jp/ja/assets/9018-04770/user-manuals/9018-04770.pdf",
+      "retrieved_at": "2026-10-23T20:08:14+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-a87553a4a1cd4adc"
+      ],
+      "model_ids": [
+        "MOD-a87553a4a1cd4adc"
+      ],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 644807,
+      "sha256": "ab97ec826ea1d14d09b3070dc9527a0850be92989c918ee929558a3d349ffa8a",
+      "local_only_path": "materials/work/20261023/restricted/vendors/E7515B-UXM-5G-Firmware-Update-Tool-Installation-and-User-Guide.html",
+      "listing_title": "E7515B UXM 5G Firmware Update Tool Installation & User Guide | Keysight",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": [
+        {
+          "title": "",
+          "url": "https://www.keysight.com/jp/ja/more-countries.html?prev_url=https%3A%2F%2Fwww.keysight.com%2Fjp%2Fja%2Fassets%2F9018-04770%2Fuser-manuals%2F9018-04770.pdf"
+        },
+        {
+          "title": "中国",
+          "url": "https://www.keysight.com.cn/cn/zh/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "日本",
+          "url": "https://www.keysight.com/jp/ja/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "繁體中文",
+          "url": "https://www.keysight.com/tw/zh/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "한국",
+          "url": "https://www.keysight.com/kr/ko/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Brasil",
+          "url": "https://www.keysight.com/br/pt/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Canada",
+          "url": "https://www.keysight.com/ca/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Deutschland",
+          "url": "https://www.keysight.com/de/de/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "France",
+          "url": "https://www.keysight.com/fr/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "India",
+          "url": "https://www.keysight.com/in/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Malaysia",
+          "url": "https://www.keysight.com/my/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "United Kingdom",
+          "url": "https://www.keysight.com/gb/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "United States",
+          "url": "https://www.keysight.com/us/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Australia",
+          "url": "https://www.keysight.com/au/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Austria",
+          "url": "https://www.keysight.com/at/de/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Belgium",
+          "url": "https://www.keysight.com/be/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Denmark",
+          "url": "https://www.keysight.com/dk/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Finland",
+          "url": "https://www.keysight.com/fi/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Hong Kong,\n                                                        China",
+          "url": "https://www.keysight.com/hk/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Ireland",
+          "url": "https://www.keysight.com/ie/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Israel",
+          "url": "https://www.keysight.com/il/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Italy",
+          "url": "https://www.keysight.com/it/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Mexico",
+          "url": "https://www.keysight.com/mx/en/assets/9018-04770/user-manuals/9018-04770.pdf?"
+        },
+        {
+          "title": "Netherlands",
+          "url": "https://www.keysight.com/nl/en/assets/9018-04770/user-manuals/9018-04770.pdf?"
+        },
+        {
+          "title": "Singapore",
+          "url": "https://www.keysight.com/sg/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Spain",
+          "url": "https://www.keysight.com/es/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Sweden",
+          "url": "https://www.keysight.com/se/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Switzerland (German)",
+          "url": "https://www.keysight.com/ch/de/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Thailand",
+          "url": "https://www.keysight.com/th/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        },
+        {
+          "title": "Vietnam",
+          "url": "https://www.keysight.com/vn/en/assets/9018-04770/user-manuals/9018-04770.pdf"
+        }
+      ]
+    },
+    {
+      "model": "MT8821C",
+      "title": "MT8821C Brochure",
+      "url": "https://dl.cdn-anritsu.com/en-en/test-measurement/files/Brochures-Datasheets-Catalogs/Brochure/mt8821c-e11200.pdf",
+      "retrieved_at": "2026-10-23T20:08:15+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-f533bf4a816b0a86"
+      ],
+      "model_ids": [
+        "MOD-f533bf4a816b0a86"
+      ],
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "application/pdf",
+      "bytes": 2976074,
+      "sha256": "6779bb111a2029f7bf01c252df1c6654f6f64af136fd6b571c0cedfd654c7270",
+      "local_only_path": "materials/work/20261023/restricted/vendors/MT8821C-MT8821C-Brochure.pdf",
+      "pages": 20,
+      "first_page_models_found": [
+        "MT8821C"
+      ],
+      "reason": "Official original downloaded for local review; public redistribution permission is unconfirmed. Exact firmware, option and model-suffix applicability require further review."
+    },
+    {
+      "model": "MT8821C",
+      "title": "MT8821C Product Introduction",
+      "url": "https://dl.cdn-anritsu.com/en-en/test-measurement/files/Product-Introductions/Product-Introduction/mt8821c-el11000.pdf",
+      "retrieved_at": "2026-10-23T20:08:17+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-f533bf4a816b0a86"
+      ],
+      "model_ids": [
+        "MOD-f533bf4a816b0a86"
+      ],
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "application/pdf",
+      "bytes": 3492710,
+      "sha256": "8df9f7a2dc3755d28a00bc57e1480f8d6f5b6ddb0f4cb0e2852f17fdc352080e",
+      "local_only_path": "materials/work/20261023/restricted/vendors/MT8821C-MT8821C-Product-Introduction.pdf",
+      "pages": 47,
+      "first_page_models_found": [
+        "MT8821C"
+      ],
+      "reason": "Official original downloaded for local review; public redistribution permission is unconfirmed. Exact firmware, option and model-suffix applicability require further review."
+    },
+    {
+      "model": "CMW500 CMX500 FSW ESW",
+      "title": "Remote Control via SCPI Getting Started v04",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/getting_started/1179_4592_01/Remote_Control_SCPI_GettingStarted_en_04.pdf",
+      "caveat": "General SCPI transport guide; not a substitute for model-specific command reference or installed-option verification.",
+      "retrieved_at": "2026-10-23T20:08:17+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-9ae25d0e0d6d9c7c",
+        "EQ-MOD-c7163884035d1865"
+      ],
+      "model_ids": [
+        "MOD-9ae25d0e0d6d9c7c",
+        "MOD-c7163884035d1865"
+      ],
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "application/pdf",
+      "bytes": 751211,
+      "sha256": "b6097e47932cd4f8f493751446535635ba9e28c35ff867735c838e711e92667c",
+      "local_only_path": "materials/work/20261023/restricted/vendors/CMW500-CMX500-FSW-ESW-Remote-Control-via-SCPI-Getting-Started-v04.pdf",
+      "pages": 43,
+      "first_page_models_found": [],
+      "reason": "Official original downloaded for local review; public redistribution permission is unconfirmed. Exact firmware, option and model-suffix applicability require further review."
+    },
+    {
+      "model": "CMW500",
+      "title": "CMW500 manuals and drivers portal",
+      "url": "https://www.rohde-schwarz.com/jp/manual/cmw500_overview/",
+      "retrieved_at": "2026-10-23T20:08:18+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-9ae25d0e0d6d9c7c"
+      ],
+      "model_ids": [
+        "MOD-9ae25d0e0d6d9c7c"
+      ],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 98678,
+      "sha256": "5b90b91dad4195bc5f2270fb7d0b1b3f05e861ab45de65ce602fc9d40f546c1c",
+      "local_only_path": "materials/work/20261023/restricted/vendors/CMW500-CMW500-manuals-and-drivers-portal.html",
+      "listing_title": "製品のマニュアル CMW500 ワイドバンド無線機テスタ | Rohde & Schwarz",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": [
+        {
+          "title": "Shaping the future of connectivity",
+          "url": "/jp/about-us/magazine/shaping-the-future-of-connectivity/itu-collaboration-interview_258545.html"
+        }
+      ]
+    },
+    {
+      "model": "DASY8",
+      "title": "DASY8 software and handbook download portal",
+      "url": "https://speag.swiss/downloads/dasy/dasy8-download-2",
+      "caveat": "Current product capability candidate; do not infer upgrade rights or compatibility with the registered DASY5 Server.",
+      "retrieved_at": "2026-10-23T20:08:19+09:00",
+      "http_status": 200,
+      "request_ids": [],
+      "model_ids": [],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 30745,
+      "sha256": "e31cbfff134172d1ba4f1f5dea7360dd755893f5dfcf66c18a78348114b394df",
+      "local_only_path": "materials/work/20261023/restricted/vendors/DASY8-DASY8-software-and-handbook-download-portal.html",
+      "listing_title": "DASY8 Download » SPEAG, Schmid & Partner Engineering AG",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": []
+    },
+    {
+      "model": "DASY8",
+      "title": "DASY8 application notes portal",
+      "url": "https://speag.swiss/products/dasy8/dasy8-state-of-the-art-wireless-device-compliance-testing/tutorials-2",
+      "retrieved_at": "2026-10-23T20:08:20+09:00",
+      "http_status": 200,
+      "request_ids": [],
+      "model_ids": [],
+      "rights": "unknown",
+      "status": "official_listing_only",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "text/html",
+      "bytes": 45708,
+      "sha256": "da82bf3cf96e9245a955f8141fc2d05dc417b772b2b883f1e4987a2be302305a",
+      "local_only_path": "materials/work/20261023/restricted/vendors/DASY8-DASY8-application-notes-portal.html",
+      "listing_title": "APPLICATION NOTES » SPEAG, Schmid & Partner Engineering AG",
+      "reason": "Official page is available, but this record is not a full manual download.",
+      "related_links": [
+        {
+          "title": "Time-Averaged Power Density Measurements",
+          "url": "/assets/downloads/products/dasy/application-notes/TA-APD/AppNote_TA-APD_20261019.pdf"
+        },
+        {
+          "title": "DASY8 Report Assistant",
+          "url": "/assets/downloads/products/dasy/application-notes/DRA/AppNote_DRA_20260908.pdf"
+        },
+        {
+          "title": "PD Evaluations of Non-Planar Devices",
+          "url": "/assets/downloads/products/dasy/application-notes/Camera-Module/AppNote_CameraModule_260224.pdf"
+        },
+        {
+          "title": "On-Site Requirements Before Installation",
+          "url": "/assets/downloads/products/dasy/application-notes/OnSite_Requirements/AppNote_OnSite_Requirements_260205.pdf"
+        },
+        {
+          "title": "Compliance Evaluation of Base Station Antennas",
+          "url": "assets/downloads/application-notes/AppNoteBaseStationPhantom20180801.pdf"
+        },
+        {
+          "title": "Power Density Measurements of mmWave Devices",
+          "url": "/assets/downloads/products/dasy/application-notes/mmWave-Introduction/AppNote-mmWave-Introduction-220224.pdf"
+        },
+        {
+          "title": "Interim Procedures for Devices Operating at 6 - 10 GHz",
+          "url": "/assets/downloads/products/dasy/application-notes/Measurements-6-10-GHz/AppNote_6-10GHz_230810.pdf"
+        },
+        {
+          "title": "Time-Averaged SAR Measurements for Market Surveillance",
+          "url": "/assets/downloads/products/dasy/application-notes/TimeAveragedSAR/AppNote_TAS_240528.pdf"
+        },
+        {
+          "title": "Testing Compliance of WPT Devices with DASY8/6 Module WPT V2.6+ according to ISED SPR-002 Issue 2",
+          "url": "/assets/downloads/products/dasy/application-notes/WPT/DASY8_Module_WPT_Application_Note_Compatibility_with_SPR002_Issue_2.pdf"
+        },
+        {
+          "title": "Testing Compliance of WPT Devices with DASY8/6 Module WPT V2.6+ according to FCC KDB 680106 D01 v04",
+          "url": "/assets/downloads/products/dasy/application-notes/WPT/DASY8_Module_WPT_Application_Note_Compatibility_with_KDB_680106V2.pdf"
+        },
+        {
+          "title": "Testing Compliance of WPT Devices by Simulations: Best Practice",
+          "url": "/assets/downloads/products/dasy/application-notes/WPT/Application_Note_Testing_Compliance_of_WPT_by_Simulations_Best_Practice.pdf"
+        },
+        {
+          "title": "Testing Compliance of WPT Devices with DASY8/6 Module WPT V2.6+ according to IEC/IEEE 63184",
+          "url": "/assets/downloads/products/dasy/application-notes/WPT/DASY8_Module_WPT_Application_Note_Compatibility_with_IEC_63184.pdf"
+        }
+      ]
+    },
+    {
+      "model": "DASY8",
+      "title": "WPT evaluation application note referring to FCC KDB 447498 and 680106",
+      "url": "https://speag.swiss/assets/downloads/products/dasy/application-notes/WPT/DASY8_Module_WPT_Application_Note_Compatibility_with_KDB_680106V2.pdf",
+      "retrieved_at": "2026-10-23T20:08:21+09:00",
+      "http_status": 200,
+      "request_ids": [],
+      "model_ids": [],
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "application/pdf",
+      "bytes": 11349412,
+      "sha256": "7f36821209c7d7cde1113530d0dd8ccea436632fc681ce1080b30d2256f51c3d",
+      "local_only_path": "materials/work/20261023/restricted/vendors/DASY8-WPT-evaluation-application-note-referring-to-FCC-KDB-447498-and-680106.pdf",
+      "pages": 45,
+      "first_page_models_found": [
+        "DASY8"
+      ],
+      "reason": "Official original downloaded for local review; public redistribution permission is unconfirmed. Exact firmware, option and model-suffix applicability require further review."
+    },
+    {
+      "model": "DASY8",
+      "title": "Power density evaluation of non-planar devices application note",
+      "url": "https://speag.swiss/assets/downloads/products/dasy/application-notes/Camera-Module/AppNote_CameraModule_260224.pdf",
+      "retrieved_at": "2026-10-23T20:08:22+09:00",
+      "http_status": 200,
+      "request_ids": [],
+      "model_ids": [],
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "application/pdf",
+      "bytes": 1775915,
+      "sha256": "bd0c320f14a602ea6965f2ab37ccd7728d019f2cf218622f607295cd3cbc7283",
+      "local_only_path": "materials/work/20261023/restricted/vendors/DASY8-Power-density-evaluation-of-non-planar-devices-application-note.pdf",
+      "pages": 11,
+      "first_page_models_found": [
+        "DASY8"
+      ],
+      "reason": "Official original downloaded for local review; public redistribution permission is unconfirmed. Exact firmware, option and model-suffix applicability require further review."
+    },
+    {
+      "model": "CMW500",
+      "title": "Acoustic Test Software for Mobile Phones in Service and Repair",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_application/application_notes/1ga69/1GA69_0e.pdf",
+      "retrieved_at": "2026-10-23T20:08:22+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-9ae25d0e0d6d9c7c"
+      ],
+      "model_ids": [
+        "MOD-9ae25d0e0d6d9c7c"
+      ],
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "application/pdf",
+      "bytes": 993889,
+      "sha256": "a883adc77f411f292049f0177a43af96deced7c103a3d8ef88f61dca011eff16",
+      "local_only_path": "materials/work/20261023/restricted/vendors/CMW500-Acoustic-Test-Software-for-Mobile-Phones-in-Service-and-Repair.pdf",
+      "pages": 22,
+      "first_page_models_found": [
+        "CMW500"
+      ],
+      "reason": "Official original downloaded for local review; public redistribution permission is unconfirmed. Exact firmware, option and model-suffix applicability require further review."
+    },
+    {
+      "model": "UPV",
+      "title": "UPV-K9/K92 Operating Manual",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_operating_manual/UPV_K9_K92_OperatingManual_en_03.pdf",
+      "retrieved_at": "2026-10-23T20:08:24+09:00",
+      "http_status": 200,
+      "request_ids": [
+        "EQ-MOD-4cfa8152521b9c8c",
+        "EQ-MOD-dde573a34f352a55"
+      ],
+      "model_ids": [
+        "MOD-4cfa8152521b9c8c",
+        "MOD-dde573a34f352a55"
+      ],
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "installed_firmware_options_calibration": "not verified",
+      "file_type": "application/pdf",
+      "bytes": 4158632,
+      "sha256": "79364e14b89727b786383f6fe027a3455bf2f0179c695407da735a2d38868c72",
+      "local_only_path": "materials/work/20261023/restricted/vendors/UPV-UPV-K9-K92-Operating-Manual.pdf",
+      "pages": 179,
+      "first_page_models_found": [
+        "UPV"
+      ],
+      "reason": "Official original downloaded for local review; public redistribution permission is unconfirmed. Exact firmware, option and model-suffix applicability require further review."
+    }
+  ],
+  "notice": "Vendor files remain outside Git unless redistribution rights are confirmed; original equipment inventory is unchanged."
+}
