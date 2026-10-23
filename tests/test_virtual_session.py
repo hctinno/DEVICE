@@ -219,14 +219,100 @@ class VirtualSessionTests(unittest.TestCase):
                 self.assertTrue(session.observations()['synthetic'])
                 self.assertFalse(session.observations()['hardware_verified'])
 
-    def test_hidden_request_id_cannot_return_through_operator_api(self):
+    def test_hidden_request_id_does_not_change_operator_result_or_export(self):
         session = self.create()
-        session.scenario_control('private', 'inject_fault', name='tx_ignored', value=True)
-        with self.assertRaises(self.module.RequestConflictError):
-            session.execute('private', 'advance', ticks=0)
+        plain = self.create('plain')
+        session.scenario_control('private', 'inject_fault', name='thermal_drop_db', value=6)
+        self.assertEqual(session.execute('private', 'advance', ticks=0),
+                         plain.execute('private', 'advance', ticks=0))
+        self.assertEqual(session.observations(), plain.observations())
         with self.assertRaises(ValueError):
             session.scenario_control('bad', '__dict__')
-        self.assertEqual(session.observations()['events'], [])
+        self.assertNotIn('thermal_drop_db', json.dumps(session.observations()))
+
+    def test_namespaced_retries_and_conflicts_survive_new_process(self):
+        session = self.create()
+        session.scenario_control('shared', 'inject_fault', name='thermal_drop_db', value=6)
+        observed = session.execute('shared', 'advance', ticks=0)
+        before = self.read_file()
+        self.assertIsNone(session.scenario_control(
+            'shared', 'inject_fault', name='thermal_drop_db', value=6))
+        self.assertEqual(session.execute('shared', 'advance', ticks=0), observed)
+        for callback in [
+            lambda: session.scenario_control('shared', 'inject_fault',
+                                             name='thermal_drop_db', value=5),
+            lambda: session.execute('shared', 'advance', ticks=1),
+        ]:
+            with self.assertRaises(self.module.RequestConflictError):
+                callback()
+        self.assertEqual(self.read_file(), before)
+        session.close()
+        resumed = json.loads(self.process(
+            "from labflow.virtual_session import RequestConflictError\n"
+            "with VirtualSession.open('case', storage_root=root) as session:\n"
+            "    session.scenario_control('shared', 'inject_fault', name='thermal_drop_db', value=6)\n"
+            "    observed = session.execute('shared', 'advance', ticks=0)\n"
+            "    conflicts = 0\n"
+            "    for kind in ('author', 'operator'):\n"
+            "        try:\n"
+            "            if kind == 'author':\n"
+            "                session.scenario_control('shared', 'inject_fault', name='thermal_drop_db', value=5)\n"
+            "            else:\n"
+            "                session.execute('shared', 'advance', ticks=1)\n"
+            "        except RequestConflictError:\n"
+            "            conflicts += 1\n"
+            "    print(json.dumps({'observed': observed, 'conflicts': conflicts, 'export': session.observations()}))\n"))
+        self.assertEqual(resumed['observed'], observed)
+        self.assertEqual(resumed['conflicts'], 2)
+        self.assertNotIn('thermal_drop_db', json.dumps(resumed['export']))
+        self.assertEqual(self.read_file(), before)
+
+    def test_operator_id_does_not_prevent_author_request_with_same_id(self):
+        session = self.create()
+        observed = session.execute('shared', 'advance', ticks=0)
+        session.scenario_control('shared', 'inject_fault', name='thermal_drop_db', value=6)
+        session = self.reopen(session)
+        before = self.read_file()
+        self.assertEqual(session.execute('shared', 'advance', ticks=0), observed)
+        self.assertIsNone(session.scenario_control(
+            'shared', 'inject_fault', name='thermal_drop_db', value=6))
+        self.assertEqual(self.read_file(), before)
+
+    def test_legacy_v1_is_unchanged_until_new_request_commits_v2(self):
+        session = self.create()
+        session.scenario_control('private', 'inject_fault', name='thermal_drop_db', value=6)
+        previous = session.execute('prior', 'advance', ticks=0)
+        document = json.loads(self.read_file())
+        session.close()
+        document['schema_version'] = 1
+        self.write_document(seal(document))
+        legacy = self.read_file()
+        old_events = json.loads(legacy)['events']
+        session = self.reopen(session)
+        self.assertEqual(self.read_file(), legacy)
+        self.assertEqual(session.execute('prior', 'advance', ticks=0), previous)
+        self.assertEqual(self.read_file(), legacy)
+        observed = session.execute('private', 'advance', ticks=0)
+        upgraded = json.loads(self.read_file())
+        self.assertEqual(upgraded['schema_version'], 2)
+        self.assertEqual(upgraded['events'][:len(old_events)], old_events)
+        self.assertEqual(observed, previous)
+        session = self.reopen(session)
+        self.assertEqual(session.execute('private', 'advance', ticks=0), observed)
+
+    def test_legacy_v1_rejects_cross_interface_duplicate_without_overwrite(self):
+        session = self.create()
+        session.scenario_control('shared', 'inject_fault', name='thermal_drop_db', value=6)
+        session.execute('shared', 'advance', ticks=0)
+        document = json.loads(self.read_file())
+        self.assertEqual(document['schema_version'], 2)
+        session.close()
+        document['schema_version'] = 1
+        self.write_document(seal(document))
+        legacy = self.read_file()
+        with self.assertRaises(self.module.SessionCorruptError):
+            self.Session.open('case', storage_root=self.root)
+        self.assertEqual(self.read_file(), legacy)
 
     def test_same_process_second_writer_is_rejected_and_close_releases_lock(self):
         session = self.create()

@@ -17,7 +17,7 @@ import threading
 from . import virtual_lab
 
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 MAX_EVENTS = 5000
 MAX_FILE_BYTES = 16 * 1024 * 1024
 _PRIVATE_ROOT = Path(__file__).resolve().parents[1] / '.local'
@@ -128,17 +128,20 @@ def _replay(body):
     if type(events) is not list or len(events) > MAX_EVENTS:
         raise ValueError('invalid event count')
     seen = {}
+    legacy_ids = set()
     for sequence, event in enumerate(events, 1):
         if (type(event) is not dict or set(event) != _EVENT_KEYS
                 or type(event['sequence']) is not int or event['sequence'] != sequence):
             raise ValueError('invalid event structure or sequence')
         request = _request(event['request_id'], event['kind'], event['action'], event['arguments'])
-        if request['request_id'] in seen:
+        key = (request['kind'], request['request_id'])
+        if key in seen or (body['schema_version'] == 1 and request['request_id'] in legacy_ids):
             raise ValueError('duplicate stored request ID')
         result = _dispatch(lab, request)
         if _encode(result) != _encode(event['result']):
             raise ValueError('replay result differs from stored result')
-        seen[request['request_id']] = event
+        seen[key] = event
+        legacy_ids.add(request['request_id'])
     return lab, seen
 
 
@@ -231,7 +234,7 @@ class VirtualSession:
                     raise ValueError('checkpoint checksum mismatch')
                 if type(body['schema_version']) is not int:
                     raise ValueError('invalid format version')
-                if body['schema_version'] != SCHEMA_VERSION or body['engine'] != _engine():
+                if body['schema_version'] not in (1, SCHEMA_VERSION) or body['engine'] != _engine():
                     raise SessionVersionError('unsupported checkpoint format or replay engine')
                 if (body['session_id'] != session_id or body['synthetic'] is not True
                         or body['hardware_verified'] is not False):
@@ -239,7 +242,9 @@ class VirtualSession:
                 obj._lab, obj._seen = _replay(body)
             except (ValueError, TypeError, KeyError, OverflowError, RecursionError) as exc:
                 raise SessionCorruptError('checkpoint validation or replay failed') from exc
-            obj._body = body
+            # Reading/retrying a v1 checkpoint does not rewrite it. The next
+            # accepted new event commits v2 with all prior events preserved.
+            obj._body = dict(body, schema_version=SCHEMA_VERSION)
             obj._disk_hash = hashlib.sha256(raw).hexdigest()
             return obj
         except BaseException:
@@ -301,7 +306,8 @@ class VirtualSession:
         with self._mutex:
             self._ensure_usable()
             request = _request(request_id, kind, action, arguments)
-            old = self._seen.get(request_id)
+            key = (kind, request_id)
+            old = self._seen.get(key)
             if old is not None:
                 previous = {key: old[key] for key in request}
                 if _encode(previous) != _encode(request):
@@ -322,7 +328,7 @@ class VirtualSession:
                 self._failed = True
                 raise
             self._body = body
-            self._seen[request_id] = event
+            self._seen[key] = event
             return _copy(result)
 
     def execute(self, request_id, action, **arguments):
