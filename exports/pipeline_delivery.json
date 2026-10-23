@@ -17,8 +17,8 @@
   "artifacts": {
     "agent_collection_request.zip": {
       "path": "exports/agent_collection_request.zip",
-      "bytes": 1371047,
-      "sha256": "4b095ad2678532422eeaf4834d00cb45d21dc738df787fbab7afcfdf42c6b96b"
+      "bytes": 1374448,
+      "sha256": "a7f1371fb68217a28b0445d79989f442b22f5eb3a5c64d2f76208cd5fdc9685d"
     },
     "fcc_pipeline_core.zip": {
       "path": "exports/fcc_pipeline_core.zip",
@@ -34,7 +34,7 @@
     "status": "DRAFT",
     "synthetic": true
   },
-  "updated_at_kst": "2026-10-23T19:44:34.492650+09:00",
+  "updated_at_kst": "2026-10-23T20:12:48.226408+09:00",
   "handoff": {
     "transport": "git",
     "repository": "https://github.com/hctinno/DEVICE",
@@ -44,6 +44,10 @@
     "manual_file_transfer_required": false,
     "collector_role": "materials_preparation_only",
     "current_session_role": "pipeline_design_with_user",
-    "first_validation_product": "smartphone"
+    "first_validation_product": "smartphone",
+    "first_validation_scope": "smartphone_wifi_2_4ghz_80211bgn_fcc_15_247",
+    "physical_connection": "user",
+    "first_batch_instructions": "handoff/WIFI24_BGN_FIRST_BATCH.md",
+    "design_review_document": "docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md"
   }
 }

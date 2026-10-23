@@ -4,6 +4,8 @@
 
 전체 무인화 계획은 [PLAN.md](PLAN.md), 시스템 설계는 [IMPLEMENTATION.md](IMPLEMENTATION.md), 화면 규칙은 [DESIGN.md](DESIGN.md), 클라우드 시작 방법은 [CLOUD-START.md](CLOUD-START.md)에 있다. 아래 FCC 공통 코어는 이 전체 목표의 현재 구현 단계다.
 
+**지금 만드는 첫 버전은 스마트폰 2.4 GHz Wi-Fi b/g/n / FCC §15.247이다.** 지정 폴더의 의뢰자료 검토부터 누락 확인, 사용자 연결 안내, 시험모드·DUT/계측기 제어, 원시 데이터, 성적서와 AI 리뷰까지 연결한다. 물리 연결·시료 배치는 사용자가 수행한다. [설계 검토안](docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md)과 [수집 첫 배치](handoff/WIFI24_BGN_FIRST_BATCH.md)가 현재 작업의 기준이며, 이 흐름의 구현·실측 검증은 아직 완료되지 않았다.
+
 ## 프로젝트 목표: FCC 업무 전체를 수행하는 AI 시험소
 
 제품 접수, 규정 적용 판단, 시험계획, RF·EMC 시험, 계산·판정, 기술 검토, 성적서 및 경로별 제출자료까지 이어지는 FCC 파이프라인을 먼저 검증하고, 이후 KC·유럽 등 다른 시장을 추가한다. 아래 장비 DB는 이 목표에 사용하는 자원 참조자료 중 하나다.
