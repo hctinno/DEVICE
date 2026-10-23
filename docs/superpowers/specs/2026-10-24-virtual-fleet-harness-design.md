@@ -26,7 +26,7 @@ FleetHarness(runtime, policy, *, goal, catalog, topology, role_actions,
 - proposal은 정확히 `{"kind":"execute","device_id":str,"action":str,"parameters":dict}`, `{"kind":"advance","ticks":1}`, 또는 `{"kind":"stop","claim":"completed|blocked|unsupported|failed","reason":str}` 중 하나다. 인수·장비·동작을 현재 선언과 대조하며 알 수 없는 키/비유한 수/과도한 JSON은 거절한다. policy가 request ID를 지정할 수 없다.
 - `run()`은 종료까지 반복해 공개 result를 반환한다. `step()`은 최대 한 번의 policy 판단을 진행하고 분리된 상태 dict를 반환한다. `stop()`은 판단 경계에서 감독 중단을 요청한다. 실행 중 함수를 강제 중단한다고 표시하지 않는다. `events()`는 분리된 운영 이벤트 목록, `result()`는 종료된 공개 result를 반환한다.
 
-기본 예산은 `decisions=64`, `logical_requests=64`, `ticks=32`, `wall_seconds=30`, `transport_retries=2`다. 모두 유한한 양수이며 transport retries는 0을 허용한다. wall clock은 monotonic 주입 가능 함수이며 호출 전/후를 확인하는 협력식 deadline이다. 잘못된 proposal도 decision 1회를 차감한다. 이 첫 단위는 자동 cleanup을 수행하지 않으며 result의 cleanup은 `not_assessed`다. 종료를 RF/이동/전원 정지 완료로 해석하지 않는다.
+기본 예산은 `decisions=64`, `logical_requests=64`, `ticks=32`, `wall_seconds=30`, `transport_retries=2`다. transport retry는 요청별이 아닌 run 전체 누계 예산이다. 모두 유한한 양수이며 transport retries는 0을 허용한다. wall clock은 monotonic 주입 가능 함수이며 호출 전/후를 확인하는 협력식 deadline이다. 잘못된 proposal도 decision 1회를 차감한다. 이 첫 단위는 자동 cleanup을 수행하지 않으며 result의 cleanup은 `not_assessed`다. 종료를 RF/이동/전원 정지 완료로 해석하지 않는다.
 
 실행 의도와 예산을 먼저 예약·기록하고 dispatch한다. 새 acquire는 새 논리 요청 ID를 사용한다. `RetryableTransportError`만 **같은 살아있는 runtime instance·같은 ID·같은 body**로 최대 2회 재전송한다. advance는 1 tick만 허용하고 재전송 때 예산/tick을 다시 예약하지 않는다. 알려진 invalid/unsupported/error는 transport 재시도가 아니다. 다른 호출 예외, dispatch 이후 증거 저장 실패, 원 instance 소실은 불확실 종료하며 다른 instance/새 ID에 재실행하지 않는다.
 
@@ -44,6 +44,8 @@ sequence는 1부터 연속이며 작성자 이벤트 순번과 무관하다. typ
 
 `event_sink(event: dict) -> None`은 실행기가 dispatch 전에 호출하며, 실패하면 진행하지 않는다. event 사본을 전달하고 성공한 이벤트는 실행기 메모리에도 보존한다. sink 없이도 메모리 증거로 단위 검사할 수 있다.
 
+종료 이벤트 payload는 `{"code":"run_terminated","unresolved_request_ids":[]}` marker다. sink와 협력식 deadline을 확인한 뒤 공개 result의 최종 종료 사유와 policy claim을 확정한다. 이미 저장된 종료 이벤트를 나중 사유로 고쳐 쓰지 않는다. dispatch 후 receipt의 대상·profile·role·tick과 새 관측의 구조·예상 tick을 모두 검증한 뒤 receipt/observation을 확정한다. 검증 실패는 해당 미결 intent를 유지하고 불확실 종료한다.
+
 새 모듈 `labflow/virtual_fleet/journal.py`:
 
 ```python
@@ -55,7 +57,7 @@ read_operator_journal(path) -> dict
 
 새 파일만 생성하고 기존 파일을 덮거나 이어 쓰지 않는다. header에 schema/run/instance/provenance와 합성 표시를 고정하고 UTF-8/LF canonical JSONL로 append·flush·fsync한다. 운영 이벤트의 연속 sequence/외피/JSON 유효성·중복키·크기를 검증하고 hash chain을 유지한다. 기본 한도는 한 줄 512 KiB, 파일 32 MiB, 이벤트 4096개다. private author/fault/seed/truth/expected/password/경로 필드를 중첩해 넣으면 거절한다. 공개 `source_id`와 관측 증상 reason은 보존한다.
 
-reader는 header/events·무결성·complete 여부·미결 intent ID를 반환하며 `resumable=false`를 명시한다. 저장만으로 runtime 복구를 지원한다고 표시하지 않는다. 부분 마지막 줄·불일치 hash·sequence/ID/instance 오류는 원본을 보존해 거절한다. hash chain은 서명/접근 통제의 대체물이 아니다.
+provenance의 필수 키는 `runtime_origin="preinitialized"`, `catalog_sha256`, `topology_sha256`, `engine_sha256`다. SHA는 64자리 소문자 hex다. 추가 공개 JSON은 허용하며 reader가 자동 실행/복구하거나 현재 engine과 비교해 재개를 시도하지 않는다. header/events·무결성·complete 여부·미결 intent ID를 반환하고 `resumable=false`를 명시한다. 저장만으로 runtime 복구를 지원한다고 표시하지 않는다. 부분 마지막 줄·불일치 hash·sequence/ID/instance 오류는 원본을 보존해 거절한다. hash chain은 서명/접근 통제의 대체물이 아니다.
 
 현재 초기화 23요청 이전부터 기록하는 재생 wrapper는 아직 없다. 이 단위의 provenance는 `runtime_origin=preinitialized`, catalog/topology/code fingerprint를 명시한다. 작성자 seed/고장/정답/일정은 총괄이 별도 private artifact로 저장하고 운영 journal header·순번·context와 섞지 않는다.
 
@@ -83,7 +85,7 @@ minimum tick은 시험 시작 관측 tick 다음 값이며 정답 수치가 아�
 {"schema_version":1,"kind":"virtual_fleet_harness_result","run_id":"opaque","runtime_instance_id":"opaque","synthetic":true,"hardware_verified":false,"ai_model_called":false,"policy":{"kind":"fixture","id":"rf_sensor_v1"},"termination":{"reason":"policy_stop","policy_claim":"completed"},"task_outcome":"not_assessed","cleanup":{"status":"not_assessed","evidence_refs":[]},"usage":{"decisions":1,"logical_requests":0,"transport_retries":0,"tick_delta":0,"reserved_ticks":0,"elapsed_ms":0},"evidence":{"measurement_refs":[],"operator_transcript_ref":"artifact:operator_events"},"unresolved_request_ids":[],"assessment":{"status":"not_assessed","verdict":null,"evaluator_id":null,"evidence_refs":[],"summary_code":null}}
 ```
 
-assessment.status는 `not_assessed|completed|failed`이고 verdict는 `null|pass|fail|inconclusive`다. policy가 stop하지 않은 종료의 policy_claim은 null이다. 평가기 오류 failed, 평가 완료 fail, 미평가를 분리한다. 평가 결과는 policy로 피드백하지 않는다. runtime coverage의 `scenario_validation=not_assessed`는 바꾸지 않는다.
+assessment.status는 `not_assessed|completed|failed`다. not_assessed/failed의 verdict는 null, completed는 pass/fail/inconclusive다. policy가 stop하지 않은 종료의 policy_claim은 null이다. v1 task_outcome/cleanup.status는 not_assessed로 고정한다. 모든 evidence ref 배열의 원소는 opaque 문자열이며 object를 넣지 않는다. elapsed_ms는 유한한 비음수 number, 나머지 usage counter는 비음수 정수다. 평가기 오류 failed, 평가 완료 fail, 미평가를 분리한다. 평가 결과는 policy로 피드백하지 않는다. runtime coverage의 `scenario_validation=not_assessed`는 바꾸지 않는다.
 
 CLI는 새 출력 폴더에 opaque run별 공개 result·operator JSONL·별도 private author 파일·hash manifest를 남긴다. 기존 출력은 덮지 않는다. 실제 모델 호출·학습·현장 정확도·완전한 디지털 트윈 완료로 표현하지 않는다.
 
@@ -93,4 +95,4 @@ CLI는 새 출력 폴더에 opaque run별 공개 result·operator JSONL·별도 
 
 기존 화면에 완료 기록 패널을 추가해 로딩/조회 오류/실행 없음·fixture 표시·termination/policy claim·별도 평가·예산 사용·관측 참조를 보여준다. result의 미평가를 PASS로 바꾸지 않는다. 현재 장비 관측이 바뀌어도 결과는 과거 실행 기록으로 표시한다. 활성 실행/재개/중단 버튼은 이 단위에 만들지 않는다. 다른 run/instance의 응답이나 유효하지 않은 스키마/렌더 오류가 마지막 성공 기록을 덮지 않게 한다.
 
-서버 주입 report는 엄격한 공개 필드/JSON/크기 검증과 분리된 사본을 사용한다. `harness_model.mjs`에 검증/표시 계약을 분리하고 Node·HTTP·브라우저에서 정상/미평가/평가실패/전송 실패/악성 문자열/모바일을 확인한다. 기존 64프로필 실제 브라우저 수용은 유지한다.
+서버 주입 report는 엄격한 공개 필드/JSON/256 KiB UTF-8 크기 검증과 분리된 사본을 사용한다. `harness_model.mjs`에 검증/표시 계약을 분리하고 Node·HTTP·브라우저에서 정상/미평가/평가실패/전송 실패/악성 문자열/모바일을 확인한다. 기존 64프로필 실제 브라우저 수용은 유지한다.

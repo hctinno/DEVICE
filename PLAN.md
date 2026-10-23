@@ -4,7 +4,7 @@
 
 2026-10-24 우선순위: 제공 SM-A176U의 **Un-licensed 전체 장비/시험 흐름**으로 [VLAB-ALL-001](handoff/development/VLAB-ALL-001.md)을 진행한다. [catalog](virtual_profiles/README.md)는 보고서 218사용행/장비 master 대조를 반영한 64프로필/24역할이다. 개발1~4의 공통 런타임·RF·계측·시설·운영 화면을 총괄 복제본에 통합했다. 전체 프로필의 합성 정상·단절·복구와 연결 시험 6종, 실제 64프로필 화면을 검사했다. [실행 안내](docs/fcc/virtual_fleet_usage.md)와 [통합 기록 002](handoff/development/INTEGRATION-002.md)를 따른다. 원시데이터는 기능·가상환경 개발의 선행조건이 아니며 Licensed 추가 암호/최종 raw는 보류한다. 추가 사용자 자료 없이 계속 개발하고 실제 FW/도구/bench 상태는 실장비 연동 전에 확인한다. 합성 검사는 제조사 전체 기능·규격 정확도·물리 트윈·실물 검증 완료가 아니다.
 
-다음 구현은 [VLAB-HARNESS-002](handoff/development/VLAB-HARNESS-002.md)다. 개발1~4의 계약 검토를 반영해 관측 기반 fixture 실행기·제한 예산·운영 journal·분리 평가·완료 기록 화면을 병렬 배정한다. 계획 고정과 기능 구현/검증은 구별한다. 현재 실제 모델 호출·학습·자동 재시작 재개·활성 하네스 HTTP 제어는 구현 완료가 아니다.
+[VLAB-HARNESS-002](handoff/development/VLAB-HARNESS-002.md)의 관측 기반 fixture 실행기·제한 예산·운영 journal·분리 평가·완료 기록 화면을 개발1~4의 최종 커밋으로 인수·통합했다. [사용법](docs/fcc/virtual_fleet_harness_check_usage.md)과 [통합 기록 003](handoff/development/INTEGRATION-003.md)에 실행과 검증 범위를 남긴다. 최종 Python 533개·Node 34개·브라우저 수용 36개가 통과했다. 실제 모델 호출·학습·자동 재시작 재개·활성 하네스 HTTP 제어는 후속이다. 총괄은 설계·배정·인수·통합·검증을 맡으며, 사용량 제한으로 중단된 담당 세션에는 이어서 진행하도록 전달한다.
 
 최신 후속 실행: 공개적으로 더 수집할 수 있는 근거는 [DEV-EVIDENCE-20261023-002](docs/material-intake/2026-10-23-additional-collection.md)와 VLAB-ALL-001로 P01에 직접 요청했다. 준비된 근거 묶음은 원본 해시·판본을 확인해 비공개 개발 공간으로 인수한다. [사용자가 직접 준비할 자료](docs/material-intake/2026-10-23-user-inputs.md)는 SM-A176U 자료 감사 결과에 맞춰 갱신했으며 현재 즉시 추가 요청은 없다. 실물 연결·정밀도 비교 전에 현행 FW/OEM 제어 인터페이스·실제 bench/교정 상태와 비교 자료를 확인한다. 전체 시험소의 내부 자료는 해당 확장 시점에 받는다. 수집 완료 통보에서 끝내지 않고 개발에서 드러난 공백을 후속 요청으로 연결한다.
 

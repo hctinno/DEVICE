@@ -31,44 +31,46 @@
 
 Files: create `labflow/virtual_fleet/harness.py`, `tests/test_virtual_fleet_harness.py`, `docs/fcc/virtual_fleet_harness_usage.md`.
 
-- [ ] 설계의 constructor/context/proposal/result/event 계약을 읽고 예산·격리·같은 ID 유실재시도·저장 실패·늦은 응답의 실패 검사를 작성한다.
-- [ ] 실패를 실행해 확인하고 최소 `FleetHarness`/`RetryableTransportError`를 구현한다. policy와 runtime 객체를 분리하고 raw exception을 공개하지 않는다.
-- [ ] memory event sink로 source/단위/revision 판정과 stop/unsupported/uncertain 구분을 확인한다.
-- [ ] 관련 검사·문서 검사를 통과한 뒤 소스 SHA/API/한계와 함께 commit/push한다.
+- [x] 설계의 constructor/context/proposal/result/event 계약을 읽고 예산·격리·같은 ID 유실재시도·저장 실패·늦은 응답의 실패 검사를 작성한다.
+- [x] 실패를 실행해 확인하고 최소 `FleetHarness`/`RetryableTransportError`를 구현한다. policy와 runtime 객체를 분리하고 raw exception을 공개하지 않는다.
+- [x] memory event sink로 source/단위/revision 판정과 stop/unsupported/uncertain 구분을 확인한다.
+- [x] 관련 검사·문서 검사를 통과한 뒤 소스 SHA/API/한계와 함께 commit/push한다.
 
 ## Task 2 — 개발3: 운영 증거 journal
 
 Files: create `labflow/virtual_fleet/journal.py`, `tests/test_virtual_fleet_journal.py`, `docs/fcc/virtual_fleet_journal_usage.md`.
 
-- [ ] schema/sequence/hash/중복키·부분 쓰기·저장 실패·private canary·기존 파일 보존의 실패 검사를 작성하고 실행한다.
-- [ ] `OperatorJournal` callback/context manager와 reader를 구현한다. intent/receipt의 미결 ID를 반환하고 `resumable=false`를 고정한다.
-- [ ] UTF-8/LF·fsync/한도·preinitialized provenance를 검사하며 초기화부터 replay/복구했다고 주장하지 않는다.
-- [ ] 관련 검사·문서 검사를 통과한 뒤 소스 SHA/API/한계와 함께 commit/push한다.
+- [x] schema/sequence/hash/중복키·부분 쓰기·저장 실패·private canary·기존 파일 보존의 실패 검사를 작성하고 실행한다.
+- [x] `OperatorJournal` callback/context manager와 reader를 구현한다. intent/receipt의 미결 ID를 반환하고 `resumable=false`를 고정한다.
+- [x] UTF-8/LF·fsync/한도·preinitialized provenance를 검사하며 초기화부터 replay/복구했다고 주장하지 않는다.
+- [x] 관련 검사·문서 검사를 통과한 뒤 소스 SHA/API/한계와 함께 commit/push한다.
 
 ## Task 3 — 개발1: 관측 기반 fixture policy
 
 Files: create `labflow/virtual_fleet/policies.py`, `tests/test_virtual_fleet_policies.py`, `docs/fcc/virtual_fleet_policy_usage.md`.
 
-- [ ] 실제 공개 RF 관측 모양으로 새 취득/단절/대기/원인 제거 후 시작/잘못된 unit/source/revision의 실패 검사를 작성·실행한다.
-- [ ] `RFSensorFixturePolicy`를 구현한다. 정답·fault·seed·경로·라벨이나 runtime 객체를 생성자/문맥으로 받지 않는다.
-- [ ] sensor read와 meter fetch를 구별하고 새 요청 ID는 실행기에 맡긴다. context 변조와 stale receipt가 완료를 만들지 않는지 확인한다.
-- [ ] 관련 검사·문서 검사를 통과한 뒤 소스 SHA/API/한계와 함께 commit/push한다.
+- [x] 실제 공개 RF 관측 모양으로 새 취득/단절/대기/원인 제거 후 시작/잘못된 unit/source/revision의 실패 검사를 작성·실행한다.
+- [x] `RFSensorFixturePolicy`를 구현한다. 정답·fault·seed·경로·라벨이나 runtime 객체를 생성자/문맥으로 받지 않는다.
+- [x] sensor read와 meter fetch를 구별하고 새 요청 ID는 실행기에 맡긴다. context 변조와 stale receipt가 완료를 만들지 않는지 확인한다.
+- [x] 관련 검사·문서 검사를 통과한 뒤 소스 SHA/API/한계와 함께 commit/push한다.
 
 ## Task 4 — 개발4: 완료 결과 조회
 
 Files: modify owned `labflow/virtual_fleet_server.py`, `frontend/virtual_fleet/{index.html,app.mjs,styles.css}`; create `frontend/virtual_fleet/harness_model.mjs`, `.test.mjs`, 전용 browser check; add own HTTP tests and usage.
 
-- [ ] optional report 주입/없음/잘못된 JSON·private field·호출자 변조의 HTTP 실패 검사를 작성·실행한다.
-- [ ] 설계의 read-only GET와 완료 기록 panel을 구현한다. 기존 state/명령·CSRF·유실재시도를 변경하지 않는다.
-- [ ] Node/브라우저에서 평가 상태 분리·늦은 응답/렌더 실패·XSS·모바일을 확인한다. 기존 실제 64프로필 브라우저도 통과시킨다.
-- [ ] 관련 검사·문서 검사를 통과한 뒤 소스 SHA/API/한계와 함께 commit/push한다.
+- [x] optional report 주입/없음/잘못된 JSON·private field·호출자 변조의 HTTP 실패 검사를 작성·실행한다.
+- [x] 설계의 read-only GET와 완료 기록 panel을 구현한다. 기존 state/명령·CSRF·유실재시도를 변경하지 않는다.
+- [x] Node/브라우저에서 평가 상태 분리·늦은 응답/렌더 실패·XSS·모바일을 확인한다. 기존 실제 64프로필 브라우저도 통과시킨다.
+- [x] 관련 검사·문서 검사를 통과한 뒤 소스 SHA/API/한계와 함께 commit/push한다.
 
 ## Task 5 — 총괄: 분리 평가·CLI 통합
 
 Files: create `labflow/virtual_fleet/evaluation.py`, `harness_check.py`, `tests/test_virtual_fleet_evaluation.py`, 통합 사용법/기록.
 
-- [ ] 위 계약을 stub 기반으로 먼저 검사하고 D2/D3/D1의 고정 API를 인수한다.
-- [ ] 같은 공개 목표의 정상/지속 장애/상대 tick 4 복구를 별도 작성자 wrapper로 준비한다. 운영 policy context에 작성자 정보가 없는지 검사한다.
-- [ ] 현재 snapshot의 source/unit/새 취득/revision과 독립 합성 산술로 평가하고 별도 평가 결과를 공개 result에 붙인다. 원시 정답은 private 파일에만 저장한다.
-- [ ] 새 출력 폴더 CLI·journal/result/author/manifest와 선택적 완료 보고서 화면을 연결한다. 기존 파일·실패 로그를 보존한다.
-- [ ] 관련·전체 Python, Node, 실제 브라우저, UTF-8/문서/링크·공백 검사와 독립 리뷰를 실행한다. 통과 범위만 기록하고 commit/push·원격 SHA를 대조한다.
+- [x] 위 계약을 stub 기반으로 먼저 검사하고 D2/D3/D1의 고정 API를 인수한다.
+- [x] 같은 공개 목표의 정상/지속 장애/상대 tick 4 복구를 별도 작성자 wrapper로 준비한다. 운영 policy context에 작성자 정보가 없는지 검사한다.
+- [x] 현재 snapshot의 source/unit/새 취득/revision과 독립 합성 산술로 평가하고 별도 평가 결과를 공개 result에 붙인다. 원시 정답은 private 파일에만 저장한다.
+- [x] 새 출력 폴더 CLI·journal/result/author/manifest와 선택적 완료 보고서 화면을 연결한다. 기존 파일·실패 로그를 보존한다.
+- [x] 관련·전체 Python, Node, 실제 브라우저, UTF-8/문서/링크·공백 검사와 독립 리뷰를 실행한다. 통과 범위만 기록하고 commit/push·원격 SHA를 대조한다.
+
+검증·원격 인수 완료: 기능 통합 `10a1849`, Python 533개·Node 34개·브라우저 수용 36개 PASS. [통합 기록 003](../../../handoff/development/INTEGRATION-003.md)에 소스·회귀·검증 한계를 남긴다.
