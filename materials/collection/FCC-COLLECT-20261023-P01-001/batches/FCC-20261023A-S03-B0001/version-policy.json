@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-10-23T21:54:21+09:00",
+  "publication_transition_evidence_ids": [
+    "S03-E020",
+    "S03-E012",
+    "S03-E014"
+  ],
+  "families": [
+    {
+      "id": "447498-D01-v06",
+      "status": "permitted_during_notified_transition_subject_to_application_conditions",
+      "selection_for_actual_product": "not_selected"
+    },
+    {
+      "id": "447498-D04-v01",
+      "status": "interim_guidance_during_notified_transition_use_entirety_with_associated_updates",
+      "selection_for_actual_product": "not_selected"
+    },
+    {
+      "id": "447498-D01-v07",
+      "status": "future_notice_reference_not_listed_attachment_on_checked_page",
+      "selection_for_actual_product": "not_available_from_this_audit"
+    }
+  ],
+  "no_mixing": true,
+  "transition_end_date": null,
+  "transition_end_reason": "Current checked publication says until further notice; no definite end date inferred.",
+  "legacy_attachment_publication_dates": "Existing attachment published_at remains null; publication page update dates are not assigned to PDFs.",
+  "standard_edition_separation": {
+    "explicit_kdb_reference": "IEEE Std 1528-2013",
+    "source_evidence_id": "S03-E021",
+    "publisher_replacement_is_not_FCC_acceptance": true,
+    "full_standard_original_acquired": false,
+    "2020_2026_FCC_acceptance": "unreviewed_pending_separate_evidence",
+    "legacy_catalog_reference": "materials/inventory/standards_access.json"
+  },
+  "citation_numbering_conflict": {
+    "legacy_location": "447498 D01 v06 page 7 §4.1(b)",
+    "legacy_citation": "§2.1093(d)(5)",
+    "current_source_based_averaging_clause": "47 CFR §2.1093(d)(4)",
+    "action": "Preserve old source unchanged; cite current text separately, not an automatic renumbering of the KDB."
+  },
+  "unsearched_scope": [
+    "Global FCC latest/major/draft KDB lists and all publications beyond the three assigned publications",
+    "Complete follow-on 616217/648474/388624/690783 methods and separate HAC/above-6-GHz PD procedures",
+    "Independent workshop Presentation 3.2 original and Mobile MPE XLS acquisition",
+    "FCC acceptance of 2020/2026 standard editions and licensed full standard contents",
+    "Actual DUT applicability, calculations, device testing, lab validation and formal report approval"
+  ]
+}

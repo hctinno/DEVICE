@@ -1,0 +1,71 @@
+{
+  "task_id": "FCC-20261023-S06-B0001",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "immutable_legacy_references": [
+    {
+      "reference_id": "S06-REF-INNCO-CATALOG-P102",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-REFERENCES-20261023-005",
+      "legacy_document_id": "INNCO-Systems-innco-Katalog-2017-03-17-MR.pdf-ea42a0e496",
+      "legacy_manifest_path": "materials/manifests/FCC-REFERENCES-20261023-005.json",
+      "legacy_source_path_inside_package": null,
+      "legacy_source_path_inside_package_reason": "해당 공개 package에는 권리 미확인 원본 바이트가 제외되어 있다. 내부 원본 경로를 꾸며 넣지 않는다.",
+      "legacy_package_metadata_locator": "manifest.json#/documents (document_id로 조회; package 내용 검증으로 확인)",
+      "legacy_manifest_json_pointer": "/documents/6",
+      "local_source_path": "[local-only reference retained by P01]",
+      "local_source_sha256": "443522a64c71c81542759802e3e67a623433729058ec2f023684f1ff7f2540ed",
+      "local_source_bytes": 15395932,
+      "local_source_checked_at": "2026-10-23T21:52:42+09:00",
+      "rights": "unknown",
+      "public_package_contains_original": false,
+      "evidence_location": {
+        "pdf_page_1_based": 102,
+        "printed_page": "102",
+        "section": "6.2 CONTROLLERS (CO)",
+        "review_image": "[local-only derivative or original; not included in public payload]"
+      },
+      "new_links_only_request_ids": [
+        "EQ-MOD-6b92cbf630670c77"
+      ],
+      "new_links_only_model_ids": [
+        "MOD-6b92cbf630670c77"
+      ],
+      "finding": "CO3000-4p는 4장치·4포트, article 80005688. 1D도 물리 포트는 4개이므로 포트 수만으로 동시 제어 기능을 확정할 수 없다.",
+      "scope_limit": "2017 파일명 카탈로그의 제품군 근거다. CO2000 명령표나 CO3000-4port의 현장 펌웨어·정지·인터록 근거로 사용하지 않는다.",
+      "old_document_modified": false,
+      "redownloaded": false
+    },
+    {
+      "reference_id": "S06-REF-ETS-2090-LEGACY-FAILURE",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-REFERENCES-20261023-005",
+      "legacy_document_id": "ETS-Lindgren-2090-281-29.pdf-10c0c052bf",
+      "legacy_manifest_path": "materials/manifests/FCC-REFERENCES-20261023-005.json",
+      "source_url": "https://www.ets-lindgren.com/get-manuals/2090%281%29.pdf",
+      "status": "unavailable",
+      "legacy_source_path_inside_package": null,
+      "sha256": null,
+      "bytes": null,
+      "evidence_location": "materials/inventory/controllers_sources.json#/records/2",
+      "reason": "S01가 기록한 403 실패이며 확보 원본이 아니다. 이번 시도도 PDF 대신 목록 HTML로 이동했다.",
+      "new_links_only_request_ids": [
+        "EQ-MOD-f183d948fc590a8b",
+        "EQ-MOD-207e69830324252e"
+      ],
+      "old_document_modified": false
+    }
+  ],
+  "legacy_conflict_check": {
+    "sources": [
+      "[local-only reference retained by P01]",
+      "materials/inventory/controllers_sources.json",
+      "[local-only reference retained by P01]",
+      "[local-only reference retained by P01]"
+    ],
+    "s01_active_request_ids_at_observation": [],
+    "s01_active_model_ids_at_observation": [],
+    "s01_active_downloads_at_observation": [],
+    "note": "수신 v002의 단일 담당을 유지했다. 원본 재다운로드와 기존 document_id 수정은 하지 않았다."
+  }
+}

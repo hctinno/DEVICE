@@ -1,0 +1,10 @@
+[
+  {
+    "question_id": "S03-Q001",
+    "owner": "P01",
+    "blocking_current_batch": false,
+    "question_ko": "기존 표준 대장의 IEEE 1528-2013 대체판(2020/2026)에 대한 FCC 허용/전환 근거와 2025 TCBC Presentation 3.2 상세 검토를 후속 배정에 포함할지 정리해 주세요.",
+    "reason_ko": "발행기관의 신판/대체 표시는 FCC 허용을 입증하지 않는다. 이번 배정의 KDB 3개 현재 첨부 대조만으로 신판 허용을 확정하지 않았다.",
+    "current_handling": "현재 배치는 제한을 명시하고 동결; 추가 다운로드나 범위 확장 없이 다음 실제 배정 대기"
+  }
+]

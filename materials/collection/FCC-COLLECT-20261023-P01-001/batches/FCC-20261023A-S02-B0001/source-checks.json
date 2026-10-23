@@ -1,0 +1,84 @@
+{
+  "recorded_at": "2026-10-23T21:55:20+09:00",
+  "checked_on": "2026-10-23",
+  "timezone": "Asia/Seoul",
+  "new_originals_saved": 0,
+  "checks": [
+    {
+      "url": "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15",
+      "result": "accessible",
+      "observed_title_last_amended": "2026-10-19",
+      "observed_title_up_to_date_as_of": "2026-10-21",
+      "verified_points": [
+        "15.31(a)(3)-(4)",
+        "15.37(s)",
+        "15.38(f)"
+      ],
+      "note": "eCFR is authoritative but unofficial; no claim that it is an official legal CFR edition. Live page was checked but not saved as a new original."
+    },
+    {
+      "url": "https://www.ecfr.gov/current/title-47/section-2.948",
+      "result": "accessible",
+      "verified_points": [
+        "2.948(d)(1)-(4)",
+        "2.948(b)"
+      ],
+      "observed_title_last_amended": "2026-10-19",
+      "observed_title_up_to_date_as_of": "2026-10-21"
+    },
+    {
+      "url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "request_id": "KDB-558074",
+      "result": "http_403",
+      "attempts": 1,
+      "retries": 0,
+      "consequence": "Current publication/attachment currency not confirmed. Verified S01 2019 attachment retained as legacy guidance."
+    },
+    {
+      "url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20539",
+      "request_id": "KDB-414788",
+      "result": "http_403",
+      "attempts": 1,
+      "retries": 0,
+      "consequence": "Current publication/attachment currency not confirmed. Current 2.948(d) controls edition mapping; 2018 PDF is legacy context."
+    }
+  ],
+  "no_purchase_retry_request_ids": [
+    "STD-004",
+    "STD-005",
+    "STD-006",
+    "STD-001"
+  ],
+  "unsearched_scope": [
+    "FCC major-guidance/recent-publication full rediscovery",
+    "Current KDB 300643 online currency",
+    "Standards publisher newest-edition survey",
+    "Other products, Part 18, immunity/ESD/surge, other radio bands",
+    "Real equipment, DUT, site networks and field measurements"
+  ],
+  "processing_events": [
+    {
+      "event": "read_only_console_encoding_failure",
+      "detail": "UnicodeEncodeError: cp949 cannot encode U+00B5 while printing extracted CFR metadata.",
+      "cause": "Local Python console encoding; source JSON/XML bytes were not changed.",
+      "resolution": "Subsequent reads use python -X utf8 -B; verified all selected original bytes and SHA-256."
+    }
+  ],
+  "pdf_visual_review": [
+    {
+      "reference_id": "REF-KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+      "pages": [
+        1,
+        9
+      ]
+    },
+    {
+      "reference_id": "REF-KDB-414788-414788-D01-Radiated-Test-Site-v01r01-6546c61f79",
+      "pages": [
+        1,
+        3
+      ]
+    }
+  ],
+  "pdf_review_limit": "All pages were text-extracted. Visual review covers only the listed relevant pages; extracted layout is not claimed lossless."
+}

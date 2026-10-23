@@ -1,0 +1,246 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "checked_at": "2026-10-23T22:22:20.823604+09:00",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "reviewed_assignment_version": "v002",
+  "reviewed_batches": 8,
+  "request_outcomes": {
+    "completed": 11,
+    "limited": 6,
+    "not_started": 0
+  },
+  "new_locally_acquired_originals": 19,
+  "restricted_complete_originals_kept_local": 19,
+  "public_new_collector_originals": 0,
+  "public_extracted_documents": 3,
+  "public_support_license_files": 1,
+  "package_count": 4,
+  "batches": [
+    {
+      "batch_id": "FCC-20261023A-S01-B0001",
+      "task_id": "FCC-20261023-S01-B0001",
+      "owner_session": "S01",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 2,
+        "limited": 0,
+        "not_started": 0
+      },
+      "new_locally_acquired_originals": 0,
+      "public_originals_included": 0,
+      "public_metadata_path": "batches/FCC-20261023A-S01-B0001",
+      "package": null,
+      "package_validation": null,
+      "limitations": [
+        "15 evidence items reference 9 existing legacy documents without changing original IDs.",
+        "Three KDB publication lists were compared against five existing attachment links; unchanged-URL attachment bytes were not freshly redownloaded, and that limitation is explicit.",
+        "C63.10 full-text access and 2013-to-2020 clause mapping remain open; index is not an executable method approval."
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S02-B0001",
+      "task_id": "FCC-20261023-S02-B0001",
+      "owner_session": "S02",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      },
+      "new_locally_acquired_originals": 0,
+      "public_originals_included": 0,
+      "public_metadata_path": "batches/FCC-20261023A-S02-B0001",
+      "package": null,
+      "package_validation": null,
+      "limitations": [
+        "18 EMC evidence items resolve seven preserved legacy originals; exact CFR headings, editions and gaps are distinguished.",
+        "Digital-device, AC/charging and intentional-radiator paths are separate; immunity is not added as a blanket FCC requirement.",
+        "Two current KDB queries were blocked and paid standards are unavailable; no new original was fabricated or acquired."
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S03-B0001",
+      "task_id": "FCC-20261023-S03-B0001",
+      "owner_session": "S03",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 1,
+        "not_started": 0
+      },
+      "new_locally_acquired_originals": 0,
+      "public_originals_included": 0,
+      "public_metadata_path": "batches/FCC-20261023A-S03-B0001",
+      "package": null,
+      "package_validation": null,
+      "limitations": [
+        "21 SAR evidence items resolve 12 immutable legacy document records; three publication lists and seven existing attachments are compared.",
+        "Exact XML/CFR headings and PDF pages are provided; SAR, MPE, power-density and HAC boundaries remain distinct.",
+        "A source-index request is complete with limitations; missing DUT inputs, standard-acceptance checks and unchanged-URL byte currency are not inferred."
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S04-B0001",
+      "task_id": "FCC-20261023-S04-B0001",
+      "owner_session": "S04",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 3,
+        "limited": 0,
+        "not_started": 0
+      },
+      "new_locally_acquired_originals": 6,
+      "public_originals_included": 0,
+      "public_metadata_path": "batches/FCC-20261023A-S04-B0001",
+      "package": {
+        "package_id": "FCC-20261023A-S04-B0001",
+        "path": "materials/packages/FCC-20261023A-S04-B0001.zip",
+        "sha256": "47a9e618607b62cb4bd322f7c090b1dbf9a45f9c3cbc51e51279a6308612d7db",
+        "bytes": 1840,
+        "included_payloads": 0,
+        "access_or_unavailable_records": 6
+      },
+      "package_validation": {
+        "sha256": "47a9e618607b62cb4bd322f7c090b1dbf9a45f9c3cbc51e51279a6308612d7db",
+        "bytes": 1840,
+        "crc_valid": true,
+        "manifest_bytes_equal": true,
+        "cumulative_import": "passed"
+      },
+      "limitations": [
+        "Six actual PDFs passed independent byte/header/schema checks and parsed successfully; title/model scope and declared edition text were checked.",
+        "The covers explicitly include N9030A and N1913/1914A; Agilent and Keysight model IDs remain separate.",
+        "Command locations and sensor/input/firmware conditions are documentary evidence only; actual unit identification, options, calibration and operation remain unverified.",
+        "All six complete manuals retain unknown redistribution permission and are excluded from public payloads."
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S05-B0001",
+      "task_id": "FCC-20261023-S05-B0001",
+      "owner_session": "S05",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 2,
+        "not_started": 0
+      },
+      "new_locally_acquired_originals": 6,
+      "public_originals_included": 0,
+      "public_metadata_path": "batches/FCC-20261023A-S05-B0001",
+      "package": {
+        "package_id": "FCC-20261023A-S05-B0001",
+        "path": "materials/packages/FCC-20261023A-S05-B0001.zip",
+        "sha256": "81356c87ec66d08ce0c178d3c6ba45ac56a0050e6b377484b467f682481449b3",
+        "bytes": 2258,
+        "included_payloads": 0,
+        "access_or_unavailable_records": 6
+      },
+      "package_validation": {
+        "sha256": "81356c87ec66d08ce0c178d3c6ba45ac56a0050e6b377484b467f682481449b3",
+        "bytes": 2258,
+        "crc_valid": true,
+        "manifest_bytes_equal": true,
+        "cumulative_import": "passed"
+      },
+      "limitations": [
+        "DAE4, Measurement Server DASY5, PC and software are distinct entries in the component table.",
+        "External-device GPIB functionality does not establish a DASY5 remote SCPI API.",
+        "Report generator chapter shows version 5.2 and separate output licence markers; internal .da52/raw schema remains unprovided.",
+        "The six complete originals have unconfirmed redistribution rights and must remain local."
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "task_id": "FCC-20261023-S06-B0001",
+      "owner_session": "S06",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 3,
+        "not_started": 0
+      },
+      "new_locally_acquired_originals": 3,
+      "public_originals_included": 0,
+      "public_metadata_path": "batches/FCC-20261023A-S06-B0001",
+      "package": {
+        "package_id": "FCC-20261023A-S06-B0001",
+        "path": "materials/packages/FCC-20261023A-S06-B0001.zip",
+        "sha256": "3877283b6b53b33f5f917c95cd4297d641ef7020f84ace50db0524116bcf50f1",
+        "bytes": 1639,
+        "included_payloads": 0,
+        "access_or_unavailable_records": 3
+      },
+      "package_validation": {
+        "sha256": "3877283b6b53b33f5f917c95cd4297d641ef7020f84ace50db0524116bcf50f1",
+        "bytes": 1639,
+        "crc_valid": true,
+        "manifest_bytes_equal": true,
+        "cumulative_import": "passed"
+      },
+      "limitations": [
+        "Three model requests were researched but all remain limited; no command manual was acquired.",
+        "P01 independently confirmed the old ETS 2090 PDF URL redirects to a manuals HTML page.",
+        "CO3000-4P/4p product-family references do not establish the identity, firmware or licence of a field device labelled -4port.",
+        "Three locally acquired HTML originals and a legacy catalogue image are excluded from public payloads."
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S07-B0001",
+      "task_id": "FCC-20261023-S07-B0001",
+      "owner_session": "S07",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 2,
+        "limited": 0,
+        "not_started": 0
+      },
+      "new_locally_acquired_originals": 4,
+      "public_originals_included": 0,
+      "public_metadata_path": "batches/FCC-20261023A-S07-B0001",
+      "package": {
+        "package_id": "FCC-20261023A-S07-B0001",
+        "path": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "sha256": "73f9176add48af579e8f32aee5fb469cf9699bc3e1671969e3b3903296bae782",
+        "bytes": 31115,
+        "included_payloads": 4,
+        "access_or_unavailable_records": 4
+      },
+      "package_validation": {
+        "sha256": "73f9176add48af579e8f32aee5fb469cf9699bc3e1671969e3b3903296bae782",
+        "bytes": 31115,
+        "crc_valid": true,
+        "manifest_bytes_equal": true,
+        "cumulative_import": "passed"
+      },
+      "limitations": [
+        "P01 independently read official Android Developers and AOSP Content License pages; article documentation is licensed under Apache-2.0, with site, trademark and linked-media exceptions.",
+        "Three extracted article files carry publisher, actual source URL, original hash and extraction-change notice; full HTML originals stay local.",
+        "ADB/logcat/AOSP testing interfaces do not establish manufacturer RF transmit-mode support; no DUT commands were executed."
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S08-B0001",
+      "task_id": "FCC-20261023-S08-B0001",
+      "owner_session": "S08",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 2,
+        "limited": 0,
+        "not_started": 0
+      },
+      "new_locally_acquired_originals": 0,
+      "public_originals_included": 0,
+      "public_metadata_path": "batches/FCC-20261023A-S08-B0001",
+      "package": null,
+      "package_validation": null,
+      "limitations": [
+        "24 report field candidates distinguish official requirements, public-case practice and collector proposals.",
+        "21 existing case exhibits and five official sources are reused with verified hashes; no native instrument raw data was acquired.",
+        "SAR b/g/n output tables and an ax/be OFDMA RF report are not substituted for a complete b/g/n RF case.",
+        "The EMC scope-text versus result-table discrepancy and source-access limits are explicit technical-review items."
+      ]
+    }
+  ],
+  "meaning": "Collection and provenance review only; not technical method approval, equipment operation or site validation.",
+  "publication_commit": "Use the Git commit containing this file; P01 records the verified remote SHA separately."
+}

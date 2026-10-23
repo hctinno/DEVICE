@@ -1,0 +1,70 @@
+{
+  "task_id": "FCC-20261023-S03-B0001",
+  "batch_id": "FCC-20261023A-S03-B0001",
+  "attempt": 1,
+  "owner_session": "S03",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "activation": "approved",
+  "created_at": "2026-10-23T21:54:21+09:00",
+  "request_results": [
+    {
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "status": "completed_with_limitations",
+      "evidence_count": 21,
+      "reason_ko": "근거·실제 조항/페이지 및 미제공 DUT 입력 색인 완료. 신판 표준 FCC 허용·워크숍 상세 검토는 미확정으로 보존."
+    },
+    {
+      "request_id": "ADD-S03-SAR-ATTACHMENT-DELTA-001",
+      "status": "completed",
+      "checked_publications": 3,
+      "checked_listed_attachments": 7,
+      "new_or_missing_listed_attachments": 0,
+      "reason_ko": "현재 공식 publication의 첨부명/판본/공개 attachment ID가 기존 원문 7개와 일치. 기존 바이트·해시 검증 완료; 중복 사본/재다운로드 없음."
+    }
+  ],
+  "counts": {
+    "requests_total": 2,
+    "completed": 1,
+    "completed_with_limitations": 1,
+    "blocked": 0,
+    "not_started": 0,
+    "evidence_items": 21,
+    "legacy_originals_referenced_and_rehashed": 12,
+    "official_publications_compared": 3,
+    "listed_attachments_compared": 7,
+    "new_originals": 0,
+    "public_new_originals": 0,
+    "restricted_new_originals": 0,
+    "duplicate_originals_created": 0,
+    "derived_files": 15,
+    "missing_private_input_groups": 13,
+    "questions_nonblocking": 1,
+    "source_access_attempts": 11,
+    "source_access_failures": 6,
+    "source_access_successes": 5
+  },
+  "metadata_file_count": 13,
+  "local_metadata_not_downloaded_originals": true,
+  "fake_http_urls_for_local_artifacts": false,
+  "rights_ko": "새 원문 없음. S01 원문은 소유/ID/경로/레코드 불변으로 참조한다. 파생본은 공개 미국 정부 원문에서 생성했으며 별도 표준 전문을 포함하지 않는다. 공개 게시 판단은 P01 담당이다.",
+  "limitations_ko": [
+    "실제 DUT·교정·원시 측정·기관 자료 미제공; 제품 적용성·적합성·시스템 유효성 미판정.",
+    "KDB 현재 첨부 목록은 대조했으나 현재 각 PDF 바이트를 다시 받지 않았다. 현재 원문 바이트와 저장본의 완전 동일성을 주장하지 않는다.",
+    "IEEE/IEC 신판의 FCC 허용과 추가 KDB/워크숍/HAC/6 GHz 초과 PD 상세는 이번 배치에서 확정하지 않았다.",
+    "공식 HTTP 403 실패를 성공으로 바꾸지 않았다. 브라우저 화면의 성공 관측과 구분해 기록했다."
+  ],
+  "unsearched_scope": [
+    "Global FCC latest/major/draft KDB lists and all publications beyond the three assigned publications",
+    "Complete follow-on 616217/648474/388624/690783 methods and separate HAC/above-6-GHz PD procedures",
+    "Independent workshop Presentation 3.2 original and Mobile MPE XLS acquisition",
+    "FCC acceptance of 2020/2026 standard editions and licensed full standard contents",
+    "Actual DUT applicability, calculations, device testing, lab validation and formal report approval"
+  ],
+  "git_commands_executed": 0,
+  "shared_files_modified": false,
+  "equipment_or_DUT_control_performed": false,
+  "p01_intake_status": "not_yet_received",
+  "git_publication_status": "not_performed_by_S03",
+  "cloud_technical_acceptance": "not_claimed"
+}

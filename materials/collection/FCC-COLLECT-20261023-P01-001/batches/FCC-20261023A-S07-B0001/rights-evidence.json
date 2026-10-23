@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-23T21:51:41+09:00",
+  "policy_original_document_id": "S07-android-content-license-0a5ada2e77c8",
+  "policy_original_path": "[local-only derivative or original; not included in public payload]",
+  "policy_original_sha256": "0a5ada2e77c8348d829a23386c00b23a63ddc5b3f3df7986f24002de447ffb7b",
+  "developer_policy": {
+    "url": "https://developer.android.com/license",
+    "sections": [
+      "Documentation content",
+      "Restrictions",
+      "Attribution",
+      "Documentation Licences"
+    ],
+    "findings": "문서·코드 기본 라이선스는 Apache-2.0이며 별도 표기가 우선한다. 그 밖의 사이트 콘텐츠는 CC BY 2.5이며 라이선스 문서·상표·연결된 외부 콘텐츠·제3자 구성요소의 예외가 있다."
+  },
+  "aosp_policy": {
+    "url": "https://source.android.com/license",
+    "review_method": "공식 페이지를 검색 도구로 열람했다. 4개 원문 상한을 지키기 위해 추가 원본 바이트는 내려받지 않았다.",
+    "sections": [
+      "Documentation content",
+      "Restrictions",
+      "Attribution"
+    ],
+    "findings": "문서·코드 기본 라이선스는 Apache-2.0이고 기타 콘텐츠는 CC BY 4.0이다. 상표·별도 조건 콘텐츠·외부 링크와 제3자 구성요소를 구별한다. Android Developers의 기타 콘텐츠 CC BY 2.5와 혼합하지 않는다."
+  },
+  "raw_html_publication": "restricted_pending_file_level_rights_review",
+  "restricted_originals": [
+    "[local-only derivative or original; not included in public payload]",
+    "[local-only derivative or original; not included in public payload]",
+    "[local-only derivative or original; not included in public payload]",
+    "[local-only derivative or original; not included in public payload]"
+  ],
+  "public_content_candidates": [
+    "derived/android-adb.txt",
+    "derived/android-logcat.txt",
+    "derived/aosp-wifi-debug.txt"
+  ],
+  "publisher_handoff": "P01은 공개용 본문 추출본에 필요한 Apache-2.0 라이선스 사본과 귀속·변경 고지를 포함해 게시한다. 로컬 원본이 있다는 사실과 공개·클라우드 전달 완료는 구별한다.",
+  "linked_media_collected": false
+}

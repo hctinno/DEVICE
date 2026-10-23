@@ -1,0 +1,809 @@
+{
+  "created_at": "2026-10-23T21:56:42.430002+09:00",
+  "task_id": "FCC-20261023-S04-B0001",
+  "scope": "문서 근거의 위치 확인이며 현장 장비 지원 검증·명령 실행·시험방법 승인이 아님",
+  "page_numbering": "pdf_pages_1based는 파일의 물리 쪽 번호. 인쇄 쪽 번호를 별도 병기하며 N1913-90008 후반부에서 차이를 확인했다.",
+  "evidence": [
+    {
+      "evidence_id": "S04-AN-ID",
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "identification",
+      "location": {
+        "pdf_pages_1based": [
+          235,
+          502
+        ],
+        "heading": "Identification Query / System IDN Response"
+      },
+      "commands_or_api": [
+        "*IDN?",
+        ":SYSTem:IDN:CONFigure?"
+      ],
+      "finding": "식별 응답 필드와 응답 변경 기능의 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "IDN 응답은 사용자 설정 가능하므로 현장 실물 식별을 단독 확정하지 않는다."
+    },
+    {
+      "evidence_id": "S04-AN-BRAND",
+      "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "brand_and_applicability",
+      "location": {
+        "pdf_pages_1based": [
+          1
+        ],
+        "heading": "Cover notice"
+      },
+      "commands_or_api": [],
+      "finding": "Agilent 계측사업의 Keysight 전환과 N9030A 적용을 표지에서 확인.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "Agilent·Keysight 모델 ID는 별도로 유지한다."
+    },
+    {
+      "evidence_id": "S04-AN-SET",
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "settings_and_query",
+      "location": {
+        "pdf_pages_1based": [
+          655,
+          749,
+          750
+        ],
+        "heading": "FREQ Channel / Format Data"
+      },
+      "commands_or_api": [
+        "[:SENSe]:FREQuency:CENTer?",
+        ":FORMat[:TRACe][:DATA]?",
+        ":FORMat:BORDer NORMal|SWAPped"
+      ],
+      "finding": "주파수·전송 형식·바이트 순서 정의 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "선택 입력·5xx 옵션에 따라 범위가 달라진다."
+    },
+    {
+      "evidence_id": "S04-AN-OPT",
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "options",
+      "location": {
+        "pdf_pages_1based": [
+          236,
+          237,
+          524
+        ],
+        "heading": "Query Instrument Options / List installed Options"
+      },
+      "commands_or_api": [
+        "*OPT?",
+        ":SYSTem:OPTions?"
+      ],
+      "finding": "옵션 조회 위치. 실제 옵션 목록은 미수신.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false
+    },
+    {
+      "evidence_id": "S04-AN-SYNC",
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "synchronization",
+      "location": {
+        "pdf_pages_1based": [
+          235,
+          236,
+          984
+        ],
+        "heading": "Operation Complete / Abort"
+      },
+      "commands_or_api": [
+        "*OPC?",
+        ":INITiate:CONTinuous",
+        ":INITiate:IMMediate"
+      ],
+      "finding": "동일 제어 포트에서 시작한 동작에 대한 완료 동기화.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "ABORt 후 OPC 완료가 유효한 새 측정 완료를 뜻하지 않는다."
+    },
+    {
+      "evidence_id": "S04-AN-ERR",
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "errors",
+      "location": {
+        "pdf_pages_1based": [
+          432,
+          433
+        ],
+        "heading": "System Show Errors"
+      },
+      "commands_or_api": [
+        ":SYSTem:ERRor[:NEXT]?"
+      ],
+      "finding": "오류 번호·메시지 반환과 상세 오류 응답 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false
+    },
+    {
+      "evidence_id": "S04-AN-ABORT",
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "abort_and_recovery",
+      "location": {
+        "pdf_pages_1based": [
+          983,
+          984
+        ],
+        "heading": "Abort"
+      },
+      "commands_or_api": [
+        ":ABORt"
+      ],
+      "finding": "단일/연속 측정에서 정지·재시작 동작 차이.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "연속 상태에서는 재측정할 수 있고 정렬 동작은 즉시 중단하지 않는다."
+    },
+    {
+      "evidence_id": "S04-AN-TRACE",
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "raw_value_transfer",
+      "location": {
+        "pdf_pages_1based": [
+          749,
+          750,
+          1025,
+          1026
+        ],
+        "heading": "Format Data / Query Trace Data"
+      },
+      "commands_or_api": [
+        ":TRACe[:DATA]? TRACE1",
+        ":FORMat[:TRACe][:DATA]",
+        ":FORMat:BORDer"
+      ],
+      "finding": "트레이스 값·단위·바이너리 블록·포인트 수의 근거.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "트레이스는 현재 Y축 단위의 진폭값이며 원시 IQ로 간주하지 않는다."
+    },
+    {
+      "evidence_id": "S04-AN-CHP",
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "conducted_power_candidate",
+      "location": {
+        "pdf_pages_1based": [
+          1063,
+          1064,
+          1070
+        ],
+        "heading": "Channel Power Measurement / WLAN Results"
+      },
+      "commands_or_api": [
+        ":CONFigure:CHPower",
+        ":FETCh:CHPower[n]?",
+        ":READ:CHPower[n]?"
+      ],
+      "finding": "전력 스칼라와 캡처 트레이스 반환 형태의 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "선택 표준·측정 설정에 따른 결과 형식을 확인해야 한다. FCC 방법 승인이 아니다."
+    },
+    {
+      "evidence_id": "S04-AN-LIMIT",
+      "document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "input_limits",
+      "location": {
+        "pdf_pages_1based": [
+          35,
+          149
+        ],
+        "heading": "Maximum Safe Input Level / Option BBA Inputs"
+      },
+      "commands_or_api": [],
+      "finding": "RF 평균 총전력 +30 dBm. 피크 +50 dBm은 펄스폭 ≤10 µs·듀티 ≤1%·입력 감쇠 ≥30 dB 조건부.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "RF 입력과 BBA 입력·AC/DC 결합 한계를 혼용하지 않는다. 현장 운전 한계는 미설정."
+    },
+    {
+      "evidence_id": "S04-AN-WARM",
+      "document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "warmup_and_specification_conditions",
+      "location": {
+        "pdf_pages_1based": [
+          24
+        ],
+        "heading": "Precision Frequency Reference"
+      },
+      "commands_or_api": [],
+      "finding": "기준발진기 워밍업·재현성 및 시간 조건의 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "해당 주파수 기준 조건을 모든 측정의 준비시간으로 일반화하지 않는다."
+    },
+    {
+      "evidence_id": "S04-AN-LINK",
+      "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "topic": "interfaces_and_drivers",
+      "location": {
+        "pdf_pages_1based": [
+          11,
+          12,
+          31,
+          32
+        ],
+        "heading": "Hardware Connection Formats / VISA Driver Options"
+      },
+      "commands_or_api": [],
+      "finding": "GPIB·LAN·USB와 VISA/드라이버 경로 설명.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "현장 인터페이스·드라이버 설치·버전 호환은 미검증."
+    },
+    {
+      "evidence_id": "S04-PM-ID",
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "identification",
+      "location": {
+        "pdf_pages_1based": [
+          595
+        ],
+        "heading": "Identification Query",
+        "printed_pages": [
+          597
+        ]
+      },
+      "commands_or_api": [
+        "*IDN?"
+      ],
+      "finding": "제조사·N1914A·일련번호·펌웨어 응답 형식 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false
+    },
+    {
+      "evidence_id": "S04-PM-SET",
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "settings_and_query",
+      "location": {
+        "pdf_pages_1based": [
+          368,
+          583
+        ],
+        "heading": "Sensor calibration table / UNIT Subsystem",
+        "printed_pages": [
+          368,
+          585
+        ]
+      },
+      "commands_or_api": [
+        "[SENSe[1]]|SENSe2:CORRection:CSET[1][:SELect]",
+        "UNIT[1]|2|3|4:POWer?"
+      ],
+      "finding": "센서 보정표 선택·주파수 연계 및 값 단위 설정/조회 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "창 번호와 물리 센서 채널을 동일시하지 않는다."
+    },
+    {
+      "evidence_id": "S04-PM-OPT",
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "options",
+      "location": {
+        "pdf_pages_1based": [
+          598
+        ],
+        "heading": "Query Instrument Options",
+        "printed_pages": [
+          600
+        ]
+      },
+      "commands_or_api": [
+        "*OPT?"
+      ],
+      "finding": "문서의 옵션 조회 응답은 표준/003 예시로 제한됨.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "모든 라이선스·장착 옵션의 완전한 증거로 사용하지 않는다."
+    },
+    {
+      "evidence_id": "S04-PM-SYNC",
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "synchronization",
+      "location": {
+        "pdf_pages_1based": [
+          89,
+          90,
+          597
+        ],
+        "heading": "Using Operation Complete / IEEE 488.2",
+        "printed_pages": [
+          89,
+          90,
+          599
+        ]
+      },
+      "commands_or_api": [
+        "*OPC?",
+        "*OPC",
+        "*STB?"
+      ],
+      "finding": "완료 응답과 상태 동기화 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "문서 예제의 교정 명령·버스 동작은 실행하지 않았다."
+    },
+    {
+      "evidence_id": "S04-PM-ERR",
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "errors",
+      "location": {
+        "pdf_pages_1based": [
+          517
+        ],
+        "heading": "SYSTem:ERRor?",
+        "printed_pages": [
+          517
+        ]
+      },
+      "commands_or_api": [
+        "SYSTem:ERRor?"
+      ],
+      "finding": "FIFO 오류 조회는 항목을 제거하며 큐 한계는 30개.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "원본 오류를 보존하기 전 무조건 지우는 절차를 만들지 않는다."
+    },
+    {
+      "evidence_id": "S04-PM-VAL",
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "raw_value_transfer",
+      "location": {
+        "pdf_pages_1based": [
+          34,
+          137,
+          175
+        ],
+        "heading": "MEASure / FETCh Commands",
+        "printed_pages": [
+          34,
+          137,
+          175
+        ]
+      },
+      "commands_or_api": [
+        "FETCh[1]|2|3|4[:SCALar][:POWer:AC]?",
+        "MEASure[1]|2|3|4[:SCALar][:POWer:AC]?"
+      ],
+      "finding": "기존 데이터 재계산과 새 측정 시작을 구별할 근거.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "FETCh 수신만으로 신규 측정·정상 입력을 입증하지 않는다."
+    },
+    {
+      "evidence_id": "S04-PM-ABORT",
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "abort_and_recovery",
+      "location": {
+        "pdf_pages_1based": [
+          546
+        ],
+        "heading": "ABORt",
+        "printed_pages": [
+          548
+        ]
+      },
+      "commands_or_api": [
+        "ABORt[1]|2|3|4"
+      ],
+      "finding": "트리거 대기·유휴 상태 전이와 연속 모드 재대기 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "연속 모드에서 ABORt를 영구 정지로 간주하지 않는다."
+    },
+    {
+      "evidence_id": "S04-PM-LINK",
+      "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "interfaces_and_licenses",
+      "location": {
+        "pdf_pages_1based": [
+          44,
+          55
+        ],
+        "heading": "Web Interface / Programming Language Selection",
+        "printed_pages": [
+          44,
+          55
+        ]
+      },
+      "commands_or_api": [
+        "SYSTem:VERSion?"
+      ],
+      "finding": "GPIB·LAN·USB 및 SCPI/레거시 언어·Option 200 조건 위치.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "실제 언어·라이선스·옵션 설치는 미확인."
+    },
+    {
+      "evidence_id": "S04-PM-SENSOR",
+      "document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "sensor_limits_and_accuracy",
+      "location": {
+        "pdf_pages_1based": [
+          25
+        ],
+        "heading": "Power Sensor Specifications",
+        "printed_pages": [
+          25
+        ]
+      },
+      "commands_or_api": [],
+      "finding": "시스템 정확도·영점 조건은 연결 센서 사양과 함께 확인해야 함.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "센서 모델 미확정으로 2.4 GHz·입력전력·펄스 측정 능력을 미확정 유지."
+    },
+    {
+      "evidence_id": "S04-PM-VERIFY",
+      "document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "topic": "warmup_and_performance_verification",
+      "location": {
+        "pdf_pages_1based": [
+          22,
+          48
+        ],
+        "heading": "Specification Definitions / Performance Tests",
+        "printed_pages": [
+          22,
+          48
+        ]
+      },
+      "commands_or_api": [],
+      "finding": "보증 사양은 30분 워밍업·영점·교정 및 명시 조건을 전제함.",
+      "evidence_level": "official_manual_located",
+      "hardware_verified": false,
+      "caveat": "교정·성능검증은 문서 확보만 했으며 현장에서 미실행."
+    }
+  ],
+  "model_results": [
+    {
+      "request_id": "EQ-MOD-aecdf6d16380a2be",
+      "model_id": "MOD-aecdf6d16380a2be",
+      "manufacturer_as_registered": "Agilent",
+      "model_as_registered": "N9030A",
+      "result": "documentary_batch_complete",
+      "document_ids": [
+        "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+        "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "S04-KEYSIGHT-N9020-90112-354463a721ff"
+      ],
+      "control_class": "direct_remote_control_documented_unit_unverified",
+      "historical_brand_ids_preserved": true,
+      "installed_options_firmware_interface": "not_provided_or_verified",
+      "calibration_and_actual_unit_status": "not_provided_or_verified",
+      "new_asset_identity_or_on_site_selection_claimed": false
+    },
+    {
+      "request_id": "EQ-MOD-48a20d5887cbe5bc",
+      "model_id": "MOD-48a20d5887cbe5bc",
+      "manufacturer_as_registered": "Keysight",
+      "model_as_registered": "N1914A",
+      "result": "documentary_batch_complete",
+      "document_ids": [
+        "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+        "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "S04-KEYSIGHT-N1913-90009-c9b6b27d187c"
+      ],
+      "control_class": "direct_remote_control_documented_unit_unverified",
+      "historical_brand_ids_preserved": true,
+      "installed_options_firmware_interface": "not_provided_or_verified",
+      "calibration_and_actual_unit_status": "not_provided_or_verified",
+      "new_asset_identity_or_on_site_selection_claimed": false
+    },
+    {
+      "request_id": "EQ-MOD-c40c6c5f1b4e7ca9",
+      "model_id": "MOD-c40c6c5f1b4e7ca9",
+      "manufacturer_as_registered": "Keysight",
+      "model_as_registered": "N9030A",
+      "result": "documentary_batch_complete",
+      "document_ids": [
+        "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+        "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "S04-KEYSIGHT-N9020-90112-354463a721ff"
+      ],
+      "control_class": "direct_remote_control_documented_unit_unverified",
+      "historical_brand_ids_preserved": true,
+      "installed_options_firmware_interface": "not_provided_or_verified",
+      "calibration_and_actual_unit_status": "not_provided_or_verified",
+      "new_asset_identity_or_on_site_selection_claimed": false
+    }
+  ],
+  "original_inspection": [
+    {
+      "document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "media_type_received": "application/pdf",
+      "http_status": 200,
+      "pdf_header": "%PDF-1.6",
+      "pdf_pages": 489,
+      "part_number_notice_pdf_page": 2,
+      "edition_pdf_page": 2,
+      "copyright_pdf_page": 2,
+      "first_page_visual_checked": true,
+      "first_page_applicability": "N9030A가 표지에 명시됨",
+      "scope": "표지·판본·선택한 관련 쪽 확인; 전체 페이지의 수식·표를 전수 검증한 것은 아님",
+      "encryption": null,
+      "ocr_used": false
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "media_type_received": "application/pdf",
+      "http_status": 200,
+      "pdf_header": "%PDF-1.6",
+      "pdf_pages": 3307,
+      "part_number_notice_pdf_page": 2,
+      "edition_pdf_page": 2,
+      "copyright_pdf_page": 2,
+      "first_page_visual_checked": true,
+      "first_page_applicability": "N9030A가 표지에 명시됨",
+      "scope": "표지·판본·선택한 관련 쪽 확인; 전체 페이지의 수식·표를 전수 검증한 것은 아님",
+      "encryption": null,
+      "ocr_used": false
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "media_type_received": "application/pdf",
+      "http_status": 200,
+      "pdf_header": "%PDF-1.5",
+      "pdf_pages": 52,
+      "part_number_notice_pdf_page": 2,
+      "edition_pdf_page": 2,
+      "copyright_pdf_page": 2,
+      "first_page_visual_checked": true,
+      "first_page_applicability": "N9030A가 표지에 명시됨",
+      "scope": "표지·판본·선택한 관련 쪽 확인; 전체 페이지의 수식·표를 전수 검증한 것은 아님",
+      "encryption": null,
+      "ocr_used": false
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "media_type_received": "application/pdf",
+      "http_status": 200,
+      "pdf_header": "%PDF-1.4",
+      "pdf_pages": 253,
+      "part_number_notice_pdf_page": 2,
+      "edition_pdf_page": 2,
+      "copyright_pdf_page": 2,
+      "first_page_visual_checked": true,
+      "first_page_applicability": "N1913/1914A 공통 문서이며 N1914A 포함",
+      "scope": "표지·판본·선택한 관련 쪽 확인; 전체 페이지의 수식·표를 전수 검증한 것은 아님",
+      "encryption": null,
+      "ocr_used": false
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "media_type_received": "application/pdf",
+      "http_status": 200,
+      "pdf_header": "%PDF-1.6",
+      "pdf_pages": 639,
+      "part_number_notice_pdf_page": 2,
+      "edition_pdf_page": 2,
+      "copyright_pdf_page": 2,
+      "first_page_visual_checked": true,
+      "first_page_applicability": "N1913/1914A 공통 문서이며 N1914A 포함",
+      "scope": "표지·판본·선택한 관련 쪽 확인; 전체 페이지의 수식·표를 전수 검증한 것은 아님",
+      "encryption": null,
+      "ocr_used": false
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "media_type_received": "application/pdf",
+      "http_status": 200,
+      "pdf_header": "%PDF-1.6",
+      "pdf_pages": 139,
+      "part_number_notice_pdf_page": 2,
+      "edition_pdf_page": 2,
+      "copyright_pdf_page": 2,
+      "first_page_visual_checked": true,
+      "first_page_applicability": "N1913/1914A 공통 문서이며 N1914A 포함",
+      "scope": "표지·판본·선택한 관련 쪽 확인; 전체 페이지의 수식·표를 전수 검증한 것은 아님",
+      "encryption": null,
+      "ocr_used": false
+    }
+  ],
+  "derived_files": [
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    },
+    {
+      "path": "[local-only derivative or original; not included in public payload]",
+      "representation": "extracted",
+      "method": "PDF page rendered with PyMuPDF; no OCR",
+      "parent_document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "rights": "unknown",
+      "publication": "private_qa_only"
+    }
+  ],
+  "legacy_hash_collisions": []
+}

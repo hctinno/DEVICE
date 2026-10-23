@@ -1,0 +1,56 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "version": "v003",
+  "activation": "approved",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "created_at": "2026-10-23T22:02:03.711430+09:00",
+  "tasks": [
+    {
+      "task_id": "FCC-20261023-S01-B0002",
+      "batch_id": "FCC-20261023A-S01-B0002",
+      "attempt": 1,
+      "owner_session": "S01",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v003",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S01-KDB-BLOB-CURRENCY-002"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "KDB-558074",
+        "KDB-662911",
+        "KDB-913591"
+      ],
+      "priority": "P0",
+      "scope": "KDB558074/662911/913591의 현재 publication 목록과 기존 첨부 5개를 원본 소유 S01이 직접 검증한다. 기존 파일과 ID를 보존하고 공식 HTTP 응답을 해시 스트리밍해 현재 바이트와 비교한다. 조건부 요청을 사용할 수 있으면 실제 기존 ETag/Last-Modified에 근거해 사용하고 값을 만들지 않는다. 같은 해시의 바이트는 새 원본으로 저장/집계하지 않는다. 바뀐 바이트만 새 판본/ID로 저장하고, HTTP 403/실패는 불명 상태로 남긴다. 네트워크 검증 전송 수와 신규 저장 원본 수를 구별한다.",
+      "completion_criteria": "publication별 현재 첨부 집합, 5개 첨부의 HTTP 상태·최종 URL·비교 SHA/bytes·검증시각·동일/변경/확인불가; silent replacement 비교의 미검증 공백을 줄이는 근거. 기존 원본 변경 0, 새 원본 최대2개.",
+      "original_limit": 2,
+      "status": "prepared",
+      "prerequisite": "First B0001 batch frozen and P01 has verified receipt; no modification of old ready."
+    },
+    {
+      "task_id": "FCC-20261023-S08-B0002",
+      "batch_id": "FCC-20261023A-S08-B0002",
+      "attempt": 1,
+      "owner_session": "S08",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v003",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S08-BGN-CASE-COMPLETENESS-002"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "DISC-REPORTS"
+      ],
+      "priority": "P0",
+      "scope": "기존 단일 FCC ID A3LSMS938U의 공식 공개 첨부 목록에서 2.4GHz b/g/n 전용 RF 시험방법·결과를 포함한 성적서가 누락돼 있는지 조사한다. 기존 21개 첨부와 해시를 재사용하고 재다운로드하지 않는다. SAR 보고서의 b/g/n 출력표나 ax/be OFDMA RF 보고서를 독립 b/g/n RF 성적서로 대체하지 않는다. 같은 FCC ID의 실제 별도 b/g/n 첨부가 확인되면 공식 페이지·모델·보고서 ID와 실제 PDF를 최대3개 취득한다. 권리 미확인 원문은 로컬 제한으로 보존한다. 다른 제품으로 임의 확대하지 않는다.",
+      "completion_criteria": "같은 FCC ID의 공식 첨부 목록·기존21개 대비 b/g/n 원문 유무와 실제 근거; 새 PDF가 있으면 정확한 모델/보고서ID·판본/조건·해시/권리, 없거나 접근 차단이면 확인한 범위·미확인 범위를 표시. raw 계측파일과 보고값 구별.",
+      "original_limit": 3,
+      "status": "prepared",
+      "prerequisite": "First B0001 batch frozen and P01 has verified receipt; no modification of old ready."
+    }
+  ],
+  "scope": "Supplemental batches; all prior v002 work remains fixed to its own version."
+}

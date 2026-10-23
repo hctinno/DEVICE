@@ -1,0 +1,153 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S04-B0001",
+  "task_id": "FCC-20261023-S04-B0001",
+  "owner_session": "S04",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "snapshot_inventory_sha256": "adaa5d0da3aa54826b9039bd651fd2cb45f20a3d6f49cbecc679618379fd311c",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S04-B0001",
+    "decision": "content_approved_for_metadata_and_access_notice_only",
+    "findings": [
+      "Six actual PDFs passed independent byte/header/schema checks and parsed successfully; title/model scope and declared edition text were checked.",
+      "The covers explicitly include N9030A and N1913/1914A; Agilent and Keysight model IDs remain separate.",
+      "Command locations and sensor/input/firmware conditions are documentary evidence only; actual unit identification, options, calibration and operation remain unverified.",
+      "All six complete manuals retain unknown redistribution permission and are excluded from public payloads."
+    ],
+    "request_outcome": {
+      "completed": 3,
+      "limited": 0,
+      "not_started": 0
+    },
+    "publication_metadata_files": [],
+    "pdf_headers_text_checked": 6,
+    "visual_sampled_pages": {
+      "S04-KEYSIGHT-N9060-90027-2429ceb7a23f": [
+        1
+      ],
+      "S04-KEYSIGHT-N1913-90008-ecaf6faf7189": [
+        1
+      ]
+    },
+    "owner": "P01",
+    "source_inventory_verified": true,
+    "rights_public_document_ids": [],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [
+    {
+      "document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "1c018ae8aa9857389365d3fc9ed98996665f91f49fa0a199d00bd798c241f93b",
+      "original_bytes": 3855952,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-72001/technical-specifications/N9030A-PXA-Signal-Analyzer-Specifications-Guide.pdf",
+      "download_url": "https://www.keysight.com/us/en/assets/9018-72001/technical-specifications/N9030A-PXA-Signal-Analyzer-Specifications-Guide.pdf",
+      "version": "Edition 1, January 2022; supersedes October 2021"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+      "original_bytes": 22650636,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+      "download_url": "https://www.keysight.com/id/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+      "version": "Edition 23, December 2018"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "354463a721ff57298576d6c059c9637d5e58bb16d854ace86303de31a55c8f3e",
+      "original_bytes": 736733,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-02192/programming-guides/9018-02192.pdf",
+      "download_url": "https://www.keysight.com/ni/en/assets/9018-02192/programming-guides/9018-02192.pdf",
+      "version": "Print date August 2014; supersedes February 2013"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9",
+      "original_bytes": 6833924,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-02513/user-manuals/9018-02513.pdf",
+      "download_url": "https://www.keysight.com/ni/en/assets/9018-02513/user-manuals/9018-02513.pdf",
+      "version": "Edition 24, November 1, 2022"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+      "original_bytes": 4367308,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-02514/programming-guides/9018-02514.pdf",
+      "download_url": "https://www.keysight.com/ni/en/assets/9018-02514/programming-guides/9018-02514.pdf",
+      "version": "Edition 19, June 11, 2025"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "c9b6b27d187cf72ba01934fa3ff9b48c6a39e1e8db6922fa15cb654939d3a4db",
+      "original_bytes": 4786198,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-02516/service-manuals/9018-02516.pdf",
+      "download_url": "https://www.keysight.com/ni/en/assets/9018-02516/service-manuals/9018-02516.pdf",
+      "version": "Edition 17, October 8, 2025"
+    }
+  ],
+  "redacted_local_reference_fields": [
+    "/original_inspection/0/path",
+    "/original_inspection/1/path",
+    "/original_inspection/2/path",
+    "/original_inspection/3/path",
+    "/original_inspection/4/path",
+    "/original_inspection/5/path",
+    "/derived_files/0/path",
+    "/derived_files/1/path",
+    "/derived_files/2/path",
+    "/derived_files/3/path",
+    "/derived_files/4/path",
+    "/derived_files/5/path",
+    "/derived_files/6/path",
+    "/derived_files/7/path",
+    "/derived_files/8/path",
+    "/derived_files/9/path",
+    "/derived_files/10/path",
+    "/derived_files/11/path",
+    "/derived_files/12/path",
+    "/derived_files/13/path"
+  ],
+  "package": {
+    "package_id": "FCC-20261023A-S04-B0001",
+    "path": "materials/packages/FCC-20261023A-S04-B0001.zip",
+    "sha256": "47a9e618607b62cb4bd322f7c090b1dbf9a45f9c3cbc51e51279a6308612d7db",
+    "bytes": 1840,
+    "included_payloads": 0,
+    "access_or_unavailable_records": 6
+  },
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

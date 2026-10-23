@@ -1,0 +1,519 @@
+{
+  "input_spec_id": "S07-WIFI24-BGN-INPUT-v001",
+  "artifact_type": "local_generated_input_specification",
+  "task_id": "FCC-20261023-S07-B0001",
+  "request_id": "ADD-S07-WIFI24-TESTMODE-INPUT-001",
+  "reference_request_ids": [
+    "LOCAL-005",
+    "LOCAL-006",
+    "LOCAL-009"
+  ],
+  "created_at": "2026-10-23T21:51:41+09:00",
+  "provider": "lab_or_product_owner / 제조사 시험도구 제공 담당",
+  "actual_dut": {
+    "manufacturer": null,
+    "model": null,
+    "sample_id": null,
+    "chipset": null,
+    "firmware": null,
+    "test_tool": null,
+    "state": "not_designated"
+  },
+  "purpose": "실제 제품·시험도구를 받은 뒤 검증할 입력 항목을 정의한다. 제품 지원을 확정하거나 제어 실행을 승인하는 문서가 아니다.",
+  "input_groups": {
+    "product_and_sample_LOCAL009": [
+      {
+        "field": "manufacturer_model_variant",
+        "request_ids": [
+          "LOCAL-009"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "제조사·정확한 모델·지역/통신사 변형·모델 suffix"
+      },
+      {
+        "field": "sample_id_hw_revision",
+        "request_ids": [
+          "LOCAL-009"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "비식별 시료 ID·HW revision·PCB/모듈 구분"
+      },
+      {
+        "field": "wifi_chipset_revision_chains_antennas",
+        "request_ids": [
+          "LOCAL-009",
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "Wi-Fi 칩셋·실리콘 세대·송신 체인·안테나/커넥터 구성"
+      },
+      {
+        "field": "android_build_fingerprint_sdk_build_type",
+        "request_ids": [
+          "LOCAL-009",
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "Android 릴리스·SDK·build fingerprint·user/userdebug/eng 및 정책"
+      },
+      {
+        "field": "power_battery_rf_connection_constraints",
+        "request_ids": [
+          "LOCAL-009"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "제품 전원·배터리·전도/방사 연결 조건과 제조사 한계"
+      }
+    ],
+    "firmware_tool_compatibility_LOCAL006": [
+      {
+        "field": "test_firmware_identity",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "제조사 시험 FW의 정확한 파일명·버전·해시·HW/칩셋/지역 호환표"
+      },
+      {
+        "field": "wifi_firmware_driver_hal",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "Wi-Fi FW·커널 드라이버·HAL 버전 및 시험 FW와의 조합"
+      },
+      {
+        "field": "vendor_tool_package",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "제조사·제품명·도구 버전·패키지 manifest·파일 해시·공식 설명서"
+      },
+      {
+        "field": "host_os_arch_runtime_driver_versions",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "지원 호스트 OS·아키텍처·런타임·USB 드라이버·ADB 호환 버전"
+      },
+      {
+        "field": "interface_and_feature_matrix",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "CLI/SDK/API/GUI 인터페이스별 기능·옵션·플러그인·미지원/미확인 구분"
+      },
+      {
+        "field": "official_examples_and_expected_responses",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "버전에 대응하는 공식 호출·응답·오류·로그 내보내기 예제"
+      },
+      {
+        "field": "license_entitlement_access_conditions",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "제공 담당·라이선스/기능 권한·로그인 필요 여부·허용된 사용/보관/공유 범위. 키·비밀번호 값은 공개 산출물에 넣지 않음"
+      },
+      {
+        "field": "calibration_tune_up_and_rf_path_inputs",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "제품별 calibration/tune-up·출력 보정·튜너/안테나 상태의 식별·적용 조건"
+      }
+    ],
+    "access_and_invocation_LOCAL006": [
+      {
+        "field": "approved_transport_and_target_identity",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "승인된 USB/SDK 연결 방식·대상 시료 선택 규칙. 현장 주소 탐색을 수행하지 않음"
+      },
+      {
+        "field": "debug_authorization_and_privilege",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "USB 디버깅·호스트 RSA 승인·기기 잠금·root/SELinux/앱 권한 조건"
+      },
+      {
+        "field": "exact_call_and_quoting_contract",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "정확한 CLI/SDK 시그니처·인코딩·인자 escaping·입력값 단위·범위·지원 버전"
+      },
+      {
+        "field": "stdout_stderr_returncode_and_device_result",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "호스트 프로세스 결과와 제품의 명령 수락/완료 응답을 구별하는 파싱 계약"
+      },
+      {
+        "field": "completion_query_and_error_contract",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "완료 상태 조회·제한시간·오류 코드·취소·멱등성·부분 실행·재시도 허용 조건"
+      },
+      {
+        "field": "disconnect_reconnect_recovery",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "연결 끊김/오프라인/권한 소실/재부팅 후 송신 상태 조회·중단·복구 절차"
+      }
+    ],
+    "logging_and_export_LOCAL005_006": [
+      {
+        "field": "raw_logs_and_result_export",
+        "request_ids": [
+          "LOCAL-005",
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "원본 stdout/stderr·도구/기기/펌웨어 로그·이진/텍스트 형식·내보내기 경로·오류 시 로그"
+      },
+      {
+        "field": "timestamp_and_correlation",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "호스트/기기 시간 기준·타임존·동기화 오차·case/run/step·시료 연결 방식"
+      },
+      {
+        "field": "logcat_permissions_options_buffers",
+        "request_ids": [
+          "LOCAL-006"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "제품 OS·권한별 실제 logcat --help 결과·필요 버퍼·필터·형식·로그 누락 조건"
+      },
+      {
+        "field": "existing_test_sw_api",
+        "request_ids": [
+          "LOCAL-005"
+        ],
+        "value": null,
+        "state": "not_provided",
+        "required_evidence": "기존 시험 SW의 API·버전·권한·파일 형식·라이선스. 미제공이어도 공개 문서 수집은 완료 가능"
+      }
+    ]
+  },
+  "rf_parameter_readback_requirements": [
+    {
+      "parameter": "channel_and_frequency",
+      "unit_to_confirm": "channel index / MHz",
+      "needed": "지원 채널·지역별 허용·설정값과 조회 주파수의 관계",
+      "set_call": null,
+      "query_call": null,
+      "supported_values": null,
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "support_status": "unknown",
+      "actual_value": null
+    },
+    {
+      "parameter": "bandwidth",
+      "unit_to_confirm": "MHz",
+      "needed": "b/g/n 및 HT20/HT40 지원·상하 측대역·비지원 조합",
+      "set_call": null,
+      "query_call": null,
+      "supported_values": null,
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "support_status": "unknown",
+      "actual_value": null
+    },
+    {
+      "parameter": "phy_and_modulation_rate",
+      "unit_to_confirm": "PHY / Mbps / MCS index",
+      "needed": "b/g/n 변조·레이트·MCS·GI·공간스트림 조합",
+      "set_call": null,
+      "query_call": null,
+      "supported_values": null,
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "support_status": "unknown",
+      "actual_value": null
+    },
+    {
+      "parameter": "tx_chain_and_antenna",
+      "unit_to_confirm": "chain mask / antenna index",
+      "needed": "단일/복수 체인·안테나 포트와 DUT 변형의 대응",
+      "set_call": null,
+      "query_call": null,
+      "supported_values": null,
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "support_status": "unknown",
+      "actual_value": null
+    },
+    {
+      "parameter": "target_output_power",
+      "unit_to_confirm": "명시 단위; dBm 여부도 확인",
+      "needed": "명목 목표값·단계값·실측값 구별과 출력 제한·보정 조건",
+      "set_call": null,
+      "query_call": null,
+      "supported_values": null,
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "support_status": "unknown",
+      "actual_value": null
+    },
+    {
+      "parameter": "packet_length_count_pattern",
+      "unit_to_confirm": "byte / count / pattern",
+      "needed": "패킷 길이·개수·반복·페이로드와 응답 의미",
+      "set_call": null,
+      "query_call": null,
+      "supported_values": null,
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "support_status": "unknown",
+      "actual_value": null
+    },
+    {
+      "parameter": "duty_and_timing",
+      "unit_to_confirm": "percent / s 또는 제조사 단위",
+      "needed": "듀티·on/off 타이밍·지속/패킷 모드 및 실효 듀티 확인",
+      "set_call": null,
+      "query_call": null,
+      "supported_values": null,
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "support_status": "unknown",
+      "actual_value": null
+    },
+    {
+      "parameter": "tuner_and_power_control",
+      "unit_to_confirm": "제조사 enum / state",
+      "needed": "튜너·적응 출력·전력 절감·온도 보상·SAR backoff 상태",
+      "set_call": null,
+      "query_call": null,
+      "supported_values": null,
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "support_status": "unknown",
+      "actual_value": null
+    },
+    {
+      "parameter": "concurrent_radios",
+      "unit_to_confirm": "radio/state list",
+      "needed": "다른 무선 기능의 동시 송신·비활성·조건과 상태 조회",
+      "set_call": null,
+      "query_call": null,
+      "supported_values": null,
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "support_status": "unknown",
+      "actual_value": null
+    }
+  ],
+  "operation_contracts": [
+    {
+      "operation": "identify",
+      "contract_needed": "시료·HW/FW·도구 버전·연결 대상 확인",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    },
+    {
+      "operation": "query_initial_state",
+      "contract_needed": "일반/시험 모드·RF 송신·배터리/온도 등 사전 상태 조회",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    },
+    {
+      "operation": "enter_test_mode",
+      "contract_needed": "시험 모드 진입 전제·명령·완료 응답·상태 조회",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    },
+    {
+      "operation": "configure_and_readback",
+      "contract_needed": "파라미터 설정과 실제 적용 상태의 독립 조회·비지원 조합 처리",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    },
+    {
+      "operation": "start_tx",
+      "contract_needed": "송신 시작 수락·실행 완료·중복 호출/시간초과 시 상태 확인",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    },
+    {
+      "operation": "query_rf_state",
+      "contract_needed": "송신 여부·모드·체인·출력 목표·현재 상태 조회",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    },
+    {
+      "operation": "stop_tx",
+      "contract_needed": "중단 명령·응답·RF idle 확인·실패 시 제조사 복구 절차",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    },
+    {
+      "operation": "exit_test_mode",
+      "contract_needed": "시험 모드 해제·정상 복귀·최종 RF 상태 확인",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    },
+    {
+      "operation": "recover_after_link_loss",
+      "contract_needed": "연결 소실 중 실행 상태 불명·재접속 후 조회·재시도 제한",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    },
+    {
+      "operation": "export_logs",
+      "contract_needed": "성공·실패·중단을 포함한 원본 로그와 관련 상태 내보내기",
+      "call_signature": null,
+      "expected_response": null,
+      "completion_query": null,
+      "error_codes": null,
+      "timeout": null,
+      "idempotency": "unknown",
+      "support_status": "unknown",
+      "validation_evidence": "not_provided"
+    }
+  ],
+  "completion_evidence_required": [
+    "호스트 호출 성공, DUT의 명령 수락, 기능 완료 조회, 실제 RF 관측을 서로 구별한다.",
+    "도구의 종료 코드 0·device 상태·로그 메시지만으로 RF 설정 완료나 출력 적합을 판단하지 않는다.",
+    "송신 종료는 제조사 stop 응답과 상태 조회를 받고 필요한 현장 RF 확인 근거를 연결한다. 임계값·방법은 검증된 현장 절차에서 정한다.",
+    "연결 끊김·시간초과·취소 시 송신 상태가 불명이면 성공으로 전환하지 않고 원본·오류를 보존한다.",
+    "실제 값은 제조사 근거와 현장 검증 전까지 null/unknown을 유지한다. 채널·출력·속도 기본값을 꾸며 넣지 않는다."
+  ],
+  "evidence_links": [
+    "S07-E01",
+    "S07-E02",
+    "S07-E03",
+    "S07-E04",
+    "S07-E05",
+    "S07-E07",
+    "S07-E08",
+    "S07-E11",
+    "S07-E12",
+    "S07-E13"
+  ],
+  "not_collected": [
+    "비밀키·비밀번호·계정 토큰",
+    "제조사 비공개 FW·도구 패키지",
+    "실측 출력·내부 교정값·현장 주소"
+  ],
+  "runtime_actions_performed": [],
+  "validation_state": "input_specification_only"
+}

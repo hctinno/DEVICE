@@ -1,0 +1,170 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S07-B0001",
+  "task_id": "FCC-20261023-S07-B0001",
+  "owner_session": "S07",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "snapshot_inventory_sha256": "30733f863feed2197c1bc89a36528e73cc62cd31ee71c852db05d736b55f33a2",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S07-B0001",
+    "decision": "content_approved_with_apache_documentation_derivatives",
+    "findings": [
+      "P01 independently read official Android Developers and AOSP Content License pages; article documentation is licensed under Apache-2.0, with site, trademark and linked-media exceptions.",
+      "Three extracted article files carry publisher, actual source URL, original hash and extraction-change notice; full HTML originals stay local.",
+      "ADB/logcat/AOSP testing interfaces do not establish manufacturer RF transmit-mode support; no DUT commands were executed."
+    ],
+    "request_outcome": {
+      "completed": 2,
+      "limited": 0,
+      "not_started": 0
+    },
+    "public_derivative_paths": [
+      "derived/android-adb.txt",
+      "derived/android-logcat.txt",
+      "derived/aosp-wifi-debug.txt"
+    ],
+    "publication_metadata_files": [
+      "dut-testmode-input-spec.json",
+      "rights-evidence.json",
+      "derived-documents.json",
+      "attribution.json"
+    ],
+    "owner": "P01",
+    "source_inventory_verified": true,
+    "rights_public_document_ids": [],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [
+    {
+      "document_id": "S07-android-adb-23876effdde7",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "23876effdde7c9f1e635d9d91db2cc748908f05cb37d0f205856c9abdd5ff691",
+      "original_bytes": 368027,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "download_url": "https://developer.android.com/tools/adb?hl=en",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25"
+    },
+    {
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "1b9760fb6b6143df5a4fb3dfb842680c8436f218de892374ff8638c5c1a3f3f8",
+      "original_bytes": 285774,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "download_url": "https://developer.android.com/tools/logcat?hl=en",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03"
+    },
+    {
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "004a0e99cf250e378878dba6ba28754a031ae0dfcb864ccb6a3f92ae3016f95e",
+      "original_bytes": 191045,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "download_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09"
+    },
+    {
+      "document_id": "S07-android-content-license-0a5ada2e77c8",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "0a5ada2e77c8348d829a23386c00b23a63ddc5b3f3df7986f24002de447ffb7b",
+      "original_bytes": 252965,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://developer.android.com/license",
+      "download_url": "https://developer.android.com/license",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated not stated"
+    },
+    {
+      "document_id": "S07-android-adb-23876effdde7-text-r1",
+      "representation": "extracted",
+      "acquired_locally": true,
+      "original_sha256": "6532366fa2464a72ec71abc46804cd5fa437da5b0dbee641df1cdac6d81e148c",
+      "original_bytes": 54433,
+      "public_payload_included": true,
+      "rights": "public",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "download_url": "https://developer.android.com/tools/adb?hl=en",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25"
+    },
+    {
+      "document_id": "S07-android-logcat-1b9760fb6b61-text-r1",
+      "representation": "extracted",
+      "acquired_locally": true,
+      "original_sha256": "d9a548e2233081e0780481d8d2133f89fbd915a5cbfafac2d10d9653b2132e01",
+      "original_bytes": 11045,
+      "public_payload_included": true,
+      "rights": "public",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "download_url": "https://developer.android.com/tools/logcat?hl=en",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03"
+    },
+    {
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25-text-r1",
+      "representation": "extracted",
+      "acquired_locally": true,
+      "original_sha256": "4322321c54ca157caaf740042e7a3e172b61112e257077f15baaeeed19419ee8",
+      "original_bytes": 4894,
+      "public_payload_included": true,
+      "rights": "public",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "download_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09"
+    },
+    {
+      "document_id": "P01-license-Apache-2.0-cfc7749b96f6",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "original_bytes": 11358,
+      "public_payload_included": [
+        "derived/android-adb.txt",
+        "derived/android-logcat.txt",
+        "derived/aosp-wifi-debug.txt"
+      ],
+      "rights": "public",
+      "source_url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "download_url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "version": "Version 2.0, January 2004"
+    }
+  ],
+  "redacted_local_reference_fields": [
+    "/policy_original_path",
+    "/restricted_originals/0",
+    "/restricted_originals/1",
+    "/restricted_originals/2",
+    "/restricted_originals/3"
+  ],
+  "package": {
+    "package_id": "FCC-20261023A-S07-B0001",
+    "path": "materials/packages/FCC-20261023A-S07-B0001.zip",
+    "sha256": "73f9176add48af579e8f32aee5fb469cf9699bc3e1671969e3b3903296bae782",
+    "bytes": 31115,
+    "included_payloads": 4,
+    "access_or_unavailable_records": 4
+  },
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "dut-testmode-input-spec.json",
+    "rights-evidence.json",
+    "derived-documents.json",
+    "attribution.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

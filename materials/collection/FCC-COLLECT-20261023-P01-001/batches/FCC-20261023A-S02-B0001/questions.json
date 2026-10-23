@@ -1,0 +1,42 @@
+[
+  {
+    "question_id": "S02-Q01",
+    "task_id": "FCC-20261023-S02-B0001",
+    "blocking_batch_completion": false,
+    "needed_before": "DUT applicability and test-plan approval",
+    "route_via": "P01",
+    "question": "첫 대상 모델의 디지털 추가 기능·시장·충전 중 동작·AC/USB 호스트·주변기기 조합·최고 내부 주파수를 기존 비공개 입력 요청에 연결할 수 있는가?",
+    "gap_ids": [
+      "G07"
+    ],
+    "user_contact_sent": false
+  },
+  {
+    "question_id": "S02-Q02",
+    "task_id": "FCC-20261023-S02-B0001",
+    "blocking_batch_completion": false,
+    "needed_before": "site approval and actual measurements",
+    "route_via": "P01; S04/S06/S08 references",
+    "question": "선택 사이트의 대역·거리·측정 볼륨별 검증 성적서와 교정·보정 기록 중 기존 보유 자료는 무엇인가?",
+    "gap_ids": [
+      "G08"
+    ],
+    "user_contact_sent": false
+  },
+  {
+    "question_id": "S02-Q03",
+    "task_id": "FCC-20261023-S02-B0001",
+    "blocking_batch_completion": false,
+    "needed_before": "detailed bandwidth/setup and 2013-to-2020 clause mapping approval",
+    "route_via": "P01; S01 standard ownership retained",
+    "question": "기존 기관 라이선스로 적법하게 열람 가능한 C63.4-2014·C63.4a-2017·C63.25.1-2018·C63.10-2020을 연결할 수 있는가? 구매·계정 생성이나 재승인 요청은 아니다.",
+    "gap_ids": [
+      "G01",
+      "G02",
+      "G03",
+      "G04",
+      "G09"
+    ],
+    "user_contact_sent": false
+  }
+]

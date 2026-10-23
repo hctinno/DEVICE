@@ -1,8 +1,9 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "checked_at": "2026-10-23T21:43:15.074674+09:00",
+  "checked_at": "2026-10-23T22:22:20.823604+09:00",
   "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
-  "assignment_version": "v002",
+  "latest_assignment_version": "v003",
+  "reviewed_result_version": "v002",
   "published_branch": "collect/fcc-p0-smartphone-20261023-001",
   "development_target_branch": "codex/fcc-lab-foundation",
   "session_control_empirically_verified": {
@@ -12,79 +13,115 @@
     "wait_status": true,
     "all_eight_acknowledged": true
   },
-  "active_request_count": 17,
+  "initial_request_count": 17,
+  "initial_request_outcomes": {
+    "completed": 11,
+    "limited": 6,
+    "not_started": 0
+  },
+  "followup_request_count": 2,
   "sessions": [
     {
       "role": "S01",
       "role_acknowledged": true,
       "git_prohibited_acknowledged": true,
       "task_acknowledged": true,
-      "task_state": "in_progress",
-      "task_id": "FCC-20261023-S01-B0001",
-      "ready_batches": []
+      "initial_task_id": "FCC-20261023-S01-B0001",
+      "initial_batch_state": "content_and_rights_reviewed",
+      "current_followup": {
+        "task_id": "FCC-20261023-S01-B0002",
+        "batch_id": "FCC-20261023A-S01-B0002",
+        "owner_session": "S01",
+        "assignment_version": "v003",
+        "collector_state": "local_ready_frozen_waiting_P01_receipt",
+        "P01_receipt_state": "accepted_pending_content_and_rights_review",
+        "publication_state": "not_included_in_v002_results",
+        "request_ids": [
+          "ADD-S01-KDB-BLOB-CURRENCY-002"
+        ]
+      },
+      "state_without_followup": null
     },
     {
       "role": "S02",
       "role_acknowledged": true,
       "git_prohibited_acknowledged": true,
       "task_acknowledged": true,
-      "task_state": "in_progress",
-      "task_id": "FCC-20261023-S02-B0001",
-      "ready_batches": []
+      "initial_task_id": "FCC-20261023-S02-B0001",
+      "initial_batch_state": "content_and_rights_reviewed",
+      "current_followup": null,
+      "state_without_followup": "awaiting_next_P01_assignment"
     },
     {
       "role": "S03",
       "role_acknowledged": true,
       "git_prohibited_acknowledged": true,
       "task_acknowledged": true,
-      "task_state": "in_progress",
-      "task_id": "FCC-20261023-S03-B0001",
-      "ready_batches": []
+      "initial_task_id": "FCC-20261023-S03-B0001",
+      "initial_batch_state": "content_and_rights_reviewed",
+      "current_followup": null,
+      "state_without_followup": "awaiting_next_P01_assignment"
     },
     {
       "role": "S04",
       "role_acknowledged": true,
       "git_prohibited_acknowledged": true,
       "task_acknowledged": true,
-      "task_state": "in_progress",
-      "task_id": "FCC-20261023-S04-B0001",
-      "ready_batches": []
+      "initial_task_id": "FCC-20261023-S04-B0001",
+      "initial_batch_state": "content_and_rights_reviewed",
+      "current_followup": null,
+      "state_without_followup": "awaiting_next_P01_assignment"
     },
     {
       "role": "S05",
       "role_acknowledged": true,
       "git_prohibited_acknowledged": true,
       "task_acknowledged": true,
-      "task_state": "in_progress",
-      "task_id": "FCC-20261023-S05-B0001",
-      "ready_batches": []
+      "initial_task_id": "FCC-20261023-S05-B0001",
+      "initial_batch_state": "content_and_rights_reviewed",
+      "current_followup": null,
+      "state_without_followup": "awaiting_next_P01_assignment"
     },
     {
       "role": "S06",
       "role_acknowledged": true,
       "git_prohibited_acknowledged": true,
       "task_acknowledged": true,
-      "task_state": "in_progress",
-      "task_id": "FCC-20261023-S06-B0001",
-      "ready_batches": []
+      "initial_task_id": "FCC-20261023-S06-B0001",
+      "initial_batch_state": "content_and_rights_reviewed",
+      "current_followup": null,
+      "state_without_followup": "awaiting_next_P01_assignment"
     },
     {
       "role": "S07",
       "role_acknowledged": true,
       "git_prohibited_acknowledged": true,
       "task_acknowledged": true,
-      "task_state": "in_progress",
-      "task_id": "FCC-20261023-S07-B0001",
-      "ready_batches": []
+      "initial_task_id": "FCC-20261023-S07-B0001",
+      "initial_batch_state": "content_and_rights_reviewed",
+      "current_followup": null,
+      "state_without_followup": "awaiting_next_P01_assignment"
     },
     {
       "role": "S08",
       "role_acknowledged": true,
       "git_prohibited_acknowledged": true,
       "task_acknowledged": true,
-      "task_state": "in_progress",
-      "task_id": "FCC-20261023-S08-B0001",
-      "ready_batches": []
+      "initial_task_id": "FCC-20261023-S08-B0001",
+      "initial_batch_state": "content_and_rights_reviewed",
+      "current_followup": {
+        "task_id": "FCC-20261023-S08-B0002",
+        "batch_id": "FCC-20261023A-S08-B0002",
+        "owner_session": "S08",
+        "assignment_version": "v003",
+        "collector_state": "in_progress",
+        "P01_receipt_state": "not_received",
+        "publication_state": "not_included_in_v002_results",
+        "request_ids": [
+          "ADD-S08-BGN-CASE-COMPLETENESS-002"
+        ]
+      },
+      "state_without_followup": null
     }
   ],
   "scope": "Source collection and provenance only. No method approval, hardware execution, site validation or conformity claim."

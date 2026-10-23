@@ -1,0 +1,56 @@
+[
+  {
+    "path": "derived/android-adb.txt",
+    "representation": "extracted",
+    "parent_document_id": "S07-android-adb-23876effdde7",
+    "sha256": "6532366fa2464a72ec71abc46804cd5fa437da5b0dbee641df1cdac6d81e148c",
+    "bytes": 54433,
+    "media_type": "text/plain; charset=utf-8",
+    "rights": "public",
+    "license": "Apache-2.0 documentation content; exceptions preserved in original",
+    "layout_limits": "텍스트·코드가 추출되지만 표 구조·그림·수식 레이아웃과 외부 미디어는 보존하지 않는다. 원문 HTML을 함께 참조한다.",
+    "license_evidence_url": "https://developer.android.com/license",
+    "publication_conditions": [
+      "Apache-2.0의 라이선스 사본·저작권·귀속 고지를 보존한다.",
+      "텍스트 추출 변경 사실과 원문 URL·원문 해시를 유지한다.",
+      "상표·외부 링크 자산을 재사용 권한에 포함하지 않는다.",
+      "이 파일에는 본문과 원문 라이선스 고지만 포함하며 사이트 스크립트·로고·이미지는 포함하지 않는다."
+    ]
+  },
+  {
+    "path": "derived/android-logcat.txt",
+    "representation": "extracted",
+    "parent_document_id": "S07-android-logcat-1b9760fb6b61",
+    "sha256": "d9a548e2233081e0780481d8d2133f89fbd915a5cbfafac2d10d9653b2132e01",
+    "bytes": 11045,
+    "media_type": "text/plain; charset=utf-8",
+    "rights": "public",
+    "license": "Apache-2.0 documentation content; exceptions preserved in original",
+    "layout_limits": "텍스트·코드가 추출되지만 표 구조·그림·수식 레이아웃과 외부 미디어는 보존하지 않는다. 원문 HTML을 함께 참조한다.",
+    "license_evidence_url": "https://developer.android.com/license",
+    "publication_conditions": [
+      "Apache-2.0의 라이선스 사본·저작권·귀속 고지를 보존한다.",
+      "텍스트 추출 변경 사실과 원문 URL·원문 해시를 유지한다.",
+      "상표·외부 링크 자산을 재사용 권한에 포함하지 않는다.",
+      "이 파일에는 본문과 원문 라이선스 고지만 포함하며 사이트 스크립트·로고·이미지는 포함하지 않는다."
+    ]
+  },
+  {
+    "path": "derived/aosp-wifi-debug.txt",
+    "representation": "extracted",
+    "parent_document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+    "sha256": "4322321c54ca157caaf740042e7a3e172b61112e257077f15baaeeed19419ee8",
+    "bytes": 4894,
+    "media_type": "text/plain; charset=utf-8",
+    "rights": "public",
+    "license": "Apache-2.0 documentation content; exceptions preserved in original",
+    "layout_limits": "텍스트·코드가 추출되지만 표 구조·그림·수식 레이아웃과 외부 미디어는 보존하지 않는다. 원문 HTML을 함께 참조한다.",
+    "license_evidence_url": "https://source.android.com/license",
+    "publication_conditions": [
+      "Apache-2.0의 라이선스 사본·저작권·귀속 고지를 보존한다.",
+      "텍스트 추출 변경 사실과 원문 URL·원문 해시를 유지한다.",
+      "상표·외부 링크 자산을 재사용 권한에 포함하지 않는다.",
+      "이 파일에는 본문과 원문 라이선스 고지만 포함하며 사이트 스크립트·로고·이미지는 포함하지 않는다."
+    ]
+  }
+]

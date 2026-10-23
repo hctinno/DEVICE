@@ -1,0 +1,147 @@
+{
+  "task_id": "FCC-20261023-S03-B0001",
+  "request_id": "ADD-S03-SAR-ATTACHMENT-DELTA-001",
+  "checked_at": "2026-10-23T21:54:21+09:00",
+  "publications": [
+    {
+      "publication": "KDB-447498",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20676",
+      "official_publication_date_displayed": "2025-04-02",
+      "observed_at": "2026-10-23T21:46:14+09:00",
+      "observation_method": "dedicated hidden IAB tab; read-only accessibility and DOM text/link observation",
+      "current_raw_http_bytes_retained": false,
+      "current_raw_http_sha256": null,
+      "attachment_count": 4,
+      "attachments": [
+        {
+          "live_attachment_title": "447498 D01 General RF Exposure Guidance v06",
+          "live_public_attachment_id": "f8IQgJxTTL5y0oRi0cpAuA==",
+          "official_download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=f8IQgJxTTL5y0oRi0cpAuA%3D%3D&desc=447498 D01 General RF Exposure Guidance v06&tracking_number=20676",
+          "reference_id": "REF-KDB-447498-447498-D01-General-RF-Exposure-Guidance-v06-6c7b038105",
+          "legacy_sha256": "6c7b038105de7121a55e8eec55f7ba6bd0a458ee1f521d61b344fa733092d59d",
+          "legacy_bytes": 1350641,
+          "comparison": "listed_title_version_and_public_attachment_id_match_existing_original",
+          "action": "reuse_S01_original_no_copy_no_redownload"
+        },
+        {
+          "live_attachment_title": "447498 D02 SAR Procedures for Dongle Xmtr v02r01",
+          "live_public_attachment_id": "VmJkXb8CkArNCxgNV899CQ==",
+          "official_download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=VmJkXb8CkArNCxgNV899CQ%3D%3D&desc=447498 D02 SAR Procedures for Dongle Xmtr v02r01&tracking_number=20676",
+          "reference_id": "REF-KDB-447498-447498-D02-SAR-Procedures-for-Dongle-Xmtr-v02r01-c74e032ec1",
+          "legacy_sha256": "c74e032ec145a04bfef8051dfee99c7e22f5ebc5ad76626d49d85522a90809ad",
+          "legacy_bytes": 255691,
+          "comparison": "listed_title_version_and_public_attachment_id_match_existing_original",
+          "action": "reuse_S01_original_no_copy_no_redownload"
+        },
+        {
+          "live_attachment_title": "447498 D03 Supplement C Cross-Reference v01",
+          "live_public_attachment_id": "RpV6tzh7+sHYZxnX9U4XmQ==",
+          "official_download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=RpV6tzh7%2BsHYZxnX9U4XmQ%3D%3D&desc=447498 D03 Supplement C Cross-Reference v01&tracking_number=20676",
+          "reference_id": "REF-KDB-447498-447498-D03-Supplement-C-Cross-Reference-v01-694baeb3b4",
+          "legacy_sha256": "694baeb3b46e101ff95f89c9f624c754002e9bc463b887065573481b5d6d61c1",
+          "legacy_bytes": 26547,
+          "comparison": "listed_title_version_and_public_attachment_id_match_existing_original",
+          "action": "reuse_S01_original_no_copy_no_redownload"
+        },
+        {
+          "live_attachment_title": "447498 D04 Interim General RF Exposure Guidance v01",
+          "live_public_attachment_id": "Z0Stk/POk2hqHgYJNt/RlQ==",
+          "official_download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=Z0Stk%2FPOk2hqHgYJNt%2FRlQ%3D%3D&desc=447498 D04 Interim  General RF Exposure Guidance v01&tracking_number=20676",
+          "reference_id": "REF-KDB-447498-447498-D04-Interim-General-RF-Exposure-Guidance-v01-93b298eb4f",
+          "legacy_sha256": "93b298eb4f6df5b65f213efb4768043d18c6301a4b2da7e645754f7013c9e152",
+          "legacy_bytes": 731010,
+          "comparison": "listed_title_version_and_public_attachment_id_match_existing_original",
+          "action": "reuse_S01_original_no_copy_no_redownload"
+        }
+      ],
+      "missing_or_new_listed_attachments": [],
+      "current_attachment_pdf_bytes_refetched": false,
+      "limitation": "Current publication listing compared by title/version/attachment ID. Existing local original bytes verified by hash. No claim that every live PDF byte was independently refetched and rehashed.",
+      "other_linked_resources": [
+        {
+          "title": "http://www.fcc.gov/oet/ea/presentations/files/oct05/MPE-mobile.xls",
+          "href": "http://www.fcc.gov/oet/ea/presentations/files/oct05/MPE-mobile.xls"
+        }
+      ]
+    },
+    {
+      "publication": "KDB-865664",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=28242",
+      "official_publication_date_displayed": "2015-10-23",
+      "observed_at": "2026-10-23T21:46:14+09:00",
+      "observation_method": "dedicated hidden IAB tab; read-only accessibility and DOM text/link observation",
+      "current_raw_http_bytes_retained": false,
+      "current_raw_http_sha256": null,
+      "attachment_count": 2,
+      "attachments": [
+        {
+          "live_attachment_title": "865664 D01 SAR Measurement 100 MHz to 6 GHz v01r04",
+          "live_public_attachment_id": "RUMcMDL7fmDLsdRSsbCNoA==",
+          "official_download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=RUMcMDL7fmDLsdRSsbCNoA%3D%3D&desc=865664 D01 SAR Measurement 100 MHz to 6 GHz v01r04&tracking_number=28242",
+          "reference_id": "REF-KDB-865664-865664-D01-SAR-Measurement-100-MHz-to-6-GHz-v01r04-99a6e21d4e",
+          "legacy_sha256": "99a6e21d4e9c6c4aa0ee862231bf1df3450b23b3fca7341bffa38bdbdedd7a48",
+          "legacy_bytes": 229922,
+          "comparison": "listed_title_version_and_public_attachment_id_match_existing_original",
+          "action": "reuse_S01_original_no_copy_no_redownload"
+        },
+        {
+          "live_attachment_title": "865664 D02 RF Exposure Reporting v01r02",
+          "live_public_attachment_id": "7MrO52l3lVpGzJz3Hbb0PQ==",
+          "official_download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=7MrO52l3lVpGzJz3Hbb0PQ%3D%3D&desc=865664 D02 RF Exposure Reporting v01r02&tracking_number=28242",
+          "reference_id": "REF-KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "legacy_sha256": "6ed9380c42d2a88c2bb469be39162561453aad60bad0b2aea77bcce020a2ee05",
+          "legacy_bytes": 413076,
+          "comparison": "listed_title_version_and_public_attachment_id_match_existing_original",
+          "action": "reuse_S01_original_no_copy_no_redownload"
+        }
+      ],
+      "missing_or_new_listed_attachments": [],
+      "current_attachment_pdf_bytes_refetched": false,
+      "limitation": "Current publication listing compared by title/version/attachment ID. Existing local original bytes verified by hash. No claim that every live PDF byte was independently refetched and rehashed.",
+      "other_linked_resources": []
+    },
+    {
+      "publication": "KDB-248227",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=28238",
+      "official_publication_date_displayed": "2015-10-23",
+      "observed_at": "2026-10-23T21:46:14+09:00",
+      "observation_method": "dedicated hidden IAB tab; read-only accessibility and DOM text/link observation",
+      "current_raw_http_bytes_retained": false,
+      "current_raw_http_sha256": null,
+      "attachment_count": 1,
+      "attachments": [
+        {
+          "live_attachment_title": "248227 D01 802 11 Wi-Fi SAR v02r02",
+          "live_public_attachment_id": "ARcyvK1h4uoKj8FLtKtPkQ==",
+          "official_download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=ARcyvK1h4uoKj8FLtKtPkQ%3D%3D&desc=248227 D01 802 11 Wi-Fi SAR v02r02&tracking_number=28238",
+          "reference_id": "REF-KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02-3ede39bf7a",
+          "legacy_sha256": "3ede39bf7a0044caa721e0ae3344ab002085c4daf54acb7f0a14e1537ffe073a",
+          "legacy_bytes": 818995,
+          "comparison": "listed_title_version_and_public_attachment_id_match_existing_original",
+          "action": "reuse_S01_original_no_copy_no_redownload"
+        }
+      ],
+      "missing_or_new_listed_attachments": [],
+      "current_attachment_pdf_bytes_refetched": false,
+      "limitation": "Current publication listing compared by title/version/attachment ID. Existing local original bytes verified by hash. No claim that every live PDF byte was independently refetched and rehashed.",
+      "other_linked_resources": []
+    }
+  ],
+  "checked_publication_count": 3,
+  "checked_listed_attachment_count": 7,
+  "new_or_missing_listed_attachment_count": 0,
+  "originals_downloaded": 0,
+  "duplicate_originals_created": 0,
+  "not_downloaded_companions": [
+    {
+      "title": "Mobile Multi-transmitter MPE Estimation XLS",
+      "url": "http://www.fcc.gov/oet/ea/presentations/files/oct05/MPE-mobile.xls",
+      "reason": "publication 안의 보조 링크다. 이번 스마트폰 2.4 GHz SAR 첨부 목록과 구별하고 S01 legacy 예약이 불명확하여 추가 취득하지 않는다."
+    },
+    {
+      "title": "April 2025 TCBC Workshop Presentation 3.2",
+      "url": null,
+      "reason": "publication에서 언급하는 상세 설명이다. 독립적인 현행 원문·기존 소유 확인은 후속 배정을 기다린다."
+    }
+  ]
+}

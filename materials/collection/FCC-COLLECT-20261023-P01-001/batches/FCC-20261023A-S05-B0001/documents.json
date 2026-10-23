@@ -1,0 +1,144 @@
+[
+  {
+    "document_id": "S05-dasy52-flyer-b88500087b6a",
+    "request_ids": [
+      "EQ-MOD-708c2272f105c511",
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "title": "DASY52 Systems — historical component and feature matrix",
+    "kind": "other",
+    "version": "DASY52 Systems composite flyer; PDF p2 W12/13; component/feature pages W 0708; exact edition unresolved",
+    "publisher": "SPEAG, Schmid & Partner Engineering AG",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T21:43:17+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source, acquired for local review only. SPEAG site carries a copyright notice; no permission to redistribute the complete source has been established. Keep raw payload private pending P01 rights review. Legal route: https://speag.swiss/meta-navigation/legal-notice",
+    "representation": "original",
+    "source_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+    "download_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+    "model_ids": [
+      "MOD-708c2272f105c511",
+      "MOD-4e657354694908fa"
+    ],
+    "language": "en",
+    "notes": "Historical system brochure; not a full user/programming manual. DAE4 and Measurement Server DASY5 appear as separate components. System feature availability is package-dependent, not evidence of installed options. Visual review found mixed printed page markers; PDF metadata creation date is not treated as the complete document's publication date. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S05-dasy52-report-generator-c694fa6fd65d",
+    "request_ids": [
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "title": "DASY5 Manual V5.2 — Chapter 29 DASY5 Report Generator application note",
+    "kind": "manual",
+    "version": "DASY5 Manual V5.2, October 2009; Chapter 29 excerpt",
+    "publisher": "SPEAG, Schmid & Partner Engineering AG",
+    "published_at": "2009-10",
+    "retrieved_at": "2026-10-23T21:43:21+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source, acquired for local review only. SPEAG site carries a copyright notice; no permission to redistribute the complete source has been established. Keep raw payload private pending P01 rights review. Legal route: https://speag.swiss/meta-navigation/legal-notice",
+    "representation": "original",
+    "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+    "download_url": "https://speag.swiss/assets/downloads/products/dasy/free_downloads/AN_D52_ReportGenerator.pdf",
+    "model_ids": [
+      "MOD-4e657354694908fa"
+    ],
+    "language": "en",
+    "notes": "Exact DASY5.2 software evidence for .da52 measurement containers and optional template/exporter functions. Contains a historical illustrative report, not this laboratory's measurements or current regulatory requirements. The legacy release page uses a broken relative link; the observed asset path works when resolved from the official domain root. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S05-dasy52-release-4fc4edb3039a",
+    "request_ids": [
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "title": "Final Release DASY52 — official historical release notice",
+    "kind": "other",
+    "version": "Release notice dated 2009-10-16",
+    "publisher": "SPEAG, Schmid & Partner Engineering AG",
+    "published_at": "2009-10-16",
+    "retrieved_at": "2026-10-23T21:43:24+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source, acquired for local review only. SPEAG site carries a copyright notice; no permission to redistribute the complete source has been established. Keep raw payload private pending P01 rights review. Legal route: https://speag.swiss/meta-navigation/legal-notice",
+    "representation": "original",
+    "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+    "download_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+    "model_ids": [
+      "MOD-4e657354694908fa"
+    ],
+    "language": "en",
+    "notes": "Historical DASY5 V5.2 upgrade and file-import/reporting notice. Does not establish installation, licensed options or current FCC method acceptance. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S05-speag-rights-route-e128de06477f",
+    "request_ids": [
+      "EQ-MOD-708c2272f105c511",
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "title": "SPEAG Legal Notice — rights and publisher verification route",
+    "kind": "other",
+    "version": "Undated live page; retrieved 2026-10-23",
+    "publisher": "SPEAG, Schmid & Partner Engineering AG",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T21:43:25+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source, acquired for local review only. SPEAG site carries a copyright notice; no permission to redistribute the complete source has been established. Keep raw payload private pending P01 rights review. Legal route: https://speag.swiss/meta-navigation/legal-notice",
+    "representation": "original",
+    "source_url": "https://speag.swiss/meta-navigation/legal-notice",
+    "download_url": "https://speag.swiss/meta-navigation/legal-notice",
+    "model_ids": [
+      "MOD-708c2272f105c511",
+      "MOD-4e657354694908fa"
+    ],
+    "language": "en",
+    "notes": "Publisher/legal route only. Public access and the presence of a copyright notice do not establish public redistribution permission. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S05-dasy52-download-portal-7e984da783d0",
+    "request_ids": [
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "title": "DASY52 Support and Download Page",
+    "kind": "other",
+    "version": "Undated portal; displays V52.10.4.1535 release 2021-07-01",
+    "publisher": "SPEAG, Schmid & Partner Engineering AG",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T21:45:52+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source, acquired for local review only. SPEAG site carries a copyright notice; no permission to redistribute the complete source has been established. Keep raw payload private pending P01 rights review. Legal route: https://speag.swiss/meta-navigation/legal-notice",
+    "representation": "original",
+    "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+    "download_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+    "model_ids": [
+      "MOD-4e657354694908fa"
+    ],
+    "language": "en",
+    "notes": "Public portal snapshot. Licensed product access requires a SPEAG-supplied license and installer/email workflow. No installer, email request, login or license action performed. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S05-dasy52-readme-b0e2d28dec82",
+    "request_ids": [
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "title": "DASY52 V10.4 (1535) official ReadMe",
+    "kind": "manual",
+    "version": "DASY52 V10.4 (1535); SEMCAD X V14 V6.14 (7501)",
+    "publisher": "SPEAG, Schmid & Partner Engineering AG",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T21:45:55+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source; complete-source redistribution permission has not been established. Keep original private for P01 review. Legal route: https://speag.swiss/meta-navigation/legal-notice",
+    "representation": "original",
+    "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+    "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/6-0/ReadMe.txt",
+    "model_ids": [
+      "MOD-4e657354694908fa"
+    ],
+    "language": "en",
+    "notes": "Content explicitly identifies DASY52 despite the URL directory 6-0. Describes documentation delivery, server/driver/robot versions and license/user-file locations. Instructions preserved as source data; no installation, upgrade or external request executed. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  }
+]

@@ -1,0 +1,75 @@
+[
+  {
+    "document_id": "S06-ets-manuals-index-383dba3d17af",
+    "request_ids": [
+      "EQ-MOD-f183d948fc590a8b",
+      "EQ-MOD-207e69830324252e"
+    ],
+    "model_ids": [
+      "MOD-f183d948fc590a8b",
+      "MOD-207e69830324252e"
+    ],
+    "title": "ETS-Lindgren current and archived manuals index",
+    "kind": "other",
+    "version": "Undated current/archive index; snapshot 2026-10-23; not a 2090 manual",
+    "publisher": "ETS-Lindgren",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T21:40:47+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "공식 사이트의 익명 공개 열람만 확인했다. 공개 저장소 재배포 허락은 확인하지 못했으며 restricted/ 안에만 보관한다. P01은 원본을 공개 게시하지 않고 권리를 별도로 검토해야 한다.",
+    "representation": "original",
+    "language": "en",
+    "source_url": "https://www.ets-lindgren.com/manuals/",
+    "download_url": "https://www.ets-lindgren.com/manuals/",
+    "notes": "접근 경로와 목록 첫 페이지 확인용이다. 2090 명령 원문 또는 전체 보관 목록을 확보한 것으로 집계하지 않는다. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S06-innco-co3000-4p-product-a9a5ddfd5681",
+    "request_ids": [
+      "EQ-MOD-6b92cbf630670c77"
+    ],
+    "model_ids": [
+      "MOD-6b92cbf630670c77"
+    ],
+    "title": "INNCO Controller CO3000-4P official product page",
+    "kind": "other",
+    "version": "Undated CO3000-4P product web page; firmware revision unstated; snapshot 2026-10-23",
+    "publisher": "INNCO Systems",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T21:40:47+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "공식 사이트의 익명 공개 열람만 확인했다. 공개 저장소 재배포 허락은 확인하지 못했으며 restricted/ 안에만 보관한다. P01은 원본을 공개 게시하지 않고 권리를 별도로 검토해야 한다.",
+    "representation": "original",
+    "language": "en",
+    "source_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+    "download_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+    "notes": "공식 CO3000-4P 사양이다. 대장 CO3000-4port와의 동일성 및 현장 옵션·라이선스를 확정하지 않는다. 명령 매뉴얼이 아니다. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S06-ets-2090-official-case-study-ba4374369e9b",
+    "request_ids": [
+      "EQ-MOD-f183d948fc590a8b",
+      "EQ-MOD-207e69830324252e"
+    ],
+    "model_ids": [
+      "MOD-f183d948fc590a8b",
+      "MOD-207e69830324252e"
+    ],
+    "title": "ETS-Lindgren PC Test Engineering Laboratory: Model 2090 description",
+    "kind": "other",
+    "version": "Undated official case-study web page; snapshot 2026-10-23",
+    "publisher": "ETS-Lindgren",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T21:44:28+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "공식 사이트의 익명 공개 열람만 확인했다. 공개 저장소 재배포 허락은 확인하지 못했으며 restricted/ 안에만 보관한다. P01은 원본을 공개 게시하지 않고 권리를 별도로 검토해야 한다.",
+    "representation": "original",
+    "language": "en",
+    "source_url": "https://www.ets-lindgren.com/case-studies/pc-test-engineering-laboratory/",
+    "download_url": "https://www.ets-lindgren.com/case-studies/pc-test-engineering-laboratory/",
+    "notes": "Model 2090 제품군과 원격 GPIB 설명의 공식 근거다. EMCO 표기의 실제 개별 장비·펌웨어 호환성은 미확인이다. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  }
+]

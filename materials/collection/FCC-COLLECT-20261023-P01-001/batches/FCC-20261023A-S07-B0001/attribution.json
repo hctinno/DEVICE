@@ -1,0 +1,38 @@
+{
+  "prepared_at": "2026-10-23T21:55:15+09:00",
+  "publisher": "Google / Android Open Source Project",
+  "source_documents": [
+    {
+      "title": "Android Debug Bridge (adb)",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "document_id": "S07-android-adb-23876effdde7",
+      "original_sha256": "23876effdde7c9f1e635d9d91db2cc748908f05cb37d0f205856c9abdd5ff691"
+    },
+    {
+      "title": "Logcat command-line tool",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "original_sha256": "1b9760fb6b6143df5a4fb3dfb842680c8436f218de892374ff8638c5c1a3f3f8"
+    },
+    {
+      "title": "Test, debug, and tune Wi-Fi",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "original_sha256": "004a0e99cf250e378878dba6ba28754a031ae0dfcb864ccb6a3f92ae3016f95e"
+    },
+    {
+      "title": "Content License",
+      "source_url": "https://developer.android.com/license",
+      "document_id": "S07-android-content-license-0a5ada2e77c8",
+      "original_sha256": "0a5ada2e77c8348d829a23386c00b23a63ddc5b3f3df7986f24002de447ffb7b"
+    }
+  ],
+  "documentation_license": "Apache-2.0 subject to page-specific exceptions",
+  "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+  "policy_urls": [
+    "https://developer.android.com/license",
+    "https://source.android.com/license"
+  ],
+  "changes": "본문만 텍스트 추출했다. 번역·코드 실행·실측 검증은 수행하지 않았다. 표의 셀 텍스트는 대조했으나 표 배치·그림은 추출본에서 보존하지 않는다.",
+  "before_publication": "P01은 Apache-2.0 라이선스 사본과 필요한 원문 고지를 함께 게시한다. 상표·외부 자산·로컬 제한 HTML은 공개 자료와 구별한다."
+}

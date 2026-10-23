@@ -1,0 +1,52 @@
+{
+  "task_id": "FCC-20261023-S05-B0001",
+  "batch_id": "FCC-20261023A-S05-B0001",
+  "attempt": 1,
+  "owner_session": "S05",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "activation": "approved",
+  "questions": [
+    {
+      "question_id": "S05-Q01",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511"
+      ],
+      "route_to": "P01",
+      "blocking_this_batch": false,
+      "question": "DAE4 모델 입력에 섞인 DAE3V1을 구분할 개체별 명판 대응과 실제 교정서·허용된 교정파일 예제를 후속 현장 입력으로 배정해 주세요.",
+      "input_ids": [
+        "S05-IN01",
+        "S05-IN02",
+        "S05-IN03",
+        "S05-IN07"
+      ]
+    },
+    {
+      "question_id": "S05-Q02",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "route_to": "P01",
+      "blocking_this_batch": false,
+      "question": "실제 Server·SW·Driver·Robot 버전과 보유 옵션, 사용권 내 전체 매뉴얼/API 문서를 후속 입력으로 확인해 주세요. 설치·업그레이드·구매는 수행하지 않았습니다.",
+      "input_ids": [
+        "S05-IN04",
+        "S05-IN05"
+      ]
+    },
+    {
+      "question_id": "S05-Q03",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "route_to": "P01",
+      "blocking_this_batch": false,
+      "question": "해당 설치 버전의 비식별 .da52 및 내보내기 예제·파일 명세를 현장 자료 담당에게 연결해 주세요. 현재 공개 문서만으로 raw/교정 데이터 스키마를 확정할 수 없습니다.",
+      "input_ids": [
+        "S05-IN06"
+      ]
+    }
+  ],
+  "blocking_this_batch": false
+}

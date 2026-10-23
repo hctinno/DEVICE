@@ -1,0 +1,81 @@
+{
+  "task_id": "FCC-20261023-S02-B0001",
+  "batch_id": "FCC-20261023A-S02-B0001",
+  "attempt": 1,
+  "owner_session": "S02",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "activation": "approved",
+  "created_at": "2026-10-23T21:55:20+09:00",
+  "request_ids": [
+    "ADD-S02-EMC-BGN-CONDITIONS-001"
+  ],
+  "model_ids": [],
+  "status": "completed_with_recorded_evidence_limits",
+  "request_counts": {
+    "completed": 1,
+    "blocked": 0,
+    "unstarted": 0
+  },
+  "requests": [
+    {
+      "request_id": "ADD-S02-EMC-BGN-CONDITIONS-001",
+      "status": "completed_with_recorded_evidence_limits",
+      "completion_basis": "18 condition/measurement/report items, each with verified original locations; current rules and permitted editions separated; S01 ownership preserved."
+    }
+  ],
+  "evidence_counts": {
+    "indexed": 18,
+    "with_recorded_gaps": 18,
+    "gap_records": 9
+  },
+  "source_access_counts": {
+    "verified_legacy_originals_reused": 7,
+    "new_originals_downloaded": 0,
+    "new_public_originals": 0,
+    "new_restricted_local_originals": 0,
+    "purchase_required_standard_references": 4,
+    "live_checks_succeeded": 2,
+    "live_checks_http_403": 2,
+    "source_access_limit_records": 6
+  },
+  "artifact_counts": {
+    "new_originals": 0,
+    "restricted_originals": 0,
+    "derived_files": 1,
+    "metadata_files": 7
+  },
+  "original_limit": 6,
+  "documents_json_note": "[]; no new original records and no fake URLs for local metadata.",
+  "ownership": {
+    "legacy_original_owner": "S01",
+    "git_and_publication_owner": "P01",
+    "transmitter_spurious_evidence_owner": "S01",
+    "equipment_manual_reference": "S04",
+    "site_motion_reference": "S06",
+    "common_report_quality_reference": "S08"
+  },
+  "key_findings": [
+    "AC/charging/indirect power conditions indexed separately for 15.107 and 15.207.",
+    "15.31(a)(4) C63.4-2014 is distinct from 15.31(a)(3)/15.37(s) C63.10-2020.",
+    "2.948(d)(2) connects 1-18 GHz site validation to C63.25.1-2018.",
+    "Legacy 2019 KDB 558074 clause numbers are based on C63.10-2013; mapping to 2020 remains unverified."
+  ],
+  "limits": [
+    "No detailed standard bandwidth/setup approval without licensed full texts.",
+    "KDB 558074 and 414788 current publication checks returned HTTP 403 once each; current attachment completeness not asserted.",
+    "Actual DUT configuration, calibration and site evidence not provided; field suitability not established."
+  ],
+  "unsearched_scope": [
+    "FCC major-guidance/recent-publication full rediscovery",
+    "Current KDB 300643 online currency",
+    "Standards publisher newest-edition survey",
+    "Other products, Part 18, immunity/ESD/surge, other radio bands",
+    "Real equipment, DUT, site networks and field measurements"
+  ],
+  "questions_count": 3,
+  "question_policy": "Non-blocking future-input requests recorded for P01; no messages or approvals requested from users/other chats.",
+  "handoff_status": "local_work_prepared; P01 intake, publication and cloud intake not yet confirmed",
+  "hardware_or_network_control_performed": false,
+  "git_commands_performed": false
+}

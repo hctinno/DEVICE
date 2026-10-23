@@ -1,0 +1,688 @@
+{
+  "task_id": "FCC-20261023-S03-B0001",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "created_at": "2026-10-23T21:54:21+09:00",
+  "evidence_count": 21,
+  "items": [
+    {
+      "evidence_id": "S03-E001",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "휴대기기 분류",
+      "source_based_summary_ko": "§2.1093(b)는 통상 RF 방사 구조가 사용자의 몸에서 20 cm 이내인 비고정 사용 송신기기를 portable로 정의한다. 제품 사용 조건으로 분류해야 한다.",
+      "required_product_or_lab_inputs": [
+        "사용 설명서",
+        "안테나/방사 구조 위치",
+        "예상 사용 거리"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "clause_or_heading": "47 CFR §2.1093(b)",
+          "verification_anchor": "within 20 centimeters",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+          "cfr_section": "2.1093",
+          "xml_section_selector": ".//*[@TYPE='SECTION'][@N='2.1093']"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "S03-E002",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "SAR 한계와 노출 환경",
+      "source_based_summary_ko": "§1.1310(c)의 일반인/비통제 노출 한계는 전신 평균 0.08 W/kg, 국소 1 g 평균 1.6 W/kg이며 사지 예외는 10 g 평균 4 W/kg이다. 이 수치를 실제 제품의 측정 결과나 합격 판정으로 사용하지 않았다.",
+      "required_product_or_lab_inputs": [
+        "일반인/직업인 노출 분류",
+        "head/body/extremity 사용 조건"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-47-CFR-Part-1-2026-10-19-562721685d",
+          "clause_or_heading": "47 CFR §1.1310(a), (c)",
+          "verification_anchor": "a peak spatial-average SAR of 1.6 W/kg",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+          "cfr_section": "1.1310",
+          "xml_section_selector": ".//*[@TYPE='SECTION'][@N='1.1310']"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "S03-E003",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "SAR·MPE·전력밀도 경계",
+      "source_based_summary_ko": "휴대기기의 100 kHz~6 GHz 평가는 SAR 조항을 따르며 6 GHz 초과는 §1.1310(e)(1) Table 1의 MPE 한계로 평가한다. 2.4 GHz 스마트폰 SAR를 원거리 MPE 계산으로 대체한다고 가정하지 않는다.",
+      "required_product_or_lab_inputs": [
+        "모든 송신 주파수",
+        "최소 사용 거리",
+        "노출 조건"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "clause_or_heading": "47 CFR §2.1093(d)(1)",
+          "verification_anchor": "Portable devices that transmit at frequencies above 6 GHz",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+          "cfr_section": "2.1093",
+          "xml_section_selector": ".//*[@TYPE='SECTION'][@N='2.1093']"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-1-2026-10-19-562721685d",
+          "clause_or_heading": "47 CFR §1.1310(d)(2), (3)",
+          "verification_anchor": "except for portable devices",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+          "cfr_section": "1.1310",
+          "xml_section_selector": ".//*[@TYPE='SECTION'][@N='1.1310']"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "S03-E004",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "제외 평가 입력",
+      "source_based_summary_ko": "단일 RF 소스와 동일 시간평균 구간 내 복수 RF 소스의 제외/평가 조건은 §2.1093(c)(1)~(3) 및 참조된 §1.1307(b)로 구분한다. 최소 거리·시간평균 전력·ERP·조합 정보 없이는 제외를 확정하지 않는다.",
+      "required_product_or_lab_inputs": [
+        "소스별 시간평균 최대 전력",
+        "ERP",
+        "최소 거리",
+        "동시송신/동일 평균구간 조합"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "clause_or_heading": "47 CFR §2.1093(c)(1)~(3)",
+          "verification_anchor": "exemption ratio",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+          "cfr_section": "2.1093",
+          "xml_section_selector": ".//*[@TYPE='SECTION'][@N='2.1093']"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-1-2026-10-19-562721685d",
+          "clause_or_heading": "47 CFR §1.1307(b)(3)",
+          "verification_anchor": "exemption",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+          "cfr_section": "1.1307",
+          "xml_section_selector": ".//*[@TYPE='SECTION'][@N='1.1307']"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "XML 수식은 이미지/별도 노드가 포함될 수 있다. 텍스트 추출본만으로 제외 수식을 구현하거나 수치 검산하지 않았다."
+    },
+    {
+      "evidence_id": "S03-E005",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "시간평균",
+      "source_based_summary_ko": "일반 소비자용 휴대기기에 직업인 노출의 듀티 기반 시간평균을 그대로 적용할 수 없다. §2.1093(d)(4)는 RF 소스의 고유 속성에 따른 source-based averaging을 별도로 규정한다.",
+      "required_product_or_lab_inputs": [
+        "소스 고유 송신 주기",
+        "듀티비·시간 로그",
+        "출력 제어 알고리즘/펌웨어"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "clause_or_heading": "47 CFR §2.1093(d)(4)",
+          "verification_anchor": "source-based",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+          "cfr_section": "2.1093",
+          "xml_section_selector": ".//*[@TYPE='SECTION'][@N='2.1093']"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "447498 v06 §4.1(b)의 과거 §2.1093(d)(5) 인용은 현행 번호와 다르다. 현행 source-based 조항은 (d)(4)로 별도 대조했다."
+    },
+    {
+      "evidence_id": "S03-E006",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "Wi-Fi 시험모드·듀티비",
+      "source_based_summary_ko": "Wi-Fi의 비동기 네트워크 트래픽을 SAR 시험모드로 간주하지 않는다. KDB 248227 §2.2는 생산품의 출력·이득·RF 튜닝을 유지하는 제조사/칩셋 시험모드와 주기적 고듀티 송신, 해당 조건에 맞는 보고 SAR 스케일링·보고를 요구한다.",
+      "required_product_or_lab_inputs": [
+        "제조사 시험도구/버전",
+        "양산 설정 일치 증거",
+        "모드·변조·속도·대역폭",
+        "실측 듀티비"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02-3ede39bf7a",
+          "clause_or_heading": "KDB 248227 D01 v02r02 §2.2 Duty Factor Control",
+          "verification_anchor": "A minimum transmission duty factor of 85%",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            3
+          ],
+          "printed_pages": [
+            3
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "85% 미만 송신 능력의 예외 조건도 같은 페이지에 있다. 단일 듀티비를 모든 제품에 강제하거나 실제 DUT 능력을 추정하지 않는다."
+    },
+    {
+      "evidence_id": "S03-E007",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "출력 테이블과 측정 채널",
+      "source_based_summary_ko": "KDB 248227 §4는 안테나 포트별 출력, 생산품 최대 출력/공차, 채널 대역폭·변조·속도와 상·중·하 채널을 구별해 측정하고 SAR 조건을 뒷받침하도록 한다.",
+      "required_product_or_lab_inputs": [
+        "포트별 출력 테이블",
+        "채널별 tune-up tolerance",
+        "실제 출력 측정값"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02-3ede39bf7a",
+          "clause_or_heading": "KDB 248227 D01 v02r02 §4(a)~(c)",
+          "verification_anchor": "Power must be measured at each transmit antenna port",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            6,
+            7
+          ],
+          "printed_pages": [
+            6,
+            7
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "S03-E008",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "사용 위치 선택",
+      "source_based_summary_ko": "KDB 248227 §5.1은 귀 옆 handset의 좌/우·touch/tilt와 hotspot 등의 복수 위치를 다룬다. 초기 위치는 비교 가능한 area scan 또는 충분한 안테나/결합 근거로 정하고, 근거가 부족하면 area scan을 사용한다.",
+      "required_product_or_lab_inputs": [
+        "head/hotspot/body 지원 여부",
+        "안테나 좌표·방향",
+        "표면/모서리별 거리",
+        "area scan"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02-3ede39bf7a",
+          "clause_or_heading": "KDB 248227 D01 v02r02 §5.1(a), (b)",
+          "verification_anchor": "Head Exposure Configuration",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            8,
+            9
+          ],
+          "printed_pages": [
+            8,
+            9
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "S03-E009",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "802.11b DSSS",
+      "source_based_summary_ko": "KDB 248227 §5.2.1은 고정 위치와 복수 위치의 초기 위치 절차를 구분한다. DSSS의 채널 추가 시험 여부는 해당 노출 조건의 보고 SAR에 따른 0.8/1.2 W/kg 단계 조건으로 정한다.",
+      "required_product_or_lab_inputs": [
+        "최고 실측 출력 채널",
+        "해당 노출 위치별 보고 SAR",
+        "스케일링 근거"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02-3ede39bf7a",
+          "clause_or_heading": "KDB 248227 D01 v02r02 §5.2.1(a), (b)",
+          "verification_anchor": "no further SAR testing is required for 802.11b DSSS",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            9,
+            10
+          ],
+          "printed_pages": [
+            9,
+            10
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "초기 위치의 0.4 W/kg 절차(§5.1.1)와 고정 위치 DSSS의 0.8 W/kg 조건을 혼용하지 않는다. 측정 결과 미제공으로 적용 여부는 미판정이다."
+    },
+    {
+      "evidence_id": "S03-E010",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "802.11g/n OFDM 연결",
+      "source_based_summary_ko": "KDB 248227 §5.2.2는 g/n OFDM의 별도 제외 조건을 규정한다. DSSS 최고 보고 SAR를 OFDM/DSSS의 명시 최대 출력 비율로 보정한 값이 1.2 W/kg 이하인지 등 해당 조건을 확인해야 한다.",
+      "required_product_or_lab_inputs": [
+        "DSSS 최고 보고 SAR",
+        "DSSS/OFDM 명시 최대 출력",
+        "제외 경로/판본 선택"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02-3ede39bf7a",
+          "clause_or_heading": "KDB 248227 D01 v02r02 §5.2.2(a), (b)",
+          "verification_anchor": "ratio of OFDM to DSSS",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            10
+          ],
+          "printed_pages": [
+            10
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "표의 1.2 W/kg는 시험 축소 조건이다. 일반인 국소 SAR 한계 1.6 W/kg와 구별하며 제품 입력 없이 g/n 시험 불필요로 판정하지 않는다."
+    },
+    {
+      "evidence_id": "S03-E011",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "head/body와 액세서리",
+      "source_based_summary_ko": "447498 D01 v06 §4.2.1은 귀 옆 handset의 SAM phantom과 다른 head 조건을 구분한다. §4.2.2는 body-worn 액세서리, 금속 부품, 보수적 거리와 사용자 설명 정보를 다룬다.",
+      "required_product_or_lab_inputs": [
+        "사용 위치",
+        "보유 액세서리/금속 여부",
+        "사용 설명서",
+        "phantom 적합성"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-447498-447498-D01-General-RF-Exposure-Guidance-v06-6c7b038105",
+          "clause_or_heading": "KDB 447498 D01 v06 §§4.2.1, 4.2.2(a)~(d)",
+          "verification_anchor": "Body-worn accessory exposure conditions",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            10,
+            11
+          ],
+          "printed_pages": [
+            10,
+            11
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "이 페이지의 과거 거리 조건을 독립적으로 현행 기본값으로 채택하지 않는다. 2025 publication의 대안 안내(E012)와 판본 정책을 함께 검토해야 한다."
+    },
+    {
+      "evidence_id": "S03-E012",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "2025 body 거리 대안",
+      "source_based_summary_ko": "447498 publication의 2025-04-02 대안 안내는 §2.1093 portable의 body 평가 거리를 5 mm 이하로 설명하며, 실제 on-body holder가 grant exhibit에 제시된 경우 그 구조가 뒷받침하는 거리로 최대 25 mm까지의 조건부 대안을 설명한다.",
+      "required_product_or_lab_inputs": [
+        "실제 holder 구조/사진",
+        "grant exhibit",
+        "제품 형태",
+        "필요 사용 거리"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-447498-publication-0afba0d635",
+          "clause_or_heading": "Answer > Posted: 04/02/2025 > Interim Simplified Guidance for Testing §2.1093-Portable Devices",
+          "verification_anchor": "not to exceed 5 mm",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "자동으로 모든 기기에 5 mm 또는 25 mm를 지정한 것이 아니다. 상세 안내로 연결된 April 2025 TCBC Workshop Presentation 3.2는 이번 배치에서 독립 검토하지 않았다."
+    },
+    {
+      "evidence_id": "S03-E013",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "Wi-Fi 동시송신",
+      "source_based_summary_ko": "KDB 248227 §§6.3~6.5는 MIMO/TxBF와 다른 무선기술의 동시송신을 구별한다. 조합별 전력·보고 SAR·피크 위치를 확인하고 제외가 성립하지 않는 위치/구성은 그 구성으로 동시송신 평가를 해야 한다.",
+      "required_product_or_lab_inputs": [
+        "모든 MIMO chain/안테나 조합",
+        "WWAN/BT/Wi-Fi 동시송신 매트릭스",
+        "동시/단독 출력",
+        "SAR 피크 좌표"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02-3ede39bf7a",
+          "clause_or_heading": "KDB 248227 D01 v02r02 §§6.3, 6.4, 6.5",
+          "verification_anchor": "maximum output power of each antenna during simultaneous transmission",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            14,
+            15
+          ],
+          "printed_pages": [
+            14,
+            15
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "S03-E014",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "센서 기반 출력 제어",
+      "source_based_summary_ko": "KDB 865664 D02 §2.3(b)는 출력 감소/정상 복귀 조건과 proximity 등 센서의 거리 검출·trigger·coverage를 검증하고 보고할 것을 설명한다. 제품에 센서가 있다는 가정은 하지 않는다.",
+      "required_product_or_lab_inputs": [
+        "센서/출력 제어 사양",
+        "감소·복귀 조건",
+        "거리별 trigger/coverage 실측",
+        "최대 출력값"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "clause_or_heading": "KDB 865664 D02 v01r02 §2.3(b)",
+          "verification_anchor": "triggering conditions for activating the power reduction",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            4
+          ],
+          "printed_pages": [
+            4
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        },
+        {
+          "reference_id": "REF-KDB-447498-publication-0afba0d635",
+          "clause_or_heading": "Answer > Posted 08/24/2023 > Motion Sensor for Conducted Power Control",
+          "verification_anchor": "PWRDYN",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "2023 motion-sensor의 25 mm 논거는 PWRDYN PAG와 개별 사례 조건이다. 일반적인 이격거리나 모든 출력 제어 제품의 승인으로 확대하지 않는다."
+    },
+    {
+      "evidence_id": "S03-E015",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "스캔·보간·후처리",
+      "source_based_summary_ko": "KDB 865664 D01 §§2.7.1~2.7.3의 주파수별 area/zoom grid·측정점 거리·각도·부피, 경계 피크와 gram averaging volume 포착 조건을 참조해야 한다. 표 수치와 각주를 PNG로 대조했다.",
+      "required_product_or_lab_inputs": [
+        "실제 주파수",
+        "probe tip/sensor offset",
+        "scan grid/volume",
+        "보간·외삽 구현 검증"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-865664-865664-D01-SAR-Measurement-100-MHz-to-6-GHz-v01r04-99a6e21d4e",
+          "clause_or_heading": "KDB 865664 D01 v01r04 §§2.7.1~2.7.3; page 8 table and footnote",
+          "verification_anchor": "Maximum zoom scan spatial resolution",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            7,
+            8,
+            9
+          ],
+          "printed_pages": [
+            7,
+            8,
+            9
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "표의 행/열·각주가 텍스트 추출 시 평탄화된다. 전체 수치 테이블의 기계 규칙 변환이나 독립 계산 검증은 수행하지 않았다."
+    },
+    {
+      "evidence_id": "S03-E016",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "드리프트와 후처리 검증",
+      "source_based_summary_ko": "KDB 865664 D01 §2.7.4는 area 전·zoom 후 단일점 SAR와 필요시 중간 drift 측정을 다룬다. 5% 초과 drift의 KDB inquiry 및 셋업 문제 해결 조건이 있다. §2.7.5는 IEEE 1528-2013 기준 분포로 보간/외삽을 검증하도록 한다.",
+      "required_product_or_lab_inputs": [
+        "전/후·중간 drift 로그",
+        "실제 셋업 상태",
+        "후처리 검증 결과"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-865664-865664-D01-SAR-Measurement-100-MHz-to-6-GHz-v01r04-99a6e21d4e",
+          "clause_or_heading": "KDB 865664 D01 v01r04 §§2.7.4, 2.7.5",
+          "verification_anchor": "When the drift is more than 5%",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            9
+          ],
+          "printed_pages": [
+            9
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "S03-E017",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "SAR 시스템 검증",
+      "source_based_summary_ko": "KDB 865664 D01 §3.4.1은 사용 주파수/유효 probe 교정점별로 실제 시험과 같은 probe·매질 조합의 시스템 verification을 요구하며, 동일 교정점·매질의 측정 series 전에 실시하도록 한다.",
+      "required_product_or_lab_inputs": [
+        "probe·dipole 교정서",
+        "매질 유전율/도전율",
+        "verification 결과·시각",
+        "동일 조합 증거"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-865664-865664-D01-SAR-Measurement-100-MHz-to-6-GHz-v01r04-99a6e21d4e",
+          "clause_or_heading": "KDB 865664 D01 v01r04 §3.4.1",
+          "verification_anchor": "before each series of SAR measurements",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            19
+          ],
+          "printed_pages": [
+            19
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "시험소가 이 요구를 충족했다는 의미가 아니다. 실제 probe·매질·교정·검증 기록은 미제공이다."
+    },
+    {
+      "evidence_id": "S03-E018",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "장비·교정 보고",
+      "source_based_summary_ko": "KDB 865664 D02 §2.1(f), §2.3(a)는 실제 사용 장비/도구의 식별·교정일·주기/상태·소프트웨어 버전과 시스템 검증 결과의 표/교정 기준값 연결을 요구한다.",
+      "required_product_or_lab_inputs": [
+        "실제 장비/시스템 식별",
+        "교정 유효성",
+        "SW 릴리스",
+        "시스템 verification 요약"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "clause_or_heading": "KDB 865664 D02 v01r02 §§2.1(f), 2.3(a)",
+          "verification_anchor": "actual calibration dates",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            3,
+            4
+          ],
+          "printed_pages": [
+            3,
+            4
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "S03-E019",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "측정·보고 연결",
+      "source_based_summary_ko": "KDB 865664 D02 §2.3(b)~(d), (f)~(g)는 출력/양산 한계·듀티 보정, 사용 위치별 SAR 표, 동시송신 분석과 plot의 시험일·모드·위치·채널/주파수·probe·매질·grid·drift·SAR/피크 위치를 연결하도록 한다.",
+      "required_product_or_lab_inputs": [
+        "실제 측정/보정 원본",
+        "plot와 요약표 식별자",
+        "동시송신 분석",
+        "불확도"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "clause_or_heading": "KDB 865664 D02 v01r02 §2.3(b)~(d), (f), (g)",
+          "verification_anchor": "The SAR distribution plots",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            4,
+            5
+          ],
+          "printed_pages": [
+            4,
+            5
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "빈 입력 명세와 출처 색인만 작성했다. 실제 보고서 값·실측 plot·기관 발행 적합성을 생성하거나 검증하지 않았다."
+    },
+    {
+      "evidence_id": "S03-E020",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "KDB 전환·혼용 금지",
+      "source_based_summary_ko": "447498 publication의 2023-01-17 안내는 D04 v01 전환 기간을 2022-08-13부터 별도 통지까지로 설명한다. D01 v06도 명시된 신청 시점/PAG 예외 조건으로 허용하되 각 절차 전체를 따라야 하며 v06/D04 일부 혼용을 금한다.",
+      "required_product_or_lab_inputs": [
+        "신청/731·grant 시점",
+        "선택한 KDB 경로",
+        "PAG 여부"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-447498-publication-0afba0d635",
+          "clause_or_heading": "Answer > Posted 01/17/2023 > UPDATES TO THE TRANSITION PERIOD UNTIL FURTHER NOTICE",
+          "verification_anchor": "may not mix and match",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": null,
+          "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "2026-10-23 공식 브라우저 화면에서도 이 안내를 확인했다. v07은 게시 시 안내하겠다는 미래 언급이며, 이번 첨부 목록에 v07이 있다고 처리하지 않는다."
+    },
+    {
+      "evidence_id": "S03-E021",
+      "request_id": "ADD-S03-WIFI24-SAR-INDEX-001",
+      "topic": "표준 판본과 KDB 우선순위",
+      "source_based_summary_ko": "447498 D01 v06 §4.1(a)/각주7 및 865664 D01은 IEEE Std 1528-2013을 구체적으로 인용한다. 447498 D03은 폐지된 Supplement C와 KDB 연결을 제공한다. 발행기관의 대체/신판 상태만으로 FCC 허용 판본을 확정할 수 없다.",
+      "required_product_or_lab_inputs": [
+        "기관 보유 표준 라이선스",
+        "실제 적용 판본",
+        "해당 FCC 허용/전환 근거"
+      ],
+      "sources": [
+        {
+          "reference_id": "REF-KDB-447498-447498-D01-General-RF-Exposure-Guidance-v06-6c7b038105",
+          "clause_or_heading": "KDB 447498 D01 v06 §4.1(a), footnote 7",
+          "verification_anchor": "IEEE Std 1528-2013",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            7
+          ],
+          "printed_pages": [
+            7
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        },
+        {
+          "reference_id": "REF-KDB-447498-447498-D03-Supplement-C-Cross-Reference-v01-694baeb3b4",
+          "clause_or_heading": "KDB 447498 D03 v01; discontinued Supplement C cross-reference",
+          "verification_anchor": "865664 D01",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "pdf_pages_one_based": [
+            1
+          ],
+          "printed_pages": [
+            1
+          ],
+          "page_numbering": "physical PDF page index and printed Page number coincide"
+        }
+      ],
+      "review_status": "source_indexed_not_method_approved",
+      "product_compliance_decision": "not_evaluated",
+      "limitation_or_application_note_ko": "기존 standards_access.json의 2020판·2026 amendment는 FCC applicability=unreviewed, 정식 전문 미확보다. 이 배치에서 허용 판본으로 승인하지 않았다."
+    }
+  ],
+  "taxonomy": [
+    {
+      "term": "SAR",
+      "unit": "W/kg",
+      "scope": "인체 조직의 질량 평균 흡수율; portable 100 kHz~6 GHz의 해당 조문 참조",
+      "evidence_ids": [
+        "S03-E002",
+        "S03-E003"
+      ]
+    },
+    {
+      "term": "MPE",
+      "unit": "주파수에 따른 전계/자계/전력밀도 등",
+      "scope": "§1.1310(e)(1)의 한계 체계; portable 2.4 GHz의 SAR 대체로 자동 사용하지 않음",
+      "evidence_ids": [
+        "S03-E003"
+      ]
+    },
+    {
+      "term": "PD",
+      "unit": "전력/면적",
+      "scope": "전력밀도라는 물리량과 해당 평가 방법을 구분; 6 GHz 초과 portable의 상세 PD 방법은 이번 b/g/n 배치에서 미검토",
+      "evidence_ids": [
+        "S03-E003"
+      ]
+    },
+    {
+      "term": "HAC",
+      "unit": null,
+      "scope": "보청기 호환성의 별도 요구; 이 SAR 색인으로 적용성/적합성/시험방법 완료를 주장하지 않음",
+      "evidence_ids": [],
+      "applicability": "undetermined_not_assumed_required"
+    }
+  ]
+}

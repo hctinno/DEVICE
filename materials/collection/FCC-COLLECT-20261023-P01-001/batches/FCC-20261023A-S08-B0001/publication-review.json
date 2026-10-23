@@ -1,0 +1,65 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S08-B0001",
+  "task_id": "FCC-20261023-S08-B0001",
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "snapshot_inventory_sha256": "8e830991b60a4f1a5c6d18f89d61bd5b1d5edc16dce9829690eae915790a4bd2",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S08-B0001",
+    "decision": "content_approved_for_reference_index",
+    "findings": [
+      "24 report field candidates distinguish official requirements, public-case practice and collector proposals.",
+      "21 existing case exhibits and five official sources are reused with verified hashes; no native instrument raw data was acquired.",
+      "SAR b/g/n output tables and an ax/be OFDMA RF report are not substituted for a complete b/g/n RF case.",
+      "The EMC scope-text versus result-table discrepancy and source-access limits are explicit technical-review items."
+    ],
+    "request_outcome": {
+      "completed": 2,
+      "limited": 0,
+      "not_started": 0
+    },
+    "publication_metadata_files": [],
+    "owner": "P01",
+    "source_inventory_verified": true,
+    "rights_public_document_ids": [],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [],
+  "redacted_local_reference_fields": [
+    "/sources/5/local_only_path",
+    "/sources/6/local_only_path",
+    "/sources/7/local_only_path",
+    "/sources/8/local_only_path",
+    "/sources/9/local_only_path",
+    "/sources/10/local_only_path",
+    "/sources/11/local_only_path",
+    "/sources/12/local_only_path",
+    "/sources/13/local_only_path",
+    "/sources/14/local_only_path",
+    "/sources/15/local_only_path",
+    "/sources/16/local_only_path",
+    "/sources/17/local_only_path",
+    "/sources/18/local_only_path",
+    "/sources/19/local_only_path",
+    "/sources/20/local_only_path",
+    "/sources/21/local_only_path",
+    "/sources/22/local_only_path",
+    "/sources/23/local_only_path",
+    "/sources/24/local_only_path",
+    "/sources/25/local_only_path"
+  ],
+  "package": null,
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

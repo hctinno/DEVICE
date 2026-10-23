@@ -1,0 +1,715 @@
+[
+  {
+    "reference_id": "REF-KDB-447498-publication-0afba0d635",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-447498-publication-0afba0d635",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-447498-publication.html",
+    "sha256": "0afba0d635d11f3df7613778c2eb527b6fc4d76f6ac8820ab5b48b673d7401f8",
+    "bytes": 21636,
+    "title": "447498",
+    "version": "Publication page dated 2025-04-02; retrieved 2026-10-23T19:55:36+09:00",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20676",
+    "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20676",
+    "legacy_retrieved_at": "2026-10-23T19:55:36+09:00",
+    "published_at": "2025-04-02",
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-447498"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [
+      {
+        "clause_or_heading": "Answer > Posted: 04/02/2025 > Interim Simplified Guidance for Testing §2.1093-Portable Devices",
+        "verification_anchor": "not to exceed 5 mm",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section"
+      },
+      {
+        "clause_or_heading": "Answer > Posted 08/24/2023 > Motion Sensor for Conducted Power Control",
+        "verification_anchor": "PWRDYN",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section"
+      },
+      {
+        "clause_or_heading": "Answer > Posted 01/17/2023 > UPDATES TO THE TRANSITION PERIOD UNTIL FURTHER NOTICE",
+        "verification_anchor": "may not mix and match",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section"
+      }
+    ],
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-KDB-447498-447498-D01-General-RF-Exposure-Guidance-v06-6c7b038105",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-447498-447498-D01-General-RF-Exposure-Guidance-v06-6c7b038105",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-447498-447498-D01-General-RF-Exposure-Guidance-v06.pdf",
+    "sha256": "6c7b038105de7121a55e8eec55f7ba6bd0a458ee1f521d61b344fa733092d59d",
+    "bytes": 1350641,
+    "title": "447498 D01 General RF Exposure Guidance v06",
+    "version": "447498 D01 General RF Exposure Guidance v06",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20676",
+    "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=f8IQgJxTTL5y0oRi0cpAuA%3D%3D&desc=447498 D01 General RF Exposure Guidance v06&tracking_number=20676",
+    "legacy_retrieved_at": "2026-10-23T19:57:22+09:00",
+    "published_at": null,
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-447498"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [
+      {
+        "clause_or_heading": "KDB 447498 D01 v06 §§4.2.1, 4.2.2(a)~(d)",
+        "verification_anchor": "Body-worn accessory exposure conditions",
+        "pdf_pages_one_based": [
+          10,
+          11
+        ],
+        "printed_pages": [
+          10,
+          11
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 447498 D01 v06 §4.1(a), footnote 7",
+        "verification_anchor": "IEEE Std 1528-2013",
+        "pdf_pages_one_based": [
+          7
+        ],
+        "printed_pages": [
+          7
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      }
+    ],
+    "pdf_page_count": 34,
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-KDB-447498-447498-D02-SAR-Procedures-for-Dongle-Xmtr-v02r01-c74e032ec1",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-447498-447498-D02-SAR-Procedures-for-Dongle-Xmtr-v02r01-c74e032ec1",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-447498-447498-D02-SAR-Procedures-for-Dongle-Xmtr-v02r01.pdf",
+    "sha256": "c74e032ec145a04bfef8051dfee99c7e22f5ebc5ad76626d49d85522a90809ad",
+    "bytes": 255691,
+    "title": "447498 D02 SAR Procedures for Dongle Xmtr v02r01",
+    "version": "447498 D02 SAR Procedures for Dongle Xmtr v02r01",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20676",
+    "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=VmJkXb8CkArNCxgNV899CQ%3D%3D&desc=447498 D02 SAR Procedures for Dongle Xmtr v02r01&tracking_number=20676",
+    "legacy_retrieved_at": "2026-10-23T19:57:46+09:00",
+    "published_at": null,
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-447498"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [],
+    "pdf_page_count": 3,
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-KDB-447498-447498-D03-Supplement-C-Cross-Reference-v01-694baeb3b4",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-447498-447498-D03-Supplement-C-Cross-Reference-v01-694baeb3b4",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-447498-447498-D03-Supplement-C-Cross-Reference-v01.pdf",
+    "sha256": "694baeb3b46e101ff95f89c9f624c754002e9bc463b887065573481b5d6d61c1",
+    "bytes": 26547,
+    "title": "447498 D03 Supplement C Cross-Reference v01",
+    "version": "447498 D03 Supplement C Cross-Reference v01",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20676",
+    "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=RpV6tzh7%2BsHYZxnX9U4XmQ%3D%3D&desc=447498 D03 Supplement C Cross-Reference v01&tracking_number=20676",
+    "legacy_retrieved_at": "2026-10-23T19:57:47+09:00",
+    "published_at": null,
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-447498"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [
+      {
+        "clause_or_heading": "KDB 447498 D03 v01; discontinued Supplement C cross-reference",
+        "verification_anchor": "865664 D01",
+        "pdf_pages_one_based": [
+          1
+        ],
+        "printed_pages": [
+          1
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      }
+    ],
+    "pdf_page_count": 1,
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-KDB-447498-447498-D04-Interim-General-RF-Exposure-Guidance-v01-93b298eb4f",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-447498-447498-D04-Interim-General-RF-Exposure-Guidance-v01-93b298eb4f",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-447498-447498-D04-Interim-General-RF-Exposure-Guidance-v01.pdf",
+    "sha256": "93b298eb4f6df5b65f213efb4768043d18c6301a4b2da7e645754f7013c9e152",
+    "bytes": 731010,
+    "title": "447498 D04 Interim  General RF Exposure Guidance v01",
+    "version": "447498 D04 Interim  General RF Exposure Guidance v01",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20676",
+    "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=Z0Stk%2FPOk2hqHgYJNt%2FRlQ%3D%3D&desc=447498 D04 Interim  General RF Exposure Guidance v01&tracking_number=20676",
+    "legacy_retrieved_at": "2026-10-23T19:57:48+09:00",
+    "published_at": null,
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-447498"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [],
+    "pdf_page_count": 49,
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-KDB-865664-publication-cfda6a7114",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-865664-publication-cfda6a7114",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-865664-publication.html",
+    "sha256": "cfda6a7114d609f0ec097228f4300e6f19a1c401b90d295bc0e9a0f4e2352f51",
+    "bytes": 14473,
+    "title": "865664",
+    "version": "Publication page dated 2015-10-23; retrieved 2026-10-23T19:55:36+09:00",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=28242",
+    "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=28242",
+    "legacy_retrieved_at": "2026-10-23T19:55:36+09:00",
+    "published_at": "2015-10-23",
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-865664"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [],
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-KDB-865664-865664-D01-SAR-Measurement-100-MHz-to-6-GHz-v01r04-99a6e21d4e",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-865664-865664-D01-SAR-Measurement-100-MHz-to-6-GHz-v01r04-99a6e21d4e",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-865664-865664-D01-SAR-Measurement-100-MHz-to-6-GHz-v01r04.pdf",
+    "sha256": "99a6e21d4e9c6c4aa0ee862231bf1df3450b23b3fca7341bffa38bdbdedd7a48",
+    "bytes": 229922,
+    "title": "865664 D01 SAR Measurement 100 MHz to 6 GHz v01r04",
+    "version": "865664 D01 SAR Measurement 100 MHz to 6 GHz v01r04",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=28242",
+    "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=RUMcMDL7fmDLsdRSsbCNoA%3D%3D&desc=865664 D01 SAR Measurement 100 MHz to 6 GHz v01r04&tracking_number=28242",
+    "legacy_retrieved_at": "2026-10-23T19:58:03+09:00",
+    "published_at": null,
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-865664"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [
+      {
+        "clause_or_heading": "KDB 865664 D01 v01r04 §§2.7.1~2.7.3; page 8 table and footnote",
+        "verification_anchor": "Maximum zoom scan spatial resolution",
+        "pdf_pages_one_based": [
+          7,
+          8,
+          9
+        ],
+        "printed_pages": [
+          7,
+          8,
+          9
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 865664 D01 v01r04 §§2.7.4, 2.7.5",
+        "verification_anchor": "When the drift is more than 5%",
+        "pdf_pages_one_based": [
+          9
+        ],
+        "printed_pages": [
+          9
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 865664 D01 v01r04 §3.4.1",
+        "verification_anchor": "before each series of SAR measurements",
+        "pdf_pages_one_based": [
+          19
+        ],
+        "printed_pages": [
+          19
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      }
+    ],
+    "pdf_page_count": 23,
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02.pdf",
+    "sha256": "6ed9380c42d2a88c2bb469be39162561453aad60bad0b2aea77bcce020a2ee05",
+    "bytes": 413076,
+    "title": "865664 D02 RF Exposure Reporting v01r02",
+    "version": "865664 D02 RF Exposure Reporting v01r02",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=28242",
+    "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=7MrO52l3lVpGzJz3Hbb0PQ%3D%3D&desc=865664 D02 RF Exposure Reporting v01r02&tracking_number=28242",
+    "legacy_retrieved_at": "2026-10-23T19:58:04+09:00",
+    "published_at": null,
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-865664"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [
+      {
+        "clause_or_heading": "KDB 865664 D02 v01r02 §2.3(b)",
+        "verification_anchor": "triggering conditions for activating the power reduction",
+        "pdf_pages_one_based": [
+          4
+        ],
+        "printed_pages": [
+          4
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 865664 D02 v01r02 §§2.1(f), 2.3(a)",
+        "verification_anchor": "actual calibration dates",
+        "pdf_pages_one_based": [
+          3,
+          4
+        ],
+        "printed_pages": [
+          3,
+          4
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 865664 D02 v01r02 §2.3(b)~(d), (f), (g)",
+        "verification_anchor": "The SAR distribution plots",
+        "pdf_pages_one_based": [
+          4,
+          5
+        ],
+        "printed_pages": [
+          4,
+          5
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      }
+    ],
+    "pdf_page_count": 8,
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-KDB-248227-publication-9a6bc63cba",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-248227-publication-9a6bc63cba",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-248227-publication.html",
+    "sha256": "9a6bc63cba4d2a6a072d2d020f5e12a1c81b493a7f299be30fd4d6d6a325ddf6",
+    "bytes": 14211,
+    "title": "248227",
+    "version": "Publication page dated 2015-10-23; retrieved 2026-10-23T19:55:37+09:00",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=28238",
+    "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=28238",
+    "legacy_retrieved_at": "2026-10-23T19:55:37+09:00",
+    "published_at": "2015-10-23",
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-248227"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [],
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02-3ede39bf7a",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02-3ede39bf7a",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/KDB-248227-248227-D01-802-11-Wi-Fi-SAR-v02r02.pdf",
+    "sha256": "3ede39bf7a0044caa721e0ae3344ab002085c4daf54acb7f0a14e1537ffe073a",
+    "bytes": 818995,
+    "title": "248227 D01 802 11 Wi-Fi SAR v02r02",
+    "version": "248227 D01 802 11 Wi-Fi SAR v02r02",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=28238",
+    "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=ARcyvK1h4uoKj8FLtKtPkQ%3D%3D&desc=248227 D01 802 11 Wi-Fi SAR v02r02&tracking_number=28238",
+    "legacy_retrieved_at": "2026-10-23T19:58:10+09:00",
+    "published_at": null,
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "KDB-248227"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [
+      {
+        "clause_or_heading": "KDB 248227 D01 v02r02 §2.2 Duty Factor Control",
+        "verification_anchor": "A minimum transmission duty factor of 85%",
+        "pdf_pages_one_based": [
+          3
+        ],
+        "printed_pages": [
+          3
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 248227 D01 v02r02 §4(a)~(c)",
+        "verification_anchor": "Power must be measured at each transmit antenna port",
+        "pdf_pages_one_based": [
+          6,
+          7
+        ],
+        "printed_pages": [
+          6,
+          7
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 248227 D01 v02r02 §5.1(a), (b)",
+        "verification_anchor": "Head Exposure Configuration",
+        "pdf_pages_one_based": [
+          8,
+          9
+        ],
+        "printed_pages": [
+          8,
+          9
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 248227 D01 v02r02 §5.2.1(a), (b)",
+        "verification_anchor": "no further SAR testing is required for 802.11b DSSS",
+        "pdf_pages_one_based": [
+          9,
+          10
+        ],
+        "printed_pages": [
+          9,
+          10
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 248227 D01 v02r02 §5.2.2(a), (b)",
+        "verification_anchor": "ratio of OFDM to DSSS",
+        "pdf_pages_one_based": [
+          10
+        ],
+        "printed_pages": [
+          10
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      },
+      {
+        "clause_or_heading": "KDB 248227 D01 v02r02 §§6.3, 6.4, 6.5",
+        "verification_anchor": "maximum output power of each antenna during simultaneous transmission",
+        "pdf_pages_one_based": [
+          14,
+          15
+        ],
+        "printed_pages": [
+          14,
+          15
+        ],
+        "page_numbering": "physical PDF page index and printed Page number coincide"
+      }
+    ],
+    "pdf_page_count": 27,
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-47-CFR-Part-1-2026-10-19-562721685d",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "47-CFR-Part-1-2026-10-19-562721685d",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/47-CFR-Part-1-2026-10-19.xml",
+    "sha256": "562721685d68e90450cc5818b2870f9e8044f46bd46b964b098b48ab80e2a070",
+    "bytes": 2165230,
+    "title": "47 CFR Part 1",
+    "version": "eCFR issue 2026-10-19",
+    "source_url": "https://www.ecfr.gov/current/title-47/part-1",
+    "download_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-19/title-47.xml?part=1",
+    "legacy_retrieved_at": "2026-10-23T19:55:17+09:00",
+    "published_at": "2026-10-19",
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "FCC-PART-1",
+      "FCC-SEC-1.1307",
+      "FCC-SEC-1.1310",
+      "FCC-SEC-1.50002"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [
+      {
+        "clause_or_heading": "47 CFR §1.1310(a), (c)",
+        "verification_anchor": "a peak spatial-average SAR of 1.6 W/kg",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+        "cfr_section": "1.1310",
+        "xml_section_selector": ".//*[@TYPE='SECTION'][@N='1.1310']"
+      },
+      {
+        "clause_or_heading": "47 CFR §1.1310(d)(2), (3)",
+        "verification_anchor": "except for portable devices",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+        "cfr_section": "1.1310",
+        "xml_section_selector": ".//*[@TYPE='SECTION'][@N='1.1310']"
+      },
+      {
+        "clause_or_heading": "47 CFR §1.1307(b)(3)",
+        "verification_anchor": "exemption",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+        "cfr_section": "1.1307",
+        "xml_section_selector": ".//*[@TYPE='SECTION'][@N='1.1307']"
+      }
+    ],
+    "selected_sections": [
+      "1.1307",
+      "1.1310"
+    ],
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  },
+  {
+    "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-PHONE-20261023-001",
+    "legacy_document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+    "legacy_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+    "legacy_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+    "source_path_inside_package": "originals/47-CFR-Part-2-2026-10-19.xml",
+    "sha256": "17c0fcaf1e5445cd93c93c55706eb48a3015e9b4a3342dc61aedc35e09e9ff79",
+    "bytes": 967123,
+    "title": "47 CFR Part 2",
+    "version": "eCFR issue 2026-10-19",
+    "source_url": "https://www.ecfr.gov/current/title-47/part-2",
+    "download_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-19/title-47.xml?part=2",
+    "legacy_retrieved_at": "2026-10-23T19:55:17+09:00",
+    "published_at": "2026-10-19",
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "request_ids": [
+      "FCC-PART-2",
+      "FCC-SEC-2.803",
+      "FCC-SEC-2.903",
+      "FCC-SEC-2.906",
+      "FCC-SEC-2.907",
+      "FCC-SEC-2.909",
+      "FCC-SEC-2.910",
+      "FCC-SEC-2.911",
+      "FCC-SEC-2.924",
+      "FCC-SEC-2.925",
+      "FCC-SEC-2.926",
+      "FCC-SEC-2.929",
+      "FCC-SEC-2.933",
+      "FCC-SEC-2.938",
+      "FCC-SEC-2.944",
+      "FCC-SEC-2.945",
+      "FCC-SEC-2.947",
+      "FCC-SEC-2.948",
+      "FCC-SEC-2.949",
+      "FCC-SEC-2.950",
+      "FCC-SEC-2.960",
+      "FCC-SEC-2.962",
+      "FCC-SEC-2.1033",
+      "FCC-SEC-2.1041",
+      "FCC-SEC-2.1043",
+      "FCC-SEC-2.1046",
+      "FCC-SEC-2.1047",
+      "FCC-SEC-2.1049",
+      "FCC-SEC-2.1051",
+      "FCC-SEC-2.1053",
+      "FCC-SEC-2.1055",
+      "FCC-SEC-2.1057",
+      "FCC-SEC-2.1077",
+      "FCC-SEC-2.1091",
+      "FCC-SEC-2.1093"
+    ],
+    "linked_new_request_ids": [
+      "ADD-S03-WIFI24-SAR-INDEX-001",
+      "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+    ],
+    "verification": {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "new_copy_of_original_created": false
+    },
+    "evidence_locations": [
+      {
+        "clause_or_heading": "47 CFR §2.1093(b)",
+        "verification_anchor": "within 20 centimeters",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+        "cfr_section": "2.1093",
+        "xml_section_selector": ".//*[@TYPE='SECTION'][@N='2.1093']"
+      },
+      {
+        "clause_or_heading": "47 CFR §2.1093(d)(1)",
+        "verification_anchor": "Portable devices that transmit at frequencies above 6 GHz",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+        "cfr_section": "2.1093",
+        "xml_section_selector": ".//*[@TYPE='SECTION'][@N='2.1093']"
+      },
+      {
+        "clause_or_heading": "47 CFR §2.1093(c)(1)~(3)",
+        "verification_anchor": "exemption ratio",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+        "cfr_section": "2.1093",
+        "xml_section_selector": ".//*[@TYPE='SECTION'][@N='2.1093']"
+      },
+      {
+        "clause_or_heading": "47 CFR §2.1093(d)(4)",
+        "verification_anchor": "source-based",
+        "pdf_pages_one_based": null,
+        "page_numbering": "HTML/XML has no physical page numbering; use exact heading/section",
+        "cfr_section": "2.1093",
+        "xml_section_selector": ".//*[@TYPE='SECTION'][@N='2.1093']"
+      }
+    ],
+    "selected_sections": [
+      "2.1091",
+      "2.1093"
+    ],
+    "extracted_text_path": "[local-only derivative or original; not included in public payload]"
+  }
+]

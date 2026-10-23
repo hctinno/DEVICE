@@ -1,0 +1,17 @@
+{
+  "task_id": "FCC-20261023-S07-B0001",
+  "created_at": "2026-10-23T21:51:41+09:00",
+  "questions": [],
+  "blocking_current_batch": [],
+  "follow_up_inputs": [
+    {
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "state": "not_provided_intentionally_open",
+      "details": "후속 실증 제품과 제조사 시험 FW·도구가 지정되면 입력 명세를 채운다. 현재 수집 배치의 완료를 막지 않는다."
+    }
+  ],
+  "communication": "추가 승인이나 다른 세션 메시지를 요청하지 않는다. P01이 파일과 최종 응답을 읽고 취합한다."
+}

@@ -1,0 +1,1461 @@
+{
+  "task_id": "FCC-20261023-S08-B0001",
+  "batch_id": "FCC-20261023A-S08-B0001",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "created_at": "2026-10-23T21:56:05+09:00",
+  "field_candidates": [
+    {
+      "field_id": "F01",
+      "title": "신청자·FCC ID·모델·변형 연결",
+      "candidate_labels": [
+        "신청자",
+        "FCC ID",
+        "모델",
+        "추가 모델",
+        "신청 묶음"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.1033(b)(1),(5),(9)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            1,
+            5
+          ],
+          "locator": "표지; §2.1",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            4
+          ],
+          "locator": "§4.1",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-009"
+      ],
+      "review_note": "같은 FCC ID는 첨부 연결의 기준이다. 서로 다른 application_id·모델·시료의 동일성이나 전체 승인 완료를 뜻하지 않는다."
+    },
+    {
+      "field_id": "F02",
+      "title": "보고서 식별·개정·시험일·발행일",
+      "candidate_labels": [
+        "보고서 번호",
+        "개정",
+        "측정일",
+        "발행일"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.1033(b)(9)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            1
+          ],
+          "locator": "표지",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            3
+          ],
+          "locator": "§1.1 Revision history",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7854589",
+          "document_id": null,
+          "exhibit_id": "7854589",
+          "pdf_pages": [
+            1
+          ],
+          "locator": "Document Serial No. Rev2",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [],
+      "review_note": "시험일과 발행일을 구별한다. 원문에 없는 측정 시각·시간대는 추정하지 않는다. 개정 표기를 현재 유효성의 독립 확인으로 쓰지 않는다."
+    },
+    {
+      "field_id": "F03",
+      "title": "실제 시료 일련번호·선정 방식",
+      "candidate_labels": [
+        "시료 식별",
+        "시험 시료 일련번호",
+        "선정/샘플링"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.1033(b)(9)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            5
+          ],
+          "locator": "§2.1 Test Device Serial No.",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            5
+          ],
+          "locator": "§4.3",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7835532",
+          "document_id": null,
+          "exhibit_id": "7835532",
+          "pdf_pages": [
+            1
+          ],
+          "locator": "Pre-Production Samples",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-009",
+        "LOCAL-010"
+      ],
+      "review_note": "RF·SAR·EMC의 물리 시료가 동일하다고 합치지 않는다. 모델 또는 FCC ID만으로 실제 시료 인수인계를 재구성하지 않는다."
+    },
+    {
+      "field_id": "F04",
+      "title": "DUT 펌웨어·시험 SW·동작 설정",
+      "candidate_labels": [
+        "DUT HW/FW",
+        "시험 SW 버전",
+        "송신 설정"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            7,
+            13
+          ],
+          "locator": "§2.5; §7.1 notes",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            12,
+            18
+          ],
+          "locator": "§5.1.1; §5.2.1",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.1(e)(1),(f)",
+          "pdf_pages": [
+            2,
+            3
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        }
+      ],
+      "evidence_status": "partially_supported",
+      "unavailable_evidence": [
+        "실제 DUT HW/FW·시험모드 접근 및 설정 읽기 기록 미제공"
+      ],
+      "private_input_request_ids": [
+        "LOCAL-009",
+        "LOCAL-010"
+      ],
+      "review_note": "사례에 적힌 버전은 실제 현장 DUT/API 접근 권한의 증거가 아니다. RF 일반의 세부 HW/FW 필수 조항은 이 배치에서 확정하지 않았다."
+    },
+    {
+      "field_id": "F05",
+      "title": "시험법·판본·일탈과 적용 이유",
+      "candidate_labels": [
+        "규정 조항",
+        "방법·판본",
+        "일탈/제외 사유"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.1033(b)(9); §2.947(a)-(c),(g)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            1,
+            8,
+            13
+          ],
+          "locator": "Test Procedure(s); §3.1; §7.1",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.1(e)(1),(2),(4)",
+          "pdf_pages": [
+            2
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [],
+      "review_note": "2024년 사례의 ANSI 판본을 2026년 방법 승인으로 일반화하지 않는다. 기준 판본/전환 적용성은 방법 담당이 검토한다."
+    },
+    {
+      "field_id": "F06",
+      "title": "b/g/n 채널·주파수·모드·대역폭 의미",
+      "candidate_labels": [
+        "채널",
+        "주파수·단위",
+        "변조/모드",
+        "대역폭 종류",
+        "데이터율"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "locator": "§4",
+          "pdf_pages": [
+            4
+          ],
+          "applies_to": "2.4 GHz DTS 방법·보고 근거. b/g/n 적용성은 방법 담당 검토 필요",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7854589",
+          "document_id": null,
+          "exhibit_id": "7854589",
+          "pdf_pages": [
+            95,
+            142
+          ],
+          "locator": "§10.6 Table 10-109; §12.29 Table 12-117",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            5,
+            6
+          ],
+          "locator": "§2.2 Tables 2-1,2-3",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "partially_supported",
+      "unavailable_evidence": [
+        "같은 FCC ID의 b/g/n 비OFDMA RF 전체 성적서가 기존 21개에 식별되지 않음"
+      ],
+      "private_input_request_ids": [
+        "LOCAL-010"
+      ],
+      "review_note": "SAR p95는 b/g/n 전도 출력의 보고표다. p95의 20 MHz 표기와 p142 802.11b의 22 MHz 표기를 같은 대역폭 정의로 합치지 않는다. OFDMA RF 결과를 b/g/n RF 결과로 바꾸지 않는다."
+    },
+    {
+      "field_id": "F07",
+      "title": "안테나·포트·다중 송신 조합",
+      "candidate_labels": [
+        "안테나 식별",
+        "포트",
+        "SISO/MIMO",
+        "동시송신 조건"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "locator": "§3, §7",
+          "pdf_pages": [
+            3,
+            4,
+            6
+          ],
+          "applies_to": "2.4 GHz DTS 방법·보고 근거. b/g/n 적용성은 방법 담당 검토 필요",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.1(d)(2)-(4),(6); §2.3(f)",
+          "pdf_pages": [
+            2,
+            5
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7836231",
+          "document_id": null,
+          "exhibit_id": "7836231",
+          "pdf_pages": [
+            2
+          ],
+          "locator": "Figure J-1",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            6
+          ],
+          "locator": "Table 2-3",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-003",
+        "LOCAL-009"
+      ],
+      "review_note": "제품 안테나 설명과 실제 현장 연결·보정 경로를 구별한다. 다중 출력 합산 방법을 단일 포트 결과로 대체하지 않는다."
+    },
+    {
+      "field_id": "F08",
+      "title": "계측기 제조사·모델·일련번호·역할",
+      "candidate_labels": [
+        "제조사",
+        "장비 모델",
+        "일련번호",
+        "사용 역할"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.947(d); §2.948(b)(1)(v)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            11
+          ],
+          "locator": "Tables 6-1,6-2",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            12,
+            18
+          ],
+          "locator": "시험 장비 표",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.1(f)",
+          "pdf_pages": [
+            3
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-003",
+        "LOCAL-010"
+      ],
+      "review_note": "사례 장비 목록을 보유 장비 또는 실제 실행에서 사용한 장비로 등록하지 않는다."
+    },
+    {
+      "field_id": "F09",
+      "title": "교정일·주기·유효 시점과 추적성",
+      "candidate_labels": [
+        "교정일",
+        "교정 주기",
+        "만료일",
+        "측정 시점",
+        "교정서 참조"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.948(b)(1)(vi)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.1(f); §2.3(j)",
+          "pdf_pages": [
+            3,
+            6
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            11,
+            12
+          ],
+          "locator": "교정 표 및 사용 시점 note",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-003",
+        "LOCAL-010"
+      ],
+      "review_note": "p12는 시험 기간 중 교정/만료가 있는 장비를 유효 기간 안에서 사용했다는 보고서 설명이다. 기간 전체나 현재 날짜만으로 개별 측정의 교정 유효성을 단정하지 않는다. 실제 교정서·개별 측정-장비 연결은 미제공이다."
+    },
+    {
+      "field_id": "F10",
+      "title": "시험 장소·환경·공급 전원",
+      "candidate_labels": [
+        "시험 장소",
+        "온도",
+        "습도",
+        "기압",
+        "공급 전원"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.1033(b)(9); §2.948(b)(1)(i)-(iv)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            8
+          ],
+          "locator": "§3.2,3.3",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            11,
+            12,
+            18
+          ],
+          "locator": "§4.8; §5.1.2; §5.2.2",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-001",
+        "LOCAL-010"
+      ],
+      "review_note": "환경 허용 범위와 개별 측정값을 구별한다. 실제 현장 환경·사이트 상태를 사례로 채우지 않는다."
+    },
+    {
+      "field_id": "F11",
+      "title": "시험 셋업·배선·거리·사진 연결",
+      "candidate_labels": [
+        "셋업 식별",
+        "경로/거리",
+        "배선/부속품",
+        "도면·사진 참조"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.1033(b)(11),(17)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.1(e)(5); §2.3(j)",
+          "pdf_pages": [
+            2,
+            6
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            14,
+            22
+          ],
+          "locator": "Figures 7-1,7-2",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7836231",
+          "document_id": null,
+          "exhibit_id": "7836231",
+          "pdf_pages": [
+            1,
+            2
+          ],
+          "locator": "Appendix J",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            4,
+            6,
+            7
+          ],
+          "locator": "§4.1,4.4,4.5",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-010"
+      ],
+      "review_note": "RF 파워 측정 도식과 SAR Appendix J를 같은 시험의 실제 셋업 사진으로 혼동하지 않는다."
+    },
+    {
+      "field_id": "F12",
+      "title": "분석기·파워미터 측정 설정",
+      "candidate_labels": [
+        "RBW",
+        "VBW",
+        "검파기",
+        "span/sweep",
+        "trace/average",
+        "trigger/gate"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "locator": "§5,§6,§8.3.2.1",
+          "pdf_pages": [
+            4,
+            5,
+            6,
+            8
+          ],
+          "applies_to": "2.4 GHz DTS 방법·보고 근거. b/g/n 적용성은 방법 담당 검토 필요",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            14,
+            22,
+            27,
+            59
+          ],
+          "locator": "§7.2,7.3,7.4,7.7",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-010"
+      ],
+      "review_note": "서로 다른 시험항목의 RBW/VBW/검파기를 공통 값으로 채우지 않는다. 사례 설정은 OFDMA 사례의 설정이다."
+    },
+    {
+      "field_id": "F13",
+      "title": "듀티·송신 지속시간·최대 출력 상태",
+      "candidate_labels": [
+        "듀티 비율",
+        "송신 지속시간",
+        "최대 제어 상태",
+        "게이팅 조건"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "locator": "§3,§6",
+          "pdf_pages": [
+            4,
+            5,
+            6
+          ],
+          "applies_to": "2.4 GHz DTS 방법·보고 근거. b/g/n 적용성은 방법 담당 검토 필요",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.1(e)(3); §2.3(c),(d)",
+          "pdf_pages": [
+            2,
+            4
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            5,
+            22
+          ],
+          "locator": "Table 2-2; §7.3",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7854589",
+          "document_id": null,
+          "exhibit_id": "7854589",
+          "pdf_pages": [
+            142
+          ],
+          "locator": "Table 12-117",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-010"
+      ],
+      "review_note": "원시 듀티 비율, 측정 게이팅, 결과에 적용하는 보정 계수를 구별한다. 노출 보고의 scaling을 일반 RF 보정으로 확대하지 않는다."
+    },
+    {
+      "field_id": "F14",
+      "title": "보고 측정값·단위·측정 통계",
+      "candidate_labels": [
+        "보고값",
+        "단위",
+        "peak/average/QP",
+        "시험 조건"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.1033(b)(9); §2.947(g)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7854589",
+          "document_id": null,
+          "exhibit_id": "7854589",
+          "pdf_pages": [
+            95
+          ],
+          "locator": "Table 10-109",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            14
+          ],
+          "locator": "Final Result",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            22,
+            27
+          ],
+          "locator": "출력·PSD 방법",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-010"
+      ],
+      "review_note": "SAR 표의 b/g/n dBm 값과 EMC 그림 속 최종 표는 보고값이다. 장비 원시 파일·원시 트레이스 또는 이 시험소의 실측값으로 표시하지 않는다."
+    },
+    {
+      "field_id": "F15",
+      "title": "보정 구성요소·부호·판본",
+      "candidate_labels": [
+        "케이블 손실",
+        "감쇠/증폭",
+        "안테나 인자",
+        "적용 보정표"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.1033(b)(9)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "locator": "§3",
+          "pdf_pages": [
+            3,
+            4
+          ],
+          "applies_to": "2.4 GHz DTS 방법·보고 근거. b/g/n 적용성은 방법 담당 검토 필요",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            13
+          ],
+          "locator": "§7.1 note 2",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            14,
+            24
+          ],
+          "locator": "결과 보정/마진 계산 notes",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-003",
+        "LOCAL-010"
+      ],
+      "review_note": "RF 경로 손실과 방사 안테나 인자·증폭 이득을 구별한다. 사례 수식은 실제 현장 보정값·보정표 버전을 제공하지 않는다."
+    },
+    {
+      "field_id": "F16",
+      "title": "계산·변환·다중 출력 합산",
+      "candidate_labels": [
+        "계산 참조",
+        "입력/출력 단위",
+        "합산 대상",
+        "중간값"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.1033(b)(9)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "locator": "§3,§8.3",
+          "pdf_pages": [
+            4,
+            8,
+            9
+          ],
+          "applies_to": "2.4 GHz DTS 방법·보고 근거. b/g/n 적용성은 방법 담당 검토 필요",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            22
+          ],
+          "locator": "§7.3 Measure-and-Sum 방법명",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-010"
+      ],
+      "review_note": "샘플 계산 필요성과 실제 적용 알고리즘 승인은 구별한다. 이번 배치는 계산 코드나 새 DB 형식을 구현하지 않는다."
+    },
+    {
+      "field_id": "F17",
+      "title": "한계·마진·결과·적용 제도",
+      "candidate_labels": [
+        "한계/단위",
+        "마진 정의",
+        "적용 조항",
+        "결과",
+        "제외 근거"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.947(g); §2.1033(b)(9)",
+          "pdf_pages": [],
+          "applies_to": "FCC Part 15 인증 보고·근거",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            13,
+            73
+          ],
+          "locator": "Table 7-1; Conclusion",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            3,
+            14,
+            24
+          ],
+          "locator": "결과 요약; 결과표 notes",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-004",
+        "LOCAL-011"
+      ],
+      "review_note": "사례의 FCC와 캐나다 RSS 기준을 분리한다. 예컨대 사례에 병기된 RSS EIRP 요구를 FCC 자체 한계로 바꾸지 않는다. 공식 발행 권한은 별도다."
+    },
+    {
+      "field_id": "F18",
+      "title": "불확도·포함인자·적용 판정 규칙",
+      "candidate_labels": [
+        "불확도",
+        "단위",
+        "k/신뢰 수준",
+        "예산 출처",
+        "적용 조건"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.3(e)",
+          "pdf_pages": [
+            5
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            10
+          ],
+          "locator": "§5 Tables 5-1,5-2",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            11
+          ],
+          "locator": "§4.9",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "partially_supported",
+      "unavailable_evidence": [
+        "STD-010 ISO/IEC 17025:2017 정식 원문 미확보",
+        "STD-019 IEEE/ANSI C63.23-2012 정식 원문 미확보·방법 적용 판본 미확정"
+      ],
+      "private_input_request_ids": [
+        "LOCAL-004"
+      ],
+      "review_note": "SAR 불확도 보고는 해당 KDB의 조건부 요구로 읽는다. 사례의 k=2나 U 값을 실제 시험소 값으로 쓰지 않는다. ISO/IEC 17025·C63.23 원문 미확보로 일반 의무·세부 조항을 재구성하지 않는다."
+    },
+    {
+      "field_id": "F19",
+      "title": "SAR 측정·정규화·보고값의 구별",
+      "candidate_labels": [
+        "측정 SAR",
+        "출력/듀티 scaling",
+        "reported/adjusted SAR",
+        "노출 자세/거리"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.3(b)-(e),(i)",
+          "pdf_pages": [
+            4,
+            5
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7854589",
+          "document_id": null,
+          "exhibit_id": "7854589",
+          "pdf_pages": [
+            95,
+            142
+          ],
+          "locator": "§10.6; §12.29",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7835532",
+          "document_id": null,
+          "exhibit_id": "7835532",
+          "pdf_pages": [
+            46
+          ],
+          "locator": "시간 변화 시험 구성 표",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-010"
+      ],
+      "review_note": "SAR 지원용 b/g/n 전도 출력과 Part 15.247 RF 최대 출력 검증을 구별한다. 단독 SAR와 동시 송신 노출 평가도 분리한다."
+    },
+    {
+      "field_id": "F20",
+      "title": "그림·보고 표·원시 파일의 추적 연결",
+      "candidate_labels": [
+        "그림/표 식별",
+        "보고 행",
+        "원시 파일 참조",
+        "원본 해시"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_guidance",
+          "source_ref": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "document_id": "KDB-865664-865664-D02-RF-Exposure-Reporting-v01r02-6ed9380c42",
+          "locator": "§2.3(g),(h),(j)",
+          "pdf_pages": [
+            5,
+            6
+          ],
+          "applies_to": "RF 인체노출 보고 전용. 일반 RF/EMC 전체에 무조건 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            14
+          ],
+          "locator": "그래프와 Final Result",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7854589",
+          "document_id": null,
+          "exhibit_id": "7854589",
+          "pdf_pages": [
+            142
+          ],
+          "locator": "Plot # 열",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "partially_supported",
+      "unavailable_evidence": [
+        "실제 native 계측기 출력 파일과 보고 행의 일대일 연결 미제공"
+      ],
+      "private_input_request_ids": [
+        "LOCAL-010"
+      ],
+      "review_note": "KDB는 SAR 그림과 결과표 참조를 요구한다. 별도 raw 파일 식별·해시 연결은 수집자 필드 제안이며 이를 KDB의 일반 해시 의무로 표시하지 않는다."
+    },
+    {
+      "field_id": "F21",
+      "title": "검토자·서명·발행 권한",
+      "candidate_labels": [
+        "시험 책임자",
+        "검토자",
+        "발행 권한 근거",
+        "서명"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            1
+          ],
+          "locator": "표지 책임 진술·Approved by",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7835532",
+          "document_id": null,
+          "exhibit_id": "7835532",
+          "pdf_pages": [
+            1
+          ],
+          "locator": "책임 진술·Approved by",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.938(b)(1)(x)",
+          "pdf_pages": [],
+          "applies_to": "SDoC에 해당할 때의 서명 기록 요구. Certification 전체의 동일 의무로 확대하지 않는다.",
+          "evidence_state": "available_fixed_edition"
+        }
+      ],
+      "evidence_status": "partially_supported",
+      "unavailable_evidence": [
+        "기관의 실제 발행권한·서명정책 미제공",
+        "ISO/IEC 17025 해당 세부 조항 원문 미확보"
+      ],
+      "private_input_request_ids": [
+        "LOCAL-011"
+      ],
+      "review_note": "사례의 승인자 표기는 이 시험소의 기술 검토·발행 위임이 아니다. Certification 관련 세부 QMS 검토/발행 조항은 ISO 원문 없이 확정하지 않는다."
+    },
+    {
+      "field_id": "F22",
+      "title": "사이트 인정·범위·검증 상태",
+      "candidate_labels": [
+        "사이트",
+        "인정/recognition",
+        "인정 범위",
+        "사이트 검증"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.948(a),(b),(d)-(f)",
+          "pdf_pages": [],
+          "applies_to": "FCC 시험소 자격·시설 기록",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            4,
+            8
+          ],
+          "locator": "§1.3; §3.2",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            3
+          ],
+          "locator": "§3.1",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-001",
+        "LOCAL-003"
+      ],
+      "review_note": "외부 시험소의 2024년 보고서 인정 설명을 우리 시험소의 현재 recognition·scope 또는 사이트 유효성으로 전이하지 않는다."
+    },
+    {
+      "field_id": "F23",
+      "title": "보존·변경 이력·책임 주체",
+      "candidate_labels": [
+        "변경 근거",
+        "보존 책임",
+        "적용 절차",
+        "보존 조건"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "official_requirement",
+          "source_ref": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "locator": "§2.938(a),(d)-(h)",
+          "pdf_pages": [],
+          "applies_to": "장비 승인 책임 주체의 기록 유지. SDoC/Certification과 조사 조건을 구별한다.",
+          "evidence_state": "available_fixed_edition"
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            3
+          ],
+          "locator": "§1.1",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "evidence_status": "supported_for_indexing",
+      "unavailable_evidence": [],
+      "private_input_request_ids": [
+        "LOCAL-010",
+        "LOCAL-011"
+      ],
+      "review_note": "규정상 책임 주체·승인 절차·중단/조사 조건을 먼저 확인한다. 이를 시험소 모든 자료에 동일한 단일 보존기간으로 바꾸지 않는다."
+    },
+    {
+      "field_id": "F24",
+      "title": "현장 raw-계산-보고의 독립 재현",
+      "candidate_labels": [
+        "완료 시험건",
+        "원시 파일",
+        "장비 설정",
+        "보정표",
+        "계산/판정",
+        "발행본 연결"
+      ],
+      "candidate_label_classification": "collector_proposal",
+      "evidence": [
+        {
+          "classification": "collector_proposal",
+          "source_ref": "LOCAL-010",
+          "document_id": null,
+          "locator": "handoff/lab_private_inputs.csv request_id=LOCAL-010",
+          "pdf_pages": [],
+          "evidence_state": "not_provided",
+          "applies_to": "후속 실제 완료 시험건의 독립 검증 입력"
+        }
+      ],
+      "evidence_status": "partially_supported",
+      "unavailable_evidence": [
+        "실제 완료 시험건의 원시 데이터·보정·계산·성적서 원본 묶음 미제공"
+      ],
+      "private_input_request_ids": [
+        "LOCAL-010",
+        "LOCAL-003",
+        "LOCAL-011"
+      ],
+      "review_note": "보고서 구조 색인 완료와 실제 수치 재현을 분리한다. 공개 PDF·그림·교정 표를 완료 시험건 원시 묶음으로 대체하지 않는다."
+    }
+  ],
+  "classification_contract": "official_requirement=고정 규정 원문, official_guidance=고정 FCC 지침, case_practice=공개 사례의 보고 관행, collector_proposal=수집자 색인 후보, evidence_unavailable=명시된 미확보 근거. 후보 명칭은 설계 승인·새 DB schema가 아니다.",
+  "page_convention": "PDF 페이지는 1부터 시작하며 문서 하단 인쇄 번호와 대조했다. XML은 조항으로 인용한다.",
+  "lab_private_inputs_not_provided": [
+    {
+      "request_id": "LOCAL-010",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "실제 완료 시험건의 native raw·측정 설정·완료 로그·계산·보고 행/그림 연결. 공개 보고서 PDF는 대체 자료가 아니다."
+    },
+    {
+      "request_id": "LOCAL-003",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "실제 장비 교정서, 보정표 원본/판본·주파수별 값, 중간점검과 측정 시점의 사용 장비 연결."
+    },
+    {
+      "request_id": "LOCAL-001",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "해당 사이트·인정기관·FCC recognition·실제 시험 범위와 유효성 증거."
+    },
+    {
+      "request_id": "LOCAL-004",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "방법별 실제 불확도 예산·적용 판정 정책과 승인 근거."
+    },
+    {
+      "request_id": "LOCAL-009",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "실제 시료 ID·HW/FW·변형 대응 및 시험 조건의 제품별 근거."
+    },
+    {
+      "request_id": "LOCAL-011",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "기관의 기술 검토·발행 위임, 서명, 정정/개정 승인 기록."
+    }
+  ],
+  "licensed_standard_limits": [
+    {
+      "request_id": "STD-010",
+      "title": "ISO/IEC 17025:2017",
+      "status": "purchase_required",
+      "official_url": "https://www.iso.org/standard/66912.html",
+      "original_acquired": false,
+      "catalog_checked_on": "2026-10-23",
+      "catalog_note": "공식 카탈로그의 Edition 3·2017·2023 확인 및 구매 경로만 확인했다. 영문에 대한 교정판 적용을 추정하지 않는다.",
+      "next_input": "허가된 정식 원문·사용권과 필요한 기관 적용 범위를 권한 있는 담당자가 제공. 구매/가입/약관 동의는 수행하지 않았다."
+    },
+    {
+      "request_id": "STD-019",
+      "title": "IEEE/ANSI C63.23-2012",
+      "status": "purchase_required",
+      "official_url": "https://standards.ieee.org/ieee/C63.23/5596/",
+      "original_acquired": false,
+      "catalog_checked_on": "2026-10-23",
+      "catalog_note": "공식 카탈로그의 표준 식별·구매/구독 경로를 확인했다. 실제 방법이 요구하는 판본·세부 계산 조항은 확정하지 않았다.",
+      "next_input": "방법 담당의 참조 판본 확인 후 허가된 정식 원문/구독 접근을 담당자가 제공. 부록 ZIP이나 공개 요약을 표준 원문으로 대체하지 않는다."
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "checks": [
+    {
+      "publication_number": "558074",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "legacy_document_id": "KDB-558074-publication-92168150c6",
+      "legacy_sha256": "92168150c69765622272035e821c6f9e5d622ed68b525fa93ef38824db8a0fb4",
+      "checked_at": "2026-10-23T21:43:10.210271+09:00",
+      "web_open_attempt": "403 Forbidden; one direct HTTP fallback",
+      "existing_original_persisted_again": false,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "observed_bytes": 15421,
+      "observed_sha256": "92168150c69765622272035e821c6f9e5d622ed68b525fa93ef38824db8a0fb4",
+      "byte_identical_to_legacy": true,
+      "attachment_links": [
+        {
+          "label": "558074 D01 15.247 Meas Guidance v05r02",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=tylb5MMggvhIlVMK75RrRQ%3D%3D&desc=558074 D01 15.247 Meas Guidance v05r02&tracking_number=21124"
+        }
+      ],
+      "publication_text_for_comparison": "558074 Section 15.247, Digital Transmission Systems (DTS) and Frequency Hopping measurement procedures Search | RSS | Updates | E-Filing | Initiatives | Consumers | Find People Office of Engineering and Technology FCC > FCC E-filing > OET Knowledge Base > OET KDB Full Text Search Result FCC Site Map Publication Number: 558074 Rule Parts: 15.247 Publication Date: 04/02/2019 Keyword: Section 15.247, Digital Transmission Systems (DTS) and Frequency Hopping measurement procedures First Category: Unlicensed Service Rules and Procedures Second Category: Digital & Freq Hopping Devices  15.247 Question: What are the test procedures for measuring Digital\r\nTransmission System (DTS),\r\nFrequency Hopping Spread Spectrum systems (DSS), and hybrid devices subject\r\nto the requirements\r\nin Section 15.247? Answer: T est procedures for measuring Digital Transmission System (DTS),\r\nFrequency Hopping Spread Spectrum Systems (DSS), and hybrid devices are provided in the attachment 558074 D01 DTS Meas Guidance . Attachment List: 558074 D01 15.247 Meas Guidance v05r02 Please use the Submit Inquiry link at www.fcc.gov/labhelp to send any comments or suggestions for this site Federal Communications Commission 45 L Street NE Washington, DC 20554 More FCC Contact Information... Phone: 888-CALL-FCC (225-5322) TTY: 888-TELL-FCC (835-5322) Fax: 202-418-0232 E-mail: fccinfo@fcc.gov - Privacy Policy - Web Policies & Notices - Customer Service Standards - Freedom of Information Act"
+    },
+    {
+      "publication_number": "662911",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "legacy_document_id": "KDB-662911-publication-160b602e2c",
+      "legacy_sha256": "160b602e2c354e8d1520c24d6714fee52b0743892f92b01301eb20ffb91f9866",
+      "checked_at": "2026-10-23T21:43:11.331331+09:00",
+      "web_open_attempt": "403 Forbidden; one direct HTTP fallback",
+      "existing_original_persisted_again": false,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "observed_bytes": 16773,
+      "observed_sha256": "160b602e2c354e8d1520c24d6714fee52b0743892f92b01301eb20ffb91f9866",
+      "byte_identical_to_legacy": true,
+      "attachment_links": [
+        {
+          "label": "662911 D03 MIMO Antenna Gain Measurement v02",
+          "url": "https://appsint.fcc.gov/kdb/GetAttachment.html?id=NYHxoDYQ%2BFDRLI98iGGa%2Bw%3D%3D&desc=662911%20D03%20MIMO%20Antenna%20Gain%20Measurement%20v01&tracking_number=49466"
+        },
+        {
+          "label": "662911 D01 Multiple Transmitter Output v02r01",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=B0ZQiTBTVsn3P3wZ2WdqhQ%3D%3D&desc=662911 D01 Multiple Transmitter Output v02r01&tracking_number=49466"
+        },
+        {
+          "label": "662911 D02 MIMO with Cross Polarized Antenna v01",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=i%2BFRza%2B2Hh0pf9nHJHJGHw%3D%3D&desc=662911 D02 MIMO with Cross Polarized Antenna v01&tracking_number=49466"
+        },
+        {
+          "label": "662911 D03 MIMO Antenna Gain Measurement v02",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=0oFrwPO2uh8GhTp8suJdxA%3D%3D&desc=662911 D03 MIMO Antenna Gain Measurement v02&tracking_number=49466"
+        },
+        {
+          "label": "OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=zx796foayVA0TnNkVOgKjg%3D%3D&desc=OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013&tracking_number=49466"
+        }
+      ],
+      "publication_text_for_comparison": "662911 Measurement of Transmitters with Multiple Output, MIMO, Smart Antenna Search | RSS | Updates | E-Filing | Initiatives | Consumers | Find People Office of Engineering and Technology FCC > FCC E-filing > OET Knowledge Base > OET KDB Full Text Search Result FCC Site Map Publication Number: 662911 Rule Parts: Publication Date: 03/31/2025 Keyword: Measurement of Transmitters with Multiple Output, MIMO, Smart Antenna First Category: Unlicensed Service Rules and Procedures Second Category: Antennas - Part 15.203 Question: What is the guidance for measurement of output emission of devices that employ single transmitter with multiple outputs or systems with multiple transmitters operating simultaneously in the same frequency band? Answer: The attached document, 662911 D01 Multiple Transmitter Output v02r01 provides guidance for measurements of conducted output emissions of devices that employ a single transmitter with multiple outputs in the same band. The guidance applies to devices that transmit on multiple antennas simultaneously in the same band through a coordinated process. Examples include, but are not limited to, devices employing beamforming or multiple-input and multiple-output (MIMO.) This guidance applies to both licensed and unlicensed devices whenever the FCC rules call for conducted output measurements. Guidance is provided for in-band, out-of-band, and spurious emission measurements. The attached document, 662911 D02 MIMO with Cross-Polarized Antennas v01 , provides additional guidance for measurements of both conducted output emissions and radiated emissions from devices that have two outputs driving linearly polarized antennas that are cross-polarized with respect to each other. The attached document, 662911 D03 MIMO Antenna Gain Measurement v02 provides guidance for m measurement of directional dain of multi-antenna systems. The attached technical report, OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013 , provides the technical basis for array gain formulas included in 662911 D01 for IEEE 802.11 transmissions using cyclic delay diversity. Note: 03/31/2025: 662911 D03 MIMO Antenna Gain Measurement v02 replaces 662911 D03 MIMO Gain Measurement v01. The requirement for a PAG inquiry in Section IV has been removed, as additional guidance is provided. Attachment List: 662911 D01 Multiple Transmitter Output v02r01 662911 D02 MIMO with Cross Polarized Antenna v01 662911 D03 MIMO Antenna Gain Measurement v02 OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013 Please use the Submit Inquiry link at www.fcc.gov/labhelp to send any comments or suggestions for this site Federal Communications Commission 45 L Street NE Washington, DC 20554 More FCC Contact Information... Phone: 888-CALL-FCC (225-5322) TTY: 888-TELL-FCC (835-5322) Fax: 202-418-0232 E-mail: fccinfo@fcc.gov - Privacy Policy - Web Policies & Notices - Customer Service Standards - Freedom of Information Act"
+    },
+    {
+      "publication_number": "913591",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "legacy_document_id": "KDB-913591-publication-e4102ce5f2",
+      "legacy_sha256": "e4102ce5f2e1818003338c3aaa4954ee8724ed6fdf796767d3ac18dc5c957bf2",
+      "checked_at": "2026-10-23T21:43:12.239488+09:00",
+      "web_open_attempt": "403 Forbidden; one direct HTTP fallback",
+      "existing_original_persisted_again": false,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "observed_bytes": 13462,
+      "observed_sha256": "e4102ce5f2e1818003338c3aaa4954ee8724ed6fdf796767d3ac18dc5c957bf2",
+      "byte_identical_to_legacy": true,
+      "attachment_links": [],
+      "publication_text_for_comparison": "913591 Measurement of radiated emissions at the band-edge for a Part 15 RF Device Search | RSS | Updates | E-Filing | Initiatives | Consumers | Find People Office of Engineering and Technology FCC > FCC E-filing > OET Knowledge Base > OET KDB Full Text Search Result FCC Site Map Publication Number: 913591 Rule Parts: 15.247 Publication Date: 04/05/2017 Keyword: Measurement of radiated emissions at the band-edge for a Part 15 RF Device First Category: Unlicensed Service Rules and Procedures Second Category: General Part 15 Transmitters (UnLic) Question: What is the procedure for making band-edge measurements for a Part 15 intentional radiator? Answer: Measurement procedures for band-edge testing are provided in Subclause 6.10 of ANSI Standard C63.10-2013. Please use the Submit Inquiry link at www.fcc.gov/labhelp to send any comments or suggestions for this site Federal Communications Commission 45 L Street NE Washington, DC 20554 More FCC Contact Information... Phone: 888-CALL-FCC (225-5322) TTY: 888-TELL-FCC (835-5322) Fax: 202-418-0232 E-mail: fccinfo@fcc.gov - Privacy Policy - Web Policies & Notices - Customer Service Standards - Freedom of Information Act"
+    }
+  ],
+  "new_originals_saved": 0
+}

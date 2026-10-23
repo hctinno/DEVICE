@@ -1,0 +1,39 @@
+[
+  {
+    "question_id": "S04-Q001",
+    "blocking_this_document_batch": false,
+    "owner": "P01이 취합 후 현장 장비 담당",
+    "question": "N9030A 실제 사용할 자산·선택 입력·옵션·펌웨어·통신 인터페이스와 교정 유효성은 어떤 현장 증거로 확정할지 기존 요청을 연결해야 한다.",
+    "existing_asset_request_ids_by_model": {
+      "MOD-aecdf6d16380a2be": [
+        "ASSET-EQ-001099",
+        "ASSET-EQ-002466",
+        "ASSET-EQ-003409",
+        "ASSET-EQ-003983",
+        "ASSET-EQ-005984"
+      ],
+      "MOD-c40c6c5f1b4e7ca9": [
+        "ASSET-EQ-002426",
+        "ASSET-EQ-002467",
+        "ASSET-EQ-002672",
+        "ASSET-EQ-003502"
+      ]
+    },
+    "next_action": "기존 자산 증거 요청을 유지한다. IDN 문자열만으로 실물·브랜드·설치 옵션을 확정하지 않는다."
+  },
+  {
+    "question_id": "S04-Q002",
+    "blocking_this_document_batch": false,
+    "owner": "P01이 취합 후 전력계·센서 담당",
+    "question": "N1914A에 연결할 실제 센서·채널·케이블·교정/보정표·입력 한계가 미제공이다. 센서 확정 후 해당 센서 문서를 다음 배정에 넣어야 한다.",
+    "existing_asset_request_ids_by_model": {
+      "MOD-48a20d5887cbe5bc": [
+        "ASSET-EQ-000687",
+        "ASSET-EQ-000902",
+        "ASSET-EQ-001690",
+        "ASSET-EQ-004796"
+      ]
+    },
+    "next_action": "전력계 본체 문서로 센서 능력이나 b/g/n 출력 측정 적합성을 대신 확정하지 않는다."
+  }
+]

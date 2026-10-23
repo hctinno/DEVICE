@@ -1,0 +1,273 @@
+{
+  "reviewed_at": "2026-10-23T21:51:41+09:00",
+  "evidence": [
+    {
+      "evidence_id": "S07-E01",
+      "document_id": "S07-android-adb-23876effdde7",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "extracted_path": "derived/android-adb.txt",
+      "line_start": 108,
+      "line_end": 129,
+      "locator_phrase": "To use adb with a device connected over USB",
+      "summary_ko": "USB 디버깅 설정이 필요하며 승인된 호스트 연결 조건을 확인해야 한다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed"
+    },
+    {
+      "evidence_id": "S07-E02",
+      "document_id": "S07-android-adb-23876effdde7",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "extracted_path": "derived/android-adb.txt",
+      "line_start": 128,
+      "line_end": 135,
+      "locator_phrase": "accept an RSA key",
+      "summary_ko": "제품 사용자가 기기를 잠금 해제하고 호스트 RSA 승인 대화에 응답하는 조건이 문서화되어 있다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed"
+    },
+    {
+      "evidence_id": "S07-E03",
+      "document_id": "S07-android-adb-23876effdde7",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "extracted_path": "derived/android-adb.txt",
+      "line_start": 452,
+      "line_end": 459,
+      "locator_phrase": "this state does not imply that the Android system is fully booted",
+      "summary_ko": "adb의 device 상태만으로 Android 부팅 완료·제품 준비·RF 시험모드 준비를 확정할 수 없다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed",
+      "source_fact_ko": "device 상태가 Android 부팅·운영 완료를 뜻하지 않는다고 문서가 명시한다.",
+      "collector_inference_ko": "따라서 이 상태만으로 RF 시험모드 준비도 확정하지 않는다는 수집자의 해석이다."
+    },
+    {
+      "evidence_id": "S07-E04",
+      "document_id": "S07-android-adb-23876effdde7",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "extracted_path": "derived/android-adb.txt",
+      "line_start": 564,
+      "line_end": 587,
+      "locator_phrase": "Send commands to a specific device",
+      "summary_ko": "여러 대상이 있을 때 시리얼로 대상을 식별하고 -s로 지정하는 인터페이스를 문서화한다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed"
+    },
+    {
+      "evidence_id": "S07-E05",
+      "document_id": "S07-android-adb-23876effdde7",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "extracted_path": "derived/android-adb.txt",
+      "line_start": 741,
+      "line_end": 772,
+      "locator_phrase": "Issue shell commands",
+      "summary_ko": "일반 Unix shell 명령 호출 인터페이스이며 제조사 RF 시험 API의 존재를 보장하지 않는다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed",
+      "source_fact_ko": "일반 Unix shell 호출 형식이 문서화되어 있다.",
+      "collector_inference_ko": "범용 shell 제공이 제조사 RF 시험 API의 존재를 보장하지 않는다는 범위 해석이다."
+    },
+    {
+      "evidence_id": "S07-E06",
+      "document_id": "S07-android-adb-23876effdde7",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "extracted_path": "derived/android-adb.txt",
+      "line_start": 665,
+      "line_end": 692,
+      "locator_phrase": "Copy files to and from a device",
+      "summary_ko": "파일 복사 인터페이스를 제공하지만 제품별 접근 권한과 실제 파일 존재는 별도 확인 대상이다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed",
+      "source_fact_ko": "파일 복사 인터페이스가 문서화되어 있다.",
+      "collector_inference_ko": "특정 제품의 파일 경로·권한·실제 파일 존재는 별도 입력으로 둔다."
+    },
+    {
+      "evidence_id": "S07-E07",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "extracted_path": "derived/android-logcat.txt",
+      "line_start": 121,
+      "line_end": 137,
+      "locator_phrase": "What options are available will depend on the OS version",
+      "summary_ko": "logcat 옵션은 기기 OS에 따라 달라지며 --help와 권한 확인이 필요하다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed"
+    },
+    {
+      "evidence_id": "S07-E08",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "extracted_path": "derived/android-logcat.txt",
+      "line_start": 130,
+      "line_end": 136,
+      "locator_phrase": "many of the options are only usable as",
+      "summary_ko": "일부 logcat 기능에 root 권한이 필요하다고 문서가 명시하며 실제 권한은 미확인이다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed"
+    },
+    {
+      "evidence_id": "S07-E09",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "extracted_path": "derived/android-logcat.txt",
+      "line_start": 248,
+      "line_end": 257,
+      "locator_phrase": "threadtime",
+      "summary_ko": "로그 출력 형식과 시각·스레드 정보의 선택 인터페이스가 문서화되어 있다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed"
+    },
+    {
+      "evidence_id": "S07-E10",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "extracted_path": "derived/android-logcat.txt",
+      "line_start": 316,
+      "line_end": 355,
+      "locator_phrase": "View alternative log buffers",
+      "summary_ko": "main/system/crash/radio/events 등의 버퍼 선택과 필터링을 구별한다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed"
+    },
+    {
+      "evidence_id": "S07-E11",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "extracted_path": "derived/aosp-wifi-debug.txt",
+      "line_start": 12,
+      "line_end": 25,
+      "locator_phrase": "AOSP provides a mix of unit tests and CTS tests",
+      "summary_ko": "수집한 Wi-Fi 시험 문서는 프레임워크 단위·CTS 시험을 다룬다. 제조사 b/g/n 송신시험 모드의 근거로 대체하지 않는다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed",
+      "source_fact_ko": "AOSP Wi-Fi 프레임워크의 단위·CTS 시험을 설명한다.",
+      "collector_inference_ko": "이 자료를 제조사 전용 b/g/n RF 송신시험 모드의 증거로 대체하지 않는다는 범위 해석이다."
+    },
+    {
+      "evidence_id": "S07-E12",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "extracted_path": "derived/aosp-wifi-debug.txt",
+      "line_start": 43,
+      "line_end": 68,
+      "locator_phrase": "only in userdebug and eng builds",
+      "summary_ko": "Wi-Fi 오류 시 자동 bugreport 동작에는 빌드 유형 조건이 있으며 HAL에 따른 펌웨어 로그 위치도 다르다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed"
+    },
+    {
+      "evidence_id": "S07-E13",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "extracted_path": "derived/aosp-wifi-debug.txt",
+      "line_start": 72,
+      "line_end": 91,
+      "locator_phrase": "entry and exit RSSI thresholds",
+      "summary_ko": "RSSI 기반 접속·이탈 임계치 조정과 RF 시험용 출력·변조·듀티 설정을 구별한다.",
+      "classification": "documented_interface",
+      "runtime_validation": "not_executed",
+      "source_fact_ko": "네트워크 접속·이탈 RSSI 임계치를 조정하는 구성을 설명한다.",
+      "collector_inference_ko": "이 구성은 RF 송신 시험의 출력·변조·듀티 설정 근거와 구별한다."
+    }
+  ],
+  "capability_matrix": [
+    {
+      "capability": "ADB USB 접근·호스트 승인",
+      "document_status": "documented_conditional",
+      "evidence_ids": [
+        "S07-E01",
+        "S07-E02"
+      ],
+      "runtime_status": "not_executed",
+      "limitation": "실제 USB 드라이버·잠금 해제·정책·승인 상태는 미확인"
+    },
+    {
+      "capability": "ADB 대상 열거·시리얼 지정·일반 shell 호출",
+      "document_status": "documented_interface",
+      "evidence_ids": [
+        "S07-E03",
+        "S07-E04",
+        "S07-E05"
+      ],
+      "runtime_status": "not_executed",
+      "limitation": "전송 상태와 DUT 기능 완료 상태를 별도로 검증해야 함"
+    },
+    {
+      "capability": "파일 복사·원본 회수 경로",
+      "document_status": "documented_interface",
+      "evidence_ids": [
+        "S07-E06"
+      ],
+      "runtime_status": "not_executed",
+      "limitation": "실제 파일 경로·읽기 권한·형식은 미확인"
+    },
+    {
+      "capability": "logcat 버퍼·형식·필터",
+      "document_status": "documented_conditional",
+      "evidence_ids": [
+        "S07-E07",
+        "S07-E08",
+        "S07-E09",
+        "S07-E10"
+      ],
+      "runtime_status": "not_executed",
+      "limitation": "기기 OS·도구 버전·권한별 지원을 확인해야 함"
+    },
+    {
+      "capability": "AOSP Wi-Fi 프레임워크 시험·로그",
+      "document_status": "documented_conditional",
+      "evidence_ids": [
+        "S07-E11",
+        "S07-E12"
+      ],
+      "runtime_status": "not_executed",
+      "limitation": "userdebug/eng 및 HAL 조건이 있는 개발·호환성 시험 자료"
+    },
+    {
+      "capability": "Wi-Fi RSSI 접속 임계치 조정",
+      "document_status": "documented_non_rf_test_configuration",
+      "evidence_ids": [
+        "S07-E13"
+      ],
+      "runtime_status": "not_executed",
+      "limitation": "b/g/n RF 출력·채널·속도 고정 기능을 입증하지 않음"
+    },
+    {
+      "capability": "제조사 b/g/n 전용 시험모드 진입·송신 시작·종료",
+      "document_status": "unknown",
+      "evidence_ids": [],
+      "runtime_status": "not_executed",
+      "limitation": "DUT·칩셋·시험 FW·제조사 도구와 공식 명령 계약이 미지정"
+    },
+    {
+      "capability": "채널·대역폭·변조/속도·체인·출력·패킷/듀티·튜너 설정/조회",
+      "document_status": "unknown",
+      "evidence_ids": [],
+      "runtime_status": "not_executed",
+      "limitation": "범용 ADB/logcat 문서에 의한 제품별 지원은 확정할 수 없음"
+    },
+    {
+      "capability": "RF 송신 종료·안전한 유휴 상태의 실제 확인",
+      "document_status": "unknown",
+      "evidence_ids": [],
+      "runtime_status": "not_executed",
+      "limitation": "프로세스 종료·USB 분리·adb 서버 재시작을 RF OFF 증거로 취급하지 않음"
+    },
+    {
+      "capability": "가상 Android 에뮬레이터의 실물 RF 시험 대체",
+      "document_status": "not_established",
+      "evidence_ids": [
+        "S07-E03",
+        "S07-E04"
+      ],
+      "runtime_status": "not_executed",
+      "limitation": "실제 RF 경로·실물 시료 검증이 별도로 필요함"
+    },
+    {
+      "capability": "VISA·IVI/SCPI의 DUT 시험모드 호환",
+      "document_status": "not_established",
+      "evidence_ids": [],
+      "runtime_status": "not_executed",
+      "limitation": "기존 일반 계측 인터페이스 자료만 참조하며 특정 DUT 지원을 주장하지 않음"
+    }
+  ],
+  "interpretation": "unknown/not_established는 미지원 판정이 아니다. 수집 자료의 입증 범위를 넘는 기능을 미확인으로 둔다. 문서 예제는 실행하지 않았다."
+}

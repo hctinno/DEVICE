@@ -1,0 +1,129 @@
+{
+  "task_id": "FCC-20261023-S06-B0001",
+  "batch_id": "FCC-20261023A-S06-B0001",
+  "attempt": 1,
+  "owner_session": "S06",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "request_ids": [
+    "EQ-MOD-f183d948fc590a8b",
+    "EQ-MOD-207e69830324252e",
+    "EQ-MOD-6b92cbf630670c77"
+  ],
+  "model_ids": [
+    "MOD-f183d948fc590a8b",
+    "MOD-207e69830324252e",
+    "MOD-6b92cbf630670c77"
+  ],
+  "activation": "approved",
+  "priority": "P0",
+  "prepared_at": "2026-10-23T21:52:42+09:00",
+  "timezone": "Asia/Seoul",
+  "batch_result": "collection_review_complete_with_limitations",
+  "request_counts": {
+    "assigned": 3,
+    "reviewed": 3,
+    "completed": 0,
+    "limited": 3,
+    "not_started": 0
+  },
+  "count_semantics": "completed는 전체 명령/상태/완료/정지/한계 근거 및 해당 모델 적용범위가 충족된 요청이다. 일부 제품 사양과 발견 단서만 확보한3건은limited로 분류한다. 자료 준비 종료와 현장 검증 완료를 구별한다.",
+  "completed_request_ids": [],
+  "limited_request_ids": [
+    "EQ-MOD-f183d948fc590a8b",
+    "EQ-MOD-207e69830324252e",
+    "EQ-MOD-6b92cbf630670c77"
+  ],
+  "not_started_request_ids": [],
+  "source_counts": {
+    "new_downloaded_originals": 3,
+    "new_public_redistributable_originals": 0,
+    "new_local_restricted_originals": 3,
+    "new_command_manual_originals": 0,
+    "legacy_originals_reused_without_download": 1,
+    "primary_acquisition_attempts": 5,
+    "primary_acquisition_failures": 2,
+    "additional_direct_http_observations": 4,
+    "derived_raster_files": 1,
+    "metadata_json_files": 12,
+    "open_questions": 3,
+    "new_original_limit": 6
+  },
+  "original_media_types": {
+    "text/html": 3,
+    "application/pdf": 0
+  },
+  "rights_and_publication": {
+    "public_original_paths": [],
+    "restricted_original_paths": [
+      "[local-only derivative or original; not included in public payload]",
+      "[local-only derivative or original; not included in public payload]",
+      "[local-only derivative or original; not included in public payload]"
+    ],
+    "restricted_derived_paths": [
+      "[local-only derivative or original; not included in public payload]"
+    ],
+    "publication_owner": "P01",
+    "instruction": "[local-only derivative or original; not included in public payload]"
+  },
+  "model_outcomes": [
+    {
+      "request_id": "EQ-MOD-f183d948fc590a8b",
+      "model_id": "MOD-f183d948fc590a8b",
+      "status": "limited",
+      "identity": "2090 제품군 후보 확인; 개별 명판·세대·펌웨어 적용성 미확인"
+    },
+    {
+      "request_id": "EQ-MOD-207e69830324252e",
+      "model_id": "MOD-207e69830324252e",
+      "status": "limited",
+      "identity": "2090 제품군 후보 확인; 개별 명판·세대·펌웨어 적용성 미확인"
+    },
+    {
+      "request_id": "EQ-MOD-6b92cbf630670c77",
+      "model_id": "MOD-6b92cbf630670c77",
+      "status": "limited",
+      "identity": "공식 CO3000-4P/2017 CO3000-4p가 대응 후보. 대장 -4port와 동일 제품/라이선스인지는 명판·제조사 적용 확인 필요."
+    }
+  ],
+  "unavailable_or_unconfirmed": [
+    "2090 전체 명령 매뉴얼 원문",
+    "CO3000-4port의 정확한 접미/라이선스/펌웨어 대응",
+    "INNCO 상태·완료·정지·한계·인터록 명령 원문",
+    "모든 대상의 실장비 적용성·독립 보호·현장RF 경로 보정"
+  ],
+  "p01_followup_applied": {
+    "legacy_2090_route_redirect_independently_confirmed_by_p01": true,
+    "search_cache_command_content_excluded_from_technical_evidence": true,
+    "reviewed_current_archived_first_page_contains_2090_link": false,
+    "no_repeated_failed_access_or_other_model_command_inference": true,
+    "manufacturer_manual_request_recorded": true
+  },
+  "official_search_scope": {
+    "as_of_date": "2026-10-23",
+    "checked": [
+      "배정된2090 제품군 공식 문서 경로·사례·공식URL 검색색인",
+      "INNCO4P 제품 페이지·기존카탈로그·다운로드/회원/지원 경로"
+    ],
+    "unsearched": [
+      "ETS 전체 archived 페이지/로그인 내부",
+      "INNCO 회원영역 내부",
+      "그 밖의모델·규정·표준·시험방법"
+    ],
+    "no_global_nonpublication_claim": true
+  },
+  "safety_and_authority": {
+    "facility_network_scans": 0,
+    "facility_site_accesses": 0,
+    "hardware_or_dut_commands": 0,
+    "motion_or_rf_output_operations": 0,
+    "installs_or_firmware_changes": 0,
+    "account_logins_or_purchases": 0,
+    "form_submissions_or_external_messages": 0,
+    "git_commands": 0,
+    "shared_files_modified": false
+  },
+  "verification_scope": "UTF-8/JSON/schema·바이트/해시·목록/경로·원본 헤더·기존 카탈로그 102쪽 렌더링 검토. 시험소 기능·계측 정확도·기관 적합성·장비 제어 검증이 아니다.",
+  "next_action": "P01 인수 후 실제 다음 지시를 기다린다. 이 배치 범위를 자동 확장하지 않는다.",
+  "handoff_state": "collector_prepared_for_freeze_p01_receipt_pending"
+}

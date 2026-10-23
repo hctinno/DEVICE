@@ -1,0 +1,87 @@
+{
+  "task_id": "FCC-20261023-S08-B0001",
+  "batch_id": "FCC-20261023A-S08-B0001",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "created_at": "2026-10-23T21:56:05+09:00",
+  "timezone": "Asia/Seoul",
+  "status": "completed_with_explicit_limits",
+  "request_results": [
+    {
+      "request_id": "ADD-S08-WIFI24-REPORT-FIELDS-001",
+      "status": "completed",
+      "completion_kind": "evidence_index_with_explicit_limits",
+      "limitations_present": true,
+      "output": "metadata/evidence-index.json"
+    },
+    {
+      "request_id": "ADD-S08-CASE-LINKS-001",
+      "status": "completed",
+      "completion_kind": "evidence_index_with_explicit_limits",
+      "limitations_present": true,
+      "output": "metadata/references.json"
+    }
+  ],
+  "counts": {
+    "assigned_requests": 2,
+    "completed_requests": 2,
+    "requests_with_limits": 2,
+    "not_started_requests": 0,
+    "counting_note": "requests_with_limits는 completed_requests에 포함된다. 완료는 배정된 색인/관계/누락 기록 조건의 완료이며 실측·전체 규정·성적서 발행 완료가 아니다.",
+    "field_candidates": 24,
+    "legacy_case_originals_reused": 21,
+    "legacy_official_originals_reused": 5,
+    "legacy_sources_hash_verified": 26,
+    "new_originals": 0,
+    "new_public_originals": 0,
+    "new_restricted_originals": 0,
+    "full_text_derivatives_in_ready": 0,
+    "metadata_files": 5,
+    "native_instrument_raw_files": 0,
+    "private_input_groups_not_provided": 6,
+    "paid_standard_originals_not_acquired": 2,
+    "blocking_questions": 0,
+    "nonblocking_questions": 2
+  },
+  "scope": "기존 단일 공개사례 A3LSMS938U의 RF/EMC/SAR/셋업 첨부와 공식 보고/추적성 근거를 읽어 b/g/n 원시값·설정·보정·단위·시료/장비·판정·불확도·검토 요구 색인을 만든다. 이미 받은 사례21개를 다시 다운로드하지 않는다. 공식 요구/사례 관행/제안을 구별하며 성적서 그림을 계측기 raw로 표시하지 않는다. 구매 필요 ISO 원문은 대체하지 않는다.",
+  "original_limit": 6,
+  "edition_control": "원문·ID·해시·수집시각은 S01 기록을 변경하지 않고 참조한다. 새 로컬 색인은 downloaded 원문 레코드가 아니다.",
+  "limits": [
+    "b/g/n SAR 지원 출력표는 확인되나 b/g/n 비OFDMA RF 전체 성적서는 기존 21개에 식별되지 않는다.",
+    "EMC p3 범위 문구/요약 표 차이는 기술 검토가 필요하다.",
+    "KDB 현행 게시 상태 재확인은 403으로 미완료. 과거 확보 판본을 고정 참조한다.",
+    "실제 현장 raw·교정/보정·기관 발행권한은 미제공이며 공개 사례로 대체하지 않는다.",
+    "ISO/IEC 17025와 C63.23 원문 미확보를 공식 요약·사례로 대체하지 않는다."
+  ],
+  "publication": "ready에는 짧은 출처/페이지/관계/누락 metadata만 포함한다. 제한 원문·전체 추출문·렌더링 이미지는 포함하지 않는다. 공개 여부 검수는 P01이 수행한다.",
+  "source_access": {
+    "external_checks": 6,
+    "network_original_files_saved": 0,
+    "repeated_failed_requests": 0
+  },
+  "unsearched_scope": [
+    "전체 FCC/KDB 추가·폐기 목록 재탐색",
+    "기존 21개 밖의 추가 EAS 첨부/기술 운영 설명",
+    "전체 21개 성적서의 모든 수치·규격·적합성 검토",
+    "실장비·현장·실제 업무 및 기관 인정/권한 검증"
+  ],
+  "physical_or_external_actions": {
+    "equipment_network_search": false,
+    "equipment_commands": false,
+    "installation_or_purchase": false,
+    "external_submission_or_message": false,
+    "git_commands": false
+  },
+  "local_verification": {
+    "verified_at": "2026-10-23T21:56:07+09:00",
+    "utf8_json_and_assignment": "pass",
+    "field_locations_and_source_hashes": "pass",
+    "source_hashes_reverified": 26,
+    "document_integrity_command": "python -X utf8 -B scripts/check_artifacts.py",
+    "document_integrity_exit_code": 0,
+    "document_integrity_output": "PASS: 7 UTF-8 documents; 59 local links; no encoding markers.\nScope: document integrity only. No hardware, AI workflow, or conformity validation performed.",
+    "validation_scope": "문서·출처·메타데이터·인계 무결성만 검사. 원문 최신성/기술 적용 승인·실측 정확도·현장·발행 검증은 수행하지 않음."
+  }
+}

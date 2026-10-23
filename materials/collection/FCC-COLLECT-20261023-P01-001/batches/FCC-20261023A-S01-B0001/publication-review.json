@@ -1,0 +1,82 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S01-B0001",
+  "task_id": "FCC-20261023-S01-B0001",
+  "owner_session": "S01",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "snapshot_inventory_sha256": "64e673326937dea46c4824e7c58c41276cf6b44d4f81360fda5eec74353d5354",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S01-B0001",
+    "decision": "content_approved_for_reference_index",
+    "findings": [
+      "15 evidence items reference 9 existing legacy documents without changing original IDs.",
+      "Three KDB publication lists were compared against five existing attachment links; unchanged-URL attachment bytes were not freshly redownloaded, and that limitation is explicit.",
+      "C63.10 full-text access and 2013-to-2020 clause mapping remain open; index is not an executable method approval."
+    ],
+    "request_outcome": {
+      "completed": 2,
+      "limited": 0,
+      "not_started": 0
+    },
+    "publication_metadata_files": [
+      "attachment-comparison.json",
+      "official-checks.json"
+    ],
+    "owner": "P01",
+    "source_inventory_verified": true,
+    "rights_public_document_ids": [],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [],
+  "redacted_local_reference_fields": [
+    "/legacy_handover/inventory_path",
+    "/legacy_references/0/package_path",
+    "/legacy_references/0/legacy_local_path",
+    "/legacy_references/0/manifest_path",
+    "/legacy_references/1/package_path",
+    "/legacy_references/1/legacy_local_path",
+    "/legacy_references/1/manifest_path",
+    "/legacy_references/2/package_path",
+    "/legacy_references/2/legacy_local_path",
+    "/legacy_references/2/manifest_path",
+    "/legacy_references/3/package_path",
+    "/legacy_references/3/legacy_local_path",
+    "/legacy_references/3/manifest_path",
+    "/legacy_references/4/package_path",
+    "/legacy_references/4/legacy_local_path",
+    "/legacy_references/4/manifest_path",
+    "/legacy_references/5/package_path",
+    "/legacy_references/5/legacy_local_path",
+    "/legacy_references/5/manifest_path",
+    "/legacy_references/6/package_path",
+    "/legacy_references/6/legacy_local_path",
+    "/legacy_references/6/manifest_path",
+    "/legacy_references/7/package_path",
+    "/legacy_references/7/legacy_local_path",
+    "/legacy_references/7/manifest_path",
+    "/legacy_references/8/package_path",
+    "/legacy_references/8/legacy_local_path",
+    "/legacy_references/8/manifest_path",
+    "/standard_access_metadata_references/0/metadata_path",
+    "/standard_access_metadata_references/1/metadata_path",
+    "/standard_access_metadata_references/2/metadata_path",
+    "/standard_edition_context/publisher_catalog_records_from_legacy/0/metadata_path",
+    "/standard_edition_context/publisher_catalog_records_from_legacy/1/metadata_path",
+    "/standard_edition_context/publisher_catalog_records_from_legacy/2/metadata_path"
+  ],
+  "package": null,
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "attachment-comparison.json",
+    "official-checks.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

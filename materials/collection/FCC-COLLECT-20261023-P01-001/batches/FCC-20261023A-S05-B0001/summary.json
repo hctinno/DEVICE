@@ -1,0 +1,142 @@
+{
+  "task_id": "FCC-20261023-S05-B0001",
+  "batch_id": "FCC-20261023A-S05-B0001",
+  "attempt": 1,
+  "owner_session": "S05",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "activation": "approved",
+  "prepared_at": "2026-10-23T21:49:17+09:00",
+  "status": "research_complete_with_document_and_field_limits",
+  "scope": "SPEAG DAE4와 DASY5 Server의 정확한 세대/역할/공식 문서·데이터교환·호환/교정 조건을 조사한다. 기존 speag_sources 및 로컬 제한 원문은 읽기 참조하고 DAE4ip/DASY6를 해당 모델로 일반화하지 않는다. 실제 프로브/DAQ교정·시스템검증 결과는 미제공이다.",
+  "request_ids": [
+    "EQ-MOD-708c2272f105c511",
+    "EQ-MOD-4e657354694908fa"
+  ],
+  "model_ids": [
+    "MOD-708c2272f105c511",
+    "MOD-4e657354694908fa"
+  ],
+  "request_counts": {
+    "completed": 0,
+    "limited": 2,
+    "not_started": 0,
+    "researched": 2
+  },
+  "count_definition": "completed/limited/not_started는 요청별 상호 배타적 문서 확보 상태다. 두 요청 모두 조사했지만 전체 매뉴얼/API/현장 입력 제한이 있어 limited로 집계한다. 배치 인계 준비 완료와 장비 지원/현장 검증 완료는 다르다.",
+  "request_results": [
+    {
+      "request_id": "EQ-MOD-708c2272f105c511",
+      "model_id": "MOD-708c2272f105c511",
+      "model": "SPEAG DAE4",
+      "state": "limited",
+      "research_complete": true,
+      "found": [
+        "정확한 모델의 공식 사양·교정 서비스 개요",
+        "DAE4와 DAE4ip 차이",
+        "역사적 구성표와 DAE 기능/전송 개요"
+      ],
+      "gaps": [
+        "직접 제어 프로토콜/API와 교정파일 스키마",
+        "DAE3V1 혼재 개체 식별",
+        "실제 교정·EOC 구성·시스템 점검"
+      ]
+    },
+    {
+      "request_id": "EQ-MOD-4e657354694908fa",
+      "model_id": "MOD-4e657354694908fa",
+      "model": "SPEAG DASY5 Server",
+      "state": "limited",
+      "research_complete": true,
+      "found": [
+        "역사적 전용 구성품 식별",
+        "DASY52 공식 ReadMe의 Server/Driver/Robot 버전",
+        "DASY5.2 컨테이너·보고서/export와 옵션 근거",
+        "전용 포털 접근 조건"
+      ],
+      "gaps": [
+        "전체 사용자/프로그래밍 매뉴얼은 라이선스 배포물 내 제공",
+        "실물 하드웨어·설치 버전·라이선스·API 옵션 미확인",
+        ".da52 내부/raw/교정파일 명세 미확보"
+      ]
+    }
+  ],
+  "source_counts": {
+    "downloaded_originals": 6,
+    "public_redistributable_originals": 0,
+    "local_restricted_originals": 6,
+    "original_bytes": 5013644,
+    "new_pdf": 2,
+    "new_html": 3,
+    "new_text": 1,
+    "legacy_originals_referenced": 5,
+    "legacy_originals_copied": 0,
+    "legacy_originals_redownloaded": 0,
+    "derived_source_representations_in_payload": 0,
+    "metadata_files_in_payload": 9
+  },
+  "access_counts": {
+    "new_source_http_200": 6,
+    "new_source_network_failures": 0,
+    "local_header_validation_failures": 1,
+    "local_header_validation_recoveries": 1,
+    "network_retry_for_validation_failure": 0,
+    "notes": "웹 탐색 도구의 잘못된 상대 링크/경로 실패는 별도 로그에 남겼다. 직접 원문 수집 6건의 네트워크 상태와 구분한다."
+  },
+  "rights_handling": {
+    "publication_recommendation": "원문 6개는 공개 패키지에서 제외하고 로컬 제한 자료로 유지한다. P01은 공개 가능한 출처·사실 요약을 별도 파일로 게시할 수 있다.",
+    "raw_payload_prefix": "[local-only derivative or original; not included in public payload]",
+    "public_redistribution_permission_verified": false,
+    "publisher_legal_url": "https://speag.swiss/meta-navigation/legal-notice"
+  },
+  "generation_boundaries": [
+    "DAE4 배터리형과 DAE4ip 통합 전원형을 구별한다.",
+    "DASY5 v5.0, DASY52 v5.2/포털 V52.10.4.1535, DASY6 SAR/R&D를 구별한다.",
+    "DASY6 HTTP API·R&D CSV·Server 교정 설명을 DASY5 지원으로 확대하지 않는다.",
+    "매뉴얼/API 사용권·옵션·설치와 현장 실측 검증은 별도 상태다."
+  ],
+  "not_provided_field_inputs": [
+    "S05-IN01",
+    "S05-IN02",
+    "S05-IN03",
+    "S05-IN04",
+    "S05-IN05",
+    "S05-IN06",
+    "S05-IN07"
+  ],
+  "pending_questions": [
+    "S05-Q01",
+    "S05-Q02",
+    "S05-Q03"
+  ],
+  "questions_block_batch_handover": false,
+  "verification": {
+    "source_hash_size_mime_checks": "passed",
+    "new_document_schema": "passed",
+    "visual_pages_reviewed": [
+      "DASY52 flyer PDF p3,p5",
+      "DASY5 Report Generator PDF p1,p2",
+      "legacy DASY6 PDF p59,p73"
+    ],
+    "laboratory_network_access": 0,
+    "equipment_commands": 0,
+    "installations": 0,
+    "git_commands": 0,
+    "real_calibration_or_system_verification": "not_performed"
+  },
+  "searched_at": "2026-10-23T21:49:17+09:00",
+  "searched_scope": [
+    "공식 SPEAG 공개 제품·교정·수명·릴리스·다운로드·법적 고지 페이지",
+    "고정 legacy 색인과 materials/inventory",
+    "S01 소유 DASY6 매뉴얼의 관련 장"
+  ],
+  "unsearched_scope": [
+    "배정 밖 SAR 모델·규정 원문",
+    "라이선스 배포물 내부 전체 매뉴얼·SDK·업그레이드 절차 파일",
+    "사내/현장 네트워크·설치 디렉터리·교정 원본",
+    "유료/로그인/메일 요청이 필요한 자료"
+  ],
+  "handover_state": "local_batch_prepared_p01_acceptance_pending",
+  "legacy_original_owner": "S01",
+  "immutable_legacy_records_modified": false
+}

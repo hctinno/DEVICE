@@ -1,0 +1,61 @@
+{
+  "task_id": "FCC-20261023-S05-B0001",
+  "batch_id": "FCC-20261023A-S05-B0001",
+  "attempt": 1,
+  "owner_session": "S05",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "activation": "approved",
+  "inputs": [
+    {
+      "input_id": "S05-IN01",
+      "request_id": "EQ-MOD-708c2272f105c511",
+      "status": "not_provided",
+      "needed": "DAE4/DAE3V1 개체별 명판 모델·시리얼과 17행 대응",
+      "why": "모델명 혼재 해소"
+    },
+    {
+      "input_id": "S05-IN02",
+      "request_id": "EQ-MOD-708c2272f105c511",
+      "status": "not_provided",
+      "needed": "개별 DAE/프로브 교정서의 판본·유효기간·조건과 허용된 비식별 교정파일 예제",
+      "why": "교정계수의 출처·단위·적용 대상·파일 구조 확인"
+    },
+    {
+      "input_id": "S05-IN03",
+      "request_id": "EQ-MOD-708c2272f105c511",
+      "status": "not_provided",
+      "needed": "실제 EOC/EOCip 모델·배선·전원 및 호스트 구성 기록",
+      "why": "DAE4와 DAE4ip의 공급 전원·호환 구분"
+    },
+    {
+      "input_id": "S05-IN04",
+      "request_id": "EQ-MOD-4e657354694908fa",
+      "status": "not_provided",
+      "needed": "Server 명판·하드웨어 리비전·설치 SW/Server/Driver/Robot 버전 화면 또는 관리 기록",
+      "why": "DASY5/DASY52/DASY6 및 조건부 버전 조합 구분"
+    },
+    {
+      "input_id": "S05-IN05",
+      "request_id": "EQ-MOD-4e657354694908fa",
+      "status": "not_provided",
+      "needed": "보유 모듈·RG 출력·API 옵션의 명칭/활성 여부와 사용 가능한 공식 매뉴얼 판본",
+      "why": "기능·권리 확인; license.dat 본문·동글 키·쿠키는 받거나 기록하지 않음"
+    },
+    {
+      "input_id": "S05-IN06",
+      "request_id": "EQ-MOD-4e657354694908fa",
+      "status": "not_provided",
+      "needed": "허용된 비식별 .da52 프로젝트와 해당 버전의 export 예제·설명",
+      "why": "raw/후처리/보고 출력 및 파일 필드 대응; 고객 원문 전체를 인터넷으로 재구성하지 않음"
+    },
+    {
+      "input_id": "S05-IN07",
+      "request_id": "EQ-MOD-708c2272f105c511",
+      "status": "not_provided",
+      "needed": "실제 팬텀·액체 특성·온도·검증 소스 교정 및 시스템 점검 원시 기록",
+      "why": "공개 제조사 설명과 현장 시스템 검증을 구분"
+    }
+  ],
+  "status": "not_provided"
+}

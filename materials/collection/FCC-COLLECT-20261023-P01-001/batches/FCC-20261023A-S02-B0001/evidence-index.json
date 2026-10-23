@@ -1,0 +1,866 @@
+{
+  "task_id": "FCC-20261023-S02-B0001",
+  "request_ids": [
+    "ADD-S02-EMC-BGN-CONDITIONS-001"
+  ],
+  "created_at": "2026-10-23T21:55:20+09:00",
+  "evidence_item_count": 18,
+  "items": [
+    {
+      "evidence_id": "S02-E01",
+      "title": "제품 분류와 디지털 기기 허가 경로",
+      "applies_if": "일반 소비자·가정용 디지털 기능을 포함하는 대상 제품. 실제 기능과 판매 조건 확인 후 적용.",
+      "interpretation": "15.3(h)/(i)/(k)의 분류와 디지털 기능 예외를 먼저 확인한다. 15.101(a)의 기타 Class B 디지털기기·주변기기는 SDoC 또는 certification 경로이며 15.101(d)의 주변기기 조건을 별도 확인한다. 스마트폰이라는 이름만으로 경로나 면제를 확정하지 않는다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.3(h), (i), (k)",
+          "section": "15.3",
+          "paragraph": "(h), (i), (k)",
+          "xml_xpath": ".//DIV8[@N='15.3']",
+          "anchor": "used only to enable operation",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.3",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.101(a), (d)",
+          "section": "15.101",
+          "paragraph": "(a), (d)",
+          "xml_xpath": ".//DIV8[@N='15.101']",
+          "anchor": "Other Class B digital devices",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.101",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "판매 대상 환경",
+        "디지털 추가 기능",
+        "주변기기 판매 조합",
+        "제품·펌웨어 버전"
+      ],
+      "measurement_or_report_fields": [
+        "제품 분류·사유",
+        "허가 경로",
+        "검토한 예외",
+        "모델·조합 식별"
+      ],
+      "gap_ids": [
+        "G07"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E02",
+      "title": "배터리 전용과 충전·간접 AC 연결의 구별",
+      "applies_if": "충전 중 동작 가능 여부 또는 AC에 연결된 호스트·어댑터를 통해 전원을 받는 구성.",
+      "interpretation": "배터리만 사용하고 AC 동작·연결 수단이 없는 경우의 AC 전도 측정 예외와, 동작 중 충전·AC 어댑터·배터리 대체기·간접 AC 전원 연결 시 측정 조건을 구별한다. 배터리 내장 자체를 전도 시험 면제로 사용하지 않는다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.107(d)",
+          "section": "15.107",
+          "paragraph": "(d)",
+          "xml_xpath": ".//DIV8[@N='15.107']",
+          "anchor": "battery chargers which permit operating while charging",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.107",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.207(c)",
+          "section": "15.207",
+          "paragraph": "(c)",
+          "xml_xpath": ".//DIV8[@N='15.207']",
+          "anchor": "connect to the AC power lines indirectly",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.207",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "충전 중 RF/디지털 동작",
+        "충전기·AC 어댑터",
+        "USB 호스트 전원 연결도",
+        "배터리 전용 모드"
+      ],
+      "measurement_or_report_fields": [
+        "시험 구성별 AC 연결 여부",
+        "면제 또는 시험 적용 사유",
+        "충전기·호스트·케이블 ID"
+      ],
+      "gap_ids": [
+        "G07"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E03",
+      "title": "Class B 디지털 기기 AC 전도 한계와 LISN",
+      "applies_if": "15.107(a)/(d)에 해당하는 디지털 기기 AC 연결 구성.",
+      "interpretation": "150 kHz-30 MHz에서 각 전원선-접지 전압을 50 μH/50 Ω LISN으로 평가한다. QP/AVG 한계(dBμV)는 0.15-0.5 MHz에서 66→56/56→46, 0.5-5 MHz에서 56/46, 5-30 MHz에서 60/50이다. 첫 구간은 주파수 로그에 따라 감소하고 경계에서는 낮은 한계를 적용한다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.107(a), table",
+          "section": "15.107",
+          "paragraph": "(a), table",
+          "xml_xpath": ".//DIV8[@N='15.107']",
+          "anchor": "150 kHz to 30 MHz",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.107",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.31(l)",
+          "section": "15.31",
+          "paragraph": "(l)",
+          "xml_xpath": ".//DIV8[@N='15.31']",
+          "anchor": "line-impedance stabilization network",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.31",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "AC 전원 구성·단자",
+        "LISN 모델·교정",
+        "전원선·환경·케이블 배치"
+      ],
+      "measurement_or_report_fields": [
+        "주파수 Hz",
+        "전원선",
+        "QP/AVG detector",
+        "수신 전압·단위",
+        "보정 후 dBμV",
+        "적용 한계·여유",
+        "LISN/수신기 ID",
+        "측정 대역폭"
+      ],
+      "gap_ids": [
+        "G01",
+        "G07",
+        "G08"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E04",
+      "title": "b/g/n intentional radiator의 AC 전도 경로",
+      "applies_if": "b/g/n 송신 구성에 15.207(a)/(c)의 AC 연결 조건이 성립하는 경우.",
+      "interpretation": "15.207의 전도 한계·LISN·150 kHz-30 MHz 범위를 디지털 기기의 15.107 경로와 구별해 연결한다. 두 조문에 같은 수치가 있어도 시험 모드와 적용 근거를 하나로 합치지 않는다. RF 적용성 근거 수집은 S01 범위이며 실제 방법 승인·시험 수행은 개발·기관 권한에서 별도로 처리한다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.207(a), (c)",
+          "section": "15.207",
+          "paragraph": "(a), (c)",
+          "xml_xpath": ".//DIV8[@N='15.207']",
+          "anchor": "for an intentional radiator",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.207",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.107(d)",
+          "section": "15.107",
+          "paragraph": "(d)",
+          "xml_xpath": ".//DIV8[@N='15.107']",
+          "anchor": "Devices that include",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.107",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "송신 중 충전 가능 여부",
+        "AC/간접 전원 구성",
+        "시험모드 접근 정보"
+      ],
+      "measurement_or_report_fields": [
+        "15.107/15.207 적용 구분",
+        "송신·디지털 동작 상태",
+        "QP/AVG·주파수·전압·한계",
+        "전원 구성 증거"
+      ],
+      "gap_ids": [
+        "G01",
+        "G04",
+        "G07"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S01; S02는 공유 방법 참조",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E05",
+      "title": "케이블·포트·주변기기와 최대 방출 구성",
+      "applies_if": "외부 액세서리·전기 입력·데이터 포트 또는 소비자가 조정할 수 있는 기능이 있는 경우.",
+      "interpretation": "15.31(g)/(i)/(j)는 접근 가능한 조정과 정상 사용 범위에서 방출이 최대가 되는 구성, 외부 액세서리 연결·동작, 각 종류 포트의 대표 연결과 의도된 판매 조합을 다룬다. 모든 가능한 조합의 전수 시험을 요구하는 것으로 일반화하지 않는다. 표준의 구체적인 케이블 배치는 미확보다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.31(g), (i), (j)",
+          "section": "15.31",
+          "paragraph": "(g), (i), (j)",
+          "xml_xpath": ".//DIV8[@N='15.31']",
+          "anchor": "one of each type of port",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.31",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "각 포트 종류",
+        "대표 주변기기",
+        "정상 동작·부하",
+        "판매 조합",
+        "케이블 길이·차폐"
+      ],
+      "measurement_or_report_fields": [
+        "포트별 연결표",
+        "액세서리 모델·동작",
+        "배치 사진",
+        "최대 방출 구성 선정 사유"
+      ],
+      "gap_ids": [
+        "G01",
+        "G07"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E06",
+      "title": "1 GHz 이하 검출기와 대역폭 근거",
+      "applies_if": "15.35(a)가 적용되고 개별 조문에 별도 검출기 예외가 없는 측정.",
+      "interpretation": "1,000 MHz 이하의 일반 기준은 CISPR QP와 관련 대역폭이며, 같은 QP 대역폭에서 peak로 한계를 충족하는 대안을 구별한다. 계측 사양 위치는 C63.4-2014 clause 4이다. 구매 제한으로 세부 수신 대역폭을 확인하지 못했으므로 9 kHz·120 kHz 등의 값을 임의 입력하지 않는다. 15.209(d) 같은 개별 예외를 먼저 확인한다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.35(a)",
+          "section": "15.35",
+          "paragraph": "(a)",
+          "xml_xpath": ".//DIV8[@N='15.35']",
+          "anchor": "same bandwidth",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.35",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.209(d)",
+          "section": "15.209",
+          "paragraph": "(d)",
+          "xml_xpath": ".//DIV8[@N='15.209']",
+          "anchor": "average detector",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.209",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "측정 종류·대역",
+        "수신기 검출기·필터 정의",
+        "개별 조문 예외"
+      ],
+      "measurement_or_report_fields": [
+        "detector",
+        "RBW/CISPR bandwidth",
+        "적용 예외",
+        "peak 선별값·QP 확정값"
+      ],
+      "gap_ids": [
+        "G01"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E07",
+      "title": "1 GHz 초과 평균·피크와 대역폭",
+      "applies_if": "15.35(b)의 일반 방사 기준이 적용되며 다른 규정에 별도 요구가 없는 경우.",
+      "interpretation": "1,000 MHz 초과 일반 방사 기준은 average detector, 최소 resolution bandwidth 1 MHz, 평균 한계보다 20 dB 높은 peak 한계다. 별도 조문·측정방법 예외와 실제 신호 파형을 확인해야 하며 VBW·평균 시간·게이팅을 이 한 문장으로 확정하지 않는다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.35(b), (c)",
+          "section": "15.35",
+          "paragraph": "(b), (c)",
+          "xml_xpath": ".//DIV8[@N='15.35']",
+          "anchor": "minimum resolution bandwidth of 1 MHz",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.35",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "파형·듀티",
+        "검출기 구현",
+        "방법별 예외",
+        "게이팅 가능 여부"
+      ],
+      "measurement_or_report_fields": [
+        "average/peak",
+        "RBW Hz",
+        "VBW·sweep·평균 방식",
+        "듀티 산출 원본",
+        "평균·피크 한계"
+      ],
+      "gap_ids": [
+        "G01",
+        "G04",
+        "G07"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E08",
+      "title": "Class B 디지털 기기 방사 한계와 기준 거리",
+      "applies_if": "15.109(a)의 Class B 등 해당 경로를 적용하는 unintentional radiator.",
+      "interpretation": "기준 3 m에서 30-88 MHz 100 μV/m, 88-216 MHz 150 μV/m, 216-960 MHz 200 μV/m, 960 MHz 초과 500 μV/m이다. 경계에서는 더 엄격한 한계를 적용하고 측정 상한·검출기는 15.33/15.35로 연결한다. Class A는 별도 10 m 경로이며 혼용하지 않는다. 15.109(g)의 대안 경로는 이번 배치에서 선정하지 않았다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.109(a), (b), (c)",
+          "section": "15.109",
+          "paragraph": "(a), (b), (c)",
+          "xml_xpath": ".//DIV8[@N='15.109']",
+          "anchor": "distance of 3 meters",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.109",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "Class 분류",
+        "측정 거리·사이트",
+        "주파수 범위"
+      ],
+      "measurement_or_report_fields": [
+        "주파수",
+        "전계 μV/m 또는 단위 변환 근거",
+        "거리",
+        "안테나·편파",
+        "경계 한계",
+        "detector"
+      ],
+      "gap_ids": [
+        "G07",
+        "G08"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E09",
+      "title": "디지털 기기 방사 측정 주파수 상한",
+      "applies_if": "15.33(b)(1)의 디지털 기기 방사 측정.",
+      "interpretation": "발생·사용·동조 최고 주파수에 따른 표를 적용한다. 1.705 MHz 미만→30 MHz, 1.705-108→1,000 MHz, 108-500→2,000 MHz, 500-1,000→5,000 MHz, 1,000 MHz 초과→최고 주파수의 5차 고조파와 40 GHz 중 낮은 값이다. 최고 내부 주파수가 없으므로 스마트폰이라는 명칭만으로 측정 상한을 정하지 않는다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.33(b)(1), table",
+          "section": "15.33",
+          "paragraph": "(b)(1), table",
+          "xml_xpath": ".//DIV8[@N='15.33']",
+          "anchor": "5th harmonic of the highest frequency",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.33",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "최고 내부 발생·사용 주파수",
+        "최저 RF 신호",
+        "동작 모드"
+      ],
+      "measurement_or_report_fields": [
+        "측정 시작·종료 Hz",
+        "상한 선정식·입력 근거",
+        "제외 주파수와 사유"
+      ],
+      "gap_ids": [
+        "G07"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E10",
+      "title": "b/g/n 방사 측정 범위의 S01 참조",
+      "applies_if": "15.33(a)의 intentional radiator 조사 범위 및 내장 디지털 기기 비교가 필요한 경우.",
+      "interpretation": "10 GHz 미만 송신기의 일반 조사 상한은 최고 기본파의 10차 고조파 또는 40 GHz 중 낮은 값이며, 내장 디지털 기기의 상한이 더 높으면 15.33(a)(5)로 비교한다. 이 항목은 공유 조사 범위의 출처만 연결하며 송신기 스퓨리어스 적용·한계의 근거 수집과 원본은 S01이 소유한다. 최종 측정 계획 승인·실행 권한을 수집자에게 부여하지 않는다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.33(a)(1), (a)(5)",
+          "section": "15.33",
+          "paragraph": "(a)(1), (a)(5)",
+          "xml_xpath": ".//DIV8[@N='15.33']",
+          "anchor": "tenth harmonic",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.33",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "실제 채널·기본파",
+        "최고 내부 디지털 주파수",
+        "활성 무선 기능·모드"
+      ],
+      "measurement_or_report_fields": [
+        "S01 방법 참조 ID",
+        "조사 범위 계산 입력",
+        "디지털 기기 상한 비교"
+      ],
+      "gap_ids": [
+        "G04",
+        "G07"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S01",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E11",
+      "title": "측정 거리·최대 방사 방향과 현장 구성",
+      "applies_if": "방사 전계 측정 및 기준 거리와 다른 거리 사용 검토.",
+      "interpretation": "15.31(f)는 DUT·보조장비·연결 케이블을 포함하는 경계에서 거리를 정의한다. 다른 거리의 사용·외삽은 주파수와 근접장·검출 가능성 조건을 검토해야 한다. 충분한 방사 방향에서 최대 전계를 찾고 보고한다. 챔버가 있다는 사실만으로 기준 거리·측정 볼륨·사이트 적합성을 인정하지 않는다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.31(d), (f), (f)(6)",
+          "section": "15.31",
+          "paragraph": "(d), (f), (f)(6)",
+          "xml_xpath": ".//DIV8[@N='15.31']",
+          "anchor": "The maximum field strength",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.31",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "전체 시스템 경계",
+        "안테나 거리",
+        "주파수별 사이트 적합성",
+        "최대화 기록"
+      ],
+      "measurement_or_report_fields": [
+        "기준·실제 거리",
+        "외삽 방법과 사유",
+        "최대 방향·높이·편파",
+        "셋업 사진"
+      ],
+      "gap_ids": [
+        "G01",
+        "G04",
+        "G08"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E12",
+      "title": "사이트 검증의 현행 대역별 표준",
+      "applies_if": "측정방법이 validated radiated test site를 요구하는 경우.",
+      "interpretation": "현행 2.948(d)(1)-(4)는 30 MHz-1 GHz에 C63.4a-2017 또는 C63.4-2014 clause 5.4.4, 1-18 GHz에 C63.25.1-2018, 18-40 GHz에 C63.4-2014 clause 5.5.1 a) 1)의 CISPR 16-1-4:2010-04 기준을 연결하며 재검증 간격은 3년을 넘지 않는다. 2018년 KDB의 구 설명만으로 1-18 GHz 요구를 대체하지 않는다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "location": "47 CFR 2.948(d)(1)-(4)",
+          "section": "2.948",
+          "paragraph": "(d)(1)-(4)",
+          "xml_xpath": ".//DIV8[@N='2.948']",
+          "anchor": "ANSI C63.25.1-2018",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-2.948",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "location": "47 CFR 2.910(c), (d)",
+          "section": "2.910",
+          "paragraph": "(c), (d)",
+          "xml_xpath": ".//DIV8[@N='2.910']",
+          "anchor": "Amendment 1: Test Site Validation",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-2.910",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-KDB-414788-414788-D01-Radiated-Test-Site-v01r01-6546c61f79",
+          "pdf_page": 3,
+          "location": "section 3, footnotes 13-17",
+          "anchor": "Subclauses 5.4.4 and 5.5",
+          "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20539",
+          "source_extract_file": "metadata/source-extracts.json",
+          "currency": "legacy_attachment; current_publication_check_http_403"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "검증 대역·볼륨·거리",
+        "검증일·유효성",
+        "실제 검증 성적서"
+      ],
+      "measurement_or_report_fields": [
+        "적용 표준 판본",
+        "대역별 사이트 검증 기록",
+        "교정·재검증 기한",
+        "미검증 대역"
+      ],
+      "gap_ids": [
+        "G01",
+        "G02",
+        "G03",
+        "G06",
+        "G08"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S06/S08 현장 증거; S02 규정 색인",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E13",
+      "title": "30 MHz 미만 대체 사이트의 근거 한계",
+      "applies_if": "해당 DUT의 조사 범위와 방법에서 30 MHz 미만 방사 측정이 실제로 필요한 경우.",
+      "interpretation": "보유 414788 D01(2018) section 2는 대체 사이트와 open-field 사이트 간 상관 증거를 설명한다. 당시의 미확정 검증 기준 설명을 2026년의 모든 방법에 그대로 일반화하지 않는다. 현행 15.31(d)·C63.10-2020과 최신 KDB 검토가 남아 있으며 실제 필요성도 DUT별로 확인한다.",
+      "basis": [
+        {
+          "reference_id": "REF-KDB-414788-414788-D01-Radiated-Test-Site-v01r01-6546c61f79",
+          "pdf_page": 2,
+          "location": "section 2 and footnote 6",
+          "anchor": "document evidence of correlation",
+          "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20539",
+          "source_extract_file": "metadata/source-extracts.json",
+          "currency": "legacy_attachment; current_publication_check_http_403"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.31(d)",
+          "section": "15.31",
+          "paragraph": "(d)",
+          "xml_xpath": ".//DIV8[@N='15.31']",
+          "anchor": "properly calibrated",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.31",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "최저 조사 주파수",
+        "대체 사이트 상관 자료",
+        "현행 허용 방법"
+      ],
+      "measurement_or_report_fields": [
+        "방법·판본",
+        "상관 데이터 참조",
+        "사이트 사용의 제한 조건"
+      ],
+      "gap_ids": [
+        "G04",
+        "G06",
+        "G07",
+        "G08"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E14",
+      "title": "편입 판본·전환 종료와 발행기관 판본의 구별",
+      "applies_if": "현재 배치 기준일 2026-10-23의 방법 판본 선택.",
+      "interpretation": "디지털 기기 방법은 15.31(a)(4)의 C63.4-2014 및 명시된 제외 절을 기록한다. intentional radiator는 15.31(a)(3)/15.37(s)의 C63.10-2020으로 연결한다. 2013년판 선택 전환은 2025-10-30부터 종료됐으므로 15.38에 두 판본이 남아 있다는 이유로 현재 둘 다 선택 가능하다고 보지 않는다. 발행기관의 최신 발행판과 FCC 편입·허용 판본도 구별한다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.31(a)(3)-(4)",
+          "section": "15.31",
+          "paragraph": "(a)(3)-(4)",
+          "xml_xpath": ".//DIV8[@N='15.31']",
+          "anchor": "ANSI C63.10-2020",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.31",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.37(s)",
+          "section": "15.37",
+          "paragraph": "(s)",
+          "xml_xpath": ".//DIV8[@N='15.37']",
+          "anchor": "On or after October 30, 2025",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.37",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.38(f)(1)-(4)",
+          "section": "15.38",
+          "paragraph": "(f)(1)-(4)",
+          "xml_xpath": ".//DIV8[@N='15.38']",
+          "anchor": "ANSI C63.10-2013",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.38",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "측정일·신청 목적",
+        "재현 대상 과거 판본 여부",
+        "정식 표준 접근"
+      ],
+      "measurement_or_report_fields": [
+        "규정 issue",
+        "허용 표준·제외 절",
+        "전환일",
+        "과거 재현/신규 시험 구분"
+      ],
+      "gap_ids": [
+        "G01",
+        "G04"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E15",
+      "title": "구 KDB의 C63.10 절 번호 연결 공백",
+      "applies_if": "보유 558074 D01 v05r02의 DTS 방출 절을 현행 시험법에 연결할 때.",
+      "interpretation": "보유 PDF 첫 페이지 footnote 1은 모든 절 참조가 C63.10-2013 기준임을 명시한다. page 9의 DTS 8.5/8.6/8.7은 비제한·제한 대역과 band-edge 방법을 해당 구판 절에 연결한다. FHSS section 9의 DCCF 문구를 b/g/n DTS에 자동 적용하지 않는다. 현행 2020년판과의 대응 검증은 공백으로 남긴다.",
+      "basis": [
+        {
+          "reference_id": "REF-KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "pdf_page": 1,
+          "location": "footnote 1",
+          "anchor": "all clause and subclause cross-references are per ANSI C63.10-2013",
+          "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+          "source_extract_file": "metadata/source-extracts.json",
+          "currency": "legacy_attachment; current_publication_check_http_403"
+        },
+        {
+          "reference_id": "REF-KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "pdf_page": 9,
+          "location": "sections 8.5-8.7 and section 9 boundary",
+          "anchor": "8.6 DTS emissions in restricted frequency bands",
+          "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+          "source_extract_file": "metadata/source-extracts.json",
+          "currency": "legacy_attachment; current_publication_check_http_403"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "DTS/FHSS 실제 분류",
+        "현행 표준 원문",
+        "방법 검토 결과"
+      ],
+      "measurement_or_report_fields": [
+        "구판 절 번호",
+        "현행 절 대응 상태",
+        "S01 검토 참조",
+        "듀티 보정의 적용 근거"
+      ],
+      "gap_ids": [
+        "G04",
+        "G05",
+        "G09"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S01; S02는 연결 공백 색인",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E16",
+      "title": "측정·보고·보존에 필요한 기본 기록",
+      "applies_if": "certification 신청 또는 SDoC 측정 데이터 보존.",
+      "interpretation": "15.31(b)는 사용한 측정 절차와 실제 사용 장비 목록을 신청 또는 보존 자료에 포함하도록 한다. 15.31(f)(4)/(6)의 거리 외삽·최대 전계 보고와 2.948(b)의 사이트 위치·사진·도면·장비·교정·감쇠 자료를 연결한다. 원시 값·보정 이력·모드·단위 필드는 추적성을 위한 제안이며 각 항목을 조문이 직접 요구하는 필드와 구별한다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "47 CFR 15.31(b), (f)(4), (f)(6)",
+          "section": "15.31",
+          "paragraph": "(b), (f)(4), (f)(6)",
+          "xml_xpath": ".//DIV8[@N='15.31']",
+          "anchor": "list of the test equipment actually employed",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-15.31",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "location": "47 CFR 2.948(b)(1)(i)-(vii)",
+          "section": "2.948",
+          "paragraph": "(b)(1)(i)-(vii)",
+          "xml_xpath": ".//DIV8[@N='2.948']",
+          "anchor": "date the equipment was last calibrated",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-2.948",
+          "source_extract_file": "metadata/source-extracts.json"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "실제 장비·교정·사이트 기록",
+        "적용 절차·판본",
+        "측정 원본"
+      ],
+      "measurement_or_report_fields": [
+        "조문 직접 요구 필드",
+        "추적성 제안 필드",
+        "원시값·단위·보정 참조",
+        "모드·사진·장비·판본·거리"
+      ],
+      "gap_ids": [
+        "G07",
+        "G08"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S08 공통 보고·품질; S02 EMC 근거",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E17",
+      "title": "b/g/n 모드 축소·worst-case 선정의 설명 근거",
+      "applies_if": "복수 데이터율·대역폭·변조·코딩·스트림 모드를 일부 대표 모드로 줄일 때.",
+      "interpretation": "보유 KDB 558074 page 4 section 4는 구현 가능한 동작 모드의 준수 확인과 시험 축소 시 측정 근거를 포함한 상세한 기술적 설명을 요구한다. 단일 저속·최대 출력 모드가 모든 방출 항목의 worst case라고 가정하지 않는다. RF 모드·채널·한계의 근거 수집은 S01 범위이며 실제 선택·승인은 개발·기관 권한에서 별도로 처리한다.",
+      "basis": [
+        {
+          "reference_id": "REF-KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "pdf_page": 4,
+          "location": "section 4 TEST SUITE CONSIDERATIONS",
+          "anchor": "complete and detailed technical justification",
+          "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+          "source_extract_file": "metadata/source-extracts.json",
+          "currency": "legacy_attachment; current_publication_check_http_403"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "지원 모드·채널·출력·스트림",
+        "항목별 예비 측정",
+        "시험모드 접근"
+      ],
+      "measurement_or_report_fields": [
+        "대표 모드 선정 근거",
+        "제외 모드·사유",
+        "근거 측정 파일",
+        "채널 선택 참조"
+      ],
+      "gap_ids": [
+        "G04",
+        "G05",
+        "G07",
+        "G09"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S01",
+      "approved_test_method": false
+    },
+    {
+      "evidence_id": "S02-E18",
+      "title": "실제 보정·환경·장비 설정의 입력 공백",
+      "applies_if": "방사·전도 값을 판정 가능한 결과로 만들 때.",
+      "interpretation": "표준·규정 근거의 확보는 실제 케이블 손실·안테나 계수·LISN 보정·수신기 설정·사이트 유효성을 확보한 것이 아니다. 2.948(b)의 장비·교정 기록 및 KDB 558074 page 4의 RF 경로 보정 보고 위치를 참조하고 실제 수치를 만들지 않는다. 매뉴얼은 S04, 사이트·모션은 S06, 불확도·보고 품질은 S08에 연결한다.",
+      "basis": [
+        {
+          "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "location": "47 CFR 2.948(b)(1)(v)-(vii)",
+          "section": "2.948",
+          "paragraph": "(b)(1)(v)-(vii)",
+          "xml_xpath": ".//DIV8[@N='2.948']",
+          "anchor": "List of measuring equipment used",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-2.948",
+          "source_extract_file": "metadata/source-extracts.json"
+        },
+        {
+          "reference_id": "REF-KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "pdf_page": 4,
+          "location": "section 3 continuation, first paragraph",
+          "anchor": "These adjustments shall be recorded in the test report",
+          "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+          "source_extract_file": "metadata/source-extracts.json",
+          "currency": "legacy_attachment; current_publication_check_http_403"
+        }
+      ],
+      "required_product_or_site_inputs": [
+        "실제 교정서·보정표",
+        "수신기·안테나·LISN 구성",
+        "환경 기록"
+      ],
+      "measurement_or_report_fields": [
+        "보정표 ID·유효일",
+        "실제 원시값·단위",
+        "합성/실측/재생 구별",
+        "장비 설정·완료 증거"
+      ],
+      "gap_ids": [
+        "G07",
+        "G08"
+      ],
+      "support_status": "indexed_with_gaps",
+      "evidence_scope_owner": "S02",
+      "approved_test_method": false
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "G01",
+      "kind": "purchase_required",
+      "request_id": "STD-004",
+      "missing": "C63.4-2014 전체 원문. CISPR QP 계측 대역폭·셋업·세부 절차는 미확보.",
+      "next_input": "기관이 적법하게 보유한 해당 판본·열람 범위를 P01이 연결. 구매·구독 재시도 없음."
+    },
+    {
+      "gap_id": "G02",
+      "kind": "purchase_required",
+      "request_id": "STD-005",
+      "missing": "C63.4a-2017 전체 원문과 적용 사이트 검증 절차.",
+      "next_input": "S06/S08의 기관 보유 표준·실제 사이트 검증 자료와 연결."
+    },
+    {
+      "gap_id": "G03",
+      "kind": "purchase_required",
+      "request_id": "STD-006",
+      "missing": "C63.25.1-2018 전체 원문. 1-18 GHz 사이트 검증 절차·판정의 세부 조건.",
+      "next_input": "적법한 표준 접근과 해당 대역 실제 사이트 검증 성적서 연결."
+    },
+    {
+      "gap_id": "G04",
+      "kind": "purchase_required",
+      "request_id": "STD-001",
+      "reference_only": true,
+      "missing": "C63.10-2020 전체 원문 및 구 KDB의 2013년판 절 번호와의 대응.",
+      "next_input": "S01 원문 소유를 유지하며 P01이 표준·절 번호 검토를 연결. S02 신규 수집 대상 아님."
+    },
+    {
+      "gap_id": "G05",
+      "kind": "unavailable",
+      "request_id": "KDB-558074",
+      "http_status": 403,
+      "missing": "이번 세션에서 공식 publication의 현재 첨부 목록·개정 여부를 재확인하지 못함.",
+      "next_input": "현재 목록의 공식 확인이 가능한 후속 경로를 P01이 연결. 같은 실패 재시도 없음."
+    },
+    {
+      "gap_id": "G06",
+      "kind": "unavailable",
+      "request_id": "KDB-414788",
+      "http_status": 403,
+      "missing": "이번 세션에서 공식 publication의 현재 첨부 목록·개정 여부를 재확인하지 못함.",
+      "next_input": "현행 2.948(d)와 보유 2018년 KDB의 차이를 유지하고 후속 공식 개정 확인."
+    },
+    {
+      "gap_id": "G07",
+      "kind": "lab_private_input_missing",
+      "missing": "대상 모델·시장·디지털 추가 기능, 충전 중 동작, AC/USB 호스트·충전기·포트, 최고 내부 주파수, b/g/n 모드 정보.",
+      "next_input": "기존 비공개 입력 요청과 연결. 공개 자료로 실제 DUT 상태를 재구성하지 않음."
+    },
+    {
+      "gap_id": "G08",
+      "kind": "lab_private_input_missing",
+      "missing": "시험 사이트·볼륨·거리·대역별 검증, 교정·보정값·환경·기관 인정 범위의 실제 증거.",
+      "next_input": "P01이 S04/S06/S08의 현장 증거 요청과 연결. 공개 규정으로 현장 적합성 대체 금지."
+    },
+    {
+      "gap_id": "G09",
+      "kind": "edition_mapping_unverified",
+      "missing": "KDB 558074의 C63.10-2013 절 번호와 현행 C63.10-2020 절 번호·변경 내용의 대응 검증.",
+      "next_input": "S01/P01은 미검증 연결 근거를 반환하고 최종 방법 검토·승인은 개발·기관 권한에서 처리. 구 절 번호를 자동 치환하지 않음."
+    }
+  ],
+  "measurement_field_policy": "measurement_or_report_fields는 후속 데이터 계약의 추적성 제안이다. 조문 직접 요구는 interpretation과 basis에서 확인하며, 미확보 표준의 모든 필수 필드를 확인했다는 뜻이 아니다.",
+  "scope_note": "근거·공백 색인이다. 개별 DUT의 필수시험 확정, 시험방법 승인, 실측·사이트 적합 판정이 아니다. 내성·ESD·서지를 FCC 필수로 추가하지 않았다."
+}

@@ -1,0 +1,74 @@
+{
+  "task_id": "FCC-20261023-S01-B0001",
+  "batch_id": "FCC-20261023A-S01-B0001",
+  "attempt": 1,
+  "owner_session": "S01",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "activation": "approved",
+  "request_ids": [
+    "ADD-S01-WIFI24-METHOD-INDEX-001",
+    "ADD-S01-KDB-ATTACHMENT-DELTA-001"
+  ],
+  "model_ids": [],
+  "created_at": "2026-10-23T21:49:19.294875+09:00",
+  "status": "metadata_complete_with_open_dependencies",
+  "completion": {
+    "assigned_requests": 2,
+    "metadata_requests_completed": 2,
+    "assigned_requests_not_started": 0,
+    "evidence_entries": 15,
+    "KDB_publications_compared": 3,
+    "public_attachment_links_matched": 5
+  },
+  "counts": {
+    "new_public_originals": 0,
+    "new_restricted_originals": 0,
+    "existing_original_redownloads": 0,
+    "legacy_original_documents_referenced": 9,
+    "derived_payload_files": 0,
+    "metadata_files": 7,
+    "unavailable_standard_originals": 3,
+    "questions": 2
+  },
+  "rights": {
+    "legacy_originals_referenced": "US government originals; retained in prior public packages.",
+    "new_documents_array_empty": true,
+    "copyrighted_standard_full_text_included": false,
+    "local_generated_metadata_is_not_a_downloaded_original": true
+  },
+  "legacy_handover": {
+    "inventory_path": "[local-only reference retained by P01]",
+    "inventory_sha256": "81fdb26486f37f8683b11e88d96bbd51c66fdff748958c8e478715df8b9cfa28",
+    "completed_before_v002": true,
+    "restricted_SCPI_file_note": "The one restricted path without a metadata path reference is restricted/ivi/scpi-99.pdf. It is indexed by hash and can be matched to the permitted SCPI public original; no missing bytes are implied.",
+    "P01_receipt_verified": false
+  },
+  "verification": {
+    "legacy_reference_sizes_and_sha256_checked": true,
+    "current_publication_http_statuses": [
+      200,
+      200,
+      200
+    ],
+    "current_publication_hashes_match_legacy": true,
+    "PDF_visual_reviewed": [
+      "KDB558074 printed pp8-9",
+      "KDB662911 D03 printed p4"
+    ],
+    "xml_table_checked": "§15.31(m) full table structure/rows inspected",
+    "git_commands_run": 0,
+    "hardware_or_lab_network_actions": 0
+  },
+  "limits": [
+    "C63.10-2020 / Cor1-2023 / C63.10a-2024 full originals are not obtained; exact 2013-to-2020 clause crosswalk remains open.",
+    "Actual DUT modes, antenna configuration, firmware/tool support, path corrections and measurement data are not provided.",
+    "Public listing deltas were checked; old PDFs were not refetched to test silent unchanged-URL replacements.",
+    "KDB558074 page14 D02 wording conflicts with current D01 identity; preserved as a source ambiguity.",
+    "Local completion is not P01 acceptance, Git publication, cloud technical intake, or an approved operating method."
+  ],
+  "unsearched_scope": [
+    "Other KDB publications, other RF bands/protocols, new equipment manuals, KC/EU and full 304/2867 backlog are outside this v002 batch."
+  ],
+  "next_action": "P01 validates inventory and reference/rights metadata, then issues receipt/publication. S01 awaits next explicit assignment after freezing."
+}

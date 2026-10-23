@@ -1,0 +1,57 @@
+[
+  {
+    "question_id": "S06-Q-001",
+    "owner": "P01",
+    "priority": "P0",
+    "request_ids": [
+      "EQ-MOD-f183d948fc590a8b",
+      "EQ-MOD-207e69830324252e",
+      "LOCAL-016"
+    ],
+    "title": "2090 전체 매뉴얼과 개별 장비 적용 근거",
+    "needed_input": "P01이 보유 자료에서 Revision G P#399199 또는 실제 펌웨어에 적용되는 전체 매뉴얼, 명판/펌웨어 기존 기록과 연결 위치기 식별을 확인해 줄 것. 검색 색인 단서로 명령을 승인하지 말 것.",
+    "asset_request_ids": [
+      "ASSET-EQ-001555",
+      "ASSET-EQ-002778",
+      "ASSET-EQ-002784",
+      "ASSET-EQ-006172"
+    ],
+    "current_evidence": "기존 PDF URL은 목록 HTML로 이동하고 사이트 검색/검색 스크립트는403. 적용 원문 미확보.",
+    "blocks_current_intake": false,
+    "blocks_operational_use": true,
+    "status": "open"
+  },
+  {
+    "question_id": "S06-Q-002",
+    "owner": "P01",
+    "priority": "P0",
+    "request_ids": [
+      "EQ-MOD-6b92cbf630670c77",
+      "ASSET-EQ-000741",
+      "LOCAL-016"
+    ],
+    "title": "CO3000-4port와4P 대응 및 정확한 명령 매뉴얼",
+    "needed_input": "보유 자료로 명판·article/세대·펌웨어·4장치 기능 활성 구성을 확인하고, 일치하는 조작/프로그래밍/상태/완료/정지/인터록 문서를 제공 가능한 경로로 연결할 것.",
+    "current_evidence": "공식4P 사양과S01 카탈로그 p102는 확인. 회원 영역은 로그인 화면이며 그 안에 매뉴얼이 있는지 미확인. 지원 양식은Device/Serial/Project 정보를 요구하지만 제출하지 않음.",
+    "blocks_current_intake": false,
+    "blocks_operational_use": true,
+    "status": "open"
+  },
+  {
+    "question_id": "S06-Q-003",
+    "owner": "P01",
+    "priority": "P0",
+    "request_ids": [
+      "LOCAL-003",
+      "LOCAL-007",
+      "LOCAL-008",
+      "LOCAL-013"
+    ],
+    "title": "실제RF 경로·모션 한계·인터록 현장 입력",
+    "needed_input": "실제배선/포트표·주파수별 보정 원본과 판본·좌표/한계·인터록/비상정지 배선 및 검증 기록·승인된 통신 설정을 기존 현장 입력 요청에 연결할 것.",
+    "current_evidence": "공개 매뉴얼/광CAN 포트수로RF 포트·보정값·현장 보호기능을 재구성할 수 없음.",
+    "blocks_current_intake": false,
+    "blocks_operational_use": true,
+    "status": "open"
+  }
+]

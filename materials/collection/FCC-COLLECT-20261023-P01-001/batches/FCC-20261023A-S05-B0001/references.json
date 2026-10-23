@@ -1,0 +1,167 @@
+[
+  {
+    "reference_id": "S05-L01",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-EQUIPMENT-20261023-004",
+    "document_id": "SPEAG-DAE4-and-DAE4ip-official-specifications-8e66e5080b",
+    "manifest_path": "materials/manifests/FCC-EQUIPMENT-20261023-004.json",
+    "package_path": "materials/packages/FCC-EQUIPMENT-20261023-004.zip",
+    "source_path_inside_package": null,
+    "package_payload_contains_original": false,
+    "source_path_note": "Original omitted from legacy public package due to unconfirmed redistribution rights; source_path_inside_package is null intentionally.",
+    "local_original_path": "[local-only reference retained by P01]",
+    "sha256": "eb71e84f8a1ef8057a661cf929b9cf75026bea252b90a8c1c300abbc823c671c",
+    "bytes": 25580,
+    "media_type": "text/html",
+    "rights": "unknown",
+    "legacy_manifest_status": "read_only",
+    "source_url": "https://speag.swiss/products/dasy8/m-hac/daes",
+    "download_url": "https://speag.swiss/products/dasy8/m-hac/daes",
+    "legacy_document_request_ids": [
+      "EQ-MOD-38503d023c4f533f",
+      "EQ-MOD-a0597dbe8a1e6d07",
+      "EQ-MOD-f89ac85bca22a066"
+    ],
+    "reference_for_request_ids": [
+      "EQ-MOD-708c2272f105c511",
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "evidence_locations": [
+      "HTML h1 Data Acquisition Electronics (DAE); table rows DAE4 and DAE4ip"
+    ],
+    "local_hash_verified_at": "2026-10-23T21:49:17+09:00",
+    "original_copied_or_redownloaded": false
+  },
+  {
+    "reference_id": "S05-L02",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-EQUIPMENT-20261023-004",
+    "document_id": "SPEAG-DAE-calibration-procedure-overview-b35e7ee2e5",
+    "manifest_path": "materials/manifests/FCC-EQUIPMENT-20261023-004.json",
+    "package_path": "materials/packages/FCC-EQUIPMENT-20261023-004.zip",
+    "source_path_inside_package": null,
+    "package_payload_contains_original": false,
+    "source_path_note": "Original omitted from legacy public package due to unconfirmed redistribution rights; source_path_inside_package is null intentionally.",
+    "local_original_path": "[local-only reference retained by P01]",
+    "sha256": "fe7ad1ddcaa504076dc857ddaa13d4e4da97515de481110fe7ab5bcecf271e7a",
+    "bytes": 27330,
+    "media_type": "text/html",
+    "rights": "unknown",
+    "legacy_manifest_status": "read_only",
+    "source_url": "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae",
+    "download_url": "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae",
+    "legacy_document_request_ids": [
+      "EQ-MOD-ae5832f52cddbd67"
+    ],
+    "reference_for_request_ids": [
+      "EQ-MOD-708c2272f105c511",
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "evidence_locations": [
+      "HTML READOUT UNIT (DAE) table and Calibration Procedure row"
+    ],
+    "local_hash_verified_at": "2026-10-23T21:49:17+09:00",
+    "original_copied_or_redownloaded": false
+  },
+  {
+    "reference_id": "S05-L03",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-EQUIPMENT-20261023-004",
+    "document_id": "SPEAG-DASY-product-lifetime-77da520bd8",
+    "manifest_path": "materials/manifests/FCC-EQUIPMENT-20261023-004.json",
+    "package_path": "materials/packages/FCC-EQUIPMENT-20261023-004.zip",
+    "source_path_inside_package": null,
+    "package_payload_contains_original": false,
+    "source_path_note": "Original omitted from legacy public package due to unconfirmed redistribution rights; source_path_inside_package is null intentionally.",
+    "local_original_path": "[local-only reference retained by P01]",
+    "sha256": "7535ade614a84e354c5188c0c19a94b949183f8567fb8c0919ddbd744caa7e23",
+    "bytes": 25322,
+    "media_type": "text/html",
+    "rights": "unknown",
+    "legacy_manifest_status": "read_only",
+    "source_url": "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime",
+    "download_url": "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime",
+    "legacy_document_request_ids": [
+      "EQ-MOD-553b7e26b00a3bba",
+      "EQ-MOD-5e30000af203b4fb",
+      "EQ-MOD-951b898fe0a74d32",
+      "EQ-MOD-d48306ef9ca20631"
+    ],
+    "reference_for_request_ids": [
+      "EQ-MOD-708c2272f105c511",
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "evidence_locations": [
+      "HTML DASY PRODUCT LIFETIME table; DASY5/DASY52/DASY6 rows"
+    ],
+    "local_hash_verified_at": "2026-10-23T21:49:17+09:00",
+    "original_copied_or_redownloaded": false
+  },
+  {
+    "reference_id": "S05-L04",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-EQUIPMENT-20261023-004",
+    "document_id": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+    "manifest_path": "materials/manifests/FCC-EQUIPMENT-20261023-004.json",
+    "package_path": "materials/packages/FCC-EQUIPMENT-20261023-004.zip",
+    "source_path_inside_package": null,
+    "package_payload_contains_original": false,
+    "source_path_note": "Original omitted from legacy public package due to unconfirmed redistribution rights; source_path_inside_package is null intentionally.",
+    "local_original_path": "[local-only reference retained by P01]",
+    "sha256": "8e941109aa7e1628ae38fd51bca7be03393bf9f6eb16954e8458d6d1e27d20b3",
+    "bytes": 13685412,
+    "media_type": "application/pdf",
+    "rights": "unknown",
+    "legacy_manifest_status": "read_only",
+    "source_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+    "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+    "legacy_document_request_ids": [
+      "EQ-MOD-38503d023c4f533f",
+      "EQ-MOD-553b7e26b00a3bba",
+      "EQ-MOD-951b898fe0a74d32",
+      "EQ-MOD-f89ac85bca22a066"
+    ],
+    "reference_for_request_ids": [
+      "EQ-MOD-708c2272f105c511",
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "evidence_locations": [
+      "PDF p59-61 / printed 3-17..3-19",
+      "PDF p73-74 / printed 3-31..3-32",
+      "PDF p105,111-112 / printed 7-2,7-8..7-9"
+    ],
+    "local_hash_verified_at": "2026-10-23T21:49:17+09:00",
+    "original_copied_or_redownloaded": false
+  },
+  {
+    "reference_id": "S05-L05",
+    "original_owner": "S01",
+    "legacy_package_id": "FCC-EQUIPMENT-20261023-004",
+    "document_id": "SPEAG-DASY6-API-option-announcement-and-access-route-d4baf66e7c",
+    "manifest_path": "materials/manifests/FCC-EQUIPMENT-20261023-004.json",
+    "package_path": "materials/packages/FCC-EQUIPMENT-20261023-004.zip",
+    "source_path_inside_package": null,
+    "package_payload_contains_original": false,
+    "source_path_note": "Original omitted from legacy public package due to unconfirmed redistribution rights; source_path_inside_package is null intentionally.",
+    "local_original_path": "[local-only reference retained by P01]",
+    "sha256": "865fab4e9572cc904dba57eede0ff2c0078de0483e46a8bd9f77ae6ed62f172e",
+    "bytes": 37287,
+    "media_type": "text/html",
+    "rights": "unknown",
+    "legacy_manifest_status": "read_only",
+    "source_url": "https://speag.swiss/news-events/news/measurement/cdasy6-module-sar-v6-12-automate-your-testing-workflow",
+    "download_url": "https://speag.swiss/news-events/news/measurement/cdasy6-module-sar-v6-12-automate-your-testing-workflow",
+    "legacy_document_request_ids": [
+      "ADDED-EQ-VENDOR-REFERENCE"
+    ],
+    "reference_for_request_ids": [
+      "EQ-MOD-708c2272f105c511",
+      "EQ-MOD-4e657354694908fa"
+    ],
+    "evidence_locations": [
+      "Article date 2020-05-06; Automated Measurements with the API Option; final quotation paragraph"
+    ],
+    "local_hash_verified_at": "2026-10-23T21:49:17+09:00",
+    "original_copied_or_redownloaded": false
+  }
+]

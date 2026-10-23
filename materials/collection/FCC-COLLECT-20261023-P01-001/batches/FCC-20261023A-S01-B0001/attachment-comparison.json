@@ -1,0 +1,257 @@
+{
+  "batch_id": "FCC-20261023A-S01-B0001",
+  "request_id": "ADD-S01-KDB-ATTACHMENT-DELTA-001",
+  "publications": [
+    {
+      "publication_number": "558074",
+      "publication_document_id": "KDB-558074-publication-92168150c6",
+      "publication_page_date": "2019-04-02",
+      "checked_at": "2026-10-23T21:43:10.210271+09:00",
+      "live_listing_byte_identical": true,
+      "public_attachment_count": 1,
+      "public_attachment_matches": [
+        {
+          "label": "558074 D01 15.247 Meas Guidance v05r02",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=tylb5MMggvhIlVMK75RrRQ%3D%3D&desc=558074 D01 15.247 Meas Guidance v05r02&tracking_number=21124",
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "legacy_package_id": "FCC-PHONE-20261023-001",
+          "sha256": "06cf6de58ce4b0abd521d6b42e50689f18331cf67be48c8dba7b5553c8470f75",
+          "bytes": 281974,
+          "state": "existing_original_reused",
+          "cover_page_verified": true,
+          "page_count": 14,
+          "cover_date": "2019-04-02"
+        }
+      ],
+      "stale_or_nonpublic_inline_links": [],
+      "new_or_missing_public_attachments": [],
+      "full_original_redownloads": 0,
+      "current_scope": "These three public publication pages and all their public attachment links only.",
+      "unconfirmed": [
+        "Existing PDF bytes were reused, not refetched; a silent payload replacement at an unchanged URL is not independently excluded."
+      ],
+      "change_relationships": [
+        {
+          "source": {
+            "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+            "location_type": "PDF_printed_page_and_section",
+            "pdf_page_1based": 14,
+            "printed_page": "14",
+            "section": "Change Notice",
+            "edition": "558074 D01 15.247 Meas Guidance v05r02"
+          },
+          "facts": [
+            "v05 to v05r01 on 2019-02-11; duty-cycle clarification in section 9.",
+            "v05r01 to v05r02 on 2019-04-02; correction to FHSS table in section 2.2.",
+            "The note says it combines/expires KDB867751, KDB453039 and DA00-705."
+          ],
+          "ambiguity": "Page 14 calls this document D02; cover and current publication list D01. Preserve the wording; no separate missing D02 inferred."
+        }
+      ]
+    },
+    {
+      "publication_number": "662911",
+      "publication_document_id": "KDB-662911-publication-160b602e2c",
+      "publication_page_date": "2025-03-31",
+      "checked_at": "2026-10-23T21:43:11.331331+09:00",
+      "live_listing_byte_identical": true,
+      "public_attachment_count": 4,
+      "public_attachment_matches": [
+        {
+          "label": "662911 D01 Multiple Transmitter Output v02r01",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=B0ZQiTBTVsn3P3wZ2WdqhQ%3D%3D&desc=662911 D01 Multiple Transmitter Output v02r01&tracking_number=49466",
+          "document_id": "KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01-8c61a4b10b",
+          "legacy_package_id": "FCC-PHONE-20261023-001",
+          "sha256": "8c61a4b10b8769d3e3125e0e1614d7846019c64644ce2dfab5e2d548f74fa075",
+          "bytes": 129928,
+          "state": "existing_original_reused",
+          "cover_page_verified": true,
+          "page_count": 13,
+          "cover_date": "2013-10-31"
+        },
+        {
+          "label": "662911 D02 MIMO with Cross Polarized Antenna v01",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=i%2BFRza%2B2Hh0pf9nHJHJGHw%3D%3D&desc=662911 D02 MIMO with Cross Polarized Antenna v01&tracking_number=49466",
+          "document_id": "KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01-d909bea3ac",
+          "legacy_package_id": "FCC-PHONE-20261023-001",
+          "sha256": "d909bea3ac6c3bfeda0111007f62d6290e2173971a0b3bb9ca3b38e13ca1ffd9",
+          "bytes": 39610,
+          "state": "existing_original_reused",
+          "cover_page_verified": true,
+          "page_count": 3,
+          "cover_date": "2011-10-25"
+        },
+        {
+          "label": "662911 D03 MIMO Antenna Gain Measurement v02",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=0oFrwPO2uh8GhTp8suJdxA%3D%3D&desc=662911 D03 MIMO Antenna Gain Measurement v02&tracking_number=49466",
+          "document_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a",
+          "legacy_package_id": "FCC-PHONE-20261023-001",
+          "sha256": "8a497f419a69989f10c2baa985994c81a86b822f79d4c068447fa1d19cb623b4",
+          "bytes": 75629,
+          "state": "existing_original_reused",
+          "cover_page_verified": true,
+          "page_count": 4,
+          "cover_date": "2025-03-31"
+        },
+        {
+          "label": "OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=zx796foayVA0TnNkVOgKjg%3D%3D&desc=OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013&tracking_number=49466",
+          "document_id": "KDB-662911-OET-13TR1003-Directonal-Gain-of-802-11-MIMO-with-CDD-04-05-2013-7da0cc38d8",
+          "legacy_package_id": "FCC-PHONE-20261023-001",
+          "sha256": "7da0cc38d804066d1564b29663bea22827791cd6731ad91ccf6c5f1cc92b34b0",
+          "bytes": 4822513,
+          "state": "existing_original_reused",
+          "cover_page_verified": true,
+          "page_count": 48,
+          "cover_date": "2013-04-05"
+        }
+      ],
+      "stale_or_nonpublic_inline_links": [
+        {
+          "label": "662911 D03 MIMO Antenna Gain Measurement v02",
+          "url": "https://appsint.fcc.gov/kdb/GetAttachment.html?id=NYHxoDYQ%2BFDRLI98iGGa%2Bw%3D%3D&desc=662911%20D03%20MIMO%20Antenna%20Gain%20Measurement%20v01&tracking_number=49466",
+          "action": "not_accessed; stale inline link preserved as evidence"
+        }
+      ],
+      "new_or_missing_public_attachments": [],
+      "full_original_redownloads": 0,
+      "current_scope": "These three public publication pages and all their public attachment links only.",
+      "unconfirmed": [
+        "Existing PDF bytes were reused, not refetched; a silent payload replacement at an unchanged URL is not independently excluded."
+      ],
+      "change_relationships": [
+        {
+          "source": {
+            "document_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a",
+            "location_type": "PDF_printed_page_and_section",
+            "pdf_page_1based": 4,
+            "printed_page": "4",
+            "section": "Change Notice",
+            "edition": "662911 D03 MIMO Antenna Gain Measurement v02"
+          },
+          "replacement": "D03 v02 replaces D03 v01 on 2025-03-31",
+          "change": "Section IV PAG inquiry requirement removed; additional guidance provided.",
+          "legacy_unavailable_record_preserved": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-cc2d81997d",
+          "public_existing_resolution_document_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a"
+        }
+      ]
+    },
+    {
+      "publication_number": "913591",
+      "publication_document_id": "KDB-913591-publication-e4102ce5f2",
+      "publication_page_date": "2017-04-05",
+      "checked_at": "2026-10-23T21:43:12.239488+09:00",
+      "live_listing_byte_identical": true,
+      "public_attachment_count": 0,
+      "public_attachment_matches": [],
+      "stale_or_nonpublic_inline_links": [],
+      "new_or_missing_public_attachments": [],
+      "full_original_redownloads": 0,
+      "current_scope": "These three public publication pages and all their public attachment links only.",
+      "unconfirmed": [
+        "Existing PDF bytes were reused, not refetched; a silent payload replacement at an unchanged URL is not independently excluded."
+      ],
+      "change_relationships": [
+        {
+          "source_document_id": "KDB-913591-publication-e4102ce5f2",
+          "location": "Answer",
+          "facts": "No attachment list. Answer references C63.10-2013 subclause 6.10.",
+          "edition_caution": "Current §15.37(s)/§15.38 and licensed C63.10-2020 must be reviewed before translating clause numbers."
+        }
+      ]
+    }
+  ],
+  "all_current_public_attachment_links_matched_existing_originals": true,
+  "existing_original_redownloads": 0,
+  "new_originals": 0,
+  "standard_edition_context": {
+    "cfr_sources": [
+      {
+        "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+        "location_type": "CFR_clause",
+        "section": "15.31",
+        "clause": "(a)(3)",
+        "xml_locator": "DIV8[@N='15.31']",
+        "edition": "eCFR issue 2026-10-19"
+      },
+      {
+        "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+        "location_type": "CFR_clause",
+        "section": "15.37",
+        "clause": "(s)",
+        "xml_locator": "DIV8[@N='15.37']",
+        "edition": "eCFR issue 2026-10-19"
+      },
+      {
+        "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+        "location_type": "CFR_clause",
+        "section": "15.38",
+        "clause": "(f)(3)-(4)",
+        "xml_locator": "DIV8[@N='15.38']",
+        "edition": "eCFR issue 2026-10-19"
+      }
+    ],
+    "KDB_cross_reference_edition": "C63.10-2013 explicitly stated in KDB558074 page1 footnote1",
+    "publisher_catalog_records_from_legacy": [
+      {
+        "metadata_path": "[local-only reference retained by P01]",
+        "metadata_sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+        "json_pointer": "/records/0",
+        "record": {
+          "request_id": "STD-001",
+          "title": "IEEE/ANSI/USEMCSC C63.10-2020",
+          "official_url": "https://standards.ieee.org/ieee/C63.10/10445/",
+          "published_at": "2021-01-29",
+          "publisher_status": "active",
+          "relationship": "Amendment C63.10a-2024; corrigendum C63.10-2020/Cor1-2023",
+          "status": "purchase_required",
+          "checked_at": "2026-10-23T20:10:00+09:00",
+          "verification": "Official publisher catalog/browser or official catalog text obtained through web lookup; purchase or subscription access identified. Full original not obtained.",
+          "rights": "read_only",
+          "reason": "Full standard was not downloaded. No purchase, subscription, account creation or license acceptance was performed.",
+          "fcc_applicability": "unreviewed"
+        }
+      },
+      {
+        "metadata_path": "[local-only reference retained by P01]",
+        "metadata_sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+        "json_pointer": "/records/1",
+        "record": {
+          "request_id": "STD-002",
+          "title": "IEEE/ANSI C63.10-2020/Cor1-2023",
+          "official_url": "https://standards.ieee.org/ieee/C63.10-2020_Cor1/10915/",
+          "published_at": "2023-06-06",
+          "publisher_status": "active",
+          "relationship": "Corrigendum to C63.10-2020",
+          "status": "purchase_required",
+          "checked_at": "2026-10-23T20:10:00+09:00",
+          "verification": "Official publisher catalog/browser or official catalog text obtained through web lookup; purchase or subscription access identified. Full original not obtained.",
+          "rights": "read_only",
+          "reason": "Full standard was not downloaded. No purchase, subscription, account creation or license acceptance was performed.",
+          "fcc_applicability": "unreviewed"
+        }
+      },
+      {
+        "metadata_path": "[local-only reference retained by P01]",
+        "metadata_sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+        "json_pointer": "/records/2",
+        "record": {
+          "request_id": "STD-003",
+          "title": "IEEE/ANSI/USEMCSC C63.10a-2024",
+          "official_url": "https://standards.ieee.org/ieee/C63.10a/11614/",
+          "published_at": "2024-08-16",
+          "publisher_status": "active",
+          "relationship": "Amendment to C63.10-2020",
+          "status": "purchase_required",
+          "checked_at": "2026-10-23T20:10:00+09:00",
+          "verification": "Official publisher catalog/browser or official catalog text obtained through web lookup; purchase or subscription access identified. Full original not obtained.",
+          "rights": "read_only",
+          "reason": "Full standard was not downloaded. No purchase, subscription, account creation or license acceptance was performed.",
+          "fcc_applicability": "unreviewed"
+        }
+      }
+    ],
+    "publisher_latest_not_equated_to_FCC_acceptance": true,
+    "2020_full_text_clause_crosswalk_complete": false
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S05-B0001",
+  "task_id": "FCC-20261023-S05-B0001",
+  "owner_session": "S05",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "snapshot_inventory_sha256": "bf1ca2d9fb16e5e753937703cf47dde4c8c597dadc6d3c11156f5cc1e8db2206",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S05-B0001",
+    "owner": "P01",
+    "decision": "content_approved_for_metadata_and_access_notice_only",
+    "source_inventory_verified": true,
+    "reviewed_new_pdf_pages": {
+      "S05-dasy52-flyer-b88500087b6a": [
+        3,
+        5
+      ],
+      "S05-dasy52-report-generator-c694fa6fd65d": [
+        1,
+        2
+      ]
+    },
+    "findings": [
+      "DAE4, Measurement Server DASY5, PC and software are distinct entries in the component table.",
+      "External-device GPIB functionality does not establish a DASY5 remote SCPI API.",
+      "Report generator chapter shows version 5.2 and separate output licence markers; internal .da52/raw schema remains unprovided.",
+      "The six complete originals have unconfirmed redistribution rights and must remain local."
+    ],
+    "request_outcome": {
+      "completed": 0,
+      "limited": 2,
+      "not_started": 0
+    },
+    "rights_public_document_ids": [],
+    "technical_method_approval": false,
+    "hardware_validation": false,
+    "publication_metadata_files": [
+      "field-inputs.json"
+    ]
+  },
+  "source_acquisitions": [
+    {
+      "document_id": "S05-dasy52-flyer-b88500087b6a",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "b88500087b6ace1d7dddb45155a48308792a98c22d82ea6c879852c13048a117",
+      "original_bytes": 2692513,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+      "download_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+      "version": "DASY52 Systems composite flyer; PDF p2 W12/13; component/feature pages W 0708; exact edition unresolved"
+    },
+    {
+      "document_id": "S05-dasy52-report-generator-c694fa6fd65d",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "c694fa6fd65d155656bd171927e109ea695398f72d71a1d470a85fcabc14dece",
+      "original_bytes": 2235681,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+      "download_url": "https://speag.swiss/assets/downloads/products/dasy/free_downloads/AN_D52_ReportGenerator.pdf",
+      "version": "DASY5 Manual V5.2, October 2009; Chapter 29 excerpt"
+    },
+    {
+      "document_id": "S05-dasy52-release-4fc4edb3039a",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "4fc4edb3039a4b7e69aa874cdb3bd5e3d3b32bd37d22324974ba778aa13c773e",
+      "original_bytes": 38228,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+      "download_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+      "version": "Release notice dated 2009-10-16"
+    },
+    {
+      "document_id": "S05-speag-rights-route-e128de06477f",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "e128de06477f6b0f0f3680a4a3c8f5152153d127782f30e9f3c017070cfad027",
+      "original_bytes": 18947,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://speag.swiss/meta-navigation/legal-notice",
+      "download_url": "https://speag.swiss/meta-navigation/legal-notice",
+      "version": "Undated live page; retrieved 2026-10-23"
+    },
+    {
+      "document_id": "S05-dasy52-download-portal-7e984da783d0",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "7e984da783d025a521c2fa52a6cb052971583d1c63ae21627d7b9fbc2ebc03de",
+      "original_bytes": 23318,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+      "download_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+      "version": "Undated portal; displays V52.10.4.1535 release 2021-07-01"
+    },
+    {
+      "document_id": "S05-dasy52-readme-b0e2d28dec82",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "b0e2d28dec82eca9c974571ac9f703d6e2eae870fd550cf74fab887c1683e5a9",
+      "original_bytes": 4957,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+      "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/6-0/ReadMe.txt",
+      "version": "DASY52 V10.4 (1535); SEMCAD X V14 V6.14 (7501)"
+    }
+  ],
+  "redacted_local_reference_fields": [
+    "/rights_handling/raw_payload_prefix",
+    "/items/5/sources/0/source_path",
+    "/0/local_original_path",
+    "/1/local_original_path",
+    "/2/local_original_path",
+    "/3/local_original_path",
+    "/4/local_original_path"
+  ],
+  "package": {
+    "package_id": "FCC-20261023A-S05-B0001",
+    "path": "materials/packages/FCC-20261023A-S05-B0001.zip",
+    "sha256": "81356c87ec66d08ce0c178d3c6ba45ac56a0050e6b377484b467f682481449b3",
+    "bytes": 2258,
+    "included_payloads": 0,
+    "access_or_unavailable_records": 6
+  },
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "field-inputs.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

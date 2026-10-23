@@ -1,0 +1,108 @@
+{
+  "checked_at": "2026-10-23T21:51:41+09:00",
+  "legacy_source_index_sha256": "d202916f2ef302e631e9922c3c6d36a8d8141a7568256d3aefc13123385c7fcd",
+  "legacy_documents": [
+    {
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-UPDATES-20261023-003",
+      "legacy_document_id": "SCPI-99-09b60c1400",
+      "source_path_inside_package": "originals/protocol/scpi-99.pdf",
+      "sha256": "09b60c1400a973b1d0a983cdf8f2cb403bbe225b0acf4c01e4e324ab7833dece",
+      "bytes": 4368141,
+      "package_path": "materials/packages/FCC-UPDATES-20261023-003.zip",
+      "evidence_location": "materials/manifests/FCC-UPDATES-20261023-003.json",
+      "reference_only_request_ids": [
+        "DEV-IVI",
+        "DEV-VISA"
+      ],
+      "new_link_request_ids": [
+        "ADD-S07-ADB-OFFICIAL-001"
+      ],
+      "reference_verification": "existing ZIP member hash and size match; no network download or original-record mutation",
+      "limit": "일반 계측 인터페이스·PyVISA 구조 자료이며 DUT RF 시험모드나 현장 설치 드라이버를 입증하지 않는다."
+    },
+    {
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-UPDATES-20261023-003",
+      "legacy_document_id": "pyvisa-pyvisa-LICENSE-212d522219",
+      "source_path_inside_package": "originals/upstream/pyvisa/pyvisa/LICENSE",
+      "sha256": "212d52221929294cd44f561c07089ea2a40a599e5af013cb3047460a918fceb2",
+      "bytes": 1110,
+      "package_path": "materials/packages/FCC-UPDATES-20261023-003.zip",
+      "evidence_location": "materials/manifests/FCC-UPDATES-20261023-003.json",
+      "reference_only_request_ids": [
+        "DEV-VISA"
+      ],
+      "new_link_request_ids": [
+        "ADD-S07-ADB-OFFICIAL-001"
+      ],
+      "reference_verification": "existing ZIP member hash and size match; no network download or original-record mutation",
+      "limit": "일반 계측 인터페이스·PyVISA 구조 자료이며 DUT RF 시험모드나 현장 설치 드라이버를 입증하지 않는다."
+    },
+    {
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-UPDATES-20261023-003",
+      "legacy_document_id": "pyvisa-pyvisa-docs-source-advanced-architecture.rst-76ad33c2a9",
+      "source_path_inside_package": "originals/upstream/pyvisa/pyvisa/docs/source/advanced/architecture.rst",
+      "sha256": "76ad33c2a9c39f7f7c5b9c52b1279e699ce512a93ca9ed7994d8c1ce18163319",
+      "bytes": 4348,
+      "package_path": "materials/packages/FCC-UPDATES-20261023-003.zip",
+      "evidence_location": "materials/manifests/FCC-UPDATES-20261023-003.json",
+      "reference_only_request_ids": [
+        "DEV-VISA"
+      ],
+      "new_link_request_ids": [
+        "ADD-S07-ADB-OFFICIAL-001"
+      ],
+      "reference_verification": "existing ZIP member hash and size match; no network download or original-record mutation",
+      "limit": "일반 계측 인터페이스·PyVISA 구조 자료이며 DUT RF 시험모드나 현장 설치 드라이버를 입증하지 않는다."
+    }
+  ],
+  "private_input_requests": [
+    {
+      "request_id": "LOCAL-005",
+      "document": "LIMS·시험 SW·보고 SW API/내보내기 문서",
+      "purpose": "버전·권한·파일 형식·라이선스·테스트 환경",
+      "priority": "P1",
+      "owner": "lab_or_product_owner",
+      "download_url": "",
+      "status": "not_publicly_reconstructible",
+      "instruction": "Collect only when available and authorized; not a prerequisite for public-source intake or software construction",
+      "collector_state": "not_provided",
+      "collection_route": "Existing repository material must be checked first, then the stated lab/product owner. Public manuals cannot replace this evidence."
+    },
+    {
+      "request_id": "LOCAL-006",
+      "document": "DUT 시험모드 API와 펌웨어·안테나·동시송신",
+      "purpose": "제품별 채널/전력/모드 설정과 읽기 검증",
+      "priority": "P1",
+      "owner": "lab_or_product_owner",
+      "download_url": "",
+      "status": "not_publicly_reconstructible",
+      "instruction": "Collect only when available and authorized; not a prerequisite for public-source intake or software construction",
+      "collector_state": "not_provided",
+      "collection_route": "Existing repository material must be checked first, then the stated lab/product owner. Public manuals cannot replace this evidence."
+    },
+    {
+      "request_id": "LOCAL-009",
+      "document": "제품 자료 및 실제 시료 식별",
+      "purpose": "HW/FW/모델/블록도/회로도/사용설명서/전원",
+      "priority": "P1",
+      "owner": "lab_or_product_owner",
+      "download_url": "",
+      "status": "not_publicly_reconstructible",
+      "instruction": "Collect only when available and authorized; not a prerequisite for public-source intake or software construction",
+      "collector_state": "not_provided",
+      "collection_route": "Existing repository material must be checked first, then the stated lab/product owner. Public manuals cannot replace this evidence."
+    }
+  ],
+  "private_input_evidence": {
+    "path": "materials/inventory/private_input_status.json",
+    "sha256": "1cb762ef4f1cadf2fb50f1bbd8a0be200bb2ec08d597885d2c25e76f8ac70431"
+  },
+  "ivi_inventory_reference": {
+    "path": "materials/inventory/ivi_sources.json",
+    "usage": "기존 제한 원본의 출처·판본·권리 상태를 참조한다. 새 원본 확보·IVI 드라이버 설치·모델 호환 완료로 집계하지 않는다."
+  },
+  "immutability": "기존 package/document ID·request_ids·시각·경로·레코드는 변경하지 않았다. 신규 연결만 이 별도 참조 기록에 남긴다."
+}

@@ -1,0 +1,83 @@
+{
+  "task_id": "FCC-20261023-S04-B0001",
+  "batch_id": "FCC-20261023A-S04-B0001",
+  "attempt": 1,
+  "owner_session": "S04",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "activation": "approved",
+  "request_ids": [
+    "EQ-MOD-aecdf6d16380a2be",
+    "EQ-MOD-c40c6c5f1b4e7ca9",
+    "EQ-MOD-48a20d5887cbe5bc"
+  ],
+  "model_ids": [
+    "MOD-aecdf6d16380a2be",
+    "MOD-c40c6c5f1b4e7ca9",
+    "MOD-48a20d5887cbe5bc"
+  ],
+  "priority": "P0",
+  "created_at": "2026-10-23T21:56:42.434211+09:00",
+  "timezone": "Asia/Seoul",
+  "status": "documentary_collection_complete_pending_P01_intake",
+  "result": "배정 3개 모델의 공식 원문 6개 확보·문서 근거 정리 완료. 원문 공개 재배포는 제한 상태이며 현장 능력은 미검증.",
+  "request_counts": {
+    "investigated_complete": 3,
+    "unavailable_source_blocked": 0,
+    "not_started": 0
+  },
+  "source_counts": {
+    "downloaded_originals": 6,
+    "downloaded_public_redistributable_originals": 0,
+    "downloaded_private_restricted_or_rights_unconfirmed_originals": 6,
+    "source_access_unavailable_final": 0,
+    "legacy_originals_reused": 0,
+    "derived_raster_qa_files": 14,
+    "ocr_files": 0
+  },
+  "original_bytes": 43230751,
+  "evidence_items": 22,
+  "questions_count": 2,
+  "blockers": [],
+  "local_access": "미국/중국 일부 자산 URL에서 자료 요청 양식 HTML을 관측했다. 공개 지역별 공식 URL에서 6개 실제 PDF를 확보했다. 어떤 양식·계정·권한 동의도 제출하지 않았다.",
+  "rights_and_publication": "6개 PDF와 파생 QA PNG는 private/ 아래에만 있다. 공개 웹 열람과 공개 저장소 재배포 권한을 구분한다. documents.json의 downloaded는 로컬 원본 확보를 뜻하며 공개 게시 완료가 아니다. P01은 private/ 원문과 파생본을 공개 Git 패키지에서 제외해야 한다.",
+  "model_identity": "Agilent N9030A와 Keysight N9030A는 서로 다른 기존 ID로 보존하고 공통 문서를 두 request_ids/model_ids에 연결했다. N1914A는 N1913/1914A 공통 문서의 적용 범위만 확인했다.",
+  "document_versions": [
+    {
+      "document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+      "version": "Edition 1, January 2022; supersedes October 2021"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "version": "Edition 23, December 2018"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+      "version": "Print date August 2014; supersedes February 2013"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+      "version": "Edition 24, November 1, 2022"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "version": "Edition 19, June 11, 2025"
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+      "version": "Edition 17, October 8, 2025"
+    }
+  ],
+  "version_limit": "공개 URL에서 실제 받은 바이트의 판본 고정이다. 전체 옵션·모든 세대의 최신 판본 전수 확인이나 설치 펌웨어 일치 검증은 아니다.",
+  "unsearched_or_deferred_scope": [
+    "배정 외 모델·안테나·RF 부품",
+    "실제 N1914A 연결 센서의 모델별 매뉴얼·교정서·주파수 보정 데이터",
+    "N9030A 별도 설치/수리·전체 성능검증 절차와 모든 옵션별 문서",
+    "드라이버/펌웨어/라이선스 파일·설치·실행·실장비 명령/응답",
+    "FCC 시험방법 적합성 승인·실측 비교·현장 검증"
+  ],
+  "validation_scope": "원문 HTTP/MIME/헤더·본문 표지/판본·해시/크기·JSON Schema·참조 쪽 위치·인계 파일 무결성을 검사한다. 실장비·계측 정확도·기관 적합성 검증은 미실행.",
+  "handover_state": "local_frozen_batch_pending_P01_intake",
+  "next_action": "P01 인수·검수 결과를 기다린다. Git 게시·클라우드 기술 인수 완료로 표시하지 않으며 실제 후속 배정 전 범위를 확장하지 않는다.",
+  "ready_path_relative_to_collector": "ready/FCC-20261023A-S04-B0001"
+}

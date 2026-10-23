@@ -1,0 +1,399 @@
+{
+  "task_id": "FCC-20261023-S02-B0001",
+  "original_owner": "S01",
+  "new_original_count": 0,
+  "references": [
+    {
+      "reference_id": "REF-KDB-558074-publication-92168150c6",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-558074-publication-92168150c6",
+      "manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+      "package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "source_path_inside_package": "originals/KDB-558074-publication.html",
+      "sha256": "92168150c69765622272035e821c6f9e5d622ed68b525fa93ef38824db8a0fb4",
+      "bytes": 15421,
+      "media_type": "text/html",
+      "version": "Publication page dated 2019-04-02; retrieved 2026-10-23T19:55:41+09:00",
+      "retrieved_at": "2026-10-23T19:55:41+09:00",
+      "published_at_as_legacy_record": "2019-04-02",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "original_not_copied_or_modified": true,
+      "evidence_locations": [
+        {
+          "section": null,
+          "pdf_page": null,
+          "locator": "HTML publication page text"
+        }
+      ]
+    },
+    {
+      "reference_id": "REF-KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+      "manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+      "package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "source_path_inside_package": "originals/KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02.pdf",
+      "sha256": "06cf6de58ce4b0abd521d6b42e50689f18331cf67be48c8dba7b5553c8470f75",
+      "bytes": 281974,
+      "media_type": "application/pdf",
+      "version": "558074 D01 15.247 Meas Guidance v05r02",
+      "retrieved_at": "2026-10-23T19:58:21+09:00",
+      "published_at_as_legacy_record": null,
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=tylb5MMggvhIlVMK75RrRQ%3D%3D&desc=558074 D01 15.247 Meas Guidance v05r02&tracking_number=21124",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "original_not_copied_or_modified": true,
+      "evidence_locations": [
+        {
+          "section": null,
+          "pdf_page": 1,
+          "locator": "PDF page 1"
+        },
+        {
+          "section": null,
+          "pdf_page": 2,
+          "locator": "PDF page 2"
+        },
+        {
+          "section": null,
+          "pdf_page": 3,
+          "locator": "PDF page 3"
+        },
+        {
+          "section": null,
+          "pdf_page": 4,
+          "locator": "PDF page 4"
+        },
+        {
+          "section": null,
+          "pdf_page": 5,
+          "locator": "PDF page 5"
+        },
+        {
+          "section": null,
+          "pdf_page": 6,
+          "locator": "PDF page 6"
+        },
+        {
+          "section": null,
+          "pdf_page": 7,
+          "locator": "PDF page 7"
+        },
+        {
+          "section": null,
+          "pdf_page": 8,
+          "locator": "PDF page 8"
+        },
+        {
+          "section": null,
+          "pdf_page": 9,
+          "locator": "PDF page 9"
+        },
+        {
+          "section": null,
+          "pdf_page": 10,
+          "locator": "PDF page 10"
+        },
+        {
+          "section": null,
+          "pdf_page": 11,
+          "locator": "PDF page 11"
+        },
+        {
+          "section": null,
+          "pdf_page": 12,
+          "locator": "PDF page 12"
+        },
+        {
+          "section": null,
+          "pdf_page": 13,
+          "locator": "PDF page 13"
+        },
+        {
+          "section": null,
+          "pdf_page": 14,
+          "locator": "PDF page 14"
+        }
+      ],
+      "page_1_observed_publication_date": "2019-04-02"
+    },
+    {
+      "reference_id": "REF-KDB-300643-publication-4404308a15",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-300643-publication-4404308a15",
+      "manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+      "package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "source_path_inside_package": "originals/KDB-300643-publication.html",
+      "sha256": "4404308a1591bf4a1e8223eb14b064b7922d37279411d969cb4c33eb21d958ea",
+      "bytes": 17177,
+      "media_type": "text/html",
+      "version": "Publication page dated 2018-07-12; retrieved 2026-10-23T19:55:45+09:00",
+      "retrieved_at": "2026-10-23T19:55:45+09:00",
+      "published_at_as_legacy_record": "2018-07-12",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21079",
+      "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21079",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "original_not_copied_or_modified": true,
+      "evidence_locations": [
+        {
+          "section": null,
+          "pdf_page": null,
+          "locator": "HTML publication page text"
+        }
+      ]
+    },
+    {
+      "reference_id": "REF-KDB-414788-publication-f33b1ece3f",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-414788-publication-f33b1ece3f",
+      "manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+      "package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "source_path_inside_package": "originals/KDB-414788-publication.html",
+      "sha256": "f33b1ece3f8cd894c5038feb504daf3afcdfe4b3d8a358df7a73c587f6a77fbb",
+      "bytes": 20525,
+      "media_type": "text/html",
+      "version": "Publication page dated 2018-07-12; retrieved 2026-10-23T19:55:57+09:00",
+      "retrieved_at": "2026-10-23T19:55:57+09:00",
+      "published_at_as_legacy_record": "2018-07-12",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20539",
+      "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20539",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "original_not_copied_or_modified": true,
+      "evidence_locations": [
+        {
+          "section": null,
+          "pdf_page": null,
+          "locator": "HTML publication page text"
+        }
+      ]
+    },
+    {
+      "reference_id": "REF-KDB-414788-414788-D01-Radiated-Test-Site-v01r01-6546c61f79",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-414788-414788-D01-Radiated-Test-Site-v01r01-6546c61f79",
+      "manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+      "package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "source_path_inside_package": "originals/KDB-414788-414788-D01-Radiated-Test-Site-v01r01.pdf",
+      "sha256": "6546c61f79be9e59a3562fe83c79f86f6ed786871ff6aad610935c0b500fcade",
+      "bytes": 350511,
+      "media_type": "application/pdf",
+      "version": "414788 D01 Radiated Test Site v01r01",
+      "retrieved_at": "2026-10-23T19:59:26+09:00",
+      "published_at_as_legacy_record": null,
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20539",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=Xzl%2BoKUwSoIwlpouVv6Fnw%3D%3D&desc=414788 D01 Radiated Test Site v01r01&tracking_number=20539",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "original_not_copied_or_modified": true,
+      "evidence_locations": [
+        {
+          "section": null,
+          "pdf_page": 1,
+          "locator": "PDF page 1"
+        },
+        {
+          "section": null,
+          "pdf_page": 2,
+          "locator": "PDF page 2"
+        },
+        {
+          "section": null,
+          "pdf_page": 3,
+          "locator": "PDF page 3"
+        },
+        {
+          "section": null,
+          "pdf_page": 4,
+          "locator": "PDF page 4"
+        },
+        {
+          "section": null,
+          "pdf_page": 5,
+          "locator": "PDF page 5"
+        },
+        {
+          "section": null,
+          "pdf_page": 6,
+          "locator": "PDF page 6"
+        }
+      ],
+      "page_1_observed_publication_date": "2018-07-12"
+    },
+    {
+      "reference_id": "REF-47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+      "manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+      "package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "source_path_inside_package": "originals/47-CFR-Part-2-2026-10-19.xml",
+      "sha256": "17c0fcaf1e5445cd93c93c55706eb48a3015e9b4a3342dc61aedc35e09e9ff79",
+      "bytes": 967123,
+      "media_type": "application/xml",
+      "version": "eCFR issue 2026-10-19",
+      "retrieved_at": "2026-10-23T19:55:17+09:00",
+      "published_at_as_legacy_record": "2026-10-19",
+      "source_url": "https://www.ecfr.gov/current/title-47/part-2",
+      "download_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-19/title-47.xml?part=2",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "original_not_copied_or_modified": true,
+      "evidence_locations": [
+        {
+          "section": "2.910",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='2.910']"
+        },
+        {
+          "section": "2.947",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='2.947']"
+        },
+        {
+          "section": "2.948",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='2.948']"
+        }
+      ]
+    },
+    {
+      "reference_id": "REF-47-CFR-Part-15-2026-10-19-74ea049a98",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+      "manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json",
+      "package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "source_path_inside_package": "originals/47-CFR-Part-15-2026-10-19.xml",
+      "sha256": "74ea049a987626a0c8509b2c24279f9fea4689bff7248c6a3e1856a9dae641be",
+      "bytes": 571831,
+      "media_type": "application/xml",
+      "version": "eCFR issue 2026-10-19",
+      "retrieved_at": "2026-10-23T19:55:17+09:00",
+      "published_at_as_legacy_record": "2026-10-19",
+      "source_url": "https://www.ecfr.gov/current/title-47/part-15",
+      "download_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-19/title-47.xml?part=15",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "original_not_copied_or_modified": true,
+      "evidence_locations": [
+        {
+          "section": "15.3",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.3']"
+        },
+        {
+          "section": "15.31",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.31']"
+        },
+        {
+          "section": "15.33",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.33']"
+        },
+        {
+          "section": "15.35",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.35']"
+        },
+        {
+          "section": "15.37",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.37']"
+        },
+        {
+          "section": "15.38",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.38']"
+        },
+        {
+          "section": "15.101",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.101']"
+        },
+        {
+          "section": "15.107",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.107']"
+        },
+        {
+          "section": "15.109",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.109']"
+        },
+        {
+          "section": "15.205",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.205']"
+        },
+        {
+          "section": "15.207",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.207']"
+        },
+        {
+          "section": "15.209",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.209']"
+        },
+        {
+          "section": "15.247",
+          "pdf_page": null,
+          "locator": ".//DIV8[@N='15.247']"
+        }
+      ]
+    }
+  ],
+  "metadata_inputs": [
+    {
+      "path": "[local-only reference retained by P01]",
+      "bytes": 1602,
+      "sha256": "4651209e23591b78149b3fe142b7d4c6f4cfe53598d4f902dbdffd4102703e54",
+      "kind": "local_existing_metadata_not_new_original"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "bytes": 14813,
+      "sha256": "2f91d3fc09bf1769c27b1d25932ff653faf37674be545eba3937bb57cb421862",
+      "kind": "local_existing_metadata_not_new_original"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "bytes": 1774,
+      "sha256": "6764dbffd42797ee3ad43ef244795b383a969d8f0a163555bf8215705e314c9b",
+      "kind": "local_existing_metadata_not_new_original"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "bytes": 1043108,
+      "sha256": "d202916f2ef302e631e9922c3c6d36a8d8141a7568256d3aefc13123385c7fcd",
+      "kind": "local_existing_metadata_not_new_original"
+    },
+    {
+      "path": "materials/inventory/standards_access.json",
+      "bytes": 28833,
+      "sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+      "kind": "local_existing_metadata_not_new_original"
+    },
+    {
+      "path": "materials/inventory/cfr_edition_evidence.json",
+      "bytes": 102249,
+      "sha256": "9b509b8fbd1c54f2e8d011be1726f32399e2c419638d1671a0d459c3dee57eca",
+      "kind": "local_existing_metadata_not_new_original"
+    }
+  ],
+  "legacy_document_records_modified": false,
+  "legacy_source_index_added_links": false,
+  "note": "New relationships are this batch metadata only; old document IDs and request_ids remain unchanged."
+}

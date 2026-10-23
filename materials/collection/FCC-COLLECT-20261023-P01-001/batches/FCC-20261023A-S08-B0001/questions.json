@@ -1,0 +1,130 @@
+{
+  "task_id": "FCC-20261023-S08-B0001",
+  "batch_id": "FCC-20261023A-S08-B0001",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "created_at": "2026-10-23T21:56:05+09:00",
+  "blocking_questions": [],
+  "nonblocking_questions": [
+    {
+      "question_id": "S08-Q01",
+      "blocking_for_this_metadata_batch": false,
+      "owner": "P01 / 원본 담당 S01 / 방법 담당",
+      "subject": "b/g/n RF 전체 성적서의 후속 식별",
+      "question": "동일 FCC ID의 b/g/n 비OFDMA RF 전체 성적서·관련 첨부를 후속 고정 배정으로 식별할 필요가 있다. 기존 21개에는 OFDMA RF와 SAR 지원 b/g/n 출력표만 확인된다.",
+      "evidence": [
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7788955",
+          "document_id": null,
+          "exhibit_id": "7788955",
+          "pdf_pages": [
+            1
+          ],
+          "locator": "802.11ax/be OFDMA 표지",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        },
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7854589",
+          "document_id": null,
+          "exhibit_id": "7854589",
+          "pdf_pages": [
+            95,
+            142
+          ],
+          "locator": "SAR 지원 b/g/n 출력·SAR 결과",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "next_action": "P01이 S01 예약·기존 출처를 확인한 뒤 후속 담당을 지정. S08은 범위를 확장하거나 재다운로드하지 않는다."
+    },
+    {
+      "question_id": "S08-Q02",
+      "blocking_for_this_metadata_batch": false,
+      "owner": "P01 / EMC 기술 담당",
+      "subject": "EMC 공개 성적서의 적용 범위 문구와 요약 표 해석",
+      "question": "EMC p3의 remark는 수신부 Part 15B §15.107 전도 요구만을 범위로 적지만 같은 페이지 결과 요약에는 전도·방사가 함께 있다. 시험/발행 범위를 확정하기 전에 해석이 필요하다.",
+      "evidence": [
+        {
+          "classification": "case_practice",
+          "source_ref": "EXHIBIT-7786580",
+          "document_id": null,
+          "exhibit_id": "7786580",
+          "pdf_pages": [
+            3
+          ],
+          "locator": "§1.1 remark; §2.1 summary",
+          "evidence_state": "available_local_restricted",
+          "scope_note": "보고된 사례 관행이며 이 시험소의 실측·승인 증거가 아니다."
+        }
+      ],
+      "next_action": "사례의 방사 측정 표 존재와 해당 신청에서 주장하는 범위를 구분해 검토. S08은 전체 Part 15B 적합성 완료로 확정하지 않는다."
+    }
+  ],
+  "private_input_requests": [
+    {
+      "request_id": "LOCAL-010",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "실제 완료 시험건의 native raw·측정 설정·완료 로그·계산·보고 행/그림 연결. 공개 보고서 PDF는 대체 자료가 아니다."
+    },
+    {
+      "request_id": "LOCAL-003",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "실제 장비 교정서, 보정표 원본/판본·주파수별 값, 중간점검과 측정 시점의 사용 장비 연결."
+    },
+    {
+      "request_id": "LOCAL-001",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "해당 사이트·인정기관·FCC recognition·실제 시험 범위와 유효성 증거."
+    },
+    {
+      "request_id": "LOCAL-004",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "방법별 실제 불확도 예산·적용 판정 정책과 승인 근거."
+    },
+    {
+      "request_id": "LOCAL-009",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "실제 시료 ID·HW/FW·변형 대응 및 시험 조건의 제품별 근거."
+    },
+    {
+      "request_id": "LOCAL-011",
+      "status": "not_provided",
+      "owner": "lab_or_product_owner",
+      "needed": "기관의 기술 검토·발행 위임, 서명, 정정/개정 승인 기록."
+    }
+  ],
+  "access_limits": [
+    {
+      "request_id": "STD-010",
+      "title": "ISO/IEC 17025:2017",
+      "status": "purchase_required",
+      "official_url": "https://www.iso.org/standard/66912.html",
+      "original_acquired": false,
+      "catalog_checked_on": "2026-10-23",
+      "catalog_note": "공식 카탈로그의 Edition 3·2017·2023 확인 및 구매 경로만 확인했다. 영문에 대한 교정판 적용을 추정하지 않는다.",
+      "next_input": "허가된 정식 원문·사용권과 필요한 기관 적용 범위를 권한 있는 담당자가 제공. 구매/가입/약관 동의는 수행하지 않았다."
+    },
+    {
+      "request_id": "STD-019",
+      "title": "IEEE/ANSI C63.23-2012",
+      "status": "purchase_required",
+      "official_url": "https://standards.ieee.org/ieee/C63.23/5596/",
+      "original_acquired": false,
+      "catalog_checked_on": "2026-10-23",
+      "catalog_note": "공식 카탈로그의 표준 식별·구매/구독 경로를 확인했다. 실제 방법이 요구하는 판본·세부 계산 조항은 확정하지 않았다.",
+      "next_input": "방법 담당의 참조 판본 확인 후 허가된 정식 원문/구독 접근을 담당자가 제공. 부록 ZIP이나 공개 요약을 표준 원문으로 대체하지 않는다."
+    }
+  ],
+  "routing": "P01이 이 파일과 대화 응답을 읽어 취합한다. S08은 다른 대화로 전송하거나 사용자에게 재승인을 요청하지 않는다."
+}

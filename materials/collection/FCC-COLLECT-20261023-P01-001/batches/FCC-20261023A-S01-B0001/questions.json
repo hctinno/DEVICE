@@ -1,0 +1,29 @@
+[
+  {
+    "question_id": "S01-B0001-Q01",
+    "owner_to_coordinate": "P01",
+    "blocking_this_metadata_delivery": false,
+    "topic": "C63.10 정식 원문 접근",
+    "request_ids": [
+      "STD-001",
+      "STD-002",
+      "STD-003"
+    ],
+    "state": "purchase_required_or_existing_internal_license_needed",
+    "question": "C63.10-2020 및 관련 정오표/추록을 대조할 수 있는 허용된 내부 라이선스/열람 경로가 있는지 취합이 필요하다.",
+    "next_action": "이미 보유한 라이선스가 있으면 권한 있는 경로에서 확인하고, 없으면 P01이 구매 필요 상태를 유지한다. 공개 저장소 재배포나 사용자 재첨부를 요청하지 않는다."
+  },
+  {
+    "question_id": "S01-B0001-Q02",
+    "owner_to_coordinate": "P01 / DUT 입력 담당 S07",
+    "blocking_this_metadata_delivery": false,
+    "topic": "실제 제품·송신 시험모드 입력",
+    "request_ids": [
+      "LOCAL-006",
+      "LOCAL-009"
+    ],
+    "state": "actual_DUT_inputs_not_provided",
+    "question": "실제 모델/변형·b/g/n 모드/채널/대역폭·체인/안테나 이득·최대 출력·duty cycle·충전 상태·제조사 시험모드의 제공 항목과 담당 확인이 필요하다.",
+    "next_action": "기존 비공개 입력 요청에 연결한다. 인터넷의 다른 제품 자료로 채우거나 DUT/장비를 조작하지 않는다."
+  }
+]

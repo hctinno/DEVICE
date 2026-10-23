@@ -1,0 +1,98 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S06-B0001",
+  "task_id": "FCC-20261023-S06-B0001",
+  "owner_session": "S06",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "snapshot_inventory_sha256": "ed1ef6eccf2da33e9a76fe15e4fdc15f37b5108c9e7ab919e6a3d39e8236e161",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S06-B0001",
+    "decision": "content_approved_for_metadata_and_access_notice_only",
+    "findings": [
+      "Three model requests were researched but all remain limited; no command manual was acquired.",
+      "P01 independently confirmed the old ETS 2090 PDF URL redirects to a manuals HTML page.",
+      "CO3000-4P/4p product-family references do not establish the identity, firmware or licence of a field device labelled -4port.",
+      "Three locally acquired HTML originals and a legacy catalogue image are excluded from public payloads."
+    ],
+    "request_outcome": {
+      "completed": 0,
+      "limited": 3,
+      "not_started": 0
+    },
+    "publication_metadata_files": [],
+    "owner": "P01",
+    "source_inventory_verified": true,
+    "rights_public_document_ids": [],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [
+    {
+      "document_id": "S06-ets-manuals-index-383dba3d17af",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "383dba3d17af35695e5bed8adb6885fee06cdc01f2f8fd216ecb5ce44c5269b7",
+      "original_bytes": 340130,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.ets-lindgren.com/manuals/",
+      "download_url": "https://www.ets-lindgren.com/manuals/",
+      "version": "Undated current/archive index; snapshot 2026-10-23; not a 2090 manual"
+    },
+    {
+      "document_id": "S06-innco-co3000-4p-product-a9a5ddfd5681",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "a9a5ddfd5681cd038612a68196cf07bc73704d2f00feb92c0e651af7792dfde0",
+      "original_bytes": 14199,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+      "download_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+      "version": "Undated CO3000-4P product web page; firmware revision unstated; snapshot 2026-10-23"
+    },
+    {
+      "document_id": "S06-ets-2090-official-case-study-ba4374369e9b",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "ba4374369e9bf82dda07206db72f1df1070bd39d51e9f0038b4669042f7ed31d",
+      "original_bytes": 305658,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.ets-lindgren.com/case-studies/pc-test-engineering-laboratory/",
+      "download_url": "https://www.ets-lindgren.com/case-studies/pc-test-engineering-laboratory/",
+      "version": "Undated official case-study web page; snapshot 2026-10-23"
+    }
+  ],
+  "redacted_local_reference_fields": [
+    "/rights_and_publication/restricted_original_paths/0",
+    "/rights_and_publication/restricted_original_paths/1",
+    "/rights_and_publication/restricted_original_paths/2",
+    "/rights_and_publication/restricted_derived_paths/0",
+    "/rights_and_publication/instruction",
+    "/immutable_legacy_references/0/local_source_path",
+    "/immutable_legacy_references/0/evidence_location/review_image",
+    "/legacy_conflict_check/sources/0",
+    "/legacy_conflict_check/sources/2",
+    "/legacy_conflict_check/sources/3"
+  ],
+  "package": {
+    "package_id": "FCC-20261023A-S06-B0001",
+    "path": "materials/packages/FCC-20261023A-S06-B0001.zip",
+    "sha256": "3877283b6b53b33f5f917c95cd4297d641ef7020f84ace50db0524116bcf50f1",
+    "bytes": 1639,
+    "included_payloads": 0,
+    "access_or_unavailable_records": 3
+  },
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

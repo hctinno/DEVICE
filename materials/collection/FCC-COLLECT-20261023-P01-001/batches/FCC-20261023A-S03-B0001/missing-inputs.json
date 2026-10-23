@@ -1,0 +1,191 @@
+{
+  "task_id": "FCC-20261023-S03-B0001",
+  "basis_file": "materials/inventory/private_input_status.json",
+  "public_sources_cannot_reconstruct_private_inputs": true,
+  "items": [
+    {
+      "input_id": "DUT-01",
+      "linked_existing_request_ids": [
+        "LOCAL-009"
+      ],
+      "needed_input_ko": "실제 모델·HW/FW·지역 변형·FCC ID·시료 식별과 제품 설명서",
+      "evidence_ids": [
+        "S03-E001",
+        "S03-E011"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-02",
+      "linked_existing_request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "needed_input_ko": "지원 Wi-Fi b/g/n·대역·미국 채널·대역폭·변조/속도·AP/client/hotspot 조건",
+      "evidence_ids": [
+        "S03-E006",
+        "S03-E007"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-03",
+      "linked_existing_request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "needed_input_ko": "안테나/포트/chain ID·위치/방향/도면·실제 결합과 거리·필요 ERP 근거",
+      "evidence_ids": [
+        "S03-E004",
+        "S03-E008",
+        "S03-E013"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-04",
+      "linked_existing_request_ids": [
+        "LOCAL-006"
+      ],
+      "needed_input_ko": "모드/채널/안테나별 양산 최대 출력·tune-up tolerance·단독/동시송신 출력",
+      "evidence_ids": [
+        "S03-E007",
+        "S03-E010",
+        "S03-E013"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-05",
+      "linked_existing_request_ids": [
+        "LOCAL-006"
+      ],
+      "needed_input_ko": "제조사 시험모드와 도구의 허용된 취득 경로/버전·양산 설정 일치/읽기 검증 증거",
+      "evidence_ids": [
+        "S03-E006"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-06",
+      "linked_existing_request_ids": [
+        "LOCAL-006",
+        "LOCAL-010"
+      ],
+      "needed_input_ko": "실측 듀티비·주기/시간 로그·SAR 전후 출력과 drift",
+      "evidence_ids": [
+        "S03-E005",
+        "S03-E006",
+        "S03-E016"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-07",
+      "linked_existing_request_ids": [
+        "LOCAL-009"
+      ],
+      "needed_input_ko": "head/voice/data/body/hotspot 실제 사용 조건·면/모서리/거리·holder/액세서리 금속과 grant exhibit",
+      "evidence_ids": [
+        "S03-E008",
+        "S03-E011",
+        "S03-E012"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-08",
+      "linked_existing_request_ids": [
+        "LOCAL-006"
+      ],
+      "needed_input_ko": "모든 Wi-Fi/WWAN/BT 등의 동시송신 행렬·MIMO/TxBF chain 조합·FW 제약 증거",
+      "evidence_ids": [
+        "S03-E013"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-09",
+      "linked_existing_request_ids": [
+        "LOCAL-006"
+      ],
+      "needed_input_ko": "실제 센서/출력 제어 유무·trigger/복귀·거리/coverage·PAG/PWRDYN 등 제품 고유 승인",
+      "evidence_ids": [
+        "S03-E014"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-10",
+      "linked_existing_request_ids": [
+        "LOCAL-003"
+      ],
+      "needed_input_ko": "실제 SAR 시스템·probe/dipole/phantom·교정서·유효 교정점·매질 파라미터/온도와 verification",
+      "evidence_ids": [
+        "S03-E015",
+        "S03-E017",
+        "S03-E018"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-11",
+      "linked_existing_request_ids": [
+        "LOCAL-004"
+      ],
+      "needed_input_ko": "적용 방법의 불확도 예산·변동성 검증과 판정 정책",
+      "evidence_ids": [
+        "S03-E019"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-12",
+      "linked_existing_request_ids": [
+        "LOCAL-010"
+      ],
+      "needed_input_ko": "독립 검증용 실측 scan/plot/원시 데이터·출력/보정·사진·계산/보고의 연결",
+      "evidence_ids": [
+        "S03-E019"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    },
+    {
+      "input_id": "DUT-13",
+      "linked_existing_request_ids": [
+        "LOCAL-016"
+      ],
+      "needed_input_ko": "보유 표준의 정식 라이선스·실제 이용 가능한 판본·FCC 허용/전환 근거",
+      "evidence_ids": [
+        "S03-E021"
+      ],
+      "status": "not_provided",
+      "owner": "lab_or_product_owner_via_P01",
+      "blocking_public_source_batch": false
+    }
+  ]
+}

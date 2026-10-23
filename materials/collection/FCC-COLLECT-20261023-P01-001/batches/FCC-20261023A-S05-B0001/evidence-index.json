@@ -1,0 +1,639 @@
+{
+  "task_id": "FCC-20261023-S05-B0001",
+  "batch_id": "FCC-20261023A-S05-B0001",
+  "attempt": 1,
+  "owner_session": "S05",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "activation": "approved",
+  "evidence_kind": "manufacturer_sources_and_explicit_gaps",
+  "items": [
+    {
+      "evidence_id": "S05-E001",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511",
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "모델과 구성품 구분",
+      "finding": "공식 역사적 구성표는 DAE4·Measurement Server DASY5·PC·DASY5 SW를 별도 항목으로 구분한다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-flyer-b88500087b6a",
+          "source_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+          "download_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+          "location": {
+            "pdf_page": 3,
+            "table": "DASY5 Component List"
+          }
+        }
+      ],
+      "applicability": "DASY52 계열 구성품 식별 근거다. 현장 보유 구성과 옵션을 확정하지 않는다.",
+      "state": "supported",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E002",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511"
+      ],
+      "topic": "DAE4 역할",
+      "finding": "DAE4의 3채널 전압 취득·광학 직렬 통신·접촉/충돌 검출 기능을 제조사 사양과 DAE 설명에서 확인했다.",
+      "sources": [
+        {
+          "reference_id": "S05-L01",
+          "document_id": "SPEAG-DAE4-and-DAE4ip-official-specifications-8e66e5080b",
+          "source_url": "https://speag.swiss/products/dasy8/m-hac/daes",
+          "location": {
+            "heading": "Data Acquisition Electronics (DAE)",
+            "row": "DAE4"
+          }
+        },
+        {
+          "reference_id": "S05-L04",
+          "document_id": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+          "source_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+          "location": {
+            "pdf_page": 73,
+            "printed_page": "3-31",
+            "section": "3.9.1-3.9.2"
+          }
+        }
+      ],
+      "applicability": "현재 사양 페이지의 호스트는 DASY8, 매뉴얼의 호스트는 DASY6다. DAE4 모델 기능 근거와 구형 현장 시스템 호환 검증을 구분한다.",
+      "state": "supported",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E003",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511"
+      ],
+      "topic": "DAE4와 DAE4ip",
+      "finding": "DAE4는 배터리형이고 DAE4ip는 통합 전원형이다. DASY6 문서는 ip 전원 공급에 맞는 EOCip 모델을 구분한다.",
+      "sources": [
+        {
+          "reference_id": "S05-L01",
+          "document_id": "SPEAG-DAE4-and-DAE4ip-official-specifications-8e66e5080b",
+          "source_url": "https://speag.swiss/products/dasy8/m-hac/daes",
+          "location": {
+            "rows": [
+              "DAE4",
+              "DAE4ip"
+            ]
+          }
+        },
+        {
+          "reference_id": "S05-L04",
+          "document_id": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+          "source_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+          "location": {
+            "pdf_pages": [
+              61,
+              73,
+              74
+            ],
+            "printed_pages": [
+              "3-19",
+              "3-31",
+              "3-32"
+            ]
+          }
+        }
+      ],
+      "applicability": "DAE4ip의 연속 전원·자동화 특성을 DAE4에 부여하지 않는다. 기존 EOC의 실제 종류는 미확인이다.",
+      "state": "supported",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E004",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511"
+      ],
+      "topic": "DAE 데이터 경로와 프로토콜 공백",
+      "finding": "DASY6 호스트 문서는 DAE 전압·상태의 광학 하향 전송과 명령·클록의 광학 상향 전송을 설명한다. 공개 명령 바이트·SDK·SCPI 정의는 이번 자료에서 확보하지 못했다.",
+      "sources": [
+        {
+          "reference_id": "S05-L04",
+          "document_id": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+          "source_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+          "location": {
+            "pdf_page": 73,
+            "printed_page": "3-31",
+            "section": "3.9.2"
+          }
+        }
+      ],
+      "applicability": "DASY6 내 DAE 연결 설명이다. 직접 PC 제어 API 또는 DASY5 프로토콜 호환성의 증거가 아니다.",
+      "state": "supported_with_gap",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E005",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511"
+      ],
+      "topic": "교정 범위와 실제 교정서",
+      "finding": "제조사 교정 서비스는 DAE4를 명시하고 접촉·충돌, A/D 성능, 채널 분리, 입력 특성과 배터리 검출 등의 확인 항목을 제시한다. 실제 장치의 교정계수·유효기간은 미제공이다.",
+      "sources": [
+        {
+          "reference_id": "S05-L02",
+          "document_id": "SPEAG-DAE-calibration-procedure-overview-b35e7ee2e5",
+          "source_url": "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae",
+          "location": {
+            "heading": "READOUT UNIT (DAE)",
+            "rows": [
+              "DAE3, DAE4, DAEasy4, DAE4MRI",
+              "Calibration Procedure"
+            ]
+          }
+        }
+      ],
+      "applicability": "서비스 범위와 CMC 설명은 개별 장치 교정성적서·현장 불확도 예산을 대체하지 않는다.",
+      "state": "supported_with_gap",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E006",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511"
+      ],
+      "topic": "DAE3V1 명칭 혼재",
+      "finding": "고정 모델 입력의 DAE4 행 equipment_names에는 SPEAG DAE3V1도 함께 들어 있다. 등록 17행 전부를 실물 DAE4로 확정할 수 없다.",
+      "sources": [
+        {
+          "source_path": "[local-only reference retained by P01]",
+          "location": {
+            "array_index_zero_based": 0,
+            "fields": [
+              "model",
+              "equipment_names",
+              "registration_rows"
+            ]
+          }
+        }
+      ],
+      "applicability": "기존 모델 ID를 수정하지 않는다. 장치별 명판·시리얼로 식별해야 한다.",
+      "state": "evidence_gap",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E007",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "Server와 호스트 소프트웨어 버전",
+      "finding": "DASY52 V10.4(1535) ReadMe는 DASY5 server/robot controller 업그레이드를 별도 항목으로 다루고 점검 조합을 Server 5.0.28, Driver 5.0.03, Robot 5.0.60으로 적는다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-readme-b0e2d28dec82",
+          "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/6-0/ReadMe.txt",
+          "location": {
+            "line_numbers_one_based": [
+              11,
+              12,
+              66,
+              67,
+              70,
+              74,
+              75,
+              76,
+              77
+            ]
+          }
+        }
+      ],
+      "applicability": "해당 ReadMe의 조건부 업그레이드 후 조합이다. 현재 장치에 적용·설치됐다는 증거가 아니다.",
+      "state": "supported",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E008",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "배포 버전 표기",
+      "finding": "DASY52 전용 포털은 V52.10.4.1535와 2021-07-01을 표시하며, 연결된 ReadMe의 본문은 DASY52 V10.4(1535)를 명시한다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-download-portal-7e984da783d0",
+          "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "download_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "location": {
+            "heading": "Module SAR / Software Installer"
+          }
+        },
+        {
+          "document_id": "S05-dasy52-readme-b0e2d28dec82",
+          "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/6-0/ReadMe.txt",
+          "location": {
+            "line_numbers_one_based": [
+              11,
+              12,
+              74
+            ]
+          }
+        }
+      ],
+      "applicability": "포털 표시·ReadMe 표기를 각각 보존한다. URL의 6-0 디렉터리명을 DASY6 판본으로 해석하지 않는다.",
+      "state": "supported",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E009",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "전체 매뉴얼 접근 조건",
+      "finding": "ReadMe는 문서를 설치물의 Documentation 디렉터리에 PDF로 제공한다고 설명한다. 현재 포털의 제품 취득은 제조사 라이선스 파일·설치 도구·이메일 절차를 요구한다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-readme-b0e2d28dec82",
+          "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/6-0/ReadMe.txt",
+          "location": {
+            "line_numbers_one_based": [
+              51,
+              52,
+              57,
+              58
+            ]
+          }
+        },
+        {
+          "document_id": "S05-dasy52-download-portal-7e984da783d0",
+          "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "download_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "location": {
+            "heading": "Support & Download Page",
+            "location": "license/download workflow"
+          }
+        }
+      ],
+      "applicability": "공개한 보고서 장만 취득했다. 전체 사용자/프로그래밍 매뉴얼은 접근 제한으로 남기며 설치·메일 요청을 실행하지 않았다.",
+      "state": "access_limited",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E010",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "측정 컨테이너",
+      "finding": "DASY5.2 보고서 장은 장치 단위 .da52 측정 컨테이너와 별도 입력·사진·RGtemplate를 이용한 보고서 생성을 설명한다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-report-generator-c694fa6fd65d",
+          "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/free_downloads/AN_D52_ReportGenerator.pdf",
+          "location": {
+            "pdf_page": 1,
+            "printed_page": "29-1",
+            "section": "29.1"
+          }
+        }
+      ],
+      "applicability": "DASY5.2 기능 근거다. .da52 내부 바이너리 구조·원시 센서 스키마를 제공하는 문서는 아니다.",
+      "state": "supported",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E011",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "내보내기와 라이선스",
+      "finding": "보고서 장은 Excel·Word·HTML 출력과 고객별 데이터베이스 exporter를 설명한다. 도식에는 XML과 출력별 라이선스 표시도 있으나 XML 스키마·호출 API는 제시되지 않는다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-report-generator-c694fa6fd65d",
+          "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/free_downloads/AN_D52_ReportGenerator.pdf",
+          "location": {
+            "pdf_pages": [
+              1,
+              2
+            ],
+            "printed_pages": [
+              "29-1",
+              "29-2"
+            ],
+            "figures": [
+              "report export flow",
+              "Export Options dialog"
+            ]
+          }
+        }
+      ],
+      "applicability": "템플릿·측정 완료·입력 속성 및 보유 옵션이 전제다. XML 아이콘을 공개 API나 무조건 사용 가능한 raw export로 처리하지 않는다.",
+      "state": "supported_with_gap",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E012",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "사용자 파일과 교정파일 공백",
+      "finding": "ReadMe는 Configuration·Inventory·측정/인쇄 템플릿 위치와 일부 XML 설정 파일명을 명시한다. 이 정보만으로 DAE·프로브 교정파일의 필드·단위·검증 규칙은 확인되지 않는다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-readme-b0e2d28dec82",
+          "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/6-0/ReadMe.txt",
+          "location": {
+            "line_numbers_one_based": [
+              95,
+              96,
+              97,
+              107,
+              108,
+              109
+            ]
+          }
+        }
+      ],
+      "applicability": "Communication_Systems.xml·Preferences.xml·Setup.xml은 설정명 근거다. 실제 license.dat 내용이나 비밀 키는 수집 대상이 아니다.",
+      "state": "supported_with_gap",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E013",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "라이선스 조건",
+      "finding": "ReadMe는 USB 동글의 flexid와 제조사 발급 라이선스 파일의 연결을 명시한다. 보고서·API 옵션의 보유 여부는 현장 입력이 필요하다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-readme-b0e2d28dec82",
+          "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/6-0/ReadMe.txt",
+          "location": {
+            "line_numbers_one_based": [
+              82,
+              83,
+              84,
+              86,
+              87,
+              88,
+              92
+            ]
+          }
+        },
+        {
+          "document_id": "S05-dasy52-report-generator-c694fa6fd65d",
+          "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/free_downloads/AN_D52_ReportGenerator.pdf",
+          "location": {
+            "pdf_page": 1,
+            "printed_page": "29-1",
+            "location": "output license markers"
+          }
+        }
+      ],
+      "applicability": "라이선스 존재·옵션 목록만 요청한다. 동글 식별값·라이선스 키 원문을 산출물에 넣지 않는다.",
+      "state": "supported_with_gap",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E014",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "DASY6 API와 DASY5 경계",
+      "finding": "2020년 DASY6 SAR V6.12 공지는 HTTP API Server를 별도 API Option으로 소개하고 견적 경로를 제시한다. 이는 DASY5 지원의 근거가 아니다.",
+      "sources": [
+        {
+          "reference_id": "S05-L05",
+          "document_id": "SPEAG-DASY6-API-option-announcement-and-access-route-d4baf66e7c",
+          "source_url": "https://speag.swiss/news-events/news/measurement/cdasy6-module-sar-v6-12-automate-your-testing-workflow",
+          "location": {
+            "article_date": "2020-05-06",
+            "heading": "Automated Measurements with the API Option",
+            "location": "API quotation paragraph"
+          }
+        }
+      ],
+      "applicability": "DASY6 Module SAR V6.12 범위다. DASY5 Server의 외부 제어 API·라이선스·호환 SDK는 미확보다.",
+      "state": "generation_boundary",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E015",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "DASY6 R&D 내보내기 경계",
+      "finding": "DASY6 R&D 매뉴얼은 Jupyter/Python 연동과 시간·센서 위치·측정/평가량을 담는 CSV 출력을 설명한다.",
+      "sources": [
+        {
+          "reference_id": "S05-L04",
+          "document_id": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+          "source_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+          "location": {
+            "pdf_pages": [
+              105,
+              111,
+              112
+            ],
+            "printed_pages": [
+              "7-2",
+              "7-8",
+              "7-9"
+            ]
+          }
+        }
+      ],
+      "applicability": "DASY6 Module R&D 기능이다. DASY5나 DASY6 SAR의 파일 형식·API와 같다고 판단하지 않는다.",
+      "state": "generation_boundary",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E016",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa",
+        "EQ-MOD-708c2272f105c511"
+      ],
+      "topic": "교정 불필요 문구의 적용 대상",
+      "finding": "DASY6 매뉴얼의 교정 불필요 표기는 DASY6 Measurement Server 장에 있다. DAE4의 교정 서비스와 별도 대상이다.",
+      "sources": [
+        {
+          "reference_id": "S05-L04",
+          "document_id": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+          "source_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+          "location": {
+            "pdf_page": 59,
+            "printed_page": "3-17",
+            "section": "3.3.1 / Calibration"
+          }
+        },
+        {
+          "reference_id": "S05-L02",
+          "document_id": "SPEAG-DAE-calibration-procedure-overview-b35e7ee2e5",
+          "source_url": "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae",
+          "location": {
+            "heading": "READOUT UNIT (DAE)"
+          }
+        }
+      ],
+      "applicability": "DASY5 Server의 교정 조건이나 DAE4의 교정 면제로 일반화하지 않는다.",
+      "state": "generation_boundary",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E017",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "세대별 수명과 지원",
+      "finding": "제조사는 DASY5 v5.0·DASY52 v5.2·DASY6 소프트웨어와 로봇/제어기 조합의 지원 시점을 별도 행으로 관리한다. 예를 들어 DASY52 v5.2 SW의 제한 지원 시작은 2025-12로 표시된다.",
+      "sources": [
+        {
+          "reference_id": "S05-L03",
+          "document_id": "SPEAG-DASY-product-lifetime-77da520bd8",
+          "source_url": "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime",
+          "location": {
+            "heading": "DASY PRODUCT LIFETIME",
+            "table_rows": [
+              "DASY5 systems",
+              "DASY52 Systems",
+              "DASY6 Systems"
+            ]
+          }
+        }
+      ],
+      "applicability": "소프트웨어·하드웨어의 행을 혼합하지 않는다. 단일 DASY5 Server 시리얼의 지원 계약 종료를 확정하는 표가 아니다.",
+      "state": "supported",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E018",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "역사적 판본과 호환",
+      "finding": "2009년 릴리스 공지는 DASY5 V5.2 업그레이드와 4.x/5.0 측정 파일 가져오기를 설명한다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-release-4fc4edb3039a",
+          "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+          "download_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+          "location": {
+            "headings": [
+              "Final Release of DASY52",
+              "New GUI Structure"
+            ]
+          }
+        }
+      ],
+      "applicability": "과거 제품 기능과 판본 관계의 근거다. 오늘의 FCC 허용 시험법·현장 설치·모든 역호환을 입증하지 않는다.",
+      "state": "supported",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E019",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511",
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "브로슈어 판본 주의",
+      "finding": "새 브로슈어는 PDF p2에 W12/13, 구성·기능표에 W 0708을 함께 갖고 있다. 인쇄 표식과 PDF 생성일을 문서 전체의 동일 판본/게시일로 확정하지 않았다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-flyer-b88500087b6a",
+          "source_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+          "download_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+          "location": {
+            "pdf_pages": [
+              2,
+              3,
+              5
+            ],
+            "location": "printed footer markers"
+          }
+        }
+      ],
+      "applicability": "원본은 그대로 보존하고 판본 미해결 상태를 기록한다.",
+      "state": "edition_unresolved",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E020",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "외부 장비 제어와 DASY API 구분",
+      "finding": "브로슈어의 GPIB Commands는 External Device Control 묶음의 기능이다. DASY5 자체가 외부에서 호출 가능한 SCPI 장치라는 근거로 쓰지 않는다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-flyer-b88500087b6a",
+          "source_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+          "download_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+          "location": {
+            "pdf_page": 5,
+            "table": "DASY5 Feature List (2/2)",
+            "section": "Module: External Device Control"
+          }
+        }
+      ],
+      "applicability": "패키지별 기능표다. 실제 옵션, 명령 구문·오류·완료 동기화 계약은 미확인이다.",
+      "state": "supported_with_gap",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E021",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511",
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "원문 권리",
+      "finding": "신규 원문은 모두 공식 공개 경로에서 받았지만 완전 원문의 공개 재배포 허용 근거를 확인하지 못했다.",
+      "sources": [
+        {
+          "document_id": "S05-speag-rights-route-e128de06477f",
+          "source_url": "https://speag.swiss/meta-navigation/legal-notice",
+          "download_url": "https://speag.swiss/meta-navigation/legal-notice",
+          "location": {
+            "heading": "Legal Notice",
+            "location": "publisher identity and copyright footer"
+          }
+        }
+      ],
+      "applicability": "원문 6개는 로컬 제한 자료로 둔다. P01은 원문 공개 여부를 따로 검수하며 공개 가능한 출처·사실 요약만 우선 반환할 수 있다.",
+      "state": "rights_unconfirmed",
+      "hardware_or_method_validation": "not_performed"
+    },
+    {
+      "evidence_id": "S05-E022",
+      "request_ids": [
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "topic": "예제와 현장 검증 구분",
+      "finding": "보고서 장의 후반은 2009년 예제 보고서다. 그 장비 목록·교정일·측정값은 현장 DAE4 또는 이 시험소의 검증 결과가 아니다.",
+      "sources": [
+        {
+          "document_id": "S05-dasy52-report-generator-c694fa6fd65d",
+          "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/free_downloads/AN_D52_ReportGenerator.pdf",
+          "location": {
+            "pdf_pages": [
+              3,
+              8,
+              9
+            ],
+            "printed_pages": [
+              "29-3",
+              "29-8",
+              "29-9"
+            ]
+          }
+        }
+      ],
+      "applicability": "이번 배치는 예제의 수치를 현장 실측값이나 합격 근거로 재사용하지 않는다.",
+      "state": "illustrative_only",
+      "hardware_or_method_validation": "not_performed"
+    }
+  ]
+}

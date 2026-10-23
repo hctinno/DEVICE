@@ -1,0 +1,146 @@
+{
+  "as_of": "2026-10-23",
+  "timezone": "Asia/Seoul",
+  "regulation_snapshot_issue": "2026-10-19",
+  "title_up_to_date_as_of": "2026-10-21",
+  "entries": [
+    {
+      "standard": "ANSI C63.4-2014",
+      "request_id": "STD-004",
+      "use": "unintentional-radiator method; 15.35(a) CISPR QP instrumentation",
+      "fcc_basis": [
+        "15.31(a)(4)",
+        "15.35(a)",
+        "15.38(f)(1)-(2)"
+      ],
+      "excluded_method_clauses": [
+        "4.5.3",
+        "4.6",
+        "6.2.13",
+        "8.2.2",
+        "9",
+        "13"
+      ],
+      "availability": "purchase_required; legacy access metadata reused; no retry",
+      "latest_publisher_edition": "not_researched"
+    },
+    {
+      "standard": "ANSI C63.4a-2017",
+      "request_id": "STD-005",
+      "use": "site validation alternative in 2.948(d), specifically 30 MHz-1 GHz in (d)(1)",
+      "fcc_basis": [
+        "2.948(d)(1)",
+        "2.910(d)(2)"
+      ],
+      "availability": "purchase_required; no retry",
+      "latest_publisher_edition": "not_researched"
+    },
+    {
+      "standard": "ANSI C63.25.1-2018",
+      "request_id": "STD-006",
+      "use": "site validation from 1 GHz to 18 GHz",
+      "fcc_basis": [
+        "2.948(d)(2)",
+        "2.910(d)(3)"
+      ],
+      "availability": "purchase_required; no retry",
+      "latest_publisher_edition": "not_researched"
+    },
+    {
+      "standard": "ANSI C63.10-2020",
+      "request_id": "STD-001",
+      "reference_only": true,
+      "method_owner": "S01",
+      "use": "other intentional radiators; mandatory under 15.37(s) on or after 2025-10-30",
+      "fcc_basis": [
+        "15.31(a)(3)",
+        "15.37(s)",
+        "15.38(f)(4)"
+      ],
+      "availability": "purchase_required; existing metadata only; no retry",
+      "latest_publisher_edition": "not_researched",
+      "mapping_from_2013": "unverified"
+    },
+    {
+      "standard": "ANSI C63.10-2013",
+      "use": "historical KDB clause references and pre-transition reproduction only",
+      "fcc_basis": [
+        "15.37(s)",
+        "15.38(f)(3)"
+      ],
+      "transition_new_selection_end_exclusive": "2025-10-30",
+      "usable_as_current_alternative_to_2020": false,
+      "legacy_kdb_page": "558074 D01 v05r02 page 1 footnote 1",
+      "availability": "not acquired or retried by S02"
+    },
+    {
+      "standard": "CISPR 16-1-4:2010-04",
+      "use": "2.948(d)(3) site criterion at 18-40 GHz via C63.4-2014 clause 5.5.1 a) 1)",
+      "fcc_basis": [
+        "2.948(d)(3)",
+        "2.910(c)(1)"
+      ],
+      "availability": "full text not inspected; no acquisition in this batch"
+    }
+  ],
+  "existing_access_records_read_only": [
+    {
+      "request_id": "STD-001",
+      "title": "IEEE/ANSI/USEMCSC C63.10-2020",
+      "official_url": "https://standards.ieee.org/ieee/C63.10/10445/",
+      "published_at": "2021-01-29",
+      "publisher_status": "active",
+      "relationship": "Amendment C63.10a-2024; corrigendum C63.10-2020/Cor1-2023",
+      "status": "purchase_required",
+      "checked_at": "2026-10-23T20:10:00+09:00",
+      "verification": "Official publisher catalog/browser or official catalog text obtained through web lookup; purchase or subscription access identified. Full original not obtained.",
+      "rights": "read_only",
+      "reason": "Full standard was not downloaded. No purchase, subscription, account creation or license acceptance was performed.",
+      "fcc_applicability": "unreviewed"
+    },
+    {
+      "request_id": "STD-004",
+      "title": "IEEE/ANSI C63.4-2014",
+      "official_url": "https://standards.ieee.org/ieee/C63.4/5841/",
+      "published_at": "2014-06-20",
+      "publisher_status": "active",
+      "relationship": "Amendment C63.4a-2017",
+      "status": "purchase_required",
+      "checked_at": "2026-10-23T20:10:00+09:00",
+      "verification": "Official publisher catalog/browser or official catalog text obtained through web lookup; purchase or subscription access identified. Full original not obtained.",
+      "rights": "read_only",
+      "reason": "Full standard was not downloaded. No purchase, subscription, account creation or license acceptance was performed.",
+      "fcc_applicability": "unreviewed"
+    },
+    {
+      "request_id": "STD-006",
+      "title": "IEEE C63.25.1-2018",
+      "official_url": "https://webstore.ansi.org/search/find?in=1&st=C63.25",
+      "published_at": null,
+      "publisher_status": "listed",
+      "relationship": "Publisher search listing confirmed; individual catalog and full standard not acquired",
+      "status": "purchase_required",
+      "checked_at": "2026-10-23T20:10:00+09:00",
+      "verification": "Official publisher catalog/browser or official catalog text obtained through web lookup; purchase or subscription access identified. Full original not obtained.",
+      "rights": "read_only",
+      "reason": "Full standard was not downloaded. No purchase, subscription, account creation or license acceptance was performed.",
+      "fcc_applicability": "unreviewed"
+    },
+    {
+      "request_id": "STD-005",
+      "title": "IEEE/ANSI C63.4a-2017",
+      "official_url": "https://standards.ieee.org/ieee/C63.4a/7117/",
+      "published_at": "2017-10-13",
+      "publisher_status": "active",
+      "relationship": "Amendment to C63.4-2014; test site validation.",
+      "status": "purchase_required",
+      "checked_at": "2026-10-23T20:19:49+09:00",
+      "verification": "Official publisher catalog accessed through web lookup. Full text not acquired.",
+      "rights": "read_only",
+      "reason": "Full standard requires licensed purchase/subscription. No order or agreement accepted.",
+      "fcc_applicability": "unreviewed"
+    }
+  ],
+  "full_standards_downloaded": 0,
+  "publisher_latest_vs_fcc_incorporated_kept_separate": true
+}

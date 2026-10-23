@@ -1,0 +1,766 @@
+{
+  "batch_id": "FCC-20261023A-S01-B0001",
+  "task_id": "FCC-20261023-S01-B0001",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "created_at": "2026-10-23T21:49:19.294875+09:00",
+  "scope": "2.4 GHz Wi-Fi b/g/n / §15.247, source-location candidates for review",
+  "entry_count": 15,
+  "entries": [
+    {
+      "evidence_id": "S01-B0001-E01",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "DTS 분류와 b/g/n 모드별 시험 범위",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 1,
+          "printed_page": "1",
+          "section": "1 and footnote 1",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 4,
+          "printed_page": "4",
+          "section": "4",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "KDB는 DTS/FHSS/Hybrid 분류를 구별하며, 데이터율·대역폭·변조·부호율·스트림 등 구현 가능한 모드의 적합성 확인을 요구한다. 최악 모드만 사용하는 시험 축소에는 상세한 기술적 정당화가 필요하다.",
+      "product_or_method_inputs_to_confirm": [
+        "실제 b/g/n 지원 모드",
+        "채널 대역폭과 채널 범위",
+        "변조/데이터율/부호율",
+        "공간 스트림과 동시 송신 체인"
+      ],
+      "candidate_records_to_retain": [
+        "모드별 시험 매트릭스",
+        "출력/PSD/대역경계/불요파별 최악 조건 근거",
+        "축소 시험의 측정 근거"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "실제 DUT는 미지정이다.",
+        "b/g/n라는 명칭만으로 DUT 기능이나 모든 시험조건을 확정하지 않는다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E02",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "시험 채널 수와 위치",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.31",
+          "clause": "(m), table",
+          "xml_locator": "DIV8[@N='15.31']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 4,
+          "printed_page": "4",
+          "section": "4",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "§15.31(m) 표는 동작 범위 1 MHz 이하/1~10 MHz/10 MHz 초과에 각각 1/2/3개 주파수와 중간/하단·상단/하단·중간·상단 위치를 제시한다.",
+      "product_or_method_inputs_to_confirm": [
+        "지원 동작 주파수 범위",
+        "실제 채널 중심 주파수"
+      ],
+      "candidate_records_to_retain": [
+        "선정 채널과 동작 범위",
+        "표의 적용 행과 선정 근거"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "표의 범위를 확인해 적용한다. 실제 DUT의 채널 조합을 추정하지 않는다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E03",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "디지털 변조의 최소 6 dB 대역폭",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.247",
+          "clause": "(a)(2)",
+          "xml_locator": "DIV8[@N='15.247']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 8,
+          "printed_page": "8",
+          "section": "8.2",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "§15.247(a)(2)는 디지털 변조 시스템의 최소 6 dB 대역폭을 500 kHz로 제시한다. KDB 8.2는 C63.10의 11.8을 참조한다.",
+      "product_or_method_inputs_to_confirm": [
+        "변조 모드",
+        "채널/대역폭",
+        "DUT 송신 상태"
+      ],
+      "candidate_records_to_retain": [
+        "6 dB 대역폭 결과와 단위",
+        "해당 모드/채널",
+        "사용 방법과 계측 설정"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "KDB의 표준 절 번호는 2013 판 기준이다. C63.10-2020 절 대응과 세부 계측 설정은 정식 원문으로 확인해야 한다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E04",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "최대 전도 출력과 평균 방식 선택",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.247",
+          "clause": "(b)(3)",
+          "xml_locator": "DIV8[@N='15.247']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 8,
+          "printed_page": "8",
+          "section": "8.3.1 and 8.3.2.1",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 9,
+          "printed_page": "9",
+          "section": "8.3.2.2 and 8.3.2.3",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "디지털 변조 출력의 1 W 기준과 peak 대신 maximum conducted power를 사용하는 선택지가 조문에 있다. 후자는 모든 안테나 출력을 합산하고 꺼진 시간/낮아진 출력 시간을 평균에 포함하지 않는다. KDB는 평균 출력의 OBW 참조와 분석기/전력계 방법을 구별한다.",
+      "product_or_method_inputs_to_confirm": [
+        "최대 출력 제어 수준",
+        "송신 체인별 출력",
+        "peak/average 선택",
+        "OBW",
+        "분석기 또는 전력계 방법"
+      ],
+      "candidate_records_to_retain": [
+        "체인별·합산 출력과 단위",
+        "방법 선택",
+        "OBW",
+        "평균 구간/게이트",
+        "DUT 모드/채널"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "안테나 이득에 따른 출력 감소 조건을 함께 검토한다.",
+        "KDB 8.3.1.2의 peak integrated band power 배제 문구를 일반적인 적분 평균 방법 배제로 오해하지 않는다.",
+        "표준 2020 세부 방법은 미확보다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E05",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "전도 PSD와 출력 측정 방식 연결",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.247",
+          "clause": "(e)",
+          "xml_locator": "DIV8[@N='15.247']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 9,
+          "printed_page": "9",
+          "section": "8.4",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "디지털 변조 PSD 한계는 연속 송신 구간의 임의 3 kHz 대역에서 8 dBm이다. 조문은 전도 출력과 같은 결정 방식을 PSD에도 쓰도록 연결한다. KDB는 C63.10의 11.10을 참조한다.",
+      "product_or_method_inputs_to_confirm": [
+        "출력 측정 방식",
+        "송신 모드/체인",
+        "연속 송신 조건"
+      ],
+      "candidate_records_to_retain": [
+        "PSD 값과 기준 대역폭",
+        "출력 방식과의 일치",
+        "체인 처리",
+        "계측 설정"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "8 dBm/3 kHz의 규정 한계를 실제 분석기 RBW 값과 자동 동일시하지 않는다.",
+        "표준 세부 설정과 2020 절 대응은 미확인이다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E06",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "안테나 이득과 다중 출력 합산",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.247",
+          "clause": "(b)(3), (b)(4), (c)",
+          "xml_locator": "DIV8[@N='15.247']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 4,
+          "printed_page": "4",
+          "section": "3",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 6,
+          "printed_page": "6",
+          "section": "7",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01-8c61a4b10b",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 1,
+          "printed_page": "1",
+          "section": "A and B",
+          "edition": "662911 D01 Multiple Transmitter Output v02r01"
+        },
+        {
+          "document_id": "KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01-d909bea3ac",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 1,
+          "printed_page": "1",
+          "section": "Response (1) and (2)",
+          "edition": "662911 D02 MIMO with Cross Polarized Antenna v01"
+        }
+      ],
+      "source_facts": "조문은 모든 안테나 출력의 합산과 6 dBi를 초과하는 방향성 이득의 조건을 둔다. D01은 합산과 배열 이득을 구별하고 D02는 교차 편파 두 출력의 전도 한계와 방사 한계를 구별한다.",
+      "product_or_method_inputs_to_confirm": [
+        "동시 송신 체인",
+        "안테나/요소 이득",
+        "상관·배열/빔 형성 조건",
+        "전도 또는 방사 한계의 종류"
+      ],
+      "candidate_records_to_retain": [
+        "포트별 원값",
+        "전력 합산 근거",
+        "이득 계산/측정 근거",
+        "적용 한계와 출력 감소 검토"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "고정 point-to-point 예외를 스마트폰에 적용한다고 추정하지 않는다.",
+        "실제 안테나 자료와 동시 송신 구성은 미제공이다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E07",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "전도 경로 보정과 대체 방사 측정의 가정",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 3,
+          "printed_page": "3",
+          "section": "3",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 4,
+          "printed_page": "4",
+          "section": "3 continuation",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "전도 측정은 안테나 계통의 공칭 임피던스에 맞춰 수행하고 경로의 손실/이득을 반영한다. 안테나 포트 측정이 불가능해 방사 결과에서 등가 전도값을 구할 때는 변환·안테나 이득·가정을 보고한다.",
+      "product_or_method_inputs_to_confirm": [
+        "공칭 임피던스",
+        "케이블/감쇠기/증폭기",
+        "주파수별 경로 손실/이득",
+        "안테나 포트 접근 가능 여부"
+      ],
+      "candidate_records_to_retain": [
+        "원 계측값과 보정값",
+        "손실/이득 자료와 단위",
+        "등가 전도 변환의 가정"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "현장 경로와 교정/보정표는 미제공이다.",
+        "공개 문서를 실제 보정값으로 대체하지 않는다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E08",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "Duty cycle·송신 지속시간·게이트",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 5,
+          "printed_page": "5",
+          "section": "6",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 6,
+          "printed_page": "6",
+          "section": "6(a), 6(b)(1)-(4)",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 8,
+          "printed_page": "8",
+          "section": "8.3.2.1",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "KDB는 가능한 연속 송신 또는 최대 출력 구간의 트리거/게이트를 구별하고, 불가하면 추가 duty-cycle 측정이 필요함을 설명한다. zero-span 방식에는 RBW/VBW, T, sweep point 조건이 있다.",
+      "product_or_method_inputs_to_confirm": [
+        "최대 출력 수준",
+        "송신 on/off 시간",
+        "최소 송신 지속시간 T",
+        "duty-cycle 변화",
+        "연속 송신 지원/제한"
+      ],
+      "candidate_records_to_retain": [
+        "duty cycle와 시간 원값",
+        "측정 방식",
+        "트리거/게이트",
+        "RBW/VBW와 포인트 수",
+        "연속 송신 불가 사유"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "제조사 시험모드 도구와 실제 출력 유지 기능은 미확보다.",
+        "다른 프로토콜 FAQ의 보정을 b/g/n에 자동 적용하지 않는다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E09",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "분석기 선형 범위·headroom·sweep 점수",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 4,
+          "printed_page": "4",
+          "section": "5.1",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 5,
+          "printed_page": "5",
+          "section": "5.2",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 8,
+          "printed_page": "8",
+          "section": "8.3.2.1",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "KDB는 입력 믹서의 포화/클리핑 방지, reference level/감쇠/headroom 설정과 평균 출력 측정의 주파수 bin 간격 조건을 설명한다.",
+      "product_or_method_inputs_to_confirm": [
+        "RBW",
+        "span",
+        "OBW 또는 대역폭",
+        "duty cycle",
+        "제조사 권장 mixer 범위",
+        "계측기 최대 입력"
+      ],
+      "candidate_records_to_retain": [
+        "reference level/attenuation",
+        "span/RBW/point 수",
+        "선형 범위 검토 근거",
+        "사용한 headroom 근거"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "계측기별 안전 입력과 mixer 허용 범위는 S04 문서 및 현장 확인이 필요하다.",
+        "공개 방법 색인을 장비 입력 허용으로 간주하지 않는다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E10",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "비제한 대역의 대역외 방출",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.247",
+          "clause": "(d)",
+          "xml_locator": "DIV8[@N='15.247']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 9,
+          "printed_page": "9",
+          "section": "8.5",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "동작 대역 밖 임의 100 kHz의 상대 감쇠는 peak 전도 한계 방식에서 20 dB, 조문이 허용한 시간 RMS 평균 방식에서 30 dB로 구별된다. KDB 8.5는 C63.10 11.11을 참조한다.",
+      "product_or_method_inputs_to_confirm": [
+        "출력 적합성의 peak/RMS 방식",
+        "동작 대역 경계",
+        "비제한 대역 여부"
+      ],
+      "candidate_records_to_retain": [
+        "대역내 기준값",
+        "대역외 값",
+        "기준 대역폭",
+        "감쇠와 방법 연결"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "제한 대역 방사 한계는 별도로 확인한다.",
+        "세부 2020 방법 원문은 미확보다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E11",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "제한 대역 방사와 검파/주파수 범위 연결",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.247",
+          "clause": "(d)",
+          "xml_locator": "DIV8[@N='15.247']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.33",
+          "clause": "(a)(1), (a)(5), (d)",
+          "xml_locator": "DIV8[@N='15.33']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.35",
+          "clause": "(a), (b), (c)",
+          "xml_locator": "DIV8[@N='15.35']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 9,
+          "printed_page": "9",
+          "section": "8.6",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "§15.247(d)는 제한 대역의 §15.205/15.209 방사 한계로 연결된다. §15.33은 방사 조사 범위와 디지털 기기 포함 조건을, §15.35는 별도 규정이 없는 경우 검파·대역폭·평균 조건을 규정한다.",
+      "product_or_method_inputs_to_confirm": [
+        "최고 기본 주파수",
+        "디지털 회로 주파수",
+        "방출 주파수",
+        "해당 제한 대역",
+        "펄스/평균 특성"
+      ],
+      "candidate_records_to_retain": [
+        "조사 주파수 범위와 근거",
+        "detector/RBW/평균 구간",
+        "peak와 average 결과",
+        "§15.205/209 연결"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "S02의 EMC 적용 색인과 연결할 참조다. EMC 담당 범위를 새로 승인하지 않는다.",
+        "실제 DUT의 상한 조사 주파수를 추정하지 않는다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E12",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "대역경계 marker-delta와 integration 선택",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 7,
+          "printed_page": "7",
+          "section": "8.1(c)(1)-(2)",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 9,
+          "printed_page": "9",
+          "section": "8.7.1-8.7.3",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        },
+        {
+          "document_id": "KDB-913591-publication-e4102ce5f2",
+          "location_type": "HTML_publication",
+          "section": "Answer"
+        }
+      ],
+      "source_facts": "KDB 558074는 방사 대역경계 marker-delta의 2 MHz 조건과 평균 전도/방사 integration 방법을 구별한다. 913591 본문은 C63.10-2013 6.10을 참조하며 별도 첨부가 없다.",
+      "product_or_method_inputs_to_confirm": [
+        "대역경계",
+        "99% OBW 위치",
+        "전도/방사",
+        "peak/average",
+        "방법 선택"
+      ],
+      "candidate_records_to_retain": [
+        "경계와 OBW 위치",
+        "선택 방법과 제한",
+        "관련 원값/설정",
+        "대역경계 결과"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "2013 절 번호를 C63.10-2020 절 번호로 복사하지 않는다.",
+        "2020 원문과 KDB 명확화의 조합은 파이프라인 담당의 기술 검토가 필요하다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E13",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "표준 편입 판본과 전환일",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.31",
+          "clause": "(a)(3)",
+          "xml_locator": "DIV8[@N='15.31']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.37",
+          "clause": "(s)",
+          "xml_locator": "DIV8[@N='15.37']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.38",
+          "clause": "(f)(3), (f)(4)",
+          "xml_locator": "DIV8[@N='15.38']",
+          "edition": "eCFR issue 2026-10-19"
+        },
+        {
+          "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 1,
+          "printed_page": "1",
+          "section": "footnote 1",
+          "edition": "558074 D01 15.247 Meas Guidance v05r02"
+        }
+      ],
+      "source_facts": "확보한 조문의 §15.37(s)는 2025-10-30 전후의 C63.10-2013/2020 전환을 구별하며 이후 2020 사용을 명시한다. KDB 558074의 교차 참조는 각주에서 2013 판 기준임을 명시한다.",
+      "product_or_method_inputs_to_confirm": [
+        "시험/신청 기준일",
+        "사용 표준 판본",
+        "정오표/추록의 허용 근거"
+      ],
+      "candidate_records_to_retain": [
+        "편입 판본",
+        "전환 조건",
+        "KDB-표준 절 대응의 검토 기록"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "STD-001/002/003 정식 원문은 구매/라이선스 필요 상태다.",
+        "발행기관의 최신 정오표/추록 존재를 FCC 자동 채택으로 처리하지 않는다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E14",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "전원·액세서리·최대 방출 구성 입력",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location_type": "CFR_clause",
+          "section": "15.31",
+          "clause": "(e), (g), (i)",
+          "xml_locator": "DIV8[@N='15.31']",
+          "edition": "eCFR issue 2026-10-19"
+        }
+      ],
+      "source_facts": "§15.31은 공급 전압 변화 및 새 배터리 조건, 사용자가 접근하는 조정과 리드선, 액세서리를 포함한 최대 방출 구성을 다룬다.",
+      "product_or_method_inputs_to_confirm": [
+        "배터리/외부 전원",
+        "정격 공급 전압",
+        "충전/USB 등 액세서리",
+        "리드선과 사용 구성"
+      ],
+      "candidate_records_to_retain": [
+        "시험 전원 상태",
+        "전압/배터리 조건",
+        "연결 액세서리",
+        "최대 방출 구성의 선정 근거"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "스마트폰 충전/동작 상태의 실제 지원과 시험 범위는 DUT 입력 및 S02 검토가 필요하다."
+      ],
+      "technical_or_operational_approval": false
+    },
+    {
+      "evidence_id": "S01-B0001-E15",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001"
+      ],
+      "title": "측정 방향성 이득 보고의 범위와 판본",
+      "evidence_class": "collector_paraphrase_of_official_source",
+      "sources": [
+        {
+          "document_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 1,
+          "printed_page": "1",
+          "section": "I and II",
+          "edition": "662911 D03 MIMO Antenna Gain Measurement v02"
+        },
+        {
+          "document_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 3,
+          "printed_page": "3",
+          "section": "IV(B)-(D) and V(1)-(3)",
+          "edition": "662911 D03 MIMO Antenna Gain Measurement v02"
+        },
+        {
+          "document_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a",
+          "location_type": "PDF_printed_page_and_section",
+          "pdf_page_1based": 4,
+          "printed_page": "4",
+          "section": "V(4)-(7), Change Notice",
+          "edition": "662911 D03 MIMO Antenna Gain Measurement v02"
+        }
+      ],
+      "source_facts": "D03 v02는 계산 대신 측정 방향성 이득을 사용하는 범위와 방법/환경/보고 요소를 설명한다. Change Notice는 v01 대체 및 Section IV의 PAG inquiry 요구 제거를 명시한다.",
+      "product_or_method_inputs_to_confirm": [
+        "동시 송신 RF chain/모드",
+        "이득 측정 또는 계산 선택",
+        "in-band/out-of-band 범위",
+        "배열 및 조향 구성"
+      ],
+      "candidate_records_to_retain": [
+        "요소/포트/모드별 이득 표",
+        "peak gain과 방향",
+        "이득 계산·측정 근거",
+        "환경·교정/보정 근거"
+      ],
+      "record_field_status": "collector_index_for_review",
+      "unconfirmed_or_conditions": [
+        "이 보고 범위에서 원시 자료가 필수 아니라고 한 문구를 시험소 전체 원시 데이터 보존 정책으로 일반화하지 않는다.",
+        "실제 스마트폰 안테나 자료는 미제공이다."
+      ],
+      "technical_or_operational_approval": false
+    }
+  ],
+  "notice": "Sources, collector paraphrases, candidate record fields and unknown inputs are separate. This is not an approved executable method."
+}
