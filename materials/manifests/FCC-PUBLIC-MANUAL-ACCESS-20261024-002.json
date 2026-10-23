@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "package_id": "FCC-PUBLIC-MANUAL-ACCESS-20261024-002",
+  "created_at": "2026-10-24T01:11:29.240353+09:00",
+  "synthetic": false,
+  "notes": "P01 reviewed bibliography/access projection of six already acquired manufacturer documents. No original source, report body, private asset data or OEM software is delivered. Projection performs no new source acquisition.",
+  "documents": [
+    {
+      "document_id": "S04-RS-ESR-1175706802-4f648da036a0",
+      "title": "R&S ESR EMI Test Receiver User Manual",
+      "kind": "manual",
+      "version": "1175.7068.02 Version 13; FW 3.66 or higher",
+      "publisher": "Rohde & Schwarz",
+      "published_at": "2021-11-17",
+      "retrieved_at": "2026-10-24T00:33:21.929509+09:00",
+      "representation": "original",
+      "source_url": "https://www.rohde-schwarz.com/us/manual/rs-esr-user-manual_78701-28851.html",
+      "download_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESR_UserManual_en_13.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-002"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S04-RS-1CM50-2E-6c9a51d8b23a",
+      "title": "Measurements on Bluetooth Products using R&S CMU200/CBT and CMUgo/CBTgo",
+      "kind": "other",
+      "version": "1CM50_2E, September 2006",
+      "publisher": "Rohde & Schwarz",
+      "published_at": "2006-09",
+      "retrieved_at": "2026-10-24T00:35:30.694198+09:00",
+      "representation": "original",
+      "source_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_application/application_notes/1cm50/1CM50_2e.pdf",
+      "download_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_application/application_notes/1cm50/1CM50_2e.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-002"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S02-ENV216-UserManual-06-dcb9c3a2dd87",
+      "title": "R&S ENV216 Two Line V-Network User Manual",
+      "kind": "manual",
+      "version": "User Manual 5201.6693.14, Version 06; copyright 2023",
+      "publisher": "Rohde & Schwarz",
+      "published_at": null,
+      "retrieved_at": "2026-10-24T00:48:50+09:00",
+      "representation": "original",
+      "source_url": "https://www.rohde-schwarz.com/au/manual/rs-env216-two-line-v-network-user-manual_78701-29140.html",
+      "download_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/5201_6693_01/ENV216_UserManual_en_06.pdf",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-002"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S05-V010-e3632a-user-776ea5e97c9a",
+      "title": "E3632A DC Power Supply User's Guide",
+      "kind": "manual",
+      "version": "E3632-90001; Edition 8, March 2019",
+      "publisher": "Keysight Technologies",
+      "published_at": "2019-03",
+      "retrieved_at": "2026-10-24T00:33:11+09:00",
+      "representation": "original",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-01309/user-manuals/9018-01309.pdf",
+      "download_url": "https://www.keysight.com/zw/en/assets/9018-01309/user-manuals/9018-01309.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-002"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S05-V010-su642-family-cb394aa32e48",
+      "title": "ESPEC Bench-top Temperature (& Humidity) Chambers — SH/SU catalog",
+      "kind": "other",
+      "version": "CAT.NO.E13111-R2503; SH/SU family catalogue with explicit SU-642 column",
+      "publisher": "ESPEC CORP.",
+      "published_at": null,
+      "retrieved_at": "2026-10-24T00:33:11+09:00",
+      "representation": "original",
+      "source_url": "https://www.espec.co.jp/english/products/catalog/sh.pdf",
+      "download_url": "https://www.espec.co.jp/english/products/catalog/sh.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-002"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S05-V010-8753d-programming-2b55041cd353",
+      "title": "8753D Network Analyzer Including Option 011 Programmer's Guide",
+      "kind": "manual",
+      "version": "HP 08753-90256; July 1997; March 2000 HP-to-Agilent transition notice",
+      "publisher": "Hewlett-Packard / Keysight archive",
+      "published_at": "1997-07",
+      "retrieved_at": "2026-10-24T00:33:11+09:00",
+      "representation": "original",
+      "source_url": "https://www.keysight.com/nl/en/assets/9018-40539/programming-guides/9018-40539.pdf",
+      "download_url": "https://www.keysight.com/zw/en/assets/9018-40539/programming-guides/9018-40539.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-002"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    }
+  ]
+}
