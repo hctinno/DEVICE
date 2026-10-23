@@ -69,9 +69,13 @@ advance는 항상 `{"kind":"advance","ticks":1}`이다. execute는 `kind/device_
 
 revision이 바뀌면 정책의 취득/read 기록을 지운다. 원인 제거만으로 이전 측정이 새 결과가 되지 않으며 새 acquire와 read가 필요하다. 같은 논리 요청의 응답 유실 재시도와 복구 후 새 취득 ID의 구별은 실행기 책임이다. 과거 receipt의 tick/ok/measurement만으로 completed를 만들지 않는다.
 
+센서 read 뒤 pending을 관측하면 이전 취득·read 확인을 함께 폐기한다. 그 뒤 과거 측정이 다시 나타나도 새 acquire와 read를 거쳐야 한다. 최초 acquire의 pending 동안에는 진행 중 취득 기록을 유지해 정상 완료를 기다린다.
+
 ## 검증과 한계
 
 [계약 검사](../../tests/test_virtual_fleet_policies.py)는 공개 관측 double로 정상·단절·복구, stale receipt, 잘못된 unit/source/profile/revision, NaN/bool/대역 오버플로, context 변경, read 전후 수치 변경·시각 퇴행과 사본 격리를 확인한다.
+
+독립 리뷰의 acquire → read → pending/측정 없음 → 과거 측정 재등장 순서도 회귀로 보존했다. 재등장한 과거 값으로 허위 완료하지 않고 새 취득을 요구하는지, 최초 취득의 여러 pending 뒤에는 정상 read·완료하는지를 각각 확인한다.
 
 ```powershell
 python -B -m unittest discover -s tests -p test_virtual_fleet_policies.py
