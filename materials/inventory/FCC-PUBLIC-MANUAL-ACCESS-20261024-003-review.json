@@ -1,0 +1,52 @@
+{
+  "package_id": "FCC-PUBLIC-MANUAL-ACCESS-20261024-003",
+  "reviewed_at": "2026-10-24T01:22:54.892722+09:00",
+  "decision": "bibliographic_and_access_metadata_only",
+  "already_acquired_original_records": 2,
+  "new_network_acquisitions_by_projection": 0,
+  "public_original_payloads": 0,
+  "user_original_or_report_body_payloads": 0,
+  "OEM_packages": 0,
+  "source_acquisition_counting": "Same two previously acquired originals; projection and private copies are not additional acquisitions.",
+  "manifest_path": "materials/manifests/FCC-PUBLIC-MANUAL-ACCESS-20261024-003.json",
+  "package": {
+    "path": "materials/packages/FCC-PUBLIC-MANUAL-ACCESS-20261024-003.zip",
+    "sha256": "25b0e1e8d7f78e64e470aca092847201817baccc20fb1bdb1665fd649b160621",
+    "bytes": 1167,
+    "manifest_bytes_equal": true,
+    "crc_valid": true,
+    "cumulative_import": {
+      "package_id": "FCC-PUBLIC-MANUAL-ACCESS-20261024-003",
+      "downloaded": 0,
+      "unavailable": 2,
+      "already_imported": false
+    }
+  },
+  "source_reviews": [
+    {
+      "document_id": "S07-B0004-emc32-specifications-v1300-26f5e56d45a9",
+      "title": "R&S EMC32 EMC Measurement Software Specifications",
+      "version": "Data Sheet 13.00; specifications for software 10.60.10; mixed February/August 2020 page headers",
+      "source_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_brochures_and_datasheets/pdf_1/EMC32_dat-sw_en_5214-6580-22_v1300.pdf",
+      "download_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_brochures_and_datasheets/pdf_1/EMC32_dat-sw_en_5214-6580-22_v1300.pdf",
+      "locally_verified_original_sha256": "26f5e56d45a97611ca00a33ec6d5a60f5d5ff72c5f014456c152ab4ff52299da",
+      "original_bytes": 1398778,
+      "public_original_payload_included": false,
+      "rights": "unknown",
+      "representation_in_package": "access notice referencing an original"
+    },
+    {
+      "document_id": "S07-B0004-asus-gt-axe11000-e26987-7504fb1532ee",
+      "title": "GT-AXE11000 User Manual E26987",
+      "version": "E26987; Revised Edition v3; September 2025",
+      "source_url": "https://www.asus.com/us/supportonly/gt-axe11000/helpdesk_manual/",
+      "download_url": "https://dlcdnets.asus.com/pub/ASUS/wireless/GT-AXE11000/E26987_GT-AXE11000_UM_EAA_V3_WEB.pdf",
+      "locally_verified_original_sha256": "7504fb1532ee65b539a80eac805a72c722c35f134bfae70ffec6718fa728682b",
+      "original_bytes": 1914889,
+      "public_original_payload_included": false,
+      "rights": "unknown",
+      "representation_in_package": "access notice referencing an original"
+    }
+  ],
+  "scope": "Document identity, source bytes and access/rights review only; no current equipment, physical accuracy, conformity, firmware/options or full manufacturer protocol validation."
+}

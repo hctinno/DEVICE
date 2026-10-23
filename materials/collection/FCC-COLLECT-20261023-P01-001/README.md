@@ -50,3 +50,5 @@
 2026-10-24 별도 제조사 문헌 4종의 [서지·권리 검수](../../inventory/FCC-PUBLIC-MANUAL-ACCESS-20261024-001-review.json) · [접근 안내 manifest](../../manifests/FCC-PUBLIC-MANUAL-ACCESS-20261024-001.json) · [접근 안내 ZIP](../../packages/FCC-PUBLIC-MANUAL-ACCESS-20261024-001.zip)을 제공한다. 기존 취득본의 공개 메타데이터 투영이며 위 20개 배치 집계와 별도다. 원문 PDF와 사용자 사례 자료는 포함하지 않는다.
 
 2026-10-24 추가 검수한 제조사 문헌6종의 [서지·권리 검수](../../inventory/FCC-PUBLIC-MANUAL-ACCESS-20261024-002-review.json) · [접근 안내 manifest](../../manifests/FCC-PUBLIC-MANUAL-ACCESS-20261024-002.json) · [접근 안내 ZIP](../../packages/FCC-PUBLIC-MANUAL-ACCESS-20261024-002.zip)을 제공한다. 이미 취득한 원문의 메타데이터 투영이며 원문과 사용자 사례 자료는 포함하지 않는다. 전체 프로토콜·현재 자산·가상 또는 실장비 실행의 검증 집계와 구분한다.
+
+2026-10-24 추가 검수한 제조사 문헌2종의 [서지·권리 검수](../../inventory/FCC-PUBLIC-MANUAL-ACCESS-20261024-003-review.json) · [접근 안내 manifest](../../manifests/FCC-PUBLIC-MANUAL-ACCESS-20261024-003.json) · [접근 안내 ZIP](../../packages/FCC-PUBLIC-MANUAL-ACCESS-20261024-003.zip)을 제공한다. 이미 취득한 원문의 메타데이터 투영이며 원문과 사용자 사례 자료는 포함하지 않는다. 전체 프로토콜·현재 자산·가상 또는 실장비 실행의 검증 집계와 구분한다.

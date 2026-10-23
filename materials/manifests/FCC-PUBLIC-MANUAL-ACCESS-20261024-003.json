@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "package_id": "FCC-PUBLIC-MANUAL-ACCESS-20261024-003",
+  "created_at": "2026-10-24T01:22:54.892722+09:00",
+  "synthetic": false,
+  "notes": "P01 reviewed bibliography/access projection of two already acquired manufacturer documents. No original source, report body, private asset data or OEM software is delivered. Projection performs no new source acquisition.",
+  "documents": [
+    {
+      "document_id": "S07-B0004-emc32-specifications-v1300-26f5e56d45a9",
+      "title": "R&S EMC32 EMC Measurement Software Specifications",
+      "kind": "manual",
+      "version": "Data Sheet 13.00; specifications for software 10.60.10; mixed February/August 2020 page headers",
+      "publisher": "Rohde & Schwarz",
+      "published_at": null,
+      "retrieved_at": "2026-10-24T00:59:13+09:00",
+      "representation": "original",
+      "source_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_brochures_and_datasheets/pdf_1/EMC32_dat-sw_en_5214-6580-22_v1300.pdf",
+      "download_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_brochures_and_datasheets/pdf_1/EMC32_dat-sw_en_5214-6580-22_v1300.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-003"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S07-B0004-asus-gt-axe11000-e26987-7504fb1532ee",
+      "title": "GT-AXE11000 User Manual E26987",
+      "kind": "manual",
+      "version": "E26987; Revised Edition v3; September 2025",
+      "publisher": "ASUS",
+      "published_at": null,
+      "retrieved_at": "2026-10-24T00:59:13+09:00",
+      "representation": "original",
+      "source_url": "https://www.asus.com/us/supportonly/gt-axe11000/helpdesk_manual/",
+      "download_url": "https://dlcdnets.asus.com/pub/ASUS/wireless/GT-AXE11000/E26987_GT-AXE11000_UM_EAA_V3_WEB.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-003"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    }
+  ]
+}
