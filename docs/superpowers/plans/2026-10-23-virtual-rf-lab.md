@@ -55,7 +55,7 @@
 - [x] Write a subprocess test for `python -m labflow --workspace STATE virtual-check --out OUT`, including a non-ASCII path and artifact hash verification.
 - [x] Add CLI and explain the partial profile, source pages, scenario expectations and remaining AI/MCP integration.
 - [x] Run the full unittest suite, `python scripts/check_artifacts.py`, compile checks and `git diff --check`.
-- [ ] Review changes and update plan/verification results; commit and push the development branch and verify remote SHA.
+- [x] Review changes and update plan/verification results; commit and push the development branch and verify remote SHA.
 
 ## Implementation decisions
 
@@ -68,3 +68,4 @@
 - 자체 코드 검토로 찾은 모순된 OPC 상태/응답과 과도하게 큰 정수 입력을 실패 검사로 재현한 뒤 보강했다. 독립 검토자나 실제 AI 모델의 평가로 표시하지 않는다.
 - `check_artifacts.py`: 루트 문서 8개·링크 119개 통과. 변경한 문서 8개·링크 80개도 별도로 검사했다. compileall과 diff 검사 통과.
 - 원문 v2의 3개 packet·22개 파일 검증, N1914A 원문 발췌·렌더링 대조를 수행했다. 실장비·현장·규격 적합성·실제 RF 물리·모델 학습은 미검증이다.
+- 구현 커밋 `d1c7d9ecdfaa7ec795e536551c245a9ed578df38`을 전용 개발 브랜치 `codex/pipeline-dev-20261023-intake`에 푸시하고 원격 SHA 일치를 확인했다. P01에 v2 인수·구현·검증 결과와 남은 자료 공백을 직접 전달했다.
