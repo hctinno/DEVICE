@@ -4,6 +4,8 @@
 
 ## 수집 에이전트
 
+아래 명령은 새 작업을 시작할 때의 예시다. 이미 로컬에서 수집 중이면 [역할·우선순위 갱신](../handoff/COLLECTOR_ROLE_UPDATE.md)에 따라 기존 브랜치와 파일을 보존하며 최신 지시를 먼저 읽는다.
+
 ```bash
 git fetch origin
 git switch -c collect/fcc-p0-batch001 origin/codex/fcc-lab-foundation

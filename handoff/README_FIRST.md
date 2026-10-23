@@ -6,7 +6,7 @@
 
 ## 시작 순서
 
-1. `AGENT_PROMPT.md`를 읽고 P0 FCC 규정·KDB·표준 접근 자료를 먼저 수집합니다.
+1. `AGENT_PROMPT.md`와 `WIFI24_BGN_FIRST_BATCH.md`의 현재 우선순위를 적용합니다. 이미 수집 중이면 [역할·우선순위 갱신](COLLECTOR_ROLE_UPDATE.md)을 먼저 읽고 로컬 결과를 보존합니다.
 2. `collection_requests.xlsx` 또는 동명의 CSV를 작업대장으로 사용합니다. 모든 장비 모델과 식별이 불완전한 행도 포함합니다.
 3. `collection_manifest.schema.json`에 맞는 `manifest.json`과 원본 파일을 배치 ZIP으로 만듭니다. `materials/packages/<package_id>.zip`, 검토용 `materials/manifests/<package_id>.json`과 `materials/STATUS.md`를 작업 브랜치에 커밋·푸시합니다. 상세 절차는 저장소의 `materials/README.md`를 따릅니다. 완성된 P0 묶음부터 공유합니다.
 4. 막힌 항목도 request_id와 이유를 기록해 반환합니다. 결과가 없는 항목을 대장에서 삭제하지 않습니다.
