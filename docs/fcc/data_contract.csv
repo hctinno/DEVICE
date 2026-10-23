@@ -1,0 +1,102 @@
+﻿entity,purpose,field,meaning,validation_status
+projects,시험 건과 제품의 기준 정보,case_id,시험 건 고정 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+projects,시험 건과 제품의 기준 정보,authorization_route,certification / sdoc / mixed / undetermined,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+projects,시험 건과 제품의 기준 정보,applicant,신청자 또는 의뢰자,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+projects,시험 건과 제품의 기준 정보,manufacturer,제조자,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+projects,시험 건과 제품의 기준 정보,model,제품 모델,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+projects,시험 건과 제품의 기준 정보,serial_number,시료 일련번호; 없으면 누락 사유는 제품 자료에 기록,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+projects,시험 건과 제품의 기준 정보,sample_id,실제 시료 고정 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+projects,시험 건과 제품의 기준 정보,hw_version,하드웨어 버전,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+projects,시험 건과 제품의 기준 정보,fw_version,펌웨어 버전,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+projects,시험 건과 제품의 기준 정보,product_profile_artifact_id,제품 사양·포트·무선기술·사용조건 JSON 등; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+configurations,실제 또는 계획된 제품 동작 구성,configuration_id,구성 고정 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+configurations,실제 또는 계획된 제품 동작 구성,case_id,projects 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+configurations,실제 또는 계획된 제품 동작 구성,configuration_revision,구성 개정,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+configurations,실제 또는 계획된 제품 동작 구성,dut_mode,시험 모드 식별,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+configurations,실제 또는 계획된 제품 동작 구성,configuration_artifact_id,채널·대역폭·전력·안테나·동시송신·지원기기·케이블 상세; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+configurations,실제 또는 계획된 제품 동작 구성,selection_rationale_artifact_id,최악 조건 및 시험 조합 선정 근거; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+source_versions,문서와 적용판의 고정 식별,source_version_id,문서 판본 고정 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+source_versions,문서와 적용판의 고정 식별,document_id,CFR / KDB publication+attachment / 표준 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+source_versions,문서와 적용판의 고정 식별,edition,문서 판본,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+source_versions,문서와 적용판의 고정 식별,clause,근거 조항,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+source_versions,문서와 적용판의 고정 식별,effective_date,시행일; 미확인 시 비움,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+source_versions,문서와 적용판의 고정 식별,transition_artifact_id,전환·대체·적용조건 근거; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+source_versions,문서와 적용판의 고정 식별,official_url,공식 문서 URL,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+source_versions,문서와 적용판의 고정 식별,original_artifact_id,확보한 원본의 artifacts ID; 발췌와 구별,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+source_versions,문서와 적용판의 고정 식별,review_status,unverified / reviewed / superseded,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+method_profiles,시험방법별 설정·계산·보고 요구의 정의,method_profile_id,시험방법 프로필 고정 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+method_profiles,시험방법별 설정·계산·보고 요구의 정의,revision,프로필 개정,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+method_profiles,시험방법별 설정·계산·보고 요구의 정의,method_source_version_id,source_versions 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+method_profiles,시험방법별 설정·계산·보고 요구의 정의,profile_artifact_id,설정 필수항목·단위·조건·절차·입출력·유효성·필수증거·보고항목 JSON; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+method_profiles,시험방법별 설정·계산·보고 요구의 정의,review_status,draft / reviewed / retired,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+test_plan,요구사항별 적용 판단과 계획,plan_item_id,시험계획 항목 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+test_plan,요구사항별 적용 판단과 계획,case_id,projects 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+test_plan,요구사항별 적용 판단과 계획,configuration_id,configurations 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+test_plan,요구사항별 적용 판단과 계획,requirement_source_version_id,요구사항의 source_versions 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+test_plan,요구사항별 적용 판단과 계획,method_profile_id,method_profiles 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+test_plan,요구사항별 적용 판단과 계획,applicability,applicable / not_applicable / undetermined,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+test_plan,요구사항별 적용 판단과 계획,rationale_artifact_id,적용/비적용/보류 및 시험 축소 근거; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+test_plan,요구사항별 적용 판단과 계획,review_status,draft / reviewed / superseded,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,run_id,실행 고정 ID; 재시험은 새 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,plan_item_id,test_plan 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,configuration_id,실제 configurations 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,method_profile_id,실제 method_profiles 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,started_at,시간대 포함 ISO 8601 시각,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,ended_at,시간대 포함 ISO 8601 시각,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,test_site_id,시험 장소/사이트 식별,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,operator_id,실제 수행 주체 식별,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,software_revision,실행 소프트웨어 버전,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,settings_artifact_id,실제 장비 설정; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,environment_artifact_id,실제 환경 및 시간 기록; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,setup_artifact_id,실제 셋업 사진/도면의 매니페스트; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,execution_status,planned / running / completed / aborted / error,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+runs,한 번의 실제 시험 실행,supersedes_run_id,대체하는 runs ID; 원본 실행 보존,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+run_equipment,실제로 사용한 장비와 시험 시점의 상태,run_id,runs 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+run_equipment,실제로 사용한 장비와 시험 시점의 상태,asset_id,기존 장비 DB의 ID 또는 추가 자산 식별,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+run_equipment,실제로 사용한 장비와 시험 시점의 상태,role,측정 체인에서의 역할,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+run_equipment,실제로 사용한 장비와 시험 시점의 상태,configuration_artifact_id,옵션·설정·펌웨어·교정상태·기준시점; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+run_equipment,실제로 사용한 장비와 시험 시점의 상태,calibration_artifact_id,교정 증거; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+run_equipment,실제로 사용한 장비와 시험 시점의 상태,correction_artifact_id,적용 보정표와 판본; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,observation_id,관측값 고정 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,run_id,runs 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,raw_artifact_id,변경 없는 장비 원본; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,raw_locator,원본의 행/배열 인덱스/채널/바이트 위치,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,quantity,측정량 식별,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,value,관측값; 원본 정밀도 보존,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,unit,관측값의 단위,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,coordinates_artifact_id,시간·주파수·위치·편파 등 좌표; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,context_artifact_id,검파기·RBW/VBW·시간설정·장비 내부 보정 여부; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,validity,unreviewed / valid / invalid,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+observations,원시 파일에서 추출한 개별 관측값,validity_reason,결측·과부하·장비 오류 등 상태 근거,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,result_id,계산 결과 고정 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,run_id,runs 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,quantity,결과 측정량,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,value,반올림 전 결과값,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,unit,결과 단위,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,inputs_artifact_id,원시 observation ID들과 보정 입력 매핑; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,calculation_artifact_id,계산식/코드·버전·파라미터·입력/출력·단위 검증; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,limit_artifact_id,한계값/곡선·비교식·조건·단위·source_version_id·불확도 적용 규칙; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,margin_value,해당 방법에서 정의된 경우만 저장,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,margin_unit,마진 단위,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,validity,unreviewed / valid / invalid,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,decision,not_evaluated / pass / fail / inconclusive,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+results,계산과 규정 판정,decision_reason,판정 근거 또는 미판정 사유,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,artifact_id,증거 파일 고정 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,case_id,관련 projects ID; 공통 문서는 비울 수 있음,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,kind,raw / source_original / source_extract / configuration / photo / calculation / other,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,relative_path,묶음 루트 기준 경로,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,media_type,MIME 형식,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,sha256,실제 저장 파일의 SHA256,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,created_at,생성 시각; 시간대 포함,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,source_uri,장비 또는 원천 URL; 자격증명 제외,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,parent_artifact_id,파생 전 artifacts ID; 원본은 비움,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+artifacts,원본과 파생 증거 파일의 공통 목록,usage_status,사용 조건 확인 상태와 권한 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+report_fields,보고서 표시 항목과 입력의 연결,report_id,보고서 고정 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+report_fields,보고서 표시 항목과 입력의 연결,report_revision,보고서 개정,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+report_fields,보고서 표시 항목과 입력의 연결,section_id,보고서 구간,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+report_fields,보고서 표시 항목과 입력의 연결,field_id,표/셀/그림/문장 식별,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+report_fields,보고서 표시 항목과 입력의 연결,source_table,입력 엔터티 이름,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+report_fields,보고서 표시 항목과 입력의 연결,source_record_id,입력 기록 ID,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+report_fields,보고서 표시 항목과 입력의 연결,source_field,입력 필드,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+report_fields,보고서 표시 항목과 입력의 연결,render_rule_artifact_id,표시단위·반올림·그래프 규칙; artifacts 참조,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정
+report_fields,보고서 표시 항목과 입력의 연결,review_status,draft / reviewed / released / superseded,공통 구조 초안; 방법별 필수성·타입·허용값는 프로필 검토 후 확정

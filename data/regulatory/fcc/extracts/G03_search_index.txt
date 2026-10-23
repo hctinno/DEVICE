@@ -1,0 +1,214 @@
+SEARCH INDEX EVIDENCE — NOT CURRENT KDB OR ATTACHMENT
+Captured: 2026-10-23T08:41:02.139Z
+Source ID: G03
+OET Major Guidance Draft Publications (https://apps.fcc.gov/oetcf/kdb/reports/GuidedPublicationList.cfm)
+【turn185197search2】 [wordlim: 200] Crawled: 1.4 years ago; 852134 Who is authorized to sign a Form 731 Application for Equipment Authorization, request confidentiality for application exhibits, request grantee code registration numbers, etc.? ...  [1] :  https://www.fcc.gov/document/fcc-amends-equipment-authorization-program ... 546630 Can a Telecommunication Certification Body (TCB) supersede attachments to a Form 731 application that has been uploaded to the Federal Communications Commission (FCC) equipment authorization electronic filing system? ... 644545 The topic previously addressed in this KDB Publication is now covered under KDB Publication 789033.
+Image  |    It is important to understand that the staff guidance provided in the following KDB publications is intended to assist the public in following Commission requirements and does not constitute rules. Accordingly, the guidance is not binding on the Commission and will not prevent the Commission from making a different decision in any matter that comes to its attention for resolution. The guidance publications listed below constitute staff guidance only and do not necessarily represent the only acceptable methods for demonstrating compliance. Please submit an inquiry if you have questions about the guidance. The following documents are major guidance publications made available by the OET.
+Administrative/General
+149672 What are the restrictions for certification of a transmitter that can operate under multiple rule parts?
+156187 What are the FCC requirements for a product that was tested outside of the US and has a "CE" mark?
+169429 Can an exhibit submitted with an application be referenced in a subsequent application filing, as opposed to being uploaded in the subsequent filing?
+178919 What are the Federal Communications Commission (FCC) guidelines for permissive changes?
+204515 What is a Grantee Code, what are the guidelines for acquiring a Grantee Code, modifying Grantee Code information, transferring control of a Grantee Code and recovering a lost Grantee Code registration number?
+214146 What are the test procedures for radar detectors?
+249634 What is the procedure for filling an application for a change in ID under §2.933 of the FCC rules?
+252845 Is it acceptable to use a Spread Spectrum Oscillator for a Part 15b computer product to reduce measurable energy levels?    
+287378 Where do I ship a test sample when I in response to a sample request from the FCC Laboratory?
+291699 Do all of the output powers reported in test reports for the same device need to be identical?
+324861 Please provide information regarding incidental and unintentional radiators.
+373026 The topic previously addressed in this KDB Publication is no longer applicable and has been removed from the published list.
+384352 If a proposed system has a signal with a bandwidth from 4 to 22 MHz, the midband frequency of 13 MHz., corresponding to the wavelength of 23.06 meters and the wavelength for the lowest frequency is 4 MHz (wavelength of 74.95 meters), how far out should the measurements go along the line, given these potential measurement points down the line:
+568916 What are the FCC rules for marketing of licensed transmitters prior to Certification. 
+ 
+634817 Is there any information or guidance on listing frequency ranges on grants for transmitters subject to Certification?
+640677 What rules and approval procedures apply to LED lighting devices?
+726920 How can information included with a request for an equipment authorization be held confidential?
+746324 Is a digital device (e.g., computer) with a CE Mark or it has been tested to either CISPR 22 or CISPR 32 considered to be compliant with the FCC rules for an unintentional radiator?
+784838 What are the procedures for the approval of Telephone Terminal Equipment (TTE) and the recognition a Telecommunication Certification Body (TCB) to certify TTE?
+845799 When does the FCC require that all television manufacturers ship TVs with ATSC Tuners? What is the cutoff date to manufacture televisions with NTSC Tuners?What is the last date that television manufactures can ship TVs with NTSC Tuners, within the USA?
+852134 Who is authorized to sign a Form 731 Application for Equipment Authorization, request confidentiality for application exhibits, request grantee code registration numbers, etc.?
+852803 Is a company required to do additional testing of previously tested, labeled and FCC approved televisions they purchase, and then re-package in new packaging for re-sale?
+896810 What are the procedures for authorizing an RF device using Suppliers Declaration of Conformity (SDoC)?
+926956 What is the transition plan for implementation of the new U-NII rules adopted by the Commission in ET Docket No. 13-49?
+951290 What are the procedures for submitting Equipment Compliance Review (ECR) when it is required by a specific KBD publication.
+953436 What web services are available for accessing data in the FCC Laboratory Equipment Authorization System?
+967957 Can a grant of certification show the European Frequency band 13.4 to 13.5 GHz band, as well as the applicable U.S. frequency band for radar detectors?   Does this band pose any threat of interference in the U.S.?  Should manufacturers disable this band in Radar Detectors that they market in the U.S.?
+986446 The FCC recently adopted  FCC 22-84 [1] on Protecting Against National Security Threats to the Communications Supply Chain through the Equipment Authorization Program.  How does that affect the FCC equipment authorization process?
+ [1] :  https://www.fcc.gov/document/fcc-amends-equipment-authorization-program
+996023 If a device is authorized for marketing under any of the Commission's equipment authorization rules, may the device also be marketed and used in any of the territorial possessions of the United States; such as, Guam, Puerto Rico and the U.S. Virgin Islands?
+Administrative/Importation
+741304 Are there any guidelines for requesting to exceed the limits of the importation requirements in Section 2.1204? 
+765119 Is an equipment authorization required for devices that are to be used as a "give-away" devices, since they are not literally being marketed?
+997198 How do you identify goods being imported into the United States that require an FCC Equipment Authorization?
+Administrative/Label
+125366 What are the rules governing the placement of the FCC ID on a radio transmitter small enough to be ingested by a cow? The only practical way for the FCC ID to appear on the device is to have it molded into the plastic, and the small size would make it impossible to read. Can the FCC ID be included in the user instructions or literature, instead of on the device?
+316776 Does the FCC allow placement of warning statements and other user information on electronic media (i.e., CD) enclosed with the product when sold to the consumer, instead of in the user's manual?
+522580 What are the labeling requirements for an implanted medical device?
+693197 What are the labelling requirements for Closed-Captioning V-chips?
+726885 What are the labelling requirements for Part 90 Devices, and what labelling and certification requirements must be applied to equipment with different trade names marketed under the same FCC ID?  
+784748 What guidance is available for labeling and user information for RF devices?
+TCB/Test Laboratories
+161357 What marketing conditions apply when a Telecommunications Certification Body (TCB) grant is dismissed?
+349827 The topic previously addressed in this KDB Publication is now covered on the FCC equipment authorization web-page. See: https://www.fcc.gov/testing-laboratory-qualifications#block-menu-block-4
+388624 What devices require FCC guidance prior to a TCB issuing a grant of equipment authorization, and what are the procedures to obtain this guidance?
+546630 Can a Telecommunication Certification Body (TCB) supersede attachments to a Form 731 application that has been uploaded to the Federal Communications Commission (FCC) equipment authorization electronic filing system?
+610077 What are the post market surveillance requirements for a Telecommunications Certification Body (TCB)?
+628591 What equipment cannot be certified by a Telecommunications Certification Body?
+641163 What guidance does the FCC provide to Telecommunication Certification Bodies (TCBs) regarding their roles and responsibilities in order to be recognized by the FCC?
+668797 What guidelines does the FCC provide to an accreditation body performing an assessment of a certification body seeking to authorize equipment in compliance with the FCC requirements?
+853844 What guidelines does the FCC provide to an accreditation body performing a technical assessment of a testing laboratory to determine the capability and competence of that laboratory to perform EMC tests to show compliance with the FCC regulatory requirements?
+901874 What is the procedure for the recognition of a Conformity Assessment Body (CAB) under the terms of a Mutual Recognition Agreement (MRA)?
+920091 The topic previously addressed in this KDB Publication is now covered under KDB Publication 641163.
+974614 What guidance is available for FCC recognition of accredited testing laboratories that perform testing of RF Devices subject to the Declaration of Conformity (DoC) and Certification approval procedures?
+Technical/ Part 15 Unintentional Radiators
+171051 What are the current test procedures for Access Broadband Over Power-Line (BPL) and Carrier Current Systems (CCS)?
+214146 What are the test procedures for radar detectors?
+218634 Can an ATSC TV receiver without an NTSC function be manufactured, marketed, and/or imported into the United States under the FCC requirements?
+252845 Is it acceptable to use a Spread Spectrum Oscillator for a Part 15b computer product to reduce measurable energy levels?    
+324861 Please provide information regarding incidental and unintentional radiators.
+368196 What are the Equipment Under Test (EUT) configuration requirements for emission testing of devices with cables, which are absent during normal operation and are connected only temporarily (for maintenance, initial installation, preprogramming, repair, adjustment etc.)?
+724156 Does the digital tuner rule in Section 15.117, as ordered by FCC 05-190 (ET Docket 05-24), apply to analog receivers that are shipped to customers for the sole purpose of replacing the customer's existing damaged or safety recalled analog television?
+746324 Is a digital device (e.g., computer) with a CE Mark or it has been tested to either CISPR 22 or CISPR 32 considered to be compliant with the FCC rules for an unintentional radiator?
+772105 What type of unintentional radiators under Part 15B of the FCC rules are exempt from an FCC Equipment Authorization?
+845799 When does the FCC require that all television manufacturers ship TVs with ATSC Tuners? What is the cutoff date to manufacture televisions with NTSC Tuners?What is the last date that television manufactures can ship TVs with NTSC Tuners, within the USA?
+848406 What is the FCC requirement for an electronic device that generates sound waves for communication purposes?
+852803 Is a company required to do additional testing of previously tested, labeled and FCC approved televisions they purchase, and then re-package in new packaging for re-sale?
+Technical/General
+175505 What are the equipment authorization requirements for scanning receivers?
+293079 The topic previously addressed in this KDB Publication is now covered under KDB Publication 174176
+294083 What are the certification requirements for a multi-channel power amplifier (MCPA)?
+296753 Where can the equipment authorization procedures for ?Learned Mode? or Trainable? transmitters be found?
+347215 What is the preferred measurement method and equipment setup for a Leaky Coax Video Distribution System?
+356361 Where can information about frequency stability requirements for licensed transmitters be found in the FCC rules?
+368196 What are the Equipment Under Test (EUT) configuration requirements for emission testing of devices with cables, which are absent during normal operation and are connected only temporarily (for maintenance, initial installation, preprogramming, repair, adjustment etc.)?
+390777 Can the voltage regulator circuitry of a certified module be removed and placed on the host device? The grantee will  be the only one implementing the module into the host equipment.
+If this change is not permissible, can the grantee get a new certification for limited modular approval for use with the regulator design on the host?
+442812 What are the guidelines for providing a software operational description with an application for certification as required by Section 2.944 for a Software Defined Radio?
+449343 The topic previously addressed in this KDB Publication is now covered under KDB Publication 442401.
+494761 What are the FCC's rules/requirements for using the CDMA 1.25 MHz bandwidth signal over the air and using their upconverter to upconvert this signal to 2.4 GHz? After utilizing the upconverter, the device would then transmitt this signal to another unit within a building and using their downconverter, downconvert this 2.4 GHz signal to 800 or 1900 MHz.
+568429 The topic previously addressed in this KDB Publication is now covered under KDB Publication 174176
+570181 Is it against the law to operate a device for eavesdropping?
+587968 Can a device be approved under one FCC ID that uses Crystal A or Crystal B to operate at a fixed frequency, or would it violate the rule in Section 2.924 that requires the devices to be electrically identical?
+703967 What are the rules for Biomedical Telemetry Devices using the same frequency bands as VHF or UHF TV broadcast services? 
+724156 Does the digital tuner rule in Section 15.117, as ordered by FCC 05-190 (ET Docket 05-24), apply to analog receivers that are shipped to customers for the sole purpose of replacing the customer's existing damaged or safety recalled analog television?
+754507 Can a rack mounted licensed transmitter system with multiple amplifiers marketed with one to N external amplifier modules be approved under one FCC Identifier?
+772105 What type of unintentional radiators under Part 15B of the FCC rules are exempt from an FCC Equipment Authorization?
+808834 Under what circumstances must tune-up procedures be included as part of an application for certification of equipment? When are the results of the measurement of frequency stability testing required as part of the application?
+823669 Under what conditions will a 60 dB per decade extrapolation factor (roll-off) be acceptable for operations below 490 kHz for devices such as a dog fence transmitter or pet containment device?  
+842590 What measurement procedures should be used for demonstrating compliance of millimeter wave devices?
+873782 The topic previously addressed in this KDB Publication is now covered under KDB Publication 174176
+927445 What are the FCC Rules for building and marketing of kits of products, which when completed are subject to the FCC Rules? 
+968740 In a device that has a Part 15.247 transmitter, specifically a 2.4GHz spread spectrum device and a Part 24 GSM1900 phone, what is the limit for the spurious emissions; 13dBm as per part 24.238 or 20dB below the SS transmitter carrier, when both transmitters are on at the same time?
+970781 What is the requirement on emission designators regarding the use of W as the third symbol? Should the W be used for a transmitter that can simultaneously (over multiple channels) transmit both data and voice, or should the transmitter should have the multiple emission designators - one for each type of emission?
+985179 What is the FCC requirement for testing Learned Radio Transmitters operating under Part 15?
+996369 What is the FCC guidance for equipment authorization of transmitter module devices, and equipment that incorporates transmitter modules?
+Technical/Licensed Radio Services
+147736 What are the FCC rules for 8 VSB translators used for DTV?
+180817 A test laboratory has a Part 24 transceiver that consists of four output amplifiers and eight receiver amps. Each amplifier output is rated at 2 Watts.  Each output is electrically identically and is only capable of transmitting 2 Watts.  Should the power output block of the application for Certification state 2W (not 8 W) and is data for only one output acceptable?
+273109 What is the equipment authorization guidance for Part 25 Transceivers?
+285076 What are the equipment authorization requirements for hearing aid compatibility of mobile handsets?
+361126 What is the emission mask or the emission limit on the bandedge channels for a Pt.22 transmitter (869 MHz to 894 MHz) with GSM/8PSK digital format, with the emission designator is GXW?
+381733 Are cell phone blockers legal and can they be imported?
+387345 Are there Commission rules that apply to the use of analog cellular phones granted authorization before February 13, 2000?  If a phone received a grant of equipment authorization before February 13, 2000 and is currently being mass produced, but does not have a special procedure incorporated for processing 911 calls, is it required to comply with Section 22.921 of the Commission's rules?
+393701 Do four previously Certified Part 24 amplifiers, installed in one unit, require a new equipment authorization?
+412608 During preliminary testing of a Radio Modem, the IF (122.28 MHz) produced harmonics over the FCC Part 15 Class A limits for a digital device. Since the IF is used to operate the PCS amplifier, does the harmonic content of the IF need to be tested under FCC Part 15 unintentional emission requirements or under Part 24E?
+442401 What measurement procedures and test site parameters should be used for testing licensed radio service devices for Section 2.1053 radiated field strength, and radiated power (e.g., ERP, EIRP) when specified in the applicable licensed service rule?
+442705 Is there a recommended emission designator that would be acceptable for ATSC DTV transmitters for equipment authorization purposes?
+465557 What is the FCC interpretation of 47 CFR 90.214 concerning transient frequency behavior?
+490433 What is the procedure for approval of a single band (Pt.24 Only) version of the approved dual band phone?
+511808 What are the procedures for getting  an equipment authorization for Part 90 subpart M and Part 95 Subpart L devices using C-V2X  systems for named entities under a waiver.
+550599 What procedures should be used to evaluate the compliance of a Medical Body Area Network (MBAN) under Part 95?
+552295 What are the guidelines for providing a Contention Based Protocol (CBP) operational description, as required by Part 90Z?
+553680 Explain Part 80 marine VHF (156-162 MHz band) ship radio frequency allocations with regards to domestic and international regulations.
+579009 How are new application and permissive change application handled for wideband and narrowband equipment in the Part 90 re-farming bands?
+585798 What are the 60  meter amateur band requirements authorized under Report and Order FCC 03-105, for new and existing radios regarding the following:
+1) For Type Approval, does the radio have to be restricted to transmit only on the allocated channels such as, Marine HF radios?
+2) Does the radio have to be restricted to USB operation?
+3) Is the operator responsible for maintaining the ERP at 50W or less, since the radio cannot sense this? 
+4) Would it affect type approval, if the transmitter output was 100W?
+5) Will the radio have to be re-submitted for Type Approval, if we add the 5MHz band?
+593599 The topic previously addressed in this KDB Publication is now covered under KDB Publication 703967.
+617965 Is it acceptable to use the torso simulator and tissue-equivalent material previously specified in Part 95 rules for testing of MedRadio transmitters in cardiac pacemaker and defibrillator implants?
+677961 Does a test transmitter which operates in 2 bands 1800-1900 MHz and 1900-2000 MHz, is used to determine  intra-floor signal propagating for PCS coverage inside buildings, require certification?
+771134 The topic previously addressed in this KDB Publication is now covered under the procedures in ANSI C63.26.
+888861 What are the requirements for certification of GMRS and FRS radios that operate under Part 95?
+899624 Do Tri-band and Single-band cell and PCS phones need separate FCC Identifiers (FCC ID)?
+935210 What is the Commission guidance for the evaluation of Signal Boosters?
+940660 What procedures should be used to evaluate Citizens Broadband Radio Service (CBRS) for compliance under Part 96?
+951136 Does changing the antenna for a device authorized under part 90 of the rules require a new application? 
+981606 What data must be submitted to show out-of-band compliance for emission limitations using the alternative out-of-band emission limits for Parts 22 and 24 Devices?
+983389 What are the emission mask requirements for 24 GHz Microwave transmission operating under 47 CFR Part 101?
+Technical/Part 15 Intentional Radiators
+139720 Can a Part 15 water meter transceiver used only in water pit installations, in the ground, using metallic, concrete, or plastic enclosures be tested in a typical installation as opposed to on an Open Area Test Site (OATS)?
+151788 Can a tamper alarm transmission exceed the 5 second limit of Section 15.231 (a) (1) & (2) under the certified conditions in Section 15.231 (a) (4)?
+171051 What are the current test procedures for Access Broadband Over Power-Line (BPL) and Carrier Current Systems (CCS)?
+174176 What are the line conducted emission requirements for an FCC equipment authorization of devices subject to Part 15 and Part 18 of the FCC rules?
+185380 The topic previously addressed in this KDB Publication is now covered under KDB Publication 460108.
+192659 How does the Commission determine the antenna gain for RF ID systems operating under Section 15.247 that employ both vertical and horizontal radiating elements?
+200443 Expired. The subject previously covered in this publication is covered in  Publication 842590
+205122 What are the compliance requirements for passive tags used with Frequency Hopping Tag Reading systems operating under CFR 47 Section 15.247?
+206256  What procedures should be followed for approval of a wireless microphone?
+212452 Can a fixed polling or contention channel be used to transmit in a 46/49 MHz cordless system for the purpose of base-to-handset synchronization, channel selection and/or management?
+252102 Can a wireless computer keyboard operate as a periodic device under Section 15.231?
+291074 What are the requirements for obtaining a Certification for U-NII-4 band 5.9 GHz devices operating in the 5.850-5.895 GHz band under Part 15, Subpart E?
+296588 Can a Section 15.237 auditory assistance device have 2-way communications, and if so, must it only be used for the handicapped?
+353028 What are the requirements for antennas used with intentional radiators authorized under Part 15? 
+364244 What Guidance is provided for certifying radar devices under the provisions of §15.255 of the FCC rules?
+393764 What guidance is available for the approval of Ultra-Wide Band devices?
+416721 What are the test procedures for certifying equipment to operate under the Part 15 Subpart H, White Space rules?
+433442 What are the maximum acceptable levels of the 917 and 929 MHz spurious emissions to meet Part 15.249/15.209 intentional radiator (ISM Band) FCC Compliance?
+443890 What frequency accuracy needs to be maintained for a transmitter operating under Section 15.249 (902-928 MHz band)?
+453039 The topic previously addressed in this KDB Publication is now covered under KDB Publication 558074.
+453097 Can devices or systems with the signal containment and virtual waveguide features as described be considered Class B unintentional radiators under the Part 15 rules?
+470998 What measurement procedures should be used for compliance testing of a FM transmitter operating under Section 15.239 and designed to use a vehicle's wiring as a transmitting antenna?
+520657 What are the test requirements for multiple transmitters that share a common antenna and are operating under the Frequency Hopping Spread Spectrum (FHSS) rules in Section 15.247?
+543300 The topic previously addressed in this KDB Publication is now covered under KDB Publication 558074.
+558074 What are the test procedures for measuring Digital Transmission System (DTS), Frequency Hopping Spread Spectrum systems (DSS), and hybrid devices subject to the requirements in Section 15.247?
+594280 What are the software security requirements for non-SDR devices and what limitations apply to software con f iguration control for such devices?
+602159 What are the special requirements for Part 15 repeaters?
+644545 The topic previously addressed in this KDB Publication is now covered under KDB Publication 789033. 
+653005 What are the requirements for vehicular radars operating in the 76 to 81 GHz band under Part 95 Subpart M?
+661845 15.245, Perimeter Protection System: Can you clarify the perimeter protection system exclusion in 15.245?
+684743 What are the limits for fixed narrow beam point-to-point operation in Section 15.249 (b) operating in the 24 GHz band?
+696199 Can an optional amplifier accessory for a Part 15 device be certified as a separate device under Section 15.204(b) ?
+708832 Are multiple transmitters addressed in the Commission's Part 15 Rules?
+720338 For a device operating under 47 CFR 15.249, should a peak detector o r a quasi peak-detector be used for measurement and should the maximum 20dB correction factor be used to measure average?
+789033 What are the test procedures for measuring U-NII devices subject to the requirements in Part 15, Subpart E?
+806974 Can equipment be authorized as a 15.233 device for a wireless remote telephone jack? The base station would connect to the public telephone network and the remote station would have a standard telephone jack.  This will allow a standard telephone unit to be connected through the base station to the public telephone network wirelessly.
+868660 What are the equipment authorization requirements for a cordless phone using a 2.4 GHz transmitter base station with a 900 MHz receiver, interoperating with a remote 900 MHZ transmitter handset that also incorporates a 2.4 GHz receiver?
+890966 What is the measurement procedure for level probing radars?
+899393 What are the FCC regulations for 43-49 MHz cordless telephones and repeaters operating in this band?
+926416 Can a Section 15.231 device operate on multiple carrier frequencies?
+965303 What are the requirements for marketing a low-power unlicensed video transmitter?
+973804 The topic previously addressed in this KDB Publication is now covered under KDB Publication 412172.
+987594 What are the requirements for obtaining a Certification for U-NII 6 GHz devices operating in the 5.925-7.125 GHz band under Part 15, Subpart E.
+Technical/Part 18 ISM
+227764 What equipment is considered to be Industrial Scientific and Medical (ISM) subject to Part 18?
+629601 What is the correct distance attenuation factor which should be applied to a low frequency Part 18 measurement?
+Technical/RF Exposure
+212821 Does the FCC require SAR values to be specified in user manuals?
+248227 Are there any SAR measurement procedures for IEEE 802.11 wireless transmitters?
+357746 The topic previously addressed in this KDB Publication is now covered under KDB Publication 974614.
+447498 What are the RF exposure requirements and procedures for mobile and portable devices?
+615223 What are the SAR requirements and measurement procedures for IEEE 802.16e/WiMax devices?
+616217 What are the SAR evaluation procedures for laptop and tablet computers?
+643646 W hat are the Specific Absorption Rate (SAR) test procedures for occupational push-to-talk (PTT) radios?
+648474 What are the test procedures for SAR evaluation of handsets or wireless charging battery covers? 
+680106 What is the equipment authorization guidance for Wireless Power Transfer Devices under Part 15 or Part 18.
+690783 What are guidelines for TCBs for listing SAR numbers on FCC equipment authorization grants?
+865664 Is there any guidance for SAR measurements that addresses devices operating in the 100 MHz to 6 GHz range and how should RF exposure compliance be reported?
+941225 What are the SAR test procedures for 3G/4G devices?
+Test Methods
+300643 What measurement procedures should be used for Part 15 EMC compliance testing of intentional and unintentional radiators?
+412172 How do you determine ERP and EIRP Values for a RF Transmitting System?
+414788 What are the requirements for test sites used to make radiated emissions measurements?
+460108 May a monopole (rod) antenna be used for performing radiated emission measurements below 30 MHz?
+662911 What is the guidance for measurement of output emission of devices that employ single transmitter with multiple outputs or systems with multiple transmitters operating simultaneously in the same frequency band?
+764661 For licensed devices, is it acceptable to use a reduced video filter technique to simulate average measurements rather than using an average detector?  For example, the spectrum analyzer is set to to 100 kHz RBW with the VBW set to 100 Hz..  This technique is done in order to smooth out the spectral signature.
+822428 What procedure should be used to calibrate antennas used to make radiated emission measurements and normalized site attenuation (NSA) measurements?
+823311 The topic previously addressed in this KDB Publication is now covered under KDB Publication 414788.
+890810 If the emission bandwidth is 4.1 MHZ wide, 1% of this is 41 kHz; can a 30 kHz Resolution and Video BW to test the band edge be used? 
+905462 What test guidance should be followed to demonstrate compliance for U-NII devices subject to DFS requirements?
+913591 What is the procedure for making band-edge measurements for a Part 15 intentional radiator?
+966099 Can a log average detector be used to make average measurements on intentional radiators?
+971168 What are the procedures for compliance measurement for the fundamental emission power for licensed wideband (> 1 MHz) digital transmission systems?

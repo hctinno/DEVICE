@@ -1,0 +1,157 @@
+OFFICIAL PAGE TEXT EXTRACT — NOT ORIGINAL HTML/PDF
+Captured: 2026-10-23T08:41:02.139Z
+Source ID: R13
+eCFR :: 47 CFR 15.37 -- Transition provisions for compliance with this part. (https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.37)
+【turn346342view2】 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.37","lineno":null}); Total lines: 152
+L0: Site Feedback
+L1: 
+L2: ##### You are using an unsupported browser
+L3: 
+L4: You are using an unsupported browser. This web site is designed for the current versions of Microsoft Edge, Google Chrome, Mozilla Firefox, or Safari.
+L5: ### Site Feedback
+L6: 
+L7: The Office of the Federal Register publishes documents on behalf of Federal agencies but does not have any authority over their programs. We recommend you directly contact the agency associated with the content in question.
+L8: 
+L9: * * *
+L10: 
+L11: If you have comments or suggestions on how to improve the www.ecfr.gov website or have questions about using www.ecfr.gov, please choose the 'Website Feedback' button below.
+L12: 
+L13: Website Feedback
+L14: If you would like to comment on the current content, please use the 'Content Feedback' button below for instructions on contacting the issuing agency
+L15: 
+L16: Content Feedback
+L17: 
+L18: If you have questions for the Agency that issued the current document please contact the agency directly.
+L19: # Website Feedback
+L20: 
+L21: * (required) Your Name[Input]
+L22: 
+L23: * (required) Email[Input]
+L24: 
+L25: Attachment[Input]
+L26: 
+L27: * (required) How can we help you?
+L28: 
+L29: [Input][Input]* (required) I am requesting technical help or providing website feedback
+L30: This contact form is only for website help or website suggestions. If you have questions or comments regarding a published document please contact the publishing agency. Comments or questions about document content can not be answered by OFR staff. Please do not provide confidential information or personal data.
+L31: 
+L32: [Input]
+L33:   * 【0†☰】
+L34:   *     *     * 【1†Home】
+L35:     * Browse
+L36:       * 【2†Titles】
+L37:       * 【3†Agencies】
+L38:     * CFR Updates
+L39:       * 【4†Recent Changes】
+L40:       * 【5†Issue Summaries】
+L41:       * 【6†Corrections】
+L42:     * Finding Aids
+L43:       * 【7†Parallel Table of Authorities】
+L44:       * 【8†Subject Index】
+L45:       * 【9†Agency-prepared Indexes】
+L46:     * Reader Aids
+L47:       * 【10†Reader Aids Home】
+L48:       * 【11†Using the eCFR Point-in-Time System】
+L49:       * 【12†Understanding the eCFR】
+L50:       * 【13†Government Policy and OFR Procedures】
+L51:       * 【14†Developer Resources】
+L52:       * 【15†Recent Site Updates】
+L53:     * My eCFR
+L54:       * 【16†Sign In / Sign Up】
+L55:     * [Input] [Input: Search the eCFR]
+L56: # 【1†eCFR】
+L57: 
+L58: ## The Electronic Code of Federal Regulations
+L59: 
+L60: ###### Enhanced Content :: FR Reference
+L61: 
+L62: Enhanced content is provided to the user to provide additional context.
+L63: 
+L64: ###### Enhanced Content :: FR Reference
+L65: # Title 47
+L66: 
+L67: This content is from the eCFR and is authoritative but unofficial.
+L68: 
+L69: Displaying title 47, up to date as of 10/21/2026. Title 47 was last amended 10/19/2026.
+L70: 
+L71: 【0†view historical versions】
+L72: 
+L73: A 【17†drafting site is available†drafting.ecfr.gov】 for use when drafting amendatory language
+L74: 
+L75: 【17†switch to drafting site†drafting.ecfr.gov】
+L76: 
+L77: Navigate by entering citations or phrases (eg: 1 CFR 1.1 49 CFR 172.101 Organization and Purpose 1/1.1 Regulation Y FAR).
+L78: Choosing an item from citations and headings will bring you directly to the content. Choosing an item from full text search results will bring you to those results. Pressing enter in the search box will also bring you to search results.
+L79: 
+L80: Background and more details are available in the 【18†Search & Navigation】 guide.
+L81: 
+L82: [Input] [Input] [Input]
+L83: 
+L84: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L85: 
+L86: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L87:   *   * Table of Contents
+L88:   * Details
+L89:   * Print/PDF
+L90:   * Display Options
+L91:   *   * Timeline
+L92:   * Go to Date
+L93:   * Compare Dates
+L94:   *   * Published Edition
+L95:   *   * Developer Tools
+L96: ###### eCFR Content
+L97: 
+L98: The Code of Federal Regulations (CFR) is the official legal print publication containing the codification of the general and permanent rules published in the Federal Register by the departments and agencies of the Federal Government. The Electronic Code of Federal Regulations (eCFR) is a continuously updated online version of the CFR. It is not an official legal edition of the CFR.
+L99: 
+L100: 【19†Learn more】 about the eCFR, its status, and the editorial process.
+L101: #### § 15.37 Transition provisions for compliance with this part.
+L102: 
+L103: (a) [Reserved]
+L104: 
+L105: (b) Effective October 16, 2002, an equipment approval may no longer be obtained for medical telemetry equipment operating under the provisions of 【20†§ 15.241】 or 【21†§ 15.242】. The requirements for obtaining an approval for medical telemetry equipment after this date are found in 【22†subpart H of part 95 of this chapter】.
+L106: (c) All radio frequency devices that are authorized on or after July 12, 2004 under the certification, or Supplier's Declaration of Conformity procedures (or the prior verification or declaration of conformity procedures, as applicable) shall comply with the conducted limits specified in 【23†§ 15.107】 or 【24†§ 15.207】 as appropriate.
+L107: All radio frequency devices that are manufactured or imported on or after July 11, 2005 shall comply with the conducted limits specified in 【23†§ 15.107】 or 【24†§ 15.207】, as appropriate. Equipment authorized, imported or manufactured prior to these dates shall comply with the conducted limits specified in 【23†§ 15.107】 or 【24†§ 15.207】, as appropriate, or with the conducted limits that were in effect immediately prior to September 9, 2002.
+L108: (d) Radar detectors manufactured or imported after August 28, 2002 and marketed after September 27, 2002 shall comply with the regulations specified in this part. Radar detectors manufactured or imported prior to January 27, 2003 may be labeled with the information required by 【25†§ 2.925 of this chapter】 and 【26†§ 15.19(a)】 on the individual equipment carton rather than on the device, and are exempt from complying with the requirements of 【27†§ 15.21】.
+L109: 
+L110: (e)-(f) [Reserved]
+L111: (g) The manufacture or importation of auditory assistance devices that operate in the 72.0-73.0 MHz, 74.6-74.8 MHz, and 75.2-76.0 MHz bands that do not comply with the requirements of 【28†§ 15.237(c)】 shall cease on or before July 11, 2016. Effective January 12, 2015, equipment approval will not be granted for auditory assistance devices that operate in the 72.0-73.0 MHz, 74.6-74.8 MHz, and 75.2-76.0 MHz bands that do not comply with the requirements of 【28†§ 15.237(c)】.
+L112: These rules do not prohibit the sale or use of authorized auditory assistance devices that operate in the 72.0-73.0 MHz, 74.6-74.8 MHz, and 75.2-76.0 MHz bands manufactured in the United States, or imported into the United States, prior to July 11, 2016.
+L113: (h) Effective June 2, 2015 devices using digital modulation techniques in the 5725-5850 MHz bands will no longer be certified under the provisions of 【29†§ 15.247】. The technical requirements for obtaining certification after this date for digitally modulated devices and the digitally modulated portion of hybrid devices are found in 【30†subpart E of this part】. The provisions for the frequency hopping spread spectrum portion of hybrid devices will remain in 【29†§ 15.247】.
+L114: Effective June 2, 2016 systems using digital modulation techniques in the 5725-5850 MHz band certified under the provisions of 【29†§ 15.247】 may no longer be imported or marketed within the United States.
+L115: (i) As of December 26, 2017, wireless microphones for which an application for certification is filed must comply with the requirements of 【31†§ 15.236】. Manufacturing and marketing of wireless microphones that would not comply with the rules for operation in 【31†§ 15.236】 must cease no later than September 24, 2018. Only wireless microphones certified for operation under this part may be operated under this part as of July 13, 2020.
+L116: 
+L117: (j)-(r) [Reserved]
+L118: (s) Prior to October 30, 2025, measurements for intentional radiators subject to 【32†§ 15.31(a)(3)】 must be made using the procedures in ANSI C63.10-2013 or ANSI C63.10-2020 (incorporated by reference, see 【33†§ 15.38】). On or after October 30, 2025, measurements for intentional radiators subject to 【32†§ 15.31(a)(3)】 must be made using the procedures in ANSI C63.10-2020 (incorporated by reference, see 【33†§ 15.38】).
+L119: [【34†77 FR 4913†www.federalregister.gov】, Feb. 1, 2012, as amended at 【35†78 FR 34927†www.federalregister.gov】, June 11, 2013; 【36†79 FR 24578†www.federalregister.gov】, May 1, 2014; 【37†80 FR 71728†www.federalregister.gov】, Nov. 17, 2015; 【38†80 FR 73068†www.federalregister.gov】, Nov. 23, 2015; 【39†82 FR 41559†www.federalregister.gov】, Sept. 1, 2017; 【40†82 FR 43870†www.federalregister.gov】, Sept. 20, 2017; 【41†82 FR 50832†www.federalregister.gov】, Nov.
+L120: 2, 2017; 【42†83 FR 10640†www.federalregister.gov】, 【43†10642†www.federalregister.gov】, Mar. 12, 2018; 【44†84 FR 34796†www.federalregister.gov】, July 19, 2019; 【45†87 FR 18992†www.federalregister.gov】, Apr. 1, 2022, 【46†88 FR 47394†www.federalregister.gov】, July 24, 2023; 【47†88 FR 67115†www.federalregister.gov】, Sept. 29, 2023; 【48†91 FR 3069†www.federalregister.gov】, Jan. 26, 2026]
+L121: ###### eCFR Content
+L122: 
+L123: ## Pages
+L124: 
+L125:   * 【1†Home】
+L126:   * 【1†Titles】
+L127:   * 【49†Search】
+L128:   * 【4†Recent Changes】
+L129:   * 【50†Corrections】
+L130: 
+L131: ## Reader Aids
+L132: 
+L133:   * 【11†Using the eCFR Point-in-Time System】
+L134:   * 【12†Understanding the eCFR】
+L135:   * 【13†Government Policy and OFR Procedures】
+L136:   * 【14†Developer Resources】
+L137:   * 【15†Recent Site Updates】
+L138: ## Information
+L139: 
+L140:   * 【51†About This Site】
+L141:   * 【52†Legal Status】
+L142:   * 【53†Privacy】
+L143:   * 【54†Accessibility】
+L144:   * 【55†FOIA】
+L145:   * 【56†No Fear Act†www.archives.gov】
+L146:   * 【57†Continuity Information†www.archives.gov】
+L147: 
+L148: ## My eCFR
+L149: 
+L150:   * 【58†My Subscriptions】
+L151:   * 【16†Sign In / Sign Up】

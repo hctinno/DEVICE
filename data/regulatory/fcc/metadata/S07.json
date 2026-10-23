@@ -1,0 +1,15 @@
+{
+  "source_id": "S07",
+  "title": "ANSI C63.10a-2024",
+  "url": "https://standards.ieee.org/ieee/C63.10a/11614/",
+  "kind": "standard_amendment",
+  "version": "2024; published 2024-08-16",
+  "observed_at_utc": "2026-10-23T08:42:52.496Z",
+  "status": "publisher_metadata_verified",
+  "original_acquired": false,
+  "original_sha256": null,
+  "latest_verified": false,
+  "retrieval": "web_connector_official_catalog_or_access_page",
+  "local_metadata": "data/regulatory/fcc/metadata/S07.json",
+  "notes": "IEEE 공식 카탈로그에서 개정 문서와 errata 링크 확인. 발행 사실을 FCC 자동 적용으로 해석하지 않음. 본문 미확보."
+}

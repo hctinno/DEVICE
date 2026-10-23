@@ -1,0 +1,15 @@
+{
+  "source_id": "S06",
+  "title": "ANSI C63.10-2020/Cor1-2023",
+  "url": "https://standards.ieee.org/ieee/C63.10-2020_Cor1/10915/",
+  "kind": "standard_corrigendum",
+  "version": "2023; published 2023-06-06",
+  "observed_at_utc": "2026-10-23T08:42:52.496Z",
+  "status": "publisher_metadata_verified",
+  "original_acquired": false,
+  "original_sha256": null,
+  "latest_verified": false,
+  "retrieval": "web_connector_official_catalog_or_access_page",
+  "local_metadata": "data/regulatory/fcc/metadata/S06.json",
+  "notes": "IEEE 공식 카탈로그에서 정오표 존재와 발행일 확인. 본문 미확보. FCC 적용 근거를 별도 검토할 것."
+}

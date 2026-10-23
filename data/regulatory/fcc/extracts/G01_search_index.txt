@@ -1,0 +1,56 @@
+SEARCH INDEX EVIDENCE — NOT CURRENT KDB OR ATTACHMENT
+Captured: 2026-10-23T08:41:02.139Z
+Source ID: G01
+OET Knowledge Database (KDB) (https://apps.fcc.gov/oetcf/kdb/index.cfm)
+【turn185197search0】 [wordlim: 200] Published: 17.5 years ago; Crawled: 1.4 years ago; The FCC Office of Engineering and Technology (OET) publishes equipment authorization procedures and measurement guidance in the form of FCC Public Notices and Knowledge Database (KDB) publications. ... The following attachments are guides for obtaining certification for devices operating in the 5.925-7.125GHz band under Part 15, Subpart E:987594 D01 U-NII 6GHz General Requirements v03r01 provides general requirements for filling form 731 and supporting ...
+Equipment Authorization Presentations
+Image: 
+Equipment Authorization System (EAS)
+Image: 
+Telecommunications Certification Bodies (TCB)
+Image: 
+Measurement Procedures
+Image  |    Office of Engineering and Technology Laboratory Division Knowledge Database (KDB) Welcome to the OET Laboratory Division Knowledge Database (KDB). The FCC Office of Engineering and Technology (OET) publishes equipment authorization procedures and measurement guidance in the form of FCC Public Notices and Knowledge Database (KDB) publications. The staff guidance provided in the KDB is intended to assist the public in following Commission requirements and does not constitute rules. Accordingly, the guidance is not binding on the Commission and will not prevent the Commission from making a different decision in any matter that comes to its attention for resolution. The Basic KDB Search is a full text search and the Advanced KDB Search allows for input of multiple search criteria. The KDB Publication Number search is a quick search for a specific publication. We hope that your visit is both timely and useful. Page Index:  [Select] Image Stay updated on newly published guidance and frequently asked questions by adding this RSS feed to your reader.
+
+#### Publication Searches:
+
+Basic KDB Search: Enter a text string in the field below. This search scans the Knowledge Database for any publications that include the text entered. Alternative search results can be obtained by using the syntax described by clicking here.
+Text search: [Input] [Input]
+Advanced KDB Search: Search for publications that meet one or more identified criteria. Major Guidance Publications: View publications associated with major guidance categories. KDB Publication Number Search: Search for a specific publication by entering the publication number:
+Publication Number: [Input] [Input]
+Didn't find a conclusive answer? Submit an Inquiry
+
+
+#### Publications:
+
+Recent KDB Publications:
+Publication Number Question Answer
+987594  What are the requirements for obtaining a Certification for U-NII 6 GHz devices operating in the 5.925-7.125 GHz band under Part 15, Subpart E. The following attachments are guides for obtaining certification for devices operating in the 5.925-7.125GHz band under Part 15, Subpart E:987594 D01 U-NII 6GHz General Requirements v03r01 provides general requirements for filling form 731 and supporting ...
+484596  What is the FCC?s policy permitting the referencing of test data from another equipment authorization application? Attachment 484596 D01 Referencing Test Data 03 guides referencing test data provided in the test report previously submitted in a related equipment authorization application.Note: 05/28/2025: 484596 D01 Referencing Test Data v03- published 2024-03-21 re...
+
+
+#### Recent Guidelines and Interpretations:
+
+Posted on Apr 28 2009 3:02PM:
+Updates will be forthcoming.
+
+#### Important Notes:
+
+* * *
+
+Inquiry Responses and Publications: FCC staff publications and replies to inquiries from the KDB are based on one or more of the following criteria:
+1. Responses that the FCC staff have given to prior inquiries.
+2. Staff guidance of the Commission's rules and policies.
+3. Prior staff practices
+The KDB publications regarding measurement procedures constitute staff guidance only and do not necessarily represent the only acceptable methods for measuring RF emissions. Nor are these guidelines binding on the Commission or any interested party. Image Stay updated on newly published guidance and frequently asked questions by adding this RSS feed to your reader. Page Index:  [Select]  | Image  |    | Image
+
+Please use the Submit Inquiry link at www.fcc.gov/labhelp to send any comments or suggestions for this site
+Federal Communications Commission
+45 L Street NE
+Washington, DC 20554
+More FCC Contact Information...
+ | 
+Phone:  888-CALL-FCC (225-5322)
+TTY:  888-TELL-FCC (835-5322)
+Fax:  202-418-0232
+E-mail:  fccinfo@fcc.gov

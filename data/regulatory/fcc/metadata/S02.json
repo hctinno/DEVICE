@@ -1,0 +1,15 @@
+{
+  "source_id": "S02",
+  "title": "ANSI C63.4-2014",
+  "url": "https://standards.ieee.org/ieee/C63.4/5841/",
+  "kind": "standard",
+  "version": "2014; reaffirmed February 2025",
+  "observed_at_utc": "2026-10-23T08:42:52.496Z",
+  "status": "publisher_metadata_verified",
+  "original_acquired": false,
+  "original_sha256": null,
+  "latest_verified": false,
+  "retrieval": "web_connector_official_catalog_or_access_page",
+  "local_metadata": "data/regulatory/fcc/metadata/S02.json",
+  "notes": "IEEE 공식 카탈로그의 재확인(reaffirmed) 안내를 확인. 새 판본으로 대체했다는 의미로 처리하지 않음. 구매/구독 경로 확인, 원문 미확보."
+}

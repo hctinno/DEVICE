@@ -1,0 +1,15 @@
+{
+  "source_id": "A01",
+  "title": "IEEE Standards Access / Reading Room",
+  "url": "https://standards.ieee.org/access-standards/",
+  "kind": "access_information",
+  "version": "2026-10-23 확인",
+  "observed_at_utc": "2026-10-23T08:42:52.496Z",
+  "status": "access_route_verified",
+  "original_acquired": false,
+  "original_sha256": null,
+  "latest_verified": false,
+  "retrieval": "web_connector_official_catalog_or_access_page",
+  "local_metadata": "data/regulatory/fcc/metadata/A01.json",
+  "notes": "구매, 구독, 무료 계정을 통한 일부 표준 reading room, GET 프로그램 경로가 있음. 대상 C63 표준의 무료 원문 다운로드 허용 여부는 별도 확인."
+}

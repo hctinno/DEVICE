@@ -1,0 +1,129 @@
+OFFICIAL PAGE TEXT EXTRACT — NOT ORIGINAL HTML/PDF
+Captured: 2026-10-23T08:41:02.139Z
+Source ID: R09
+eCFR :: 47 CFR 15.31 -- Measurement standards. (https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.31)
+【turn300948view0】 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.31","lineno":null}); Total lines: 204
+L0: Site Feedback
+L1: 
+L2: ##### You are using an unsupported browser
+L3: 
+L4: You are using an unsupported browser. This web site is designed for the current versions of Microsoft Edge, Google Chrome, Mozilla Firefox, or Safari.
+L5: ### Site Feedback
+L6: 
+L7: The Office of the Federal Register publishes documents on behalf of Federal agencies but does not have any authority over their programs. We recommend you directly contact the agency associated with the content in question.
+L8: 
+L9: * * *
+L10: 
+L11: If you have comments or suggestions on how to improve the www.ecfr.gov website or have questions about using www.ecfr.gov, please choose the 'Website Feedback' button below.
+L12: 
+L13: Website Feedback
+L14: If you would like to comment on the current content, please use the 'Content Feedback' button below for instructions on contacting the issuing agency
+L15: 
+L16: Content Feedback
+L17: 
+L18: If you have questions for the Agency that issued the current document please contact the agency directly.
+L19: # Website Feedback
+L20: 
+L21: * (required) Your Name[Input]
+L22: 
+L23: * (required) Email[Input]
+L24: 
+L25: Attachment[Input]
+L26: 
+L27: * (required) How can we help you?
+L28: 
+L29: [Input][Input]* (required) I am requesting technical help or providing website feedback
+L30: This contact form is only for website help or website suggestions. If you have questions or comments regarding a published document please contact the publishing agency. Comments or questions about document content can not be answered by OFR staff. Please do not provide confidential information or personal data.
+L31: 
+L32: [Input]
+L33:   * 【0†☰】
+L34:   *     *     * 【1†Home】
+L35:     * Browse
+L36:       * 【2†Titles】
+L37:       * 【3†Agencies】
+L38:     * CFR Updates
+L39:       * 【4†Recent Changes】
+L40:       * 【5†Issue Summaries】
+L41:       * 【6†Corrections】
+L42:     * Finding Aids
+L43:       * 【7†Parallel Table of Authorities】
+L44:       * 【8†Subject Index】
+L45:       * 【9†Agency-prepared Indexes】
+L46:     * Reader Aids
+L47:       * 【10†Reader Aids Home】
+L48:       * 【11†Using the eCFR Point-in-Time System】
+L49:       * 【12†Understanding the eCFR】
+L50:       * 【13†Government Policy and OFR Procedures】
+L51:       * 【14†Developer Resources】
+L52:       * 【15†Recent Site Updates】
+L53:     * My eCFR
+L54:       * 【16†Sign In / Sign Up】
+L55:     * [Input] [Input: Search the eCFR]
+L56: # 【1†eCFR】
+L57: 
+L58: ## The Electronic Code of Federal Regulations
+L59: 
+L60: ###### Enhanced Content :: FR Reference
+L61: 
+L62: Enhanced content is provided to the user to provide additional context.
+L63: 
+L64: ###### Enhanced Content :: FR Reference
+L65: # Title 47
+L66: 
+L67: This content is from the eCFR and is authoritative but unofficial.
+L68: 
+L69: Displaying title 47, up to date as of 10/21/2026. Title 47 was last amended 10/19/2026.
+L70: 
+L71: 【0†view historical versions】
+L72: 
+L73: A 【17†drafting site is available†drafting.ecfr.gov】 for use when drafting amendatory language
+L74: 
+L75: 【17†switch to drafting site†drafting.ecfr.gov】
+L76: 
+L77: Navigate by entering citations or phrases (eg: 1 CFR 1.1 49 CFR 172.101 Organization and Purpose 1/1.1 Regulation Y FAR).
+L78: Choosing an item from citations and headings will bring you directly to the content. Choosing an item from full text search results will bring you to those results. Pressing enter in the search box will also bring you to search results.
+L79: 
+L80: Background and more details are available in the 【18†Search & Navigation】 guide.
+L81: 
+L82: [Input] [Input] [Input]
+L83: 
+L84: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L85: 
+L86: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L87:   *   * Table of Contents
+L88:   * Details
+L89:   * Print/PDF
+L90:   * Display Options
+L91:   *   * Timeline
+L92:   * Go to Date
+L93:   * Compare Dates
+L94:   *   * Published Edition
+L95:   *   * Developer Tools
+L96: ###### eCFR Content
+L97: 
+L98: The Code of Federal Regulations (CFR) is the official legal print publication containing the codification of the general and permanent rules published in the Federal Register by the departments and agencies of the Federal Government. The Electronic Code of Federal Regulations (eCFR) is a continuously updated online version of the CFR. It is not an official legal edition of the CFR.
+L99: 
+L100: 【19†Learn more】 about the eCFR, its status, and the editorial process.
+L101: #### § 15.31 Measurement standards.
+L102: 
+L103: (a) The following measurement procedures are used by the Commission to determine compliance with the technical requirements in this part. Except where noted, copies of these procedures are available from the Commission's current duplicating contractor whose name and address are available from the Commission's Consumer and Governmental Affairs Bureau at 1-888-CALL-FCC (1-888-225-5322).
+L104: 
+L105: (1) FCC/OET MP-2: Measurement of UHF Noise Figures of TV Receivers.
+L106: (2) Unlicensed Personal Communications Service (UPCS) devices are to be measured for compliance using ANSI C63.17-2013: “American National Standard Methods of Measurement of the Electromagnetic and Operational Compatibility of Unlicensed Personal Communications Services (UPCS) Devices” (incorporated by reference, see 【20†§ 15.38】).
+L107: 
+L108: (3) Other intentional radiators must be measured for compliance using the following procedure: ANSI C63.10-2020 (incorporated by reference, see 【20†§ 15.38】).
+L109: (4) Unintentional radiators are to be measured for compliance using the following procedure excluding clauses 4.5.3, 4.6, 6.2.13, 8.2.2, 9, and 13: ANSI C63.4-2014 (incorporated by reference, see 【20†§ 15.38】).
+L110: 
+L111: Note 1 to paragraph (a)(4):
+L112: 
+L113: Digital devices tested to show compliance with the provisions of 【21†§ 15.109(g)(2)】 must be tested following the ANSI C63.4-2014 procedure described in 【22†paragraph (a)(4)】 of this section.
+L114: (b) All parties making compliance measurements on equipment subject to the requirements of this part are urged to use these measurement procedures. Any party using other procedures should ensure that such other procedures can be relied on to produce measurement results compatible with the FCC measurement procedures.
+L115: The description of the measurement procedure used in testing the equipment for compliance and a list of the test equipment actually employed shall be made part of an application for certification or included with the data required to be retained by the party responsible for devices authorized pursuant to Supplier's Declaration of Conformity.
+L116: (c) Except as otherwise indicated in 【23†§§ 15.255】 and 【24†15.256】, for swept frequency equipment, measurements shall be made with the frequency sweep stopped at those frequencies chosen for the measurements to be reported.
+L117: (d) Field strength measurements shall be made, to the extent possible, on an open area test site. Test sites other than open area test sites may be employed if they are properly calibrated so that the measurement results correspond to what would be obtained from an open area test site.
+L118: In the case of equipment for which measurements can be performed only at the installation site, such as perimeter protection systems, carrier current systems, and systems employing a “leaky” coaxial cable as an antenna, measurements for Supplier's Declaration of Conformity or for obtaining a grant of equipment authorization shall be performed at a minimum of three installations that can be demonstrated to be representative of typical installation sites.
+L119: (e) For intentional radiators, measurements of the variation of the input power or the radiated signal level of the fundamental frequency component of the emission, as appropriate, shall be performed with the supply voltage varied between 85% and 115% of the nominal rated supply voltage. For battery operated equipment, the equipment tests shall be performed using a new battery.
+L120: (f) To the extent practicable, the device under test shall be measured at the distance specified in the appropriate rule section. The distance specified corresponds to the horizontal distance between the measurement antenna and the closest point of the equipment under test, support equipment or interconnecting cables as determined by the boundary defined by an imaginary straight line periphery describing a simple geometric configuration enclosing the system containing the equipment under test.
+L121: The equipment under test, support equipment and any interconnecting cables shall be included within this boundary.
+L122: (1) At frequencies at or above 30 MHz, measurements may be performed at a distance other than what is specified provided: measurements are not made in the near field except where it can be shown that near field measurements are appropriate due to the characteristics of the device; and it can be demonstrated that the signal levels needed to be measured at the distance employed can be detected by the measurement equipment.
+L123: Measurements shall not be performed at a distance greater than 30 meters unless it can be further demonstrated that measurements at a distance of 30 meters or less are impractical. When performing measurements at a distance other than that specified, the results shall be extrapolated to the specified distance using an extrapolation factor of 20 dB/decade (inverse linear-distance for field strength measurements; inverse-linear-distance-squared for power density measurements).

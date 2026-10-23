@@ -1,0 +1,66 @@
+test_demo_reaches_pdf_without_claiming_real_compliance (test_labflow.CommandTests.test_demo_reaches_pdf_without_claiming_real_compliance) ... ok
+test_archive_size_limit_is_enforced_before_import (test_labflow.IntakeTests.test_archive_size_limit_is_enforced_before_import) ... ok
+test_corrupted_blob_is_detected_on_read (test_labflow.IntakeTests.test_corrupted_blob_is_detected_on_read) ... ok
+test_duplicate_zip_member_is_rejected (test_labflow.IntakeTests.test_duplicate_zip_member_is_rejected) ... ok
+test_error_html_cannot_be_registered_as_pdf (test_labflow.IntakeTests.test_error_html_cannot_be_registered_as_pdf) ... ok
+test_hash_mismatch_rejects_whole_package (test_labflow.IntakeTests.test_hash_mismatch_rejects_whole_package) ... ok
+test_import_preserves_original_and_starts_unreviewed (test_labflow.IntakeTests.test_import_preserves_original_and_starts_unreviewed) ... ok
+test_late_bad_document_leaves_no_partial_records (test_labflow.IntakeTests.test_late_bad_document_leaves_no_partial_records) ... ok
+test_repeat_package_is_idempotent (test_labflow.IntakeTests.test_repeat_package_is_idempotent) ... ok
+test_same_document_id_cannot_replace_original (test_labflow.IntakeTests.test_same_document_id_cannot_replace_original) ... ok
+test_symbolic_link_archive_member_is_rejected (test_labflow.IntakeTests.test_symbolic_link_archive_member_is_rejected) ... ok
+test_traversal_is_rejected_without_writing_outside_store (test_labflow.IntakeTests.test_traversal_is_rejected_without_writing_outside_store) ... ok
+test_unavailable_record_is_preserved_without_fake_file (test_labflow.IntakeTests.test_unavailable_record_is_preserved_without_fake_file) ... ok
+test_unlisted_file_is_rejected (test_labflow.IntakeTests.test_unlisted_file_is_rejected) ... ok
+test_stdio_client_can_complete_offline_draft_workflow (test_labflow.MCPTransportTests.test_stdio_client_can_complete_offline_draft_workflow) ... Executing <Task pending name='Task-2' coro=<MCPTransportTests.test_stdio_client_can_complete_offline_draft_workflow() running at /workspace/DEVICE/tests/test_labflow.py:338> cb=[_run_until_complete_cb() at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/base_events.py:181] created at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py:100> took 0.166 seconds
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pydantic_settings/sources/utils.py:47: IncompleteFieldDefinitionWarning: Field 'lifespan' has an incomplete definition: its annotation contains an unresolved forward reference, so settings sources may fail to correctly resolve its value. Call `model_rebuild()` on the model where the field is defined, once all the referenced types are defined.
+  warnings.warn(
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+ok
+test_calculation_is_available_but_missing_reviews_block_judgment (test_labflow.WorkflowTests.test_calculation_is_available_but_missing_reviews_block_judgment) ... ok
+test_corrupted_report_evidence_never_exports_a_pass (test_labflow.WorkflowTests.test_corrupted_report_evidence_never_exports_a_pass) ... ok
+test_cross_case_run_is_rejected (test_labflow.WorkflowTests.test_cross_case_run_is_rejected) ... ok
+test_empty_observations_are_blocked (test_labflow.WorkflowTests.test_empty_observations_are_blocked) ... ok
+test_explicit_artifact_provenance_survives_reimport_and_reopen (test_labflow.WorkflowTests.test_explicit_artifact_provenance_survives_reimport_and_reopen) ... ok
+test_failed_execution_cannot_pass (test_labflow.WorkflowTests.test_failed_execution_cannot_pass) ... ok
+test_instrument_corrections_cannot_be_applied_twice (test_labflow.WorkflowTests.test_instrument_corrections_cannot_be_applied_twice) ... ok
+test_invalid_unit_or_nonfinite_data_never_pass (test_labflow.WorkflowTests.test_invalid_unit_or_nonfinite_data_never_pass) ... ok
+test_latest_failed_attempt_blocks_prior_pass (test_labflow.WorkflowTests.test_latest_failed_attempt_blocks_prior_pass) ... ok
+test_legacy_store_recovers_synthetic_run_provenance (test_labflow.WorkflowTests.test_legacy_store_recovers_synthetic_run_provenance) ... ok
+test_matching_raw_identity_is_accepted (test_labflow.WorkflowTests.test_matching_raw_identity_is_accepted) ... ok
+test_missing_correction_state_is_not_assumed_uncorrected (test_labflow.WorkflowTests.test_missing_correction_state_is_not_assumed_uncorrected) ... ok
+test_not_applicable_requires_reason_and_cannot_accept_run (test_labflow.WorkflowTests.test_not_applicable_requires_reason_and_cannot_accept_run) ... ok
+test_power_conversion_is_independently_known (test_labflow.WorkflowTests.test_power_conversion_is_independently_known) ... ok
+test_product_markup_is_escaped_in_report (test_labflow.WorkflowTests.test_product_markup_is_escaped_in_report) ... ok
+test_raw_identity_mismatches_block_single_observation_and_envelope (test_labflow.WorkflowTests.test_raw_identity_mismatches_block_single_observation_and_envelope) ... ok
+test_report_is_draft_and_contains_traceable_raw_evidence (test_labflow.WorkflowTests.test_report_is_draft_and_contains_traceable_raw_evidence) ... ok
+test_report_labels_synthetic_evidence_in_previous_attempts (test_labflow.WorkflowTests.test_report_labels_synthetic_evidence_in_previous_attempts) ... ok
+test_reused_case_id_cannot_change_product_or_synthetic_flag (test_labflow.WorkflowTests.test_reused_case_id_cannot_change_product_or_synthetic_flag) ... ok
+test_reviewed_case_preserves_raw_input_and_preliminary_result (test_labflow.WorkflowTests.test_reviewed_case_preserves_raw_input_and_preliminary_result) ... ok
+test_source_corruption_revokes_previously_computed_pass (test_labflow.WorkflowTests.test_source_corruption_revokes_previously_computed_pass) ... ok
+test_synthetic_flag_reaches_decision (test_labflow.WorkflowTests.test_synthetic_flag_reaches_decision) ... ok
+test_synthetic_package_evidence_cannot_be_reused_as_real_measurement (test_labflow.WorkflowTests.test_synthetic_package_evidence_cannot_be_reused_as_real_measurement) ... ok
+test_synthetic_setup_and_calibration_each_block_real_case (test_labflow.WorkflowTests.test_synthetic_setup_and_calibration_each_block_real_case) ... ok
+test_unknown_scope_is_rejected (test_labflow.WorkflowTests.test_unknown_scope_is_rejected) ... ok
+test_zero_margin_boundary_passes_without_rounding (test_labflow.WorkflowTests.test_zero_margin_boundary_passes_without_rounding) ... ok
+test_distinguishes_devices_from_related_parts (test_registry.RegistryTests.test_distinguishes_devices_from_related_parts) ... ok
+test_identifiers_and_unknowns (test_registry.RegistryTests.test_identifiers_and_unknowns) ... ok
+test_import_preserves_duplicates_and_never_interprets_note_as_instruction (test_registry.RegistryTests.test_import_preserves_duplicates_and_never_interprets_note_as_instruction) ... ok
+test_known_aliases_and_nested_html (test_registry.RegistryTests.test_known_aliases_and_nested_html) ... ok
+test_legacy_brands_and_ambiguous_names_stay_separate (test_registry.RegistryTests.test_legacy_brands_and_ambiguous_names_stay_separate) ... ok
+test_malformed_input_does_not_publish_partial_database (test_registry.RegistryTests.test_malformed_input_does_not_publish_partial_database) ... ok
+test_suspected_typo_is_not_merged (test_registry.RegistryTests.test_suspected_typo_is_not_merged) ... ok
+
+----------------------------------------------------------------------
+Ran 48 tests in 0.865s
+
+OK

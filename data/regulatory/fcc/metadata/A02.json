@@ -1,0 +1,15 @@
+{
+  "source_id": "A02",
+  "title": "ANSI IBR FAQ",
+  "url": "https://ibr.ansi.org/Faq/Default.aspx",
+  "kind": "access_information",
+  "version": "2026-10-23 확인",
+  "observed_at_utc": "2026-10-23T08:42:52.496Z",
+  "status": "access_route_verified",
+  "original_acquired": false,
+  "original_sha256": null,
+  "latest_verified": false,
+  "retrieval": "web_connector_official_catalog_or_access_page",
+  "local_metadata": "data/regulatory/fcc/metadata/A02.json",
+  "notes": "IBR 포털은 등록과 FileOpen 플러그인을 요구하며 장치에 묶인 열람, 인쇄/복사/붙여넣기/저장 제한 및 접근 만료를 안내. 열람 권한을 AI DB 저장 권한으로 간주하지 않음."
+}

@@ -1,0 +1,420 @@
+OFFICIAL PAGE TEXT EXTRACTS — NOT ORIGINAL FILES
+Captured 2026-10-23; supports format_baseline.md
+eCFR :: 47 CFR 2.1033 -- Application for certification. (https://www.ecfr.gov/current/title-47/section-2.1033)
+【turn450950view0】 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.ecfr.gov/current/title-47/section-2.1033","lineno":125}); Redirected to URL: https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-2/subpart-J/subject-group-ECFR55475dd0ca1a058/section-2.1033; Total lines: 236
+L78: Choosing an item from citations and headings will bring you directly to the content. Choosing an item from full text search results will bring you to those results. Pressing enter in the search box will also bring you to search results.
+L79: 
+L80: Background and more details are available in the 【18†Search & Navigation】 guide.
+L81: 
+L82: [Input] [Input] [Input]
+L83: 
+L84: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L85: 
+L86: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L87:   *   * Table of Contents
+L88:   * Details
+L89:   * Print/PDF
+L90:   * Display Options
+L91:   *   * Timeline
+L92:   * Go to Date
+L93:   * Compare Dates
+L94:   *   * Published Edition
+L95:   *   * Developer Tools
+L96: ###### eCFR Content
+L97: 
+L98: The Code of Federal Regulations (CFR) is the official legal print publication containing the codification of the general and permanent rules published in the Federal Register by the departments and agencies of the Federal Government. The Electronic Code of Federal Regulations (eCFR) is a continuously updated online version of the CFR. It is not an official legal edition of the CFR.
+L99: 
+L100: 【19†Learn more】 about the eCFR, its status, and the editorial process.
+L101: ###### Editorial Note on 【20†Part 2】
+L102: 
+L103: #### Editorial Note:
+L104: 
+L105: Nomenclature changes to part 2 appear at 【21†63 FR 54077†www.federalregister.gov】, Oct. 8, 1998.
+L106: 
+L107: #### § 2.1033 Application for certification.
+L108: ###### Cross Reference
+L109: 
+L110: Link to an amendment published at 【22†90 FR 38070†www.federalregister.gov】, Aug. 7, 2025.
+L111: 
+L112: (a) An application for certification shall be filed on FCC Form 731 with all questions answered. Items that do not apply shall be so noted.
+L113: 
+L114: (b) Applications for equipment operating under Parts 11, 15 and 18 of the rules shall be accompanied by a technical report containing the following information:
+L115: (1) The full name, mailing address and physical address (if different from mailing address), email address, and telephone number of:
+L116: 
+L117: (i) The applicant for certification; and
+L118: 
+L119: (ii) The applicant's agent for service of process in the United States for matters relating to the authorized equipment.
+L120: 
+L121: (2) A written and signed certification that, as of, the filing date of the notice, the equipment to which the change applies is not prohibited from receiving an equipment authorization pursuant to 【23†§ 2.903】;
+L122: (3) An affirmative or negative statement as to whether the applicant is identified on the Covered List, established pursuant to 【24†§ 1.50002 of this chapter】, as an entity producing covered communications equipment; and
+L123: 
+L124: (4) The written and signed certifications required by 【25†§ 2.911(d)(7)】.
+L125: 
+L126: (5) FCC identifier.
+L127: (6) A copy of the installation and operating instructions to be furnished the user. A draft copy of the instructions may be submitted if the actual document is not available. The actual document shall be furnished to the FCC when it becomes available.
+L128: 
+L129: (7) A brief description of the circuit functions of the device along with a statement describing how the device operates. This statement should contain a description of the ground system and antenna, if any, used with the device.
+L130: (8) A block diagram showing the frequency of all oscillators in the device. The signal path and frequency shall be indicated at each block. The tuning range(s) and intermediate frequency(ies) shall be indicated at each block. A schematic diagram is also required for intentional radiators.
+L131: (9) A report of measurements showing compliance with the pertinent FCC technical requirements. This report shall identify the test procedure used (e.g., specify the FCC test procedure, or industry test procedure that was used), the date the measurements were made, the location where the measurements were made, and the device that was tested (model and serial number, if available).
+L132: The report shall include sample calculations showing how the measurement results were converted for comparison with the technical requirements.
+L133: (10) A sufficient number of photographs to clearly show the exterior appearance, the construction, the component placement on the chassis, and the chassis assembly. The exterior views shall show the overall appearance, the antenna used with the device (if any), the controls available to the user, and the required identification label in sufficient detail so that the name and FCC identifier can be read.
+L134: In lieu of a photograph of the label, a sample label (or facsimile thereof) may be submitted together with a sketch showing where this label will be placed on the equipment. Photographs shall be of size A4 (21 cm × 29.7 cm) or 8 × 10 inches (20.3 cm × 25.4 cm). Smaller photographs may be submitted provided they are sharp and clear, show the necessary detail, and are mounted on A4 (21 cm × 29.7 cm) or 8.5 × 11 inch (21.6 cm × 27.9 cm) paper.
+L135: A sample label or facsimile together with the sketch showing the placement of this label shall be on the same size paper.
+L136: (11) If the equipment for which certification is being sought must be tested with peripheral or accessory devices connected or installed, a brief description of those peripherals or accessories. The peripheral or accessory devices shall be unmodified, commercially available equipment.
+L137: 
+L138: (12) For equipment subject to the provisions of 【26†part 15 of this chapter】, the application shall indicate if the equipment is being authorized pursuant to the transition provisions in 【27†§ 15.37 of this chapter】.
+L139: (13) [Reserved]
+L140: 
+L141: (14) Applications for certification of transmitters operating within the 59.0-64.0 GHz band under 【26†part 15 of this chapter】 shall also be accompanied by an exhibit demonstrating compliance with the provisions of 【28†§ 15.255(g) of this chapter】.
+L142: 
+L143: (15) An application for certification of a software defined radio must include the information required by 【29†§ 2.944】.
+L144: (16) Applications for certification of U-NII devices in the 5.15-5.35 GHz and the 5.47-5.85 GHz bands must include a high level operational description of the security procedures that control the radio frequency operating parameters and ensure that unauthorized modifications cannot be made.
+L145: (17) Contain at least one drawing or photograph showing the test set-up for each of the required types of tests applicable to the device for which certification is requested. These drawings or photographs must show enough detail to confirm other information contained in the test report. Any photographs used must be focused originals without glare or dark spots and must clearly show the test configuration used.
+L146: (c) Applications for equipment other than that operating under 【26†parts 15】, 【30†11】 and 【31†18】 of this chapter shall be accompanied by a technical report containing the following information:
+L147: 
+L148: (1) The full name, mailing address and physical address (if different from mailing address), email address, and telephone number of:
+L149: 
+L150: (i) The applicant for certification; and
+L151: 
+L152: (ii) The applicant's agent for service of process in the United States for matters relating to the authorized equipment.
+
+--------------------------------------------------------------------------------
+eCFR :: 47 CFR 2.938 -- Retention of records. (https://www.ecfr.gov/current/title-47/section-2.938)
+【turn450950view1】 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.ecfr.gov/current/title-47/section-2.938","lineno":105}); Redirected to URL: https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-2/subpart-J/subject-group-ECFRd5ad3b739dbf27a/section-2.938; Total lines: 183
+L33:   * 【0†☰】
+L34:   *     *     * 【1†Home】
+L35:     * Browse
+L36:       * 【2†Titles】
+L37:       * 【3†Agencies】
+L38:     * CFR Updates
+L39:       * 【4†Recent Changes】
+L40:       * 【5†Issue Summaries】
+L41:       * 【6†Corrections】
+L42:     * Finding Aids
+L43:       * 【7†Parallel Table of Authorities】
+L44:       * 【8†Subject Index】
+L45:       * 【9†Agency-prepared Indexes】
+L46:     * Reader Aids
+L47:       * 【10†Reader Aids Home】
+L48:       * 【11†Using the eCFR Point-in-Time System】
+L49:       * 【12†Understanding the eCFR】
+L50:       * 【13†Government Policy and OFR Procedures】
+L51:       * 【14†Developer Resources】
+L52:       * 【15†Recent Site Updates】
+L53:     * My eCFR
+L54:       * 【16†Sign In / Sign Up】
+L55:     * [Input] [Input: Search the eCFR]
+L56: # 【1†eCFR】
+L57: 
+L58: ## The Electronic Code of Federal Regulations
+L59: 
+L60: ###### Enhanced Content :: FR Reference
+L61: 
+L62: Enhanced content is provided to the user to provide additional context.
+L63: 
+L64: ###### Enhanced Content :: FR Reference
+L65: # Title 47
+L66: 
+L67: This content is from the eCFR and is authoritative but unofficial.
+L68: 
+L69: Displaying title 47, up to date as of 10/21/2026. Title 47 was last amended 10/19/2026.
+L70: 
+L71: 【0†view historical versions】
+L72: 
+L73: A 【17†drafting site is available†drafting.ecfr.gov】 for use when drafting amendatory language
+L74: 
+L75: 【17†switch to drafting site†drafting.ecfr.gov】
+L76: 
+L77: Navigate by entering citations or phrases (eg: 1 CFR 1.1 49 CFR 172.101 Organization and Purpose 1/1.1 Regulation Y FAR).
+L78: Choosing an item from citations and headings will bring you directly to the content. Choosing an item from full text search results will bring you to those results. Pressing enter in the search box will also bring you to search results.
+L79: 
+L80: Background and more details are available in the 【18†Search & Navigation】 guide.
+L81: 
+L82: [Input] [Input] [Input]
+L83: 
+L84: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L85: 
+L86: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L87:   *   * Table of Contents
+L88:   * Details
+L89:   * Print/PDF
+L90:   * Display Options
+L91:   *   * Timeline
+L92:   * Go to Date
+L93:   * Compare Dates
+L94:   *   * Published Edition
+L95:   *   * Developer Tools
+L96: ###### eCFR Content
+L97: 
+L98: The Code of Federal Regulations (CFR) is the official legal print publication containing the codification of the general and permanent rules published in the Federal Register by the departments and agencies of the Federal Government. The Electronic Code of Federal Regulations (eCFR) is a continuously updated online version of the CFR. It is not an official legal edition of the CFR.
+L99: 
+L100: 【19†Learn more】 about the eCFR, its status, and the editorial process.
+L101: ###### Editorial Note on 【20†Part 2】
+L102: 
+L103: #### Editorial Note:
+L104: 
+L105: Nomenclature changes to part 2 appear at 【21†63 FR 54077†www.federalregister.gov】, Oct. 8, 1998.
+L106: 
+L107: #### § 2.938 Retention of records.
+L108: ###### Cross Reference
+L109: 
+L110: Link to an amendment published at 【22†90 FR 38067†www.federalregister.gov】, Aug. 7, 2025.
+L111: 
+L112: (a) For equipment subject to the equipment authorization procedures in this part, the responsible party shall maintain the records listed as follows:
+L113: 
+L114: (1) A record of the original design drawings and specifications and all changes that have been made that may affect compliance with the standards and the requirements of 【23†§ 2.931】.
+L115: (2) A record of the procedures used for production inspection and testing to ensure conformance with the standards and the requirements of 【23†§ 2.931】.
+L116: 
+L117: (3) A record of the test results that demonstrate compliance with the appropriate regulations in this chapter.
+L118: 
+L119: (b) For equipment subject to Supplier's Declaration of Conformity, the responsible party shall, in addition to the requirements in 【24†paragraph (a)】 of this section, maintain the following records:
+L120: (1) Measurements made on an appropriate test site that demonstrates compliance with the applicable regulations in this chapter. The record shall:
+L121: 
+L122: (i) Indicate the actual date all testing was performed;
+L123: 
+L124: (ii) State the name of the test laboratory, company, or individual performing the testing;
+L125: 
+L126: (iii) Contain a description of how the device was actually tested, identifying the measurement procedure and test equipment that was used;
+L127: (iv) Contain a description of the equipment under test (EUT) and support equipment connected to, or installed within, the EUT;
+L128: 
+L129: (v) Identify the EUT and support equipment by trade name and model number and, if appropriate, by FCC Identifier and serial number;
+L130: 
+L131: (vi) Indicate the types and lengths of connecting cables used and how they were arranged or moved during testing;
+L132: (vii) Contain at least two drawings or photographs showing the test set-up for the highest line conducted emission and showing the test set-up for the highest radiated emission. These drawings or photographs must show enough detail to confirm other information contained in the test report. Any photographs used must clearly show the test configuration used;
+L133: (viii) List all modifications, if any, made to the EUT by the testing company or individual to achieve compliance with the regulations in this chapter;
+L134: 
+L135: (ix) Include all of the data required to show compliance with the appropriate regulations in this chapter;
+L136: 
+L137: (x) Contain, on the test report, the signature of the individual responsible for testing the product along with the name and signature of an official of the responsible party, as designated in 【25†§ 2.909】; and
+L138: (xi) A copy of the compliance information, as described in 【26†§ 2.1077】, required to be provided with the equipment.
+L139: 
+L140: (2) A written and signed certification that, as of the date of first importation or marketing of the equipment, the equipment for which the responsible party maintains Supplier's Declaration of Conformity is not produced by any entity identified on the Covered List, established pursuant to 【27†§ 1.50002 of this chapter】, as producing covered communications equipment.
+L141: (c) The provisions of 【24†paragraph (a)】 of this section shall also apply to a manufacturer of equipment produced under an agreement with the original responsible party. The retention of the records by the manufacturer under these circumstances shall satisfy the grantee's responsibility under 【24†paragraph (a)】 of this section.
+L142: (d) For equipment subject to more than one equipment authorization procedure, the responsible party must retain the records required under all applicable provisions of this section.
+L143: 
+L144: (e) For equipment subject to rules that include a transition period, the records must indicate the particular transition provisions that were in effect when the equipment was determined to be compliant.
+L145: (f) For equipment subject to certification, records shall be retained for a one year period after the marketing of the associated equipment has been permanently discontinued, or until the conclusion of an investigation or a proceeding if the responsible party (or, under 【28†paragraph (c)】 of this section, the manufacturer) is officially notified that an investigation or any other administrative proceeding involving its equipment has been instituted.
+L146: For all other records kept pursuant to this section, a two-year period shall apply.
+L147: (g) If radio frequency equipment is modified by any party other than the original responsible party, and that party is not working under the authorization of the original responsible party, the party performing the modifications is not required to obtain the original design drawings specified in 【29†paragraph (a)(1)】 of this section.
+
+--------------------------------------------------------------------------------
+eCFR :: 47 CFR 2.947 -- Measurement procedure. (https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-2/subpart-J/subject-group-ECFRd5ad3b739dbf27a/section-2.947)
+【turn450950view2】 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-2/subpart-J/subject-group-ECFRd5ad3b739dbf27a/section-2.947","lineno":105}); Total lines: 155
+L33:   * 【0†☰】
+L34:   *     *     * 【1†Home】
+L35:     * Browse
+L36:       * 【2†Titles】
+L37:       * 【3†Agencies】
+L38:     * CFR Updates
+L39:       * 【4†Recent Changes】
+L40:       * 【5†Issue Summaries】
+L41:       * 【6†Corrections】
+L42:     * Finding Aids
+L43:       * 【7†Parallel Table of Authorities】
+L44:       * 【8†Subject Index】
+L45:       * 【9†Agency-prepared Indexes】
+L46:     * Reader Aids
+L47:       * 【10†Reader Aids Home】
+L48:       * 【11†Using the eCFR Point-in-Time System】
+L49:       * 【12†Understanding the eCFR】
+L50:       * 【13†Government Policy and OFR Procedures】
+L51:       * 【14†Developer Resources】
+L52:       * 【15†Recent Site Updates】
+L53:     * My eCFR
+L54:       * 【16†Sign In / Sign Up】
+L55:     * [Input] [Input: Search the eCFR]
+L56: # 【1†eCFR】
+L57: 
+L58: ## The Electronic Code of Federal Regulations
+L59: 
+L60: ###### Enhanced Content :: FR Reference
+L61: 
+L62: Enhanced content is provided to the user to provide additional context.
+L63: 
+L64: ###### Enhanced Content :: FR Reference
+L65: # Title 47
+L66: 
+L67: This content is from the eCFR and is authoritative but unofficial.
+L68: 
+L69: Displaying title 47, up to date as of 10/21/2026. Title 47 was last amended 10/19/2026.
+L70: 
+L71: 【0†view historical versions】
+L72: 
+L73: A 【17†drafting site is available†drafting.ecfr.gov】 for use when drafting amendatory language
+L74: 
+L75: 【17†switch to drafting site†drafting.ecfr.gov】
+L76: 
+L77: Navigate by entering citations or phrases (eg: 1 CFR 1.1 49 CFR 172.101 Organization and Purpose 1/1.1 Regulation Y FAR).
+L78: Choosing an item from citations and headings will bring you directly to the content. Choosing an item from full text search results will bring you to those results. Pressing enter in the search box will also bring you to search results.
+L79: 
+L80: Background and more details are available in the 【18†Search & Navigation】 guide.
+L81: 
+L82: [Input] [Input] [Input]
+L83: 
+L84: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L85: 
+L86: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L87:   *   * Table of Contents
+L88:   * Details
+L89:   * Print/PDF
+L90:   * Display Options
+L91:   *   * Timeline
+L92:   * Go to Date
+L93:   * Compare Dates
+L94:   *   * Published Edition
+L95:   *   * Developer Tools
+L96: ###### eCFR Content
+L97: 
+L98: The Code of Federal Regulations (CFR) is the official legal print publication containing the codification of the general and permanent rules published in the Federal Register by the departments and agencies of the Federal Government. The Electronic Code of Federal Regulations (eCFR) is a continuously updated online version of the CFR. It is not an official legal edition of the CFR.
+L99: 
+L100: 【19†Learn more】 about the eCFR, its status, and the editorial process.
+L101: ###### Editorial Note on 【20†Part 2】
+L102: 
+L103: #### Editorial Note:
+L104: 
+L105: Nomenclature changes to part 2 appear at 【21†63 FR 54077†www.federalregister.gov】, Oct. 8, 1998.
+L106: #### § 2.947 Measurement procedure.
+L107: 
+L108: (a) Test data must be measured in accordance with the following standards or measurement procedures:
+L109: 
+L110: (1) Those set forth in bulletins or reports prepared by the Commission's Office of Engineering and Technology. These will be issued as required, and specified in the particular part of the rules where applicable.
+L111: (2) Those acceptable to the Commission and published by national engineering societies such as the Electronic Industries Association, the Institute of Electrical and Electronic Engineers, Inc., and the American National Standards Institute.
+L112: (3) Any measurement procedure acceptable to the Commission may be used to prepare data demonstrating compliance with the requirements of this chapter. Advisory information regarding measurement procedures can be found in the Commission's Knowledge Database, which is available at 【22†www.fcc.gov/labhelp†www.fcc.gov】.
+L113: 
+L114: (b) Information submitted pursuant to 【23†paragraph (a)】 of this section shall completely identify the specific standard or measurement procedure used.
+L115: (c) In the case of equipment requiring measurement procedures not specified in the references set forth in 【24†paragraphs (a)(1)】 through 【25†(3)】 of this section, the applicant shall submit a detailed description of the measurement procedures actually used.
+L116: 
+L117: (d) A listing of the test equipment used shall be submitted.
+L118: 
+L119: (e) If deemed necessary, additional information may be required concerning the measurement procedures employed in obtaining the data submitted for equipment authorization purposes.
+L120: (f) A composite system is a system that incorporates different devices contained either in a single enclosure or in separate enclosures connected by wire or cable. If the individual devices in a composite system are subject to different technical standards, each such device must comply with its specific standards. In no event may the measured emissions of the composite system exceed the highest level permitted for an individual component.
+L121: Testing for compliance with the different standards shall be performed with all of the devices in the system functioning. If the composite system incorporates more than one antenna or other radiating source and these radiating sources are designed to emit at the same time, measurements of conducted and radiated emissions shall be performed with all radiating sources that are to be employed emitting.
+L122: (g) For each technical requirement in this chapter, the test report shall provide adequate test data to demonstrate compliance for the requirement, or in absence of test data, justification acceptable to the Commission as to why test data is not required.
+L123: [【26†42 FR 44987†www.federalregister.gov】, Sept. 8, 1977, as amended at 【27†44 FR 39181†www.federalregister.gov】, July 5, 1979; 【28†51 FR 12616†www.federalregister.gov】, Apr. 14, 1986; 【29†80 FR 33442†www.federalregister.gov】, June 12, 2015; 【30†82 FR 50828†www.federalregister.gov】, Nov. 2, 2017]
+L124: ###### eCFR Content
+L125: 
+L126: ## Pages
+L127: 
+L128:   * 【1†Home】
+L129:   * 【1†Titles】
+L130:   * 【31†Search】
+L131:   * 【4†Recent Changes】
+L132:   * 【32†Corrections】
+L133: 
+L134: ## Reader Aids
+L135: 
+L136:   * 【11†Using the eCFR Point-in-Time System】
+L137:   * 【12†Understanding the eCFR】
+L138:   * 【13†Government Policy and OFR Procedures】
+L139:   * 【14†Developer Resources】
+L140:   * 【15†Recent Site Updates】
+L141: ## Information
+L142: 
+L143:   * 【33†About This Site】
+L144:   * 【34†Legal Status】
+L145:   * 【35†Privacy】
+L146:   * 【36†Accessibility】
+L147:   * 【37†FOIA】
+L148:   * 【38†No Fear Act†www.archives.gov】
+L149:   * 【39†Continuity Information†www.archives.gov】
+L150: 
+L151: ## My eCFR
+L152: 
+L153:   * 【40†My Subscriptions】
+L154:   * 【16†Sign In / Sign Up】
+
+--------------------------------------------------------------------------------
+eCFR :: 47 CFR 15.31 -- Measurement standards. (https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.31)
+【turn450950view3】 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.31","lineno":100}); Total lines: 204
+L33:   * 【0†☰】
+L34:   *     *     * 【1†Home】
+L35:     * Browse
+L36:       * 【2†Titles】
+L37:       * 【3†Agencies】
+L38:     * CFR Updates
+L39:       * 【4†Recent Changes】
+L40:       * 【5†Issue Summaries】
+L41:       * 【6†Corrections】
+L42:     * Finding Aids
+L43:       * 【7†Parallel Table of Authorities】
+L44:       * 【8†Subject Index】
+L45:       * 【9†Agency-prepared Indexes】
+L46:     * Reader Aids
+L47:       * 【10†Reader Aids Home】
+L48:       * 【11†Using the eCFR Point-in-Time System】
+L49:       * 【12†Understanding the eCFR】
+L50:       * 【13†Government Policy and OFR Procedures】
+L51:       * 【14†Developer Resources】
+L52:       * 【15†Recent Site Updates】
+L53:     * My eCFR
+L54:       * 【16†Sign In / Sign Up】
+L55:     * [Input] [Input: Search the eCFR]
+L56: # 【1†eCFR】
+L57: 
+L58: ## The Electronic Code of Federal Regulations
+L59: 
+L60: ###### Enhanced Content :: FR Reference
+L61: 
+L62: Enhanced content is provided to the user to provide additional context.
+L63: 
+L64: ###### Enhanced Content :: FR Reference
+L65: # Title 47
+L66: 
+L67: This content is from the eCFR and is authoritative but unofficial.
+L68: 
+L69: Displaying title 47, up to date as of 10/21/2026. Title 47 was last amended 10/19/2026.
+L70: 
+L71: 【0†view historical versions】
+L72: 
+L73: A 【17†drafting site is available†drafting.ecfr.gov】 for use when drafting amendatory language
+L74: 
+L75: 【17†switch to drafting site†drafting.ecfr.gov】
+L76: 
+L77: Navigate by entering citations or phrases (eg: 1 CFR 1.1 49 CFR 172.101 Organization and Purpose 1/1.1 Regulation Y FAR).
+L78: Choosing an item from citations and headings will bring you directly to the content. Choosing an item from full text search results will bring you to those results. Pressing enter in the search box will also bring you to search results.
+L79: 
+L80: Background and more details are available in the 【18†Search & Navigation】 guide.
+L81: 
+L82: [Input] [Input] [Input]
+L83: 
+L84: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L85: 
+L86: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L87:   *   * Table of Contents
+L88:   * Details
+L89:   * Print/PDF
+L90:   * Display Options
+L91:   *   * Timeline
+L92:   * Go to Date
+L93:   * Compare Dates
+L94:   *   * Published Edition
+L95:   *   * Developer Tools
+L96: ###### eCFR Content
+L97: 
+L98: The Code of Federal Regulations (CFR) is the official legal print publication containing the codification of the general and permanent rules published in the Federal Register by the departments and agencies of the Federal Government. The Electronic Code of Federal Regulations (eCFR) is a continuously updated online version of the CFR. It is not an official legal edition of the CFR.
+L99: 
+L100: 【19†Learn more】 about the eCFR, its status, and the editorial process.
+L101: #### § 15.31 Measurement standards.
+L102: 
+L103: (a) The following measurement procedures are used by the Commission to determine compliance with the technical requirements in this part. Except where noted, copies of these procedures are available from the Commission's current duplicating contractor whose name and address are available from the Commission's Consumer and Governmental Affairs Bureau at 1-888-CALL-FCC (1-888-225-5322).
+L104: 
+L105: (1) FCC/OET MP-2: Measurement of UHF Noise Figures of TV Receivers.
+L106: (2) Unlicensed Personal Communications Service (UPCS) devices are to be measured for compliance using ANSI C63.17-2013: “American National Standard Methods of Measurement of the Electromagnetic and Operational Compatibility of Unlicensed Personal Communications Services (UPCS) Devices” (incorporated by reference, see 【20†§ 15.38】).
+L107: 
+L108: (3) Other intentional radiators must be measured for compliance using the following procedure: ANSI C63.10-2020 (incorporated by reference, see 【20†§ 15.38】).
+L109: (4) Unintentional radiators are to be measured for compliance using the following procedure excluding clauses 4.5.3, 4.6, 6.2.13, 8.2.2, 9, and 13: ANSI C63.4-2014 (incorporated by reference, see 【20†§ 15.38】).
+L110: 
+L111: Note 1 to paragraph (a)(4):
+L112: 
+L113: Digital devices tested to show compliance with the provisions of 【21†§ 15.109(g)(2)】 must be tested following the ANSI C63.4-2014 procedure described in 【22†paragraph (a)(4)】 of this section.
+L114: (b) All parties making compliance measurements on equipment subject to the requirements of this part are urged to use these measurement procedures. Any party using other procedures should ensure that such other procedures can be relied on to produce measurement results compatible with the FCC measurement procedures.
+L115: The description of the measurement procedure used in testing the equipment for compliance and a list of the test equipment actually employed shall be made part of an application for certification or included with the data required to be retained by the party responsible for devices authorized pursuant to Supplier's Declaration of Conformity.
+L116: (c) Except as otherwise indicated in 【23†§§ 15.255】 and 【24†15.256】, for swept frequency equipment, measurements shall be made with the frequency sweep stopped at those frequencies chosen for the measurements to be reported.
+L117: (d) Field strength measurements shall be made, to the extent possible, on an open area test site. Test sites other than open area test sites may be employed if they are properly calibrated so that the measurement results correspond to what would be obtained from an open area test site.
+L118: In the case of equipment for which measurements can be performed only at the installation site, such as perimeter protection systems, carrier current systems, and systems employing a “leaky” coaxial cable as an antenna, measurements for Supplier's Declaration of Conformity or for obtaining a grant of equipment authorization shall be performed at a minimum of three installations that can be demonstrated to be representative of typical installation sites.
+L119: (e) For intentional radiators, measurements of the variation of the input power or the radiated signal level of the fundamental frequency component of the emission, as appropriate, shall be performed with the supply voltage varied between 85% and 115% of the nominal rated supply voltage. For battery operated equipment, the equipment tests shall be performed using a new battery.
+L120: (f) To the extent practicable, the device under test shall be measured at the distance specified in the appropriate rule section. The distance specified corresponds to the horizontal distance between the measurement antenna and the closest point of the equipment under test, support equipment or interconnecting cables as determined by the boundary defined by an imaginary straight line periphery describing a simple geometric configuration enclosing the system containing the equipment under test.
+L121: The equipment under test, support equipment and any interconnecting cables shall be included within this boundary.
+L122: (1) At frequencies at or above 30 MHz, measurements may be performed at a distance other than what is specified provided: measurements are not made in the near field except where it can be shown that near field measurements are appropriate due to the characteristics of the device; and it can be demonstrated that the signal levels needed to be measured at the distance employed can be detected by the measurement equipment.
+
+

@@ -1,0 +1,393 @@
+{
+  "generated_at_kst": "2026-10-23T16:44:34.520543+09:00",
+  "grain": "원본 관리대장의 등록 1행; 실물 장비 고유 대수와 다를 수 있음",
+  "source": {
+    "original_filename": "시험설비_관리대장 (16).xlsx",
+    "sha256": "a6dfd5dcbe68f63b12a381c92512cd7b9985ab62a312c529adb9948f81d16d41",
+    "record_count": 6470,
+    "sheet_count": 1
+  },
+  "equipment_records": 6470,
+  "raw_manufacturer_labels": 833,
+  "manufacturer_groups": 610,
+  "manufacturer_groups_are_verified_companies": false,
+  "models": 2867,
+  "equipment_without_model_master": 270,
+  "equipment_without_manufacturer": 76,
+  "equipment_without_model": 213,
+  "equipment_without_serial": 758,
+  "equipment_without_name": 1,
+  "unclassified_records": 60,
+  "legacy_identifiers": 707,
+  "category_count": 45,
+  "category_counts": [
+    {
+      "category_id": "antenna",
+      "domain_ko": "RF 안테나",
+      "category_ko": "안테나·방사 루프",
+      "equipment_records": 503
+    },
+    {
+      "category_id": "attenuator",
+      "domain_ko": "RF 수동부품",
+      "category_ko": "감쇠기",
+      "equipment_records": 480
+    },
+    {
+      "category_id": "probe_sensor",
+      "domain_ko": "센서·프로브",
+      "category_ko": "전압·전류·장·가속도 센서",
+      "equipment_records": 376
+    },
+    {
+      "category_id": "power_supply",
+      "domain_ko": "전력·전기",
+      "category_ko": "전원공급기·전력 시뮬레이터",
+      "equipment_records": 336
+    },
+    {
+      "category_id": "sar",
+      "domain_ko": "SAR·전자기장",
+      "category_ko": "SAR·팬텀·전자기장 시험 부속",
+      "equipment_records": 277
+    },
+    {
+      "category_id": "emc_network",
+      "domain_ko": "EMC 결합망",
+      "category_ko": "LISN·CDN·결합망",
+      "equipment_records": 259
+    },
+    {
+      "category_id": "rf_amplifier",
+      "domain_ko": "RF·신호 증폭",
+      "category_ko": "증폭기·프리앰프",
+      "equipment_records": 258
+    },
+    {
+      "category_id": "rf_coupler",
+      "domain_ko": "RF 수동부품",
+      "category_ko": "커플러·분배기·정합 부품",
+      "equipment_records": 256
+    },
+    {
+      "category_id": "chamber",
+      "domain_ko": "환경·신뢰성",
+      "category_ko": "환경·열·진공·차폐 챔버",
+      "equipment_records": 237
+    },
+    {
+      "category_id": "filter",
+      "domain_ko": "RF 수동부품",
+      "category_ko": "필터·듀플렉서",
+      "equipment_records": 187
+    },
+    {
+      "category_id": "communication_tester",
+      "domain_ko": "RF·무선 측정",
+      "category_ko": "무선통신·프로토콜 시험기",
+      "equipment_records": 186
+    },
+    {
+      "category_id": "temperature_humidity",
+      "domain_ko": "환경 계측",
+      "category_ko": "온도·습도 계측기",
+      "equipment_records": 184
+    },
+    {
+      "category_id": "fixture_accessory",
+      "domain_ko": "치구·부속품",
+      "category_ko": "시험 치구·케이블·부속품",
+      "equipment_records": 182
+    },
+    {
+      "category_id": "rf_analyzer",
+      "domain_ko": "RF·무선 측정",
+      "category_ko": "스펙트럼·신호·EMI 분석기",
+      "equipment_records": 171
+    },
+    {
+      "category_id": "passive_electrical",
+      "domain_ko": "전기 수동부품",
+      "category_ko": "저항·션트·커패시터·변압기",
+      "equipment_records": 169
+    },
+    {
+      "category_id": "signal_generator",
+      "domain_ko": "신호 발생",
+      "category_ko": "신호·파형·GNSS 발생기",
+      "equipment_records": 157
+    },
+    {
+      "category_id": "power_sensor",
+      "domain_ko": "RF·무선 측정",
+      "category_ko": "전력 센서",
+      "equipment_records": 156
+    },
+    {
+      "category_id": "switch_system",
+      "domain_ko": "신호 경로",
+      "category_ko": "스위칭·경로 제어 장치",
+      "equipment_records": 155
+    },
+    {
+      "category_id": "daq",
+      "domain_ko": "데이터 수집",
+      "category_ko": "데이터 로거·수집 장치",
+      "equipment_records": 147
+    },
+    {
+      "category_id": "dimension_mass_time",
+      "domain_ko": "치수·질량·시간",
+      "category_ko": "치수·질량·시간·토크 계측기",
+      "equipment_records": 147
+    },
+    {
+      "category_id": "electrical_meter",
+      "domain_ko": "전력·전기",
+      "category_ko": "멀티미터·저항·LCR 계측기",
+      "equipment_records": 129
+    },
+    {
+      "category_id": "emc_transient",
+      "domain_ko": "EMC 내성",
+      "category_ko": "ESD·서지·과도현상 시험기",
+      "equipment_records": 125
+    },
+    {
+      "category_id": "power_meter",
+      "domain_ko": "전력·전기",
+      "category_ko": "전력계·전력 분석기",
+      "equipment_records": 123
+    },
+    {
+      "category_id": "interface",
+      "domain_ko": "통신 인터페이스",
+      "category_ko": "버스·광통신·제어 인터페이스",
+      "equipment_records": 122
+    },
+    {
+      "category_id": "fire_ip_test",
+      "domain_ko": "안전 시험",
+      "category_ko": "방수·방진·화염·재료 시험 장치",
+      "equipment_records": 119
+    },
+    {
+      "category_id": "termination",
+      "domain_ko": "RF 수동부품",
+      "category_ko": "종단기·수동 부하",
+      "equipment_records": 117
+    },
+    {
+      "category_id": "electronic_load",
+      "domain_ko": "전력·전기",
+      "category_ko": "전자부하·배터리 사이클러",
+      "equipment_records": 91
+    },
+    {
+      "category_id": "calibration",
+      "domain_ko": "교정·표준",
+      "category_ko": "교정기·교정 표준·치구",
+      "equipment_records": 83
+    },
+    {
+      "category_id": "mechanical_test",
+      "domain_ko": "환경·신뢰성",
+      "category_ko": "진동·충격·기계적 시험기",
+      "equipment_records": 82
+    },
+    {
+      "category_id": "motion",
+      "domain_ko": "위치·로봇",
+      "category_ko": "로봇·마스트·턴테이블",
+      "equipment_records": 72
+    },
+    {
+      "category_id": "motion_controller",
+      "domain_ko": "위치·로봇",
+      "category_ko": "로봇·마스트·턴테이블 제어기",
+      "equipment_records": 69
+    },
+    {
+      "category_id": "unclassified",
+      "domain_ko": "확인 필요",
+      "category_ko": "미분류·추가 확인",
+      "equipment_records": 60
+    },
+    {
+      "category_id": "rf_conversion",
+      "domain_ko": "RF·무선 측정",
+      "category_ko": "주파수 변환·믹서·확장 모듈",
+      "equipment_records": 56
+    },
+    {
+      "category_id": "software_computer",
+      "domain_ko": "전산·소프트웨어",
+      "category_ko": "컴퓨터·소프트웨어·라이선스",
+      "equipment_records": 55
+    },
+    {
+      "category_id": "pressure_flow",
+      "domain_ko": "환경 계측",
+      "category_ko": "압력·진공·유량·환경 계측기",
+      "equipment_records": 51
+    },
+    {
+      "category_id": "oscilloscope",
+      "domain_ko": "전력·전기",
+      "category_ko": "오실로스코프",
+      "equipment_records": 50
+    },
+    {
+      "category_id": "audio",
+      "domain_ko": "음향",
+      "category_ko": "음향 계측·발생 장치",
+      "equipment_records": 47
+    },
+    {
+      "category_id": "optical",
+      "domain_ko": "광학·방사선",
+      "category_ko": "광학·색·조도·방사선 계측기",
+      "equipment_records": 41
+    },
+    {
+      "category_id": "electrical_safety",
+      "domain_ko": "안전 시험",
+      "category_ko": "전기안전·절연·내전압 시험기",
+      "equipment_records": 38
+    },
+    {
+      "category_id": "cooling_heating",
+      "domain_ko": "환경·신뢰성",
+      "category_ko": "냉각·가열·공조 장치",
+      "equipment_records": 29
+    },
+    {
+      "category_id": "network_analyzer",
+      "domain_ko": "RF·무선 측정",
+      "category_ko": "네트워크·임피던스 분석기",
+      "equipment_records": 27
+    },
+    {
+      "category_id": "broadcast_network",
+      "domain_ko": "방송·통신 시스템",
+      "category_ko": "방송·통신 시스템 장치",
+      "equipment_records": 23
+    },
+    {
+      "category_id": "system_controller",
+      "domain_ko": "시스템 제어",
+      "category_ko": "범용 제어기·시스템 제어 장치",
+      "equipment_records": 18
+    },
+    {
+      "category_id": "medical_test",
+      "domain_ko": "의료기기 시험",
+      "category_ko": "생체신호·의료기기 시험기",
+      "equipment_records": 13
+    },
+    {
+      "category_id": "chemical_lab",
+      "domain_ko": "이화학·실험실",
+      "category_ko": "수질·이화학·실험실 장비",
+      "equipment_records": 7
+    }
+  ],
+  "quality_counts": [
+    {
+      "issue_type": "missing_identifier",
+      "field_name": "serial_number",
+      "affected_records": 758
+    },
+    {
+      "issue_type": "lifecycle_note_review",
+      "field_name": "lifecycle_status",
+      "affected_records": 363
+    },
+    {
+      "issue_type": "model_catalog_unresolved",
+      "field_name": "model_id",
+      "affected_records": 270
+    },
+    {
+      "issue_type": "missing_identifier",
+      "field_name": "model",
+      "affected_records": 213
+    },
+    {
+      "issue_type": "manufacturer_alias_review",
+      "field_name": "manufacturer",
+      "affected_records": 93
+    },
+    {
+      "issue_type": "missing_identifier",
+      "field_name": "manufacturer",
+      "affected_records": 76
+    },
+    {
+      "issue_type": "unclassified",
+      "field_name": "category",
+      "affected_records": 60
+    },
+    {
+      "issue_type": "non_manufacturer",
+      "field_name": "manufacturer",
+      "affected_records": 25
+    },
+    {
+      "issue_type": "multiple_manufacturers",
+      "field_name": "manufacturer",
+      "affected_records": 3
+    },
+    {
+      "issue_type": "missing_identifier",
+      "field_name": "name",
+      "affected_records": 1
+    }
+  ],
+  "status_hints": [
+    {
+      "source_status_hint": "no_status_evidence",
+      "equipment_records": 6107
+    },
+    {
+      "source_status_hint": "out_of_service_reported",
+      "equipment_records": 54
+    },
+    {
+      "source_status_hint": "retired_reported",
+      "equipment_records": 79
+    },
+    {
+      "source_status_hint": "status_history_review",
+      "equipment_records": 230
+    }
+  ],
+  "duplicates": [
+    {
+      "match_type": "exact_source_fields",
+      "candidate_groups": 44,
+      "affected_records": 123
+    },
+    {
+      "match_type": "manufacturer_model_serial",
+      "candidate_groups": 699,
+      "affected_records": 1427
+    },
+    {
+      "match_type": "serial_only",
+      "candidate_groups": 830,
+      "affected_records": 1874
+    }
+  ],
+  "verified_connections": 0,
+  "supported_model_interfaces": 0,
+  "caveats": [
+    "원본 6,470행을 삭제·병합하지 않음. 등록건수는 운용 가능 실물 장비 대수가 아님.",
+    "제조사 표준표기는 표기 그룹. 법인 확인·인수합병 통합·공식 매뉴얼 검증을 수행하지 않음.",
+    "장비종류는 이름 기반 추정. 미분류와 분류 규칙을 함께 제공.",
+    "SCPI/LAN/USB/GPIB/SDK 지원, IP·주소, 현행 교정 유효기간은 미확인.",
+    "원본 No.는 관리대장 순번. 장비ID는 최초 스냅샷 식별자이며 실물 자산번호로 단정하지 않음.",
+    "펌웨어 원문 항목에는 소프트웨어명도 포함될 수 있음.",
+    "원본 파일의 재고 기준일은 확인되지 않음. 생성일시는 DB·내보내기 작업 일시."
+  ]
+}
