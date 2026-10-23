@@ -187,6 +187,32 @@ class BandwidthMathTests(MathTestCase):
         self.assert_rejected(self.module.analyze_6db_bandwidth,
             [trace([-1e308, 0, 1e308]), trace([1e308, 1.1e308, 1.2e308], [-1e308, 0, -1e308])])
 
+    def test_large_absolute_axes_reject_unreliable_crossing_precision(self):
+        for level in [-25.17, -25.16]:
+            with self.subTest(level=level):
+                source = trace([1e20 - 1048576, 1e20, 1e20 + 1048576], [level, 0, level])
+                with self.assertRaises(ValueError) as caught:
+                    self.module.analyze_6db_bandwidth(source)
+                self.assertEqual(str(caught.exception), 'numeric_result_out_of_range')
+
+    def test_exact_interpolation_on_both_sides_and_at_boundary_without_cancellation(self):
+        for level, width, comparison in [(-25.17, 499917.0441001192, 'below'),
+                                         (-25.16, 500115.7392686804, 'meets')]:
+            with self.subTest(level=level):
+                result = self.module.analyze_6db_bandwidth(trace([-1048576, 0, 1048576], [level, 0, level]))
+                self.assertAlmostEqual(result['bandwidth_hz'], width, places=6)
+                self.assertEqual(result['conditional_comparison'], comparison)
+        exact = self.module.analyze_6db_bandwidth(trace([-500000, 0, 500000], [-12, 0, -12]))
+        self.assertEqual(exact['bandwidth_hz'], 500000)
+        self.assertEqual(exact['margin_hz'], 0)
+        self.assertEqual(exact['conditional_comparison'], 'meets')
+
+    def test_below_boundary_width_rounding_up_to_limit_is_a_representation_error(self):
+        source = trace([-20000, 0, 980000], [math.nextafter(-12, -math.inf), 0, -12])
+        with self.assertRaises(ValueError) as caught:
+            self.module.analyze_6db_bandwidth(source)
+        self.assertEqual(str(caught.exception), 'numeric_result_out_of_range')
+
     def test_input_hash_tracks_declared_values_and_inputs_and_results_are_independent(self):
         source = trace(capture_id='A' * 128); before = deepcopy(source)
         first = self.module.analyze_6db_bandwidth(source)
@@ -281,6 +307,30 @@ class PSDMathTests(MathTestCase):
             self.module.analyze_psd_band(density_sample(1e308))
         self.assertEqual(str(caught.exception), 'numeric_result_out_of_range')
 
+    def test_density_rounded_to_eight_dbm_keeps_its_true_above_comparison(self):
+        result = self.module.analyze_psd_band(density_sample(0.002103191148267311))
+        self.assertEqual(result['power_dbm'], 8.0)
+        self.assertEqual(result['conditional_comparison'], 'above')
+        self.assertLess(result['margin_db'], 0)
+        self.assertAlmostEqual(result['margin_db'], -5.622003640353109e-16, delta=1e-29)
+
+    def test_adjacent_density_values_keep_signed_unrounded_margins(self):
+        middle = 0.002103191148267311
+        for density, comparison, sign in [(math.nextafter(middle, -math.inf), 'meets', 1),
+                                          (math.nextafter(middle, math.inf), 'above', -1)]:
+            with self.subTest(density=density):
+                result = self.module.analyze_psd_band(density_sample(density))
+                self.assertEqual(result['conditional_comparison'], comparison)
+                self.assertGreater(sign * result['margin_db'], 0)
+        for power, comparison, sign in [(math.nextafter(8, -math.inf), 'meets', 1),
+                                        (math.nextafter(8, math.inf), 'above', -1)]:
+            result = self.module.analyze_psd_band(psd_sample(power_dbm=power))
+            self.assertEqual(result['conditional_comparison'], comparison)
+            self.assertGreater(sign * result['margin_db'], 0)
+        exact = self.module.analyze_psd_band(psd_sample(power_dbm=8))
+        self.assertEqual(exact['conditional_comparison'], 'meets')
+        self.assertEqual(exact['margin_db'], 0)
+
     def test_invalid_power_density_boolean_nonfinite_and_out_of_range_are_rejected(self):
         bad = [True, False, 'CANARY_PRIVATE', {}, [], None, math.nan, math.inf, -math.inf, 10 ** 1000]
         values = [psd_sample(power_dbm=value) for value in bad + [-300.1, 100.1]]
@@ -355,6 +405,19 @@ class PureMathTests(MathTestCase):
             else:
                 changed['frequency_offsets_hz'][1] = 0.0
             self.assertNotEqual(function(source)['input_sha256'], function(changed)['input_sha256'])
+
+    def test_precision_does_not_depend_on_or_modify_the_callers_decimal_context(self):
+        from decimal import Inexact, ROUND_DOWN, localcontext
+        with localcontext() as caller:
+            caller.prec = 5
+            caller.rounding = ROUND_DOWN
+            caller.traps[Inexact] = True
+            result = self.module.analyze_psd_band(density_sample(0.002103191148267311))
+            self.assertEqual(result['conditional_comparison'], 'above')
+            self.assertLess(result['margin_db'], 0)
+            self.assertEqual(caller.prec, 5)
+            self.assertEqual(caller.rounding, ROUND_DOWN)
+            self.assertIs(caller.traps[Inexact], True)
 
 
 if __name__ == '__main__':
