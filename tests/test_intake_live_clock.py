@@ -90,12 +90,12 @@ class IntakeLiveClockTests(unittest.TestCase):
         self.assertEqual(job['attempt'], 1)
 
     def test_live_claim_does_not_spend_lease_while_reading_source_documents(self):
-        original = intake_jobs.document_context
+        original = intake_jobs.prepare_analysis_documents
         def read_documents(*args, **kwargs):
             result = original(*args, **kwargs)
             self.clock = 16
             return result
-        with patch('labflow.intake_jobs.document_context', side_effect=read_documents):
+        with patch('labflow.intake_jobs.prepare_analysis_documents', side_effect=read_documents):
             job = self.claim()
         self.assertEqual(job['lease_until'], 21)
 

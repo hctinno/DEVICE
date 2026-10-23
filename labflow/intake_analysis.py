@@ -5,6 +5,7 @@ the data contract and literal citations, not the truth of an AI interpretation.
 """
 import hashlib
 from pathlib import Path
+import re
 
 from .store import canonical
 
@@ -47,19 +48,29 @@ def _text(value, label, limit=4000):
         raise ValueError('Invalid '+label)
 
 
-def validate_analysis(analysis, documents, synthetic):
-    _keys(analysis, {'schema_version', 'producer', 'identity', 'facts', 'missing_fields'}, 'analysis')
-    if type(analysis['schema_version']) is not int or analysis['schema_version'] != 1:
+def _choice(value, choices, label):
+    if not isinstance(value, str) or value not in choices:
+        raise ValueError('Invalid '+label)
+
+
+def validate_analysis(analysis, documents, synthetic, *, context_id=None):
+    if not isinstance(analysis, dict) or type(analysis.get('schema_version')) is not int:
         raise ValueError('Unsupported analysis schema')
+    version = analysis['schema_version']
+    if version not in {1, 2}:
+        raise ValueError('Unsupported analysis schema')
+    fields = {'schema_version', 'producer', 'identity', 'facts', 'missing_fields'}
+    _keys(analysis, fields | ({'context_id'} if version == 2 else set()), 'analysis')
+    if version == 2 and (not isinstance(context_id, str) or not re.fullmatch('[a-f0-9]{64}', context_id)
+                         or analysis['context_id'] != context_id):
+        raise ValueError('Analysis context is no longer current')
     _keys(analysis['producer'], {'kind', 'name'}, 'producer')
     producer = analysis['producer']
-    if producer['kind'] not in {'model', 'manual', 'fixture'}:
-        raise ValueError('Unknown analyzer kind')
+    _choice(producer['kind'], {'model', 'manual', 'fixture'}, 'analyzer kind')
     if producer['kind'] == 'fixture' and not synthetic:
         raise ValueError('Fixture analysis requires synthetic intake')
     _text(producer['name'], 'analyzer name', 200)
-    if analysis['identity'] not in {'single', 'ambiguous', 'unknown'}:
-        raise ValueError('Invalid product identity state')
+    _choice(analysis['identity'], {'single', 'ambiguous', 'unknown'}, 'product identity state')
     facts = analysis['facts']
     if not isinstance(facts, list) or len(facts) > 200:
         raise ValueError('Invalid facts list')
@@ -72,28 +83,55 @@ def validate_analysis(analysis, documents, synthetic):
         if not isinstance(fact['field'], str) or fact['field'] not in FIELDS:
             raise ValueError('Unknown fact field')
         _text(fact['value'], 'fact value')
-        if fact['status'] not in {'explicit', 'inferred', 'uncertain'}:
-            raise ValueError('Unknown fact status')
+        _choice(fact['status'], {'explicit', 'inferred', 'uncertain'}, 'fact status')
         if not isinstance(fact['evidence'], list) or not 1 <= len(fact['evidence']) <= 20:
             raise ValueError('Facts require source evidence')
         for evidence in fact['evidence']:
-            _keys(evidence, {'path', 'sha256', 'line_start', 'line_end', 'quote', 'role'}, 'citation')
+            citation_fields = {'path', 'sha256', 'line_start', 'line_end', 'quote', 'role'}
+            kind = evidence.get('kind') if isinstance(evidence, dict) and version == 2 else None
+            if version == 2:
+                _choice(kind, {'text_line', 'pdf_page'}, 'citation kind')
+                citation_fields.add('kind')
+                if kind == 'pdf_page':
+                    citation_fields.update({'extraction_id', 'page_number', 'text_sha256'})
+            _keys(evidence, citation_fields, 'citation')
             if not isinstance(evidence['path'], str):
                 raise ValueError('Invalid source path')
             doc = by_path.get(evidence['path'])
-            if doc is None or doc['sha256'] != evidence['sha256'] or doc['text'] is None:
+            if doc is None or doc['sha256'] != evidence['sha256']:
                 raise ValueError('Citation requires a parsed source in this revision')
-            if evidence['role'] not in {'request', 'product', 'reference'}:
-                raise ValueError('Invalid source role')
-            first, last = evidence['line_start'], evidence['line_end']
-            lines = doc['text'].splitlines()
-            if type(first) is not int or type(last) is not int or not 1 <= first <= last <= len(lines):
-                raise ValueError('Invalid citation line range')
+            _choice(evidence['role'], {'request', 'product', 'reference'}, 'source role')
             _text(evidence['quote'], 'citation quote', MAX_TEXT_BYTES)
-            if evidence['quote'] not in '\n'.join(lines[first-1:last]):
-                raise ValueError('Citation quote does not match retained source')
+            first, last = evidence['line_start'], evidence['line_end']
+            if kind == 'pdf_page':
+                from .document_extract import page_citation
+                if doc.get('format') != 'pdf' or evidence['extraction_id'] != doc.get('extraction_id'):
+                    raise ValueError('PDF extraction identity mismatch')
+                result = {'schema_version': 1, 'status': doc['parse_status'], 'pages': doc['pages'],
+                          'parser': doc['parser'], 'source': {'filename': doc['path'], 'sha256': doc['sha256']}}
+                citation = page_citation(result, evidence['page_number'], first, last)
+                if citation['text_sha256'] != evidence['text_sha256'] or evidence['quote'] not in citation['quote']:
+                    raise ValueError('PDF page citation does not match retained source')
+            else:
+                if doc['text'] is None or doc.get('format') == 'pdf':
+                    raise ValueError('Citation requires a parsed text source')
+                lines = doc['text'].splitlines()
+                if type(first) is not int or type(last) is not int or not 1 <= first <= last <= len(lines):
+                    raise ValueError('Invalid citation line range')
+                if evidence['quote'] not in '\n'.join(lines[first-1:last]):
+                    raise ValueError('Citation quote does not match retained source')
     canonical(analysis)
-    return [d['path'] for d in documents if d['text'] is None]
+    unread = []
+    for document in documents:
+        if document.get('format') == 'pdf':
+            readable = (version == 2 and document.get('parse_status') == 'ok'
+                        and document.get('complete') is True
+                        and any(page['text'].strip() for page in document.get('pages', [])))
+        else:
+            readable = document['text'] is not None
+        if not readable:
+            unread.append(document['path'])
+    return unread
 
 
 def answer_basis(analysis, field):

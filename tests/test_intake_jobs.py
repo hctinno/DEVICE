@@ -184,7 +184,8 @@ class IntakeJobTests(unittest.TestCase):
         self.scan(120)
         job=claim_job(self.store,'worker',now=122)
         document=next(d for d in job['documents'] if d['path']=='image.pdf')
-        self.assertEqual(document['parse_status'],'requires_parser')
+        self.assertEqual(document['parse_status'],'malformed_pdf')
+        self.assertIsNone(document['text'])
         result=self.finish(job,now=125)
         self.assertIn('unread_documents',{q['key'] for q in result['questions']})
 
