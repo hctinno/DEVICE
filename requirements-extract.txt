@@ -1,0 +1,2 @@
+# DEV1-DOC-001: exact parser version is recorded in every PDF result.
+pypdf==6.21.2
