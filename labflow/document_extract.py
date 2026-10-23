@@ -107,15 +107,18 @@ def _warnings_observable():
 
 def _inspect_content(content, resources, reader, limit):
     """Check decoded page/form streams; never decode embedded image pixels."""
-    from pypdf.generic import ContentStream, NameObject
+    from pypdf.generic import (ArrayObject, ByteStringObject, ContentStream,
+                               DictionaryObject, NameObject, TextStringObject)
 
     remaining = limit
     active_forms = set()
+    missing_form_resources = False
+    text_types = (TextStringObject, ByteStringObject)
     paint_operators = {b'S', b's', b'f', b'F', b'f*', b'B', b'B*', b'b', b'b*',
                        b'sh', b'Tj', b'TJ', b"'", b'"'}
 
     def visit(stream, scope, depth):
-        nonlocal remaining
+        nonlocal remaining, missing_form_resources
         if stream is None:
             return False, False
         remaining -= len(stream.get_data())
@@ -131,19 +134,35 @@ def _inspect_content(content, resources, reader, limit):
                         or not isinstance(operands[1], (int, float))
                         or operands[0] not in scope.get('/Font', {})):
                     raise ValueError('Invalid PDF text font operation')
+                if not isinstance(scope['/Font'][operands[0]], DictionaryObject):
+                    raise ValueError('Invalid PDF font resource')
+            elif operator == b'Tj':
+                if len(operands) != 1 or not isinstance(operands[0], text_types):
+                    raise ValueError('Invalid PDF text string operand')
+                has_marks = True
+            elif operator == b'TJ':
+                if (len(operands) != 1 or not isinstance(operands[0], ArrayObject)
+                        or any(not isinstance(item, text_types + (int, float)) for item in operands[0])):
+                    raise ValueError('Invalid PDF text array operand')
+                has_marks = True
             elif operator == b'Do':
                 has_marks = True
                 resource = scope['/XObject'][operands[0]].get_object()
                 if resource.get('/Subtype') == '/Image':
                     has_image = True
                 elif resource.get('/Subtype') == '/Form':
+                    # pypdf does not inherit our parent scope while extracting
+                    # such a Form. Retain available text but report the gap.
+                    if '/Resources' not in resource:
+                        missing_form_resources = True
+                        continue
                     identity = id(resource)
                     if identity in active_forms:
                         raise _ContentLimit()
                     active_forms.add(identity)
                     try:
                         nested_image, _ = visit(ContentStream(resource, reader),
-                                                resource.get('/Resources', scope), depth + 1)
+                                                resource['/Resources'], depth + 1)
                         has_image = has_image or nested_image
                     finally:
                         active_forms.remove(identity)
@@ -151,7 +170,8 @@ def _inspect_content(content, resources, reader, limit):
                 has_marks = True
         return has_image, has_marks
 
-    return visit(content, resources, 0)
+    has_image, has_marks = visit(content, resources, 0)
+    return has_image, has_marks, missing_form_resources
 
 
 def _pdf_status(result):
@@ -159,7 +179,7 @@ def _pdf_status(result):
     has_text = any(page['text'].strip() for page in result['pages'])
     codes = {issue['code'] for issue in result['issues']}
     if codes & {'page_limit', 'output_limit', 'content_limit', 'page_error', 'parser_warning',
-                'parser_warnings_unobservable'}:
+                'parser_warnings_unobservable', 'form_resources_missing'}:
         if has_text:
             return 'partial'
         return 'limit_exceeded' if codes & {'page_limit', 'output_limit', 'content_limit'} else 'parser_error'
@@ -206,8 +226,10 @@ def _read_pdf(payload, result, limits, pypdf, warnings):
             warnings.page_number = number
             try:
                 page = reader.pages[index]
-                has_image, has_marks = _inspect_content(page.get_contents(), page.get('/Resources', {}), reader,
-                                                        limits.max_page_content_bytes)
+                has_image, has_marks, missing_form_resources = _inspect_content(
+                    page.get_contents(), page.get('/Resources', {}), reader, limits.max_page_content_bytes)
+                if missing_form_resources:
+                    _issue(result, 'form_resources_missing', number)
                 text = page.extract_text()
                 if not isinstance(text, str):
                     raise ValueError('Unexpected PDF text result')

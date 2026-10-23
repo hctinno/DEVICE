@@ -15,7 +15,7 @@ import unittest
 from unittest.mock import patch
 
 from pypdf import PdfReader, PdfWriter
-from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject, NumberObject
+from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject, NullObject, NumberObject
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.cidfonts import UnicodeCIDFont
@@ -44,6 +44,19 @@ def synthetic_pdf(texts, *, images=(), vectors=(), forms=(), korean=False):
         if index in vectors:
             document.rect(40, 500, 100, 100)
         document.showPage()
+    document.save()
+    return stream.getvalue()
+
+
+def synthetic_text_form_pdf():
+    stream = BytesIO()
+    document = canvas.Canvas(stream, invariant=1, pageCompression=0)
+    document.drawString(40, 740, 'Outside form')
+    document.beginForm('details')
+    document.drawString(40, 700, 'Inside form')
+    document.endForm()
+    document.doForm('details')
+    document.showPage()
     document.save()
     return stream.getvalue()
 
@@ -168,6 +181,76 @@ class DocumentTextTests(ExtractionTestCase):
 
 
 class DocumentPdfTests(ExtractionTestCase):
+    def test_null_or_numeric_used_font_cannot_be_successfully_cited(self):
+        for invalid_font in (NullObject(), NumberObject(1)):
+            with self.subTest(font=type(invalid_font).__name__):
+                writer = PdfWriter(clone_from=BytesIO(synthetic_pdf(['Good'])))
+                writer.pages[0]['/Resources']['/Font'][NameObject('/F1')] = invalid_font
+                stream = BytesIO()
+                writer.write(stream)
+                payload = stream.getvalue()
+                result = self.module.extract_document(payload, 'invalid-font.pdf')
+                self.assertEqual(result['status'], 'parser_error')
+                self.assertFalse(result['complete'])
+                self.assertEqual(result['source']['sha256'], hashlib.sha256(payload).hexdigest())
+                self.assertEqual(result['pages'][0]['status'], 'error')
+                self.assertIn('page_error', [issue['code'] for issue in result['issues']])
+                with self.assertRaises(ValueError):
+                    self.module.page_citation(result, 1, 1, 1)
+
+    def test_malformed_text_showing_operand_does_not_silently_drop_text(self):
+        for operation in (b'123 Tj', b'123 TJ', b'[(text) /Invalid] TJ'):
+            with self.subTest(operation=operation):
+                writer = PdfWriter(clone_from=BytesIO(synthetic_pdf(['Good'])))
+                content = DecodedStreamObject()
+                content.set_data(b'BT /F1 12 Tf 40 740 Td (Good) Tj ' + operation + b' ET')
+                writer.pages[0][NameObject('/Contents')] = writer._add_object(content)
+                stream = BytesIO()
+                writer.write(stream)
+                result = self.module.extract_document(stream.getvalue(), 'invalid-text.pdf')
+                self.assertEqual(result['status'], 'parser_error')
+                self.assertFalse(result['complete'])
+                self.assertEqual(result['pages'][0]['status'], 'error')
+                self.assertEqual(result['pages'][0]['text'], '')
+                with self.assertRaises(ValueError):
+                    self.module.page_citation(result, 1, 1, 1)
+
+    def test_valid_text_array_keeps_numeric_spacing_adjustments_supported(self):
+        writer = PdfWriter(clone_from=BytesIO(synthetic_pdf(['Good'])))
+        content = DecodedStreamObject()
+        content.set_data(b'BT /F1 12 Tf 40 740 Td [(Good) 50 ( text)] TJ ET')
+        writer.pages[0][NameObject('/Contents')] = writer._add_object(content)
+        stream = BytesIO()
+        writer.write(stream)
+        result = self.module.extract_document(stream.getvalue(), 'valid-array.pdf')
+        self.assertEqual(result['status'], 'ok')
+        self.assertEqual(result['pages'][0]['text'], 'Good text')
+
+    def test_form_without_own_resources_is_explicitly_partial(self):
+        writer = PdfWriter(clone_from=BytesIO(synthetic_text_form_pdf()))
+        form = next(iter(writer.pages[0]['/Resources']['/XObject'].values())).get_object()
+        del form['/Resources']
+        stream = BytesIO()
+        writer.write(stream)
+        payload = stream.getvalue()
+        result = self.module.extract_document(payload, 'missing-form-resources.pdf')
+        self.assertEqual(result['status'], 'partial')
+        self.assertFalse(result['complete'])
+        self.assertEqual(result['source']['sha256'], hashlib.sha256(payload).hexdigest())
+        self.assertEqual(result['pages'][0]['text'], 'Outside form\n')
+        self.assertEqual(result['pages'][0]['text_sha256'], hashlib.sha256(b'Outside form\n').hexdigest())
+        self.assertIn('form_resources_missing', [issue['code'] for issue in result['issues']])
+        citation = self.module.page_citation(result, 1, 1, 1)
+        self.assertEqual(citation['quote'], 'Outside form')
+        self.assertEqual(citation['extraction_status'], 'partial')
+
+    def test_form_with_own_resources_keeps_all_text_supported(self):
+        result = self.module.extract_document(synthetic_text_form_pdf(), 'form.pdf')
+        self.assertEqual(result['status'], 'ok')
+        self.assertTrue(result['complete'])
+        self.assertIn('Outside form', result['pages'][0]['text'])
+        self.assertIn('Inside form', result['pages'][0]['text'])
+
     def test_multiple_pages_retain_page_local_lines_and_parser_version(self):
         payload = synthetic_pdf(['Device A\nMarket US', 'Purpose testing\nPage two'])
         result = self.module.extract_document(payload, 'request.pdf')

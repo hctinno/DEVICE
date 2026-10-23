@@ -80,6 +80,10 @@ PDF와 텍스트 모두 페이지 번호·줄 번호는 **1부터 시작**한다
 
 pypdf 경고는 원문 문구 대신 위치와 `parser_warning`으로 남긴다. 상위 앱이 pypdf WARNING 로그를 차단해 경고를 관측할 수 없으면 `parser_warnings_unobservable`을 기록하며 결과를 완전 성공으로 표시하지 않는다. 추출기는 상위 앱의 로그 수준을 변경하지 않는다.
 
+사용된 폰트가 사전 객체가 아니거나 `Tj/TJ`의 문자·배열 피연산자가 잘못되면 해당 페이지를 `error`로 처리하고 `page_error`를 기록한다. 그 페이지의 일부 문자만 정상적으로 보이더라도 정상 인용을 허용하지 않는다. 이 검사는 폰트·문자 연산의 알려진 실패 경로에 대한 것이며 범용 PDF 구문 검증은 아니다.
+
+호출된 Form에 자체 `/Resources`가 없으면 상위 리소스를 가정하지 않고 `form_resources_missing`을 기록한다. pypdf가 읽을 수 있었던 바깥쪽 텍스트는 보존하지만 문서는 `partial`이며 `complete=false`다. 읽을 텍스트가 없으면 `parser_error`다. 보존된 텍스트의 인용에는 기존대로 `extraction_status=partial`이 포함된다. Form 리소스 상속 추출은 지원하지 않는다.
+
 ## 기존 접수와 연결할 지점 — 총괄 통합 제안
 
 1. [기존 접수](active_intake_usage.md)의 revision에서 원본 blob을 검증한 후 그 바이트와 이름으로 추출한다. `result.source.sha256`과 등록된 원본 hash의 일치를 확인한다.
@@ -102,5 +106,7 @@ pypdf 경고는 원문 문구 대신 위치와 `parser_warning`으로 남긴다.
 테스트는 자체 생성한 다중 페이지·한국어·암호·이미지·벡터 PDF와 UTF-8 바이트를 사용한다. 실제 고객/제한 문서, OCR·표 의미 정확도, 모든 제조사 PDF, 실제 모델의 판단, 실장비·현장 검증을 수행한 것으로 보지 않는다. 문서 검사는 UTF-8/링크 무결성 검사이며 추출 정확도와 별도다.
 
 2026-10-23 검증 기록: Python 3.12.4 / pypdf 6.21.2에서 신규 35개와 전체 142개 unittest 통과. Python AST/컴파일, 의존성 검사, 루트 문서 검사(8개 문서·124개 링크)와 신규 문서 2개의 UTF-8/로컬 링크 검사를 통과했다. 독립 CLI로 합성 2페이지 정상 PDF의 `ok/종료 0`, 텍스트+이미지 전용 페이지 PDF의 `partial/종료 2`, 전체 원본 hash 일치를 확인했다. 하위 에이전트 없이 작성자가 자체 검토했으며 총괄의 공통 통합 검토는 별도다.
+
+같은 날 총괄 독립 리뷰의 `DOC-R1/R2`를 재현했다. Null/숫자 폰트 값, 숫자 `Tj/TJ`·잘못된 배열 원소, 자체 리소스 없는 Form이 기존 코드에서 성공으로 표시되는 6개 실패 사례를 먼저 확인한 뒤 수정했다. 정상 문자 배열·정상 Form을 포함한 추출기 40개와 전체 147개 검사가 통과했다. 한국어·페이지/줄 인용·원본/텍스트 hash·한도 검사는 그대로 통과하며 새 형식 버전이나 공통 접수 변경은 없다. 사용된 폰트와 해당 문자 연산만 검사하며 Form 리소스 상속 추출은 구현하지 않는다.
 
 설계 근거: pypdf의 [텍스트 추출 문서](https://pypdf.readthedocs.io/en/stable/user/extract-text.html), [암호화 문서](https://pypdf.readthedocs.io/en/stable/user/encryption-decryption.html), [패키지 정보](https://pypi.org/project/pypdf/). 현재 고정 버전에 대해 합성 검증하며 새 버전·새 문서 유형은 재검증해야 한다.
