@@ -1,6 +1,6 @@
 # DGM AutoLab — 클라우드에서 이어서 작업하기
 
-확인일: 2026-10-23. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 기준 브랜치는 `main`이다. 클라우드 환경 생성·실행은 별도로 확인해야 한다.
+확인일: 2026-10-23. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 기준 브랜치는 `main`이다. 클라우드 세션 실행·저장소 접근과 Python 문서·패키지 검증을 확인했다. 환경 생성·게시 UI 절차는 이 세션에서 수행하지 않았다. 최신 작업 상태와 작업 브랜치는 [HANDOFF.md](HANDOFF.md)에 기록한다.
 
 ## 권장 작업 방식
 
@@ -14,6 +14,18 @@
 4. 그 환경에서 새 작업을 시작하고 아래 인계 프롬프트를 사용한다. 계정에서 Cloud 메뉴나 저장소 접근이 보이지 않으면 계정·워크스페이스 권한과 GitHub 연결 상태를 확인한다.
 
 현재 공식 절차는 [Codex Cloud 안내](https://learn.chatgpt.com/docs/cloud)에 근거한다. 계정별 제공 기능과 화면은 실제 세션에서 확인한다.
+
+## 연결 후 문서가 보이지 않는 경우
+
+클라우드 작업 사본이 원격 저장소의 최신 커밋보다 오래될 수 있다. 이번 재개에서는 초기 README만 보였으나, 원격 `main`에 인계 문서가 있었다. 저장소가 비어 있다고 결론내리기 전에 다음 읽기 전용 명령으로 확인한다.
+
+```sh
+git status --short --branch
+git log -1 --oneline
+git ls-remote --symref origin HEAD 'refs/heads/*'
+```
+
+원격 기록이 다르면 `git fetch origin`으로 가져와 문서와 차이를 검토한다. 기존 작업 트리의 수정과 브랜치를 보존하고, 필요한 원격 커밋에서 새 작업 브랜치를 만든다. 강제 초기화나 사용자 수정 덮어쓰기로 동기화하지 않는다. 여러 PC에서 이어받을 때는 원격에 작업 브랜치와 커밋이 실제로 존재하는지 확인한다.
 
 ## 새 세션에 붙여 넣을 문장
 

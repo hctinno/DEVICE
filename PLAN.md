@@ -3,7 +3,7 @@
 작성일: 2026-10-23, Asia/Seoul  
 상태: 구축 범위 및 계획 초안. 구현·장비 연결·현장 검증은 시작하지 않음.
 
-작업 환경 결정: 여러 PC에서 이어서 작업하기 위해 개발을 클라우드 세션 중심으로 전환한다. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 기준 브랜치는 `main`이다. 현재 상태는 [HANDOFF.md](HANDOFF.md), 클라우드 연결 절차는 [CLOUD-START.md](CLOUD-START.md)를 따른다. 클라우드 환경 생성·실행은 아직 확인하지 않았다.
+작업 환경 결정: 여러 PC에서 이어서 작업하기 위해 개발을 클라우드 세션 중심으로 전환한다. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 기준 브랜치는 `main`이다. 현재 상태는 [HANDOFF.md](HANDOFF.md), 클라우드 연결 절차는 [CLOUD-START.md](CLOUD-START.md)를 따른다. 2026-10-23 클라우드 세션 실행·저장소 접근·문서 및 패키지 검증을 확인했다. 현장 구축 진척은 0%이며 장비리스트는 자료 대기 상태다.
 
 ## 1. 목표 계약
 
