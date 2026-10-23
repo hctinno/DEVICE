@@ -218,6 +218,49 @@ class PDFAnalysisConnectionTests(DocumentBridgeCase):
         self.assertEqual(report['results'][0]['status'],'completed')
         self.assertEqual(intake_status(self.store)[0]['analysis']['facts']['market']['value'],'EU')
 
+    def test_caller_mutation_after_validation_cannot_change_completed_analysis(self):
+        from labflow.intake_analysis import validate_analysis
+        self.receive(pdf(['product_type: remote_control','market: EU\npurpose: radio_test']))
+        job=claim_job(self.store,'worker',now=103)
+        analysis=SyntheticTextProvider().analyze(self.provider_context(job)); expected=copy.deepcopy(analysis)
+        def mutate_original():
+            analysis['context_id']='0'*64
+            analysis['facts'][0]['value']='forged_after_validation'
+            analysis['facts'][0]['evidence'][0].update(page_number=99,quote='not retained anywhere')
+        def validate_then_mutate(*args,**kwargs):
+            unread=validate_analysis(*args,**kwargs)
+            with ThreadPoolExecutor(max_workers=1) as pool:pool.submit(mutate_original).result(5)
+            return unread
+        with patch('labflow.intake_jobs.validate_analysis',side_effect=validate_then_mutate):
+            result=complete_job(self.store,job['job_id'],job['token'],analysis,now=104)
+        self.assertNotEqual(analysis,expected)
+        self.assertEqual(result['submitted'],expected)
+        self.assertEqual(result['facts']['product_type']['value'],'remote_control')
+        with self.store.connection() as con:
+            state,saved=con.execute('SELECT state,result_json FROM intake_jobs WHERE job_id=?',(job['job_id'],)).fetchone()
+        self.assertEqual(state,'completed');self.assertEqual(json.loads(saved)['submission'],expected)
+        self.assertEqual(json.loads(saved)['summary']['submitted'],expected)
+        self.assertEqual(notifications(self.store)[0]['payload']['submitted'],expected)
+
+    def test_completed_retransmission_freezes_analysis_before_first_io(self):
+        self.receive(pdf(['product_type: remote_control','market: EU\npurpose: radio_test']))
+        job=claim_job(self.store,'worker',now=103)
+        original=SyntheticTextProvider().analyze(self.provider_context(job))
+        expected=complete_job(self.store,job['job_id'],job['token'],original,now=104)
+        retransmission=copy.deepcopy(original); connection=self.store.connection; mutated=False
+        @contextmanager
+        def mutate_on_first_connection():
+            nonlocal mutated
+            if not mutated:
+                mutated=True
+                retransmission['context_id']='0'*64
+                retransmission['facts'][0]['evidence'][0].update(page_number=99,quote='changed before read')
+            with connection() as con:yield con
+        with patch.object(self.store,'connection',side_effect=mutate_on_first_connection):
+            result=complete_job(self.store,job['job_id'],job['token'],retransmission,now=500)
+        self.assertTrue(mutated);self.assertNotEqual(retransmission,original)
+        self.assertEqual(result,expected);self.assertEqual(len(notifications(self.store)),1)
+
     def test_pdf_citation_tampering_is_rejected_atomically(self):
         self.receive(pdf(['product_type: remote_control\nmarket: EU','market: EU\npurpose: radio_test']))
         job=claim_job(self.store,'worker',now=103); original=SyntheticTextProvider().analyze(self.provider_context(job))

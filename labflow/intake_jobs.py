@@ -162,6 +162,12 @@ def _refresh(store, con, intake, analysis, unread, *, notify):
 def complete_job(store, job_id, token, analysis, *, now=None):
     if not isinstance(analysis, dict):
         raise ValueError('Analysis object required')
+    # Detach every nested caller alias before the first I/O. Validation,
+    # projection, persistence and completed retries must use this same snapshot.
+    try:
+        analysis = json.loads(canonical(analysis))
+    except (TypeError, ValueError, OverflowError, RuntimeError):
+        raise ValueError('Invalid analysis JSON') from None
     if now is not None:
         timestamp(now)
     with store.connection() as con:
