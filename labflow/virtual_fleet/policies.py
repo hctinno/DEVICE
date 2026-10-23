@@ -245,6 +245,8 @@ class RFSensorFixturePolicy:
         if sensor['values'].get('reason') in {'calibration_unavailable', 'measurement_not_valid', 'output_disabled'}:
             return _stop('blocked', 'sensor_not_ready')
         if sensor['status'] == 'pending':
+            if self._read is not None:
+                self._acquire = self._read = None
             return {'kind': 'advance', 'ticks': 1}
         sample = sensor['values']['outputs'].get('measurement')
         if sample is not None:

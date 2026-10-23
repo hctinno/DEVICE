@@ -115,6 +115,25 @@ class FixturePolicyTests(unittest.TestCase):
         changed=context(tick=15,revision=4,sensor_state='acquiring')
         self.assertEqual(policy(changed),{'kind':'advance','ticks':1})
 
+    def test_pending_after_read_discards_old_capture_before_it_reappears(self):
+        policy=self.Policy(); self.acquire(policy)
+        self.assertEqual(policy(context(tick=15,sample=measurement()))['action'],'read')
+        self.assertEqual(policy(context(tick=16,sensor_state='acquiring')),{'kind':'advance','ticks':1})
+        reappeared=context(tick=17,sample=measurement(tick=15))
+        self.assertEqual(policy(reappeared),{'kind':'execute','device_id':'sensor','action':'acquire','parameters':{}})
+        self.assertEqual(policy(context(tick=17,sensor_state='acquiring')),{'kind':'advance','ticks':1})
+        fresh=context(tick=18,sample=measurement(tick=18))
+        self.assertEqual(policy(fresh)['action'],'read')
+        self.assertEqual(policy(fresh)['claim'],'completed')
+
+    def test_initial_acquisition_pending_keeps_the_active_acquire(self):
+        policy=self.Policy(); self.acquire(policy)
+        for tick in (15,16):
+            self.assertEqual(policy(context(tick=tick,sensor_state='acquiring')),{'kind':'advance','ticks':1})
+        fresh=context(tick=17,sample=measurement(tick=17))
+        self.assertEqual(policy(fresh)['action'],'read')
+        self.assertEqual(policy(fresh)['claim'],'completed')
+
     def test_regressed_clock_and_changed_read_sample_cannot_complete(self):
         for change in ('clock','sample'):
             policy=self.Policy(); self.acquire(policy)
