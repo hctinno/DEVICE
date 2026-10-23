@@ -6,7 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const OWN = path.resolve(__dirname, '..');
-const SOURCES = ['labflow/intake_fixture_check.py', 'labflow/intake_fixture_bridge.py',
+const SOURCES = ['labflow/__init__.py', 'labflow/intake_fixture_check.py', 'labflow/intake_fixture_bridge.py',
   'labflow/virtual_fleet/method_adapter.py', 'labflow/intake_fixture_jobs.py', 'labflow/intake_jobs.py',
   'labflow/intake_worker.py', 'labflow/intake_analysis.py', 'labflow/intake_documents.py',
   'labflow/document_extract.py', 'labflow/store.py', 'labflow/schema.sql', 'labflow/ui_read_model.py',
@@ -15,6 +15,18 @@ const SOURCES = ['labflow/intake_fixture_check.py', 'labflow/intake_fixture_brid
 const hash = data => createHash('sha256').update(data).digest('hex');
 const exists = file => {try {fs.lstatSync(file); return true;} catch (error) {if (error.code === 'ENOENT') return false; throw error;}};
 const within = (parent, target) => {const relative=path.relative(parent,target); return relative && !relative.startsWith('..'+path.sep) && relative !== '..' && !path.isAbsolute(relative);};
+const samePath = (left, right) => path.relative(path.resolve(left),path.resolve(right)) === '';
+
+function evidenceAncestors(output, own) {
+  const parents=[];
+  for (let parent=path.dirname(output); !samePath(parent,own);) {
+    parents.push(parent);
+    const next=path.dirname(parent);
+    assert(!samePath(next,parent), 'Evidence ancestors did not reach the checkout root');
+    parent=next;
+  }
+  return parents;
+}
 
 function readConfig(env = process.env) {
   const kind=env.FLOW_DOCUMENT_KIND || 'both';
@@ -26,6 +38,7 @@ function readConfig(env = process.env) {
 }
 
 function reserveEvidence(own, requested) {
+  own=path.resolve(own);
   const local=path.join(own,'.local');
   if (!exists(local)) fs.mkdirSync(local);
   assert(!fs.lstatSync(local).isSymbolicLink(), 'Evidence .local must be a plain directory');
@@ -33,7 +46,7 @@ function reserveEvidence(own, requested) {
   const output=path.resolve(own,requested);
   assert(within(local,output), 'Evidence must stay inside this checkout .local');
   assert(!exists(output), 'Evidence output already exists; preserve it and choose a new folder');
-  for (let parent=path.dirname(output); parent!==own; parent=path.dirname(parent)) {
+  for (const parent of evidenceAncestors(output,own)) {
     if (exists(parent)) assert(!fs.lstatSync(parent).isSymbolicLink(), 'Linked evidence paths are forbidden');
   }
   fs.mkdirSync(output); // Parent must already exist; never create or reuse another run.
@@ -69,16 +82,71 @@ v["delegation_event"]=json.loads(c.execute("SELECT details_json FROM events WHER
 v["workflow_counts"]={n:c.execute("SELECT count(*) FROM "+n).fetchone()[0] for n in ("cases","plans","runs","evaluations")}
 print(json.dumps(v,ensure_ascii=False,allow_nan=False)); c.close()`;
 
-const DEFER = `import pathlib, sqlite3, sys
-sys.path.insert(0,sys.argv[1])
+// Run this in every Python process that imports the selected project. Both the
+// import spec and the imported objects must belong to the requested regular package.
+const SOURCE_GUARD = `import importlib, importlib.util, json, sys
+from pathlib import Path
+_flow_root=Path(sys.argv.pop(1)).resolve(strict=True)
+_flow_package_dir=_flow_root/"labflow"
+_flow_init=_flow_package_dir/"__init__.py"
+_flow_entry=_flow_package_dir/"intake_fixture_check.py"
+if not _flow_init.is_file() or not _flow_entry.is_file():
+    raise ValueError("source_regular_package_required")
+if _flow_init.resolve()!=_flow_init or _flow_entry.resolve()!=_flow_entry or _flow_package_dir.resolve()!=_flow_package_dir:
+    raise ValueError("source_path_outside_root")
+def _flow_file(value,expected):
+    if not isinstance(value,str) or Path(value).resolve(strict=True)!=expected:
+        raise ValueError("source_module_path_mismatch")
+def _flow_paths(value):
+    if value is None or tuple(Path(item).resolve(strict=True) for item in value)!=(_flow_package_dir,):
+        raise ValueError("source_package_path_mismatch")
+sys.path.insert(0,str(_flow_root))
+_flow_spec=importlib.util.find_spec("labflow")
+if _flow_spec is None:
+    raise ValueError("source_package_missing")
+_flow_file(_flow_spec.origin,_flow_init)
+_flow_paths(_flow_spec.submodule_search_locations)
+_flow_package=importlib.import_module("labflow")
+_flow_file(_flow_package.__file__,_flow_init)
+_flow_paths(_flow_package.__path__)
+_flow_spec=importlib.util.find_spec("labflow.intake_fixture_check")
+if _flow_spec is None:
+    raise ValueError("source_cli_missing")
+_flow_file(_flow_spec.origin,_flow_entry)
+_flow_cli=importlib.import_module("labflow.intake_fixture_check")
+_flow_file(_flow_cli.__file__,_flow_entry)
+_flow_file(_flow_cli.__spec__.origin,_flow_entry)
+_flow_file(_flow_package.__file__,_flow_init)
+_flow_paths(_flow_package.__path__)
+if _flow_cli.__package__!="labflow":
+    raise ValueError("source_cli_package_mismatch")
+_flow_binding={"kind":"intake_fixture_import_binding","source_root":str(_flow_root),
+    "package_file":str(Path(_flow_package.__file__).resolve()),
+    "package_paths":[str(Path(item).resolve()) for item in _flow_package.__path__],
+    "module_file":str(Path(_flow_cli.__file__).resolve())}`;
+
+function sourceBootstrap() {
+  return SOURCE_GUARD+'\nprint(json.dumps(_flow_binding,ensure_ascii=False),flush=True)\nraise SystemExit(_flow_cli.main())';
+}
+
+function validateSourceBinding(binding, source) {
+  const root=fs.realpathSync(source), directory=path.join(root,'labflow');
+  assert(binding && binding.kind === 'intake_fixture_import_binding','Actual import binding is required');
+  assert(samePath(binding.source_root,root),'Actual source root mismatch');
+  assert(samePath(binding.package_file,path.join(directory,'__init__.py')),'Actual package file mismatch');
+  assert(Array.isArray(binding.package_paths) && binding.package_paths.length === 1 && samePath(binding.package_paths[0],directory),'Actual package search path mismatch');
+  assert(samePath(binding.module_file,path.join(directory,'intake_fixture_check.py')),'Actual CLI module file mismatch');
+}
+
+const DEFER = SOURCE_GUARD+`\nimport pathlib, sqlite3
 from labflow.store import Store
 from labflow.intake_jobs import respond
-p=pathlib.Path(sys.argv[2]).resolve(); c=sqlite3.connect((p/"lab.sqlite3").as_uri()+"?mode=ro",uri=True)
+p=pathlib.Path(sys.argv[1]).resolve(); c=sqlite3.connect((p/"lab.sqlite3").as_uri()+"?mode=ro",uri=True)
 assert c.execute("SELECT count(*) FROM intake_sources WHERE synthetic!=1").fetchone()[0]==0
 assert c.execute("SELECT count(*) FROM intakes").fetchone()[0]==1
-assert c.execute("SELECT intake_id FROM intakes").fetchone()[0]==sys.argv[3]
+assert c.execute("SELECT intake_id FROM intakes").fetchone()[0]==sys.argv[2]
 c.close()
-respond(Store(p),'FLOW-BROWSER-DEFER','defer',intake_id=sys.argv[3])`;
+respond(Store(p),'FLOW-BROWSER-DEFER','defer',intake_id=sys.argv[2])`;
 
 function pythonOnce(config, script, args) {
   const result=spawnSync(config.python,['-B','-X','utf8','-c',script,...args],{cwd:OWN,windowsHide:true,encoding:'utf8',timeout:30000,
@@ -158,10 +226,7 @@ function verifyCitations(intake, output, kind) {
 }
 
 function startCLI(config, output, kind) {
-  // run_module gives an explicit read-only source override precedence over cwd.
-  const bootstrap="import runpy,sys; sys.path.insert(0,sys.argv.pop(1)); runpy.run_module('labflow.intake_fixture_check',run_name='__main__')";
-  const entry=config.source === OWN ? ['-m','labflow.intake_fixture_check'] : ['-c',bootstrap,config.source];
-  const child=spawn(config.python,['-B','-X','utf8',...entry,'--output',output,'--power-dbm',String(config.power),'--document-kind',kind,'--port','0'],
+  const child=spawn(config.python,['-B','-X','utf8','-c',sourceBootstrap(),config.source,'--output',output,'--power-dbm',String(config.power),'--document-kind',kind,'--port','0'],
     {cwd:OWN,windowsHide:true,stdio:['ignore','pipe','pipe'],env:{...process.env,PYTHONUTF8:'1',PYTHONIOENCODING:'utf-8',PYTHONDONTWRITEBYTECODE:'1'}});
   const logs={stdout:'',stderr:''}; child.stdout.on('data',chunk=>{logs.stdout+=chunk;}); child.stderr.on('data',chunk=>{logs.stderr+=chunk;});
   const closed=new Promise(resolve=>child.once('close',resolve));
@@ -203,8 +268,10 @@ async function runKind(config, evidence, kind, checks) {
     const {origin,intake_id}=await session.ready;
     const summary=JSON.parse(fs.readFileSync(path.join(output,'public-summary.json'),'utf8'));
     assert.equal(intake_id,summary.intake_id);
-    const stdoutSummary=session.logs.stdout.split(/\r?\n/).find(line=>line.startsWith('{'));
-    assert.deepEqual(JSON.parse(stdoutSummary),summary);
+    const stdoutRecords=session.logs.stdout.split(/\r?\n/).filter(line=>line.startsWith('{')).map(JSON.parse);
+    const sourceBinding=stdoutRecords.find(value=>value.kind === 'intake_fixture_import_binding');
+    validateSourceBinding(sourceBinding,config.source);
+    assert.deepEqual(stdoutRecords.find(value=>value.kind === 'intake_fixture_flow_check'),summary);
     const database=JSON.parse(pythonOnce(config,DB_READ,[path.join(output,'state')]));
     const {chromium}=require('playwright'); browser=await chromium.launch({headless:true});
     const context=await browser.newContext({viewport:{width:1512,height:1100}}); context.setDefaultTimeout(10000);
@@ -280,7 +347,7 @@ async function runKind(config, evidence, kind, checks) {
     await screenshot(page,path.join(evidence,`${kind}-mobile.png`));
     assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert(methods.length && methods.every(method=>method==='GET'));
     checks.push(`${kind}: 390px overflow 0, JavaScript errors 0, external requests 0 and browser API writes 0`);
-    writeJson(path.join(evidence,`${kind}-binding.json`),{summary,record,after_defer:historical,citations:locators,pageErrors:errors,externalRequests:external,apiMethods:[...new Set(methods)]});
+    writeJson(path.join(evidence,`${kind}-binding.json`),{source_binding:sourceBinding,summary,record,after_defer:historical,citations:locators,pageErrors:errors,externalRequests:external,apiMethods:[...new Set(methods)]});
   } finally {
     try {if(browser) await browser.close();}
     finally {try {await stopChild(session);}finally{writeJson(path.join(evidence,`${kind}-server-log.json`),{
@@ -290,6 +357,7 @@ async function runKind(config, evidence, kind, checks) {
 async function main(env = process.env) {
   const config=readConfig(env);
   assert(fs.statSync(path.join(config.source,'labflow/intake_fixture_check.py')).isFile(),'Actual intake_fixture_check module is required');
+  assert(fs.statSync(path.join(config.source,'labflow/__init__.py')).isFile(),'Actual regular labflow package is required');
   const evidence=reserveEvidence(OWN,config.requested), hashes=sourceHashes(config.source), checks=[];
   console.log('Actual fixture acceptance evidence: '+evidence);
   const result={synthetic:true,hardware_verified:false,ai_model_called:false,resumable:false,tool_sha256:hash(fs.readFileSync(__filename)),source_root:config.source,source_sha256:hashes,kinds:config.kinds,checks,passed:false};
@@ -303,5 +371,57 @@ async function main(env = process.env) {
   return result;
 }
 
-module.exports={readConfig,reserveEvidence,validateBinding,main};
-if (require.main===module) main().catch(error=>{console.error(error);process.exitCode=1;});
+async function selfTest(env = process.env) {
+  const config=readConfig({FLOW_PYTHON:env.FLOW_PYTHON}), evidence=reserveEvidence(OWN), checks=[];
+  const result={kind:'intake_fixture_browser_self_test',synthetic:true,hardware_verified:false,ai_model_called:false,
+    actual_flow_executed:false,checks,passed:false};
+  const check=(name,action,skip=false)=>{if(skip) checks.push({name,status:'skipped'});else{action();checks.push({name,status:'pass'});}};
+  const fixture=(name,initializer,entry)=>{
+    const root=path.join(evidence,name);fs.mkdirSync(root);fs.mkdirSync(path.join(root,'labflow'));
+    if(initializer !== null) writeNew(path.join(root,'labflow/__init__.py'),initializer);
+    if(entry !== null) writeNew(path.join(root,'labflow/intake_fixture_check.py'),entry);
+    return root;
+  };
+  const cli="def main():\n    print('SELF_TEST_MAIN')\n    return 0\nif __name__=='__main__':\n    main()\n";
+  const complete=fixture('complete','',cli), marker="raise RuntimeError('OVERRIDE_MUST_NOT_FALLBACK')\n";
+  const launch=(source,cache=false)=>{
+    const prefix='import sys; sys.path.insert(0,'+JSON.stringify(complete)+'); '+(cache?'import labflow; ':'');
+    const run=spawnSync(config.python,['-B','-X','utf8','-c',prefix+sourceBootstrap(),source,'--help'],{
+      cwd:OWN,windowsHide:true,encoding:'utf8',timeout:15000,
+      env:{...process.env,PYTHONUTF8:'1',PYTHONIOENCODING:'utf-8',PYTHONDONTWRITEBYTECODE:'1'}});
+    assert(!run.error,run.error?.message);return run;
+  };
+  try {
+    check('Windows alternate-case output terminates',()=>{
+      const parent=path.join(evidence,'case');fs.mkdirSync(parent);const output=path.join(parent,'e').toUpperCase();
+      const script="require(process.argv[1]).reserveEvidence(process.argv[2],process.argv[3])";
+      const run=spawnSync(process.execPath,['-e',script,__filename,OWN,output],{cwd:OWN,windowsHide:true,encoding:'utf8',timeout:3000});
+      assert(!run.error,run.error?.message);assert.equal(run.status,0,run.stderr);assert(fs.statSync(output).isDirectory());
+      assert.deepEqual(fs.readdirSync(parent).map(name=>name.toLowerCase()),['e']);
+    },process.platform !== 'win32');
+    check('ancestor traversal stops at a root',()=>{
+      assert.throws(()=>evidenceAncestors(path.resolve(OWN,'..','outside-root','new'),OWN),/checkout root/);
+    });
+    for(const [name,root,cache] of [
+      ['missing package initializer',fixture('missing-init',null,marker),false],
+      ['namespace root',fixture('namespace',null,null),false],
+      ['redirected package search path',fixture('redirected','__path__=['+JSON.stringify(path.join(complete,'labflow'))+']\n',marker),false],
+      ['cached foreign package',fixture('cached','',marker),true],
+      ['actual imported module file mismatch',fixture('wrong-file','',"__file__="+JSON.stringify(path.join(complete,'labflow/intake_fixture_check.py'))+'\n'+cli),false],
+    ]) check(name,()=>{
+      const run=launch(root,cache);assert.notEqual(run.status,0,run.stdout);assert(!run.stdout.includes('SELF_TEST_MAIN'));
+    });
+    check('complete package supplies verified import paths',()=>{
+      const run=launch(complete);assert.equal(run.status,0,run.stderr);assert(run.stdout.includes('SELF_TEST_MAIN'));
+      const binding=run.stdout.split(/\r?\n/).filter(line=>line.startsWith('{')).map(JSON.parse).find(value=>value.kind === 'intake_fixture_import_binding');
+      validateSourceBinding(binding,complete);
+    });
+    result.passed=true;
+  } catch(error) {result.error=error.message;throw error;}
+  finally {writeJson(path.join(evidence,'self-test.json'),result);}
+  const response={kind:result.kind,passed:checks.filter(item=>item.status === 'pass').length,skipped:checks.filter(item=>item.status === 'skipped').length,evidence};
+  console.log(JSON.stringify(response));return result;
+}
+
+module.exports={readConfig,reserveEvidence,evidenceAncestors,sourceBootstrap,validateSourceBinding,validateBinding,main,selfTest};
+if (require.main===module) (process.argv[2] === '--self-test' ? selfTest() : main()).catch(error=>{console.error(error);process.exitCode=1;});
