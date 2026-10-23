@@ -1,0 +1,78 @@
+export const FIELDS = {
+  product_type: '제품 종류', customer: '고객', manufacturer: '제조사', model: '모델',
+  market: '의뢰 시장', purpose: '의뢰 목적', features: '기능', antenna_gain: '안테나 이득',
+  power_target: '출력 목표', firmware: '펌웨어',
+};
+export const FACT_LABELS = {explicit: '원문 명시', inferred: '분석자 추론', uncertain: '불확실', user_confirmed: '사용자 답변'};
+export const JOB_LABELS = {queued: '대기', running: '분석 중', completed: '분석 완료', failed: '실패', superseded: '이전 버전으로 종료'};
+const STATES = {
+  deferred: ['보류', 'neutral', 'Ⅱ', '저장된 보류 의사입니다. 화면에서 자동 재개하지 않습니다.'],
+  upload_incomplete: ['자료 미완성', 'warning', '!', '입력 묶음의 안정화 또는 파일 보완이 필요합니다.'],
+  analysis_failed: ['분석 실패', 'danger', '!', '분석 작업의 오류와 재시도 기록을 확인하세요.'],
+  awaiting_analysis: ['분석 대기', 'neutral', '◷', '접수는 저장됐으며 분석 결과를 기다립니다.'],
+  analyzing: ['분석 중', 'info', '↻', '작업 임대가 기록되어 있습니다. 실제 모델 실행 여부는 별도 확인이 필요합니다.'],
+  lease_expired: ['임대 만료 · 확인 필요', 'warning', '!', '작업 임대 시각이 지났습니다. 재인수 또는 실패 갱신 여부를 확인해야 합니다.'],
+  needs_information: ['확인 필요', 'warning', '!', '누락·충돌 또는 읽지 못한 자료가 있습니다.'],
+  plan_pending: ['계획 연결 대기', 'info', '→', '접수 진행이 위임됐습니다. 시험계획 및 실장비 준비는 확인되지 않았습니다.'],
+  propose_start: ['착수 제안', 'info', '→', '접수 분석이 저장됐습니다. 후속 업무 착수 제안 상태입니다.'],
+  invalid: ['상태 확인 필요', 'warning', '?', '분석 상태와 저장된 결과가 맞지 않습니다.'],
+  unsupported: ['지원 미확인 상태', 'warning', '?', '알 수 없는 상태를 완료로 처리하지 않습니다. 원래 상태 코드를 확인하세요.'],
+};
+
+export function describeState(record, now = Date.now() / 1000) {
+  let code;
+  if (!['awaiting_analysis', 'analyzed', 'analysis_failed', 'upload_incomplete'].includes(record.status)) code = 'unsupported';
+  else if (record.deferred) code = 'deferred';
+  else if (record.status === 'analyzed') {
+    code = record.analysis ? ({needs_information: 'needs_information', prepare_plan: 'plan_pending',
+      propose_start: 'propose_start', deferred: 'deferred'}[record.analysis.next_action] || 'unsupported') : 'invalid';
+  } else if (record.status === 'awaiting_analysis') {
+    const job = (record.jobs || []).find(j => j.revision === record.revision);
+    code = !job || job.state === 'queued' ? 'awaiting_analysis'
+      : job.state === 'running' ? (Number.isFinite(job.lease_until) && job.lease_until <= now ? 'lease_expired' : 'analyzing') : 'unsupported';
+  } else code = record.status;
+  const [label, tone, symbol, hint] = STATES[code];
+  return {code, label, tone, symbol, hint};
+}
+
+export function factSources(record, field) {
+  const fact = record.analysis?.facts?.[field];
+  if (!fact || fact.status === 'user_confirmed') return [];
+  return (record.analysis?.submitted?.facts || [])
+    .filter(candidate => candidate.field === field && candidate.value.trim() === fact.value
+      && ['explicit', 'inferred'].includes(candidate.status))
+    .flatMap(candidate => candidate.evidence || []);
+}
+
+export function filterIntakes(records, {query = '', filter = 'all'} = {}) {
+  const term = query.trim().toLocaleLowerCase('ko');
+  return records.filter(record => {
+    const state = describeState(record).code;
+    const matches = filter === 'all'
+      || (filter === 'attention' && ['needs_information', 'upload_incomplete', 'analysis_failed', 'lease_expired', 'invalid', 'unsupported'].includes(state))
+      || (filter === 'waiting' && ['awaiting_analysis', 'analyzing'].includes(state))
+      || (filter === 'deferred' && state === 'deferred')
+      || (filter === 'failed' && state === 'analysis_failed');
+    const text = [record.bundle, record.source_id, record.intake_id,
+      ...Object.values(record.analysis?.facts || {}).map(fact => fact.value)].join(' ').toLocaleLowerCase('ko');
+    return matches && text.includes(term);
+  });
+}
+
+export function noticeContext(notice, record) {
+  if (notice.revision < record?.revision) return {code: 'previous_revision', label: '이전 버전 기록'};
+  if (notice.revision === record?.revision) return {code: 'same_revision', label: '같은 버전 · 생성 당시 기록'};
+  return {code: 'unknown_revision', label: '버전 관계 미확인'};
+}
+
+export function seoulTime(value) {
+  const date = new Date(typeof value === 'number' ? value * 1000 : value);
+  if (value == null || !Number.isFinite(date.getTime())) return '기록 없음';
+  return new Intl.DateTimeFormat('ko-KR', {timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit',
+    day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false}).format(date);
+}
+
+export function bytes(value) {
+  if (!Number.isFinite(value)) return '크기 미확인';
+  return value < 1024 ? `${value} B` : `${(value / 1024).toFixed(1)} KiB`;
+}

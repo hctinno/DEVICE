@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "empty store is distinct from load/error",
+    "real service, synthetic provenance, conflict, parser gap, source text/XSS",
+    "search, waiting/failure/defer filters, user answer provenance, keyboard navigation",
+    "local notice history to current intake",
+    "390px responsive layout without horizontal overflow",
+    "unsupported state and missing source remain explicit",
+    "refresh failure preserves labeled stale data and retry recovers",
+    "initial error is never an empty-store success",
+    "loading remains distinct until the API responds"
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "evidence": "frontend/evidence",
+  "provenance": "synthetic",
+  "date_kst": "2026-10-23"
+}
