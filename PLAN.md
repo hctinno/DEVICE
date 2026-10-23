@@ -3,6 +3,8 @@
 작성일: 2026-10-23, Asia/Seoul
 상태: 첫 구현 범위를 스마트폰 2.4 GHz Wi-Fi b/g/n / FCC §15.247로 확정. [1차 파이프라인 설계 검토안](docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md)에 사용자 흐름과 완료 조건을 정리했다. 장비 DB·오프라인 공통 코어는 구현했으며 새 흐름·실장비 연결·현장 검증은 미완료다.
 
+현재 범위의 작업량·순서·완료 게이트는 [b/g/n 구축 7단계](docs/fcc/wifi24_delivery_roadmap.md)에 정리했다. AI 하네스는 새 구현 대상이며, 단계 4에서 전도 출력 한 항목의 실제 전체 흐름을 먼저 검증한다. 이 문서 아래의 장기 가중치는 이번 버전의 진행률이 아니다.
+
 작업 환경 결정: 여러 PC에서 이어서 작업하기 위해 개발을 클라우드 세션 중심으로 전환한다. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 현재 구현 인계 브랜치는 `codex/fcc-lab-foundation`이다. 현재 상태는 [HANDOFF.md](HANDOFF.md), 클라우드 연결 절차는 [CLOUD-START.md](CLOUD-START.md)를 따른다. 클라우드 workspace에서 코드와 테스트를 실행했으며 현장 장비 연결은 확인하지 않았다.
 
 ## 1. 목표 계약
