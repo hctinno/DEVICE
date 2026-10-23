@@ -181,6 +181,8 @@ def _artifact(output, path, kind):
 
 
 def _report(value, run_id, instance_id):
+    from ..virtual_fleet_server import _harness_payload
+
     def public(item):
         if type(item) is dict:
             return all(type(key) is str and key.lower() not in _PRIVATE_FIELDS and public(child)
@@ -194,6 +196,9 @@ def _report(value, run_id, instance_id):
             or value.get('run_id') != run_id or value.get('runtime_instance_id') != instance_id
             or any(value.get(key) is not flag for key, flag in _FLAGS.items())):
         raise ValueError('invalid_fixture_report')
+    # Use the existing pure wire validator for every nested public v1 field.
+    # The same boundary also protects the last report retained after a failure.
+    value = json.loads(_harness_payload(value))['report']
     raw = _canonical(value)
     if len(raw) > 256 * 1024:
         raise ValueError('fixture_report_size')
@@ -201,7 +206,7 @@ def _report(value, run_id, instance_id):
 
 
 def _graded_report(trial, report, events, run_id, instance_id):
-    assessment = evaluate_sensor_run(trial, report, events)
+    assessment = evaluate_sensor_run(trial, deepcopy(report), deepcopy(events))
     fields = {'status', 'verdict', 'evaluator_id', 'evidence_refs', 'summary_code'}
     if type(assessment) is not dict or set(assessment) != fields:
         raise ValueError('invalid_fixture_assessment')
