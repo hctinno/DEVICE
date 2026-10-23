@@ -265,6 +265,21 @@ class RFRoleTests(RFTestCase):
         self.assertEqual(self.observe(device,inputs,tick=7)['status'],'pending')
         self.assertEqual(self.observe(device,inputs,tick=8)['values']['outputs']['rf']['power_dbm'],19)
 
+    def test_controller_authority_cancels_a_local_matrix_route_override(self):
+        device=self.device('rf_switch',parameters={'requires_control':True,'control_selects_route':True})
+        self.perform(device,'configure',{'loss_db':1,'settling_ticks':2})
+        inputs={'control':{'valid':True,'enabled':True,'selected_input':'rf_1'},
+                'rf_1':signal(),'rf_2':signal(power_dbm=20)}
+        self.assertEqual(self.observe(device,inputs,tick=0)['status'],'pending')
+        self.assertEqual(self.observe(device,inputs,tick=2)['values']['outputs']['rf']['power_dbm'],9)
+        requested=self.perform(device,'select_path',{'input_port':'rf_2'},tick=3,inputs=inputs)
+        self.assertEqual(requested['status'],'pending')
+        self.assertTrue(requested['setup_changed'])
+        for tick in (3,4,5,6):
+            observed=self.observe(device,inputs,tick=tick,revision=2)
+            self.assertEqual(observed['status'],'ok')
+            self.assertEqual(observed['values']['outputs']['rf']['power_dbm'],9)
+
 
 class DUTSensorTests(RFTestCase):
     def configure_dut(self,device,**changes):
