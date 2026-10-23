@@ -11,6 +11,7 @@ import copy
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import math
 from pathlib import Path
 import re
 import secrets
@@ -22,6 +23,7 @@ _STATIC = Path(__file__).resolve().parents[1] / "frontend" / "virtual_fleet"
 _ASSETS = {"/": ("index.html", "text/html; charset=utf-8"),
            "/app.mjs": ("app.mjs", "text/javascript; charset=utf-8"),
            "/model.mjs": ("model.mjs", "text/javascript; charset=utf-8"),
+           "/harness_model.mjs": ("harness_model.mjs", "text/javascript; charset=utf-8"),
            "/styles.css": ("styles.css", "text/css; charset=utf-8")}
 _REQUEST_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}\Z")
 _TYPES = {"number", "integer", "boolean", "string", "object", "array"}
@@ -31,6 +33,94 @@ _PRIVATE_KEYS = {"author_control", "author", "hidden", "hidden_fault", "expected
 _INPUT_KEYS = _PRIVATE_KEYS | {"fault", "address", "host", "ip", "path", "url", "command", "script"}
 _PROFILE_FIELDS = {"profile_id", "model", "manufacturer", "role", "ports", "variant", "evidence_refs",
                    "simulation_basis", "capability_scope", "profile_kind", "classification", "context", "auxiliary"}
+_HARNESS_REASONS = {"policy_stop", "supervisor_stop", "decision_budget", "request_budget", "tick_budget", "wall_deadline",
+                    "policy_error", "invalid_proposal", "runtime_error", "runtime_mutation_uncertain", "evidence_error"}
+_POLICY_CLAIMS = {"completed", "blocked", "unsupported", "failed"}
+_HARNESS_MAX_BYTES = 256 * 1024
+
+
+def _harness_payload(report) -> bytes:
+    """Validate the completed public v1 result; retain only immutable wire bytes.
+
+    No private-field filtering is used here: an unexpected field is rejected.
+    This does not run or inspect the harness/runtime or resolve artifact paths.
+    """
+    def record(value, fields):
+        if type(value) is not dict or set(value) != set(fields.split()):
+            raise ValueError("invalid_harness_report_fields")
+
+    def text(value, maximum=128, nullable=False):
+        if value is None and nullable:
+            return
+        if type(value) is not str or not value.strip() or len(value) > maximum:
+            raise ValueError("invalid_harness_report_text")
+        value.encode("utf-8")
+
+    def references(value):
+        if type(value) is not list or len(value) > 4096:
+            raise ValueError("invalid_harness_report_references")
+        for reference in value:
+            text(reference, 1024)
+            if re.match(r"(?:[/\\]|[A-Za-z]:[/\\]|(?:https?|file):)", reference, re.IGNORECASE):
+                raise ValueError("harness_reference_must_be_opaque")
+
+    try:
+        report = copy.deepcopy(report)
+        if report is None:
+            encoded = b"null"
+        else:
+            record(report, "schema_version kind run_id runtime_instance_id synthetic hardware_verified ai_model_called policy termination task_outcome cleanup usage evidence unresolved_request_ids assessment")
+            if type(report["schema_version"]) is not int or report["schema_version"] != 1 or report["kind"] != "virtual_fleet_harness_result":
+                raise ValueError("invalid_harness_report_schema")
+            if report["synthetic"] is not True or report["hardware_verified"] is not False or report["ai_model_called"] is not False:
+                raise ValueError("invalid_harness_report_provenance")
+            text(report["run_id"])
+            text(report["runtime_instance_id"])
+            record(report["policy"], "kind id")
+            if report["policy"]["kind"] != "fixture":
+                raise ValueError("invalid_harness_report_policy")
+            text(report["policy"]["id"])
+            record(report["termination"], "reason policy_claim")
+            reason, claim = report["termination"]["reason"], report["termination"]["policy_claim"]
+            if type(reason) is not str or reason not in _HARNESS_REASONS:
+                raise ValueError("invalid_harness_report_termination")
+            if (reason == "policy_stop" and (type(claim) is not str or claim not in _POLICY_CLAIMS)) or (reason != "policy_stop" and claim is not None):
+                raise ValueError("invalid_harness_report_claim")
+            if report["task_outcome"] != "not_assessed":
+                raise ValueError("invalid_harness_report_task_outcome")
+            record(report["cleanup"], "status evidence_refs")
+            if report["cleanup"]["status"] != "not_assessed":
+                raise ValueError("invalid_harness_report_cleanup")
+            references(report["cleanup"]["evidence_refs"])
+            record(report["usage"], "decisions logical_requests transport_retries tick_delta reserved_ticks elapsed_ms")
+            for name, value in report["usage"].items():
+                if name == "elapsed_ms":
+                    if type(value) not in (int, float) or value < 0 or not math.isfinite(value):
+                        raise ValueError("invalid_harness_report_elapsed")
+                elif type(value) is not int or not 0 <= value <= 9007199254740991:
+                    raise ValueError("invalid_harness_report_counter")
+            record(report["evidence"], "measurement_refs operator_transcript_ref")
+            references(report["evidence"]["measurement_refs"])
+            references([report["evidence"]["operator_transcript_ref"]])
+            references(report["unresolved_request_ids"])
+            record(report["assessment"], "status verdict evaluator_id evidence_refs summary_code")
+            assessment = report["assessment"]
+            if type(assessment["status"]) is not str or assessment["status"] not in {"not_assessed", "completed", "failed"}:
+                raise ValueError("invalid_harness_report_assessment")
+            if assessment["status"] == "completed":
+                if type(assessment["verdict"]) is not str or assessment["verdict"] not in {"pass", "fail", "inconclusive"}:
+                    raise ValueError("invalid_harness_report_verdict")
+            elif assessment["verdict"] is not None:
+                raise ValueError("invalid_harness_report_verdict")
+            text(assessment["evaluator_id"], nullable=True)
+            text(assessment["summary_code"], nullable=True)
+            references(assessment["evidence_refs"])
+            encoded = json.dumps(report, ensure_ascii=False, allow_nan=False, separators=(",", ":")).encode("utf-8")
+            if len(encoded) > _HARNESS_MAX_BYTES:
+                raise ValueError("harness_report_too_large")
+        return b'{"schema_version":1,"report":' + encoded + b"}"
+    except (TypeError, KeyError, UnicodeError, OverflowError, RecursionError) as error:
+        raise ValueError("invalid_harness_report") from error
 
 
 class RequestError(Exception):
@@ -106,9 +196,10 @@ class VirtualFleetServer(ThreadingHTTPServer):
     daemon_threads = True
     request_queue_size = 32
 
-    def __init__(self, runtime, *, catalog, topology, role_actions, host, port):
+    def __init__(self, runtime, *, catalog, topology, role_actions, host, port, harness_report=None):
         if host not in ("127.0.0.1", "localhost"):
             raise ValueError("loopback_only")
+        self._harness_payload = _harness_payload(harness_report)
         self.runtime = runtime
         self.catalog = _public_catalog(copy.deepcopy(catalog))
         self.topology = _safe_json(copy.deepcopy(topology))
@@ -281,7 +372,9 @@ class FleetHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             self._guard()
-            if self.path == "/api/state":
+            if self.path == "/api/harness-result":
+                self._send(200, self.server._harness_payload)
+            elif self.path == "/api/state":
                 try:
                     snapshot = self.server.snapshot()
                     encoded = json.dumps(snapshot, ensure_ascii=False, allow_nan=False).encode("utf-8")
@@ -355,14 +448,14 @@ class FleetHandler(BaseHTTPRequestHandler):
 
 
 def create_server(runtime, *, catalog: dict, topology: dict, role_actions: dict,
-                  host: str = "127.0.0.1", port: int = 8770) -> VirtualFleetServer:
+                  host: str = "127.0.0.1", port: int = 8770, harness_report=None) -> VirtualFleetServer:
     """Return an unstarted server. The caller owns serve_forever/shutdown/close.
 
     Catalog/topology/schema are fixed for this server lifetime. Runtime mutations
     must pass through this server's lock if a consistent HTTP snapshot is needed.
     """
     return VirtualFleetServer(runtime, catalog=catalog, topology=topology,
-                              role_actions=role_actions, host=host, port=port)
+                              role_actions=role_actions, host=host, port=port, harness_report=harness_report)
 
 
 def main(argv=None):

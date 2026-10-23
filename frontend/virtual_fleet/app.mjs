@@ -1,4 +1,5 @@
 import {validateSnapshot, parseParameters, describeStatus, layoutTopology, summarizeProfiles, stringify, seoulTime} from './model.mjs';
+import {validateHarnessResponse, describeHarnessResult, requireSameReport} from './harness_model.mjs';
 
 const $ = selector => document.querySelector(selector);
 const el = (tag, className = '', text) => {
@@ -15,6 +16,7 @@ const KIND_LABELS = {report_equipment: '보고서 장비', dut_context: 'DUT 문
 const ACTION_LABELS = {configure: '구성', set_output: '전원 출력 설정', set_transmit: '송신 설정', set_attenuation: '감쇠 설정', set_temperature: '온도 설정', select_path: 'RF 경로 선택', start: '시작', cancel: '취소', recover: '복구'};
 let snapshot = null, selected = null, busy = false, pending = null, query = '', roleFilter = '';
 const actionSelection = new Map(), history = [];
+let harnessReport = null, harnessHasSuccess = false, harnessLoadSequence = 0;
 const profileFor = (data, device) => data.catalog.profiles.find(profile => profile.profile_id === device.profile_id);
 
 function badge(status) {
@@ -218,6 +220,67 @@ function buildContent(data, selection) {
   return add(fragment, renderHero(data), renderMetrics(data), workspace, renderCatalog(data), renderHistory());
 }
 
+function renderHarnessReport(report) {
+  const content = document.createDocumentFragment();
+  if (report === null) return add(content, el('p', 'empty-state', '완료된 실행 기록이 없습니다.'));
+  const view = describeHarnessResult(report);
+  const reportBadge = status => el('span', `report-badge ${status.tone}`, status.label);
+  add(content, add(el('div', 'report-provenance'), el('strong', '', 'fixture · 실제 AI 호출 없음'), el('span', '', '합성 결과 · 실장비 미검증')),
+    el('p', 'report-history-note', '과거 실행 기록 · 현재 장비 관측과 별도로 보존합니다.'));
+  const identity = el('dl', 'report-identity');
+  add(identity, detail('실행 ID', report.run_id), detail('runtime instance', report.runtime_instance_id), detail('fixture policy', report.policy.id));
+  add(content, identity);
+  const cards = el('div', 'report-summary');
+  add(cards, add(el('article', 'report-card'), el('h3', '', '종료 사유'), reportBadge(view.termination), el('p', 'mono small', report.termination.reason),
+    el('p', '', view.policyClaim), el('p', 'muted small', view.taskOutcome)),
+    add(id(el('article', 'report-card'), 'harness-assessment'), el('h3', '', '독립 평가'), reportBadge(view.assessment),
+      el('p', 'mono small', `status: ${report.assessment.status} · verdict: ${report.assessment.verdict ?? 'null'}`),
+      el('p', 'muted small', `평가 ID: ${report.assessment.evaluator_id ?? '없음'}`), el('p', 'muted small', `결과 코드: ${report.assessment.summary_code ?? '없음'}`)),
+    add(el('article', 'report-card'), el('h3', '', '정리 상태'), reportBadge(view.cleanup), el('p', 'muted small', '자동 정리 없음 · 종료를 장비 정지 완료로 해석하지 않습니다.')));
+  add(content, cards);
+  const usage = el('dl', 'report-usage');
+  for (const [key, label] of [['decisions', '판단'], ['logical_requests', '논리 요청'], ['transport_retries', '전송 재시도'], ['tick_delta', '진행 tick'], ['reserved_ticks', '예약 tick'], ['elapsed_ms', '협력식 경과 시간 (ms)']]) {
+    add(usage, add(el('div'), el('dt', '', label), el('dd', 'mono', report.usage[key].toLocaleString('ko-KR', {maximumFractionDigits: 3}))));
+  }
+  add(content, el('h3', 'report-subheading', '예산 사용'), usage);
+  if (view.unresolvedCount) add(content, add(el('div', 'report-unresolved'), el('strong', '', `응답 미확인 요청 ${view.unresolvedCount}개`),
+    el('p', 'small', '종료 시 미결 ID를 보존합니다. 재개나 새 ID 자동 재실행은 제공하지 않습니다.'), el('pre', 'json', stringify(report.unresolved_request_ids))));
+  add(content, jsonDetails(`관측 참조 ${report.evidence.measurement_refs.length}개 · 공개 참조 ID`, report.evidence),
+    jsonDetails(`평가 참조 ${report.assessment.evidence_refs.length}개 · 정리 참조 ${report.cleanup.evidence_refs.length}개`, {assessment: report.assessment.evidence_refs, cleanup: report.cleanup.evidence_refs}),
+    el('p', 'muted small report-history-note', '참조 ID만 조회합니다. 원시 파일·작성자 고장/정답은 이 화면에 제공하지 않습니다. runtime coverage의 미평가 상태는 유지됩니다.'));
+  return content;
+}
+
+async function refreshHarnessReport() {
+  const sequence = ++harnessLoadSequence;
+  const panel = $('#harness-result-panel');
+  panel.setAttribute('aria-busy', 'true');
+  $('#harness-status').textContent = harnessHasSuccess ? '완료 기록을 불러오는 중입니다. 마지막 성공 기록을 표시합니다.' : '완료 기록을 불러오는 중입니다.';
+  $('#harness-status').className = '';
+  try {
+    const response = await fetchJSON('/api/harness-result');
+    if (sequence !== harnessLoadSequence) return;
+    if (!response.ok) throw new Error('harness_result_unavailable');
+    const next = validateHarnessResponse(response.data);
+    requireSameReport(harnessReport, next.report);
+    const updatedText = `기록 조회 ${seoulTime(new Date().toISOString())} KST`;
+    const staged = renderHarnessReport(next.report);
+    $('#harness-result-body').replaceChildren(staged);
+    $('#harness-updated').textContent = updatedText;
+    harnessReport = next.report;
+    harnessHasSuccess = true;
+    $('#harness-status').textContent = '기록 조회 완료 · 완료된 합성 실행 기록입니다.';
+    $('#harness-status').className = 'load-ok';
+  } catch {
+    if (sequence !== harnessLoadSequence) return;
+    $('#harness-status').textContent = harnessHasSuccess ? '기록을 조회하지 못했습니다. 마지막 성공 기록을 표시합니다.' : '완료 기록을 조회하지 못했습니다. 기록 새로고침으로 다시 시도하세요.';
+    $('#harness-status').className = 'load-error';
+    if (!harnessHasSuccess) $('#harness-result-body').replaceChildren(el('p', 'empty-state', '완료 기록 조회가 필요합니다. 장비 상태 조회와 별개로 다시 시도할 수 있습니다.'));
+  } finally {
+    if (sequence === harnessLoadSequence) panel.setAttribute('aria-busy', 'false');
+  }
+}
+
 function setBusy(value) {
   busy = value;
   $('#refresh').disabled = busy;
@@ -316,7 +379,8 @@ function request(path, payload, label) {
 document.addEventListener('click', async event => {
   const target = event.target.closest('button, [data-device][role="button"]');
   if (!target) return;
-  if (target.id === 'refresh') {setBusy(true); await refresh(); setBusy(false);}
+  if (target.id === 'harness-refresh') await refreshHarnessReport();
+  else if (target.id === 'refresh') {setBusy(true); await refresh(); setBusy(false);}
   else if (target.id === 'retry-request' && pending) await submit(pending);
   else if (target.id === 'advance' && snapshot && !busy && !pending) {
     const ticks = Number($('#advance-ticks').value);
@@ -361,6 +425,7 @@ document.addEventListener('submit', async event => {
   } catch (error) {operationMessage(error.message);}
 });
 
+void refreshHarnessReport();
 setBusy(true);
 await refresh();
 setBusy(false);
