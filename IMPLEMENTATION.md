@@ -2,6 +2,8 @@
 
 상태: 전체 시스템 설계. 현재 Python/SQLite 공통 코어·CLI·stdio MCP·오프라인 계산·초안 보고를 구현했다. 상세 실행 범위는 [파이프라인 사용법](docs/fcc/pipeline_usage.md)에 있으며, 실장비 및 기관 시스템과 연동되지 않았다.
 
+2026-10-24 [접수→단일 가상 시험 연결](docs/fcc/intake_fixture_check_usage.md): `intake_documents.py`가 보존 PDF 문맥/페이지 인용, `intake_fixture_jobs.py`가 별도 readiness/queue, `intake_fixture_bridge.py`가 bounded 게시, `virtual_fleet/method_adapter.py`가 명시 recipe를 담당한다. `intake_fixture_check.py`는 새 합성 TXT/PDF의 실제 연결을 실행하고 기존 intake UI가 같은 접수의 현재/과거 가상 결과를 읽는다. [통합 기록 004](handoff/development/INTEGRATION-004.md)의 합성 검증 범위를 따르며 실제 모델·현장·전체 방법 검증은 후속이다.
+
 개발 인수 후 [접수 기반](docs/fcc/active_intake_usage.md)을 추가했다. `active_intake.py`는 source/묶음/revision, `intake_analysis.py`는 텍스트 문맥/인용/사실·질문 계약, `intake_jobs.py`는 임대/응답/재개/로컬 알림을 담당한다. 기존 측정 case와 미확정 intake는 별도 객체이며 모델 작업자·상시 서비스·다형식 파서는 후속이다.
 
 이어 [가상 RF 실행 환경](docs/fcc/virtual_lab_usage.md)을 추가했다. `virtual_lab.py`는 가상 DUT·RF 경로·N1914A 명령 부분집합, `virtual_scenarios.py`는 6개 시나리오·관측 평가·별도 정답 파일·SHA-256 manifest를 담당한다. `virtual-check` CLI는 업무 DB와 별도로 새 실행 폴더에 합성 증거를 남긴다. 기존 AI 작업·보고서와의 통합은 후속이며 이 실행기는 실제 네트워크·장비·모델 API를 호출하지 않는다.

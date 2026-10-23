@@ -6,7 +6,7 @@
 
 [VLAB-HARNESS-002](handoff/development/VLAB-HARNESS-002.md)의 관측 기반 fixture 실행기·제한 예산·운영 journal·분리 평가·완료 기록 화면을 개발1~4의 최종 커밋으로 인수·통합했다. [사용법](docs/fcc/virtual_fleet_harness_check_usage.md)과 [통합 기록 003](handoff/development/INTEGRATION-003.md)에 실행과 검증 범위를 남긴다. 최종 Python 533개·Node 34개·브라우저 수용 36개가 통과했다. 실제 모델 호출·학습·자동 재시작 재개·활성 하네스 HTTP 제어는 후속이다. 총괄은 설계·배정·인수·통합·검증을 맡으며, 사용량 제한으로 중단된 담당 세션에는 이어서 진행하도록 전달한다.
 
-현재 후속 작업은 [FLOW-003-CONTRACT](handoff/development/FLOW-003-CONTRACT.md)다. 접수·문서 해석과 제한된 가상 실행·결과 조회 사이의 연결 계약을 개발1~4에 검토 배정하고 P01에는 기존 방법 근거/공백 대조를 요청한다. 배정한 단위가 끝나도 전체 개발 완료로 처리하지 않으며 총괄이 후속 계약·실제 구현 배정을 이어간다.
+접수·PDF 페이지 근거→단일 합성 가상 시험→같은 접수 결과 화면의 FLOW-003을 구현·리뷰 수정·통합했다. [실행 안내](docs/fcc/intake_fixture_check_usage.md)와 [통합 기록 004](handoff/development/INTEGRATION-004.md)에 Python 666개·Node 44개·브라우저 32개 검사 그룹 PASS와 범위·인수 SHA를 남겼다. 다음 실제 작업은 개발1 PDF generation 탐지, 개발2 bounded 합성 접수 자동 발견·분석, 개발3 BW6/PSD 순수 계산, 개발4 실제 종단 브라우저 수용 도구다. 설계/계획을 전달했고 사용자 재지시 없이 이어간다. 전체 무인시험소·실제 AI·현장 검증은 별도 남은 범위다.
 
 연속 운영 결정: 사용자 재지시를 기다리지 않고 담당 작업의 완료/중단·검증 결과를 확인해 다음 작은 구현을 배정한다. 검토만으로 끝내지 않고 담당 구현·검증·리뷰 수정·총괄 통합·커밋/푸시까지 이어간다. 실제 사용자 결정이나 준비가 필요한 항목만 알리며 기존 위임과 준비된 자료로 가능한 개발은 계속한다. [개발 운영 원칙](handoff/development/README.md)을 인계 기준으로 사용한다.
 
