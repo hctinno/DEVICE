@@ -188,7 +188,7 @@ class SupervisorActualTests(SupervisorFixture):
         register_source(self.store, 'OTHER-SYN', other, synthetic=True, settle_seconds=.001)
         scan_source(self.store, 'OTHER-SYN', now=100)
         scan_source(self.store, 'OTHER-SYN', now=101)
-        with patch('labflow.intake_supervisor.scan_source', wraps=scan_source) as scan:
+        with patch('labflow.intake_supervisor.scan_source', autospec=True, side_effect=scan_source) as scan:
             result = self.run_supervisor(max_cycles=1)
         self.assert_public(result)
         self.assertEqual((result['scanned_sources'], result['accepted_revisions'], result['analyzed_jobs']), (1, 0, 1))
@@ -252,7 +252,7 @@ class SupervisorBoundaryTests(SupervisorFixture):
         super().setUp()
         self.clock = Clock()
         self.addCleanup(patch.stopall)
-        self.scan = patch('labflow.intake_supervisor.scan_source', return_value={
+        self.scan = patch('labflow.intake_supervisor.scan_source', autospec=True, return_value={
             'accepted': [], 'pending': [], 'issues': []}).start()
         self.worker = patch('labflow.intake_supervisor.run_worker', return_value=worker_result()).start()
         patch('labflow.intake_supervisor.monotonic', side_effect=self.clock.monotonic).start()
@@ -328,7 +328,7 @@ class SupervisorBoundaryTests(SupervisorFixture):
         self.worker.assert_not_called()
 
     def test_deadline_after_scan_prevents_worker_and_next_source(self):
-        def scan(*args):
+        def scan(*args, **kwargs):
             self.clock.now = 1
             return {'accepted': [], 'pending': [], 'issues': []}
         self.scan.side_effect = scan
@@ -355,7 +355,7 @@ class SupervisorBoundaryTests(SupervisorFixture):
         self.assertEqual(result['cycles'], 1)
 
     def test_worker_receives_remaining_monotonic_budget_and_limits(self):
-        def scan(*args):
+        def scan(*args, **kwargs):
             self.clock.now += 2
             return {'accepted': [], 'pending': [], 'issues': []}
         self.scan.side_effect = scan

@@ -1,4 +1,5 @@
 """Cooperative, bounded synthetic discovery and existing fixture analysis."""
+import inspect
 import math
 from time import monotonic, sleep
 
@@ -40,6 +41,12 @@ def _configuration(store, source_ids, provider, worker_id, max_cycles, max_run_s
             identifier(source)
     except BaseException:
         raise ValueError('supervisor_identity_invalid') from None
+    try:
+        parameter = inspect.signature(scan_source).parameters.get('synthetic_only')
+    except BaseException:
+        parameter = None
+    if parameter is None or parameter.kind not in (inspect.Parameter.KEYWORD_ONLY, inspect.Parameter.POSITIONAL_OR_KEYWORD):
+        raise ValueError('supervisor_scanner_invalid')
     try:
         _preflight(provider, worker_id, max_jobs_per_cycle, max_run_seconds, provider_timeout_seconds, lease_seconds)
     except BaseException:
@@ -148,7 +155,7 @@ def run_intake_supervisor(store, source_ids, provider, *, worker_id, max_cycles=
                 return finish('time_limit')
             result['scanned_sources'] += 1
             try:
-                scanned = scan_source(store, source)
+                scanned = scan_source(store, source, synthetic_only=True)
             except BaseException:
                 return finish('source_error', 'source_scan_error')
             try:

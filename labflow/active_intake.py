@@ -104,7 +104,10 @@ def _digest(value):
     return hashlib.sha256(canonical(value).encode('utf-8')).hexdigest()
 
 
-def scan_source(store, source_id, *, now=None):
+def scan_source(store, source_id, *, now=None, synthetic_only=False):
+    """Gate synthetic-only filesystem access inside the scan write transaction."""
+    if type(synthetic_only) is not bool:
+        raise ValueError('synthetic_only_must_be_boolean')
     now = timestamp(now)
     result = {'accepted': [], 'pending': [], 'issues': []}
     with store.connection() as con:
@@ -112,6 +115,8 @@ def scan_source(store, source_id, *, now=None):
         source = con.execute('SELECT * FROM intake_sources WHERE source_id=?', (source_id,)).fetchone()
         if source is None:
             raise ValueError('Unknown intake source')
+        if synthetic_only and source['synthetic'] != 1:
+            raise ValueError('synthetic_source_required')
         root = _plain_path(source['root'])
         seen = set()
         for folder in sorted(root.iterdir()):
