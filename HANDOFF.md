@@ -4,7 +4,7 @@
 
 ## 다음 세션의 목적
 
-사용자는 여러 PC에서 일하므로 개발을 클라우드 세션에서 이어간다. **1차 구축 목표는 FCC RF·EMC·SAR**이며 그 안의 첫 전체 흐름 실증은 스마트폰 2.4 GHz Wi-Fi b/g/n / FCC §15.247이다. [b/g/n 설계](docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md)와 [병렬 수집 운영 검토안](docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md)을 확인한다. 사람이 물리 연결을 수행하며 장비 컨트롤러나 시뮬레이터만으로 업무 흐름을 대체하지 않는다.
+사용자는 여러 PC에서 일하므로 개발을 클라우드 세션에서 이어간다. **1차 구축 목표는 FCC RF·EMC·SAR**이며 그 안의 첫 전체 흐름 실증은 스마트폰 2.4 GHz Wi-Fi b/g/n / FCC §15.247이다. [b/g/n 설계](docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md)와 [병렬 수집 운영 설계](docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md)을 확인한다. 사람이 물리 연결을 수행하며 장비 컨트롤러나 시뮬레이터만으로 업무 흐름을 대체하지 않는다.
 
 전체 범위·합격 기준·미확정 사항은 [PLAN.md](PLAN.md), 데이터·실행·현장 설계는 [IMPLEMENTATION.md](IMPLEMENTATION.md)에 있다. 대화 내용을 다시 추정하는 대신 이 문서를 읽는다.
 
@@ -12,7 +12,7 @@
 
 ## 이번 인계의 역할 — 사용자 결정
 
-- **수집과 Git 게시를 분리한다.** 수집자는 하나의 로컬 프로젝트의 자기 폴더에만 자료를 저장하며 Git 명령을 하지 않는다. 별도 P01이 완료 폴더를 검수·패키징·커밋·푸시한다. 현재 클라우드 담당은 기술 인수·설계·개발을 맡는다. [공통 지시](handoff/AGENT_PROMPT.md)와 [8개 역할 초안](handoff/parallel/README.md)을 따른다. 세션 수/배정은 아직 사용자 검토 중이고 실제 신규 수집 세션은 실행하지 않았다.
+- **수집과 Git 게시를 분리한다.** 수집자는 하나의 로컬 프로젝트의 자기 폴더에만 자료를 저장하며 Git 명령을 하지 않는다. 별도 P01이 완료 폴더를 검수·패키징·커밋·푸시한다. 현재 클라우드 담당은 기술 인수·설계·개발을 맡는다. [공통 지시](handoff/AGENT_PROMPT.md)와 [확정한 8개 역할](handoff/parallel/README.md)을 따른다. 이름은 수집1~수집8이며 기존 세션은 수집1(S01)이다. 사용자는 메인(P01)에만 지시하고 메인이 전체 수집을 통제하며 게시도 겸하기를 원한다. 실제 로컬 준비·세션 지시 전달·실행은 별도 확인한다.
 - **진행 중인 로컬 수집은 보존한다.** [수집 역할 갱신](handoff/COLLECTOR_ROLE_UPDATE.md)에 따라 기존 경로·원본·진행 요청을 먼저 예약하고 P01이 고정 지시 사본을 제공한다. 수집자가 Git 금지 지시를 확인하기 전에는 단독 게시 운영 전환이 완료됐다고 보지 않는다. GitHub 갱신만으로 다른 계정의 실행 중인 작업에 지시가 반영됐다고 가정하지 않는다.
 - **현재 에이전트와 사용자는 전체 파이프라인을 다시 기획한다.** 필요한 공개 원문이 준비될 것을 전제로 업무 흐름·입출력·검증 조건을 구체화한다. 이 설계 가정은 문서의 실제 확보·적용성 검토 또는 현장 검증 완료를 뜻하지 않는다.
 - **첫 실증은 스마트폰 2.4 GHz Wi-Fi b/g/n / FCC §15.247이다.** 폴더 접수·자료 누락/충돌·시험/장비 안내·시험모드 확인·DUT/계측기 제어·원시 데이터·성적서·AI 리뷰를 연결한다. 사용자는 물리 연결·교체·시료 배치를 담당한다. 다른 무선 기능·로봇·KC/EU는 후속이다.
@@ -31,6 +31,8 @@
 - 공유 저장소: [hctinno/DEVICE](https://github.com/hctinno/DEVICE). 기존 main 계획 문서를 현재 구현에 통합했다. 이번 인계 기준 브랜치는 **`codex/fcc-lab-foundation`**이며 main 병합 전에는 이 브랜치를 사용한다. 현재 클라우드 workspace에서 구현과 검증을 실행했으며, 현장 장비에 연결한 것은 아니다.
 
 ## 시작 순서
+
+**로컬 메인(P01)으로 인계받았다면 [메인 총괄 지시](handoff/parallel/MAIN_AGENT_PROMPT.md)를 우선한다.** 사용자는 [한 번 전달할 시작 문장](handoff/parallel/START_HERE.md)을 메인에게 제공한다. 아래 개발용 테스트·브랜치 절차를 수집자에게 실행시키지 않는다.
 
 1. [AGENTS.md](AGENTS.md), [PLAN.md](PLAN.md), [IMPLEMENTATION.md](IMPLEMENTATION.md), [DESIGN.md](DESIGN.md)를 읽는다.
 2. 맡은 역할을 먼저 확인한다. 수집자는 P01의 로컬 고정 지시·배정만 읽고 자기 폴더에 기록한다. P01은 [게시 규칙](materials/README.md)에 따라 패키지 인수 검사를 수행한다. 개발 담당은 저장소 루트에서 `python -m pip install -r requirements.txt`, `python scripts/check_artifacts.py`, `python -m unittest discover -s tests -v`를 실행한다. 환경에 따라 `python3`를 사용한다.

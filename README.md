@@ -2,7 +2,7 @@
 
 다른 PC·에이전트도 이 GitHub 저장소를 체크아웃해 같은 자료와 코드를 사용한다. 현재 작업 인계 기준 브랜치는 `codex/fcc-lab-foundation`이다. [HANDOFF.md](HANDOFF.md)와 [AGENTS.md](AGENTS.md)를 먼저 읽고, 자료 수집 담당은 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)를 따른다. 로컬 커밋은 push한 뒤에 다른 세션에 공유된다.
 
-**1차 구축 목표는 FCC RF·EMC·SAR**다. 수집 세션들은 하나의 로컬 프로젝트에서 각자 자료만 저장하고 Git은 별도 P01만 수행한다. [수집 8개 + 게시 1개 운영안](docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md)과 [역할별 지시 초안](handoff/parallel/README.md)을 사용자 검토용으로 작성했다. 신규 수집 세션은 아직 실행하지 않았다.
+**1차 구축 목표는 FCC RF·EMC·SAR**다. 수집 세션들은 하나의 로컬 프로젝트에서 각자 자료만 저장하고 Git은 별도 P01만 수행한다. [확정한 수집1~수집8 역할](handoff/parallel/README.md)과 [메인(P01)이 총괄하는 운영 설계](docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md)를 따른다. 기존 수집자는 수집1이다. 실제 로컬 준비와 자동 지시 전달 기능은 별도 확인하며 클라우드에서 새 수집 세션을 실행한 것은 아니다.
 
 전체 무인화 계획은 [PLAN.md](PLAN.md), 시스템 설계는 [IMPLEMENTATION.md](IMPLEMENTATION.md), 화면 규칙은 [DESIGN.md](DESIGN.md), 클라우드 시작 방법은 [CLOUD-START.md](CLOUD-START.md)에 있다. 아래 FCC 공통 코어는 이 전체 목표의 현재 구현 단계다.
 
@@ -17,6 +17,7 @@
 - [FCC 공개 규정·KDB·표준의 실제 수집 상태](docs/fcc/source_acquisition_status.md)
 - [규격 중심 성적서·데이터 형식 초안](docs/fcc/format_baseline.md) 및 [빈 템플릿 엑셀](exports/fcc_format_templates.xlsx)
 - [수집 에이전트 작업 지시](handoff/AGENT_PROMPT.md) · [수집 대장](handoff/collection_requests.xlsx) · [GitHub 결과 인계 규칙](materials/README.md)
+- [메인 에이전트 총괄 지시](handoff/parallel/MAIN_AGENT_PROMPT.md) · [메인에 한 번 전달할 문장](handoff/parallel/START_HERE.md)
 - [공통 파이프라인 실행·MCP 연결 안내](docs/fcc/pipeline_usage.md) · [구현 진입점](labflow/__main__.py)
 
 ZIP 내보내기는 선택적 스냅샷이다. 같은 저장소를 사용하는 에이전트 사이에서는 파일을 사용자가 내려받아 다시 첨부할 필요가 없다.

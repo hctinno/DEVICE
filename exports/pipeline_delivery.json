@@ -17,8 +17,8 @@
   "artifacts": {
     "agent_collection_request.zip": {
       "path": "exports/agent_collection_request.zip",
-      "bytes": 1392918,
-      "sha256": "314df5cc2ec5bc407eb0a6802d6799447b4003aa65466377a3a7d7e312e698f0"
+      "bytes": 1401593,
+      "sha256": "605d8ed4385660977d2e398b641470dee6e02abd54a939cef0c4e4b6369ff09d"
     },
     "fcc_pipeline_core.zip": {
       "path": "exports/fcc_pipeline_core.zip",
@@ -34,7 +34,7 @@
     "status": "DRAFT",
     "synthetic": true
   },
-  "updated_at_kst": "2026-10-23T21:01:16.227053+09:00",
+  "updated_at_kst": "2026-10-23T21:22:17.899342+09:00",
   "handoff": {
     "transport": "git",
     "repository": "https://github.com/hctinno/DEVICE",
@@ -51,10 +51,10 @@
     "design_review_document": "docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md",
     "collector_role_update": "handoff/COLLECTOR_ROLE_UPDATE.md",
     "first_construction_scope": "fcc_rf_emc_sar",
-    "publisher_role": "single_local_packaging_and_git_writer",
+    "publisher_role": "local_main_coordinator_and_single_git_writer",
     "publisher_instructions": "handoff/parallel/P01.md",
     "parallel_collection_proposal": {
-      "status": "draft_pending_user_review",
+      "status": "roles_approved_main_instructions_ready_local_execution_unverified",
       "collector_sessions": 8,
       "local_publisher_sessions": 1,
       "cloud_pipeline_sessions": 1,
@@ -62,9 +62,29 @@
       "collector_git_operations": false,
       "roles": "handoff/parallel/README.md",
       "design": "docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md",
-      "sessions_launched": false,
       "row_assignments_created": false,
-      "handoff_automation_implemented": false
-    }
+      "handoff_automation_implemented": false,
+      "main_session_name": "메인",
+      "main_role_id": "P01",
+      "publisher_merged_into_main": true,
+      "collector_session_names": [
+        "수집1",
+        "수집2",
+        "수집3",
+        "수집4",
+        "수집5",
+        "수집6",
+        "수집7",
+        "수집8"
+      ],
+      "existing_collector_session": "수집1",
+      "existing_collector_role_id": "S01",
+      "main_dispatch_capabilities_verified": false,
+      "sessions_launched_by_current_cloud_session": false,
+      "local_setup_status": "not_observed"
+    },
+    "main_instructions": "handoff/parallel/MAIN_AGENT_PROMPT.md",
+    "main_start_prompt": "handoff/parallel/START_HERE.md",
+    "session_start_plan": "docs/superpowers/plans/2026-10-23-collection-session-start.md"
   }
 }

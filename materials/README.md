@@ -2,7 +2,7 @@
 
 공유 저장소는 `https://github.com/hctinno/DEVICE`, 개발 인계 기준은 `codex/fcc-lab-foundation`이다. **수집자 S01~S08은 Git을 사용하지 않는다. 별도 P01만 같은 로컬 프로젝트에서 검수·패키징·커밋·푸시한다.** 현재 클라우드 담당은 게시 자료를 기술 인수하고 개발한다.
 
-수집 8개 역할은 [검토안](../docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md)이며 아직 활성화하지 않았다. 수집자별 브랜치/worktree를 만드는 이전 절차는 최신 사용자 결정으로 대체한다. 상세 운영은 [P01 역할](../handoff/parallel/P01.md)을 따른다.
+[수집1~수집8 역할](../docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md)은 확정됐고 기존 수집자는 수집1이다. 메인(P01)이 전체 배정·진행·취합과 게시를 맡는다. 실제 로컬 준비·지시 전달·실행 상태는 별도 확인한다. 수집자별 브랜치/worktree를 만드는 이전 절차는 최신 사용자 결정으로 대체한다. 상세 운영은 [P01 역할](../handoff/parallel/P01.md)을 따른다.
 
 ## 수집자와 P01의 경계
 
