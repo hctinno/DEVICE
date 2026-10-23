@@ -631,9 +631,9 @@ class InspectionMicroscope(_Facility):
                 selected = {key: sample[key] for key in ('sample_id', 'feature_size_um', 'surface_contrast')}
                 if selected != self._source_sample:
                     self._source_sample = copy.deepcopy(selected)
-                    self.sample = selected
                     self.active, self.result = False, None
                     self.invalid_reason = 'sample_changed'
+                self.sample = selected
         if not self._sample_ready:
             self.active, self.result = False, None
             self.invalid_reason = 'sample_unavailable'
@@ -708,6 +708,8 @@ class InspectionMicroscope(_Facility):
                 self.invalid_reason = 'setup_changed'
             return self._response(changed=changed)
         if action == 'load_sample':
+            if self.requires_sample or 'sample' in self._inputs:
+                return self._invalid('sample_input_authoritative')
             if parameters['feature_size_um'] <= 0 or not 0 <= parameters['surface_contrast'] <= 1:
                 return self._invalid('invalid_synthetic_sample')
             self.sample = copy.deepcopy(parameters)

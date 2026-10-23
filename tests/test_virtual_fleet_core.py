@@ -303,6 +303,85 @@ class VirtualFleetCoreTests(unittest.TestCase):
         fleet = self.fleet(catalog=c, topology=t)
         self.assertEqual(fleet.observations()['devices']['a']['status'], 'error')
 
+    def test_connected_empty_output_is_distinct_from_an_unconnected_input(self):
+        class EmptySource(SampleDevice):
+            def observation(self, **kwargs):
+                result = super().observation(**kwargs)
+                result['values']['outputs'] = {}
+                return result
+        fleet = self.fleet(factories={'sample': EmptySource})
+        rows = fleet.observations()['devices']
+        self.assertNotIn('in', rows['a']['values']['inputs'])
+        marker = rows['b']['values']['inputs']['in']
+        self.assertFalse(marker['valid'])
+        self.assertEqual(marker['reason'], 'output_unavailable')
+        self.assertEqual(marker['source_id'], 'a')
+
+    def test_author_exception_after_mutation_quarantines_invalidates_and_caches_redacted_receipt(self):
+        for exception_type in [RuntimeError, ValueError]:
+            calls = []
+            class BadAuthor(SampleDevice):
+                def author_control(self, fault, value):
+                    calls.append(1)
+                    self.value = 99
+                    raise exception_type('sensitive author implementation detail')
+            fleet = self.fleet(factories={'sample': BadAuthor})
+            fleet.execute('start-a', 'a', 'start')
+            fleet.execute('start-b', 'b', 'start')
+            fleet.advance('acquired', 2)
+            self.assertEqual(fleet.observations()['devices']['a']['values']['result'], 1)
+            receipt = fleet.author_control('hidden', 'a', 'private-author-secret', True)
+            self.assertEqual(receipt['status'], 'error')
+            rows = fleet.observations()['devices']
+            self.assertEqual(rows['a']['status'], 'error')
+            self.assertFalse(fleet.coverage()['devices']['a']['available'])
+            self.assertIsNone(rows['b']['values']['result'])
+            self.assertFalse(rows['b']['values']['inputs']['in']['valid'])
+            revision = fleet.observations()['setup_revision']
+            self.assertGreater(revision, 0)
+            fleet.advance('later', 1)
+            self.assertEqual(fleet.author_control('hidden', 'a', 'private-author-secret', True), receipt)
+            self.assertEqual(fleet.observations()['setup_revision'], revision)
+            self.assertEqual(len(calls), 1)
+            self.assertEqual(fleet.execute('read-unavailable', 'a', 'read')['status'], 'error')
+            public = repr([receipt, fleet.observations(), fleet.coverage(), fleet.history()])
+            self.assertNotIn('sensitive author implementation detail', public)
+            self.assertNotIn('private-author-secret', public)
+
+    def test_propagation_revision_change_cannot_relabel_and_cache_an_old_valid_measurement(self):
+        from labflow.virtual_fleet.facility import DEVICE_FACTORIES, ROLE_ACTIONS
+        failure = {'armed': False}
+        class FailElsewhere(SampleDevice):
+            def observation(self, **kwargs):
+                if failure['armed']:
+                    failure['armed'] = False
+                    raise RuntimeError('sensitive other-node failure')
+                return super().observation(**kwargs)
+        c = catalog()
+        c['profiles'].append({'profile_id': 'synthetic-microscope', 'role': 'inspection_microscope',
+                              'ports': {'inputs': {}, 'outputs': {'data': 'data'}}, 'simulation_parameters': {}})
+        t = {'devices': [{'id': 'a-inspection', 'profile_id': 'synthetic-microscope'},
+                         {'id': 'z-other', 'profile_id': 'synthetic-sample'}], 'connections': []}
+        factories = dict(DEVICE_FACTORIES, sample=FailElsewhere)
+        actions = dict(ROLE_ACTIONS, **ACTIONS)
+        fleet = self.fleet(catalog=c, topology=t, factories=factories, role_actions=actions)
+        loaded = fleet.execute('sample', 'a-inspection', 'load_sample',
+                               {'sample_id': 'synthetic', 'feature_size_um': 11, 'surface_contrast': .9})
+        self.assertEqual(loaded['status'], 'ok')
+        fleet.execute('acquire', 'a-inspection', 'acquire')
+        fleet.advance('complete', 2)
+        previous = fleet.observations()['devices']['a-inspection']['values']['measurement']
+        self.assertTrue(previous['valid'])
+        failure['armed'] = True
+        reply = fleet.execute('fetch-race', 'a-inspection', 'fetch')
+        self.assertEqual(fleet.observations()['devices']['a-inspection']['status'], 'invalid')
+        self.assertEqual(reply['status'], 'invalid')
+        self.assertNotIn('measurement', reply['values'])
+        self.assertEqual(reply['values']['reason'], 'setup_changed_during_action')
+        self.assertGreater(reply['setup_revision'], previous['acquisition_revision'])
+        fleet.advance('later', 1)
+        self.assertEqual(fleet.execute('fetch-race', 'a-inspection', 'fetch'), reply)
+
 
 if __name__ == '__main__':
     unittest.main()

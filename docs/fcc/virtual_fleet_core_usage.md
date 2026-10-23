@@ -70,11 +70,13 @@ catalog는 `profiles` 목록을 갖고 각 profile에는 적어도 고유 `profi
 
 runtime은 위상 순서대로 매 tick의 advance/observation을 실행하고 source의 `values.outputs[port]` 객체를 target의 `inputs[port]`로 전달한다. source_id는 실제 source 노드 ID로 고정한다. RF/전원/기계 제어 관계는 각각 포트 종류와 payload로 검사한다. control 종류가 같아도 RF 행렬 선택 객체를 위치 명령으로 해석하지 않는다.
 
-연결되지 않은 입력은 없다. upstream 오류로 출력이 없으면 `valid=false/upstream_status/source_id` 표식을 전달한다. 정상 upstream에 출력이 없으면 입력 키도 없다. pending source가 명시적으로 `valid=true`인 출력을 유지하면 전달한다. 그 밖의 pending/오류/미연결 출력은 무효다. 하류 장비도 payload, 단위, valid와 동작 전제를 검사해야 한다.
+연결되지 않은 입력은 없다. 연결된 source에 출력이 없으면 status와 관계없이 `valid=false/reason=output_unavailable/upstream_status/source_id` 표식을 전달한다. 이를 통해 미연결 포트와 연결된 빈 출력을 구별한다. pending source가 명시적으로 `valid=true`인 출력을 유지하면 전달한다. 그 밖의 pending/오류/미연결 출력은 무효다. 하류 장비도 payload, 단위, valid와 동작 전제를 검사해야 한다.
 
 유효 RF 출력은 frequency_hz/power_dbm/bandwidth_hz/duty_cycle/modulation을 명시한다. 유한한 수, 양수 주파수/대역폭, `0 < duty_cycle <= 1`을 검사하며 source_id를 덮어쓴다. 여러 RF 입력을 runtime이 더하지 않는다. 꺼짐·누락·과부하·무효 측정은 정상 숫자 0으로 바꾸지 않는다.
 
 설정 revision은 보수적으로 전체 fleet에 적용된다. 진행/완료 측정은 자신의 취득 revision과 비교해 무효화해야 한다. 시설 현미경은 이를 구현한다. 시설의 현재 위치/환경 상태는 순간 상태이며 설정 revision 변경만으로 물리 위치나 온도를 초기화하지 않는다.
+
+action 자체의 setup_changed를 반영한 뒤 DAG 전파에서 다른 노드의 계약 오류로 revision이 다시 바뀌면 이전 action 응답을 현재 측정처럼 반환하지 않는다. 그 응답은 수치 없는 invalid/setup_changed_during_action으로 저장한다. 같은 요청 ID 재시도도 이 최초 무효 영수증을 반환하며, 장비 action을 몰래 재실행하지 않는다. action의 설정 자체가 적용됐을 수 있으므로 새 ID로 상태를 확인해야 한다.
 
 ## 요청과 오류 경계
 
@@ -83,6 +85,8 @@ runtime은 위상 순서대로 매 tick의 advance/observation을 실행하고 s
 식별자는 ASCII 문자·숫자로 시작하는 최대 128자의 문자/숫자/`_.:-` 조합이다. seed는 부호 없는 64비트 정수, 한 번 advance는 1~10000 tick이다. 값은 유한한 JSON, 문자열 객체 키, 최대 64단 중첩/1MiB다. device 응답은 최대 256KiB다. 각 요청 공간은 5000개/32MiB의 메모리 예산을 갖고, 실행 전에 응답 공간을 예약한다. 메모리 runtime이므로 프로세스 재시작 뒤 요청 재시도나 영속 replay를 보장하지 않는다.
 
 알 수 없는 action/인수는 unsupported/invalid이고 설정을 성공으로 바꾸지 않는다. 잘못된 장비 응답이나 예외는 내부 예외 문자열을 공개하지 않고 해당 노드를 error로 격리한다. 하류 입력과 이전 측정의 revision도 무효화한다. 격리된 코드 계약 오류는 새 runtime 생성이 필요하며, 아래 시설 동작 고장은 원인 제거와 명시적 복구 동작으로 회복한다.
+
+작성자 callback의 예외도 같은 격리·revision·하류 무효화를 적용하고, 민감 문자열을 제거한 오류 영수증을 작성자 ID 공간에 저장한다. 같은 ID/내용 재시도는 callback을 다시 실행하지 않고 최초 오류를 반환한다. callback이 예외 전에 변이하지 않았음을 공통 인터페이스로 증명할 수 없으므로 callback이 던진 ValueError도 격리한다. runtime이 callback 호출 전에 검증하는 JSON/ID/없는 노드 오류는 ValueError로 거절한다.
 
 ## 시설 action과 포트
 
@@ -108,7 +112,7 @@ runtime은 위상 순서대로 매 tick의 advance/observation을 실행하고 s
 
 위치 control 출력은 valid/enabled/target_position/unit/generation을 포함한다. 하류는 단위·범위·새 generation을 검사한다. 중단 뒤 같은 generation은 자동 재시작하지 않는다. `requires_control=true`인 노드는 유효 제어가 필요하다. `requires_power=true`는 명시된 입력의 valid/enabled와 양수 voltage_v를 요구한다. 전원 자체의 upstream 전원 모델은 지원하지 않는다.
 
-현미경 sample 입력은 valid/sample_id/feature_size_um/surface_contrast를 명시한다. 연결 sample이 바뀌거나 무효가 되면 진행/완료 취득을 버린다. 미연결이면 load_sample을 사용할 수 있고 requires_sample=true면 입력을 요구한다. 관측에는 항상 synthetic_sample=true, scope=`auxiliary cable validation`, image_interpretation=`not_performed`가 있다. feature_size_um과 확대상 크기는 입력 합성 특성에서 계산한 값이다.
+현미경 sample 입력은 valid/sample_id/feature_size_um/surface_contrast를 명시한다. 연결 sample이 바뀌거나 무효가 되면 진행/완료 취득을 버린다. 연결/required 입력은 매번 권위 입력으로 선택하고 local load_sample으로 덮어쓰지 못한다. 미연결이고 requires_sample=false일 때 load_sample을 사용할 수 있다. 관측에는 항상 synthetic_sample=true, scope=`auxiliary cable validation`, image_interpretation=`not_performed`가 있다. feature_size_um과 확대상 크기는 입력 합성 특성에서 계산한 값이다.
 
 ## 합성 정책과 미지원
 
