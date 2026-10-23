@@ -13,6 +13,8 @@ ASSETS = {
     '/styles.css': ('styles.css', 'text/css; charset=utf-8'),
     '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
     '/model.mjs': ('model.mjs', 'text/javascript; charset=utf-8'),
+    '/intake_flow_model.mjs': ('intake_flow_model.mjs', 'text/javascript; charset=utf-8'),
+    '/virtual_fleet/harness_model.mjs': ('virtual_fleet/harness_model.mjs', 'text/javascript; charset=utf-8'),
 }
 FRONTEND = Path(__file__).resolve().parents[1] / 'frontend'
 
@@ -71,13 +73,15 @@ def create_server(workspace, host='127.0.0.1', port=8765):
                     return self.error(503, 'asset_unavailable')
             if path == '/api/intakes':
                 intake_id = None
+                fixture_runs = False
             else:
-                match = re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})', path)
+                match = re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})(/fixture-runs)?', path)
                 if match is None:
                     return self.error(404, 'route_not_found')
                 intake_id = match[1]
+                fixture_runs = bool(match[2])
             try:
-                self.send_payload(200, model.snapshot(intake_id))
+                self.send_payload(200, model.fixture_runs(intake_id) if fixture_runs else model.snapshot(intake_id))
             except ReadModelError as exc:
                 self.error(404 if exc.code == 'intake_not_found' else 503, exc.code)
             except (OSError, ValueError):

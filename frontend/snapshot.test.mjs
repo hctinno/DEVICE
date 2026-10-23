@@ -53,3 +53,32 @@ for (const [name, path, mutate] of invalid) {
     assert.throws(() => validateSnapshot(value), error => error.message === 'invalid_snapshot' && error.path === path);
   });
 }
+
+test('V2 text and PDF citations retain context and page-local coordinates while V1 remains valid', () => {
+  const data = fixture();
+  const submitted = data.intakes[0].analysis.submitted;
+  submitted.schema_version = 2;
+  submitted.context_id = 'context:synthetic-1';
+  const source = submitted.facts[0].evidence[0];
+  source.kind = 'text_line';
+  assert.equal(validateSnapshot(data), data);
+  Object.assign(source, {kind:'pdf_page', extraction_id:'extraction:synthetic-1', page_number:2, text_sha256:'b'.repeat(64)});
+  assert.equal(validateSnapshot(data), data);
+  assert.equal(source.page_number, 2);
+  assert.equal(validateSnapshot(fixture()).schema_version, 1);
+});
+
+test('V2 requires context and exact typed citation fields with valid page line and extraction identities', () => {
+  for (const mutate of [s => {delete s.context_id;}, s => {s.context_id = [];}, s => {s.schema_version = null;},
+    s => {delete s.facts[0].evidence[0].extraction_id;}, s => {s.facts[0].evidence[0].page_number = 0;},
+    s => {s.facts[0].evidence[0].kind = 'page';}, s => {s.facts[0].evidence[0].line_end = 0;},
+    s => {s.facts[0].evidence[0].line_start = 3;}, s => {s.facts[0].evidence[0].text_sha256 = 'bad';},
+    s => {s.facts[0].evidence[0].seed = 0;}, s => {s.facts[0].evidence[0].role = 'future';},
+    s => {s.facts[0].evidence[0].sha256 += '\n';}, s => {s.facts[0].evidence[0].text_sha256 += '\n';}]) {
+    const data = fixture(), submitted = data.intakes[0].analysis.submitted;
+    Object.assign(submitted, {schema_version:2, context_id:'context:synthetic-1'});
+    Object.assign(submitted.facts[0].evidence[0], {kind:'pdf_page', extraction_id:'extract:1', page_number:2, text_sha256:'b'.repeat(64)});
+    mutate(submitted);
+    assert.throws(() => validateSnapshot(data), /invalid_snapshot/);
+  }
+});
