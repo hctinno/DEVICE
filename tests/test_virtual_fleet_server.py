@@ -224,6 +224,29 @@ class VirtualFleetServerTests(unittest.TestCase):
             self.assertNotIn("private", str(receipt))
         self.assertEqual(self.state()["observations"]["tick"], 2)
 
+    def test_non_utf8_result_returns_safe_uncertain_receipt_and_preserves_retry_id(self):
+        def non_utf8_result(request_id, ticks):
+            self.runtime.tick += ticks
+            return {"request_id": request_id, "status": "ok",
+                    "values": {"label": "\ud800", "note": "private-runtime-body"}}
+        self.runtime.advance = non_utf8_result
+        payload = {"request_id": "non-utf8-once", "ticks": 2}
+        responses = []
+        for _ in range(2):
+            try:
+                responses.append(self.request("/api/advance", "POST", payload))
+            except (http.client.RemoteDisconnected, OSError) as error:
+                responses.append((type(error).__name__, {}, b""))
+        self.assertEqual([response[0] for response in responses], [503, 503])
+        for replayed, (_, _, body) in zip((False, True), responses):
+            receipt = json.loads(body.decode("utf-8", errors="strict"))
+            self.assertEqual(receipt["error"]["code"], "runtime_mutation_uncertain")
+            self.assertEqual(receipt["request_id"], "non-utf8-once")
+            self.assertEqual(receipt["replayed"], replayed)
+            self.assertNotIn("result", receipt)
+            self.assertNotIn(b"private-runtime-body", body)
+        self.assertEqual(self.state()["observations"]["tick"], 2)
+
     def test_snapshot_with_missing_device_is_error_instead_of_partial_success(self):
         original = self.runtime.observations
         def partial():
