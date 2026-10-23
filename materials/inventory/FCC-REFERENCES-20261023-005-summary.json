@@ -1,0 +1,11 @@
+{
+  "package_id": "FCC-REFERENCES-20261023-005",
+  "archive_bytes": 4630,
+  "archive_sha256": "6f6a79659874d103f0c5904f1bc7e1ad627a6fa3f5a0747bc4e1c0a8c3a9c077",
+  "status_counts": {
+    "read_only": 34,
+    "unavailable": 5
+  },
+  "public_originals": 0,
+  "local_pdf_records": 35
+}

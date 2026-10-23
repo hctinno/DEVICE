@@ -1,0 +1,311 @@
+{
+  "checked_at": "2026-10-23T20:43:36+09:00",
+  "requests": [
+    {
+      "request_id": "ADDED-EQ-CONTROLLER-ANALYZER-REFERENCES",
+      "evidence": [
+        {
+          "title": "2090 Multi-Device Controller manual",
+          "package_id": "FCC-REFERENCES-20261023-005",
+          "document_id": "ETS-Lindgren-2090-281-29.pdf-10c0c052bf",
+          "status": "unavailable"
+        },
+        {
+          "title": "EMC Field Probes H-600100 K manual",
+          "package_id": "FCC-REFERENCES-20261023-005",
+          "document_id": "ETS-Lindgren-EMC-20Field-20Probes-20H-600100-20K.pdf-a8710dd726",
+          "status": "unavailable"
+        },
+        {
+          "title": "EMC Field Probes 399395 D manual",
+          "package_id": "FCC-REFERENCES-20261023-005",
+          "document_id": "ETS-Lindgren-EMC-20Field-20Probes-20399395-20D-20Manual.pdf-4d76bee2e3",
+          "status": "unavailable"
+        },
+        {
+          "title": "6500 Series Loop Antennas manual",
+          "package_id": "FCC-REFERENCES-20261023-005",
+          "document_id": "ETS-Lindgren-6500-20Series-20Loop-20Antennas-20399293-20C.pdf-fa88306499",
+          "status": "unavailable"
+        },
+        {
+          "title": "R&S®FSVA and R&S®FSV Instrument Security",
+          "package_id": "FCC-REFERENCES-20261023-005",
+          "document_id": "Rohde-Schwarz-rs-fsva-and-rs-fsv-instrument-security_78701-28726.html-71e5bacf0e",
+          "status": "unavailable"
+        },
+        {
+          "title": "R&S®FSV-B30/-B32/-B34 DC Power Supply and Battery Operation Installation Manual",
+          "package_id": "FCC-REFERENCES-20261023-005",
+          "document_id": "Rohde-Schwarz-FSV-B30-B32-B34_DC_Power_Supply_Battery_Pack_en_02.pdf-7f0316bd64",
+          "status": "read_only"
+        }
+      ]
+    },
+    {
+      "request_id": "ADDED-EQ-ELEKTRA",
+      "evidence": [
+        {
+          "title": "ELEKTRA full user manual",
+          "package_id": "FCC-EQUIPMENT-20261023-004",
+          "document_id": "Rohde-Schwarz-ELEKTRA-full-user-manual-b4456f8e28",
+          "status": "read_only"
+        }
+      ]
+    },
+    {
+      "request_id": "ADDED-EQ-VENDOR-REFERENCE",
+      "evidence": [
+        {
+          "title": "DASY6 API option announcement and access route",
+          "package_id": "FCC-EQUIPMENT-20261023-004",
+          "document_id": "SPEAG-DASY6-API-option-announcement-and-access-route-d4baf66e7c",
+          "status": "read_only"
+        },
+        {
+          "title": "WPT3 and MAGPy3 V3.4 API and export update",
+          "package_id": "FCC-EQUIPMENT-20261023-004",
+          "document_id": "SPEAG-WPT3-and-MAGPy3-V3.4-API-and-export-update-f8b047743a",
+          "status": "read_only"
+        }
+      ]
+    },
+    {
+      "request_id": "ADDED-HAC-TRANSITIONS",
+      "evidence": [
+        {
+          "title": "Achieving 100% wireless handset model hearing aid compatibility - Small Entity Compliance Guide",
+          "package_id": "FCC-UPDATES-20261023-003",
+          "document_id": "FCC-DA25-78-786c1bc52b",
+          "status": "downloaded"
+        },
+        {
+          "title": "Achieving 100% wireless handset model hearing aid compatibility - final rule",
+          "package_id": "FCC-UPDATES-20261023-003",
+          "document_id": "FR-2024-25088-9a42c87178",
+          "status": "downloaded"
+        },
+        {
+          "title": "Achieving 100% Wireless Handset Model Hearing Aid Compatibility - Report and Order",
+          "package_id": "FCC-UPDATES-20261023-003",
+          "document_id": "FCC-24-112A1-aca71e4a01",
+          "status": "downloaded"
+        },
+        {
+          "title": "FCC requires all mobile phones to be hearing aid compatible - news release",
+          "package_id": "FCC-UPDATES-20261023-003",
+          "document_id": "DOC-406697A1-f357acbb1d",
+          "status": "downloaded"
+        },
+        {
+          "title": "Statement of Chairwoman Jessica Rosenworcel on FCC 24-112",
+          "package_id": "FCC-UPDATES-20261023-003",
+          "document_id": "FCC-24-112A2-76dc45b96f",
+          "status": "downloaded"
+        },
+        {
+          "title": "Statement of Commissioner Geoffrey Starks on FCC 24-112",
+          "package_id": "FCC-UPDATES-20261023-003",
+          "document_id": "FCC-24-112A3-11daa7d2ff",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "ADDED-STD-17065-FDIS",
+      "evidence": [
+        {
+          "title": "ISO/IEC FDIS 17065",
+          "source_url": "https://www.iso.org/standard/94443.html",
+          "status": "purchase_required"
+        }
+      ]
+    },
+    {
+      "request_id": "ADDED-STD-62209-1528-CSV2026",
+      "evidence": [
+        {
+          "title": "IEC/IEEE 62209-1528:2020+AMD1:2026 CSV",
+          "source_url": "https://webstore.iec.ch/en/publication/116521",
+          "status": "purchase_required"
+        }
+      ]
+    },
+    {
+      "request_id": "ADDED-STD-62209-1528a-2026",
+      "evidence": [
+        {
+          "title": "IEC/IEEE 62209-1528a-2026",
+          "source_url": "https://standards.ieee.org/ieee/62209-1528a/11607/",
+          "status": "purchase_required"
+        }
+      ]
+    },
+    {
+      "request_id": "ADDED-STD-C63.25.2-2024",
+      "evidence": [
+        {
+          "title": "IEEE/ANSI C63.25.2-2024",
+          "source_url": "https://standards.ieee.org/ieee/C63.25.2/11463/",
+          "status": "purchase_required"
+        }
+      ]
+    },
+    {
+      "request_id": "ADDED-STD-C6310-2013",
+      "evidence": [
+        {
+          "title": "IEEE/ANSI C63.10-2013",
+          "source_url": "https://standards.ieee.org/ieee/C63.10/5690/",
+          "status": "purchase_required"
+        }
+      ]
+    },
+    {
+      "request_id": "ADDED-STD-TIA5050-2018",
+      "evidence": [
+        {
+          "title": "ANSI/TIA-5050-2018",
+          "source_url": "https://www.ecfr.gov/current/title-47/section-20.19",
+          "status": "unavailable",
+          "reason": "Rule-mentioned volume-control standard identified; full original, exact publisher access route and replacement edition are unresolved. TIA revision announcement is not treated as the standard."
+        }
+      ]
+    },
+    {
+      "request_id": "FCC-SEC-18.311",
+      "evidence": [
+        {
+          "title": "FCC Methods of Measurements of Radio Noise Emissions from ISM Equipment",
+          "package_id": "FCC-UPDATES-20261023-003",
+          "document_id": "FCC-MP5-1986-8aaeb7301d",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "KDB-231607",
+      "evidence": [
+        {
+          "title": "DRAFT 231607 D01 Technical Standards Reference DR01-46294",
+          "package_id": "FCC-UPDATES-20261023-003",
+          "document_id": "drafts-GetPublishedDocument-43426e6c48",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "KDB-394321",
+      "evidence": [
+        {
+          "title": "394321",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-394321-publication-bcd8ef1e5e",
+          "status": "downloaded"
+        },
+        {
+          "title": "394321 D01 Grantee Responsibilities v01",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-394321-394321-D01-Grantee-Responsibilities-v01-a77f39601f",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "KDB-502150",
+      "evidence": [
+        {
+          "title": "502150",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-502150-publication-df4b1951aa",
+          "status": "downloaded"
+        },
+        {
+          "title": "502150 D01 Certification Under Waiver v01",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-502150-502150-D01-Certification-Under-Waiver-v01-76e7677a7e",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "KDB-513465",
+      "evidence": [
+        {
+          "title": "513465",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-513465-publication-addafc4c0d",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "KDB-522082",
+      "evidence": [
+        {
+          "title": "522082",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-522082-publication-f5de669057",
+          "status": "downloaded"
+        },
+        {
+          "title": "522082 D01 Directions to FCC Lab v01",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-522082-522082-D01-Directions-to-FCC-Lab-v01-a2c873eb42",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "KDB-568086",
+      "evidence": [
+        {
+          "title": "568086",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-568086-publication-c57ceee6ee",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "KDB-657217",
+      "evidence": [
+        {
+          "title": "657217",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-657217-publication-137ddd8c55",
+          "status": "downloaded"
+        },
+        {
+          "title": "657217 D01 Personal Computer v03",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-657217-657217-D01-Personal-Computer-v03-342a4b1afe",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "KDB-714737",
+      "evidence": [
+        {
+          "title": "714737",
+          "package_id": "FCC-GENERAL-20261023-002",
+          "document_id": "KDB-714737-publication-42c75e54e8",
+          "status": "downloaded"
+        }
+      ]
+    },
+    {
+      "request_id": "KDB-775926",
+      "evidence": [
+        {
+          "title": "DRAFT 775926 SAR Testing for Irregular Shaped Devices DR01-46042",
+          "package_id": "FCC-UPDATES-20261023-003",
+          "document_id": "drafts-GetPublishedDocument-12-3909a19012",
+          "status": "downloaded"
+        }
+      ]
+    }
+  ],
+  "notice": "Additional requests do not replace or shrink the original 304 requests and 2867 model rows."
+}

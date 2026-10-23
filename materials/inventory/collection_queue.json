@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T20:34:53+09:00",
+  "updated_at": "2026-10-23T20:43:37+09:00",
   "base_commit": "e664e0e3a1db8d8fac6a8f6bc92b1a2b49c7a283",
   "regulatory": [
     {
@@ -17093,8 +17093,10 @@
       "manufacturer": "INNCO Systems",
       "model": "AS2000-PP",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17103,8 +17105,10 @@
       "manufacturer": "INNCO Systems",
       "model": "AS4000-MP-HK",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17113,8 +17117,10 @@
       "manufacturer": "INNCO Systems",
       "model": "CO2000",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17123,8 +17129,10 @@
       "manufacturer": "INNCO Systems",
       "model": "CO3000",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17143,8 +17151,10 @@
       "manufacturer": "INNCO Systems",
       "model": "CT 0800",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17173,8 +17183,10 @@
       "manufacturer": "INNCO Systems",
       "model": "DT2000-2t",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17183,8 +17195,10 @@
       "manufacturer": "INNCO Systems",
       "model": "DT3000-3t",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17193,8 +17207,10 @@
       "manufacturer": "INNCO Systems",
       "model": "KMS5400",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17203,8 +17219,10 @@
       "manufacturer": "INNCO Systems",
       "model": "MA2000-EP",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17213,8 +17231,10 @@
       "manufacturer": "INNCO Systems",
       "model": "MA4000-EP",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17223,8 +17243,10 @@
       "manufacturer": "INNCO Systems",
       "model": "MA4640",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17233,8 +17255,10 @@
       "manufacturer": "INNCO Systems",
       "model": "MA4640-XP-ET",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -17253,8 +17277,10 @@
       "manufacturer": "INNCO Systems",
       "model": "Turn Table",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23013,8 +23039,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "8921",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ru_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23401,8 +23429,13 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ENV216",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/getting_started/1328_4922_01/ESW_GettingStarted_en_11.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23411,8 +23444,12 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ENV4200",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23421,8 +23458,12 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ENV432",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23441,8 +23482,18 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESCI",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_es_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_fr_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_it_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_pt_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_DL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K106_NBIoT_DL_UserManual_en_01.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K93_WiMAX_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_UL_UserManual_en_06.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23481,8 +23532,12 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESH2-Z5",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23491,8 +23546,13 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESH3",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_UL_UserManual_en_06.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23511,8 +23571,12 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESH3-Z5",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23541,8 +23605,24 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESPI",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_de_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_es_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_fr_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_it_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_pt_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K70_VSA_UserManual_en_09.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K73_3GPP_FDD_UE_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K84_K85_1XEV-DO_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K7_AnalogDemod_K7S_FMStereo_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K72_3GPP_FDD_BTS_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K93_WiMAX_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23591,8 +23671,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESU8",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_it_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23631,8 +23713,11 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESW 44",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/getting_started/1328_4922_01/ESW_GettingStarted_en_11.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23641,8 +23726,11 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESW26",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/getting_started/1328_4922_01/ESW_GettingStarted_en_11.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23651,8 +23739,11 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESW44",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/getting_started/1328_4922_01/ESW_GettingStarted_en_11.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23661,8 +23752,11 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "ESW8",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/getting_started/1328_4922_01/ESW_GettingStarted_en_11.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23751,8 +23845,40 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "FSV 40",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_de_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_es_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_fr_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_it_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ja_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ko_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_pt_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ru_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_tw_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K70_VSA_UserManual_en_09.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10_GSM_UserManual_en_07.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K73_3GPP_FDD_UE_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K76_K77_TDSCDMA_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/fsv_k70_vsa_gettingstarted_en.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K84_K85_1XEV-DO_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_DL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K40_PhaseNoise_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K82_K83_CDMA2000_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K7_AnalogDemod_K7S_FMStereo_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K106_NBIoT_DL_UserManual_en_01.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K72_3GPP_FDD_BTS_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K93_WiMAX_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_0197_01/FSV-K144_5G_NR_DL_UserManual_en_02.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_UL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K8_Bluetooth_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23761,8 +23887,40 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "FSV30",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_de_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_es_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_fr_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_it_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ja_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ko_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_pt_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ru_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_tw_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K70_VSA_UserManual_en_09.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10_GSM_UserManual_en_07.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K73_3GPP_FDD_UE_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K76_K77_TDSCDMA_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/fsv_k70_vsa_gettingstarted_en.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K84_K85_1XEV-DO_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_DL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K40_PhaseNoise_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K82_K83_CDMA2000_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K7_AnalogDemod_K7S_FMStereo_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K106_NBIoT_DL_UserManual_en_01.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K72_3GPP_FDD_BTS_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K93_WiMAX_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_0197_01/FSV-K144_5G_NR_DL_UserManual_en_02.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_UL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K8_Bluetooth_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23781,8 +23939,40 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "FSV40",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_de_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_es_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_fr_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_it_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ja_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ko_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_pt_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ru_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_tw_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K70_VSA_UserManual_en_09.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10_GSM_UserManual_en_07.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K73_3GPP_FDD_UE_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K76_K77_TDSCDMA_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/fsv_k70_vsa_gettingstarted_en.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K84_K85_1XEV-DO_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_DL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K40_PhaseNoise_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K82_K83_CDMA2000_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K7_AnalogDemod_K7S_FMStereo_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K106_NBIoT_DL_UserManual_en_01.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K72_3GPP_FDD_BTS_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K93_WiMAX_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_0197_01/FSV-K144_5G_NR_DL_UserManual_en_02.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_UL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K8_Bluetooth_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23801,8 +23991,39 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "FSVA40",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_de_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_es_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_fr_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_it_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ja_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ko_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_pt_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ru_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_tw_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K70_VSA_UserManual_en_09.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10_GSM_UserManual_en_07.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K73_3GPP_FDD_UE_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K76_K77_TDSCDMA_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K84_K85_1XEV-DO_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_DL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K40_PhaseNoise_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K82_K83_CDMA2000_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K7_AnalogDemod_K7S_FMStereo_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K106_NBIoT_DL_UserManual_en_01.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K72_3GPP_FDD_BTS_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K93_WiMAX_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_0197_01/FSV-K144_5G_NR_DL_UserManual_en_02.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_UL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K8_Bluetooth_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23811,8 +24032,30 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "FSVR",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_de_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_es_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_fr_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_it_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ja_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ko_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_pt_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ru_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_tw_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K70_VSA_UserManual_en_09.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K73_3GPP_FDD_UE_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_DL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K82_K83_CDMA2000_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K106_NBIoT_DL_UserManual_en_01.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_0197_01/FSV-K144_5G_NR_DL_UserManual_en_02.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_UL_UserManual_en_06.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23941,8 +24184,32 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "HZ-10",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/getting_started/1328_4922_01/ESW_GettingStarted_en_11.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_es_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_it_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ja_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ko_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_ru_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/FSVA_FSV_QuickStartguide_zh_tw_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10_GSM_UserManual_en_07.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_DL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K40_PhaseNoise_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K82_K83_CDMA2000_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K7_AnalogDemod_K7S_FMStereo_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K54_EMI_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K106_NBIoT_DL_UserManual_en_01.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K93_WiMAX_UserManual_en_03.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K10x_LTE_UL_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K8_Bluetooth_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23971,8 +24238,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "MDS-21",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K93_WiMAX_UserManual_en_03.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24011,8 +24280,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "NRP-Z81",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24133,8 +24404,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "OSP 120",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24143,8 +24416,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "OSP 130",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24153,8 +24428,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "OSP 150",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24163,8 +24440,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "OSP130",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24173,8 +24452,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "OSP150",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K91_WLAN_UserManual_en_06.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24293,8 +24574,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "RTO64",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K82_K83_CDMA2000_UserManual_en_05.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24423,8 +24706,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "SMBV100A",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24443,8 +24728,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "SMC100A",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24473,8 +24760,10 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "SMT 02",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24483,8 +24772,18 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "SMU 200A",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K70_VSA_UserManual_en_09.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K73_3GPP_FDD_UE_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K76_K77_TDSCDMA_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/fsv_k70_vsa_gettingstarted_en.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K84_K85_1XEV-DO_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K82_K83_CDMA2000_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K7_AnalogDemod_K7S_FMStereo_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K72_3GPP_FDD_BTS_UserManual_en_04.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24493,8 +24792,18 @@
       "manufacturer": "Rohde & Schwarz",
       "model": "SMU200A",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K70_VSA_UserManual_en_09.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K73_3GPP_FDD_UE_UserManual_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K76_K77_TDSCDMA_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/fsv_k70_vsa_gettingstarted_en.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K84_K85_1XEV-DO_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K82_K83_CDMA2000_UserManual_en_05.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K7_AnalogDemod_K7S_FMStereo_UserManual_en_06.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSV_K72_3GPP_FDD_BTS_UserManual_en_04.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -34636,8 +34945,8 @@
     "not_started": 6
   },
   "equipment_state_counts": {
-    "not_started": 2747,
-    "partial_references_found": 99,
+    "not_started": 2701,
+    "partial_references_found": 145,
     "model_identity_or_legacy_lookup_required": 21
   },
   "notice": "All requests retained. Partial source availability does not mean every required document, edition, transition, attachment or device function has been completed."

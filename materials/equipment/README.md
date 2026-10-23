@@ -15,3 +15,11 @@ PDF의 파일 헤더, 페이지 수, 첫 페이지의 제목·모델·판본을 
 Schwarzbeck PDF에는 데이터시트, 도면, 조립·안전 안내, 방사 패턴, 검증/교정 방법 설명이 포함된다. 일반적인 검증 방법을 실제 보유 장비의 교정서·안테나 팩터·중간점검 값으로 대체하지 않는다. 실장비 명령, 스크립트, 드라이버 설치 및 DUT 시험모드 실행은 수행하지 않았다.
 
 전체 잔여 요청은 [수집 대장](../inventory/collection_queue.json)에 유지한다. 현장 소유 자료는 [기존 비공개 입력 요청](../inventory/private_input_status.json)과 `handoff/asset_evidence_requests.csv`에 연결한다.
+
+## 005 추가 자료
+
+[005 ZIP](../packages/FCC-REFERENCES-20261023-005.zip)과 [manifest](../manifests/FCC-REFERENCES-20261023-005.json)에 ESW·FSV 계열·INNCO 자료의 접근 기록을 추가했다. [통합 원문 대장](../inventory/equipment_round5_sources.json), [제어기·수신기 대장](../inventory/controllers_sources.json), [FSV 계열 대장](../inventory/rs_fsv_sources.json)에서 로컬 경로와 파일 해시를 확인할 수 있다.
+
+ESW 본체·시작 매뉴얼, FSV/FSVA 본체·시작 및 측정 옵션 문서와 INNCO의 2017년 제품 카탈로그를 확보했다. FSV의 시작 안내서에는 여러 언어 판본이 있어 파일명 기준 언어와 판본을 기록했다. 영어 원문을 번역본으로 교체하지 않는다. FSV-K54의 두 출처가 같은 PDF를 가리키므로 manifest에서는 한 레코드에 연결했다.
+
+005에는 로컬 전용 원문 기록 34개와 HTTP 미확보 5개가 있으며, 공개 원문 payload는 없다. ETS-Lindgren의 목록 페이지에서 다음 페이지 링크가 404로 연결되었고, 별도로 확인한 공식 구형 PDF 링크 4개도 원문을 받지 못했다. 해당 실패를 완료로 처리하지 않았다. INNCO 카탈로그는 동작·프로그래밍 매뉴얼과 구분한다.
