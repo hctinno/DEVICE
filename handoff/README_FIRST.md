@@ -1,12 +1,12 @@
 # 다른 에이전트에게 전달할 자료 수집 요청
 
-이 폴더 전체 또는 `agent_collection_request.zip`을 수집 에이전트에게 전달하고 `AGENT_PROMPT.md`를 작업 지시로 사용하십시오. 대상은 **FCC를 먼저 구축하는 RF·EMC AI 시험소**입니다. 첨부 장비 목록은 보유 자원의 한 예이며 규정 지원 범위를 장비 목록으로 제한하지 않습니다.
+공유 GitHub 저장소 `hctinno/DEVICE`의 `codex/fcc-lab-foundation` 브랜치를 기준으로 작업하고, 이 폴더의 `AGENT_PROMPT.md`를 지시로 사용하십시오. 사용자가 ZIP을 내려받아 다른 에이전트에게 재첨부할 필요는 없습니다. 대상은 **FCC를 먼저 구축하는 RF·EMC AI 시험소**입니다. 장비 목록은 보유 자원의 한 예이며 규정 지원 범위를 장비 목록으로 제한하지 않습니다.
 
 ## 시작 순서
 
 1. `AGENT_PROMPT.md`를 읽고 P0 FCC 규정·KDB·표준 접근 자료를 먼저 수집합니다.
 2. `collection_requests.xlsx` 또는 동명의 CSV를 작업대장으로 사용합니다. 모든 장비 모델과 식별이 불완전한 행도 포함합니다.
-3. `collection_manifest.schema.json`에 맞는 `manifest.json`과 원본 파일을 ZIP으로 반환합니다. 완성된 P0 묶음부터 나눠 전달해도 됩니다.
+3. `collection_manifest.schema.json`에 맞는 `manifest.json`과 원본 파일을 배치 ZIP으로 만듭니다. `materials/packages/<package_id>.zip`, 검토용 `materials/manifests/<package_id>.json`과 `materials/STATUS.md`를 작업 브랜치에 커밋·푸시합니다. 상세 절차는 저장소의 `materials/README.md`를 따릅니다. 완성된 P0 묶음부터 공유합니다.
 4. 막힌 항목도 request_id와 이유를 기록해 반환합니다. 결과가 없는 항목을 대장에서 삭제하지 않습니다.
 
 ## 목록의 의미
@@ -39,6 +39,6 @@ fcc_materials_batch_001.zip
   metadata/...
 ```
 
-ZIP 안의 모든 일반 파일을 manifest에 기록합니다. `manifest.json`만 예외입니다. 디렉터리 경로는 상대 POSIX 경로를 사용하고, 원본과 OCR/텍스트 변환본을 다른 record로 식별합니다. 대화에 전달할 **개별 ZIP은 압축 후 25 MiB 이하**, 압축 해제 총량은 512 MiB 이하, 파일/디렉터리 합계는 10,000개 이하로 나눕니다. 원본 파일 하나가 25 MiB를 넘으면 문서를 임의 분할하지 말고 크기와 파일명, 접근 가능한 원천 주소를 별도 상태 기록으로 반환하십시오. 공유할 수 없는 유료 표준은 구매·사용권 안내와 상태만 반환합니다.
+ZIP 안의 모든 일반 파일을 manifest에 기록합니다. `manifest.json`만 예외입니다. 디렉터리 경로는 상대 POSIX 경로를 사용하고, 원본과 OCR/텍스트 변환본을 다른 record로 식별합니다. Git에 저장하는 배치 ZIP은 압축 후 50 MiB 이하를 권장하며, 인수기의 압축 해제 총량 512 MiB/10,000 entries 제한을 지킵니다. 대화 첨부를 선택하는 경우에만 25 MiB 이하로 나눕니다. 단일 대용량 원본은 임의 분할하지 말고 원천 URL·크기와 추가 저장 방식 필요 상태를 기록합니다. 이 저장소는 공개이므로 원문의 공개 재배포가 허용되는지 확인하고, 내부 라이선스·열람 전용·권리 미확인 문서는 원본 대신 출처와 접근 조건을 기록합니다.
 
 이 요청 묶음에는 수집한 원문이 포함되어 있지 않습니다. 원문 인수 후에도 문서 적용성·시험방법·현장 상관성 검증이 별도로 필요합니다.

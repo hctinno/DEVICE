@@ -1,4 +1,8 @@
-# DEVICE — FCC AI 시험소
+# DEVICE — DGM AutoLab / FCC AI 시험소
+
+다른 PC·에이전트도 이 GitHub 저장소를 체크아웃해 같은 자료와 코드를 사용한다. 현재 작업 인계 기준 브랜치는 `codex/fcc-lab-foundation`이다. [HANDOFF.md](HANDOFF.md)와 [AGENTS.md](AGENTS.md)를 먼저 읽고, 자료 수집 담당은 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)를 따른다. 로컬 커밋은 push한 뒤에 다른 세션에 공유된다.
+
+전체 무인화 계획은 [PLAN.md](PLAN.md), 시스템 설계는 [IMPLEMENTATION.md](IMPLEMENTATION.md), 화면 규칙은 [DESIGN.md](DESIGN.md), 클라우드 시작 방법은 [CLOUD-START.md](CLOUD-START.md)에 있다. 아래 FCC 공통 코어는 이 전체 목표의 현재 구현 단계다.
 
 ## 프로젝트 목표: FCC 업무 전체를 수행하는 AI 시험소
 
@@ -8,8 +12,10 @@
 - [FCC 준비항목·범위·원천·완료기준 엑셀](exports/fcc_lab_preparation.xlsx)
 - [FCC 공개 규정·KDB·표준의 실제 수집 상태](docs/fcc/source_acquisition_status.md)
 - [규격 중심 성적서·데이터 형식 초안](docs/fcc/format_baseline.md) 및 [빈 템플릿 엑셀](exports/fcc_format_templates.xlsx)
-- [다른 에이전트에게 전달할 자료 수집 요청 ZIP](exports/agent_collection_request.zip) · [작업 지시](handoff/AGENT_PROMPT.md) · [수집 대장](handoff/collection_requests.xlsx)
-- [공통 파이프라인 실행·MCP 연결 안내](docs/fcc/pipeline_usage.md) · [구현 코드](labflow/)
+- [수집 에이전트 작업 지시](handoff/AGENT_PROMPT.md) · [수집 대장](handoff/collection_requests.xlsx) · [GitHub 결과 인계 규칙](materials/README.md)
+- [공통 파이프라인 실행·MCP 연결 안내](docs/fcc/pipeline_usage.md) · [구현 진입점](labflow/__main__.py)
+
+ZIP 내보내기는 선택적 스냅샷이다. 같은 저장소를 사용하는 에이전트 사이에서는 파일을 사용자가 내려받아 다시 첨부할 필요가 없다.
 
 현재 장비 기준정보 DB와 자료 수집 대장, 자료 인수 → 제품/계획 → 오프라인 시험기록 → 계산 → HTML/PDF/JSON 초안의 공통 코어가 있다. CLI와 stdio MCP가 같은 서비스를 호출한다. 실제 FCC 세부 방법 검증, 전체 범위 적용성 자동 판단, 현장 장비 제어와 공식 성적서 발행은 아직 구현되지 않았다.
 

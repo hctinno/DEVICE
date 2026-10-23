@@ -30,3 +30,11 @@ Workspace: existing dedicated /workspace/DEVICE on branch work; prior artifacts 
 - Full current KDB rediscovery remains a collector task; 180 seeds are not a verified current exhaustive inventory. Source page discovery is not original acquisition. Licensed/read-only standards remain distinct from freely redistributable files.
 - Delivery batches are requested at <=25 MiB compressed for chat transfer; importer permits <=512 MiB expanded and 10,000 entries. Oversized originals should be reported for separate transfer, not silently truncated.
 - Material review findings were fixed with targeted regressions; no second reviewer pass was requested. No unresolved Critical/Important finding remains from that review. Existing source/equipment assets and earlier preparation work are preserved.
+
+## GitHub collaboration follow-up
+
+The user requested all current work be committed and shared through the same GitHub repository, eliminating manual ZIP transfer. All preserved equipment/source/export artifacts were committed in a32407c. The existing remote main planning/handoff commit 6e9e9c3 was integrated without discarding its broader unmanned-laboratory scope. HANDOFF/PLAN/CLOUD-START now reflect the actual implemented offline core and remaining field work.
+
+The sharing branch is codex/fcc-lab-foundation. Collector results use separate collect/* branches, materials/packages plus reviewable manifest JSON and STATUS.md. ZIP remains an internal importer format; Git transports it between agents. Public-repository redistribution limits are recorded for future licensed standards. No agent needs the user to download and reattach the work.
+
+Merged-tree verification: 48 tests passed; equipment source/DB/export checks 17/17 passed; root document integrity passed for seven UTF-8 documents and 55 local links. No hardware run or official filing was performed.

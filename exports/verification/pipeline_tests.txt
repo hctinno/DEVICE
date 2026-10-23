@@ -12,7 +12,7 @@ test_symbolic_link_archive_member_is_rejected (test_labflow.IntakeTests.test_sym
 test_traversal_is_rejected_without_writing_outside_store (test_labflow.IntakeTests.test_traversal_is_rejected_without_writing_outside_store) ... ok
 test_unavailable_record_is_preserved_without_fake_file (test_labflow.IntakeTests.test_unavailable_record_is_preserved_without_fake_file) ... ok
 test_unlisted_file_is_rejected (test_labflow.IntakeTests.test_unlisted_file_is_rejected) ... ok
-test_stdio_client_can_complete_offline_draft_workflow (test_labflow.MCPTransportTests.test_stdio_client_can_complete_offline_draft_workflow) ... Executing <Task pending name='Task-2' coro=<MCPTransportTests.test_stdio_client_can_complete_offline_draft_workflow() running at /workspace/DEVICE/tests/test_labflow.py:338> cb=[_run_until_complete_cb() at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/base_events.py:181] created at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py:100> took 0.166 seconds
+test_stdio_client_can_complete_offline_draft_workflow (test_labflow.MCPTransportTests.test_stdio_client_can_complete_offline_draft_workflow) ... Executing <Task pending name='Task-2' coro=<MCPTransportTests.test_stdio_client_can_complete_offline_draft_workflow() running at /workspace/DEVICE/tests/test_labflow.py:338> cb=[_run_until_complete_cb() at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/base_events.py:181] created at /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py:100> took 0.174 seconds
 /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pydantic_settings/sources/utils.py:47: IncompleteFieldDefinitionWarning: Field 'lifespan' has an incomplete definition: its annotation contains an unresolved forward reference, so settings sources may fail to correctly resolve its value. Call `model_rebuild()` on the model where the field is defined, once all the referenced types are defined.
   warnings.warn(
 Processing request of type ListToolsRequest
@@ -61,6 +61,6 @@ test_malformed_input_does_not_publish_partial_database (test_registry.RegistryTe
 test_suspected_typo_is_not_merged (test_registry.RegistryTests.test_suspected_typo_is_not_merged) ... ok
 
 ----------------------------------------------------------------------
-Ran 48 tests in 0.865s
+Ran 48 tests in 1.046s
 
 OK

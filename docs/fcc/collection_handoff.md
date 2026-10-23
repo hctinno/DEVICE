@@ -1,6 +1,6 @@
 # 다른 에이전트에게 넘길 자료 수집 패키지
 
-`exports/agent_collection_request.zip` 전체를 전달하고 내부 `AGENT_PROMPT.md`를 실행 지시로 사용한다. 엑셀만 전달하면 원본/메타데이터 구분과 반환 규약이 빠지므로 ZIP을 권장한다.
+공유 저장소 hctinno/DEVICE의 `codex/fcc-lab-foundation` 브랜치를 기준으로 `handoff/AGENT_PROMPT.md`를 실행 지시로 사용한다. 수집 담당은 별도 브랜치에서 결과를 커밋·푸시한다. 사용자가 ZIP을 다운로드·재첨부할 필요는 없다. 세부 경로와 절차는 [GitHub 인계 규칙](../../materials/README.md)을 따른다.
 
 | 수집 대장 | 요청 범위 |
 |---|---|
@@ -16,12 +16,12 @@ KDB 180개는 과거 공식 색인과 추가 검색에서 확인한 **시작 목
 
 P0의 공통 규정·주요 KDB·필수 표준 묶음부터 받는다. 전 모델의 매뉴얼 수집이 끝나야 시작할 필요는 없다. 표준의 최신 발행판과 FCC 허용 판본, 과거 재현용 판본을 구분하고, 유료/열람 전용 자료는 합법적인 전달 가능 범위와 상태를 기록한다.
 
-반환물은 `manifest.json` + 실제 파일의 ZIP이며 **압축 후 25 MiB 이하**로 나눈다. 압축 해제 총량은 512 MiB, entries는 10,000개 이하이다. 문서의 출처·판본·권리·원문/파생 구별·SHA-256을 기록한다. 미확보 문서도 상태와 사유를 남기고 파일이나 해시를 만들어 넣지 않는다. 단일 대용량 원본은 임의 분할하지 말고 별도 전달 필요 상태로 남긴다.
+반환물은 `manifest.json` + 실제 파일의 ZIP으로 `materials/packages/`에 커밋하고, 동일 manifest를 `materials/manifests/`에도 저장한다. Git 배치는 압축 후 50 MiB 이하를 권장하며, 25 MiB 제한은 선택적 대화 첨부에만 적용한다. 압축 해제 총량은 512 MiB, entries는 10,000개 이하이다. 문서의 출처·판본·권리·원문/파생 구별·SHA-256을 기록한다. 미확보 문서도 상태와 사유를 남기고 파일이나 해시를 만들어 넣지 않는다. 단일 대용량 원본은 임의 분할하지 말고 별도 전달 필요 상태로 남긴다.
 
 반환 ZIP은 다음 명령으로 검증·등록한다. 요청 ZIP 자체는 원본 문서 패키지가 아니므로 인수 명령에 넣지 않는다.
 
 ```bash
-python -m labflow --workspace data/labflow import-package /path/to/fcc_materials_batch_001.zip
+python -m labflow --workspace .local/collector-check import-package materials/packages/FCC-P0-20261023-001.zip
 ```
 
 성공적으로 인수해도 문서 상태는 `unreviewed`이다. 공식 출처·판본·적용 범위·표준 조항을 검토한 뒤 시험방법 프로필에 연결한다. 기존 공개 조문 발췌와 색인은 원문으로 승격하지 않는다.

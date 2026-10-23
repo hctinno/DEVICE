@@ -46,10 +46,10 @@
     "official_release_available": false
   },
   "report": {
-    "html": "/workspace/DEVICE/exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.html",
-    "pdf": "/workspace/DEVICE/exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.pdf",
-    "json": "/workspace/DEVICE/exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.json",
-    "manifest": "/workspace/DEVICE/exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/files.sha256.json",
+    "html": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.html",
+    "pdf": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.pdf",
+    "json": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.json",
+    "manifest": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/files.sha256.json",
     "status": "DRAFT",
     "synthetic": true
   },

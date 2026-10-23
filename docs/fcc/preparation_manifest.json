@@ -8,7 +8,7 @@
   "pipeline_implemented": false,
   "current_kdb_attachments_acquired": false,
   "updated_at_utc": "2026-10-23T09:55:44.155132+00:00",
-  "public_source_acquisition_owner": "external_collection_agent_requested_by_user",
+  "public_source_acquisition_owner": "external_collection_agent_via_same_github_repository",
   "raw_validation_data_status": "user_has_materials_not_provided_use_for_later_independent_validation",
   "source_acquisition_catalog": "data/regulatory/fcc/catalog.json",
   "source_acquisition_summary": {
@@ -35,5 +35,8 @@
     "stdio_mcp"
   ],
   "collection_request_package": "exports/agent_collection_request.zip",
-  "pipeline_usage": "docs/fcc/pipeline_usage.md"
+  "pipeline_usage": "docs/fcc/pipeline_usage.md",
+  "handoff_transport": "github_branch_commits",
+  "handoff_base_branch": "codex/fcc-lab-foundation",
+  "updated_at_kst": "2026-10-23T19:16:38.271543+09:00"
 }

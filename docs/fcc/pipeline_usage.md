@@ -7,7 +7,8 @@
 Python 3.10 이상에서 실행한다. 실제 검증 환경은 Python 3.12이다.
 
 ```bash
-cd /workspace/DEVICE
+git clone --branch codex/fcc-lab-foundation https://github.com/hctinno/DEVICE.git
+cd DEVICE
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python -m labflow --workspace data/labflow init
@@ -33,6 +34,8 @@ python -m labflow --workspace data/labflow_demo demo --out exports/pipeline_demo
 `data/equipment.sqlite3`는 기존 장비 기준정보로 별도 보존한다. 현재 run의 `equipment_ids`는 연결용 ID이며, 실물 상태·옵션·교정 유효성이나 이 DB의 실존 ID를 자동 검증하지 않는다. 현장 장비 어댑터와 능력 검증은 후속 단계이다.
 
 ## 문서와 측정 증거 인수
+
+수집 담당의 결과는 같은 GitHub 저장소의 브랜치에서 fetch·검토·통합한다. `materials/packages/`의 ZIP을 아래 인수 명령에 사용한다. 사용자가 직접 파일을 옮길 필요는 없다. [자료 인계 규칙](../../materials/README.md)을 따른다.
 
 ```bash
 python -m labflow --workspace data/labflow import-package /path/to/collector_batch.zip
