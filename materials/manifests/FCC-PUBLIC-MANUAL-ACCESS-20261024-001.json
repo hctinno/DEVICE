@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "package_id": "FCC-PUBLIC-MANUAL-ACCESS-20261024-001",
+  "created_at": "2026-10-24T00:49:20.851930+09:00",
+  "synthetic": false,
+  "notes": "P01 reviewed bibliography/access projection of four already acquired manufacturer manuals. No original source, report body, private asset data or OEM software is delivered. Projection performs no new source acquisition.",
+  "documents": [
+    {
+      "document_id": "S04-KEYSIGHT-N1912-90008-c66464fa1668",
+      "title": "Keysight N1911A/1912A P-Series Power Meters Programming Guide",
+      "kind": "manual",
+      "version": "Edition 21, April 15, 2022",
+      "publisher": "Keysight Technologies",
+      "published_at": "2022-04-15",
+      "retrieved_at": "2026-10-23T23:44:33.131128+09:00",
+      "representation": "original",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-05085/programming-guides/9018-05085.pdf",
+      "download_url": "https://www.keysight.com/zw/en/assets/9018-05085/programming-guides/9018-05085.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-001"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1912-90002-a8ec0531b701",
+      "title": "Keysight N1911A/1912A User's Guide",
+      "kind": "manual",
+      "version": "Edition 20, May 11, 2021",
+      "publisher": "Keysight Technologies",
+      "published_at": "2021-05-11",
+      "retrieved_at": "2026-10-23T23:44:34.395802+09:00",
+      "representation": "original",
+      "source_url": "https://www.keysight.com/de/de/assets/9018-05090/user-manuals/9018-05090.pdf",
+      "download_url": "https://www.keysight.com/zw/en/assets/9018-05090/user-manuals/9018-05090.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-001"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1920-90007-9d9efe12fa04",
+      "title": "Keysight N1921A and N1922A P-Series Wideband Power Sensor Operating and Service Guide",
+      "kind": "manual",
+      "version": "Edition 12, November 1, 2021",
+      "publisher": "Keysight Technologies",
+      "published_at": "2021-11-01",
+      "retrieved_at": "2026-10-23T23:43:13.537606+09:00",
+      "representation": "original",
+      "source_url": "https://www.keysight.com/zw/en/assets/9018-05084/user-manuals/9018-05084.pdf",
+      "download_url": "https://www.keysight.com/zw/en/assets/9018-05084/user-manuals/9018-05084.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-001"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S06-OSP-OperatingManual-en-17-8f5f1419879f",
+      "title": "R&S OSP Open Switch and Control Unit - Operating Manual",
+      "kind": "manual",
+      "version": "1505.3896.12-17; offered for FW 2.63 / OSP-Panel 2.50",
+      "publisher": "Rohde & Schwarz GmbH & Co. KG",
+      "published_at": "2018-04-19",
+      "retrieved_at": "2026-10-24T00:08:37+09:00",
+      "representation": "original",
+      "source_url": "https://www.rohde-schwarz.com.cn/manual/rs-osp-open-switch-and-control-platform-operating-manual_78701-28709.html",
+      "download_url": "https://cdn.rohde-schwarz.com.cn/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/OSP_OperatingManual_en_17.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-001"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    }
+  ]
+}

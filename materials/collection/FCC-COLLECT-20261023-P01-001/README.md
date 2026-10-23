@@ -37,7 +37,7 @@
 
 수집1 후속에서는 KDB PDF 5개가 기존 SHA·크기와 동일함을 확인했다. 새 HTML의 마크업 변화와 기술 본문 변화를 구별한다. 수집8 후속에서는 A3LSMS938U의 별도 80쪽 WLAN OFDM 보고서에서 b/g/n 시험방법·결과를 확인했다. 모든 신청·변형의 완전성이나 2026년 방법 승인을 뜻하지 않는다.
 
-현재 신규 로컬 원문 30개 중 공개 원문은 3개다. 그 외에는 권리가 확인되지 않아 로컬 보존하며 접근 안내만 제공한다. 별도로 허용된 Android/AOSP 문서 추출물 3개와 Apache-2.0 라이선스 파일 1개를 공개한다. 모든 공개 ZIP은 manifest 일치·CRC·전용 DB 누적 인수 검사를 통과했다.
+위 20개 공개 검수 배치 집계의 신규 로컬 원문 30개 중 공개 원문은 3개다. 그 외에는 권리가 확인되지 않아 로컬 보존하며 접근 안내만 제공한다. 별도로 허용된 Android/AOSP 문서 추출물 3개와 Apache-2.0 라이선스 파일 1개를 공개한다. 모든 공개 ZIP은 manifest 일치·CRC·전용 DB 누적 인수 검사를 통과했다.
 
 실제 DUT·시험모드, 자산·센서·설치판본, 사이트·RF 경로·교정·인터록, native raw·불확도·발행권한, 허가된 표준 원문은 다섯 입력 묶음으로 취합했다. 이 항목들은 문서 게시를 막지 않으며 실장비 적용 전에 해소해야 한다.
 
@@ -46,3 +46,5 @@
 기존 공개 원본 465개 및 수집 메타데이터 1개와 신규 결과는 별도 집계한다. 기존 2,272개 파일·5개 ZIP은 보존했다. 전체 2,867개 모델을 이번 FCC 범위에 편입하거나 시험소 구현·현장검증 완료로 주장하지 않는다.
 
 추가 요청 DEV-EVIDENCE-20261023-002의 4개 배치를 검수했다. 기존 매뉴얼 근거 13건·센서군 4개를 보강하고 표준·제조사 원문 7개를 로컬 확보했다. 실제 스마트폰 RF 제어의 미확보 기능 16개, 대상 컨트롤러 매뉴얼 3개, 실측 원시파일은 여전히 미해결이다. [추가 결과·한계](additional-evidence/DEV-EVIDENCE-20261023-002/completion.json) · [인수 색인](additional-evidence/DEV-EVIDENCE-20261023-002/intake-v1.json) · [기존 제한6건 A/B/C 감사](additional-evidence/DEV-EVIDENCE-20261023-002/limited-audit.json) · [사용자만 확인할 최소 자료](additional-evidence/DEV-EVIDENCE-20261023-002/user-materials.md). 배정별 실행·인수 상태는 status.json에서 구별한다.
+
+2026-10-24 별도 제조사 문헌 4종의 [서지·권리 검수](../../inventory/FCC-PUBLIC-MANUAL-ACCESS-20261024-001-review.json) · [접근 안내 manifest](../../manifests/FCC-PUBLIC-MANUAL-ACCESS-20261024-001.json) · [접근 안내 ZIP](../../packages/FCC-PUBLIC-MANUAL-ACCESS-20261024-001.zip)을 제공한다. 기존 취득본의 공개 메타데이터 투영이며 위 20개 배치 집계와 별도다. 원문 PDF와 사용자 사례 자료는 포함하지 않는다.
