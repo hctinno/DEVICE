@@ -1,6 +1,6 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "updated_at": "2026-10-23T22:43:46.116951+09:00",
+  "updated_at": "2026-10-23T23:07:55.107700+09:00",
   "owner": "P01",
   "routing": "User and external contacts are handled by P01 only. No direct collector requests.",
   "current_collection_publication_blocked_by_private_inputs": false,

@@ -1,6 +1,6 @@
 # FCC 병렬 수집 운영 기록
 
-기준 시각: 2026-10-23T22:37:09.441685+09:00 (Asia/Seoul). 실행 ID: `FCC-COLLECT-20261023-P01-001`.
+기준 시각: 2026-10-23T23:07:55.107700+09:00 (Asia/Seoul). 실행 ID: `FCC-COLLECT-20261023-P01-001`.
 
 고정 지시: [MAIN_AGENT_PROMPT.md](https://github.com/hctinno/DEVICE/blob/fb1767b367c0c1595560c2845d447ab30cecdce3/handoff/parallel/MAIN_AGENT_PROMPT.md).
 
@@ -27,7 +27,7 @@
 
 [전체 결과·검증](results.json) · [실행 상태](status.json) · [질문·결정](questions-queue.json) · [초기 결과](results-v002.json) · [기존 보존](legacy-summary.json).
 
-[v002](assignments-v002.json), [v003](assignments-v003.json), [v004](assignments-v004.json), [v005](assignments-v005.json) 배정을 각 배치별로 고정했다. 수집자는 자기 폴더만 작성하며 Git·공통 파일·검수·게시는 메인(P01)만 수행한다.
+[v002](assignments-v002.json), [v003](assignments-v003.json), [v004](assignments-v004.json), [v005](assignments-v005.json), [v006](assignments-v006.json) 배정을 각 배치별로 고정했다. 수집자는 자기 폴더만 작성하며 Git·공통 파일·검수·게시는 메인(P01)만 수행한다.
 
 초기 8개 배치는 커밋 [14b0e6d](https://github.com/hctinno/DEVICE/commit/14b0e6d7f2aa29ac3232276b78365cfd8c489aea)로 원격 게시를 확인했다. 이후 배치는 같은 게시 브랜치의 Git 이력과 상세 결과를 참조한다.
 
@@ -41,4 +41,4 @@
 
 기존 공개 원본 465개 및 수집 메타데이터 1개와 신규 결과는 별도 집계한다. 기존 2,272개 파일·5개 ZIP은 보존했다. 전체 2,867개 모델을 이번 FCC 범위에 편입하거나 시험소 구현·현장검증 완료로 주장하지 않는다.
 
-개발 측의 [v2 인수·가상 부분 프로필 구현 회신](development/DEV-VLAB-20261023-001-development-receipt-v2.json)을 기록했다. 테스트 수치는 개발 측 보고이며 P01이 재실행한 실장비 검증이 아니다. 새 수집 요청은 없다.
+추가 요청 DEV-EVIDENCE-20261023-002: [기존 제한6건 A/B/C 감사](additional-evidence/DEV-EVIDENCE-20261023-002/limited-audit.json) · [사용자만 확인할 최소 자료](additional-evidence/DEV-EVIDENCE-20261023-002/user-materials.md). 새 배정의 실행/인수 상태는 status.json에서 구별한다.
