@@ -1,6 +1,9 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
 작성일: 2026-10-23, Asia/Seoul
+
+최신 운영 결정: [개발1~3 병렬 운영](handoff/development/README.md)을 사용자 요청으로 구성한다. 개발1 문서·접수 / 개발2 AI 하네스 / 개발3 가상 시험소, 총괄은 공통 계약·통합·검증과 P01 조율을 담당한다. 최초 배정은 세션 준비·왕복 메시지 확인이며 제품 기능 개발 완료로 집계하지 않는다.
+
 상태: **1차 구축 목표는 FCC RF·EMC·SAR**다. 그 안의 첫 전체 흐름 실증은 스마트폰 2.4 GHz Wi-Fi b/g/n / FCC §15.247로 유지한다. [b/g/n 파이프라인 설계 검토안](docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md)에 사용자 흐름과 완료 조건을 정리했다. 장비 DB·오프라인 공통 코어는 구현했으며 새 흐름·실장비 연결·현장 검증은 미완료다.
 
 개발 인수 후 첫 단위: `codex/pipeline-dev-20261023-intake`에서 [안정된 폴더 접수·분석 작업·질문/답변/보류 기반](docs/fcc/active_intake_usage.md)을 추가했다. 기존 48개 검사에서 Windows 문자셋 문제를 발견·수정했고 새 검사 포함 86개를 통과했다. [공개 5개 자료 배치](docs/material-intake/2026-10-23-development-intake.md)도 누적 인수했다. 이는 로드맵 2·3의 일부이며 상시 AI 서비스·다형식 문서 해석·실제 AI 정확도·규정 적용성·실측 검증은 남아 있다. 완성률로 환산하지 않는다.
