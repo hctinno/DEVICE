@@ -1,0 +1,480 @@
+{
+  "task_id": "FCC-20261023-S07-B0002",
+  "created_at": "2026-10-23T22:32:45.000+09:00",
+  "matrix_kind": "unavailable_oem_rf_contracts",
+  "actual_dut": {
+    "manufacturer": null,
+    "model": null,
+    "variant": null,
+    "sample_id": null,
+    "chipset": null,
+    "test_firmware": null,
+    "test_tool": null
+  },
+  "source_request_id": "DEV-VLAB-20261023-001",
+  "rows": [
+    {
+      "gap_id": "S07-RF-01",
+      "function_name": "실제 DUT·시험 FW·도구 식별",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "missing_evidence": "제조사/모델/변형·HW/FW·칩셋·도구 버전과 호환표",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-02",
+      "function_name": "b/g/n RF 시험모드 진입",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ],
+      "missing_evidence": "진입 명령·권한·전제·완료 응답·상태 조회",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-03",
+      "function_name": "b/g/n RF 시험모드 해제",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ],
+      "missing_evidence": "해제 명령·정상 복귀·RF 유휴 상태 증거",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-04",
+      "function_name": "RF 송신 시작",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ],
+      "missing_evidence": "송신 시작 인자·ACK·완료 조회·중복 호출 의미",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-05",
+      "function_name": "RF 송신 중단",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ],
+      "missing_evidence": "중단 명령·오류·실제 RF OFF 조회와 관측 조건",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-06",
+      "function_name": "채널/주파수 설정·조회",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "missing_evidence": "채널↔MHz·허용 범위·set/get·적용값 readback",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-07",
+      "function_name": "대역폭 설정·조회",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "missing_evidence": "HT20/HT40 등 지원 조합·set/get·미지원 응답",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-08",
+      "function_name": "b/g/n PHY·변조·속도 설정·조회",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "missing_evidence": "속도·MCS·GI·공간 스트림의 지원 조합",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-09",
+      "function_name": "송신 체인·안테나 선택·조회",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "missing_evidence": "체인 마스크·포트·안테나/튜너 매핑",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-10",
+      "function_name": "출력 목표 설정·조회",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "missing_evidence": "인자 단위·단계·범위·보정·목표값/실측값 구분",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-11",
+      "function_name": "패킷 구성",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ],
+      "missing_evidence": "길이·반복 횟수·패턴·연속/패킷 모드·조회",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-12",
+      "function_name": "듀티/송신 시간 제어·조회",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ],
+      "missing_evidence": "타이밍 단위·범위·실효 듀티 확인·실제 응답",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-13",
+      "function_name": "튜너·출력제어·동시송신 상태",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "missing_evidence": "튜너·절전·SAR backoff·다른 radio 동작과 고정 조건",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-14",
+      "function_name": "현재 RF 송신/시험모드 상태 조회",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ],
+      "missing_evidence": "상태 명령·필드/단위·실행중/유휴/불명 판별",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-15",
+      "function_name": "오류·시간초과·취소·재접속 복구",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ],
+      "missing_evidence": "에러코드·원격 실행 여부·멱등성·재시도·복구 한계",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    },
+    {
+      "gap_id": "S07-RF-16",
+      "function_name": "제조사 로그·결과 API와 export",
+      "acquisition_status": "unavailable",
+      "device_support_status": "unverified",
+      "api_signature": null,
+      "request_example": null,
+      "response_schema": null,
+      "manufacturer_response_example": null,
+      "confirmed_tool_version": null,
+      "required_existing_input_ids": [
+        "LOCAL-005",
+        "LOCAL-006"
+      ],
+      "missing_evidence": "원본 파일·응답 스키마·시간/시험 단계 연결·로그 완료",
+      "known_inventory_state": "not_provided",
+      "inventory_reference": "materials/inventory/private_input_status.json",
+      "prior_input_spec": "[local-only reference retained by P01]",
+      "public_context_source_ids": [
+        "S07-SRC-android-adb",
+        "S07-SRC-android-logcat",
+        "S07-SRC-aosp-wifi-debug"
+      ],
+      "public_context_is_oem_api_evidence": false,
+      "actual_device_tested": false,
+      "next_handling": "기존 LOCAL 입력의 공백으로 인계한다. 이 배치에서 제조사 자료를 요청하거나 단말에 접속하지 않는다.",
+      "status_meaning": "미확보라는 뜻이며 API 부재·제품 미지원을 판정한 것은 아니다."
+    }
+  ],
+  "conclusion": "기존 입력 대장과 B0001에 실제 OEM RF API/응답이 없어 unavailable로 반환한다. 조사 작업은 완료하며 제품 지원/미지원을 확정하지 않는다.",
+  "non_equivalences": [
+    {
+      "public_contract": "ADB 연결/device 상태",
+      "does_not_establish": "RF 시험모드 준비"
+    },
+    {
+      "public_contract": "shell exit / adb kill-server",
+      "does_not_establish": "RF 송신 종료"
+    },
+    {
+      "public_contract": "Wi-Fi RSSI 임계치 설정",
+      "does_not_establish": "RF 채널·대역폭·목표출력 설정"
+    },
+    {
+      "public_contract": "Wi-Fi 프레임워크/CTS 시험",
+      "does_not_establish": "FCC b/g/n RF 시험모드/API"
+    },
+    {
+      "public_contract": "logcat 로그 수신",
+      "does_not_establish": "제조사 명령 성공 ACK 또는 측정 완료"
+    }
+  ]
+}

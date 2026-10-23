@@ -1,0 +1,214 @@
+{
+  "request_id": "DEV-VLAB-20261023-001",
+  "revision": 2,
+  "prepared_at": "2026-10-23T22:36:33.338891+09:00",
+  "original_source_intake_revision": 1,
+  "original_intake_sha256": "17e2c855fb0fcd23f520ab40bec4ff229dd79253754dccf67c99339b0c5880fe",
+  "mapping_packets": [
+    {
+      "batch_id": "FCC-20261023A-S04-B0002",
+      "task_id": "FCC-20261023-S04-B0002",
+      "inventory_sha256": "ba143f05f8ec281f33573707ae4c7fe093124c4a60e534c10d398409e02e1549",
+      "source_owner": "S04",
+      "source_mapping_review": "passed",
+      "new_originals": 0,
+      "summary": "N1914A18개·N9030A12개 명령/응답 계약과 문서 불일치5개",
+      "metadata_files": [
+        {
+          "filename": "command-contracts.json",
+          "frozen_sha256": "6414bb39d93e0e50590e8a63c7969d763d9c0acf1fd1ebc9252abd505466e265",
+          "frozen_bytes": 95523,
+          "public_metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0002/command-contracts.json",
+          "public_metadata_sha256": "6414bb39d93e0e50590e8a63c7969d763d9c0acf1fd1ebc9252abd505466e265",
+          "public_content_may_have_local_paths_redacted": true
+        },
+        {
+          "filename": "evidence-index.json",
+          "frozen_sha256": "0af0cfd91cf5746632817a8e21d61c1f413306502bbb21a50225e823f7f73c60",
+          "frozen_bytes": 24791,
+          "public_metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0002/evidence-index.json",
+          "public_metadata_sha256": "0af0cfd91cf5746632817a8e21d61c1f413306502bbb21a50225e823f7f73c60",
+          "public_content_may_have_local_paths_redacted": true
+        },
+        {
+          "filename": "questions.json",
+          "frozen_sha256": "16a67e278afda5a4a40114c15f9a350bea6e8c657d74febe69fff4b6c16b524a",
+          "frozen_bytes": 1100,
+          "public_metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0002/questions.json",
+          "public_metadata_sha256": "16a67e278afda5a4a40114c15f9a350bea6e8c657d74febe69fff4b6c16b524a",
+          "public_content_may_have_local_paths_redacted": true
+        }
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S07-B0002",
+      "task_id": "FCC-20261023-S07-B0002",
+      "inventory_sha256": "9ddc0035dce766560a62f38ceeeae1b66afbd8171c71d2ba3edba11391cea869",
+      "source_owner": "S07",
+      "source_mapping_review": "passed",
+      "new_originals": 0,
+      "summary": "공개 CLI14개·미확보 OEM RF기능16개",
+      "metadata_files": [
+        {
+          "filename": "public-cli-api-matrix.json",
+          "frozen_sha256": "aba58815d35f53e315ce1291d6d0e5769dcdf417fcf3eb6bbd74745254325a58",
+          "frozen_bytes": 47309,
+          "public_metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0002/public-cli-api-matrix.json",
+          "public_metadata_sha256": "c90c6e3e32b86d1cf600f7ba698a87fd5e7cd96590dafa12502821682eb86915",
+          "public_content_may_have_local_paths_redacted": true
+        },
+        {
+          "filename": "dut-rf-gap-matrix.json",
+          "frozen_sha256": "819009be1151006be010a02918f31a6c49156590042a57d501b9aa52d588bb29",
+          "frozen_bytes": 21858,
+          "public_metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0002/dut-rf-gap-matrix.json",
+          "public_metadata_sha256": "989d28b876da7b7e9902a8c0b0a648aa2c06816f9aaa5e5b6b5cc967c8846bd3",
+          "public_content_may_have_local_paths_redacted": true
+        },
+        {
+          "filename": "virtual-response-boundary.json",
+          "frozen_sha256": "b611c6bda67e763b9658cbdfc51588071ce9ed6b0a78d22249b42e15f16775cf",
+          "frozen_bytes": 1460,
+          "public_metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0002/virtual-response-boundary.json",
+          "public_metadata_sha256": "26d5762bd92f2097395e790eeab150b7d1d23769f173c1606dbc83f1bf9dfbdf",
+          "public_content_may_have_local_paths_redacted": true
+        }
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S08-B0003",
+      "task_id": "FCC-20261023-S08-B0003",
+      "inventory_sha256": "788962563b9692d781409ba51f98ef569961a9cdc84f9d763fd01a8696db0de8",
+      "source_owner": "S08",
+      "source_mapping_review": "passed",
+      "new_originals": 0,
+      "summary": "자료유형6개·문서/사례13개, 실제 현장 자료는 미확보",
+      "metadata_files": [
+        {
+          "filename": "evidence-index.json",
+          "frozen_sha256": "a0fcb19af429eed35734ed59f91d0f316bf97aefaff32e5fe5342c7f34a9afbc",
+          "frozen_bytes": 40040,
+          "public_metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0003/evidence-index.json",
+          "public_metadata_sha256": "395798aa3082d11d829292609b0ada3164f14cf9c73d951abf4ce17d086330cc",
+          "public_content_may_have_local_paths_redacted": true
+        },
+        {
+          "filename": "references.json",
+          "frozen_sha256": "85e317309a716aa81642ad7d90ca9e48c1b38d7e0e3ecd465461e90f3d48feb1",
+          "frozen_bytes": 34803,
+          "public_metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0003/references.json",
+          "public_metadata_sha256": "07fc53571b83e23faddadc4d732a101028a851bb59eaaa4ea5e30608e5d48896",
+          "public_content_may_have_local_paths_redacted": true
+        }
+      ]
+    }
+  ],
+  "instrument_document_issues": [
+    {
+      "issue_id": "DOC-INIT-QUERY",
+      "finding": "예제 INIT1?/INIT2?와 정식 INITiate 무질의 정의가 다름.",
+      "handling": "질의 별칭을 지원한다고 표시하지 않는다. 정식 문법을 기준으로 하고 예제 불일치를 보존한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            40,
+            544,
+            550
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-TRIGGER-EXT",
+      "finding": "EXTernal 설정은 허용하지만 해당 질의 설명은 IMM/BUS/HOLD만 나열.",
+      "handling": "EXT 조회의 정확한 응답을 미확정으로 표시한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            561,
+            562,
+            563
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            563,
+            564,
+            565
+          ]
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-UNIT-TABLE",
+      "finding": "단위 파라미터 표에 Range of Values 15 to 100이 인쇄되어 있음. PDF 원본 렌더링으로 확인.",
+      "handling": "숫자 범위를 단위값으로 사용하지 않는다. 본문의 W/DBM 근거와 표 문제를 함께 전달한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            583,
+            584
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            585,
+            586
+          ]
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-PM-BYTEORDER-TRACE",
+      "finding": "NORMal/SWAPped의 절대 MSB/LSB 매핑을 찾지 못함. TRACe 주석은 있으나 독립 파형 명령 계약은 찾지 못함.",
+      "handling": "수치 REAL64 출력과 파형 trace를 분리하고 미확정 동작을 생성하지 않는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            281,
+            282,
+            283
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-AN-STATUS-EXAMPLE",
+      "finding": "ESR 설명은 hexadecimal이라고 쓰고, STB 예제는 16과 bit 5를 함께 기재한다. 정확한 wire 표현과 비트 번호 설명은 재확인이 필요하다.",
+      "handling": "예제 수치·표현을 검증된 패킷이나 고정 virtual fixture로 간주하지 않는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            235,
+            238
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401"
+        }
+      ]
+    }
+  ],
+  "development_policy_note": "The developer selects and implements the virtual profile. Undocumented byte order, waveform and inconsistent examples remain unknown or explicitly synthetic; they are not claimed as vendor-verified responses.",
+  "remaining_inputs": [
+    "actual DUT/OEM RF tool and firmware",
+    "actual instrument/sensor/options/firmware and calibration",
+    "site/RF path/interlock originals",
+    "native raw and completion/error logs",
+    "licensed standards and technical/issuance authority"
+  ],
+  "intake_scope": "Documentary source mapping only. No new original acquisition, hardware validation or virtual-code implementation."
+}

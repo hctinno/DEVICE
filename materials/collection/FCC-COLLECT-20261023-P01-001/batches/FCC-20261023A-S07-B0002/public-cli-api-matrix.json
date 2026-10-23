@@ -1,0 +1,860 @@
+{
+  "task_id": "FCC-20261023-S07-B0002",
+  "created_at": "2026-10-23T22:32:45.000+09:00",
+  "matrix_kind": "existing_public_command_contracts",
+  "source_request_id": "DEV-VLAB-20261023-001",
+  "execution_authorization": false,
+  "all_examples_are_documentation_data": true,
+  "rows": [
+    {
+      "contract_id": "S07-CLI-01",
+      "operation": "USB 디버깅 접근·호스트 승인",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-adb-Enabling",
+          "section_id": "Enabling",
+          "section_title": "Enable adb debugging on your device"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb devices",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-adb-Enabling",
+          "raw_html_line": 9039,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "USB 디버깅·Developer options 설정 필요",
+        "문서가 정한 Android 버전에서는 기기 잠금 해제와 RSA 호스트 승인 필요",
+        "실제 시료·케이블·드라이버·승인 상태는 미제공"
+      ],
+      "success_discrimination": "연결 목록은 ADB 전송 접근 여부를 판단하는 자료다.",
+      "failure_discrimination": "호스트 승인 불가·연결 부재·오프라인은 준비되지 않은 상태로 남긴다. 특정 오류 문자열은 이 절에서 고정하지 않는다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "권한 해제나 RF 종료 명령은 이 예제로 제공되지 않는다.",
+      "limitations": "RSA 승인·ADB 연결을 RF 시험모드 승인 또는 RF 송신 가능성으로 확장하지 않는다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-02",
+      "operation": "대상 목록·전송 연결 상태 조회",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-adb-devicestatus",
+          "section_id": "devicestatus",
+          "section_title": "Query for devices"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb devices -l",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-adb-devicestatus",
+          "raw_html_line": 9402,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "ADB 전송 접근 전제 충족",
+        "여러 대상은 시리얼을 구별"
+      ],
+      "success_discrimination": "문서는 device를 ADB 서버 연결 상태로 설명한다. Android 부팅·운영 완료를 보장하지 않는다.",
+      "failure_discrimination": "offline은 연결되지 않았거나 응답하지 않는 상태다. no device는 문서의 연결 부재 분류이며 항상 같은 stdout 토큰으로 출력된다고 확정하지 않는다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "조회 완료와 RF 종료는 별개다.",
+      "limitations": "알 수 없는 출력·대상 다중성·상태 미확인은 성공 처리하지 않는다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-03",
+      "operation": "특정 시리얼에 일반 shell 호출",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-adb-directingcommands",
+          "section_id": "directingcommands",
+          "section_title": "Send commands to a specific device"
+        },
+        {
+          "evidence_id": "S07-V005-android-adb-shellcommands",
+          "section_id": "shellcommands",
+          "section_title": "Issue shell commands"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb [-d |-e | -s serial_number] shell shell_command",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-adb-shellcommands",
+          "raw_html_line": 9684,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "목록에서 대상 시리얼 식별",
+        "실제 shell_command와 권한은 개별 문서/도구에서 확인",
+        "대괄호·serial_number·shell_command는 문서의 구문 표기"
+      ],
+      "success_discrimination": "문서화된 대상 선택/호출 구문을 제공한다. 개별 shell 작업의 성공 응답은 이 구문만으로 결정하지 않는다.",
+      "failure_discrimination": "잘못된 대상·권한·지원 명령·원격 실행 결과를 별도 분류해야 하며 고정 OEM 오류 응답은 없다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "단일 호출의 종료가 원격 비동기 작업 종료나 RF OFF를 보장하지 않는다.",
+      "limitations": "-s는 대상 선택 옵션이다. RF 채널·출력·속도 설정 옵션이 아니다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-04",
+      "operation": "기기 shell 도구 열거 예제",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-adb-shellcommands",
+          "section_id": "shellcommands",
+          "section_title": "Issue shell commands"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb shell ls /system/bin",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-adb-shellcommands",
+          "raw_html_line": 9699,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "승인된 대상·shell 접근",
+        "문서가 설명한 일반 Unix 도구의 실제 탑재 여부는 기기별 확인"
+      ],
+      "success_discrimination": "목록 출력은 기기에서 보이는 실행파일 목록의 자료다.",
+      "failure_discrimination": "파일 부재·권한 오류·호출 실패를 OEM 시험 API 미지원 또는 지원으로 단정하지 않는다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "이 예제에 RF 종료·복구 계약은 없다.",
+      "limitations": "실행파일 이름의 존재만으로 시험모드 지원을 확정하지 않는다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-05",
+      "operation": "대화형 shell 진입·종료",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-adb-shellcommands",
+          "section_id": "shellcommands",
+          "section_title": "Issue shell commands"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb [-d | -e | -s serial_number] shell",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-adb-shellcommands",
+          "raw_html_line": 9690,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        },
+        {
+          "text": "exit",
+          "kind": "documented_interactive_exit_token",
+          "evidence_id": "S07-V005-android-adb-shellcommands",
+          "raw_html_line": 9694,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        },
+        {
+          "text": "Control+D",
+          "kind": "documented_keyboard_action",
+          "evidence_id": "S07-V005-android-adb-shellcommands",
+          "raw_html_line": 9694,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "대상 shell 접근·사용자 승인",
+        "대화형 흐름과 단일 호출 구분"
+      ],
+      "success_discrimination": "문서는 대화형 shell 진입과 종료 조작을 설명한다.",
+      "failure_discrimination": "shell의 단절·시간초과·원격 프로세스 상태는 이 절에 완전한 오류 계약이 없다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "Control+D 또는 exit는 대화형 shell 종료 조작이다.",
+      "limitations": "shell 종료를 DUT 시험모드 해제·송신 중단으로 기록하지 않는다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-06",
+      "operation": "기기 파일 읽기 복사",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-adb-copyfiles",
+          "section_id": "copyfiles",
+          "section_title": "Copy files to and from a device"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb pull remote local",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-adb-copyfiles",
+          "raw_html_line": 9630,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "remote/local은 실제 값이 없는 문서 자리표시자",
+        "읽기 권한·파일 존재·호스트 저장 위치의 별도 확인 필요"
+      ],
+      "success_discrimination": "문서상 pull은 기기에서 호스트로 파일을 복사한다.",
+      "failure_discrimination": "파일·권한·전송 오류의 모든 반환코드/문자열은 수집 문서에 고정되어 있지 않다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "파일 복사 완료와 DUT/측정 작업 종료는 별개다.",
+      "limitations": "실제 로그 경로·파일 형식은 제조사 도구/제품 입력 없이는 확정할 수 없다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-07",
+      "operation": "호스트 ADB 서버 종료",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-adb-stopping",
+          "section_id": "stopping",
+          "section_title": "Stop the adb server"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb kill-server",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-adb-stopping",
+          "raw_html_line": 9655,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "ADB 서버에 대한 호스트 조작",
+        "다른 연결에 미치는 영향은 후속 운영 계약에서 다뤄야 함"
+      ],
+      "success_discrimination": "문서는 ADB 서버 프로세스를 중지하고 후속 ADB 명령으로 재시작할 수 있다고 설명한다.",
+      "failure_discrimination": "고정 성공/오류 응답·모든 종료코드 매핑은 없다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "대상은 호스트 ADB 서버다.",
+      "limitations": "DUT RF OFF·시험모드 종료·안전 정지 명령으로 사용할 근거는 없다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-08",
+      "operation": "로그 스트림 일반 구문",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-logcat-Syntax",
+          "section_id": "Syntax",
+          "section_title": "Command-line syntax"
+        },
+        {
+          "evidence_id": "S07-V005-android-logcat-Overview",
+          "section_id": "Overview",
+          "section_title": "Logging system overview"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "invocation_examples": [
+        {
+          "text": "[adb] shell logcat [<option>] ... [<filter-spec>] ...",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-logcat-Syntax",
+          "raw_html_line": 9011,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "기기 로그 접근·해당 버전의 옵션 확인",
+        "[adb]는 문서의 실행 문맥 구분 표기"
+      ],
+      "success_discrimination": "문서는 logcat의 시스템/앱 로그 출력과 adb logcat 단축 구문을 설명한다.",
+      "failure_discrimination": "로그 없음은 필터·버퍼·권한·생성 여부 등과 구별해야 하며 RF 상태 판정으로 쓰지 않는다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "스트림의 종료·호스트 취소가 DUT 송신 종료를 뜻하지 않는다.",
+      "limitations": "로그 메시지는 제조사 명령 ACK나 측정 완료 응답과 별도다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-09",
+      "operation": "기기별 logcat 옵션 도움말",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-logcat-options",
+          "section_id": "options",
+          "section_title": "Options"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb logcat --help",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-logcat-options",
+          "raw_html_line": 9025,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "옵션은 기기 OS 버전에 따라 다름",
+        "일부 옵션에는 root 권한이 필요"
+      ],
+      "success_discrimination": "문서상 해당 기기의 지원 옵션을 확인하는 수단이다.",
+      "failure_discrimination": "옵션·권한이 충족되지 않을 때를 분리해야 한다. 실제 기기의 응답은 없다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "도움말 호출 종료만 나타내며 DUT 동작 종료 계약은 아니다.",
+      "limitations": "root 접근 가능 여부를 가정하거나 권한 변경을 실행하지 않는다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-10",
+      "operation": "로그 태그·우선순위 필터",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-logcat-filteringOutput",
+          "section_id": "filteringOutput",
+          "section_title": "Filter log output"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb logcat ActivityManager:I MyApp:D *:S",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-logcat-filteringOutput",
+          "raw_html_line": 9087,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        },
+        {
+          "text": "adb logcat *:W",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-logcat-filteringOutput",
+          "raw_html_line": 9105,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "기기별 로그 접근",
+        "별표와 인용부호는 호출 shell의 해석을 고려"
+      ],
+      "success_discrimination": "문서의 태그/우선순위 규칙에 따라 표시할 로그를 선택한다.",
+      "failure_discrimination": "필터로 제외된 로그를 성공·RF OFF 증거로 삼지 않는다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "이 절은 logcat 프로세스의 모든 종료/취소 동작을 규정하지 않는다.",
+      "limitations": "I/E 등 로그 severity는 시험 적합/부적합 또는 RF 명령 성공/실패와 동일하지 않다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-11",
+      "operation": "로그 버퍼·출력 형식",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-android-logcat-outputFormat",
+          "section_id": "outputFormat",
+          "section_title": "Control log output format"
+        },
+        {
+          "evidence_id": "S07-V005-android-logcat-alternativeBuffers",
+          "section_id": "alternativeBuffers",
+          "section_title": "View alternative log buffers"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "invocation_examples": [
+        {
+          "text": "[adb] logcat [-v <format>]",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-logcat-outputFormat",
+          "raw_html_line": 9152,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        },
+        {
+          "text": "adb logcat -v thread",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-logcat-outputFormat",
+          "raw_html_line": 9158,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        },
+        {
+          "text": "adb logcat -b radio",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-logcat-alternativeBuffers",
+          "raw_html_line": 9244,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        },
+        {
+          "text": "logcat -b main,radio,events",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-android-logcat-alternativeBuffers",
+          "raw_html_line": 9262,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "호스트 adb 문맥과 기기 shell의 직접 logcat 문맥을 구별",
+        "버퍼·형식 지원과 접근 권한은 실제 기기별 확인"
+      ],
+      "success_discrimination": "시간·PID/TID·태그 등의 출력 형식과 선택 버퍼를 문서가 설명한다.",
+      "failure_discrimination": "요청한 버퍼 부재·권한·로그 누락의 실제 응답은 미확보다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "버퍼 수집/프로세스 종료가 RF 송신 종료는 아니다.",
+      "limitations": "radio 버퍼는 문서상 radio/telephony 로그이며 Wi-Fi RF 측정값이나 시험 ACK를 보장하지 않는다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-12",
+      "operation": "AOSP Wi-Fi 프레임워크 단위시험",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-aosp-wifi-debug-testing",
+          "section_id": "testing",
+          "section_title": "Testing"
+        },
+        {
+          "evidence_id": "S07-V005-aosp-wifi-debug-unit-tests",
+          "section_id": "unit-tests",
+          "section_title": "Unit tests"
+        },
+        {
+          "evidence_id": "S07-V005-aosp-wifi-debug-cts-tests",
+          "section_id": "cts-tests",
+          "section_title": "CTS tests"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "invocation_examples": [
+        {
+          "text": "atest FrameworksWifiApiTests",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-aosp-wifi-debug-unit-tests",
+          "raw_html_line": 4996,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        },
+        {
+          "text": "atest FrameworksWifiTests",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-aosp-wifi-debug-unit-tests",
+          "raw_html_line": 5005,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "AOSP 시험 환경·소스·실행 조건이 필요",
+        "CTS 설명에서는 시작 시 DUT와 AP 연결 조건이 있음",
+        "이 배치에서 해당 환경을 확보/실행하지 않음"
+      ],
+      "success_discrimination": "문서에 Wi-Fi Manager/Service 단위시험 명령이 있다.",
+      "failure_discrimination": "정확한 전체 결과·오류 응답 스키마는 이 페이지에 없다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "프레임워크 시험 종료는 제조사 RF 송신 종료 계약이 아니다.",
+      "limitations": "FCC b/g/n RF 시험용 송신모드나 적합성 측정 절차로 대체하지 않는다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-13",
+      "operation": "Wi-Fi 접속 RSSI 임계치 구성·복원",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-aosp-wifi-debug-configuration-tuning",
+          "section_id": "configuration-tuning",
+          "section_title": "Configuration tuning"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "invocation_examples": [
+        {
+          "text": "adb shell settings put global wifi_score_params \\\n                             [rssi2|rssi5]=<bad>:<entry>:<low>:<good>",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-aosp-wifi-debug-configuration-tuning",
+          "raw_html_line": 5083,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        },
+        {
+          "text": "adb shell settings delete global wifi_score_params",
+          "kind": "verbatim_document_example",
+          "evidence_id": "S07-V005-aosp-wifi-debug-configuration-tuning",
+          "raw_html_line": 5092,
+          "execution_status": "not_executed",
+          "device_or_customer_data": false
+        }
+      ],
+      "preconditions": [
+        "문서가 설명한 Android 프레임워크·오버레이/설정 맥락에 한정",
+        "실제 제품의 권한·동작·지원값은 미확인"
+      ],
+      "success_discrimination": "문서는 네트워크 접속/이탈 RSSI 임계치 구성과 override 삭제를 설명한다.",
+      "failure_discrimination": "설정 수락과 실제 적용 상태를 구별할 필요가 있으나 구체적 readback/오류 계약은 확보하지 못했다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "delete는 문서상 내장 임계치 복원용 override 제거다.",
+      "limitations": "채널·RF 목표출력·변조율·듀티·시험모드 종료 명령으로 재해석하지 않는다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    },
+    {
+      "contract_id": "S07-CLI-14",
+      "operation": "Wi-Fi 펌웨어 로그의 위치·빌드 조건",
+      "interface_family": "public_Android_tooling",
+      "documented_contract_scope": "문서상 공개 인터페이스; 실제 DUT 동작 검증 아님",
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "source_sections": [
+        {
+          "evidence_id": "S07-V005-aosp-wifi-debug-debugging",
+          "section_id": "debugging",
+          "section_title": "Enhanced logging options for debugging"
+        },
+        {
+          "evidence_id": "S07-V005-aosp-wifi-debug-manual-test",
+          "section_id": "manual-test",
+          "section_title": "Manual test"
+        }
+      ],
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "source_paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "invocation_examples": [],
+      "preconditions": [
+        "자동 bugreport는 userdebug/eng 조건이 있음",
+        "AIDL/HIDL에 따라 로그 위치가 다름"
+      ],
+      "success_discrimination": "문서가 bugreport 안의 Wi-Fi 펌웨어 로그 위치 확인을 설명한다.",
+      "failure_discrimination": "실제 로그 생성·파일·권한·버전은 미확인이다.",
+      "log_and_raw_capture": "실제 실행 자료는 없다. 후속 구현 시 stdout/stderr·호스트/도구 버전·대상 식별·시각·종료/오류 상태를 별도 원본으로 보존해야 한다.",
+      "termination_contract": "로그 확인 절차가 송신 종료 검증을 제공하지 않는다.",
+      "limitations": "정확한 bugreport 호출 API는 이 페이지의 수집 내용만으로 새로 만들지 않는다.",
+      "exit_code_contract": "문서에서 이 동작의 모든 반환코드 의미를 고정한 계약은 확보하지 못했다.",
+      "actual_api_tested": false,
+      "rf_transmit_command": false,
+      "oem_response_available": false
+    }
+  ],
+  "parser_constraints": [
+    "stdout 문구·반환코드의 근거 없는 고정 매핑을 만들지 않는다.",
+    "알 수 없는 응답은 unknown/error로 남긴다.",
+    "host 호출·전송·remote command·OEM RF state·실측 결과를 별도 계층으로 취급한다.",
+    "일반 shell/ADB를 RF 송신 API로 분류하지 않는다."
+  ]
+}

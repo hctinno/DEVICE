@@ -1,0 +1,93 @@
+{
+  "task_id": "FCC-20261023-S08-B0003",
+  "batch_id": "FCC-20261023A-S08-B0003",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v005",
+  "created_at": "2026-10-23T22:32:56+09:00",
+  "blocking_questions": [],
+  "nonblocking_questions": [],
+  "missing_actual_materials": [
+    {
+      "material_type_id": "V01",
+      "material_type": "연결도·RF 경로·포트 관계",
+      "status": "not_provided",
+      "missing": "실제 시험소 케이블/커넥터/스위치 경로와 상태, DUT-센서 연결도 및 확인 기록.",
+      "existing_request_ids": [
+        "LOCAL-007",
+        "LOCAL-003"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V02",
+      "material_type": "손실·보정표·교정 원본",
+      "status": "not_provided",
+      "missing": "실제 주파수별 손실 파일, 센서/DAQ/프로브 교정원본·판본·유효기간과 측정 시점의 연결.",
+      "existing_request_ids": [
+        "LOCAL-003",
+        "LOCAL-004"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V03",
+      "material_type": "원시 형식·트레이스·측정 컨테이너",
+      "status": "not_provided",
+      "missing": "실제 native trace/IQ/DAQ 파일·원본 헤더·단위·타임스탬프·생성 SW/펌웨어 및 보고 행과의 연결.",
+      "existing_request_ids": [
+        "LOCAL-010",
+        "LOCAL-005"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V04",
+      "material_type": "통신 로그·완료/상태 응답",
+      "status": "not_provided",
+      "missing": "동일 실행 ID의 실제 명령/응답·시각·완료 확인·timeout/재시도 로그와 대상 장비/주소/세션 메타데이터.",
+      "existing_request_ids": [
+        "LOCAL-013",
+        "LOCAL-010"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V05",
+      "material_type": "오류·중단·복구 사례",
+      "status": "not_provided",
+      "missing": "실제 통신 끊김·범위 초과·시간 초과·센서 오류의 원본 기록, 결과 무효 처리와 복구/정지 검증.",
+      "existing_request_ids": [
+        "LOCAL-008",
+        "LOCAL-010",
+        "LOCAL-013"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V06",
+      "material_type": "측정조건-결과 연결 예제",
+      "status": "not_provided",
+      "missing": "현재 시험소의 실제 완료 시험건에서 조건→raw→보정→계산→판정→발행본을 재현하는 원본 묶음.",
+      "existing_request_ids": [
+        "LOCAL-010",
+        "LOCAL-011"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    }
+  ],
+  "note": "새 사용자 질문을 생성하지 않고 기존 LOCAL 요청에 연결했다. 합성 데이터 생성과 구현 판단은 개발 담당 범위다."
+}

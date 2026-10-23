@@ -1,0 +1,931 @@
+{
+  "task_id": "FCC-20261023-S08-B0003",
+  "batch_id": "FCC-20261023A-S08-B0003",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v005",
+  "created_at": "2026-10-23T22:32:56+09:00",
+  "material_types": [
+    {
+      "material_type_id": "V01",
+      "material_type": "연결도·RF 경로·포트 관계",
+      "availability": "example_or_documentation_available_actual_material_not_provided",
+      "actual_material_status": "not_provided",
+      "actual_material_count": 0,
+      "source_refs": [
+        "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+        "S04-KEYSIGHT-N9020-90112-354463a721ff",
+        "S06-innco-co3000-4p-product-a9a5ddfd5681"
+      ],
+      "available_reference_material": [
+        {
+          "source_ref": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+          "location": {
+            "pdf_pages_1based": [
+              14,
+              28,
+              33
+            ],
+            "locator": "§7.2/7.3/7.4 셋업 도식"
+          },
+          "finding": "신호분석기·파워미터·EUT 연결도 위치.",
+          "classification": "third_party_report_table_or_plot",
+          "actual_capture": false,
+          "origin": "제3자 측정 결과를 서술한 성적서. native 계측기 파일이 아니다.",
+          "locator_provenance": "이전 검수된 S08 B0001/B0002 근거 위치"
+        },
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-AN-LINK",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "GPIB·LAN·USB와 VISA/드라이버 경로 설명.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+              "location": {
+                "pdf_pages_1based": [
+                  11,
+                  12,
+                  31,
+                  32
+                ],
+                "heading": "Hardware Connection Formats / VISA Driver Options"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-AN-LINK",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "현장 인터페이스·드라이버 설치·버전 호환은 미검증."
+        },
+        {
+          "source_ref": "S06-innco-co3000-4p-product-a9a5ddfd5681",
+          "location": {
+            "provider_index": "[local-only reference retained by P01]",
+            "model_id": "MOD-6b92cbf630670c77",
+            "field": "models[].official_product_facts"
+          },
+          "classification": "manufacturer_product_description",
+          "actual_capture": false,
+          "finding": "CO3000-4P의 제어 인터페이스/위치기 포트 설명이다. 광 CAN 위치기 포트를 RF 스위치 포트로 해석하지 않는다."
+        }
+      ],
+      "candidate_field_locations": [
+        "장치/포트 식별",
+        "연결 방향",
+        "센서/측정 경로",
+        "통신 경로와 RF 경로 구별"
+      ],
+      "conditions_and_limits": [
+        "사례 셋업 도식과 제조사 인터페이스 설명은 실제 현장 배선도·검증된 포트 상태가 아니다.",
+        "CO3000-4port 실물 세대·옵션·펌웨어 및 RF 스위치 구성은 미확인."
+      ],
+      "missing_actual_material": "실제 시험소 케이블/커넥터/스위치 경로와 상태, DUT-센서 연결도 및 확인 기록.",
+      "existing_private_input_request_ids": [
+        "LOCAL-007",
+        "LOCAL-003"
+      ],
+      "simulation_fixture_created": false,
+      "source_original_moved_or_modified": false
+    },
+    {
+      "material_type_id": "V02",
+      "material_type": "손실·보정표·교정 원본",
+      "availability": "example_or_documentation_available_actual_material_not_provided",
+      "actual_material_status": "not_provided",
+      "actual_material_count": 0,
+      "source_refs": [
+        "EXHIBIT-7786580",
+        "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+        "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "SPEAG-DAE-calibration-procedure-overview-b35e7ee2e5"
+      ],
+      "available_reference_material": [
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-PM-SET",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "센서 보정표 선택·주파수 연계 및 값 단위 설정/조회 위치.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+              "location": {
+                "pdf_pages_1based": [
+                  368,
+                  583
+                ],
+                "heading": "Sensor calibration table / UNIT Subsystem",
+                "printed_pages": [
+                  368,
+                  585
+                ]
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-PM-SET",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "창 번호와 물리 센서 채널을 동일시하지 않는다."
+        },
+        {
+          "provider": "S05",
+          "provider_evidence_id": "S05-E005",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "제조사 교정 서비스는 DAE4를 명시하고 접촉·충돌, A/D 성능, 채널 분리, 입력 특성과 배터리 검출 등의 확인 항목을 제시한다. 실제 장치의 교정계수·유효기간은 미제공이다.",
+          "source_locations": [
+            {
+              "source_ref": "SPEAG-DAE-calibration-procedure-overview-b35e7ee2e5",
+              "location": {
+                "heading": "READOUT UNIT (DAE)",
+                "rows": [
+                  "DAE3, DAE4, DAEasy4, DAE4MRI",
+                  "Calibration Procedure"
+                ]
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S05-E005",
+              "provider": "S05"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "서비스 범위와 CMC 설명은 개별 장치 교정성적서·현장 불확도 예산을 대체하지 않는다."
+        },
+        {
+          "source_ref": "EXHIBIT-7786580",
+          "location": {
+            "pdf_pages_1based": [
+              14,
+              24
+            ],
+            "locator": "결과표 하단 보정/마진 설명"
+          },
+          "finding": "손실·안테나 인자·증폭 보정의 필드/계산 설명 위치.",
+          "classification": "third_party_report_table_or_plot",
+          "actual_capture": false,
+          "origin": "제3자 측정 결과를 서술한 성적서. native 계측기 파일이 아니다.",
+          "locator_provenance": "이전 검수된 S08 B0001/B0002 근거 위치"
+        },
+        {
+          "source_ref": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+          "location": {
+            "pdf_pages_1based": [
+              11,
+              12,
+              13,
+              77
+            ],
+            "locator": "교정 표·보정 설명·AC 전도 notes"
+          },
+          "finding": "교정일/주기/만료와 적용 보정 설명의 보고서 위치.",
+          "classification": "third_party_report_table_or_plot",
+          "actual_capture": false,
+          "origin": "제3자 측정 결과를 서술한 성적서. native 계측기 파일이 아니다.",
+          "locator_provenance": "이전 검수된 S08 B0001/B0002 근거 위치"
+        }
+      ],
+      "candidate_field_locations": [
+        "주파수",
+        "보정 단위/부호",
+        "케이블/센서 식별",
+        "보정표 선택",
+        "교정 유효일",
+        "적용한 보정 판본"
+      ],
+      "conditions_and_limits": [
+        "센서 보정표 선택 명령의 문서화와 실제 센서의 보정값 파일을 구별한다.",
+        "제조사 교정 서비스 설명·성적서의 교정 목록은 이 시험소의 실제 교정성적서/보정 원본이 아니다."
+      ],
+      "missing_actual_material": "실제 주파수별 손실 파일, 센서/DAQ/프로브 교정원본·판본·유효기간과 측정 시점의 연결.",
+      "existing_private_input_request_ids": [
+        "LOCAL-003",
+        "LOCAL-004"
+      ],
+      "simulation_fixture_created": false,
+      "source_original_moved_or_modified": false
+    },
+    {
+      "material_type_id": "V03",
+      "material_type": "원시 형식·트레이스·측정 컨테이너",
+      "availability": "example_or_documentation_available_actual_material_not_provided",
+      "actual_material_status": "not_provided",
+      "actual_material_count": 0,
+      "source_refs": [
+        "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "S05-dasy52-report-generator-c694fa6fd65d",
+        "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8"
+      ],
+      "available_reference_material": [
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-AN-TRACE",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "트레이스 값·단위·바이너리 블록·포인트 수의 근거.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+              "location": {
+                "pdf_pages_1based": [
+                  749,
+                  750,
+                  1025,
+                  1026
+                ],
+                "heading": "Format Data / Query Trace Data"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-AN-TRACE",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "트레이스는 현재 Y축 단위의 진폭값이며 원시 IQ로 간주하지 않는다."
+        },
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-PM-VAL",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "기존 데이터 재계산과 새 측정 시작을 구별할 근거.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+              "location": {
+                "pdf_pages_1based": [
+                  34,
+                  137,
+                  175
+                ],
+                "heading": "MEASure / FETCh Commands",
+                "printed_pages": [
+                  34,
+                  137,
+                  175
+                ]
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-PM-VAL",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "FETCh 수신만으로 신규 측정·정상 입력을 입증하지 않는다."
+        },
+        {
+          "provider": "S05",
+          "provider_evidence_id": "S05-E010",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "DASY5.2 보고서 장은 장치 단위 .da52 측정 컨테이너와 별도 입력·사진·RGtemplate를 이용한 보고서 생성을 설명한다.",
+          "source_locations": [
+            {
+              "source_ref": "S05-dasy52-report-generator-c694fa6fd65d",
+              "location": {
+                "pdf_page": 1,
+                "printed_page": "29-1",
+                "section": "29.1"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S05-E010",
+              "provider": "S05"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "DASY5.2 기능 근거다. .da52 내부 바이너리 구조·원시 센서 스키마를 제공하는 문서는 아니다."
+        },
+        {
+          "provider": "S05",
+          "provider_evidence_id": "S05-E011",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "보고서 장은 Excel·Word·HTML 출력과 고객별 데이터베이스 exporter를 설명한다. 도식에는 XML과 출력별 라이선스 표시도 있으나 XML 스키마·호출 API는 제시되지 않는다.",
+          "source_locations": [
+            {
+              "source_ref": "S05-dasy52-report-generator-c694fa6fd65d",
+              "location": {
+                "pdf_pages": [
+                  1,
+                  2
+                ],
+                "printed_pages": [
+                  "29-1",
+                  "29-2"
+                ],
+                "figures": [
+                  "report export flow",
+                  "Export Options dialog"
+                ]
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S05-E011",
+              "provider": "S05"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "템플릿·측정 완료·입력 속성 및 보유 옵션이 전제다. XML 아이콘을 공개 API나 무조건 사용 가능한 raw export로 처리하지 않는다."
+        },
+        {
+          "provider": "S05",
+          "provider_evidence_id": "S05-E015",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "DASY6 R&D 매뉴얼은 Jupyter/Python 연동과 시간·센서 위치·측정/평가량을 담는 CSV 출력을 설명한다.",
+          "source_locations": [
+            {
+              "source_ref": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+              "location": {
+                "pdf_pages": [
+                  105,
+                  111,
+                  112
+                ],
+                "printed_pages": [
+                  "7-2",
+                  "7-8",
+                  "7-9"
+                ]
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S05-E015",
+              "provider": "S05"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "DASY6 Module R&D 기능이다. DASY5나 DASY6 SAR의 파일 형식·API와 같다고 판단하지 않는다."
+        }
+      ],
+      "candidate_field_locations": [
+        "진폭 단위",
+        "포인트 수",
+        "ASCII/바이너리 형식",
+        "바이트 순서",
+        "측정 컨테이너/내보내기 종류",
+        "시간/센서 위치/평가량"
+      ],
+      "conditions_and_limits": [
+        "트레이스 Y값 반환은 native IQ와 같지 않다. FETCh 수신만으로 새 측정 완료를 입증하지 않는다.",
+        "DASY5.2 .da52/보고서 출력 설명은 실제 .da52 파일이 아니다. DASY6 R&D의 CSV 설명을 DASY5/DAE4 형식으로 전용하지 않는다.",
+        "형식 문서화와 실제 원시 캡처/파서 상관성 검증을 구별한다."
+      ],
+      "missing_actual_material": "실제 native trace/IQ/DAQ 파일·원본 헤더·단위·타임스탬프·생성 SW/펌웨어 및 보고 행과의 연결.",
+      "existing_private_input_request_ids": [
+        "LOCAL-010",
+        "LOCAL-005"
+      ],
+      "simulation_fixture_created": false,
+      "source_original_moved_or_modified": false
+    },
+    {
+      "material_type_id": "V04",
+      "material_type": "통신 로그·완료/상태 응답",
+      "availability": "example_or_documentation_available_actual_material_not_provided",
+      "actual_material_status": "not_provided",
+      "actual_material_count": 0,
+      "source_refs": [
+        "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "S07-android-adb-23876effdde7",
+        "S07-android-logcat-1b9760fb6b61"
+      ],
+      "available_reference_material": [
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-AN-ID",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "식별 응답 필드와 응답 변경 기능의 위치.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+              "location": {
+                "pdf_pages_1based": [
+                  235,
+                  502
+                ],
+                "heading": "Identification Query / System IDN Response"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-AN-ID",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "IDN 응답은 사용자 설정 가능하므로 현장 실물 식별을 단독 확정하지 않는다."
+        },
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-AN-SYNC",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "동일 제어 포트에서 시작한 동작에 대한 완료 동기화.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+              "location": {
+                "pdf_pages_1based": [
+                  235,
+                  236,
+                  984
+                ],
+                "heading": "Operation Complete / Abort"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-AN-SYNC",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "ABORt 후 OPC 완료가 유효한 새 측정 완료를 뜻하지 않는다."
+        },
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-PM-SYNC",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "완료 응답과 상태 동기화 위치.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+              "location": {
+                "pdf_pages_1based": [
+                  89,
+                  90,
+                  597
+                ],
+                "heading": "Using Operation Complete / IEEE 488.2",
+                "printed_pages": [
+                  89,
+                  90,
+                  599
+                ]
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-PM-SYNC",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "문서 예제의 교정 명령·버스 동작은 실행하지 않았다."
+        },
+        {
+          "provider": "S07",
+          "provider_evidence_id": "S07-E03",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "adb의 device 상태만으로 Android 부팅 완료·제품 준비·RF 시험모드 준비를 확정할 수 없다.",
+          "source_locations": [
+            {
+              "source_ref": "S07-android-adb-23876effdde7",
+              "location": {
+                "line_start": 452,
+                "line_end": 459,
+                "extracted_path": "[local-only derivative or original; not included in public payload]",
+                "representation": "extracted_text",
+                "locator_phrase": "this state does not imply that the Android system is fully booted"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S07-E03",
+              "provider": "S07"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": null
+        },
+        {
+          "provider": "S07",
+          "provider_evidence_id": "S07-E09",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "로그 출력 형식과 시각·스레드 정보의 선택 인터페이스가 문서화되어 있다.",
+          "source_locations": [
+            {
+              "source_ref": "S07-android-logcat-1b9760fb6b61",
+              "location": {
+                "line_start": 248,
+                "line_end": 257,
+                "extracted_path": "[local-only derivative or original; not included in public payload]",
+                "representation": "extracted_text",
+                "locator_phrase": "threadtime"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S07-E09",
+              "provider": "S07"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": null
+        },
+        {
+          "provider": "S07",
+          "provider_evidence_id": "S07-E10",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "main/system/crash/radio/events 등의 버퍼 선택과 필터링을 구별한다.",
+          "source_locations": [
+            {
+              "source_ref": "S07-android-logcat-1b9760fb6b61",
+              "location": {
+                "line_start": 316,
+                "line_end": 355,
+                "extracted_path": "[local-only derivative or original; not included in public payload]",
+                "representation": "extracted_text",
+                "locator_phrase": "View alternative log buffers"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S07-E10",
+              "provider": "S07"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": null
+        }
+      ],
+      "candidate_field_locations": [
+        "요청/응답 방향",
+        "대상 식별",
+        "송수신 시각",
+        "완료/상태",
+        "로그 형식/버퍼",
+        "실패/시간 제한"
+      ],
+      "conditions_and_limits": [
+        "문서의 질의·응답 및 로그 형식은 실제 실행 통신기록이 아니다.",
+        "ADB device 상태만으로 부팅/시험 준비 완료를 확정하지 않는다.",
+        "ABORt 후 OPC 응답은 유효한 새 RF 측정 완료와 다르다."
+      ],
+      "missing_actual_material": "동일 실행 ID의 실제 명령/응답·시각·완료 확인·timeout/재시도 로그와 대상 장비/주소/세션 메타데이터.",
+      "existing_private_input_request_ids": [
+        "LOCAL-013",
+        "LOCAL-010"
+      ],
+      "simulation_fixture_created": false,
+      "source_original_moved_or_modified": false
+    },
+    {
+      "material_type_id": "V05",
+      "material_type": "오류·중단·복구 사례",
+      "availability": "example_or_documentation_available_actual_material_not_provided",
+      "actual_material_status": "not_provided",
+      "actual_material_count": 0,
+      "source_refs": [
+        "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "S07-aosp-wifi-debug-004a0e99cf25"
+      ],
+      "available_reference_material": [
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-AN-ERR",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "오류 번호·메시지 반환과 상세 오류 응답 위치.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+              "location": {
+                "pdf_pages_1based": [
+                  432,
+                  433
+                ],
+                "heading": "System Show Errors"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-AN-ERR",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": null
+        },
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-AN-ABORT",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "단일/연속 측정에서 정지·재시작 동작 차이.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+              "location": {
+                "pdf_pages_1based": [
+                  983,
+                  984
+                ],
+                "heading": "Abort"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-AN-ABORT",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "연속 상태에서는 재측정할 수 있고 정렬 동작은 즉시 중단하지 않는다."
+        },
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-PM-ERR",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "FIFO 오류 조회는 항목을 제거하며 큐 한계는 30개.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+              "location": {
+                "pdf_pages_1based": [
+                  517
+                ],
+                "heading": "SYSTem:ERRor?",
+                "printed_pages": [
+                  517
+                ]
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-PM-ERR",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "원본 오류를 보존하기 전 무조건 지우는 절차를 만들지 않는다."
+        },
+        {
+          "provider": "S04",
+          "provider_evidence_id": "S04-PM-ABORT",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "트리거 대기·유휴 상태 전이와 연속 모드 재대기 위치.",
+          "source_locations": [
+            {
+              "source_ref": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+              "location": {
+                "pdf_pages_1based": [
+                  546
+                ],
+                "heading": "ABORt",
+                "printed_pages": [
+                  548
+                ]
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S04-PM-ABORT",
+              "provider": "S04"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": "연속 모드에서 ABORt를 영구 정지로 간주하지 않는다."
+        },
+        {
+          "provider": "S07",
+          "provider_evidence_id": "S07-E12",
+          "provider_index": "[local-only reference retained by P01]",
+          "finding": "Wi-Fi 오류 시 자동 bugreport 동작에는 빌드 유형 조건이 있으며 HAL에 따른 펌웨어 로그 위치도 다르다.",
+          "source_locations": [
+            {
+              "source_ref": "S07-aosp-wifi-debug-004a0e99cf25",
+              "location": {
+                "line_start": 43,
+                "line_end": 68,
+                "extracted_path": "[local-only derivative or original; not included in public payload]",
+                "representation": "extracted_text",
+                "locator_phrase": "only in userdebug and eng builds"
+              },
+              "locator_provenance": "해당 담당의 검수된 evidence-index",
+              "provider_evidence_id": "S07-E12",
+              "provider": "S07"
+            }
+          ],
+          "classification": "manual_documented_format_or_interface",
+          "actual_capture": false,
+          "conditions": null
+        }
+      ],
+      "candidate_field_locations": [
+        "오류 코드/메시지",
+        "발생 시각/상태",
+        "읽기/삭제의 부작용",
+        "중단 후 상태",
+        "OS/빌드 조건"
+      ],
+      "conditions_and_limits": [
+        "매뉴얼의 오류 큐/중단 설명과 실제 현장 고장·복구 기록을 구별한다.",
+        "일부 오류 질의는 큐 항목을 제거한다. 원본 오류 보존 정책은 개발/운영 담당 검토 사항이다.",
+        "Wi-Fi bugreport 설명은 OS 빌드 조건이 있으며 실제 DUT 실패로그가 아니다. 수집 과정의 HTTP 오류도 계측기 오류 사례로 대체하지 않는다."
+      ],
+      "missing_actual_material": "실제 통신 끊김·범위 초과·시간 초과·센서 오류의 원본 기록, 결과 무효 처리와 복구/정지 검증.",
+      "existing_private_input_request_ids": [
+        "LOCAL-008",
+        "LOCAL-010",
+        "LOCAL-013"
+      ],
+      "simulation_fixture_created": false,
+      "source_original_moved_or_modified": false
+    },
+    {
+      "material_type_id": "V06",
+      "material_type": "측정조건-결과 연결 예제",
+      "availability": "example_or_documentation_available_actual_material_not_provided",
+      "actual_material_status": "not_provided",
+      "actual_material_count": 0,
+      "source_refs": [
+        "EXHIBIT-7786580",
+        "EXHIBIT-7854589",
+        "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535"
+      ],
+      "available_reference_material": [
+        {
+          "source_ref": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+          "location": {
+            "pdf_pages_1based": [
+              1,
+              5,
+              6,
+              14,
+              28,
+              29,
+              30,
+              33,
+              34
+            ],
+            "locator": "제품/조건과 §7.2-7.4 결과"
+          },
+          "finding": "b/g/n 포함 RF 보고서의 모드·채널·안테나·방법 설정과 출력/대역폭/PSD 결과 위치.",
+          "classification": "third_party_report_table_or_plot",
+          "actual_capture": false,
+          "origin": "제3자 측정 결과를 서술한 성적서. native 계측기 파일이 아니다.",
+          "locator_provenance": "이전 검수된 S08 B0001/B0002 근거 위치"
+        },
+        {
+          "source_ref": "EXHIBIT-7854589",
+          "location": {
+            "pdf_pages_1based": [
+              95,
+              142
+            ],
+            "locator": "§10.6 표10-109; §12.29 표12-117"
+          },
+          "finding": "SAR 평가를 지원하는 b/g/n 출력표와 SAR 조건/결과 위치. RF 독립 성적서와 구별.",
+          "classification": "third_party_report_table_or_plot",
+          "actual_capture": false,
+          "origin": "제3자 측정 결과를 서술한 성적서. native 계측기 파일이 아니다.",
+          "locator_provenance": "이전 검수된 S08 B0001/B0002 근거 위치"
+        },
+        {
+          "source_ref": "EXHIBIT-7786580",
+          "location": {
+            "pdf_pages_1based": [
+              12,
+              14,
+              18,
+              24
+            ],
+            "locator": "환경/장비와 전도·방사 결과 위치"
+          },
+          "finding": "EMC 사례의 시험일·환경·장비·조건과 보정된 표/그림 연결 위치.",
+          "classification": "third_party_report_table_or_plot",
+          "actual_capture": false,
+          "origin": "제3자 측정 결과를 서술한 성적서. native 계측기 파일이 아니다.",
+          "locator_provenance": "이전 검수된 S08 B0001/B0002 근거 위치"
+        }
+      ],
+      "candidate_field_locations": [
+        "FCC ID/모델/시료",
+        "모드·채널·주파수",
+        "검파/peak·average",
+        "안테나",
+        "온습도/공급 전원",
+        "설정·보정",
+        "결과 단위·한계·마진"
+      ],
+      "conditions_and_limits": [
+        "실제 제3자 시험을 보고한 문서이나 현재 시험소의 native raw/실행 로그·교정원본이 아니다.",
+        "서로 다른 시험소·시료·신청 묶음을 하나의 물리 시험건으로 합치지 않는다.",
+        "성적서 표/그림의 존재는 모든 수치/방법의 독립 검증을 뜻하지 않는다."
+      ],
+      "missing_actual_material": "현재 시험소의 실제 완료 시험건에서 조건→raw→보정→계산→판정→발행본을 재현하는 원본 묶음.",
+      "existing_private_input_request_ids": [
+        "LOCAL-010",
+        "LOCAL-011"
+      ],
+      "simulation_fixture_created": false,
+      "source_original_moved_or_modified": false
+    }
+  ],
+  "scenario_case_link": {
+    "source_request_item": 3,
+    "purpose": "첫 전도출력 시나리오의 조건-출력 위치 연결",
+    "source_ref": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+    "conditions_pdf_pages": [
+      1,
+      5,
+      6,
+      28
+    ],
+    "results_pdf_pages": [
+      29,
+      30,
+      31
+    ],
+    "reference_material_types": [
+      "V01",
+      "V02",
+      "V03",
+      "V04",
+      "V05",
+      "V06"
+    ],
+    "limitation": "RF 성적서 예제와 계측기 매뉴얼을 개별 장비/실측 raw의 동일 실행으로 연결하지 않았다. 실제 소스/센서/경로/교정 및 방법 승인 조건은 미제공이다."
+  },
+  "classification_contract": {
+    "manual_documented_format_or_interface": "설명/예제; 실제 통신·원시 캡처 아님",
+    "manufacturer_product_description": "제품군 설명; 실물/배선 검증 아님",
+    "third_party_report_table_or_plot": "제3자 성적서 표현; 이 시험소 native raw 아님",
+    "not_provided": "요청한 실제 검증 자료가 현 인수 자료에 없음"
+  },
+  "missing_actual_materials": [
+    {
+      "material_type_id": "V01",
+      "material_type": "연결도·RF 경로·포트 관계",
+      "status": "not_provided",
+      "missing": "실제 시험소 케이블/커넥터/스위치 경로와 상태, DUT-센서 연결도 및 확인 기록.",
+      "existing_request_ids": [
+        "LOCAL-007",
+        "LOCAL-003"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V02",
+      "material_type": "손실·보정표·교정 원본",
+      "status": "not_provided",
+      "missing": "실제 주파수별 손실 파일, 센서/DAQ/프로브 교정원본·판본·유효기간과 측정 시점의 연결.",
+      "existing_request_ids": [
+        "LOCAL-003",
+        "LOCAL-004"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V03",
+      "material_type": "원시 형식·트레이스·측정 컨테이너",
+      "status": "not_provided",
+      "missing": "실제 native trace/IQ/DAQ 파일·원본 헤더·단위·타임스탬프·생성 SW/펌웨어 및 보고 행과의 연결.",
+      "existing_request_ids": [
+        "LOCAL-010",
+        "LOCAL-005"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V04",
+      "material_type": "통신 로그·완료/상태 응답",
+      "status": "not_provided",
+      "missing": "동일 실행 ID의 실제 명령/응답·시각·완료 확인·timeout/재시도 로그와 대상 장비/주소/세션 메타데이터.",
+      "existing_request_ids": [
+        "LOCAL-013",
+        "LOCAL-010"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V05",
+      "material_type": "오류·중단·복구 사례",
+      "status": "not_provided",
+      "missing": "실제 통신 끊김·범위 초과·시간 초과·센서 오류의 원본 기록, 결과 무효 처리와 복구/정지 검증.",
+      "existing_request_ids": [
+        "LOCAL-008",
+        "LOCAL-010",
+        "LOCAL-013"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    },
+    {
+      "material_type_id": "V06",
+      "material_type": "측정조건-결과 연결 예제",
+      "status": "not_provided",
+      "missing": "현재 시험소의 실제 완료 시험건에서 조건→raw→보정→계산→판정→발행본을 재현하는 원본 묶음.",
+      "existing_request_ids": [
+        "LOCAL-010",
+        "LOCAL-011"
+      ],
+      "owner": "lab_or_product_owner",
+      "routing": "P01이 기존 현장 입력 요청과 연결",
+      "blocks_this_index_batch": false
+    }
+  ]
+}

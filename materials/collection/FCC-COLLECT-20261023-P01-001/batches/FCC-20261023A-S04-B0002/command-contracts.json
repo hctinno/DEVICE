@@ -1,0 +1,2058 @@
+{
+  "metadata_schema_version": 1,
+  "task_id": "FCC-20261023-S04-B0002",
+  "batch_id": "FCC-20261023A-S04-B0002",
+  "source_request_id": "DEV-VLAB-20261023-001",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v005",
+  "created_at": "2026-10-23T22:34:34.480155+09:00",
+  "scope_notice": "실제 명령을 전송하거나 가상 계측기를 구현한 산출물이 아니다. 응답 예제는 문서의 템플릿·상수·예제이며 실측 또는 생성된 가상 측정 데이터가 아니다. 첫 프로필 선택·미확정 정책·구현은 개발 담당이 정한다.",
+  "page_numbering": "pdf_pages_1based는 실제 PDF 순서이다. N1913-90008은 후반부에 인쇄 쪽 번호가 PDF 순서보다 2 크다. 아래 인용은 물리 PDF 쪽을 기준으로 검증했다.",
+  "profile_selection": "development_owner_only_not_selected_here",
+  "new_originals": 0,
+  "new_downloads": 0,
+  "source_count": 6,
+  "syntax_rules": [
+    {
+      "rule": "대괄호는 생략 가능한 키워드/인수, 꺾쇠는 치환 자리, |는 대안이다. 표의 문법을 그대로 하나의 명령 문자열로 보내지 않는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            95,
+            96
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    },
+    {
+      "rule": "N1914A boolean은 ON/OFF/NRf를 허용하고 NRf 정수 반올림 후 비영은 1이다. 질의는 0/1을 반환한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            96
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    },
+    {
+      "rule": "X-Series는 대소문자 무시, 명시된 짧은/긴 키워드 형식을 허용한다. 임의 중간 길이 축약은 허용된다고 볼 수 없다. 세미콜론 복합 명령의 경로 규칙을 별도 유지한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+          "part_number": "N9020-90112",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            16,
+            17,
+            21
+          ],
+          "source_sha256": "354463a721ff57298576d6c059c9637d5e58bb16d854ace86303de31a55c8f3e"
+        }
+      ]
+    },
+    {
+      "rule": "N1914A는 앞 질의 응답을 읽기 전에 다음 질의를 보내면 응답이 섞일 수 있다고 명시한다. 응답 경계를 임의로 합치지 않는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            95
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    }
+  ],
+  "contracts": [
+    {
+      "contract_id": "PM-ID",
+      "device": "N1914A",
+      "function": "identification",
+      "title": "기기 식별",
+      "commands": [
+        "*IDN?"
+      ],
+      "arguments_and_units": "인수 없음. 제조사·모델·일련번호·펌웨어 순서의 쉼표 구분 문자열.",
+      "response": {
+        "type": "identification_string",
+        "template": "Keysight Technologies,N1914A,<serial number>,A2.XX.YY",
+        "example_status": "manual_template_with_placeholders",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "조회이며 측정 시작 명령이 아니다.",
+      "constraints": "실제 설치 펌웨어나 자산 일련번호는 미제공. 문자열을 실물 증거로 대체하지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "17 IEEE 488.2 Command Reference / *IDN?",
+          "pdf_pages_1based": [
+            595
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            597
+          ],
+          "verified_anchor": "A2.XX.YY"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-STATUS",
+      "device": "N1914A",
+      "function": "status_query",
+      "title": "상태 레지스터 조회",
+      "commands": [
+        "*STB?",
+        "*ESR?"
+      ],
+      "arguments_and_units": "인수 없음. 반환은 단위 없는 NR1 정수 0..255.",
+      "response": {
+        "type": "NR1_integer",
+        "range": [
+          0,
+          255
+        ],
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "ESR 조회는 표준 이벤트 레지스터를 읽고 지운다. STB의 bit 4는 MAV, bit 2는 오류큐, bit 6은 MSS.",
+      "constraints": "상태 비트와 새 측정의 유효성은 별도이다. ESR 파괴적 읽기를 숨기지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "17 / *ESR? and *STB?",
+          "pdf_pages_1based": [
+            594,
+            604
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            596,
+            606
+          ],
+          "verified_anchor": "0 to 255"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-CONFIG",
+      "device": "N1914A",
+      "function": "measurement_settings",
+      "title": "측정 창·소스 구성",
+      "commands": [
+        "CONFigure[1]|2|3|4[:SCALar][:POWer:AC] [<expected_value>[,<resolution>[,<source list>]]]",
+        "CONFigure[1]|2|3|4?"
+      ],
+      "arguments_and_units": "expected_value는 센서 의존 dBm/W, resolution은 1..4, source list는 (@1)/(@2); (@3)/(@4)는 USB 옵션 전제. DEF는 현 값 유지. 접미 1..4는 창/측정 선택이며 물리 채널 번호와 별개.",
+      "response": {
+        "type": "quoted_configuration_string",
+        "template": "<function> <expected_value>,<resolution>,<source list>",
+        "example_status": "manual_response_template",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "구성만 하고 측정은 시작하지 않는다. 관련 채널에 CONT OFF, TRIG:SOUR IMM, 자동 지연·자동 평균 길이·평균 ON을 적용한다.",
+      "constraints": "생략 소스의 기본값은 현 창 구성과 USB 옵션에 따라 달라진다. READ/FETCh에 인수를 다시 주면 기존 구성과 일치해야 한다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "2 MEASurement Commands / Optional Parameters, CONFigure, FETCh",
+          "pdf_pages_1based": [
+            108,
+            112,
+            117,
+            118,
+            119,
+            137,
+            138
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "CONFigure"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-FREQ",
+      "device": "N1914A",
+      "function": "measurement_settings",
+      "title": "센서 보정 주파수",
+      "commands": [
+        "[SENSe[1]]|SENSe2|3|4:FREQuency[:CW|:FIXed] <numeric_value>",
+        "[SENSe[1]]|SENSe2|3|4:FREQuency[:CW|:FIXed]? [MIN|MAX]"
+      ],
+      "arguments_and_units": "문서상 파라미터 범위 0 Hz..1000 GHz, 기본 단위 Hz, Hz/kHz/MHz/GHz 허용, 가장 가까운 1 kHz로 분해. *RST 기본값 50 MHz.",
+      "response": {
+        "type": "frequency_numeric",
+        "unit": "Hz",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "주파수에 맞는 센서 보정표 또는 센서 EEPROM 보정을 적용한다.",
+      "constraints": "파라미터 허용 범위는 실제 센서의 RF 주파수 범위가 아니다. 센서 모델·보정표·CFT 옵션에 따라 보정 전제가 다르다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "11 SENSe / FREQuency",
+          "pdf_pages_1based": [
+            392,
+            393
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "1000.0 GHz"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-UNIT",
+      "device": "N1914A",
+      "function": "measurement_settings",
+      "title": "수치 단위 설정·조회",
+      "commands": [
+        "UNIT[1]|2|3|4:POWer <amplitude_unit>",
+        "UNIT[1]|2|3|4:POWer?"
+      ],
+      "arguments_and_units": "W와 DBM의 동작이 본문에 기술됨. *RST 시 DBM. 접미사는 측정 창을 선택한다.",
+      "response": {
+        "type": "unit_setting",
+        "documented_values": [
+          "W",
+          "DBM"
+        ],
+        "literal_example": null,
+        "complete_enum_confirmed": false,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "이후 값·해당 수치 인수의 단위에 영향을 준다. 상대/비율 측정은 별도 단위 규칙.",
+      "constraints": "PDF 584쪽의 Range of Values 칸에 15 to 100이 있어 단위 열거로 사용할 수 없다. 표 오류를 숫자 단위 계약으로 옮기지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 Output Format / 16 UNIT",
+          "pdf_pages_1based": [
+            69,
+            583,
+            584
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "UNIT"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-CONT",
+      "device": "N1914A",
+      "function": "trigger",
+      "title": "단일·연속 트리거 모드",
+      "commands": [
+        "INITiate[1]|2|3|4:CONTinuous <boolean>",
+        "INITiate[1]|2|3|4:CONTinuous?"
+      ],
+      "arguments_and_units": "0/OFF 또는 1/ON. NRf 입력도 허용되며 정수로 반올림한 결과가 0이 아니면 1로 해석한다. 질의 응답은 0/1.",
+      "response": {
+        "type": "boolean_integer",
+        "documented_values": [
+          "0",
+          "1"
+        ],
+        "example_status": "documented_return_values",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "OFF는 단일 트리거 완료 후 idle, ON은 완료 후 다음 트리거 사이클로 간다. *RST는 OFF; 전원/프리셋/로컬 전환은 외부 트리거 조건에 따라 다르다.",
+      "constraints": "*RST와 전원 투입 상태를 같은 초기값으로 만들지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "15 / INITiate CONTinuous",
+          "pdf_pages_1based": [
+            96,
+            548,
+            549
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "On reset (*RST)"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-TRIG-SOURCE",
+      "device": "N1914A",
+      "function": "trigger",
+      "title": "트리거 소스 선택",
+      "commands": [
+        "TRIGger[:SEQuence[1]|2|3|4]:SOURce BUS|EXTernal|HOLD|IMMediate",
+        "TRIGger[1]|2|3|4:SOURce?"
+      ],
+      "arguments_and_units": "BUS, EXTernal, HOLD, IMMediate. 접미/시퀀스는 채널·옵션 범위와 대조.",
+      "response": {
+        "type": "trigger_source_mnemonic",
+        "documented_query_list": [
+          "IMM",
+          "BUS",
+          "HOLD"
+        ],
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "소스 선택만으로 arm되지 않는다. INITiate가 대기 상태로 전환한다. CONFigure/MEASure는 소스를 IMM로 바꾼다.",
+      "constraints": "설정 문법에 EXT가 있으나 PDF 563쪽 조회 목록에는 빠져 있다. EXT 조회 응답을 문서만으로 확정하지 않는다.",
+      "documented_errors": [
+        {
+          "code": -221,
+          "message_as_printed": "Settings Conflict",
+          "condition": "해당 쪽에 기술된 리더/팔로워·속도·검출기 설정 충돌에 한정"
+        }
+      ],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "15 / TRIGger SOURce",
+          "pdf_pages_1based": [
+            561,
+            562,
+            563,
+            577
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            563,
+            564,
+            565,
+            579
+          ],
+          "verified_anchor": "SOURce"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-INIT",
+      "device": "N1914A",
+      "function": "trigger",
+      "title": "측정 arm·시작",
+      "commands": [
+        "INITiate[1]|2|3|4[:IMMediate]"
+      ],
+      "arguments_and_units": "정식 문법에 질의 ? 없음. 물리 트리거 시퀀스 선택.",
+      "response": {
+        "type": "command_no_query_response_defined",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "idle에서 wait-for-trigger로 전환한다. 소스 IMM면 즉시 시작하고 결과를 메모리에 둔다. 전송은 FETCh가 담당.",
+      "constraints": "PDF 40쪽의 INIT1?/INIT2? 예제는 정식 문법과 불일치한다. 질의 별칭으로 승인하지 않는다.",
+      "documented_errors": [
+        {
+          "code": -213,
+          "message_as_printed": "INIT ignored",
+          "condition": "idle 상태가 아니거나 CONT ON"
+        }
+      ],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 Examples / 15 INITiate IMMediate",
+          "pdf_pages_1based": [
+            40,
+            544,
+            550
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "INITiate"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-BUS-TRIG",
+      "device": "N1914A",
+      "function": "trigger",
+      "title": "버스 트리거",
+      "commands": [
+        "*TRG",
+        "GET (GPIB bus message)"
+      ],
+      "arguments_and_units": "인수 없음. BUS 소스와 wait-for-trigger 전제.",
+      "response": {
+        "type": "command_no_query_response_defined",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "대기 중인 채널들을 트리거한다. *DDT 설정으로 동작이 바뀔 수 있다.",
+      "constraints": "GPIB GET 메시지와 SCPI 문자열을 동일 전송으로 취급하지 않는다.",
+      "documented_errors": [
+        {
+          "code": -211,
+          "message_as_printed": "Trigger ignored",
+          "condition": "소스가 BUS가 아니거나 wait-for-trigger가 아님"
+        }
+      ],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "17 / *TRG and GPIB GET",
+          "pdf_pages_1based": [
+            605,
+            608
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            607,
+            610
+          ],
+          "verified_anchor": "Trigger ignored"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-COMPLETE",
+      "device": "N1914A",
+      "function": "completion",
+      "title": "완료 대기·확인",
+      "commands": [
+        "*OPC",
+        "*OPC?",
+        "*WAI"
+      ],
+      "arguments_and_units": "인수 없음. *OPC는 이벤트 bit 0 설정, *OPC?는 완료 후 ASCII 1.",
+      "response": {
+        "type": "documented_constant_for_OPC_query",
+        "literal_example": "1",
+        "example_status": "documented_return_constant_not_capture",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "*WAI는 pending 작업 완료·device clear·power cycle 조건까지 후속 명령 처리를 기다린다.",
+      "constraints": "사용자 지정 timeout·센서 준비시간은 문서에서 고정되지 않았다. 명령 완료와 계측 유효성을 분리한다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 Synchronization / 17 *OPC, *WAI, DCL",
+          "pdf_pages_1based": [
+            89,
+            597,
+            607,
+            608
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "*OPC"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-ERROR",
+      "device": "N1914A",
+      "function": "error_queue",
+      "title": "오류큐 조회·지움",
+      "commands": [
+        "SYSTem:ERRor?",
+        "*CLS"
+      ],
+      "arguments_and_units": "인수 없음. 오류 번호와 메시지.",
+      "response": {
+        "type": "error_number_and_message",
+        "literal_example": "+0, “No error”",
+        "example_status": "as_printed_typographic_quotes_not_wire_capture",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "FIFO 조회 1회당 오류 1개 제거. 용량 30개. *CLS는 전체 오류를 지움. *RST는 오류큐를 바꾸지 않는다.",
+      "constraints": "큐가 넘치면 마지막 오류를 -350으로 바꾸고 공간이 생길 때까지 추가 오류를 받지 않는다.",
+      "documented_errors": [
+        {
+          "code": -350,
+          "message_as_printed": "Queue overflow",
+          "condition": "오류큐 초과"
+        }
+      ],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "14 / SYSTem ERRor",
+          "pdf_pages_1based": [
+            517
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "30 errors"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-READ",
+      "device": "N1914A",
+      "function": "numeric_read",
+      "title": "새 측정 읽기",
+      "commands": [
+        "READ[1]|2|3|4[:SCALar][:POWer:AC]? [<expected_value>[,<resolution>[,<source list>]]]"
+      ],
+      "arguments_and_units": "CONFigure와 같은 선택 인수·순서. 재지정 시 구성 값과 일치 필요. 반환 단위는 UNIT 설정.",
+      "response": {
+        "type": "power_reading_ASCII_NR3_or_REAL64",
+        "literal_example": null,
+        "example_status": "numeric_measurement_example_not_supplied",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "지정 창을 단일 채널/relative OFF로 하고 abort→initiate→측정→계산→출력한다. 새 데이터를 얻는다.",
+      "constraints": "CONT OFF 필요. BUS/HOLD 사용 제약을 소스와 함께 지킨다. 유효성·센서 한계는 별도.",
+      "documented_errors": [
+        {
+          "code": -213,
+          "message_as_printed": "INIT ignored",
+          "condition": "CONT ON"
+        },
+        {
+          "code": -214,
+          "message_as_printed": "Trigger deadlock",
+          "condition": "BUS 트리거에서 READ"
+        }
+      ],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 READ / 2 READ scalar power / 15 trigger restrictions",
+          "pdf_pages_1based": [
+            39,
+            156,
+            157,
+            562
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "READ"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-FETCH",
+      "device": "N1914A",
+      "function": "numeric_read",
+      "title": "메모리 측정값 가져오기",
+      "commands": [
+        "FETCh[1]|2|3|4[:SCALar][:POWer:AC]? [<expected_value>[,<resolution>[,<source list>]]]"
+      ],
+      "arguments_and_units": "창 선택·센서 의존 expected value·resolution 1..4·소스 목록. 단위는 UNIT.",
+      "response": {
+        "type": "power_reading_ASCII_NR3_or_REAL64",
+        "literal_example": null,
+        "example_status": "numeric_measurement_example_not_supplied",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "메모리에 있는 측정의 계산·출력을 수행하며 자체적으로 새 데이터를 확보하지 않는다. free run에서는 FETCh 사용이 기술됨.",
+      "constraints": "트리거 횟수에 따라 여러 결과 반환 조건이 있으므로 항상 단일 수치라고 가정하지 않는다. 설정 일치·센서 전제를 확인한다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 INITiate/FETCh and Output / 2 FETCh",
+          "pdf_pages_1based": [
+            39,
+            69,
+            137,
+            138
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "FETCh"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-MEASURE",
+      "device": "N1914A",
+      "function": "numeric_read",
+      "title": "구성 포함 복합 측정",
+      "commands": [
+        "MEASure[1]|2|3|4[:SCALar][:POWer:AC]? [<expected_value>[,<resolution>[,<source list>]]]"
+      ],
+      "arguments_and_units": "선택 인수는 구성 계약과 같음. 결과는 전력 단위 설정·형식과 연계.",
+      "response": {
+        "type": "power_reading_ASCII_NR3_or_REAL64",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "abort·configure·initiate·계산·출력의 복합 명령. 원하는 기존 트리거/평균 설정을 그대로 보존하는 명령이 아니다.",
+      "constraints": "수동 세부 설정을 유지하려는 흐름에서는 CONFigure 후 세부 설정·READ 또는 INIT/FETCh를 구별한다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 MEASure / 2 MEASure",
+          "pdf_pages_1based": [
+            34,
+            117,
+            175
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "MEASure"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-FORMAT",
+      "device": "N1914A",
+      "function": "trace_binary",
+      "title": "수치 ASCII·바이너리 형식",
+      "commands": [
+        "FORMat[:READings][:DATA] ASCii|REAL",
+        "FORMat[:READings][:DATA]?"
+      ],
+      "arguments_and_units": "ASCii 또는 REAL. 기본/리셋 ASCii. N1914A 두 채널에 공통 적용.",
+      "response": {
+        "type": "format_setting_or_reading_format",
+        "setting_values_as_documented": [
+          "ASCii",
+          "REAL"
+        ],
+        "ascii_numeric": "NR3",
+        "real_numeric": "IEEE 754 64-bit; 8 bytes per number; definite-length block; LF terminator",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "숫자 결과 전송 형식을 바꾸며 측정 자체를 시작하지 않는다.",
+      "constraints": "파형 트레이스 원본 지원을 뜻하지 않는다. 책의 TRACe 주석만으로 별도 TRACe API를 만들지 않는다. NaN 표기는 96쪽의 9.91 E37이며 실측값이 아니다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 Output / SCPI Types / 6 FORMat",
+          "pdf_pages_1based": [
+            69,
+            96,
+            283,
+            284
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "64 bit"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-BORDER",
+      "device": "N1914A",
+      "function": "trace_binary",
+      "title": "수치 바이너리 바이트 순서",
+      "commands": [
+        "FORMat[:READings]:BORDer NORMal|SWAPped",
+        "FORMat[:READings]:BORDer?"
+      ],
+      "arguments_and_units": "REAL에서만 사용. *RST 기본 NORMal.",
+      "response": {
+        "type": "byte_order_setting",
+        "documented_values": [
+          "NORMal",
+          "SWAPped"
+        ],
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "바이너리 순서 설정/조회.",
+      "constraints": "검토한 전력계 문서에는 NORMal과 절대 MSB/LSB 순서의 대응이 명시되지 않았다. N9030A의 정의를 전용하지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "6 / FORMat BORDer",
+          "pdf_pages_1based": [
+            281,
+            282
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "NORMal"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-ABORT",
+      "device": "N1914A",
+      "function": "abort",
+      "title": "측정 중단",
+      "commands": [
+        "ABORt[1]|2|3|4"
+      ],
+      "arguments_and_units": "대상 트리거 채널 선택. 질의 없음.",
+      "response": {
+        "type": "command_no_query_response_defined",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "wait-for-trigger에서 idle로 전환. 트리거 설정은 유지. CONT ON이면 곧바로 트리거 대기로 돌아간다.",
+      "constraints": "영구 정지·출력 차단·전원 off로 해석하지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "15 / ABORt",
+          "pdf_pages_1based": [
+            544,
+            546
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            546,
+            548
+          ],
+          "verified_anchor": "idle state"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "PM-OPTIONS",
+      "device": "N1914A",
+      "function": "options",
+      "title": "옵션 조회 범위",
+      "commands": [
+        "*OPT?"
+      ],
+      "arguments_and_units": "인수 없음.",
+      "response": {
+        "type": "option_string",
+        "documented_values": [
+          "\"\"",
+          "\"003\""
+        ],
+        "example_status": "documented_response_cases",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "문서에는 표준 장비의 빈 문자열과 003 옵션 응답이 제시됨.",
+      "constraints": "전체 USB/레거시 언어/라이선스 목록을 반환한다고 확장하지 않는다. 실제 옵션 미확인.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "SCPI",
+        "mode_premise": "N1913/1914A 공통 문서 중 N1914A 규정을 적용한다. HP438A 레거시 언어를 자동으로 포함하지 않는다.",
+        "firmware_premise": "N1913-90008 Edition 19 (2025-06-11)를 고정했다. 개별 명령의 최소 설치 펌웨어는 인용절에서 명시되지 않은 경우 미확정이다.",
+        "option_premise": "기본 A/B 채널과 USB 옵션이 필요한 C/D 경로를 구별한다. 옵션·센서·라이선스의 실제 설치 상태는 미확인이다.",
+        "measurement_premise": "센서 모델·주파수 범위·최대 입력·교정/보정값·트리거 외부 신호·현장 연결은 미제공. 문서의 넓은 설정 범위를 물리 성능으로 확장하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+            "version": "Edition 19, June 11, 2025"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "17 / *OPT?",
+          "pdf_pages_1based": [
+            598
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            600
+          ],
+          "verified_anchor": "003"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-ID",
+      "device": "N9030A",
+      "function": "identification",
+      "title": "분석기 식별",
+      "commands": [
+        "*IDN?",
+        ":SYSTem:IDN:CONFigure?"
+      ],
+      "arguments_and_units": "제조사, 모델, 일련번호, 펌웨어 순서의 4필드.",
+      "response": {
+        "type": "identification_string",
+        "literal_example": "Keysight Technologies, N9020A, US01020004, A.01.02",
+        "example_status": "shared_manual_example_for_N9020A_not_N9030A_fixture",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "식별 응답은 FACTory/AGILent/USER 설정과 모드별 사용자 응답에 영향받는다.",
+      "constraints": "책의 N9020A 응답 예제를 N9030A의 실제 또는 가상 고유번호로 바꾸지 않는다. Agilent·Keysight 모델 ID 유지.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 Identification Query / 6 System IDN Response",
+          "pdf_pages_1based": [
+            235,
+            502
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "*IDN?"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-STATUS",
+      "device": "N9030A",
+      "function": "status_query",
+      "title": "분석기 상태 레지스터",
+      "commands": [
+        "*STB?",
+        "*ESR?"
+      ],
+      "arguments_and_units": "상태 비트·정수형 레지스터 값. 실제 값 예제 미제공.",
+      "response": {
+        "type": "status_register_numeric",
+        "STB_format": "decimal per PDF 238",
+        "ESR_format": "PDF 235 describes hexadecimal; exact wire representation not independently confirmed",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "ESR 읽기는 이벤트를 지움. OPERation의 교정·sweep·측정·트리거 대기 비트를 구별.",
+      "constraints": "상태 조회와 새 유효 측정 데이터 판정을 분리한다. PDF 238의 수치 16/bit 5 예제는 비트 번호 해석 확인 전 고정 fixture로 사용하지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 STATus / IEEE 488.2",
+          "pdf_pages_1based": [
+            188,
+            198,
+            235,
+            238
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "Status"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-FREQ",
+      "device": "N9030A",
+      "function": "measurement_settings",
+      "title": "중심 주파수 설정·조회",
+      "commands": [
+        "[:SENSe]:FREQuency:CENTer <freq>",
+        "[:SENSe]:FREQuency:CENTer?"
+      ],
+      "arguments_and_units": "기본 Hz, 주파수 suffix 허용. min/max/preset은 5xx·선택 입력·모드·span에 의존.",
+      "response": {
+        "type": "frequency_setting",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "RF 또는 I/Q 선택 입력의 중심을 바꾼다. span과 start/stop 한계가 결합됨.",
+      "constraints": "현장 옵션을 모르는 상태에서 고정 주파수 범위를 만들지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / FREQ Channel",
+          "pdf_pages_1based": [
+            655
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "FREQuency:CENTer"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-TRIGGER",
+      "device": "N9030A",
+      "function": "trigger",
+      "title": "단일 측정 시작",
+      "commands": [
+        ":INITiate:CONTinuous OFF|ON|0|1",
+        ":INITiate:IMMediate"
+      ],
+      "arguments_and_units": "CONT 설정과 현재 선택된 측정·트리거 소스에 의존.",
+      "response": {
+        "type": "command_no_query_response_defined",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "책의 단일 sweep 예제는 CONT 0 후 INIT:IMM, 완료는 OPC 질의로 별도 확인.",
+      "constraints": "외부 트리거 소스·레벨·시간값 전체 계약은 이번 표에서 확정하지 않았다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 OPC Example / 8 Sweep Control",
+          "pdf_pages_1based": [
+            236,
+            983,
+            984
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "INIT:IMM"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-COMPLETE",
+      "device": "N9030A",
+      "function": "completion",
+      "title": "완료 동기화",
+      "commands": [
+        "*OPC",
+        "*OPC?",
+        "*WAI"
+      ],
+      "arguments_and_units": "인수 없음. 같은 제어 포트에서 시작한 작업을 대상으로 함.",
+      "response": {
+        "type": "documented_constant_for_OPC_query",
+        "literal_example": "1",
+        "example_status": "documented_return_constant_not_capture",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "OPC는 bit 설정, OPC?는 진행 작업 완료 후 응답. ABORt가 완료 관련 비트를 지워 OPC 완료를 만들 수 있다.",
+      "constraints": "다른 포트/전면 패널 작업까지 전역 완료로 취급하지 않는다. OPC 1을 유효한 측정 증거로 대체하지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 OPC / Wait-to-Continue / 8 Abort",
+          "pdf_pages_1based": [
+            235,
+            236,
+            239,
+            984
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "*OPC"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-ERROR",
+      "device": "N9030A",
+      "function": "error_queue",
+      "title": "분석기 오류 응답",
+      "commands": [
+        ":SYSTem:ERRor[:NEXT]?",
+        "*CLS"
+      ],
+      "arguments_and_units": "오류 번호·오류 메시지 문자열. verbose 설정에 따라 추가 진단 문자열.",
+      "response": {
+        "type": "error_number_and_message",
+        "literal_example": "-113,\"Undefined header\"",
+        "example_status": "manual_error_example_not_capture",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "CLS는 오류큐와 이벤트를 지운다. SYST:ERR? 출력은 verbose 옵션 영향을 받음.",
+      "constraints": "이전 분석기 오류 번호/이벤트 동작의 완전한 호환성이 보장되지 않음. 전력계의 큐 용량 30을 복제하지 않는다.",
+      "documented_errors": [
+        {
+          "code": -113,
+          "message_as_printed": "Undefined header",
+          "condition": "문서의 잘못된 SENS:BOGUS 예제"
+        }
+      ],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 Status / 6 Show Errors and Verbose SCPI",
+          "pdf_pages_1based": [
+            188,
+            432,
+            433,
+            434
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "ERRor"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-POWER",
+      "device": "N9030A",
+      "function": "numeric_read",
+      "title": "채널 전력 반환",
+      "commands": [
+        ":CONFigure:CHPower",
+        ":INITiate:CHPower",
+        ":FETCh:CHPower[n]?",
+        ":READ:CHPower[n]?"
+      ],
+      "arguments_and_units": "n=1/생략은 스칼라 묶음, n=2는 트레이스. 전력 dBm, PSD는 선택된 dBm/Hz 또는 dBm/MHz.",
+      "response": {
+        "type": "measurement_result_vector",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "대역 내 총 RMS 전력과 PSD를 구별. WLAN 80+80 설정은 결과 구성이 추가로 달라짐.",
+      "constraints": "측정 모드·옵션·적분 대역폭·기능별 반환 스키마를 고정한 뒤 사용해야 한다. b/g/n 시험방법 승인 아님.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "9 / Channel Power Measurement Commands and Results",
+          "pdf_pages_1based": [
+            1063,
+            1064,
+            1070
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "CHPower"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-TRACE",
+      "device": "N9030A",
+      "function": "trace_binary",
+      "title": "트레이스 데이터 조회",
+      "commands": [
+        ":TRACe[:DATA]? TRACE1|TRACE2|TRACE3|TRACE4|TRACE5|TRACE6"
+      ],
+      "arguments_and_units": "반환점 수는 sweep points와 연계. 값은 현재 Y축 단위, X축은 소스 트레이스 설정.",
+      "response": {
+        "type": "amplitude_trace_ASCII_or_binary",
+        "literal_example": "–5.87350E+01, –5.89110E+01, –5.87205E+01, –5.12345E+01<NL><END>",
+        "example_status": "exact_extracted_printed_line_typographic_dash_not_wire_capture",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "조회 시 sweep 중이면 일관성 문제가 있어 단일 sweep 또는 View 상태가 문서상 권장됨.",
+      "constraints": "원시 ADC/IQ 파형으로 이름 붙이지 않는다. legacy RAWTRACE/LLINE 매개변수는 없다고 기술됨.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / Query Trace Data and More Information",
+          "pdf_pages_1based": [
+            1025,
+            1026
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "TRACe[:DATA]?"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-FORMAT",
+      "device": "N9030A",
+      "function": "trace_binary",
+      "title": "분석기 데이터 형식",
+      "commands": [
+        ":FORMat[:TRACe][:DATA] ASCii|INTeger,32|REAL,32|REAL,64",
+        ":FORMat[:TRACe][:DATA]?"
+      ],
+      "arguments_and_units": "ASCii/REAL은 현재 Y축 단위. INT,32 트레이스 값은 0.001 dBm 단위.",
+      "response": {
+        "type": "format_and_trace_block",
+        "setting_values_as_documented": [
+          "ASC,8",
+          "REAL,32",
+          "REAL,64",
+          "INT,32"
+        ],
+        "literal_example": "#216<16 bytes of data><NL><END>",
+        "example_status": "manual_block_structure_placeholder_not_binary_payload",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "binary는 definite-length block. INT,32는 TRACe:DATA에 한정되고 이를 따르는 다른 질의는 REAL,32처럼 동작.",
+      "constraints": "잘못된 폭 INT,48 등의 설정은 오류 없이 기본 폭으로 처리될 수 있다. 형식 조회로 확인 필요.",
+      "documented_errors": [
+        {
+          "code": -161,
+          "message_as_printed": "Invalid Block Data",
+          "condition": "블록 기대 상태에 ASCII 데이터를 보냄"
+        },
+        {
+          "code": -121,
+          "message_as_printed": "Invalid Character in Number",
+          "condition": "ASCII 기대 상태에 블록 데이터를 보냄"
+        }
+      ],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / Format Data and Trace More Information",
+          "pdf_pages_1based": [
+            749,
+            750,
+            1026
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "INTeger"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-BORDER",
+      "device": "N9030A",
+      "function": "trace_binary",
+      "title": "분석기 바이너리 바이트 순서",
+      "commands": [
+        ":FORMat:BORDer NORMal|SWAPped"
+      ],
+      "arguments_and_units": "NORMal은 MSB 먼저, SWAPped는 LSB 먼저라는 정의가 문서에 있음.",
+      "response": {
+        "type": "byte_order_control",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "데이터 전송·조회에 적용. 설정과 실제 payload를 함께 보존.",
+      "constraints": "이 정의를 N1914A의 누락된 절대 순서 근거로 사용하지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / Format Data Byte Order",
+          "pdf_pages_1based": [
+            750,
+            1026
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "MSB"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-ABORT",
+      "device": "N9030A",
+      "function": "abort",
+      "title": "분석기 측정 중단",
+      "commands": [
+        ":ABORt"
+      ],
+      "arguments_and_units": "인수 없음. 현재 측정·CONT 상태에 의존.",
+      "response": {
+        "type": "command_no_query_response_defined",
+        "literal_example": null,
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "가능한 한 빨리 중단하고 sweep/trigger를 재설정한다. 진행 중 alignment는 끝날 때까지 기다림. CONT ON이면 새 측정 순서 시작.",
+      "constraints": "모든 측정에서 지원하지는 않는다. CONT OFF에서 idle 유지. OPC 완료만으로 유효 측정을 만들지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / Sweep Control / Abort",
+          "pdf_pages_1based": [
+            983,
+            984
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "ABORt"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    },
+    {
+      "contract_id": "AN-OPTIONS-RESET",
+      "device": "N9030A",
+      "function": "options_and_reset",
+      "title": "분석기 옵션·리셋 전제",
+      "commands": [
+        "*OPT?",
+        "*RST"
+      ],
+      "arguments_and_units": "인수 없음. 옵션 문자열에는 쉼표와 양 끝 따옴표가 포함된다고 명시됨.",
+      "response": {
+        "type": "quoted_option_list",
+        "literal_example": "\"503,P03,PFR\"",
+        "example_status": "manual_example_not_installed_option_evidence",
+        "printed_example": "“503,P03,PFR”",
+        "literal_example_status": "ASCII_quote_display_normalization_of_printed_example_not_capture",
+        "not_an_instrument_capture": true
+      },
+      "state_and_completion": "RST는 모드 preset과 CONT OFF에 해당하며 진행 측정·OPC 비트에 영향을 준다. X-Series RST는 CLS를 수행하지 않는다.",
+      "constraints": "실제 설치 옵션·펌웨어 버전 미확인. 구형 Agilent/타 분석기 동작을 임의 동일화하지 않는다.",
+      "documented_errors": [],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "applicability": {
+        "command_set": "X-Series SCPI, Spectrum Analyzer Mode",
+        "mode_premise": "Swept SA 및 Channel Power 문서 위치를 구분한다. 실제 선택 모드와 설치 애플리케이션·옵션은 미확인이다.",
+        "firmware_premise": "N9060-90027 Edition 23 (2018-12)를 고정했다. Initial/Modified S/W 표기는 명령 설명의 이력이며 현장 설치 버전 확인을 대체하지 않는다.",
+        "option_premise": "5xx 주파수 옵션·선택 RF/IQ 입력·응용 모드에 따라 인수 범위가 달라진다. Agilent/Keysight 모델 ID를 임의 병합하지 않는다.",
+        "measurement_premise": "입력 한계·감쇠·보정·대역폭·단위·측정 완료 상태·형식과 포인트 수가 함께 필요하다. 실제 값이나 캘리브레이션 데이터를 생성하지 않는다.",
+        "fixed_document_editions": [
+          {
+            "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+            "version": "Edition 23, December 2018"
+          }
+        ],
+        "minimum_installed_firmware_confirmed": false
+      },
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 / Query Options and RST",
+          "pdf_pages_1based": [
+            236,
+            237,
+            238
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "*RST"
+        }
+      ],
+      "evidence_status": "located_in_existing_official_manual",
+      "hardware_verified": false,
+      "implemented_here": false
+    }
+  ],
+  "document_issues": [
+    {
+      "issue_id": "DOC-INIT-QUERY",
+      "finding": "예제 INIT1?/INIT2?와 정식 INITiate 무질의 정의가 다름.",
+      "handling": "질의 별칭을 지원한다고 표시하지 않는다. 정식 문법을 기준으로 하고 예제 불일치를 보존한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            40,
+            544,
+            550
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-TRIGGER-EXT",
+      "finding": "EXTernal 설정은 허용하지만 해당 질의 설명은 IMM/BUS/HOLD만 나열.",
+      "handling": "EXT 조회의 정확한 응답을 미확정으로 표시한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            561,
+            562,
+            563
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            563,
+            564,
+            565
+          ]
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-UNIT-TABLE",
+      "finding": "단위 파라미터 표에 Range of Values 15 to 100이 인쇄되어 있음. PDF 원본 렌더링으로 확인.",
+      "handling": "숫자 범위를 단위값으로 사용하지 않는다. 본문의 W/DBM 근거와 표 문제를 함께 전달한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            583,
+            584
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            585,
+            586
+          ]
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-PM-BYTEORDER-TRACE",
+      "finding": "NORMal/SWAPped의 절대 MSB/LSB 매핑을 찾지 못함. TRACe 주석은 있으나 독립 파형 명령 계약은 찾지 못함.",
+      "handling": "수치 REAL64 출력과 파형 trace를 분리하고 미확정 동작을 생성하지 않는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            281,
+            282,
+            283
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-AN-STATUS-EXAMPLE",
+      "finding": "ESR 설명은 hexadecimal이라고 쓰고, STB 예제는 16과 bit 5를 함께 기재한다. 정확한 wire 표현과 비트 번호 설명은 재확인이 필요하다.",
+      "handling": "예제 수치·표현을 검증된 패킷이나 고정 virtual fixture로 간주하지 않는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            235,
+            238
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401"
+        }
+      ]
+    }
+  ],
+  "physical_input_gaps": [
+    {
+      "gap_id": "GAP-ACTUAL-ASSET",
+      "status": "existing_private_input_pending",
+      "description": "실제 N9030A/N1914A 자산·일련번호 대응, 설치 FW/SW/옵션·인터페이스·교정 유효성 미확인.",
+      "existing_group": "INPUT-ASSETS",
+      "existing_request_ids": [
+        "LOCAL-016"
+      ]
+    },
+    {
+      "gap_id": "GAP-SENSOR",
+      "status": "existing_private_input_pending",
+      "description": "연결 센서·주파수/전력 한계·보정표·케이블·트리거·워밍업 조건 미확인. N1913 서비스 문서 22/25쪽 조건은 현장 검증 결과가 아니다.",
+      "existing_group": "INPUT-ASSETS",
+      "existing_request_ids": [
+        "LOCAL-016"
+      ]
+    },
+    {
+      "gap_id": "GAP-VIRTUAL-DATA",
+      "status": "not_generated",
+      "description": "가상 측정값·실측·교정 수치와 timeout 값은 생성하지 않았다. 개발 담당이 가상 데이터의 출처·정책을 별도 명시해야 한다."
+    }
+  ],
+  "contract_gaps": [
+    {
+      "gap_id": "GAP-PM-ABSOLUTE-BYTEORDER",
+      "device": "N1914A",
+      "description": "NORMal/SWAPped 문자열은 있으나 절대 MSB/LSB 매핑과 실제 binary 응답 캡처는 이 6개 원문에서 미확보.",
+      "related_contracts": [
+        "PM-BORDER",
+        "PM-FORMAT"
+      ]
+    },
+    {
+      "gap_id": "GAP-PM-WAVEFORM-TRACE",
+      "device": "N1914A",
+      "description": "수치 결과의 REAL64 block은 확인했다. 독립적인 시간 파형·원시 IQ용 TRACe 명령 계약은 확보하지 못했다. FORM 문단의 TRACe 언급만으로 만들지 않는다.",
+      "related_contracts": [
+        "PM-FORMAT",
+        "PM-BORDER"
+      ]
+    },
+    {
+      "gap_id": "GAP-AN-TRIGGER-DETAILS",
+      "device": "N9030A",
+      "description": "INIT/CONT 및 동기화는 포함했으나 개별 외부/RF 트리거의 모든 소스·레벨·지연 계약은 이번 표에서 전수 추출하지 않았다.",
+      "related_contracts": [
+        "AN-TRIGGER"
+      ]
+    },
+    {
+      "gap_id": "GAP-ERROR-CATALOG",
+      "device": "both",
+      "description": "직접 인용한 명령에 연결되는 오류만 포함했다. 모든 오류 번호·센서별 오류·비정상 binary 블록 오류의 전체 표는 작성하지 않았다.",
+      "related_contracts": [
+        "PM-ERROR",
+        "AN-ERROR"
+      ]
+    }
+  ],
+  "unsearched_scope": [
+    "새 매뉴얼·최신 판본·정오표·공식 지원 문의",
+    "배정 외 모델·별도 센서의 원문",
+    "실장비 통신·패킷 캡처·성능·교정·현장 검증",
+    "가상 계측기 코드·첫 프로필 선택·공통 스키마 변경",
+    "모든 오류·모든 모드·옵션 명령의 완전 추출"
+  ]
+}

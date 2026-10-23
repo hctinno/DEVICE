@@ -1,0 +1,59 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S04-B0002",
+  "task_id": "FCC-20261023-S04-B0002",
+  "owner_session": "S04",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v005",
+  "snapshot_inventory_sha256": "ba143f05f8ec281f33573707ae4c7fe093124c4a60e534c10d398409e02e1549",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S04-B0002",
+    "owner": "P01",
+    "decision": "content_approved_for_existing_source_contract_mapping",
+    "source_inventory_verified": true,
+    "findings": [
+      "P01 independently verified the six preserved source hashes, all30 contract source locations and literal anchors.",
+      "P01 visually inspected the conflicting INIT example/definition, unit-range table, REAL format description and analyzer status example. These are documented uncertainties, not validated instrument behavior.",
+      "18 N1914A and12 N9030A contract rows distinguish command completion, actual measurement validity, sensor/option/firmware conditions and format boundaries.",
+      "The original manuals remain restricted. Only authored contract metadata is published; no device commands, virtual implementation or measurement data were generated."
+    ],
+    "request_outcome": {
+      "completed": 1,
+      "limited": 0,
+      "not_started": 0
+    },
+    "rights_public_document_ids": [],
+    "publication_metadata_files": [
+      "command-contracts.json"
+    ],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [],
+  "redacted_local_reference_fields": [
+    "/0/source_snapshot",
+    "/0/source_path_in_snapshot",
+    "/1/source_snapshot",
+    "/1/source_path_in_snapshot",
+    "/2/source_snapshot",
+    "/2/source_path_in_snapshot",
+    "/3/source_snapshot",
+    "/3/source_path_in_snapshot",
+    "/4/source_snapshot",
+    "/4/source_path_in_snapshot",
+    "/5/source_snapshot",
+    "/5/source_path_in_snapshot"
+  ],
+  "package": null,
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "command-contracts.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

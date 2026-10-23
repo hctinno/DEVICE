@@ -1,0 +1,12 @@
+{
+  "task_id": "FCC-20261023-S07-B0002",
+  "created_at": "2026-10-23T22:32:45.000+09:00",
+  "questions": [],
+  "blocking_current_batch": [],
+  "known_unavailable_inputs": [
+    "LOCAL-005",
+    "LOCAL-006",
+    "LOCAL-009"
+  ],
+  "handling": "기존 입력 공백을 RF 매트릭스에 연결했다. 새 자료 요청이나 사용자 재승인을 하지 않는다."
+}

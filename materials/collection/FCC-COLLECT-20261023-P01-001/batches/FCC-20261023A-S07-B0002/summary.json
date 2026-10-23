@@ -1,0 +1,61 @@
+{
+  "task_id": "FCC-20261023-S07-B0002",
+  "batch_id": "FCC-20261023A-S07-B0002",
+  "attempt": 1,
+  "owner_session": "S07",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v005",
+  "source_request_id": "DEV-VLAB-20261023-001",
+  "request_ids": [
+    "ADD-S07-VLAB-DUT-API-002"
+  ],
+  "prepared_at": "2026-10-23T22:32:45.000+09:00",
+  "request_results": [
+    {
+      "request_id": "ADD-S07-VLAB-DUT-API-002",
+      "state": "completed",
+      "result": "공개 CLI 계약 14개와 미확보 OEM RF 기능 16개를 source ID·절·판본·권리·공개/로컬 경로에 연결했다.",
+      "oem_rf_result": "unavailable"
+    }
+  ],
+  "request_counts": {
+    "completed": 1,
+    "limited": 0,
+    "not_started": 0
+  },
+  "counts": {
+    "new_originals": 0,
+    "new_downloads": 0,
+    "new_private_tool_requests": 0,
+    "actual_device_connections": 0,
+    "actual_device_commands": 0,
+    "installations": 0,
+    "external_messages": 0,
+    "reused_official_documents": 3,
+    "public_cli_contract_rows": 14,
+    "unavailable_oem_rf_rows": 16
+  },
+  "source_selection": "P01 검수 B0001 snapshot 우선; 게시 패키지/기존 로컬 입력 대장 읽기 참조",
+  "scope_not_searched": [
+    "신규 웹/원문",
+    "제조사 비공개 도구",
+    "기기·시험소 네트워크",
+    "실행 응답/로그 수집"
+  ],
+  "limitations": [
+    "명령별 전체 종료코드·실응답 형식은 공개 문서로 확정되지 않은 부분을 표시했다.",
+    "실제 DUT·OEM 도구·RF API는 미지정/미확보다.",
+    "가상 응답은 개발자가 만드는 합성 데이터이며 OEM 응답이나 실측 증거가 아니다."
+  ],
+  "files": {
+    "cli_matrix": "metadata/public-cli-api-matrix.json",
+    "rf_gap_matrix": "metadata/dut-rf-gap-matrix.json",
+    "evidence": "metadata/evidence-index.json",
+    "references": "metadata/references.json",
+    "virtual_boundary": "metadata/virtual-response-boundary.json"
+  },
+  "handoff_state": "payload_validated_for_freeze",
+  "questions": [],
+  "validation_report": "metadata/validation-report.json",
+  "metadata_file_count": 9
+}

@@ -1,0 +1,788 @@
+{
+  "created_at": "2026-10-23T22:34:34.480155+09:00",
+  "contracts_count": 30,
+  "functions_by_device": {
+    "N1914A": [
+      "abort",
+      "completion",
+      "error_queue",
+      "identification",
+      "measurement_settings",
+      "numeric_read",
+      "options",
+      "status_query",
+      "trace_binary",
+      "trigger"
+    ],
+    "N9030A": [
+      "abort",
+      "completion",
+      "error_queue",
+      "identification",
+      "measurement_settings",
+      "numeric_read",
+      "options_and_reset",
+      "status_query",
+      "trace_binary",
+      "trigger"
+    ]
+  },
+  "coverage": [
+    {
+      "contract_id": "PM-ID",
+      "device": "N1914A",
+      "function": "identification",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "17 IEEE 488.2 Command Reference / *IDN?",
+          "pdf_pages_1based": [
+            595
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            597
+          ],
+          "verified_anchor": "A2.XX.YY"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-STATUS",
+      "device": "N1914A",
+      "function": "status_query",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "17 / *ESR? and *STB?",
+          "pdf_pages_1based": [
+            594,
+            604
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            596,
+            606
+          ],
+          "verified_anchor": "0 to 255"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-CONFIG",
+      "device": "N1914A",
+      "function": "measurement_settings",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "2 MEASurement Commands / Optional Parameters, CONFigure, FETCh",
+          "pdf_pages_1based": [
+            108,
+            112,
+            117,
+            118,
+            119,
+            137,
+            138
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "CONFigure"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-FREQ",
+      "device": "N1914A",
+      "function": "measurement_settings",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "11 SENSe / FREQuency",
+          "pdf_pages_1based": [
+            392,
+            393
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "1000.0 GHz"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-UNIT",
+      "device": "N1914A",
+      "function": "measurement_settings",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 Output Format / 16 UNIT",
+          "pdf_pages_1based": [
+            69,
+            583,
+            584
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "UNIT"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-CONT",
+      "device": "N1914A",
+      "function": "trigger",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "15 / INITiate CONTinuous",
+          "pdf_pages_1based": [
+            96,
+            548,
+            549
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "On reset (*RST)"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-TRIG-SOURCE",
+      "device": "N1914A",
+      "function": "trigger",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "15 / TRIGger SOURce",
+          "pdf_pages_1based": [
+            561,
+            562,
+            563,
+            577
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            563,
+            564,
+            565,
+            579
+          ],
+          "verified_anchor": "SOURce"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-INIT",
+      "device": "N1914A",
+      "function": "trigger",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 Examples / 15 INITiate IMMediate",
+          "pdf_pages_1based": [
+            40,
+            544,
+            550
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "INITiate"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-BUS-TRIG",
+      "device": "N1914A",
+      "function": "trigger",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "17 / *TRG and GPIB GET",
+          "pdf_pages_1based": [
+            605,
+            608
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            607,
+            610
+          ],
+          "verified_anchor": "Trigger ignored"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-COMPLETE",
+      "device": "N1914A",
+      "function": "completion",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 Synchronization / 17 *OPC, *WAI, DCL",
+          "pdf_pages_1based": [
+            89,
+            597,
+            607,
+            608
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "*OPC"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-ERROR",
+      "device": "N1914A",
+      "function": "error_queue",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "14 / SYSTem ERRor",
+          "pdf_pages_1based": [
+            517
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "30 errors"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-READ",
+      "device": "N1914A",
+      "function": "numeric_read",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 READ / 2 READ scalar power / 15 trigger restrictions",
+          "pdf_pages_1based": [
+            39,
+            156,
+            157,
+            562
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "READ"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-FETCH",
+      "device": "N1914A",
+      "function": "numeric_read",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 INITiate/FETCh and Output / 2 FETCh",
+          "pdf_pages_1based": [
+            39,
+            69,
+            137,
+            138
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "FETCh"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-MEASURE",
+      "device": "N1914A",
+      "function": "numeric_read",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 MEASure / 2 MEASure",
+          "pdf_pages_1based": [
+            34,
+            117,
+            175
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "MEASure"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-FORMAT",
+      "device": "N1914A",
+      "function": "trace_binary",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "1 Output / SCPI Types / 6 FORMat",
+          "pdf_pages_1based": [
+            69,
+            96,
+            283,
+            284
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "64 bit"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-BORDER",
+      "device": "N1914A",
+      "function": "trace_binary",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "6 / FORMat BORDer",
+          "pdf_pages_1based": [
+            281,
+            282
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "verified_anchor": "NORMal"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-ABORT",
+      "device": "N1914A",
+      "function": "abort",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "15 / ABORt",
+          "pdf_pages_1based": [
+            544,
+            546
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            546,
+            548
+          ],
+          "verified_anchor": "idle state"
+        }
+      ]
+    },
+    {
+      "contract_id": "PM-OPTIONS",
+      "device": "N1914A",
+      "function": "options",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "17 / *OPT?",
+          "pdf_pages_1based": [
+            598
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            600
+          ],
+          "verified_anchor": "003"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-ID",
+      "device": "N9030A",
+      "function": "identification",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 Identification Query / 6 System IDN Response",
+          "pdf_pages_1based": [
+            235,
+            502
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "*IDN?"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-STATUS",
+      "device": "N9030A",
+      "function": "status_query",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 STATus / IEEE 488.2",
+          "pdf_pages_1based": [
+            188,
+            198,
+            235,
+            238
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "Status"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-FREQ",
+      "device": "N9030A",
+      "function": "measurement_settings",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / FREQ Channel",
+          "pdf_pages_1based": [
+            655
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "FREQuency:CENTer"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-TRIGGER",
+      "device": "N9030A",
+      "function": "trigger",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 OPC Example / 8 Sweep Control",
+          "pdf_pages_1based": [
+            236,
+            983,
+            984
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "INIT:IMM"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-COMPLETE",
+      "device": "N9030A",
+      "function": "completion",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 OPC / Wait-to-Continue / 8 Abort",
+          "pdf_pages_1based": [
+            235,
+            236,
+            239,
+            984
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "*OPC"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-ERROR",
+      "device": "N9030A",
+      "function": "error_queue",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 Status / 6 Show Errors and Verbose SCPI",
+          "pdf_pages_1based": [
+            188,
+            432,
+            433,
+            434
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "ERRor"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-POWER",
+      "device": "N9030A",
+      "function": "numeric_read",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "9 / Channel Power Measurement Commands and Results",
+          "pdf_pages_1based": [
+            1063,
+            1064,
+            1070
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "CHPower"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-TRACE",
+      "device": "N9030A",
+      "function": "trace_binary",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / Query Trace Data and More Information",
+          "pdf_pages_1based": [
+            1025,
+            1026
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "TRACe[:DATA]?"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-FORMAT",
+      "device": "N9030A",
+      "function": "trace_binary",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / Format Data and Trace More Information",
+          "pdf_pages_1based": [
+            749,
+            750,
+            1026
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "INTeger"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-BORDER",
+      "device": "N9030A",
+      "function": "trace_binary",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / Format Data Byte Order",
+          "pdf_pages_1based": [
+            750,
+            1026
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "MSB"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-ABORT",
+      "device": "N9030A",
+      "function": "abort",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "8 / Sweep Control / Abort",
+          "pdf_pages_1based": [
+            983,
+            984
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "ABORt"
+        }
+      ]
+    },
+    {
+      "contract_id": "AN-OPTIONS-RESET",
+      "device": "N9030A",
+      "function": "options_and_reset",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "3 / Query Options and RST",
+          "pdf_pages_1based": [
+            236,
+            237,
+            238
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "verified_anchor": "*RST"
+        }
+      ]
+    }
+  ],
+  "document_issues": [
+    {
+      "issue_id": "DOC-INIT-QUERY",
+      "finding": "예제 INIT1?/INIT2?와 정식 INITiate 무질의 정의가 다름.",
+      "handling": "질의 별칭을 지원한다고 표시하지 않는다. 정식 문법을 기준으로 하고 예제 불일치를 보존한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            40,
+            544,
+            550
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-TRIGGER-EXT",
+      "finding": "EXTernal 설정은 허용하지만 해당 질의 설명은 IMM/BUS/HOLD만 나열.",
+      "handling": "EXT 조회의 정확한 응답을 미확정으로 표시한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            561,
+            562,
+            563
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            563,
+            564,
+            565
+          ]
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-UNIT-TABLE",
+      "finding": "단위 파라미터 표에 Range of Values 15 to 100이 인쇄되어 있음. PDF 원본 렌더링으로 확인.",
+      "handling": "숫자 범위를 단위값으로 사용하지 않는다. 본문의 W/DBM 근거와 표 문제를 함께 전달한다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            583,
+            584
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "printed_pages": [
+            585,
+            586
+          ]
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-PM-BYTEORDER-TRACE",
+      "finding": "NORMal/SWAPped의 절대 MSB/LSB 매핑을 찾지 못함. TRACe 주석은 있으나 독립 파형 명령 계약은 찾지 못함.",
+      "handling": "수치 REAL64 출력과 파형 trace를 분리하고 미확정 동작을 생성하지 않는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "part_number": "N1913-90008",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            281,
+            282,
+            283
+          ],
+          "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2"
+        }
+      ]
+    },
+    {
+      "issue_id": "DOC-AN-STATUS-EXAMPLE",
+      "finding": "ESR 설명은 hexadecimal이라고 쓰고, STB 예제는 16과 bit 5를 함께 기재한다. 정확한 wire 표현과 비트 번호 설명은 재확인이 필요하다.",
+      "handling": "예제 수치·표현을 검증된 패킷이나 고정 virtual fixture로 간주하지 않는다.",
+      "source_locations": [
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "part_number": "N9060-90027",
+          "section": "See named document issue or rule",
+          "pdf_pages_1based": [
+            235,
+            238
+          ],
+          "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401"
+        }
+      ]
+    }
+  ],
+  "physical_input_gaps": [
+    {
+      "gap_id": "GAP-ACTUAL-ASSET",
+      "status": "existing_private_input_pending",
+      "description": "실제 N9030A/N1914A 자산·일련번호 대응, 설치 FW/SW/옵션·인터페이스·교정 유효성 미확인.",
+      "existing_group": "INPUT-ASSETS",
+      "existing_request_ids": [
+        "LOCAL-016"
+      ]
+    },
+    {
+      "gap_id": "GAP-SENSOR",
+      "status": "existing_private_input_pending",
+      "description": "연결 센서·주파수/전력 한계·보정표·케이블·트리거·워밍업 조건 미확인. N1913 서비스 문서 22/25쪽 조건은 현장 검증 결과가 아니다.",
+      "existing_group": "INPUT-ASSETS",
+      "existing_request_ids": [
+        "LOCAL-016"
+      ]
+    },
+    {
+      "gap_id": "GAP-VIRTUAL-DATA",
+      "status": "not_generated",
+      "description": "가상 측정값·실측·교정 수치와 timeout 값은 생성하지 않았다. 개발 담당이 가상 데이터의 출처·정책을 별도 명시해야 한다."
+    }
+  ],
+  "contract_gaps": [
+    {
+      "gap_id": "GAP-PM-ABSOLUTE-BYTEORDER",
+      "device": "N1914A",
+      "description": "NORMal/SWAPped 문자열은 있으나 절대 MSB/LSB 매핑과 실제 binary 응답 캡처는 이 6개 원문에서 미확보.",
+      "related_contracts": [
+        "PM-BORDER",
+        "PM-FORMAT"
+      ]
+    },
+    {
+      "gap_id": "GAP-PM-WAVEFORM-TRACE",
+      "device": "N1914A",
+      "description": "수치 결과의 REAL64 block은 확인했다. 독립적인 시간 파형·원시 IQ용 TRACe 명령 계약은 확보하지 못했다. FORM 문단의 TRACe 언급만으로 만들지 않는다.",
+      "related_contracts": [
+        "PM-FORMAT",
+        "PM-BORDER"
+      ]
+    },
+    {
+      "gap_id": "GAP-AN-TRIGGER-DETAILS",
+      "device": "N9030A",
+      "description": "INIT/CONT 및 동기화는 포함했으나 개별 외부/RF 트리거의 모든 소스·레벨·지연 계약은 이번 표에서 전수 추출하지 않았다.",
+      "related_contracts": [
+        "AN-TRIGGER"
+      ]
+    },
+    {
+      "gap_id": "GAP-ERROR-CATALOG",
+      "device": "both",
+      "description": "직접 인용한 명령에 연결되는 오류만 포함했다. 모든 오류 번호·센서별 오류·비정상 binary 블록 오류의 전체 표는 작성하지 않았다.",
+      "related_contracts": [
+        "PM-ERROR",
+        "AN-ERROR"
+      ]
+    }
+  ],
+  "source_check_notes": [
+    {
+      "part_number": "N1913-90008",
+      "scope": "All 639 PDF pages searched for explicit MSB/LSB/endian words; no matches. TRACe occurred only in the format note at PDF page 283. This is a bounded documentary gap, not a physical capability assertion."
+    }
+  ]
+}

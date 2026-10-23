@@ -1,0 +1,133 @@
+{
+  "created_at": "2026-10-23T22:32:45.000+09:00",
+  "original_owner": "S07 (B0001); P01 검수 snapshot 읽기 참조",
+  "prior_batch_id": "FCC-20261023A-S07-B0001",
+  "prior_publication_commit": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+  "prior_inventory_sha256": "30733f863feed2197c1bc89a36528e73cc62cd31ee71c852db05d736b55f33a2",
+  "prior_public_package_sha256": "73f9176add48af579e8f32aee5fb469cf9699bc3e1671969e3b3903296bae782",
+  "documents": [
+    {
+      "legacy_package_id": "FCC-20261023A-S07-B0001",
+      "legacy_document_id": "S07-android-adb-23876effdde7",
+      "published_document_id": "S07-android-adb-23876effdde7-text-r1",
+      "source_path_inside_package": "[local-only derivative or original; not included in public payload]",
+      "sha256": "6532366fa2464a72ec71abc46804cd5fa437da5b0dbee641df1cdac6d81e148c",
+      "original_sha256": "23876effdde7c9f1e635d9d91db2cc748908f05cb37d0f205856c9abdd5ff691",
+      "evidence_location": "[local-only reference retained by P01]",
+      "public_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "new_link_request_ids": [
+        "ADD-S07-VLAB-DUT-API-002"
+      ],
+      "record_mutated": false
+    },
+    {
+      "legacy_package_id": "FCC-20261023A-S07-B0001",
+      "legacy_document_id": "S07-android-logcat-1b9760fb6b61",
+      "published_document_id": "S07-android-logcat-1b9760fb6b61-text-r1",
+      "source_path_inside_package": "[local-only derivative or original; not included in public payload]",
+      "sha256": "d9a548e2233081e0780481d8d2133f89fbd915a5cbfafac2d10d9653b2132e01",
+      "original_sha256": "1b9760fb6b6143df5a4fb3dfb842680c8436f218de892374ff8638c5c1a3f3f8",
+      "evidence_location": "[local-only reference retained by P01]",
+      "public_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "new_link_request_ids": [
+        "ADD-S07-VLAB-DUT-API-002"
+      ],
+      "record_mutated": false
+    },
+    {
+      "legacy_package_id": "FCC-20261023A-S07-B0001",
+      "legacy_document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "published_document_id": "S07-aosp-wifi-debug-004a0e99cf25-text-r1",
+      "source_path_inside_package": "[local-only derivative or original; not included in public payload]",
+      "sha256": "4322321c54ca157caaf740042e7a3e172b61112e257077f15baaeeed19419ee8",
+      "original_sha256": "004a0e99cf250e378878dba6ba28754a031ae0dfcb864ccb6a3f92ae3016f95e",
+      "evidence_location": "[local-only reference retained by P01]",
+      "public_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "new_link_request_ids": [
+        "ADD-S07-VLAB-DUT-API-002"
+      ],
+      "record_mutated": false
+    }
+  ],
+  "local_input_evidence": {
+    "path": "materials/inventory/private_input_status.json",
+    "sha256": "1cb762ef4f1cadf2fb50f1bbd8a0be200bb2ec08d597885d2c25e76f8ac70431",
+    "requests": [
+      {
+        "request_id": "LOCAL-005",
+        "document": "LIMS·시험 SW·보고 SW API/내보내기 문서",
+        "purpose": "버전·권한·파일 형식·라이선스·테스트 환경",
+        "priority": "P1",
+        "owner": "lab_or_product_owner",
+        "download_url": "",
+        "status": "not_publicly_reconstructible",
+        "instruction": "Collect only when available and authorized; not a prerequisite for public-source intake or software construction",
+        "collector_state": "not_provided",
+        "collection_route": "Existing repository material must be checked first, then the stated lab/product owner. Public manuals cannot replace this evidence."
+      },
+      {
+        "request_id": "LOCAL-006",
+        "document": "DUT 시험모드 API와 펌웨어·안테나·동시송신",
+        "purpose": "제품별 채널/전력/모드 설정과 읽기 검증",
+        "priority": "P1",
+        "owner": "lab_or_product_owner",
+        "download_url": "",
+        "status": "not_publicly_reconstructible",
+        "instruction": "Collect only when available and authorized; not a prerequisite for public-source intake or software construction",
+        "collector_state": "not_provided",
+        "collection_route": "Existing repository material must be checked first, then the stated lab/product owner. Public manuals cannot replace this evidence."
+      },
+      {
+        "request_id": "LOCAL-009",
+        "document": "제품 자료 및 실제 시료 식별",
+        "purpose": "HW/FW/모델/블록도/회로도/사용설명서/전원",
+        "priority": "P1",
+        "owner": "lab_or_product_owner",
+        "download_url": "",
+        "status": "not_publicly_reconstructible",
+        "instruction": "Collect only when available and authorized; not a prerequisite for public-source intake or software construction",
+        "collector_state": "not_provided",
+        "collection_route": "Existing repository material must be checked first, then the stated lab/product owner. Public manuals cannot replace this evidence."
+      }
+    ]
+  },
+  "prior_input_spec": {
+    "local_snapshot": "[local-only reference retained by P01]",
+    "public_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001/dut-testmode-input-spec.json"
+  },
+  "development_item_2": [
+    {
+      "item": 2,
+      "priority": "P0",
+      "title": "DUT 공개 CLI/API와 RF 시험모드 공백",
+      "current_evidence": "S07 B0001의 ADB/logcat/AOSP 문서와 입력 명세. 공개 추출물3개+라이선스.",
+      "followup_task_id": "FCC-20261023-S07-B0002",
+      "missing": "실제 OEM RF 진입/종료·출력·채널설정 API 및 해당 도구는 확보되지 않음. 가상 계약은 개발자가 정의하며 실제 API로 표시하지 않음."
+    }
+  ],
+  "immutability": "기존 원본·ready·snapshot·published document_id 레코드는 변경하지 않았다. 이번 신규 연결과 해석만 별도 metadata로 기록한다."
+}

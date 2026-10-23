@@ -1,6 +1,6 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "updated_at": "2026-10-23T22:32:00.103084+09:00",
+  "updated_at": "2026-10-23T22:37:09.441685+09:00",
   "owner": "P01",
   "routing": "User and external contacts are handled by P01 only. No direct collector requests.",
   "current_collection_publication_blocked_by_private_inputs": false,
@@ -149,6 +149,19 @@
       "decision": "발견된 별도 WLAN 보고서의 모델·FCC ID·b/g/n 시험방법과 결과를 검수한다. 아직 원격 게시/원시계측 확보로 표시하지 않는다.",
       "resolution_batch_id": "FCC-20261023A-S08-B0002",
       "resolution_metadata_path": "batches/FCC-20261023A-S08-B0002"
+    },
+    {
+      "group_id": "DEV-INSTRUMENT-DOC-UNCERTAINTY",
+      "title": "가상 계측기 프로필의 문서 불일치·미확정 기능 처리",
+      "status": "awaiting_developer_policy",
+      "source_questions": [
+        "S04-B0002-Q01",
+        "S04-B0002-Q02"
+      ],
+      "source_batch_id": "FCC-20261023A-S04-B0002",
+      "owner": "P01 / authorized development thread",
+      "decision": "정식 문법과 검증된 응답만 실제 제조사 계약으로 취급한다. NORMal byte order, 독립 waveform/trace 지원, INIT 질의 예제와 기타 문서 불일치는 미확정 또는 개발자 합성 정책으로 구분한다. 실제 장비에서 자동 검증하지 않는다.",
+      "blocks_current_collection": false
     }
   ]
 }

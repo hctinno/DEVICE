@@ -1,0 +1,112 @@
+{
+  "task_id": "FCC-20261023-S04-B0002",
+  "batch_id": "FCC-20261023A-S04-B0002",
+  "attempt": 1,
+  "owner_session": "S04",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v005",
+  "activation": "approved",
+  "request_ids": [
+    "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+  ],
+  "model_ids": [
+    "MOD-aecdf6d16380a2be",
+    "MOD-c40c6c5f1b4e7ca9",
+    "MOD-48a20d5887cbe5bc"
+  ],
+  "source_request_id": "DEV-VLAB-20261023-001",
+  "created_at": "2026-10-23T22:34:34.480155+09:00",
+  "timezone": "Asia/Seoul",
+  "status": "local_frozen_metadata_pending_P01_intake",
+  "summary": "검수된 B0001 원문 6개만 재사용하여 N1914A 18개·N9030A 12개의 명령/응답 계약을 정리했다. 신규 원문·다운로드·공통 코드 수정 없이 문서 근거를 반환한다.",
+  "request_counts": {
+    "completed_documentary_request": 1,
+    "blocked": 0,
+    "not_started": 0
+  },
+  "source_counts": {
+    "reused_originals": 6,
+    "new_originals": 0,
+    "new_downloads": 0,
+    "copied_original_payloads": 0
+  },
+  "contract_count": 30,
+  "contracts_by_device": {
+    "N1914A": 18,
+    "N9030A": 12
+  },
+  "functions_by_device": {
+    "N1914A": [
+      "abort",
+      "completion",
+      "error_queue",
+      "identification",
+      "measurement_settings",
+      "numeric_read",
+      "options",
+      "status_query",
+      "trace_binary",
+      "trigger"
+    ],
+    "N9030A": [
+      "abort",
+      "completion",
+      "error_queue",
+      "identification",
+      "measurement_settings",
+      "numeric_read",
+      "options_and_reset",
+      "status_query",
+      "trace_binary",
+      "trigger"
+    ]
+  },
+  "document_issues_count": 5,
+  "questions_count": 2,
+  "source_notice": "B0001 원문은 공개 재배포 미확인 상태로 로컬에 보존되어 있다. 이 배치는 원문 파일을 포함하지 않는 메타데이터 전용 인계이다. P01의 공개 게시가 원문 전달을 뜻하지 않는다.",
+  "scope_notice": "실제 명령을 전송하거나 가상 계측기를 구현한 산출물이 아니다. 응답 예제는 문서의 템플릿·상수·예제이며 실측 또는 생성된 가상 측정 데이터가 아니다. 첫 프로필 선택·미확정 정책·구현은 개발 담당이 정한다.",
+  "new_application_code_files": 0,
+  "common_files_modified": 0,
+  "git_commands_executed": false,
+  "hardware_commands_executed": false,
+  "network_access_performed": false,
+  "first_profile_selected": false,
+  "measurement_or_calibration_values_generated": false,
+  "blocked_by_private_input": false,
+  "private_input_gaps_preserved": [
+    {
+      "gap_id": "GAP-ACTUAL-ASSET",
+      "status": "existing_private_input_pending",
+      "description": "실제 N9030A/N1914A 자산·일련번호 대응, 설치 FW/SW/옵션·인터페이스·교정 유효성 미확인.",
+      "existing_group": "INPUT-ASSETS",
+      "existing_request_ids": [
+        "LOCAL-016"
+      ]
+    },
+    {
+      "gap_id": "GAP-SENSOR",
+      "status": "existing_private_input_pending",
+      "description": "연결 센서·주파수/전력 한계·보정표·케이블·트리거·워밍업 조건 미확인. N1913 서비스 문서 22/25쪽 조건은 현장 검증 결과가 아니다.",
+      "existing_group": "INPUT-ASSETS",
+      "existing_request_ids": [
+        "LOCAL-016"
+      ]
+    },
+    {
+      "gap_id": "GAP-VIRTUAL-DATA",
+      "status": "not_generated",
+      "description": "가상 측정값·실측·교정 수치와 timeout 값은 생성하지 않았다. 개발 담당이 가상 데이터의 출처·정책을 별도 명시해야 한다."
+    }
+  ],
+  "unsearched_scope": [
+    "새 매뉴얼·최신 판본·정오표·공식 지원 문의",
+    "배정 외 모델·별도 센서의 원문",
+    "실장비 통신·패킷 캡처·성능·교정·현장 검증",
+    "가상 계측기 코드·첫 프로필 선택·공통 스키마 변경",
+    "모든 오류·모든 모드·옵션 명령의 완전 추출"
+  ],
+  "next_action": "P01 검수와 개발 담당의 프로필·미확정 기능 정책 결정을 기다린다. 후속 실제 배정 전 신규 수집 또는 구현을 시작하지 않는다.",
+  "ready_path_relative_to_collector": "ready/FCC-20261023A-S04-B0002",
+  "validation_status": "passed",
+  "published": false
+}

@@ -1,10 +1,10 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "updated_at": "2026-10-23T22:32:00.103084+09:00",
+  "updated_at": "2026-10-23T22:37:09.441685+09:00",
   "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
-  "reviewed_batches": 13,
+  "reviewed_batches": 16,
   "reviewed_request_outcomes": {
-    "completed": 16,
+    "completed": 19,
     "limited": 6,
     "not_started": 0
   },
@@ -194,6 +194,24 @@
       }
     },
     {
+      "batch_id": "FCC-20261023A-S04-B0002",
+      "task_id": "FCC-20261023-S04-B0002",
+      "owner_session": "S04",
+      "assignment_version": "v005",
+      "snapshot_inventory_sha256": "ba143f05f8ec281f33573707ae4c7fe093124c4a60e534c10d398409e02e1549",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S04-B0002",
+      "new_local_originals": 0,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": null
+    },
+    {
       "batch_id": "FCC-20261023A-S05-B0001",
       "task_id": "FCC-20261023-S05-B0001",
       "owner_session": "S05",
@@ -284,6 +302,24 @@
       }
     },
     {
+      "batch_id": "FCC-20261023A-S07-B0002",
+      "task_id": "FCC-20261023-S07-B0002",
+      "owner_session": "S07",
+      "assignment_version": "v005",
+      "snapshot_inventory_sha256": "9ddc0035dce766560a62f38ceeeae1b66afbd8171c71d2ba3edba11391cea869",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S07-B0002",
+      "new_local_originals": 0,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": null
+    },
+    {
       "batch_id": "FCC-20261023A-S08-B0001",
       "task_id": "FCC-20261023-S08-B0001",
       "owner_session": "S08",
@@ -330,6 +366,24 @@
         "crc_valid": true,
         "cumulative_import": "passed"
       }
+    },
+    {
+      "batch_id": "FCC-20261023A-S08-B0003",
+      "task_id": "FCC-20261023-S08-B0003",
+      "owner_session": "S08",
+      "assignment_version": "v005",
+      "snapshot_inventory_sha256": "788962563b9692d781409ba51f98ef569961a9cdc84f9d763fd01a8696db0de8",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S08-B0003",
+      "new_local_originals": 0,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": null
     }
   ],
   "publication_note": "Every listed batch is included in the same Git history as this record. Exact remote commits are verified and reported by P01; review does not establish conformity or hardware validation."

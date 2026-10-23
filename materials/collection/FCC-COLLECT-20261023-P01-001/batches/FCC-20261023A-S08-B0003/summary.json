@@ -1,0 +1,72 @@
+{
+  "task_id": "FCC-20261023-S08-B0003",
+  "batch_id": "FCC-20261023A-S08-B0003",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v005",
+  "created_at": "2026-10-23T22:32:56+09:00",
+  "timezone": "Asia/Seoul",
+  "status": "completed_with_explicit_actual_material_gaps",
+  "source_request_id": "DEV-VLAB-20261023-001",
+  "source_request_items": [
+    3,
+    4
+  ],
+  "request_results": [
+    {
+      "request_id": "ADD-S08-VLAB-VALIDATION-MATERIALS-003",
+      "status": "completed",
+      "completion_kind": "reference_type_and_intake_location_map_with_explicit_gaps"
+    }
+  ],
+  "counts": {
+    "assigned_requests": 1,
+    "completed_requests": 1,
+    "requests_with_limits": 1,
+    "not_started_requests": 0,
+    "material_types_mapped": 6,
+    "actual_material_types_not_provided": 6,
+    "referenced_original_documents": 13,
+    "new_originals": 0,
+    "new_downloads": 0,
+    "original_moves": 0,
+    "original_edits": 0,
+    "actual_measurements": 0,
+    "synthetic_datasets_created": 0,
+    "metadata_files": 5,
+    "blocking_questions": 0,
+    "new_questions": 0
+  },
+  "counts_note": "요청은 매핑/공백 기록 조건으로 완료. 실제 검증 자료 6종은 모두 미제공이며 예제/문서만 연결했다.",
+  "scope": "DEV-VLAB-20261023-001 항목4 및 항목3의 사례 연결. 검수된 기존21개와 신규7788954 성적서, S04/S05/S06/S07 근거 색인만 읽어 연결도·손실/보정표·원시형식·통신로그·오류사례·측정조건-결과 예제의 현재 인수가능 위치를 매핑한다. 실제 native raw·실측로그·교정원본인지, 매뉴얼예제인지, 성적서표/그림인지, 미확보인지를 필수로 구분한다. 상세 원문/렌더링·대량표 재배포 없이 문서/페이지/조건/필드 위치만 반환한다. 합성데이터 생성과 구현은 개발 담당의 책임이며 합성값을 측정자료로 만들지 않는다.",
+  "source_publication_sha": "69aa22f4c354ac3ed853a45d0a9029edcd79d2d0",
+  "method": "P01 검수 snapshot의 색인·문서 metadata와 이전 S08 보고 위치를 읽었다. 매뉴얼/보고 원문은 이 배치에서 열거나 재해시하지 않았다. 원문 경로의 존재/크기와 색인 해시만 확인했다.",
+  "public_private_separation": "공개 경로는 metadata와 이미 게시된 S07 추출문/라이선스 묶음이다. 완전 원문은 로컬 제한 경로이며 별도 권한/비공개 개발 공간 인수가 필요하다.",
+  "not_claimed": [
+    "실제 native raw 확보",
+    "현장 통신/오류 로그 확보",
+    "실제 교정원본 확보",
+    "현재 시험소 측정 정확도",
+    "합성 데이터 생성 또는 검증 완료"
+  ],
+  "unreviewed_scope": [
+    "현장별 실제 캡처/원본",
+    "매뉴얼 원문 전수 재검토",
+    "다른 모델/세대의 인터페이스 적용성",
+    "새 수집 또는 미완료 후속 배치"
+  ],
+  "development_boundary": "가상장비·합성 데이터·파서 구현은 개발 담당이 수행한다. 이 배치는 예제 데이터 파일을 생성하지 않았다.",
+  "local_verification": {
+    "utf8_json_schema_assignment": "pass",
+    "six_material_type_classification": "pass",
+    "source_catalog_and_intake_paths": "pass",
+    "accepted_metadata_hashes_reverified": 16,
+    "source_originals_rehashed": 0,
+    "new_originals_or_moves_or_edits": 0,
+    "prior_own_batches_unchanged": true,
+    "document_integrity_exit_code": 0,
+    "document_integrity_output": "PASS: 7 UTF-8 documents; 59 local links; no encoding markers.\nScope: document integrity only. No hardware, AI workflow, or conformity validation performed.",
+    "scope": "참조 색인·파일 경로·구분·메타데이터·인계 무결성 검증이다. 실제 자료/장비·계산·현장 검증을 뜻하지 않는다."
+  }
+}

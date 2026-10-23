@@ -1,0 +1,619 @@
+{
+  "task_id": "FCC-20261023-S08-B0003",
+  "batch_id": "FCC-20261023A-S08-B0003",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v005",
+  "created_at": "2026-10-23T22:32:56+09:00",
+  "source_catalog": [
+    {
+      "source_ref": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "title": "FCC 2.4 GHz b/g/n 포함 OFDM RF 성적서",
+      "version": "1M2408260067.13.A3L; 발행 2024-10-28; 별도 개정번호 미표시",
+      "sha256": "48ce8ee535ba4b1abe3b532c9c0629c15775bcd03ad18541424d42e66c57eee9",
+      "bytes": 5858854,
+      "representation": "original",
+      "rights": "unknown",
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788954",
+      "source_owner": "S08",
+      "accepted_batch_id": "FCC-20261023A-S08-B0002",
+      "hash_provenance": "이전 S08 검수/게시 기록. 이번에는 원본 존재·크기만 확인했으며 재해시하지 않았다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0002/references.json",
+        "publication_sha": "69aa22f4c354ac3ed853a45d0a9029edcd79d2d0",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "access": "로컬 제한 보관 원문",
+        "p01_verified_private_copy": "[local-only reference retained by P01]",
+        "p01_private_copy_hash_evidence": 1
+      },
+      "public_derived_options": [],
+      "is_native_instrument_capture": false,
+      "case_scope": "A3LSMS938U 공개 제출 사례. 현재 시험소의 실측 검증 자료가 아니다."
+    },
+    {
+      "source_ref": "EXHIBIT-7786580",
+      "document_id": null,
+      "exhibit_id": "7786580",
+      "title": "Test Report",
+      "version": "LBE20240390; 개정 위치는 p3 §1.1. 이번 배치에서 판본 원문 재열람 안 함",
+      "sha256": "a26f0f387596fa1000da803d8203803bad93dbf56f7e43e68a0ed5959b270197",
+      "bytes": 1605816,
+      "representation": "original",
+      "rights": "unknown",
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=ECRjbjEs3BHabX1k7Znclw%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7786580",
+      "source_owner": "S01",
+      "accepted_batch_id": "FCC-20261023A-S08-B0001",
+      "hash_provenance": "이전 S08 검수/게시 기록. 이번에는 원본 존재·크기만 확인했으며 재해시하지 않았다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0001/references.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "access": "로컬 제한 보관 원문"
+      },
+      "public_derived_options": [],
+      "is_native_instrument_capture": false,
+      "case_scope": "A3LSMS938U 공개 제출 사례. 현재 시험소의 실측 검증 자료가 아니다."
+    },
+    {
+      "source_ref": "EXHIBIT-7854589",
+      "document_id": null,
+      "exhibit_id": "7854589",
+      "title": "RF Exposure Part 1 Test Report",
+      "version": "1M2408260067-23.A3L (Rev2); 기존 검수 색인의 보고서 기본번호/개정 관계 참조",
+      "sha256": "e70edcaeb71fba07b6171f7e9b3e48fce102760d1e078c1c75d7b24cd47bbd54",
+      "bytes": 3580511,
+      "representation": "original",
+      "rights": "unknown",
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7854589",
+      "source_owner": "S01",
+      "accepted_batch_id": "FCC-20261023A-S08-B0001",
+      "hash_provenance": "이전 S08 검수/게시 기록. 이번에는 원본 존재·크기만 확인했으며 재해시하지 않았다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0001/references.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "access": "로컬 제한 보관 원문"
+      },
+      "public_derived_options": [],
+      "is_native_instrument_capture": false,
+      "case_scope": "A3LSMS938U 공개 제출 사례. 현재 시험소의 실측 검증 자료가 아니다."
+    },
+    {
+      "document_id": "S06-innco-co3000-4p-product-a9a5ddfd5681",
+      "title": "INNCO Controller CO3000-4P official product page",
+      "version": "Undated CO3000-4P product web page; firmware revision unstated; snapshot 2026-10-23",
+      "representation": "original",
+      "sha256": "a9a5ddfd5681cd038612a68196cf07bc73704d2f00feb92c0e651af7792dfde0",
+      "bytes": 14199,
+      "rights": "unknown",
+      "source_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+      "download_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+      "source_ref": "S06-innco-co3000-4p-product-a9a5ddfd5681",
+      "source_owner": "S06",
+      "metadata_provider": "S06",
+      "accepted_batch_id": "FCC-20261023A-S06-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0001/evidence-index.json",
+        "documents_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0001/documents.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": []
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+      "title": "X-Series Signal Analyzer Programmer's Guide",
+      "version": "Print date August 2014; supersedes February 2013",
+      "representation": "original",
+      "sha256": "354463a721ff57298576d6c059c9637d5e58bb16d854ace86303de31a55c8f3e",
+      "bytes": 736733,
+      "rights": "unknown",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-02192/programming-guides/9018-02192.pdf",
+      "download_url": "https://www.keysight.com/ni/en/assets/9018-02192/programming-guides/9018-02192.pdf",
+      "source_ref": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+      "source_owner": "S04",
+      "metadata_provider": "S04",
+      "accepted_batch_id": "FCC-20261023A-S04-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0001/evidence-index.json",
+        "documents_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0001/documents.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": []
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "title": "N1913/1914A EPM Series Power Meters Programming Guide",
+      "version": "Edition 19, June 11, 2025",
+      "representation": "original",
+      "sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+      "bytes": 4367308,
+      "rights": "unknown",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-02514/programming-guides/9018-02514.pdf",
+      "download_url": "https://www.keysight.com/ni/en/assets/9018-02514/programming-guides/9018-02514.pdf",
+      "source_ref": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+      "source_owner": "S04",
+      "metadata_provider": "S04",
+      "accepted_batch_id": "FCC-20261023A-S04-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0001/evidence-index.json",
+        "documents_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0001/documents.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": []
+    },
+    {
+      "document_id": "SPEAG-DAE-calibration-procedure-overview-b35e7ee2e5",
+      "title": "DAE calibration procedure overview",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "representation": "original",
+      "sha256": "fe7ad1ddcaa504076dc857ddaa13d4e4da97515de481110fe7ab5bcecf271e7a",
+      "bytes": 27330,
+      "rights": "unknown",
+      "source_url": "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae",
+      "download_url": "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae",
+      "source_ref": "SPEAG-DAE-calibration-procedure-overview-b35e7ee2e5",
+      "source_owner": "S01",
+      "metadata_provider": "S05",
+      "accepted_batch_id": "FCC-20261023A-S05-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S05-B0001/evidence-index.json",
+        "documents_path": "materials/manifests/FCC-EQUIPMENT-20261023-004.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": []
+    },
+    {
+      "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "title": "X-Series Signal Analyzer Spectrum Analyzer Mode User's and Programmer's Reference",
+      "version": "Edition 23, December 2018",
+      "representation": "original",
+      "sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+      "bytes": 22650636,
+      "rights": "unknown",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+      "download_url": "https://www.keysight.com/id/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+      "source_ref": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+      "source_owner": "S04",
+      "metadata_provider": "S04",
+      "accepted_batch_id": "FCC-20261023A-S04-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0001/evidence-index.json",
+        "documents_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0001/documents.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": []
+    },
+    {
+      "document_id": "S05-dasy52-report-generator-c694fa6fd65d",
+      "title": "DASY5 Manual V5.2 — Chapter 29 DASY5 Report Generator application note",
+      "version": "DASY5 Manual V5.2, October 2009; Chapter 29 excerpt",
+      "representation": "original",
+      "sha256": "c694fa6fd65d155656bd171927e109ea695398f72d71a1d470a85fcabc14dece",
+      "bytes": 2235681,
+      "rights": "unknown",
+      "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+      "download_url": "https://speag.swiss/assets/downloads/products/dasy/free_downloads/AN_D52_ReportGenerator.pdf",
+      "source_ref": "S05-dasy52-report-generator-c694fa6fd65d",
+      "source_owner": "S05",
+      "metadata_provider": "S05",
+      "accepted_batch_id": "FCC-20261023A-S05-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S05-B0001/evidence-index.json",
+        "documents_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S05-B0001/documents.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": []
+    },
+    {
+      "document_id": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+      "title": "DASY6 Module R&D Manual, March 2023",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "representation": "original",
+      "sha256": "8e941109aa7e1628ae38fd51bca7be03393bf9f6eb16954e8458d6d1e27d20b3",
+      "bytes": 13685412,
+      "rights": "unknown",
+      "source_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+      "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+      "source_ref": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+      "source_owner": "S01",
+      "metadata_provider": "S05",
+      "accepted_batch_id": "FCC-20261023A-S05-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S05-B0001/evidence-index.json",
+        "documents_path": "materials/manifests/FCC-EQUIPMENT-20261023-004.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": []
+    },
+    {
+      "document_id": "S07-android-adb-23876effdde7",
+      "title": "Android Debug Bridge (adb)",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "representation": "original",
+      "sha256": "23876effdde7c9f1e635d9d91db2cc748908f05cb37d0f205856c9abdd5ff691",
+      "bytes": 368027,
+      "rights": "unknown",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "download_url": "https://developer.android.com/tools/adb?hl=en",
+      "source_ref": "S07-android-adb-23876effdde7",
+      "source_owner": "S07",
+      "metadata_provider": "S07",
+      "accepted_batch_id": "FCC-20261023A-S07-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001/evidence-index.json",
+        "documents_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001/documents.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": [
+        {
+          "document_id": "S07-android-adb-23876effdde7-text-r1",
+          "parent_document_id": "S07-android-adb-23876effdde7",
+          "representation": "extracted",
+          "rights": "public",
+          "path": "[local-only derivative or original; not included in public payload]",
+          "sha256": "6532366fa2464a72ec71abc46804cd5fa437da5b0dbee641df1cdac6d81e148c",
+          "bytes": 54433,
+          "package_path": "materials/packages/FCC-20261023A-S07-B0001.zip",
+          "manifest_path": "materials/manifests/FCC-20261023A-S07-B0001.json",
+          "is_instrument_log": false,
+          "conditions": "게시된 Apache-2.0 라이선스·귀속·변경 고지와 함께 인수. 추출문은 원문 레이아웃/그림을 보존하지 않는다."
+        }
+      ]
+    },
+    {
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "title": "Logcat command-line tool",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "representation": "original",
+      "sha256": "1b9760fb6b6143df5a4fb3dfb842680c8436f218de892374ff8638c5c1a3f3f8",
+      "bytes": 285774,
+      "rights": "unknown",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "download_url": "https://developer.android.com/tools/logcat?hl=en",
+      "source_ref": "S07-android-logcat-1b9760fb6b61",
+      "source_owner": "S07",
+      "metadata_provider": "S07",
+      "accepted_batch_id": "FCC-20261023A-S07-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001/evidence-index.json",
+        "documents_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001/documents.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": [
+        {
+          "document_id": "S07-android-logcat-1b9760fb6b61-text-r1",
+          "parent_document_id": "S07-android-logcat-1b9760fb6b61",
+          "representation": "extracted",
+          "rights": "public",
+          "path": "[local-only derivative or original; not included in public payload]",
+          "sha256": "d9a548e2233081e0780481d8d2133f89fbd915a5cbfafac2d10d9653b2132e01",
+          "bytes": 11045,
+          "package_path": "materials/packages/FCC-20261023A-S07-B0001.zip",
+          "manifest_path": "materials/manifests/FCC-20261023A-S07-B0001.json",
+          "is_instrument_log": false,
+          "conditions": "게시된 Apache-2.0 라이선스·귀속·변경 고지와 함께 인수. 추출문은 원문 레이아웃/그림을 보존하지 않는다."
+        }
+      ]
+    },
+    {
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "title": "Test, debug, and tune Wi-Fi",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "representation": "original",
+      "sha256": "004a0e99cf250e378878dba6ba28754a031ae0dfcb864ccb6a3f92ae3016f95e",
+      "bytes": 191045,
+      "rights": "unknown",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "download_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "source_ref": "S07-aosp-wifi-debug-004a0e99cf25",
+      "source_owner": "S07",
+      "metadata_provider": "S07",
+      "accepted_batch_id": "FCC-20261023A-S07-B0001",
+      "hash_provenance": "검수된 문서/참조 색인의 원본 해시. S08 v005는 원문을 다시 해시하거나 열지 않고 파일 존재·크기와 색인 무결성을 확인했다.",
+      "original_rehashed_in_this_batch": false,
+      "public_intake": {
+        "metadata_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001/evidence-index.json",
+        "documents_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001/documents.json",
+        "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+        "original_payload_available": false,
+        "kind": "metadata_only"
+      },
+      "local_intake": {
+        "original_path": "[local-only reference retained by P01]",
+        "exists": true,
+        "snapshot_evidence_index": "[local-only reference retained by P01]",
+        "access": "권한이 있는 로컬/비공개 개발 공간에서만 인수. 공개 Git에 완전 원문을 넣지 않는다."
+      },
+      "public_derived_options": [
+        {
+          "document_id": "S07-aosp-wifi-debug-004a0e99cf25-text-r1",
+          "parent_document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+          "representation": "extracted",
+          "rights": "public",
+          "path": "[local-only derivative or original; not included in public payload]",
+          "sha256": "4322321c54ca157caaf740042e7a3e172b61112e257077f15baaeeed19419ee8",
+          "bytes": 4894,
+          "package_path": "materials/packages/FCC-20261023A-S07-B0001.zip",
+          "manifest_path": "materials/manifests/FCC-20261023A-S07-B0001.json",
+          "is_instrument_log": false,
+          "conditions": "게시된 Apache-2.0 라이선스·귀속·변경 고지와 함께 인수. 추출문은 원문 레이아웃/그림을 보존하지 않는다."
+        }
+      ]
+    }
+  ],
+  "accepted_index_provenance": [
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "58ae2f43c12e62b2a805c7ea03fda26541bcdd1b0796a790eaf2e36afc7bea9a",
+      "bytes": 9685,
+      "batch_id": "FCC-20261023A-S04-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "adaa5d0da3aa54826b9039bd651fd2cb45f20a3d6f49cbecc679618379fd311c"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "4c6776772605eab06aa8c3b8f3474beff7127536d763c0b6369f58e76bdd6094",
+      "bytes": 27779,
+      "batch_id": "FCC-20261023A-S04-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "adaa5d0da3aa54826b9039bd651fd2cb45f20a3d6f49cbecc679618379fd311c"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+      "bytes": 4,
+      "batch_id": "FCC-20261023A-S04-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "adaa5d0da3aa54826b9039bd651fd2cb45f20a3d6f49cbecc679618379fd311c"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "e72c11a2cf98b5f68ca2d7e6b9c5d5a99364de8331c51b6e5de985234bc9af31",
+      "bytes": 4214,
+      "batch_id": "FCC-20261023A-S04-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "adaa5d0da3aa54826b9039bd651fd2cb45f20a3d6f49cbecc679618379fd311c"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "3d2367baf3a2053c377c36b009dd843d882f0c2cbcf6ecda05ae10cbdbba2944",
+      "bytes": 9297,
+      "batch_id": "FCC-20261023A-S05-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "bf1ca2d9fb16e5e753937703cf47dde4c8c597dadc6d3c11156f5cc1e8db2206"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "dff3b6a30206d20312d515ea2cf54ea1743401341c359f9d7d1312dae3e3e942",
+      "bytes": 26643,
+      "batch_id": "FCC-20261023A-S05-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "bf1ca2d9fb16e5e753937703cf47dde4c8c597dadc6d3c11156f5cc1e8db2206"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "eb481b4a25c6f56fa34080218f827e801f16d86db0c9b15b57a419879ee3ac70",
+      "bytes": 7977,
+      "batch_id": "FCC-20261023A-S05-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "bf1ca2d9fb16e5e753937703cf47dde4c8c597dadc6d3c11156f5cc1e8db2206"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "5e0b6f60e6d7e4293551113899cb11f3392e633e1dc8753e7176d2a0e95150c1",
+      "bytes": 5718,
+      "batch_id": "FCC-20261023A-S05-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "bf1ca2d9fb16e5e753937703cf47dde4c8c597dadc6d3c11156f5cc1e8db2206"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "5c982b2cccb35e9d4fc6adb28f16663992c8f882768e377d55a0375c0af0ef78",
+      "bytes": 4295,
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "ed1ef6eccf2da33e9a76fe15e4fdc15f37b5108c9e7ab919e6a3d39e8236e161"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "b2668e6fae5fd79e88b8a9959a17bcf7d209f5d095e13eb812e7dbb724e982a0",
+      "bytes": 11822,
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "ed1ef6eccf2da33e9a76fe15e4fdc15f37b5108c9e7ab919e6a3d39e8236e161"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "d6fc7430f00a4d66c5bb302497e2e0d05ec44c9f50f93209fb8b10ab3f2ab6a4",
+      "bytes": 3574,
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "ed1ef6eccf2da33e9a76fe15e4fdc15f37b5108c9e7ab919e6a3d39e8236e161"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "4da83eca2a67a704106a9e2edced50689838c24163a635d1d3775fb5b1fbe348",
+      "bytes": 5151,
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "ed1ef6eccf2da33e9a76fe15e4fdc15f37b5108c9e7ab919e6a3d39e8236e161"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "28aacdb82d9b1aba93cf5bbda574dd4e568505d61fba90c10696a6c3dedad54f",
+      "bytes": 6909,
+      "batch_id": "FCC-20261023A-S07-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "30733f863feed2197c1bc89a36528e73cc62cd31ee71c852db05d736b55f33a2"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "8c01ff6d5c06e78cf3727a9e31862c8de900bf9bc39e36c7b6dc56a5cdc155a5",
+      "bytes": 12388,
+      "batch_id": "FCC-20261023A-S07-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "30733f863feed2197c1bc89a36528e73cc62cd31ee71c852db05d736b55f33a2"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "afeeec19bddbd62d11b6df558f71fdebd8081774ab7684ef946cc8801c724fab",
+      "bytes": 5647,
+      "batch_id": "FCC-20261023A-S07-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "30733f863feed2197c1bc89a36528e73cc62cd31ee71c852db05d736b55f33a2"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "8306d6311e25bf123877e44d3d2ccba06f26c7bec2d46188112c93dd27932d64",
+      "bytes": 3514,
+      "batch_id": "FCC-20261023A-S07-B0001",
+      "receipt_state": "published",
+      "snapshot_inventory_sha256": "30733f863feed2197c1bc89a36528e73cc62cd31ee71c852db05d736b55f33a2"
+    }
+  ],
+  "input_request": {
+    "path": "materials/collection/FCC-COLLECT-20261023-P01-001/development/DEV-VLAB-20261023-001.json",
+    "sha256": "c1eb66ef77b0cb01157f2f62b7b296fa6d3d358b1d0128342af5d83ddc8b4b9a",
+    "items": [
+      3,
+      4
+    ]
+  },
+  "source_roles": [
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08"
+  ],
+  "case_baseline": {
+    "fcc_id": "A3LSMS938U",
+    "legacy_case_count": 21,
+    "newly_acquired_in_prior_batch_exhibit": "7788954",
+    "new_original_count_in_this_batch": 0,
+    "report_references_used": [
+      "7788954",
+      "7786580",
+      "7854589"
+    ],
+    "prior_ready_batches_preserved": [
+      "FCC-20261023A-S08-B0001",
+      "FCC-20261023A-S08-B0002"
+    ]
+  },
+  "intake_note": "로컬 원문의 해시는 검수 색인 출처를 따른다. 이 배치에서 원문에 새로 해시를 부여하거나 복사/이동하지 않았다."
+}

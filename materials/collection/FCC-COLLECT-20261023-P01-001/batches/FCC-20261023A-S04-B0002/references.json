@@ -1,0 +1,581 @@
+[
+  {
+    "legacy_package_id": "FCC-20261023A-S04-B0001",
+    "legacy_batch_id": "FCC-20261023A-S04-B0001",
+    "original_owner": "S04",
+    "document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+    "part_number": "N9030-90017",
+    "version": "Edition 1, January 2022; supersedes October 2021",
+    "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+    "source_snapshot": "[local-only reference retained by P01]",
+    "source_path_in_snapshot": "[local-only derivative or original; not included in public payload]",
+    "source_path_in_public_package": null,
+    "public_package_contains_original": false,
+    "sha256": "1c018ae8aa9857389365d3fc9ed98996665f91f49fa0a199d00bd798c241f93b",
+    "bytes": 3855952,
+    "source_url": "https://www.keysight.com/us/en/assets/9018-72001/technical-specifications/N9030A-PXA-Signal-Analyzer-Specifications-Guide.pdf",
+    "download_url_recorded_in_prior_batch": "https://www.keysight.com/us/en/assets/9018-72001/technical-specifications/N9030A-PXA-Signal-Analyzer-Specifications-Guide.pdf",
+    "rights": "unknown",
+    "original_reused_read_only": true,
+    "original_copied_into_this_batch": false,
+    "evidence_locations": [
+      {
+        "document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+        "part_number": "N9030-90017",
+        "section": "Input limits and frequency reference conditions",
+        "pdf_pages_1based": [
+          24,
+          35,
+          149
+        ],
+        "source_sha256": "1c018ae8aa9857389365d3fc9ed98996665f91f49fa0a199d00bd798c241f93b"
+      }
+    ],
+    "linked_contract_ids": []
+  },
+  {
+    "legacy_package_id": "FCC-20261023A-S04-B0001",
+    "legacy_batch_id": "FCC-20261023A-S04-B0001",
+    "original_owner": "S04",
+    "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+    "part_number": "N9060-90027",
+    "version": "Edition 23, December 2018",
+    "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+    "source_snapshot": "[local-only reference retained by P01]",
+    "source_path_in_snapshot": "[local-only derivative or original; not included in public payload]",
+    "source_path_in_public_package": null,
+    "public_package_contains_original": false,
+    "sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+    "bytes": 22650636,
+    "source_url": "https://www.keysight.com/us/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+    "download_url_recorded_in_prior_batch": "https://www.keysight.com/id/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+    "rights": "unknown",
+    "original_reused_read_only": true,
+    "original_copied_into_this_batch": false,
+    "evidence_locations": [
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "3 Identification Query / 6 System IDN Response",
+        "pdf_pages_1based": [
+          235,
+          502
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "*IDN?"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "3 STATus / IEEE 488.2",
+        "pdf_pages_1based": [
+          188,
+          198,
+          235,
+          238
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "Status"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "8 / FREQ Channel",
+        "pdf_pages_1based": [
+          655
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "FREQuency:CENTer"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "3 OPC Example / 8 Sweep Control",
+        "pdf_pages_1based": [
+          236,
+          983,
+          984
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "INIT:IMM"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "3 OPC / Wait-to-Continue / 8 Abort",
+        "pdf_pages_1based": [
+          235,
+          236,
+          239,
+          984
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "*OPC"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "3 Status / 6 Show Errors and Verbose SCPI",
+        "pdf_pages_1based": [
+          188,
+          432,
+          433,
+          434
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "ERRor"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "9 / Channel Power Measurement Commands and Results",
+        "pdf_pages_1based": [
+          1063,
+          1064,
+          1070
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "CHPower"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "8 / Query Trace Data and More Information",
+        "pdf_pages_1based": [
+          1025,
+          1026
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "TRACe[:DATA]?"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "8 / Format Data and Trace More Information",
+        "pdf_pages_1based": [
+          749,
+          750,
+          1026
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "INTeger"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "8 / Format Data Byte Order",
+        "pdf_pages_1based": [
+          750,
+          1026
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "MSB"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "8 / Sweep Control / Abort",
+        "pdf_pages_1based": [
+          983,
+          984
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "ABORt"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+        "part_number": "N9060-90027",
+        "section": "3 / Query Options and RST",
+        "pdf_pages_1based": [
+          236,
+          237,
+          238
+        ],
+        "source_sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+        "verified_anchor": "*RST"
+      }
+    ],
+    "linked_contract_ids": [
+      "AN-ID",
+      "AN-STATUS",
+      "AN-FREQ",
+      "AN-TRIGGER",
+      "AN-COMPLETE",
+      "AN-ERROR",
+      "AN-POWER",
+      "AN-TRACE",
+      "AN-FORMAT",
+      "AN-BORDER",
+      "AN-ABORT",
+      "AN-OPTIONS-RESET"
+    ]
+  },
+  {
+    "legacy_package_id": "FCC-20261023A-S04-B0001",
+    "legacy_batch_id": "FCC-20261023A-S04-B0001",
+    "original_owner": "S04",
+    "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+    "part_number": "N9020-90112",
+    "version": "Print date August 2014; supersedes February 2013",
+    "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+    "source_snapshot": "[local-only reference retained by P01]",
+    "source_path_in_snapshot": "[local-only derivative or original; not included in public payload]",
+    "source_path_in_public_package": null,
+    "public_package_contains_original": false,
+    "sha256": "354463a721ff57298576d6c059c9637d5e58bb16d854ace86303de31a55c8f3e",
+    "bytes": 736733,
+    "source_url": "https://www.keysight.com/us/en/assets/9018-02192/programming-guides/9018-02192.pdf",
+    "download_url_recorded_in_prior_batch": "https://www.keysight.com/ni/en/assets/9018-02192/programming-guides/9018-02192.pdf",
+    "rights": "unknown",
+    "original_reused_read_only": true,
+    "original_copied_into_this_batch": false,
+    "evidence_locations": [],
+    "linked_contract_ids": []
+  },
+  {
+    "legacy_package_id": "FCC-20261023A-S04-B0001",
+    "legacy_batch_id": "FCC-20261023A-S04-B0001",
+    "original_owner": "S04",
+    "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+    "part_number": "N1913-90001",
+    "version": "Edition 24, November 1, 2022",
+    "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+    "source_snapshot": "[local-only reference retained by P01]",
+    "source_path_in_snapshot": "[local-only derivative or original; not included in public payload]",
+    "source_path_in_public_package": null,
+    "public_package_contains_original": false,
+    "sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9",
+    "bytes": 6833924,
+    "source_url": "https://www.keysight.com/us/en/assets/9018-02513/user-manuals/9018-02513.pdf",
+    "download_url_recorded_in_prior_batch": "https://www.keysight.com/ni/en/assets/9018-02513/user-manuals/9018-02513.pdf",
+    "rights": "unknown",
+    "original_reused_read_only": true,
+    "original_copied_into_this_batch": false,
+    "evidence_locations": [
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+        "part_number": "N1913-90001",
+        "section": "Interfaces and programming language option",
+        "pdf_pages_1based": [
+          44,
+          55
+        ],
+        "source_sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9"
+      }
+    ],
+    "linked_contract_ids": []
+  },
+  {
+    "legacy_package_id": "FCC-20261023A-S04-B0001",
+    "legacy_batch_id": "FCC-20261023A-S04-B0001",
+    "original_owner": "S04",
+    "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+    "part_number": "N1913-90008",
+    "version": "Edition 19, June 11, 2025",
+    "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+    "source_snapshot": "[local-only reference retained by P01]",
+    "source_path_in_snapshot": "[local-only derivative or original; not included in public payload]",
+    "source_path_in_public_package": null,
+    "public_package_contains_original": false,
+    "sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+    "bytes": 4367308,
+    "source_url": "https://www.keysight.com/us/en/assets/9018-02514/programming-guides/9018-02514.pdf",
+    "download_url_recorded_in_prior_batch": "https://www.keysight.com/ni/en/assets/9018-02514/programming-guides/9018-02514.pdf",
+    "rights": "unknown",
+    "original_reused_read_only": true,
+    "original_copied_into_this_batch": false,
+    "evidence_locations": [
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "17 IEEE 488.2 Command Reference / *IDN?",
+        "pdf_pages_1based": [
+          595
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "printed_pages": [
+          597
+        ],
+        "verified_anchor": "A2.XX.YY"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "17 / *ESR? and *STB?",
+        "pdf_pages_1based": [
+          594,
+          604
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "printed_pages": [
+          596,
+          606
+        ],
+        "verified_anchor": "0 to 255"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "2 MEASurement Commands / Optional Parameters, CONFigure, FETCh",
+        "pdf_pages_1based": [
+          108,
+          112,
+          117,
+          118,
+          119,
+          137,
+          138
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "CONFigure"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "11 SENSe / FREQuency",
+        "pdf_pages_1based": [
+          392,
+          393
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "1000.0 GHz"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "1 Output Format / 16 UNIT",
+        "pdf_pages_1based": [
+          69,
+          583,
+          584
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "UNIT"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "15 / INITiate CONTinuous",
+        "pdf_pages_1based": [
+          96,
+          548,
+          549
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "On reset (*RST)"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "15 / TRIGger SOURce",
+        "pdf_pages_1based": [
+          561,
+          562,
+          563,
+          577
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "printed_pages": [
+          563,
+          564,
+          565,
+          579
+        ],
+        "verified_anchor": "SOURce"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "1 Examples / 15 INITiate IMMediate",
+        "pdf_pages_1based": [
+          40,
+          544,
+          550
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "INITiate"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "17 / *TRG and GPIB GET",
+        "pdf_pages_1based": [
+          605,
+          608
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "printed_pages": [
+          607,
+          610
+        ],
+        "verified_anchor": "Trigger ignored"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "1 Synchronization / 17 *OPC, *WAI, DCL",
+        "pdf_pages_1based": [
+          89,
+          597,
+          607,
+          608
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "*OPC"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "14 / SYSTem ERRor",
+        "pdf_pages_1based": [
+          517
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "30 errors"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "1 READ / 2 READ scalar power / 15 trigger restrictions",
+        "pdf_pages_1based": [
+          39,
+          156,
+          157,
+          562
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "READ"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "1 INITiate/FETCh and Output / 2 FETCh",
+        "pdf_pages_1based": [
+          39,
+          69,
+          137,
+          138
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "FETCh"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "1 MEASure / 2 MEASure",
+        "pdf_pages_1based": [
+          34,
+          117,
+          175
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "MEASure"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "1 Output / SCPI Types / 6 FORMat",
+        "pdf_pages_1based": [
+          69,
+          96,
+          283,
+          284
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "64 bit"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "6 / FORMat BORDer",
+        "pdf_pages_1based": [
+          281,
+          282
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "verified_anchor": "NORMal"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "15 / ABORt",
+        "pdf_pages_1based": [
+          544,
+          546
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "printed_pages": [
+          546,
+          548
+        ],
+        "verified_anchor": "idle state"
+      },
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+        "part_number": "N1913-90008",
+        "section": "17 / *OPT?",
+        "pdf_pages_1based": [
+          598
+        ],
+        "source_sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+        "printed_pages": [
+          600
+        ],
+        "verified_anchor": "003"
+      }
+    ],
+    "linked_contract_ids": [
+      "PM-ID",
+      "PM-STATUS",
+      "PM-CONFIG",
+      "PM-FREQ",
+      "PM-UNIT",
+      "PM-CONT",
+      "PM-TRIG-SOURCE",
+      "PM-INIT",
+      "PM-BUS-TRIG",
+      "PM-COMPLETE",
+      "PM-ERROR",
+      "PM-READ",
+      "PM-FETCH",
+      "PM-MEASURE",
+      "PM-FORMAT",
+      "PM-BORDER",
+      "PM-ABORT",
+      "PM-OPTIONS"
+    ]
+  },
+  {
+    "legacy_package_id": "FCC-20261023A-S04-B0001",
+    "legacy_batch_id": "FCC-20261023A-S04-B0001",
+    "original_owner": "S04",
+    "document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+    "part_number": "N1913-90009",
+    "version": "Edition 17, October 8, 2025",
+    "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+    "source_snapshot": "[local-only reference retained by P01]",
+    "source_path_in_snapshot": "[local-only derivative or original; not included in public payload]",
+    "source_path_in_public_package": null,
+    "public_package_contains_original": false,
+    "sha256": "c9b6b27d187cf72ba01934fa3ff9b48c6a39e1e8db6922fa15cb654939d3a4db",
+    "bytes": 4786198,
+    "source_url": "https://www.keysight.com/us/en/assets/9018-02516/service-manuals/9018-02516.pdf",
+    "download_url_recorded_in_prior_batch": "https://www.keysight.com/ni/en/assets/9018-02516/service-manuals/9018-02516.pdf",
+    "rights": "unknown",
+    "original_reused_read_only": true,
+    "original_copied_into_this_batch": false,
+    "evidence_locations": [
+      {
+        "document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+        "part_number": "N1913-90009",
+        "section": "Warmup, calibration and sensor-dependent accuracy",
+        "pdf_pages_1based": [
+          22,
+          25
+        ],
+        "source_sha256": "c9b6b27d187cf72ba01934fa3ff9b48c6a39e1e8db6922fa15cb654939d3a4db"
+      }
+    ],
+    "linked_contract_ids": []
+  }
+]

@@ -1,0 +1,25 @@
+[
+  {
+    "question_id": "S04-B0002-Q01",
+    "blocking_this_batch": false,
+    "owner": "P01을 통한 개발 담당",
+    "question": "N1914A NORMal의 절대 byte order, 독립 TRACe 응답 계약처럼 근거가 부족한 기능은 첫 가상 프로필에서 미지원/미확정으로 표시할지 개발 정책이 필요하다. 추가 원문이나 실장비 캡처는 현재 배정 범위가 아니다.",
+    "related_gaps": [
+      "GAP-PM-ABSOLUTE-BYTEORDER",
+      "GAP-PM-WAVEFORM-TRACE"
+    ],
+    "first_profile_selected_here": false
+  },
+  {
+    "question_id": "S04-B0002-Q02",
+    "blocking_this_batch": false,
+    "owner": "P01을 통한 개발 담당",
+    "question": "INIT 질의 예제·EXT 조회 목록·단위 표·분석기 상태 예제의 문서 내부 불일치를 보존했다. 정식 문법과 검증된 항목만 구현 대상으로 삼고 나머지는 미확정으로 유지할 필요가 있다.",
+    "related_document_issues": [
+      "DOC-INIT-QUERY",
+      "DOC-TRIGGER-EXT",
+      "DOC-UNIT-TABLE",
+      "DOC-AN-STATUS-EXAMPLE"
+    ]
+  }
+]

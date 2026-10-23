@@ -1,0 +1,731 @@
+{
+  "task_id": "FCC-20261023-S07-B0002",
+  "created_at": "2026-10-23T22:32:45.000+09:00",
+  "new_source_records": 0,
+  "source_registry": [
+    {
+      "source_id": "S07-SRC-android-adb",
+      "slug": "android-adb",
+      "original_document_id": "S07-android-adb-23876effdde7",
+      "published_document_id": "S07-android-adb-23876effdde7-text-r1",
+      "title": "Android Debug Bridge (adb)",
+      "publisher": "Google / Android Open Source Project",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T21:43:57+09:00",
+      "page_last_updated": "2026-09-25",
+      "source_url": "https://developer.android.com/tools/adb?hl=en",
+      "original_sha256": "23876effdde7c9f1e635d9d91db2cc748908f05cb37d0f205856c9abdd5ff691",
+      "original_bytes": 368027,
+      "published_sha256": "6532366fa2464a72ec71abc46804cd5fa437da5b0dbee641df1cdac6d81e148c",
+      "published_bytes": 54433,
+      "rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "publication_commit": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+      "reuse_only": true
+    },
+    {
+      "source_id": "S07-SRC-android-logcat",
+      "slug": "android-logcat",
+      "original_document_id": "S07-android-logcat-1b9760fb6b61",
+      "published_document_id": "S07-android-logcat-1b9760fb6b61-text-r1",
+      "title": "Logcat command-line tool",
+      "publisher": "Google / Android Open Source Project",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T21:43:57+09:00",
+      "page_last_updated": "2024-01-03",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en",
+      "original_sha256": "1b9760fb6b6143df5a4fb3dfb842680c8436f218de892374ff8638c5c1a3f3f8",
+      "original_bytes": 285774,
+      "published_sha256": "d9a548e2233081e0780481d8d2133f89fbd915a5cbfafac2d10d9653b2132e01",
+      "published_bytes": 11045,
+      "rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "publication_commit": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+      "reuse_only": true
+    },
+    {
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "slug": "aosp-wifi-debug",
+      "original_document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "published_document_id": "S07-aosp-wifi-debug-004a0e99cf25-text-r1",
+      "title": "Test, debug, and tune Wi-Fi",
+      "publisher": "Google / Android Open Source Project",
+      "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T21:43:57+09:00",
+      "page_last_updated": "2026-10-09",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+      "original_sha256": "004a0e99cf250e378878dba6ba28754a031ae0dfcb864ccb6a3f92ae3016f95e",
+      "original_bytes": 191045,
+      "published_sha256": "4322321c54ca157caaf740042e7a3e172b61112e257077f15baaeeed19419ee8",
+      "published_bytes": 4894,
+      "rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "paths": {
+        "local_snapshot_original": "[local-only reference retained by P01]",
+        "frozen_collector_original": "[local-only reference retained by P01]",
+        "local_snapshot_extracted": "[local-only reference retained by P01]",
+        "published_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "published_member": "[local-only derivative or original; not included in public payload]",
+        "published_metadata": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001"
+      },
+      "publication_commit": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+      "reuse_only": true
+    }
+  ],
+  "sections": [
+    {
+      "evidence_id": "S07-V005-android-adb-howadbworks",
+      "slug": "android-adb",
+      "document_id": "S07-android-adb-23876effdde7",
+      "section_id": "howadbworks",
+      "section_title": "How adb works",
+      "raw_html_line_start": 8994,
+      "raw_html_line_end": 9029,
+      "examples": [],
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/adb?hl=en#howadbworks",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-adb-Enabling",
+      "slug": "android-adb",
+      "document_id": "S07-android-adb-23876effdde7",
+      "section_id": "Enabling",
+      "section_title": "Enable adb debugging on your device",
+      "raw_html_line_start": 9030,
+      "raw_html_line_end": 9053,
+      "examples": [
+        {
+          "kind": "code",
+          "source_line": 9039,
+          "text": "adb devices"
+        }
+      ],
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/adb?hl=en#Enabling",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-adb-devicestatus",
+      "slug": "android-adb",
+      "document_id": "S07-android-adb-23876effdde7",
+      "section_id": "devicestatus",
+      "section_title": "Query for devices",
+      "raw_html_line_start": 9396,
+      "raw_html_line_end": 9438,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 9402,
+          "text": "adb devices -l"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9432,
+          "text": "$ adb devices\nList of devices attached\nemulator-5556 device product:sdk_google_phone_x86_64 model:Android_SDK_built_for_x86_64 device:generic_x86_64\nemulator-5554 device product:sdk_google_phone_x86 model:Android_SDK_built_for_x86 device:generic_x86\n0a388e93      device usb:1-1 product:razor model:Nexus_7 device:flo"
+        }
+      ],
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/adb?hl=en#devicestatus",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-adb-directingcommands",
+      "slug": "android-adb",
+      "document_id": "S07-android-adb-23876effdde7",
+      "section_id": "directingcommands",
+      "section_title": "Send commands to a specific device",
+      "raw_html_line_start": 9513,
+      "raw_html_line_end": 9564,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 9540,
+          "text": "$ adb devices\nList of devices attached\nemulator-5554 device\nemulator-5555 device\n0.0.0.0:6520  device\n\n# To install on emulator-5555\n$ adb -s emulator-5555 install helloWorld.apk\n# To install on 0.0.0.0:6520\n$ adb -s 0.0.0.0:6520 install helloWorld.apk"
+        }
+      ],
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/adb?hl=en#directingcommands",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-adb-copyfiles",
+      "slug": "android-adb",
+      "document_id": "S07-android-adb-23876effdde7",
+      "section_id": "copyfiles",
+      "section_title": "Copy files to and from a device",
+      "raw_html_line_start": 9617,
+      "raw_html_line_end": 9649,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 9630,
+          "text": "adb pull remote local"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9638,
+          "text": "adb push local remote"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9646,
+          "text": "adb push myfile.txt /sdcard/myfile.txt"
+        }
+      ],
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/adb?hl=en#copyfiles",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-adb-stopping",
+      "slug": "android-adb",
+      "document_id": "S07-android-adb-23876effdde7",
+      "section_id": "stopping",
+      "section_title": "Stop the adb server",
+      "raw_html_line_start": 9650,
+      "raw_html_line_end": 9658,
+      "examples": [
+        {
+          "kind": "code",
+          "source_line": 9655,
+          "text": "adb kill-server"
+        }
+      ],
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/adb?hl=en#stopping",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-adb-shellcommands",
+      "slug": "android-adb",
+      "document_id": "S07-android-adb-23876effdde7",
+      "section_id": "shellcommands",
+      "section_title": "Issue shell commands",
+      "raw_html_line_start": 9679,
+      "raw_html_line_end": 9728,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 9684,
+          "text": "adb [-d |-e | -s serial_number] shell shell_command"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9690,
+          "text": "adb [-d | -e | -s serial_number] shell"
+        },
+        {
+          "kind": "code",
+          "source_line": 9694,
+          "text": "Control+D"
+        },
+        {
+          "kind": "code",
+          "source_line": 9694,
+          "text": "exit"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9699,
+          "text": "adb shell ls /system/bin"
+        }
+      ],
+      "source_id": "S07-SRC-android-adb",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/adb?hl=en#shellcommands",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-logcat-Overview",
+      "slug": "android-logcat",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "section_id": "Overview",
+      "section_title": "Logging system overview",
+      "raw_html_line_start": 8949,
+      "raw_html_line_end": 9004,
+      "examples": [],
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en#Overview",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-logcat-Syntax",
+      "slug": "android-logcat",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "section_id": "Syntax",
+      "section_title": "Command-line syntax",
+      "raw_html_line_start": 9005,
+      "raw_html_line_end": 9017,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 9011,
+          "text": "[adb] shell logcat [<option>] ... [<filter-spec>] ..."
+        }
+      ],
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en#Syntax",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-logcat-options",
+      "slug": "android-logcat",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "section_id": "options",
+      "section_title": "Options",
+      "raw_html_line_start": 9018,
+      "raw_html_line_end": 9032,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 9025,
+          "text": "adb logcat --help"
+        }
+      ],
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en#options",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-logcat-filteringOutput",
+      "slug": "android-logcat",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "section_id": "filteringOutput",
+      "section_title": "Filter log output",
+      "raw_html_line_start": 9033,
+      "raw_html_line_end": 9120,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 9069,
+          "text": "I/ActivityManager(  585): Starting activity: Intent { action=android.intent.action...}"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9087,
+          "text": "adb logcat ActivityManager:I MyApp:D *:S"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9105,
+          "text": "adb logcat *:W"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9112,
+          "text": "export ANDROID_LOG_TAGS=\"ActivityManager:I MyApp:D *:S\""
+        }
+      ],
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en#filteringOutput",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-logcat-outputFormat",
+      "slug": "android-logcat",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "section_id": "outputFormat",
+      "section_title": "Control log output format",
+      "raw_html_line_start": 9121,
+      "raw_html_line_end": 9166,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 9152,
+          "text": "[adb] logcat [-v <format>]"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9158,
+          "text": "adb logcat -v thread"
+        }
+      ],
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en#outputFormat",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-android-logcat-alternativeBuffers",
+      "slug": "android-logcat",
+      "document_id": "S07-android-logcat-1b9760fb6b61",
+      "section_id": "alternativeBuffers",
+      "section_title": "View alternative log buffers",
+      "raw_html_line_start": 9213,
+      "raw_html_line_end": 9265,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 9236,
+          "text": "[adb] logcat [-b <buffer>]"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9244,
+          "text": "adb logcat -b radio"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9253,
+          "text": "logcat -b main -b radio -b events"
+        },
+        {
+          "kind": "pre",
+          "source_line": 9262,
+          "text": "logcat -b main,radio,events"
+        }
+      ],
+      "source_id": "S07-SRC-android-logcat",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://developer.android.com/tools/logcat?hl=en#alternativeBuffers",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-aosp-wifi-debug-testing",
+      "slug": "aosp-wifi-debug",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "section_id": "testing",
+      "section_title": "Testing",
+      "raw_html_line_start": 4981,
+      "raw_html_line_end": 4984,
+      "examples": [],
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en#testing",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-aosp-wifi-debug-unit-tests",
+      "slug": "aosp-wifi-debug",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "section_id": "unit-tests",
+      "section_title": "Unit tests",
+      "raw_html_line_start": 4985,
+      "raw_html_line_end": 5007,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 4996,
+          "text": "atest FrameworksWifiApiTests"
+        },
+        {
+          "kind": "pre",
+          "source_line": 5005,
+          "text": "atest FrameworksWifiTests"
+        }
+      ],
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en#unit-tests",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-aosp-wifi-debug-cts-tests",
+      "slug": "aosp-wifi-debug",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "section_id": "cts-tests",
+      "section_title": "CTS tests",
+      "raw_html_line_start": 5008,
+      "raw_html_line_end": 5015,
+      "examples": [],
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en#cts-tests",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-aosp-wifi-debug-debugging",
+      "slug": "aosp-wifi-debug",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "section_id": "debugging",
+      "section_title": "Enhanced logging options for debugging",
+      "raw_html_line_start": 5016,
+      "raw_html_line_end": 5024,
+      "examples": [],
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en#debugging",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-aosp-wifi-debug-manual-test",
+      "slug": "aosp-wifi-debug",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "section_id": "manual-test",
+      "section_title": "Manual test",
+      "raw_html_line_start": 5034,
+      "raw_html_line_end": 5051,
+      "examples": [],
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en#manual-test",
+      "validation": "local_preserved_document_review_only"
+    },
+    {
+      "evidence_id": "S07-V005-aosp-wifi-debug-configuration-tuning",
+      "slug": "aosp-wifi-debug",
+      "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+      "section_id": "configuration-tuning",
+      "section_title": "Configuration tuning",
+      "raw_html_line_start": 5052,
+      "raw_html_line_end": 5151,
+      "examples": [
+        {
+          "kind": "pre",
+          "source_line": 5083,
+          "text": "adb shell settings put global wifi_score_params \\\n                             [rssi2|rssi5]=<bad>:<entry>:<low>:<good>"
+        },
+        {
+          "kind": "pre",
+          "source_line": 5088,
+          "text": "adb shell settings put global wifi_score_params \\\n                       rssi2=-85:-85:-73:-60,rssi5=-82:-82:-70:-57"
+        },
+        {
+          "kind": "pre",
+          "source_line": 5092,
+          "text": "adb shell settings delete global wifi_score_params"
+        }
+      ],
+      "source_id": "S07-SRC-aosp-wifi-debug",
+      "source_version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+      "source_rights": {
+        "full_html": "unknown",
+        "full_html_access": "local_only_restricted",
+        "published_text": "public",
+        "documentation_license": "Apache-2.0; exceptions and notices preserved",
+        "license_member": "licenses/LICENSE-2.0.txt"
+      },
+      "local_source_path": "[local-only reference retained by P01]",
+      "public_source_package": "materials/packages/FCC-20261023A-S07-B0001.zip",
+      "public_source_member": "[local-only derivative or original; not included in public payload]",
+      "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en#configuration-tuning",
+      "validation": "local_preserved_document_review_only"
+    }
+  ],
+  "evidence_scope": "기존 공식 문서의 절과 원문 HTML 줄을 참조한다. 새로운 OEM 문서·실제 명령 응답은 없다."
+}

@@ -1,10 +1,10 @@
 # FCC 병렬 수집 운영 기록
 
-기준 시각: 2026-10-23T22:32:00.103084+09:00 (Asia/Seoul). 실행 ID: `FCC-COLLECT-20261023-P01-001`.
+기준 시각: 2026-10-23T22:37:09.441685+09:00 (Asia/Seoul). 실행 ID: `FCC-COLLECT-20261023-P01-001`.
 
 고정 지시: [MAIN_AGENT_PROMPT.md](https://github.com/hctinno/DEVICE/blob/fb1767b367c0c1595560c2845d447ab30cecdce3/handoff/parallel/MAIN_AGENT_PROMPT.md).
 
-검수된 배치 13개를 취합했다. 수집 결과는 문서 조사 완료 16개·제한 조사 6개이며, 아래 후속 배정 중 미인수 작업은 별도로 표시한다.
+검수된 배치 16개를 취합했다. 수집 결과는 문서 조사 완료 19개·제한 조사 6개이며, 아래 후속 배정 중 미인수 작업은 별도로 표시한다.
 
 |담당·배치|문서 조사 완료/제한|공개 결과|
 |---|---|---|
@@ -16,11 +16,14 @@
 |S03-B0001|1/1|[근거·한계](batches/FCC-20261023A-S03-B0001/summary.json)|
 |S03-B0002|1/0|[근거·한계](batches/FCC-20261023A-S03-B0002/summary.json)|
 |S04-B0001|3/0|[근거·한계](batches/FCC-20261023A-S04-B0001/summary.json)|
+|S04-B0002|1/0|[근거·한계](batches/FCC-20261023A-S04-B0002/summary.json)|
 |S05-B0001|0/2|[근거·한계](batches/FCC-20261023A-S05-B0001/summary.json)|
 |S06-B0001|0/3|[근거·한계](batches/FCC-20261023A-S06-B0001/summary.json)|
 |S07-B0001|2/0|[근거·한계](batches/FCC-20261023A-S07-B0001/summary.json)|
+|S07-B0002|1/0|[근거·한계](batches/FCC-20261023A-S07-B0002/summary.json)|
 |S08-B0001|2/0|[근거·한계](batches/FCC-20261023A-S08-B0001/summary.json)|
 |S08-B0002|1/0|[근거·한계](batches/FCC-20261023A-S08-B0002/summary.json)|
+|S08-B0003|1/0|[근거·한계](batches/FCC-20261023A-S08-B0003/summary.json)|
 
 [전체 결과·검증](results.json) · [실행 상태](status.json) · [질문·결정](questions-queue.json) · [초기 결과](results-v002.json) · [기존 보존](legacy-summary.json).
 
@@ -34,6 +37,6 @@
 
 실제 DUT·시험모드, 자산·센서·설치판본, 사이트·RF 경로·교정·인터록, native raw·불확도·발행권한, 허가된 표준 원문은 다섯 입력 묶음으로 취합했다. 이 항목들은 문서 게시를 막지 않으며 실장비 적용 전에 해소해야 한다.
 
-개발 요청 DEV-VLAB-20261023-001의 [기존 자료 인수 색인](development/DEV-VLAB-20261023-001.json)을 제공한다. 가상 계측기 명령/응답·DUT CLI·자료 유형 보완은 v005의 기존 원문 기반 작업이며 실제 실험실 검증과 구별한다.
+개발 요청 DEV-VLAB-20261023-001의 [기존 자료 인수 색인](development/DEV-VLAB-20261023-001.json)과 [후속 명령·API·검증 자료 매핑](development/DEV-VLAB-20261023-001-mappings-v2.json)을 제공한다. v005는 계측기 계약 30개·공개 CLI 14개·미확보 OEM RF 기능 16개·자료 유형 6개를 구분한다. 가상 구현과 실제 실험실 검증은 별도다.
 
 기존 공개 원본 465개 및 수집 메타데이터 1개와 신규 결과는 별도 집계한다. 기존 2,272개 파일·5개 ZIP은 보존했다. 전체 2,867개 모델을 이번 FCC 범위에 편입하거나 시험소 구현·현장검증 완료로 주장하지 않는다.

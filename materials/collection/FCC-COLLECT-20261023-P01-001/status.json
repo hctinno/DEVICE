@@ -1,6 +1,6 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "checked_at": "2026-10-23T22:32:00.103084+09:00",
+  "checked_at": "2026-10-23T22:37:09.441685+09:00",
   "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
   "latest_assignment_version": "v005",
   "published_branch": "collect/fcc-p0-smartphone-20261023-001",
@@ -16,8 +16,8 @@
     {
       "role": "S01",
       "latest_collector_task": "FCC-20261023-S01-B0003",
-      "collector_status": "local_ready_frozen_waiting_P01_receipt",
-      "collector_status_updated_at": "2026-10-23T22:26:47.987983+09:00",
+      "collector_status": "idle_awaiting_next_assignment",
+      "collector_status_updated_at": "2026-10-23T22:33:02.335872+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -30,7 +30,9 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea"
         },
         {
           "task_id": "FCC-20261023-S01-B0002",
@@ -41,7 +43,9 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "69aa22f4c354ac3ed853a45d0a9029edcd79d2d0"
         },
         {
           "task_id": "FCC-20261023-S01-B0003",
@@ -51,16 +55,18 @@
             "ADD-S01-KDB913591-RAW-CURRENCY-003"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "content_approved",
-          "included_in_results": true
+          "P01_intake_state": "published",
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "c4e4aa6fddedd8b07c2cca9b814364a78d143295"
         }
       ]
     },
     {
       "role": "S02",
       "latest_collector_task": "FCC-20261023-S02-B0002",
-      "collector_status": "ready_frozen",
-      "collector_status_updated_at": "2026-10-23T22:29:09+09:00",
+      "collector_status": "published_waiting_next_assignment",
+      "collector_status_updated_at": "2026-10-23T22:33:12+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -72,7 +78,9 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea"
         },
         {
           "task_id": "FCC-20261023-S02-B0002",
@@ -82,16 +90,18 @@
             "ADD-S02-EMC-CASE-SCOPE-002"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "content_approved",
-          "included_in_results": true
+          "P01_intake_state": "published",
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "c4e4aa6fddedd8b07c2cca9b814364a78d143295"
         }
       ]
     },
     {
       "role": "S03",
       "latest_collector_task": "FCC-20261023-S03-B0002",
-      "collector_status": "ready_with_explicit_unknowns",
-      "collector_status_updated_at": "2026-10-23T22:29:30+09:00",
+      "collector_status": "published_waiting_for_assignment",
+      "collector_status_updated_at": "2026-10-23T22:33:15+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -104,7 +114,9 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea"
         },
         {
           "task_id": "FCC-20261023-S03-B0002",
@@ -114,16 +126,18 @@
             "ADD-S03-IEEE1528-FCC-TRANSITION-002"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "content_approved",
-          "included_in_results": true
+          "P01_intake_state": "published",
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "c4e4aa6fddedd8b07c2cca9b814364a78d143295"
         }
       ]
     },
     {
       "role": "S04",
       "latest_collector_task": "FCC-20261023-S04-B0002",
-      "collector_status": "in_progress",
-      "collector_status_updated_at": "2026-10-23T22:29:38.724259+09:00",
+      "collector_status": "complete_pending_P01_intake",
+      "collector_status_updated_at": "2026-10-23T22:35:30.688247+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -137,7 +151,9 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea"
         },
         {
           "task_id": "FCC-20261023-S04-B0002",
@@ -147,8 +163,10 @@
             "ADD-S04-VLAB-COMMAND-CONTRACT-002"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "not_received",
-          "included_in_results": false
+          "P01_intake_state": "content_approved",
+          "included_in_results": true,
+          "publication_state": "included_in_this_revision",
+          "prior_publication_sha": null
         }
       ]
     },
@@ -169,7 +187,9 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea"
         }
       ]
     },
@@ -191,15 +211,17 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea"
         }
       ]
     },
     {
       "role": "S07",
       "latest_collector_task": "FCC-20261023-S07-B0002",
-      "collector_status": "in_progress",
-      "collector_status_updated_at": "2026-10-23T22:30:28.000+09:00",
+      "collector_status": "ready_frozen",
+      "collector_status_updated_at": "2026-10-23T22:33:30.000+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -212,7 +234,9 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea"
         },
         {
           "task_id": "FCC-20261023-S07-B0002",
@@ -222,16 +246,18 @@
             "ADD-S07-VLAB-DUT-API-002"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "not_received",
-          "included_in_results": false
+          "P01_intake_state": "content_approved",
+          "included_in_results": true,
+          "publication_state": "included_in_this_revision",
+          "prior_publication_sha": null
         }
       ]
     },
     {
       "role": "S08",
       "latest_collector_task": "FCC-20261023-S08-B0003",
-      "collector_status": "in_progress",
-      "collector_status_updated_at": "2026-10-23T22:31:06+09:00",
+      "collector_status": "ready_frozen_awaiting_p01",
+      "collector_status_updated_at": "2026-10-23T22:33:25+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -244,7 +270,9 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea"
         },
         {
           "task_id": "FCC-20261023-S08-B0002",
@@ -255,7 +283,9 @@
           ],
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
-          "included_in_results": true
+          "included_in_results": true,
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "69aa22f4c354ac3ed853a45d0a9029edcd79d2d0"
         },
         {
           "task_id": "FCC-20261023-S08-B0003",
@@ -265,17 +295,15 @@
             "ADD-S08-VLAB-VALIDATION-MATERIALS-003"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "not_received",
-          "included_in_results": false
+          "P01_intake_state": "content_approved",
+          "included_in_results": true,
+          "publication_state": "included_in_this_revision",
+          "prior_publication_sha": null
         }
       ]
     }
   ],
-  "included_reviewed_batches": 13,
-  "pending_intake_task_ids": [
-    "FCC-20261023-S04-B0002",
-    "FCC-20261023-S07-B0002",
-    "FCC-20261023-S08-B0003"
-  ],
+  "included_reviewed_batches": 16,
+  "pending_intake_task_ids": [],
   "scope": "Source collection and provenance only; no method approval, equipment or site validation."
 }

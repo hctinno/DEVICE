@@ -1,0 +1,28 @@
+{
+  "task_id": "FCC-20261023-S07-B0002",
+  "created_at": "2026-10-23T22:32:45.000+09:00",
+  "classification": "evidence_boundary_for_development",
+  "implemented_here": false,
+  "available_evidence": {
+    "public_command_syntax": true,
+    "published_document_examples": true,
+    "live_device_transcript": false,
+    "oem_rf_api": false,
+    "oem_response_fixture": false,
+    "rf_measurement": false
+  },
+  "developer_virtual_contract": {
+    "defined_by": "개발팀",
+    "status": "not_defined_or_implemented_by_this_collection_batch",
+    "origin_required": "개발자가 정의한 가상 상태·응답은 합성 시뮬레이션 데이터로 표시한다.",
+    "vendor_response": false,
+    "validated_against_real_dut": false
+  },
+  "rules": [
+    "공식 문서의 예제와 개발자 합성 응답을 구분한다.",
+    "OEM 명령명·성공코드·반환 JSON·RF OFF 응답을 실재 자료인 것처럼 생성하지 않는다.",
+    "가상 연결·송신·종료가 성공해도 실장비 기능·현장 안전·적합성을 검증한 것으로 표시하지 않는다.",
+    "미확보 RF API는 unavailable로 유지하고 후속의 실제 패키지/버전/응답 증거와 별도로 연결한다."
+  ],
+  "allowed_use": "공개 문서에서 확인된 transport/로그 계약을 참고하고, 개발 전용 합성 동작으로 가상 파이프라인을 설계할 수 있다. 제조사 프로토콜의 재현이라고 부르지 않는다."
+}
