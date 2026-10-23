@@ -13,7 +13,9 @@ $env:FLOW_DOCUMENT_KIND = 'both'
 node frontend/intake_fixture_browser_check.cjs
 ```
 
-통합 전 다른 checkout의 최신 소스를 읽어야 할 때만 `FLOW_SOURCE_ROOT`를 그 checkout 경로로 지정한다. Python 경로가 기본 `.venv`와 다르면 `FLOW_PYTHON`을 지정한다. 외부 소스 모드는 `runpy.run_module`로 실제 CLI 모듈을 실행하며 지정한 source가 현재 작업 폴더보다 먼저 import되게 한다. `-B`와 `PYTHONDONTWRITEBYTECODE=1`을 사용한다. 소스 checkout에 결과를 쓰지 않는다.
+경로와 import 회귀만 확인할 때는 `node frontend/intake_fixture_browser_check.cjs --self-test`를 실행한다. 새 자기 `.local`의 작은 package 대역으로 8개 경계를 검사하고 `self-test.json`에 기록한다. 이 모드는 실제 흐름을 실행하지 않으며 Playwright가 필요 없다. Windows 대소문자 검사는 Windows에서 실행하고 다른 OS에서는 명시적으로 skip으로 남긴다. 실제 수용 검사 10개는 기본 실행으로 별도 확인해야 한다.
+
+통합 전 다른 checkout의 최신 소스를 읽어야 할 때만 `FLOW_SOURCE_ROOT`를 그 checkout 경로로 지정한다. Python 경로가 기본 `.venv`와 다르면 `FLOW_PYTHON`을 지정한다. 지정 source는 `labflow/__init__.py`와 실제 CLI 파일을 가진 정규 package여야 한다. 실행 전에 import spec과 import된 package의 `__file__`/`__path__`, CLI의 `__file__`/spec origin을 지정 root와 대조하고 검증한 실제 모듈의 `main()`을 호출한다. namespace·불완전 package·다른 checkout으로 변경된 검색 경로·캐시된 다른 package·외부 모듈로의 fallback을 거절한다. 보류 기록에도 같은 검증을 사용한다. `-B`와 `PYTHONDONTWRITEBYTECODE=1`을 사용하며 소스 checkout에 결과를 쓰지 않는다.
 
 | 환경 변수 | 기본값과 의미 |
 |---|---|
@@ -23,7 +25,7 @@ node frontend/intake_fixture_browser_check.cjs
 | `FLOW_POWER_DBM` | `-4`; 유한한 -30~20 dBm 합성 recipe 입력, 공백/NaN/범위 밖 거절 |
 | `FLOW_OUTPUT_ROOT` | 생략 시 자기 `.local/ib-XXXXXX` 새 폴더; 지정 시 자기 `.local` 안의 존재하지 않는 폴더만 허용 |
 
-기본 출력은 Windows 경로를 짧게 유지한다. TXT/PDF 실행 출력은 각각 새 증거 폴더의 `t/`, `p/`다. 지정 출력의 부모는 미리 존재해야 한다. 기존 폴더·파일·스크린샷을 덮거나 삭제하지 않으며 실패 결과도 보존한다. 출력·상위 경로의 링크는 거절한다. 기존 서버·다른 프로세스·고정 8765/8766 포트를 사용하지 않고, 직접 만든 CLI child가 port 0으로 고른 서버만 종료한다.
+기본 출력은 Windows 경로를 짧게 유지한다. TXT/PDF 실행 출력은 각각 새 증거 폴더의 `t/`, `p/`다. 지정 출력의 부모는 미리 존재해야 한다. 경로 동등성은 플랫폼의 경로 비교를 따르며 Windows 대소문자가 다른 동일 경로도 처리한다. 상위 경로 순회가 checkout까지 도달하지 못하면 drive/root에서 종료하고 거절한다. 기존 폴더·파일·스크린샷을 덮거나 삭제하지 않으며 실패 결과도 보존한다. 출력·상위 경로의 링크는 거절한다. 기존 서버·다른 프로세스·고정 8765/8766 포트를 사용하지 않고, 직접 만든 CLI child가 port 0으로 고른 서버만 종료한다.
 
 ## 검사 내용
 
@@ -39,6 +41,8 @@ node frontend/intake_fixture_browser_check.cjs
 
 두 형식을 모두 실행하면 다섯 묶음씩 총 10개, 한 형식은 5개를 통과해야 한다. 종료 코드 0과 `result.json`의 `passed=true`가 모두 있어야 성공이다. PDF 의존성이 없거나 분석/bridge/평가/표시가 실패하면 해당 시도를 실패로 남기며 다른 fixture나 TXT 결과로 대체하지 않는다.
 
-새 증거 폴더에는 `result.json`, `{text,pdf}-binding.json`, `{text,pdf}-server-log.json`, 데스크톱/모바일 PNG가 남는다. `t/`, `p/` 아래 원본·Store·공개 결과·운영 journal·비공개 작성자 자료도 유지한다. server log에는 이 도구가 만든 child PID와 종료 상태를 기록한다. 도구 자체와 주요 소스의 SHA-256을 남기며 주요 소스가 실행 중 바뀌면 성공으로 판정하지 않는다. 비공개 자료가 포함된 이 폴더를 공개 Git에 넣지 않는다.
+새 증거 폴더에는 `result.json`, `{text,pdf}-binding.json`, `{text,pdf}-server-log.json`, 데스크톱/모바일 PNG가 남는다. `t/`, `p/` 아래 원본·Store·공개 결과·운영 journal·비공개 작성자 자료도 유지한다. binding의 `source_binding`과 server log에 실제 package/CLI import 경로를, server log에는 이 도구가 만든 child PID와 종료 상태를 기록한다. 도구 자체와 주요 소스의 SHA-256을 남기며 주요 소스가 실행 중 바뀌면 성공으로 판정하지 않는다. 비공개 자료가 포함된 이 폴더를 공개 Git에 넣지 않는다.
 
 개발4의 짧은 자기 `.local` 출력에서 TXT 전용 실제 5개, TXT/PDF 실제 10개 통과를 확인했다. 기존 증거의 전체 bytes 보존, 경로/설정/결합 거절과 시작 실패 기록을 확인하는 도구 경계 5개도 통과했다. 이는 합성 fixture 수용 검사다. 실제 모델 호출·실장비·현장 업무·기관 적합성·FCC 합격·runtime 재개를 검증하지 않는다.
+
+독립 리뷰 후 Windows 대소문자 경로 무한 순회와 잘못된 source fallback을 RED로 재현해 수정했다. 해당 회귀를 포함한 경계 13개와 실제 TXT/PDF 10개를 다시 실행해 통과했다. 기존 실패·증거 폴더는 보존했다.
