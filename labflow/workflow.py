@@ -92,7 +92,8 @@ def record_run(store,plan_id,data,raw_path=None):
     for key in ['settings','environment']:_mapping(data.get(key),key)
     for key in ['equipment_ids','setup_artifact_ids','calibration_artifact_ids']:_ids(data.get(key),key,allow_empty=True)
     for sha in data['setup_artifact_ids']+data['calibration_artifact_ids']:store.verify_blob(sha)
-    raw_sha=store.import_artifact(raw_path,'raw') if raw_path is not None else None
+    case=store.row('cases',plan['case_id'])
+    raw_sha=store.import_artifact(raw_path,'raw',synthetic=bool(case['synthetic'])) if raw_path is not None else None
     # The raw hash is part of the immutable run record, so retry cannot replace raw bytes.
     record={**data,'plan_id':plan_id,'raw_sha256':raw_sha}
     return _insert(store,'runs','run_id',record,{'plan_id':plan_id,'raw_sha256':raw_sha})
@@ -153,6 +154,12 @@ def _invalid_number(value):
     raise ValueError('JSON contains nonfinite numeric literal: '+value)
 
 
+def _check_measurement_identity(value,expected):
+    _mapping(value,'observation')
+    for key,identity in expected.items():
+        if key in value and value[key]!=identity:raise ValueError('identity_mismatch:'+key)
+
+
 def evaluate(store,run_id):
     run=store.row('runs',run_id);plan=store.row('plans',run['plan_id']);case=store.row('cases',plan['case_id'])
     method=store.row('methods',plan['method_id']);profile=method['data']
@@ -161,15 +168,24 @@ def evaluate(store,run_id):
     if run['review_status']!='reviewed':blockers.append('run_unreviewed')
     blockers+=_run_blockers(store,run)
     if case['data']['authorization_route']=='undetermined':blockers.append('authorization_route_undetermined')
-    synthetic=bool(case['synthetic']) or any(d['synthetic'] for d in sources)
-    if synthetic and not case['synthetic']:blockers.append('synthetic_source_in_real_case')
+    evidence_hashes=set(run['data']['setup_artifact_ids']+run['data']['calibration_artifact_ids'])
+    if run['raw_sha256']:evidence_hashes.add(run['raw_sha256'])
+    synthetic_evidence=sorted(sha for sha in evidence_hashes if store.evidence_is_synthetic(sha))
+    synthetic_source=any(d['synthetic'] for d in sources)
+    synthetic=bool(case['synthetic']) or synthetic_source or bool(synthetic_evidence)
+    if not case['synthetic']:
+        if synthetic_source:blockers.append('synthetic_source_in_real_case')
+        if synthetic_evidence:blockers.append('synthetic_evidence_in_real_case')
     calculations=[];limit=profile['limit']
     if run['raw_sha256'] and 'raw_corrupt' not in blockers:
         try:
             raw=json.loads(store.verify_blob(run['raw_sha256']).read_text(),parse_constant=_invalid_number)
+            identity={'case_id':plan['case_id'],'plan_id':run['plan_id'],'run_id':run_id}
+            _check_measurement_identity(raw,identity)
             observations=raw.get('observations',[raw]) if isinstance(raw,dict) else None
             if not isinstance(observations,list) or not observations:raise ValueError('No observations')
             for index,observation in enumerate(observations):
+                _check_measurement_identity(observation,identity)
                 computed=calculate(profile['calculator'],observation)
                 if computed['unit']!=limit['unit']:raise ValueError('Result and limit unit mismatch')
                 margin=(number(limit['value'])-computed['value']) if limit['operator']=='<=' else (computed['value']-number(limit['value']))
@@ -181,7 +197,7 @@ def evaluate(store,run_id):
     decision='blocked' if blockers else ('pass' if all(c['within_limit'] for c in calculations) else 'fail')
     if synthetic and decision!='blocked':decision='simulated_'+decision
     result={'run_id':run_id,'case_id':plan['case_id'],'plan_id':run['plan_id'],'method_id':plan['method_id'],
-            'raw_sha256':run['raw_sha256'],'synthetic':synthetic,'decision':decision,'blockers':blockers,
+            'raw_sha256':run['raw_sha256'],'synthetic':synthetic,'synthetic_evidence_sha256':synthetic_evidence,'decision':decision,'blockers':blockers,
             'calculations':calculations,'limit':limit,'source_document_ids':profile['source_document_ids'],
             'official_release_available':False}
     serialized=canonical(result);fingerprint=hashlib.sha256(serialized.encode()).hexdigest()
@@ -206,8 +222,14 @@ def case_status(store,case_id):
         else:
             result=evaluate(store,attempts[-1]['run_id']);results.append(result)
             blockers.extend(result['blockers'])
+    run_data=[json.loads(r['data_json']) for r in runs]
+    evidence_hashes=set()
+    for run in run_data:
+        evidence_hashes.update(run['setup_artifact_ids']+run['calibration_artifact_ids'])
+        if run['raw_sha256']:evidence_hashes.add(run['raw_sha256'])
+    synthetic_evidence=sorted(sha for sha in evidence_hashes if store.evidence_is_synthetic(sha))
     return {'case_id':case_id,'case':case['data'],'plans':[json.loads(p['data_json']) for p in plans],
-            'runs':[json.loads(r['data_json']) for r in runs],'results':results,
+            'runs':run_data,'results':results,'synthetic_evidence_sha256':synthetic_evidence,
             'blockers':sorted(set(blockers)),'workflow_status':'draft_report_available',
             'official_release_available':False,'hardware_connected':False,
-            'regulatory_scope_complete':False,'synthetic':bool(case['synthetic']) or any(r['synthetic'] for r in results)}
+            'regulatory_scope_complete':False,'synthetic':bool(case['synthetic']) or bool(synthetic_evidence) or any(r['synthetic'] for r in results)}

@@ -1,0 +1,39 @@
+{
+  "prepared_at_kst": "2026-10-23T17:15:06.401577+09:00",
+  "readiness_items": 44,
+  "scope_candidates": 20,
+  "source_entries": 27,
+  "acceptance_criteria": 14,
+  "xlsx_checks": "passed",
+  "pipeline_implemented": false,
+  "current_kdb_attachments_acquired": false,
+  "updated_at_utc": "2026-10-23T09:55:44.155132+00:00",
+  "public_source_acquisition_owner": "external_collection_agent_requested_by_user",
+  "raw_validation_data_status": "user_has_materials_not_provided_use_for_later_independent_validation",
+  "source_acquisition_catalog": "data/regulatory/fcc/catalog.json",
+  "source_acquisition_summary": {
+    "records": 24,
+    "official_regulation_extracts": 13,
+    "kdb_search_index_records": 4,
+    "original_files_acquired": 0,
+    "current_kdb_attachments_acquired": 0
+  },
+  "format_design_basis": "regulations_and_standard_methods_before_legacy_formats",
+  "format_template_entities": 11,
+  "format_fields": 101,
+  "report_requirement_mappings": 16,
+  "offline_core_implemented": true,
+  "live_hardware_implemented": false,
+  "official_release_implemented": false,
+  "full_fcc_domain_verified": false,
+  "core_capabilities": [
+    "collector_package_intake",
+    "immutable_evidence",
+    "cases_methods_plans_runs",
+    "two_generic_calculators",
+    "draft_html_pdf_json",
+    "stdio_mcp"
+  ],
+  "collection_request_package": "exports/agent_collection_request.zip",
+  "pipeline_usage": "docs/fcc/pipeline_usage.md"
+}

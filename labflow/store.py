@@ -29,6 +29,12 @@ class Store:
         self.db=self.root/'lab.sqlite3'
         with self.connection() as con:
             con.executescript(Path(__file__).with_name('schema.sql').read_text())
+            if 'synthetic' not in {r['name'] for r in con.execute('PRAGMA table_info(blobs)')}:
+                con.execute('ALTER TABLE blobs ADD COLUMN synthetic INTEGER NOT NULL DEFAULT 0')
+            # Preserve provenance when opening stores created by the first core version.
+            con.execute("UPDATE blobs SET synthetic=1 WHERE kind='synthetic_evidence' OR sha256 IN (SELECT sha256 FROM documents WHERE synthetic=1)")
+            con.execute('UPDATE blobs SET synthetic=1 WHERE sha256 IN '
+                        '(SELECT r.raw_sha256 FROM runs r JOIN plans p USING(plan_id) JOIN cases c USING(case_id) WHERE c.synthetic=1)')
 
     @contextmanager
     def connection(self):
@@ -60,22 +66,36 @@ class Store:
         except FileExistsError:self.verify_blob(sha)
         return sha
 
-    def import_artifact(self,path,kind='raw'):
+    def register_blob(self,con,sha,size,kind,synthetic=False):
+        if not isinstance(synthetic,bool):raise ValueError('synthetic must be boolean')
+        con.execute('INSERT INTO blobs(sha256,bytes,kind,synthetic) VALUES(?,?,?,?) '
+                    'ON CONFLICT(sha256) DO UPDATE SET synthetic=MAX(blobs.synthetic,excluded.synthetic)',
+                    (sha,size,kind,int(synthetic)))
+
+    def evidence_is_synthetic(self,sha):
+        if not sha:return False
+        with self.connection() as con:
+            row=con.execute('SELECT synthetic FROM blobs WHERE sha256=?',(sha,)).fetchone()
+        return bool(row and row['synthetic'])
+
+    def import_artifact(self,path,kind='raw',*,synthetic=False):
+        if not isinstance(synthetic,bool):raise ValueError('synthetic must be boolean')
         path=Path(path)
         if not path.is_file() or path.stat().st_size>536870912:raise ValueError('Missing or oversized artifact')
         payload=path.read_bytes()
         if not payload:raise ValueError('Empty artifact')
         sha=self.write_blob(payload)
         with self.connection() as con:
-            con.execute('INSERT OR IGNORE INTO blobs VALUES(?,?,?)',(sha,len(payload),kind))
-            self.event(con,'artifact.import',sha,{'kind':kind})
+            self.register_blob(con,sha,len(payload),kind,synthetic)
+            self.event(con,'artifact.import',sha,{'kind':kind,'synthetic_declared':synthetic})
         return sha
 
     def document(self,document_id):
         with self.connection() as con:
             row=con.execute('SELECT * FROM documents WHERE document_id=?',(document_id,)).fetchone()
         if row is None:raise ValueError('Unknown document: '+str(document_id))
-        return {**json.loads(row['record_json']),'sha256':row['sha256'],'review_status':row['review_status'],'synthetic':bool(row['synthetic'])}
+        return {**json.loads(row['record_json']),'sha256':row['sha256'],'review_status':row['review_status'],
+                'synthetic':bool(row['synthetic']) or self.evidence_is_synthetic(row['sha256'])}
 
     def documents(self):
         with self.connection() as con:ids=[r[0] for r in con.execute('SELECT document_id FROM documents ORDER BY document_id')]

@@ -17,6 +17,9 @@ def main():
     sub.add_parser('init');sub.add_parser('documents');sub.add_parser('mcp')
     for name in ['import-package','create-case','register-method']:
         sub.add_parser(name).add_argument('file')
+    artifact=sub.add_parser('import-artifact');artifact.add_argument('file');artifact.add_argument('--kind',required=True)
+    provenance=artifact.add_mutually_exclusive_group(required=True)
+    provenance.add_argument('--synthetic',action='store_true');provenance.add_argument('--real',action='store_true')
     plan=sub.add_parser('add-plan');plan.add_argument('case_id');plan.add_argument('file')
     run=sub.add_parser('record-run');run.add_argument('plan_id');run.add_argument('file');run.add_argument('--raw')
     for name in ['evaluate','status']:sub.add_parser(name).add_argument('id')
@@ -31,6 +34,9 @@ def main():
         if cmd=='init':result={'workspace':str(store.root),'status':'initialized','hardware_connected':False,'official_release_available':False}
         elif cmd=='documents':result=store.documents()
         elif cmd=='import-package':result=import_package(store,args.file)
+        elif cmd=='import-artifact':
+            sha=store.import_artifact(args.file,args.kind,synthetic=args.synthetic)
+            result={'sha256':sha,'synthetic':store.evidence_is_synthetic(sha)}
         elif cmd=='create-case':result=create_case(store,data())
         elif cmd=='register-method':result=register_method(store,data())
         elif cmd=='add-plan':result=add_plan(store,args.case_id,data())

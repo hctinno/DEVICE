@@ -7,14 +7,12 @@ from pathlib import Path
 import uuid
 
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.cidfonts import UnicodeCIDFont
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
 
-from .store import canonical
 from .workflow import case_status
 
 
@@ -106,7 +104,7 @@ def render_report(store,case_id,output_dir):
     if font not in pdfmetrics.getRegisteredFontNames():pdfmetrics.registerFont(UnicodeCIDFont(font))
     style=ParagraphStyle('body',fontName=font,fontSize=8.5,leading=12,spaceAfter=4,wordWrap='CJK')
     title_style=ParagraphStyle('title',parent=style,fontSize=17,leading=22,spaceAfter=14)
-    heading_style=ParagraphStyle('heading',parent=style,fontSize=12,leading=17,spaceBefore=12,spaceAfter=8)
+    heading_style=ParagraphStyle('heading',parent=style,fontSize=12,leading=17,spaceBefore=12,spaceAfter=8,keepWithNext=True)
     story=[Paragraph(escape(label+'DRAFT — FCC workflow report'),title_style),Paragraph(escape(payload['release_note']),style)]
     for title,headers,rows in sections:
         story.append(Paragraph(escape(title),heading_style))

@@ -218,6 +218,79 @@ class WorkflowTests(unittest.TestCase):
         result=evaluate(self.store,'SIMRUN')
         self.assertTrue(result['synthetic']);self.assertEqual(result['decision'],'simulated_pass')
 
+    def test_synthetic_package_evidence_cannot_be_reused_as_real_measurement(self):
+        archive=package(self.root/'synthetic.zip',self.raw.read_bytes(),document_id='SYN-RAW',package_id='SYN-PKG',
+            mutate=lambda m:m.update(synthetic=True))
+        import_package(self.store,archive)
+        self.record();self.review();result=evaluate(self.store,'RUN-1')
+        self.assertTrue(result['synthetic'])
+        self.assertEqual(result['decision'],'blocked')
+        self.assertIn('synthetic_evidence_in_real_case',result['blockers'])
+        report=render_report(self.store,'CASE-1',self.root/'reports')
+        self.assertTrue(json.loads(Path(report['json']).read_text())['synthetic'])
+
+    def test_explicit_artifact_provenance_survives_reimport_and_reopen(self):
+        sha=self.store.import_artifact(self.raw,'raw',synthetic=True)
+        self.store.import_artifact(self.raw,'raw',synthetic=False)
+        self.store=Store(self.store.root)
+        self.assertTrue(self.store.evidence_is_synthetic(sha))
+        self.record();self.review()
+        self.assertEqual(evaluate(self.store,'RUN-1')['decision'],'blocked')
+
+    def test_legacy_store_recovers_synthetic_run_provenance(self):
+        create_case(self.store,{'case_id':'SIM','authorization_route':'certification','product':{'manufacturer':'Fixture','model':'Synthetic'},'scope_ids':['F02'],'synthetic':True})
+        add_plan(self.store,'SIM',{'plan_id':'SIMPLAN','method_id':'METHOD-1','configuration':{'mode':'fixture'},'applicability':'applicable','rationale':'fixture'})
+        run=record_run(self.store,'SIMPLAN',{**self.run,'run_id':'SIMRUN','case_id':'SIM'},self.raw)
+        with self.store.connection() as con:con.execute('ALTER TABLE blobs DROP COLUMN synthetic')
+        self.store=Store(self.store.root)
+        self.assertTrue(self.store.evidence_is_synthetic(run['raw_sha256']))
+
+    def test_report_labels_synthetic_evidence_in_previous_attempts(self):
+        self.store.import_artifact(self.raw,'raw',synthetic=True)
+        self.record();self.review()
+        data=json.loads(self.raw.read_text());data['reading']=31;self.raw.write_text(json.dumps(data))
+        record_run(self.store,'PLAN-1',{**self.run,'run_id':'CLEAN-RUN'},self.raw)
+        review_run(self.store,'CLEAN-RUN','r','fixture')
+        self.assertEqual(evaluate(self.store,'CLEAN-RUN')['decision'],'pass')
+        report=render_report(self.store,'CASE-1',self.root/'reports')
+        self.assertTrue(json.loads(Path(report['json']).read_text())['synthetic'])
+
+    def test_synthetic_setup_and_calibration_each_block_real_case(self):
+        fixture=self.root/'synthetic.txt';fixture.write_text('explicit synthetic evidence')
+        archive=package(self.root/'synthetic.zip',fixture.read_bytes(),document_id='SYN-EVIDENCE',package_id='SYN-PKG',
+            mutate=lambda m:m.update(synthetic=True))
+        import_package(self.store,archive)
+        sha=hashlib.sha256(fixture.read_bytes()).hexdigest()
+        self.store.review_document('DOC-1','r','fixture');review_method(self.store,'METHOD-1','r','fixture')
+        for field in ['setup_artifact_ids','calibration_artifact_ids']:
+            with self.subTest(field=field):
+                run={**self.run,'run_id':field,field:[sha]}
+                record_run(self.store,'PLAN-1',run,self.raw);review_run(self.store,field,'r','fixture')
+                result=evaluate(self.store,field)
+                self.assertTrue(result['synthetic']);self.assertEqual(result['decision'],'blocked')
+
+    def test_raw_identity_mismatches_block_single_observation_and_envelope(self):
+        observation=json.loads(self.raw.read_text())
+        self.store.review_document('DOC-1','r','fixture');review_method(self.store,'METHOD-1','r','fixture')
+        for position in ['single','envelope','observation']:
+            for field in ['case_id','plan_id','run_id']:
+                with self.subTest(position=position,field=field):
+                    run_id=position+'-'+field
+                    if position=='single':raw={**observation,field:'OTHER'}
+                    elif position=='envelope':raw={'observations':[observation],field:'OTHER'}
+                    else:raw={'observations':[{**observation,field:'OTHER'}]}
+                    self.raw.write_text(json.dumps(raw))
+                    record_run(self.store,'PLAN-1',{**self.run,'run_id':run_id},self.raw)
+                    review_run(self.store,run_id,'r','fixture');result=evaluate(self.store,run_id)
+                    self.assertEqual(result['decision'],'blocked')
+                    self.assertTrue(any('identity_mismatch:'+field in b for b in result['blockers']))
+
+    def test_matching_raw_identity_is_accepted(self):
+        self.raw.write_text(json.dumps({'case_id':'CASE-1','plan_id':'PLAN-1','run_id':'RUN-1',
+            'observations':[json.loads(self.raw.read_text())]}))
+        self.record();self.review()
+        self.assertEqual(evaluate(self.store,'RUN-1')['decision'],'pass')
+
     def test_report_is_draft_and_contains_traceable_raw_evidence(self):
         self.record();result=render_report(self.store,'CASE-1',self.root/'reports')
         html=Path(result['html']).read_text();data=json.loads(Path(result['json']).read_text())
@@ -249,6 +322,49 @@ class CommandTests(unittest.TestCase):
             self.assertTrue(report['synthetic']);self.assertEqual(report['results'][0]['calculations'][0]['value'],22)
             self.assertEqual(report['results'][0]['decision'],'blocked')
             self.assertTrue(Path(data['report']['pdf']).exists())
+
+
+class MCPTransportTests(unittest.IsolatedAsyncioTestCase):
+    async def test_stdio_client_can_complete_offline_draft_workflow(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);archive=package(root/'source.zip',mutate=lambda m:m.update(synthetic=True))
+            evidence=root/'setup.txt';evidence.write_text('synthetic setup/calibration')
+            raw=root/'raw.json';raw.write_text(json.dumps({'case_id':'MCP-CASE','plan_id':'MCP-PLAN','run_id':'MCP-RUN',
+                'reading':30,'unit':'dBm'}))
+            parameters=StdioServerParameters(command=sys.executable,args=['-m','labflow','--workspace',str(root/'store'),'mcp'],
+                cwd=str(Path(__file__).resolve().parents[1]))
+            async with stdio_client(parameters) as (read,write):
+                async with ClientSession(read,write) as session:
+                    await session.initialize()
+                    names={tool.name for tool in (await session.list_tools()).tools}
+                    self.assertIn('lab_import_artifact',names)
+                    self.assertFalse(any('review' in name for name in names))
+                    async def call(name,arguments=None):
+                        result=await session.call_tool(name,arguments or {})
+                        self.assertFalse(result.isError,result.content)
+                        return result.structuredContent
+                    capabilities=await call('lab_capabilities')
+                    self.assertFalse(capabilities['live_hardware']);self.assertFalse(capabilities['official_release'])
+                    await call('lab_import_package',{'zip_path':str(archive)})
+                    imported=await call('lab_import_artifact',{'path':str(evidence),'kind':'setup','synthetic':True})
+                    sha=imported['sha256']
+                    await call('lab_create_case',{'data':{'case_id':'MCP-CASE','authorization_route':'certification',
+                        'product':{'manufacturer':'Synthetic','model':'Fixture'},'scope_ids':['F03'],'synthetic':True}})
+                    await call('lab_register_method',{'data':{'method_id':'MCP-METHOD','scope_id':'F03','calculator':'rf_power',
+                        'source_document_ids':['DOC-1'],'limit':{'value':2,'unit':'W','operator':'<=','source_document_id':'DOC-1','clause':'fictional threshold'}}})
+                    await call('lab_add_plan',{'case_id':'MCP-CASE','data':{'plan_id':'MCP-PLAN','method_id':'MCP-METHOD',
+                        'applicability':'applicable','configuration':{'mode':'fixture'},'rationale':'Transport test only'}})
+                    await call('lab_record_run',{'plan_id':'MCP-PLAN','raw_path':str(raw),'data':{'run_id':'MCP-RUN','case_id':'MCP-CASE',
+                        'started_at':'2026-10-23T09:00:00Z','ended_at':'2026-10-23T09:01:00Z','execution_status':'completed',
+                        'settings':{'mode':'fixture'},'environment':{'temperature_c':23},'equipment_ids':['SYNTHETIC'],
+                        'setup_artifact_ids':[sha],'calibration_artifact_ids':[sha]}})
+                    evaluated=await call('lab_evaluate',{'run_id':'MCP-RUN'})
+                    self.assertEqual(evaluated['calculations'][0]['value'],1)
+                    self.assertEqual(evaluated['decision'],'blocked');self.assertTrue(evaluated['synthetic'])
+                    report=await call('lab_render_report',{'case_id':'MCP-CASE','output_dir':str(root/'reports')})
+                    self.assertTrue(Path(report['pdf']).is_file())
 
 
 if __name__=='__main__':unittest.main()

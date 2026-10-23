@@ -86,7 +86,7 @@ def import_package(store,path):
             sha=None
             if doc['status']=='downloaded':
                 sha=store.write_blob(payloads[doc['path']])
-                con.execute('INSERT OR IGNORE INTO blobs VALUES(?,?,?)',(sha,doc['bytes'],doc['kind']))
+                store.register_blob(con,sha,doc['bytes'],doc['kind'],manifest.get('synthetic',False))
             con.execute('INSERT OR IGNORE INTO documents(document_id,package_id,sha256,record_json,synthetic) VALUES(?,?,?,?,?)',
                         (doc['document_id'],package_id,sha,canonical(doc),int(manifest.get('synthetic',False))))
         store.event(con,'package.import',package_id,summary)

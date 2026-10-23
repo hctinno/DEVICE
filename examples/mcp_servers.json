@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "fcc-lab-workflow": {
+      "command": "python",
+      "args": ["-m", "labflow", "--workspace", "/workspace/DEVICE/data/labflow", "mcp"],
+      "env": {"PYTHONPATH": "/workspace/DEVICE"}
+    }
+  }
+}

@@ -30,7 +30,7 @@ def run_demo(store,output_dir):
     add_plan(store,case_id,{'plan_id':plan_id,'method_id':method_id,'configuration':{'mode':'synthetic'},'applicability':'applicable','rationale':'Software arithmetic fixture only'})
     raw=inputs/'raw.json';raw.write_text(json.dumps({'reading':30,'unit':'dBuV','antenna_factor_db_per_m':10,'cable_loss_db':2,'preamp_gain_db':20,'instrument_corrections_applied':False}))
     setup=inputs/'setup.txt';setup.write_text('SYNTHETIC setup/calibration placeholder. Not an actual laboratory record.')
-    evidence=store.import_artifact(setup,'synthetic_evidence');run_id='DEMO-RUN-'+suffix
+    evidence=store.import_artifact(setup,'setup',synthetic=True);run_id='DEMO-RUN-'+suffix
     record_run(store,plan_id,{'run_id':run_id,'case_id':case_id,'started_at':'2026-10-23T00:00:00Z','ended_at':'2026-10-23T00:01:00Z','execution_status':'completed',
         'settings':{'detector':'synthetic only'},'environment':{'temperature_c':23},'equipment_ids':['SYNTHETIC-ASSET'],'setup_artifact_ids':[evidence],'calibration_artifact_ids':[evidence]},raw)
     result=evaluate(store,run_id)
