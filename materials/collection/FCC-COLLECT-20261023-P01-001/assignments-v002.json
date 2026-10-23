@@ -1,0 +1,246 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "activation": "approved",
+  "created_at": "2026-10-23T21:37:43.080007+09:00",
+  "tasks": [
+    {
+      "task_id": "FCC-20261023-S01-B0001",
+      "batch_id": "FCC-20261023A-S01-B0001",
+      "attempt": 1,
+      "owner_session": "S01",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v002",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S01-WIFI24-METHOD-INDEX-001",
+        "ADD-S01-KDB-ATTACHMENT-DELTA-001"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "FCC-SEC-15.247",
+        "FCC-SEC-15.31",
+        "FCC-SEC-15.33",
+        "FCC-SEC-15.35",
+        "FCC-SEC-15.37",
+        "FCC-SEC-15.38",
+        "KDB-558074",
+        "KDB-662911",
+        "KDB-913591",
+        "STD-001",
+        "STD-002",
+        "STD-003"
+      ],
+      "priority": "P0",
+      "scope_classification": "current_FCC",
+      "scope": "Legacy 인계를 먼저 마친 뒤 §15.247 b/g/n 시험항목·필수 입력·기록의 근거 색인, KDB 558074/662911/913591의 공식 첨부 완전성/판본/대체 관계를 기존 원문과 대조한다. 이미 가진 원문은 참조하고 새/누락 첨부만 취득한다. 문서 최신성과 FCC 허용 판본을 구별한다.",
+      "completion_criteria": "최소 6개 시험/입력/기록 근거 항목과 실제 조항/페이지/표; KDB 3개 publication별 첨부 대조와 미확인 표시; 기존 원문 재수집 0.",
+      "original_limit": 6,
+      "status": "prepared",
+      "legacy_policy": "Existing completed/in-progress originals remain S01-owned. Reuse source index; download only genuinely missing/new originals within this task. Unexpected legacy active scope => report and leave reserved, never duplicate."
+    },
+    {
+      "task_id": "FCC-20261023-S02-B0001",
+      "batch_id": "FCC-20261023A-S02-B0001",
+      "attempt": 1,
+      "owner_session": "S02",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v002",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S02-EMC-BGN-CONDITIONS-001"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "FCC-PART-15",
+        "FCC-SEC-15.31",
+        "FCC-SEC-15.33",
+        "FCC-SEC-15.35",
+        "FCC-SEC-15.38",
+        "FCC-SEC-15.207",
+        "STD-004",
+        "STD-005",
+        "STD-006"
+      ],
+      "priority": "P0",
+      "scope_classification": "current_FCC",
+      "scope": "기존 Part15/KDB/판본 자료를 참조하여 스마트폰 디지털기기·충전/AC연결·주변기기 조건과 b/g/n 방출 방법의 연결을 색인한다. §15.101/15.107/15.109/15.207 적용 조건 및 detector/bandwidth/distance/frequency/configuration/site 근거를 확인하되 내성시험을 FCC 필수로 넣지 않는다. 기존 구매필요 표준은 재시도하지 않고 접근/근거 공백을 남긴다.",
+      "completion_criteria": "최소 6개 조건/측정/보고 항목별 근거 위치 또는 근거 공백; 현행 법령/허용 표준 판본의 구별; 원문 소유 S01 참조.",
+      "original_limit": 6,
+      "status": "prepared",
+      "legacy_policy": "Existing completed/in-progress originals remain S01-owned. Reuse source index; download only genuinely missing/new originals within this task. Unexpected legacy active scope => report and leave reserved, never duplicate."
+    },
+    {
+      "task_id": "FCC-20261023-S03-B0001",
+      "batch_id": "FCC-20261023A-S03-B0001",
+      "attempt": 1,
+      "owner_session": "S03",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v002",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S03-WIFI24-SAR-INDEX-001",
+        "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "KDB-447498",
+        "KDB-248227",
+        "KDB-865664",
+        "FCC-SEC-2.1093",
+        "FCC-PART-1",
+        "FCC-PART-2"
+      ],
+      "priority": "P0",
+      "scope_classification": "current_FCC",
+      "scope": "기존 KDB447498/248227/865664와 노출 조문을 재사용하여 스마트폰/Wi-Fi SAR 연결, 제품입력/사용위치/거리/동시송신/출력제어/측정·보고 근거를 색인한다. 공식 publication 첨부·전환 관계를 현재 원문과 대조하고 새/누락 첨부만 취득한다. SAR/MPE/PD/HAC를 구별하고 제품 적합성을 판정하지 않는다.",
+      "completion_criteria": "최소 6개 근거 항목과 실제 조항/페이지; KDB3개 첨부 대조; 실제 DUT 입력 미제공 목록; 기존 원문 중복 0.",
+      "original_limit": 6,
+      "status": "prepared",
+      "legacy_policy": "Existing completed/in-progress originals remain S01-owned. Reuse source index; download only genuinely missing/new originals within this task. Unexpected legacy active scope => report and leave reserved, never duplicate."
+    },
+    {
+      "task_id": "FCC-20261023-S04-B0001",
+      "batch_id": "FCC-20261023A-S04-B0001",
+      "attempt": 1,
+      "owner_session": "S04",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v002",
+      "activation": "approved",
+      "request_ids": [
+        "EQ-MOD-aecdf6d16380a2be",
+        "EQ-MOD-c40c6c5f1b4e7ca9",
+        "EQ-MOD-48a20d5887cbe5bc"
+      ],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9",
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "reference_request_ids": [],
+      "priority": "P0",
+      "scope_classification": "support_resource",
+      "scope": "Agilent N9030A, Keysight N9030A, Keysight N1914A의 공식 조작/프로그래밍/동기화·오류·원시값 전송·입력한계·옵션 문서를 첫 전도 출력 후보로 조사한다. 역사적 제조사/모델 ID는 유지하고 공통 문서는 한 원본으로 연결한다. 정확한 현장 모델을 확정하지 않는다. 기존 manufacturer_sources와 legacy에서 같은 원문이 있으면 참조만 한다.",
+      "completion_criteria": "3개 모델 ID의 식별/적용범위, 분석기/전력계 각 문서군의 출처·실제 확보/제한 상태; ID/설정조회/동기화/오류/값전송 근거 또는 공백.",
+      "original_limit": 6,
+      "status": "prepared",
+      "legacy_policy": "Existing completed/in-progress originals remain S01-owned. Reuse source index; download only genuinely missing/new originals within this task. Unexpected legacy active scope => report and leave reserved, never duplicate."
+    },
+    {
+      "task_id": "FCC-20261023-S05-B0001",
+      "batch_id": "FCC-20261023A-S05-B0001",
+      "attempt": 1,
+      "owner_session": "S05",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v002",
+      "activation": "approved",
+      "request_ids": [
+        "EQ-MOD-708c2272f105c511",
+        "EQ-MOD-4e657354694908fa"
+      ],
+      "model_ids": [
+        "MOD-708c2272f105c511",
+        "MOD-4e657354694908fa"
+      ],
+      "reference_request_ids": [],
+      "priority": "P0",
+      "scope_classification": "support_resource",
+      "scope": "SPEAG DAE4와 DASY5 Server의 정확한 세대/역할/공식 문서·데이터교환·호환/교정 조건을 조사한다. 기존 speag_sources 및 로컬 제한 원문은 읽기 참조하고 DAE4ip/DASY6를 해당 모델로 일반화하지 않는다. 실제 프로브/DAQ교정·시스템검증 결과는 미제공이다.",
+      "completion_criteria": "2개 모델 문서군의 공식 출처/확보·접근제한, DAE4와 DAE4ip/DASY5와 DASY6의 적용범위, 내보내기/API·교정파일 근거 또는 공백.",
+      "original_limit": 6,
+      "status": "prepared",
+      "legacy_policy": "Existing completed/in-progress originals remain S01-owned. Reuse source index; download only genuinely missing/new originals within this task. Unexpected legacy active scope => report and leave reserved, never duplicate."
+    },
+    {
+      "task_id": "FCC-20261023-S06-B0001",
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "attempt": 1,
+      "owner_session": "S06",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v002",
+      "activation": "approved",
+      "request_ids": [
+        "EQ-MOD-f183d948fc590a8b",
+        "EQ-MOD-207e69830324252e",
+        "EQ-MOD-6b92cbf630670c77"
+      ],
+      "model_ids": [
+        "MOD-f183d948fc590a8b",
+        "MOD-207e69830324252e",
+        "MOD-6b92cbf630670c77"
+      ],
+      "reference_request_ids": [],
+      "priority": "P0",
+      "scope_classification": "support_resource",
+      "scope": "ETS EMCO Model2090 Multi-Device Controller, ETS-Lindgren2090, INNCO CO3000-4port의 정확한 공식 명령/상태/완료/정지/한계/통신 근거를 조사한다. legacy CO3000/CO2000 원문은 소유 S01을 참조하고 4port 적용을 확인 없이 일반화하지 않는다. 전도 RF경로 보정/포트/실제배선은 현장 미제공 목록에 남긴다.",
+      "completion_criteria": "3개 모델 ID의 식별·문서 적용범위, 상태/완료/정지·인터록 근거 또는 미공개 표시; 사이트/실장비 접근 0.",
+      "original_limit": 6,
+      "status": "prepared",
+      "legacy_policy": "Existing completed/in-progress originals remain S01-owned. Reuse source index; download only genuinely missing/new originals within this task. Unexpected legacy active scope => report and leave reserved, never duplicate."
+    },
+    {
+      "task_id": "FCC-20261023-S07-B0001",
+      "batch_id": "FCC-20261023A-S07-B0001",
+      "attempt": 1,
+      "owner_session": "S07",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v002",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S07-ADB-OFFICIAL-001",
+        "ADD-S07-WIFI24-TESTMODE-INPUT-001"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "LOCAL-005",
+        "LOCAL-006",
+        "LOCAL-009",
+        "DEV-VISA",
+        "DEV-IVI"
+      ],
+      "priority": "P0",
+      "scope_classification": "support_resource",
+      "scope": "Android 개발자/AOSP의 공식 ADB·logcat·Wi-Fi 관련 도구 문서에서 접근/권한/명령호출·오류/로그 인터페이스를 수집한다. 일반 ADB 또는 에뮬레이터 지원을 실제 제조사 b/g/n RF 시험모드로 간주하지 않는다. 제조사 송신모드에 필요한 FW/칩셋/도구/라이선스/기능·응답·종료 확인 입력 명세를 작성하되 실제 DUT는 미지정으로 둔다. VISA/IVI는 legacy 참조만 하고 재수집하지 않는다.",
+      "completion_criteria": "공식 Android/AOSP 원문 최대 4개와 권리 근거; ADB지원/미확인 RF기능 구별; LOCAL006/009와 연결된 제품·도구 입력 명세.",
+      "original_limit": 4,
+      "status": "prepared",
+      "legacy_policy": "Existing completed/in-progress originals remain S01-owned. Reuse source index; download only genuinely missing/new originals within this task. Unexpected legacy active scope => report and leave reserved, never duplicate."
+    },
+    {
+      "task_id": "FCC-20261023-S08-B0001",
+      "batch_id": "FCC-20261023A-S08-B0001",
+      "attempt": 1,
+      "owner_session": "S08",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v002",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S08-WIFI24-REPORT-FIELDS-001",
+        "ADD-S08-CASE-LINKS-001"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "DISC-REPORTS",
+        "DISC-EA",
+        "DISC-LABS",
+        "KDB-865664",
+        "FCC-SEC-2.1033",
+        "STD-010",
+        "STD-019",
+        "LOCAL-001",
+        "LOCAL-003",
+        "LOCAL-010"
+      ],
+      "priority": "P0",
+      "scope_classification": "current_FCC",
+      "scope": "기존 단일 공개사례 A3LSMS938U의 RF/EMC/SAR/셋업 첨부와 공식 보고/추적성 근거를 읽어 b/g/n 원시값·설정·보정·단위·시료/장비·판정·불확도·검토 요구 색인을 만든다. 이미 받은 사례21개를 다시 다운로드하지 않는다. 공식 요구/사례 관행/제안을 구별하며 성적서 그림을 계측기 raw로 표시하지 않는다. 구매 필요 ISO 원문은 대체하지 않는다.",
+      "completion_criteria": "최소 12개 필드에 문서ID/조항·페이지 또는 근거 미확보 표시; 같은 FCC ID의 사례 연결; 실제 raw/교정/발행권한 미제공 목록.",
+      "original_limit": 6,
+      "status": "prepared",
+      "legacy_policy": "Existing completed/in-progress originals remain S01-owned. Reuse source index; download only genuinely missing/new originals within this task. Unexpected legacy active scope => report and leave reserved, never duplicate."
+    }
+  ],
+  "legacy_original_owner": "S01",
+  "rule": "Collectors write only their own local directories; P01 alone controls Git. Existing original IDs and source files are preserved."
+}

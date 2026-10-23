@@ -1,0 +1,24 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "checked_at": "2026-10-23T21:41:49.198203+09:00",
+  "public_originals": {
+    "records": 465,
+    "unique_sha256": 465,
+    "media_type_counts": {
+      "text/html": 193,
+      "application/pdf": 197,
+      "application/xml": 22,
+      "text/plain; charset=utf-8": 53
+    },
+    "collector_metadata_excluded": 1
+  },
+  "legacy_package_count": 5,
+  "legacy_manifest_document_records": 656,
+  "independently_checked_legacy_files": 2272,
+  "legacy_preservation_issues": [],
+  "legacy_active_request_ids": [],
+  "cumulative_import_passed": true,
+  "restricted_originals_cloud_delivery": false,
+  "prior_publication_sha": "fec183b4b0e11a4ffe3f44d4e8126099e09cf1fc"
+}

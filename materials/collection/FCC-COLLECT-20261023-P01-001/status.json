@@ -1,0 +1,91 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "checked_at": "2026-10-23T21:43:15.074674+09:00",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v002",
+  "published_branch": "collect/fcc-p0-smartphone-20261023-001",
+  "development_target_branch": "codex/fcc-lab-foundation",
+  "session_control_empirically_verified": {
+    "list": true,
+    "read": true,
+    "send_and_start_turn": true,
+    "wait_status": true,
+    "all_eight_acknowledged": true
+  },
+  "active_request_count": 17,
+  "sessions": [
+    {
+      "role": "S01",
+      "role_acknowledged": true,
+      "git_prohibited_acknowledged": true,
+      "task_acknowledged": true,
+      "task_state": "in_progress",
+      "task_id": "FCC-20261023-S01-B0001",
+      "ready_batches": []
+    },
+    {
+      "role": "S02",
+      "role_acknowledged": true,
+      "git_prohibited_acknowledged": true,
+      "task_acknowledged": true,
+      "task_state": "in_progress",
+      "task_id": "FCC-20261023-S02-B0001",
+      "ready_batches": []
+    },
+    {
+      "role": "S03",
+      "role_acknowledged": true,
+      "git_prohibited_acknowledged": true,
+      "task_acknowledged": true,
+      "task_state": "in_progress",
+      "task_id": "FCC-20261023-S03-B0001",
+      "ready_batches": []
+    },
+    {
+      "role": "S04",
+      "role_acknowledged": true,
+      "git_prohibited_acknowledged": true,
+      "task_acknowledged": true,
+      "task_state": "in_progress",
+      "task_id": "FCC-20261023-S04-B0001",
+      "ready_batches": []
+    },
+    {
+      "role": "S05",
+      "role_acknowledged": true,
+      "git_prohibited_acknowledged": true,
+      "task_acknowledged": true,
+      "task_state": "in_progress",
+      "task_id": "FCC-20261023-S05-B0001",
+      "ready_batches": []
+    },
+    {
+      "role": "S06",
+      "role_acknowledged": true,
+      "git_prohibited_acknowledged": true,
+      "task_acknowledged": true,
+      "task_state": "in_progress",
+      "task_id": "FCC-20261023-S06-B0001",
+      "ready_batches": []
+    },
+    {
+      "role": "S07",
+      "role_acknowledged": true,
+      "git_prohibited_acknowledged": true,
+      "task_acknowledged": true,
+      "task_state": "in_progress",
+      "task_id": "FCC-20261023-S07-B0001",
+      "ready_batches": []
+    },
+    {
+      "role": "S08",
+      "role_acknowledged": true,
+      "git_prohibited_acknowledged": true,
+      "task_acknowledged": true,
+      "task_state": "in_progress",
+      "task_id": "FCC-20261023-S08-B0001",
+      "ready_batches": []
+    }
+  ],
+  "scope": "Source collection and provenance only. No method approval, hardware execution, site validation or conformity claim."
+}
