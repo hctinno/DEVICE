@@ -6,6 +6,8 @@
 
 이어 [가상 RF 실행 환경](docs/fcc/virtual_lab_usage.md)을 추가했다. `virtual_lab.py`는 가상 DUT·RF 경로·N1914A 명령 부분집합, `virtual_scenarios.py`는 6개 시나리오·관측 평가·별도 정답 파일·SHA-256 manifest를 담당한다. `virtual-check` CLI는 업무 DB와 별도로 새 실행 폴더에 합성 증거를 남긴다. 기존 AI 작업·보고서와의 통합은 후속이며 이 실행기는 실제 네트워크·장비·모델 API를 호출하지 않는다.
 
+2026-10-24에는 [전체 장비 가상환경](docs/fcc/virtual_fleet_usage.md)을 별도 `labflow/virtual_fleet/`로 통합했다. Un-licensed catalog의 64프로필/24역할을 공통 DAG·tick·setup revision·요청 ID·관측 계약으로 실행하며, 역할별 구성/취득/오류/복구와 loopback 운영 화면을 제공한다. Python 바인딩은 보조 역할까지 27종을 선언하지만 현재 catalog의 역할 수는 24다. 전도 연결 예제와 6종 연결 검사는 명시된 합성 정책을 사용하며 원본 raw를 실행 조건으로 요구하지 않는다. 기존 접수 DB·가상 세션·AI 하네스와의 연결, 규격별 방법·현장 비교·물리 정밀도는 별도 후속 검증이다. [통합 기록 002](handoff/development/INTEGRATION-002.md)를 참조한다.
+
 2026-10-23 사용자 범위 확정: 1차 목표는 FCC RF·EMC·SAR이며 첫 실장비 실증은 [스마트폰 2.4 GHz b/g/n / FCC §15.247](docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md)이다. 제품 종류·의뢰 목적·시장은 자료에서 파악하며 접수 시 스마트폰/FCC를 기본 정답으로 넣지 않는다. 물리 연결은 사용자가 수행한다. 아래의 전체 시설·로봇·인증 제출 설계는 후속 확장에 해당하며 첫 실증의 선행조건으로 삼지 않는다.
 
 ## 1. 기존 시험소 전환 원칙

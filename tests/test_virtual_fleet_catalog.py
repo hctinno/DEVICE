@@ -123,5 +123,18 @@ class CatalogTests(unittest.TestCase):
                       if profile['role'] in ('inspection_microscope','network_analyzer') else 'report_equipment')
             self.assertEqual(profile['profile_kind'],expected)
 
+    def test_reported_fixed_and_step_attenuators_keep_different_controls(self):
+        profiles=load_catalog(Path(__file__).resolve().parents[1]/'virtual_profiles/sm_a176u_unlicensed.json')['profiles']
+        nominal={'18B-03':3,'18N-20dB':20,'8493C':10}
+        for profile in profiles:
+            if profile['role']!='attenuator':continue
+            parameters=profile['simulation_parameters']
+            if 'Step Attenuator' in profile['variant']:
+                self.assertEqual(parameters['attenuator_mode'],'step')
+                self.assertNotIn('steps_db',parameters)  # No guessed manufacturer step table.
+            else:
+                self.assertEqual(parameters['attenuator_mode'],'fixed')
+                self.assertEqual(parameters['attenuation_db'],nominal[profile['model']])
+
 
 if __name__=='__main__':unittest.main()

@@ -113,7 +113,10 @@
       "variant": "Attenuator(3 dB)",
       "simulation_basis": "role_domain_model",
       "capability_scope": "virtual_case_actions",
-      "simulation_parameters": {},
+      "simulation_parameters": {
+        "attenuator_mode": "fixed",
+        "attenuation_db": 3.0
+      },
       "ports": {
         "inputs": {
           "rf": "rf"
@@ -169,7 +172,10 @@
       "variant": "Attenuator(20 dB)",
       "simulation_basis": "role_domain_model",
       "capability_scope": "virtual_case_actions",
-      "simulation_parameters": {},
+      "simulation_parameters": {
+        "attenuator_mode": "fixed",
+        "attenuation_db": 20.0
+      },
       "ports": {
         "inputs": {
           "rf": "rf"
@@ -266,7 +272,10 @@
       "variant": "Attenuator(10 dB)(DC-26.5 GHz)",
       "simulation_basis": "role_domain_model",
       "capability_scope": "virtual_case_actions",
-      "simulation_parameters": {},
+      "simulation_parameters": {
+        "attenuator_mode": "fixed",
+        "attenuation_db": 10.0
+      },
       "ports": {
         "inputs": {
           "rf": "rf"
@@ -322,7 +331,10 @@
       "variant": "Attenuator(10 dB)",
       "simulation_basis": "role_domain_model",
       "capability_scope": "virtual_case_actions",
-      "simulation_parameters": {},
+      "simulation_parameters": {
+        "attenuator_mode": "fixed",
+        "attenuation_db": 10.0
+      },
       "ports": {
         "inputs": {
           "rf": "rf"
@@ -364,7 +376,9 @@
       "variant": "Step Attenuator(11 dB)",
       "simulation_basis": "role_domain_model",
       "capability_scope": "virtual_case_actions",
-      "simulation_parameters": {},
+      "simulation_parameters": {
+        "attenuator_mode": "step"
+      },
       "ports": {
         "inputs": {
           "rf": "rf"
@@ -392,7 +406,9 @@
       "variant": "Step Attenuator(70 dB)",
       "simulation_basis": "role_domain_model",
       "capability_scope": "virtual_case_actions",
-      "simulation_parameters": {},
+      "simulation_parameters": {
+        "attenuator_mode": "step"
+      },
       "ports": {
         "inputs": {
           "rf": "rf"
