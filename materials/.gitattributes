@@ -1,0 +1,2 @@
+# Keep the reviewable JSON byte-identical to manifest.json inside each ZIP.
+manifests/*.json text eol=lf
