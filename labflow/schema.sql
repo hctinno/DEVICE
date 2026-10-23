@@ -9,3 +9,26 @@ CREATE TABLE IF NOT EXISTS plans(plan_id TEXT PRIMARY KEY,case_id TEXT NOT NULL 
 CREATE TABLE IF NOT EXISTS runs(run_id TEXT PRIMARY KEY,plan_id TEXT NOT NULL REFERENCES plans,raw_sha256 TEXT REFERENCES blobs,data_json TEXT NOT NULL,review_status TEXT NOT NULL DEFAULT 'unreviewed');
 CREATE TABLE IF NOT EXISTS evaluations(evaluation_id INTEGER PRIMARY KEY,run_id TEXT NOT NULL REFERENCES runs,fingerprint TEXT NOT NULL,data_json TEXT NOT NULL,UNIQUE(run_id,fingerprint));
 CREATE TABLE IF NOT EXISTS events(event_id INTEGER PRIMARY KEY,created_at TEXT NOT NULL,action TEXT NOT NULL,subject_id TEXT NOT NULL,details_json TEXT NOT NULL);
+
+CREATE TABLE IF NOT EXISTS intake_sources(
+ source_id TEXT PRIMARY KEY, root TEXT NOT NULL UNIQUE, synthetic INTEGER NOT NULL,
+ settle_seconds REAL NOT NULL CHECK(settle_seconds>0));
+CREATE TABLE IF NOT EXISTS intakes(
+ intake_id TEXT PRIMARY KEY, source_id TEXT NOT NULL REFERENCES intake_sources,
+ bundle TEXT NOT NULL, revision INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL,
+ delegated INTEGER NOT NULL DEFAULT 0, deferred INTEGER NOT NULL DEFAULT 0,
+ analysis_json TEXT, UNIQUE(source_id,bundle));
+CREATE TABLE IF NOT EXISTS intake_observations(
+ source_id TEXT NOT NULL REFERENCES intake_sources, bundle TEXT NOT NULL,
+ fingerprint TEXT NOT NULL, stable_since REAL NOT NULL, PRIMARY KEY(source_id,bundle));
+CREATE TABLE IF NOT EXISTS intake_revisions(
+ intake_id TEXT NOT NULL REFERENCES intakes, revision INTEGER NOT NULL,
+ fingerprint TEXT NOT NULL, files_json TEXT NOT NULL, synthetic INTEGER NOT NULL,
+ created_at REAL NOT NULL, PRIMARY KEY(intake_id,revision));
+CREATE TABLE IF NOT EXISTS intake_jobs(
+ job_id TEXT PRIMARY KEY, intake_id TEXT NOT NULL, revision INTEGER NOT NULL,
+ state TEXT NOT NULL CHECK(state IN ('queued','running','completed','failed','superseded')),
+ worker_id TEXT, token TEXT, lease_until REAL, attempt INTEGER NOT NULL DEFAULT 0,
+ result_json TEXT, error_code TEXT, created_at REAL NOT NULL,
+ UNIQUE(intake_id,revision),
+ FOREIGN KEY(intake_id,revision) REFERENCES intake_revisions(intake_id,revision));
