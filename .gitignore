@@ -11,4 +11,5 @@ __pycache__/
 .local/
 data/labflow/
 exports/reports/
+exports/virtual/
 materials/work/

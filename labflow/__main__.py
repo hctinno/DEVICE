@@ -30,6 +30,8 @@ def main():
     for name in ['evaluate','status']:sub.add_parser(name).add_argument('id')
     report=sub.add_parser('report');report.add_argument('case_id');report.add_argument('--out',default='exports/reports')
     demo=sub.add_parser('demo');demo.add_argument('--out',default='exports/demo')
+    virtual=sub.add_parser('virtual-check',help='Run synthetic RF bench scenarios; no real hardware or AI calls')
+    virtual.add_argument('--out',default='exports/virtual')
     for name in ['review-document','review-method','review-run']:
         p=sub.add_parser(name);p.add_argument('id');p.add_argument('--reviewer',required=True);p.add_argument('--note',required=True)
     source=sub.add_parser('intake-add-source')
@@ -48,6 +50,11 @@ def main():
     sub.add_parser('intake-notifications')
     args=parser.parse_args()
     try:
+        if args.command=='virtual-check':
+            from .virtual_scenarios import run_virtual_scenarios
+            result=run_virtual_scenarios(args.out)
+            print(json.dumps(result,ensure_ascii=False,allow_nan=False,indent=2))
+            return 1 if result['failed'] else 0
         store=Store(args.workspace);cmd=args.command
         def data():return json.loads(Path(args.file).read_text(encoding='utf-8-sig'))
         if cmd=='init':result={'workspace':str(store.root),'status':'initialized','hardware_connected':False,'official_release_available':False}
