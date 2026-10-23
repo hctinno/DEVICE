@@ -1,0 +1,232 @@
+{
+  "checked_at": "2026-10-23T20:34:01+09:00",
+  "records": [
+    {
+      "title": "DASY6 Module R&D Manual, March 2023",
+      "publisher": "SPEAG",
+      "url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+      "retrieved_at": "2026-10-23T20:33:50+09:00",
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "reason": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established.",
+      "pages": 114,
+      "file_kind": "manual",
+      "media_type": "application/pdf",
+      "request_ids": [
+        "EQ-MOD-f89ac85bca22a066",
+        "EQ-MOD-553b7e26b00a3bba",
+        "EQ-MOD-951b898fe0a74d32",
+        "EQ-MOD-38503d023c4f533f"
+      ],
+      "model_ids": [
+        "MOD-f89ac85bca22a066",
+        "MOD-553b7e26b00a3bba",
+        "MOD-951b898fe0a74d32",
+        "MOD-38503d023c4f533f"
+      ],
+      "model_match": "Register model string occurs in source. This is reference evidence, not proof of whole-manual applicability or installed option support.",
+      "original_sha256": "8e941109aa7e1628ae38fd51bca7be03393bf9f6eb16954e8458d6d1e27d20b3",
+      "original_bytes": 13685412,
+      "local_storage": "materials/work/20261023/restricted/vendors/speag/DASY6_RD_20230302.pdf"
+    },
+    {
+      "title": "DASY8 Module R&D Manual, March 2023",
+      "publisher": "SPEAG",
+      "url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY8_RD_20230302.pdf",
+      "retrieved_at": "2026-10-23T20:33:50+09:00",
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "reason": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established.",
+      "pages": 124,
+      "file_kind": "manual",
+      "media_type": "application/pdf",
+      "request_ids": [
+        "EQ-MOD-f89ac85bca22a066",
+        "EQ-MOD-553b7e26b00a3bba",
+        "EQ-MOD-951b898fe0a74d32",
+        "EQ-MOD-38503d023c4f533f"
+      ],
+      "model_ids": [
+        "MOD-f89ac85bca22a066",
+        "MOD-553b7e26b00a3bba",
+        "MOD-951b898fe0a74d32",
+        "MOD-38503d023c4f533f"
+      ],
+      "model_match": "Register model string occurs in source. This is reference evidence, not proof of whole-manual applicability or installed option support.",
+      "original_sha256": "902dc515b7d3bc50ab1297a9dddc62a12c91419a7b9411fc0125090218864c6c",
+      "original_bytes": 19458857,
+      "local_storage": "materials/work/20261023/restricted/vendors/speag/DASY8_RD_20230302.pdf"
+    },
+    {
+      "title": "DASY8 incident power density conformal-surface application note",
+      "publisher": "SPEAG",
+      "url": "https://speag.swiss/assets/downloads/products/dasy/application-notes/Camera-Module/AppNote_CameraModule_240412.pdf",
+      "retrieved_at": "2026-10-23T20:33:50+09:00",
+      "rights": "unknown",
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "reason": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established.",
+      "pages": 11,
+      "file_kind": "application_note",
+      "media_type": "application/pdf",
+      "request_ids": [
+        "EQ-MOD-d034ebc06292d349",
+        "EQ-MOD-f89ac85bca22a066",
+        "EQ-MOD-2cf057cd27d71f07"
+      ],
+      "model_ids": [
+        "MOD-d034ebc06292d349",
+        "MOD-f89ac85bca22a066",
+        "MOD-2cf057cd27d71f07"
+      ],
+      "model_match": "Register model string occurs in source. This is reference evidence, not proof of whole-manual applicability or installed option support.",
+      "original_sha256": "84621d84684ff94adcae1e2e08576bec4de2e313c750f2b29dabb423c6e31f82",
+      "original_bytes": 1775864,
+      "local_storage": "materials/work/20261023/restricted/vendors/speag/AppNote_CameraModule_240412.pdf"
+    },
+    {
+      "title": "EX3DV4 official specifications",
+      "publisher": "SPEAG",
+      "url": "https://speag.swiss/components/probes-2/dosimetric/ex3dv4-isotropic-dos-probe-3",
+      "retrieved_at": "2026-10-23T20:08:07+09:00",
+      "rights": "unknown",
+      "status": "official_listing_acquired",
+      "reason": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established.",
+      "file_kind": "specification_or_lifecycle_page",
+      "media_type": "text/html",
+      "page_title": "EX3DV4 - Isotropic Dos-Probe » SPEAG, Schmid & Partner Engineering AG",
+      "linked_sources": [],
+      "request_ids": [
+        "EQ-MOD-ab694e38395717da",
+        "EQ-MOD-5e30000af203b4fb",
+        "EQ-MOD-85d8f604e0feafdd"
+      ],
+      "model_ids": [
+        "MOD-ab694e38395717da",
+        "MOD-5e30000af203b4fb",
+        "MOD-85d8f604e0feafdd"
+      ],
+      "model_match": "Register model string occurs in source. This is reference evidence, not proof of whole-manual applicability or installed option support.",
+      "original_sha256": "95d2085e20d6e3ce91dbeb74e06528951e5572a0553af8abc77e87df5c87cc25",
+      "original_bytes": 25800,
+      "local_storage": "materials/work/20261023/restricted/vendors/speag/600e36fa1b5f.html"
+    },
+    {
+      "title": "DAE4 and DAE4ip official specifications",
+      "publisher": "SPEAG",
+      "url": "https://speag.swiss/products/dasy8/m-hac/daes",
+      "retrieved_at": "2026-10-23T20:33:54+09:00",
+      "rights": "unknown",
+      "status": "official_listing_acquired",
+      "reason": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established.",
+      "file_kind": "specification_or_lifecycle_page",
+      "media_type": "text/html",
+      "page_title": "DAEs » SPEAG, Schmid & Partner Engineering AG",
+      "linked_sources": [],
+      "request_ids": [
+        "EQ-MOD-f89ac85bca22a066",
+        "EQ-MOD-a0597dbe8a1e6d07",
+        "EQ-MOD-38503d023c4f533f"
+      ],
+      "model_ids": [
+        "MOD-f89ac85bca22a066",
+        "MOD-a0597dbe8a1e6d07",
+        "MOD-38503d023c4f533f"
+      ],
+      "model_match": "Register model string occurs in source. This is reference evidence, not proof of whole-manual applicability or installed option support.",
+      "original_sha256": "eb71e84f8a1ef8057a661cf929b9cf75026bea252b90a8c1c300abbc823c671c",
+      "original_bytes": 25580,
+      "local_storage": "materials/work/20261023/restricted/vendors/speag/8e66e5080b1f.html"
+    },
+    {
+      "title": "DASY product lifetime",
+      "publisher": "SPEAG",
+      "url": "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime",
+      "retrieved_at": "2026-10-23T20:33:56+09:00",
+      "rights": "unknown",
+      "status": "official_listing_acquired",
+      "reason": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established.",
+      "file_kind": "specification_or_lifecycle_page",
+      "media_type": "text/html",
+      "page_title": "PRODUCT LIFETIME » SPEAG, Schmid & Partner Engineering AG",
+      "linked_sources": [],
+      "request_ids": [
+        "EQ-MOD-d48306ef9ca20631",
+        "EQ-MOD-5e30000af203b4fb",
+        "EQ-MOD-553b7e26b00a3bba",
+        "EQ-MOD-951b898fe0a74d32"
+      ],
+      "model_ids": [
+        "MOD-d48306ef9ca20631",
+        "MOD-5e30000af203b4fb",
+        "MOD-553b7e26b00a3bba",
+        "MOD-951b898fe0a74d32"
+      ],
+      "model_match": "Register model string occurs in source. This is reference evidence, not proof of whole-manual applicability or installed option support.",
+      "original_sha256": "7535ade614a84e354c5188c0c19a94b949183f8567fb8c0919ddbd744caa7e23",
+      "original_bytes": 25322,
+      "local_storage": "materials/work/20261023/restricted/vendors/speag/77da520bd8a9.html"
+    },
+    {
+      "title": "DAE calibration procedure overview",
+      "publisher": "SPEAG",
+      "url": "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae",
+      "retrieved_at": "2026-10-23T20:33:56+09:00",
+      "rights": "unknown",
+      "status": "official_listing_acquired",
+      "reason": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established.",
+      "file_kind": "specification_or_lifecycle_page",
+      "media_type": "text/html",
+      "page_title": "Readout Unit (DAE) » SPEAG, Schmid & Partner Engineering AG",
+      "linked_sources": [],
+      "request_ids": [
+        "EQ-MOD-ae5832f52cddbd67"
+      ],
+      "model_ids": [
+        "MOD-ae5832f52cddbd67"
+      ],
+      "model_match": "Register model string occurs in source. This is reference evidence, not proof of whole-manual applicability or installed option support.",
+      "original_sha256": "fe7ad1ddcaa504076dc857ddaa13d4e4da97515de481110fe7ab5bcecf271e7a",
+      "original_bytes": 27330,
+      "local_storage": "materials/work/20261023/restricted/vendors/speag/b35e7ee2e549.html"
+    },
+    {
+      "title": "DASY6 API option announcement and access route",
+      "publisher": "SPEAG",
+      "url": "https://speag.swiss/news-events/news/measurement/cdasy6-module-sar-v6-12-automate-your-testing-workflow",
+      "retrieved_at": "2026-10-23T20:33:57+09:00",
+      "rights": "unknown",
+      "status": "official_listing_acquired",
+      "reason": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established.",
+      "file_kind": "specification_or_lifecycle_page",
+      "media_type": "text/html",
+      "page_title": "cDASY6 Module SAR V6.12: Automate Your Testing Workflow » SPEAG, Schmid & Partner Engineering AG",
+      "linked_sources": [],
+      "request_ids": [],
+      "model_ids": [],
+      "model_match": "Register model string occurs in source. This is reference evidence, not proof of whole-manual applicability or installed option support.",
+      "original_sha256": "865fab4e9572cc904dba57eede0ff2c0078de0483e46a8bd9f77ae6ed62f172e",
+      "original_bytes": 37287,
+      "local_storage": "materials/work/20261023/restricted/vendors/speag/d4baf66e7ca0.html"
+    },
+    {
+      "title": "WPT3 and MAGPy3 V3.4 API and export update",
+      "publisher": "SPEAG",
+      "url": "https://speag.swiss/news-events/news/measurement/2026/smarter-and-faster-testing-of-wpt-devices",
+      "retrieved_at": "2026-10-23T20:33:59+09:00",
+      "rights": "unknown",
+      "status": "official_listing_acquired",
+      "reason": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established.",
+      "file_kind": "specification_or_lifecycle_page",
+      "media_type": "text/html",
+      "page_title": "Smarter and Faster Testing of WPT Devices » SPEAG, Schmid & Partner Engineering AG",
+      "linked_sources": [],
+      "request_ids": [],
+      "model_ids": [],
+      "model_match": "Register model string occurs in source. This is reference evidence, not proof of whole-manual applicability or installed option support.",
+      "original_sha256": "192957c8939bb8054e802f502c6da52ad2489e1406123b7f2124ad3a858993fa",
+      "original_bytes": 28612,
+      "local_storage": "materials/work/20261023/restricted/vendors/speag/f8b047743a0d.html"
+    }
+  ],
+  "notes": "DASY6/DASY8 manuals do not establish that an inventoried DASY5 Server has been upgraded. Public calibration procedure descriptions do not replace the actual unit certificate."
+}

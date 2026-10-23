@@ -1,0 +1,2799 @@
+{
+  "schema_version": 1,
+  "package_id": "FCC-EQUIPMENT-20261023-004",
+  "created_at": "2026-10-23T20:34:53+09:00",
+  "synthetic": false,
+  "notes": "Rights-restricted equipment references only. Original PDFs/HTML were acquired locally where stated but are not included in this public package. No payload files and no claimed public-original acquisitions.",
+  "documents": [
+    {
+      "document_id": "Schwarzbeck-K420NJ.pdf-bc0134d83d",
+      "request_ids": [
+        "EQ-MOD-649a72f760826c36",
+        "EQ-MOD-a67ec5cf1adb22af"
+      ],
+      "title": "K420NJ.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/420-nj/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/K420NJ.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9113.pdf-d79315cf1a",
+      "request_ids": [
+        "EQ-MOD-649a72f760826c36"
+      ],
+      "title": "k9113.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/420-nj/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9113.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k422NJ.pdf-4637f3842f",
+      "request_ids": [
+        "EQ-MOD-33eb2bfd37d6d769",
+        "EQ-MOD-649a72f760826c36",
+        "EQ-MOD-a67ec5cf1adb22af",
+        "EQ-MOD-d63c58c84b0ce341"
+      ],
+      "title": "k422NJ.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/422-nj/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k422NJ.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-422_NJ_field_uniformity.pdf-9c0322bf74",
+      "request_ids": [
+        "EQ-MOD-33eb2bfd37d6d769"
+      ],
+      "title": "422_NJ_field_uniformity.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/422-nj/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/422_NJ_field_uniformity.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-K9119.pdf-9c2cda62bf",
+      "request_ids": [
+        "EQ-MOD-d63c58c84b0ce341"
+      ],
+      "title": "K9119.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/422-nj/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/K9119.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-422_NJ_assembly.pdf-52d18c5834",
+      "request_ids": [
+        "EQ-MOD-33eb2bfd37d6d769",
+        "EQ-MOD-d63c58c84b0ce341"
+      ],
+      "title": "422_NJ_assembly.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/422-nj/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/422_NJ_assembly.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-AM9144.pdf-dc649afd9d",
+      "request_ids": [
+        "EQ-MOD-332964178fb65c1a"
+      ],
+      "title": "AM9144.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antenna-masts-and-tripods/am-9144/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/AM9144.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9120d.pdf-f55bb3e33e",
+      "request_ids": [
+        "EQ-MOD-96cf29b0de7f8e07",
+        "EQ-MOD-9c807e61f0bdccd2",
+        "EQ-MOD-bbda667ca33e4ef1"
+      ],
+      "title": "k9120d.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-d/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9120d.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-ri9120d.pdf-d56f9e848c",
+      "request_ids": [
+        "EQ-MOD-96cf29b0de7f8e07",
+        "EQ-MOD-9c807e61f0bdccd2",
+        "EQ-MOD-bbda667ca33e4ef1"
+      ],
+      "title": "ri9120d.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-d/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/ri9120d.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-pol9120.pdf-025089432d",
+      "request_ids": [
+        "EQ-MOD-7555dfe0eaf3c115",
+        "EQ-MOD-96cf29b0de7f8e07",
+        "EQ-MOD-9c807e61f0bdccd2",
+        "EQ-MOD-bbda667ca33e4ef1",
+        "EQ-MOD-c732306f37d9d947",
+        "EQ-MOD-f8f632054e50113a"
+      ],
+      "title": "pol9120.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-d/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/pol9120.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-AppNote_RayleighDistance_BBHA9120D.pdf-dad7e44b10",
+      "request_ids": [
+        "EQ-MOD-96cf29b0de7f8e07",
+        "EQ-MOD-9c807e61f0bdccd2",
+        "EQ-MOD-bbda667ca33e4ef1"
+      ],
+      "title": "AppNote_RayleighDistance_BBHA9120D.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-d/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/AppNote_RayleighDistance_BBHA9120D.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9120J.pdf-de4e1bc7d0",
+      "request_ids": [
+        "EQ-MOD-f8f632054e50113a"
+      ],
+      "title": "k9120J.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-j/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9120J.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RI9120J.pdf-0ebd1f7d24",
+      "request_ids": [
+        "EQ-MOD-f8f632054e50113a"
+      ],
+      "title": "RI9120J.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-j/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RI9120J.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-P9120J.pdf-0446464168",
+      "request_ids": [
+        "EQ-MOD-f8f632054e50113a"
+      ],
+      "title": "P9120J.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-j/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/P9120J.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-ApplicationNote_AntennaDistance.pdf-1280b43b7c",
+      "request_ids": [
+        "EQ-MOD-f8f632054e50113a"
+      ],
+      "title": "ApplicationNote_AntennaDistance.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-j/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/ApplicationNote_AntennaDistance.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9170.pdf-62776edee3",
+      "request_ids": [
+        "EQ-MOD-7bb4e54c2a0da54a",
+        "EQ-MOD-828532a96c2a6b43"
+      ],
+      "title": "k9170.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/standard-gain-horn-antennas/bbha-9170/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9170.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RI9170.pdf-6d7a864e02",
+      "request_ids": [
+        "EQ-MOD-7bb4e54c2a0da54a",
+        "EQ-MOD-828532a96c2a6b43"
+      ],
+      "title": "RI9170.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/standard-gain-horn-antennas/bbha-9170/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RI9170.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9120e.pdf-b9ed55d5f2",
+      "request_ids": [
+        "EQ-MOD-c732306f37d9d947"
+      ],
+      "title": "k9120e.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9120e.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-ri9120e.pdf-ac99670605",
+      "request_ids": [
+        "EQ-MOD-c732306f37d9d947"
+      ],
+      "title": "ri9120e.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/ri9120e.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9120f.pdf-94bdcd49b6",
+      "request_ids": [
+        "EQ-MOD-332964178fb65c1a",
+        "EQ-MOD-7555dfe0eaf3c115"
+      ],
+      "title": "k9120f.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-f/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9120f.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RI9120F.pdf-a19ba149e4",
+      "request_ids": [
+        "EQ-MOD-7555dfe0eaf3c115"
+      ],
+      "title": "RI9120F.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/broadband-horn-antennas/double-ridged-horn-antennas/bbha-9120-f/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RI9120F.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k8652.pdf-cf17e09855",
+      "request_ids": [
+        "EQ-MOD-4ce364f798e4ace4"
+      ],
+      "title": "k8652.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/discontinued-product/bnb-8652/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k8652.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k_cal_1614.pdf-478263cdb2",
+      "request_ids": [
+        "EQ-MOD-09200332a8d78b8e",
+        "EQ-MOD-1d02ec58cb57907d"
+      ],
+      "title": "k_cal_1614.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/absorbing-clamps/cal-cmad-1614/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k_cal_1614.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-CDNE_M2.pdf-a63f00f1e2",
+      "request_ids": [
+        "EQ-MOD-39ec100eb179f720",
+        "EQ-MOD-af82e19a60b04e0d"
+      ],
+      "title": "CDNE_M2.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/cdne/cdne-m2/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/CDNE_M2.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-SR100-6W.pdf-f0f48e7694",
+      "request_ids": [
+        "EQ-MOD-39ec100eb179f720",
+        "EQ-MOD-af82e19a60b04e0d"
+      ],
+      "title": "SR100-6W.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/cdne/cdne-m2/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/SR100-6W.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-CDNE_M3.pdf-e532805926",
+      "request_ids": [
+        "EQ-MOD-39ec100eb179f720",
+        "EQ-MOD-af82e19a60b04e0d"
+      ],
+      "title": "CDNE_M3.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/cdne/cdne-m3/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/CDNE_M3.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k1614.pdf-24dda86673",
+      "request_ids": [
+        "EQ-MOD-09200332a8d78b8e",
+        "EQ-MOD-1d02ec58cb57907d"
+      ],
+      "title": "k1614.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/absorbing-clamps/cmad-1614/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k1614.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k5132.pdf-335ec2fd58",
+      "request_ids": [
+        "EQ-MOD-a5c5ae1ae24876b9"
+      ],
+      "title": "k5132.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/radiating-loops/fesp-5132/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k5132.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-kFESP5132SecNote.pdf-b2ab373ca6",
+      "request_ids": [
+        "EQ-MOD-a5c5ae1ae24876b9"
+      ],
+      "title": "kFESP5132SecNote.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/radiating-loops/fesp-5132/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/kFESP5132SecNote.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-LoopHolder50.pdf-d392439890",
+      "request_ids": [
+        "EQ-MOD-06a96b0e5b08b16e",
+        "EQ-MOD-a5c5ae1ae24876b9",
+        "EQ-MOD-b5f7f8a7a856e7d9"
+      ],
+      "title": "LoopHolder50.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/radiating-loops/fesp-5132/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/LoopHolder50.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k51331330.pdf-cbd2016406",
+      "request_ids": [
+        "EQ-MOD-81f0a3a266b88240"
+      ],
+      "title": "k51331330.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/radiating-loops/fesp-5133-1330/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k51331330.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k51331330SecNote.pdf-722ec7e833",
+      "request_ids": [
+        "EQ-MOD-81f0a3a266b88240"
+      ],
+      "title": "k51331330SecNote.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/radiating-loops/fesp-5133-1330/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k51331330SecNote.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k5133741.pdf-3879d9e034",
+      "request_ids": [
+        "EQ-MOD-d093124ee47312e0"
+      ],
+      "title": "k5133741.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/monitoring-loops/fesp-5133-7-41/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k5133741.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k5133-9.pdf-3d6f9f66cd",
+      "request_ids": [
+        "EQ-MOD-7458e7ff327969ad"
+      ],
+      "title": "k5133-9.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/radiating-loops/fesp-5133-9/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k5133-9.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k5134-1.pdf-4634cb1f92",
+      "request_ids": [
+        "EQ-MOD-22a3e8a6760c5ffe"
+      ],
+      "title": "k5134-1.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/monitoring-loops/fesp-5134-1/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k5134-1.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k5134-40.pdf-d875a55a26",
+      "request_ids": [
+        "EQ-MOD-06a96b0e5b08b16e",
+        "EQ-MOD-b5f7f8a7a856e7d9"
+      ],
+      "title": "k5134-40.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/monitoring-loops/fesp-5134-40/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k5134-40.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k1519-60D.pdf-d48a5ca592",
+      "request_ids": [
+        "EQ-MOD-332964178fb65c1a",
+        "EQ-MOD-6447abf2242d6863",
+        "EQ-MOD-f118335690054e68"
+      ],
+      "title": "k1519-60D.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/active-loop-antennas-magnetic-field-probes/fmzb-1519-60-d/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k1519-60D.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k5164.pdf-943497cf8e",
+      "request_ids": [
+        "EQ-MOD-148f988164f4a7f4",
+        "EQ-MOD-22a3e8a6760c5ffe",
+        "EQ-MOD-80831b12947f369a"
+      ],
+      "title": "k5164.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/passive-magnetic-antennas/tx-loop-antennas/hfra-5164/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k5164.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-kNFCN1356.pdf-fa7ca42ea0",
+      "request_ids": [
+        "EQ-MOD-148f988164f4a7f4",
+        "EQ-MOD-22a3e8a6760c5ffe",
+        "EQ-MOD-80831b12947f369a"
+      ],
+      "title": "kNFCN1356.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/passive-magnetic-antennas/tx-loop-antennas/hfra-5164/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/kNFCN1356.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k5163.pdf-d9be0557ff",
+      "request_ids": [
+        "EQ-MOD-7a534b832d5e9d37"
+      ],
+      "title": "k5163.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/loop-antennas/passive-magnetic-antennas/rx-loop-antennas/hfrae-5163/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k5163.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k5136.pdf-d8a7988d58",
+      "request_ids": [
+        "EQ-MOD-2596c29662cc1509",
+        "EQ-MOD-fe1b117c49da4f07"
+      ],
+      "title": "k5136.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/magtest-system/dc-test-radiating-loop/hs-5136/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k5136.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k8600.pdf-a4cd9bbbfd",
+      "request_ids": [
+        "EQ-MOD-b8b0e2bc442e1699",
+        "EQ-MOD-d8260582cbabb748",
+        "EQ-MOD-fcc4f5bf581fa7d5"
+      ],
+      "title": "k8600.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/lisn-automotive-cispr-25/high-voltage-lisn-cispr-25/hvse-8600/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k8600.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-MDS21C.pdf-8f47aec74d",
+      "request_ids": [
+        "EQ-MOD-a9cd768e0c6b609d"
+      ],
+      "title": "MDS21C.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/absorbing-clamps/mds-21-c/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/MDS21C.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k8226HV.pdf-4e906335a5",
+      "request_ids": [
+        "EQ-MOD-ea83ea8909ba0a54"
+      ],
+      "title": "k8226HV.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/lisn-according-to-mil-461-mil-462/nnbl-8226-hv/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k8226HV.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-K8124-200.pdf-123edadf81",
+      "request_ids": [
+        "EQ-MOD-4e4078e95314a011",
+        "EQ-MOD-78852893cf4e7c0a",
+        "EQ-MOD-ce1ee4036d8228c3"
+      ],
+      "title": "K8124-200.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/lisn-automotive-cispr-25/lisn-cispr-25-iso-7637/nnbm-8124-200/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/K8124-200.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-K8124-400.pdf-6cba83f1fb",
+      "request_ids": [
+        "EQ-MOD-139bcad2ecc8c845",
+        "EQ-MOD-78852893cf4e7c0a"
+      ],
+      "title": "K8124-400.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/lisn-automotive-cispr-25/lisn-cispr-25-iso-7637/nnbm-8124-400/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/K8124-400.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-K8124-800.pdf-7a2953fe48",
+      "request_ids": [
+        "EQ-MOD-78852893cf4e7c0a",
+        "EQ-MOD-8298e8f62ef8c2ab"
+      ],
+      "title": "K8124-800.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/lisn-automotive-cispr-25/lisn-cispr-25-iso-7637/nnbm-8124-800/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/K8124-800.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k8124.pdf-6c13b00bd5",
+      "request_ids": [
+        "EQ-MOD-78852893cf4e7c0a"
+      ],
+      "title": "k8124.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/lisn-automotive-cispr-25/lisn-cispr-25-iso-7637/nnbm-8124/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k8124.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k8123-200.pdf-003e7c6c59",
+      "request_ids": [
+        "EQ-MOD-b8b0e2bc442e1699",
+        "EQ-MOD-d8260582cbabb748"
+      ],
+      "title": "k8123-200.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/lisn-automotive-cispr-25/high-voltage-lisn-cispr-25/nnhv-8123-200/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k8123-200.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k8123-400.pdf-0741a1a363",
+      "request_ids": [
+        "EQ-MOD-d8260582cbabb748",
+        "EQ-MOD-fcc4f5bf581fa7d5"
+      ],
+      "title": "k8123-400.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/lisn-automotive-cispr-25/high-voltage-lisn-cispr-25/nnhv-8123-400/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k8123-400.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k8129.pdf-17c2c58bec",
+      "request_ids": [
+        "EQ-MOD-34e51947fad299f3"
+      ],
+      "title": "k8129.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:58+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/v-lisn-cispr-16-1-2/nnlk-8129/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k8129.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RC_LISN.pdf-24d811f1ee",
+      "request_ids": [
+        "EQ-MOD-34e51947fad299f3",
+        "EQ-MOD-43cf662f0bda8042"
+      ],
+      "title": "RC_LISN.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/v-lisn-cispr-16-1-2/nnlk-8129/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RC_LISN.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-Option_TC.pdf-8f84bb34b5",
+      "request_ids": [
+        "EQ-MOD-34e51947fad299f3"
+      ],
+      "title": "Option_TC.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/v-lisn/v-lisn-cispr-16-1-2/nnlk-8129/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/Option_TC.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k8300.pdf-32d3cbb67d",
+      "request_ids": [
+        "EQ-MOD-43cf662f0bda8042"
+      ],
+      "title": "k8300.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/lisn/delta-dc-an-150-ohm/pvdc-8300/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k8300.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-K9244.pdf-2e749c0da2",
+      "request_ids": [
+        "EQ-MOD-aad20a09adfa062c"
+      ],
+      "title": "K9244.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/rs-9244/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/K9244.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RI9113EH.pdf-8faac3045f",
+      "request_ids": [
+        "EQ-MOD-649a72f760826c36"
+      ],
+      "title": "RI9113EH.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/biconical-antennas/sba-9113/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RI9113EH.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-s9113.pdf-f133b6dfea",
+      "request_ids": [
+        "EQ-MOD-649a72f760826c36"
+      ],
+      "title": "s9113.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/biconical-antennas/sba-9113/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/s9113.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-p9113.pdf-4ce291dc56",
+      "request_ids": [
+        "EQ-MOD-649a72f760826c36"
+      ],
+      "title": "p9113.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/biconical-antennas/sba-9113/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/p9113.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RI9119EH.pdf-ee9f2e9330",
+      "request_ids": [
+        "EQ-MOD-d63c58c84b0ce341"
+      ],
+      "title": "RI9119EH.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/biconical-antennas/sba-9119/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RI9119EH.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-P9119.pdf-763c8cd6ad",
+      "request_ids": [
+        "EQ-MOD-d63c58c84b0ce341"
+      ],
+      "title": "P9119.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/biconical-antennas/sba-9119/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/P9119.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9128e.pdf-8622d0cf73",
+      "request_ids": [
+        "EQ-MOD-05dad7eb664e7a72",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-ead4c17f9931709d"
+      ],
+      "title": "k9128e.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9128e.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-ri9128e.pdf-6b3a1b9b09",
+      "request_ids": [
+        "EQ-MOD-05dad7eb664e7a72",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-ead4c17f9931709d"
+      ],
+      "title": "ri9128e.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/ri9128e.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-9128enr.pdf-5a70f04993",
+      "request_ids": [
+        "EQ-MOD-05dad7eb664e7a72",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-ead4c17f9931709d"
+      ],
+      "title": "9128enr.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/9128enr.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-s9128e.pdf-df21b3d146",
+      "request_ids": [
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-ead4c17f9931709d"
+      ],
+      "title": "s9128e.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/s9128e.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-Montage_STLP.pdf-f62dfb85cb",
+      "request_ids": [
+        "EQ-MOD-30c301c3b86d6ab1",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-ead4c17f9931709d",
+        "EQ-MOD-ed5a01466f7fc3bb"
+      ],
+      "title": "Montage_STLP.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/Montage_STLP.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-K9128DSNAP.pdf-febc7e0067",
+      "request_ids": [
+        "EQ-MOD-332964178fb65c1a"
+      ],
+      "title": "K9128DSNAP.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/K9128DSNAP.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-shortdis.pdf-5be14608e8",
+      "request_ids": [
+        "EQ-MOD-04d51cc8cb7b423f",
+        "EQ-MOD-1391e5f3333a4858",
+        "EQ-MOD-26d5b5fd062308e8",
+        "EQ-MOD-30c301c3b86d6ab1",
+        "EQ-MOD-85cdbc031a75d27b",
+        "EQ-MOD-866552a227f9dba7",
+        "EQ-MOD-8e479cd434c1b3d3",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-bc0b3260373d035e",
+        "EQ-MOD-cd6793591a61276c",
+        "EQ-MOD-d2f258a3faed1497",
+        "EQ-MOD-e625759483468f55",
+        "EQ-MOD-ead4c17f9931709d",
+        "EQ-MOD-ed5a01466f7fc3bb"
+      ],
+      "title": "shortdis.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/shortdis.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-fachamb.pdf-b418af56b5",
+      "request_ids": [
+        "EQ-MOD-d2f258a3faed1497"
+      ],
+      "title": "fachamb.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/fachamb.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-LPDA_Assembly.pdf-ec733bf41f",
+      "request_ids": [
+        "EQ-MOD-04d51cc8cb7b423f",
+        "EQ-MOD-26d5b5fd062308e8",
+        "EQ-MOD-30c301c3b86d6ab1",
+        "EQ-MOD-85cdbc031a75d27b",
+        "EQ-MOD-866552a227f9dba7",
+        "EQ-MOD-8e479cd434c1b3d3",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-bc0b3260373d035e",
+        "EQ-MOD-cd6793591a61276c",
+        "EQ-MOD-d2f258a3faed1497",
+        "EQ-MOD-e625759483468f55",
+        "EQ-MOD-ead4c17f9931709d",
+        "EQ-MOD-ed5a01466f7fc3bb"
+      ],
+      "title": "LPDA_Assembly.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/LPDA_Assembly.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9128es.pdf-a69e0fcda2",
+      "request_ids": [
+        "EQ-MOD-05dad7eb664e7a72",
+        "EQ-MOD-30c301c3b86d6ab1",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-ead4c17f9931709d"
+      ],
+      "title": "k9128es.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e-special/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9128es.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RI9128ES.pdf-37c3d993f6",
+      "request_ids": [
+        "EQ-MOD-05dad7eb664e7a72",
+        "EQ-MOD-30c301c3b86d6ab1",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-ead4c17f9931709d"
+      ],
+      "title": "RI9128ES.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e-special/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RI9128ES.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-9128ESNR.pdf-a9f23cb91b",
+      "request_ids": [
+        "EQ-MOD-05dad7eb664e7a72",
+        "EQ-MOD-30c301c3b86d6ab1",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-ead4c17f9931709d"
+      ],
+      "title": "9128ESNR.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e-special/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/9128ESNR.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-S9128Es.pdf-e1650feb68",
+      "request_ids": [
+        "EQ-MOD-05dad7eb664e7a72",
+        "EQ-MOD-30c301c3b86d6ab1",
+        "EQ-MOD-9e9410a20ea3e84b",
+        "EQ-MOD-ead4c17f9931709d"
+      ],
+      "title": "S9128Es.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9128-e-special/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/S9128Es.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9129.pdf-fc01145934",
+      "request_ids": [
+        "EQ-MOD-1391e5f3333a4858",
+        "EQ-MOD-ed5a01466f7fc3bb"
+      ],
+      "title": "k9129.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9129/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9129.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RI9129.pdf-a6c733fbbb",
+      "request_ids": [
+        "EQ-MOD-ed5a01466f7fc3bb"
+      ],
+      "title": "RI9129.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9129/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RI9129.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-p9129.pdf-701fe11ba6",
+      "request_ids": [
+        "EQ-MOD-ed5a01466f7fc3bb"
+      ],
+      "title": "p9129.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9129/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/p9129.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-K9149.pdf-a3f882ce80",
+      "request_ids": [
+        "EQ-MOD-1391e5f3333a4858"
+      ],
+      "title": "K9149.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9149/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/K9149.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RI9149.pdf-1d1b8a9de9",
+      "request_ids": [
+        "EQ-MOD-1391e5f3333a4858"
+      ],
+      "title": "RI9149.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9149/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RI9149.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-9149NR.pdf-2888952bb2",
+      "request_ids": [
+        "EQ-MOD-1391e5f3333a4858"
+      ],
+      "title": "9149NR.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9149/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/9149NR.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-P9149.pdf-23f1a62b21",
+      "request_ids": [
+        "EQ-MOD-1391e5f3333a4858"
+      ],
+      "title": "P9149.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:00+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/stacked-lpda/stlp-9149/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/P9149.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-SY9223-7637-4.pdf-2dde052ecc",
+      "request_ids": [
+        "EQ-MOD-f3df9df032e9c908"
+      ],
+      "title": "SY9223-7637-4.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/transformers/balun-transformers/sy-9223-7637-4/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/SY9223-7637-4.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-KTF130-150.pdf-18336ed78b",
+      "request_ids": [
+        "EQ-MOD-b760a825c6a70bed"
+      ],
+      "title": "KTF130-150.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/conducted-immunity-test-fixtures/tf-130-150/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/KTF130-150.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9261.pdf-df076d3b42",
+      "request_ids": [
+        "EQ-MOD-461a0a7ccca3c905"
+      ],
+      "title": "k9261.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/voltage-probes/tk-9261/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9261.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9420.pdf-f8c759cbec",
+      "request_ids": [
+        "EQ-MOD-0dc359183168efaa"
+      ],
+      "title": "k9420.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/voltage-probes/tk-9420/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9420.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-kuhap.pdf-2718bf7640",
+      "request_ids": [
+        "EQ-MOD-bad3e427175f3881"
+      ],
+      "title": "kuhap.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/dipoles/uhap/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/kuhap.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-mUHAP.pdf-78d04aea2b",
+      "request_ids": [
+        "EQ-MOD-bad3e427175f3881"
+      ],
+      "title": "mUHAP.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/dipoles/uhap/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/mUHAP.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-kvhapauhapa.pdf-9134d7a98b",
+      "request_ids": [
+        "EQ-MOD-bad3e427175f3881"
+      ],
+      "title": "kvhapauhapa.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/dipoles/uhap/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/kvhapauhapa.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-CCA.pdf-ae8a0f5e28",
+      "request_ids": [
+        "EQ-MOD-85cdbc031a75d27b",
+        "EQ-MOD-96cf29b0de7f8e07",
+        "EQ-MOD-9ad1848248b82a01",
+        "EQ-MOD-9c807e61f0bdccd2",
+        "EQ-MOD-bbda667ca33e4ef1",
+        "EQ-MOD-bc0b3260373d035e",
+        "EQ-MOD-e3aad3901a09f027",
+        "EQ-MOD-e625759483468f55",
+        "EQ-MOD-f069e5be943af3b9"
+      ],
+      "title": "CCA.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/dipoles/uhap/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/CCA.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9142.pdf-5f00b66b88",
+      "request_ids": [
+        "EQ-MOD-85cdbc031a75d27b",
+        "EQ-MOD-bc0b3260373d035e",
+        "EQ-MOD-e625759483468f55"
+      ],
+      "title": "k9142.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/uslp-9142/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9142.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-ri9142.pdf-ab31c7ff5f",
+      "request_ids": [
+        "EQ-MOD-85cdbc031a75d27b",
+        "EQ-MOD-bc0b3260373d035e",
+        "EQ-MOD-e625759483468f55"
+      ],
+      "title": "ri9142.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/uslp-9142/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/ri9142.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-AntennaCenter.pdf-74a0d8e1c1",
+      "request_ids": [
+        "EQ-MOD-04d51cc8cb7b423f",
+        "EQ-MOD-26d5b5fd062308e8",
+        "EQ-MOD-85cdbc031a75d27b",
+        "EQ-MOD-866552a227f9dba7",
+        "EQ-MOD-8e479cd434c1b3d3",
+        "EQ-MOD-bc0b3260373d035e",
+        "EQ-MOD-cd6793591a61276c",
+        "EQ-MOD-d2f258a3faed1497",
+        "EQ-MOD-e625759483468f55"
+      ],
+      "title": "AntennaCenter.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/uslp-9142/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/AntennaCenter.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-kVAMP9243B.pdf-eff3a80b34",
+      "request_ids": [
+        "EQ-MOD-2619addf36dcd025",
+        "EQ-MOD-f2ebd5127c2b2a5e"
+      ],
+      "title": "kVAMP9243B.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/vamp-9243-b/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/kVAMP9243B.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-kVT9243B.pdf-005b77ff60",
+      "request_ids": [
+        "EQ-MOD-2619addf36dcd025",
+        "EQ-MOD-f2ebd5127c2b2a5e"
+      ],
+      "title": "kVT9243B.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/vamp-9243-b/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/kVT9243B.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-kCA9243B.pdf-5a5214b1f8",
+      "request_ids": [
+        "EQ-MOD-2619addf36dcd025",
+        "EQ-MOD-f2ebd5127c2b2a5e"
+      ],
+      "title": "kCA9243B.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/vamp-9243-b/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/kCA9243B.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-kMIL461F_bonding_kit.pdf-1883bad19f",
+      "request_ids": [
+        "EQ-MOD-2619addf36dcd025",
+        "EQ-MOD-f2ebd5127c2b2a5e"
+      ],
+      "title": "kMIL461F_bonding_kit.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/vamp-9243-b/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/kMIL461F_bonding_kit.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-Cal_vertical_monopole_antenna.pdf-a7544df043",
+      "request_ids": [
+        "EQ-MOD-2619addf36dcd025",
+        "EQ-MOD-f2ebd5127c2b2a5e"
+      ],
+      "title": "Cal_vertical_monopole_antenna.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/automotive-antennas/vamp-9243-b/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/Cal_vertical_monopole_antenna.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9103.pdf-33bc31d9bd",
+      "request_ids": [
+        "EQ-MOD-2a83e632ab52c6a5",
+        "EQ-MOD-87d5fe5196b72331",
+        "EQ-MOD-ef21325b1c230887"
+      ],
+      "title": "k9103.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/dipoles/vha-9103/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9103.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91249106.pdf-6dcf718987",
+      "request_ids": [
+        "EQ-MOD-9ad1848248b82a01",
+        "EQ-MOD-e3aad3901a09f027",
+        "EQ-MOD-ef21325b1c230887"
+      ],
+      "title": "91249106.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbb-9124/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91249106.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91249136.pdf-f0a5921d47",
+      "request_ids": [
+        "EQ-MOD-9ad1848248b82a01",
+        "EQ-MOD-e3aad3901a09f027"
+      ],
+      "title": "91249136.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbb-9124/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91249136.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91249137.pdf-02f1735e1b",
+      "request_ids": [
+        "EQ-MOD-9ad1848248b82a01",
+        "EQ-MOD-e3aad3901a09f027"
+      ],
+      "title": "91249137.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbb-9124/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91249137.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91249138.pdf-7bbbe47392",
+      "request_ids": [
+        "EQ-MOD-9ad1848248b82a01",
+        "EQ-MOD-e3aad3901a09f027"
+      ],
+      "title": "91249138.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbb-9124/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91249138.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91249146.pdf-a76602e445",
+      "request_ids": [
+        "EQ-MOD-9ad1848248b82a01",
+        "EQ-MOD-e3aad3901a09f027"
+      ],
+      "title": "91249146.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbb-9124/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91249146.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91249177.pdf-e2f4d3aae9",
+      "request_ids": [
+        "EQ-MOD-9ad1848248b82a01",
+        "EQ-MOD-e3aad3901a09f027"
+      ],
+      "title": "91249177.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbb-9124/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91249177.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91249178.pdf-7c582d76a4",
+      "request_ids": [
+        "EQ-MOD-9ad1848248b82a01",
+        "EQ-MOD-e3aad3901a09f027"
+      ],
+      "title": "91249178.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbb-9124/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91249178.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9133.pdf-187ea9e44d",
+      "request_ids": [
+        "EQ-MOD-87d5fe5196b72331"
+      ],
+      "title": "k9133.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbc-9133/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9133.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91339106.pdf-507db38655",
+      "request_ids": [
+        "EQ-MOD-87d5fe5196b72331"
+      ],
+      "title": "91339106.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbc-9133/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91339106.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91339136.pdf-8aa1a3337d",
+      "request_ids": [
+        "EQ-MOD-87d5fe5196b72331"
+      ],
+      "title": "91339136.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbc-9133/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91339136.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91339177.pdf-0cffc44bb7",
+      "request_ids": [
+        "EQ-MOD-87d5fe5196b72331"
+      ],
+      "title": "91339177.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbc-9133/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91339177.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-91339178.pdf-ea4a7a706d",
+      "request_ids": [
+        "EQ-MOD-87d5fe5196b72331"
+      ],
+      "title": "91339178.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbc-9133/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/91339178.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-9133all.pdf-f2098c374c",
+      "request_ids": [
+        "EQ-MOD-87d5fe5196b72331"
+      ],
+      "title": "9133all.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbc-9133/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/9133all.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9179.pdf-3b99090737",
+      "request_ids": [
+        "EQ-MOD-2a83e632ab52c6a5",
+        "EQ-MOD-87d5fe5196b72331"
+      ],
+      "title": "k9179.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:02+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbc-9133/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9179.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-9134-10MAN.pdf-9bd4e6841a",
+      "request_ids": [
+        "EQ-MOD-769de80574e27b70"
+      ],
+      "title": "9134-10MAN.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbd-9134-10/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/9134-10MAN.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-Elementspulen.pdf-84e7ad0280",
+      "request_ids": [
+        "EQ-MOD-2a83e632ab52c6a5",
+        "EQ-MOD-769de80574e27b70"
+      ],
+      "title": "Elementspulen.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbd-9134-10/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/Elementspulen.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-9134-4MAN.pdf-a15ed2b351",
+      "request_ids": [
+        "EQ-MOD-2a83e632ab52c6a5"
+      ],
+      "title": "9134-4MAN.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbd-9134-4/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/9134-4MAN.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k_HOLDER_SHORT_9134-4.pdf-30a09c5438",
+      "request_ids": [
+        "EQ-MOD-2a83e632ab52c6a5"
+      ],
+      "title": "k_HOLDER_SHORT_9134-4.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbd-9134-4/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k_HOLDER_SHORT_9134-4.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k_HOLDER_LONG_9134-4.pdf-4dbc439f3d",
+      "request_ids": [
+        "EQ-MOD-2a83e632ab52c6a5"
+      ],
+      "title": "k_HOLDER_LONG_9134-4.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/antenna-holders-baluns/vhbd-9134-4/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k_HOLDER_LONG_9134-4.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9561d.pdf-e22081ff7a",
+      "request_ids": [
+        "EQ-MOD-8ef006813f7e451c"
+      ],
+      "title": "k9561d.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/attenuators-and-pulse-limiters/vtsd-9561-d/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9561d.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9168.pdf-6cff66e575",
+      "request_ids": [
+        "EQ-MOD-26d5b5fd062308e8",
+        "EQ-MOD-8e479cd434c1b3d3"
+      ],
+      "title": "k9168.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/hybrid-lpda/vulb-9168/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9168.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-d9168.pdf-1ab9551531",
+      "request_ids": [
+        "EQ-MOD-26d5b5fd062308e8",
+        "EQ-MOD-8e479cd434c1b3d3"
+      ],
+      "title": "d9168.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/hybrid-lpda/vulb-9168/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/d9168.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-ri9168.pdf-6fdd350fff",
+      "request_ids": [
+        "EQ-MOD-26d5b5fd062308e8",
+        "EQ-MOD-8e479cd434c1b3d3"
+      ],
+      "title": "ri9168.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/hybrid-lpda/vulb-9168/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/ri9168.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-nr9168.pdf-43a2b1ada6",
+      "request_ids": [
+        "EQ-MOD-26d5b5fd062308e8",
+        "EQ-MOD-8e479cd434c1b3d3"
+      ],
+      "title": "nr9168.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/hybrid-lpda/vulb-9168/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/nr9168.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-s9168.pdf-fa33966e1b",
+      "request_ids": [
+        "EQ-MOD-26d5b5fd062308e8",
+        "EQ-MOD-8e479cd434c1b3d3"
+      ],
+      "title": "s9168.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/hybrid-lpda/vulb-9168/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/s9168.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-Patternvulb.pdf-561421a3ad",
+      "request_ids": [
+        "EQ-MOD-26d5b5fd062308e8",
+        "EQ-MOD-8e479cd434c1b3d3"
+      ],
+      "title": "Patternvulb.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/hybrid-lpda/vulb-9168/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/Patternvulb.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9118a.pdf-72eb3092d1",
+      "request_ids": [
+        "EQ-MOD-04d51cc8cb7b423f",
+        "EQ-MOD-866552a227f9dba7",
+        "EQ-MOD-cd6793591a61276c"
+      ],
+      "title": "k9118a.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-a/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9118a.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-d9118ABCDEFG.pdf-1cda8f706d",
+      "request_ids": [
+        "EQ-MOD-04d51cc8cb7b423f",
+        "EQ-MOD-866552a227f9dba7",
+        "EQ-MOD-cd6793591a61276c",
+        "EQ-MOD-d2f258a3faed1497"
+      ],
+      "title": "d9118ABCDEFG.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-a/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/d9118ABCDEFG.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-RI9118A.pdf-a116a6a0d4",
+      "request_ids": [
+        "EQ-MOD-04d51cc8cb7b423f",
+        "EQ-MOD-866552a227f9dba7",
+        "EQ-MOD-cd6793591a61276c"
+      ],
+      "title": "RI9118A.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-a/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/RI9118A.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-nr9118a.pdf-cbeb5b6b61",
+      "request_ids": [
+        "EQ-MOD-04d51cc8cb7b423f",
+        "EQ-MOD-866552a227f9dba7",
+        "EQ-MOD-cd6793591a61276c"
+      ],
+      "title": "nr9118a.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-a/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/nr9118a.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-s9118a.pdf-f452dd447f",
+      "request_ids": [
+        "EQ-MOD-04d51cc8cb7b423f",
+        "EQ-MOD-866552a227f9dba7",
+        "EQ-MOD-cd6793591a61276c"
+      ],
+      "title": "s9118a.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-a/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/s9118a.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-p9118a.pdf-9a1f1f34bf",
+      "request_ids": [
+        "EQ-MOD-04d51cc8cb7b423f",
+        "EQ-MOD-866552a227f9dba7",
+        "EQ-MOD-cd6793591a61276c"
+      ],
+      "title": "p9118a.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-a/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/p9118a.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-k9118e.pdf-29f919873d",
+      "request_ids": [
+        "EQ-MOD-d2f258a3faed1497"
+      ],
+      "title": "k9118e.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/k9118e.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-ri9118e.pdf-e2a6e6dab6",
+      "request_ids": [
+        "EQ-MOD-d2f258a3faed1497"
+      ],
+      "title": "ri9118e.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/ri9118e.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-s9118e.pdf-799c2c781f",
+      "request_ids": [
+        "EQ-MOD-d2f258a3faed1497"
+      ],
+      "title": "s9118e.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/s9118e.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Schwarzbeck-p9118e.pdf-c89536a56d",
+      "request_ids": [
+        "EQ-MOD-d2f258a3faed1497"
+      ],
+      "title": "p9118e.pdf",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "Schwarzbeck",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:03+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.schwarzbeck.com/antennas/logarithmic-periodic-broadband-antennas/standard-lpda/vulp-9118-e/",
+      "download_url": "https://www.schwarzbeck.com/Datenblatt/p9118e.pdf",
+      "notes": "Official public PDF downloaded. No permission to redistribute the complete document in this public repository has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Rohde-Schwarz-ELEKTRA-full-user-manual-b4456f8e28",
+      "request_ids": [
+        "ADDED-EQ-ELEKTRA"
+      ],
+      "title": "ELEKTRA full user manual",
+      "kind": "manual",
+      "version": "23; software 5.30; listing 2026-07-10",
+      "publisher": "Rohde & Schwarz",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:09+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.rohde-schwarz.com/us/manual/rs-elektra-emc-test-software-user-manual_78701-588928.html",
+      "download_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1178_6785_01/ELEKTRA_UserManual_en_23.pdf",
+      "notes": "Candidate software documentation; no assertion that ELEKTRA is installed or licensed on the inventoried EMC32 station. Full original retained locally; no public redistribution permission established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Rohde-Schwarz-CMX500-KDB-987594-D02-cases-K-L-application-note-2d8172be0a",
+      "request_ids": [
+        "EQ-MOD-c7163884035d1865"
+      ],
+      "title": "CMX500 KDB 987594 D02 cases K/L application note",
+      "kind": "manual",
+      "version": "1SL416 version 0e; cover 08.2025",
+      "publisher": "Rohde & Schwarz",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:14+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.rohde-schwarz.com/fr/applications/perform-kdb987594-d02-test-cases-kl-with-rs-cmx500-obt_56280-1577029.html",
+      "download_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_application/application_notes/1sl416/1SL416_0e_The_FCC_KDB_test_requirement_KL.pdf",
+      "notes": "Vendor example, not FCC normative method. Listing is dated 2025-07-30 but cover states 08.2025; both retained. Full original retained locally; no public redistribution permission established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "Rohde-Schwarz-CMX500-product-brochure-0060478e03",
+      "request_ids": [
+        "EQ-MOD-c7163884035d1865"
+      ],
+      "title": "CMX500 product brochure",
+      "kind": "manual",
+      "version": "06.00 filename",
+      "publisher": "Rohde & Schwarz",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:18+09:00",
+      "status": "unavailable",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.rohde-schwarz.com/fr/application/cmx500/",
+      "download_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5216_4127_12/CMX500_bro_en_5216-4127-12_v0600.pdf",
+      "notes": "Historical brochure; version 07.00 also identified, not assumed equivalent. Original not acquired: HTTP 404 "
+    },
+    {
+      "document_id": "Anritsu-MT8000A-product-introduction-c8da1f99ac",
+      "request_ids": [
+        "EQ-MOD-27e4e96e1d2f9c07"
+      ],
+      "title": "MT8000A product introduction",
+      "kind": "manual",
+      "version": "Publisher PDF version to be read from cover",
+      "publisher": "Anritsu",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:32:21+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://www.anritsu.com/en-us/test-measurement/products/mt8000a",
+      "download_url": "https://dl-qa.cdn-anritsu.com/en-en/test-measurement/files/Product-Introductions/Product-Introduction/mt8000a-el1900.pdf",
+      "notes": "Official CDN reference found in publisher web results. Current June 2026 listing not assumed identical to this PDF. Full original retained locally; no public redistribution permission established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "SPEAG-DASY6-Module-R-D-Manual-March-2023-93e4e1ddd8",
+      "request_ids": [
+        "EQ-MOD-38503d023c4f533f",
+        "EQ-MOD-553b7e26b00a3bba",
+        "EQ-MOD-951b898fe0a74d32",
+        "EQ-MOD-f89ac85bca22a066"
+      ],
+      "title": "DASY6 Module R&D Manual, March 2023",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "SPEAG",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:50+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+      "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+      "notes": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "SPEAG-DASY8-Module-R-D-Manual-March-2023-b123ed4144",
+      "request_ids": [
+        "EQ-MOD-38503d023c4f533f",
+        "EQ-MOD-553b7e26b00a3bba",
+        "EQ-MOD-951b898fe0a74d32",
+        "EQ-MOD-f89ac85bca22a066"
+      ],
+      "title": "DASY8 Module R&D Manual, March 2023",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "SPEAG",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:50+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY8_RD_20230302.pdf",
+      "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY8_RD_20230302.pdf",
+      "notes": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "SPEAG-DASY8-incident-power-density-conformal-surface-application-note-0b3c366195",
+      "request_ids": [
+        "EQ-MOD-2cf057cd27d71f07",
+        "EQ-MOD-d034ebc06292d349",
+        "EQ-MOD-f89ac85bca22a066"
+      ],
+      "title": "DASY8 incident power density conformal-surface application note",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "SPEAG",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:50+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://speag.swiss/assets/downloads/products/dasy/application-notes/Camera-Module/AppNote_CameraModule_240412.pdf",
+      "download_url": "https://speag.swiss/assets/downloads/products/dasy/application-notes/Camera-Module/AppNote_CameraModule_240412.pdf",
+      "notes": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "SPEAG-EX3DV4-official-specifications-600e36fa1b",
+      "request_ids": [
+        "EQ-MOD-5e30000af203b4fb",
+        "EQ-MOD-85d8f604e0feafdd",
+        "EQ-MOD-ab694e38395717da"
+      ],
+      "title": "EX3DV4 official specifications",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "SPEAG",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:08:07+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://speag.swiss/components/probes-2/dosimetric/ex3dv4-isotropic-dos-probe-3",
+      "download_url": "https://speag.swiss/components/probes-2/dosimetric/ex3dv4-isotropic-dos-probe-3",
+      "notes": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "SPEAG-DAE4-and-DAE4ip-official-specifications-8e66e5080b",
+      "request_ids": [
+        "EQ-MOD-38503d023c4f533f",
+        "EQ-MOD-a0597dbe8a1e6d07",
+        "EQ-MOD-f89ac85bca22a066"
+      ],
+      "title": "DAE4 and DAE4ip official specifications",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "SPEAG",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:54+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://speag.swiss/products/dasy8/m-hac/daes",
+      "download_url": "https://speag.swiss/products/dasy8/m-hac/daes",
+      "notes": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "SPEAG-DASY-product-lifetime-77da520bd8",
+      "request_ids": [
+        "EQ-MOD-553b7e26b00a3bba",
+        "EQ-MOD-5e30000af203b4fb",
+        "EQ-MOD-951b898fe0a74d32",
+        "EQ-MOD-d48306ef9ca20631"
+      ],
+      "title": "DASY product lifetime",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "SPEAG",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime",
+      "download_url": "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime",
+      "notes": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "SPEAG-DAE-calibration-procedure-overview-b35e7ee2e5",
+      "request_ids": [
+        "EQ-MOD-ae5832f52cddbd67"
+      ],
+      "title": "DAE calibration procedure overview",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "SPEAG",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:56+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae",
+      "download_url": "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae",
+      "notes": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "SPEAG-DASY6-API-option-announcement-and-access-route-d4baf66e7c",
+      "request_ids": [
+        "ADDED-EQ-VENDOR-REFERENCE"
+      ],
+      "title": "DASY6 API option announcement and access route",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "SPEAG",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:57+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://speag.swiss/news-events/news/measurement/cdasy6-module-sar-v6-12-automate-your-testing-workflow",
+      "download_url": "https://speag.swiss/news-events/news/measurement/cdasy6-module-sar-v6-12-automate-your-testing-workflow",
+      "notes": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    },
+    {
+      "document_id": "SPEAG-WPT3-and-MAGPy3-V3.4-API-and-export-update-f8b047743a",
+      "request_ids": [
+        "ADDED-EQ-VENDOR-REFERENCE"
+      ],
+      "title": "WPT3 and MAGPy3 V3.4 API and export update",
+      "kind": "manual",
+      "version": "Edition unresolved; official original retrieved 2026-10-23",
+      "publisher": "SPEAG",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T20:33:59+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "representation": "original",
+      "source_url": "https://speag.swiss/news-events/news/measurement/2026/smarter-and-faster-testing-of-wpt-devices",
+      "download_url": "https://speag.swiss/news-events/news/measurement/2026/smarter-and-faster-testing-of-wpt-devices",
+      "notes": "Official source; compatibility with actual inventoried generation, options and licenses is unverified. No permission to republish the complete third-party document has been established. The original was downloaded locally; its bytes are intentionally excluded from this public package because redistribution permission remains unconfirmed. See materials/inventory for local storage, hash, size and matching evidence."
+    }
+  ]
+}

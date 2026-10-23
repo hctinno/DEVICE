@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T20:20:12+09:00",
+  "updated_at": "2026-10-23T20:34:53+09:00",
   "base_commit": "e664e0e3a1db8d8fac6a8f6bc92b1a2b49c7a283",
   "regulatory": [
     {
@@ -8195,8 +8195,10 @@
       "manufacturer": "Anritsu",
       "model": "MT8000A",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://dl-qa.cdn-anritsu.com/en-en/test-measurement/files/Product-Introductions/Product-Introduction/mt8000a-el1900.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -23347,7 +23349,9 @@
       "priority": "P1",
       "state": "partial_references_found",
       "references": [
-        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/getting_started/1179_4592_01/Remote_Control_SCPI_GettingStarted_en_04.pdf"
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/getting_started/1179_4592_01/Remote_Control_SCPI_GettingStarted_en_04.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_application/application_notes/1sl416/1SL416_0e_The_FCC_KDB_test_requirement_KL.pdf",
+        "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5216_4127_12/CMX500_bro_en_5216-4127-12_v0600.pdf"
       ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -24761,8 +24765,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "420NJ",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/K420NJ.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k422NJ.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24771,8 +24778,12 @@
       "manufacturer": "SCHWARZBECK",
       "model": "422NJ",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k422NJ.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/422_NJ_field_uniformity.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/422_NJ_assembly.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24781,7 +24792,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "9160",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -24791,8 +24802,13 @@
       "manufacturer": "SCHWARZBECK",
       "model": "AM 9144",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/AM9144.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9120f.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k1519-60D.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/K9128DSNAP.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24801,7 +24817,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BBHA 9120 A 371",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -24811,8 +24827,13 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BBHA 9120 D",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9120d.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9120d.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/AppNote_RayleighDistance_BBHA9120D.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/CCA.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24821,8 +24842,13 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BBHA 9120 J",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9120J.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9120J.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/P9120J.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ApplicationNote_AntennaDistance.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24831,8 +24857,13 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BBHA 9120D",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9120d.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9120d.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/AppNote_RayleighDistance_BBHA9120D.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/CCA.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24841,8 +24872,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BBHA 9170",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9170.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9170.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24851,8 +24885,13 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BBHA9120D",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9120d.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9120d.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/AppNote_RayleighDistance_BBHA9120D.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/CCA.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24861,8 +24900,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BBHA9120E",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9120e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9120e.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24871,8 +24913,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BBHA9120F",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9120f.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9120F.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24881,8 +24926,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BBHA9170",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9170.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9170.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24891,8 +24939,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "BNB 8652",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k8652.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24901,8 +24951,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "CAL CMAD1614",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k_cal_1614.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k1614.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24911,8 +24964,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "CDNE M2",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/CDNE_M2.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/CDNE_M3.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24921,8 +24977,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "CDNE M3",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/CDNE_M2.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/CDNE_M3.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24931,8 +24990,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "CMAD1614",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k_cal_1614.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k1614.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24941,7 +25003,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "ECSS LISN2",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -24951,7 +25013,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "ECSS LISN2-75A",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -24961,8 +25023,12 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FESP 5132",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k5132.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kFESP5132SecNote.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/LoopHolder50.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24971,7 +25037,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FESP 5133-1300",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -24981,8 +25047,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FESP 5133-1330",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k51331330.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k51331330SecNote.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -24991,8 +25060,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FESP 5133-7/41",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k5133741.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25001,8 +25072,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FESP 5133-9",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k5133-9.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25011,8 +25084,12 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FESP 5134-1",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k5134-1.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k5164.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kNFCN1356.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25021,8 +25098,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FESP 5134-40",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/LoopHolder50.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k5134-40.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25031,8 +25111,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FESP-5134-40",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/LoopHolder50.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k5134-40.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25041,8 +25124,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FMZB 1513",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/CCA.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25051,8 +25136,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FMZB 1519-60D",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k1519-60D.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25061,8 +25148,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FMZB1519-60D",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k1519-60D.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25071,7 +25160,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "FSP",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25081,8 +25170,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "HFRA5164",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k5164.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kNFCN1356.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25091,8 +25183,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "HFRAE 5163",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k5163.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25101,8 +25195,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "HS5136",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k5136.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25111,8 +25207,12 @@
       "manufacturer": "SCHWARZBECK",
       "model": "HVSE 8600",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k8600.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k8123-200.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k8123-400.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25121,7 +25221,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "LISN",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25131,8 +25231,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "MDS 21 C",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/MDS21C.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25141,8 +25243,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NFCN 1356",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k5164.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kNFCN1356.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25151,7 +25256,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NMHA",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25161,8 +25266,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NNBL 8226 HV",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k8226HV.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25171,8 +25278,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NNBM 8124-200",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/K8124-200.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25181,8 +25290,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NNBM 8124-400",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/K8124-400.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25191,8 +25302,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NNBM 8124-800",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/K8124-800.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25203,7 +25316,11 @@
       "priority": "P1",
       "state": "partial_references_found",
       "references": [
-        "https://www.schwarzbeck.de/Datenblatt/k8123.pdf"
+        "https://www.schwarzbeck.de/Datenblatt/k8123.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/K8124-200.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/K8124-400.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/K8124-800.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k8124.pdf"
       ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25213,8 +25330,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NNBM8124-200",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/K8124-200.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25223,8 +25342,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NNHV 8123-200",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k8600.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k8123-200.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25233,8 +25355,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NNHV 8123-400",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k8600.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k8123-400.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25243,8 +25368,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "NNLK 8129",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k8129.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/Option_TC.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25253,7 +25381,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "OSP230",
       "priority": "P2",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25263,8 +25391,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "Opt. 5136 ZG",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k5136.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25273,8 +25403,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "PVDC 8300",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k8300.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25283,8 +25415,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "RS 9244",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/K9244.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25293,8 +25427,15 @@
       "manufacturer": "SCHWARZBECK",
       "model": "SBA9113",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/K420NJ.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9113.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k422NJ.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9113EH.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/s9113.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/p9113.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25303,8 +25444,14 @@
       "manufacturer": "SCHWARZBECK",
       "model": "SBA9119",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k422NJ.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/K9119.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/422_NJ_assembly.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9119EH.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/P9119.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25313,8 +25460,17 @@
       "manufacturer": "SCHWARZBECK",
       "model": "STLP 9128 E",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9128e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9128e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9128enr.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/s9128e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9128es.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9128ES.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9128ESNR.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/S9128Es.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25323,8 +25479,13 @@
       "manufacturer": "SCHWARZBECK",
       "model": "STLP 9128 E special",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9128es.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9128ES.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9128ESNR.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/S9128Es.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25333,8 +25494,17 @@
       "manufacturer": "SCHWARZBECK",
       "model": "STLP 9128E",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9128e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9128e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9128enr.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/s9128e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9128es.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9128ES.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9128ESNR.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/S9128Es.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25343,8 +25513,16 @@
       "manufacturer": "SCHWARZBECK",
       "model": "STLP 9128ES",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9128e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9128e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9128enr.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9128es.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9128ES.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9128ESNR.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/S9128Es.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25353,8 +25531,12 @@
       "manufacturer": "SCHWARZBECK",
       "model": "STLP 9129",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9129.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9129.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/p9129.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25363,8 +25545,14 @@
       "manufacturer": "SCHWARZBECK",
       "model": "STLP9149",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9129.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/K9149.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9149.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9149NR.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/P9149.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25373,8 +25561,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "SY9223-7637-4",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/SY9223-7637-4.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25383,8 +25573,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "TF 130-150",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/KTF130-150.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25393,8 +25585,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "TK9261",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9261.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25403,8 +25597,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "TK9420",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9420.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25413,7 +25609,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "TP-1142",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25423,7 +25619,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "UHAL9107",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25433,7 +25629,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "UHAL9107/91071107",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25443,8 +25639,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "UHAP",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/kuhap.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/mUHAP.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25453,8 +25652,12 @@
       "manufacturer": "SCHWARZBECK",
       "model": "USLP 9142",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/CCA.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9142.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9142.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25463,7 +25666,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "USLP 9142 Log.-Per. Antenna",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25473,8 +25676,12 @@
       "manufacturer": "SCHWARZBECK",
       "model": "USLP-9142",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/CCA.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9142.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9142.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25483,8 +25690,12 @@
       "manufacturer": "SCHWARZBECK",
       "model": "USLP9142",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/CCA.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9142.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9142.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25493,8 +25704,13 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VAMP 9243 B",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/kVAMP9243B.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kVT9243B.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kCA9243B.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kMIL461F_bonding_kit.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25503,8 +25719,13 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VAMP 9243B",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/kVAMP9243B.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kVT9243B.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kCA9243B.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/kMIL461F_bonding_kit.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25513,8 +25734,11 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VHA9103",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9103.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249106.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25523,7 +25747,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VHA9103/91031170",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25533,7 +25757,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VHA9130",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25543,8 +25767,17 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VHBB 9124",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/CCA.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249106.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249136.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249137.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249138.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249146.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249177.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249178.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25553,8 +25786,17 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VHBB9124",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/CCA.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249106.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249136.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249137.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249138.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249146.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249177.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91249178.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25563,8 +25805,17 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VHBC9133",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9103.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9133.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91339106.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91339136.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91339177.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/91339178.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9133all.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9179.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25573,8 +25824,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VHBD 9134-10",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/9134-10MAN.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25583,8 +25836,14 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VHBD 9134-4",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9103.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9179.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/9134-4MAN.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k_HOLDER_SHORT_9134-4.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k_HOLDER_LONG_9134-4.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25593,8 +25852,10 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VTSD 9561-D",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9561d.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25603,7 +25864,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VTSD 9561-F-N",
       "priority": "P2",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25613,7 +25874,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VTSD9561F-N",
       "priority": "P2",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25623,7 +25884,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULB 9160",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25633,7 +25894,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULB 9165",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25643,8 +25904,14 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULB 9168",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9168.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/d9168.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9168.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/nr9168.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/s9168.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25653,7 +25920,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULB9160",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25663,7 +25930,7 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULB9160/3125",
       "priority": "P1",
-      "state": "not_started",
+      "state": "model_identity_or_legacy_lookup_required",
       "references": [],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
@@ -25673,8 +25940,14 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULB9168",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9168.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/d9168.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9168.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/nr9168.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/s9168.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25683,8 +25956,15 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULP 9118 A",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9118a.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/d9118ABCDEFG.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9118A.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/nr9118a.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/s9118a.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/p9118a.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25693,8 +25973,15 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULP 9118 E",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/fachamb.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/d9118ABCDEFG.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/k9118e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/ri9118e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/s9118e.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/p9118e.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25703,8 +25990,15 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULP 9118A",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9118a.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/d9118ABCDEFG.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9118A.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/nr9118a.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/s9118a.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/p9118a.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -25713,8 +26007,15 @@
       "manufacturer": "SCHWARZBECK",
       "model": "VULP9118A",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://www.schwarzbeck.com/Datenblatt/k9118a.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/d9118ABCDEFG.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/RI9118A.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/nr9118a.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/s9118a.pdf",
+        "https://www.schwarzbeck.com/Datenblatt/p9118a.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -26183,8 +26484,10 @@
       "manufacturer": "SPEAG",
       "model": "5G Verification Source",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/assets/downloads/products/dasy/application-notes/Camera-Module/AppNote_CameraModule_240412.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -26393,8 +26696,10 @@
       "manufacturer": "SPEAG",
       "model": "D1950V3",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -26663,8 +26968,13 @@
       "manufacturer": "SPEAG",
       "model": "DAE4ip",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+        "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY8_RD_20230302.pdf",
+        "https://speag.swiss/assets/downloads/products/dasy/application-notes/Camera-Module/AppNote_CameraModule_240412.pdf",
+        "https://speag.swiss/products/dasy8/m-hac/daes"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -26733,8 +27043,10 @@
       "manufacturer": "SPEAG",
       "model": "EF3DV3",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/products/dasy8/m-hac/daes"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -26763,8 +27075,10 @@
       "manufacturer": "SPEAG",
       "model": "ET3DV6",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -26783,8 +27097,10 @@
       "manufacturer": "SPEAG",
       "model": "EUmmWV4",
       "priority": "P2",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/assets/downloads/products/dasy/application-notes/Camera-Module/AppNote_CameraModule_240412.pdf"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -26886,8 +27202,10 @@
       "manufacturer": "SPEAG",
       "model": "Magnetic Field Simulator (TMFS)",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/services/cal-lab/calibration-services/readout-unit-dae"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -26896,8 +27214,12 @@
       "manufacturer": "SPEAG",
       "model": "POWER SOURCE1",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+        "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY8_RD_20230302.pdf",
+        "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -26906,8 +27228,12 @@
       "manufacturer": "SPEAG",
       "model": "POWERSOURCE1",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+        "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY8_RD_20230302.pdf",
+        "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -27506,8 +27832,12 @@
       "manufacturer": "SPEAG",
       "model": "UniPV1",
       "priority": "P1",
-      "state": "not_started",
-      "references": [],
+      "state": "partial_references_found",
+      "references": [
+        "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+        "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY8_RD_20230302.pdf",
+        "https://speag.swiss/products/dasy8/m-hac/daes"
+      ],
       "actual_unit_options_firmware_calibration": "not_provided"
     },
     {
@@ -34306,8 +34636,9 @@
     "not_started": 6
   },
   "equipment_state_counts": {
-    "not_started": 2853,
-    "partial_references_found": 14
+    "not_started": 2747,
+    "partial_references_found": 99,
+    "model_identity_or_legacy_lookup_required": 21
   },
   "notice": "All requests retained. Partial source availability does not mean every required document, edition, transition, attachment or device function has been completed."
 }

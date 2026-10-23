@@ -9,6 +9,7 @@
 | FCC-PHONE-20261023-001 | 스마트폰 SAR/HAC/RF/EMC·품질·인증, KDB 29종, CFR 11개 Part | e664e0e3a1db8d8fac6a8f6bc92b1a2b49c7a283 | 원본 111 + 메타데이터 1 / 오래된 내부 링크 미확보 1 | 별도 workspace에서 112개 인수, 미확보 1개 | collect/fcc-p0-smartphone-20261023-001 |
 | FCC-GENERAL-20261023-002 | 나머지 KDB·CFR, 전체 요청 대장, 판본·권리 검토 메타데이터 | e664e0e3a1db8d8fac6a8f6bc92b1a2b49c7a283 | 원본 234 / 제3자 서신 공개 재배포 보류 1 | 별도 workspace에서 234개 인수, 미확보 1개 | collect/fcc-p0-smartphone-20261023-001 |
 | FCC-UPDATES-20261023-003 | FCC 워크숍 33종, KDB 초안 14종, HAC·MP-5·OET65, 프로토콜 문서 | e664e0e3a1db8d8fac6a8f6bc92b1a2b49c7a283 | 원본 120 / 색인 HTTP 원문 미확보 3 | 별도 workspace에서 120개 인수, 미확보 3개 | collect/fcc-p0-smartphone-20261023-001 |
+| FCC-EQUIPMENT-20261023-004 | Schwarzbeck·SPEAG·통신시험기 및 시험 SW 문서의 접근·판본·권리 대장 | e664e0e3a1db8d8fac6a8f6bc92b1a2b49c7a283 | 공개 원본 0 / 로컬 확보 후 재배포 제한 145, HTTP 실패 1 | 별도 workspace에서 제한 기록 146개 인수; ZIP에 원문 없음 | collect/fcc-p0-smartphone-20261023-001 |
 
 배치가 추가되면 각 행의 기준 커밋은 수집 작업을 시작한 SHA로 기록한다. 결과 커밋 SHA는 push 후 작업 보고 또는 PR에 남긴다. 커밋 본문 파일에 자기 자신의 SHA를 미리 채우지 않는다.
 
@@ -24,4 +25,6 @@
 
 003 배치는 41,454,231 bytes이며, SHA-256은 `ef59bc8ffe0648fcffb44c96f6529ede531a4340312f15fe64e2134b82bb3fe5`다. ZIP CRC, 모든 원본의 해시·크기, 정확한 파일 집합, JSON Schema 및 외부/내부 manifest 바이트 일치 검사에 통과했다. 전용 인수 workspace에서 `downloaded=120`, `unavailable=3`을 확인했다.
 
-전체 수집은 미완료다. 304개 규정 등 요청, 2,867개 모델, 식별 미완료 270행, 현장 비공개 입력 16묶음을 모두 보존한다. 모델 문서는 14개 요청에 부분 자료가 있으며 나머지 2,853개는 미착수다. 현행 KDB 첨부 외 추가 초안·워크숍·표준·장비/시험 SW 문서를 계속 처리한다. 원본 미확보 사유의 기록을 원본 확보 실적으로 계산하지 않는다.
+004의 [장비 자료 안내](equipment/README.md), [Schwarzbeck 원문 대장](inventory/schwarzbeck_sources.json), [SPEAG 문서](inventory/speag_sources.json), [통신시험기·시험 SW](inventory/phone_equipment_sources.json)를 추가했다. 공개 재배포를 보류한 원문은 `materials/work/20261023/restricted/`에 보관하며 Git에서 제외한다. 인수기의 `unavailable=146`은 이 배치의 원문이 ZIP에 제공되지 않았다는 뜻으로, 실제 다운로드 실패 1개와 권리 제한 145개를 구별해야 한다.
+
+전체 수집은 미완료다. 304개 규정 등 요청, 2,867개 모델, 식별 미완료 270행, 현장 비공개 입력 16묶음을 모두 보존한다. 모델 요청 중 99개에 부분 자료가 있고 21개는 공식 모델 검색 후 식별·구형 자료 확인이 필요하며 2,747개는 미착수다. 기존 규정 등 요청은 부분 자료 확보 271개, 제거된 조문 식별 1개, 표준 구매 필요 23개, 표준 로컬 원문/권리 미확인 1개, 열람 경로 확인 1개, 공개 시험건 로컬 확보 1개, 국가 확장 미착수 6개다. 원본 미확보 사유의 기록을 원본 확보 실적으로 계산하지 않는다.

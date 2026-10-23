@@ -1,0 +1,98 @@
+{
+  "checked_at": "2026-10-23T20:32:23+09:00",
+  "records": [
+    {
+      "title": "ELEKTRA full user manual",
+      "publisher": "Rohde & Schwarz",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1178_6785_01/ELEKTRA_UserManual_en_23.pdf",
+      "source_url": "https://www.rohde-schwarz.com/us/manual/rs-elektra-emc-test-software-user-manual_78701-588928.html",
+      "version": "23; software 5.30; listing 2026-07-10",
+      "retrieved_at": "2026-10-23T20:32:09+09:00",
+      "request_ids": [
+        "ADDED-EQ-ELEKTRA"
+      ],
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "rights": "unknown",
+      "reason": "Candidate software documentation; no assertion that ELEKTRA is installed or licensed on the inventoried EMC32 station. Full original retained locally; no public redistribution permission established.",
+      "pages": 800,
+      "original_sha256": "bb40071ad8f95264f329591c5a0c9b1497d5b14bf3a75ee88e5151e814a9f6e7",
+      "original_bytes": 17911268,
+      "local_storage": "materials/work/20261023/restricted/vendors/ELEKTRA_UserManual_en_23.pdf",
+      "media_type": "application/pdf"
+    },
+    {
+      "title": "CMX500 KDB 987594 D02 cases K/L application note",
+      "publisher": "Rohde & Schwarz",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_application/application_notes/1sl416/1SL416_0e_The_FCC_KDB_test_requirement_KL.pdf",
+      "source_url": "https://www.rohde-schwarz.com/fr/applications/perform-kdb987594-d02-test-cases-kl-with-rs-cmx500-obt_56280-1577029.html",
+      "version": "1SL416 version 0e; cover 08.2025",
+      "retrieved_at": "2026-10-23T20:32:14+09:00",
+      "request_ids": [
+        "EQ-MOD-c7163884035d1865"
+      ],
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "rights": "unknown",
+      "reason": "Vendor example, not FCC normative method. Listing is dated 2025-07-30 but cover states 08.2025; both retained. Full original retained locally; no public redistribution permission established.",
+      "pages": 20,
+      "original_sha256": "beda940aa97740abac4ae65a577d334b1efc5f7ecd7e186d8aaa7e7923ad98bf",
+      "original_bytes": 759655,
+      "local_storage": "materials/work/20261023/restricted/vendors/1SL416_0e_The_FCC_KDB_test_requirement_KL.pdf",
+      "media_type": "application/pdf"
+    },
+    {
+      "title": "CMX500 product brochure",
+      "publisher": "Rohde & Schwarz",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5216_4127_12/CMX500_bro_en_5216-4127-12_v0600.pdf",
+      "source_url": "https://www.rohde-schwarz.com/fr/application/cmx500/",
+      "version": "06.00 filename",
+      "retrieved_at": "2026-10-23T20:32:18+09:00",
+      "request_ids": [
+        "EQ-MOD-c7163884035d1865"
+      ],
+      "status": "unavailable",
+      "rights": "unknown",
+      "reason": "Historical brochure; version 07.00 also identified, not assumed equivalent. Original not acquired: HTTP 404 "
+    },
+    {
+      "title": "MT8000A product introduction",
+      "publisher": "Anritsu",
+      "url": "https://dl-qa.cdn-anritsu.com/en-en/test-measurement/files/Product-Introductions/Product-Introduction/mt8000a-el1900.pdf",
+      "source_url": "https://www.anritsu.com/en-us/test-measurement/products/mt8000a",
+      "version": "Publisher PDF version to be read from cover",
+      "retrieved_at": "2026-10-23T20:32:21+09:00",
+      "request_ids": [
+        "EQ-MOD-27e4e96e1d2f9c07"
+      ],
+      "status": "downloaded_locally_redistribution_unconfirmed",
+      "rights": "unknown",
+      "reason": "Official CDN reference found in publisher web results. Current June 2026 listing not assumed identical to this PDF. Full original retained locally; no public redistribution permission established.",
+      "pages": 41,
+      "original_sha256": "30ea1b0c178c7c1278f9fe8eeccaf31aceb39a22e71c4c905abd233ab357e834",
+      "original_bytes": 3434795,
+      "local_storage": "materials/work/20261023/restricted/vendors/mt8000a-el1900.pdf",
+      "media_type": "application/pdf"
+    }
+  ],
+  "access_limits": [
+    {
+      "model": "CMW500",
+      "source_url": "https://www.rohde-schwarz.com/jp/manual/cmw500_overview/",
+      "state": "full_model_manual_not_found_in_public_listing",
+      "observed": "The public listing contained one generic SCPI quick guide, zero user manuals and zero service manuals. That generic guide was already collected.",
+      "next_step": "Check existing lab documentation or the manufacturer support entitlement; do not substitute a third-party rehost without source verification."
+    },
+    {
+      "model": "MT8000A",
+      "state": "download_landing_route_failed",
+      "source_url": "https://www.anritsu.com/en-us/test-measurement/products/mt8000a",
+      "observed": "Official June 2026 brochure/product introduction and SmartStudio/TestDeck links identified, but landing/download navigation did not yield a verified file. Earlier official product introduction tracked separately.",
+      "links": [
+        "https://www.anritsu.com/en-US/test-measurement/support/downloads/brochures-datasheets-and-catalogs/dwl19556",
+        "https://www.anritsu.com/en-US/test-measurement/support/downloads/brochures-datasheets-and-catalogs/dwl21374",
+        "https://www.anritsu.com/en-US/test-measurement/support/downloads/product-introductions/dwl19557",
+        "https://www.anritsu.com/en-US/test-measurement/support/downloads/product-introductions/dwl20785",
+        "https://www.anritsu.com/en-US/test-measurement/support/downloads/product-introductions/dwl21043"
+      ]
+    }
+  ]
+}

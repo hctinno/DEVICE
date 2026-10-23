@@ -1,0 +1,24 @@
+{
+  "package_id": "FCC-EQUIPMENT-20261023-004",
+  "archive_bytes": 9064,
+  "archive_sha256": "9870ee342dff0a6ecb3cbb1d77b83b8e46938bd39f99a5e45516ecf8db38b351",
+  "status_counts": {
+    "read_only": 145,
+    "unavailable": 1
+  },
+  "public_originals": 0,
+  "local_original_types": {
+    "application/pdf": 139,
+    "text/html": 6
+  },
+  "schwarzbeck": {
+    "files": 133,
+    "original_bytes": 64439304,
+    "model_states": {
+      "partial_sources_acquired": 75,
+      "model_identity_or_legacy_lookup_required": 21
+    },
+    "empty_text_pdf_count": 2
+  },
+  "note": "Rights-limited references are counted separately from public originals."
+}
