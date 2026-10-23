@@ -42,6 +42,11 @@ def _profile():
             'max_total_text_bytes': MAX_TOTAL_TEXT_BYTES, 'max_context_bytes': MAX_CONTEXT_BYTES}
 
 
+def current_extraction_profile_id():
+    """Identify current parser/code/limits without parsing or retaining data."""
+    return _hash(_encoded(_profile()))
+
+
 def _spans(text):
     result, start = [], 0
     for number, part in enumerate(text.splitlines(keepends=True), 1):
