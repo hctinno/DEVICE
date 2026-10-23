@@ -493,7 +493,9 @@ class RFDevice:
                 if not isinstance(control,dict): raise _Issue('disconnected','control_unavailable')
                 selected=control.get('selected_input')
                 if selected not in self._routes(): raise _Issue('invalid','undeclared_control_route')
-                if selected!=self._route and selected!=self._pending_route:
+                if selected==self._route:
+                    self._pending_route=None; self._due_tick=None
+                elif selected!=self._pending_route:
                     self._pending_route=selected; self._due_tick=tick+self.settings['settling_ticks']
             if self._pending_route is not None:
                 if tick<self._due_tick or self._faults.get('stuck'): raise _Issue('pending','settling')
