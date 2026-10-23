@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "package_id": "FCC-PUBLIC-MANUAL-ACCESS-20261024-004",
+  "created_at": "2026-10-24T01:36:36.781184+09:00",
+  "synthetic": false,
+  "notes": "P01 reviewed bibliography/access projection of five already acquired manufacturer documents. No original source, report body, private asset data or OEM software is delivered. Projection performs no new source acquisition.",
+  "documents": [
+    {
+      "document_id": "S01-Keysight-5989-6948EN-f36225ab3534",
+      "title": "RF & Microwave Attenuators",
+      "kind": "other",
+      "version": "5989-6948EN; published August 13, 2020 (printed PDF page11)",
+      "publisher": "Keysight Technologies",
+      "published_at": "2020-08-13",
+      "retrieved_at": "2026-10-24T01:16:08.326521+09:00",
+      "representation": "original",
+      "source_url": "https://www.keysight.com/us/en/assets/7018-01620/brochures/5989-6948.pdf",
+      "download_url": "https://www.keysight.com/content/dam/keysight/en/doc/ungate/brochures/5989-6948.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-004"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S01-Narda-138-POWERDIVIDERS-92ae03180581",
+      "title": "Multi-Octave 2- and 4-Way Power Dividers",
+      "kind": "other",
+      "version": "138-POWERDIVIDERS.PDF; printed catalog pages138-140; formal edition/date not stated",
+      "publisher": "Narda-MITEQ",
+      "published_at": null,
+      "retrieved_at": "2026-10-24T01:16:34.107628+09:00",
+      "representation": "original",
+      "source_url": "https://www.nardamiteq.com/viewmodel.php?model=4456-4",
+      "download_url": "https://www.nardamiteq.com/docs/138-POWERDIVIDERS.PDF",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-004"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S01-API-Inmet-INM0001-9676fa908114",
+      "title": "API Inmet Wireless & Microwave Components Short Form Catalog",
+      "kind": "other",
+      "version": "Back cover: INM.0001; Short Form Catalog;01-17; Copyright2018. Exact publication day unresolved.",
+      "publisher": "API Technologies / Inmet; hosted by Spectrum Control",
+      "published_at": null,
+      "retrieved_at": "2026-10-24T01:16:38.273809+09:00",
+      "representation": "original",
+      "source_url": "https://www.spectrumcontrol.com/application/files/5316/7527/1463/inmet-short-form-catalog.pdf",
+      "download_url": "https://www.spectrumcontrol.com/application/files/5316/7527/1463/inmet-short-form-catalog.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-004"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S01-Keysight-5091-6188E-62e4b9ff13c3",
+      "title": "87300B,C,D and87301B,C,D,E Directional Couplers;87310B Hybrid Coupler",
+      "kind": "other",
+      "version": "5091-6188E; published September18,2020 (printed PDF page9)",
+      "publisher": "Keysight Technologies",
+      "published_at": "2020-09-18",
+      "retrieved_at": "2026-10-24T01:17:06.821165+09:00",
+      "representation": "original",
+      "source_url": "https://www.keysight.com/sg/en/assets/7018-06681/technical-overviews/5091-6188.pdf",
+      "download_url": "https://www.keysight.com/content/dam/keysight/en/doc/ungate/technical-overviews/5091-6188.pdf",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-004"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    },
+    {
+      "document_id": "S06-INNCO-DS2000-S-product-856f5b0cd7f8",
+      "title": "INNCO DS2000-S official product technical data, including -1t load variant",
+      "kind": "other",
+      "version": "Undated official product page; snapshot 2026-10-24; not an operating/programming manual",
+      "publisher": "INNCO Systems",
+      "published_at": null,
+      "retrieved_at": "2026-10-24T01:09:36+09:00",
+      "representation": "original",
+      "source_url": "https://www.innco-systems.de/en/products/turntables/ds2000-s-with-stainless-steel-panels-turntable",
+      "download_url": "https://www.innco-systems.de/en/products/turntables/ds2000-s-with-stainless-steel-panels-turntable",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-MANUAL-ACCESS-20261024-004"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Publisher copyright; full-document redistribution permission is not established. Bibliographic and access metadata only.",
+      "notes": "Complete original was acquired and hash-verified locally. Its bytes are not supplied in this package. Document model/version scope does not verify an installed asset, firmware, option, physical performance or protocol implementation."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "review_id": "FCC-PUBLIC-ACCESS-QA-20261024-001",
+  "reviewed_at": "2026-10-24T01:35:53.428412+09:00",
+  "scope": "Independent archive/access metadata integrity review of the two named fixed publications only. Source bytes were hashed without re-extracting manufacturer contents. No API/runtime/physical validation.",
+  "packages": [
+    {
+      "package_id": "FCC-PUBLIC-MANUAL-ACCESS-20261024-001",
+      "publication_commit": "135621e99d5f0fdb0488c4d57d15170c81b8591c",
+      "source_records": 4,
+      "manifest_only_archive": true,
+      "outcome": "pass"
+    },
+    {
+      "package_id": "FCC-PUBLIC-MANUAL-ACCESS-20261024-002",
+      "publication_commit": "1408eb4e3a4d14c6f103f5ecf3ee52ff0b829029",
+      "source_records": 6,
+      "manifest_only_archive": true,
+      "outcome": "pass"
+    }
+  ],
+  "total_source_records": 10,
+  "committed_byte_comparison_basis": "Six raw committed blob snapshots supplied and extracted by P01, compared independently to published files. This is not a claim of direct collector Git extraction.",
+  "public_projection_defects": 0,
+  "new_originals": 0,
+  "public_original_payloads": 0,
+  "user_or_OEM_payloads": 0,
+  "manufacturer_protocol_or_hardware_support_validated": false
+}
