@@ -1,0 +1,150 @@
+OFFICIAL PAGE TEXT EXTRACT — NOT ORIGINAL HTML/PDF
+Captured: 2026-10-23T08:41:02.139Z
+Source ID: R05
+eCFR :: 47 CFR 2.948 -- Measurement facilities. (https://www.ecfr.gov/current/title-47/section-2.948)
+【turn300948view2】 [wordlim: 200] Crawled: today; Content type: text/html; Source: open({"ref_id":"https://www.ecfr.gov/current/title-47/section-2.948","lineno":null}); Redirected to URL: https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-2/subpart-J/subject-group-ECFRd5ad3b739dbf27a/section-2.948; Total lines: 181
+L0: Site Feedback
+L1: 
+L2: ##### You are using an unsupported browser
+L3: 
+L4: You are using an unsupported browser. This web site is designed for the current versions of Microsoft Edge, Google Chrome, Mozilla Firefox, or Safari.
+L5: ### Site Feedback
+L6: 
+L7: The Office of the Federal Register publishes documents on behalf of Federal agencies but does not have any authority over their programs. We recommend you directly contact the agency associated with the content in question.
+L8: 
+L9: * * *
+L10: 
+L11: If you have comments or suggestions on how to improve the www.ecfr.gov website or have questions about using www.ecfr.gov, please choose the 'Website Feedback' button below.
+L12: 
+L13: Website Feedback
+L14: If you would like to comment on the current content, please use the 'Content Feedback' button below for instructions on contacting the issuing agency
+L15: 
+L16: Content Feedback
+L17: 
+L18: If you have questions for the Agency that issued the current document please contact the agency directly.
+L19: # Website Feedback
+L20: 
+L21: * (required) Your Name[Input]
+L22: 
+L23: * (required) Email[Input]
+L24: 
+L25: Attachment[Input]
+L26: 
+L27: * (required) How can we help you?
+L28: 
+L29: [Input][Input]* (required) I am requesting technical help or providing website feedback
+L30: This contact form is only for website help or website suggestions. If you have questions or comments regarding a published document please contact the publishing agency. Comments or questions about document content can not be answered by OFR staff. Please do not provide confidential information or personal data.
+L31: 
+L32: [Input]
+L33:   * 【0†☰】
+L34:   *     *     * 【1†Home】
+L35:     * Browse
+L36:       * 【2†Titles】
+L37:       * 【3†Agencies】
+L38:     * CFR Updates
+L39:       * 【4†Recent Changes】
+L40:       * 【5†Issue Summaries】
+L41:       * 【6†Corrections】
+L42:     * Finding Aids
+L43:       * 【7†Parallel Table of Authorities】
+L44:       * 【8†Subject Index】
+L45:       * 【9†Agency-prepared Indexes】
+L46:     * Reader Aids
+L47:       * 【10†Reader Aids Home】
+L48:       * 【11†Using the eCFR Point-in-Time System】
+L49:       * 【12†Understanding the eCFR】
+L50:       * 【13†Government Policy and OFR Procedures】
+L51:       * 【14†Developer Resources】
+L52:       * 【15†Recent Site Updates】
+L53:     * My eCFR
+L54:       * 【16†Sign In / Sign Up】
+L55:     * [Input] [Input: Search the eCFR]
+L56: # 【1†eCFR】
+L57: 
+L58: ## The Electronic Code of Federal Regulations
+L59: 
+L60: ###### Enhanced Content :: FR Reference
+L61: 
+L62: Enhanced content is provided to the user to provide additional context.
+L63: 
+L64: ###### Enhanced Content :: FR Reference
+L65: # Title 47
+L66: 
+L67: This content is from the eCFR and is authoritative but unofficial.
+L68: 
+L69: Displaying title 47, up to date as of 10/21/2026. Title 47 was last amended 10/19/2026.
+L70: 
+L71: 【0†view historical versions】
+L72: 
+L73: A 【17†drafting site is available†drafting.ecfr.gov】 for use when drafting amendatory language
+L74: 
+L75: 【17†switch to drafting site†drafting.ecfr.gov】
+L76: 
+L77: Navigate by entering citations or phrases (eg: 1 CFR 1.1 49 CFR 172.101 Organization and Purpose 1/1.1 Regulation Y FAR).
+L78: Choosing an item from citations and headings will bring you directly to the content. Choosing an item from full text search results will bring you to those results. Pressing enter in the search box will also bring you to search results.
+L79: 
+L80: Background and more details are available in the 【18†Search & Navigation】 guide.
+L81: 
+L82: [Input] [Input] [Input]
+L83: 
+L84: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L85: 
+L86: [Input: Enter a search term or CFR reference (eg. fishing or 1 CFR 1.1)]
+L87:   *   * Table of Contents
+L88:   * Details
+L89:   * Print/PDF
+L90:   * Display Options
+L91:   *   * Timeline
+L92:   * Go to Date
+L93:   * Compare Dates
+L94:   *   * Published Edition
+L95:   *   * Developer Tools
+L96: ###### eCFR Content
+L97: 
+L98: The Code of Federal Regulations (CFR) is the official legal print publication containing the codification of the general and permanent rules published in the Federal Register by the departments and agencies of the Federal Government. The Electronic Code of Federal Regulations (eCFR) is a continuously updated online version of the CFR. It is not an official legal edition of the CFR.
+L99: 
+L100: 【19†Learn more】 about the eCFR, its status, and the editorial process.
+L101: ###### Editorial Note on 【20†Part 2】
+L102: 
+L103: #### Editorial Note:
+L104: 
+L105: Nomenclature changes to part 2 appear at 【21†63 FR 54077†www.federalregister.gov】, Oct. 8, 1998.
+L106: #### § 2.948 Measurement facilities.
+L107: 
+L108: (a) Equipment authorized under the certification procedure must be tested at a laboratory that is:
+L109: 
+L110: (1) Accredited in accordance with 【22†paragraph (e)】 of this section; and
+L111: 
+L112: (2) Recognized by the Commission in accordance with 【23†§ 2.951】.
+L113: (b) A laboratory that makes measurements of equipment subject to an equipment authorization under the certification procedure or Supplier's Declaration of Conformity shall compile a description of the measurement facilities employed.
+L114: 
+L115: (1) The description of the measurement facilities shall contain the following information:
+L116: 
+L117: (i) Location of the test site.
+L118: 
+L119: (ii) Physical description of the test site accompanied by photographs that clearly show the details of the test site.
+L120: (iii) A drawing showing the dimensions of the site, physical layout of all supporting structures, and all structures within 5 times the distance between the measuring antenna and the device being measured.
+L121: 
+L122: (iv) Description of structures used to support the device being measured and the test instrumentation.
+L123: 
+L124: (v) List of measuring equipment used.
+L125: (vi) Information concerning the calibration of the measuring equipment, i.e., the date the equipment was last calibrated and how often the equipment is calibrated.
+L126: 
+L127: (vii) For a measurement facility that will be used for testing radiated emissions, a plot of site attenuation data taken pursuant to 【24†paragraph (d)】 of this section.
+L128: 
+L129: (2) The description of the measurement facilities shall be provided to a laboratory accreditation body upon request.
+L130: (3) The description of the measurement facilities shall be retained by the party responsible for authorization of the equipment and provided to the Commission upon request.
+L131: (i) The party responsible for authorization of the equipment may rely upon the description of the measurement facilities retained by an independent laboratory that performed the tests. In this situation, the party responsible for authorization of the equipment is not required to retain a duplicate copy of the description of the measurement facilities.
+L132: (ii) No specific site calibration data is required for equipment that is authorized for compliance based on measurements performed at the installation site of the equipment. The description of the measurement facilities may be retained at the site at which the measurements were performed.
+L133: 
+L134: (c) [Reserved]
+L135: (d) When the measurement method used requires the testing of radiated emissions on a validated test site, the site attenuation must comply with either: the requirements of ANSI C63.4a-2017 (incorporated by reference, see 【25†§ 2.910】) or the requirements of sections 5.4.4 through 5.5 of ANSI C63.4-2014 (incorporated by reference, see 【25†§ 2.910】).
+L136: (1) Measurement facilities used to make radiated emission measurements from 30 MHz to 1 GHz must comply with the site validation requirements in either ANSI C63.4a-2017 or ANSI C63.4-2014 (clause 5.4.4);
+L137: 
+L138: (2) Measurement facilities used to make radiated emission measurements from 1 GHz to 18 GHz must comply with the site validation requirement of ANSI C63.25.1-2018 (incorporated by reference, see 【25†§ 2.910】);
+L139: (3) Measurement facilities used to make radiated emission measurements from 18 GHz to 40 GHz must comply with the site validation requirement of ANSI C63.4-2014 (clause 5.5.1 a) 1)), such that the site validation criteria called out in CISPR 16-1-4:2010-04 (incorporated by reference, see 【25†§ 2.910】) is met.
+L140: 
+L141: (4) Test site revalidation must occur on an interval not to exceed three years.
+L142: (e) A laboratory that has been accredited with a scope covering the measurements required for the types of equipment that it will test shall be deemed competent to test and submit test data for equipment subject to certification. Such a laboratory shall be accredited by a Commission recognized accreditation organization based on the International Organization for Standardization/International Electrotechnical Commission International Standard ISO/IEC 17025, (incorporated by reference, see 【25†§ 2.910】).
+L143: The organization accrediting the laboratory must be recognized by the Commission's Office of Engineering and Technology, as indicated in 【26†§ 0.241 of this chapter】, to perform such accreditation based on International Standard ISO/IEC 17011 (incorporated by reference, see 【25†§ 2.910】).
+L144: The frequency for reassessment of the test facility and the information that is required to be filed or retained by the testing party shall comply with the requirements established by the accrediting organization, but shall occur on an interval not to exceed two years.

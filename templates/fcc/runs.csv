@@ -1,0 +1,1 @@
+﻿run_id,plan_item_id,configuration_id,method_profile_id,started_at,ended_at,test_site_id,operator_id,software_revision,settings_artifact_id,environment_artifact_id,setup_artifact_id,execution_status,supersedes_run_id

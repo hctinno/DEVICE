@@ -1,0 +1,57 @@
+{
+  "case_id": "DEMO-304409da4b",
+  "intake": {
+    "package_id": "DEMO-PACKAGE-304409da4b",
+    "downloaded": 1,
+    "unavailable": 0,
+    "already_imported": false
+  },
+  "evaluation": {
+    "run_id": "DEMO-RUN-304409da4b",
+    "case_id": "DEMO-304409da4b",
+    "plan_id": "DEMO-PLAN-304409da4b",
+    "method_id": "DEMO-METHOD-304409da4b",
+    "raw_sha256": "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed",
+    "synthetic": true,
+    "synthetic_evidence_sha256": [
+      "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925",
+      "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed"
+    ],
+    "decision": "blocked",
+    "blockers": [
+      "method_unreviewed",
+      "run_unreviewed",
+      "source_unreviewed:DEMO-SOURCE-304409da4b"
+    ],
+    "calculations": [
+      {
+        "value": 22.0,
+        "unit": "dBuV/m",
+        "index": 0,
+        "source_locator": "/",
+        "margin": 8.0,
+        "within_limit": true
+      }
+    ],
+    "limit": {
+      "clause": "FICTIONAL arithmetic threshold; not an FCC limit",
+      "operator": "<=",
+      "source_document_id": "DEMO-SOURCE-304409da4b",
+      "unit": "dBuV/m",
+      "value": 30
+    },
+    "source_document_ids": [
+      "DEMO-SOURCE-304409da4b"
+    ],
+    "official_release_available": false
+  },
+  "report": {
+    "html": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.html",
+    "pdf": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.pdf",
+    "json": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.json",
+    "manifest": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/files.sha256.json",
+    "status": "DRAFT",
+    "synthetic": true
+  },
+  "synthetic": true
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "package_id": "fcc-materials-example-status-only",
+  "created_at": "2026-10-23T09:00:00+09:00",
+  "notes": "Schema example only; this does not report an actual collection result. Downloaded files must include their actual path, hash, byte count and source URLs.",
+  "documents": [
+    {
+      "document_id": "EXAMPLE-STD-001-access-status",
+      "request_ids": ["STD-001"],
+      "title": "Example access-status record; replace with actual findings",
+      "kind": "standard",
+      "version": "unverified-example",
+      "status": "unavailable",
+      "representation": "metadata",
+      "rights": "unknown",
+      "notes": "Example only; no file or original hash is claimed."
+    }
+  ]
+}

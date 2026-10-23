@@ -1,0 +1,90 @@
+{
+  "created_at": "2026-10-23T10:01:11.853815+00:00",
+  "verification": {
+    "tests_passed": 48,
+    "mcp_stdio_end_to_end": true,
+    "handoff_hashes_xlsx_parity": true,
+    "pdf_visual_inspection": true,
+    "full_fcc_compliance_validation": false,
+    "live_hardware_validation": false
+  },
+  "dependencies": {
+    "mcp": "1.29.0",
+    "jsonschema": "4.26.0",
+    "openpyxl": "3.1.5",
+    "reportlab": "4.4.9"
+  },
+  "artifacts": {
+    "agent_collection_request.zip": {
+      "path": "exports/agent_collection_request.zip",
+      "bytes": 1401593,
+      "sha256": "605d8ed4385660977d2e398b641470dee6e02abd54a939cef0c4e4b6369ff09d"
+    },
+    "fcc_pipeline_core.zip": {
+      "path": "exports/fcc_pipeline_core.zip",
+      "bytes": 67058,
+      "sha256": "297d2976514b80e29d36b31c026cd8b2de3cdf5782f41639a528983377fbaf7a"
+    }
+  },
+  "demo_report": {
+    "html": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.html",
+    "pdf": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.pdf",
+    "json": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/report.json",
+    "manifest": "exports/pipeline_demo/DEMO-304409da4b/20261023T095742_986754f3/files.sha256.json",
+    "status": "DRAFT",
+    "synthetic": true
+  },
+  "updated_at_kst": "2026-10-23T21:22:17.899342+09:00",
+  "handoff": {
+    "transport": "git",
+    "repository": "https://github.com/hctinno/DEVICE",
+    "base_branch": "codex/fcc-lab-foundation",
+    "collector_instructions": "handoff/AGENT_PROMPT.md",
+    "results": "materials/README.md",
+    "manual_file_transfer_required": false,
+    "collector_role": "local_materials_preparation_only_no_git",
+    "current_session_role": "pipeline_design_implementation_and_validation",
+    "first_validation_product": "smartphone",
+    "first_validation_scope": "smartphone_wifi_2_4ghz_80211bgn_fcc_15_247",
+    "physical_connection": "user",
+    "first_batch_instructions": "handoff/WIFI24_BGN_FIRST_BATCH.md",
+    "design_review_document": "docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md",
+    "collector_role_update": "handoff/COLLECTOR_ROLE_UPDATE.md",
+    "first_construction_scope": "fcc_rf_emc_sar",
+    "publisher_role": "local_main_coordinator_and_single_git_writer",
+    "publisher_instructions": "handoff/parallel/P01.md",
+    "parallel_collection_proposal": {
+      "status": "roles_approved_main_instructions_ready_local_execution_unverified",
+      "collector_sessions": 8,
+      "local_publisher_sessions": 1,
+      "cloud_pipeline_sessions": 1,
+      "shared_local_project": true,
+      "collector_git_operations": false,
+      "roles": "handoff/parallel/README.md",
+      "design": "docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md",
+      "row_assignments_created": false,
+      "handoff_automation_implemented": false,
+      "main_session_name": "메인",
+      "main_role_id": "P01",
+      "publisher_merged_into_main": true,
+      "collector_session_names": [
+        "수집1",
+        "수집2",
+        "수집3",
+        "수집4",
+        "수집5",
+        "수집6",
+        "수집7",
+        "수집8"
+      ],
+      "existing_collector_session": "수집1",
+      "existing_collector_role_id": "S01",
+      "main_dispatch_capabilities_verified": false,
+      "sessions_launched_by_current_cloud_session": false,
+      "local_setup_status": "not_observed"
+    },
+    "main_instructions": "handoff/parallel/MAIN_AGENT_PROMPT.md",
+    "main_start_prompt": "handoff/parallel/START_HERE.md",
+    "session_start_plan": "docs/superpowers/plans/2026-10-23-collection-session-start.md"
+  }
+}

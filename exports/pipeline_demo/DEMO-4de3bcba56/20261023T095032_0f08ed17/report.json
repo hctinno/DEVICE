@@ -1,0 +1,191 @@
+{
+  "case_id": "DEMO-4de3bcba56",
+  "case": {
+    "authorization_route": "certification",
+    "case_id": "DEMO-4de3bcba56",
+    "product": {
+      "manufacturer": "SYNTHETIC EXAMPLE",
+      "model": "Arithmetic demonstration only",
+      "serial_number": "NO-REAL-SAMPLE"
+    },
+    "scope_ids": [
+      "F02"
+    ],
+    "synthetic": true
+  },
+  "plans": [
+    {
+      "applicability": "applicable",
+      "case_id": "DEMO-4de3bcba56",
+      "configuration": {
+        "mode": "synthetic"
+      },
+      "method_id": "DEMO-METHOD-4de3bcba56",
+      "plan_id": "DEMO-PLAN-4de3bcba56",
+      "rationale": "Software arithmetic fixture only"
+    }
+  ],
+  "runs": [
+    {
+      "calibration_artifact_ids": [
+        "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925"
+      ],
+      "case_id": "DEMO-4de3bcba56",
+      "ended_at": "2026-10-23T00:01:00Z",
+      "environment": {
+        "temperature_c": 23
+      },
+      "equipment_ids": [
+        "SYNTHETIC-ASSET"
+      ],
+      "execution_status": "completed",
+      "plan_id": "DEMO-PLAN-4de3bcba56",
+      "raw_sha256": "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed",
+      "run_id": "DEMO-RUN-4de3bcba56",
+      "settings": {
+        "detector": "synthetic only"
+      },
+      "setup_artifact_ids": [
+        "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925"
+      ],
+      "started_at": "2026-10-23T00:00:00Z"
+    }
+  ],
+  "results": [
+    {
+      "run_id": "DEMO-RUN-4de3bcba56",
+      "case_id": "DEMO-4de3bcba56",
+      "plan_id": "DEMO-PLAN-4de3bcba56",
+      "method_id": "DEMO-METHOD-4de3bcba56",
+      "raw_sha256": "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed",
+      "synthetic": true,
+      "synthetic_evidence_sha256": [
+        "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925",
+        "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed"
+      ],
+      "decision": "blocked",
+      "blockers": [
+        "method_unreviewed",
+        "run_unreviewed",
+        "source_unreviewed:DEMO-SOURCE-4de3bcba56"
+      ],
+      "calculations": [
+        {
+          "value": 22.0,
+          "unit": "dBuV/m",
+          "index": 0,
+          "source_locator": "/",
+          "margin": 8.0,
+          "within_limit": true
+        }
+      ],
+      "limit": {
+        "clause": "FICTIONAL arithmetic threshold; not an FCC limit",
+        "operator": "<=",
+        "source_document_id": "DEMO-SOURCE-4de3bcba56",
+        "unit": "dBuV/m",
+        "value": 30
+      },
+      "source_document_ids": [
+        "DEMO-SOURCE-4de3bcba56"
+      ],
+      "official_release_available": false
+    }
+  ],
+  "blockers": [
+    "method_unreviewed",
+    "run_unreviewed",
+    "scope_completeness_unreviewed",
+    "source_unreviewed:DEMO-SOURCE-4de3bcba56"
+  ],
+  "workflow_status": "draft_report_available",
+  "official_release_available": false,
+  "hardware_connected": false,
+  "regulatory_scope_complete": false,
+  "synthetic": true,
+  "report_status": "DRAFT",
+  "generated_at": "2026-10-23T09:50:32.970241+00:00",
+  "release_note": "No official release. Regulatory scope completeness is not reviewed.",
+  "evidence_files": {
+    "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925": "evidence/4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925",
+    "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed": "evidence/d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed"
+  },
+  "methods": [
+    {
+      "calculator": "emc_field_strength",
+      "limit": {
+        "clause": "FICTIONAL arithmetic threshold; not an FCC limit",
+        "operator": "<=",
+        "source_document_id": "DEMO-SOURCE-4de3bcba56",
+        "unit": "dBuV/m",
+        "value": 30
+      },
+      "method_id": "DEMO-METHOD-4de3bcba56",
+      "scope_id": "F02",
+      "source_document_ids": [
+        "DEMO-SOURCE-4de3bcba56"
+      ],
+      "technical_review_status": "unreviewed"
+    }
+  ],
+  "sources": [
+    {
+      "bytes": 71,
+      "document_id": "DEMO-SOURCE-4de3bcba56",
+      "download_url": "https://example.invalid/synthetic.txt",
+      "kind": "example",
+      "media_type": "text/plain",
+      "path": "originals/fixture.txt",
+      "representation": "original",
+      "request_ids": [
+        "DEMO-NONNORMATIVE"
+      ],
+      "retrieved_at": "2026-10-23T09:50:32.828512+00:00",
+      "rights": "public",
+      "sha256": "c27830c07c3cad56cd1f8909f514f80964fbe7fe1ffe7896574b2e492bee19b8",
+      "source_url": "https://example.invalid/synthetic",
+      "status": "downloaded",
+      "title": "Synthetic arithmetic fixture, not a regulatory source",
+      "version": "demo-v1",
+      "review_status": "unreviewed",
+      "synthetic": true
+    }
+  ],
+  "audit_events": [
+    {
+      "event_id": 2,
+      "created_at": "2026-10-23T09:50:32.848171+00:00",
+      "action": "cases.create",
+      "subject_id": "DEMO-4de3bcba56",
+      "details_json": "{\"data_sha256\":\"6570ae81bd62671e999621179050845617fcb5510e226c420e367b4bb75b826b\"}"
+    },
+    {
+      "event_id": 3,
+      "created_at": "2026-10-23T09:50:32.863024+00:00",
+      "action": "methods.create",
+      "subject_id": "DEMO-METHOD-4de3bcba56",
+      "details_json": "{\"data_sha256\":\"dec2e23e572501e6620ab69312cc26cee97e37aab2a1c8e0bdae48d984c2918a\"}"
+    },
+    {
+      "event_id": 4,
+      "created_at": "2026-10-23T09:50:32.877651+00:00",
+      "action": "plans.create",
+      "subject_id": "DEMO-PLAN-4de3bcba56",
+      "details_json": "{\"data_sha256\":\"46b3fbe03dfe759824e5c963fac5044445b89dc6951dbbc96bf0bfc604d56e3b\"}"
+    },
+    {
+      "event_id": 7,
+      "created_at": "2026-10-23T09:50:32.930341+00:00",
+      "action": "runs.create",
+      "subject_id": "DEMO-RUN-4de3bcba56",
+      "details_json": "{\"data_sha256\":\"1a647a5c1425731427b5af09b50d4925271e4e62beb9f3f327ac48645f5f6157\"}"
+    },
+    {
+      "event_id": 8,
+      "created_at": "2026-10-23T09:50:32.951060+00:00",
+      "action": "run.evaluate",
+      "subject_id": "DEMO-RUN-4de3bcba56",
+      "details_json": "{\"decision\":\"blocked\",\"fingerprint\":\"2f3e4863c3c9e258055f780e2837c4bd2d659698f0fbb881000b42ed1353d3e2\"}"
+    }
+  ]
+}

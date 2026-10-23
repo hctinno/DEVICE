@@ -1,0 +1,43 @@
+{
+  "observed_on": "2026-10-23",
+  "runtime_network_policy": {
+    "mode": "restricted",
+    "state": "enforced",
+    "presets": [
+      "package_managers"
+    ],
+    "custom_allowed_hosts": [],
+    "tested_hosts_allowed": false
+  },
+  "supported_network_configuration_tool_available": false,
+  "attempts": [
+    {
+      "url": "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.31",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "channel": "workspace_https_via_inherited_proxy",
+      "observed_on": "2026-10-23",
+      "classification": "environment_http_tunnel_403"
+    },
+    {
+      "url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?id=21124&switch=P",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "channel": "workspace_https_via_inherited_proxy",
+      "observed_on": "2026-10-23",
+      "classification": "environment_http_tunnel_403"
+    },
+    {
+      "url": "https://docs.fcc.gov/public/attachments/FCC-23-14A1.pdf",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+      "channel": "workspace_https_via_inherited_proxy",
+      "observed_on": "2026-10-23",
+      "classification": "environment_http_tunnel_403"
+    },
+    {
+      "url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?id=21124&switch=P",
+      "channel": "web_connector",
+      "observed_on": "2026-10-23",
+      "error": "403 Forbidden",
+      "classification": "direct_page_unavailable"
+    }
+  ]
+}

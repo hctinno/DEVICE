@@ -1,0 +1,195 @@
+{
+  "case_id": "DEMO-304409da4b",
+  "case": {
+    "authorization_route": "certification",
+    "case_id": "DEMO-304409da4b",
+    "product": {
+      "manufacturer": "SYNTHETIC EXAMPLE",
+      "model": "Arithmetic demonstration only",
+      "serial_number": "NO-REAL-SAMPLE"
+    },
+    "scope_ids": [
+      "F02"
+    ],
+    "synthetic": true
+  },
+  "plans": [
+    {
+      "applicability": "applicable",
+      "case_id": "DEMO-304409da4b",
+      "configuration": {
+        "mode": "synthetic"
+      },
+      "method_id": "DEMO-METHOD-304409da4b",
+      "plan_id": "DEMO-PLAN-304409da4b",
+      "rationale": "Software arithmetic fixture only"
+    }
+  ],
+  "runs": [
+    {
+      "calibration_artifact_ids": [
+        "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925"
+      ],
+      "case_id": "DEMO-304409da4b",
+      "ended_at": "2026-10-23T00:01:00Z",
+      "environment": {
+        "temperature_c": 23
+      },
+      "equipment_ids": [
+        "SYNTHETIC-ASSET"
+      ],
+      "execution_status": "completed",
+      "plan_id": "DEMO-PLAN-304409da4b",
+      "raw_sha256": "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed",
+      "run_id": "DEMO-RUN-304409da4b",
+      "settings": {
+        "detector": "synthetic only"
+      },
+      "setup_artifact_ids": [
+        "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925"
+      ],
+      "started_at": "2026-10-23T00:00:00Z"
+    }
+  ],
+  "results": [
+    {
+      "run_id": "DEMO-RUN-304409da4b",
+      "case_id": "DEMO-304409da4b",
+      "plan_id": "DEMO-PLAN-304409da4b",
+      "method_id": "DEMO-METHOD-304409da4b",
+      "raw_sha256": "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed",
+      "synthetic": true,
+      "synthetic_evidence_sha256": [
+        "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925",
+        "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed"
+      ],
+      "decision": "blocked",
+      "blockers": [
+        "method_unreviewed",
+        "run_unreviewed",
+        "source_unreviewed:DEMO-SOURCE-304409da4b"
+      ],
+      "calculations": [
+        {
+          "value": 22.0,
+          "unit": "dBuV/m",
+          "index": 0,
+          "source_locator": "/",
+          "margin": 8.0,
+          "within_limit": true
+        }
+      ],
+      "limit": {
+        "clause": "FICTIONAL arithmetic threshold; not an FCC limit",
+        "operator": "<=",
+        "source_document_id": "DEMO-SOURCE-304409da4b",
+        "unit": "dBuV/m",
+        "value": 30
+      },
+      "source_document_ids": [
+        "DEMO-SOURCE-304409da4b"
+      ],
+      "official_release_available": false
+    }
+  ],
+  "synthetic_evidence_sha256": [
+    "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925",
+    "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed"
+  ],
+  "blockers": [
+    "method_unreviewed",
+    "run_unreviewed",
+    "scope_completeness_unreviewed",
+    "source_unreviewed:DEMO-SOURCE-304409da4b"
+  ],
+  "workflow_status": "draft_report_available",
+  "official_release_available": false,
+  "hardware_connected": false,
+  "regulatory_scope_complete": false,
+  "synthetic": true,
+  "report_status": "DRAFT",
+  "generated_at": "2026-10-23T09:57:42.684431+00:00",
+  "release_note": "No official release. Regulatory scope completeness is not reviewed.",
+  "evidence_files": {
+    "4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925": "evidence/4927a4f3dc65c674baba35a85bafd19b1761419de5de54f70fc0c3a651a52925",
+    "d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed": "evidence/d573555c3a63d4d64efaf08fff2f63e3f6d471d86ff8a7cc47e355e9cb817bed"
+  },
+  "methods": [
+    {
+      "calculator": "emc_field_strength",
+      "limit": {
+        "clause": "FICTIONAL arithmetic threshold; not an FCC limit",
+        "operator": "<=",
+        "source_document_id": "DEMO-SOURCE-304409da4b",
+        "unit": "dBuV/m",
+        "value": 30
+      },
+      "method_id": "DEMO-METHOD-304409da4b",
+      "scope_id": "F02",
+      "source_document_ids": [
+        "DEMO-SOURCE-304409da4b"
+      ],
+      "technical_review_status": "unreviewed"
+    }
+  ],
+  "sources": [
+    {
+      "bytes": 71,
+      "document_id": "DEMO-SOURCE-304409da4b",
+      "download_url": "https://example.invalid/synthetic.txt",
+      "kind": "example",
+      "media_type": "text/plain",
+      "path": "originals/fixture.txt",
+      "representation": "original",
+      "request_ids": [
+        "DEMO-NONNORMATIVE"
+      ],
+      "retrieved_at": "2026-10-23T09:57:42.543662+00:00",
+      "rights": "public",
+      "sha256": "c27830c07c3cad56cd1f8909f514f80964fbe7fe1ffe7896574b2e492bee19b8",
+      "source_url": "https://example.invalid/synthetic",
+      "status": "downloaded",
+      "title": "Synthetic arithmetic fixture, not a regulatory source",
+      "version": "demo-v1",
+      "review_status": "unreviewed",
+      "synthetic": true
+    }
+  ],
+  "audit_events": [
+    {
+      "event_id": 10,
+      "created_at": "2026-10-23T09:57:42.561896+00:00",
+      "action": "cases.create",
+      "subject_id": "DEMO-304409da4b",
+      "details_json": "{\"data_sha256\":\"4b77e4f3fd33d3f76afc78ce28fd8ed6e04b993a92400135629f7b52275586f3\"}"
+    },
+    {
+      "event_id": 11,
+      "created_at": "2026-10-23T09:57:42.576071+00:00",
+      "action": "methods.create",
+      "subject_id": "DEMO-METHOD-304409da4b",
+      "details_json": "{\"data_sha256\":\"06ee98c7da818faf5963abb823c819446fec6490f2a4e134f72fcab8bd8ed161\"}"
+    },
+    {
+      "event_id": 12,
+      "created_at": "2026-10-23T09:57:42.593351+00:00",
+      "action": "plans.create",
+      "subject_id": "DEMO-PLAN-304409da4b",
+      "details_json": "{\"data_sha256\":\"e7cf8b5c7169e690aedaa489025398ea00ca98bc9e307f3f6c06e8432ef25db5\"}"
+    },
+    {
+      "event_id": 15,
+      "created_at": "2026-10-23T09:57:42.645491+00:00",
+      "action": "runs.create",
+      "subject_id": "DEMO-RUN-304409da4b",
+      "details_json": "{\"data_sha256\":\"8ada70646130355f56c7b6c1d2f2ba9e5f07a34aa437123bfcb97cbaa042ea70\"}"
+    },
+    {
+      "event_id": 16,
+      "created_at": "2026-10-23T09:57:42.664991+00:00",
+      "action": "run.evaluate",
+      "subject_id": "DEMO-RUN-304409da4b",
+      "details_json": "{\"decision\":\"blocked\",\"fingerprint\":\"287837ef0b352ac905c1b55bc98819554b6dd1daf19ea194b7c483dcc2ba2008\"}"
+    }
+  ]
+}

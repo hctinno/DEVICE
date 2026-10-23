@@ -1,0 +1,21 @@
+SEARCH INDEX EVIDENCE — NOT CURRENT KDB OR ATTACHMENT
+Captured: 2026-10-23T08:41:02.139Z
+Source ID: G02
+558074 Section 15.247, Digital Transmission Systems (DTS) and Frequency Hopping measurement procedures (https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?id=21124&switch=P)
+【turn185197search1】 [wordlim: 200] Published: 7.6 years ago; Crawled: 1.4 years ago; Answer:   T est procedures for measuring Digital Transmission System (DTS), Frequency Hopping Spread Spectrum Systems (DSS), and hybrid devices are provided in the attachment 558074 D01 DTS  Meas Guidance.
+Publication Number: 558074 Rule Parts: 15.247 Publication Date: 04/02/2019
+Keyword: Section 15.247, Digital Transmission Systems (DTS) and Frequency Hopping measurement procedures
+
+* * *
+
+First Category: Unlicensed Service Rules and Procedures
+Second Category: Digital & Freq Hopping Devices 15.247
+
+* * *
+
+Question:   What are the test procedures for measuring Digital Transmission System (DTS), Frequency Hopping Spread Spectrum systems (DSS), and hybrid devices subject to the requirements in Section 15.247?
+
+Answer:   T est procedures for measuring Digital Transmission System (DTS), Frequency Hopping Spread Spectrum Systems (DSS), and hybrid devices are provided in the attachment 558074 D01 DTS  Meas Guidance.  
+Attachment List:
+558074 D01 15.247 Meas Guidance v05r02
+ | Image  |    | Image

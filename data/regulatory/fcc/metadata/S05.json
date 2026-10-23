@@ -1,0 +1,15 @@
+{
+  "source_id": "S05",
+  "title": "ISO/IEC 17025",
+  "url": "https://ibr.ansi.org/standards/iso8.aspx",
+  "kind": "standard",
+  "version": "2005 및 2017 — 2.910 편입 목록에 모두 있음",
+  "observed_at_utc": "2026-10-23T08:42:52.496Z",
+  "status": "publisher_index_only",
+  "original_acquired": false,
+  "original_sha256": null,
+  "latest_verified": false,
+  "retrieval": "official_domain_search_index",
+  "local_metadata": "data/regulatory/fcc/metadata/S05.json",
+  "notes": "ANSI 공식 검색 색인에서 17025:2005/2017의 view-only 목록 확인. §2.910 편입 목록 확인. 인정 프로그램의 실제 적용판과 전환 근거 별도 확인 필요."
+}

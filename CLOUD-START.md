@@ -1,14 +1,16 @@
 # DGM AutoLab — 클라우드에서 이어서 작업하기
 
-확인일: 2026-10-23. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 기준 브랜치는 `main`이다. 클라우드 환경 생성·실행은 별도로 확인해야 한다.
+최신 사용자 요청으로 다른 PC·Codex 계정에 새 **개발총괄** 세션을 여는 경우 [DEVELOPER-START.md](DEVELOPER-START.md)를 먼저 따른다. 수집 공유 폴더 밖의 독립 복제본에서 기존 개발 역할을 이어받는다. 아래는 클라우드를 선택할 때의 연결 안내이며 새 개발 세션을 수집자로 지정하는 문서가 아니다.
+
+확인일: 2026-10-23. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 현재 구현 인계 브랜치는 `codex/fcc-lab-foundation`이다. main 병합 전에는 이 브랜치를 선택한다. 현재 클라우드 workspace에서 구현·검증을 실행했으며, 별도 세션은 자기 환경의 준비 상태를 확인한다.
 
 ## 권장 작업 방식
 
-여러 PC가 같은 GitHub 저장소와 클라우드 개발환경을 사용한다. 사용자가 지정한 `hctinno/DEVICE`는 확인 시점에 공개 저장소이며 현재는 설계·인계 문서와 검증 스크립트를 관리한다. 계획·코드·진행 상태는 저장소에 남기고 작업별 브랜치를 사용한다. 로컬 대화나 특정 PC의 파일 경로가 다른 세션에 자동으로 전달된다고 가정하지 않는다.
+여러 PC가 같은 GitHub 저장소와 클라우드 개발환경을 사용한다. 사용자가 지정한 `hctinno/DEVICE`는 확인 시점에 공개 저장소이며 계획·코드·장비 기준정보·조사 자료·합성 데모·진행 상태를 관리한다. 계획·코드·진행 상태는 저장소에 남기고 작업별 브랜치를 사용한다. 로컬 대화나 특정 PC의 파일 경로가 다른 세션에 자동으로 전달된다고 가정하지 않는다.
 
 ## 클라우드 연결
 
-1. [저장소의 HANDOFF.md](https://github.com/hctinno/DEVICE/blob/main/HANDOFF.md)를 열어 현재 진행 상태를 확인한다. 현재 자료에는 실제 고객·시험 원본 데이터가 없다.
+1. [인계 브랜치의 HANDOFF.md](https://github.com/hctinno/DEVICE/blob/codex/fcc-lab-foundation/HANDOFF.md)를 열어 현재 진행 상태를 확인한다. 현재 장비 관리대장 원본·기준정보, 공개 조문 발췌 및 합성 시험 데모가 있다. 실제 고객 시험의 원시 측정 데이터는 아직 제공되지 않았다.
 2. 웹 또는 데스크톱에서 `Work in > Cloud > Select environment`를 연다. 기존 환경을 선택하거나 `Create environment`에서 `hctinno/DEVICE` 저장소를 연결한다.
 3. 새 환경이면 준비 결과를 검토하고 `Publish` 후 `Environment published`를 확인한다. 이 동작은 개발환경 준비이며 시험소 소프트웨어 운영 배포를 뜻하지 않는다.
 4. 그 환경에서 새 작업을 시작하고 아래 인계 프롬프트를 사용한다. 계정에서 Cloud 메뉴나 저장소 접근이 보이지 않으면 계정·워크스페이스 권한과 GitHub 연결 상태를 확인한다.
@@ -20,11 +22,14 @@
 ```text
 DGM AutoLab 프로젝트를 이어서 진행해줘. 목표는 기존 RF·EMC 시험소의 전체 무인화이며, 규격·시험방법·장비·시료·실측·로우데이터·판정·성적서·인증 업무와 물리 자동화를 모두 포함한다.
 저장소의 HANDOFF.md와 AGENTS.md를 먼저 읽고, PLAN.md, IMPLEMENTATION.md, DESIGN.md를 확인해줘.
-현재는 설계 초안 단계이며 실장비 연결과 앱 구현은 미착수다. python3 scripts/check_artifacts.py로 파일을 확인하고, 다음 작업을 이어가줘.
+codex/fcc-lab-foundation 브랜치에서 시작해줘. 장비 DB와 오프라인 공통 코어·CLI·MCP·성적서 초안이 구현되어 있고 실장비 연결과 FCC 세부 방법 검증은 남아 있다. python scripts/check_artifacts.py와 python -m unittest discover -s tests -v로 확인하고 다음 작업을 이어가줘.
+자료 수집 역할이면 이 개발 프롬프트를 실행하지 말고 P01이 제공한 로컬 고정 지시와 handoff/AGENT_PROMPT.md를 따라 자기 폴더에만 저장해줘. 수집자는 Git 명령을 하지 않고 별도 P01만 검수·패키징·커밋·푸시해. 수집1~수집8 역할은 확정됐고 기존 수집자는 수집1이야. 메인(P01)이 실제 경로·기존 작업 예약·배정과 지시 전달을 준비한 뒤 시작해. 사용자 대신 세션을 중복 생성하지 마. 사용자에게 파일 이동을 요구하지 마.
 특정 PC의 E: 드라이브나 이전 대화에 의존하지 말고 저장소를 기준으로 작업해줘.
 ```
 
 ## 개발환경과 시험소 현장
+
+현재 1차 구축 목표는 FCC RF·EMC·SAR이며 스마트폰 2.4 GHz b/g/n은 첫 전체 흐름 실증이다. 로컬 수집자는 하나의 프로젝트에서 자기 하위 폴더를 사용하며 Git 브랜치/worktree를 나누지 않는다. 위 클라우드 브랜치·테스트 절차는 개발 담당용이다.
 
 클라우드에는 개발, 업무 데이터 모델, 규격·문서 처리, AI 계획·분석, 가상 시험 검증을 둔다. 실제 계측기·PLC·로봇의 드라이버와 안전 동작은 현장 실행 서비스가 담당한다. 현장 연결은 별도 네트워크·인증·운영 설계가 필요하며 이번 인계에서는 연결하지 않았다.
 
@@ -45,4 +50,4 @@ python3 scripts/check_artifacts.py
 python3 scripts/package_handoff.py
 ```
 
-Windows에서 `python3`가 없다면 `python`을 사용한다. 산출물은 `dist/dgm-autolab-cloud-handoff.zip`이다. 이 검사는 문서와 패키지 무결성만 확인하며 AI 기능이나 현장 운전을 검증하지 않는다.
+Windows에서 `python3`가 없다면 `python`을 사용한다. 산출물은 `dist/dgm-autolab-cloud-handoff.zip`이다. 이 ZIP은 기존 설계 문서의 선택적 스냅샷이며, 전체 코드·장비 DB·자료의 인계에는 Git 체크아웃을 사용한다. 이 검사는 문서와 패키지 무결성만 확인하며 AI 기능이나 현장 운전을 검증하지 않는다.

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "checks": [
+    "24 catalog artifact hashes and supplemental evidence verified; no false original hashes",
+    "SQLite integrity and JSON equivalence verified",
+    "Readiness and report requirement source references resolve",
+    "Preparation workbook equals all four source CSVs",
+    "11 blank format CSVs match workbook; 101 field definitions, 16 requirement mappings; no formula cells",
+    "New documentation local links resolve",
+    "All FCC ZIP archives pass integrity check"
+  ],
+  "catalog_records": 24,
+  "source_register_entries": 27,
+  "original_downloads": 0,
+  "format_entities": 11,
+  "format_fields": 101,
+  "requirement_mappings": 16
+}

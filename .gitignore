@@ -5,3 +5,10 @@ __pycache__/
 .env
 .env.*
 !.env.example
+*.sqlite3-wal
+*.sqlite3-shm
+*.tmp
+.local/
+data/labflow/
+exports/reports/
+materials/work/
