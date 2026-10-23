@@ -70,4 +70,6 @@ python scripts/check_artifacts.py
 
 HTTP 7개는 결과 없음·불변 사본·호출자 변경·private/JSON/크기 경계·nullable claim·기존 보안 경계를 검사한다. Node 8개는 공개 스키마·미평가/실패·identity·사본·enum 타입을, 브라우저 11개는 정상/미평가/평가 오류/실행 불확실·조회/렌더 오류·늦은 응답·XSS·모바일을 검사한다. 기존 가상 브라우저 13개와 실제 64프로필 Python runtime을 사용하는 브라우저 7개도 별도로 실행한다. 이 수를 실제 하네스 통합이나 현장 정확도 검증으로 합산하지 않는다.
 
+최종 회귀는 전체 Python **425개/68.743초**, 전체 Node **34개**, 브라우저 **11+13+7개** 통과다. 처음의 PDF 검사 수집 오류는 자기 가상환경을 기존 `requirements-extract.txt`의 6.21.2에 맞춰 해소했다. 이후 전체 422개에서 기존 early POST 3개 subcase의 Windows 연결 초기화가 재현됐고, 헤더 먼저/본문 나중 전송의 5개 경계에서 응답 준비가 너무 빨랐음을 RED로 확인했다. [서버 사용법](virtual_fleet_ui_usage.md)의 제한된 잔여 본문 소비로 수정한 뒤 transport 3개와 전체 회귀가 통과했다. transport 3개 중 1개가 5개 subcase를 포함하며 별도 5개로 합산하지 않는다. 실패/RED/최종 로그는 `.local/VLAB-HARNESS-002/implementation/`에 구분 보존한다. 하위 에이전트 없이 작성자가 자체 검토했으며 총괄의 독립 인수 검토는 별도다.
+
 실제 `FleetHarness`/journal/평가·CLI가 만든 result의 주입 검증은 총괄 인수 단위다. 이 UI는 저장된 완료 기록만 읽으며 durable runtime 재개·hard cancellation·live HTTP 감독 제어·실제 모델 호출·실장비/현장 검증은 수행하지 않았다.
