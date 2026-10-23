@@ -137,6 +137,7 @@ FCC를 Part 15.247 하나로 대표시키지 않는다. 별도 [범위표](fcc_s
 
 ## 파일
 
+- [전체 파이프라인 Mermaid 구조도 — 역할·자료·개발 순서](autonomous_lab_architecture.md)
 - [준비항목 대장](readiness_checklist.csv)
 - [FCC 규정군 범위 후보](fcc_scope_matrix.csv)
 - [규정·표준 원천 대장](source_register.csv)

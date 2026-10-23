@@ -7,6 +7,8 @@
 
 현재 범위의 작업량·순서·완료 게이트는 [b/g/n 구축 7단계](docs/fcc/wifi24_delivery_roadmap.md)에 정리했다. AI 하네스는 새 구현 대상이며, 단계 4에서 전도 출력 한 항목의 실제 전체 흐름을 먼저 검증한다. 이 문서 아래의 장기 가중치는 이번 버전의 진행률이 아니다.
 
+[전체 파이프라인 Mermaid 구조도](docs/fcc/autonomous_lab_architecture.md)에서 운영 흐름, AI·하네스·MCP·현장 실행기의 역할, 수집 자료와 개발 기능의 연결, 개발·검증 순서를 함께 볼 수 있다. 기존 설계를 시각화한 문서이며 기능 구현 완료를 뜻하지 않는다.
+
 작업 환경 결정: 여러 PC에서 이어서 작업하기 위해 개발을 클라우드 세션 중심으로 전환한다. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 현재 구현 인계 브랜치는 `codex/fcc-lab-foundation`이다. 현재 상태는 [HANDOFF.md](HANDOFF.md), 클라우드 연결 절차는 [CLOUD-START.md](CLOUD-START.md)를 따른다. 클라우드 workspace에서 코드와 테스트를 실행했으며 현장 장비 연결은 확인하지 않았다.
 
 ## 1. 목표 계약
