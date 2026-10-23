@@ -3,6 +3,7 @@ import hashlib
 import importlib
 import json
 import math
+import os
 from pathlib import Path
 import re
 import stat
@@ -181,11 +182,21 @@ def _claim(job):
 
 
 def _folder(root, job):
-    request = 'request-'+hashlib.sha256(job['request_id'].encode('utf-8')).hexdigest()
-    run = 'run-'+hashlib.sha256(job['run_id'].encode('utf-8')).hexdigest()
-    parent = _plain(root/request)
-    parent.mkdir(parents=True, exist_ok=True)
-    target = _plain(parent/run)
+    binding = canonical([job['request_id'], job['run_id']]).encode('utf-8')
+    target = root/('run-'+hashlib.sha256(binding).hexdigest())
+    # Include the final filenames and UTF-16 units in the Windows preflight.
+    # Do this before creating directories or entering the adapter/bootstrap.
+    if os.name == 'nt' and any(len(str(target/name).encode('utf-16-le'))//2 >= 260 for name in
+            ('public-result.json', 'operator/events.jsonl', 'private/author.json',
+             'private-manifest.json', 'failure.json')):
+        raise _Failure('output_path_too_long')
+    try:
+        target = _plain(target)
+        if target.parent != root:
+            raise _Failure('output_path_invalid')
+        root.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        raise _Failure('output_path_unavailable') from None
     if target.exists():
         raise _Failure('output_exists')
     return target
@@ -217,7 +228,13 @@ def _validated(value, folder, job):
     for item in value['artifacts']:
         if type(item) is not dict or type(item.get('kind')) is not str or item['kind'] in selected:
             raise _Failure('artifact_set')
-        selected[item['kind']] = item
+        _record(item, 'kind path sha256 bytes')
+        # Freeze the returned descriptor before any file I/O or host callback.
+        # Hash/size checks through publication must use this original snapshot.
+        descriptor = dict(item)
+        if isinstance(descriptor['path'], Path):
+            descriptor['path'] = str(descriptor['path'])
+        selected[descriptor['kind']] = descriptor
     if set(selected) != {'result', 'operator_journal'}:
         raise _Failure('artifact_set')
     result_path, result_bytes = _file(selected['result'], folder/'public-result.json', _REPORT_LIMIT)

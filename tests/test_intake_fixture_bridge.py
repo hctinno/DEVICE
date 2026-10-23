@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import json
+import os
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
@@ -46,6 +47,11 @@ def json_bytes(value):
 def metadata(kind, path):
     data = path.read_bytes()
     return {'kind': kind, 'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)}
+
+
+def padded_output_root(base, minimum_length=100):
+    length = max(minimum_length, len(str(base))+16)
+    return base/('runs-'+('x'*(length-len(str(base))-6)))
 
 
 def artifacts(result, folder):
@@ -402,6 +408,24 @@ class IntakeFixtureBridgeTests(unittest.TestCase):
             self.assert_uncertain(self.run_worker())
         self.assertEqual(len(self.store.imports), 1)
 
+    def test_retained_adapter_metadata_changes_cannot_replace_validated_import_descriptors(self):
+        retained = []
+        original = self.store.import_artifact
+        def executor(request, output_dir, **kwargs):
+            value = self.executor(request, output_dir, **kwargs)
+            retained.append(value)
+            return value
+        def mutate_metadata(path, kind='raw', *, synthetic=False):
+            for artifact in retained[0]['artifacts']:
+                artifact.update(kind='changed', path=str(self.root/'other'), sha256='0'*64, bytes=1)
+            return original(path, kind, synthetic=synthetic)
+        with patch.object(self.store, 'import_artifact', side_effect=mutate_metadata):
+            result = self.run_worker(executor)
+        self.assertEqual(result['results'][0]['state'], 'completed')
+        published = self.queue.completed[0][3]
+        self.assertEqual({item['kind'] for item in published}, {'result', 'operator_journal'})
+        self.assertTrue(all(item['sha256'] != '0'*64 and item['bytes'] > 1 for item in published))
+
     def test_lease_lost_during_import_never_reaches_publication(self):
         original = self.store.import_artifact
         def losing(*args, **kwargs):
@@ -480,6 +504,27 @@ class IntakeFixtureBridgeTests(unittest.TestCase):
         self.assertEqual(path.read_bytes(), b'preserved synthetic marker')
         self.assertFalse(self.queue.claims)
 
+    def test_typical_nested_output_root_keeps_actual_journal_path_below_windows_limit(self):
+        output = padded_output_root(self.root)
+        self.assertGreaterEqual(len(str(output)), 100)
+        with patch('labflow.intake_fixture_bridge._queue_api', return_value=self.queue):
+            result = run_fixture_worker(self.store, worker_id='worker', output_root=output, executor=self.executor)
+        self.assertEqual(result['results'][0]['state'], 'completed')
+        journal = self.calls[0][1]/'operator/events.jsonl'
+        self.assertTrue(journal.is_file())
+        self.assertLess(len(str(journal).encode('utf-16-le'))//2, 260)
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows filesystem path preflight')
+    def test_impossible_windows_output_root_fails_before_executor_with_explicit_code(self):
+        output = padded_output_root(self.root, 190)
+        with patch('labflow.intake_fixture_bridge._queue_api', return_value=self.queue):
+            result = run_fixture_worker(self.store, worker_id='worker', output_root=output, executor=self.executor)
+        self.assertEqual(result['results'][0]['state'], 'failed')
+        self.assertEqual(result['results'][0]['error_code'], 'output_path_too_long')
+        self.assertFalse(self.calls)
+        self.assertFalse(self.queue.failed[0][3])
+        self.assertFalse(output.exists())
+
 
 class IntakeFixtureBridgeDatabaseTests(unittest.TestCase):
     """Actual queue/Store transitions with a synthetic executor, without a model."""
@@ -556,6 +601,24 @@ class IntakeFixtureBridgeDatabaseTests(unittest.TestCase):
             self.assertEqual(con.execute('SELECT COUNT(*) FROM cases').fetchone()[0], 0)
             self.assertEqual(con.execute('SELECT COUNT(*) FROM plans').fetchone()[0], 0)
 
+    def test_actual_normal_adapter_runs_under_typical_nested_output_root(self):
+        try:
+            from labflow.virtual_fleet.method_adapter import run_fixture_method
+        except ModuleNotFoundError as error:
+            if error.name == 'labflow.virtual_fleet.method_adapter':
+                self.skipTest('normal D3 adapter is an integration dependency')
+            raise
+        output = padded_output_root(self.root)
+        result = run_fixture_worker(self.store, worker_id='fixture-worker', output_root=output,
+                                    executor=run_fixture_method)
+        self.assertEqual(result['results'][0]['state'], 'completed')
+        saved = json.loads(self.stored()['result_json'])
+        self.assertEqual(saved['report']['termination'], {'reason': 'policy_stop', 'policy_claim': 'completed'})
+        self.assertEqual(saved['report']['assessment']['verdict'], 'pass')
+        journals = list(output.rglob('events.jsonl'))
+        self.assertEqual(len(journals), 1)
+        self.assertLess(len(str(journals[0]).encode('utf-16-le'))//2, 260)
+
     def test_actual_readiness_change_after_dispatch_is_uncertain_and_not_reclaimed(self):
         from labflow.intake_jobs import respond
         def executor(request, output_dir, **kwargs):
@@ -602,6 +665,56 @@ class IntakeFixtureBridgeDatabaseTests(unittest.TestCase):
         self.assertEqual(record['state'], 'uncertain')
         self.assertEqual(record['error_code'], 'lease_expired')
         self.assertEqual(len(json.loads(record['result_json'])['artifacts']), 2)
+        self.assertEqual(self.run_worker()['attempted_jobs'], 0)
+        self.assertEqual(len(self.calls), 1)
+
+    def test_actual_store_rejects_journal_and_retained_descriptor_changed_after_validation(self):
+        retained = []
+        replacement = self.root/'replacement-events.jsonl'
+        original = self.store.import_artifact
+        changed = []
+        def executor(request, output_dir, **kwargs):
+            value = self.executor(request, output_dir, **kwargs)
+            retained.append(value)
+            base = {'schema_version': 1, 'kind': 'operator_event', 'run_id': kwargs['run_id'],
+                    'runtime_instance_id': kwargs['runtime_instance_id']}
+            with OperatorJournal(replacement, run_id=kwargs['run_id'],
+                    runtime_instance_id=kwargs['runtime_instance_id'],
+                    provenance={'runtime_origin': 'preinitialized', 'catalog_sha256': '1'*64,
+                                'topology_sha256': '2'*64, 'engine_sha256': '3'*64}) as journal:
+                journal({**base, 'event_id': 'event:1', 'sequence': 1, 'type': 'intent', 'payload': {
+                    'request_id': 'request:replacement:1', 'operation': 'execute', 'logical_request': 1,
+                    'body': {'device_id': 'sensor', 'action': 'acquire', 'parameters': {}}}})
+                journal({**base, 'event_id': 'event:2', 'sequence': 2, 'type': 'receipt', 'payload': {
+                    'request_id': 'request:replacement:1', 'result': {'status': 'ok'}}})
+                journal({**base, 'event_id': 'event:3', 'sequence': 3, 'type': 'termination',
+                         'payload': {'code': 'run_terminated', 'unresolved_request_ids': []}})
+            return value
+        def replace_journal_and_descriptor(path, kind='raw', *, synthetic=False):
+            if not changed:
+                artifact = next(item for item in retained[0]['artifacts'] if item['kind'] == 'operator_journal')
+                journal_path = Path(artifact['path'])
+                journal_path.write_bytes(replacement.read_bytes())
+                artifact.update(metadata('operator_journal', journal_path))
+                changed.append(True)
+            return original(path, kind, synthetic=synthetic)
+        with patch.object(self.store, 'import_artifact', side_effect=replace_journal_and_descriptor):
+            result = self.run_worker(executor)
+        self.assertTrue(changed)
+        row = self.stored()
+        diagnostic = ''
+        if row['result_json']:
+            from labflow.virtual_fleet.journal import read_operator_journal
+            published = json.loads(row['result_json'])
+            artifact = next(item for item in published['artifacts'] if item['kind'] == 'operator_journal')
+            journal = read_operator_journal(self.store.verify_blob(artifact['sha256']))
+            diagnostic = 'published logical_requests='+str(published['report']['usage']['logical_requests'])
+            diagnostic += ', journal intents='+str(sum(item['type'] == 'intent' for item in journal['events']))
+        self.assertEqual(result['results'][0]['state'], 'uncertain', diagnostic)
+        self.assertEqual(row['state'], 'uncertain')
+        self.assertIsNone(row['result_json'])
+        self.assertEqual(result['results'][0]['error_code'], 'imported_artifact_mismatch')
+        self.assertTrue((self.calls[0][1]/'operator/events.jsonl').is_file())
         self.assertEqual(self.run_worker()['attempted_jobs'], 0)
         self.assertEqual(len(self.calls), 1)
 
