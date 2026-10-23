@@ -4,6 +4,8 @@ import hashlib
 import json
 import math
 import re
+from decimal import Context, Decimal, ROUND_HALF_EVEN, localcontext
+from fractions import Fraction
 
 
 _ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}\Z')
@@ -66,19 +68,60 @@ def _numeric_result(value):
 
 
 def _crossing(inside_x, inside_y, outside_x, outside_y):
-    if inside_y == _THRESHOLD_DB:
-        return inside_x
-    # Measure from the inside sample: subtracting nearly equal huge levels
-    # or forming an outside-to-inside axis span would lose/overflow a crossing.
-    fraction = (inside_y - _THRESHOLD_DB) / (inside_y - outside_y)
+    # Fraction preserves the exact values of both Python ints and input floats.
+    inside, outside = Fraction(inside_x), Fraction(outside_x)
+    fraction = ((Fraction(inside_y) - _THRESHOLD_DB)
+                / (Fraction(inside_y) - Fraction(outside_y)))
+    return inside + (outside - inside) * fraction
+
+
+def _fraction_float(value):
     try:
-        crossing = math.fsum((inside_x * (1 - fraction), outside_x * fraction))
+        return _numeric_result(float(value))
     except (OverflowError, ValueError):
         raise ValueError('numeric_result_out_of_range') from None
-    _numeric_result(crossing)
-    if not min(inside_x, outside_x) <= crossing <= max(inside_x, outside_x):
+
+
+def _bandwidth_values(left, right, exact_left, exact_right):
+    exact_width = exact_right - exact_left
+    width = _fraction_float(exact_width)
+    displayed_difference = Fraction(right) - Fraction(left)
+    displayed_width = _fraction_float(displayed_difference)
+    meets = exact_width >= _MINIMUM_BANDWIDTH_HZ
+    # A one-ULP bound concerns representation only. The boundary comparison
+    # always uses exact_width, with no allowed excess or regulatory tolerance.
+    if (width <= 0 or displayed_difference <= 0
+            or abs(displayed_difference - exact_width) > Fraction(math.ulp(width))
+            or (displayed_difference >= _MINIMUM_BANDWIDTH_HZ) != meets
+            or (displayed_width >= _MINIMUM_BANDWIDTH_HZ) != meets
+            or (Fraction(width) >= _MINIMUM_BANDWIDTH_HZ) != meets):
         raise ValueError('numeric_result_out_of_range')
-    return crossing
+    return width, _fraction_float(exact_width - _MINIMUM_BANDWIDTH_HZ), 'meets' if meets else 'below'
+
+
+def _density_log_values(exact_power):
+    # Every divide/log10/product/subtraction is enclosed by adjacent Decimal
+    # values. Agreeing bounds certify both the comparison and displayed floats.
+    for precision in (80, 160, 320, 640, 1280):
+        fixed = Context(prec=precision, rounding=ROUND_HALF_EVEN,
+                        Emin=-999999, Emax=999999, traps=[])
+        with localcontext(fixed):
+            power = Decimal(exact_power.numerator) / Decimal(exact_power.denominator)
+            lower = (power.next_minus().log10().next_minus() * 10).next_minus()
+            upper = (power.next_plus().log10().next_plus() * 10).next_plus()
+            maximum = Decimal(_MAXIMUM_DBM)
+            if upper <= maximum:
+                comparison = 'meets'
+            elif lower > maximum:
+                comparison = 'above'
+            else:
+                continue
+            low_margin = (maximum - upper).next_minus()
+            high_margin = (maximum - lower).next_plus()
+            dbm, margin = float(lower), float(low_margin)
+            if dbm == float(upper) and margin == float(high_margin):
+                return _numeric_result(dbm), _numeric_result(margin), comparison
+    raise ValueError('numeric_result_out_of_range')
 
 
 def analyze_6db_bandwidth(trace):
@@ -122,16 +165,15 @@ def analyze_6db_bandwidth(trace):
         reasons.append('right_crossing_missing')
     if reasons:
         return result
-    left_hz = (axis[left] if levels[left] == _THRESHOLD_DB else
-               _crossing(axis[left], levels[left], axis[left - 1], levels[left - 1]))
-    right_hz = (axis[right] if levels[right] == _THRESHOLD_DB else
-                _crossing(axis[right], levels[right], axis[right + 1], levels[right + 1]))
-    bandwidth = _numeric_result(right_hz - left_hz)
-    if bandwidth <= 0:
-        raise ValueError('numeric_result_out_of_range')
+    exact_left = (Fraction(axis[left]) if levels[left] == _THRESHOLD_DB else
+                  _crossing(axis[left], levels[left], axis[left - 1], levels[left - 1]))
+    exact_right = (Fraction(axis[right]) if levels[right] == _THRESHOLD_DB else
+                   _crossing(axis[right], levels[right], axis[right + 1], levels[right + 1]))
+    left_hz = axis[left] if levels[left] == _THRESHOLD_DB else _fraction_float(exact_left)
+    right_hz = axis[right] if levels[right] == _THRESHOLD_DB else _fraction_float(exact_right)
+    bandwidth, margin, comparison = _bandwidth_values(left_hz, right_hz, exact_left, exact_right)
     result.update(status='complete', left_offset_hz=left_hz, right_offset_hz=right_hz,
-                  bandwidth_hz=bandwidth, margin_hz=_numeric_result(bandwidth - _MINIMUM_BANDWIDTH_HZ),
-                  conditional_comparison='meets' if bandwidth >= _MINIMUM_BANDWIDTH_HZ else 'below')
+                  bandwidth_hz=bandwidth, margin_hz=margin, conditional_comparison=comparison)
     return result
 
 
@@ -156,19 +198,21 @@ def analyze_psd_band(sample):
             raise ValueError('invalid_psd_input')
         power_dbm = float(value)
         power_mw = _numeric_result(10 ** (power_dbm / 10))
+        margin = _fraction_float(Fraction(_MAXIMUM_DBM) - Fraction(value))
+        comparison = 'meets' if value <= _MAXIMUM_DBM else 'above'
     else:
         if value <= 0:
             raise ValueError('invalid_psd_input')
-        power_mw = _numeric_result(value * _REFERENCE_BANDWIDTH_HZ)
+        exact_power = Fraction(value) * _REFERENCE_BANDWIDTH_HZ
+        power_mw = _fraction_float(exact_power)
         if power_mw <= 0:
             raise ValueError('numeric_result_out_of_range')
-        power_dbm = _numeric_result(10 * math.log10(power_mw))
+        power_dbm, margin, comparison = _density_log_values(exact_power)
     return {
         **_identity(sample), 'kind': 'synthetic_psd_band_result',
         'algorithm_id': 'declared_3khz_power_v1', 'input_basis': basis,
         'power_dbm': power_dbm, 'power_mw': power_mw,
         'reference_bandwidth_hz': _REFERENCE_BANDWIDTH_HZ, 'maximum_dbm': _MAXIMUM_DBM,
-        'margin_db': _numeric_result(_MAXIMUM_DBM - power_dbm),
-        'conditional_comparison': 'meets' if power_dbm <= _MAXIMUM_DBM else 'above',
+        'margin_db': margin, 'conditional_comparison': comparison,
         'source_coverage': 'single_declared_band', 'max_search_complete': False,
     }
