@@ -33,6 +33,8 @@ python -m labflow --workspace .local/intake-state intake-notifications
 
 `intake-claim`은 처리할 작업이 없으면 null을 반환한다. 작업에는 원본 hash/경로/텍스트, revision, 임대 token, 응답 계약 안내가 들어 있다. 분석을 적용할 때 현재 임대·revision·원본을 확인한다. 다른 작업자의 임대, 만료된 임대, 보완 이전의 결과를 거절한다. 동일 완료 응답 재전송은 원본을 다시 확인하고 기존 결과를 반환한다.
 
+합성 분석 작업자는 Python 서비스의 `claim_job(..., synthetic_only=True)`를 사용한다. 작업 선택, 만료된 임대의 실패 처리와 접수 상태 정리를 같은 쓰기 트랜잭션에서 합성 revision에만 적용한다. 합성 작업이 없으면 실제 접수로 넘어가지 않고 `None`을 반환하며 실제 접수의 시도 횟수·실패 상태를 소모하지 않는다. 이 옵션은 boolean만 받는다. 기본값 `False`와 기존 CLI/MCP 호출은 기존 전체 작업 선택 동작을 유지한다. 이 필터는 저장된 원본 provenance에 따른 선택이며 자료 진위나 실제 AI 판단을 증명하지 않는다.
+
 ```text
 python -m labflow --workspace .local/intake-state intake-fail JOB_ID TOKEN
 ```
