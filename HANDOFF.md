@@ -4,6 +4,8 @@
 
 2026-10-24 최신 결정: 사용자 제공 SM-A176U 자료를 비공개로 인수하고 **Un-licensed 전체 장비/시험 흐름 가상화**를 우선한다. 원시데이터는 기능·가상환경 개발의 선행조건이 아니며 Licensed 추가 암호/최종 raw 확인은 보류한다. [전체 장비 개발 배정](handoff/development/VLAB-ALL-001.md), [64프로필 catalog](virtual_profiles/README.md), [현재 사용자 입력](docs/material-intake/2026-10-23-user-inputs.md)을 따른다. 개발1~4의 RF/계측/시설·런타임/UI를 총괄 복제본에 통합했다. [실행 안내](docs/fcc/virtual_fleet_usage.md)와 [통합 기록 002](handoff/development/INTEGRATION-002.md)에 출처·수정·검증·남은 범위를 기록했다. 전체 Python 415개, Node 26개와 실제 64프로필 브라우저 7개가 통과했다. 이 수를 실장비 정확도나 전체 무인시험소 완료로 읽지 않는다. 아래의 이전 첫 프로필/개발 단위 기록은 보존 이력이다.
 
+다음 구현 배정은 [VLAB-HARNESS-002](handoff/development/VLAB-HARNESS-002.md)와 [고정 설계](docs/superpowers/specs/2026-10-24-virtual-fleet-harness-design.md)다. 개발1 policy / 개발2 bounded harness / 개발3 operator journal / 개발4 완료 기록 조회 / 총괄 분리 평가·CLI로 나눈다. 기존 VirtualSession에 새 Fleet의 재생 기능이 있다고 가정하지 않는다. 이번 단위는 fixture 기반이며 실제 모델 호출·학습·재시작 재개·실행 중 HTTP 감독 제어는 후속이다. 기능이 인수되기 전에는 이전 415개 결과를 새 하네스 검증으로 집계하지 않는다.
+
 최신 수집 후속 지시: 사용자는 공개 추가 자료를 P01에 맡기고 개발1~4의 계속 진행과 사용자 직접 준비 자료의 분리를 요청했다. 총괄은 [DEV-EVIDENCE-20261023-002](docs/material-intake/2026-10-23-additional-collection.md)를 실제 전달했다. P01에서 수집1·4·6·7의 후속 실행 보고를 받았고 첫 S04 B0003 패키지의 17파일·재사용 원문 6개를 해시 검증해 인수했다. 신규 원문은 0개이며 근거 13개를 보완한 결과다. [사용자 입력 목록](docs/material-intake/2026-10-23-user-inputs.md)은 첫 실물 검증에 필요한 최소 입력과 이후 시험소 전체로 확대할 때의 내부 자료를 구분한다. 해당 자료를 기다리며 독립 개발을 멈추지 않는다.
 
 ## 개발 병렬 운영 — 최신 사용자 결정
