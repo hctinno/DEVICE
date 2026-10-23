@@ -81,6 +81,8 @@ failure.json                 # 실패가 발생하고 저장 가능한 경우
 
 공개 report는 기존 v1 exact contract이며 연결용 case/plan/접수/token/경로 필드를 추가하지 않는다. task_outcome/cleanup은 not_assessed다. 초기화 이후의 협력 중단이나 실패도 실제 종료/평가 상태를 유지하고 측정 성공으로 바꾸지 않는다.
 
+반환 및 파일 보존 전에 기존 순수 v1 wire 검증기로 모든 중첩 필드 집합·자료형·문자열/참조 길이·수치 범위를 검사한다. 이 검증 호출은 서버를 실행하지 않는다. evaluator_id와 summary_code는 v1에서 허용한 null 또는 공백이 아닌 최대 128자 문자열이어야 하며 dict/list·수치·boolean·빈 문자열을 거절한다. 평가기에는 공개 report와 events의 복사본을 전달하므로 거절된 평가 후보가 마지막 유효 report를 변경할 수 없다. 실패 보존도 같은 검증을 통과한 report만 기록한다.
+
 반환 artifacts는 정확히 result/operator_journal 두 종류의 host-only `{kind,path,sha256,bytes}` 목록이다. path는 새 출력 폴더 안의 public-result.json과 operator/events.jsonl 절대 경로이며 policy/공개 report로 전달하지 않는다. worker가 이를 synthetic=True blob으로 등록한 뒤 공개 artifact_id/hash DTO를 만든다. private author/manifest는 이 목록에서 제외한다.
 
 journal header의 preinitialized/catalog/topology/engine fingerprint와 실제 전체 topology·노드/profile 결합·공개 설정/기준면을 보존한다. engine hash는 현재 virtual_fleet Python 파일들을 이름순으로 LF 정규화하여 이름/NUL/내용/NUL을 SHA-256에 누적한다. seed·조건·정답·허용차·초기 영수증은 별도 private author 파일에 둔다.
@@ -103,4 +105,6 @@ python scripts/check_artifacts.py
 
 전용 검사는 실제 정상 trial/변경 power·예약 ID·fresh source/unit/revision, 위임 상실 경계·응답 유실 tick 재시도·journal 불일치/파일 실패·비공개 canary·기존 폴더 보존을 확인한다. 현재 단계에서 실제 AI·장비/현장·실물 coupling/교정·FCC 전체 방법·안전 정지·durable runtime resume/replay는 검증하거나 지원하지 않는다. 공개 report는 synthetic=true/hardware_verified=false/ai_model_called=false를 유지한다.
 
-2026-10-24 자기 clone 검증: 전용 22개, 관련 하네스/정책/평가기/저널 105개가 통과했다. 최종 전체 Python 검사는 새 전용 검사를 포함해 555개/70.859초 PASS다. Python AST 2개·이 문서 UTF-8·루트 문서 8개/165링크 검사도 통과했다. 전체 로그는 private `.local/FLOW-003-IMPLEMENTATION/`에 보존하며 이전 단위의 실패 기록도 유지한다. 이 검증은 새 단일 합성 adapter의 범위이며 접수 queue/worker/UI 종단 연결은 총괄 통합에서 별도 확인한다.
+2026-10-24 최초 구현 검증: 전용 22개, 관련 하네스/정책/평가기/저널 105개가 통과했다. 당시 전체 Python 검사는 새 전용 검사를 포함해 555개/70.859초 PASS다. Python AST 2개·이 문서 UTF-8·루트 문서 8개/165링크 검사도 통과했다. 전체 로그는 private `.local/FLOW-003-IMPLEMENTATION/`에 보존하며 이전 단위의 실패 기록도 유지한다.
+
+같은 날 후속 리뷰에서는 잘못된 평가 메타데이터·중첩 report·평가기의 원본 변경을 3개 검사/15개 사례로 먼저 재현했다. 수정 후 전용 25개와 관련 105개가 통과했다. 잘못된 평가를 거절한 경우 공개 실패 result가 마지막 유효 report와 같고 canary가 없으며, journal·private author가 보존되는지도 확인했다. 전체 회귀는 반복하지 않았으며 후속 RED·중간 실패·GREEN 로그는 private `.local/FLOW-003-REVIEW/`에 보존한다.

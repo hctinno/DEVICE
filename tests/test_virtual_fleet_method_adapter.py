@@ -357,6 +357,77 @@ class MethodAdapterTests(unittest.TestCase):
             if path.exists():
                 self.assertNotIn(b'CANARY_GRADER_PRIVATE', path.read_bytes())
 
+    def test_evaluator_metadata_requires_public_v1_text_types_before_return_or_storage(self):
+        actual = self.module.evaluate_sensor_run
+        invalid = [{'authorControl': 'CANARY_METADATA_PRIVATE'},
+                   [{'authorControl': 'CANARY_METADATA_PRIVATE'}], 7, True, ' ']
+        for field in ['evaluator_id', 'summary_code']:
+            for index, value in enumerate(invalid):
+                with self.subTest(field=field, value_type=type(value).__name__):
+                    output = self.root / f'invalid-{field}-{index}'
+                    last_valid = []
+                    def corrupt(*args, **kwargs):
+                        last_valid.append(deepcopy(args[1]))
+                        assessment = actual(*args, **kwargs)
+                        assessment[field] = deepcopy(value)
+                        return assessment
+                    with patch.object(self.module, 'evaluate_sensor_run', side_effect=corrupt):
+                        with self.assertRaises(self.module.FixtureMethodError) as caught:
+                            self.run_method(output=output)
+                    self.assertEqual(caught.exception.code, 'evaluation_failed')
+                    self.assertTrue(caught.exception.dispatched)
+                    self.assertNotIn('CANARY_METADATA_PRIVATE', str(caught.exception))
+                    retained = json.loads((output / 'public-result.json').read_text(encoding='utf-8'))
+                    self.assertEqual(retained, last_valid[0])
+                    self.assertEqual(retained['assessment']['status'], 'not_assessed')
+                    self.assertIsNone(retained['assessment']['evaluator_id'])
+                    self.assertTrue(read_operator_journal(output / 'operator/events.jsonl')['complete'])
+                    self.assertTrue((output / 'private/author.json').is_file())
+                    for name in ['public-result.json', 'operator/events.jsonl', 'failure.json']:
+                        self.assertNotIn(b'CANARY_METADATA_PRIVATE', (output / name).read_bytes())
+
+    def test_rejected_evaluator_cannot_mutate_the_last_valid_public_report(self):
+        actual = self.module.evaluate_sensor_run
+        last_valid = []
+        def corrupt(trial, report, events):
+            last_valid.append(deepcopy(report))
+            assessment = actual(trial, report, events)
+            report['assessment']['evaluator_id'] = {'authorControl': 'CANARY_MUTATED_REPORT_PRIVATE'}
+            assessment['summary_code'] = ['CANARY_MUTATED_REPORT_PRIVATE']
+            return assessment
+        with patch.object(self.module, 'evaluate_sensor_run', side_effect=corrupt):
+            with self.assertRaises(self.module.FixtureMethodError) as caught:
+                self.run_method()
+        self.assertEqual(caught.exception.code, 'evaluation_failed')
+        retained = json.loads((self.output / 'public-result.json').read_text(encoding='utf-8'))
+        self.assertEqual(retained, last_valid[0])
+        self.assertEqual(retained['assessment']['status'], 'not_assessed')
+        self.assertIsNone(retained['assessment']['evaluator_id'])
+        for name in ['public-result.json', 'operator/events.jsonl', 'failure.json']:
+            self.assertNotIn(b'CANARY_MUTATED_REPORT_PRIVATE', (self.output / name).read_bytes())
+
+    def test_malformed_nested_harness_result_is_not_retained_as_public_evidence(self):
+        actual = self.module.FleetHarness.run
+        invalid = [('policy', 'id', {'authorControl': 'CANARY_NESTED_PRIVATE'}),
+                   ('usage', 'elapsed_ms', True), ('evidence', 'operator_transcript_ref', []),
+                   ('cleanup', 'evidence_refs', {'authorControl': 'CANARY_NESTED_PRIVATE'})]
+        for index, (section, field, value) in enumerate(invalid):
+            with self.subTest(section=section, field=field):
+                output = self.root / f'invalid-nested-{index}'
+                def corrupt(harness):
+                    report = actual(harness)
+                    report[section][field] = deepcopy(value)
+                    return report
+                with patch.object(self.module.FleetHarness, 'run', corrupt):
+                    with self.assertRaises(self.module.FixtureMethodError) as caught:
+                        self.run_method(output=output)
+                self.assertEqual(caught.exception.code, 'harness_failed')
+                self.assertFalse((output / 'public-result.json').exists())
+                self.assertTrue((output / 'failure.json').is_file())
+                self.assertTrue((output / 'private/author.json').is_file())
+                for name in ['operator/events.jsonl', 'failure.json']:
+                    self.assertNotIn(b'CANARY_NESTED_PRIVATE', (output / name).read_bytes())
+
     def test_changed_catalog_during_load_cannot_produce_a_stale_public_fingerprint(self):
         actual = self.module.load_catalog
         with patch.object(self.module, 'load_catalog', side_effect=lambda path: dict(actual(path), title='changed in loader')):
