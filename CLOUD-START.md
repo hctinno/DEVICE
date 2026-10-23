@@ -1,5 +1,7 @@
 # DGM AutoLab — 클라우드에서 이어서 작업하기
 
+최신 사용자 요청으로 다른 PC·Codex 계정에 새 **개발총괄** 세션을 여는 경우 [DEVELOPER-START.md](DEVELOPER-START.md)를 먼저 따른다. 수집 공유 폴더 밖의 독립 복제본에서 기존 개발 역할을 이어받는다. 아래는 클라우드를 선택할 때의 연결 안내이며 새 개발 세션을 수집자로 지정하는 문서가 아니다.
+
 확인일: 2026-10-23. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 현재 구현 인계 브랜치는 `codex/fcc-lab-foundation`이다. main 병합 전에는 이 브랜치를 선택한다. 현재 클라우드 workspace에서 구현·검증을 실행했으며, 별도 세션은 자기 환경의 준비 상태를 확인한다.
 
 ## 권장 작업 방식
