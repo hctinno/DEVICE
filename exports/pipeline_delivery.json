@@ -17,8 +17,8 @@
   "artifacts": {
     "agent_collection_request.zip": {
       "path": "exports/agent_collection_request.zip",
-      "bytes": 1369409,
-      "sha256": "b49b6d243b5d7913d3b3af9cef887ad322cd4704505d8c7b5cdbb558be03ee71"
+      "bytes": 1371047,
+      "sha256": "4b095ad2678532422eeaf4834d00cb45d21dc738df787fbab7afcfdf42c6b96b"
     },
     "fcc_pipeline_core.zip": {
       "path": "exports/fcc_pipeline_core.zip",
@@ -34,13 +34,16 @@
     "status": "DRAFT",
     "synthetic": true
   },
-  "updated_at_kst": "2026-10-23T19:17:27.345668+09:00",
+  "updated_at_kst": "2026-10-23T19:44:34.492650+09:00",
   "handoff": {
     "transport": "git",
     "repository": "https://github.com/hctinno/DEVICE",
     "base_branch": "codex/fcc-lab-foundation",
     "collector_instructions": "handoff/AGENT_PROMPT.md",
     "results": "materials/README.md",
-    "manual_file_transfer_required": false
+    "manual_file_transfer_required": false,
+    "collector_role": "materials_preparation_only",
+    "current_session_role": "pipeline_design_with_user",
+    "first_validation_product": "smartphone"
   }
 }

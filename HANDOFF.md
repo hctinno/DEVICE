@@ -8,6 +8,13 @@
 
 전체 범위·합격 기준·미확정 사항은 [PLAN.md](PLAN.md), 데이터·실행·현장 설계는 [IMPLEMENTATION.md](IMPLEMENTATION.md)에 있다. 대화 내용을 다시 추정하는 대신 이 문서를 읽는다.
 
+## 이번 인계의 역할 — 사용자 결정
+
+- **새 에이전트는 자료 준비 담당이다.** 이 대화나 전체 개발을 이어받는 임무가 아니다. 미확보 규정·KDB 전체 첨부·표준·시험방법·보고 요구·장비/시험 SW 문서를 조사하고, 원본·판본·출처·누락 목록을 GitHub로 반환한다. 상세 지시는 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)를 따른다.
+- **현재 에이전트와 사용자는 전체 파이프라인을 다시 기획한다.** 필요한 공개 원문이 준비될 것을 전제로 업무 흐름·입출력·검증 조건을 구체화한다. 이 설계 가정은 문서의 실제 확보·적용성 검토 또는 현장 검증 완료를 뜻하지 않는다.
+- **첫 전체 흐름 실증 제품은 스마트폰이다.** 전체 FCC 지원 범위를 유지하며, 자료 수집의 첫 배치를 스마트폰의 기능별 RF·EMC·인체노출 및 관련 요구 조사에 맞춘다. 장비 예시 목록이나 Part 15B/15.247만으로 전체 시범 범위를 제한하지 않는다.
+- 기존 성적서와 원시 데이터 양식은 새 설계의 제약으로 삼지 않는다. 신규 형식은 규격·시험방법에서 도출하고 기존 시험건은 후속 독립 검증에 사용한다.
+
 ## 현재 상태
 
 - 완료: 전체 계획·작업 규칙, 장비 원본/SQLite DB/내보내기(등록 6,470행·모델 2,867개), 규정 등 304개 수집 요청, 오프라인 공통 코어·CLI·stdio MCP, 합성 데이터 기반 HTML/PDF/JSON 초안.
@@ -20,9 +27,9 @@
 ## 시작 순서
 
 1. [AGENTS.md](AGENTS.md), [PLAN.md](PLAN.md), [IMPLEMENTATION.md](IMPLEMENTATION.md), [DESIGN.md](DESIGN.md)를 읽는다.
-2. 저장소 루트에서 `python -m pip install -r requirements.txt`, `python scripts/check_artifacts.py`, `python -m unittest discover -s tests -v`를 실행한다. 환경에 따라 `python3`를 사용한다.
+2. 맡은 역할을 먼저 확인한다. 수집 담당은 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)의 수집·패키지 인수 검사만 수행한다. 개발 담당은 저장소 루트에서 `python -m pip install -r requirements.txt`, `python scripts/check_artifacts.py`, `python -m unittest discover -s tests -v`를 실행한다. 환경에 따라 `python3`를 사용한다.
 3. `hctinno/DEVICE`의 체크아웃과 작업 브랜치·파일을 확인한다. 클라우드 환경이 준비되지 않았다면 [CLOUD-START.md](CLOUD-START.md)의 연결 절차를 따른다.
-4. 수집 담당은 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)와 [materials/README.md](materials/README.md)를 따른다. 개발 담당은 [docs/fcc/pipeline_usage.md](docs/fcc/pipeline_usage.md)를 읽고 원문 인수·시험방법 구현을 이어간다. 장비 DB의 미확인 옵션·인터페이스·현장 상태를 만들어내지 않는다.
+4. 수집 담당은 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)와 [materials/README.md](materials/README.md)를 따른다. 개발 담당은 [docs/fcc/pipeline_usage.md](docs/fcc/pipeline_usage.md)로 구현 범위를 확인하고 사용자와 진행 중인 스마트폰 파이프라인 기획에 맞춰 작업한다. 수집 담당에게 전체 구현이나 설계 결정을 넘기지 않는다. 장비 DB의 미확인 옵션·인터페이스·현장 상태를 만들어내지 않는다.
 5. 작업 종료 시 변경·검증·미완료 사항을 갱신해 커밋·푸시하고, 결과 브랜치와 SHA를 보고한다. 사용자가 ZIP을 내려받아 재첨부하는 절차를 기본 인계 방식으로 사용하지 않는다.
 
 ## 유지할 결정
@@ -35,4 +42,4 @@
 
 설계에는 `architecture-patterns`, OpenAI 제품·클라우드 절차 확인에는 `openai-docs`, 다음 세션 인계에는 `handoff`가 적합하다. 설치되지 않은 스킬의 PC 전용 경로에 의존하지 말고 저장소 지침과 공식 문서를 사용한다. 사용자 요청이나 적용 지침 없이 하위 에이전트를 생성하지 않는다.
 
-한국어로 간결하게 보고하고 같은 범위 질문을 반복하지 않는다. 현재 우선 작업은 **P0 공식 원문 수집과 FCC 방법 프로필의 근거 연결**이다. 이미 제공한 장비리스트나 Git에 있는 파일을 다시 요청하지 않는다.
+한국어로 간결하게 보고하고 같은 범위 질문을 반복하지 않는다. 수집 담당의 우선 작업은 **스마트폰 관련 자료와 P0 공식 원문 준비**, 현재 에이전트의 우선 작업은 **사용자와 전체 파이프라인 재기획**이다. 이미 제공한 장비리스트나 Git에 있는 파일을 다시 요청하지 않는다.
