@@ -54,6 +54,32 @@ for (const [name, path, mutate] of invalid) {
   });
 }
 
+test('V1 citations require exactly six complete fields with hashes roles and ordered lines', () => {
+  const changes = [
+    ['empty evidence', () => ({})],
+    ...['path','sha256','line_start','line_end','quote','role'].map(key => [`missing ${key}`, source => {delete source[key];return source;}]),
+    ['bad hash', source => ({...source,sha256:'not-a-hash'})],
+    ['empty path', source => ({...source,path:''})],
+    ['empty quote', source => ({...source,quote:''})],
+    ['unknown role', source => ({...source,role:'future'})],
+    ['reversed lines', source => ({...source,line_start:4,line_end:2})],
+    ['zero line', source => ({...source,line_start:0})],
+    ['fractional line', source => ({...source,line_end:1.5})],
+    ['private extra key', source => ({...source,seed:0})],
+    ['PDF fields in V1', source => ({...source,kind:'pdf_page',page_number:2})],
+  ];
+  for (const [name, change] of changes) {
+    const data=fixture(), submitted=data.intakes[0].analysis.submitted;
+    submitted.schema_version=1;
+    submitted.facts[0].evidence[0]=change(submitted.facts[0].evidence[0]);
+    assert.throws(()=>validateSnapshot(data),/invalid_snapshot/,name);
+  }
+  for (const role of ['request','product','reference']) {
+    const data=fixture(); data.intakes[0].analysis.submitted.facts[0].evidence[0].role=role;
+    assert.equal(validateSnapshot(data),data);
+  }
+});
+
 test('V2 text and PDF citations retain context and page-local coordinates while V1 remains valid', () => {
   const data = fixture();
   const submitted = data.intakes[0].analysis.submitted;

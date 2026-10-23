@@ -64,6 +64,29 @@ async function main() {
       assert.match(text, /작업 결과 미평가/); assert.match(text, /실제 AI 호출 없음/);
       assert.equal(await page.locator('#fixture-panel input, #fixture-panel select, #fixture-panel a').count(), 0);
     });
+    await check('malformed V1 citation snapshots preserve the successful DOM intake request selection and times', async () => {
+      const good=structuredClone(snapshot); good.intakes[0].bundle='LAST_GOOD';
+      await page.route('**/api/intakes',handler=>handler.fulfill({json:good}));
+      await refreshIntakes(page); await loaded(page);
+      await page.locator('.fixture-request').nth(1).click();
+      const view=async()=>({detail:createHash('sha256').update(await page.locator('#detail-panel').innerHTML()).digest('hex'),
+        intake:await page.locator('.intake-item[aria-current]').innerText(),time:await page.locator('#last-updated').innerText(),flow:await contentState(page)});
+      const before=await view();
+      await page.unroute('**/api/intakes');
+      for (const change of [()=>({}),s=>({...s,sha256:'bad'}),s=>({...s,line_start:4,line_end:2}),
+        s=>({...s,role:'future'}),s=>({...s,seed:0}),s=>{delete s.quote;return s;}]) {
+        const bad=structuredClone(good); bad.intakes[0].bundle='MALFORMED_V1_REPLACEMENT'; bad.generated_at='2026-10-24T23:59:00Z';
+        const fact=bad.intakes[0].analysis.submitted.facts[0]; fact.evidence[0]=change(fact.evidence[0]);
+        await page.route('**/api/intakes',handler=>handler.fulfill({json:bad}));
+        await refreshIntakes(page);
+        await page.locator('#error-banner').filter({hasText:'조회 실패'}).waitFor();
+        assert.deepEqual(await view(),before);
+        assert.equal(await page.getByRole('heading',{name:'MALFORMED_V1_REPLACEMENT',exact:true}).count(),0);
+        await page.unroute('**/api/intakes');
+      }
+      await refreshIntakes(page); await loaded(page);
+      assert.equal(await page.locator('#error-banner').isHidden(),true);
+    });
     await check('record selection is local and scoped to request identity', async () => {
       await page.locator('.fixture-request').nth(1).click();
       assert.match(await page.locator('#fixture-result').innerText(), /FIXTURE-21/);

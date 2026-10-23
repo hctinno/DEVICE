@@ -50,7 +50,7 @@ synthetic hardware_verified ai_model_called resumable case_id plan_id error_code
 
 ## V1·V2 인용
 
-기존 TXT V1 표시를 유지한다. schema2의 `submitted.context_id`와 정확한 `text_line`/`pdf_page` 변형을 검증한다. PDF는 페이지 번호, 그 페이지 안의 줄 범위, extraction ID, 원본·페이지 텍스트 SHA-256과 quote를 보존해 표시한다. 모든 문자열은 DOM text로 구성하며 HTML·링크로 실행하지 않는다. 인용 검증은 페이지 추출의 정확도나 실제 문서 이해 성능을 입증하지 않는다. 미독해/partial 질문은 기존 접수 분석 상태와 함께 계속 표시한다.
+기존 TXT V1 표시를 유지하며 인용은 정확한 6개 필수 키(`path`, `sha256`, `line_start`, `line_end`, `quote`, `role`)와 유효한 해시·역할·줄 범위를 요구한다. schema2의 `submitted.context_id`와 정확한 `text_line`/`pdf_page` 변형도 검증한다. PDF는 페이지 번호, 그 페이지 안의 줄 범위, extraction ID, 원본·페이지 텍스트 SHA-256과 quote를 보존해 표시한다. 모든 문자열은 DOM text로 구성하며 HTML·링크로 실행하지 않는다. 인용 검증은 페이지 추출의 정확도나 실제 문서 이해 성능을 입증하지 않는다. 미독해/partial 질문은 기존 접수 분석 상태와 함께 계속 표시한다.
 
 ## 검증
 
@@ -66,5 +66,7 @@ python -B scripts/check_artifacts.py
 브라우저는 최신 20건·선택·현재/과거 준비 관계·오류·교차 결합·렌더 실패·중단을 무시한 늦은 응답·접수/revision 전환·V2 인용/XSS·390px 화면과 기존 접수 화면을 검사한다. 증거와 초기 실패 기록은 자기 clone의 `.local/FLOW-003-IMPLEMENTATION/`에 남긴다. [데스크톱](../../frontend/evidence/intake-flow-desktop.png), [모바일](../../frontend/evidence/intake-flow-mobile.png)은 공개 합성 화면이다.
 
 개발4 clone에서 총괄 queue 커밋 `b97712e`를 인수한 상태의 검증: 전용 Python 12개, 전체 Python 561개, 전체 Node 43개, 신규 브라우저 12개와 기존 접수 브라우저 9개 통과. 루트 문서 검사 8개/링크 165개와 이 문서의 UTF-8/링크 3개도 확인했다. 전체 Python은 D1/D2/D3 새 구현을 인수하기 전 범위다.
+
+독립 리뷰의 V1 인용 누락/손상 허용 지적은 Node·브라우저에서 RED로 재현한 뒤 수정했다. 수정 후 전체 Node 44개, 신규 브라우저 13개와 기존 접수 9개를 다시 실행해 통과했다. `{}`, 잘못된 해시·역할·줄 범위·추가 키가 있는 응답에서 마지막 성공 DOM·접수/요청 선택·조회 시각을 보존하는 회귀를 포함한다. Python 561개는 앞선 서버 구현의 검증 기록이다.
 
 실제 queue/adapter/worker/PDF provider 전체 연결은 총괄 통합 검사에 남는다. 실제 AI 호출·실장비·현장 업무·기관 적합성·runtime 재개는 이 구현에서 검증하지 않았다.
