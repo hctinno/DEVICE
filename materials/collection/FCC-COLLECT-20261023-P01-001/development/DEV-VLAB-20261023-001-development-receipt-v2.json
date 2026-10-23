@@ -1,0 +1,76 @@
+{
+  "request_id": "DEV-VLAB-20261023-001",
+  "received_at": "2026-10-23T22:43:46.116951+09:00",
+  "source": "authorized project development chat",
+  "mapping_revision": 2,
+  "mapping_sha256": "0d0451947462ca1c1f072776e072d5ff14bfdcf54352c1d13937d70b4151d40e",
+  "source_publication_sha": "33d19ae3a0da8dbd5911c1b4ef038f83815a5219",
+  "developer_reported_intake": {
+    "packets": 3,
+    "files": 22,
+    "checks": [
+      "receipt",
+      "READY",
+      "inventory",
+      "bytes",
+      "sha256"
+    ],
+    "shared_collection_files_modified": false
+  },
+  "developer_implementation": {
+    "commit": "d1c7d9ecdfaa7ec795e536551c245a9ed578df38",
+    "branch": "codex/pipeline-dev-20261023-intake",
+    "profile": "N1914A single A channel, ASCII, single measurement; synthetic partial profile",
+    "scenarios": [
+      "normal",
+      "transmission ignored",
+      "disconnected RF path",
+      "reduced output",
+      "measurement stuck",
+      "communication recovery"
+    ],
+    "observation_and_answer_files_separated": true,
+    "documentation_path": "docs/fcc/virtual_lab_usage.md"
+  },
+  "developer_reported_validation": {
+    "unittest_passed": 107,
+    "new_tests": 21,
+    "CLI_scenarios_passed": 6,
+    "CLI_scenarios_total": 6,
+    "kind": "synthetic contract checks",
+    "real_AI_validation": false,
+    "hardware_validation": false,
+    "P01_reran_tests": false
+  },
+  "P01_independent_checks": {
+    "mapping_hash_matches": true,
+    "implementation_commit_present_locally": true,
+    "implementation_commit_in_observed_remote_branch_history": true,
+    "observed_remote_head": "f9cf2ea9fcd33b7b48b29ad39c3e07854d430eef",
+    "implementation_documentation_read_at_reported_commit": true
+  },
+  "resolved_development_policy": {
+    "source_question_ids": [
+      "S04-B0002-Q01",
+      "S04-B0002-Q02"
+    ],
+    "excluded_from_supported_profile": [
+      "INIT query aliases from inconsistent examples",
+      "numeric UNIT range in the inconsistent table",
+      "EXT",
+      "binary byte order",
+      "waveform/trace"
+    ],
+    "public_ADB_not_substituted_for_OEM_RF_API": true,
+    "policy_scope": "current virtual partial profile only; source document ambiguities and actual device capability remain unverified"
+  },
+  "new_collection_request": null,
+  "remaining_input_groups": [
+    "actual OEM RF tools and firmware",
+    "native raw and execution logs",
+    "calibration/loss originals and actual asset/sensor configuration",
+    "site/RF path/interlock configuration",
+    "licensed standards and applicability evidence"
+  ],
+  "next_notification_policy": "Notify the development owner only when new evidence or a recorded gap changes. No duplicate collection is assigned for this acknowledgement."
+}
