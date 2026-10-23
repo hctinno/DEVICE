@@ -1,0 +1,37 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "requested_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "started_at": "2026-10-23T22:26:21.718081+09:00",
+      "request_headers": {
+        "Accept-Encoding": "identity",
+        "Referer": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+        "Accept": "text/html",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) FCC-public-source-verification",
+        "Cache-Control": "no-cache"
+      },
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "response_headers": {
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "13825",
+        "content-encoding": null,
+        "etag": null,
+        "last-modified": null,
+        "date": "Fri, 23 Oct 2026 13:21:48 GMT",
+        "cache-control": "max-age=0, no-cache, no-store",
+        "age": null
+      },
+      "redirects": [],
+      "representation_bytes_hashed": 13825,
+      "representation_sha256": "f45bf5baad16576a56eff61c556170c581046b36e3161c7df3a1a7638bf0ed59",
+      "stream_completed": true,
+      "completed_at": "2026-10-23T22:26:24.010209+09:00"
+    }
+  ],
+  "conditional_headers_used": false,
+  "reason_no_conditional": "B0002 ETag and Last-Modified are both null; its response body was not retained. No validator value is invented.",
+  "byte_count_scope": "Streamed decoded HTTP representation bytes, not TCP/TLS wire bytes.",
+  "network_scope": "Only the assigned public KDB913591 publication endpoint. No attachments or other KDB URLs requested."
+}

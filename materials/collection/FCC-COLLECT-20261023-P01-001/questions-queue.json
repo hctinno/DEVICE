@@ -1,6 +1,6 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "updated_at": "2026-10-23T22:27:14.876406+09:00",
+  "updated_at": "2026-10-23T22:32:00.103084+09:00",
   "owner": "P01",
   "routing": "User and external contacts are handled by P01 only. No direct collector requests.",
   "current_collection_publication_blocked_by_private_inputs": false,
@@ -98,32 +98,45 @@
     {
       "group_id": "FOLLOWUP-KDB-HTML",
       "title": "913591 현재 응답 보관",
-      "status": "local_ready_frozen_waiting_P01_receipt",
+      "status": "resolved_for_documentary_scope",
       "source_questions": [
         "S01-B0002-Q02"
       ],
       "assigned_task_id": "FCC-20261023-S01-B0003",
-      "decision": "최대1개 HTML의 응답과 본문/첨부 집합을 보완한다. 동일한 PDF를 다시 받지 않는다."
+      "decision": "최대1개 HTML의 응답과 본문/첨부 집합을 보완한다. 동일한 PDF를 다시 받지 않는다.",
+      "resolution_batch_id": "FCC-20261023A-S01-B0003",
+      "resolution_metadata_path": "batches/FCC-20261023A-S01-B0003"
     },
     {
       "group_id": "FOLLOWUP-EMC-SCOPE",
       "title": "공개 EMC 성적서 범위 문구와 결과표",
-      "status": "in_progress",
+      "status": "review_complete_scope_unresolved",
       "source_questions": [
         "S08-Q02"
       ],
       "assigned_task_id": "FCC-20261023-S02-B0002",
-      "decision": "보유 PDF만으로 명시사실·추론·미확정을 나누어 검토한다. 보고서 저자의 의도를 추정해 승인 범위를 확정하지 않는다."
+      "decision": "보유 PDF만으로 명시사실·추론·미확정을 나누어 검토한다. 보고서 저자의 의도를 추정해 승인 범위를 확정하지 않는다.",
+      "remaining_questions": [
+        "S02-B0002-Q01",
+        "S02-B0002-Q02"
+      ],
+      "resolution_batch_id": "FCC-20261023A-S02-B0002",
+      "resolution_metadata_path": "batches/FCC-20261023A-S02-B0002"
     },
     {
       "group_id": "FOLLOWUP-SAR-EDITION",
       "title": "SAR 표준 판본과 FCC 허용 근거",
-      "status": "in_progress",
+      "status": "review_complete_2026_acceptance_unconfirmed",
       "source_questions": [
         "S03-Q001"
       ],
       "assigned_task_id": "FCC-20261023-S03-B0002",
-      "decision": "IEEE1528과 IEC/IEEE62209-1528 명칭·발행판·허용/전환 근거를 분리해 공식자료로 확인한다."
+      "decision": "IEEE1528과 IEC/IEEE62209-1528 명칭·발행판·허용/전환 근거를 분리해 공식자료로 확인한다.",
+      "remaining_questions": [
+        "S03-Q002"
+      ],
+      "resolution_batch_id": "FCC-20261023A-S03-B0002",
+      "resolution_metadata_path": "batches/FCC-20261023A-S03-B0002"
     },
     {
       "group_id": "FOLLOWUP-BGN-CASE",

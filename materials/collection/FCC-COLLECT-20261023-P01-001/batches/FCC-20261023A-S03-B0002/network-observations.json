@@ -1,0 +1,49 @@
+{
+  "recorded_at": "2026-10-23T22:28:44+09:00",
+  "observed_date": "2026-10-23",
+  "distinct_publisher_pages_observed": 3,
+  "publisher_page_reads": 6,
+  "publisher_observation_ids": [
+    "OBS-IEEE-1528-2013-20261023",
+    "OBS-IEEE-62209-1528-2020-20261023",
+    "OBS-IEEE-62209-1528a-2026-20261023"
+  ],
+  "searches": [
+    {
+      "query": "\"62209-1528\" FCC acceptance",
+      "domains": [
+        "fcc.gov",
+        "ecfr.gov"
+      ],
+      "result_use": "반환된 과거 FCC 자료는 새 표준 허용의 직접 근거로 채택하지 않음"
+    },
+    {
+      "query": "\"62209-1528\" \"KDB\"",
+      "domains": [
+        "apps.fcc.gov"
+      ],
+      "result": "no results"
+    },
+    {
+      "query": "\"62209-1528\" \"2026\"",
+      "domains": [
+        "fcc.gov",
+        "ecfr.gov"
+      ],
+      "result": "no results"
+    },
+    {
+      "query": "\"IEEE 1528\" \"incorporation\"",
+      "domains": [
+        "ecfr.gov"
+      ],
+      "result": "no results"
+    }
+  ],
+  "limitations": "검색 결과 부재는 미허용 증명이 아니다. 발행기관 페이지는 메타데이터 관측만 했고 raw 원문 파일을 새로 저장하지 않았다.",
+  "new_original_downloads": 0,
+  "paid_standard_acquisition": false,
+  "repeated_403_or_browser_bypass": false,
+  "shared_browser_or_download_settings_changed": false,
+  "external_messages_or_submissions": false
+}

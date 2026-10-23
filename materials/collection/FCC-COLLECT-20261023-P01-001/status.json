@@ -1,8 +1,8 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "checked_at": "2026-10-23T22:27:14.876406+09:00",
+  "checked_at": "2026-10-23T22:32:00.103084+09:00",
   "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
-  "latest_assignment_version": "v004",
+  "latest_assignment_version": "v005",
   "published_branch": "collect/fcc-p0-smartphone-20261023-001",
   "development_target_branch": "codex/fcc-lab-foundation",
   "session_control_empirically_verified": {
@@ -40,7 +40,7 @@
             "ADD-S01-KDB-BLOB-CURRENCY-002"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "content_approved",
+          "P01_intake_state": "published",
           "included_in_results": true
         },
         {
@@ -51,16 +51,16 @@
             "ADD-S01-KDB913591-RAW-CURRENCY-003"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "not_received",
-          "included_in_results": false
+          "P01_intake_state": "content_approved",
+          "included_in_results": true
         }
       ]
     },
     {
       "role": "S02",
       "latest_collector_task": "FCC-20261023-S02-B0002",
-      "collector_status": "in_progress",
-      "collector_status_updated_at": "2026-10-23T22:25:33+09:00",
+      "collector_status": "ready_frozen",
+      "collector_status_updated_at": "2026-10-23T22:29:09+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -82,16 +82,16 @@
             "ADD-S02-EMC-CASE-SCOPE-002"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "not_received",
-          "included_in_results": false
+          "P01_intake_state": "content_approved",
+          "included_in_results": true
         }
       ]
     },
     {
       "role": "S03",
       "latest_collector_task": "FCC-20261023-S03-B0002",
-      "collector_status": "in_progress",
-      "collector_status_updated_at": "2026-10-23T22:25:27+09:00",
+      "collector_status": "ready_with_explicit_unknowns",
+      "collector_status_updated_at": "2026-10-23T22:29:30+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -114,16 +114,16 @@
             "ADD-S03-IEEE1528-FCC-TRANSITION-002"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "not_received",
-          "included_in_results": false
+          "P01_intake_state": "content_approved",
+          "included_in_results": true
         }
       ]
     },
     {
       "role": "S04",
-      "latest_collector_task": "FCC-20261023-S04-B0001",
-      "collector_status": "waiting_next_assignment",
-      "collector_status_updated_at": "2026-10-23T22:26:06.006683+09:00",
+      "latest_collector_task": "FCC-20261023-S04-B0002",
+      "collector_status": "in_progress",
+      "collector_status_updated_at": "2026-10-23T22:29:38.724259+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -138,6 +138,17 @@
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
           "included_in_results": true
+        },
+        {
+          "task_id": "FCC-20261023-S04-B0002",
+          "batch_id": "FCC-20261023A-S04-B0002",
+          "assignment_version": "v005",
+          "request_ids": [
+            "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "not_received",
+          "included_in_results": false
         }
       ]
     },
@@ -186,9 +197,9 @@
     },
     {
       "role": "S07",
-      "latest_collector_task": "FCC-20261023-S07-B0001",
-      "collector_status": "published_waiting_assignment",
-      "collector_status_updated_at": "2026-10-23T22:26:07.000+09:00",
+      "latest_collector_task": "FCC-20261023-S07-B0002",
+      "collector_status": "in_progress",
+      "collector_status_updated_at": "2026-10-23T22:30:28.000+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -202,14 +213,25 @@
           "acknowledgement_file_present": true,
           "P01_intake_state": "published",
           "included_in_results": true
+        },
+        {
+          "task_id": "FCC-20261023-S07-B0002",
+          "batch_id": "FCC-20261023A-S07-B0002",
+          "assignment_version": "v005",
+          "request_ids": [
+            "ADD-S07-VLAB-DUT-API-002"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "not_received",
+          "included_in_results": false
         }
       ]
     },
     {
       "role": "S08",
-      "latest_collector_task": "FCC-20261023-S08-B0002",
-      "collector_status": "ready_frozen_awaiting_p01",
-      "collector_status_updated_at": "2026-10-23T22:23:59+09:00",
+      "latest_collector_task": "FCC-20261023-S08-B0003",
+      "collector_status": "in_progress",
+      "collector_status_updated_at": "2026-10-23T22:31:06+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -232,17 +254,28 @@
             "ADD-S08-BGN-CASE-COMPLETENESS-002"
           ],
           "acknowledgement_file_present": true,
-          "P01_intake_state": "content_approved",
+          "P01_intake_state": "published",
           "included_in_results": true
+        },
+        {
+          "task_id": "FCC-20261023-S08-B0003",
+          "batch_id": "FCC-20261023A-S08-B0003",
+          "assignment_version": "v005",
+          "request_ids": [
+            "ADD-S08-VLAB-VALIDATION-MATERIALS-003"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "not_received",
+          "included_in_results": false
         }
       ]
     }
   ],
-  "included_reviewed_batches": 10,
+  "included_reviewed_batches": 13,
   "pending_intake_task_ids": [
-    "FCC-20261023-S01-B0003",
-    "FCC-20261023-S02-B0002",
-    "FCC-20261023-S03-B0002"
+    "FCC-20261023-S04-B0002",
+    "FCC-20261023-S07-B0002",
+    "FCC-20261023-S08-B0003"
   ],
   "scope": "Source collection and provenance only; no method approval, equipment or site validation."
 }

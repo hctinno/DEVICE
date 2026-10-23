@@ -1,0 +1,74 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "version": "v005",
+  "activation": "approved",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "created_at": "2026-10-23T22:28:51.107536+09:00",
+  "tasks": [
+    {
+      "task_id": "FCC-20261023-S04-B0002",
+      "batch_id": "FCC-20261023A-S04-B0002",
+      "attempt": 1,
+      "owner_session": "S04",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v005",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S04-VLAB-COMMAND-CONTRACT-002"
+      ],
+      "model_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9",
+        "MOD-48a20d5887cbe5bc"
+      ],
+      "source_request_id": "DEV-VLAB-20261023-001",
+      "priority": "P0",
+      "scope": "DEV-VLAB-20261023-001 항목1. 이미 확보·검수한 S04 B0001 매뉴얼6개만 재사용하여 가상 계측기 구현에 필요한 실제 명령/응답 계약의 근거를 표로 반환한다. N9030A 분석기와 N1914A 전력계를 구별하고 명령의 옵션/모드/펌웨어 전제, 인수와 단위, 완료 대기·동기화, 오류큐, binary/ascii trace 형식 및 원문 응답 예제를 문서ID·절·PDF페이지와 연결한다. 첫 프로필 선택과 구현은 개발 담당이 한다. 실장비 명령 실행이나 실측/교정값 생성은 하지 않는다. 문서에 없는 오류 응답/숫자를 만들어 넣지 않는다. 개발 후보 우선순위는 N1913-90008의 N1914A 식별·설정/단위·트리거·완료확인·읽기·오류와 센서 전제이며, X-Series 분석기 자료도 유지한다. 실제 현장 장비 선정이나 측정방법 승인이 아니다.",
+      "completion_criteria": "식별/상태조회·측정설정·트리거·완료동기화·오류큐·수치읽기·trace/binary·중단의 최소8개 기능 계약과 문서 위치 또는 미확보 표시. 본체/센서·실제설치상태 공백 구별. 신규원문0개, 코드/공통파일수정0.",
+      "original_limit": 0,
+      "status": "queued_not_transmitted",
+      "prerequisite": "Own prior batches published. Reuse P01 snapshots read-only; preserve frozen sources and work only in the assigned folder."
+    },
+    {
+      "task_id": "FCC-20261023-S07-B0002",
+      "batch_id": "FCC-20261023A-S07-B0002",
+      "attempt": 1,
+      "owner_session": "S07",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v005",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S07-VLAB-DUT-API-002"
+      ],
+      "model_ids": [],
+      "source_request_id": "DEV-VLAB-20261023-001",
+      "priority": "P0",
+      "scope": "DEV-VLAB-20261023-001 항목2. 기존 S07 B0001의 공식 ADB/logcat/AOSP 문서와 기존 로컬 입력 대장만으로 실제 공개 CLI/API 계약과 미확보 제조사 RF기능을 매핑한다. 연결·권한·호출·성공/실패 판별·로그·종료 계약은 문서 근거와 예제를 제시하되, b/g/n 시험모드 진입/종료·채널·대역폭·출력·상태조회 API가 확보됐는지는 별도 필드로 명시한다. 일반 shell/연결명령을 RF송신명령으로 표현하지 않는다. 개발이 만드는 가상 응답은 제조사 실응답과 다름을 기록한다.",
+      "completion_criteria": "개발자가 사용할 공개 CLI/API 매트릭스와 DUT RF 기능 미확보 매트릭스, source ID·절·버전·권리·공개/로컬 경로. 실제 OEM 도구가 없으면 unavailable로 완료 가능. 신규원문/비공개도구요청/실제단말접속/명령실행0.",
+      "original_limit": 0,
+      "status": "queued_not_transmitted",
+      "prerequisite": "Own prior batches published. Reuse P01 snapshots read-only; preserve frozen sources and work only in the assigned folder."
+    },
+    {
+      "task_id": "FCC-20261023-S08-B0003",
+      "batch_id": "FCC-20261023A-S08-B0003",
+      "attempt": 1,
+      "owner_session": "S08",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v005",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S08-VLAB-VALIDATION-MATERIALS-003"
+      ],
+      "model_ids": [],
+      "source_request_id": "DEV-VLAB-20261023-001",
+      "priority": "P1",
+      "scope": "DEV-VLAB-20261023-001 항목4 및 항목3의 사례 연결. 검수된 기존21개와 신규7788954 성적서, S04/S05/S06/S07 근거 색인만 읽어 연결도·손실/보정표·원시형식·통신로그·오류사례·측정조건-결과 예제의 현재 인수가능 위치를 매핑한다. 실제 native raw·실측로그·교정원본인지, 매뉴얼예제인지, 성적서표/그림인지, 미확보인지를 필수로 구분한다. 상세 원문/렌더링·대량표 재배포 없이 문서/페이지/조건/필드 위치만 반환한다. 합성데이터 생성과 구현은 개발 담당의 책임이며 합성값을 측정자료로 만들지 않는다.",
+      "completion_criteria": "최소6가지 자료유형별 위치/문서ID/해시/판본/조건/권리/실제or예제분류와 미확보목록. 공개/로컬 인수 경로 분리, 신규원문0개, 원본이동/수정0, 실제계측0.",
+      "original_limit": 0,
+      "status": "queued_not_transmitted",
+      "prerequisite": "Own prior batches published. Reuse P01 snapshots read-only; preserve frozen sources and work only in the assigned folder."
+    }
+  ],
+  "scope": "Existing-source contract and material mapping for the authorized development request. No new source downloads."
+}

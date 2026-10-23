@@ -1,0 +1,69 @@
+{
+  "task_id": "FCC-20261023-S03-B0002",
+  "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+  "created_at": "2026-10-23T22:28:44+09:00",
+  "editions": [
+    {
+      "edition_id": "IEEE-1528-2013",
+      "exact_identifier": "IEEE 1528-2013",
+      "publisher_observation_id": "OBS-IEEE-1528-2013-20261023",
+      "publisher_status": "Superseded Standard",
+      "published_date": "2013-09-06",
+      "publisher_replacement": "IEEE/IEC 62209-1528-2020",
+      "FCC_acceptance_evidence_ids": [
+        "B2-E01",
+        "B2-E02"
+      ],
+      "FCC_acceptance_scope_ko": "KDB에서 기본 개념·측정 요구의 근거로 명시적 참조. 발행기관의 superseded 상태가 FCC에서 자동 사용금지를 뜻하지 않는다.",
+      "FCC_first_acceptance_effective_date": null,
+      "FCC_first_acceptance_effective_date_status": "not_determined",
+      "known_FCC_reference_date": "2015-08-07, KDB 865664 v01r04 Change Notice",
+      "mandatory_phaseout_date": null,
+      "limitations_ko": "KDB 우선·제품별 적용 절차가 필요하다. 표준의 모든 조항을 전면 법령편입했다고 주장하지 않는다."
+    },
+    {
+      "edition_id": "IEC-IEEE-62209-1528-2020",
+      "exact_identifier": "IEC/IEEE 62209-1528:2020",
+      "publisher_display_identifier": "IEEE/IEC 62209-1528-2020",
+      "publisher_observation_id": "OBS-IEEE-62209-1528-2020-20261023",
+      "publisher_status": "Active Standard",
+      "published_date": "2020-10-19",
+      "publisher_replacement": "공식 카탈로그는 IEC 62209-1:2016·62209-2:2010 대체 및 IEEE 1528-2013 supersede를 명시한다.",
+      "FCC_acceptance_evidence_ids": [
+        "B2-E03",
+        "B2-E04",
+        "B2-E05",
+        "B2-E06",
+        "B2-E07",
+        "B2-E08"
+      ],
+      "FCC_acceptance_scope_ko": "최종 FCC KDB에 SAR 기본 개념으로 명시적 참조가 있다. 2026 workshop은 적용 규정/KDB와 시험소가 평가받은 주파수 범위에서 6 GHz 이하 사용을 설명한다.",
+      "FCC_first_acceptance_effective_date": null,
+      "FCC_first_acceptance_effective_date_status": "not_determined",
+      "known_related_dates": [
+        "2026-01-28 workshop explanation",
+        "2026-07-31 lab checklist publication",
+        "2026-10-14 checklist transition endpoint only"
+      ],
+      "mandatory_phaseout_date": null,
+      "limitations_ko": "체크리스트 전환일은 표준 자체의 시행·의무 전환일이 아니다. 표준 범위 4 MHz~10 GHz 전체의 FCC 포괄 허용이나 2026 amendment의 자동 허용을 뜻하지 않는다."
+    },
+    {
+      "edition_id": "IEC-IEEE-62209-1528a-2026",
+      "exact_identifier": "IEC/IEEE 62209-1528:2020 Amendment 1:2026",
+      "publisher_display_identifier": "IEEE/IEC 62209-1528a-2026",
+      "publisher_observation_id": "OBS-IEEE-62209-1528a-2026-20261023",
+      "publisher_status": "Active Standard",
+      "published_date": "2026-09-02",
+      "publisher_relationship": "2020판의 Amendment 1; 독립 IEEE 1528-2026 또는 2020판 전면 대체로 표기하지 않음",
+      "FCC_acceptance_evidence_ids": [],
+      "FCC_acceptance_status": "unconfirmed_in_checked_sources",
+      "FCC_acceptance_scope_ko": "명확한 최종 FCC 공문/규정/KDB의 amendment 허용 근거 미확인. 허용도 금지도 추정하지 않는다.",
+      "FCC_first_acceptance_effective_date": null,
+      "FCC_first_acceptance_effective_date_status": "unconfirmed",
+      "mandatory_phaseout_date": null,
+      "limitations_ko": "IEEE board approval 2026-07-20과 발행일 2026-09-02는 FCC 시행일이 아니다."
+    }
+  ],
+  "source_boundary_ko": "발행 상태·기본 개념 참조·조건부 방법 허용·법령편입·최초 효력일을 각각 구분한다. 미확정 칸은 null로 유지한다."
+}

@@ -1,0 +1,54 @@
+{
+  "task_id": "FCC-20261023-S03-B0002",
+  "document_id": "workshops-32-Interim-Simplified-RFX-Guidance-for-Portable-Devices_Apr2025_Final-TCB-81fc228ece",
+  "title": "Interim Simplified Guidance for Testing §2.1093-Portable Devices",
+  "presentation_slot": "April 2025 TCBC Presentation 3.2",
+  "author": "Alfonso G. Tarditi",
+  "author_affiliation": "Laboratory Division, Office of Engineering and Technology, Federal Communications Commission",
+  "host": "FCC official equipment authorization presentations site",
+  "presented_date": "2025-04-02",
+  "publication_date_distinction": "발표일은 표지/각 슬라이드에서 확인했다. 웹 업로드일은 별도로 확인하지 못했다.",
+  "authority": {
+    "type": "staff_workshop_presentation",
+    "statutory_incorporation": false,
+    "disclaimer_locator": "PDF page 1",
+    "disclaimer_summary_ko": "저자의 견해이며 FCC의 견해를 반드시 대표하지 않는다고 명시한다.",
+    "independent_KDB_connection": "KDB 447498의 2025-04-02 note가 같은 임시 거리 안내를 연결한다. 이를 근거로 표준 판본 전체 채택을 주장하지 않는다."
+  },
+  "content": [
+    {
+      "pages": [
+        3
+      ],
+      "summary_ko": "일부 portable 조건에 대한 임시 대안이며, 다루지 않은 기존 KDB 내용은 유지한다."
+    },
+    {
+      "pages": [
+        4,
+        5
+      ],
+      "summary_ko": "태블릿/랩톱과 handset earpiece 관련 기존 KDB 616217/648474 연결을 설명한다."
+    },
+    {
+      "pages": [
+        6
+      ],
+      "summary_ko": "non-hotspot body의 1-g SAR 5 mm, 확인된 on-body holder의 구조적 거리(최대 25 mm), grant exhibit 및 사용자 문서 조건을 제시한다."
+    },
+    {
+      "pages": [
+        7
+      ],
+      "summary_ko": "hotspot 1-g SAR 10 mm, head earpiece 접촉, 조건부 extremity 10-g 접촉 시험을 별도로 설명한다."
+    }
+  ],
+  "standard_edition_analysis": {
+    "contains_IEEE1528_or_62209_edition_adoption_statement": false,
+    "basis": "전체 8개 슬라이드 텍스트를 검토했다. 사용 거리/위치 안내이며 2020/2026판 허용·전환의 직접 근거로 사용하지 않는다."
+  },
+  "actual_DUT_application": "not_evaluated",
+  "source_question_resolution": {
+    "question_id": "S03-Q001",
+    "status": "addressed_with_explicit_unknowns"
+  }
+}

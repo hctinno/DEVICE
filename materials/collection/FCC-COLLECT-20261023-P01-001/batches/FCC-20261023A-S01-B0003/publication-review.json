@@ -1,0 +1,114 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S01-B0003",
+  "task_id": "FCC-20261023-S01-B0003",
+  "owner_session": "S01",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v004",
+  "snapshot_inventory_sha256": "a8439a7ead9863ad7264d0badc1ba54a568dde470cade82f80f6fee52570e79d",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S01-B0003",
+    "owner": "P01",
+    "decision": "content_approved_with_public_FCC_HTML_original",
+    "source_inventory_verified": true,
+    "findings": [
+      "P01 independently verified new HTML hash and size, identical normalized visible text versus legacy, and identity with the earlier B0002 hash-only observation.",
+      "One official government HTML closes the missing raw capture. No PDF or other KDB was re-requested. Markup change is not a new guidance edition."
+    ],
+    "request_outcome": {
+      "completed": 1,
+      "limited": 0,
+      "not_started": 0
+    },
+    "rights_public_document_ids": [
+      "KDB-913591-publication-currency-f45bf5baad16"
+    ],
+    "publication_metadata_files": [
+      "http-verification.json"
+    ],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [
+    {
+      "document_id": "KDB-913591-publication-currency-f45bf5baad16",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "f45bf5baad16576a56eff61c556170c581046b36e3161c7df3a1a7638bf0ed59",
+      "original_bytes": 13825,
+      "public_payload_included": true,
+      "rights": "public",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "version": "Publication HTML observed 2026-10-23T22:26:24.010209+09:00; response bytes differ from legacy"
+    }
+  ],
+  "redacted_local_reference_fields": [
+    "/legacy_local_path",
+    "/prior_observation_reference/path",
+    "/prior_HTTP_reference/path",
+    "/protected_files_before/local-reference-c9f20abd4bb3:key",
+    "/protected_files_before/local-reference-f8ee9c0e4f15:key",
+    "/protected_files_before/local-reference-2f61a671f2cb:key",
+    "/protected_files_before/local-reference-c9e428abf10e:key",
+    "/protected_files_before/local-reference-2f24e0e302d8:key",
+    "/protected_files_before/local-reference-0de5a2d71c7c:key",
+    "/protected_files_before/local-reference-6b44e2015256:key",
+    "/protected_files_before/local-reference-6f9676adb2c6:key",
+    "/protected_files_before/local-reference-c7ba56e915fb:key",
+    "/protected_files_before/local-reference-089cf9e2e16a:key",
+    "/protected_files_before/local-reference-302292b16393:key",
+    "/protected_files_before/local-reference-ae09dfa9bf8f:key",
+    "/protected_files_before/local-reference-cf7a207a89b2:key",
+    "/protected_files_before/local-reference-1b25da937476:key",
+    "/protected_files_before/local-reference-769e3160e250:key",
+    "/protected_files_before/local-reference-d7d1cc53a93a:key",
+    "/protected_files_before/local-reference-40b26ac29611:key",
+    "/protected_files_before/local-reference-c74d802ba59a:key",
+    "/protected_files_before/local-reference-894e8af30e96:key",
+    "/protected_files_before/local-reference-51fae7924f97:key",
+    "/protected_files_before/local-reference-a33558b5f161:key",
+    "/protected_files_before/local-reference-725a3161625e:key",
+    "/protected_files_after/local-reference-c9f20abd4bb3:key",
+    "/protected_files_after/local-reference-f8ee9c0e4f15:key",
+    "/protected_files_after/local-reference-2f61a671f2cb:key",
+    "/protected_files_after/local-reference-c9e428abf10e:key",
+    "/protected_files_after/local-reference-2f24e0e302d8:key",
+    "/protected_files_after/local-reference-0de5a2d71c7c:key",
+    "/protected_files_after/local-reference-6b44e2015256:key",
+    "/protected_files_after/local-reference-6f9676adb2c6:key",
+    "/protected_files_after/local-reference-c7ba56e915fb:key",
+    "/protected_files_after/local-reference-089cf9e2e16a:key",
+    "/protected_files_after/local-reference-302292b16393:key",
+    "/protected_files_after/local-reference-ae09dfa9bf8f:key",
+    "/protected_files_after/local-reference-cf7a207a89b2:key",
+    "/protected_files_after/local-reference-1b25da937476:key",
+    "/protected_files_after/local-reference-769e3160e250:key",
+    "/protected_files_after/local-reference-d7d1cc53a93a:key",
+    "/protected_files_after/local-reference-40b26ac29611:key",
+    "/protected_files_after/local-reference-c74d802ba59a:key",
+    "/protected_files_after/local-reference-894e8af30e96:key",
+    "/protected_files_after/local-reference-51fae7924f97:key",
+    "/protected_files_after/local-reference-a33558b5f161:key",
+    "/protected_files_after/local-reference-725a3161625e:key"
+  ],
+  "package": {
+    "package_id": "FCC-20261023A-S01-B0003",
+    "path": "materials/packages/FCC-20261023A-S01-B0003.zip",
+    "sha256": "c2737c7ef05f1489c0b4df2cac95e3aaca545b6b265b67ecb24737bb010780b3",
+    "bytes": 5683,
+    "included_payloads": 1,
+    "access_or_unavailable_records": 0
+  },
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "http-verification.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

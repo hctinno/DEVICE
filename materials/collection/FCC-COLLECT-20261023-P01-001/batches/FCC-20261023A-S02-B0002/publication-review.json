@@ -1,0 +1,54 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S02-B0002",
+  "task_id": "FCC-20261023-S02-B0002",
+  "owner_session": "S02",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v004",
+  "snapshot_inventory_sha256": "020cf4e4ab931bb1bbe49eb42f29b912aa0bef5b9745c007bd581ec698757f63",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S02-B0002",
+    "owner": "P01",
+    "decision": "content_approved_with_scope_question_open",
+    "source_inventory_verified": true,
+    "findings": [
+      "P01 independently hash-verified the preserved 28-page case report and visually checked pages 3 and 5. The Part15.107/CXX-only remark and separate conducted/radiated results are both present.",
+      "The full-document index distinguishes directly stated scope, observed result tables and interpretation. Author intent, application approval scope and specimen-to-variant attribution remain unresolved.",
+      "No new original or complete report text is published. The two questions are retained for an authorized technical reviewer; no external message was sent."
+    ],
+    "request_outcome": {
+      "completed": 1,
+      "limited": 0,
+      "not_started": 0
+    },
+    "rights_public_document_ids": [],
+    "publication_metadata_files": [
+      "comparison.json",
+      "page-map.json",
+      "review-log.json"
+    ],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [],
+  "redacted_local_reference_fields": [
+    "/sources/0/local_only_path",
+    "/metadata_inputs/4/path",
+    "/metadata_inputs/5/path",
+    "/metadata_inputs/6/path"
+  ],
+  "package": null,
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "comparison.json",
+    "page-map.json",
+    "review-log.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

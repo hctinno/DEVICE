@@ -1,0 +1,25 @@
+[
+  {
+    "document_id": "KDB-913591-publication-currency-f45bf5baad16",
+    "request_ids": [
+      "ADD-S01-KDB913591-RAW-CURRENCY-003"
+    ],
+    "title": "913591 Measurement of radiated emissions at the band-edge for a Part 15 RF Device",
+    "kind": "guidance",
+    "version": "Publication HTML observed 2026-10-23T22:26:24.010209+09:00; response bytes differ from legacy",
+    "publisher": "FCC",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T22:26:24.010209+09:00",
+    "status": "downloaded",
+    "rights": "public",
+    "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+    "representation": "original",
+    "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+    "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+    "path": "originals/KDB-913591-publication-currency-f45bf5baad16.html",
+    "sha256": "f45bf5baad16576a56eff61c556170c581046b36e3161c7df3a1a7638bf0ed59",
+    "bytes": 13825,
+    "media_type": "text/html",
+    "notes": "Current raw response acquired in B0003. B0002 recorded only its earlier response hash and attachment set. Legacy ID KDB-913591-publication-e4102ce5f2 is unchanged; different HTML bytes do not imply a new technical guidance edition."
+  }
+]

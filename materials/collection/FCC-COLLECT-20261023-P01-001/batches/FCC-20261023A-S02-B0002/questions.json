@@ -1,0 +1,24 @@
+[
+  {
+    "question_id": "S02-B0002-Q01",
+    "source_question_id": "S08-Q02",
+    "route_via": "P01",
+    "recipient_role": "보고서 발행자 또는 위임된 기술 검토자",
+    "blocking_batch_completion": false,
+    "blocking_conclusion": "보고서가 주장하는 적용 범위의 최종 확정",
+    "question": "LBE20240390 Issue 1의 p3 Remark는 해당 CXX 신청에 사용할 수 있는 범위만 제한한 것인가, 보고서 전체의 적용 범위를 제한한 것인가? p5의 JAB/JBP와 §5.2 방사 결과가 어떤 범위로 포함되는지 코드·시험·시료별 표와 근거 문서 또는 정정본으로 명확히 해 달라.",
+    "why_document_cannot_resolve": "p3 제한과 p5 복수 코드·§5.2 결과를 직접 연결하는 설명이나 범위 정정이 28쪽 안에 없다.",
+    "external_message_sent": false
+  },
+  {
+    "question_id": "S02-B0002-Q02",
+    "source_question_id": "S08-Q02",
+    "route_via": "P01",
+    "recipient_role": "보고서 발행자 또는 시료·측정 기록의 기술 검토자",
+    "blocking_batch_completion": false,
+    "blocking_conclusion": "시료별·variant별 결과 귀속의 독립 확인",
+    "question": "전도 4개·방사 5개 모드 결과를 실제 단일 시료와 연결하는 내부 시료 ID·시험 기록은 무엇이며, p10의 SM-S938U1 variant에는 어떤 근거로 이 결과가 적용되는가? p4의 휴대전화 일련번호 대시와 결과 그림의 빈 일련번호 필드를 보완할 기존 추적 기록을 제공해 달라.",
+    "why_document_cannot_resolve": "단일 시료 설명은 있으나 고유 시료 ID와 variant별 결과 연결이 명시되지 않는다.",
+    "external_message_sent": false
+  }
+]

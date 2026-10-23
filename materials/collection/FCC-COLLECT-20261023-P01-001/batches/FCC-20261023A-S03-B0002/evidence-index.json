@@ -1,0 +1,302 @@
+{
+  "task_id": "FCC-20261023-S03-B0002",
+  "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+  "created_at": "2026-10-23T22:28:44+09:00",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v004",
+  "items": [
+    {
+      "evidence_id": "B2-E01",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "447498 D01 v06 §4.1(a)와 각주 7은 IEEE Std 1528-2013의 기본 측정 개념을 사용하되 KDB 시험 요구가 우선한다고 설명한다.",
+      "classification": "source_evidence",
+      "sources": [
+        {
+          "reference_id": "B2-REF-general",
+          "document_id": "KDB-447498-447498-D01-General-RF-Exposure-Guidance-v06-6c7b038105",
+          "heading_or_clause": "§4.1(a), footnote 7",
+          "anchor": "IEEE Std 1528-2013",
+          "pdf_pages_one_based": [
+            7
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "6c7b038105de7121a55e8eec55f7ba6bd0a458ee1f521d61b344fa733092d59d"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E02",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "865664 D01은 probe·scan 요구가 IEEE Std 1528-2013에서 유래했다고 설명하며, 2015-08-07 v01r04 변경 공지에 해당 판본을 참조하도록 갱신한 사실이 있다.",
+      "classification": "source_evidence",
+      "sources": [
+        {
+          "reference_id": "B2-REF-measurement",
+          "document_id": "KDB-865664-865664-D01-SAR-Measurement-100-MHz-to-6-GHz-v01r04-99a6e21d4e",
+          "heading_or_clause": "§1 Introduction; Change Notice 08/07/2015",
+          "anchor": "08/07/2015",
+          "pdf_pages_one_based": [
+            2,
+            23
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "99a6e21d4e9c6c4aa0ee862231bf1df3450b23b3fca7341bffa38bdbdedd7a48"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E03",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "447498 D04 §1.3은 규정이 산업표준 자체보다 KDB의 허용 측정 절차를 참조하는 체계를 설명한다. 2020판의 이름이 언급된다는 사실만으로 모든 내용을 허용했다고 해석하지 않는다.",
+      "classification": "source_evidence",
+      "sources": [
+        {
+          "reference_id": "B2-REF-interim",
+          "document_id": "KDB-447498-447498-D04-Interim-General-RF-Exposure-Guidance-v01-93b298eb4f",
+          "heading_or_clause": "§1.3 Relation to the New FCC RF Exposure Rules",
+          "anchor": "rather than industry standards",
+          "pdf_pages_one_based": [
+            5,
+            6
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "93b298eb4f6df5b65f213efb4768043d18c6301a4b2da7e645754f7013c9e152"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E04",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "974614 D01의 참고문헌 [B18]은 IEEE/IEC 62209-1528-2020을 정확한 제목으로 기재한다. 이는 발행기관의 대체 표기와 별개의 실제 FCC KDB 참조 증거다.",
+      "classification": "source_evidence",
+      "sources": [
+        {
+          "reference_id": "B2-REF-lab_roles",
+          "document_id": "KDB-974614-974614-D01-Accredited-Test-Lab-Roles-and-Resp-v05r04-e5148262f2",
+          "heading_or_clause": "References [B18]",
+          "anchor": "IEEE/IEC 62209-1528-2020",
+          "pdf_pages_one_based": [
+            9
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "e5148262f20fd92de4407268d6995bb2427a37a83ff79886d535d3e36aaf7d66"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E05",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "974614 D01 Table A1의 RF Exposure 행은 KDB 447498과 SAR 측정 개념을 함께 열거한다. 원문은 IEEE/IEC 62209-1528-2013 or 2020으로 혼합 표기하므로 이를 독립된 2013년 공동표준 명칭으로 정규화하지 않는다.",
+      "classification": "identifier_conflict_preserved",
+      "sources": [
+        {
+          "reference_id": "B2-REF-lab_roles",
+          "document_id": "KDB-974614-974614-D01-Accredited-Test-Lab-Roles-and-Resp-v05r04-e5148262f2",
+          "heading_or_clause": "Appendix A, Table A1, RF Exposure row",
+          "anchor": "1528-2013 or 2020",
+          "pdf_pages_one_based": [
+            12
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "e5148262f20fd92de4407268d6995bb2427a37a83ff79886d535d3e36aaf7d66"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E06",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "853844 D01 v02r04 item 18은 KDB 447498에 따른 SAR 측정 역량과 IEEE/IEC 62209-1528-2020 (or 2013)의 기본 개념을 확인한다. 시험소 평가 맥락의 조건부 참조이며 표준 전체의 포괄 대체 승인으로 일반화하지 않는다.",
+      "classification": "source_evidence",
+      "sources": [
+        {
+          "reference_id": "B2-REF-lab_checklist",
+          "document_id": "KDB-853844-853844-D01-Accredited-Lab-Checklist-v02r04-715412757c",
+          "heading_or_clause": "Technical Assessment Checklist item 18",
+          "anchor": "1528-2020 (or 2013)",
+          "pdf_pages_one_based": [
+            6
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "715412757c0b09de87150857b62dc3e00831720a154a1d09288dd06128f4a769"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E07",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "853844 publication은 v02r04가 공개 즉시 유효하고 체크리스트 전환을 2026-10-14까지 허용한다고 설명한다. 이 날짜를 IEEE 2013→2020 시험방법의 전환 종료일로 바꿔 쓰지 않는다.",
+      "classification": "source_evidence",
+      "sources": [
+        {
+          "reference_id": "B2-REF-pub_checklist",
+          "document_id": "KDB-853844-publication-edaf6a7308",
+          "heading_or_clause": "Answer > 07/31/2026 transition paragraph",
+          "anchor": "10/14/2026",
+          "pdf_pages_one_based": null,
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "edaf6a73089198479bb5f48966dfecf1426f0d7a23f6fbd9c7663c14c5816d3b"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E08",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "2026-01-28의 Maximum Frequency of Investigation 발표 slide 3은 6 GHz 이하의 SAR 평가에 2020판을 사용할 수 있다고 설명하면서 §1.1310·§2.1093·적용 KDB와 평가받은 최고주파수를 조건으로 둔다. 발표의 설명을 독립 법령편입으로 취급하지 않는다.",
+      "classification": "workshop_explanation",
+      "sources": [
+        {
+          "reference_id": "B2-REF-workshop_17",
+          "document_id": "workshops-17-Max-Frequency-of-Investigation-TCB_Jan_2026-97e90c947c",
+          "heading_or_clause": "RF Exposure Frequency Of Investigation",
+          "anchor": "SAR evaluation is acceptable based on",
+          "pdf_pages_one_based": [
+            3
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "97e90c947c283d36ccf6dcb0cd0688daa08d06ab026b2ad7622478ea6802ab40"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E09",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "현행 확보 CFR §2.1093(d)(2)는 KDB 측정 지침이 유일한 방법은 아니며 FCC나 이해관계자를 구속하지 않는 staff guidance임을 명시한다. 검토한 §2.910에서 이 세 SAR 판본의 직접 법령편입을 확인하지 못했다.",
+      "classification": "legal_authority_boundary",
+      "sources": [
+        {
+          "reference_id": "B2-REF-part2",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "heading_or_clause": "47 CFR §2.1093(d)(2)",
+          "anchor": "is not binding",
+          "pdf_pages_one_based": null,
+          "cfr_section": "2.1093",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "17c0fcaf1e5445cd93c93c55706eb48a3015e9b4a3342dc61aedc35e09e9ff79"
+        },
+        {
+          "reference_id": "B2-REF-part2",
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "heading_or_clause": "47 CFR §2.910 Incorporation by reference",
+          "anchor": "Incorporation by reference",
+          "pdf_pages_one_based": null,
+          "cfr_section": "2.910",
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "17c0fcaf1e5445cd93c93c55706eb48a3015e9b4a3342dc61aedc35e09e9ff79"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E10",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "2025 TCBC 3.2의 발표자는 Alfonso G. Tarditi, 소속은 FCC OET Laboratory Division이며 날짜는 2025-04-02다. 표지의 면책 문구와 공식 FCC 호스팅을 구분해 기록했다.",
+      "classification": "workshop_provenance",
+      "sources": [
+        {
+          "reference_id": "B2-REF-workshop_32",
+          "document_id": "workshops-32-Interim-Simplified-RFX-Guidance-for-Portable-Devices_Apr2025_Final-TCB-81fc228ece",
+          "heading_or_clause": "Title slide, author/affiliation/date/disclaimer",
+          "anchor": "Alfonso G. Tarditi",
+          "pdf_pages_one_based": [
+            1
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "81fc228ece6943138382a45dee468a439e0e9dde506fb3ce0b78957fb4dd557e"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E11",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "TCBC 3.2 slide 3은 portable 기기의 일부 요구에 대한 임시 대안이며 KDB 447498 landing page에 게시되었다고 설명한다. 그 외 기존 KDB 내용은 계속 적용한다고 명시한다.",
+      "classification": "source_evidence",
+      "sources": [
+        {
+          "reference_id": "B2-REF-workshop_32",
+          "document_id": "workshops-32-Interim-Simplified-RFX-Guidance-for-Portable-Devices_Apr2025_Final-TCB-81fc228ece",
+          "heading_or_clause": "Summary",
+          "anchor": "items not specifically covered",
+          "pdf_pages_one_based": [
+            3
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "81fc228ece6943138382a45dee468a439e0e9dde506fb3ce0b78957fb4dd557e"
+        },
+        {
+          "reference_id": "B2-REF-pub447",
+          "document_id": "KDB-447498-publication-0afba0d635",
+          "heading_or_clause": "Answer > Posted: 04/02/2025",
+          "anchor": "Interim Simplified Guidance for Testing",
+          "pdf_pages_one_based": null,
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "0afba0d635d11f3df7613778c2eb527b6fc4d76f6ac8820ab5b48b673d7401f8"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E12",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "TCBC 3.2 slide 6은 non-hotspot body의 5 mm 시험과 holder 조건부 최대 25 mm, exhibit·설명서 조건을 다룬다. slide 7은 hotspot·head·extremity를 별도로 구분한다. 이는 표준 판본의 교체 공지가 아니다.",
+      "classification": "method_scope_not_standard_adoption",
+      "sources": [
+        {
+          "reference_id": "B2-REF-workshop_32",
+          "document_id": "workshops-32-Interim-Simplified-RFX-Guidance-for-Portable-Devices_Apr2025_Final-TCB-81fc228ece",
+          "heading_or_clause": "Interim RF Exposure Testing Guidance (I), (II)",
+          "anchor": "not in",
+          "pdf_pages_one_based": [
+            6,
+            7
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "81fc228ece6943138382a45dee468a439e0e9dde506fb3ce0b78957fb4dd557e"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    },
+    {
+      "evidence_id": "B2-E13",
+      "request_id": "ADD-S03-IEEE1528-FCC-TRANSITION-002",
+      "claim_ko": "확보된 draft 자료의 표준 언급은 최종 공문/최종 KDB의 채택 증거로 세지 않았다. 로컬 191개 FCC PDF 검색과 제한된 공식 검색에서 2026 amendment의 확정 허용·시행일을 찾지 못했으나, 검색 부재를 금지의 증거로 삼지 않는다.",
+      "classification": "unconfirmed_not_prohibition",
+      "sources": [
+        {
+          "reference_id": "B2-REF-draft_standards",
+          "document_id": "drafts-GetPublishedDocument-43426e6c48",
+          "heading_or_clause": "Draft §3.24, §3.25, Change Notice",
+          "anchor": "XX/XX/XXXX",
+          "pdf_pages_one_based": [
+            9
+          ],
+          "cfr_section": null,
+          "extracted_text_path": "[local-only derivative or original; not included in public payload]",
+          "original_sha256": "43426e6c4846c4b79bf38ddd7c8ceac1ccf442b00a56a66666898e912f2d7b4e"
+        }
+      ],
+      "DUT_compliance_decision": "not_evaluated"
+    }
+  ],
+  "evidence_count": 13
+}

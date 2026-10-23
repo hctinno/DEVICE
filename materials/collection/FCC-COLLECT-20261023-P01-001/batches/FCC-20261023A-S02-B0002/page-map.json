@@ -1,0 +1,237 @@
+{
+  "task_id": "FCC-20261023-S02-B0002",
+  "batch_id": "FCC-20261023A-S02-B0002",
+  "attempt": 1,
+  "owner_session": "S02",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v004",
+  "created_at": "2026-10-23T22:28:34+09:00",
+  "page_count": 28,
+  "pages": [
+    {
+      "pdf_page": 1,
+      "printed_page": 1,
+      "content": "표지·프로젝트/모델/발행 정보",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "59be1ce6f28775e3e894899a2561abffb916b346ef22bef21ba321ae78d42c67"
+    },
+    {
+      "pdf_page": 2,
+      "printed_page": 2,
+      "content": "목차",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "7bdabddd22b45a099f518715cf333d2a9f632ba7b865da4cf18eba1b29763143"
+    },
+    {
+      "pdf_page": 3,
+      "printed_page": 3,
+      "content": "개정·범위 Remark·전도/방사 요약",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "ecf77507276ad7761f5bf5af6b10442ad7f5427e4359b7656695cf2955846fee"
+    },
+    {
+      "pdf_page": 4,
+      "printed_page": 4,
+      "content": "EUT·주변기기 목록",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "851c4930bf3af3145f94e31b0531de95ab953a167dd38ee577c276f22bf945bc"
+    },
+    {
+      "pdf_page": 5,
+      "printed_page": 5,
+      "content": "전도/방사 모드·단일 시료 설명",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "eef8cf4cf4a3469d2a50881762d9925449dab8758e70209621d8961bf8cf0c32"
+    },
+    {
+      "pdf_page": 6,
+      "printed_page": 6,
+      "content": "케이블 구성",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "efc5b80f6f8091e151dc2852049357e8f7b9f4c7ee44650f9bff21ff9f1791ca"
+    },
+    {
+      "pdf_page": 7,
+      "printed_page": 7,
+      "content": "전도 연결도",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "e02186c174fffb4c7af6291947bdd4f116a5b4aff4c07be232bc0c7ad1df9167"
+    },
+    {
+      "pdf_page": 8,
+      "printed_page": 8,
+      "content": "방사 모드 1~3 연결도",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "0fdd5c2e211b3b0aa602a795529abcc18335243a943da97be035b88ba237a3d0"
+    },
+    {
+      "pdf_page": 9,
+      "printed_page": 9,
+      "content": "방사 모드 4~5 연결도",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "6e2ee3ddf606971664178630a378b4edcb714d96f97f0d7d84b3189fee8f4daf"
+    },
+    {
+      "pdf_page": 10,
+      "printed_page": 10,
+      "content": "EUT 기능·variant·최고 주파수 표기",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "571a930a090c272d9fb28d5cb404ee5065b32707a4b17f2b9910dbc8e59c26c5"
+    },
+    {
+      "pdf_page": 11,
+      "printed_page": 11,
+      "content": "구성·수신 대표 선정·불확도",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "f733b062ab3b34b031c204771cbc096100beb17d971561a5261a5d1280153cce"
+    },
+    {
+      "pdf_page": 12,
+      "printed_page": 12,
+      "content": "전도 방법·한계·장비·시험일",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "f5fc8e31e60d0058849c7e96a7f106d9fc6f5707317072482de5db1a00fcd4f4"
+    },
+    {
+      "pdf_page": 13,
+      "printed_page": 13,
+      "content": "전도 모드 1 그래프·수치 표",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "9875121afe2701600a1712a9235d4bbdf63cb20a93d7168b9d85551a75161d77"
+    },
+    {
+      "pdf_page": 14,
+      "printed_page": 14,
+      "content": "전도 모드 2 그래프·수치 표",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "9c33e291e7ed17a7e929767873840bc64d96c85494341c53faf1df3402bb3c78"
+    },
+    {
+      "pdf_page": 15,
+      "printed_page": 15,
+      "content": "전도 모드 3 그래프·수치 표",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "d0531bd818f2bd4527976df99cf522093be0c3ab66c05d29d171c4076232a4b5"
+    },
+    {
+      "pdf_page": 16,
+      "printed_page": 16,
+      "content": "전도 모드 4 그래프·수치 표",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "b036ee77e7b93ce0858202b5f96089bf5c4d72dfa64c9acb0b6959c78bfa4019"
+    },
+    {
+      "pdf_page": 17,
+      "printed_page": 17,
+      "content": "방사 방법·한계·검출기·거리",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "2d0fc51d6bb48581e8337036c9175575dcd27e871085ca405353c2893f61f4b1"
+    },
+    {
+      "pdf_page": 18,
+      "printed_page": 18,
+      "content": "방사 장비·시험일·장소",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "9b6481311d5842201d9b50fc63b1faeca48adf2cd36771292996a5c9fd4bdef5"
+    },
+    {
+      "pdf_page": 19,
+      "printed_page": 19,
+      "content": "방사 모드 1: 1 GHz 미만 결과",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "35ac002a47ed7a0dd602db8baaadeee18455ff3293a7b89e9a6e6043d1c5d6b3"
+    },
+    {
+      "pdf_page": 20,
+      "printed_page": 20,
+      "content": "방사 모드 1: 1 GHz 초과 결과",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "c639b35cd91b3cca34d92a0b1e0add07983535a8a5d333620fa135e90307da4d"
+    },
+    {
+      "pdf_page": 21,
+      "printed_page": 21,
+      "content": "방사 모드 2: 1 GHz 미만 결과",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "6bf4fd6b9d76f12f7cdc6fcae856e069f4576f908733b335dc2f4eb8d68ac4f5"
+    },
+    {
+      "pdf_page": 22,
+      "printed_page": 22,
+      "content": "방사 모드 2: 1 GHz 초과 결과",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "031aa411840b8dbbf03a0377049fda658eeebfef043e324ff43fea4bbf4542e1"
+    },
+    {
+      "pdf_page": 23,
+      "printed_page": 23,
+      "content": "방사 모드 3: 1 GHz 미만 결과",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "536c837d70495d3c6616bb6a6a8fbc68ea58ba0f361349602ac671f69ff59afb"
+    },
+    {
+      "pdf_page": 24,
+      "printed_page": 24,
+      "content": "방사 모드 3: 1 GHz 초과 결과",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "2cc3eddfda7e80b2ee89143b07d94b3cfb5e47bbb6fd1168ec1afecc1e50cc96"
+    },
+    {
+      "pdf_page": 25,
+      "printed_page": 25,
+      "content": "방사 모드 4: 1 GHz 미만 결과",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "17c12e64af35df563626e3078325e53133b2dbbd0d74317c5d07b8740bbc5045"
+    },
+    {
+      "pdf_page": 26,
+      "printed_page": 26,
+      "content": "방사 모드 4: 1 GHz 초과 그래프·수치 표",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "598f9f2bddf130a7b4ecaf0830111d355b61f5b73b8553a07ac8defd1efa1e79"
+    },
+    {
+      "pdf_page": 27,
+      "printed_page": 27,
+      "content": "방사 모드 5: 1 GHz 미만 결과",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "44b52f2cb4d64a959596e6e49a2d72a7a537dd0b702b1b914f85b3c79a4a3d60"
+    },
+    {
+      "pdf_page": 28,
+      "printed_page": 28,
+      "content": "방사 모드 5: 1 GHz 초과 그래프·수치 표",
+      "text_read": true,
+      "visual_overview_reviewed": true,
+      "text_sha256": "fce12e6cd0a4eba27f6b770e39904b5758e429c2dacd616ef4617612b786e01a"
+    }
+  ],
+  "full_text_included": false
+}

@@ -1,0 +1,78 @@
+{
+  "task_id": "FCC-20261023-S02-B0002",
+  "batch_id": "FCC-20261023A-S02-B0002",
+  "attempt": 1,
+  "owner_session": "S02",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v004",
+  "created_at": "2026-10-23T22:28:34+09:00",
+  "sources": [
+    {
+      "source_ref": "EXHIBIT-7786580",
+      "source_type": "existing_local_restricted_pdf",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "source_path_inside_package": null,
+      "identity_note": "공개 manifest의 document_id가 없는 기존 제한 사례. FCC exhibit ID를 참조키로만 사용한다.",
+      "exhibit_id": "7786580",
+      "fcc_id": "A3LSMS938U",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "a26f0f387596fa1000da803d8203803bad93dbf56f7e43e68a0ed5959b270197",
+      "bytes": 1605816,
+      "pages": 28,
+      "media_type": "application/pdf",
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=ECRjbjEs3BHabX1k7Znclw%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7786580",
+      "legacy_retrieved_at": "2026-10-23T20:05:32+09:00",
+      "urls_accessed_this_batch": false,
+      "rights": "unknown",
+      "rights_state": "local_only_redistribution_unconfirmed",
+      "source_pdf_in_payload": false,
+      "full_text_or_page_images_in_payload": false,
+      "original_modified": false,
+      "original_downloaded": false,
+      "scope_of_review": "현재 보유된 한 문서의 전체 28쪽; 외부 첨부·승인 상태 미조회",
+      "rights_note": "원문 재배포 권한을 확인하지 않았으며 원문·전체 추출·페이지 이미지가 아니라 제한된 인용과 사실 색인만 반환한다."
+    }
+  ],
+  "metadata_inputs": [
+    {
+      "path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0001/references.json",
+      "bytes": 65934,
+      "sha256": "6a5f3995f3773d7fa8b23d5de65843e0a5200947e2c64f3f8927092c40249217"
+    },
+    {
+      "path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0001/questions.json",
+      "bytes": 6042,
+      "sha256": "3d0c9e38edfa0871c535ce6b9b530308ae3bbf190c477afe5ceef992dccfa2f2"
+    },
+    {
+      "path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0001/evidence-index.json",
+      "bytes": 56843,
+      "sha256": "e851a4de29fcc1523195a59ce6c99f966bde99e21d7c90fbc85a72225d0ea66a"
+    },
+    {
+      "path": "materials/inventory/public_case_A3LSMS938U.json",
+      "bytes": 31880,
+      "sha256": "38ae91d24fa00d49fa0057a61c7f098550eda599798dd9e228152353cdc314ed"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "bytes": 1690,
+      "sha256": "15c06bd48a4e558867479b8f96333bf9548bdbd1a49c125dda52a47014ed296d"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "bytes": 1774,
+      "sha256": "861f1f50b8829448544d4b81dd3eeb4bba27f504b7285cd8cfd210c7ef928586"
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "bytes": 1043108,
+      "sha256": "d202916f2ef302e631e9922c3c6d36a8d8141a7568256d3aefc13123385c7fcd"
+    }
+  ],
+  "S08_source_question": "S08-Q02",
+  "legacy_index_result": "공개 legacy manifest 색인에는 exhibit 원문 레코드가 없으며, 기존 case inventory 및 게시된 S08 참조로 식별함."
+}

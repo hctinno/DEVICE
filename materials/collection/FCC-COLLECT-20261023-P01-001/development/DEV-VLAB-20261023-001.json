@@ -1,0 +1,730 @@
+{
+  "request_id": "DEV-VLAB-20261023-001",
+  "prepared_at": "2026-10-23T22:30:06.770785+09:00",
+  "revision": 1,
+  "source_publication_sha": "69aa22f4c354ac3ed853a45d0a9029edcd79d2d0",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "scope": "Read-only source intake for a virtual lab; no hardware selection or method approval.",
+  "source_packets": [
+    {
+      "batch_id": "FCC-20261023A-S04-B0001",
+      "role": "S04",
+      "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+      "inventory_sha256": "adaa5d0da3aa54826b9039bd651fd2cb45f20a3d6f49cbecc679618379fd311c",
+      "public_review": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0001/publication-review.json",
+      "public_evidence_index": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0001/evidence-index.json",
+      "documents": [
+        {
+          "document_id": "S04-KEYSIGHT-N9030-90017-1c018ae8aa98",
+          "title": "N9030A PXA Signal Analyzer Specifications Guide",
+          "version": "Edition 1, January 2022; supersedes October 2021",
+          "publisher": "Keysight Technologies",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://www.keysight.com/us/en/assets/9018-72001/technical-specifications/N9030A-PXA-Signal-Analyzer-Specifications-Guide.pdf",
+          "download_url": "https://www.keysight.com/us/en/assets/9018-72001/technical-specifications/N9030A-PXA-Signal-Analyzer-Specifications-Guide.pdf",
+          "sha256": "1c018ae8aa9857389365d3fc9ed98996665f91f49fa0a199d00bd798c241f93b",
+          "bytes": 3855952,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N9060-90027-2429ceb7a23f",
+          "title": "X-Series Signal Analyzer Spectrum Analyzer Mode User's and Programmer's Reference",
+          "version": "Edition 23, December 2018",
+          "publisher": "Keysight Technologies",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://www.keysight.com/us/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+          "download_url": "https://www.keysight.com/id/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+          "sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "bytes": 22650636,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N9020-90112-354463a721ff",
+          "title": "X-Series Signal Analyzer Programmer's Guide",
+          "version": "Print date August 2014; supersedes February 2013",
+          "publisher": "Keysight Technologies",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://www.keysight.com/us/en/assets/9018-02192/programming-guides/9018-02192.pdf",
+          "download_url": "https://www.keysight.com/ni/en/assets/9018-02192/programming-guides/9018-02192.pdf",
+          "sha256": "354463a721ff57298576d6c059c9637d5e58bb16d854ace86303de31a55c8f3e",
+          "bytes": 736733,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90001-1a82f33f4cba",
+          "title": "N1913/1914A EPM Series Power Meters User's Guide",
+          "version": "Edition 24, November 1, 2022",
+          "publisher": "Keysight Technologies",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://www.keysight.com/us/en/assets/9018-02513/user-manuals/9018-02513.pdf",
+          "download_url": "https://www.keysight.com/ni/en/assets/9018-02513/user-manuals/9018-02513.pdf",
+          "sha256": "1a82f33f4cbabae9fba88fe0b3206d668ec750a73e3f1de12695f8c7146a97f9",
+          "bytes": 6833924,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90008-ecaf6faf7189",
+          "title": "N1913/1914A EPM Series Power Meters Programming Guide",
+          "version": "Edition 19, June 11, 2025",
+          "publisher": "Keysight Technologies",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://www.keysight.com/us/en/assets/9018-02514/programming-guides/9018-02514.pdf",
+          "download_url": "https://www.keysight.com/ni/en/assets/9018-02514/programming-guides/9018-02514.pdf",
+          "sha256": "ecaf6faf71890f01289261087c13cd32b5b661edbd69a303cd0f636691fb28c2",
+          "bytes": 4367308,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S04-KEYSIGHT-N1913-90009-c9b6b27d187c",
+          "title": "N1913/1914A EPM Series Power Meters Service Guide",
+          "version": "Edition 17, October 8, 2025",
+          "publisher": "Keysight Technologies",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://www.keysight.com/us/en/assets/9018-02516/service-manuals/9018-02516.pdf",
+          "download_url": "https://www.keysight.com/ni/en/assets/9018-02516/service-manuals/9018-02516.pdf",
+          "sha256": "c9b6b27d187cf72ba01934fa3ff9b48c6a39e1e8db6922fa15cb654939d3a4db",
+          "bytes": 4786198,
+          "complete_original_publicly_delivered": false
+        }
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S07-B0001",
+      "role": "S07",
+      "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+      "inventory_sha256": "30733f863feed2197c1bc89a36528e73cc62cd31ee71c852db05d736b55f33a2",
+      "public_review": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001/publication-review.json",
+      "public_evidence_index": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0001/evidence-index.json",
+      "documents": [
+        {
+          "document_id": "S07-android-adb-23876effdde7",
+          "title": "Android Debug Bridge (adb)",
+          "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-09-25",
+          "publisher": "Google / Android Open Source Project",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://developer.android.com/tools/adb?hl=en",
+          "download_url": "https://developer.android.com/tools/adb?hl=en",
+          "sha256": "23876effdde7c9f1e635d9d91db2cc748908f05cb37d0f205856c9abdd5ff691",
+          "bytes": 368027,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S07-android-logcat-1b9760fb6b61",
+          "title": "Logcat command-line tool",
+          "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2024-01-03",
+          "publisher": "Google / Android Open Source Project",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://developer.android.com/tools/logcat?hl=en",
+          "download_url": "https://developer.android.com/tools/logcat?hl=en",
+          "sha256": "1b9760fb6b6143df5a4fb3dfb842680c8436f218de892374ff8638c5c1a3f3f8",
+          "bytes": 285774,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S07-aosp-wifi-debug-004a0e99cf25",
+          "title": "Test, debug, and tune Wi-Fi",
+          "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated 2026-10-09",
+          "publisher": "Google / Android Open Source Project",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+          "download_url": "https://source.android.com/docs/core/connect/wifi-debug?hl=en",
+          "sha256": "004a0e99cf250e378878dba6ba28754a031ae0dfcb864ccb6a3f92ae3016f95e",
+          "bytes": 191045,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S07-android-content-license-0a5ada2e77c8",
+          "title": "Content License",
+          "version": "Web snapshot 2026-10-23T21:43:57+09:00; page Last updated not stated",
+          "publisher": "Google / Android Open Source Project",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://developer.android.com/license",
+          "download_url": "https://developer.android.com/license",
+          "sha256": "0a5ada2e77c8348d829a23386c00b23a63ddc5b3f3df7986f24002de447ffb7b",
+          "bytes": 252965,
+          "complete_original_publicly_delivered": false
+        }
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S01-B0001",
+      "role": "S01",
+      "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+      "inventory_sha256": "64e673326937dea46c4824e7c58c41276cf6b44d4f81360fda5eec74353d5354",
+      "public_review": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0001/publication-review.json",
+      "public_evidence_index": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0001/evidence-index.json",
+      "documents": []
+    },
+    {
+      "batch_id": "FCC-20261023A-S01-B0002",
+      "role": "S01",
+      "publication_sha": "69aa22f4c354ac3ed853a45d0a9029edcd79d2d0",
+      "inventory_sha256": "0cfd13d6f1b84395f17a49ee88003645a3f19139c539b24b4ebcac51a05313f2",
+      "public_review": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0002/publication-review.json",
+      "public_evidence_index": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0002/evidence-index.json",
+      "documents": [
+        {
+          "document_id": "KDB-558074-publication-currency-e32c44fac5da",
+          "title": "558074 (current response differs from legacy bytes)",
+          "version": "Current publication HTML response 2026-10-23T22:10:06.040850+09:00; visible text unchanged from legacy, markup differs",
+          "publisher": "FCC",
+          "rights": "public",
+          "representation": "original",
+          "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+          "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+          "sha256": "e32c44fac5dac9de05d98b0f314b0ff1f180393c1eeaf804f9481c926269b1e1",
+          "bytes": 15784,
+          "complete_original_publicly_delivered": true
+        },
+        {
+          "document_id": "KDB-662911-publication-currency-926d5f354681",
+          "title": "662911 (current response differs from legacy bytes)",
+          "version": "Current publication HTML response 2026-10-23T22:10:06.794079+09:00; visible text unchanged from legacy, markup differs",
+          "publisher": "FCC",
+          "rights": "public",
+          "representation": "original",
+          "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+          "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+          "sha256": "926d5f35468102618d1476c90ad60cac3490735038c60697610b739e6dbe8f73",
+          "bytes": 17136,
+          "complete_original_publicly_delivered": true
+        }
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S08-B0002",
+      "role": "S08",
+      "publication_sha": "69aa22f4c354ac3ed853a45d0a9029edcd79d2d0",
+      "inventory_sha256": "675a230e72769257983ac096d78ce803b96cb8f1ebe690c7cc28084381bb3f1c",
+      "public_review": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0002/publication-review.json",
+      "public_evidence_index": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S08-B0002/evidence-index.json",
+      "documents": [
+        {
+          "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+          "title": "FCC Part 15.247 802.11b/g/n/ax/be (OFDM) RF 측정 성적서",
+          "version": "1M2408260067.13.A3L; issue 2024-10-28; report revision not expressly numbered",
+          "publisher": "Element Washington DC LLC",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+          "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788954",
+          "sha256": "48ce8ee535ba4b1abe3b532c9c0629c15775bcd03ad18541424d42e66c57eee9",
+          "bytes": 5858854,
+          "complete_original_publicly_delivered": false
+        }
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S05-B0001",
+      "role": "S05",
+      "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+      "inventory_sha256": "bf1ca2d9fb16e5e753937703cf47dde4c8c597dadc6d3c11156f5cc1e8db2206",
+      "public_review": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S05-B0001/publication-review.json",
+      "public_evidence_index": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S05-B0001/evidence-index.json",
+      "documents": [
+        {
+          "document_id": "S05-dasy52-flyer-b88500087b6a",
+          "title": "DASY52 Systems — historical component and feature matrix",
+          "version": "DASY52 Systems composite flyer; PDF p2 W12/13; component/feature pages W 0708; exact edition unresolved",
+          "publisher": "SPEAG, Schmid & Partner Engineering AG",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+          "download_url": "https://speag.swiss/assets/downloads/speagflyers/1312-Speag-DASY52.pdf",
+          "sha256": "b88500087b6ace1d7dddb45155a48308792a98c22d82ea6c879852c13048a117",
+          "bytes": 2692513,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S05-dasy52-report-generator-c694fa6fd65d",
+          "title": "DASY5 Manual V5.2 — Chapter 29 DASY5 Report Generator application note",
+          "version": "DASY5 Manual V5.2, October 2009; Chapter 29 excerpt",
+          "publisher": "SPEAG, Schmid & Partner Engineering AG",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/free_downloads/AN_D52_ReportGenerator.pdf",
+          "sha256": "c694fa6fd65d155656bd171927e109ea695398f72d71a1d470a85fcabc14dece",
+          "bytes": 2235681,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S05-dasy52-release-4fc4edb3039a",
+          "title": "Final Release DASY52 — official historical release notice",
+          "version": "Release notice dated 2009-10-16",
+          "publisher": "SPEAG, Schmid & Partner Engineering AG",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+          "download_url": "https://speag.swiss/news-events/news/measurement/final-release-dasy5",
+          "sha256": "4fc4edb3039a4b7e69aa874cdb3bd5e3d3b32bd37d22324974ba778aa13c773e",
+          "bytes": 38228,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S05-speag-rights-route-e128de06477f",
+          "title": "SPEAG Legal Notice — rights and publisher verification route",
+          "version": "Undated live page; retrieved 2026-10-23",
+          "publisher": "SPEAG, Schmid & Partner Engineering AG",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://speag.swiss/meta-navigation/legal-notice",
+          "download_url": "https://speag.swiss/meta-navigation/legal-notice",
+          "sha256": "e128de06477f6b0f0f3680a4a3c8f5152153d127782f30e9f3c017070cfad027",
+          "bytes": 18947,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S05-dasy52-download-portal-7e984da783d0",
+          "title": "DASY52 Support and Download Page",
+          "version": "Undated portal; displays V52.10.4.1535 release 2021-07-01",
+          "publisher": "SPEAG, Schmid & Partner Engineering AG",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "download_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "sha256": "7e984da783d025a521c2fa52a6cb052971583d1c63ae21627d7b9fbc2ebc03de",
+          "bytes": 23318,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S05-dasy52-readme-b0e2d28dec82",
+          "title": "DASY52 V10.4 (1535) official ReadMe",
+          "version": "DASY52 V10.4 (1535); SEMCAD X V14 V6.14 (7501)",
+          "publisher": "SPEAG, Schmid & Partner Engineering AG",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://speag.swiss/downloads/dasy/dasy52-download",
+          "download_url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/6-0/ReadMe.txt",
+          "sha256": "b0e2d28dec82eca9c974571ac9f703d6e2eae870fd550cf74fab887c1683e5a9",
+          "bytes": 4957,
+          "complete_original_publicly_delivered": false
+        }
+      ]
+    },
+    {
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "role": "S06",
+      "publication_sha": "14b0e6d7f2aa29ac3232276b78365cfd8c489aea",
+      "inventory_sha256": "ed1ef6eccf2da33e9a76fe15e4fdc15f37b5108c9e7ab919e6a3d39e8236e161",
+      "public_review": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0001/publication-review.json",
+      "public_evidence_index": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0001/evidence-index.json",
+      "documents": [
+        {
+          "document_id": "S06-ets-manuals-index-383dba3d17af",
+          "title": "ETS-Lindgren current and archived manuals index",
+          "version": "Undated current/archive index; snapshot 2026-10-23; not a 2090 manual",
+          "publisher": "ETS-Lindgren",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://www.ets-lindgren.com/manuals/",
+          "download_url": "https://www.ets-lindgren.com/manuals/",
+          "sha256": "383dba3d17af35695e5bed8adb6885fee06cdc01f2f8fd216ecb5ce44c5269b7",
+          "bytes": 340130,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S06-innco-co3000-4p-product-a9a5ddfd5681",
+          "title": "INNCO Controller CO3000-4P official product page",
+          "version": "Undated CO3000-4P product web page; firmware revision unstated; snapshot 2026-10-23",
+          "publisher": "INNCO Systems",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+          "download_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+          "sha256": "a9a5ddfd5681cd038612a68196cf07bc73704d2f00feb92c0e651af7792dfde0",
+          "bytes": 14199,
+          "complete_original_publicly_delivered": false
+        },
+        {
+          "document_id": "S06-ets-2090-official-case-study-ba4374369e9b",
+          "title": "ETS-Lindgren PC Test Engineering Laboratory: Model 2090 description",
+          "version": "Undated official case-study web page; snapshot 2026-10-23",
+          "publisher": "ETS-Lindgren",
+          "rights": "unknown",
+          "representation": "original",
+          "source_url": "https://www.ets-lindgren.com/case-studies/pc-test-engineering-laboratory/",
+          "download_url": "https://www.ets-lindgren.com/case-studies/pc-test-engineering-laboratory/",
+          "sha256": "ba4374369e9bf82dda07206db72f1df1070bd39d51e9f0038b4669042f7ed31d",
+          "bytes": 305658,
+          "complete_original_publicly_delivered": false
+        }
+      ]
+    }
+  ],
+  "legacy_scenario_sources": [
+    {
+      "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+      "title": "558074 D01 15.247 Meas Guidance v05r02",
+      "version": "558074 D01 15.247 Meas Guidance v05r02",
+      "publisher": "FCC",
+      "rights": "public",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=tylb5MMggvhIlVMK75RrRQ%3D%3D&desc=558074 D01 15.247 Meas Guidance v05r02&tracking_number=21124",
+      "sha256": "06cf6de58ce4b0abd521d6b42e50689f18331cf67be48c8dba7b5553c8470f75",
+      "bytes": 281974,
+      "published_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "package_entry": "originals/KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02.pdf",
+      "public_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json"
+    },
+    {
+      "document_id": "KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01-8c61a4b10b",
+      "title": "662911 D01 Multiple Transmitter Output v02r01",
+      "version": "662911 D01 Multiple Transmitter Output v02r01",
+      "publisher": "FCC",
+      "rights": "public",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=B0ZQiTBTVsn3P3wZ2WdqhQ%3D%3D&desc=662911 D01 Multiple Transmitter Output v02r01&tracking_number=49466",
+      "sha256": "8c61a4b10b8769d3e3125e0e1614d7846019c64644ce2dfab5e2d548f74fa075",
+      "bytes": 129928,
+      "published_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "package_entry": "originals/KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01.pdf",
+      "public_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json"
+    },
+    {
+      "document_id": "KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01-d909bea3ac",
+      "title": "662911 D02 MIMO with Cross Polarized Antenna v01",
+      "version": "662911 D02 MIMO with Cross Polarized Antenna v01",
+      "publisher": "FCC",
+      "rights": "public",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=i%2BFRza%2B2Hh0pf9nHJHJGHw%3D%3D&desc=662911 D02 MIMO with Cross Polarized Antenna v01&tracking_number=49466",
+      "sha256": "d909bea3ac6c3bfeda0111007f62d6290e2173971a0b3bb9ca3b38e13ca1ffd9",
+      "bytes": 39610,
+      "published_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "package_entry": "originals/KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01.pdf",
+      "public_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json"
+    },
+    {
+      "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+      "title": "47 CFR Part 15",
+      "version": "eCFR issue 2026-10-19",
+      "publisher": "Office of the Federal Register / GPO",
+      "rights": "public",
+      "source_url": "https://www.ecfr.gov/current/title-47/part-15",
+      "download_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-19/title-47.xml?part=15",
+      "sha256": "74ea049a987626a0c8509b2c24279f9fea4689bff7248c6a3e1856a9dae641be",
+      "bytes": 571831,
+      "published_package_path": "materials/packages/FCC-PHONE-20261023-001.zip",
+      "package_entry": "originals/47-CFR-Part-15-2026-10-19.xml",
+      "public_manifest_path": "materials/manifests/FCC-PHONE-20261023-001.json"
+    }
+  ],
+  "requested_items": [
+    {
+      "item": 1,
+      "priority": "P0",
+      "title": "계측기 명령/응답 계약",
+      "current_evidence": "S04 B0001의 원문6개와22개 근거 항목",
+      "candidate_preference": "N1914A/N1913-90008 우선; X-Series 유지. 개발자가 가상 프로필 선택.",
+      "followup_task_id": "FCC-20261023-S04-B0002",
+      "missing": "실제 센서·옵션·FW·교정은 미지정. 실장비 응답이 아니라 매뉴얼 계약/예제임을 유지."
+    },
+    {
+      "item": 2,
+      "priority": "P0",
+      "title": "DUT 공개 CLI/API와 RF 시험모드 공백",
+      "current_evidence": "S07 B0001의 ADB/logcat/AOSP 문서와 입력 명세. 공개 추출물3개+라이선스.",
+      "followup_task_id": "FCC-20261023-S07-B0002",
+      "missing": "실제 OEM RF 진입/종료·출력·채널설정 API 및 해당 도구는 확보되지 않음. 가상 계약은 개발자가 정의하며 실제 API로 표시하지 않음."
+    },
+    {
+      "item": 3,
+      "priority": "P0",
+      "title": "첫 전도출력 시나리오 근거",
+      "current_evidence": "S01 B0001 및 아래 source_locations. KDB PDF5개 바이트 비교는 S01 B0002.",
+      "source_locations": [
+        {
+          "evidence_id": "S01-B0001-E01",
+          "topic": "DTS 분류와 b/g/n 모드별 시험 범위",
+          "source_locations": [
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 1,
+              "printed_page": "1",
+              "section": "1 and footnote 1",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 4,
+              "printed_page": "4",
+              "section": "4",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            }
+          ],
+          "status": "source_index_for_developer_technical_review"
+        },
+        {
+          "evidence_id": "S01-B0001-E02",
+          "topic": "시험 채널 수와 위치",
+          "source_locations": [
+            {
+              "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+              "location_type": "CFR_clause",
+              "section": "15.31",
+              "clause": "(m), table",
+              "xml_locator": "DIV8[@N='15.31']",
+              "edition": "eCFR issue 2026-10-19"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 4,
+              "printed_page": "4",
+              "section": "4",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            }
+          ],
+          "status": "source_index_for_developer_technical_review"
+        },
+        {
+          "evidence_id": "S01-B0001-E04",
+          "topic": "최대 전도 출력과 평균 방식 선택",
+          "source_locations": [
+            {
+              "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+              "location_type": "CFR_clause",
+              "section": "15.247",
+              "clause": "(b)(3)",
+              "xml_locator": "DIV8[@N='15.247']",
+              "edition": "eCFR issue 2026-10-19"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 8,
+              "printed_page": "8",
+              "section": "8.3.1 and 8.3.2.1",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 9,
+              "printed_page": "9",
+              "section": "8.3.2.2 and 8.3.2.3",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            }
+          ],
+          "status": "source_index_for_developer_technical_review"
+        },
+        {
+          "evidence_id": "S01-B0001-E06",
+          "topic": "안테나 이득과 다중 출력 합산",
+          "source_locations": [
+            {
+              "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+              "location_type": "CFR_clause",
+              "section": "15.247",
+              "clause": "(b)(3), (b)(4), (c)",
+              "xml_locator": "DIV8[@N='15.247']",
+              "edition": "eCFR issue 2026-10-19"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 4,
+              "printed_page": "4",
+              "section": "3",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 6,
+              "printed_page": "6",
+              "section": "7",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            },
+            {
+              "document_id": "KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01-8c61a4b10b",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 1,
+              "printed_page": "1",
+              "section": "A and B",
+              "edition": "662911 D01 Multiple Transmitter Output v02r01"
+            },
+            {
+              "document_id": "KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01-d909bea3ac",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 1,
+              "printed_page": "1",
+              "section": "Response (1) and (2)",
+              "edition": "662911 D02 MIMO with Cross Polarized Antenna v01"
+            }
+          ],
+          "status": "source_index_for_developer_technical_review"
+        },
+        {
+          "evidence_id": "S01-B0001-E07",
+          "topic": "전도 경로 보정과 대체 방사 측정의 가정",
+          "source_locations": [
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 3,
+              "printed_page": "3",
+              "section": "3",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 4,
+              "printed_page": "4",
+              "section": "3 continuation",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            }
+          ],
+          "status": "source_index_for_developer_technical_review"
+        },
+        {
+          "evidence_id": "S01-B0001-E08",
+          "topic": "Duty cycle·송신 지속시간·게이트",
+          "source_locations": [
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 5,
+              "printed_page": "5",
+              "section": "6",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 6,
+              "printed_page": "6",
+              "section": "6(a), 6(b)(1)-(4)",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 8,
+              "printed_page": "8",
+              "section": "8.3.2.1",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            }
+          ],
+          "status": "source_index_for_developer_technical_review"
+        },
+        {
+          "evidence_id": "S01-B0001-E09",
+          "topic": "분석기 선형 범위·headroom·sweep 점수",
+          "source_locations": [
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 4,
+              "printed_page": "4",
+              "section": "5.1",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 5,
+              "printed_page": "5",
+              "section": "5.2",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 8,
+              "printed_page": "8",
+              "section": "8.3.2.1",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            }
+          ],
+          "status": "source_index_for_developer_technical_review"
+        },
+        {
+          "evidence_id": "S01-B0001-E13",
+          "topic": "표준 편입 판본과 전환일",
+          "source_locations": [
+            {
+              "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+              "location_type": "CFR_clause",
+              "section": "15.31",
+              "clause": "(a)(3)",
+              "xml_locator": "DIV8[@N='15.31']",
+              "edition": "eCFR issue 2026-10-19"
+            },
+            {
+              "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+              "location_type": "CFR_clause",
+              "section": "15.37",
+              "clause": "(s)",
+              "xml_locator": "DIV8[@N='15.37']",
+              "edition": "eCFR issue 2026-10-19"
+            },
+            {
+              "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+              "location_type": "CFR_clause",
+              "section": "15.38",
+              "clause": "(f)(3), (f)(4)",
+              "xml_locator": "DIV8[@N='15.38']",
+              "edition": "eCFR issue 2026-10-19"
+            },
+            {
+              "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+              "location_type": "PDF_printed_page_and_section",
+              "pdf_page_1based": 1,
+              "printed_page": "1",
+              "section": "footnote 1",
+              "edition": "558074 D01 15.247 Meas Guidance v05r02"
+            }
+          ],
+          "status": "source_index_for_developer_technical_review"
+        },
+        {
+          "evidence_id": "S01-B0001-E14",
+          "topic": "전원·액세서리·최대 방출 구성 입력",
+          "source_locations": [
+            {
+              "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+              "location_type": "CFR_clause",
+              "section": "15.31",
+              "clause": "(e), (g), (i)",
+              "xml_locator": "DIV8[@N='15.31']",
+              "edition": "eCFR issue 2026-10-19"
+            }
+          ],
+          "status": "source_index_for_developer_technical_review"
+        }
+      ],
+      "missing": "C63.10 정식 원문·적용 판본 세부 검토, 실제 DUT/센서/경로/교정 입력 및 중단 정책 승인."
+    },
+    {
+      "item": 4,
+      "priority": "P1",
+      "title": "검증 자료의 종류와 존재 여부",
+      "current_evidence": "S04 매뉴얼의 trace/수치 형식 예제, S05 내보내기 문서, S08 B0002의 보고서 조건/결과 위치.",
+      "followup_task_id": "FCC-20261023-S08-B0003",
+      "classification": "manual_example/report_table_or_plot only; no native instrument raw or live run log acquired",
+      "missing": "실제 RF 배선/보정 원본, native raw·완료/오류 로그·실장비/현장 검증 증거."
+    }
+  ],
+  "intake_conditions": [
+    "Copy only the required frozen originals into the separate private development workspace, then compare SHA-256 and bytes. Do not modify the source snapshots.",
+    "Third-party complete originals are not cleared for public Git redistribution. Public repositories receive source metadata and access notices.",
+    "Public reports and manual examples are not measured evidence from this laboratory. No hardware commands, firmware installation or site access are authorized by source collection."
+  ],
+  "open_inputs_index": "materials/collection/FCC-COLLECT-20261023-P01-001/questions-queue.json",
+  "private_paths": "P01 provides local frozen paths through the authorized development coordination channel; excluded from public Git."
+}

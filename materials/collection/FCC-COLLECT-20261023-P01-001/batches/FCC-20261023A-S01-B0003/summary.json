@@ -1,0 +1,45 @@
+{
+  "task_id": "FCC-20261023-S01-B0003",
+  "batch_id": "FCC-20261023A-S01-B0003",
+  "attempt": 1,
+  "owner_session": "S01",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v004",
+  "activation": "approved",
+  "request_ids": [
+    "ADD-S01-KDB913591-RAW-CURRENCY-003"
+  ],
+  "model_ids": [],
+  "created_at": "2026-10-23T22:26:24.037718+09:00",
+  "status": "current_publication_snapshot_prepared",
+  "assigned_requests": 1,
+  "assigned_requests_not_started": 0,
+  "counts": {
+    "verification_GET_attempts": 1,
+    "response_body_transfers": 1,
+    "representation_bytes_hashed": 13825,
+    "new_public_originals": 1,
+    "new_restricted_originals": 0,
+    "PDF_network_requests": 0,
+    "other_KDB_network_requests": 0,
+    "same_legacy_bytes_saved_again": 0,
+    "metadata_files": 6,
+    "derived_payload_files": 0,
+    "existing_originals_modified": 0,
+    "git_commands": 0
+  },
+  "comparison_to_legacy": "changed",
+  "normalized_visible_text_equal_to_legacy": true,
+  "attachment_set_equal_to_legacy": true,
+  "current_bytes_equal_to_B0002_observed_hash": true,
+  "raw_capture_is_new_observation": true,
+  "questions_count": 0,
+  "limits": [
+    "Observation applies at the recorded current HTTP time, not continuously after it.",
+    "No execution, technical guidance revision, FCC applicability approval or P01 acceptance is inferred."
+  ],
+  "unsearched_scope": [
+    "All PDFs, other KDB publications, standards and equipment remain outside this batch."
+  ],
+  "P01_receipt_for_this_batch": null
+}

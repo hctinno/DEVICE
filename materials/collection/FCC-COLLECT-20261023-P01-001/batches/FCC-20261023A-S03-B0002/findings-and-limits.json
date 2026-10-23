@@ -1,0 +1,44 @@
+{
+  "task_id": "FCC-20261023-S03-B0002",
+  "items": [
+    {
+      "id": "LIMIT-01",
+      "issue_ko": "2026 Amendment 1의 명시적 FCC 허용과 시행일 미확인",
+      "handling_ko": "publisher active와 FCC acceptance를 분리한다. 허용 또는 금지를 추정하지 않는다."
+    },
+    {
+      "id": "LIMIT-02",
+      "issue_ko": "2013/2020판의 최초 FCC 허용일 및 일괄 의무 전환일 미확인",
+      "handling_ko": "표준 발행일·KDB 변경일·체크리스트 전환일을 서로 대체하지 않는다."
+    },
+    {
+      "id": "LIMIT-03",
+      "issue_ko": "KDB 974614 Table A1의 IEEE/IEC 62209-1528-2013 표기와 853844의 or 2013 표기가 정확한 publisher 명칭과 혼합됨",
+      "handling_ko": "원문 문자열을 보존한다. IEEE 1528-2013과 공동표준 2020을 구별하며 존재가 확인되지 않은 새 표준 ID를 만들지 않는다."
+    },
+    {
+      "id": "LIMIT-04",
+      "issue_ko": "974614 listing/body는 v05r04지만 첫 페이지 header는 v05r03",
+      "handling_ko": "기존 source_conflicts 기록과 일치한다. 표지·본문·publication의 차이를 함께 인계하며 원문이나 버전 필드를 고치지 않는다."
+    },
+    {
+      "id": "LIMIT-05",
+      "issue_ko": "표준 전문·정식 라이선스·실제 DUT 및 시험소 인정 입력 미제공",
+      "handling_ko": "공개 카탈로그와 FCC 원문 근거 범위만 반환한다. 실제 SOP·계산·적합성을 승인하지 않는다."
+    },
+    {
+      "id": "LIMIT-06",
+      "issue_ko": "전수 법령·모든 최신/초안 KDB를 완전 탐색한 결과가 아님",
+      "handling_ko": "고정 색인 내 FCC PDF 191개와 정확한 표준명으로 제한된 공식 검색을 수행했다. 검색 부재는 미허용의 증명이 아니다."
+    }
+  ],
+  "authority_order_ko": [
+    "CFR 조문과 법령편입 여부",
+    "해당 제품·방법에 대한 최종 FCC KDB/공문",
+    "관련 범위의 시험소 인정·체크리스트 지침",
+    "FCC 직원 workshop 설명",
+    "표준 발행기관 카탈로그",
+    "초안은 채택 증거에서 제외"
+  ],
+  "interpretation_ko": "정확한 법적 지위는 해당 문서와 적용 맥락에서 판단한다. 이 배열만으로 일률적인 법률적 우선순위를 판정한 것은 아니다."
+}

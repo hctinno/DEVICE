@@ -1,0 +1,81 @@
+[
+  {
+    "observation_id": "OBS-IEEE-1528-2013-20261023",
+    "source_url": "https://standards.ieee.org/ieee/1528/4418/",
+    "display_identifier": "IEEE 1528-2013",
+    "title": "IEEE Recommended Practice for Determining the Peak Spatial-Average Specific Absorption Rate (SAR) in the Human Head from Wireless Communications Devices: Measurement Techniques",
+    "publisher_status": "Superseded Standard",
+    "board_approval_date": "2013-06-14",
+    "published_date": "2013-09-06",
+    "explicit_relationship": "Superseded by 62209-1528-2020; superseding 1528-2003",
+    "heading_locators": [
+      "Status",
+      "Superseded by",
+      "Board Approval",
+      "History > Published"
+    ],
+    "scope_note_ko": "머리 인체모델과 귀 옆 사용, 300 MHz~6 GHz의 측정 권고 규격이다. 본문 전체를 확보하지 않았다.",
+    "checked_at": "2026-10-23T22:28:44+09:00",
+    "representation": "metadata_observation",
+    "access_method": "official publisher page read through web tool",
+    "raw_original_retained": false,
+    "raw_source_sha256": null,
+    "raw_source_bytes": null,
+    "full_standard_access": "purchase_or_subscription_required_not_acquired",
+    "FCC_effective_date": null,
+    "authority_note_ko": "발행기관의 상태·승인일·공개일이다. FCC의 승인·효력일과 구별한다."
+  },
+  {
+    "observation_id": "OBS-IEEE-62209-1528-2020-20261023",
+    "source_url": "https://standards.ieee.org/ieee/62209-1528/7325/",
+    "display_identifier": "IEEE/IEC 62209-1528-2020",
+    "title": "IEC/IEEE International Standard - Measurement procedure for the assessment of specific absorption rate of human exposure to radio frequency fields from hand-held and body-mounted wireless communication devices - Part 1528: Human models, instrumentation, and procedures (Frequency range of 4 MHz to 10 GHz)",
+    "publisher_status": "Active Standard",
+    "board_approval_date": "2020-09-24",
+    "published_date": "2020-10-19",
+    "explicit_relationship": "Replaces IEC 62209-1:2016, IEC 62209-2:2010 and supersedes IEEE Std 1528-2013; Amendment: 62209-1528a-2026",
+    "heading_locators": [
+      "Status",
+      "Superseding",
+      "Amendment",
+      "Board Approval",
+      "History > Published"
+    ],
+    "scope_note_ko": "4 MHz~10 GHz는 발행 규격의 범위다. FCC에서 모든 주파수·방법을 허용한다는 의미로 사용하지 않는다.",
+    "checked_at": "2026-10-23T22:28:44+09:00",
+    "representation": "metadata_observation",
+    "access_method": "official publisher page read through web tool",
+    "raw_original_retained": false,
+    "raw_source_sha256": null,
+    "raw_source_bytes": null,
+    "full_standard_access": "purchase_or_subscription_required_not_acquired",
+    "FCC_effective_date": null,
+    "authority_note_ko": "발행기관의 상태·승인일·공개일이다. FCC의 승인·효력일과 구별한다."
+  },
+  {
+    "observation_id": "OBS-IEEE-62209-1528a-2026-20261023",
+    "source_url": "https://standards.ieee.org/ieee/62209-1528a/11607/",
+    "display_identifier": "IEEE/IEC 62209-1528a-2026",
+    "title": "IEEE/IEC International Standard - Measurement procedure for the assessment of specific absorption rate of human exposure to radio frequency fields from hand-held and body-mounted wireless communication devices - Part 1528: Human models, instrumentation, and procedures (Frequency range of 4 MHz to 10 GHz) AMENDMENT 1",
+    "publisher_status": "Active Standard",
+    "board_approval_date": "2026-07-20",
+    "published_date": "2026-09-02",
+    "explicit_relationship": "Amendment of IEC/IEEE 62209-1528:2020",
+    "heading_locators": [
+      "Status",
+      "Board Approval",
+      "History > Published",
+      "Working Group"
+    ],
+    "scope_note_ko": "Amendment 1이다. 2020판 전체를 대체한 독립 IEEE 1528-2026 판본으로 표기하지 않는다.",
+    "checked_at": "2026-10-23T22:28:44+09:00",
+    "representation": "metadata_observation",
+    "access_method": "official publisher page read through web tool",
+    "raw_original_retained": false,
+    "raw_source_sha256": null,
+    "raw_source_bytes": null,
+    "full_standard_access": "purchase_or_subscription_required_not_acquired",
+    "FCC_effective_date": null,
+    "authority_note_ko": "발행기관의 상태·승인일·공개일이다. FCC의 승인·효력일과 구별한다."
+  }
+]

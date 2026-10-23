@@ -1,0 +1,67 @@
+{
+  "task_id": "FCC-20261023-S01-B0003",
+  "request_ids": [
+    "ADD-S01-KDB913591-RAW-CURRENCY-003"
+  ],
+  "legacy_document_id": "KDB-913591-publication-e4102ce5f2",
+  "legacy_sha256": "e4102ce5f2e1818003338c3aaa4954ee8724ed6fdf796767d3ac18dc5c957bf2",
+  "legacy_bytes": 13462,
+  "current_observation": {
+    "comparison_to_legacy": "changed",
+    "current_sha256": "f45bf5baad16576a56eff61c556170c581046b36e3161c7df3a1a7638bf0ed59",
+    "current_bytes": 13825,
+    "normalized_visible_text_equal_to_legacy": true,
+    "attachment_set_equal_to_legacy": true,
+    "current_attachment_links": [],
+    "normalized_current_text_sha256": "2ca7f53a19feeb3091c5c6019739ef2ec7791d22ad23ac242c462fb73d0c4f7e",
+    "normalized_legacy_text_sha256": "2ca7f53a19feeb3091c5c6019739ef2ec7791d22ad23ac242c462fb73d0c4f7e",
+    "current_html_title": "913591 Measurement of radiated emissions at the band-edge for a Part 15 RF Device",
+    "checked_at": "2026-10-23T22:26:24.010209+09:00",
+    "http_status": 200,
+    "final_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+    "prior_B0002_observation": {
+      "checked_at": "2026-10-23T22:10:07.588241+09:00",
+      "sha256": "f45bf5baad16576a56eff61c556170c581046b36e3161c7df3a1a7638bf0ed59",
+      "bytes": 13825,
+      "original_saved_then": false
+    },
+    "current_bytes_equal_to_B0002_observed_hash": true,
+    "current_bytes_count_equal_to_B0002": true,
+    "current_observation_is_separate_from_B0002": true,
+    "saved_current_document_id": "KDB-913591-publication-currency-f45bf5baad16",
+    "saved_current_path": "originals/KDB-913591-publication-currency-f45bf5baad16.html"
+  },
+  "legacy_attachment_links": [],
+  "HTML_markup_comparison": {
+    "added_tag_structures": [
+      {
+        "tag": "script",
+        "attribute_names": "",
+        "count": 1
+      },
+      {
+        "tag": "script",
+        "attribute_names": "defer,src,type",
+        "count": 1
+      },
+      {
+        "tag": "noscript",
+        "attribute_names": "",
+        "count": 1
+      },
+      {
+        "tag": "img",
+        "attribute_names": "src,style",
+        "count": 1
+      }
+    ],
+    "removed_tag_structures": [],
+    "scripts_executed": false,
+    "technical_guidance_revision_inferred": false
+  },
+  "comparison_cautions": [
+    "B0002 time/hash are an earlier observation, not this acquisition time.",
+    "No PDF or licensed standard was acquired.",
+    "A different HTML hash is not evidence of a new technical rule or guidance edition."
+  ]
+}

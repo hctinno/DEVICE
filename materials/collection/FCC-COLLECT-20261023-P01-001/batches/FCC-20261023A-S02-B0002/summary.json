@@ -1,0 +1,53 @@
+{
+  "task_id": "FCC-20261023-S02-B0002",
+  "batch_id": "FCC-20261023A-S02-B0002",
+  "attempt": 1,
+  "owner_session": "S02",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v004",
+  "created_at": "2026-10-23T22:28:34+09:00",
+  "request_ids": [
+    "ADD-S02-EMC-CASE-SCOPE-002"
+  ],
+  "model_ids": [],
+  "status": "review_completed_with_author_question_open",
+  "request_counts": {
+    "completed": 1,
+    "blocked": 0,
+    "unstarted": 0
+  },
+  "key_result": "전도 4개·방사 5개 모드의 상세 결과가 같은 보고서에 존재한다. p3의 CXX/§15.107 전도 범위 제한을 해소하는 명시적 문구는 없어 저자·기술 검토 질문으로 남긴다.",
+  "scope_question_resolved": false,
+  "fact_count": 13,
+  "inference_count": 2,
+  "question_count": 2,
+  "source_counts": {
+    "existing_restricted_pdf_reviewed": 1,
+    "pages_read": 28,
+    "new_originals": 0,
+    "new_restricted_originals": 0,
+    "site_accesses": 0,
+    "downloads": 0,
+    "copied_originals": 0
+  },
+  "artifact_counts": {
+    "metadata_files": 8,
+    "derived_original_or_full_text_files": 0
+  },
+  "limitations": [
+    "저자 의도·FCC 승인 범위는 원문만으로 확정하지 않음",
+    "고유 시료 ID·variant별 결과 귀속을 독립 확인하지 않음",
+    "새 실측·법적 적용·시험실 적합성·수치 재현 판정 없음"
+  ],
+  "not_started_or_expanded": [
+    "외부 첨부·사이트 조회",
+    "다른 FCC ID/보고서 수집",
+    "법령 재해석·적용 결론"
+  ],
+  "S08_question_ref": "S08-Q02",
+  "original_limit": 0,
+  "new_original_records": "documents.json is []",
+  "P01_intake_confirmed": false,
+  "git_publication_confirmed": false,
+  "git_commands_performed": false
+}
