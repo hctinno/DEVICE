@@ -44,7 +44,7 @@ class AnalysisProvider(ABC):
 
     @abstractmethod
     def analyze(self, context):
-        """Return an analysis-schema-1 object from untrusted document data."""
+        """Return schema 1 text or context-bound schema 2 page analysis."""
 
 
 @dataclass(frozen=True)
@@ -56,22 +56,30 @@ class SyntheticTextProvider(AnalysisProvider):
     def analyze(self, context):
         if context.get('synthetic') is not True:
             raise ValueError('Synthetic context required')
+        version = 2 if any(d.get('format') == 'pdf' for d in context['documents']) else 1
         facts = []
         for document in context['documents']:
-            if document['text'] is None:
-                continue
-            for number, line in enumerate(document['text'].splitlines(), 1):
-                field, separator, value = line.partition(':')
-                field, value = field.strip(), value.strip()
-                if not separator or field not in FIELDS or not value:
-                    continue
-                facts.append({'field': field, 'value': value, 'status': 'explicit',
-                              'evidence': [{'path': document['path'], 'sha256': document['sha256'],
-                                            'line_start': number, 'line_end': number,
-                                            'quote': line, 'role': 'request'}]})
+            if document.get('format') == 'pdf':
+                sources = [(page['text'], {'kind': 'pdf_page', 'extraction_id': document['extraction_id'],
+                            'page_number': page['page_number'], 'text_sha256': page['text_sha256']})
+                           for page in document['pages'] if document['parse_status'] in {'ok', 'partial'}
+                           and page['status'] in {'ok', 'truncated'}]
+            else:
+                sources = [] if document['text'] is None else [(document['text'], {'kind': 'text_line'} if version == 2 else {})]
+            for text, location in sources:
+                for number, line in enumerate(text.splitlines(), 1):
+                    field, separator, value = line.partition(':')
+                    field, value = field.strip(), value.strip()
+                    if not separator or field not in FIELDS or not value:
+                        continue
+                    facts.append({'field': field, 'value': value, 'status': 'explicit',
+                                  'evidence': [{**location, 'path': document['path'], 'sha256': document['sha256'],
+                                                'line_start': number, 'line_end': number,
+                                                'quote': line, 'role': 'request'}]})
         products = {f['value'] for f in facts if f['field'] == 'product_type'}
         present = {f['field'] for f in facts}
-        return {'schema_version': 1, 'producer': {'kind': self.kind, 'name': self.name},
+        return {'schema_version': version, **({'context_id': context['analysis_context_id']} if version == 2 else {}),
+                'producer': {'kind': self.kind, 'name': self.name},
                 'identity': 'single' if len(products) == 1 else 'ambiguous' if products else 'unknown',
                 'facts': facts, 'missing_fields': sorted(REQUIRED_FIELDS - present)}
 
@@ -232,8 +240,9 @@ def run_worker(store, provider, *, worker_id, max_jobs=1, max_run_seconds=None,
                provider_timeout_seconds=30, lease_seconds=120):
     """Process synthetic jobs until idle or a declared job/time limit is met.
 
-    Provider execution is forcibly bounded; synchronous DB calls and OS cleanup
-    are outside the run-time deadline. Exceptions and tokens are not returned.
+    Provider execution is forcibly bounded; source preparation, synchronous DB
+    calls and OS cleanup are outside the hard deadline. The run budget is checked
+    again after preparation. Exceptions and tokens are not returned.
     """
     _preflight(provider, worker_id, max_jobs, max_run_seconds, provider_timeout_seconds, lease_seconds)
     deadline = None if max_run_seconds is None else time.monotonic() + max_run_seconds
@@ -259,6 +268,8 @@ def run_worker(store, provider, *, worker_id, max_jobs=1, max_run_seconds=None,
             break
         context = {key: job[key] for key in ('job_id', 'intake_id', 'revision', 'synthetic',
                                             'documents', 'analysis_contract', 'instructions')}
+        if 'analysis_context_id' in job:
+            context['analysis_context_id'] = job['analysis_context_id']
         budgets = [(provider_timeout_seconds, 'provider_timeout'),
                    (job['lease_until'] - time.time(), 'lease_expired')]
         if deadline is not None:
