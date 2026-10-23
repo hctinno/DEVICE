@@ -52,7 +52,7 @@ def render_report(store,case_id,output_dir):
     subjects={case_id,*source_ids,*[p['plan_id'] for p in payload['plans']],*[r['run_id'] for r in payload['runs']],*[m['method_id'] for m in payload['methods']]}
     with store.connection() as con:
         payload['audit_events']=[dict(r) for r in con.execute('SELECT * FROM events ORDER BY event_id') if r['subject_id'] in subjects]
-    (folder/'report.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+    (folder/'report.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2,allow_nan=False)+'\n',encoding='utf-8')
 
     def display(value):
         if value is None or value=='':return 'Not supplied'
@@ -97,7 +97,7 @@ def render_report(store,case_id,output_dir):
     html='''<!doctype html><html lang="en"><meta charset="utf-8"><title>Draft FCC laboratory report</title>
 <style>body{font:14px system-ui,sans-serif;max-width:1000px;margin:36px auto;color:#172b4d}h1{font-size:26px}h2{font-size:18px;margin-top:28px}.banner{border:2px solid #a33;padding:16px;color:#911}table{border-collapse:collapse;width:100%;table-layout:fixed}th,td{border:1px solid #ccd5df;padding:8px;text-align:left;overflow-wrap:anywhere}th{background:#edf2f8}li{overflow-wrap:anywhere}@page{size:A4;margin:18mm}@media print{h2{break-after:avoid}table{font-size:9px}tr{break-inside:avoid}}</style>'''
     html+='<h1>'+escape(label+'DRAFT — FCC workflow report')+'</h1><p class="banner">'+escape(payload['release_note'])+'</p>'+body+'<h2>Retained measurement evidence</h2><ul>'+evidence+'</ul></html>'
-    (folder/'report.html').write_text(html)
+    (folder/'report.html').write_text(html,encoding='utf-8')
 
     # A standard Korean CID font preserves Korean names in addition to Latin FCC content.
     font='HYSMyeongJo-Medium'
@@ -119,5 +119,5 @@ def render_report(store,case_id,output_dir):
         canvas.drawRightString(A4[0]-36,20,str(doc.page));canvas.restoreState()
     SimpleDocTemplate(str(folder/'report.pdf'),pagesize=A4,rightMargin=36,leftMargin=36,topMargin=36,bottomMargin=36).build(story,onFirstPage=footer,onLaterPages=footer)
     file_hashes={str(p.relative_to(folder)):hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.rglob('*') if p.is_file()}
-    (folder/'files.sha256.json').write_text(json.dumps(file_hashes,indent=2)+'\n')
+    (folder/'files.sha256.json').write_text(json.dumps(file_hashes,indent=2)+'\n',encoding='utf-8')
     return {'html':str(folder/'report.html'),'pdf':str(folder/'report.pdf'),'json':str(folder/'report.json'),'manifest':str(folder/'files.sha256.json'),'status':'DRAFT','synthetic':payload['synthetic']}

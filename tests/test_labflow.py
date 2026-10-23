@@ -133,6 +133,15 @@ class WorkflowTests(unittest.TestCase):
 
     def record(self):return record_run(self.store,'PLAN-1',self.run,self.raw)
 
+    def test_unicode_report_round_trips_as_utf8(self):
+        product={'manufacturer':'시험 제조사 — µ','model':'제품 α'}
+        create_case(self.store,{'case_id':'UTF8','authorization_route':'undetermined',
+                               'product':product,'scope_ids':['F02'],'synthetic':True})
+        result=render_report(self.store,'UTF8',self.root/'reports')
+        payload=json.loads(Path(result['json']).read_text(encoding='utf-8'))
+        self.assertEqual(payload['case']['product'],product)
+        self.assertIn(product['manufacturer'],Path(result['html']).read_text(encoding='utf-8'))
+
     def review(self):
         self.store.review_document('DOC-1','test reviewer','fixture source only')
         review_method(self.store,'METHOD-1','test reviewer','fixture procedure and limit only')
@@ -174,21 +183,21 @@ class WorkflowTests(unittest.TestCase):
 
     def test_invalid_unit_or_nonfinite_data_never_pass(self):
         for bad in [{'reading':float('nan'),'unit':'dBuV'},{'reading':True,'unit':'dBuV'},{'reading':30,'unit':'dBm'}]:
-            with self.subTest(bad=bad),self.assertRaises(ValueError):calculate('emc_field_strength',{**json.loads(self.raw.read_text()),**bad})
+            with self.subTest(bad=bad),self.assertRaises(ValueError):calculate('emc_field_strength',{**json.loads(self.raw.read_text(encoding='utf-8')),**bad})
 
     def test_power_conversion_is_independently_known(self):
         self.assertEqual(calculate('rf_power',{'reading':30,'unit':'dBm'}),{'value':1.0,'unit':'W'})
 
     def test_instrument_corrections_cannot_be_applied_twice(self):
-        data=json.loads(self.raw.read_text());data['instrument_corrections_applied']=True
+        data=json.loads(self.raw.read_text(encoding='utf-8'));data['instrument_corrections_applied']=True
         with self.assertRaises(ValueError):calculate('emc_field_strength',data)
 
     def test_missing_correction_state_is_not_assumed_uncorrected(self):
-        data=json.loads(self.raw.read_text());del data['instrument_corrections_applied']
+        data=json.loads(self.raw.read_text(encoding='utf-8'));del data['instrument_corrections_applied']
         with self.assertRaises(ValueError):calculate('emc_field_strength',data)
 
     def test_zero_margin_boundary_passes_without_rounding(self):
-        data=json.loads(self.raw.read_text());data['reading']=38;self.raw.write_text(json.dumps(data))
+        data=json.loads(self.raw.read_text(encoding='utf-8'));data['reading']=38;self.raw.write_text(json.dumps(data))
         self.record();self.review();result=evaluate(self.store,'RUN-1')
         self.assertEqual(result['calculations'][0]['margin'],0)
         self.assertEqual(result['decision'],'pass')
@@ -227,7 +236,7 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(result['decision'],'blocked')
         self.assertIn('synthetic_evidence_in_real_case',result['blockers'])
         report=render_report(self.store,'CASE-1',self.root/'reports')
-        self.assertTrue(json.loads(Path(report['json']).read_text())['synthetic'])
+        self.assertTrue(json.loads(Path(report['json']).read_text(encoding='utf-8'))['synthetic'])
 
     def test_explicit_artifact_provenance_survives_reimport_and_reopen(self):
         sha=self.store.import_artifact(self.raw,'raw',synthetic=True)
@@ -248,12 +257,12 @@ class WorkflowTests(unittest.TestCase):
     def test_report_labels_synthetic_evidence_in_previous_attempts(self):
         self.store.import_artifact(self.raw,'raw',synthetic=True)
         self.record();self.review()
-        data=json.loads(self.raw.read_text());data['reading']=31;self.raw.write_text(json.dumps(data))
+        data=json.loads(self.raw.read_text(encoding='utf-8'));data['reading']=31;self.raw.write_text(json.dumps(data))
         record_run(self.store,'PLAN-1',{**self.run,'run_id':'CLEAN-RUN'},self.raw)
         review_run(self.store,'CLEAN-RUN','r','fixture')
         self.assertEqual(evaluate(self.store,'CLEAN-RUN')['decision'],'pass')
         report=render_report(self.store,'CASE-1',self.root/'reports')
-        self.assertTrue(json.loads(Path(report['json']).read_text())['synthetic'])
+        self.assertTrue(json.loads(Path(report['json']).read_text(encoding='utf-8'))['synthetic'])
 
     def test_synthetic_setup_and_calibration_each_block_real_case(self):
         fixture=self.root/'synthetic.txt';fixture.write_text('explicit synthetic evidence')
@@ -270,7 +279,7 @@ class WorkflowTests(unittest.TestCase):
                 self.assertTrue(result['synthetic']);self.assertEqual(result['decision'],'blocked')
 
     def test_raw_identity_mismatches_block_single_observation_and_envelope(self):
-        observation=json.loads(self.raw.read_text())
+        observation=json.loads(self.raw.read_text(encoding='utf-8'))
         self.store.review_document('DOC-1','r','fixture');review_method(self.store,'METHOD-1','r','fixture')
         for position in ['single','envelope','observation']:
             for field in ['case_id','plan_id','run_id']:
@@ -287,13 +296,13 @@ class WorkflowTests(unittest.TestCase):
 
     def test_matching_raw_identity_is_accepted(self):
         self.raw.write_text(json.dumps({'case_id':'CASE-1','plan_id':'PLAN-1','run_id':'RUN-1',
-            'observations':[json.loads(self.raw.read_text())]}))
+            'observations':[json.loads(self.raw.read_text(encoding='utf-8'))]}))
         self.record();self.review()
         self.assertEqual(evaluate(self.store,'RUN-1')['decision'],'pass')
 
     def test_report_is_draft_and_contains_traceable_raw_evidence(self):
         self.record();result=render_report(self.store,'CASE-1',self.root/'reports')
-        html=Path(result['html']).read_text();data=json.loads(Path(result['json']).read_text())
+        html=Path(result['html']).read_text(encoding='utf-8');data=json.loads(Path(result['json']).read_text(encoding='utf-8'))
         self.assertIn('DRAFT',html);self.assertIn('22',html)
         self.assertEqual(data['results'][0]['decision'],'blocked')
         self.assertTrue(Path(result['pdf']).read_bytes().startswith(b'%PDF-'))
@@ -303,12 +312,12 @@ class WorkflowTests(unittest.TestCase):
         self.record();self.review();evaluate(self.store,'RUN-1')
         self.store.blob_path(self.store.document('DOC-1')['sha256']).write_bytes(b'tampered')
         report=render_report(self.store,'CASE-1',self.root/'reports')
-        self.assertEqual(json.loads(Path(report['json']).read_text())['results'][0]['decision'],'blocked')
+        self.assertEqual(json.loads(Path(report['json']).read_text(encoding='utf-8'))['results'][0]['decision'],'blocked')
 
     def test_product_markup_is_escaped_in_report(self):
         create_case(self.store,{'case_id':'HTML','authorization_route':'sdoc','product':{'manufacturer':'<script>alert(1)</script>','model':'DUT'},'scope_ids':['F02'],'synthetic':True})
         report=render_report(self.store,'HTML',self.root/'reports')
-        text=Path(report['html']).read_text()
+        text=Path(report['html']).read_text(encoding='utf-8')
         self.assertNotIn('<script>alert(1)</script>',text)
         self.assertIn('&lt;script&gt;',text)
 
@@ -318,7 +327,7 @@ class CommandTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             result=subprocess.run([sys.executable,'-m','labflow','--workspace',str(Path(tmp)/'store'),'demo','--out',str(Path(tmp)/'out')],capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr)
-            data=json.loads(result.stdout);report=json.loads(Path(data['report']['json']).read_text())
+            data=json.loads(result.stdout);report=json.loads(Path(data['report']['json']).read_text(encoding='utf-8'))
             self.assertTrue(report['synthetic']);self.assertEqual(report['results'][0]['calculations'][0]['value'],22)
             self.assertEqual(report['results'][0]['decision'],'blocked')
             self.assertTrue(Path(data['report']['pdf']).exists())
