@@ -373,6 +373,22 @@ class FacilityTests(unittest.TestCase):
         self.assertEqual(result['status'], 'invalid')
         self.assertNotIn('measurement', result['values'])
 
+    def test_microscope_local_sample_cannot_override_authoritative_connected_sample(self):
+        for required in [False, True]:
+            device = self.device('inspection_microscope', requires_sample=required)
+            source = {'sample': {'valid': True, 'sample_id': 'upstream-a', 'feature_size_um': 11, 'surface_contrast': .9}}
+            self.advance(device, 0, inputs=source)
+            local = self.perform(device, 'load_sample', inputs=source, sample_id='local-b',
+                                 feature_size_um=999, surface_contrast=.9)
+            self.assertEqual(local['status'], 'invalid')
+            self.perform(device, 'acquire', inputs=source)
+            result = self.advance(device, 2, inputs=source)
+            self.assertEqual(result['status'], 'ok')
+            self.assertEqual(result['values']['measurement']['feature_size_um'], 11)
+        device = self.device('inspection_microscope', requires_sample=True)
+        self.assertEqual(self.perform(device, 'load_sample', sample_id='local', feature_size_um=1,
+                                      surface_contrast=.9)['status'], 'invalid')
+
 
 if __name__ == '__main__':
     unittest.main()

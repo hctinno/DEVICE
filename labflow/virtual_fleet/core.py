@@ -304,9 +304,8 @@ class VirtualFleet:
             upstream = self._snapshots.get(source, {'status': 'invalid', 'values': {}})
             value = upstream['values'].get('outputs', {}).get(source_port)
             if value is None:
-                if upstream['status'] != 'ok':
-                    result[target_port] = {'valid': False, 'upstream_status': upstream['status'],
-                                           'source_id': source}
+                result[target_port] = {'valid': False, 'upstream_status': upstream['status'],
+                                       'reason': 'output_unavailable', 'source_id': source}
                 continue
             result[target_port] = _json_copy(value)
             if upstream['status'] != 'ok' and not (upstream['status'] == 'pending' and value.get('valid') is True):
@@ -393,13 +392,18 @@ class VirtualFleet:
                         self._quarantined.add(device_id)
                         result = dict(self._failed(), setup_changed=True)
                     self._exercised[device_id].add(action)
-                counts = self._status_counts[device_id]
-                counts[result['status']] = counts.get(result['status'], 0) + 1
             if result['setup_changed']:
                 self._revision += 1
+            action_revision = self._revision
             self._propagate()
             if device_id in self._quarantined:
                 result = dict(self._failed(), setup_changed=result['setup_changed'])
+            elif self._revision != action_revision and result['status'] in {'ok', 'pending'}:
+                result = {'status': 'invalid', 'values': {'reason': 'setup_changed_during_action'},
+                          'setup_changed': result['setup_changed']}
+            if device_id in self._nodes:
+                counts = self._status_counts[device_id]
+                counts[result['status']] = counts.get(result['status'], 0) + 1
             response = self._envelope(result, device_id if device_id in self._nodes else None)
             event = {'request_id': request_id, 'kind': 'execute', 'device_id': device_id,
                      'action': action, 'tick': self._tick, 'status': result['status'], 'outcome': 'executed'}
@@ -432,10 +436,17 @@ class VirtualFleet:
                 raise ValueError('unknown device')
             if device_id in self._quarantined:
                 raise ValueError('unavailable device requires runtime reconstruction')
-            self._devices[device_id].author_control(fault, value)
+            result = {'status': 'ok', 'values': {}}
+            try:
+                self._devices[device_id].author_control(fault, value)
+            except Exception:
+                self._quarantined.add(device_id)
+                result = self._failed()
             self._revision += 1
             self._propagate()
-            response = self._envelope({'status': 'ok', 'values': {}})
+            if device_id in self._quarantined:
+                result = self._failed()
+            response = self._envelope(result)
             return self._remember(key, fingerprint, response)
 
     def observations(self):
