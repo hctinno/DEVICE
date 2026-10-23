@@ -1,0 +1,63 @@
+{
+  "route_id": "innco-german-download-list",
+  "observed_at": "2026-10-23T23:14:26+09:00",
+  "requested_url": "https://www.innco-systems.de/de/downloads/katalog",
+  "discovery_basis": "work/FCC-20261023A-S06-B0002/metadata/route-innco-german-model-page.json ; DOWNLOADS and KATALOG links",
+  "purpose": "Check official public archive/manual path for assigned controller documentation",
+  "http_method": "GET",
+  "authenticated": false,
+  "downloaded_original_path": null,
+  "http_status": 200,
+  "final_url": "https://www.innco-systems.de/de/downloads/katalog",
+  "redirects": [],
+  "response_bytes": 9971,
+  "response_sha256": "7b418b66ee7c925dadcaebabb7d8d9d9d0b352db51abb66accb1c1a1c654422b",
+  "content_type": "text/html",
+  "pdf_header": false,
+  "html_title": "KATALOG - innco systems",
+  "headings": [],
+  "archived_rows_reviewed": 0,
+  "matching_archive_rows": [],
+  "observed_official_links": [
+    {
+      "url": "https://www.innco-systems.de/de/downloads/katalog",
+      "text": "Navigation überspringen",
+      "row_context": "Navigation überspringen",
+      "target_match": false
+    },
+    {
+      "url": "https://www.innco-systems.de/de/downloads/katalog",
+      "text": "DOWNLOADS",
+      "row_context": "DOWNLOADS",
+      "target_match": false
+    },
+    {
+      "url": "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf",
+      "text": "",
+      "row_context": "",
+      "target_match": false
+    },
+    {
+      "url": "https://www.innco-systems.de/de/downloads/katalog?file=files/Dateien/innco-Katalog-2017-03-17-MR.pdf",
+      "text": "innco systems - product overview (14,7 MiB)",
+      "row_context": "innco systems - product overview (14,7 MiB)",
+      "target_match": false
+    },
+    {
+      "url": "https://www.innco-systems.de/de/downloads/member-area",
+      "text": "MEMBER AREA",
+      "row_context": "MEMBER AREA",
+      "target_match": false
+    },
+    {
+      "url": "http://www.innco-systems.de/en/downloads/catalogue-kopie",
+      "text": "EN",
+      "row_context": "EN",
+      "target_match": false
+    }
+  ],
+  "document_type_assessment": "HTML page, not a downloaded operating/programming manual",
+  "target_mentions": [],
+  "snapshot_only_no_source_file": true,
+  "status": "reviewed_public_html"
+}

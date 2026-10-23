@@ -1,0 +1,19 @@
+{
+  "route_id": "ets-archive-page-7",
+  "observed_at": "2026-10-23T23:14:01+09:00",
+  "requested_url": "https://www.ets-lindgren.com/manuals/page/7/",
+  "discovery_basis": "[local-only reference retained by P01]",
+  "purpose": "Check official public archive/manual path for assigned controller documentation",
+  "http_method": "GET",
+  "authenticated": false,
+  "downloaded_original_path": null,
+  "http_status": 404,
+  "final_url": "https://www.ets-lindgren.com/manuals/page/7/",
+  "redirects": [],
+  "response_bytes": 294379,
+  "response_sha256": "b5c6755744121068ffa3b66cf2710a41e2a728d10c4e62351aff6f4462008870",
+  "content_type": "text/html",
+  "pdf_header": false,
+  "status": "access_failed_no_retry",
+  "document_type_assessment": "Not an acquired source"
+}

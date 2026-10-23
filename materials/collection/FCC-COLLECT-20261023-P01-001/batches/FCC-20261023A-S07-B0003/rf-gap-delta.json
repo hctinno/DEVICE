@@ -1,0 +1,260 @@
+{
+  "task_id": "FCC-20261023-S07-B0003",
+  "baseline_batch": "FCC-20261023A-S07-B0002",
+  "gap_counts": {
+    "prior_actual_smartphone_gaps": 16,
+    "closed_for_actual_smartphone": 0,
+    "remaining_actual_smartphone_gaps": 16,
+    "limited_comparator_updates": 10
+  },
+  "rows": [
+    {
+      "gap_id": "S07-RF-01",
+      "function_name": "실제 DUT·시험 FW·도구 식별",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "no_sufficient_comparator_contract",
+      "comparator_command_ids": [
+        "QC-C09"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-02",
+      "function_name": "b/g/n RF 시험모드 진입",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C01"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-03",
+      "function_name": "b/g/n RF 시험모드 해제",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "no_sufficient_comparator_contract",
+      "comparator_command_ids": [],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-04",
+      "function_name": "RF 송신 시작",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C02"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-05",
+      "function_name": "RF 송신 중단",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C02",
+        "QC-C10"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-06",
+      "function_name": "채널/주파수 설정·조회",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C03"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-07",
+      "function_name": "대역폭 설정·조회",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C06"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-08",
+      "function_name": "b/g/n PHY·변조·속도 설정·조회",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C05",
+        "QC-C06"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-09",
+      "function_name": "송신 체인·안테나 선택·조회",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "no_sufficient_comparator_contract",
+      "comparator_command_ids": [],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-10",
+      "function_name": "출력 목표 설정·조회",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C04"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-11",
+      "function_name": "패킷 구성",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C07"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-12",
+      "function_name": "듀티/송신 시간 제어·조회",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C08"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-13",
+      "function_name": "튜너·출력제어·동시송신 상태",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "no_sufficient_comparator_contract",
+      "comparator_command_ids": [],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-14",
+      "function_name": "현재 RF 송신/시험모드 상태 조회",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "QCC74x_limited_document_evidence_added",
+      "comparator_command_ids": [
+        "QC-C10"
+      ],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-15",
+      "function_name": "오류·시간초과·취소·재접속 복구",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "no_sufficient_comparator_contract",
+      "comparator_command_ids": [],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-006"
+      ]
+    },
+    {
+      "gap_id": "S07-RF-16",
+      "function_name": "제조사 로그·결과 API와 export",
+      "prior_smartphone_status": "unavailable",
+      "current_smartphone_status": "unavailable",
+      "closed_for_actual_smartphone": false,
+      "comparison_update": "no_sufficient_comparator_contract",
+      "comparator_command_ids": [],
+      "limitation": "실제 스마트폰·칩셋·시험 FW·QDART/OEM 도구 버전 및 응답이 미지정/미확보다.",
+      "required_existing_input_ids": [
+        "LOCAL-005",
+        "LOCAL-006"
+      ]
+    }
+  ],
+  "actual_dut": {
+    "manufacturer": null,
+    "model": null,
+    "chipset": null,
+    "firmware": null,
+    "oem_tool": null
+  },
+  "interpretation": "비교 문서에서 일부 명령을 알게 된 것과 실제 스마트폰 RF API를 확보한 것은 다르다. 16개 실제 공백은 유지된다."
+}

@@ -43,7 +43,8 @@
           ],
           "next_action": "실물/기관 자료는 사용자 보유 경로로만 연결. 공개 타제품 사례로 채우지 않음."
         }
-      ]
+      ],
+      "v006_resolution": "Standard/access records supplemented by S01; no new SAR2026 FCC adoption or actual DUT evidence."
     },
     {
       "request_id": "EQ-MOD-708c2272f105c511",
@@ -71,7 +72,8 @@
           ],
           "next_action": "실제 개체와 보유 제조사/라이선스 자료 경로가 필요. 제조사 문의/로그인은 이번 범위 밖."
         }
-      ]
+      ],
+      "v006_resolution": "Existing S05 evidence preserved. Licensed full manuals, actual installation and native data remain outside public-source acquisition."
     },
     {
       "request_id": "EQ-MOD-4e657354694908fa",
@@ -100,7 +102,8 @@
           ],
           "next_action": "SAR 실물 연동 시 보유 설치/라이선스 자료와 비식별 기존 파일 위치 연결. 첫 RF 가상 프로필을 이 자료 때문에 중단하지 않음."
         }
-      ]
+      ],
+      "v006_resolution": "Existing S05 evidence preserved. Licensed full manuals, actual installation and native data remain outside public-source acquisition."
     },
     {
       "request_id": "EQ-MOD-f183d948fc590a8b",
@@ -137,7 +140,8 @@
           ],
           "next_action": "실제 자산 대응과 기존 현장 기록 필요. 카탈로그만으로 운동/정지 동작을 승인하지 않음."
         }
-      ]
+      ],
+      "v006_resolution": "Five new official routes checked; no matching command manual acquired. Existing B facts and C questions remain."
     },
     {
       "request_id": "EQ-MOD-207e69830324252e",
@@ -173,7 +177,8 @@
           ],
           "next_action": "사용자 보유 자산 및 현장 자료 위치가 필요."
         }
-      ]
+      ],
+      "v006_resolution": "Five new official routes checked; no matching command manual acquired. Existing B facts and C questions remain."
     },
     {
       "request_id": "EQ-MOD-6b92cbf630670c77",
@@ -209,7 +214,8 @@
           ],
           "next_action": "명판/구성·실물 매뉴얼과 현장 자료 위치 필요."
         }
-      ]
+      ],
+      "v006_resolution": "Five new official routes checked; no matching command manual acquired. Existing B facts and C questions remain."
     }
   ],
   "priorities": {
@@ -225,5 +231,40 @@
     "no equipment/site network operation",
     "no duplicate original acquisition",
     "no proprietary document substituted by a public summary"
+  ],
+  "followup_reviewed_at": "2026-10-23T23:18:42.379644+09:00",
+  "followup_batches": [
+    {
+      "batch_id": "FCC-20261023A-S07-B0003",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 1,
+        "not_started": 0
+      }
+    },
+    {
+      "batch_id": "FCC-20261023A-S04-B0003",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      }
+    },
+    {
+      "batch_id": "FCC-20261023A-S01-B0004",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 1,
+        "not_started": 0
+      }
+    },
+    {
+      "batch_id": "FCC-20261023A-S06-B0002",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 1,
+        "not_started": 0
+      }
+    }
   ]
 }

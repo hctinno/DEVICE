@@ -1,0 +1,63 @@
+{
+  "route_id": "innco-german-model-page",
+  "observed_at": "2026-10-23T23:14:02+09:00",
+  "requested_url": "http://www.innco-systems.de/de/produkte/controller/co3000-4p-controller/articles/",
+  "discovery_basis": "[local-only reference retained by P01]",
+  "purpose": "Check official public archive/manual path for assigned controller documentation",
+  "http_method": "GET",
+  "authenticated": false,
+  "downloaded_original_path": null,
+  "http_status": 200,
+  "final_url": "https://www.innco-systems.de/de/produkte/controller/co3000-4p-controller/articles/",
+  "redirects": [
+    {
+      "from": "http://www.innco-systems.de/de/produkte/controller/co3000-4p-controller/articles/",
+      "status": 301,
+      "to": "https://www.innco-systems.de/de/produkte/controller/co3000-4p-controller/articles/"
+    }
+  ],
+  "response_bytes": 13963,
+  "response_sha256": "efd9552a763bcfdacd17c03a41adf26c6955ef44a82397905903ee0a542c81c5",
+  "content_type": "text/html",
+  "pdf_header": false,
+  "html_title": "CO3000-4P - Controller - innco systems",
+  "headings": [
+    "Controller CO3000-4P"
+  ],
+  "archived_rows_reviewed": 0,
+  "matching_archive_rows": [],
+  "observed_official_links": [
+    {
+      "url": "https://www.innco-systems.de/de/downloads/katalog",
+      "text": "DOWNLOADS",
+      "row_context": "DOWNLOADS",
+      "target_match": false
+    },
+    {
+      "url": "https://www.innco-systems.de/de/produkte/controller/co3000-4p-controller/articles/?pdf=848",
+      "text": "",
+      "row_context": "",
+      "target_match": true
+    },
+    {
+      "url": "https://www.innco-systems.de/de/downloads/katalog",
+      "text": "KATALOG",
+      "row_context": "KATALOG",
+      "target_match": false
+    },
+    {
+      "url": "https://www.innco-systems.de/de/downloads/member-area",
+      "text": "MEMBER AREA",
+      "row_context": "MEMBER AREA",
+      "target_match": false
+    }
+  ],
+  "document_type_assessment": "HTML page, not a downloaded operating/programming manual",
+  "target_mentions": [
+    "CO3000-4P - Controller - innco systems INNCO MENU Controller CO3000-4P Data interface IEEE 488, LAN (optional RS 232) Device interface 4 Port CAN-",
+    "CO3000-4P - Controller - innco systems INNCO MENU Controller CO3000-4P Data interface IEEE 488, LAN (optional RS 232) Device interface 4 Port CAN-Bus via fibre optic cable (POF) (up to 8 Port´s & glass cable",
+    "ght approx. 3kg Temperature range 5°C to +40°C The digital controller CO3000 suit for the operation of antenna masts, turntables, slide bars and other positioning equipment of innco and innco-systems. This controller"
+  ],
+  "snapshot_only_no_source_file": true,
+  "status": "reviewed_public_html"
+}

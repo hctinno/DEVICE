@@ -1,0 +1,276 @@
+{
+  "task_id": "FCC-20261023-S06-B0002",
+  "batch_id": "FCC-20261023A-S06-B0002",
+  "attempt": 1,
+  "owner_session": "S06",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v006",
+  "source_request_id": "DEV-EVIDENCE-20261023-002",
+  "request_ids": [
+    "ADD-S06-OFFICIAL-ARCHIVE-MANUAL-GAPS-002"
+  ],
+  "model_ids": [
+    "MOD-f183d948fc590a8b",
+    "MOD-207e69830324252e",
+    "MOD-6b92cbf630670c77"
+  ],
+  "checked_at": "2026-10-23T23:16:06+09:00",
+  "classification_definitions": {
+    "A": "공개 공식 경로의 추가 조사 후보. 실제 취득 가능/해소를 아직 보장하지 않음.",
+    "B": "이미 확보한 출처·권리 상태가 알려진 로컬 자료로 재사용/부분 해소 가능.",
+    "C": "실물/기관/제조사/라이선스 자료 또는 사용자 보유 자료 위치가 필요."
+  },
+  "route_evaluations_A": [
+    {
+      "route_id": "ets-archive-page-3",
+      "requested_url": "https://www.ets-lindgren.com/manuals/page/3/",
+      "http_status": 404,
+      "final_url": "https://www.ets-lindgren.com/manuals/page/3/",
+      "assessment": "http_404_no_original",
+      "target_model_family": "ETS/EMCO 2090",
+      "edition_sought": "Revision G P#399199 또는 일치하는 전체 매뉴얼",
+      "manual_found": false,
+      "verified_manual_edition": null,
+      "response_sha256": "235d8bbfa38585f113b3f76ce8ce004c216d9ed00bc3677b1736d4564ad58eb1",
+      "response_bytes": 294379,
+      "matching_original_acquired": false,
+      "record_path": "metadata/route-ets-archive-page-3.json"
+    },
+    {
+      "route_id": "ets-archive-page-7",
+      "requested_url": "https://www.ets-lindgren.com/manuals/page/7/",
+      "http_status": 404,
+      "final_url": "https://www.ets-lindgren.com/manuals/page/7/",
+      "assessment": "http_404_no_original",
+      "target_model_family": "ETS/EMCO 2090",
+      "edition_sought": "Revision G P#399199 또는 일치하는 전체 매뉴얼",
+      "manual_found": false,
+      "verified_manual_edition": null,
+      "response_sha256": "b5c6755744121068ffa3b66cf2710a41e2a728d10c4e62351aff6f4462008870",
+      "response_bytes": 294379,
+      "matching_original_acquired": false,
+      "record_path": "metadata/route-ets-archive-page-7.json"
+    },
+    {
+      "route_id": "innco-german-download-list",
+      "requested_url": "https://www.innco-systems.de/de/downloads/katalog",
+      "http_status": 200,
+      "final_url": "https://www.innco-systems.de/de/downloads/katalog",
+      "assessment": "public_html_not_command_manual",
+      "target_model_family": "INNCO CO3000-4port (공식 4P와 대응 미확정)",
+      "edition_sought": "정확한 설치 세대/판본 미제공",
+      "manual_found": false,
+      "verified_manual_edition": null,
+      "response_sha256": "7b418b66ee7c925dadcaebabb7d8d9d9d0b352db51abb66accb1c1a1c654422b",
+      "response_bytes": 9971,
+      "matching_original_acquired": false,
+      "record_path": "metadata/route-innco-german-download-list.json"
+    },
+    {
+      "route_id": "innco-german-model-page",
+      "requested_url": "http://www.innco-systems.de/de/produkte/controller/co3000-4p-controller/articles/",
+      "http_status": 200,
+      "final_url": "https://www.innco-systems.de/de/produkte/controller/co3000-4p-controller/articles/",
+      "assessment": "public_html_not_command_manual",
+      "target_model_family": "INNCO CO3000-4port (공식 4P와 대응 미확정)",
+      "edition_sought": "정확한 설치 세대/판본 미제공",
+      "manual_found": false,
+      "verified_manual_edition": null,
+      "response_sha256": "efd9552a763bcfdacd17c03a41adf26c6955ef44a82397905903ee0a542c81c5",
+      "response_bytes": 13963,
+      "matching_original_acquired": false,
+      "record_path": "metadata/route-innco-german-model-page.json"
+    },
+    {
+      "route_id": "innco-german-product-pdf",
+      "requested_url": "https://www.innco-systems.de/de/produkte/controller/co3000-4p-controller/articles/?pdf=848",
+      "http_status": 200,
+      "final_url": "https://www.innco-systems.de/de/produkte/controller/co3000-4p-controller/articles/?pdf=848",
+      "assessment": "expected_pdf_but_html_no_original",
+      "target_model_family": "INNCO CO3000-4port (공식 4P와 대응 미확정)",
+      "edition_sought": "정확한 설치 세대/판본 미제공",
+      "manual_found": false,
+      "verified_manual_edition": null,
+      "response_sha256": "79e52a2a9fcfe885cc3712410981ed8143c379934d0f48b992f968e5890c5050",
+      "response_bytes": 1134,
+      "matching_original_acquired": false,
+      "record_path": "metadata/route-innco-german-product-pdf.json"
+    }
+  ],
+  "model_gap_matrix": [
+    {
+      "historical_request_id": "EQ-MOD-f183d948fc590a8b",
+      "model_id": "MOD-f183d948fc590a8b",
+      "historical_batch": "FCC-20261023A-S06-B0001",
+      "historical_result": "limited",
+      "current_exact_manual_status": "not_obtained_in_checked_new_routes",
+      "A": {
+        "state": "new_route_review_finished_no_original_gap_resolved",
+        "route_ids": [
+          "ets-archive-page-3",
+          "ets-archive-page-7"
+        ]
+      },
+      "B": {
+        "state": "existing_partial_evidence_reused",
+        "source_ids": [
+          "S06-ets-manuals-index-383dba3d17af",
+          "S06-ets-2090-official-case-study-ba4374369e9b"
+        ]
+      },
+      "C": {
+        "state": "existing_private_input_still_needed",
+        "refs": [
+          "S06-Q-001",
+          "S06-Q-003"
+        ]
+      },
+      "command_state_completion_stop_inferred": false,
+      "equipment_support_verified": false
+    },
+    {
+      "historical_request_id": "EQ-MOD-207e69830324252e",
+      "model_id": "MOD-207e69830324252e",
+      "historical_batch": "FCC-20261023A-S06-B0001",
+      "historical_result": "limited",
+      "current_exact_manual_status": "not_obtained_in_checked_new_routes",
+      "A": {
+        "state": "new_route_review_finished_no_original_gap_resolved",
+        "route_ids": [
+          "ets-archive-page-3",
+          "ets-archive-page-7"
+        ]
+      },
+      "B": {
+        "state": "existing_partial_evidence_reused",
+        "source_ids": [
+          "S06-ets-manuals-index-383dba3d17af",
+          "S06-ets-2090-official-case-study-ba4374369e9b"
+        ]
+      },
+      "C": {
+        "state": "existing_private_input_still_needed",
+        "refs": [
+          "S06-Q-001",
+          "S06-Q-003"
+        ]
+      },
+      "command_state_completion_stop_inferred": false,
+      "equipment_support_verified": false
+    },
+    {
+      "historical_request_id": "EQ-MOD-6b92cbf630670c77",
+      "model_id": "MOD-6b92cbf630670c77",
+      "historical_batch": "FCC-20261023A-S06-B0001",
+      "historical_result": "limited",
+      "current_exact_manual_status": "not_obtained_in_checked_new_routes",
+      "A": {
+        "state": "new_route_review_finished_no_original_gap_resolved",
+        "route_ids": [
+          "innco-german-download-list",
+          "innco-german-model-page",
+          "innco-german-product-pdf"
+        ]
+      },
+      "B": {
+        "state": "existing_partial_evidence_reused",
+        "source_ids": [
+          "S06-innco-co3000-4p-product-a9a5ddfd5681",
+          "INNCO-Systems-innco-Katalog-2017-03-17-MR.pdf-ea42a0e496"
+        ]
+      },
+      "C": {
+        "state": "existing_private_input_still_needed",
+        "refs": [
+          "S06-Q-002",
+          "S06-Q-003"
+        ]
+      },
+      "command_state_completion_stop_inferred": false,
+      "equipment_support_verified": false
+    }
+  ],
+  "existing_source_reuse_B": "metadata/references.json#/existing_source_reuse_B",
+  "field_and_licensed_inputs_C": [
+    {
+      "category": "C",
+      "question_ref": "S06-Q-001",
+      "group_id": "INPUT-ASSETS",
+      "user_input_refs": [
+        "USER-02",
+        "USER-05"
+      ],
+      "model_ids": [
+        "MOD-f183d948fc590a8b",
+        "MOD-207e69830324252e"
+      ],
+      "request_ids": [
+        "ASSET-EQ-001555",
+        "ASSET-EQ-002778",
+        "ASSET-EQ-002784",
+        "ASSET-EQ-006172",
+        "LOCAL-016"
+      ],
+      "need": "보유 2090 명판/세대/설치 FW와 연결 위치기 식별, 적용 전체 조작·명령 매뉴얼의 위치/판본/허가된 사용 범위.",
+      "current_state": "not_provided_in_this_assignment",
+      "no_new_login_or_contact_requested": true
+    },
+    {
+      "category": "C",
+      "question_ref": "S06-Q-002",
+      "group_id": "INPUT-ASSETS",
+      "user_input_refs": [
+        "USER-02",
+        "USER-05"
+      ],
+      "model_ids": [
+        "MOD-6b92cbf630670c77"
+      ],
+      "request_ids": [
+        "ASSET-EQ-000741",
+        "LOCAL-016"
+      ],
+      "need": "CO3000-4port와 4P의 명판/옵션/라이선스/FW 대응 및 일치하는 명령·상태·완료·중단 문서의 기존 보유 위치.",
+      "current_state": "not_provided_in_this_assignment",
+      "no_new_login_or_contact_requested": true
+    },
+    {
+      "category": "C",
+      "question_ref": "S06-Q-003",
+      "group_id": "INPUT-SITE-PATH",
+      "user_input_refs": [
+        "USER-04"
+      ],
+      "model_ids": [
+        "MOD-f183d948fc590a8b",
+        "MOD-207e69830324252e",
+        "MOD-6b92cbf630670c77"
+      ],
+      "request_ids": [
+        "LOCAL-003",
+        "LOCAL-007",
+        "LOCAL-008",
+        "LOCAL-013"
+      ],
+      "need": "기존 RF 배선/포트·손실/보정 파일, 모션 좌표/한계와 인터록/비상정지 배선·검증 기록의 위치.",
+      "current_state": "not_provided_in_this_assignment",
+      "no_new_login_or_contact_requested": true
+    }
+  ],
+  "public_search_scope": {
+    "date": "2026-10-23",
+    "queries": [
+      "\"399199\" site:media.ets-lindgren.com",
+      "\"2090\" \"manual\" site:ets-lindgren.com/wp-content/uploads",
+      "\"CO3000\" \"programming\" site:innco-systems.de"
+    ],
+    "result": "수집 가능한 새 2090 매뉴얼 링크를 확인하지 못했다. 기존 URL 검색 색인은 신규 원문/명령 근거로 사용하지 않음."
+  },
+  "unsearched_or_not_established": [
+    "ETS 전체 보관 목록 내용: 3·7페이지 응답404로 내용 확인 불가; 이전2페이지 실패 재시도 없음",
+    "다른 미관찰 URL 및 비공개/로그인 내부 자료",
+    "현장 장비·FW·배선·주소·정지/인터록 동작"
+  ],
+  "no_global_absence_or_private_only_claim": true,
+  "scope_boundary": "5개 신규 공식 경로 관찰 결과다. 모든 공식 자료의 부재·비공개 또는 제품 지원 불가를 확정하지 않는다."
+}

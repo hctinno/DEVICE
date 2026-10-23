@@ -1,0 +1,75 @@
+{
+  "task_id": "FCC-20261023-S06-B0002",
+  "batch_id": "FCC-20261023A-S06-B0002",
+  "attempt": 1,
+  "owner_session": "S06",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v006",
+  "source_request_id": "DEV-EVIDENCE-20261023-002",
+  "request_ids": [
+    "ADD-S06-OFFICIAL-ARCHIVE-MANUAL-GAPS-002"
+  ],
+  "model_ids": [
+    "MOD-f183d948fc590a8b",
+    "MOD-207e69830324252e",
+    "MOD-6b92cbf630670c77"
+  ],
+  "activation": "approved",
+  "prepared_at": "2026-10-23T23:16:06+09:00",
+  "timezone": "Asia/Seoul",
+  "result": "review_complete_with_unresolved_manual_gaps",
+  "request_counts": {
+    "assigned": 1,
+    "reviewed": 1,
+    "completed": 0,
+    "limited": 1,
+    "not_started": 0
+  },
+  "historical_model_counts": {
+    "reviewed": 3,
+    "resolved": 0,
+    "limited_unchanged": 3
+  },
+  "new_original_limit": 2,
+  "new_originals": 0,
+  "new_command_manuals": 0,
+  "public_redistributable_originals": 0,
+  "restricted_new_originals": 0,
+  "route_counts": {
+    "new_public_routes_checked": 5,
+    "http_404": 2,
+    "expected_pdf_returned_html": 1,
+    "other_public_html_pages": 2,
+    "new_target_manuals": 0
+  },
+  "B_existing_originals_hash_verified": 4,
+  "C_existing_input_groups": 3,
+  "new_questions": 0,
+  "prior_open_question_refs": [
+    "S06-Q-001",
+    "S06-Q-002",
+    "S06-Q-003"
+  ],
+  "no_new_user_upload_or_contact_request": true,
+  "important_limits": [
+    "2090 Revision G P#399199은 문서 탐색 대상이며 실제 원문 확보/판본 검증은 여전히 미완료.",
+    "INNCO4P 제품 페이지/카탈로그를 CO3000-4port 명령·동작의 확정 근거로 확대하지 않음.",
+    "색인 HTML·HTTP200·응답 해시를 실제 명령 매뉴얼 확보로 집계하지 않음.",
+    "기존 B0001 결과와 실패 기록을 수정하거나 원문을 재다운로드하지 않음."
+  ],
+  "safety_and_authority": {
+    "previous_failed_urls_retried": 0,
+    "equipment_commands": 0,
+    "facility_network_access": 0,
+    "login": 0,
+    "external_contacts_or_forms": 0,
+    "purchases": 0,
+    "installs": 0,
+    "downloaded_code_execution": 0,
+    "git_commands": 0,
+    "shared_file_writes": 0
+  },
+  "handoff_state": "prepared_for_freeze_p01_intake_pending",
+  "metadata_json_files": 11,
+  "next_action": "기존 B 근거 재사용과 C 입력 위치 확인은 P01이 취합. 실제 다음 배정 수신 전 추가 조사하지 않는다."
+}

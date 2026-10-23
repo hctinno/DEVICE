@@ -1,0 +1,88 @@
+{
+  "task_id": "FCC-20261023-S07-B0003",
+  "as_of": "2026-10-23",
+  "timezone": "Asia/Seoul",
+  "rounds": [
+    {
+      "round": 1,
+      "queries": [
+        "site:qualcomm.com QDART WLAN RF test mode",
+        "site:developer.samsung.com smartphone RF test mode wireless testing",
+        "site:mediatek.gitlab.io \"RF\" \"Wi-Fi\" test"
+      ]
+    },
+    {
+      "round": 2,
+      "queries": [
+        "site:mediatek.gitlab.io \"Wi-Fi\" \"RF test\"",
+        "site:mediatek.gitlab.io \"wifi test\" \"iwpriv\"",
+        "site:developer.samsung.com \"Remote Test Lab\" \"limitations\"",
+        "site:docs.qualcomm.com \"QDART\" \"WLAN\" \"commands\""
+      ]
+    },
+    {
+      "round": 3,
+      "queries": [
+        "MediaTek Genio Wi-Fi RF test mode iwpriv official developer guide",
+        "site:docs.qualcomm.com \"QDART Connectivity User Guide\" \"80-WL400-24\""
+      ]
+    },
+    {
+      "round": 4,
+      "queries": [
+        "site:genio.mediatek.com \"RF\" \"test\" \"Wi-Fi\"",
+        "site:genio.mediatek.com \"set_test_mode\"",
+        "site:genio.mediatek.com \"ated\" \"Wi-Fi\"",
+        "site:developer.samsung.com/remote-test-lab \"test\""
+      ]
+    },
+    {
+      "round": 5,
+      "queries": [
+        "site:genio.mediatek.com/doc wifi",
+        "site:genio.mediatek.com \"QA Tool\"",
+        "site:mediatek.com \"QAtool\" Wi-Fi"
+      ]
+    },
+    {
+      "round": 6,
+      "queries": [
+        "site:genio.mediatek.com \"RF test\" OR \"RFTest\" OR \"WLAN test\"",
+        "site:docs.qualcomm.com \"QCC74\" \"RF Test\" \"QDART\"",
+        "site:qualcomm.com \"QDART Connectivity\" \"Get access\""
+      ]
+    },
+    {
+      "round": 7,
+      "queries": [
+        "site:qualcomm.com/developer \"QDART\"",
+        "site:docs.qualcomm.com \"QDART\" \"smartphone\"",
+        "site:developer.samsung.com \"RF\" \"test mode\" -wallet -watch -payment"
+      ]
+    }
+  ],
+  "queries": 22,
+  "manufacturer_families": [
+    "Qualcomm",
+    "Samsung",
+    "MediaTek"
+  ],
+  "included_scope": "공식 공개 제조사 자료·도구 소개·문서/라이선스 접근 안내",
+  "unsearched_scope": [
+    "로그인·entitlement 안쪽 자료",
+    "제조사 비공개 패키지·실제 대상 모델의 파트너 문서",
+    "다른 제조사 또는 전체 규격/장비 대장"
+  ],
+  "excluded_sources": [
+    {
+      "class": "제3자 문서 미러/커뮤니티",
+      "reason": "제조사 공식 원천으로 사용하지 않았고 Confidential 표시 자료는 원문 취득 대상으로 삼지 않았다."
+    },
+    {
+      "class": "기존 ADB/AOSP 원문",
+      "reason": "기존 배치를 읽기 참조했으며 재다운로드하지 않았다."
+    }
+  ],
+  "raw_response_failure": "Qualcomm software catalog의 직접 HTTP는 JavaScript 실행 안내만 포함했다. 실제 카탈로그/소프트웨어 취득 성공으로 표시하지 않았다.",
+  "post_supplement_policy": "추가 IoT 원문은 취득하지 않았고 QCC74x 1개만 RF 명령 비교용으로 선정했다."
+}

@@ -1,0 +1,100 @@
+{
+  "source_batch": "FCC-20261023A-S03-B0002",
+  "source_task": "FCC-20261023-S03-B0002",
+  "resolved_or_clarified": [
+    {
+      "topic": "표준 식별자",
+      "result_ko": "IEEE 1528-2013, IEC/IEEE 62209-1528:2020, 2026 Amendment 1을 구별한다."
+    },
+    {
+      "topic": "2020판 근거",
+      "result_ko": "최종 KDB에서 기본 SAR 개념으로 참조된 증거를 확인했다. 모든 방법·대역의 포괄 승인으로 확대하지 않는다.",
+      "source_evidence_ids": [
+        "B2-E03",
+        "B2-E04",
+        "B2-E05",
+        "B2-E06",
+        "B2-E08"
+      ]
+    },
+    {
+      "topic": "TCBC 3.2 권위/내용",
+      "result_ko": "FCC 직원 발표의 출처와 임시 RF 노출 지침 범위를 정리했다. 표준 교체 공지로 보지 않는다.",
+      "source_evidence_ids": [
+        "B2-E10",
+        "B2-E11",
+        "B2-E12"
+      ]
+    }
+  ],
+  "remaining": [
+    {
+      "topic": "2026 Amendment 1의 명시적 FCC 허용과 시행일 미확인",
+      "handling": "publisher active와 FCC acceptance를 분리한다. 허용 또는 금지를 추정하지 않는다."
+    },
+    {
+      "topic": "2013/2020판의 최초 FCC 허용일 및 일괄 의무 전환일 미확인",
+      "handling": "표준 발행일·KDB 변경일·체크리스트 전환일을 서로 대체하지 않는다."
+    },
+    {
+      "topic": "KDB 974614 Table A1의 IEEE/IEC 62209-1528-2013 표기와 853844의 or 2013 표기가 정확한 publisher 명칭과 혼합됨",
+      "handling": "원문 문자열을 보존한다. IEEE 1528-2013과 공동표준 2020을 구별하며 존재가 확인되지 않은 새 표준 ID를 만들지 않는다."
+    },
+    {
+      "topic": "974614 listing/body는 v05r04지만 첫 페이지 header는 v05r03",
+      "handling": "기존 source_conflicts 기록과 일치한다. 표지·본문·publication의 차이를 함께 인계하며 원문이나 버전 필드를 고치지 않는다."
+    },
+    {
+      "topic": "표준 전문·정식 라이선스·실제 DUT 및 시험소 인정 입력 미제공",
+      "handling": "공개 카탈로그와 FCC 원문 근거 범위만 반환한다. 실제 SOP·계산·적합성을 승인하지 않는다."
+    },
+    {
+      "topic": "전수 법령·모든 최신/초안 KDB를 완전 탐색한 결과가 아님",
+      "handling": "고정 색인 내 FCC PDF 191개와 정확한 표준명으로 제한된 공식 검색을 수행했다. 검색 부재는 미허용의 증명이 아니다."
+    }
+  ],
+  "no_new_SAR_adoption_evidence_added_here": true,
+  "actual_DUT_and_licensed_text": {
+    "status": "not_provided",
+    "routing": "P01 existing input groups; no direct user request",
+    "groups": [
+      {
+        "group_id": "INPUT-DUT",
+        "title": "실증 DUT와 제조사 시험모드",
+        "status": "awaiting_existing_private_input",
+        "source_questions": [
+          "S01-B0001-Q02",
+          "S02-Q01"
+        ],
+        "request_ids": [
+          "LOCAL-006",
+          "LOCAL-009"
+        ],
+        "needed": "제품/변형·시료 ID·HW/FW·칩셋·b/g/n 모드/채널/대역폭·체인·최대출력·duty cycle·충전/호스트 조건·제조사 도구/라이선스·진입/종료와 응답 근거.",
+        "decision": "S07의 입력 명세로 통합한다. 공개 타제품 자료나 일반 ADB 지원으로 실제 RF 시험모드를 확정하지 않는다.",
+        "available_support": "batches/FCC-20261023A-S07-B0001/dut-testmode-input-spec.json"
+      },
+      {
+        "group_id": "INPUT-LICENSED-STANDARDS",
+        "title": "허가된 표준 원문 접근",
+        "status": "awaiting_existing_private_input",
+        "source_questions": [
+          "S01-B0001-Q01",
+          "S02-Q03"
+        ],
+        "request_ids": [
+          "STD-001",
+          "STD-002",
+          "STD-003",
+          "STD-004",
+          "STD-005",
+          "STD-006",
+          "STD-010",
+          "STD-019"
+        ],
+        "needed": "기존 기관 라이선스로 열람 가능한 C63.10/C63.4/관련 정오표·사이트 표준, ISO/IEC17025 및 불확도 참조의 허가된 접근 위치.",
+        "decision": "원문 미확보와 최신 발행판/허용판 차이를 유지한다. 구매·가입·재배포를 수행하지 않고 이미 보유한 접근 경로만 연결한다."
+      }
+    ]
+  }
+}

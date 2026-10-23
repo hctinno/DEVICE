@@ -1,0 +1,151 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S07-B0003",
+  "task_id": "FCC-20261023-S07-B0003",
+  "owner_session": "S07",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v006",
+  "snapshot_inventory_sha256": "22693b83d23d69ede8df2c9781ac8f13687c84fd345d8881a6b73856ee0d4ed3",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S07-B0003",
+    "owner": "P01",
+    "decision": "content_approved_for_metadata_and_access_notice_only",
+    "source_inventory_verified": true,
+    "findings": [
+      "Five new manufacturer originals passed independent byte/hash/identity checks, including one out-of-scope original retained in the acquisition count.",
+      "QCC74x is an IoT/MFG UART comparator only. P01 confirmed the125-page Rev.AH cover and command pages; AF in the URL is not the retained edition.",
+      "MediaTek access documentation contains an NDA condition and Samsung sources describe Remote Test Lab/RDB app debugging. None establishes a target smartphone RF API.",
+      "No actual smartphone RF gap was closed:16 remain, with no software package, login or device command. Complete originals and rendered/text derivatives remain private."
+    ],
+    "request_outcome": {
+      "completed": 0,
+      "limited": 1,
+      "not_started": 0
+    },
+    "rights_public_document_ids": [],
+    "publication_metadata_files": [
+      "manufacturer-function-matrix.json",
+      "access-notices.json",
+      "rf-gap-delta.json",
+      "rf-command-comparator.json",
+      "uncertainties.json",
+      "search-scope.json"
+    ],
+    "technical_method_approval": false,
+    "hardware_validation": false,
+    "publication_notes_by_document_id": {
+      "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a": "P01 scope: QCC74x IoT MFG comparator; target smartphone support is unverified.",
+      "S07-B0003-mediatek-mt7663-daafe8ad8820": "P01 scope: IoT module access/conditions reference, not a target smartphone RF contract.",
+      "S07-B0003-mediatek-wifi-common-f3a5e381657c": "P01 scope: out-of-scope general IoT source retained for acquisition accounting; not a smartphone RF contract.",
+      "S07-B0003-samsung-remote-test-lab-09a994ff2cce": "P01 scope: app debugging/Remote Test Lab reference, not an OEM RF transmit-mode API.",
+      "S07-B0003-samsung-rdb-guide-a56e40c530db": "P01 scope: app debugging/Remote Test Lab reference, not an OEM RF transmit-mode API."
+    },
+    "outcome_basis": "Metadata research is accepted; the requested full-standard/OEM protocol evidence remains unavailable or limited."
+  },
+  "source_acquisitions": [
+    {
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "d14d107baf6a5a7742d661c8c05b3fde5753e6369ac1ec0c1b744042362b02dc",
+      "original_bytes": 1527517,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://docs.qualcomm.com/bundle/publicresource/80-WL740-5_REV_AF_QCC74x_Hardware_Training_Guide.pdf",
+      "download_url": "https://docs.qualcomm.com/doc/80-WL740-5/80-WL740-5_REV_AF_QCC74x_Hardware_Training_Guide.pdf",
+      "version": "80-WL740-5 Rev. AH (125 pages); URL filename says REV_AF"
+    },
+    {
+      "document_id": "S07-B0003-mediatek-mt7663-daafe8ad8820",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "daafe8ad882084af3300b4886518c404b298a44003066ea6239a865580b8e9a3",
+      "original_bytes": 51827,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-Module-MT7663.html",
+      "download_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-Module-MT7663.html",
+      "version": "IoT Yocto v26.0; current/latest page snapshot 2026-10-23T23:08:16+09:00"
+    },
+    {
+      "document_id": "S07-B0003-mediatek-wifi-common-f3a5e381657c",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "f3a5e381657c0429003373a9a25d85d14778fd365bde467ff5b63432b319da21",
+      "original_bytes": 81780,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-common.html",
+      "download_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-common.html",
+      "version": "IoT Yocto v26.0; current/latest page snapshot 2026-10-23T23:08:17+09:00"
+    },
+    {
+      "document_id": "S07-B0003-samsung-remote-test-lab-09a994ff2cce",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "09a994ff2cce5b98bd54f24def9c831df39e05860ab3e7103f47dd2fc05369f2",
+      "original_bytes": 84537,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://developer.samsung.com/remote-test-lab",
+      "download_url": "https://developer.samsung.com/remote-test-lab",
+      "version": "Web snapshot 2026-10-23T23:08:17+09:00; hardware, firmware and RDB executable versions not pinned by this page"
+    },
+    {
+      "document_id": "S07-B0003-samsung-rdb-guide-a56e40c530db",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "a56e40c530dbdb775501f075504e228dcb52ab7eda4e818e4417677e57c13675",
+      "original_bytes": 88568,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://developer.samsung.com/remote-test-lab/blog/en-us/2022/07/13/connect-to-devices-on-remote-test-lab-using-rdb-in-android-studio",
+      "download_url": "https://developer.samsung.com/remote-test-lab/blog/en/2022/07/13/connect-to-devices-on-remote-test-lab-using-rdb-in-android-studio",
+      "version": "Web snapshot 2026-10-23T23:08:18+09:00; hardware, firmware and RDB executable versions not pinned by this page"
+    }
+  ],
+  "redacted_local_reference_fields": [
+    "/review_images/0/path",
+    "/review_images/1/path",
+    "/review_images/2/path",
+    "/review_images/3/path",
+    "/review_images/4/path",
+    "/review_images/5/path",
+    "/known_source_index",
+    "/originals/0/path",
+    "/originals/0/local_path",
+    "/originals/1/path",
+    "/originals/1/local_path",
+    "/originals/2/path",
+    "/originals/2/local_path",
+    "/originals/3/path",
+    "/originals/3/local_path",
+    "/originals/4/path",
+    "/originals/4/local_path",
+    "/prior_gap_matrix/path"
+  ],
+  "package": {
+    "package_id": "FCC-20261023A-S07-B0003",
+    "path": "materials/packages/FCC-20261023A-S07-B0003.zip",
+    "sha256": "ea75c61dfa8f67dea02c1a89fb97bbe2bc2926da813e07afe97e2b51efcac276",
+    "bytes": 1715,
+    "included_payloads": 0,
+    "access_or_unavailable_records": 5
+  },
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "manufacturer-function-matrix.json",
+    "access-notices.json",
+    "rf-gap-delta.json",
+    "rf-command-comparator.json",
+    "uncertainties.json",
+    "search-scope.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

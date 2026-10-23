@@ -1,0 +1,40 @@
+[
+  {
+    "document_id": "C63-standards-status-20261022-75d45e8ee337",
+    "request_ids": [
+      "ADD-S01-METHOD-ERRATA-ACCESS-004"
+    ],
+    "title": "Status of C63 Standards",
+    "kind": "guidance",
+    "publisher": "USEMCSC C63",
+    "version": "Page heading dated 22 October 2026; historical sections may be stale",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T23:09:32.385975+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public committee page. Whole-file public redistribution permission was not found; retain local original and publish factual metadata only unless P01 confirms rights.",
+    "representation": "original",
+    "source_url": "https://www.c63.org/documents/misc/matrix/c63_standards.htm",
+    "download_url": "https://www.c63.org/documents/misc/matrix/c63_standards.htm",
+    "notes": "New source confirmed against v006 known-source URLs and hashes. Document role: committee_status_and_revision_notice. No account, purchase, form submission or source script execution. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "C63.4-2014-horn-aperture-interpretation-4717bf878589",
+    "request_ids": [
+      "ADD-S01-METHOD-ERRATA-ACCESS-004"
+    ],
+    "title": "C63.4-2014 Clause 4.5 Horn Antenna Aperture interpretation response",
+    "kind": "guidance",
+    "publisher": "ASC C63",
+    "version": "Official file dated 20181207 in filename; document dates retained separately",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T23:09:34.509180+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public interpretation document. Full-file public redistribution permission not established. Not a complete standard or an FCC adoption decision; local-only original.",
+    "representation": "original",
+    "source_url": "https://www.c63.org/documents/misc/interpretations/C63_4_2014_20181207_Clause_4_5_Horn_antenna_aperture.pdf",
+    "download_url": "https://www.c63.org/documents/misc/interpretations/C63_4_2014_20181207_Clause_4_5_Horn_antenna_aperture.pdf",
+    "notes": "New source confirmed against v006 known-source URLs and hashes. Document role: committee_interpretation_not_standard_amendment. No account, purchase, form submission or source script execution. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  }
+]

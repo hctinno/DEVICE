@@ -1,0 +1,109 @@
+{
+  "task_id": "FCC-20261023-S01-B0004",
+  "request_ids": [
+    "ADD-S01-METHOD-ERRATA-ACCESS-004"
+  ],
+  "entries": [
+    {
+      "evidence_id": "S01-B0004-E01",
+      "subject": "C63.10 current incorporated base",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "§15.31(a)(3), §15.37(s), §15.38(f)(4)"
+        }
+      ],
+      "finding_ko": "편입 본판·전환일과 발행기관 정오표/추록을 별도 연결한다."
+    },
+    {
+      "evidence_id": "S01-B0004-E02",
+      "subject": "C63.4/C63.4a scope",
+      "sources": [
+        {
+          "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+          "location": "§15.31(a)(4), §15.38(f)(1)-(2)"
+        },
+        {
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "location": "§2.910(b)(1)-(2), §2.948(d)"
+        }
+      ],
+      "finding_ko": "C63.4의 제외 조항과 사이트 검증용 C63.4a 범위를 보존한다."
+    },
+    {
+      "evidence_id": "S01-B0004-E03",
+      "subject": "Cor1 identifier conflict",
+      "sources": [
+        {
+          "document_id": "KDB-974614-974614-D01-Accredited-Test-Lab-Roles-and-Resp-v05r04-e5148262f2",
+          "location": "References [B10], printed p.9"
+        },
+        {
+          "web_observation_id": "REUSED-IEEE-COR1-DATES"
+        }
+      ],
+      "finding_ko": "KDB의 COR 1-2021과 정식 Cor1-2023을 같은 원문으로 확정하지 않는다."
+    },
+    {
+      "evidence_id": "S01-B0004-E04",
+      "subject": "Free Cor1 access offer",
+      "sources": [
+        {
+          "web_observation_id": "NEW-ANSI-COR1-ACCESS"
+        }
+      ],
+      "finding_ko": "무료 제공 표시를 찾았지만 직접 취득 실패. 이전 구매 필요 기록에 대한 새 접근 경로 후보이며 원문 확보는 아니다."
+    },
+    {
+      "evidence_id": "S01-B0004-E05",
+      "subject": "Public errata scope and copy condition",
+      "sources": [
+        {
+          "web_observation_id": "NEW-IEEE-ERRATA-WEB",
+          "location": "PDF text pp.1-2"
+        }
+      ],
+      "finding_ko": "2024 정정지는 추록의 6 GHz U-NII 부분이다. 무료 열람·조건부 복제와 실제 파일 취득·FCC 허용은 별개다."
+    },
+    {
+      "evidence_id": "S01-B0004-E06",
+      "subject": "Committee status can contain stale passages",
+      "sources": [
+        {
+          "document_id": "C63-standards-status-20261022-75d45e8ee337",
+          "location": "C63.4 and C63.4a detail sections"
+        },
+        {
+          "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+          "location": "§2.948(d)(1)"
+        }
+      ],
+      "finding_ko": "2026-10-22 표제와 과거 발행 예정/awaiting FCC decision 문구가 함께 있다. 확보된 CFR보다 우선하는 최신 규제 근거로 쓰지 않는다."
+    },
+    {
+      "evidence_id": "S01-B0004-E07",
+      "subject": "Interpretation versus amendment",
+      "sources": [
+        {
+          "document_id": "C63.4-2014-horn-aperture-interpretation-4717bf878589",
+          "location": "PDF p.1, Subcommittee Response"
+        }
+      ],
+      "finding_ko": "해석문은 혼 안테나 관련 설명이며, 표준 개정을 수행하는 문서와 구별한다. 첫 페이지를 렌더링해 확인했다."
+    },
+    {
+      "evidence_id": "S01-B0004-E08",
+      "subject": "SAR prior review reused",
+      "sources": [
+        {
+          "reference_id": "S03-B0002-edition-matrix.json"
+        },
+        {
+          "reference_id": "S03-B0002-evidence-index.json"
+        }
+      ],
+      "finding_ko": "2020 기본 개념 참조의 확인 상태를 재사용하고 2026 amendment 승인 미확인은 그대로 둔다."
+    }
+  ],
+  "technical_approval": false
+}

@@ -1,0 +1,18 @@
+{
+  "request_id": "DEV-EVIDENCE-20261023-002",
+  "prepared_at": "2026-10-23T23:18:42.379644+09:00",
+  "collection_review_state": "four_bounded_batches_reviewed",
+  "new_local_originals": 7,
+  "new_public_originals": 0,
+  "new_raw_measurement_files": 0,
+  "new_OEM_RF_software_packages": 0,
+  "actual_smartphone_RF_gaps_remaining": 16,
+  "remaining_target_controller_manuals": 3,
+  "historical_limited_six": {
+    "status": "not_silently_reclassified",
+    "audit": "limited-audit.json"
+  },
+  "intake": "intake-v1.json",
+  "user_inputs": "user-materials.md",
+  "scope_limits": "The reviewed routes do not prove global unavailability. Actual DUT, asset, licensed material and field evidence are still needed before physical integration."
+}

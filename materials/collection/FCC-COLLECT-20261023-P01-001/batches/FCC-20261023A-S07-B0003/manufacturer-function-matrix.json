@@ -1,0 +1,441 @@
+{
+  "task_id": "FCC-20261023-S07-B0003",
+  "families": [
+    {
+      "manufacturer": "Qualcomm",
+      "smartphone_tool_focus": "QDART/QSPR/QUTS",
+      "selection_class": "access_guide_only_for_smartphone",
+      "source_access_ids": [
+        "S07-B0003-A01",
+        "S07-B0003-A02",
+        "S07-B0003-A03"
+      ],
+      "original_comparator_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "product_firmware_scope": "실제 스마트폰·칩셋·FW는 미지정. 카탈로그의 QDART 문서 Rev E는 실제 도구 버전이 아니다. QCC74x MFG 자료는 IoT 비교만 허용.",
+      "permissions": "공식 목록에서 다운로드 로그인 안내와 QPM 배포 경로를 확인했다. 라이선스/entitlement의 실제 부여·설치·로그인은 수행하지 않았다.",
+      "functions": [
+        {
+          "gap_id": "S07-RF-01",
+          "function": "실제 DUT·시험 FW·도구 식별",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-02",
+          "function": "b/g/n RF 시험모드 진입",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-03",
+          "function": "b/g/n RF 시험모드 해제",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-04",
+          "function": "RF 송신 시작",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-05",
+          "function": "RF 송신 중단",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-06",
+          "function": "채널/주파수 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-07",
+          "function": "대역폭 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-08",
+          "function": "b/g/n PHY·변조·속도 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-09",
+          "function": "송신 체인·안테나 선택·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-10",
+          "function": "출력 목표 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-11",
+          "function": "패킷 구성",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-12",
+          "function": "듀티/송신 시간 제어·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-13",
+          "function": "튜너·출력제어·동시송신 상태",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-14",
+          "function": "현재 RF 송신/시험모드 상태 조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-15",
+          "function": "오류·시간초과·취소·재접속 복구",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-16",
+          "function": "제조사 로그·결과 API와 export",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        }
+      ],
+      "comparator": "별도 rf-command-comparator.json의 10개 항목은 QCC74x에 한정한다."
+    },
+    {
+      "manufacturer": "MediaTek",
+      "smartphone_tool_focus": "제조사 WLAN RF 도구 공개 자료",
+      "selection_class": "official_NDA_access_information_in_embedded_scope",
+      "source_access_ids": [
+        "S07-B0003-A04"
+      ],
+      "original_evidence_ids": [
+        "S07-B0003-mediatek-mt7663-daafe8ad8820"
+      ],
+      "product_firmware_scope": "공식 근거는 IoT Yocto v26.0의 Genio MT7663S/AW-CB451NF 문맥. 실제 스마트폰 모뎀·Wi-Fi 칩셋·FW·도구 버전은 미지정.",
+      "permissions": "해당 MT7663S 스택·wifitest의 NDA 조건만 확인했다. 이를 MediaTek 모든 제품의 동일 조건으로 일반화하지 않는다.",
+      "functions": [
+        {
+          "gap_id": "S07-RF-01",
+          "function": "실제 DUT·시험 FW·도구 식별",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-02",
+          "function": "b/g/n RF 시험모드 진입",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-03",
+          "function": "b/g/n RF 시험모드 해제",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-04",
+          "function": "RF 송신 시작",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-05",
+          "function": "RF 송신 중단",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-06",
+          "function": "채널/주파수 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-07",
+          "function": "대역폭 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-08",
+          "function": "b/g/n PHY·변조·속도 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-09",
+          "function": "송신 체인·안테나 선택·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-10",
+          "function": "출력 목표 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-11",
+          "function": "패킷 구성",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-12",
+          "function": "듀티/송신 시간 제어·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-13",
+          "function": "튜너·출력제어·동시송신 상태",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-14",
+          "function": "현재 RF 송신/시험모드 상태 조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-15",
+          "function": "오류·시간초과·취소·재접속 복구",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-16",
+          "function": "제조사 로그·결과 API와 export",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        }
+      ],
+      "comparator": "NDA 안내는 명령 API 원문 확보가 아니다. 일반 Wi-Fi 연결 문서는 범위 밖 보존으로 분리했다."
+    },
+    {
+      "manufacturer": "Samsung",
+      "smartphone_tool_focus": "Galaxy 개발/시험 자료와 Remote Test Lab/RDB",
+      "selection_class": "smartphone_app_test_and_debug_access_only",
+      "source_access_ids": [
+        "S07-B0003-A05"
+      ],
+      "original_evidence_ids": [
+        "S07-B0003-samsung-remote-test-lab-09a994ff2cce",
+        "S07-B0003-samsung-rdb-guide-a56e40c530db"
+      ],
+      "product_firmware_scope": "공개 서비스 페이지에 Galaxy 대상은 있으나 실제 DUT·정확한 모델/FW·공장 RF 프로그램은 지정되지 않았다.",
+      "permissions": "Samsung 계정·원격 기기 선택·RDB/ADB 클라이언트·RSA 승인 절차가 설명된다. 서비스 예약·기기 접속·설치는 수행하지 않았다.",
+      "functions": [
+        {
+          "gap_id": "S07-RF-01",
+          "function": "실제 DUT·시험 FW·도구 식별",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-02",
+          "function": "b/g/n RF 시험모드 진입",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-03",
+          "function": "b/g/n RF 시험모드 해제",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-04",
+          "function": "RF 송신 시작",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-05",
+          "function": "RF 송신 중단",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-06",
+          "function": "채널/주파수 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-07",
+          "function": "대역폭 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-08",
+          "function": "b/g/n PHY·변조·속도 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-09",
+          "function": "송신 체인·안테나 선택·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-10",
+          "function": "출력 목표 설정·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-11",
+          "function": "패킷 구성",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-12",
+          "function": "듀티/송신 시간 제어·조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-13",
+          "function": "튜너·출력제어·동시송신 상태",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-14",
+          "function": "현재 RF 송신/시험모드 상태 조회",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-15",
+          "function": "오류·시간초과·취소·재접속 복구",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        },
+        {
+          "gap_id": "S07-RF-16",
+          "function": "제조사 로그·결과 API와 export",
+          "status": "unavailable",
+          "actual_smartphone_compatibility": "not_verified",
+          "api_signature": null,
+          "raw_oem_response": null
+        }
+      ],
+      "comparator": "앱 실행/디버깅과 RF 송신 시험은 별도이며 RF API 미확보를 유지한다."
+    }
+  ],
+  "smartphone_functions_confirmed": 0,
+  "all_vendor_response_examples_acquired": false,
+  "tool_or_example_execution_performed": false
+}

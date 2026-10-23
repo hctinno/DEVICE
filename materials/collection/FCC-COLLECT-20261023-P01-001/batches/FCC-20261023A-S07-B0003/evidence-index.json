@@ -1,0 +1,223 @@
+{
+  "task_id": "FCC-20261023-S07-B0003",
+  "created_at": "2026-10-23T23:11:50.000+09:00",
+  "evidence": [
+    {
+      "evidence_id": "S07-B0003-E01",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "location": {
+        "type": "PDF",
+        "section": "1 Overview",
+        "pdf_pages_1based": [
+          4,
+          5
+        ],
+        "printed_pages": [
+          4,
+          5
+        ]
+      },
+      "finding": "QCC74x는 1x1 2.4GHz b/g/n/ax IoT SoC이며 문서에 HT20/HT40이 명시된다.",
+      "scope": "QCC74x comparison only",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    },
+    {
+      "evidence_id": "S07-B0003-E02",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "location": {
+        "type": "PDF",
+        "section": "3.6 / 3.8",
+        "pdf_pages_1based": [
+          45,
+          56,
+          57
+        ],
+        "printed_pages": [
+          45,
+          56,
+          57
+        ]
+      },
+      "finding": "MFG FW 전제, UART 115200·8 data bits·no parity·CRLF와 H/mfg handshake를 명시한다. stop bit는 본문에서 고정하지 않았다.",
+      "scope": "QCC74x MFG firmware only",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    },
+    {
+      "evidence_id": "S07-B0003-E03",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "location": {
+        "type": "PDF",
+        "section": "3.8 Wi-Fi",
+        "pdf_pages_1based": [
+          58,
+          59
+        ],
+        "printed_pages": [
+          58,
+          59
+        ]
+      },
+      "finding": "송신 on/off, b/g/n 변조·채널·출력 명령이 있으나 목표 스마트폰에 대한 근거는 아니다.",
+      "scope": "QCC74x comparison only",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    },
+    {
+      "evidence_id": "S07-B0003-E04",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "location": {
+        "type": "PDF",
+        "section": "3.6 / 3.8",
+        "pdf_pages_1based": [
+          46,
+          48,
+          60,
+          62
+        ],
+        "printed_pages": [
+          46,
+          48,
+          60,
+          62
+        ]
+      },
+      "finding": "패킷 길이·빈도·듀티 예제 및 조회 항목을 확인했다. 빈도 단위·전체 setter 응답·일부 구문에는 추가 확인이 필요하다.",
+      "scope": "QCC74x comparison only",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    },
+    {
+      "evidence_id": "S07-B0003-E05",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "location": {
+        "type": "PDF",
+        "section": "3.8 Get / Get(cont.) / Set",
+        "pdf_pages_1based": [
+          62,
+          63,
+          64
+        ],
+        "printed_pages": [
+          62,
+          63,
+          64
+        ]
+      },
+      "finding": "FW 버전·빌드·현재 power/channel/tx·MFG CW mode 조회가 있다. 일반 시험 FW 종료와 CW 모드를 혼동하지 않는다.",
+      "scope": "QCC74x comparison only",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    },
+    {
+      "evidence_id": "S07-B0003-E06",
+      "document_id": "S07-B0003-mediatek-mt7663-daafe8ad8820",
+      "location": {
+        "type": "HTML",
+        "section_id": "proprietary-software-stack-for-mt7663s",
+        "heading": "Proprietary Software Stack for MT7663S",
+        "raw_html_line_start": 583
+      },
+      "finding": "MT7663S 스택에는 NDA가 필요하다고 명시한다.",
+      "scope": "Genio MT7663S access conditions",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    },
+    {
+      "evidence_id": "S07-B0003-E07",
+      "document_id": "S07-B0003-mediatek-mt7663-daafe8ad8820",
+      "location": {
+        "type": "HTML",
+        "section_id": "open-source-tools-iwpriv-from-legacy-wireless-tools-for-mt7663",
+        "heading": "Open Source Tools iwpriv / SOP",
+        "raw_html_line_start": 601
+      },
+      "finding": "iwpriv는 deprecated이며 wifitest는 NDA 도구다. 공개 SOP의 버전 조회를 RF 송신 명령으로 해석하지 않는다.",
+      "scope": "Genio MT7663S access conditions",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    },
+    {
+      "evidence_id": "S07-B0003-E08",
+      "document_id": "S07-B0003-samsung-rdb-guide-a56e40c530db",
+      "location": {
+        "type": "HTML",
+        "section_id": "Connect-remote-device",
+        "heading": "Connect remote device",
+        "raw_html_line_start": 994
+      },
+      "finding": "RDB 클라이언트 연결·Disconnect 표시·RSA 허용 조건을 설명한다. RF 모드 명령은 없다.",
+      "scope": "Samsung remote app debugging only",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    },
+    {
+      "evidence_id": "S07-B0003-E09",
+      "document_id": "S07-B0003-samsung-remote-test-lab-09a994ff2cce",
+      "location": {
+        "type": "HTML",
+        "heading": "How to get started",
+        "raw_html_line_start": 996
+      },
+      "finding": "삼성 기기를 대상으로 앱을 시험하는 서비스이며 가입·선택 절차를 안내한다.",
+      "scope": "Samsung app-test access context",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    },
+    {
+      "evidence_id": "S07-B0003-E10",
+      "access_id": "S07-B0003-A01",
+      "location": {
+        "type": "official_catalog_row",
+        "source_url": "https://docs.qualcomm.com/list?product=1611373424801094",
+        "document_number": "80-WL400-24",
+        "revision": "E",
+        "date": "2019-04-19"
+      },
+      "finding": "QDART 문서 식별자·판본만 확인했다. PDF/API 본문과 해당 실제 도구 버전은 미확보다.",
+      "scope": "access metadata only",
+      "review_status": "document_review_only",
+      "actual_device_verified": false
+    }
+  ],
+  "rights": "원문은 unknown/local-only. 이 색인은 자체 작성한 사실·위치 요약이며 공개 원본 허가를 뜻하지 않는다.",
+  "review_images": [
+    {
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "page": 57,
+      "path": "[local-only derivative or original; not included in public payload]",
+      "visual_review": "readable; text/field labels checked"
+    },
+    {
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "page": 58,
+      "path": "[local-only derivative or original; not included in public payload]",
+      "visual_review": "readable; text/field labels checked"
+    },
+    {
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "page": 59,
+      "path": "[local-only derivative or original; not included in public payload]",
+      "visual_review": "readable; text/field labels checked"
+    },
+    {
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "page": 62,
+      "path": "[local-only derivative or original; not included in public payload]",
+      "visual_review": "readable; text/field labels checked"
+    },
+    {
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "page": 63,
+      "path": "[local-only derivative or original; not included in public payload]",
+      "visual_review": "readable; text/field labels checked"
+    },
+    {
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "page": 64,
+      "path": "[local-only derivative or original; not included in public payload]",
+      "visual_review": "readable; text/field labels checked"
+    }
+  ]
+}

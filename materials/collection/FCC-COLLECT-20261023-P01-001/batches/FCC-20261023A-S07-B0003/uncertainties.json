@@ -1,0 +1,63 @@
+{
+  "task_id": "FCC-20261023-S07-B0003",
+  "items": [
+    {
+      "issue_id": "S07-U01",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "pages": [
+        1
+      ],
+      "issue": "다운로드 URL에 REV_AF, 원문 표지·footer에 Rev. AH",
+      "handling": "실제 bytes의 Rev. AH로 기록하고 URL 불일치를 보존한다."
+    },
+    {
+      "issue_id": "S07-U02",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "pages": [
+        4,
+        5,
+        58
+      ],
+      "issue": "SoC 개요는 HT20/HT40인데 11ax 일반 명령표에는 80/160 index가 포함됨",
+      "handling": "QCC74x의 80/160 지원을 주장하지 않는다. b/g/n 비교 범위 밖 인덱스는 적용 미확인."
+    },
+    {
+      "issue_id": "S07-U03",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "pages": [
+        46,
+        48,
+        58
+      ],
+      "issue": "mlm27 예제와 11n 문법의 coding type 항목이 완전히 일치하는지 미확인",
+      "handling": "파라미터를 임의 보충하거나 실제 실행 가능한 명령이라고 표시하지 않는다."
+    },
+    {
+      "issue_id": "S07-U04",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "pages": [
+        60,
+        63
+      ],
+      "issue": "f/y:f frequency 필드 단위와 전체 허용값이 불명확",
+      "handling": "Hz·ms·패킷/s 등으로 추정하지 않는다."
+    },
+    {
+      "issue_id": "S07-U05",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "pages": [
+        62,
+        63,
+        64
+      ],
+      "issue": "상태 조회·CW 모드와 정상 FW 복귀/독립 RF OFF 검증의 차이",
+      "handling": "y:t/y:M 또는 M0를 일반 스마트폰 시험종료 계약으로 승격하지 않는다."
+    },
+    {
+      "issue_id": "S07-U06",
+      "source_url": "https://www.qualcomm.com/developer/software/list",
+      "issue": "직접 HTTP는200이지만 카탈로그본문 없는 접근 셸",
+      "handling": "원문 확보로 집계하지 않는다. 1회 보존 재시도 응답과 최초 실패 메타데이터를 별도 보존했다."
+    }
+  ]
+}

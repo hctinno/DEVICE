@@ -1,0 +1,135 @@
+{
+  "task_id": "FCC-20261023-S06-B0002",
+  "batch_id": "FCC-20261023A-S06-B0002",
+  "attempt": 1,
+  "owner_session": "S06",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v006",
+  "source_request_id": "DEV-EVIDENCE-20261023-002",
+  "request_ids": [
+    "ADD-S06-OFFICIAL-ARCHIVE-MANUAL-GAPS-002"
+  ],
+  "model_ids": [
+    "MOD-f183d948fc590a8b",
+    "MOD-207e69830324252e",
+    "MOD-6b92cbf630670c77"
+  ],
+  "existing_source_reuse_B": [
+    {
+      "category": "B",
+      "owner": "S06",
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "document_id": "S06-ets-manuals-index-383dba3d17af",
+      "title": "ETS-Lindgren current and archived manuals index",
+      "version": "Undated current/archive index; snapshot 2026-10-23; not a 2090 manual",
+      "source_url": "https://www.ets-lindgren.com/manuals/",
+      "source_path_inside_public_package": null,
+      "source_path_inside_public_package_reason": "P01 게시 영수증의 included_payloads=0; 원본은 로컬 제한 보관만 함.",
+      "source_path_inside_local_batch": "[local-only derivative or original; not included in public payload]",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "383dba3d17af35695e5bed8adb6885fee06cdc01f2f8fd216ecb5ce44c5269b7",
+      "bytes": 340130,
+      "rights": "unknown",
+      "reuse_limit": "문서 색인·제품군·공개 제품 사양의 범위. 정확한 명령·설치 상태·인터록 근거로 확대하지 않는다."
+    },
+    {
+      "category": "B",
+      "owner": "S06",
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "document_id": "S06-innco-co3000-4p-product-a9a5ddfd5681",
+      "title": "INNCO Controller CO3000-4P official product page",
+      "version": "Undated CO3000-4P product web page; firmware revision unstated; snapshot 2026-10-23",
+      "source_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+      "source_path_inside_public_package": null,
+      "source_path_inside_public_package_reason": "P01 게시 영수증의 included_payloads=0; 원본은 로컬 제한 보관만 함.",
+      "source_path_inside_local_batch": "[local-only derivative or original; not included in public payload]",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "a9a5ddfd5681cd038612a68196cf07bc73704d2f00feb92c0e651af7792dfde0",
+      "bytes": 14199,
+      "rights": "unknown",
+      "reuse_limit": "문서 색인·제품군·공개 제품 사양의 범위. 정확한 명령·설치 상태·인터록 근거로 확대하지 않는다."
+    },
+    {
+      "category": "B",
+      "owner": "S06",
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "document_id": "S06-ets-2090-official-case-study-ba4374369e9b",
+      "title": "ETS-Lindgren PC Test Engineering Laboratory: Model 2090 description",
+      "version": "Undated official case-study web page; snapshot 2026-10-23",
+      "source_url": "https://www.ets-lindgren.com/case-studies/pc-test-engineering-laboratory/",
+      "source_path_inside_public_package": null,
+      "source_path_inside_public_package_reason": "P01 게시 영수증의 included_payloads=0; 원본은 로컬 제한 보관만 함.",
+      "source_path_inside_local_batch": "[local-only derivative or original; not included in public payload]",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "ba4374369e9bf82dda07206db72f1df1070bd39d51e9f0038b4669042f7ed31d",
+      "bytes": 305658,
+      "rights": "unknown",
+      "reuse_limit": "문서 색인·제품군·공개 제품 사양의 범위. 정확한 명령·설치 상태·인터록 근거로 확대하지 않는다."
+    },
+    {
+      "category": "B",
+      "owner": "S01",
+      "batch_id": "FCC-REFERENCES-20261023-005",
+      "document_id": "INNCO-Systems-innco-Katalog-2017-03-17-MR.pdf-ea42a0e496",
+      "title": "INNCO product catalogue, 2017 filename",
+      "source_url": "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf",
+      "source_path_inside_public_package": null,
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "443522a64c71c81542759802e3e67a623433729058ec2f023684f1ff7f2540ed",
+      "bytes": 15395932,
+      "rights": "unknown",
+      "evidence_location": {
+        "pdf_page_1_based": 102,
+        "section": "6.2 CONTROLLERS (CO)"
+      },
+      "reuse_limit": "CO3000-4p 사양/1D 구분에만 재사용. -4port 동일성·명령/상태/정지/인터록은 미확인."
+    }
+  ],
+  "duplicate_checks": [
+    {
+      "observed_on_route": "innco-german-download-list",
+      "observed_url": "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf",
+      "canonical_url": "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf",
+      "same_target_url_as_existing": true,
+      "existing_document_id": "INNCO-Systems-innco-Katalog-2017-03-17-MR.pdf-ea42a0e496",
+      "existing_verified_sha256": "443522a64c71c81542759802e3e67a623433729058ec2f023684f1ff7f2540ed",
+      "candidate_new_sha256": null,
+      "candidate_downloaded": false,
+      "comparison_basis": "직접 링크는 기존 카탈로그와 같은 URL. 새 바이트를 받지 않았으므로 신규 응답과 해시가 같다고 주장하지 않는다."
+    },
+    {
+      "observed_on_route": "innco-german-download-list",
+      "observed_url": "https://www.innco-systems.de/de/downloads/katalog?file=files/Dateien/innco-Katalog-2017-03-17-MR.pdf",
+      "canonical_url": "https://www.innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf",
+      "same_target_url_as_existing": true,
+      "existing_document_id": "INNCO-Systems-innco-Katalog-2017-03-17-MR.pdf-ea42a0e496",
+      "existing_verified_sha256": "443522a64c71c81542759802e3e67a623433729058ec2f023684f1ff7f2540ed",
+      "candidate_new_sha256": null,
+      "candidate_downloaded": false,
+      "comparison_basis": "file 쿼리의 대상 파일 경로가 기존 카탈로그와 같아 중복 취득을 생략. 신규 원본 해시는 없음."
+    }
+  ],
+  "previous_failure_records": [
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "6a050d54a96632b4b52913996ee5e353ecdaa4666c382f535ca67be12ad3bb3e",
+      "not_retried": true,
+      "fact": "기존 PDF URL은 목록 HTML로 redirect; 원문 아님."
+    },
+    {
+      "path": "[local-only reference retained by P01]",
+      "sha256": "978d77eddd3e6290dc0a211df7be24ae0e25624ea5a677d9d1e76fbefb9162a3",
+      "not_retried": true,
+      "fact": "기존 영문 PDF 링크는 HTML 응답; 원문 아님."
+    }
+  ],
+  "previous_ready_all_files_sha256": "30742dd8a47f2095862948376bfc0e00a68664327cbb98cbf629da97fa90ad48",
+  "known_source_index": {
+    "path": "[local-only reference retained by P01]",
+    "sha256": "8b612566cae37d078f5183068ebab710739fea6041efd2ddcf59db81d95447fa"
+  },
+  "audit_source": {
+    "path": "materials/collection/FCC-COLLECT-20261023-P01-001/additional-evidence/DEV-EVIDENCE-20261023-002/limited-audit.json",
+    "sha256": "4e324e81ac34c612110ae3ac0d4ed88c6d89bd3b9f972330b3c6465ab866bab6"
+  }
+}

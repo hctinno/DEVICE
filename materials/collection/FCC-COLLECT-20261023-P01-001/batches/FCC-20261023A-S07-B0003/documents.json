@@ -1,0 +1,102 @@
+[
+  {
+    "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+    "request_ids": [
+      "ADD-S07-PUBLIC-SMARTPHONE-RF-TOOLS-003"
+    ],
+    "title": "QCC74x Hardware Training Guide",
+    "kind": "manual",
+    "version": "80-WL740-5 Rev. AH (125 pages); URL filename says REV_AF",
+    "publisher": "Qualcomm",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T23:08:16+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source retrieved anonymously. No permission to redistribute the entire original or extraction in a public repository has been established; retain under local restriction. Linked software was not downloaded or executed.",
+    "representation": "original",
+    "source_url": "https://docs.qualcomm.com/bundle/publicresource/80-WL740-5_REV_AF_QCC74x_Hardware_Training_Guide.pdf",
+    "download_url": "https://docs.qualcomm.com/doc/80-WL740-5/80-WL740-5_REV_AF_QCC74x_Hardware_Training_Guide.pdf",
+    "model_ids": [],
+    "notes": "Original entity bytes preserved; actual DUT is not designated and no tool or device command was executed. Printed edition AH differs from AF in the URL filename. Product scope is the QCC74x IoT SoC and its MFG firmware, not an identified smartphone or generic QDART. P01 scope: QCC74x IoT MFG comparator; target smartphone support is unverified. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S07-B0003-mediatek-mt7663-daafe8ad8820",
+    "request_ids": [
+      "ADD-S07-PUBLIC-SMARTPHONE-RF-TOOLS-003"
+    ],
+    "title": "MT7663 Module — IoT Yocto v26.0 documentation",
+    "kind": "manual",
+    "version": "IoT Yocto v26.0; current/latest page snapshot 2026-10-23T23:08:16+09:00",
+    "publisher": "MediaTek",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T23:08:16+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source retrieved anonymously. No permission to redistribute the entire original or extraction in a public repository has been established; retain under local restriction. Linked software was not downloaded or executed.",
+    "representation": "original",
+    "source_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-Module-MT7663.html",
+    "download_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-Module-MT7663.html",
+    "model_ids": [],
+    "notes": "Original entity bytes preserved; actual DUT is not designated and no tool or device command was executed. P01 scope: IoT module access/conditions reference, not a target smartphone RF contract. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S07-B0003-mediatek-wifi-common-f3a5e381657c",
+    "request_ids": [
+      "ADD-S07-PUBLIC-SMARTPHONE-RF-TOOLS-003"
+    ],
+    "title": "Wi-Fi — IoT Yocto v26.0 documentation",
+    "kind": "manual",
+    "version": "IoT Yocto v26.0; current/latest page snapshot 2026-10-23T23:08:17+09:00",
+    "publisher": "MediaTek",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T23:08:17+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source retrieved anonymously. No permission to redistribute the entire original or extraction in a public repository has been established; retain under local restriction. Linked software was not downloaded or executed.",
+    "representation": "original",
+    "source_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-common.html",
+    "download_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-common.html",
+    "model_ids": [],
+    "notes": "Original entity bytes preserved; actual DUT is not designated and no tool or device command was executed. P01 scope: out-of-scope general IoT source retained for acquisition accounting; not a smartphone RF contract. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S07-B0003-samsung-remote-test-lab-09a994ff2cce",
+    "request_ids": [
+      "ADD-S07-PUBLIC-SMARTPHONE-RF-TOOLS-003"
+    ],
+    "title": "Remote Test Lab",
+    "kind": "other",
+    "version": "Web snapshot 2026-10-23T23:08:17+09:00; hardware, firmware and RDB executable versions not pinned by this page",
+    "publisher": "Samsung",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T23:08:17+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source retrieved anonymously. No permission to redistribute the entire original or extraction in a public repository has been established; retain under local restriction. Linked software was not downloaded or executed.",
+    "representation": "original",
+    "source_url": "https://developer.samsung.com/remote-test-lab",
+    "download_url": "https://developer.samsung.com/remote-test-lab",
+    "model_ids": [],
+    "notes": "Original entity bytes preserved; actual DUT is not designated and no tool or device command was executed. P01 scope: app debugging/Remote Test Lab reference, not an OEM RF transmit-mode API. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  },
+  {
+    "document_id": "S07-B0003-samsung-rdb-guide-a56e40c530db",
+    "request_ids": [
+      "ADD-S07-PUBLIC-SMARTPHONE-RF-TOOLS-003"
+    ],
+    "title": "Connect to Devices on Remote Test Lab Using RDB in Android Studio",
+    "kind": "manual",
+    "version": "Web snapshot 2026-10-23T23:08:18+09:00; hardware, firmware and RDB executable versions not pinned by this page",
+    "publisher": "Samsung",
+    "published_at": null,
+    "retrieved_at": "2026-10-23T23:08:18+09:00",
+    "status": "read_only",
+    "rights": "unknown",
+    "rights_notes": "Official public source retrieved anonymously. No permission to redistribute the entire original or extraction in a public repository has been established; retain under local restriction. Linked software was not downloaded or executed.",
+    "representation": "original",
+    "source_url": "https://developer.samsung.com/remote-test-lab/blog/en-us/2022/07/13/connect-to-devices-on-remote-test-lab-using-rdb-in-android-studio",
+    "download_url": "https://developer.samsung.com/remote-test-lab/blog/en/2022/07/13/connect-to-devices-on-remote-test-lab-using-rdb-in-android-studio",
+    "model_ids": [],
+    "notes": "Original entity bytes preserved; actual DUT is not designated and no tool or device command was executed. P01 scope: app debugging/Remote Test Lab reference, not an OEM RF transmit-mode API. P01 publication: original acquired and hash-verified locally, but its complete bytes are excluded because redistribution permission is unconfirmed or internal. This is an access notice, not original delivery."
+  }
+]

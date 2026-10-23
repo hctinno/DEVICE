@@ -1,0 +1,93 @@
+{
+  "task_id": "FCC-20261023-S07-B0003",
+  "created_at": "2026-10-23T23:11:50.000+09:00",
+  "known_source_index": "[local-only reference retained by P01]",
+  "known_source_index_sha256": "8b612566cae37d078f5183068ebab710739fea6041efd2ddcf59db81d95447fa",
+  "originals": [
+    {
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "source_url": "https://docs.qualcomm.com/bundle/publicresource/80-WL740-5_REV_AF_QCC74x_Hardware_Training_Guide.pdf",
+      "download_url": "https://docs.qualcomm.com/doc/80-WL740-5/80-WL740-5_REV_AF_QCC74x_Hardware_Training_Guide.pdf",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "d14d107baf6a5a7742d661c8c05b3fde5753e6369ac1ec0c1b744042362b02dc",
+      "bytes": 1527517,
+      "version": "80-WL740-5 Rev. AH (125 pages); URL filename says REV_AF",
+      "rights": "unknown",
+      "selection_role": "embedded_rf_command_comparator",
+      "selected_as_smartphone_rf_proof": false,
+      "reason": "QCC74x IoT MFG 명령 비교용 유일 원문. QDART·스마트폰 API로 일반화하지 않는다."
+    },
+    {
+      "document_id": "S07-B0003-mediatek-mt7663-daafe8ad8820",
+      "source_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-Module-MT7663.html",
+      "download_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-Module-MT7663.html",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "daafe8ad882084af3300b4886518c404b298a44003066ea6239a865580b8e9a3",
+      "bytes": 51827,
+      "version": "IoT Yocto v26.0; current/latest page snapshot 2026-10-23T23:08:16+09:00",
+      "rights": "unknown",
+      "selection_role": "vendor_access_conditions",
+      "selected_as_smartphone_rf_proof": false,
+      "reason": "Genio MT7663S의 NDA 스택·wifitest 제공 조건. RF 명령 원문 비교용으로 집계하지 않는다."
+    },
+    {
+      "document_id": "S07-B0003-samsung-remote-test-lab-09a994ff2cce",
+      "source_url": "https://developer.samsung.com/remote-test-lab",
+      "download_url": "https://developer.samsung.com/remote-test-lab",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "09a994ff2cce5b98bd54f24def9c831df39e05860ab3e7103f47dd2fc05369f2",
+      "bytes": 84537,
+      "version": "Web snapshot 2026-10-23T23:08:17+09:00; hardware, firmware and RDB executable versions not pinned by this page",
+      "rights": "unknown",
+      "selection_role": "smartphone_app_test_access_context",
+      "selected_as_smartphone_rf_proof": false,
+      "reason": "Samsung 스마트폰 대상 원격 앱 시험 서비스의 공개 진입 안내이며 공장 RF 모드 근거가 아니다."
+    },
+    {
+      "document_id": "S07-B0003-samsung-rdb-guide-a56e40c530db",
+      "source_url": "https://developer.samsung.com/remote-test-lab/blog/en-us/2022/07/13/connect-to-devices-on-remote-test-lab-using-rdb-in-android-studio",
+      "download_url": "https://developer.samsung.com/remote-test-lab/blog/en/2022/07/13/connect-to-devices-on-remote-test-lab-using-rdb-in-android-studio",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "a56e40c530dbdb775501f075504e228dcb52ab7eda4e818e4417677e57c13675",
+      "bytes": 88568,
+      "version": "Web snapshot 2026-10-23T23:08:18+09:00; hardware, firmware and RDB executable versions not pinned by this page",
+      "rights": "unknown",
+      "selection_role": "smartphone_app_debug_access_context",
+      "selected_as_smartphone_rf_proof": false,
+      "reason": "Samsung RDB의 앱 디버깅 접근·계정/클라이언트/승인 조건이며 RF API가 아니다."
+    },
+    {
+      "document_id": "S07-B0003-mediatek-wifi-common-f3a5e381657c",
+      "source_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-common.html",
+      "download_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-common.html",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "f3a5e381657c0429003373a9a25d85d14778fd365bde467ff5b63432b319da21",
+      "bytes": 81780,
+      "version": "IoT Yocto v26.0; current/latest page snapshot 2026-10-23T23:08:17+09:00",
+      "rights": "unknown",
+      "selection_role": "out_of_scope_preserved",
+      "selected_as_smartphone_rf_proof": false,
+      "reason": "보충 지시 전에 받은 일반 IoT SoftAP/연결 설명. 원문·해시를 보존하되 우선 RF 근거와 공백 해소 집계에서 제외한다."
+    }
+  ],
+  "prior_gap_matrix": {
+    "batch_id": "FCC-20261023A-S07-B0002",
+    "path": "[local-only reference retained by P01]",
+    "publication_sha": "33d19ae3a0da8dbd5911c1b4ef038f83815a5219"
+  },
+  "supplement_ack": {
+    "selection_rule": "RF 명령 비교용 임베디드 원문은 QCC74x 1개만 선택한다.",
+    "retained_total_new_originals": 5,
+    "retained_out_of_scope": [
+      "S07-B0003-mediatek-wifi-common-f3a5e381657c"
+    ],
+    "no_new_iot_fillers_after_supplement": true,
+    "source_count_rule": "선정 제외 자료를 신규 취득 수에서 빼지 않았다."
+  },
+  "preservation": "기존 ready/snapshot과 기존 원문·실패 기록은 변경하지 않았다. 새5개 원문 모두 자기 제한경로에 보존한다."
+}

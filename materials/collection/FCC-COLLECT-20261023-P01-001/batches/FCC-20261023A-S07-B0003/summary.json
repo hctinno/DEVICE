@@ -1,0 +1,55 @@
+{
+  "task_id": "FCC-20261023-S07-B0003",
+  "batch_id": "FCC-20261023A-S07-B0003",
+  "attempt": 1,
+  "owner_session": "S07",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v006",
+  "source_request_id": "DEV-EVIDENCE-20261023-002",
+  "created_at": "2026-10-23T23:11:50.000+09:00",
+  "request_ids": [
+    "ADD-S07-PUBLIC-SMARTPHONE-RF-TOOLS-003"
+  ],
+  "request_results": [
+    {
+      "request_id": "ADD-S07-PUBLIC-SMARTPHONE-RF-TOOLS-003",
+      "state": "completed_with_limitations",
+      "result": "3개 제조사 제품군의 공개 자료·접근 조건을 조사했다. QCC74x 한정 비교 명령과 실제 스마트폰 OEM 공백을 분리했다."
+    }
+  ],
+  "counts": {
+    "manufacturer_families": 3,
+    "distinct_download_candidate_urls": 6,
+    "new_original_documents": 5,
+    "restricted_originals": 5,
+    "public_originals": 0,
+    "selected_embedded_rf_command_comparators": 1,
+    "vendor_access_condition_originals": 1,
+    "smartphone_app_debug_originals": 2,
+    "out_of_scope_preserved_originals": 1,
+    "failed_source_urls": 1,
+    "http_fetch_attempts": 7,
+    "software_packages_downloaded": 0,
+    "actual_device_connections": 0,
+    "actual_device_commands": 0,
+    "new_logins_or_permissions": 0,
+    "external_contacts": 0
+  },
+  "gap_counts": {
+    "prior_actual_smartphone_gaps": 16,
+    "closed_for_actual_smartphone": 0,
+    "remaining_actual_smartphone_gaps": 16,
+    "limited_comparator_updates": 10
+  },
+  "limitations": [
+    "실제 DUT·스마트폰 시험 FW·OEM 도구는 미지정/미확보다.",
+    "QCC74x UART 명령은 IoT 비교용이며 QDART 스마트폰 API가 아니다.",
+    "MediaTek RF 도구의 NDA 조건·Samsung 앱 시험용 RDB 안내는 전용 RF API 확보로 집계하지 않는다.",
+    "전체 원문/추출본 재배포 권리를 확인하지 못해 로컬 제한 보존한다."
+  ],
+  "request_completion": "요청된 조사·근거/공백 매핑을 완료한다. OEM API 미확보를 숨기지 않는다.",
+  "handoff_state": "payload_validated_for_freeze",
+  "next_step": "검증·동결 후 P01 인수 대기",
+  "questions": [],
+  "validation_report": "metadata/validation-report.json"
+}

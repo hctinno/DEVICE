@@ -1,0 +1,39 @@
+[
+  {
+    "question_id": "S01-B0004-Q01",
+    "owner": "P01",
+    "blocking_metadata_delivery": false,
+    "topic": "Cor1-2023 free access and licensed standards",
+    "request_ids": [
+      "STD-001",
+      "STD-002",
+      "STD-003",
+      "STD-004",
+      "STD-005",
+      "STD-006"
+    ],
+    "state": "full_text_not_acquired",
+    "next_action_ko": "기존 기관 라이선스 경로를 확인하거나 ANSI 무료 제공 경로의 익명 다운로드 가능 여부를 후속으로 확인한다. 이 배치는 로그인·장바구니·주문을 실행하지 않았다."
+  },
+  {
+    "question_id": "S01-B0004-Q02",
+    "owner": "P01",
+    "blocking_metadata_delivery": false,
+    "topic": "Exact corrigendum identity and acceptance",
+    "state": "COR1-2021_vs_Cor1-2023_not_resolved",
+    "next_action_ko": "KDB 974614 B10 표기와 정식 Cor1-2023의 동일성·허용 범위를 최종 FCC 근거와 정식 원문으로 대조한다. 임의 별칭으로 합치지 않는다."
+  },
+  {
+    "question_id": "S01-B0004-Q03",
+    "owner": "P01 / existing S03 follow-up",
+    "blocking_metadata_delivery": false,
+    "topic": "SAR remaining adoption/input gaps",
+    "source_question_ids": [
+      "S03-Q002",
+      "S01-B0001-Q01",
+      "S01-B0001-Q02"
+    ],
+    "state": "prior_unconfirmed_status_preserved",
+    "next_action_ko": "2026 SAR amendment의 명시적 FCC 근거와 실제 DUT/라이선스 입력은 기존 요청에서 취합한다. 이 배치는 새 허용 근거를 추가하지 않는다."
+  }
+]

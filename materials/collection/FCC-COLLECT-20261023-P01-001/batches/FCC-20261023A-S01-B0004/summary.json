@@ -1,0 +1,57 @@
+{
+  "task_id": "FCC-20261023-S01-B0004",
+  "batch_id": "FCC-20261023A-S01-B0004",
+  "attempt": 1,
+  "owner_session": "S01",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v006",
+  "activation": "approved",
+  "request_ids": [
+    "ADD-S01-METHOD-ERRATA-ACCESS-004"
+  ],
+  "model_ids": [],
+  "created_at": "2026-10-23T23:12:16.892214+09:00",
+  "status": "metadata_complete_with_full_text_and_access_limits",
+  "source_request_id": "DEV-EVIDENCE-20261023-002",
+  "counts": {
+    "assigned_requests": 1,
+    "completed_with_limits": 1,
+    "not_started": 0,
+    "standard_and_notice_entries": 13,
+    "new_originals": 2,
+    "new_originals_public_access": 2,
+    "new_public_redistribution_cleared_originals": 0,
+    "new_local_only_originals": 2,
+    "full_standard_texts_acquired": 0,
+    "existing_original_redownloads": 0,
+    "evidence_items": 8,
+    "questions": 3,
+    "logged_acquisition_HTTP_attempts": 3
+  },
+  "actual_acquired_ko": [
+    "C63 개정 현황 HTML",
+    "C63.4 혼 안테나 해석문 PDF"
+  ],
+  "not_acquired_ko": [
+    "C63.10a-2024 정정지 raw PDF: 직접 HTTP 403",
+    "Cor1-2023 raw 원문: 무료 제공 표시 확인, 직접 접속 403",
+    "유료 표준 전문 및 기관 라이선스"
+  ],
+  "prior_S03_review_reused": true,
+  "new_SAR_adoption_evidence": false,
+  "rights_notice_ko": "새 원문 2개는 공개 열람 원문이지만 공개 재배포 허가를 확정하지 못해 restricted 경로에 보존했다. 정정지의 조건부 복제 조항도 기록했다.",
+  "acquisition_log_limit": "The initial local title-assertion failure occurred before HTTP logs were persisted. Its missing response statuses/hashes are not reconstructed; collector-recovery.json preserves this audit limit.",
+  "no_login_purchase_contact_install_or_device_actions": true,
+  "git_commands_executed": 0,
+  "unsearched_scope": [
+    "전체 C63/IEC 정오표 전수 조사",
+    "기관 라이선스 내부 자료",
+    "규격 유료 전문",
+    "실제 DUT/FW/센서 상태",
+    "S03 범위를 넘어선 새 FCC SAR 승인 탐색"
+  ],
+  "P01_receipt": null,
+  "next_action": "P01 reviews metadata, restricted-source rights and existing input routing; S01 waits for next explicit assignment after ready freeze.",
+  "metadata_files": 11,
+  "validation_scope": "Current metadata, legacy references, source headers/hashes, document schema, and ready immutability; no measurement or method approval."
+}

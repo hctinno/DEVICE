@@ -1,0 +1,68 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S06-B0002",
+  "task_id": "FCC-20261023-S06-B0002",
+  "owner_session": "S06",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v006",
+  "snapshot_inventory_sha256": "5f87620198df4561f310e01d3e616758bd480c17b97d2e6a5370f01d498cd953",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S06-B0002",
+    "owner": "P01",
+    "decision": "content_approved_with_manual_gaps_unresolved",
+    "source_inventory_verified": true,
+    "findings": [
+      "P01 independently reverified four existing source hashes and found the archived pagination URLs in the preserved official index.",
+      "Five bounded route observations return404 or HTML without the target command manual. No new command document or original is claimed.",
+      "Both2090 model IDs and the CO3000-4port request remain limited; product/catalogue references do not establish installed hardware or command support.",
+      "Existing field/manual questions are reused, without a new external contact, login or equipment action."
+    ],
+    "request_outcome": {
+      "completed": 0,
+      "limited": 1,
+      "not_started": 0
+    },
+    "rights_public_document_ids": [],
+    "publication_metadata_files": [
+      "route-ets-archive-page-3.json",
+      "route-ets-archive-page-7.json",
+      "route-innco-german-download-list.json",
+      "route-innco-german-model-page.json",
+      "route-innco-german-product-pdf.json"
+    ],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [],
+  "redacted_local_reference_fields": [
+    "/existing_source_reuse_B/0/source_path_inside_local_batch",
+    "/existing_source_reuse_B/0/local_path",
+    "/existing_source_reuse_B/1/source_path_inside_local_batch",
+    "/existing_source_reuse_B/1/local_path",
+    "/existing_source_reuse_B/2/source_path_inside_local_batch",
+    "/existing_source_reuse_B/2/local_path",
+    "/existing_source_reuse_B/3/local_path",
+    "/previous_failure_records/0/path",
+    "/previous_failure_records/1/path",
+    "/known_source_index/path",
+    "/discovery_basis",
+    "/discovery_basis",
+    "/discovery_basis"
+  ],
+  "package": null,
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "route-ets-archive-page-3.json",
+    "route-ets-archive-page-7.json",
+    "route-innco-german-download-list.json",
+    "route-innco-german-model-page.json",
+    "route-innco-german-product-pdf.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

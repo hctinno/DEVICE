@@ -1,0 +1,340 @@
+{
+  "task_id": "FCC-20261023-S01-B0004",
+  "entries": [
+    {
+      "entry_id": "ACCESS-STD-001",
+      "request_id": "STD-001",
+      "exact_identifier": "IEEE/ANSI/USEMCSC C63.10-2020",
+      "title_from_legacy_catalog": "IEEE/ANSI/USEMCSC C63.10-2020",
+      "document_role": "base_standard",
+      "publisher": "IEEE / ANSI / USEMCSC C63",
+      "published_date_from_legacy": "2021-01-29",
+      "relationship": "Amendment C63.10a-2024; corrigendum C63.10-2020/Cor1-2023",
+      "official_catalog_url": "https://standards.ieee.org/ieee/C63.10/10445/",
+      "legacy_access_record": {
+        "path": "[local-only reference retained by P01]",
+        "sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+        "json_pointer": "/records/0"
+      },
+      "full_standard_original_acquired": false,
+      "full_standard_document_id": null,
+      "access_status": "purchase_or_existing_licensed_access_required",
+      "full_standard_rights": "not_obtained",
+      "catalog_original_redownloaded": false,
+      "catalog_is_not_standard_full_text": true,
+      "full_standard_title": "American National Standard of Procedures for Compliance Testing of Unlicensed Wireless Devices",
+      "FCC_relation": {
+        "status": "named_edition_with_transition",
+        "sources": [
+          {
+            "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+            "location": "§15.31(a)(3), §15.37(s), §15.38(f)(4)"
+          }
+        ],
+        "note_ko": "2025-10-30 이후 C63.10-2020을 쓰도록 한 확보 조문을 참조한다. 정오표·추록의 별도 허용까지 자동 확장하지 않는다."
+      }
+    },
+    {
+      "entry_id": "ACCESS-STD-002",
+      "request_id": "STD-002",
+      "exact_identifier": "IEEE/ANSI C63.10-2020/Cor1-2023",
+      "title_from_legacy_catalog": "IEEE/ANSI C63.10-2020/Cor1-2023",
+      "document_role": "corrigendum",
+      "publisher": "IEEE / ANSI / USEMCSC C63",
+      "published_date_from_legacy": "2023-06-06",
+      "relationship": "Corrigendum to C63.10-2020",
+      "official_catalog_url": "https://standards.ieee.org/ieee/C63.10-2020_Cor1/10915/",
+      "legacy_access_record": {
+        "path": "[local-only reference retained by P01]",
+        "sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+        "json_pointer": "/records/1"
+      },
+      "full_standard_original_acquired": false,
+      "full_standard_document_id": null,
+      "access_status": "official_free_download_offer_seen_original_not_acquired",
+      "full_standard_rights": "not_obtained",
+      "catalog_original_redownloaded": false,
+      "catalog_is_not_standard_full_text": true,
+      "full_standard_title": "American National Standard of Procedures for Compliance Testing of Unlicensed Wireless Devices - Corrigendum 1",
+      "additional_official_access_url": "https://webstore.ansi.org/standards/ieee/ieeeansic63102020cor12023",
+      "additional_access_observation": {
+        "offer": "Free Download; USD 0.00 shown by the official ANSI Webstore",
+        "method": "Public web read/search; direct HTTP GET returned 403 and 5709 bytes of non-original response.",
+        "raw_standard_file_obtained": false,
+        "login_attempted": false,
+        "checkout_or_purchase_attempted": false,
+        "note_ko": "기존 purchase_required 레코드를 덮어쓰지 않고 무료 제공 경로를 새 근거로 추가한다. 무료 표시만으로 익명 다운로드나 공개 재배포 허가를 확정하지 않는다."
+      },
+      "approval_date_observation": "2023-04-10",
+      "published_date_observation": "2023-06-06",
+      "date_note": "Committee notice calls 2023-04-10 published; IEEE catalog distinguishes ANSI approval 2023-04-10 from publication 2023-06-06.",
+      "FCC_relation": {
+        "status": "exact_corrigendum_acceptance_unconfirmed_in_reused_evidence",
+        "sources": [
+          {
+            "document_id": "KDB-974614-974614-D01-Accredited-Test-Lab-Roles-and-Resp-v05r04-e5148262f2",
+            "location": "References [B10], printed p.9"
+          },
+          {
+            "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+            "location": "§15.38(f)(4)"
+          }
+        ],
+        "note_ko": "KDB 974614에는 C63.10 COR 1-2021로 적혀 있고 발행기관 식별자는 Cor1-2023이다. 두 표기를 같은 판본으로 임의 합치지 않는다."
+      }
+    },
+    {
+      "entry_id": "ACCESS-STD-003",
+      "request_id": "STD-003",
+      "exact_identifier": "IEEE/ANSI/USEMCSC C63.10a-2024",
+      "title_from_legacy_catalog": "IEEE/ANSI/USEMCSC C63.10a-2024",
+      "document_role": "amendment",
+      "publisher": "IEEE / ANSI / USEMCSC C63",
+      "published_date_from_legacy": "2024-08-16",
+      "relationship": "Amendment to C63.10-2020",
+      "official_catalog_url": "https://standards.ieee.org/ieee/C63.10a/11614/",
+      "legacy_access_record": {
+        "path": "[local-only reference retained by P01]",
+        "sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+        "json_pointer": "/records/2"
+      },
+      "full_standard_original_acquired": false,
+      "full_standard_document_id": null,
+      "access_status": "purchase_or_existing_licensed_access_required",
+      "full_standard_rights": "not_obtained",
+      "catalog_original_redownloaded": false,
+      "catalog_is_not_standard_full_text": true,
+      "full_standard_title": "American National Standard of Procedures for Compliance Testing of Unlicensed Wireless Devices - Amendment 1",
+      "related_errata_id": "ACCESS-ERRATA-20241118",
+      "FCC_relation": {
+        "status": "amendment_acceptance_not_established_by_this_collection",
+        "sources": [
+          {
+            "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+            "location": "§15.31(a)(3), §15.38(f)(4)"
+          }
+        ],
+        "note_ko": "발행된 추록과 FCC가 편입한 본판을 구별한다."
+      }
+    },
+    {
+      "entry_id": "ACCESS-STD-004",
+      "request_id": "STD-004",
+      "exact_identifier": "IEEE/ANSI C63.4-2014",
+      "title_from_legacy_catalog": "IEEE/ANSI C63.4-2014",
+      "document_role": "base_standard",
+      "publisher": "IEEE / ANSI / USEMCSC C63",
+      "published_date_from_legacy": "2014-06-20",
+      "relationship": "Amendment C63.4a-2017",
+      "official_catalog_url": "https://standards.ieee.org/ieee/C63.4/5841/",
+      "legacy_access_record": {
+        "path": "[local-only reference retained by P01]",
+        "sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+        "json_pointer": "/records/3"
+      },
+      "full_standard_original_acquired": false,
+      "full_standard_document_id": null,
+      "access_status": "purchase_or_existing_licensed_access_required",
+      "full_standard_rights": "not_obtained",
+      "catalog_original_redownloaded": false,
+      "catalog_is_not_standard_full_text": true,
+      "full_standard_title": "American National Standard for Methods of Measurement of Radio-Noise Emissions from Low-Voltage Electrical and Electronic Equipment in the Range of 9 kHz to 40 GHz",
+      "reaffirmation_observation": {
+        "text": "IEEE catalog search result states reaffirmed February 2025.",
+        "new_edition_identifier_inferred": false,
+        "source_url": "https://standards.ieee.org/ieee/C63.4/5841/"
+      },
+      "FCC_relation": {
+        "status": "named_edition_with_scope_exclusions",
+        "sources": [
+          {
+            "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+            "location": "§15.31(a)(4), §15.35(a), §15.38(f)(1)-(2)"
+          },
+          {
+            "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+            "location": "§2.910(b)(1), §2.948(d)"
+          }
+        ],
+        "note_ko": "조문에 명시한 측정 범위와 제외 조항을 유지한다. 2025 reaffirmation을 새로운 2025 시험방법 판으로 만들지 않는다."
+      }
+    },
+    {
+      "entry_id": "ACCESS-STD-005",
+      "request_id": "STD-005",
+      "exact_identifier": "IEEE/ANSI C63.4a-2017",
+      "title_from_legacy_catalog": "IEEE/ANSI C63.4a-2017",
+      "document_role": "amendment",
+      "publisher": "IEEE / ANSI / USEMCSC C63",
+      "published_date_from_legacy": "2017-10-13",
+      "relationship": "Amendment to C63.4-2014; test site validation.",
+      "official_catalog_url": "https://standards.ieee.org/ieee/C63.4a/7117/",
+      "legacy_access_record": {
+        "path": "[local-only reference retained by P01]",
+        "sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+        "json_pointer": "/records/21"
+      },
+      "full_standard_original_acquired": false,
+      "full_standard_document_id": null,
+      "access_status": "purchase_or_existing_licensed_access_required",
+      "full_standard_rights": "not_obtained",
+      "catalog_original_redownloaded": false,
+      "catalog_is_not_standard_full_text": true,
+      "full_standard_title": "American National Standard for Methods of Measurement of Radio-Noise Emissions from Low-Voltage Electrical and Electronic Equipment in the Range of 9 kHz to 40 GHz - Amendment 1: Test Site Validation",
+      "related_interpretation_id": "C63.4-2014-horn-aperture-interpretation-4717bf878589",
+      "FCC_relation": {
+        "status": "named_for_site_validation",
+        "sources": [
+          {
+            "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+            "location": "§2.910(b)(2), §2.948(d)(1)"
+          }
+        ],
+        "note_ko": "30 MHz~1 GHz 사이트 검증 문맥의 편입 근거다. 위원회 현황 페이지의 과거 awaiting FCC decision 문구로 이 조문을 뒤집지 않는다."
+      }
+    },
+    {
+      "entry_id": "ACCESS-ERRATA-20241118",
+      "exact_identifier": "Errata to ANSI/USEMCSC C63.10a-2024",
+      "full_standard_title": "Errata to Amendment 1 of American National Standard for Procedures for Compliance Testing of Unlicensed Wireless Devices",
+      "document_role": "errata_sheet_not_base_or_formal_Cor1",
+      "publisher": "IEEE / USEMCSC C63",
+      "correction_sheet_date": "2024-11-18",
+      "underlying_amendment_approval_date": "2024-08-08",
+      "official_access_url": "https://standards.ieee.org/wp-content/uploads/2024/11/C63.10a-2024_errata.pdf",
+      "full_standard_original_acquired": false,
+      "local_original_acquired": false,
+      "document_id": null,
+      "access_status": "web_text_readable_direct_PDF_GET_403",
+      "remote_pages_reported": 2,
+      "scope_observed": "Page 2, clause 12.9.1: U-NII average measurements in 5925-7125 MHz; not a 2.4 GHz b/g/n correction.",
+      "rights_observed": "Unmodified copying for standard currency is permitted subject to noncommercial distribution limits. No assumption that public-project distribution satisfies the condition.",
+      "remaining": "Raw PDF not acquired. Text extraction contains both changed cross-reference numbers; visual deletion/insertion direction was not verified.",
+      "FCC_relation": {
+        "status": "not_an_independent_adoption_instrument",
+        "note": "A publisher correction sheet does not itself establish FCC acceptance."
+      }
+    },
+    {
+      "entry_id": "ACCESS-C634-INTERPRETATION",
+      "exact_identifier": "C63.4-2014 Clause 4.5 Horn Antenna Aperture interpretation response",
+      "document_role": "official_committee_interpretation",
+      "publisher": "ASC C63",
+      "document_id": "C63.4-2014-horn-aperture-interpretation-4717bf878589",
+      "local_original_acquired": true,
+      "full_standard_original_acquired": false,
+      "official_access_url": "https://www.c63.org/documents/misc/interpretations/C63_4_2014_20181207_Clause_4_5_Horn_antenna_aperture.pdf",
+      "date_status": "File name contains 20181207; form contains a 2016 request and 2017 actions. A publication day is not inferred.",
+      "access_status": "local_original_rights_unconfirmed",
+      "source_location": "PDF p.1, Subcommittee Response",
+      "relationship_ko": "C63.4-2014 4.5·표2의 혼 안테나 거리 해석과 C63.4a-2017 관련 설명이다. 본문은 해석만으로 표준을 개정하지 않는다고 구별한다.",
+      "FCC_relation": {
+        "status": "supporting_interpretation_not_FCC_adoption",
+        "technical_or_equipment_approval": false
+      }
+    },
+    {
+      "entry_id": "ACCESS-C63-STATUS",
+      "exact_identifier": "Status of C63 Standards; page heading 2026-10-22",
+      "document_role": "committee_revision_status_notice",
+      "publisher": "USEMCSC C63",
+      "document_id": "C63-standards-status-20261022-75d45e8ee337",
+      "local_original_acquired": true,
+      "full_standard_original_acquired": false,
+      "official_access_url": "https://www.c63.org/documents/misc/matrix/c63_standards.htm",
+      "access_status": "local_original_rights_unconfirmed",
+      "source_location": "C63.4/C63.4a and C63.10/Cor1/Amendment sections",
+      "limitations_ko": "페이지 머리말 날짜가 최근이어도 일부 본문은 2024 예정 문구와 awaiting FCC decision을 유지한다. 최신 규정·최종 KDB의 대체 근거로 쓰지 않는다."
+    },
+    {
+      "entry_id": "ACCESS-STD-006",
+      "request_id": "STD-006",
+      "exact_identifier": "IEEE C63.25.1-2018",
+      "document_role": "site_validation_standard",
+      "publisher": "IEEE / ANSI / USEMCSC C63",
+      "official_catalog_or_notice_url": "https://webstore.ansi.org/search/find?in=1&st=C63.25",
+      "full_standard_original_acquired": false,
+      "access_status": "licensed_full_text_not_acquired",
+      "FCC_relation_note_ko": "확보 CFR §2.910(b)(3), §2.948(d)(2)에 1 GHz~18 GHz 사이트 검증 판으로 명시됨.",
+      "first_conducted_power_dependency": "not assumed; site validation is a distinct scope"
+    },
+    {
+      "entry_id": "ACCESS-ADDED-C63252-2024",
+      "request_id": "ADDED-C63252-2024",
+      "exact_identifier": "ANSI C63.25.2-2024",
+      "document_role": "site_validation_standard",
+      "publisher": "IEEE / ANSI / USEMCSC C63",
+      "official_catalog_or_notice_url": "https://www.c63.org/documents/misc/matrix/c63_standards.htm",
+      "full_standard_original_acquired": false,
+      "access_status": "licensed_full_text_not_acquired",
+      "FCC_relation_note_ko": "위원회는 2024 발행을 안내하지만 확보된 §2.948의 이름을 새 판으로 대체하지 않는다.",
+      "first_conducted_power_dependency": "not assumed; site validation is a distinct scope"
+    },
+    {
+      "entry_id": "ACCESS-SAR-IEEE-1528-2013",
+      "exact_identifier": "IEEE 1528-2013",
+      "full_standard_title": "IEEE Recommended Practice for Determining the Peak Spatial-Average Specific Absorption Rate (SAR) in the Human Head from Wireless Communications Devices: Measurement Techniques",
+      "publisher": "IEEE / IEC",
+      "document_role": "base_standard",
+      "official_catalog_url": "https://standards.ieee.org/ieee/1528/4418/",
+      "published_date": "2013-09-06",
+      "relationship_from_prior_review": "Superseded by 62209-1528-2020; superseding 1528-2003",
+      "publisher_status": "Superseded Standard",
+      "full_standard_original_acquired": false,
+      "access_status": "purchase_or_subscription_required_not_acquired",
+      "prior_S03_observation_id": "OBS-IEEE-1528-2013-20261023",
+      "prior_S03_acceptance_evidence_ids": [
+        "B2-E01",
+        "B2-E02"
+      ],
+      "FCC_acceptance_scope_ko": "KDB에서 기본 개념·측정 요구의 근거로 명시적 참조. 발행기관의 superseded 상태가 FCC에서 자동 사용금지를 뜻하지 않는다.",
+      "FCC_first_acceptance_effective_date": null,
+      "catalog_original_redownloaded": false
+    },
+    {
+      "entry_id": "ACCESS-SAR-IEC-IEEE-62209-1528-2020",
+      "exact_identifier": "IEC/IEEE 62209-1528:2020",
+      "full_standard_title": "IEC/IEEE International Standard - Measurement procedure for the assessment of specific absorption rate of human exposure to radio frequency fields from hand-held and body-mounted wireless communication devices - Part 1528: Human models, instrumentation, and procedures (Frequency range of 4 MHz to 10 GHz)",
+      "publisher": "IEEE / IEC",
+      "document_role": "base_standard",
+      "official_catalog_url": "https://standards.ieee.org/ieee/62209-1528/7325/",
+      "published_date": "2020-10-19",
+      "relationship_from_prior_review": "Replaces IEC 62209-1:2016, IEC 62209-2:2010 and supersedes IEEE Std 1528-2013; Amendment: 62209-1528a-2026",
+      "publisher_status": "Active Standard",
+      "full_standard_original_acquired": false,
+      "access_status": "purchase_or_subscription_required_not_acquired",
+      "prior_S03_observation_id": "OBS-IEEE-62209-1528-2020-20261023",
+      "prior_S03_acceptance_evidence_ids": [
+        "B2-E03",
+        "B2-E04",
+        "B2-E05",
+        "B2-E06",
+        "B2-E07",
+        "B2-E08"
+      ],
+      "FCC_acceptance_scope_ko": "최종 FCC KDB에 SAR 기본 개념으로 명시적 참조가 있다. 2026 workshop은 적용 규정/KDB와 시험소가 평가받은 주파수 범위에서 6 GHz 이하 사용을 설명한다.",
+      "FCC_first_acceptance_effective_date": null,
+      "catalog_original_redownloaded": false
+    },
+    {
+      "entry_id": "ACCESS-SAR-IEC-IEEE-62209-1528a-2026",
+      "exact_identifier": "IEC/IEEE 62209-1528:2020 Amendment 1:2026",
+      "full_standard_title": "IEEE/IEC International Standard - Measurement procedure for the assessment of specific absorption rate of human exposure to radio frequency fields from hand-held and body-mounted wireless communication devices - Part 1528: Human models, instrumentation, and procedures (Frequency range of 4 MHz to 10 GHz) AMENDMENT 1",
+      "publisher": "IEEE / IEC",
+      "document_role": "amendment",
+      "official_catalog_url": "https://standards.ieee.org/ieee/62209-1528a/11607/",
+      "published_date": "2026-09-02",
+      "relationship_from_prior_review": "Amendment of IEC/IEEE 62209-1528:2020",
+      "publisher_status": "Active Standard",
+      "full_standard_original_acquired": false,
+      "access_status": "purchase_or_subscription_required_not_acquired",
+      "prior_S03_observation_id": "OBS-IEEE-62209-1528a-2026-20261023",
+      "prior_S03_acceptance_evidence_ids": [],
+      "FCC_acceptance_scope_ko": "명확한 최종 FCC 공문/규정/KDB의 amendment 허용 근거 미확인. 허용도 금지도 추정하지 않는다.",
+      "FCC_first_acceptance_effective_date": null,
+      "catalog_original_redownloaded": false
+    }
+  ],
+  "entry_count": 13,
+  "rules": "Standard text, catalog, interpretation, correction sheet and revision notice are separate. Legacy records are immutable; new access observations are addenda."
+}

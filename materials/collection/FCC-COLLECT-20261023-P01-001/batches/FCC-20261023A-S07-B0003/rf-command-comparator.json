@@ -1,0 +1,256 @@
+{
+  "task_id": "FCC-20261023-S07-B0003",
+  "scope": "QCC74x IoT MFG only",
+  "comparator_original_count": 1,
+  "source_document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+  "transport": {
+    "interface": "UART",
+    "mfg_baud": 115200,
+    "data_bits": 8,
+    "parity": "none",
+    "stop_bits": null,
+    "command_terminator": "\\r\\n",
+    "normal_firmware_baud_example": 2000000
+  },
+  "commands": [
+    {
+      "id": "QC-C01",
+      "name": "MFG handshake / entry",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        45,
+        56,
+        57
+      ],
+      "request_syntax": [
+        "H",
+        "mfg"
+      ],
+      "response_syntax": [
+        "mfg"
+      ],
+      "details": "MFG 전환 mfg는 정상 FW의 baud 설정에 의존한다. 문서는 정상 FW 기본 2000000과 MFG 115200을 구분한다. H 응답은 MFG 활성 확인이며 실제 모델 적용은 미검증이다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    },
+    {
+      "id": "QC-C02",
+      "name": "Wi-Fi TX on/off",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        58
+      ],
+      "request_syntax": [
+        "t1",
+        "T1",
+        "t0",
+        "T0"
+      ],
+      "response_syntax": null,
+      "details": "페이지는 On/Off 명령을 명시하지만 setter의 보편적 ACK/오류 형식은 제시하지 않는다. 송신 상태는 별도 y:t 조회 항목이다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    },
+    {
+      "id": "QC-C03",
+      "name": "2.4 GHz channel",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        59,
+        62
+      ],
+      "request_syntax": [
+        "c[channel idx]",
+        "y:c"
+      ],
+      "response_syntax": [
+        "#*#*channel:[channel freq]"
+      ],
+      "details": "채널 index 1~14. 조회 문자열은 channel freq로 적혀 있으며 단위/표현을 임의 정규화하지 않는다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    },
+    {
+      "id": "QC-C04",
+      "name": "TX power target",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        59,
+        62
+      ],
+      "request_syntax": [
+        "p[power dbm]",
+        "y:p"
+      ],
+      "response_syntax": [
+        "#*#*power:[power level dbm]"
+      ],
+      "details": "제시 범위 -15~24 dBm. p-1은 DTS TLV 전력규칙 적용 의미가 따로 있다. 조회값은 계측기로 확인한 RF 실측값이 아니다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    },
+    {
+      "id": "QC-C05",
+      "name": "11b/11g rate",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        59
+      ],
+      "request_syntax": [
+        "B[rate idx]",
+        "b[rate idx]",
+        "G[rate idx]",
+        "g[rate idx]"
+      ],
+      "response_syntax": null,
+      "details": "11b index0~3, 11g index0~7. 대소문자에 따른 구분은 원문을 따른다. 개별 smartphone rate 지원을 확정하지 않는다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    },
+    {
+      "id": "QC-C06",
+      "name": "11n modulation / width",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        58
+      ],
+      "request_syntax": [
+        "msg2[mcs idx][coding type]",
+        "msm2[mcs idx][coding type]",
+        "mlg2[mcs idx][coding type]",
+        "mlm2[mcs idx][coding type]",
+        "msg4[mcs idx][coding type]",
+        "msm4[mcs idx][coding type]",
+        "mlg4[mcs idx][coding type]",
+        "mlm4[mcs idx][coding type]"
+      ],
+      "response_syntax": null,
+      "details": "mcs0~7·coding0/1·HT20/HT40. 페이지46 예제 mlm27과 문법의 coding 항목 차이는 미해소이므로 실행 가능한 완성 명령으로 추정하지 않는다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    },
+    {
+      "id": "QC-C07",
+      "name": "Packet length / frequency",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        60,
+        63
+      ],
+      "request_syntax": [
+        "l[length]",
+        "f[freq]",
+        "y:f"
+      ],
+      "response_syntax": [
+        "#*#*freq:[tx frequency]"
+      ],
+      "details": "f의 최댓값1000은 보이나 단위는 이 설명에서 확정되지 않는다. 모든 인자 범위·실제 응답 버전은 미확인이다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    },
+    {
+      "id": "QC-C08",
+      "name": "Duty example / query",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        46,
+        48,
+        62
+      ],
+      "request_syntax": [
+        "d50",
+        "y:i"
+      ],
+      "response_syntax": [
+        "#*#*duty:[tx duty]"
+      ],
+      "details": "d50은 50% 예제다. 이를 근거로 모든 듀티 값·set 응답·필드 단위를 보편적 API로 확장하지 않는다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    },
+    {
+      "id": "QC-C09",
+      "name": "FW version / build",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        62
+      ],
+      "request_syntax": [
+        "y:v",
+        "y:d"
+      ],
+      "response_syntax": [
+        "#*#*version:[version]",
+        "#*#*date:[building date] time:[building time]"
+      ],
+      "details": "조회 문법을 확보했으나 실제 FW 빌드 또는 응답 로그는 없다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    },
+    {
+      "id": "QC-C10",
+      "name": "TX / MFG CW state",
+      "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+      "section": "3.8",
+      "pdf_pages_1based": [
+        63,
+        64
+      ],
+      "request_syntax": [
+        "y:t",
+        "y:M",
+        "M[MFG mode]"
+      ],
+      "response_syntax": [
+        "#*#*tx:[0 or 1]",
+        "#*#*mfgmode:[MFG mode]"
+      ],
+      "details": "M mode 0/1은 CW 시험 모드의 선택이다. 시험 FW 자체의 종료/정상 FW 복귀 계약으로 간주하지 않는다.",
+      "product_scope": "QCC74x IoT SoC with MFG firmware; not a smartphone or QDART compatibility claim",
+      "actual_firmware_build": null,
+      "actual_device_tested": false,
+      "execution_status": "not_executed",
+      "source_rights": "unknown; local restricted original"
+    }
+  ],
+  "unavailable_for_target_smartphone": true,
+  "execution_authorization": false,
+  "excluded_operations": "eFuse 영구 기록·펌웨어 설치·교정값 쓰기·다른 무선 기능 실행은 수행하지 않았다."
+}

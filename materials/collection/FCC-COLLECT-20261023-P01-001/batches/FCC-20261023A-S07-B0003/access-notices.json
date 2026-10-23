@@ -1,0 +1,89 @@
+{
+  "task_id": "FCC-20261023-S07-B0003",
+  "created_at": "2026-10-23T23:11:50.000+09:00",
+  "records": [
+    {
+      "access_id": "S07-B0003-A01",
+      "manufacturer": "Qualcomm",
+      "product_family": "QCA9377 catalog / QDART Connectivity",
+      "source_url": "https://docs.qualcomm.com/list?product=1611373424801094",
+      "source_location": "QDART Connectivity User Guide row",
+      "observed_document_number": "80-WL400-24",
+      "observed_document_version": "Rev E",
+      "observed_document_date": "2019-04-19",
+      "version_kind": "guide revision shown in public catalog; not installed tool version",
+      "evidence_method": "공식 검색 결과/문서 목록 열람. 원본 PDF는 취득하지 않았다.",
+      "document_id": null,
+      "path": null,
+      "sha256": null,
+      "bytes": null,
+      "status": "access_guide_only",
+      "software_status": "unavailable",
+      "actual_smartphone_model": null,
+      "api_signatures_acquired": false,
+      "notes": "해당 카탈로그에는 모바일 Wi-Fi 및 MSM/SDM WFA 문서가 보이지만 특정 스마트폰 RF 모드 호환을 입증하지 않는다. 문서 원본 및 패키지 권한은 확인되지 않았다."
+    },
+    {
+      "access_id": "S07-B0003-A02",
+      "manufacturer": "Qualcomm",
+      "product_family": "WLAN QSPR / QUTS",
+      "source_url": "https://www.qualcomm.com/developer/software/list",
+      "source_location": "WLAN QSPR Subsystem / Unified Tools Services rows",
+      "evidence_method": "공식 페이지의 웹 도구 렌더링 본문 확인. 직접 HTTP 응답은 유효 카탈로그 본문이 없는 접근 셸이었다.",
+      "status": "access_guide_only",
+      "software_status": "login_required",
+      "software_binary_downloaded": false,
+      "api_signatures_acquired": false,
+      "version": null,
+      "notes": "자동화·Diag/QMI/ADB 연결 API의 존재를 설명하고 다운로드 로그인 안내가 있다. 명령 시그니처·응답·지원 DUT/FW 목록은 확보하지 못했다. 로그인하지 않았다."
+    },
+    {
+      "access_id": "S07-B0003-A03",
+      "manufacturer": "Qualcomm",
+      "product_family": "QDART-Connectivity distribution route",
+      "source_url": "https://www.qualcomm.com/developer/hardware/robotics-rb5-development-kit/software",
+      "source_location": "Development Acceleration Resource Toolkit - Wireless Connectivity Subsystem",
+      "evidence_method": "공식 제품 소프트웨어 페이지의 검색 본문 확인. 새 원문으로 내려받지 않았다.",
+      "status": "access_guide_only",
+      "software_status": "unavailable",
+      "distribution_route": "http://qpm.qualcomm.com/",
+      "version": null,
+      "api_signatures_acquired": false,
+      "notes": "QPM으로의 배포 이전과 QCAMSL/QCARCT/QSPR 구성 설명을 확인했다. RB5 문맥을 스마트폰 지원 근거로 사용하지 않으며, QPM 접속·로그인·설치를 수행하지 않았다."
+    },
+    {
+      "access_id": "S07-B0003-A04",
+      "manufacturer": "MediaTek",
+      "product_family": "Genio MT7663S",
+      "document_id": "S07-B0003-mediatek-mt7663-daafe8ad8820",
+      "source_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-Module-MT7663.html",
+      "source_location": "Proprietary Software Stack for MT7663S / Open Source Tools iwpriv / SOP",
+      "status": "access_guide_only",
+      "software_status": "license_or_NDA_required",
+      "software_binary_downloaded": false,
+      "version": "IoT Yocto v26.0 context; proprietary driver/wifitest build not stated",
+      "api_signatures_acquired": false,
+      "notes": "NDA가 필요한 제조사 스택과 wifitest를 명시한다. 공개 iwpriv 설명은 RF 송신 API 표가 아니며 설치·드라이버 빌드 지시는 실행하지 않았다."
+    },
+    {
+      "access_id": "S07-B0003-A05",
+      "manufacturer": "Samsung",
+      "product_family": "Remote Test Lab / RDB",
+      "document_ids": [
+        "S07-B0003-samsung-remote-test-lab-09a994ff2cce",
+        "S07-B0003-samsung-rdb-guide-a56e40c530db"
+      ],
+      "source_url": "https://developer.samsung.com/remote-test-lab/blog/en-us/2022/07/13/connect-to-devices-on-remote-test-lab-using-rdb-in-android-studio",
+      "source_location": "Run Remote Debug Bridge application / Connect remote device",
+      "status": "access_guide_only",
+      "software_status": "account_and_client_required_for_service_use",
+      "software_binary_downloaded": false,
+      "api_signatures_acquired": false,
+      "version": "RDB executable version not stated in saved page",
+      "notes": "스마트폰 앱 디버깅 연결 안내만 확보했다. 제조사 공장 RF 진입/송신/종료 API는 문서에서 발견되지 않았다. 서비스 예약·로그인·단말 접속은 하지 않았다."
+    }
+  ],
+  "software_packages_acquired": 0,
+  "authentication_performed": false,
+  "external_inquiries_sent": false
+}

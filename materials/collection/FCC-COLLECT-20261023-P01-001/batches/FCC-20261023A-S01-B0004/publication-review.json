@@ -1,0 +1,111 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S01-B0004",
+  "task_id": "FCC-20261023-S01-B0004",
+  "owner_session": "S01",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v006",
+  "snapshot_inventory_sha256": "9025d14fae76c3c686c305765b31f5c7b59217851fed5071e17b33c83e07c208",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S01-B0004",
+    "owner": "P01",
+    "decision": "content_approved_for_metadata_and_access_notice_only",
+    "source_inventory_verified": true,
+    "findings": [
+      "Two new committee originals passed independent byte/hash checks; the interpretation PDF was visually inspected. They are committee status/interpretation sources, not full standards or FCC adoption instruments.",
+      "P01 independently opened official IEEE catalogues for Cor1-2023 and C63.10a-2024 and confirmed identifiers, approval/publication dates and the errata link.",
+      "Direct raw errata/Cor1 acquisition failed; web-readable text or a free offer is not counted as an acquired original. Initial missing HTTP-log details remain an explicit recovery limitation.",
+      "The committee page contains historical/stale passages; preserved CFR and KDB scope is not replaced. COR1-2021 versus Cor1-2023 identity/acceptance and SAR2026 approval remain unresolved."
+    ],
+    "request_outcome": {
+      "completed": 0,
+      "limited": 1,
+      "not_started": 0
+    },
+    "rights_public_document_ids": [],
+    "publication_metadata_files": [
+      "standards-access-matrix.json",
+      "sar-followup-reuse.json"
+    ],
+    "technical_method_approval": false,
+    "hardware_validation": false,
+    "outcome_basis": "Metadata research is accepted; the requested full-standard/OEM protocol evidence remains unavailable or limited."
+  },
+  "source_acquisitions": [
+    {
+      "document_id": "C63-standards-status-20261022-75d45e8ee337",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "75d45e8ee337cefc9fbe8c56a9346849db43f3e36be94a08ee34502709664b2f",
+      "original_bytes": 242631,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.c63.org/documents/misc/matrix/c63_standards.htm",
+      "download_url": "https://www.c63.org/documents/misc/matrix/c63_standards.htm",
+      "version": "Page heading dated 22 October 2026; historical sections may be stale"
+    },
+    {
+      "document_id": "C63.4-2014-horn-aperture-interpretation-4717bf878589",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "4717bf87858969436809b544dfcdec0e100771c95c5600cd6d93f0e036fd46fe",
+      "original_bytes": 591429,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://www.c63.org/documents/misc/interpretations/C63_4_2014_20181207_Clause_4_5_Horn_antenna_aperture.pdf",
+      "download_url": "https://www.c63.org/documents/misc/interpretations/C63_4_2014_20181207_Clause_4_5_Horn_antenna_aperture.pdf",
+      "version": "Official file dated 20181207 in filename; document dates retained separately"
+    }
+  ],
+  "redacted_local_reference_fields": [
+    "/references/0/path",
+    "/references/1/path",
+    "/references/2/path",
+    "/references/3/path",
+    "/references/4/path",
+    "/references/5/path",
+    "/references/6/path",
+    "/references/7/path",
+    "/references/8/path",
+    "/references/9/path",
+    "/references/10/package_path",
+    "/references/10/manifest_path",
+    "/references/10/local_path",
+    "/references/11/package_path",
+    "/references/11/manifest_path",
+    "/references/11/local_path",
+    "/references/12/package_path",
+    "/references/12/manifest_path",
+    "/references/12/local_path",
+    "/references/13/package_path",
+    "/references/13/manifest_path",
+    "/references/13/local_path",
+    "/new_original_references/0/path",
+    "/new_original_references/1/path",
+    "/entries/0/legacy_access_record/path",
+    "/entries/1/legacy_access_record/path",
+    "/entries/2/legacy_access_record/path",
+    "/entries/3/legacy_access_record/path",
+    "/entries/4/legacy_access_record/path"
+  ],
+  "package": {
+    "package_id": "FCC-20261023A-S01-B0004",
+    "path": "materials/packages/FCC-20261023A-S01-B0004.zip",
+    "sha256": "04c803096c448eeac4bf5032790431db2b5888975b909297d1f8ffd090b9ff5c",
+    "bytes": 1234,
+    "included_payloads": 0,
+    "access_or_unavailable_records": 2
+  },
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "standards-access-matrix.json",
+    "sar-followup-reuse.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

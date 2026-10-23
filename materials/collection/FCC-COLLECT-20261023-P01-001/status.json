@@ -1,6 +1,6 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "checked_at": "2026-10-23T23:13:17.250202+09:00",
+  "checked_at": "2026-10-23T23:18:43.965250+09:00",
   "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
   "latest_assignment_version": "v006",
   "published_branch": "collect/fcc-p0-smartphone-20261023-001",
@@ -72,9 +72,9 @@
           ],
           "acknowledgement_file_present": true,
           "execution_state": "local_ready_frozen_waiting_P01_receipt",
-          "P01_intake_state": "not_received",
-          "included_in_results": false,
-          "publication_state": "not_published",
+          "P01_intake_state": "content_approved",
+          "included_in_results": true,
+          "publication_state": "included_in_this_revision",
           "prior_publication_sha": null
         }
       ]
@@ -200,10 +200,10 @@
           ],
           "acknowledgement_file_present": true,
           "execution_state": "complete_pending_P01_intake",
-          "P01_intake_state": "content_approved",
+          "P01_intake_state": "published",
           "included_in_results": true,
-          "publication_state": "included_in_this_revision",
-          "prior_publication_sha": null
+          "publication_state": "verified_in_prior_commit",
+          "prior_publication_sha": "3d5f857e9af0d0ed48ba9ca2134d79f806214def"
         }
       ]
     },
@@ -234,8 +234,8 @@
     {
       "role": "S06",
       "latest_collector_task": "FCC-20261023-S06-B0002",
-      "collector_status": "in_progress",
-      "collector_status_updated_at": "2026-10-23T23:12:52+09:00",
+      "collector_status": "completed_with_limitations",
+      "collector_status_updated_at": "2026-10-23T23:16:21+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -262,10 +262,10 @@
             "ADD-S06-OFFICIAL-ARCHIVE-MANUAL-GAPS-002"
           ],
           "acknowledgement_file_present": true,
-          "execution_state": "in_progress",
-          "P01_intake_state": "not_received",
-          "included_in_results": false,
-          "publication_state": "not_published",
+          "execution_state": "completed_with_limitations",
+          "P01_intake_state": "content_approved",
+          "included_in_results": true,
+          "publication_state": "included_in_this_revision",
           "prior_publication_sha": null
         }
       ]
@@ -273,8 +273,8 @@
     {
       "role": "S07",
       "latest_collector_task": "FCC-20261023-S07-B0003",
-      "collector_status": "in_progress",
-      "collector_status_updated_at": "2026-10-23T23:06:25.000+09:00",
+      "collector_status": "ready_frozen",
+      "collector_status_updated_at": "2026-10-23T23:14:08.000+09:00",
       "role_and_git_boundary_acknowledged": true,
       "tasks": [
         {
@@ -314,10 +314,10 @@
             "ADD-S07-PUBLIC-SMARTPHONE-RF-TOOLS-003"
           ],
           "acknowledgement_file_present": true,
-          "execution_state": "in_progress",
-          "P01_intake_state": "not_received",
-          "included_in_results": false,
-          "publication_state": "not_published",
+          "execution_state": "ready_frozen",
+          "P01_intake_state": "content_approved",
+          "included_in_results": true,
+          "publication_state": "included_in_this_revision",
           "prior_publication_sha": null
         }
       ]
@@ -375,11 +375,7 @@
       ]
     }
   ],
-  "included_reviewed_batches": 17,
-  "pending_intake_task_ids": [
-    "FCC-20261023-S07-B0003",
-    "FCC-20261023-S01-B0004",
-    "FCC-20261023-S06-B0002"
-  ],
+  "included_reviewed_batches": 20,
+  "pending_intake_task_ids": [],
   "scope": "Source collection and provenance only; no method approval, equipment or site validation."
 }

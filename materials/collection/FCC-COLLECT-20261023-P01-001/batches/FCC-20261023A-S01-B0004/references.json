@@ -1,0 +1,140 @@
+{
+  "references": [
+    {
+      "reference_id": "LEGACY-STANDARD-ACCESS",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "a4b1e9204f5da57faa868c3158bce59b90fc70871bb5db12a0d1aad5dbf5035c",
+      "kind": "existing_metadata_not_full_standard"
+    },
+    {
+      "reference_id": "V006-KNOWN-SOURCES",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "8b612566cae37d078f5183068ebab710739fea6041efd2ddcf59db81d95447fa",
+      "kind": "deduplication_index"
+    },
+    {
+      "reference_id": "P01-QUESTION-DECISIONS",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "50117a95bef3d152b45d6ed1f9c80714e50c51c05849ec02e453e60fb39732b7",
+      "kind": "existing_input_routing"
+    },
+    {
+      "reference_id": "S03-B0002-summary.json",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "8d86974ad0ecf920cb1e3861a85eab39ed694e4b285642bb02efaabeb573b751",
+      "kind": "existing_S03_review_metadata"
+    },
+    {
+      "reference_id": "S03-B0002-edition-matrix.json",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "13ada27d14af3dda914a2174855d151a1de3f72b82a422f83176dc24d718ac53",
+      "kind": "existing_S03_review_metadata"
+    },
+    {
+      "reference_id": "S03-B0002-publisher-observations.json",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "5e82b44f9e68933593a1d94e462de56d5df954811da634bdaf9977594e63a7ad",
+      "kind": "existing_S03_review_metadata"
+    },
+    {
+      "reference_id": "S03-B0002-findings-and-limits.json",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "ef12a6bd4f64a62c50bb52c74806f8c4a1ee641210ffa5cefd9ef50468ec0a7e",
+      "kind": "existing_S03_review_metadata"
+    },
+    {
+      "reference_id": "S03-B0002-evidence-index.json",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "a76689b4fdd6abebd621fb026db7015d9e6122cf718445557f1c5c48311989bf",
+      "kind": "existing_S03_review_metadata"
+    },
+    {
+      "reference_id": "S03-B0002-references.json",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "5cc13b5542ad4a1a4e78a294e168fe762aecbad9b3224ede90660973d75bd439",
+      "kind": "existing_S03_review_metadata"
+    },
+    {
+      "reference_id": "S03-B0002-questions.json",
+      "path": "[local-only reference retained by P01]",
+      "sha256": "b264f030f139ccebf43a539c928313892cdb5e05b95bfb77ac6fe4de68e5d5d6",
+      "kind": "existing_S03_review_metadata"
+    },
+    {
+      "document_id": "KDB-974614-974614-D01-Accredited-Test-Lab-Roles-and-Resp-v05r04-e5148262f2",
+      "package_id": "FCC-PHONE-20261023-001",
+      "package_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-974614-974614-D01-Accredited-Test-Lab-Roles-and-Resp-v05r04.pdf",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "e5148262f20fd92de4407268d6995bb2427a37a83ff79886d535d3e36aaf7d66",
+      "bytes": 353948,
+      "version": "974614 D01 Accredited Test Lab Roles and Resp v05r04",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=44684",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=e%2F4Loq%2Bapi5wjewQJzYr2A%3D%3D&desc=974614 D01 Accredited Test Lab Roles and Resp v05r04&tracking_number=44684",
+      "reference_id": "KDB-974614-974614-D01-Accredited-Test-Lab-Roles-and-Resp-v05r04-e5148262f2",
+      "kind": "existing_original_not_redownloaded"
+    },
+    {
+      "document_id": "KDB-853844-853844-D01-Accredited-Lab-Checklist-v02r04-715412757c",
+      "package_id": "FCC-PHONE-20261023-001",
+      "package_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-853844-853844-D01-Accredited-Lab-Checklist-v02r04.pdf",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "715412757c0b09de87150857b62dc3e00831720a154a1d09288dd06128f4a769",
+      "bytes": 269476,
+      "version": "853844 D01 Accredited Lab Checklist v02r04",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=44615",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=Hj6iQZ0znBCdwf977y9X7Q%3D%3D&desc=853844 D01 Accredited Lab Checklist v02r04&tracking_number=44615",
+      "reference_id": "KDB-853844-853844-D01-Accredited-Lab-Checklist-v02r04-715412757c",
+      "kind": "existing_original_not_redownloaded"
+    },
+    {
+      "document_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+      "package_id": "FCC-PHONE-20261023-001",
+      "package_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/47-CFR-Part-2-2026-10-19.xml",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "17c0fcaf1e5445cd93c93c55706eb48a3015e9b4a3342dc61aedc35e09e9ff79",
+      "bytes": 967123,
+      "version": "eCFR issue 2026-10-19",
+      "source_url": "https://www.ecfr.gov/current/title-47/part-2",
+      "download_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-19/title-47.xml?part=2",
+      "reference_id": "47-CFR-Part-2-2026-10-19-17c0fcaf1e",
+      "kind": "existing_original_not_redownloaded"
+    },
+    {
+      "document_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+      "package_id": "FCC-PHONE-20261023-001",
+      "package_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/47-CFR-Part-15-2026-10-19.xml",
+      "local_path": "[local-only reference retained by P01]",
+      "sha256": "74ea049a987626a0c8509b2c24279f9fea4689bff7248c6a3e1856a9dae641be",
+      "bytes": 571831,
+      "version": "eCFR issue 2026-10-19",
+      "source_url": "https://www.ecfr.gov/current/title-47/part-15",
+      "download_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-19/title-47.xml?part=15",
+      "reference_id": "47-CFR-Part-15-2026-10-19-74ea049a98",
+      "kind": "existing_original_not_redownloaded"
+    }
+  ],
+  "new_original_references": [
+    {
+      "document_id": "C63-standards-status-20261022-75d45e8ee337",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "sha256": "75d45e8ee337cefc9fbe8c56a9346849db43f3e36be94a08ee34502709664b2f",
+      "rights": "unknown"
+    },
+    {
+      "document_id": "C63.4-2014-horn-aperture-interpretation-4717bf878589",
+      "path": "[local-only derivative or original; not included in public payload]",
+      "sha256": "4717bf87858969436809b544dfcdec0e100771c95c5600cd6d93f0e036fd46fe",
+      "rights": "unknown"
+    }
+  ],
+  "catalog_and_CFR_KDB_redownloads": 0,
+  "S03_source_original_redownloads": 0
+}

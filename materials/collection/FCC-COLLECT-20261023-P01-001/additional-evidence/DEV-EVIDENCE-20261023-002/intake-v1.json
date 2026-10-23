@@ -1,0 +1,489 @@
+{
+  "request_id": "DEV-EVIDENCE-20261023-002",
+  "revision": 1,
+  "prepared_at": "2026-10-23T23:18:42.379644+09:00",
+  "packets": [
+    {
+      "task_id": "FCC-20261023-S07-B0003",
+      "batch_id": "FCC-20261023A-S07-B0003",
+      "owner_session": "S07",
+      "assignment_version": "v006",
+      "inventory_sha256": "22693b83d23d69ede8df2c9781ac8f13687c84fd345d8881a6b73856ee0d4ed3",
+      "review_state": "content_and_rights_reviewed",
+      "prior_verified_publication_sha": null,
+      "publication_note": "Remaining reviewed batches are included in the same commit as the public intake index.",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 1,
+        "not_started": 0
+      },
+      "new_originals": [
+        {
+          "document_id": "S07-B0003-qualcomm-qcc74x-training-d14d107baf6a",
+          "title": "QCC74x Hardware Training Guide",
+          "version": "80-WL740-5 Rev. AH (125 pages); URL filename says REV_AF",
+          "publisher": "Qualcomm",
+          "sha256": "d14d107baf6a5a7742d661c8c05b3fde5753e6369ac1ec0c1b744042362b02dc",
+          "bytes": 1527517,
+          "rights": "unknown",
+          "source_url": "https://docs.qualcomm.com/bundle/publicresource/80-WL740-5_REV_AF_QCC74x_Hardware_Training_Guide.pdf",
+          "download_url": "https://docs.qualcomm.com/doc/80-WL740-5/80-WL740-5_REV_AF_QCC74x_Hardware_Training_Guide.pdf"
+        },
+        {
+          "document_id": "S07-B0003-mediatek-mt7663-daafe8ad8820",
+          "title": "MT7663 Module — IoT Yocto v26.0 documentation",
+          "version": "IoT Yocto v26.0; current/latest page snapshot 2026-10-23T23:08:16+09:00",
+          "publisher": "MediaTek",
+          "sha256": "daafe8ad882084af3300b4886518c404b298a44003066ea6239a865580b8e9a3",
+          "bytes": 51827,
+          "rights": "unknown",
+          "source_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-Module-MT7663.html",
+          "download_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-Module-MT7663.html"
+        },
+        {
+          "document_id": "S07-B0003-mediatek-wifi-common-f3a5e381657c",
+          "title": "Wi-Fi — IoT Yocto v26.0 documentation",
+          "version": "IoT Yocto v26.0; current/latest page snapshot 2026-10-23T23:08:17+09:00",
+          "publisher": "MediaTek",
+          "sha256": "f3a5e381657c0429003373a9a25d85d14778fd365bde467ff5b63432b319da21",
+          "bytes": 81780,
+          "rights": "unknown",
+          "source_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-common.html",
+          "download_url": "https://genio.mediatek.com/doc/iot-yocto/latest/sw/yocto/app-dev/Wi-Fi/Wi-Fi-common.html"
+        },
+        {
+          "document_id": "S07-B0003-samsung-remote-test-lab-09a994ff2cce",
+          "title": "Remote Test Lab",
+          "version": "Web snapshot 2026-10-23T23:08:17+09:00; hardware, firmware and RDB executable versions not pinned by this page",
+          "publisher": "Samsung",
+          "sha256": "09a994ff2cce5b98bd54f24def9c831df39e05860ab3e7103f47dd2fc05369f2",
+          "bytes": 84537,
+          "rights": "unknown",
+          "source_url": "https://developer.samsung.com/remote-test-lab",
+          "download_url": "https://developer.samsung.com/remote-test-lab"
+        },
+        {
+          "document_id": "S07-B0003-samsung-rdb-guide-a56e40c530db",
+          "title": "Connect to Devices on Remote Test Lab Using RDB in Android Studio",
+          "version": "Web snapshot 2026-10-23T23:08:18+09:00; hardware, firmware and RDB executable versions not pinned by this page",
+          "publisher": "Samsung",
+          "sha256": "a56e40c530dbdb775501f075504e228dcb52ab7eda4e818e4417677e57c13675",
+          "bytes": 88568,
+          "rights": "unknown",
+          "source_url": "https://developer.samsung.com/remote-test-lab/blog/en-us/2022/07/13/connect-to-devices-on-remote-test-lab-using-rdb-in-android-studio",
+          "download_url": "https://developer.samsung.com/remote-test-lab/blog/en/2022/07/13/connect-to-devices-on-remote-test-lab-using-rdb-in-android-studio"
+        }
+      ],
+      "public_package": {
+        "package_id": "FCC-20261023A-S07-B0003",
+        "path": "materials/packages/FCC-20261023A-S07-B0003.zip",
+        "sha256": "ea75c61dfa8f67dea02c1a89fb97bbe2bc2926da813e07afe97e2b51efcac276",
+        "bytes": 1715,
+        "included_payloads": 0,
+        "access_or_unavailable_records": 5
+      },
+      "metadata_files": [
+        {
+          "name": "summary.json",
+          "frozen_sha256": "1995858b71e46ee83bdcfa65991e08dff2acdb78faf5ef7362f2b1d624589555",
+          "frozen_bytes": 2209,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/summary.json",
+          "public_sha256": "1995858b71e46ee83bdcfa65991e08dff2acdb78faf5ef7362f2b1d624589555",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "evidence-index.json",
+          "frozen_sha256": "22dccf0d712bc423e8596d9d8b73e7fa6a5307d759f0bc0763587791db42781a",
+          "frozen_bytes": 7637,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/evidence-index.json",
+          "public_sha256": "7ba83d28698496a2f28008564e3b1d7f6fcc43574ef2b30d5f3f485084503f67",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "references.json",
+          "frozen_sha256": "a7832abdbe876a3e1636f1f38b340bf8accdb927951f49944fe478c7e94b76f3",
+          "frozen_bytes": 5967,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/references.json",
+          "public_sha256": "2e101def8de2ee2cc7941cee1096ef55d6c9b288947bd91cac7811a14901e380",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "questions.json",
+          "frozen_sha256": "d962551d27e75fa267ec2266d2111954e854fef00abcacdc47e907b9ecd682a5",
+          "frozen_bytes": 323,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/questions.json",
+          "public_sha256": "d962551d27e75fa267ec2266d2111954e854fef00abcacdc47e907b9ecd682a5",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "manufacturer-function-matrix.json",
+          "frozen_sha256": "947cfe49056c2288f8c1f2a58915897486e0a8608651c0da3418da26a092b65c",
+          "frozen_bytes": 16083,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/manufacturer-function-matrix.json",
+          "public_sha256": "947cfe49056c2288f8c1f2a58915897486e0a8608651c0da3418da26a092b65c",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "access-notices.json",
+          "frozen_sha256": "d508c5e42d95c6ed7dd0f8dd9f8f696c752a394621d2db670cc3c74d82f29773",
+          "frozen_bytes": 4942,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/access-notices.json",
+          "public_sha256": "d508c5e42d95c6ed7dd0f8dd9f8f696c752a394621d2db670cc3c74d82f29773",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "rf-gap-delta.json",
+          "frozen_sha256": "3b80d6293726955375d1a2cc4a2b7bfeb057dd84f9d9e294c77aec469fffb2fd",
+          "frozen_bytes": 9677,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/rf-gap-delta.json",
+          "public_sha256": "3b80d6293726955375d1a2cc4a2b7bfeb057dd84f9d9e294c77aec469fffb2fd",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "rf-command-comparator.json",
+          "frozen_sha256": "41d4673aae566a9d69b5371ea3aa0f45045f3b5acb356f89aaeffe4cfe5faf71",
+          "frozen_bytes": 9053,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/rf-command-comparator.json",
+          "public_sha256": "41d4673aae566a9d69b5371ea3aa0f45045f3b5acb356f89aaeffe4cfe5faf71",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "uncertainties.json",
+          "frozen_sha256": "961d5a735a089a090b73ee3e253cec722e3a24d2155721f401a079c4deca700a",
+          "frozen_bytes": 2222,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/uncertainties.json",
+          "public_sha256": "961d5a735a089a090b73ee3e253cec722e3a24d2155721f401a079c4deca700a",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "search-scope.json",
+          "frozen_sha256": "7417fcf752944839e4e1675be604a0303b0509ce3ce01c2bee1179436df9e0d9",
+          "frozen_bytes": 3010,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/search-scope.json",
+          "public_sha256": "7417fcf752944839e4e1675be604a0303b0509ce3ce01c2bee1179436df9e0d9",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "documents.json",
+          "frozen_sha256": "f9b4e419ae37fa9eb9a4f686a9549d849a883909b6a8f866626e353fcad6fc96",
+          "frozen_bytes": 6922,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S07-B0003/documents.json",
+          "public_sha256": "bba5266d84a049191397f7ee991f4f8daab866390fc683aa70aa2d26af02b943",
+          "local_path_redactions_possible": true
+        }
+      ]
+    },
+    {
+      "task_id": "FCC-20261023-S04-B0003",
+      "batch_id": "FCC-20261023A-S04-B0003",
+      "owner_session": "S04",
+      "assignment_version": "v006",
+      "inventory_sha256": "72b33100c842b7460fddb3650f116b3f98ff3e34716c5cfe0bafa6988b512b5d",
+      "review_state": "content_and_rights_reviewed",
+      "prior_verified_publication_sha": "3d5f857e9af0d0ed48ba9ca2134d79f806214def",
+      "publication_note": "Remaining reviewed batches are included in the same commit as the public intake index.",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      },
+      "new_originals": [],
+      "public_package": null,
+      "metadata_files": [
+        {
+          "name": "summary.json",
+          "frozen_sha256": "a837c7ef25e4ecc0c5262a7a76450673c4e96e26c1467d552b71556a4ee68111",
+          "frozen_bytes": 2710,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0003/summary.json",
+          "public_sha256": "f3697c21d41774eabe8418f64b4fe252747e8d2c2fe546801a9cb718b6dc24f4",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "evidence-index.json",
+          "frozen_sha256": "04d3d20bbabe3db1df1ca14f7a77426a1b0f0408fcbc2d7b961c355b8e545a41",
+          "frozen_bytes": 12971,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0003/evidence-index.json",
+          "public_sha256": "6f0b871f72d29dccf6f6a47de35f9204223a5a26fbf667cfff52b06bfe36b9a4",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "references.json",
+          "frozen_sha256": "bac821ff64615009c19a5aef1d3eccfe76ee04f4a91b5bb324ebb93b838abbd1",
+          "frozen_bytes": 4614,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0003/references.json",
+          "public_sha256": "02f20f6f6dddb61d50d1966c2032f77c6c2ff0e5397c5443de44b1decefd28fe",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "questions.json",
+          "frozen_sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+          "frozen_bytes": 4,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0003/questions.json",
+          "public_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "gap-supplements.json",
+          "frozen_sha256": "ebbe364082042bbbf51dcd4d95f5f721facf043dccd4578b877cff314e2ce34b",
+          "frozen_bytes": 25581,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0003/gap-supplements.json",
+          "public_sha256": "e3c90e5a86e7103dc4f2647227254f30a631c1eb9a1695d0fa0a1df45591bfb4",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "sensor-prerequisites.json",
+          "frozen_sha256": "316e9fa4196778d86b41e15356535e3e17d02ae04af8747c8018b0c0ecd00294",
+          "frozen_bytes": 4387,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0003/sensor-prerequisites.json",
+          "public_sha256": "138a9130ec1b086647529f21df51a5df31e746d275ae4cae98be3b650b1e578c",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "example-provenance.json",
+          "frozen_sha256": "2174d360c3f82fff48b2fa7849ec1d008f5156b7239cd7ee2624e3a26b2be7da",
+          "frozen_bytes": 3565,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0003/example-provenance.json",
+          "public_sha256": "b86bae814bde172a87096c68e587a8083556855e96aff19ed12dafd7b855923d",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "unresolved.json",
+          "frozen_sha256": "1d403fcea10e8c6911c3aa98a3e2b22897bf1111efaa83f214c820957bd333b8",
+          "frozen_bytes": 1753,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0003/unresolved.json",
+          "public_sha256": "f2b78d5ad25ad57f794b1c82ceee8077237b7d02ee51f89a94a523ea4b63ea9a",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "documents.json",
+          "frozen_sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+          "frozen_bytes": 4,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S04-B0003/documents.json",
+          "public_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+          "local_path_redactions_possible": true
+        }
+      ]
+    },
+    {
+      "task_id": "FCC-20261023-S01-B0004",
+      "batch_id": "FCC-20261023A-S01-B0004",
+      "owner_session": "S01",
+      "assignment_version": "v006",
+      "inventory_sha256": "9025d14fae76c3c686c305765b31f5c7b59217851fed5071e17b33c83e07c208",
+      "review_state": "content_and_rights_reviewed",
+      "prior_verified_publication_sha": null,
+      "publication_note": "Remaining reviewed batches are included in the same commit as the public intake index.",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 1,
+        "not_started": 0
+      },
+      "new_originals": [
+        {
+          "document_id": "C63-standards-status-20261022-75d45e8ee337",
+          "title": "Status of C63 Standards",
+          "version": "Page heading dated 22 October 2026; historical sections may be stale",
+          "publisher": "USEMCSC C63",
+          "sha256": "75d45e8ee337cefc9fbe8c56a9346849db43f3e36be94a08ee34502709664b2f",
+          "bytes": 242631,
+          "rights": "unknown",
+          "source_url": "https://www.c63.org/documents/misc/matrix/c63_standards.htm",
+          "download_url": "https://www.c63.org/documents/misc/matrix/c63_standards.htm"
+        },
+        {
+          "document_id": "C63.4-2014-horn-aperture-interpretation-4717bf878589",
+          "title": "C63.4-2014 Clause 4.5 Horn Antenna Aperture interpretation response",
+          "version": "Official file dated 20181207 in filename; document dates retained separately",
+          "publisher": "ASC C63",
+          "sha256": "4717bf87858969436809b544dfcdec0e100771c95c5600cd6d93f0e036fd46fe",
+          "bytes": 591429,
+          "rights": "unknown",
+          "source_url": "https://www.c63.org/documents/misc/interpretations/C63_4_2014_20181207_Clause_4_5_Horn_antenna_aperture.pdf",
+          "download_url": "https://www.c63.org/documents/misc/interpretations/C63_4_2014_20181207_Clause_4_5_Horn_antenna_aperture.pdf"
+        }
+      ],
+      "public_package": {
+        "package_id": "FCC-20261023A-S01-B0004",
+        "path": "materials/packages/FCC-20261023A-S01-B0004.zip",
+        "sha256": "04c803096c448eeac4bf5032790431db2b5888975b909297d1f8ffd090b9ff5c",
+        "bytes": 1234,
+        "included_payloads": 0,
+        "access_or_unavailable_records": 2
+      },
+      "metadata_files": [
+        {
+          "name": "summary.json",
+          "frozen_sha256": "cc829ef1033f18a431531056247951aacbad80eb9eff5dbea11ecaea1d8eaa7d",
+          "frozen_bytes": 2526,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0004/summary.json",
+          "public_sha256": "61bf3fcb80c79f8804e196540f1976afdfc0b4bf15138902129c9f21ea95c23c",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "evidence-index.json",
+          "frozen_sha256": "d267cac6b41ae4c12209616029901ecab03be18d7e46d9af31c89d164c3f1296",
+          "frozen_bytes": 3892,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0004/evidence-index.json",
+          "public_sha256": "523adc854a993d912c7bd1f4100ba90ad90713fdc5e795c94055bb6fb7c71e8b",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "references.json",
+          "frozen_sha256": "b7d5d90b210a08dbc0e792ef75082671f9a7d6f1a7306c73b5433b46a3c8e013",
+          "frozen_bytes": 8223,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0004/references.json",
+          "public_sha256": "0a9a13b8dcfeb8f6f821003e19e036b65ef3b3e8c15d0cea1dbe824cd604ae1d",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "questions.json",
+          "frozen_sha256": "d4e999b34f65a309222b25ec2f348b48b83448bd87ce58b7fc9200c4abf64643",
+          "frozen_bytes": 1557,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0004/questions.json",
+          "public_sha256": "8a3688208ce7b565c5c3bda2c6e0abe3cbf30b839024aeaa214bc6ab7d4b92ec",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "standards-access-matrix.json",
+          "frozen_sha256": "b769cdbbef83d1407c5b219dedd0ec477452b972d0d7ecc58b5abd8373b4226a",
+          "frozen_bytes": 19244,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0004/standards-access-matrix.json",
+          "public_sha256": "ec03bdb612c9ae9223b3290a1c5e3b097d05159e2d7677b0d1e6e27870a0350d",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "sar-followup-reuse.json",
+          "frozen_sha256": "de767dce596bd424e275808ab38732822a81900f4eaed472ab8356442a4d99d5",
+          "frozen_bytes": 4440,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0004/sar-followup-reuse.json",
+          "public_sha256": "9b4fefbfcfef99b9f665bb6263c3e6630454ba1b6c4293a54b5206945f915288",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "documents.json",
+          "frozen_sha256": "c1765b253a7abfd0032343e6e36df65b3d0c92936aec2b725430209163ec654e",
+          "frozen_bytes": 2777,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S01-B0004/documents.json",
+          "public_sha256": "ba23720ce7cd4c1e4b544efdcd52c845aee2a481ad84db8b387c582f435a81b8",
+          "local_path_redactions_possible": true
+        }
+      ]
+    },
+    {
+      "task_id": "FCC-20261023-S06-B0002",
+      "batch_id": "FCC-20261023A-S06-B0002",
+      "owner_session": "S06",
+      "assignment_version": "v006",
+      "inventory_sha256": "5f87620198df4561f310e01d3e616758bd480c17b97d2e6a5370f01d498cd953",
+      "review_state": "content_and_rights_reviewed",
+      "prior_verified_publication_sha": null,
+      "publication_note": "Remaining reviewed batches are included in the same commit as the public intake index.",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 1,
+        "not_started": 0
+      },
+      "new_originals": [],
+      "public_package": null,
+      "metadata_files": [
+        {
+          "name": "summary.json",
+          "frozen_sha256": "cf8002e13f07fbb895384a811ec8854f098d0414aa7b112f70508c0f479666d0",
+          "frozen_bytes": 2426,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/summary.json",
+          "public_sha256": "cf8002e13f07fbb895384a811ec8854f098d0414aa7b112f70508c0f479666d0",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "evidence-index.json",
+          "frozen_sha256": "72f05226de97832136cce85e5ccbcf4b1b9665baf10df5698f6541018277f14b",
+          "frozen_bytes": 10532,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/evidence-index.json",
+          "public_sha256": "72f05226de97832136cce85e5ccbcf4b1b9665baf10df5698f6541018277f14b",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "references.json",
+          "frozen_sha256": "72c646d3a201b9cbc614634aa3ffc937001ce2b321bc58e1ad2cb085c99255c9",
+          "frozen_bytes": 7455,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/references.json",
+          "public_sha256": "4c4f82117f38c6c79da7480b5a850977c0309b7d7d7bb8aa210541692fbbbd3d",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "questions.json",
+          "frozen_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+          "frozen_bytes": 3,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/questions.json",
+          "public_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "route-ets-archive-page-3.json",
+          "frozen_sha256": "953104cd0834e823fb1e74f2906ede90136cd21f30fa1ec8139bd83c4b11f512",
+          "frozen_bytes": 862,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/route-ets-archive-page-3.json",
+          "public_sha256": "20a5160e1bc217d3cabb388009342e9e0cb2a618672f2ef630b0748d261dc6bc",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "route-ets-archive-page-7.json",
+          "frozen_sha256": "eaab2f8d696f8d2e52a4fe54f60fbb0e1bd450bf9f59c00d8104a13c451b5203",
+          "frozen_bytes": 862,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/route-ets-archive-page-7.json",
+          "public_sha256": "f2d5664fbe282fe220cfb5f25e9d99885840aac4fcbabb5d8fd67e41a4be2357",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "route-innco-german-download-list.json",
+          "frozen_sha256": "9e0494f165859dd4fa81302be0dfc9d4ebcaa574de5ba2f151ff7942fe75b979",
+          "frozen_bytes": 2266,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/route-innco-german-download-list.json",
+          "public_sha256": "9e0494f165859dd4fa81302be0dfc9d4ebcaa574de5ba2f151ff7942fe75b979",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "route-innco-german-model-page.json",
+          "frozen_sha256": "cf5d9755ef1feeaef31e75ee0064a4f7a3bba7220bb79feea7b75f59a84fe92c",
+          "frozen_bytes": 2757,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/route-innco-german-model-page.json",
+          "public_sha256": "bb8ef2fff304faba97831c520304b1c4dee5525938594e652a3ad7d28c376f54",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "route-innco-german-product-pdf.json",
+          "frozen_sha256": "e60eaaaf75bd55c52db96709235955c9163e62e041bd45600502306b738f7496",
+          "frozen_bytes": 1156,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/route-innco-german-product-pdf.json",
+          "public_sha256": "e60eaaaf75bd55c52db96709235955c9163e62e041bd45600502306b738f7496",
+          "local_path_redactions_possible": true
+        },
+        {
+          "name": "documents.json",
+          "frozen_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+          "frozen_bytes": 3,
+          "public_path": "materials/collection/FCC-COLLECT-20261023-P01-001/batches/FCC-20261023A-S06-B0002/documents.json",
+          "public_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+          "local_path_redactions_possible": true
+        }
+      ]
+    }
+  ],
+  "batch_count": 4,
+  "new_original_count": 7,
+  "new_public_original_payloads": 0,
+  "out_of_scope_originals_preserved_in_count": 1,
+  "historical_limited_requests": 6,
+  "historical_limited_statuses_changed": false,
+  "result_notes": [
+    "S04:13 evidence supplements and4 sensor families from existing manuals; no new original, raw capture or measurement.",
+    "S01:2 committee status/interpretation originals;13 standard/notice records; full standards and blocked corrigendum/errata raw files were not acquired.",
+    "S07:5 manufacturer originals, including1 out-of-scope preserved source;1 IoT command comparator only;0 of16 actual smartphone RF gaps closed.",
+    "S06:5 new public routes checked;0 target command manuals acquired;4 existing originals reused;3 historical model gaps remain."
+  ],
+  "acquisition_rights": "All7 newly acquired complete originals remain local because redistribution rights are not established. Public packages contain access notices only.",
+  "audit_path": "materials/collection/FCC-COLLECT-20261023-P01-001/additional-evidence/DEV-EVIDENCE-20261023-002/limited-audit.json",
+  "user_materials_path": "materials/collection/FCC-COLLECT-20261023-P01-001/additional-evidence/DEV-EVIDENCE-20261023-002/user-materials.md",
+  "actual_hardware_or_method_validation": false,
+  "public_hash_representation": "UTF-8 LF bytes, identical to Git blobs; frozen source hashes retain their exact original bytes."
+}
