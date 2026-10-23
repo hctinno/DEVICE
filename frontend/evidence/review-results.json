@@ -1,0 +1,26 @@
+{
+  "date_kst": "2026-10-23",
+  "provenance": "synthetic",
+  "review_checks_passed": 10,
+  "checks": [
+    "refresh rejects missing question key without mixing snapshots",
+    "refresh rejects missing candidate value without mixing snapshots",
+    "refresh rejects object instead of question array without mixing snapshots",
+    "refresh rejects array instead of projected facts object without mixing snapshots",
+    "refresh rejects null notification record without mixing snapshots",
+    "a rendering exception preserves the successful snapshot (populated response)",
+    "a rendering exception preserves the successful snapshot (empty response)",
+    "a malformed first response stays an error when search and filter change",
+    "initial HTTP failure survives search and filter interaction",
+    "search and filter during initial loading do not invent an empty result"
+  ],
+  "node_model_checks_passed": 20,
+  "existing_browser_checks_passed": 9,
+  "python_checks_passed": 118,
+  "red_evidence": [
+    "review-r1-red.log",
+    "review-r23-red.log",
+    "review-render-empty-red.log"
+  ],
+  "red_evidence_location": ".local/dev4/"
+}

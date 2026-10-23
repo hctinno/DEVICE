@@ -24,8 +24,10 @@ export function describeState(record, now = Date.now() / 1000) {
   if (!['awaiting_analysis', 'analyzed', 'analysis_failed', 'upload_incomplete'].includes(record.status)) code = 'unsupported';
   else if (record.deferred) code = 'deferred';
   else if (record.status === 'analyzed') {
-    code = record.analysis ? ({needs_information: 'needs_information', prepare_plan: 'plan_pending',
-      propose_start: 'propose_start', deferred: 'deferred'}[record.analysis.next_action] || 'unsupported') : 'invalid';
+    const actions = {needs_information: 'needs_information', prepare_plan: 'plan_pending',
+      propose_start: 'propose_start', deferred: 'deferred'};
+    code = !record.analysis ? 'invalid' : Object.hasOwn(actions, record.analysis.next_action)
+      ? actions[record.analysis.next_action] : 'unsupported';
   } else if (record.status === 'awaiting_analysis') {
     const job = (record.jobs || []).find(j => j.revision === record.revision);
     code = !job || job.state === 'queued' ? 'awaiting_analysis'
@@ -40,7 +42,9 @@ export function factSources(record, field) {
   if (!fact || fact.status === 'user_confirmed') return [];
   return (record.analysis?.submitted?.facts || [])
     .filter(candidate => candidate.field === field && candidate.value.trim() === fact.value
-      && ['explicit', 'inferred'].includes(candidate.status))
+      && ['explicit', 'inferred'].includes(candidate.status)
+      && (!['market', 'purpose'].includes(field)
+        || (candidate.status === 'explicit' && (candidate.evidence || []).every(source => source.role === 'request'))))
     .flatMap(candidate => candidate.evidence || []);
 }
 
@@ -75,4 +79,108 @@ export function seoulTime(value) {
 export function bytes(value) {
   if (!Number.isFinite(value)) return '크기 미확인';
   return value < 1024 ? `${value} B` : `${(value / 1024).toFixed(1)} KiB`;
+}
+
+// Validate the structures consumed by the renderer, without reinterpreting
+// analysis claims or replacing missing evidence with invented sources.
+export function validateSnapshot(payload) {
+  const fail = path => { throw Object.assign(new Error('invalid_snapshot'), {path}); };
+  const object = (value, path) => {
+    if (value === null || typeof value !== 'object' || Array.isArray(value)) fail(path);
+  };
+  const text = (value, path, allowEmpty = false) => {
+    if (typeof value !== 'string' || (!allowEmpty && !value.trim())) fail(path);
+  };
+  const number = (value, path, integer = false, minimum = 0) => {
+    if (!Number.isFinite(value) || value < minimum || (integer && !Number.isInteger(value))) fail(path);
+  };
+  const array = (value, path, check) => {
+    if (!Array.isArray(value)) fail(path);
+    value.forEach((item, index) => check(item, `${path}[${index}]`));
+  };
+  const optionalText = (value, path) => { if (value !== undefined) text(value, path, true); };
+  const citation = (value, path) => {
+    object(value, path);
+    for (const key of ['path', 'sha256', 'quote', 'role']) optionalText(value[key], `${path}.${key}`);
+    for (const key of ['line_start', 'line_end']) {
+      if (value[key] !== undefined) number(value[key], `${path}.${key}`, true, 1);
+    }
+  };
+  const candidate = (value, path) => {
+    object(value, path);
+    for (const key of ['field', 'value', 'status']) text(value[key], `${path}.${key}`);
+    if (value.evidence !== undefined) array(value.evidence, `${path}.evidence`, citation);
+  };
+  const question = (value, path) => {
+    object(value, path);
+    for (const key of ['key', 'message']) text(value[key], `${path}.${key}`);
+    optionalText(value.field, `${path}.field`);
+    for (const key of ['values', 'paths']) {
+      if (value[key] !== undefined) array(value[key], `${path}.${key}`, text);
+    }
+  };
+  const analysis = (value, path) => {
+    object(value, path);
+    object(value.facts, `${path}.facts`);
+    for (const [field, fact] of Object.entries(value.facts)) {
+      const location = `${path}.facts.${field}`;
+      object(fact, location);
+      text(fact.value, `${location}.value`);
+      text(fact.status, `${location}.status`);
+      optionalText(fact.event_id, `${location}.event_id`);
+    }
+    array(value.questions, `${path}.questions`, question);
+    text(value.next_action, `${path}.next_action`);
+    if (value.submitted !== undefined) {
+      object(value.submitted, `${path}.submitted`);
+      array(value.submitted.facts, `${path}.submitted.facts`, candidate);
+      if (value.submitted.producer !== undefined) {
+        object(value.submitted.producer, `${path}.submitted.producer`);
+        for (const key of ['kind', 'name']) text(value.submitted.producer[key], `${path}.submitted.producer.${key}`);
+      }
+    }
+    if (value.unread_documents !== undefined) array(value.unread_documents, `${path}.unread_documents`, text);
+  };
+  const file = (value, path) => {
+    object(value, path);
+    text(value.path, `${path}.path`);
+    text(value.sha256, `${path}.sha256`);
+    number(value.bytes, `${path}.bytes`, true);
+  };
+  const record = (value, path) => {
+    object(value, path);
+    for (const key of ['intake_id', 'source_id', 'bundle', 'status', 'measurement_support']) text(value[key], `${path}.${key}`);
+    for (const key of ['synthetic', 'deferred', 'delegated']) if (typeof value[key] !== 'boolean') fail(`${path}.${key}`);
+    number(value.revision, `${path}.revision`, true, 1);
+    if (value.analysis !== null) analysis(value.analysis, `${path}.analysis`);
+    array(value.files, `${path}.files`, file);
+    array(value.history, `${path}.history`, (revision, location) => {
+      object(revision, location);
+      number(revision.revision, `${location}.revision`, true, 1);
+      number(revision.created_at, `${location}.created_at`);
+      array(revision.files, `${location}.files`, file);
+    });
+    array(value.jobs, `${path}.jobs`, (job, location) => {
+      object(job, location);
+      text(job.job_id, `${location}.job_id`);
+      text(job.state, `${location}.state`);
+      number(job.revision, `${location}.revision`, true, 1);
+      number(job.attempt, `${location}.attempt`, true);
+      if (job.error_code != null) text(job.error_code, `${location}.error_code`);
+      if (job.lease_until != null) number(job.lease_until, `${location}.lease_until`);
+    });
+  };
+  object(payload, 'response');
+  if (payload.schema_version !== 1) fail('schema_version');
+  text(payload.generated_at, 'generated_at');
+  if (!Number.isFinite(new Date(payload.generated_at).getTime())) fail('generated_at');
+  array(payload.intakes, 'intakes', record);
+  array(payload.notifications, 'notifications', (notice, path) => {
+    object(notice, path);
+    number(notice.notification_id, `${path}.notification_id`, true, 1);
+    text(notice.intake_id, `${path}.intake_id`);
+    number(notice.revision, `${path}.revision`, true, 1);
+    analysis(notice.payload, `${path}.payload`);
+  });
+  return payload;
 }

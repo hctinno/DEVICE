@@ -1,4 +1,4 @@
-import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes} from './model.mjs';
+import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot} from './model.mjs';
 
 const $ = selector => document.querySelector(selector);
 const state = {records: [], notices: [], selected: location.hash.slice(1), loaded: false, request: 0, view: 'intakes'};
@@ -9,6 +9,8 @@ const errorMessages = {
   store_unavailable: '접수 저장소를 읽을 수 없습니다. 파일·권한·스키마 상태를 확인하세요.',
   state_invalid: '저장된 접수 상태를 해석할 수 없습니다. 상태 기록을 확인하세요.',
   unsupported_response: '화면에서 지원하지 않는 API 응답입니다.',
+  invalid_snapshot: '응답의 필수 필드 또는 자료 구조가 올바르지 않아 조회 결과를 적용하지 않았습니다.',
+  render_failed: '조회 결과를 화면으로 구성하지 못해 이전 상태를 유지합니다.',
 };
 
 function el(tag, className = '', text) {
@@ -59,48 +61,44 @@ function metadata(entries) {
   return list;
 }
 
-function renderMetrics() {
-  const counts = [['전체 접수', state.records.length, '▤', ''],
-    ['확인 필요', filterIntakes(state.records, {filter: 'attention'}).length, '!', 'attention'],
-    ['분석 대기·분석 중', filterIntakes(state.records, {filter: 'waiting'}).length, '◷', ''],
-    ['사용자 보류', filterIntakes(state.records, {filter: 'deferred'}).length, 'Ⅱ', '']];
-  $('#metrics').replaceChildren(...counts.map(([label, value, icon, style]) => {
+function buildMetrics(view) {
+  const counts = [['전체 접수', view.records.length, '▤', ''],
+    ['확인 필요', filterIntakes(view.records, {filter: 'attention'}).length, '!', 'attention'],
+    ['분석 대기·분석 중', filterIntakes(view.records, {filter: 'waiting'}).length, '◷', ''],
+    ['사용자 보류', filterIntakes(view.records, {filter: 'deferred'}).length, 'Ⅱ', '']];
+  return counts.map(([label, value, icon, style]) => {
     const card = el('div', `metric ${style}`);
     card.append(el('p', '', label), el('strong', '', value), el('small', '', '건'));
     const symbol = el('span', 'metric-icon', icon);
     symbol.setAttribute('aria-hidden', 'true');
     card.append(symbol);
     return card;
-  }));
-  $('#notice-count').textContent = state.notices.length;
+  });
 }
 
-function renderList() {
-  const filtered = filterIntakes(state.records, {query: $('#search').value, filter: $('#filter').value});
-  if (!filtered.some(item => item.intake_id === state.selected)) state.selected = filtered[0]?.intake_id || '';
-  $('#result-count').textContent = `${filtered.length} / ${state.records.length}건`;
+function buildList(view) {
+  const filtered = filterIntakes(view.records, {query: $('#search').value, filter: $('#filter').value});
+  const selected = filtered.some(item => item.intake_id === view.selected) ? view.selected : filtered[0]?.intake_id || '';
   const nodes = filtered.map(record => {
     const item = el('li');
     const button = el('button', 'intake-item');
     button.type = 'button';
-    if (record.intake_id === state.selected) button.setAttribute('aria-current', 'true');
+    if (record.intake_id === selected) button.setAttribute('aria-current', 'true');
     const badges = el('div', 'item-badges');
     badges.append(stateBadge(record), badge(record.synthetic ? '합성' : '제공 자료', 'provenance'));
     button.append(badges, el('span', 'item-title', record.bundle),
       el('span', 'item-meta', `${record.source_id} · v${record.revision} · 원본 ${record.files.length}개`));
     button.addEventListener('click', () => {
-      state.selected = record.intake_id;
+      publishView(prepareView({...state, selected: record.intake_id}));
       history.replaceState(null, '', `#${encodeURIComponent(record.intake_id)}`);
-      renderList();
-      renderDetail();
       $('#detail-title')?.focus();
       $('#announcer').textContent = `${record.bundle} 상세를 표시했습니다.`;
     });
     item.append(button);
     return item;
   });
-  if (!nodes.length) nodes.push(el('li', 'empty small', state.records.length ? '검색·필터 조건에 맞는 접수가 없습니다.' : '등록된 접수가 없습니다.'));
-  $('#intake-list').replaceChildren(...nodes);
+  if (!nodes.length) nodes.push(el('li', 'empty small', view.records.length ? '검색·필터 조건에 맞는 접수가 없습니다.' : '등록된 접수가 없습니다.'));
+  return {nodes, selected, count: `${filtered.length} / ${view.records.length}건`};
 }
 
 function renderFacts(record) {
@@ -199,8 +197,8 @@ function renderJobs(record) {
   return node;
 }
 
-function noticeNode(notice, includeLink) {
-  const record = state.records.find(item => item.intake_id === notice.intake_id);
+function noticeNode(notice, includeLink, view) {
+  const record = view.records.find(item => item.intake_id === notice.intake_id);
   const node = el('article', 'notice');
   const header = el('div', 'notice-meta');
   header.append(badge(`기록 #${notice.notification_id}`), el('span', '', `${record?.bundle || notice.intake_id} · v${notice.revision}`),
@@ -217,20 +215,18 @@ function noticeNode(notice, includeLink) {
   if (includeLink && record) {
     const button = el('button', 'button', '현재 접수 보기'); button.type = 'button';
     button.addEventListener('click', () => {
-      $('#search').value = ''; $('#filter').value = 'all'; state.selected = record.intake_id;
-      changeView('intakes'); renderList(); renderDetail(); $('#detail-title')?.focus();
+      $('#search').value = ''; $('#filter').value = 'all';
+      changeView('intakes'); publishView(prepareView({...state, selected: record.intake_id})); $('#detail-title')?.focus();
     }); node.append(button);
   }
   return node;
 }
 
-function renderDetail() {
-  const panel = $('#detail-panel');
-  const record = state.records.find(item => item.intake_id === state.selected);
+function buildDetail(view) {
+  const record = view.records.find(item => item.intake_id === view.selected);
   if (!record) {
-    panel.replaceChildren(empty(state.records.length ? '표시할 접수가 없습니다' : '첫 접수를 기다리고 있습니다', state.records.length
-      ? '검색어 또는 상태 필터를 변경하세요.' : '등록된 접수 자료가 없습니다. 기존 접수 서비스로 자료가 저장되면 새로고침하여 확인할 수 있습니다.'));
-    return;
+    return [empty(view.records.length ? '표시할 접수가 없습니다' : '첫 접수를 기다리고 있습니다', view.records.length
+      ? '검색어 또는 상태 필터를 변경하세요.' : '등록된 접수 자료가 없습니다. 기존 접수 서비스로 자료가 저장되면 새로고침하여 확인할 수 있습니다.')];
   }
   const current = describeState(record);
   const header = el('header', 'detail-header');
@@ -249,19 +245,37 @@ function renderDetail() {
     ['보류 의사', record.deferred ? '저장됨' : '저장된 보류 없음'],
   ]), renderFacts(record), renderQuestions(record), renderJobs(record), renderFiles(record));
   const notices = section('이 접수의 알림 기록', '전송·읽음 상태 미제공');
-  const related = state.notices.filter(notice => notice.intake_id === record.intake_id);
+  const related = view.notices.filter(notice => notice.intake_id === record.intake_id);
   if (!related.length) notices.append(el('p', 'muted', '저장된 알림이 없습니다.'));
-  else for (const notice of [...related].reverse()) notices.append(noticeNode(notice, false));
+  else for (const notice of [...related].reverse()) notices.append(noticeNode(notice, false, view));
   body.append(notices);
-  panel.replaceChildren(header, body);
+  return [header, body];
 }
 
-function renderNotifications() {
-  const panel = $('#notification-view');
-  const heading = el('div', 'section-heading'); heading.append(el('h2', '', '저장된 알림 기록'), el('small', '', `${state.notices.length}개`));
-  panel.replaceChildren(heading, el('p', 'muted', '알림 생성 당시의 기록입니다. 조회로 읽음 처리하거나 외부에 발송하지 않습니다.'));
-  if (!state.notices.length) panel.append(empty('알림 기록이 없습니다', '분석 결과로 생성된 로컬 알림이 여기에 표시됩니다.'));
-  else for (const notice of [...state.notices].reverse()) panel.append(noticeNode(notice, true));
+function buildNotifications(view) {
+  const heading = el('div', 'section-heading'); heading.append(el('h2', '', '저장된 알림 기록'), el('small', '', `${view.notices.length}개`));
+  const nodes = [heading, el('p', 'muted', '알림 생성 당시의 기록입니다. 조회로 읽음 처리하거나 외부에 발송하지 않습니다.')];
+  if (!view.notices.length) nodes.push(empty('알림 기록이 없습니다', '분석 결과로 생성된 로컬 알림이 여기에 표시됩니다.'));
+  else for (const notice of [...view.notices].reverse()) nodes.push(noticeNode(notice, true, view));
+  return nodes;
+}
+
+function prepareView(next) {
+  // Build every panel off-DOM before committing either DOM or application state.
+  const list = buildList(next);
+  const view = {...next, selected: list.selected};
+  return {view, list, metrics: buildMetrics(view), detail: buildDetail(view), notifications: buildNotifications(view)};
+}
+
+function publishView(prepared) {
+  $('#metrics').replaceChildren(...prepared.metrics);
+  $('#intake-list').replaceChildren(...prepared.list.nodes);
+  $('#detail-panel').replaceChildren(...prepared.detail);
+  $('#notification-view').replaceChildren(...prepared.notifications);
+  $('#result-count').textContent = prepared.list.count;
+  $('#notice-count').textContent = prepared.view.notices.length;
+  $('#last-updated').textContent = prepared.view.updatedText;
+  Object.assign(state, prepared.view);
 }
 
 function changeView(view) {
@@ -285,20 +299,24 @@ async function refresh() {
     const response = await fetch('/api/intakes', {signal: controller.signal, cache: 'no-store'});
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error?.code || 'store_unavailable');
-    if (payload.schema_version !== 1 || !Array.isArray(payload.intakes) || !Array.isArray(payload.notifications)) throw new Error('unsupported_response');
+    validateSnapshot(payload);
     if (request !== state.request) return;
-    state.records = payload.intakes; state.notices = payload.notifications; state.loaded = true;
-    renderMetrics(); renderList(); renderDetail(); renderNotifications();
-    $('#last-updated').textContent = `${seoulTime(payload.generated_at)} KST 조회`;
+    let prepared;
+    try { prepared = prepareView({...state, records: payload.intakes, notices: payload.notifications, loaded: true,
+      updatedText: `${seoulTime(payload.generated_at)} KST 조회`}); }
+    catch { throw new Error('render_failed'); }
+    publishView(prepared);
     $('#error-banner').hidden = true;
     $('#announcer').textContent = `접수 ${state.records.length}건을 조회했습니다.`;
   } catch (error) {
     if (request !== state.request) return;
-    const message = errorMessages[error.message] || '서버 연결 또는 응답을 확인할 수 없습니다. 서버 실행 상태를 확인하고 다시 시도하세요.';
+    const message = Object.hasOwn(errorMessages, error.message) ? errorMessages[error.message]
+      : '서버 연결 또는 응답을 확인할 수 없습니다. 서버 실행 상태를 확인하고 다시 시도하세요.';
     const banner = $('#error-banner');
     banner.replaceChildren(el('strong', '', '조회 실패'), el('p', '', message),
       el('p', 'inline-note', state.loaded ? '아래 내용은 마지막 성공 조회 시점의 기록입니다. 최신 상태가 아닐 수 있습니다.' : '저장소가 비었다는 뜻이 아닙니다. 접수 건수를 확인하지 못했습니다.'));
     const retry = el('button', 'button', '다시 조회'); retry.type = 'button'; retry.addEventListener('click', refresh);
+    if (error.message === 'invalid_snapshot') banner.append(el('p', 'inline-note', `응답 필드: ${error.path}`));
     banner.append(retry); banner.hidden = false;
     if (!state.loaded) {
       $('#result-count').textContent = '조회 불가'; $('#metrics').replaceChildren();
@@ -314,8 +332,12 @@ async function refresh() {
   }
 }
 
-$('#search').addEventListener('input', () => { renderList(); renderDetail(); });
-$('#filter').addEventListener('change', () => { renderList(); renderDetail(); });
+function renderFilteredIntakes() {
+  if (!state.loaded) return;
+  publishView(prepareView(state));
+}
+$('#search').addEventListener('input', renderFilteredIntakes);
+$('#filter').addEventListener('change', renderFilteredIntakes);
 $('#refresh').addEventListener('click', refresh);
 for (const button of document.querySelectorAll('[data-view]')) button.addEventListener('click', () => changeView(button.dataset.view));
 refresh();

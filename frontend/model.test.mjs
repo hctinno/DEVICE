@@ -19,10 +19,13 @@ test('analysis completion or plan request is never a completed test', () => {
   assert.equal(describeState({status: 'analyzed', analysis: {next_action: 'needs_information'}}).code, 'needs_information');
   assert.equal(describeState({status: 'analyzed', analysis: null}).code, 'invalid');
   assert.equal(describeState({status: 'analyzed', analysis: {next_action: 'future'}}).code, 'unsupported');
+  for (const next_action of ['constructor', 'toString', '__proto__']) {
+    assert.equal(describeState({status: 'analyzed', analysis: {next_action}}).code, 'unsupported');
+  }
 });
 
 test('projected facts only cite matching candidates and never forge citations for user answers', () => {
-  const citation = {path: 'request.txt', quote: '<script>alert(1)</script>'};
+  const citation = {path: 'request.txt', role: 'request', quote: '<script>alert(1)</script>'};
   const record = {analysis: {facts: {market: {value: 'EU', status: 'explicit'}}, submitted: {facts: [
     {field: 'market', value: 'EU', status: 'explicit', evidence: [citation]},
     {field: 'market', value: 'US', status: 'explicit', evidence: [{path: 'other.txt'}]},
@@ -32,6 +35,30 @@ test('projected facts only cite matching candidates and never forge citations fo
   record.analysis.facts.market = {value: 'EU', status: 'user_confirmed', event_id: 'ANSWER-1'};
   assert.deepEqual(factSources(record, 'market'), []);
   assert.deepEqual(factSources({analysis: {facts: {model: {value: 'X', status: 'explicit'}}}}, 'model'), []);
+});
+
+test('market and purpose only cite explicit candidates entirely from request sources', () => {
+  for (const field of ['market', 'purpose']) {
+    const request = {path: 'request.txt', role: 'request'};
+    const record = {analysis: {facts: {[field]: {value: 'US', status: 'explicit'}}, submitted: {facts: [
+      {field, value: ' US ', status: 'explicit', evidence: [request]},
+      {field, value: 'US', status: 'explicit', evidence: [{path: 'reference.txt', role: 'reference'}]},
+      {field, value: 'US', status: 'inferred', evidence: [{path: 'guess.txt', role: 'request'}]},
+      {field, value: 'US', status: 'explicit', evidence: [request, {path: 'mixed.txt', role: 'reference'}]},
+    ]}}};
+    assert.deepEqual(factSources(record, field), [request]);
+    assert.equal(record.analysis.submitted.facts.length, 4);
+  }
+});
+
+test('general facts keep explicit and inferred sources regardless of source role', () => {
+  const reference = {path: 'reference.txt', role: 'reference'};
+  const inference = {path: 'guess.txt', role: 'request'};
+  const record = {analysis: {facts: {manufacturer: {value: 'Maker', status: 'explicit'}}, submitted: {facts: [
+    {field: 'manufacturer', value: 'Maker', status: 'explicit', evidence: [reference]},
+    {field: 'manufacturer', value: 'Maker', status: 'inferred', evidence: [inference]},
+  ]}}};
+  assert.deepEqual(factSources(record, 'manufacturer'), [reference, inference]);
 });
 
 test('Korean search combines with filters without hiding unsupported or failed work', () => {

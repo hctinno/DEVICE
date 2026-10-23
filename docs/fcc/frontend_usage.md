@@ -8,7 +8,7 @@
 
 빈 저장소, 조회 중, 접속/저장소 오류, 자료 미완성, 분석 대기·분석 중, 실패, 사용자 보류, 임대 만료, 미지원 상태를 구분한다. `prepare_plan`은 계획 연결 대기이며 시험 준비 완료가 아니다. `completed`는 분석 작업 완료다. 알림은 생성 당시 로컬 기록이며 읽음/외부 발송 상태가 없다.
 
-사용자 답변은 응답 event ID로 표시한다. 그 외 사실은 일치하는 제출 후보의 원문 인용·행·파일명·SHA-256을 연결하며 출처가 없으면 근거 없음을 표시한다. 충돌/불확실 후보도 펼쳐 볼 수 있다. 원본 파일은 메타데이터만 조회하며 현재 원본 바이트의 무결성을 새로 검증하는 화면은 아니다.
+사용자 답변은 응답 event ID로 표시한다. 그 외 사실은 일치하는 제출 후보의 원문 인용·행·파일명·SHA-256을 연결하며 출처가 없으면 근거 없음을 표시한다. 시장·목적은 서비스와 같이 `explicit`이면서 모든 출처 역할이 `request`인 후보만 확정 근거로 연결한다. 제외된 참고/추론 후보는 제출 후보에서 보존한다. 충돌/불확실 후보도 펼쳐 볼 수 있다. 원본 파일은 메타데이터만 조회하며 현재 원본 바이트의 무결성을 새로 검증하는 화면은 아니다.
 
 ## 실행
 
@@ -41,13 +41,15 @@ python -m labflow.ui_server --workspace .local/ui-empty/state --port 8766
 
 기존 `active_intake.intake_status`와 `intake_jobs.notifications`를 같은 SQLite 읽기 스냅샷에서 호출한다. `Store`를 생성해 마이그레이션하지 않고 `mode=ro` 및 `query_only`를 사용한다. 변경 메서드·외부 Host/Origin·임의 파일 경로·쿼리를 거절한다. 응답에는 lease token을 추가하지 않는다. 정적 자산은 allowlist만 제공하고 원문은 DOM `textContent`로 표시한다.
 
-미지원/손상 상태는 `503`과 `store_missing/store_unavailable/state_invalid`, 없는 접수는 `404`와 `intake_not_found`로 반환한다. 조회 실패 시 이전 성공 자료가 남으면 최신 자료가 아닐 수 있다고 표시한다. 시각은 KST로 표시하고 API 시각은 ISO UTC다.
+미지원/손상 상태는 `503`과 `store_missing/store_unavailable/state_invalid`, 없는 접수는 `404`와 `intake_not_found`로 반환한다. 화면은 HTTP 200이어도 중첩 사실/후보/질문/출처/작업/파일/알림의 자료형과 필수 필드를 검사한다. 구조가 잘못되면 해당 필드 경로를 표시하고 적용하지 않는다. 출처 없음과 새로운 상태 코드는 잘못된 객체/배열 구조와 구분한다.
+
+모든 패널과 조회 시각을 화면 밖에서 구성한 뒤 상태와 함께 반영한다. 검사 또는 화면 구성 실패 시 마지막 성공 스냅샷의 목록·상세·집계·알림·시각을 함께 보존한다. 정상 조회를 한 적이 없으면 검색/필터 조작으로 오류·로딩을 빈 저장소로 바꾸지 않는다. 시각은 KST로 표시하고 API 시각은 ISO UTC다.
 
 ## 검증 재현
 
 ```powershell
 python -m unittest discover -s tests -p "test_ui_*.py" -v
-node --test frontend/model.test.mjs
+node --test frontend/model.test.mjs frontend/snapshot.test.mjs
 python -m unittest discover -s tests -v
 python scripts/check_artifacts.py
 ```
@@ -56,11 +58,14 @@ python scripts/check_artifacts.py
 
 ```powershell
 node frontend/browser_check.cjs
+node --test frontend/review_check.cjs
 ```
 
 스크린샷과 검사 결과는 `.local/dev4/evidence/`에 저장한다. [고정 화면 증거](../../frontend/evidence/README.md)는 이 작업의 합성 자료만 포함한다. Node는 상태 검사와 선택적 브라우저 검사에만 필요하다.
 
-최종 검증: Python 전체 118개(신규 UI 11개 포함), Node 상태 6개, 브라우저 수용 검사 9개 통과. 브라우저는 실제 합성 서비스 연결·빈 상태·HTML 안전 표시·검색/필터·키보드·알림 이동·390px 화면·미지원 상태/출처 누락·조회 실패/재시도·초기 오류·로딩을 확인했다. 페이지 JavaScript 오류와 외부 자산 요청은 0건이다. Python/JavaScript 정적 검사, 문서 UTF-8/링크와 diff 검사도 수행한다.
+초기 검증은 Python 118개·Node 상태 6개·브라우저 9개였다. 총괄 통합 리뷰의 3개 결함을 재현한 후 확정 출처 필터, 중첩 응답 검사·일괄 화면 반영, 초기 로딩/오류 보존을 수정했다. 후속 검증은 Python 전체 118개(신규 UI 11개 포함), Node 상태·계약 20개, 기존 브라우저 9개와 리뷰 회귀 10개다. 리뷰 회귀는 잘못된 중첩 자료 및 실제 렌더 예외에서 이전 스냅샷 보존과 첫 오류/로딩 중 검색·필터를 확인한다. 별도 로그와 화면은 `.local/dev4/review-evidence/` 및 [고정 리뷰 증거](../../frontend/evidence/README.md)에 있다.
+
+기존 브라우저 검사는 실제 합성 서비스 연결·빈 상태·HTML 안전 표시·검색/필터·키보드·알림 이동·390px 화면·미지원 상태/출처 누락·조회 실패/재시도·초기 오류·로딩을 확인했다. 이 검사의 페이지 JavaScript 오류와 외부 자산 요청은 0건이다. 리뷰 회귀의 렌더 예외는 테스트에서 의도적으로 주입한다. Python/JavaScript 정적 검사, 문서 UTF-8/링크와 diff 검사도 수행한다.
 
 초기 환경에는 reportlab 등 일부 의존성이 없어 기존 검사 2실패/3오류가 발생했다. 자기 clone의 가상환경에 기존 requirements를 설치한 뒤 전체 검사가 통과했다. 제품 공통 의존성 파일은 변경하지 않았다.
 
