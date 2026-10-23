@@ -349,7 +349,10 @@ class _Instrument:
             raise _InputError('unsupported_measurement_mode')
         if config.get('detector', 'rms') not in {'rms', 'peak', 'quasi_peak'}:
             raise _InputError('unsupported_detector')
-        if config.get('measurement', 'power') not in {'power', 'psd', 'voltage', 'field_strength'}:
+        measurements = {'power', 'psd', 'voltage'}
+        if self.role == 'emi_receiver':
+            measurements.add('field_strength')
+        if config.get('measurement', 'power') not in measurements:
             raise _InputError('unsupported_measurement')
         if config.get('unit', 'dBm') not in {'dBm', 'W', 'mW'}:
             raise _InputError('unsupported_unit')

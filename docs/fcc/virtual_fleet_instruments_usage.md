@@ -81,7 +81,8 @@ RF `power_dbm`은 ON 구간 평균이다. `0 < duty_cycle <= 1`, `crest_factor_d
 - meter trigger_source는 immediate/bus다. configure로 bus를 선택하는 것만으로 arm되지 않는다. acquire→trigger_wait→trigger→acquiring→advance→complete 순서다. 대기·정체 timeout에는 측정값을 내지 않는다.
 - analyzer/EMI의 detector는 rms/peak/quasi_peak다. peak는 ON+crest를 사용한다. quasi_peak는 시간 평균과 peak 사이의 tick 기반 합성 envelope이며 CISPR 응답을 재현한 검파기가 아니다. 두 경우 필요한 crest와 입력 상한을 확인한다.
 - measurement=psd는 선언된 입력 bandwidth에 전력이 균일하다는 합성 정책이다. 결과 value는 `P - 10 log10(B)`와 dBm/Hz다. rbw_band_power_dbm과 normalization_hz에 대한 normalized_band_power_dbm을 별도로 기록한다. RBW를 정규화 단위로 바꾸거나 실제 trace 적분을 수행하지 않는다.
-- EMI 기본 measurement=voltage는 `dBuV = dBm + 90 + 10 log10(R)`이며 기본 R=50 ohm이다. field_strength는 명시적 antenna_factor_db_per_m을 더해 dBuV/m으로 출력한다. 보정값이 없으면 무효다. analyzer의 voltage 변환은 고정 합성 50 ohm 정책이다.
+- analyzer의 measurement는 power/psd/voltage를 지원한다. field_strength 설정은 `error/unsupported_measurement`로 거절하며 기존 설정을 보존한다. EMI는 power/psd/voltage/field_strength를 지원한다.
+- EMI 기본 measurement=voltage는 `dBuV = dBm + 90 + 10 log10(R)`이며 기본 R=50 ohm이다. EMI의 field_strength는 명시적 antenna_factor_db_per_m을 더해 dBuV/m으로 출력한다. 보정값이 없으면 무효다. analyzer의 voltage 변환은 고정 합성 50 ohm 정책이다.
 
 meter/analyzer/EMI의 calibrate는 전원이 필요한 가상 내부 routine이며 외부 RF/POWER REF를 필수로 요구하지 않는다. 완료하면 operation_complete=true와 calibration_state=verification_required를 반환한다. verify_calibration에는 알려진 합성 reference_dbm과 양수 tolerance_db가 필요하며 현재 센서/RF와 비교한다. 완료 플래그만으로 교정 유효를 만들지 않는다. 중단된 교정은 재확인이 필요하다.
 
@@ -132,7 +133,7 @@ assert abs(result["values"]["outputs"]["measurement"]["value"] - 3.9794000867) <
 
 ## 검증 기록과 남은 범위
 
-이 단위의 38개 검사는 계산·단위·모드·트리거·전원·센서·취득 중/완료 후 변경·시간 초과·복구·seed·FIFO·창·조건별 부적합·VNA 보간/표준/외삽 금지·출력 크기·중첩 인수·주파수 일치·작성자 경계를 확인한다. 검사는 `python -m unittest discover -s tests -p test_virtual_fleet_instruments.py -v`로 실행한다.
+이 단위의 40개 검사는 계산·단위·모드·트리거·전원·센서·취득 중/완료 후 변경·시간 초과·복구·seed·FIFO·창·조건별 부적합·VNA 보간/표준/외삽 금지·출력 크기·중첩 인수·주파수 일치·작성자 경계·역할별 측정 지원 범위를 확인한다. 검사는 `python -m unittest discover -s tests -p test_virtual_fleet_instruments.py -v`로 실행한다.
 
 고정 catalog commit `a548af3e5b7fa84e1a0c5ed93af064db689de371`, 파일 SHA-256 `037b92b4d32fc7c65d6e5ec0b518f5933c48745e3e5907c158b0317ab4923ea6`의 담당 16개 프로필 모두 factory/port 일치 및 합성 정상·통신 단절·복구 재취득을 실행했다. common core/facility와 연결한 전원→발생기→분석기→software DAG의 정상·미출력 무효 전파·재취득도 확인했다. 원본 감사 및 호환 script/coverage는 개발2의 비공개 작업 공간에 보존한다. 나머지 catalog 역할과 전체 UI/시험 조합 통합은 담당별 결과를 총괄이 인수한다.
 
