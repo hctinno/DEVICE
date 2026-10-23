@@ -227,7 +227,7 @@ class VirtualFleetServer(ThreadingHTTPServer):
                     raise ValueError("invalid_runtime_result")
                 receipt = {"request_id": request_id, "session_id": self.session_id, "replayed": False,
                            "synthetic": True, "hardware_verified": False, "result": result}
-                json.dumps(receipt, allow_nan=False)
+                json.dumps(receipt, ensure_ascii=False, allow_nan=False).encode("utf-8")
                 status = 200
             except Exception:
                 # A call may have changed state before raising: keep the ID reserved.
