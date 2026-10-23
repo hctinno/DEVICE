@@ -101,26 +101,21 @@ export function validateSnapshot(payload) {
   const optionalText = (value, path) => { if (value !== undefined) text(value, path, true); };
   const citation = (value, path, version = 1) => {
     object(value, path);
-    if (version === 2) {
-      const fields = value.kind === 'text_line' ? ['kind', 'path', 'sha256', 'line_start', 'line_end', 'quote', 'role']
+    const fields = version === 1 ? ['path', 'sha256', 'line_start', 'line_end', 'quote', 'role']
+      : value.kind === 'text_line' ? ['kind', 'path', 'sha256', 'line_start', 'line_end', 'quote', 'role']
         : value.kind === 'pdf_page' ? ['kind', 'path', 'sha256', 'extraction_id', 'page_number', 'text_sha256', 'line_start', 'line_end', 'quote', 'role'] : [];
-      if (!fields.length || Object.keys(value).length !== fields.length || Object.keys(value).some(key => !fields.includes(key))) fail(path);
-      for (const key of ['path', 'sha256', 'quote', 'role']) text(value[key], `${path}.${key}`);
-      if (!['request', 'product', 'reference'].includes(value.role)) fail(`${path}.role`);
-      if (!/^[a-f0-9]{64}$/.test(value.sha256)) fail(`${path}.sha256`);
-      for (const key of ['line_start', 'line_end']) number(value[key], `${path}.${key}`, true, 1);
-      if (value.line_end < value.line_start) fail(`${path}.line_end`);
-      if (value.kind === 'pdf_page') {
-        text(value.extraction_id, `${path}.extraction_id`);
-        if (value.extraction_id.length > 256) fail(`${path}.extraction_id`);
-        number(value.page_number, `${path}.page_number`, true, 1);
-        text(value.text_sha256, `${path}.text_sha256`);
-        if (!/^[a-f0-9]{64}$/.test(value.text_sha256)) fail(`${path}.text_sha256`);
-      }
-    } else if (value.kind !== undefined) fail(`${path}.kind`);
-    for (const key of ['path', 'sha256', 'quote', 'role']) optionalText(value[key], `${path}.${key}`);
-    for (const key of ['line_start', 'line_end']) {
-      if (value[key] !== undefined) number(value[key], `${path}.${key}`, true, 1);
+    if (!fields.length || Object.keys(value).length !== fields.length || Object.keys(value).some(key => !fields.includes(key))) fail(path);
+    for (const key of ['path', 'sha256', 'quote', 'role']) text(value[key], `${path}.${key}`);
+    if (!['request', 'product', 'reference'].includes(value.role)) fail(`${path}.role`);
+    if (!/^[a-f0-9]{64}$/.test(value.sha256)) fail(`${path}.sha256`);
+    for (const key of ['line_start', 'line_end']) number(value[key], `${path}.${key}`, true, 1);
+    if (value.line_end < value.line_start) fail(`${path}.line_end`);
+    if (version === 2 && value.kind === 'pdf_page') {
+      text(value.extraction_id, `${path}.extraction_id`);
+      if (value.extraction_id.length > 256) fail(`${path}.extraction_id`);
+      number(value.page_number, `${path}.page_number`, true, 1);
+      text(value.text_sha256, `${path}.text_sha256`);
+      if (!/^[a-f0-9]{64}$/.test(value.text_sha256)) fail(`${path}.text_sha256`);
     }
   };
   const candidate = (value, path, version) => {
