@@ -1,0 +1,10 @@
+{
+  "regulatory_requests": 304,
+  "kdb_publications": 180,
+  "standard_requests": 24,
+  "equipment_models": 2867,
+  "unresolved_equipment_rows": 270,
+  "asset_rows": 6470,
+  "private_input_groups": 16,
+  "located_equipment_links": 8
+}
