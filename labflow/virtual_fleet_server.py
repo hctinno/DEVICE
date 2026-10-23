@@ -16,6 +16,7 @@ from pathlib import Path
 import re
 import secrets
 import threading
+import time
 from typing import Any
 
 
@@ -367,7 +368,44 @@ class FleetHandler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def _error(self, error):
+        if self.command == "POST":
+            self.close_connection = True
+            self._discard_post_body()
         self._send(error.status, {"error": {"code": error.code}})
+
+    def _declared_post_length(self):
+        lengths = self.headers.get_all("Content-Length", [])
+        if self.headers.get("Transfer-Encoding") or len(lengths) != 1 or re.fullmatch(r"[0-9]+", lengths[0]) is None:
+            return None
+        try:
+            return int(lengths[0])
+        except ValueError:
+            return None
+
+    def _read_post_chunk(self, amount):
+        chunk = self.rfile.read1(amount)
+        self._post_bytes_read = getattr(self, "_post_bytes_read", 0) + len(chunk)
+        return chunk
+
+    def _discard_post_body(self):
+        """Avoid an unread-body TCP reset, with one deadline and no JSON parsing."""
+        length = self._declared_post_length()
+        if length is None:
+            return  # Ambiguous/chunked framing is not consumed as a known body.
+        remaining = min(max(0, length - getattr(self, "_post_bytes_read", 0)), 1048576)
+        deadline = time.monotonic() + 1.0
+        try:
+            while remaining:
+                budget = deadline - time.monotonic()
+                if budget <= 0:
+                    break
+                self.connection.settimeout(budget)
+                chunk = self._read_post_chunk(min(remaining, 65536))
+                if not chunk:
+                    break
+                remaining -= len(chunk)
+        except (OSError, TimeoutError):
+            pass
 
     def do_GET(self):
         try:
@@ -395,31 +433,22 @@ class FleetHandler(BaseHTTPRequestHandler):
     def _body(self):
         if self.headers.get_content_type() != "application/json":
             raise RequestError(415, "json_required")
-        lengths = self.headers.get_all("Content-Length", [])
-        if self.headers.get("Transfer-Encoding") or len(lengths) != 1 or not lengths[0].isdigit():
+        length = self._declared_post_length()
+        if length is None:
             raise RequestError(400, "invalid_content_length")
-        length = int(lengths[0])
         if length > 65536:
-            # Bounded drain keeps a normal oversize client from losing the 413
-            # response to a Windows TCP reset when unread request bytes remain.
-            self.connection.settimeout(1)
-            remaining = min(length, 1048576)
-            try:
-                while remaining:
-                    chunk = self.rfile.read(min(remaining, 65536))
-                    if not chunk:
-                        break
-                    remaining -= len(chunk)
-            except (OSError, TimeoutError):
-                pass
             raise RequestError(413, "request_too_large")
         if length == 0:
             raise RequestError(400, "empty_body")
         self.connection.settimeout(5)
         try:
-            raw = self.rfile.read(length)
-            if len(raw) != length:
-                raise ValueError("short_body")
+            chunks = []
+            while self._post_bytes_read < length:
+                chunk = self._read_post_chunk(length - self._post_bytes_read)
+                if not chunk:
+                    raise ValueError("short_body")
+                chunks.append(chunk)
+            raw = b"".join(chunks)
             payload = json.loads(raw.decode("utf-8"), object_pairs_hook=_unique_object,
                                  parse_constant=lambda _: (_ for _ in ()).throw(ValueError("non_finite")))
             json.dumps(payload, allow_nan=False)  # Also rejects finite syntax such as 1e999 overflowing to infinity.
@@ -428,6 +457,7 @@ class FleetHandler(BaseHTTPRequestHandler):
             raise RequestError(400, "invalid_json")
 
     def do_POST(self):
+        self._post_bytes_read = 0
         try:
             self._guard(mutation=True)
             if self.path not in ("/api/actions", "/api/advance"):

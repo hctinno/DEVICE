@@ -58,6 +58,8 @@ snapshot은 `schema_version=1`, `mode=virtual`, `synthetic=true`, `hardware_veri
 
 변경 요청은 `Content-Type: application/json`, 정확한 `Origin: http://127.0.0.1:<port>` 또는 Host와 일치하는 localhost origin, snapshot의 `X-CSRF-Token`을 요구한다. CORS를 제공하지 않으며 Host·필수 보안 헤더의 중복·cross-site 요청을 검사한다. JSON 중복 키·NaN/Infinity/숫자 overflow·미선언 필드·잘못된 타입을 거절한다. body 상한은 65,536 bytes, tick 범위는 1~1000이다. request ID는 영문/숫자로 시작하는 최대 128자의 영문/숫자/`._:-` 문자열이다.
 
+POST 오류는 읽지 않은 요청 본문 때문에 Windows가 오류 응답을 연결 초기화로 바꾸지 않도록 응답 전 잔여 본문을 소비한다. 단일한 정상 `Content-Length`에서 실제 읽은 양을 뺀 부분만 대상으로 하며, 전체 monotonic deadline 1초·최대 1 MiB로 제한한다. 본문을 파싱하거나 명령을 실행하지 않고 기존 403/404/415/413 판정을 유지한다. 이미 읽은 invalid JSON은 다시 기다리지 않으며, oversize도 같은 소비 경로를 사용한다. 중복/불명확/chunked framing의 길이를 추정해 읽지 않는다.
+
 ```json
 {"request_id":"demo-output-1","device_id":"supply","action":"set_output","parameters":{"enabled":true}}
 ```
