@@ -13,8 +13,11 @@ from .store import canonical, identifier
 MAX_ATTEMPTS = 3
 
 
-def claim_job(store, worker_id, *, now=None, lease_seconds=120):
+def claim_job(store, worker_id, *, now=None, lease_seconds=120, synthetic_only=False):
+    """Claim work atomically, optionally leaving all real intake work untouched."""
     identifier(worker_id)
+    if type(synthetic_only) is not bool:
+        raise ValueError('synthetic_only must be boolean')
     now = timestamp(now)
     timestamp(lease_seconds)
     if not 0 < lease_seconds <= 3600:
@@ -22,13 +25,23 @@ def claim_job(store, worker_id, *, now=None, lease_seconds=120):
     with store.connection() as con:
         con.execute('BEGIN IMMEDIATE')
         con.execute("UPDATE intake_jobs SET state='failed',error_code='attempt_limit' "
-                    "WHERE state='running' AND lease_until<=? AND attempt>=?", (now, MAX_ATTEMPTS))
+                    "WHERE state='running' AND lease_until<=? AND attempt>=? "
+                    "AND (?=0 OR EXISTS (SELECT 1 FROM intake_revisions r "
+                    "WHERE r.intake_id=intake_jobs.intake_id AND r.revision=intake_jobs.revision "
+                    "AND r.synthetic=1))", (now, MAX_ATTEMPTS, synthetic_only))
         con.execute("UPDATE intakes SET status='analysis_failed' WHERE status!='upload_incomplete' AND EXISTS "
-                    "(SELECT 1 FROM intake_jobs j WHERE j.intake_id=intakes.intake_id AND j.revision=intakes.revision AND j.state='failed')")
+                    "(SELECT 1 FROM intake_jobs j WHERE j.intake_id=intakes.intake_id "
+                    "AND j.revision=intakes.revision AND j.state='failed' "
+                    "AND (?=0 OR EXISTS (SELECT 1 FROM intake_revisions r "
+                    "WHERE r.intake_id=j.intake_id AND r.revision=j.revision AND r.synthetic=1)))",
+                    (synthetic_only,))
         job = con.execute("SELECT j.* FROM intake_jobs j JOIN intakes i USING(intake_id) "
                           "WHERE j.revision=i.revision AND i.status!='upload_incomplete' AND j.attempt<? "
                           "AND (j.state='queued' OR (j.state='running' AND j.lease_until<=?)) "
-                          "ORDER BY j.created_at,j.job_id LIMIT 1", (MAX_ATTEMPTS, now)).fetchone()
+                          "AND (?=0 OR EXISTS (SELECT 1 FROM intake_revisions r "
+                          "WHERE r.intake_id=j.intake_id AND r.revision=j.revision AND r.synthetic=1)) "
+                          "ORDER BY j.created_at,j.job_id LIMIT 1",
+                          (MAX_ATTEMPTS, now, synthetic_only)).fetchone()
         if job is None:
             return None
         revision = con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',
