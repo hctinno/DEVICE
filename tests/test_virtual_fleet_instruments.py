@@ -532,6 +532,55 @@ class FleetInstrumentTests(unittest.TestCase):
                     self.assertAlmostEqual(measured['value'], value)
                     self.assertEqual(measured['unit'], unit)
 
+    def test_tx_transitions_discard_pending_and_completed_receive_measurements(self):
+        for role in ['communication_tester', 'bluetooth_tester', 'wireless_ap', 'dfs_system']:
+            for initially_transmitting in [False, True]:
+                for completed in [False, True]:
+                    with self.subTest(role=role, tx=initially_transmitting, completed=completed):
+                        device = make(role, power_required=False)
+                        call(device, 'configure', {'frequency_hz': 2.45e9})
+                        if initially_transmitting:
+                            call(device, 'start_tx')
+                        call(device, 'acquire')
+                        tick = 2 if completed else 0
+                        if completed:
+                            self.assertIn('measurement', advance(device)['values']['outputs'])
+                        action = 'stop_tx' if initially_transmitting else 'start_tx'
+                        expected = 'idle' if initially_transmitting else 'transmitting'
+                        changed = call(device, action, tick=tick)
+                        self.assertEqual(changed['status'], 'ok')
+                        self.assertTrue(changed['setup_changed'])
+                        self.assertTrue(changed['values']['operation_complete'])
+                        self.assertEqual(changed['values']['state'], expected)
+                        self.assertNotIn('measurement', changed['values']['outputs'])
+                        self.assertNotIn('data', changed['values']['outputs'])
+                        observed = device.observation(tick=tick, setup_revision=1)
+                        self.assertEqual(observed['status'], 'ok')
+                        self.assertEqual(observed['values']['state'], expected)
+                        self.assertEqual(set(observed['values']['outputs']), set() if initially_transmitting else {'rf'})
+                        later = advance(device, tick=tick+2, revision=1)
+                        self.assertNotIn('measurement', later['values']['outputs'])
+
+    def test_duplicate_tx_state_preserves_pending_and_completed_receive_measurements(self):
+        for role in ['communication_tester', 'bluetooth_tester', 'wireless_ap', 'dfs_system']:
+            for transmitting in [False, True]:
+                with self.subTest(role=role, tx=transmitting):
+                    device = make(role, power_required=False)
+                    call(device, 'configure', {'frequency_hz': 2.45e9})
+                    action = 'start_tx' if transmitting else 'stop_tx'
+                    call(device, action)
+                    call(device, 'acquire')
+                    repeated = call(device, action, tick=1)
+                    self.assertFalse(repeated['setup_changed'])
+                    self.assertEqual(repeated['status'], 'pending')
+                    self.assertEqual(repeated['values']['state'], 'acquiring')
+                    self.assertFalse(repeated['values']['operation_complete'])
+                    completed = packet(advance(device))
+                    cached = call(device, action, tick=2)
+                    self.assertFalse(cached['setup_changed'])
+                    self.assertEqual(cached['values']['state'], 'complete')
+                    self.assertEqual(packet(cached), completed)
+
 
 if __name__ == '__main__':
     unittest.main()
