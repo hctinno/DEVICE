@@ -233,6 +233,32 @@ class IntakeJobTests(unittest.TestCase):
         self.assertEqual(result['facts']['market']['value'],'EU')
         self.assertEqual(result['measurement_support'],'unverified')
 
+    def test_failed_analysis_is_visible_in_intake_status(self):
+        for n in range(3):
+            job=claim_job(self.store,'worker',now=102+n)
+            fail_job(self.store,job['job_id'],job['token'],now=102+n)
+        status=intake_status(self.store)[0]
+        self.assertEqual(status['status'],'analysis_failed')
+        self.assertEqual(status['jobs'][-1]['error_code'],'model_error')
+
+    def test_duplicate_completion_cannot_hide_corrupted_evidence(self):
+        job=claim_job(self.store,'worker',now=102)
+        analysis=self.analysis(job)
+        self.finish(job,analysis)
+        self.store.blob_path(job['documents'][0]['sha256']).write_bytes(b'corrupted')
+        with self.assertRaisesRegex(ValueError,'corrupted'):
+            self.finish(job,analysis,now=500)
+
+    def test_analyzer_omission_cannot_silently_close_unresolved_questions(self):
+        self.finish()
+        self.put('one','extra.txt','Still waiting for antenna and power documents')
+        self.scan(120)
+        job=claim_job(self.store,'worker',now=122)
+        analysis=self.analysis(job)
+        analysis['missing_fields']=[]
+        result=self.finish(job,analysis,now=125)
+        self.assertEqual({q['key'] for q in result['questions']},{'missing_antenna_gain','missing_power_target'})
+
 
 if __name__=='__main__':
     unittest.main()

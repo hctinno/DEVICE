@@ -211,5 +211,8 @@ def intake_status(store, intake_id=None):
                            'revision': row['revision'], 'status': row['status'], 'delegated': bool(row['delegated']),
                            'deferred': bool(row['deferred']), 'analysis': json.loads(row['analysis_json']) if row['analysis_json'] else None,
                            'files': history[-1]['files'], 'synthetic': bool(history[-1]['synthetic']),
-                           'measurement_support': 'unverified', 'history': history})
+                           'measurement_support': 'unverified', 'history': history,
+                           'jobs': [dict(job) for job in con.execute(
+                               'SELECT job_id,revision,state,attempt,error_code,lease_until FROM intake_jobs WHERE intake_id=? ORDER BY revision',
+                               (row['intake_id'],))]})
     return result if intake_id is None else result[0]

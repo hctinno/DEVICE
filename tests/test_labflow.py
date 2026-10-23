@@ -142,6 +142,15 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(payload['case']['product'],product)
         self.assertIn(product['manufacturer'],Path(result['html']).read_text(encoding='utf-8'))
 
+    def test_utf8_measurement_metadata_does_not_block_calculation(self):
+        raw=json.loads(self.raw.read_text(encoding='utf-8'))
+        raw['note']='시험 기록 — µ'
+        self.raw.write_text(json.dumps(raw,ensure_ascii=False),encoding='utf-8')
+        self.record()
+        result=evaluate(self.store,'RUN-1')
+        self.assertEqual(len(result['calculations']),1)
+        self.assertEqual(result['calculations'][0]['value'],22)
+
     def review(self):
         self.store.review_document('DOC-1','test reviewer','fixture source only')
         review_method(self.store,'METHOD-1','test reviewer','fixture procedure and limit only')

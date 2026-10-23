@@ -179,7 +179,7 @@ def evaluate(store,run_id):
     calculations=[];limit=profile['limit']
     if run['raw_sha256'] and 'raw_corrupt' not in blockers:
         try:
-            raw=json.loads(store.verify_blob(run['raw_sha256']).read_text(),parse_constant=_invalid_number)
+            raw=json.loads(store.verify_blob(run['raw_sha256']).read_text(encoding='utf-8-sig'),parse_constant=_invalid_number)
             identity={'case_id':plan['case_id'],'plan_id':run['plan_id'],'run_id':run_id}
             _check_measurement_identity(raw,identity)
             observations=raw.get('observations',[raw]) if isinstance(raw,dict) else None

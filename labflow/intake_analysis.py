@@ -102,9 +102,9 @@ def answer_basis(analysis, field):
         (f['field'], f['value'], f['status']) for f in analysis['facts'] if f['field'] in related)})
 
 
-def project_analysis(analysis, unread, answers, *, delegated, deferred):
+def project_analysis(analysis, unread, answers, *, delegated, deferred, required_fields=()):
     facts, questions = {}, []
-    required = REQUIRED_FIELDS | set(analysis['missing_fields'])
+    required = REQUIRED_FIELDS | set(analysis['missing_fields']) | set(required_fields)
     for field, label in FIELDS.items():
         candidates = [f for f in analysis['facts'] if f['field'] == field and f['status'] != 'uncertain']
         if field in {'market', 'purpose'}:

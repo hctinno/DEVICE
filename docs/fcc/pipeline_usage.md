@@ -2,6 +2,8 @@
 
 2026-10-23 기준, 자료 패키지 인수 → 제품/계획 → 오프라인 시험기록 → 결정적 계산 → HTML/PDF/JSON 초안을 실행하는 Python/SQLite 코어이다. CLI와 공식 MCP Python SDK의 stdio 서버가 동일한 서비스를 호출한다. 이 버전은 FCC 전 범위 규칙 엔진이나 실제 무인 운전 시스템이 아니다.
 
+개발 인수 브랜치에서 [능동 접수 기반 사용법](active_intake_usage.md)을 추가했다. 미확정 intake와 영속 분석 작업은 아래의 명시적 측정 case/plan과 구별한다. Windows에서도 보고서와 원시 JSON은 UTF-8로 처리한다.
+
 ## 실행
 
 Python 3.10 이상에서 실행한다. 실제 검증 환경은 Python 3.12이다.
@@ -119,7 +121,9 @@ stdio 서버는 다음 명령으로 실행한다. 사용하는 MCP 클라이언�
 python -m labflow --workspace /workspace/DEVICE/data/labflow mcp
 ```
 
-11개 도구: `lab_capabilities`, `lab_import_package`, `lab_documents`, `lab_import_artifact`, `lab_create_case`, `lab_register_method`, `lab_add_plan`, `lab_record_run`, `lab_evaluate`, `lab_case_status`, `lab_render_report`.
+기존 11개 도구: `lab_capabilities`, `lab_import_package`, `lab_documents`, `lab_import_artifact`, `lab_create_case`, `lab_register_method`, `lab_add_plan`, `lab_record_run`, `lab_evaluate`, `lab_case_status`, `lab_render_report`.
+
+접수용 6개 `lab_intake_scan/status/claim/complete/fail/notifications`를 더해 현재 17개다. 입력 경로 등록과 사용자 위임/답변은 CLI에만 있다. `autonomous_model_service`는 false이며 모델 API·상시 서비스가 구현됐다는 뜻이 아니다.
 
 공식 SDK 클라이언트의 실제 stdio handshake와 도구 호출로 인수→case→method→plan→run→계산→PDF를 검증한다. 원격 장비 제어·자동 기술 승인·공식 발행 도구는 아직 없다. 서버는 로컬 경로를 사용하는 단일 사용자 코어이다.
 
