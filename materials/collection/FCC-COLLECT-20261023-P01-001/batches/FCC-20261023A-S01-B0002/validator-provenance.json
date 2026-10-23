@@ -1,0 +1,134 @@
+{
+  "inspected_http_metadata_files": 607,
+  "browser_transfer_metadata_note": "Browser-transfer records have no saved response ETag/Last-Modified and were not used to invent validators.",
+  "sources": [
+    {
+      "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+      "candidates": [
+        {
+          "metadata_path": "[local-only reference retained by P01]",
+          "metadata_sha256": "cbefef6c245190926fc99c6b73e23e64909d80e27a01452da791ad83a0348b63",
+          "status": 403,
+          "recorded_body_sha256": "cb06a834779ec81e956d29b86f709240c677028967d32b0d8e25fd3e602b915e",
+          "body_is_verified_legacy_original": false,
+          "etag": null,
+          "last_modified": null
+        }
+      ],
+      "conditional_headers_used": {},
+      "decision": "No usable baseline validator recorded; unconditional stream comparison. Error response metadata is not an original validator."
+    },
+    {
+      "document_id": "KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01-8c61a4b10b",
+      "candidates": [
+        {
+          "metadata_path": "[local-only reference retained by P01]",
+          "metadata_sha256": "1b487ee089244e995eb22e55f4d0b30a2924627577ac2fdd5b4da4b3a1eadcd6",
+          "status": 403,
+          "recorded_body_sha256": "d70faecad2f9a215cab9bd3e2917408242f73883c593602beb30b19f992566ca",
+          "body_is_verified_legacy_original": false,
+          "etag": null,
+          "last_modified": null
+        }
+      ],
+      "conditional_headers_used": {},
+      "decision": "No usable baseline validator recorded; unconditional stream comparison. Error response metadata is not an original validator."
+    },
+    {
+      "document_id": "KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01-d909bea3ac",
+      "candidates": [
+        {
+          "metadata_path": "[local-only reference retained by P01]",
+          "metadata_sha256": "773eb5691c136a26804a3beac301cf7b1fa8eeb05e22280f1b953f084e534acb",
+          "status": 403,
+          "recorded_body_sha256": "1497b8403f5d1b806388398a4671a5cd0a5f652ad7bc7cce72ecbd3089bd2184",
+          "body_is_verified_legacy_original": false,
+          "etag": null,
+          "last_modified": null
+        }
+      ],
+      "conditional_headers_used": {},
+      "decision": "No usable baseline validator recorded; unconditional stream comparison. Error response metadata is not an original validator."
+    },
+    {
+      "document_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a",
+      "candidates": [
+        {
+          "metadata_path": "[local-only reference retained by P01]",
+          "metadata_sha256": "6ff59894e98aac57e143d3ae9f2b33a5ded66803f11bf12bbdceb084d75709d8",
+          "status": 403,
+          "recorded_body_sha256": "4b37312dcd4075c7c6495de999c62906a08f1c781224b450ac575083398b1f6e",
+          "body_is_verified_legacy_original": false,
+          "etag": null,
+          "last_modified": null
+        }
+      ],
+      "conditional_headers_used": {},
+      "decision": "No usable baseline validator recorded; unconditional stream comparison. Error response metadata is not an original validator."
+    },
+    {
+      "document_id": "KDB-662911-OET-13TR1003-Directonal-Gain-of-802-11-MIMO-with-CDD-04-05-2013-7da0cc38d8",
+      "candidates": [
+        {
+          "metadata_path": "[local-only reference retained by P01]",
+          "metadata_sha256": "6035464f190a68c9ee23441bf7897973fe1c65505a56e5e86ba16c04e3562c38",
+          "status": 403,
+          "recorded_body_sha256": "1bd20c37e67b91836aa856d781607d70104a74bc046f84829006cb6c2cfef9c9",
+          "body_is_verified_legacy_original": false,
+          "etag": null,
+          "last_modified": null
+        }
+      ],
+      "conditional_headers_used": {},
+      "decision": "No usable baseline validator recorded; unconditional stream comparison. Error response metadata is not an original validator."
+    },
+    {
+      "document_id": "KDB-558074-publication-92168150c6",
+      "candidates": [
+        {
+          "metadata_path": "[local-only reference retained by P01]",
+          "metadata_sha256": "b73f21337a47ff6adfc8bfdbb9b210080e49fdc01821a0664184a2b87efd5ebd",
+          "status": 200,
+          "recorded_body_sha256": "92168150c69765622272035e821c6f9e5d622ed68b525fa93ef38824db8a0fb4",
+          "body_is_verified_legacy_original": true,
+          "etag": null,
+          "last_modified": null
+        }
+      ],
+      "conditional_headers_used": {},
+      "decision": "No usable baseline validator recorded; unconditional stream comparison. Error response metadata is not an original validator."
+    },
+    {
+      "document_id": "KDB-662911-publication-160b602e2c",
+      "candidates": [
+        {
+          "metadata_path": "[local-only reference retained by P01]",
+          "metadata_sha256": "18bbbda732d3e897f21bccd72669b9a060e2a600c8e857027572c6ca36277eb9",
+          "status": 200,
+          "recorded_body_sha256": "160b602e2c354e8d1520c24d6714fee52b0743892f92b01301eb20ffb91f9866",
+          "body_is_verified_legacy_original": true,
+          "etag": null,
+          "last_modified": null
+        }
+      ],
+      "conditional_headers_used": {},
+      "decision": "No usable baseline validator recorded; unconditional stream comparison. Error response metadata is not an original validator."
+    },
+    {
+      "document_id": "KDB-913591-publication-e4102ce5f2",
+      "candidates": [
+        {
+          "metadata_path": "[local-only reference retained by P01]",
+          "metadata_sha256": "efb5ae0787682726ca2a1a7373315f95b3988132c5430fca25d268c31d0e3375",
+          "status": 200,
+          "recorded_body_sha256": "e4102ce5f2e1818003338c3aaa4954ee8724ed6fdf796767d3ac18dc5c957bf2",
+          "body_is_verified_legacy_original": true,
+          "etag": null,
+          "last_modified": null
+        }
+      ],
+      "conditional_headers_used": {},
+      "decision": "No usable baseline validator recorded; unconditional stream comparison. Error response metadata is not an original validator."
+    }
+  ]
+}

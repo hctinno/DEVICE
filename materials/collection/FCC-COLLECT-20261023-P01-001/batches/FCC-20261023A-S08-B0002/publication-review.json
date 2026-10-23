@@ -1,0 +1,97 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "batch_id": "FCC-20261023A-S08-B0002",
+  "task_id": "FCC-20261023-S08-B0002",
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v003",
+  "snapshot_inventory_sha256": "675a230e72769257983ac096d78ce803b96cb8f1ebe690c7cc28084381bb3f1c",
+  "review_state": "content_and_rights_reviewed",
+  "approval": {
+    "batch_id": "FCC-20261023A-S08-B0002",
+    "owner": "P01",
+    "decision": "content_approved_for_metadata_and_access_notice_only",
+    "source_inventory_verified": true,
+    "findings": [
+      "P01 independently copied and hash-verified the complete 80-page PDF from the restricted S08 location, retaining it separately from the frozen metadata snapshot. All 21 existing case originals still match their recorded hashes.",
+      "The cover confirms FCC ID A3LSMS938U, SM-S938U/SM-S938U1, report 1M2408260067.13.A3L, issue 2024-10-28 and 2412-2462 MHz.",
+      "P01 visually inspected pages 1, 29 and 34 and read selected method/result pages. The report contains b/g/n conducted power, bandwidth, PSD and related test evidence, alongside other modes; it is not a b/g/n-exclusive report.",
+      "The prior missing b/g/n RF report is located for the observed application. This does not establish completeness of all applications or current FCC method acceptance.",
+      "The third-party reproduction restriction remains unresolved. Only metadata and an access notice may be published; no complete report, rendered page or extracted article is public."
+    ],
+    "request_outcome": {
+      "completed": 1,
+      "limited": 0,
+      "not_started": 0
+    },
+    "verified_external_originals": [
+      {
+        "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+        "sha256": "48ce8ee535ba4b1abe3b532c9c0629c15775bcd03ad18541424d42e66c57eee9",
+        "bytes": 5858854,
+        "hash_verified": true,
+        "source_owner": "S08",
+        "P01_private_snapshot_retained": true
+      }
+    ],
+    "rights_public_document_ids": [],
+    "publication_metadata_files": [],
+    "technical_method_approval": false,
+    "hardware_validation": false
+  },
+  "source_acquisitions": [
+    {
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "representation": "original",
+      "acquired_locally": true,
+      "original_sha256": "48ce8ee535ba4b1abe3b532c9c0629c15775bcd03ad18541424d42e66c57eee9",
+      "original_bytes": 5858854,
+      "public_payload_included": false,
+      "rights": "unknown",
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788954",
+      "version": "1M2408260067.13.A3L; issue 2024-10-28; report revision not expressly numbered"
+    }
+  ],
+  "redacted_local_reference_fields": [
+    "/legacy_case_sources/0/local_only_path",
+    "/legacy_case_sources/1/local_only_path",
+    "/legacy_case_sources/2/local_only_path",
+    "/legacy_case_sources/3/local_only_path",
+    "/legacy_case_sources/4/local_only_path",
+    "/legacy_case_sources/5/local_only_path",
+    "/legacy_case_sources/6/local_only_path",
+    "/legacy_case_sources/7/local_only_path",
+    "/legacy_case_sources/8/local_only_path",
+    "/legacy_case_sources/9/local_only_path",
+    "/legacy_case_sources/10/local_only_path",
+    "/legacy_case_sources/11/local_only_path",
+    "/legacy_case_sources/12/local_only_path",
+    "/legacy_case_sources/13/local_only_path",
+    "/legacy_case_sources/14/local_only_path",
+    "/legacy_case_sources/15/local_only_path",
+    "/legacy_case_sources/16/local_only_path",
+    "/legacy_case_sources/17/local_only_path",
+    "/legacy_case_sources/18/local_only_path",
+    "/legacy_case_sources/19/local_only_path",
+    "/legacy_case_sources/20/local_only_path",
+    "/new_restricted_originals/0/local_only_path"
+  ],
+  "package": {
+    "package_id": "FCC-20261023A-S08-B0002",
+    "path": "materials/packages/FCC-20261023A-S08-B0002.zip",
+    "sha256": "4666ec8f02b03369f508479117e0b85c9db16092996c997fc44f5d90ef52305d",
+    "bytes": 1356,
+    "included_payloads": 0,
+    "access_or_unavailable_records": 1
+  },
+  "public_metadata": [
+    "summary.json",
+    "evidence-index.json",
+    "references.json",
+    "questions.json",
+    "documents.json"
+  ],
+  "hardware_or_conformity_validation": false,
+  "publication_commit": "P01 reports the verified Git commit separately after push."
+}

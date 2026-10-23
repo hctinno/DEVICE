@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "package_id": "FCC-20261023A-S01-B0002",
+  "created_at": "2026-10-23T22:23:54.101287+09:00",
+  "synthetic": false,
+  "notes": "P01 frozen collector intake. Public source payloads require explicit rights clearance; read_only records are access notices for locally acquired originals. Locally authored indexes are ordinary repository files, not downloaded source documents.",
+  "documents": [
+    {
+      "document_id": "KDB-558074-publication-currency-e32c44fac5da",
+      "request_ids": [
+        "ADD-S01-KDB-BLOB-CURRENCY-002"
+      ],
+      "title": "558074 (current response differs from legacy bytes)",
+      "kind": "guidance",
+      "version": "Current publication HTML response 2026-10-23T22:10:06.040850+09:00; visible text unchanged from legacy, markup differs",
+      "publisher": "FCC",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T22:10:06.040850+09:00",
+      "status": "downloaded",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "path": "originals/KDB-558074-publication-currency-e32c44fac5da.html",
+      "sha256": "e32c44fac5dac9de05d98b0f314b0ff1f180393c1eeaf804f9481c926269b1e1",
+      "bytes": 15784,
+      "media_type": "text/html",
+      "notes": "Changed bytes preserved under a new ID. Previous document KDB-558074-publication-92168150c6 is unchanged. Byte changes alone do not establish a new FCC-approved method or edition. Local raw/DOM comparison found identical normalized visible text and added script/noscript/img markup. This is response-byte evidence, not a new guidance revision."
+    },
+    {
+      "document_id": "KDB-662911-publication-currency-926d5f354681",
+      "request_ids": [
+        "ADD-S01-KDB-BLOB-CURRENCY-002"
+      ],
+      "title": "662911 (current response differs from legacy bytes)",
+      "kind": "guidance",
+      "version": "Current publication HTML response 2026-10-23T22:10:06.794079+09:00; visible text unchanged from legacy, markup differs",
+      "publisher": "FCC",
+      "published_at": null,
+      "retrieved_at": "2026-10-23T22:10:06.794079+09:00",
+      "status": "downloaded",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "path": "originals/KDB-662911-publication-currency-926d5f354681.html",
+      "sha256": "926d5f35468102618d1476c90ad60cac3490735038c60697610b739e6dbe8f73",
+      "bytes": 17136,
+      "media_type": "text/html",
+      "notes": "Changed bytes preserved under a new ID. Previous document KDB-662911-publication-160b602e2c is unchanged. Byte changes alone do not establish a new FCC-approved method or edition. Local raw/DOM comparison found identical normalized visible text and added script/noscript/img markup. This is response-byte evidence, not a new guidance revision."
+    }
+  ]
+}

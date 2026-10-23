@@ -1,0 +1,332 @@
+{
+  "legacy_references": [
+    {
+      "reference_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+      "package_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02.pdf",
+      "legacy_local_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "sha256": "06cf6de58ce4b0abd521d6b42e50689f18331cf67be48c8dba7b5553c8470f75",
+      "bytes": 281974,
+      "title": "558074 D01 15.247 Meas Guidance v05r02",
+      "version": "558074 D01 15.247 Meas Guidance v05r02",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=tylb5MMggvhIlVMK75RrRQ%3D%3D&desc=558074 D01 15.247 Meas Guidance v05r02&tracking_number=21124",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "new_original": false,
+      "request_ids_unchanged": [
+        "KDB-558074"
+      ]
+    },
+    {
+      "reference_id": "KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01-8c61a4b10b",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01-8c61a4b10b",
+      "package_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01.pdf",
+      "legacy_local_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "sha256": "8c61a4b10b8769d3e3125e0e1614d7846019c64644ce2dfab5e2d548f74fa075",
+      "bytes": 129928,
+      "title": "662911 D01 Multiple Transmitter Output v02r01",
+      "version": "662911 D01 Multiple Transmitter Output v02r01",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=B0ZQiTBTVsn3P3wZ2WdqhQ%3D%3D&desc=662911 D01 Multiple Transmitter Output v02r01&tracking_number=49466",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "new_original": false,
+      "request_ids_unchanged": [
+        "KDB-662911"
+      ]
+    },
+    {
+      "reference_id": "KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01-d909bea3ac",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01-d909bea3ac",
+      "package_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01.pdf",
+      "legacy_local_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "sha256": "d909bea3ac6c3bfeda0111007f62d6290e2173971a0b3bb9ca3b38e13ca1ffd9",
+      "bytes": 39610,
+      "title": "662911 D02 MIMO with Cross Polarized Antenna v01",
+      "version": "662911 D02 MIMO with Cross Polarized Antenna v01",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=i%2BFRza%2B2Hh0pf9nHJHJGHw%3D%3D&desc=662911 D02 MIMO with Cross Polarized Antenna v01&tracking_number=49466",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "new_original": false,
+      "request_ids_unchanged": [
+        "KDB-662911"
+      ]
+    },
+    {
+      "reference_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a",
+      "package_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02.pdf",
+      "legacy_local_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "sha256": "8a497f419a69989f10c2baa985994c81a86b822f79d4c068447fa1d19cb623b4",
+      "bytes": 75629,
+      "title": "662911 D03 MIMO Antenna Gain Measurement v02",
+      "version": "662911 D03 MIMO Antenna Gain Measurement v02",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=0oFrwPO2uh8GhTp8suJdxA%3D%3D&desc=662911 D03 MIMO Antenna Gain Measurement v02&tracking_number=49466",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "new_original": false,
+      "request_ids_unchanged": [
+        "KDB-662911"
+      ]
+    },
+    {
+      "reference_id": "KDB-662911-OET-13TR1003-Directonal-Gain-of-802-11-MIMO-with-CDD-04-05-2013-7da0cc38d8",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-662911-OET-13TR1003-Directonal-Gain-of-802-11-MIMO-with-CDD-04-05-2013-7da0cc38d8",
+      "package_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-662911-OET-13TR1003-Directonal-Gain-of-802-11-MIMO-with-CDD-04-05-2013.pdf",
+      "legacy_local_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "sha256": "7da0cc38d804066d1564b29663bea22827791cd6731ad91ccf6c5f1cc92b34b0",
+      "bytes": 4822513,
+      "title": "OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013",
+      "version": "OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "download_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=zx796foayVA0TnNkVOgKjg%3D%3D&desc=OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013&tracking_number=49466",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "new_original": false,
+      "request_ids_unchanged": [
+        "KDB-662911"
+      ]
+    },
+    {
+      "reference_id": "KDB-558074-publication-92168150c6",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-558074-publication-92168150c6",
+      "package_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-558074-publication.html",
+      "legacy_local_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "sha256": "92168150c69765622272035e821c6f9e5d622ed68b525fa93ef38824db8a0fb4",
+      "bytes": 15421,
+      "title": "558074",
+      "version": "Publication page dated 2019-04-02; retrieved 2026-10-23T19:55:41+09:00",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "new_original": false,
+      "request_ids_unchanged": [
+        "KDB-558074"
+      ]
+    },
+    {
+      "reference_id": "KDB-662911-publication-160b602e2c",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "document_id": "KDB-662911-publication-160b602e2c",
+      "package_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-662911-publication.html",
+      "legacy_local_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "sha256": "160b602e2c354e8d1520c24d6714fee52b0743892f92b01301eb20ffb91f9866",
+      "bytes": 16773,
+      "title": "662911",
+      "version": "Publication page dated 2025-03-31; retrieved 2026-10-23T19:55:44+09:00",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "new_original": false,
+      "request_ids_unchanged": [
+        "KDB-662911"
+      ]
+    },
+    {
+      "reference_id": "KDB-913591-publication-e4102ce5f2",
+      "original_owner": "S01",
+      "legacy_package_id": "FCC-GENERAL-20261023-002",
+      "document_id": "KDB-913591-publication-e4102ce5f2",
+      "package_path": "[local-only reference retained by P01]",
+      "source_path_inside_package": "originals/KDB-913591-publication.html",
+      "legacy_local_path": "[local-only reference retained by P01]",
+      "manifest_path": "[local-only reference retained by P01]",
+      "sha256": "e4102ce5f2e1818003338c3aaa4954ee8724ed6fdf796767d3ac18dc5c957bf2",
+      "bytes": 13462,
+      "title": "913591",
+      "version": "Publication page dated 2017-04-05; retrieved 2026-10-23T19:57:27+09:00",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "download_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "rights": "public",
+      "rights_notes": "US federal government source. Public-domain US government work; third-party incorporated standards are not included. Source and limitations retained.",
+      "representation": "original",
+      "new_original": false,
+      "request_ids_unchanged": [
+        "KDB-913591"
+      ]
+    }
+  ],
+  "prior_ready_path": "[local-only reference retained by P01]",
+  "prior_P01_receipt_path": "[local-only reference retained by P01]",
+  "protected_legacy_files_before": {
+    "local-reference-c9f20abd4bb3": {
+      "bytes": 1187,
+      "sha256": "64e673326937dea46c4824e7c58c41276cf6b44d4f81360fda5eec74353d5354"
+    },
+    "local-reference-f8ee9c0e4f15": {
+      "bytes": 12988,
+      "sha256": "75f889591159f451229669880109831e1dd98bd8b0a3027a01e94fa60e6fde40"
+    },
+    "local-reference-2f61a671f2cb": {
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    "local-reference-c9e428abf10e": {
+      "bytes": 32365,
+      "sha256": "0b66252b8d7518d37d966fe8ea7fe54ae3c39608a759bf97f2cbe72f57941ccf"
+    },
+    "local-reference-2f24e0e302d8": {
+      "bytes": 9892,
+      "sha256": "b900b3fe30f60592ecda30533d1c38b6f79688f2e3ad528ce6f575f010550ec9"
+    },
+    "local-reference-0de5a2d71c7c": {
+      "bytes": 1439,
+      "sha256": "7d05361c49b91e145925b2497ee55d96810df3568fa0747fd740c9870f1e761c"
+    },
+    "local-reference-6b44e2015256": {
+      "bytes": 19743,
+      "sha256": "a11a6a4962b3e5791c2970e3ca87c13d3c0428160d95610c8fda2db0bad48312"
+    },
+    "local-reference-6f9676adb2c6": {
+      "bytes": 3273,
+      "sha256": "d7947077ef41df09a02f1fc127ab16e70adc65388dc1e9fca73ecf1bd5838b6a"
+    },
+    "local-reference-c7ba56e915fb": {
+      "bytes": 374,
+      "sha256": "41bcfc683726b5648b68d09d7eb7193d7aa0df38660da0ad265a1a3a6bd47dda"
+    },
+    "local-reference-acb512f0ef71": {
+      "bytes": 281974,
+      "sha256": "06cf6de58ce4b0abd521d6b42e50689f18331cf67be48c8dba7b5553c8470f75"
+    },
+    "local-reference-f3b0c57cb42c": {
+      "bytes": 15421,
+      "sha256": "92168150c69765622272035e821c6f9e5d622ed68b525fa93ef38824db8a0fb4"
+    },
+    "local-reference-bc14fbbd6c31": {
+      "bytes": 129928,
+      "sha256": "8c61a4b10b8769d3e3125e0e1614d7846019c64644ce2dfab5e2d548f74fa075"
+    },
+    "local-reference-85ac59bb1088": {
+      "bytes": 39610,
+      "sha256": "d909bea3ac6c3bfeda0111007f62d6290e2173971a0b3bb9ca3b38e13ca1ffd9"
+    },
+    "local-reference-3a3820a39aa8": {
+      "bytes": 75629,
+      "sha256": "8a497f419a69989f10c2baa985994c81a86b822f79d4c068447fa1d19cb623b4"
+    },
+    "local-reference-34b407619d8c": {
+      "bytes": 4822513,
+      "sha256": "7da0cc38d804066d1564b29663bea22827791cd6731ad91ccf6c5f1cc92b34b0"
+    },
+    "local-reference-d1674d7c2d7c": {
+      "bytes": 16773,
+      "sha256": "160b602e2c354e8d1520c24d6714fee52b0743892f92b01301eb20ffb91f9866"
+    },
+    "local-reference-725a3161625e": {
+      "bytes": 13462,
+      "sha256": "e4102ce5f2e1818003338c3aaa4954ee8724ed6fdf796767d3ac18dc5c957bf2"
+    }
+  },
+  "protected_legacy_files_after": {
+    "local-reference-c9f20abd4bb3": {
+      "bytes": 1187,
+      "sha256": "64e673326937dea46c4824e7c58c41276cf6b44d4f81360fda5eec74353d5354"
+    },
+    "local-reference-f8ee9c0e4f15": {
+      "bytes": 12988,
+      "sha256": "75f889591159f451229669880109831e1dd98bd8b0a3027a01e94fa60e6fde40"
+    },
+    "local-reference-2f61a671f2cb": {
+      "bytes": 4,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+    },
+    "local-reference-c9e428abf10e": {
+      "bytes": 32365,
+      "sha256": "0b66252b8d7518d37d966fe8ea7fe54ae3c39608a759bf97f2cbe72f57941ccf"
+    },
+    "local-reference-2f24e0e302d8": {
+      "bytes": 9892,
+      "sha256": "b900b3fe30f60592ecda30533d1c38b6f79688f2e3ad528ce6f575f010550ec9"
+    },
+    "local-reference-0de5a2d71c7c": {
+      "bytes": 1439,
+      "sha256": "7d05361c49b91e145925b2497ee55d96810df3568fa0747fd740c9870f1e761c"
+    },
+    "local-reference-6b44e2015256": {
+      "bytes": 19743,
+      "sha256": "a11a6a4962b3e5791c2970e3ca87c13d3c0428160d95610c8fda2db0bad48312"
+    },
+    "local-reference-6f9676adb2c6": {
+      "bytes": 3273,
+      "sha256": "d7947077ef41df09a02f1fc127ab16e70adc65388dc1e9fca73ecf1bd5838b6a"
+    },
+    "local-reference-c7ba56e915fb": {
+      "bytes": 374,
+      "sha256": "41bcfc683726b5648b68d09d7eb7193d7aa0df38660da0ad265a1a3a6bd47dda"
+    },
+    "local-reference-acb512f0ef71": {
+      "bytes": 281974,
+      "sha256": "06cf6de58ce4b0abd521d6b42e50689f18331cf67be48c8dba7b5553c8470f75"
+    },
+    "local-reference-f3b0c57cb42c": {
+      "bytes": 15421,
+      "sha256": "92168150c69765622272035e821c6f9e5d622ed68b525fa93ef38824db8a0fb4"
+    },
+    "local-reference-bc14fbbd6c31": {
+      "bytes": 129928,
+      "sha256": "8c61a4b10b8769d3e3125e0e1614d7846019c64644ce2dfab5e2d548f74fa075"
+    },
+    "local-reference-85ac59bb1088": {
+      "bytes": 39610,
+      "sha256": "d909bea3ac6c3bfeda0111007f62d6290e2173971a0b3bb9ca3b38e13ca1ffd9"
+    },
+    "local-reference-3a3820a39aa8": {
+      "bytes": 75629,
+      "sha256": "8a497f419a69989f10c2baa985994c81a86b822f79d4c068447fa1d19cb623b4"
+    },
+    "local-reference-34b407619d8c": {
+      "bytes": 4822513,
+      "sha256": "7da0cc38d804066d1564b29663bea22827791cd6731ad91ccf6c5f1cc92b34b0"
+    },
+    "local-reference-d1674d7c2d7c": {
+      "bytes": 16773,
+      "sha256": "160b602e2c354e8d1520c24d6714fee52b0743892f92b01301eb20ffb91f9866"
+    },
+    "local-reference-725a3161625e": {
+      "bytes": 13462,
+      "sha256": "e4102ce5f2e1818003338c3aaa4954ee8724ed6fdf796767d3ac18dc5c957bf2"
+    }
+  },
+  "all_protected_legacy_hashes_unchanged": true,
+  "new_connection_policy": "Existing package/document IDs, request_ids and byte locations were read only; new response comparisons are separate metadata."
+}

@@ -1,9 +1,8 @@
 {
   "run_id": "FCC-COLLECT-20261023-P01-001",
-  "checked_at": "2026-10-23T22:22:20.823604+09:00",
+  "checked_at": "2026-10-23T22:27:14.876406+09:00",
   "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
-  "latest_assignment_version": "v003",
-  "reviewed_result_version": "v002",
+  "latest_assignment_version": "v004",
   "published_branch": "collect/fcc-p0-smartphone-20261023-001",
   "development_target_branch": "codex/fcc-lab-foundation",
   "session_control_empirically_verified": {
@@ -11,118 +10,239 @@
     "read": true,
     "send_and_start_turn": true,
     "wait_status": true,
-    "all_eight_acknowledged": true
+    "all_eight_initial_acknowledged": true
   },
-  "initial_request_count": 17,
-  "initial_request_outcomes": {
-    "completed": 11,
-    "limited": 6,
-    "not_started": 0
-  },
-  "followup_request_count": 2,
   "sessions": [
     {
       "role": "S01",
-      "role_acknowledged": true,
-      "git_prohibited_acknowledged": true,
-      "task_acknowledged": true,
-      "initial_task_id": "FCC-20261023-S01-B0001",
-      "initial_batch_state": "content_and_rights_reviewed",
-      "current_followup": {
-        "task_id": "FCC-20261023-S01-B0002",
-        "batch_id": "FCC-20261023A-S01-B0002",
-        "owner_session": "S01",
-        "assignment_version": "v003",
-        "collector_state": "local_ready_frozen_waiting_P01_receipt",
-        "P01_receipt_state": "accepted_pending_content_and_rights_review",
-        "publication_state": "not_included_in_v002_results",
-        "request_ids": [
-          "ADD-S01-KDB-BLOB-CURRENCY-002"
-        ]
-      },
-      "state_without_followup": null
+      "latest_collector_task": "FCC-20261023-S01-B0003",
+      "collector_status": "local_ready_frozen_waiting_P01_receipt",
+      "collector_status_updated_at": "2026-10-23T22:26:47.987983+09:00",
+      "role_and_git_boundary_acknowledged": true,
+      "tasks": [
+        {
+          "task_id": "FCC-20261023-S01-B0001",
+          "batch_id": "FCC-20261023A-S01-B0001",
+          "assignment_version": "v002",
+          "request_ids": [
+            "ADD-S01-WIFI24-METHOD-INDEX-001",
+            "ADD-S01-KDB-ATTACHMENT-DELTA-001"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "published",
+          "included_in_results": true
+        },
+        {
+          "task_id": "FCC-20261023-S01-B0002",
+          "batch_id": "FCC-20261023A-S01-B0002",
+          "assignment_version": "v003",
+          "request_ids": [
+            "ADD-S01-KDB-BLOB-CURRENCY-002"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "content_approved",
+          "included_in_results": true
+        },
+        {
+          "task_id": "FCC-20261023-S01-B0003",
+          "batch_id": "FCC-20261023A-S01-B0003",
+          "assignment_version": "v004",
+          "request_ids": [
+            "ADD-S01-KDB913591-RAW-CURRENCY-003"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "not_received",
+          "included_in_results": false
+        }
+      ]
     },
     {
       "role": "S02",
-      "role_acknowledged": true,
-      "git_prohibited_acknowledged": true,
-      "task_acknowledged": true,
-      "initial_task_id": "FCC-20261023-S02-B0001",
-      "initial_batch_state": "content_and_rights_reviewed",
-      "current_followup": null,
-      "state_without_followup": "awaiting_next_P01_assignment"
+      "latest_collector_task": "FCC-20261023-S02-B0002",
+      "collector_status": "in_progress",
+      "collector_status_updated_at": "2026-10-23T22:25:33+09:00",
+      "role_and_git_boundary_acknowledged": true,
+      "tasks": [
+        {
+          "task_id": "FCC-20261023-S02-B0001",
+          "batch_id": "FCC-20261023A-S02-B0001",
+          "assignment_version": "v002",
+          "request_ids": [
+            "ADD-S02-EMC-BGN-CONDITIONS-001"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "published",
+          "included_in_results": true
+        },
+        {
+          "task_id": "FCC-20261023-S02-B0002",
+          "batch_id": "FCC-20261023A-S02-B0002",
+          "assignment_version": "v004",
+          "request_ids": [
+            "ADD-S02-EMC-CASE-SCOPE-002"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "not_received",
+          "included_in_results": false
+        }
+      ]
     },
     {
       "role": "S03",
-      "role_acknowledged": true,
-      "git_prohibited_acknowledged": true,
-      "task_acknowledged": true,
-      "initial_task_id": "FCC-20261023-S03-B0001",
-      "initial_batch_state": "content_and_rights_reviewed",
-      "current_followup": null,
-      "state_without_followup": "awaiting_next_P01_assignment"
+      "latest_collector_task": "FCC-20261023-S03-B0002",
+      "collector_status": "in_progress",
+      "collector_status_updated_at": "2026-10-23T22:25:27+09:00",
+      "role_and_git_boundary_acknowledged": true,
+      "tasks": [
+        {
+          "task_id": "FCC-20261023-S03-B0001",
+          "batch_id": "FCC-20261023A-S03-B0001",
+          "assignment_version": "v002",
+          "request_ids": [
+            "ADD-S03-WIFI24-SAR-INDEX-001",
+            "ADD-S03-SAR-ATTACHMENT-DELTA-001"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "published",
+          "included_in_results": true
+        },
+        {
+          "task_id": "FCC-20261023-S03-B0002",
+          "batch_id": "FCC-20261023A-S03-B0002",
+          "assignment_version": "v004",
+          "request_ids": [
+            "ADD-S03-IEEE1528-FCC-TRANSITION-002"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "not_received",
+          "included_in_results": false
+        }
+      ]
     },
     {
       "role": "S04",
-      "role_acknowledged": true,
-      "git_prohibited_acknowledged": true,
-      "task_acknowledged": true,
-      "initial_task_id": "FCC-20261023-S04-B0001",
-      "initial_batch_state": "content_and_rights_reviewed",
-      "current_followup": null,
-      "state_without_followup": "awaiting_next_P01_assignment"
+      "latest_collector_task": "FCC-20261023-S04-B0001",
+      "collector_status": "waiting_next_assignment",
+      "collector_status_updated_at": "2026-10-23T22:26:06.006683+09:00",
+      "role_and_git_boundary_acknowledged": true,
+      "tasks": [
+        {
+          "task_id": "FCC-20261023-S04-B0001",
+          "batch_id": "FCC-20261023A-S04-B0001",
+          "assignment_version": "v002",
+          "request_ids": [
+            "EQ-MOD-aecdf6d16380a2be",
+            "EQ-MOD-c40c6c5f1b4e7ca9",
+            "EQ-MOD-48a20d5887cbe5bc"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "published",
+          "included_in_results": true
+        }
+      ]
     },
     {
       "role": "S05",
-      "role_acknowledged": true,
-      "git_prohibited_acknowledged": true,
-      "task_acknowledged": true,
-      "initial_task_id": "FCC-20261023-S05-B0001",
-      "initial_batch_state": "content_and_rights_reviewed",
-      "current_followup": null,
-      "state_without_followup": "awaiting_next_P01_assignment"
+      "latest_collector_task": "FCC-20261023-S05-B0001",
+      "collector_status": "published_waiting_for_inputs_or_next_assignment",
+      "collector_status_updated_at": "2026-10-23T22:26:02.000+09:00",
+      "role_and_git_boundary_acknowledged": true,
+      "tasks": [
+        {
+          "task_id": "FCC-20261023-S05-B0001",
+          "batch_id": "FCC-20261023A-S05-B0001",
+          "assignment_version": "v002",
+          "request_ids": [
+            "EQ-MOD-708c2272f105c511",
+            "EQ-MOD-4e657354694908fa"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "published",
+          "included_in_results": true
+        }
+      ]
     },
     {
       "role": "S06",
-      "role_acknowledged": true,
-      "git_prohibited_acknowledged": true,
-      "task_acknowledged": true,
-      "initial_task_id": "FCC-20261023-S06-B0001",
-      "initial_batch_state": "content_and_rights_reviewed",
-      "current_followup": null,
-      "state_without_followup": "awaiting_next_P01_assignment"
+      "latest_collector_task": "FCC-20261023-S06-B0001",
+      "collector_status": "published_waiting_assignment",
+      "collector_status_updated_at": "2026-10-23T22:25:55+09:00",
+      "role_and_git_boundary_acknowledged": true,
+      "tasks": [
+        {
+          "task_id": "FCC-20261023-S06-B0001",
+          "batch_id": "FCC-20261023A-S06-B0001",
+          "assignment_version": "v002",
+          "request_ids": [
+            "EQ-MOD-f183d948fc590a8b",
+            "EQ-MOD-207e69830324252e",
+            "EQ-MOD-6b92cbf630670c77"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "published",
+          "included_in_results": true
+        }
+      ]
     },
     {
       "role": "S07",
-      "role_acknowledged": true,
-      "git_prohibited_acknowledged": true,
-      "task_acknowledged": true,
-      "initial_task_id": "FCC-20261023-S07-B0001",
-      "initial_batch_state": "content_and_rights_reviewed",
-      "current_followup": null,
-      "state_without_followup": "awaiting_next_P01_assignment"
+      "latest_collector_task": "FCC-20261023-S07-B0001",
+      "collector_status": "published_waiting_assignment",
+      "collector_status_updated_at": "2026-10-23T22:26:07.000+09:00",
+      "role_and_git_boundary_acknowledged": true,
+      "tasks": [
+        {
+          "task_id": "FCC-20261023-S07-B0001",
+          "batch_id": "FCC-20261023A-S07-B0001",
+          "assignment_version": "v002",
+          "request_ids": [
+            "ADD-S07-ADB-OFFICIAL-001",
+            "ADD-S07-WIFI24-TESTMODE-INPUT-001"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "published",
+          "included_in_results": true
+        }
+      ]
     },
     {
       "role": "S08",
-      "role_acknowledged": true,
-      "git_prohibited_acknowledged": true,
-      "task_acknowledged": true,
-      "initial_task_id": "FCC-20261023-S08-B0001",
-      "initial_batch_state": "content_and_rights_reviewed",
-      "current_followup": {
-        "task_id": "FCC-20261023-S08-B0002",
-        "batch_id": "FCC-20261023A-S08-B0002",
-        "owner_session": "S08",
-        "assignment_version": "v003",
-        "collector_state": "in_progress",
-        "P01_receipt_state": "not_received",
-        "publication_state": "not_included_in_v002_results",
-        "request_ids": [
-          "ADD-S08-BGN-CASE-COMPLETENESS-002"
-        ]
-      },
-      "state_without_followup": null
+      "latest_collector_task": "FCC-20261023-S08-B0002",
+      "collector_status": "ready_frozen_awaiting_p01",
+      "collector_status_updated_at": "2026-10-23T22:23:59+09:00",
+      "role_and_git_boundary_acknowledged": true,
+      "tasks": [
+        {
+          "task_id": "FCC-20261023-S08-B0001",
+          "batch_id": "FCC-20261023A-S08-B0001",
+          "assignment_version": "v002",
+          "request_ids": [
+            "ADD-S08-WIFI24-REPORT-FIELDS-001",
+            "ADD-S08-CASE-LINKS-001"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "published",
+          "included_in_results": true
+        },
+        {
+          "task_id": "FCC-20261023-S08-B0002",
+          "batch_id": "FCC-20261023A-S08-B0002",
+          "assignment_version": "v003",
+          "request_ids": [
+            "ADD-S08-BGN-CASE-COMPLETENESS-002"
+          ],
+          "acknowledgement_file_present": true,
+          "P01_intake_state": "content_approved",
+          "included_in_results": true
+        }
+      ]
     }
   ],
-  "scope": "Source collection and provenance only. No method approval, hardware execution, site validation or conformity claim."
+  "included_reviewed_batches": 10,
+  "pending_intake_task_ids": [
+    "FCC-20261023-S01-B0003",
+    "FCC-20261023-S02-B0002",
+    "FCC-20261023-S03-B0002"
+  ],
+  "scope": "Source collection and provenance only; no method approval, equipment or site validation."
 }

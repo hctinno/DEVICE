@@ -1,0 +1,80 @@
+{
+  "task_id": "FCC-20261023-S08-B0002",
+  "batch_id": "FCC-20261023A-S08-B0002",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v003",
+  "created_at": "2026-10-23T22:21:44+09:00",
+  "timezone": "Asia/Seoul",
+  "status": "completed_with_explicit_limits",
+  "request_results": [
+    {
+      "request_id": "ADD-S08-BGN-CASE-COMPLETENESS-002",
+      "status": "completed",
+      "finding": "같은 FCC ID의 b/g/n 방법·결과를 포함한 별도 비OFDMA RF 보고서가 기존 21개에서 누락돼 있었음을 공식 목록·실제 PDF로 확인했다.",
+      "new_document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "limitations_present": true
+    }
+  ],
+  "counts": {
+    "assigned_requests": 1,
+    "completed_requests": 1,
+    "requests_with_limits": 1,
+    "not_started_requests": 0,
+    "existing_case_originals_reused": 21,
+    "existing_originals_redownloaded": 0,
+    "official_index_rows_observed": 54,
+    "application_lists_observed": 1,
+    "new_pdf_originals": 1,
+    "new_restricted_originals": 1,
+    "new_public_originals": 0,
+    "original_payload_files_in_ready": 0,
+    "new_document_records": 1,
+    "metadata_files": 5,
+    "native_raw_files": 0,
+    "new_questions": 0,
+    "counting_note": "제한 있는 요청 수는 완료 요청에 포함된다. read_only 원문 레코드 1개는 로컬 취득 성공/공개 전달 제한을 나타낸다."
+  },
+  "original_limit": 3,
+  "bgn_rf_gap": "resolved_for_observed_application",
+  "whole_fcc_case_complete": false,
+  "limits": [
+    "새 원문 PDF 1개는 확보했으나 공개 재배포 권한은 미확인이다. 원문은 제한 로컬 보관이고 P01 공개 반환에는 원문을 포함하지 않는다.",
+    "b/g/n RF 원문 공백은 이번 신청 묶음에서 해소했다. 모든 FCC 신청·보고서 개정·시험항목·제품 변형의 전체 사례 완전성은 확인하지 않았다.",
+    "2024년 성적서의 방법 판본/설정/판정을 2026년 현행 승인 방법이나 이 시험소 실측 검증으로 간주하지 않는다.",
+    "native raw·교정서/보정표 원본·실행 이력·기관 발행권한은 이번 범위에서 확보하지 않았다."
+  ],
+  "prior_gap_resolution": {
+    "batch_id": "FCC-20261023A-S08-B0001",
+    "question_id": "S08-Q01",
+    "field_id": "F06",
+    "resolved_by_document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+    "old_ready_modified": false,
+    "prior_inventory_sha256": "8e830991b60a4f1a5c6d18f89d61bd5b1d5edc16dce9829690eae915790a4bd2"
+  },
+  "not_reinvestigated": [
+    "다른 6개 기존 application_id의 최신 전체 첨부/허가 이력",
+    "다른 FCC ID/모델",
+    "이 보고서의 모든 수치 재계산·규격 적용 승인",
+    "기존 S08-Q02 EMC 범위 해석"
+  ],
+  "publication": "원문/전체 추출문/렌더링은 ready 밖 제한/분석 폴더에 보관한다. 새 로컬 생성 색인에 가짜 HTTP 원문 URL을 부여하지 않는다.",
+  "boundary": {
+    "git_commands": false,
+    "shared_project_files_modified": false,
+    "equipment_or_dut_control": false,
+    "private_login_or_submission_or_contact": false,
+    "browser_download_settings_changed": false
+  },
+  "local_verification": {
+    "utf8_json_schema_assignment": "pass",
+    "official_table_transcription": "pass",
+    "new_pdf_bytes_header_identity_and_result_locations": "pass",
+    "old_21_hashes_and_prior_ready_unchanged": "pass",
+    "document_integrity_command": "python -X utf8 -B scripts/check_artifacts.py",
+    "document_integrity_exit_code": 0,
+    "document_integrity_output": "PASS: 7 UTF-8 documents; 59 local links; no encoding markers.\nScope: document integrity only. No hardware, AI workflow, or conformity validation performed.",
+    "scope": "문서·출처·내용 위치·인계 무결성만 검사. 실측 재현·시험법 최신성/적합 승인·기관 발행 검증은 수행하지 않음."
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "reviewed_at": "2026-10-23T22:13:09.467542+09:00",
+  "saved_html_reviews": [
+    {
+      "legacy_document_id": "KDB-558074-publication-92168150c6",
+      "new_document_id": "KDB-558074-publication-currency-e32c44fac5da",
+      "legacy_sha256": "92168150c69765622272035e821c6f9e5d622ed68b525fa93ef38824db8a0fb4",
+      "current_sha256": "e32c44fac5dac9de05d98b0f314b0ff1f180393c1eeaf804f9481c926269b1e1",
+      "old_bytes": 15421,
+      "new_bytes": 15784,
+      "visible_text_identical": true,
+      "visible_text_sha256": "6b74bdfbe3f1c03b11ca33d5cf1f625720bea8e6793df9a3276d09ef982d0ba9",
+      "added_tag_structures": [
+        {
+          "tag": "script",
+          "attribute_names": "",
+          "count": 1
+        },
+        {
+          "tag": "script",
+          "attribute_names": "defer,src,type",
+          "count": 1
+        },
+        {
+          "tag": "noscript",
+          "attribute_names": "",
+          "count": 1
+        },
+        {
+          "tag": "img",
+          "attribute_names": "src,style",
+          "count": 1
+        }
+      ],
+      "raw_edit_ranges": [
+        {
+          "operation": "insert",
+          "old_character_offset": [
+            1067,
+            1067
+          ],
+          "new_character_offset": [
+            1067,
+            1207
+          ],
+          "old_chars": 0,
+          "new_chars": 140
+        },
+        {
+          "operation": "insert",
+          "old_character_offset": [
+            15404,
+            15404
+          ],
+          "new_character_offset": [
+            15544,
+            15767
+          ],
+          "old_chars": 0,
+          "new_chars": 223
+        }
+      ],
+      "observation": "The saved current HTML contains extra script/noscript/img markup. Normalized visible text is byte-identical as UTF-8. No script was executed.",
+      "meaning": "Different response bytes are preserved as evidence, not labelled a new technical guidance edition."
+    },
+    {
+      "legacy_document_id": "KDB-662911-publication-160b602e2c",
+      "new_document_id": "KDB-662911-publication-currency-926d5f354681",
+      "legacy_sha256": "160b602e2c354e8d1520c24d6714fee52b0743892f92b01301eb20ffb91f9866",
+      "current_sha256": "926d5f35468102618d1476c90ad60cac3490735038c60697610b739e6dbe8f73",
+      "old_bytes": 16773,
+      "new_bytes": 17136,
+      "visible_text_identical": true,
+      "visible_text_sha256": "5965f7d32722ebedd0040ba88c4f3dda0de80745d3690b4df4edf1e5f3c4d10d",
+      "added_tag_structures": [
+        {
+          "tag": "script",
+          "attribute_names": "",
+          "count": 1
+        },
+        {
+          "tag": "script",
+          "attribute_names": "defer,src,type",
+          "count": 1
+        },
+        {
+          "tag": "noscript",
+          "attribute_names": "",
+          "count": 1
+        },
+        {
+          "tag": "img",
+          "attribute_names": "src,style",
+          "count": 1
+        }
+      ],
+      "raw_edit_ranges": [
+        {
+          "operation": "insert",
+          "old_character_offset": [
+            1015,
+            1015
+          ],
+          "new_character_offset": [
+            1015,
+            1155
+          ],
+          "old_chars": 0,
+          "new_chars": 140
+        },
+        {
+          "operation": "insert",
+          "old_character_offset": [
+            16756,
+            16756
+          ],
+          "new_character_offset": [
+            16896,
+            17119
+          ],
+          "old_chars": 0,
+          "new_chars": 223
+        }
+      ],
+      "observation": "The saved current HTML contains extra script/noscript/img markup. Normalized visible text is byte-identical as UTF-8. No script was executed.",
+      "meaning": "Different response bytes are preserved as evidence, not labelled a new technical guidance edition."
+    }
+  ],
+  "unsaved_913591": "Current hash/size and empty public attachment set were observed, but current raw HTML was not retained because the two-original limit was reached. No full visible-text identity claim is made for this page."
+}

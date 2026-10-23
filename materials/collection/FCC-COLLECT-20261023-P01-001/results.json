@@ -1,0 +1,270 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "updated_at": "2026-10-23T22:27:14.876406+09:00",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "reviewed_batches": 10,
+  "reviewed_request_outcomes": {
+    "completed": 13,
+    "limited": 6,
+    "not_started": 0
+  },
+  "new_local_originals": 22,
+  "public_collector_originals": 2,
+  "public_extracted_documents": 3,
+  "public_support_license_files": 1,
+  "batches": [
+    {
+      "batch_id": "FCC-20261023A-S01-B0001",
+      "task_id": "FCC-20261023-S01-B0001",
+      "owner_session": "S01",
+      "assignment_version": "v002",
+      "snapshot_inventory_sha256": "64e673326937dea46c4824e7c58c41276cf6b44d4f81360fda5eec74353d5354",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 2,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S01-B0001",
+      "new_local_originals": 0,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": null
+    },
+    {
+      "batch_id": "FCC-20261023A-S01-B0002",
+      "task_id": "FCC-20261023-S01-B0002",
+      "owner_session": "S01",
+      "assignment_version": "v003",
+      "snapshot_inventory_sha256": "0cfd13d6f1b84395f17a49ee88003645a3f19139c539b24b4ebcac51a05313f2",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S01-B0002",
+      "new_local_originals": 2,
+      "public_collector_originals": 2,
+      "public_extracted_documents": 0,
+      "package": {
+        "package_id": "FCC-20261023A-S01-B0002",
+        "path": "materials/packages/FCC-20261023A-S01-B0002.zip",
+        "sha256": "0c0ae0aa94b0d49bf92458beffddbdc39164a31e19427f166257100951e96c35",
+        "bytes": 11935,
+        "included_payloads": 2,
+        "access_or_unavailable_records": 0
+      },
+      "validation": {
+        "manifest_bytes_equal": true,
+        "crc_valid": true,
+        "cumulative_import": "passed"
+      }
+    },
+    {
+      "batch_id": "FCC-20261023A-S02-B0001",
+      "task_id": "FCC-20261023-S02-B0001",
+      "owner_session": "S02",
+      "assignment_version": "v002",
+      "snapshot_inventory_sha256": "bf952afe3b43cdb22325eeadf50481dc633d711b93b20c66e437b16a25ff9ac2",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S02-B0001",
+      "new_local_originals": 0,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": null
+    },
+    {
+      "batch_id": "FCC-20261023A-S03-B0001",
+      "task_id": "FCC-20261023-S03-B0001",
+      "owner_session": "S03",
+      "assignment_version": "v002",
+      "snapshot_inventory_sha256": "eb3cbab101bd9f23af276ce9e551c21b1fc5414df2338a47b4f2a7f258a846a6",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 1,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S03-B0001",
+      "new_local_originals": 0,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": null
+    },
+    {
+      "batch_id": "FCC-20261023A-S04-B0001",
+      "task_id": "FCC-20261023-S04-B0001",
+      "owner_session": "S04",
+      "assignment_version": "v002",
+      "snapshot_inventory_sha256": "adaa5d0da3aa54826b9039bd651fd2cb45f20a3d6f49cbecc679618379fd311c",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 3,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S04-B0001",
+      "new_local_originals": 6,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": {
+        "package_id": "FCC-20261023A-S04-B0001",
+        "path": "materials/packages/FCC-20261023A-S04-B0001.zip",
+        "sha256": "47a9e618607b62cb4bd322f7c090b1dbf9a45f9c3cbc51e51279a6308612d7db",
+        "bytes": 1840,
+        "included_payloads": 0,
+        "access_or_unavailable_records": 6
+      },
+      "validation": {
+        "manifest_bytes_equal": true,
+        "crc_valid": true,
+        "cumulative_import": "passed"
+      }
+    },
+    {
+      "batch_id": "FCC-20261023A-S05-B0001",
+      "task_id": "FCC-20261023-S05-B0001",
+      "owner_session": "S05",
+      "assignment_version": "v002",
+      "snapshot_inventory_sha256": "bf1ca2d9fb16e5e753937703cf47dde4c8c597dadc6d3c11156f5cc1e8db2206",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 2,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S05-B0001",
+      "new_local_originals": 6,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": {
+        "package_id": "FCC-20261023A-S05-B0001",
+        "path": "materials/packages/FCC-20261023A-S05-B0001.zip",
+        "sha256": "81356c87ec66d08ce0c178d3c6ba45ac56a0050e6b377484b467f682481449b3",
+        "bytes": 2258,
+        "included_payloads": 0,
+        "access_or_unavailable_records": 6
+      },
+      "validation": {
+        "manifest_bytes_equal": true,
+        "crc_valid": true,
+        "cumulative_import": "passed"
+      }
+    },
+    {
+      "batch_id": "FCC-20261023A-S06-B0001",
+      "task_id": "FCC-20261023-S06-B0001",
+      "owner_session": "S06",
+      "assignment_version": "v002",
+      "snapshot_inventory_sha256": "ed1ef6eccf2da33e9a76fe15e4fdc15f37b5108c9e7ab919e6a3d39e8236e161",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 0,
+        "limited": 3,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S06-B0001",
+      "new_local_originals": 3,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": {
+        "package_id": "FCC-20261023A-S06-B0001",
+        "path": "materials/packages/FCC-20261023A-S06-B0001.zip",
+        "sha256": "3877283b6b53b33f5f917c95cd4297d641ef7020f84ace50db0524116bcf50f1",
+        "bytes": 1639,
+        "included_payloads": 0,
+        "access_or_unavailable_records": 3
+      },
+      "validation": {
+        "manifest_bytes_equal": true,
+        "crc_valid": true,
+        "cumulative_import": "passed"
+      }
+    },
+    {
+      "batch_id": "FCC-20261023A-S07-B0001",
+      "task_id": "FCC-20261023-S07-B0001",
+      "owner_session": "S07",
+      "assignment_version": "v002",
+      "snapshot_inventory_sha256": "30733f863feed2197c1bc89a36528e73cc62cd31ee71c852db05d736b55f33a2",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 2,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S07-B0001",
+      "new_local_originals": 4,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 3,
+      "package": {
+        "package_id": "FCC-20261023A-S07-B0001",
+        "path": "materials/packages/FCC-20261023A-S07-B0001.zip",
+        "sha256": "73f9176add48af579e8f32aee5fb469cf9699bc3e1671969e3b3903296bae782",
+        "bytes": 31115,
+        "included_payloads": 4,
+        "access_or_unavailable_records": 4
+      },
+      "validation": {
+        "manifest_bytes_equal": true,
+        "crc_valid": true,
+        "cumulative_import": "passed"
+      }
+    },
+    {
+      "batch_id": "FCC-20261023A-S08-B0001",
+      "task_id": "FCC-20261023-S08-B0001",
+      "owner_session": "S08",
+      "assignment_version": "v002",
+      "snapshot_inventory_sha256": "8e830991b60a4f1a5c6d18f89d61bd5b1d5edc16dce9829690eae915790a4bd2",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 2,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S08-B0001",
+      "new_local_originals": 0,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": null
+    },
+    {
+      "batch_id": "FCC-20261023A-S08-B0002",
+      "task_id": "FCC-20261023-S08-B0002",
+      "owner_session": "S08",
+      "assignment_version": "v003",
+      "snapshot_inventory_sha256": "675a230e72769257983ac096d78ce803b96cb8f1ebe690c7cc28084381bb3f1c",
+      "review_state": "content_and_rights_reviewed",
+      "request_outcome": {
+        "completed": 1,
+        "limited": 0,
+        "not_started": 0
+      },
+      "metadata_path": "batches/FCC-20261023A-S08-B0002",
+      "new_local_originals": 1,
+      "public_collector_originals": 0,
+      "public_extracted_documents": 0,
+      "package": {
+        "package_id": "FCC-20261023A-S08-B0002",
+        "path": "materials/packages/FCC-20261023A-S08-B0002.zip",
+        "sha256": "4666ec8f02b03369f508479117e0b85c9db16092996c997fc44f5d90ef52305d",
+        "bytes": 1356,
+        "included_payloads": 0,
+        "access_or_unavailable_records": 1
+      },
+      "validation": {
+        "manifest_bytes_equal": true,
+        "crc_valid": true,
+        "cumulative_import": "passed"
+      }
+    }
+  ],
+  "publication_note": "Every listed batch is included in the same Git history as this record. Exact remote commits are verified and reported by P01; review does not establish conformity or hardware validation."
+}

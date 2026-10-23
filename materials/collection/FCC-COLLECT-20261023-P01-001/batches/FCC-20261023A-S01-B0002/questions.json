@@ -1,0 +1,13 @@
+[
+  {
+    "question_id": "S01-B0002-Q02",
+    "owner_to_coordinate": "P01",
+    "topic": "Changed originals exceed this batch storage limit",
+    "document_ids": [
+      "KDB-913591-publication-e4102ce5f2"
+    ],
+    "next_action": "P01 may accept the recorded storage limitation; issue a new bounded batch only if preserving the third raw HTML is needed. The five-PDF byte comparison is complete.",
+    "blocking_byte_comparison_delivery": false,
+    "question": "Does P01 need a separate later raw snapshot of the changed 913591 HTML? Its current hash/size and no-attachment state are already recorded."
+  }
+]

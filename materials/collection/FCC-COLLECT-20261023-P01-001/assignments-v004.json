@@ -1,0 +1,88 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "version": "v004",
+  "activation": "approved",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "created_at": "2026-10-23T22:24:33.740860+09:00",
+  "tasks": [
+    {
+      "task_id": "FCC-20261023-S01-B0003",
+      "batch_id": "FCC-20261023A-S01-B0003",
+      "attempt": 1,
+      "owner_session": "S01",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v004",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S01-KDB913591-RAW-CURRENCY-003"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "KDB-913591"
+      ],
+      "priority": "P0",
+      "scope": "B0002에서 해시·첨부 집합만 확인하고 저장 상한 때문에 보관하지 못한 KDB913591 공식 publication HTML 1개만 취득한다. 기존 B0002 관측시각·해시와 구별하고 legacy 원문·ID를 보존한다. 새 응답은 legacy와 바이트·정규화 본문·첨부 집합을 비교한다. 같은 legacy 바이트라면 저장하지 않고 비교기록만 남긴다. B0002의 PDF5개나 다른 KDB는 다시 요청하지 않는다.",
+      "completion_criteria": "공식 URL·현재시각·HTTP·최종URL·SHA/bytes와 원문 또는 접근실패 근거. 본문/첨부 동일 여부와 미확인 구별. 새 원본 최대1개, PDF 재취득0개.",
+      "original_limit": 1,
+      "status": "prepared",
+      "source_question_ids": [
+        "S01-B0002-Q02"
+      ],
+      "prerequisite": "Prior own batch frozen and acknowledged by P01. Do not change existing ready or published batches."
+    },
+    {
+      "task_id": "FCC-20261023-S02-B0002",
+      "batch_id": "FCC-20261023A-S02-B0002",
+      "attempt": 1,
+      "owner_session": "S02",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v004",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S02-EMC-CASE-SCOPE-002"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "DISC-REPORTS"
+      ],
+      "priority": "P0",
+      "scope": "S08-B0001-Q02를 취합한다. 기존 단일 FCC ID A3LSMS938U의 EXHIBIT-7786580 EMC PDF 전체와 S08 근거를 읽어 p3 범위 remark와 전도/방사 결과표가 가리키는 측정·시료·규칙을 대조한다. 현재 보유 원문만 사용하며 새 다운로드0개. 실제 저자 의도나 FCC 승인범위를 추정으로 확정하지 말고, 직접 인용 가능 위치·명시사실·추론·미확정 질문을 구별한다. 법적 적용 결론/시험실 적합성/새 실측을 내리지 않는다.",
+      "completion_criteria": "문서·시료·보고서ID·페이지/표 근거, 원문이 명시한 전도/방사범위 비교, 다른섹션의 명확화 여부, 원문만으로 못 정하면 필요한 저자/기술검토 질문. 원본 변경·다운로드·사이트접근0개.",
+      "original_limit": 0,
+      "status": "prepared",
+      "source_question_ids": [
+        "S08-Q02"
+      ],
+      "prerequisite": "Prior own batch frozen and acknowledged by P01. Do not change existing ready or published batches."
+    },
+    {
+      "task_id": "FCC-20261023-S03-B0002",
+      "batch_id": "FCC-20261023A-S03-B0002",
+      "attempt": 1,
+      "owner_session": "S03",
+      "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+      "assignment_version": "v004",
+      "activation": "approved",
+      "request_ids": [
+        "ADD-S03-IEEE1528-FCC-TRANSITION-002"
+      ],
+      "model_ids": [],
+      "reference_request_ids": [
+        "STD-015",
+        "STD-016",
+        "KDB-447498",
+        "KDB-865664"
+      ],
+      "priority": "P0",
+      "scope": "S03-Q001을 후속 처리한다. 기존 표준 대장과 2025 TCBC Presentation 3.2 및 확보된 FCC/KDB 자료를 우선 재사용하여 IEEE1528-2013과 대체판으로 표시된 2020/2026의 발행·효력·FCC 허용/전환 근거를 분리한다. IEEE1528과 IEC/IEEE62209-1528은 정확한 번호·명칭을 구별하고 대체관계를 추정하지 않는다. 발표자료가 공식허용이나 법령편입을 뜻한다고 가정하지 않는다. 정확한 공문/법령/공식KDB 근거가 없으면 미확인으로 끝낸다. 신규가 필요할 때 공식기관 공개원문만 최대2개; 이미 가진 문서 재다운로드·유료표준 취득·반복403 우회 금지. DUT 적합성을 판정하지 않는다.",
+      "completion_criteria": "판본별 publisher status/FCC acceptance evidence/적용시점과 문서ID·조항·페이지의 표, TCBC3.2 내용·발행자·발표일·법적권위의 구분, 미확정판본·추가입력. 기존자료보존, 신규공식원문최대2개.",
+      "original_limit": 2,
+      "status": "prepared",
+      "source_question_ids": [
+        "S03-Q001"
+      ],
+      "prerequisite": "Prior own batch frozen and acknowledged by P01. Do not change existing ready or published batches."
+    }
+  ],
+  "scope": "Targeted follow-up on collected questions, not an expansion to all models."
+}

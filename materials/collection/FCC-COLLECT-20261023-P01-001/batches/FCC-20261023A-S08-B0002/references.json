@@ -1,0 +1,975 @@
+{
+  "task_id": "FCC-20261023-S08-B0002",
+  "batch_id": "FCC-20261023A-S08-B0002",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v003",
+  "created_at": "2026-10-23T22:21:44+09:00",
+  "official_index_observation": {
+    "fcc_id": "A3LSMS938U",
+    "application_id_encoded": "sOZs7GKWFPpjsFaWHlbMcA%3D%3D",
+    "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+    "observed_on": "2026-10-23",
+    "timezone": "Asia/Seoul",
+    "page_title": "OET List Exhibits Report",
+    "displayed_match_count": 54,
+    "representation": "local_derived_browser_dom_projection",
+    "capture_note": "공식 페이지의 표시된 표를 DOM으로 읽고 아래 열 순서로 보존했다. HTTP 원본 HTML 스냅샷이나 신규 다운로드 원문으로 표시하지 않는다. 이 신청 묶음 밖 전체 FCC 이력을 확인했다는 뜻이 아니다.",
+    "columns": [
+      "exhibit_id",
+      "title",
+      "exhibit_type",
+      "submitted_date_mm_dd_yyyy",
+      "display_type",
+      "available_date_mm_dd_yyyy"
+    ],
+    "rows": [
+      [
+        "7787411",
+        "Authorization Letter",
+        "Attestation Statements",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7787412",
+        "Label Attestation Letter",
+        "Attestation Statements",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7787413",
+        "FCC 2.911(d)(7) Agent for Service Attestation",
+        "Attestation Statements",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788944",
+        "HAC Attestation Letter",
+        "Attestation Statements",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788945",
+        "HAC Waiver Conditions Attestation Letter",
+        "Attestation Statements",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7789461",
+        "FCC 2.911(d)(5) Covered List Attestation",
+        "Attestation Statements",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7794363",
+        "DA-23-914A1 HAC Waiver",
+        "Attestation Statements",
+        "11/04/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7800996",
+        "Confidentiality Request Letter",
+        "Cover Letter(s)",
+        "11/06/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7787416",
+        "External Photographs",
+        "External Photos",
+        "11/01/2024",
+        "pdf",
+        "05/25/2025"
+      ],
+      [
+        "7787417",
+        "E-Label and Location",
+        "ID Label/Location Info",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7787418",
+        "Internal Photographs 1",
+        "Internal Photos",
+        "11/01/2024",
+        "pdf",
+        "05/25/2025"
+      ],
+      [
+        "7787422",
+        "Internal Photographs 2",
+        "Internal Photos",
+        "11/01/2024",
+        "pdf",
+        "05/25/2025"
+      ],
+      [
+        "7854595",
+        "RF Exposure Part 1 Test Report",
+        "RF Exposure Info",
+        "11/26/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836405",
+        "RF Exposure Part 1 Appendix I RU SAR Exclusion",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836404",
+        "RF Exposure Part 1 Appendix H LTE and NR Lower Bandwidth RF Conducted Powers",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836403",
+        "RF Exposure Part 1 Appendix G System Validation",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836402",
+        "RF Exposure Part 1 Appendix C Probe and Dipole Calibration Certificates 7",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836401",
+        "RF Exposure Part 1 Appendix C Probe and Dipole Calibration Certificates 6",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836400",
+        "RF Exposure Part 1 Appendix C Probe and Dipole Calibration Certificates 5",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836398",
+        "RF Exposure Part 1 Appendix C Probe and Dipole Calibration Certificates 4",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836390",
+        "RF Exposure Part 1 Appendix C Probe and Dipole Calibration Certificates 3",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836385",
+        "RF Exposure Part 1 Appendix C Probe and Dipole Calibration Certificates 2",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7836383",
+        "RF Exposure Part 1 Appendix C Probe and Dipole Calibration Certificates 1",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7835681",
+        "RF Exposure Part 1 Appendix F Power Reduction Verification",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7835680",
+        "RF Exposure Part 1 Appendix E Multi-Tx Antenna SAR Considerations",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7835675",
+        "RF Exposure Part 1 Appendix D Tissue Specifications",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7835674",
+        "RF Exposure Part 1 Appendix B Verification Plots",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7835673",
+        "RF Exposure Part 1 Appendix A Test Plots",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7835671",
+        "SAR Part 2 Test Report",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7835670",
+        "RF Exposure Part 0 Appendix A Test Results",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7835669",
+        "RF Exposure Part 0 Test Report",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7835668",
+        "Compliance Summary Report",
+        "RF Exposure Info",
+        "11/19/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788790",
+        "SAR Part 2 Appendix G Calibration Certificates",
+        "RF Exposure Info",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788789",
+        "SAR Part 2 Appendix F Sub6 Procedures",
+        "RF Exposure Info",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788788",
+        "SAR Part 2 Appendix E Test Sequences",
+        "RF Exposure Info",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788787",
+        "SAR Part 2 Appendix C System Validation",
+        "RF Exposure Info",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788786",
+        "SAR Part 2 Appendix B Tissue Specifications",
+        "RF Exposure Info",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788785",
+        "SAR Part 2 Appendix A Verifications Plots",
+        "RF Exposure Info",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7847498",
+        "HAC Volume Control Test Report",
+        "Test Report",
+        "11/22/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788955",
+        "WLAN OFDMA Test Report",
+        "Test Report",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788954",
+        "WLAN OFDM Test Report",
+        "Test Report",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788953",
+        "Bluetooth LE Test Report 3",
+        "Test Report",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788952",
+        "Bluetooth LE Test Report 2",
+        "Test Report",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788951",
+        "Bluetooth LE Test Report 1",
+        "Test Report",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788950",
+        "Antenna Gain Report",
+        "Test Report",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788948",
+        "HAC T-Coil Test Report",
+        "Test Report",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7788947",
+        "HAC RFE Test Report",
+        "Test Report",
+        "11/01/2024",
+        "pdf",
+        "11/26/2024"
+      ],
+      [
+        "7847499",
+        "HAC Volume Control Test Setup Photographs",
+        "Test Setup Photos",
+        "11/22/2024",
+        "pdf",
+        "05/25/2025"
+      ],
+      [
+        "7836406",
+        "RF Exposure Part 1 Appendix J Test Setup Photographs",
+        "Test Setup Photos",
+        "11/19/2024",
+        "pdf",
+        "05/25/2025"
+      ],
+      [
+        "7789026",
+        "Test Setup Photographs",
+        "Test Setup Photos",
+        "11/01/2024",
+        "pdf",
+        "05/25/2025"
+      ],
+      [
+        "7789025",
+        "Antenna Gain Test Setup Photographs",
+        "Test Setup Photos",
+        "11/01/2024",
+        "pdf",
+        "05/25/2025"
+      ],
+      [
+        "7789023",
+        "HAC T-Coil Test Setup Photographs",
+        "Test Setup Photos",
+        "11/01/2024",
+        "pdf",
+        "05/25/2025"
+      ],
+      [
+        "7789022",
+        "SAR Part 2 Appendix D Test Setup Photographs",
+        "Test Setup Photos",
+        "11/01/2024",
+        "pdf",
+        "05/25/2025"
+      ],
+      [
+        "7789027",
+        "Users Manual",
+        "Users Manual",
+        "11/01/2024",
+        "pdf",
+        "05/25/2025"
+      ]
+    ],
+    "transcription_verification": {
+      "canonical_json_characters": 5676,
+      "browser_projection_fnv1a32": "7942aaec",
+      "local_projection_fnv1a32": "7942aaec",
+      "matches": true,
+      "scope": "표 전사 일치 확인용이며 HTTP 원본의 암호학적 해시가 아니다."
+    }
+  },
+  "legacy_comparison": {
+    "legacy_case_count": 21,
+    "legacy_original_hashes_reverified": 21,
+    "legacy_index_record_count": 656,
+    "exact_existing_exhibit_ids_on_this_application": [
+      "7788951",
+      "7788955"
+    ],
+    "official_rows_not_equal_to_existing_exhibit_ids": 52,
+    "new_candidate_id_present_in_legacy_21": false,
+    "new_candidate_hash_present_in_legacy_21": false,
+    "new_candidate_hash_or_url_present_in_fixed_source_index": false,
+    "comparison_limit": "다른 신청 묶음에는 같은 제목·같은 내용의 첨부가 다른 ID로 게시될 수 있다. 54개 중 ID가 기존 21개에 없는 나머지를 모두 새로운 내용이라고 집계하지 않는다."
+  },
+  "legacy_case_sources": [
+    {
+      "exhibit_id": "7786342",
+      "title": "E-Label and Location",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "0d759e11e781400ac59a0ea90a801ace497464f47762ea61498217df6df976cb",
+      "bytes": 94725,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7786342",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7786342']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7854589",
+      "title": "RF Exposure Part 1 Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "e70edcaeb71fba07b6171f7e9b3e48fce102760d1e078c1c75d7b24cd47bbd54",
+      "bytes": 3580511,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7854589",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7854589']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7835532",
+      "title": "SAR Part 2 Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "bf1242b6301a1eac12e03f728a15674c5aa8a6413619484a0ea9e7553ce41a28",
+      "bytes": 3007825,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7835532",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7835532']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7835528",
+      "title": "Compliance Summary Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "882a319cc7f5f011fb6bb9d161a176d8b572b0c987990281c470a0bbd415b7dd",
+      "bytes": 253437,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7835528",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7835528']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7847487",
+      "title": "Part 24 Test Report 1",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "4f8182c22020fb9539f56bf18074b086e3d549527197dd8f900a259aa4175fae",
+      "bytes": 5679073,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7847487",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7847487']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7847485",
+      "title": "HAC Volume Control Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "ed553fd6b50edcfd1e540eaacd11968b79891937c576fc97b61ba9313907febd",
+      "bytes": 6227512,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7847485",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7847485']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7846969",
+      "title": "Part 27a Test Report 1",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "02559a21bcfdcdd8e0693ee3a49042590c344b98eefd05fb14f9dc49254334db",
+      "bytes": 5714700,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7846969",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7846969']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7798800",
+      "title": "Part 25 SCS Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "f9c4be8de1660c2639a6805233657a319e6f219c8ff6d836b302b0fc384d6652",
+      "bytes": 147490,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7798800",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7798800']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7786615",
+      "title": "Part 22 Test Report 1",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "62cfd919d1ecf113e6f365a13d3275a77074522f514eea212ddfd88b7bf3c301",
+      "bytes": 5673195,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7786615",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7786615']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7786560",
+      "title": "HAC T-Coil Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "733971aef064db9f5b6817d23d890458539999050b631ce59a22517dd6275f57",
+      "bytes": 3305774,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7786560",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7786560']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7786559",
+      "title": "HAC RFE Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "aa85c278d17e91244e682d53aaf817a083f22e0010ccc131a1cc334f597ecc9b",
+      "bytes": 1410534,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7786559",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7786559']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7836231",
+      "title": "RF Exposure Part 1 Appendix J Test Setup Photographs",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "e31514769ca3c699c313dba64915aeaefd5dd92d9e7201b1a294565375e63dbe",
+      "bytes": 1085957,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7836231",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7836231']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7786726",
+      "title": "Users Manual",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "317a6a9e4ef5c408d65bbc36cfdb05fcc7054b2759d6917b473144de2343a7f4",
+      "bytes": 476122,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=snPnyA5u%2FO1GOehnrw%2F17Q%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7786726",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7786726']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7788917",
+      "title": "UNII OFDMA Test Report 1",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "CkO970%2FBFesYdfxGmzvwDQ%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "070d554627a7251b0471af0c09c7065df89876964cc4aedf1a2dbfc0379c0dfa",
+      "bytes": 5423912,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=CkO970%2FBFesYdfxGmzvwDQ%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788917",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7788917']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7788913",
+      "title": "DFS Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "CkO970%2FBFesYdfxGmzvwDQ%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "6cea0cdd2b4534c631535d016c12b7c627fd931e5c189e26432dd6c81f268c26",
+      "bytes": 578377,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=CkO970%2FBFesYdfxGmzvwDQ%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788913",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7788913']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7788955",
+      "title": "WLAN OFDMA Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "sOZs7GKWFPpjsFaWHlbMcA%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "44d4cec92ae7ae6e5240635d9b47b1ca3b5d5e3c41f1952d1bfbb08a4c55eb20",
+      "bytes": 5451443,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788955",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7788955']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7788951",
+      "title": "Bluetooth LE Test Report 1",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "sOZs7GKWFPpjsFaWHlbMcA%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "8e9b8d284effbeec53579f91d538448a6543e8574caf5dcb4fad88872cc4c009",
+      "bytes": 4616106,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788951",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7788951']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7846975",
+      "title": "Bluetooth Test Report 1",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "63wVzpJnRd0%2F4ZsO%2BCSqBA%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "28743921394bc7cfff6916780d17d5c31daed67e091e93f2212cb3f08e000896",
+      "bytes": 5674493,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=63wVzpJnRd0%2F4ZsO%2BCSqBA%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7846975",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7846975']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7786580",
+      "title": "Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "ECRjbjEs3BHabX1k7Znclw%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "a26f0f387596fa1000da803d8203803bad93dbf56f7e43e68a0ed5959b270197",
+      "bytes": 1605816,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=ECRjbjEs3BHabX1k7Znclw%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7786580",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7786580']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7789126",
+      "title": "WiFi 6GHz OFDMA Test Report 1",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "lNNI%2FrIowtY3%2BAjH2V%2Fc3g%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "47872f1027e9fc623d67657ccd5fe4fd18f09b5ffb98e90aba505701eac6ffc5",
+      "bytes": 5661817,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=lNNI%2FrIowtY3%2BAjH2V%2Fc3g%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7789126",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7789126']",
+      "hash_reverified": true,
+      "redownloaded": false
+    },
+    {
+      "exhibit_id": "7789171",
+      "title": "UWB Test Report",
+      "fcc_id": "A3LSMS938U",
+      "application_id_encoded": "Fb6pWsP6vw9lw8vHbVca5w%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "sha256": "9b627a0013bee1ed1a2018703f630e97377d016cdddce717f1fd89d1a22d648b",
+      "bytes": 4389776,
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=Fb6pWsP6vw9lw8vHbVca5w%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7789171",
+      "original_owner": "S01",
+      "legacy_package_id": null,
+      "document_id": null,
+      "legacy_inventory_path": "materials/inventory/public_case_A3LSMS938U.json",
+      "legacy_locator": "records[exhibit_id='7789171']",
+      "hash_reverified": true,
+      "redownloaded": false
+    }
+  ],
+  "new_restricted_originals": [
+    {
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "original_owner": "S08",
+      "source_type": "new_local_restricted_original",
+      "representation": "original",
+      "fcc_id": "A3LSMS938U",
+      "model": "SM-S938U",
+      "additional_models": [
+        "SM-S938U1"
+      ],
+      "report_id": "1M2408260067.13.A3L",
+      "report_revision": null,
+      "revision_note": "별도 보고서 개정 번호는 확인되지 않았다. V11.1 08/28/2023은 서식 표기로 구별한다.",
+      "report_issue_date": "2024-10-28",
+      "test_dates": {
+        "start": "2024-09-03",
+        "end": "2024-10-25"
+      },
+      "fcc_submitted_date": "2024-11-01",
+      "fcc_available_date": "2024-11-26",
+      "pages": 80,
+      "media_type": "application/pdf",
+      "bytes": 5858854,
+      "sha256": "48ce8ee535ba4b1abe3b532c9c0629c15775bcd03ad18541424d42e66c57eee9",
+      "retrieved_at": "2026-10-23T22:14:01+09:00",
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788954",
+      "application_id_encoded": "sOZs7GKWFPpjsFaWHlbMcA%3D%3D",
+      "local_only_path": "[local-only reference retained by P01]",
+      "rights": "unknown",
+      "rights_state": "local_only_redistribution_unconfirmed",
+      "rights_evidence": {
+        "pdf_page": 1,
+        "location": "하단 복제 제한 문구",
+        "meaning": "Element의 서면 허락 없는 부분 복제/이용에 제한이 있다. FCC에서 공개 열람된 사실을 공개 Git 재배포 권한으로 취급하지 않는다."
+      },
+      "original_acquired_locally": true,
+      "original_in_ready": false,
+      "public_payload_allowed": false,
+      "raw_instrument_file": false,
+      "embedded_file_count": 0,
+      "transport": "공식 페이지의 관찰된 링크를 브라우저 downloadMedia로 취득. 자동 반환된 취득 파일을 S08 제한 폴더로 옮겼고 공유 브라우저 설정·다운로드 경로 설정은 변경하지 않았다.",
+      "identity_proof": {
+        "fcc_id_in_opening": true,
+        "model_in_opening": true,
+        "same_legacy_sha256": false
+      }
+    }
+  ],
+  "existing_reference_documents": [
+    {
+      "source_ref": "EXHIBIT-7788955",
+      "owner": "S01",
+      "purpose": "ax/be OFDMA RF 사례 구별",
+      "evidence_location": "표지 p1"
+    },
+    {
+      "source_ref": "EXHIBIT-7854589",
+      "owner": "S01",
+      "purpose": "SAR 지원 b/g/n 출력표 구별",
+      "evidence_location": "§10.6 p95; §12.29 p142"
+    }
+  ],
+  "access_evidence": {
+    "web_search": {
+      "queries": [
+        "site:apps.fcc.gov \"A3LSMS938U\" \"WLAN\" \"Test Report\"",
+        "site:apps.fcc.gov \"A3LSMS938U\" \"802.11b\" \"15.247\"",
+        "site:apps.fcc.gov \"A3LSMS938U\" \"7788955\""
+      ],
+      "outcome": "no_results"
+    },
+    "web_tool_index_open": "not_accessible",
+    "direct_http_index_attempt": {
+      "requested_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+      "checked_at": "2026-10-23T22:09:25+09:00",
+      "status": 403,
+      "final_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+      "content_type": "text/html",
+      "response_bytes": 424,
+      "response_sha256": "30fd408ee49e9bbaa10086d22e7ad25aee6fdc4012dbdacf035e91ff36480634",
+      "downloaded_as_original": false,
+      "body_excerpt": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"http&#58;&#47;&#47;apps&#46;fcc&#46;gov&#47;oetcf&#47;eas&#47;reports&#47;ViewExhibitReport&#46;cfm&#63;\" on this server.<P>\nReferen"
+    },
+    "direct_http_pdf_attempt": {
+      "requested_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788954",
+      "checked_at": "2026-10-23T22:12:11+09:00",
+      "http_status": 403,
+      "final_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788954",
+      "content_type": "text/html",
+      "response_bytes": 410,
+      "response_sha256": "c8aa9b9b7c8dc4313816baa4726c96ef458157c366844b5568c52e4ccc97fc7d",
+      "valid_pdf": false,
+      "error_excerpt": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"http&#58;&#47;&#47;apps&#46;fcc&#46;gov&#47;eas&#47;GetApplica"
+    },
+    "browser_index": "success; visible table header and DOM rows verified",
+    "browser_pdf": "success; actual PDF header/pages/identity/hash verified",
+    "failed_response_policy": "403 HTML 오류 본문을 PDF나 확보된 원문으로 집계하지 않는다. 같은 실패를 반복하지 않았다."
+  },
+  "visual_review": {
+    "renderer": "Poppler pdftoppm",
+    "pdf_pages": [
+      1,
+      15,
+      29,
+      30,
+      34
+    ],
+    "note": "Symbol 글꼴 경고는 기록했으며 인용 표지·표·그림을 PNG에서 확인했다. 표/그림은 native raw로 취급하지 않는다."
+  }
+}

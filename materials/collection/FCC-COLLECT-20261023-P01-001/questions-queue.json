@@ -1,0 +1,141 @@
+{
+  "run_id": "FCC-COLLECT-20261023-P01-001",
+  "updated_at": "2026-10-23T22:27:14.876406+09:00",
+  "owner": "P01",
+  "routing": "User and external contacts are handled by P01 only. No direct collector requests.",
+  "current_collection_publication_blocked_by_private_inputs": false,
+  "private_groups": 5,
+  "targeted_followup_groups": 4,
+  "groups": [
+    {
+      "group_id": "INPUT-DUT",
+      "title": "실증 DUT와 제조사 시험모드",
+      "status": "awaiting_existing_private_input",
+      "source_questions": [
+        "S01-B0001-Q02",
+        "S02-Q01"
+      ],
+      "request_ids": [
+        "LOCAL-006",
+        "LOCAL-009"
+      ],
+      "needed": "제품/변형·시료 ID·HW/FW·칩셋·b/g/n 모드/채널/대역폭·체인·최대출력·duty cycle·충전/호스트 조건·제조사 도구/라이선스·진입/종료와 응답 근거.",
+      "decision": "S07의 입력 명세로 통합한다. 공개 타제품 자료나 일반 ADB 지원으로 실제 RF 시험모드를 확정하지 않는다.",
+      "available_support": "batches/FCC-20261023A-S07-B0001/dut-testmode-input-spec.json"
+    },
+    {
+      "group_id": "INPUT-ASSETS",
+      "title": "실제 자산·센서·설치 판본·적용 매뉴얼",
+      "status": "awaiting_existing_private_input",
+      "source_questions": [
+        "S04-Q001",
+        "S04-Q002",
+        "S05-Q01",
+        "S05-Q02",
+        "S06-Q-001",
+        "S06-Q-002"
+      ],
+      "request_ids": [
+        "LOCAL-016"
+      ],
+      "needed": "실제 N9030A/N1914A 및 센서·DAE4·DASY Server·2090·CO3000의 명판/일련번호 대응, 설치 FW/SW/Driver/Robot·옵션, 적용 전체 매뉴얼과 허가된 열람 경로, 교정 유효성.",
+      "decision": "보유 자산별 증거 요청에 연결한다. 제조사 카탈로그·유사 모델·검색 요약으로 설치 상태와 명령을 확정하지 않는다. 센서가 정해지면 그 모델 문서를 다음 배정한다."
+    },
+    {
+      "group_id": "INPUT-SITE-PATH",
+      "title": "사이트·RF 경로·모션/인터록",
+      "status": "awaiting_existing_private_input",
+      "source_questions": [
+        "S02-Q02",
+        "S06-Q-003"
+      ],
+      "request_ids": [
+        "LOCAL-001",
+        "LOCAL-003",
+        "LOCAL-007",
+        "LOCAL-008",
+        "LOCAL-013"
+      ],
+      "needed": "인정/등록 시험범위·대역/거리/볼륨별 사이트 검증, 실제 배선/포트·주파수별 보정 원본/판본·교정, 모션 좌표/한계와 인터록/비상정지 배선·검증 기록.",
+      "decision": "현장 자료 확인 전 실장비 연결·움직임·출력·네트워크 검색을 수행하지 않는다. 카탈로그 포트 수로 현장 RF 경로를 재구성하지 않는다."
+    },
+    {
+      "group_id": "INPUT-RAW-QUALITY",
+      "title": "원시 시험건·DASY 내보내기·불확도·발행 권한",
+      "status": "awaiting_existing_private_input",
+      "source_questions": [
+        "S05-Q03"
+      ],
+      "request_ids": [
+        "LOCAL-010",
+        "LOCAL-004",
+        "LOCAL-011"
+      ],
+      "needed": "사용권 내 비식별 native raw/.da52와 내보내기 예제·설정·완료 로그·보고 연결, 실제 불확도 예산과 판정 정책, 기술 검토/발행 위임 기록.",
+      "decision": "S05/S08의 요구 목록으로 통합한다. 공개 성적서 표·그림은 native raw나 기관 발행 권한의 대체가 아니다."
+    },
+    {
+      "group_id": "INPUT-LICENSED-STANDARDS",
+      "title": "허가된 표준 원문 접근",
+      "status": "awaiting_existing_private_input",
+      "source_questions": [
+        "S01-B0001-Q01",
+        "S02-Q03"
+      ],
+      "request_ids": [
+        "STD-001",
+        "STD-002",
+        "STD-003",
+        "STD-004",
+        "STD-005",
+        "STD-006",
+        "STD-010",
+        "STD-019"
+      ],
+      "needed": "기존 기관 라이선스로 열람 가능한 C63.10/C63.4/관련 정오표·사이트 표준, ISO/IEC17025 및 불확도 참조의 허가된 접근 위치.",
+      "decision": "원문 미확보와 최신 발행판/허용판 차이를 유지한다. 구매·가입·재배포를 수행하지 않고 이미 보유한 접근 경로만 연결한다."
+    },
+    {
+      "group_id": "FOLLOWUP-KDB-HTML",
+      "title": "913591 현재 응답 보관",
+      "status": "local_ready_frozen_waiting_P01_receipt",
+      "source_questions": [
+        "S01-B0002-Q02"
+      ],
+      "assigned_task_id": "FCC-20261023-S01-B0003",
+      "decision": "최대1개 HTML의 응답과 본문/첨부 집합을 보완한다. 동일한 PDF를 다시 받지 않는다."
+    },
+    {
+      "group_id": "FOLLOWUP-EMC-SCOPE",
+      "title": "공개 EMC 성적서 범위 문구와 결과표",
+      "status": "in_progress",
+      "source_questions": [
+        "S08-Q02"
+      ],
+      "assigned_task_id": "FCC-20261023-S02-B0002",
+      "decision": "보유 PDF만으로 명시사실·추론·미확정을 나누어 검토한다. 보고서 저자의 의도를 추정해 승인 범위를 확정하지 않는다."
+    },
+    {
+      "group_id": "FOLLOWUP-SAR-EDITION",
+      "title": "SAR 표준 판본과 FCC 허용 근거",
+      "status": "in_progress",
+      "source_questions": [
+        "S03-Q001"
+      ],
+      "assigned_task_id": "FCC-20261023-S03-B0002",
+      "decision": "IEEE1528과 IEC/IEEE62209-1528 명칭·발행판·허용/전환 근거를 분리해 공식자료로 확인한다."
+    },
+    {
+      "group_id": "FOLLOWUP-BGN-CASE",
+      "title": "같은 FCC ID의 b/g/n RF 보고서",
+      "status": "resolved_for_documentary_scope",
+      "source_questions": [
+        "S08-Q01"
+      ],
+      "assigned_task_id": "FCC-20261023-S08-B0002",
+      "decision": "발견된 별도 WLAN 보고서의 모델·FCC ID·b/g/n 시험방법과 결과를 검수한다. 아직 원격 게시/원시계측 확보로 표시하지 않는다.",
+      "resolution_batch_id": "FCC-20261023A-S08-B0002",
+      "resolution_metadata_path": "batches/FCC-20261023A-S08-B0002"
+    }
+  ]
+}

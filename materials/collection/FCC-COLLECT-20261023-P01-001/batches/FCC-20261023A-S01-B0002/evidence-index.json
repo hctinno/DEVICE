@@ -1,0 +1,303 @@
+{
+  "task_id": "FCC-20261023-S01-B0002",
+  "request_ids": [
+    "ADD-S01-KDB-BLOB-CURRENCY-002"
+  ],
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v003",
+  "current_publication_sets": [
+    {
+      "publication_number": "558074",
+      "publication_document_id": "KDB-558074-publication-92168150c6",
+      "current_state": "changed",
+      "checked_at": "2026-10-23T22:10:06.040850+09:00",
+      "current_public_attachments": [
+        {
+          "label": "558074 D01 15.247 Meas Guidance v05r02",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=tylb5MMggvhIlVMK75RrRQ%3D%3D&desc=558074 D01 15.247 Meas Guidance v05r02&tracking_number=21124"
+        }
+      ],
+      "nonpublic_or_stale_inline_links_not_requested": [],
+      "added_public_urls": [],
+      "removed_public_urls": [],
+      "current_public_attachment_count": 1
+    },
+    {
+      "publication_number": "662911",
+      "publication_document_id": "KDB-662911-publication-160b602e2c",
+      "current_state": "changed",
+      "checked_at": "2026-10-23T22:10:06.794079+09:00",
+      "current_public_attachments": [
+        {
+          "label": "662911 D01 Multiple Transmitter Output v02r01",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=B0ZQiTBTVsn3P3wZ2WdqhQ%3D%3D&desc=662911 D01 Multiple Transmitter Output v02r01&tracking_number=49466"
+        },
+        {
+          "label": "662911 D02 MIMO with Cross Polarized Antenna v01",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=i%2BFRza%2B2Hh0pf9nHJHJGHw%3D%3D&desc=662911 D02 MIMO with Cross Polarized Antenna v01&tracking_number=49466"
+        },
+        {
+          "label": "662911 D03 MIMO Antenna Gain Measurement v02",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=0oFrwPO2uh8GhTp8suJdxA%3D%3D&desc=662911 D03 MIMO Antenna Gain Measurement v02&tracking_number=49466"
+        },
+        {
+          "label": "OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=zx796foayVA0TnNkVOgKjg%3D%3D&desc=OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013&tracking_number=49466"
+        }
+      ],
+      "nonpublic_or_stale_inline_links_not_requested": [
+        {
+          "label": "662911 D03 MIMO Antenna Gain Measurement v02",
+          "url": "https://appsint.fcc.gov/kdb/GetAttachment.html?id=NYHxoDYQ%2BFDRLI98iGGa%2Bw%3D%3D&desc=662911%20D03%20MIMO%20Antenna%20Gain%20Measurement%20v01&tracking_number=49466"
+        }
+      ],
+      "added_public_urls": [],
+      "removed_public_urls": [],
+      "current_public_attachment_count": 4
+    },
+    {
+      "publication_number": "913591",
+      "publication_document_id": "KDB-913591-publication-e4102ce5f2",
+      "current_state": "changed",
+      "checked_at": "2026-10-23T22:10:07.588241+09:00",
+      "current_public_attachments": [],
+      "nonpublic_or_stale_inline_links_not_requested": [],
+      "added_public_urls": [],
+      "removed_public_urls": [],
+      "current_public_attachment_count": 0
+    }
+  ],
+  "source_comparisons": [
+    {
+      "document_id": "KDB-558074-publication-92168150c6",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "role": "publication",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "request_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "expected_sha256": "92168150c69765622272035e821c6f9e5d622ed68b525fa93ef38824db8a0fb4",
+      "expected_bytes": 15421,
+      "conditional_headers": {},
+      "attempt_indexes": [
+        1
+      ],
+      "comparison": "changed",
+      "current_bytes_hashed": true,
+      "current_sha256": "e32c44fac5dac9de05d98b0f314b0ff1f180393c1eeaf804f9481c926269b1e1",
+      "current_bytes": 15784,
+      "new_original_saved": true,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "verified_at": "2026-10-23T22:10:06.040850+09:00",
+      "html_title": "558074 Section 15.247, Digital Transmission Systems (DTS) and Frequency Hopping measurement procedures",
+      "attachment_links": [
+        {
+          "label": "558074 D01 15.247 Meas Guidance v05r02",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=tylb5MMggvhIlVMK75RrRQ%3D%3D&desc=558074 D01 15.247 Meas Guidance v05r02&tracking_number=21124"
+        }
+      ],
+      "new_document_id": "KDB-558074-publication-currency-e32c44fac5da",
+      "new_path": "originals/KDB-558074-publication-currency-e32c44fac5da.html"
+    },
+    {
+      "document_id": "KDB-662911-publication-160b602e2c",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "role": "publication",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "request_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "expected_sha256": "160b602e2c354e8d1520c24d6714fee52b0743892f92b01301eb20ffb91f9866",
+      "expected_bytes": 16773,
+      "conditional_headers": {},
+      "attempt_indexes": [
+        2
+      ],
+      "comparison": "changed",
+      "current_bytes_hashed": true,
+      "current_sha256": "926d5f35468102618d1476c90ad60cac3490735038c60697610b739e6dbe8f73",
+      "current_bytes": 17136,
+      "new_original_saved": true,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "verified_at": "2026-10-23T22:10:06.794079+09:00",
+      "html_title": "662911 Measurement of Transmitters with Multiple Output, MIMO, Smart Antenna",
+      "attachment_links": [
+        {
+          "label": "662911 D03 MIMO Antenna Gain Measurement v02",
+          "url": "https://appsint.fcc.gov/kdb/GetAttachment.html?id=NYHxoDYQ%2BFDRLI98iGGa%2Bw%3D%3D&desc=662911%20D03%20MIMO%20Antenna%20Gain%20Measurement%20v01&tracking_number=49466"
+        },
+        {
+          "label": "662911 D01 Multiple Transmitter Output v02r01",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=B0ZQiTBTVsn3P3wZ2WdqhQ%3D%3D&desc=662911 D01 Multiple Transmitter Output v02r01&tracking_number=49466"
+        },
+        {
+          "label": "662911 D02 MIMO with Cross Polarized Antenna v01",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=i%2BFRza%2B2Hh0pf9nHJHJGHw%3D%3D&desc=662911 D02 MIMO with Cross Polarized Antenna v01&tracking_number=49466"
+        },
+        {
+          "label": "662911 D03 MIMO Antenna Gain Measurement v02",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=0oFrwPO2uh8GhTp8suJdxA%3D%3D&desc=662911 D03 MIMO Antenna Gain Measurement v02&tracking_number=49466"
+        },
+        {
+          "label": "OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013",
+          "url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=zx796foayVA0TnNkVOgKjg%3D%3D&desc=OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013&tracking_number=49466"
+        }
+      ],
+      "new_document_id": "KDB-662911-publication-currency-926d5f354681",
+      "new_path": "originals/KDB-662911-publication-currency-926d5f354681.html"
+    },
+    {
+      "document_id": "KDB-913591-publication-e4102ce5f2",
+      "legacy_package_id": "FCC-GENERAL-20261023-002",
+      "role": "publication",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "request_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "expected_sha256": "e4102ce5f2e1818003338c3aaa4954ee8724ed6fdf796767d3ac18dc5c957bf2",
+      "expected_bytes": 13462,
+      "conditional_headers": {},
+      "attempt_indexes": [
+        3
+      ],
+      "comparison": "changed",
+      "current_bytes_hashed": true,
+      "current_sha256": "f45bf5baad16576a56eff61c556170c581046b36e3161c7df3a1a7638bf0ed59",
+      "current_bytes": 13825,
+      "new_original_saved": false,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=20476",
+      "verified_at": "2026-10-23T22:10:07.588241+09:00",
+      "html_title": "913591 Measurement of radiated emissions at the band-edge for a Part 15 RF Device",
+      "attachment_links": [],
+      "not_saved_reason": "Changed accepted response exceeds this batch two-original storage limit; report for a follow-up assignment."
+    },
+    {
+      "document_id": "KDB-558074-558074-D01-15.247-Meas-Guidance-v05r02-06cf6de58c",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "role": "attachment",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=21124",
+      "request_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=tylb5MMggvhIlVMK75RrRQ%3D%3D&desc=558074 D01 15.247 Meas Guidance v05r02&tracking_number=21124",
+      "expected_sha256": "06cf6de58ce4b0abd521d6b42e50689f18331cf67be48c8dba7b5553c8470f75",
+      "expected_bytes": 281974,
+      "conditional_headers": {},
+      "attempt_indexes": [
+        4
+      ],
+      "comparison": "same",
+      "current_bytes_hashed": true,
+      "current_sha256": "06cf6de58ce4b0abd521d6b42e50689f18331cf67be48c8dba7b5553c8470f75",
+      "current_bytes": 281974,
+      "new_original_saved": false,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=tylb5MMggvhIlVMK75RrRQ%3D%3D&desc=558074%20D01%2015.247%20Meas%20Guidance%20v05r02&tracking_number=21124",
+      "verified_at": "2026-10-23T22:10:08.693007+09:00",
+      "pdf_inspection": {
+        "pages": 14,
+        "header_valid": true,
+        "expected_source_identity_on_cover": true
+      }
+    },
+    {
+      "document_id": "KDB-662911-662911-D01-Multiple-Transmitter-Output-v02r01-8c61a4b10b",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "role": "attachment",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "request_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=B0ZQiTBTVsn3P3wZ2WdqhQ%3D%3D&desc=662911 D01 Multiple Transmitter Output v02r01&tracking_number=49466",
+      "expected_sha256": "8c61a4b10b8769d3e3125e0e1614d7846019c64644ce2dfab5e2d548f74fa075",
+      "expected_bytes": 129928,
+      "conditional_headers": {},
+      "attempt_indexes": [
+        5
+      ],
+      "comparison": "same",
+      "current_bytes_hashed": true,
+      "current_sha256": "8c61a4b10b8769d3e3125e0e1614d7846019c64644ce2dfab5e2d548f74fa075",
+      "current_bytes": 129928,
+      "new_original_saved": false,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=B0ZQiTBTVsn3P3wZ2WdqhQ%3D%3D&desc=662911%20D01%20Multiple%20Transmitter%20Output%20v02r01&tracking_number=49466",
+      "verified_at": "2026-10-23T22:10:09.567803+09:00",
+      "pdf_inspection": {
+        "pages": 13,
+        "header_valid": true,
+        "expected_source_identity_on_cover": true
+      }
+    },
+    {
+      "document_id": "KDB-662911-662911-D02-MIMO-with-Cross-Polarized-Antenna-v01-d909bea3ac",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "role": "attachment",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "request_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=i%2BFRza%2B2Hh0pf9nHJHJGHw%3D%3D&desc=662911 D02 MIMO with Cross Polarized Antenna v01&tracking_number=49466",
+      "expected_sha256": "d909bea3ac6c3bfeda0111007f62d6290e2173971a0b3bb9ca3b38e13ca1ffd9",
+      "expected_bytes": 39610,
+      "conditional_headers": {},
+      "attempt_indexes": [
+        6
+      ],
+      "comparison": "same",
+      "current_bytes_hashed": true,
+      "current_sha256": "d909bea3ac6c3bfeda0111007f62d6290e2173971a0b3bb9ca3b38e13ca1ffd9",
+      "current_bytes": 39610,
+      "new_original_saved": false,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=i%2BFRza%2B2Hh0pf9nHJHJGHw%3D%3D&desc=662911%20D02%20MIMO%20with%20Cross%20Polarized%20Antenna%20v01&tracking_number=49466",
+      "verified_at": "2026-10-23T22:10:10.232321+09:00",
+      "pdf_inspection": {
+        "pages": 3,
+        "header_valid": true,
+        "expected_source_identity_on_cover": true
+      }
+    },
+    {
+      "document_id": "KDB-662911-662911-D03-MIMO-Antenna-Gain-Measurement-v02-8a497f419a",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "role": "attachment",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "request_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=0oFrwPO2uh8GhTp8suJdxA%3D%3D&desc=662911 D03 MIMO Antenna Gain Measurement v02&tracking_number=49466",
+      "expected_sha256": "8a497f419a69989f10c2baa985994c81a86b822f79d4c068447fa1d19cb623b4",
+      "expected_bytes": 75629,
+      "conditional_headers": {},
+      "attempt_indexes": [
+        7
+      ],
+      "comparison": "same",
+      "current_bytes_hashed": true,
+      "current_sha256": "8a497f419a69989f10c2baa985994c81a86b822f79d4c068447fa1d19cb623b4",
+      "current_bytes": 75629,
+      "new_original_saved": false,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=0oFrwPO2uh8GhTp8suJdxA%3D%3D&desc=662911%20D03%20MIMO%20Antenna%20Gain%20Measurement%20v02&tracking_number=49466",
+      "verified_at": "2026-10-23T22:10:10.966196+09:00",
+      "pdf_inspection": {
+        "pages": 4,
+        "header_valid": true,
+        "expected_source_identity_on_cover": true
+      }
+    },
+    {
+      "document_id": "KDB-662911-OET-13TR1003-Directonal-Gain-of-802-11-MIMO-with-CDD-04-05-2013-7da0cc38d8",
+      "legacy_package_id": "FCC-PHONE-20261023-001",
+      "role": "attachment",
+      "source_url": "https://apps.fcc.gov/oetcf/kdb/forms/FTSSearchResultPage.cfm?switch=P&id=49466",
+      "request_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=zx796foayVA0TnNkVOgKjg%3D%3D&desc=OET 13TR1003 Directonal Gain of 802 11 MIMO with CDD 04 05 2013&tracking_number=49466",
+      "expected_sha256": "7da0cc38d804066d1564b29663bea22827791cd6731ad91ccf6c5f1cc92b34b0",
+      "expected_bytes": 4822513,
+      "conditional_headers": {},
+      "attempt_indexes": [
+        8
+      ],
+      "comparison": "same",
+      "current_bytes_hashed": true,
+      "current_sha256": "7da0cc38d804066d1564b29663bea22827791cd6731ad91ccf6c5f1cc92b34b0",
+      "current_bytes": 4822513,
+      "new_original_saved": false,
+      "http_status": 200,
+      "final_url": "https://apps.fcc.gov/kdb/GetAttachment.html?id=zx796foayVA0TnNkVOgKjg%3D%3D&desc=OET%2013TR1003%20Directonal%20Gain%20of%20802%2011%20MIMO%20with%20CDD%2004%2005%202013&tracking_number=49466",
+      "verified_at": "2026-10-23T22:10:13.074983+09:00",
+      "pdf_inspection": {
+        "pages": 48,
+        "header_valid": true,
+        "expected_source_identity_on_cover": true
+      }
+    }
+  ],
+  "comparison_states": "same/changed require HTTP200, complete streaming and correct source identity. 304 requires a genuine byte-verified legacy validator. Anything else is unconfirmed."
+}

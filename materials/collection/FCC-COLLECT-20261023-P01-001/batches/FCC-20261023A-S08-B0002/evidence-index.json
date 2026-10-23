@@ -1,0 +1,197 @@
+{
+  "task_id": "FCC-20261023-S08-B0002",
+  "batch_id": "FCC-20261023A-S08-B0002",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v003",
+  "created_at": "2026-10-23T22:21:44+09:00",
+  "evidence": [
+    {
+      "evidence_id": "E01",
+      "classification": "official_index_observation",
+      "topic": "공식 첨부 존재·신청 연결",
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+      "exhibit_id": "7788954",
+      "locator": "공식 표의 WLAN OFDM 행",
+      "finding": "표시 54개 첨부 중 별도 OFDM 보고서 링크가 있고 기존 OFDMA 7788955와 구별된다."
+    },
+    {
+      "evidence_id": "E02",
+      "classification": "local_inventory_comparison",
+      "topic": "기존 21개 대비 누락",
+      "locator": "materials/inventory/public_case_A3LSMS938U.json 및 고정 v003 legacy-source-index",
+      "finding": "21개 기존 첨부의 ID·원본 해시와 656개 고정 원본 레코드를 대조했다. 새 첨부 ID·다운로드 URL·원문 해시는 기존 목록과 일치하지 않는다."
+    },
+    {
+      "evidence_id": "E03",
+      "classification": "case_practice",
+      "topic": "보고서·제품·주파수 식별",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "pdf_pages": [
+        1,
+        5,
+        6
+      ],
+      "locator": "표지; §2.1-2.5",
+      "finding": "A3LSMS938U, SM-S938U/SM-S938U1, 1M2408260067.13.A3L, 2412-2462 MHz와 b/g/n을 포함한 비OFDMA RF 범위를 확인했다. b/g/n 외 모드도 함께 포함되어 있어 b/g/n만의 배타적인 보고서로 표현하지 않는다.",
+      "scope": "동일 FCC ID의 공개 시험 사례 내용 확인. 현재 시험소의 실측·시험법 승인·FCC 적합 판정으로 전이하지 않는다."
+    },
+    {
+      "evidence_id": "E04",
+      "classification": "case_practice",
+      "topic": "b/g/n 시험방법 포함",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "pdf_pages": [
+        14,
+        28,
+        33,
+        47,
+        58,
+        66,
+        76,
+        77
+      ],
+      "locator": "§7.2-7.8",
+      "finding": "대역폭·출력·PSD·대역경계·전도 스퓨리어스·방사·AC 전도 시험의 방법/설정/셋업 설명을 확인했다. 단순 제품 기능 목록이나 SAR 출력표만 있는 문서가 아니다.",
+      "scope": "동일 FCC ID의 공개 시험 사례 내용 확인. 현재 시험소의 실측·시험법 승인·FCC 적합 판정으로 전이하지 않는다."
+    },
+    {
+      "evidence_id": "E05",
+      "classification": "case_practice",
+      "topic": "대역폭 결과",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "pdf_pages": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "locator": "§7.2; 표7-2/7-3; 관련 plot",
+      "finding": "표에 b, g, n/ac 모드 및 채널별 결과가 있고 후속 그림이 연결된다. n/ac 공통 표기를 임의로 독립한 n 전용 시험 행으로 재구성하지 않는다.",
+      "scope": "동일 FCC ID의 공개 시험 사례 내용 확인. 현재 시험소의 실측·시험법 승인·FCC 적합 판정으로 전이하지 않는다."
+    },
+    {
+      "evidence_id": "E06",
+      "classification": "case_practice",
+      "topic": "b/g/n 전도 출력 결과",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "pdf_pages": [
+        28,
+        29,
+        30,
+        31
+      ],
+      "locator": "§7.3; 표7-4~7-6,7-10~7-12 및 MIMO 표",
+      "finding": "방법과 함께 b/g/n의 ANT1/ANT2 전도 출력 결과표에 채널·주파수·peak/average·단위·한계·마진이 있다. SAR 지원 출력표와 별도의 RF 보고서다.",
+      "scope": "동일 FCC ID의 공개 시험 사례 내용 확인. 현재 시험소의 실측·시험법 승인·FCC 적합 판정으로 전이하지 않는다."
+    },
+    {
+      "evidence_id": "E07",
+      "classification": "case_practice",
+      "topic": "PSD 방법·결과·그림",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "pdf_pages": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ],
+      "locator": "§7.4; 표7-21 및 관련 plot",
+      "finding": "b/g/n-ac 행, 안테나별/합산 결과, 보고된 판단과 연결 그림이 있다. 그림은 계측기 native 파일이 아니며 표/그림 존재 확인이 방법의 적합성 승인이나 독립 재계산을 뜻하지 않는다.",
+      "scope": "동일 FCC ID의 공개 시험 사례 내용 확인. 현재 시험소의 실측·시험법 승인·FCC 적합 판정으로 전이하지 않는다."
+    },
+    {
+      "evidence_id": "E08",
+      "classification": "case_practice",
+      "topic": "최악 조건·스퓨리어스 표시",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "pdf_pages": [
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        58,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "locator": "§7.5-7.6",
+      "finding": "b/g/n 등의 조건을 조사하고 보고서가 선정한 최악 조건을 제시한다. 전도 스퓨리어스의 b 최악 조건 그림을 모든 모드의 개별 원시 결과로 확대하지 않는다.",
+      "scope": "동일 FCC ID의 공개 시험 사례 내용 확인. 현재 시험소의 실측·시험법 승인·FCC 적합 판정으로 전이하지 않는다."
+    },
+    {
+      "evidence_id": "E09",
+      "classification": "case_practice",
+      "topic": "방사·AC 전도와 결론의 위치",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "pdf_pages": [
+        66,
+        70,
+        71,
+        72,
+        73,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "locator": "§7.7-7.8; §8.0",
+      "finding": "방사 결과와 AC 전도 결과/셋업, 보고서 결론의 위치를 색인했다. 보고된 결과는 해당 사례의 주장이고 이 시험소의 수행 증거가 아니다.",
+      "scope": "동일 FCC ID의 공개 시험 사례 내용 확인. 현재 시험소의 실측·시험법 승인·FCC 적합 판정으로 전이하지 않는다."
+    },
+    {
+      "evidence_id": "E10",
+      "classification": "case_practice",
+      "topic": "원문 전달 권리 제한",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "pdf_pages": [
+        1
+      ],
+      "locator": "하단 저작권/복제 제한",
+      "finding": "제3자 복제 제한을 확인했으며 원문 PDF는 로컬 제한 보관에만 두고 반환 묶음에는 URL·해시·판본·근거 metadata만 포함한다.",
+      "scope": "동일 FCC ID의 공개 시험 사례 내용 확인. 현재 시험소의 실측·시험법 승인·FCC 적합 판정으로 전이하지 않는다."
+    },
+    {
+      "evidence_id": "E11",
+      "classification": "case_practice",
+      "topic": "보고서 그림과 실제 raw 구별",
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "exhibit_id": "7788954",
+      "pdf_pages": [
+        34
+      ],
+      "locator": "표7-21 아래 계측 화면 그림 및 PDF 컨테이너 검사",
+      "finding": "PDF의 화면 그림은 보고용 표현이다. PDF 내 첨부 파일은 0개이며 실제 계측기 raw 파일·실행 로그·보정표 원본 묶음은 새로 확보하지 않았다.",
+      "scope": "동일 FCC ID의 공개 시험 사례 내용 확인. 현재 시험소의 실측·시험법 승인·FCC 적합 판정으로 전이하지 않는다."
+    }
+  ],
+  "classification_note": "공식 첨부 목록 관찰과 제3자 사례 보고 내용을 구별한다. 시험법 승인·적합 판정을 수행한 문서가 아니다.",
+  "checked_scope": {
+    "fcc_id": "A3LSMS938U",
+    "application_id_encoded": "sOZs7GKWFPpjsFaWHlbMcA%3D%3D",
+    "new_document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+    "raw_instrument_files_acquired": false
+  }
+}

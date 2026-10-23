@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "package_id": "FCC-20261023A-S08-B0002",
+  "created_at": "2026-10-23T22:26:36.190086+09:00",
+  "synthetic": false,
+  "notes": "P01 frozen collector intake. Public source payloads require explicit rights clearance; read_only records are access notices for locally acquired originals. Locally authored indexes are ordinary repository files, not downloaded source documents.",
+  "documents": [
+    {
+      "document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535",
+      "request_ids": [
+        "ADD-S08-BGN-CASE-COMPLETENESS-002"
+      ],
+      "title": "FCC Part 15.247 802.11b/g/n/ax/be (OFDM) RF 측정 성적서",
+      "kind": "example",
+      "version": "1M2408260067.13.A3L; issue 2024-10-28; report revision not expressly numbered",
+      "publisher": "Element Washington DC LLC",
+      "published_at": "2024-11-26",
+      "retrieved_at": "2026-10-23T22:14:01+09:00",
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "공식 FCC 공개 첨부이나 제3자 보고서다. p1 하단의 복제 제한과 서면 허가 조건을 확인했다. 공개 재배포 허가 미확인으로 원문을 ready/public payload에 넣지 않는다.",
+      "representation": "original",
+      "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=sOZs7GKWFPpjsFaWHlbMcA%3D%3D&fcc_id=A3LSMS938U",
+      "download_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=7788954",
+      "notes": "실제 PDF 원문은 로컬 제한 보관으로 확보했다. read_only는 공개 인수 레코드의 원문 전달 제한이며 다운로드 실패를 뜻하지 않는다. 실제 로컬 경로·SHA-256·bytes·보고서 식별/조건은 references.json의 new_restricted_originals에 있다. 비다운로드 상태 레코드의 path/hash/bytes 금지 계약을 지켜 이 레코드에는 해당 속성을 넣지 않는다. published_at은 FCC 목록의 공개일이며 보고서 발행일 2024-10-28과 구별한다."
+    }
+  ]
+}

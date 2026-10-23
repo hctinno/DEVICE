@@ -1,0 +1,17 @@
+{
+  "task_id": "FCC-20261023-S08-B0002",
+  "batch_id": "FCC-20261023A-S08-B0002",
+  "attempt": 1,
+  "owner_session": "S08",
+  "instruction_sha": "fb1767b367c0c1595560c2845d447ab30cecdce3",
+  "assignment_version": "v003",
+  "created_at": "2026-10-23T22:21:44+09:00",
+  "blocking_questions": [],
+  "nonblocking_questions": [],
+  "resolved_prior_question": {
+    "question_id": "S08-Q01",
+    "resolution_document_id": "FCC-A3LSMS938U-WLAN-OFDM-7788954-48ce8ee535"
+  },
+  "unchanged_out_of_scope_question": "S08-Q02는 이전 배치 그대로이며 이 배치에서 재판정하지 않았다.",
+  "routing": "P01이 파일과 대화 응답을 읽어 취합한다. 새 지시 전 다른 FCC ID나 범위로 확대하지 않는다."
+}
