@@ -46,3 +46,14 @@ CREATE TABLE IF NOT EXISTS intake_notifications(
  revision INTEGER NOT NULL, signature TEXT NOT NULL, payload_json TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS intake_notice_state(
  intake_id TEXT PRIMARY KEY REFERENCES intakes, signature TEXT NOT NULL);
+
+CREATE TABLE IF NOT EXISTS intake_fixture_jobs(
+ request_id TEXT PRIMARY KEY, intake_id TEXT NOT NULL, revision INTEGER NOT NULL,
+ request_fingerprint TEXT NOT NULL, readiness_fingerprint TEXT NOT NULL,
+ revision_fingerprint TEXT NOT NULL, delegation_event_id TEXT NOT NULL,
+ recipe_id TEXT NOT NULL, settings_json TEXT NOT NULL, model TEXT NOT NULL,
+ source_synthetic INTEGER NOT NULL CHECK(source_synthetic IN (0,1)),
+ state TEXT NOT NULL CHECK(state IN ('queued','running','completed','failed','uncertain','superseded')),
+ worker_id TEXT, token TEXT, lease_until REAL, run_id TEXT UNIQUE, runtime_instance_id TEXT UNIQUE,
+ result_json TEXT, error_code TEXT, created_at REAL NOT NULL, updated_at REAL NOT NULL,
+ FOREIGN KEY(intake_id,revision) REFERENCES intake_revisions(intake_id,revision));
