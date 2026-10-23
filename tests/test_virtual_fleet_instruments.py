@@ -499,6 +499,39 @@ class FleetInstrumentTests(unittest.TestCase):
         self.assertEqual(response['status'], 'invalid')
         self.assertEqual(response['values']['outputs'], {})
 
+    def test_analyzer_rejects_unsupported_field_strength_without_losing_valid_settings(self):
+        analyzer = make('signal_analyzer')
+        call(analyzer, 'configure', {'frequency_hz': 2.45e9, 'measurement': 'power'})
+        original = analyzer.observation(tick=0, setup_revision=0)['values']['configuration']
+        rejected = call(analyzer, 'configure', {'measurement': 'field_strength'})
+        self.assertEqual(rejected['status'], 'error')
+        self.assertEqual(rejected['values']['reason'], 'unsupported_measurement')
+        self.assertEqual(rejected['values']['configuration'], original)
+        self.assertFalse(rejected['setup_changed'])
+        self.assertEqual(call(analyzer, 'acquire')['status'], 'pending')
+        recovered = packet(advance(analyzer))
+        self.assertEqual(recovered['value'], 10)
+        self.assertEqual(recovered['unit'], 'dBm')
+
+    def test_all_supported_analyzer_and_receiver_measurements_have_required_settings(self):
+        expectations = {'power': (10.0, 'dBm'), 'psd': (-53.01029995663981, 'dBm/Hz'),
+                        'voltage': (116.98970004336019, 'dBuV'),
+                        'field_strength': (124.23970004336019, 'dBuV/m')}
+        for role in ['signal_analyzer', 'emi_receiver']:
+            for measurement, (value, unit) in expectations.items():
+                if role == 'signal_analyzer' and measurement == 'field_strength':
+                    continue
+                with self.subTest(role=role, measurement=measurement):
+                    device = make(role)
+                    config = {'frequency_hz': 2.45e9, 'measurement': measurement}
+                    if measurement == 'field_strength':
+                        config['antenna_factor_db_per_m'] = 7.25
+                    self.assertEqual(call(device, 'configure', config)['status'], 'ok')
+                    self.assertEqual(call(device, 'acquire')['status'], 'pending')
+                    measured = packet(advance(device))
+                    self.assertAlmostEqual(measured['value'], value)
+                    self.assertEqual(measured['unit'], unit)
+
 
 if __name__ == '__main__':
     unittest.main()
