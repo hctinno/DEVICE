@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>접수 운영 · DGM AutoLab</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 이동</a>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">D</span><div>DGM <strong>AutoLab</strong><small>LAB OPERATIONS</small></div></div>
+    <p class="nav-label">WORKSPACE</p>
+    <nav aria-label="주 메뉴">
+      <button type="button" data-view="intakes" aria-current="page"><span aria-hidden="true">▤</span>접수 현황</button>
+      <button type="button" data-view="notifications"><span aria-hidden="true">◷</span>알림 기록 <span id="notice-count" class="nav-count">0</span></button>
+    </nav>
+    <div class="sidebar-note"><span class="connection-dot" aria-hidden="true"></span> 로컬 조회 모드<p>자료와 저장된 업무 상태를<br>한곳에서 확인합니다.</p></div>
+    <div class="sidebar-footer">딸깍맨 / DGM<small>CLICK. AUTOMATE. DONE.</small></div>
+  </aside>
+  <main id="main" tabindex="-1">
+    <header class="page-header">
+      <div><p class="eyebrow">WORKSPACE <span>/</span> INTAKE</p><h1 id="page-title">접수 운영</h1><p class="subtitle">자료의 근거에서 다음 작업까지.</p></div>
+      <div class="header-actions"><span class="mode-tag">◉ 조회 전용</span><button class="button" id="refresh" type="button"><span aria-hidden="true">↻</span> 새로고침</button><small id="last-updated">아직 조회하지 않음</small></div>
+    </header>
+    <div class="scope-note"><span aria-hidden="true">i</span><p><strong>접수 업무의 저장 상태입니다.</strong> 시험·실측·장비 연결 상태는 이 화면에서 확인되지 않습니다.</p></div>
+    <div id="error-banner" hidden role="alert"></div>
+    <section id="metrics" class="metrics" aria-label="접수 집계"></section>
+    <section id="intake-view" class="workspace-grid" aria-label="접수 조회">
+      <section class="queue-panel" aria-labelledby="queue-title">
+        <div class="queue-heading"><h2 id="queue-title">접수 목록</h2><span id="result-count" class="muted">조회 중</span></div>
+        <label class="search-label" for="search">접수 검색</label><input type="search" id="search" placeholder="이름, 접수 ID, 제품 검색" autocomplete="off">
+        <div class="filter-row"><label for="filter">상태</label><select id="filter"><option value="all">전체 상태</option><option value="attention">확인 필요</option><option value="waiting">분석 대기·분석 중</option><option value="deferred">보류</option><option value="failed">분석 실패</option></select></div>
+        <ul id="intake-list" class="intake-list"><li class="empty small" role="status">저장된 접수 상태를 불러오는 중입니다.</li></ul>
+      </section>
+      <section id="detail-panel" class="detail-panel" aria-label="접수 상세"><div class="empty"><span class="empty-icon" aria-hidden="true">▤</span><h2>접수 상태를 조회하고 있습니다</h2><p>잠시 후 목록에서 의뢰를 선택할 수 있습니다.</p></div></section>
+    </section>
+    <section id="notification-view" class="panel notification-view" aria-label="전체 알림 기록" hidden></section>
+    <footer class="main-footer"><span>DGM AutoLab · 접수 조회 v0.1</span><span>모델 자동 실행·실장비 제어 미연결</span></footer>
+    <p id="announcer" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+</body>
+</html>

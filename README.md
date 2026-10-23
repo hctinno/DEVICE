@@ -1,6 +1,6 @@
 # DEVICE — DGM AutoLab / FCC AI 시험소
 
-다른 PC·에이전트도 이 GitHub 저장소를 체크아웃해 같은 자료와 코드를 사용한다. 현재 작업 인계 기준 브랜치는 `codex/fcc-lab-foundation`이다. [HANDOFF.md](HANDOFF.md)와 [AGENTS.md](AGENTS.md)를 먼저 읽고, 자료 수집 담당은 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)를 따른다. 로컬 커밋은 push한 뒤에 다른 세션에 공유된다.
+다른 PC·에이전트도 이 GitHub 저장소를 체크아웃해 같은 자료와 코드를 사용한다. 최초 인계 기준은 `codex/fcc-lab-foundation`이며, 개발총괄의 후속 구현은 `codex/pipeline-dev-20261023-intake`에 있다. [HANDOFF.md](HANDOFF.md)와 [AGENTS.md](AGENTS.md)를 먼저 읽고, 자료 수집 담당은 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)를 따른다. 로컬 커밋은 push한 뒤에 다른 세션에 공유된다.
 
 **1차 구축 목표는 FCC RF·EMC·SAR**다. 수집 세션들은 하나의 로컬 프로젝트에서 각자 자료만 저장하고 Git은 별도 P01만 수행한다. [확정한 수집1~수집8 역할](handoff/parallel/README.md)과 [메인(P01)이 총괄하는 운영 설계](docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md)를 따른다. 기존 수집자는 수집1이다. 실제 로컬 준비와 자동 지시 전달 기능은 별도 확인하며 클라우드에서 새 수집 세션을 실행한 것은 아니다.
 
@@ -21,6 +21,8 @@
 - [공통 파이프라인 실행·MCP 연결 안내](docs/fcc/pipeline_usage.md) · [구현 진입점](labflow/__main__.py)
 
 ZIP 내보내기는 선택적 스냅샷이다. 같은 저장소를 사용하는 에이전트 사이에서는 파일을 사용자가 내려받아 다시 첨부할 필요가 없다.
+
+첫 [접수 운영 화면](docs/fcc/frontend_usage.md)에서 접수 목록·사실/출처·누락/충돌·작업 상태·알림을 조회할 수 있다. [PDF 추출](docs/fcc/document_extract_usage.md), [합성 접수 작업자](docs/fcc/intake_worker_usage.md), [가상 시험 세션 저장·재개](docs/fcc/virtual_session_usage.md)도 개별 실행할 수 있다. 각 기능의 통합 검토와 남은 연결은 [통합 기록](handoff/development/INTEGRATION-001.md)을 따른다. 상시 AI 분석·가상 시험 제어·실제 시험 전체를 이 화면에서 수행하는 단계는 아직 아니다.
 
 현재 장비 기준정보 DB와 자료 수집 대장, 자료 인수 → 제품/계획 → 오프라인 시험기록 → 계산 → HTML/PDF/JSON 초안의 공통 코어가 있다. CLI와 stdio MCP가 같은 서비스를 호출한다. 실제 FCC 세부 방법 검증, 전체 범위 적용성 자동 판단, 현장 장비 제어와 공식 성적서 발행은 아직 구현되지 않았다.
 
@@ -60,6 +62,7 @@ Python 3.10 이상과 `openpyxl`이 필요하다. DB 조회는 Python 표준 라
 
 ```bash
 python -m pip install -r requirements.txt
+python -m pip install -r requirements-extract.txt
 python -m unittest discover -s tests -v
 python registry/validate.py
 ```

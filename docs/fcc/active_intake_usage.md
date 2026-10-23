@@ -101,4 +101,4 @@ python -m labflow --workspace .local/intake-state intake-respond USER_EVENT_003 
 
 현재 상태·계약 검증은 `tests/test_active_intake.py`, `tests/test_intake_jobs.py`, `tests/test_intake_interfaces.py`에 있다. 실제 SDK stdio 호출도 포함한다. 가상 자료에 대해 이 개발 대화의 모델이 인용을 붙인 응답을 한 번 적용한 대화형 smoke를 수행했지만, 자동 모델 API 연결·블라인드 평가·실고객 문서 정확도 검증은 수행하지 않았다.
 
-다음 구현은 PDF/DOCX/XLSX·OCR 문맥 계약, 설정 가능한 모델 작업자, 주기 스캔/작업 실행 서비스, 알림 전달 확인 및 명시적 실패 복구다. 이후 검토된 규정/방법으로 시험·장비·셋업 준비 목록을 연결한다. [전체 설계](../superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md)의 단계 A 전체와 7단계 로드맵 2·3의 완료를 이 기반 구현으로 선언하지 않는다.
+별도 [PDF 추출기](document_extract_usage.md), [합성 접수 작업자](intake_worker_usage.md), [접수 조회 화면](frontend_usage.md)을 추가했다. PDF의 페이지 근거를 현재 분석 계약과 연결하는 작업, DOCX/XLSX·OCR, 실제 모델 제공자/평가, 주기 스캔/실행 서비스와 알림 전달 확인은 후속이다. 이후 검토된 규정/방법으로 시험·장비·셋업 준비 목록을 연결한다. [전체 설계](../superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md)의 단계 A 전체와 7단계 로드맵 2·3의 완료를 이 기반 구현으로 선언하지 않는다.
