@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import multiprocessing
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -208,6 +209,48 @@ class IntakeWorkerTests(unittest.TestCase):
             with self.assertRaises(WorkerConfigurationError):
                 self.run_jobs()
         self.assertEqual(self.job()['attempt'], 0)
+
+    def test_live_clock_claim_reclaims_a_lease_expired_during_call_delay(self):
+        previous = claim_job(self.store, 'previous', lease_seconds=120)
+        def delayed_claim(store, worker_id, *, now=None, lease_seconds=120, synthetic_only=False):
+            with store.connection() as con:
+                con.execute('UPDATE intake_jobs SET lease_until=? WHERE job_id=?',
+                            (time.time() + 0.05, previous['job_id']))
+            time.sleep(0.1)
+            return claim_job(store, worker_id, now=now, lease_seconds=lease_seconds,
+                             synthetic_only=synthetic_only)
+        with patch('labflow.intake_worker.claim_job', delayed_claim):
+            report = self.run_jobs()
+        self.assertEqual(report['attempted_jobs'], 1)
+        self.assertEqual(report['results'][0]['status'], 'completed')
+        self.assertEqual(self.job()['attempt'], 2)
+
+    def test_live_clock_completion_rejects_expiry_during_call_delay(self):
+        def delayed_complete(store, job_id, token, analysis, *, now=None):
+            with store.connection() as con:
+                con.execute('UPDATE intake_jobs SET lease_until=? WHERE job_id=?',
+                            (time.time() + 0.05, job_id))
+            time.sleep(0.1)
+            return complete_job(store, job_id, token, analysis, now=now)
+        with patch('labflow.intake_worker.complete_job', delayed_complete):
+            report = self.run_jobs()
+        self.assertEqual(report['results'][0]['status'], 'lease_lost')
+        self.assertEqual(self.job()['state'], 'running')
+        self.assertEqual(notifications(self.store), [])
+
+    def test_live_clock_failure_rejects_expiry_during_call_delay(self):
+        from labflow.intake_jobs import fail_job
+        def delayed_fail(store, job_id, token, *, now=None):
+            with store.connection() as con:
+                con.execute('UPDATE intake_jobs SET lease_until=? WHERE job_id=?',
+                            (time.time() + 0.05, job_id))
+            time.sleep(0.1)
+            return fail_job(store, job_id, token, now=now)
+        with patch('labflow.intake_worker.fail_job', delayed_fail):
+            report = self.run_jobs(RaisingProvider())
+        self.assertEqual(report['results'][0]['status'], 'lease_lost')
+        self.assertEqual(self.job()['state'], 'running')
+        self.assertEqual(self.job()['attempt'], 1)
 
     def test_real_jobs_remain_untouched_by_synthetic_worker(self):
         real = self.root / 'real-inbox'
@@ -455,6 +498,25 @@ class IntakeWorkerTests(unittest.TestCase):
                                 env={**os.environ, 'PYTHONUTF8': '1', 'PYTHONDONTWRITEBYTECODE': '1'})
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout)['results'][0]['status'], 'completed')
+
+    def test_documented_python_file_claims_only_one_of_two_jobs(self):
+        self.put('two', 'product_type: smartphone\nmarket: US\npurpose: certification\n')
+        self.scan()
+        repository = Path(__file__).resolve().parents[1]
+        usage = (repository / 'docs/fcc/intake_worker_usage.md').read_text(encoding='utf-8')
+        snippet = re.findall(r'```python\n(.*?)\n```', usage, re.DOTALL)[0]
+        snippet = snippet.replace("'.local/worker-demo-001/state'", repr(str(self.store.root)))
+        script = self.root / 'documented_worker.py'
+        script.write_text(snippet, encoding='utf-8')
+        result = subprocess.run([sys.executable, '-X', 'utf8', '-B', str(script)],
+                                cwd=repository, capture_output=True, text=True, encoding='utf-8', timeout=20,
+                                env={**os.environ, 'PYTHONPATH': str(repository),
+                                     'PYTHONUTF8': '1', 'PYTHONDONTWRITEBYTECODE': '1'})
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with self.store.connection() as con:
+            states = sorted(tuple(row) for row in con.execute('SELECT state,attempt FROM intake_jobs'))
+        self.assertEqual(states, [('completed', 1), ('queued', 0)], result.stderr)
+        self.assertEqual(len(notifications(self.store)), 1)
 
 
 if __name__ == '__main__':

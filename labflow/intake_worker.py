@@ -208,7 +208,7 @@ def _failure(store, job, reason):
     if issue:
         return {'status': issue[0], 'reason': issue[1], 'job_state': None}
     try:
-        failed = fail_job(store, job['job_id'], job['token'], now=time.time())
+        failed = fail_job(store, job['job_id'], job['token'])
     except ValueError:
         issue = _lease_issue(store, job)
         return {'status': issue[0] if issue else 'state_error',
@@ -232,7 +232,7 @@ def run_worker(store, provider, *, worker_id, max_jobs=1, max_run_seconds=None,
             stop_reason = 'time_limit'
             break
         try:
-            job = claim_job(store, worker_id, now=time.time(), lease_seconds=lease_seconds, synthetic_only=True)
+            job = claim_job(store, worker_id, lease_seconds=lease_seconds, synthetic_only=True)
         except (ValueError, OSError, sqlite3.Error):
             stop_reason = 'state_error'
             break
@@ -258,7 +258,7 @@ def run_worker(store, provider, *, worker_id, max_jobs=1, max_run_seconds=None,
                 error = 'invalid_response'
             else:
                 try:
-                    complete_job(store, job['job_id'], job['token'], analysis, now=time.time())
+                    complete_job(store, job['job_id'], job['token'], analysis)
                     result.update(status='completed', reason=None, job_state='completed')
                 except (ValueError, TypeError, KeyError, OverflowError):
                     error = 'invalid_response'
