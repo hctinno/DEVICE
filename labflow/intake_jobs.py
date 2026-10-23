@@ -18,17 +18,19 @@ def claim_job(store, worker_id, *, now=None, lease_seconds=120, synthetic_only=F
     identifier(worker_id)
     if type(synthetic_only) is not bool:
         raise ValueError('synthetic_only must be boolean')
-    now = timestamp(now)
+    if now is not None:
+        timestamp(now)  # Explicit clocks are for deterministic callers/tests.
     timestamp(lease_seconds)
     if not 0 < lease_seconds <= 3600:
         raise ValueError('Lease must be between zero and 3600 seconds')
     with store.connection() as con:
         con.execute('BEGIN IMMEDIATE')
+        acquired_at = timestamp(now)
         con.execute("UPDATE intake_jobs SET state='failed',error_code='attempt_limit' "
                     "WHERE state='running' AND lease_until<=? AND attempt>=? "
                     "AND (?=0 OR EXISTS (SELECT 1 FROM intake_revisions r "
                     "WHERE r.intake_id=intake_jobs.intake_id AND r.revision=intake_jobs.revision "
-                    "AND r.synthetic=1))", (now, MAX_ATTEMPTS, synthetic_only))
+                    "AND r.synthetic=1))", (acquired_at, MAX_ATTEMPTS, synthetic_only))
         con.execute("UPDATE intakes SET status='analysis_failed' WHERE status!='upload_incomplete' AND EXISTS "
                     "(SELECT 1 FROM intake_jobs j WHERE j.intake_id=intakes.intake_id "
                     "AND j.revision=intakes.revision AND j.state='failed' "
@@ -41,18 +43,19 @@ def claim_job(store, worker_id, *, now=None, lease_seconds=120, synthetic_only=F
                           "AND (?=0 OR EXISTS (SELECT 1 FROM intake_revisions r "
                           "WHERE r.intake_id=j.intake_id AND r.revision=j.revision AND r.synthetic=1)) "
                           "ORDER BY j.created_at,j.job_id LIMIT 1",
-                          (MAX_ATTEMPTS, now, synthetic_only)).fetchone()
+                          (MAX_ATTEMPTS, acquired_at, synthetic_only)).fetchone()
         if job is None:
             return None
         revision = con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',
                                (job['intake_id'], job['revision'])).fetchone()
         documents = document_context(store, json.loads(revision['files_json']))
         token = uuid.uuid4().hex
+        lease_until = timestamp(now) + lease_seconds
         con.execute("UPDATE intake_jobs SET state='running',worker_id=?,token=?,lease_until=?,attempt=attempt+1 WHERE job_id=?",
-                    (worker_id, token, now+lease_seconds, job['job_id']))
+                    (worker_id, token, lease_until, job['job_id']))
         store.event(con, 'intake.analysis_claimed', job['intake_id'], {'job_id': job['job_id'], 'attempt': job['attempt']+1})
         return {'job_id': job['job_id'], 'intake_id': job['intake_id'], 'revision': job['revision'],
-                'token': token, 'lease_until': now+lease_seconds, 'attempt': job['attempt']+1,
+                'token': token, 'lease_until': lease_until, 'attempt': job['attempt']+1,
                 'synthetic': bool(revision['synthetic']), 'documents': documents,
                 'analysis_contract': {
                     'schema_version': 1, 'producer': {'kind': 'model|manual|fixture', 'name': 'model/version or analyzer name'},
@@ -103,7 +106,8 @@ def _refresh(store, con, intake, analysis, unread, *, notify):
 
 
 def complete_job(store, job_id, token, analysis, *, now=None):
-    now = timestamp(now)
+    if now is not None:
+        timestamp(now)
     with store.connection() as con:
         con.execute('BEGIN IMMEDIATE')
         previous = con.execute("SELECT * FROM intake_jobs WHERE job_id=? AND state='completed'", (job_id,)).fetchone()
@@ -115,11 +119,14 @@ def complete_job(store, job_id, token, analysis, *, now=None):
                                    (previous['intake_id'], previous['revision'])).fetchone()
             document_context(store, json.loads(revision['files_json']))
             return result['summary']
-        job, intake = _leased(con, job_id, token, now)
+        job, intake = _leased(con, job_id, token, timestamp(now))
         revision = con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?', (job['intake_id'], job['revision'])).fetchone()
         documents = document_context(store, json.loads(revision['files_json']))
         unread = validate_analysis(analysis, documents, bool(revision['synthetic']))
         summary = _refresh(store, con, intake, analysis, unread, notify=True)
+        # Parsing/projection may outlast the lease. Rejecting here also rolls
+        # back every question, notification and analysis write in this txn.
+        _leased(con, job_id, token, timestamp(now))
         con.execute("UPDATE intake_jobs SET state='completed',result_json=?,error_code=NULL WHERE job_id=?",
                     (canonical({'submission': analysis, 'summary': summary}), job_id))
         store.event(con, 'intake.analysis_completed', intake['intake_id'], {'job_id': job_id, 'revision': job['revision'], 'producer': analysis['producer']})
@@ -127,10 +134,11 @@ def complete_job(store, job_id, token, analysis, *, now=None):
 
 
 def fail_job(store, job_id, token, *, now=None):
-    now = timestamp(now)
+    if now is not None:
+        timestamp(now)
     with store.connection() as con:
         con.execute('BEGIN IMMEDIATE')
-        job, _ = _leased(con, job_id, token, now)
+        job, _ = _leased(con, job_id, token, timestamp(now))
         state = 'queued' if job['attempt'] < MAX_ATTEMPTS else 'failed'
         con.execute("UPDATE intake_jobs SET state=?,error_code='model_error' WHERE job_id=?", (state, job_id))
         if state == 'failed':
