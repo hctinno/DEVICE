@@ -56,6 +56,8 @@ device.author_control(fault, value)  # 작성자 전용; 운영자/HTTP에 노�
 
 진행 중 setup revision이나 입력이 바뀌면 취득을 무효화한다. 완료 결과도 현재 입력·전원·교정·source·revision이 유효할 때만 출력한다. 결과에 획득 tick/setup revision, 장치 설정 revision, source 및 단위·quantity를 남긴다.
 
+start_tx/stop_tx로 실제 송신 상태가 바뀌면 진행 중 취득·완료 결과·입력 signature를 먼저 폐기하고 transmitting/idle로 전이한다. 새 setup revision의 응답에 이전 측정값을 섞지 않으며, 첫 start_tx부터 유효 RF 출력을 유지한다. 현재 송신 상태와 같은 동작을 반복하면 setup_changed=false이고 진행 중 취득/완료 결과와 상태를 보존한다.
+
 | 역할 | configure 필드 | 추가 동작 |
 |---|---|---|
 | power_meter | frequency_hz, measurement_mode, unit, window, trigger_source | acquire/fetch, trigger, calibrate, verify_calibration |
@@ -133,7 +135,7 @@ assert abs(result["values"]["outputs"]["measurement"]["value"] - 3.9794000867) <
 
 ## 검증 기록과 남은 범위
 
-이 단위의 40개 검사는 계산·단위·모드·트리거·전원·센서·취득 중/완료 후 변경·시간 초과·복구·seed·FIFO·창·조건별 부적합·VNA 보간/표준/외삽 금지·출력 크기·중첩 인수·주파수 일치·작성자 경계·역할별 측정 지원 범위를 확인한다. 검사는 `python -m unittest discover -s tests -p test_virtual_fleet_instruments.py -v`로 실행한다.
+이 단위의 42개 검사는 계산·단위·모드·트리거·전원·센서·취득 중/완료 후 변경·시간 초과·복구·seed·FIFO·창·조건별 부적합·VNA 보간/표준/외삽 금지·출력 크기·중첩 인수·주파수 일치·작성자 경계·역할별 측정 지원 범위·송신 상태 전이와 중복 요청을 확인한다. 검사는 `python -m unittest discover -s tests -p test_virtual_fleet_instruments.py -v`로 실행한다.
 
 고정 catalog commit `a548af3e5b7fa84e1a0c5ed93af064db689de371`, 파일 SHA-256 `037b92b4d32fc7c65d6e5ec0b518f5933c48745e3e5907c158b0317ab4923ea6`의 담당 16개 프로필 모두 factory/port 일치 및 합성 정상·통신 단절·복구 재취득을 실행했다. common core/facility와 연결한 전원→발생기→분석기→software DAG의 정상·미출력 무효 전파·재취득도 확인했다. 원본 감사 및 호환 script/coverage는 개발2의 비공개 작업 공간에 보존한다. 나머지 catalog 역할과 전체 UI/시험 조합 통합은 담당별 결과를 총괄이 인수한다.
 

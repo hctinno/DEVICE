@@ -690,8 +690,10 @@ class _Instrument:
                 if action == 'start_tx':
                     self._rf_output()
                 changed = self._transmitting != (action == 'start_tx')
-                self._transmitting = action == 'start_tx'
-                self._state, self._reason = 'transmitting' if self._transmitting else 'idle', None
+                if changed:
+                    self._invalidate(None)
+                    self._transmitting = action == 'start_tx'
+                    self._state = 'transmitting' if self._transmitting else 'idle'
                 return self._response(setup_revision, changed=changed)
             if action == 'fetch':
                 if self._pending:
