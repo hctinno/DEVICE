@@ -13,6 +13,7 @@ from unittest.mock import patch
 
 from labflow import intake_documents
 from labflow.active_intake import register_source, scan_source
+from labflow.document_extract import ExtractionLimits
 from labflow.intake_jobs import claim_job, complete_job
 from labflow.intake_worker import SyntheticTextProvider
 from labflow.store import Store, canonical
@@ -102,6 +103,22 @@ class GenerationInspectionTests(unittest.TestCase):
         self.update_result(change)
         return context_id
 
+    def rewrite_extraction(self,change):
+        context=self.retained_context();document=context['documents'][0]
+        artifact=json.loads(self.store.blob_path(document['extraction_id']).read_bytes())
+        change(artifact['result'])
+        for key in ('parser','limits','pages','issues','complete','total_pages','processed_pages'):
+            document[key]=copy.deepcopy(artifact['result'][key])
+        document['parse_status']=artifact['result']['status']
+        document['extraction_id']=self.store.write_blob(canonical(artifact).encode('utf-8'))
+        self.point_to_context(context)
+        def bind(result):
+            for fact in result['submission']['facts']:
+                for evidence in fact['evidence']:
+                    if evidence.get('kind')=='pdf_page':evidence['extraction_id']=document['extraction_id']
+            result['summary']['submitted']=copy.deepcopy(result['submission'])
+        self.update_result(bind)
+
     def retained_context(self):
         return json.loads(self.store.blob_path(self.analysis['context_id']).read_bytes())
 
@@ -128,6 +145,33 @@ class GenerationInspectionTests(unittest.TestCase):
         intake,_,_,summary=self.complete('two',pdf(['','']))
         self.assertTrue(summary['unread_documents'])
         self.assertEqual(self.inspect(intake)['status'],'current')
+
+    def test_retained_parser_unavailable_is_valid_without_a_reported_parser_version(self):
+        import sys
+        with patch.dict(sys.modules,{'pypdf':None}):
+            intake,job,_,summary=self.complete('two')
+        self.assertEqual(job['documents'][0]['parse_status'],'parser_unavailable')
+        self.assertIsNone(job['documents'][0]['parser']['version']);self.assertTrue(summary['unread_documents'])
+        self.assertEqual(self.inspect(intake)['status'],'current')
+
+    def test_input_limit_before_parser_import_keeps_its_typed_state(self):
+        with patch.object(intake_documents,'EXTRACTION_LIMITS',ExtractionLimits(max_input_bytes=1)):
+            intake,job,_,summary=self.complete('two')
+            self.assertEqual(job['documents'][0]['parse_status'],'limit_exceeded')
+            self.assertEqual(job['documents'][0]['parser'],{'name':'pdf','version':None})
+            self.assertTrue(summary['unread_documents'])
+            self.assertEqual(self.inspect(intake)['status'],'current')
+        self.assertEqual(self.inspect(intake)['status'],'stale')
+
+    def test_partial_page_limit_and_malformed_parser_failure_are_valid_generations(self):
+        with patch.object(intake_documents,'EXTRACTION_LIMITS',ExtractionLimits(max_pages=1)):
+            intake,job,_,_=self.complete('two')
+            document=job['documents'][0]
+            self.assertEqual((document['parse_status'],document['processed_pages'],document['total_pages']),('partial',1,2))
+            self.assertEqual(self.inspect(intake)['status'],'current')
+        intake,job,_,summary=self.complete('three',b'%PDF-corrupted')
+        self.assertEqual(job['documents'][0]['parse_status'],'malformed_pdf')
+        self.assertTrue(summary['unread_documents']);self.assertEqual(self.inspect(intake)['status'],'current')
 
     def test_code_and_limit_profile_changes_detect_stale(self):
         profile=intake_documents._profile()
@@ -225,6 +269,18 @@ class GenerationInspectionTests(unittest.TestCase):
         document['extraction_id']=self.store.write_blob(canonical(artifact).encode('utf-8'))
         self.point_to_context(context)
         self.assertEqual(self.inspect()['reason_codes'],['invalid_extraction'])
+
+    def test_extraction_parser_version_must_match_the_stored_profile(self):
+        def change(result):result['parser']['version']='different-parser-version'
+        self.rewrite_extraction(change)
+        result=self.inspect();self.assertEqual(result['status'],'invalid')
+        self.assertEqual(result['reason_codes'],['invalid_extraction']);self.assertFalse(result['reanalysis_required'])
+
+    def test_complete_extraction_cannot_omit_a_declared_page(self):
+        def change(result):result['total_pages']=3
+        self.rewrite_extraction(change)
+        result=self.inspect();self.assertEqual(result['status'],'invalid')
+        self.assertEqual(result['reason_codes'],['invalid_extraction']);self.assertFalse(result['reanalysis_required'])
 
     def test_retained_character_limit_and_completion_flag_must_be_consistent(self):
         for mode in ('character_limit','complete_flag'):

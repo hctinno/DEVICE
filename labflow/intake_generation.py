@@ -140,9 +140,20 @@ def _pdf(store, item, document, profile, stored_id):
              and type(result['pages']) is list and result['processed_pages'] == len(result['pages'])
              and len(result['pages']) <= profile['limits']['max_pages']
              and (result['total_pages'] is None or type(result['total_pages']) is int and result['total_pages'] >= 0), code)
+    if result['complete']:
+        _require(type(result['total_pages']) is int and result['processed_pages'] == result['total_pages'], code)
     _keys(result['parser'], {'name', 'version'}, code)
     _require(type(result['parser']['name']) is str and result['parser']['name'] in {'pdf', 'pypdf'}
              and (result['parser']['version'] is None or type(result['parser']['version']) is str), code)
+    if result['status'] == 'parser_unavailable':
+        _require(result['parser'] == {'name': 'pypdf', 'version': None}
+                 and not result['pages'] and result['total_pages'] is None, code)
+    elif result['parser']['name'] == 'pdf':
+        _require(result['parser']['version'] is None and result['status'] == 'limit_exceeded'
+                 and item['bytes'] > profile['limits']['max_input_bytes']
+                 and not result['pages'] and result['total_pages'] is None, code)
+    else:
+        _require(type(result['parser']['version']) is str and result['parser'] == profile['parser'], code)
     _issues(result['issues'], code)
     size, characters, previous = 0, 0, 0
     for page in result['pages']:
