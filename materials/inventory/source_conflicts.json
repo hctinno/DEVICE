@@ -58,5 +58,15 @@
       "publication": "453097",
       "issue": "Third-party Keyssa letter; original is local-only."
     }
+  ],
+  "workshop_date_conflicts": [
+    {
+      "source_url": "https://www.fcc.gov/general/equipment-authorization-presentations",
+      "download_url": "https://www.fcc.gov/sites/default/files/15-Clarifications-on-Applicability-of-KDB-680106_Apr2025_Final-TCB.pdf",
+      "listing_year": 2025,
+      "cover_date": "2024-04-02",
+      "state": "review_required",
+      "resolution": "Preserve original; do not silently correct the date."
+    }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "package_id": "FCC-UPDATES-20261023-003",
+  "archive_bytes": 41454231,
+  "archive_sha256": "ef59bc8ffe0648fcffb44c96f6529ede531a4340312f15fe64e2134b82bb3fe5",
+  "status_counts": {
+    "downloaded": 120,
+    "unavailable": 3
+  },
+  "original_types": {
+    "text/plain; charset=utf-8": 53,
+    "application/xml": 1,
+    "application/pdf": 62,
+    "text/html": 4
+  }
+}
