@@ -35,7 +35,7 @@ python -m labflow --workspace data/labflow_demo demo --out exports/pipeline_demo
 
 ## 문서와 측정 증거 인수
 
-수집 담당의 결과는 같은 GitHub 저장소의 브랜치에서 fetch·검토·통합한다. `materials/packages/`의 ZIP을 아래 인수 명령에 사용한다. 사용자가 직접 파일을 옮길 필요는 없다. [자료 인계 규칙](../../materials/README.md)을 따른다.
+수집자는 같은 로컬 프로젝트의 자기 폴더에만 기록하고 Git을 사용하지 않는다. 별도 P01이 완료 자료를 검수·패키징·커밋·푸시한다. 클라우드 개발 담당은 P01 게시 커밋을 검토·통합하고 `materials/packages/`의 ZIP을 아래 인수 명령에 사용한다. 사용자가 직접 파일을 옮길 필요는 없다. [자료 인계 규칙](../../materials/README.md)을 따른다.
 
 ```bash
 python -m labflow --workspace data/labflow import-package /path/to/collector_batch.zip

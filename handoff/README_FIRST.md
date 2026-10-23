@@ -1,14 +1,14 @@
 # 다른 에이전트에게 전달할 자료 수집 요청
 
-공유 GitHub 저장소 `hctinno/DEVICE`의 `codex/fcc-lab-foundation` 브랜치를 기준으로 작업하고, 이 폴더의 `AGENT_PROMPT.md`를 지시로 사용하십시오. 사용자가 ZIP을 내려받아 다른 에이전트에게 재첨부할 필요는 없습니다. 대상은 **FCC를 먼저 구축하는 RF·EMC AI 시험소**입니다. 장비 목록은 보유 자원의 한 예이며 규정 지원 범위를 장비 목록으로 제한하지 않습니다.
+공유 저장소는 `hctinno/DEVICE`, 개발 인계 기준은 `codex/fcc-lab-foundation`입니다. **수집자는 Git을 사용하지 않고 P01이 제공한 로컬 고정 지시 사본을 읽습니다.** 여러 수집자는 한 프로젝트의 자기 폴더에만 저장하고 P01만 검수·패키징·커밋·푸시합니다. 대상은 **FCC RF·EMC·SAR AI 시험소**입니다. 장비 목록은 보유 자원의 한 예이며 규정 지원 범위를 장비 목록으로 제한하지 않습니다.
 
-새 에이전트의 임무는 **미확보 자료 준비와 GitHub 반환**입니다. 현재 에이전트와 사용자가 파이프라인을 기획하며, 전체 개발을 인계하는 요청이 아닙니다. 첫 실증은 **스마트폰 2.4 GHz Wi-Fi b/g/n / FCC §15.247**입니다. [첫 배치 지시](WIFI24_BGN_FIRST_BATCH.md)의 원문·방법·공개 시험건·자동화 인터페이스 자료부터 반환하고 전체 대장은 후속으로 유지합니다. 기획에서 자료 확보를 가정하더라도 실제 수집 상태를 완료로 바꾸지 않습니다.
+수집자의 임무는 **미확보 자료 준비와 로컬 완료 인계**입니다. 현재 에이전트와 사용자가 설계·개발을 맡습니다. [8개 수집 역할](parallel/README.md)은 검토안이며 승인 후 고정 배정으로 시작합니다. 첫 실증은 **스마트폰 2.4 GHz Wi-Fi b/g/n / FCC §15.247**이고 관련 담당은 [첫 배치](WIFI24_BGN_FIRST_BATCH.md)를 우선합니다. SAR 등 다른 분야는 병렬 수집합니다. 전체 대장은 보존하며 기획에서 자료 확보를 가정하더라도 실제 확보 상태를 완료로 바꾸지 않습니다.
 
 ## 시작 순서
 
 1. `AGENT_PROMPT.md`와 `WIFI24_BGN_FIRST_BATCH.md`의 현재 우선순위를 적용합니다. 이미 수집 중이면 [역할·우선순위 갱신](COLLECTOR_ROLE_UPDATE.md)을 먼저 읽고 로컬 결과를 보존합니다.
-2. `collection_requests.xlsx` 또는 동명의 CSV를 작업대장으로 사용합니다. 모든 장비 모델과 식별이 불완전한 행도 포함합니다.
-3. `collection_manifest.schema.json`에 맞는 `manifest.json`과 원본 파일을 배치 ZIP으로 만듭니다. `materials/packages/<package_id>.zip`, 검토용 `materials/manifests/<package_id>.json`과 `materials/STATUS.md`를 작업 브랜치에 커밋·푸시합니다. 상세 절차는 저장소의 `materials/README.md`를 따릅니다. 완성된 P0 묶음부터 공유합니다.
+2. P01이 기존 CSV/XLSX와 로컬 확보/진행 요청을 대조해 만든 고정 배정표를 사용합니다. 수집자가 공통 대장을 수정하거나 다른 담당 요청을 중복 수집하지 않습니다.
+3. 수집자는 자기 work 폴더에서 원본·출처·해시·누락 목록을 준비해 ready로 동결합니다. P01이 `collection_manifest.schema.json`에 맞는 ZIP과 외부 manifest를 만들고 자기 임시 DB에서 검사한 뒤 게시합니다. 공통 STATUS도 P01만 작성합니다. 세부 계약은 [게시 역할](parallel/P01.md)을 따릅니다.
 4. 막힌 항목도 request_id와 이유를 기록해 반환합니다. 결과가 없는 항목을 대장에서 삭제하지 않습니다.
 
 ## 목록의 의미

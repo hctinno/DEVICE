@@ -17,8 +17,8 @@
   "artifacts": {
     "agent_collection_request.zip": {
       "path": "exports/agent_collection_request.zip",
-      "bytes": 1379314,
-      "sha256": "20c8811a55d76b298b2d75cc2c72bfcfd44f83f10f9713f9e97ec4f3e43df934"
+      "bytes": 1392918,
+      "sha256": "314df5cc2ec5bc407eb0a6802d6799447b4003aa65466377a3a7d7e312e698f0"
     },
     "fcc_pipeline_core.zip": {
       "path": "exports/fcc_pipeline_core.zip",
@@ -34,7 +34,7 @@
     "status": "DRAFT",
     "synthetic": true
   },
-  "updated_at_kst": "2026-10-23T20:35:10.876249+09:00",
+  "updated_at_kst": "2026-10-23T21:01:16.227053+09:00",
   "handoff": {
     "transport": "git",
     "repository": "https://github.com/hctinno/DEVICE",
@@ -42,13 +42,29 @@
     "collector_instructions": "handoff/AGENT_PROMPT.md",
     "results": "materials/README.md",
     "manual_file_transfer_required": false,
-    "collector_role": "materials_preparation_only",
+    "collector_role": "local_materials_preparation_only_no_git",
     "current_session_role": "pipeline_design_implementation_and_validation",
     "first_validation_product": "smartphone",
     "first_validation_scope": "smartphone_wifi_2_4ghz_80211bgn_fcc_15_247",
     "physical_connection": "user",
     "first_batch_instructions": "handoff/WIFI24_BGN_FIRST_BATCH.md",
     "design_review_document": "docs/superpowers/specs/2026-10-23-smartphone-wifi24-bgn-design.md",
-    "collector_role_update": "handoff/COLLECTOR_ROLE_UPDATE.md"
+    "collector_role_update": "handoff/COLLECTOR_ROLE_UPDATE.md",
+    "first_construction_scope": "fcc_rf_emc_sar",
+    "publisher_role": "single_local_packaging_and_git_writer",
+    "publisher_instructions": "handoff/parallel/P01.md",
+    "parallel_collection_proposal": {
+      "status": "draft_pending_user_review",
+      "collector_sessions": 8,
+      "local_publisher_sessions": 1,
+      "cloud_pipeline_sessions": 1,
+      "shared_local_project": true,
+      "collector_git_operations": false,
+      "roles": "handoff/parallel/README.md",
+      "design": "docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md",
+      "sessions_launched": false,
+      "row_assignments_created": false,
+      "handoff_automation_implemented": false
+    }
   }
 }
