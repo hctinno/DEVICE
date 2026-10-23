@@ -246,6 +246,25 @@ class RFRoleTests(RFTestCase):
         self.assertEqual(self.observe(device,inputs,tick=2,revision=2)['status'],'pending')
         self.assertEqual(self.observe(device,inputs,tick=3,revision=2)['values']['outputs']['rf']['power_dbm'],9)
 
+    def test_controller_reversal_cancels_uncommitted_route_and_old_deadline(self):
+        device=self.device('rf_switch',parameters={'requires_control':True,'control_selects_route':True})
+        self.perform(device,'configure',{'loss_db':1,'settling_ticks':2})
+        inputs={'control':{'valid':True,'enabled':True,'selected_input':'rf_1'},
+                'rf_1':signal(),'rf_2':signal(power_dbm=20)}
+        self.assertEqual(self.observe(device,inputs,tick=0)['status'],'pending')
+        self.assertEqual(self.observe(device,inputs,tick=2)['values']['outputs']['rf']['power_dbm'],9)
+        inputs['control']['selected_input']='rf_2'
+        self.assertEqual(self.observe(device,inputs,tick=3)['status'],'pending')
+        inputs['control']['selected_input']='rf_1'
+        reversed_observation=self.observe(device,inputs,tick=4)
+        self.assertEqual(self.observe(device,inputs,tick=5)['values']['outputs']['rf']['power_dbm'],9)
+        self.assertEqual(reversed_observation['status'],'ok')
+        self.assertEqual(reversed_observation['values']['outputs']['rf']['power_dbm'],9)
+        inputs['control']['selected_input']='rf_2'
+        self.assertEqual(self.observe(device,inputs,tick=6)['status'],'pending')
+        self.assertEqual(self.observe(device,inputs,tick=7)['status'],'pending')
+        self.assertEqual(self.observe(device,inputs,tick=8)['values']['outputs']['rf']['power_dbm'],19)
+
 
 class DUTSensorTests(RFTestCase):
     def configure_dut(self,device,**changes):

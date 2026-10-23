@@ -77,7 +77,7 @@ enabled 기본 true, startup/settling/acquisition_ticks 기본 1이며 1…1,000
 
 fixed attenuator는 최초 설정 후 attenuation_db 변경을 거절한다. step은 명시한 정렬·중복 없는 steps_db 안에서만 선택하며 step과 loss_table 조합은 미지원이다. 이 step 목록이 해당 실장비의 실제 옵션이나 step 정밀도를 증명하지 않는다.
 
-switch의 `select_path({'input_port': 'rf_1'})`는 즉시 RF를 연결하지 않는다. 기본 physical matrix는 로컬 선택과 control gate를 사용한다. `control_selects_route: true`일 때만 upstream selected_input이 선택을 바꾼다. controller-only는 자신의 select_path를 사용하고 upstream은 승인 gate 역할만 한다. controller routes에서 이전 선택을 제거하면 새 선택 전까지 무출력이다. control payload는 `{status: 'ok', valid: true, enabled: true, selected_input, source_id}`다.
+switch의 `select_path({'input_port': 'rf_1'})`는 즉시 RF를 연결하지 않는다. 기본 physical matrix는 로컬 선택과 control gate를 사용한다. `control_selects_route: true`일 때만 upstream selected_input이 선택을 바꾼다. 전환 완료 전에 현재 안정 경로로 선택을 되돌리면 미완료 전환과 기존 완료 시각을 취소한다. 이후 다른 경로를 선택하면 새 settling 시각을 적용하며, 같은 대기 경로를 반복 관측해도 시각을 연장하지 않는다. controller-only는 자신의 select_path를 사용하고 upstream은 승인 gate 역할만 한다. controller routes에서 이전 선택을 제거하면 새 선택 전까지 무출력이다. control payload는 `{status: 'ok', valid: true, enabled: true, selected_input, source_id}`다.
 
 ## DUT와 센서 취득
 
@@ -140,6 +140,6 @@ python -B scripts/check_artifacts.py
 
 2026-10-24 Asia/Seoul 기준, private Un-licensed catalog 64개 중 담당 10역할·38프로파일에서 명시적 합성 정책을 사용해 생성·정상·disconnect·복구를 실행했다. catalog SHA-256은 `48ed0cb0be2cf1a4ae7a32f4cb570dc7805ee21b1bfc218efcec7a04e33f96bf`다. 이 수는 실물 장비 대수나 모델별 제조사 정밀도 검증 수가 아니다. 원문 수치·시리얼·원시 데이터는 이 코드·문서·검사에 포함하지 않았다.
 
-이 분기의 RF 전용 39개와 전체 회귀 186개가 통과했다. 별도 private 복제본에서 총괄의 공통·시설·계측기 코드와 연결한 preview 9개도 통과했다. 수용 검사에서는 고정 감쇠기 공칭값을 보존하고, 미확보 제조사 step 대신 개발용 목록을 명시했다. 연결 preview의 통과를 전체 catalog의 시험 시나리오 완료나 총괄 최종 인수로 표시하지 않는다.
+이 분기의 RF 전용 40개와 전체 회귀 187개가 통과했다. 별도 private 복제본에서 총괄의 공통·시설·계측기 코드와 연결한 preview 10개도 통과했다. 수용 검사에서는 고정 감쇠기 공칭값을 보존하고, 미확보 제조사 step 대신 개발용 목록을 명시했다. 연결 preview의 통과를 전체 catalog의 시험 시나리오 완료나 총괄 최종 인수로 표시하지 않는다.
 
 실장비 비교, 실제 DUT/OEM 도구, SCPI/VISA/네트워크 명령, 필터 notch 응답·증폭기 비선형·실제 안테나 전계·LISN 임피던스/잡음, 실제 RF 안전 인터록은 미구현·미검증이다. OSP 모듈·옵션·동기화·reset과 물리 RF 차단을 동일시하지 않는다. Licensed 원시·추가 암호 확인은 별도 보류이며 현재 가상 역할 실행의 선행 조건이 아니다.
