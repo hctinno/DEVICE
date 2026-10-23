@@ -30,6 +30,8 @@ with create_server(runtime, catalog=catalog, topology=topology,
 
 반환값은 아직 시작하지 않은 `ThreadingHTTPServer`다. 호출자가 실행/종료 수명을 소유한다. `localhost`는 IPv4 loopback으로 바인딩하며 그 외 host는 거절한다. 임의 모듈·원본 경로·실장비 주소를 로딩하는 HTTP/CLI 입력은 없다. 이 CLI는 `--demo`만 제공하며 실제 통합 진입점의 구성은 총괄이 담당한다.
 
+VLAB-HARNESS-002에서는 선택적 `harness_report=None` 주입과 읽기 전용 `GET /api/harness-result`를 추가했다. 완료 기록 패널·엄격한 공개 result·크기/사본 검증은 [완료 기록 조회 사용법](virtual_fleet_harness_report_ui_usage.md)을 따른다. 기존 장비 동작과 별도로 과거 실행 기록을 표시하며 활성 run 제어는 추가하지 않는다.
+
 runtime에서 사용하는 메서드는 다음 네 개뿐이다.
 
 ```python
