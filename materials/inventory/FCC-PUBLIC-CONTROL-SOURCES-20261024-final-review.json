@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "review_id": "FCC-PUBLIC-CONTROL-SOURCES-20261024-FINAL-001",
+  "request_id": "DEV-CONTROL-SOURCES-008",
+  "published_at": "2026-10-24T11:04:06.259565+09:00",
+  "scope": "Eight bounded source-document/static-code/identity review tasks and independent private development intake.",
+  "reviewed_collector_batches": 8,
+  "private_development_intake": {
+    "ACKed_packets": 8,
+    "payload_files": 128,
+    "payload_bytes": 4443631,
+    "JSON_files": 104,
+    "collector_frozen_payload_files": 120,
+    "unique_new_originals_in_this_request": 21,
+    "new_originals_are_not_public_payload": true,
+    "P01_review_files_added": 8
+  },
+  "coordination": {
+    "P01_question_items_handled": 8,
+    "new_user_preparation_requests": 0,
+    "collector_Git_operations_authorized": false,
+    "Git_publisher": "P01"
+  },
+  "public_projection": {
+    "kind": "status_and_reference_metadata_only",
+    "source_original_or_code_payload_files": 0,
+    "user_original_or_report_body_image_payload_files": 0,
+    "existing_backend_review": "FCC-PUBLIC-CONTROL-SOURCES-20261024-001-review.json",
+    "existing_public_collector_batch_count_preserved": 20,
+    "new_acquisitions_by_this_projection": 0
+  },
+  "verification": {
+    "source_and_independent_development_copy_SHA256_bytes_UTF8_JSON_checked": true,
+    "source_originals_and_frozen_READY_preserved": true,
+    "software_install_import_or_execution_by_P01": false,
+    "hardware_or_RF_actions": false,
+    "runtime_support_or_physical_accuracy_proven": false
+  },
+  "remaining_limits": [
+    "Vendor login/HTTP403 pages are access outcomes rather than driver packages or proof of non-support.",
+    "Publisher installer checksums differ from locally acquired original hashes.",
+    "Source identity, model/family candidates, declared dependencies and static implementation do not prove installed firmware/options or runtime support.",
+    "Distinct source licenses and file notices are preserved; dependency/vendor-binary rights remain separately reviewed.",
+    "Simulation fallback values, caches, completion and empty abort/disable implementations do not establish physical measurement validity or output safety.",
+    "Identity conflicts and sensor-host/calibration relationships remain preserved without automatic model merges or database corrections."
+  ]
+}
