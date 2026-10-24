@@ -685,7 +685,9 @@ class _ReferenceRuntime:
         with self.lock:
             if self.closing: _reference_fail()
             sid = self.cookie(handler); item = self.session(sid)
-            if sid is not None and item is None: _reference_fail('access_denied', 403)
+            if sid is not None and item is None:
+                self._binding_open()
+                return [('X-Intake-Reference-Read-Allowed', 'false')]
             headers = []
             if handler.command == 'GET':
                 if item is None:
