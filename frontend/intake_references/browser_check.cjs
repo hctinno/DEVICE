@@ -238,7 +238,8 @@ async function frontendMain(){
    '/virtual_fleet/harness_model.mjs':['virtual_fleet/harness_model.mjs','text/javascript'],
    '/intake-references/model.mjs':['intake_references/model.mjs','text/javascript'],
    '/intake-references/view.mjs':['intake_references/view.mjs','text/javascript'],
-   '/intake-references/transport.mjs':['intake_references/transport.mjs','text/javascript']};
+   '/intake-references/transport.mjs':['intake_references/transport.mjs','text/javascript'],
+   '/intake-reference-actions/actions.mjs':['intake_reference_actions/actions.mjs','text/javascript']};
   server=http.createServer((req,res)=>{
    res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
    res.setHeader('Content-Security-Policy',"default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
@@ -310,7 +311,7 @@ async function frontendMain(){
   const dispatchRefresh=()=>page.evaluate(()=>document.querySelector('#refresh').dispatchEvent(new Event('click')));
   await page.locator('#intake-reference-panel .intake-reference-review').waitFor();await ready();
   assert.equal(await page.locator('#detail-panel .intake-reference-review').count(),0);
-  assert.equal(await page.locator('#intake-reference-panel').evaluate(n=>n.previousElementSibling.id==='intake-view'&&n.nextElementSibling.id==='notification-view'),true);
+  assert.equal(await page.locator('#intake-reference-panel').evaluate(n=>n.previousElementSibling.id==='intake-view'&&n.nextElementSibling.id==='intake-reference-actions-panel'&&n.nextElementSibling.nextElementSibling.id==='notification-view'&&document.querySelectorAll('#intake-reference-panel').length===1&&document.querySelectorAll('#intake-reference-actions-panel').length===1&&!document.querySelector('#detail-panel #intake-reference-panel, #detail-panel #intake-reference-actions-panel')),true);
   assert.equal((await counts()).history,1);assert.equal((await counts()).current,0);checks.push('product_mount_sibling_context_history1_current0');
   const beforeFilter=await counts();await page.locator('#search').fill('050');await page.locator('#filter').selectOption('attention');
   assert.equal((await counts()).history,beforeFilter.history);checks.push('filter_same_context_no_extra_history');
@@ -696,7 +697,9 @@ async function integratedMain(){
    });
    stage=mode+'_root_app';await page.goto(origin);await page.locator('#detail-title').waitFor();await page.locator('.intake-reference-review').waitFor();
    assert.equal(await page.locator('#intake-reference-panel').count(),1);assert.equal(await page.locator('#detail-panel #intake-reference-panel').count(),0);
-   assert.equal(await page.locator('#intake-reference-actions-panel').count(),0);await quiet(page);
+   assert.equal(await page.locator('#intake-reference-actions-panel').count(),1);
+   assert.equal(await page.locator('#detail-panel #intake-reference-actions-panel').count(),0);
+   assert.equal(await page.locator('#intake-reference-actions-panel > .reference-actions-review').count(),1);await quiet(page);
    if(mode==='none'){
     await page.waitForFunction(()=>document.querySelector('.ir-history-status')?.dataset.state==='error');assert.equal(await page.locator('.ir-current-read').isDisabled(),true);
     const report=await host.ask({op:'report'});assert.equal(report.reference_module_loaded,false);assert.equal(report.stats.none?.parent_history_started||0,0);
