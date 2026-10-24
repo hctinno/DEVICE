@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합031](INTEGRATION-031.md): F2 실제 접수화면 연결/독립 최종 Yes·새 root Node230/HTTP Python58/DOM12/source234·기존228 불변을 인수했다. 전체Python2205는030의 이전 실행이다.
+
+| 담당 | 실제 다음 작업과 소유 |
+| --- | --- |
+| 개발1 | 047 후보1705b5cb/new3를 원격 게시했다. 독립 제품리뷰와 같은 소유3 수정 우선. 기존049 branch·stash1/원본 유지, 서버2는 개발2 소유다. |
+| 개발2 | 053 후보5eee86b4/기존서버2+신규usage1을 원격 게시했다. 같은 Store/세션/source1·prepare/append/replay·만료/종료의 독립 제품리뷰와 소유수정 우선. |
+| 개발3 | 055 공개계약28947c8와 exact spec/plan·source4를 확인하고 새 codex/dev3-rf-waveform-observation055-20261025/new3에서 C01~C05 RED부터 실제 구현한다. |
+| 개발4 | 050 F2 exact3커밋/소유7을031에서 인수. 052 C2 공개 준비v2는 독립 정적Yes이며 공개시점gate문구를 좁혀 갱신한다. accepted053/static1·정확최종base·소유5의 실제별도배정 전 C2 제품0. |
+| 총괄 | 소유/공통계약·독립리뷰/수정·작은 기능cut·적정 회귀·원격대조/후속배정을 잇는다. 담당구현을 일괄 대행하지 않는다. |
+| P01 | B028105155db 공개3exact·collector125/125·corpus90/90·v065 실제ACK2/입력21. target18/690·직접동일성보류1/92·기존대응보류1/53·제외1/46·전체보존21/881을 구분한다. 새READY는 별도 QA/인수 전 가산0. |
+
+수집·개발은 각 독립clone/전용branch를 유지하며 공유와 사용자 원본은 읽기 전용이다. 검증 수는 owner/독립/root 및 정상/합성준비/fault/이전실행을 합산하지 않는다. 사용자 준비0·전수/실제AI/실장비·현행규범 검증은 open이다.
+
 2026-10-25 계약 후속: [055 별도 CW 관측 설계](../../docs/superpowers/specs/2026-10-25-virtual-fleet-rf-signal-waveform-observation-design.md)·[계획](../../docs/superpowers/plans/2026-10-25-virtual-fleet-rf-signal-waveform-observation.md)을 private v1 정적 Yes와 공개 준비v2 독립 delta·canonical 투영 Yes/C0I0 뒤 고정했다. 048 보존 context→041 선언→054 I/Q 수학을 별도 private 관측으로 게시하는 신규3이며, 새 [0,N/Fs)와 옛 RF tick·sensor aperture는 비동기다. source4 pin·phase6·부모 full-code 표·first error/KI·exclusive 단일 link를 닫았다. 제품 구현/055 C01~C12는 아직0이고 다음은 이 정확054 포함 게시base·신규3을 개발3에 실제 배정하는 단계다. 통합030 기능6fb74328/게시160732c·Python2205·Node210·source232는 그대로이며 이번 새 제품 검사는0이다. 개발1 047·개발2 053 구현을 유지하고 개발4 F2 1e3719a5는 owner 게시/독립 제품리뷰 중이며 다음 C2 공개 준비v2 문서만 실제 배정했다. P01 B027 c3c87eb9의 공개3/실제ACK3·42JSON/새PDF0·collector123/123·corpus88/88 및 v063 ACK1/입력17·v064 ACK2/입력21을 대조했다. 대상18PDF/690쪽·direct17+parent1·공식0·한정영역181/181은 전문·교정·전수 완료가 아니다. 미검수 다음 원문은 미접근·미가산이다. 사용자 준비0, 아래는 각 당시 기록이다.
 
 최신 [통합030](INTEGRATION-030.md)을 우선한다. root source232에는054 순수 I/Q가 추가됐고 기존 engine·업무 DTO·false flags는 그대로다.
