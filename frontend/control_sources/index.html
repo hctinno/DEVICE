@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>제어자료 카탈로그 · DGM AutoLab</title><link rel="stylesheet" href="/control-sources/styles.css"><script type="module" src="/control-sources/app.js"></script></head>
+<body>
+  <a href="#main" class="skip">본문으로 이동</a>
+  <header class="topbar"><a class="brand" href="/">D<span>GM</span> <strong>AutoLab</strong></a><a href="/">← 접수 운영</a><span class="mode">자료 조회 전용</span></header>
+  <main id="main" tabindex="-1">
+    <header class="page-title"><div><p class="eyebrow">EQUIPMENT / CONTROL SOURCES</p><h1>제어자료 카탈로그</h1><p class="subtitle">모델과 출처를 확인하고, 다음 검증의 근거를 찾습니다.</p></div><button id="refresh" type="button" class="button">새로고침</button></header>
+    <aside class="scope-note"><strong>조사 자료와 실제 지원은 별도입니다.</strong><p>정확 모델 자료·공개 코드·접근 성공이 설치나 실장비 동작을 뜻하지 않습니다. 지원 미평가 · 실물 미검증 · 장비 연결·명령 실행 없음.</p></aside>
+    <div id="summary-status" class="status" role="status">자료 집계를 조회하고 있습니다.</div>
+    <section id="summary" aria-label="자료 집계와 대장 스냅샷"></section>
+    <form id="filters" class="filters" aria-label="카탈로그 검색">
+      <div class="search-field"><label for="query">모델·제조사·항목 ID</label><input id="query" type="search" maxlength="200" placeholder="예: N9030A, DMM6500, N1921A" autocomplete="off"></div>
+      <div><label for="scope">조사 분류</label><select id="scope"><option value="">전체 분류</option><option value="included">제어·계측 대상</option><option value="excluded_passive">독립 제어 비대상</option><option value="identity_unresolved">식별 보류</option><option value="needs_scope_review">제어 대상 여부 검토</option></select></div>
+      <button class="button primary" type="submit">자료 찾기</button>
+      <details class="id-filters"><summary>모델·장비·프로필 ID로 좁히기</summary><div class="id-grid"><div><label for="model-id">모델 ID</label><input id="model-id" maxlength="150" autocomplete="off"></div><div><label for="equipment-id">장비 ID</label><input id="equipment-id" maxlength="150" autocomplete="off"></div><div><label for="profile-id">프로필 후보 ID</label><input id="profile-id" maxlength="150" autocomplete="off"></div></div><p class="muted">조건은 함께 적용합니다. 프로필 조회는 텍스트 후보이며 설치 자산과의 연결은 미확정입니다.</p></details>
+    </form>
+    <div class="workspace">
+      <section class="panel queue" aria-labelledby="list-title"><div class="panel-heading"><h2 id="list-title">조사 항목</h2><span id="result-count" class="muted">조회 전</span></div><p id="list-status" class="status" role="status">목록을 조회하고 있습니다.</p><ul id="items" class="items" aria-label="조사 항목 목록"></ul><nav class="pagination" aria-label="목록 페이지"><button id="previous" type="button" class="button" disabled>이전</button><span id="page-info" class="muted">—</span><button id="next" type="button" class="button" disabled>다음</button></nav></section>
+      <section class="panel detail-panel" aria-labelledby="detail-title"><div class="panel-heading"><h2 id="detail-title">모델과 근거</h2><span class="mode">지원 미평가</span></div><p id="detail-status" class="status" role="status">목록에서 항목을 선택하세요.</p><div id="detail"><p class="empty">출처·라이선스·검토 주석을 이곳에서 확인합니다.</p></div></section>
+    </div>
+    <footer>고정 조사 자료의 읽기 화면 · 실제 장비 지원·실측·규범 적합성을 입증하지 않습니다.</footer><p id="announcer" class="sr-only" aria-live="polite"></p>
+  </main>
+</body>
+</html>

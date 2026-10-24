@@ -1,10 +1,12 @@
-"""Loopback-only, read-only intake UI. No equipment or mutation endpoints."""
+"""Loopback-only intake and control-source UI. No equipment or mutation endpoints."""
 import argparse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import importlib
 import json
 from pathlib import Path
 import re
-from urllib.parse import unquote, urlsplit
+import threading
+from urllib.parse import parse_qsl, unquote, urlsplit
 
 from .ui_read_model import IntakeReadModel, ReadModelError
 
@@ -15,14 +17,64 @@ ASSETS = {
     '/model.mjs': ('model.mjs', 'text/javascript; charset=utf-8'),
     '/intake_flow_model.mjs': ('intake_flow_model.mjs', 'text/javascript; charset=utf-8'),
     '/virtual_fleet/harness_model.mjs': ('virtual_fleet/harness_model.mjs', 'text/javascript; charset=utf-8'),
+    '/control-sources': ('control_sources/index.html', 'text/html; charset=utf-8'),
+    '/control-sources/': ('control_sources/index.html', 'text/html; charset=utf-8'),
+    '/control-sources/styles.css': ('control_sources/styles.css', 'text/css; charset=utf-8'),
+    '/control-sources/app.js': ('control_sources/app.js', 'text/javascript; charset=utf-8'),
+    '/control-sources/model.mjs': ('control_sources/model.mjs', 'text/javascript; charset=utf-8'),
 }
 FRONTEND = Path(__file__).resolve().parents[1] / 'frontend'
+_ID = re.compile(r'[A-Za-z0-9_.-]{1,150}', re.ASCII)
+_SCOPES = {'included', 'excluded_passive', 'identity_unresolved', 'needs_scope_review'}
+
+
+def _catalog_query(raw):
+    # BaseHTTPRequestHandler decodes request-target bytes as ISO-8859-1.
+    raw_bytes = raw.encode('latin-1')
+    if len(raw_bytes) > 4096:
+        raise ValueError('catalog_invalid_query')
+    raw = raw_bytes.decode('utf-8', errors='strict')
+    if re.search(r'%(?![0-9A-Fa-f]{2})', raw):
+        raise ValueError('catalog_invalid_query')
+    pairs = parse_qsl(raw, keep_blank_values=True, strict_parsing=True,
+                      encoding='utf-8', errors='strict', max_num_fields=8)
+    result = {}
+    for key, value in pairs:
+        if key in result or key not in {'query', 'scope', 'model_id', 'equipment_id', 'profile_id', 'offset', 'limit'}:
+            raise ValueError('catalog_invalid_query')
+        if key in {'offset', 'limit'}:
+            if not re.fullmatch(r'[0-9]+', value, re.ASCII):
+                raise ValueError('catalog_invalid_query')
+            value = int(value)
+            if (key == 'offset' and not 0 <= value <= 1000000) or (key == 'limit' and not 1 <= value <= 100):
+                raise ValueError('catalog_invalid_query')
+        elif key == 'query':
+            if len(value) > 200:
+                raise ValueError('catalog_invalid_query')
+        elif key == 'scope':
+            if value not in _SCOPES:
+                raise ValueError('catalog_invalid_query')
+        elif not _ID.fullmatch(value):
+            raise ValueError('catalog_invalid_query')
+        result[key] = value
+    return result
 
 
 def create_server(workspace, host='127.0.0.1', port=8765):
     if host != '127.0.0.1':
         raise ValueError('The UI server only accepts the loopback host 127.0.0.1')
     model = IntakeReadModel(workspace)
+    catalog_instance = None
+    catalog_lock = threading.Lock()
+
+    def catalog():
+        nonlocal catalog_instance
+        with catalog_lock:
+            if catalog_instance is None:
+                module = importlib.import_module('.control_source_catalog', __package__)
+                # Publish only a successfully constructed immutable snapshot.
+                catalog_instance = module.ControlSourceCatalog()
+            return catalog_instance
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, format, *args):
@@ -61,10 +113,28 @@ def create_server(workspace, host='127.0.0.1', port=8765):
         def do_GET(self):
             if not self.allowed_request():
                 return self.error(403, 'local_origin_required')
-            parsed = urlsplit(self.path)
-            if parsed.query or parsed.fragment or parsed.scheme or parsed.netloc:
+            try:
+                parsed = urlsplit(self.path)
+                if re.search(r'%(?![0-9A-Fa-f]{2})', parsed.path):
+                    raise ValueError('invalid_path')
+                path = unquote(parsed.path, encoding='utf-8', errors='strict')
+            except ValueError:
                 return self.error(404, 'route_not_found')
-            path = unquote(parsed.path)
+            if parsed.fragment or parsed.scheme or parsed.netloc or ('?' in self.path and path != '/api/control-sources'):
+                return self.error(404, 'route_not_found')
+            if path == '/api/control-sources':
+                try:
+                    filters = _catalog_query(parsed.query)
+                except (ValueError, UnicodeError):
+                    return self.error(400, 'catalog_invalid_query')
+                return self.read_catalog('find_items', **filters)
+            if path == '/api/control-sources/summary':
+                return self.read_catalog('summary')
+            if path.startswith('/api/control-sources/'):
+                item_id = path[len('/api/control-sources/'):]
+                if not _ID.fullmatch(item_id):
+                    return self.error(400, 'catalog_invalid_query')
+                return self.read_catalog('detail', item_id)
             if path in ASSETS:
                 filename, content_type = ASSETS[path]
                 try:
@@ -86,6 +156,23 @@ def create_server(workspace, host='127.0.0.1', port=8765):
                 self.error(404 if exc.code == 'intake_not_found' else 503, exc.code)
             except (OSError, ValueError):
                 self.error(503, 'store_unavailable')
+
+        def read_catalog(self, method, *args, **kwargs):
+            try:
+                payload = getattr(catalog(), method)(*args, **kwargs)
+                return self.send_payload(200, payload)
+            except Exception as exc:
+                try:
+                    code = getattr(exc, 'code', None) if isinstance(exc, ValueError) else None
+                except Exception:
+                    code = None
+                if type(code) is not str:
+                    code = None
+                if code == 'catalog_item_not_found':
+                    return self.error(404, code)
+                if code == 'catalog_invalid_query':
+                    return self.error(400, code)
+                return self.error(503, 'catalog_unavailable')
 
         do_HEAD = do_GET
 
