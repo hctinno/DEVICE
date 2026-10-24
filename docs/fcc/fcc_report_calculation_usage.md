@@ -43,11 +43,13 @@ request의 정확6키는 `calculator`, `rule`, `method`, `input_claim_ids`, `rep
 
 input_claim_ids는 rf_power의 `reading` 1키 또는 emc_field_strength의 위 입력 역할5키와 정확히 같다. 값은 ID다. 역할 간 또는 보고 결과와 같은 claim ID 재사용을 거절한다. true 보정 flag는 중복 보정 위험으로 계산하지 않고, null/unknown/추론 flag를 false로 가정하지 않는다.
 
-사용 수치와 보고 결과에는 공통 `(document_id, source_sha256, file_page, text_sha256)` 페이지 근거가 최소 하나 있어야 한다. 같은 페이지의 다른 표·행도 합성하지 않는다. 모든 수치의 명시된 table/row가 같으면 그 표·행으로 결합한다. table/row가 불명인 항목이 있으면 공통 line 범위가 있어야 하며, 알려진 표·행끼리 상충하면 line이 겹쳐도 거절한다. null·unknown·unconfirmed·not_reported·n/a·미확인·불명·대시는 불명 표식이며 같은 행으로 채우지 않는다. 표·행 annotation은 PDF 기하를 재인증한 결과가 아니다. 공통 페이지와 결합 근거는 안정 정렬해 첫 유효 후보를 명시한다. 행 후보 조합 작업은 최대65,536회이며 초과는 limit 오류다.
+사용 수치와 보고 결과에는 공통 `(document_id, source_sha256, file_page, text_sha256)` 페이지 근거가 최소 하나 있어야 한다. 같은 페이지의 다른 표·행도 합성하지 않는다. 모든 수치의 명시된 table/row가 같으면 그 표·행으로 결합한다. table/row가 불명인 항목이 있으면 공통 line 범위가 있어야 하며, 알려진 표·행끼리 상충하면 line이 겹쳐도 거절한다. null·unknown·unconfirmed·not_reported·n/a·미확인·불명·대시(`-`, `–` U+2013, `—`)는 불명 표식이며 같은 행으로 채우지 않는다. 표·행 annotation은 PDF 기하를 재인증한 결과가 아니다. 공통 페이지와 결합 근거는 안정 정렬해 첫 유효 후보를 명시한다. 행 후보 조합 작업은 최대65,536회이며 초과는 limit 오류다.
 
 bool인 instrument_corrections_applied와 제품 family·rule/method·기관 legal_name/address/classification·issue_date의 검토 문맥도 같은 문서의 유효 근거가 필요하되 수치 페이지/행과 같을 필요는 없다. 다른 부분 파일의 문맥을 추측 연결하지 않는다.
 
 known HCT issuer, in_scope, review_status reviewed/partial이 필요하다. product.family, issuer.legal_name/address, report.issue_date, method.rules/references는 reviewed report_fact와 preview가 일치해야 한다. issuer.classification만 021과 같이 reviewed developer_inference를 허용하며 legal_name/address의 report_fact를 대신하지 않는다. 표준 번호만 확인한 standard_reference_only·개발자 추론은 실제 사용 방법의 report_fact로 올리지 않는다. scope_status는 producer의 제공 판정이며 이 순수 함수는 현재 시각이나 보유하지 않은 cutoff를 만들어 재계산하지 않는다.
+
+scalar 문맥의 동등성/상충은 021과 같은 trim/casefold로 대조한다. 예를 들어 `sensor_node`와 ` SENSOR_NODE `는 동등하며, 서로 다른 정규화 값은 부족 상태로 유지한다. 입력의 원문 value·source와 반환 preview 표기는 정규화 값으로 덮어쓰지 않는다.
 
 reported_result_claim_id는 ID 또는 null이다. null이면 comparison_policy도 null이며 기본 출력 단위는 rf_power W, EMC dBuV/m이고 비교는 미실행이다. 보고 결과가 있으면 policy는 정확 `absolute_tolerance`, `unit` 2키로 caller가 finite 비음수 tolerance와 같은 결과 unit을 명시한다. 0 허용, bool 불허다. 이는 개발 비교 정책이며 FCC limit·측정불확도·보고서 decision rule이 아니다.
 
