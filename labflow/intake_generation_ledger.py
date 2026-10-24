@@ -1,5 +1,6 @@
 """Explicit, atomic imports of immutable completed PDF analysis origins."""
 import hashlib
+import hmac
 import json
 import math
 import re
@@ -313,3 +314,129 @@ def generation_history(store, intake_id, *, limit=20, before_epoch=None):
                     'available': present, 'records': records, 'next_before_epoch': records[-1]['epoch'] if more else None}
     except sqlite3.Error:
         _fail('generation_ledger_storage_error')
+
+
+def _replay_input(analysis):
+    try:
+        if not isinstance(analysis, dict):
+            raise ValueError()
+        payload = canonical(analysis).encode('utf-8')
+    except (ValueError, TypeError, OverflowError, RuntimeError, UnicodeError):
+        _fail('generation_replay_invalid_analysis')
+    if len(payload) > MAX_RESULT_BYTES:
+        _fail('generation_replay_analysis_limit')
+    try:
+        return json.loads(payload)
+    except (ValueError, RuntimeError):
+        _fail('generation_replay_invalid_analysis')
+
+
+def _replay_payload(payload, sha, code):
+    try:
+        if type(payload) is not str or not _hash(sha):
+            raise ValueError()
+        raw = payload.encode('utf-8')
+        if len(raw) > MAX_RESULT_BYTES or _digest(raw) != sha:
+            raise ValueError()
+        parsed = json.loads(payload, object_pairs_hook=_unique)
+        canonical(parsed).encode('utf-8')
+        return parsed
+    except (ValueError, TypeError, OverflowError, RuntimeError, UnicodeError):
+        _fail(code)
+
+
+def _replay_snapshot(snapshot, row):
+    code = 'generation_replay_snapshot_invalid'
+    if (type(snapshot) is not dict or set(snapshot) != {'schema_version', 'scope'} | {part[0] for part in _PARTS}
+            or type(snapshot['schema_version']) is not int or snapshot['schema_version'] != 1
+            or snapshot['scope'] != 'migration_time'):
+        _fail(code)
+    for key, _, columns, _, single in _PARTS:
+        values = [snapshot[key]] if single else snapshot[key]
+        if type(values) is not list:
+            _fail(code)
+        for value in values:
+            if type(value) is not dict or set(value) != set(columns) or value['intake_id'] != row['intake_id']:
+                _fail(code)
+    intake = snapshot['intake']
+    if (type(intake['revision']) is not int or intake['revision'] != row['revision']
+            or intake['source_id'] != row['source_id']):
+        _fail(code)
+
+
+def replay_imported_completion(store, job_id, token, analysis):
+    """Read an exact imported completion under its retained profile, or None.
+
+    Only an absent ledger/import origin permits the caller's legacy fallback.
+    This function never prepares documents or changes any current state.
+    """
+    submitted = _replay_input(analysis)
+    try:
+        identifier(job_id)
+    except ValueError:
+        _fail('generation_replay_invalid_job')
+    token_sha = None
+    if type(token) is str:
+        try:
+            raw_token = token.encode('utf-8')
+            if 0 < len(raw_token) <= 4096:
+                token_sha = _digest(raw_token)
+        except UnicodeError:
+            pass
+    try:
+        with store.connection() as con:
+            con.execute('BEGIN')
+            if not _schema(con):
+                return None
+            public = ','.join('g.' + column for column in _PUBLIC.split(','))
+            row = con.execute(f'SELECT {public},g.state,g.token_sha256,g.snapshot_sha256,g.origin_created_at,'
+                'CASE WHEN typeof(g.result_json)=\'text\' AND length(CAST(g.result_json AS BLOB))<=? THEN g.result_json END AS result_json,'
+                'CASE WHEN typeof(g.snapshot_json)=\'text\' AND length(CAST(g.snapshot_json AS BLOB))<=? THEN g.snapshot_json END AS snapshot_json,'
+                'j.job_id AS legacy_job_id,j.intake_id AS legacy_intake_id,j.revision AS legacy_revision,j.state AS legacy_state,'
+                'CASE WHEN typeof(j.created_at) IN (\'integer\',\'real\') THEN j.created_at END AS legacy_created_at,'
+                'CASE WHEN typeof(j.result_json)=\'text\' AND length(CAST(j.result_json AS BLOB))<=? THEN j.result_json END AS legacy_result_json,'
+                'i.intake_id AS parent_intake_id,'
+                'CASE WHEN typeof(i.source_id)=\'text\' AND length(CAST(i.source_id AS BLOB))<=150 THEN i.source_id END AS source_id,'
+                'CASE WHEN length(CAST(r.files_json AS BLOB))<=4194304 THEN r.files_json END AS files_json,'
+                'CASE WHEN length(CAST(r.fingerprint AS BLOB))=64 THEN r.fingerprint END AS fingerprint,'
+                'r.synthetic AS revision_synthetic '
+                f'FROM {_G} g LEFT JOIN intake_jobs j ON j.job_id=g.origin_job_id '
+                'LEFT JOIN intake_revisions r ON r.intake_id=g.intake_id AND r.revision=g.revision '
+                'LEFT JOIN intakes i ON i.intake_id=g.intake_id '
+                "WHERE g.origin_job_id=? AND g.origin_kind='completed_import'",
+                (MAX_RESULT_BYTES, MAX_SNAPSHOT_BYTES, MAX_RESULT_BYTES, job_id)).fetchone()
+            if row is None:
+                return None
+            row = dict(row)
+    except sqlite3.Error:
+        _fail('generation_replay_storage_error')
+    try:
+        _receipt(row)
+    except ValueError:
+        _fail('generation_replay_origin_invalid')
+    if (row['state'] != 'completed' or row['legacy_state'] != 'completed'
+            or row['legacy_job_id'] != job_id or row['legacy_intake_id'] != row['intake_id']
+            or row['legacy_revision'] != row['revision'] or row['parent_intake_id'] != row['intake_id']
+            or type(row['legacy_created_at']) not in (int, float) or not math.isfinite(row['legacy_created_at'])
+            or type(row['origin_created_at']) not in (int, float) or not math.isfinite(row['origin_created_at'])
+            or row['legacy_created_at'] != row['origin_created_at']
+            or row['revision_synthetic'] not in (0, 1) or row['revision_synthetic'] != row['synthetic']):
+        _fail('generation_replay_origin_invalid')
+    if token_sha is None or not _hash(row['token_sha256']) or not hmac.compare_digest(token_sha, row['token_sha256']):
+        _fail('generation_replay_token_mismatch')
+    result = _replay_payload(row['result_json'], row['result_sha256'], 'generation_replay_result_invalid')
+    _replay_payload(row['legacy_result_json'], row['result_sha256'], 'generation_replay_origin_invalid')
+    snapshot = _replay_payload(row['snapshot_json'], row['snapshot_sha256'], 'generation_replay_snapshot_invalid')
+    _replay_snapshot(snapshot, row)
+    if (type(result) is not dict or set(result) != {'submission', 'summary'}
+            or type(result['summary']) is not dict
+            or canonical(result['submission']) != canonical(submitted)):
+        _fail('generation_replay_submission_mismatch')
+    retained = {**row, 'synthetic': row['revision_synthetic']}
+    try:
+        context_id, profile_id = _validated(store, retained)
+    except ValueError:
+        _fail('generation_replay_binding_invalid')
+    if context_id != row['context_id'] or profile_id != row['profile_id']:
+        _fail('generation_replay_binding_invalid')
+    return json.loads(canonical(result['summary']))

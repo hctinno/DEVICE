@@ -51,6 +51,24 @@ history의 정확한 키는 schema_version=1, kind=intake_analysis_generation_hi
 
 ledger가 없으면 available=false/빈 목록을 반환하고 DDL을 만들지 않는다. 알려진 ledger가 있으면 해당 intake의 목록이 비어 있어도 available=true다. 미존재 intake와 잘못된 인수는 고정 오류로 거절한다. history는 보존 metadata 조회이며 원본의 현재 무결성이나 준비 상태를 새로 승인하지 않는다. 명시 재수입은 현재 원본/분석을 다시 검증한다.
 
+## GEN-004B2 역사적 완료 replay
+
+```python
+replay_imported_completion(store, job_id, token, analysis) -> dict | None
+```
+
+수입된 completed_import origin에 대해 원래 submission/token의 정확한 재전송을 확인하고 **저장된 원래 summary**의 독립 JSON 사본을 반환한다. ledger가 없거나 해당 job에 수입 origin이 없을 때만 None이다. 부분/손상 schema, 존재하는 잘못된 origin/상태, token/submission 불일치와 보존 근거 손상은 고정 ValueError로 거절하며 성공 fallback을 허용하지 않는다.
+
+analysis는 첫 I/O 전에 유한 JSON·유효 UTF-8·최대 8MiB의 독립 사본으로 고정한다. 호출자가 DB/blob 읽기 뒤 원본 중첩 dict를 바꿔도 이 사본과 보존 submission만 비교한다. 반환 summary를 바꾸거나 두 번째 호출을 해도 보존 결과는 바뀌지 않는다. 원래 token 열은 조회하지 않고 전달 token의 SHA-256을 보존 hash와 대조한다.
+
+명시적 BEGIN의 한 DB 읽기 snapshot에서 알려진 schema, 수입 origin, 구형 completed job/revision/source와 result/snapshot bytes/hash를 고정한다. 각 JSON payload는 SQL에서 8MiB 한도를 확인한 뒤 읽는다. snapshot의 scope/버전/행 형식과 intake/revision/source 결합도 확인한다. 파생 추출물·context·원본·페이지 인용은 보존 당시 profile로 재검증한다. 현재 parser/code/profile과 같아야 한다는 조건은 없고 현재 parser를 import하거나 문서를 다시 준비하지 않는다.
+
+현재 revision이 더 새로워도 원래 summary만 반환하며 현재 head·projection·질문/답변·알림/notice·위임·준비 상태·기존 완료 결과를 변경하지 않는다. DDL·Store 생성·DB/blob/원본 쓰기·provider 호출도 없다. 이 응답은 현재 세대 선택이나 새로운 실행 권한이 아니다.
+
+replay 오류는 generation_replay_ 접두사의 invalid_analysis/analysis_limit/invalid_job, origin_invalid/token_mismatch/submission_mismatch, result_invalid/snapshot_invalid/binding_invalid/storage_error다. 알려진 ledger schema 오류는 기존 generation_ledger_schema_mismatch를 유지한다. raw token·제출 내용·경로·원시 예외는 오류에 넣지 않는다.
+
+[replay 검사](../../tests/test_intake_generation_replay.py)는 실제 수입 V2와 과거 revision, profile 변경·parser 미설치 상태, 부재만 None, 손상/불일치 거절, 최초 DB/blob 읽기 이후 caller 변조, detached 반환, 단일 DB 읽기·raw token 조회0·전체 rows/DB/source/blob bytes 불변을 확인한다. complete_job의 최초 snapshot 이후·현재 준비 이전에 호출하는 공통 접점과 통합 회귀는 총괄 소유다.
+
 ## 실패와 검증
 
 ValueError에는 고정 generation_ 코드만 넣는다. 입력·기대값은 invalid_intake/invalid_expectation/invalid_history_limit, 대상은 intake_not_found/revision_changed/analysis_not_completed/result_changed/origin_changed, 근거는 invalid_analysis/unbound_analysis, 한도는 result_limit/snapshot_limit, 보존 상태는 ledger_schema_mismatch/ledger_record_invalid/invalid_snapshot/invalid_completion_time/epoch_exhausted, SQLite 실행은 ledger_storage_error다. 원시 SQL·예외·파일 내용은 공개 오류에 넣지 않는다.
@@ -59,8 +77,9 @@ ValueError에는 고정 generation_ 코드만 넣는다. 입력·기대값은 in
 
 ```powershell
 python -B -m unittest discover -s tests -p test_intake_generation_ledger.py
+python -B -m unittest discover -s tests -p test_intake_generation_replay.py
 python -B -m unittest discover -s tests -p 'test_intake*.py'
 python -B scripts/check_artifacts.py
 ```
 
-합성 PDF 생성/완료 검사는 선택 의존성 pypdf가 설치된 환경에서 실행하고 미설치 skip은 성공 실행 수로 세지 않는다. 수입/조회 자체는 parser를 실행하지 않는다. 전체 DB 자동 migration, 새 재분석 요청/queue/worker·legacy 완료 fence·fixture readiness 연결은 GEN-004B2 후속이며 실제 모델·실장비·현장 검증은 미실행이다.
+합성 PDF 생성/완료 검사는 선택 의존성 pypdf가 설치된 환경에서 실행하고 미설치 skip은 성공 실행 수로 세지 않는다. 수입/조회/replay 자체는 parser를 실행하지 않는다. 전체 DB 자동 migration과 새 재분석 queue/selected head·legacy 완료/fixture readiness writer fence는 GEN-004B3 후속이며 이 단위에 먼저 노출하지 않는다. 실제 모델·실장비·현장 검증은 미실행이다.
