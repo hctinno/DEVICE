@@ -110,7 +110,7 @@ CREATE TRIGGER intake_reference_events_no_delete BEFORE DELETE ON intake_referen
 
 SQLite 지원 autoindex는 records의 record_id/request_id/composite UNIQUE 세 개, heads의 intake_id PK 한 개, events의 record_id PK 한 개다. INTEGER PRIMARY KEY seq는 별도 autoindex가 없다. 분리 FK만으로 origin triple을 보장하지 않으므로 같은 con에서 job의 intake/revision도 대조한다. base UNIQUE/삭제 경로는 바꾸지 않는다.
 
-fingerprint는 canonical10키 `{schema_version,request_id,expected_snapshot_id,expected_head_record_id,intake_snapshot_sha256,case_context_sha256,validated_response_sha256,reference_receipt_sha256,producer_name}`의 SHA다. 각 JSON SHA는 분리 입력의 compact canonical bytes다. record_id는 canonical3키 `{schema_version,request_id,request_fingerprint}`의 SHA다. context/response 원문은 저장하지 않고 SHA와032 binding만 보존한다. snapshot/receipt/append/source/summary는 각 canonical JSON/hash로 저장하며 primitive columns 및 event/head와 교차검사한다.
+fingerprint는 canonical9키 `{schema_version,request_id,expected_snapshot_id,expected_head_record_id,intake_snapshot_sha256,case_context_sha256,validated_response_sha256,reference_receipt_sha256,producer_name}`의 SHA다. 각 JSON SHA는 분리 입력의 compact canonical bytes다. record_id는 canonical3키 `{schema_version,request_id,request_fingerprint}`의 SHA다. context/response 원문은 저장하지 않고 SHA와032 binding만 보존한다. snapshot/receipt/append/source/summary는 각 canonical JSON/hash로 저장하며 primitive columns 및 event/head와 교차검사한다.
 
 ## 고정 예산·오류
 
