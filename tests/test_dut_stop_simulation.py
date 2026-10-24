@@ -346,9 +346,175 @@ class DutStopTests(unittest.TestCase):
         with patch.object(adapter,'_command',side_effect=command): result = adapter.stop('uncertain')
         self.assert_receipt(result,'unconfirmed')
         self.assertEqual(result['reason_code'],'runtime_error')
+        self.assertEqual(result['acknowledgement'],{'received':False,'completion':'unknown','origin':'none'})
         self.assertNotIn('PRIVATE_POST_STOP_EXCEPTION',json.dumps(result))
         history = self.fleet.history()
         self.assertEqual(adapter.stop('uncertain'),result)
+        self.assertEqual(self.fleet.history(),history)
+
+    def test_legal_nested_packet_keeps_original_context_and_private_diagnostic(self):
+        for levels in (26,28,29,30):
+            with self.subTest(levels=levels):
+                fleet = fleet_fixture()
+                adapter = self.adapter(fleet=fleet)
+                before = fleet.observations()
+                actual = adapter._command
+                nested = 'PRIVATE_NESTED_PACKET'
+                for _ in range(levels): nested={'child':nested}
+                def command(request_id,action):
+                    response = actual(request_id,action)
+                    if action=='stop': response['values']['unknown_nested']=nested
+                    return response
+                with patch.object(adapter,'_command',side_effect=command): result=adapter.stop('nested')
+                self.assert_receipt(result,'unconfirmed')
+                self.assertEqual(result['reason_code'],'invalid_response')
+                self.assertEqual(result['request_context'],{'tick':before['tick'],'setup_revision':before['setup_revision']})
+                self.assertEqual([value['action'] for value in result['commands']],['stop'])
+                self.assertEqual(result['acknowledgement']['completion'],'unknown')
+                self.assertEqual(fleet.observations()['devices']['dut']['values']['state'],'idle')
+                author = adapter.author_record('nested')
+                self.assertEqual(author['exchanges'][0]['raw_response']['values']['unknown_nested'],nested)
+                self.assertEqual(author['exchanges'][0]['received_response']['values']['unknown_nested'],nested)
+                self.assertEqual(author['receipt'],result)
+                history = fleet.history()
+                self.assertEqual(adapter.stop('nested'),result)
+                self.assertEqual(fleet.history(),history)
+                author['exchanges'][0]['raw_response']['values']['unknown_nested']='caller mutation'
+                self.assertEqual(adapter.author_record('nested')['exchanges'][0]['raw_response']['values']['unknown_nested'],nested)
+
+    def test_overdepth_packet_is_sanitized_and_never_retransmitted(self):
+        adapter = self.adapter()
+        actual = adapter._command
+        nested = 'outside packet depth'
+        for _ in range(31): nested={'child':nested}
+        def command(request_id,action):
+            response = actual(request_id,action)
+            response['values']['unknown_nested']=nested
+            return response
+        with patch.object(adapter,'_command',side_effect=command): result=adapter.stop('overdepth')
+        self.assert_receipt(result,'unconfirmed')
+        self.assertEqual(result['reason_code'],'invalid_response')
+        self.assertEqual(result['acknowledgement']['completion'],'unknown')
+        self.assertEqual([item['action'] for item in result['commands']],['stop'])
+        self.assertEqual(adapter.author_record('overdepth')['exchanges'][0]['error_code'],'invalid_response')
+        history = self.fleet.history()
+        self.assertEqual(adapter.stop('overdepth'),result)
+        self.assertEqual(self.fleet.history(),history)
+
+    def test_transitive_fleet_helper_overrides_are_rejected_before_callbacks(self):
+        for name in ('_request','_envelope','_propagate','_check_result','_remember'):
+            with self.subTest(name=name):
+                fleet = fleet_fixture()
+                calls = []
+                original = getattr(fleet,name)
+                def marker(*args,**kwargs):
+                    calls.append(name)
+                    return original(*args,**kwargs)
+                setattr(fleet,name,marker)
+                with self.assertRaisesRegex(ValueError,'^dut_stop_fleet_invalid$'): self.adapter(fleet=fleet)
+                self.assertEqual(calls,[])
+
+    def test_transitive_device_helper_and_class_override_are_rejected(self):
+        fleet = fleet_fixture()
+        calls = []
+        original = fleet._devices['dut']._publish
+        def marker(*args,**kwargs):
+            calls.append('publish')
+            return original(*args,**kwargs)
+        fleet._devices['dut']._publish=marker
+        with self.assertRaisesRegex(ValueError,'^dut_stop_fleet_invalid$'): self.adapter(fleet=fleet)
+        self.assertEqual(calls,[])
+        fleet = fleet_fixture()
+        original_request = VirtualFleet._request
+        def request(*args,**kwargs):
+            calls.append('request')
+            return original_request(*args,**kwargs)
+        with patch.object(VirtualFleet,'_request',request):
+            with self.assertRaisesRegex(ValueError,'^dut_stop_fleet_invalid$'): self.adapter(fleet=fleet)
+        self.assertEqual(calls,[])
+
+    def test_helper_override_after_creation_never_runs_or_confirms(self):
+        adapter = self.adapter()
+        calls = []
+        original = self.fleet._request
+        def marker(*args,**kwargs):
+            calls.append('request')
+            return original(*args,**kwargs)
+        self.fleet._request=marker
+        result = adapter.stop('overridden')
+        self.assert_receipt(result,'unconfirmed')
+        self.assertEqual(calls,[])
+        self.assertEqual(result['commands'],[])
+        self.assertEqual(adapter.stop('overridden'),result)
+
+    def test_maximum_json_component_budgets_fit_author_wrapper_and_replay(self):
+        """Serialization-only envelope fixtures, not valid semantic DUT results."""
+        def sized(value,size):
+            value['storage_fixture_padding']=''
+            length = len(stop_boundary._fingerprint(value).encode('utf-8'))
+            value['storage_fixture_padding']='x'*(size-length)
+            self.assertEqual(len(stop_boundary._fingerprint(value).encode('utf-8')),size)
+            return value
+        for invalid_wrapper in (False,True):
+            with self.subTest(invalid_wrapper=invalid_wrapper):
+                adapter = self.adapter()
+                request_id = 'budget-components'
+                before = self.fleet.observations()
+                commands = []
+                for action in ('stop','read'):
+                    command_id = adapter._id(request_id,action)
+                    adapter._command(command_id,action)
+                    commands.append({'request_id':command_id,'action':action})
+                nested = 'PRIVATE_MAX_DEPTH_PACKET'
+                for _ in range(31): nested={'child':nested}
+                packet = sized({'storage_fixture_nested':nested},32*1024)
+                self.assertEqual(stop_boundary._copy(packet,32*1024),packet)
+                receipt = adapter._base(request_id)
+                receipt.update(status='unconfirmed',reason_code='invalid_response',commands=commands,
+                    request_context={'tick':before['tick'],'setup_revision':before['setup_revision']},
+                    acknowledgement={'received':False,'completion':'unknown','origin':'none'})
+                receipt = sized(receipt,96*1024)
+                author = {'schema_version':1,'kind':'synthetic_dut_stop_author_record','request_id':request_id,
+                    'configuration':adapter._configuration,'request_context':receipt['request_context'],
+                    'exchanges':[{**command,'raw_response':packet,'received_response':packet,'error_code':'invalid_response'}
+                                 for command in commands],'receipt':None}
+                if invalid_wrapper: author['invalid_wrapper_fixture']=object()
+                result = adapter._finish(request_id,receipt,author)
+                diagnostic = adapter.author_record(request_id)
+                encoded = stop_boundary._fingerprint(diagnostic).encode('utf-8')
+                self.assertGreater(len(encoded),224*1024)
+                self.assertLessEqual(len(encoded),256*1024)
+                for event in diagnostic['exchanges']:
+                    for field in ('raw_response','received_response'): self.assertEqual(event[field],packet)
+                self.assertEqual(diagnostic['receipt'],result)
+                if invalid_wrapper:
+                    self.assertEqual(diagnostic['diagnostic_error'],'author_record_invalid')
+                    self.assertEqual(result['reason_code'],'runtime_error')
+                history = self.fleet.history()
+                self.assertEqual(adapter.stop(request_id),result)
+                self.assertEqual(self.fleet.history(),history)
+
+    def test_author_aggregate_failure_keeps_progress_and_bounded_raw_diagnostics(self):
+        adapter = self.adapter()
+        actual = adapter._finish
+        before = self.fleet.observations()
+        def finish(request_id,receipt,author):
+            author['oversized_wrapper_fixture']='x'*(256*1024)
+            return actual(request_id,receipt,author)
+        with patch.object(adapter,'_finish',side_effect=finish): result=adapter.stop('aggregate-failure')
+        self.assert_receipt(result,'unconfirmed')
+        self.assertEqual(result['reason_code'],'runtime_error')
+        self.assertEqual([event['action'] for event in result['commands']],['stop','read'])
+        self.assertEqual(result['request_context'],{'tick':before['tick'],'setup_revision':before['setup_revision']})
+        self.assertEqual(result['acknowledgement']['completion'],'acknowledged')
+        diagnostic = adapter.author_record('aggregate-failure')
+        self.assertEqual(diagnostic['diagnostic_error'],'author_record_invalid')
+        self.assertIsNotNone(diagnostic['exchanges'][0]['raw_response'])
+        self.assertIsNotNone(diagnostic['exchanges'][1]['received_response'])
+        self.assertEqual(diagnostic['receipt'],result)
+        self.assertLessEqual(len(stop_boundary._fingerprint(diagnostic).encode('utf-8')),256*1024)
+        history = self.fleet.history()
+        self.assertEqual(adapter.stop('aggregate-failure'),result)
         self.assertEqual(self.fleet.history(),history)
 
     def test_no_file_socket_process_sdk_or_catalog_io(self):
