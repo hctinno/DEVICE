@@ -2,6 +2,8 @@
 
 갱신일: 2026-10-24, Asia/Seoul. 이전 배정·인수 이력은 보존한다.
 
+최신 [통합014](handoff/development/INTEGRATION-014.md)의 기능 기준은 `af8e9cbf8773f54092fa223c41e3203eba18482a`다. 사례021/계산023/화면024/AI 검토경계025를 소유 수정·독립 최종 Yes 뒤 인수했고 새 전체 Python1492/skip0·Node103·contract화면13/실제S03 12/S05 12를 확인했다. source182개와 기존Node180개는 게시 전까지 같다. P01 요청012는 실제8배정 뒤 고유 원본/참조7PDF348쪽과 후속 metadata를 인수했으며 전수 모집단unknown·공식대응0·기관/날짜/권리/상충/누락을 유지한다. 실제보고서 수치 재계산·실제AI/물리 검증은0이다. 다음028 독립Yes는015용으로 동결, 개발1 선택페이지030 승인·구현/개발2 평가029 독립리뷰/개발3 준비026 Important1 소유수정/개발4 정식route027 구현을 실제 배정했다. 사용자 결정/준비0, 아래013 이하는 보존 이력이다.
+
 최신 [통합013](handoff/development/INTEGRATION-013.md)의 기능 기준은 fe614ca다. PREPARE004 최종 수정·HARNESS016·신규 FCC 평가 GROUPS022·E3632A019를 정확 소유 커밋으로 인수하고 새 전체 Python1379/skip0·source172불변, 기존64Fleet 새 관측8/역사8/measure6을 확인했다.019 독립 검토는 일반 기능33개 범위이며 hook 관련9개는 독립 검토 밖이다. P01 요청012는8명 실제 배정/동결 ACK v3 인수, S06 제외·pending 검수14JSON과 첫 S03 실제 PDF2/111쪽·27payload를 원문 불변으로 인수했다. 공식 mapping0/분할 누락·상충/모집단unknown을 유지한다.021 후보는 공개읽기 호환 수정·독립 리뷰, 개발4 실제024 GET/DOM·개발3 계산023·개발2 다음025를 병행한다. 사용자 결정/준비0이며 아래012 이하는 보존 이력이다.
 
 최신 [통합012](handoff/development/INTEGRATION-012.md)의 기능 기준은1635cf2다. DELTA015·수정 STOP013·UI017을 독립 최종 Yes 후 인수해 새 전체 Python1237/skip0·Node86·실제 화면46묶음·기존64Fleet 정지17사례·실제metadata11응답/오류2를 확인했다. 기존011/S05 readback12JSON을 정확 인수/ACK해019에 전달했다. 신규 HCT FCC corpus 지시 전체를 읽고 [요청012/v021](docs/material-intake/2026-10-24-hct-fcc-corpus-request.md)을 P01→수집1~8에 실제 배정했다. 개발1 CASE021/개발4 VIEW024, 개발2 완료016의 최종리뷰와 다음평가GROUP022, 개발3 진행019/후속023을 [후속대장](handoff/development/NEXT-004.md)대로 이어간다. 기존 branch/미커밋·원문/소유권 보존, 모집단/적격PDF는 검수 전 미산정/미확인, 사용자 준비0이다. 아래011 이하는 당시 기록이다.

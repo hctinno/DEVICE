@@ -2,6 +2,8 @@
 
 작성일: 2026-10-23, Asia/Seoul
 
+2026-10-24 현재 [통합014](handoff/development/INTEGRATION-014.md): 실제 PDF 근거 사례021·명시 입력 계산023·읽기 구성요소024·AI 참고응답 경계025를 독립 최종 Yes 후 인수했다. 새 전체 Python1492/skip0·Node103·contract13/실제사례 화면24 PASS, source182불변이다. 요청012는 P01→수집1~8 실제 운영 중이며 원본/참조7고유PDF348쪽을 인수했다. 확정 적격7·전수 완료·전쪽 의미 검토는 아니며 공식대응0/모집단unknown·부록/판본/상충을 보존한다. [후속대장](handoff/development/NEXT-004.md)의028 다음통합·030승인·구현/029리뷰/026소유수정/027구현은 실제 배정했다. 기존 전체 업무 무인화·첫b/g/n/Un-licensed·원본 비공개 결정을 유지하고 사용자 결정/준비0이다. 아래013 이하는 보존 이력이다.
+
 2026-10-24 현재 [통합013](handoff/development/INTEGRATION-013.md): 검수 사본 준비004/하네스·정지 별도016/신규 사례 그룹022/합성 readback019를 인수했다. 새 전체 Python1379 PASS/skip0·원source172불변, 기존64Fleet 새8/역사8/measure6 PASS다. P01 요청012의 실제8배정·ACK와 첫 HCT 원문2/111쪽을 인수했고 개발1 사례021·개발4 실제화면024·개발3 근거 계산023·개발2 AI 문맥/응답025를 이어간다. 공식 mapping0·평가적격0·HAC72쪽 자동미인용/분할·상충/전수모집단unknown은 그대로다. 기존 전체 업무 무인화/첫 b/g/n·Un-licensed 결정과 소유 작업을 보존하며 사용자 준비0이다. 아래012 이하는 당시 이력이다.
 
 2026-10-24 현재 [통합012](handoff/development/INTEGRATION-012.md): DELTA015·수정 STOP013·후속자료 UI017을 독립 Yes 후 인수했다. 새 전체 Python1237/Node86·실제 화면46묶음/가상Fleet정지17사례 PASS다. [신규 HCT FCC corpus012](docs/material-intake/2026-10-24-hct-fcc-corpus-request.md)는 발행2025~실제마감의 국내 HCT/America 전수 대상으로 P01→수집1~8 v021 실제 배정을 시작했다. 보유22PDF 재검수/첫작은B001부터 사례 조회021·화면024, 그룹평가022와019 후속 계산/가상 연결을 이어간다. 기존 branch/미커밋·소유 작업/첫b/g/n·Un-licensed 결정은 보존하며 모집단·단계별 수는 검수 전 미산정이다. 현재 사용자 준비0, 실물/실제AI 완료 주장은 없다. 아래011 이하는 보존 이력이다.

@@ -1,5 +1,7 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+최신 인수·구현은 [통합014](../../handoff/development/INTEGRATION-014.md)다. 아래 최초 미산정/미보유와013 단계는 당시 이력으로 보존한다. 현재 고유 원본·별도 canonical reference는7PDF/348물리쪽이며 확정 적격7/전체 모집단/전수 완료와 구별한다. 실제 수집1~8 배정·후속 조사는 P01 한 창구로 계속된다.
+
 2026-10-24, Asia/Seoul. 신규 작업 `HCT-FCC-CORPUS-2025-2026-001`, 수집 창구 요청 `DEV-HCT-FCC-CORPUS-012`다. 사용자의 전달 파일 전체를 읽었으며 SHA-256은 `76ac8d9ee5b5836bfd99e8eecaa0492a2e0d3a9983a0329fe7b898afffed7eeb`다. 전달 파일은 공유 `.local/side-handoffs/hct-fcc-report-corpus-20261024/MAIN-PROMPT.txt`에 보존한다. 코드·메타데이터 외 원본/추출 본문/실제 측정값은 공개 Git에 추가하지 않는다.
 
 ## 보존 기준과 범위
@@ -53,3 +55,24 @@ S06-B0006-v1은 index3384B/SHA `96cee612c598f27f6b7feeaa87a4990b77531f47346f7f09
 첫 양성 S03-B0005-v1 index5600B/SHA `e34aa95cc85c1a27f3245016a773c93a38c154bc821c20da876e5a87eadc210d`·27payload/4798587B를 정확 인수/ACK했다. 실제 고유 PDF2/4559516B·SAR38/HAC73=111물리쪽, 국내 HCT의2025발행 검수다. 공식첨부403 2/공식대응 확인0·미러원문2를 구별한다. P01대표페이지12/별도산술20셀과 남은99쪽 의미 미검토, HAC142/143/등재메타데이터 상충·part2 미보유/SAR 미보유분을 보존한다.
 
 기존 extractor의 encrypted 거절 후021 소유 모듈의 제한된 공개empty-user 읽기를 배정했다. 실제 SAR38citable/HACcover1citable·72form resource누락 미인용을 유지한 실제producer를 개발4 GET/DOM과 개발3 계산023에 전달했다.022 실제2행은 동일 FCC 성분1·부적격·전부미배정이며 actual model score/fold0이다.025 AI 문맥/응답 경계도 다음 실제 배정했다. P01에는 S05 다음 양성 검수와 준비된 b/g/n §15.247 전도 출력 사례를 기존자료 재사용 우선 요청했다. 자세한 검증·소유 커밋/범위는 [통합013](../../handoff/development/INTEGRATION-013.md)을 따른다. 현재 사용자 결정/준비0, 전체 모집단unknown·수집완료 미주장이다.
+
+## 후속 실제 인수·구현 — 통합014
+
+021/023/024/025의 소유 수정·독립 최종 Yes와 총괄 새 전체 Python1492/Node103·실제 JSON 화면24/contract13을 [통합014](../../handoff/development/INTEGRATION-014.md)에 기록했다. 실제 원본2PDF111쪽 재생·문맥/응답 참조 일관성을 확인했으며 근거 부족인 실제 계산6요청은 실행하지 않았다. 실제 모델·학습·독립 점수·RF/현장 실증0을 유지한다.
+
+| 인수/별도 참조 | 실제 범위 | 남은 경계 |
+|---|---|---|
+| S03-B0005 | SAR38/HAC73쪽,2PDF·27payload | HAC72쪽 native 미인용/메타데이터 상충·다른 분할 미보유 |
+| S05-B0007 | §15.255 RF42쪽,1PDF·17payload | 방법/결과 문맥 상충, 정확search0·개정·사진/공식대응 미확인 |
+| S04-B0011 + canonical B0010 | metadata14JSON·별도EMC40쪽 원본 | P01 선택접근과 전체추출·방법승인을 구별,030 선택페이지 구현 배정 |
+| S06-B0007 | America45쪽,1PDF·18payload | visual 선택검수·native text/OCR0,기관/시설·applicant/제조사·날짜 구별 |
+| S03-B0006 | HAC Part2 70쪽,1PDF·25payload | 직접issuer/발행일/개정 미기재, parent·인쇄페이지 관계만 확인 |
+| S01-B0013 + canonical B0012 | metadata18JSON·별도LG b/g/n40쪽 원본 | SM과 다른모델·부록/재사용/날짜·판본/사진·측정 기준면 공백 |
+
+위 원본은 중복 없는7파일/348물리쪽이다. 논리 보고서·적격·전체 의미 검토 수로 변환하지 않는다. source identity/mtime/mode/bytes/SHA·strict JSON/UTF8·index/payload 대응을 검증해 private에 인수하고 P01에 실제 ACK했다. S01-B0013/S03-B0007/S04-B0012/S06-B0008의71payload406439B와 S01-B0011/S02-B0007/S07-B0008/S08-B0010의54JSON956099B는 PDF payload0으로 따로 관리한다. 기존22PDF/1323쪽 재검수와 신규7파일을 섞지 않는다.
+
+S07 규정/판본12행·선택 원문 hash와 S08 관계/누락 주석은 개발1/2/3에 전달했다. 원문 확보/표준번호/판본/조항 대조·현재 방법 승인을 구별하고 후자를 미확인으로 유지한다. 전체 모집단unknown·공식FCC mapping0/403·listing-only·기관/시설/TCB·발행일과grant/개정/부록/미확보 조사는 P01의 기존 수집1~8 운영으로 계속된다.
+
+기존 사용자 SM 재사용 metadata3JSON17593B와 좁힌 `P01-BGN-ROW-PROVENANCE-20261024-001`3JSON69158B는 별도 private 입력이며 신규 원본/collector증분0이다. LG 엄격 표시 반올림1상충·SM7/9/HT20·기준면/ATT/숨은정밀도 미확정을 보존하고 개발3에 전달했다. 전체 raw/Licensed 추가 준비를 요구하지 않는다.
+
+[후속대장](../../handoff/development/NEXT-004.md)에028 최종Yes/다음015·030계약승인/구현,029게시/독립리뷰,026 Important1 소유수정,027 정식route구현을 실제 배정했다. 준비된 자료부터 계속 연결하며 원문/본문/복호문/측정값/암호를 공개 Git·외부 모델에 보내지 않는다. 현재 사용자 결정/준비0이다.

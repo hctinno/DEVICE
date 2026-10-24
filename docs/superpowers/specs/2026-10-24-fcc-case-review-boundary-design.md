@@ -24,4 +24,6 @@ reviewed 상태라도 basis·literal 검증·citable 여부와 parser 한계를 
 
 ## 수용 조건
 
+계약 고정 보완: 정확021 class/type와 공식 읽기 API·DTO 검증만 사용하며 하위 helper/code 교체 방어 프레임워크를 추가하지 않는다. 실제 검증은 caller가 private packet/원문 bytes로 정식021 객체를 먼저 구성하고 그 준비단계의 PDF 읽기와025 API 자체 I/O0을 별도 계상한다. private state/method를 만들어 실제 catalog로 가장하지 않는다. `selected`는 근거 참조 선택 상태이며 사례 전체 승인·규범/모델 품질 승인이 아니다.
+
 합성 문맥/정상 응답·후보 없음·판본/제품 불일치·미검토/partial·출처 혼합·잘못된 문맥/참조·JSON/예산·사본 불변을 RED→GREEN으로 검증한다. 실제021 B001은 private에서 두 사례·페이지 한계가 유지되는 문맥 생성/합성 응답 decoding만 별도 실행한다. 원본과 source fingerprints가 불변이고 외부 송신·모델·학습·평가/실물0이어야 한다. 소유 커밋/푸시·원격 대조 후 독립 리뷰/수정, 총괄 실제 통합/회귀/게시와 다음 배정으로 이어간다.

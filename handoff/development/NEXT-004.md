@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+최신 기준은 [통합014](INTEGRATION-014.md)의 기능 `af8e9cbf8773f54092fa223c41e3203eba18482a`다. 사례021·계산023·화면024·AI 문맥/응답025를 소유 수정·독립 최종 Yes 후 인수했다. 새 전체 Python1492/skip0·Node103·contract화면13/실제S03 12/S05 12 PASS, source182불변이다. 요청012는 P01→수집1~8 실제 배정/후속 운영을 유지하며 원본·별도참조7고유PDF348쪽을 인수했다. 아래013 이하는 당시 이력이며 이 표를 우선한다.
+
+| 담당 | 현재 인수/검토 | 실제 후속과 소유권 |
+|---|---|---|
+| 개발1 | 021 수정3c599fe 독립Yes/총괄3c14654. 0281fae206 독립Yes, receipt4e8d6078을 동결해 다음015 인수 대기 | [PAGE-SCOPE030 설계](../../docs/superpowers/specs/2026-10-24-fcc-case-page-scope-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-page-scope.md) 승인/실제 구현 배정. 전용branch/같은3파일·None producer동일·명시 선택 범위·미선택생략/partial·S04 실제16p/S06 native gap |
+| 개발2 | 025e209d46 독립Yes/총괄af8e9cb. 029ec653603f9a2a95ed9be26fcf09ebeaaaee0c7f6 게시/독립 일반 데이터 리뷰 실제 배정 | [평가029 설계](../../docs/superpowers/specs/2026-10-24-fcc-case-review-evaluation-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-review-evaluation.md)의 신규3파일. 실제모델점수null·부적격/S03 점수null 보존. 지적 소유수정 우선/다음 운영연결 설계 메모 배정 |
+| 개발3 | 023 수정4309532 독립Yes/총괄ea2df0f. 026a1f0d7b 독립No Important1을 원바이트 보존, 미통합 | [준비026 설계](../../docs/superpowers/specs/2026-10-24-fcc-report-fixture-recipe-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-report-fixture-recipe.md). point7/context12 전체 공동행·공동line 또는 명시binding으로 소유RED/수정 실제 배정. 실제3case 부족/실행0·BGN 정밀도·기준면 gap 유지 |
+| 개발4 | 024 수정5f12e76 독립Yes/총괄69b18ed. Node17·root 실제24/contract13 PASS | [정식route027 설계](../../docs/superpowers/specs/2026-10-24-fcc-case-route-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-route.md) 승인/RED→구현. 소유8파일만·same-origin읽기·실제caller→서버→DOM/port0·기존route/Store 불변 |
+| P01 | 최근8 collector 패킷71payload+54JSON 인수/ACK, 별도LG40p참조를 포함한 원본7/348. SM reuse3JSON/17593B·후속행근거3JSON/69158B 별도 인수/증분0 | 기존수집1~8만 배정. LG/SM b/g/n의동행행·열/단위/출력종류/기준면·ATT·정밀도·분할/개정 gap과 새v028 DFS/America/규정·중복 조사 유지. 공식대응0/모집단unknown |
+
+014 통합은021/023/024/025로 고정 게시한다. 뒤에 준비된028/026/027/029/030을 반복 추가하며 검증 완료본 게시를 미루지 않고 다음015부터 수용한다. 총괄이 owner 구현을 일괄 대신하지 않으며 리뷰 실패는 담당에게 RED/수정·재검증으로 실제 배정한다. 현재 사용자 결정/준비0, 원문/실제값/복호문/암호 공개0·실제AI/학습/물리/현장·외부 제출 미실행이다.
+
 최신 기준은 [통합013](INTEGRATION-013.md)의 기능fe614ca·새 전체 Python1379 PASS/skip0·source172불변이다.004/016/019/022를 인수했으며 Node86/화면46은 이전012 보존 결과다. 아래 표가 현재 실제 배정이며 그 뒤012 표 이하는 이력이다.
 
 | 담당 | 인수/현재 기준 | 실제 후속 |
