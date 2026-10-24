@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+최신 공통 기능은019 게시a028f8a/기능20b5185·1777Python114Node/source202다.041 설계와 계획의 v3/공개delta 독립Yes C0I0를 고정하며 기능 회귀와 계약 검토를 구별한다.
+
+| 담당 | 다음 실제 단계와 소유권 |
+|---|---|
+| 개발1 | 040 exact1c741fce/신규3·owner34/290/full1742·합성경계는독립리뷰 중. 지적 소유수정 우선. 다음043은 기존Store를DDL/UPDATE 없이여는공식API 계약만 준비,040S0/039/UI 변경0 |
+| 개발2 | 038196c3ebb 독립Yes acb0b21f·직접121/API32·owner357/관측8분리. 문구정정8f7f334f(10→9키)만 별도delta/실행0, 다음통합용.042 A 신규3파일 계약은 preview exact11/reason_codes의034준비이유9종을보완하고독립재검토 |
+| 개발3 | [041 설계](../../docs/superpowers/specs/2026-10-24-virtual-fleet-rf-signal-scenario-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-virtual-fleet-rf-signal-scenario.md) 게시 exactbase 뒤전용branch/new3 구현. 주7/별도평가7·semantic8·저장10·고정catalog·부모engine19/새code핀분리·부모무변경 |
+| 개발4 | 039 기존1880476+정확036/037·소유10 구현. 실제UI POST/native준비·합성/실자료분모·typed/DOM·기존024033불변·회귀/독립리뷰로이어감 |
+| P01 | S02B0013/S03B0011 신규36payload207244B 인수ACK/새PDF0·게시e500a159exact/collector69·corpus34. 후속002:S02B0014/S03B0012 v040 실제ACK2·입력21,S08B0014 v041배정/ACK확인중,S01B0020예외검수·가산0 |
+
+현재 사용자 결정/준비0. root는 구현을 일괄 대행하지 않고 담당 완료후 후속을 실제 배정한다. 아래019/018은 당시 보존기록이다.
+
 최신 [통합019](INTEGRATION-019.md)의 기능 기준은 `20b5185be0e70cbb756b671b705b28586652d881`다.034 수정·036·037의 독립 최종Yes/정확 소유4커밋·9파일, 새 전체1777Python/114Node·소스202 불변·실제5쪽 로더→계산/HTTP5·합성034→032를 인수했다.038/039/040/041 제품코드는 이번 cut에 섞지 않는다.
 
 | 담당 | 진행 중인 실제 단위와 다음 수용 조건 |

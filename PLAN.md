@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-10-24 후속:[041 설계](docs/superpowers/specs/2026-10-24-virtual-fleet-rf-signal-scenario-design.md)·[계획](docs/superpowers/plans/2026-10-24-virtual-fleet-rf-signal-scenario.md)을 고정했다. 기존 DUT RF frame/센서정책·전력계와 한 bounded harness의 합성7종·별도 literal평가/실제journal 검증, catalog exact gate·저장실패 원본보존을 신규3파일로 구현한다. root 계획의 meter configure 순서 전사오류도 독립delta에서 수정했으며 센서 취득 전 setup4에서 완료한다. 다음038·040는 새019 cut에 섞지 않고 별도리뷰/통합하며039 구현을 유지한다.042 명시 참고검토·043 기존Store opener는 후속 사용자 화면 접점을 위한 최소계약이며 아직 제품완료가 아니다. 수집v0392묶음은 신규PDF0, 사용자준비0이다.
+
 2026-10-24 [통합019](handoff/development/INTEGRATION-019.md):034 수정·036·037의 정확 소유4커밋을 인수하고 새 전체1777Python/114Node·소스202 불변을 확인했다. 명시한 JSON/PDF 입력을 로더037에서 검증·구성한 뒤 메모리036 계산과 기존읽기HTTP에 연결했다. 접수034는 같은 DB 관측·최신 답변·원본 보존을 확인하며032 참고결합의 실행권한false/평가null을 유지한다. 개발1 040 시작CLI/개발4 039 계산화면은 구현 중, 개발2 038은 독립 리뷰/042 최소접점 계약 준비, 개발3 041은 고정 합성7시나리오의 출력실패 계약 보완이다. P01 대상·참조12/489와 별도제외1/46·전수unknown/official0을 유지하고 기존 수집·미커밋·실패를 보존한다. 사용자 준비0이며 아래018은 이전 상태다.
 
 2026-10-24 후속:018 e2f998c의기능/회귀를고정하고039명시계산UI와040전용시작CLI의설계/계획을별도로고정한다. 개발4/1은지정033포함base·정확승인의존036/037으로각소유10/3파일을구현한다. 개발2 038불변참고이력구현과개발3 041genuineFleet RF신호7종실행계약을병행한다. 다음019은독립최종Yes034수정·036·037의정확소유commit만통합/검증할예정이다. 신규P01target1/23쪽·excluded1/46쪽·보유HAC8쪽보강을구별해target/reference12/489와별도excluded1/46·전수unknown/official0/사용자준비0을기록한다. 아래018의11/466은게시당시수량이다.
