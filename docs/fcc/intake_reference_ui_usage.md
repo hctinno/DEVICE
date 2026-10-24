@@ -1,6 +1,6 @@
-# 접수 참고 이력·현재 조회044 A1 / 프런트엔드050 F1
+# 접수 참고 이력·현재 조회044 A1 / 프런트엔드050 F1·F2
 
-인수된044 A1 구성요소를 기존 접수 화면의 별도 형제 패널에 연결했다.050 F1은 native fetch 전송 모듈과 제품 app/index/styles를 명시 wire fixture로 검증한다. 정식049 서버·043/042→HTTP→DOM의 F2 통합은 미실행이다. [044 설계](../superpowers/specs/2026-10-24-intake-reference-ui-design.md)·[계획](../superpowers/plans/2026-10-24-intake-reference-ui.md)의 A1 API를 보존하며, [050 설계](../superpowers/specs/2026-10-24-intake-reference-frontend-design.md)·[계획](../superpowers/plans/2026-10-24-intake-reference-frontend.md)의 소유7 범위만 변경한다. 실제 고객 DB/PDF·모델·현장 장비는 실행하지 않는다.
+인수된044 A1 구성요소를 기존 접수 화면의 별도 형제 패널에 연결했다.050 F1은 native fetch 전송 모듈과 제품 app/index/styles를 명시 wire fixture로 검증하며, F2는 정식049 서버·043/042→HTTP→DOM을 별도로 검증한다. [044 설계](../superpowers/specs/2026-10-24-intake-reference-ui-design.md)·[계획](../superpowers/plans/2026-10-24-intake-reference-ui.md)의 A1 API를 보존하며, [050 설계](../superpowers/specs/2026-10-24-intake-reference-frontend-design.md)·[계획](../superpowers/plans/2026-10-24-intake-reference-frontend.md)의 소유7 범위만 변경한다. 실제 고객 DB/PDF·모델·현장 장비는 실행하지 않는다.
 
 `model.mjs`는 상수 `INTAKE_REFERENCE_VIEW_MAX_BYTES=2097152`와 `validateIntakeReferenceContext`, `parseIntakeReferenceHistoryJson`, `parseIntakeReferenceCurrentJson`, `createIntakeReferenceGate`를 공개한다. parser는 exact history7/current10과2MiB/depth20/key+value nodes200000을 검사해 detached DTO를 반환한다. 잘못된 입력은 `invalid_intake_reference_view`, Number로 정확하게 표현할 수 없는 정수는 `intake_reference_view_unrepresentable`의 고정 Error다. 부모 SQLite63bit를 반올림·잘라내기·빈 성공으로 바꾸지 않는다. A1 raw string의 Unicode/JSON·UTF8 크기를 검사하며 실제 wire의 fatal UTF8 decode는 A2 transport 소유다.
 
@@ -17,10 +17,11 @@ node --test frontend/intake_references/model.test.mjs
 node --test frontend/intake_references/transport.test.mjs
 node frontend/intake_references/browser_check.cjs
 node frontend/intake_references/browser_check.cjs --mode frontend
+node frontend/intake_references/browser_check.cjs --mode integrated
 python scripts/check_artifacts.py
 ```
 
-무인자 checker는 기존 A1의 전체 합성 DTO·trusted callback 경로18검사를 유지한다. `--mode frontend`는 자기127.0.0.1 port0의 정적 allowlist와 실제 제품 app/index/styles·A1·transport를 사용한다. API 응답은 브라우저 native fetch 경계에서 제공하는 명시 wire fixture이며, 서버의 session/cookie/Store/provider를 구현하거나 대신하지 않는다. 두 모드의 새 ignored `.local` 증거·소스 전후 SHA·390/1440 PNG·종료 결과를 따로 보존한다. F1은 제품 CSS만 사용하며 CSP 완화·범용 파일 서빙·빈 모듈은 없다. `--mode integrated` 및 임의 URL·secret 입력은 현재 거절한다. 빈 성공 모드는 제공하지 않는다.
+무인자 checker는 기존 A1의 전체 합성 DTO·trusted callback 경로18검사를 유지한다. `--mode frontend`는 자기127.0.0.1 port0의 정적 allowlist와 실제 제품 app/index/styles·A1·transport를 사용한다. API 응답은 브라우저 native fetch 경계에서 제공하는 명시 wire fixture이며, 서버의 session/cookie/Store/provider를 구현하거나 대신하지 않는다. `--mode integrated`는 아래 실제049 경로다. 각 모드의 새 ignored `.local` 증거·소스 전후 SHA·390/1440 PNG·종료 결과를 따로 보존한다. 제품 CSS와 CSP를 유지하며 임의 URL·secret 입력과 알 수 없는 mode는 선행 거절한다. 빈 성공 모드는 제공하지 않는다.
 
 `createIntakeReferenceTransport()`만 export하고 정확 `{readHistory,readCurrent,setContext,setPending,destroy}`를 반환한다. 생성 I/O·주입 옵션은 없다. app은 view에 reader 두 개만 전달한다. 같은 유효 non-null context3는 no-op이며 토큰과 진행 중 요청을 보존한다. 문맥 변경·null/invalid·pending true는 private 요청 세대와 CSRF를 먼저 무효화하고 요청을 취소한다. 잘못된 입력은 `intake_reference_ui_invalid_request`, 잘못된 wire/UTF8·시간 초과·알 수 없는 실패는 `intake_reference_ui_unavailable`이며 알려진 서버 오류는049의 열거33개만 보존한다. raw 응답·예외·주소·secret을 오류 메시지에 포함하지 않는다.
 
@@ -30,4 +31,20 @@ history GET은 `limit=1..100`과 null이면 생략하는 safe 양의 `before_seq
 
 2026-10-24 F1 소유 검증은 새 전체 Node206(기존186+transport20, fail/skip0), A1 trusted DOM18, 명시 frontend wire-fixture DOM19다. 기존 합성 사례 reader13·route17·lookup21·calculation21도 별도 통과했다. 전송 모듈 부재와 실제 behavior/잘못된 접수 ID의 fail-closed RED, 화면 mount RED 및 보완 중 실패 원본은 private 증거에 보존했다. 제품049 HTTP·043/042·참고 현재 조회의 보존 원문 읽기·backend 전체 Python은 이번 F1에서 미실행이다. Python2015는 root024의 이전 실행이다.
 
-알려진 연결 공백: 배정 base `0d7ee630b87bf2e2221c00ebcb3c106822dcfd15`의 기존 서버는 [049 정적 계약](../superpowers/specs/2026-10-24-intake-reference-http-host-design.md)의 `/intake-references/{model,view,transport}.mjs`를 아직 제공하지 않는다. 이 base에서 새 app을 사용하는 기존 intake-fixture 원형 회귀1회는 ESM 연결 실패로 보존했으며 원형 PASS로 보고하지 않는다. 승인된 private 어댑터가 검증 프로세스의 exact static3 매핑만 추가한 별도 phase에서는 기존 text/PDF 접수 회귀10개가 통과했다. backend/기존 checker 파일은 변경하지 않았고 이 adapter 결과를 제품049/session/auth/source gate/F2 통과로 합산하지 않는다. 리드는049 인수와 정적3 실제 제공 뒤에만 root app을 통합하고, 그 정확 base에서 원형 회귀와 genuine F2를 새로 실행한다.
+F1 당시 배정 base `0d7ee630b87bf2e2221c00ebcb3c106822dcfd15`의 기존 서버는 [049 정적 계약](../superpowers/specs/2026-10-24-intake-reference-http-host-design.md)의 `/intake-references/{model,view,transport}.mjs`를 제공하지 않았다. 이 base의 원형 intake-fixture 회귀1회 ESM 실패와 별도 exact static3 어댑터 phase의 text/PDF10 PASS를 보존했다. 이 adapter 결과를 제품049/session/auth/source gate/F2 통과로 합산하지 않는다. 후속 F2는 인수049를 포함한 정확 base에서 adapter 없이 새로 실행한다.
+
+## 050 F2 — 실제049·제품 화면 검증
+
+2026-10-25 Asia/Seoul. 별도 배정 base `2c5ba9ee043fd2559635bfe4d4725b34f6b45cd4`에서 원 F1 `3aa2c7d`와 cold 수정 `50a9aa3`를 순서대로 적용했다. 추가 제품 변경은 같은 checker와 이 usage뿐이다. A1·050 transport/app·052 C1 core와 backend/Store/schema/CSP는 바꾸지 않는다. 최종 소유 게시·독립 인수는 영수증으로 구별한다.
+
+integrated checker는 저장한 Python supervisor를 자기 `.local/ir-f2-*`에 만들고 별도 P0에서 기존 public 합성 접수 helper와 genuine025 context/validated response→정식042 prepare1/append1로 이력1행을 준비한다. 생성/분석/파싱·DDL/쓰기는 이후 HTTP와 분리한다. 새 provider·고객 원문·이전 run DB/응답 재생은 사용하지 않는다. 새 Python child의 actual049가 같은 checkout의 실제 static3를 제공하고 Chromium은 제품 `/`·app·native same-origin fetch를 사용한다. ASSETS shim·Node proxy·sitecustomize·가짜 Store/HTTP 성공 응답은 없다.
+
+수용은 별도 세 host(None/default scope/허용 scope)와 None child의040 catalog-only 생성·종료를 구분한다. None/040는042 import·Store 생성/opener0, static3 GET/HEAD6은 HTTP raw bytes와 Git LF 정규화 bytes·MIME/CSP를 대조한다. 기본scope는 이력 metadata1/source0·현재 버튼 비활성·직접 current403/부모0이다. 허용 정상은 자동 history1/source0 후 키보드 명시 current1만 정식042→038/034를 통과한다. 공개 정제 요약·CASE-A·false/null/0·raw UTC/KST·이전 관측과390/1440·외부 초점을 확인한다.
+
+retained PDF/context/extraction의 실제 open과 snapshot._blob의 bounded native 반환 bytes를 profile/audit로 관찰한다. 후자는 전체 read bytes의 부분 계측이며 총 bytes는 unknown이다. 문서 재파싱/OCR/render·subprocess/model 시작은 HTTP phase에서0이다. SQL dump/행 수·파일 hash/identity 불변은 관측 범위 보존 증거이며 전체 데이터 무결성 인증이 아니다. SQLite open/close 수에는 startup 검증도 포함하므로 startup과 정상·fault·수명 phase를 나눠 기록한다.
+
+정상 current와 별개로 clock+901 fault의 세션403/부모0·lastgood 보존, 새 anonymous browser context의 실제 재bootstrap을 확인한다. lifecycle은 정식042 native 진입 profile에서 원 실행을 유지한 채 잠시 대기한다. 둘째 실제 탭은 metadata를 읽되 source current429/queue0이며, 첫 브라우저 abort가 부모를 끝내지 않는다. 브라우저 종료→configured host close의 parent finally 대기→worker/socket/loop 회수 뒤 caller만043 Store를 닫는다. host 종료 뒤 borrowed Store 가용성, caller close 전 native4 이동 차단/뒤 해제·자기 port 재bind·원본/sidecar 보존을 별도 확인한다. 이 profile gate·시계 fault를 실제 운영의 모든 지연/시간 흐름 검증으로 올리지 않는다.
+
+관측에는 method/route 종류/status·header 존재/형식·정확body2 bool과 계수만 남긴다. 실제 cookie/CSRF·binding 값/해시·원 request 헤더/HAR·private 원문을 DOM/storage/로그/다운로드/영수증으로 내보내지 않는다. 최초 integrated 미구현 RED·P0 계측의 테이블명 오류·None supervisor 종료 실패도 보존했다. 고객 PDF·실제 모델/실장비·053 준비/등록 HTTP·052 C2 메인 조립·새 backend 전체 Python은 이번 F2에서 미실행이다.
+
+소유 F2의 새 검증은 integrated12·원형 text/PDF10·A1 trusted18·F1 wire19·보호된 C1 component23·전체 Node230(인수base210+기존 transport20, fail/skip0)이다. 기존 합성 reader13/route17/lookup21/calculation21도 별도 통과했다. integrated의 reference 요청은 응답9개와 browser abort로 전달 불명인 lifecycle1개를 구별하며 정식042 부모는 metadata4/current2회다. 세 child의 SQLite 누적2/4/12는 startup 포함이며 모두 close를 관측했다. 정상 current의 bounded _blob 관측은 PDF2958/context3438/extraction1800 bytes와 각각 open3회이며 전체 read bytes로 합산하지 않는다. configured 수명 둘의 caller close 전 native4 차단/뒤4 해제·3개 실제 host port 회수와040 catalog-only port 회수, 입력/행/schema/소스 불변을 확인했다. 이전 F1/root029 검사 수는 이 새 실행 수에 더하지 않는다.

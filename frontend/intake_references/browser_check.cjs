@@ -25,6 +25,7 @@ function createSyntheticBundle(){
 }
 async function main(argv=process.argv.slice(2)){
  if(argv.length===2&&argv[0]==='--mode'&&argv[1]==='frontend')return frontendMain();
+ if(argv.length===2&&argv[0]==='--mode'&&argv[1]==='integrated')return integratedMain();
  const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
  const {createHash}=require('node:crypto'),{execFileSync}=require('node:child_process');
  assert.equal(argv.length,0,'invalid_configuration');
@@ -411,5 +412,358 @@ async function frontendMain(){
   result_sha256:hash(fs.readFileSync(path.join(evidence,'result.json')))}));
  if(failure)throw Error('intake_reference_frontend_F1_failed');return result;
 }
+const INTEGRATED_SUPERVISOR=String.raw`"""050 F2 acceptance only: public synthetic preparation, genuine049, no HTTP shim."""
+import hashlib,json,os,re,socket,sqlite3,sys,threading,time,types
+from pathlib import Path
+
+ROOT=Path(sys.argv[1]).resolve()
+sys.path[:0]=[str(ROOT),str(ROOT/'tests')]
+tests=types.ModuleType('tests');tests.__path__=[str(ROOT/'tests')];sys.modules['tests']=tests
+assert 'sitecustomize' not in sys.modules
+
+def emit(value):
+    print(json.dumps(value,separators=(',',':')),flush=True)
+
+def fingerprint(folder):
+    files={}
+    for p in sorted(folder.rglob('*')):
+        if p.is_file():
+            b=p.read_bytes();s=p.stat();files[p.relative_to(folder).as_posix()]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'identity':[s.st_dev,s.st_ino,s.st_mtime_ns,s.st_mode]}
+    return files
+
+def database(folder):
+    con=sqlite3.connect((folder/'state/lab.sqlite3').as_uri()+'?mode=ro',uri=True)
+    try:
+        dump='\n'.join(con.iterdump()).encode('utf-8')
+        tables=[r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")]
+        counts={n:con.execute('SELECT count(*) FROM "'+n.replace('"','""')+'"').fetchone()[0] for n in tables}
+        return {'dump_sha256':hashlib.sha256(dump).hexdigest(),'table_counts':counts}
+    finally:con.close()
+
+def prepare(folder):
+    from tests.test_ui_server import ReferenceFixture
+    from tests.test_intake_case_references import catalog_fixture,context_for,response_for
+    from labflow.intake_reference_review import prepare_reference_review,append_reference_review
+    assert not folder.exists();folder.mkdir()
+    f=ReferenceFixture(folder,registered=False)
+    try:
+        catalog=catalog_fixture();context=context_for(catalog);response=response_for(context)
+        prepared,preview=prepare_reference_review(f.legacy,catalog,f.intake_id,case_context=context,validated_response=response,
+            producer_name=response['expected_producer']['name'],allow_retained_reads=True)
+        request={'schema_version':1,'intake_id':f.intake_id,'request_id':'SYNTHETIC-F2-REFERENCE',
+            'preparation_id':preview['preparation_id'],'expected_snapshot_id':preview['observation']['snapshot_id'],'expected_head_record_id':None}
+        registration=append_reference_review(f.legacy,catalog,prepared,request,allow_retained_reads=True,allow_append=True)
+        assert registration['stored'] is True
+        with f.legacy.connection() as con:
+            submission=json.loads(con.execute("SELECT result_json FROM intake_jobs WHERE state='completed'").fetchone()[0])['submission']
+        context_id=submission['context_id'];intake_context=json.loads(f.legacy.blob_path(context_id).read_bytes())
+        categories={str(f.legacy.blob_path(context_id)):'context'}
+        for d in intake_context['documents']:
+            categories[str(f.legacy.blob_path(d['sha256']))]='pdf'
+            if d.get('extraction_id'):categories[str(f.legacy.blob_path(d['extraction_id']))]='extraction'
+        meta={'intake_id':f.intake_id,'record_id':registration['record_id'],'seq':registration['seq'],
+              'case_ids':context['selection']['requested_case_ids'] if 'selection' in context else ['CASE-A'],
+              'preparation_ready':preview['preparation_ready'],'categories':categories,
+              'P0':{'public042_prepare':1,'public042_append':1,'public025_context_response':1,'synthetic_intake_PDF':1}}
+    finally:f.legacy.close()
+    meta['database']=database(folder);meta['files']=fingerprint(folder)
+    assert all(meta['database']['table_counts'][n]==1 for n in ['intake_reference_records','intake_reference_events','intake_reference_heads'])
+    (folder.parent/'fixture.json').write_text(json.dumps(meta,indent=2)+'\n',encoding='utf-8')
+    emit({'prepared':True,'intake_id':meta['intake_id'],'record_id':meta['record_id'],'seq':meta['seq'],'P0':meta['P0'],'files':len(meta['files'])})
+
+def serve(folder,mode):
+    from labflow.ui_server import create_server
+    from labflow.store import Store
+    meta=json.loads((folder.parent/'fixture.json').read_text(encoding='utf-8'))
+    stats={};phase='startup';live_connections=set();totals={'SQLite_opened':0,'SQLite_closed':0}
+    entered=threading.Event();release=threading.Event();close_done=threading.Event();close_started=threading.Event()
+    state={'armed':False,'close_error':False,'gate_timed_out':False};codes={};store=None;server=None;loop=None;closer=None;monitor={'enabled':True}
+    def count(key,amount=1):
+        bucket=stats.setdefault(phase,{});bucket[key]=bucket.get(key,0)+amount
+    def audit(event,args):
+        if not monitor['enabled']:return
+        if event=='open' and args and type(args[0]) is str:
+            category=meta['categories'].get(str(Path(args[0]).absolute()))
+            if category:count('retained_open_'+category)
+        elif event=='sqlite3.connect/handle':
+            live_connections.add(id(args[0]));totals['SQLite_opened']+=1
+        elif event=='subprocess.Popen':count('subprocess_start')
+    def profile(frame,event,arg):
+        code=frame.f_code
+        label=codes.get(code)
+        if label and event=='call':
+            if label=='parent042':
+                action=frame.f_locals.get('request',{}).get('action','invalid');count('parent_'+action+'_started')
+                if action=='current' and state['armed']:
+                    state['armed']=False;entered.set()
+                    if not release.wait(15):state['gate_timed_out']=True
+            else:count(label)
+        elif label=='parent042' and event=='return':
+            action=frame.f_locals.get('request',{}).get('action','invalid');count('parent_'+action+'_returned')
+            if type(arg) is dict:count('parent_'+action+'_normal')
+        if event=='return' and code.co_name=='read_bytes' and type(arg) is bytes:
+            p=frame.f_locals.get('self');category=meta['categories'].get(str(p))
+            if category:count('retained_bytes_'+category,len(arg))
+        if event=='return' and label=='snapshot_blob' and type(arg) is tuple and type(arg[0]) is bytes:
+            category=meta['categories'].get(str(frame.f_locals.get('path')))
+            if category:count('bounded_blob_bytes_'+category,len(arg[0]))
+        if event=='c_return' and getattr(arg,'__name__',None)=='close' and isinstance(getattr(arg,'__self__',None),sqlite3.Connection):
+            ident=id(arg.__self__)
+            if ident in live_connections:live_connections.remove(ident);totals['SQLite_closed']+=1
+        if event=='call' and code.co_filename==str(ROOT/'labflow/store.py'):
+            if code.co_qualname=='Store.__init__':count('Store_constructor')
+            if code.co_qualname=='Store.open_existing':count('Store_open_existing')
+        if event=='call' and code.co_filename==str(ROOT/'labflow/document_extract.py') and code.co_name=='extract_document':count('document_reparse')
+        return profile
+    sys.addaudithook(audit);sys.setprofile(profile);threading.setprofile(profile)
+    try:
+        if mode=='none':
+            assert 'labflow.intake_reference_review' not in sys.modules
+            # Exercise040's catalog-only path without a Store/reference runtime.
+            from tests.test_intake_case_references import catalog_fixture
+            lazy=create_server(folder/'state',port=0,fcc_case_catalog=catalog_fixture());lazy_port=lazy.server_port;lazy.server_close()
+            probe=socket.socket();probe.bind(('127.0.0.1',lazy_port));probe.close()
+            assert 'labflow.intake_reference_review' not in sys.modules
+            server=create_server(folder/'state',port=0)
+        else:
+            import labflow.intake_reference_review as review
+            import labflow.intake_reference_ledger as ledger
+            import labflow.intake_reference_snapshot as snapshot
+            unwrap=lambda f:getattr(f,'__wrapped__',f).__code__
+            codes.update({unwrap(review.read_reference_review):'parent042',unwrap(ledger.reference_history):'ledger_history',
+                          unwrap(ledger.current_reference):'ledger_current',unwrap(snapshot.capture_intake_reference_snapshot_in_transaction):'capture034',
+                          snapshot._blob.__code__:'snapshot_blob'})
+            store=Store.open_existing(str(folder/'state'))
+            server=create_server(store.root,port=0,intake_reference_store=store,intake_reference_read_scope=() if mode=='deny' else 'workspace')
+        assert server.server_port not in (8765,8766)
+        loop=threading.Thread(target=server.serve_forever,kwargs={'poll_interval':.02},name='F2-real049-loop');loop.start()
+        phase=mode
+        emit({'ready':True,'port':server.server_port,'mode':mode,'reference_module_loaded':'labflow.intake_reference_review' in sys.modules,
+              'startup':stats.get('startup',{}),'startup_SQLite':dict(totals),'catalog_only_040_closed_port_rebound':mode=='none',
+              'formal_server':type(server).__module__=='labflow.ui_server' or mode=='none'})
+        def close():
+            close_started.set()
+            try:
+                if mode=='none':server.shutdown()
+                server.server_close()
+            except BaseException:state['close_error']=True
+            finally:close_done.set()
+        def report():
+            return {'stats':stats,'SQLite':totals,'SQLite_live':len(live_connections),'entered':entered.is_set(),
+                    'close_started':close_started.is_set(),'close_done':close_done.is_set(),'gate_timed_out':state['gate_timed_out'],
+                    'reference_module_loaded':'labflow.intake_reference_review' in sys.modules}
+        for line in sys.stdin:
+            command=json.loads(line);op=command['op']
+            if op=='report':emit(report())
+            elif op=='arm':phase='lifecycle';state['armed']=True;emit({'armed':True})
+            elif op=='expire':
+                phase='session_expiry_fault';clock=server._reference_runtime.clock
+                server._reference_runtime.clock=lambda:clock()+901
+                emit({'clock_advanced_for_expiry':True})
+            elif op=='restart_phase':phase='anonymous_restart';emit({'restart_phase':True})
+            elif op=='wait':emit({'entered':entered.wait(8)})
+            elif op=='begin_close':
+                closer=threading.Thread(target=close,name='F2-caller-close');closer.start();assert close_started.wait(2);time.sleep(.1);emit(report())
+            elif op=='release':release.set();emit({'released':True})
+            elif op=='finish':
+                release.set()
+                if closer is None:closer=threading.Thread(target=close,name='F2-caller-close');closer.start()
+                assert close_done.wait(12) and not state['close_error'];closer.join(2);loop.join(2);assert not loop.is_alive()
+                phase='after_HTTP';monitor['enabled']=False;sys.setprofile(None);threading.setprofile(None)
+                borrowed_usable=False;blocked=0;targets=[folder,folder/'state',folder/'state/blobs',folder/'state/lab.sqlite3']
+                def move_roundtrip(p):
+                    bound=folder.parent.resolve();a=p.resolve();b=p.with_name(p.name+'.native-move').resolve()
+                    assert a.is_relative_to(bound) and b.is_relative_to(bound) and not b.exists()
+                    p.rename(b);b.rename(p)
+                if store:
+                    with store.connection() as con:borrowed_usable=con.execute('SELECT count(*) FROM intakes').fetchone()[0]==1
+                    for p in targets:
+                        try:move_roundtrip(p)
+                        except OSError:blocked+=1
+                    assert blocked==4;store.close();store=None
+                released=0
+                for p in reversed(targets):move_roundtrip(p);released+=1
+                after_db=database(folder);after_files=fingerprint(folder)
+                assert after_db==meta['database'] and after_files==meta['files']
+                probe=socket.socket();probe.bind(('127.0.0.1',server.server_port));probe.close()
+                final=report();final.update({'closed':True,'loop_closed':True,'borrowed_store_usable_after_host':borrowed_usable,
+                    'native_blocked':blocked,'native_released':released,'inputs_unchanged':True,'port_rebound':True,'mode':mode})
+                emit(final);return
+            else:raise AssertionError('unknown_supervisor_command')
+    finally:
+        release.set()
+        if server is not None:
+            try:server.server_close()
+            except BaseException:pass
+        if loop:loop.join(3)
+        if store:store.close()
+        sys.setprofile(None);threading.setprofile(None)
+
+if __name__=='__main__':
+    try:
+        assert len(sys.argv) in (4,5)
+        folder=Path(sys.argv[3]).resolve();assert folder.is_relative_to(ROOT/'.local')
+        if sys.argv[2]=='prepare':prepare(folder)
+        elif sys.argv[2]=='serve':serve(folder,sys.argv[4])
+        else:raise AssertionError('invalid_supervisor_mode')
+    except BaseException as error:
+        frames=[];tb=error.__traceback__
+        while tb:
+            if tb.tb_frame.f_code.co_filename==__file__:frames.append(tb.tb_lineno)
+            tb=tb.tb_next
+        emit({'fatal':'integrated_supervisor_failed','type':type(error).__name__,'supervisor_lines':frames});sys.exit(1)
+`;
+/*050 F2 uses genuine049 in fresh Python children. No proxy, mock API or injected transport. */
+async function integratedMain(){
+ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+ const {createHash}=require('node:crypto'),{spawn,execFileSync}=require('node:child_process');
+ const root=fs.realpathSync(path.resolve(__dirname,'../..')),hash=b=>createHash('sha256').update(b).digest('hex');
+ const local=path.join(root,'.local');fs.mkdirSync(local,{recursive:true});const evidence=fs.mkdtempSync(path.join(local,'ir-f2-'));
+ const save=(n,v)=>fs.writeFileSync(path.join(evidence,n),JSON.stringify(v,null,2)+'\n',{flag:'wx'});
+ const sourcePins=()=>Object.fromEntries(execFileSync('git',['ls-files','-z','--','labflow','frontend','tests'],{cwd:root}).toString('utf8').split('\0').filter(Boolean).sort().map(n=>[n,hash(fs.readFileSync(path.join(root,n)))]));
+ const before=sourcePins(),checks=[],children=[],observations=[],errors=[],external=[],secrets=new Set();let browser,stage='initialization',failure;
+ const result={phase:'050 F2 genuine049 / public043-042 / native product frontend',checks,status:'fail',
+  P0_preparation_separate:true,phases:{},source_unchanged:false,browser_closed:false,children_closed:false,
+  backend_full_Python_executed:false,customer_PDF_model_hardware_executed:false};
+ result.retained_byte_observation_scope='snapshot._blob native returned bytes are a measured subset; audit counts all retained opens; total read bytes unknown';
+ save('source-pins-before.json',before);const helper=path.join(evidence,'supervisor.py');fs.writeFileSync(helper,INTEGRATED_SUPERVISOR,{flag:'wx'});
+ const python=path.join(root,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
+ const env={...process.env,PYTHONUTF8:'1',PYTHONDONTWRITEBYTECODE:'1'};delete env.PYTHONPATH;delete env.PYTHONHOME;
+ function launch(args){
+  const child=spawn(python,['-X','utf8','-B',helper,root,...args],{cwd:root,env,windowsHide:true,stdio:['pipe','pipe','pipe']});
+  const lines=[],waiters=[];let buffer='',stderrBytes=0,exitState=null;
+  const finishWaiters=()=>{while(waiters.length){const w=waiters.shift();clearTimeout(w.timer);w.reject(Error('supervisor_closed'));}};
+  const closed=new Promise(resolve=>child.on('close',(code,signal)=>{exitState={code,signal};finishWaiters();resolve(exitState);}));
+  child.on('error',()=>finishWaiters());child.stderr.on('data',b=>{stderrBytes+=b.length;});
+  child.stdout.on('data',b=>{buffer+=b.toString('utf8');while(buffer.includes('\n')){const end=buffer.indexOf('\n'),line=buffer.slice(0,end);buffer=buffer.slice(end+1);
+   let value;try{value=JSON.parse(line);}catch{value={fatal:'invalid_supervisor_frame'};}
+   if(waiters.length){const w=waiters.shift();clearTimeout(w.timer);w.resolve(value);}else lines.push(value);
+  }});
+  const next=(ms=20000)=>lines.length?Promise.resolve(lines.shift()):exitState?Promise.reject(Error('supervisor_closed')):new Promise((resolve,reject)=>{
+   const w={resolve,reject,timer:setTimeout(()=>{const at=waiters.indexOf(w);if(at>=0)waiters.splice(at,1);reject(Error('supervisor_timeout'));},ms)};waiters.push(w);
+  });
+  const api={child,closed,next,ask:async op=>{child.stdin.write(JSON.stringify(op)+'\n');const value=await next();if(value.fatal){api.fatal=value;throw Error('supervisor_failed');}return value;},get stderrBytes(){return stderrBytes;},get exitState(){return exitState;}};
+  children.push(api);return api;
+ }
+ const check=(name,fn)=>{stage=name;return Promise.resolve().then(fn).then(()=>checks.push(name));};
+ const quiet=async page=>{
+  await settle();for(const cookie of await page.context().cookies()){secrets.add(cookie.value);assert.equal(cookie.httpOnly,true);assert.equal(cookie.sameSite,'Strict');}
+  const values=await page.evaluate(()=>({body:document.documentElement.outerHTML,local:Object.entries(localStorage),session:Object.entries(sessionStorage),downloads:document.querySelectorAll('a[download]').length}));
+  assert.equal([...secrets].some(s=>s&&values.body.includes(s)),false,'private_value_in_DOM');assert.deepEqual(values.local,[]);assert.deepEqual(values.session,[]);assert.equal(values.downloads,0);
+ };
+ async function watch(page,origin,mode){
+  page.on('pageerror',()=>errors.push(mode));page.on('download',()=>errors.push('unexpected_download'));
+  page.on('request',request=>{if(!request.url().startsWith(origin+'/'))external.push(mode);});
+  page.on('response',response=>{const url=new URL(response.url());if(!url.pathname.startsWith('/api/intake-references/'))return;
+   const request=response.request();const record={phase:mode,kind:url.pathname.endsWith('/history')?'history':'current',method:request.method(),status:response.status()};
+   observations.push(record);
+   record.promise=(async()=>{
+    const headers=await request.allHeaders();record.origin_valid=record.kind!=='current'||headers.origin===origin;
+    record.csrf_shape=typeof headers['x-intake-reference-csrf']==='string'&&/^[a-f0-9]{64}$/.test(headers['x-intake-reference-csrf']);
+    record.cookie_present=!!headers.cookie;
+    if(record.kind==='current')record.exact_body2=JSON.stringify(request.postDataJSON())===JSON.stringify({schema_version:1,action:'current'});
+    const token=await response.headerValue('x-intake-reference-csrf');if(token)secrets.add(token);
+    record.response_csrf_shape=token!==null&&/^[a-f0-9]{64}$/.test(token);
+    record.read_allowed=await response.headerValue('x-intake-reference-read-allowed');
+   })().catch(()=>{record.observation_failed=true;});
+  });
+ }
+ const settle=async()=>{await Promise.all(observations.map(o=>o.promise));};
+ const ready=async page=>{await page.waitForFunction(()=>document.querySelector('.ir-history-status')?.dataset.state==='ready');};
+ const stopped=async host=>{const final=await host.ask({op:'finish'});const exit=await host.closed;assert.deepEqual(exit,{code:0,signal:null});assert.equal(host.stderrBytes,0);assert.equal(final.closed,true);assert.equal(final.loop_closed,true);assert.equal(final.SQLite_live,0);assert.equal(final.SQLite.SQLite_opened,final.SQLite.SQLite_closed);assert.equal(final.inputs_unchanged,true);assert.equal(final.port_rebound,true);return final;};
+ try{
+  stage='P0_public_fixture';const folder=path.join(evidence,'workspace');const preparation=launch(['prepare',folder]);
+  const prepared=await preparation.next();if(prepared.fatal){preparation.fatal=prepared;throw Error('fixture_failed');}
+  assert.deepEqual(await preparation.closed,{code:0,signal:null});assert.equal(preparation.stderrBytes,0);assert.equal(prepared.prepared,true);
+  result.P0=prepared;checks.push('public_P0_synthetic025_042_prepare_append_rows1_before_HTTP');
+  browser=await require('playwright').chromium.launch({headless:true});
+  for(const mode of ['none','deny','allow']){
+   stage=mode+'_startup';const host=launch(['serve',folder,mode]),initial=await host.next();if(initial.fatal){host.fatal=initial;throw Error('host_start_failed');}
+   assert.equal(initial.ready,true);const origin=`http://127.0.0.1:${initial.port}`;assert.equal(initial.startup.Store_constructor||0,0);
+   assert.equal(initial.startup.Store_open_existing||0,mode==='none'?0:1);result.phases[mode]={startup:initial};
+   const context=await browser.newContext({viewport:{width:1440,height:1000}}),page=await context.newPage();await watch(page,origin,mode);
+   if(mode==='none')await check('real049_static3_GET_HEAD6_raw_and_GitLF_MIME_CSP',async()=>{
+    const assets=[];
+    for(const name of ['model','view','transport']){
+     const route='/intake-references/'+name+'.mjs',file='frontend/intake_references/'+name+'.mjs';
+     const response=await fetch(origin+route);assert.equal(response.status,200);const raw=Buffer.from(await response.arrayBuffer()),disk=fs.readFileSync(path.join(root,file));assert.equal(raw.equals(disk),true);
+     assert.equal(response.headers.get('content-type'),'text/javascript; charset=utf-8');assert.equal(response.headers.get('cache-control'),'no-store');
+     assert.equal(response.headers.get('content-security-policy').includes("script-src 'self'"),true);
+     const canonical=execFileSync('git',['show','HEAD:'+file],{cwd:root});assert.equal(raw.toString('utf8').replace(/\r\n/g,'\n'),canonical.toString('utf8'));
+     const head=await fetch(origin+route,{method:'HEAD'});assert.equal(head.status,200);assert.equal((await head.arrayBuffer()).byteLength,0);assert.equal(Number(head.headers.get('content-length')),raw.length);
+     assets.push({name,GET:200,HEAD:200,raw_bytes:raw.length,raw_sha256:hash(raw),git_lf_bytes:canonical.length,git_lf_sha256:hash(canonical)});
+    }result.static3=assets;
+   });
+   stage=mode+'_root_app';await page.goto(origin);await page.locator('#detail-title').waitFor();await page.locator('.intake-reference-review').waitFor();
+   assert.equal(await page.locator('#intake-reference-panel').count(),1);assert.equal(await page.locator('#detail-panel #intake-reference-panel').count(),0);
+   assert.equal(await page.locator('#intake-reference-actions-panel').count(),0);await quiet(page);
+   if(mode==='none'){
+    await page.waitForFunction(()=>document.querySelector('.ir-history-status')?.dataset.state==='error');assert.equal(await page.locator('.ir-current-read').isDisabled(),true);
+    const report=await host.ask({op:'report'});assert.equal(report.reference_module_loaded,false);assert.equal(report.stats.none?.parent_history_started||0,0);
+    result.phases.none.final=await stopped(host);assert.equal(result.phases.none.final.reference_module_loaded,false);checks.push('None_and_040_catalog_lazy042_Store0_existing_intake_DOM');
+    await context.close();continue;
+   }
+   await ready(page);
+   await check(mode+'_first_history1_metadata_source0',async()=>{
+    const report=await host.ask({op:'report'}),s=report.stats[mode];assert.equal(s.parent_history_started,1);assert.equal(s.parent_history_normal,1);assert.equal(s.ledger_history,1);
+    assert.equal(s.parent_current_started||0,0);for(const kind of ['pdf','context','extraction'])assert.equal(s['retained_open_'+kind]||0,0);
+    assert.equal(await page.locator('.ir-history-results').innerText().then(t=>t.includes(prepared.record_id)),true);result.phases[mode].first_history=report;
+   });
+   if(mode==='deny'){
+    assert.equal(await page.locator('.ir-current-read').isDisabled(),true);
+    const denied=await page.evaluate(async id=>{const r=await fetch(`/api/intake-references/${id}/current`,{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json; charset=utf-8'},body:JSON.stringify({schema_version:1,action:'current'})});return {status:r.status,code:(await r.json()).error.code};},prepared.intake_id);
+    assert.deepEqual(denied,{status:403,code:'intake_reference_ui_access_denied'});const report=await host.ask({op:'report'});assert.equal(report.stats.deny.parent_current_started||0,0);
+    await quiet(page);await context.close();result.phases.deny.final=await stopped(host);checks.push('default_scope_false_current_disabled_direct403_parent0');continue;
+   }
+   await check('native_same_origin_explicit_current1_real042_038_034_source_bytes_no_reparse',async()=>{
+    assert.equal(await page.locator('.ir-current-read').isEnabled(),true);await page.locator('.ir-current-read').focus();await page.keyboard.press('Enter');
+    await page.waitForFunction(()=>document.querySelector('.ir-current-status')?.dataset.state==='current');const report=await host.ask({op:'report'}),s=report.stats.allow;
+    assert.equal(s.parent_current_started,1);assert.equal(s.parent_current_normal,1);assert.equal(s.ledger_current,1);assert.ok(s.capture034>0);
+    for(const kind of ['pdf','context','extraction']){assert.ok(s['retained_open_'+kind]>0);assert.ok((s['retained_bytes_'+kind]||0)+(s['bounded_blob_bytes_'+kind]||0)>0);}
+    assert.equal(s.document_reparse||0,0);assert.equal(s.subprocess_start||0,0);result.phases.allow.normal=report;
+   });
+   await check('genuine_DOM_public_record_CASE_A_literals_raw_KST_and_external_focus_390_1440',async()=>{
+    const text=await page.locator('.intake-reference-review').innerText();assert.equal(text.includes('CASE-A'),true);assert.equal(text.includes('false'),true);assert.equal(text.includes('null'),true);assert.equal(text.includes('KST'),true);
+    await page.locator('#search').focus();await quiet(page);await page.screenshot({path:path.join(evidence,'integrated-1440.png'),fullPage:true});
+    await page.setViewportSize({width:390,height:1000});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.equal(await page.locator('#search').evaluate(n=>n===document.activeElement),true);
+    await page.screenshot({path:path.join(evidence,'integrated-390.png'),fullPage:true});
+   });
+   await check('separate_expired_session403_no_parent_preserves_lastgood_and_anonymous_restart',async()=>{
+    const good=await page.locator('.ir-current-results').innerText();await host.ask({op:'expire'});await page.locator('.ir-current-read').click();
+    await page.waitForFunction(()=>document.querySelector('.ir-current-status')?.dataset.state==='error');assert.equal(await page.locator('.ir-current-results').innerText(),good);
+    const report=await host.ask({op:'report'});assert.equal(report.stats.session_expiry_fault?.parent_current_started||0,0);result.phases.expiry=report;
+   });
+   await quiet(page);await context.close();await host.ask({op:'restart_phase'});
+   const restarted=await browser.newContext({viewport:{width:1440,height:1000}}),active=await restarted.newPage();await watch(active,origin,'anonymous_restart');await active.goto(origin);await ready(active);
+   await host.ask({op:'arm'});await active.locator('.ir-current-read').click();assert.equal((await host.ask({op:'wait'})).entered,true);
+   await check('source1_queue0_second_tab_current429_real_metadata_allowed',async()=>{
+    const other=await restarted.newPage();await watch(other,origin,'lifecycle');await other.goto(origin);await ready(other);await other.locator('.ir-current-read').click();
+    await other.waitForFunction(()=>document.querySelector('.ir-current-status')?.dataset.state==='error');await settle();assert.equal(observations.some(o=>o.phase==='lifecycle'&&o.kind==='current'&&o.status===429),true);await quiet(other);await other.close();
+   });
+   await check('browser_abort_does_not_release_parent_close_waits_finally_and_caller_native_release',async()=>{
+    await active.close();await restarted.close();await browser.close();browser=null;result.browser_closed=true;const closing=await host.ask({op:'begin_close'});assert.equal(closing.close_started,true);assert.equal(closing.close_done,false);
+    assert.equal(closing.stats.lifecycle.parent_current_started,1);assert.equal(closing.stats.lifecycle.parent_current_returned||0,0);
+    await host.ask({op:'release'});const final=await stopped(host);assert.equal(final.stats.lifecycle.parent_current_normal,1);assert.equal(final.gate_timed_out,false);
+    assert.equal(final.borrowed_store_usable_after_host,true);assert.equal(final.native_blocked,4);assert.equal(final.native_released,4);assert.equal(final.SQLite_live,0);assert.equal(final.SQLite.SQLite_opened,final.SQLite.SQLite_closed);
+    assert.equal(final.inputs_unchanged,true);assert.equal(final.port_rebound,true);result.phases.allow.final=final;
+   });
+  }
+  await settle();for(const o of observations){assert.equal(o.observation_failed||false,false);if(o.kind==='history'&&o.status===200)assert.equal(o.response_csrf_shape,o.read_allowed==='true');if(o.kind==='current'&&o.status===200){assert.equal(o.csrf_shape,true);assert.equal(o.cookie_present,true);assert.equal(o.origin_valid,true);assert.equal(o.exact_body2,true);}}
+  assert.deepEqual(errors,[]);assert.deepEqual(external,[]);checks.push('no_secret_storage_download_external_JS_or_manual_origin_cookie_headers');
+ }catch(error){failure=error;save('failure.json',{stage,type:error.name,operator:error.operator,
+  actual:typeof error.actual==='number'||typeof error.actual==='boolean'?error.actual:null,expected:typeof error.expected==='number'||typeof error.expected==='boolean'?error.expected:null,
+  checker_lines:String(error.stack||'').split('\n').slice(1).filter(s=>s.includes(__filename+':')).map(s=>s.match(/:(\d+):\d+\)?$/)?.[1]),supervisor:children.filter(c=>c.fatal).map(c=>c.fatal)});}
+ finally{
+  try{if(browser)await browser.close();result.browser_closed=true;}catch{failure||=Error('browser_close_failed');}
+  for(const child of children){if(child.exitState)continue;try{await child.ask({op:'release'});await child.ask({op:'finish'});await child.closed;}catch{child.child.kill();await child.closed;failure||=Error('child_cleanup_failed');}}
+  result.children_closed=children.every(c=>c.exitState?.code===0&&c.exitState?.signal===null&&c.stderrBytes===0);
+  const after=sourcePins();save('source-pins-after.json',after);result.source_unchanged=JSON.stringify(before)===JSON.stringify(after);
+  result.javascript_errors=errors.length;result.external_requests=external.length;result.observations=observations.map(({promise,...o})=>o);
+  result.status=!failure&&result.browser_closed&&result.children_closed&&result.source_unchanged?'pass':'fail';save('result.json',result);
+ }
+ console.log(JSON.stringify({phase:result.phase,status:result.status,checks:checks.length,evidence:path.relative(root,evidence).split(path.sep).join('/'),result_sha256:hash(fs.readFileSync(path.join(evidence,'result.json')))}));
+ if(failure)throw Error('intake_reference_integrated_F2_failed');return result;
+}
+
 module.exports={createSyntheticBundle,main};
 if(require.main===module)main().catch(error=>{process.stderr.write(error.message+'\n');process.exitCode=1;});
