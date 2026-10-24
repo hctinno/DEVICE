@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+계약 후속(2026-10-24): [052 고정설계](../../docs/superpowers/specs/2026-10-24-intake-reference-actions-ui-design.md)/계획·[047 고정설계](../../docs/superpowers/specs/2026-10-24-intake-serve-design.md)/계획의 독립정적/공개delta Yes를 우선한다. 이번은 문서 고정이며 root027 기능/검증을 새제품PASS로세지않는다.
+
+| 담당 | 현재 실제 작업·소유·다음 조건 |
+| --- | --- |
+| 개발1 | 04920e26edf No/C0I3 소유3 수정. auth→lease 원자성/종료worker참조회수/nativeIO 모든mutex밖의 경계RED→검증→fix게시→독립재검토. 047A/new3는049최종인수뒤정확base별도배정 |
+| 개발2 | 052 private/public 정적Yes와 원No/erratum/증거보존. 후속053 trustedexact4/046→049 같은host 계약·소유3 제안. 현재049 변경/소유이관0, D1fix인수뒤명시이관과공개계약/base후구현 |
+| 개발3 | 051 actual985f46bb/new3 구현중·전용29/보존11·실제child별도/관련·전체회귀. 후보commit/push/정확증거뒤독립리뷰 |
+| 개발4 | 052 C1new4 exactbase배정뒤실제구현. v1+승인v2/22항수용을공개계약으로따름. A1/050/app/backend불변;C2는actualbackend/static1+050F2인수뒤app3/같은checker별도배정 |
+| 총괄 | 047/052 계약정확게시/원격대조→D4실제구현배정. root제품027보존,049/051 후보는독립최종Yes뒤소유정확통합/새회귀. 담당제품일괄대신0 |
+| P01 | B020a112d321 공개cutoff/대상17·650·official0/전수unknown. B021 metadata5묶음86payload 인수ACK·PDF0/자료수불변.142/181은한정wrapper영역,다음공개대조는privatefollowup |
+
+원문/복호문/암호·실제측정값공개0·공유읽기전용·Un-licensed우선·raw/Licensed보류·사용자준비0을유지한다. 아래027은당시기능게시기록이다.
+
 최신 [통합027](INTEGRATION-027.md)을 우선한다. 실제 root 제품은048 저장읽기까지이며051 계약과050 F1 후보의완료를실제서버/화면통합으로합치지않는다.
 
 | 담당 | 현재 작업과 다음 연결 |

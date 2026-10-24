@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+계약 후속: [052 설계](../../docs/superpowers/specs/2026-10-24-intake-reference-actions-ui-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-reference-actions-ui.md) private/public 정적Yes 뒤 게시정확base/new4를개발4에실제구현배정한다. 개발1 049 No3 소유수정 우선·047 new3는049최종인수뒤, 개발2는053같은host계약준비/현소유이관0, 개발3은051 actual985f46bb/new3 구현/검증이다. root027기능/2092Python186Node는유지하며이번은제품PASS0이다. P01 B021 metadata86payload/새원문0 인수ACK와다음공개대조를privatefollowup으로구별한다. 사용자준비0·소유/원본/실패보존·[현재대장](NEXT-004.md)을따른다.
+
 최신 [통합027](INTEGRATION-027.md):048 exactee005850 신규3→기능339eaa50·독립최종Yes C0I0·새 Python2092/Node186·소스225 불변이다. staging40파일과정식읽기11을새RF실행과구별한다. 개발3은051 공개계약/계획 Yes 뒤 정확게시base/new3 구현, 개발1 049 현재검증/게시, 개발2 052독립계약검토, 개발4 C1보완으로잇는다. 050 F1최종Yes50a9와genuine049/F2미실행은별개다. P01 B020a112d321 공개exact/privateACK3·대상17/650·공식0/전수unknown·FOLLOWUP007 v055실제ACK2/입력30·사용자준비0을유지한다. [현재대장](NEXT-004.md)과최신privatefollowup을따르고아래026은당시기록이다.
 
 최신 [통합026](INTEGRATION-026.md):046 exact807f9cf 신규3→기능636b85d7·독립Yes C0/I0·새 Python2049/Node186·소스223 불변이다. genuine043/025/042 준비1·등록/재전송/예상거절 append3을 확인했으며 실제049 HTTP/DOM은 미실행이다. 개발1 049·개발3 048 현재 구현, 개발2 050 F1 3aa2c7d 독립 제품 리뷰, 개발4 후속F2 recipe를 잇는다. root app은accepted049/실제static3 뒤다. P01 B0181ef774de·95/95·60/60·대상16/603·공식0/전수unknown·v051 실제ACK3/입력34·사용자 준비0이다. [현재대장](NEXT-004.md)과 최신private followup을 따르며 아래025는 당시 기록이다.
