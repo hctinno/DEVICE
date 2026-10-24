@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "kind": "dut_manufacturer_acquisition_delta",
+  "provenance": {
+    "public_collection_commit": "ade1b91395c17f382e02cb1ae70f37daa04154c7",
+    "public_collection_path": "materials/inventory/FCC-PUBLIC-DUT-CONTROL-20261024-001-review.json",
+    "public_collection_sha256": "5ee6223b65febdc4273cd94aaf43b46154e20acf0b19c2db0d3bdab5d2491b20",
+    "source_request_id": "DEV-DUT-MANUFACTURER-010",
+    "main_prompt_sha256": "b1cb4f3ddaf32dd11227a039eadee889835594210796e7a544948acd327148df",
+    "parent_catalog_sha256": {
+      "dut_sources.json": "e561182cf35b72ed47c45de28bf921b53b3eb7d662a226f686535c346c6b9858",
+      "dut_paths.json": "3eb9d1d7623ddaa1f99ca1d3d50c749f184e7bb6a09767fc87800a9288dfe77b"
+    },
+    "relationship": "later_acquisition_metadata_without_rewriting_the_parent_snapshot"
+  },
+  "counts": {
+    "source_groups": 6,
+    "source_file_references": 22,
+    "new_whole_repository_archives": 0,
+    "public_original_or_code_payload_files": 0
+  },
+  "records": [
+    {
+      "reference_id": "qualcomm_diag",
+      "acquisition_scope": "selected_private_source_files_or_reference_document",
+      "selected_file_hashes_independently_verified": true,
+      "whole_repository_archive_acquired": false,
+      "record": {
+        "source_id": "DUT-CONTROL-QCSUPER-001",
+        "repository": "P1sec/QCSuper",
+        "repository_commit": "65e14771804cec8fe70ffb55552da9d85721f0eb",
+        "commit_url": "https://github.com/P1sec/QCSuper/commit/65e14771804cec8fe70ffb55552da9d85721f0eb",
+        "authority": "community_project_primary_source",
+        "declared_package_version": "2.1.4",
+        "requires_python": ">=3.7",
+        "license_basis": "Package LICENSE pointer and byte-matched fullGNU GPLv3 text; only/or-later not inferred from template.",
+        "scope": "DIAG transport, cellular logging and offlineDLF static comparison; USB and ADB paths distinct.",
+        "limits": [
+          "Constructor/setup includes state changes and is not adopted as a passive read step.",
+          "Response/exit/cleanup and four5-second default waits do not prove RFapplication/stop or total timeout bound.",
+          "HDLC, external/bundled binaries and transitive runtime/license closure not acquired."
+        ],
+        "files": [
+          {
+            "primary_source_url": "https://github.com/P1sec/QCSuper/blob/65e14771804cec8fe70ffb55552da9d85721f0eb/README.md",
+            "download_url": "https://raw.githubusercontent.com/P1sec/QCSuper/65e14771804cec8fe70ffb55552da9d85721f0eb/README.md",
+            "sha256": "42792b597458563412e7833f6d23afad2b86135288107125b232c6b39ce0b678",
+            "bytes": 32652,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/P1sec/QCSuper/blob/65e14771804cec8fe70ffb55552da9d85721f0eb/pyproject.toml",
+            "download_url": "https://raw.githubusercontent.com/P1sec/QCSuper/65e14771804cec8fe70ffb55552da9d85721f0eb/pyproject.toml",
+            "sha256": "68e75910ae7f294c0ee88ba77b14f5036043612788e6cdf9d98ded0c45da6dad",
+            "bytes": 2337,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/P1sec/QCSuper/blob/65e14771804cec8fe70ffb55552da9d85721f0eb/src/qcsuper/inputs/_base_input.py",
+            "download_url": "https://raw.githubusercontent.com/P1sec/QCSuper/65e14771804cec8fe70ffb55552da9d85721f0eb/src/qcsuper/inputs/_base_input.py",
+            "sha256": "81f677a0e95737cdf53f3ec4c2b23b7f25e107694f7a78408f70abc69f6ea489",
+            "bytes": 16339,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/P1sec/QCSuper/blob/65e14771804cec8fe70ffb55552da9d85721f0eb/src/qcsuper/inputs/usb_modem_pyusb.py",
+            "download_url": "https://raw.githubusercontent.com/P1sec/QCSuper/65e14771804cec8fe70ffb55552da9d85721f0eb/src/qcsuper/inputs/usb_modem_pyusb.py",
+            "sha256": "3dd697fff5c4959dc5d16d02a41a3f11bf91b2ecb3e3e4cc02d16a4426162408",
+            "bytes": 4388,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/P1sec/QCSuper/blob/65e14771804cec8fe70ffb55552da9d85721f0eb/src/qcsuper/inputs/adb.py",
+            "download_url": "https://raw.githubusercontent.com/P1sec/QCSuper/65e14771804cec8fe70ffb55552da9d85721f0eb/src/qcsuper/inputs/adb.py",
+            "sha256": "8b0030d0929c2a9653e3c0dd40276b79e0066748e6c0c3470ce9672abfb843d1",
+            "bytes": 16615,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/P1sec/QCSuper/blob/65e14771804cec8fe70ffb55552da9d85721f0eb/src/qcsuper/inputs/dlf_read.py",
+            "download_url": "https://raw.githubusercontent.com/P1sec/QCSuper/65e14771804cec8fe70ffb55552da9d85721f0eb/src/qcsuper/inputs/dlf_read.py",
+            "sha256": "d655aaf463ae0dfa0d812e814562cf3d50d3a9cef68e1e6fbf422a047297ffaf",
+            "bytes": 2214,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/P1sec/QCSuper/blob/65e14771804cec8fe70ffb55552da9d85721f0eb/LICENSE",
+            "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+            "bytes": 35147,
+            "public_payload_included": false,
+            "scope": "PinnedQCSuperLICENSE byte-match to retained fullGNU GPLv3 text; project package points to LICENSE.",
+            "new_distinct_payload_original": false
+          }
+        ],
+        "source_reuse_publication_approved": false,
+        "device_or_Firmware_support": "not_assessed",
+        "runtime_or_physical_validation": false
+      }
+    },
+    {
+      "reference_id": "samsung_at_legacy",
+      "acquisition_scope": "selected_private_source_files_or_reference_document",
+      "selected_file_hashes_independently_verified": true,
+      "whole_repository_archive_acquired": false,
+      "record": {
+        "source_id": "DUT-CONTROL-GALAXY-AT-001",
+        "repository": "apeppels/galaxy-at-tool",
+        "repository_commit": "a4247497cca7da96b9aaa7f533cff23e13ad6437",
+        "commit_url": "https://github.com/apeppels/galaxy-at-tool/commit/a4247497cca7da96b9aaa7f533cff23e13ad6437",
+        "authority": "community_project_primary_source",
+        "license_basis": "Explicit complete redistribution grant not verified in selected root/header evidence.",
+        "scope": "LegacyGalaxy USB/serial source and response parsing only.",
+        "limits": [
+          "Legacy target descriptions do not establish a current product/FW/transport binding.",
+          "Python3syntax fails; text-only review. Default private-data/state-changing routines are not adopted.",
+          "Unbound response-name and swallowed exceptions are static risks, not runtime reproduced defects."
+        ],
+        "files": [
+          {
+            "primary_source_url": "https://github.com/apeppels/galaxy-at-tool/blob/a4247497cca7da96b9aaa7f533cff23e13ad6437/README.md",
+            "download_url": "https://raw.githubusercontent.com/apeppels/galaxy-at-tool/a4247497cca7da96b9aaa7f533cff23e13ad6437/README.md",
+            "sha256": "a0327d0e999ebc18cae42a55dca33e63e45e07e7019e4976a56b8e5db00accbb",
+            "bytes": 2771,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/apeppels/galaxy-at-tool/blob/a4247497cca7da96b9aaa7f533cff23e13ad6437/galaxy_at_tool.py",
+            "download_url": "https://raw.githubusercontent.com/apeppels/galaxy-at-tool/a4247497cca7da96b9aaa7f533cff23e13ad6437/galaxy_at_tool.py",
+            "sha256": "14ded23d2eb7704f42870cb0f074bd31841949f10c94bf3320ad779f3d3a578a",
+            "bytes": 10658,
+            "public_payload_included": false
+          }
+        ],
+        "source_reuse_publication_approved": false,
+        "device_or_Firmware_support": "not_assessed",
+        "runtime_or_physical_validation": false
+      }
+    },
+    {
+      "reference_id": "android_at_research",
+      "acquisition_scope": "selected_private_source_files_or_reference_document",
+      "selected_file_hashes_independently_verified": true,
+      "whole_repository_archive_acquired": false,
+      "record": {
+        "source_id": "DUT-CONTROL-FICS-AT-001",
+        "repository": "FICS/atcmd",
+        "repository_commit": "766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5",
+        "commit_url": "https://github.com/FICS/atcmd/commit/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5",
+        "authority": "community_research_project_primary_source",
+        "license_basis": "No complete redistribution terms verified in inspected directories/headers; author/citation text is not treated as a complete grant.",
+        "scope": "Extract, interact, send and USBconfiguration components kept separate in static evidence.",
+        "limits": [
+          "No firmware extraction, AT enumeration/transmission, port switch or original program execution.",
+          "Two selectedPythonfiles parse underPython3; legacyinteract is text-only after syntax failure; C is not compiled.",
+          "Command dictionaries/exclusion lists are not device support, a safe allowlist or execution authorization."
+        ],
+        "files": [
+          {
+            "primary_source_url": "https://github.com/FICS/atcmd/blob/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/README.md",
+            "download_url": "https://raw.githubusercontent.com/FICS/atcmd/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/README.md",
+            "sha256": "58bc847b11defd892c7548f5b65eeef21f823770e6c26ecdd3cdc20d20027e85",
+            "bytes": 1663,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/FICS/atcmd/blob/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/extract/README.md",
+            "download_url": "https://raw.githubusercontent.com/FICS/atcmd/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/extract/README.md",
+            "sha256": "1182acb02c30a199929b1d558b64691bdd534d38a14159fadd9b648d522eb1e7",
+            "bytes": 11461,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/FICS/atcmd/blob/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/send/at_cmds.py",
+            "download_url": "https://raw.githubusercontent.com/FICS/atcmd/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/send/at_cmds.py",
+            "sha256": "1cb37531e5d54dc014b6d5413b8eff62814be0eb093a5ae77e85628750dc4cdd",
+            "bytes": 2301,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/FICS/atcmd/blob/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/interact/atinteract.py",
+            "download_url": "https://raw.githubusercontent.com/FICS/atcmd/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/interact/atinteract.py",
+            "sha256": "b3d7a6a20b084654a876680d415f63c7fe111a0e6b88acd147f2f804d605abd9",
+            "bytes": 3641,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/FICS/atcmd/blob/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/send/atsend.py",
+            "download_url": "https://raw.githubusercontent.com/FICS/atcmd/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/send/atsend.py",
+            "sha256": "e0e7f22428dfe0eb8f5efeed60ced57737b800d099156442d433770090db75ea",
+            "bytes": 5660,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://github.com/FICS/atcmd/blob/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/usbswitch/usbswitcher.c",
+            "download_url": "https://raw.githubusercontent.com/FICS/atcmd/766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5/usbswitch/usbswitcher.c",
+            "sha256": "f249e54a2659eb1a272682a2e4dae84cd8427cc51a746e14b5cf61eb6dd4b089",
+            "bytes": 3881,
+            "public_payload_included": false
+          }
+        ],
+        "source_reuse_publication_approved": false,
+        "device_or_Firmware_support": "not_assessed",
+        "runtime_or_physical_validation": false
+      }
+    },
+    {
+      "reference_id": "qualcomm_ath10k_testmode",
+      "acquisition_scope": "selected_private_source_files_or_reference_document",
+      "selected_file_hashes_independently_verified": true,
+      "whole_repository_archive_acquired": false,
+      "record": {
+        "source_id": "DUT-CONTROL-ATH10K-001",
+        "repository": "torvalds/linux",
+        "repository_commit": "17bb0e2f6c8043f70a693a5f3797471cbed354c8",
+        "commit_url": "https://github.com/torvalds/linux/commit/17bb0e2f6c8043f70a693a5f3797471cbed354c8",
+        "authority": "upstream_OS_project_primary_source",
+        "license_basis": "SelectedfileISCidentifiers and samecommit LICENSES/deprecated/ISC fulltext retained; additionalNOTICE/dependency/FW rights separate.",
+        "scope": "Three exact ath10k testmode files; UTFstate, WMI/TLV forwarding and response/stop bounds.",
+        "limits": [
+          "Disabled configuration has empty/false/zero stubs; success0 is not proof of execution.",
+          "Driver state/forwarding result is not observedRFapplication/completion/stop.",
+          "Matching chip, boarddata, build options and testfirmware are unverified; no firmware or fullkernel acquired."
+        ],
+        "files": [
+          {
+            "primary_source_url": "https://raw.githubusercontent.com/torvalds/linux/17bb0e2f6c8043f70a693a5f3797471cbed354c8/drivers/net/wireless/ath/ath10k/testmode.c",
+            "download_url": "https://raw.githubusercontent.com/torvalds/linux/17bb0e2f6c8043f70a693a5f3797471cbed354c8/drivers/net/wireless/ath/ath10k/testmode.c",
+            "sha256": "237c5ec49e0fdce1ac70a34f1c46e6f69dafb94e10167d9c8f48363a12851307",
+            "bytes": 16594,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://raw.githubusercontent.com/torvalds/linux/17bb0e2f6c8043f70a693a5f3797471cbed354c8/drivers/net/wireless/ath/ath10k/testmode.h",
+            "download_url": "https://raw.githubusercontent.com/torvalds/linux/17bb0e2f6c8043f70a693a5f3797471cbed354c8/drivers/net/wireless/ath/ath10k/testmode.h",
+            "sha256": "7a9c690022031036b0c148aa253f6f60c6ab3a66b956398098b2b03011784464",
+            "bytes": 696,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://raw.githubusercontent.com/torvalds/linux/17bb0e2f6c8043f70a693a5f3797471cbed354c8/drivers/net/wireless/ath/ath10k/testmode_i.h",
+            "download_url": "https://raw.githubusercontent.com/torvalds/linux/17bb0e2f6c8043f70a693a5f3797471cbed354c8/drivers/net/wireless/ath/ath10k/testmode_i.h",
+            "sha256": "11259ab47873e64b0d3fa6b915a63c50573246e5fa86aaf7e3f6a322974274df",
+            "bytes": 2394,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://raw.githubusercontent.com/torvalds/linux/17bb0e2f6c8043f70a693a5f3797471cbed354c8/LICENSES/deprecated/ISC",
+            "download_url": "https://raw.githubusercontent.com/torvalds/linux/17bb0e2f6c8043f70a693a5f3797471cbed354c8/LICENSES/deprecated/ISC",
+            "sha256": "cbdf535b99a9f4cb208c5495c6dd9a1f84104d83c03f8f0d98ee7a0c43805388",
+            "bytes": 1046,
+            "public_payload_included": false
+          }
+        ],
+        "source_reuse_publication_approved": false,
+        "device_or_Firmware_support": "not_assessed",
+        "runtime_or_physical_validation": false
+      }
+    },
+    {
+      "reference_id": "samsung_legacy_muic",
+      "acquisition_scope": "selected_private_source_files_or_reference_document",
+      "selected_file_hashes_independently_verified": true,
+      "whole_repository_archive_acquired": false,
+      "record": {
+        "source_id": "DUT-CONTROL-LEGACY-MUIC-001",
+        "repository": "LineageOS/android_kernel_samsung_universal8890",
+        "repository_commit": "33ca16cbaf4bd144df3beef64283302c0aa35eed",
+        "commit_url": "https://github.com/LineageOS/android_kernel_samsung_universal8890/commit/33ca16cbaf4bd144df3beef64283302c0aa35eed",
+        "authority": "community_OS_project_primary_source",
+        "license_basis": "SelectedheaderGPL2-or-later wording and repositoryGPLv2COPYING retained separately.",
+        "scope": "Exact legacy MUIC header enum and path/callback declarations.",
+        "limits": [
+          "Enum comments do not establish wiring or implemented board callbacks.",
+          "ModernUSB-C/AnyWay behavior, universal power-on and current product/FW applicability remain unknown."
+        ],
+        "files": [
+          {
+            "primary_source_url": "https://raw.githubusercontent.com/LineageOS/android_kernel_samsung_universal8890/33ca16cbaf4bd144df3beef64283302c0aa35eed/include/linux/muic/muic.h",
+            "download_url": "https://raw.githubusercontent.com/LineageOS/android_kernel_samsung_universal8890/33ca16cbaf4bd144df3beef64283302c0aa35eed/include/linux/muic/muic.h",
+            "sha256": "82baf90addb9bd1987f2d4ee203f4d1a0f81c3a019e1322e49826e4c543d73b0",
+            "bytes": 7002,
+            "public_payload_included": false
+          },
+          {
+            "primary_source_url": "https://raw.githubusercontent.com/LineageOS/android_kernel_samsung_universal8890/33ca16cbaf4bd144df3beef64283302c0aa35eed/COPYING",
+            "download_url": "https://raw.githubusercontent.com/LineageOS/android_kernel_samsung_universal8890/33ca16cbaf4bd144df3beef64283302c0aa35eed/COPYING",
+            "sha256": "af8067302947c01fd9eee72befa54c7e3ef8a48fecde7fd71277f2290b2bf0f7",
+            "bytes": 18693,
+            "public_payload_included": false
+          }
+        ],
+        "source_reuse_publication_approved": false,
+        "device_or_Firmware_support": "not_assessed",
+        "runtime_or_physical_validation": false
+      }
+    },
+    {
+      "reference_id": "etsi_at_reference",
+      "acquisition_scope": "selected_private_source_files_or_reference_document",
+      "selected_file_hashes_independently_verified": true,
+      "whole_repository_archive_acquired": false,
+      "record": {
+        "source_id": "DUT-CONTROL-ETSI-REFERENCE-001",
+        "title": "ETSI TS127007V18.8.0(2025-01)",
+        "authority": "official_standard_publisher",
+        "license_basis": "ETSIcopyright2025/allrightsreserved; original/body not publicly redistributed.",
+        "scope": "Bounded8.2CFUN/8.37CLAC reference semantics only.",
+        "physical_pages": [
+          119,
+          120,
+          152
+        ],
+        "printed_pages": [
+          118,
+          119,
+          151
+        ],
+        "limits": [
+          "CLAC is optional and lists user-available commands, not all hiddenOEM commands or arguments.",
+          "CFUNfunctional levels/reset do not establish a fullWi-FiRFtest API.",
+          "Current applicable edition, product implementation and regulatory acceptance are not approved."
+        ],
+        "files": [
+          {
+            "primary_source_url": "https://www.etsi.org/deliver/etsi_ts/127000_127099/127007/18.08.00_60/ts_127007v180800p.pdf",
+            "download_url": "https://www.etsi.org/deliver/etsi_ts/127000_127099/127007/18.08.00_60/ts_127007v180800p.pdf",
+            "sha256": "2f23ecaf2bd5ee3155a810405c3c6640a32d6b6bd68860ac12fb3f8fa4fc15eb",
+            "bytes": 2481630,
+            "public_payload_included": false
+          }
+        ],
+        "source_reuse_publication_approved": false,
+        "device_or_Firmware_support": "not_assessed",
+        "runtime_or_physical_validation": false
+      }
+    }
+  ],
+  "support_status": "not_assessed",
+  "hardware_verified": false,
+  "source_code_executed": false,
+  "automatic_fallback_enabled": false,
+  "source_reuse_publication_approved": false
+}
