@@ -17,6 +17,7 @@ const exact=(value,keys)=>need(value && !Array.isArray(value) && Object.keys(val
 const hex=(value,length)=>need(typeof value==='string' && value.length===length && /^[a-f0-9]+$/.test(value));
 const sourceId=value=>need(typeof value==='string' && value.length===7 && /^DUT-[AGS][0-9]{2}$/.test(value));
 const backendId=value=>need(typeof value==='string' && value.length>=1 && value.length<=80 && /^[a-z]/.test(value) && !/[^a-z0-9_]/.test(value));
+const referenceId=value=>need(typeof value==='string' && value.length>=1 && value.length<=96 && /^[a-z]/.test(value) && !/[^a-z0-9_]/.test(value));
 const memberPath=value=>{text(value);need(value && !/^[A-Za-z]:|^\/|\\|(?:^|\/)\.\.(?:\/|$)/.test(value));};
 function clone(input){
   let nodes=0;
@@ -99,4 +100,55 @@ export function formatAdbIndependence(value){return checked(()=>{
   need(typeof value==='string' && Object.hasOwn(labels,value));return labels[value]+' ('+value+')';
 });}
 export function safeDutSourceHref(value){try{if(typeof value!=='string' || !/^https?:\/\//i.test(value) || /[\s\u0000-\u001F\u007F\\]/.test(value))return null;const url=new URL(value);return ['http:','https:'].includes(url.protocol) && !url.username && !url.password?url.href:null;}catch{return null;}}
-export function createDutReadGate(){let generation=0,current=null;return {begin(kind,id){if(kind==='route')backendId(id);else if(kind==='source')sourceId(id);else need(kind==='references' && id===null);current=Object.freeze({generation:++generation,kind,id});return current;},clear(){generation++;current=null;},current(ticket){return ticket!==null && ticket===current;}};}
+export function createDutReadGate(){let generation=0,current=null;return {begin(kind,id){if(kind==='route')backendId(id);else if(kind==='source')sourceId(id);else if(kind==='acquisition')referenceId(id);else need(kind==='references' && id===null);current=Object.freeze({generation:++generation,kind,id});return current;},clear(){generation++;current=null;},current(ticket){return ticket!==null && ticket===current;}};}
+
+const DELTA_RECORDS=Object.freeze([
+ ['qualcomm_diag','DUT-CONTROL-QCSUPER-001','65e14771804cec8fe70ffb55552da9d85721f0eb',7],
+ ['samsung_at_legacy','DUT-CONTROL-GALAXY-AT-001','a4247497cca7da96b9aaa7f533cff23e13ad6437',2],
+ ['android_at_research','DUT-CONTROL-FICS-AT-001','766a6b918289f5c2f4c3e1b82a65b964e4a0c8f5',6],
+ ['qualcomm_ath10k_testmode','DUT-CONTROL-ATH10K-001','17bb0e2f6c8043f70a693a5f3797471cbed354c8',4],
+ ['samsung_legacy_muic','DUT-CONTROL-LEGACY-MUIC-001','33ca16cbaf4bd144df3beef64283302c0aa35eed',2],
+ ['etsi_at_reference','DUT-CONTROL-ETSI-REFERENCE-001',null,1]
+]);
+function deltaCommon(value,kind){
+ need(value.schema_version===1 && value.kind===kind && value.catalog_state==='read_only_acquisition_delta');
+ need(value.support_status==='not_assessed' && value.hardware_verified===false && value.source_code_executed===false && value.automatic_fallback_enabled===false);
+}
+function snapshotReference(value,id){
+ exact(value,'reference_id url review_scope file_path_if_known file_blob_oid_if_verified repository_commit_pinned whole_repository_archive_acquired new_local_source_copy_saved target_device_support reuse_license_review');
+ referenceId(id);need(REFERENCE_IDS.includes(id) && value.reference_id===id);text(value.url);text(value.review_scope);
+ if(value.file_path_if_known!==null)memberPath(value.file_path_if_known);if(value.file_blob_oid_if_verified!==null)hex(value.file_blob_oid_if_verified,40);
+ need(value.repository_commit_pinned===null && value.whole_repository_archive_acquired===false && value.new_local_source_copy_saved===false && value.target_device_support==='not_verified' && value.reuse_license_review==='required_per_file_before_reuse');
+}
+function acquisitionRecord(value,id){
+ const expected=DELTA_RECORDS.find(row=>row[0]===id);need(expected);
+ exact(value,'reference_id acquisition_scope selected_file_hashes_independently_verified whole_repository_archive_acquired record');
+ need(value.reference_id===id && value.acquisition_scope==='selected_private_source_files_or_reference_document' && value.selected_file_hashes_independently_verified===true && value.whole_repository_archive_acquired===false);
+ const record=value.record,keys='source_id authority license_basis scope limits files source_reuse_publication_approved device_or_Firmware_support runtime_or_physical_validation';
+ exact(record,keys+(expected[2]===null?' title physical_pages printed_pages':' repository repository_commit commit_url')+(id==='qualcomm_diag'?' declared_package_version requires_python':''));
+ need(record.source_id===expected[1] && record.source_reuse_publication_approved===false && record.device_or_Firmware_support==='not_assessed' && record.runtime_or_physical_validation===false);
+ for(const key of ['authority','license_basis','scope'])text(record[key]);strings(record.limits);
+ if(expected[2]!==null){text(record.repository);text(record.commit_url);need(record.repository_commit===expected[2]);}
+ else{ text(record.title);for(const key of ['physical_pages','printed_pages']){array(record[key]);record[key].forEach(page=>{count(page);need(page>0);});}need(record.physical_pages.join(',')==='119,120,152' && record.printed_pages.join(',')==='118,119,151');}
+ if(id==='qualcomm_diag'){text(record.declared_package_version);text(record.requires_python);}
+ array(record.files);need(record.files.length===expected[3]);const seen=new Set();
+ record.files.forEach((file,index)=>{
+  const reused=id==='qualcomm_diag' && index===6;
+  exact(file,'primary_source_url sha256 bytes public_payload_included'+(reused?' scope new_distinct_payload_original':' download_url'));
+  text(file.primary_source_url);need(!seen.has(file.primary_source_url));seen.add(file.primary_source_url);hex(file.sha256,64);count(file.bytes);need(file.bytes>0 && file.public_payload_included===false);
+  if(reused){text(file.scope);need(file.new_distinct_payload_original===false);}else text(file.download_url);
+ });
+}
+export function validateDutAcquisitionSummary(input){return checked(()=>{
+ const value=clone(input);exact(value,'schema_version kind catalog_state counts provenance support_status hardware_verified source_code_executed automatic_fallback_enabled source_reuse_publication_approved');deltaCommon(value,'dut_manufacturer_delta_summary');need(value.source_reuse_publication_approved===false);
+ exact(value.counts,'source_groups source_file_references new_whole_repository_archives public_original_or_code_payload_files');
+ for(const [key,number] of Object.entries({source_groups:6,source_file_references:22,new_whole_repository_archives:0,public_original_or_code_payload_files:0}))need(value.counts[key]===number);
+ const provenance=value.provenance;exact(provenance,'public_collection_commit public_collection_path public_collection_sha256 source_request_id main_prompt_sha256 parent_catalog_sha256 relationship');
+ hex(provenance.public_collection_commit,40);hex(provenance.public_collection_sha256,64);hex(provenance.main_prompt_sha256,64);memberPath(provenance.public_collection_path);text(provenance.source_request_id);need(provenance.relationship==='later_acquisition_metadata_without_rewriting_the_parent_snapshot');
+ exact(provenance.parent_catalog_sha256,'dut_sources.json dut_paths.json');need(provenance.parent_catalog_sha256['dut_sources.json']==='e561182cf35b72ed47c45de28bf921b53b3eb7d662a226f686535c346c6b9858' && provenance.parent_catalog_sha256['dut_paths.json']==='3eb9d1d7623ddaa1f99ca1d3d50c749f184e7bb6a09767fc87800a9288dfe77b');return value;
+});}
+export function validateDutAcquisitionRecords(input){return checked(()=>{const value=clone(input);array(value);need(value.length===6);value.forEach((record,index)=>acquisitionRecord(record,DELTA_RECORDS[index][0]));return value;});}
+export function validateDutAcquisitionReference(input,expectedId){return checked(()=>{
+ referenceId(expectedId);need(REFERENCE_IDS.includes(expectedId));const value=clone(input);exact(value,'schema_version kind catalog_state reference_id snapshot_reference acquisition_delta support_status hardware_verified source_code_executed automatic_fallback_enabled');deltaCommon(value,'dut_manufacturer_reference');need(value.reference_id===expectedId);snapshotReference(value.snapshot_reference,expectedId);
+ if(DELTA_RECORDS.some(row=>row[0]===expectedId))acquisitionRecord(value.acquisition_delta,expectedId);else need(value.acquisition_delta===null);return value;
+});}

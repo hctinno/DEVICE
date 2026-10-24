@@ -2,6 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import * as dutModel from './model.mjs';
 import {validateDutSourceRecord,validateDutRouteRecord,formatAdbIndependence,safeDutSourceHref,createDutReadGate,
  validateDutSummary,validateDutRoutes,validateDutRoute,validateDutSource,validateDutReferences} from './model.mjs';
 const read=name=>JSON.parse(fs.readFileSync(new URL('../../control_sources/'+name,import.meta.url),'utf8'));
@@ -72,4 +73,45 @@ test('manufacturing references preserve two acquired members and nine unacquired
   v=>v.already_acquired_member_checks[0].product_support='supported',v=>v.additional_reviewed_references.pop()]){
   const bad=structuredClone(value);mutate(bad);assert.throws(()=>validateDutReferences(bad),/invalid_dut_catalog_response/);
  }
+});
+
+// DELTA015 DTO fixtures, never actual API evidence.
+const delta=read('dut_manufacturer_delta.json');
+const deltaCommon=kind=>({schema_version:1,kind,catalog_state:'read_only_acquisition_delta',...flags});
+const deltaSummary=()=>structuredClone({...deltaCommon('dut_manufacturer_delta_summary'),counts:delta.counts,provenance:delta.provenance,source_reuse_publication_approved:false});
+const deltaReference=id=>structuredClone({...deltaCommon('dut_manufacturer_reference'),reference_id:id,snapshot_reference:sources.manufacturing_references.additional_reviewed_references.find(row=>row.reference_id===id),acquisition_delta:delta.records.find(row=>row.reference_id===id) ?? null});
+test('delta exact ten-key summary distinguishes selected six groups and twenty-two private references',()=>{
+ assert.deepEqual(dutModel.validateDutAcquisitionSummary(deltaSummary()),deltaSummary());
+ for(const mutate of [v=>v.schema_version=true,v=>v.extra=1,v=>v.counts.source_groups=9,v=>v.counts.source_file_references=21,v=>v.counts.public_original_or_code_payload_files=1,v=>v.source_reuse_publication_approved=true,v=>v.hardware_verified=true,v=>v.provenance.parent_catalog_sha256['dut_paths.json']='0'.repeat(64)]){
+  const bad=deltaSummary();mutate(bad);assert.throws(()=>dutModel.validateDutAcquisitionSummary(bad),/^Error: invalid_dut_catalog_response$/);
+ }
+});
+test('delta six raw wrappers preserve optional fields and reused LICENSE without adding absent keys',()=>{
+ const copy=dutModel.validateDutAcquisitionRecords(delta.records);assert.deepEqual(copy,delta.records);
+ assert.equal(copy.reduce((sum,row)=>sum+row.record.files.length,0),22);
+ const license=copy[0].record.files.at(-1);assert(!Object.hasOwn(license,'download_url'));assert.equal(license.new_distinct_payload_original,false);
+ assert(!Object.hasOwn(copy[1].record,'requires_python'));assert(!Object.hasOwn(copy[1].record,'declared_package_version'));
+ assert.deepEqual(copy.at(-1).record.physical_pages,[119,120,152]);assert(!Object.hasOwn(copy.at(-1).record,'repository_commit'));
+ copy[0].record.files.pop();assert.equal(delta.records[0].record.files.length,7);
+});
+test('delta malformed identities links counts optional keys and support promotions cannot become success',()=>{
+ for(const mutate of [v=>v.pop(),v=>v.reverse(),v=>v[1].reference_id=v[0].reference_id,v=>v[0].record.source_id=v[1].record.source_id,
+  v=>v[0].whole_repository_archive_acquired=true,v=>v[0].record.runtime_or_physical_validation=true,v=>v[0].record.source_reuse_publication_approved=true,
+  v=>v[0].record.device_or_Firmware_support='supported',v=>v[0].record.files[0].public_payload_included=true,v=>delete v[0].record.files[0].sha256,
+  v=>v[0].record.files[0].bytes=true,v=>v[0].record.files.at(-1).new_distinct_payload_original=true,v=>v[1].record.requires_python=null]){
+  const bad=structuredClone(delta.records);mutate(bad);assert.throws(()=>dutModel.validateDutAcquisitionRecords(bad),/^Error: invalid_dut_catalog_response$/);
+ }
+});
+test('all nine delta reference DTOs retain literal old snapshot and six deltas with three explicit nulls',()=>{
+ let nulls=0;for(const record of sources.manufacturing_references.additional_reviewed_references){const value=deltaReference(record.reference_id),copy=dutModel.validateDutAcquisitionReference(value,record.reference_id);assert.deepEqual(copy,value);assert.equal(copy.snapshot_reference.repository_commit_pinned,null);assert.equal(copy.snapshot_reference.new_local_source_copy_saved,false);if(copy.acquisition_delta===null)nulls++;}
+ assert.equal(nulls,3);
+ for(const mutate of [v=>v.reference_id='usb_type_c_reference',v=>v.snapshot_reference.reference_id='usb_type_c_reference',v=>v.snapshot_reference.repository_commit_pinned='1'.repeat(40),v=>v.acquisition_delta=null,v=>v.acquisition_delta.record.hardware_verified=false]){
+  const bad=deltaReference('qualcomm_diag');mutate(bad);assert.throws(()=>dutModel.validateDutAcquisitionReference(bad,'qualcomm_diag'),/^Error: invalid_dut_catalog_response$/);
+ }
+ assert.throws(()=>dutModel.validateDutAcquisitionReference(deltaReference('qualcomm_diag'),'qualcomm_diag\n'),/^Error: invalid_dut_catalog_response$/);
+});
+test('acquisition tickets share selection generation with route source and reference navigation',()=>{
+ const gate=createDutReadGate(),old=gate.begin('route','adb'),delta=gate.begin('acquisition','qualcomm_diag');assert(!gate.current(old));assert(gate.current(delta));
+ const next=gate.begin('source','DUT-G13');assert(!gate.current(delta));assert(gate.current(next));
+ for(const id of ['', 'Qdiag','diag\n','diag/secret','a'.repeat(97)])assert.throws(()=>gate.begin('acquisition',id),/invalid_dut_catalog_response/);
 });

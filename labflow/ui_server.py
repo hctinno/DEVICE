@@ -73,6 +73,8 @@ def create_server(workspace, host='127.0.0.1', port=8765):
     catalog_lock = threading.Lock()
     dut_instance = None
     dut_lock = threading.Lock()
+    delta_instance = None
+    delta_lock = threading.Lock()
 
     def catalog():
         nonlocal catalog_instance
@@ -90,6 +92,14 @@ def create_server(workspace, host='127.0.0.1', port=8765):
                 module = importlib.import_module('.dut_control_catalog', __package__)
                 dut_instance = module.DutControlCatalog()
             return dut_instance
+
+    def delta_catalog():
+        nonlocal delta_instance
+        with delta_lock:
+            if delta_instance is None:
+                module = importlib.import_module('.dut_manufacturer_delta', __package__)
+                delta_instance = module.DutManufacturerDeltaCatalog()
+            return delta_instance
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, format, *args):
@@ -142,6 +152,17 @@ def create_server(workspace, host='127.0.0.1', port=8765):
             if dut_target and ('//' in parsed.path or '\\' in path
                                or re.search(r'%(?:2f|5c)', parsed.path, re.IGNORECASE)):
                 return self.error(404, 'route_not_found')
+            if path == '/api/dut-controls/acquisitions/summary':
+                return self.read_dut_delta('summary')
+            if path == '/api/dut-controls/acquisitions/records':
+                return self.read_dut_delta('records')
+            if path.startswith('/api/dut-controls/acquisitions/references/'):
+                reference_id = path[len('/api/dut-controls/acquisitions/references/'):]
+                if '/' in reference_id:
+                    return self.error(404, 'route_not_found')
+                if not re.fullmatch(r'[a-z][a-z0-9_]{0,95}', reference_id, re.ASCII):
+                    return self.error(400, 'dut_delta_invalid_query')
+                return self.read_dut_delta('reference', reference_id)
             if path == '/api/dut-controls/summary':
                 return self.read_dut_catalog('summary')
             if path == '/api/dut-controls/routes':
@@ -225,6 +246,22 @@ def create_server(workspace, host='127.0.0.1', port=8765):
                 if code == 'dut_catalog_item_not_found':
                     return self.error(404, code)
                 return self.error(503, 'dut_catalog_unavailable')
+
+        def read_dut_delta(self, method, *args):
+            try:
+                return self.send_payload(200, getattr(delta_catalog(), method)(*args))
+            except Exception as exc:
+                try:
+                    code = getattr(exc, 'code', None) if isinstance(exc, ValueError) else None
+                except Exception:
+                    code = None
+                if type(code) is not str:
+                    code = None
+                if code == 'dut_delta_invalid_query':
+                    return self.error(400, code)
+                if code == 'dut_delta_item_not_found':
+                    return self.error(404, code)
+                return self.error(503, 'dut_delta_unavailable')
 
         do_HEAD = do_GET
 
