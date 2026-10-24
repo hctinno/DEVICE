@@ -237,6 +237,21 @@ def _inspect(store, row):
     return 'verified', None, context_id, stored_id
 
 
+def validate_retained_analysis(store, stored_record):
+    """Validate a retained revision/result under its stored profile, without writes.
+
+    Callers may pass a row already fixed by their own read or writer transaction.
+    The tuple is (verified|legacy_unbound, reason, context_id, profile_id).
+    This does not compare current code or grant readiness/execution authority.
+    """
+    try:
+        return _inspect(store, stored_record)
+    except _Invalid:
+        raise
+    except (ValueError, TypeError, KeyError, OverflowError, RuntimeError, OSError):
+        raise _Invalid('invalid_context') from None
+
+
 def analysis_generation_status(store, intake_id):
     """Return only sanitized generation metadata from one DB read snapshot."""
     try:
@@ -270,7 +285,7 @@ def analysis_generation_status(store, intake_id):
     if row['state'] != 'completed':
         return response
     try:
-        status, reason, context_id, stored_id = _inspect(store, row)
+        status, reason, context_id, stored_id = validate_retained_analysis(store, row)
     except _Invalid as error:
         status, reason, context_id, stored_id = 'invalid', str(error), None, None
     except (ValueError, TypeError, KeyError, OverflowError, RuntimeError):
