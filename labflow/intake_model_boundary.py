@@ -295,6 +295,8 @@ def decode_analysis_response(response, context, *, producer_name):
     value, _, version = _context(context)
     try:
         analysis = json.loads(text, object_pairs_hook=_pairs, parse_constant=_constant)
+        # Valid wire UTF-8 can still encode an unpaired surrogate as JSON ASCII.
+        json.dumps(analysis, ensure_ascii=False, allow_nan=False).encode('utf-8')
         if (type(analysis) is not dict or type(analysis.get('schema_version')) is not int
                 or analysis['schema_version'] != version or analysis.get('producer') != expected):
             _fail('analysis_response_invalid')

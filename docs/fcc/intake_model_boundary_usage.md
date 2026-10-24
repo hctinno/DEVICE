@@ -41,7 +41,7 @@ user content는 context 사본의 canonical JSON 그대로다. 문서 안의 ‘
 
 ## 응답 검증
 
-response는 bytes 또는 str이며 UTF-8 최대 **2 MiB**다. 크기를 확인한 뒤 strict UTF-8·단일 JSON 객체로 읽는다. 앞뒤 JSON 공백은 허용하지만 Markdown fence·설명·여러 JSON 값·중복 키·NaN/Infinity·잘못된 숫자와 형식을 거절한다. 크기 초과 입력을 잘라서 사용하지 않는다.
+response는 bytes 또는 str이며 UTF-8 최대 **2 MiB**다. 크기를 확인한 뒤 strict UTF-8·단일 JSON 객체로 읽는다. JSON escape를 해석한 문자열도 UTF-8로 확인해 단독 surrogate를 거절하고 정상 pair는 허용한다. 앞뒤 JSON 공백은 허용하지만 Markdown fence·설명·여러 JSON 값·중복 키·NaN/Infinity·잘못된 숫자와 형식을 거절한다. 크기 초과 입력을 잘라서 사용하지 않는다.
 
 producer는 expected_producer와 정확히 같아야 한다. TXT만 있으면 schema 1, PDF가 하나라도 있으면 context-bound schema 2여야 한다. 기존 validate_analysis로 exact 분석 필드·현재 문서 hash·줄 범위·literal quote·PDF extraction/page text hash·context ID를 검사한 뒤 분리된 analysis dict만 반환한다.
 

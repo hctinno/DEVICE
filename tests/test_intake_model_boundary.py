@@ -377,6 +377,16 @@ class ModelBoundaryTests(unittest.TestCase):
         with patch('labflow.intake_model_boundary.validate_analysis', side_effect=ValueError(CANARY)):
             self.assert_clean_error(lambda: self.decode())
 
+    def test_escaped_unpaired_unicode_surrogate_is_rejected_after_json_decode(self):
+        response = analysis(self.context)
+        for surrogate in ('\ud800', '\udc00'):
+            response['facts'][0]['value'] = CANARY+surrogate
+            encoded = json.dumps(response, ensure_ascii=True).encode('utf-8')
+            self.assert_clean_error(lambda: decode_analysis_response(encoded, self.context, producer_name=NAME))
+        response['facts'][0]['value'] = '\U0001f600'
+        encoded = json.dumps(response, ensure_ascii=True).encode('utf-8')
+        self.assertEqual(decode_analysis_response(encoded, self.context, producer_name=NAME), response)
+
 
 if __name__ == '__main__':
     unittest.main()
