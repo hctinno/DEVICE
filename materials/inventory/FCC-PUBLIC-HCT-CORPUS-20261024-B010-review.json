@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "recorded_at_Asia_Seoul": "2026-10-24T17:57:37.249449+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "corpus_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "publication_scope": "reviewed_nonsensitive_bibliography_hash_and_bounded_status_only",
+  "publication_rights_decision": "Public FCC report bibliography, raw SHA/size/page counts and bounded intake status only. Original report bytes, body, case values, images, code, unique identifiers, user materials and private paths are excluded.",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S01-B0019",
+      "review_scope": "bounded_LCWB_EMC_source",
+      "inventory_sha256": "c7a3bb5d142498170aa3d1e52e9e3cb04fb122117d275069bb2e1ce14f276ba4",
+      "private_intake_index_sha256": "503d52c21c0ac950298834bc4ac0c02b54c7e6defe94084b11f57a0d8f1a822b",
+      "private_intake_index_bytes": 5259,
+      "payload_files": 25,
+      "payload_bytes": 1228832,
+      "JSON_files": 24,
+      "PDF_files": 1,
+      "receiver_receipt_sha256": "ea9086a9e96788ec88d9ea89f217b8104815ad2667bc763085388685cabcda0d",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "bounded_source_facts": 11,
+      "new_target_source_PDFs": 1,
+      "new_excluded_source_PDFs": 0
+    },
+    {
+      "batch_id": "FCC-20261024A-S02-B0012",
+      "review_scope": "bounded_retained_Tide_RF_source_excluded_before2025",
+      "inventory_sha256": "747dd586b790c0a667008b4203d16e3588a347c7b5b9af4352f01cffeffe7415",
+      "private_intake_index_sha256": "a493f1199719c08561ce8ce8281fe6b8ad0429d3fea874e095b2d300a8a80ff9",
+      "private_intake_index_bytes": 3583,
+      "payload_files": 15,
+      "payload_bytes": 2843809,
+      "JSON_files": 14,
+      "PDF_files": 1,
+      "receiver_receipt_sha256": "a1cec4149713c83d45412cb4c8a232528422f90234457ed8f3d32ac07a8ec09d",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "bounded_source_facts": 10,
+      "new_target_source_PDFs": 0,
+      "new_excluded_source_PDFs": 1
+    },
+    {
+      "batch_id": "FCC-20261024A-S03-B0010",
+      "review_scope": "retained_HAC1_eight_page_analysis_citations_setup_and_requirements",
+      "inventory_sha256": "9aa46dd0d149a1c926ece39085a0a76d0fd55f25f2e7783d2c61792e68a1d5cf",
+      "private_intake_index_sha256": "5ab12a72f86254885b51b764d72986fe5d694fd084b7cbbb00cb78035343e7bf",
+      "private_intake_index_bytes": 4895,
+      "payload_files": 23,
+      "payload_bytes": 118027,
+      "JSON_files": 22,
+      "PDF_files": 0,
+      "receiver_receipt_sha256": "73b05d61d07be96cb33a2fb4fd322aaf5fd21dcd783b3c3a2def66538f8fca31",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "bounded_source_facts": 8,
+      "new_target_source_PDFs": 0,
+      "new_excluded_source_PDFs": 0
+    }
+  ],
+  "new_independently_accepted_private_packets": 3,
+  "new_private_payload": {
+    "files": 63,
+    "bytes": 4190668,
+    "JSON": 60,
+    "PDF": 2,
+    "MD": 1
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 67,
+    "independently_ACKed": 67
+  },
+  "corpus_request_private_packets_including_exclusion_review": {
+    "reviewed": 32,
+    "independently_ACKed": 32
+  },
+  "current_source_cohort": {
+    "PDFs": 12,
+    "physical_pages": 489,
+    "bytes": 29261984,
+    "direct_issuer_and_issue": 11,
+    "parent_relation_only": 1,
+    "official_mapping_confirmed": 0,
+    "all_source_raw_bytes_rechecked": true,
+    "full_semantics_or_census_approved": false
+  },
+  "separately_retained_excluded_source": {
+    "PDFs": 1,
+    "physical_pages": 46,
+    "bytes": 2771507,
+    "target_increment": 0
+  },
+  "all_new_request_retained_originals_including_excluded": {
+    "PDFs": 13,
+    "physical_pages": 535,
+    "bytes": 32033491,
+    "not_a_count_of_HCT2025plus_eligible_reports": true,
+    "legacy22_included": false
+  },
+  "new_source_bibliography": [
+    {
+      "report_number": "HCT-EM-2501-FC004",
+      "revision": "0 Initial Release",
+      "issue_date": "2025-01-24",
+      "issuer_as_printed": "HCT CO.,LTD.",
+      "FCC_ID": "BEJ-LCWB008",
+      "model": "LCWB-008",
+      "sha256": "45f3d35f5707f72cfbc6d2b9998b0b33506919dd9cecccf7750f8321b2e11b58",
+      "bytes": 1134279,
+      "physical_pages": 23,
+      "disposition": "issue_window_issuer_confirmed_mirror_raw_original",
+      "official_exhibit_mapping": "unconfirmed",
+      "bounded_primary_pages": 8,
+      "bounded_context_pages": 2,
+      "bounded_facts": 11,
+      "selected_blocks": 2,
+      "selected_rows": 6,
+      "bounded_displayed_margin_arithmetic_checks": 6,
+      "other_modes_rows_and_all_semantics_pending": true,
+      "peak_and_average_frequency_rows_not_inferred_as_paired_or_duty": true,
+      "correction_components_reference_plane_or_live_equipment_binding_confirmed": false
+    },
+    {
+      "report_number": "HA230203-UEI-003-R05",
+      "revision_as_printed": "Initial Issue",
+      "numeric_revision": null,
+      "issue_date": "2024-10-29",
+      "issuer_as_printed": "HCT America, Inc.",
+      "FCC_ID": "MG3-J1TH019A00",
+      "model": "J1TH019",
+      "sha256": "630ea4a9e57944ccff75036cb89b6a026d09cedbd110c0d3427ea97238d39299",
+      "bytes": 2771507,
+      "physical_pages": 46,
+      "disposition": "excluded_before_2025_issue_start_raw_original_preserved",
+      "target_increment": 0,
+      "official_exhibit_mapping": "unconfirmed",
+      "bounded_primary_pages": 7,
+      "bounded_facts": 10,
+      "selected_blocks": 2,
+      "selected_rows": 4,
+      "mirror_page_and_byte_claim_differs_from_actual": true,
+      "test_program_prose_and_result_radio_family_difference": "preserved_unresolved",
+      "availability_or_report_prefix_not_issue_date": true
+    }
+  ],
+  "bounded_HAC1_followup": {
+    "new_physical_pages": [
+      4,
+      5,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "new_bounded_facts": 8,
+    "citation_and_requirement_blocks": 2,
+    "selected_rows": 5,
+    "new_actual_DUT_measured_result_rows": 0,
+    "HAC1_primary_page_coverage": [
+      14,
+      73
+    ],
+    "suite_primary_page_coverage": [
+      59,
+      181
+    ],
+    "remaining_primary_pages": 122,
+    "title_only_privacy_boundary_not_identifier_absence_proof": true,
+    "setup_descriptions_requirements_and_citations_not_actual_DUT_or_current_support": true,
+    "old_identity_part_cover_body_discrepancies_preserved": true,
+    "all_cells_full_semantics_calibration_current_rules_or_physical_pass": false
+  },
+  "separate_metadata_reuse_supplement": {
+    "index_SHA256": "596ff02394e248093118ad17b29956c4a33a5ca98bcf2a589aa98881da90ec9a",
+    "index_bytes": 854,
+    "payload_JSON": 3,
+    "payload_bytes": 18336,
+    "independently_ACKed_and_allclone_rehashed": true,
+    "historical_binding_nulls_preserved": 9,
+    "new_exact_page_relations_from_approved_metadata": 7,
+    "remaining_interpretive_boundaries": 2,
+    "collector_or_target_source_counter_increment": 0,
+    "new_PDF_operations_or_new_report_case_values": 0,
+    "fullstandard_historical_current_application_gaps_open": true
+  },
+  "open_scope": [
+    "population and unsearched periods, institutions, sites and categories",
+    "missing originals, official exhibit mapping, revisions, parts, appendices and setup",
+    "untranscribed cells and full semantic review",
+    "full standards and historical/current applicability",
+    "source model conflicts, unknown data reuse and independent evaluation",
+    "native raw and physical validation"
+  ],
+  "new_user_preparation_requests": 0,
+  "AI_evaluation_training_external_model_transmission_or_physical_runs": 0,
+  "original_text_case_values_images_code_identifiers_private_paths_user_materials_exported": false,
+  "whole_census_complete": false,
+  "full_semantic_or_functional_or_conformity_or_physical_validation": false,
+  "historical_public_20_batch_count_changed": false,
+  "verification_scope": "Raw bytes and independently received packets plus bounded source/metadata review. Document checks do not establish lab functionality, metrology or conformity."
+}
