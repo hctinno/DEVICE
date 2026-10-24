@@ -4,9 +4,663 @@ import json
 import tempfile
 import threading
 import unittest
+from contextlib import ExitStack
+from copy import deepcopy
+import importlib
+import io
+import os
+from pathlib import Path
+import socket
+import time
+from unittest import mock
 
 from test_ui_read_model import IntakeFixture
 from labflow.ui_server import create_server
+from labflow import ui_server as host_module
+from labflow.store import Store
+
+
+class ReferenceFixture:
+    """Public synthetic setup; all writes/analysis precede049 read admission."""
+    def __init__(self, root, *, registered=True):
+        from labflow.active_intake import register_source, scan_source
+        from labflow.intake_jobs import claim_job, complete_job, respond
+        from labflow.intake_worker import SyntheticTextProvider
+        from labflow.intake_reference_snapshot import read_intake_reference_snapshot
+        from labflow.intake_case_references import build_intake_case_reference_receipt
+        from labflow.intake_reference_ledger import record_intake_reference
+        from tests.test_document_extract import synthetic_pdf
+        from tests.test_intake_case_references import catalog_fixture, context_for, response_for
+        self.root = Path(root); self.legacy = Store(self.root / 'state')
+        inbox = self.root / 'inbox'; (inbox / 'one').mkdir(parents=True)
+        register_source(self.legacy, 'SYN-INBOX', inbox, synthetic=True, settle_seconds=1)
+        (inbox / 'one/request.pdf').write_bytes(synthetic_pdf([
+            'product_type: sensor_node\nmarket: FCC\npurpose: development\nmodel: MODEL-A']))
+        scan_source(self.legacy, 'SYN-INBOX', now=100); scan_source(self.legacy, 'SYN-INBOX', now=102)
+        job = claim_job(self.legacy, 'SYN-WORKER', now=103)
+        complete_job(self.legacy, job['job_id'], job['token'], SyntheticTextProvider().analyze(job), now=104)
+        respond(self.legacy, 'SYN-PROCEED', 'proceed', intake_id=job['intake_id'])
+        self.intake_id = job['intake_id']
+        if not registered: return
+        capture = read_intake_reference_snapshot(self.legacy, self.intake_id)
+        catalog = catalog_fixture(); context = context_for(catalog); response = response_for(context)
+        receipt = build_intake_case_reference_receipt(capture['snapshot'], catalog, context, response,
+                                                    producer_name=response['expected_producer']['name'])
+        record_intake_reference(self.legacy, 'SYN-REFERENCE', expected_snapshot_id=capture['snapshot_id'],
+            expected_head_record_id=None, intake_snapshot=capture['snapshot'], catalog=catalog,
+            case_context=context, validated_response=response, reference_receipt=receipt,
+            producer_name=response['expected_producer']['name'])
+
+
+class ReferenceHostTests(unittest.TestCase):
+    def setUp(self):
+        parent = Path(__file__).resolve().parents[1] / '.local'
+        temporary = tempfile.TemporaryDirectory(prefix='r049-', dir=parent)
+        self.addCleanup(temporary.cleanup)
+        self.fixture = ReferenceFixture(temporary.name)
+        self.store = Store.open_existing(str(self.fixture.legacy.root)); self.addCleanup(self.store.close)
+        self.ident = self.fixture.intake_id
+
+    def start(self, scope='workspace', *, store=None, workspace=None):
+        server = create_server(self.store.root if workspace is None else workspace, port=0,
+            intake_reference_store=self.store if store is None else store, intake_reference_read_scope=scope)
+        thread = threading.Thread(target=server.serve_forever, kwargs={'poll_interval': .02}, daemon=True)
+        thread.start()
+        def stop():
+            server.server_close(); thread.join(5); self.assertFalse(thread.is_alive())
+        self.addCleanup(stop)
+        return server
+
+    def request(self, server, path, method='GET', body=None, headers=None):
+        connection = http.client.HTTPConnection(*server.server_address, timeout=6)
+        try:
+            connection.request(method, path, body=body, headers=headers or {})
+            response = connection.getresponse()
+            return response.status, dict(response.getheaders()), response.read()
+        finally: connection.close()
+
+    def raw(self, server, path, method='POST', body=b'{}', headers=()):
+        connection = http.client.HTTPConnection(*server.server_address, timeout=6)
+        try:
+            connection.putrequest(method, path, skip_host=True, skip_accept_encoding=True)
+            connection.putheader('Host', '127.0.0.1:' + str(server.server_port))
+            for key, value in headers: connection.putheader(key, value)
+            connection.endheaders(body)
+            response = connection.getresponse()
+            return response.status, dict(response.getheaders()), response.read()
+        finally: connection.close()
+
+    def route(self, action='history', ident=None):
+        return '/api/intake-references/' + (self.ident if ident is None else ident) + '/' + action
+
+    def bootstrap(self, server, ident=None):
+        status, headers, body = self.request(server, self.route(ident=ident))
+        self.assertEqual(status, 200, body)
+        return headers['Set-Cookie'].split(';')[0], headers.get('X-Intake-Reference-CSRF')
+
+    def source_headers(self, server, cookie, csrf):
+        return {'Origin': 'http://127.0.0.1:' + str(server.server_port), 'Sec-Fetch-Site': 'same-origin',
+                'Content-Type': 'application/json; charset=utf-8', 'Cookie': cookie,
+                'X-Intake-Reference-CSRF': csrf or '0' * 64}
+
+    def current(self, server, cookie, csrf, **changes):
+        headers = self.source_headers(server, cookie, csrf); headers.update(changes)
+        return self.request(server, self.route('current'), 'POST', b'{"schema_version":1,"action":"current"}', headers)
+
+    def snapshot(self):
+        return {p.relative_to(self.fixture.root).as_posix(): (p.stat().st_size, p.stat().st_mtime_ns,
+                hashlib.sha256(p.read_bytes()).hexdigest()) for p in self.fixture.root.rglob('*') if p.is_file()}
+
+    def fixed(self, suffix, operation):
+        try:
+            raise RuntimeError('PRIVATE caller')
+        except RuntimeError:
+            with self.assertRaises(ValueError) as caught: operation()
+        error = caught.exception; expected = 'intake_reference_ui_' + suffix
+        self.assertEqual((str(error), error.args), (expected, (expected,)))
+        self.assertIsNone(error.__context__); self.assertIsNone(error.__cause__)
+
+    def test_reference_None_has_no_parent_import_or_creating_operation(self):
+        original = host_module.importlib.import_module
+        def imported(name, *args, **kwargs):
+            self.assertNotIn('intake_reference', name); return original(name, *args, **kwargs)
+        with mock.patch.object(host_module.importlib, 'import_module', side_effect=imported), \
+             mock.patch.object(Store, '__init__', side_effect=AssertionError('creating')):
+            server = create_server(self.store.root, port=0, intake_reference_store=None,
+                                   intake_reference_read_scope=object())
+        thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
+        try:
+            self.assertIs(type(server), host_module.ThreadingHTTPServer)
+            self.assertEqual(self.request(server, self.route())[0], 503)
+            self.assertEqual(self.raw(server, self.route('current'), body=b'', headers=[('Content-Length','39')])[0], 503)
+            self.assertEqual(self.request(server, '/api/intakes')[0], 200)
+        finally: server.shutdown(); server.server_close(); thread.join(5)
+
+    def test_reference_official_binding_workspace_scope_and_callbacks_rejected_before_bind(self):
+        class Fake:
+            def __fspath__(self): raise AssertionError('callback')
+        for value in [self.fixture.legacy, Fake(), object()]:
+            self.fixed('invalid_request', lambda: create_server(self.store.root, port=0, intake_reference_store=value))
+        for scope in [None, True, [], ('A', 'A'), tuple('A' + str(i) for i in range(101)), ('_A',), ('A\n',), ('A' * 151,)]:
+            self.fixed('invalid_request', lambda: create_server(self.store.root, port=0,
+                       intake_reference_store=self.store, intake_reference_read_scope=scope))
+        for root in [self.fixture.root, str(self.store.root) + '.', str(self.store.root.parent) + '/./state', Fake()]:
+            self.fixed('invalid_request', lambda: create_server(root, port=0, intake_reference_store=self.store))
+
+    def test_reference_closed_or_changed_official_binding_is_unavailable(self):
+        root = self.store.root; self.store.root = self.fixture.root
+        self.fixed('unavailable', lambda: create_server(root, port=0, intake_reference_store=self.store))
+        self.store.root = root
+        original = self.store.db; self.store.db = self.fixture.root / 'other.sqlite3'
+        self.fixed('unavailable', lambda: create_server(self.store.root, port=0, intake_reference_store=self.store))
+        self.store.db = original; self.store.close()
+        self.fixed('unavailable', lambda: create_server(self.store.root, port=0, intake_reference_store=self.store))
+
+    def test_reference_static_exact3_accepted_A1_bytes_and_future_transport404_in_None(self):
+        server = create_server(self.store.root, port=0)
+        thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
+        try:
+            observed = {}
+            accepted = {'model': (12335, '93a6a2f2e45c9ed75e23fbc01399ae7ec3817c1a3ff2c97651198c97802a10d2'),
+                        'view': (14712, 'c3e38b254cc346d0bd64dc12b5f1ebae6e426ce17662c6d8f533f3da457b7417')}
+            for name in ('model', 'view'):
+                route = '/intake-references/' + name + '.mjs'
+                status, headers, body = self.request(server, route)
+                self.assertEqual(status, 200); self.assertEqual(headers['Content-Type'], 'text/javascript; charset=utf-8')
+                self.assertEqual(body, (host_module.FRONTEND / 'intake_references' / (name + '.mjs')).read_bytes())
+                lf = body.replace(b'\r\n', b'\n')
+                self.assertEqual((len(lf), hashlib.sha256(lf).hexdigest()), accepted[name])
+                observed[name] = {'HTTP_bytes':len(body),'HTTP_sha256':hashlib.sha256(body).hexdigest(),
+                                  'GitLF_bytes':len(lf),'GitLF_sha256':hashlib.sha256(lf).hexdigest()}
+                self.assertEqual(self.request(server, route, 'HEAD')[2], b'')
+                for alias in [route + '?x=1', route.replace(name, '%' + format(ord(name[0]), '02x') + name[1:], 1),
+                              route.replace('/' + name, '//' + name), 'http://127.0.0.1:' + str(server.server_port) + route]:
+                    self.assertEqual(self.request(server, alias)[0], 404)
+                status, headers, _ = self.request(server, route, 'POST')
+                self.assertEqual(status, 405); self.assertEqual(headers['Allow'], 'GET, HEAD')
+            status, _, transport = self.request(server, '/intake-references/transport.mjs')
+            path = host_module.FRONTEND / 'intake_references/transport.mjs'
+            if path.is_file():
+                self.assertEqual((status, transport), (200, path.read_bytes()))
+            else: self.assertEqual(status, 404)
+            self.evidence = {'kind':'049_None_static_A1_accepted_bytes','assets':observed,
+                             'transport_status':status,'transport_genuine_acceptance':False,
+                             'reference_runtime_created':False}
+        finally: server.shutdown(); server.server_close(); thread.join(5)
+
+    def test_reference_genuine_history_HEAD_current_preserve_inputs_no_parser_and_source_separation(self):
+        from labflow import intake_reference_review as api
+        before = self.snapshot(); calls, opened = [], []
+        original, open_file = api.read_reference_review, Path.open
+        def parent(*args, **kwargs): calls.append((args[2]['action'], kwargs)); return original(*args, **kwargs)
+        def opened_file(path, *args, **kwargs):
+            if path.parent == self.store.root / 'blobs': opened.append(path.name)
+            return open_file(path, *args, **kwargs)
+        with mock.patch.object(api, 'read_reference_review', side_effect=parent), \
+             mock.patch('labflow.document_extract.extract_document', side_effect=AssertionError('parser')), \
+             mock.patch('labflow.intake_documents.extract_document', side_effect=AssertionError('parser')), \
+             mock.patch.object(Store, '__init__', side_effect=AssertionError('creating')), \
+             mock.patch.object(Path, 'open', opened_file):
+            server = self.start(); cookie, csrf = self.bootstrap(server)
+            self.assertEqual(opened, []); self.assertEqual(calls[-1][0], 'history')
+            status, head, body = self.request(server, self.route(), 'HEAD')
+            self.assertEqual((status, body), (200, b'')); self.assertNotIn('Set-Cookie', head)
+            self.assertEqual(opened, [])
+            status, _, body = self.current(server, cookie, csrf)
+            value = json.loads(body); self.assertEqual((status, value['status']), (200, 'current'))
+            self.assertEqual(len(value), 10); self.assertGreater(len(opened), 0)
+        self.assertEqual(self.snapshot(), before)
+        self.evidence = {'kind': 'genuine049_HTTP_043_042_038_034', 'history_parent_calls': 2,
+                         'history_retained_reads': 0, 'current_parent_calls': 1, 'current_retained_opens': len(opened),
+                         'parsing_calls': 0, 'inputs_unchanged': True, 'actual_customer_DB_PDF': 0}
+
+    def test_reference_default_empty_scope_metadata_is_allowed_and_source_denied(self):
+        server = self.start(())
+        status, headers, _ = self.request(server, self.route())
+        self.assertEqual((status, headers['X-Intake-Reference-Read-Allowed']), (200, 'false'))
+        self.assertNotIn('X-Intake-Reference-CSRF', headers)
+        auth = self.source_headers(server, headers['Set-Cookie'].split(';')[0], None)
+        self.assertEqual(self.raw(server, self.route('current'), body=b'', headers=list(auth.items())+[('Content-Length','39')])[0], 403)
+
+    def test_reference_current_requires_exact_Origin_Fetch_CSRF_session_scope(self):
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        for changes in [{'Origin': 'null'}, {'Origin': 'http://attacker.invalid'}, {'Sec-Fetch-Site': 'cross-site'},
+                        {'X-Intake-Reference-CSRF': '0' * 64}, {'Cookie': cookie + '; ' + cookie}]:
+            invalid = self.source_headers(server, cookie, csrf); invalid.update(changes)
+            self.assertEqual(self.raw(server, self.route('current'), body=b'', headers=list(invalid.items())+[('Content-Length','39')])[0], 403)
+        headers = self.source_headers(server, cookie, csrf)
+        for key in ('Origin', 'Sec-Fetch-Site', 'Cookie', 'X-Intake-Reference-CSRF'):
+            changed = dict(headers); changed.pop(key)
+            self.assertEqual(self.raw(server, self.route('current'), body=b'', headers=list(changed.items())+[('Content-Length','39')])[0], 403)
+        other = self.start(('OTHER',)); other_cookie, other_csrf = self.bootstrap(other)
+        invalid = self.source_headers(other, other_cookie, other_csrf)
+        self.assertEqual(self.raw(other, self.route('current'), body=b'', headers=list(invalid.items())+[('Content-Length','39')])[0], 403)
+
+    def test_reference_path_methods_queries_and_cursor63_are_exact(self):
+        server = self.start()
+        for path in [self.route() + '?limit=0', self.route() + '?limit=101', self.route() + '?limit=1&limit=1',
+                     self.route() + '?before_seq=01', self.route() + '?before_seq=' + str(2**63),
+                     self.route() + '?x=1', self.route('current') + '?x=1']:
+            self.assertIn(self.request(server, path)[0], (400, 404, 405))
+        self.assertEqual(self.request(server, self.route() + '?limit=100&before_seq=' + str(2**63 - 1))[0], 200)
+        for method in ('GET', 'HEAD'):
+            status, headers, body = self.request(server, self.route('current'), method)
+            self.assertEqual(status, 405); self.assertEqual(headers['Allow'], 'POST')
+            if method == 'HEAD': self.assertEqual(body, b'')
+        for path in [self.route().replace(self.ident, '%49' + self.ident[1:]), self.route().replace('/history', '//history'),
+                     self.route(ident='_A'), self.route(ident='A' * 151), self.route(ident='A%0a')]:
+            self.assertIn(self.request(server, path)[0], (400, 404))
+
+    def test_reference_strict_current_wire_rejects_extra_duplicate_BOM_nonfinite_depth(self):
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        headers = self.source_headers(server, cookie, csrf)
+        for raw in [b'\xef\xbb\xbf{}', b'{"schema_version":1,"schema_version":1,"action":"current"}',
+                    b'{"schema_version":1,"action":"current","allow_retained_reads":true}',
+                    b'{"schema_version":NaN,"action":"current"}', b'[]', b'{} trailing',
+                    b'{"schema_version":1,"action":"current","x":"\\ud800"}']:
+            self.assertEqual(self.request(server, self.route('current'), 'POST', raw, headers)[0], 400)
+        self.assertEqual(self.raw(server, self.route('current'), body=b'', headers=list(headers.items())+[('Content-Length','16385')])[0], 413)
+
+    def test_reference_session_HEAD_no_creation_renewal_cookie_flags_and_stable_tokens(self):
+        server = self.start(); rt = server._reference_runtime
+        now = [1000.0]; rt.clock = lambda: now[0]
+        status, headers, _ = self.request(server, self.route(), 'HEAD')
+        self.assertEqual(status, 200); self.assertNotIn('Set-Cookie', headers); self.assertEqual(len(rt.sessions), 0)
+        cookie, csrf = self.bootstrap(server); sid = cookie.split('=')[1]
+        self.assertEqual(len(sid), 64); self.assertEqual(len(csrf), 64)
+        now[0] += 899
+        _, headers, _ = self.request(server, self.route(), headers={'Cookie': cookie})
+        self.assertEqual(headers['X-Intake-Reference-CSRF'], csrf); self.assertNotIn('Set-Cookie', headers)
+        stamp = rt.sessions[sid]['last_seen']; now[0] += 899
+        self.request(server, self.route(), 'HEAD', headers={'Cookie': cookie})
+        self.assertEqual(rt.sessions[sid]['last_seen'], stamp)
+        now[0] += 1
+        self.assertEqual(self.current(server, cookie, csrf)[0], 403)
+
+    def test_reference_session128_full_is_not_silently_evicted_and_expired_slots_reclaimed(self):
+        server = self.start(); rt = server._reference_runtime; now = [0.0]; rt.clock = lambda: now[0]
+        for _ in range(128): self.assertEqual(self.request(server, self.route())[0], 200)
+        self.assertEqual(len(rt.sessions), 128)
+        self.assertEqual(self.request(server, self.route())[0], 503)
+        now[0] = 900
+        self.assertEqual(self.request(server, self.route())[0], 200); self.assertEqual(len(rt.sessions), 1)
+
+    def test_reference_internal_binding_detached_hex64_no_session_or_idle_renewal(self):
+        server = self.start(); cookie, _ = self.bootstrap(server); sid = cookie.split('=')[1]
+        rt = server._reference_runtime; stamp = rt.sessions[sid]['last_seen']
+        binding = server._reference_action_binding(sid)
+        self.assertEqual(set(binding), {'host_epoch', 'session_id', 'scope_epoch'})
+        self.assertTrue(all(type(v) is str and len(v) == 64 for v in binding.values()))
+        binding['host_epoch'] = '0' * 64
+        self.assertNotEqual(binding, server._reference_action_binding(sid))
+        self.assertEqual(rt.sessions[sid]['last_seen'], stamp)
+        self.assertIsNone(server._reference_action_binding('0' * 64))
+
+    def test_reference_source_lease_busy_and_body_error_finally_preserves_protocol(self):
+        server = self.start(); rt = server._reference_runtime
+        with server._reference_parent_call(source=True):
+            self.assertEqual(rt.active, 1)
+            self.fixed('unavailable', lambda: server._reference_parent_call(source=True).__enter__())
+            with server._reference_parent_call(): self.assertEqual(rt.active, 2)
+        self.assertEqual(rt.active, 0)
+        marker = RuntimeError('PRIVATE business')
+        with self.assertRaises(RuntimeError) as caught:
+            with server._reference_parent_call(source=True): raise marker
+        self.assertIs(caught.exception, marker); self.assertEqual(rt.active, 0)
+        self.fixed('invalid_request', lambda: server._reference_parent_call(source=1).__enter__())
+
+    def test_reference_parent_block_allows_mutex_and_metadata_but_second_source429(self):
+        from labflow import intake_reference_review as api
+        original = api.read_reference_review; entered, release = threading.Event(), threading.Event()
+        def parent(*args, **kwargs):
+            if args[2]['action'] == 'current': entered.set(); self.assertTrue(release.wait(5))
+            return original(*args, **kwargs)
+        result = []
+        with mock.patch.object(api, 'read_reference_review', side_effect=parent):
+            server = self.start(); cookie, csrf = self.bootstrap(server)
+            thread = threading.Thread(target=lambda: result.append(self.current(server, cookie, csrf)))
+            thread.start()
+            try:
+                self.assertTrue(entered.wait(5))
+                self.assertTrue(server._reference_runtime.lock.acquire(timeout=1)); server._reference_runtime.lock.release()
+                self.assertEqual(self.request(server, self.route())[0], 200)
+                self.assertEqual(self.current(server, cookie, csrf)[0], 429)
+            finally: release.set(); thread.join(6)
+        self.assertEqual(result[0][0], 200)
+
+    def test_reference_server_close_waits_parent_then_workers_and_never_borrowed_close(self):
+        server = self.start(); entered, release, stopped = threading.Event(), threading.Event(), threading.Event()
+        def work():
+            with server._reference_parent_call(source=True): entered.set(); release.wait(5)
+        worker = threading.Thread(target=work); worker.start(); self.assertTrue(entered.wait(3))
+        close = threading.Thread(target=lambda: (server.server_close(), stopped.set())); close.start()
+        try:
+            deadline = time.monotonic() + 3
+            while not server._reference_runtime.closing and time.monotonic() < deadline: time.sleep(.005)
+            self.assertFalse(stopped.wait(.05)); self.assertEqual(self.store._existing_binding.state, 'open')
+            self.fixed('unavailable', lambda: server._reference_parent_call().__enter__())
+        finally: release.set(); worker.join(5); close.join(5)
+        self.assertTrue(stopped.is_set()); self.assertEqual(self.store._existing_binding.state, 'open')
+        self.assertFalse(server._reference_runtime.clients)
+        paths = [self.store.db, self.store.root / 'blobs', self.store.root, self.fixture.root]
+        allowed = Path(__file__).resolve().parents[1] / '.local'
+        for path in paths:
+            moved = path.with_name(path.name + '.moved')
+            self.assertTrue(path.resolve().is_relative_to(allowed.resolve()))
+            self.assertTrue(moved.resolve().is_relative_to(allowed.resolve()))
+            with self.assertRaises(OSError): path.rename(moved)
+        self.store.close()
+        for path in paths:
+            moved = path.with_name(path.name + '.moved'); path.rename(moved); moved.rename(path)
+        with socket.socket() as probe:
+            probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1); probe.bind(server.server_address)
+        self.evidence = {'kind': '049_drain_native_release', 'parent_waited': True, 'borrowed_close_calls': 0,
+                         'known_clients': 0, 'blocked_native_moves':4,'released_native_moves':4,'own_port_rebind':True}
+
+    def test_reference_self_lease_close_rejected_without_poisoning_open_host(self):
+        server = self.start()
+        with server._reference_parent_call(): self.fixed('unavailable', server.server_close)
+        self.assertFalse(server._reference_runtime.closing)
+        self.assertEqual(self.request(server, self.route())[0], 200)
+
+    def test_reference_not_started_close_and_repeated_close_never_shutdown_deadlock(self):
+        server = create_server(self.store.root, port=0, intake_reference_store=self.store)
+        with mock.patch.object(server, 'shutdown', side_effect=AssertionError('unstarted shutdown')):
+            server.server_close(); server.server_close()
+        self.assertEqual(server.socket.fileno(), -1)
+        self.assertEqual(self.store._existing_binding.state, 'open')
+
+    def test_reference_accepted_slow_headers_and_uncaught_handler_are_reclaimed_quietly(self):
+        server = self.start(); connection = socket.create_connection(server.server_address, timeout=3)
+        connection.sendall(b'GET / HTTP/1.1\r\nHost: ')
+        try:
+            with mock.patch('sys.stderr', new_callable=io.StringIO) as stderr:
+                server.server_close()
+                self.assertEqual(stderr.getvalue(), '')
+        finally: connection.close()
+        self.assertFalse(server._reference_runtime.clients)
+        self.assertFalse(any(t.is_alive() for t in server._reference_runtime.worker_refs))
+
+    def test_reference_all27_parent_errors_require_exact_class_and_code(self):
+        from labflow import intake_reference_review as api
+        from labflow.intake_reference_ledger import IntakeReferenceLedgerError
+        from labflow.intake_reference_snapshot import IntakeReferenceStateError
+        groups = [(api.IntakeReferenceReviewError, api._CODES),
+                  (IntakeReferenceLedgerError, {'invalid_argument','store_invalid','intake_not_found','input_limit','parent_invalid','origin_invalid','schema_mismatch','request_conflict','integrity_invalid','storage_error'}),
+                  (IntakeReferenceStateError, {'invalid_argument','store_invalid','transaction_required','intake_not_found','input_limit','source_integrity_invalid','projection_inconsistent','delegation_invalid','storage_error'})]
+        for cls, suffixes in groups:
+            for suffix in suffixes:
+                error = cls(suffix)
+                with mock.patch.object(api, 'read_reference_review', side_effect=error):
+                    server = self.start(); status, _, body = self.request(server, self.route())
+                expected = {'invalid_argument':400,'access_denied':403,'intake_not_found':404,'input_limit':413}.get(suffix,503)
+                self.assertEqual((status, json.loads(body)), (expected, {'error': {'code': error.code}}))
+                server.server_close()
+
+    def test_reference_parent_unknown_or_malformed_DTO_is_fixed_not_success(self):
+        from labflow import intake_reference_review as api
+        valid = api.read_reference_review(self.store, self.ident, {'schema_version':1,'action':'history','limit':20,'before_seq':None})
+        for payload in [{**valid, 'PRIVATE': 'PRIVATE'}, {**valid, 'available': 1},
+                        {**valid, 'verification': {**valid['verification'], 'original_sources_reverified': True}}]:
+            with mock.patch.object(api, 'read_reference_review', return_value=payload):
+                server = self.start(); status, _, body = self.request(server, self.route())
+            self.assertEqual((status, json.loads(body)), (503, {'error': {'code':'intake_reference_ui_unavailable'}}))
+            server.server_close()
+
+    def test_reference_maximum_scope_and_ID_are_accepted_not_silently_shrunk(self):
+        maximum = 'A' * 150
+        server = self.start((maximum,) + tuple('ID' + str(i) for i in range(99)))
+        self.assertEqual(len(server._reference_runtime.scope), 100)
+        self.assertEqual(self.request(server, self.route(ident=maximum))[0], 404)
+        self.assertEqual(self.request(server, self.route(ident='A' * 151))[0], 400)
+
+    def test_reference_static_IO_failure503_and_missing_HEAD404_without_fake_asset(self):
+        server = self.start()
+        original = Path.read_bytes
+        def read(path):
+            if path == host_module.FRONTEND / 'intake_references/model.mjs': raise PermissionError('PRIVATE asset')
+            return original(path)
+        with mock.patch.object(Path, 'read_bytes', read):
+            status, _, body = self.request(server, '/intake-references/model.mjs')
+        self.assertEqual((status, json.loads(body)), (503, {'error': {'code': 'asset_unavailable'}}))
+        expected = 200 if (host_module.FRONTEND / 'intake_references/transport.mjs').is_file() else 404
+        self.assertEqual(self.request(server, '/intake-references/transport.mjs', 'HEAD')[0::2], (expected, b''))
+
+    def test_reference_duplicate_framing_content_and_auth_headers_precede_parent(self):
+        from labflow import intake_reference_review as api
+        original = api.read_reference_review; calls = []
+        def parent(*args, **kwargs): calls.append(args[2]['action']); return original(*args, **kwargs)
+        with mock.patch.object(api, 'read_reference_review', side_effect=parent):
+            server = self.start(); cookie, csrf = self.bootstrap(server); calls.clear()
+            raw = b'{"schema_version":1,"action":"current"}'
+            auth = list(self.source_headers(server, cookie, csrf).items())
+            cases = [([('Content-Length', str(len(raw))), ('Content-Length', str(len(raw)))],400),
+                     ([('Content-Length','-1')],400), ([],411),
+                     ([('Content-Length',str(len(raw))), ('Transfer-Encoding','chunked')],400),
+                     ([('Content-Length',str(len(raw))), ('Content-Encoding','gzip')],415),
+                     ([('Content-Length',str(len(raw))), ('Expect','100-continue')],417),
+                     ([('Content-Length',str(len(raw))), ('Origin',auth[0][1])],403),
+                     ([('Content-Length',str(len(raw))), ('X-Intake-Reference-CSRF',csrf)],403),
+                     ([('Content-Length',str(len(raw))), ('Cookie',cookie)],403),
+                     ([('Content-Length',str(len(raw))), ('Host','attacker.invalid')],403)]
+            for extra, expected in cases:
+                # These failures precede body reads; do not send ambiguous unread payload after bad framing.
+                self.assertEqual(self.raw(server, self.route('current'), body=b'', headers=auth + extra)[0], expected)
+            self.assertEqual(calls, [])
+
+    def test_reference_body_read_timeout408_does_not_reserve_parent_or_source(self):
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        connection = http.client.HTTPConnection(*server.server_address, timeout=7)
+        try:
+            connection.putrequest('POST', self.route('current'))
+            for key, value in self.source_headers(server, cookie, csrf).items(): connection.putheader(key, value)
+            connection.putheader('Content-Length', '100'); connection.endheaders(b'{')
+            response = connection.getresponse(); self.assertEqual(response.status, 408); response.read()
+        finally: connection.close()
+        self.assertEqual(server._reference_runtime.active, 0); self.assertFalse(server._reference_runtime.source_active)
+
+    def test_reference_expiry_after_body_decode_is_rechecked_before_parent_lease(self):
+        server = self.start(); rt = server._reference_runtime; now = [0.0]; rt.clock = lambda: now[0]
+        cookie, csrf = self.bootstrap(server); original = host_module._reference_body
+        def decoded(blob):
+            result = original(blob); now[0] = 900; return result
+        with mock.patch.object(host_module, '_reference_body', side_effect=decoded):
+            self.assertEqual(self.current(server, cookie, csrf)[0], 403)
+        self.assertEqual(rt.active, 0)
+
+    def test_reference_self_worker_and_own_running_loop_close_are_fixed_not_deadlocks(self):
+        from labflow import intake_reference_review as api
+        original = api.read_reference_review; holder = {}; worker_rejected = []
+        def parent(*args, **kwargs):
+            self.fixed('unavailable', holder['server'].server_close); worker_rejected.append(True)
+            return original(*args, **kwargs)
+        with mock.patch.object(api, 'read_reference_review', side_effect=parent):
+            server = self.start(); holder['server'] = server
+            self.assertEqual(self.request(server, self.route())[0], 200)
+        self.assertEqual(worker_rejected, [True]); self.assertFalse(server._reference_runtime.closing)
+        seen = threading.Event()
+        def action():
+            if not seen.is_set(): self.fixed('unavailable', server.server_close); seen.set()
+        server.service_actions = action
+        self.assertTrue(seen.wait(3)); self.assertFalse(server._reference_runtime.closing)
+
+    def test_reference_stopped_loop_close_never_calls_shutdown_again(self):
+        server = self.start(); server.shutdown()
+        deadline = time.monotonic() + 3
+        while server._reference_runtime.loop_thread is not None and time.monotonic() < deadline: time.sleep(.005)
+        with mock.patch.object(server, 'shutdown', side_effect=AssertionError('stopped shutdown')): server.server_close()
+        self.assertEqual(server.socket.fileno(), -1)
+
+    def test_reference_real_owned_port_collision_reclaims_unpublished_host(self):
+        # Windows SO_REUSEADDR permits sharing; an owned exclusive listener gives a real collision.
+        listener = socket.socket(); self.addCleanup(listener.close)
+        if hasattr(socket, 'SO_EXCLUSIVEADDRUSE'): listener.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        listener.bind(('127.0.0.1', 0)); listener.listen()
+        self.fixed('unavailable', lambda: create_server(self.store.root, port=listener.getsockname()[1], intake_reference_store=self.store))
+        server = self.start()
+        self.assertEqual(self.request(server, self.route())[0], 200)
+        self.assertEqual(self.store._existing_binding.state, 'open')
+
+    def test_reference_shutdown_failure_and_repeated_interrupt_still_reclaim_known_resources(self):
+        server = self.start()
+        with mock.patch.object(server, 'shutdown', side_effect=OSError('PRIVATE shutdown')):
+            self.fixed('unavailable', server.server_close)
+        self.assertEqual(server.socket.fileno(), -1); self.assertFalse(server._reference_runtime.worker_refs)
+        server.server_close()
+        second = self.start(); original = host_module._REFERENCE_BASE_SHUTDOWN; attempts = []
+        def interrupted(value):
+            attempts.append(1)
+            if len(attempts) < 3: raise KeyboardInterrupt()
+            return original(value)
+        with mock.patch.object(second, 'shutdown', side_effect=lambda: interrupted(second)):
+            second.server_close()
+        self.assertEqual(len(attempts), 3); self.assertEqual(second.socket.fileno(), -1)
+
+    def test_reference_known_client_close_failure_is_quiet_retained_and_retryable(self):
+        server = self.start(); client = socket.create_connection(server.server_address, timeout=3)
+        client.sendall(b'GET / HTTP/1.1\r\nHost: ')
+        deadline = time.monotonic() + 3
+        while not server._reference_runtime.clients and time.monotonic() < deadline: time.sleep(.005)
+        owned = next(iter(server._reference_runtime.clients)); original = socket.socket.close
+        def close(value):
+            if value is owned: raise OSError('PRIVATE client close')
+            return original(value)
+        try:
+            with mock.patch.object(socket.socket, 'close', close), mock.patch('sys.stderr', new_callable=io.StringIO) as stderr:
+                self.fixed('unavailable', server.server_close)
+                self.assertEqual(stderr.getvalue(), '')
+            self.assertIn(owned, server._reference_runtime.clients)
+            server.server_close(); self.assertFalse(server._reference_runtime.clients)
+        finally: client.close()
+
+    def test_reference_normal_none_stale_and_unavailable_are_genuine200_not_transport_errors(self):
+        from labflow.intake_jobs import respond
+        from labflow.active_intake import scan_source
+        from tests.test_document_extract import synthetic_pdf
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        respond(self.fixture.legacy, 'SYN-ANSWER-LATER', 'answer', intake_id=self.ident, answers={'model':'MODEL-A'})
+        before = self.snapshot(); status, _, body = self.current(server, cookie, csrf)
+        self.assertEqual((status, json.loads(body)['status']), (200, 'stale')); self.assertEqual(self.snapshot(), before)
+        (self.fixture.root / 'inbox/one/request.pdf').write_bytes(synthetic_pdf(['product_type: sensor_node\nmarket: FCC\npurpose: development\nmodel: MODEL-A\nrevision: NEXT']))
+        scan_source(self.fixture.legacy, 'SYN-INBOX', now=200); scan_source(self.fixture.legacy, 'SYN-INBOX', now=202)
+        before = self.snapshot(); status, _, body = self.current(server, cookie, csrf)
+        self.assertEqual((status, json.loads(body)['status']), (200, 'unavailable')); self.assertEqual(self.snapshot(), before)
+        other = ReferenceFixture(self.fixture.root / 'no-ledger', registered=False)
+        opened = Store.open_existing(str(other.legacy.root)); self.addCleanup(opened.close)
+        no_ledger = self.start(store=opened, workspace=opened.root)
+        c, token = self.bootstrap(no_ledger, other.intake_id)
+        status, _, body = self.request(no_ledger, self.route('current', other.intake_id), 'POST',
+                b'{"schema_version":1,"action":"current"}', self.source_headers(no_ledger, c, token))
+        self.assertEqual((status, json.loads(body)['status']), (200, 'none'))
+
+    def test_reference_unknown_HTTP_method_has_405_not_raw_HTML_or_wrong_status(self):
+        server = self.start()
+        for path, allow in [(self.route(), 'GET, HEAD'), (self.route('current'), 'POST'),
+                            ('/intake-references/model.mjs', 'GET, HEAD')]:
+            status, headers, body = self.request(server, path, 'TRACE')
+            self.assertEqual((status, headers.get('Allow')), (405, allow))
+            self.assertEqual(json.loads(body)['error']['code'], 'read_only')
+
+    def test_reference_genuine_current_abort_then_close_waits_for_parent_finally(self):
+        from labflow import intake_reference_review as api
+        original = api.read_reference_review; entered, release = threading.Event(), threading.Event()
+        calls = []
+        def parent(*args, **kwargs):
+            if args[2]['action'] == 'current':
+                entered.set(); self.assertTrue(release.wait(5)); calls.append('current')
+            return original(*args, **kwargs)
+        with mock.patch.object(api, 'read_reference_review', side_effect=parent):
+            server = self.start(); cookie, csrf = self.bootstrap(server); before = self.snapshot()
+            payload = b'{"schema_version":1,"action":"current"}'
+            lines = ['POST ' + self.route('current') + ' HTTP/1.1', 'Host: 127.0.0.1:' + str(server.server_port)]
+            lines += [key + ': ' + value for key, value in self.source_headers(server, cookie, csrf).items()]
+            lines += ['Content-Length: ' + str(len(payload)), '', '']
+            client = socket.create_connection(server.server_address, timeout=3)
+            client.sendall('\r\n'.join(lines).encode('ascii') + payload)
+            try:
+                self.assertTrue(entered.wait(3)); client.shutdown(socket.SHUT_RDWR); client.close()
+                self.assertEqual(self.current(server, cookie, csrf)[0], 429)
+                errors = []
+                def stop():
+                    try: server.server_close()
+                    except BaseException as error: errors.append(error)
+                supervisor = threading.Thread(target=stop)
+                with mock.patch('sys.stderr', new_callable=io.StringIO) as stderr:
+                    supervisor.start(); self.assertTrue(supervisor.is_alive())
+                    self.assertEqual(self.store._existing_binding.state, 'open')
+                    release.set(); supervisor.join(6)
+                    self.assertEqual(stderr.getvalue(), '')
+                self.assertFalse(supervisor.is_alive()); self.assertEqual(errors, [])
+            finally:
+                release.set(); client.close()
+        self.assertEqual(calls, ['current']); self.assertEqual(self.snapshot(), before)
+        self.assertEqual(server._reference_runtime.active, 0)
+        self.assertFalse(server._reference_runtime.clients); self.assertFalse(server._reference_runtime.worker_refs)
+        self.evidence = {'kind':'049_actual_current_abort_close', 'barrier_around_formal_parent': True,
+                         'actual_042_calls':1, 'delivery':'unknown; client aborted', 'busy429':True,
+                         'parent_finally_before_close':True, 'inputs_unchanged':True, 'known_clients_workers':0}
+
+    def test_reference_failed_response_write_does_not_attempt_recursive_error_response(self):
+        server = self.start(); cls = server.RequestHandlerClass; original = cls.send_response
+        attempts = []
+        def response(handler, status, message=None):
+            if handler.path == '/intake-references/model.mjs':
+                attempts.append(status); raise OSError('PRIVATE response write')
+            return original(handler, status, message)
+        with mock.patch.object(cls, 'send_response', response), mock.patch('sys.stderr', new_callable=io.StringIO) as stderr:
+            with self.assertRaises((http.client.RemoteDisconnected, ConnectionResetError, ConnectionAbortedError)):
+                self.request(server, '/intake-references/model.mjs')
+            self.assertEqual(attempts, [200]); self.assertEqual(stderr.getvalue(), '')
+
+    def test_reference_interrupt_between_close_phases_is_deferred_until_reclaimed(self):
+        server = self.start(); rt = server._reference_runtime
+        original = threading.Condition.__enter__; seen, errors = [], []
+        def enter(condition):
+            if condition is rt.changed and not seen:
+                seen.append(True); raise KeyboardInterrupt()
+            return original(condition)
+        def stopped():
+            try: server.server_close()
+            except BaseException as error: errors.append(type(error).__name__)
+        with mock.patch.object(threading.Condition, '__enter__', enter):
+            thread = threading.Thread(target=stopped); thread.start(); thread.join(5)
+        self.assertFalse(thread.is_alive()); self.assertEqual(errors, [])
+        self.assertEqual(server.socket.fileno(), -1); self.assertFalse(rt.clients)
+
+    def test_reference_second_loop_is_rejected_without_corrupting_running_loop(self):
+        server = self.start(); self.assertEqual(self.request(server, self.route())[0], 200)
+        first = server._reference_runtime.loop_thread
+        try:
+            with mock.patch.object(host_module.ThreadingHTTPServer, 'serve_forever', side_effect=AssertionError('second loop body')):
+                self.fixed('unavailable', server.serve_forever)
+            self.assertIs(server._reference_runtime.loop_thread, first)
+        finally:
+            server.shutdown()
+            try: server.server_close()
+            except ValueError: pass
+
+    def test_reference_parent_import_failure_and_missing_callable_are_fixed_before_bind(self):
+        from labflow import intake_reference_review as api
+        original = host_module.importlib.import_module
+        def imported(name, *args, **kwargs):
+            if name == '.intake_reference_review': raise OSError('PRIVATE import')
+            return original(name, *args, **kwargs)
+        with mock.patch.object(host_module.ThreadingHTTPServer, 'server_bind', side_effect=AssertionError('bind reached')) as bind:
+            with mock.patch.object(host_module.importlib, 'import_module', side_effect=imported):
+                self.fixed('unavailable', lambda: create_server(self.store.root, port=0, intake_reference_store=self.store))
+            with mock.patch.object(api, 'read_reference_review', None):
+                self.fixed('unavailable', lambda: create_server(self.store.root, port=0, intake_reference_store=self.store))
+            bind.assert_not_called()
+
+    def test_reference_configured_host_and_port_types_rejected_without_callbacks_or_bind(self):
+        class Host:
+            def __eq__(self, other): raise AssertionError('host callback')
+        with mock.patch.object(host_module.ThreadingHTTPServer, 'server_bind', side_effect=AssertionError('bind reached')) as bind:
+            self.fixed('invalid_request', lambda: create_server(self.store.root, host=Host(), port=0, intake_reference_store=self.store))
+            for value in [True, False, 1.0, '0', -1, 65536]:
+                self.fixed('invalid_request', lambda: create_server(self.store.root, port=value, intake_reference_store=self.store))
+            bind.assert_not_called()
+
 
 
 class ServerTests(unittest.TestCase):

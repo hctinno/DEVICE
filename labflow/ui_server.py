@@ -1,12 +1,18 @@
 """Loopback-only evidence UI and explicit memory calculation. No lab controls."""
 import argparse
+from contextlib import contextmanager, ExitStack
+from datetime import datetime, timedelta
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import hmac
 import importlib
 import json
 import math
 from pathlib import Path
 import re
+import secrets
+import socket
 import threading
+import time
 from urllib.parse import parse_qsl, unquote, urlsplit
 
 from .ui_read_model import IntakeReadModel, ReadModelError
@@ -38,6 +44,9 @@ ASSETS = {
     '/fcc-cases/discovery_view.mjs': ('fcc_cases/discovery_view.mjs', 'text/javascript; charset=utf-8'),
     '/fcc-cases/calculation_model.mjs': ('fcc_cases/calculation_model.mjs', 'text/javascript; charset=utf-8'),
     '/fcc-cases/calculation_view.mjs': ('fcc_cases/calculation_view.mjs', 'text/javascript; charset=utf-8'),
+    '/intake-references/model.mjs': ('intake_references/model.mjs', 'text/javascript; charset=utf-8'),
+    '/intake-references/view.mjs': ('intake_references/view.mjs', 'text/javascript; charset=utf-8'),
+    '/intake-references/transport.mjs': ('intake_references/transport.mjs', 'text/javascript; charset=utf-8'),
 }
 FRONTEND = Path(__file__).resolve().parents[1] / 'frontend'
 _ID = re.compile(r'[A-Za-z0-9_.-]{1,150}', re.ASCII)
@@ -352,9 +361,625 @@ def _catalog_query(raw):
     return result
 
 
-def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None):
+_REFERENCE_ASSETS = frozenset('/intake-references/' + name + '.mjs' for name in ('model', 'view', 'transport'))
+_REFERENCE_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,149}\Z', re.ASCII)
+_REFERENCE_SHA = re.compile(r'[a-f0-9]{64}\Z', re.ASCII)
+_REFERENCE_CODES = frozenset('intake_reference_ui_' + suffix for suffix in
+    ('unconfigured', 'invalid_request', 'input_limit', 'access_denied', 'session_unavailable', 'unavailable'))
+_REFERENCE_BINDINGS = frozenset('current_at_append historical_provided preparation_unverified head_conflict reference_unbound'.split())
+_REFERENCE_REASONS = frozenset('analysis_not_completed legacy_analysis no_pdf_context expected_revision_changed '
+    'expected_result_changed analysis_not_ready profile_changed delegation_missing intake_deferred '
+    'delegation_evidence_missing required_questions_open unread_documents source_provenance_unconfirmed '
+    'preparation_not_ready current_capture_unavailable no_reference_head reference_snapshot_stale'.split())
+_REFERENCE_PARENT_SUFFIXES = {
+    'IntakeReferenceReviewError': ('intake_reference_review_', 'invalid_argument store_invalid access_denied '
+        'prepared_invalid review_state_changed parent_invalid input_limit unavailable'),
+    'IntakeReferenceLedgerError': ('intake_reference_ledger_', 'invalid_argument store_invalid intake_not_found '
+        'input_limit parent_invalid origin_invalid schema_mismatch request_conflict integrity_invalid storage_error'),
+    'IntakeReferenceStateError': ('intake_reference_state_', 'invalid_argument store_invalid transaction_required '
+        'intake_not_found input_limit source_integrity_invalid projection_inconsistent delegation_invalid storage_error')}
+_REFERENCE_BASE_SHUTDOWN = ThreadingHTTPServer.shutdown
+
+
+class _ReferenceFailure(ValueError):
+    def __init__(self, suffix, status=503):
+        self.code = 'intake_reference_ui_' + suffix
+        self.status = status
+        super().__init__(self.code)
+
+
+def _reference_fail(suffix='unavailable', status=503):
+    try:
+        raise _ReferenceFailure(suffix, status) from None
+    except _ReferenceFailure as error:
+        error.__context__ = error.__cause__ = None
+        raise
+
+
+def _reference_need(condition):
+    if not condition:
+        _reference_fail()
+
+
+def _reference_keys(value, names):
+    _reference_need(type(value) is dict and value.keys() == set(names.split()))
+
+
+def _reference_int(value, minimum=1, maximum=2**63-1):
+    _reference_need(type(value) is int and minimum <= value <= maximum)
+
+
+def _reference_id(value, maximum=150):
+    _reference_need(type(value) is str and len(value) <= maximum and _REFERENCE_ID.fullmatch(value) is not None)
+
+
+def _reference_sha(value, nullable=False):
+    _reference_need(nullable and value is None or type(value) is str and _REFERENCE_SHA.fullmatch(value) is not None)
+
+
+def _reference_time(value):
+    _reference_need(type(value) is str and len(value) <= 128)
+    try:
+        stamp = datetime.fromisoformat(value)
+        valid = stamp.tzinfo is not None and stamp.utcoffset() == timedelta(0)
+    except (ValueError, TypeError):
+        valid = False
+    _reference_need(valid)
+
+
+def _reference_flags(value, names, positive):
+    _reference_keys(value, names)
+    _reference_need(all(type(flag) is bool and flag is (key in positive) for key, flag in value.items()))
+
+
+def _reference_plain(value, *, request=False):
+    cap, depth_cap, node_cap = (16384, 8, 256) if request else (2097152, 20, 200000)
+    nodes = size = 0
+    def invalid(limit=False):
+        _reference_fail('input_limit' if limit and request else 'invalid_request' if request else 'unavailable',
+                        413 if limit and request else 400 if request else 503)
+    def walk(item, depth=0):
+        nonlocal nodes, size
+        nodes += 1
+        if nodes > node_cap or depth > depth_cap: invalid(True)
+        if item is None or type(item) in (bool, int, str):
+            if type(item) is str and len(item) > cap: invalid(True)
+            try: size += len(json.dumps(item, ensure_ascii=False, allow_nan=False).encode('utf-8'))
+            except (ValueError, UnicodeError): invalid()
+            if size > cap: invalid(True)
+            return item
+        if type(item) not in (dict, list): invalid()
+        size += 2 + max(0, len(item) - 1) + (len(item) if type(item) is dict else 0)
+        if size > cap or len(item) > node_cap: invalid(True)
+        if type(item) is list: return [walk(child, depth + 1) for child in item]
+        result = {}
+        for key, child in item.items():
+            if type(key) is not str: invalid()
+            walk(key, depth + 1); result[key] = walk(child, depth + 1)
+        return result
+    result = walk(value)
+    raw = json.dumps(result, ensure_ascii=False, allow_nan=False, separators=(',', ':')).encode('utf-8')
+    if len(raw) > cap: invalid(True)
+    return result, raw
+
+
+def _reference_record(value):
+    _reference_keys(value, 'record_id seq request_id revision origin_job_id reference_receipt_id binding_status '
+                          'expected_snapshot_id append_observation source_modes created_at')
+    for key in ('record_id', 'reference_receipt_id', 'expected_snapshot_id'): _reference_sha(value[key])
+    for key in ('request_id', 'origin_job_id'): _reference_id(value[key])
+    for key in ('seq', 'revision'): _reference_int(value[key])
+    _reference_need(value['binding_status'] in _REFERENCE_BINDINGS); _reference_time(value['created_at'])
+    a = value['append_observation']
+    _reference_keys(a, 'expected_snapshot_id captured_snapshot_id head_before_record_id head_after_record_id '
+                       'head_advanced preparation_ready observed_at')
+    _reference_sha(a['expected_snapshot_id'])
+    for key in ('captured_snapshot_id', 'head_before_record_id', 'head_after_record_id'): _reference_sha(a[key], True)
+    _reference_need(type(a['head_advanced']) is bool and type(a['preparation_ready']) is bool)
+    _reference_time(a['observed_at'])
+    _reference_need(a['expected_snapshot_id'] == value['expected_snapshot_id'] and a['observed_at'] == value['created_at']
+                    and a['head_advanced'] is (value['binding_status'] == 'current_at_append'))
+    if a['head_advanced']:
+        _reference_need(a['head_after_record_id'] == value['record_id'] and a['captured_snapshot_id'] == a['expected_snapshot_id'])
+    else: _reference_need(a['head_after_record_id'] == a['head_before_record_id'])
+    modes = value['source_modes']; _reference_keys(modes, 'intake_revision_synthetic catalog_synthetic intake_provenance_status')
+    _reference_need(type(modes['intake_revision_synthetic']) is bool
+                    and (modes['catalog_synthetic'] is None or type(modes['catalog_synthetic']) is bool)
+                    and modes['intake_provenance_status'] in {'confirmed', 'unconfirmed', 'not_assessed'})
+
+
+def _reference_response(value, intake_id, request):
+    value, raw = _reference_plain(value)
+    common = 'schema_version kind intake_id available '
+    history = request['action'] == 'history'
+    _reference_keys(value, common + ('records next_before_seq verification' if history else
+        'status record reference_summary current_observation reason_codes verification'))
+    _reference_need(type(value['schema_version']) is int and value['schema_version'] == 1
+                    and value['kind'] == ('intake_reference_history' if history else 'intake_reference_review_current')
+                    and value['intake_id'] == intake_id and type(value['available']) is bool)
+    if history:
+        rows = value['records']
+        _reference_need(type(rows) is list and len(rows) <= request['limit'])
+        for row in rows: _reference_record(row)
+        seqs = [r['seq'] for r in rows]
+        _reference_need(seqs == sorted(set(seqs), reverse=True)
+                        and len({r['record_id'] for r in rows}) == len(rows)
+                        and len({r['request_id'] for r in rows}) == len(rows)
+                        and (value['available'] or not rows)
+                        and (request['before_seq'] is None or all(seq < request['before_seq'] for seq in seqs)))
+        cursor = value['next_before_seq']
+        if cursor is not None:
+            _reference_int(cursor); _reference_need(len(rows) == request['limit'] and cursor == seqs[-1])
+        _reference_flags(value['verification'], 'record_metadata_verified payloads_reverified original_sources_reverified '
+                         'database_currentness_verified', {'record_metadata_verified'} if value['available'] else set())
+    else:
+        status, record, reasons = value['status'], value['record'], value['reason_codes']
+        _reference_need(status in {'current', 'stale', 'none', 'unavailable'} and type(reasons) is list
+                        and all(type(r) is str and r in _REFERENCE_REASONS for r in reasons)
+                        and reasons == sorted(set(reasons)))
+        for state, reason in [('none','no_reference_head'), ('stale','reference_snapshot_stale'),
+                              ('unavailable','current_capture_unavailable')]:
+            _reference_need((status == state) == (reason in reasons))
+        o = value['current_observation']; _reference_keys(o, 'snapshot_id head_record_id preparation_ready observed_at')
+        _reference_sha(o['snapshot_id'], True); _reference_sha(o['head_record_id'], True)
+        _reference_need(type(o['preparation_ready']) is bool); _reference_time(o['observed_at'])
+        _reference_flags(value['verification'], 'record_hash_verified database_snapshot_observed '
+                         'reference_source_currentness_verified operational_authority_granted model_execution_verified evaluation_executed',
+                         {'database_snapshot_observed'} | ({'record_hash_verified'} if record is not None else set()))
+        if record is None:
+            _reference_need(value['reference_summary'] is None and o['head_record_id'] is None)
+        else:
+            _reference_record(record)
+            _reference_need(value['available'] and record['record_id'] == o['head_record_id']
+                            and record['binding_status'] == 'current_at_append')
+            r = value['reference_summary']; _reference_keys(r, 'receipt_id status context_id selected_case_ids accepted_reference_count')
+            _reference_sha(r['receipt_id']); _reference_sha(r['context_id'], True)
+            _reference_need(r['receipt_id'] == record['reference_receipt_id'] and r['status'] in {'bound', 'insufficient_evidence'}
+                            and type(r['selected_case_ids']) is list and len(r['selected_case_ids']) <= 16)
+            for case in r['selected_case_ids']: _reference_id(case, 128)
+            _reference_need(r['selected_case_ids'] == sorted(set(r['selected_case_ids'])))
+            _reference_int(r['accepted_reference_count'], 0, 256)
+            _reference_need(r['accepted_reference_count'] >= len(r['selected_case_ids'])
+                            and (r['accepted_reference_count'] == 0) == (not r['selected_case_ids']))
+        _reference_need((status == 'unavailable') == (o['snapshot_id'] is None)
+                        and (status not in {'current', 'stale'} or record is not None)
+                        and (status != 'none' or record is None))
+        if status == 'current': _reference_need(record['expected_snapshot_id'] == o['snapshot_id'])
+    return raw
+
+
+def _reference_body(blob):
+    try:
+        text = blob.decode('utf-8', errors='strict')
+        depth = 0; quoted = escaped = False
+        for char in text:
+            if quoted:
+                if not escaped and char == '"': quoted = False
+                escaped = not escaped and char == '\\'
+            elif char == '"': quoted = True
+            elif char in '[{':
+                depth += 1
+                if depth > 8: _reference_fail('input_limit', 413)
+            elif char in ']}': depth -= 1
+        def pairs(items):
+            out = {}
+            for key, value in items:
+                if key in out: raise ValueError()
+                out[key] = value
+            return out
+        def constant(_): raise ValueError()
+        value = json.loads(text, object_pairs_hook=pairs, parse_constant=constant)
+        value, _ = _reference_plain(value, request=True)
+        if (type(value) is not dict or value.keys() != {'schema_version','action'}
+                or type(value['schema_version']) is not int or value['schema_version'] != 1 or value['action'] != 'current'):
+            raise ValueError()
+    except (ValueError, UnicodeError, RecursionError) as error:
+        if type(error) is _ReferenceFailure: raise
+        _reference_fail('invalid_request', 400)
+    return value
+
+
+def _reference_history_query(query):
+    values = {'limit': 20, 'before_seq': None}
+    try:
+        if '%' in query or '+' in query: raise ValueError()
+        pairs = parse_qsl(query, keep_blank_values=True, strict_parsing=True)
+        if len(pairs) > 2 or len({p[0] for p in pairs}) != len(pairs): raise ValueError()
+        for key, literal in pairs:
+            if key not in values or not re.fullmatch('[1-9][0-9]{0,18}', literal, re.ASCII): raise ValueError()
+            number = int(literal)
+            if number > (100 if key == 'limit' else 2**63-1): raise ValueError()
+            values[key] = number
+    except ValueError: _reference_fail('invalid_request', 400)
+    return {'schema_version': 1, 'action': 'history', **values}
+
+
+class _ReferenceRuntime:
+    def __init__(self, workspace, store, scope):
+        module = importlib.import_module('.store', __package__)
+        if type(store) is not module.Store or type(store.__dict__.get('_existing_binding')) is not module._ExistingBinding:
+            _reference_fail('invalid_request', 400)
+        binding = store._existing_binding
+        try:
+            path = module._existing_path(workspace) if type(workspace) is str else workspace
+            if type(path) is not type(Path()) or path != binding.root:
+                _reference_fail('invalid_request', 400)
+        except Exception:
+            _reference_fail('invalid_request', 400)
+        if not (type(scope) is str and scope == 'workspace' or type(scope) is tuple and len(scope) <= 100
+                and all(type(v) is str and _REFERENCE_ID.fullmatch(v) for v in scope) and len(set(scope)) == len(scope)):
+            _reference_fail('invalid_request', 400)
+        self.store, self.binding, self.scope = store, binding, scope
+        self.lock = threading.RLock(); self.changed = threading.Condition(self.lock)
+        self.clock = time.monotonic
+        self.host_epoch, self.scope_epoch = secrets.token_hex(32), secrets.token_hex(32)
+        self.sessions, self.clients, self.worker_refs, self.workers, self.leases = {}, set(), set(), set(), {}
+        self.active = 0; self.source_active = False; self.closing = self.closed = False
+        self.loop_thread = None; self.loop_failure = False; self.close_lock = threading.Lock()
+        self.check_store()
+        api = importlib.import_module('.intake_reference_review', __package__)
+        self.parent = api.read_reference_review
+        _reference_need(callable(self.parent))
+        self.parent_errors = {getattr(api, name): frozenset(prefix + suffix for suffix in names.split())
+                              for name, (prefix, names) in _REFERENCE_PARENT_SUFFIXES.items()}
+
+    def check_store(self):
+        try:
+            with self.binding.lock:
+                type(self.store).__enter__(self.store)
+                self.binding.check_identity()
+        except BaseException:
+            _reference_fail()
+
+    def allowed(self, intake_id):
+        return self.scope == 'workspace' or intake_id in self.scope
+
+    def expire(self):
+        now = self.clock()
+        for sid in [sid for sid, item in self.sessions.items() if now - item['last_seen'] >= 900]:
+            del self.sessions[sid]
+        return now
+
+    def session(self, sid, *, touch=False):
+        now = self.expire()
+        item = self.sessions.get(sid) if type(sid) is str and _REFERENCE_SHA.fullmatch(sid) else None
+        if item is not None and touch: item['last_seen'] = now
+        return item
+
+    def cookie(self, handler):
+        headers = handler.headers.get_all('Cookie', [])
+        if len(headers) > 1: _reference_fail('access_denied', 403)
+        found = []
+        for piece in (headers[0].split(';') if headers else []):
+            key, equal, value = piece.strip().partition('=')
+            if key == self.cookie_name:
+                if not equal or not _REFERENCE_SHA.fullmatch(value): _reference_fail('access_denied', 403)
+                found.append(value)
+        if len(found) > 1: _reference_fail('access_denied', 403)
+        return found[0] if found else None
+
+    @property
+    def cookie_name(self):
+        return 'dgm_intake_reference_' + str(self.server.server_port)
+
+    def authenticate(self, handler, intake_id, *, touch=False):
+        if self.closing: _reference_fail()
+        sid = self.cookie(handler); item = self.session(sid, touch=touch)
+        tokens = handler.headers.get_all('X-Intake-Reference-CSRF', [])
+        if (not self.allowed(intake_id) or item is None or len(tokens) != 1
+                or not _REFERENCE_SHA.fullmatch(tokens[0]) or not hmac.compare_digest(tokens[0], item['csrf'])):
+            _reference_fail('access_denied', 403)
+        return sid
+
+    def history_headers(self, handler, intake_id):
+        with self.lock:
+            if self.closing: _reference_fail()
+            sid = self.cookie(handler); item = self.session(sid)
+            if sid is not None and item is None: _reference_fail('access_denied', 403)
+            headers = []
+            if handler.command == 'GET':
+                if item is None:
+                    if len(self.sessions) >= 128: _reference_fail('session_unavailable')
+                    sid = secrets.token_hex(32); item = {'csrf': secrets.token_hex(32), 'last_seen': self.clock()}
+                    self.sessions[sid] = item
+                    headers.append(('Set-Cookie', self.cookie_name + '=' + sid +
+                                    '; HttpOnly; SameSite=Strict; Path=/api/intake-references/; Max-Age=900'))
+                else: item['last_seen'] = self.clock()
+            allowed = item is not None and self.allowed(intake_id)
+            headers.append(('X-Intake-Reference-Read-Allowed', 'true' if allowed else 'false'))
+            if allowed: headers.append(('X-Intake-Reference-CSRF', item['csrf']))
+            return headers
+
+    def action_binding(self, session_id):
+        with self.lock:
+            if self.closing or self.session(session_id) is None: return None
+            return {'host_epoch': self.host_epoch, 'session_id': session_id, 'scope_epoch': self.scope_epoch}
+
+    @contextmanager
+    def parent_call(self, *, source=False):
+        if type(source) is not bool: _reference_fail('invalid_request', 400)
+        ident = threading.get_ident()
+        with self.lock:
+            if self.closing: _reference_fail()
+            self.check_store()
+            if source and self.source_active: _reference_fail('unavailable', 429)
+            self.active += 1; self.source_active |= source
+            self.leases[ident] = self.leases.get(ident, 0) + 1
+        try: yield None
+        finally:
+            with self.lock:
+                self.active -= 1
+                if source: self.source_active = False
+                self.leases[ident] -= 1
+                if not self.leases[ident]: del self.leases[ident]
+                self.changed.notify_all()
+
+
+class _ReferenceHTTPServer(ThreadingHTTPServer):
+    daemon_threads = False
+    block_on_close = True
+
+    def __init__(self, address, handler, runtime):
+        self._reference_runtime = runtime; runtime.server = self
+        super().__init__(address, handler)
+
+    def _reference_action_binding(self, session_id):
+        return self._reference_runtime.action_binding(session_id)
+
+    def _reference_parent_call(self, *, source=False):
+        return self._reference_runtime.parent_call(source=source)
+
+    def get_request(self):
+        client, address = super().get_request()
+        rt = self._reference_runtime
+        with rt.lock: rt.clients.add(client)
+        try: client.settimeout(5)
+        except BaseException:
+            try: client.close()
+            except BaseException: pass
+            with rt.lock:
+                if client.fileno() == -1: rt.clients.discard(client)
+            raise
+        return client, address
+
+    def process_request(self, request, client_address):
+        rt = self._reference_runtime
+        with rt.lock:
+            rt.clients.add(request)
+            closing = rt.closing
+        if closing:
+            self.shutdown_request(request)
+            with rt.lock: rt.clients.discard(request)
+        else:
+            try: super().process_request(request, client_address)
+            except BaseException:
+                self.shutdown_request(request)
+                with rt.lock: rt.clients.discard(request)
+
+    def process_request_thread(self, request, client_address):
+        rt = self._reference_runtime; ident = threading.get_ident()
+        with rt.lock:
+            rt.workers.add(ident); rt.worker_refs.add(threading.current_thread())
+        try:
+            try: super().process_request_thread(request, client_address)
+            except BaseException:
+                try: self.shutdown_request(request)
+                except BaseException: pass
+        finally:
+            with rt.lock:
+                rt.workers.discard(ident)
+                if request.fileno() == -1: rt.clients.discard(request)
+                rt.changed.notify_all()
+
+    def handle_error(self, request, client_address):
+        pass
+
+    def serve_forever(self, poll_interval=.5):
+        rt = self._reference_runtime
+        with rt.lock:
+            if rt.closing or rt.loop_thread is not None: _reference_fail()
+            rt.loop_thread = threading.current_thread()
+        try:
+            try: super().serve_forever(poll_interval=poll_interval)
+            except KeyboardInterrupt: raise
+            except BaseException:
+                with rt.lock: rt.loop_failure = True
+        finally:
+            with rt.lock:
+                rt.loop_thread = None; rt.changed.notify_all()
+
+    def server_close(self):
+        rt = self._reference_runtime; ident = threading.get_ident()
+        with rt.lock:
+            if ident in rt.workers or rt.leases.get(ident) or rt.loop_thread is threading.current_thread():
+                _reference_fail()
+        while True:
+            try: rt.close_lock.acquire(); break
+            except KeyboardInterrupt: continue
+        failed = False
+        def finish(action):
+            nonlocal failed
+            while True:
+                try: action(); return
+                except KeyboardInterrupt: continue
+                except BaseException: failed = True; return
+        try:
+            while True:
+                try:
+                    with rt.lock:
+                        if rt.closed: break
+                        rt.closing = True; loop = rt.loop_thread
+                    if loop is not None:
+                        finish(self.shutdown)
+                        if loop.is_alive(): finish(lambda: _REFERENCE_BASE_SHUTDOWN(self))
+                    with rt.changed:
+                        while rt.active:
+                            try: rt.changed.wait(.1)
+                            except KeyboardInterrupt: continue
+                            except BaseException: failed = True
+                        clients = list(rt.clients)
+                        threads = getattr(self, '_threads', ())
+                        if isinstance(threads, list): rt.worker_refs.update(threads)
+                        workers = list(rt.worker_refs)
+                        failed |= rt.loop_failure
+                    # Closing accepted sockets wakes incomplete headers and blocked writes.
+                    for client in clients:
+                        def disconnect():
+                            try: client.shutdown(socket.SHUT_RDWR)
+                            except OSError: pass
+                        finish(disconnect); finish(client.close)
+                    finish(super().server_close)
+                    if self.socket.fileno() != -1: finish(self.socket.close)
+                    for worker in workers:
+                        if worker is not threading.current_thread(): finish(worker.join)
+                    if loop is not None and loop is not threading.current_thread(): finish(loop.join)
+                    with rt.lock:
+                        rt.clients = {client for client in rt.clients if client.fileno() != -1}
+                        rt.worker_refs = {worker for worker in rt.worker_refs if worker.is_alive()}
+                        rt.sessions.clear()
+                        rt.closed = not rt.clients and not rt.worker_refs and self.socket.fileno() == -1 and rt.loop_thread is None
+                        failed |= not rt.closed
+                    break
+                except KeyboardInterrupt:
+                    # A signal between cleanup phases must not return live resources.
+                    continue
+        finally: rt.close_lock.release()
+        if failed: _reference_fail()
+
+
+def _reference_guard(handler, *, source=False):
+    port = handler.server.server_port
+    hosts = {f'127.0.0.1:{port}', f'localhost:{port}'}
+    if port == 80: hosts |= {'127.0.0.1', 'localhost'}
+    host = handler.headers.get_all('Host', [])
+    origin = handler.headers.get_all('Origin', [])
+    fetch = handler.headers.get_all('Sec-Fetch-Site', [])
+    if (handler.client_address[0] != '127.0.0.1' or len(host) != 1 or host[0] not in hosts
+            or len(origin) > 1 or origin and origin[0] != 'http://' + host[0]
+            or len(fetch) > 1 or fetch and fetch[0] == 'cross-site'
+            or source and (origin != ['http://' + host[0]] or fetch != ['same-origin'])):
+        _reference_fail('access_denied', 403)
+
+
+def _reference_dispatch(handler, runtime):
+    handler._reference_headers = []; handler._reference_allow = None
+    handler._reference_handling = handler._reference_response_started = False
+    raw_target = handler.requestline.split()[1]
+    try:
+        parsed = urlsplit(handler.path)
+        path = unquote(parsed.path, encoding='utf-8', errors='strict')
+    except (ValueError, UnicodeError): return False
+    asset = path.startswith('/intake-references/') or path == '/intake-references'
+    if not asset and not (path.startswith('/api/intake-references/') or path == '/api/intake-references'):
+        return False
+    handler._reference_handling = True
+    handler.close_connection = True
+    code, status, payload = None, None, None
+    try:
+        if len(raw_target.encode('utf-8')) > 1024: _reference_fail('input_limit', 413)
+        if (parsed.scheme or parsed.netloc or parsed.fragment or raw_target != path + ('?' + parsed.query if '?' in raw_target else '')
+                or '%' in parsed.path or '\\' in raw_target or '//' in parsed.path):
+            handler.error(404, 'route_not_found'); return True
+        if asset:
+            if raw_target not in _REFERENCE_ASSETS:
+                handler.error(404, 'route_not_found'); return True
+            handler._reference_allow = 'GET, HEAD'
+            if handler.command not in ('GET', 'HEAD'):
+                handler.error(405, 'read_only'); return True
+            _reference_guard(handler)
+            filename, mime = ASSETS[path]
+            try: body = (FRONTEND / filename).read_bytes()
+            except FileNotFoundError:
+                handler.error(404, 'route_not_found'); return True
+            except OSError:
+                handler.error(503, 'asset_unavailable'); return True
+            handler.send_payload(200, body, mime); return True
+        match = re.fullmatch(r'/api/intake-references/([^/]+)/(history|current)', path, re.ASCII)
+        if match is None:
+            handler.error(404, 'route_not_found'); return True
+        intake_id, action = match.groups()
+        if _REFERENCE_ID.fullmatch(intake_id) is None: _reference_fail('invalid_request', 400)
+        handler._reference_allow = 'GET, HEAD' if action == 'history' else 'POST'
+        if handler.command not in (('GET', 'HEAD') if action == 'history' else ('POST',)):
+            handler.error(405, 'read_only'); return True
+        _reference_guard(handler)
+        if runtime is None: _reference_fail('unconfigured')
+        if action == 'current': _reference_guard(handler, source=True)
+        if action == 'history':
+            request = _reference_history_query(parsed.query)
+            with runtime.lock:
+                sid = runtime.cookie(handler)
+                if sid is not None and runtime.session(sid) is None:
+                    _reference_fail('access_denied', 403)
+            with runtime.parent_call():
+                value = runtime.parent(runtime.store, intake_id, request, allow_retained_reads=False)
+                payload = _reference_response(value, intake_id, request)
+                handler._reference_headers = runtime.history_headers(handler, intake_id)
+        else:
+            if '?' in raw_target: _reference_fail('invalid_request', 400)
+            with runtime.lock: runtime.authenticate(handler, intake_id)
+            if handler.headers.get_all('Transfer-Encoding'):
+                _reference_fail('invalid_request', 400)
+            if handler.headers.get_all('Content-Encoding'): _reference_fail('invalid_request', 415)
+            if handler.headers.get_all('Expect'): _reference_fail('invalid_request', 417)
+            types = handler.headers.get_all('Content-Type', [])
+            if len(types) != 1 or re.fullmatch(r'application/json(?:\s*;\s*charset\s*=\s*utf-8)?', types[0].strip(), re.I) is None:
+                _reference_fail('invalid_request', 415)
+            lengths = handler.headers.get_all('Content-Length', [])
+            if not lengths: _reference_fail('invalid_request', 411)
+            if len(lengths) != 1 or re.fullmatch('[0-9]+', lengths[0], re.ASCII) is None:
+                _reference_fail('invalid_request', 400)
+            literal = lengths[0].lstrip('0') or '0'
+            if len(literal) > 5 or int(literal) > 16384: _reference_fail('input_limit', 413)
+            try: blob = handler.rfile.read(int(literal))
+            except (TimeoutError, OSError): _reference_fail('unavailable', 408)
+            if len(blob) != int(literal): _reference_fail('invalid_request', 400)
+            request = _reference_body(blob)
+            with ExitStack() as lease:
+                with runtime.lock:
+                    runtime.authenticate(handler, intake_id, touch=True)
+                    lease.enter_context(runtime.parent_call(source=True))
+                value = runtime.parent(runtime.store, intake_id, request, allow_retained_reads=True)
+                payload = _reference_response(value, intake_id, request)
+    except BaseException as error:
+        if handler._reference_response_started: return True
+        code, status = 'intake_reference_ui_unavailable', 503
+        if (type(error) is _ReferenceFailure and type(error.code) is str and error.code in _REFERENCE_CODES
+                and type(error.status) is int and error.status in {400,403,408,411,413,415,417,429,503}):
+            code, status = error.code, error.status
+        elif runtime is not None and type(error) in runtime.parent_errors:
+            candidate = getattr(error, 'code', None)
+            if type(candidate) is str and candidate in runtime.parent_errors[type(error)]:
+                code = candidate
+                for suffix, mapped in [('invalid_argument',400), ('access_denied',403), ('intake_not_found',404), ('input_limit',413)]:
+                    if candidate.endswith('_' + suffix): status = mapped
+    try:
+        if code is not None:
+            handler._reference_headers = []
+            handler.error(status, code)
+        else: handler.send_payload(200, payload)
+    except BaseException:
+        # Delivery is unknown; a second error frame cannot repair a partial response.
+        pass
+    return True
+
+
+def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None,
+                  intake_reference_store=None, intake_reference_read_scope=()):
+    if intake_reference_store is not None and (type(host) is not str or host != '127.0.0.1'
+            or type(port) is not int or not 0 <= port <= 65535):
+        _reference_fail('invalid_request', 400)
     if host != '127.0.0.1':
         raise ValueError('The UI server only accepts the loopback host 127.0.0.1')
+    reference, setup_failure = None, None
+    if intake_reference_store is not None:
+        try:
+            reference = _ReferenceRuntime(workspace, intake_reference_store, intake_reference_read_scope)
+        except _ReferenceFailure as error:
+            setup_failure = (error.code.removeprefix('intake_reference_ui_'), error.status)
+        except Exception:
+            setup_failure = ('unavailable', 503)
+    if setup_failure is not None: _reference_fail(*setup_failure)
     fcc_summary = fcc_case = fcc_search = fcc_discover = fcc_error_type = fcc_calculate = None
     if fcc_case_catalog is not None:
         invalid = False
@@ -420,6 +1045,7 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
         def send_payload(self, status, content, content_type='application/json; charset=utf-8'):
             if not isinstance(content, bytes):
                 content = json.dumps(content, ensure_ascii=False, allow_nan=False).encode('utf-8')
+            if getattr(self, '_reference_handling', False): self._reference_response_started = True
             self.send_response(status)
             self.send_header('Content-Type', content_type)
             self.send_header('Content-Length', str(len(content)))
@@ -427,6 +1053,10 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 self.send_header('Allow', 'POST')
             if getattr(self, '_fcc_close', False):
                 self.send_header('Connection', 'close')
+            if getattr(self, '_reference_allow', None):
+                self.send_header('Allow', self._reference_allow)
+            for key, value in getattr(self, '_reference_headers', ()):
+                self.send_header(key, value)
             self.send_header('Cache-Control', 'no-store')
             self.send_header('X-Content-Type-Options', 'nosniff')
             self.send_header('Referrer-Policy', 'no-referrer')
@@ -441,6 +1071,20 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
         def error(self, status, code):
             self.send_payload(status, {'error': {'code': code}})
 
+        def send_error(self, code, message=None, explain=None):
+            if code == 501 and _reference_dispatch(self, reference): return
+            if reference is None:
+                return super().send_error(code, message, explain)
+            self.close_connection = True
+            self.error(413 if code == 431 else 400, 'intake_reference_ui_input_limit' if code == 431
+                       else 'intake_reference_ui_invalid_request')
+
+        def handle_expect_100(self):
+            if reference is None: return super().handle_expect_100()
+            self.close_connection = True
+            self.error(417, 'intake_reference_ui_invalid_request')
+            return False
+
         def allowed_request(self):
             server_port = self.server.server_port
             hosts = {f'127.0.0.1:{server_port}', f'localhost:{server_port}'}
@@ -452,6 +1096,7 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
 
         def do_GET(self):
             self._fcc_post_only = False
+            if _reference_dispatch(self, reference): return
             if not self.allowed_request():
                 return self.error(403, 'local_origin_required')
             try:
@@ -649,9 +1294,11 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
         do_HEAD = do_GET
 
         def reject_write(self):
+            if _reference_dispatch(self, reference): return
             self.error(405, 'read_only')
 
         def do_POST(self):
+            if _reference_dispatch(self, reference): return
             raw_target = self.requestline.split()[1]
             if self.path != _FCC_CALC_PATH or raw_target != _FCC_CALC_PATH:
                 return self.reject_write()
@@ -713,7 +1360,14 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
 
         do_PUT = do_PATCH = do_DELETE = do_OPTIONS = reject_write
 
-    return ThreadingHTTPServer((host, port), Handler)
+    if reference is None:
+        return ThreadingHTTPServer((host, port), Handler)
+    try:
+        server = _ReferenceHTTPServer((host, port), Handler, reference)
+    except Exception:
+        server = None
+    if server is None: _reference_fail()
+    return server
 
 
 def main():
