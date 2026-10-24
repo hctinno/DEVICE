@@ -194,7 +194,7 @@ def _events(con,intake_id,row,answers):
     size=_one(con,"SELECT count(*) AS n,coalesce(sum(coalesce(length(CAST(e.details_json AS BLOB)),0)+coalesce(length(CAST(e.created_at AS BLOB)),0)+coalesce(length(CAST(r.request_json AS BLOB)),0)+coalesce(length(CAST(r.result_json AS BLOB)),0)),0) AS bytes FROM "+join+' WHERE '+where,(intake_id,))
     if size['n']>10000 or size['bytes']>8*_MIB:_fail('input_limit')
     events=_select(con,'SELECT '+','.join(columns)+' FROM '+join+' WHERE '+where+' ORDER BY e.event_id',(intake_id,))
-    _bounded(events,8*_MIB,code);proofs={};delegated=deferred=0;latest=None;active=None
+    _bounded(events,8*_MIB,code);proofs={};latest_answers={};delegated=deferred=0;latest=None;active=None
     for event in events:
         _positive(event['event_id'],code)
         details=_json(event['details_json'],8*_MIB,code);_keys(details,{'event_id','action'},code);_identifier(details['event_id'],code)
@@ -207,7 +207,8 @@ def _events(con,intake_id,row,answers):
                 or result['next_action'] not in {'awaiting_analysis','prepare_plan','needs_information','deferred','propose_start'}):_fail(code)
         if action=='answer':
             if type(request['answers']) is not dict or not request['answers'] or set(request['answers'])-set(FIELDS):_fail(code)
-            for value in request['answers'].values():_text(value,code)
+            for field,value in request['answers'].items():
+                _text(value,code);latest_answers[field]=(details['event_id'],value.strip())
         elif request['answers'] is not None:_fail(code)
         if action=='proceed':delegated=1;deferred=0;latest=details['event_id'];active=latest
         elif action=='defer':deferred=1;latest=details['event_id'];active=None
@@ -221,8 +222,8 @@ def _events(con,intake_id,row,answers):
         for fact in basis['facts']:
             if type(fact) is not list or len(fact)!=3 or fact[0] not in FIELDS or fact[2] not in {'explicit','inferred','uncertain'}:_fail(code)
             _text(fact[1],code)
-        proof=proofs.get(answer['event_id'])
-        if proof is None or proof['action']!='answer' or answer['field'] not in proof['answers'] or proof['answers'][answer['field']].strip()!=answer['value']:_fail(code)
+        if latest_answers.get(answer['field'])!=(answer['event_id'],answer['value']):_fail(code)
+    if set(latest_answers)!={answer['field'] for answer in answers}:_fail(code)
     return {'event_id':latest,'history_sha256':_hash(events),'verified':latest is not None},active
 
 

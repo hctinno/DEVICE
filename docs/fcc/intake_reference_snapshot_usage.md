@@ -26,7 +26,7 @@ same-con capture는 이미 transaction 중인 동일 Store DB의 trusted sqlite3
 
 현재 answers·모든 missing_* 질문의 required_fields·delegated/deferred와 공개 validate_analysis/project_analysis를 사용해 live 전체 projection을 다시 계산한다. 완료 당시 result.summary는 과거 projection이므로 현재 projection과 같다고 요구하지 않는다. 현재 projection의 submitted가 완료 submission과 맞고 재계산 전체가 일치해야 한다.
 
-답변의 원래 basis/event와 user_response/intake_responses의 target/action/value 관계를 검증한다. 현재 basis와 다른 과거 답변도 삭제·확인 승격하지 않고 상태 hash에 포함한다. effective proceed/defer 이력과 flags를 대조하되 새 위임이나 알림을 만들지 않는다. 원래 source/revision/blob synthetic provenance를 분리해 읽으며 불명/불일치는 readiness=false로 보존한다. synthetic을 재등록하지 않는다.
+답변의 원래 basis/event와 user_response/intake_responses의 target/action/value 관계를 검증한다. DB 이벤트 순서대로 각 필드의 마지막 answer 이벤트와 공백을 제거한 값을 구하고, 현재 답변 행의 필드 집합·event_id·value가 정확히 대응해야 한다. 최신 필드 누락이나 과거 이벤트/값 복원은 delegation_invalid다. 현재 basis와 다른 과거 답변도 삭제·확인 승격하지 않고 상태 hash에 포함한다. effective proceed/defer 이력과 flags를 대조하되 새 위임이나 알림을 만들지 않는다. 원래 source/revision/blob synthetic provenance를 분리해 읽으며 불명/불일치는 readiness=false로 보존한다. synthetic을 재등록하지 않는다.
 
 readiness.kind는 **reference_preparation_v1**이다. prepare_plan·질문/미해석 부재·위임/defer·profile/출처 상태를 관측한다. 기존 특정 fixture의 모델/recipe 적격과 다른 이름 공간이며 request_fixture_job의 expected_readiness_fingerprint로 쓰지 않는다.
 
@@ -106,12 +106,14 @@ origin/원문/context/extraction/profile 손상은 source_integrity_invalid, liv
 
 ## 소유 검증
 
-2026-10-24 전용40개 포함 관련310개 검사 PASS/skip0, 52.502초다. 부모/core12개 소스는 base032와 불변이다. missing DB 생성0, 같은 transaction의 WAL 관측/다음 조회 변화, 별도 process에서 caller가 기존 Store를 다시 연 뒤 같은 snapshot 관측, readonly 연결/row_factory·isolation/total_changes 보존, stale expected·oldprofile·V1/noPDF·projection/답변/위임·상한/escaping·출처 변화를 검사했다.
+2026-10-24 최신 소유 수정본은 전용46개 포함 관련316개 검사 PASS/skip0, 58.673초다. 직전40/310 결과와 독립 리뷰 I001의 원래 재현·신규4개 RED를 보존했다. 최신 답변 필드 누락·과거 이벤트/값 복원·같은 값의 옛 이벤트를 거절하고 정상 다중 필드/반복 답변·DB 이벤트 순서를 확인했다. 부모/core12개 소스는 base032와 불변이다. missing DB 생성0, 같은 transaction의 WAL 관측/다음 조회 변화, 별도 process에서 caller가 기존 Store를 다시 연 뒤 같은 snapshot 관측, readonly 연결/row_factory·isolation/total_changes 보존, stale expected·oldprofile·V1/noPDF·projection/답변/위임·상한/escaping·출처 변화를 검사했다.
 
 별도 synthetic V2 관측2건(rollback journal/live WAL)에서 애플리케이션 전체 row·schema·main DB/WAL 내용·blob은 불변이다. live WAL에서는 SQLite의 lab.sqlite3-shm 변화가 실제 관측됐다. 이를 애플리케이션 쓰기와 구별하며 모든 SQLite sidecar가 항상 불변이라고 하지 않는다. 두 연결은 mode=ro/URI였고 immutable 옵션은 없었다.
 
 이 관측2건의 Python 읽기는 original PDF6/context6/extraction6/profile·package metadata12회다. 실제 blob 읽기와 PDF parser0을 구별한다. Store 생성/connection·blob 등록/쓰기·event·PDF 추출·provider 감시8종은0회다. 생성된 합성 catalog/자료의 준비는 API 바깥이다. 034 snapshot→032 결합1건도 bound이며032의 DB currentness/권한false·평가null을 유지했다.
 
 최초 연결 cleanup/trace 테스트 문제, 원문 상한 오류가 일반 무결성 오류로 덮이던 RED와 수정 전 소스를 private에 보존했다. 최종본은 원문 global 한도 초과=input_limit와 한도 안의 원문 변경=source_integrity_invalid를 구별한다. SQLite trace의 내부 주석 `-- PRAGMA database_list`는 SELECT table-valued pragma 조회에서 발생하며 실제 옵션 변경 명령이 아니다.
+
+I001 수정 뒤 첫 관련316 실행의 PDF 작업자1개 실패도 보존했다. 소유 검증 스크립트의 main guard 누락으로 Windows spawn이 검증을 재실행한 문제이며, private runner만 수정해 child bootstrap RED→GREEN과 위316 통과를 확인했다. 제품 코드나 부모 테스트를 이 실행 문제에 맞춰 바꾸지 않았다. 새 genuine 반복 답변을 포함한 관측2건에서도 애플리케이션 row/schema/blob은 불변이고 live WAL의 SHM 변화는 별도로 기록했다.
 
 임시 synthetic V2 Store의 실제 SQLite read/동시 transaction/재시작 검증과 실제 고객 업무는 다른 분모다. 이034의 actual catalog 신규 검사는0이고 기존032 실제 증거는 보존만 했다. 실제 고객DB/current/E2E·모델·장비 검증은 미실행이다. B 저장/DDL/current head 코드는 없다. 문서 검사는 UTF-8·링크 무결성이며 기능·계측·기관 적합성을 입증하지 않는다. 독립 리뷰와 공통 통합은 별도다.
