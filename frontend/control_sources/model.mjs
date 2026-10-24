@@ -112,3 +112,48 @@ export function createReadGate(){
     beginDetail(itemId){id(itemId);selected=itemId;return {generation,selection:++selection,item_id:itemId};},
     detailCurrent(ticket){return ticket.generation===generation && ticket.selection===selection && ticket.item_id===selected;}};
 }
+export const DEFAULT_NAVIGATION=Object.freeze({query:'',scope:null,model_id:null,equipment_id:null,profile_id:null,offset:0,limit:25,item_id:null});
+const NAVIGATION_KEYS=Object.keys(DEFAULT_NAVIGATION);
+const navigationError=()=>{throw new Error('invalid_catalog_navigation');};
+const navigationChecked=action=>{try{return action();}catch{navigationError();}};
+function navigationState(input){
+  const value=jsonData(input);exact(value,NAVIGATION_KEYS.join(' '));
+  text(value.query);need([...value.query].length<=200 && !/[\u0000-\u001F\u007F]/.test(value.query));
+  if(value.scope!==null)scoped(value.scope);
+  for(const key of ['model_id','equipment_id','profile_id','item_id'])if(value[key]!==null)id(value[key]);
+  count(value.offset);need(value.offset<=1000000);count(value.limit);need(value.limit>=1 && value.limit<=100);
+  return value;
+}
+function boundedFragment(value){
+  need(typeof value==='string' && value.length<=4096 && !/[\uD800-\uDFFF]/u.test(value));
+  need(new TextEncoder().encode(value).length<=4096);
+}
+export function parseCatalogFragment(fragment){return navigationChecked(()=>{
+  boundedFragment(fragment);const value={...DEFAULT_NAVIGATION};
+  if(fragment==='' || fragment==='#')return value;
+  need(fragment.startsWith('#'));const parts=fragment.slice(1).split('&');need(parts.length<=8);const seen=new Set();
+  for(const part of parts){
+    const equals=part.indexOf('=');need(equals>0);
+    const key=decodeURIComponent(part.slice(0,equals)),text=decodeURIComponent(part.slice(equals+1));
+    need(Object.hasOwn(DEFAULT_NAVIGATION,key) && !seen.has(key));seen.add(key);
+    if(key==='offset' || key==='limit'){need(/^[0-9]+$/.test(text));value[key]=Number(text);}
+    else value[key]=text;
+  }
+  return navigationState(value);
+});}
+export function serializeCatalogFragment(input){return navigationChecked(()=>{
+  const value=navigationState(input),encode=text=>encodeURIComponent(text).replace(/[!'()*]/g,character=>'%'+character.charCodeAt(0).toString(16).toUpperCase());
+  const pairs=[];for(const key of NAVIGATION_KEYS)if(value[key]!==DEFAULT_NAVIGATION[key])pairs.push(key+'='+encode(String(value[key])));
+  const fragment=pairs.length?'#'+pairs.join('&'):'';boundedFragment(fragment);return fragment;
+});}
+export function createNavigationGate(){
+  let generation=0,current=null;
+  return {
+    begin(input,{force=false}={}){
+      const fragment=serializeCatalogFragment(input);
+      if(!force && current?.fragment===fragment)return null;
+      current=Object.freeze({generation:++generation,fragment,state:Object.freeze(parseCatalogFragment(fragment))});return current;
+    },
+    current(ticket){return ticket!==null && ticket===current;},
+  };
+}
