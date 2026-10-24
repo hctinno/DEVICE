@@ -15,6 +15,7 @@
       <button class="button primary" type="submit">자료 찾기</button>
       <details class="id-filters"><summary>모델·장비·프로필 ID로 좁히기</summary><div class="id-grid"><div><label for="model-id">모델 ID</label><input id="model-id" maxlength="150" autocomplete="off"></div><div><label for="equipment-id">장비 ID</label><input id="equipment-id" maxlength="150" autocomplete="off"></div><div><label for="profile-id">프로필 후보 ID</label><input id="profile-id" maxlength="150" autocomplete="off"></div></div><p class="muted">조건은 함께 적용합니다. 프로필 조회는 텍스트 후보이며 설치 자산과의 연결은 미확정입니다.</p></details>
     </form>
+    <p id="navigation-status" class="status" role="status" aria-live="polite"></p>
     <div class="workspace">
       <section class="panel queue" aria-labelledby="list-title"><div class="panel-heading"><h2 id="list-title">조사 항목</h2><span id="result-count" class="muted">조회 전</span></div><p id="list-status" class="status" role="status">목록을 조회하고 있습니다.</p><ul id="items" class="items" aria-label="조사 항목 목록"></ul><nav class="pagination" aria-label="목록 페이지"><button id="previous" type="button" class="button" disabled>이전</button><span id="page-info" class="muted">—</span><button id="next" type="button" class="button" disabled>다음</button></nav></section>
       <section class="panel detail-panel" aria-labelledby="detail-title"><div class="panel-heading"><h2 id="detail-title">모델과 근거</h2><span class="mode">지원 미평가</span></div><p id="detail-status" class="status" role="status">목록에서 항목을 선택하세요.</p><div id="detail"><p class="empty">출처·라이선스·검토 주석을 이곳에서 확인합니다.</p></div></section>

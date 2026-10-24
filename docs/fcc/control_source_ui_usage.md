@@ -18,6 +18,28 @@ python -B -m labflow.ui_server --workspace .local/my-ui-state --port 0
 
 N9030A의 공식 IVI 계열 근거와 MCP N9030B 등재, DMM6500의 KEITHLEY/Keysight 표기와 코드별 권리, N1921A의 독립 제어 분류와 센서·호스트 관계를 각각 확인할 수 있다. 조사 분류·코드 발견·검색 색인·원문 열람은 실제 지원 레코드가 아니다.
 
+## 조회 링크와 브라우저 이력 계약 — NAV002
+
+조회 상태는 페이지 query를 넓히지 않고 URL fragment에만 둔다. 고정 키 순서는 `query`, `scope`, `model_id`, `equipment_id`, `profile_id`, `offset`, `limit`, `item_id`다. 기본값은 빈 query·나머지 선택 필터/항목 ID 없음·offset 0·limit 25이며 기본값은 링크에서 생략한다. 빈 fragment와 `#`는 기본 화면이다.
+
+값은 UTF-8 RFC3986 percent encoding을 사용한다. 공백은 `%20`, 더하기는 `%2B`이며 입력 fragment의 `+`는 문자 더하기다. 한 번만 decode한 뒤 키·타입·범위를 확인하고 키 순서·기본값 생략·대문자 percent로 정규화한다. 양수/0의 ASCII 십진수만 허용하며 선행 0은 정규화한다. `#`를 포함한 raw fragment는 최대4096 UTF-8B/최대8키이고 중복·unknown·깨진 percent/UTF-8·빈 ID/정수·제어문자·잘못된 타입/범위를 거절한다. query는 Unicode 문자 0..200개, ID와 scope·offset·limit 범위는 HTTP 계약과 같다.
+
+parser/serializer의 고정 오류는 `invalid_catalog_navigation`이다. 잘못된 링크는 원문을 오류에 출력하지 않고 경고와 기본 조회로 안내한다. 해당 이력 항목의 fragment는 기본값으로 replace하여 뒤로 가기 오류 반복을 막는다. 정상화와 동일 상태·기본 자동 미리보기에는 새 history 항목을 만들지 않는다. 사용자 검색/페이지/명시 선택은 유효한 상태가 달라질 때 한 항목을 추가한다. history.state는 null이며 localStorage/sessionStorage에 상태를 복사하지 않는다. 자료 본문·원문/로그/producer 파일 경로·API payload·실행 명령을 링크로 만들지 않고, 오직 명시 검색 조건과 공개 ID만 쓴다.
+
+검색은 offset과 명시 선택을 초기화하고 현재 limit을 유지한다. 페이지 이동도 명시 선택을 초기화한다. 선택 ID가 없는 상태는 해당 페이지의 첫 항목을 자동 미리보기하며 링크에는 item_id를 추가하지 않는다. 명시 item_id는 현재 페이지 밖이어도 상세 API로 읽되 페이지 밖임을 표시한다. 없는 ID나 실패를 첫 항목으로 조용히 대체하지 않는다. 새로고침은 같은 조건·페이지·명시 선택을 재조회한다.
+
+reload·hashchange·popstate는 같은 DTO/세대/선택 ID/offset/limit 검증으로 API를 다시 읽는다. 같은 이력 이동의 중복 이벤트는 한 번만 적용한다. 최초 로드는 focus를 빼앗지 않는다. 검색/페이지 이동은 목록의 첫 항목(빈 목록이면 목록 제목), 명시 선택·이력 복원은 상세 제목(실패면 상태 안내)으로 focus를 옮기며 늦은 응답이 focus나 URL을 바꾸지 못하게 한다. 본문 건너뛰기 링크는 조회 fragment를 변경하지 않는다.
+
+주소창의 현재 링크를 복사해 같은 조회 조건을 열 수 있다. 예시는 다음과 같으며 서버 주소 뒤에 붙인다.
+
+```text
+/control-sources#query=N9030A&scope=included&item_id=MOD-c40c6c5f1b4e7ca9
+/control-sources#query=DMM6500&scope=identity_unresolved
+/control-sources#offset=10&limit=10
+```
+
+NAV002는 새 실제 증거에서 기존 UI 회귀 `checks` 10묶음과 신규 `navigation_checks` 7묶음을 구별해 실행한다. `navigation_contract=fragment_v1`을 기록하며 이전 UI001 증거를 새 이력 기능의 성공으로 대신하지 않는다. 전용 Node 13개/전체 Node 72개와 실제 API의 신규7+회귀10이 통과했다. 모바일에서 제목 focus가 화면 밖에 남는 경우를 실제 좌표로 재현해 수정하고, 제목의 가시 범위와 기본 버튼 Tab 순서를 확인했다. 잘못된 링크·중복 이벤트·늦은 응답·focus·본문 건너뛰기·storage0 및 자원 종료/소스·합성 DB 불변을 함께 검사한다.
+
 ## HTTP 계약
 
 GET과 HEAD만 다음 경로를 읽는다. HEAD는 같은 상태·Content-Length를 반환하고 body는 없다.
@@ -49,4 +71,4 @@ python -B scripts/check_artifacts.py
 
 HTTP unit 검사는 계약 double로 실패·타입·상태·동시 초기화 경계를 검증한다. Node 검사는 고정 자료를 조합한 DTO 계약 검사다. 이 수를 실제 API 브라우저 실행 수로 합치지 않는다. 브라우저 성공은 `kind=control_source_actual_browser`, `contract_fixture=false`, `actual_catalog_connected=true`, `synthetic_workspace=true`로 구별한다. 카탈로그는 실제 조사 metadata이며 RF 측정 결과가 아니다. 실제 장비·제조사 바이너리·모델 호출·현장 방법 승인·기관 적합성 검증은 미실행이다.
 
-소유 검증에서 신규 HTTP 11개·카탈로그 API 20개·기존 접수 관련 11개, 전용 Node 8개/전체 Node 67개가 통과했다. Node 상세 검사는 고정 3,137항목과 270개 null-model 식별 항목을 포함한다. 정식 API를 연결한 실제 브라우저 10묶음도 통과했고, 소스·합성 workspace DB hash 동일/자기 자원 종료/JS 오류와 외부 요청0을 확인했다. 사전 contract 미리보기와 이전 spectrum 검사 수는 합산하지 않았다. 전체 Python 회귀와 총괄의 독립 인수 상태는 별도 기록을 따른다.
+앞선 UI001 소유 검증에서 신규 HTTP 11개·카탈로그 API 20개·기존 접수 관련 11개, 전용 Node 8개/전체 Node 67개가 통과했다. Node 상세 검사는 고정 3,137항목과 270개 null-model 식별 항목을 포함한다. 정식 API를 연결한 실제 브라우저 10묶음도 통과했고, 소스·합성 workspace DB hash 동일/자기 자원 종료/JS 오류와 외부 요청0을 확인했다. 사전 contract 미리보기와 이전 spectrum 검사 수는 합산하지 않았다. NAV002에서 server/API는 변경하지 않았으며 Python 회귀를 다시 실행하지 않았다. 전체 Python 회귀와 총괄의 독립 인수 상태는 별도 기록을 따른다.
