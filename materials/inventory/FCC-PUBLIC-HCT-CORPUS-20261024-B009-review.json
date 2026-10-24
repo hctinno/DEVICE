@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "recorded_at_Asia_Seoul": "2026-10-24T17:05:31.636007+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "corpus_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "publication_scope": "reviewed_nonsensitive_hash_and_status_only",
+  "publication_rights_decision": "Only coordination hashes, counts, bounded review status and bibliography-level rule identifiers. Original report files, text, case values, images, identifiers and private paths excluded.",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S01-B0018",
+      "review_scope": "bounded_exact_original_failure_and_secondary_claims",
+      "inventory_sha256": "da41199c722b97ff299cd6a3e926a4293438d85a535d54579f476cc43f3abada",
+      "private_intake_index_sha256": "5d1025438b0ed18cfb2e4cf891a46722466b706ea5f8226040d4d6c48e7fe088",
+      "private_intake_index_bytes": 4726,
+      "payload_files": 22,
+      "payload_bytes": 47455,
+      "JSON_files": 22,
+      "receiver_receipt_sha256": "6813a18cabc7f80edc5b89fff74e18fd5c8dd439591d37a474482302933ea176",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "new_original_PDFs": 0,
+      "new_report_page_facts": 0
+    },
+    {
+      "batch_id": "FCC-20261024A-S02-B0011",
+      "review_scope": "bounded_America_metadata_discovery_with_unknown_issue_and_issuer",
+      "inventory_sha256": "5af14d947ece548bed3019160019a4378adbdc63a809ce1d7f665bdb7b7f9a12",
+      "private_intake_index_sha256": "6e678511a372d73ffc19ac883956ccf1ac6b948138ee0cc80d1c3ffb68f7192d",
+      "private_intake_index_bytes": 3030,
+      "payload_files": 12,
+      "payload_bytes": 70696,
+      "JSON_files": 12,
+      "receiver_receipt_sha256": "835da41133b142065446f5d101836b7f329bfb8ead25f04a67f0396526928189",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "new_original_PDFs": 0,
+      "new_report_page_facts": 0
+    },
+    {
+      "batch_id": "FCC-20261024A-S07-B0010",
+      "review_scope": "two_report_interpretive_normative_mappings_with_explicit_gaps",
+      "inventory_sha256": "c92f9c40a7d68daa594dd3d382011817c6ca5a827707c72a41a688208b6ce2d8",
+      "private_intake_index_sha256": "d48faa2a3000410ccd8f9ca120f8f71d4440363d8fe673394e054582c17b19d6",
+      "private_intake_index_bytes": 4448,
+      "payload_files": 20,
+      "payload_bytes": 109295,
+      "JSON_files": 20,
+      "receiver_receipt_sha256": "80d2b3ece5ad4e9c6c1c27d7b918afbd092e05c427d68c7ee4aefe851b7d3a0c",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "new_original_PDFs": 0,
+      "new_report_page_facts": 0
+    },
+    {
+      "batch_id": "FCC-20261024A-S08-B0013",
+      "review_scope": "one_tablet_descriptor_metadata_delta_against_historical_audits",
+      "inventory_sha256": "ca86a4139ad564a58d8ae517ece9545429d187d4a0f1e2a0530e774592a26f27",
+      "private_intake_index_sha256": "546ced6029c449276f9dad27c537cb3fd65913c4b2f9ab6d0d5c408266d5d316",
+      "private_intake_index_bytes": 3228,
+      "payload_files": 13,
+      "payload_bytes": 124914,
+      "JSON_files": 13,
+      "receiver_receipt_sha256": "1f3e922cd087806fe79c0a35e746054b6a50d3a34d30a5a9c2c249ee1b69a09e",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "new_original_PDFs": 0,
+      "new_report_page_facts": 0
+    }
+  ],
+  "new_independently_accepted_private_packets": 4,
+  "new_private_payload": {
+    "files": 67,
+    "bytes": 352360,
+    "JSON": 67,
+    "PDF": 0,
+    "MD": 0
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 64,
+    "independently_ACKed": 64
+  },
+  "corpus_private_collector_packets": {
+    "reviewed": 29,
+    "independently_ACKed": 29
+  },
+  "originals_as_previously_verified": {
+    "PDFs": 11,
+    "physical_pages": 466,
+    "bytes": 28127705,
+    "direct_issuer_and_issue": 10,
+    "parent_relation_only": 1,
+    "official_mapping_confirmed": 0,
+    "new_PDFs_in_these_units": 0,
+    "new_source_revalidation_from_metadata_audits": false
+  },
+  "bounded_results": {
+    "domestic_exact_original_attempt": {
+      "actual_PDFs": 0,
+      "secondary_claims": 8,
+      "queries": 1,
+      "ordinary_HTML": 3,
+      "failure": "Exact mirror returned403; inspected alternative labels had different exhibit identifiers and were not substituted.",
+      "original_SHA_bytes_pages_identity": null,
+      "mirror403_is_official_FCC403": false
+    },
+    "America_discovery": {
+      "new_metadata_labels": 10,
+      "report_labels": 7,
+      "setup_labels": 3,
+      "already_known_FCCID_contexts": 3,
+      "queries": 4,
+      "ordinary_HTML": 4,
+      "explicit_Q1_report_issue_claims": 0,
+      "actual_PDFs": 0,
+      "report_issuer_issue_and_actual_file_fields": "unknown",
+      "availability_grant_prefix_or_TCB_is_report_issue_or_issuer": false,
+      "producer_recorded_HTML_independently_revisited_by_P01": false
+    },
+    "normative_mapping": {
+      "reports": 2,
+      "interpretive_mapping_rows": 7,
+      "report_metadata_anchors": 14,
+      "exact_report_page_binding_gaps": 9,
+      "retained_gap_items": 8,
+      "existing_KDB_v06_physical_and_printed_pages_reviewed": [
+        12,
+        13
+      ],
+      "existing_CFR_snapshot_date": "2026-10-19",
+      "CFR_sections_locally_compared": [
+        "2.1093",
+        "15.31",
+        "15.38",
+        "15.109"
+      ],
+      "stored_publication_page_date": "2025-04-02",
+      "report_PDF_reads": 0,
+      "new_report_facts": 0,
+      "current_or_historical_applicability_approved": false,
+      "full_C63_4_2014_standard_available_for_this_mapping": false
+    },
+    "metadata_delta": {
+      "current_descriptors": 11,
+      "historical_ten_record_anchors_and_220_comparison_block_preserved": true,
+      "new_descriptor_vs_old22_metadata_comparisons": 22,
+      "new_descriptor_vs_old10_metadata_comparisons": 10,
+      "delta_equal_SHA_metadata": 0,
+      "resolved_metadata_pointer_occurrences": 91,
+      "current_transitive_components": 9,
+      "report_families": 10,
+      "fresh_PDF_operations": 0,
+      "independent_evaluation_groups_confirmed": 0,
+      "tablet_cover_identity_model_conflict": "SM-X526B versus SM-X528U unresolved",
+      "producer_manufacturer_null_and_reviewer_direct_observation": "separate authorities; previous metadata unchanged"
+    }
+  },
+  "open_scope": [
+    "population and unsearched periods, institutions, sites and categories",
+    "unacquired originals and official exhibit mapping",
+    "revisions, split parts, appendices and setup relations",
+    "untranscribed cells and full semantic analysis",
+    "report-to-standard detailed page and clause bindings",
+    "historical and current rule applicability",
+    "reuse and independent evaluation",
+    "native raw and physical validation"
+  ],
+  "new_user_preparation_requests": 0,
+  "AI_evaluation_training_external_model_transmission_or_physical_runs": 0,
+  "original_text_case_values_images_code_identifiers_private_paths_user_materials_exported": false,
+  "whole_census_complete": false,
+  "full_semantic_or_functional_or_conformity_or_physical_validation": false,
+  "historical_public_20_batch_count_changed": false,
+  "verification_scope": "Hashes, byte-preserving independent intake and specifically bounded content/metadata review; document integrity checks are not lab functionality or metrology evidence."
+}
