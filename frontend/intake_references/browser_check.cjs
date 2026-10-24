@@ -217,6 +217,7 @@ async function frontendMain(){
  const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
  const {createHash}=require('node:crypto'),{execFileSync}=require('node:child_process');
  const root=fs.realpathSync(path.resolve(__dirname,'../..')),hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+ fs.mkdirSync(path.join(root,'.local'),{recursive:true});
  const evidence=fs.mkdtempSync(path.join(root,'.local/ir-f1-'));
  const save=(name,value)=>fs.writeFileSync(path.join(evidence,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
  const sourcePins=()=>{
