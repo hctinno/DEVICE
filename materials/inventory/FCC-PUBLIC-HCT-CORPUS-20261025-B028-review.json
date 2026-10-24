@@ -1,0 +1,192 @@
+{
+  "recorded_at": "2026-10-25T02:37:35.925737+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "unit": "B028",
+  "publication_scope": "reviewed nonsensitive bibliography/hash/count/status only",
+  "new_private_payload": {
+    "files": 33,
+    "bytes": 5830578,
+    "JSON": 32,
+    "PDF": 1,
+    "MD": 0
+  },
+  "units": [
+    {
+      "scope": "America2025Q3_bounded_metadata_tail_old8_link_enrichment",
+      "payload_files": 14,
+      "payload_bytes": 97053,
+      "JSON": 14,
+      "PDF": 0,
+      "MD": 0,
+      "index_bytes": 3373,
+      "index_sha256": "10fb333b71f3fb1f1c2b5cae0a40e1e6188978609d8038371a01e20b2ed2a57d",
+      "review_bytes": 4507,
+      "review_sha256": "577af33561186d378a1e8d89b1997bbdb4d808fc5b4d98c6437c44b25a870f5d",
+      "independent_intake": "explicit_ACK_and_readonly_exactset_allrawSHA_bytes_strictUTF8_PDFmagic_reviewhash_verified"
+    },
+    {
+      "scope": "new_original_pending_direct_identity_bounded_review",
+      "payload_files": 19,
+      "payload_bytes": 5733525,
+      "JSON": 18,
+      "PDF": 1,
+      "MD": 0,
+      "index_bytes": 4284,
+      "index_sha256": "5441df46d93d141f66f95651939a8175bb1bc686b7eae43e959aef4a6afdb462",
+      "review_bytes": 14974,
+      "review_sha256": "494ee36652eb39f571ddd87d07d82857843df6e3b93f6e89703bba4efc29b304",
+      "independent_intake": "explicit_ACK_and_readonly_exactset_allrawSHA_bytes_strictUTF8_PDFmagic_reviewhash_verified"
+    }
+  ],
+  "explicit_independent_ACKs": 2,
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 125,
+    "independently_ACKed": 125
+  },
+  "cumulative_request012_reviewed_and_ACKed": {
+    "reviewed": 90,
+    "independently_ACKed": 90
+  },
+  "source_cohorts": {
+    "target_and_parent_reference": {
+      "PDFs": 18,
+      "physical_pages": 690,
+      "bytes": 40988413,
+      "direct_issuer_issue": 17,
+      "parent_only": 1,
+      "official_mapping": 0
+    },
+    "excluded_before2025": {
+      "PDFs": 1,
+      "pages": 46,
+      "bytes": 2771507,
+      "target_increment": 0
+    },
+    "pending_report_link": {
+      "PDFs": 1,
+      "pages": 53,
+      "bytes": 4626750,
+      "target_increment": 0
+    },
+    "all_retained_request_originals": {
+      "PDFs": 21,
+      "pages": 881,
+      "bytes": 54053233,
+      "not_all_HCT2025plus_eligible": true
+    },
+    "legacy22_separate": true,
+    "pending_direct_identity": {
+      "PDFs": 1,
+      "pages": 92,
+      "bytes": 5666563,
+      "target_increment": 0,
+      "reportnumber_model_legalissuer_site_ruleparts_parent": "unconfirmed",
+      "actual_labelbody_mismatch_observed": false
+    }
+  },
+  "new_original_bibliography": [
+    {
+      "sha256": "3edf9de4f2fbaae0fe2369381d89c23a3ddb8fd74f105e52e6b90fcb5ca8dbce",
+      "bytes": 5666563,
+      "physical_pages": 92,
+      "disposition": "separate_pending_direct_identity",
+      "target_reference_increment": 0,
+      "limited_document_title_FCCID_issue_revision_observations_checked": true,
+      "reportnumber_model_legalissuer_site_rules_parent_unconfirmed": true,
+      "full_labelbody_correspondence": null,
+      "actual_labelbody_mismatch_observed": false,
+      "rights": "unknown/private_only",
+      "source_original_body_values_images_not_public": true
+    }
+  ],
+  "fresh_source_verification_scope": {
+    "new_report_originals": 1,
+    "new_original_target_increment": 0,
+    "new_original_pending_direct_identity": 1,
+    "strict_unique_pageleaves": 92,
+    "all_Count_values_match": true,
+    "parser_warnings": 0,
+    "AES_bits": 256,
+    "source_permissions_integer": -1340,
+    "source_bytes_mtime_mode_permissions_unchanged": true,
+    "entire_current18_freshly_reaudited": false,
+    "prior20_retained_frozen_proofs_not_newly_reaudited": true,
+    "metadata43_givenSHA_holds_not_freshrawaudit_or_independence": true,
+    "official_mapping_confirmed": 0
+  },
+  "bounded_new_original_review": {
+    "identity_observations": 4,
+    "revision_history_blocks": 1,
+    "selected_revision_date_rows": 2,
+    "actual_P01_safe_regions_viewed": 13,
+    "primary_physical_pages": [
+      1,
+      2
+    ],
+    "footer_context_physical_pages": [
+      92
+    ],
+    "printed_footer_samples_checked": 3,
+    "sampled_printed_total": 229,
+    "all_intermediate_printed_pages_checked": false,
+    "whole229page_report_retained_or_reviewed": false,
+    "physical92_not_whole229_report": true,
+    "URL_Part1_not_direct_body_part_designation": true,
+    "numeric_revision_from_source_row_not_URLlabel": true,
+    "producer_revision_row1_prose_and_P01_ordinalrow2_proof_preserved": true,
+    "case_result_rows_methods_newarithmetic_DUTmeasurements": 0,
+    "currentnormative_chain_calibration_reuse_independence_or_SDKfixture_approval": false,
+    "rights_unknown_private_only_not_redistribution_training_grant": true,
+    "copy_print_accessibility_or_decrypt_export_OCR_bodydump_executed": false,
+    "whole_source_privacy_clearance_or_identifier_absenceproof": false
+  },
+  "bounded_metadata_tail": {
+    "period_intent": "America2025Q3",
+    "new_queries": 4,
+    "old_literal_queries_compared": 4,
+    "normalized_query_overlap": 0,
+    "ordinary_HTML_indexes": 3,
+    "unique_indexes": 3,
+    "old_selected_exact_index_title_locator_matched": 8,
+    "actual_observed_link_enrichments_not_newleads": 8,
+    "new_selected_metadata": 0,
+    "PDF_sourcefacts_directissuerissue_eligible_increment": 0,
+    "limited_query_projections": 2,
+    "suppressed_query_header_occurrences": 4,
+    "suppressed_index_guard_rows": 2,
+    "suppressed_values_or_rows_not_recovered_or_stored": true,
+    "provider_actual_total_hits": null,
+    "qualified_projected_search_hits": 0,
+    "prior_limited_index_HTTP_or_network_cause": null,
+    "current_HTML200_not_oldfailure_resolution_or_PDF_success": true,
+    "unused_HTML_selection_capacity": [
+      3,
+      12
+    ],
+    "zero_projection_or_selection_not_population0_absence_or_quartercompletion": true,
+    "hyphenated_href_not_alias_rawsame_or_reuse_independence": true,
+    "sourcePDF_privacy_native_scans_or_P01_online_replay": 0
+  },
+  "bounded_HAC_review_status": {
+    "suite_regions_visited": 181,
+    "suite_regions_total": 181,
+    "unvisited_regions": 0,
+    "new_region_visits": 0,
+    "zero_unvisited_only_region_visits_not_fullsemantic_allcells_plotnumbers_calibration_HACsuite_or_census_completion": true
+  },
+  "privacy_and_failure_status": {
+    "old_originals_ACK_READY_control_failures_unchanged": true,
+    "source_private_values_rows_perIDhashes_or_images_exported": false,
+    "bounded_native_or_finalmetadata_zero_not_globalabsenceproof": true,
+    "P01_prepare_wrong_oldmetadata_filename_failure_preserved_partial_control_unchanged": true,
+    "recovered_actualfilename_newversion_same_task_budget_no_reassignment": true,
+    "nested_machine_visualpending_earlier_than_top_actual_view_complete": true
+  },
+  "remaining_scope": {
+    "whole_population": "unknown/open",
+    "all_periods_legalissuers_sites_products_categories_revisions_parts_appendices_setup_photos_tails": "open",
+    "full_semantic_current_normative_reuse_independence_native_raw_AI_physical_or_conformity_complete": false,
+    "new_external_model_API_training_evaluation_folds_scores": 0,
+    "new_user_preparation_requests": 0
+  }
+}
