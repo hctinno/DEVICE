@@ -1,0 +1,183 @@
+{
+  "record_id": "FCC-PUBLIC-HCT-CORPUS-20261024-B002",
+  "project_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "reviewed_at": "2026-10-24T14:18:51.032216+09:00",
+  "publication_kind": "non_sensitive_bibliography_hash_scope_status_only",
+  "sources": [
+    {
+      "report_id": "HCT-EM-2504-FC001",
+      "revision": "0",
+      "FCC_ID": "A3LSMF766U",
+      "issuer": "HCT CO., LTD., Republic of Korea",
+      "report_issue": "2025-04-22",
+      "family": "Part15B EMC mobile phone",
+      "original_SHA256": "eb35e29924e3f2732d99126cd07387c1da8e3d04c1c55b65baa303d5e8db3504",
+      "bytes": 1070359,
+      "physical_pages": 40,
+      "actual_mirror_URL": "https://device.report/m/eb35e29924e3f2732d99126cd07387c1da8e3d04c1c55b65baa303d5e8db3504.pdf",
+      "observed_official_attachment_URL": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=8259615",
+      "official_mapping": "pending_official403",
+      "bounded_facts": 16,
+      "primary_visual_pages": 16,
+      "result_tables": 2,
+      "result_rows_arithmetic_checked": 15,
+      "equipment_rows_model_nextdate_checked": 34,
+      "pages_without_primary_fact": 24,
+      "packet_original_transport": "metadata_only_external_canonical_reference; separate_receiver_original_copy_receipt_verified",
+      "missing": [
+        "remainingsemanticpages_and_tables",
+        "separate_setup_photo",
+        "currentcalibration/controlsupport",
+        "exactfullstandard/currentapplicability",
+        "officialapplication/exhibit"
+      ],
+      "new_originals_acquired_by_metadata_repair": 0
+    },
+    {
+      "report_id": "HA2511-0263-R01-01",
+      "revision": "1_history_and_suffix",
+      "FCC_ID": "2AEIM-1900020",
+      "issuer": "HCT America, Inc.",
+      "report_issue": "2026-02-02",
+      "revision_history_date": "2026-01-29",
+      "dates_not_silently_merged": true,
+      "family": "GFSK DTS battery control unit; notbgn WiFi",
+      "original_SHA256": "a1b07bdbce98b9d7ae10637fbca2358e98dc3f96ef9882b47a7e0e39c94e450d",
+      "bytes": 3662990,
+      "physical_pages": 45,
+      "printed_pages": 44,
+      "leading_cover": 1,
+      "actual_mirror_URL": "https://manuals.plus/m/a1b07bdbce98b9d7ae10637fbca2358e98dc3f96ef9882b47a7e0e39c94e450d.pdf",
+      "official_mapping": "pending_application_and_exhibit_unknown",
+      "bounded_facts": 9,
+      "primary_visual_pages": 9,
+      "all_pages_displaylist_parsed": 45,
+      "text_or_OCR_export_by_P01": false,
+      "pages_without_primary_fact": 36,
+      "manufacturer_not_inferred_from_applicant": true,
+      "missing": [
+        "officialmapping",
+        "photoappendices",
+        "revision0original",
+        "remainingsemanticpages/mostmeasurementrows",
+        "otherreservedoriginalblocked"
+      ]
+    },
+    {
+      "parent_report_id": "HCT-SR-2510-FC002",
+      "file_kind": "HAC RF Emission 2of2",
+      "direct_FCC_ID": null,
+      "direct_issuer": null,
+      "direct_report_issue": null,
+      "direct_revision": null,
+      "parent_association": "header and printed74..143 correspond to previously reviewed1..73; parentidentity/date never inherited as directpart2fields",
+      "original_SHA256": "709e930153ff0669dd5b12407c1a94775bfe7213a5f54a8fb40aa7426ea9bdfc",
+      "bytes": 2925968,
+      "physical_pages": 70,
+      "actual_mirror_URL": "https://fccid.io/m/709e930153ff0669dd5b12407c1a94775bfe7213a5f54a8fb40aa7426ea9bdfc.pdf",
+      "observed_official_attachment_URL": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=8726408",
+      "official_mapping": "pending_official403",
+      "new_bounded_facts": 14,
+      "new_primary_visual_pages": 14,
+      "new_file_primary_pages": 7,
+      "held_SAR0_new_primary_pages": 7,
+      "held_original_copies": 0,
+      "HAC_footer_positions_checked": 143,
+      "cumulative_S03_primary_pages": 26,
+      "cumulative_S03_source_pages": 181,
+      "S03_pages_without_primary_fact": 155,
+      "reported_dB_rows_recomputed": 2,
+      "conflicts_retained": [
+        "cover142_body143",
+        "bothHACmetadata_othermodel",
+        "part2directidentity/date/revision_absent",
+        "embeddedcalibrationdates_notreportissue"
+      ],
+      "embedded_dipole_calibration_not_phone_HAC_or_current_calibration": true,
+      "missing": [
+        "remainingsemantics/subtables/plotmarkers",
+        "wholeSARsuite",
+        "officialmapping",
+        "directpart2identityfields"
+      ]
+    }
+  ],
+  "this_followup": {
+    "private_packets": 3,
+    "source_original_references": 3,
+    "source_physical_pages": 155,
+    "bounded_facts": 39,
+    "indexed_payload_files": 57,
+    "indexed_payload_bytes": 7232032,
+    "JSON_files": 54,
+    "MD_files": 1,
+    "indexed_original_PDFs": 2,
+    "separate_canonical_original_references": 1,
+    "original_acquisitions_this_public_projection": 0,
+    "independent_intake_ACKs": 3
+  },
+  "private_packets": [
+    {
+      "unit": "S04-B0011",
+      "payload_files": 14,
+      "payload_bytes": 200259,
+      "JSON_files": 14,
+      "index_bytes": 3384,
+      "index_SHA256": "331e02be10e30be6670c69bc6ee89bbbb95af9b4b1d44f566306299f99c35dad",
+      "state": "independent_owner_intake_ACK_and_P01_source_clone_all_payloads_rehashed",
+      "indexed_original_PDFs": 0
+    },
+    {
+      "unit": "S06-B0007",
+      "payload_files": 18,
+      "payload_bytes": 3754662,
+      "JSON_files": 17,
+      "index_bytes": 4085,
+      "index_SHA256": "e218eefb0b203fd0ae0395ad2f20444fc41964dedd7031dc2b5c132a61af0f03",
+      "state": "independent_owner_intake_ACK_and_P01_source_clone_all_payloads_rehashed",
+      "indexed_original_PDFs": 1
+    },
+    {
+      "unit": "S03-B0006",
+      "payload_files": 25,
+      "payload_bytes": 3277111,
+      "JSON_files": 23,
+      "index_bytes": 5258,
+      "index_SHA256": "5f164b5bf29d4f8587ce609ccbc60f8bc71a041d8196cd5ad2f4c9451c8aeef0",
+      "state": "independent_owner_intake_ACK_and_P01_source_clone_all_payloads_rehashed",
+      "indexed_original_PDFs": 1
+    }
+  ],
+  "overall_known_stage_at_review": {
+    "actual_unique_corpus_PDFs": 6,
+    "physical_pages": 308,
+    "bounded_reviewed_and_independently_intake_ACKed_source_PDFs": 6,
+    "direct_issuer_issue_verified_files": 5,
+    "separately_sourced_parent_relational_part_files": 1,
+    "official_exhibit_mapping_verified": 0,
+    "whole_semantic_analysis_complete": false,
+    "target_issue_start": "2025-01-01",
+    "total_population": null,
+    "whole_corpus_complete": false,
+    "unverified_search_coverage": "open"
+  },
+  "public_payload": {
+    "original_PDFs": 0,
+    "extracted_body": 0,
+    "case_measurement_values": 0,
+    "photos_or_rendered_images": 0,
+    "source_code": 0,
+    "user_private_materials": 0
+  },
+  "rights_and_scope": [
+    "Original copy/print/accessibility flags and report reproduction notices preserved; no general text-export/redistribution/training grant inferred.",
+    "S04selectedmemoryaccessibilityreading/rendering andS06render-only/no-text-export are distinct P01verification methods.",
+    "Byteintake doesnot imply fullcontent/native-raw/currentcalibration/SDK/hardware/AI/conformity approval.",
+    "Reported historic citations remain citations; unknown exactedition/fulltext/currentapplicability is not approved.",
+    "SameFCCID/family/revision/part/SHA/reuseddata groups held without independentfold/score/modelcalls.",
+    "Separate private user report reuse is excluded from this public corpus/source record.",
+    "Historical20publiccollectionbatch counts unchanged. Whole corpus and whole laboratory completion not established."
+  ],
+  "user_preparation_requests": 0
+}
