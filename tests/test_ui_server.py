@@ -864,6 +864,93 @@ class ReferenceHostTests(unittest.TestCase):
         self.evidence = {'kind':'049_review_I3_native_failure_finally','faults':['OSError','KeyboardInterrupt'],
                          'failed_parent_calls':0,'active_source_leases_after_failure':0,'next_current':200}
 
+    def _completion_expiry(self, method='GET', *, action='history', fault=None):
+        server = self.start(); rt = server._reference_runtime; now = [0.0]; rt.clock = lambda: now[0]
+        status, initial_headers, initial_body = self.request(server, self.route()); self.assertEqual(status, 200)
+        cookie = initial_headers['Set-Cookie'].split(';')[0]; csrf = initial_headers['X-Intake-Reference-CSRF']
+        sid = cookie.split('=')[1]; item = rt.sessions[sid]; binding = self.store._existing_binding
+        parent, connect, opened, info = rt.parent, sqlite3.connect, Path.open, binding.backend.info
+        calls, sql, retained = [], [], []; before = self.snapshot()
+        def observed_parent(*args, **kwargs):
+            calls.append(args[2]['action']); value = parent(*args, **kwargs); now[0] = 900.0
+            if fault == 'closing':
+                with rt.lock: rt.closing = True
+            elif fault == 'binding': self.store._existing_binding = object()
+            elif fault == 'typed': return {}
+            elif fault == 'parent': raise ValueError('PRIVATE after parent')
+            return value
+        def observed_sql(*args, **kwargs):
+            sql.append(kwargs.get('uri') is True and str(args[0]).endswith('?mode=ro'))
+            return connect(*args, **kwargs)
+        def observed_open(path, *args, **kwargs):
+            if path.parent == self.store.root / 'blobs': retained.append(1)
+            return opened(path, *args, **kwargs)
+        def native_failed(*args, **kwargs):
+            info(*args, **kwargs); now[0] = 900.0; raise OSError('PRIVATE native completion')
+        stale_status = None
+        try:
+            with ExitStack() as patches:
+                patches.enter_context(mock.patch.object(rt, 'parent', observed_parent))
+                patches.enter_context(mock.patch.object(sqlite3, 'connect', observed_sql))
+                patches.enter_context(mock.patch.object(Path, 'open', observed_open))
+                if fault == 'native': patches.enter_context(mock.patch.object(binding.backend, 'info', native_failed))
+                response = (self.current(server, cookie, csrf) if action == 'current' else
+                            self.request(server, self.route(), method, headers={'Cookie':cookie}))
+                if fault is None and action == 'history' and response[0] == 200:
+                    stale_status = self.request(server, self.route(), headers={'Cookie':cookie})[0]
+        finally: self.store._existing_binding = binding
+        self.assertEqual(self.snapshot(), before); self.assertTrue(all(sql))
+        self.assertEqual(rt.active, 0); self.assertFalse(rt.source_active); self.assertFalse(rt.leases)
+        return {'server':server,'response':response,'initial_body':initial_body,'calls':calls,'sql':sql,
+                'retained':len(retained),'old_last_seen':item['last_seen'],'sid':sid,'stale_status':stale_status}
+
+    def _assert_completed_history_expiry(self, method):
+        result = self._completion_expiry(method); status, headers, body = result['response']
+        self.assertEqual(status, 200)
+        self.assertEqual(headers['X-Intake-Reference-Read-Allowed'], 'false')
+        self.assertFalse('X-Intake-Reference-CSRF' in headers); self.assertFalse('Set-Cookie' in headers)
+        self.assertEqual(body, b'' if method == 'HEAD' else result['initial_body'])
+        self.assertEqual(int(headers['Content-Length']), len(result['initial_body']))
+        self.assertEqual((result['calls'], len(result['sql']), result['retained']), (['history'],1,0))
+        self.assertEqual(result['old_last_seen'], 0.0); self.assertEqual(result['stale_status'], 403)
+        rt = result['server']._reference_runtime; self.assertFalse(rt.sessions)
+        self.assertIsNone(result['server']._reference_action_binding(result['sid']))
+        self.evidence = {'kind':'049_I4_history_completed_expiry','method':method,'status':200,
+                         'formal_parent_calls':1,'SQLite_ro_connections':1,'retained_opens':0,
+                         'original_history_preserved':True,'Read_Allowed':False,'CSRF_SetCookie_new_session_idle_renewal':0,
+                         'old_cookie_followup':403,'old_cookie_followup_parent_SQL':0,'binding_expired':True,
+                         'HEAD_body0':method == 'HEAD','inputs_unchanged':True}
+
+    def test_reference_history_GET_completed_expiry_keeps_metadata_and_drops_authority(self):
+        self._assert_completed_history_expiry('GET')
+
+    def test_reference_history_HEAD_completed_expiry_keeps_metadata_and_drops_authority(self):
+        self._assert_completed_history_expiry('HEAD')
+
+    def test_reference_admitted_current_completion_expiry_does_not_reauthenticate_or_renew(self):
+        result = self._completion_expiry(action='current'); status, headers, body = result['response']
+        self.assertEqual(status, 200); value = json.loads(body)
+        self.assertEqual((len(value), value['status']), (10, 'current'))
+        self.assertFalse('Set-Cookie' in headers); self.assertFalse('X-Intake-Reference-CSRF' in headers)
+        self.assertEqual((result['calls'], len(result['sql'])), (['current'],1)); self.assertGreater(result['retained'], 0)
+        self.assertEqual(result['old_last_seen'], 0.0)
+        self.assertIsNone(result['server']._reference_action_binding(result['sid']))
+        self.evidence = {'kind':'049_I4_current_completed_expiry','status':200,'formal_parent_calls':1,
+                         'SQLite_ro_connections':1,'actual_retained_opens':result['retained'],
+                         'post_parent_idle_renewal':0,'expired_binding':True,'inputs_unchanged':True}
+
+    def test_reference_completion_expiry_does_not_promote_closing_binding_native_or_typed_failures(self):
+        for fault in ('closing','binding','native','typed','parent'):
+            with self.subTest(fault=fault):
+                result = self._completion_expiry(fault=fault); status, headers, body = result['response']
+                self.assertEqual((status, json.loads(body)['error']['code']), (503,'intake_reference_ui_unavailable'))
+                self.assertFalse('Set-Cookie' in headers); self.assertFalse('X-Intake-Reference-CSRF' in headers)
+                expected = 0 if fault == 'native' else 1
+                self.assertEqual((len(result['calls']), len(result['sql']), result['retained']), (expected,expected,0))
+                self.assertEqual(result['old_last_seen'], 0.0)
+        self.evidence = {'kind':'049_I4_completion_expiry_failure_precedence',
+                         'faults':['closing','binding','native','typed','parent'],'status':503,'authority_headers':0}
+
 
 
 class ServerTests(unittest.TestCase):

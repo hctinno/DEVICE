@@ -47,4 +47,12 @@ configured `server_close()`는 admission 차단→모든 부모 finally/active0�
 
 수정본의 별도 genuine HTTP도 다시 실행했다. history GET/HEAD/current POST 각1, 앞서 적은 source bytes·parser0·쓰기 요청0·DB/file/SQL 불변·native 대상4곳 차단/해제와 같은 포트 재사용을 다시 확인했다. 이번에는 SQLite.close의 실제 C-return4도 계측했다. Node186은 초기 후보의 검사이며 frontend 소스가 같아 이번 수정에서 재실행하지 않았다. 새 RED47의 실패8·native 소유 경계 RED49의 실패5와 중간 GREEN47/49도 최종 GREEN50과 구분해 보존했다.
 
-현재 사용 예제의 별도 CLI는 후속047이다. 실제 고객 DB/PDF·모델·실장비/현장·D4 DOM/미래 transport·046 통합은 미실행이며 이 backend 검증과 별도다. 위 수정본 결과는 자체 검증이며 새 독립 판정은 총괄 재검토 후 별도로 기록한다.
+그 `c24e806` 후보는 원래3건의 독립 확인 뒤, 허용된 history 부모 완료 직후 만료가 뒤늦은403으로 바뀌는 I4 한 건으로 Critical0/Important1·No를 받았다. 총괄의 [공개 명확화7cafcb4](https://github.com/hctinno/DEVICE/commit/7cafcb4c79d9d64695393386162ab72e41b00d31)의 spec/plan 핀과 별도 정적Yes를 읽고 같은3에서 I4만 수정했다. 공개 문서는 git show/privatecopy로 확인했으며 이 branch의 공유 spec/plan을 바꾸거나 root base로 재배치하지 않았다.
+
+입장/native 뒤 최종 인증 이전의 invalid/expired cookie는 그대로403/부모·SQLite0이다. 그 인증을 통과한 history 부모와 typed history7이 완료된 뒤 같은 session이 만료된 GET/HEAD는 원래 metadata200·Read-Allowed:false만 반환하며 CSRF/Set-Cookie/새session/idle갱신0, HEAD body0이다. 만료 cookie를 anonymous 신규session 분기로 바꾸지 않는다. closing을 먼저 차단하고 해당 후행분기의 binding도 확인해 다른 실패를200으로 승격하지 않는다. anonymous GET/HEAD·live cookie·이미 허용된 current200과 source/native lease 코드는 그대로다. 만료 binding은 후속 내부 조회에서도None이며 권한을 복원하지 않는다.
+
+2026-10-25 I4 수정본의 전용54·관련301·전체2069는 각각 실패/오류/건너뜀0으로 통과했다. 전체 실행은439.906초이며 제품/test hash가 실행 전후 같았다. 원c24e에서 GET/HEAD와 binding 동시변경의 RED54/실패3을 먼저 보존했다. 새4개 검사는 실제 부모 반환 직후 clock900에서 metadata 원형·HEAD body0·권한/쿠키/idle0, 옛cookie 재제출403/추가부모·SQL0, admitted current10/후행재인증·갱신0, closing/binding/native/typed/parent 실패의 비승격을 확인했다. 원래50개 검사 본문과 다른 제품 함수·public interface는 같다.
+
+별도 genuine043→042 HTTP는 정상GET/HEAD/current3·후행만료GET/HEAD/current3·anonymous 재bootstrap2의 formal 부모8회다. 부모 함수는 바꾸지 않고 실제 반환 profile에서 private clock만 진행했다. 후행GET/HEAD200·metadata/권한false, current200과 만료bindingNone, 옛cookie403의 부모/SQLite0을 확인했다. 실제 SQLite.close C-return9·쓰기요청0·metadata 원문0·재파싱0, 두current 각각 context7857B/PDF4437B 읽기를 계측했다. 입력/SQL dump/row counts 불변·worker/socket/native 회수와 같은 포트 재사용도 다시 확인했다. 이8회나 과거50/297/2065·초기Node186을 새54/301/2069에 합산하지 않는다. frontend가 같아 이번에도 Node는 재실행하지 않았다. 기존 No·proof·RED·관측647B와 모든 원본은 보존했다.
+
+현재 사용 예제의 별도 CLI는 후속047이다. 실제 고객 DB/PDF·모델·실장비/현장·D4 DOM/미래 transport·046 통합은 미실행이며 이 backend 검증과 별도다. 위 I4 결과는 자체 검증이며 새 독립 판정은 총괄 재검토 후 별도로 기록한다.
