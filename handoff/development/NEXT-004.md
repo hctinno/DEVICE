@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합022](INTEGRATION-022.md)의 기능19c74172/041·042소유4커밋·6파일과 새1934Python/156Node·소스214를 고정한다. 정식 API·가상평가와 제품 화면/실제모델·실물 검증을 구별한다.
+
+| 담당 | 확정된 다음 작은 구현/계약 |
+|---|---|
+| 개발1 |기존4a14913/`codex/dev1-store-open043-20261024`의043 소유3 구현을 유지. 전용45/합성SQLite·034→032→038은 담당 보고이며 관련/전체 회귀→정확 게시→독립 리뷰→총괄 인수로 계속 |
+| 개발2 |042최종Yes·문구a0b651f 인수 완료.046 A/A1 계약·미실행H20/입력인수·유한 handle·기존044 host 재사용/공용 hook 소유를 고정. 부모/공유 host 제품 변경은 별도 배정 |
+| 개발3 |[045 설계](../../docs/superpowers/specs/2026-10-24-virtual-fleet-rf-signal-cli-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-virtual-fleet-rf-signal-cli.md), `codex/dev3-rf-signal-cli045-20261024` 신규3. 정식0411회·엄격옵션3/namespace·요약14/exit/실제 자식7와 실패·회수 검증 |
+| 개발4 |[044 설계](../../docs/superpowers/specs/2026-10-24-intake-reference-ui-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-reference-ui.md), `codex/dev4-intake-reference-ui044-20261024` A1신규5 typed model/view/상태ticket·genuine 합성 transport DOM. A2 기존5 HTTP/app는043 인수/정확 소유 뒤 별도 |
+| 총괄 |022정확 게시base·정적 최종Yes 영수증과 함께3/4 실제 구현배정. 담당 수정/독립 리뷰/회귀/통합·push/원격대조/후속을 계속하고 제품 구현을 대신 소유하지 않음 |
+| P01 |B0143패킷 명시ACK/대상15PDF583쪽 반영. 기존 다음색인2/HAC8 실제배정ACK 유지, FOLLOWUP-004는 S08의 새2건 metadata 비교/누락 delta만 요청. 원문/새수치 반복수집 불필요 |
+
+실제 메시지/ACK/검증 pin·현재 제한 여부는 최신 private followup에 남긴다. 사용자 결정/준비0, 전체 모집단·현행규범·실제AI/실물 미완료, 아래021 이하는 당시 기록이다.
+
 최신 [통합021](INTEGRATION-021.md)의 기능8cd888f/039 소유2커밋·10파일과 새1866Python/156Node·소스210·제품화면81을 고정한다. 새 실자료9는 승인5쪽의 root 새phase이며 owner 과거actual9를 재계수하지 않았다.
 
 | 담당 | 실제 다음 작은 작업 |

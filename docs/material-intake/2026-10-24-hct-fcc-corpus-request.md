@@ -1,5 +1,11 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+후속v044/B014의 S02B0016/S03B0014/S04B0014 정확3묶음56payload2995711B(53JSON·2PDF·1MD)을 독립 clone에 인수·명시 ACK했다. 모든 index/정확집합/bytes/SHA/UTF8·공유원본 identity/mtime/mode 불변과 P01 검토3 전체를 확인했다. root 신규 원문 구조22/39쪽/allCount·경고0·공개 빈 USER 열람/원권한·bytes 보존을 별도 확인했고 native/render/OCR/실측값 산술 재검토0이다. 대상·참조15PDF583쪽33525071B(직접기관/발행14+부모참조1), 별도2024제외1/46·보고서대응보류1/53을 구별한다. 보존17개를 적격17개로 표시하지 않는다. P01 검수80/독립77의 신규ACK3 반영과 다음 원격 게시를 확인하며 마지막 exact 공개fa26db34/77·42를 신규 수와 혼합하지 않는다.
+
+S03 보유HAC1 physical39~46의8한정관측은 직접제목6/한계2다. 누적 primary-region inspection91/181·미방문90은 성공제목91개나 전쪽 의미검토가 아니며 p41의선택strip제목없음/p45겹침원인·frequency null/누락·부모null을 보존한다. 새2PDF는 기관/발행·라벨대응을 한정확인했으나 공식FCC대응0/전수모집단unknown이다. S04 index claim2B차이·분리사진부록미보유·인접caption추론과 S02 LNA부호/보정성분·실설치/교정/현재판본 한계를 유지한다. P01 식별자 한정검사·원래 추출0/범위동일성 가정실패를 삭제하지 않고 새root시각검토로 재계수하지 않는다.
+
+P01의 다음색인2건/HAC8쪽 실제배정·ACK를 유지한다. FOLLOWUP-20261024-004를 실제 전송해 S08이 비면 새2건 sanitized metadata를 기존 비교/누락대장에 delta2로 잇도록 요청했다. 추가 원문 재다운로드/새수치전사/전체규격 반복조사는 요구하지 않았다. [통합022](../../handoff/development/INTEGRATION-022.md)은 별도의 synthetic API·가상평가 검증이며 이 신자료의 전체계산/모델/물리 승인으로 올리지 않는다. 개발1~4 기존 작업·P01 한 창구·사용자 준비0을 유지한다. 아래v042/043은 당시 보존 기록이다.
+
 후속v042/043의 S02B0015/S03B0013/S04B0013와 S01B0021 네 metadata 묶음73payload439053B(JSON72/MD1/PDF0)을 전체 SHA/bytes/정확집합/strict UTF8·sourceidentity/mtime/mode 불변으로 독립 인수·명시ACK했다. P01review4 전체를 읽었으며 root 새원문stat/open/hash/native/render/OCR/복사·산술0이다. 대상13/522·제외1/46·대응보류1/53·공식0/전수unknown은 불변이다. P01이 수신clone을 전체 재대조해 collector77/77·012자료/제외/보류검토42/42로 기록했고 공개 fa26db34b5f6526a10eee2c42e8d0d5cfaa9412f를 root가 원격 대조했다. 검수 묶음 수를 전수 모집단 완료로 올리지 않는다. 다음v044 S02/S04 각 정확링크 max1PDF·S03 보유HAC1 physical39~46는 실제3배정/ACK3·입력33으로 진행하며 검수 전 원문증가0이다.
 
 S02 Q3의8secondary lead/4query·ordinaryHTML5(usable4/limited1)는 issue/issuer/rawnull·원인null을 보존한다. S04 Q2의12query issueclaim/47returned occurrence·7title관계는 원문 발행/기관 승인이나 전수 모집단이 아니다. S03 보유HAC1 physical31~38의 제목/조건·공간축X[m]/Y[m]·footer만 P01이 한정 대조해 primary83/181·남은98이며 숫자plot/limit/pass·실측·현재지원은 미확인이다. S01의 승인5쪽 후속7facts·장비2블록6기재행/18허용cell은 설치·실제chain·현재교정/API binding을 증명하지 않는다. D.F 거리 문맥·단위상충/복합보정·§11.13.3인용·tool별parser index·보수 inset/식별자한정검사·P01초기실패를 보존한다. reused3facts/원문6·8·23 재열람0·새PDF/적격증가0이다.
