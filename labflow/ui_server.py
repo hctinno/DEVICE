@@ -47,6 +47,7 @@ ASSETS = {
     '/intake-references/model.mjs': ('intake_references/model.mjs', 'text/javascript; charset=utf-8'),
     '/intake-references/view.mjs': ('intake_references/view.mjs', 'text/javascript; charset=utf-8'),
     '/intake-references/transport.mjs': ('intake_references/transport.mjs', 'text/javascript; charset=utf-8'),
+    '/intake-reference-actions/actions.mjs': ('intake_reference_actions/actions.mjs', 'text/javascript; charset=utf-8'),
 }
 FRONTEND = Path(__file__).resolve().parents[1] / 'frontend'
 _ID = re.compile(r'[A-Za-z0-9_.-]{1,150}', re.ASCII)
@@ -361,7 +362,7 @@ def _catalog_query(raw):
     return result
 
 
-_REFERENCE_ASSETS = frozenset('/intake-references/' + name + '.mjs' for name in ('model', 'view', 'transport'))
+_REFERENCE_ASSETS = frozenset('/intake-references/' + name + '.mjs' for name in ('model', 'view', 'transport')) | {'/intake-reference-actions/actions.mjs'}
 _REFERENCE_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,149}\Z', re.ASCII)
 _REFERENCE_SHA = re.compile(r'[a-f0-9]{64}\Z', re.ASCII)
 _REFERENCE_CODES = frozenset('intake_reference_ui_' + suffix for suffix in
@@ -379,6 +380,19 @@ _REFERENCE_PARENT_SUFFIXES = {
     'IntakeReferenceStateError': ('intake_reference_state_', 'invalid_argument store_invalid transaction_required '
         'intake_not_found input_limit source_integrity_invalid projection_inconsistent delegation_invalid storage_error')}
 _REFERENCE_BASE_SHUTDOWN = ThreadingHTTPServer.shutdown
+_REFERENCE_ACTION_ERRORS = {'unconfigured': 503, 'invalid_request': 400, 'input_limit': 413,
+    'access_denied': 403, 'review_input_unavailable': 503, 'prepared_unavailable': 410,
+    'request_conflict': 409, 'unavailable': 503}
+_REFERENCE_ACTION_PARENTS = {
+    ('.store', 'StoreOpenError'): ('store_open_', 'invalid_argument path_invalid unavailable schema_mismatch '
+        'input_changed integrity_invalid closed backend_unavailable mode_unsupported'),
+    ('.intake_case_references', 'IntakeCaseReferencesError'): ('intake_case_references_',
+        'catalog_invalid snapshot_invalid context_invalid response_invalid producer_invalid source_error limit_exceeded'),
+    ('.fcc_case_review', 'FccCaseReviewError'): ('fcc_case_review_',
+        'catalog_invalid query_invalid selection_invalid source_invalid source_error limit_exceeded '
+        'context_invalid context_mismatch producer_invalid response_invalid reference_invalid')}
+_REFERENCE_PREPARE_REASONS = frozenset('analysis_not_ready profile_changed delegation_missing intake_deferred '
+    'delegation_evidence_missing required_questions_open unread_documents source_provenance_unconfirmed preparation_not_ready'.split())
 
 
 class _ReferenceFailure(ValueError):
@@ -548,7 +562,7 @@ def _reference_response(value, intake_id, request):
     return raw
 
 
-def _reference_body(blob):
+def _reference_body(blob, action='current'):
     try:
         text = blob.decode('utf-8', errors='strict')
         depth = 0; quoted = escaped = False
@@ -570,13 +584,101 @@ def _reference_body(blob):
         def constant(_): raise ValueError()
         value = json.loads(text, object_pairs_hook=pairs, parse_constant=constant)
         value, _ = _reference_plain(value, request=True)
-        if (type(value) is not dict or value.keys() != {'schema_version','action'}
-                or type(value['schema_version']) is not int or value['schema_version'] != 1 or value['action'] != 'current'):
+        fields = {'current': 'schema_version action', 'prepare': 'schema_version review_input_id replace_handle_id',
+                  'append': 'schema_version handle_id intake_id request_id preparation_id expected_snapshot_id expected_head_record_id'}
+        if (type(value) is not dict or value.keys() != set(fields[action].split())
+                or type(value['schema_version']) is not int or value['schema_version'] != 1):
             raise ValueError()
+        if action == 'current':
+            if value['action'] != 'current': raise ValueError()
+        else:
+            for key in (('review_input_id', 'replace_handle_id') if action == 'prepare' else
+                        ('handle_id', 'preparation_id', 'expected_snapshot_id', 'expected_head_record_id')):
+                if value[key] is None and key in {'replace_handle_id', 'expected_head_record_id'}: continue
+                if type(value[key]) is not str or _REFERENCE_SHA.fullmatch(value[key]) is None: raise ValueError()
+            if action == 'append':
+                for key in ('intake_id', 'request_id'):
+                    if type(value[key]) is not str or _REFERENCE_ID.fullmatch(value[key]) is None: raise ValueError()
     except (ValueError, UnicodeError, RecursionError) as error:
         if type(error) is _ReferenceFailure: raise
         _reference_fail('invalid_request', 400)
     return value
+
+
+def _reference_scope(scope):
+    if not (type(scope) is str and scope == 'workspace' or type(scope) is tuple and len(scope) <= 100
+            and all(type(value) is str and _REFERENCE_ID.fullmatch(value) for value in scope)
+            and len(set(scope)) == len(scope)):
+        _reference_fail('invalid_request', 400)
+    return scope
+
+
+def _reference_action_response(value, intake_id, request, action):
+    """Validate only public046 wire values; private preparation stays in046."""
+    value, raw = _reference_plain(value)
+    _reference_int(value.get('schema_version'), maximum=1)
+    if action == 'prepare':
+        _reference_keys(value, 'schema_version kind handle_id append_request_id expires_in_seconds preview')
+        _reference_need(value['kind'] == 'intake_reference_preparation_handle')
+        _reference_sha(value['handle_id']); _reference_id(value['append_request_id'])
+        _reference_int(value['expires_in_seconds'], 1, 900)
+        _fcc_json_bytes(value, cap=65536, max_depth=16, max_nodes=10000, compact=True)
+        preview = value['preview']
+        _fcc_json_bytes(preview, cap=32768, max_depth=12, max_nodes=4096, compact=True)
+        _reference_keys(preview, 'schema_version kind intake_id preparation_id observation preparation_ready reason_codes '
+                        'review_status selection source_modes verification')
+        _reference_int(preview['schema_version'], maximum=1)
+        _reference_need(preview['kind'] == 'intake_reference_review_preview' and preview['intake_id'] == intake_id)
+        _reference_id(preview['intake_id']); _reference_sha(preview['preparation_id'])
+        observation = preview['observation']
+        _reference_keys(observation, 'kind snapshot_id head_record_id observed_at')
+        _reference_need(observation['kind'] == 'paired_public_reads')
+        _reference_sha(observation['snapshot_id']); _reference_sha(observation['head_record_id'], True)
+        _reference_time(observation['observed_at'])
+        reasons = preview['reason_codes']
+        _reference_need(type(reasons) is list and len(reasons) <= 9 and all(type(reason) is str and reason in _REFERENCE_PREPARE_REASONS for reason in reasons))
+        _reference_need(reasons == sorted(set(reasons)) and preview['preparation_ready'] is (not reasons))
+        _reference_need(preview['review_status'] in {'bound', 'insufficient_evidence'})
+        selection = preview['selection']
+        _reference_keys(selection, 'context_id corpus_id requested_case_ids status accepted_reference_count receipt_id')
+        _reference_sha(selection['context_id'], True); _reference_sha(selection['receipt_id'])
+        if selection['corpus_id'] is not None: _reference_id(selection['corpus_id'], 128)
+        ids = selection['requested_case_ids']
+        _reference_need(type(ids) is list and len(ids) <= 16)
+        for ident in ids: _reference_id(ident, 128)
+        _reference_need(len(ids) == len(set(ids)) and selection['status'] in {'selected', 'no_candidate', 'unknown'})
+        _reference_int(selection['accepted_reference_count'], 0, 256)
+        modes = preview['source_modes']
+        _reference_keys(modes, 'intake_revision_synthetic catalog_synthetic intake_provenance_status')
+        _reference_need(type(modes['intake_revision_synthetic']) is bool and (modes['catalog_synthetic'] is None or type(modes['catalog_synthetic']) is bool)
+                        and modes['intake_provenance_status'] in {'confirmed', 'unconfirmed'})
+        _reference_flags(preview['verification'], 'reference_receipt_validated retained_snapshot_observed '
+            'reference_source_currentness_verified operational_authority_granted model_execution_verified evaluation_executed',
+            {'reference_receipt_validated', 'retained_snapshot_observed'})
+    else:
+        _reference_keys(value, 'schema_version kind request_id record_id seq stored replayed binding_status append_observation verification')
+        _reference_need(value['kind'] == 'intake_reference_registration' and value['request_id'] == request['request_id'] and value['stored'] is True)
+        _reference_sha(value['record_id']); _reference_int(value['seq'])
+        _reference_need(type(value['replayed']) is bool and value['binding_status'] in _REFERENCE_BINDINGS)
+        observation = value['append_observation']
+        _reference_keys(observation, 'expected_snapshot_id captured_snapshot_id head_before_record_id head_after_record_id '
+                        'head_advanced preparation_ready observed_at')
+        _reference_sha(observation['expected_snapshot_id'])
+        for key in ('captured_snapshot_id', 'head_before_record_id', 'head_after_record_id'): _reference_sha(observation[key], True)
+        _reference_time(observation['observed_at'])
+        _reference_need(type(observation['preparation_ready']) is bool and observation['expected_snapshot_id'] == request['expected_snapshot_id']
+                        and observation['head_advanced'] is (value['binding_status'] == 'current_at_append'))
+        if observation['head_advanced']:
+            _reference_need(observation['captured_snapshot_id'] == observation['expected_snapshot_id'] and observation['head_after_record_id'] == value['record_id'])
+        else: _reference_need(observation['head_after_record_id'] == observation['head_before_record_id'])
+        flags = value['verification']
+        required = 'record_hash_verified parent_revalidated_at_append origin_revalidated_at_append operational_authority_granted '
+        required += 'model_execution_verified evaluation_executed independent_evaluation_approved'
+        _reference_need(type(flags) is dict and set(flags) in (set(required.split()), set(required.split()) | {'mutable_state_verified_at_append'}))
+        if 'mutable_state_verified_at_append' in flags: _reference_need(type(flags['mutable_state_verified_at_append']) is bool)
+        _reference_flags({key: flags[key] for key in required.split()}, required,
+                         {'record_hash_verified', 'parent_revalidated_at_append', 'origin_revalidated_at_append'})
+    return raw
 
 
 def _reference_history_query(query):
@@ -606,22 +708,90 @@ class _ReferenceRuntime:
                 _reference_fail('invalid_request', 400)
         except Exception:
             _reference_fail('invalid_request', 400)
-        if not (type(scope) is str and scope == 'workspace' or type(scope) is tuple and len(scope) <= 100
-                and all(type(v) is str and _REFERENCE_ID.fullmatch(v) for v in scope) and len(set(scope)) == len(scope)):
-            _reference_fail('invalid_request', 400)
-        self.store, self.binding, self.scope = store, binding, scope
+        self.store, self.binding, self.scope = store, binding, _reference_scope(scope)
         self.lock = threading.RLock(); self.changed = threading.Condition(self.lock)
         self.clock = time.monotonic
         self.host_epoch, self.scope_epoch = secrets.token_hex(32), secrets.token_hex(32)
         self.sessions, self.clients, self.worker_refs, self.workers, self.leases = {}, set(), set(), set(), {}
         self.active = 0; self.source_active = False; self.closing = self.closed = False
         self.loop_thread = None; self.loop_failure = False; self.close_lock = threading.Lock()
+        self.actions = None; self.actions_closed = False; self.append_scope = ()
+        self.action_methods = {}; self.action_errors = {}; self.action_error_type = None
         self.check_store()
         api = importlib.import_module('.intake_reference_review', __package__)
         self.parent = api.read_reference_review
         _reference_need(callable(self.parent))
         self.parent_errors = {getattr(api, name): frozenset(prefix + suffix for suffix in names.split())
                               for name, (prefix, names) in _REFERENCE_PARENT_SUFFIXES.items()}
+
+    def configure_actions(self, catalog, append_scope, review_inputs):
+        self.append_scope = _reference_scope(append_scope)
+        if type(review_inputs) is not tuple: _reference_fail('invalid_request', 400)
+        if not review_inputs: return
+        failure = None
+        try:
+            api = importlib.import_module('.intake_reference_review_host', __package__)
+            self.action_error_type = api.IntakeReferenceReviewHostError
+            self.action_errors = dict(self.parent_errors)
+            self.action_errors[self.action_error_type] = frozenset('intake_reference_review_host_' + suffix for suffix in _REFERENCE_ACTION_ERRORS)
+            for (module_name, name), (prefix, suffixes) in _REFERENCE_ACTION_PARENTS.items():
+                module = importlib.import_module(module_name, __package__)
+                self.action_errors[getattr(module, name)] = frozenset(prefix + suffix for suffix in suffixes.split())
+            actions = api.create_reference_review_actions(self.store, catalog, host_epoch=self.host_epoch,
+                scope_epoch=self.scope_epoch, runtime_lock=self.lock, read_scope=self.scope,
+                append_scope=self.append_scope, review_inputs=review_inputs)
+            _reference_need(type(actions) is api.ReferenceReviewActions)
+            self.actions = actions
+            self.action_methods = {name: getattr(api.ReferenceReviewActions, name) for name in
+                                   ('capabilities', 'prepare', 'append', 'discard_session', 'close')}
+        except Exception as error:
+            code, status = self.action_failure(error)
+            cls = type(error) if type(error) in self.action_errors and code in self.action_errors[type(error)] else _ReferenceFailure
+            failure = cls(code, status=status) if cls is self.action_error_type else cls(code) if cls is not _ReferenceFailure else _ReferenceFailure('unavailable')
+        if failure is not None:
+            try: raise failure from None
+            except ValueError as error:
+                error.__context__ = error.__cause__ = None
+                raise
+
+    def action_failure(self, error):
+        code = getattr(error, 'code', None) if type(error) in self.action_errors else None
+        if type(code) is not str or code not in self.action_errors[type(error)]:
+            return 'intake_reference_ui_unavailable', 503
+        if type(error) is self.action_error_type:
+            suffix = code.removeprefix('intake_reference_review_host_')
+            status = _REFERENCE_ACTION_ERRORS[suffix]
+            if suffix == 'unavailable' and type(error.status) is int and error.status == 429: status = 429
+            return code, status
+        status = 503
+        for suffix, mapped in [('invalid_argument',400), ('access_denied',403), ('intake_not_found',404),
+                               ('input_limit',413), ('limit_exceeded',413)]:
+            if code.endswith('_' + suffix): status = mapped
+        if code == 'intake_reference_ledger_request_conflict': status = 409
+        return code, status
+
+    def binding_for(self, sid):
+        return {'host_epoch': self.host_epoch, 'session_id': sid, 'scope_epoch': self.scope_epoch}
+
+    def discard_binding(self, binding):
+        if self.actions is not None:
+            self.action_methods['discard_session'](self.actions, binding)
+
+    def action_headers(self, headers, sid, intake_id):
+        binding = self.binding_for(sid) if sid is not None else None
+        capabilities = (self.action_methods['capabilities'](self.actions, binding, intake_id) if self.actions is not None else
+                        {'prepare_allowed': False, 'append_allowed': False, 'review_input_id': None})
+        _reference_keys(capabilities, 'prepare_allowed append_allowed review_input_id')
+        prepare, append, input_id = (capabilities[key] for key in ('prepare_allowed', 'append_allowed', 'review_input_id'))
+        _reference_need(type(prepare) is bool and type(append) is bool and (not append or prepare))
+        if prepare:
+            _reference_need(binding is not None and any(name == 'X-Intake-Reference-CSRF' for name, _ in headers))
+            _reference_sha(input_id)
+        else: _reference_need(input_id is None)
+        result = headers + [('X-Intake-Reference-Prepare-Allowed', 'true' if prepare else 'false'),
+                            ('X-Intake-Reference-Append-Allowed', 'true' if append else 'false')]
+        if prepare: result.append(('X-Intake-Reference-Review-Input', input_id))
+        return result
 
     def check_store(self):
         try:
@@ -647,6 +817,7 @@ class _ReferenceRuntime:
     def expire(self):
         now = self.clock()
         for sid in [sid for sid, item in self.sessions.items() if now - item['last_seen'] >= 900]:
+            self.discard_binding(self.binding_for(sid))
             del self.sessions[sid]
         return now
 
@@ -672,11 +843,12 @@ class _ReferenceRuntime:
     def cookie_name(self):
         return 'dgm_intake_reference_' + str(self.server.server_port)
 
-    def authenticate(self, handler, intake_id, *, touch=False):
+    def authenticate(self, handler, intake_id, *, touch=False, append=False):
         if self.closing: _reference_fail()
         sid = self.cookie(handler); item = self.session(sid, touch=touch)
         tokens = handler.headers.get_all('X-Intake-Reference-CSRF', [])
-        if (not self.allowed(intake_id) or item is None or len(tokens) != 1
+        if (not self.allowed(intake_id) or append and not (self.append_scope == 'workspace' or intake_id in self.append_scope)
+                or item is None or len(tokens) != 1
                 or not _REFERENCE_SHA.fullmatch(tokens[0]) or not hmac.compare_digest(tokens[0], item['csrf'])):
             _reference_fail('access_denied', 403)
         return sid
@@ -687,7 +859,7 @@ class _ReferenceRuntime:
             sid = self.cookie(handler); item = self.session(sid)
             if sid is not None and item is None:
                 self._binding_open()
-                return [('X-Intake-Reference-Read-Allowed', 'false')]
+                return self.action_headers([('X-Intake-Reference-Read-Allowed', 'false')], None, intake_id)
             headers = []
             if handler.command == 'GET':
                 if item is None:
@@ -700,12 +872,12 @@ class _ReferenceRuntime:
             allowed = item is not None and self.allowed(intake_id)
             headers.append(('X-Intake-Reference-Read-Allowed', 'true' if allowed else 'false'))
             if allowed: headers.append(('X-Intake-Reference-CSRF', item['csrf']))
-            return headers
+            return self.action_headers(headers, sid if allowed else None, intake_id)
 
     def action_binding(self, session_id):
         with self.lock:
             if self.closing or self.session(session_id) is None: return None
-            return {'host_epoch': self.host_epoch, 'session_id': session_id, 'scope_epoch': self.scope_epoch}
+            return self.binding_for(session_id)
 
     @contextmanager
     def parent_call(self, *, source=False):
@@ -717,14 +889,18 @@ class _ReferenceRuntime:
             yield None
 
     @contextmanager
-    def _request_call(self, handler, intake_id, *, source=False):
+    def _request_call(self, handler, intake_id, *, source=False, action=None):
         def authenticate(*, touch=False):
-            if source: return self.authenticate(handler, intake_id, touch=touch)
+            if source:
+                if action == 'append': return self.authenticate(handler, intake_id, touch=touch, append=True)
+                return self.authenticate(handler, intake_id, touch=touch)
             sid = self.cookie(handler)
             if sid is not None and self.session(sid) is None: _reference_fail('access_denied', 403)
+            return sid
         with ExitStack() as lease:
             with self.lock:
-                authenticate()
+                sid = authenticate()
+                binding = self.binding_for(sid) if action is not None else None
                 lease.enter_context(self._parent_lease(source=source))
             # The lease owns native validation too, without any runtime-lock depth.
             self.check_store()
@@ -732,7 +908,26 @@ class _ReferenceRuntime:
                 if self.closing: _reference_fail()
                 self._binding_open()
                 authenticate(touch=source)
-            yield None
+            try: yield binding
+            finally:
+                if binding is not None:
+                    with self.lock:
+                        if self.closing or self.session(sid) is None:
+                            self.discard_binding(binding)
+
+    def check_preparation_session(self, binding):
+        with self.lock:
+            if self.closing:
+                self.discard_binding(binding); _reference_fail()
+            self._binding_open()
+            if self.session(binding['session_id']) is None:
+                self.discard_binding(binding); _reference_fail('access_denied', 403)
+
+    def close_actions(self):
+        if self.actions is not None and not self.actions_closed:
+            result = self.action_methods['close'](self.actions)
+            _reference_need(result is None)
+            self.actions_closed = True
 
     @contextmanager
     def _parent_lease(self, *, source=False):
@@ -849,6 +1044,8 @@ class _ReferenceHTTPServer(ThreadingHTTPServer):
                     with rt.lock:
                         if rt.closed: break
                         rt.closing = True; loop = rt.loop_thread
+                        for sid in list(rt.sessions):
+                            finish(lambda sid=sid: rt.discard_binding(rt.binding_for(sid)))
                     if loop is not None:
                         finish(self.shutdown)
                         if loop.is_alive(): finish(lambda: _REFERENCE_BASE_SHUTDOWN(self))
@@ -862,6 +1059,8 @@ class _ReferenceHTTPServer(ThreadingHTTPServer):
                         if isinstance(threads, list): rt.worker_refs.update(threads)
                         workers = list(rt.worker_refs)
                         failed |= rt.loop_failure
+                    # All admitted parents and their retirement finally have finished.
+                    finish(rt.close_actions)
                     # Closing accepted sockets wakes incomplete headers and blocked writes.
                     for client in clients:
                         def disconnect():
@@ -877,7 +1076,8 @@ class _ReferenceHTTPServer(ThreadingHTTPServer):
                         rt.clients = {client for client in rt.clients if client.fileno() != -1}
                         rt.worker_refs = {worker for worker in rt.worker_refs if worker.is_alive()}
                         rt.sessions.clear()
-                        rt.closed = not rt.clients and not rt.worker_refs and self.socket.fileno() == -1 and rt.loop_thread is None
+                        rt.closed = (not rt.clients and not rt.worker_refs and self.socket.fileno() == -1 and rt.loop_thread is None
+                                     and (rt.actions is None or rt.actions_closed))
                         failed |= not rt.closed
                     break
                 except KeyboardInterrupt:
@@ -909,12 +1109,13 @@ def _reference_dispatch(handler, runtime):
         parsed = urlsplit(handler.path)
         path = unquote(parsed.path, encoding='utf-8', errors='strict')
     except (ValueError, UnicodeError): return False
-    asset = path.startswith('/intake-references/') or path == '/intake-references'
+    asset = (path.startswith('/intake-references/') or path == '/intake-references'
+             or path.startswith('/intake-reference-actions/') or path == '/intake-reference-actions')
     if not asset and not (path.startswith('/api/intake-references/') or path == '/api/intake-references'):
         return False
     handler._reference_handling = True
     handler.close_connection = True
-    code, status, payload = None, None, None
+    code, status, payload, action = None, None, None, None
     try:
         if len(raw_target.encode('utf-8')) > 1024: _reference_fail('input_limit', 413)
         if (parsed.scheme or parsed.netloc or parsed.fragment or raw_target != path + ('?' + parsed.query if '?' in raw_target else '')
@@ -934,17 +1135,19 @@ def _reference_dispatch(handler, runtime):
             except OSError:
                 handler.error(503, 'asset_unavailable'); return True
             handler.send_payload(200, body, mime); return True
-        match = re.fullmatch(r'/api/intake-references/([^/]+)/(history|current)', path, re.ASCII)
+        match = re.fullmatch(r'/api/intake-references/([^/]+)/(history|current|prepare|append)', path, re.ASCII)
         if match is None:
             handler.error(404, 'route_not_found'); return True
         intake_id, action = match.groups()
         if _REFERENCE_ID.fullmatch(intake_id) is None: _reference_fail('invalid_request', 400)
         handler._reference_allow = 'GET, HEAD' if action == 'history' else 'POST'
         if handler.command not in (('GET', 'HEAD') if action == 'history' else ('POST',)):
-            handler.error(405, 'read_only'); return True
+            if action in {'prepare', 'append'}: handler.send_payload(405, b'')
+            else: handler.error(405, 'read_only')
+            return True
         _reference_guard(handler)
         if runtime is None: _reference_fail('unconfigured')
-        if action == 'current': _reference_guard(handler, source=True)
+        if action != 'history': _reference_guard(handler, source=True)
         if action == 'history':
             request = _reference_history_query(parsed.query)
             with runtime._request_call(handler, intake_id):
@@ -953,7 +1156,10 @@ def _reference_dispatch(handler, runtime):
                 handler._reference_headers = runtime.history_headers(handler, intake_id)
         else:
             if '?' in raw_target: _reference_fail('invalid_request', 400)
-            with runtime.lock: runtime.authenticate(handler, intake_id)
+            with runtime.lock:
+                if action == 'append': runtime.authenticate(handler, intake_id, append=True)
+                else: runtime.authenticate(handler, intake_id)
+            if action in {'prepare', 'append'} and runtime.actions is None: _reference_fail('unconfigured')
             if handler.headers.get_all('Transfer-Encoding'):
                 _reference_fail('invalid_request', 400)
             if handler.headers.get_all('Content-Encoding'): _reference_fail('invalid_request', 415)
@@ -970,16 +1176,24 @@ def _reference_dispatch(handler, runtime):
             try: blob = handler.rfile.read(int(literal))
             except (TimeoutError, OSError): _reference_fail('unavailable', 408)
             if len(blob) != int(literal): _reference_fail('invalid_request', 400)
-            request = _reference_body(blob)
-            with runtime._request_call(handler, intake_id, source=True):
-                value = runtime.parent(runtime.store, intake_id, request, allow_retained_reads=True)
-                payload = _reference_response(value, intake_id, request)
+            request = _reference_body(blob) if action == 'current' else _reference_body(blob, action)
+            if action == 'append' and request['intake_id'] != intake_id: _reference_fail('invalid_request', 400)
+            with runtime._request_call(handler, intake_id, source=True, action=action if action != 'current' else None) as binding:
+                if action == 'current':
+                    value = runtime.parent(runtime.store, intake_id, request, allow_retained_reads=True)
+                    payload = _reference_response(value, intake_id, request)
+                else:
+                    value = runtime.action_methods[action](runtime.actions, binding, intake_id, request)
+                    payload = _reference_action_response(value, intake_id, request, action)
+                    if action == 'prepare': runtime.check_preparation_session(binding)
     except BaseException as error:
         if handler._reference_response_started: return True
         code, status = 'intake_reference_ui_unavailable', 503
         if (type(error) is _ReferenceFailure and type(error.code) is str and error.code in _REFERENCE_CODES
                 and type(error.status) is int and error.status in {400,403,408,411,413,415,417,429,503}):
             code, status = error.code, error.status
+        elif runtime is not None and action in {'prepare', 'append'}:
+            code, status = runtime.action_failure(error)
         elif runtime is not None and type(error) in runtime.parent_errors:
             candidate = getattr(error, 'code', None)
             if type(candidate) is str and candidate in runtime.parent_errors[type(error)]:
@@ -998,7 +1212,11 @@ def _reference_dispatch(handler, runtime):
 
 
 def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None,
-                  intake_reference_store=None, intake_reference_read_scope=()):
+                  intake_reference_store=None, intake_reference_read_scope=(),
+                  intake_reference_append_scope=(), intake_reference_review_inputs=()):
+    if intake_reference_store is None and not (type(intake_reference_append_scope) is tuple and not intake_reference_append_scope
+            and type(intake_reference_review_inputs) is tuple and not intake_reference_review_inputs):
+        _reference_fail('invalid_request', 400)
     if intake_reference_store is not None and (type(host) is not str or host != '127.0.0.1'
             or type(port) is not int or not 0 <= port <= 65535):
         _reference_fail('invalid_request', 400)
@@ -1013,6 +1231,8 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
         except Exception:
             setup_failure = ('unavailable', 503)
     if setup_failure is not None: _reference_fail(*setup_failure)
+    if reference is not None:
+        reference.configure_actions(fcc_case_catalog, intake_reference_append_scope, intake_reference_review_inputs)
     fcc_summary = fcc_case = fcc_search = fcc_discover = fcc_error_type = fcc_calculate = None
     if fcc_case_catalog is not None:
         invalid = False
