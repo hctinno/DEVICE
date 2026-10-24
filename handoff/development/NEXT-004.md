@@ -1,5 +1,7 @@
 # 후속 개발 인수 대장 004
 
+2026-10-25 통합032 후속 배정: 기능 `b2923712`/source236·이전 Python2242/DOM12 유지. CLI 관측기 v3의 총괄 fresh2는 PASS이고 원 v1/v2 실패·current 전달 unknown을 보존했다. 부분 query caller 문서1은 독립 Yes/8조건 뒤 `c89e5c6`로 인수·푸시, 총괄 API 재실행0이다. 개발1은 기존 DOCX reader의 정확 DTO/한도·미지원 계약과 신규3 계획을 private 보완하고, 개발2는 기존 API 재사용 우선으로 규정·방법 근거 공급의 최소 계약을 private 보완한다. 공개 계약·정확base·소유 별도 배정 전 두 제품 구현은0이다. 개발3은 055 No/C0I1 최초 KI 보존의 소유3 수정 후보 66fcee56를 게시해 독립 재검토 중이며 총괄 인수0이다. 개발4는 C2 기본5 구현과 별도 호환2 검증을 계속한다. [C2 계약](../../docs/superpowers/specs/2026-10-25-intake-reference-actions-ui-composition-design.md)의 옛 F1 인접 단언1 허용은 `8252281` 정적 Yes/공개핀으로 실제 전달·ACK했으며 c03 제품base·미커밋을 재작성하지 않는다. P01 B030 공개3·실제ACK3/41JSON·v068 완료19/v069 당시22 대조와 B031 29JSON ACK2를 마쳤다. B0322는 총괄 ACK0이며 현재 원문 취득 후속의 성패를 아직 총괄 검수하지 않았다. 특정 미확보 PDF 한건을 우선하고 분기query 묶음의 기계적 반복을 피한다. 대상18/690·pending/retained 구별·사용자 준비0을 유지한다.
+
 2026-10-25 C2-COMPAT-050: 개발4의 기본5 구현은 계속한다. 기존050 F1 static allowlist의 C1 모듈1 누락·F2의 C2 panel0 전제는 [갱신 C2 계약](../../docs/superpowers/specs/2026-10-25-intake-reference-actions-ui-composition-design.md)의 별도예외2로 좁혔다. 독립 정적검토·공개 정확핀·총괄의 추가2 실제배정 전 protected050 checker/usage 수정0이다. 배정 뒤 같은 C2 branch에서 기본5와 별도 commit2·combined F1/F2 검증으로 잇고, 원base c03e440/미커밋·과거 실패·계수는 보존한다. 이 문서 변경의 제품 검사는0이다.
 
 최신 [통합032](INTEGRATION-032.md): 047 CLI·053 같은host 준비/등록의 독립 최종Yes와 소유6을 인수했다. 새 전체Python2242/skip0·실제기존화면12/source236·기존232 불변이며 Node230은031 이전 실행이다.

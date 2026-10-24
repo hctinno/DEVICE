@@ -1,5 +1,13 @@
 # DGM AutoLab — 개발·수집 세션 인계
 
+2026-10-25 통합032 후속: 기능 기준 `b2923712`·소스236은 유지한다. 접수 CLI의 추가 관측기 종료 오류를 소유 수정한 뒤 총괄의 새 합성 metadata/intakes 각1·합2가 통과했다. 두 child exit0·강제정리0, 각 SQLite3 close3·native4 차단/해제·자기 포트 재사용·입력/SQL 불변을 확인했고 v1/v2 실패를 보존했다. current 응답 전달은 미소비 unknown이며 반복 KI/kill·전체 Python2242·DOM12는 재실행하지 않았다.
+
+부분 query caller 사용법은 `dce4a6da`의 독립 최종 Yes/C0I0/M0 뒤 `c89e5c6`로 문서1을 인수했다. 소유8조건과 독립8조건을 분리하며, 각각 실제 match8/discover8·정상반환7/원 오류1을 확인했다. 총괄은 새 API 실행을 반복하지 않았다. 비FCC/시장 누락에서도 discovery가 같을 수 있어 원 match 이유·질문을 함께 보존한다. 규정·방법 null과 false 권한은 유지하며 실제 AI 이해·확정 사례 선택을 주장하지 않는다.
+
+[C2 계약](docs/superpowers/specs/2026-10-25-intake-reference-actions-ui-composition-design.md)·[계획](docs/superpowers/plans/2026-10-25-intake-reference-actions-ui-composition.md)의 F1 옛 인접 단언1도 정확 sibling 순서로 갱신하도록 `8252281` 공개핀·독립 정적 Yes 뒤 개발4에 실제 배정했다. 기본5/별도 호환2·c03 제품base/미커밋은 보존한다. 개발1은 기존 DOCX reader의 private 계약 보완, 개발2는 명시 규정·방법 근거 공급의 private 계약 보완을 실제 배정받았다. 두 준비는 아직 제품 구현이 아니다. 개발3의 055 No/C0I1 소유수정 후속 후보 66fcee56는 독립 재검토 중이며 아직 총괄 인수0이다. 개발4는 C2 구현·전송실패·회수 검증을 계속한다.
+
+P01 B030 `b7443fc5` 공개3·기존 ACK3/41JSON·v068 완료19와 v069 당시 ACK2/22를 대조했다. 후행 B031 29JSON/새PDF0은 명시 ACK2, B0322는 아직 총괄 ACK0이다. 대상18PDF/690쪽과 pending·전체보존 코호트를 구별한다. 반복 분기 검색을 자동 연장하지 않고 특정 미확보 원문 우선 계획을 P01에 전달했으며, 현재 원문 취득 결과와 규정·권리·직접 신원 검수는 별도다. 사용자 결정·준비0, 새 실제 모델/현장/전수 완료는0이다.
+
 2026-10-25 C2 호환 후속: 개발4가 기존050 F1 정적목록의 C1 모듈 누락과 F2 panel0 전제를 보고해 [C2 계약](docs/superpowers/specs/2026-10-25-intake-reference-actions-ui-composition-design.md)·[계획](docs/superpowers/plans/2026-10-25-intake-reference-actions-ui-composition.md)에 별도 최소 호환2를 명시했다. 기본 C2 소유5·API·R1·수용20·제품base c03e440·현재 미커밋은 유지하며, 050 checker/usage2는 독립 정적검토·정확 공개핀·총괄 실제 추가배정 뒤 별도 작은 commit으로만 수정한다. 이 문서 변경의 새 제품 검사는0이며 실제032 Python2242/DOM12와 구별한다. 최신 실제 배정/추가 CLI 관측 실패·소유수정 및 P01 후속ACK는 private followup을 따른다.
 
 2026-10-25 [통합032](handoff/development/INTEGRATION-032.md): 047 운영 CLI와053 같은 서버의 준비·등록을 각각 독립 최종 Yes/C0I0 뒤 정확2커밋·소유6으로 기능b2923712에 인수했다. 새 전체Python2242/skip0와 기존 접수화면의 실제HTTP/DOM12가 통과했고 source236·범위 밖 기존232는 불변이다. Node230은031 이전 실행이며 이번 반복0이다. 053은 시작 때 명시한025 입력을 소비하며 실제AI 응답 생산·동적 입력 공급을 완료한 것은 아니다. 개발4 C2는 정적Yes인 공개계약·정확게시base·소유5 실제배정으로 이어가고, 개발3은055 신규3의 최종 용량경계 수정 뒤 새 전체회귀를 진행한다. 개발1은 CLI/053 새 통합관측 준비, 개발2는 기존025 caller 조립을 신규모듈0으로 잇는다. P01 B02954bf4d26 공개3·실제ACK3·collector128/128·corpus93/93과 v066 ACK1/입력18·v067 ACK2/입력21을 대조했다. 대상18PDF/690쪽·공식0은 그대로이고 직접동일성보류2/93쪽과 전체보존22/882쪽은 적격 대상에 더하지 않는다. 전수·현행규범·실제AI·실장비는 open, 사용자준비0이다. 아래는 당시 기록이다.
