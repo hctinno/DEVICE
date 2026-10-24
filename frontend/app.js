@@ -350,6 +350,41 @@ function renderQuestions(record) {
   return node;
 }
 
+function renderTestIntentReview(record, review) {
+  const node = section('제공된 규정·방법 대조', '제공 시점의 대조 · review_only');
+  node.classList.add('test-intent-review');
+  const states = {missing:'후보 미제공',proposed:'제공 후보 · 인용 연결 미완료',
+    conflicting:'서로 다른 제공 후보',literal_linked:'양쪽 인용의 문자 연결 · 적용성 미판정'};
+  const literal = value => value === null ? 'null' : Array.isArray(value) ? JSON.stringify(value) : String(value);
+  node.append(el('p', 'inline-note', '제공된 인용의 문자 연결을 대조한 결과입니다. 적용성·현재성·실행 권한은 확인하지 않습니다.'),
+    el('p', 'inline-note', '이번 제공 대조에서 모델 호출 없음 · 기존 분석의 모델 실행/품질 미검증'),
+    metadata([['제공 접수', `${record.intake_id} · v${review.input_binding.revision}`],
+      ['제공 관측의 질문 수', review.questions.length], ['대조 사유', literal(review.reason_codes)]]));
+  for (const [field, label] of [['rule','규정'],['method','시험방법']]) {
+    const value = review.fields[field], part = el('div', 'source');
+    part.append(el('h4', '', label), metadata([['상태', `${states[value.status]} · ${value.status}`],
+      ['원 사유 코드', literal(value.reason_codes)]]));
+    for (const candidate of value.candidates) {
+      const details = el('details', 'history');
+      details.append(el('summary', '', candidate.literal), metadata([
+        ['제공자 선언', `${candidate.origin === 'model_proposed' ? '모델 제안으로 표시된 제공값' : '명시 공급값'} · ${candidate.origin}`],
+        ['문자 연결', candidate.literal_linked], ['사유 코드', literal(candidate.reason_codes)],
+        ['제공 기간 대조', literal(candidate.period_checks)],
+      ]), el('p', 'inline-note', '제공 결과에 담긴 인용 위치입니다. 다른 현재 사실의 인용문을 가져와 붙이지 않습니다.'));
+      for (const ref of candidate.intake_refs) details.append(el('p', 'mono', `원 analysis fact_index=${ref.fact_index} · evidence_index=${ref.evidence_index}`));
+      for (const ref of candidate.basis_refs) details.append(el('p', 'mono', `${ref.document_id} · PDF ${ref.page_number}쪽 · ${ref.line_start}–${ref.line_end}행 · 텍스트 SHA-256 ${ref.text_sha256}`));
+      part.append(details);
+    }
+    node.append(part);
+  }
+  const checks = metadata(['intake_citations_checked','basis_literals_checked'].map(key=>[key,review.verification[key]]));
+  checks.classList.add('test-intent-checks');
+  const authority = metadata(Object.entries(review.verification).filter(([key])=>!['intake_citations_checked','basis_literals_checked'].includes(key)));
+  authority.classList.add('test-intent-authority');
+  node.append(el('h4', '', '인용 검사 수행 여부'), checks, el('h4', '', '미검증·미승인 범위'), authority);
+  return node;
+}
+
 function renderFiles(record) {
   const node = section('원본과 자료 버전', '저장된 메타데이터 · 바이너리 열기 미연결');
   for (const revision of [...record.history].reverse()) {
@@ -434,7 +469,10 @@ function buildDetail(view) {
     ['시료 · 물리 위치', '제공 안 됨'], ['실측 지원', `미검증 (${record.measurement_support})`],
     ['접수 / 후속 상태 코드', `${record.status} / ${record.analysis?.next_action || '없음'}`],
     ['보류 의사', record.deferred ? '저장됨' : '저장된 보류 없음'],
-  ]), renderFacts(record), renderQuestions(record), buildFixturePanel(record, view), renderJobs(record), renderFiles(record));
+  ]));
+  const intent = (view.intentReviews || []).find(value=>value.input_binding.intake_id===record.intake_id&&value.input_binding.revision===record.revision);
+  if (intent) body.append(renderTestIntentReview(record, intent));
+  body.append(renderFacts(record), renderQuestions(record), buildFixturePanel(record, view), renderJobs(record), renderFiles(record));
   const notices = section('이 접수의 알림 기록', '전송·읽음 상태 미제공');
   const related = view.notices.filter(notice => notice.intake_id === record.intake_id);
   if (!related.length) notices.append(el('p', 'muted', '저장된 알림이 없습니다.'));
@@ -511,7 +549,8 @@ async function refresh() {
     validateSnapshot(payload);
     if (request !== state.request || !referenceCanChange()) return;
     let prepared;
-    try { prepared = prepareView({...state, records: payload.intakes, notices: payload.notifications, loaded: true,
+    try { prepared = prepareView({...state, records: payload.intakes, notices: payload.notifications,
+      intentReviews:payload.intake_test_intent_reviews || [], loaded: true,
       updatedText: `${seoulTime(payload.generated_at)} KST 조회`, snapshotGeneration:(state.snapshotGeneration || 0) + 1}); }
     catch { throw new Error('render_failed'); }
     publishView(prepared);

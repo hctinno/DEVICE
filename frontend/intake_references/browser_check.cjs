@@ -281,7 +281,7 @@ async function frontendMain(){
    };
    window.f1Wire={counts,observations,setSnapshot(value){mainSnapshot=clone(value);},next(kind,mode){queues[kind].push({mode});},
     hold(kind,label){queues[kind].push({label});},release(label,mode='ok'){const item=held.get(label);if(!item)throw Error('fixture_hold_missing');
-     held.delete(label);item.resolve(response(item.kind,item.id,mode));},held(label){return held.has(label);}};
+     held.delete(label);item.resolve(item.kind==='main'&&mode==='ok'?new Response(JSON.stringify(item.snapshot),{headers}):response(item.kind,item.id,mode));},held(label){return held.has(label);}};
    window.fetch=(url,options={})=>{
     const u=new URL(url,location.origin);if(!u.pathname.startsWith('/api/'))return native(url,options);
     let kind,id='';
@@ -295,7 +295,7 @@ async function frontendMain(){
     if(kind==='current'){const body=JSON.parse(options.body);item.body_exact2=Object.keys(body).length===2&&body.schema_version===1&&body.action==='current';
      item.csrf_header_present=typeof options.headers?.['X-Intake-Reference-CSRF']==='string';}
     observations.push(item);options.signal?.addEventListener('abort',()=>{item.aborted=true;},{once:true});
-    const next=queues[kind]?.shift();if(next?.label)return new Promise(resolve=>held.set(next.label,{resolve,kind,id}));
+    const next=queues[kind]?.shift();if(next?.label)return new Promise(resolve=>held.set(next.label,{resolve,kind,id,snapshot:kind==='main'?clone(mainSnapshot):null}));
     return Promise.resolve(response(kind,id,next?.mode||'ok'));
    };
   },{snapshot,bundle});
@@ -392,6 +392,58 @@ async function frontendMain(){
    await page.locator('.intake-reference-review').evaluate(n=>n.scrollIntoView({block:'start'}));
    await page.screenshot({path:path.join(evidence,`frontend-${width}-panel.png`)});}
   checks.push('product_CSS_long_ID_KST_wrap_390_and1440_two_to_one_columns');
+  const intentChecks=[];result.intent_view_checks=intentChecks;
+  assert.equal(await page.locator('.test-intent-review').count(),0);
+  const supplied=copy(snapshot),review=createIntentReview(supplied.intakes[1]);
+  const candidate={literal:'<img src=x onerror=alert(1)>RULE-'+ '🧪'.repeat(50),origin:'model_proposed',literal_linked:false,
+   intake_refs:[],basis_refs:[{document_id:'SYN-BASIS',page_number:1,text_sha256:'a'.repeat(64),line_start:1,line_end:2}],
+   period_checks:[{document_id:'SYN-BASIS',status:'unconfirmed'}],reason_codes:['intake_ground_missing','period_unconfirmed']};
+  review.fields.rule={status:'proposed',candidates:[copy(candidate)],reason_codes:['intake_ground_missing']};
+  review.fields.method={status:'conflicting',candidates:[{...copy(candidate),literal:'METHOD-A'},{...copy(candidate),literal:'METHOD-B'}],reason_codes:['intent_conflicting']};
+  review.questions=[{key:'missing_firmware',field:'firmware',message:'제공 관측의 질문'}];
+  supplied.intake_test_intent_reviews=[review];
+  await page.locator('#search').focus();await page.evaluate(value=>window.f1Wire.setSnapshot(value),supplied);
+  await dispatchRefresh();await ready();await page.locator('.test-intent-review').waitFor();
+  assert.equal(await page.locator('#search').evaluate(n=>n===document.activeElement),true);
+  assert.match(await page.locator('.test-intent-review').innerText(),/제공된 규정·방법 대조/);
+  assert.match(await page.locator('.test-intent-review').innerText(),/모델 호출 없음/);
+  assert.equal(await page.locator('.test-intent-authority dd').count(),12);
+  assert.equal(await page.locator('.test-intent-authority dd').evaluateAll(nodes=>nodes.every(n=>n.textContent==='false')),true);
+  assert.equal(await page.locator('.test-intent-review img,.test-intent-review script,.test-intent-review button').count(),0);
+  assert.equal(await page.locator('.test-intent-review blockquote').count(),0);
+  assert.match(await page.locator('#detail-panel').innerText(),/합성 펌웨어 확인/);
+  intentChecks.push('supplied_values_reasons_conflict_questions_false12_and_no_invented_quotes');
+  const beforeDetails=await counts();await page.locator('.test-intent-review summary').first().focus();await page.keyboard.press('Enter');
+  assert.equal(await page.locator('.test-intent-review details').first().evaluate(n=>n.open),true);
+  assert.deepEqual(await counts(),beforeDetails);intentChecks.push('keyboard_details_only_no_source_focus_or_controller_action');
+  const goodIntent=await page.locator('.test-intent-review').innerText(),beforeInvalid=await counts();
+  const invalidIntent=copy(supplied);invalidIntent.intake_test_intent_reviews[0].verification.execution_authorized=true;
+  await page.evaluate(value=>window.f1Wire.setSnapshot(value),invalidIntent);await dispatchRefresh();await page.locator('#error-banner').waitFor();
+  assert.equal(await page.locator('.test-intent-review').innerText(),goodIntent);
+  assert.equal((await counts()).history,beforeInvalid.history);assert.equal((await counts()).current,beforeInvalid.current);
+  await page.evaluate(value=>window.f1Wire.setSnapshot(value),supplied);await dispatchRefresh();await ready();
+  intentChecks.push('invalid_review_rejects_whole_snapshot_and_keeps_lastgood');
+  const missing=copy(snapshot);missing.intake_test_intent_reviews=[createIntentReview(missing.intakes[1])];
+  await page.evaluate(value=>window.f1Wire.setSnapshot(value),missing);await dispatchRefresh();await ready();
+  assert.match(await page.locator('.test-intent-review').innerText(),/후보 미제공/);
+  assert.match(await page.locator('.test-intent-review').innerText(),/missing/);
+  assert.equal(await page.locator('.test-intent-review details').count(),0);
+  assert.equal((await page.locator('.test-intent-review').innerText()).includes('FCC'),false);
+  await page.evaluate(value=>window.f1Wire.setSnapshot(value),supplied);await dispatchRefresh();await ready();
+  intentChecks.push('missing_null_empty_results_remain_unknown_without_defaults');
+  const beforeIntentSelection=await counts();await page.locator('.intake-item').first().click();await ready();
+  assert.equal(await page.locator('.test-intent-review').count(),0);await page.locator('.intake-item').nth(1).click();await ready();
+  assert.equal(await page.locator('.test-intent-review').count(),1);assert.equal((await counts()).current,beforeIntentSelection.current);
+  for(const width of [1440,390]){await page.setViewportSize({width,height:1000});
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+   await page.locator('.test-intent-review').screenshot({path:path.join(evidence,`intent-wire-${width}.png`)});}
+  intentChecks.push('selection_isolation_atomic_view_and_390_1440_existing_CSS');
+  await hold('main','intent-old');await dispatchRefresh();await held('intent-old');
+  await page.evaluate(value=>window.f1Wire.setSnapshot(value),snapshot);await hold('main','intent-new');await dispatchRefresh();await held('intent-new');
+  await release('intent-new');await ready();await release('intent-old');
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  assert.equal(await page.locator('.test-intent-review').count(),0);
+  intentChecks.push('late_metadata_cannot_restore_missing_review');
   const clean=await page.evaluate(()=>({storage:[localStorage.length,sessionStorage.length],downloads:document.querySelectorAll('a[download]').length,
    token_visible:/f{64}/.test(document.body.innerText),token_url:/f{64}/.test(location.href),observations:window.f1Wire.observations,counts:{...window.f1Wire.counts}}));
   assert.deepEqual(clean.storage,[0,0]);assert.equal(clean.downloads,0);assert.equal(clean.token_visible,false);assert.equal(clean.token_url,false);
@@ -768,5 +820,20 @@ async function integratedMain(){
  if(failure)throw Error('intake_reference_integrated_F2_failed');return result;
 }
 
-module.exports={createSyntheticBundle,main};
+// Declared wire only. Native API/034 inputs are prepared separately in Python.
+function createIntentReview(record){
+ const limits={max_input_bytes:41943040,max_context_bytes:6291456,max_analysis_bytes:2097152,max_projection_bytes:8388608,
+  max_observation_bytes:12582912,max_proposal_bytes:65536,max_sources_bytes:8388608,max_output_bytes:2097152,
+  max_depth:32,max_nodes:2000000,max_source_documents:8,max_candidates_per_field:2,max_refs_per_side:8,
+  max_literal_chars:256,max_institution_scope_chars:128,max_edition_chars:256,max_workflow_scope_ids:20,max_questions:200};
+ const flags='projection_recomputed result_projection_reverified database_currentness_verified source_authenticity_verified normative_applicability_verified institution_scope_verified edition_currentness_verified model_execution_verified model_quality_verified query_release_authorized case_selection_authorized execution_authorized'.split(' ');
+ const binding={intake_id:record.intake_id,revision:record.revision,analysis_context_id:null,result_sha256:null,observation_snapshot_id:null,
+  provided_context_sha256:'1'.repeat(64),provided_analysis_sha256:'2'.repeat(64),provided_projection_sha256:'3'.repeat(64),
+  provided_proposal_sha256:'4'.repeat(64),provided_sources_sha256:'5'.repeat(64),provided_observation_sha256:null};
+ return {schema_version:1,kind:'intake_test_intent_review',status:'review_only',input_binding:binding,
+  fields:Object.fromEntries(['rule','method'].map(key=>[key,{status:'missing',candidates:[],reason_codes:['intent_missing']}])),
+  questions:[],reason_codes:['applicability_not_assessed','intent_missing'],
+  verification:{...Object.fromEntries(flags.map(key=>[key,false])),intake_citations_checked:false,basis_literals_checked:false},limits};
+}
+module.exports={createSyntheticBundle,createIntentReview,main};
 if(require.main===module)main().catch(error=>{process.stderr.write(error.message+'\n');process.exitCode=1;});
