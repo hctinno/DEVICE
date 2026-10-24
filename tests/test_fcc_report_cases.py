@@ -770,6 +770,297 @@ class FccReportCaseDiscoveryTests(unittest.TestCase):
                 self.assertFalse(discovery["items"][0]["execution_authorized"])
 
 
+class FccCasePacketPreparationTests(unittest.TestCase):
+    """035 metadata preparation; all source declarations are synthetic."""
+
+    def setUp(self):
+        self.assertTrue(callable(getattr(cases, "prepare_fcc_case_packet", None)), "035 memory API is absent")
+        self.packet, self.pdfs, _ = fixture()
+        self.packet_path, self.scope_path = "canonical/packet.json", "scope/pages.json"
+        self.policy = {"schema_version": 1, "sources": {sha: {"pages": [2, 1], "mode": "accessibility",
+            "basis_id": "SYNTHETIC-035", "basis_sha256": "e" * 64} for sha in self.pdfs}}
+
+    @staticmethod
+    def encoded(value):
+        return json.dumps(value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+
+    def inputs(self, *, packet=None, policy=None, files=None, manifest=None):
+        files = ({self.packet_path: self.encoded(self.packet if packet is None else packet),
+                  self.scope_path: self.encoded(self.policy if policy is None else policy)} if files is None else files)
+        manifest = ({"request_id": "DEV-HCT-FCC-CORPUS-012", "revision": "SYNTHETIC-035-v1",
+                     "files": [{"path": path, "bytes": len(raw), "sha256": digest(raw)} for path, raw in files.items()]}
+                    if manifest is None else manifest)
+        raw = self.encoded(manifest)
+        return raw, files, {"expected_manifest_sha256": digest(raw), "packet_path": self.packet_path,
+                            "page_scope_path": self.scope_path}
+
+    def prepare(self, **kwargs):
+        raw, files, options = self.inputs(**kwargs)
+        return cases.prepare_fcc_case_packet(raw, files, **options)
+
+    def error(self, code, inputs=None):
+        raw, files, options = inputs or self.inputs()
+        with self.assertRaises(cases.FccReportCaseError) as caught:
+            cases.prepare_fcc_case_packet(raw, files, **options)
+        self.assertEqual((caught.exception.code, str(caught.exception), caught.exception.args), (code, code, (code,)))
+        self.assertIsNone(caught.exception.__context__)
+        self.assertNotIn("PRIVATE-SYNTHETIC", repr(caught.exception))
+
+    def test_exact_preparation_contract_preserves_input_evidence12_and_false_verification(self):
+        result = self.prepare()
+        self.assertEqual(set(result), {"schema_version", "kind", "packet", "page_scope", "source_refs", "provenance", "verification"})
+        self.assertEqual(result["schema_version"], 1); self.assertEqual(result["kind"], "fcc_case_packet_preparation")
+        self.assertEqual(result["verification"], {"manifest_and_consumed_json_bytes_verified": True,
+            "source_pdf_bytes_verified": False, "retained_literals_verified": False,
+            "authority_or_rights_verified": False, "execution_authorized": False})
+        self.assertEqual(len(result["packet"]["cases"][0]["claims"][0]["evidence"][0]), 12)
+        self.assertEqual(result["source_refs"], [{key: self.packet["documents"][0][key]
+            for key in ["document_id", "sha256", "size_bytes", "physical_pages"]}])
+        self.assertEqual(next(iter(result["page_scope"]["sources"].values()))["pages"], [1, 2])
+
+    def test_manifest_and_canonical_hashes_are_independently_reproducible(self):
+        raw, files, options = self.inputs()
+        result = cases.prepare_fcc_case_packet(raw, files, **options)
+        provenance = result["provenance"]
+        self.assertEqual(set(provenance), {"manifest_sha256", "consumed_files", "packet_sha256", "page_scope_sha256"})
+        self.assertEqual(provenance["manifest_sha256"], digest(raw))
+        self.assertEqual(provenance["consumed_files"], sorted(
+            [{"path": path, "bytes": len(blob), "sha256": digest(blob)} for path, blob in files.items()], key=lambda row: row["path"]))
+        for name in ["packet", "page_scope"]:
+            self.assertEqual(provenance[name + "_sha256"], digest(self.encoded(result[name])))
+
+    def test_metadata_success_does_not_verify_a_fabricated_literal_or_original_pdf(self):
+        packet = deepcopy(self.packet)
+        packet["cases"][0]["claims"][0]["evidence"][0].update(quote="PRIVATE-SYNTHETIC wrong literal", text_sha256="f" * 64)
+        result = self.prepare(packet=packet)
+        self.assertFalse(result["verification"]["retained_literals_verified"])
+        with self.assertRaises(cases.FccReportCaseError) as caught:
+            cases.FccReportCaseCatalog(result["packet"], self.pdfs, page_scope=result["page_scope"])
+        self.assertEqual(caught.exception.code, "fcc_case_invalid_evidence")
+
+    def test_calls_are_memory_only_without_catalog_parser_files_network_or_database(self):
+        with mock.patch.object(cases.FccReportCaseCatalog, "__init__", side_effect=AssertionError("catalog")), \
+                mock.patch.object(cases, "extract_document", side_effect=AssertionError("extract")), \
+                mock.patch.object(cases, "_public_read_pdf", side_effect=AssertionError("full PDF")), \
+                mock.patch.object(cases, "_ScopedPdf", side_effect=AssertionError("selected PDF")), \
+                mock.patch("pypdf.PdfReader", side_effect=AssertionError("reader")), \
+                mock.patch("builtins.open", side_effect=AssertionError("file")), \
+                mock.patch("os.open", side_effect=AssertionError("descriptor")), \
+                mock.patch("pathlib.Path.open", side_effect=AssertionError("path")), \
+                mock.patch("socket.socket", side_effect=AssertionError("network")), \
+                mock.patch("sqlite3.connect", side_effect=AssertionError("database")), \
+                mock.patch("subprocess.Popen", side_effect=AssertionError("process")):
+            self.assertEqual(self.prepare()["kind"], "fcc_case_packet_preparation")
+
+    def test_expected_manifest_pin_precedes_json_interpretation(self):
+        raw, files, options = self.inputs(); options["expected_manifest_sha256"] = "0" * 64
+        self.error("fcc_case_invalid_sources", (b"PRIVATE-SYNTHETIC invalid JSON", files, options))
+        options["expected_manifest_sha256"] = digest(b"PRIVATE-SYNTHETIC invalid JSON")
+        self.error("fcc_case_invalid_packet", (b"PRIVATE-SYNTHETIC invalid JSON", files, options))
+
+    def test_manifest_must_be_exact_bytes_and_expected_sha_strict_lower_hex(self):
+        raw, files, options = self.inputs()
+        class BytesChild(bytes): pass
+        for bad in [raw.decode(), bytearray(raw), memoryview(raw), BytesChild(raw), None, False]:
+            with self.subTest(type=type(bad).__name__): self.error("fcc_case_invalid_packet", (bad, files, options))
+        for bad in [None, True, "F" * 64, "a" * 63, " a" * 32]:
+            with self.subTest(sha=bad): self.error("fcc_case_invalid_packet", (raw, files, {**options, "expected_manifest_sha256": bad}))
+
+    def test_json_blob_map_requires_exact_two_plain_keys_and_bytes(self):
+        raw, files, options = self.inputs()
+        class DictChild(dict): pass
+        class BytesChild(bytes): pass
+        for bad in [DictChild(files), [], {self.packet_path: files[self.packet_path]}, {**files, "extra.json": b"{}"},
+                    {**files, self.packet_path: bytearray(files[self.packet_path])},
+                    {**files, self.packet_path: BytesChild(files[self.packet_path])}]:
+            with self.subTest(type=type(bad).__name__, count=len(bad)): self.error("fcc_case_invalid_sources", (raw, bad, options))
+
+    def test_user_defined_blob_keys_are_rejected_without_hash_or_equality_callbacks(self):
+        raw, files, options = self.inputs()
+        collision = hash(self.packet_path)
+        class HostileKey:
+            calls = 0
+            def __hash__(self):
+                self.calls += 1
+                return collision
+            def __eq__(self, other):
+                self.calls += 1
+                return False
+        key = HostileKey(); invalid = {key: b"{}", self.scope_path: files[self.scope_path]}; key.calls = 0
+        self.error("fcc_case_invalid_sources", (raw, invalid, options))
+        self.assertEqual(key.calls, 0)
+
+    def test_blob_size_hash_and_missing_selected_manifest_member_are_source_errors(self):
+        raw, files, options = self.inputs()
+        self.error("fcc_case_invalid_sources", (raw, {**files, self.packet_path: files[self.packet_path] + b" "}, options))
+        manifest = json.loads(raw)
+        for change in [{"bytes": len(files[self.packet_path]) + 1}, {"sha256": "0" * 64}, {"path": "missing.json"}]:
+            changed = deepcopy(manifest); changed["files"][0].update(change)
+            self.error("fcc_case_invalid_sources", self.inputs(files=files, manifest=changed))
+
+    def test_manifest_id128_minimum_two_and_maximum128_are_actual_boundaries(self):
+        raw, files, options = self.inputs(); manifest = json.loads(raw)
+        for revision in ["R", "R" * 128]:
+            changed = {**manifest, "revision": revision}
+            self.assertEqual(cases.prepare_fcc_case_packet(*self.inputs(files=files, manifest=changed)[:2],
+                **self.inputs(files=files, manifest=changed)[2])["schema_version"], 1)
+        for revision in ["R" * 129, "bad/id", True, None]:
+            self.error("fcc_case_invalid_packet", self.inputs(files=files, manifest={**manifest, "revision": revision}))
+        changed = deepcopy(manifest); changed["files"] = changed["files"][:1]
+        self.error("fcc_case_invalid_packet", self.inputs(files=files, manifest=changed))
+        changed = deepcopy(manifest)
+        changed["files"] += [{"path": "unconsumed/" + str(i) + ".bin", "bytes": 0, "sha256": "f" * 64} for i in range(126)]
+        self.assertEqual(len(self.prepare(files=files, manifest=changed)["provenance"]["consumed_files"]), 2)
+        changed["files"].append({"path": "unconsumed/last.bin", "bytes": 0, "sha256": "f" * 64})
+        self.error("fcc_case_limit_exceeded", self.inputs(files=files, manifest=changed))
+
+    def test_manifest_flags_and_extra_metadata_do_not_grant_authority(self):
+        raw, files, options = self.inputs(); manifest = json.loads(raw)
+        self.assertFalse(self.prepare(files=files, manifest={**manifest, "observations": {"current": True, "value": 0}})["verification"]["execution_authorized"])
+        for flag in ["source_code_executed", "runtime_or_hardware_support_confirmed", "public_export_allowed"]:
+            self.assertEqual(self.prepare(files=files, manifest={**manifest, flag: False})["schema_version"], 1)
+            for bad in [True, 0, None, "false"]:
+                self.error("fcc_case_invalid_packet", self.inputs(files=files, manifest={**manifest, flag: bad}))
+        self.error("fcc_case_invalid_packet", self.inputs(files=files, manifest={**manifest, "request_id": "DEV-CONTROL-SOURCES-008"}))
+
+    def test_manifest_rows_reject_extra_keys_bool_sizes_bad_hashes_and_case_aliases(self):
+        raw, files, options = self.inputs(); manifest = json.loads(raw)
+        for change in [{"bytes": True}, {"bytes": -1}, {"sha256": "F" * 64}, {"extra": False}]:
+            changed = deepcopy(manifest); changed["files"][0].update(change)
+            self.error("fcc_case_invalid_packet", self.inputs(files=files, manifest=changed))
+        for path in [self.packet_path, self.packet_path.upper()]:
+            changed = deepcopy(manifest); changed["files"].append({**changed["files"][0], "path": path})
+            self.error("fcc_case_invalid_packet", self.inputs(files=files, manifest=changed))
+
+    def test_lexical_paths_and_selectors_are_explicit_distinct_json_paths(self):
+        raw, files, options = self.inputs(); manifest = json.loads(raw)
+        for path in ["/absolute.json", "../outside.json", "a\\b.json", "a//b.json", "CON.json", "a:stream.json", "trailing. /x.json", "intake-v1.json"]:
+            changed = deepcopy(manifest); changed["files"][0]["path"] = path
+            self.error("fcc_case_invalid_packet", self.inputs(files=files, manifest=changed))
+        for changes in [{"page_scope_path": self.packet_path}, {"packet_path": None}, {"packet_path": "../packet.json"},
+                        {"packet_path": "packet.txt"}, {"page_scope_path": "CON.json"}]:
+            self.error("fcc_case_invalid_packet", (raw, files, {**options, **changes}))
+
+    def test_duplicate_keys_invalid_utf8_nonfinite_and_nonobject_json_are_rejected(self):
+        raw, files, options = self.inputs()
+        for malformed in [b'\xff', b'{}{}', b'[]', b'{"request_id":"x","request_id":"y"}',
+                          raw[:-1] + b',"unknown":NaN}', raw[:-1] + b',"unknown":1e99999}']:
+            self.error("fcc_case_invalid_packet", (malformed, files, {**options, "expected_manifest_sha256": digest(malformed)}))
+        for path in [self.packet_path, self.scope_path]:
+            for malformed in [b'null', b'{}', b'{"schema_version":1,"schema_version":1}']:
+                self.error("fcc_case_invalid_packet", self.inputs(files={**files, path: malformed}))
+
+    def test_output_evidence_key_and_bad_metadata_reference_are_never_accepted(self):
+        for update in [{"literal_verified": True}, {"document_id": "MISSING"}, {"source_sha256": "e" * 64}, {"file_page": True}]:
+            packet = deepcopy(self.packet); packet["cases"][0]["claims"][0]["evidence"][0].update(update)
+            self.error("fcc_case_invalid_evidence", self.inputs(packet=packet))
+        packet = deepcopy(self.packet); packet["cases"][0]["claims"][0]["output_only"] = False
+        self.error("fcc_case_invalid_packet", self.inputs(packet=packet))
+
+    def test_scope_is_required_exactly_bound_and_does_not_promote_unselected_evidence(self):
+        for policy in [None, {}, {"schema_version": 1, "sources": {}}]:
+            self.error("fcc_case_invalid_packet", self.inputs(policy=policy if policy is not None else False))
+        for pages in [[], [True], [1, 1], [3]]:
+            policy = deepcopy(self.policy); next(iter(policy["sources"].values()))["pages"] = pages
+            self.error("fcc_case_invalid_packet", self.inputs(policy=policy))
+        policy = deepcopy(self.policy); next(iter(policy["sources"].values()))["pages"] = [2]
+        self.error("fcc_case_invalid_evidence", self.inputs(policy=policy))
+
+    def test_packet_and_manifest_and_scope_resource_caps_precede_interpretation(self):
+        raw, files, options = self.inputs()
+        large = raw + b" " * (1024 * 1024)
+        self.error("fcc_case_limit_exceeded", (large, files, {**options, "expected_manifest_sha256": digest(large)}))
+        for path, limit in [(self.packet_path, 4 * 1024 * 1024), (self.scope_path, 64 * 1024)]:
+            self.error("fcc_case_limit_exceeded", self.inputs(files={**files, path: b" " * (limit + 1)}))
+        manifest = json.loads(raw); nested = None
+        for _ in range(18): nested = [nested]
+        self.error("fcc_case_limit_exceeded", self.inputs(files=files, manifest={**manifest, "ignored": nested}))
+        self.error("fcc_case_limit_exceeded", self.inputs(files=files, manifest={**manifest, "ignored": [0] * 50001}))
+
+    def test_exact_raw_byte_caps_are_accepted_and_return_budget_is_enforced(self):
+        raw, files, options = self.inputs()
+        files = {path: blob + b" " * (limit - len(blob)) for path, blob, limit in [
+            (self.packet_path, files[self.packet_path], 4 * 1024 * 1024),
+            (self.scope_path, files[self.scope_path], 64 * 1024)]}
+        raw, files, options = self.inputs(files=files)
+        raw += b" " * (1024 * 1024 - len(raw)); options["expected_manifest_sha256"] = digest(raw)
+        self.assertEqual(cases.prepare_fcc_case_packet(raw, files, **options)["kind"], "fcc_case_packet_preparation")
+        with mock.patch.object(cases, "_OUTPUT_BYTES", 1):
+            self.error("fcc_case_limit_exceeded")
+
+    def test_declaration_only_pdf_limits_and_total_source_budget_are_enforced(self):
+        packet = deepcopy(self.packet); packet["documents"][0]["size_bytes"] = 16 * 1024 * 1024 + 1
+        self.error("fcc_case_limit_exceeded", self.inputs(packet=packet))
+        packet = deepcopy(self.packet); policy = deepcopy(self.policy)
+        for index in range(1, 5):
+            document = deepcopy(packet["documents"][0]); document.update(document_id="DOC-" + str(index), sha256=digest(str(index).encode()))
+            packet["documents"].append(document); policy["sources"][document["sha256"]] = deepcopy(next(iter(policy["sources"].values())))
+        for document in packet["documents"]: document["size_bytes"] = 16 * 1024 * 1024
+        self.error("fcc_case_limit_exceeded", self.inputs(packet=packet, policy=policy))
+
+    def test_source16_total64mib_and_selection800_normal_upper_input_needs_no_pdf(self):
+        packet = deepcopy(self.packet); policy = deepcopy(self.policy)
+        for index in range(1, 16):
+            document = deepcopy(packet["documents"][0]); document.update(document_id="DOC-" + str(index), sha256=digest(str(index).encode()))
+            packet["documents"].append(document)
+            policy["sources"][document["sha256"]] = deepcopy(next(iter(policy["sources"].values())))
+        for document in packet["documents"]:
+            document.update(size_bytes=4 * 1024 * 1024, physical_pages=50)
+            policy["sources"][document["sha256"]]["pages"] = list(range(50, 0, -1))
+        result = self.prepare(packet=packet, policy=policy)
+        self.assertEqual(len(result["source_refs"]), 16)
+        self.assertEqual(sum(len(s["pages"]) for s in result["page_scope"]["sources"].values()), 800)
+        self.assertEqual([r["document_id"] for r in result["source_refs"]], sorted(r["document_id"] for r in result["source_refs"]))
+
+    def test_source200_pages_and_total800_accept_exact_boundary_then_reject801(self):
+        packet = deepcopy(self.packet); policy = deepcopy(self.policy)
+        for index in range(1, 4):
+            document = deepcopy(packet["documents"][0]); document.update(document_id="DOC-" + str(index), sha256=digest(str(index).encode()))
+            packet["documents"].append(document); policy["sources"][document["sha256"]] = deepcopy(next(iter(policy["sources"].values())))
+        for document in packet["documents"]:
+            document["physical_pages"] = 200
+            policy["sources"][document["sha256"]]["pages"] = list(range(1, 201))
+        self.assertEqual(sum(len(r["pages"]) for r in self.prepare(packet=packet, policy=policy)["page_scope"]["sources"].values()), 800)
+        document = deepcopy(packet["documents"][0]); document.update(document_id="LAST", sha256="f" * 64)
+        packet["documents"].append(document); policy["sources"][document["sha256"]] = {**deepcopy(next(iter(policy["sources"].values()))), "pages": [1]}
+        self.error("fcc_case_limit_exceeded", self.inputs(packet=packet, policy=policy))
+
+    def test_declared_physical_page100000_is_not_an_actual_count_assertion(self):
+        packet = deepcopy(self.packet); packet["documents"][0]["physical_pages"] = 100000
+        result = self.prepare(packet=packet)
+        self.assertEqual(result["source_refs"][0]["physical_pages"], 100000)
+        self.assertFalse(result["verification"]["source_pdf_bytes_verified"])
+        packet["documents"][0]["physical_pages"] = 100001
+        self.error("fcc_case_invalid_packet", self.inputs(packet=packet))
+
+    def test_canonical_input_output_are_detached_and_arrays_ordinary_values_preserved(self):
+        packet = deepcopy(self.packet); packet["cases"][0]["claims"].reverse()
+        packet["scope"]["search_scope_notes"] = [" same ", " same "]
+        packet["cases"][0]["claims"][0]["value"] = [0, 0.0, False, None, " spaced "]
+        raw, files, options = self.inputs(packet=packet)
+        before = deepcopy(files); result = cases.prepare_fcc_case_packet(raw, files, **options)
+        self.assertEqual(result["packet"], packet)
+        self.assertEqual(files, before)
+        result["packet"]["cases"][0]["claims"].clear(); result["page_scope"]["sources"].clear()
+        self.assertEqual(cases.prepare_fcc_case_packet(raw, files, **options)["packet"], packet)
+        files.clear(); self.assertEqual(packet["scope"]["search_scope_notes"], [" same ", " same "])
+
+    def test_object_key_order_changes_canonical_hash_not_array_semantics(self):
+        first = self.prepare()
+        packet = dict(reversed(list(self.packet.items())))
+        policy = dict(reversed(list(self.policy.items())))
+        second = self.prepare(packet=packet, policy=policy)
+        self.assertEqual(first["provenance"]["packet_sha256"], second["provenance"]["packet_sha256"])
+        self.assertEqual(first["provenance"]["page_scope_sha256"], second["provenance"]["page_scope_sha256"])
+        self.assertEqual(list(second["packet"]), sorted(second["packet"]))
+
+    def test_empty_corpus_still_requires_two_pinned_metadata_files(self):
+        packet = deepcopy(self.packet); packet.update(documents=[], cases=[])
+        result = self.prepare(packet=packet, policy={"schema_version": 1, "sources": {}})
+        self.assertEqual(result["source_refs"], []); self.assertEqual(result["packet"]["cases"], [])
+        self.assertFalse(result["verification"]["retained_literals_verified"])
+
+
 class FccReportPageScopeTests(unittest.TestCase):
     """030 selected-source contract, using synthetic original bytes only."""
 
