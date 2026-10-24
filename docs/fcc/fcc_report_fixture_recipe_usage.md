@@ -70,7 +70,7 @@ Hz 외 MHz/GHz, C 외 °C 등의 다른 표기/단위는 이 단위에서 자동
 
 RF point7은 power_dbm/frequency_hz/bandwidth_hz/modulation/duty_cycle/crest_factor_db/tested_model이다. 같은 document/SHA/file_page/textSHA의 같은 명시 table/row 또는 공통 line 범위가 필요하다. 알려진 표·행끼리 상충하면 line이 겹쳐도 거절한다. null·unknown·unconfirmed·not_reported·n/a·미확인·불명·`-`/`–`/`—`는 불명 표식이고 표·행으로 채우지 않는다.
 
-경로 loss3·bootstrap6·quantity3의 context12도 그 document의 유효 근거가 필요하다. 각각 point와 같은 표·행/공통 line으로 직접 결합할 수 있으면 추가 연결은 필요 없다. 하나라도 별도 page/row라면 case 안의 reviewed report_fact, unit=null, field=`setting.setup_binding`인 claim으로 명시 연결한다. request에는 새 selector를 추가하지 않는다.
+경로 loss3·bootstrap6·quantity3의 context12도 그 document의 유효 근거가 필요하다. point7과 context12 전체에 동시에 공통인 명시 table/row 또는 공통 line 범위 하나가 있으면 추가 연결은 필요 없고, source_binding.row_binding에는 그 공동 근거를 반환한다. 문맥마다 서로 다른 point 근거를 선택하는 개별 결합만으로는 직접 결합하지 않는다. 전체 공동 근거가 없으면 case 안의 reviewed report_fact, unit=null, field=`setting.setup_binding`인 claim으로 명시 연결한다. request에는 새 selector를 추가하지 않는다.
 
 setup_binding.value는 exact `point_claim_ids`, `context_claim_ids` 2키다. 중복 없는 ID 배열이며 각각 선택한 RF point7 ID 집합과 context12 ID 집합에 정확히 대응한다. 연결 claim도 같은 document의 citable/literal 근거를 가져야 한다. 이 관계는 검수자의 구조화 해석이지 PDF에 기계 ID가 문자 그대로 있다는 뜻이 아니다. 같은 point 집합에 서로 다른 reviewed 연결이 있으면 상충으로 거절한다. 연결을 찾지 못하거나 임의 포함 관계만 있으면 부족이다. 다른 부분 파일의 setup을 추측 연결하지 않는다.
 
