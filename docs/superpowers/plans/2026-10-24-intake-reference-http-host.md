@@ -61,6 +61,10 @@
 - [ ] **4. 회귀·문서:** 전용→043/042/034/038·ui_server/040·기존 route→전체 Python을 실행한다. `python scripts/check_artifacts.py`, 새 usage 링크/UTF8·소유밖 diff/부모 pins·실패/known자원을 확인한다. asset phase는 예약/미존재404·accepted A1 static2·D4 transport actual로 구별하며 DOM/Node의 실행·미실행을 따로 보고한다.
 - [ ] **5. 게시:** 정확3 commit/push·remoteSHA·GitLF pins/새 QA로 총괄에 인계한다. 독립 지적은 같은3 수정/회귀 뒤 재검토하고 총괄 통합/게시까지 잇는다. D4 DOM·046 attach·047 CLI 완료를049 단위 수로 합산하지 않는다.
 
+## 2026-10-25 후행 만료 보완 검사 — 미실행
+
+고정 설계의 완료 후 만료 명확화를 같은049 소유3으로 구현한다. 기존 c24e806·원No/RED·owner/독립 post-parent 관측은 보존한다. 입장과 native 뒤 최종 인증에서 이미 만료한 cookie의403/부모0 검사는 유지한다. 실제 formal042 history가 반환한 직후 private clock을900으로 진행하는 GET/HEAD 경계를 먼저 RED로 고정하고,200/history7·Read-Allowed:false·CSRF/Set-Cookie/새세션/idle갱신0·HEAD body0·부모1/ROSQLite1·자원회수를 검증한다. 이미 허용된 current200/current10은 완료 뒤 새 인증/idle갱신 없이 유지되는 별도 검사다. closing/binding/native 실패와 혼동하지 않고 기존50·관련297·genuine043/042·수명·필요전체회귀를 새 phase로 확인해 같은branch 수정commit/push→독립재검토→총괄인수로 잇는다.047/053 제품 착수나 소유권 이관을 뜻하지 않는다.
+
 ## 자체 검토·미실행 상태
 
 H01~H13과 keyword2/hook2·None/정적3·lock/close를 spec과 대조했다. 구현/검사0,실제 구현 base는 이 설계/계획과 accepted A1을 포함한 총괄의 정확 root025 게시 SHA로 배정한다. public spec/plan·소유/hook/base 고정 뒤 구현을 별도 배정하며 새 고객자료/사용자 준비·승인0이다.

@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합028](INTEGRATION-028.md)을 우선한다. source227의 root 제품은051 저장조회 CLI까지이며 현재 RF 파형/실제host/app 완성을 뜻하지 않는다.
+
+| 담당 | 현재 소유와 다음 작은 구현 |
+| --- | --- |
+| 개발1 |049 branch와소유3 유지.20e No/C0I3→c24e806 수정50/297/2065 뒤 독립No C0I1(원3수정확인/후행만료I4). 공개최소명확화 별도정적Yes를이번게시한정확핀으로같은소유3추가수정;최종Yes/총괄인수뒤047 공개계약/new3 정확base 실제배정 |
+| 개발2 |053 private A:승인046 객체1을accepted049 같은Store/catalog/RLock/epochs/session/source1에 연결. private정적Yes→공개준비/공개delta검토→049인수뒤ui_server/test/newusage3 소유이관과정확base 실제배정;지금제품/새branch0 |
+| 개발3 |051 최종독립Yes/소유3 root인수.054 private A/new3 CW·사각pulse normalized I/Q·전력/에너지 순수수학 계약v1 No C0I1(양의subnormal 정밀도모순)→privatev2 보완/재독립검토→공개계약/exactbase뒤구현. 기존041/048/051/falsewaveform flags 유지 |
+| 개발4 |052 C1 실제base81ac8e7/branch codex/dev4-reference-actions-ui052-20261025/new4 구현·검증.050F1/50a9와No/RED 보존. 실제049/static3뒤F2,053/static1+052인수뒤C2 app조립 |
+| 총괄 |051 소유인수·새회귀/028게시·원격대조·후속실제배정.049 재검토/수정→독립Yes→총괄회귀,053/054 계약검토와소유권고정.담당제품일괄대신구현0 |
+| P01 |공개B022574bf4d9 exact/110·75·4묶음64metadata293931B/새PDF0 실제ACK.대상17/650·한정HAC150/181/미방문31·공식0/전수unknown.후속v058 실제ACK3/35입력(10/15/10)도대조했고미검수READY를더하지않음 |
+
+생산025 입력producer부재/capability=false·첫b/g/n 지원범위·Un-licensed우선/raw·Licensed보류를유지한다.새수집의mirror403은FCC공식거절/부재/확보성공이아니고wrapper검토는본문·교정/현행규범승인이아니다.사용자준비0·실제AI/현장/전수완료미주장.아래는당시기록이다.
+
 계약 후속(2026-10-24): [052 고정설계](../../docs/superpowers/specs/2026-10-24-intake-reference-actions-ui-design.md)/계획·[047 고정설계](../../docs/superpowers/specs/2026-10-24-intake-serve-design.md)/계획의 독립정적/공개delta Yes를 우선한다. 이번은 문서 고정이며 root027 기능/검증을 새제품PASS로세지않는다.
 
 | 담당 | 현재 실제 작업·소유·다음 조건 |

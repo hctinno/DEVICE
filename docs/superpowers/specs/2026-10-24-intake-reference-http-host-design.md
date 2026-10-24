@@ -61,6 +61,8 @@ _reference_parent_call(*, source=False) -> contextmanager[None]
 
 binding은 HTTP auth 뒤 같은 lock에서 session/idle/epoch를 재확인한 사본이다. 없는/만료/closing은 None, 생성/갱신·부모0이다. ID만으로 CSRF/Origin을 검증했다고 주장하지 않는다. auth·binding·lease는 같은 critical section에서 등록하고 ExitStack 등으로 parent I/O 전에 mutex를 완전히 놓는다. source는 exact bool; False=history, True=current/미래 prepare·append·replay의 공용1/queue0이다. finally에서 active/source 반환·notify, abort/timeout에도 원래 parent finally 전 lease 해제0이다. 같은 lock/epoch를 future046 startup에 전달한다. 오늘046 attach/registry/capability header/expiry callback을 만들지 않는다.
 
+2026-10-25 완료 후 세션 만료 명확화: 위 403/access_denied·부모/source0은 요청 입장과 부모 직전 최종 인증에서 거절한 경우다. 그 인증·lease를 통과해 이미 허용된 history 부모가 완료된 뒤 응답 header를 만들기 전에 같은 세션만 만료되면, GET/HEAD는 원래 history7 metadata를200으로 전달하되 Read-Allowed:false, CSRF/Set-Cookie/새 세션/idle 갱신0으로 반환한다. HEAD body0·신규/갱신0은 유지한다. 만료된 권한을 복원하거나 anonymous 신규세션으로 바꾸지 않으며, 만료 사실을 뒤늦은403으로 바꿔 이미 수행한 부모를0으로 보고하지 않는다. 이미 허용된 current의 결과200도 완료 뒤 재인증을 추가하지 않고 유지한다. 입장/부모 직전의 invalid·expired cookie는 여전히403/부모0이며, closing/binding 실패·native 오류·finally/close 수명은 이 세션 만료 예외로 덮지 않는다. 후속 capability도 만료된 binding을 유효한 것으로 사용하지 않는다. 이는 독립 재검토의 GET/HEAD 후행만료 관측에 따른 계약 명확화이며 제품 수정/검증 완료가 아니다.
+
 ## configured server_close
 
 configured 전용 non-daemon/block_on_close server만 사용한다. admission 차단→진입한 모든 부모 finally/active0→worker/socket/session 회수 뒤 반환하며 borrowed Store.close0이다. caller가 그 뒤 Store를 닫는다. 반복 close는 멱등이고 반복 interrupt/abort로 drain을 건너뛰지 않는다. 자기 worker/활성 lease·동일 실행 loop 안의 close는 unavailable 거절이며 완료로 간주하지 않는다. 정상 supervisor의 ordinary cleanup 오류는 active0 뒤 전달하며 첫 오류와 나머지 회수 시도를 보존한다.

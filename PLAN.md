@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-10-25 [통합028](handoff/development/INTEGRATION-028.md): 저장조회051 CLI 인수·새 Python2121/Node186·소스227·실제자식14를 확인했다. 다음054는 scalar/주파수밀도와 구별한 CW·사각pulse의 유계한 정규화 I/Q 생성/순수전력·에너지 분석 private A/new3이며 v1 정적No C0I1의 양의subnormal 거절범위를 보완한v2→재독립검토→공개계약/정확base→구현으로 잇는다. 기존 waveform false/041 crest정책/전체물리목표는 유지한다. 049 소유수정 재검토→실제050F2/app, 052 C1→053 같은host→C2 순서로 병행한다. 자료 대상17/650·HAC한정150/181·공식0/전수unknown이며 원시/Licensed보류·Un-licensed우선·첫b/g/n·사용자준비0은 같다.
+
 2026-10-24 계약 후속: 027의2092Python/186Node·source225는 이전 승인 기능 검증이다. [052](docs/superpowers/specs/2026-10-24-intake-reference-actions-ui-design.md)의 명시준비/등록/원래재전송 구성요소 C1/new4를 정적/공개deltaYes 뒤 정확base로구현배정한다. callback exact8/context3·교체응답불명·slot/session·uncertain/destroy를고정했고실제backend완료를C1게이트로두지않는다. [047](docs/superpowers/specs/2026-10-24-intake-serve-design.md) thinCLI/new3도계약Yes이나049소유fix최종인수후구현한다. 개발1수정/개발2후속053계약/개발3의051구현을병렬로유지하며첫b/g/n·Un-licensed/rawLicensed보류·전체업무/물리목표·사용자준비0을보존한다.
 
 2026-10-24 [통합027](handoff/development/INTEGRATION-027.md): 가상 RF 저장 기록을 실행 없이 조회하는048을 인수했다. 저장 검증/과거평가/현재조회 범위와 생산CLI 종료 미기록을 구별한다. 새 Python2092/Node186·소스225 불변·합성보존조회11, 다음051 읽기CLI 신규3을 잇는다. 049 현재서버 구현·052 준비/등록 UI C1→C2, 050F1 독립Yes 후 실제F2 순서를 유지한다. 자료는 대상17/650·한정HAC134/181/미방문47·공식0/전수unknown이며 실제규범/AI/현장완료가 아니다. 첫b/g/n·Un-licensed우선·raw/Licensed보류·전체업무/물리목표·사용자준비0은 같다.
