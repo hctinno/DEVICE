@@ -1,0 +1,132 @@
+{
+  "recorded_at": "2026-10-25T07:32:58.196853+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "unit": "B038_new_original_structure_and_secondary_file_bibliography_only",
+  "publication_scope": "nonsensitive bibliography/hash/count/status only",
+  "new_private_payload": {
+    "files": 15,
+    "bytes": 4389339,
+    "JSON": 14,
+    "PDF": 1,
+    "MD": 0
+  },
+  "unit_hashes_and_counts": {
+    "payload_files": 15,
+    "payload_bytes": 4389339,
+    "JSON_files": 14,
+    "PDF_files": 1,
+    "MD_files": 0,
+    "index_bytes": 3576,
+    "index_sha256": "10661c4e83ba63861dc49cb9287b37a0b68c48446610207251121fcbd4026887",
+    "P01_review_bytes": 8259,
+    "P01_review_sha256": "fca348bd17129bb16745d8f82b8fe403e7a6731b591f8cfa4df82be9bac76d61"
+  },
+  "explicit_independent_ACKs": 1,
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 142,
+    "independently_ACKed": 142
+  },
+  "cumulative_request012_reviewed_and_ACKed": {
+    "reviewed": 107,
+    "independently_ACKed": 107
+  },
+  "remaining_reviewed_private_intake_pending_packets": 0,
+  "source_cohorts": {
+    "target_or_parent_reference": {
+      "PDFs": 18,
+      "physical_pages": 690,
+      "bytes": 40988413,
+      "direct_issuer_issue_static_predicate": 17,
+      "parent_only": 1,
+      "official_mapping": 0
+    },
+    "excluded_before2025": {
+      "PDFs": 1,
+      "physical_pages": 46,
+      "bytes": 2771507
+    },
+    "pending_report_link": {
+      "PDFs": 1,
+      "physical_pages": 53,
+      "bytes": 4626750
+    },
+    "pending_direct_identity": {
+      "PDFs": 5,
+      "physical_pages": 254,
+      "bytes": 19314880
+    },
+    "all_retained_not_eligible": {
+      "PDFs": 25,
+      "physical_pages": 1043,
+      "bytes": 67701550
+    },
+    "legacy22_separate": true
+  },
+  "new_original_bibliography": [
+    {
+      "sha256": "c51d1550f714266200f1c2b5930f28ba2437828bf5632fb7e73e72154ee098a9",
+      "bytes": 4294935,
+      "physical_pages": 50,
+      "direct_report_number": null,
+      "direct_issuer": null,
+      "direct_issue_date": null,
+      "direct_FCC_ID": null,
+      "direct_model": null,
+      "numeric_revision": null,
+      "direct_FCC_scope_method_edition_site_parentbody": null,
+      "printed_pagination": null,
+      "cohort": "pending_direct_identity",
+      "target_increment": 0,
+      "encrypted": true,
+      "encryption": "Standard V5 R6 256-bit AES",
+      "permission_flags": -1052,
+      "copy_flag": false,
+      "print_accessibility_flags": true,
+      "actual_features_executed": 0,
+      "rights": "unknown/privateonly",
+      "reproduction_training_publication_grant": false
+    }
+  ],
+  "new_originals": 1,
+  "target_increment": 0,
+  "new_physical_ledger_versions": 2,
+  "bounded_review_status": {
+    "fresh_original_raw_and_strict_dictionary_structure_checked": 1,
+    "unique_leaf_allCount_Parents_leaforder_no_cycles_duplicates_repair_warnings": true,
+    "fresh_source_body_native_displaylist_render_pixels_OCR_bodydump_decrypt_export_print_accessibility_features": 0,
+    "P01_online_replay": 0,
+    "frozen_secondary_file_bibliography_fields": 4,
+    "secondary_blocks_rows": [
+      2,
+      4
+    ],
+    "secondary_fields_not_directbody_or_official_identity": true,
+    "asset_token_matches_rawhash_not_official_mapping_or_labelbody_identity": true,
+    "direct_source_identity_fields_null": 17,
+    "physical_printed_locator_null_count": 50,
+    "actual_labelbody_mismatch_observed": false,
+    "full_labelbody_mapping": null,
+    "outside_issuer_period_scope_exclusion_confirmed": false,
+    "source_original_bytes_identity_mtime_mode_permissions_unchanged": true,
+    "known46_givenSHA_metadata_absent_match_not_wholecorpus_uniqueness_or_reuse_independence": true,
+    "producer_packaging_and_auxiliary_failures_and_encrypted_reader_guard_skip_preserved_not_PdfReader_PASS": true,
+    "prior24_frozen_proofs_not_fresh_whole25_original_audit": true,
+    "source_privacy_census_or_identifier_absence_proven": false,
+    "copyrestricted_unknown_rights_not_legal_restriction_classification_or_grant": true,
+    "root_byte_ACK_not_fullsemantic_currentnormative_model_physical_approval": true
+  },
+  "bounded_HAC_review_status": {
+    "suite_regions_visited": 181,
+    "suite_regions_total": 181,
+    "new_regionvisits": 0,
+    "wrapper_visits_not_fullsemantic_allcells_plotnumbers_calibration_HACsuite_or_census_completion": true
+  },
+  "remaining_scope": {
+    "whole_population": "unknown/open",
+    "all_periods_issuers_sites_products_categories_revisions_parts_appendices_setup_photos_tails": "open",
+    "whole_semantic_currentnormative_reuse_independence_model_AI_physical_conformity_complete": false,
+    "source_body_citation_strings_casevalues_images_code_identifiers_privatepaths_user_materials_public": false,
+    "new_external_model_API_training_evaluation_folds_scores": 0,
+    "new_user_preparation_requests": 0
+  }
+}
