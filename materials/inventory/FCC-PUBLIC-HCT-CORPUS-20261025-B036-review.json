@@ -1,0 +1,107 @@
+{
+  "recorded_at": "2026-10-25T06:13:43.474517+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "unit": "B036_held_report_revision_context_gate_gap",
+  "publication_scope": "reviewed nonsensitive bibliography/hash/count/status only",
+  "new_private_payload": {
+    "files": 14,
+    "bytes": 63478,
+    "JSON": 14,
+    "PDF": 0,
+    "MD": 0
+  },
+  "unit_hashes_and_counts": {
+    "payload_files": 14,
+    "payload_bytes": 63478,
+    "JSON_files": 14,
+    "PDF_files": 0,
+    "MD_files": 0,
+    "index_bytes": 3393,
+    "index_sha256": "0470e4567e03a174b3c2c7c2c7dc6b5ee68c93a91059736c6005d26064cdff4e",
+    "P01_review_bytes": 6366,
+    "P01_review_sha256": "3a933313915866b232e5a564fab6245e6c98d2bb5bc35a20205a28fbe175fb2a"
+  },
+  "explicit_independent_ACKs": 1,
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 140,
+    "independently_ACKed": 140
+  },
+  "cumulative_request012_reviewed_and_ACKed": {
+    "reviewed": 105,
+    "independently_ACKed": 105
+  },
+  "remaining_reviewed_private_intake_pending_packets": 0,
+  "source_cohorts": {
+    "target_or_parent_reference": {
+      "PDFs": 18,
+      "physical_pages": 690,
+      "bytes": 40988413,
+      "direct_issuer_issue_static_predicate": 17,
+      "parent_only": 1,
+      "official_mapping": 0
+    },
+    "excluded_before2025": {
+      "PDFs": 1,
+      "physical_pages": 46,
+      "bytes": 2771507
+    },
+    "pending_report_link": {
+      "PDFs": 1,
+      "physical_pages": 53,
+      "bytes": 4626750
+    },
+    "pending_direct_identity": {
+      "PDFs": 3,
+      "physical_pages": 141,
+      "bytes": 10065998
+    },
+    "all_retained_not_eligible": {
+      "PDFs": 23,
+      "physical_pages": 930,
+      "bytes": 58452668
+    },
+    "legacy22_separate": true
+  },
+  "new_original_bibliography": [],
+  "new_originals": 0,
+  "target_increment": 0,
+  "new_physical_ledger_versions": 0,
+  "bounded_review_status": {
+    "source_physical_page": 3,
+    "existing_report_anchor_verified_as_context_only": true,
+    "producer_exact_public_header_lexical_gate_failures": 4,
+    "producer_one_header_fullbbox_geometry_gate_also_failed": true,
+    "numeric_revision_and_history_date_value_cells_read": false,
+    "new_observations": 0,
+    "new_blocks": 0,
+    "new_selected_data_rows": 0,
+    "numeric_revision": null,
+    "literal_revision_history_date": null,
+    "normalized_revision_history_date": null,
+    "failed_gate_unknown_words_recovered_or_relaxed": false,
+    "P01_failed_header_or_value_cells_replayed": false,
+    "printed_locator_reused_from_prior_metadata_not_new_footer_read": true,
+    "value_absence_or_invalid_revision_date_proven": false,
+    "legal_issuer_issue_fullscope_methodedition_currentrule_alias_parent_body_reuse_or_SDKfixture_confirmed": false,
+    "native_only_no_source_imagegeometry_pixels_render_OCR_bodydump_export_or_features": true,
+    "source_original_bytes_identity_mtime_mode_permissions_unchanged": true,
+    "source_privacy_census_or_identifier_absence_proven": false,
+    "rights": "unknown/private-only",
+    "unencrypted_not_reproduction_training_publication_grant": true,
+    "root_byte_ACK_not_new_semantic_currentnormative_model_validation": true
+  },
+  "bounded_HAC_review_status": {
+    "suite_regions_visited": 181,
+    "suite_regions_total": 181,
+    "new_regionvisits": 0,
+    "wrapper_visits_not_fullsemantic_allcells_plotnumbers_calibration_HACsuite_or_census_completion": true
+  },
+  "remaining_scope": {
+    "whole_population": "unknown/open",
+    "all_periods_issuers_sites_products_categories_revisions_parts_appendices_setup_photos_tails": "open",
+    "whole_semantic_currentnormative_reuse_independence_model_AI_physical_conformity_complete": false,
+    "source_body_citation_strings_casevalues_images_code_identifiers_privatepaths_user_materials_public": false,
+    "new_external_model_API_training_evaluation_folds_scores": 0,
+    "new_user_preparation_requests": 0
+  }
+}
