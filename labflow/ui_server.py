@@ -2,6 +2,7 @@
 import argparse
 from contextlib import contextmanager, ExitStack
 from datetime import datetime, timedelta
+import hashlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import hmac
 import importlib
@@ -1213,7 +1214,34 @@ def _reference_dispatch(handler, runtime):
 
 def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None,
                   intake_reference_store=None, intake_reference_read_scope=(),
-                  intake_reference_append_scope=(), intake_reference_review_inputs=()):
+                  intake_reference_append_scope=(), intake_reference_review_inputs=(),
+                  intake_test_intent_inputs=()):
+    intent_review = None
+    if (type(intake_test_intent_inputs) is not tuple or len(intake_test_intent_inputs) > 1
+            or intake_test_intent_inputs and (type(intake_test_intent_inputs[0]) is not tuple
+                or len(intake_test_intent_inputs[0]) != 3)):
+        module = importlib.import_module('.intake_test_intent', __package__)
+        raise module.IntakeTestIntentError('test_intent_invalid_input')
+    if intake_test_intent_inputs:
+        module = importlib.import_module('.intake_test_intent', __package__)
+        from .store import canonical as intent_canonical
+        review = module.build_intake_test_intent_review(*intake_test_intent_inputs[0])
+        binding = review['input_binding']
+        intent_binding = (binding['intake_id'], binding['revision'], binding['provided_projection_sha256'])
+        intent_review = intent_canonical(review).encode('utf-8')
+
+    def with_intent_review(payload):
+        if intent_review is None:
+            return payload
+        records = payload['intakes'] if 'intakes' in payload else [payload['intake']]
+        for record in records:
+            if (record['intake_id'] == intent_binding[0] and record['revision'] == intent_binding[1]
+                    and record['analysis'] is not None
+                    and hashlib.sha256(intent_canonical(record['analysis']).encode('utf-8')).hexdigest() == intent_binding[2]):
+                payload['intake_test_intent_reviews'] = [json.loads(intent_review)]
+                break
+        return payload
+
     if intake_reference_store is None and not (type(intake_reference_append_scope) is tuple and not intake_reference_append_scope
             and type(intake_reference_review_inputs) is tuple and not intake_reference_review_inputs):
         _reference_fail('invalid_request', 400)
@@ -1450,7 +1478,8 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 intake_id = match[1]
                 fixture_runs = bool(match[2])
             try:
-                self.send_payload(200, model.fixture_runs(intake_id) if fixture_runs else model.snapshot(intake_id))
+                payload = model.fixture_runs(intake_id) if fixture_runs else with_intent_review(model.snapshot(intake_id))
+                self.send_payload(200, payload)
             except ReadModelError as exc:
                 self.error(404 if exc.code == 'intake_not_found' else 503, exc.code)
             except (OSError, ValueError):

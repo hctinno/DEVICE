@@ -200,5 +200,91 @@ export function validateSnapshot(payload) {
     number(notice.revision, `${path}.revision`, true, 1);
     analysis(notice.payload, `${path}.payload`);
   });
+  if (Object.hasOwn(payload, 'intake_test_intent_reviews')) {
+    const limits={max_input_bytes:41943040,max_context_bytes:6291456,max_analysis_bytes:2097152,max_projection_bytes:8388608,
+      max_observation_bytes:12582912,max_proposal_bytes:65536,max_sources_bytes:8388608,max_output_bytes:2097152,
+      max_depth:32,max_nodes:2000000,max_source_documents:8,max_candidates_per_field:2,max_refs_per_side:8,
+      max_literal_chars:256,max_institution_scope_chars:128,max_edition_chars:256,max_workflow_scope_ids:20,max_questions:200};
+    const falseFlags='projection_recomputed result_projection_reverified database_currentness_verified source_authenticity_verified normative_applicability_verified institution_scope_verified edition_currentness_verified model_execution_verified model_quality_verified query_release_authorized case_selection_authorized execution_authorized'.split(' ');
+    const reasons='intake_binding_incomplete intake_binding_mismatch intake_questions_open intent_missing intent_conflicting intake_ground_missing basis_missing literal_not_in_citation source_not_normative source_status_unconfirmed institution_scope_unconfirmed scope_conflicting edition_unconfirmed period_unconfirmed period_conflicting period_outside_declared_window applicability_not_assessed'.split(' ');
+    let stringBytes=0;
+    const keys=(value,names,path)=>{object(value,path);if(Object.keys(value).length!==names.length||names.some(key=>!Object.hasOwn(value,key)))fail(path);};
+    const word=(value,path,cap=2097152,empty=false)=>{
+      text(value,path,empty);if([...value].length>cap)fail(path);
+      stringBytes+=new TextEncoder().encode(value).length;if(stringBytes>2097152)fail(path);
+    };
+    const integer=(value,path,min=0,max=Number.MAX_SAFE_INTEGER)=>{
+      if(!Number.isSafeInteger(value)||value<min||value>max)fail(path);
+    };
+    const id=(value,path,max=150)=>{word(value,path,max);if(/^[A-Za-z0-9][A-Za-z0-9_.-]*$/.exec(value)?.[0]!==value)fail(path);};
+    const sha=(value,path,nullable=false)=>{if(nullable&&value===null)return;word(value,path,64);if(value.length!==64||!/^[a-f0-9]{64}$/.test(value))fail(path);};
+    const choice=(value,allowed,path)=>{if(!allowed.includes(value))fail(path);};
+    const list=(value,max,path,check)=>{if(!Array.isArray(value)||value.length>max)fail(path);array(value,path,check);};
+    const codes=(value,path)=>{
+      list(value,reasons.length,path,(item,where)=>{word(item,where,128);choice(item,reasons,where);});
+      if(new Set(value).size!==value.length)fail(path);
+    };
+    const refs=(value,path,basis)=>{
+      list(value,8,path,(item,where)=>{
+        keys(item,basis?['document_id','page_number','text_sha256','line_start','line_end']:['fact_index','evidence_index'],where);
+        if(basis){id(item.document_id,where,128);sha(item.text_sha256,where);integer(item.page_number,where,1);
+          integer(item.line_start,where,1);integer(item.line_end,where,item.line_start);
+        }else{integer(item.fact_index,where,0,199);integer(item.evidence_index,where,0,19);}
+      });
+      const tokens=value.map(item=>basis?[item.document_id,item.page_number,item.text_sha256,item.line_start,item.line_end].join('|'):[item.fact_index,item.evidence_index].join('|'));
+      if(new Set(tokens).size!==tokens.length)fail(path);
+    };
+    list(payload.intake_test_intent_reviews,1,'intake_test_intent_reviews',(review,path)=>{
+      keys(review,['schema_version','kind','status','input_binding','fields','questions','reason_codes','verification','limits'],path);
+      if(review.schema_version!==1||review.kind!=='intake_test_intent_review'||review.status!=='review_only')fail(path);
+      const binding=review.input_binding;
+      keys(binding,['intake_id','revision','analysis_context_id','result_sha256','observation_snapshot_id','provided_context_sha256',
+        'provided_analysis_sha256','provided_projection_sha256','provided_proposal_sha256','provided_sources_sha256','provided_observation_sha256'],path);
+      id(binding.intake_id,path);integer(binding.revision,path,1);
+      for(const key of ['analysis_context_id','result_sha256','observation_snapshot_id','provided_observation_sha256'])sha(binding[key],path,true);
+      for(const key of ['provided_context_sha256','provided_analysis_sha256','provided_projection_sha256','provided_proposal_sha256','provided_sources_sha256'])sha(binding[key],path);
+      if(!payload.intakes.some(record=>record.intake_id===binding.intake_id&&record.revision===binding.revision&&record.analysis!==null))fail(path);
+      keys(review.verification,[...falseFlags,'intake_citations_checked','basis_literals_checked'],path);
+      for(const key of falseFlags)if(review.verification[key]!==false)fail(path);
+      for(const key of ['intake_citations_checked','basis_literals_checked'])if(typeof review.verification[key]!=='boolean')fail(path);
+      keys(review.limits,Object.keys(limits),path);
+      for(const [key,value] of Object.entries(limits))if(review.limits[key]!==value)fail(path);
+      keys(review.fields,['rule','method'],path);
+      for(const field of ['rule','method']){
+        const value=review.fields[field];keys(value,['status','candidates','reason_codes'],path);
+        choice(value.status,['missing','proposed','conflicting','literal_linked'],path);codes(value.reason_codes,path);
+        list(value.candidates,2,path,(candidate,where)=>{
+          keys(candidate,['literal','origin','intake_refs','basis_refs','literal_linked','period_checks','reason_codes'],where);
+          word(candidate.literal,where,256);choice(candidate.origin,['explicit_supplied','model_proposed'],where);
+          if(typeof candidate.literal_linked!=='boolean')fail(where);
+          refs(candidate.intake_refs,where,false);refs(candidate.basis_refs,where,true);codes(candidate.reason_codes,where);
+          list(candidate.period_checks,8,where,(period,location)=>{
+            keys(period,['document_id','status'],location);id(period.document_id,location,128);
+            choice(period.status,['unconfirmed','conflicting','in_declared_window','outside_declared_window'],location);
+          });
+          if(new Set(candidate.period_checks.map(item=>item.document_id)).size!==candidate.period_checks.length)fail(where);
+        });
+      }
+      codes(review.reason_codes,path);
+      list(review.questions,200,path,(value,where)=>{
+        const fields='product_type customer manufacturer model market purpose features antenna_gain power_target firmware'.split(' ');
+        object(value,where);word(value.key,where);
+        const names=value.key==='product_identity'?['key','message']:value.key==='unread_documents'?['key','paths','message']
+          :['key','field','message',...(value.key.startsWith('conflict_')?['values']:[])];
+        keys(value,names,where);word(value.message,where,2097152,true);
+        if(Object.hasOwn(value,'field')){
+          choice(value.field,fields,where);
+          if(value.key!==(value.key.startsWith('conflict_')?'conflict_':'missing_')+value.field)fail(where);
+        }
+        if(Object.hasOwn(value,'values')){
+          list(value.values,200,where,(item,location)=>word(item,location,4000));if(value.values.length<2)fail(where);
+        }
+        if(Object.hasOwn(value,'paths'))array(value.paths,where,(item,location)=>{
+          word(item,location);if(item.startsWith('/')||/[\\:]/.test(item)||item.split('/').some(part=>['','.','..'].includes(part)))fail(location);
+        });
+      });
+      if(new TextEncoder().encode(JSON.stringify(review)).length>2097152)fail(path);
+    });
+  }
   return payload;
 }
