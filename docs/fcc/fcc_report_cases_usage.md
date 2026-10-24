@@ -240,3 +240,34 @@ policy 예산은 정규 UTF-8 JSON64KiB/깊이6/node4096/source16이다. 기존 
 caller는 private에 정규 policy/hash·기존 basis pin·실제 시도/retained/citable 페이지·권한 관측과 원본 identity/mtime/mode/bytes/SHA 불변 영수증을 보존한다. API는 파일을 쓰지 않고 전체 retained 본문을 반환하지 않는다. 기존 summary/case/search/match_intake/discover·평가·권한·consumer 키를 유지한다.
 
 실제 S04는 P01의 확인된 accessibility16쪽만 사용하고 나머지24쪽을 미처리/의미 검토 공백으로 남긴다. 새 native text/hash는 해당 parser의 실제 결과로 생성하며 P01의 다른 parser hash를 재사용하지 않는다. S06은 visual/display-list와 text/OCR0을 보존한다. native scope를 발급하거나 None/빈 pages/허구 retained hash로 성공 case를 만들지 않고 metadata+미실행 gap으로 남긴다. 공개 예제/테스트에는 합성 PDF만 사용하며, S03/S05 default producer 원바이트와 수정 없는023/024 consumer 수용을 별도로 확인한다.
+
+## CASE-PACKET035 — manifest에서 정식 입력 준비
+
+```python
+from labflow.fcc_report_cases import prepare_fcc_case_packet
+
+prepared = prepare_fcc_case_packet(
+    manifest_bytes, {"packet.json": packet_bytes, "scope.json": scope_bytes},
+    expected_manifest_sha256=trusted_manifest_sha256,
+    packet_path="packet.json", page_scope_path="scope.json",
+)
+# 별도로 승인된 host가 원본 bytes와 범위를 결합해 실제 검증한다.
+catalog = FccReportCaseCatalog(prepared["packet"], pdf_sources,
+                               page_scope=prepared["page_scope"])
+```
+
+035는 고정 manifest와 명시한 canonical packet/scope JSON 두 개의 연결·입력 형식만 검사하는 메모리 API다. 원문 PDF·파일·network·DB·Store I/O, constructor/파서/추출/계산·모델·실행 호출은 0이다. 자동 경로 탐색·JSON pointer/평가식·reader/callback·출력 쓰기·CLI는 없다. 004의 CONTROL-SOURCES-008 검수/복제 영수증이나 검증된 producer로 표시하지 않는다. 권리·현재성·공식 대응·평가·실물 위임은 바뀌지 않는다.
+
+manifest_json은 정확 bytes, expected_manifest_sha256은 별도 인수한 소문자64hex다. 실제 SHA를 JSON 해석 전에 대조하고 strict UTF-8·중복키·비유한 수치/사용자 객체를 거절한다. manifest는 request_id=`DEV-HCT-FCC-CORPUS-012`, 기존 ID128 문법의 revision, files를 필수로 갖는다. files는2..128행이고 각 행의 정확3키는 path/bytes/sha256다. path는 004의 lexical 상대 POSIX 규칙을 따르며 대소문자만 다른 중복도 거절한다. 실제 디스크·조상 안전 검증을 수행했다는 뜻은 아니다. bytes는 bool을 제외한 0 이상 정수, SHA는 소문자64hex다. 추가 top metadata는 한도 내 plain JSON으로만 받으며 지원/권리/현재성의 근거로 쓰지 않는다. source_code_executed/runtime_or_hardware_support_confirmed/public_export_allowed가 있으면 각각 정확 false여야 한다.
+
+두 selector는 서로 다른 명시 JSON path다. json_files는 이 두 key와 정확 bytes 값만 갖는 plain dict다. 두 파일은 manifest에 있어야 하며 실제 크기/SHA가 일치해야 한다. 미소비 manifest payload까지 검수했다고 주장하지 않는다. packet은 기존021 top6/document6/claim7/**입력 evidence12**를 그대로 사용한다. 출력 evidence13의 literal_verified나 case9/producer는 입력으로 받지 않는다. scope는030 top2/source4를 그대로 사용하고 None/누락을 전체 선택으로 바꾸지 않는다. source 집합·물리 선언 범위/예산·선택 밖 근거를 metadata로 대조한다. 실제 source SHA/Count/permission integrity·본문 literal·basis 권리 검사는 이후021/030의 책임이다.
+
+정규 bytes는 UTF-8·ensure_ascii=false·allow_nan=false·object key 정렬·compact separators·마지막 줄바꿈 없음이다. 배열 순서는 보존하고030 pages만 정렬 사본을 쓴다. trim/coercion·숫자 반올림·단위 변환·status/basis 승격은 없다. 입력/반환 사본은 격리된다.
+
+반환 정확7키는 schema_version/kind/packet/page_scope/source_refs/provenance/verification이다. schema_version=1, kind=`fcc_case_packet_preparation`이며 packet/page_scope는 정규화한 입력 사본이다. source_refs는 document_id 순서의 정확 document_id/sha256/size_bytes/physical_pages 네 키를 갖는 선언 metadata다. 경로를 자동 만들거나 원본 대조 성공으로 쓰지 않는다. provenance의 정확4키는 manifest_sha256/consumed_files/packet_sha256/page_scope_sha256이다. consumed_files는 path순의 정확 path/bytes/sha256 두 행이고 뒤의 두 hash는 위 정규 bytes의 SHA다. verification은 정확5키이며 manifest_and_consumed_json_bytes_verified=true, source_pdf_bytes_verified=false, retained_literals_verified=false, authority_or_rights_verified=false, execution_authorized=false다.
+
+예산은 manifest1MiB/depth16/node50000/files128, packet4MiB와 기존021 전 한도, scope64KiB/depth6/node4096, 두 blob 합계4MiB+64KiB, 반환8MiB다. PDF 선언은 source16·개별16MiB/합계64MiB·물리100000쪽 이하, 선택은 source200/총800을 실제 열지 않고 선확인한다. 협력적 예산이며 OS 격리·강제 timeout 보증은 아니다.
+
+기존 FccReportCaseError의 네 코드만 발생시킨다: 형식/selector/path는 fcc_case_invalid_packet, 예상 manifest pin/두 blob 집합·누락·크기·SHA는 fcc_case_invalid_sources, 예산은 fcc_case_limit_exceeded, metadata 근거 상호참조/선택 밖 인용은 fcc_case_invalid_evidence다. 기존 고정 code/str/args/context와 첫 검출 오류 규칙을 유지하며 원시 경로/본문/예외를 노출하지 않는다. 기존021/030의 오류·None 경로·literal 검증은 그대로다.
+
+P01의 서로 다른 fact 형식에서 field/value/status/basis/quote/line/textSHA를 추정하지 않는다. 같은 parser의 실제 인용이 없는 자료는 입력 미준비/gap으로 남긴다. 031의 derived outputs 영수증에는 과거 intake-v1이 없으므로 별도 metadata-only file index를 동결해 연결하며 P01/004 검수 사본으로 소급 표시하지 않는다. 실제 수용은 승인된 canonical JSON/index 재생과 원문 I/O0을 확인하며 새 PDF를 열지 않는다. 현재 인수10PDF/431쪽과 이전9/424쪽 snapshot을 구별하고 전수·전쪽 의미검토·적격10을 주장하지 않는다. UI는 metadata 준비와 기존024/033의 실제 검증 DTO를 구별하고 저장·현재성은 별도034 계약을 따른다.

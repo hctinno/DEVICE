@@ -15,6 +15,7 @@ import re
 from urllib.parse import urlsplit
 
 from . import document_extract as _extract
+from .control_packet_audit import ControlPacketAuditError, _manifest_path
 from .document_extract import ExtractionLimits, extract_document, page_citation
 
 
@@ -202,12 +203,12 @@ def _url(value, *, nullable=False, official=False):
         _fail()
 
 
-def _decode(raw):
+def _decode(raw, *, byte_limit=_PACKET_BYTES):
     if type(raw) not in (str, bytes):
         _fail()
     try:
         payload = raw.encode("utf-8") if type(raw) is str else raw
-        if len(payload) > _PACKET_BYTES:
+        if len(payload) > byte_limit:
             _fail("fcc_case_limit_exceeded")
         text = payload.decode("utf-8")
         def pairs(rows):
@@ -352,6 +353,14 @@ def _page_scope(policy, documents):
         if total > 800:
             _fail("fcc_case_limit_exceeded")
     return sources
+
+
+def _selected_evidence(packet, scopes):
+    for case in packet["cases"]:
+        for claim in case["claims"]:
+            for evidence in claim["evidence"]:
+                if evidence["file_page"] not in scopes[evidence["source_sha256"]]["pages"]:
+                    _fail("fcc_case_invalid_evidence")
 
 
 def _strict_leaf_count(reader):
@@ -529,9 +538,10 @@ class _ScopedPdf:
         return _extract._status(result, "partial" if partial else _extract._pdf_status(result))
 
 
-class FccReportCaseCatalog:
-    @_public("fcc_case_invalid_packet")
-    def __init__(self, packet, pdf_sources, *, page_scope=None):
+class _PacketMetadata:
+    """Shared packet structure only; never opens or qualifies a source PDF."""
+
+    def __init__(self, packet):
         packet = _plain(packet)
         _keys(packet, {"schema_version", "corpus_id", "scope", "searches", "documents", "cases"})
         if type(packet["schema_version"]) is not int or packet["schema_version"] != 1:
@@ -541,79 +551,6 @@ class FccReportCaseCatalog:
         self._validate_scope_searches()
         self._validate_documents()
         self._validate_cases()
-        blobs = self._sources(pdf_sources)
-        self._extractions, self._documents = {}, {}
-        if page_scope is not None:
-            scopes = _page_scope(page_scope, packet["documents"])
-            for case in packet["cases"]:
-                for claim in case["claims"]:
-                    for evidence in claim["evidence"]:
-                        if evidence["file_page"] not in scopes[evidence["source_sha256"]]["pages"]:
-                            _fail("fcc_case_invalid_evidence")
-            self._read_scoped(blobs, scopes)
-        remaining_pages, remaining_chars = 800, 4000000
-        for document in packet["documents"] if page_scope is None else ():
-            if remaining_pages <= 0 or remaining_chars <= 0:
-                _fail("fcc_case_limit_exceeded")
-            payload = blobs[document["sha256"]]
-            if not payload.startswith(b"%PDF-"):
-                _fail("fcc_case_pdf_invalid")
-            limits = ExtractionLimits(max_input_bytes=_PDF_BYTES, max_pages=min(200, remaining_pages),
-                                      max_output_chars=min(1000000, remaining_chars),
-                                      max_page_content_bytes=8 * _MIB)
-            result = extract_document(payload, document["document_id"] + ".pdf", limits=limits)
-            if result["status"] == "encrypted" and any(exhibit["source_kind"] in {"official", "mirror"}
-                                                        for exhibit in document["exhibits"]):
-                result = _public_read_pdf(payload, document["document_id"] + ".pdf", limits)
-            if result["status"] == "parser_unavailable":
-                _fail("fcc_case_extraction_unavailable")
-            if (result["status"] not in {"ok", "empty", "partial", "image_only", "no_text", "limit_exceeded", "parser_error"}
-                    or type(result["total_pages"]) is not int or result["total_pages"] < 1
-                    or result["total_pages"] != document["physical_pages"]
-                    or result["source"]["sha256"] != document["sha256"]
-                    or result["source"]["size_bytes"] != document["size_bytes"]):
-                _fail("fcc_case_pdf_invalid")
-            remaining_pages -= result["processed_pages"]
-            remaining_chars -= sum(len(page["text"]) for page in result["pages"])
-            if remaining_pages < 0 or remaining_chars < 0:
-                _fail("fcc_case_limit_exceeded")
-            self._extractions[document["document_id"]] = result
-            self._documents[document["document_id"]] = self._document_dto(document, result)
-        self._cases = {case["case_id"]: case for case in packet["cases"]}
-        self._previews = {}
-        for case in packet["cases"]:
-            for claim in case["claims"]:
-                for evidence in claim["evidence"]:
-                    self._validate_evidence(case, evidence)
-                    evidence["literal_verified"] = True
-            self._previews[case["case_id"]] = self._preview(case)
-        self._summary = self._build_summary()
-
-    @classmethod
-    @_public("fcc_case_invalid_packet")
-    def from_json(cls, packet_json, pdf_sources, *, page_scope=None):
-        return cls(_decode(packet_json), pdf_sources, page_scope=page_scope)
-
-    def _read_scoped(self, blobs, scopes):
-        readers = []
-        try:
-            # Every source must pass metadata, leaf-count and permission checks
-            # before the first selected page's content stream can be opened.
-            for document in self._packet["documents"]:
-                readers.append(_ScopedPdf(blobs[document["sha256"]], document, scopes[document["sha256"]]))
-            remaining_chars = 4000000
-            for document, reader in zip(self._packet["documents"], readers):
-                if remaining_chars <= 0:
-                    _fail("fcc_case_limit_exceeded")
-                limits = ExtractionLimits(max_input_bytes=_PDF_BYTES, max_pages=200,
-                                          max_output_chars=min(1000000, remaining_chars), max_page_content_bytes=8 * _MIB)
-                result = reader.read(document, limits)
-                remaining_chars -= sum(len(page["text"]) for page in result["pages"])
-                self._extractions[document["document_id"]] = result
-                self._documents[document["document_id"]] = self._document_dto(document, result)
-        finally:
-            for reader in readers:
-                reader.close()
 
     def _validate_scope_searches(self):
         scope = self._packet["scope"]
@@ -763,6 +700,189 @@ class FccReportCaseCatalog:
                 else:
                     _text(relation["external_target"], 256)
 
+    def _validate_evidence_metadata(self, case, evidence):
+        code = "fcc_case_invalid_evidence"
+        _keys(evidence, _EVIDENCE, code)
+        _id(evidence["document_id"], code=code); _sha(evidence["source_sha256"], code)
+        _sha(evidence["text_sha256"], code)
+        if evidence["document_id"] not in case["document_ids"]:
+            _fail(code)
+        document = self._document_rows[evidence["document_id"]]
+        if evidence["source_sha256"] != document["sha256"]:
+            _fail(code)
+        for key in ("file_page", "line_start", "line_end"):
+            _integer(evidence[key], 1, code=code)
+        if evidence["file_page"] > document["physical_pages"]:
+            _fail(code)
+        if evidence["line_end"] < evidence["line_start"] or evidence["line_end"] - evidence["line_start"] >= 40:
+            _fail(code)
+        for key in ("printed_page", "table", "row", "column"):
+            _text(evidence[key], 128, nullable=True, code=code)
+        _strings(evidence["footnotes"], 16, 512, code=code)
+        _text(evidence["quote"], 8192, code=code)
+
+
+def _preparation_path(value, *, json_only=False):
+    _text(value, 16384)
+    try:
+        _manifest_path(value)
+    except ControlPacketAuditError:
+        _fail()
+    if json_only and not value.lower().endswith(".json"):
+        _fail()
+    return value
+
+
+def _canonical(value):
+    return json.dumps(value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+
+
+@_public("fcc_case_invalid_packet")
+def prepare_fcc_case_packet(manifest_json, json_files, *, expected_manifest_sha256, packet_path, page_scope_path):
+    """Bind two pinned metadata inputs; no source bytes or literals are verified."""
+    _sha(expected_manifest_sha256)
+    if type(manifest_json) is not bytes:
+        _fail()
+    if len(manifest_json) > _MIB:
+        _fail("fcc_case_limit_exceeded")
+    if hashlib.sha256(manifest_json).hexdigest() != expected_manifest_sha256:
+        _fail("fcc_case_invalid_sources")
+    manifest = _plain(_decode(manifest_json, byte_limit=_MIB), byte_limit=_MIB)
+    if type(manifest) is not dict or not {"request_id", "revision", "files"} <= set(manifest):
+        _fail()
+    if manifest["request_id"] != "DEV-HCT-FCC-CORPUS-012":
+        _fail()
+    _id(manifest["revision"])
+    for flag in ("source_code_executed", "runtime_or_hardware_support_confirmed", "public_export_allowed"):
+        if flag in manifest and manifest[flag] is not False:
+            _fail()
+    _list(manifest["files"], 128, minimum=2)
+    rows, seen = {}, set()
+    for row in manifest["files"]:
+        _keys(row, {"path", "bytes", "sha256"})
+        path = _preparation_path(row["path"])
+        _integer(row["bytes"]); _sha(row["sha256"])
+        if path.casefold() in seen:
+            _fail()
+        seen.add(path.casefold()); rows[path] = row
+    packet_path = _preparation_path(packet_path, json_only=True)
+    page_scope_path = _preparation_path(page_scope_path, json_only=True)
+    if packet_path.casefold() == page_scope_path.casefold():
+        _fail()
+    selected = {packet_path, page_scope_path}
+    if (type(json_files) is not dict or len(json_files) != 2
+            or any(type(path) is not str for path in json_files)):
+        _fail("fcc_case_invalid_sources")
+    if set(json_files) != selected or not selected <= set(rows):
+        _fail("fcc_case_invalid_sources")
+    total = 0
+    for path, limit in ((packet_path, _PACKET_BYTES), (page_scope_path, 64 * 1024)):
+        raw = json_files[path]
+        if type(raw) is not bytes:
+            _fail("fcc_case_invalid_sources")
+        total += len(raw)
+        if rows[path]["bytes"] > limit or len(raw) > limit or total > _PACKET_BYTES + 64 * 1024:
+            _fail("fcc_case_limit_exceeded")
+        if len(raw) != rows[path]["bytes"] or hashlib.sha256(raw).hexdigest() != rows[path]["sha256"]:
+            _fail("fcc_case_invalid_sources")
+    validated = _PacketMetadata(_decode(json_files[packet_path]))
+    packet = validated._packet
+    if sum(document["size_bytes"] for document in packet["documents"]) > _PDF_TOTAL:
+        _fail("fcc_case_limit_exceeded")
+    scopes = _page_scope(_decode(json_files[page_scope_path], byte_limit=64 * 1024), packet["documents"])
+    _selected_evidence(packet, scopes)
+    policy = {"schema_version": 1, "sources": scopes}
+    result = {"schema_version": 1, "kind": "fcc_case_packet_preparation", "packet": packet, "page_scope": policy,
+              "source_refs": [{key: document[key] for key in ("document_id", "sha256", "size_bytes", "physical_pages")}
+                              for document in sorted(packet["documents"], key=lambda row: row["document_id"])],
+              "provenance": {"manifest_sha256": expected_manifest_sha256,
+                             "consumed_files": [rows[path] for path in sorted(selected)],
+                             "packet_sha256": hashlib.sha256(_canonical(packet)).hexdigest(),
+                             "page_scope_sha256": hashlib.sha256(_canonical(policy)).hexdigest()},
+              "verification": {"manifest_and_consumed_json_bytes_verified": True,
+                               "source_pdf_bytes_verified": False, "retained_literals_verified": False,
+                               "authority_or_rights_verified": False, "execution_authorized": False}}
+    encoded = _canonical(result)
+    if len(encoded) > _OUTPUT_BYTES:
+        _fail("fcc_case_limit_exceeded")
+    return json.loads(encoded)
+
+
+class FccReportCaseCatalog(_PacketMetadata):
+    @_public("fcc_case_invalid_packet")
+    def __init__(self, packet, pdf_sources, *, page_scope=None):
+        super().__init__(packet)
+        packet = self._packet
+        blobs = self._sources(pdf_sources)
+        self._extractions, self._documents = {}, {}
+        if page_scope is not None:
+            scopes = _page_scope(page_scope, packet["documents"])
+            _selected_evidence(packet, scopes)
+            self._read_scoped(blobs, scopes)
+        remaining_pages, remaining_chars = 800, 4000000
+        for document in packet["documents"] if page_scope is None else ():
+            if remaining_pages <= 0 or remaining_chars <= 0:
+                _fail("fcc_case_limit_exceeded")
+            payload = blobs[document["sha256"]]
+            if not payload.startswith(b"%PDF-"):
+                _fail("fcc_case_pdf_invalid")
+            limits = ExtractionLimits(max_input_bytes=_PDF_BYTES, max_pages=min(200, remaining_pages),
+                                      max_output_chars=min(1000000, remaining_chars),
+                                      max_page_content_bytes=8 * _MIB)
+            result = extract_document(payload, document["document_id"] + ".pdf", limits=limits)
+            if result["status"] == "encrypted" and any(exhibit["source_kind"] in {"official", "mirror"}
+                                                        for exhibit in document["exhibits"]):
+                result = _public_read_pdf(payload, document["document_id"] + ".pdf", limits)
+            if result["status"] == "parser_unavailable":
+                _fail("fcc_case_extraction_unavailable")
+            if (result["status"] not in {"ok", "empty", "partial", "image_only", "no_text", "limit_exceeded", "parser_error"}
+                    or type(result["total_pages"]) is not int or result["total_pages"] < 1
+                    or result["total_pages"] != document["physical_pages"]
+                    or result["source"]["sha256"] != document["sha256"]
+                    or result["source"]["size_bytes"] != document["size_bytes"]):
+                _fail("fcc_case_pdf_invalid")
+            remaining_pages -= result["processed_pages"]
+            remaining_chars -= sum(len(page["text"]) for page in result["pages"])
+            if remaining_pages < 0 or remaining_chars < 0:
+                _fail("fcc_case_limit_exceeded")
+            self._extractions[document["document_id"]] = result
+            self._documents[document["document_id"]] = self._document_dto(document, result)
+        self._cases = {case["case_id"]: case for case in packet["cases"]}
+        self._previews = {}
+        for case in packet["cases"]:
+            for claim in case["claims"]:
+                for evidence in claim["evidence"]:
+                    self._validate_evidence(case, evidence)
+                    evidence["literal_verified"] = True
+            self._previews[case["case_id"]] = self._preview(case)
+        self._summary = self._build_summary()
+
+    @classmethod
+    @_public("fcc_case_invalid_packet")
+    def from_json(cls, packet_json, pdf_sources, *, page_scope=None):
+        return cls(_decode(packet_json), pdf_sources, page_scope=page_scope)
+
+    def _read_scoped(self, blobs, scopes):
+        readers = []
+        try:
+            # Every source must pass metadata, leaf-count and permission checks
+            # before the first selected page's content stream can be opened.
+            for document in self._packet["documents"]:
+                readers.append(_ScopedPdf(blobs[document["sha256"]], document, scopes[document["sha256"]]))
+            remaining_chars = 4000000
+            for document, reader in zip(self._packet["documents"], readers):
+                if remaining_chars <= 0:
+                    _fail("fcc_case_limit_exceeded")
+                limits = ExtractionLimits(max_input_bytes=_PDF_BYTES, max_pages=200,
+                                          max_output_chars=min(1000000, remaining_chars), max_page_content_bytes=8 * _MIB)
+                result = reader.read(document, limits)
+                remaining_chars -= sum(len(page["text"]) for page in result["pages"])
+                self._extractions[document["document_id"]] = result
+                self._documents[document["document_id"]] = self._document_dto(document, result)
+        finally:
+            for reader in readers:
+                reader.close()
+
     def _sources(self, supplied):
         if type(supplied) is not dict:
             _fail("fcc_case_invalid_sources")
@@ -800,27 +920,6 @@ class FccReportCaseCatalog:
             "page_index": [{"file_page": page["page_number"], "status": page["status"],
                             "text_sha256": page["text_sha256"], "line_count": len(page["line_spans"]),
                             "citable": self._citable(result, page)} for page in result["pages"]]}
-
-    def _validate_evidence_metadata(self, case, evidence):
-        code = "fcc_case_invalid_evidence"
-        _keys(evidence, _EVIDENCE, code)
-        _id(evidence["document_id"], code=code); _sha(evidence["source_sha256"], code)
-        _sha(evidence["text_sha256"], code)
-        if evidence["document_id"] not in case["document_ids"]:
-            _fail(code)
-        document = self._document_rows[evidence["document_id"]]
-        if evidence["source_sha256"] != document["sha256"]:
-            _fail(code)
-        for key in ("file_page", "line_start", "line_end"):
-            _integer(evidence[key], 1, code=code)
-        if evidence["file_page"] > document["physical_pages"]:
-            _fail(code)
-        if evidence["line_end"] < evidence["line_start"] or evidence["line_end"] - evidence["line_start"] >= 40:
-            _fail(code)
-        for key in ("printed_page", "table", "row", "column"):
-            _text(evidence[key], 128, nullable=True, code=code)
-        _strings(evidence["footnotes"], 16, 512, code=code)
-        _text(evidence["quote"], 8192, code=code)
 
     def _validate_evidence(self, case, evidence):
         code = "fcc_case_invalid_evidence"
