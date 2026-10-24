@@ -79,4 +79,6 @@ genuine bundle을 이전031 producer와 canonical JSON/타입/배열순서까지
 
 ## 검증 범위
 
+typed Node 회귀 중 명시된 Python 사례는 프로젝트 `.venv` 또는 `FCC_CASE_CALCULATION_PYTHON`으로 genuine 합성 catalog와 정식036/023 결과를 생성한다. 근거 tuple의 문자열은 Python과 같은 Unicode 코드포인트 순서로 대조하고 숫자 순서·null·원문 문자열·중복 개수는 유지한다. 보조평면/BMP·한글 접두·분해형·null·중복의 정상 결과를 수용하면서 뒤집힌·누락·추가·중복 projection은 거절한다. 실제 수집 PDF나 실측값을 사용하는 검사가 아니다.
+
 기존 private 초안28 SKIP/모듈 부재 RED, 새 제품경로 typed/HTTP/DOM RED, 합성 genuine/경계·actual·기존033/027/024 및 다른 제품 회귀를 각각 기록한다. 기능/독립 검토/실제 수용 결과는 실행한 영수증만 근거로 하며 문서 무결성 검사를 실장비·기관 적합성 증거로 세지 않는다.
