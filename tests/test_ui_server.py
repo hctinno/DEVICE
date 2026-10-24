@@ -4,7 +4,7 @@ import json
 import tempfile
 import threading
 import unittest
-from contextlib import ExitStack
+from contextlib import ExitStack, contextmanager
 from copy import deepcopy
 import importlib
 import io
@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import socket
 import sqlite3
+import sys
 import time
 from unittest import mock
 
@@ -951,6 +952,387 @@ class ReferenceHostTests(unittest.TestCase):
         self.evidence = {'kind':'049_I4_completion_expiry_failure_precedence',
                          'faults':['closing','binding','native','typed','parent'],'status':503,'authority_headers':0}
 
+
+
+class ReferenceActionsHostTests(unittest.TestCase):
+    """053 uses genuine025/043/046/042; HTTP owns session/source admission."""
+    request = ReferenceHostTests.request
+    raw = ReferenceHostTests.raw
+    route = ReferenceHostTests.route
+    bootstrap = ReferenceHostTests.bootstrap
+    source_headers = ReferenceHostTests.source_headers
+    fixed = ReferenceHostTests.fixed
+
+    def setUp(self):
+        parent = Path(__file__).resolve().parents[1] / '.local'
+        parent.mkdir(exist_ok=True)
+        temporary = tempfile.TemporaryDirectory(prefix='r053-unit-', dir=parent)
+        self.addCleanup(temporary.cleanup)
+        self.fixture = ReferenceFixture(temporary.name, registered=False)
+        self.store = Store.open_existing(str(self.fixture.legacy.root)); self.addCleanup(self.store.close)
+        self.ident = self.fixture.intake_id
+        from tests.test_intake_case_references import catalog_fixture, context_for, response_for
+        self.catalog = catalog_fixture(); context = context_for(self.catalog); response = response_for(context)
+        self.supplied = {'intake_id': self.ident, 'case_context': context, 'validated_response': response,
+                         'producer_name': response['expected_producer']['name']}
+
+    def start(self, *, enabled=True, **options):
+        import inspect
+        self.assertIn('intake_reference_review_inputs', inspect.signature(create_server).parameters)
+        values = dict(fcc_case_catalog=self.catalog, intake_reference_store=self.store,
+                      intake_reference_read_scope=(self.ident,), intake_reference_append_scope=(self.ident,),
+                      intake_reference_review_inputs=(self.supplied,)) if enabled else {}
+        values.update(options)
+        server = create_server(self.store.root, port=0, **values)
+        thread = threading.Thread(target=server.serve_forever, kwargs={'poll_interval': .01}, daemon=True)
+        thread.start()
+        def stop():
+            if type(server) is host_module.ThreadingHTTPServer: server.shutdown()
+            server.server_close(); thread.join(6); self.assertFalse(thread.is_alive())
+        self.addCleanup(stop)
+        return server
+
+    def prepare(self, server, cookie, csrf, input_id=None, replace=None):
+        if input_id is None:
+            status, headers, _ = self.request(server, self.route(), headers={'Cookie': cookie})
+            self.assertEqual(status, 200); input_id = headers['X-Intake-Reference-Review-Input']
+        return self.post(server, cookie, csrf, 'prepare',
+                         {'schema_version': 1, 'review_input_id': input_id, 'replace_handle_id': replace})
+
+    def post(self, server, cookie, csrf, action, value):
+        return self.request(server, self.route(action), 'POST', json.dumps(value).encode('utf-8'),
+                            self.source_headers(server, cookie, csrf))
+
+    def append_request(self, envelope):
+        preview = envelope['preview']
+        return {'schema_version': 1, 'handle_id': envelope['handle_id'], 'intake_id': self.ident,
+                'request_id': envelope['append_request_id'], 'preparation_id': preview['preparation_id'],
+                'expected_snapshot_id': preview['observation']['snapshot_id'],
+                'expected_head_record_id': preview['observation']['head_record_id']}
+
+    def counts(self):
+        with self.store.connection() as connection:
+            tables = {row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+            return tuple(connection.execute('SELECT count(*) FROM ' + table).fetchone()[0] if table in tables else 0
+                         for table in ('intake_reference_records', 'intake_reference_events', 'intake_reference_heads'))
+
+    def test_actions_defaults_and_empty_inputs_never_import046(self):
+        import inspect
+        self.assertIn('intake_reference_append_scope', inspect.signature(create_server).parameters)
+        original = host_module.importlib.import_module
+        def imported(name, *args, **kwargs):
+            self.assertNotIn('intake_reference_review_host', name)
+            return original(name, *args, **kwargs)
+        with mock.patch.object(host_module.importlib, 'import_module', side_effect=imported):
+            server = self.start(intake_reference_review_inputs=(), intake_reference_append_scope=())
+            status, headers, _ = self.request(server, self.route())
+            self.assertEqual(status, 200)
+            for name in ('Prepare', 'Append'):
+                self.assertEqual(headers['X-Intake-Reference-' + name + '-Allowed'], 'false')
+            self.assertNotIn('X-Intake-Reference-Review-Input', headers)
+            self.assertEqual(self.counts(), (0, 0, 0))
+            empty = create_server(self.store.root, port=0, intake_reference_append_scope=(), intake_reference_review_inputs=())
+            empty.server_close()
+
+    def test_actions_None_nondefault_options_rejected_before_bind(self):
+        import inspect
+        self.assertIn('intake_reference_review_inputs', inspect.signature(create_server).parameters)
+        for changes in ({'intake_reference_append_scope': (self.ident,)}, {'intake_reference_review_inputs': (self.supplied,)},
+                        {'intake_reference_append_scope': None}, {'intake_reference_review_inputs': []}):
+            with mock.patch.object(host_module.ThreadingHTTPServer, 'server_bind', side_effect=AssertionError('bind')):
+                self.fixed('invalid_request', lambda: create_server(self.store.root, port=0, **changes))
+
+    def test_actions_static_actual_C1_and_nonmutating_missing_boundary(self):
+        server = self.start(enabled=False)
+        route = '/intake-reference-actions/actions.mjs'
+        status, headers, body = self.request(server, route)
+        path = host_module.FRONTEND / 'intake_reference_actions/actions.mjs'
+        self.assertEqual((status, body), (200, path.read_bytes()))
+        self.assertEqual(headers['Content-Type'], 'text/javascript; charset=utf-8')
+        self.assertEqual(self.request(server, route, 'HEAD')[2], b'')
+        self.assertEqual(self.request(server, route, 'POST')[0], 405)
+        for alias in (route + '?x=1', route.replace('/actions.', '//actions.'), route.replace('actions.mjs', '%61ctions.mjs')):
+            self.assertEqual(self.request(server, alias)[0], 404)
+        original = Path.read_bytes
+        def missing(value):
+            if value == path: raise FileNotFoundError()
+            return original(value)
+        with mock.patch.object(Path, 'read_bytes', missing):
+            self.assertEqual(self.request(server, route)[0], 404)
+        self.assertEqual(path.read_bytes(), body)
+
+    def test_actions_genuine_prepare_append_and_original_replay(self):
+        source = deepcopy(self.supplied); server = self.start(); cookie, csrf = self.bootstrap(server)
+        status, headers, _ = self.request(server, self.route(), headers={'Cookie': cookie})
+        self.assertEqual(status, 200)
+        self.assertEqual(headers['X-Intake-Reference-Prepare-Allowed'], 'true')
+        self.assertEqual(headers['X-Intake-Reference-Append-Allowed'], 'true')
+        status, _, body = self.prepare(server, cookie, csrf, headers['X-Intake-Reference-Review-Input'])
+        self.assertEqual(status, 200, body); envelope = json.loads(body)
+        self.assertEqual(len(envelope), 6); self.assertEqual(len(envelope['preview']), 11)
+        self.assertEqual(self.counts(), (0, 0, 0))
+        request = self.append_request(envelope); original = deepcopy(request)
+        status, _, body = self.post(server, cookie, csrf, 'append', request)
+        self.assertEqual(status, 200, body); first = json.loads(body)
+        self.assertEqual(first['binding_status'], 'current_at_append')
+        self.assertIs(first['verification']['operational_authority_granted'], False)
+        status, _, body = self.post(server, cookie, csrf, 'append', request)
+        self.assertEqual(status, 200, body); self.assertEqual(json.loads(body), {**first, 'replayed': True})
+        self.assertEqual(self.counts(), (1, 1, 1)); self.assertEqual(request, original); self.assertEqual(source, self.supplied)
+
+    def test_actions_head_conflict_is_normal_stored_result_and_original_replay(self):
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        envelopes = []
+        for _ in range(2):
+            status, _, body = self.prepare(server, cookie, csrf)
+            self.assertEqual(status, 200, body); envelopes.append(json.loads(body))
+        requests = [self.append_request(envelope) for envelope in envelopes]
+        status, _, body = self.post(server, cookie, csrf, 'append', requests[0]); self.assertEqual(status, 200, body)
+        winner = json.loads(body)
+        status, _, body = self.post(server, cookie, csrf, 'append', requests[1]); self.assertEqual(status, 200, body)
+        conflict = json.loads(body); self.assertEqual(conflict['binding_status'], 'head_conflict')
+        self.assertIs(conflict['stored'], True); self.assertIs(conflict['append_observation']['head_advanced'], False)
+        self.assertEqual(conflict['append_observation']['head_after_record_id'], winner['record_id'])
+        status, _, body = self.post(server, cookie, csrf, 'append', requests[1]); self.assertEqual(status, 200, body)
+        self.assertEqual(json.loads(body), {**conflict, 'replayed': True}); self.assertEqual(self.counts(), (2, 2, 1))
+
+    def test_actions_append_scope_default_denies_without_consuming_preparation(self):
+        server = self.start(intake_reference_append_scope=()); cookie, csrf = self.bootstrap(server)
+        _, headers, _ = self.request(server, self.route(), headers={'Cookie': cookie})
+        self.assertEqual(headers['X-Intake-Reference-Prepare-Allowed'], 'true')
+        self.assertEqual(headers['X-Intake-Reference-Append-Allowed'], 'false')
+        status, _, body = self.prepare(server, cookie, csrf); self.assertEqual(status, 200, body)
+        status, _, _ = self.post(server, cookie, csrf, 'append', self.append_request(json.loads(body)))
+        self.assertEqual(status, 403); self.assertEqual(self.counts(), (0, 0, 0))
+
+    def test_actions_history_late_expiry_inherits200_without_reissuing_capabilities(self):
+        server = self.start(); rt = server._reference_runtime; now = [100.0]; rt.clock = lambda: now[0]
+        cookie, csrf = self.bootstrap(server); sid = cookie.split('=', 1)[1]; original = rt.parent
+        def late(*args, **kwargs):
+            value = original(*args, **kwargs); now[0] += 901; return value
+        with mock.patch.object(rt, 'parent', side_effect=late):
+            status, headers, _ = self.request(server, self.route(), headers={'Cookie': cookie})
+        self.assertEqual(status, 200)
+        for name in ('Read', 'Prepare', 'Append'):
+            self.assertEqual(headers['X-Intake-Reference-' + name + '-Allowed'], 'false')
+        for name in ('Set-Cookie', 'X-Intake-Reference-CSRF', 'X-Intake-Reference-Review-Input'):
+            self.assertNotIn(name, headers)
+        self.assertNotIn(sid, rt.sessions)
+
+    @contextmanager
+    def paused_http(self, operation, function, *, event='call', observe=None):
+        """Pause real code using the profiler; parent functions remain untouched."""
+        code = getattr(function, '__wrapped__', function).__code__
+        entered = threading.Event(); release = threading.Event(); results = []; returned = []
+        previous = threading.getprofile()
+        def profile(frame, kind, value):
+            if observe is not None: observe(frame, kind, value)
+            if frame.f_code is code:
+                if kind == 'return' and type(value) is dict: returned.append(deepcopy(value))
+                if kind == event and not entered.is_set():
+                    entered.set()
+                    if not release.wait(15): raise RuntimeError('053 test pause expired')
+        def run():
+            try: results.append(('result', operation()))
+            except BaseException as error: results.append(('error', error))
+        threading.setprofile(profile)
+        worker = threading.Thread(target=run, daemon=True); worker.start()
+        try:
+            self.assertTrue(entered.wait(10)); yield results, release, returned
+        finally:
+            release.set(); worker.join(15); threading.setprofile(previous)
+            self.assertFalse(worker.is_alive()); self.assertTrue(results)
+
+    def test_actions_bad_config_is_fixed_before_bind_and_empty_inputs_remain_lazy(self):
+        for options, suffix in [({'intake_reference_append_scope': []}, 'invalid_request'),
+                                ({'intake_reference_append_scope': ('DUP', 'DUP')}, 'invalid_request'),
+                                ({'intake_reference_review_inputs': []}, 'invalid_request')]:
+            with mock.patch.object(host_module.ThreadingHTTPServer, 'server_bind', side_effect=AssertionError('bind')):
+                self.fixed(suffix, lambda: create_server(self.store.root, port=0,
+                    intake_reference_store=self.store, **options))
+        from labflow import intake_reference_review_host as api
+        for inputs, expected in [((self.supplied, self.supplied), 'invalid_request'),
+                                 ((self.supplied,) * 101, 'input_limit')]:
+            with self.assertRaises(api.IntakeReferenceReviewHostError) as caught:
+                create_server(self.store.root, port=0, intake_reference_store=self.store,
+                    fcc_case_catalog=self.catalog, intake_reference_read_scope=(self.ident,),
+                    intake_reference_review_inputs=inputs)
+            self.assertEqual(caught.exception.code, 'intake_reference_review_host_' + expected)
+            self.assertIsNone(caught.exception.__context__); self.assertIsNone(caught.exception.__cause__)
+
+    def test_actions_wire_limits_methods_auth_and_aliases_never_dispatch_core(self):
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        _, headers, _ = self.request(server, self.route(), headers={'Cookie': cookie})
+        request = {'schema_version': 1, 'review_input_id': headers['X-Intake-Reference-Review-Input'], 'replace_handle_id': None}
+        for action in ('prepare', 'append'):
+            for method in ('GET', 'HEAD', 'PUT', 'OPTIONS'):
+                status, fields, body = self.request(server, self.route(action), method)
+                self.assertEqual((status, fields['Allow'], body), (405, 'POST', b''))
+        for route in (self.route('prepare') + '?x=1', self.route('prepare').replace('/prepare', '/%70repare')):
+            self.assertIn(self.request(server, route, 'POST', b'{}', self.source_headers(server, cookie, csrf))[0], (400, 404))
+        invalid = [b'\xef\xbb\xbf{}', b'[]', b'{"schema_version":1,"schema_version":1}', b'{"x":NaN}',
+                   json.dumps({**request, 'schema_version': True}).encode(), json.dumps({**request, 'allow_append': True}).encode(),
+                   json.dumps({**request, 'replace_handle_id': 'X' * 64}).encode(), b'{"a":"\\ud800"}']
+        for body in invalid:
+            status, _, _ = self.request(server, self.route('prepare'), 'POST', body, self.source_headers(server, cookie, csrf))
+            self.assertEqual(status, 400, body)
+        self.assertEqual(self.request(server, self.route('prepare'), 'POST', b'x' * 16385, self.source_headers(server, cookie, csrf))[0], 413)
+        self.assertEqual(self.post(server, cookie, '0' * 64, 'prepare', request)[0], 403)
+        self.assertEqual(self.post(server, '', csrf, 'prepare', request)[0], 403)
+        self.assertEqual(self.counts(), (0, 0, 0))
+        self.assertEqual(server._reference_runtime.active, 0)
+
+    def test_actions_exact_error_allowlist68_and_parent_conflict_status(self):
+        server = self.start(); rt = server._reference_runtime
+        self.assertEqual(sum(len(values) for values in rt.action_errors.values()) + len(host_module._REFERENCE_CODES), 68)
+        for cls, codes in rt.action_errors.items():
+            for code in codes:
+                error = cls(code)
+                actual, status = rt.action_failure(error)
+                self.assertEqual(actual, code)
+                self.assertIn(status, {400, 403, 404, 409, 410, 413, 503})
+            unknown = cls(next(iter(codes))); unknown.code = next(iter(codes)) + '_PRIVATE'
+            self.assertEqual(rt.action_failure(unknown), ('intake_reference_ui_unavailable', 503))
+            class Child(cls): pass
+            self.assertEqual(rt.action_failure(Child(next(iter(codes)))), ('intake_reference_ui_unavailable', 503))
+        from labflow.intake_reference_ledger import IntakeReferenceLedgerError
+        self.assertEqual(rt.action_failure(IntakeReferenceLedgerError('intake_reference_ledger_request_conflict')),
+                         ('intake_reference_ledger_request_conflict', 409))
+        busy = rt.action_error_type('unavailable', status=429)
+        self.assertEqual(rt.action_failure(busy), ('intake_reference_review_host_unavailable', 429))
+        self.assertEqual(rt.action_failure(RuntimeError('PRIVATE SQL/path')), ('intake_reference_ui_unavailable', 503))
+
+    def test_actions_other_session_frozen_request_replacement_and_capacity(self):
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        status, _, body = self.prepare(server, cookie, csrf); self.assertEqual(status, 200, body)
+        old = json.loads(body); request = self.append_request(old)
+        other_cookie, other_csrf = self.bootstrap(server)
+        self.assertEqual(self.post(server, other_cookie, other_csrf, 'append', request)[0], 403)
+        self.assertEqual(self.post(server, cookie, csrf, 'append', {**request, 'request_id': 'OTHER053'})[0], 409)
+        status, _, body = self.prepare(server, cookie, csrf, replace=old['handle_id']); self.assertEqual(status, 200, body)
+        new = json.loads(body)
+        self.assertEqual(self.post(server, cookie, csrf, 'append', request)[0], 410)
+        self.assertEqual(self.prepare(server, cookie, csrf)[0], 200)
+        self.assertEqual(self.prepare(server, cookie, csrf)[0], 503)
+        self.assertEqual(self.post(server, cookie, csrf, 'append', self.append_request(new))[0], 200)
+
+    def test_actions_expiry_between_outer_admission_and_core_reservation_retires_new_handle(self):
+        from labflow import intake_reference_review_host as api
+        server = self.start(); rt = server._reference_runtime; now = [100.0]; rt.clock = lambda: now[0]
+        cookie, csrf = self.bootstrap(server); sid = cookie.split('=', 1)[1]
+        binding = server._reference_action_binding(sid)
+        with self.paused_http(lambda: self.prepare(server, cookie, csrf), api.ReferenceReviewActions.prepare) as (results, release, returned):
+            now[0] += 901
+            self.assertEqual(self.request(server, self.route(), headers={'Cookie': cookie})[0], 403)
+            release.set()
+        self.assertEqual(results[0][0], 'result'); self.assertEqual(results[0][1][0], 403)
+        self.assertEqual(len(returned), 1)
+        with self.assertRaises(api.IntakeReferenceReviewHostError) as caught:
+            rt.actions.append(binding, self.ident, self.append_request(returned[0]))
+        self.assertEqual(caught.exception.status, 410)
+        self.assertEqual(rt.active, 0); self.assertFalse(rt.source_active)
+
+    def test_actions_prepare_parent_io_unlocks_mutex_and_source_is_shared_queue0(self):
+        from labflow import intake_reference_review as api
+        server = self.start(); rt = server._reference_runtime; cookie, csrf = self.bootstrap(server)
+        status, _, body = self.prepare(server, cookie, csrf); self.assertEqual(status, 200, body)
+        request = self.append_request(json.loads(body))
+        with self.paused_http(lambda: self.prepare(server, cookie, csrf), api.prepare_reference_review) as (results, release, _):
+            acquired = rt.lock.acquire(timeout=.5); self.assertTrue(acquired)
+            if acquired: rt.lock.release()
+            self.assertTrue(rt.source_active); self.assertEqual(rt.active, 1)
+            self.assertEqual(self.prepare(server, cookie, csrf)[0], 429)
+            self.assertEqual(self.post(server, cookie, csrf, 'append', request)[0], 429)
+            self.assertEqual(ReferenceHostTests.current(self, server, cookie, csrf)[0], 429)
+            release.set()
+        self.assertEqual(results[0][1][0], 200); self.assertEqual(rt.active, 0)
+
+    def test_actions_append_admitted_before_session_expiry_keeps_truthful_registration(self):
+        from labflow import intake_reference_review as api
+        server = self.start(); rt = server._reference_runtime; now = [100.0]; rt.clock = lambda: now[0]
+        cookie, csrf = self.bootstrap(server)
+        status, _, body = self.prepare(server, cookie, csrf); self.assertEqual(status, 200, body)
+        request = self.append_request(json.loads(body))
+        with self.paused_http(lambda: self.post(server, cookie, csrf, 'append', request), api.append_reference_review) as (results, release, _):
+            now[0] += 901
+            self.assertEqual(self.request(server, self.route(), headers={'Cookie': cookie})[0], 403)
+            release.set()
+        self.assertEqual(results[0][0], 'result'); self.assertEqual(results[0][1][0], 200)
+        self.assertTrue(json.loads(results[0][1][2])['stored']); self.assertEqual(self.counts(), (1, 1, 1))
+        self.assertEqual(self.post(server, cookie, csrf, 'append', request)[0], 403)
+
+    def test_actions_close_waits_parent_finally_then_close_outside_mutex_and_borrowed_store(self):
+        from labflow import intake_reference_review as parent
+        from labflow import intake_reference_review_host as api
+        server = self.start(); rt = server._reference_runtime; cookie, csrf = self.bootstrap(server)
+        closed = threading.Event(); close_results = []; observed = []
+        close_code = api.ReferenceReviewActions.close.__wrapped__.__code__
+        def observe(frame, event, value):
+            if event == 'call' and frame.f_code is close_code:
+                observed.append((rt.active, rt.lock._is_owned()))
+        def close():
+            try: server.server_close(); close_results.append('closed')
+            except BaseException as error: close_results.append(error)
+            finally: closed.set()
+        with self.paused_http(lambda: self.prepare(server, cookie, csrf), parent.prepare_reference_review, observe=observe) as (_, release, _):
+            closer = threading.Thread(target=close); closer.start()
+            deadline = time.monotonic() + 3
+            while not rt.closing and time.monotonic() < deadline: time.sleep(.005)
+            self.assertTrue(rt.closing); self.assertFalse(closed.is_set()); self.assertEqual(observed, [])
+            self.assertTrue(rt.source_active); self.assertEqual(rt.active, 1)
+            release.set(); closer.join(8); self.assertFalse(closer.is_alive())
+        self.assertEqual(close_results, ['closed']); self.assertEqual(observed, [(0, False)])
+        self.assertTrue(rt.closed); self.assertFalse(rt.workers); self.assertEqual(rt.active, 0)
+        self.assertIs(self.store.__enter__(), self.store)
+
+    def test_actions_committed_response_abort_preserves_original_replay(self):
+        from labflow import intake_reference_review_host as api
+        server = self.start(); rt = server._reference_runtime; cookie, csrf = self.bootstrap(server)
+        status, _, body = self.prepare(server, cookie, csrf); self.assertEqual(status, 200, body)
+        request = self.append_request(json.loads(body)); original = deepcopy(request)
+        connection = http.client.HTTPConnection(*server.server_address, timeout=6)
+        def send():
+            connection.request('POST', self.route('append'), json.dumps(request).encode(), self.source_headers(server, cookie, csrf))
+            try:
+                response = connection.getresponse(); return response.status, response.read()
+            except (OSError, http.client.HTTPException): return 'delivery_unknown'
+            finally: connection.close()
+        with self.paused_http(send, api.ReferenceReviewActions.append, event='return') as (_, release, _):
+            self.assertEqual(self.counts(), (1, 1, 1)); self.assertTrue(rt.source_active)
+            connection.close(); self.assertEqual(self.post(server, cookie, csrf, 'append', request)[0], 429)
+            release.set()
+        deadline = time.monotonic() + 3
+        while rt.active and time.monotonic() < deadline: time.sleep(.005)
+        status, _, body = self.post(server, cookie, csrf, 'append', request)
+        self.assertEqual(status, 200, body); self.assertIs(json.loads(body)['replayed'], True)
+        self.assertEqual(request, original); self.assertEqual(self.counts(), (1, 1, 1))
+
+    def test_actions_typed_response_failure_preserves_fixed_error_and_no_authority(self):
+        from labflow import intake_reference_review_host as api
+        original = api.ReferenceReviewActions.prepare
+        def corrupted(actions, *args, **kwargs):
+            value = original(actions, *args, **kwargs)
+            value['preview']['verification']['operational_authority_granted'] = True
+            return value
+        with mock.patch.object(api.ReferenceReviewActions, 'prepare', corrupted):
+            server = self.start(); cookie, csrf = self.bootstrap(server)
+            status, _, body = self.prepare(server, cookie, csrf)
+        self.assertEqual(status, 503)
+        self.assertEqual(json.loads(body), {'error': {'code': 'intake_reference_ui_unavailable'}})
+        self.assertEqual(self.counts(), (0, 0, 0))
+
+    def test_actions_nonNone_close_is_not_confirmed_closed_after_worker_cleanup(self):
+        server = self.start(); rt = server._reference_runtime
+        original = rt.action_methods['close']
+        def unconfirmed(actions):
+            original(actions); return 'PRIVATE-unconfirmed'
+        rt.action_methods['close'] = unconfirmed
+        self.fixed('unavailable', server.server_close)
+        self.assertEqual(server.socket.fileno(), -1); self.assertFalse(rt.workers)
+        self.assertFalse(rt.actions_closed); self.assertFalse(rt.closed)
+        rt.action_methods['close'] = original
+        server.server_close(); self.assertTrue(rt.closed); self.assertTrue(rt.actions_closed)
+        self.assertIs(self.store.__enter__(), self.store)
 
 
 class ServerTests(unittest.TestCase):
