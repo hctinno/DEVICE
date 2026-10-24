@@ -24,6 +24,7 @@ function createSyntheticBundle(){
  return {context,history,current};
 }
 async function main(argv=process.argv.slice(2)){
+ if(argv.length===2&&argv[0]==='--mode'&&argv[1]==='frontend')return frontendMain();
  const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
  const {createHash}=require('node:crypto'),{execFileSync}=require('node:child_process');
  assert.equal(argv.length,0,'invalid_configuration');
@@ -209,6 +210,205 @@ async function main(argv=process.argv.slice(2)){
  }
  console.log(JSON.stringify({phase:result.phase,status:result.status,checks:checks.length,evidence:path.relative(root,evidence).split(path.sep).join('/'),result_sha256:hash(fs.readFileSync(path.join(evidence,'result.json')))}));
  if(failure)throw Error('intake_reference_A1_failed');return result;
+}
+/*050 F1 loads product app/index/styles; API bytes below are explicit browser wire fixtures.
+  This static server provides no session, Store, provider or product reference API. */
+async function frontendMain(){
+ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+ const {createHash}=require('node:crypto'),{execFileSync}=require('node:child_process');
+ const root=fs.realpathSync(path.resolve(__dirname,'../..')),hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+ const evidence=fs.mkdtempSync(path.join(root,'.local/ir-f1-'));
+ const save=(name,value)=>fs.writeFileSync(path.join(evidence,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
+ const sourcePins=()=>{
+  const names=execFileSync('git',['ls-files','-z','--','labflow','frontend'],{cwd:root}).toString('utf8').split('\0');
+  names.push('frontend/intake_references/transport.mjs','frontend/intake_references/transport.test.mjs','docs/fcc/intake_reference_ui_usage.md');
+  return Object.fromEntries([...new Set(names)].filter(Boolean).sort().map(name=>[name,hash(fs.readFileSync(path.join(root,name)))]));
+ };
+ const before=sourcePins(),checks=[],errors=[],external=[];save('source-pins-before.json',before);
+ const result={phase:'050 F1 product frontend / explicit browser wire fixtures',checks,status:'fail',
+  genuine049_HTTP_executed:false,Store_042_043_executed:false,original_source_reads:0,
+  backend_full_regression_executed:false,model_hardware_executed:false,
+  browser_closed:false,server_closed:false,source_unchanged:false};
+ let browser,server,page,failure;
+ try{
+  const files={'/':['index.html','text/html'],'/app.js':['app.js','text/javascript'],'/model.mjs':['model.mjs','text/javascript'],
+   '/intake_flow_model.mjs':['intake_flow_model.mjs','text/javascript'],'/styles.css':['styles.css','text/css'],
+   '/virtual_fleet/harness_model.mjs':['virtual_fleet/harness_model.mjs','text/javascript'],
+   '/intake-references/model.mjs':['intake_references/model.mjs','text/javascript'],
+   '/intake-references/view.mjs':['intake_references/view.mjs','text/javascript'],
+   '/intake-references/transport.mjs':['intake_references/transport.mjs','text/javascript']};
+  server=http.createServer((req,res)=>{
+   res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
+   res.setHeader('Content-Security-Policy',"default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+   const file=Object.hasOwn(files,req.url)&&files[req.url];
+   if(req.method!=='GET'||!file){res.writeHead(404);return res.end();}
+   res.setHeader('Content-Type',file[1]+'; charset=utf-8');res.end(fs.readFileSync(path.join(root,'frontend',file[0])));
+  });
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin=`http://127.0.0.1:${server.address().port}`;
+  browser=await require('playwright').chromium.launch({headless:true});
+  const context=await browser.newContext({viewport:{width:1440,height:1000}});
+  const bundle=createSyntheticBundle();
+  const analysis={facts:{market:{value:'US',status:'explicit'}},questions:[{key:'firmware',field:'firmware',message:'합성 펌웨어 확인'}],
+   next_action:'needs_information',submitted:{producer:{kind:'fixture',name:'050 wire fixture'},facts:[{field:'market',value:'US',status:'explicit',
+    evidence:[{path:'synthetic/request.txt',sha256:'a'.repeat(64),line_start:1,line_end:1,quote:'Synthetic US',role:'request'}]}]},unread_documents:[]};
+  const intake=(id,bundleName)=>({intake_id:id,source_id:'SYNTHETIC-SOURCE-050',bundle:bundleName,revision:2,status:'analyzed',synthetic:true,
+   deferred:false,delegated:false,measurement_support:'unverified',analysis:copy(analysis),files:[],
+   history:[{revision:2,created_at:1792756800,files:[],synthetic:1}],
+   jobs:[{job_id:'SYNTHETIC-JOB-050',revision:2,state:'completed',attempt:1,error_code:null,lease_until:null}]});
+  const first=bundle.context.intake_id,second='SYNTHETIC-INTAKE-050-B'.padEnd(150,'X');
+  const snapshot={schema_version:1,generated_at:'2026-10-24T01:02:03Z',intakes:[intake(first,'050 합성 접수 A'),intake(second,'050 합성 접수 B')],
+   notifications:[{notification_id:1,intake_id:first,revision:2,payload:copy(analysis)}]};
+  save('synthetic-input.json',{kind:'explicit frontend wire fixtures; not 049',snapshot,bundle});
+  await context.addInitScript(({snapshot,bundle})=>{
+   const native=window.fetch.bind(window),clone=value=>structuredClone(value),counts={main:0,history:0,current:0,fixture:0};
+   const queues={main:[],history:[],current:[]},held=new Map(),observations=[];
+   let mainSnapshot=clone(snapshot);const token='f'.repeat(64);
+   const headers={'Content-Type':'application/json; charset=utf-8'};
+   const response=(kind,id,mode)=>{
+    if(mode==='unconfigured')return new Response('{"error":{"code":"intake_reference_ui_unconfigured"}}',{status:503,headers});
+    if(mode==='expired')return new Response('{"error":{"code":"intake_reference_ui_access_denied"}}',{status:403,headers});
+    if(kind==='main')return new Response(JSON.stringify(mainSnapshot),{headers});
+    if(kind==='fixture')return new Response(JSON.stringify({schema_version:1,intake_id:id,storage_available:false,records:[]}),{headers});
+    let data=clone(kind==='history'?bundle.history:bundle.current);data.intake_id=id;
+    let raw=JSON.stringify(data);if(mode==='unsafe')raw=raw.replace('"seq":3','"seq":9007199254740993');
+    if(mode==='bad_utf8')raw=new Uint8Array([0xc3,0x28]);if(mode==='bom')raw=new Uint8Array([239,187,191,123,125]);
+    const extra=kind==='history'?{'X-Intake-Reference-Read-Allowed':mode==='denied'?'false':'true',
+     ...(mode==='denied'||mode==='missing_csrf'?{}:{'X-Intake-Reference-CSRF':token})}:{};
+    return new Response(raw,{headers:{...headers,...extra}});
+   };
+   window.f1Wire={counts,observations,setSnapshot(value){mainSnapshot=clone(value);},next(kind,mode){queues[kind].push({mode});},
+    hold(kind,label){queues[kind].push({label});},release(label,mode='ok'){const item=held.get(label);if(!item)throw Error('fixture_hold_missing');
+     held.delete(label);item.resolve(response(item.kind,item.id,mode));},held(label){return held.has(label);}};
+   window.fetch=(url,options={})=>{
+    const u=new URL(url,location.origin);if(!u.pathname.startsWith('/api/'))return native(url,options);
+    let kind,id='';
+    if(u.pathname==='/api/intakes')kind='main';
+    else if(/^\/api\/intake-references\/[^/]+\/history$/.test(u.pathname)){kind='history';id=u.pathname.split('/')[3];}
+    else if(/^\/api\/intake-references\/[^/]+\/current$/.test(u.pathname)){kind='current';id=u.pathname.split('/')[3];}
+    else if(u.pathname.endsWith('/fixture-runs')){kind='fixture';id=u.pathname.split('/')[3];}
+    else return Promise.resolve(new Response('{}',{status:404,headers}));
+    counts[kind]++;const item={kind,aborted:!!options.signal?.aborted,pending_before_fetch:document.querySelector('.intake-reference-review')?.dataset.pending,
+     current_disabled:document.querySelector('.ir-current-read')?.disabled};
+    if(kind==='current'){const body=JSON.parse(options.body);item.body_exact2=Object.keys(body).length===2&&body.schema_version===1&&body.action==='current';
+     item.csrf_header_present=typeof options.headers?.['X-Intake-Reference-CSRF']==='string';}
+    observations.push(item);options.signal?.addEventListener('abort',()=>{item.aborted=true;},{once:true});
+    const next=queues[kind]?.shift();if(next?.label)return new Promise(resolve=>held.set(next.label,{resolve,kind,id}));
+    return Promise.resolve(response(kind,id,next?.mode||'ok'));
+   };
+  },{snapshot,bundle});
+  context.on('page',p=>{p.on('pageerror',()=>errors.push('pageerror'));p.on('request',r=>{if(!r.url().startsWith(origin+'/'))external.push('external');});});
+  page=await context.newPage();page.setDefaultTimeout(10000);await page.goto(origin);
+  const state=selector=>page.locator(selector).getAttribute('data-state');
+  const ready=()=>page.waitForFunction(()=>document.querySelector('.ir-history-status')?.dataset.state==='ready');
+  const counts=()=>page.evaluate(()=>({...window.f1Wire.counts}));
+  const mode=(kind,value)=>page.evaluate(({kind,value})=>window.f1Wire.next(kind,value),{kind,value});
+  const hold=(kind,label)=>page.evaluate(({kind,label})=>window.f1Wire.hold(kind,label),{kind,label});
+  const release=(label,value='ok')=>page.evaluate(({label,value})=>window.f1Wire.release(label,value),{label,value});
+  const held=label=>page.waitForFunction(label=>window.f1Wire.held(label),label);
+  const dispatchRefresh=()=>page.evaluate(()=>document.querySelector('#refresh').dispatchEvent(new Event('click')));
+  await page.locator('#intake-reference-panel .intake-reference-review').waitFor();await ready();
+  assert.equal(await page.locator('#detail-panel .intake-reference-review').count(),0);
+  assert.equal(await page.locator('#intake-reference-panel').evaluate(n=>n.previousElementSibling.id==='intake-view'&&n.nextElementSibling.id==='notification-view'),true);
+  assert.equal((await counts()).history,1);assert.equal((await counts()).current,0);checks.push('product_mount_sibling_context_history1_current0');
+  const beforeFilter=await counts();await page.locator('#search').fill('050');await page.locator('#filter').selectOption('attention');
+  assert.equal((await counts()).history,beforeFilter.history);checks.push('filter_same_context_no_extra_history');
+  await page.locator('#search').focus();await page.locator('.ir-history-refresh').evaluate(button=>button.click());await ready();
+  assert.equal(await page.locator('#search').evaluate(n=>n===document.activeElement),true);checks.push('automatic_history_preserves_outside_focus');
+  await hold('current','keyboard-current');await page.locator('.ir-current-read').focus();await page.keyboard.press('Enter');
+  await held('keyboard-current');await page.locator('#search').focus();await release('keyboard-current');
+  await page.waitForFunction(()=>document.querySelector('.ir-current-status').dataset.state==='current');
+  assert.equal((await counts()).current,1);assert.match(await page.locator('.ir-current-results').innerText(),/KST/);
+  assert.equal(await page.locator('#search').evaluate(n=>n===document.activeElement),true);checks.push('explicit_current_keyboard_exact_body_header_KST_no_focus_theft');
+  for(const bad of ['missing_csrf','bad_utf8','bom']){await mode('history',bad);await page.locator('.ir-history-refresh').click();
+   await page.waitForFunction(()=>document.querySelector('.ir-history-status').dataset.state==='error');
+   assert.equal(await page.locator('.ir-current-read').isDisabled(),true);assert.equal(await page.locator('.ir-history-results').getAttribute('data-stale'),'true');
+   await page.locator('.ir-history-refresh').click();await ready();}
+  checks.push('bad_headers_UTF8_BOM_preserve_lastgood_and_fail_closed');
+  await mode('history','unsafe');await page.locator('.ir-history-refresh').click();
+  await page.waitForFunction(()=>document.querySelector('.ir-history-status').dataset.state==='unrepresentable');
+  assert.equal(await page.locator('.ir-history-previous').isDisabled(),true);await page.locator('.ir-history-refresh').click();await ready();
+  checks.push('unsafe_integer_limit_keeps_lastgood_without_rounding');
+  await mode('current','expired');await page.locator('.ir-current-read').click();
+  await page.waitForFunction(()=>document.querySelector('.ir-current-status').dataset.state==='error');
+  const expiredCount=(await counts()).current;assert.equal(await page.locator('.ir-current-results').getAttribute('data-stale'),'true');
+  assert.match(await page.locator('#intake-reference-panel').innerText(),/이력을 새로 조회/);
+  await page.locator('.ir-history-refresh').click();await ready();assert.equal((await counts()).current,expiredCount);
+  await page.locator('.ir-current-read').click();await page.waitForFunction(()=>document.querySelector('.ir-current-status').dataset.state==='current');
+  checks.push('expired_session_fixed_guide_metadata_requery_no_auto_current_retry');
+  await mode('history','denied');await page.locator('.ir-history-refresh').click();await ready();
+  assert.equal(await page.locator('.ir-current-read').isDisabled(),true);assert.equal(await page.locator('#detail-title').isVisible(),true);
+  await mode('history','unconfigured');await page.locator('.ir-history-refresh').click();
+  await page.waitForFunction(()=>document.querySelector('.ir-history-status').dataset.state==='error');
+  assert.equal(await page.locator('#detail-title').isVisible(),true);assert.equal((await counts()).current,expiredCount+1);
+  await page.locator('.ir-history-refresh').click();await ready();checks.push('none_assets_and_permission_false_keep_intake_UI_source0');
+  const selectionCounts=await counts();await page.locator('.intake-item').nth(1).click();await ready();
+  assert.match(await page.locator('.ir-selection').innerText(),/SYNTHETIC-INTAKE-050-B/);
+  assert.equal((await counts()).history,selectionCounts.history+1);assert.equal((await counts()).current,selectionCounts.current);
+  assert.equal(await page.locator('.ir-current-results').isVisible(),false);checks.push('new_selection_history1_current0_hides_other_intake_good');
+  await page.locator('[data-view="notifications"]').click();assert.equal(await page.locator('#intake-reference-panel').isVisible(),false);
+  await page.locator('[data-view="intakes"]').click();assert.equal(await page.locator('#intake-reference-panel').isVisible(),true);
+  assert.equal((await counts()).current,selectionCounts.current);checks.push('navigation_only_toggles_sibling_visibility');
+  const lastTitle=await page.locator('#detail-title').innerText();const invalid=copy(snapshot);invalid.intakes[0].intake_id='../invalid-context';
+  invalid.intakes[1].intake_id='../also-invalid-context';await page.evaluate(value=>window.f1Wire.setSnapshot(value),invalid);
+  const beforeBad=await counts();await page.locator('#refresh').click();await page.locator('#error-banner').waitFor();
+  assert.equal(await page.locator('#detail-title').innerText(),lastTitle);assert.equal((await counts()).history,beforeBad.history);
+  await page.evaluate(value=>window.f1Wire.setSnapshot(value),snapshot);await page.locator('#refresh').click();await ready();
+  checks.push('prepare_context_before_DOM_publish_rejects_invalid_snapshot_preserving_good');
+  await hold('current','old-current');await page.locator('.ir-current-read').click();await held('old-current');
+  await hold('history','old-history');await page.locator('.ir-history-refresh').click();await held('old-history');
+  await hold('main','main-older');await dispatchRefresh();await held('main-older');
+  const observed=await page.evaluate(()=>window.f1Wire.observations);
+  assert.equal(observed.filter(x=>x.kind==='current').at(-1).aborted,true);assert.equal(observed.filter(x=>x.kind==='history').at(-1).aborted,true);
+  assert.equal(observed.filter(x=>x.kind==='main').at(-1).pending_before_fetch,'true');
+  assert.equal(observed.filter(x=>x.kind==='main').at(-1).current_disabled,true);checks.push('main_refresh_before_fetch_cancels_both_channels');
+  await hold('main','main-newer');await dispatchRefresh();await held('main-newer');await release('main-older');
+  await page.waitForFunction(()=>!window.f1Wire.held('main-older'));
+  assert.equal(await page.locator('.intake-reference-review').getAttribute('data-pending'),'true');assert.equal(await page.locator('#refresh').isDisabled(),true);
+  await release('main-newer');await ready();await release('old-current');await release('old-history');
+  assert.equal(await state('.ir-current-status'),'idle');checks.push('latest_finally_only_and_late_channels_cannot_publish');
+  await hold('main','queued-selection');await dispatchRefresh();await held('queued-selection');
+  const queued=await counts();await page.locator('.intake-item').first().click();await page.locator('.intake-item').nth(1).click();
+  assert.equal((await counts()).history,queued.history);await release('queued-selection');await ready();
+  assert.equal((await counts()).history,queued.history+1);assert.equal((await counts()).current,queued.current);
+  checks.push('pending_keeps_latest_selection_and_resumes_metadata_once');
+  const bfcache=await counts();await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true})));
+  assert.equal(await page.locator('.intake-reference-review').getAttribute('data-pending'),'true');
+  await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));await ready();
+  assert.equal((await counts()).history,bfcache.history+1);assert.equal((await counts()).current,bfcache.current);checks.push('BFcache_reentry_refreshes_metadata_without_current');
+  await hold('main','hidden-main');await dispatchRefresh();await held('hidden-main');const hidden=await counts();
+  await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true})));await release('hidden-main');
+  await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);
+  assert.equal(await page.locator('.intake-reference-review').getAttribute('data-pending'),'true');assert.equal((await counts()).history,hidden.history);
+  await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));await ready();
+  assert.equal((await counts()).history,hidden.history+1);assert.equal((await counts()).current,hidden.current);
+  checks.push('main_finally_cannot_resume_reference_while_BFcache_suspended');
+  for(const width of [1440,390]){await page.setViewportSize({width,height:width===390?844:1000});
+   await page.locator('.intake-reference-review').scrollIntoViewIfNeeded();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+   assert.equal(await page.locator('.ir-history-results').evaluate(n=>getComputedStyle(n.closest('.intake-reference-review')).gridTemplateColumns.split(' ').length),width===390?1:2);
+   await page.screenshot({path:path.join(evidence,`frontend-${width}.png`),fullPage:true});
+   await page.locator('.intake-reference-review').evaluate(n=>n.scrollIntoView({block:'start'}));
+   await page.screenshot({path:path.join(evidence,`frontend-${width}-panel.png`)});}
+  checks.push('product_CSS_long_ID_KST_wrap_390_and1440_two_to_one_columns');
+  const clean=await page.evaluate(()=>({storage:[localStorage.length,sessionStorage.length],downloads:document.querySelectorAll('a[download]').length,
+   token_visible:/f{64}/.test(document.body.innerText),token_url:/f{64}/.test(location.href),observations:window.f1Wire.observations,counts:{...window.f1Wire.counts}}));
+  assert.deepEqual(clean.storage,[0,0]);assert.equal(clean.downloads,0);assert.equal(clean.token_visible,false);assert.equal(clean.token_url,false);
+  assert.ok(clean.observations.filter(x=>x.kind==='current').every(x=>x.body_exact2&&x.csrf_header_present));save('observations.json',clean);
+  const terminal=await counts();await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pagehide',{persisted:false})));
+  assert.equal(await page.locator('.intake-reference-review').count(),0);await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));
+  assert.deepEqual(await counts(),terminal);checks.push('nonpersisted_pagehide_terminal_no_resurrection');
+  assert.deepEqual(errors,[]);assert.deepEqual(external,[]);checks.push('no_secret_storage_download_external_or_Javascript_errors');
+ }catch(error){failure=error;save('failure.json',{message:String(error.stack||error)});if(page)try{await page.screenshot({path:path.join(evidence,'failure.png'),fullPage:true});}catch{}}
+ finally{
+  try{if(browser)await browser.close();result.browser_closed=true;}catch(error){failure||=error;}
+  try{if(server){server.closeAllConnections();await new Promise((resolve,reject)=>server.close(e=>e?reject(e):resolve()));}result.server_closed=true;}catch(error){failure||=error;}
+  try{const after=sourcePins();save('source-pins-after.json',after);result.source_unchanged=JSON.stringify(before)===JSON.stringify(after);
+   if(!result.source_unchanged)failure||=Error('source_changed');}catch(error){failure||=error;}
+  result.javascript_errors=errors.length;result.external_requests=external.length;
+  result.status=!failure&&result.browser_closed&&result.server_closed&&result.source_unchanged?'pass':'fail';save('result.json',result);
+ }
+ console.log(JSON.stringify({phase:result.phase,status:result.status,checks:checks.length,evidence:path.relative(root,evidence).split(path.sep).join('/'),
+  result_sha256:hash(fs.readFileSync(path.join(evidence,'result.json')))}));
+ if(failure)throw Error('intake_reference_frontend_F1_failed');return result;
 }
 module.exports={createSyntheticBundle,main};
 if(require.main===module)main().catch(error=>{process.stderr.write(error.message+'\n');process.exitCode=1;});
