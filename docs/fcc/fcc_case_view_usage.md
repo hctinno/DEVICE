@@ -14,7 +14,7 @@ summary는 정확12키, case는 정확9키이며 공통7키/verification5개 fal
 
 모집단 unconfirmed·공식 검색 blocked/failed·미러/기존 보유·공식 대응 검수 기록·권리를 구별한다. 후보/확보/추출/검토/규정 대조/개발/평가를 완료율로 합치지 않는다. 보고서 유래 결과·과거 교정은 현재 실측/교정이 아니며 literal 검증은 과학·기관·규정 적합 인증이 아니다. evaluation_group.eligible은 021의 로컬 metadata 조건이며 022의 canonical family/전체 연결 성분 평가 분리 승인과 다르다. 실제 AI·학습·물리 운전은 없다.
 
-응답·렌더링 오류에서 마지막 성공 DOM과 선택을 보존하고 이전 자료라고 표시한다. 요청 generation은 동일 ID 재선택·새로고침·필터 변경·destroy 뒤 늦은 응답을 차단하며 이전 요청이 초점을 옮기지 못하게 한다. native 버튼/입력/select의 키보드 탐색과 현재 성공 제목·오류 상태 초점을 유지한다. 문자만 textContent로 넣으며 안전한 HTTP(S) 문헌 링크는 명시 선택 시에만 noopener/noreferrer로 연다.
+응답·렌더링 오류에서 마지막 성공 DOM과 선택을 보존하고 이전 자료라고 표시한다. 요청 generation은 동일 ID 재선택·새로고침·필터 변경·destroy 뒤 늦은 응답을 차단하며 이전 요청이 초점을 옮기지 못하게 한다. 새로고침의 현재 generation을 화면 구성 전에 확인하고 필터 정리는 지역 사본에서만 준비한 뒤 현재 응답을 게시할 때 적용한다. 늦은 빈 summary가 나중에 선택한 필터의 내부 상태를 지우지 않는다. native 버튼/입력/select의 키보드 탐색과 현재 성공 제목·오류 상태 초점을 유지한다. 문자만 textContent로 넣으며 안전한 HTTP(S) 문헌 링크는 명시 선택 시에만 noopener/noreferrer로 연다.
 
 ## 계약·실제 JSON 수용 도구
 
@@ -38,8 +38,8 @@ transport의 정확3키는 `{schema_version:1, summary:완전한DTO, cases:[모�
 
 새 `.local/ib-*`마다 input SHA/반환 JSON, source 전후 SHA, HTTP 로그, 실패 진단·DOM·PNG와 result.json을 보존하고 자기 browser/server 종료를 검사한다. 결과 kind는 `fcc_case_json_browser`이며 contract_fixture는 합성 계약 모드에서만 true다. actual mode는 synthetic=false를 요구한다. **producer_origin_verified_by_tool=false**는 항상 유지한다. mode 라벨·synthetic=false·SHA 일치만으로 producer의 실제성을 인증하지 않으며, 실제 B001 연결 주장은 총괄/P01의 별도 원본·producer attestation과 결합해야 한다.
 
-12묶음은 분리한 집계/범위, 원래 사례·문헌·권리·페이지·인용, 정확 로컬 필터, 원래 값의 타입(계약의0/false/불명/상충과 실제 입력에 있는 값만 구분), 오류·변조의 lastgood/선택, XSS/위험URL, 목록 실패, 실제 없는ID·주입한 빈 snapshot의 이전 상세 보존, 동일ID 늦은응답, refresh/filter/destroy 경합·다중 instance,390px native 키보드 초점,GET/HEAD·storage·경로/외부요청 경계다. 실제 payload에 없는0/false를 관측했다고 표시하지 않으며 원래 문서/페이지·값 타입 관측 수를 result.json에 따로 기록한다. 주입한 공격·빈 snapshot 검사는 실제 producer 원본의 관측과 구분한다. 공개 fixture 검사는 실제 producer/PDF 인수로 합산하지 않는다.
+공통12묶음은 분리한 집계/범위, 원래 사례·문헌·권리·페이지·인용, 정확 로컬 필터, 원래 값의 타입(계약의0/false/불명/상충과 실제 입력에 있는 값만 구분), 오류·변조의 lastgood/선택, XSS/위험URL, 목록 실패, 실제 없는ID·주입한 빈 snapshot의 이전 상세 보존, 동일ID 늦은응답, refresh/filter/destroy 경합·다중 instance,390px native 키보드 초점,GET/HEAD·storage·경로/외부요청 경계다. 합성 계약 모드는 이전 빈summary 지연→최신summary→제품군 선택→늦은 빈summary→다른 필터 조작에서 같은 목록이 유지되는 추가1묶음까지 총13개다. 실제 모드는 원래 payload에 없는0/false를 관측했다고 표시하지 않으며 원래 문서/페이지·값 타입 관측 수를 result.json에 따로 기록한다. 주입한 공격·빈 snapshot 검사는 실제 producer 원본의 관측과 구분한다. 공개 fixture 검사는 실제 producer/PDF 인수로 합산하지 않는다.
 
 문서 검사는 `python -B scripts/check_artifacts.py`와 소유5파일의 UTF-8/링크/해시 검사를 수행한다. 실제 배치와 독립 리뷰·통합/실물/현장 검증은 각 단계의 새 증거로 별도 기록한다.
 
-소유 검증 영수증에는 전용·전체 Node, 합성 계약12묶음과 별도 실제 B001 JSON12묶음, 기존 화면 회귀를 각각 기록한다. 큰 정수의 조용한 반올림은 RED 재현 후 거절 경계로 검증한다. producer/검증영수증/provenance의 지정 SHA·크기와 비공개 사본, 입력·소스 불변·자기 browser/server 종료·JS 오류/외부 요청0, 실제390px 초점/페이지 근거 PNG를 확인한다. 실제 값·인용·보고서 식별자·원본 hash는 공개 fixture/이 문서에 복사하지 않는다. 이번 단위는 새 JS/Markdown5파일이며 전체 Python 회귀·021 API 자체 실행과 PDF 판독은 수행하지 않았다. 총괄 독립 인수는 별도 게이트다.
+소유 검증 영수증에는 전용·전체 Node, 합성 계약13묶음과 별도 실제 S03/S05 JSON 각각12묶음, 기존 화면 회귀를 각각 기록한다. 큰 정수의 조용한 반올림과 늦은 빈summary의 내부 필터 변경은 각각 RED 재현 후 거절/상태 게시 경계로 검증한다. producer/검증영수증/provenance의 지정 SHA·크기와 비공개 사본, 입력·소스 불변·자기 browser/server 종료·JS 오류/외부 요청0, 실제390px 초점/페이지 근거 PNG를 확인한다. 실제 값·인용·보고서 식별자·원본 hash는 공개 fixture/이 문서에 복사하지 않는다. 이번 단위는 새 JS/Markdown5파일이며 전체 Python 회귀·021 API 자체 실행과 PDF 판독은 수행하지 않았다. 총괄 독립 인수는 별도 게이트다.
