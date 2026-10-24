@@ -1,0 +1,162 @@
+{
+  "record_id": "FCC-PUBLIC-E3632A-READBACK-20261024-001",
+  "reviewed_at": "2026-10-24T13:02:03.136467+09:00",
+  "request_id": "DEV-E3632A-READBACK-011",
+  "publication_kind": "reviewed_bibliography_hash_scope_metadata_only",
+  "review_scope": {
+    "development_questions": 6,
+    "evidence_rows": 9,
+    "independently_checked_anchors": 58,
+    "public_source_file_references": 6,
+    "private_intake_payload_files": 12,
+    "private_intake_payload_bytes": 224609,
+    "private_intake_JSON_files": 12,
+    "new_originals_acquired": 0,
+    "retained_original_copies_in_new_packet": 0,
+    "new_network_requests": 0,
+    "user_preparation_requests": 0
+  },
+  "sources": [
+    {
+      "repository": "python-ivi/python-ivi",
+      "commit": "cfa45ceade0758debe4bc24ba4c8195222cad1e2",
+      "file": "ivi/agilent/agilentE3632A.py",
+      "source_url": "https://github.com/python-ivi/python-ivi/blob/cfa45ceade0758debe4bc24ba4c8195222cad1e2/ivi/agilent/agilentE3632A.py",
+      "bytes": 1924,
+      "sha256": "dd44fb5777dfe0650a3fd1ba50a4394593b61f96628c806bd07588e35da351f2",
+      "evidence": "retained_original_static_review",
+      "original_payload_included": false
+    },
+    {
+      "repository": "python-ivi/python-ivi",
+      "commit": "cfa45ceade0758debe4bc24ba4c8195222cad1e2",
+      "file": "ivi/agilent/agilentE3600A.py",
+      "source_url": "https://github.com/python-ivi/python-ivi/blob/cfa45ceade0758debe4bc24ba4c8195222cad1e2/ivi/agilent/agilentE3600A.py",
+      "bytes": 7546,
+      "sha256": "7c2028e609f4070f53e44c89816ef38a0d2c116b27dc5976d15a3806bd76e001",
+      "evidence": "retained_original_static_review",
+      "original_payload_included": false
+    },
+    {
+      "repository": "python-ivi/python-ivi",
+      "commit": "cfa45ceade0758debe4bc24ba4c8195222cad1e2",
+      "file": "ivi/scpi/dcpwr.py",
+      "source_url": "https://github.com/python-ivi/python-ivi/blob/cfa45ceade0758debe4bc24ba4c8195222cad1e2/ivi/scpi/dcpwr.py",
+      "bytes": 22996,
+      "sha256": "067df407999f398e03e0a3d075aa49ae18b43b131205e18db57b2f0574cb18e3",
+      "evidence": "retained_original_static_review",
+      "original_payload_included": false
+    },
+    {
+      "repository": "python-ivi/python-ivi",
+      "commit": "cfa45ceade0758debe4bc24ba4c8195222cad1e2",
+      "file": "setup.py",
+      "source_url": "https://github.com/python-ivi/python-ivi/blob/cfa45ceade0758debe4bc24ba4c8195222cad1e2/setup.py",
+      "bytes": 2700,
+      "sha256": "c429e315f8ac2230fd9d3fc328b146b98e02fd37010d9b2c511a6617c7a22d9b",
+      "evidence": "retained_original_static_review",
+      "original_payload_included": false
+    },
+    {
+      "repository": "python-ivi/python-ivi",
+      "commit": "cfa45ceade0758debe4bc24ba4c8195222cad1e2",
+      "file": "COPYING",
+      "source_url": "https://github.com/python-ivi/python-ivi/blob/cfa45ceade0758debe4bc24ba4c8195222cad1e2/COPYING",
+      "bytes": 1064,
+      "sha256": "2e339496a7c5039c642c6d1900e76fca343b6845fa6321ce3efd296b8e3e6a8b",
+      "evidence": "retained_original_static_review",
+      "original_payload_included": false
+    },
+    {
+      "publisher": "Keysight Technologies",
+      "title": "E3632A DC Power Supply User's Guide",
+      "edition": "E3632-90001; Edition8 March2019",
+      "source_url": "https://www.keysight.com/us/en/assets/9018-01309/user-manuals/9018-01309.pdf",
+      "bytes": 3971416,
+      "sha256": "776ea5e97c9a82e174a5c496c419bb3b27dda934d47068f7fdb217babc2b3583",
+      "physical_pages": 181,
+      "selected_pages_reviewed": [
+        1,
+        2,
+        61,
+        62,
+        87,
+        94,
+        97,
+        99,
+        100,
+        101,
+        102,
+        104,
+        105,
+        106,
+        108,
+        109,
+        124,
+        128,
+        177,
+        179
+      ],
+      "internal_document_inconsistency_preserved": true,
+      "original_payload_included": false,
+      "redistribution_permission": "unconfirmed_private_only"
+    }
+  ],
+  "review_topics": [
+    {
+      "topic": "programmed_readback",
+      "bounded_conclusion": "Programmed voltage/current limit and cached/requested/query settings are separate from measured terminal observations."
+    },
+    {
+      "topic": "enable_state",
+      "bounded_conclusion": "Output enable query/cached request is separate from delivered output, protection and communication failure."
+    },
+    {
+      "topic": "OFF_and_protection",
+      "bounded_conclusion": "Documented disabled behavior does not establish physical disconnection, observed zero or safe DUT state."
+    },
+    {
+      "topic": "measurement",
+      "bounded_conclusion": "Measurement query quantities are distinct from settings; exact raw response, disabled/error behavior and validation remain bounded or unknown."
+    },
+    {
+      "topic": "completion_freshness_stop",
+      "bounded_conclusion": "Command completion, value reception, measurement freshness, validity and physical stop are separate evidence."
+    },
+    {
+      "topic": "simulation_placeholders",
+      "bounded_conclusion": "Constant simulation responses, pass-only disable/abort/locks and tracking-name inconsistency do not establish operation or safe stop."
+    },
+    {
+      "topic": "ranges",
+      "bounded_conclusion": "Programming maxima, rated range and DUT safety limits stay separate; conflicting manual tables remain unresolved."
+    },
+    {
+      "topic": "identity",
+      "bounded_conclusion": "Exact model source, inherited family behavior and historical manufacturer/profile labels stay separate; installed firmware/options unverified."
+    },
+    {
+      "topic": "rights_dependencies",
+      "bounded_conclusion": "MIT notices, unpinned declared dependencies and private manufacturer documentation have separate rights/execution boundaries."
+    }
+  ],
+  "rights": {
+    "python_ivi_selected_source": "MIT terms with copyright/permission notice; no dependency/manufacturer license substitution",
+    "manufacturer_manual": "copyright; public redistribution unconfirmed; private only",
+    "source_originals_or_code_or_manual_body_or_images_in_this_public_record": 0
+  },
+  "validation_boundary": {
+    "source_static_and_manual_review": true,
+    "source_install_import_compile_execution": false,
+    "hardware_or_RF_or_DUT_output_actions": false,
+    "current_FW_options_or_physical_support_confirmed": false,
+    "DUT_safe_limits_confirmed": false,
+    "virtual_development_blocked": false
+  },
+  "private_delivery": {
+    "index_sha256": "b19883fff46fbd12525b93515d03bcaa5bfc03086a4f3938b9e3e3ea8291307b",
+    "index_bytes": 3078,
+    "state": "content_reviewed_and_delivered_independent_ACK_tracked_separately"
+  },
+  "counts_scope": "This is a metadata projection of retained materials, not a new physical PDF acquisition or a change to the historical20public collection batches."
+}
