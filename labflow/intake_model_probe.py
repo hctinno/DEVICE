@@ -4,12 +4,13 @@ import hashlib
 import http.client
 import json
 import math
-import multiprocessing
 import os
 from pathlib import Path
 import re
 import socket
 import stat
+import subprocess
+import sys
 import time
 
 from .intake_model_boundary import build_analysis_prompt, decode_analysis_response
@@ -22,6 +23,10 @@ _ENDPOINT = re.compile(r'http://127\.0\.0\.1:([0-9]{1,5})/analysis\Z')
 _SHA = re.compile(r'[a-f0-9]{64}\Z')
 _CODES = {'ok', 'http_status', 'transport_error', 'response_too_large', 'response_incomplete'}
 _FILENAMES = ('prompt.json', 'response-prefix.bin', 'transport.json', 'result.json', 'manifest.json')
+_BOOTSTRAP = (
+    'import sys; sys.path.insert(0,sys.argv[1]); '
+    'from labflow.intake_model_probe import _child_entry; _child_entry(*sys.argv[2:])'
+)
 
 
 def _plain(value):
@@ -94,11 +99,48 @@ class _StrictResponse(http.client.HTTPResponse):
         super().__init__(*args, **kwargs)
         self.reader = _HeaderReader(self.fp)
         self.fp = self.reader
+        self.trailer_complete = False
 
     def begin(self):
         super().begin()
         if not self.reader.complete:
             raise http.client.HTTPException()
+
+    def _read_and_discard_trailer(self):
+        # HTTPResponse accepts EOF here. A contract receipt requires the final CRLF.
+        for _ in range(http.client._MAXHEADERS+1):
+            line = self.fp.readline(http.client._MAXLINE+1)
+            if not line or not line.endswith(b'\r\n') or len(line) > http.client._MAXLINE:
+                raise http.client.IncompleteRead(b'')
+            if line == b'\r\n':
+                self.trailer_complete = True
+                return
+            field, separator, _ = line[:-2].partition(b':')
+            if not separator or not re.fullmatch(rb"[!#$%&'*+.^_`|~0-9A-Za-z-]+", field):
+                raise http.client.IncompleteRead(b'')
+        raise http.client.HTTPException()
+
+    def _read_next_chunk_size(self):
+        line = self.fp.readline(http.client._MAXLINE+1)
+        if len(line) > http.client._MAXLINE or not line.endswith(b'\r\n'):
+            raise http.client.IncompleteRead(b'')
+        size = line[:-2].partition(b';')[0]
+        if not re.fullmatch(rb'[0-9A-Fa-f]+', size):
+            raise http.client.IncompleteRead(b'')
+        return int(size, 16)
+
+    def _get_chunk_left(self):
+        left = self.chunk_left
+        if not left:
+            if left is not None and self._safe_read(2) != b'\r\n':
+                raise http.client.IncompleteRead(b'')
+            left = self._read_next_chunk_size()
+            if left == 0:
+                self._read_and_discard_trailer()
+                self._close_conn()
+                left = None
+            self.chunk_left = left
+        return left
 
 
 def _length(response):
@@ -150,6 +192,8 @@ def _exchange(port, body, prefix_path, timeout):
                     break
                 if not chunk:
                     meta['complete'] = expected is None or meta['bytes'] == expected
+                    if response.chunked and not response.trailer_complete:
+                        meta['complete'] = False
                     meta['code'] = ('ok' if response.status == 200 else 'http_status') if meta['complete'] else 'response_incomplete'
                     break
                 retain(chunk)
@@ -183,15 +227,40 @@ def _probe_child(port, body, prefix_path, metadata_path, timeout):
             pass
 
 
+def _child_entry(folder, port, timeout, request_sha256):
+    """Fixed isolated interpreter entry; never import the caller's __main__."""
+    folder = _plain(folder)
+    port, timeout = int(port), float(timeout)
+    if not 1 <= port <= 65535 or not math.isfinite(timeout) or not 0 < timeout <= 60:
+        raise ValueError()
+    body = _read(folder/'prompt.json', 16*1024*1024)
+    if body is None or hashlib.sha256(body).hexdigest() != request_sha256:
+        raise ValueError()
+    _probe_child(port, body, str(folder/'response-prefix.bin'), str(folder/'transport.json'), timeout)
+
+
+def _start_child(folder, port, timeout, request_sha256):
+    return subprocess.Popen([sys.executable, '-I', '-S', '-B', '-X', 'utf8', '-c', _BOOTSTRAP,
+        str(Path(__file__).resolve().parents[1]), str(folder), str(port), str(timeout), request_sha256],
+        stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        close_fds=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+
+
 def _stop(process):
     try:
-        if process.is_alive():
+        if process.poll() is None:
             process.terminate()
-            process.join(.25)
-        if process.is_alive():
+            try:
+                process.wait(timeout=.25)
+            except subprocess.TimeoutExpired:
+                pass
+        if process.poll() is None:
             process.kill()
-            process.join(.25)
-        return not process.is_alive()
+            try:
+                process.wait(timeout=.25)
+            except subprocess.TimeoutExpired:
+                pass
+        return process.poll() is not None
     except BaseException:
         return False
 
@@ -308,28 +377,26 @@ def probe_loopback_analysis(context, *, endpoint, producer_name, output_dir, tim
     process, stopped, timed_out, exit_code = None, True, False, None
     deadline = time.monotonic()+timeout_seconds
     try:
-        process = multiprocessing.get_context('spawn').Process(target=_probe_child, args=(
-            port, body, str(folder/'response-prefix.bin'), str(folder/'transport.json'), timeout_seconds), daemon=True)
-        process.start()
-        while process.is_alive():
+        process = _start_child(folder, port, timeout_seconds, result['request_sha256'])
+        while process.poll() is None:
             remaining = deadline-time.monotonic()
             if remaining <= 0:
                 timed_out = True
                 break
-            process.join(remaining)
+            try:
+                process.wait(timeout=remaining)
+            except subprocess.TimeoutExpired:
+                timed_out = True
+                break
         timed_out = timed_out or time.monotonic() >= deadline
-        exit_code = process.exitcode
+        exit_code = process.returncode
     except BaseException:
         result['reason_code'] = 'child_start_failed'
     finally:
         if process is not None:
             stopped = _stop(process)
             if stopped:
-                try:
-                    exit_code = process.exitcode
-                    process.close()
-                except BaseException:
-                    pass
+                exit_code = process.returncode
     if not stopped:
         result['reason_code'] = 'termination_failed'
         # Do not read files while an unconfirmed child may still be writing.
