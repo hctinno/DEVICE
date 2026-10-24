@@ -1,0 +1,120 @@
+{
+  "recorded_at": "2026-10-25T08:09:16.430703+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "unit": "B040_bounded_normaldetail_access_failure_metadata_intake",
+  "publication_scope": "nonsensitive bibliography/hash/count/status only",
+  "new_private_payload": {
+    "files": 14,
+    "bytes": 64242,
+    "JSON": 14,
+    "PDF": 0,
+    "MD": 0
+  },
+  "unit_hashes_and_counts": {
+    "payload_files": 14,
+    "payload_bytes": 60275,
+    "JSON_files": 14,
+    "PDF_files": 0,
+    "MD_files": 0,
+    "index_bytes": 3387,
+    "index_sha256": "a20b4de765f09633a27f9a1b676463f1ff60ae11f6dcfbfb2f45de7a0e3d15d8",
+    "P01_review_bytes": 6455,
+    "P01_review_sha256": "f5e56ad4550f2706e55637558f76b28a71a4ca3f1e344f0fc3fe09def691a649"
+  },
+  "explicit_independent_ACKs": 1,
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 144,
+    "independently_ACKed": 144
+  },
+  "cumulative_request012_reviewed_and_ACKed": {
+    "reviewed": 109,
+    "independently_ACKed": 109
+  },
+  "remaining_reviewed_private_intake_pending_packets": 0,
+  "source_cohorts": {
+    "target_or_parent_reference": {
+      "PDFs": 18,
+      "physical_pages": 690,
+      "bytes": 40988413,
+      "direct_issuer_issue_static_predicate": 17,
+      "parent_only": 1,
+      "official_mapping": 0
+    },
+    "excluded_before2025": {
+      "PDFs": 1,
+      "physical_pages": 46,
+      "bytes": 2771507
+    },
+    "pending_report_link": {
+      "PDFs": 1,
+      "physical_pages": 53,
+      "bytes": 4626750
+    },
+    "pending_direct_identity": {
+      "PDFs": 5,
+      "physical_pages": 254,
+      "bytes": 19314880
+    },
+    "all_retained_not_eligible": {
+      "PDFs": 25,
+      "physical_pages": 1043,
+      "bytes": 67701550
+    },
+    "legacy22_separate": true
+  },
+  "new_originals": 0,
+  "target_increment": 0,
+  "new_physical_ledger_versions": 0,
+  "bounded_review_status": {
+    "exact_normal_detail_GET_attempts": 1,
+    "actual_HTTP_status": 403,
+    "actual_MIME": "text/html",
+    "tool_error": null,
+    "queries": 0,
+    "ordinary_HTML_views": 0,
+    "ordinary_HTML_attempts": 1,
+    "redirects_followed": 0,
+    "same_endpoint_retries": 0,
+    "explicit_response_body_read_bytes": 0,
+    "response_body_not_saved_parsed_or_browsed": true,
+    "challenge_body_detection": null,
+    "raw_default_challengefalse_and_assettokenfalse_not_actualinspection_or_rawSHAcomparison": true,
+    "origin_proxy_security_reason_not_inferred": true,
+    "PDF_payloads": 0,
+    "source_SHA_bytes_magic_pages_AES_permissions": null,
+    "direct_body_identity_and_citation_fields_null": 17,
+    "new_observations_blocks_rows": [
+      0,
+      0,
+      0
+    ],
+    "only_approved_secondary_lead_allowfields_retained_not_new_facts": true,
+    "secondary_issue_claim_title_reportprefix_model_or_URLtoken_not_directidentity": true,
+    "actual_labelbody_mismatch_observed": false,
+    "full_labelbody_mapping": null,
+    "outside_issuer_period_scope_exclusion_confirmed": false,
+    "HTTP403_not_sourceabsence_officialFCCrefusal_or_legalrestriction_proof": true,
+    "no_physical_excluded_pendinglink_pendingdirect_original_cohort_from_PDF0": true,
+    "known47_givenSHA_metadata_only_no_actualrawcomparison_fresh47audit_or_reuse_independence": true,
+    "P01_online_replay_or_source_original_operations": 0,
+    "source_privacy_census_or_identifier_absence_proven": false,
+    "metadata_patternzero_not_original_privacyabsence_proof": true,
+    "rights_unknown_privateonly_not_legalrestriction_or_reproduction_training_publication_grant": true,
+    "all_prior25_original_proofs_frozen_not_fresh_wholeaudit": true,
+    "root_byte_ACK_not_fullsemantic_currentnormative_model_physical_approval": true
+  },
+  "bounded_HAC_review_status": {
+    "suite_regions_visited": 181,
+    "suite_regions_total": 181,
+    "new_regionvisits": 0,
+    "wrapper_visits_not_fullsemantic_allcells_plotnumbers_calibration_HACsuite_or_census_completion": true
+  },
+  "remaining_scope": {
+    "whole_population": "unknown/open",
+    "all_periods_issuers_sites_products_categories_revisions_parts_appendices_setup_photos_tails": "open",
+    "whole_semantic_currentnormative_reuse_independence_model_AI_physical_conformity_complete": false,
+    "source_body_citation_strings_casevalues_images_code_identifiers_privatepaths_user_materials_public": false,
+    "new_external_model_API_training_evaluation_folds_scores": 0,
+    "new_user_preparation_requests": 0
+  }
+}
