@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "recorded_at_Asia_Seoul": "2026-10-24T20:22:53.387839+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "corpus_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "publication_scope": "reviewed_nonsensitive_bibliography_hash_and_bounded_status_only",
+  "publication_rights_decision": "Only public bibliographic identities, raw-file hashes/size/page counts and bounded QA/intake status. No originals/body/case values/images/code/unique identifiers/user materials/private paths.",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S02-B0016",
+      "review_scope": "new_EMC_original_bounded_source_review",
+      "inventory_sha256": "395c88c7b6b881accc610b0b5383670e6847becfda2c4da37f699c513a63ac90",
+      "private_intake_index_sha256": "56d31b5c761bd354919a9e19ebd74eb1831b5e116fff16f8b09c8af7c9c1f582",
+      "private_intake_index_bytes": 3715,
+      "payload_files": 16,
+      "payload_bytes": 1656813,
+      "JSON_files": 15,
+      "PDF_files": 1,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "1b99110d26ec96fab5c21641df09194680d909f3f1ebc265ec0acb7935e9bc4b",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "target_reference",
+      "receiver_original_structure_proof_sha256": "e14f5750c14f07d9f9a855ca68871dc1661a4589ab0584a9cd898769ec477c9f"
+    },
+    {
+      "batch_id": "FCC-20261024A-S03-B0014",
+      "review_scope": "held_HAC_bounded_source_observations_including_two_title_limits",
+      "inventory_sha256": "ae654b4f9e349386324b54a2a55968b768bfc08ece020640921f452d3ebc23cb",
+      "private_intake_index_sha256": "31a8206b006bb37c1653c4a25bd37f2d42e3c2636f6fc189b54d207d66de0fff",
+      "private_intake_index_bytes": 5082,
+      "payload_files": 24,
+      "payload_bytes": 154454,
+      "JSON_files": 23,
+      "PDF_files": 0,
+      "MD_files": 1,
+      "receiver_receipt_sha256": "94425b21486fe3ddc126c0456ed52b62795d610b32b5550a5b0cad196a15735b",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "held_metadata_reference"
+    },
+    {
+      "batch_id": "FCC-20261024A-S04-B0014",
+      "review_scope": "new_EMC_original_bounded_source_review",
+      "inventory_sha256": "e2987f5df76de97f71477b738f6b43aab0b0f191452b2c41230e5078804d3fd0",
+      "private_intake_index_sha256": "e20533c0f9bfc8706d587aad90828598b7f7ac8513defc60d49945486159c5c8",
+      "private_intake_index_bytes": 3726,
+      "payload_files": 16,
+      "payload_bytes": 1184444,
+      "JSON_files": 15,
+      "PDF_files": 1,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "66d25b6499b4d4b26288eddf319abcc6d614ba807a31b4f61bb2fb4afe97649e",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "target_reference",
+      "receiver_original_structure_proof_sha256": "6001259a2cfec4736f55c5d7c1db3fa5206c522253d6555db0019f1ff2e64538"
+    }
+  ],
+  "new_independently_accepted_private_packets": 3,
+  "new_private_payload": {
+    "files": 56,
+    "bytes": 2995711,
+    "JSON": 53,
+    "PDF": 2,
+    "MD": 1
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 80,
+    "independently_ACKed": 80
+  },
+  "corpus_private_packets_including_exclusion_and_pending_link_review": {
+    "reviewed": 45,
+    "independently_ACKed": 45
+  },
+  "new_reviewed_bibliography": [
+    {
+      "report_number": "HA2508-0219-E01",
+      "numeric_revision": null,
+      "revision_description": "Original Issue",
+      "issue_date": "2025-09-25",
+      "issuer_as_printed": "HCT America, Inc.",
+      "FCC_ID_as_printed": "2BG9ISUPER-MP",
+      "model_as_printed": "SUPER ANTENNA SUPER-MP",
+      "physical_pages": 22,
+      "bytes": 1579493,
+      "sha256": "81f1ded52d92bba3975ad361da7847a17c0d1e8eff75a3aa234b43cee27b65cd",
+      "cohort": "target_reference",
+      "direct_source_identity_issue_and_issuer_reviewed": true,
+      "official_exhibit_mapping_confirmed": false,
+      "mirror_claim_pages": 0,
+      "mirror_page_claim_does_not_override_actual_physical_pages": true,
+      "bounded_primary_pages_reviewed": 7,
+      "whole_report_semantic_complete": false,
+      "selected_source_fact_records": 9,
+      "derived_arithmetic_records": 1,
+      "selected_result_rows": 1,
+      "selected_decimal_checks": 2,
+      "separate_setup_original_acquired": false
+    },
+    {
+      "report_number": "HCT-EM-2504-FC002",
+      "revision": "0",
+      "issue_date": "2025-04-29",
+      "issuer_as_printed": "HCT CO., LTD.",
+      "FCC_ID": "A3LSMF761U",
+      "model_as_printed": "SM-F761U",
+      "series_model_as_printed": "SM-F761U1",
+      "physical_pages": 39,
+      "bytes": 1079097,
+      "sha256": "e0abd5c77f2c8ef7cb432426317deaea615846bb8493a5ec88dc31d54534ba55",
+      "cohort": "target_reference",
+      "direct_source_identity_issue_and_issuer_reviewed": true,
+      "official_exhibit_mapping_confirmed": false,
+      "secondary_index_bytes": 1079099,
+      "index_size_difference_preserved_cause_unknown": true,
+      "bounded_primary_pages_reviewed": 12,
+      "context_pages_reviewed": 2,
+      "whole_report_semantic_complete": false,
+      "selected_source_fact_records": 12,
+      "selected_result_blocks": 2,
+      "selected_result_rows": 6,
+      "selected_decimal_checks": 6,
+      "report_revision_and_form_revision_kept_distinct": true,
+      "separate_photo_reference": "HCT-EM-2504-FC002-P",
+      "separate_photo_original_acquired": false
+    }
+  ],
+  "current_target_reference_cohort": {
+    "PDFs": 15,
+    "physical_pages": 583,
+    "bytes": 33525071,
+    "direct_issuer_issue": 14,
+    "parent_only": 1,
+    "official_mapping_confirmed": 0
+  },
+  "separately_retained_excluded": {
+    "PDFs": 1,
+    "physical_pages": 46,
+    "bytes": 2771507,
+    "target_increment": 0
+  },
+  "separately_retained_pending_report_link": {
+    "PDFs": 1,
+    "physical_pages": 53,
+    "bytes": 4626750,
+    "target_increment": 0
+  },
+  "all_retained_request_originals_not_eligible_count": {
+    "PDFs": 17,
+    "physical_pages": 682,
+    "bytes": 40923328,
+    "eligible17_claim": false,
+    "legacy22_included": false
+  },
+  "new_originals_reviewed_privately": 2,
+  "new_target_reference_originals": 2,
+  "new_PDF_payloads_published_to_Git": 0,
+  "bounded_HAC_review_status": {
+    "new_primary_region_observations": 8,
+    "direct_title_confirmations": 6,
+    "limited_titles": 2,
+    "limited_title_pages": [
+      41,
+      45
+    ],
+    "limited_titles_not_filled_from_neighbor_pages": true,
+    "numeric_rows_or_calculations": 0,
+    "HAC1_primary_region_inspections": [
+      46,
+      73
+    ],
+    "suite_primary_region_inspections": [
+      91,
+      181
+    ],
+    "unvisited_primary_regions": 90,
+    "inspection_counter_includes_explicit_limited_observations_not_readable_titles_or_semantic_successes": true,
+    "numeric_plots_identity_calibration_rows_full_cells_currentrules_or_hardware_approved": false
+  },
+  "source_method_and_arithmetic_boundaries": {
+    "source_citations_and_author_statements_are_not_current_normative_approval": true,
+    "selected_arithmetic_does_not_establish_actual_correction_components_reference_plane_instrument_chain_or_calibration": true,
+    "source_adjacent_caption_binding_and_same_page_caption_binding_preserved_separately": true,
+    "native_raw_or_new_physical_measurements": 0
+  },
+  "privacy_and_failure_status": {
+    "bounded_memory_candidate_checks_completed": true,
+    "candidate_literal_matches_in_final_metadata": 0,
+    "candidate_values_rows_or_per_identifier_hashes_exported": false,
+    "global_identifier_absence_proven": false,
+    "producer_and_P01_scope_crop_guard_failures_preserved_without_rewriting_old_records": true
+  },
+  "receiver_source_validation": {
+    "exact_packet_bytes_review_hashes_and_source_permissions_preserved": true,
+    "new_originals_strict_structure_checked": 2,
+    "earlier_byte_receipt_pending_structure_resolved_by_separate_original_structure_proofs": true,
+    "native_render_OCR_or_P01_source_arithmetic_replayed": false
+  },
+  "historical_group_audits_not_retroactively_extended_to_current_cohorts": true,
+  "new_user_preparation_requests": 0,
+  "AI_evaluation_training_external_models_or_physical_runs": 0,
+  "open_scope": [
+    "whole population unsearched periods legal issuers sites products and categories",
+    "official mapping label-body correspondence revisions parts appendices setup",
+    "limited titles untranscribed cells numeric plots and whole semantic analysis",
+    "full standards historical/current applicability source conflicts unknown reuse",
+    "actual installed chain calibration reference plane native raw independent evaluation real equipment and site validation"
+  ],
+  "whole_census_complete": false,
+  "full_semantic_functional_conformity_or_physical_validation": false,
+  "original_text_case_values_images_code_identifiers_private_paths_user_materials_exported": false,
+  "historical_public20batch_count_changed": false,
+  "verification_scope": "Exact private packet bytes and specified bounded source observations. Document integrity is not function/metrology/conformity evidence."
+}
