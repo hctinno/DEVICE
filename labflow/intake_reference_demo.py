@@ -137,14 +137,16 @@ def _reserve(custom):
     return output
 
 
-def _close_owned(resource, method, first):
+def _close_owned(resource, method, first, *, remember_interrupt=False):
     failures = 0
     while failures < 2:
         try:
             if getattr(resource, method)() is not None:
                 raise RuntimeError()
             return True
-        except KeyboardInterrupt:
+        except KeyboardInterrupt as error:
+            if remember_interrupt and first[0] is None:
+                first[0] = error
             continue
         except Exception:
             if first[0] is None:
@@ -194,12 +196,14 @@ def _prepare_demo(output: Path):
         response = respond(store, 'DEMO-PROCEED-' + uuid.uuid4().hex, 'proceed', intake_id=intake_id)
         if response['status'] != 'recorded':
             _fail('unavailable')
-    except Exception:
+    except BaseException:
         preparation_failed = True
         raise
     finally:
         errors = [None]
-        closed = _close_owned(store, 'close', errors)
+        closed = _close_owned(store, 'close', errors, remember_interrupt=True)
+        if not preparation_failed and isinstance(errors[0], KeyboardInterrupt):
+            raise errors[0]
         if not preparation_failed and (not closed or errors[0] is not None):
             _fail('shutdown_failed')
 
@@ -224,11 +228,11 @@ def _prepare_demo(output: Path):
     return state, intake_id, catalog, inputs
 
 
-def _cleanup(server, store, first):
+def _cleanup(server, store, first, *, remember_interrupt=False):
     # The official host closes admission and drains parent finally before return.
-    if server is not None and not _close_owned(server, 'server_close', first):
+    if server is not None and not _close_owned(server, 'server_close', first, remember_interrupt=remember_interrupt):
         return False
-    if store is not None and not _close_owned(store, 'close', first):
+    if store is not None and not _close_owned(store, 'close', first, remember_interrupt=remember_interrupt):
         return False
     return True
 
@@ -240,8 +244,8 @@ def _emit_error(code):
         pass  # Delivery unknown: never retry a possibly delivered frame.
 
 
-def main(argv=None) -> int:
-    """Return fixed codes without replacing, reconfiguring or closing caller I/O."""
+def _execute(argv):
+    """Share one execution path and its ready phase with the process wrapper."""
     output = server = store = None
     first = [None]
     ready = False
@@ -253,7 +257,7 @@ def main(argv=None) -> int:
                 and type(arguments[0]) is str and arguments[0] == '--help'):
             phase = _PREFIX + 'output_failed'
             _write(sys.stdout, _HELP.encode('utf-8'))
-            return 0
+            return 0, False
         custom = _arguments(arguments)
         if custom is not None:
             _new_leaf(custom)
@@ -296,13 +300,15 @@ def main(argv=None) -> int:
         ready = True
         phase = _PREFIX + 'unavailable'
         server.serve_forever()
-    except KeyboardInterrupt:
+    except KeyboardInterrupt as error:
         interrupted = True
+        if not ready and first[0] is None:
+            first[0] = error
     except Exception as error:
         code = error.args[0] if type(error) is _Failure and len(error.args) == 1 else None
         first[0] = code if type(code) is str and code in _CODES else phase
     finally:
-        closed = _cleanup(server, store, first)
+        closed = _cleanup(server, store, first, remember_interrupt=not ready)
 
     # Only fixed status and resource results are recorded; no session or wire data.
     if output is not None:
@@ -313,25 +319,33 @@ def main(argv=None) -> int:
             else:
                 _save(output / ('failure-' + uuid.uuid4().hex + '.json'), {'schema_version': 1,
                     'kind': 'intake_reference_demo_incomplete', **_FLAGS, 'graceful': False,
-                    'code': first[0] or _PREFIX + 'unavailable'})
+                    'code': first[0] if type(first[0]) is str else _PREFIX + 'unavailable'})
         except (Exception, KeyboardInterrupt):
             if first[0] is None:
                 first[0] = _PREFIX + 'output_failed'
+    if isinstance(first[0], KeyboardInterrupt):
+        return 130, ready
     if first[0] is not None:
         _emit_error(first[0])
-        return 2 if first[0] == _PREFIX + 'invalid_argument' else 1
-    return 130 if interrupted and not ready else 0
+        return (2 if first[0] == _PREFIX + 'invalid_argument' else 1), ready
+    return (130 if interrupted and not ready else 0), ready
+
+
+def main(argv=None) -> int:
+    """Return fixed codes without replacing, reconfiguring or closing caller I/O."""
+    return _execute(argv)[0]
 
 
 def _process_main():
     # Only a standalone module process owns stream configuration and final flush.
+    ready = False
     try:
         for stream in (sys.stdout, sys.stderr):
             try:
                 stream.reconfigure(encoding='utf-8', errors='strict', newline='\n')
             except Exception:
                 pass
-        status = main()
+        status, ready = _execute(None)
     except KeyboardInterrupt:
         status = 130
     for stream in (sys.stdout, sys.stderr):
@@ -340,6 +354,8 @@ def _process_main():
                 stream.flush()
                 break
             except KeyboardInterrupt:
+                if status == 0 and not ready:
+                    status = 130
                 continue
             except Exception:
                 if status == 0:

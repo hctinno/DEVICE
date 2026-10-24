@@ -215,6 +215,148 @@ class DemoBoundaries(unittest.TestCase):
             server.server_close.assert_called_once();store.close.assert_called_once()
 
 
+class DemoFirstInterrupts(unittest.TestCase):
+    """Genuine P0 pass-through faults; module streams are lifecycle doubles."""
+
+    def p0(self, label, *, worker_error=None, close_events=()):
+        api=importlib.import_module('labflow.intake_reference_demo')
+        folder=ROOT/'.local/INTAKE-DEMO-057/correction-v2/first-interrupt-evidence'/(label+'-'+uuid_hex())
+        folder.mkdir(parents=True,exist_ok=False);output=folder/'output'
+        out,err=io.StringIO(),io.StringIO();worker=api.run_worker;real_close=Store.close
+        calls={'genuine_completed_worker':0,'P0_close':0,'factory':0}
+        def analyze(*args,**kwargs):
+            value=worker(*args,**kwargs)
+            self.assertEqual(value['results'][0]['status'],'completed');calls['genuine_completed_worker']+=1
+            if worker_error is not None:raise worker_error
+            return value
+        def close(store):
+            number=calls['P0_close'];calls['P0_close']+=1
+            event=close_events[number] if number<len(close_events) else None
+            if isinstance(event,KeyboardInterrupt):raise event
+            value=real_close(store)
+            if event is not None:raise event
+            return value
+        def factory(*args,**kwargs):
+            calls['factory']+=1;raise OSError('observer stops before any bind')
+        with mock.patch.object(api,'run_worker',analyze),mock.patch.object(Store,'close',close), \
+                mock.patch.object(Store,'open_existing',wraps=Store.open_existing) as opened, \
+                mock.patch.object(api._ui,'create_server',factory),mock.patch.object(sys,'stdout',out),mock.patch.object(sys,'stderr',err):
+            status=api.main(['--output',str(output)])
+        record={'status':status,'calls':calls,'open_existing':opened.call_count,
+                'stdout_bytes':len(out.getvalue().encode()),'fixed_error':json.loads(err.getvalue()) if err.getvalue() else None,
+                'bind_or_serve':0,'originals_preserved':len(list((output/'inbox').rglob('request.*')))==2,
+                'closed_success':(output/'closed.json').exists()}
+        with (folder/'receipt.json').open('x',encoding='utf-8') as stream:json.dump(record,stream)
+        self.assertEqual(calls['genuine_completed_worker'],1);self.assertTrue(record['originals_preserved'])
+        self.assertFalse(record['closed_success']);return record
+
+    def test_first_worker_KI_survives_later_genuine_close_error(self):
+        result=self.p0('worker-KI-close-error',worker_error=KeyboardInterrupt(),close_events=(OSError(),None))
+        self.assertEqual(result['status'],130);self.assertEqual(result['calls']['factory'],0)
+        self.assertEqual(result['open_existing'],0);self.assertIsNone(result['fixed_error'])
+
+    def test_first_P0_close_KI_prevents_P1_open_or_factory(self):
+        result=self.p0('P0-close-first-KI',close_events=(KeyboardInterrupt(),None))
+        self.assertEqual(result['status'],130);self.assertEqual(result['calls']['factory'],0)
+        self.assertEqual(result['open_existing'],0);self.assertIsNone(result['fixed_error'])
+
+    def test_first_close_KI_survives_later_genuine_close_error_and_retry(self):
+        result=self.p0('close-KI-before-error',close_events=(KeyboardInterrupt(),OSError(),None))
+        self.assertEqual(result['status'],130);self.assertEqual(result['calls']['P0_close'],3)
+        self.assertEqual(result['calls']['factory'],0);self.assertEqual(result['open_existing'],0);self.assertIsNone(result['fixed_error'])
+
+    def test_earlier_worker_error_survives_later_close_KI_and_error(self):
+        result=self.p0('worker-error-before-KI',worker_error=OSError(),close_events=(KeyboardInterrupt(),OSError(),None))
+        self.assertEqual(result['status'],1);self.assertEqual(result['calls']['factory'],0);self.assertEqual(result['open_existing'],0)
+        self.assertEqual(result['fixed_error'],{'error':{'code':PREFIX+'unavailable'}})
+
+    def test_first_final_help_flush_KI_returns130_without_fixture(self):
+        api=importlib.import_module('labflow.intake_reference_demo')
+        class Stream(io.StringIO):
+            flushes=0
+            def reconfigure(self,**kwargs):pass
+            def flush(self):
+                self.flushes+=1
+                if self.flushes==2:raise KeyboardInterrupt()
+        out,err=Stream(),io.StringIO()
+        with mock.patch.object(sys,'argv',['demo','--help']),mock.patch.object(sys,'stdout',out),mock.patch.object(sys,'stderr',err), \
+                mock.patch.object(api,'_prepare_demo') as prepare,mock.patch.object(Store,'open_existing') as opened, \
+                mock.patch.object(api._ui,'create_server') as factory:
+            status=api._process_main()
+        self.assertEqual(status,130);self.assertIn('--output',out.getvalue());self.assertEqual(err.getvalue(),'')
+        prepare.assert_not_called();opened.assert_not_called();factory.assert_not_called()
+
+    def process(self,args,*,out_events=(),err_events=(),prepare_error=None):
+        api=importlib.import_module('labflow.intake_reference_demo')
+        folder=ROOT/'.local/INTAKE-DEMO-057/correction-v2/stream-evidence'/uuid_hex();folder.mkdir(parents=True,exist_ok=False)
+        output=folder/'output';events=[];exits=[]
+        class Stream(io.StringIO):
+            def __init__(self,failures):super().__init__();self.flushes=0;self.failures=dict(failures)
+            def reconfigure(self,**kwargs):pass
+            def flush(self):
+                self.flushes+=1
+                if self.flushes in self.failures:raise self.failures[self.flushes]
+        out,err=Stream(out_events),Stream(err_events)
+        store=object.__new__(Store);store.root=output/'state';store.close=mock.Mock(side_effect=lambda:events.append('Store.close'))
+        server=SimpleNamespace(server_port=54321,serve_forever=mock.Mock(side_effect=KeyboardInterrupt()),
+            server_close=mock.Mock(side_effect=lambda:events.append('host.close')))
+        def exit_process(status):exits.append(status);raise SystemExit(status)
+        with mock.patch.object(sys,'argv',['demo',*(args if args is not None else ['--output',str(output)])]), \
+                mock.patch.object(sys,'stdout',out),mock.patch.object(sys,'stderr',err),mock.patch.object(api,'_dependencies'), \
+                mock.patch.object(api,'_prepare_demo',return_value=(store.root,'DEMO-ID',object(),()),side_effect=prepare_error) as prepare, \
+                mock.patch.object(Store,'open_existing',return_value=store) as opened, \
+                mock.patch.object(api._ui,'create_server',return_value=server) as factory,mock.patch.object(api.os,'_exit',exit_process):
+            try:status=api._process_main()
+            except SystemExit as ended:status=ended.code
+        return status,out.getvalue(),err.getvalue(),events,exits,prepare.call_count,opened.call_count,factory.call_count
+
+    def test_help_final_KI_then_output_error_keeps130_without_duplicate_error(self):
+        result=self.process(['--help'],out_events=((2,KeyboardInterrupt()),(3,KeyboardInterrupt())),err_events=((1,OSError()),))
+        self.assertEqual(result[0],130);self.assertEqual(result[2],'');self.assertEqual(result[4],[130]);self.assertEqual(result[5:],(0,0,0))
+
+    def test_earlier_invalid_argument_survives_final_KI_and_output_error(self):
+        result=self.process(['bad'],out_events=((1,KeyboardInterrupt()),),err_events=((2,OSError()),))
+        self.assertEqual(result[0],2);self.assertEqual(result[4],[2]);self.assertEqual(result[5:],(0,0,0))
+        self.assertEqual(json.loads(result[2]),{'error':{'code':PREFIX+'invalid_argument'}})
+
+    def test_earlier_preparation_failure_survives_final_KI_and_output_error(self):
+        result=self.process(None,prepare_error=OSError(),out_events=((1,KeyboardInterrupt()),),err_events=((2,OSError()),))
+        self.assertEqual(result[0],1);self.assertEqual(result[4],[1]);self.assertEqual(result[5:],(1,0,0))
+        self.assertEqual(json.loads(result[2]),{'error':{'code':PREFIX+'unavailable'}})
+
+    def test_earlier130_survives_repeated_final_KI_and_output_error(self):
+        result=self.process(None,prepare_error=KeyboardInterrupt(),out_events=((1,KeyboardInterrupt()),(2,KeyboardInterrupt())),err_events=((1,OSError()),))
+        self.assertEqual(result[0],130);self.assertEqual(result[2],'');self.assertEqual(result[4],[130]);self.assertEqual(result[5:],(1,0,0))
+
+    def test_after_ready_drain_stays0_during_repeated_module_flush_KI(self):
+        result=self.process(None,out_events=((2,KeyboardInterrupt()),(3,KeyboardInterrupt())))
+        self.assertEqual(result[0],0);self.assertEqual(result[2],'');self.assertEqual(result[3],['host.close','Store.close'])
+        self.assertEqual(result[4],[]);self.assertEqual(result[5:],(1,1,1));self.assertEqual(json.loads(result[1])['kind'],'intake_reference_demo_ready')
+
+    def test_actual_module_help_final_flush_KI_exits130(self):
+        code=r'''
+import io,json,os,runpy,sys
+calls={'prepare':0,'factory':0}
+def profile(frame,event,arg):
+ if event=='call' and frame.f_code.co_name=='_prepare_demo':calls['prepare']+=1
+ if event=='call' and frame.f_globals.get('__name__')=='labflow.ui_server' and frame.f_code.co_name=='create_server':calls['factory']+=1
+class Stream(io.StringIO):
+ def __init__(self):super().__init__();self.flushes=0
+ def reconfigure(self,**kwargs):pass
+ def flush(self):
+  self.flushes+=1
+  if self.flushes in (2,3):raise KeyboardInterrupt()
+sys.setprofile(profile);out=Stream();sys.stdout=out;sys.argv=['demo','--help']
+try:runpy.run_module('labflow.intake_reference_demo',run_name='__main__')
+except SystemExit as ended:
+ os.write(1,json.dumps({'status':ended.code,'calls':calls,'help_written':'--output' in out.getvalue()}).encode())
+ raise
+'''
+        result=subprocess.run([sys.executable,'-X','utf8','-B','-c',code],cwd=ROOT,capture_output=True,timeout=10)
+        self.assertEqual(result.returncode,130);self.assertEqual(result.stderr,b'')
+        value=json.loads(result.stdout);self.assertEqual(value['status'],130);self.assertEqual(value['calls'],{'prepare':0,'factory':0});self.assertTrue(value['help_written'])
+
+
 _CHILD = r'''
 import json,os,runpy,sqlite3,sys,threading,time
 from pathlib import Path
