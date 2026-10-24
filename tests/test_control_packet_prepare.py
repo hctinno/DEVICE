@@ -240,26 +240,33 @@ class ControlPacketPrepareTests(unittest.TestCase):
     def test_reparse_source_workspace_parent_and_leaf_are_rejected(self):
         parent = self.destination.parent
         parent.mkdir(parents=True)
-        original_lstat = os.lstat
+        original_info, original_stat = prepare._WindowsIO.info, prepare._WindowsIO.stat_file
         for target in (self.source, self.workspace, parent, self.source / "metadata" / "data.json"):
             with self.subTest(target=target.name):
-                def reparse(path, *args, **kwargs):
-                    result = original_lstat(path, *args, **kwargs)
-                    if Path(path) == target:
+                def reparse_info(backend, descriptor, **kwargs):
+                    result = original_info(backend, descriptor, **kwargs)
+                    if backend.directories.get(target) == descriptor:
                         return types.SimpleNamespace(st_mode=result.st_mode, st_file_attributes=0x400)
                     return result
-                with mock.patch.object(prepare.os, "lstat", side_effect=reparse):
+
+                def reparse_stat(backend, path):
+                    result = original_stat(backend, path)
+                    if path == target:
+                        return types.SimpleNamespace(st_mode=result.st_mode, st_file_attributes=0x400)
+                    return result
+
+                with mock.patch.object(prepare._WindowsIO, "info", reparse_info), \
+                        mock.patch.object(prepare._WindowsIO, "stat_file", reparse_stat):
                     self.error("packet_prepare_path_invalid")
         self.assertFalse(self.destination.exists())
 
     def test_opened_destination_identity_must_match_its_path(self):
-        original_open, original_fstat = os.open, os.fstat
+        original_create, original_fstat = prepare._WindowsIO.create_file, os.fstat
         created = set()
 
-        def track(path, flags, *args, **kwargs):
-            descriptor = original_open(path, flags, *args, **kwargs)
-            if flags & os.O_EXCL:
-                created.add(descriptor)
+        def track(backend, path):
+            descriptor = original_create(backend, path)
+            created.add(descriptor)
             return descriptor
 
         def changed(descriptor):
@@ -269,7 +276,7 @@ class ControlPacketPrepareTests(unittest.TestCase):
                                              st_dev=info.st_dev, st_ino=info.st_ino + 1)
             return info
 
-        with mock.patch.object(prepare.os, "open", side_effect=track), \
+        with mock.patch.object(prepare._WindowsIO, "create_file", track), \
                 mock.patch.object(prepare.os, "fstat", side_effect=changed):
             self.error("packet_prepare_path_invalid")
         self.incomplete()
@@ -379,18 +386,18 @@ class ControlPacketPrepareTests(unittest.TestCase):
             self.assertTrue(any(path.is_file() for path in self.destination.rglob("*")))
 
     def test_existing_file_injected_during_copy_is_not_overwritten(self):
-        original_open = os.open
+        original_create = prepare._WindowsIO.create_file
         injected = None
 
-        def collide(path, flags, *args, **kwargs):
+        def collide(backend, path):
             nonlocal injected
             path = Path(path)
-            if flags & os.O_EXCL and path.name == "data.json" and injected is None:
+            if path.name == "data.json" and injected is None:
                 path.write_bytes(b"foreign content")
                 injected = path
-            return original_open(path, flags, *args, **kwargs)
+            return original_create(backend, path)
 
-        with mock.patch.object(prepare.os, "open", side_effect=collide):
+        with mock.patch.object(prepare._WindowsIO, "create_file", collide):
             self.error("packet_prepare_copy_failed")
         self.incomplete()
         self.assertIsNotNone(injected)
@@ -428,7 +435,7 @@ class ControlPacketPrepareTests(unittest.TestCase):
 
     def test_receipt_publish_failure_keeps_complete_tmp_without_marker(self):
         before = self.snapshot()
-        with mock.patch.object(prepare.os, "link", side_effect=OSError("PRIVATE-SECRET no hardlinks")):
+        with mock.patch.object(prepare._WindowsIO, "link_receipt", side_effect=OSError("PRIVATE-SECRET no hardlinks")):
             self.error("packet_prepare_receipt_failed")
         self.incomplete()
         temporary = list(self.destination.glob(".prepared-receipt-*.tmp"))
@@ -437,14 +444,14 @@ class ControlPacketPrepareTests(unittest.TestCase):
         self.assertEqual(before, self.snapshot())
 
     def test_receipt_write_or_flush_failure_keeps_partial_without_marker(self):
-        original_open, original_write = os.open, os.write
+        original_create, original_write = prepare._WindowsIO.create_file, os.write
         original_id = self.packet_id
         for mode in ("write", "flush"):
             self.packet_id = original_id + "-" + mode
             receipt_descriptors = set()
 
-            def track(path, flags, *args, **kwargs):
-                fd = original_open(path, flags, *args, **kwargs)
+            def track(backend, path):
+                fd = original_create(backend, path)
                 if Path(path).name.startswith(".prepared-receipt-"):
                     receipt_descriptors.add(fd)
                 return fd
@@ -454,7 +461,7 @@ class ControlPacketPrepareTests(unittest.TestCase):
                     raise OSError("PRIVATE-SECRET receipt write")
                 return original_write(fd, data)
 
-            with self.subTest(mode=mode), mock.patch.object(prepare.os, "open", side_effect=track), \
+            with self.subTest(mode=mode), mock.patch.object(prepare._WindowsIO, "create_file", track), \
                     mock.patch.object(prepare.os, "write", side_effect=write):
                 if mode == "flush":
                     with mock.patch.object(prepare.os, "fsync", side_effect=OSError("PRIVATE-SECRET flush")):
@@ -465,15 +472,206 @@ class ControlPacketPrepareTests(unittest.TestCase):
             self.assertEqual(len(list(self.destination.glob(".prepared-receipt-*.tmp"))), 1)
 
     def test_concurrent_final_marker_is_preserved_without_overwrite(self):
-        original_link = os.link
+        original_link = prepare._WindowsIO.link_receipt
 
-        def collide(source, destination, *args, **kwargs):
-            Path(destination).write_bytes(b"foreign marker")
-            return original_link(source, destination, *args, **kwargs)
+        def collide(backend, descriptor, marker):
+            marker.write_bytes(b"foreign marker")
+            return original_link(backend, descriptor, marker)
 
-        with mock.patch.object(prepare.os, "link", side_effect=collide):
+        with mock.patch.object(prepare._WindowsIO, "link_receipt", collide):
             self.error("packet_prepare_receipt_failed")
         self.assertEqual((self.destination / "prepared-receipt.json").read_bytes(), b"foreign marker")
+
+    def test_parent_junction_race_before_create_never_creates_outside_file(self):
+        outside = self.base / "race-outside"
+        outside.mkdir()
+        foreign = outside / "foreign.txt"
+        foreign.write_bytes(b"foreign content")
+        before = self.snapshot()
+        original_create = prepare._WindowsIO.create_file
+        attempted = swapped = False
+        parent = self.destination / "metadata"
+
+        def race(backend, path):
+            nonlocal attempted, swapped
+            if Path(path) == parent / "data.json" and not attempted:
+                attempted = True
+                try:
+                    parent.rename(parent.with_name("metadata-preserved"))
+                    if os.name == "nt":
+                        subprocess.run(["cmd.exe", "/d", "/c", "mklink", "/J", str(parent), str(outside)],
+                                       capture_output=True, check=True, creationflags=subprocess.CREATE_NO_WINDOW)
+                    else:
+                        parent.symlink_to(outside, target_is_directory=True)
+                    swapped = True
+                except OSError:
+                    pass
+            return original_create(backend, path)
+
+        try:
+            with mock.patch.object(prepare._WindowsIO, "create_file", race):
+                try:
+                    result = self.call()
+                    self.assertEqual(result["state"], "complete")
+                except prepare.ControlPacketPrepareError:
+                    pass
+            self.assertTrue(attempted)
+            self.assertFalse((outside / "data.json").exists())
+            self.assertEqual(foreign.read_bytes(), b"foreign content")
+            self.assertEqual(before, self.snapshot())
+        finally:
+            if swapped:
+                if os.name == "nt":
+                    os.rmdir(parent)
+                else:
+                    parent.unlink()
+
+    def test_receipt_path_swap_at_publish_never_returns_invalid_complete(self):
+        original_link = prepare._WindowsIO.link_receipt
+        attempted = False
+
+        def race(backend, descriptor, marker):
+            nonlocal attempted
+            attempted = True
+            path = next(marker.parent.glob(".prepared-receipt-*.tmp"))
+            try:
+                path.rename(path.with_name(path.name + ".preserved"))
+                path.write_bytes(b"INVALID-AT-PUBLISH")
+            except OSError:
+                pass
+            return original_link(backend, descriptor, marker)
+
+        with mock.patch.object(prepare._WindowsIO, "link_receipt", race):
+            try:
+                result = self.call()
+            except prepare.ControlPacketPrepareError:
+                result = None
+        self.assertTrue(attempted)
+        if result is not None:
+            self.assertEqual(json.loads((self.destination / "prepared-receipt.json").read_bytes()), result)
+
+    def test_wrong_published_inode_is_not_reported_complete(self):
+        def wrong(backend, descriptor, marker):
+            marker.write_bytes(b"INVALID-AT-PUBLISH")
+
+        with mock.patch.object(prepare._WindowsIO, "link_receipt", wrong):
+            self.error("packet_prepare_receipt_failed")
+        self.assertEqual((self.destination / "prepared-receipt.json").read_bytes(), b"INVALID-AT-PUBLISH")
+
+    def set_private_mountpoint(self, directory, outside):
+        """Test-owned attribute-only reparse mutation, stronger than a rename race."""
+        import ctypes
+        from ctypes import wintypes
+        import struct
+
+        self.assertTrue(directory.resolve().is_relative_to(self.base.resolve()))
+        self.assertTrue(outside.resolve().is_relative_to(self.base.resolve()))
+        kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel.CreateFileW.argtypes = [wintypes.LPCWSTR, wintypes.DWORD, wintypes.DWORD,
+                                      ctypes.c_void_p, wintypes.DWORD, wintypes.DWORD, wintypes.HANDLE]
+        kernel.CreateFileW.restype = wintypes.HANDLE
+        kernel.CloseHandle.argtypes = [wintypes.HANDLE]
+        kernel.CloseHandle.restype = wintypes.BOOL
+        kernel.DeviceIoControl.argtypes = [wintypes.HANDLE, wintypes.DWORD, ctypes.c_void_p,
+                                          wintypes.DWORD, ctypes.c_void_p, wintypes.DWORD,
+                                          ctypes.POINTER(wintypes.DWORD), ctypes.c_void_p]
+        kernel.DeviceIoControl.restype = wintypes.BOOL
+        handle = kernel.CreateFileW(str(directory), 0x100, 7, None, 3, 0x2200000, None)
+        if handle == ctypes.c_void_p(-1).value:
+            raise ctypes.WinError(ctypes.get_last_error())
+        substitute = ("\\??\\" + str(outside)).encode("utf-16-le")
+        printed = str(outside).encode("utf-16-le")
+        paths = substitute + b"\x00\x00" + printed + b"\x00\x00"
+        raw = struct.pack("<LHHHHHH", 0xA0000003, 8 + len(paths), 0,
+                          0, len(substitute), len(substitute) + 2, len(printed)) + paths
+        buffer = ctypes.create_string_buffer(raw)
+        returned = wintypes.DWORD()
+        if not kernel.DeviceIoControl(handle, 0x900A4, buffer, len(raw), None, 0,
+                                      ctypes.byref(returned), None):
+            code = ctypes.get_last_error()
+            kernel.CloseHandle(handle)
+            raise ctypes.WinError(code)
+
+        def restore_owned_fixture():
+            clear = ctypes.create_string_buffer(struct.pack("<LHH", 0xA0000003, 0, 0))
+            try:
+                if not kernel.DeviceIoControl(handle, 0x900AC, clear, 8, None, 0,
+                                              ctypes.byref(returned), None):
+                    raise ctypes.WinError(ctypes.get_last_error())
+            finally:
+                kernel.CloseHandle(handle)
+
+        return restore_owned_fixture
+
+    def test_in_place_reparse_at_native_create_cannot_redirect_outside(self):
+        outside = self.base / "in-place-outside"
+        outside.mkdir()
+        foreign = outside / "foreign.txt"
+        foreign.write_bytes(b"foreign content")
+        before = self.snapshot()
+        original_init = prepare._WindowsIO.__init__
+        restore = None
+        attempted = False
+
+        def initialize(backend):
+            original_init(backend)
+            original_create = backend.native.NtCreateFile
+
+            def create(*args):
+                nonlocal attempted, restore
+                attrs = backend.ctypes.cast(args[2], backend.ctypes.POINTER(backend.ObjectAttributes)).contents
+                name = attrs.ObjectName.contents.Buffer
+                if args[7] == 2 and name == "data.json" and not attempted:
+                    attempted = True
+                    restore = self.set_private_mountpoint(self.destination / "metadata", outside)
+                return original_create(*args)
+
+            backend.native.NtCreateFile = create
+
+        try:
+            with mock.patch.object(prepare._WindowsIO, "__init__", initialize):
+                self.error("packet_prepare_copy_failed")
+            self.assertTrue(attempted)
+            self.assertFalse((outside / "data.json").exists())
+            self.assertEqual(foreign.read_bytes(), b"foreign content")
+            self.assertEqual(before, self.snapshot())
+            self.incomplete()
+        finally:
+            if restore is not None:
+                restore()
+
+    def test_receipt_write_attempt_at_publish_cannot_corrupt_complete_bytes(self):
+        original_link = prepare._WindowsIO.link_receipt
+        attempted = False
+
+        def write(backend, descriptor, marker):
+            nonlocal attempted
+            attempted = True
+            temporary = next(marker.parent.glob(".prepared-receipt-*.tmp"))
+            try:
+                temporary.write_bytes(b"INVALID-AT-PUBLISH")
+            except OSError:
+                pass
+            return original_link(backend, descriptor, marker)
+
+        with mock.patch.object(prepare._WindowsIO, "link_receipt", write):
+            result = self.call()
+        self.assertTrue(attempted)
+        self.assertEqual(json.loads((self.destination / "prepared-receipt.json").read_bytes()), result)
+
+    def test_missing_safe_backend_rejects_before_destination_writes(self):
+        before = self.snapshot()
+        with mock.patch.object(prepare, "_WINDOWS_BACKEND_AVAILABLE", False):
+            self.error("packet_prepare_copy_failed")
+        self.assertFalse((self.workspace / ".local").exists())
+        self.assertEqual(before, self.snapshot())
+
+    def test_native_handles_are_released_without_changing_source_permissions(self):
+        permissions = {p: p.stat().st_mode for p in self.source.rglob("*") if p.is_file()}
+        self.call()
+        self.assertEqual(permissions, {p: p.stat().st_mode for p in permissions})
+        self.source.rename(self.source.with_name("released-source"))
+        self.destination.rename(self.destination.with_name("released-destination"))
 
 
 if __name__ == "__main__":
