@@ -1,0 +1,14 @@
+# 장비 제어자료 카탈로그
+
+2026-10-24 · Asia/Seoul. 지정 조사 커밋 `8dec2d783b99609b27fb37f82752f17146206f4d`의 [원본 레코드](../research/equipment-control-2026-10-24/deliverables/model_control_sources.json)를 그대로 두고, 현재 기준정보·프로필 후보·이전 참고 URL을 별도 읽기 자료로 연결한다. [설계](../docs/superpowers/specs/2026-10-24-control-source-catalog-design.md)와 [어댑터 계획](../docs/fcc/control_adapter_roadmap.md)을 따른다.
+
+- [registry_overlay.json](registry_overlay.json): 원본을 중복 저장하지 않는 3,137개 인수 메타데이터와 64개 프로필의 텍스트 후보. 원본 레코드와 item_id로 결합하면 인계 overlay의 레코드 전체를 복원한다. `integration_state`는 인계 당시 관찰이며 현재 앱의 장비 지원 상태가 아니다.
+- [source_url_index.json](source_url_index.json): URL 문자열을 그대로 비교한 1,690개 색인. 모델 출처 1,624개와 이전 참고 83개의 중복 17개를 보존한다. 출처별 권리·접근·근거는 원본의 관계 2,260개에 남아 있으며 URL 단위로 합치지 않는다.
+- [prior_vendor_references.json](prior_vendor_references.json): 이전 30개/제조사 조사 53개 참고 링크. 이번 개발 인수에서 모두 다시 내려받거나 실행한 것이 아니다.
+- [review_notes.json](review_notes.json): N9030A의 IVI/MCP IDF 차이, DMM6500 제조사·권리, N1921A 센서 관계, N1911A/N1914A 구별에 관한 총괄 검토. 원본 조사 문장을 대체하지 않는다.
+
+현재 DB를 SQLite `mode=ro`·`query_only`로 다시 대조했다. 모델 ID 2,867개, 장비 ID와 모델 관계 6,470개에 누락·불일치 0개이며 DB SHA-256은 전후 `1b51105dc845ee84803df14b012170cedd354180842740912f469b5231c8137b`로 같다. null model_id의 식별 항목 270개를 새 모델로 만들지 않았다. 최종 identity_unresolved 176개와는 다른 집계다. 등록행·조사 항목은 물리 가동 대수를 뜻하지 않는다.
+
+64개 프로필의 비교 결과는 정규화 후보 37개, 다른 제조사 표기의 같은 모델 후보 9개, 텍스트 후보 없음 18개다. 다중 후보·별칭·기능별 파생 프로필을 보존하며 설치 자산·FW·옵션 binding을 확정하지 않는다. 원본 DB·Store·VirtualFleet catalog와 조사 SQLite를 서로 교체하지 않는다.
+
+모든 항목의 adapter_support_status는 `not_assessed`, vendor_binary_executed와 hardware_verified는 false다. SDK·SCPI·제조사 Mock·실장비 검증은 수행 증거가 생긴 별도 지원 기록으로 관리한다. 카탈로그 조회는 장비 연결·탐색·명령·외부 코드 설치를 실행하지 않는다. 로컬 인계의 원본·전체 해시 영수증은 `.local/vendor-control/20261024-001/`에 보존했고 이 공개 자료에는 PC 절대 경로나 사용자 원문 payload를 넣지 않았다.

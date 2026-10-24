@@ -1,0 +1,984 @@
+{
+  "schema_version": 1,
+  "kind": "equipment_control_prior_references",
+  "observed_date": "2026-10-24",
+  "timezone": "Asia/Seoul",
+  "provenance_sha256": "4a4ba2fef3c18c500854eb06cb975917b79a3d7821b16d7baae512869e50b321",
+  "links": [
+    {
+      "id": "U01",
+      "name": "키사이트 MCP 다운로드",
+      "url": "https://www.keysight.com/kr/ko/lib/software-detail/computer-software/keysight-mcp-server-for-instrument-control.html",
+      "user_provided": true,
+      "priority": "P0",
+      "review": "다운로드 페이지와 릴리스 설명 확인",
+      "observed_version": "2026-10-20 / 1.1 / build 1.1.20",
+      "use": "명령 구성·미리보기·실장비/MCP 연결과 Mock 적용성 검토",
+      "remaining": "사용 버전 고정, IDF·Mock·승인·영속 상태의 실제 동작 확인"
+    },
+    {
+      "id": "U02",
+      "name": "키사이트 IO Libraries 다운로드",
+      "url": "https://www.keysight.com/kr/ko/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html",
+      "user_provided": true,
+      "priority": "P0",
+      "review": "원 페이지 확인 후 일부 재조회 실패를 공식 지역 페이지·도움말로 보완",
+      "use": "VISA·PC 장비 연결·통신 진단",
+      "remaining": "현장 OS/버스/기존 VISA와의 호환·설치 범위 확인"
+    },
+    {
+      "id": "U03",
+      "name": "R&S RsInstrument",
+      "url": "https://github.com/Rohde-Schwarz/RsInstrument",
+      "user_provided": true,
+      "priority": "P0",
+      "review": "README·pyproject·LICENSE·MCP 문서·시뮬레이션 소스 확인",
+      "observed_version": "pyproject 1.131.0 / Python >=3.10 / MIT",
+      "use": "공식 Python 드라이버·MCP 재사용",
+      "remaining": "고정 커밋·허용 라이선스·지원 장비·동작 계약·버전별 가상 검증"
+    },
+    {
+      "id": "U04",
+      "name": "키사이트 GitHub 조직",
+      "url": "https://github.com/keysight",
+      "user_provided": true,
+      "priority": "P1",
+      "review": "당시 공개 109개 저장소 목록과 관련 README 선별 확인",
+      "use": "관련 공개 소스 탐색",
+      "remaining": "필요한 제품·모델별 소스 선별; 전체 저장소의 기술 검증으로 집계하지 않음"
+    },
+    {
+      "id": "R01",
+      "name": "R&S 공식 제어 예제",
+      "url": "https://github.com/Rohde-Schwarz/Examples",
+      "priority": "P0",
+      "review": "루트 README에서 RsInstrument·모델별 SCPI·IVI 예제 분류 확인",
+      "use": "모델별 어댑터와 명령 예제",
+      "remaining": "우리 실제 장비·FW·옵션에 맞는 예제 선별"
+    },
+    {
+      "id": "R02",
+      "name": "RsFsw 시작 문서",
+      "url": "https://rohde-schwarz.github.io/RsFsw_PythonDocumentation/getting_started.html",
+      "priority": "P0",
+      "review": "공식 모델별 Python API 설명 확인",
+      "observed_version": "문서 6.31.0.218",
+      "use": "FSW/FSVA 계열 명령 API 참고",
+      "remaining": "실제 모델·FW·옵션별 지원 확인; 카탈로그 이름만으로 해당 드라이버를 확정하지 않음"
+    },
+    {
+      "id": "R03",
+      "name": "RsFsw 릴리스 이력",
+      "url": "https://rohde-schwarz.github.io/RsFsw_PythonDocumentation/readme.html",
+      "priority": "P0",
+      "review": "지원 모델·FW에 연결된 릴리스 설명 확인",
+      "use": "모델/FW별 적용성 기록",
+      "remaining": "사용 릴리스의 지원 목록 재확인"
+    },
+    {
+      "id": "R04",
+      "name": "RsInstrument 단계별 안내",
+      "url": "https://rsinstrument.readthedocs.io/en/latest/StepByStepGuide.html",
+      "priority": "P0",
+      "review": "통신·발견·MCP·쓰기 정책 문서 확인",
+      "use": "동기화·오류·MCP 통합 계약",
+      "remaining": "도구별 부작용·권한·지원 모델을 우리 실행 계약과 대조"
+    },
+    {
+      "id": "R05",
+      "name": "RsInstrument MCP 안내 위치",
+      "url": "https://rsinstrument.readthedocs.io/en/latest/StepByStepGuide.html#mcp-server",
+      "priority": "P0",
+      "review": "공식 MCP 설치·실행·확장 API 설명 확인",
+      "use": "MCP 도구 재사용 후보",
+      "remaining": "설치·실행은 검토 자료와 별도로 범위 확인"
+    },
+    {
+      "id": "R06",
+      "name": "RsInstrument 클래스와 Simulate 옵션",
+      "url": "https://rsinstrument.readthedocs.io/en/latest/RsInstrument.html",
+      "priority": "P0",
+      "review": "Simulate=True 옵션·통신 선택 설명 확인",
+      "use": "드라이버 가상 세션 구성",
+      "remaining": "단순 시뮬레이션과 장비 동작·물리 모델을 구분"
+    },
+    {
+      "id": "R07",
+      "name": "RsInstrument MCP API",
+      "url": "https://rsinstrument.readthedocs.io/en/latest/RsInstrument.mcp.html",
+      "priority": "P0",
+      "review": "공식 MCP 조립·정책 API 문서 확인",
+      "use": "기존 도구 계층에 제조사 도구 연결 검토",
+      "remaining": "FastMCP/SDK 버전과 우리 MCP 계약의 호환 확인"
+    },
+    {
+      "id": "R08",
+      "name": "RsInstrument 시뮬레이션 소스",
+      "url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/main/RsInstrument/Internal/VisaSessionSim.py",
+      "priority": "P0",
+      "review": "VisaSessionSim.py 정적 검토",
+      "use": "설정 캐시·응답 단순화의 범위 확인",
+      "remaining": "query_opc 성공·오류 없음 고정 반환을 실측 증거로 쓰지 않음"
+    },
+    {
+      "id": "R09",
+      "name": "RsInstrument MCP 소스 문서",
+      "url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/main/docs/source/Chapter_17_MCP.rst",
+      "priority": "P0",
+      "review": "도구·범위·쓰기 정책·확장 API 확인",
+      "use": "MCP 통합의 명확한 기능 경계",
+      "remaining": "MCP 정책과 코어 write 호출 정책을 별도로 다룸"
+    },
+    {
+      "id": "R10",
+      "name": "RsInstrument 패키지 구성",
+      "url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/main/pyproject.toml",
+      "priority": "P0",
+      "review": "버전·Python·기본/추가 의존성·라이선스 확인",
+      "use": "재현 가능한 선택 의존성 검토",
+      "remaining": "현행 프로젝트의 의존성 충돌과 배포 방식 확인"
+    },
+    {
+      "id": "R11",
+      "name": "RsInstrument 라이선스",
+      "url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/main/LICENSE",
+      "priority": "P0",
+      "review": "MIT 라이선스 파일 확인",
+      "use": "소스 인수·재사용 고지 확인",
+      "remaining": "실제 선택 릴리스·모델별 패키지 라이선스 개별 확인"
+    },
+    {
+      "id": "K01",
+      "name": "키사이트 MCP 구조",
+      "url": "https://helpfiles.keysight.com/kmsic/English/keysight_mcp_for_instrument_control/Content/architecture.html",
+      "priority": "P0",
+      "review": "VISA 제공자·Mock·직접 소켓·MCP 구조 확인",
+      "use": "제어 경로·Mock 경로 설계 입력",
+      "remaining": "문서의 Windows 표와 최신 Linux 릴리스 차이 대조"
+    },
+    {
+      "id": "K02",
+      "name": "키사이트 MCP 실행 절차",
+      "url": "https://helpfiles.keysight.com/kmsic/English/keysight_mcp_for_instrument_control/Content/workflow.html",
+      "priority": "P0",
+      "review": "IDF·명령 미리보기·엔지니어 승인 설명 확인",
+      "use": "실행·승인 계약 검토",
+      "remaining": "최신 버전의 실제 승인 정책 확인; 임의 우회하지 않음"
+    },
+    {
+      "id": "K03",
+      "name": "키사이트 MCP 도움말 릴리스 노트",
+      "url": "https://helpfiles.keysight.com/kmsic/English/keysight_mcp_for_instrument_control/Content/release-notes.html",
+      "priority": "P0",
+      "review": "2026년 5월 0.1 설명과 Mock 제공자 확인",
+      "observed_version": "도움말 0.1",
+      "use": "초기 기능과 알려진 한계 참고",
+      "remaining": "다운로드 페이지 1.1과의 판본 차이 확인"
+    },
+    {
+      "id": "K04",
+      "name": "키사이트 MCP 절차",
+      "url": "https://helpfiles.keysight.com/kmsic/English/keysight_mcp_for_instrument_control/Content/procedures.html",
+      "priority": "P1",
+      "review": "문서화된 다단계 절차 개념 확인",
+      "use": "시험 절차와 제조사 명령 묶음의 대응 검토",
+      "remaining": "최신 도구 API는 list_procedures/resolve_procedure 제거 여부 대조"
+    },
+    {
+      "id": "K05",
+      "name": "IO Libraries 공식 지역 페이지",
+      "url": "https://www.keysight.com/kor/ko/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html",
+      "priority": "P0",
+      "review": "공식 검색 결과의 릴리스·지원 인터페이스 설명 확인",
+      "observed_version": "2026-09-14 / 2026 Update 1 / build 21.4.204",
+      "use": "IOLS 릴리스 확인 보완",
+      "remaining": "설치 파일과 릴리스 원문을 P01이 재확인"
+    },
+    {
+      "id": "K06",
+      "name": "IO Libraries 온라인 도움말",
+      "url": "https://www.keysight.com/eng/en/lib/resources/help-files/io-libraries-suite-online-help.html",
+      "priority": "P0",
+      "review": "제품 구성·Windows 2026 도움말 링크 확인",
+      "use": "VISA·Connection Expert·Interactive IO·IO Monitor 안내",
+      "remaining": "실제 OS와 설치 버전에 맞는 문서 선택"
+    },
+    {
+      "id": "K07",
+      "name": "IO Libraries 구성 안내",
+      "url": "https://helpfiles.keysight.com/IO_Libraries_Suite/English/IOLS_Windows/IOLS/Content/About%20Keysight%20IO%20Libraries.htm",
+      "priority": "P0",
+      "review": "VISA API·연결/진단 구성요소 설명 확인",
+      "use": "현장 PC 통신 계층 검토",
+      "remaining": "장비별 명령 지원을 연결 가능 여부와 구별"
+    },
+    {
+      "id": "P01",
+      "name": "PyVISA-sim 저장소",
+      "url": "https://github.com/pyvisa/pyvisa-sim",
+      "priority": "P0",
+      "review": "공식 저장소 설명 확인",
+      "use": "VISA 메시지 통신의 가상 backend",
+      "remaining": "버전·응답 정의·오류 모델·의존성 확인"
+    },
+    {
+      "id": "P02",
+      "name": "PyVISA-sim 안내",
+      "url": "https://pyvisa.readthedocs.io/projects/pyvisa-sim/en/latest/index.html",
+      "priority": "P0",
+      "review": "@sim backend와 사용자 정의 장비 구성 확인",
+      "use": "하드웨어 없는 어댑터 검사",
+      "remaining": "임의 모델의 완전한 SCPI/펌웨어 구현으로 간주하지 않음"
+    },
+    {
+      "id": "P03",
+      "name": "PyVISA-sim 장비 정의",
+      "url": "https://pyvisa-sim.readthedocs.io/en/latest/definitions.html",
+      "priority": "P0",
+      "review": "대화·속성·리소스와 응답 정의 설명 확인",
+      "use": "명령·응답 계약의 fixture 표현",
+      "remaining": "물리 계산·상태·고장 정책과 연결"
+    },
+    {
+      "id": "O01",
+      "name": "LabVault",
+      "url": "https://github.com/Keysight/labvault",
+      "priority": "P1",
+      "review": "README의 네트워크 시험소 자산·예약·토폴로지·텔레메트리 확인",
+      "use": "운영 자원 관리 참고",
+      "remaining": "RF/EMC 모델·현행 코드·라이선스와 적합성 개별 확인"
+    },
+    {
+      "id": "O02",
+      "name": "InfraGraph",
+      "url": "https://github.com/Keysight/infragraph",
+      "priority": "P1",
+      "review": "README의 제조사 독립 그래프·변환·시각화 설명 확인",
+      "use": "장비·포트·연결 구조 표현 참고",
+      "remaining": "RF 경로 의미·측정 상태를 자체 계약으로 연결"
+    },
+    {
+      "id": "O03",
+      "name": "CyPerf MCP",
+      "url": "https://github.com/Keysight/cyperf-mcp",
+      "priority": "P2",
+      "review": "README의 네트워크 성능·보안용 100도구·실험적 API 확인",
+      "use": "해당 네트워크 시험 범위에서 재사용 검토",
+      "remaining": "CyPerf controller·SDK·라이선스·API 안정성 확인; RF/EMC 지원과 구별"
+    },
+    {
+      "id": "D01",
+      "name": "OpenTAP 기존 설계 참고",
+      "url": "https://doc.opentap.io/Developer%20Guide/What%20is%20OpenTAP/Readme.html",
+      "priority": "P2",
+      "review": "기존 PLAN/IMPLEMENTATION의 후보 참조 경로 확인; 이 페이지 상세 기술 검토는 미수행",
+      "use": "시험 실행 엔진 후보 비교",
+      "remaining": "현재 Python 실행기와 통합 이익·의존성 확인; 채택 미확정"
+    },
+    {
+      "id": "D02",
+      "name": "OpenTAP Runner",
+      "url": "https://doc.opentap.io/runner/",
+      "priority": "P2",
+      "review": "공식 검색 결과의 원격 세션·계획 실행 설명 확인",
+      "use": "추후 실행 엔진 연동 후보",
+      "remaining": "도입 필요성이 확인된 경우에만 상세 검토"
+    },
+    {
+      "id": "M01",
+      "url": "https://github.com/Anritsu/Examples",
+      "labels_in_original": [
+        "공식 SCPI 예제",
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "Anritsu"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M02",
+      "url": "https://github.com/tektronix/keithley/blob/main/Drivers/DMM6500_DAQ6510/DMM6500_Python_Sockets_Driver/DMM6500_Sockets_Driver.py",
+      "labels_in_original": [
+        "DMM6500 Python 소스",
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "Keithley"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M03",
+      "url": "https://speag.swiss/products/dasy8/dasy8-state-of-the-art-wireless-device-compliance-testing/videos",
+      "labels_in_original": [
+        "공식 DASY 영상 목록",
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "SPEAG"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M04",
+      "url": "https://www.youtube.com/watch?v=WuKmhIvT7-M",
+      "labels_in_original": [
+        "Automated SAR Report with DASY8/6 API",
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "SPEAG"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M05",
+      "url": "https://www.youtube.com/watch?v=ZG5DfvwzdfY",
+      "labels_in_original": [
+        "Automate Your Testing Workflow",
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "SPEAG"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M06",
+      "url": "https://video-test-measurement.anritsu.com/en-us/detail/video/6165118102001/automation-test-software-ats",
+      "labels_in_original": [
+        "ATS 공식 데모 페이지"
+      ],
+      "manufacturer_groups": [
+        "Anritsu (ATS demo in introductory section)"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M07",
+      "url": "https://raw.githubusercontent.com/Anritsu/Examples/master/LICENSE",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "Anritsu"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M08",
+      "url": "https://dl.cdn-anritsu.com/en-en/test-measurement/files/Product-Introductions/Product-Introduction/mt8862a-el11100.pdf",
+      "labels_in_original": [
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "Anritsu"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M09",
+      "url": "https://github.com/tektronix/Programmatic-Control-Examples",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "Tektronix"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M10",
+      "url": "https://www.tek.com/sample-license",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "Tektronix"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M11",
+      "url": "https://dev.tek.com/en/driver-download",
+      "labels_in_original": [
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "Tektronix"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M12",
+      "url": "https://github.com/tektronix/keithley",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "Keithley"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M13",
+      "url": "https://raw.githubusercontent.com/tektronix/keithley/main/LICENSE",
+      "labels_in_original": [
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "Keithley"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M14",
+      "url": "https://github.com/ni/nidaqmx-python",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "National Instruments"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M15",
+      "url": "https://raw.githubusercontent.com/ni/nidaqmx-python/master/LICENSE",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "National Instruments"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M16",
+      "url": "https://github.com/EspecNorthAmerica/ChamberConnectLibrary",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "ESPEC"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M17",
+      "url": "https://raw.githubusercontent.com/EspecNorthAmerica/ChamberConnectLibrary/master/README.md",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "ESPEC"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M18",
+      "url": "https://espec.com/images/uploads/files/f4t_access_options.pdf",
+      "labels_in_original": [
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "ESPEC"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M19",
+      "url": "https://github.com/ros-industrial/staubli_val3_driver",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "Stäubli"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M20",
+      "url": "https://github.com/ros-industrial/staubli_val3_driver/blob/master/staubli_val3_driver/README.md",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "Stäubli"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M21",
+      "url": "https://www.chromaate.com/en/data_center/driver",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "Chroma"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M22",
+      "url": "https://www.chromaate.com/en/data_center/62000p_series_dc_power_supply",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "Chroma"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M23",
+      "url": "https://github.com/python-ivi/python-ivi",
+      "labels_in_original": [
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "Chroma"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M24",
+      "url": "https://sine.ni.com/apps/utf8/niid_web_display.model_page?p_model_id=24772",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "Yokogawa"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M25",
+      "url": "https://github.com/mcgillowen/yoko-tool",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "Yokogawa"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M26",
+      "url": "https://www.hioki.com/us-en/support/faq/detail/id_n1083515",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "HIOKI"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M27",
+      "url": "https://www.hioki.com/us-en/products/power-meters/3phase-ac-dc/id_5929",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "HIOKI"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M28",
+      "url": "https://manual.hioki.com/en/LR8450/manual/supplement/controlling_communication_commands.html",
+      "labels_in_original": [
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "HIOKI"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M29",
+      "url": "https://global.kikusui.co.jp/sample-code/",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "KIKUSUI"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M30",
+      "url": "https://global.kikusui.co.jp/dri-fir-upd/plz-ap/",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "KIKUSUI"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M31",
+      "url": "https://in.kikusui.co.jp/drivers/",
+      "labels_in_original": [
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "KIKUSUI"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M32",
+      "url": "https://kikusui-europe.com/download-service/",
+      "labels_in_original": [
+        "자료 4"
+      ],
+      "manufacturer_groups": [
+        "KIKUSUI"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M33",
+      "url": "https://www.itechate.com/en/product/ac-power-supply/IT7900.html",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "ITECH"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M34",
+      "url": "https://itechate.com/uploadfiles/%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/user%20manual/it7900/IT7900%20User%20Manual-EN.pdf",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "ITECH"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M35",
+      "url": "https://www.itechate.com/uploadfiles/2019/09/201909191340524052.pdf",
+      "labels_in_original": [
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "ITECH"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M36",
+      "url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "INNCO Systems"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M37",
+      "url": "https://www.innco-systems.de/en/products/controllers",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "INNCO Systems"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M38",
+      "url": "https://www.ets-lindgren.com/get-manuals/2090%281%29.pdf",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "ETS-Lindgren"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M39",
+      "url": "https://www.ets-lindgren.com/manuals/",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "ETS-Lindgren"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M40",
+      "url": "https://lumiloop.de/support/documents-and-downloads/",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "LUMILOOP"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M41",
+      "url": "https://lumiloop.de/downloads/manuals/LSProbe_Manual.pdf",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "LUMILOOP"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M42",
+      "url": "https://lumiloop.de/downloads/manuals/LSPM_Manual.pdf",
+      "labels_in_original": [
+        "자료 3"
+      ],
+      "manufacturer_groups": [
+        "LUMILOOP"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M43",
+      "url": "https://arworld.us/wp-content/uploads/2022/03/FI7000-Manual.pdf",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "AR / Amplifier Research"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M44",
+      "url": "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/em-test/autowave_datasheet_2024-12-13_en.pdf?la=en&revision=6e1c4ce9-11c3-478e-ae65-65914241146f",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "EM TEST / AMETEK CTS"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M45",
+      "url": "https://www.avalontest.com/images/uploaded/File-1437086576.pdf",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "TESEQ / AMETEK CTS"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M46",
+      "url": "https://www.emc-partner.com/products",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "EMC PARTNER"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M47",
+      "url": "https://www.emc-partner.com/downloads/application-sheets/118-application-sheets-ev-charging-stations-4-page/file",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "EMC PARTNER"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M48",
+      "url": "https://www.ni.com/en/support/downloads/tools-network/download.simremote-api-for-labview.html",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "Spirent"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M49",
+      "url": "https://www.vipm.io/package/spirent_lib_simremote_api/",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "Spirent"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M50",
+      "url": "https://www.tdkrfsolutions.tdk.com/products/loop-/system-interface-si-300",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "TDK RF Solutions"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M51",
+      "url": "https://www.tdkrfsolutions.tdk.com/resources",
+      "labels_in_original": [
+        "자료 2"
+      ],
+      "manufacturer_groups": [
+        "TDK RF Solutions"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M52",
+      "url": "https://www.narda-sts.com/index.php?dl=1&eID=dumpFile&f=1433&t=f&token=e9b26b33ae9ffe14801a729d44f4494d97b73258",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "Narda"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    },
+    {
+      "id": "M53",
+      "url": "https://www.schwarzbeck.de/en/component/content/article/13-lisn-line-impedance-stabilisation-networks-amn-artificial-mains-network/23-v-lisn-en.html",
+      "labels_in_original": [
+        "자료 1"
+      ],
+      "manufacturer_groups": [
+        "Schwarzbeck"
+      ],
+      "review": "사용자 조사 문서의 참고 링크 보존. 원문·검색 색인·미열람 상태는 제조사별 기록을 따름. 이 갱신에서 53개 모두 재접속하거나 전량 원문 확보한 것이 아님.",
+      "priority": "정확한 보유 모델과 현재 수집 공백을 P01과 대조해 배정",
+      "source_file": "provided/README.ko.md"
+    }
+  ],
+  "unique_url_count": 83,
+  "scope": "Prior reference observations preserved; not freshly downloaded or functionally verified."
+}

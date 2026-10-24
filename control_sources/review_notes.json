@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "kind": "equipment_control_intake_review_notes",
+  "source_commit": "8dec2d783b99609b27fb37f82752f17146206f4d",
+  "scope": "Coordinator interpretation of the fixed handoff; original source associations remain unchanged. These notes establish no installed model support or hardware verification.",
+  "notes": [
+    {
+      "note_id": "N9030A-IVI-IS-NOT-MCP-IDF",
+      "item_ids": [
+        "MOD-aecdf6d16380a2be",
+        "MOD-c40c6c5f1b4e7ca9"
+      ],
+      "title": "N9030A 드라이버 근거와 MCP 검증 모델 표를 구별",
+      "explanation": "공식 X-Series IVI 계열 지원 근거와 Keysight MCP v1.1의 검증 IDF 표는 별개다. v1.1 PDF 41쪽에는 N9030B가 있고 N9030A의 정확한 모델 등재는 확인되지 않았다. A/B 자동 대체나 현재 설치 IDF·FW·옵션 확정은 하지 않는다.",
+      "evidence": [
+        {
+          "kind": "provided_manual_review",
+          "url": "https://www.keysight.com/kr/ko/lib/software-detail/computer-software/keysight-mcp-server-for-instrument-control.html",
+          "sha256": "90fd83edc588ef382d957120e506098127dceb6c6aaa29baa3bc3fcadc95eaa1",
+          "pdf_pages_1based": [
+            41
+          ]
+        }
+      ]
+    },
+    {
+      "note_id": "DMM6500-MANUFACTURER-AND-LICENSES",
+      "item_ids": [
+        "MOD-4e1a45a25496a054",
+        "MOD-ce43da835609baea"
+      ],
+      "title": "제조사 식별과 코드 경로별 권리 검토",
+      "explanation": "KEITHLEY 항목과 Keysight 표기의 식별 보류 항목을 합치거나 원본 DB를 자동 수정하지 않는다. tm_devices, PyMeasure, Tektronix 조건부 샘플의 권리와 기능 범위는 출처마다 따로 보존한다. 코드 발견은 설치·정확 모델 동작 검증이 아니다.",
+      "evidence": [
+        {
+          "kind": "research_source_associations",
+          "url": "https://github.com/hctinno/DEVICE/tree/8dec2d783b99609b27fb37f82752f17146206f4d/research/equipment-control-2026-10-24",
+          "sha256": "fe895ac47431d9f4f8b407f6e007492b0f4b0e395ad48c9a7eb10b1dcd8418ea",
+          "pdf_pages_1based": []
+        }
+      ]
+    },
+    {
+      "note_id": "N1921A-SENSOR-RELATION-RETAINED",
+      "item_ids": [
+        "MOD-753eb28b11306834",
+        "MOD-a4d91bde0d110ab5"
+      ],
+      "title": "독립 제어 분류와 센서 역할은 별개",
+      "explanation": "독립 제어 비대상 분류여도 기존 센서·교정·호스트 파워미터 관계와 가상 프로필을 유지한다. 이 분류로 센서나 시험망을 삭제하지 않는다. 설치 센서 조합·교정 상태는 아직 확정하지 않았다.",
+      "evidence": [
+        {
+          "kind": "research_and_profile_candidate_review",
+          "url": "https://github.com/hctinno/DEVICE/tree/8dec2d783b99609b27fb37f82752f17146206f4d/research/equipment-control-2026-10-24",
+          "sha256": "fe895ac47431d9f4f8b407f6e007492b0f4b0e395ad48c9a7eb10b1dcd8418ea",
+          "pdf_pages_1based": []
+        }
+      ]
+    },
+    {
+      "note_id": "N1911A-N1914A-EXACT-CONTRACT",
+      "item_ids": [
+        "MOD-48a20d5887cbe5bc",
+        "MOD-5fd207467d05c0fa"
+      ],
+      "title": "파워미터의 정확 모델·센서 계약을 따로 검증",
+      "explanation": "N1911A와 N1914A를 서로 대체하지 않는다. 기존 N1914A 소형 합성 프로필은 실제 SDK·SCPI 전송 지원이 아니다. 모델별 명령·단위·보정·완료·오류와 센서 조합을 공식 판본에 연결한 뒤 재사용 동작을 검증한다.",
+      "evidence": [
+        {
+          "kind": "research_source_associations",
+          "url": "https://github.com/hctinno/DEVICE/tree/8dec2d783b99609b27fb37f82752f17146206f4d/research/equipment-control-2026-10-24",
+          "sha256": "fe895ac47431d9f4f8b407f6e007492b0f4b0e395ad48c9a7eb10b1dcd8418ea",
+          "pdf_pages_1based": []
+        }
+      ]
+    }
+  ]
+}
