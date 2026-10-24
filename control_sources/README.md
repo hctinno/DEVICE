@@ -2,7 +2,7 @@
 
 2026-10-24 · Asia/Seoul. 지정 조사 커밋 `8dec2d783b99609b27fb37f82752f17146206f4d`의 [원본 레코드](../research/equipment-control-2026-10-24/deliverables/model_control_sources.json)를 그대로 두고, 현재 기준정보·프로필 후보·이전 참고 URL을 별도 읽기 자료로 연결한다. [설계](../docs/superpowers/specs/2026-10-24-control-source-catalog-design.md)와 [어댑터 계획](../docs/fcc/control_adapter_roadmap.md)을 따른다.
 
-[읽기 API](../docs/fcc/control_source_catalog_usage.md)와 기존 접수 서버의 [카탈로그 화면](../docs/fcc/control_source_ui_usage.md)을 통합했다. 모델/장비/프로필 ID·출처·라이선스·미평가 상태를 조회하며 원문 코드를 설치하거나 장비에 연결하지 않는다. [통합009](../handoff/development/INTEGRATION-009.md)의 정식 API 브라우저10묶음과 현재 전체 회귀를 확인했다. DUT소스30개/9경로의 별도 보완 조회는 기존 장비 입력/해시를 덮어쓰지 않는 후속으로 구현한다.
+[읽기 API](../docs/fcc/control_source_catalog_usage.md)와 기존 접수 서버의 [카탈로그 화면](../docs/fcc/control_source_ui_usage.md)을 통합했다. 모델/장비/프로필 ID·출처·라이선스·미평가 상태를 조회하며 원문 코드를 설치하거나 장비에 연결하지 않는다. [통합010](../handoff/development/INTEGRATION-010.md)의 실제 API 브라우저10+NAV7묶음과 전체 Python1144/Node72 회귀를 확인했다. [DUT30소스/9경로](DUT-README.md)의 [별도 읽기 API](../docs/fcc/dut_control_catalog_usage.md)도 통합했으며 DUT 화면012는 구현 중이다. 기존 장비 입력/해시를 덮어쓰지 않는다.
 
 - [registry_overlay.json](registry_overlay.json): 원본을 중복 저장하지 않는 3,137개 인수 메타데이터와 64개 프로필의 텍스트 후보. 원본 레코드와 item_id로 결합하면 인계 overlay의 레코드 전체를 복원한다. `integration_state`는 인계 당시 관찰이며 현재 앱의 장비 지원 상태가 아니다.
 - [source_url_index.json](source_url_index.json): URL 문자열을 그대로 비교한 1,690개 색인. 모델 출처 1,624개와 이전 참고 83개의 중복 17개를 보존한다. 출처별 권리·접근·근거는 원본의 관계 2,260개에 남아 있으며 URL 단위로 합치지 않는다.
@@ -15,4 +15,4 @@
 
 64개 프로필의 비교 결과는 정규화 후보 37개, 다른 제조사 표기의 같은 모델 후보 9개, 텍스트 후보 없음 18개다. 다중 후보·별칭·기능별 파생 프로필을 보존하며 설치 자산·FW·옵션 binding을 확정하지 않는다. 원본 DB·Store·VirtualFleet catalog와 조사 SQLite를 서로 교체하지 않는다.
 
-모든 항목의 adapter_support_status는 `not_assessed`, vendor_binary_executed와 hardware_verified는 false다. SDK·SCPI·제조사 Mock·실장비 검증은 수행 증거가 생긴 별도 지원 기록으로 관리한다. 카탈로그 조회는 장비 연결·탐색·명령·외부 코드 설치를 실행하지 않는다. 로컬 인계의 원본·전체 해시 영수증은 `.local/vendor-control/20261024-001/`에 보존했고 이 공개 자료에는 PC 절대 경로나 사용자 원문 payload를 넣지 않았다.
+모든 항목의 adapter_support_status는 `not_assessed`, vendor_binary_executed와 hardware_verified는 false다. 고정 RsInstrument 소스를 private 빌드한 실제 일반 Simulation10관측은 [별도 실행 기록](../handoff/development/INTEGRATION-010.md)에 있으며 정확 장비 모델의 지원을 승인하지 않는다. Keysight Mock·실장비/현장 검증과도 구별한다. 카탈로그 조회는 장비 연결·탐색·명령·외부 코드 설치를 실행하지 않는다. 로컬 인계의 원본·전체 해시 영수증은 `.local/vendor-control/20261024-001/`에 보존했고 이 공개 자료에는 PC 절대 경로나 사용자 원문 payload를 넣지 않았다.

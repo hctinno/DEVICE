@@ -2,6 +2,8 @@
 
 2026-10-24 · Asia/Seoul. [실제 수집 요청](2026-10-24-control-sources-requests.md)에 따라 P01이 검수·동결한 자료를 독립 개발 clone에 비공개 인수한다. 원문·소스/권리·재사용 실행·장비 지원은 따로 기록하며 기존 [고정 카탈로그](../../control_sources/README.md)의 출처 속성을 덮어쓰지 않는다.
 
+현재8패킷128payload/4443631B·JSON104의 인수/ACK와 새 audit 실제 전체 검증을 마쳤다. 이후 고정 RsInstrument 소스의 private 빌드 SDK probe를 소유 수정/독립 Yes 후 인수했고 총괄도 실제 일반 Simulation10관측·runtime163파일 불변·금지 I/O0/종료를 확인했다. [통합010](../../handoff/development/INTEGRATION-010.md)의 최종 실행 기록을 우선한다. 아래 인수 당시 실행0/첫 실패/당시 성공0은 순서별 보존 이력이며 현재 성공을 부정하는 상태가 아니다. 정확 장비 모델/물리/현장 지원은 계속 미평가다.
+
 | 패킷 | 색인 SHA-256 / bytes | 독립 인수 검증 |
 |---|---|---|
 | S04-B0009-v1 / CTRL001 | `9280086206ee62863d8132a7673030a8529d2e95787a14e47060573c91eb58d6` /3815 |16payload/744792B, JSON12개 UTF-8·SHA·bytes PASS |
@@ -37,6 +39,6 @@ S01은27프로필의15후보 관계/14유일 model ID와 DB18모델·12별칭을
 
 S03은 공식 tm_devices의 TSP/Apache-2.0, community PyMeasure SCPI/MIT, Tek socket sample의 제품 한정 조건을 분리한다.14정적 근거와3소스의 AST 색인에서 return-only24개를 기능으로 세지 않는다. PyMeasure 생성자의 `*LANG` 쓰기 후보·측정 설정과 반환값 차이·오류 큐 변경을 어댑터 검토 항목에 반영한다. tm_devices22선언 의존성은 설치 lock/전이 권리 검증이 아니며 Keysight DMM6500 식별 보류를 유지한다. 구체 구현 전 해당 mixin/NOTICE/adapter/release/제품 범위만 후속 검토한다.
 
-SDK-SIM006은 개발2의 private 고정소스/의존성 환경에서 진행 중이다. 첫 실제 Simulation 관측은 부모 PID 결합 검증에서 실패해 성공 집계0으로 보존했다. 통합된 합성 probe 성공이나 이 인수 영수증으로 제조사 SDK 실행 검증을 대체하지 않는다. 현재 추가 사용자 준비물0이다.
+초기 SDK-SIM006 관측은 부모 PID 결합 검증에서 실패해 당시 성공 집계0으로 보존했다. 이후 소유 수정·독립 재리뷰 Yes와 총괄 실제10관측은 위 최신 기록을 따른다. 통합된 합성 검사나 이 자료 인수 영수증을 실제 SDK 실행 증거로 대체하지 않는다. 현재 추가 사용자 준비물0이다.
 
 후속 S05까지8패킷의 누적은 **128payload/4443631B·JSON104개**다. 마지막21파일도 지정 index SHA/bytes와 모두 대조했고 공유 원본 bytes·크기·mtime은 같다. E3632A의 고정 python-ivi commit `cfa45ceade0758debe4bc24ba4c8195222cad1e2`는 정확 class의 초기화/range와 E3600A/SCPI 계열 기능을 구별한다. 단일 출력·P15V/P30V의 프로그래밍 최대값을 정격/DUT 한계로 쓰지 않는다. abort/disable/lock의 pass-only·simulation 측정0·tracking getter 위험과 출력 OFF 미보장을 보존한다. 설정/cache/실측/출력 readback·오류/완료는 별개다. setup의 legacy requires/extras는 pin·설치 검증이 아니며 버전 exec·core/transport와 의존 권리는 미검토다.6신규 원문은 private이며 실제 SDK/실장비 지원으로 승인하지 않는다.

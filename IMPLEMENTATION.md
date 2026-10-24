@@ -1,6 +1,6 @@
 # DGM AutoLab — 구현·시스템 설계 초안
 
-2026-10-24 [통합009](handoff/development/INTEGRATION-009.md): `ControlSourceCatalog`의 고정자료 조회와 기존 `ui_server`의 `/control-sources`·GET/HEAD 전용 API, `intake_model_probe`의 strict framing/고정 Popen 격리, 정확 `VirtualLab`의 N1914A A/window1 ASCII 전송 경계를 인수했다. 전체 Python997/Node67/실제브라우저 두10묶음 PASS다. catalog는 지원 대장이 아니며 실제 SDK/물리/현장 검증과 별도다. DUT공개 소스는 기존 DB/64프로필을 바꾸지 않는 경로·출처 조회로 연결한다. 아래 통합008은 직전 구현 기록이다.
+2026-10-24 [통합010](handoff/development/INTEGRATION-010.md): 기존 catalog API/화면·probe·N1914A 가상 경계 위에 읽기 packet audit/CLI, DUT 고정2JSON의30소스/9경로 API, catalog 탐색, 선언 구간 exact PSD, 격리된 실제 RsInstrument Simulation probe를 인수했다. 새 전체 Python1144/Node72·실제 catalog10+NAV7/접수10묶음과 실제 generic SDK10관측 PASS다. 원문 code/확보·권리/설치·모델 지원/실물 단계를 분리하며 기존 DB·64프로필·Store 권한은 같다. 다음은 source→새 private workspace 준비, 합성 DUT stop 검증, 연속3kHz 최대, DUT 실제 API 화면이다. 실제 RF·현장·실제 AI 검증은 남아 있다. 아래009/008은 이전 구현 기록이다.
 
 2026-10-24 [통합008](handoff/development/INTEGRATION-008.md)에서 보존 generation replay를 complete_job의 현재 profile 준비 전에 연결했고, 명시 밀도 source/정확3kHz 적분과 실제 Python→GET→spectrum DOM 검사를 인수했다. [제어자료 카탈로그](control_sources/README.md)는 원본 조사+별도 overlay의 읽기 입력이며 장비 DB/Store/프로필이나 실제지원 레지스트리를 대체하지 않는다. [어댑터 개발 순서](docs/fcc/control_adapter_roadmap.md)의 자료/원문·권리/재사용/통합/실물/현장 단계를 유지하며 catalog API·화면/정확 N1914A 합성 전송 경계를 개발1·4·3에 실제 배정했다. 기존 SDK/제품Mock/실물 지원으로 과장하지 않는다.
 

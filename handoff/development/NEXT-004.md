@@ -1,16 +1,16 @@
 # 후속 개발 인수 대장 004
 
-현재 기준은 [통합009](INTEGRATION-009.md)의 API/화면·수정probe·가상meter와 전체 Python997/Node67·실제catalog10/기존접수10 PASS다. 아래008·이전 배정 문장은 보존 이력이며 현재 단계는 이 표를 우선한다.
+현재 기준은 [통합010](INTEGRATION-010.md)의 기능0ce8984와 새 전체 Python1144/skip0·Node72·실제catalog10+NAV7/기존접수10 PASS다. 실제 RsInstrument 소프트웨어 Simulation10관측도 총괄이 별도 검증했다. 아래009/008·이전 배정 문장은 보존 이력이며 현재 단계는 이 표를 우선한다.
 
 | 담당 | 인수된 마지막 단위 | 현재 실제 후속 |
 |---|---|---|
-| 개발1 | catalog a65c09e→eb94d42, 독립 Yes | packet-audit7b87815 No2→ownerfix308ad99 재리뷰 Yes·총괄 인수 대기. [CLI003](../../docs/superpowers/specs/2026-10-24-control-packet-cli-design.md) 새 branch/RED 보존·복구 후 구현 |
-| 개발2 | MODEL005 d0a+23d14d5→bbf5ce3/9aa7f13, 최종 Yes | SDK-SIM006 고정 MIT source/의존성·실제 첫관측의 부모PID 실패 보존/수정. 실제 성공 집계0 |
-| 개발3 | METER00680be39d→1854ec8, 독립 Yes | PSD0071712e59 독립 Yes·총괄 인수 대기. 다음 DUT-CATALOG010 경로/출처 조회 신규3파일 실제 배정, root가 정제입력/pin·계약 준비 |
-| 개발4 | catalogUI13cde90→1a55837, 독립 Yes | [NAV002](../../docs/superpowers/specs/2026-10-24-control-catalog-navigation-design.md) URL fragment·이력/선택 복원·모바일/늦은응답 검사/최종 소유 게시 |
-| P01 | CTRL0088패킷128payload/4443631B·JSON104 인수 | DEV-DUT-CONTROL009를 v018/S07에 실제 배정. AnyWay 공식 공개경로/기존자료만 작은 후속. live지시 v5는 별도 범위 대조 |
+| 개발1 | audit002 7b87815+308ad99, CLI003 50de9ba+11f3773 독립 Yes·총괄 인수 | [PREPARE004](../../docs/superpowers/specs/2026-10-24-control-packet-prepare-design.md) branch `codex/dev1-control-packet-prepare-004-20261024`. 후보65ea592의 독립 No2: junction 외부쓰기·tmp 교체 invalid complete를 실제 재현, 소유 RED/수정 배정/ACK. 기존 성공·실패/실제 S08 영수증 보존 |
+| 개발2 | SDK006 86c3f59+50ecac0 독립 Yes·총괄 인수/실제10관측 | [DUT-STOP013](../../docs/superpowers/specs/2026-10-24-synthetic-dut-stop-boundary-design.md) branch `codex/dev2-dut-stop013-20261024`. builder Yes, 기존 Fleet stop/read·gate·불확정 결과/작성자 truth 분리 구현 |
+| 개발3 | PSD0071712e59, DUT010896f7fe 독립 Yes·총괄 인수 | [SOURCE-PSD-MAX014](../../docs/superpowers/specs/2026-10-24-continuous-source-psd-maximum-design.md) branch `codex/dev3-source-psd-max-014-20261024`. 후보d5819b5 관련114검사/실제 합성17사례 후 소유 게시, 독립 구현 리뷰 실제 배정. Fraction/earliest tie/계산·출력 상한 유지 |
+| 개발4 | NAV002eb814dd 독립 Yes·총괄 인수/실제 UI10+NAV7 | [DUT-CATALOG-UI012](../../docs/superpowers/specs/2026-10-24-dut-control-catalog-ui-design.md) branch `codex/dev4-dut-catalog-ui-012-20261024`. HTTP/DTO 검사 후 실제 API 화면 구현. API896f7fe 정확 소유 인수 허용, 공통 ui_server 승인 접점만 변경 |
+| P01 | CTRL0088패킷128payload, CONTROL00913JSON, MANUFACTURER01078payload 독립 인수/ACK | v018/S07·v019/S02/S03/S05 실제 요청/배정/ACK 완료. 새 원문24고유/선택파일·라이선스/ETSI private 경계 보존. 현재 구체 추가 의존0, 새 필요는 총괄의 request ID로만 배정 |
 
-총괄은8패킷·DUT30소스의 정적 인수를 마쳤고 현재 branch/기존 DB·64프로필·공유 원본을 보존했다. 미검증 SDK/단말/실물/현장 성공을 주장하지 않으며 현재 사용자 결정·준비물0이다.
+총괄은 지정5차 전체를 읽고 고정했으며8패킷·DUT30소스/32압축과 후속009/010을 구별해 인수했다. [새 제조시험 확보 영수증](../../docs/material-intake/2026-10-24-dut-manufacturer-receipts.md)은 기존 DUT2JSON pin을 소급 수정하지 않는다. 다음 준비 backlog는 **CONTROL-PACKET-CLI005**(prepare004 리뷰 수정 뒤 고정 CLI)와 **DUT-CATALOG-DELTA015**(현 snapshot/후속 확보의 명시 결합 읽기)다. 담당 현재 구현을 덮어쓰지 않고 완료 뒤 계약·리뷰·통합까지 이어 배정한다. 기존 DB·64프로필·공유 원본을 보존했고 실제 단말/물리/현장·실제 AI 검증은 미실행, 현재 사용자 결정·준비물0이다.
 
 2026-10-24, Asia/Seoul. [연속 개발 운영](README.md)과 [최신 통합008](INTEGRATION-008.md), [통합 007](INTEGRATION-007.md), [006](INTEGRATION-006.md), [005](INTEGRATION-005.md), [FLOW003 통합](INTEGRATION-004.md)을 따른다. 각 단위는 담당 구현→검증→독립 리뷰/소유 수정→총괄 인수/회귀→개발 브랜치 게시→다음 배정으로 이어간다. 전체 수집 완료를 기다리지 않는다.
 

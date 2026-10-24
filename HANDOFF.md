@@ -2,7 +2,7 @@
 
 갱신일: 2026-10-24, Asia/Seoul. 이전 배정·인수 이력은 보존한다.
 
-최신 [통합009](handoff/development/INTEGRATION-009.md)의 소스1a55837에서 전체 Python997 PASS/skip0·Node67 PASS·정식 catalog API 실제브라우저10/기존 접수10묶음을 확인했다. API/읽기화면·수정 모델probe·N1914A 가상 어댑터를 독립 Yes 후 인수했다. P01 CTRL008의8패킷128payload/4443631B를 ACK했고 DUT30소스/32압축의 정적 인수와 DEV-DUT-CONTROL009를 이어간다. 개발1 audit002는 No2 owner fix·CLI003, 개발2 SDK006의 부모PID 실패 수정, 개발3 PSD007 리뷰, 개발4 NAV002 구현/게시가 현재 후속이다. 실제 SDK 성공·실물/현장 검증은 남아 있고 새 사용자 준비0이다. 아래 최신008/007 등은 이전 시점의 보존 이력이다.
+최신 [통합010](handoff/development/INTEGRATION-010.md)의 기능 기준은0ce8984다. 기존 독립 clone/개발 branch에서 자료 audit/CLI·DUT30소스/9경로 읽기 API·catalog 탐색·선언 구간 PSD·고정 SDK probe를 소유 수정/독립 Yes 후 통합했다. 새 전체 Python1144 PASS/skip0·Node72 PASS·실제 catalog10+NAV7/기존 접수10묶음, 실제 RsInstrument 소프트웨어 Simulation10관측을 확인했다. 최종5차 지시를 전체 읽고 동결했으며 P01 CONTROL00913JSON/제조시험01078payload를 SHA/bytes·공유 불변 확인 후 인수/ACK했다. [다음 작업](handoff/development/NEXT-004.md)은 개발1prepare004 No2 소유 수정, 개발2synthetic stop013, 개발3연속PSDmax014, 개발4DUT UI012다. 기존 브랜치/미커밋·소유권·수집 상태를 보존하며 실제 DUT/물리/현장·실제 AI 검증은 미실행, 새 사용자 준비0이다. 아래009/008/007 등은 각 당시 보존 이력이다.
 
 최신 [통합 008](handoff/development/INTEGRATION-008.md): 사용자 지정 조사8dec2d7를 기존 개발 브랜치에 인수하고 자료1053파일·현재 DB모델2867/장비6470관계 일치·DB/64프로필 불변을 확인했다. 보존 replay의 complete_job 접점·밀도source·실제계산 브라우저를 인수해 새 관련Python274/actual spectrum8/self14 PASS와 독립 Yes를 확인했다. [자료 카탈로그](control_sources/README.md)·[어댑터 계획](docs/fcc/control_adapter_roadmap.md)을 만들고 P01 CTRL001..006을 실제 발송·8명 배정 ACK, TRACE007 12행을 인수했다. 개발1 API/개발4 출처·지원단계 화면/개발3 N1914A 합성 경계를 새 배정하고 개발2 probe를 계속한다. 아래848은 직전 전체 결과이며 이번 자료 인수의 새 전체 검사 수가 아니다. 사용자 추가 준비물0, 실제 SDK/제품 Mock/실물·현장 비교 미실행이다.
 
