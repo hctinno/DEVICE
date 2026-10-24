@@ -22,6 +22,11 @@ ASSETS = {
     '/control-sources/styles.css': ('control_sources/styles.css', 'text/css; charset=utf-8'),
     '/control-sources/app.js': ('control_sources/app.js', 'text/javascript; charset=utf-8'),
     '/control-sources/model.mjs': ('control_sources/model.mjs', 'text/javascript; charset=utf-8'),
+    '/dut-controls': ('dut_controls/index.html', 'text/html; charset=utf-8'),
+    '/dut-controls/': ('dut_controls/index.html', 'text/html; charset=utf-8'),
+    '/dut-controls/styles.css': ('dut_controls/styles.css', 'text/css; charset=utf-8'),
+    '/dut-controls/app.js': ('dut_controls/app.js', 'text/javascript; charset=utf-8'),
+    '/dut-controls/model.mjs': ('dut_controls/model.mjs', 'text/javascript; charset=utf-8'),
 }
 FRONTEND = Path(__file__).resolve().parents[1] / 'frontend'
 _ID = re.compile(r'[A-Za-z0-9_.-]{1,150}', re.ASCII)
@@ -66,6 +71,8 @@ def create_server(workspace, host='127.0.0.1', port=8765):
     model = IntakeReadModel(workspace)
     catalog_instance = None
     catalog_lock = threading.Lock()
+    dut_instance = None
+    dut_lock = threading.Lock()
 
     def catalog():
         nonlocal catalog_instance
@@ -75,6 +82,14 @@ def create_server(workspace, host='127.0.0.1', port=8765):
                 # Publish only a successfully constructed immutable snapshot.
                 catalog_instance = module.ControlSourceCatalog()
             return catalog_instance
+
+    def dut_catalog():
+        nonlocal dut_instance
+        with dut_lock:
+            if dut_instance is None:
+                module = importlib.import_module('.dut_control_catalog', __package__)
+                dut_instance = module.DutControlCatalog()
+            return dut_instance
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, format, *args):
@@ -122,6 +137,27 @@ def create_server(workspace, host='127.0.0.1', port=8765):
                 return self.error(404, 'route_not_found')
             if parsed.fragment or parsed.scheme or parsed.netloc or ('?' in self.path and path != '/api/control-sources'):
                 return self.error(404, 'route_not_found')
+            dut_target = (path == '/dut-controls' or path.startswith('/dut-controls/')
+                          or path == '/api/dut-controls' or path.startswith('/api/dut-controls/'))
+            if dut_target and ('//' in parsed.path or '\\' in path
+                               or re.search(r'%(?:2f|5c)', parsed.path, re.IGNORECASE)):
+                return self.error(404, 'route_not_found')
+            if path == '/api/dut-controls/summary':
+                return self.read_dut_catalog('summary')
+            if path == '/api/dut-controls/routes':
+                return self.read_dut_catalog('routes')
+            if path == '/api/dut-controls/manufacturing-references':
+                return self.read_dut_catalog('manufacturing_references')
+            if path.startswith('/api/dut-controls/routes/'):
+                backend = path[len('/api/dut-controls/routes/'):]
+                if not re.fullmatch(r'[a-z][a-z0-9_]{0,79}', backend, re.ASCII):
+                    return self.error(400, 'dut_catalog_invalid_query')
+                return self.read_dut_catalog('route', backend)
+            if path.startswith('/api/dut-controls/sources/'):
+                source_id = path[len('/api/dut-controls/sources/'):]
+                if not re.fullmatch(r'DUT-[AGS][0-9]{2}', source_id, re.ASCII):
+                    return self.error(400, 'dut_catalog_invalid_query')
+                return self.read_dut_catalog('source', source_id)
             if path == '/api/control-sources':
                 try:
                     filters = _catalog_query(parsed.query)
@@ -173,6 +209,22 @@ def create_server(workspace, host='127.0.0.1', port=8765):
                 if code == 'catalog_invalid_query':
                     return self.error(400, code)
                 return self.error(503, 'catalog_unavailable')
+
+        def read_dut_catalog(self, method, *args):
+            try:
+                return self.send_payload(200, getattr(dut_catalog(), method)(*args))
+            except Exception as exc:
+                try:
+                    code = getattr(exc, 'code', None) if isinstance(exc, ValueError) else None
+                except Exception:
+                    code = None
+                if type(code) is not str:
+                    code = None
+                if code == 'dut_catalog_invalid_query':
+                    return self.error(400, code)
+                if code == 'dut_catalog_item_not_found':
+                    return self.error(404, code)
+                return self.error(503, 'dut_catalog_unavailable')
 
         do_HEAD = do_GET
 
