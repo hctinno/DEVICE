@@ -478,6 +478,67 @@ class FccReportFixtureRecipeTests(unittest.TestCase):
         with patch.object(preparation, '_OUTPUT_BYTES', 1):
             self.assert_error('fcc_recipe_limit_exceeded', detail, request)
 
+    def ambiguous_point_fixture(self, mode, *, contexts_at_b=False, explicit=False):
+        detail, request = recipe_fixture()
+        if mode == 'common_line':
+            for role in (*request['setting_claim_ids'], *request['quantity_claim_ids']):
+                selected(detail, request, role)['evidence'][0].update(
+                    table=None, row=None, line_start=1, line_end=2)
+        for role in POINT:
+            item = selected(detail, request, role)
+            alternate = copy.deepcopy(item['evidence'][0])
+            if mode == 'table_row':
+                alternate['row'] = 'POINT-2'
+            else:
+                alternate.update(line_start=10, line_end=11)
+            item['evidence'].append(alternate)
+        context_roles = [r for r in request['setting_claim_ids'] if r not in POINT]
+        context_roles.extend(request['quantity_claim_ids'])
+        for role in context_roles if contexts_at_b else ('switch_loss_db',):
+            locator = selected(detail, request, role)['evidence'][0]
+            if mode == 'table_row':
+                locator['row'] = 'POINT-2'
+            else:
+                locator.update(line_start=10, line_end=11)
+        if explicit:
+            detail['case']['claims'].append(binding_claim(request))
+        return detail, request
+
+    def test_ambiguous_point_evidence_cannot_join_split_context_rows(self):
+        detail, request = self.ambiguous_point_fixture('table_row')
+        with patch.object(method_adapter, 'describe_fixture_method',
+                          wraps=method_adapter.describe_fixture_method) as called:
+            self.assert_gap(detail, request, 'setup_binding_missing')
+        called.assert_not_called()
+
+    def test_ambiguous_point_evidence_cannot_join_disjoint_context_lines(self):
+        detail, request = self.ambiguous_point_fixture('common_line')
+        with patch.object(method_adapter, 'describe_fixture_method',
+                          wraps=method_adapter.describe_fixture_method) as called:
+            self.assert_gap(detail, request, 'setup_binding_missing')
+        called.assert_not_called()
+
+    def test_joint_direct_binding_reports_the_actual_shared_row_or_line(self):
+        for mode in ('table_row', 'common_line'):
+            detail, request = self.ambiguous_point_fixture(mode, contexts_at_b=True)
+            result = preparation.prepare_report_fixture_recipe(detail, request)
+            self.assertEqual(result['status'], 'prepared_for_fixed_virtual_fixture')
+            self.assertIsNone(result['source_binding']['setup_binding_claim_id'])
+            binding = result['source_binding']['row_binding']
+            if mode == 'table_row':
+                self.assertEqual(binding['row'], 'POINT-2')
+            else:
+                self.assertEqual((binding['line_start'], binding['line_end']), (10, 11))
+
+    def test_explicit_setup_binding_keeps_ambiguous_point_controls_supported(self):
+        for mode in ('table_row', 'common_line'):
+            detail, request = self.ambiguous_point_fixture(mode, explicit=True)
+            before = copy.deepcopy((detail, request))
+            result = preparation.prepare_report_fixture_recipe(detail, request)
+            self.assertEqual(result['status'], 'prepared_for_fixed_virtual_fixture')
+            self.assertEqual(result['source_binding']['setup_binding_claim_id'], 'SETUP-BINDING')
+            self.assertEqual((detail, request), before)
+
 
 if __name__ == '__main__':
     unittest.main()

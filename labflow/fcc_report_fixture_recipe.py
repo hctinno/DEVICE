@@ -718,12 +718,11 @@ def _source_binding(request, docs, claims, result):
         if not all(any(s['document_id'] == anchor[0] for s in p['sources']) for p in required):
             context_missing = True
             continue
-        direct = True
-        for item in contexts:
-            same_page = [s for s in item['sources'] if _anchor(s) == anchor]
-            if not same_page or _rows(lists + [same_page], work) is None:
-                direct = False
-                break
+        context_lists = [[s for s in item['sources'] if _anchor(s) == anchor] for item in contexts]
+        joint_row = _rows(lists + context_lists, work) if all(context_lists) else None
+        direct = joint_row is not None
+        if direct:
+            row = joint_row
         binding = None
         # Direct row evidence does not erase a reviewed contradictory setup.
         try:
