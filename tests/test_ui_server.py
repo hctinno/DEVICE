@@ -1176,7 +1176,10 @@ class ReferenceActionsHostTests(unittest.TestCase):
         for body in invalid:
             status, _, _ = self.request(server, self.route('prepare'), 'POST', body, self.source_headers(server, cookie, csrf))
             self.assertEqual(status, 400, body)
-        self.assertEqual(self.request(server, self.route('prepare'), 'POST', b'x' * 16385, self.source_headers(server, cookie, csrf))[0], 413)
+        # Header-only max+1 checks declared-length rejection before body reading.
+        status, _, body = self.raw(server, self.route('prepare'), body=b'',
+            headers=list(self.source_headers(server, cookie, csrf).items()) + [('Content-Length', '16385')])
+        self.assertEqual((status, json.loads(body)), (413, {'error': {'code': 'intake_reference_ui_input_limit'}}))
         self.assertEqual(self.post(server, cookie, '0' * 64, 'prepare', request)[0], 403)
         self.assertEqual(self.post(server, '', csrf, 'prepare', request)[0], 403)
         self.assertEqual(self.counts(), (0, 0, 0))
