@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-10-25 [통합035](handoff/development/INTEGRATION-035.md): DOCX 제한 본문 reader와 제공 시험 의도·근거 순수 대조를 독립 Yes/정확 신규3씩 인수했다. UI test1은 header-only 선언 max+1의413을 확인하며 제품 변경/원10053 정확 원인 확정으로 해석하지 않는다. 기능dd2c64c0·source242·새 총괄204/22/21 각PASS, 앞선 전체2310/Node230/앱16 재실행0이다. 개발1 DOCX 접수 연결 최소 계약·개발2 독립 oracle 평가 계약, 개발3 CLI·개발4 정식 합성demo 실제 구현을 잇는다. P01 후행140/140·105/105 대조/원문 재사용 별도 요청/다음 누락PDF를 유지하고 대상18/690·보존23/930≠적격23·Un-licensed 우선·실제AI/실물/현행규범/전수 미완료·사용자 준비0이다.
+
 2026-10-25 [통합034](handoff/development/INTEGRATION-034.md): 별도 CW I/Q 관측055·공통 writer 최초 오류 보존 최종7을 독립 Yes 뒤 기능4042772d에 인수했다. 새 전체 Python2310/skip0·source238/기존232 불변이며033 Node230/앱16 재실행0이다. 실제AI·물리/현행규범·전수 완료는 아니며 다음은 개발1 DOCX 게시/독립검토, 개발2 공급근거 new3 실제 구현, 개발3 thin CLI·개발4 합성demo 공개 delta/정확base/new3 실제 배정이다. 기존 UI 과대body 연결 실패는 DOCX와 분리해 조사하고 원실패를 유지한다. P01 B035 metadata14JSON/새PDF0 actual ACK1·보고139/139/104/104와 후행 공개·판본근거 작업을 구별하며 대상18/690·보존23/930≠적격23·Un-licensed 우선·사용자 준비0을 유지한다.
 
 2026-10-25 다음 구현: 개발2의 [제공 규정·방법 근거 대조](docs/superpowers/specs/2026-10-25-intake-test-intent-design.md)·[계획](docs/superpowers/plans/2026-10-25-intake-test-intent.md)을 private v2/공개 투영 독립 Yes 뒤 고정하고 정확 게시 base/신규3 실제 구현으로 잇는다. 제공 인용·결합·날짜와 부족/모순을 review_only로 보존하며 query 완성·사례 자동선택·실제 AI/실행 승인으로 확대하지 않는다. 기존033 기능914d9de0/source236·Node230/로컬 앱16은 유지하고 이번 기능 재실행0이다. 개발1 DOCX 구현·개발3 ce3 독립 제품 재검토/다음 CLI 준비·개발4 057 합성demo 계약을 병행한다. P01 패킷138/138·corpus103/103·보존23/930·대상18/690·보류3/141과 후행 공개/보유원문 검토를 구별한다. 사용자 준비0이며 전체 업무·물리 무인화 목표는 같다.
