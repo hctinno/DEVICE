@@ -7,6 +7,7 @@ import hashlib
 import importlib
 import importlib.util
 import json
+import errno
 import os
 from pathlib import Path
 import shutil
@@ -685,3 +686,132 @@ class ObservationIntegrationTests(_Support):
         result = self.invoke({**REQUEST, "run_name": "retained055"})
         self.assertEqual(serialized_fixture.fingerprint(folder), before)
         self.assertEqual(self.bundle(result)["source_snapshot"]["storage"]["status"], "complete_verified")
+
+
+class ObservationWriterOutcomeTests(_Support):
+    def writer_fault(self, first, *, close_error=True, name="observe055", forge_context=False,
+                     marker_error=False, cleanup_error=False):
+        """Use the real pinned writer; only its actual fsync/close calls fault."""
+        real_sync, real_close = native.os.fsync, native.os.close
+        secondary = OSError(errno.EIO, "synthetic secondary writer close")
+        forged = KeyboardInterrupt("synthetic unraised interrupt")
+        state = dict(fd=None, sync=0, close=0)
+
+        def sync(descriptor):
+            if not state["sync"]:
+                state["fd"], state["sync"] = descriptor, 1
+                raise first
+            if marker_error:
+                raise OSError("synthetic marker flush")
+            return real_sync(descriptor)
+
+        def close(descriptor):
+            if close_error and descriptor == state["fd"] and not state["close"]:
+                state["close"] = 1
+                real_close(descriptor)
+                if forge_context:
+                    forged.__traceback__ = first.__traceback__
+                    try:
+                        raise secondary
+                    except OSError:
+                        secondary.__context__ = forged
+                        raise
+                raise secondary
+            return real_close(descriptor)
+
+        def backend_effect(backend, number):
+            if cleanup_error and number == 1:
+                original = backend.close
+                def closing():
+                    original()
+                    raise OSError("synthetic secondary backend cleanup")
+                backend.close = closing
+
+        caught, value = None, None
+        with mock.patch.object(native.os, "fsync", sync), mock.patch.object(native.os, "close", close):
+            try:
+                value = self.invoke({**REQUEST, "observation_name": name}, backend_effect=backend_effect)
+            except BaseException as error:
+                caught = error
+        self.assertIsNone(value)
+        self.assertEqual([call.call_count for call in self.calls], [1, 1, 1, 1])
+        folder = self.base / ".local/rf-waveform-observations" / name
+        self.assertFalse((folder / "observation.json").exists())
+        self.assertTrue((folder / "observation.pending.json").is_file())
+        with self.assertRaises(OSError) as closed:
+            os.fstat(state["fd"])
+        self.assertEqual(closed.exception.errno, errno.EBADF)
+        self.assertEqual((state["sync"], state["close"]), (1, int(close_error)))
+        return caught, folder, secondary, forged
+
+    def test_single_native_fsync_KI_keeps_the_same_interrupt_and_marker(self):
+        first = KeyboardInterrupt("synthetic first interrupt")
+        caught, folder, secondary, forged = self.writer_fault(first, close_error=False)
+        self.assertIs(caught, first)
+        ObservationStorageTests.marker(self, "write_pending", None, False, "interrupted")
+
+    def test_native_fsync_KI_then_actual_writer_close_error_keeps_first_identity(self):
+        first = KeyboardInterrupt("synthetic first interrupt")
+        caught, folder, secondary, forged = self.writer_fault(first)
+        self.assertIs(caught, first)
+        ObservationStorageTests.marker(self, "write_pending", None, False, "interrupted")
+
+    def test_recovered_first_KI_survives_marker_and_backend_cleanup_errors(self):
+        first = KeyboardInterrupt("synthetic first interrupt")
+        caught, folder, secondary, forged = self.writer_fault(first, marker_error=True, cleanup_error=True)
+        self.assertIs(caught, first)
+        value = json.loads((folder / "failure.json").read_bytes())
+        self.assertEqual((value["status"], value["error_code"]), ("interrupted", None))
+
+    def test_first_ordinary_writer_error_with_secondary_close_error_stays_failed(self):
+        first = OSError(errno.EIO, "synthetic first ordinary failure")
+        caught, folder, secondary, forged = self.writer_fault(first)
+        self.assertIs(type(caught), observer.RfSignalWaveformObservationError)
+        self.assertEqual(caught.code, PREFIX + "write_failed")
+        ObservationStorageTests.marker(self, "write_pending", "write_failed", False)
+
+    def test_forged_KI_context_even_with_current_native_traceback_is_not_first(self):
+        first = OSError(errno.EIO, "synthetic actual first ordinary failure")
+        caught, folder, secondary, forged = self.writer_fault(first, forge_context=True)
+        self.assertIs(type(caught), observer.RfSignalWaveformObservationError)
+        self.assertEqual(caught.code, PREFIX + "write_failed")
+        ObservationStorageTests.marker(self, "write_pending", "write_failed", False)
+
+    def test_unraised_KI_context_on_replacement_writer_is_not_promoted(self):
+        forged = KeyboardInterrupt("synthetic never raised")
+        original = native._write_bytes
+        def replaced(tree, path, raw, code, *, sync=False):
+            if path.name == "observation.pending.json":
+                error = OSError("synthetic replacement writer")
+                error.__context__ = forged
+                raise error
+            return original(tree, path, raw, code, sync=sync)
+        with mock.patch.object(native, "_write_bytes", replaced):
+            self.rejection("write_failed")
+        ObservationStorageTests.marker(self, "write_pending", "write_failed", False)
+
+    def test_stale_real_native_KI_traceback_from_other_invocation_is_not_promoted(self):
+        first = KeyboardInterrupt("synthetic prior invocation")
+        caught, folder, secondary, forged = self.writer_fault(first, close_error=False, name="prior055")
+        self.assertIs(caught, first)
+        original = native._write_bytes
+        def replaced(tree, path, raw, code, *, sync=False):
+            if path.name == "observation.pending.json":
+                error = OSError("synthetic current ordinary failure")
+                error.__context__ = first
+                raise error
+            return original(tree, path, raw, code, sync=sync)
+        with mock.patch.object(native, "_write_bytes", replaced):
+            self.rejection("write_failed")
+        ObservationStorageTests.marker(self, "write_pending", "write_failed", False)
+
+    def test_post_link_error_with_KI_context_remains_publication_uncertain(self):
+        original = native._WindowsIO.link_receipt
+        def linked(backend, descriptor, marker):
+            original(backend, descriptor, marker)
+            error = OSError("synthetic after link")
+            error.__context__ = KeyboardInterrupt("synthetic never raised")
+            raise error
+        with mock.patch.object(native._WindowsIO, "link_receipt", linked):
+            self.rejection("publication_uncertain")
+        ObservationStorageTests.marker(self, "publish", "publication_uncertain", True)

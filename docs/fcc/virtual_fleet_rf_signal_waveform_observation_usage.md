@@ -67,6 +67,6 @@ public 오류는 `RfSignalWaveformObservationError.code`의 고정 prefix `rf_si
 
 leaf 소유 후 `failure.json`은 exclusive best-effort다. 정확6키(schema_version/kind/phase/status/error_code/publication_attempted)를 사용하고 phase는 claim_destination/write_pending/verify_pending/publish/verify_published/cleanup6뿐이다. helper 내부 write/fsync/writer close는 모두 write_pending이며 별도 sync phase가 없다.
 
-최초 오류/KI는 marker·cleanup 실패가 덮지 않는다. KI는 정리 후 전파하고 marker가 안전하게 가능하면 interrupted/code null을 쓴다.055는 알려진 호출 내 소유 descriptor를 실제로 정리하며 helper.close 시작만으로 완료를 가정하지 않는다. 내부 writer는 기존 helper context/finally가 소유한다. marker 기록에는 검증된 소유권이 남아 있어야 하며 unsafe reopen/덮어쓰기를 하지 않는다.
+최초 오류/KI는 marker·cleanup 실패가 덮지 않는다. KI는 정리 후 전파하고 marker가 안전하게 가능하면 interrupted/code null을 쓴다.055는 알려진 호출 내 소유 descriptor를 실제로 정리하며 helper.close 시작만으로 완료를 가정하지 않는다. 내부 writer는 기존 helper context/finally가 소유한다. writer 본문의 최초 KI가 후행 close 오류에 가려져도 같은 호출의 실제 최초 KI 객체를 보존한다. 임의로 붙인 예외 context를 중단 근거로 취급하지 않는다. marker 기록에는 검증된 소유권이 남아 있어야 하며 unsafe reopen/덮어쓰기는 하지 않는다.
 
 publication_uncertain에서는 final 존재만으로 호출 성공을 추정하거나 다시 호출하지 않는다. 원래 pending/final/실패 bytes와 오류를 보존해 검토한다. 이 관측은 기존 시험소 전체 자동화·물리 운전·계측 정확도·기관 적합성의 완료 증거가 아니다.
