@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합027](INTEGRATION-027.md)을 우선한다. 실제 root 제품은048 저장읽기까지이며051 계약과050 F1 후보의완료를실제서버/화면통합으로합치지않는다.
+
+| 담당 | 현재 작업과 다음 연결 |
+| --- | --- |
+| 개발1 | 기존025 base/049 owned3 유지. 전용38·관련285·genuineHTTP 관측 뒤 전체회귀/게시; 정확후보의 독립제품리뷰·총괄통합을 거쳐 다음047 thinCLI/046같은host계약 |
+| 개발2 | 050 F1/50a9 독립최종Yes와 원래No/새cold delta 증거보존. 052 v1 C0I3의callback DTO·교체응답유실·session/slot수명 최소보완을 독립재검토 |
+| 개발3 | 048 독립Yes/정확소유3 인수완료. 051 [설계](../../docs/superpowers/specs/2026-10-24-virtual-fleet-rf-signal-read-cli-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-virtual-fleet-rf-signal-read-cli.md) 공개deltaYes, root 정확게시base/신규3 실제배정뒤 구현·검증·게시 |
+| 개발4 | 050 F1/50a9 cold수정 최종Yes. 052 C1 신규4의정확callback/불명응답/session보존 v2계약 뒤 구현. 실제049/static3인수뒤 F2 recipe와C2 app조립 |
+| 총괄 | 048 소유인수/새회귀/027게시·원격대조·051 실제배정. 049후보독립리뷰→049우선통합→진짜static3·050 F2→app순서로연결. 담당구현일괄대신0 |
+| P01 | B020a112d321 공개exact/101·66·private3ACK/신규47쪽·대상17/650. FOLLOWUP007 v055 S07판본4~6관계/S08기보유delta1 실제ACK2/입력30(13/17), 다음미검수READY3 가산0 |
+
+생산025 입력producer부재/capability=false·현재b/g/n 지원범위는유지한다. Part2/96의reference corpus확보를자동시험지원/현행규정승인으로올리지않는다. 사용자준비0, 원본/복호문/실제측정값공개0·실제AI/물리/전수완료미주장. 아래026 이하는 당시 기록이다.
+
 최신 [통합026](INTEGRATION-026.md)을 우선한다. 현재 제품은046 코어까지이며050 F1 후보의 게시와 실제 서버·화면 통합 완료를 구별한다.
 
 | 담당 | 현재 실제 작업과 다음 연결 |

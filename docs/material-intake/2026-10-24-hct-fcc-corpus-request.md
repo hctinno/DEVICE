@@ -1,5 +1,9 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+2026-10-24 B020 인수·공개 대조: B019aceceb8c의 원격exact/공개3blob·대장/collector98·corpus63을대조했다. 이후 B020 private S02/S03/S04 세묶음51payload2220896B(JSON49/PDF1/MD1)를각각원문색인/정확SHA·bytes·identity로인수하고 실제ACK3을전달했다. 새PDF1은47쪽의정적Part2/96참고성적서이며 root는bytecopy/hash/magic만확인하고 nativeparse/render/OCR/계산은새실행0이다. P01의구조47/한정5쪽·10facts·6행/18표시계산검토와root검사를구별한다. 대상·참조17PDF650쪽38603877B=직접16+parent1, 별도제외1/46·연결보류1/53·고유19/749는적격19가아니다. 공식대응0/모집단unknown·권리unknown/privateonly·사적신청인파생값보류·4Port합산/duty/ATT/plane/gainorigin/현행한계미확정을유지한다.
+
+HAC2기보유16..23의P01 nativeSHA8+안전한header/footer관측으로한정누적134/181·미방문47·HAC2지역23/70이다. 전문semantic/교정완료나기관원문직접매핑이아니다. S02한정device.report403/HTML1/PDF0을FCC공식거절·권리판정·자료부재로해석하지않는다. ACK후collector101/101·corpus66/66과P01 B020a112d321 공개3blob/대장·원격exact를대조했다. FOLLOWUP007로S08기승인descriptor delta1재사용과S07기보유공식판본/방법4~6관계행을P01한창구에실제요청했다. P01은v055로S07/S08 실제전달·정확ACK2/입력30(13/17)을동결했다. 기보유XML 최대4section/4~6관계·기보유승인descriptor 최대40givenSHA이며기존같은delta재사용/새원문·새페이지·새수치·자동지원승격0이다. 원래qualified006은보존하고actual literal007 annotation/양측ACK로구별했다. 후시점XML을발행시점/현행승인으로쓰지않는다. v053/v054의다음READY3은미검수로가산0·사용자준비0이다.
+
 2026-10-24 B018 추가 인수: P01 공개1ef774de 원격exact·공개3blob/ledger·private3묶음47payload145358B(JSON46/MD1/PDF0)·명시ACK3를 대조했다. collector95/95·corpus60/60, 대상·참조16PDF603쪽36642346B=직접15+parent1·공식0/전수unknown은 그대로다. 별도제외1/46·연결보류1/53·고유보존18/702는 적격18이 아니다. S02 metadata 표제 차이는원문body상충확인이아니며 P01 fresh도구실패/HTTPnull·무재시도, S04 producer의정확device.report403은 공식FCC/부재/권리판정이 아니다. HAC1 마지막3은P01의한정wrapper3/bodytitle0·누적118/181/미방문63/HAC1지역73/73일뿐 전문semantic·교정완료가 아니다. oldqueue99/115/new8과현재unit3를구별한다.
 
 v051은 실제3배정/ACK3·고정입력34(10/14/10)다. S02 America2026Q2·S04국내2026Q1 각 metadata query4/HTML6/선택12·PDF0, S03기보유HAC2 physical8..15·정수max8·새PDF/network/copy0로 이어진다. 동결context95/92·formal115/QA118을나중95/95/formal118로소급수정하지않는다. 원본/ACK/READY/실패·같은차단route무재시도·사용자준비0을유지한다. 이cut이후 새검수/ACK는 최신privatefollowup으로구별하고 검수전 수를올리지않는다.

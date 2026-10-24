@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-10-24 [통합027](handoff/development/INTEGRATION-027.md): 가상 RF 저장 기록을 실행 없이 조회하는048을 인수했다. 저장 검증/과거평가/현재조회 범위와 생산CLI 종료 미기록을 구별한다. 새 Python2092/Node186·소스225 불변·합성보존조회11, 다음051 읽기CLI 신규3을 잇는다. 049 현재서버 구현·052 준비/등록 UI C1→C2, 050F1 독립Yes 후 실제F2 순서를 유지한다. 자료는 대상17/650·한정HAC134/181/미방문47·공식0/전수unknown이며 실제규범/AI/현장완료가 아니다. 첫b/g/n·Un-licensed우선·raw/Licensed보류·전체업무/물리목표·사용자준비0은 같다.
+
 2026-10-24 [통합026](handoff/development/INTEGRATION-026.md): 메모리에 고정한 참고검토 입력으로 준비→명시등록→원래 요청 재전송을 처리하는046 코어를 인수했다. 새 Python2049/Node186·소스223 불변과 실제043/042 연결을 검증했다. 이는 실제 모델·인증세션/화면·물리 시험소 완료가 아니다. 049 서버/048 보존 결과 읽기/050 F1 독립 리뷰·후속F2를 계속하며 B018 대상16/603·한정HAC118/181·미방문63·공식0/전수unknown을 구별한다. 첫b/g/n·Un-licensed우선·raw/Licensed보류·전체 업무/물리 목표·사용자 준비0을 유지한다.
 
 2026-10-24 [통합025](handoff/development/INTEGRATION-025.md):접수참고이력A1typed model/view·lastgood/context/pending/late-beforeparse를인수해새Node186·합성DOM18·소스221불변을확인했다. Python2015는024이전결과/source217전부불변·이번재실행0이다. 개발1 [049backend](docs/superpowers/specs/2026-10-24-intake-reference-http-host-design.md)3와개발4 [050frontend](docs/superpowers/specs/2026-10-24-intake-reference-frontend-design.md)F1/7을병렬구현하며제품rootapp/F2는049인수/static3실제제공후다.개발2 046core/개발3 048reader 구현을유지한다. P01대상16/603/공식0/전수unknown·후속006실제ACK2,사용자준비0·첫b/g/n/Un-licensed/rawLicensed보류·전체업무목표를보존한다.
