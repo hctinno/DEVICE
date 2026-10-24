@@ -5,6 +5,7 @@ const {reserveEvidence}=require('../intake_fixture_browser_check.cjs');
 const ROOT=fs.realpathSync(path.resolve(__dirname,'../..')),sha=value=>createHash('sha256').update(value).digest('hex');
 const write=(file,value)=>fs.writeFileSync(file,value,{flag:'wx'}),json=(file,value)=>write(file,JSON.stringify(value,null,2)+'\n');
 const same=(a,b)=>path.relative(path.resolve(a),path.resolve(b))==='';
+const bounded=async(promise,code,milliseconds=7000)=>{let timer;try{return await Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error(code)),milliseconds);})]);}finally{clearTimeout(timer);}};
 const BOOT=`import importlib, importlib.util, hashlib, json, sys, threading
 from pathlib import Path
 root=Path(sys.argv[1]).resolve(strict=True); evidence=Path(sys.argv[2]).resolve(strict=True)
@@ -48,9 +49,9 @@ async function main(){
   if(!fs.existsSync(path.join(ROOT,'labflow/control_source_catalog.py')))throw Error('catalog_dependency_missing');
   const python=process.env.CONTROL_CATALOG_PYTHON || path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
   if(!python.trim() || /[\r\n\0]/.test(python))throw Error('invalid_configuration');
-  const evidence=reserveEvidence(ROOT),checks=[],cleanup={browser_closed:false,producer_closed:false,server_closed:false};
+  const evidence=reserveEvidence(ROOT),checks=[],navigationChecks=[],cleanup={browser_closed:false,producer_closed:false,server_closed:false};
   const result={kind:'control_source_actual_browser',contract_fixture:false,actual_catalog_connected:false,synthetic_workspace:true,intake_source_synthetic:true,
-    hardware_verified:false,vendor_binary_executed:false,checks,cleanup,passed:false};
+    hardware_verified:false,vendor_binary_executed:false,checks,navigation_checks:navigationChecks,navigation_contract:'fragment_v1',cleanup,passed:false};
   const before=sourceHashes();result.source_sha256=before;let browser,child,closed,stdout='',stderr='',failed,ready,rejectReady;
   const errors=[],external=[],requests=[];let exitResolve;
   try{
@@ -103,11 +104,58 @@ async function main(){
       await page.evaluate(()=>{window.catalogOriginalFetch=window.fetch;window.fetch=(url,options)=>window.catalogOriginalFetch(url,{...options,signal:undefined});});
       const old=await get('/api/control-sources/MOD-4e1a45a25496a054');let release,arrived;const waiting=new Promise(resolve=>arrived=resolve),hold=new Promise(resolve=>release=resolve);
       await page.route('**/api/control-sources/MOD-4e1a45a25496a054',async route=>{arrived();await hold;await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(old)});});
-      await page.locator('#items button[data-item-id="MOD-4e1a45a25496a054"]').click();await waiting;await selected('MOD-ce43da835609baea');const retained=await page.locator('#detail').innerHTML();const response=page.waitForResponse(url=>url.url().endsWith('/MOD-4e1a45a25496a054'));release();await (await response).finished();await page.evaluate(()=>new Promise(requestAnimationFrame));assert.equal(await page.locator('#detail').innerHTML(),retained);await page.unroute('**/api/control-sources/MOD-4e1a45a25496a054');await page.evaluate(()=>{window.fetch=window.catalogOriginalFetch;delete window.catalogOriginalFetch;});
+      await page.locator('#items button[data-item-id="MOD-4e1a45a25496a054"]').click();await bounded(waiting,'late_detail_request_not_observed');await selected('MOD-ce43da835609baea');const retained=await page.locator('#detail').innerHTML();const response=page.waitForResponse(url=>url.url().endsWith('/MOD-4e1a45a25496a054'));release();await (await response).finished();await page.evaluate(()=>new Promise(requestAnimationFrame));assert.equal(await page.locator('#detail').innerHTML(),retained);await page.unroute('**/api/control-sources/MOD-4e1a45a25496a054');await page.evaluate(()=>{window.fetch=window.catalogOriginalFetch;delete window.catalogOriginalFetch;});
     });
     await check('390px keyboard view and all requests remain read-only with no external or JS errors',async()=>{await page.setViewportSize({width:390,height:844});await page.evaluate(()=>scrollTo(0,0));assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:path.join(evidence,'DMM6500-mobile.png'),fullPage:true});await page.screenshot({path:path.join(evidence,'DMM6500-mobile-top.png')});await page.locator('#detail .source').first().scrollIntoViewIfNeeded();await page.screenshot({path:path.join(evidence,'DMM6500-mobile-source.png')});await page.locator('#detail .review').first().scrollIntoViewIfNeeded();await page.screenshot({path:path.join(evidence,'DMM6500-mobile-review.png')});await page.locator('#query').focus();assert.equal(await page.evaluate(()=>document.activeElement.id),'query');
       for(const link of await page.locator('#detail a').evaluateAll(nodes=>nodes.map(n=>({href:n.href,rel:n.rel,target:n.target})))){assert(/^https?:/.test(link.href));assert(link.rel.includes('noopener') && link.rel.includes('noreferrer'));assert.equal(link.target,'_blank');}
       assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert(requests.every(request=>request.method==='GET'));
+    });
+    const navCheck=async(name,action)=>{await action();navigationChecks.push(name);console.log('PASS NAV '+name);};
+    const waitId=id=>page.waitForFunction(id=>document.querySelector('#detail .detail-card')?.dataset.itemId===id && !document.querySelector('#detail-status').classList.contains('pending') && !document.querySelector('#detail-status').classList.contains('error'),id);
+    // Both documented page routes force a fresh document for direct-link cases.
+    const go=async fragment=>{const target=new URL(page.url()).pathname==='/control-sources'?'/control-sources/':'/control-sources';await page.goto(origin+target+fragment);};
+    const hash=()=>page.evaluate(()=>location.hash);
+    const listReads=()=>requests.filter(request=>new URL(request.url).pathname==='/api/control-sources').length;
+    await page.setViewportSize({width:1440,height:1000});
+    await navCheck('direct link and reload restore typed filters limit and off-page selection',async()=>{
+      const fragment='#query=N9030A&scope=included&limit=1&item_id=MOD-c40c6c5f1b4e7ca9';
+      await go(fragment);await waitId('MOD-c40c6c5f1b4e7ca9');assert.equal(await page.locator('#query').inputValue(),'N9030A');assert.equal(await page.locator('#scope').inputValue(),'included');assert.equal(await page.locator('#items button').count(),1);assert((await page.locator('#detail-status').innerText()).includes('현재 목록 페이지 밖'));assert.equal(await hash(),fragment);
+      await page.reload();await waitId('MOD-c40c6c5f1b4e7ca9');assert.equal(await hash(),fragment);assert.equal(await page.locator('#items button').count(),1);
+      await go('#item_id=MOD-NAV-unknown');await page.waitForFunction(()=>document.querySelector('#detail-status').classList.contains('error'));assert.equal(await hash(),'#item_id=MOD-NAV-unknown');assert.equal(await page.locator('#detail .detail-card').count(),0);
+    });
+    await navCheck('search explicit selection and back forward preserve scope and one history entry per action',async()=>{
+      await go('#query=N9030A&scope=included&item_id=MOD-c40c6c5f1b4e7ca9');await waitId('MOD-c40c6c5f1b4e7ca9');
+      const length=await page.evaluate(()=>history.length);await selected('MOD-aecdf6d16380a2be');assert.equal(await hash(),'#query=N9030A&scope=included&item_id=MOD-aecdf6d16380a2be');assert.equal(await page.evaluate(()=>history.length),length+1);
+      await page.locator('#query').fill('DMM6500');await page.locator('#scope').selectOption('identity_unresolved');await page.locator('#filters button[type=submit]').click();await waitId('MOD-4e1a45a25496a054');assert.equal(await hash(),'#query=DMM6500&scope=identity_unresolved');assert.equal(await page.evaluate(()=>history.length),length+2);
+      await page.goBack();await waitId('MOD-aecdf6d16380a2be');assert.equal(await page.locator('#query').inputValue(),'N9030A');assert.equal(await page.locator('#scope').inputValue(),'included');
+      await page.goForward();await waitId('MOD-4e1a45a25496a054');assert.equal(await page.locator('#query').inputValue(),'DMM6500');assert.equal(await page.locator('#scope').inputValue(),'identity_unresolved');
+    });
+    await navCheck('bounded pages custom limit and empty query result survive navigation',async()=>{
+      await go('#offset=10&limit=10');await page.waitForFunction(()=>document.querySelector('#page-info').textContent.startsWith('11–20'));await settled();await page.locator('#next').click();await page.waitForFunction(()=>document.querySelector('#page-info').textContent.startsWith('21–30'));assert.equal(await hash(),'#offset=20&limit=10');
+      await page.goBack();await page.waitForFunction(()=>document.querySelector('#page-info').textContent.startsWith('11–20'));await page.goForward();await page.waitForFunction(()=>document.querySelector('#page-info').textContent.startsWith('21–30'));
+      await go('#query=NO-CATALOG-NAV-MATCH&limit=10');await page.waitForFunction(()=>document.querySelector('#detail-status').textContent==='선택할 항목 없음');assert.equal(await page.locator('#items button').count(),0);await page.reload();await page.waitForFunction(()=>document.querySelector('#detail-status').textContent==='선택할 항목 없음');assert.equal(await hash(),'#query=NO-CATALOG-NAV-MATCH&limit=10');
+    });
+    await navCheck('N1921A and other-manufacturer profile links retain unassessed source meaning',async()=>{
+      await go('#query=N1921A&scope=excluded_passive&item_id=MOD-753eb28b11306834');await waitId('MOD-753eb28b11306834');assert((await page.locator('#detail').innerText()).includes('센서'));
+      const actual=await get('/api/control-sources?profile_id=11667b-1839151d7a');const id=actual.items[0].item_id;await go('#profile_id=11667b-1839151d7a&item_id='+id);await waitId(id);assert.equal(await page.locator('#profile-id').inputValue(),'11667b-1839151d7a');assert((await page.locator('#detail').innerText()).includes('다른 제조사 표기의 같은 모델 후보'));assert((await page.locator('#detail').innerText()).includes('설치 자산 연결 미확정'));
+    });
+    await navCheck('bad fragments show fixed error and replace with safe default without raw payload',async()=>{
+      await page.addInitScript(()=>{window.catalogInitialHistoryLength=history.length;});
+      for(const fragment of ['#unknown=PRIVATE_NAV_CANARY','#query=a&query=b','#query=%FF','#offset=-1','#profile_id=MOD%252F1','#query='+'A'.repeat(4096)]){
+        await go(fragment);await page.waitForFunction(()=>document.querySelector('#navigation-status')?.textContent.includes('invalid_catalog_navigation'));await settled();assert.equal(await hash(),'');assert.equal(await page.locator('#query').inputValue(),'');assert.equal(await page.locator('#items button').count(),25);assert(!(await page.locator('body').innerText()).includes('PRIVATE_NAV_CANARY'));assert.equal(await page.evaluate(()=>history.length===window.catalogInitialHistoryLength),true);
+      }
+    });
+    await navCheck('duplicate history events coalesce and late restored requests cannot change URL DOM or focus',async()=>{
+      await go('#query=DMM6500&item_id=MOD-ce43da835609baea');await waitId('MOD-ce43da835609baea');await page.evaluate(()=>{window.catalogOriginalFetch=window.fetch;window.fetch=(url,options)=>window.catalogOriginalFetch(url,{...options,signal:undefined});});
+      const old=await get('/api/control-sources?query=N9030A&offset=0&limit=25');let release,arrived;const waiting=new Promise(resolve=>arrived=resolve),hold=new Promise(resolve=>release=resolve);const routePattern=/\/api\/control-sources\?/;
+      await page.route(routePattern,async route=>{if(new URL(route.request().url()).searchParams.get('query')==='N9030A'){arrived();await hold;await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(old)});}else await route.continue();});
+      await page.evaluate(()=>{location.hash='#query=N9030A&item_id=MOD-c40c6c5f1b4e7ca9';});await bounded(waiting,'late_navigation_request_not_observed');await page.evaluate(()=>{location.hash='#query=DMM6500&item_id=MOD-4e1a45a25496a054';});await waitId('MOD-4e1a45a25496a054');const retained=await page.locator('#detail').innerHTML(),currentHash=await hash(),active=await page.evaluate(()=>document.activeElement.id);const response=page.waitForResponse(response=>new URL(response.url()).pathname==='/api/control-sources' && new URL(response.url()).searchParams.get('query')==='N9030A');release();await (await response).finished();await page.evaluate(()=>new Promise(requestAnimationFrame));assert.equal(await page.locator('#detail').innerHTML(),retained);assert.equal(await hash(),currentHash);assert.equal(await page.evaluate(()=>document.activeElement.id),active);assert.equal(active,'catalog-detail-heading');await page.unroute(routePattern);
+      const count=listReads();await page.evaluate(()=>{dispatchEvent(new PopStateEvent('popstate'));dispatchEvent(new HashChangeEvent('hashchange'));});await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));assert.equal(listReads(),count);await page.evaluate(()=>{window.fetch=window.catalogOriginalFetch;delete window.catalogOriginalFetch;});
+    });
+    await navCheck('keyboard focus skip link mobile and storage boundaries survive restored reads',async()=>{
+      await page.locator('#query').fill('N1921A');await page.locator('#scope').selectOption('');await page.locator('#query').focus();await page.keyboard.press('Enter');await settled();assert(await page.evaluate(()=>document.activeElement.matches('#items button') && document.activeElement.tabIndex===0));
+      const beforeHash=await hash();await page.locator('.skip').focus();await page.keyboard.press('Enter');assert.equal(await hash(),beforeHash);assert.equal(await page.evaluate(()=>document.activeElement.id),'main');await page.setViewportSize({width:390,height:844});await page.locator('#items button').first().focus();await page.keyboard.press('Enter');await settled();const focus=await page.evaluate(()=>{const node=document.activeElement,box=node.getBoundingClientRect();return {id:node.id,top:box.top,bottom:box.bottom,height:innerHeight};});assert.equal(focus.id,'catalog-detail-heading');assert(focus.top>=0 && focus.bottom<=focus.height,JSON.stringify(focus));await page.screenshot({path:path.join(evidence,'NAV002-mobile-focus.png')});await page.evaluate(()=>scrollTo(0,0));assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:path.join(evidence,'NAV002-mobile-top.png')});await page.locator('#detail').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(evidence,'NAV002-mobile-detail.png')});assert.deepEqual(await page.evaluate(()=>({local:localStorage.length,session:sessionStorage.length,state:history.state,query:location.search})),{local:0,session:0,state:null,query:''});
+      assert(requests.filter(request=>['/control-sources','/control-sources/'].includes(new URL(request.url).pathname)).every(request=>new URL(request.url).search===''));assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert(requests.every(request=>request.method==='GET'));
     });
   }catch(error){failed=error;json(path.join(evidence,'private-error.json'),{message:String(error.stack || error)});}
   finally{
@@ -115,9 +163,9 @@ async function main(){
     try{if(child){if(child.exitCode===null && child.stdin.writable)child.stdin.end('stop\n');let timer;const stopped=await Promise.race([closed,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('owned_cleanup_timeout')),7000);})]).finally(()=>clearTimeout(timer));cleanup.producer_closed=stopped.code===0;const last=stdout.trim().split(/\r?\n/).at(-1);const record=JSON.parse(last);cleanup.server_closed=record.kind==='control_catalog_browser_stopped' && record.server_closed;result.database_after=record.database_after;result.database_unchanged=record.database_unchanged;assert(result.database_unchanged);assert(cleanup.producer_closed && cleanup.server_closed);}}catch(error){if(child && child.exitCode===null)child.kill();failed ||= error;}
     write(path.join(evidence,'producer-stdout.raw'),stdout);write(path.join(evidence,'producer-stderr.raw'),stderr);json(path.join(evidence,'http-requests.json'),requests);
     try{result.source_sha256_after=sourceHashes();assert.deepEqual(result.source_sha256_after,before);result.source_unchanged=true;}catch(error){failed ||= error;}
-    result.javascript_errors=errors.length;result.external_requests=external.length;result.passed=!failed && checks.length===10 && cleanup.browser_closed && cleanup.producer_closed && cleanup.server_closed && result.source_unchanged;json(path.join(evidence,'result.json'),result);
+    result.javascript_errors=errors.length;result.external_requests=external.length;result.passed=!failed && checks.length===10 && navigationChecks.length===7 && errors.length===0 && external.length===0 && cleanup.browser_closed && cleanup.producer_closed && cleanup.server_closed && result.source_unchanged;json(path.join(evidence,'result.json'),result);
   }
-  if(!result.passed)throw Error('control_catalog_browser_failed');console.log(JSON.stringify({kind:result.kind,passed:checks.length,evidence}));return result;
+  if(!result.passed)throw Error('control_catalog_browser_failed');console.log(JSON.stringify({kind:result.kind,passed:checks.length,navigation_passed:navigationChecks.length,evidence}));return result;
 }
 if(require.main===module)main().catch(error=>{console.error(JSON.stringify({error:['catalog_dependency_missing','invalid_configuration'].includes(error.message)?error.message:'control_catalog_browser_failed'}));process.exitCode=1;});
 module.exports={main};

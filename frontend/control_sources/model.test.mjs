@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {validateSummary,validateItems,validateDetail,safeSourceHref,createReadGate,SOURCE_COMMIT} from './model.mjs';
+import {validateSummary,validateItems,validateDetail,safeSourceHref,createReadGate,SOURCE_COMMIT,
+ DEFAULT_NAVIGATION,parseCatalogFragment,serializeCatalogFragment,createNavigationGate} from './model.mjs';
 
 const read=name=>JSON.parse(fs.readFileSync(new URL('../../'+name,import.meta.url),'utf8'));
 const overlay=read('control_sources/registry_overlay.json');
@@ -73,4 +74,46 @@ test('list generations and selection IDs jointly reject late detail and list res
  const a=gate.beginDetail('MOD-a'),b=gate.beginDetail('MOD-b');assert(!gate.detailCurrent(a));assert(gate.detailCurrent(b));
  gate.beginList();assert(!gate.detailCurrent(b));assert(!gate.listCurrent(first));
  const c=gate.beginDetail('MOD-c');assert(gate.detailCurrent(c));assert.throws(()=>gate.beginDetail('../x'),/invalid_catalog_response/);
+});
+test('fragment round trips have fixed order omitted defaults and RFC3986 encoding',()=>{
+ assert.deepEqual(parseCatalogFragment(''),DEFAULT_NAVIGATION);assert.deepEqual(parseCatalogFragment('#'),DEFAULT_NAVIGATION);
+ assert.equal(serializeCatalogFragment({...DEFAULT_NAVIGATION}),'');
+ const value={...DEFAULT_NAVIGATION,query:'한글 A+B = &',scope:'included',model_id:'MOD-a',equipment_id:'EQ-1',profile_id:'fsv40',offset:25,limit:10,item_id:'MOD-selected'};
+ const hash='#query=%ED%95%9C%EA%B8%80%20A%2BB%20%3D%20%26&scope=included&model_id=MOD-a&equipment_id=EQ-1&profile_id=fsv40&offset=25&limit=10&item_id=MOD-selected';
+ assert.equal(serializeCatalogFragment(value),hash);assert.deepEqual(parseCatalogFragment(hash),value);
+ assert.equal(parseCatalogFragment('#query=A+B').query,'A+B');
+ assert.equal(serializeCatalogFragment(parseCatalogFragment('#limit=025&offset=000&query=')),'');
+ assert.equal(serializeCatalogFragment({...DEFAULT_NAVIGATION,query:"!'()*"}),'#query=%21%27%28%29%2A');
+});
+test('fragment rejection is bounded strict and uses one fixed public error',()=>{
+ for(const hash of [null,{},'query=x','#query','#=x','#query=a&query=b','#query=a&%71uery=b','#constructor=x','#__proto__=x','#unknown=x',
+  '#query=%','#query=%xz','#query=%FF','#query=%C0%AF','#query=%ED%A0%80','#query=%00','#query=%0A','#query=\ud800',
+  '#scope=all','#scope=','#model_id=','#item_id=','#profile_id=a%2Fb','#offset=','#offset=true','#offset=-1','#offset=1.5','#offset=%2B1','#offset=1000001','#limit=0','#limit=101',
+  '#query='+ 'a'.repeat(201),'#query=x&','#'+ 'x'.repeat(4096)]) {
+  assert.throws(()=>parseCatalogFragment(hash),/^Error: invalid_catalog_navigation$/);
+ }
+});
+test('fragment decode occurs once and Unicode count agrees with Python text length',()=>{
+ assert.equal(parseCatalogFragment('#query=%252Ftmp%252Ffile').query,'%2Ftmp%2Ffile');
+ assert.equal(serializeCatalogFragment(parseCatalogFragment('#query=%252Ftmp%252Ffile')),'#query=%252Ftmp%252Ffile');
+ assert.throws(()=>parseCatalogFragment('#item_id=MOD%252F1'),/invalid_catalog_navigation/);
+ const value={...DEFAULT_NAVIGATION,query:'😀'.repeat(200)};assert.deepEqual(parseCatalogFragment(serializeCatalogFragment(value)),value);
+ assert.throws(()=>serializeCatalogFragment({...value,query:value.query+'😀'}),/invalid_catalog_navigation/);
+ const oversized='#query='+encodeURIComponent(value.query)+['model_id','equipment_id','profile_id','item_id'].map(key=>'&'+key+'='+'%41'.repeat(150)).join('');
+ assert(Buffer.byteLength(oversized,'utf8')>4096);assert.throws(()=>parseCatalogFragment(oversized),/invalid_catalog_navigation/);
+});
+test('only eight typed navigation fields can enter a link and getters never execute',()=>{
+ for(const bad of [{...DEFAULT_NAVIGATION,offset:true},{...DEFAULT_NAVIGATION,limit:Infinity},{...DEFAULT_NAVIGATION,limit:0},
+  {...DEFAULT_NAVIGATION,source_path:'/private/raw'},{...DEFAULT_NAVIGATION,item_id:'../../file'},{...DEFAULT_NAVIGATION,query:17}])assert.throws(()=>serializeCatalogFragment(bad),/invalid_catalog_navigation/);
+ let called=false;const bad={...DEFAULT_NAVIGATION};Object.defineProperty(bad,'query',{enumerable:true,get(){called=true;throw Error('PRIVATE');}});
+ assert.throws(()=>serializeCatalogFragment(bad),/^Error: invalid_catalog_navigation$/);assert.equal(called,false);
+ const copy=parseCatalogFragment('');copy.offset=4;assert.equal(DEFAULT_NAVIGATION.offset,0);
+});
+test('navigation events coalesce by canonical state while explicit refresh invalidates stale tickets',()=>{
+ const gate=createNavigationGate(),first=gate.begin(parseCatalogFragment('#offset=000'));
+ assert(first);assert(gate.current(first));assert.equal(gate.begin(parseCatalogFragment('')),null);assert(gate.current(first));
+ const next=gate.begin({...DEFAULT_NAVIGATION,item_id:'MOD-b'});assert(!gate.current(first));assert(gate.current(next));
+ assert.equal(gate.begin(parseCatalogFragment('#item_id=MOD-b')),null);
+ const refreshed=gate.begin(next.state,{force:true});assert(refreshed);assert(!gate.current(next));assert(gate.current(refreshed));
+ assert(Object.isFrozen(refreshed) && Object.isFrozen(refreshed.state));
 });

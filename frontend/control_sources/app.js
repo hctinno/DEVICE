@@ -1,6 +1,9 @@
-import {validateSummary,validateItems,validateDetail,safeSourceHref,createReadGate,SCOPE_LABELS,RESEARCH_LABELS,ACCESS_LABELS,CANDIDATE_LABELS} from './model.mjs';
+import {validateSummary,validateItems,validateDetail,safeSourceHref,createReadGate,SCOPE_LABELS,RESEARCH_LABELS,ACCESS_LABELS,CANDIDATE_LABELS,
+  DEFAULT_NAVIGATION,parseCatalogFragment,serializeCatalogFragment,createNavigationGate} from './model.mjs';
 const $=selector=>document.querySelector(selector);
 const gate=createReadGate(),state={list:null,detail:null,selected:'',pending:false,criteria:null};
+const navigationGate=createNavigationGate();let activeNavigation=null;
+const filterInputs=[['query','#query'],['scope','#scope'],['model_id','#model-id'],['equipment_id','#equipment-id'],['profile_id','#profile-id']];
 const controllers={};let summaryGeneration=0;
 const messages={catalog_unavailable:'자료 카탈로그를 읽지 못했습니다.',catalog_invalid_query:'검색 조건이나 ID의 형식을 확인하세요.',catalog_item_not_found:'해당 조사 항목이 없습니다.',invalid_catalog_response:'응답의 자료 구조·선택 ID·지원 상태를 확인하지 못했습니다.'};
 function el(tag,className='',text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=String(text);return node;}
@@ -35,7 +38,8 @@ function renderItems(value){const fragment=document.createDocumentFragment();for
   button.append(el('strong','',item.model || '모델 표기 없음'),el('small','',item.manufacturer || '제조사 미확정'),el('small','mono',item.item_id),el('small','',SCOPE_LABELS[item.scope]),el('small','',`출처 ${item.source_count} · 장비 ID ${item.equipment_id_count} · 지원 미평가`));li.append(button);fragment.append(li);}return fragment;}
 function renderDetail(value){
   const record=value.record,raw=record.research_record,root=el('article','detail-card');root.dataset.itemId=raw.item_id;
-  root.append(el('p','eyebrow',raw.manufacturer || '제조사 미확정'),el('h3','',raw.model || '모델 표기 없음'),el('p','mono',raw.item_id));
+  const heading=el('h3','focus-target',raw.model || '모델 표기 없음');heading.id='catalog-detail-heading';heading.tabIndex=-1;
+  root.append(el('p','eyebrow',raw.manufacturer || '제조사 미확정'),heading,el('p','mono',raw.item_id));
   const tags=el('div','tags');tags.append(tag('조사 분류 · '+SCOPE_LABELS[raw.scope],raw.scope!=='included'),tag('자료 확인 · '+RESEARCH_LABELS[raw.research_status]),tag('지원 미평가',true),tag('실물 미검증'),tag('설치·코드 실행 없음'));root.append(tags);
   const identity=el('dl');for(const [label,value] of [['모델 ID',raw.model_id],['등록행',raw.registration_rows],['장비 ID',raw.equipment_ids.join(' · ')],['장비명',raw.names.join(' · ')],['조사 분류 사유',raw.scope_reason],['공개 코드 조사',raw.public_code_status]])kv(identity,label,value);
   kv(identity,'자료 인수 상태','별도 카탈로그 인계 자료 · 실제 지원 상태와 별도');kv(identity,'식별 대응',raw.model_id===null?'장비 ID 대응 · 모델 식별 미확정':'고정 대장의 모델·장비 ID 대응');kv(identity,'정규화 프로필 후보 ID',record.candidate_virtual_profile_ids.join(' · ') || '없음');root.append(identity);
@@ -54,25 +58,68 @@ function renderDetail(value){
 }
 function pagination(){const value=state.list;$('#previous').disabled=state.pending || !value || value.offset===0;$('#next').disabled=state.pending || !value || value.next_offset===null;}
 async function loadSummary(){const generation=++summaryGeneration;status('#summary-status','자료 집계를 조회하고 있습니다.','pending');try{const value=validateSummary(await fetchData('summary','/api/control-sources/summary'));if(generation!==summaryGeneration)return;const prepared=renderSummary(value);$('#summary').replaceChildren(prepared);$('#summary').dataset.stale='false';status('#summary-status','고정 조사 집계 · 지원 미평가 · 프로필 연결 미확정');}catch(error){if(generation!==summaryGeneration)return;$('#summary').dataset.stale='true';status('#summary-status',errorText(error)+' 표시 중인 집계가 있으면 마지막 성공 조회 기록입니다.','error');}}
-async function selectItem(itemId){
+function focusNode(node){if(node){if(!node.matches('button,a,input,select,textarea'))node.tabIndex=-1;node.focus();}}
+function currentRead(ticket,navigation){return gate.detailCurrent(ticket) && navigationGate.current(navigation);}
+async function selectItem(itemId,{navigation=activeNavigation,focusMode='none',outsidePage=false}={}){
   const ticket=gate.beginDetail(itemId);state.selected=itemId;$('#detail').dataset.stale='true';status('#detail-status',`${itemId} 조회 중 · 아래 내용이 있으면 이전 성공 항목입니다.`,'pending');
   for(const button of $('#items').querySelectorAll('button'))button.setAttribute('aria-current',String(button.dataset.itemId===itemId));
-  try{const value=validateDetail(await fetchData('detail','/api/control-sources/'+encodeURIComponent(itemId)),itemId);if(!gate.detailCurrent(ticket))return;const prepared=renderDetail(value);if(!gate.detailCurrent(ticket))return;$('#detail').replaceChildren(prepared);$('#detail').dataset.stale='false';state.detail=value;status('#detail-status',`선택 항목 ${itemId} · 고정 조사 자료`);$('#announcer').textContent=`${value.record.research_record.model} 상세를 조회했습니다.`;}
-  catch(error){if(!gate.detailCurrent(ticket))return;status('#detail-status',`${itemId} 조회 실패. ${errorText(error)} 아래 내용이 있으면 이전 성공 항목이며 현재 선택의 최신 결과가 아닙니다.`,'error');}
+  try{const value=validateDetail(await fetchData('detail','/api/control-sources/'+encodeURIComponent(itemId)),itemId);if(!currentRead(ticket,navigation))return;const prepared=renderDetail(value);if(!currentRead(ticket,navigation))return;$('#detail').replaceChildren(prepared);$('#detail').dataset.stale='false';state.detail=value;status('#detail-status',`선택 항목 ${itemId} · 고정 조사 자료`+(outsidePage?' · 현재 목록 페이지 밖의 직접 선택 항목':''));$('#announcer').textContent=`${value.record.research_record.model} 상세를 조회했습니다.`;if(focusMode==='detail')focusNode($('#catalog-detail-heading'));}
+  catch(error){if(!currentRead(ticket,navigation))return;status('#detail-status',`${itemId} 조회 실패. ${errorText(error)} 아래 내용이 있으면 이전 성공 항목이며 현재 선택의 최신 결과가 아닙니다.`,'error');if(focusMode==='detail')focusNode($('#detail-status'));}
 }
-async function loadList(offset=0,activeCriteria=null){
+async function loadList(route,navigation,focusMode='none'){
+  const {offset,limit,item_id:itemId}=route;
   const ticket=gate.beginList();controllers.detail?.abort();state.pending=true;pagination();$('#items').inert=true;$('#items').setAttribute('aria-busy','true');$('#detail').dataset.stale='true';status('#list-status','검색 조건의 목록을 조회하고 있습니다.','pending');status('#detail-status','목록 조회 중 · 아래 상세가 있으면 이전 성공 항목입니다.','pending');
-  const criteria=activeCriteria?{...activeCriteria}:{};
-  if(!activeCriteria)for(const [key,selector] of [['query','#query'],['scope','#scope'],['model_id','#model-id'],['equipment_id','#equipment-id'],['profile_id','#profile-id']]){const value=$(selector).value.trim();if(value)criteria[key]=value;}
-  const params=new URLSearchParams({offset:String(offset),limit:'25',...criteria});
-  try{const value=validateItems(await fetchData('list','/api/control-sources?'+params));if(value.offset!==offset || value.limit!==25)throw Error('invalid_catalog_response');if(!gate.listCurrent(ticket))return;const prepared=renderItems(value);$('#items').replaceChildren(prepared);$('#items').dataset.stale='false';state.list=value;state.criteria=criteria;$('#result-count').textContent=`${value.total.toLocaleString('ko-KR')}항목`;$('#page-info').textContent=value.items.length?`${value.offset+1}–${value.offset+value.items.length} / ${value.total}`:`0 / ${value.total}`;status('#list-status',(value.items.length?'항목을 선택해 출처와 검토 내용을 확인하세요.':'조건에 맞는 조사 항목이 없습니다.')+' 적용 조건: '+(Object.entries(criteria).map(([key,value])=>key==='scope'?SCOPE_LABELS[value]:value).join(' · ') || '전체 조사 항목'));
-    if(value.items.length)void selectItem(value.items[0].item_id);else{state.detail=null;state.selected='';$('#detail').replaceChildren(el('p','empty','조건에 맞는 항목이 없어 상세를 표시하지 않습니다.'));$('#detail').dataset.stale='false';status('#detail-status','선택할 항목 없음');}
-  }catch(error){if(!gate.listCurrent(ticket))return;$('#items').dataset.stale='true';status('#list-status',errorText(error)+' 아래 목록이 있으면 이전 성공 조회이며 현재 조건의 결과가 아닙니다.','error');status('#detail-status','목록 조회 실패 · 아래 상세가 있으면 이전 성공 항목입니다.','error');}
-  finally{if(gate.listCurrent(ticket)){state.pending=false;$('#items').inert=false;$('#items').setAttribute('aria-busy','false');pagination();}}
+  const criteria={};for(const [key] of filterInputs)if(route[key]!==DEFAULT_NAVIGATION[key])criteria[key]=route[key];
+  const params=new URLSearchParams({offset:String(offset),limit:String(limit),...criteria});
+  const current=()=>gate.listCurrent(ticket) && navigationGate.current(navigation);
+  try{const value=validateItems(await fetchData('list','/api/control-sources?'+params));if(value.offset!==offset || value.limit!==limit)throw Error('invalid_catalog_response');if(!current())return;const prepared=renderItems(value);$('#items').replaceChildren(prepared);$('#items').dataset.stale='false';state.list=value;state.criteria=criteria;$('#result-count').textContent=`${value.total.toLocaleString('ko-KR')}항목`;$('#page-info').textContent=value.items.length?`${value.offset+1}–${value.offset+value.items.length} / ${value.total}`:`0 / ${value.total}`;status('#list-status',(value.items.length?'항목을 선택해 출처와 검토 내용을 확인하세요.':'조건에 맞는 조사 항목이 없습니다.')+' 적용 조건: '+(Object.entries(criteria).map(([key,value])=>key==='scope'?SCOPE_LABELS[value]:value).join(' · ') || '전체 조사 항목'));
+    $('#items').inert=false;
+    if(focusMode==='list')focusNode($('#items button') || $('#list-title'));
+    if(itemId!==null)void selectItem(itemId,{navigation,focusMode:focusMode==='none'?'none':'detail',outsidePage:!value.items.some(item=>item.item_id===itemId)});
+    else if(value.items.length)void selectItem(value.items[0].item_id,{navigation});
+    else{state.detail=null;state.selected='';$('#detail').replaceChildren(el('p','empty','조건에 맞는 항목이 없어 상세를 표시하지 않습니다.'));$('#detail').dataset.stale='false';status('#detail-status','선택할 항목 없음');}
+  }catch(error){if(!current())return;$('#items').dataset.stale='true';status('#list-status',errorText(error)+' 아래 목록이 있으면 이전 성공 조회이며 현재 조건의 결과가 아닙니다.','error');status('#detail-status','목록 조회 실패 · 아래 상세가 있으면 이전 성공 항목입니다.','error');if(focusMode!=='none')focusNode($('#list-status'));}
+  finally{if(current()){state.pending=false;$('#items').inert=false;$('#items').setAttribute('aria-busy','false');pagination();}}
 }
-$('#filters').addEventListener('submit',event=>{event.preventDefault();void loadList();});
-$('#refresh').addEventListener('click',()=>{void loadSummary();void loadList(state.list?.offset || 0,state.criteria);});
-$('#items').addEventListener('click',event=>{const button=event.target.closest('[data-item-id]');if(button && !state.pending)void selectItem(button.dataset.itemId);});
-$('#previous').addEventListener('click',()=>void loadList(Math.max(0,state.list.offset-state.list.limit),state.criteria));
-$('#next').addEventListener('click',()=>{if(state.list && state.list.next_offset!==null)void loadList(state.list.next_offset,state.criteria);});
-void loadSummary();void loadList();
+function navigationError(fallback=false){
+  status('#navigation-status',fallback?'조회 링크를 읽지 못해 기본 목록을 표시합니다. (invalid_catalog_navigation)':'검색 조건의 형식을 확인하세요. 이전 조회를 유지하며 링크에 적용하지 않았습니다. (invalid_catalog_navigation)','error');
+}
+function navigate(route,{historyMode='push',force=false,focusMode='list',warning=false}={}){
+  const fragment=serializeCatalogFragment(route),ticket=navigationGate.begin(route,{force});
+  if(location.hash!==fragment){
+    const method=historyMode==='push'?'pushState':'replaceState';
+    history[method](null,'',location.pathname+fragment);
+  }
+  if(ticket===null)return;
+  activeNavigation=ticket;
+  if(!warning)status('#navigation-status','');
+  for(const [key,selector] of filterInputs)$(selector).value=ticket.state[key] ?? '';
+  $('.id-filters').open=['model_id','equipment_id','profile_id'].some(key=>ticket.state[key]!==null);
+  void loadList(ticket.state,ticket,focusMode);
+}
+function restoreLocation(initial=false){
+  try{
+    const route=parseCatalogFragment(location.hash);
+    navigate(route,{historyMode:'replace',focusMode:initial?'none':route.item_id!==null?'detail':'list'});
+  }catch{
+    navigationError(true);
+    navigate({...DEFAULT_NAVIGATION},{historyMode:'replace',force:true,focusMode:initial?'none':'list',warning:true});
+  }
+}
+function publishedRoute(itemId=null){
+  return {...DEFAULT_NAVIGATION,...state.criteria,offset:state.list?.offset ?? 0,limit:state.list?.limit ?? activeNavigation?.state.limit ?? 25,item_id:itemId};
+}
+$('#filters').addEventListener('submit',event=>{
+  event.preventDefault();
+  const route={...DEFAULT_NAVIGATION,limit:activeNavigation?.state.limit ?? 25};
+  for(const [key,selector] of filterInputs){const value=$(selector).value.trim();if(value)route[key]=value;}
+  try{navigate(route,{force:true});}catch{navigationError();focusNode($('#navigation-status'));}
+});
+$('#refresh').addEventListener('click',()=>{void loadSummary();navigate(activeNavigation?.state || {...DEFAULT_NAVIGATION},{historyMode:'replace',force:true,focusMode:'none'});});
+$('#items').addEventListener('click',event=>{const button=event.target.closest('[data-item-id]');if(button && !state.pending)navigate(publishedRoute(button.dataset.itemId),{force:true,focusMode:'detail'});});
+$('#previous').addEventListener('click',()=>{const route=publishedRoute();route.offset=Math.max(0,state.list.offset-state.list.limit);navigate(route);});
+$('#next').addEventListener('click',()=>{if(state.list && state.list.next_offset!==null){const route=publishedRoute();route.offset=state.list.next_offset;navigate(route);}});
+$('.skip').addEventListener('click',event=>{event.preventDefault();$('#main').focus({preventScroll:true});$('#main').scrollIntoView({block:'start'});});
+addEventListener('popstate',()=>restoreLocation());
+addEventListener('hashchange',()=>restoreLocation());
+void loadSummary();restoreLocation(true);
