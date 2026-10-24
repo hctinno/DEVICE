@@ -3,6 +3,7 @@ import {validateFixtureRuns, describeFixtureRecord, requireStableFixtureRecords,
 import {validateIntakeReferenceContext} from './intake-references/model.mjs';
 import {createIntakeReferenceReview} from './intake-references/view.mjs';
 import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
+import {createIntakeReferenceActionsReview} from './intake-reference-actions/actions.mjs';
 
 const $ = selector => document.querySelector(selector);
 const state = {records: [], notices: [], selected: location.hash.slice(1), loaded: false, request: 0, view: 'intakes'};
@@ -12,8 +13,50 @@ const referenceTransport = createIntakeReferenceTransport();
 const referencePanel = createIntakeReferenceReview($('#intake-reference-panel'), {
   readHistory:referenceTransport.readHistory, readCurrent:referenceTransport.readCurrent,
 });
+const referenceActions = createIntakeReferenceActionsReview($('#intake-reference-actions-panel'));
 let referenceDestroyed = false;
 let referenceSuspended = false;
+let referencePending = false;
+let referenceContext = null;
+let referenceGuard = false;
+const referenceCanChange = () => !referenceDestroyed && !referenceGuard;
+const sameReferenceContext = (a, b) => a && b && a.intake_id === b.intake_id &&
+  a.revision === b.revision && a.snapshotGeneration === b.snapshotGeneration;
+
+function setReferencePending(value) {
+  if (!referenceCanChange()) return false;
+  referenceGuard = true;
+  try {
+    referencePending = value;
+    if (value) {
+      referenceActions.setPending(true);
+      if (referenceDestroyed) return false;
+      referenceTransport.setPending(true);
+      referencePanel.setPending(true);
+    } else {
+      referenceTransport.setPending(false);
+      referenceActions.setPending(false);
+      if (referenceDestroyed) return false;
+      referencePanel.setPending(false);
+    }
+    return true;
+  } finally { if (!referenceDestroyed) referenceGuard = false; }
+}
+
+function refreshRegisteredHistory(event) {
+  if (!referenceCanChange() || referencePending || referenceSuspended ||
+      event.target !== referenceActions.root || !referenceActions.root.isConnected) return;
+  let captured;
+  try { captured = validateIntakeReferenceContext(event.detail); } catch { return; }
+  if (!sameReferenceContext(captured, referenceContext)) return;
+  referenceGuard = true;
+  try { void referencePanel.refreshHistory().catch(() => {}); } catch {}
+  finally {
+    // C1 is notifying until dispatchEvent has finished every bubbling listener.
+    queueMicrotask(() => { if (!referenceDestroyed) referenceGuard = false; });
+  }
+}
+referenceActions.root.addEventListener('intake-reference-history-refresh', refreshRegisteredHistory);
 const roles = {request: '의뢰 자료', product: '제품 자료', reference: '참고 자료'};
 const producerKinds = {fixture: '합성 분석 예시', manual: '수동 분석', model: '모델 분석자 선언'};
 const errorMessages = {
@@ -234,6 +277,7 @@ function buildList(view) {
     button.append(badges, el('span', 'item-title', record.bundle),
       el('span', 'item-meta', `${record.source_id} · v${record.revision} · 원본 ${record.files.length}개`));
     button.addEventListener('click', () => {
+      if (!referenceCanChange()) return;
       publishView(prepareView({...state, selected: record.intake_id}));
       history.replaceState(null, '', `#${encodeURIComponent(record.intake_id)}`);
       $('#detail-title')?.focus();
@@ -361,6 +405,7 @@ function noticeNode(notice, includeLink, view) {
   if (includeLink && record) {
     const button = el('button', 'button', '현재 접수 보기'); button.type = 'button';
     button.addEventListener('click', () => {
+      if (!referenceCanChange()) return;
       $('#search').value = ''; $('#filter').value = 'all';
       changeView('intakes'); publishView(prepareView({...state, selected: record.intake_id})); $('#detail-title')?.focus();
     }); node.append(button);
@@ -417,23 +462,32 @@ function prepareView(next) {
 }
 
 function publishView(prepared) {
-  $('#metrics').replaceChildren(...prepared.metrics);
-  $('#intake-list').replaceChildren(...prepared.list.nodes);
-  $('#detail-panel').replaceChildren(...prepared.detail);
-  $('#notification-view').replaceChildren(...prepared.notifications);
-  $('#result-count').textContent = prepared.list.count;
-  $('#notice-count').textContent = prepared.view.notices.length;
-  $('#last-updated').textContent = prepared.view.updatedText;
-  Object.assign(state, prepared.view);
-  referenceTransport.setContext(prepared.referenceContext);
-  referencePanel.setContext(prepared.referenceContext);
-  syncFixtureContext();
+  if (!referenceCanChange()) return;
+  referenceGuard = true;
+  try {
+    $('#metrics').replaceChildren(...prepared.metrics);
+    $('#intake-list').replaceChildren(...prepared.list.nodes);
+    $('#detail-panel').replaceChildren(...prepared.detail);
+    $('#notification-view').replaceChildren(...prepared.notifications);
+    $('#result-count').textContent = prepared.list.count;
+    $('#notice-count').textContent = prepared.view.notices.length;
+    $('#last-updated').textContent = prepared.view.updatedText;
+    Object.assign(state, prepared.view);
+    referenceContext = prepared.referenceContext;
+    referenceActions.setContext(referenceContext);
+    if (referenceDestroyed) return;
+    referenceTransport.setContext(prepared.referenceContext);
+    referencePanel.setContext(prepared.referenceContext);
+    syncFixtureContext();
+  } finally { if (!referenceDestroyed) referenceGuard = false; }
 }
 
 function changeView(view) {
+  if (!referenceCanChange()) return;
   state.view = view;
   $('#intake-view').hidden = view !== 'intakes'; $('#notification-view').hidden = view !== 'notifications';
   $('#intake-reference-panel').hidden = view !== 'intakes';
+  $('#intake-reference-actions-panel').hidden = view !== 'intakes';
   $('#page-title').textContent = view === 'intakes' ? '접수 운영' : '알림 기록';
   for (const button of document.querySelectorAll('[data-view]')) {
     if (button.dataset.view === view) button.setAttribute('aria-current', 'page');
@@ -442,9 +496,9 @@ function changeView(view) {
 }
 
 async function refresh() {
+  if (!referenceCanChange()) return;
   const request = ++state.request;
-  referenceTransport.setPending(true);
-  referencePanel.setPending(true);
+  if (!setReferencePending(true)) return;
   state.controller?.abort();
   const controller = new AbortController(); state.controller = controller;
   const timer = setTimeout(() => controller.abort(), 10000);
@@ -455,7 +509,7 @@ async function refresh() {
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error?.code || 'store_unavailable');
     validateSnapshot(payload);
-    if (request !== state.request) return;
+    if (request !== state.request || !referenceCanChange()) return;
     let prepared;
     try { prepared = prepareView({...state, records: payload.intakes, notices: payload.notifications, loaded: true,
       updatedText: `${seoulTime(payload.generated_at)} KST 조회`, snapshotGeneration:(state.snapshotGeneration || 0) + 1}); }
@@ -464,7 +518,7 @@ async function refresh() {
     $('#error-banner').hidden = true;
     $('#announcer').textContent = `접수 ${state.records.length}건을 조회했습니다.`;
   } catch (error) {
-    if (request !== state.request) return;
+    if (request !== state.request || !referenceCanChange()) return;
     const message = Object.hasOwn(errorMessages, error.message) ? errorMessages[error.message]
       : '서버 연결 또는 응답을 확인할 수 없습니다. 서버 실행 상태를 확인하고 다시 시도하세요.';
     const banner = $('#error-banner');
@@ -480,10 +534,9 @@ async function refresh() {
     }
   } finally {
     clearTimeout(timer);
-    if (request === state.request) {
+    if (request === state.request && referenceCanChange()) {
       if (!referenceSuspended) {
-        referenceTransport.setPending(false);
-        referencePanel.setPending(false);
+        setReferencePending(false);
       }
       $('#refresh').disabled = false; $('#refresh').textContent = '↻ 새로고침';
       $('#intake-view').setAttribute('aria-busy', 'false');
@@ -493,24 +546,27 @@ async function refresh() {
 
 addEventListener('pagehide', event => {
   if (event.persisted) {
+    if (!referenceCanChange()) return;
     referenceSuspended = true;
-    referenceTransport.setPending(true);
-    referencePanel.setPending(true);
+    setReferencePending(true);
   } else {
+    if (referenceDestroyed) return;
     referenceDestroyed = true;
+    referenceActions.root.removeEventListener('intake-reference-history-refresh', refreshRegisteredHistory);
+    referenceActions.destroy();
     referenceTransport.destroy();
     referencePanel.destroy();
   }
 });
 addEventListener('pageshow', event => {
-  if (event.persisted && !referenceDestroyed) {
+  if (event.persisted && referenceCanChange()) {
     referenceSuspended = false;
     refresh();
   }
 });
 
 function renderFilteredIntakes() {
-  if (!state.loaded) return;
+  if (!state.loaded || !referenceCanChange()) return;
   publishView(prepareView(state));
 }
 $('#search').addEventListener('input', renderFilteredIntakes);
