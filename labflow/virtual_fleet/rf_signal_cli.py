@@ -29,7 +29,7 @@ _CODE_PINS = {
     'labflow/virtual_fleet/rf_signal_scenario.py':
         (44423, 'bae395d27975dcfe5a64c5a4ea2ae86dccfa87f6d88c9e2c25b2283333a77cae'),
     'labflow/control_packet_prepare.py':
-        (28907, 'c6fcc54fbac917a5a24a1b07e4ff2b3f82945383ca01d581c1829e9ed0341e6c')}
+        (29100, '8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7')}
 _PARENT_CODES = frozenset('rf_signal_scenario_' + name for name in (
     'invalid_request', 'unsupported_catalog', 'output_unavailable',
     'execution_incomplete', 'evidence_invalid', 'evidence_unavailable'))

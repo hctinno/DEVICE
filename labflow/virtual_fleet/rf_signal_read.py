@@ -24,7 +24,7 @@ _ENGINE = (
     'policies.py', 'rf.py', 'spectrum_capture.py', 'spectrum_math.py')
 _ENGINE_SHA = '9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42'
 _CATALOG_SHA = '6f27b5d9ac3d3805b7f198dc0d186865cbfdcaf489d4bceba0572f99709313ff'
-_HELPER_SHA = 'c6fcc54fbac917a5a24a1b07e4ff2b3f82945383ca01d581c1829e9ed0341e6c'
+_HELPER_SHA = '8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7'
 _FILES = {'private-manifest.json': 65536, 'public-result.json': 327680,
           'operator/events.jsonl': 33554432, 'private/author.json': 1048576, 'failure.json': 65536}
 _ROWS = {'public-result.json': 'operator', 'operator/events.jsonl': 'operator',
@@ -119,7 +119,7 @@ def _sources(tree):
     path = tree.root / 'labflow/control_packet_prepare.py'
     raw, result[path] = _source(tree, path)
     raw = raw.replace(b'\r\n', b'\n')
-    if len(raw) != 28907 or _sha(raw) != _HELPER_SHA:
+    if len(raw) != 29100 or _sha(raw) != _HELPER_SHA:
         _fail('input_changed')
     return result
 
