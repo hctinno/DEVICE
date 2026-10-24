@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>FCC 보고서 사례 · DGM AutoLab</title>
+  <link rel="stylesheet" href="/fcc-cases/styles.css">
+  <script type="module" src="/fcc-cases/app.js"></script>
+</head>
+<body>
+  <a class="route-skip" href="#main">본문으로 이동</a>
+  <nav class="route-nav" aria-label="워크스페이스 이동">
+    <a class="route-brand" href="/">DGM <strong>AutoLab</strong></a>
+    <a href="/">접수 현황</a>
+    <a href="/control-sources">제어자료</a>
+    <a href="/dut-controls">DUT 자료</a>
+    <a href="/fcc-cases" aria-current="page">FCC 보고서 사례</a>
+  </nav>
+  <main id="main" tabindex="-1">
+    <section id="fcc-route-state" class="route-state" aria-labelledby="route-heading">
+      <p class="route-kicker">DGM AUTOLAB / FCC REPORT CASES</p>
+      <h1 id="route-heading">FCC 보고서 사례</h1>
+      <p id="fcc-route-status" role="status" aria-live="polite">사례 자료의 구성 상태를 확인하고 있습니다.</p>
+      <p>보고서 유래 자료의 조회 전용 화면입니다. 원본 확보·페이지 검토·규정 대조·독립 평가 상태를 각각 확인합니다.</p>
+      <button id="fcc-route-retry" type="button">다시 확인</button>
+    </section>
+    <section id="fcc-reader" aria-label="FCC 보고서 사례 조회" hidden></section>
+  </main>
+</body>
+</html>

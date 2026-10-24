@@ -3,6 +3,7 @@ import argparse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import importlib
 import json
+import math
 from pathlib import Path
 import re
 import threading
@@ -27,10 +28,79 @@ ASSETS = {
     '/dut-controls/styles.css': ('dut_controls/styles.css', 'text/css; charset=utf-8'),
     '/dut-controls/app.js': ('dut_controls/app.js', 'text/javascript; charset=utf-8'),
     '/dut-controls/model.mjs': ('dut_controls/model.mjs', 'text/javascript; charset=utf-8'),
+    '/fcc-cases': ('fcc_cases/index.html', 'text/html; charset=utf-8'),
+    '/fcc-cases/': ('fcc_cases/index.html', 'text/html; charset=utf-8'),
+    '/fcc-cases/styles.css': ('fcc_cases/styles.css', 'text/css; charset=utf-8'),
+    '/fcc-cases/app.js': ('fcc_cases/app.js', 'text/javascript; charset=utf-8'),
+    '/fcc-cases/model.mjs': ('fcc_cases/model.mjs', 'text/javascript; charset=utf-8'),
+    '/fcc-cases/view.mjs': ('fcc_cases/view.mjs', 'text/javascript; charset=utf-8'),
 }
 FRONTEND = Path(__file__).resolve().parents[1] / 'frontend'
 _ID = re.compile(r'[A-Za-z0-9_.-]{1,150}', re.ASCII)
 _SCOPES = {'included', 'excluded_passive', 'identity_unresolved', 'needs_scope_review'}
+_FCC_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,127}\Z', re.ASCII)
+_FCC_CODES = frozenset({'fcc_case_invalid_packet', 'fcc_case_invalid_sources', 'fcc_case_limit_exceeded',
+                        'fcc_case_pdf_invalid', 'fcc_case_extraction_unavailable', 'fcc_case_invalid_evidence',
+                        'fcc_case_invalid_query', 'fcc_case_not_found', 'fcc_case_invalid_intake'})
+_FCC_PRIVATE_PATH = re.compile(
+    r'''(?:^|[\s"'(<])(?:[A-Za-z]:[\\/]|\\\\[^\\\s]+\\|file://|\.local[\\/])'''
+    r'''|(?:^|[\s"'(<])/(?:Users|home|private|tmp|var|mnt|Volumes)/''', re.IGNORECASE)
+
+
+def _fcc_response_bytes(value, method):
+    """Bound a detached021 response before sending any HTTP headers."""
+    common = {'schema_version', 'kind', 'corpus_id', 'execution_mode', 'synthetic',
+              'validation_scope', 'verification'}
+    expected = ({'scope', 'searches', 'counts', 'documents', 'case_previews'} if method == 'summary'
+                else {'case', 'documents'})
+    if type(value) is not dict or set(value) != common | expected:
+        raise ValueError('invalid_fcc_case_response')
+    verification = value['verification']
+    if (type(value['schema_version']) is not int or value['schema_version'] != 1
+            or value['kind'] != ('fcc_report_case_summary' if method == 'summary' else 'fcc_report_case')
+            or value['execution_mode'] != 'report_derived'
+            or value['validation_scope'] != 'source_bytes_and_retained_page_literals_only'
+            or type(value['synthetic']) is not bool
+            or type(value['corpus_id']) is not str or not _FCC_ID.fullmatch(value['corpus_id'])
+            or type(verification) is not dict or set(verification) != {
+                'hardware_verified', 'physical_verified', 'model_execution_verified',
+                'normative_compliance_verified', 'coverage_complete'}
+            or any(flag is not False for flag in verification.values())):
+        raise ValueError('invalid_fcc_case_response')
+    nodes = 0
+
+    def visit(item, depth=0):
+        nonlocal nodes
+        nodes += 1
+        if nodes > 200000 or depth > 20:
+            raise ValueError('invalid_fcc_case_response')
+        kind = type(item)
+        if kind is str:
+            item.encode('utf-8', errors='strict')
+            if _FCC_PRIVATE_PATH.search(item):
+                raise ValueError('invalid_fcc_case_response')
+        elif item is None or kind in (bool, int):
+            pass
+        elif kind is float:
+            if not math.isfinite(item):
+                raise ValueError('invalid_fcc_case_response')
+        elif kind is list:
+            for child in item:
+                visit(child, depth + 1)
+        elif kind is dict:
+            for key, child in item.items():
+                if type(key) is not str:
+                    raise ValueError('invalid_fcc_case_response')
+                visit(key, depth + 1)
+                visit(child, depth + 1)
+        else:
+            raise ValueError('invalid_fcc_case_response')
+
+    visit(value)
+    raw = json.dumps(value, ensure_ascii=False, allow_nan=False).encode('utf-8')
+    if len(raw) > 8 * 1024 * 1024:
+        raise ValueError('invalid_fcc_case_response')
+    return raw
 
 
 def _catalog_query(raw):
@@ -65,9 +135,26 @@ def _catalog_query(raw):
     return result
 
 
-def create_server(workspace, host='127.0.0.1', port=8765):
+def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None):
     if host != '127.0.0.1':
         raise ValueError('The UI server only accepts the loopback host 127.0.0.1')
+    fcc_summary = fcc_case = fcc_error_type = None
+    if fcc_case_catalog is not None:
+        invalid = False
+        try:
+            module = importlib.import_module('.fcc_report_cases', __package__)
+            if type(fcc_case_catalog) is not module.FccReportCaseCatalog:
+                invalid = True
+            else:
+                # Capture formal class methods, never arbitrary instance callbacks.
+                fcc_summary = module.FccReportCaseCatalog.summary
+                fcc_case = module.FccReportCaseCatalog.case
+                fcc_error_type = module.FccReportCaseError
+        except Exception:
+            invalid = True
+        if invalid:
+            # Raise outside the exception handler so no private context is retained.
+            raise ValueError('fcc_case_catalog_invalid')
     model = IntakeReadModel(workspace)
     catalog_instance = None
     catalog_lock = threading.Lock()
@@ -147,6 +234,22 @@ def create_server(workspace, host='127.0.0.1', port=8765):
                 return self.error(404, 'route_not_found')
             if parsed.fragment or parsed.scheme or parsed.netloc or ('?' in self.path and path != '/api/control-sources'):
                 return self.error(404, 'route_not_found')
+            fcc_target = (path == '/fcc-cases' or path.startswith('/fcc-cases/')
+                          or path == '/api/fcc-cases' or path.startswith('/api/fcc-cases/'))
+            raw_target = self.requestline.split()[1]
+            if fcc_target and ('?' in raw_target or '#' in raw_target or '//' in parsed.path
+                               or raw_target.startswith('//') or '\\' in path
+                               or re.search(r'%(?:2f|5c)', parsed.path, re.IGNORECASE)):
+                return self.error(404, 'route_not_found')
+            if path == '/api/fcc-cases/summary':
+                return self.read_fcc_cases('summary')
+            if path.startswith('/api/fcc-cases/cases/'):
+                case_id = path[len('/api/fcc-cases/cases/'):]
+                if '/' in case_id:
+                    return self.error(404, 'route_not_found')
+                if not _FCC_ID.fullmatch(case_id):
+                    return self.error(400, 'fcc_case_invalid_query')
+                return self.read_fcc_cases('case', case_id)
             dut_target = (path == '/dut-controls' or path.startswith('/dut-controls/')
                           or path == '/api/dut-controls' or path.startswith('/api/dut-controls/'))
             if dut_target and ('//' in parsed.path or '\\' in path
@@ -213,6 +316,21 @@ def create_server(workspace, host='127.0.0.1', port=8765):
                 self.error(404 if exc.code == 'intake_not_found' else 503, exc.code)
             except (OSError, ValueError):
                 self.error(503, 'store_unavailable')
+
+        def read_fcc_cases(self, method, *args):
+            if fcc_case_catalog is None:
+                return self.error(503, 'fcc_case_catalog_unconfigured')
+            try:
+                operation = fcc_summary if method == 'summary' else fcc_case
+                payload = operation(fcc_case_catalog, *args)
+                raw = _fcc_response_bytes(payload, method)
+            except Exception as exc:
+                code = exc.code if type(exc) is fcc_error_type else None
+                if type(code) is not str or code not in _FCC_CODES:
+                    code = 'fcc_case_catalog_unavailable'
+                return self.error(400 if code == 'fcc_case_invalid_query' else
+                                  404 if code == 'fcc_case_not_found' else 503, code)
+            return self.send_payload(200, raw)
 
         def read_catalog(self, method, *args, **kwargs):
             try:
