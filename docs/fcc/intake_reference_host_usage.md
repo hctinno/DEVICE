@@ -33,7 +33,7 @@ configured `server_close()`는 admission 차단→모든 부모 finally/active0�
 
 오류는 고정 `intake_reference_ui_`6코드와 exact 부모 class/code27만 내보낸다. auth403·busy429·wire400/411/413/415/417/408·미구성/unknown503을 구별한다. raw exception/SQL/path·traceback·secret을 자동 출력하지 않는다. metadata 관측을 전체 DB/원문 진위·권리·지속 현재성·쓰기/운전 권한으로 승격하지 않는다.
 
-2026-10-24 검증은 기준 `0d7ee630b87bf2e2221c00ebcb3c106822dcfd15`의 합성 fixture로 실행했다. Python 3.12.4/SQLite 3.45.3에서 전용38·관련285·전체2053이 각각 실패/오류/건너뜀0으로 통과했다. 전체 실행은420.078초이며 검사 전후 제품/test 소스 hash가 같았다. Node v24.16.0의 기존186개도 모두 통과했다. 서로 겹치는 검사 묶음이므로 숫자를 합산하지 않는다.
+초기 `20e26ed` 후보의 2026-10-24 검증은 기준 `0d7ee630b87bf2e2221c00ebcb3c106822dcfd15`의 합성 fixture로 실행했다. Python 3.12.4/SQLite 3.45.3에서 전용38·관련285·전체2053이 각각 실패/오류/건너뜀0으로 통과했다. 전체 실행은420.078초이며 검사 전후 제품/test 소스 hash가 같았다. Node v24.16.0의 기존186개도 모두 통과했다. 서로 겹치는 검사 묶음이므로 숫자를 합산하지 않는다.
 
 별도 실제 HTTP 계측은 정식043→042 history GET/HEAD/current POST 각1회였다. history/HEAD의 원문 open0, current의 합성 context7857B/PDF4437B 읽기를 관측했고 재파싱0·쓰기 SQL 요청0·read-only SQLite 연결4개 회수를 확인했다. 준비 단계의 fixture 생성/분석/038 기록은 API 실행과 분리했다. 실행 전후 DB/파일의 identity·mode·mtime·bytes/hash와 SQL dump/row counts가 같았다. host 종료의 borrowed Store.close0·부모 finally 대기·client/worker 회수, caller 종료 전후 native 보호 대상4곳의 이동 차단/해제와 같은 포트 재사용도 확인했다. client abort의 응답 전달 여부는 unknown으로 보존했다.
 
@@ -41,4 +41,10 @@ configured `server_close()`는 admission 차단→모든 부모 finally/active0�
 
 실패한 RED와 계측기 분류 실패도 보존했다. 최초 계측기는 SQLite 내부 `-- ...` trace를 별도 SQL 명령으로 오인했다. 실행을 바꾸지 않고 실제 쓰기 요청 여부를 기록하는 authorizer를 더한 계측에서 통과했으며 제품을 바꾸거나 실패를 성공 수에 넣지 않았다. `scripts/check_artifacts.py`는 UTF8·필수 문서·링크 검사이며 기능·계측 정확도·기관 적합성 증거가 아니다.
 
-현재 사용 예제의 별도 CLI는 후속047이다. 실제 고객 DB/PDF·모델·실장비/현장·D4 DOM/미래 transport·046 통합은 미실행이며 이 backend 검증과 별도다. 이 결과는 독립 검토 전 구현 후보의 자체 검증이다.
+이후 독립 검토는 Critical0/Important3의 No였다. 이력의 세션 확인과 lease 등록 사이 만료, 종료된 worker 참조 누적, runtime RLock 안의043 native identity I/O를 재현했다. 원래 후보·검사·No 원문을 보존하고 같은 소유3에서 별도 수정했다. 초기 인증과 lease 예약을 같은 critical section에서 수행하고 모든 runtime lock depth를 놓은 뒤 native 검증을 한다. 그동안 active/source lease를 보유하며 native 뒤 인증/idle/closing/binding을 다시 확인해 formal 부모에 진입한다. native 실패/중단도 finally로 lease를 반환한다. worker 참조는 실행 중 회수하되 표준 non-daemon join이 실제 thread 반환까지 기다리는 보장은 유지한다.
+
+2026-10-25 수정본은 전용50·관련297·전체2065가 각각 실패/오류/건너뜀0으로 통과했다. 전체 실행은428.687초이며 제품/test hash가 실행 전후 같았다. 새 경계12개는 GET/HEAD 만료403의 부모/SQL0, closing/binding 변경503의 부모/SQL0, native 중 mutex 접근과 active/source 소유, 빠른 두 번째 source429, native 오류 뒤 회수,21요청의 종료 참조0, runtime finally 뒤 실제 thread 종료까지 close 대기를 확인했다. 제품 factory/main/기존 handler/hook signature와 원래38개 검사 본문은 같다.
+
+수정본의 별도 genuine HTTP도 다시 실행했다. history GET/HEAD/current POST 각1, 앞서 적은 source bytes·parser0·쓰기 요청0·DB/file/SQL 불변·native 대상4곳 차단/해제와 같은 포트 재사용을 다시 확인했다. 이번에는 SQLite.close의 실제 C-return4도 계측했다. Node186은 초기 후보의 검사이며 frontend 소스가 같아 이번 수정에서 재실행하지 않았다. 새 RED47의 실패8·native 소유 경계 RED49의 실패5와 중간 GREEN47/49도 최종 GREEN50과 구분해 보존했다.
+
+현재 사용 예제의 별도 CLI는 후속047이다. 실제 고객 DB/PDF·모델·실장비/현장·D4 DOM/미래 transport·046 통합은 미실행이며 이 backend 검증과 별도다. 위 수정본 결과는 자체 검증이며 새 독립 판정은 총괄 재검토 후 별도로 기록한다.
