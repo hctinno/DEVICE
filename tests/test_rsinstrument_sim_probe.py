@@ -61,6 +61,18 @@ def declared_receipt(configuration,pid=123):
     return receipt,journal
 
 
+def receipt_prefix(receipt,observations):
+    value = copy.deepcopy(receipt)
+    value['observations'] = copy.deepcopy(observations)
+    records = []
+    for observation in value['observations']:
+        records.extend([{'event':'intent','sequence':observation['sequence'],'api':observation['api'],
+                         'command':observation['command']}, {'event':'observation','observation':observation}])
+    journal = b''.join(sim._json(record)+b'\n' for record in records)
+    value['journal_sha256'] = hashlib.sha256(journal).hexdigest()
+    return value,journal
+
+
 class SimulationBoundaryTests(unittest.TestCase):
     def setUp(self):
         local = Path(__file__).resolve().parents[1]/'.local/sdk-sim-tests'
@@ -394,6 +406,64 @@ class SimulationBoundaryTests(unittest.TestCase):
         for modified in attacks:
             with self.subTest(modified=modified):
                 with self.assertRaises(ValueError): sim._decode_receipt(sim._json(modified),journal,configuration,123)
+
+    def test_failed_receipt_cannot_assert_execution_without_successful_entry(self):
+        configuration = sim._configuration(str(self.root/'env/Scripts/python.exe'),self.lock,1)
+        original,_ = declared_receipt(configuration)
+        original.update(status='rejected',reason_code='sdk_operation_failed')
+        failed = copy.deepcopy(original['observations'][0])
+        failed.update(state='raised',response=None,error_code='sdk_operation_failed')
+        wrong_class = copy.deepcopy(original['observations'][0])
+        wrong_class['response'] = 'VisaSession'
+        missing_class = copy.deepcopy(original['observations'][0])
+        missing_class['response'] = None
+        for name,observations in (('empty',[]),('raised',[failed]),('wrong-class',[wrong_class]),('missing-class',[missing_class])):
+            with self.subTest(case=name):
+                value,journal = receipt_prefix(original,observations)
+                with self.assertRaises(ValueError):
+                    sim._decode_receipt(sim._json(value),journal,configuration,123)
+
+    def test_proven_entry_is_preserved_for_partial_sdk_failure(self):
+        configuration = sim._configuration(str(self.root/'env/Scripts/python.exe'),self.lock,1)
+        original,_ = declared_receipt(configuration)
+        original.update(status='rejected',reason_code='sdk_operation_failed')
+        observations = copy.deepcopy(original['observations'][:2])
+        observations[1].update(state='raised',response=None,error_code='sdk_operation_failed')
+        value,journal = receipt_prefix(original,observations)
+        decoded = sim._decode_receipt(sim._json(value),journal,configuration,123)
+        self.assertTrue(decoded['actual_vendor_simulation_executed'])
+        self.assertEqual((decoded['status'],decoded['reason_code']),('rejected','sdk_operation_failed'))
+        original.update(actual_vendor_simulation_executed=False,sdk=None,session_closed=None)
+        value,journal = receipt_prefix(original,[])
+        self.assertFalse(sim._decode_receipt(sim._json(value),journal,configuration,123)['actual_vendor_simulation_executed'])
+
+    def test_false_execution_flag_cannot_erase_a_proven_entry(self):
+        configuration = sim._configuration(str(self.root/'env/Scripts/python.exe'),self.lock,1)
+        original,_ = declared_receipt(configuration)
+        original.update(status='rejected',reason_code='sdk_operation_failed',actual_vendor_simulation_executed=False,sdk=None)
+        value,journal = receipt_prefix(original,original['observations'][:1])
+        with self.assertRaises(ValueError): sim._decode_receipt(sim._json(value),journal,configuration,123)
+
+    def test_parent_rejects_empty_failed_receipt_without_executed_claim(self):
+        class Child:
+            pid,returncode = 123,0
+            def poll(self): return 0
+        def launch(configuration,folder):
+            value,_ = declared_receipt(configuration)
+            value.update(status='rejected',reason_code='sdk_operation_failed')
+            value,journal = receipt_prefix(value,[])
+            (folder/'journal.jsonl').write_bytes(journal)
+            (folder/'child-receipt.json').write_bytes(sim._json(value))
+            return Child()
+        with patch.object(sim,'_APPROVED_RECEIPT_SHA256',HASH), \
+             patch.object(sim,'_verify_runtime',return_value={'site_packages':'fixture','python':'fixture'}), \
+             patch.object(sim,'_launch_child',side_effect=launch):
+            result = self.call()
+        self.assert_false_claims(result)
+        self.assertEqual((result['status'],result['reason_code']),('rejected','evidence_error'))
+        retained = json.loads((self.root/'output/child-receipt.json').read_text(encoding='utf-8'))
+        self.assertTrue(retained['actual_vendor_simulation_executed'])
+        self.assertEqual(retained['observations'],[])
 
     def test_journal_boolean_alias_and_missing_final_newline_are_rejected(self):
         configuration = sim._configuration(str(self.root/'env/Scripts/python.exe'),self.lock,1)

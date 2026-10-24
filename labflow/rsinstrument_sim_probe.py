@@ -482,6 +482,10 @@ def _decode_receipt(data,journal,configuration,pid):
         intent = {'event':'intent','sequence':index,'api':record['api'],'command':record['command']}
         if _json(lines[2*index])!=_json(intent) or _json(lines[2*index+1])!=_json({'event':'observation','observation':record}):
             raise ValueError()
+    entry_observed = bool(observations) and observations[0]['state']=='returned' and (
+        observations[0]['response']=='VisaSessionSim' and observations[0]['error_code'] is None)
+    if value['actual_vendor_simulation_executed'] is not entry_observed:
+        raise ValueError()
     sdk = value['sdk']
     if value['actual_vendor_simulation_executed']:
         expected_hash = next(item['sha256'] for item in configuration['lock']['files'] if item['path']=='RsInstrument/__init__.py')
