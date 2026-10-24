@@ -2,6 +2,8 @@
 
 갱신일: 2026-10-24, Asia/Seoul. 이전 배정·인수 이력은 보존한다.
 
+최신 [통합013](handoff/development/INTEGRATION-013.md)의 기능 기준은 fe614ca다. PREPARE004 최종 수정·HARNESS016·신규 FCC 평가 GROUPS022·E3632A019를 정확 소유 커밋으로 인수하고 새 전체 Python1379/skip0·source172불변, 기존64Fleet 새 관측8/역사8/measure6을 확인했다.019 독립 검토는 일반 기능33개 범위이며 hook 관련9개는 독립 검토 밖이다. P01 요청012는8명 실제 배정/동결 ACK v3 인수, S06 제외·pending 검수14JSON과 첫 S03 실제 PDF2/111쪽·27payload를 원문 불변으로 인수했다. 공식 mapping0/분할 누락·상충/모집단unknown을 유지한다.021 후보는 공개읽기 호환 수정·독립 리뷰, 개발4 실제024 GET/DOM·개발3 계산023·개발2 다음025를 병행한다. 사용자 결정/준비0이며 아래012 이하는 보존 이력이다.
+
 최신 [통합012](handoff/development/INTEGRATION-012.md)의 기능 기준은1635cf2다. DELTA015·수정 STOP013·UI017을 독립 최종 Yes 후 인수해 새 전체 Python1237/skip0·Node86·실제 화면46묶음·기존64Fleet 정지17사례·실제metadata11응답/오류2를 확인했다. 기존011/S05 readback12JSON을 정확 인수/ACK해019에 전달했다. 신규 HCT FCC corpus 지시 전체를 읽고 [요청012/v021](docs/material-intake/2026-10-24-hct-fcc-corpus-request.md)을 P01→수집1~8에 실제 배정했다. 개발1 CASE021/개발4 VIEW024, 개발2 완료016의 최종리뷰와 다음평가GROUP022, 개발3 진행019/후속023을 [후속대장](handoff/development/NEXT-004.md)대로 이어간다. 기존 branch/미커밋·원문/소유권 보존, 모집단/적격PDF는 검수 전 미산정/미확인, 사용자 준비0이다. 아래011 이하는 당시 기록이다.
 
 최신 [통합011](handoff/development/INTEGRATION-011.md)의 기능 기준은3350fa3다. MAX014 연속3kHz 최대와 DUT UI012의 정식 API/읽기 화면을 독립 Yes 후 인수했다. 새 전체 Python1176 PASS/skip0·Node81 PASS·DUT자료 화면12/장비·NAV17/접수10=39묶음·합성source실행6사례를 확인했다. P01 공개metadata6그룹/22file 참조를 private 원문SHA와 대조해 별도 delta 입력/pin을 고정했고 기존 DUT2JSON·DB/64프로필·공유 수집 원본은 같다. [후속](handoff/development/NEXT-004.md)은 개발1prepare004 No2/개발2stop013 No3 소유 수정, 개발3DELTA015/개발4ACQUISITION-UI017 실제 배정·ACK/구현이다. 현재 branch·미커밋·소유권·실패를 보존하며 원문/실물·실제 AI 지원을 승격하지 않는다. 사용자 준비0이다. 아래010/008 이하는 각 당시 이력이다.

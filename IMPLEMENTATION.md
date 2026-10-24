@@ -1,5 +1,7 @@
 # DGM AutoLab — 구현·시스템 설계 초안
 
+2026-10-24 [통합013](handoff/development/INTEGRATION-013.md): native 검수사본004와 하네스/명시정지016, 기존 E3632A 읽기019, FCC 전체 연결성분 분할022를 독립 범위 검토 후 인수했다. 새 전체 Python1379/skip0·172 source 불변이며 프론트엔드86/화면46은 이전012 보존 결과다. 신규012 검수 실제 원문2/111쪽은 private에 두고021 원본 페이지 literal·정확조회→024 읽기 화면/023 기존계산·025 AI 문맥/응답 경계로 연결한다. HAC72쪽 missing form resource·공식매핑0·평가적격0을 유지한다. 전체 업무/실제AI/물리·현장 검증과 각 소프트웨어 단위를 구별하며 사용자 준비0이다. 아래012 이하는 보존 이력이다.
+
 2026-10-24 [통합012](handoff/development/INTEGRATION-012.md): 기존 Fleet의 명시 DUT stop/read와 ACK·역사영수증 경계, pinned DUT 후속metadata API/읽기 화면을 독립 최종 Yes 후 인수했다. 새 전체 Python1237/Node86·실제 화면46묶음·가상Fleet정지17사례 PASS다. 신규 [HCT FCC corpus 사례 계약](docs/superpowers/specs/2026-10-24-hct-fcc-case-catalog-design.md)은 별도 private 원본/검수packet→페이지 근거 읽기인덱스/접수 연결→읽기 화면이며 기존 장비DB·Store·동결metadata를 교체하지 않는다. [그룹 평가022](docs/superpowers/specs/2026-10-24-fcc-case-evaluation-groups-design.md)는 검토된 그룹의 유출 방지를 구현하고 실제 모델 평가와 구분한다. P01 v0218역할 실제 수집과 개발1/4 신규021/024·개발2 후속022·개발3 진행019를 병행한다. 원문/실측값·암호는 공개Git0, 실물/OEM/현장·AI 미검증 경계는 같다. 아래011 이하는 이전 기록이다.
 
 2026-10-24 [통합011](handoff/development/INTEGRATION-011.md): `frequency_psd_max.py`의 정확 Fraction 후보/적분/earliest tie와 `/dut-controls`의 실제 API 읽기 화면·명시 GET/HEAD/lazy snapshot을 독립 Yes 후 인수했다. 새 전체 Python1176/Node81·실제브라우저39묶음/명시source최대6사례 PASS다. MAX complete는 선언 밀도 support에 한정하고 DUT 자료 확보/권리/제품 지원을 분리한다. 기존 DUT2JSON/API·Core·Store·DB/64프로필은 유지하고 별도 delta 입력/015 API/017 화면으로 과거참고와 후속확보를 명시 결합한다. prepare004/stop013 미해결 후보는 미통합/소유 수정 중이다. 실제 RF/현장·실제 AI 검증은 남아 있다. 아래010/008 이하는 이전 기록이다.

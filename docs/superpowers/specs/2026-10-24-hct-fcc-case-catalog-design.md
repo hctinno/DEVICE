@@ -24,6 +24,8 @@ claim은 `claim_id`, `field`, `value`, `unit`, `status`, `basis`, `evidence` 7�
 
 evidence는 원본 document_id/SHA, 1-based 파일 페이지, 인쇄 페이지(unknown 허용), 표/행/열/각주 위치, retained text hash·line_start/end·quote를 담는다. `page_citation`으로 실제 같은 SHA·페이지의 retained literal을 확인한다. 다른 페이지/개정의 값·변조된 hash·범위를 거절한다. 구조화 값은 인용과 검수자의 해석을 구분하며 단위 환산·판정·법령 요구를 API가 추측하지 않는다. 추출 이미지·곡선은 native raw가 아니다.
 
+실제 S03 B001의 두 공개 PDF는 permission encryption이 있지만 일반 reader에서 비밀 암호 없이 빈 user password로 열리며 원본 SHA와38/73쪽이 유지됨을 총괄이 확인했다. 기존 `extract_document`는 이를 encrypted로 명시 거절하므로 그 기본 동작은 바꾸지 않는다. **021 소유 파일에만** 공개 official/mirror exhibit의 읽기 정책을 좁게 추가한다. 원문 bytes를 직접 읽는 strict reader가 빈 user password의 USER_PASSWORD 결과1인 경우만 허용하고, 비밀 암호/owner credential·추측·재시도·외부 I/O·원본 재작성/복호 PDF 저장은 하지 않는다. 기존 page/content/경고·누락form/텍스트·전체 예산 검사 helper를 재사용하고 동일 per-page citable/literal 검증을 유지한다. parser.name은 `pypdf-public-empty-user-password`, 진단 issue.code는 `public_empty_user_password_read`로 별도 표시해 일반 원문 추출과 구분한다. 이 진단 자체는 성공/실패를 바꾸지 않으며 실제 parser 경고는 여전히 근거 사용을 막는다. 기존 request/출력 exact keyset은 바꾸지 않고 rights/private·원본SHA와 출처를 보존한다. existing_user만 있는 입력이나 비어 있지 않은 열람 암호는 기존 거절 경계를 유지한다. 합성 blank-user permission PDF의 정상 읽기와 secret-user/owner-only·일반접수 기본 거절·원본 불변을 RED/GREEN으로 확인한다.
+
 ## 조회와 접수 연결
 
 API는 `summary()`, `case(case_id)`, `search(query)`, `match_intake(projected_summary, query)`로 고정한다. 완전한 DTO 키/유형/오류를 개발1 usage에서 먼저 명시하고 개발4와 공유한다. summary/case/matches kind는 각각 `fcc_report_case_summary`, `fcc_report_case`, `fcc_report_case_matches`다. 모든 wrapper에 검증 범위를 담고 실행모드는 report_derived, hardware/physical/model execution verified는 false다. 요약은 원본 확보/추출/검토/규정대조/개발반영/평가를 혼합 완료율로 표시하지 않는다.

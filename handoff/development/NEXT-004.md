@@ -1,5 +1,15 @@
 # 후속 개발 인수 대장 004
 
+최신 기준은 [통합013](INTEGRATION-013.md)의 기능fe614ca·새 전체 Python1379 PASS/skip0·source172불변이다.004/016/019/022를 인수했으며 Node86/화면46은 이전012 보존 결과다. 아래 표가 현재 실제 배정이며 그 뒤012 표 이하는 이력이다.
+
+| 담당 | 인수/현재 기준 | 실제 후속 |
+|---|---|---|
+| 개발1 | PREPARE004 최종fa7c354 독립 Yes/총괄c6a99ca | CASE021 후보742637c 독립 리뷰·소유 자가점검2수정. 공개 empty-user 읽기 전용 경로/실제 SAR38citable·HAC1citable/72미인용, S06 대표3 제외·pending 검증 보존 |
+| 개발2 | HARNESS016/022 독립 Yes/총괄f362456·8f48856, 실제S06 4행/S03 2행 전부 미배정 검증 | [REVIEW-BOUNDARY025](../../docs/superpowers/specs/2026-10-24-fcc-case-review-boundary-design.md) 신규3파일·전용branch 실제 배정. bounded021 private 문맥/strict 사례·근거 응답, 실제모델/평가0 |
+| 개발3 | READBACK019 일반 기능 독립 Yes/총괄fe614ca·전체42포함1379 PASS | [CALCULATION023](../../docs/superpowers/specs/2026-10-24-fcc-report-calculation-check-design.md) 새branch/소유3파일. exact claim역할·동일표/행·기존계산·명시 tolerance, 실제 B001 역할부족 보존 |
+| 개발4 | UI017 인수/기존Node86·실제화면46 | VIEW024 신규5파일. contract Node11/browser10 이후 실제producer6b43c5d3로GET→DOM·390px/근거·마지막정상상태 검증 |
+| P01 | CORPUS012 v0218배정/ACK v3·S06/S03 실제검수 인수 ACK | S05 다음 양성 검수배치·기존b/g/n §15.247 재사용 우선 후속. 전수모집단/기관·날짜·분할·공식403/상충/누락 대장 계속 |
+
 최신 기준은 [통합012](INTEGRATION-012.md)의 기능1635cf2/새 전체 Python1237·skip0/Node86·실제화면46묶음·가상Fleet정지17사례다. DELTA015·STOP013 수정·UI017은 독립 최종 Yes 후 인수했다. 신규 corpus 지시 전체/SHA와 [P01 요청012·실제 v0218배정](../../docs/material-intake/2026-10-24-hct-fcc-corpus-request.md)을 보존하며 아래011 당시 표보다 다음 현재 표를 우선한다.
 
 | 담당 | 현재 보존/검토 | 현재 실제 다음 단위 |
