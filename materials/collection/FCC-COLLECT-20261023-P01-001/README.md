@@ -60,3 +60,5 @@
 2026-10-24 CTRL-003의 backend 소스 2종에 대한 [정적 근거·권리 검수](../../inventory/FCC-PUBLIC-CONTROL-SOURCES-20261024-001-review.json), [접근 안내 manifest](../../manifests/FCC-PUBLIC-CONTROL-SOURCES-20261024-001.json), [ZIP](../../packages/FCC-PUBLIC-CONTROL-SOURCES-20261024-001.zip)을 추가했다. 고정 버전·원본 해시·MIT 고지·의존성과 시뮬레이션 한계를 보존한 메타데이터 투영이다. 원문 확보·정적 검수와 SDK 실행/실물 지원 검증을 구분한다.
 
 2026-10-24 DEV-CONTROL-SOURCES-008의 한정 배정8묶음은 모두 검수·개발 독립 인수를 완료했다. [최종 공개 요약](../../inventory/FCC-PUBLIC-CONTROL-SOURCES-20261024-final-review.json)은 비공개128파일·4443631B·JSON104개의 무결성 확인과 남은 적용·권리·실행 한계를 제공한다. 고유 신규 원문21개와 기존 사용자 자료는 비공개로 보존하며 이번 요약에는 원문·코드·보고서 본문/이미지가 없다. 위20개 공개 배치 집계는 그대로 유지한다.
+
+2026-10-24 DUT 제어 소스5프로젝트와 ETSI 지정 참고판의 [서지·파일 해시·정적 검수](../../inventory/FCC-PUBLIC-DUT-CONTROL-20261024-001-review.json)를 게시했다. 후속3묶음78파일·3472276B·JSON56개와 앞선 AnyWay 한정13개 메타데이터의 개발 독립 인수를 확인했다. 고유 신규 원문24개는 비공개 보존하며 이번 게시에는 원문·코드·PDF 본문이 없다. 실제 제품/FW·호출/정지·라이선스 적용과 지정 표준의 현행 적용성은 별도 검증 사항이다.
