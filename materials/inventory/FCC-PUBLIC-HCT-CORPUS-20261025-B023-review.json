@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "recorded_at_Asia_Seoul": "2026-10-25T00:34:38.013126+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "corpus_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "publication_scope": "reviewed_nonsensitive_hash_count_and_bounded_status_only",
+  "publication_rights_decision": "Only nonsensitive hash/count/status reviewed for this projection. Original redistribution/model-use rights unknown. No source/body/casevalues/images/code/source-identifiers/privatepaths/userfiles.",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S03-B0023",
+      "review_scope": "held_HAC2_next_eight_header_only_limited_regions",
+      "inventory_sha256": "a7849c6e1dbf1af759123a886966b910549bab680c9c8188f3b018c7fffc5fa6",
+      "private_intake_index_sha256": "2fd8978d7a54af1d60962b89a6a1a9a589a4c3ce34394b7b85d6030c7a3c7d08",
+      "private_intake_index_bytes": 5584,
+      "payload_files": 27,
+      "payload_bytes": 162510,
+      "JSON_files": 26,
+      "PDF_files": 0,
+      "MD_files": 1,
+      "receiver_receipt_sha256": "da52f8b2ced3c8c804a80bccbfee8f6a53c9c19e16ed2bd4eeabd60c43fece7a",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "held_header_only_metadata_reference_footer_null_no_producer_nativeSHA_match"
+    },
+    {
+      "batch_id": "FCC-20261024A-S04-B0023",
+      "review_scope": "domestic2026Q3_secondary_metadata_fresh_and_retained_observations_separate",
+      "inventory_sha256": "876685b0ed0d08df99234bff3307b215799ef40410f342134ad4782fae3f8030",
+      "private_intake_index_sha256": "b6ea5bdf9cf31646e68654bf84cc34a4c6b881d334b0ba5ebfd070a8504e5645",
+      "private_intake_index_bytes": 3549,
+      "payload_files": 15,
+      "payload_bytes": 70048,
+      "JSON_files": 15,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "bd31e191b6f5998a5f9d84b3feed9dfc2df3c4427d30ae4eb649f30754133647",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "domesticQ3_fresh5_retained4_secondary_metadata_no_original"
+    }
+  ],
+  "new_independently_accepted_private_packets": 2,
+  "new_private_payload": {
+    "files": 42,
+    "bytes": 232558,
+    "JSON": 41,
+    "PDF": 0,
+    "MD": 1
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 112,
+    "independently_ACKed": 112
+  },
+  "corpus_private_packets_including_exclusion_and_pending_link_review": {
+    "reviewed": 77,
+    "independently_ACKed": 77
+  },
+  "new_reviewed_bibliography": [],
+  "new_originals_reviewed_privately": 0,
+  "new_target_reference_originals": 0,
+  "new_PDF_payloads_published_to_Git": 0,
+  "current_target_reference_cohort": {
+    "PDFs": 17,
+    "physical_pages": 650,
+    "bytes": 38603877,
+    "direct_issuer_issue": 16,
+    "parent_only": 1,
+    "official_mapping_confirmed": 0
+  },
+  "separately_retained_excluded": {
+    "PDFs": 1,
+    "physical_pages": 46,
+    "bytes": 2771507,
+    "target_increment": 0
+  },
+  "separately_retained_pending_report_link": {
+    "PDFs": 1,
+    "physical_pages": 53,
+    "bytes": 4626750,
+    "target_increment": 0
+  },
+  "all_retained_request_originals_not_eligible_count": {
+    "PDFs": 19,
+    "physical_pages": 749,
+    "bytes": 46002134,
+    "eligible19_claim": false,
+    "legacy22_included": false
+  },
+  "fresh_source_verification_scope": {
+    "new_report_originals": 0,
+    "prior17_frozen_verifications_preserved": true,
+    "all17_fresh_reverification": false,
+    "held_HAC2_selected_region_native_character_counts_and_safe_header_visual_rechecked": 8,
+    "P01_native_digests_computed_separately_from_producer_character_counts": true,
+    "producer_native_digest_match_claimed": false,
+    "full_HAC_semantics_or_calibration_reviewed": false,
+    "unreviewed_producer_source_not_included_in_confirmed_cohorts": true
+  },
+  "bounded_metadata_discovery": {
+    "partition": "domestic_HCT_2026Q3",
+    "issue_search_window": [
+      "2026-07-01",
+      "2026-09-30"
+    ],
+    "search_queries": 4,
+    "ordinary_HTML": 0,
+    "query_result_occurrences": 23,
+    "selected_metadata_candidates": 9,
+    "fresh_query_candidates": 5,
+    "newly_selected_retained_prior_unselected_rows": 4,
+    "retained_locator_observation_time_checked_against_fixed_metadata": true,
+    "current_selection_not_new_search_observation_for_old_rows": true,
+    "secondary_Q3issue_claims": 9,
+    "direct_issuer_issue_PDF_or_eligible": 0,
+    "unselected_query_occurrences": 18,
+    "unused_HTML_allowance": 6,
+    "unused_selected_allowance": 3,
+    "unexposed_query_pagination_tail": null,
+    "all_literal_exhibit_titles_or_direct_PDF_links": null,
+    "queryprefix_available_TestFirm_not_direct_issue_issuer": true,
+    "alternate_mirror_same_label_date_URLtoken_not_canonical_alias_samebytes_or_independence": true,
+    "P01_online_replay": 0,
+    "claims_retained_as_frozen_producer_observations": true,
+    "searchcap_zeroquery_occurrences_not_population_or_absence": true
+  },
+  "bounded_HAC_review_status": {
+    "new_primary_region_observations": 8,
+    "direct_body_title_confirmations": 0,
+    "limited_header_only_observations": 8,
+    "physical_pages": [
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47
+    ],
+    "new_footer_regions_rendered_or_qualified": 0,
+    "printed_page_numbers_and_total": null,
+    "native_footer_allowlist_failure_preserved_as_gap": true,
+    "computed_offset_or_neighbor_page_inheritance": false,
+    "HAC1_primary_region_inspections": [
+      73,
+      73
+    ],
+    "HAC2_primary_region_inspections": [
+      47,
+      70
+    ],
+    "suite_primary_region_inspections": [
+      158,
+      181
+    ],
+    "unvisited_primary_regions": 23,
+    "inspection_counter_includes_wrappers_not_readable_titles_full_cells_semantics_or_calibration_success": true,
+    "body_calibration_identity_raster_unreviewed": true,
+    "numeric_rows_calculations_DUT_measurements": 0,
+    "direct_identity_not_inherited_from_parent_or_PDFmetadata": true,
+    "OCR_or_full_identity_raster": false
+  },
+  "privacy_and_failure_status": {
+    "original_ACK_READY_control_images_failures_unchanged": true,
+    "source_unique_values_rows_or_perIDhashes_reprinted": false,
+    "old_applicant_fields_or_removed_wrapper_titles_not_reaccessed": true,
+    "bounded_counts_or_zero_native_not_global_absenceproof": true,
+    "producer_metadata_candidate_scan_distinct_from_source_PDF_scan": true,
+    "source_PDF_privacy_scan_for_search_candidates_unexecuted": true,
+    "P01_prior_native_digest_field_assumption_failed_before_first_image_preserved_not_producer_error": true,
+    "actual_producer_character_counts_verified_own_native_digests_separate_no_producer_digest_match": true,
+    "own_safe_header_geometry_checked_and_actually_viewed": true,
+    "footer_nulls_preserved": true
+  },
+  "receiver_validation": {
+    "all_exact_payload_SHA_bytes_UTF8_reviewhash_verified": true,
+    "root_original_or_nested_reference_operations": 0,
+    "native_render_OCR_new_arithmetic_or_physical_replay": 0,
+    "byte_ACK_not_full_semantic_currentnormative_or_physical_approval": true
+  },
+  "new_user_preparation_requests": 0,
+  "AI_evaluation_training_external_models_or_physical_runs": 0,
+  "open_scope": [
+    "remaining periods legalissuers sites products categories search-cap tails",
+    "officialmapping rulehistory currentapplicability and missingstandards",
+    "remaining HAC2regions and visitedlimitedsemantic fulltable plot calibration gaps",
+    "parts revisions appendices setup photos reuseddata independence",
+    "actualchain referenceplane installation metrology and physicalsite validation"
+  ],
+  "whole_census_complete": false,
+  "full_semantic_functional_conformity_or_physical_validation": false,
+  "original_text_case_values_images_code_identifiers_private_paths_user_materials_exported": false,
+  "verification_scope": "Exactbyte private intake and explicitly bounded metadata/static review; document integrity is not function/metrology/conformity validation."
+}
