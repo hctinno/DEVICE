@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합030](INTEGRATION-030.md)을 우선한다. root source232에는054 순수 I/Q가 추가됐고 기존 engine·업무 DTO·false flags는 그대로다.
+
+| 담당 | 실제 현재 작업과 소유 |
+| --- | --- |
+| 개발1 | exact2c5ba9e/new047 branch에서 신규 CLI·검사·usage3. 기존049 branch/실패·stash 보존, 서버/서버검사2는 개발2에게 이관. |
+| 개발2 | exact2c5ba9e/new053 branch, 기존 ui_server/test2+신규 usage1. 빈 입력 기본 거절·같은046 객체/세션/source1·실제 준비/등록/replay·종료를 구현한다. |
+| 개발3 | 054 final Yes/root030 인수. 055 private adapter A 정적 Yes 뒤 공개 준비v2를 작성한다. 시간창 비동기성·dependency_pins/phase/error literal을 고정해 독립 delta·공개 계약·정확 base/소유 배정 뒤 제품 구현. |
+| 개발4 | exact2c5ba9e 기반 F2 branch에 F1/50a9 정확순서 적용. 실제 static3/043→049→042→rootapp·native fetch 검증과 기존 화면 회귀를 진행한다. 제품 추가 delta는 checker/usage2 우선이며 C1/backend는 보호한다. |
+| 총괄 | 독립 리뷰·소유 경계·root 회귀·계산 근거·원격 exact를 확인해 작은 단위를 게시하고 다음 구현을 실제 배정한다. |
+| P01 | B025 d6e0aab/B026 7aa591bd 공개3파일씩 exact, collector120/120·corpus85/85·target18PDF/690쪽·공식mapping0. v061 ACK2/입력25와 v062 ACK2/입력22를 고정했다. 한정영역181/181은 전문·교정·전수 완료가 아니다. |
+
+새 root 게시가 진행 중인 담당 branch의 base 변경을 뜻하지 않는다. 052 C2는 accepted C1·genuine049/F2·accepted053/static1·정확 base/별도 소유 배정 뒤다. 과거 No/RED·관측기 실패·동결 수량은 보존하며 사용자 결정/준비0·Un-licensed 우선/raw·Licensed 보류를 유지한다. 아래는 당시 기록이다.
+
 최신 [통합029](INTEGRATION-029.md)을 우선한다. 다음 구현은 이 통합의 게시 SHA·소유 범위를 실제 전달한 뒤 착수한다.
 
 | 담당 | 현재 상태와 다음 작은 작업 |

@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+최신 [통합030](INTEGRATION-030.md)의 기능 기준은6fb74328이다. 054 후보22fa7a56 신규3/독립 최종 Yes를 인수해 새 전체 Python2205/Node210·source232 불변·직접 수학 생성3/분석8을 확인했다. 이전029의 실제 HTTP15/화면23+18은 이번 재실행 수가 아니다. 개발1 047/개발2 053/개발4 F2는 기존 정확2c5ba9e의 독립 branch·소유로 계속하며 새 root로 임의 이동하지 않는다. 개발3 055 private A는 정적 Yes/공개 준비v2 작성이며 실제 구현은 공개 계약·054 포함 정확 게시 base·신규3 배정 뒤다. P01 B026 공개7aa591bd/120·85·대상18/690·한정영역181/181을 대조했고 전문/교정/전수는 열려 있다. 사용자 준비0, 최신 private followup과 [현재대장](NEXT-004.md)을 우선한다.
+
 최신 [통합029](INTEGRATION-029.md)의 기능 기준은5d891834다. 049 b0/052 C1 fdbc를 독립 최종 Yes 뒤 정확5커밋·7파일로 인수했다. 새 Python2175/Node210, C1 합성 화면23/A1 기존 화면18, 별도 genuine HTTP와 자원 회수를 확인했다. 담당의 검사와 독립 검사, root 검사 수를 합산하지 않는다. 다음047/053/F2의 정확 게시 base와 실제 배정은 최신 private followup을 우선한다. 개발3 054는 독립 최종 Yes/다음 별도 통합, C2는 정적 Yes이며 실제 구현은 의존성 인수 뒤다. P01 B024 공개18/690과 B025 새 metadata ACK2를 구분하고 사용자 준비0을 유지한다.
 
 2026-10-25 계약후속은 [053 설계](../../docs/superpowers/specs/2026-10-25-intake-reference-actions-host-design.md)·[계획](../../docs/superpowers/plans/2026-10-25-intake-reference-actions-host.md), [054 설계](../../docs/superpowers/specs/2026-10-25-virtual-fleet-rf-signal-waveform-design.md)·[계획](../../docs/superpowers/plans/2026-10-25-virtual-fleet-rf-signal-waveform.md)의private/공개delta정적Yes다. D1 049 I4 소유수정·D4 052 C1 코드/회귀는그대로, D3는이번게시exactbase/new3로054구현, D2는049최종인수/소유이관뒤053제품으로잇는다. root028기능3b60b6f/source227와Python2121/Node186/CLI14는이전검증이며이번제품실행0이다. P01B0236c5ee15a 공개exact/112·77·metadata42/새PDF0·한정HAC158/181·v059ACK2/25입력을대조했다. [현재대장](NEXT-004.md)과최신privatefollowup의실제배정/후보를우선하고사용자준비0이다.
