@@ -33,7 +33,7 @@ _ROLES = {
         ('preamp_gain_db', 'correction.preamp_gain_db', ('dB',)),
         ('instrument_corrections_applied', 'correction.instrument_corrections_applied', (None,))),
 }
-_UNKNOWN = {'unknown', 'unconfirmed', 'not_reported', 'n/a', '미확인', '불명', '-', '—'}
+_UNKNOWN = {'unknown', 'unconfirmed', 'not_reported', 'n/a', '미확인', '불명', '-', '–', '—'}
 
 
 class FccReportCalculationError(ValueError):
@@ -462,7 +462,7 @@ def _contexts(detail, request, claims, docs):
             if not values_list or any(type(v) is not str or not v.strip() for v in values_list):
                 continue
             if not collection:
-                values.add(value)
+                values.add(_fold(value))
             if expected is None or _fold(expected) in {_fold(v) for v in values_list}:
                 matching.extend(_sources(claim, docs))
         if not matching or (not collection and len(values) != 1):

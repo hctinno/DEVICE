@@ -526,6 +526,46 @@ class FccReportCalculationTests(unittest.TestCase):
                 checks._ratio(value)
             self.assertEqual(caught.exception.reason, 'numeric_representation_unavailable')
 
+    def test_en_dash_row_marker_requires_shared_lines(self):
+        detail, request = fixture('emc_field_strength')
+        for line, identity in enumerate(('reading', 'af', 'cable', 'gain'), 1):
+            find(detail, identity)['evidence'][0].update(table='T1', row='–',
+                                                      line_start=line, line_end=line)
+        self.assert_insufficient(detail, request, 'row_evidence_unconfirmed')
+
+    def test_en_dash_row_with_shared_lines_preserves_unknown_identity(self):
+        detail, request = fixture('emc_field_strength')
+        for identity in ('reading', 'af', 'cable', 'gain'):
+            find(detail, identity)['evidence'][0].update(table='T1', row='–')
+        result = checks.check_report_calculation(detail, request)
+        self.assertEqual(result['status'], 'calculated')
+        self.assertEqual(result['source_page']['row_binding'], {
+            'basis': 'common_line_range', 'table': 'T1', 'row': None, 'line_start': 1, 'line_end': 1})
+        self.assertEqual(result['inputs'][0]['sources'][0]['row'], '–')
+
+    def test_equivalent_scalar_context_uses_021_fold_and_preserves_original_values(self):
+        detail, request = fixture()
+        for identity in ('family', 'legal', 'address'):
+            duplicate = copy.deepcopy(find(detail, identity))
+            duplicate['claim_id'] += '-equivalent'
+            duplicate['value'] = ' ' + duplicate['value'].swapcase() + ' '
+            detail['case']['claims'].append(duplicate)
+        before = copy.deepcopy(detail)
+        with patch.object(calculations, 'calculate', wraps=calculations.calculate) as called:
+            result = checks.check_report_calculation(detail, request)
+        self.assertEqual(result['status'], 'calculated')
+        self.assertEqual(called.call_count, 1)
+        self.assertEqual(result['context']['product_family'], before['case']['preview']['product_family'])
+        self.assertEqual(detail, before)
+        self.assertEqual(find(detail, 'family-equivalent')['value'], ' SYNTHETIC RADIO ')
+
+    def test_different_folded_scalar_context_remains_unconfirmed(self):
+        detail, request = fixture()
+        duplicate = copy.deepcopy(find(detail, 'family'))
+        duplicate.update(claim_id='family-conflict', value=' A Different Product ')
+        detail['case']['claims'].append(duplicate)
+        self.assert_insufficient(detail, request, 'case_context_unconfirmed')
+
 
 if __name__ == '__main__':
     unittest.main()
