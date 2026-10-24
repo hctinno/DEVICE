@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합023](INTEGRATION-023.md)의043/기능938406ca·새1980Python/156Node·소스215·genuine043→0427call을 고정한다.
+
+| 담당 | 현재·다음 작은 단위 |
+|---|---|
+| 개발1 |043 최종 인수.049 backend private 계약/계획→공개정적검토/정확base 뒤 기존ui_server/test·신규usage3 구현.047 thin CLI는 다음 |
+| 개발2 |[046 설계](../../docs/superpowers/specs/2026-10-24-intake-reference-review-host-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-reference-review-host.md)의 신규3 코어를 exact023 게시base로 구현. shared backend를 기다리거나 대신 만들지 않음 |
+| 개발3 |045 dc1a1fb 독립Yes/직접35+별도자식14→다음통합.048 보존 결과 읽기 private 계약/계획, 기존045 실행/평가 반복0 |
+| 개발4 |044 A1 38e0e1b 신규5 후보 독립리뷰/소유지적수정우선.후속 A2frontend 계획. 현재 A1 그대로·미래backend는 개발1/049 |
+| 총괄 |046공개계약·exactbase 실제배정,045/044 증거/독립리뷰·049계약→통합/회귀/개발브랜치push/원격대조/후속.담당제품구현을대신소유하지않음 |
+| P01 |B0154묶음66payload ACK/게시1b65c7ba exact·84/84·49/49. FOLLOWUP005기존v047과연결: PDF최대각1/보유HAC최대8·실제ACK3.새READY는검수전수량0 |
+
+현재044 A1/API를 보존하고 미래044 A2 backend D1/049 vs frontend D4 분할이022의 미래일괄소유 표현보다 우선한다.046 core직접검증과 실제host/HTTP/DOM은 별도 phase다. 사용자 준비0·실제AI/현장/전수 미완료이며 실제메시지/ACK/pin은 최신 private followup을 함께 읽는다. 아래022는 당시 기록이다.
+
 최신 [통합022](INTEGRATION-022.md)의 기능19c74172/041·042소유4커밋·6파일과 새1934Python/156Node·소스214를 고정한다. 정식 API·가상평가와 제품 화면/실제모델·실물 검증을 구별한다.
 
 | 담당 | 확정된 다음 작은 구현/계약 |

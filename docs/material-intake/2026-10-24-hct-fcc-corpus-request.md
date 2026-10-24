@@ -1,5 +1,11 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+2026-10-24 B015: S02B0017/S03B0015/S04B0015/S08B0015 정확4묶음66payload568724B(65JSON·1MD/PDF0)을 비공개 byte 인수·명시ACK4했다. index/집합/SHA/bytes/UTF8·공유원본 identity/mtime/mode와 P01검토4 전체를 확인했다. 공개1b65c7bae68ef584dc05243b2cc3493d3ce4a666 원격exact·공개3파일/ledger·ACK영수증대조,collector84/84·corpus49/49다. 신규원문0/대상15PDF583쪽33525071B=직접14+부모1·별도제외1/46·대응보류1/53·전체보존17/682는적격17이아니다.
+
+America Q4/국내Q3 secondary12개씩의선택검색/미래available/기관역할·접근실패·rights/발행미확인과잠재식별자값비전송한계를보존한다. HAC보유physical47~54관측8=직접제목1/한계7,누적primary-region inspection99/181·미방문82이며성공제목99나전쪽의미검토가아니다.p51인쇄쪽수null·기존41/45·calibration미검토를유지한다.S08 descriptor2/고정metadata16/locator186/SHA비교75=차이75/누락0은데이터독립성·현재15새전수검수가아니다.root새PDF stat/open/hash/native/render/OCR/copy/산술0이다.
+
+FOLLOWUP-20261024-005를P01에실제요청하고기존v047의S02B0018/S04B0016 PDF최대각1·별도S03B0016보유HAC최대8/실제ACK3·고정입력32에연결했다.보유자료와이미관측한링크를먼저사용하며실패403/대체링크없음은재요청하지않는다.READY·운송중다음자료는검수전증분0이다.[통합023](../../handoff/development/INTEGRATION-023.md)의043→042 합성검증은이신자료의전체계산/실제모델/물리승인이아니다.공식0/전수unknown·사용자준비0·P01한창구·원문비공개를유지하고아래B014이하는당시기록이다.
+
 후속v044/B014의 S02B0016/S03B0014/S04B0014 정확3묶음56payload2995711B(53JSON·2PDF·1MD)을 독립 clone에 인수·명시 ACK했다. 모든 index/정확집합/bytes/SHA/UTF8·공유원본 identity/mtime/mode 불변과 P01 검토3 전체를 확인했다. root 신규 원문 구조22/39쪽/allCount·경고0·공개 빈 USER 열람/원권한·bytes 보존을 별도 확인했고 native/render/OCR/실측값 산술 재검토0이다. 대상·참조15PDF583쪽33525071B(직접기관/발행14+부모참조1), 별도2024제외1/46·보고서대응보류1/53을 구별한다. 보존17개를 적격17개로 표시하지 않는다. P01 검수80/독립77의 신규ACK3 반영과 다음 원격 게시를 확인하며 마지막 exact 공개fa26db34/77·42를 신규 수와 혼합하지 않는다.
 
 S03 보유HAC1 physical39~46의8한정관측은 직접제목6/한계2다. 누적 primary-region inspection91/181·미방문90은 성공제목91개나 전쪽 의미검토가 아니며 p41의선택strip제목없음/p45겹침원인·frequency null/누락·부모null을 보존한다. 새2PDF는 기관/발행·라벨대응을 한정확인했으나 공식FCC대응0/전수모집단unknown이다. S04 index claim2B차이·분리사진부록미보유·인접caption추론과 S02 LNA부호/보정성분·실설치/교정/현재판본 한계를 유지한다. P01 식별자 한정검사·원래 추출0/범위동일성 가정실패를 삭제하지 않고 새root시각검토로 재계수하지 않는다.
