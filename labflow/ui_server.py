@@ -34,6 +34,8 @@ ASSETS = {
     '/fcc-cases/app.js': ('fcc_cases/app.js', 'text/javascript; charset=utf-8'),
     '/fcc-cases/model.mjs': ('fcc_cases/model.mjs', 'text/javascript; charset=utf-8'),
     '/fcc-cases/view.mjs': ('fcc_cases/view.mjs', 'text/javascript; charset=utf-8'),
+    '/fcc-cases/discovery_model.mjs': ('fcc_cases/discovery_model.mjs', 'text/javascript; charset=utf-8'),
+    '/fcc-cases/discovery_view.mjs': ('fcc_cases/discovery_view.mjs', 'text/javascript; charset=utf-8'),
 }
 FRONTEND = Path(__file__).resolve().parents[1] / 'frontend'
 _ID = re.compile(r'[A-Za-z0-9_.-]{1,150}', re.ASCII)
@@ -47,32 +49,14 @@ _FCC_PRIVATE_PATH = re.compile(
     r'''|(?:^|[\s"'(<])/(?:Users|home|private|tmp|var|mnt|Volumes)/''', re.IGNORECASE)
 
 
-def _fcc_response_bytes(value, method):
-    """Bound a detached021 response before sending any HTTP headers."""
-    common = {'schema_version', 'kind', 'corpus_id', 'execution_mode', 'synthetic',
-              'validation_scope', 'verification'}
-    expected = ({'scope', 'searches', 'counts', 'documents', 'case_previews'} if method == 'summary'
-                else {'case', 'documents'})
-    if type(value) is not dict or set(value) != common | expected:
-        raise ValueError('invalid_fcc_case_response')
-    verification = value['verification']
-    if (type(value['schema_version']) is not int or value['schema_version'] != 1
-            or value['kind'] != ('fcc_report_case_summary' if method == 'summary' else 'fcc_report_case')
-            or value['execution_mode'] != 'report_derived'
-            or value['validation_scope'] != 'source_bytes_and_retained_page_literals_only'
-            or type(value['synthetic']) is not bool
-            or type(value['corpus_id']) is not str or not _FCC_ID.fullmatch(value['corpus_id'])
-            or type(verification) is not dict or set(verification) != {
-                'hardware_verified', 'physical_verified', 'model_execution_verified',
-                'normative_compliance_verified', 'coverage_complete'}
-            or any(flag is not False for flag in verification.values())):
-        raise ValueError('invalid_fcc_case_response')
+def _fcc_json_bytes(value, *, cap=8 * 1024**2, max_depth=20, max_nodes=200000, compact=False):
+    """Check pure JSON before comparisons or headers; lookup has its own budget."""
     nodes = 0
 
     def visit(item, depth=0):
         nonlocal nodes
         nodes += 1
-        if nodes > 200000 or depth > 20:
+        if nodes > max_nodes or depth > max_depth:
             raise ValueError('invalid_fcc_case_response')
         kind = type(item)
         if kind is str:
@@ -97,10 +81,55 @@ def _fcc_response_bytes(value, method):
             raise ValueError('invalid_fcc_case_response')
 
     visit(value)
-    raw = json.dumps(value, ensure_ascii=False, allow_nan=False).encode('utf-8')
-    if len(raw) > 8 * 1024 * 1024:
+    raw = json.dumps(value, ensure_ascii=False, allow_nan=False,
+                     **({'separators': (',', ':')} if compact else {})).encode('utf-8')
+    if len(raw) > cap:
         raise ValueError('invalid_fcc_case_response')
     return raw
+
+
+def _fcc_response_bytes(value, method):
+    common = {'schema_version', 'kind', 'corpus_id', 'execution_mode', 'synthetic',
+              'validation_scope', 'verification'}
+    kinds = {'summary': ('fcc_report_case_summary', {'scope', 'searches', 'counts', 'documents', 'case_previews'}),
+             'case': ('fcc_report_case', {'case', 'documents'}),
+             'search': ('fcc_report_case_matches', {'query', 'status', 'reason_codes', 'intake_binding', 'matches'}),
+             'discover': ('fcc_report_case_discovery', {'query', 'status', 'reason_codes', 'items'})}
+    compact = method in {'search', 'discover'}
+    raw = _fcc_json_bytes(value, compact=compact, max_nodes=2000000 if compact else 200000)
+    kind, fields = kinds[method]
+    if type(value) is not dict or set(value) != common | fields:
+        raise ValueError('invalid_fcc_case_response')
+    verification = value['verification']
+    if (type(value['schema_version']) is not int or value['schema_version'] != 1 or value['kind'] != kind
+            or value['execution_mode'] != 'report_derived'
+            or value['validation_scope'] != 'source_bytes_and_retained_page_literals_only'
+            or type(value['synthetic']) is not bool
+            or type(value['corpus_id']) is not str or not _FCC_ID.fullmatch(value['corpus_id'])
+            or type(verification) is not dict or set(verification) != {
+                'hardware_verified', 'physical_verified', 'model_execution_verified',
+                'normative_compliance_verified', 'coverage_complete'}
+            or any(flag is not False for flag in verification.values())):
+        raise ValueError('invalid_fcc_case_response')
+    return raw
+
+
+def _fcc_lookup_query(raw):
+    blob = raw.encode('latin-1')
+    if len(blob) > 16384:
+        raise ValueError('fcc_case_invalid_query')
+    text = blob.decode('utf-8', errors='strict')
+    if re.search(r'%(?![0-9A-Fa-f]{2})', text):
+        raise ValueError('fcc_case_invalid_query')
+    result = dict.fromkeys(('product_family', 'rule', 'method', 'model'))
+    seen = set()
+    for key, value in parse_qsl(text, keep_blank_values=True, strict_parsing=True,
+                               encoding='utf-8', errors='strict', max_num_fields=4):
+        if key not in result or key in seen or len(value) > 256 or value and not value.strip():
+            raise ValueError('fcc_case_invalid_query')
+        seen.add(key)
+        result[key] = value if value else None
+    return result
 
 
 def _catalog_query(raw):
@@ -138,7 +167,7 @@ def _catalog_query(raw):
 def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None):
     if host != '127.0.0.1':
         raise ValueError('The UI server only accepts the loopback host 127.0.0.1')
-    fcc_summary = fcc_case = fcc_error_type = None
+    fcc_summary = fcc_case = fcc_search = fcc_discover = fcc_error_type = None
     if fcc_case_catalog is not None:
         invalid = False
         try:
@@ -149,6 +178,8 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 # Capture formal class methods, never arbitrary instance callbacks.
                 fcc_summary = module.FccReportCaseCatalog.summary
                 fcc_case = module.FccReportCaseCatalog.case
+                fcc_search = getattr(module.FccReportCaseCatalog, 'search', None)
+                fcc_discover = getattr(module.FccReportCaseCatalog, 'discover', None)
                 fcc_error_type = module.FccReportCaseError
         except Exception:
             invalid = True
@@ -232,15 +263,22 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 path = unquote(parsed.path, encoding='utf-8', errors='strict')
             except ValueError:
                 return self.error(404, 'route_not_found')
-            if parsed.fragment or parsed.scheme or parsed.netloc or ('?' in self.path and path != '/api/control-sources'):
+            if parsed.fragment or parsed.scheme or parsed.netloc or ('?' in self.path and path not in {
+                    '/api/control-sources', '/api/fcc-cases/lookup'}):
                 return self.error(404, 'route_not_found')
             fcc_target = (path == '/fcc-cases' or path.startswith('/fcc-cases/')
                           or path == '/api/fcc-cases' or path.startswith('/api/fcc-cases/'))
             raw_target = self.requestline.split()[1]
-            if fcc_target and ('?' in raw_target or '#' in raw_target or '//' in parsed.path
+            if fcc_target and (('?' in raw_target and path != '/api/fcc-cases/lookup') or '#' in raw_target or '//' in parsed.path
                                or raw_target.startswith('//') or '\\' in path
                                or re.search(r'%(?:2f|5c)', parsed.path, re.IGNORECASE)):
                 return self.error(404, 'route_not_found')
+            if path == '/api/fcc-cases/lookup':
+                try:
+                    query = _fcc_lookup_query(parsed.query)
+                except (ValueError, UnicodeError):
+                    return self.error(400, 'fcc_case_invalid_query')
+                return self.read_fcc_lookup(query)
             if path == '/api/fcc-cases/summary':
                 return self.read_fcc_cases('summary')
             if path.startswith('/api/fcc-cases/cases/'):
@@ -316,6 +354,30 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 self.error(404 if exc.code == 'intake_not_found' else 503, exc.code)
             except (OSError, ValueError):
                 self.error(503, 'store_unavailable')
+
+        def read_fcc_lookup(self, query):
+            if fcc_case_catalog is None:
+                return self.error(503, 'fcc_case_catalog_unconfigured')
+            try:
+                search = fcc_search(fcc_case_catalog, query)
+                discovery = fcc_discover(fcc_case_catalog, query)
+                _fcc_response_bytes(search, 'search')
+                _fcc_response_bytes(discovery, 'discover')
+                for key in ['schema_version', 'corpus_id', 'execution_mode', 'synthetic', 'validation_scope',
+                            'verification', 'query']:
+                    if search[key] != discovery[key]:
+                        raise ValueError('invalid_fcc_case_response')
+                payload = {'schema_version': 1, 'kind': 'fcc_report_case_lookup',
+                           'search': search, 'discovery': discovery}
+                raw = _fcc_json_bytes(payload, cap=16 * 1024**2 + 1024, max_depth=22,
+                                      max_nodes=2000000, compact=True)
+            except Exception as exc:
+                code = exc.code if type(exc) is fcc_error_type else None
+                if type(code) is not str or code not in _FCC_CODES:
+                    code = 'fcc_case_catalog_unavailable'
+                return self.error(400 if code == 'fcc_case_invalid_query' else
+                                  404 if code == 'fcc_case_not_found' else 503, code)
+            return self.send_payload(200, raw)
 
         def read_fcc_cases(self, method, *args):
             if fcc_case_catalog is None:
