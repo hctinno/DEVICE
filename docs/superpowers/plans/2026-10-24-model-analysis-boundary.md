@@ -24,8 +24,8 @@
 
 **Interfaces:** build_analysis_prompt / decode_analysis_response의 exact API와 DTO는 설계를 따른다.
 
-- [ ] 실제 TXT/PDF context와 정상·누락·충돌·다른 제품 raw JSON의 검사, malformed/quote/context/producer/한도/injection/alias의 RED를 작성·실행한다.
-- [ ] 순수 snapshot·고정 prompt·엄격한 decoder와 기존 근거 검증을 구현한다.
-- [ ] 전용 검사 및 기존 분석/worker 회귀, 네트워크·DB·원본 무변경과 오류 정제를 확인한다.
-- [ ] usage·정적·문서 검사와 소유 branch commit/push·원격 SHA 대조를 마친다.
-- [ ] 총괄 독립 리뷰·소유 수정·통합 뒤 다음 provider 연결 구현을 이어간다.
+- [x] 실제 TXT/PDF context와 정상·누락·충돌·다른 제품 raw JSON의 검사, malformed/quote/context/producer/한도/injection/alias의 RED를 작성·실행한다.
+- [x] 순수 snapshot·고정 prompt·엄격한 decoder와 기존 근거 검증을 구현한다.
+- [x] 전용 검사 및 기존 분석/worker 회귀, 네트워크·DB·원본 무변경과 오류 정제를 확인한다.
+- [x] usage·정적·문서 검사와 소유 branch commit/push·원격 SHA 대조를 마친다.
+- [x] 총괄 독립 리뷰·소유 수정·통합 뒤 다음 provider 연결 구현을 이어간다.

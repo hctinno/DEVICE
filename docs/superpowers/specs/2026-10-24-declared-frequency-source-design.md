@@ -27,13 +27,13 @@ generate 결과 exact 키는 schema_version=1, kind=synthetic_frequency_source, 
 
 공통 flags는 synthetic=true, hardware_verified=false, ai_model_called=false, method_approval=not_assessed, regulatory_scope_complete=false, waveform_implemented=false, oem_mode_verified=false다. input_sha256는 원래 spec 전체의 canonical JSON SHA-256이다.
 
-trace는 기존 synthetic_frequency_spectrum exact 입력이다. capture_id는 `fs:`+input_sha256, offset은 원래 knot 전부, relative_levels_db는 10log10(S/Smax)다. max는 정확한0, 나머지는 유한한 비양수이며 밀도 비를 먼저 float 나누어 underflow하지 않는다. 독립 Decimal 문맥으로 caller precision/traps/flags를 보존한다. 계산 불가·구별 소실은 고정 numeric_result_out_of_range로 거절하고 거짓0이나 임의 floor로 바꾸지 않는다. 여기서 BW6는 **knot 샘플의 dB 선형 보간** 결과이며 선형 밀도 함수의 해석적 폭이라고 표시하지 않는다. source 생성은 BW 판정을 호출하지 않는다.
+trace는 기존 synthetic_frequency_spectrum exact 입력이다. capture_id는 `fs:`+input_sha256, offset은 원래 knot 전부, relative_levels_db는 10log10(S/Smax)다. max는 정확한0, 나머지는 유한한 비양수이며 밀도 비를 먼저 float 나누어 underflow하지 않는다. 독립 Decimal 문맥으로 caller precision/traps/flags를 보존한다. 서로 다른 정확한 양의 density가 같은 표시 float level로 합쳐지는 경우도 구별 소실로 거절하며, 원래 같은 density의 반복/plateau는 허용한다. 계산 불가·구별 소실은 고정 numeric_result_out_of_range로 거절하고 거짓0이나 임의 floor로 바꾸지 않는다. 여기서 BW6는 **knot 샘플의 dB 선형 보간** 결과이며 선형 밀도 함수의 해석적 폭이라고 표시하지 않는다. source 생성은 BW 판정을 호출하지 않는다.
 
 ## 3kHz 적분 출력
 
 start_offset_hz는 bool 아닌 유한 숫자다. 실제 JSON int/float를 Fraction으로 보존하고 [start,start+3000]이 정의 구간 안에 완전히 포함될 때만 실행한다. 각 교차 구간에서 density를 선형 보간해 (S(a)+S(b))*(b-a)/2를 정확히 더한다. mean/peak·duty/crest·경로보정을 변환하지 않는다.
 
-결과 exact 키는 schema_version=1, kind=synthetic_integrated_band_power, source_id, declared_mode_id, input_sha256, start_offset_hz, stop_offset_hz, reference_bandwidth_hz=3000, reference_plane, time_basis, power_method, power_mw, exact_power_ratio, source_coverage=single_declared_band, max_search_complete=false와 공통7 flags다. exact_power_ratio는 numerator/denominator의 양의 십진 정수 문자열이며 기약분수다. power_mw는 그 유한 양수 float 표기이며 정확 판정의 근거는 ratio다. stop의 표기로 3kHz가 붕괴하거나 공개 endpoint 차이가3000Hz의1ULP보다 다르면 numeric_result_out_of_range로 거절한다. 이는 표현 가능성 guard이며 pass 허용오차가 아니다.
+결과 exact 키는 schema_version=1, kind=synthetic_integrated_band_power, source_id, declared_mode_id, input_sha256, start_offset_hz, stop_offset_hz, reference_bandwidth_hz=3000, reference_plane, time_basis, power_method, power_mw, exact_power_ratio, source_coverage=single_declared_band, max_search_complete=false와 공통7 flags다. exact_power_ratio는 numerator/denominator의 양의 십진 정수 문자열이며 기약분수다. power_mw는 그 유한 양수 float 표기이며 정확 판정의 근거는 ratio다. start는 원래 JSON int/float를 보존하고 int의 stop은 정확한 int+3000, float의 stop은 정확한 Fraction endpoint를 float로 표시한다. 공개 endpoint도 Fraction으로 비교하며 int를 float로 낮추지 않는다. stop의 표기로 3kHz가 붕괴하거나 공개 endpoint 차이가3000Hz의1ULP보다 다르면 numeric_result_out_of_range로 거절한다. 이는 표현 가능성 guard이며 pass 허용오차가 아니다.
 
 이 단위는 PSD 비교 enum·dBm·전대역 최대값을 만들지 않는다. 다음 ratio-aware PSD 연결에서 반올림 전 정확 전력을 소비한다. 현재 analyze_psd_band의 임의 float 입력에 ratio를 몰래 끼워 넣지 않는다.
 

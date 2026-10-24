@@ -2,6 +2,8 @@
 
 갱신일: 2026-10-24, Asia/Seoul. 이전 배정·인수 이력은 보존한다.
 
+최신 인수/검증은 [통합 기록 007](handoff/development/INTEGRATION-007.md)이다. 개발1 immutable 분석 이력, 개발2 모델 prompt/strict 응답 경계, 개발4 BW/PSD 구성요소의 소유 수정·독립 Yes 후 새 전체 Python **848 PASS·skip0**, Node **59 PASS**, spectrum contract browser12·기존 실제 접수 TXT/PDF10그룹 PASS를 확인했다. 실제 계산→spectrum 브라우저는 다음 도구로 구현 중이며 contract 검사를 실제 계산 연결로 세지 않는다. GEN-B2 replay·MODEL-PROBE·frequency source·actual browser를 이미 배정했고 P01도 TRACE007 기존 근거를 매핑 중이다. 아래 이전 미인수/검증 수는 보존 이력이다.
+
 현재 추가 인수: 개발3의 선언 trace/현재 관측 문맥 결합을 독립 Yes 후 인수해 관련 Python **188 PASS**(신규23 포함)를 확인했다. [통합 기록 006](handoff/development/INTEGRATION-006.md)을 따른다. 개발4의 BW/PSD 구성요소는 SVG 좌표 붕괴·비열거 필드 사본 누락의 소유 수정 중이며 아직 인수하지 않았다. 개발3 frequency source와 개발4 실제 계산 브라우저 도구도 바로 배정했다. 아래 전체771은 직전 공통본의 전체 실행 결과다.
 
 최신 후속 통합: GEN-004A 보존 분석 변경 탐지, WATCH-004A 합성 의뢰 반복 발견/분석, SPECTRUM-004A BW6/PSD 계산을 소유 수정·독립 재리뷰 Yes 후 인수했다. [통합 기록 005](handoff/development/INTEGRATION-005.md)의 새 전체 Python **771 PASS·skip 0**, 실제 TXT/PDF 종단 브라우저 **10그룹 PASS**와 한계를 따른다. 개발1 이력 ledger, 개발2 모델 prompt/응답 경계, 개발3 관측 문맥 결합, 개발4 BW/PSD 읽기 화면을 실제 구현으로 배정했다. 아래 666개 등은 이전 단위의 보존 이력이다.

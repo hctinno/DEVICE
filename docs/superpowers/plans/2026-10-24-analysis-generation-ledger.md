@@ -24,8 +24,8 @@
 
 **Interfaces:** import_completed_generation / generation_history의 exact API와 receipt는 설계를 따른다.
 
-- [ ] 실제 V2 완료+질문/답변/위임 seed, 일반/반복/동시 수입·무변경과 invalid/legacy/CAS/rollback/한도, R1/R2 origin·limit1 cursor·완료 event 부재 검사를 작성해 RED를 확인한다.
-- [ ] transaction-safe additive DDL·검증·snapshot·immutable metadata·읽기 전용 pagination을 구현한다.
-- [ ] 전용 검사와 기존 GEN/PDF/jobs/fixture 회귀를 실행하고 소스·DB·blob 경계 증거를 남긴다.
-- [ ] 사용법/정적·문서 검사, 소유 branch commit/push·원격 SHA 확인을 마친다.
-- [ ] 총괄 독립 리뷰→소유 수정→통합·게시 후 GEN-004B2 구현을 이어간다.
+- [x] 실제 V2 완료+질문/답변/위임 seed, 일반/반복/동시 수입·무변경과 invalid/legacy/CAS/rollback/한도, R1/R2 origin·limit1 cursor·완료 event 부재 검사를 작성해 RED를 확인한다.
+- [x] transaction-safe additive DDL·검증·snapshot·immutable metadata·읽기 전용 pagination을 구현한다.
+- [x] 전용 검사와 기존 GEN/PDF/jobs/fixture 회귀를 실행하고 소스·DB·blob 경계 증거를 남긴다.
+- [x] 사용법/정적·문서 검사, 소유 branch commit/push·원격 SHA 확인을 마친다.
+- [x] 총괄 독립 리뷰→소유 수정→통합·게시 후 GEN-004B2 구현을 이어간다.

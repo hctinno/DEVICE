@@ -2,6 +2,8 @@
 
 상태: 전체 시스템 설계. 현재 Python/SQLite 공통 코어·CLI·stdio MCP·오프라인 계산·초안 보고를 구현했다. 상세 실행 범위는 [파이프라인 사용법](docs/fcc/pipeline_usage.md)에 있으며, 실장비 및 기관 시스템과 연동되지 않았다.
 
+최신 [통합 007](handoff/development/INTEGRATION-007.md)의 `intake_generation_ledger.py`는 명시 완료 origin의 추가형 불변 이력, `intake_model_boundary.py`는 순수 prompt/strict 분석 응답, `frontend/virtual_fleet/spectrum_model.mjs`·`spectrum_view.mjs`는 검증한 BW/PSD 읽기 구성요소다. 기존 worker fixture gate와 Store 자동 초기화는 바꾸지 않았다. 새 head/queue·모델 전송/실제 호출·실제 계산의 spectrum route 연결은 후속이다.
+
 2026-10-24 후속 [통합 005](handoff/development/INTEGRATION-005.md): `intake_generation.py`는 보존 PDF profile 변경의 읽기 탐지, `intake_supervisor.py`는 atomic synthetic scan과 제한된 기존 분석 worker 반복, `virtual_fleet/spectrum_math.py`는 명시 합성 BW/PSD 계산을 담당한다. 현재 완료 job/fixture 권한을 generation 탐지가 자동 변경하지 않는다. 새 ledger·모델 prompt/decoder·관측 결합·계산 화면은 후속 단위로 구현 중이다.
 
 추가 [통합 006](handoff/development/INTEGRATION-006.md)의 `virtual_fleet/spectrum_capture.py`를 인수했다. 현재 scalar 취득 관측과 별도 선언 trace의 ID/hash/clock/revision을 검증하고 rf_trace_observed=false를 보존한다. 주파수 밀도 source는 다음 신규 모듈로 구현 중이며 기존 scalar 역할을 자동 확장하지 않았다.
