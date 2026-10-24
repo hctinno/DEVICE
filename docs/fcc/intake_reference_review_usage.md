@@ -23,7 +23,7 @@ def read_reference_review(
 ) -> dict: ...
 ```
 
-trusted caller가 Store/catalog를 제공한다. 이 API는 Store constructor·connection·DB/폴더/DDL 생성이나 catalog constructor를 호출하지 않는다. fake proxy/subclass를 만들지 않는다. 같은 process의 악의적 Python 코드를 격리하거나 객체의 모든 생성 이력을 판정하는 보증은 하지 않는다.
+trusted caller가 Store/catalog를 제공한다. 이 API는 Store 초기화·Store.connection 호출·DB/폴더 생성·기본 업무 스키마 DDL·catalog constructor 호출을 수행하지 않는다. 최초 명시 append에 필요한 부모038 전용 namespace DDL(CREATE TABLE3/INDEX1/TRIGGER4)은 허용한다. fake proxy/subclass를 만들지 않는다. 같은 process의 악의적 Python 코드를 격리하거나 객체의 모든 생성 이력을 판정하는 보증은 하지 않는다.
 
 allow_retained_reads/allow_append는 정확 bool인 trusted keyword다. 기본false이며0/1/null·요청 body의 권한 키로 승격할 수 없다. history는 metadata 조회라 source read grant가 필요 없다. prepare/current는 read grant, append는 read와append grant가 모두 필요하다. 실제 자료에 대한 권리나 시험/모델/물리 운전 권한은 이 bool로 새로 부여되지 않는다.
 
