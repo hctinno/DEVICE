@@ -2,6 +2,8 @@
 
 갱신일: 2026-10-24, Asia/Seoul. 이전 배정·인수 이력은 보존한다.
 
+최신 [통합017](handoff/development/INTEGRATION-017.md)은035 exact49ef565→root기능 `de6173fbc1c9a8a0164f43ea54b25acae0cd9617`/소유3파일·독립Yes를인수했다. 새전체Python1671/Node103·source193불변·지정제품31·실제metadataAPI3call/원문0을확인했다. corpus11원본/참조466쪽·전수unknown/official0,신규EMC표지/본문모델상충·S08옛10-only검수를보존한다. P01에012-FOLLOWUP-20261024-001의S07판본/방법4~8행·S08추가1metadata delta실제배정을요청했고037 B신규3파일구현을승인/017정확게시pin전달로잇는다.034A/036/033구현·검증도계속하며사용자준비0/실제AI·물리완료미주장,아래016 이하는당시이력이다.
+
 016 게시 `d3b09b0e8c6297ea3cbf3e6c2898b5b31d325ae6` 후031 독립최종Yes/C0/I0·직접합성16/새PDF0을인수했다(receipt9a8ed14b…/lead989dd34c…). 실제owner5쪽·ctor/023/RF각1과reported/comparisonnull·실물미검증은그대로다. [036계산서비스](docs/superpowers/specs/2026-10-24-fcc-case-calculation-service-design.md) B/016base/개발3신규3파일을승인해즉시구현배정했고미래HTTP/화면은033후D4별도다.035 owner49ef565/full1117·관련173·실제JSON3call게시를수신해독립리뷰배정,개발1은지적우선/다음037명시host계약제안을받았다.034A/033도구현계속이며아래016문장의031리뷰중은게시당시상태다. 최신private followup도함께읽는다.
 
 최신 [통합016](handoff/development/INTEGRATION-016.md)의 기능 기준은 `c7ac91dff5ded5af0ce8407c8e8d408452585d0e`다.027 정식화면/030 선택읽기/032 접수참고결합을 정확3소유commit·독립Yes 뒤 인수했고 새전체 Python1646/Node103·source193불변/제품route contract17·실제S03 14를 확인했다. 추가S05 단일case는옛도구의구분필터전제에서11후실패/2미실행으로보존하고033 새mode에배정했다. 원본/참조10PDF431쪽·전수unknown/공식대응0·부분의미검토를유지한다.031 owner실제한셀 계산완료/독립인수검토·035입력어댑터/034A현재snapshot/033화면구현·036계산화면계약제안을실제배정했다. 사용자준비0/전체AI·물리완료미주장, 아래015 이하는당시이력이다.

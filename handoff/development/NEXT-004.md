@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합017](INTEGRATION-017.md) 기능은 `de6173fbc1c9a8a0164f43ea54b25acae0cd9617`다.03549ef565/소유3파일·독립Yes9a170685 인수후새전체1671/Node103·source193불변·제품31·JSON3call/원문0 PASS. corpus11/466·모집단unknown/official0·신규EMC모델상충·S08옛10-only는유지한다.
+
+| 담당 | 현재 인수/실제 후속 |
+|---|---|
+| 개발1 | 035→rootde6173f최종인수.[037 B설계](../../docs/superpowers/specs/2026-10-24-fcc-case-catalog-host-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-catalog-host.md) 승인/신규3파일·Windows명시startup read-only·정확017게시pin후RED→구현·LG선택5 actual새phase/모든handle해제·기존권한·요청중sourceIO0 |
+| 개발2 | 034A/R1 전용29PASS보고·상한/동일DB/재시작·전체검증중.새3파일·mode=ro생성0/samecon·032nestedfalse·고객0·B저장별도 |
+| 개발3 | 036 B신규3파일/016base사용계약·RED→구현중.031독립Yes·부모result20/범위·새실제036phase분리·새수학/033타파일0 |
+| 개발4 | 033실제lookup2+5/HTTP18/contract19·Node114/과거화면owner검증뒤전체회귀/소유commit·원격반환중.다음018독립리뷰·계산패널/POST는036최종후별도 |
+| P01 | S08B0012 10-only/S01B0017원문35p 인수ACK→현재11/466.012-FOLLOWUP-20261024-001은S07v037-B0010/S08v037-B0013 실제배정·ACK2/25입력보고수신,내용READY미인수.전수큐S01B0018/S02B0011도기존담당배정/ACK보고수신·미확보/검색0≠모집단0 |
+
+017cut은035만고정게시하며033/034/036/037을뒤늦게섞지않는다.사용자준비0·원문/수치/식별자/암호공개0·실제AI/실물/현장/외부제출미실행이다.
+
 016 게시후갱신:031 독립Yes/C0/I0 receipt9a8ed14b…/lead989dd34c…인수(독립합성16/새PDF0·owner actual본문5/023·RF각1분리). 개발3은[036 B계산서비스](../../docs/superpowers/specs/2026-10-24-fcc-case-calculation-service-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-calculation-service.md)의016base/new3파일RED→구현을실제배정받았다.035 owner49ef565/소유3·관련173/full1117·actualJSON3call은독립리뷰실제배정/미인수이며지적우선,개발1다음037명시host계약제안도배정했다.034A/033구현계속·source193/1646/103/31은016당시검증이고새후속완료로세지않는다.
 
 최신 기준은 [통합016](INTEGRATION-016.md)의기능 `c7ac91dff5ded5af0ce8407c8e8d408452585d0e`다.027/030/032 정확3소유commit·독립Yes 뒤 새전체1646/Node103·source193불변/제품route17+14를확인했다. S05추가검사는단일case의옛도구전제실패로11후2미실행을보존하고033 별도mode에배정했다. corpus012 현재10고유PDF431쪽/전수unknown·official0이며아래015 이하는당시이력이다.

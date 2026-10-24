@@ -1,5 +1,7 @@
 # DGM AutoLab — 구현·시스템 설계 초안
 
+2026-10-24 [통합017](handoff/development/INTEGRATION-017.md):고정manifest·명시packet/scope JSON2를검증하는035 pure API를인수했다. 기존metadata4검증공유/None·genuine원문/literal경계를보존하고preparedmetadata의PDF/literal·권리·실행false를유지한다. 새전체1671/Node103·source193불변·제품31·실제JSON3call/원문0 PASS다. 다음037명시Windows read-only host→035→genuine생성자1은별도신규3파일로배정하고서버/CLI/Store를바꾸지않는다. corpus11/466·모델상충/옛10범위·현재규범/실측·실제AI미검증은같다. 아래016 이하는보존이력이다.
+
 2026-10-24 [통합016](handoff/development/INTEGRATION-016.md): 명시host catalog→정식read-only route027·전체Count/권한 선검사후선택native030·genuine case/decoder와전체snapshot 참고결합032를인수했다. 새전체 Python1646/Node103·source193불변/제품route17+14 PASS. S05단일case옛도구전제실패와부분11검사는보존한다.031 실제literal 한셀의기존023→RF계산 owner결과는private/독립검토이며reportedW/comparisonnull이다.035 메모리packet준비·034A mode=ro 현재snapshot·033조회와036명시계산UI계약을분리배정하고Store/DB/worker·권한/전체AI·물리미검증을유지한다. 아래015 이하는보존이력이다.
 
 2026-10-24 [통합015](handoff/development/INTEGRATION-015.md): 021 메모리의 discover028는 상충/미확인 자료와 기존 정확후보를 구별한다.029는 공개022/025의 전체결합·독립성분 노출/참조fixture만 대조하며 실제 점수/평가승인0이다.026은 source 역할/단위·point7/context12 전체공동행 또는 명시binding을 고정descriptor와 대조하고 실행권한을 만들지 않는다. 새 전체 Python1578/Node103·source186불변, 실제3PDF153쪽 기존producer동일/조회7·부족준비3·평가6null을 확인했다. corpus9PDF424쪽은 private이며 전체 의미/규범/실물 검증과 구별한다.027 정식route/030선택읽기/032순수접수결합은 독립Yes 후 다음016,031 정식private입력 인수/실제단일셀 연결을 병행하며 기존Store/worker/DB/64프로필·권한은 같다. 아래014 이하는 보존 이력이다.

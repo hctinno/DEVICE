@@ -2,6 +2,8 @@
 
 작성일: 2026-10-23, Asia/Seoul
 
+2026-10-24 [통합017](handoff/development/INTEGRATION-017.md):035 metadata준비API를독립Yes/소유3파일로인수하고새전체1671/Node103·source193불변·지정제품31/실제JSON3call을확인했다. corpus11/466의전수·적격/semantic·공식미확인을유지하고EMC모델상충을자동정정하지않는다.037 BWindows명시startup loader를신규3파일로승인·배정하며034A/036/033을계속한다. P01후속012-001은기존S07/S08의좁은재사용delta요청이고사용자준비0이다. 아래016 이하는보존이력이다.
+
 016 게시후031 독립최종Yes/C0/I0를인수하고[036 B계산서비스](docs/superpowers/specs/2026-10-24-fcc-case-calculation-service-design.md)·[계획](docs/superpowers/plans/2026-10-24-fcc-case-calculation-service.md)을개발3에즉시배정했다.035 owner49ef565는독립리뷰/소유수정우선·다음037host계약제안,034A/033은구현계속이다. source193·1646/103은016코드결과이며신규후속구현완료로소급하지않는다.
 
 2026-10-24 현재 [통합016](handoff/development/INTEGRATION-016.md): 정식사례route027/선택읽기030/접수참고032를정확3commit·독립Yes 후인수하고새전체 Python1646/Node103·source193불변/제품화면17+14를확인했다. 추가S05 단일case 검사전제실패를보존해033 별도mode에배정했다. corpus10/431·전수unknown/official0·부분의미검토는같다.031실제한셀 owner계산/독립검토·035입력준비/034A현재snapshot/033화면구현/036연결계약을이어간다. 사용자준비0이며아래015 이하는당시이력이다.
