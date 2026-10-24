@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_271.json",
+  "original_log_sha256": "b8ba03c40c25bd605f5b0489baa57bd66c09fca9cc4a1b4f3e71b5e2eefa2eba",
+  "original_log_bytes": 29513,
+  "queries": [
+    "HIOKI 3554 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.co.jp/",
+    "https://hioki.tw/software-detail.php?id=175",
+    "https://hioki.tw/software-detail.php?id=8",
+    "https://hiokikorea.com/support/software_search.html?p=6",
+    "https://manualzz.com/doc/27472758/hioki-3554-operation-manual",
+    "https://www.hioki.cn/products/3554",
+    "https://www.hioki.co.kr/HIOKI/Product_Program/download/3554E.pdf",
+    "https://www.hioki.com/download/29220",
+    "https://www.hioki.com/euro-en/support/download/software/versionup/detail/id_579",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_198",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n9715",
+    "https://www.hioki.com/jp-ja/products/resistance-meters/battery/id_5946",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n9715",
+    "https://www.hioki.com/us-en/support/faq/detail/id_427",
+    "https://www.hiokikorea.com/support/software_agree.html?c_id=A023001&fullpath=download%2F1502_s&p_no=319",
+    "https://www.hiokikorea.com/support/software_search.html?p=6",
+    "https://www.reddit.com/r/AskElectronics/comments/swy2pq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

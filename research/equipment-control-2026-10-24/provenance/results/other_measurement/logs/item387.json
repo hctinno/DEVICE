@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item387.json",
+  "original_log_sha256": "0d245434e7a4326dad49b82c7a95276edd69751880afbe440b18af5c6f4523da",
+  "original_log_bytes": 16703,
+  "queries": [
+    "TESTO \"TESTO 103\" software interface manual",
+    "site:github.com \"TESTO 103\" TESTO"
+  ],
+  "discovered_urls": [
+    "https://cdn.hoffmann-group.com/derivatives/3260312/originalpdf/testo-103-instruction-manual.pdf",
+    "https://en.sekorm.com/doc/3208198.html",
+    "https://sstech.co.kr/product/product__view.php?cat=8&cat_no=50&idx=1074",
+    "https://static.testo.com/image/upload/Instruction-manual-and-Software/Instruction-manuals/testo-103-instruction-manual-3703.pdf",
+    "https://testo.vn/Upload/Product/4c27ea25-27fd-4741-b4b9-d51748da4f1e/item-4.pdf",
+    "https://tkg.com.vn/may-do-nhiet-do-thuc-pham-haccp-testo-103",
+    "https://txtdoc.ru/brands/testo/",
+    "https://txtdoc.ru/equipment/tools/testo/",
+    "https://www.nubicom.co.kr/testo/testo_103.jsp",
+    "https://www.testo.com/en-AU/testo-103/p/0560-0103",
+    "https://www.testo.com/en-UK/testo-103/p/0560-0103",
+    "https://www.testo.com/es-CL/testo-103/p/0560-0103",
+    "https://www.testo.com/es-ES/termometro-testo-103/p/0560-0103",
+    "https://www.testo.kiev.ua/ua/dokumentacyia/recommendations",
+    "https://www.testo.ru/no-NO/testo-103/p/0560-0103"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open014.json",
+  "original_log_sha256": "97baab9816f15f1ad9ae0ea57a2be32d21c7496db68ed63a8cd3485d36168a72",
+  "original_log_bytes": 17410,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.rohde-schwarz.com/us/products/test-and-measurement/rf-and-microwave-power-sensors/rs-nrpxxa-an_63493-199428.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,29 @@
+{
+  "input_count": 360,
+  "result_count": 360,
+  "retained_count": 324,
+  "status_counts": {
+    "exact_source": 164,
+    "family_source": 16,
+    "searched_no_public_control_source": 122,
+    "excluded_passive": 36,
+    "needs_scope_review": 1,
+    "identity_unresolved": 19,
+    "vendor_only": 2
+  },
+  "scope_counts": {
+    "included": 304,
+    "excluded_passive": 36,
+    "needs_scope_review": 1,
+    "identity_unresolved": 19
+  },
+  "not_searched_count": 0,
+  "source_code_model_count": 20,
+  "downloaded_code_evidence_records": 19,
+  "actual_code_file_records": 18,
+  "public_repository_count": 16,
+  "public_text_files_scanned": 5206,
+  "errors": [],
+  "hardware_tested": false,
+  "result_sha256": "026b503562064c6dd9b7dbbd78d0fd62b884dee889114a24feea7134a426b3ca"
+}

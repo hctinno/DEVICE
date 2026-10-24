@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_358.json",
+  "original_log_sha256": "6a00530a1c61e64997ed40f61a17c9d014e40cf9494161da9fe8ca1493c518e2",
+  "original_log_bytes": 33700,
+  "queries": [
+    "Tektronix TDS8000 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://download.tek.com/manual/071043807.pdf",
+    "https://download.tek.com/manual/071205003web.pdf",
+    "https://download.tek.com/manual/DSA8200-CSA800-TDS8000-Series-Programmer-Manual.pdf",
+    "https://download.tek.com/manual/DSA8200-CSA8000-TDS8000-Software-Read-This-First-EN-US.pdf",
+    "https://download.tek.com/manual/DSA8200-CSA8000-TDS8000-TekScope-Software-Installation-EN-US.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://manualmachine.com/tektronix/tds8000b/26808698-field-install-instructions/",
+    "https://manualzilla.com/doc/5722768/tektronix-tds8000-digital-sampling-oscilloscope",
+    "https://manualzz.com/doc/56510491/tektronix-csa8200-series--tds8000-series-service-manual",
+    "https://manuzoid.com/manuals/EnBDY-Tektronix%20CSA8000B%20Series%20Programmer%27s%20Manual",
+    "https://studylib.net/doc/18156849/tek-tds-8000-user",
+    "https://w140.com/tekwiki/images/5/52/071-0438-04.pdf",
+    "https://w140.com/tekwiki/wiki/Manuals/077-xxxx",
+    "https://www.manualslib.com/products/Tektronix-Tds8000-Series-8789622.html",
+    "https://www.manualslib.com/products/Tektronix-Tds8000b-Series-2849935.html",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Oscilloscopes&model=Tektronix-TDS8000&productID=0CC250BFFA90450A53BDD716FABCA17C&type=Test-Equipment-Sales",
+    "https://www.tek.com/en/manual/dsa8200-and-csa-tds8000-series",
+    "https://www.tek.com/ko/support/datasheets-manuals-software-downloads?model=tds8000b",
+    "https://www.tek.com/vn/manual/dsa8200-and-csa-tds8000-series"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

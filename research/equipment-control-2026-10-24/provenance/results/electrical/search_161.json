@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_161.json",
+  "original_log_sha256": "c0baf1b395fac5922b1ab881c44b95e9796030626245d23b4a2abb52dc5ba0a4",
+  "original_log_bytes": 32685,
+  "queries": [
+    "KIKUSUI PCR2000M manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/en/download/",
+    "https://global.kikusui.co.jp/dri-fir-upd/pcr-m-ap/",
+    "https://in.kikusui.co.jp/download-service/",
+    "https://kikusui-europe.com/download/cat_pcr-ma/",
+    "https://kikusui-europe.com/w2-2/ac-power-supply/pcr-ma/pcr-ma-series/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manualzz.com/doc/24814676/kikusui-pcr-2000m-user-manual",
+    "https://manualzz.com/doc/7224509/kikusui-pcr-m-pcr500m--pcr1000m--pcr2000m--pcr4000m-ac-po",
+    "https://manualzz.com/doc/o/l1vq5/kikusui-pcr-2000m-user-manual-installation-and-preparation",
+    "https://ph.kikusui.co.jp/download/cat_pcr-ma/",
+    "https://ph.kikusui.co.jp/w2-2/ac-power-supply-ph/pcr-ma-series/pcr-ma-series/",
+    "https://rddocuments.kikusui.co.jp/oss/pcrwe2",
+    "https://www.bira.com/uploads/1/2/4/4/124443461/pcrc_users_manual_kikusui.pdf",
+    "https://www.jays.co.kr/14_kikusui/KIKUSUI_Power-PCR-M-Series.asp?layer=2&maker=3",
+    "https://www.kikusui.cn/resources/001/pdf/pcr-wea_users_manual_en.pdf",
+    "https://www.manualslib.com/manual/1016047/Kikusui-Pcr-2000m.html",
+    "https://www.manualslib.com/manual/2906894/Kikusui-Pcr-M-Series.html",
+    "https://www.manualslib.com/products/Kikusui-Pcr-2000m-3992028.html",
+    "https://www.testequipmenthq.com/datasheets/KIKUSUI-PCR1000M-Datasheet.pdf",
+    "https://www.testequipmenthq.com/datasheets/KIKUSUI-PCR2000M-Datasheet.pdf",
+    "https://y-d.co.jp/jpdf2/PCR_M%20Series.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

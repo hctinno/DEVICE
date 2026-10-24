@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group27_cas.json",
+  "original_log_sha256": "5c5a7877a43a68ce4ff6244befca7ca80b7d80148d6b224f4e0a3808f43b2028",
+  "original_log_bytes": 14957,
+  "queries": [
+    "CAS (\"DB2-150\" OR \"CASTONII\" OR \"BWII-15\" OR \"BWII-150\") RS232 manual",
+    "CAS (\"HB-250\" OR \"HB-75\" OR \"ECB-150\" OR \"MW-2N\" OR \"25AC\") interface manual",
+    "site:github.com CAS scale RS232"
+  ],
+  "discovered_urls": [
+    "https://github.com/ChromisPos/ChromisPOS/blob/master/src-pos/uk/chromis/pos/scale/ScaleCASPDII.java",
+    "https://github.com/GROUNDUP-GmbH/scale-hub/blob/main/docs/ARCHITECTURE.md",
+    "https://github.com/KickNext/weight_scale",
+    "https://github.com/OnLog-System/onlog-ef-qw",
+    "https://github.com/ducasp/blueMSX/blob/master/changes.txt",
+    "https://github.com/encryptedtouhid/WeighingMachineConnector.NET",
+    "https://github.com/goncalomb/scale2pos",
+    "https://github.com/mcjelcom/ha-audio-control",
+    "https://github.com/samjaninf/erpnext-stripe-terminal",
+    "https://github.com/syssi/esphome-pace-bms/files/13579647/instruction.for.software.-.short.version.pdf",
+    "https://github.com/tarangill/pasigono",
+    "https://github.com/topics/mt-sics",
+    "https://github.com/wqweto/VbScalesReader",
+    "https://www.volza.com/p/hsn-code-84238211/import-data/",
+    "https://www.volza.com/p/hsn-code-84238211/import-data/imports-in-vietnam/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

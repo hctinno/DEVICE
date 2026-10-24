@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_348.json",
+  "original_log_sha256": "5d44287171776760013ce6d31b57e7017ce01df411ba118b6424f41160d41240",
+  "original_log_bytes": 28528,
+  "queries": [
+    "Yamatake SRF106AS manual programming software"
+  ],
+  "discovered_urls": [
+    "https://aa-industrial.azbil.com/atw/download/document/manual/CP-UM-1666E",
+    "https://arielectric.com.my/images/azbil/pdf/cp-sp-1027e-16.pdf",
+    "https://arielectric.com.my/images/azbil/pdf/cp-um-1666e-17.pdf",
+    "https://arielectric.com.my/images/azbil/pdf/cp-um-1667e-08.pdf",
+    "https://industrystore.ru/library/fuji/plc/sph/feh240-all.pdf",
+    "https://manualzilla.com/doc/5787760/user-s-manual---azbil-corporation",
+    "https://manualzz.com/doc/6516565/yamatake-srf101--srf102--srf103--srf106--srf201--srf202--",
+    "https://manualzz.com/doc/7294136/yamatake-srf-206-212-224-dot-printer-user%E2%80%99s-manual",
+    "https://manualzz.com/doc/ja/4752723/yamatake-srf100-200-slp-f10--slp-f20-smart-loader-%E5%8F%96%E6%89%B1%E8%AA%AC%E6%98%8E%E6%9B%B8?lang=it",
+    "https://www.autobase.biz/English/AutoBaseHelp/Help10/Plc_Scan/YAMA_SDC_DMC2.htm",
+    "https://www.imajteknik.net/marka/yamatake",
+    "https://www.manualslib.com/products/Yamatake-Azbil-Srf212-12400438.html",
+    "https://www.proface.tech/otasuke/files/manual/gpproex/v2_50/device/data/ytk_cpls.pdf",
+    "https://www.scribd.com/document/694517134/Recorder-yamatake",
+    "https://www.scribd.com/document/69594840/Manual-STD3000",
+    "https://www.scribd.com/document/762501526/m2-2e-Safety-Operating-Maintenance-Instructions-Marine-Auxiliary-Boiler-Hb-08-10-12-15-18",
+    "https://www.yokogawa.com/us/library/documents-downloads/software/yamatake-corporation-thermonexthermoplus-temperature-transmitter/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

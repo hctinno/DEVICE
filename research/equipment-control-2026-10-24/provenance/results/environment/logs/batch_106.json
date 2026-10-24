@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_106.json",
+  "original_log_sha256": "4b3deb62c413e31c004c1878c2b7f006a4cdacadfcbfa042cb2a43bbe13764b1",
+  "original_log_bytes": 25346,
+  "queries": [
+    "(주)델타엠에스 \"DELTACLAVE Series 410\" 고압증기멸균기",
+    "Conotec \"FM-2AA-2\" Ampere meter for Glow wire tester",
+    "DAEJIN ENGINEERING \"DJ-ITH 1000\" INFRARED CHAMBER",
+    "DAEJIN ENGINEERING \"DJ-SWT 1000\" RAIN TESTER"
+  ],
+  "discovered_urls": [
+    "https://daaramall.co.kr/include/ajax_product_list.php?=&page=1349",
+    "https://deltame.en.ec21.com/Small_steam_sterilizers--752099_752106.html",
+    "https://device.report/m/e1f06982c5a1df641675c27610080489bc54f8e0bf10d92b973377203eaa8c6d",
+    "https://manualzilla.com/doc/5681162/ii.7-alat-kedokteran-ii",
+    "https://meddevice.ayo.pe.kr/device/region/%EA%B2%BD%EA%B8%B0",
+    "https://mediromoa.com/device/A04010.03",
+    "https://www.aesthetic-intelligence.ai/en/registry/classification/A04010.03",
+    "https://www.aesthetic-intelligence.ai/registry/classification/A04010.03",
+    "https://www.ec21.com/companies/co-deltams01/autoclave.html",
+    "https://www.ec21.com/product-details/High-Pressure-Steam-Sterilizer-43L--9579738.html",
+    "https://www.eximpedia.app/companies/trustofjv-mchj/99728542",
+    "https://www.todaysbest.co.kr/%EC%9E%A5%EB%B9%84%EC%86%8C%EA%B0%9C/",
+    "https://www.volza.com/company-profile/k-medical-consulting-co-ltd-76994073/",
+    "https://www.volza.com/p/steam-sterilizer-accessories/hsn-code-8419/export-data/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

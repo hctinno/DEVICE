@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_205.json",
+  "original_log_sha256": "0c6d631b136e4cc7d5551b0f87f7ce217bf27db3d08777662199acef5f36387a",
+  "original_log_bytes": 32183,
+  "queries": [
+    "DIGITEK POWER DEFC-3075VT manual programming software"
+  ],
+  "discovered_urls": [
+    "https://click2electro.com/manual/",
+    "https://decowellauto.com/software-and-debugging-tools/",
+    "https://denagene.com/uploads/cms/product/ef01013a-1e89-4c65-a97c-f286e4f8a3f9/WyvA98OTXYdXSIBqQf2uxleaSuHdVzXCdNtPYOx1.pdf",
+    "https://device.report/m/81a63e58caf833eedec9d740f70bb8c711fdcecd8bbb75a350d28ec2abe8ec20",
+    "https://id.scribd.com/document/442860869/DFL-3000A",
+    "https://itmikro.com.my/wp-content/uploads/2020/08/dpm380_380B-usermanual-v1-2.pdf",
+    "https://manualzz.com/doc/34490531/high-country-tek-dvc700-dvc710--dvc707--dvc722--dvc741--d",
+    "https://moen.nidec.com/en-US/drives/Downloads",
+    "https://newtech.pk/download/",
+    "https://pt.scribd.com/document/339136799/307-User-Portugese",
+    "https://www.c-electricdrives.com/downloads.html",
+    "https://www.deif.cn/%E8%BD%AF%E4%BB%B6/?product=16248",
+    "https://www.emea.lambda.tdk.com/uk/technical-centre/software-tools",
+    "https://www.ke.com.my/v2/assets/products/UM_DXI_01_EN_1.pdf",
+    "https://www.manualshelf.com/manual/datakom/dkg-307/user-manual-english.html",
+    "https://www.power-electronics.co.nz/assets/programming-manuals/SD750-SW-eng.pdf",
+    "https://www.powersoft.com/wp-content/uploads/2019/01/powersoft_DigiModIK_uguide_en_v2.3.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item147.json",
+  "original_log_sha256": "44e80950e7e795529f29c3e081b0cb8f7fc48302f389ff512b23b315fb4289d7",
+  "original_log_bytes": 452,
+  "queries": [
+    "Airspan \"full-gNB Starter Kit 5G Outdoor, 1x AS2900, US\" software interface manual",
+    "site:github.com \"full-gNB Starter Kit 5G Outdoor, 1x AS2900, US\" Airspan"
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item432.json",
+  "original_log_sha256": "7416987545e38a3559e3c8a286f9d3c9a8e042d6a11a8c5ca8517550acf4eb69",
+  "original_log_bytes": 14559,
+  "queries": [
+    "Gemred \"82201B-00\" software interface manual",
+    "site:github.com \"82201B-00\" Gemred"
+  ],
+  "discovered_urls": [
+    "https://bip.ump.edu.pl/attachments/download/15657",
+    "https://cegroup-lb.com/wp-content/uploads/2020/11/cegroup-2173-360-insize.pdf",
+    "https://dspace.sti.ufcg.edu.br/bitstream/riufcg/18211/1/MAXWELL%20MOURA%20COSTA%20-%20TESE%20PPGEE%202015.pdf",
+    "https://escipub.com/Articles/IJSMR/IJSMR-2020-12-0805.pdf",
+    "https://gist.github.com/LillenArt",
+    "https://gist.github.com/LillenArt?direction=desc&sort=updated",
+    "https://inspection.ie/collections/spirit-precision-levels-1736435384",
+    "https://kr.made-in-china.com/co_gemred/product_Digital-Protractor-Measuring-Tool-NO-82201B-00-_hessureyy.html",
+    "https://mjcu.journals.ekb.eg/article_342767_9ac0293aa61e959d607854c84e687335.pdf",
+    "https://mqs.co.uk/collections/shop-levels-protractors",
+    "https://mqs.co.uk/collections/spirit-precision-levels",
+    "https://mqs.co.uk/collections/spirit-precision-levels?page=1",
+    "https://onlinelibrary.wiley.com/doi/10.1186/s13047-018-0306-x",
+    "https://patents.google.com/patent/CN208399157U/en",
+    "https://sandro.longo.unipr.it/publications/Longo_et_al_JNNFM_2013.pdf",
+    "https://www.100y.com.tw/product/54048",
+    "https://www.goldsupplier.com/sale-aluminum-protractor.html",
+    "https://www.goldsupplier.com/sale-gauge-measuring-tool.html",
+    "https://www.goldsupplier.com/sale-v-360.html",
+    "https://www.kic21.co.kr/process/price?category=%EB%B6%80%EC%82%B0%EC%A7%80%EC%82%AC&page=1&sFrm=frm"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

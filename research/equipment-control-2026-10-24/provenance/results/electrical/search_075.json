@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_075.json",
+  "original_log_sha256": "ada1beff1542cc6bcaed9df27c0032f4970cd36ecf18101f59d7680245579283",
+  "original_log_bytes": 38718,
+  "queries": [
+    "Kingpo Standard test hob manual programming software"
+  ],
+  "discovered_urls": [
+    "https://chinatic.org/contact",
+    "https://chinatic.org/downloads/",
+    "https://chinatic.org/resources",
+    "https://chinatic.org/resources/document-request-index",
+    "https://ecoindeals.com/",
+    "https://polish.batterytestingmachine.com/photo/batterytestingmachine/document/94240/KP2021%20electrosurgical%20analyzer%20instruction%20manual.pdf",
+    "https://www.dgkingpo.com/automated-esd-test-system-6-axis-robot/",
+    "https://www.dgkingpo.com/product/brushless-motor-test-bench/",
+    "https://www.dgkingpo.com/why-laboratories-choose-kingpo-testing-equipment/",
+    "https://www.dgkingpo.com/wp-content/uploads/2025/10/Spark-Ignition-Test-Apparatus-Operation-Manual.pdf",
+    "https://www.everychina.com/p-z52f7231-108410665-three-station-online-automatic-test-system-for-motor-performance-testing.html",
+    "https://www.iectest-equipment.com/aboutus.html",
+    "https://www.iectestequipments.com/",
+    "https://www.kingpocn.com/upload/file/202409/1725373324644538.pdf",
+    "https://www.kingpogauges.com/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

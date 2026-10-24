@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_oda.json",
+  "original_log_sha256": "2025523473efa99be02350f2a6aab876cbf8700301ebf253fd785ed2bbc2f6f8",
+  "original_log_bytes": 23679,
+  "queries": [
+    "ODA EX30-40 EX50-24 EX60-40 EX80-45 programming manual SCPI"
+  ],
+  "discovered_urls": [
+    "https://dataseoul.s3.ap-northeast-2.amazonaws.com/upload/S20210402095af0afb82fb/46280d9a1ac2c.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJZQOKHMYYDTTJAFA%2F20260616%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20260616T003314Z&X-Amz-Expires=60&X-Amz-Signature=a3735ff1ff7566484f8b968f54187a60f93bac21ea0c04e86febb835a5b3d21d&X-Amz-SignedHeaders=host&response-cache-control=private%2C+no-store%2C+max-age%3D0&response-content-disposition=attachment%3B+filename%3D%22ODA_TECHNOLOGIES_EX-TB_DATASHEET_KOR.pdf%22%3B+filename%2A%3DUTF-8%27%27ODA_TECHNOLOGIES_EX-TB_DATASHEET_KOR.pdf&response-content-type=application%2Fpdf&response-expires=1997-07-28T05%3A00%3A00Z",
+    "https://m.damoatool.com/product/ODA/EX.html",
+    "https://m.ultrasystem.co.kr/product/oda-ex-series/82/category/29/display/1/",
+    "https://m.ultrasystem.co.kr/product/zoom.html?product_no=82",
+    "https://rndtech.synology.me/Instrument/Datasheet/ODA/EX60-40.pdf",
+    "https://ultrasystem.co.kr/product/oda-ex-series/82/",
+    "https://www.manualslib.com/manual/1769920/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/1769920/Oda-Ex-Series.html?page=9",
+    "https://www.manualslib.com/manual/2222851/Oda-Ex-Series.html?page=72",
+    "https://www.manualslib.com/manual/2402093/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/3552676/Oda-Nex-Series.html?page=86",
+    "https://www.manualslib.com/products/Oda-Ex-30-60-10868387.html",
+    "https://www.metasite.co.kr/NewMeta/NM_files/ODA_NEX-Series_UM.pdf",
+    "https://www.mts-industrial.com/Download/ODA%20TECHNOLOGIES%20PRODUCTS%20CATALOG.pdf",
+    "https://www.powertm.co.kr/pdf/oda/EX30-200.pdf",
+    "https://www.powertm.co.kr/pdf/oda/EX30-40.pdf",
+    "https://www.tekkammall.com/goods/goods_view.php?goodsNo=1000005201",
+    "https://www.tekkammall.com/goods/goods_view.php?goodsNo=1000005202"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

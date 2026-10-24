@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_022.json",
+  "original_log_sha256": "43fc4d74221ce6f71927a815f58c0bcd579c60500e9d0c4de98788378c69cc54",
+  "original_log_bytes": 26004,
+  "queries": [
+    "ESPEC \"EBE-4E20W6P3T\" manual communication software GitHub",
+    "ESPEC \"SH-242\" manual communication software GitHub",
+    "FAMTECH \"EDS3000LS4-445\" manual communication software GitHub",
+    "JFM Engineering \"JFM A - 014\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "http://www.komei.re.kr",
+    "https://2026.espec.com/na/products/family/sh_humidity",
+    "https://en.used-lab.com/item_list/sh-242-benchtop-constant-temperature-and-humidity-chamber-with-stand-40-to-150c-espec-s-n93012152/",
+    "https://espec.com/images/uploads/files/t_su-sh_benchtop.pdf",
+    "https://espec.com/na/products/family/sh_humidity",
+    "https://espec.com/na/products/family/sh_humidity/",
+    "https://espec.com/na/products/model/sh_242",
+    "https://manuals.plus/m/4e3899badfb14e20b84566e4921a8f0fade3b8a5bcbcc13cf7f26be86bd590af.pdf",
+    "https://pmo41839d-pic1.ysjianzhan.cn/upload/PMR-171_FCCTestReport_Part97_compressed.pdf",
+    "https://sciwatch.kiost.ac.kr/bitstream/2020.kiost/42881/1/%EC%84%A0%EC%B2%B4%20%EB%82%B4%20%EC%83%9D%EC%A1%B4%EC%9E%90%20%EC%88%98%EC%83%89%20%EB%B0%8F%20%EC%83%9D%EC%A1%B4%EC%84%B1%20%ED%99%95%EB%B3%B4%20%EA%B8%B0%EC%88%A0%EA%B0%9C%EB%B0%9C.pdf",
+    "https://www.espec.co.jp",
+    "https://www.espec.co.jp/english/products/catalog/5GPJ_44.pdf",
+    "https://www.espec.co.jp/products/env-test/sh/",
+    "https://www.manualslib.com/manual/2131528/Espec-Sh.html",
+    "https://www.manualslib.com/manual/3892188/Espec-Sh-242.html",
+    "https://www.manualslib.com/products/Espec-Sh-642-11697149.html",
+    "https://www.manualslib.com/products/Espec-Su-242-12309320.html",
+    "https://www.ntecusa.com/Test-Equipment-Sales/Temperature/ESPEC-SH-242/7D8B1B82636CCEAF4735E36D79BBF099",
+    "https://www.pntechmall.com/goods/goods_view.php?goodsNo=1000000872",
+    "https://www.tekkammall.com/goods/goods_view.php?goodsNo=1000010361"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

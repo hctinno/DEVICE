@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item276.json",
+  "original_log_sha256": "23db438eb5f1ed5c7d0d86152890706c7f1f325cd2435661c6e298d8c5b96b38",
+  "original_log_bytes": 15571,
+  "queries": [
+    "GN otometrics \"AURICAL HIT\" software interface manual",
+    "site:github.com \"AURICAL HIT\" GN otometrics"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/22c94bf3cb267c5567a72657d6655a2a221f79bf700d520e2d0594a6d544c3d5.pdf",
+    "https://device.report/m/f8af63edced14ae5805f5c44e7ffe6d9f319e6893d8463cba827db2f4f154121_pdf",
+    "https://madsen.hu/pdf/utmutato/Aurical_HIT_Reference_Manual_7-50-1150-EN_04.pdf",
+    "https://manualzilla.com/doc/5752069/aurical-hit-user-guide",
+    "https://manualzz.com/doc/26270409/otometrics-aurical-hit-reference-manual",
+    "https://manualzz.com/doc/7049027/aurical-hit-user-guide",
+    "https://manualzz.com/doc/html/5729692/otometrics-aurical-hit-test-apparecchio-acustico--otosuit",
+    "https://natussensory.com/products/aurical-hit/",
+    "https://www.accessdata.fda.gov/cdrh_docs/pdf12/K122028.pdf",
+    "https://www.audiologyonline.com/releases/gn-otometrics-aurical-hit-approved-11450",
+    "https://www.manualslib.com/manual/1271257/Otometrics-Aurical-Hit.html",
+    "https://www.manualslib.com/manual/1666479/Natus-Otometrics-Aurical-Hit.html",
+    "https://www.manualslib.com/manual/2873129/Otometrics-Aurical-Hit.html",
+    "https://www.manualslib.es/manual/199498/Otometrics-Aurical-Hit.html",
+    "https://www.manualzz.com/doc/26270409/otometrics-aurical-hit-reference-manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

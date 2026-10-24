@@ -1,0 +1,40 @@
+{
+  "input_items": 519,
+  "result_items": 519,
+  "scope": {
+    "included": 321,
+    "excluded_passive": 171,
+    "identity_unresolved": 27
+  },
+  "research_status": {
+    "family_source": 54,
+    "excluded_passive": 171,
+    "exact_source": 22,
+    "searched_no_public_control_source": 104,
+    "vendor_only": 141,
+    "identity_unresolved": 27
+  },
+  "retained": 348,
+  "retained_with_actual_queries": 348,
+  "unprocessed": 0,
+  "items_with_sources": 228,
+  "source_links": 561,
+  "source_access": {
+    "search_index_only": 489,
+    "content_read": 59,
+    "blocked": 8,
+    "download_read": 5
+  },
+  "source_match": {
+    "exact_model": 214,
+    "documented_family": 20,
+    "family_candidate": 294,
+    "generic_vendor": 20,
+    "discovery_only": 13
+  },
+  "exact_public_code_items": 3,
+  "unique_executed_queries_in_logs": 531,
+  "search_log_errors": [],
+  "issues": [],
+  "results_sha256": "d4d0b77e12fe637f19ccd00af88b2a2c4f1ac5cfaf9cd05e02d97129f4df1d58"
+}

@@ -1,0 +1,21 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_tgsprog2.json",
+  "original_log_sha256": "29f35f4f8bff08379bd153f3826e10ed7417b958fa4987583548175c144b9157",
+  "original_log_bytes": 25673,
+  "queries": [
+    "\"TDS7254B\" \"Programmer Manual\""
+  ],
+  "discovered_urls": [
+    "https://manuals.plus/m/e72c8fd9b5f4520e3d8e9fd61ff6a3052e4e1e342bf8522fedeaae86469ad236",
+    "https://manualzz.com/doc/55857077/tektronix-afg2021-technical-reference",
+    "https://www.datasheetarchive.com/?q=P6139A",
+    "https://www.readkong.com/page/afg2021-arbitrary-function-generator-specifications-and-6496621",
+    "https://www.semistarcorp.com/product/tektronix-manual/",
+    "https://www.tek.com/en/manual/tdsht3-2",
+    "https://www.tek.com/fr/manual/tdsht3-2"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

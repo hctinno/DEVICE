@@ -1,0 +1,41 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_221.json",
+  "original_log_sha256": "ef60c2f0f9d0c426a5b389055d468f7f5053f884614195f2d2dee078f2ee0a14",
+  "original_log_bytes": 29380,
+  "queries": [
+    "KIKUSUI PCR2000MA manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/",
+    "https://global.kikusui.co.jp/download/cat_pcr-ma/",
+    "https://global.kikusui.co.jp/w2-2/ac-power-supply-en/pcr-ma-en/pcr-ma-series/",
+    "https://global.kikusui.co.jp/w2-2/ac-power-supply-en/pcr-ma-en/pcr-ma-series/?lang=en&wishlist-action=view&wishlist_id=__wishlist_token__",
+    "https://in.kikusui.co.jp/download/cat_pcr-ma/",
+    "https://in.kikusui.co.jp/w2-2/ac-power-supply-in/pcr-ma-in/pcr-ma-series/",
+    "https://kikusui-europe.com/download/cat_pcr-ma/",
+    "https://kikusui-europe.com/w2-2/ac-power-supply/pcr-ma/pcr-ma-series/",
+    "https://kikusui-korea.co.kr/files/PDF/PCR_MA_M.pdf",
+    "https://kikusui.co.jp/download/cat_pcr-ma/",
+    "https://kikusui.co.jp/w2-2/ac-power-supply/pcr-ma/pcr-ma-series/",
+    "https://kikusuiamerica.com/download/cat_pcr-ma/",
+    "https://kikusuiamerica.com/dri-fir-upd/pcr-ma-firm/",
+    "https://kikusuiamerica.com/w2-2/ac-power-supply-en-en_us/pcr-ma-en-en_us/pcr-ma-series/",
+    "https://ph.kikusui.co.jp/download/cat_pcr-ma/",
+    "https://ph.kikusui.co.jp/w2-2/ac-power-supply-ph/pcr-ma-series/pcr-ma-series/",
+    "https://sg.kikusui.co.jp/download/cat_pcr-ma/",
+    "https://sg.kikusui.co.jp/w2-2/ac-power-supply/pcr-ma/pcr-ma-series/",
+    "https://telonic.co.uk/jg/wp-content/uploads/PCR-MA_uSER-Manual_TelonicUK.pdf",
+    "https://vn.kikusui.co.jp/download/cat_pcr-ma/",
+    "https://vn.kikusui.co.jp/download/pcr-ma/",
+    "https://vn.kikusui.co.jp/w2-2/ac-power-supply/pcr-ma/pcr-ma-series/",
+    "https://www.kikusui.cn/resources/001/pdf/pcr_ma_interface_manual.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pcr_ma_users_manual_en.pdf",
+    "https://www.lantronix.com/products/xdirect/",
+    "https://www.manualslib.com/manual/2983651/Kikusui-Pcr-Ma-Series.html",
+    "https://www.testone.com.tr/wp-content/uploads/pcr-ma.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

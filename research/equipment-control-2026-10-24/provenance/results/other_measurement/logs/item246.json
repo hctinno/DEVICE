@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item246.json",
+  "original_log_sha256": "ae2e2eb2e06fd1ace1a290b5fdff007c22b3113ad53f5437b5952c6b86831bb8",
+  "original_log_bytes": 13276,
+  "queries": [
+    "TESTO \"testo 470\" software interface manual",
+    "site:github.com \"testo 470\" TESTO"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Documents/testo/measurementengineering_ac_en.pdf",
+    "https://m.isokimia.com.my/index.php?cat=Testing-Measuring-Instruments&products_id=1324626&subcat=Testo-Measuring-Instruments-GERMANY&subsubcat=Transmitter-Stroboscope-Tachometer&ws=showproducts",
+    "https://media.testo.com/media/d2/0f/6cbf98b2efd6/testo-470-Ficha-tcnica.pdf",
+    "https://mvtek.vn/download/Catalogue/Testo/testo-470-data-sheet.pdf",
+    "https://static-int.testo.com/media/a5/ff/1a4d4bc44f38/Catalogo-ES-testo470-DT-SP.pdf",
+    "https://testo.vn/testo-470-tachometer",
+    "https://testotaiwan.com/product_detail.html?id=124",
+    "https://www.geooptic.ru/static/files/Instrukciya-testo-470-ru.pdf",
+    "https://www.instruktionsbok.se/testo/bruksanvisning-470/pdf",
+    "https://www.manualslib.com/manual/1493066/Testo-470.html",
+    "https://www.nubicom.co.kr/testo/testo_470.jsp",
+    "https://www.souz-pribor.ru/product/testo-470/",
+    "https://www.testo-direct.com/pdfs/cache/www.testo-direct.com/testo/tachometer/0563_0470/datasheet/testo_0563_0470_tachometer_datasheet.pdf",
+    "https://www.testo.com/it-IT/testo-470/p/0563-0470",
+    "https://www.testo.ru/ru-RU/testo-470/p/0563-0470",
+    "https://www.testoplus.co.kr/estore/?itemid=187&testo=info",
+    "https://www.testotaiwan.com/product_detail.html?id=124",
+    "https://www.unielektro.de/TESTO-testo-470-Drehzahl-Messgeraet--item-01803342"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

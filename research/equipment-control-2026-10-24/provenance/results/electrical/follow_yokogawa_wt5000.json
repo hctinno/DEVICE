@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_yokogawa_wt5000.json",
+  "original_log_sha256": "071ec0d617bc3c4a3bf8fb78695d14a869d35ac5c31dc22fe8f247a4ae34b1f0",
+  "original_log_bytes": 31169,
+  "queries": [
+    "Yokogawa WT5000 communication interface manual"
+  ],
+  "discovered_urls": [
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/d91891f0-e679-469b-b86b-5880e984d2fb/IMWT5000-02EN.pdf",
+    "https://cdn.tmi.yokogawa.com/1/7114/files/IMWT5000-17EN.pdf",
+    "https://cdn.tmi.yokogawa.com/IMWT5000-02EN.pdf",
+    "https://en.wikipedia.org/wiki/Train_communication_network",
+    "https://koreayokogawa.com/support/download.php?boardid=download&idx=24&mNum=3&mode=view&sNum=2",
+    "https://manuals.plus/m/042018325c6c4b9e98591d1d788153be88d52d5c2bf2c45e2536108c4c5630f1",
+    "https://manualzz.com/doc/60170496/yokogawa-wt5000-user-manual",
+    "https://tmi.yokogawa.com/bx/solutions/products/power-analyzers/wt5000/",
+    "https://tmi.yokogawa.com/is/solutions/products/power-analyzers/wt5000/",
+    "https://tmi.yokogawa.com/library/",
+    "https://tmi.yokogawa.com/us/solutions/products/power-analyzers/wt5000/",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&idx=24&mode=view&offset=100&sk=&sw=",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&idx=26&mNum=3&mode=view&sNum=2",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&idx=26&mNum=3&mode=view&sNum=4",
+    "https://www.manualslib.com/manual/1601709/Yokogawa-Wt5000.html",
+    "https://www.manualslib.com/manual/2855401/Yokogawa-Wt5000.html",
+    "https://www.manualslib.com/manual/2855401/Yokogawa-Wt5000.html?page=13"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,27 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_027.json",
+  "original_log_sha256": "6eeddf982f7679432843faf836f1028823683d430e8c4ba11068b6e4fb78e88a",
+  "original_log_bytes": 29701,
+  "queries": [
+    "SPEAG POWER SOURCE1 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://owonna.com/products_owon_spe_series_1_ch_100w-300w_dc_power_supply",
+    "https://owonna.com/products_owon_spe_series_dc_power_supply",
+    "https://powerwalker.com/pl/software/",
+    "https://powerwalker.com/sv/software/",
+    "https://speag.swiss/assets/downloads/application-notes/POWERSOURCE1_manual.pdf",
+    "https://speag.swiss/components/emv-and-v-sources/powersource1-2",
+    "https://speag.swiss/downloads/easy6-2",
+    "https://speag.swiss/products/magpy/videos",
+    "https://speag.swiss/zh_cmn/components-zh-cmn/emv-and-v-sources-zh-cmn/powersource1-2-zh-cmn",
+    "https://tm-co.co.jp/products/spe6053/",
+    "https://tm-co.co.jp/products/spe6205/",
+    "https://tm-co.co.jp/products/spe8105/",
+    "https://tm-co.co.jp/products/spe8205/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

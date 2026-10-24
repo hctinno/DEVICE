@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/batch042.json",
+  "original_log_sha256": "0c4af176cd4825661513def25dd924988288884543b109516032492c4cb185bb",
+  "original_log_bytes": 29647,
+  "queries": [
+    "HP Agilent Keysight \"8591A\" programming manual driver remote control",
+    "HP Agilent Keysight \"8664A\" programming manual driver remote control",
+    "HP Agilent Keysight \"D09861T\" programming manual driver remote control",
+    "HP Agilent Keysight \"SUNMAC100\" programming manual driver remote control"
+  ],
+  "discovered_urls": [
+    "https://docs.ampnuts.ru/eevblog.docs/HP_Agilent_Keysight/",
+    "https://docs.ampnuts.ru/eevblog.docs/HP_Agilent_Keysight/5991-3132EN%20English%20_%202014-04-01%20_%20PDF%20479%20KB%20c20141030%20%5B20%5D.pdf",
+    "https://docs.ampnuts.ru/eevblog.docs/HP_Agilent_Keysight/index.htm",
+    "https://manualzz.com/doc/21306630/agilent-signal-generator-user-manual",
+    "https://sine.ni.com/apps/utf8/niid_web_display.model_page?p_model_id=393",
+    "https://www.eserviceinfo.com/downloadsm/157989/Agilent_08665-90078%208664A%208665A-B%20Operating%20%26%20Calibration%20July93.html",
+    "https://www.hpwiki.org/service_notes%3Aservice_note_index_2025_08_31",
+    "https://www.keysight.com.cn/cn/zh/assets/9018-02672/user-manuals/9018-02672.pdf",
+    "https://www.keysight.com.cn/cn/zh/lib/resources/technical-specifications/operation-and-service-manuals-for-older-obsolete-rf--microwave-instruments-610466.html",
+    "https://www.keysight.com/at/de/assets/9018-05936/user-manuals/9018-05936.pdf",
+    "https://www.keysight.com/at/de/assets/9018-41289/service-manuals/9018-41289.pdf",
+    "https://www.keysight.com/de/de/assets/9018-02672/user-manuals/9018-02672.pdf",
+    "https://www.keysight.com/es/en/assets/9018-06110/user-manuals/9018-06110.pdf",
+    "https://www.keysight.com/es/en/support/8665A/highperformance-signal-generator-42-ghz.html",
+    "https://www.keysight.com/et/en/assets/9018-02672/user-manuals/9018-02672.pdf",
+    "https://www.keysight.com/et/en/assets/9018-05912/programming-guides/9018-05912.pdf",
+    "https://www.keysight.com/gb/en/assets/9018-05929/service-manuals/9018-05929.pdf",
+    "https://www.keysight.com/gb/en/assets/9018-41289/service-manuals/9018-41289.pdf",
+    "https://www.keysight.com/tr/en/assets/9018-05936/user-manuals/9018-05936.pdf",
+    "https://www.keysight.com/tw/zh/assets/9018-06110/user-manuals/9018-06110.pdf",
+    "https://www.keysight.com/vn/en/assets/9018-05936/user-manuals/9018-05936.pdf",
+    "https://www.keysight.com/zz/en/assets/9018-02672/user-manuals/9018-02672.pdf",
+    "https://www.keysight.com/zz/en/assets/9018-05936/user-manuals/9018-05936.pdf",
+    "https://www.manualslib.com/manual/3734787/Hp-8664a.html?page=12",
+    "https://www.metrologymanuals.com/documents/sha-efecaa5342341659df7734b093a3f98225081cf9e4656de68099824c737e313b/service-manual-hp-8591a-portable-spectrum-analyzer/",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Signal-Gen-Synthesizers-Sweepers&model=Keysight-%28Agilent%29-8664A&productID=7FA45BF989F0BD895D40A489237DF9AA&type=Test-Equipment-Repair-Calibration"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

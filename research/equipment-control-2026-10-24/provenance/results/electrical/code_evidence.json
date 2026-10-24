@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/code_evidence.json",
+  "original_log_sha256": "0d9cfc38fb46c2ce03c24bd47a13acf8bdb723a67260656c5210d9e69e23c88a",
+  "original_log_bytes": 8985,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

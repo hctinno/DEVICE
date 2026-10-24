@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_209.json",
+  "original_log_sha256": "0fb0a6766f0d34193d766c1e46fd00da18847ad3bac97eec506ffe72143dcc34",
+  "original_log_bytes": 32456,
+  "queries": [
+    "Anritsu 5P100C-FC manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.anritsu.com",
+    "http://www.anritsu.com/contact-us",
+    "http://www.us.anritsu.com",
+    "https://akmetron.ru/catalog/anritsu/opticheskie-testery/cma5-5p100c-izmeritel-opticheskiy/",
+    "https://dl-qa.cdn-anritsu.com/en-us/test-measurement/files/Manuals/Programming-Manual/10580-00344F.pdf",
+    "https://dl-qa.cdn-anritsu.com/en-us/test-measurement/files/Manuals/Programming-Manual/10580-00445L.pdf",
+    "https://dl.cdn-anritsu.com/en-au/test-measurement/files/Manuals/Operation-Manual/CMA5/cma5pm_opm_e_15_0.pdf",
+    "https://dl.cdn-anritsu.com/en-au/test-measurement/files/Manuals/Operation-Manual/CMA5/cma5pm_opm_e_17_0.pdf",
+    "https://dl.cdn-anritsu.com/en-us/test-measurement/files/Manuals/Programming-Manual/10580-00094.pdf",
+    "https://dl.cdn-anritsu.com/en-us/test-measurement/files/Manuals/Programming-Manual/10580-00218.pdf",
+    "https://en.wikipedia.org/wiki/Virtual_instrument_software_architecture",
+    "https://manuals.plus/m/9a799369037485804d3bafa7787f27a5b3a134d29b0dc45e8d98084e242cfeb2",
+    "https://www.anritsu.com/en-IN/test-measurement/support/downloads?model=S251C",
+    "https://www.anritsu.com/en-gb/test-measurement/support",
+    "https://www.anritsu.com/en-in/test-measurement/support/downloads?model=S332C",
+    "https://www.anritsu.com/en-in/test-measurement/support/technical-support",
+    "https://www.anritsu.com/ko-kr/test-measurement/support/technical-support",
+    "https://www.electrorent.com/us/products/network-and-fiber-installations/fiber-optic-power-meters/anritsu/5p100-st/01t1O00000Ckg3KQAR",
+    "https://www.scribd.com/document/332376092/Anritsu-CMA5-E1500",
+    "https://www.scribd.com/document/677781900/Anritsu-2015",
+    "https://www.scribd.com/document/889821059/Master-Series-PDF",
+    "https://www.scribd.com/document/93175897/CMA50-CMA5-E1300"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

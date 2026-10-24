@@ -1,0 +1,26 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item266.json",
+  "original_log_sha256": "c5c461d916ad95d7330a721bd0ba7c2955c4494240243dbe0ef70506c3d54361",
+  "original_log_bytes": 15073,
+  "queries": [
+    "B&WTek \"BRC115P-V-ST1\" software interface manual",
+    "site:github.com \"BRC115P-V-ST1\" B&WTek"
+  ],
+  "discovered_urls": [
+    "https://doi.org/10.3390/jimaging12010016",
+    "https://github.com/openspyrit/spihim",
+    "https://ingfotonica.com/index.php?Itemid=338&id=20&option=com_easyshop&view=productlist",
+    "https://ingfotonica.com/index.php?Itemid=404&id=42&option=com_easyshop&view=productlist",
+    "https://ousar.lib.okayama-u.ac.jp/files/public/6/69970/20260113114923333003/fulltext.pdf",
+    "https://pdfs.semanticscholar.org/9611/0fd4f0f5f4bd1c2dc20d8a3f45786caf1cb2.pdf",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12843175/",
+    "https://www.mdpi.com/2313-433X/12/1/16",
+    "https://www.researchgate.net/publication/340287086_Deep_neural_networks_for_single-pixel_compressive_video_reconstruction",
+    "https://www.researchgate.net/publication/359480361_Single-pixel_imaging_compressed_video_acquisition_and_reconstruction_using_Deep_learning",
+    "https://www.scribd.com/document/1016256882/Single-pixel-Image-Reconstruction-From-Experimental-Data-Using-Neural-Networks"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

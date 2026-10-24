@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_134.json",
+  "original_log_sha256": "3ce3c6f044bf3742da469bab39c72c2efff16b6c1c372cc50d29f840cfd1909e",
+  "original_log_bytes": 30028,
+  "queries": [
+    "HIOKI PQ3100 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://blog.hiokikorea.com/product/product_view.html?c_id=A011001&p_no=144",
+    "https://hioki.tw/product-detail.php?id=234",
+    "https://hioki.tw/software-detail.php?id=67",
+    "https://manualzz.com/doc/63897756/hioki-power-quality-analyzer-pq3100-instruction-manual?lang=it",
+    "https://www.hioki.cn/products/pq3100",
+    "https://www.hioki.co.jp/jp/products/detail/?product_key=1651",
+    "https://www.hioki.com/download/30585",
+    "https://www.hioki.com/download/30600",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_481",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_562",
+    "https://www.hioki.com/support/download/manuals?page=83",
+    "https://www.hioki.net.cn/m/products/show_906.html",
+    "https://www.manualslib.com/manual/1422019/Hioki-Pq3100.html",
+    "https://www.manualslib.mx/manual/329419/Hioki-Pq3100.html?page=81",
+    "https://www.powermeterstore.com/pdfs/cache/www.powermeterstore.com/pq3100-02-600/manual/pq3100-02-600-manual.pdf",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/yjck5z"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

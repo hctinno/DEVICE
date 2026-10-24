@@ -1,0 +1,20 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/identity_rfoptics.json",
+  "original_log_sha256": "3c9f3d9453e234ad34349ad0f0f49d8b0185035cf7cfa52dc995abe1648299f3",
+  "original_log_bytes": 36154,
+  "queries": [
+    "\"RF OPTICS\" \"L-Box\"",
+    "\"RFOptic\" \"L-Box\""
+  ],
+  "discovered_urls": [
+    "https://patents.google.com/patent/AU722275B2/en",
+    "https://patents.google.com/patent/EP4724828A2/en",
+    "https://patents.google.com/patent/US10473439B2/1",
+    "https://patents.google.com/patent/US12151789B1/en",
+    "https://www.lfc.co.id/search?page=all"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

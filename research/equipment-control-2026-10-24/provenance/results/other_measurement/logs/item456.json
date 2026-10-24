@@ -1,0 +1,25 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item456.json",
+  "original_log_sha256": "77a450d022caf8ffda893ceeb09ec419b06559432ea4663c93b9d30a279058d8",
+  "original_log_bytes": 12080,
+  "queries": [
+    "site:github.com \"WJOT-2G\" 우주통신",
+    "우주통신 \"WJOT-2G\" software interface manual"
+  ],
+  "discovered_urls": [
+    "https://m.gthn1.com/attachment/0/153/153330/2179842.pdf",
+    "https://m.zozya.com/module/download/downfile.jsp?classid=0&filename=479bbdc3d55c4201b1bbd0e5a8044884.pdf",
+    "https://varnish-7.visir.is/paper/fbl/051224.pdf",
+    "https://varnish-8.visir.is/paper/fbl/051224.pdf",
+    "https://varnish-8.visir.is/paper/fbl/060109.pdf",
+    "https://www.auction.co.kr/n/search?nickname=%ED%83%9C%ED%99%94&s=3",
+    "https://www.cds.caltech.edu/~murray/preprints/cds94-013.pdf",
+    "https://www.junexiao.com/zfxxgk_279/fdzdgknr/yjsgk/202502/P020250227612843202230.pdf",
+    "https://www.passat-club.ru/forum/archive/index.php/t-23566-p-23.html",
+    "https://www.visir.is/paper/fbl/051122.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

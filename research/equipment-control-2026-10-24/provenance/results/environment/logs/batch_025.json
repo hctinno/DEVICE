@@ -1,0 +1,40 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_025.json",
+  "original_log_sha256": "851d5f76fae5b864a59ac193b786ad3572043de43d29f58fb150a1f6bf7fa442",
+  "original_log_bytes": 30241,
+  "queries": [
+    "C&G MICROWAVE \"CATR-30R\" manual communication software GitHub",
+    "ENEXSCIENTFIC \"EN-FTH-805-7K\" manual communication software GitHub",
+    "Lansmont \"65/81 Shock\" manual communication software GitHub",
+    "한로기술(주) \"Head Impact tester\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://ascelibrary.org/doi/10.1061/%28ASCE%290733-9445%282005%29131%3A4%28582%29",
+    "https://d.otto.de/files/f14b4aef-ca30-5252-8ddf-12629998c983.pdf",
+    "https://emin.vn/en/lansmont65-81-lansmont-65-81-shock-test-system-600g-10631901/pr.html",
+    "https://frankbacon.com/wp-content/uploads/12796-00.pdf",
+    "https://media.penn-elcom.com/pdf/Test%20Certificates%20Pallet%20Cushions%20-Penn%20Elcom.pdf",
+    "https://patents.google.com/patent/KR100208522B1/en",
+    "https://patents.google.com/patent/KR19980047289A/ko",
+    "https://pdf.directindustry-china.cn/pdf/lansmont-4594477.html",
+    "https://pdf.directindustry.com/pdf/lansmont/model-65-81-shock-test-system/4594477-1089884.html",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12197213/",
+    "https://www.directindustry.com/prod/lansmont/product-4594477-2635008.html",
+    "https://www.directindustry.com/prod/lansmont/product-4594477-2635640.html",
+    "https://www.directindustry.es/prod/lansmont/product-4594477-2635640.html",
+    "https://www.hanbat.ac.kr/thumbnail/BBSMSTR_000000000340/BBS_202308140214560382.pdf",
+    "https://www.lansmont.com/products/shock/performance/p65-81",
+    "https://www.lansmont.com/sites/default/files/2022-12/LANS_14003_Spec_Shock_65_81_5.13.pdf",
+    "https://www.mdpi.com/1424-8220/25/12/3751",
+    "https://www.researchgate.net/publication/392753634_A_Miniaturized_Design_for_a_Terahertz_Tri-Mirror_CATR_with_High_QZ_Characteristics",
+    "https://www.researchgate.net/publication/4058600_Modeling_and_simulation_of_printed_circuit_board_drop_test",
+    "https://www.unitload.vt.edu/about-us/media-center/cpuld-news/9-999-cpuld-news-fall-winter-2023/cn-new-equipment-in-cpuld-labs.html",
+    "https://www.unitload.vt.edu/content/dam/unitload_vt_edu/newsletters-and-images-for-them/cpuld-news-articles-pictures-and-docs/fall-winter-2023/CPULDNewsFallWinter2023.pdf",
+    "https://www.unitload.vt.edu/facilities/distribution-packaging-lab/shock-testing.html",
+    "https://www.yumpu.com/en/document/view/13637284/model-65-81-shock-test-system-lansmont-corporation"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_223.json",
+  "original_log_sha256": "afc1ff91163a30c2fb875af6f09be562d7eb9a498bbea0a0803827fbd26ef63c",
+  "original_log_bytes": 29066,
+  "queries": [
+    "Prodigit 3302C/3250A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://goodmansystem.com/PRODIGIT",
+    "https://www.alto-shaam.com/en/customer-support/software-downloads/prodigi-pro-and-classic-oven-software/prodigi-pro-and-classic-firmware-download",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=11",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=13",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=15",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=29",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=5",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=65",
+    "https://www.predig.com/support",
+    "https://www.prodigit.com.tw/uploadfiles/687/Produts/DC-Electronic-Load/3300/3302c-single-channel-mainframe-operation-manual_en.pdf",
+    "https://www.prodigit.com/uploadfiles/687/Produts/DC-Electronic-Load/3300/3302c-single-channel-mainframe-operation-manual_en.pdf",
+    "https://www.scribd.com/document/696789019/3300C-Operation-Manual-90033005-RI",
+    "https://www.scribd.com/document/975903368/Prodigit-3302C-01-datashseet"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

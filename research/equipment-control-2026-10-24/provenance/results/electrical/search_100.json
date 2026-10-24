@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_100.json",
+  "original_log_sha256": "4a7d1c68ad699b7748e0efd6d1c97561339eefd00373d2f9e7ee12a3a823f76e",
+  "original_log_bytes": 35705,
+  "queries": [
+    "DIGITEK POWER DDPS 60K manual programming software"
+  ],
+  "discovered_urls": [
+    "https://dearborngroup.com/documents/",
+    "https://device.report/m/c543ebeeb487416170c85be1001006b1d766bdb11b65c9c80004394eb0143f1d",
+    "https://device.report/m/f7066c5b451ecdd6b27850eb5b9b4a4cac142c5bc9492426f5d17ca955b3baf4",
+    "https://device.report/manuals/rk6006c-constant-voltage-current-dc-power-supply-manual",
+    "https://eur.itechate.com/uploadfiles/usermanual/it6600/en-us/IT6600D%20Programming%20Guide-EN.pdf",
+    "https://kt-prog.com/ecu-programmer-software-installation-guide/",
+    "https://www.4test.no/files/itech/manuals/IT6600D-Programming-Guide.pdf",
+    "https://www.altoo.dk/files/itech/manuals/IT6000D-Programming-Guide.pdf?srsltid=AfmBOoqEx0Mx1j0M1RgGg8rC4siYSUpH4a1wtbPQNu_EKM4thoAc7pHr",
+    "https://www.altoo.dk/files/itech/manuals/IT6000D-User-Manual.pdf",
+    "https://www.altoo.dk/files/itech/manuals/IT6600D-Programming-Guide.pdf",
+    "https://www.altoo.dk/files/itech/manuals/IT6600D-User-Manual.pdf",
+    "https://www.dgtech.com/documents/",
+    "https://www.dgtech.com/faqs/",
+    "https://www.manualzz.com/doc/30360454/adaptive-power-systems-dps-series-programmable-dc-power-s",
+    "https://www.mediafire.com/folder/3iogirsx1s0vp/DPS_communication_upper_computer",
+    "https://www.scribd.com/document/773196888/DPS-User-Guide",
+    "https://www.scribd.com/document/906186010/Operation-and-PC-and-APP-Instruction-for-Digital-Control-Constant-Voltage-Constant-Current-Power-Supply-With-Power-Part",
+    "https://www.sigrok.org/wiki/RDTech_DPS_series",
+    "https://www.xeltek.com/resources/technical-articles/instructions-and-support/superprosoftware/",
+    "https://youtu.be/mjt1RMaah1Y"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

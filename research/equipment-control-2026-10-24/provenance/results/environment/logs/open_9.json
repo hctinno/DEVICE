@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_9.json",
+  "original_log_sha256": "9ed0f3da4204e81d184e2c2774bb891871fdd9b6caea2d953d84af7f52519e92",
+  "original_log_bytes": 6196,
+  "queries": [],
+  "discovered_urls": [
+    "http://www.relay.com.cn",
+    "http://www.timer-relay.com",
+    "http://www.timer-switch.com",
+    "https://www.kometer.co.kr/en/sub/sub03_01.php?cat_no=18&idx=80&offset=0&pmode=view",
+    "https://www.timer-switch.com/pdf-en/DH48S-Digital-Timer.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

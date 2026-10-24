@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item307.json",
+  "original_log_sha256": "010d9b780fde5be657a38e9b2c21044a6ed44b2ac47833def3df4f00b97790ef",
+  "original_log_bytes": 11656,
+  "queries": [
+    "Anritsu \"MW9060A\" software interface manual",
+    "site:github.com \"MW9060A\" Anritsu"
+  ],
+  "discovered_urls": [
+    "https://all-pribors.ru/opisanie/19136-00-mw9060a",
+    "https://anritsu.nt-rt.ru/images/showcase/catalog-eng.pdf",
+    "https://device.report/m/92e2f9231cb4641a456cdf114a6014e1b352e793650aec00556a06a6e2b3f1e5.pdf",
+    "https://device.report/m/cc9ee7c2363a1e27ec376cdb104e91e42ef6dffd946bf432c7a53501f1852412",
+    "https://electronicsandbooks.com/edt/manual/Hardware/A/Anritsu%20www.us.anritsu.com%20www.eu.anritsu.com/Product/MW9060/Anritsu%20MW9060A%20GPIB%20Manual%20c20070628%20%5B244%5D.pdf",
+    "https://electronicsandbooks.com/edt/manual/Hardware/A/Anritsu%20www.us.anritsu.com%20www.eu.anritsu.com/Product/MW9060/Anritsu%20MW9060A%20Manual%20c20070628%20%5B346%5D.pdf",
+    "https://mail.oei-analitika.ru/kurilka/si_type_info.php?si_type_id=320581",
+    "https://mail.oei-analitika.ru/kurilka/si_type_info.php?si_type_id=320582",
+    "https://mail.oei-analitika.ru/kurilka/si_type_info.php?si_type_id=322511",
+    "https://manualzilla.com/doc/6003248/complimentary-reference-material",
+    "https://oei-analitika.ru/kurilka/si_type_info.php?si_type_id=320581",
+    "https://oei-analitika.ru/kurilka/si_type_info.php?si_type_id=322511",
+    "https://rags.ru/stroyka/text/8074/",
+    "https://www.analyticalelectronics.in/testequipment/manuals/anritsu.html",
+    "https://www.artisantg.com/TestMeasurement/59399-1/Anritsu-MW9060A-Optical-Time-Domain-Reflectometer-Mainframe",
+    "https://www.artisantg.com/info/anritsu_mw9060a_manual.pdf",
+    "https://www.manualslib.com/manual/1278590/Anritsu-Mw9060a.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

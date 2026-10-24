@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_136.json",
+  "original_log_sha256": "bc9a940f7f979d5daa6bb3070cb6387052379e002828c5da070fe459ab4ea901",
+  "original_log_bytes": 26694,
+  "queries": [
+    "TDK-LAMBDA ZUP36-24 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://de.tdk-lambda.com/KB/ZUP-Datasheet-Full.pdf",
+    "https://digitaler.cld.bz/tdk2/33",
+    "https://product.tdk.cn/zh/search/power/switching-power/prg-power/info?part_no=Z36-24",
+    "https://product.tdk.cn/zh/search/power/switching-power/prg-power/info?part_no=ZUP36-24%2FU",
+    "https://product.tdk.com.cn/system/files/dam/doc/product/power/switching-power/prg-power/instruction_manual/zup-user-manual.pdf",
+    "https://product.tdk.com/de/search/power/switching-power/prg-power/info?part_no=ZUP36-24%2FU",
+    "https://product.tdk.com/en/search/power/switching-power/prg-power/info?part_no=ZUP36-24%2FU",
+    "https://product.tdk.com/system/files/dam/doc/product/power/switching-power/prg-power/instruction_manual/zup-user-manual.pdf",
+    "https://www.digikey.com/en/products/detail/tdk-lambda/ZUP36-24-U/1631842",
+    "https://www.digikey.de/en/products/detail/tdk-lambda/ZUP36-24/3984290",
+    "https://www.kynix.com/productdetails/5549501/tdklambdaamericasinc/zup3624.html",
+    "https://www.manualslib.com/manual/2729219/Tdk-Lambda-Zup-Series.html",
+    "https://www.manualslib.com/manual/635926/Tdk-Lambda-Zero-Up-200w.html",
+    "https://www.manualslib.com/products/Tdk-Lambda-Zup36-24-9663053.html",
+    "https://www.newark.com/tdk-lambda/zup36-24/bench-power-supply-prog-1ch-36v/dp/83H8338"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

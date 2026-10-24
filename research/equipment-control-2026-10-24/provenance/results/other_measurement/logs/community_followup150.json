@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup150.json",
+  "original_log_sha256": "3c209679e7e905bf8ec054a9a8786ace3cde3096f2e0fd9d02de496c7bf9cff8",
+  "original_log_bytes": 356,
+  "queries": [
+    "site:github.com \"HI8424\" \"HANNA\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

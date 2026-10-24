@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_prodigit.json",
+  "original_log_sha256": "6e143107464b3980d352bc9f5829ab00cb7be75052549a4992a10a9863df7ef4",
+  "original_log_bytes": 29982,
+  "queries": [
+    "Prodigit 3302C 3250A GPIB programming"
+  ],
+  "discovered_urls": [
+    "http://www.zimmers.net/anonftp/pub/cbm/schematics/cartridges/c64/ieee-488/index.html",
+    "https://en.wikipedia.org/wiki/GPIB",
+    "https://sine.ni.com/apps/utf8/niid_web_display.model_page?p_model_id=6984",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=13",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=18",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=25",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=30",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=4",
+    "https://www.manualslib.com/manual/2054286/Prodigit-3302c-Series.html?page=65",
+    "https://www.prodigit.com.tw/uploadfiles/687/Produts/DC-Electronic-Load/3300/3302c-single-channel-mainframe-operation-manual_en.pdf",
+    "https://www.prodigit.com/uploadfiles/687/Produts/DC-Electronic-Load/3300/3302c-single-channel-mainframe-operation-manual_en.pdf",
+    "https://www.prodigitusa.com/QuickView.htm",
+    "https://www.prodigitusa.com/prodigit/3302c/3302cDescriptions.htm",
+    "https://www.scribd.com/document/696789019/3300C-Operation-Manual-90033005-RI",
+    "https://www.scribd.com/document/975903368/Prodigit-3302C-01-datashseet"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

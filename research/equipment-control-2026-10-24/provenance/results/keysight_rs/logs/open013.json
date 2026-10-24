@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open013.json",
+  "original_log_sha256": "4037ed3ccc198581751b911180bf6aad7d7b404812c628e1484ad5b8ed1f010a",
+  "original_log_bytes": 5417,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.rohde-schwarz.com/de/handbuch/esw/",
+    "https://www.rohde-schwarz.com/us/manual/esw/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_048.json",
+  "original_log_sha256": "bf2de08e6cd2d1a35431032668307e6a93cdfaf287bf0f1f4f0070d0d6c15d93",
+  "original_log_bytes": 29822,
+  "queries": [
+    "HCT \"INPUT3 + 3GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT3 + 6GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT3 + 7GHz HPF + LNA\" manual programming driver API GitHub",
+    "에이플러스테크 \"ANTENNA MAST\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://absolute-emc.com/uploads/documents/Absolute-EMC_Product_Catalog_2024-web.pdf",
+    "https://absolute-emc.com/uploads/files/1704662710_NCD%20Manual.pdf",
+    "https://ardupilot.org/antennatracker/docs/logmessages.html",
+    "https://doi.org/10.5762/KAIS.2017.18.10.499",
+    "https://github.com/Cnd-North/adsb-flight-tracker",
+    "https://github.com/Cnd-North/adsb-flight-tracker.git",
+    "https://github.com/N6MX/SOTAbeamsMastCap",
+    "https://github.com/flightaware/dump1090.git",
+    "https://manuals.plus/m/869cd74c9d03f3fd568399e258159849a51b98fa76a4b1ead2557fb61ce63e99",
+    "https://manuals.plus/m/a5825fbf59ddb5984158af28fdb268a11225528625f5e86cc82904dbde41246f.pdf",
+    "https://manualzilla.com/doc/6025262/manual-ncd",
+    "https://manualzilla.com/doc/6722368/manual-ncd_d",
+    "https://manualzz.com/doc/25028477/ecg-products-u-106-antenna-system-instruction-manual",
+    "https://manualzz.com/doc/6560305/electronic-integrated-systems-inc.-spider-antenna-system-",
+    "https://studylib.net/doc/18576957/manual-mcu---maturo-gmbh",
+    "https://www.com-power.com/uploads/pdf/AMTTC-300-2.pdf",
+    "https://www.kais99.org/jkais/journal/Vol18No10/vol18no10p58.pdf",
+    "https://www.manualslib.com/manual/1644038/Franconia-Fc-02.html?page=13",
+    "https://www.manualslib.com/manual/3620652/Maturo-Mcu.html",
+    "https://www.technirevue.com/revue_technique/revue-technique-daewoo-lanos.pdf",
+    "https://www.willburt.com/products/telescopic-masts/am2/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

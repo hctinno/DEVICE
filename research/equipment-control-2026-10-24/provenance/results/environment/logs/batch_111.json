@@ -1,0 +1,42 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_111.json",
+  "original_log_sha256": "f6a1df1c1a1f8d2df9adf6aa71738f63cd8d557fd3615982dc468dcc1ec11b7d",
+  "original_log_bytes": 22192,
+  "queries": [
+    "(주) 듀오컴 \"HS-1900B\" EXPLOSION CHAMBER",
+    "Hitachi \"EC-45MHHPS\" Temp.&Humidity Chamber",
+    "LDS \"V830-335 LPT COMBO\" Air Cooled Vibrator",
+    "SHINKEN \"G-0265LSHP\" Vibration Test System"
+  ],
+  "discovered_urls": [
+    "https://asm-tm.ru/zapasny-e-chasti-k-vibrostendam-lds.html",
+    "https://cloud.hbkworld.com/en/products/integrated-systems/vibration-testing/shaker-systems/slip-tables/fixtures",
+    "https://d.otto.de/files/f14b4aef-ca30-5252-8ddf-12629998c983.pdf",
+    "https://hongsbelt.com.vn/bang-tai-nhua-modular",
+    "https://kmarine.kr/pdf/01.pdf",
+    "https://m.media-amazon.com/images/I/B1kItCQ4fzS.pdf",
+    "https://usedsale.jp/usedlist/20250217-major-usedlist.pdf",
+    "https://www.3915.jp/2/category/2/2.html",
+    "https://www.3915.jp/2/search.do?exclude_blog_ids=4&keyword=%E6%97%A5%E7%AB%8B&type=2&x=53&y=14",
+    "https://www.3915.jp/category/2/2.html",
+    "https://www.3915.jp/hp01/category/19/1.html",
+    "https://www.3915.jp/hp01/category/2/2.html",
+    "https://www.3915.jp/hp01/new_items/5.html",
+    "https://www.3915.jp/hp01/search.do?blog_id=2&category_id=19&page=3&page_limit=10",
+    "https://www.conveyorclub.com/attachments/view/?attach_id=266514",
+    "https://www.directindustry-china.cn/prod/huanan-xinhai-shenzhen-technology-co-ltd/product-60581-2087917.html",
+    "https://www.directindustry.com/prod/huanan-xinhai-shenzhen-technology-co-ltd/product-60581-2087917.html",
+    "https://www.trust-t.com/equipment/catalog/9488-M001.pdf",
+    "https://www.usedsale.jp/list/list9/page/3",
+    "https://www.usedsale.jp/list/page/110",
+    "https://www.usedsale.jp/search/%E5%8B%95%E3%81%B2%E3%81%9A%E3%81%BF%20%E8%A8%88/page/175",
+    "https://www.usedsale.jp/search/%E5%AF%8C%E5%A3%AB%E9%9B%BB%E6%A9%9F%20%E4%B8%AD%E5%8F%A4/page/167",
+    "https://www.wartech.co.jp/usedequipment-list/155.html",
+    "https://www.yumpu.com/en/document/view/40337183/combo-systems-with-hbt-slip-tables-thermo-fisher",
+    "https://yo.hongsbelt.com/brand-compatibility/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

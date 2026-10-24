@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_171.json",
+  "original_log_sha256": "879ff71e881dd26d3522f76c36fbd56ea7acac432d1c345de161173a1ed4ada8",
+  "original_log_bytes": 27556,
+  "queries": [
+    "NEWARE CE-7002-500V100A-R28GC manual programming software"
+  ],
+  "discovered_urls": [
+    "https://batterygrading.com/blog/download-software/",
+    "https://neware.com.cn/Download/Instructions",
+    "https://neware.ltd/software/",
+    "https://newarebattery.com/services-home/",
+    "https://newarelab.com/download",
+    "https://www.neware-usa.com/uploadfile/2023/0623/2d0691bf8f207f.pdf",
+    "https://www.neware-usa.com/uploadfile/2024/0531/2236c092d37472a.pdf",
+    "https://www.neware.cloud/Download/product-support",
+    "https://www.neware.cloud/service",
+    "https://www.neware.com.cn/Download/product-support",
+    "https://www.neware.net/supports/manuals-and-documentation.html",
+    "https://www.neware.net/supports/manuals-and-documentation/2.html",
+    "https://www.neware.net/supports/specifications.html",
+    "https://www.newarelab.com/documentation/CE-6000A-5V%20User%20Manual%EF%BC%88Version%20A%EF%BC%89.pdf",
+    "https://www.newarelab.com/documentation/CE-6000n-power%20battery%20User%20Manual.pdf",
+    "https://www.newarelab.com/download"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

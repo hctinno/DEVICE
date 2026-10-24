@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_059.json",
+  "original_log_sha256": "beead10e0273a82510051db71cf4d4800b1e6a71f05c19b5c1056333ce0871d3",
+  "original_log_bytes": 31501,
+  "queries": [
+    "Tektronix MDO34 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://download.tek.com/manual/3-Series-MDO_Specifications-Performance-Verification-077149907.pdf",
+    "https://download.tek.com/manual/3SeriesMDO-Printable-Help-077149701.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://en.wikipedia.org/wiki/Tektronix",
+    "https://en.wikipedia.org/wiki/Tektronix_4010",
+    "https://www.farnell.com/datasheets/2817445.pdf",
+    "https://www.mouser.com/pdfDocs/3SeriesMDO-Printable-Help-077149700.pdf",
+    "https://www.reddit.com/r/AskElectronics/comments/1gbuag2",
+    "https://www.reddit.com/r/AskElectronics/comments/1tqy65j/do_oscilloscopes_really_have_dlcs_now/",
+    "https://www.reddit.com/r/ECE/comments/ilbx44",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/zhhc1k",
+    "https://www.reddit.com/r/oscilloscope/comments/1ubdrwq/anyone_have_the_manual_for_a_dpu_411_type_ii/",
+    "https://www.tek.com.cn/manual/oscilloscope/3-series-mdo-programmer-manual-3-series-mdo",
+    "https://www.tek.com.cn/manual/oscilloscope/3-series-mixed-domain-oscilloscope-3-series-mdo-mixed-domain-oscilloscope-077149801",
+    "https://www.tek.com.cn/manual/oscilloscope/3-series-mixed-domain-oscilloscope-quick-start-manual-3-series-mdo",
+    "https://www.tek.com.cn/support/datasheets-manuals-software-downloads?model=MDO32",
+    "https://www.tek.com.cn/support/datasheets-manuals-software-downloads?series=3+%E7%B3%BB%E5%88%97+MDO+%E6%B7%B7%E5%90%88%E5%9F%9F%E7%A4%BA%E6%B3%A2%E5%99%A8",
+    "https://www.tek.com.cn/support/datasheets-manuals-software-downloads?series=3+%E7%B3%BB%E5%88%97+MDO+%E6%B7%B7%E5%90%88%E5%9F%9F%E7%A4%BA%E6%B3%A2%E5%99%A8&type=manual",
+    "https://www.tek.com/en/manual/oscilloscope/3-series-mdo-programmer-manual-3-series-mdo",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?model=MDO32",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?series=3+Series+MDO+Mixed+Domain+Oscilloscope",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?series=3+Series+MDO+Mixed+Domain+Oscilloscope&type=manual",
+    "https://www.tek.com/fr/support/datasheets-manuals-software-downloads?series=Oscilloscope+multidomaine+MDO+S%C3%A9rie%C2%A03",
+    "https://www.tek.com/vn/support/datasheets-manuals-software-downloads?model=MDO32"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

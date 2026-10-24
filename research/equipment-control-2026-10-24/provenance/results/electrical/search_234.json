@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_234.json",
+  "original_log_sha256": "2d4071bdb2ff57b4d34c3ac82c4a381150d20da7e1a9b5eebe94504162c28a83",
+  "original_log_bytes": 31102,
+  "queries": [
+    "YOKOGAWA DR230-00-00-1F manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/ed899661b4bdd3e3046240d9aedab524d17957f5706dadf99cae85ff13ae85ae",
+    "https://docs.ampnuts.ru/eevblog.docs/Yokogawa/YOKOGAWA%20DR232%20Communication%20Interface.pdf",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=2130&mode=view",
+    "https://manualmachine.com/yokogawa/dr230/8403621-user-manual/",
+    "https://peigroup.com/products/yokogawa/yokogawa-literature/",
+    "https://web-material3.yokogawa.com/IMDR231-11E_060.pdf",
+    "https://web-material3.yokogawa.com/product_dr230spec.us.pdf",
+    "https://www.manuallib.com/file/2044889/",
+    "https://www.manualsdir.com/models/yokogawa/dr230.html",
+    "https://www.omniprocess.se/en/software-programmes/",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.yokogawa.co.jp/library/resources/faqs/ns-faq-darwin-8048-setting-ja/",
+    "https://www.yokogawa.com/eu/library/resources/yokogawa-technical-reports/dr230-240-hybrid-recorders-in-the-darwin-1-series/",
+    "https://yokogawa.manymanuals-pt.com/sensors/dr240/user-manual-25017/46",
+    "https://yokogawa.manymanuals.com/sensors/dr240/user-manual-25017/64"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

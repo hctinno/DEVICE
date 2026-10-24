@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_211.json",
+  "original_log_sha256": "afb5c81030d11d57358e174470f41713aa8ea836218ba140d7c27c95a40dc3c4",
+  "original_log_bytes": 28716,
+  "queries": [
+    "KIKUSUI PBZ40-10 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download/cat_pbz/",
+    "https://global.kikusui.co.jp/download/pbz_bp/",
+    "https://global.kikusui.co.jp/products-index/dc/pbz/",
+    "https://global.kikusui.co.jp/w2-2/dc-power-supply-en/pbz-en/pbz-series/",
+    "https://in.kikusui.co.jp/download/cat_pbz/",
+    "https://in.kikusui.co.jp/w2-2/dc-power-supply-in/pbz-in/pbz-series/",
+    "https://kikusui-europe.com/spec/pbz_interface/",
+    "https://kikusui-korea.co.kr/files/PDF/PBZ_BP_M.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PBZ_M.pdf",
+    "https://kikusui.co.jp/download/cat_pbz/",
+    "https://kikusui.co.jp/products-index/dc/pbz/",
+    "https://kikusui.co.jp/w2-2/dc-power-supply/pbz/pbz/",
+    "https://kikusuiamerica.com/download/cat_pbz/",
+    "https://kikusuiamerica.com/products-index/dc/pbz/",
+    "https://kikusuiamerica.com/spec/pbz_other-functions/",
+    "https://kikusuiamerica.com/w2-2/dc-power-supply-en_us/pbz-en_us/pbz-series/",
+    "https://ph.kikusui.co.jp/download/cat_pbz/",
+    "https://ph.kikusui.co.jp/w2-2/dc-power-supply-ph/pbz-series/pbz-series/",
+    "https://www.kikusui-korea.co.kr/files/PDF/PBZ_M.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pbz_interface_manual.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pbz_users_manual_en.pdf",
+    "https://www.manualslib.com/products/Kikusui-Pbz40-10-6036254.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

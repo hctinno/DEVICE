@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_acp_exact.json",
+  "original_log_sha256": "b5577647e29fc526582353f660ec7e72f37e3487a02e62f2e11b32ffbd9cde39",
+  "original_log_bytes": 23428,
+  "queries": [
+    "\"AFC-1010\" \"Korea\""
+  ],
+  "discovered_urls": [
+    "https://1xbet.com/en/live/football/2397898-afc-cup-u23",
+    "https://digitallibrary.un.org/nanna/record/808425/files/A_16_Annexes_Vol._I-EN.pdf?registerDownload=1&version=1&withMetadata=0&withWatermark=0",
+    "https://en.yenisafak.com/sports/football/player/lee-chung-yong-36157",
+    "https://es.scribd.com/document/525829224/TBT-Status-Equipment-PW-14-Aug-1-2",
+    "https://fcc.report/FCC-ID/BEJD1724NAGTA/7517039.pdf",
+    "https://iffhs.com/en/news/real-madrid-number-1-474",
+    "https://pes-files.ru/pes_2020_national_teams_kitserver_gdb_pack",
+    "https://pes-files.ru/pes_2021_kitserver_pack_national_teams_14_04_21",
+    "https://soccer-nationals.easychamp.com/team/c108ad3b-1e7f-4e1f-968d-b72efd35a4a4?champId=86ca410a-264a-4af0-8000-ff29d1b432af",
+    "https://sportal.betxchange.com/wp-content/uploads/2025/09/30-Sep-Fixture.pdf",
+    "https://sportal.betxchange.com/wp-content/uploads/2025/10/05-Oct-Fixture.pdf",
+    "https://test.iffhs.com/posts/474",
+    "https://www.kic21.co.kr/process/price?category=%EB%8C%80%EC%A0%84%EC%A7%80%EC%82%AC&page=21&sFrm=frm",
+    "https://www.kic21.co.kr/process/price?page=96",
+    "https://www.kifsejournal.or.kr/upload/pdf/KIFSE-2018-32-2-048.pdf",
+    "https://www.uzdaily.uz/en/acl-disciplinary-record/",
+    "https://www.volza.com/p/used-inputs/export-data/exports-from-south-korea/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

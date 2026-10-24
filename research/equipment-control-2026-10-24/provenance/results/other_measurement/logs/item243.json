@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item243.json",
+  "original_log_sha256": "9918e562eefd6918752eafb9e476e9435b4646e2754f0f4a5e1d65f865946625",
+  "original_log_bytes": 12298,
+  "queries": [
+    "BLUEBIRD \"DG-TD260\" software interface manual",
+    "site:github.com \"DG-TD260\" BLUEBIRD"
+  ],
+  "discovered_urls": [
+    "https://09pro.com/product/detail.html?cate_no=373&display_group=1&product_no=11327",
+    "https://atextool.co.kr/goods/goods_list.php?brandCd=028038",
+    "https://keyang1.com/product/%EB%B8%94%EB%A3%A8%ED%85%8D-%EB%94%94%EC%A7%80%ED%84%B8-%ED%86%A0%ED%81%AC%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84-dg-td260-4007241/2915/",
+    "https://m.jjang114.co.kr/product/detail.html?product_no=2365",
+    "https://m.toolin.co.kr/goods/goods_view.php?goodsNo=7062",
+    "https://minton79.com/viewgs/?goods=18477&gs=68483",
+    "https://price.enuri.com/catalog/36780344",
+    "https://region4b.ntc.gov.ph/wp-content/uploads/2022/01/GEC_12312021.pdf",
+    "https://toolbytool.co.kr/goods/goods_view.php?goodsNo=1000025941",
+    "https://tooltalk.co.kr/product/%EB%B8%94%EB%A3%A8%ED%85%8D-%EB%94%94%EC%A7%80%ED%84%B8-%ED%86%A0%ED%81%AC-%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84-dg-td260/9091/",
+    "https://www.atextool.co.kr/goods/goods_view.php?goodsNo=1000015242",
+    "https://www.speedmall.co.kr/product/LT294",
+    "https://www.toolnshop.kr/view/?goods=18477&gs%5B%5D%3D=68483"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

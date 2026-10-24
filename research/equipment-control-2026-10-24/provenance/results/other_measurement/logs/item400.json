@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item400.json",
+  "original_log_sha256": "43d393d0f57fc033cd54bf127d49344184b85c5098d45443c2ce1cf7a157ac8f",
+  "original_log_bytes": 14887,
+  "queries": [
+    "Narda \"8700\" software interface manual",
+    "site:github.com \"8700\" Narda"
+  ],
+  "discovered_urls": [
+    "https://device.report/narda/meter",
+    "https://gist.github.com/DivyaSreeDandu/28916f2932b2b458ed21d478eb5e10b3",
+    "https://gist.github.com/sarkiroka/3be4223d7baaca982a404a7552fb5c0f?permalink_comment_id=1829834",
+    "https://manuals.plus/m/d4fdee9cb3ff55e3a1c0bcc31d3a3d6fa3669e3c9e727e150ef0722368fa626f",
+    "https://manualzilla.com/doc/7272121/narda-8718b-stud-sensor-user-manual",
+    "https://manualzz.com/doc/28062913/narda-8715-survey-meter-user-manual",
+    "https://manuzoid.com/manuals/6GOGP-NARDA%208718B%20User%20manual",
+    "https://maximinstruments.com/pdf_files/NARDA_8718_Datasheet.pdf",
+    "https://somanuals.com/html/12/NARDA-Stud-Sensor-8718B-User-Manual.html",
+    "https://www.artisantg.com/info/L_3_Narda_8718B_Manual_2021423102649.pdf",
+    "https://www.atecorp.com/getmedia/26509d3c-d35b-40d6-9002-65177a9d50e1/nardasafetycatalog_1.pdf",
+    "https://www.atecorp.com/getmedia/f48c182e-3f66-45fb-872c-b9cb4a970792/narda-8718_manual_1.pdf",
+    "https://www.gruppompb.com/public/upload/8718-B.pdf",
+    "https://www.manualslib.com/manual/109257/Narda-8718b.html",
+    "https://www.manualslib.com/manual/109257/Narda-8718b.html?page=105",
+    "https://www.manualslib.com/manual/109257/Narda-8718b.html?page=15",
+    "https://www.manualslib.com/manual/109257/Narda-8718b.html?page=17",
+    "https://www.manualslib.com/manual/1277066/Narda-8718.html",
+    "https://www.manualslib.com/manual/1277066/Narda-8718.html?page=3"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

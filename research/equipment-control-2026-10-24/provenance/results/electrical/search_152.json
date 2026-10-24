@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_152.json",
+  "original_log_sha256": "c1007c05a13d43e803754f6fcf0ad6998d58e100ace121ff68c7305271220b6e",
+  "original_log_bytes": 30090,
+  "queries": [
+    "DIGITEK POWER DEFC-1010VT manual programming software"
+  ],
+  "discovered_urls": [
+    "https://ccipower.com/product-category/legacy/?page=7",
+    "https://cdn.itechate.com/uploadfiles/2020/04/202004290925112511.pdf",
+    "https://device.report/m/0f0ad8dbb587c22fe5c2665597b8fbb635845d801ee9aa9da7e35f783b61679e.pdf",
+    "https://device.report/m/1786fd27d424ae14f68e41c61d51621239ad232d934da2df29f982078fd5ef42",
+    "https://device.report/m/f691f5c4c72766983c37c75ee2d9169ffe246a617fe540efa2072230cbe576c5",
+    "https://fatek.seapraha.cz/hlavni-strana/dokumentace/",
+    "https://newtech.pk/download/",
+    "https://nguyenhungvinh.com.vn/upload/product/743988112413-2827.pdf",
+    "https://studyres.com/doc/7811898/programming-manual-for-handheld-programmer-pcdi-10vt-prog",
+    "https://vigitek.biz/wp-content/uploads/pdd-manual-en.pdf",
+    "https://vmclient.zendesk.com/hc/en-ca/articles/12518470882061-PCMS-1210",
+    "https://www.daktronics.com/en-us/support/kb/DD2585808",
+    "https://www.electronics.jtekt.co.jp/jp/download/plc/",
+    "https://www.fatek.com/en/download.php?act=list&cid=178",
+    "https://www.manualslib.com/manual/1895954/Datcon-Dt1010-Series.html",
+    "https://www.powersoft.com/wp-content/uploads/2019/01/powersoft_DigiModIK_uguide_en_v2.3.pdf",
+    "https://www.voltech.com/support/",
+    "https://xn----8sbanh2blw.xn--p1ai/upload/medialibrary/instruction/digitek.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

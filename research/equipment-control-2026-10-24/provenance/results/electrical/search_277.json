@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_277.json",
+  "original_log_sha256": "e7e4a9b742d665353c9eb2eb33dd68a339cd802611585175ca6c46470bed91e4",
+  "original_log_bytes": 30413,
+  "queries": [
+    "HIOKI 3540 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.co.jp/",
+    "https://assets.tequipment.net/assets/1/26/Documents/Hioki/3540e_13.pdf",
+    "https://hiokikorea.com/support/software_search.html",
+    "https://manualzz.com/doc/28256957/hioki-3540---01---02---03-m%CF%89-hitester-instruction-manual",
+    "https://manualzz.com/doc/63897627/hioki-m%CF%89hitester-3540-bcd-3540-01-printer-interface-3540-",
+    "https://www.cedesa.com.mx/pdf/hioki/hioki_3540_user_manual.pdf?var=EBXuP1WRH4",
+    "https://www.hioki.cn/products/3541",
+    "https://www.hioki.co.kr/HIOKI/Product_Program/download/F3540E.pdf",
+    "https://www.hioki.com/download/28323",
+    "https://www.hioki.com/download/30457",
+    "https://www.hioki.com/global/support/download/software",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_609",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n10053",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n9859",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n9860",
+    "https://www.hioki.com/global/support/faq/detail/id_351",
+    "https://www.hioki.com/us-en/support/download/software",
+    "https://www.hioki.com/us-en/support/download/software/versionup/detail/id_160",
+    "https://www.hioki.net.cn/m/products/show_173.html",
+    "https://www.hiokikorea.com/support/software_search.html",
+    "https://www.hiokikorea.com/support/software_search.html?s_string=usb",
+    "https://www.manualslib.com/manual/2111111/Hioki-Hitester-3540.html",
+    "https://www.manualslib.com/manual/2111111/Hioki-Hitester-3540.html?page=23",
+    "https://www.reddit.com/r/AskElectronics/comments/swy2pq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

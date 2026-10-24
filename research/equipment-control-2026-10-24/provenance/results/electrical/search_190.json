@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_190.json",
+  "original_log_sha256": "b1347846562560e99f8802d1c2b54606b847510231fef441bbd8819c4eaf7e61",
+  "original_log_bytes": 32767,
+  "queries": [
+    "DIGITEK POWER DEFC-1003VT manual programming software"
+  ],
+  "discovered_urls": [
+    "http://cloud.edebris.com/index.php/s/AFiJCyKKYpojYYZ",
+    "https://acim.nidec.com/en-us/motors/leroy-somer/downloads/software-and-drawings?sel=t",
+    "https://bama.edebris.com/manuals/bitsavers/pdf/digitek/",
+    "https://cdn.itechate.com/uploadfiles/2020/04/202004290925112511.pdf",
+    "https://derivepower.freshdesk.com/support/solutions/articles/72000573698-11109-program-vehicle-error",
+    "https://device.report/m/0f0ad8dbb587c22fe5c2665597b8fbb635845d801ee9aa9da7e35f783b61679e.pdf",
+    "https://itechate.com/uploadfiles/2019/06/201906211059265926.pdf",
+    "https://itmikro.com.my/wp-content/uploads/2020/08/RX380-User-Manual_v1-3A4-ver.pdf",
+    "https://manualmachine.com/digitek/",
+    "https://manuals.group/results.php?search=DIGITEK",
+    "https://moen.nidec.com/en-US/drives/Downloads",
+    "https://newtech.pk/download-software-manuals/",
+    "https://suporte.firetron.com.br/home/linha/5",
+    "https://www.advateklighting.com/en-us/downloads/software",
+    "https://www.deditec.de/en/downloads/software/",
+    "https://www.electronics.jtekt.co.jp/jp/support/",
+    "https://www.fatek.com/en/download.php?act=list&cid=178",
+    "https://www.powersoft.com/wp-content/uploads/2019/01/powersoft_DigiModIK_uguide_en_v2.3.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

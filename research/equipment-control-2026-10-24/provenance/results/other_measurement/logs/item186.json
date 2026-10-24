@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item186.json",
+  "original_log_sha256": "7fb64f9b7f2d05a2f840872f3fcf80c878018a0b0bee39890d46303eecc1388d",
+  "original_log_bytes": 17977,
+  "queries": [
+    "BOSCH \"GLM80\" software interface manual",
+    "site:github.com \"GLM80\" BOSCH"
+  ],
+  "discovered_urls": [
+    "https://device.report/manual/8169756",
+    "https://fgeo.ru/upload/iblock/288/0k00fmzf78kk43hi2r22x2ckod4eudiu/Svidetelstvo-i-opisanie-tipa-sredstv-izmereniy-Bosch-GLM50_-GLM80.pdf",
+    "https://geo-laser.com.ua/ua/lasernye-ruletki-dalnomery/glm-80",
+    "https://manuals.plus/bosch/glm80-professional-laser-distance-meter-manual",
+    "https://manuals.plus/m/bf12ec231c95e9193bcae1fe7505927dbdf5aa5e662f33372c8e69347afe43db",
+    "https://manualsee.com/blog/1L1Lh79L3.html",
+    "https://www.boschtools.com/us/en/ocsmedia/GLM80_GLM80R60.pdf",
+    "https://www.koiss.co.kr/bbs-2/?vid=350",
+    "https://www.manualslib.com/guide/3614442/bosch-glm80-glm80-r60-manual.html",
+    "https://www.manualslib.com/manual/3516011/Bosch-3-601-K72-310.html",
+    "https://www.manualslib.com/products/Bosch-Glm-80-Professional-4205862.html",
+    "https://www.manualslib.es/guide/953147/manual-de-bosch-glm80-glm80-r60.html",
+    "https://www.manualslib.es/manual/802564/Bosch-Glm80-Plus-R60.html?page=15",
+    "https://www.mediaexpert.pl/lp%2Cinstrukcje-obslugi/bosch/dalmierze-laserowe"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

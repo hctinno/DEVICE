@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_222.json",
+  "original_log_sha256": "0da59601928cb4b59e5ca2985d4870a2088d5b62a420a1969b24f1279d338b64",
+  "original_log_bytes": 26680,
+  "queries": [
+    "HIOKI ST5540 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://_dmarc.hiokikorea.com/product/product_view.html?c_id=A007001&p_no=113",
+    "https://hioki.tw/product-detail.php?id=282",
+    "https://hioki.tw/software-detail.php?id=175",
+    "https://hiokikorea.com/product/product_view.html?c_id=A007001&p_no=113",
+    "https://www.hioki.cn/products/st5540",
+    "https://www.hioki.com/download/30678",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n1265655",
+    "https://www.hioki.com/id-id/support/download/software/versionup/detail/id_n9730",
+    "https://www.hioki.com/in-en/products/electrical-safety-testers/leakage/id_5916",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n1265655",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n9730",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A007001&p_no=113&s_tab=tab3",
+    "https://www.hiokikorea.com/support/software_agree.html?c_id=A007001&fullpath=download%2F392_s&p_no=113",
+    "https://www.itm.com/pdfs/cache/www.itm.com/st5540/manual/st5540-manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

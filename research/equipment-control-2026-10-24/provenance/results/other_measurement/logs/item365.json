@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item365.json",
+  "original_log_sha256": "14840cb4463db565fc8991691eac350c814b287d83a1e9edb6516c4b950985e3",
+  "original_log_bytes": 15387,
+  "queries": [
+    "AND \"FX-200i\" software interface manual",
+    "site:github.com \"FX-200i\" AND"
+  ],
+  "discovered_urls": [
+    "https://deon0hlc66wzg.cloudfront.net/images/fx-300i_manual.pdf?v=3958208930",
+    "https://manualsdump.com/en/manuals/a-and-d-fx-120i-fx-200i-fx-300i-fx1200i-fx2000i-fx3000i/250680/10",
+    "https://manualsdump.com/en/manuals/a-and-d-fx-120i-fx-200i-fx-300i-fx1200i-fx2000i-fx3000i/250680/4",
+    "https://manualzz.com/doc/1440249/aandd-fx-200i-instruction-manual",
+    "https://manuzoid.com/manuals/PmNnP-A%26D%20FX-120i%20FX-200i%20FX-300i%20FX1200i%20FX2000i%20FX3000i%20User%20manual",
+    "https://sc-journal.com/device/a-d/fx-200i/",
+    "https://weighing.andonline.com/product/fzfx-series-precision-balances-fx-200i/",
+    "https://weighing.andprecision.com/wp-content/uploads/2017/04/FX-i_FZ-i_Manual_-_English.pdf",
+    "https://www.aandd.jp/products/weighing/multilingual_brochure/english/wide_selection_english.pdf",
+    "https://www.and-store.com/products/balances/details/?productid=3652",
+    "https://www.andweighing.com.au/wp-content/uploads/manuals/fx-i.pdf",
+    "https://www.dataweigh.com/media/11550/fx-i-im.pdf",
+    "https://www.getmaintainx.com/assets/and-d-company/precision-balance-fx-200i",
+    "https://www.manualslib.com/manual/3921565/AAndd-Fx-500i.html",
+    "https://www.manualslib.com/manual/3921566/AAndd-Fx-5000i.html",
+    "https://www.manualslib.com/manual/598319/AAndd-Fx-200i.html",
+    "https://www.manualslib.com/products/AAndd-Fx-200i-2753629.html",
+    "https://www.sissac.com/wp-content/uploads/2018/11/m_ad_fxi_precision_series_op.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

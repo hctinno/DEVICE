@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_323.json",
+  "original_log_sha256": "5f53b580d5b39e85fab42b8067959b43262c65628a9c2a867b0bbf8ca6246425",
+  "original_log_bytes": 30076,
+  "queries": [
+    "YOKOGAWA 2531A manual programming software"
+  ],
+  "discovered_urls": [
+    "http://tmi.yokogawa.com/",
+    "https://cdn.tmi.yokogawa.com/1/6346/files/IM253734-61E.pdf",
+    "https://dataseoul.s3.ap-northeast-2.amazonaws.com/upload/S20210402095af0afb82fb/42359e4efd4c2.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJZQOKHMYYDTTJAFA%2F20260611%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20260611T064634Z&X-Amz-Expires=60&X-Amz-Signature=f8fcfc86d1370d7510e61c30395e768b0954f0812878ddacc2328389115d12f8&X-Amz-SignedHeaders=host&response-cache-control=private%2C+no-store%2C+max-age%3D0&response-content-disposition=attachment%3B+filename%3D%222553A_User_Manual.pdf%22%3B+filename%2A%3DUTF-8%27%272553A_User_Manual.pdf&response-content-type=application%2Fpdf&response-expires=1997-07-28T05%3A00%3A00Z",
+    "https://docs.ampnuts.ru/eevblog.docs/Yokogawa/2534_Digital_Power_Meter/Yokogawa_2534_User_Manual.pdf",
+    "https://geniuss.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMTA0MTQ3NjYzODBlZmVkNzdhIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjExMDIwZmE0MTMzZWQxZGQxMCI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDIxMTAyMDU5OGE5NzRiNGVjZmUiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjZhMTY3ZjJiZDlhYzAiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://web-material3.yokogawa.com/2/11148/files/LIM6210YK_D.pdf",
+    "https://www.artisantg.com/info/Yokogawa_253313_Manual_201746123357.pdf",
+    "https://www.koreayokogawa.com/support/download2.php",
+    "https://www.manualslib.com/manual/1268698/Yokogawa-Up35a.html?page=5",
+    "https://www.manualzz.com/doc/o/2aqp9d/yokogawa-2553a-user-manual-chapter-10-programming-overview",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1ik88ek",
+    "https://www.reddit.com/r/instrumentation/comments/1jvap24",
+    "https://www.yokogawa.co.jp/library/resources/faqs/ns-faq-ut-20031-spec/",
+    "https://www.yokogawa.co.jp/library/resources/faqs/ns-faq-ut-20053-setting/",
+    "https://www.yokogawa.co.jp/library/resources/faqs/ns-faq-ut-20063-setting/",
+    "https://www.yokogawa.co.jp/library/resources/faqs/ns-faq-ut-2037-program-ja/",
+    "https://www.yokogawa.co.jp/library/search/",
+    "https://www.yokogawa.co.jp/solutions/products-and-services/control/control-devices/configuration-tools/ll50a/",
+    "https://www.yokogawa.co.jp/solutions/products-and-services/control/control-devices/program-controllers/up55a/",
+    "https://www.yokogawa.com/solutions/products-and-services/control/control-devices/configuration-tools/ll50a/",
+    "https://yokogawaelectric.org/solutions/products-and-services/control/control-devices/configuration-tools/ll50a/index.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

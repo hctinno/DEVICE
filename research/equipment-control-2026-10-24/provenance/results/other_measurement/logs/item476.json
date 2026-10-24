@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item476.json",
+  "original_log_sha256": "e879e14eb984a09757fbd76c19e9d3c8b2880e9fec8442fa939b64f1915940ae",
+  "original_log_bytes": 17258,
+  "queries": [
+    "National Instruments \"PCI-4461\" software interface manual",
+    "site:github.com \"PCI-4461\" National Instruments"
+  ],
+  "discovered_urls": [
+    "https://au.mathworks.com/hardware-support/nidaqmx.html",
+    "https://docs-be.ni.com/bundle/371235h/raw/resource/enus/371235h.pdf?save_local=true",
+    "https://docs-be.ni.com/bundle/ni-4461-4462-specs/raw/resource/enus/373770k.pdf",
+    "https://gist.github.com/jwmoss/e7d5860e4316853c84f54bd996f75fc4",
+    "https://github.com/FOSSEE-Internship/NIDAQ-toolbox-in-Scilab/blob/master/Documentation",
+    "https://knowledge.ni.com/KnowledgeArticleDetails?id=kA00Z000000P8eUSAS&l=en-US",
+    "https://knowledge.ni.com/KnowledgeArticleDetails?id=kA03q000001EABPCA4&l=en-US",
+    "https://opal-rt.atlassian.net/wiki/spaces/PRD/pages/143758052/DAQmx%2BNI%2BPCI-4461%2Bdriver",
+    "https://reklab.lab.mcgill.ca/manual/Common/Data_Acquisition/daq/NI_4472_User_Manual_Post_Rev_E.pdf",
+    "https://www.apexwaves.com/modular-systems/national-instruments/dsa-devices/779307-01",
+    "https://www.apexwaves.com/modular-systems/national-instruments/dsa-devices/PCI-4461",
+    "https://www.farnell.com/datasheets/3750645.pdf",
+    "https://www.manualslib.com/manual/1658622/Gras-90ca.html?page=14",
+    "https://www.manualslib.com/manual/3867351/National-Instruments-Pci-4461.html",
+    "https://www.mathworks.com/hardware-support/nidaqmx.html",
+    "https://www.ni.com/en-sg/support/model.pci-4461.html",
+    "https://www.ni.com/pdf/manuals/374768p.html",
+    "https://www.reklab.lab.mcgill.ca/manual/Common/Data_Acquisition/daq/NI_4472_User_Manual_Post_Rev_E.pdf",
+    "https://www.scribd.com/document/758867241/pcipxipxieusb-443x44614462449x-dynamic-signal-acquisition-feature-usage-11-14-2023"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_186.json",
+  "original_log_sha256": "6c55fdf7b336718e63ac350a1369779b955d1021a2ff182c8a777a05629e89ab",
+  "original_log_bytes": 29959,
+  "queries": [
+    "주식회사 서현테크놀로지 PS-XSN-100 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://en.hinson-xs.com/Download.html",
+    "https://newsk.net/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMzA5MDQ3ZjEyOTFhMzk0ZjA2IjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjUwNzI3OGJmYzQzMDVmZTNjOCI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDI1MDcyNzIwZjMxN2ZhMjk5YzUiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjZhMGE5Y2YxZWFkOWUiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://sol.ls-electric.com/uploads/document/16401476693850/S100_User%2BManual%28Simple%29_KR_V3.0_211020.pdf",
+    "https://topconsokkia.co.kr/default/1004web/dd/d01.php",
+    "https://www.fujielectric.co.kr/board/board_view?code=download&no=99",
+    "https://www.hnsts.co.kr/Community/FAQ",
+    "https://www.hnsts.co.kr/ReferenceRoom/TechNoteView/8",
+    "https://www.keysight.com/kr/ko/support/software-download-center.html?q=SN100JNEA",
+    "https://www.m2i.co.kr/uploaded/network_old/NX%20PX%20UX100%20RT9%20NP100%20NP200%20Series_PC%20Link%20Driver.pdf",
+    "https://www.novantaims.com/download/mdrive-mcode/?refresh=697211169ba531769083158&wpdmdl=33374",
+    "https://www.senanetworks.co.kr/download/manual/manual_ps_x10_kr-v1.4.0.pdf",
+    "https://www.sollae.co.kr/ko/download/pds_files/ezu100ko.pdf",
+    "https://www.tek.com/ko/support/datasheets-manuals-software-downloads?field_manual_type_target_id=&field_software_type_target_id=&model=DPO77002SX&page=0%2C0%2C0%2C0%2C2%2C0%2C0%2C0%2C0%2C0&page=1%2C0%2C0%2C0%2C8%2C0%2C0%2C2%2C0%2C0",
+    "https://www.tek.com/ko/support/datasheets-manuals-software-downloads?model=DPO73304SX",
+    "https://www.tek.com/ko/support/datasheets-manuals-software-downloads?series=EA-PSI+10000+%EC%8B%9C%EB%A6%AC%EC%A6%88+%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EB%B8%94+%ED%8C%8C%EC%9B%8C+%EC%84%9C%ED%94%8C%EB%9D%BC%EC%9D%B4&type=manual",
+    "https://www.wouxun.com/guide/software.aspx",
+    "https://www.zhaoxinpower.com/support/download/",
+    "https://www.zhaoxinpower.com/support/download/lists_60_4.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

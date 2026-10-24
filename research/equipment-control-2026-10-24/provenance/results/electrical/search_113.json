@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_113.json",
+  "original_log_sha256": "b460fb1d0ffb969747d6878bb005f5e3bded3cc36618a97ab06a52848775af07",
+  "original_log_bytes": 26776,
+  "queries": [
+    "KIKUSUI PLZ664WA manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/e627ca24f865abb20d78900566fb4e33c9ff8a21bb0ee3f832569918623f7d40.pdf",
+    "https://global.kikusui.co.jp/",
+    "https://kikusui-europe.com/download-service/",
+    "https://kikusui-europe.com/kd/pm_el/page/2/",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_4WL_M.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_4W_M.pdf",
+    "https://kikusui.co.jp/download/cat-plz164w/",
+    "https://kikusui.co.jp/spec/plz-4w_sequence_function/",
+    "https://kikusui.co.jp/w2-2/discon/plz664wa/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/dri-fir-upd/plz-ap/",
+    "https://manualzz.com/doc/o/ql7du/technical-note-for-the-electronic-load--plz-4w--chapter-1-general-information",
+    "https://ph.kikusui.co.jp/spec/plz-4w_others-common-specifications/",
+    "https://sc-journal.com/device/kikusui/plz-4w-series/",
+    "https://sg.kikusui.co.jp/spec/plz-4w_switching-mode/",
+    "https://www.es-france.com/img/cms/Catalogues/kikusui-proCat_en-ES.pdf",
+    "https://www.es-france.com/img/cms/Catalogues/kikusui-proCat_en-ES.pdf?srsltid=AfmBOopvYzNma6_qgym3Vw6yi1i7dCCezy0flTB9l6uqev5vz1ANRFD9",
+    "https://www.kdk.co.kr/goods/goods_view.php?goodsNo=1000000946",
+    "https://www.manualslib.com/manual/1787317/Kikusui-Plz-4w-Series.html",
+    "https://www.wintest.co.in/pdf-file/electronic-load/plz-4w.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

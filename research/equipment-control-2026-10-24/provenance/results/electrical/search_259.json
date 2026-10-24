@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_259.json",
+  "original_log_sha256": "ebe145fd7325a0da64c7b531ac16ad846e07b41359a881023e178fbc141b4c32",
+  "original_log_bytes": 27953,
+  "queries": [
+    "ESPEC VAC-301P manual programming software"
+  ],
+  "discovered_urls": [
+    "https://2026.espec.com/na/support/software",
+    "https://2026.espec.com/na/support/web_controller",
+    "https://asiavacuumpumps.com/download/Article/vacuum_aven/vac.pdf",
+    "https://doczz.net/doc/8480096/vacuum-oven",
+    "https://emin.asia/especvac-301p-espec-vac-301p-vacuum-oven-40-200-933x102-1x102-pa-512l-85994/pr.html",
+    "https://espec.com/na/support/software",
+    "https://espec.com/na/support/web_controller",
+    "https://www.espec-vn.co/en/product/env-test/vac",
+    "https://www.espec.co.jp/english/inquiry/catalog/vac.pdf",
+    "https://www.espec.co.jp/english/products/book/vac/seo/0011.html",
+    "https://www.espec.co.jp/english/products/catalog/vac.pdf",
+    "https://www.espec.co.jp/english/products/env-test/vac/",
+    "https://www.espec.co.jp/products/book/vac/seo/0004.html",
+    "https://www.espec.co.jp/products/env-test/vac/",
+    "https://www.orange-book.com/ja/c/products/index.html?itemCd=VAC301P+++++++++++++++++++++++4150"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

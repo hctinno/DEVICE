@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_062.json",
+  "original_log_sha256": "6f538cdd3258200c137c7870ef7de109692c7f61dbd443e3991c9021680de6f4",
+  "original_log_bytes": 30584,
+  "queries": [
+    "YOKOGAWA WT5000-HE-F manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/1/10577/files/IMWT5000-00EN.pdf",
+    "https://cdn.tmi.yokogawa.com/1/8198/files/LFWT5000-01EN.pdf",
+    "https://cdn.tmi.yokogawa.com/1/8225/files/IMD024-01EN.pdf",
+    "https://d2hygkxra9zhs6.cloudfront.net/1/7115/files/IMWT5000-03EN.pdf",
+    "https://koreayokogawa.com/product/product-detail.php?idx=119",
+    "https://koreayokogawa.com/product/product-detail.php?idx=184",
+    "https://koreayokogawa.com/support/download.php?boardid=download&idx=24&mNum=3&mode=view&sNum=2",
+    "https://manualzz.com/doc/60170496/yokogawa-wt5000-user-manual",
+    "https://tmi.yokogawa.com/bx/solutions/products/power-analyzers/wt5000/",
+    "https://tmi.yokogawa.com/library/",
+    "https://tmi.yokogawa.com/solutions/products/power-analyzers/wt5000/",
+    "https://web-material3.yokogawa.com/23/19851/file_name/BUWT5000-01EN.pdf",
+    "https://www.koreayokogawa.com/product/product-detail.php?idx=119",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&idx=24&mode=view&offset=100&sk=&sw=",
+    "https://www.manualslib.com/manual/2855401/Yokogawa-Wt5000.html?page=26",
+    "https://www.manualslib.com/manual/4045221/Yokogawa-Wt5000.html",
+    "https://www.manualzz.com/doc/60170496/yokogawa-wt5000-user-manual",
+    "https://www.transcat.ca/media/pdf/yokogawa-wt5000-getting-started-guide.pdf",
+    "https://www.yokogawa.com/ymi/support/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

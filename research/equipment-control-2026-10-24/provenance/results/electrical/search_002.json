@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_002.json",
+  "original_log_sha256": "0f3745d4286ea53b50c39e9efa330d82e0fa156d90925bb88cc3a3b10fb6afa1",
+  "original_log_bytes": 30731,
+  "queries": [
+    "CHROMA 61860 programming communication driver software GitHub"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Chroma_63600_Series_-_Manual_V2.2.pdf",
+    "https://assets.testequity.com/te1/Documents/pdf/chroma-test-measurement-catalog.pdf",
+    "https://github-wiki-see.page/m/OpenEPaperLink/OpenEPaperLink/wiki/Chroma-Series-SubGhz-Tags",
+    "https://github.com/hyperb1iss/hypercolor/blob/main/docs/specs/17-razer-protocol-driver.md",
+    "https://github.com/hyperb1iss/uchroma",
+    "https://github.com/hyperb1iss/uchroma.git",
+    "https://github.com/hyperbliss/uchroma.git",
+    "https://github.com/mitsh/razer_blackwidow_chroma_driver",
+    "https://openrazer.github.io/",
+    "https://srclog.com/uchroma",
+    "https://www.atecorp.com/getmedia/24f81f02-3387-40eb-8348-fd707932e419/chroma-61800-regenerative-grid-simulator-series_1.pdf",
+    "https://www.chroma.com.cn/en/data_center/61800_series_regenerative_grid_simulator",
+    "https://www.chroma.com.cn/en/data_center/driver",
+    "https://www.chromaate.com/jp/data_center/driver",
+    "https://www.chromaate.com/kr/data_center/driver",
+    "https://www.finaltest.com.mx/v/vspfiles/assets/datasheet/Chroma-61830-HB-1_DE.pdf",
+    "https://www.hi1718.com/product/201921103032481.html",
+    "https://www.transcat.ca/media/pdf/Chroma-61860-Data-Sheet.pdf",
+    "https://www.yiqifuwu.com/manual/1767.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

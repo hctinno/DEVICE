@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open032.json",
+  "original_log_sha256": "970a4b365bd802ab408706816696bb65f40459e0b7407cb269779afb857ae2ff",
+  "original_log_bytes": 20868,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.manualslib.com/manual/3692499/Rohde-And-Schwarz-RAnds-Cbt.html?page=407"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

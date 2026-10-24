@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item478.json",
+  "original_log_sha256": "ed04b0919aba032b23f16baf39298bd00c5ae42c66da1d243fd401b170739862",
+  "original_log_bytes": 12515,
+  "queries": [
+    "MicroPioneer \"XRF-2000L\" software interface manual",
+    "site:github.com \"XRF-2000L\" MicroPioneer"
+  ],
+  "discovered_urls": [
+    "https://china.guidechem.com/trade/pdetail6974440.html",
+    "https://china.guidechem.com/trade/pdetail6978749.html",
+    "https://china.guidechem.com/trade/pdetail6981588.html",
+    "https://fcc.report/FCC-ID/V2R-BT100NC/2549359.pdf",
+    "https://img2.tradewheel.com/uploads/company/brochure/941890/632836b8cf550-attachment.pdf",
+    "https://manuals.plus/m/9530d37fa06a10ee3ac61e3324f4c01245bd1abc87358d56c1b5d610b125a179",
+    "https://stock.ttech.vn/may-x-ray-do-chieu-day-lop-ma-xrf-2000r-xrf-2000l-xrf-2000h-xrf-2000pcb-micro-pioneer-p12296",
+    "https://stock.ttech.vn/may-x-ray-phan-tich-vat-lieu-xrf-2000r-xrf-2000l-xrf-2000h-xrf-2000pcb-micro-pioneer-p12295",
+    "https://thietbiantoanbucxa.com/mobile/dich-vu-an-toan-buc-xa/356/nhap-khau-cung-cap-may-phan-tich-thanh-phan-doc-hai-trong-san-pham-xrf/index.html",
+    "https://www.daara.co.kr/sell/s_view.php?no=918048",
+    "https://www.gys.cn/qtshiyanyiqizhuangz/1538031330.html",
+    "https://www.hi1718.com/product/20127279317521.html",
+    "https://www.micropioneer.com/contents/prod/prod_01.html?sm=2_1",
+    "https://www.micropioneer.com/en/contents/prod/prod_01.html?sm=2_1",
+    "https://www.shangluo.gov.cn/_mediafile/hjj/uploadfile/20200818/1597744005102153.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

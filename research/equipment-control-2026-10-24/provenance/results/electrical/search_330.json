@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_330.json",
+  "original_log_sha256": "1cfef44c08577ce7dc98abd781cb73894fc74bf2eba4d5f8e3dd9f0b015d8005",
+  "original_log_bytes": 28069,
+  "queries": [
+    "Tektronix TDS784A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://download.tek.com/manual/070899004.pdf",
+    "https://download.tek.com/manual/070899102.pdf",
+    "https://download.tek.com/manual/070899203.pdf",
+    "https://download.tek.com/manual/070987600.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://manualsdump.com/en/manuals/tektronix-744a-784a-684a/154306/166",
+    "https://manualsdump.com/en/manuals/tektronix-744a-784a-684a/154306/167",
+    "https://manualzz.com/doc/2984855/tektronix-tds-684a--tds-744a--tds-784a-digitizing-oscillo",
+    "https://w140.com/tekwiki/wiki/7834",
+    "https://www.lost-manuals.com/pdf/tektronix--tds-784a--service--ID9939.pdf",
+    "https://www.metrologymanuals.com/documents/sha-153a90a5af16839d924eb3ffb8ca8d02d7c1606c7af3963ef9d1e343216e9bbe/user-manual-for-tds-684a-tds-744a-and-tds-784a-digitizing-oscilloscopes/",
+    "https://www.metrologymanuals.com/documents/sha-e9a7145db3a0692f0ca5e83db92d95e8434c86681c90b32f238e7dea5b53b367/tektronix-tds-family-digitizing-oscilloscopes-programmer-manual/",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Oscilloscopes&model=Tektronix-TDS784A&productID=90C4E5EAFB03CABD1349567541358D8A&type=Test-Equipment-Sales",
+    "https://www.opweb.de/pdf/tektronix--tds-784a--user--ID4519.pdf",
+    "https://www.reddit.com/r/AskElectronics/comments/1tmb6ix/recherche_de_panne_sur_oscilloscope/",
+    "https://www.reddit.com/r/AskElectronics/comments/lpy7c9",
+    "https://www.reddit.com/r/VintageElectronics/comments/1ww3hxz/tektronix_tds784_advice/",
+    "https://www.reddit.com/r/oscilloscope/comments/1ubdrwq/anyone_have_the_manual_for_a_dpu_411_type_ii/",
+    "https://www.reddit.com/r/oscilloscope/comments/1wvemx1/tektronix_tds784_advice/",
+    "https://www.tek.com/de/manual/tds-family-programmer-070970200",
+    "https://www.tek.com/de/oscilloscope/tds684a-manual/tds684a-tds744a-tds784a-reference",
+    "https://www.tek.com/en/manual/tds-family-programmer-070970200",
+    "https://www.tek.com/en/oscilloscope/tds684a-manual/tds684a-tds744-tds784a-user-manual",
+    "https://www.tek.com/en/oscilloscope/tds684a-manual/tds684a-tds744a-tds784a-reference",
+    "https://www.tek.com/vn/support/datasheets-manuals-software-downloads?model=tds754a"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

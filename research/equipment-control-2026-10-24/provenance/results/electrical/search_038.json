@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_038.json",
+  "original_log_sha256": "d526a861c650d7bd231ecf9cbba322491191947c2dd0f66d4d0b3a297a7f050b",
+  "original_log_bytes": 34675,
+  "queries": [
+    "FLUKE 88-V manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.fluke.com/manuals/88v_____umeng0000.pdf",
+    "https://assets.fluke.com/manuals/88v_____umspa0100.pdf",
+    "https://mans.io/files/viewer/1282804/35",
+    "https://manualmachine.com/fluke/88vakit/27433072-user-manual/",
+    "https://manualsfile.com/product/k495fbuv7ip.html",
+    "https://manualzz.com/doc/23839217/fluke-88-v-automotive-multimeter-users-manual",
+    "https://sc-journal.com/device/fluke/88-v/",
+    "https://www.fluke.com/en-us/product/electrical-testing/digital-multimeters/fluke-88v",
+    "https://www.instrumart.com/assets/Fluke-88V-Manual.pdf",
+    "https://www.manualslib.com/manual/452562/Fluke-88-V.html",
+    "https://www.manualslib.com/manual/452562/Fluke-88-V.html?page=41",
+    "https://www.manualslib.com/manual/786314/Fluke-88-V.html",
+    "https://www.manualslib.de/manual/359952/Fluke-88-V.html",
+    "https://www.myflukestore.com/pdfs/cache/www.myflukestore.com/88-5/manual/88-5-manual.pdf",
+    "https://www.notice-facile.com/en/manual/1609579/fluke%2B88v-a",
+    "https://www.opweb.de/en/manufacturer/fluke/88-v",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/fluke/comments/1vryjz8/fluke_88v_automotive/",
+    "https://www.reddit.com/r/networking/comments/fku5dq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

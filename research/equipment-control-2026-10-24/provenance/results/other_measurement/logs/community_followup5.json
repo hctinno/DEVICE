@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup5.json",
+  "original_log_sha256": "cfd09008049d06334496600a51bf2a6e1a96c7cd22409343905901bc08971908",
+  "original_log_bytes": 363,
+  "queries": [
+    "site:github.com \"FD-WOFD 25A\" \"FLOWDigital\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

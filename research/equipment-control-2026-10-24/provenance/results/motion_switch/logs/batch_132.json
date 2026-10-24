@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_132.json",
+  "original_log_sha256": "535800762bae3528f7d48c4b013e256f1dd7e11da45ea42218935c0a143871de",
+  "original_log_bytes": 22106,
+  "queries": [
+    "INNCO Systems \"MA4640/800-XP-EP\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FBSR-06B (1G HPF+LNA)\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FBSR-06B (3G HPF+LNA)\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FBSR-06B (6G HPF+LNA)\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/4256a941c86e29734ca3408b9d7106f067a477020737017f8fa7290ac75e7a59",
+    "https://device.report/m/962fadb2884b0a1ba7786a1fda22ea03a28914b5c5a89f1f0beb4aa019a05b22",
+    "https://device.report/m/e403881cd91193490580886cb2c64f289e5b2e10b0632ab133fcfe56287b6b3f",
+    "https://device.report/m/f0bac34fa5baa99d42a94b8f61997954ca5efeca097ff8d238d070e706cad135",
+    "https://device.report/m/f5ee57a272bdce4366a1664e1b822244c0674ca591488396e2d96c2e6e0d139e_pdf",
+    "https://fcc.report/FCC-ID/2AS8LLSM110A/5937647.pdf",
+    "https://fcc.report/FCC-ID/bejiaglnht1/5606451.pdf",
+    "https://fccid.io/A3LSMG781U/Test-Report/Test-Report-20200827-v1-SM-G781U-WPT-TEST-REPORT-4901284.pdf",
+    "https://fccid.io/m/d63489997c0eb3bf80c4a2f76b56ada176042336adbd336f4f434b11e4c6da64.pdf",
+    "https://manuals.plus/m/100a076554d5117ae1d29ad9f1ae9d20148314de5d7259df9e0c905a6808fac6.pdf",
+    "https://manuals.plus/m/4790826575581237805b4da14fa2e442371bc112f85af69d4c18759a3c9a917f",
+    "https://manuals.plus/m/4b66059c17338fae0a6aebb8ed624ddff86ca1881e9b41d02e71646faf35ae22",
+    "https://manuals.plus/m/6860d2feba1eafb2251a0b7c11f158cee99f798f776cc559be9676c9183ad48f",
+    "https://manuals.plus/m/6e4653230ce53d15f0066f5d1ae25fe3092598c45422b17b84644ff431880630.pdf",
+    "https://manuals.plus/m/9ae89d378196b299eb0c8a62b75935e9e7ab5fc15bc792314c8032c1aacdf4b2",
+    "https://manuals.plus/m/c361205fd0e969054b11dc2eb771c2f8393e4c16eeef9930794a94b9a80edba1",
+    "https://manuals.plus/m/d72f539a8de65b45a4b59c083a909225bd7fb361a6a234f64b4c2388f10686ab",
+    "https://manuals.plus/m/e5f2b1ac1566a34f08f16a8bd8b045400a0098036dfc51a7edb74fb49e93fc89"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

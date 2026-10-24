@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_210.json",
+  "original_log_sha256": "bad813e332ed5f61737570589a412a48f8f439a38c44908853697e6ba133205e",
+  "original_log_bytes": 28514,
+  "queries": [
+    "CNS CNS-B01300 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://acs-sandbox.mybigcommerce.com/radio-programming/",
+    "https://cyclesandsleds.com/pages/cns-flash",
+    "https://docs.cognex.com/cns_300/web/EN/cns/Content/Topics/getting-started-cns.htm?TocPath=Getting+Started%7C_____0",
+    "https://docs.cognex.com/isvs_2610/web/EN/Help_ISVS/Content/Topics/utilities/configure-secure-connection-install-sw.htm",
+    "https://en.hinson-xs.com/Download_detailed/1.html",
+    "https://en.hinson-xs.com/Download_detailed/208.html",
+    "https://en.hinson-xs.com/Download_list/1703963955544875008-56-8.html",
+    "https://en.hinson-xs.com/Download_list/1791358121829277696-32-8.html",
+    "https://en.hinson-xs.com/Download_list/1791358121829277696-32-8.html?gtm_latency=1",
+    "https://en.hinson-xs.com/product_detail/45.html",
+    "https://www.companics.co.il/wp-content/uploads/cns-70mn-manual.pdf",
+    "https://www.dinacell.com/wp-content/documentation/manuals/cns/D1954-04%20%28EN%29.pdf",
+    "https://www.electronicsandbooks.com/edt/manual/Hardware/C/CNS%20Systems%20www.cnssys.com/CnsClockIIManual%20c20060411%20%5B113%5D.pdf",
+    "https://www.hinson-xs.com/Download_detailed/1.html",
+    "https://www.mroelectric.com/static/app/product/pdfs/CPS-18FB.pdf",
+    "https://www.scribd.com/document/816394784/CNS-FINAL-LAB-MANUAL"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

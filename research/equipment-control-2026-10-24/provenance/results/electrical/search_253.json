@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_253.json",
+  "original_log_sha256": "23d0dcc783b21b741a91590462b212e2c3be4ea33551130be522cab6010ef29e",
+  "original_log_bytes": 28726,
+  "queries": [
+    "HIOKI 3561 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.co.jp/",
+    "http://www.microsoft.com/en-us/download/details.aspx?id=91",
+    "https://assets.tequipment.net/assets/1/26/Documents/Hioki/3561.3561-01e_01.pdf",
+    "https://hiokikorea.com/support/win7.html?S89Em0KU0T=OmF9yo6",
+    "https://hiokikorea.com/support/win8.html",
+    "https://manualzz.com/doc/o/29zg12/hioki-battery-hitester-3561-3561-01-instruction-manual-hitester",
+    "https://www.gmciuk.com/manuals/hioki-3561_manual_417214.pdf",
+    "https://www.hioki.cn/products/3561",
+    "https://www.hioki.co.kr/HIOKI/Product_Program/download/3561.pdf",
+    "https://www.hioki.com/download/30541",
+    "https://www.hioki.com/euro-en/products/resistance-meters/battery/id_5877",
+    "https://www.hioki.com/global/products/resistance-meters/battery/id_5877",
+    "https://www.hioki.com/global/support/download/software",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_162",
+    "https://www.hioki.com/in-en/support/download/software/versionup/detail/id_593",
+    "https://www.hioki.com/us-en/products/resistance-meters/battery/id_5877",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A005002&p_no=70",
+    "https://www.manualslib.com/manual/1295235/Hioki-3561.html",
+    "https://www.reddit.com/r/AskElectronics/comments/swy2pq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

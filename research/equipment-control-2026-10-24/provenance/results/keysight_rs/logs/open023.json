@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open023.json",
+  "original_log_sha256": "cd6b809ed8643aeeafcf77a3d518c899b9c4c73db37e821a7efb186eb80ee534",
+  "original_log_bytes": 550,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.keysight.com/us/en/assets/9018-04839/programming-guides/9018-04839.pdf",
+    "https://www.keysight.com/us/en/assets/9018-04839/programming-guides/9018-04839.pdf:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

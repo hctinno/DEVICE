@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/classification.json",
+  "original_log_sha256": "f5cc720dde430df690e3c3ca05df824dfbf791a4b17616ed986c2661ede7bc7c",
+  "original_log_bytes": 2989,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

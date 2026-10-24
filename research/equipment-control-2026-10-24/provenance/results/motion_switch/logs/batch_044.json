@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_044.json",
+  "original_log_sha256": "76a7a5c75ad79eb21c3f374ebd40ca36313b4318834cf644cf4994e7f0f2618d",
+  "original_log_bytes": 448,
+  "queries": [
+    "HCT \"HRSMS#3(1G HPF+LNA)\" manual programming driver API GitHub",
+    "HCT \"HRSMS#3(3G HPF+LNA)\" manual programming driver API GitHub",
+    "HCT \"HRSMS#3(7G HPF+LNA)\" manual programming driver API GitHub",
+    "HCT \"HRSMS#3(THRU+LNA)\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

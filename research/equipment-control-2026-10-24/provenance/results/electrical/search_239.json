@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_239.json",
+  "original_log_sha256": "c919a3f0372b418b6d191f3de2d9f6d39b08da9b7c5073debe05f2f45e6e866d",
+  "original_log_bytes": 31083,
+  "queries": [
+    "FLUKE 15B+ manual programming software"
+  ],
+  "discovered_urls": [
+    "http://register.fluke.com",
+    "http://us.fluke.com/usen/support/manuals",
+    "https://assets.fluke.com/manuals/151718__umeng0000.pdf",
+    "https://assets.testequity.com/te1/Documents/pdf/fluke/Fluke_151718_umeng0100_User_Manual_0624.pdf",
+    "https://m.enari.com.my/index.php?products_id=3181403&ws=showproducts",
+    "https://manuals.plus/m/4d133af7ad8b0f82cfb028d31631185564d944a579105b3aaefb1ae77d459ae9",
+    "https://manuals.plus/m/a08f426e25e8a61fffb82858b58684bd6f896eebc1a4ddb161c5e78a7e553a5f",
+    "https://manuals.plus/m/ec978711f311b5d7a5a14cd834c159f3440a1ce8e8b14b4c832b93070cb54cb3",
+    "https://manualsfile.com/product/k3gag9a1na1.html",
+    "https://media.fluke.com/3f2fb355-d6f4-410f-bbdc-b2d9006d880e_original%20file.pdf",
+    "https://my.fluke.com/en-US/support-request",
+    "https://pim-resources.coleparmer.com/instruction-manual/17785-13-14-15b-17b-digital-multimeters-manual.pdf",
+    "https://www.enari.com.my/index.php?products_id=3181403&ws=showproducts",
+    "https://www.fluke.com/en-gb/product/electrical-testing/digital-multimeters/fluke-15b-plus",
+    "https://www.fluke.com/en-us/product/electrical-testing/digital-multimeters/fluke-15b-plus",
+    "https://www.itm.com/pdfs/cache/www.itm.com/17b--esp/manual/17b--esp-manual.pdf",
+    "https://www.manualslib.com/guide/3613784/fluke-15b-17b-18b-manual.html",
+    "https://www.manualslib.com/manual/3453442/Fluke-15bPlus.html",
+    "https://www.manualslib.com/manual/901830/Fluke-15bPlus.html",
+    "https://www.manualslib.com/manual/901830/Fluke-15bPlus.html?page=11",
+    "https://www.reddit.com/r/fluke/comments/1n22aab",
+    "https://www.reddit.com/r/fluke/comments/1s86sk5/freeopensource_desktop_appcli_app_for_fluke/",
+    "https://www.reddit.com/r/networking/comments/fku5dq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

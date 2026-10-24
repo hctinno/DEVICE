@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_101.json",
+  "original_log_sha256": "b11c685a75e27d0778ade284f2849c8f7f61e2360b2bbaa4d86ae42e328f9f6b",
+  "original_log_bytes": 25100,
+  "queries": [
+    "Xantrex XPR 20-300 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://cloud.edebris.com/index.php/s/AFiJCyKKYpojYYZ",
+    "https://bama.edebris.com/manuals/xantrex/",
+    "https://bama.edebris.com/manuals/xantrex/XPR/",
+    "https://manuals.repeater-builder.com/te-files/XANTREX/XANTREX%20XFR%2035-35.pdf",
+    "https://manualsdump.com/en/manuals/xantrex_technology-xdc_60-100-xdc_60-200-xdc_80-150-xdc_600-20-xdc_80-75-xdc_600-10-xdc_40-300-xdc_150-40-xdc_40/119254/152",
+    "https://manualsdump.com/en/manuals/xantrex_technology-xdc_60-100-xdc_60-200-xdc_80-150-xdc_600-20-xdc_80-75-xdc_600-10-xdc_40-300-xdc_150-40-xdc_40/119254/216",
+    "https://manualsdump.com/en/manuals/xantrex_technology-xdc_60-100-xdc_60-200-xdc_80-150-xdc_600-20-xdc_80-75-xdc_600-10-xdc_40-300-xdc_150-40-xdc_40/119254/217",
+    "https://manualsdump.com/en/manuals/xantrex_technology-xdc_60-100-xdc_60-200-xdc_80-150-xdc_600-20-xdc_80-75-xdc_600-10-xdc_40-300-xdc_150-40-xdc_40/119254/220",
+    "https://manualsdump.com/en/manuals/xantrex_technology-xdc_60-100-xdc_60-200-xdc_80-150-xdc_600-20-xdc_80-75-xdc_600-10-xdc_40-300-xdc_150-40-xdc_40/119254/81",
+    "https://www.amabileelectronictest.com/pdf/aet_pdf_3504.pdf",
+    "https://www.manualsdir.com/manuals/229298/xantrex-technology-xdc-20-600-xdc-30-200-xdc-10-1200-xdc-40-150-xdc-10-600-xdc-20-300-xdc-60-200-xdc-300-20-xdc-600-20-xdc-150-40-xdc-80-150-xdc-30-400-xdc-80-75-xdc-100-60-xdc-600-10-xdc-300-40-xdc-40-300-xdc-150-80-xdc-100-120-xdc-60-100.html?page=123",
+    "https://www.manualsdir.com/manuals/229298/xantrex-technology-xdc-20-600-xdc-30-200-xdc-10-1200-xdc-40-150-xdc-10-600-xdc-20-300-xdc-60-200-xdc-300-20-xdc-600-20-xdc-150-40-xdc-80-150-xdc-30-400-xdc-80-75-xdc-100-60-xdc-600-10-xdc-300-40-xdc-40-300-xdc-150-80-xdc-100-120-xdc-60-100.html?page=86",
+    "https://www.manualslib.com/products/Xantrex-Xpr-20-300-2144885.html",
+    "https://www.raspberrypi.com/software/",
+    "https://www.scribd.com/document/474279267/Xantrex-XPR-Series-User-Guide-P6OP-01XN",
+    "https://xantrex.com/support/get-customer-support/",
+    "https://xantrex.com/wp-content/uploads/2021/12/XPower_300_OwnersGuide.pdf",
+    "https://xantrex.com/wp-content/uploads/2023/02/975-1176-01-01-D.pdf",
+    "https://xantrex.com/wp-content/uploads/2024/03/975-1176-01-01-C.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

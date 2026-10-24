@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_144.json",
+  "original_log_sha256": "8bba0e9181bbf8de8b2cc0e1731f021ddd74807130511bbea897932aa591a664",
+  "original_log_bytes": 25605,
+  "queries": [
+    "EM TEST \"INA 2141\" manual programming driver API GitHub",
+    "STAUBLI \"MPE6E-TX60L\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FBSR-04C(Thru)\" manual programming driver API GitHub",
+    "티앤엠시스템 \"FBSM-01B\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/5cc2e21048a4111647118a7047952e73dabddebd38bbb31db3bbfa6443b2fd84.pdf",
+    "https://es.scribd.com/document/339506147/ATV320-Programming-Manual-SP-NVE41298-01b",
+    "https://fcc.report/FCC-ID/BEJTFGMEIBBCD4/6850762.pdf",
+    "https://fccid.io/m/3b8fd10926943f892cc61186a9d5062815668c0a5bbed0a11a37adbbbb438796.pdf",
+    "https://malaysianchessfestival.blogspot.com/2025/09/event-3-merdeka-blitz-results.html",
+    "https://manuals.plus/m/42636843ac5ddb1b5766bb19a7a8ab386bb78ccdcea4c5a9fba345f6fcde7098.pdf",
+    "https://manuals.plus/m/5de4190122d99891ffd5fbe837c2f94823a71a99b2ecdf9c6e394ed3f39e1b94",
+    "https://manuals.plus/m/aaeb7dca90211201190305a5d72901ccd8405693b2bf1bd9034606bbc00c1fc7.pdf",
+    "https://manualzilla.com/doc/5644443/601-279d---nsg-3040-user-manual-english.indd",
+    "https://manualzilla.com/doc/5803666/601-335a---ina-703-englisch.indd---advanced-test-equipmen",
+    "https://manualzilla.com/doc/6908312/601-279g---nsg-3040-user-manual-english.indd",
+    "https://manualzilla.com/doc/6911271/601-318b---mfo-6501-mfo-6502-user-manual-english.indd?page=20",
+    "https://manualzilla.com/doc/6911738/601-335b---ina-703-user-manual-englisch.indd",
+    "https://manualzz.com/doc/28782477/user-manual--teseq-nsg-3060-emc-test-system",
+    "https://manualzz.com/doc/4137630/teseq-nsg-3060-emc-test-system-user-manual",
+    "https://manualzz.com/doc/4138735/teseq-mfo-6501--mfo-6502-magnetic-field-options-user-manual",
+    "https://manualzz.com/doc/6716226/teseq-nsg-3040---iec---sow--cdn-3041--cdn-3043--cdn-3063-",
+    "https://manualzz.com/doc/82032708/ametek-teseq-nsg-3060-user-manual",
+    "https://www.atoponline.com/wp-content/uploads/2021/06/20-12-RBO-042-01-%E4%B8%8A%E5%B0%9A61850-3-4-L.pdf",
+    "https://www.manualslib.com/manual/3132065/Ametek-Teseq-Nsg-3060.html?page=127"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/open_gm10_manual.json",
+  "original_log_sha256": "bc05e905a1c30445a3bfe3510451888aca57ec9470a93c67718923eaa25798f3",
+  "original_log_bytes": 494,
+  "queries": [],
+  "discovered_urls": [
+    "https://web-material3.yokogawa.com/IM04L51B01-17EN.pdf",
+    "https://web-material3.yokogawa.com/IM04L51B01-17EN.pdf:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

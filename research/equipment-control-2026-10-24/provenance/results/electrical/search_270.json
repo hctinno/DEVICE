@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_270.json",
+  "original_log_sha256": "06526496767b0c14c7abbc45a100060abc97dd31e2a27b0987637064f0ac2993",
+  "original_log_bytes": 28599,
+  "queries": [
+    "YOKOGAWA FX-1006 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.yokogawa.com/ns/fx1000/im/",
+    "http://www.yokogawa.com/ns/fx1000/soft/",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&category=&idx=2001&mode=view&offset=950&sk=&sw=",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&category=&offset=550&sk=&sw=",
+    "https://manualmachine.com/yokogawa/fx1002/17904999-user-manual/",
+    "https://manualzz.com/doc/html/61685556/yokogawa-fx1000--fx1004--fx1006--fx1008--fx1010-installat",
+    "https://quote.us.yokogawa.com/PageConfig/Index?itemType=Model&model=FX1006&pageId=1444.0",
+    "https://web-material3.yokogawa.com/IM04L21B01-01EN_030.pdf",
+    "https://web-material3.yokogawa.com/IM04L21B01-01EN_040.pdf",
+    "https://web-material3.yokogawa.com/IM04L21B01-03EN.pdf",
+    "https://www.insatech.com/media/ch5ipgv3/im_e_yokogawa-fx1000-user-manual_im04l21b01-01en.pdf",
+    "https://www.koreayokogawa.com/contact/qna.php?boardid=qna&idx=271&mode=view",
+    "https://www.manualsdir.com/manuals/360262/yokogawa-value-series-fx1000.html",
+    "https://www.manualslib.com/manual/1374950/Yokogawa-Fx1000.html",
+    "https://www.manualslib.com/products/Yokogawa-Fx1006-3738536.html",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://y-link.yokogawa.com",
+    "https://yokogawa.manymanuals-pt.com/sensors/value-series-fx1000/user-manual-43201/15",
+    "https://yokogawa.manymanuals.com/sensors/value-series-fx1000/user-manual-5242",
+    "https://yokogawa.manymanuals.es/sensors/value-series-fx1000/user-manual-5242/1"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

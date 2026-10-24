@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_265.json",
+  "original_log_sha256": "9b1a152d0b09b7b48f702d0f3e197edd286b761e30d2097c7b6617fdaa90f30f",
+  "original_log_bytes": 33171,
+  "queries": [
+    "MACCOR 4300KM manual programming software"
+  ],
+  "discovered_urls": [
+    "https://maccor.software.informer.com/",
+    "https://www.cellcare.com/maccor/maccor_S4300.php",
+    "https://www.cellcare.com/maccor/maccor_software.php",
+    "https://www.chenchi.tw/archive/download/item/Data%20Sheet%20for%20Model%204300%20Test%20System.pdf",
+    "https://www.maccor.com.cn/UploadFiles/Others/20141016114137_78795.pdf",
+    "https://www.maccor.com/software-data-analytics.html",
+    "https://www.maccor.com/software/advanced-tools.html",
+    "https://www.maccor.com/software/data-export.html",
+    "https://www.maccor.com/software/mactest.html",
+    "https://www.maccor.com/software/software.html",
+    "https://www.maccorcs.com/",
+    "https://www.maccorcs.com/docs/Configuring_Windows_11_for_MacTest32.pdf",
+    "https://www.maccorcs.com/docs/Instructions_for_Upgrading_Software_on_Existing_Maccor_Test_Systems.pdf",
+    "https://www.maccorcs.com/support.html",
+    "https://www.manuallib.com/company/1135026/",
+    "https://www.manualslib.com/manual/5416/Amcor-4300-B.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

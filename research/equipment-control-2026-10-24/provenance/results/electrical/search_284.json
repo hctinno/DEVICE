@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_284.json",
+  "original_log_sha256": "b0aa63cd335358669d101a24ea1c74cadffa3e29f8c734c4b95d8318a7a1fb34",
+  "original_log_bytes": 27814,
+  "queries": [
+    "KIKUSUI PLZ-334W manual programming software"
+  ],
+  "discovered_urls": [
+    "https://calright.com/wp-content/uploads/2018/04/23382.pdf",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://kikusui-europe.com/kd/pm_el/page/2/",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_4W_M.pdf",
+    "https://kikusui.co.jp/download/cat-plz164w/",
+    "https://kikusui.co.jp/w2-2/discon/plz334w/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://lidinco.com/en/product/tai-dien-tu-dc-kikusui-plz334w",
+    "https://manualzz.com/doc/4146962/kikusui-plz-4wl-plz164wl--plz334wl-electronic-load-user%E2%80%99s",
+    "https://manualzz.com/doc/o/ql7du/technical-note-for-the-electronic-load--plz-4w--chapter-1-general-information",
+    "https://manualzz.com/manual/en/Kikusui/PLZ334W/User%2Bmanual",
+    "https://manuzoid.com/manuals/g712A-Kikusui%20PLZ334W%20User%20manual",
+    "https://sg.kikusui.co.jp/spec/plz-4w_switching-mode/",
+    "https://www.allaboutinstruments.com/brand/kikusui/electronic_load/kikusui_electronic_load_PLZ-4WL_series.pdf",
+    "https://www.metasite.co.kr/Newmeta/NM_files/PLZ164W__164WA__334W_664W_1004W_-Operating_Manual.pdf",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Electronic-Loads&model=Kikusui-PLZ334W&productID=092929E3B1804ACBDACE0E743DA943E5&type=Test-Equipment-Sales"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

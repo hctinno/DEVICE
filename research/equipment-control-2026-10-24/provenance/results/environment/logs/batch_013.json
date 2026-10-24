@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_013.json",
+  "original_log_sha256": "ed51f8b7419f94d85dd94a25a90538db9f2aae22df39a2aba7128ee2be4bd306",
+  "original_log_bytes": 25625,
+  "queries": [
+    "ENEX SCIENCE \"EN-VTH-120-5K-VH\" manual communication software GitHub",
+    "Q-LAB \"Q-FOG CRH1100HSCR\" manual communication software GitHub",
+    "UNHOLTZ-DICKIE \"2XSAI120-T2000-64-3\" manual communication software GitHub",
+    "WEISSTECKNIK \"WPH1728/70/3/RUM\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://blog.daara.co.kr/m/sell_list.html?bc=&cid=myungtech&key=&listtype=&ord=maxprice&p_state=&page=&search=&uc=",
+    "https://blog.daara.co.kr/m/sell_list.html?bc=&cid=myungtech&key=&listtype=&ord=maxprice&p_state=&page=1&search=&uc=",
+    "https://blog.daara.co.kr/m/sell_list.html?bc=05&cid=myungtech&key=&listtype=&ord=maxprice&p_state=&page=&search=&uc=",
+    "https://blog.daara.co.kr/m/sell_list.html?bc=05&cid=myungtech&key=&listtype=&ord=minprice&p_state=&page=1&search=&uc=",
+    "https://blog.daara.co.kr/m/sell_list.html?bc=05&cid=myungtech&key=&listtype=&ord=rdate&p_state=&page=2&search=&uc=",
+    "https://myungtech.bizdaara.com/m/sell_view.html?cid=myungtech&no=1529104",
+    "https://www.daara.co.kr/sell/s_view.php?no=1529104",
+    "https://www.instrument.com.cn/netshow/SH101590/news-2.htm",
+    "https://www.instrument.com.cn/netshow/SH101590/news.htm?category=56",
+    "https://www.stsols.com/k-series",
+    "https://www.volza.com/p/analysis-or-testing/export-data/destination-taiwan/",
+    "https://www.volza.com/p/exchanger-or-heater-exchanger/export-data/destination-taiwan/",
+    "https://www.volza.com/p/meter-or-testing/export-data/destination-taiwan/",
+    "https://www.volza.com/p/vibrating-machine/export-data/exports-from-united-states/",
+    "https://www.volza.com/p/work-or-boot/export/cod-taiwan/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

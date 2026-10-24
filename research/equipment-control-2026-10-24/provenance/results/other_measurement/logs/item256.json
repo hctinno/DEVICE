@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item256.json",
+  "original_log_sha256": "c543e7963a21283219dc0b039ec0145e11237e90103bbbc608ef2e94c382c1e7",
+  "original_log_bytes": 14518,
+  "queries": [
+    "Tektronix \"TCPA 400\" software interface manual",
+    "site:github.com \"TCPA 400\" Tektronix"
+  ],
+  "discovered_urls": [
+    "https://cms.trsrentelco.com/sites/default/files/resources-pdfs/Tektronix_TCPA300_Manual.pdf",
+    "https://download.tek.com/manual/071118303.pdf",
+    "https://download.tek.com/manual/TCPA300-400-Amplifiers-and-TCP300A-400-Current-Probe-Service-Manual-077032301_RevB.pdf",
+    "https://manualmachine.com/tektronix/tcp400/4652111-service-manual/",
+    "https://manualmachine.com/tektronix/tcpa300tcpa400tcp300tcp400/26786136-user-manual/",
+    "https://manualzilla.com/doc/6024406/tcpa300-400-amplifiers-and-tcp300-400-series-ac-dc-current",
+    "https://manualzz.com/doc/4853903/tektronix-tcpa300-400-tcpa300--tcpa400-current-probe-ampl",
+    "https://manualzz.com/doc/56494717/tektronix-tcpa300-series--tcpa400-series-instruction-manual",
+    "https://manualzz.com/doc/62187750/tektronix-tcpa400-service-manual",
+    "https://www.lost-manuals.com/pdf/tektronix--tcpa400--service-user--ID12114.pdf",
+    "https://www.manualslib.com/manual/1418595/Tektronix-Tcpa300-Series.html",
+    "https://www.manualslib.com/manual/3844246/Tektronix-Tcp305.html",
+    "https://www.tek.com.cn/support/datasheets-manuals-software-downloads?series=%E7%94%B5%E6%B5%81%E6%8E%A2%E5%A4%B4&type=manual",
+    "https://www.tek.com/de/support/datasheets-manuals-software-downloads?series=Stromtastk%C3%B6pfe",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?series=Current+Probes&type=manual",
+    "https://www.tek.com/fr/support/datasheets-manuals-software-downloads?series=S%C3%A9lection+de+sondes+de+courant+de+Tektronix&type=manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

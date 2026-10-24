@@ -1,0 +1,21 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/passive_audit/open1.json",
+  "original_log_sha256": "1acc21b8ad824d8e0b9eeebdf18375595b188d2714f21905cfe595b3094c717b",
+  "original_log_bytes": 27979,
+  "queries": [],
+  "discovered_urls": [
+    "https://blog.alfa.com.tw/2018/09/17/awus036acm-alternative-linux-driver-information/",
+    "https://github.com/LorenzoBianconi/mt76†github.com】",
+    "https://github.com/cyangy/A6210-mt76x2u_Ubuntu.git†github.com】",
+    "https://github.com/cyangy/A6210-mt76x2u_Ubuntu†github.com】",
+    "https://github.com/openwrt/mt76†github.com】",
+    "https://innco-systems.de/en/products/turntables/ct0800-compact-table-for-freestanding-installation",
+    "https://media.ets-lindgren.com/wp-content/uploads/2025/12/399343-EMSwitch-Rev-K.pdf",
+    "https://support.apple.com/en-us/HT201314http://www.idownloadblog.com/2016/02/25/how-to-start-up-your-mac-in-internet-recovery-mode/http://osxdaily.com/2016/07/28/fix-broken-efi-partition-mac/†support.apple.com】",
+    "https://www.alfa.com.tw"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

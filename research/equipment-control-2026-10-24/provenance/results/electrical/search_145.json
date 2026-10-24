@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_145.json",
+  "original_log_sha256": "bb8b20d609b6ec92516f7eb06179c72dcb46a0465e1ce66b7704bec8a81a4e00",
+  "original_log_bytes": 27650,
+  "queries": [
+    "KIKUSUI PLZ1003WH manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/",
+    "https://device.report/m/31b4442695c23c88d280a93b8fd36f50350c2855618eeb4ab81b3912063fcc83.pdf",
+    "https://global.kikusui.co.jp/download-category-en/pm_el-en/",
+    "https://in.kikusui.co.jp/kd/pm_el-in/",
+    "https://kikusui-europe.com/download-service/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/kd/pm_el-en_us/",
+    "https://kikusuiamerica.com/w2-2/software-en-en_us/wavy-series/",
+    "https://www.allaboutinstruments.com/brand/kikusui/electronic_load/kikusui_electronic_load_PLZ-3WH_series.pdf",
+    "https://www.avalontest.com/images/uploaded/File-1456865419.pdf",
+    "https://www.eserviceinfo.com/fulltext.php?search_ft=KIKUSUI+PLZ-3W+Series+153W%2C+303W%2C+603W%2C+1003W+Operation",
+    "https://www.manualslib.com/manual/3683502/Kikusui-Plz-3wh-Series.html",
+    "https://www.manualslib.com/products/Kikusui-Plz-1003w-14427151.html",
+    "https://www.metasite.co.kr/Newmeta/NM_files/PLZ_3WH_-_Operating_Manual.pdf",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Electronic-Loads&model=Kikusui-PLZ1003W&productID=994404D2F780483DCF26235C3EC4AC80&type=Test-Equipment-Sales",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Electronic-Loads&model=Kikusui-PLZ1003WH&productID=84CBA72B011ECF0B81CB3024E061E935&type=Test-Equipment-Sales",
+    "https://www.scribd.com/document/711264038/Plz-303w-%EB%A7%A4%EB%89%B4%EC%96%BC",
+    "https://www.testequipmenthq.com/datasheets/KIKUSUI-PLZ-1003W-Datasheet.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

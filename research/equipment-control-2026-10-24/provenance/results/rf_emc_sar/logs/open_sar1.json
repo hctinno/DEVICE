@@ -1,0 +1,19 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/open_sar1.json",
+  "original_log_sha256": "5048efdc7c674656ffb0484bc62d4c297c71181723cecbe6163271c305b71346",
+  "original_log_bytes": 55601,
+  "queries": [],
+  "discovered_urls": [
+    "https://speag.swiss/components/emv-and-v-sources/wpt",
+    "https://speag.swiss/downloads/csar3d/csar3d-installers-3",
+    "https://speag.swiss/downloads/dak/dak-download",
+    "https://speag.swiss/products/dasy8/dasy8-state-of-the-art-wireless-device-compliance-testing/videos",
+    "https://speag.swiss/products/dasy8/m-hac/daes",
+    "https://speag.swiss/products/dasy8/m-hac/daes:",
+    "https://speag.swiss/products/easy6/easy6/software-2"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_264.json",
+  "original_log_sha256": "64fbd97247ac3836ddf6524d70d3a037c8d0c32d14188f2773a11d9c43081912",
+  "original_log_bytes": 30139,
+  "queries": [
+    "YOKOGAWA FX1006 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&category=&idx=2001&mode=view&offset=950&sk=&sw=",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=1496&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=1567&mode=view",
+    "https://manualmachine.com/yokogawa/fx1002/17904999-user-manual/",
+    "https://manualzz.com/doc/html/61685556/yokogawa-fx1000--fx1004--fx1006--fx1008--fx1010-installat",
+    "https://quote.us.yokogawa.com/PageConfig/Index?itemType=Model&model=FX1006&pageId=1444.0",
+    "https://web-material3.yokogawa.com/IM04L21B01-01EN_030.pdf",
+    "https://web-material3.yokogawa.com/IM04L21B01-01EN_040.pdf",
+    "https://web-material3.yokogawa.com/IM04L21B01-91EN.pdf",
+    "https://www.insatech.com/media/ch5ipgv3/im_e_yokogawa-fx1000-user-manual_im04l21b01-01en.pdf",
+    "https://www.koreayokogawa.com/contact/qna.php?boardid=qna&category=&idx=2896&mode=view&offset=10&sk=&sw=",
+    "https://www.koreayokogawa.com/contact/qna.php?boardid=qna&idx=271&mode=view",
+    "https://www.manualslib.com/products/Yokogawa-Fx1006-3738536.html",
+    "https://www.nexinstrument.com/assets/images/pdf/FX1006.pdf",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.togotech.co.kr/index.php/FX1006",
+    "https://y-link.yokogawa.com",
+    "https://yokogawa.manymanuals-pt.com/sensors/value-series-fx1000/user-manual-43201/15",
+    "https://yokogawa.manymanuals.com/sensors/value-series-fx1000/user-manual-5242"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

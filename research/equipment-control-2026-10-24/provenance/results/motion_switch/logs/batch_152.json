@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_152.json",
+  "original_log_sha256": "b373d648cf9e9d5799631f683afe04335c8e4a7181f65d24b7522c9902f29118",
+  "original_log_bytes": 24689,
+  "queries": [
+    "STAUBLI \"MP6E-TX90XL\" manual programming driver API GitHub",
+    "STAUBLI \"SP1 D21143300\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FBSR-04C\" manual programming driver API GitHub",
+    "TNM System \"FBSM-01B\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/0fbf2f96a6d5e6c9ed8752cddc89784c1c286ac7e3f800f0b11e0d98d69182f2",
+    "https://device.report/m/12b944718c44ccb3f049238bc5f9f6eadc7c6f52b6081e6fa673affa87bbecd8",
+    "https://device.report/m/6e2a262723ecb03bc80f789bd51bf20ccae371c1100a5e49f6938ca5414366cc",
+    "https://device.report/m/8698cb537496e1b0c64ef39306fa90d1b9948440bd6c263f166995cc000a4eac",
+    "https://device.report/m/ce297e0f4218dd4a81d21b83ca760ca237dc0ee50e778a9194968356febb2f4a.pdf",
+    "https://es.scribd.com/document/339506147/ATV320-Programming-Manual-SP-NVE41298-01b",
+    "https://fccid.io/BEJTFGMEIBBCD4/Test-Report/BEJTFGMEIBBCD4-RF-Test-Report-Sub6-n71-8025473.pdf",
+    "https://fccid.io/m/e818b7000141a67684fde6fe55ecec975b23d30ef95a85b64688faffc0a4ef5f.pdf",
+    "https://manuals.plus/m/42636843ac5ddb1b5766bb19a7a8ab386bb78ccdcea4c5a9fba345f6fcde7098.pdf",
+    "https://manuals.plus/m/5de4190122d99891ffd5fbe837c2f94823a71a99b2ecdf9c6e394ed3f39e1b94",
+    "https://manuals.plus/m/aaeb7dca90211201190305a5d72901ccd8405693b2bf1bd9034606bbc00c1fc7.pdf",
+    "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

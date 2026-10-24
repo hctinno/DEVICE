@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_095.json",
+  "original_log_sha256": "266bb13f9a1d636ce742f02bff3814cfc06d99192eab651d8d1258f17bbd902d",
+  "original_log_bytes": 26988,
+  "queries": [
+    "NEWARE CE-6004n-100V50A-H manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.newarebattery.com/softwares/BTSClient8.0-UserManual.pdf",
+    "http://www.newarebattery.comUser",
+    "https://neware.ltd/software/",
+    "https://newarebattery.com/neware-official-guide-on-how-to-use-ce6000-series/",
+    "https://newarebattery.com/services-home/",
+    "https://newarebattery.com/softwares/NEWARE_BTS_8.0.4_20251124_En.exe",
+    "https://newarelab.com/download",
+    "https://newaretesters.com/Download.html",
+    "https://www.neware-korea.com/list/specifications.html",
+    "https://www.neware-usa.com/uploadfile/2024/0531/2236c092d37472a.pdf",
+    "https://www.neware.kr/home_comm/board_all_list.htm",
+    "https://www.neware.net/products/ce-6000-series/ce-6000-module-testing-system/1.html",
+    "https://www.neware.net/supports/manuals-and-documentation.html",
+    "https://www.neware.net/supports/manuals-and-documentation/2.html",
+    "https://www.neware.net/supports/specifications.html",
+    "https://www.newarebattery.com/wp-content/uploads/2022/05/CE-6000n-User-Manual.pdf",
+    "https://www.newarelab.com/download"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

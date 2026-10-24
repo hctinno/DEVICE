@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_345.json",
+  "original_log_sha256": "e208f5bf46f361a92569a5d0f58f2103ee004a88322547294b13481e65b97ed0",
+  "original_log_bytes": 22321,
+  "queries": [
+    "Sorensen XFR35-35 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://accusrc.com/product-Xantrex-XFR3535-9012",
+    "https://accusrc.com/uploads/datasheets/5400_XFR%20Series.pdf",
+    "https://electronicsandbooks.com/edt/manual/Hardware/S/Sorensen%20www.sorensen.com/XFR/XFR1-2%20Operation%20Manual%20TM-F1OP-C1XN-01%20c20071025%20%5B110%5D.pdf",
+    "https://it.scribd.com/document/473083370/XANTREX-Power-supply-1-2Kw-XFR-35-35",
+    "https://manuals.plus/m/e0aa9f9716b70b9295691ff72ee07fd90db1879a34c2ce9e568f14ed5df71ceb",
+    "https://manualzz.com/doc/90287722/sorensen-xhr-series-user-guide",
+    "https://maximinstruments.com/pdf_files/Sorensen_XFR_12-100_Datasheet.pdf",
+    "https://maximinstruments.com/pdf_files/Sorensen_XFR_40-70_Datasheet.pdf",
+    "https://www.eserviceinfo.com/downloadsm/133098/SORENSEN_XANTREX%20XFR%2035-35.html",
+    "https://www.eserviceinfo.com/index.php?searchstring=XANTREX++XHR+Series+Operating&what=search2",
+    "https://www.eserviceinfo.com/index.php?searchstring=XANTREX+XFR+35-35&what=search2",
+    "https://www.eserviceinfo.com/index.php?searchstring=Xantrex+XFR+Series+Instruction&what=search2",
+    "https://www.eserviceinfo.com/jabse_search_wrap.php?searchtext=sorensen",
+    "https://www.lockinc.com.tw/v_comm/inc/product_file_download.asp?customer_id=2496&file_name=p_190326_07346.pdf&id=619792&lang=1",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=DC-Power-Supplies&model=Xantrex-XFR35-35&productID=153C63E81DA05637F74C63CACD33C6AE&type=Test-Equipment-Sales",
+    "https://www.programmablepower.com/products/dc-power-supplies/xfr-series",
+    "https://www.yumpu.com/en/document/view/8675479/internal-ethernet-rs-232-interface-for-xfr-series-sorensen/27"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

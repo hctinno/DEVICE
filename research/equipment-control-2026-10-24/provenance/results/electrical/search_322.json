@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_322.json",
+  "original_log_sha256": "2f47366e116b5ce02d66868e80aa0e0b761891ab51d7bc223f934eb6a7184598",
+  "original_log_bytes": 31862,
+  "queries": [
+    "(주)대영이엔티 DREP-11020 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://idisglobal-admin.s3-accelerate.amazonaws.com/boardUpFileKR/DP-DE2108_%EC%82%AC%EC%9A%A9%EC%84%A4%EB%AA%85%EC%84%9C%2420221024.pdf",
+    "https://idisglobal-admin.s3-accelerate.amazonaws.com/boardUpFileKR/DR-0815P_%EC%82%AC%EC%9A%A9%EC%84%A4%EB%AA%85%EC%84%9C_V8.2.pdf",
+    "https://jenix.co.kr/Download/Manual/DRO/Kor-manual-DSC800.pdf",
+    "https://jp.transcend-info.com/files/Manual/Manual-DP520_KR_v2.4.pdf",
+    "https://moen.nidec.com/drives/Products/Software/Programming",
+    "https://toyotech.co.kr/support/software.php?boardid=software&offset=0",
+    "https://www.electronics.jtekt.co.jp/en/download/plc/",
+    "https://www.electronics.jtekt.co.jp/jp/download/plc/",
+    "https://www.hitecrcd.co.kr/support/resource-center/",
+    "https://www.jai.com/kr/support-software",
+    "https://www.jcprogrammer.com/download/driver/0/",
+    "https://www.jcprogrammer.com/download/software/",
+    "https://www.jeiotech.com/html.doc/company09.php",
+    "https://www.jinirobotics.com/download_aidesk",
+    "https://www.jinirobotics.com/download_sbot",
+    "https://www.kyongbo.co.kr/admin/fileDown6.jsp?filename=GD1-K01+%EC%82%AC%EC%9A%A9%EC%84%A4%EB%AA%85%EC%84%9C%28V1.00%29.pdf",
+    "https://www.kyongbo.co.kr/admin/fileDown6.jsp?filename=GD1-K01+%EC%82%AC%EC%9A%A9%EC%84%A4%EB%AA%85%EC%84%9C%28V1.40%29.pdf",
+    "https://www.pikorea.co.kr/ko/knowledge-center/downloads/product-documentation/D"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

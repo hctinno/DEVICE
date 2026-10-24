@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_092.json",
+  "original_log_sha256": "d20237163af72d8d856d3b59a8fbb430929f1012495e2627a23bfa5e76b01eb3",
+  "original_log_bytes": 18876,
+  "queries": [
+    "HCT \"SM-R-604(3M_3G HPF+LNA)\" manual programming driver API GitHub",
+    "HCT \"SM-R-604(3M_6G HPF+LNA)\" manual programming driver API GitHub",
+    "HCT \"SM-R-604(7G HPF+LNA)\" manual programming driver API GitHub",
+    "HCT \"SM-R-604(8G HPF+LNA)\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://admin.global-sci.org/uploads/Issue/IJNAMB/v4n4/44-315_short.pdf",
+    "https://admin.global-sci.org/uploads/Issue/NMTMA/v1n2/12-214_short.pdf",
+    "https://digitalcommons.pvamu.edu/aam/vol15/iss3/5",
+    "https://doi.org/10.1007/BF00251441",
+    "https://doi.org/10.1007/BF01398914",
+    "https://doi.org/10.1007/s40096-020-00355-4",
+    "https://doi.org/10.1016/0041-5553",
+    "https://doi.org/10.1016/0377-0427",
+    "https://doi.org/10.1016/S0377-0427",
+    "https://doi.org/10.1016/j.cam.2003.09.023",
+    "https://doi.org/10.1016/j.matcom.2020.03.003",
+    "https://doi.org/10.1088/1742-6596/1053/1/012007",
+    "https://doi.org/10.1108/EC-03-2019-0115",
+    "https://doi.org/10.1134/S1064562415030059",
+    "https://doi.org/10.1515/cmam-2019-0023",
+    "https://doi.org/10.1515/ijnsns-2020-0103",
+    "https://doi.org/10.1515/rnam-2002-0102",
+    "https://doi.org/10.21914/anziamj.v47i0.1067",
+    "https://doi.org/10.2478/cmam-2002-0001",
+    "https://doi.org/10.2478/cmam-2003-0025",
+    "https://doi.org/10.3846/13926292.2005.9637296",
+    "https://doi.org/10.4236/ojapps.2012.24B016",
+    "https://doi.org/10.5556/j.tkjm.53.2022.3250",
+    "https://m.cn-fastener.com/gysd/sjfb_11499/tjnj/202602/P020260204743773290248.pdf",
+    "https://ufr1.www.univ-montp3.fr/fr/file/116452/download?token=tluoWubt",
+    "https://www.tandfonline.com/doi/pdf/10.1080/27658449.2021.2020400"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

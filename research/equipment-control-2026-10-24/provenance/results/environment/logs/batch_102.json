@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_102.json",
+  "original_log_sha256": "8fc1f42d07b6f69ba9d8c471be026de3dbe94cbc6fd04f1bb246afde1c7811d0",
+  "original_log_bytes": 24130,
+  "queries": [
+    "DWYER \"M26K JM\" Differential pressure gauge for Flammability tester",
+    "KOMETER \"PA-40\" Gas flowmeter for Flammability tester",
+    "SCM Technology \"SNFT-100\" Flammability tester",
+    "지구촌냉열 \"GVC-010AT\" Water Chilling Unit"
+  ],
+  "discovered_urls": [
+    "https://accessgudid.awsprod.nlm.nih.gov/devices/search?filters%5BDevice+Class%5D%5B%5D=2&filters%5BDevice+Packaged+As+Sterile%5D%5B%5D=1&filters%5BDevice+Size%5D%5B%5D=Catheter+Gauge%3A+12+French&filters%5BDevice+Size%5D%5B%5D=Catheter+Gauge%3A+8+French&filters%5BGMDN+Term+Status%5D%5B%5D=Active&filters%5BGMDN+Term+Status%5D%5B%5D=Obsolete&filters%5BImplantable%5D%5B%5D=0&page=1&page_size=40&query=%28%2A%E0%B8%95%E0%B9%88%E0%B8%AD%E0%B8%AD%E0%B8%B2%E0%B8%A2%E0%B8%B8%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%9A%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%A2%E0%B8%B2%E0%B8%A3%E0%B8%AD%E0%B8%9A+2+%E0%B8%AD%E0%B8%A2%2A%29&sort=companyName-asc",
+    "https://accessgudid.nlm.nih.gov/devices/search?filters%5BDevice+Packaged+As+Sterile%5D%5B%5D=1&filters%5BDevice+Size%5D%5B%5D=Catheter+Gauge%3A+10+French&filters%5BGMDN+Term+Status%5D%5B%5D=Active&filters%5BImplantable%5D%5B%5D=0&letter=T&option=GMDN+Term+Name&page=1&page_size=20&query=%28%22gs1%22%29&sort=companyName-asc",
+    "https://accessgudid.nlm.nih.gov/devices/search?filters%5BDevice+Packaged+As+Sterile%5D%5B%5D=1&filters%5BDevice+Size%5D%5B%5D=Catheter+Gauge%3A+10+French&filters%5BGMDN+Term+Status%5D%5B%5D=Active&filters%5BImplantable%5D%5B%5D=0&letter=frequent&option=GMDN+Term+Name&page=1&page_size=40&query=gs1&sort=companyName-asc",
+    "https://accessgudid.nlm.nih.gov/devices/search?filters%5BGMDN+Term+Name%5D%5B%5D=Nasogastric+feeding+tube&filters%5BGMDN+Term+Status%5D%5B%5D=Active&filters%5BGMDN+Term+Status%5D%5B%5D=Obsolete&filters%5BImplantable%5D%5B%5D=0&letter=N&option=GMDN+Term+Name&page=1&page_size=30&query=gs1&sort=companyName-asc",
+    "https://accessgudid.nlm.nih.gov/devices/search?filters%5BGMDN+Term+Name%5D%5B%5D=Nasogastric+feeding+tube&filters%5BGMDN+Term+Status%5D%5B%5D=Active&filters%5BGMDN+Term+Status%5D%5B%5D=Obsolete&filters%5BImplantable%5D%5B%5D=0&letter=N&option=GMDN+Term+Name&page=48&page_size=30&query=gs1",
+    "https://cdn.komachine.com/media/product-catalog/f612798d-8148-4acd-8822-2f2c3bce825d.pdf",
+    "https://hethongcongnghiep.com/dai-ly-kometer-viet-nam",
+    "https://kometer.co.kr/sub/sub03_01.php",
+    "https://library.e.abb.com/public/a1ae3ce87bf43334c1257b0c005498d5/42_14-39-EN-B-06_2008.pdf",
+    "https://llin.in/",
+    "https://power-energy-battery.com/product/pa-40-luu-luong-ke-kometer/",
+    "https://pyrometer.com/us/products/pyrometer/pa-series/measuring-system-pa-40-k021.us/",
+    "https://snft.pro/",
+    "https://www.collyflowtech.se/content/uploads/2024/08/PA-Katalog.pdf",
+    "https://www.ebay.com/itm/405437209425",
+    "https://www.ebay.com/str/farmonmanufactruingsurplus/Flow-Meter/_i.html?store_cat=48624486012",
+    "https://www.instrument.com.cn/show/C244197.html",
+    "https://www.komachine.com/en/companies/korea-flowmeter/products/136206-panel-and-acrylic-rotameter-ultra-low-flow-panel-and-acrylic-rotameter-pa-40-series",
+    "https://www.kometer.co.kr/en/sub/sub03_01.php?cat_no=18&idx=80&offset=0&pmode=view",
+    "https://www.kometer.co.kr/sub/sub03_01.php?cat_no=&idx=80&offset=&pmode=view",
+    "https://www.kometer.co.kr/sub/sub03_01.php?cat_no=18&offset=0&sk=&sw=",
+    "https://www.migatronic.com/media/4420/52130004_accessories_up_se.pdf",
+    "https://www.pyrometer.com/dl.php?f=drawing-pa-40-k006&h=831cce659148923L3Zhci93d3cvcHlyb21ldGVyX3N5X3Vzci9kYXRhL3d3dy9weXJvbWV0ZXIuY29tL3N0b3JhZ2UvZnRwL2l0cy9JVFMvw7ZmZmVudGxpY2hlciBCZXJlaWNoIGZyZWllciBadWdhbmcvZW4vMDYgRHJhd2luZ3MvUEFfSzAwMC9EUiBQQSA0MC1LMDA2X01lYXN1cmluZyBzeXN0ZW1fSUQxMDkzMjgwLnBkZg%3D%3D",
+    "https://www.pyrometer.com/dl.php?f=tu-mian-pa-40-k021&h=15d44b60d26d2ceL3Zhci93d3cvcHlyb21ldGVyX3N5X3Vzci9kYXRhL3d3dy9weXJvbWV0ZXIuY29tL3N0b3JhZ2UvZnRwL2l0cy9JVFMvw7ZmZmVudGxpY2hlciBCZXJlaWNoIGZyZWllciBadWdhbmcvZW4vMDYgRHJhd2luZ3MvUEFfSzAwMC9EUiBQQSA0MC1LMDIxX01lYXN1cmluZyBzeXN0ZW1fSUQxMTAwOTQ5LnBkZg%3D%3D",
+    "https://www.pyrometer.com/us/products/pyrometer/pa-series/measuring-system-pa-40-k029.us/",
+    "https://www.yoycart.com/Product/592472648733/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

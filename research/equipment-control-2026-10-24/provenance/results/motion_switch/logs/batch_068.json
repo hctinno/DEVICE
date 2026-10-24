@@ -1,0 +1,25 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_068.json",
+  "original_log_sha256": "0cb970b5fe4989576743bd379975a2868b2453a6ea3897fdc8256a89ee4ced5d",
+  "original_log_bytes": 27515,
+  "queries": [
+    "HCT \"Input 1 + 6G HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"Input 2 + 1.2G HPF+LNA\" manual programming driver API GitHub",
+    "HCT \"input 2 + 3.3G HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"input 2 + 6G HPF + LNA\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://github.com/Zero-We/BCL",
+    "https://github.com/spacehuhn/D",
+    "https://in.element14.com/c/development-boards-evaluation-tools/prl/results",
+    "https://testabc.abcelectronique.com/publications/index.php?date=06-2023&page=4",
+    "https://www.scribd.com/document/850808223/Stereo-Review-1974-Buyers-Guide",
+    "https://www.scribd.com/document/961835007/Pc-Engineers-Vol3-Misc",
+    "https://www.sdrstore.eu/sdr-spring-savings/?currency=BGN&items_per_page=160&layout=products_without_options&sort_by=timestamp&sort_order=asc",
+    "https://www.sdrstore.eu/sdr-spring-savings/?currency=CNY&items_per_page=160&layout=products_without_options&sl=de&sort_by=product&sort_order=desc"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_124.json",
+  "original_log_sha256": "57ad46099417e59a9f114f963e9bee18bae23d3d6f7bb9d04cff8383ac02db69",
+  "original_log_bytes": 30934,
+  "queries": [
+    "DIGITEK POWER DEFC-1003 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://cloud.edebris.com/index.php/s/AFiJCyKKYpojYYZ",
+    "https://acim.nidec.com/en-in/motors/leroy-somer/downloads/software-and-drawings",
+    "https://acim.nidec.com/en-us/motors/leroy-somer/downloads/software-and-drawings?sel=t",
+    "https://bama.edebris.com/manuals/bitsavers/pdf/digitek/",
+    "https://device.report/m/edb99af3fe7f1ed3185e1cd9e074cf6258df95d775a6a5ad9e1f7ebc0a607550",
+    "https://en.wikipedia.org/wiki/Digitek",
+    "https://manualmachine.com/digitek/",
+    "https://moen.nidec.com/en-US/drives/Downloads",
+    "https://pt.scribd.com/document/945210760/manual-Provecto-DGT100-V-1-1",
+    "https://www.electusdistribution.co.nz/dbdocument/12459/dc1003_manual_979.pdf",
+    "https://www.emea.lambda.tdk.com/uk/technical-centre/software-tools",
+    "https://www.mtu-solutions.com/cn/en/technical-information/tools-and-downloads.html",
+    "https://www.powersoft.com/wp-content/uploads/2019/01/powersoft_DigiModIK_uguide_en_v2.3.pdf",
+    "https://www.ricelake.com/media/baqay5o5/m_82311_dc-100_operation.pdf",
+    "https://www.scribd.com/document/709607354/Programmer-EN",
+    "https://www.scribd.com/document/734385674/Programmer",
+    "https://www.voltech.com/support/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

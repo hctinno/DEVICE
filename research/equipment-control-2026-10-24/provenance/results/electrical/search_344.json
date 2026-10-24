@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_344.json",
+  "original_log_sha256": "9ed9ba7fb93ad83ba5f5c45c4f4cc1d236e3c886357e2a613fca1af91aa792de",
+  "original_log_bytes": 32488,
+  "queries": [
+    "YOKOGAWA DR 230 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/files/uploaded/GS04L65B01_01EN_040.pdf",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=2130&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=2171&mode=view",
+    "https://manualmachine.com/yokogawa/dr230/8403621-user-manual/",
+    "https://manuals.repeater-builder.com/te-files/YOKOGAWA/YOKOGAWA%20DR232%20and%20DR242%20Instruction.pdf",
+    "https://tmi.yokogawa.com/ca/solutions/discontinued/dr230-hybrid-recorder/",
+    "https://tmi.yokogawa.com/solutions/discontinued/dr230-hybrid-recorder/",
+    "https://web-material3.yokogawa.com/1/11343/tabs/rd-tr-r00025-002.pdf",
+    "https://web-material3.yokogawa.com/IMDR231-11E_060.pdf",
+    "https://web-material3.yokogawa.com/product_dr230spec.us.pdf",
+    "https://www.manuallib.com/file/2044889/",
+    "https://www.manualsdir.com/models/yokogawa/dr230.html",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.yokogawa.co.jp/library/resources/faqs/ns-faq-darwin-8048-setting-ja/",
+    "https://www.yokogawa.co.jp/library/resources/faqs/ns-faq-darwin-8064-setting-ja/",
+    "https://www.yokogawa.co.jp/solutions/discontinued/dr130/",
+    "https://yokogawa.manymanuals-pt.com/sensors/dr240/user-manual-25017/46",
+    "https://yokogawa.manymanuals.com/sensors/dr240/user-manual-25017/64"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

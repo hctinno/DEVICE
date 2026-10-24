@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item170.json",
+  "original_log_sha256": "7a85bac2a9c336758486b49324986218b727e92c5130b352f1d8cfc88031594b",
+  "original_log_bytes": 14870,
+  "queries": [
+    "KEYENCE CORPORATION \"SK-H050\" software interface manual",
+    "site:github.com \"SK-H050\" KEYENCE CORPORATION"
+  ],
+  "discovered_urls": [
+    "https://axlimperial.gr/wp-content/uploads/2020/06/Axl-Imperial-Keyence-Static-Eliminator-SJ-H-SJ-F2000.5000-SJ-M-Series.pdf",
+    "https://www.artisantg.com/info/Keyence_SJ_M020G_1_2M__Manual_20251111145246.pdf",
+    "https://www.gatechnology.co.uk/assets/files/SK-H050-DATASHEET--1429915293.pdf",
+    "https://www.keyence.ca/products/static/electrostatic/sk-h/models/sk-h050/",
+    "https://www.keyence.co.in/products/static/electrostatic/sk-h/specs/",
+    "https://www.keyence.co.uk/products/static/electrostatic/sk-h/",
+    "https://www.keyence.co.uk/products/static/electrostatic/sk-h/models/sk-h050/",
+    "https://www.keyence.com.my/products/static/electrostatic/sk-h/models/",
+    "https://www.keyence.com.sg/products/static/electrostatic/sk-h/",
+    "https://www.keyence.com.sg/products/static/electrostatic/sk-h/models/",
+    "https://www.keyence.com.sg/products/static/electrostatic/sk-h/models/sk-h050/",
+    "https://www.keyence.com.sg/products/static/electrostatic/sk-h/specs/",
+    "https://www.keyence.com/products/static/electrostatic/sk-h/models/sk-h050/",
+    "https://www.keyence.com/products/static/electrostatic/sk-h/specs/",
+    "https://www.keyence.eu/products/static/electrostatic/sk-h/models/sk-h050/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

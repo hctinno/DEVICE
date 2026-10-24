@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/cas_followup141.json",
+  "original_log_sha256": "e26578144d7d67fb8f528b63a46e1213ecb2035965c7552b67bb05031e71a12c",
+  "original_log_bytes": 27394,
+  "queries": [
+    "CAS \"DB2-150\" manual RS232 interface",
+    "site:github.com CAS \"DB2-150\""
+  ],
+  "discovered_urls": [
+    "https://2whg9wk.257.cz/smlouva/soubor/42496109/Dodatek%20%C4%8D.%201%20ke%20Kupn%C3%AD%20smlouv%C4%9B%20-%20GASTRO%20-%20TREFA_signed%20ano.pdf?backlink=0taih",
+    "https://casvtech.com/customer/service/ask/page01/index.jsp?reqPageNo=162",
+    "https://daewoo.manymanuals.com/cd-players/dvc-t6300n/service-manual-3996/61",
+    "https://gist.github.com/fedemengo/5aaaf99e3fac25b96fe02e41d9bd1e4d",
+    "https://kkmcom.ru/index.php/topic%2C4451.0.html?PHPSESSID=88ittb2clr7i1bk8onfm49rbj0",
+    "https://manolabjayaabadi.com/wp-content/uploads/2023/01/PB_11595781_Pharma_and_Chemistry_en.pdf",
+    "https://oshib.top/vesy-cas-db2-oshibka-error-0/",
+    "https://oshibok.top/vesy-cas-db2-oshibka-error-0/",
+    "https://smlouvy.gov.cz/smlouva/soubor/26985113/Smlouva_opravy.pdf",
+    "https://smlouvy.gov.cz/smlouva/soubor/34209011/Inventutni_soupis_majetku_k_29.2.2024.pdf?backlink=6j5pp",
+    "https://www.eurovahy.sk/1763/cas-db2-do-150kg",
+    "https://www.hepnar.cz/podlahova-gastro-vaha-cas-db2-150-p639",
+    "https://www.kokaja.cz/fotky76654/fotov/_ps_93VAH-3.pdf",
+    "https://www.merlegio.hu/cas-db2-platform-merleg-150-kg-ig-20-g-50-g-hitelesitett/",
+    "https://www.rxelectronics.se/datasheet/ed/LE57D121BTCT.pdf",
+    "https://www.vahy-teplice.cz/vahy/mustkova-vaha-cas-db2-46x57-cm-do-60-150kg-20-50g-cejchovana/",
+    "https://www.vahy-vaha.cz/obchodni-vahy-cejchovane",
+    "https://www.vahy-vaha.cz/prodejni-vaha-db2-150-do-150kg?_Box%5B1522%5D%5BIdOpenedNode%5D=87",
+    "https://www.vahysevaz.sk/mostikova-vaha-cas-db2-do-150kg/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

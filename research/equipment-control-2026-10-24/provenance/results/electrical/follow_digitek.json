@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_digitek.json",
+  "original_log_sha256": "6f78bffa8933696f0c35b8a33a507535d713e2fee175f1cdfc99b14237b4ecec",
+  "original_log_bytes": 27408,
+  "queries": [
+    "디지텍파워 DEFC DDPS 통신 매뉴얼"
+  ],
+  "discovered_urls": [
+    "https://archive.ph/1Tvcc",
+    "https://blog.naver.com/sm921215/221308753114",
+    "https://deal.dfset.me/",
+    "https://df.game.naver.com/guide?no=1494",
+    "https://df.inven.co.kr/",
+    "https://df.nexon.com/community/dnfboard/article/2851659?searchKeyword=%EC%9D%B8%EC%B1%88&searchType=1&titleType=1",
+    "https://killgak.com/df/",
+    "https://m.gamechosun.co.kr/board/view.php?bid=tip&cate=2&num=2673369&page=15&site=df",
+    "https://m.manuals.plus/m/f7b24edc0bc4cc85cb47a8ad9ada48548caf750fdbd403912c850bf04254da42.pdf",
+    "https://m.namu.moe/w/%EB%94%94%EC%A7%80%EB%AA%AC%20%EB%94%94%ED%8E%9C%EC%8A%A4/%ED%85%8C%EC%9D%B4%EB%A8%B8",
+    "https://pland.run/statistics/skill",
+    "https://www.digwow.net/%EB%A7%A4%EC%A7%81-%EB%94%94%ED%8E%9C%EC%8A%A4-td/%EB%A7%A4%EC%A7%81-%EB%94%94%ED%8E%9C%EC%8A%A4-td-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%EC%9C%A0%EB%8B%9B-%EB%B0%B0%EC%B9%98%EC%99%80-%EC%86%8D%EC%84%B1-%EC%A1%B0%ED%95%A9-%EA%B3%B5%EB%9E%B5",
+    "https://www.dongdotech.com/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMDA0Mjg2NGVhOWRjY2Y3ZDJmIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjQwNDAzYmI2ZDBlMTUyMGVmZiI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDI0MDQwM2FlZjFhNDhlNTEwZTQiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5OGJkYTQ0YjY5MzYiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://www.dongdotech.com/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMDA0Mjg2NGVhOWRjY2Y3ZDJmIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjQwNDAzZmY4MDk1NWIzNzBlNSI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDI0MDQwMzZjNTJlZTc4OGNiNWUiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5OGQyYjcwNDE4YzUiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://www.goe.go.kr/resource/goe/na/bbs_2457/2025/05/b3465205-4710-4aba-85f2-4ab244aad3bc.pdf",
+    "https://www.inven.co.kr/board/maple/2296/102288",
+    "https://www.namu.moe/w/%EB%8D%98%EC%A0%84%EC%95%A4%ED%8C%8C%EC%9D%B4%ED%84%B0/%EB%8D%B0%EB%AF%B8%EC%A7%80%20%EA%B3%84%EC%82%B0%20%EA%B3%B5%EC%8B%9D?from=%EB%8D%B0%EB%AF%B8%EC%A7%80+%EA%B3%84%EC%82%B0+%EA%B3%B5%EC%8B%9D",
+    "https://www.witree.co.kr/layouts/witree_2015/data/product/Manual/ANIO-SE_user%20guide_Kor%28NEW%29.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

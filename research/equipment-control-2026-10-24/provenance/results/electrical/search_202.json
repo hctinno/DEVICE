@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_202.json",
+  "original_log_sha256": "ca3aabd35934475e0746514b5c042d33e9c94e7a1d63842a9f44ed6c4c2f9b06",
+  "original_log_bytes": 27396,
+  "queries": [
+    "HIOKI DT4252 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://life.hiokikorea.com/product/product_view.html?c_id=A015002&p_no=214&s_tab=tab3",
+    "https://mme-ae.com/wp-content/uploads/2021/12/DT4251A981-05.pdf",
+    "https://shop.hioki.eu/media/66/77/ac/1739802710/DT4251A981-06_Manual_EN.pdf?srsltid=AfmBOoq3hclsh3F4IvU847EGacJMgV22-pGwluTfvJanJvbLlbRrC6xt&ts=1739802710",
+    "https://shop.hioki.eu/media/66/77/ac/1739802710/DT4251A981-06_Manual_EN.pdf?srsltid=AfmBOoqAHAOxnRa-6yH0Wb2SWjzPh1lO36apWWtf9if-6CIA3aFl9slF&ts=1739802710",
+    "https://shop.hioki.eu/media/66/77/ac/1739802710/DT4251A981-06_Manual_EN.pdf?ts=1739802710",
+    "https://www.hioki.cn/home/support/softfiledown/dowlaodid/155.html",
+    "https://www.hioki.cn/products/dt4252",
+    "https://www.hioki.com/download/30662",
+    "https://www.hioki.com/euro-en/products/testers/dmm-3/id_5962",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n9752",
+    "https://www.hioki.com/id-id/products/testers/dmm-3/id_5962",
+    "https://www.hioki.com/in-en/products/testers/dmm-3/id_5962",
+    "https://www.hioki.com/redirect/content/product/5729",
+    "https://www.hioki.com/us-en/products/testers/dmm-3/id_5962",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A015002&p_no=214&s_tab=tab1",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A019006&p_no=214&s_tab=tab3",
+    "https://www.manualslib.com/manual/1741596/Hioki-Dt4252.html",
+    "https://www.manualslib.com/manual/1848731/Hioki-Dt4252.html",
+    "https://www.reddit.com/r/MechanicAdvice/comments/1fcakd0"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

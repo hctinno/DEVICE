@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open034.json",
+  "original_log_sha256": "2ae352b8a090d074c7cfaf9465b5b5bf948707c09a7e3362f86bb62190a10012",
+  "original_log_bytes": 23960,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.keysight.com/us/en/assets/9018-40059/user-manuals/9018-40059.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

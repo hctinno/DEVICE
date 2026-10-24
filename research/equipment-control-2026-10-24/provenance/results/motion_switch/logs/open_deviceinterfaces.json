@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/open_deviceinterfaces.json",
+  "original_log_sha256": "172b38fd1847b3e6a63dd467e22e44d3a255c3f2e7606429666048e4518855d6",
+  "original_log_bytes": 26479,
+  "queries": [],
+  "discovered_urls": [
+    "https://mkemc.com/index.php/products/ethernet-automotive-standard-lan/automotive-ethernet-links-t1/1000base-t1/optolan-gb-88q2112",
+    "https://www.hik-consulting.pl/files/SW04-Switching-Box.pdf",
+    "https://www.peak-system.com/products/hardware/couplers-converters/pcan-lwl/",
+    "https://www.peak-system.com/products/hardware/couplers-converters/plin-lwl/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

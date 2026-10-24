@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_283.json",
+  "original_log_sha256": "44ac6fd07775383422cac933c8e30a2318aacb8bf5398189aa5e6a8dfa54e614",
+  "original_log_bytes": 28504,
+  "queries": [
+    "에이 씨 피 코리아(주) AFC-1010 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://for-a.co.kr/165",
+    "https://manualzilla.com/doc/5814449/english-manual-template---for",
+    "https://manualzz.com/doc/11991966/for-a-fa-10-ru-remote-control-unit--fa-10-1010-frame-sync",
+    "https://manualzz.com/doc/6275122/honeywell-enraf-1010-cj-load-computer-installation-and-se",
+    "https://manualzz.com/doc/65730513/for-a-fa-1010--fa-10gpi--fa-10ps--fa-10ru--fa-aux30-opera",
+    "https://manualzz.com/doc/67962158/for-a-fa-1010-multi-channel-signal-processor-setup-guide",
+    "https://manualzz.com/doc/o/2hlaq2/for-a-fa--10dccru-operation-manual-10-5.-gpi-input-circuit",
+    "https://w.for-a.com/products/fa1010/",
+    "https://www.for-a.com/",
+    "https://www.for-a.com/product-resources/downloads/",
+    "https://www.notice-facile.com/en/manual/1440759/for.a%2Bfa-10dccru",
+    "https://www.pikorea.co.kr/ko/knowledge-center/downloads/product-documentation/R",
+    "https://www.pikorea.co.kr/ko/knowledge-center/downloads/product-documentation/W",
+    "https://www.sollae.co.kr/ko/download/pds_files/ezi10ko.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

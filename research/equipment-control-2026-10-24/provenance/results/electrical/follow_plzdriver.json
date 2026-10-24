@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_plzdriver.json",
+  "original_log_sha256": "03dee8109274f859d154ff5c75a7699248d142b706bb7c843879c8ff2f113d72",
+  "original_log_bytes": 28014,
+  "queries": [
+    "\"PLZ (3W/3WH/4W/4WA/4WL/4WH/U)\" driver"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download/cat_plz-u/",
+    "https://global.kikusui.co.jp/w2-2/discon-en/plz1004w/",
+    "https://global.kikusui.co.jp/w2-2/electronic-load-en/plz-u-en/plz-u-series/",
+    "https://global.kikusui.co.jp/w2-2/software-en/wavy-series/",
+    "https://in.kikusui.co.jp/download/cat_plz-u/",
+    "https://in.kikusui.co.jp/w2-2/electronic-load-in/plz-u-in/plz-u-series/",
+    "https://kikusui-europe.com/dri-fir-upd/plz-ivi/",
+    "https://kikusui.co.jp/download/cat-plz164w/",
+    "https://kikusui.co.jp/download/cat-plz164wh/",
+    "https://kikusui.co.jp/download/cat_plz-4wl/",
+    "https://kikusui.co.jp/dri-fir-upd/plz-ivi/",
+    "https://kikusui.co.jp/w2-2/discon/plz1004wh/",
+    "https://kikusui.co.jp/w2-2/discon/plz164wl/",
+    "https://kikusui.co.jp/w2-2/discon/plz334w/",
+    "https://kikusuiamerica.com/drivers/",
+    "https://kikusuiamerica.com/w2-2/software-en-en_us/wavy-series/",
+    "https://ph.kikusui.co.jp/download/cat_plz-u/",
+    "https://ph.kikusui.co.jp/w2-2/electronic-load-ph/plz-u-series/plz-u-series/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

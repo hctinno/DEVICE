@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item302.json",
+  "original_log_sha256": "00893842305248d6509ddae21461a313d438bf6afadd2a958ee01f8803a9f7f1",
+  "original_log_bytes": 13707,
+  "queries": [
+    "Whaleteq \"CMRR 3.0+\" software interface manual",
+    "site:github.com \"CMRR 3.0+\" Whaleteq"
+  ],
+  "discovered_urls": [
+    "http://youtu.be/uiDR3VS8EV0",
+    "https://device.report/m/1d8e60cd3bc75c933e2f586df9ff8bc4ab93787170e7046ce5ef3fbd36a1d42d",
+    "https://device.report/manuals/whaleteq-cmrr-3-0-user-manual",
+    "https://github.com/jayis1/hardware-design-lab/blob/main/neurolink/phase1_conceptual_architecture.md",
+    "https://github.com/jiyuanduan001-oss/LLM_Amplifier_Sizing/blob/master/comparison_report_tsm_single.md",
+    "https://github.com/lab-emi/ChipJev/blob/main/docs/prompt-agent/SPEC.md",
+    "https://github.com/mibe/electronics/blob/master/EEVblog.txt",
+    "https://github.com/serhii-matsyshyn/biolistener_evaluation",
+    "https://github.com/zavesone/EEG-Benchmark-Tool/blob/main/README.md",
+    "https://helixindia.com/wp-content/uploads/2023/12/cmr3.0.pdf",
+    "https://manuals.plus/m/1d8e60cd3bc75c933e2f586df9ff8bc4ab93787170e7046ce5ef3fbd36a1d42d",
+    "https://manuals.plus/ml/whaleteq/cmrr-3-0-common-mode-rejection-ratio-tester-manual",
+    "https://manualspro.net/143682-whaleteq-cmrr-30-common-mode-rejection-ratio-tester-user-manual",
+    "https://www.manualslib.com/manual/1667168/Whaleteq-Cmrr-3-0.html",
+    "https://www.manualslib.com/manual/1667168/Whaleteq-Cmrr-3-0.html?page=19",
+    "https://www.manualslib.com/manual/1667168/Whaleteq-Cmrr-3-0.html?page=20",
+    "https://www.manualslib.com/manual/4230119/Whaleteq-Cmrr-3-0Plus.html",
+    "https://www.manualslib.com/manual/4230119/Whaleteq-Cmrr-3-0Plus.html?page=26",
+    "https://www.whaleteq.com/data/gdownload/files/ecg_ekg_testing/cmrr_3.0_plus/manual/um_cmrr3.0plus_en_v.1.0.0_241024.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/um_cmrr%203.0%20plus_en_220506.pdf",
+    "https://www.whaleteq.com/en/news/view14-cmrr-30-plus-assists-you-to-test-cmrr-with-ease",
+    "https://www.whaleteq.com/en/product/2/14-eeg-testing/view17-cmrr30-plus"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

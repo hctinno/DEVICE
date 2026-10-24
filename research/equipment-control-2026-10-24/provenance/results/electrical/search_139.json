@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_139.json",
+  "original_log_sha256": "cc76fa42dfddbeee74d02984be06f113ce4799f1b48466658e5181fd2ac1cd6f",
+  "original_log_bytes": 23989,
+  "queries": [
+    "Tektronix TDS2012C manual programming software"
+  ],
+  "discovered_urls": [
+    "https://docs.rs-online.com/6b2d/0900766b8137256c.pdf",
+    "https://download.tek.com/document/48W_25025_9_WW-Letter.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://manualzz.com/doc/55891453/tektronix-tds2012c--tds2014c--tds2022c--tds2024c-service-",
+    "https://mme-user.net.tw/MAVIN/Support/Tektronix/Mavin-Tek-Full-Line-Product-Catalog-March-48W1926.pdf",
+    "https://my.tek.com/en/tektalk/oscilloscopes/3d377a5b-4c40-ed11-9db0-00224806ae7d",
+    "https://sine.ni.com/apps/utf8/niid_web_display.model_page?p_model_id=17991",
+    "https://supereyes.ru/catalog/oscilloscopes_digital/tds2012c/",
+    "https://uploads.strikinglycdn.com/files/c25fc11a-bddc-4fba-8a32-36b7ece9e741/97458509453.pdf",
+    "https://w140.com/tekwiki/images/e/e8/071-0493-01.pdf",
+    "https://w140.com/tekwiki/wiki/TDS_Series_Software",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/oscilloscope/tds1000-manual",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/oscilloscope/tds1001b-manual/tds1000b-tds2000b-tds1000c-edu-tds2000c-and-tps2000b-series",
+    "https://www.allaboutcircuits.com/test-measurement/oscilloscopes/tds2000c-series-tds2012c/manual/",
+    "https://www.allaboutcircuits.com/test-measurement/oscilloscopes/tds2000c-series-tds2012c/service-guide/",
+    "https://www.es.co.th/Schemetic/PDF/TDS2000C-SERIES.PDF",
+    "https://www.reddit.com/r/AskElectronics/comments/dml8pi",
+    "https://www.reddit.com/r/oscilloscope/comments/1ubdrwq/anyone_have_the_manual_for_a_dpu_411_type_ii/",
+    "https://www.tek.com/en/oscilloscope/tds1000-manual",
+    "https://www.tek.com/en/products/software/tekscope-pc-analysis-software",
+    "https://www.tek.com/en/support/software/utility/tektronix-openchoice-desktop-application-tdspcs1-v26",
+    "https://www.tequipment.net/TektronixTDS2012C.asp/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

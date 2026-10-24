@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_228.json",
+  "original_log_sha256": "0f558ea2703ee28434ee4fcc5b6e3db808135eccc431d1557715a1bcd7845a8a",
+  "original_log_bytes": 35512,
+  "queries": [
+    "GWINSTEK GP2323 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/54bea4c3adf8176d3ed5f7661dbe4c5d7fda31e03804170963fd3ffc7e56986e",
+    "https://device.report/m/bb54325cc05808e055d2e1ac46c00f08a02aaff960d56360db933f737a4b5d89",
+    "https://manualmachine.com/gwinstek/gpp1326/17890606-user-manual/",
+    "https://manualzz.com/doc/57136278/gwinstek-programmable-dc-power-supply-gpp-1326-gpp-2323-g",
+    "https://manualzz.com/doc/70891212/gw-instek-gpe-2323-series-user-manual",
+    "https://www.gwinstek.com/en-IN/products/downloadSeriesDownNew/26009/3463",
+    "https://www.gwinstek.com/en-global/download/downloadFile/26004",
+    "https://www.gwinstek.com/en-global/products/downloadSeriesDownNew/26004/3453",
+    "https://www.manualslib.com/manual/2741996/Gw-Instek-Gpp-2323.html",
+    "https://www.manualslib.com/manual/2741996/Gw-Instek-Gpp-2323.html?page=101",
+    "https://www.manualslib.com/manual/2741996/Gw-Instek-Gpp-2323.html?page=55",
+    "https://www.manualslib.com/manual/2741996/Gw-Instek-Gpp-2323.html?page=92",
+    "https://www.notice-facile.com/en/manual/1423392/gw%2Binstek%2Bgpp-4323",
+    "https://www.notice-facile.com/en/manual/1861621/gw%2Binstek%2Bgpe-2323",
+    "https://www.reddit.com/r/PLC/comments/1jiizzm",
+    "https://www.scribd.com/document/827729218/GW-GPP-Series-DC-Power-Supplies-User-Manual",
+    "https://www.transcat.com/media/pdf/gwinstek-gpp-1000-series-user-manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

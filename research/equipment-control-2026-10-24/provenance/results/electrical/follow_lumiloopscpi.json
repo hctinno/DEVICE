@@ -1,0 +1,27 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_lumiloopscpi.json",
+  "original_log_sha256": "56f9284bf45ebf8fc767b1331514866421ca04173a93d79512b46214e46a9d64",
+  "original_log_bytes": 27465,
+  "queries": [
+    "site:lumiloop.de LSPM 1.0+ 2.0+ SCPI commands"
+  ],
+  "discovered_urls": [
+    "https://lumiloop.de/2023/01/lumiloop-rf-power-meter/",
+    "https://lumiloop.de/2023/04/lspm-released/",
+    "https://lumiloop.de/2024/07/lumiloop-software-update-available/",
+    "https://lumiloop.de/calibration/",
+    "https://lumiloop.de/custom-download-category/manuals/",
+    "https://lumiloop.de/downloads/manuals/LSPM_Manual.pdf",
+    "https://lumiloop.de/products/lspm-rf-power-meter/",
+    "https://lumiloop.de/products/lspm-rf-power-meter/lspm-1-0/",
+    "https://lumiloop.de/products/lspm-rf-power-meter/lspm-2-0/",
+    "https://lumiloop.de/support/documents-and-downloads/",
+    "https://lumiloop.de/support/documents-and-downloads/?wpv-custom-download-category=datasheets&wpv-relationship-filter=510&wpv_post_search=&wpv_view_count=3003",
+    "https://lumiloop.de/support/documents-and-downloads/?wpv-custom-download-category=manuals&wpv_aux_current_post_id=2998&wpv_aux_parent_post_id=2998&wpv_view_count=3003",
+    "https://lumiloop.de/support/documents-and-downloads/?wpv_paged=7&wpv_view_count=3003"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

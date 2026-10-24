@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_083.json",
+  "original_log_sha256": "167bd05f1babf8318d182a0022c300c5aac23574a81bbf0a67be9eff400856c7",
+  "original_log_bytes": 28697,
+  "queries": [
+    "CHROMA 62012P-80-60 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://chroma.si/src/assets/Izdelki/DCViri/62000P-EN.pdf",
+    "https://geniuss.kr/download/?bmode=view&idx=14407947",
+    "https://www.chroma.si/src/assets/Izdelki/DCViri/62000P-EN.pdf",
+    "https://www.chromausa.com/pdf/62000P%20Programmable%20DC%20Power%20Supply%20052023.pdf",
+    "https://www.chromausa.com/pdf/62000P.pdf",
+    "https://www.chromausa.com/pdf/Br-62000P-dcsupply-052017.pdf",
+    "https://www.chromausa.com/product/programmable-dc-power-supply-62000p/",
+    "https://www.manualsdir.com/manuals/318421/atec-chroma-62000p-series.html?page=2",
+    "https://www.manualsdir.com/manuals/318421/atec-chroma-62000p-series.html?page=3",
+    "https://www.manualshelf.com/manual/atec/chroma-62000p-series/manual-english.html",
+    "https://www.manualslib.com/manual/2184481/Chroma-62000p-Series.html",
+    "https://www.manualslib.com/manual/2184481/Chroma-62000p-Series.html?page=77",
+    "https://www.manualslib.com/manual/2184481/Chroma-62000p-Series.html?page=90",
+    "https://www.manualslib.com/manual/3684565/Chroma-62000p-Series.html",
+    "https://www.manualslib.com/products/Chroma-62012p-80-60-11811570.html",
+    "https://www.mdltechnologies.co.uk/products/model-62000p-series-programmable-dc-power-supplies/",
+    "https://www.scribd.com/document/903896118/Chroma-62006P-30-80-DB-1-DE-1",
+    "https://www.transcat.ca/media/pdf/Chroma-62050P-100-100-Data-Sheet.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_357.json",
+  "original_log_sha256": "0a7d358000d67ac40b8e18eb45f80405c333ac7e40df4259ccf57f7ae0fd6ac1",
+  "original_log_bytes": 26414,
+  "queries": [
+    "FLUKE 73-III manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.fluke.com/manuals/73iii___iseng0000.pdf",
+    "https://assets.fluke.com/manuals/8xiii",
+    "https://lira.epac.to/DOCS-TECH/Manuals%20and%20Datasheets/Fluke/",
+    "https://manualzilla.com/doc/6484543/manuel-du-multim%C3%A8tre-fluke-73",
+    "https://manualzz.com/doc/29639641/fluke-series-iii-70-73-multimeter-instruction-sheet",
+    "https://media.fluke.com/e4f6553b-7a4f-49e6-9827-b10800c266ac_original%20file.pdf",
+    "https://studylib.net/doc/18241590/fluke-73-multimeter",
+    "https://www.eserviceinfo.com/downloadsm/169415/Fluke_FLUKE%2073%20III%20Series%20Instruction.html",
+    "https://www.fluke.com/en-us/support/software-downloads",
+    "https://www.flukenetworks.com/support",
+    "https://www.manualslib.com/brand/fluke/multimeter.html",
+    "https://www.manualslib.com/manual/2389280/Fluke-73-Iii-Series.html",
+    "https://www.manualslib.com/manual/3937245/Fluke-Iii-73-Series.html",
+    "https://www.manualzz.com/doc/3154872/fluke-series-iii-70-73-multimeter-instruction-sheet",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/fluke/comments/11y1pxm",
+    "https://www.reddit.com/r/fluke/comments/1ny1ztc",
+    "https://www.reddit.com/r/fluke/comments/1s86sk5/freeopensource_desktop_appcli_app_for_fluke/",
+    "https://www.reddit.com/r/fluke/comments/1tv10rj/fluke_70iii_overvolted_not_working_properly/",
+    "https://www.schroedle.de/m_list_wp.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

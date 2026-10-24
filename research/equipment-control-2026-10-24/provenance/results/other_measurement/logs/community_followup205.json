@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup205.json",
+  "original_log_sha256": "5f0769911c08a13e9fc2b3aa46c1ba895d72c0e86536c137decccd0fc54e8c99",
+  "original_log_bytes": 357,
+  "queries": [
+    "site:github.com \"TES 1330A\" \"TES\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

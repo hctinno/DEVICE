@@ -1,0 +1,26 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item221.json",
+  "original_log_sha256": "ba2de598974b5b39a85073fc9c9e7a5213a514879b002450373215598c0bcc90",
+  "original_log_bytes": 16587,
+  "queries": [
+    "Onda Corp. \"RFB-2000 system\" software interface manual",
+    "site:github.com \"RFB-2000 system\" Onda Corp."
+  ],
+  "discovered_urls": [
+    "https://beenetworknews.wordpress.com/2012/10/07/business-and-career-opportunities-bids-and-purchases-27/",
+    "https://beenetworknews.wordpress.com/2012/11/20/business-and-career-opportunities-bids-and-purchases-31/",
+    "https://community.cisco.com/t5/small-business-switches/sg200-26-26-port-switch-firmware-upgrade/td-p/2768163",
+    "https://computer2know.de/index.php?category=network&site=all",
+    "https://manuals.plus/m/c5fe4a2eb740b10b0ef12235b7c2dfbd3759978b4d10100aa0b85a27f5abfc9b",
+    "https://manuals.plus/m/f4b9bc75297b15f8067a027bac148624a318c93f6db2b3f9aafce6c98694ed78",
+    "https://manualzilla.com/doc/5743724/penetration-testing---procedures-and-methodologies",
+    "https://manualzilla.com/doc/6065237/controlo-de-helic%C3%B3pteros-de-aeromodelismo",
+    "https://telecomintel.com/page/1/?p=1",
+    "https://www.manualslib.com/manual/2993783/Aspect-Medical-Systems-Xp-Platform-A-2000.html",
+    "https://www.scribd.com/document/980426204/Research-and-Updates-on-the-Use-of-Artificial-Intelligence-in-Drone-Technology"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

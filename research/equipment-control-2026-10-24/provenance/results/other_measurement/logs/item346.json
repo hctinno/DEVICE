@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item346.json",
+  "original_log_sha256": "260f1db1fb0b405fbe0cae9e80698b8ed41ea3162566e5f1b460cc5bd9c5cc20",
+  "original_log_bytes": 15545,
+  "queries": [
+    "Holaday Industries \"HI-1501\" software interface manual",
+    "site:github.com \"HI-1501\" Holaday Industries"
+  ],
+  "discovered_urls": [
+    "https://aerobasegroup.com/cage-code/52433",
+    "https://ets-lindgren.manymanuals.fr/equipment/hi-1501-microwave-oven-survey-meter/user-manual-26814/16",
+    "https://github.com/textcreationpartnership/A08425",
+    "https://manualmachine.com/astex/ax2100/14776142-installation/",
+    "https://manuals.plus/m/3538b4625efe33b8d313623ab36f8a1e2efe5ec524f5a4fa23c721ffc261985a",
+    "https://manuals.plus/m/fdc9f0cb8d6fecbcfc2d00b49f2476874e500b08576c10029c329525f24d5c4e",
+    "https://www.artisantg.com/44911-1/ETS-Lindgren-HI-1501",
+    "https://www.artisantg.com/TestMeasurement/44911-1/ETS-Lindgren-Holaday-HI-1501-Microwave-Survey-Meter",
+    "https://www.artisantg.com/info/ETS_Lindgren_Holaday_HI_1501_Manual_2021831360.pdf",
+    "https://www.ets-lindgren.com/sites/etsauthor/ProductsManuals/Probes_Monitors/HI-1501%20%281%29.pdf",
+    "https://www.manualsdir.com/manuals/636270/ets-lindgren-hi-1501-microwave-oven-survey-meter.html",
+    "https://www.manualsdir.com/manuals/636270/ets-lindgren-hi-1501-microwave-oven-survey-meter.html?page=16",
+    "https://www.manualslib.com/manual/1401361/Ets-Lindgren-Hi-1501.html",
+    "https://www.manualslib.com/manual/3232037/Dometic-Cdmw07b.html",
+    "https://www.yumpu.com/en/document/view/19537377/hi-1501-ets-lindgren",
+    "https://www.yumpu.com/en/embed/view/Ia1xExfHooi9j5rn"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

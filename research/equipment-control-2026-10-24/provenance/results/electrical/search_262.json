@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_262.json",
+  "original_log_sha256": "649d26d2f416f604753dd3c273dcca273b2c48a5d0efd1413d5dee650eb8766b",
+  "original_log_bytes": 32627,
+  "queries": [
+    "T.E.C.C TBCDS-3020-PSU manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/10dc90c71ff1c5a8b94e56d287647bd43d1e9547cdfbb199d2c64d422ddf0ade",
+    "https://device.report/m/2c1ba0cfac0dd12bb112a9d227c5eaddc7d0eae51c630aedf9de16cd3408112d",
+    "https://docs.johnsoncontrols.com/dsc/v/u/DSC/en-US/PS3020-Power-Supply-Installation-Instructions/3",
+    "https://m.media-amazon.com/images/I/B1kItCQ4fzS.pdf",
+    "https://manuals.plus/ae/1005008666066709",
+    "https://manuals.plus/asin/B0FBWHNQVS",
+    "https://manualzz.com/doc/6787825/wavecom-instruments-ps3020-dc-regulated-power-supply-user",
+    "https://manualzz.com/doc/9445139/digital-security-controls-ps3020-power-supply-user-manual",
+    "https://product.texio.co.jp/uploads/DCS-2000E_B71-0461-01_Programming_E_05.pdf",
+    "https://tecsystem.it/docs/2023/img_cd5d766c4f.pdf",
+    "https://w.technovision.com/images/teccd_manual.pdf",
+    "https://www.j-schneider.de/en/products/uninterruptible-power-supplies/ups-software/teccontrol",
+    "https://www.scribd.com/document/657398358/Twintex-PPS-3010-Manual",
+    "https://www.scribd.com/document/763498535/PSU-Programming-Manual-en-Rev1-7-220513-1",
+    "https://www.tcsoft.com/update/TCSPS%26IManual.pdf",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?series=Series+2220%2F2230%2F2231+Multi-Channel+Programmable+DC+Power+Supplies&type=manual",
+    "https://www.tek.com/ja/support/datasheets-manuals-software-downloads?series=%E3%82%B1%E3%83%BC%E3%82%B9%E3%83%AC%E3%83%BC2220%2F2230%2F2231%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

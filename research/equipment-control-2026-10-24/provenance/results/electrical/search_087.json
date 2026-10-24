@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_087.json",
+  "original_log_sha256": "d2b2a37121c5f7c1163b2673d48a20a6f582f635cc537f9ce4bc8f4c9a2535ab",
+  "original_log_bytes": 31303,
+  "queries": [
+    "PNE SOLUTION BT5V100A12CH manual programming software"
+  ],
+  "discovered_urls": [
+    "https://baihecontrol.com/en/support",
+    "https://click2electro.com/",
+    "https://click2electro.com/manual/",
+    "https://mans.io/files/viewer/2364062/93",
+    "https://peigroup.com/wp-content/uploads/IM05E01B02-51E_003.pdf",
+    "https://peigroup.com/wp-content/uploads/IM05E01C02-46E_003.pdf",
+    "https://phoenixautomationsolutions.com/support/software/",
+    "https://sandotech.ir/wp-content/uploads/2022/07/Programming-manual-1.pdf",
+    "https://studylib.net/doc/8252629/software-manual---smc-pneumatics",
+    "https://support.automationdirect.com/index.html",
+    "https://www.chauvin-arnoux.com/en/ressources-et-support/support-faq/software/bluetooth-module-update-for-version-v4.28-firmware-devices3",
+    "https://www.idec.com/en-in/resources-documents/downloads-and-updates",
+    "https://www.instrumart.com/assets/up750manual_1.pdf",
+    "https://www.lambarine.com/support/user/bt/download/btw100/",
+    "https://www.pce-instruments.com/india/api/getartfile?_dsp=inline&_fnr=3812849",
+    "https://www.pemicro.com/manuals/prog12z/manual-programming/",
+    "https://www.scribd.com/document/408087966/Manual-5000"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

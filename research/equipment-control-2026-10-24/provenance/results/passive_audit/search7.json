@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/passive_audit/search7.json",
+  "original_log_sha256": "460baad98dd290523141f0a53b8f1deeca520b8623f0775d68a3391978668098",
+  "original_log_bytes": 25680,
+  "queries": [
+    "\"Agilent\" \"8495B\" manual step attenuator",
+    "\"Daelim Electric\" \"355687\" transformer control",
+    "\"Elex Polytech\" \"SB335224\" water evaporation",
+    "\"케이제이테크\" \"가변경 워크테이블\""
+  ],
+  "discovered_urls": [
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/183e8abe-0b4e-4d98-b2cc-df3295c57cea/Agilent_8495D.pdf",
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/8e674b7f-0bd1-414c-a63e-8062515f7d7f/5989-6948EN.pdf",
+    "https://hpwiki.mcguirescientificservices.com/_media/service_notes%3A8495b-01a.pdf",
+    "https://hpwiki.mcguirescientificservices.com/service_notes%3Aservice_note_index_2025_08_31",
+    "https://manualmachine.com/agilent/8495b/26954238-operating-and-service/",
+    "https://manuals.plus/m/3e41c3c421917e20310f985f708b56e74732036a87697e67185dd0ff8e5f1f1c",
+    "https://manualzilla.com/doc/7325614/agilent-technologies-8495-service-manual",
+    "https://manualzz.com/doc/1785428/agilent-technologies-attenuators-service-manual",
+    "https://refur.nubicom.co.kr/wp/wp-content/uploads/2023/10/AT_85032F_Spec_compressed.pdf",
+    "https://www.artisantg.com/info/Keysight_Agilent_8495D_Manual_2016119143338.pdf",
+    "https://www.atecorp.com/getmedia/682b8ecb-4114-4340-af7f-49e9d0a2fcd9/agilent-8494ab-95ab-96ab_manual_1.pdf",
+    "https://www.radwell.com//Buy/KEYSIGHT%20TECHNOLOGIES/KEYSIGHT%20AGILENT%20HP/8495B",
+    "https://www.radwell.com/Buy/KEYSIGHT%20TECHNOLOGIES/KEYSIGHT%20AGILENT%20HP/8495B",
+    "https://www.scribd.com/document/973991254/Info-Agilent-8494B-Manual",
+    "https://www.soriaudio.com/index.php?document_srl=30960663&mid=m_09",
+    "https://www.soriaudio.com/index.php?document_srl=31209473&mid=m_09",
+    "https://www.transcat.ca/products/used-and-refurbished-equipment/used-rf-test/used-attenuators/keysight-technologies-8495b-manual-step-attenuator-dc-used",
+    "https://www.transcat.com/keysight-technologies-8495b-manual-step-attenuator-dc-used"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

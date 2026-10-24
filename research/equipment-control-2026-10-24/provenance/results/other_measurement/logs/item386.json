@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item386.json",
+  "original_log_sha256": "b273639b227c117e609e98fe423ea18957c64f5cf1c906c5a976d73d68bb9fea",
+  "original_log_bytes": 13347,
+  "queries": [
+    "(주)선맥 \"SUNMAC 100\" software interface manual",
+    "site:github.com \"SUNMAC 100\" (주)선맥"
+  ],
+  "discovered_urls": [
+    "https://bitsavers.computerhistory.org/magazines/Computer_Decisions/Computer_Decisions_V17_N17_19850827.pdf",
+    "https://devzone.nordicsemi.com/f/nordic-q-a/125286/multiple-definition-of-error-when-using-custom-commands-in-manufacturer-specific-cluster",
+    "https://en.bitsogum.co.kr/",
+    "https://m.jobkorea.co.kr/company/49057474/Recruit",
+    "https://retrocdn.net/images/5/52/YourComputer_AU_1985-02.pdf",
+    "https://revistas.inpi.gov.br/pdf/marcas2048.pdf",
+    "https://seositecheckup.com/seo-audit/www.sunmacsystems.com",
+    "https://sollega.com/downloads/fr510/Install%20Manual%20FINAL.pdf",
+    "https://sunmac.co.kr/",
+    "https://sunmac.co.kr/board/index.html",
+    "https://sunmac.co.kr/category/%241/24/",
+    "https://sunmac.co.kr/category/%241/24/?cate_no=24&sort_method=1",
+    "https://sunmac.co.kr/category/%EB%B9%9B%EC%86%8C%EA%B8%88-%EB%82%B1%ED%8F%AC%EC%9E%A5/37/",
+    "https://sunmac.co.kr/product/%EC%8A%88%ED%8D%BC200%EC%8B%9C%EA%B0%84-%EB%B0%B1%EC%84%9D%EB%B9%9B%EC%86%8C%EA%B8%88-100%ED%8F%AC/11/",
+    "https://sunmac.co.kr/product/%EC%8A%88%ED%8D%BC200%EC%8B%9C%EA%B0%84-%EB%B0%B1%EC%84%9D%EB%B9%9B%EC%86%8C%EA%B8%88-100%ED%8F%AC/11/category/24/display/1/",
+    "https://www.jobkorea.co.kr/company/49057474/Recruit",
+    "https://www.sunmacsystems.com",
+    "https://www.tniuscbe.org/download/gg/gp316.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

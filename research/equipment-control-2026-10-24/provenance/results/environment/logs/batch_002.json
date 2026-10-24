@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_002.json",
+  "original_log_sha256": "70a16009a9be1e78d516d3f8d26dfcef685acae7316e548040c48f599d8d0237",
+  "original_log_bytes": 26367,
+  "queries": [
+    "DHC \"DH48S\" manual communication software GitHub",
+    "GTPS \"GTPS-1CH20\" manual communication software GitHub",
+    "Kingpo \"KP-354315\" manual communication software GitHub",
+    "Kingpo \"KP-CG200\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://aeliyamarinetech.com/products/dahua-dhc-dh48s-timer-relay-ac-dc12-24v",
+    "https://electronics.com.bd/digital-timer-relay-0-01-99h99m-time-delay-relay-with-clock-socket-dc12v",
+    "https://es.scribd.com/document/786498944/Manual-DH48J",
+    "https://eureka.patsnap.com/patent/CN222785181U",
+    "https://github.com/nicedreamzapp/Heat-N-Clean-Glass-Oven/blob/main/Controller_Setup_Guide.md",
+    "https://industrialesandes.co/img/cms/A1-34/DH48S.pdf",
+    "https://it.scribd.com/doc/64135578/E-DH48S-S",
+    "https://ple.vn/images/virtuemart/datasheet/6922-dh48s-2z.pdf",
+    "https://ro.scribd.com/document/433484244/DH48S",
+    "https://tao.hooos.com/search?page=2&w=jss48",
+    "https://www.c-lin.cn/uploadfiles/files/20220907102814_1489.pdf",
+    "https://www.hi1718.com/top-products/1-18026579.html",
+    "https://www.jd.com/brand/6728b55e7a34d35083aa.html",
+    "https://www.manuallib.com/download/pdf16/EQUIPMENT-DH48S-S-TIME-RELAY-MANUAL.PDF",
+    "https://www.santaclarasystems.com/allen-bradley/1756-dh485",
+    "https://www.studocu.id/id/document/sekolah-menengah-atas-negeri-1-kota-sukabumi/electrical/wiring-diagram-for-blower-control-panel-kandang-ayam/164653162",
+    "https://www.volza.com/p/article-or-code/hsn-code-8483109100/import-data/imports-in-peru/origin-china/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

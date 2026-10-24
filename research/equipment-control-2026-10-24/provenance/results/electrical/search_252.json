@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_252.json",
+  "original_log_sha256": "cc52d84e06169e30ea14ae08fb667eae68fa5e4acda176e7b0566677424c113c",
+  "original_log_bytes": 33424,
+  "queries": [
+    "AC Power Korea AFC-3030 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://acnt.co.kr/en/sub/search/search.php",
+    "https://acnt.co.kr/kr/sub/download/list.php",
+    "https://assets.tequipment.net/assets/1/26/Preen_AFC_Series_-_User_Manual_Updated-2018.pdf",
+    "https://assets.tequipment.net/assets/1/26/Preen_AFC_Series_User_Manual.pdf",
+    "https://fr.scribd.com/document/447677153/AFP3030-Software-Mismatch-V1-0",
+    "https://www.acnt.co.kr/en/sub/download/list.php?s_cate=Product+Manuals",
+    "https://www.acpower.net/en/products/afc",
+    "https://www.acpower.net/en/products/afv-plus",
+    "https://www.acpower.net/en/support/downloads",
+    "https://www.manualslib.com/manual/1556717/Notifier-Afp-3030.html?page=21",
+    "https://www.saelig.com/supplier/preen/afc-series-user-manual.pdf",
+    "https://www.scribd.com/document/1076830883/AFP-3030-Programming-Manual-RevG",
+    "https://www.scribd.com/document/721354090/AFP-3030-Operations-Manual-RevC",
+    "https://www.scribd.com/document/765324118/Fire-Alarm-Control-Panel-Installation-AFP-3030-DOC-01-031-H",
+    "https://www.transcat.com/media/pdf/preen-afc-series-product-manual.pdf",
+    "https://www.wison.co.kr/sub_product/prod1_view.php?cate=0001_&p_idx=229&pg=1"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

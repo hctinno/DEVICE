@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item213.json",
+  "original_log_sha256": "c3105dc84fd02a92552937775336ad5169faff64eccdfa947ccf8bc2095d3d1c",
+  "original_log_bytes": 13705,
+  "queries": [
+    "KOBETO \"KOB-340\" software interface manual",
+    "site:github.com \"KOB-340\" KOBETO"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/172e42ebbfb12f6f5534cc571aba0c0b115846efe69cff576bb8429a1bbcf496.pdf",
+    "https://freshmanuals.com/mercury",
+    "https://gist.github.com/panathea/dfeecef6b7e4a9a5f77f50bcf28d61f4",
+    "https://github.com/deepin-community/hwdata/blob/master/pnp.ids",
+    "https://github.com/lord2281/routerkeygen/blob/master/qt/src/include/unknown.h",
+    "https://toolis.co.kr/",
+    "https://www.devicemart.co.kr/goods/brand?category_code=00120001&code=0722",
+    "https://www.devicemart.co.kr/goods/brand?code=0722&iframe=&popup=&sort=low_price",
+    "https://www.devicemart.co.kr/goods/view?no=1289348",
+    "https://www.navimro.com/g/1734050/",
+    "https://www.navimro.com/g/195753",
+    "https://www.navimro.com/p/K22269667",
+    "https://www.navimro.com/p/K36942731/",
+    "https://www.navimro.com/p/K36947667",
+    "https://www.navimro.com/p/K64976569",
+    "https://www.perfect09.com/goods/goods_list.php?cateCd=004002"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

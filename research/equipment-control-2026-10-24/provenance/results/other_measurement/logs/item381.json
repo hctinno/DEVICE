@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item381.json",
+  "original_log_sha256": "b69286fe0aeb20cbcbff40b374a233d56defe2c73879acd18188cba5859299ab",
+  "original_log_bytes": 15150,
+  "queries": [
+    "TESTO \"175-H1\" software interface manual",
+    "site:github.com \"175-H1\" TESTO"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Documents/testo/measurementparameters_humidity_en.pdf",
+    "https://docs.rs-online.com/984a/0900766b80201530.pdf",
+    "https://gist.github.com/dwhswenson/d7617cb7fafab5ddbe52cb03fbe82544?short_path=8c06d50",
+    "https://gist.github.com/najhi1919/2bc3fc2f2aa6d93b112dcd30797292cd",
+    "https://instrotech.com/pub/media/manuals/manTES175-H1.pdf",
+    "https://manualzz.com/doc/26409707/testo-175-t1--t2--t3--s1--s2--h1--h2-data-logger-instruct",
+    "https://manualzz.com/doc/44516564/testo-175-t1--t2--t3--h1-data-logger-instruction-manual",
+    "https://manualzz.com/doc/4542758/testo-175--h1---h2---t1---t2---t3---s1--177--h1---t1---t2",
+    "https://shop.testo.com.br/shop/0572-1754-testo-175-h1-13657",
+    "https://site.jjstech.com/pdf/Testo/175%2C%20IM%2C%200971%201752%20en%2C%2004.pdf",
+    "https://site.jjstech.com/pdf/Testo/175-H1%2C%20SM%2C%200973%201753%2C%2001.pdf",
+    "https://www.inspectortools.com/testo-175h1-temperature-and-humidity-data-logger/",
+    "https://www.manualslib.com/manual/3847201/Testo-175-H1.html",
+    "https://www.manualslib.de/manual/123761/Testo-175H1.html",
+    "https://www.notice-facile.com/en/manual/642873/testo%2B175h1",
+    "https://www.testo.com/it-IT/testo-175-h1/p/0572-1754",
+    "https://www.testo.ru/ru-RU/testo-175-h1/p/0572-1754",
+    "https://www.testo.vn/testo-175-h1-temperature-and-humidity-data-logger",
+    "https://www.testteknik.tr/magaza/testo-175-h1-ekranli-sicaklik-ve-nem-kayit-cihazi/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_042.json",
+  "original_log_sha256": "0c0dc4be24eb6d03ee1e2aeba9bab4dde7193d6bdeef28b13c3d763bdfdd1ebb",
+  "original_log_bytes": 30687,
+  "queries": [
+    "YOKOGAWA CA500 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/1/8011/files/IMCA500-02EN.pdf",
+    "https://cdn.tmi.yokogawa.com/1/8046/files/IMD023-01EN.pdf",
+    "https://manualzz.com/doc/64259771/yokogawa-ca500-getting-started-manual",
+    "https://quote.us.yokogawa.com/PageConfig/Index?itemType=Model&model=CA500&pageId=1182.0",
+    "https://tmi.yokogawa.com/de/support/download-software-drivers-firmware/",
+    "https://tmi.yokogawa.com/es/support/download-software-drivers-firmware/",
+    "https://tmi.yokogawa.com/jp/solutions/products/portable-and-bench-instruments/calibrators/ca500-series-multi-function-process-calibrator/",
+    "https://tmi.yokogawa.com/library/",
+    "https://tmi.yokogawa.com/ph/solutions/products/portable-and-bench-instruments/calibrators/ca500-series-multi-function-process-calibrator/",
+    "https://tmi.yokogawa.com/support/download-software-drivers-firmware/",
+    "https://tmi.yokogawa.com/uk/solutions/products/portable-and-bench-instruments/calibrators/ca500-series-multi-function-process-calibrator/",
+    "https://www.easymanua.ls/yokogawa/ca500/manual",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&cat_no=&category=%EB%A7%A4%EB%89%B4%EC%96%BC&offset=50&sk=&sw=",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&idx=111&mode=view&offset=50&sk=&sw=",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&idx=111&mNum=3&mode=view&sNum=4",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.reddit.com/r/instrumentation/comments/1ik88ek"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

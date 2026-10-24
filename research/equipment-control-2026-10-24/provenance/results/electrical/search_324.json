@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_324.json",
+  "original_log_sha256": "5eb57d9888fb36a9a11b43450cb7b5592360253ac00ff7b1897e2d722e9ce008",
+  "original_log_bytes": 30423,
+  "queries": [
+    "YOKOGAWA 2533 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.yokogawa.co.jp/ftp/dist/ks/eusers/wt/ked5s/im/IM2533-01E_040.pdf",
+    "https://docs.ampnuts.ru/eevblog.docs/Yokogawa/2534_Digital_Power_Meter/Yokogawa_2534_User_Manual.pdf",
+    "https://forums.ni.com/t5/Instrument-Control-GPIB-Serial/Connecting-to-YOKOGAWA-2533-Power-Meter-via-GPIB/td-p/3720045",
+    "https://forums.ni.com/t5/LabVIEW/Is-there-a-VI-for-the-yokogawa-2533-Power-Meter/td-p/41767",
+    "https://manuals.plus/m/524818797466fbd0640615fa4487366d5baf3a4e48f5e8b35071157d55dcb491",
+    "https://studyres.com/doc/7787457/2533-digital-power-meter---advanced-test-equipment-rentals",
+    "https://www.artisantg.com/TestMeasurement/91637-1/Yokogawa-253313-3-Phase-4-Wire-AC-Digital-Power-Meter",
+    "https://www.artisantg.com/info/Yokogawa_253313_Manual_201746123357.pdf",
+    "https://www.koreayokogawa.com/support/download2.php",
+    "https://www.manualslib.com/manual/1973942/Yokogawa-2553a.html",
+    "https://www.manualslib.com/manual/4246248/Yokogawa-2533e.html",
+    "https://www.manualzz.com/doc/o/2aqp9d/yokogawa-2553a-user-manual-chapter-10-programming-overview",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.reddit.com/r/instrumentation/comments/1ik88ek",
+    "https://www.reddit.com/r/instrumentation/comments/1jvap24",
+    "https://www.yokogawa.co.jp/library/search/",
+    "https://www.yokogawa.com/ymi/support/",
+    "https://yokogawaelectric.org/solutions/products-and-services/control/control-devices/configuration-tools/ll50a/index.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

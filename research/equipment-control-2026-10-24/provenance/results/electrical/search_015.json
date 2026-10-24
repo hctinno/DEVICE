@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_015.json",
+  "original_log_sha256": "326ad120c2d5f817378b24647c8cba4ee3655af9395345a3d0f93b7e1533637e",
+  "original_log_bytes": 28551,
+  "queries": [
+    "ITECH IT6018C-1500-40 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.itechate.com/uploadfiles/catalogue/IT6000C-en.pdf",
+    "https://device.report/m/42dea70bcd15bf923ca3d75d98c5ed61fe5b50a1743989c2304df27d12ca1ef3",
+    "https://device.report/m/7166fe0175fd851220d485d8741cd884d6366113794fcd295c9e546bddfcc6c4",
+    "https://device.report/m/71c3eaf66f876b48cf6f44c1fd1ff13c99141cc68f4df60b0fb033abdbace43a",
+    "https://device.report/m/d2deeb23b5f221e8a1d6cc5ccbd5997d44e667b583ff491a97c2f445fc554f67",
+    "https://eur.itechate.com/uploadfiles/2019/09/20190902105904594.pdf",
+    "https://manualzz.com/doc/70617436/itech-it6005c-80-150--it6010c-80-300--it6018c-1500-40-use",
+    "https://mod-e.ru/catalog/istochniki_pitaniya_elektronnye_nagruzki/istochniki_pitaniya_postoyannogo_toka/itech_it6018c_1500_40_dvunapravlennyy_programmiruemyy_istochnik_pitaniya_postoyannogo_toka_1500_v_40.html",
+    "https://pt.scribd.com/document/857393430/IT6000C-User-Manual-En",
+    "https://refur.nubicom.co.kr/it6018c-1500-40/",
+    "https://www.4test.no/ITECH%2BIT6018C-1500-40%2BRegenerative%2BPower%2BSystem%2B18kW-%2B1500V-%2B40A.htm",
+    "https://www.egeratedocuments.com/markalar/itech/Datasheet/sitedeki%20t%C3%BCm%20pdfler/manual/DC%20Power%20Supply/IT6000C%20User%20Manual-EU.pdf",
+    "https://www.itechate.com/uploadfiles/%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/user%20manual/it6000c/en-us/IT6000C%20User%20Manual-EN.pdf",
+    "https://www.itechate.com/uploadfiles/2019/09/20190902105904594.pdf",
+    "https://www.itechpowered.com/uploadfiles/2022/10/it6000c-en.pdf",
+    "https://www.manualslib.com/brand/itech/power-supply.html",
+    "https://www.manualslib.com/products/Itech-It6018c-1500-40-12422497.html",
+    "https://www.scribd.com/document/977911631/IT6000C-User-Manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

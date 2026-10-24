@@ -1,0 +1,26 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_056.json",
+  "original_log_sha256": "1410b0410242fd05241abe294e264eabdcdd8f03b1d012a2309c3e4ed60d54f4",
+  "original_log_bytes": 18608,
+  "queries": [
+    "HCT \"INPUT1 + 7GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT2 + 1GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT2 + 3GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT2 + LNA\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/200c1641-f05b-47b1-9d5b-35f9aff6c7f9/N6141-90001.pdf",
+    "https://git.zx2c4.com/linux-dev/commit/?id=4d9708ea5e5a45973df7cf965805fdfb185dd5bf",
+    "https://manuals.plus/m/a5825fbf59ddb5984158af28fdb268a11225528625f5e86cc82904dbde41246f.pdf",
+    "https://manualzilla.com/doc/6810495/samsung-ltn325w-user-manual",
+    "https://manualzilla.com/doc/6984682/samsung-lt-p468w-user-s-manual",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESU_OperatingManual_en_04.pdf",
+    "https://www.renesas.com/en/document/dst/upc8220t5a-ds-pu10532ej01v0ds",
+    "https://www.renesas.com/ja/document/dst/upc8220t5a-ds-pu10532ej01v0ds",
+    "https://www.renesas.com/us/en/document/dst/upc8220t5a-ds-pu10532ej01v0ds"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

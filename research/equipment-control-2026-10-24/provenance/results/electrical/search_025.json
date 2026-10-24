@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_025.json",
+  "original_log_sha256": "a19d2290dd9f5d6bc7e3d44410259d4fd60f9bc39d0826e60015dde9bcb20eb8",
+  "original_log_bytes": 31873,
+  "queries": [
+    "YOKOGAWA DL950 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/1/10106/files/IMDL950-00EN.pdf",
+    "https://cdn.tmi.yokogawa.com/1/10833/files/IMD171-01EN.pdf",
+    "https://cdn.tmi.yokogawa.com/1/9031/files/IMDL950-02EN.pdf",
+    "https://device.report/m/a04adef32fd4b0a5b7bf8f91a180e99ee0df4c09c3c9a85615db9eb6a9533405.pdf",
+    "https://koreayokogawa.com/product/product-detail.php?idx=184",
+    "https://manualzz.com/doc/70445106/yokogawa-scopecorder-dl950-user-manual",
+    "https://sine.ni.com/apps/utf8/niid_web_display.download_page?p_id_guid=CBEE48DB602637FEE05400144FFB1D19",
+    "https://tmi.yokogawa.com/dk/solutions/products/oscilloscopes/scopecorders/dl950/",
+    "https://tmi.yokogawa.com/jp/solutions/products/oscilloscopes/scopecorders/dl950/",
+    "https://tmi.yokogawa.com/sa/solutions/products/oscilloscopes/scopecorders/dl950/",
+    "https://tmi.yokogawa.com/solutions/products/oscilloscopes/scopecorders/dl950/",
+    "https://tmi.yokogawa.com/us/solutions/products/oscilloscopes/scopecorders/dl950/",
+    "https://www.easymanua.ls/yokogawa/scopecorder-dl950/manual",
+    "https://www.kaizer.com.tw/uploads/product_download/tw/IMDL950-01EN.pdf",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&cat_no=&category=%EB%A7%A4%EB%89%B4%EC%96%BC&offset=90&sk=&sw=",
+    "https://www.manualslib.com/manual/4051825/Yokogawa-Scopecorder-Dl950.html",
+    "https://www.manualslib.com/products/Yokogawa-Scopecorder-Dl950-11516299.html",
+    "https://www.reddit.com/r/oscilloscope/comments/1vy1a5o/yokogawa_dl1540_turn_on_but_not_display/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_kikusui_pwr_pas.json",
+  "original_log_sha256": "28ef22e7432011a8e48842f2d3042b88efe5cbb859493378f70306e5eea2ef66",
+  "original_log_bytes": 27478,
+  "queries": [
+    "KIKUSUI PWR800L PWR1600L PAS40-9 PAS40-18 driver programming manual"
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/",
+    "http://www.kikusui.co.jp/en/download/",
+    "https://en.sekorm.com/doc/2000632.html",
+    "https://global.kikusui.co.jp/download-category-en/pm_dc-en-2/",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/products-index/battery-tester/pfx2500-series/",
+    "https://kikusui-korea.co.kr/files/PDF/PAS_M.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PWR_M.pdf",
+    "https://kikusui.co.jp/kikusupport/category/faqs/products/dc-power-supply/pwr/",
+    "https://kikusui.co.jp/products-index/battery-tester/pfx2500-series/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/products-index/battery-tester/pfx2500-series/",
+    "https://manualzz.com/doc/27673042/kikusui-pwr-400l--pwr-400m--pwr-400h--pwr-800l--pwr-800m-",
+    "https://manualzz.com/doc/60161926/kikusui-pwr400h--pwr400m--pwr800h--pwr800l--pwr800m-opera",
+    "https://manualzz.com/doc/61917808/kikusui-pas-10-35--pas-40-18--pas-40-9--pas-80-9-operatio",
+    "https://sg.kikusui.co.jp/spec/pfx2500_applied-configuration/",
+    "https://smtp.unitronicjaya.com/brosur/kikusui/PWR_USERS_E8.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/kikusui-proCat_cn.pdf",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

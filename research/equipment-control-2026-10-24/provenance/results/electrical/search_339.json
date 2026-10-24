@@ -1,0 +1,42 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_339.json",
+  "original_log_sha256": "6c387518147234380e24dc445bb5d80821b31f4357c09eb23e8c008c34d849e7",
+  "original_log_bytes": 27424,
+  "queries": [
+    "KIKUSUI TOS 8850 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/0d8617d9afdfd5455e0b1f62c0df70ab6cb4137bac9b3dbbd78be5d937b38d4a",
+    "https://global.kikusui.co.jp/?s=TOS",
+    "https://global.kikusui.co.jp/download-category-en/tos-en/",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/search/tos%20os",
+    "https://hl2kvx.tistory.com/22156",
+    "https://kikusui-europe.com/dri-fir-upd/",
+    "https://kikusui.co.jp/kd/pm_tos/",
+    "https://kikusui.co.jp/kiku/wp-content/uploads/2021/08/TOS3200AssistManEng.pdf",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/download/kfm2030-3/",
+    "https://kikusuiamerica.com/download/krb13-krb600/",
+    "https://kikusuiamerica.com/download/krb9-krb400-pcr-le/",
+    "https://kikusuiamerica.com/download/pd03m-s-pcr-la/",
+    "https://kikusuiamerica.com/download/pfx2331/",
+    "https://kikusuiamerica.com/download/pl02a-tos/",
+    "https://kikusuiamerica.com/download/plz4wb/",
+    "https://kikusuiamerica.com/download/tos5000a/",
+    "https://kikusuiamerica.com/download/tos7300/",
+    "https://kikusuiamerica.com/manual-search/",
+    "https://manual.kikusui.co.jp/T/TOS93_USER_E5.pdf",
+    "https://manualzz.com/doc/4763859/kikusui-tos8850-insulation-tester-user-manual",
+    "https://rddocuments.kikusui.co.jp/oss/tos93",
+    "https://usermanual.wiki/m/db410d809ba0077a40880414c4fa268af6e8377c80cdea180c8ad70ea1408432_optim.pdf",
+    "https://www.daeyangstek.co.kr/type6/board/download.php3?ext=1&user_file=TOS8870A_0-E_1_1.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/tos9300_interface_manual.pdf",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US",
+    "https://www.trading-247.com/products/kikusui-ultimate-owner-operation-instructions-service-manuals-edelivery"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

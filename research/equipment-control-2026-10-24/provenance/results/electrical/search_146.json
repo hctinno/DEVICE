@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_146.json",
+  "original_log_sha256": "fee9dd38ce4a5c09b5230396627d2b704ddaf875f6bb14672e72fdf4275e1daf",
+  "original_log_bytes": 29886,
+  "queries": [
+    "KIKUSUI PLZ1004WHB manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/download/plz_4w/",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_4W_M.pdf",
+    "https://kikusui.co.jp/download/cat-plz164wh/",
+    "https://kikusui.co.jp/w2-2/discon/plz1004wh/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manual.kikusui.co.jp/P/PLZ5WH2_USER_E7.pdf",
+    "https://manualzz.com/doc/33647563/kikusui-plz-4wh-plz164wh--plz334wh--plz1004wh-electronic-",
+    "https://manualzz.com/doc/6610544/kikusui-plz-4w--plz-4wh-series-dc-electronic-load-setup-g",
+    "https://manualzz.com/doc/70516731/kikusui-plz1004wh--plz164wh--plz2004wb--plz334wh-user-manual",
+    "https://sg.kikusui.co.jp/dri-fir-upd/wavy-for-plz4w/",
+    "https://www.allaboutinstruments.com/brand/kikusui/electronic_load/kikusui_electronic_load_PLZ-4WH_series.pdf",
+    "https://www.finaltest.com.mx/v/vspfiles/assets/datasheet/PXB_USERS_E1.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pwr-01_interface_manual_202402.pdf",
+    "https://www.manualslib.com/manual/2322508/Kikusui-Plz-4wh-Series.html",
+    "https://www.manualslib.com/manual/2322508/Kikusui-Plz-4wh-Series.html?page=59",
+    "https://www.manualslib.com/products/Kikusui-Plz1004wh-8745262.html",
+    "https://www.manualzz.com/doc/59990728/kikusui-plz1004wh--plz164wh--plz334wh-setup-manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

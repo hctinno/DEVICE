@@ -1,0 +1,26 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item204.json",
+  "original_log_sha256": "47090d68eadc6399b64465057e95f20e0026e2f5fc31e64028d42d6c84af91b3",
+  "original_log_bytes": 13009,
+  "queries": [
+    "COM-POWER \"CGO-5100\" software interface manual",
+    "site:github.com \"CGO-5100\" COM-POWER"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/383acf6f562bff1b26010021e57acc725cea0beb41bfd40a853e10fde6003890.pdf",
+    "https://fcc.report/FCC-ID/QHYS1000R/3248633.pdf",
+    "https://fcc.report/FCC-ID/YL6-143200T5V4/1903490.pdf",
+    "https://maximinstruments.com/brand/com_power%26sortby%3D%26view%3Dlist",
+    "https://maximinstruments.com/category/generator%26sortby%3D%26view%3Dlist",
+    "https://maximinstruments.com/pdf_files/COM_POWER_CGO-5100A_Datasheet.pdf",
+    "https://theemcshop.com/comb-generators/com-power-cgo-5100a-comb-generator-1-ghz-18-ghz/",
+    "https://wandong.com.cn/list-600-1.html",
+    "https://www.machinio.com/generator-sets/florida?search=1000to",
+    "https://www.ntecusa.com/search.cfm?catID=&inStock=0&mfrID=&page=238&search=nosearch",
+    "https://www.reliantemc.com/download/COM-POWER/Com-Power-CGO-51000-Comb-Generator-with-output-to-40GHz-Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

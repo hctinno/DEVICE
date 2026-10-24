@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_055.json",
+  "original_log_sha256": "d865c4bf730d45969d4171bf8d94d30aaba241b3c5d3097421eff911e47506e8",
+  "original_log_bytes": 28912,
+  "queries": [
+    "GRAPHTEC GL840 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://en.wikipedia.org/wiki/Graphtec",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl240/download",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl840/download",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl840/faq",
+    "https://graphteciwatsu.com/en/support/download/datalogger/",
+    "https://www.ankersmit.fr/manuels-logiciels/",
+    "https://www.graphtec.in.th/article-79516-softwares.html",
+    "https://www.graphteccorp.com/download/downloadapp/",
+    "https://www.graphteccorp.com/download/firm_gl840/",
+    "https://www.graphteccorp.com/download/gl-connection/",
+    "https://www.graphteccorp.com/download/gl100_gl240_gl840-aps/",
+    "https://www.graphteccorp.com/download/gl28-aps/",
+    "https://www.graphteccorp.com/support/software/logger/",
+    "https://www.graphtecinstruments.com/content/User_Manuals/GL840-UM-151.pdf",
+    "https://www.logicbus.com/assets/pdf/257/GL840-UM-154-01.pdf",
+    "https://www.mygraphtec.jp/site_download/manual/GL840-UM-154-02.pdf",
+    "https://www.reddit.com/r/PlotterArt/comments/1i0hrln",
+    "https://www.reddit.com/r/VinylCutters/comments/17awevc",
+    "https://www.reddit.com/r/VinylCutters/comments/18ojkib/looking_to_use_older_graphtec_with_current_ai/",
+    "https://www.reddit.com/r/VinylCutters/comments/1k42g3w",
+    "https://www.reddit.com/r/VinylCutters/comments/1rcaa9d/graphtech_2026_trouble_shooting_anyone/",
+    "https://www.reddit.com/r/VinylCutters/comments/cyxlwx"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

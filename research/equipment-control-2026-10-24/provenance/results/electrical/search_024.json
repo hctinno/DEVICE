@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_024.json",
+  "original_log_sha256": "1ea7dae765f3e4e6ecdb1dd1512f5b5daf8c89af5c4f7b05b05ee992fa1a23de",
+  "original_log_bytes": 29883,
+  "queries": [
+    "AC Power Korea AFC-1010 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Preen_AFC_Series_-_User_Manual_Updated-2018.pdf",
+    "https://assets.tequipment.net/assets/1/26/Preen_AFC_Series_User_Manual.pdf",
+    "https://bliiot.co.kr/en/download.html",
+    "https://studylib.net/doc/25845511/53018",
+    "https://www.acnt.co.kr/en/sub/download/list.php?s_cate=Product+Manuals",
+    "https://www.acpower.net/en/products/afc",
+    "https://www.advantech.com/ko-kr/support/details/manual?id=1-D532U9",
+    "https://www.ascglobal.eu/faq",
+    "https://www.miko.hk/AC%20Power/AFC-31030.htm",
+    "https://www.nfcorp.co.jp/english/pro/pp/ac/ec/software.html",
+    "https://www.scribd.com/document/1072964479/FA-10RU-Setup-Guide",
+    "https://www.sophpower.com/en/content/afc100-series-ac-power-source",
+    "https://www.transcat.com/media/pdf/preen-afc-series-product-manual.pdf",
+    "https://www.wison.co.kr/sub_product/prod1_view.php?cate=0001_&p_idx=229&pg=1",
+    "https://www.wison.co.kr/sub_product/prod1_view.php?cate=0001_0055_&p_idx=226"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

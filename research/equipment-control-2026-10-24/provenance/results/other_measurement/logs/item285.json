@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item285.json",
+  "original_log_sha256": "9e4025356199f98175c1655e12696d5e65086568a6fc0faecc078654729a6911",
+  "original_log_bytes": 17321,
+  "queries": [
+    "Fluke Biomedical \"Prosim 8\" software interface manual",
+    "site:github.com \"Prosim 8\" Fluke Biomedical"
+  ],
+  "discovered_urls": [
+    "https://fhs-technicalsupport.zendesk.com/hc/en-us/articles/7122823372189-ProSim8-FAQs",
+    "https://github.com/SRI-CSL/chalo-network-analyzer/blob/main/DATASETS.md",
+    "https://sc-journal.com/device/fluke-biomedical/prosim-8-series/",
+    "https://sc-journal.com/view/1829275/fluke-biomedical-prosim-8-series-getting-started-manual-30/",
+    "https://www.flukebiomedical.com/products/biomedical-test-equipment/patient-simulators/prosim-8-vital-signs-patient-simulator?trk=test",
+    "https://www.flukebiomedical.com/products/patient-simulators/prosim-8-and-prosim-8p-vital-signs-patient-simulator?PID=72624",
+    "https://www.flukebiomedical.com/resources/product-manual-search?page=10",
+    "https://www.flukebiomedical.com/sites/default/files/2025-05/prosim8_-_communications_interface_ver3.17.pdf",
+    "https://www.flukebiomedical.com/sites/default/files/prosim8_um0304.pdf",
+    "https://www.flukebiomedical.com/sites/default/files/prosim_8_plug-in_user_manual.pdf",
+    "https://www.flukebiomedical.com/sites/default/files/resources/prosim8_umeng0300.pdf",
+    "https://www.flukebiomedical.com/support/software-downloads?page=5&wbc_purpose=Basic",
+    "https://www.flukebiomedical.com/support/software-downloads?page=5&wbc_purpose=basic",
+    "https://www.manualslib.com/manual/2020318/Fluke-Biomedical-Prosim-8-Series.html",
+    "https://www.manualslib.com/manual/2709919/Fluke-Biomedical-Prosim-8.html?page=92",
+    "https://www.manualslib.com/products/Fluke-Biomedical-Prosim-8-Series-11429193.html",
+    "https://www.medwrench.com/documents/view/2538/fluke-biomedical-prosim-8-user-manual",
+    "https://www.transcat.ca/media/pdf/fluke-biomedical-prosim8-user-manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open030.json",
+  "original_log_sha256": "1fd69990fb0d8a8e9c4672b91cf0d4227743bf6783684b8f8f8fd18cb0f7dff0",
+  "original_log_bytes": 667,
+  "queries": [],
+  "discovered_urls": [
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/gb_1/f/fsv_1/FSVA_FSV_UserManual_en_13.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

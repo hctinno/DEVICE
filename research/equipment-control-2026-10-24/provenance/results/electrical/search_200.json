@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_200.json",
+  "original_log_sha256": "673e85dc59b26e4bc2cc95e871272c519458c0374eff31852f8ecaad4d6f9460",
+  "original_log_bytes": 34619,
+  "queries": [
+    "KIKUSUI PCR4000M manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/en/download/index.html",
+    "https://global.kikusui.co.jp/page/5/?s=AC+power+supply",
+    "https://kikusui-europe.com/download-service/",
+    "https://kikusui-korea.co.kr/files/PDF/PCR_M_D.pdf",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manuals.plus/m/32ee1f536a17fd970707cfbba8877ea53686bd8b17f4f0906b5cead56f1b9c1b",
+    "https://manualzz.com/doc/7224509/kikusui-pcr-m-pcr500m--pcr1000m--pcr2000m--pcr4000m-ac-po",
+    "https://ph.kikusui.co.jp/dri-fir-upd/",
+    "https://sg.kikusui.co.jp/dri-fir-upd/pcr-m-ap/",
+    "https://vn.kikusui.co.jp/download/cat_pcr-ma/",
+    "https://vn.kikusui.co.jp/w2-2/ac-power-supply/pcr-ma/pcr-ma-series/",
+    "https://www.aeroinstrument.co.th/wp-content/uploads/2020/01/1-32.pdf",
+    "https://www.bira.com/uploads/1/2/4/4/124443461/pcrc_users_manual_kikusui.pdf",
+    "https://www.icmaster.com.hk/PDF/PCR-M.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pcr_ma_interface_manual.pdf",
+    "https://www.manualslib.com/manual/2906894/Kikusui-Pcr-M-Series.html",
+    "https://www.manualslib.com/manual/3909189/Kikusui-Pcr500m.html",
+    "https://www.manualslib.com/manual/3909192/Kikusui-Pcr4000m.html",
+    "https://www.testequipmenthq.com/datasheets/KIKUSUI-PCR4000M-Datasheet.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

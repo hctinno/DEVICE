@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_kikusui_plz_ivi.json",
+  "original_log_sha256": "e0ae990df60b7e7d871d9f5d6f9c0a50deb3af06113a9c40a91647ec26f395a9",
+  "original_log_bytes": 25868,
+  "queries": [
+    "Kikusui PLZ150U PLZ303W PLZ1004W IVI driver"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/1db25a6de5ef41834ec75f9839b2e81a3814eb0051f3c910dd219c26febdba97.pdf",
+    "https://in.kikusui.co.jp/kikusupport/can-i-use-kikusuis-ivi-instrument-drivers-on-other-than-the-windows-os/",
+    "https://in.kikusui.co.jp/kikusupport/what-is-an-ivi-instrument-driver/",
+    "https://in.kikusui.co.jp/spec/plz-u_load-unit-2/",
+    "https://kikusui-europe.com/download-service/",
+    "https://kikusui-europe.com/dri-fir-upd/plz-ivi/",
+    "https://kikusui-europe.com/drivers/",
+    "https://kikusui.co.jp/download/cat-plz164w/",
+    "https://kikusui.co.jp/downloads/",
+    "https://kikusui.co.jp/dri-fir-upd/plz-ivi/",
+    "https://kikusui.co.jp/driver/",
+    "https://kikusui.co.jp/w2-2/discon/plz1004w/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://nippon-sokki.vn/assets/tenant/uploads/media-uploader/sokki/pdf_full/kikusuiplz150u-tai-gia-dien-tu-dc-kikusui-plz150u-150v-30a-150w-72039_2.pdf",
+    "https://sine.ni.com/apps/utf8/niid_web_display.download_page?p_id_guid=4C465FC232144A9BE05400144FF9A492",
+    "https://smtp.unitronicjaya.com/brosur/kikusui/PLZ_4W_V2_E7.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/kikusui-proCat_2022_cn.pdf",
+    "https://www.kikusui.cn/resources/002/pdf/IviGuide_LV2011_E.pdf",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

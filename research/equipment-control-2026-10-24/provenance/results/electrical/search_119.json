@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_119.json",
+  "original_log_sha256": "5ba230d90c5efdf9ee684732b2de02e862e83fc7263ce84b327b3ed53d7ba331",
+  "original_log_bytes": 33081,
+  "queries": [
+    "JFM 5V500A-NTFFA manual programming software"
+  ],
+  "discovered_urls": [
+    "https://automationplus.it/en/technical-documentation/?brand=Gefran&path=GPC+Power+Controllers%2FUser+Manual",
+    "https://en.jc-plc.com/download.html",
+    "https://inverterconstants.milnor.com/",
+    "https://manualzz.com/doc/65239636/gefran-kfm-05a-drive-user-manual",
+    "https://manualzz.com/doc/7207270/user-manual",
+    "https://sensatacloud.atlassian.net/wiki/spaces/HAR/pages/1553465727/Device%2BConfiguration%2Bvia%2BUSB",
+    "https://www.jfmeng.com/Docs/SuperMasterCharger-Manual-V22.6.pdf",
+    "https://www.jfmeng.com/archives/category/tech-update",
+    "https://www.jfmeng.com/btas16",
+    "https://www.jfmeng.com/documentation",
+    "https://www.jfmeng.com/mastercharger",
+    "https://www.jfmeng.com/stand-alone-text-messaging-accessory",
+    "https://www.jfmeng.com/supermastercharger",
+    "https://www.jfmeng.com/wordpress_test/wp-content/uploads/2015/06/Manual_SuperMasterCharger-V21.0.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

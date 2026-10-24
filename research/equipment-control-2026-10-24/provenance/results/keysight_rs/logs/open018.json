@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open018.json",
+  "original_log_sha256": "80d2119708f3de30a46ad56990461d32133c21bf2876a5465c2ec9f7718d6cf6",
+  "original_log_bytes": 504,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.transcat.com/media/pdf/rhode-swartz-MXO-3-user-manual.pdf",
+    "https://www.transcat.com/media/pdf/rhode-swartz-MXO-3-user-manual.pdf:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

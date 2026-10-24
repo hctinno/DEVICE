@@ -1,0 +1,21 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item283.json",
+  "original_log_sha256": "823024e633538bb1648e9b5a5ce1727d3c1203e3d7d13c86a59271e68b61afd3",
+  "original_log_bytes": 12443,
+  "queries": [
+    "Fluke Biomedical \"QA-EA-3\" software interface manual",
+    "site:github.com \"QA-EA-3\" Fluke Biomedical"
+  ],
+  "discovered_urls": [
+    "https://bola.dz/wp-content/uploads/PDF-03-04-2024.pdf",
+    "https://d-nb.info/1037091604/34",
+    "https://github.com/Buku313/Skate3-Mobile/releases",
+    "https://github.com/curatedhealth/awesome-ai-agents-for-healthcare",
+    "https://ir.library.osaka-u.ac.jp/repo/ouka/all/402/05902_Dissertation.pdf",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12693635/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

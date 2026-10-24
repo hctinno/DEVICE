@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_126.json",
+  "original_log_sha256": "109942efae480ae3b49bd8944383ceef19976410b9623e57137557805807375e",
+  "original_log_bytes": 31204,
+  "queries": [
+    "B&K Precision 9116 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.testequity.com/te1/Documents/pdf/bk/9115_series_manual.pdf",
+    "https://bk-precision.manymanuals.com/power-suppliers/9116-manual/user-manual-25301/35",
+    "https://bk-precision.manymanuals.com/power-suppliers/9116-manual/user-manual-25301/47",
+    "https://manuzoid.com/manuals/DErxO-B%26K%20Precision%209116%20Programming%20Manual",
+    "https://pim-resources.coleparmer.com/instruction-manual/20019-90-91-92.pdf",
+    "https://www.bkprecision.com/products/electrial-battery-testers/9116",
+    "https://www.bkprecision.com/products/multimeters/9116?region_code=eu",
+    "https://www.bkprecision.com/products/multimeters/9116?region_code=na",
+    "https://www.bkprecision.com/products/power-supplies/9116?region_code=la",
+    "https://www.cedesa.com.mx/pdf/bkprecision/bk-precision-9115_9116_9117_manual.pdf?var=szU4tgoHFe",
+    "https://www.digikey.com/en/products/detail/b-k-precision/9116/4875917",
+    "https://www.itm.com/pdfs/cache/www.itm.com/9116/manual/9116-manual.pdf?srsltid=AfmBOoqSiSUlKkpcqlPvytUA5kZthT66lrkkQwYOT5xPWXIBYI0DhMhe",
+    "https://www.manualslib.com/manual/2747206/Bk-Precision-9115-B.html?page=52",
+    "https://www.manualslib.com/products/Bk-Precision-9116-B-12733582.html",
+    "https://www.nubicom.co.kr/BKprecision/9116.jsp",
+    "https://www.tme.eu/eg/en/details/bk9116/one-channel-power-supplies/b-k-precision/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

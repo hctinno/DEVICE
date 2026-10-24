@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item233.json",
+  "original_log_sha256": "4bff34f44deed903b6d419e01cd223aa0b70f58b3f4225a2caaac68c6b671f24",
+  "original_log_bytes": 16552,
+  "queries": [
+    "Fluke Biomedical \"VT650\" software interface manual",
+    "site:github.com \"VT650\" Fluke Biomedical"
+  ],
+  "discovered_urls": [
+    "https://gist.github.com/zefanja/585a96988656f24c507e573042564d8e",
+    "https://github.com/MillionVentilators/ARMEE_Ventilator_1.0/blob/master/documentation/Equipment.md",
+    "https://media.fluke.com/062c1524-2010-4626-8e83-b10800bfa427_original%20file.pdf",
+    "https://mtcbiomedical.vn/upload/images/detailproduct/2023_23_09_09_12_31-VIE_VT900A%20usermanual.pdf",
+    "https://studylib.net/doc/27308201/vt650-umeng0100-0",
+    "https://www.flukebiomedical.com/products/gas-flow-analyzers/vt650-gas-flow-analyzer",
+    "https://www.flukebiomedical.com/resources/product-manual-search?page=12",
+    "https://www.flukebiomedical.com/resources/product-manual-search?page=13",
+    "https://www.flukebiomedical.com/resources/product-manual-search?page=14",
+    "https://www.flukebiomedical.com/sites/default/files/resources/vt650_umeng0100_0.pdf",
+    "https://www.flukebiomedical.com/sites/default/files/resources/vt650_umeng0100_1.pdf",
+    "https://www.flukebiomedical.com/sites/default/files/vt650_gseng0100.pdf",
+    "https://www.flukebiomedical.com/sites/default/files/vt900a_umeng0300.pdf",
+    "https://www.flukebiomedical.com/support/software-downloads?WBCMODE=PresentationUnpublished&page=4",
+    "https://www.flukebiomedical.com/support/software-downloads?page=1",
+    "https://www.flukebiomedical.com/support/software-downloads?page=3",
+    "https://www.flukebiomedical.com/support/software-downloads?page=3&wbc_purpose=basic",
+    "https://www.manualslib.com/manual/2686592/Fluke-Biomedical-Vt650.html",
+    "https://www.medwrench.com/documents/view/9630/fluke-biomedical-vt650-user-manual",
+    "https://www.scribd.com/document/498056670/Manual-VT-650"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

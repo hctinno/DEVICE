@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open029.json",
+  "original_log_sha256": "adce40e8f6154db77e656d5052f91ec6ef81b283dac57d7f1baa28f2984aab8b",
+  "original_log_bytes": 724,
+  "queries": [],
+  "discovered_urls": [
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/gb_1/r/romes/pdf/previous_45/e/esr_1/ESR_UserManual_en_13.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

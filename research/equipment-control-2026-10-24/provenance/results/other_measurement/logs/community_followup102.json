@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup102.json",
+  "original_log_sha256": "605c56929636165998df6a85dc71ce9ab76fb40feb7b7f65bc8dec2f8e57b000",
+  "original_log_bytes": 358,
+  "queries": [
+    "site:github.com \"KP-35B3\" \"Kingpo\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

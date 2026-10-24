@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_178.json",
+  "original_log_sha256": "9c85dec071b7dfeb2dbac4b5559e99217604a75e0f9bcd1449fba7eb0ccdb479",
+  "original_log_bytes": 30240,
+  "queries": [
+    "Kikusui TOS6200 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/227b48be6d22f41e49566389f32501c0ffd0a183173b456a76d0b4d41403de05",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/download/cat_st/",
+    "https://global.kikusui.co.jp/w2-2/safety-tester-en/gct-en-2/tos6210/",
+    "https://kikusui-korea.co.kr/files/PDF/TOS6200_M.pdf",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manual.kikusui.co.jp/T/TOS62_USERS_V2_J1.pdf",
+    "https://manualzilla.com/doc/5787581/user-s-manual%EF%BC%8F3.2mb---kikusui-electronics-corp",
+    "https://manualzilla.com/doc/6656222/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%82%BA%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB%EF%BC%8F3.4mb---kikusui-electronics-corp.?page=143",
+    "https://manualzz.com/doc/34416623/kikusui-tos9200-tos9201-withstanding-voltage-insulation-r",
+    "https://manuzoid.com/manuals/OR2ld-Kikusui%20tos6200%20Operating%20instructions",
+    "https://sales.sharingfactory.co.jp/listings/S85267bbd",
+    "https://www.atecorp.com/getmedia/1f730ab4-a0ad-4834-be07-ec8d72abb12d/kikusui-tos6200-6210_manual_1.pdf",
+    "https://www.manualslib.com/manual/1367309/Kikusui-Tos6200.html",
+    "https://www.manualslib.com/manual/1367309/Kikusui-Tos6200.html?page=33"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

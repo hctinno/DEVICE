@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/open_kikusui_plz.json",
+  "original_log_sha256": "ea6d54fd1cf83279478e70890c21fae79f26532f1ec614bc44f5aa6a308248c5",
+  "original_log_bytes": 20322,
+  "queries": [],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/dri-fir-upd/plz-ap/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

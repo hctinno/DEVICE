@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_328.json",
+  "original_log_sha256": "45d9255bfd19eaffa6d639962b188088dc58e6ab030007c6ba9b440426dff75a",
+  "original_log_bytes": 31028,
+  "queries": [
+    "FLUKE 87 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.fluke.com/manuals/187_189_cmeng0000.pdf",
+    "https://assets.fluke.com/manuals/83_1000_smeng0000.pdf",
+    "https://assets.fluke.com/manuals/87_89iv_smeng0000.pdf",
+    "https://assets.fluke.com/manuals/metcaldeumeng0000.pdf",
+    "https://lira.epac.to/DOCS-TECH/Manuals%20and%20Datasheets/Fluke/",
+    "https://manualsfile.com/product/k4m2pc10sev.html",
+    "https://manualzilla.com/doc/6033354/87-and-89-series-iv",
+    "https://www.avionteq.com/document/newdocument/Fluke-Multimeter-AvionTEq-87-.pdf",
+    "https://www.ko4bb.com/getsimple/index.php?dir=Fluke&id=manuals",
+    "https://www.manuallib.com/file/fluke-87-user-manual/",
+    "https://www.manuals.co.uk/fluke/87/manual",
+    "https://www.manualslib.com/manual/1505585/Fluke-87-V-An.html",
+    "https://www.manualslib.com/manual/2632597/Fluke-87-Iv-Series.html?page=34",
+    "https://www.manualslib.com/manual/397450/Fluke-87-True-Rms-Multimeter.html",
+    "https://www.manualslib.com/products/Fluke-87-3143335.html",
+    "https://www.opweb.de/en/manufacturer/fluke/87",
+    "https://www.opweb.de/en/manufacturer/fluke/87-series-iv",
+    "https://www.reddit.com/r/AskElectronics/comments/18tpfjl",
+    "https://www.reddit.com/r/AskElectronics/comments/1fc2rtv",
+    "https://www.reddit.com/r/AskElectronics/comments/1hcr7v3",
+    "https://www.reddit.com/r/AskElectronics/comments/1ifl2rx",
+    "https://www.reddit.com/r/AskElectronics/comments/1ry8z08/fluke_97_software_version/",
+    "https://www.reddit.com/r/AskElectronics/comments/1wupf9j/fluke_87v_max_no_input/",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/Tools/comments/1i9eu5e",
+    "https://www.reddit.com/r/fluke/comments/1o02hxy/info_on_fluke_et87_dmm_mag/",
+    "https://www.reddit.com/r/fluke/comments/1ok9xcl",
+    "https://www.reddit.com/r/instrumentation/comments/1dic13f",
+    "https://www.reddit.com/r/networking/comments/fku5dq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

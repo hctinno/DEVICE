@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item159.json",
+  "original_log_sha256": "1fac3d471c4535b2b8c27f2c5f2653afaa0cd41dfcd819cbf66f6a715943d723",
+  "original_log_bytes": 15871,
+  "queries": [
+    "FLUKE \"Fluke 714B\" software interface manual",
+    "site:github.com \"Fluke 714B\" FLUKE"
+  ],
+  "discovered_urls": [
+    "https://assets.fluke.com/manuals/714B____umeng0000.pdf",
+    "https://assets.fluke.com/manuals/714B____umeng0002.pdf",
+    "https://assets.fluke.com/manuals/714B____umeng0003.pdf",
+    "https://assets.fluke.com/manuals/714B____umeng0004.pdf",
+    "https://manuals.plus/m/3e2372a8fb080dfd1c282a6df932a39784650e58ada97e50766bf332dc740273",
+    "https://manualsfile.com/product/k4nca07ldx3.html",
+    "https://manualsnet.com/fluke/714b",
+    "https://manualzz.com/doc/27929342/fluke-714b-thermocouple-calibrator-manual",
+    "https://manuelutilisateur.fr/fluke/test-equipment/714b/user-manual/1rz4r",
+    "https://media.fluke.com/beab1716-14dd-40d8-977b-b10800c246d2_original%20file.pdf",
+    "https://www.easymanua.ls/fluke/714b/manual",
+    "https://www.fluke.com/en-au/product/calibration-tools/temperature-calibrators/fluke-714b",
+    "https://www.fluke.com/en-ca/product/calibration-tools/temperature-calibrators/fluke-714b",
+    "https://www.fluke.com/en/product/calibration-tools/temperature-calibrators/fluke-714b",
+    "https://www.manualslib.com/manual/1295586/Fluke-714b.html",
+    "https://www.manualslib.com/products/Fluke-714b-En-12655686.html",
+    "https://www.myflukestore.com/pdfs/cache/www.myflukestore.com/714b/manual/714b-manual.pdf",
+    "https://www.scribd.com/document/515531038/Fluke-714B-m"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

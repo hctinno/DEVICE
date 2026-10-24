@@ -1,0 +1,40 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_rm3548.json",
+  "original_log_sha256": "5823dc216b6e1254103e92d97b618d9605c781d710ff2098c5b9d3c01e2633dd",
+  "original_log_bytes": 29619,
+  "queries": [
+    "HIOKI RM3548 USB data transfer communication command"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.com",
+    "https://assets.testequity.com/te1/Documents/pdf/hioki/3548-um.pdf",
+    "https://en.wikipedia.org/wiki/USB",
+    "https://en.wikipedia.org/wiki/USB_communications",
+    "https://en.wikipedia.org/wiki/USB_mass_storage_device_class",
+    "https://hiokisupport.zendesk.com/hc/ja/articles/9370499605903--%E6%8A%B5%E6%8A%97%E8%A8%88-USB%E3%81%A7%E9%80%9A%E4%BF%A1%E3%81%8C%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84",
+    "https://manualzz.com/doc/28267469/rm3548---hioki-usa",
+    "https://manualzz.com/doc/82903404/hioki-resistance-meter-rm3548-instruction-manual",
+    "https://manualzz.com/doc/o/22nkmr/hioki-rm3545--rm3545-01-instruction-manual-chapter-11-communications--usb--rs-232c--gp-ib-interface-",
+    "https://shop.hioki.eu/HIOKI-RM3548-Portable-Resistance-Meter",
+    "https://shop.hioki.eu/media/05/9c/98/1736433095/RM3548A981-05_Manual_EN.pdf?srsltid=AfmBOorICf_-DhlT6vv03KOfFAQk75TAV6O9ZEeBbI-2OqTryC8O6wnJ&ts=1736433095",
+    "https://shop.hioki.eu/media/05/9c/98/1736433095/RM3548A981-05_Manual_EN.pdf?ts=1736433095",
+    "https://shop.hioki.eu/media/58/f5/09/1739801964/RM3548B981-01_Manual_EN.pdf?ts=1739801964",
+    "https://shop.hioki.eu/media/69/8f/01/1736500368/RM3544A981-04_Manual_EN.pdf?srsltid=AfmBOoo6O5Pe1W3Fnm45AthdCjrwICnisRpVC1GkXLMCJiex2L8Tx6dw&ts=1736500368",
+    "https://www.hioki.cn/services/faq/898",
+    "https://www.hioki.com/global/products/resistance-meters/resistance/id_1267045",
+    "https://www.hioki.com/global/support/download/software",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_302",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_609",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n10053",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n9859",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n9860",
+    "https://www.hioki.com/global/support/faq/detail/id_351",
+    "https://www.hioki.com/sg-en/support/download/software/versionup/detail/id_n9816",
+    "https://www.hiokikorea.com/support/software_agree.html?c_id=A023001&fullpath=download%2F4079_s&p_no=81",
+    "https://www.manualslib.com/manual/1484066/Hioki-Rm3545.html?page=227"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

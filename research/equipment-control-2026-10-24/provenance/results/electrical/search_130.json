@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_130.json",
+  "original_log_sha256": "e16c9d539ece3547f628c547c34c34beeeaf22dc551da3516b0696a5e04091b5",
+  "original_log_bytes": 33285,
+  "queries": [
+    "ODA EX 80-45 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/7c9bea21026f9bdb71e91813eb14633945c4703e9511d7a934b63e76c911e9b2",
+    "https://kusami.vn/Uploaded/2018_10_03/Manual%20Ex%20Series.pdf",
+    "https://m.damoatool.com/product/ODA/EX-TB.html",
+    "https://manualzz.com/doc/70968019/oda-ex-5000--ex-series-brochure-and-operating-manual",
+    "https://www.autobase.biz/English/AutoBaseHelp/Help10/Plc_Scan/ODA_ExSeries.htm",
+    "https://www.logicbus.com.mx/pdf/catalogos/ODA-Product.pdf",
+    "https://www.manualslib.com/manual/1769920/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/1769920/Oda-Ex-Series.html?page=9",
+    "https://www.manualslib.com/manual/2222851/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/2222851/Oda-Ex-Series.html?page=39",
+    "https://www.manualslib.com/manual/2222851/Oda-Ex-Series.html?page=41",
+    "https://www.manualslib.com/manual/2402093/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/2402093/Oda-Ex-Series.html?page=7",
+    "https://www.powertm.co.kr/pdf/manual/EX%20Series%20Operating%20Manual-Kor%20Ver-2.0_%EB%8F%99%EC%9E%91%EC%84%A4%EB%AA%85.pdf",
+    "https://www.studocu.vn/vn/document/dai-hoc-cong-nghiep-ha-noi/dung-sai-kt-do/ex-series-english-220825-ce/146550186"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

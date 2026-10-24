@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_268.json",
+  "original_log_sha256": "3d43c9a76ec83c4ff545988025624e9b918c0b559a2162b4a273b3082b4a3d7e",
+  "original_log_bytes": 30034,
+  "queries": [
+    "(주)티이씨씨 TBCDS-2010 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://download.jchyun.com/Download/Cool200-250.pdf",
+    "https://idisglobal-admin.s3-accelerate.amazonaws.com/boardUpFileKR/TR-0412C_%EC%84%A4%EC%B9%98%EC%84%A4%EB%AA%85%EC%84%9C_V2.1.pdf",
+    "https://jisystem.dsoob.com/Downloads?category=806dN1r1s0",
+    "https://jp.transcend-info.com/files/Manual/Manual-DPB10A_KR_v2.3.pdf",
+    "https://tibbo.com/support.html",
+    "https://toyotech.co.kr/support/software.php?boardid=software&mNum=3&mode=list&sNum=4",
+    "https://www.jama888.com/tsc-support",
+    "https://www.komachine.com/en/companies/t-e-c-c/products/102770-battery-cycler-tbcds-10kw",
+    "https://www.komachine.com/ko/companies/t-e-c-c/products/102766-battery-cycler-tbcdsseries",
+    "https://www.komachine.com/ko/companies/t-e-c-c/products/series/18858",
+    "https://www.scribd.com/document/746619569/XBF-TC04xT-T2-Manual-V1-7-202406-KR",
+    "https://www.tek.com/ko/support/datasheets-manuals-software-downloads?series=THS3000+%ED%9C%B4%EB%8C%80%EC%9A%A9+%EC%98%A4%EC%8B%A4%EB%A1%9C%EC%8A%A4%EC%BD%94%ED%94%84",
+    "https://www.tiscontrol.com/En/software.html",
+    "https://www.tiscontrol.com/cn/learning_bus_lesson4.html",
+    "https://www.tiscontrol.com/tptis/en/software.html#",
+    "https://www.tjmedia.co.kr/manual/B70.C70%20manual%20v1.pdf",
+    "https://www.tjmedia.com/manual/240322_B2_manual_v3.2.pdf",
+    "https://www.veichi.kr/e/search/result/?searchid=162"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

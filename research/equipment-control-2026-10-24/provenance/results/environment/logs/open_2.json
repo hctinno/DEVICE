@@ -1,0 +1,18 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_2.json",
+  "original_log_sha256": "ce5e9d81344d93e722fcfba450defed0c5f968bb3351f812921a4285958b706f",
+  "original_log_bytes": 40610,
+  "queries": [],
+  "discovered_urls": [
+    "http://SE-Series】",
+    "https://static.smc.eu/binaries/content/assets/smc_global/product-documentation/operation-manuals/en/om-communication_hrs012-018-024-030-040-050-060_en-n.pdf",
+    "https://thermotron.com/equipment/se-series-temperature-chamber/se-600/",
+    "https://thermotron.com/wp-content/uploads/2020/01/8800-Display-Module-Instruction-Manual-Revision-21-generic.pdf",
+    "https://weiss-na.com/wp-content/uploads/SimpacTouchscreenControlManual-Nov-2016-New-Logo.pdf",
+    "https://weiss-na.com/wp-content/uploads/SimpacTouchscreenControlManual-Nov-2016-New-Logo.pdf:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

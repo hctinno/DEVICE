@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_kikusui_drivers.json",
+  "original_log_sha256": "ad34b7bea11bff629065028b0834d60462a07f0653f1a7e8bfd3ca7e27d19d0c",
+  "original_log_bytes": 25912,
+  "queries": [
+    "site.global.kikusui.co.jp KIKUSUI PLZ-3W PLZ-4W PWR PAS TOS IVI driver"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/1db25a6de5ef41834ec75f9839b2e81a3814eb0051f3c910dd219c26febdba97.pdf",
+    "https://global.kikusui.co.jp/",
+    "https://global.kikusui.co.jp/drivers/",
+    "https://global.kikusui.co.jp/products-index/electronic-load/plz-4w/",
+    "https://global.kikusui.co.jp/w2-2/software-en/wavy-series/",
+    "https://in.kikusui.co.jp/w2-2/software-in/wavy-series/",
+    "https://kikusui-europe.com/download-service/",
+    "https://kikusui-europe.com/dri-fir-upd/plz-ivi/",
+    "https://kikusui-europe.com/w2-2/software/wavy-series/",
+    "https://kikusui.co.jp/driver/",
+    "https://kikusuiamerica.com/w2-2/software-en-en_us/wavy-series/",
+    "https://mclct.ro/wp-content/uploads/2025/03/plz-4w.pdf",
+    "https://ph.kikusui.co.jp/w2-2/software-ph/wavy-series/",
+    "https://sg.kikusui.co.jp/w2-2/software/wavy-series/",
+    "https://www.es-france.com/img/cms/Catalogues/kikusui-proCat_en-ES.pdf?srsltid=AfmBOor-ugd80etV_FmQGgDBgnOUnH1lV0GH5Rq-Rz9rfJK0Gf1CWqh9",
+    "https://www.kikusui.cn/products/014/pdf/pfx2500.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/kikusui-proCat_2022_cn.pdf",
+    "https://www.kikusui.cn/resources/002/",
+    "https://www.kolbi.es/img/cms/catalogos/ProductsEC2020-2021.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

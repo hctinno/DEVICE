@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item427.json",
+  "original_log_sha256": "a42dade2b2eaccb4af584319ca97afca55aefbcf488254e08a346d4dc7d88fe7",
+  "original_log_bytes": 16095,
+  "queries": [
+    "TDK \"VC-04\" software interface manual",
+    "site:github.com \"VC-04\" TDK"
+  ],
+  "discovered_urls": [
+    "https://csishielding.com/rental-information",
+    "https://gist.github.com/fhferreira/8661795",
+    "https://gist.github.com/nkeena/45f0be3de85e355c60dd3c62e970d417",
+    "https://gist.github.com/rcorrea-brla/f3fae52e176843482a621ab7d02e92a6",
+    "https://gist.github.com/xecgr/68a9fa9803c01f9e4d0fe4310eea0909",
+    "https://github.com/AI-ResearchGroup/A-Comprehensive-Survey-with-Critical-Analysis-for-Deepfake-Speech-Detection",
+    "https://github.com/blaqGeorge/haptic-guidance-model",
+    "https://manualzilla.com/doc/5886880/vcs-04-user-manual---r.-a.-mayes-company",
+    "https://manuzoid.com/manuals/aw5NE-TDK%20VC-04%20User%20manual",
+    "https://sc-journal.com/microboards-technology-docs/",
+    "https://somanuals.com/html/16/TDK-Camcorder-VC-04-User-Manual.html",
+    "https://tdk.manymanuals.com/",
+    "https://tdk.manymanuals.es/",
+    "https://tdk.manymanuals.fr/",
+    "https://vm01.karefil.com/products/tdk",
+    "https://www.manualslib.com/brand/tdk/",
+    "https://www.manualslib.com/manual/691812/Tdk-Vcs-04.html",
+    "https://www.manualslib.com/manual/711637/Tdk-Vc-04.html",
+    "https://www.ramayes.com/Data%20Files/TDK%20RF%20Solutions/TDK%20VCS-04%20User%20Manual.pdf",
+    "https://www.tdkrfsolutions.tdk.com/images/uploads/brochures/TDK_EMC_Solutions_Overview_Brochure.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

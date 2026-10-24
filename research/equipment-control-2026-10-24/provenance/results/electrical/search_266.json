@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_266.json",
+  "original_log_sha256": "4402a04553a566fccb8788feda4894054ba32f9b019240551cd790bed467ed08",
+  "original_log_bytes": 31118,
+  "queries": [
+    "KIKUSUI PVD300-20T manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/programming-guidebooks/",
+    "https://in.kikusui.co.jp/kikusupport/do-you-have-any-particular-application-software-for-pav-series/",
+    "https://kikusui-korea.co.kr/files/PDF/PAS_M.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PMP_M.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PWX_D.pdf",
+    "https://kikusui.co.jp/downloads/",
+    "https://kikusui.co.jp/kd/discontinued/",
+    "https://kikusui.co.jp/kd/pm_dc/page/2/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manualzilla.com/doc/6710391/%E5%8F%96%E6%89%B1%E8%AA%AC%E6%98%8E%E6%9B%B8---kikusui-electronics-corp",
+    "https://ph.kikusui.co.jp/dri-fir-upd/guidebook/",
+    "https://smtp.unitronicjaya.com/brosur/kikusui/PLZ_U_R2_E1.pdf",
+    "https://www.brltest.com/index.php?cPath=5479_38_3817&main_page=product_info&products_id=5535",
+    "https://www.brltest.com/index.php?main_page=product_info&products_id=5534",
+    "https://www.kikusui.cn/resources/001/pdf/pwr-01_interface_manual_202402.pdf",
+    "https://www.kikusui.cn/resources/002/",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

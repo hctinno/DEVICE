@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open016.json",
+  "original_log_sha256": "b303f7d86bd8cacd98e3646f8e1e77a64d6689ec75778c6dea4faddc464aace6",
+  "original_log_bytes": 31294,
+  "queries": [],
+  "discovered_urls": [
+    "http://www.rohde",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/5201_6693_01/ENV216_UserManual_en_06.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

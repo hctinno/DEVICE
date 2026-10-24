@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item054.json",
+  "original_log_sha256": "f1a59906e77fa03610a15a2eda8065ba4e1e7581652b621baff37d3d58a1a613",
+  "original_log_bytes": 16227,
+  "queries": [
+    "CASIO \"HS-3\" software interface manual",
+    "site:github.com \"HS-3\" CASIO"
+  ],
+  "discovered_urls": [
+    "https://device.report/casio/stop",
+    "https://device.report/casio/stopwatch",
+    "https://device.report/m/09bc7ca6fbb2242784eafb2b73f518c9f7a23efa8a531267e103b1d365836adc.pdf",
+    "https://device.report/manual/10110049",
+    "https://en.manualza.com/casio/modul-hs3/cae1",
+    "https://freshmanuals.com/casio",
+    "https://github.com/Technosystem-Labs/dartiq",
+    "https://github.com/ericrenone/SHCY-Spectral-Holonomy-Calabi-Yau-Learning",
+    "https://github.com/exoma-ch/brother-printer/blob/main/docs/vendor/ptouch-raster-command-reference.md",
+    "https://github.com/pestopoppa/epyc-root/blob/main/handoffs/archived/harness-selection-history-through-2026-09-16.md",
+    "https://github.com/petsc/pflotran/blob/master/database/hanford.dat",
+    "https://github.com/potestiolab/propre",
+    "https://mans.io/item/Casio/HS-3",
+    "https://manual-hub.com/manuals/casio-hs-3-01-pdf-manual/",
+    "https://manuals.plus/m/b7e2f48da4a8ac83480d333244418e6130fd868a1d1caebfa2ea5e776334d145",
+    "https://manuals.plus/m/b7e2f48da4a8ac83480d333244418e6130fd868a1d1caebfa2ea5e776334d145_optim.pdf",
+    "https://mc90.tistory.com/178",
+    "https://portablemedia.manualsonline.com/manuals/mfg/casio/hs3v.html?p=2",
+    "https://support.casio.com/pdf/002/HS3V_HS6.pdf",
+    "https://www.bestwatch.ru/instruction/casio/HS3.pdf",
+    "https://www.manuallib.com/company/175113/page/20/",
+    "https://www.manualslib.com/brand/casio/watch.html?page=3",
+    "https://www.viaindustrial.com/manuales_pdf/Cronometros_digitales_HS-3%28V%29_CASIO_Manual_Ingles.pdf",
+    "https://www.youtube.com/watch?v=8nE4GFz9V04&t=1s"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

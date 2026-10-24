@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_088.json",
+  "original_log_sha256": "6d38212f4ad7221c2b9f0374cc6fd75a3f3ce2ed11c8edc3dcbcfbe1f3e529b2",
+  "original_log_bytes": 31058,
+  "queries": [
+    "YOKOGAWA TY720 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/1/2616/files/BUDMM-E.pdf",
+    "https://cdn.tmi.yokogawa.com/1/6271/files/IM97016-E.pdf",
+    "https://cdn.tmi.yokogawa.com/1/6272/files/IM92015-E.pdf",
+    "https://cdn.tmi.yokogawa.com/1/6273/files/IM92015-02E.pdf",
+    "https://cdn.tmi.yokogawa.com/1/6445/files/IMTY720-E.pdf",
+    "https://cdn.tmi.yokogawa.com/TY720_frontview_blue__1__2__lg.jpg",
+    "https://cdn.tmi.yokogawa.com/files/uploaded/IMTY720_E_040.pdf",
+    "https://indomultimeter.com/Pdf/Yokogawa-TY710-Manual.pdf",
+    "https://koreayokogawa.com/product/product-detail.php?idx=45",
+    "https://manualzilla.com/doc/5996822/manual---yokogawa",
+    "https://manualzz.com/doc/19829744/yokogawa-ty720-user-manual",
+    "https://manualzz.com/doc/6459756/yokogawa-manual",
+    "https://manualzz.com/doc/6459756/yokogawa-ty-710--ty-720-digital-multimeter-user-s-manual",
+    "https://tmi.yokogawa.com/kr/solutions/products/portable-and-bench-instruments/digital-multimeters/ty720-digital-multimeter/",
+    "https://tmi.yokogawa.com/uk/solutions/products/portable-and-bench-instruments/digital-multimeters/ty720-digital-multimeter/",
+    "https://web-material3.yokogawa.com/Catalog_YMIAPG-EN.pdf",
+    "https://www.celesta.ro/en/produse-lateralen/3-solutii-testare-industriale-masurare-si-monitorizareen/30-multimetre-digitale/330-ty720-multimetru-digital",
+    "https://www.manualslib.com/manual/3819964/Yokogawa-Ty720.html",
+    "https://www.mycelectric.com/product/yokogawa-ty720-handheld-digital-multimeter/",
+    "https://www.nexinstrument.com/assets/images/pdf/TY720.pdf",
+    "https://www.quicktimeonline.com/assets/images/pdf/yokogawa/user-manual-ty710-ty720.pdf",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.yokogawa.com/ymi/support/",
+    "https://www.zoglabmalaysia.com/index.php/products-mainmenu-32/item/1126-digital-multimeters/5292-yokogawa-digital-multimeter-ty720"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

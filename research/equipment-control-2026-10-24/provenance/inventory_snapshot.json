@@ -1,0 +1,44 @@
+{
+  "inventory_rows": 6470,
+  "inventory_items": 3137,
+  "identified_models": 2867,
+  "unidentified_rows": 270,
+  "groups": {
+    "rf_emc_sar": {
+      "items": 519,
+      "rows": 1036,
+      "manufacturers": 128
+    },
+    "other_measurement": {
+      "items": 480,
+      "rows": 863,
+      "manufacturers": 191
+    },
+    "electrical": {
+      "items": 360,
+      "rows": 786,
+      "manufacturers": 121
+    },
+    "environment": {
+      "items": 338,
+      "rows": 446,
+      "manufacturers": 112
+    },
+    "keysight_rs": {
+      "items": 334,
+      "rows": 1023,
+      "manufacturers": 8
+    },
+    "excluded_passive": {
+      "items": 870,
+      "rows": 1873,
+      "manufacturers": 165
+    },
+    "motion_switch": {
+      "items": 236,
+      "rows": 443,
+      "manufacturers": 69
+    }
+  },
+  "database_sha256": "1b51105dc845ee84803df14b012170cedd354180842740912f469b5231c8137b"
+}

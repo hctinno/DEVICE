@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_060.json",
+  "original_log_sha256": "f1d6cd48c889d9c2113447cbea5c27e82f12e7cec4c43c1ebdbd2d056fcf9375",
+  "original_log_bytes": 26938,
+  "queries": [
+    "HCT \"INPUT1 + 1GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT1 + 3GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT1 + 6GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT1 + LNA\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://forums.raspberrypi.com/viewtopic.php?t=23478",
+    "https://git.zx2c4.com/linux-dev/commit/?id=4d9708ea5e5a45973df7cf965805fdfb185dd5bf",
+    "https://manuals.plus/m/a5825fbf59ddb5984158af28fdb268a11225528625f5e86cc82904dbde41246f.pdf",
+    "https://manualzilla.com/doc/6810495/samsung-ltn325w-user-manual",
+    "https://manualzilla.com/doc/6841765/samsung-ct-29m21fq-user-manual",
+    "https://manualzilla.com/doc/6984682/samsung-lt-p468w-user-s-manual",
+    "https://manualzilla.com/doc/6985201/samsung-cl21s8mqu-user-s-manual",
+    "https://ph1ll1ps.github.io/files/VisualDSDManual.pdf",
+    "https://www.ftcelectronics.cz/datasheets-b3/MC13237CHTR.pdf",
+    "https://www.renesas.com/en/document/dst/upc8220t5a-ds-pu10532ej01v0ds",
+    "https://www.renesas.com/us/en/document/dst/upc8220t5a-ds-pu10532ej01v0ds"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

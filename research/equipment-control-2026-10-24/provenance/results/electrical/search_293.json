@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_293.json",
+  "original_log_sha256": "55d1234df4725ba01b2dab4b2c11fd6bbf5ffb6f20d8875ab718f69fcbc07cf1",
+  "original_log_bytes": 30351,
+  "queries": [
+    "MASTECH HY3005D manual programming software"
+  ],
+  "discovered_urls": [
+    "https://eletronicabr.com/en/topic/130831-technical-documentation-mastec-power-supply-hy3005-hy3005d-hy3005d-3/",
+    "https://mail.mastechpowersupply.com/files/public/manuals/Manual_HY3005D_New.pdf",
+    "https://manualzz.com/doc/18900572/mastech-hy3000--hy5000-series-dc-power-supply-user-manual",
+    "https://manualzz.com/doc/23234841/mastech-power-supply-manual",
+    "https://manualzz.com/doc/23234841/mastech-power-supply-manual?lang=en",
+    "https://manualzz.com/doc/html/6948412/mastech-hy3005d-user-manual",
+    "https://mastechpowersupply.com/files/public/manuals/Manual_HY3005D_New.pdf",
+    "https://mastechpowersupply.com/mastech-variable-bench-power-supply-30v-5a-hy3005d.html",
+    "https://mcgrp.ru/manual/mastech/hy3005d-3",
+    "https://se7en.ws/iz-pesochnicy-zamena-analogovoy-regul/",
+    "https://viva-telecom.org/4115/mastech/hy3005d-3/download/",
+    "https://www.manualslib.com/manual/2766253/Mastech-Hy3000m-Series.html",
+    "https://www.manualslib.com/products/Mastech-Hy3005d-4220612.html",
+    "https://www.mastechpowersupplies.com/hy3005d-lab-grade-linear-dc-regulated-power-supply-0-30v-dc-0-5a-output.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

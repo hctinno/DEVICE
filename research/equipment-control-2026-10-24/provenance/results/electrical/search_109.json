@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_109.json",
+  "original_log_sha256": "f72216b6a8d64b763187eb01e2e3f0645fc5d37feac8089fcb0efe46fe679977",
+  "original_log_bytes": 30952,
+  "queries": [
+    "AMETEK XG60-25 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://accusrc.com/product-Sorensen-XG6025-9965",
+    "https://ametek.manymanuals-pt.com/equipment/xg-family-programmable-dc",
+    "https://ametek.manymanuals.com/equipment/xg-family-programmable-dc/user-manual-30001",
+    "https://ametek.manymanuals.com/equipment/xg-family-programmable-dc/user-manual-30001/35",
+    "https://ametek.manymanuals.com/equipment/xg-family-programmable-dc/user-manual-30001/55",
+    "https://ametek.manymanuals.com/equipment/xg-family-programmable-dc/user-manual-30001/62",
+    "https://ametekprogrammablepowercn.cdn.ametekweb.com/-/media/ametekprogrammablepower/files/dc-power-supplies/xg-850/manuals/xg_r850-1500-1700_operation-manual_m370430-01-rvj.pdf?la=zh-cn&revision=b8b067fe-4e59-43cd-b8fc-76ca4ac303b9",
+    "https://manualzz.com/doc/o/apcko/ametek-sorensen-xg-operation-manual-local-operation",
+    "https://manualzz.com/doc/o/apctk/ametek-sorensen-xg-operation-manual-calibration-and-troubleshooting",
+    "https://www.ametekesp.com/-/media/ametekesp/downloads/manuals/next%20gen/um-next-gen-rev-f.pdf",
+    "https://www.ameteksi.com/products/software",
+    "https://www.calplus.de/wordpress/wp-content/uploads/2016/01/AMETEK_Programmable_Power_Catalog.pdf",
+    "https://www.electronicsdatasheets.com/manufacturers/ametek-programmable-power/parts/xg-60-25",
+    "https://www.manualsdir.com/manuals/754294/ametek-xg-family-programmable-dc.html",
+    "https://www.newark.com/ametek-programmable-power/xg60-25-mebr/modular-power-supply-prog-60v/dp/51AK3916?CMP=AFC-ES-NA",
+    "https://www.transcat.ca/media/pdf/ametek-programmable-power-xg-operating-manual-firmware-version-111-and-later.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

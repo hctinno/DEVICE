@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_177.json",
+  "original_log_sha256": "03bc2880e4c79f9ae0cfc81150a9445bfd9973aadf74e0126969854636c41456",
+  "original_log_bytes": 25216,
+  "queries": [
+    "Tektronix DPO4104 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/ff709cf4-4c0c-48a1-a8d2-1ea02373cd44/TEK-DPO4054.pdf",
+    "https://download.tek.com/document/48W_19356_3.pdf",
+    "https://download.tek.com/manual/071219600revB_web.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://my.tek.com/en/tektalk/oscilloscopes/52658f8f-0909-ee11-a81c-000d3a3047a6",
+    "https://sine.ni.com/apps/utf8/niid_web_display.download_page?p_id_guid=6E23DB10D9FC2B05E04400144FB7D21D",
+    "https://trucal.com/wp-content/uploads/2018/02/DPO4104.pdf",
+    "https://w140.com/tekwiki/images/b/b8/071-2121-00.pdf",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/support/faqs/how-do-i-use-programmer-manual-my-instrument",
+    "https://www.manualslib.com/products/Tektronix-Dpo4104-8778825.html",
+    "https://www.metasite.co.kr/Newmeta/NM_files/DPO4000Series-User_Manual.pdf",
+    "https://www.opweb.de/en/manufacturer/tektronix/dpo4104",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/ehpna7",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/zhhc1k",
+    "https://www.reddit.com/r/oscilloscope/comments/1ubdrwq/anyone_have_the_manual_for_a_dpu_411_type_ii/",
+    "https://www.tek.com.cn/datasheet/dpo4000-series-digital-phosphor-oscilloscopes-datasheet",
+    "https://www.tek.com.cn/support/software/driver/dpo2000-dpo3000-dpo4000-ivi-driver",
+    "https://www.tek.com/de/support/software/driver/dpo2000-dpo3000-dpo4000-ivi-driver",
+    "https://www.tek.com/en/oscilloscope/dpo4054-manual/mso4000-and-dpo4000-series",
+    "https://www.tek.com/en/sitewide-content/manuals/4/5/6/4-5-6-series-mso-programmer-manual",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?model=MDO4104-3",
+    "https://www.tek.com/en/support/software/driver/dpo2000-dpo3000-dpo4000-ivi-driver",
+    "https://www.tek.com/vn/support/software/driver/dpo2000-dpo3000-dpo4000-ivi-driver"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

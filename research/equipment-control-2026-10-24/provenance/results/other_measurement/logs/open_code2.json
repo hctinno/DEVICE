@@ -1,0 +1,18 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/open_code2.json",
+  "original_log_sha256": "2e3791e651661bdd5bf74391cd7903bfb20ab0f5f5c578070fa1309771d7a557",
+  "original_log_bytes": 28734,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/LBNL-ETA/lumicap",
+    "https://github.com/akares/skreader-py",
+    "https://github.com/bluekitchen/bluetooth-logger/blob/master/totalphase-beagle-usb/capture_bluetooth_beagle480_5000.py",
+    "https://github.com/demianh/xl2-monitor",
+    "https://github.com/ni/nidaqmx-python",
+    "https://github.com/planetlabs/dta"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

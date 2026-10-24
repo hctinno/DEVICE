@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/open_innco_docs.json",
+  "original_log_sha256": "8532f044aae4b3cb9fb59c62db909d740de27760a1d1b76a351e40cad0e12f67",
+  "original_log_bytes": 25525,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/topics/turntable?l=python",
+    "https://innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf",
+    "https://innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf:",
+    "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+    "https://www.manualslib.com/manual/1566136/Innco-Co3000.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_278.json",
+  "original_log_sha256": "5ee7acd10b8a39823e3f7146eb740ba3f541756b463b0244afccdab631306307",
+  "original_log_bytes": 35776,
+  "queries": [
+    "WonATech WBCS3000 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.wonatech.com",
+    "https://download.garuda.kemdikbud.go.id/article.php?article=953527&title=Sintesis+Li137Mn2O4+Dengan+Metoda+Solid-State+Reaction+dan+Hidrothermal&val=14690",
+    "https://manualzz.com/doc/o/a080g/wonatech-wpg100-potentiostat-galvanostat-operation-manual-chapter2.-general-instructions?lang=no",
+    "https://mdpi-res.com/bookfiles/book/5844/Nanomaterials_for_Ion_Battery_Applications.pdf?v=1750381543",
+    "https://oak.ulsan.ac.kr/bitstream/2021.oak/23947/2/000002030682.pdf",
+    "https://pdfcoffee.com/wonatech-battery-cylc-pdf-free.html",
+    "https://support.waspbarcode.com/kb/articles/scanner-user-manuals-programming-reference-guides-quick-reference-guides-quick-start-guides-mu",
+    "https://vpctest.attaio.com/catalog/09620418-1422-08DF-AA4E-80001F4CB208/wonatech-co-ltd/",
+    "https://vpctest.attaio.com/product/29864966-8093-410e-8ca7-e0b257a229b9",
+    "https://vpctest.attaio.com/product/52A65DF3-0E90-435E-99C9-4A9031B61B80/battery-test-system/",
+    "https://vpctest.attaio.com/product/643C0D73-A5CD-4A1B-8610-EC28DC58F46D/battery-test-systems/",
+    "https://vpctest.attaio.com/product/643c0d73-a5cd-4a1b-8610-ec28dc58f46d",
+    "https://vpctest.attaio.com/see/11250/Global_Navigation_Satellite_System/?page=30",
+    "https://www.scribd.com/document/14938414/wonatech-battery-cylc",
+    "https://www.yumpu.com/en/document/view/27740021/smart-series-software-wonatech",
+    "https://www.yumpu.com/en/document/view/48617298/wonatech-products-brouchure-xenosystem-co-ltd",
+    "https://www.zivelab.com/ctlg/WonATech2022eng.pdf",
+    "https://www.zivelab.com/ctlg/WonATech2023eng_flyer.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

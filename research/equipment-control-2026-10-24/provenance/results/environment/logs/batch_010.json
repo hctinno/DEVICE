@@ -1,0 +1,41 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_010.json",
+  "original_log_sha256": "a57bb3d68dbefaeeacc5f7ebce17a750ad11225d2ae6580e08a7522842968c76",
+  "original_log_bytes": 32572,
+  "queries": [
+    "Kingpo \"57HS276-40A4-003\" manual communication software GitHub",
+    "Kingpo \"KP-ART01\" manual communication software GitHub",
+    "Kingpo \"KP-GT07\" manual communication software GitHub",
+    "Kingpo Counter for Tumbling barrel controller communication software manual GitHub"
+  ],
+  "discovered_urls": [
+    "http://kinbeg.taobao.com",
+    "https://discourse.agopengps.com/uploads/short-url/BWabkDmlEPXK6Zc6Nv1iTyKBfP.pdf",
+    "https://en.nbd.ltd/trader/info/20CO0000000900741983",
+    "https://git.mitgai.net/jrosskopf/padctl",
+    "https://github-wiki-see.page/m/k3ng/k3ng_rotator_controller/wiki/700-Master---Remote-Unit-Operation",
+    "https://github.com/SleepUnit/CrushCounter",
+    "https://github.com/kinbeg/mcp-kr-controller.git",
+    "https://github.com/kleutzinger-forks/CL-FW-kevbot",
+    "https://github.com/mjrgh/Pinscape_Controller/",
+    "https://github.com/unicode-org/cldr/blob/main/common/supplemental/subdivisions.xml",
+    "https://github.itlym.cn/henriquelino/maratron",
+    "https://glama.ai/mcp/servers/kinbeg/mcp-kr-controller/tree",
+    "https://missionpinball.org/latest/",
+    "https://pypi.org/project/kb-controller/",
+    "https://qgithub.com/mornepousse/KeSp_firmware/blob/main/COMPORTEMENTS.md",
+    "https://qgithub.com/mornepousse/KeSp_firmware/blob/main/docs/CDC_BINARY_PROTOCOL.md",
+    "https://wegamans.net/?_=%2Fkoksny%2FTRIKI-Control%23BaQ2cyRFYLjlNnovzyRV7wK9",
+    "https://www.bldc.com/images/uploaded/BLDC-KBL-bldc-motor-controller-user-manual.pdf",
+    "https://www.kincony.com/download/KC868-COL-PC-User-Manual-v20200530.pdf",
+    "https://www.kinggageengineering.com/catalog/manuals/Gas_Flow_Meter_Manual.pdf",
+    "https://www.kopropo.co.jp/app/webroot/js/kcfinder/upload/files/KG-X_Manual-V_1_0-EN.pdf",
+    "https://www.paypal.com/donate/?hosted_button_id=NFDEML5FKR8N8",
+    "https://www.volza.com/p/abrasion-resistance-tester/hsn-code-9024/import-data/imports-in-vietnam/",
+    "https://www.volza.com/p/abrasion-tester/import-data/imports-in-vietnam/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

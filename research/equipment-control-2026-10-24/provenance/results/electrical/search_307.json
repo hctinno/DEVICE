@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_307.json",
+  "original_log_sha256": "61fdbcdd5b2c261ea84494c06dd98248496cf6d2afb9f6d0607209ca4b3cb34f",
+  "original_log_bytes": 32248,
+  "queries": [
+    "Quadtech 1050 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.quadtech.com",
+    "https://electronicsandbooks.com/edt/manual/Hardware/Q/QuadTech%20%28former%20General%20Radio%29%20www.quadtech.com/G1050/g1050%20c20040706%20%5B82%5D.pdf",
+    "https://electronicsandbooks.com/edt/manual/Hardware/Q/QuadTech%20%28former%20General%20Radio%29%20www.quadtech.com/Guardian%201050%20-%20User%20Manual%20c20100115%20%5B82%5D.pdf",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/quadtech-print-register-control-systems-technical-reference",
+    "https://manualmachine.com/quadtech/1689m/4666654-user-manual/",
+    "https://manualmachine.com/quadtech/sentry30plus/4666640-user-manual/",
+    "https://www.electronicdesign.com/home/article/21202335/quadtech-announces-captivate-36-software",
+    "https://www.electronicsandbooks.com/edt/manual/Hardware/Q/QuadTech%20%28former%20General%20Radio%29%20www.quadtech.com/Guardian%201050%20-%20User%20Manual%20c20100115%20%5B82%5D.pdf",
+    "https://www.ietlabs.com/1900-wzd.html",
+    "https://www.lost-manuals.com/en/manufacturer/quadtech-inc",
+    "https://www.manualslib.com/manual/2211714/Quadtech-Sentry-Plus-Series.html",
+    "https://www.manualslib.com/manual/3683429/Quadtech-Guardian-5000.html",
+    "https://www.manualslib.com/manual/3980984/Quadtech-Guardian-6000.html?page=33",
+    "https://www.manualslib.com/manual/4100663/Quadtech-Hybrid-2000.html",
+    "https://www.manualslib.com/products/Quadtech-Hybrid-2000-14924475.html",
+    "https://www.manualslib.com/products/Quadtech-Sentry-Plus-Series-11866792.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item431.json",
+  "original_log_sha256": "e9077144c0ca28026abf49ba6c5b1d61cbdc9836abeb4a02b34670c9d8065069",
+  "original_log_bytes": 15227,
+  "queries": [
+    "e-flow Tech \"EPF-3\" software interface manual",
+    "site:github.com \"EPF-3\" e-flow Tech"
+  ],
+  "discovered_urls": [
+    "https://1s-83.com/vse-pro-1s/1s-kak-podklyuchit-epf.html",
+    "https://docs.eggplantsoftware.com/epf/25.2/epf-viewer-window/",
+    "https://docs.eggplantsoftware.com/epf/epf-v26-release-notes/",
+    "https://docs.eggplantsoftware.com/epf/ja/epf-v26-release-notes/",
+    "https://es.scribd.com/document/795675952/IET-WC-001-Mantencion-y-Prueba-sistema-deteccion-alarma-y-suprecion-de-incendio",
+    "https://github.com/saby-integration/v8unpack",
+    "https://hrengage.ai/glossary/ecr-filing",
+    "https://imlive.s3.amazonaws.com/Federal%20Government/ID333489399576382320645617191904152827833/N0040622Q0303%20SOLICITATION.pdf",
+    "https://manuals.plus/m/2b179b9f423c15215b885bc7e418e644dba5dd97e072bf06205df8a19ac53916.pdf",
+    "https://punchout.flowtech.co.uk/storage/app/media/TECHSHEETS/TS67979.pdf",
+    "https://www.aaawholesalecompany.com/men-5710-30-cs.html",
+    "https://www.elnec.com/en/products/programming-adapters/DIL48_QFP64_ZIF_EPF-3/",
+    "https://www.exisoftware.com/news_archive.html",
+    "https://www.idealo.de/preisvergleich/Liste/118050236/e-power-fun.html",
+    "https://www.insatechmarine.com/media/xmqpomxw/bu_e_hydraulic_filtration_solutions_parker.pdf",
+    "https://www.linkedin.com/posts/subicdock_shiprepair-subicdrydockcorporation-milestone-activity-7348903572941520897-2HVX",
+    "https://www.parker.com/content/dam/Parker-com/Literature/Hydraulic-Filter-Division-Europe/Websphere-Literature/BROCHURE-EPF-iProtect-filter-series.pdf",
+    "https://www.parker.com/content/dam/Parker-com/Literature/Hydraulic-Filter-Division-Europe/Websphere-Literature/EPF_Series.pdf",
+    "https://www.scribd.com/document/956259331/Annual-Report-2023-24-EPFO"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

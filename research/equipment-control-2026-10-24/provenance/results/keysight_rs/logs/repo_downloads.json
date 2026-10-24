@@ -1,0 +1,18 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/repo_downloads.json",
+  "original_log_sha256": "0ced3da97adf8ffeb24e88888c31be1659f06371946028977a8591f01e6495a4",
+  "original_log_bytes": 1300,
+  "queries": [],
+  "discovered_urls": [
+    "https://codeload.github.com/Galvant/InstrumentKit/zip/refs/heads/master",
+    "https://codeload.github.com/QCoDeS/Qcodes/zip/refs/heads/main",
+    "https://codeload.github.com/Rohde-Schwarz/Examples/zip/refs/heads/main",
+    "https://codeload.github.com/pymeasure/pymeasure/zip/refs/heads/master",
+    "https://codeload.github.com/python-ivi/python-ivi/zip/refs/heads/master",
+    "https://codeload.github.com/scikit-rf/scikit-rf/zip/refs/heads/master"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

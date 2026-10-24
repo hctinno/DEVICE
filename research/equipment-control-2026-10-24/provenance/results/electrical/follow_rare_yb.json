@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_rare_yb.json",
+  "original_log_sha256": "d28005252cd706f7cd97d4dca3ffd136aa1a20a224233095a1f2f791fb4ec984",
+  "original_log_bytes": 253,
+  "queries": [
+    "\"YB9640DM\" OR \"YB9635\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

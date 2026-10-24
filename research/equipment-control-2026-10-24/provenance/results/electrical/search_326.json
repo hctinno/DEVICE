@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_326.json",
+  "original_log_sha256": "396902191083230dad14571ef07c510dbd34e4a033ae5233c3a71ffeff447468",
+  "original_log_bytes": 30441,
+  "queries": [
+    "DIGITEK POWER DEFC 1020 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://asutp.org/news/digitec_automazione_industriale_manual_cutting_rack_013_2_011_0_016_0_017_0_boards/2025-04-30-438",
+    "https://ccipower.com/product-category/legacy/?page=7",
+    "https://cncmanual.com/num-cnc/",
+    "https://device.report/manuals/ej-et-ey-fj-fr-series-instruction-manual-data-information",
+    "https://manualmachine.com/num/1020/4713784-programming-manual/",
+    "https://manualmachine.com/num/1020m/4713788-operator-manual/",
+    "https://manualzz.com/doc/33810603/installation-and-commissioning-manual-1020-1040",
+    "https://pt.scribd.com/document/447001368/1020-series-MANUAL-1020",
+    "https://pt.scribd.com/document/961687607/1102",
+    "https://www.dgfg.eu/wp-content/uploads/2018/02/51-52-25-113-DC1000-manual.pdf",
+    "https://www.dgfg.nl/wp-content/uploads/2018/02/51-52-25-113-DC1000-manual.pdf",
+    "https://www.scribd.com/document/447001368/1020-series-MANUAL-1020",
+    "https://www.scribd.com/document/561484074/Controladores-Digitales-Universal-DC-10001",
+    "https://www.scribd.com/document/561484141/Data-Sheet"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

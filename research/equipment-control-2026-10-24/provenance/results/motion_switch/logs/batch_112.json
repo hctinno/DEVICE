@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_112.json",
+  "original_log_sha256": "8e2e9442aa77bff94742605a6472701b8ac1cca3db5ffeba31eb64c4d5bc5e46",
+  "original_log_bytes": 36165,
+  "queries": [
+    "DELL \"PowerEdge r240\" manual programming driver API GitHub",
+    "STAUBLI \"TX-60 L spe\" manual programming driver API GitHub",
+    "인스조이 \"TMX0108\" manual programming driver API GitHub",
+    "인스조이 \"TMX0132C\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://cdn.accentuate.io/4598707880021/-1701723062775/dell-emc-poweredge-r240-installation-and-service-manual-v1702684626558.pdf",
+    "https://device.report/m/ad977150643ab0c1510f501f5f980cf17627a9264918c37eb06c17db7f57d7b3",
+    "https://en.wikipedia.org/wiki/List_of_PowerEdge_servers",
+    "https://i.dell.com/sites/csdocuments/Merchandizing_Docs/ja/dell_poweredge-r240-technical-guide.pdf",
+    "https://i.dell.com/sites/csdocuments/product_docs/en/poweredge-r240-technical-guide.pdf",
+    "https://manualzz.com/doc/o/1ij2ye/dell-poweredge-r240-server-owner-s-manual-about-this-document",
+    "https://media.dustin.eu/media/d200001001340211/emc-poweredge-r240-user-manual.pdf",
+    "https://www.backcountry.com/timex-ironman-traditional-30-lap-oversize-watch",
+    "https://www.dell.com/openmanagemanuals",
+    "https://www.dell.com/support/product-details/de-de/product/poweredge-r240/resources/manuals",
+    "https://www.dell.com/support/product-details/en-kw/product/poweredge-r240/resources/manuals",
+    "https://www.dell.com/support/product-details/en-za/product/poweredge-r240/resources/manuals",
+    "https://www.dell.com/support/product-details/nl-nl/product/poweredge-r240/resources/manuals",
+    "https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-r240-technical-guide.pdf",
+    "https://www.manualowl.com/m/Dell/PowerEdge-R240/Manual/592762?page=40",
+    "https://www.manualowl.com/m/Dell/PowerEdge-R240/Manual/592762?page=41",
+    "https://www.manuals.co.uk/dell/poweredge-r240/manual?p=16",
+    "https://www.manualshelf.com/manual/dell/lifecycle-controller-os-driver-pack-current-versions/2-1-reference-guide-english/page-40.html",
+    "https://www.readkong.com/page/dell-emc-poweredge-r240-technical-guide-8424795",
+    "https://www.scribd.com/document/825167182/PowerEdge-R240-User-Manual-en-us"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

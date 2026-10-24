@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_166.json",
+  "original_log_sha256": "806b15f51c8bf68bece0dff651117d18bd422f21f2e8e910398bd94c73060efd",
+  "original_log_bytes": 32910,
+  "queries": [
+    "YOKOGAWA WT210 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/IM760401-01E.pdf",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=2273&mode=view",
+    "https://manualzz.com/doc/6496024/yokogawa-wt210-user-manual",
+    "https://manualzz.com/manual/YOKOGAWA/WT210",
+    "https://tmi.yokogawa.com/br/solutions/discontinued/wt210wt230-digital-power-meters/",
+    "https://tmi.yokogawa.com/bx/solutions/discontinued/wt210wt230-digital-power-meters/",
+    "https://tmi.yokogawa.com/ca/solutions/discontinued/wt210wt230-digital-power-meters/",
+    "https://tmi.yokogawa.com/sa/solutions/discontinued/wt210wt230-digital-power-meters/",
+    "https://tmi.yokogawa.com/solutions/discontinued/wt210wt230-digital-power-meters/",
+    "https://tmi.yokogawa.com/uk/solutions/discontinued/wt210wt230-digital-power-meters/",
+    "https://www.easymanua.ls/yokogawa/wt210/manual",
+    "https://www.koreayokogawa.com/contact/qna.php?boardid=qna&idx=278&mode=view",
+    "https://www.manualslib.com/manual/1167839/Yokogawa-Wt210.html",
+    "https://www.nexinstrument.com/assets/images/pdf/WT.pdf",
+    "https://www.reddit.com/r/PLC/comments/1cz01or"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

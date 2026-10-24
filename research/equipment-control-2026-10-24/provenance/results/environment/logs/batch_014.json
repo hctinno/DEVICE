@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_014.json",
+  "original_log_sha256": "5749b2389badc35580b1d672f725e7135ea16bab76454cee645a6131612e29ef",
+  "original_log_bytes": 35133,
+  "queries": [
+    "JUHOTECH Immersion Tester controller communication software manual GitHub",
+    "Weiss Technik \"EA55-2-4L-WC-X\" manual communication software GitHub",
+    "Weiss Technik \"weisstechnik ESS C/1300/70/15\" manual communication software GitHub",
+    "Weiss Technik \"weisstechnik ESS C/1500/70/5\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "http://www.modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf",
+    "https://chauvetprofessional.com/wp-content/uploads/2023/05/IP_Tester_UM_Rev2.pdf",
+    "https://deon0hlc66wzg.cloudfront.net/images/lab_companion_ib4-s_user_manual.pdf?v=3922679855",
+    "https://deon0hlc66wzg.cloudfront.net/images/lab_companion_on4-s_user_manual.pdf?v=3947485037",
+    "https://discord.gg/KvVWhwH3U",
+    "https://github.com/Chauvet-Pro/IPTESTER",
+    "https://github.com/Mikrocontroller-net/transistortester/tree/master/Software/Markus",
+    "https://github.com/jamarju/ComponentTester",
+    "https://github.com/kubi48/TransistorTester-source/tree/master/Markus",
+    "https://github.com/madires/Transistortester-Warehouse",
+    "https://github.com/rhunecke/HIDTester",
+    "https://github.com/witmemtech/Witmem-WTM2302_Download_Tool",
+    "https://github.itlym.cn/UnityNimit/controller",
+    "https://githubhelp.com/fredemmott/Freds-Controller-Tester",
+    "https://githubhelp.com/ulao/DeviceBuddy",
+    "https://goknight.com/content/documentation/IP_Tester_UM_Rev2.pdf",
+    "https://haller-erne.github.io/Docusaurus/heoptester/",
+    "https://qgithub.com/ClassicDIY/ModbusTool",
+    "https://qgithub.com/manne2400/Modbus_Tester_Emulator",
+    "https://qgithub.com/riclolsen/qtester104",
+    "https://ulao.github.io/DeviceBuddy/",
+    "https://wiki.juxitech.com/downloads/",
+    "https://www.awesome-hardware-test.com/en/test-controller",
+    "https://www.eevblog.com/forum/testgear/$20-lcr-esr-transistor-checker-project/",
+    "https://www.sourcetronic.com/shop/media/74/7a/e0/1725264502/ST9110%20Series%20Hipot%20Tester%20Manual_EN_v1.52.pdf?ts=1725264502",
+    "https://www.wolflabs.co.uk/documents/Jeiotech_Stirrers-overhead_MSH_manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item192.json",
+  "original_log_sha256": "193d72fbf776ac2d5545e8b1599431341cb4f032a69c47bebecd98a15d0e624a",
+  "original_log_bytes": 15497,
+  "queries": [
+    "Fluke Impulse 7000DP Impulse 7010 remote commands programming",
+    "site:github.com Impulse 7000DP"
+  ],
+  "discovered_urls": [
+    "http://localhost:5000/",
+    "https://assets.fluke.com/manuals/7000dpupiseng0000.pdf",
+    "https://download.elso.sk/fluke/manual/Fluke-Biomedical-Impulse7000DP-apln.pdf",
+    "https://github.com/Arson-Club/Impulse/blob/main/README.md",
+    "https://github.com/LandisGames/impulse",
+    "https://github.com/LimerBoy/Impulse/blob/master/impulse.py",
+    "https://github.com/Supernova-Labs-Org/impulse/blob/master/docs/api/overview.md",
+    "https://github.com/calico/impulse/",
+    "https://github.com/eslupmi/impulse",
+    "https://github.com/impulse-studio",
+    "https://github.com/jesseward/impulse/blob/main/README.md",
+    "https://github.com/johnchampaign/impulse-csharp/blob/main/README.md",
+    "https://github.com/johnchampaign/impulse-ts/blob/main/DEPLOY.md",
+    "https://github.com/topics/impulse",
+    "https://manualzz.com/doc/3154948/fluke-impulse-6000d--7000dp-defibrillator-analyzer-manual",
+    "https://manualzz.com/doc/66633088/fluke-impulse-6000d-7000dp-user-manual",
+    "https://manualzz.com/doc/o/gon2n/fluke-biomedical-impulse-um-appendix-a.--impulse-6000d-7000dp-remote-operation",
+    "https://www.flukebiomedical.com/media/92379/download",
+    "https://www.flukebiomedical.com/products/defibrillator-analyzers/impulse-7000dp-defibrillator-analyzer",
+    "https://www.flukebiomedical.com/resource/impulse-6000d7000dp-remote-communications-interface",
+    "https://www.flukebiomedical.com/resources/frequently-asked-questions?page=4",
+    "https://www.flukebiomedical.com/resources/frequently-asked-questions?page=5",
+    "https://www.flukebiomedical.com/sites/default/files/resources/4280057_6150_eng_a_w_0.pdf",
+    "https://www.manual.pe/fluke/impulse-7000dp/manual?p=41",
+    "https://www.manual.sv/fluke/impulse-7000dp/manual?p=45",
+    "https://www.manuals.co.uk/fluke/impulse-7000dp/manual?p=38",
+    "https://www.manuals.co.uk/fluke/impulse-7000dp/manual?p=45",
+    "https://www.manuals.co.uk/fluke/impulse-7000dp/manual?p=62"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_197.json",
+  "original_log_sha256": "46626523c7d36a21cb6237dfd7e5f191d408adfe19af00a2079b5d01e129a479",
+  "original_log_bytes": 29782,
+  "queries": [
+    "Pacific Power Source 3450AFX-4AGE manual programming software"
+  ],
+  "discovered_urls": [
+    "https://manualzz.com/doc/24890983/caltest-instruments-afx-series-programmable-power-source-",
+    "https://manualzz.com/doc/70808272/pacific-power-source-3150afx--360afx-operation-manual",
+    "https://pacificpower.com/products/afx-series/",
+    "https://pacificpower.com/products/ppsc-manager/",
+    "https://pacificpower.com/technical-resources/",
+    "https://pacificpower.com/wp-content/uploads/2025/07/AFX_Series_Operation_Manual-PN160620-10_v1.5.1.pdf",
+    "https://pacificpower.com/wp-content/uploads/2026/03/AFX_Series_Operation_Manual-PN160620-10_v1.5.0.pdf",
+    "https://transientspecialists.com/products/pacific-power-3450afx-rent-45-kva-programmable-ac-dc-source",
+    "https://www.manualslib.com/manual/2766082/Pacific-Power-Source-Afx-Series.html?page=169",
+    "https://www.manualslib.com/manual/2766082/Pacific-Power-Source-Afx-Series.html?page=170",
+    "https://www.manualslib.com/manual/2766082/Pacific-Power-Source-Afx-Series.html?page=6",
+    "https://www.manualslib.com/products/Pacific-Power-Source-Afx-Series-11486416.html",
+    "https://www.ppstsolutions.com/wp-content/uploads/Products/PPS/AFX/AFX_Series_Operation_Manual-PN160620-10.pdf",
+    "https://www.scribd.com/document/442485660/AFX-Series-Operation-Manual-PN160620-10-v1-1-2-pdf",
+    "https://www.testwall.com/pacific-power-3450afx/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

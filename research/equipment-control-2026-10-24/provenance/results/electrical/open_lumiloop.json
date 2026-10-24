@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/open_lumiloop.json",
+  "original_log_sha256": "a4c35369b9726dedd1decfbf3723d2a3e061b4272727bba61bfce0537b0d9210",
+  "original_log_bytes": 509,
+  "queries": [],
+  "discovered_urls": [
+    "https://lumiloop.de/downloads/manuals/LSPM_Manual.pdf",
+    "https://lumiloop.de/downloads/manuals/LSPM_Manual.pdf:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_112.json",
+  "original_log_sha256": "247810f6898bb4dff2d52cb71564d71de43de5a4f18b7b72f98dfef154b35e4b",
+  "original_log_bytes": 26465,
+  "queries": [
+    "HIOKI PW3335 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.testequity.com/te1/Documents/pdf/hioki/PW3335-M.pdf",
+    "https://hioki.tw/product-detail.php?id=237",
+    "https://hiokikorea.com/product/product_view.html?c_id=A010003&p_no=129",
+    "https://life.hiokikorea.com/product/product_view.html?c_id=A010003&p_no=129&s_tab=tab3",
+    "https://manualzz.com/doc/37362974/hioki-pw3335-series-power-meter-user-manual",
+    "https://shop.hioki.eu/media/0d/ff/be/1738666424/PW3335A981-03_Manual_EN.pdf?ts=1738666424",
+    "https://www.hioki.cn/products/pw3335",
+    "https://www.hioki.co.jp/jp/support/versionup/detail/?downloadid=1472",
+    "https://www.hioki.co.kr/hioki/Product_Program/download/PW3335E4-56E.pdf",
+    "https://www.hioki.com/download_file/9965/2",
+    "https://www.hioki.com/sg-en/support/download/software/versionup/detail/id_n9965",
+    "https://www.hioki.com/sg-en/support/download/software/versionup/detail/id_n9966",
+    "https://www.hioki.com/sites/default/files/2021-03/client_upload_1_1426838770884.pdf",
+    "https://www.hioki.com/support/download/manuals?page=81",
+    "https://www.hioki.com/us-en/products/power-meters/single-phase-ac-dc/id_5831",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A010003&p_no=129&s_tab=tab3",
+    "https://www.hiokikorea.com/support/software_agree.html?c_id=A010003&fullpath=download%2F393_s&p_no=129",
+    "https://www.reddit.com/r/AskElectronics/comments/swy2pq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

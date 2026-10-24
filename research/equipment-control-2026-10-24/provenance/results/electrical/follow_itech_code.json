@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_itech_code.json",
+  "original_log_sha256": "a61d666eacb047ebb77b32fc1133aab868e49ae0611196819ff1e483e119cb05",
+  "original_log_bytes": 29400,
+  "queries": [
+    "site:github.com ITECH IT6000 IT7900 IT6600 IT8900"
+  ],
+  "discovered_urls": [
+    "https://georgy-itech.github.io/site-portfolio/",
+    "https://gist.github.com/tjko",
+    "https://gist.github.com/tjko/492e147f3b84a8f2003da4616711b7f9",
+    "https://github.com/1622352030/lab-equipment-mcp/blob/main/README_EN.md",
+    "https://github.com/Blinkinlabs/itech_usb_serial",
+    "https://github.com/EducationManMaster/Lernfeld-5",
+    "https://github.com/Georgy-ITech",
+    "https://github.com/agi023",
+    "https://github.com/epoplavskis/homeassistant_salus/issues/33",
+    "https://github.com/huangdong332/ITECH_DC_POWER_CAPL_DLL",
+    "https://github.com/iTech-Egypt/",
+    "https://github.com/knarfS/smuview/issues/35",
+    "https://github.com/mattvenn/it8512",
+    "https://www.itech.com.eg"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_054.json",
+  "original_log_sha256": "c5dd3723783acda92a37cd53de04920a35cf12f07600e1dcf76badb899e9110c",
+  "original_log_bytes": 28218,
+  "queries": [
+    "KIKUSUI PWX1500ML manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/1d131d5f-5c6d-4c94-9e82-d2c37df3ade0/Kikusui_PWX1500ML_DC_Power_Supply_80V_56A_Datasheet.pdf",
+    "https://global.kikusui.co.jp/download/cat_pwx/",
+    "https://global.kikusui.co.jp/products-index/dc/pwx/",
+    "https://global.kikusui.co.jp/spec/pwx_1500w_interface/",
+    "https://global.kikusui.co.jp/spec/pwx_1500w_output/",
+    "https://global.kikusui.co.jp/w2-2/dc-power-supply-en/pwx-en/pwx-series-1500w-model/",
+    "https://in.kikusui.co.jp/download/cat_pwx/",
+    "https://in.kikusui.co.jp/download/pwx/",
+    "https://in.kikusui.co.jp/w2-2/dc-power-supply-in/pwx-in/pwx-series-1500w-model/",
+    "https://kikusui-europe.com/download/cat_pwx/",
+    "https://kikusui-europe.com/spec/pwx_1500w_control-features/",
+    "https://kikusui-europe.com/w2-2/dc-power-supply/pwx/pwx-series-1500w-model/",
+    "https://kikusuiamerica.com/download/cat_pwx/",
+    "https://kikusuiamerica.com/products-index/dc/pwx/",
+    "https://kikusuiamerica.com/spec/pwx_1500w_interface/",
+    "https://kikusuiamerica.com/w2-2/dc-power-supply-en_us/pwx-en_us/pwx-series-1500w-model/",
+    "https://manual.kikusui.co.jp/P/PWX_V6_E7.pdf",
+    "https://manualzz.com/doc/6742762/kikusui-pwx-750lf--pwx-750mlf--pwx-750mhf--pwx-750hf--pwx",
+    "https://telonic.co.uk/jg/wp-content/uploads/2021/05/Kikusui-PWX-UserManual.pdf",
+    "https://www.es-france.com/img/cms/Catalogues/Kikusui-europe2021-2022-ES.pdf?srsltid=AfmBOootproV_-TsZl3q167MVUFLDqCD6b1moYACBflOii0Vp8EtM-A-",
+    "https://www.n-denkei.com/vietnam/wp-content/uploads/sites/12/2021/09/KIKUSUI-pwx-Brochure-3.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

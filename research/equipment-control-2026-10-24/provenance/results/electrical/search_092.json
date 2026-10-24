@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_092.json",
+  "original_log_sha256": "aa89cf4748d62d7918c95ce5c32128826bc83d6210f5dcaec646b7e18b947bee",
+  "original_log_bytes": 30180,
+  "queries": [
+    "Newtons4th PPA500 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://manualzz.com/doc/59397312/newtons4th-ppa1500--ppa1530--ppa500-communications-manual",
+    "https://manualzz.com/doc/7217240/newtons4th-ltd-power-analyzers-user-manual",
+    "https://powertechsrl.it/wp-content/uploads/2025/01/ppa-500-manuale-uso.pdf",
+    "https://quantel-global.com/wp-content/uploads/2021/06/D000220_PPA5_15-Start-up-Manual-v4.0.pdf",
+    "https://sc-journal.com/device/newtons4th/ppa500/",
+    "https://www.manualslib.com/manual/2181899/Newtons4th-N4l-Ppa500-1500.html",
+    "https://www.manualslib.com/manual/2181899/Newtons4th-N4l-Ppa500-1500.html?page=110",
+    "https://www.manualslib.com/manual/2181899/Newtons4th-N4l-Ppa500-1500.html?page=27",
+    "https://www.manualslib.com/manual/2181899/Newtons4th-N4l-Ppa500-1500.html?page=33",
+    "https://www.manualslib.com/manual/2181899/Newtons4th-N4l-Ppa500-1500.html?page=34",
+    "https://www.newtons4th.com/knowledge-base/",
+    "https://www.newtons4th.com/user-resources/firmware/",
+    "https://www.newtons4th.com/user-resources/manuals/",
+    "https://www.newtons4th.com/user-resources/software/",
+    "https://www.testone.com.tr/wp-content/uploads/D000221_PPA5xx_15xx-User-Manual-.pdf",
+    "https://www.w5engineering.com/pc/catalog/PPA-Datalogger-User-Manual.pdf",
+    "https://www.w5engineering.com/pc/catalog/PPA45_5500-Black-Brochure-March-2020_Web-Res.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

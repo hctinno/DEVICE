@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_170.json",
+  "original_log_sha256": "6636b5eaf65d06264b107a8c4974bdb574c9ce5b76afc6f61b15d1103d87686f",
+  "original_log_bytes": 36838,
+  "queries": [
+    "U&S Energy BE-6045AP-20T manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.dam.weidmueller.com/assets/api/8b086334-5aeb-44a2-b8a1-28b6c90ce77f/original/2425840000_00_01_16_IS_Energy_Meter_D650.pdf",
+    "https://deifsupport.deif.com/support/solutions/folders/80000696950",
+    "https://device.report/m/44d482510f2a8c07c9018b556f7181d26f4285aaf740a0295dffc2da6efaf49c",
+    "https://instruments.uni-trend.com.cn/download?cate=169&keyword=&series=&smid=73",
+    "https://instruments.uni-trend.com/download?cate=33&smid=67",
+    "https://kinetik.msk.ru/usna_un.htm",
+    "https://pdfcoffee.com/usys20-usys0500020en-pdf-free.html",
+    "https://sked.ie/download/279/?tmstv=1704416655",
+    "https://studylib.net/doc/5884596/re-configuration-of-solid-state-energy-meters",
+    "https://www.amtek.cz/download/cz/merice-energie/53u_operating_manual.pdf?srsltid=AfmBOoov-VFB0XoZfpKOo8cM8ZioubyN4-hAqEGKhMXqyDl11jZdzNHN",
+    "https://www.ultra.energy/media/3188/4500h-temp-transmitter-2806.pdf",
+    "https://www.urecorp.com/upload/product/20190923184626_energy_1.pdf",
+    "https://www.ushine.co.in/index.php?page=download",
+    "https://www.weidmuller.ca/en/service/product_software.jsp",
+    "https://www.weidmuller.com.au/en/service/product_software.jsp",
+    "https://www.weidmuller.com/en/service/product_software.jsp",
+    "https://www.weidmuller.in/en/service/product_software.jsp"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

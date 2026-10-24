@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/code_sekonic.json",
+  "original_log_sha256": "5b81552849251bb2cc7e69989f4fe31c88a30e2c1d5ba285c543826178813e8a",
+  "original_log_bytes": 32985,
+  "queries": [
+    "site:github.com \"Sekonic\" \"C-800\"",
+    "site:github.com/akares/skreader-py C-800 README SDK"
+  ],
+  "discovered_urls": [
+    "https://docs.quanser.com/quanser-sdk/documentation/python/index.html",
+    "https://docs.quanser.com/quanser-sdk/documentation/quarc_c_comm_c.html",
+    "https://docs.quanser.com/quanser-sdk/documentation/quarc_c_devices_c.html",
+    "https://docs.quanser.com/quanser-sdk/documentation/quarc_c_error_handling_c.html",
+    "https://docs.quanser.com/quanser-sdk/documentation/quarc_c_hardware_c.html",
+    "https://docs.quanser.com/quanser-sdk/documentation/quarc_c_multimedia_c.html",
+    "https://github.com/NexaAI/nexa-sdk.git",
+    "https://github.com/akares",
+    "https://github.com/akares/skreader-py",
+    "https://github.com/baudcode/ydlidar",
+    "https://github.com/caesar-data/python-sdk",
+    "https://github.com/davek-ai/ClearRead",
+    "https://github.com/orbbec/pyorbbecsdk",
+    "https://github.com/ouster-lidar/ouster-ros",
+    "https://github.com/ouster-lidar/ouster-sdk",
+    "https://github.com/ouster-lidar/ouster-sdk/",
+    "https://github.com/ouster-lidar/ouster-sdk/blob/master/README.rst",
+    "https://github.com/quanser/quanser_sdk",
+    "https://github.com/quanser/quanser_sdk_examples",
+    "https://github.com/quanser/quanser_sdk_linux",
+    "https://github.com/quanser/quanser_sdk_win64",
+    "https://github.com/tjsoftchip/YDLidar-SDK",
+    "https://github.com/topics/spectrometer?l=python&o=desc&s=stars"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

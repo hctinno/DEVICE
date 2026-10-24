@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item208.json",
+  "original_log_sha256": "f2a53dcc8cb46df4ce2cdc418b2cec78c076b765e36ea577c756a4d15eb40c41",
+  "original_log_bytes": 10023,
+  "queries": [
+    "KIMO \"MP55\" software interface manual",
+    "site:github.com \"MP55\" KIMO"
+  ],
+  "discovered_urls": [
+    "https://chevrierinstruments.com/en/produit/barometre-numerique-mp55/",
+    "https://chevrierinstruments.com/produit/barometre-numerique-mp55/",
+    "https://device.report/m/2f79b1996fba3087523e9694bdfe51c6ef0409dadab80a5187a29e92362ea962",
+    "https://device.report/m/40d30863b3fd2c86fff4ed3397f3b2508065f22e02dd04b756cdc9540789fb96",
+    "https://elma-instruments.no/produkter/kimo-sauermann-mp55-absoluttryk-700-1100-mbar",
+    "https://elma.dk/produkter/kimo-sauermann-mp55-absoluttryk-700-1100-mbar",
+    "https://es.manuals.plus/kimo/class-50-lux-meter-manual",
+    "https://github.com/VgerMods/Pawn/blob/main/Localization.es.lua",
+    "https://github.com/VgerMods/Pawn/blob/main/Localization.ruRU.lua",
+    "https://github.com/pimox/pve-docs/blob/master/pct.1-synopsis.adoc",
+    "https://kimo-instruments.com/sites/default/files/files/FT_portable_MP55_EN_16-12-2020_1.pdf",
+    "https://kimo-instruments.com/sites/default/files/files/QSG-Portables_Classe-50_14-02-25_12.pdf",
+    "https://kimocorea.tistory.com/entry/%ED%9C%B4%EB%8C%80%EC%9A%A9-%EB%8C%80%EA%B8%B0%EC%95%95%EA%B3%84-MP55",
+    "https://mbimall.co.kr/product/kimo-%ED%9C%B4%EB%8C%80%EC%9A%A9-%EC%95%95%EB%A0%A5%EA%B3%84-mp55/1203/",
+    "https://www.amscontrols.com/kb/",
+    "https://www.digiparts.ch/data/product_datasheets/Datasheet_MP55-EN.pdf",
+    "https://www.hbm.com/fileadmin/mediapool/hbmdoc/technical/A05959.pdf",
+    "https://www.kimocanada.com/Anglais/pdf/Portables%202014/Classe%2050/FT%20portable%20MP55.pdf",
+    "https://www.manua.ls/kimo/mp-55/manual?p=2",
+    "https://www.mw-instruments.nl/media/2827/catalog/MW%20datasheet%20Kimo%20MP55%20EN.pdf",
+    "https://www.scribd.com/document/1075554377/MP-55-Kimo"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

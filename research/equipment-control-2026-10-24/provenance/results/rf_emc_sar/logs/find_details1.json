@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/find_details1.json",
+  "original_log_sha256": "3aa1bafc1849c029dd8236f74dfd241ef54ded3f1be067f8ba676afc0cc1fef7",
+  "original_log_bytes": 103514,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/lxi-tools/lxi-tools",
+    "https://www.ametek-cts.com/support/software-updates",
+    "https://www.narda-sts.com/index.php?dl=1&eID=dumpFile&f=1197&t=f&token=62b2fb02546ddc6b1aa6f67d5d3073adb5c069cd",
+    "https://www.totalphase.com/products/beagle-software-api/",
+    "https://www.trsrentelco.com/sites/default/files/resources-pdfs/Teseq_NSG5500_User_Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

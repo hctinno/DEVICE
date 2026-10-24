@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_kikusui_code.json",
+  "original_log_sha256": "1e440fecd5fad341a69bbfeb4f479349ab2273be7371ba6680dc3555f7397eeb",
+  "original_log_bytes": 28288,
+  "queries": [
+    "site:github.com Kikusui PLZ PWR PAS PBZ TOS"
+  ],
+  "discovered_urls": [
+    "http://localhost:18080/kabusapi",
+    "http://localhost:8250`",
+    "https://gist.github.com/Talljoe/30f436a764528b8491f1d3d66b4d3de3",
+    "https://github.com/Dash-Industry-Forum/Dash-Industry-Forum.github.io/files/11722876/DASH-IF-CTS-001-1.0.0.pdf",
+    "https://github.com/DigitalPhonetics/IMS-Toucan/blob/MassiveScaleToucan/Utility/language_list.md",
+    "https://github.com/kabucom/kabusapi/issues/399",
+    "https://github.com/kotokrad/pwz",
+    "https://github.com/kyohah/kabustation_client-python",
+    "https://github.com/palserver-gui/palserver-gui/blob/main/README.md",
+    "https://github.com/pwrlabs",
+    "https://github.com/pwrlabs/pwrjs",
+    "https://github.com/spacecubics/kikusui/blob/main/kikusui.py",
+    "https://github.com/tamironov/KIKUSUI-BIM1030-Impedance-Meter-Tester",
+    "https://github.com/z88dk/z88dk/blob/master/src/ticks/am9511.c",
+    "https://github.com/zpekic/Sys_MicroBasic/blob/main/doc/FPU%20notes.txt",
+    "https://pwrlabs.io/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_010.json",
+  "original_log_sha256": "8d21b1fd1773fc6867eb732f2335989ad0d484cbe977a7da92a0fad385a4ea23",
+  "original_log_bytes": 31951,
+  "queries": [
+    "TESTO Testo 174H manual programming software"
+  ],
+  "discovered_urls": [
+    "https://instrotech.com/media/manuals/manTES174-H.pdf",
+    "https://instrotech.com/media/manuals/manTES174-T.pdf",
+    "https://kleinschmidtgmbh.com/media/pdf/5e/49/5e/0563_0561_ba_2.pdf",
+    "https://manuals.plus/m/4cfcc3389a0bf38fb35334a0fa7c444bc520a4a3c58e1ce91a735c1a5e77ba10",
+    "https://testinstruments.net.au/product/food-industry/testo-174h-logger-white/",
+    "https://testo-ph.com/product/testo-174h/",
+    "https://testo.com.my/index.php/products-mainmenu-32/by-brands-mainmenu-75/testo-germany-mainmenu-90/item/250-testo-174h",
+    "https://testo.nz/products/testo-174h-data-logger",
+    "https://testo.rs/wp-content/uploads/2016/07/testo-174_Instruction-Manual.pdf",
+    "https://testo.vn/testo-174-h-temperature-and-humidity-mini-data-logger",
+    "https://www.elcoteam.com/attachment/get/26526/5f60bf3d5c320884154619-560T174.pdf",
+    "https://www.fmcgis.com.au/testo-174-Short-manual.pdf",
+    "https://www.ics-schneider.de/produkte/testo-174-h-mini-datenlogger-fuer-temperatur-und-feuchte/?lang=en",
+    "https://www.infoagro.com/instrumentos_medida/producto_es/6467-medidor-y-registrador-de-temperatura-y-humedad-usb-testo-174h",
+    "https://www.nubicom.co.kr/testo/testo_174_H.jsp",
+    "https://www.test-italy.it/acquisizione-dati-e-datalogger?product_id=29432283",
+    "https://www.testo.vn/testo-174h-may-do-ghi-nhiet-do-do-am-mini",
+    "https://www.zetalab.it/prodotto/testo-174-h/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

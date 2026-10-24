@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_107.json",
+  "original_log_sha256": "44f9c2fc6a3c198a12c441e3c000a559a9282ae6d11bb21d717a1e2a1c3b8f94",
+  "original_log_bytes": 26397,
+  "queries": [
+    "HIOKI LR8402 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://app.calldoorstep.inwww.hiokikorea.com/support/software_agree.html?c_id=A002001&fullpath=download%2F3694_s&p_no=366",
+    "https://ccc.dddd.hiokikorea.com/support/software_agree.html?c_id=A023001&fullpath=download%2F3694_s&p_no=35",
+    "https://hioki-vietnam.vn/wp-content/uploads/2024/06/sf1000.pdf",
+    "https://hiokikorea.com/support/software_search.html?p=3",
+    "https://hiokikorea.com/support/software_search.html?p=4",
+    "https://hiokikorea.com/support/win8.html",
+    "https://www.hioki.cn/products/lr8402-21",
+    "https://www.hioki.co.jp/jp/support/softwaredownload/?mName=LR8450&search=on",
+    "https://www.hioki.co.kr/hioki/Product_Program/download/LR8400-20E4-07M-00K.pdf",
+    "https://www.hioki.com/download/28268",
+    "https://www.hioki.com/euro-en/products/multichannel-data-loggers/multichannel/id_5846",
+    "https://www.hioki.com/in-en/support/download",
+    "https://www.hioki.com/us-en/products/multichannel-data-loggers/multichannel/id_5846",
+    "https://www.hioki.com/us-en/support/download/software/versionup/detail/id_605",
+    "https://www.hiokikorea.com/support/software_search.html?s_string=LR8450",
+    "https://www.itm.com/pdfs/cache/www.itm.com/lr8400-20/manual/lr8400-20-manual.pdf?srsltid=AfmBOoqHII_nVTUvHTNk9LjHZi5TJ7-P6LBvGnfmQvCbdJpLPS2GXqvR",
+    "https://www.rituchina.com/upload/profile/20231012/LR8400-21%E3%80%81LR8401-21%E3%80%81LR8402-21_user_manual_chi_20191017H.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

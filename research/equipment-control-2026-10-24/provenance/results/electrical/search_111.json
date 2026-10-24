@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_111.json",
+  "original_log_sha256": "660ba3f7e78c82a84e49aa42bcd2db52dd3296bb85fd160df1b3352c9deb62ad",
+  "original_log_bytes": 34641,
+  "queries": [
+    "YOKOGAWA MV2048 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/IMMV1000-01E.pdf",
+    "https://cdn.tmi.yokogawa.com/files/uploaded/BU04Q01A01_01E_030.pdf",
+    "https://cdn.tmi.yokogawa.com/files/uploaded/cn_IMMV2000_02C_C.pdf",
+    "https://manuals.plus/m/11ad3d6e8815cacfa8d55b5aa410bc4e8bb290ac43777f0c93c228a9ac571385",
+    "https://manualzz.com/doc/23569174/yokogawa-mv-1000--mv-2000-data-logger-user-s-manual",
+    "https://manualzz.com/doc/6352011/yokogawa-mv-1000--mv-2000-data-logger-service-manual",
+    "https://web-material3.yokogawa.com/IMMV1000-01E_020.pdf",
+    "https://web-material3.yokogawa.com/IMMV2000-02E_020.pdf",
+    "https://web-material3.yokogawa.com/M-4660.us.pdf",
+    "https://www.chinakong.com/download/list.asp?clas=11&owner=2&subid=3",
+    "https://www.manualsdir.com/manuals/360269/yokogawa-button-operated-mv2000-button-operated-mv1000.html",
+    "https://www.manualsdir.com/manuals/360275/yokogawa-button-operated-mv2000-button-operated-mv1000.html",
+    "https://www.manualshelf.com/manual/yokogawa/button-operated-mv2000/instruction-manual-english.html",
+    "https://www.manualshelf.com/manual/yokogawa/button-operated-mv2000/user-guide-english.html",
+    "https://www.manualslib.com/manual/2752775/Yokogawa-Mvadvanced-Mv1000-Series.html",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.scribd.com/document/1071854831/GS04Q01A01-01E-060",
+    "https://www.yokogawa.com/ca/solutions/discontinued/button-operated-mv1000-mv2000/",
+    "https://yokogawa.manymanuals.com/sensors/button-operated-mv2000/user-manual-7018"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

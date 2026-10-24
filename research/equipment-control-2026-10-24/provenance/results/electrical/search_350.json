@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_350.json",
+  "original_log_sha256": "03707130bea7c0d45e8aebc7ec909913e55f2a19776e68ad42381c253f07b643",
+  "original_log_bytes": 28739,
+  "queries": [
+    "LEVEAR VP-7670T manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.tomcom.co.jp/",
+    "https://akplus.com.tw/shinyu/Vp7670tVp7671t.pdf",
+    "https://disibeint.com/en/Support/Software.html",
+    "https://manualzilla.com/doc/5730042/user-manual---camboard-electronics",
+    "https://manualzilla.com/doc/6285246/click-para-descargar",
+    "https://verticalpower.com/index.php/help/software",
+    "https://viewplus.com/es/viewplus-support/manuals/",
+    "https://viewplus.com/viewplus-support/manuals/",
+    "https://www.aradex.de/en/software/veconfig/",
+    "https://www.bsk.com.tw/pages/product/VP-7670T_BSK.pdf",
+    "https://www.bsk.com.tw/papers/BSK%20Company%20profile.pdf",
+    "https://www.daktronics.com/en-us/support/kb/DD3992655",
+    "https://www.lost-manuals.com/pdf/dalian-levear-electric-co-ltd--vp-7670t--datasheet--ID14370.pdf",
+    "https://www.manualsdir.com/manuals/465015/kramer-electronics-vp-747.html?page=9",
+    "https://www.opweb.de/pdf/dalian-levear-electric-co-ltd--vp-7670t--datasheet--ID14370.pdf",
+    "https://www.tminstruments.com.br/imagens/tm2/301.pdf",
+    "https://www.verticalpower.com/index.php/news/news/94-new-and-updated-documentation",
+    "https://www.verticalpower.com/index.php/start/get-started",
+    "https://www.visiplex.com/manuals-guides/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

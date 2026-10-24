@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_196.json",
+  "original_log_sha256": "f4b39d2f8fff8abf7988a1b4a660853bac9e80f1650bafa7471b5aa5dcffaf89",
+  "original_log_bytes": 31655,
+  "queries": [
+    "Anritsu ML2496A manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.anritsu.com/contact.asp",
+    "http://www.anritsu.com/en-us/products-solutions/products/ml2487b.aspx",
+    "http://www.anritsu.com/en-us/products-solutions/products/ml2488b.aspx",
+    "http://www.anritsu.com/en-us/products-solutions/products/ml2495a.aspx",
+    "http://www.anritsu.com/en-us/products-solutions/products/ml2496a.aspx",
+    "https://device.report/m/a280a6b28ccaa143f67038258c27be993bf14f967ae3725cccf92227d7bfd554.pdf",
+    "https://dl.cdn-anritsu.com/en-us/test-measurement/files/Manuals/Operation-Manual/13000-00162E.pdf",
+    "https://dl.cdn-anritsu.com/en-us/test-measurement/files/Manuals/Programming-Manual/13000-00163E.pdf",
+    "https://dl.cdn-anritsu.com/en-us/test-measurement/files/Manuals/Programming-Manual/13000-00239J.pdf",
+    "https://manuals.plus/m/41f8426007e57acc9ae2f5a9d1bcd7b99c4a45ee872a37de92f87116844a4f25",
+    "https://manuzoid.com/manuals/BbKQW-Anritsu%20ML2495A%20Maintenance%20Manual",
+    "https://www.anritsu.com/en-AU/test-measurement/products/ml2496a",
+    "https://www.anritsu.com/en-IN/test-measurement/products/ml2496a",
+    "https://www.anritsu.com/en-US/test-measurement/products/ml2496a",
+    "https://www.anritsu.com/en-gb/test-measurement/support/downloads?model=ML2496A",
+    "https://www.anritsu.com/en-us/test-measurement/products/ml2487b",
+    "https://www.anritsu.com/en-us/test-measurement/products/ml2488b",
+    "https://www.anritsu.com/en-us/test-measurement/products/ml2495a",
+    "https://www.anritsu.com/en-us/test-measurement/products/ml2496a",
+    "https://www.manualslib.com/manual/2981588/Anritsu-Ml248-A-Series.html",
+    "https://www.mathworks.com/hardware-support/instrument-control-toolbox/anritsu-power-meters-from-matlab.html",
+    "https://www.reddit.com/r/rfelectronics/comments/1jkpqf8",
+    "https://www.scribd.com/document/57237787/13000-00238-ML248xB-ML249xA-Operation-Manual-Rev-J",
+    "https://www.tehencom.com/Companies/Anritsu/ML2490A_ML2495A_ML2496A/Anritsu_ML2490A_ML2495A_ML2496A-u.htm",
+    "https://www.ultimateservicemanuals.com/products/anritsu-wiltron-ultimate-repair-service-maintenance-owner-manuals"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,42 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_338.json",
+  "original_log_sha256": "10efc6d09077dc3d9c8dcbc1a09789f8981aebe6f507c342817a9445f1c0f2fb",
+  "original_log_bytes": 31713,
+  "queries": [
+    "KIKUSUI TOS 8750 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/?s=TOS",
+    "https://global.kikusui.co.jp/download-category-en/tos-en/",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/download/tos7300/",
+    "https://global.kikusui.co.jp/manual-search/",
+    "https://global.kikusui.co.jp/sitemap-html/",
+    "https://kikusui-europe.com/kikusupport/i-want-to-control-a-kikusui-product-with-a-programmable-logic-controller-plc-do-you-have-a-protocol-specification-or-communication-specification/",
+    "https://kikusui-korea.co.kr/files/PDF/TOS5200_M.pdf",
+    "https://kikusui.co.jp/kiku/wp-content/uploads/2021/08/TOS3200AssistManEng.pdf",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/download/kfm2030-3/",
+    "https://kikusuiamerica.com/download/krb13-krb600/",
+    "https://kikusuiamerica.com/download/krb9-krb400-pcr-le/",
+    "https://kikusuiamerica.com/download/pd03m-s-pcr-la/",
+    "https://kikusuiamerica.com/download/pfx2331/",
+    "https://kikusuiamerica.com/download/pl02a-tos/",
+    "https://kikusuiamerica.com/download/plz4wb/",
+    "https://kikusuiamerica.com/download/tos5000a/",
+    "https://kikusuiamerica.com/download/tos7300/",
+    "https://kikusuiamerica.com/manual-search/",
+    "https://manualzz.com/doc/6976139/kikusui-electronics-corporation-tos8700--tos8750-withstan",
+    "https://usermanual.wiki/m/db410d809ba0077a40880414c4fa268af6e8377c80cdea180c8ad70ea1408432_optim.pdf",
+    "https://www.atecorp.com/products/kikusui/tos8750",
+    "https://www.daeyangstek.co.kr/type6/board/download.php3?ext=1&user_file=TOS8870A_0-E_1_1.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/tos9300_interface_manual.pdf",
+    "https://www.manualslib.com/manual/4050246/Kikusui-Tos8700.html",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US",
+    "https://www.trading-247.com/products/kikusui-ultimate-owner-operation-instructions-service-manuals-edelivery"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

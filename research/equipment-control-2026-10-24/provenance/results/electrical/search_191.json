@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_191.json",
+  "original_log_sha256": "4db49ce2047aea927fb067c3d108871dd96ae59405f7d83b03ba1a7f334c765f",
+  "original_log_bytes": 27779,
+  "queries": [
+    "HIOKI LR8401-20 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://app.calldoorstep.inwww.hiokikorea.com/support/software_agree.html?c_id=A002001&fullpath=download%2F3694_s&p_no=366",
+    "https://hioki-vietnam.vn/wp-content/uploads/2024/06/sf1000.pdf",
+    "https://www.hioki.co.kr/hioki/Product_Program/download/LR8400-20E4-07M-00K.pdf",
+    "https://www.hioki.com/download/28268",
+    "https://www.hioki.com/euro-en/products/multichannel-data-loggers/multichannel/id_5846",
+    "https://www.hioki.com/global/support/download/software",
+    "https://www.hioki.com/in-en/support/download",
+    "https://www.hioki.com/us-en/products/multichannel-data-loggers/multichannel/id_5846",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A023001&p_no=35",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A023001&p_no=35&s_tab=tab3",
+    "https://www.hiokikorea.com/support/software_search.html?s_string=LR8450",
+    "https://www.manualslib.com/manual/2676186/Hioki-Memory-Hilogger-Lr8401-20.html?page=129",
+    "https://www.manualslib.com/manual/2676186/Hioki-Memory-Hilogger-Lr8401-20.html?page=273",
+    "https://www.manualslib.com/products/Hioki-Lr8401-20-10326911.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

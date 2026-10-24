@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_110.json",
+  "original_log_sha256": "c86a6f9b49874eef29a8cc540625a9d5df9dfdcbf1efdeb7d6b1e3ea42b7dc4b",
+  "original_log_bytes": 30228,
+  "queries": [
+    "YOKOGAWA WT310E manual programming software"
+  ],
+  "discovered_urls": [
+    "http://tmi.yokogawa.com/",
+    "http://tmi.yokogawa.com/service-support/",
+    "https://cdn.tmi.yokogawa.com/1/5702/files/IM760131-01EN.pdf",
+    "https://cdn.tmi.yokogawa.com/IM760121-02E.pdf",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=1067&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=2241&mode=view",
+    "https://koreayokogawa.com/product/product-detail.php?idx=184",
+    "https://koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&idx=27&mode=view&offset=80&sk=&sw=",
+    "https://koreayokogawa.com/support/download.php?boardid=download&idx=27&mNum=3&mode=view&sNum=4",
+    "https://manualzz.com/doc/7352910/yokogawa-wt310e--wt310eh--wt332e--wt333e-digital-power-me",
+    "https://myportal.yokogawa.com/s/download-details?",
+    "https://myportal.yokogawa.com/s/download-details?id=000003472",
+    "https://sc-journal.com/device/yokogawa/wt310e/",
+    "https://tmi.yokogawa.com/solutions/products/power-analyzers/digital-power-meter-wt300e/",
+    "https://www.koreayokogawa.com/product/product-detail.php?idx=32",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&idx=27&mode=view&offset=90&sk=&sw=",
+    "https://www.koreayokogawa.com/support/knowledge.php?boardid=knowledge&idx=229&mNum=3&mode=view&sNum=3",
+    "https://www.manualslib.com/manual/1392227/Yokogawa-Wt310e.html",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.yokogawa.com/pdf/provide/E/GW/IM/0000029830/0/IMWT310E-01EN.pdf",
+    "https://www.yokogawa.com/pdf/provide/E/GW/IM/0000029832/0/IMWT310E-17EN.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

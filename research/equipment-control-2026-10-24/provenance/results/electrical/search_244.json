@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_244.json",
+  "original_log_sha256": "7f5be0165a389cf2b8c045b85f3018a35702788e3c0537e52a988137fa4be6a9",
+  "original_log_bytes": 28154,
+  "queries": [
+    "EM TEST DPA 503N manual programming software"
+  ],
+  "discovered_urls": [
+    "https://atec.manymanuals.com/equipment/em-test-pfs-503n/user-manual-13837/2",
+    "https://en.junantech.com.tw/3-phase-digital-power-analyzer-for-harmonics-flicker-testing-dpa-503n.html",
+    "https://en.junantech.com.tw/power-fail-simulators-pfs-503n-series.html",
+    "https://maximinstruments.com/pdf_files/EMTEST_DPA503N_Datasheet.pdf",
+    "https://transientspecialists.com/cdn/shop/files/User_Manual_DPA_4eaa28d3-9d17-4a81-80f5-6a25ea66222e.pdf?v=5409931688299573145",
+    "https://www.ametek-cts.com/-/media/ametekcts/documents/quick-start-guide/quick-start-and-safety-net-v2_en.pdf?hash=84EF36B9E7B2DF4ECF5002B288E6C766&la=en&revision=cf53a8d0-00e3-4030-84e0-9523fcdc8a1a",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/em-test/dpa_503n_-_aif_503n_datasheet_2024-12-13_en.pdf?la=en&revision=4084e741-7808-43e7-ad65-ff7f2dbad22d",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/em-test/dpa_503n_datasheet_2022-05-19_en.pdf?la=en&revision=3f3d6508-5178-455d-8cf2-d731c58350b7",
+    "https://www.ametek-cts.com/products/brands/em-test/dpa-503n-aif-503n",
+    "https://www.ametek-cts.com/products/brands/em-test/pfs-503n-series?pg=Dips+Interrupts+and+Variations",
+    "https://www.ametek-cts.com/support/software-updates",
+    "https://www.atecorp.com/products/em-test/dpa503n",
+    "https://www.dfzk.com/prod_emtest_dpa_503n.html",
+    "https://www.dfzk.com/solu_64.html",
+    "https://www.emclatest.com/products/analyzers-receivers/harmonic-flicker-analyzer/dpa503n",
+    "https://www.manualslib.com/manual/2319680/Em-Test-Cni-503-Series.html?page=19",
+    "https://www.volta.it/prodotti/prove/emc/prove-condotte/domestico_industriale_iec_en/armoniche-e-flicker/dpa-503-trifase/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_000.json",
+  "original_log_sha256": "3dd2a99380692f45e40eb59e229e2f6605ca1f82b71d008630e6730a58fa5cbe",
+  "original_log_bytes": 22798,
+  "queries": [
+    "ENEX SCIENCE \"EN-RC-2500\" manual communication software GitHub",
+    "ESPEC \"PU-4J\" manual communication software GitHub",
+    "FAMTECH \"EDS12000LS4-550\" manual communication software GitHub",
+    "MTES \"1.2 BTVC\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://comastridavide.com/wp-content/uploads/2022/04/PLATINOUSJ.pdf",
+    "https://dfzk-www.oss-cn-beijing.aliyuncs.com/www-PRD/resources/files/PriceTable_emd.pdf",
+    "https://emin.asia/especpu-4j-espec-pu-4j-low-temperature-chamber-40-100degc-800l-84159/pr.html",
+    "https://emin.vn/en/especpu-4j-espec-pu-4j-low-temperature-chamber-40-100degc-800l-84159/pr.html",
+    "https://espec.co.il/products/reach-in/platinous-j-series/",
+    "https://espec.de/products/temperature-humidity-chamber-platinous-j-series/",
+    "https://www.3915.jp/3/5326.html",
+    "https://www.endokagaku.co.jp/wp/wp-content/uploads/2018/12/pratinas_j.pdf",
+    "https://www.espec.co.jp/english/products/catalog/digest.pdf",
+    "https://www.espec.co.jp/english/products/catalog/pj.pdf",
+    "https://www.mbelectronique.fr/514-serie-platinous-j-enceinte-climatique-standard.html",
+    "https://www.motoyama.co.jp/espec/esp01.htm",
+    "https://www.scribd.com/document/864381713/Espec-PR-4J",
+    "https://www.scribd.com/document/900978605/Basic-Guid-Unlocked",
+    "https://www.semiki.com/en/san-pham/tu-kiem-tra-do-am-nhiet-do-espec-388/",
+    "https://www.usedsale.jp/4c0909.html",
+    "https://www.yamato-net.co.jp/product/detail/1977/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

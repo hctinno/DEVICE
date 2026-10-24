@@ -1,0 +1,6 @@
+# Preserve snapshot bytes and SHA-256 values across Windows and Linux checkouts.
+* -text
+# The exported CSV retains its original CRLF record delimiters.
+*.csv whitespace=cr-at-eol
+# Historical evidence retains original final blank lines and its recorded hashes.
+provenance/** whitespace=-blank-at-eof

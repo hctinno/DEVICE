@@ -1,0 +1,21 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group05_narda.json",
+  "original_log_sha256": "8382fdca12dc81e34439729148c430535bf619e13bfbdf76cc2b6bcc516aa920",
+  "original_log_bytes": 16845,
+  "queries": [
+    "Narda (\"HP-01\" OR \"BFD-400-1\" OR \"SRM-3006\" OR \"EHP-200AC\" OR \"8700\") software remote commands manual",
+    "site:github.com Narda (SRM OR EHP OR 8700 OR HP01)"
+  ],
+  "discovered_urls": [
+    "http://dx.doi.org/10.1016/j.compstruc.2015.08.010",
+    "https://bounty.github.com/ineligible.html",
+    "https://bounty.github.com/targets/npm-registry.html",
+    "https://docs.github.com/assets/images/help/site-policy/github-statement-against-modern-slavery-and-child-labor.pdf",
+    "https://github.com/SURGroup/UQpy/files/5940039/Kim_Shields_CaS_2015.pdf",
+    "https://www.firmenpresse.de/presseportal/dn-harey-yehuda.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

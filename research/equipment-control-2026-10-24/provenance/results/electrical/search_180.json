@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_180.json",
+  "original_log_sha256": "a60bf31f23c8f99f941621448d8f9ea847076a887cdab7be9c5423bcbf885729",
+  "original_log_bytes": 32811,
+  "queries": [
+    "Spinner BN 640082 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/85d61fb5e06c5df957fc3278e74077c9e066e89d27a796943e1495242bb0b031",
+    "https://device.report/m/f75e5169d5f06cee7ce2531d65b7d77b53f41afc1c677b88fdc041ce80821aec",
+    "https://indeonline.in/inde/wp-content/uploads/2018/06/SPINNER-High-Power-Switches.pdf",
+    "https://manualzilla.com/doc/5749373/cee-spin-coater-hotplate-operation",
+    "https://manualzilla.com/doc/5989659/spin-family-evaluation-software?page=21",
+    "https://products.spinner-group.com/Downloads/Spinner/M36023.pdf",
+    "https://shop.spinner-group.com/de-fr/Downloads/Spinner/640082-DS.pdf",
+    "https://spinner.readthedocs.io/en/master/commands.html",
+    "https://spinner.readthedocs.io/en/master/spinner-wiring-guide.html",
+    "https://spinner.readthedocs.io/en/stable/",
+    "https://www.manualslib.com/brand/spinner/",
+    "https://www.scribd.com/document/606249331/Manual-Guide-for-Spinner",
+    "https://www.spinfiresport.com/kb/software-download-page-v2-usb/",
+    "https://www.spinner-group.com/images/download/kataloge_flyer/SPINNER_Broadcast.pdf",
+    "https://www.spinner-group.com/wp-content/uploads/2025/01/SPINNER_Broadcast.pdf",
+    "https://www.spinner.eu.com/download-center",
+    "https://www.spinner.eu.com/en/download-center"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

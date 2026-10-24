@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_335.json",
+  "original_log_sha256": "fe0157eed67a4feff66016f375e7ec737bb9b67ffe3943cb94c3980308b1c370",
+  "original_log_bytes": 31184,
+  "queries": [
+    "(주)이지전압조정기 자동전압조정기 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cache.industry.siemens.com/dl/files/659/74433659/att_101974/v1/BHUsl_0313_ko_ko-KR.pdf",
+    "https://fa-faq.mitsubishielectric.com/fa/products/software/inv/index.html",
+    "https://kind.krx.co.kr/external/dst/corpReport/64792120250717104849.pdf",
+    "https://kr.mitsubishielectric.com/fa/ko/mobile.do?act=product_list_mobile&cate_id=3&parent_id=631",
+    "https://nas.co.kr/nas/product/sgs04.php",
+    "https://www.cimon.co.kr/product_tax/cicon/",
+    "https://www.idec.com/en-apac/resources-documents/software-updates/automation-organizer-software",
+    "https://www.jaka.com/en_eu/commonQuestion",
+    "https://www.jcprogrammer.com/download/",
+    "https://www.jcprogrammer.com/download/software/",
+    "https://www.jeiotech.com/html.doc/company09.php",
+    "https://www.jmrobotics.co.kr/exec/front/Board/download/?filename=U+GOT_%EC%A0%9C%EC%95%88%EC%84%9C.pdf&no=310&realname=2025%2F05%2F13%2F219c7ae0e1c809c60c1660628a5b1540.pdf",
+    "https://www.mitsubishielectric.com/fa/id_en/products/software/inv/index.html",
+    "https://www.mitsubishielectric.com/fa/id_en/products_old/software/inv/index.html",
+    "https://www.nas.co.kr/nas/product/sgs04.php",
+    "https://www.samsungplc.co.kr/narae_pds/data/resource/plc/X8_%EA%B5%90%EC%9C%A1%EC%9A%A9_Manual_KO_V0.8.2.pdf",
+    "https://www.yaskawa.co.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyNDExMjdlNWEyODFhNmM2NWUxIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjUwNzEyMjdlMDViZjMzM2YzYiI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDI1MDcxNGE5M2ZlNTU4MzZmNGQiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjZhMTQzYWVmMTBiMDkiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://www.yaskawa.co.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyNDExMjdlNWEyODFhNmM2NWUxIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjUwNzEyZWQ5ZDcwY2I1YzI3MiI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDI1MDcxNGVmNjJkMjY2NGQ4NDUiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5ZmE4YzZmNjRlMzUiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

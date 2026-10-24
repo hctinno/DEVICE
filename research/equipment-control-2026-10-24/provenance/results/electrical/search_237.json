@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_237.json",
+  "original_log_sha256": "614f8a7e7f2900985885a4a1589bb55e08b1ac4f070139251950af6399727d42",
+  "original_log_bytes": 34341,
+  "queries": [
+    "LECROY WAVEPRO7K manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.pacificmindworks.com/",
+    "https://bee.mif.pg.gda.pl/ciasteczkowypotwor/LeCroy/LeCroy_WaveRunner_2_LT_Service_Manual.pdf",
+    "https://cdn.teledynelecroy.com/files/manuals/waveprohd-om-eng.pdf",
+    "https://cdn.teledynelecroy.com/files/manuals/wp7zi-manual.pdf",
+    "https://es.teledynelecroy.com/support/softwaredownload/labview.aspx",
+    "https://manualzz.com/doc/64979372/lecroy-dda-sda-wavepro-7-zi-series-oscilloscope-manual",
+    "https://teledyne-lecroy.manymanuals.fr/equipment/wavepro-7-zizi-a/user-manual-17047/151",
+    "https://www.ko4bb.com/getsimple/index.php?dir=LeCroy&id=manuals",
+    "https://www.manualslib.com/manual/3683535/Teledyne-Lecroy-Wavepro-7-Zi-A.html?page=144",
+    "https://www.manualslib.com/manual/3683535/Teledyne-Lecroy-Wavepro-7-Zi-A.html?page=150",
+    "https://www.manualslib.com/manual/3683535/Teledyne-Lecroy-Wavepro-7-Zi-A.html?page=18",
+    "https://www.manualslib.com/manual/566673/Lecroy-Wavepro-7-Zi.html",
+    "https://www.reddit.com/r/AskEngineers/comments/o91qrz",
+    "https://www.reddit.com/r/oscilloscope/comments/1k7zzbj",
+    "https://www.reddit.com/r/oscilloscope/comments/1pe88ag/lecroy_wavepro_950_networking_help/",
+    "https://www.reddit.com/r/oscilloscope/comments/1sn18pm/what_is_your_experience_with_teledyne_lecroy/",
+    "https://www.teledynelecroy.com/options/productdetails.aspx?categoryid=23&groupid=11&modelid=887",
+    "https://www.teledynelecroy.com/support/softwaredownload/default.aspx",
+    "https://www.teledynelecroy.com/support/techlib/productmanualsarchive.aspx?cat=1&smid=851&type=7",
+    "https://www.woojoohitech.com/bbs/board.php?bo_table=data&page=&wr_id=12"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

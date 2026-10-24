@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/open_motion_code.json",
+  "original_log_sha256": "c59bfec37a6a5e578ff8d850244d987c6b0ef0c4d6f00a0b60a77eeb7ca8c9db",
+  "original_log_bytes": 25218,
+  "queries": [],
+  "discovered_urls": [
+    "http://www.ets-lindgren.com",
+    "https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver",
+    "https://github.com/ros-industrial/staubli_val3_driver/blob/master/staubli_val3_driver/README.md",
+    "https://manualmachine.com/etslindgren/2090/1422741-user-manual/",
+    "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

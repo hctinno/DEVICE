@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item404.json",
+  "original_log_sha256": "765205ff2a5607955fb697f85e4fd002bdcbb0082dad3d388bf1ee8b0b620cb6",
+  "original_log_bytes": 13483,
+  "queries": [
+    "B&K \"5935L\" software interface manual",
+    "site:github.com \"5935L\" B&K"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/29aa7d85b9bef79729209ed03bdf260e13737019c5b5f66e4098c112137d1ba5.pdf",
+    "https://es.scribd.com/document/434471441/Pedro-Cobo-Parra-Absorcio-n-del-sonido",
+    "https://house.mo.gov/billtracking/bills121/biltxt/intro/HB1809I.htm",
+    "https://manuals.plus/m/8fbe919bd10ba41762e9bb4a54c5615d165dff9e0a1a1d0b70471e77e85f65b8",
+    "https://manuals.plus/m/eeceae3f47d502bc46305976180b6e0ef2aa4c738e81ab5b1e717b038d2d5026.pdf",
+    "https://manualzilla.com/doc/5895783/rands-upv-k9--k91-operating-manual",
+    "https://octsources.com/detail/74.html",
+    "https://patents.google.com/patent/EP3552407A1/en",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_operating_manual/UPV_K9_K92_OperatingManual_en_03.pdf",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1401_9353_01/UPV_K7_OperatingManual_en_04.pdf",
+    "https://troutunderground.com/Sound-Audio-Measurement-Kjaer-Microphone/",
+    "https://vtechworks.lib.vt.edu/bitstream/handle/10919/34247/Spalt_TB_T_2010.pdf",
+    "https://www.bksv.com/doc/bp1338.pdf",
+    "https://www.electropuces.com/bf%2CAudio.htm",
+    "https://www.machine--tools.com/By-Location-/Minnesota-/Bruel-kjaer-5935L-dual-microphone-supply.ASPX",
+    "https://www.metroacustica.com/bruelpxi",
+    "https://www.octsources.com/detail/396.html",
+    "https://www.soundbroker.com/microphone_wireless/?sort=0&start=3040"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

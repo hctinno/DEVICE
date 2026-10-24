@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open026.json",
+  "original_log_sha256": "9d77b91039ba26ca932bd4db86a1ed1be18714fdcfbfa80528e4539e2d6984ef",
+  "original_log_bytes": 625,
+  "queries": [],
+  "discovered_urls": [
+    "https://cdn.rohde-schwarz.com/pws/dl_downloads/dl_driver/miscelanous/rsosp_1/rsosp_history_release_notes.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

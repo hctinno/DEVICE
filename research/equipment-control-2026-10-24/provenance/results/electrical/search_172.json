@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_172.json",
+  "original_log_sha256": "963d375427f9e1a9ac30351c8c8d432a153596f617bcc00d4364fb0f4334c4d4",
+  "original_log_bytes": 29964,
+  "queries": [
+    "GRAPHTEC GL840WV manual programming software"
+  ],
+  "discovered_urls": [
+    "https://en.wikipedia.org/wiki/Graphtec",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl840/download",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl840/faq",
+    "https://graphteciwatsu.com/en/support/download/datalogger/",
+    "https://manualzz.com/doc/65674348/graphtec-gl840--gl840-m--gl840-wv-quick-start-manual",
+    "https://www.graphtec.in.th/article-79516-softwares.html",
+    "https://www.graphtecamerica.com/s/GL840-Quick-Start-Guide-UM-852.pdf",
+    "https://www.graphteccorp.com/download/firm_gl840/",
+    "https://www.graphteccorp.com/download/gl28-aps/",
+    "https://www.graphteccorp.com/support/",
+    "https://www.graphteccorp.com/support/software/",
+    "https://www.graphteccorp.com/support/software/logger/",
+    "https://www.graphtecinstruments.com/content/User_Manuals/GL840-UM-151.pdf",
+    "https://www.logicbus.com/assets/pdf/257/GL840-UM-154-01.pdf",
+    "https://www.lontek.com.au/archive/graphtec-gl840-wv/",
+    "https://www.manualslib.com/products/Graphtec-Gl840-Wv-11843641.html",
+    "https://www.mygraphtec.jp/site_download/catalog_en/GL840_KE10945_1D.pdf",
+    "https://www.mygraphtec.jp/site_download/manual/GL840-UM-154-02.pdf",
+    "https://www.reddit.com/r/PlotterArt/comments/1i0hrln",
+    "https://www.reddit.com/r/VinylCutters/comments/17awevc",
+    "https://www.reddit.com/r/VinylCutters/comments/1k42g3w",
+    "https://www.reddit.com/r/VinylCutters/comments/1rcaa9d/graphtech_2026_trouble_shooting_anyone/",
+    "https://www.reddit.com/r/VinylCutters/comments/cyxlwx"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

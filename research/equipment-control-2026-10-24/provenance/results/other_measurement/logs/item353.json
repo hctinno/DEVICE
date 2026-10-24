@@ -1,0 +1,27 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item353.json",
+  "original_log_sha256": "1d924b40e36f15a49cdec1161f7f9b3f12e349c7e691c13a266fe28bce5799eb",
+  "original_log_bytes": 13559,
+  "queries": [
+    "DekTec \"DTA-2131-GOLD\" software interface manual",
+    "site:github.com \"DTA-2131-GOLD\" DekTec"
+  ],
+  "discovered_urls": [
+    "https://abcdocz.com/doc/832467/2015---dektec",
+    "https://dektec.ru/index.php?id=catalog",
+    "https://kernel.googlesource.com/pub/scm/utils/pciutils/pciutils/%2B/dcd6913ec2afa8ec1030bf63df7ca69622cbf4f9/pci.ids",
+    "https://paperzz.com/doc/7032454/tabellenanhang---familie-alex--weingarten",
+    "https://studyres.com/doc/8037342/tabellenanhang---alex",
+    "https://www.dektec.com/products/downloads/Catalogue.pdf",
+    "https://www.konturm.com/catalog/id-cat-r-3.html",
+    "https://www.konturm.ru/catalogy/df/Catalogue13.pdf",
+    "https://www.konturm.ru/catalogy/df/Catalogue16.pdf",
+    "https://www.konturm.ru/catalogy/df/Catalogue17.pdf",
+    "https://www.peoplepowerparty.kr/news/lawmaker_inspection_view/77047?page=35",
+    "https://www.telecon-group.ru/catalogy/df/Catalogue17.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_224.json",
+  "original_log_sha256": "a9b7f2659eea6faffb172284ac9e2255b71c176bddba1e491088d31562feb5cc",
+  "original_log_bytes": 29286,
+  "queries": [
+    "DIGITEK POWER DEFC-1005 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://cloud.edebris.com/index.php/s/AFiJCyKKYpojYYZ",
+    "https://bama.edebris.com/manuals/bitsavers/pdf/digitek/",
+    "https://device.report/m/edb99af3fe7f1ed3185e1cd9e074cf6258df95d775a6a5ad9e1f7ebc0a607550",
+    "https://manualmachine.com/digitek/",
+    "https://manuals.plus/m/c6f9ff5ceaed00f9ad6662a7a8cd97596a79af6955de5fff459b995ba95ce1c0.pdf",
+    "https://manualzilla.com/doc/5732611/apfc-05-in-manual",
+    "https://manualzz.com/doc/5924147/cr-1005-pistola-de-ponto-digital-guia-do-usu%C3%A1rio",
+    "https://manualzz.com/doc/8430307/twin-tec-1005-ih-ignition-system-installation-instructions",
+    "https://www.lost-manuals.com/en/manufacturer/wavetek/1005",
+    "https://www.manualslib.es/manual/311127/Digitek-Ac-2005-Max.html?page=2",
+    "https://www.matsusada.com/product/accessories/application-software/digicon/",
+    "https://www.ricelake.com/media/baqay5o5/m_82311_dc-100_operation.pdf",
+    "https://www.scribd.com/document/734385674/Programmer",
+    "https://www.tekplus.co.kr/img_up/shop_pds/buytek/product/ppx_user_manual_en.pdf",
+    "https://www.ushine.co.in/index.php?page=download",
+    "https://www.yumpu.com/en/document/view/4182852/user-instructions-for-power-adapters-daytona-twin-tec"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

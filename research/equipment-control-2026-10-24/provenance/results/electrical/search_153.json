@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_153.json",
+  "original_log_sha256": "0d0bb5bbbd9ef7edbf8be2d5fae5f5820ddc828222de2777c6d31df9c632e7db",
+  "original_log_bytes": 33474,
+  "queries": [
+    "MACCOR SERIES 4000 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://4gte.com/wp-content/uploads/2024/08/240621_Series-4000-Automated-Test-System-96-channels.pdf",
+    "https://docs.alltest.net/manual/Alltest-Maccor-S4000-Datasheet-33434-.pdf",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/barber-colman-maco-8000-rld-editor-software-guide?_pos=651&_sid=aa5dbcc30&_ss=r",
+    "https://maccor.com/",
+    "https://maccor.software.informer.com/",
+    "https://manualzz.com/doc/1530846/aboveair-technologies-mc-2000-2000--mc-3000-3000--mc-4000",
+    "https://pdfcoffee.com/ws4000-manual-pdf-free.html",
+    "https://www.atecorp.com/getmedia/78ceec3f-8c92-4e72-bc96-33f815a56378/maccor-series-4000.pdf",
+    "https://www.maccor.com.cn/UploadFiles/Others/20141016115710_79575.pdf",
+    "https://www.maccor.com/",
+    "https://www.maccor.com/software/advanced-tools.html",
+    "https://www.maccor.com/software/software.html",
+    "https://www.maccorcs.com/",
+    "https://www.maccorcs.com/support.html",
+    "https://www.manuallib.com/company/1135026/",
+    "https://www.manuallib.com/file/maccor-series-4000-product-leaflet/",
+    "https://www.meccalte.com/downloads/MC400_EAAM060802EN.pdf",
+    "https://www.reddit.com/r/InjectionMolding/comments/15yof60"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

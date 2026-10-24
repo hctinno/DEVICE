@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_kikusui_ivi_list.json",
+  "original_log_sha256": "99423ed8081024337b03941136206dfe866ec7cf679ba4427cae16bbd7ed9e05",
+  "original_log_bytes": 26270,
+  "queries": [
+    "KIKUSUI instrument drivers PLZ150U PCR2000M TOS9301 PXB PBZ GitHub"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/",
+    "https://global.kikusui.co.jp/dri-fir-upd/",
+    "https://global.kikusui.co.jp/drivers/",
+    "https://global.kikusui.co.jp/sitemap-html/",
+    "https://global.kikusui.co.jp/technical-data/",
+    "https://in.kikusui.co.jp/dri-fir-upd/",
+    "https://kikusui-europe.com/dri-fir-upd/",
+    "https://kikusui-europe.com/updata/",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_U_M.pdf",
+    "https://kikusui.co.jp/driver/",
+    "https://kikusui.co.jp/product-tag/drivers/",
+    "https://kikusui.co.jp/technicaldata/",
+    "https://kikusuiamerica.com/dri-fir-upd/",
+    "https://kikusuiamerica.com/soft-firm_updata/",
+    "https://mclct.ro/wp-content/uploads/2025/02/Kikusui-Product-Catalogue-2024-2025.pdf",
+    "https://telonic.co.uk/jg/wp-content/uploads/2021/05/Kikusui-PLZ-U-OperationManual.pdf",
+    "https://www.es-france.com/img/cms/Catalogues/kikusui-europe2025-2026.pdf",
+    "https://www.es-france.com/img/cms/Catalogues/kikusui-proCat_en-ES.pdf?srsltid=AfmBOopdNE_HmVO6G_GrAT68bCQPK5n4dqWScoTSZE9qm7pagVjseRZo"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

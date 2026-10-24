@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_298.json",
+  "original_log_sha256": "5b77f8bd9c796aa372cbd65cf80b4d114c43b813f53b31263b66468192e0303d",
+  "original_log_bytes": 31429,
+  "queries": [
+    "YOKOGAWA 201137 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/1/6008/files/IMFG410-62EN.pdf",
+    "https://en.wikipedia.org/wiki/Yokogawa_Electric",
+    "https://tmi.yokogawa.com/ca/support/",
+    "https://tmi.yokogawa.com/cl/support/download-software-drivers-firmware/",
+    "https://tmi.yokogawa.com/mx/support/",
+    "https://tmi.yokogawa.com/support/",
+    "https://web-material3.yokogawa.com/1/26194/details/IM04P02B01-01E.pdf",
+    "https://www.koreayokogawa.com/support/download2.php",
+    "https://www.reddit.com/r/IndustrialAutomation/comments/1k2sjya",
+    "https://www.reddit.com/r/PLC/comments/11ce9zl",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/PLC/comments/1elfwes",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.reddit.com/r/instrumentation/comments/1k210wd",
+    "https://www.yokogawa.co.jp/library/search/",
+    "https://www.yokogawa.co.jp/library/videos/product-overviews/yss1000-software-introduction/",
+    "https://www.yokogawa.co.jp/solutions/products-and-services/control/control-devices/configuration-tools/ll50a/",
+    "https://www.yokogawa.co.jp/solutions/products-and-services/control/control-devices/single-loop-controllers/",
+    "https://www.yokogawa.com/pdf/provide/E/GW/IM/0000026021/0/IM34M06Q16-01E.pdf",
+    "https://www.yokogawa.com/pdf/provide/E/GW/IM/0000028621/0/IM%2001R04B08-00E-E.pdf",
+    "https://www.yokogawa.com/solutions/products-and-services/control/control-devices/configuration-tools/ll50a/",
+    "https://www.yokogawa.com/us/solutions/products-and-services/control/control-devices/single-loop-controllers/yss1000/",
+    "https://yokogawaelectric.org/solutions/products-and-services/control/control-devices/single-loop-controllers/yss1000/index.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

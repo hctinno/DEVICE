@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group09_speag.json",
+  "original_log_sha256": "6b77a287559611c10eb444722f02a80a916c88d425086f69da4b5012f4c0e932",
+  "original_log_bytes": 16351,
+  "queries": [
+    "SPEAG (\"AMMI\" OR \"AMCC\" OR \"EUmmWV3\" OR \"EUmmWV4\" OR \"AM1DV3\" OR \"AM1DV2\") software API remote",
+    "site:github.com SPEAG AMMI DASY SEMCAD"
+  ],
+  "discovered_urls": [
+    "https://ais.gov.bd/",
+    "https://apps.barc.gov.bd/fertilizer_recommendation/FRG%20English%2030.10.2024.pdf",
+    "https://bangladesh.gov.bd/views/upazila-list/Upazilla-List/",
+    "https://barc.gov.bd/",
+    "https://bari.gov.bd/",
+    "https://dae.gov.bd/",
+    "https://dae.gov.bd/pages/officers",
+    "https://github.com/Alikerin/yoruba-asr/blob/master/README.md",
+    "https://github.com/ITISFoundation/osparc-simcore/issues/9100",
+    "https://github.com/Junior-081/Paddy-Doctor-Paddy-Disease-Classification",
+    "https://github.com/K-Dense-AI/scientific-agents/blob/main/scientific-agents/electromagnetics-engineer/AGENTS.md",
+    "https://github.com/Mahir-22/Smart-Agro-Cultivation/blob/main/docs/data-sources.md",
+    "https://github.com/TiagoOlivoto/metan/blob/master/R/performs_ammi.R",
+    "https://github.com/bkestelman/dasy-ml",
+    "https://github.com/csikasote/ammi-asr-class-project",
+    "https://github.com/karlstratos/ammi",
+    "https://github.com/topics/health-risk-assessment",
+    "https://github.com/tue-mdse/genderComputer/blob/master/nameLists/IsraelMaleUTF8.csv",
+    "https://github.com/tunde-ajayi",
+    "https://market.dam.gov.bd/",
+    "https://market.dam.gov.bd/market_daily_price_report",
+    "https://www.bamis.gov.bd/",
+    "https://www.kaggle.com/competitions/paddy-disease-classification/data"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

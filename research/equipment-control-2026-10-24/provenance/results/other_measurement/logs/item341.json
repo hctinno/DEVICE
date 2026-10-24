@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item341.json",
+  "original_log_sha256": "b3d2c1066e491e9bee11f6fa3ad321a9f95bc4fb17613fa06b434bbb86cf1024",
+  "original_log_bytes": 16766,
+  "queries": [
+    "SENKO \"SP secure\" software interface manual",
+    "site:github.com \"SP secure\" SENKO"
+  ],
+  "discovered_urls": [
+    "https://sc-journal.com/senko-docs/gas-detectors/",
+    "https://senko.co.kr/data/file/prod/20250403150040_063425_19-1_Manual%28English%29_SP%20secure_241025.pdf",
+    "https://senko.co.kr/page/product_view.php?it_id=1561012486",
+    "https://senko.co.kr/product/view.php?prod_idx=16",
+    "https://senko.manymanuals.com/small-kitchen-appliances/c-20/user-manual-21243/9",
+    "https://senkoindia.com/product_en/view.php?prod_idx=16",
+    "https://senkousa.com/data/file/prod/20250403150040_063425_19-1_Manual%28English%29_SP%20secure_241025.pdf",
+    "https://www.komachine.com/en/companies/senko/product-files",
+    "https://www.komachine.com/ko/companies/senko/products/31725-portable-gas-leak-detector-sp-secure",
+    "https://www.manualslib.com/manual/2430184/Senko-Sp-Secure.html?page=4",
+    "https://www.manualslib.com/manual/2840480/Senko-Sp-Secure.html",
+    "https://www.manualslib.com/products/Senko-Sp-Secure-12161333.html",
+    "https://www.scribd.com/document/648944473/SPsecureManual-v-2-2-Korean",
+    "https://www.senkousa.com/product_en/view.php?prod_idx=16"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

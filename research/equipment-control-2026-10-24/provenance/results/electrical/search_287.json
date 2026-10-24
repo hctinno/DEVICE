@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_287.json",
+  "original_log_sha256": "4ca7220dd055abf22cdf21570e8dabdf50a42fb0eb613cdc01387032f38a316b",
+  "original_log_bytes": 30651,
+  "queries": [
+    "METREL MI2883 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://hitester.co.kr/menual",
+    "https://hitester.co.kr/menual?mode=policy",
+    "https://hitester.co.kr/soft",
+    "https://manualzz.com/doc/10428008/metrel-energy-master-mi-2883-instruction-manual",
+    "https://www.manualslib.com/manual/1536596/Metrel-Energy-Master-Mi-2883.html",
+    "https://www.mepro.bg/fupld/16738/metrel-mi-2883-eu.pdf",
+    "https://www.mepro.si/fupld/16738/metrel-mi-2883-eu.pdf",
+    "https://www.metrel-russia.ru/products/Kachestvo/mi2883/",
+    "https://www.metrel.co.uk/assets/Metrel/Navodila_instrumentov/Instruments/MI_2884_Energy_Master_XA/Ang/MI_2883%2C_MI_2884_-_Energy_Master%2C_Energy_Master_XA_ANG_Ver_1.1.1_20753130.pdf",
+    "https://www.metrel.co.uk/uk/shop/PQA/class-s-power-quality-analysers/mi-2883.html",
+    "https://www.metrel.de/de/shop/PQA/class-s-power-quality-analysers/mi-2883.html",
+    "https://www.metrel.de/de/shop/PQA/mi-2883.html",
+    "https://www.metrel.es/es/shop/PQA/class-s-power-quality-analysers/mi-2883.html",
+    "https://www.metrel.si/assets/Metrel/Navodila_instrumentov/Instruments/MI_2883_Energy_Master/Ang/MI_2883_Energy_Master_Ang_Ver_2.1.1_20_752_521.pdf",
+    "https://www.metrel.si/assets/Metrel/Navodila_instrumentov/Instruments/MI_2893_Power_Master_XT/Ang/MI_2893%2C_MI_2892%2C_MI_2885_-_PowerMaster_XT%2C_Power_Master%2C_Master_Q4_ANG_Ver_1.1.1_20753179.pdf",
+    "https://www.metrel.si/en/shop/PQA/mi-2883.html",
+    "https://www.metrel.si/support/confluence/mpd/en/firmware-update-instructions/mi-2883-firmware-update"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/excluded_hydrophone_boundary.json",
+  "original_log_sha256": "17d188ed9560a891ef252d6bf7f0e52f81f5b30b76a5500cf3a5f82687195862",
+  "original_log_bytes": 36626,
+  "queries": [
+    "Onda HFO-690 hydrophone interface software USB",
+    "site:github.com Onda HFO-690"
+  ],
+  "discovered_urls": [
+    "https://cfu.dtu.dk/research/facilities/onda",
+    "https://github.com/carrilloapps/hfo",
+    "https://github.com/carrilloapps/hfo/blob/main/README.md",
+    "https://instruments.ru/docs/ONDA/ONDA_hydrophones_HFO690.pdf",
+    "https://instruments.ru/docs/ONDA/ONDA_hydrophones_HM_series.pdf",
+    "https://oceansonics.com/wp-content/uploads/2021/08/Hydrophone-Hub-User-Guide-June-2020.pdf",
+    "https://ondacorp.com/images/brochures/Onda_HFO_DataSheet.pdf",
+    "https://pub.dega-akustik.de/ICA2019/data/articles/000811.pdf",
+    "https://soliton-gmbh.de/en/product/fiber-optic-hydrophone-of-the-hfo-series/",
+    "https://soliton-gmbh.de/en/wave/",
+    "https://soliton-gmbh.de/onda/",
+    "https://soliton-gmbh.de/produkt/faseroptisches-hydrofon-der-hfo-serie/",
+    "https://vpctest.attaio.com/see/2806/Hydrophones/",
+    "https://www.mobt3ath.com/uplode/book/book-124673.pdf",
+    "https://www.ondacorp.com/faqs/",
+    "https://www.ondacorp.com/fiber-optic-hydrophones/",
+    "https://www.ondacorp.com/hydrophones/",
+    "https://www.ondacorp.com/products/",
+    "https://www.ondacorp.com/resources/",
+    "https://www.scribd.com/document/964934390/AIMSIII-Manual-5-2-20161122"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

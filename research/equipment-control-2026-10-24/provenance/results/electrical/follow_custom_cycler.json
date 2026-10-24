@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_custom_cycler.json",
+  "original_log_sha256": "bd5f8b3d4e3fab00024756d344c3c622e15460a2ef23ed4ebf04469a183b5a64",
+  "original_log_bytes": 287,
+  "queries": [
+    "\"BT5V100A12CH\" OR \"BT5V300A4CH\" OR \"PSC200-300P\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

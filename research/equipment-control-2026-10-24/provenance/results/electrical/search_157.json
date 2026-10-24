@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_157.json",
+  "original_log_sha256": "b6de87b46c1d3cf60bdadd7fa5ebc1aab614c94c175320650a79092ef19a098a",
+  "original_log_bytes": 27572,
+  "queries": [
+    "Newtons4th PPA510 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://manualzz.com/doc/59397312/newtons4th-ppa1500--ppa1530--ppa500-communications-manual",
+    "https://manualzz.com/doc/6523395/newtons4th-ltd-ppa510--ppa1510--ppa520--ppa1520--ppa530--",
+    "https://powertechsrl.it/wp-content/uploads/2025/01/ppa-500-manuale-uso.pdf",
+    "https://quantel-global.com/wp-content/uploads/2021/06/D000183-PPA45_5500_Black-Brochure_Issue_2_LR-1.pdf",
+    "https://www.manualslib.com/manual/2181899/Newtons4th-N4l-Ppa500-1500.html",
+    "https://www.manualslib.com/manual/2181899/Newtons4th-N4l-Ppa500-1500.html?page=27",
+    "https://www.manualslib.com/manual/2325756/Newtons4th-Ppa55-Series.html",
+    "https://www.manualslib.com/manual/2800108/Newtons4th-Ppa55-Series.html",
+    "https://www.manualslib.com/manual/4219890/Newtons4th-Ppa-Series.html",
+    "https://www.newtons4th.com/knowledge-base/",
+    "https://www.newtons4th.com/media/docs/D000228-PPA5500-Startup-Guide.pdf",
+    "https://www.newtons4th.com/products/power-analyzers/ppa5500-precision-power-analyzer/",
+    "https://www.newtons4th.com/user-resources/firmware/",
+    "https://www.newtons4th.com/user-resources/manuals/",
+    "https://www.newtons4th.com/user-resources/software/",
+    "https://www.w5engineering.com/pc/catalog/PPA-Datalogger-User-Manual.pdf",
+    "https://www.w5engineering.com/pc/catalog/PPA55-Start-up-Manual-v2.177.pdf",
+    "https://www.w5engineering.com/pc/catalog/PPA5500-User-Manual-v3.01.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

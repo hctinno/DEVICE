@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/extra001.json",
+  "original_log_sha256": "fe9a9e273f9aefafbcf1084812585158ab8ea93c27b1eb597dbe87ebe09480cf",
+  "original_log_bytes": 18003,
+  "queries": [
+    "Keysight DSOX6004A DSOX4024G InfiniiVision programming guide IVI driver",
+    "Keysight N1914A programming guide IVI N1914B driver",
+    "Rohde Schwarz ESU8 ESU26 ESU40 CMU300 CBT instrument driver",
+    "Rohde Schwarz ESW8 ESW26 ESW44 ESR7 FSV3004 instrument driver"
+  ],
+  "discovered_urls": [
+    "https://cdn.rohde-schwarz.com.cn/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/3607_2810_12/ESW_bro_en_3607-2810-12_v1000.pdf",
+    "https://cdn.rohde-schwarz.com/pws/campaigns/rsa/Rohde_Schwarz_EMIReceiver_Flyer_Final.pdf",
+    "https://contacthings.com/product/rohde-schwarz-test-equipment/",
+    "https://rohde-schwarz.online/wp-content/uploads/2021/04/26097_%D0%9A%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3_%D0%AD%D0%9C%D0%A1_2020.pdf",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6317_01/ESW_IQ_UserManual_en_11.pdf",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1178_3963_01/ELEKTRA_ELEMI-E_User_Manual_en_24.pdf",
+    "https://sine.ni.com/apps/utf8/niid_web_display.download_page?p_id_guid=9E84674573AF6AB8E0440021287E6A9E",
+    "https://sine.ni.com/apps/utf8/niid_web_display.download_page?p_id_guid=A661BD7B892F06B2E0440021287E6A9E",
+    "https://sine.ni.com/apps/utf8/niid_web_display.download_page?p_id_guid=E3B19B3E9575659CE034080020E74861",
+    "https://sine.ni.com/apps/utf8/niid_web_display.model_page?p_model_id=21195",
+    "https://www.keysight.com.cn/cn/zh/assets/9923-01360/programming-guides/N1914-90003.pdf",
+    "https://www.keysight.com.cn/cn/zh/lib/software-detail/driver/infiniivision-x-series-oscilloscope-ivi-instrument-drivers.pv.html",
+    "https://www.keysight.com/at/de/lib/software-detail/driver/infiniivision-x-series-oscilloscope-ivi-instrument-drivers.html",
+    "https://www.keysight.com/gb/content/lib/software-detail/driver/rf-power-meter-ivi-instrument-drivers-1627801.html",
+    "https://www.keysight.com/hk/en/lib/software-detail/driver/rf-power-meter-ivi-instrument-drivers-1627801.html",
+    "https://www.keysight.com/us/content/lib/software-detail/driver/rf-power-meter-ivi-instrument-drivers-1627801.html",
+    "https://www.keysight.com/zz/en/assets/9923-01360/programming-guides/N1914-90003.pdf",
+    "https://www.keysight.com/zz/en/lib/software-detail/driver/infiniivision-x-series-oscilloscope-ivi-instrument-drivers.pv.html",
+    "https://www.mathworks.com/hardware-support/instrument-control-toolbox/agilent-x-series-infiniivision-oscilloscopes-from-matlab.html",
+    "https://www.rohde-schwarz.com/uk/faq/esw/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

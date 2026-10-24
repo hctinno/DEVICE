@@ -1,0 +1,19 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/open_interface1.json",
+  "original_log_sha256": "f74c6208e5702790b81851eaa89a989e216d82d605e2c56431a8510f1ece120a",
+  "original_log_bytes": 62871,
+  "queries": [],
+  "discovered_urls": [
+    "https://transientspecialists.com/cdn/shop/files/UM-MIL-MG3.pdf?v=16327541871080543646",
+    "https://transientspecialists.com/cdn/shop/files/UM-MIL-MG3.pdf?v=16327541871080543646:",
+    "https://www.ametek-cts.com/support/software-updates",
+    "https://www.emc-partner.com/products/cdn-a-6-125",
+    "https://www.schwarzbeck.com/lisn/delta-dc-an-150-ohm/pvdc-8300/",
+    "https://www.schwarzbeck.com/lisn/v-lisn/v-lisn-cispr-16-1-2/nslk-8128/",
+    "https://www.schwarzbeck.de/v-lisn-cispr-16-1-2-de/nnlk-8129/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

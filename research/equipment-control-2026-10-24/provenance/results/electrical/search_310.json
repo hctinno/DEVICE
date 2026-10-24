@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_310.json",
+  "original_log_sha256": "3d4154903bc4f86176d8c97d9bb3efdee00b1aec858c007eb0a048cc9c33ba6c",
+  "original_log_bytes": 35272,
+  "queries": [
+    "YOKOGAWA HR 2500E manual programming software"
+  ],
+  "discovered_urls": [
+    "https://downloads.softwaretoolbox.com/demodnld/prod_docs/topserver_help_pdf/Common/yokogawa-hr-manual.pdf",
+    "https://support.ptc.com/help/kepware/drivers/en/kepware/drivers/YOKOGAWAHR2400/setup.html",
+    "https://tmi.yokogawa.com/ca/support/",
+    "https://tmi.yokogawa.com/mx/support/",
+    "https://tmi.yokogawa.com/support/",
+    "https://tmi.yokogawa.com/uk/support/",
+    "https://web-material3.yokogawa.com/GS01C31B01-01EN.pdf",
+    "https://www.kepware-opc.cz/downloads/Ovladace/yokagawa-suite/yokogawa-hr-serial-manual.pdf",
+    "https://www.koreayokogawa.com/support/download2.php",
+    "https://www.omniprocess.se/en/software-programmes/",
+    "https://www.opcturkey.com/uploads/manuals/yokogawa-hr-manual.pdf",
+    "https://www.reddit.com/r/PLC/comments/11ce9zl",
+    "https://www.reddit.com/r/PLC/comments/18qumgd",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/PLC/comments/1elfwes",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.reddit.com/r/instrumentation/comments/1ik88ek",
+    "https://www.velotic.com/products/kepware/kepware-server/drivers/yokogawa-hr",
+    "https://www.yokogawa.co.jp/library/",
+    "https://www.yokogawa.co.jp/member-site-info/",
+    "https://www.yokogawa.com/sg/solutions/products-and-services/measurement/data-acquisition-products/ns-support-pcsoftware-supportmodel/",
+    "https://www.yokogawa.com/ymi/support/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

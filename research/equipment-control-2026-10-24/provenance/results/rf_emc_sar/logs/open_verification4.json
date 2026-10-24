@@ -1,0 +1,20 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/open_verification4.json",
+  "original_log_sha256": "af54b372729bd44fa1ced5dda22da188fea764b1768fa25785b416a7231516e7",
+  "original_log_bytes": 59509,
+  "queries": [],
+  "discovered_urls": [
+    "https://dl.cdn-anritsu.com/en-au/test-measurement/files/Manuals/Operation-Manual/MS9710B_W1284AE_remote_opm_e_5_0.pdf",
+    "https://dl.cdn-anritsu.com/en-au/test-measurement/files/Manuals/Operation-Manual/MS9710B_W1284AE_remote_opm_e_5_0.pdf:",
+    "https://www.hbkworld.com/en/products/support-resources/support-bksv/downloads/nexus-software/set-up-and-control-software",
+    "https://www.hbkworld.com/en/products/support-resources/support-bksv/downloads/nexus-software/set-up-and-control-software:",
+    "https://www.manualslib.com/manual/1718281/Amplifier-Research-75a250a.html",
+    "https://www.narda-sts.com/index.php?dl=1&eID=dumpFile&f=1171&fn=Bedienungsanleitung.pdf&t=f&token=e60cd0418c627db281c5aaca1db6f4cd42505671",
+    "https://www.narda-sts.com/index.php?dl=1&eID=dumpFile&f=4025&t=f&token=c62e07d704534f10f02263b249d3c40591b655e6",
+    "https://www.vipm.io/package/spirent_lib_simremote_api/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

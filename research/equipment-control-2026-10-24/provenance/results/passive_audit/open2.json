@@ -1,0 +1,18 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/passive_audit/open2.json",
+  "original_log_sha256": "be512c413ca5354534a64d749b01f64cc6b9e04f204d942089ca4bd1977223ff",
+  "original_log_bytes": 23907,
+  "queries": [],
+  "discovered_urls": [
+    "https://avalontest.com/images/uploaded/INA_6501_INA_6502.pdf",
+    "https://avalontest.com/images/uploaded/INA_6501_INA_6502.pdf:",
+    "https://github.com/openwrt/mt76",
+    "https://manualzilla.com/doc/6011570/operation-and-service-manual",
+    "https://www.atecorp.com/getmedia/dff57352-badc-4741-9879-c16ed7e2c5d7/emc-partner-imu-mge-manual-1-new.pdf",
+    "https://www.atecorp.com/getmedia/dff57352-badc-4741-9879-c16ed7e2c5d7/emc-partner-imu-mge-manual-1-new.pdf:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/code_mitutoyo_digimatic.json",
+  "original_log_sha256": "723d60a10c894f1961ac13e056f0cb63e074b4a6684299fa34c45181facad82b",
+  "original_log_bytes": 33246,
+  "queries": [
+    "site:github.com/Roger-random/mitutoyo Digimatic SPC",
+    "site:github.com/tlbruns/Digimatic license"
+  ],
+  "discovered_urls": [
+    "http://www.instructables.com/id/Interfacing-a-Digital-Micrometer-to-a-Microcontrol/?ALLSTEPS",
+    "https://btbm.ch/mitutoyo-spc/",
+    "https://gist.github.com/greasemonkey-btbm",
+    "https://gist.github.com/greasemonkey-btbm/fd9d5e58bcaf62d433ce11e044e28b44",
+    "https://github.com/Andrei-Sumin/Statistical-Process-Control-for-Quality-Monitoring",
+    "https://github.com/BADAndrea/DTI",
+    "https://github.com/Batucan2601/DigitalSimulator",
+    "https://github.com/DigiEmu",
+    "https://github.com/Digidemic/UnitOf",
+    "https://github.com/IMI-eRnD-Be/Drift_Test",
+    "https://github.com/Mani212005/DigiSim",
+    "https://github.com/Mani212005/DigiSim.git",
+    "https://github.com/Ornsolot/ladigitale/blob/main/README.md",
+    "https://github.com/Roger-random/mitutoyo",
+    "https://github.com/Sefy76-Curiosity/Basalt-Provenance-Triage-Toolkit",
+    "https://github.com/alexwhittemore/SPCReader",
+    "https://github.com/batucan2601/DigitalSimulator/releases/latest/download/DigitalSimulator-1.0.0-Linux.deb",
+    "https://github.com/freand76/digsim",
+    "https://github.com/freand76/digsim.git",
+    "https://github.com/hviidhenrik/SPC",
+    "https://github.com/hzeller/digi-spherometer",
+    "https://github.com/rj45/digilogic",
+    "https://github.com/tlbruns/CI-Guidance",
+    "https://github.com/tlbruns/Digimatic/blob/master/Digimatic.h",
+    "https://github.com/topics/control-chart?o=desc&s=updated",
+    "https://github.com/virtimus/digiSim",
+    "https://github.com/xor-11/DigiClock",
+    "https://www.instructables.com/id/Interfacing-a-Digital-Micrometer-to-a-Microcontrol/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

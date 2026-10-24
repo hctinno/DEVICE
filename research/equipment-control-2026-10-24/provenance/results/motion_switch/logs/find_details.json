@@ -1,0 +1,18 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/find_details.json",
+  "original_log_sha256": "b90191cfd2a7184e9ebc0f8568d010954b3947afc7d1c2f8cfda369e7cf982a5",
+  "original_log_bytes": 24816,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/eardali/turntable",
+    "https://www.manualslib.com/manual/2402418/Ar-Fi7000.html",
+    "https://www.peak-system.com/products/hardware/couplers-converters/pcan-lwl/",
+    "https://www.peak-system.com/products/hardware/couplers-converters/plin-lwl/",
+    "https://www.ramayes.com/Data%20Files/Innco%20Systems/CO3000-en.pdf",
+    "https://www.reliantemc.com/innco-systems-product-catalog/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

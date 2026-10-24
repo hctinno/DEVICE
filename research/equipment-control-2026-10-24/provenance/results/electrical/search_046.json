@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_046.json",
+  "original_log_sha256": "22446f2d207d6654e9cb8df4d0c584efe99bb832213c4533f95f9467f5a30ffd",
+  "original_log_bytes": 33113,
+  "queries": [
+    "ESPEC ER-024ZA0074 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.especmic.co.jp/special/thermo_support.htmlUser's",
+    "https://2026.espec.com/na/products/controllers/p_200",
+    "https://2026.espec.com/na/products/controllers/p_310",
+    "https://2026.espec.com/na/support",
+    "https://2026.espec.com/na/support/manuals",
+    "https://2026.espec.com/na/support/software",
+    "https://2026.espec.com/na/support/web_controller",
+    "https://electronicmag.ro/userfiles/product_files_shared/104576_E024S_manual%20programare.pdf",
+    "https://espec.com/images/uploads/files/web_controller.pdf",
+    "https://espec.com/na/support/software/index.html",
+    "https://espec.com/na/support/wc_support",
+    "https://espec.com/na/support/web_controller",
+    "https://especmic.co.jp/download/manual/ENG/manual_THERMO_REC_for_Win_ENG.pdf",
+    "https://splitsystema48.ru/image/catalog/doc/sm_esie07-11_ewap-aj.pdf",
+    "https://support.esicontrols.co.uk/wp-content/uploads/2022/05/ES1247B-User-Instructions.pdf",
+    "https://www.centralcash.co.za/download_ecr.html",
+    "https://www.manualslib.com/brand/espec/",
+    "https://www.monitoring.especmic.co.jp/test",
+    "https://wwwesicontrols.azurewebsites.net/assets/es3247b-user-instructions-web.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

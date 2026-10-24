@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/open_interfaces.json",
+  "original_log_sha256": "69c6575a54d6e0d852dbdb2f3632c94b4207a005fd2f21e12637945c4d5d219b",
+  "original_log_bytes": 20564,
+  "queries": [],
+  "discovered_urls": [
+    "https://lumiloop.de/support/documents-and-downloads/",
+    "https://manual.hioki.com/en/SW2001/manual",
+    "https://www.tdkrfsolutions.tdk.com/products/loop-/remote-switch-module-rsm-02",
+    "https://www.tdkrfsolutions.tdk.com/products/loop-/system-interface-si-300"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

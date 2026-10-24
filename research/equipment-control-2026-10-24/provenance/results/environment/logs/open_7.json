@@ -1,0 +1,18 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_7.json",
+  "original_log_sha256": "06d209a560e8da16f607e582ee24763d618933f1448779facaed9c98099f9f2c",
+  "original_log_bytes": 27365,
+  "queries": [],
+  "discovered_urls": [
+    "https://digilent.com/reference/forum-guidelines",
+    "https://files.digilent.com/datasheets/DT9857E-Datasheet.pdf",
+    "https://forum.digilent.com/forum/43-measurement-computing-faq-and-guides/",
+    "https://forum.digilent.com/profile/15525-fausto/content/?change_section=1&type=forums_topic",
+    "https://www.autonics.se/produkt/mt4y-mt4w-series/",
+    "https://www.electricaltest.com.cn/power-cord-testing-machine_c3"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

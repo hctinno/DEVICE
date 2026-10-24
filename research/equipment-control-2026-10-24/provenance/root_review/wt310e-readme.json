@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/root_review/wt310e-readme.json",
+  "original_log_sha256": "c7ff7f16382e9a21148e728bbe4de5f0b6c4ea40c0f605ee8da16eb80dcc4084",
+  "original_log_bytes": 754,
+  "queries": [],
+  "discovered_urls": [
+    "https://raw.githubusercontent.com/mcgillowen/yoko-tool/master/README.md"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

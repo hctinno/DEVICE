@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_294.json",
+  "original_log_sha256": "8fd3b49c4f29888b873c1c8d2680cafd61867ba68cd8477965efb836415459b2",
+  "original_log_bytes": 34190,
+  "queries": [
+    "STAUBLI A/B Power Indicator manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.staubli.com/Robotics/Local_content/services-brochure-EN-for-US-LR.pdf",
+    "https://en.wikipedia.org/wiki/Programmable_Universal_Machine_for_Assembly",
+    "https://en.wikipedia.org/wiki/Robot_software",
+    "https://files.elektroda.pl/271037%2Cstaubli_operatormanual.html",
+    "https://fr.wikipedia.org/wiki/Programmation_hors-ligne_%28robots_industriels%29",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/staubli-cs8-val3-program-control-and-io-configuration",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/staubli-cs9-manual-mode-robot-operation-guide",
+    "https://pdfcoffee.com/english-manual-qmc-122-rv2600602a-pdf-free.html",
+    "https://pdfcoffee.com/staubli-operatormanual-pdf-pdf-free.html",
+    "https://ru.scribd.com/presentation/323676430/02-SCSC314-Introduction-to-the-Staubli-RX60",
+    "https://www.artisantg.com/info/Staubli_RX90_LCRfsi_Manual_20211023112424.pdf",
+    "https://www.manualslib.com/products/Staubli-Cs8c-3575432.html",
+    "https://www.marposs.com/media/12043/d-1/t-file/TECNA_T3LD_EN.pdf",
+    "https://www.reddit.com/r/InjectionMolding/comments/1utbz66/engel_duo_with_staubli_mag_plates/",
+    "https://www.reddit.com/r/PLC/comments/10n9bvu/does_anyone_here_write_programs_in_val3_for/",
+    "https://www.reddit.com/r/PLC/comments/6d1se4",
+    "https://www.scribd.com/document/991163919/Manual-SRS-2025",
+    "https://www.staubli.com/ch/de/robotics/download-center.html",
+    "https://www.staubli.com/content/dam/robotics/products/robots/services/Services-for-St%C3%A4ubli-integrators-brochure-EN.pdf",
+    "https://www.staubli.com/de/de/robotics/download-center.html?f3=divisions%3Arobotics%2Fexternal%2Fservices%2Ftraining",
+    "https://www.staubli.com/global/en/services/My-staubli-portal-global.html",
+    "https://www.staubli.com/us/en/robotics/products/robot-software.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

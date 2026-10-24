@@ -1,0 +1,18 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/find_0.json",
+  "original_log_sha256": "c97316dc59be41df13e6748768f6e3c8344b2b28151579043ae42e7cfc99f090",
+  "original_log_bytes": 25289,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/jmbattle/pyESPEC",
+    "https://github.com/luferau/Samwontech-TEMP2xxx",
+    "https://www.espec.co.jp/english",
+    "https://www.espec.co.jp/english/inquiry/catalog/pcs.pdf",
+    "https://www.espec.co.jp/english/inquiry/customer-oversea.php",
+    "https://www.espec.co.jp/products/env-test/pcs/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

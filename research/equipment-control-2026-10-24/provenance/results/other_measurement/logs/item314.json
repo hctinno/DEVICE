@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item314.json",
+  "original_log_sha256": "efe55cadbbda6245ea24f1cf88d14a69d8e95b91712ba02a75bf74ceb1d23fe8",
+  "original_log_bytes": 13802,
+  "queries": [
+    "TESEQ \"KSQ 1000\" software interface manual",
+    "site:github.com \"KSQ 1000\" TESEQ"
+  ],
+  "discovered_urls": [
+    "https://accelonix.nl/product/emc-rf/rf-emission-measurement/reference-generators/teseq-ksq1000/",
+    "https://dcoll.ajou.ac.kr/dcollection/public_resource/pdf/000000033932_20260519175028.pdf",
+    "https://empos.cz/wp-content/uploads/2026/01/product_archive.pdf",
+    "https://github.com/FinanceData/fdr_krx_data_cache/blob/master/data/listing/krx/2026-05-26.csv",
+    "https://github.com/FinanceData/fdr_krx_data_cache/blob/master/data/listing/krx/2026-05-30.csv",
+    "https://github.com/FinanceData/invest-skills/blob/master/krx_stocks.csv",
+    "https://github.com/nasa/KeplerPORTs/blob/master/KeplerPORTs.py",
+    "https://github.com/sharebook-kr/pykrx/blob/master/pykrx/website/krx/market/wrap.py",
+    "https://github.com/sharebook-kr/pykrx/issues/21",
+    "https://github.com/zinzinday/script/blob/master/Scripts/Fantastik%20Rengar.lua",
+    "https://gomeasure.dk/collections/emc-test?page=2",
+    "https://gomeasure.dk/collections/vendors?q=Teseq",
+    "https://gomeasure.dk/collections/vendors?q=teseq",
+    "https://gomeasure.dk/en-se/collections/emc-test?page=2",
+    "https://gomeasure.dk/en-se/collections/vendors?q=Teseq",
+    "https://gomeasure.dk/en-se/products/ksq-1000",
+    "https://maximapp.azurewebsites.net/Products/Index?searchstring=CISPR+25",
+    "https://maximinstruments.com/brand/teseq%26page%3D2%26sortby%3D",
+    "https://maximinstruments.com/category/comb_generator",
+    "https://maximinstruments.com/category/spectrum_generator",
+    "https://novosystems.ru/produktsiya/ispitatelnoe_oborudovanie/priyomniki-izmeriteli_izlucheniy_v_radiodiapazone/product/etalonnie_istochniki_izlucheniya/",
+    "https://www.unitest.com/pdf/teseq/Schaffner_catalogue_%20ru.pdf",
+    "https://www.unitest.com/pdf/teseq/Teseq_KSQ_1000_1001__1267208619.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_118.json",
+  "original_log_sha256": "f74d7149254588283ad8eb0a49a5aa3c2f39c2be58c11a5c2885c3a1c3f5195d",
+  "original_log_bytes": 28144,
+  "queries": [
+    "MYWAY MWBFP3-1008-C02 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.myway.co.jp/products/pcube/TM003-002-788_s.pdf",
+    "https://global.myway.co.jp/products/pe_expert4/TM003-002-731B.pdf",
+    "https://manualzilla.com/doc/6622664/pdf%E8%B3%87%E6%96%99",
+    "https://myway-gb.com/en/products/motor-drive-package.php",
+    "https://tm.yrl.com/rental/measuring-device/detail/2151098/",
+    "https://tm.yrl.com/rental/measuring-device/detail/2151114/",
+    "https://tm.yrl.com/rental/measuring-device/search/?categoryId=8&companyId=232",
+    "https://tm.yrl.com/rental/measuring-device/search/?categoryId=8&companyId=232&page=2",
+    "https://tm.yrl.com/rental/measuring-device/search/?companyId=232&page=2",
+    "https://www.myway.co.jp/news/detail.php?id=864",
+    "https://www.techeyesonline.com/measuring-device/detail/HINCD-00455-MWBFP3-1008-J/",
+    "https://www.techeyesonline.com/measuring-device/detail/HINCD-00455-MWBFP3-1250-J02/",
+    "https://www.techeyesonline.com/measuring-device/search/?companyId=455&keyword=M-2",
+    "https://www.techeyesonline.com/measuring-device/search/?companyId=455&tertiaryCategoryId=149",
+    "https://www.yrl.com/pdf/tm/catalog-rental-measuring-instrument-2024.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

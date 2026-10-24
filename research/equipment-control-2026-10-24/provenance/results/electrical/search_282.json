@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_282.json",
+  "original_log_sha256": "71da3b831a76efb57fac68a1c5bae8c01d31f4c53cd3138842fe2c97f72bb6ee",
+  "original_log_bytes": 28161,
+  "queries": [
+    "Toyo System TOSCAT-3000 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://accu-techusa.com/wp-content/uploads/2020/12/TC100-Manual-V170-EN.pdf",
+    "https://aithelp.com/Knowledgebase/List/Index/45/translation-office-3000",
+    "https://bravocontrols.com/ftp/OnlineHelp/T3Controllers/module_6_1_print.htm",
+    "https://device.report/m/83a1a86edbcf5f6063e8d7666872c57bceb3ad6ccff422fb798cd89dacd5e882",
+    "https://es.scribd.com/document/511243392/3000-Manual-de-Programacion-TCS900040-Rev-14",
+    "https://manuals.plus/m/a017350a00c525def267282b0afcc271b5c92a70646cbf3bdab824d3a3635b91.pdf",
+    "https://ro.scribd.com/doc/44143807/Teox-3000-Hpr260-Tec12-Lantek",
+    "https://toa-corp.kz/wp-content/uploads/2020/10/manual-software.pdf",
+    "https://www.manualslib.com/manual/4228078/Toyo-Pkw-300.html",
+    "https://www.manualslib.com/products/Toyo-Pkw-3000-15166933.html",
+    "https://www.to3000.c",
+    "https://www.to3000.com/product-info/documentation/guides-manuals",
+    "https://www.toyorobot.com/%28X%281%29S%281hv2t5z25x2dltaury50iotn%29%29/Download/Catalog",
+    "https://www.toyorobot.com/%28X%281%29S%28fkrwntpohdgspeqpc0edphqr%29%29/Download/Catalog",
+    "https://www.toyorobot.com/Download/Catalog",
+    "https://www.toyorobot.com/Download/Catalog?AspxAutoDetectCookieSupport=1"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

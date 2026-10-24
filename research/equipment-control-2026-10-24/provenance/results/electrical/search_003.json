@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_003.json",
+  "original_log_sha256": "b08bec26f2a29336192d4860d88312f0cde61ac7b888c5a29302b67c5a9cc154",
+  "original_log_bytes": 26217,
+  "queries": [
+    "HIOKI LR8450 programming communication driver software GitHub"
+  ],
+  "discovered_urls": [
+    "https://en.donho.com.tw/uploadfiles/689/Products/HIOKI-Japan-Electronic-Motor-Measuring-Instrument/Small-recorder/LR8450/HIOKI-LR8450-%E8%8B%B1%E6%96%87%E5%9E%8B%E9%8C%84.pdf",
+    "https://shop.hioki.eu/media/15/21/g0/1775025956/LR8450E26-63M_0.pdf?ts=1775025956",
+    "https://shop.hioki.eu/media/b3/1c/0d/1736174533/select_Logger_E6-4ZE.pdf?ts=1736174533",
+    "https://www.finaltest.com.mx/v/vspfiles/assets/datasheet/Hioki_LR8450_Memory_Hilogger_-_User_Manual.pdf",
+    "https://www.hioki.cn/products/lr8450",
+    "https://www.hioki.cn/resource/software/170",
+    "https://www.hioki.com/download/30646",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_591",
+    "https://www.hioki.com/us-en/products/multichannel-data-loggers/multichannel/id_6767",
+    "https://www.hioki.com/us-en/support/download/software",
+    "https://www.hioki.com/us-en/support/download/software/versionup/detail/id_605",
+    "https://www.hioki.com/us-en/support/download/software/versionup/detail/id_n11170",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=366&p_no=366&s_tab=",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A002001&p_no=373&s_tab=tab3",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A014003&p_no=366&s_tab=tab3",
+    "https://www.hiokikorea.com/support/software_search.html?p=3",
+    "https://www.hiokikorea.com/support/software_search.html?s_string=LR8450",
+    "https://www.n-denkei.com/vietnam/wp-content/uploads/sites/12/2021/09/HIOKI-PW6001.pdf",
+    "https://www.reddit.com/r/MODBUS/comments/1hhrngy"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

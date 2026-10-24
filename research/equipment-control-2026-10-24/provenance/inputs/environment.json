@@ -1,0 +1,7696 @@
+[
+  {
+    "item_id": "MOD-3de0e7597eda4623",
+    "model_id": "MOD-3de0e7597eda4623",
+    "manufacturer": "MTES",
+    "model": "1.2 BTVC",
+    "names": [
+      "Bake out / Thermal Vacuum Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000006"
+    ],
+    "register_numbers": [
+      6
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000027",
+    "model_id": null,
+    "manufacturer": "KJ Tech",
+    "model": "",
+    "names": [
+      "Nozzle for Oil Exclusion Test"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000027"
+    ],
+    "register_numbers": [
+      27
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d906e646c9fa7dfa",
+    "model_id": "MOD-d906e646c9fa7dfa",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-RC-2500",
+    "names": [
+      "Walk-In Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000035",
+      "EQ-000928"
+    ],
+    "register_numbers": [
+      35,
+      928
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-0013cf22a99b7e8a",
+    "model_id": "MOD-0013cf22a99b7e8a",
+    "manufacturer": "FAMTECH",
+    "model": "EDS12000LS4-550",
+    "names": [
+      "VIBRATION TEST SYSTEM"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000043"
+    ],
+    "register_numbers": [
+      43
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-18896456413c6c16",
+    "model_id": "MOD-18896456413c6c16",
+    "manufacturer": "SY Corporation",
+    "model": "CE-02",
+    "names": [
+      "EMI Shield Room #2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000091"
+    ],
+    "register_numbers": [
+      91
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-062eed013785140e",
+    "model_id": "MOD-062eed013785140e",
+    "manufacturer": "SY Corporation",
+    "model": "RS #5",
+    "names": [
+      "3 m Fully Anechoic Chamber #5"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000092"
+    ],
+    "register_numbers": [
+      92
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b1b46a858a458000",
+    "model_id": "MOD-b1b46a858a458000",
+    "manufacturer": "SY Corporation",
+    "model": "RS #4",
+    "names": [
+      "3 m Fully Anechoic Chamber #4"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000093"
+    ],
+    "register_numbers": [
+      93
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-40904a2a66b2191b",
+    "model_id": "MOD-40904a2a66b2191b",
+    "manufacturer": "SY Corporation",
+    "model": "3m RE #4",
+    "names": [
+      "3 m Semi Anechoic Chamber #4"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000094"
+    ],
+    "register_numbers": [
+      94
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-430310055f7b6a73",
+    "model_id": "MOD-430310055f7b6a73",
+    "manufacturer": "SY Corporation",
+    "model": "3m RE #3",
+    "names": [
+      "3 m Semi Anechoic Chamber #3"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000095"
+    ],
+    "register_numbers": [
+      95
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7c316d874e36cd70",
+    "model_id": "MOD-7c316d874e36cd70",
+    "manufacturer": "ESPEC",
+    "model": "PU-4J",
+    "names": [
+      "온도챔버"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000096",
+      "EQ-000097"
+    ],
+    "register_numbers": [
+      96,
+      97
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-5674df0c661dd79b",
+    "model_id": "MOD-5674df0c661dd79b",
+    "manufacturer": "(주)에스와이씨",
+    "model": "RE #1",
+    "names": [
+      "3 m Semi Anechoic Chamber #1"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000110"
+    ],
+    "register_numbers": [
+      110
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000111",
+    "model_id": null,
+    "manufacturer": "SY corportation",
+    "model": "",
+    "names": [
+      "Semi Anechoic Chamber #4"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000111"
+    ],
+    "register_numbers": [
+      111
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2596c29662cc1509",
+    "model_id": "MOD-2596c29662cc1509",
+    "manufacturer": "SCHWARZBECK",
+    "model": "Opt. 5136 ZG",
+    "names": [
+      "Zero Gauss chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000124"
+    ],
+    "register_numbers": [
+      124
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-74c3ac45e91af1ad",
+    "model_id": "MOD-74c3ac45e91af1ad",
+    "manufacturer": "SYC",
+    "model": "Automotive Shield Room 3",
+    "names": [
+      "Automotive Shield Room 3"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000130"
+    ],
+    "register_numbers": [
+      130
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4bf0b5f4550c6a5b",
+    "model_id": "MOD-4bf0b5f4550c6a5b",
+    "manufacturer": "SYC",
+    "model": "Automotive EMC Chamber 7",
+    "names": [
+      "Automotive EMC Chamber 7"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000131"
+    ],
+    "register_numbers": [
+      131
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-51a840a1623b8cc4",
+    "model_id": "MOD-51a840a1623b8cc4",
+    "manufacturer": "SYC",
+    "model": "Automotive EMC Chamber 6",
+    "names": [
+      "Automotive EMC Chamber 6"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000132"
+    ],
+    "register_numbers": [
+      132
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d8260582cbabb748",
+    "model_id": "MOD-d8260582cbabb748",
+    "manufacturer": "SCHWARZBECK",
+    "model": "HVSE 8600",
+    "names": [
+      "Shield Enclosure",
+      "Shielded Enclosure"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000144",
+      "EQ-000145",
+      "EQ-000146",
+      "EQ-000147",
+      "EQ-001731",
+      "EQ-001732",
+      "EQ-001733",
+      "EQ-001734",
+      "EQ-002412",
+      "EQ-002413",
+      "EQ-002414",
+      "EQ-002415"
+    ],
+    "register_numbers": [
+      144,
+      145,
+      146,
+      147,
+      1731,
+      1732,
+      1733,
+      1734,
+      2412,
+      2413,
+      2414,
+      2415
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 12
+  },
+  {
+    "item_id": "MOD-c0b6dbe8608decb7",
+    "model_id": "MOD-c0b6dbe8608decb7",
+    "manufacturer": "Jays",
+    "model": "J-EVMS1500V",
+    "names": [
+      "Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-000162"
+    ],
+    "register_numbers": [
+      162
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4e67c1b58577b429",
+    "model_id": "MOD-4e67c1b58577b429",
+    "manufacturer": "SY Corporation",
+    "model": "Military EMC Chamber VI",
+    "names": [
+      "Military EMC Chamber VI"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000186"
+    ],
+    "register_numbers": [
+      186
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b6cdd4aff00259c5",
+    "model_id": "MOD-b6cdd4aff00259c5",
+    "manufacturer": "SY Corporation",
+    "model": "Military EMC Chamber V",
+    "names": [
+      "Military EMC Chamber V"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000187"
+    ],
+    "register_numbers": [
+      187
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4c63817cc8333655",
+    "model_id": "MOD-4c63817cc8333655",
+    "manufacturer": "SY Corporation",
+    "model": "Military EMC Chamber IV",
+    "names": [
+      "Military EMC Chamber IV"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000188"
+    ],
+    "register_numbers": [
+      188
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000205",
+    "model_id": null,
+    "manufacturer": "SY Corporation",
+    "model": "",
+    "names": [
+      "Automotive ESD room"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000205"
+    ],
+    "register_numbers": [
+      205
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000206",
+    "model_id": null,
+    "manufacturer": "SY Corporation",
+    "model": "",
+    "names": [
+      "Automotive Shield Room 2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000206"
+    ],
+    "register_numbers": [
+      206
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000207",
+    "model_id": null,
+    "manufacturer": "SY Corporation",
+    "model": "",
+    "names": [
+      "Automotive Shield Room 1"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000207"
+    ],
+    "register_numbers": [
+      207
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-28421fe01e089892",
+    "model_id": "MOD-28421fe01e089892",
+    "manufacturer": "SY Corporation",
+    "model": "1m #3",
+    "names": [
+      "Automotive EMC Chamber 3",
+      "Automotive EMC Chamber III"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000208",
+      "EQ-002651",
+      "EQ-002652"
+    ],
+    "register_numbers": [
+      208,
+      2651,
+      2652
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-ef4df43be1a5762c",
+    "model_id": "MOD-ef4df43be1a5762c",
+    "manufacturer": "SY Corporation",
+    "model": "1m #2",
+    "names": [
+      "Automotive EMC Chamber 2",
+      "Automotive EMC Chamber II"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000209",
+      "EQ-002649",
+      "EQ-002650"
+    ],
+    "register_numbers": [
+      209,
+      2649,
+      2650
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-6edd0db7786f05ab",
+    "model_id": "MOD-6edd0db7786f05ab",
+    "manufacturer": "SY Corporation",
+    "model": "1m #1",
+    "names": [
+      "Automotive EMC Chamber I"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000210",
+      "EQ-002647",
+      "EQ-002648"
+    ],
+    "register_numbers": [
+      210,
+      2647,
+      2648
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-40eb12116c923a57",
+    "model_id": "MOD-40eb12116c923a57",
+    "manufacturer": "SY Corporation",
+    "model": "1m HV #2",
+    "names": [
+      "Automotive HV EMC Chamber 2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000212"
+    ],
+    "register_numbers": [
+      212
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-3f52c413647a6f81",
+    "model_id": "MOD-3f52c413647a6f81",
+    "manufacturer": "SY Corporation",
+    "model": "1m HV #1",
+    "names": [
+      "Automotive HV EMC Chamber I"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000213"
+    ],
+    "register_numbers": [
+      213
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d7225f2c4c23b5d9",
+    "model_id": "MOD-d7225f2c4c23b5d9",
+    "manufacturer": "ESPEC",
+    "model": "SH-642",
+    "names": [
+      "TEMP&HUMID CHAMBER",
+      "온습도 챔버",
+      "Chamber",
+      "항온 항습기",
+      "TEMP & HUMIDITY CHAMBER",
+      "Temperature and Humidity chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000350",
+      "EQ-001261",
+      "EQ-001699",
+      "EQ-003668",
+      "EQ-003669",
+      "EQ-004644",
+      "EQ-004688",
+      "EQ-004939",
+      "EQ-005605"
+    ],
+    "register_numbers": [
+      350,
+      1261,
+      1699,
+      3668,
+      3669,
+      4644,
+      4688,
+      4939,
+      5605
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 9
+  },
+  {
+    "item_id": "MOD-ebb27f678d16ef0e",
+    "model_id": "MOD-ebb27f678d16ef0e",
+    "manufacturer": "SMC",
+    "model": "HRS012-A-20-BMT",
+    "names": [
+      "THERMO CHILLER"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-000352",
+      "EQ-000360"
+    ],
+    "register_numbers": [
+      352,
+      360
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-cc61d53ab9d3fbcf",
+    "model_id": "MOD-cc61d53ab9d3fbcf",
+    "manufacturer": "ESPEC",
+    "model": "ARS-1100-AE",
+    "names": [
+      "Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000357",
+      "EQ-000358",
+      "EQ-000359"
+    ],
+    "register_numbers": [
+      357,
+      358,
+      359
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-19402fb30dcdf03f",
+    "model_id": "MOD-19402fb30dcdf03f",
+    "manufacturer": "GTPS",
+    "model": "GTPS-1CH20",
+    "names": [
+      "CHILLER"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-000378"
+    ],
+    "register_numbers": [
+      378
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-984b24858a338b79",
+    "model_id": "MOD-984b24858a338b79",
+    "manufacturer": "Kingpo",
+    "model": "KP-CG200",
+    "names": [
+      "Locked-rotor test apparatus of fan motors"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000397"
+    ],
+    "register_numbers": [
+      397
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-3126290b8bed2483",
+    "model_id": "MOD-3126290b8bed2483",
+    "manufacturer": "DHC",
+    "model": "DH48S",
+    "names": [
+      "Timer for Spiliage solution dripped apparatus"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000398"
+    ],
+    "register_numbers": [
+      398
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0de0a8b99c556f36",
+    "model_id": "MOD-0de0a8b99c556f36",
+    "manufacturer": "Kingpo",
+    "model": "KP-354315",
+    "names": [
+      "Spiliage solution dripped apparatus"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000399"
+    ],
+    "register_numbers": [
+      399
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d713d68db133e153",
+    "model_id": "MOD-d713d68db133e153",
+    "manufacturer": "Kingpo",
+    "model": "KP-35791",
+    "names": [
+      "Impact test apparatus"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000400"
+    ],
+    "register_numbers": [
+      400
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000403",
+    "model_id": null,
+    "manufacturer": "Kingpo",
+    "model": "",
+    "names": [
+      "Metal cylinder for Drop test apparatus"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000403"
+    ],
+    "register_numbers": [
+      403
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000404",
+    "model_id": null,
+    "manufacturer": "Kingpo",
+    "model": "",
+    "names": [
+      "Rubber hemi-sphere for Drop test apparatus"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000404"
+    ],
+    "register_numbers": [
+      404
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7fc7ec3c457bf0a4",
+    "model_id": "MOD-7fc7ec3c457bf0a4",
+    "manufacturer": "Kingpo",
+    "model": "KP-35072",
+    "names": [
+      "Drop test apparatus"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000405"
+    ],
+    "register_numbers": [
+      405
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-8f8d1912c3db782a",
+    "model_id": "MOD-8f8d1912c3db782a",
+    "manufacturer": "Kingpo",
+    "model": "KP-355219",
+    "names": [
+      "Needle"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000410"
+    ],
+    "register_numbers": [
+      410
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-862cadcb0d2bacff",
+    "model_id": "MOD-862cadcb0d2bacff",
+    "manufacturer": "Kingpo",
+    "model": "KP-350603",
+    "names": [
+      "Spillage solution bottle"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000412"
+    ],
+    "register_numbers": [
+      412
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b70df6d2513b459e",
+    "model_id": "MOD-b70df6d2513b459e",
+    "manufacturer": "Sensys",
+    "model": "PSHJ0010BAPG(SC-2300)",
+    "names": [
+      "Pressure meter for IPx1 - IPx6"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000442",
+      "EQ-002351"
+    ],
+    "register_numbers": [
+      442,
+      2351
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-000471",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Bunsen Burner"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000471"
+    ],
+    "register_numbers": [
+      471
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a174c281e87d1756",
+    "model_id": "MOD-a174c281e87d1756",
+    "manufacturer": "AUTONICS",
+    "model": "FX4S-1P4",
+    "names": [
+      "Timer Flammability tester(Combustion)",
+      "Timer Flammability tester(Burner OFF)",
+      "Timer Flammability tester(Burner ON)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000472",
+      "EQ-000473",
+      "EQ-000474"
+    ],
+    "register_numbers": [
+      472,
+      473,
+      474
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-ff29aab52f34c4b4",
+    "model_id": "MOD-ff29aab52f34c4b4",
+    "manufacturer": "AUTONICS",
+    "model": "CT4S-1P4",
+    "names": [
+      "Counter for Flammability tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000475"
+    ],
+    "register_numbers": [
+      475
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6f9a4dcd0efc4847",
+    "model_id": "MOD-6f9a4dcd0efc4847",
+    "manufacturer": "DWYER",
+    "model": "M26K JM",
+    "names": [
+      "Differential pressure gauge for Flammability tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000476"
+    ],
+    "register_numbers": [
+      476
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-9dd802178f9c87ed",
+    "model_id": "MOD-9dd802178f9c87ed",
+    "manufacturer": "KOMETER",
+    "model": "PA-40",
+    "names": [
+      "Gas flowmeter for Flammability tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000477"
+    ],
+    "register_numbers": [
+      477
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-afa430557fc881da",
+    "model_id": "MOD-afa430557fc881da",
+    "manufacturer": "SCM Technology",
+    "model": "SNFT-100",
+    "names": [
+      "Flammability tester",
+      "Needle flame tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000478",
+      "EQ-000485"
+    ],
+    "register_numbers": [
+      478,
+      485
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-000479",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Flame Height Gauge for 500 W Flame"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000479"
+    ],
+    "register_numbers": [
+      479
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000480",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Flame Height Gauge for 50 W Flame"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000480"
+    ],
+    "register_numbers": [
+      480
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000481",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Flame Height Gauge for Needle Flame"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000481"
+    ],
+    "register_numbers": [
+      481
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000482",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Needle Flame Copper Block with Thermocouple Wire"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000482"
+    ],
+    "register_numbers": [
+      482
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000483",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Needle for Needle flame tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000483"
+    ],
+    "register_numbers": [
+      483
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0c51ea999074337a",
+    "model_id": "MOD-0c51ea999074337a",
+    "manufacturer": "AUTONICS",
+    "model": "CT4S-1P",
+    "names": [
+      "Timer for Needle flame tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000484"
+    ],
+    "register_numbers": [
+      484
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000486",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Ball Pressure Tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000486"
+    ],
+    "register_numbers": [
+      486
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a400882df9eb7321",
+    "model_id": "MOD-a400882df9eb7321",
+    "manufacturer": "지구촌냉열",
+    "model": "GVC-010AT",
+    "names": [
+      "Water Chilling Unit"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-000520"
+    ],
+    "register_numbers": [
+      520
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-8716a1e35892c5ca",
+    "model_id": "MOD-8716a1e35892c5ca",
+    "manufacturer": "MTES",
+    "model": "1.2 T.V.C",
+    "names": [
+      "Thermal Vacuum Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000588"
+    ],
+    "register_numbers": [
+      588
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-51cf2ba1f9f6d2e6",
+    "model_id": "MOD-51cf2ba1f9f6d2e6",
+    "manufacturer": "JEIOTECH",
+    "model": "HH-JT-39L",
+    "names": [
+      "Chiller-HH"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-000650",
+      "EQ-000651",
+      "EQ-000652",
+      "EQ-000653",
+      "EQ-000654",
+      "EQ-000655"
+    ],
+    "register_numbers": [
+      650,
+      651,
+      652,
+      653,
+      654,
+      655
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 6
+  },
+  {
+    "item_id": "MOD-b2a26bbd7af7c348",
+    "model_id": "MOD-b2a26bbd7af7c348",
+    "manufacturer": "Asmik",
+    "model": "MIK-Y290",
+    "names": [
+      "Pressure meter for UL Sprinkler test apparatus"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000669"
+    ],
+    "register_numbers": [
+      669
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1207448b7f57a7ee",
+    "model_id": "MOD-1207448b7f57a7ee",
+    "manufacturer": "Kingpo",
+    "model": "KP-UL02",
+    "names": [
+      "UL Sprinkler test apparatus"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000670"
+    ],
+    "register_numbers": [
+      670
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-234ba924e405b508",
+    "model_id": "MOD-234ba924e405b508",
+    "manufacturer": "ESPEC",
+    "model": "ARSF-0800-15",
+    "names": [
+      "Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000700",
+      "EQ-000710",
+      "EQ-000711"
+    ],
+    "register_numbers": [
+      700,
+      710,
+      711
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-44476bab8de5aee9",
+    "model_id": "MOD-44476bab8de5aee9",
+    "manufacturer": "ESPEC",
+    "model": "SU-642",
+    "names": [
+      "온습도챔버",
+      "Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000721",
+      "EQ-000862",
+      "EQ-001111",
+      "EQ-005512",
+      "EQ-006101"
+    ],
+    "register_numbers": [
+      721,
+      862,
+      1111,
+      5512,
+      6101
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 5
+  },
+  {
+    "item_id": "IDENTITY-EQ-000844",
+    "model_id": null,
+    "manufacturer": "KOREA SIMULATOR",
+    "model": "",
+    "names": [
+      "낙하시험기"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000844"
+    ],
+    "register_numbers": [
+      844
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000882",
+    "model_id": null,
+    "manufacturer": "Aplus tech",
+    "model": "",
+    "names": [
+      "Fan zet nozzle for IPX9_4"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000882"
+    ],
+    "register_numbers": [
+      882
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000883",
+    "model_id": null,
+    "manufacturer": "Aplus tech",
+    "model": "",
+    "names": [
+      "Fan zet nozzle for IPX9_3"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000883"
+    ],
+    "register_numbers": [
+      883
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000884",
+    "model_id": null,
+    "manufacturer": "Aplus tech",
+    "model": "",
+    "names": [
+      "Fan zet nozzle for IPX9_2"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000884"
+    ],
+    "register_numbers": [
+      884
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b1014bae2364c6ae",
+    "model_id": "MOD-b1014bae2364c6ae",
+    "manufacturer": "KOREA SIMULATOR",
+    "model": "Chiller",
+    "names": [
+      "Chiller"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-000885"
+    ],
+    "register_numbers": [
+      885
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000886",
+    "model_id": null,
+    "manufacturer": "Aplus tech",
+    "model": "",
+    "names": [
+      "Fan zet nozzle for IPX9_1"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000886"
+    ],
+    "register_numbers": [
+      886
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6d528db77d5fb5de",
+    "model_id": "MOD-6d528db77d5fb5de",
+    "manufacturer": "DHC",
+    "model": "DHC7J",
+    "names": [
+      "Counter for Tumbling barrel",
+      "Counter for kettle endurance tester",
+      "Counter for Electric iron endurance tester",
+      "Counter for Drop test"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000887",
+      "EQ-000995",
+      "EQ-001026",
+      "EQ-001030"
+    ],
+    "register_numbers": [
+      887,
+      995,
+      1026,
+      1030
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-2ae5df92ce55c541",
+    "model_id": "MOD-2ae5df92ce55c541",
+    "manufacturer": "Kingpo",
+    "model": "KP-GT2",
+    "names": [
+      "Tumbling barrel"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000888"
+    ],
+    "register_numbers": [
+      888
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-8d6670ff5ff4ad43",
+    "model_id": "MOD-8d6670ff5ff4ad43",
+    "manufacturer": "SY Corporation",
+    "model": "CE #2",
+    "names": [
+      "CE Test Room"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000930"
+    ],
+    "register_numbers": [
+      930
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d967a02bb7c41391",
+    "model_id": "MOD-d967a02bb7c41391",
+    "manufacturer": "SY Corporation",
+    "model": "EMS #3",
+    "names": [
+      "EMS Room #3"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000931"
+    ],
+    "register_numbers": [
+      931
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c64382a9eea38d5b",
+    "model_id": "MOD-c64382a9eea38d5b",
+    "manufacturer": "SAMSUNG",
+    "model": "(0 - 50) kPa",
+    "names": [
+      "Pressure meter for nozzle_6",
+      "Pressure meter for nozzle_5",
+      "Pressure meter for nozzle_4",
+      "Pressure meter for nozzle_2"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000965",
+      "EQ-000966",
+      "EQ-000967",
+      "EQ-000969"
+    ],
+    "register_numbers": [
+      965,
+      966,
+      967,
+      969
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-653c422a7ffa4930",
+    "model_id": "MOD-653c422a7ffa4930",
+    "manufacturer": "SAMSUNG",
+    "model": "(0 - 5) kPa",
+    "names": [
+      "Pressure meter for nozzle_3"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000968"
+    ],
+    "register_numbers": [
+      968
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-961858c013133808",
+    "model_id": "MOD-961858c013133808",
+    "manufacturer": "SAMSUNG",
+    "model": "(0 ~ 50) kPa",
+    "names": [
+      "Pressure meter for nozzle_1",
+      "Pressure meter for nozzle_3",
+      "Pressure meter for nozzle_2"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-000970",
+      "EQ-004261",
+      "EQ-004262",
+      "EQ-004263"
+    ],
+    "register_numbers": [
+      970,
+      4261,
+      4262,
+      4263
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-9b4b8efc98560589",
+    "model_id": "MOD-9b4b8efc98560589",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-STH-1004-1K",
+    "names": [
+      "TEMP&HUMID CHAMBER",
+      "Temp & Humidity chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-000980",
+      "EQ-000981",
+      "EQ-001450",
+      "EQ-001451",
+      "EQ-001827"
+    ],
+    "register_numbers": [
+      980,
+      981,
+      1450,
+      1451,
+      1827
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 5
+  },
+  {
+    "item_id": "MOD-1a9541625900ee57",
+    "model_id": "MOD-1a9541625900ee57",
+    "manufacturer": "LABTONE",
+    "model": "DT200",
+    "names": [
+      "Drop Test Machine"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000984"
+    ],
+    "register_numbers": [
+      984
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f415de058ad2711c",
+    "model_id": "MOD-f415de058ad2711c",
+    "manufacturer": "Kingpo",
+    "model": "KP-DH01",
+    "names": [
+      "kettle insert-withdraw endurance test device"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-000998"
+    ],
+    "register_numbers": [
+      998
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001022",
+    "model_id": null,
+    "manufacturer": "Kingpo",
+    "model": "",
+    "names": [
+      "Spring impact hammer"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001022"
+    ],
+    "register_numbers": [
+      1022
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-527de17bd974e31d",
+    "model_id": "MOD-527de17bd974e31d",
+    "manufacturer": "Kingpo",
+    "model": "KP-EI02",
+    "names": [
+      "Electric iron insert and withdraw endurance tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001029"
+    ],
+    "register_numbers": [
+      1029
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001031",
+    "model_id": null,
+    "manufacturer": "Kingpo",
+    "model": "",
+    "names": [
+      "Steel plate for Drop test"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001031"
+    ],
+    "register_numbers": [
+      1031
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5723fd909d74b491",
+    "model_id": "MOD-5723fd909d74b491",
+    "manufacturer": "Kingpo",
+    "model": "KP-EID01",
+    "names": [
+      "Drop test apparatus"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001032"
+    ],
+    "register_numbers": [
+      1032
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d1f86dbdb7306ebd",
+    "model_id": "MOD-d1f86dbdb7306ebd",
+    "manufacturer": "Kingpo",
+    "model": "57HS276-40A4-003",
+    "names": [
+      "Speed motor for Automatic scratch tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001047"
+    ],
+    "register_numbers": [
+      1047
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-92dbbbbee7476587",
+    "model_id": "MOD-92dbbbbee7476587",
+    "manufacturer": "Kingpo",
+    "model": "KP-ART01",
+    "names": [
+      "Automatic scratch tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001048"
+    ],
+    "register_numbers": [
+      1048
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001049",
+    "model_id": null,
+    "manufacturer": "Kingpo",
+    "model": "",
+    "names": [
+      "Counter for Tumbling barrel"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001049"
+    ],
+    "register_numbers": [
+      1049
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-da33b2653b5996b0",
+    "model_id": "MOD-da33b2653b5996b0",
+    "manufacturer": "Kingpo",
+    "model": "KP-GT07",
+    "names": [
+      "Tumbling barrel"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001050"
+    ],
+    "register_numbers": [
+      1050
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001063",
+    "model_id": null,
+    "manufacturer": "SY Corporation",
+    "model": "",
+    "names": [
+      "Semi Anechoic Chamber #2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001063"
+    ],
+    "register_numbers": [
+      1063
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001075",
+    "model_id": null,
+    "manufacturer": "SYC",
+    "model": "",
+    "names": [
+      "Fully Anechoic Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001075"
+    ],
+    "register_numbers": [
+      1075
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4422b928da5ac3e1",
+    "model_id": "MOD-4422b928da5ac3e1",
+    "manufacturer": "(주)에스와이씨",
+    "model": "RE #2",
+    "names": [
+      "3 m Semi Anechoic Chamber #2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001078"
+    ],
+    "register_numbers": [
+      1078
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a1c28137d06856e4",
+    "model_id": "MOD-a1c28137d06856e4",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-RC-2507-1K",
+    "names": [
+      "Walk-in chamber",
+      "Walk-in Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001100",
+      "EQ-001403"
+    ],
+    "register_numbers": [
+      1100,
+      1403
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-001120",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Flexing tester for curling iron"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001120"
+    ],
+    "register_numbers": [
+      1120
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-92b71df360389aae",
+    "model_id": "MOD-92b71df360389aae",
+    "manufacturer": "에네스과학",
+    "model": "EN-STH-1104-1K",
+    "names": [
+      "TEMP&HUMID CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001152",
+      "EQ-001319"
+    ],
+    "register_numbers": [
+      1152,
+      1319
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-87c9b308a93e15d5",
+    "model_id": "MOD-87c9b308a93e15d5",
+    "manufacturer": "FAMTECH",
+    "model": "EDS7000LS3-480",
+    "names": [
+      "VIBRATION TESTER"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001265"
+    ],
+    "register_numbers": [
+      1265
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001337",
+    "model_id": null,
+    "manufacturer": "SYC",
+    "model": "",
+    "names": [
+      "Fully Anechoic Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001337"
+    ],
+    "register_numbers": [
+      1337
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-86c6ec5545caff71",
+    "model_id": "MOD-86c6ec5545caff71",
+    "manufacturer": "ESPEC",
+    "model": "TSD-101-W",
+    "names": [
+      "Thermal Shock Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001400",
+      "EQ-004627"
+    ],
+    "register_numbers": [
+      1400,
+      4627
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-36298aba4d187b05",
+    "model_id": "MOD-36298aba4d187b05",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-SFO-704",
+    "names": [
+      "Convection Dry Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-001422"
+    ],
+    "register_numbers": [
+      1422
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fcd1bfb4ee156957",
+    "model_id": "MOD-fcd1bfb4ee156957",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-HOF-150S",
+    "names": [
+      "OVEN"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-001452",
+      "EQ-001453"
+    ],
+    "register_numbers": [
+      1452,
+      1453
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-9b475053db366530",
+    "model_id": "MOD-9b475053db366530",
+    "manufacturer": "Weiss Technik",
+    "model": "CWK240/40-150",
+    "names": [
+      "Walk-in chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001459"
+    ],
+    "register_numbers": [
+      1459
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001490",
+    "model_id": null,
+    "manufacturer": "SYC",
+    "model": "",
+    "names": [
+      "Automotive Shield Room4"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001490"
+    ],
+    "register_numbers": [
+      1490
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001491",
+    "model_id": null,
+    "manufacturer": "SYC",
+    "model": "",
+    "names": [
+      "Automotive Shield Room4"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001491"
+    ],
+    "register_numbers": [
+      1491
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001492",
+    "model_id": null,
+    "manufacturer": "SYC",
+    "model": "",
+    "names": [
+      "Automotive Chamber5"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001492"
+    ],
+    "register_numbers": [
+      1492
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001493",
+    "model_id": null,
+    "manufacturer": "SYC",
+    "model": "",
+    "names": [
+      "Automotive Chamber5"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001493"
+    ],
+    "register_numbers": [
+      1493
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001494",
+    "model_id": null,
+    "manufacturer": "SYC",
+    "model": "",
+    "names": [
+      "Automotive EMC Chamber4"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001494"
+    ],
+    "register_numbers": [
+      1494
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001495",
+    "model_id": null,
+    "manufacturer": "SYC",
+    "model": "",
+    "names": [
+      "Automotive EMC Chamber4"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001495"
+    ],
+    "register_numbers": [
+      1495
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-315ebf93eef368ed",
+    "model_id": "MOD-315ebf93eef368ed",
+    "manufacturer": "WEISSTECKNIK",
+    "model": "WPH1728/70/3/RUM",
+    "names": [
+      "WALK IN CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001498"
+    ],
+    "register_numbers": [
+      1498
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001510",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "",
+    "names": [
+      "Semi Anechoic Chamber #5"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001510"
+    ],
+    "register_numbers": [
+      1510
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-629364782e994d19",
+    "model_id": "MOD-629364782e994d19",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-VTH-120-5K-VH",
+    "names": [
+      "VIBRATION TEST CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001538"
+    ],
+    "register_numbers": [
+      1538
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-93060d15ffd7ff5c",
+    "model_id": "MOD-93060d15ffd7ff5c",
+    "manufacturer": "UNHOLTZ-DICKIE",
+    "model": "2XSAI120-T2000-64-3",
+    "names": [
+      "VIBRATION TEST SYSTEM"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001539"
+    ],
+    "register_numbers": [
+      1539
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-568f5947dbf01bd7",
+    "model_id": "MOD-568f5947dbf01bd7",
+    "manufacturer": "Q-LAB",
+    "model": "Q-FOG CRH1100HSCR",
+    "names": [
+      "Controlled Relative Humidity Cyclic Corrosion Tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-001540"
+    ],
+    "register_numbers": [
+      1540
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-cce2c77941498791",
+    "model_id": "MOD-cce2c77941498791",
+    "manufacturer": "Weiss Technik",
+    "model": "EA55-2-4L-WC-X",
+    "names": [
+      "Altitude & Temperature chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001541"
+    ],
+    "register_numbers": [
+      1541
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-eaceff2a85768e57",
+    "model_id": "MOD-eaceff2a85768e57",
+    "manufacturer": "Weiss Technik",
+    "model": "weisstechnik ESS C/1300/70/15",
+    "names": [
+      "TEMP&HUMIDITY CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001542",
+      "EQ-001543"
+    ],
+    "register_numbers": [
+      1542,
+      1543
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-a7d41fe24f811249",
+    "model_id": "MOD-a7d41fe24f811249",
+    "manufacturer": "Weiss Technik",
+    "model": "weisstechnik ESS C/1500/70/5",
+    "names": [
+      "TEMP&HUMIDITY CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001544",
+      "EQ-001545",
+      "EQ-001546"
+    ],
+    "register_numbers": [
+      1544,
+      1545,
+      1546
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "IDENTITY-EQ-001550",
+    "model_id": null,
+    "manufacturer": "JUHOTECH",
+    "model": "",
+    "names": [
+      "Immersion Tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-001550"
+    ],
+    "register_numbers": [
+      1550
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fb5efe3d6d9a3538",
+    "model_id": "MOD-fb5efe3d6d9a3538",
+    "manufacturer": "OPTECH",
+    "model": "DS2-500N",
+    "names": [
+      "Push Pull Gauge(DIGITAL)",
+      "Push-Pull Gauge (DIGITAL)",
+      "Digital Push-Pull Gauge"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001582",
+      "EQ-004069",
+      "EQ-006348"
+    ],
+    "register_numbers": [
+      1582,
+      4069,
+      6348
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-dfe08196fcea7599",
+    "model_id": "MOD-dfe08196fcea7599",
+    "manufacturer": "U&S Energy",
+    "model": "PROJECTILE JIG",
+    "names": [
+      "PROJECTILE TESTER JIG",
+      "Projectile Tester Jig"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001673",
+      "EQ-002041",
+      "EQ-003114"
+    ],
+    "register_numbers": [
+      1673,
+      2041,
+      3114
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-e2182b9507f22074",
+    "model_id": "MOD-e2182b9507f22074",
+    "manufacturer": "Salt",
+    "model": "ST-1002",
+    "names": [
+      "Universal Testing Machine"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001688"
+    ],
+    "register_numbers": [
+      1688
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001751",
+    "model_id": null,
+    "manufacturer": "노이즈켄코리아",
+    "model": "",
+    "names": [
+      "Faraday Cage"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001751"
+    ],
+    "register_numbers": [
+      1751
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001752",
+    "model_id": null,
+    "manufacturer": "노이즈켄코리아",
+    "model": "",
+    "names": [
+      "Faraday Cage"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001752"
+    ],
+    "register_numbers": [
+      1752
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-441b07f70a21fd86",
+    "model_id": "MOD-441b07f70a21fd86",
+    "manufacturer": "JFM",
+    "model": "JFM TC/540/2/1",
+    "names": [
+      "CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001807",
+      "EQ-001808"
+    ],
+    "register_numbers": [
+      1807,
+      1808
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-54d23592544902d3",
+    "model_id": "MOD-54d23592544902d3",
+    "manufacturer": "THERMOTRON",
+    "model": "SE-1400-20-20",
+    "names": [
+      "Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001888"
+    ],
+    "register_numbers": [
+      1888
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1c6a4e95229aa474",
+    "model_id": "MOD-1c6a4e95229aa474",
+    "manufacturer": "THERMOTRON",
+    "model": "SE-1400-15",
+    "names": [
+      "Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001889"
+    ],
+    "register_numbers": [
+      1889
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ad8a6291ffcc93f0",
+    "model_id": "MOD-ad8a6291ffcc93f0",
+    "manufacturer": "주식회사 두일냉열",
+    "model": "DC-5AP",
+    "names": [
+      "공냉식 일체형 냉각기"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-001890",
+      "EQ-001891"
+    ],
+    "register_numbers": [
+      1890,
+      1891
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-3a4411262c483458",
+    "model_id": "MOD-3a4411262c483458",
+    "manufacturer": "주식회사 두일냉열",
+    "model": "DC-3AT",
+    "names": [
+      "공냉식 일체형 냉각기"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-001892",
+      "EQ-001893"
+    ],
+    "register_numbers": [
+      1892,
+      1893
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-2c66d011b8f05968",
+    "model_id": "MOD-2c66d011b8f05968",
+    "manufacturer": "테스콤",
+    "model": "TC-5910E",
+    "names": [
+      "SHIELD BOX"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-001936"
+    ],
+    "register_numbers": [
+      1936
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001939",
+    "model_id": null,
+    "manufacturer": "KOREA SIMULARTOR",
+    "model": "",
+    "names": [
+      "Rollover Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001939"
+    ],
+    "register_numbers": [
+      1939
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-91b7fe9144563066",
+    "model_id": "MOD-91b7fe9144563066",
+    "manufacturer": "SUZHOU SUSHI TESTING GROUP",
+    "model": "DC-6000-60",
+    "names": [
+      "Vibration Test System"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-001956"
+    ],
+    "register_numbers": [
+      1956
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e3d372604b04164a",
+    "model_id": "MOD-e3d372604b04164a",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-STH-4050-1K",
+    "names": [
+      "Temp&Humid Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002017"
+    ],
+    "register_numbers": [
+      2017
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ffdd95b7232c15ab",
+    "model_id": "MOD-ffdd95b7232c15ab",
+    "manufacturer": "JFM Engineering",
+    "model": "#1",
+    "names": [
+      "FAN JET NOZZLE FOR IPX9"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002028",
+      "EQ-004323"
+    ],
+    "register_numbers": [
+      2028,
+      4323
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-cad0fb59d89b9c3c",
+    "model_id": "MOD-cad0fb59d89b9c3c",
+    "manufacturer": "JFM Engineering",
+    "model": "#2",
+    "names": [
+      "FAN JET NOZZLE FOR IPX9"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002029",
+      "EQ-004322"
+    ],
+    "register_numbers": [
+      2029,
+      4322
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-1f2ae004ab08584f",
+    "model_id": "MOD-1f2ae004ab08584f",
+    "manufacturer": "JFM Engineering",
+    "model": "#3",
+    "names": [
+      "FAN JET NOZZLE FOR IPX9"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002030",
+      "EQ-004321"
+    ],
+    "register_numbers": [
+      2030,
+      4321
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-a98874005240e3c0",
+    "model_id": "MOD-a98874005240e3c0",
+    "manufacturer": "JFM Engineering",
+    "model": "#4",
+    "names": [
+      "FAN JET NOZZLE FOR IPX9"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002031",
+      "EQ-004320"
+    ],
+    "register_numbers": [
+      2031,
+      4320
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-731a2eef9416670b",
+    "model_id": "MOD-731a2eef9416670b",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-SFO-1004",
+    "names": [
+      "Convection Dry Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-002037"
+    ],
+    "register_numbers": [
+      2037
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-32248fcc51c276e8",
+    "model_id": "MOD-32248fcc51c276e8",
+    "manufacturer": "Y.M.RTC",
+    "model": "YM-THC 2800S",
+    "names": [
+      "Walk-In Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002038"
+    ],
+    "register_numbers": [
+      2038
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-467a15dd196779f8",
+    "model_id": "MOD-467a15dd196779f8",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-HFO-100S",
+    "names": [
+      "Convention Dry Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-002039"
+    ],
+    "register_numbers": [
+      2039
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fa4d877e626b9edb",
+    "model_id": "MOD-fa4d877e626b9edb",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-HFO-150S",
+    "names": [
+      "Convention Dry Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-002040"
+    ],
+    "register_numbers": [
+      2040
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ba7a1726dedd57e1",
+    "model_id": "MOD-ba7a1726dedd57e1",
+    "manufacturer": "Data Translation",
+    "model": "DT9857E",
+    "names": [
+      "16채널 진동 측정 분석 시스템"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-002282"
+    ],
+    "register_numbers": [
+      2282
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-9e739a7f0027b827",
+    "model_id": "MOD-9e739a7f0027b827",
+    "manufacturer": "ESPEC",
+    "model": "TSA-301L-W",
+    "names": [
+      "Thermal Shock Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002304"
+    ],
+    "register_numbers": [
+      2304
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7098dcf267fbf597",
+    "model_id": "MOD-7098dcf267fbf597",
+    "manufacturer": "Cirsinc",
+    "model": "013",
+    "names": [
+      "Needle Biopsy Phantom"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002318"
+    ],
+    "register_numbers": [
+      2318
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fb6d9b29d5ef5d90",
+    "model_id": "MOD-fb6d9b29d5ef5d90",
+    "manufacturer": "ESPEC",
+    "model": "PWL-4KP",
+    "names": [
+      "Temperature & Humidity Chamber",
+      "TEMPERATURE&HUMIDITY CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002327",
+      "EQ-002440",
+      "EQ-002441"
+    ],
+    "register_numbers": [
+      2327,
+      2440,
+      2441
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-e8bafbb452454c41",
+    "model_id": "MOD-e8bafbb452454c41",
+    "manufacturer": "WATLOW",
+    "model": "K-TYPE",
+    "names": [
+      "Glow Wire Tester_Thermocouple"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002328"
+    ],
+    "register_numbers": [
+      2328
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-561cc65bf9f10a4b",
+    "model_id": "MOD-561cc65bf9f10a4b",
+    "manufacturer": "Turbines, Inc",
+    "model": "TM0078(KM2)",
+    "names": [
+      "Flow meter for Spray nozzle, 4K",
+      "Flow meter for IPx5, IPx6, IPx6K"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002352",
+      "EQ-004326"
+    ],
+    "register_numbers": [
+      2352,
+      4326
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-bd33148250393909",
+    "model_id": "MOD-bd33148250393909",
+    "manufacturer": "ESPEC",
+    "model": "ARS-1100",
+    "names": [
+      "Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002364",
+      "EQ-002365",
+      "EQ-002366"
+    ],
+    "register_numbers": [
+      2364,
+      2365,
+      2366
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-3dba73f9ed8f7b75",
+    "model_id": "MOD-3dba73f9ed8f7b75",
+    "manufacturer": "KJ Tech",
+    "model": "Hemisphere",
+    "names": [
+      "Crush Jig"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-002376"
+    ],
+    "register_numbers": [
+      2376
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-acfccbd35e69a270",
+    "model_id": "MOD-acfccbd35e69a270",
+    "manufacturer": "KJ Tech",
+    "model": "Semicircular Bar",
+    "names": [
+      "Crush Jig"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-002377"
+    ],
+    "register_numbers": [
+      2377
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7ffbb313dcc44645",
+    "model_id": "MOD-7ffbb313dcc44645",
+    "manufacturer": "ESPEC",
+    "model": "TSA-71S-A",
+    "names": [
+      "Thermal Shock Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002404"
+    ],
+    "register_numbers": [
+      2404
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-55207251921dcf3d",
+    "model_id": "MOD-55207251921dcf3d",
+    "manufacturer": "KJ Tech",
+    "model": "50.8 mm",
+    "names": [
+      "Impact ball"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-002447"
+    ],
+    "register_numbers": [
+      2447
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6b5096e6bb88a5ed",
+    "model_id": "MOD-6b5096e6bb88a5ed",
+    "manufacturer": "IMADA",
+    "model": "DS2-500N",
+    "names": [
+      "Push pull gauge"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-002457"
+    ],
+    "register_numbers": [
+      2457
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5e4c35206e0244c3",
+    "model_id": "MOD-5e4c35206e0244c3",
+    "manufacturer": "Conotec",
+    "model": "FM-2AA-2",
+    "names": [
+      "Ampere meter for Glow wire tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002528"
+    ],
+    "register_numbers": [
+      2528
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e27a47bccc091de2",
+    "model_id": "MOD-e27a47bccc091de2",
+    "manufacturer": "SY Corporation",
+    "model": "Military EMC Chamber III",
+    "names": [
+      "Military EMC Chamber III"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002531",
+      "EQ-002532"
+    ],
+    "register_numbers": [
+      2531,
+      2532
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-5a0ad9160a060606",
+    "model_id": "MOD-5a0ad9160a060606",
+    "manufacturer": "SY Corporation",
+    "model": "Military EMC Chamber II",
+    "names": [
+      "Military EMC Chamber II"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002533",
+      "EQ-002534"
+    ],
+    "register_numbers": [
+      2533,
+      2534
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-df68b8864d584e5a",
+    "model_id": "MOD-df68b8864d584e5a",
+    "manufacturer": "SY Corporation",
+    "model": "Military EMC Chamber I",
+    "names": [
+      "Military EMC Chamber I"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002535",
+      "EQ-002536"
+    ],
+    "register_numbers": [
+      2535,
+      2536
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-594421e69a28c26d",
+    "model_id": "MOD-594421e69a28c26d",
+    "manufacturer": "ESPEC",
+    "model": "SH-641",
+    "names": [
+      "Temp&Humidity test chamber",
+      "Temp. & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002598",
+      "EQ-003429"
+    ],
+    "register_numbers": [
+      2598,
+      3429
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-f3dd0fe271846dcd",
+    "model_id": "MOD-f3dd0fe271846dcd",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-VTH-1007-5K-VH",
+    "names": [
+      "VIBRATION TEST CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002623"
+    ],
+    "register_numbers": [
+      2623
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-458fff7bf16be8e8",
+    "model_id": "MOD-458fff7bf16be8e8",
+    "manufacturer": "SYC",
+    "model": "전장 주변기기실",
+    "names": [
+      "전장 주변기기실"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002624",
+      "EQ-002625"
+    ],
+    "register_numbers": [
+      2624,
+      2625
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-ddbf4de110151bc4",
+    "model_id": "MOD-ddbf4de110151bc4",
+    "manufacturer": "DAEJIN ENGINEERING",
+    "model": "DJ-SWT 1000",
+    "names": [
+      "RAIN TESTER"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002626"
+    ],
+    "register_numbers": [
+      2626
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c5aec3a4c1cf56df",
+    "model_id": "MOD-c5aec3a4c1cf56df",
+    "manufacturer": "DAEJIN ENGINEERING",
+    "model": "DJ-ITH 1000",
+    "names": [
+      "INFRARED CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002627"
+    ],
+    "register_numbers": [
+      2627
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-257c6381dfec66c7",
+    "model_id": "MOD-257c6381dfec66c7",
+    "manufacturer": "SY Corporation",
+    "model": "1m #4",
+    "names": [
+      "Automotive EMC Chamber IV"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002653",
+      "EQ-002654"
+    ],
+    "register_numbers": [
+      2653,
+      2654
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-c7bac980533639d5",
+    "model_id": "MOD-c7bac980533639d5",
+    "manufacturer": "JFM Engineering",
+    "model": "D-004",
+    "names": [
+      "DUST CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002682"
+    ],
+    "register_numbers": [
+      2682
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b5f3b4ae52dbb6ee",
+    "model_id": "MOD-b5f3b4ae52dbb6ee",
+    "manufacturer": "L.A.B. Equipment",
+    "model": "AD200",
+    "names": [
+      "Drop Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-002683"
+    ],
+    "register_numbers": [
+      2683
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7c62179bd55a01f5",
+    "model_id": "MOD-7c62179bd55a01f5",
+    "manufacturer": "ESPEC",
+    "model": "EBE-4E20W6P3T",
+    "names": [
+      "Walk-in Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002702"
+    ],
+    "register_numbers": [
+      2702
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-52b11c95bc502730",
+    "model_id": "MOD-52b11c95bc502730",
+    "manufacturer": "ESPEC",
+    "model": "SH-242",
+    "names": [
+      "항온 항습기"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002712"
+    ],
+    "register_numbers": [
+      2712
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c1057c4a8f427c89",
+    "model_id": "MOD-c1057c4a8f427c89",
+    "manufacturer": "JFM Engineering",
+    "model": "JFM A - 014",
+    "names": [
+      "Composite corrosion tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-002726"
+    ],
+    "register_numbers": [
+      2726
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f52e6dc442086434",
+    "model_id": "MOD-f52e6dc442086434",
+    "manufacturer": "FAMTECH",
+    "model": "EDS3000LS4-445",
+    "names": [
+      "VIBRATION TEST SYSTEM"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-002727"
+    ],
+    "register_numbers": [
+      2727
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-52a524f0c9f9479e",
+    "model_id": "MOD-52a524f0c9f9479e",
+    "manufacturer": "THERMOTRON",
+    "model": "SE-600-10-10",
+    "names": [
+      "Environmental Test Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002738"
+    ],
+    "register_numbers": [
+      2738
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-415b910b2beba7e4",
+    "model_id": "MOD-415b910b2beba7e4",
+    "manufacturer": "THERMOTRON",
+    "model": "SE-600-15-15",
+    "names": [
+      "Environmental Test Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002739"
+    ],
+    "register_numbers": [
+      2739
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-cc8ab6d94d04c6b6",
+    "model_id": "MOD-cc8ab6d94d04c6b6",
+    "manufacturer": "ETS-Lindgren",
+    "model": "AMS-8500",
+    "names": [
+      "OTA Test Chamber #4",
+      "OTA Test Chamber #3",
+      "Anechoic chamber",
+      "Anechoic Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002783",
+      "EQ-002786",
+      "EQ-005563",
+      "EQ-006181"
+    ],
+    "register_numbers": [
+      2783,
+      2786,
+      5563,
+      6181
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-eac0637bf2b3cdd8",
+    "model_id": "MOD-eac0637bf2b3cdd8",
+    "manufacturer": "Weiss Technik",
+    "model": "Votschoven lab 200L",
+    "names": [
+      "Dry Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-002876"
+    ],
+    "register_numbers": [
+      2876
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f49b1f68ffe77cdc",
+    "model_id": "MOD-f49b1f68ffe77cdc",
+    "manufacturer": "ESPEC",
+    "model": "PSL-2KP",
+    "names": [
+      "Temp.& Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-002901",
+      "EQ-006264"
+    ],
+    "register_numbers": [
+      2901,
+      6264
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-3e10f5c9a9cf42c1",
+    "model_id": "MOD-3e10f5c9a9cf42c1",
+    "manufacturer": "SCM Technology",
+    "model": "625 mm2 push pull jig",
+    "names": [
+      "625 mm2 push pull jig"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-002938"
+    ],
+    "register_numbers": [
+      2938
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b77f0364897873b6",
+    "model_id": "MOD-b77f0364897873b6",
+    "manufacturer": "SY Corporation",
+    "model": "10m #2",
+    "names": [
+      "10 m Semi Anechoic Chamber #2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003074"
+    ],
+    "register_numbers": [
+      3074
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-52915d0aa27f9355",
+    "model_id": "MOD-52915d0aa27f9355",
+    "manufacturer": "SY Corporation",
+    "model": "EMS #2",
+    "names": [
+      "EMS Room #2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003075"
+    ],
+    "register_numbers": [
+      3075
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-48df95525fa5b75f",
+    "model_id": "MOD-48df95525fa5b75f",
+    "manufacturer": "SY Corporation",
+    "model": "RE #2",
+    "names": [
+      "3 m Semi Anechoic Chamber #2(RF 이관 / 등록번호 : HCT-RF-1035)"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003076"
+    ],
+    "register_numbers": [
+      3076
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-84e7991d29080f47",
+    "model_id": "MOD-84e7991d29080f47",
+    "manufacturer": "(주)델타엠에스",
+    "model": "DELTACLAVE Series 410",
+    "names": [
+      "고압증기멸균기"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-003102"
+    ],
+    "register_numbers": [
+      3102
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fd21426c9e35f1ed",
+    "model_id": "MOD-fd21426c9e35f1ed",
+    "manufacturer": "ENEXSCIENTFIC",
+    "model": "EN-FTH-805_5K",
+    "names": [
+      "TEMP&HUMIDITY CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003103"
+    ],
+    "register_numbers": [
+      3103
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f9a7e4d67ad97fc9",
+    "model_id": "MOD-f9a7e4d67ad97fc9",
+    "manufacturer": "C&G MICROWAVE",
+    "model": "CATR-60R",
+    "names": [
+      "CATR Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003150"
+    ],
+    "register_numbers": [
+      3150
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-423b419b47cfa833",
+    "model_id": "MOD-423b419b47cfa833",
+    "manufacturer": "한로기술(주)",
+    "model": "Head Impact tester",
+    "names": [
+      "Head Impact tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003157"
+    ],
+    "register_numbers": [
+      3157
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-54959daa50d46545",
+    "model_id": "MOD-54959daa50d46545",
+    "manufacturer": "PCB PIEZOTRONICS",
+    "model": "353B18",
+    "names": [
+      "VIBRATION TRANSDUCER"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003180",
+      "EQ-003181"
+    ],
+    "register_numbers": [
+      3180,
+      3181
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-73b92f29efeda1c8",
+    "model_id": "MOD-73b92f29efeda1c8",
+    "manufacturer": "ENEXSCIENTFIC",
+    "model": "EN-FTH-805-7K",
+    "names": [
+      "TEMP&HUMIDITY CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003213",
+      "EQ-003214"
+    ],
+    "register_numbers": [
+      3213,
+      3214
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-713ec3380824ce41",
+    "model_id": "MOD-713ec3380824ce41",
+    "manufacturer": "C&G MICROWAVE",
+    "model": "CATR-30R",
+    "names": [
+      "CATR Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003269"
+    ],
+    "register_numbers": [
+      3269
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-003316",
+    "model_id": null,
+    "manufacturer": "(주)에스와이씨",
+    "model": "",
+    "names": [
+      "RF 3M Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003316"
+    ],
+    "register_numbers": [
+      3316
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-003371",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "",
+    "names": [
+      "Glow Wire Tester_Thermocouple"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-003371"
+    ],
+    "register_numbers": [
+      3371
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-33382fd64a72cf92",
+    "model_id": "MOD-33382fd64a72cf92",
+    "manufacturer": "Lansmont",
+    "model": "65/81 Shock",
+    "names": [
+      "Shock Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003407"
+    ],
+    "register_numbers": [
+      3407
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f379f449e8eb139b",
+    "model_id": "MOD-f379f449e8eb139b",
+    "manufacturer": "ESPEC",
+    "model": "PL-2KP",
+    "names": [
+      "온습도 챔버",
+      "Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003423",
+      "EQ-004622"
+    ],
+    "register_numbers": [
+      3423,
+      4622
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-4cf478b7b9d14e27",
+    "model_id": "MOD-4cf478b7b9d14e27",
+    "manufacturer": "ISU TECH",
+    "model": "H01244",
+    "names": [
+      "Impact Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003430"
+    ],
+    "register_numbers": [
+      3430
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-464bf15c896e5b18",
+    "model_id": "MOD-464bf15c896e5b18",
+    "manufacturer": "GTPS",
+    "model": "GTPS-2TH1500ES",
+    "names": [
+      "Temp&Humidity test chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003439"
+    ],
+    "register_numbers": [
+      3439
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-37d310bad5dc0635",
+    "model_id": "MOD-37d310bad5dc0635",
+    "manufacturer": "ENEXSCIENTFIC",
+    "model": "EN-DT2-1000",
+    "names": [
+      "THERMAL SHOCK TEST CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003451"
+    ],
+    "register_numbers": [
+      3451
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f92964e551f56595",
+    "model_id": "MOD-f92964e551f56595",
+    "manufacturer": "GTPS",
+    "model": "GTPS-2th1000es",
+    "names": [
+      "Temperature and Humidity chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003462"
+    ],
+    "register_numbers": [
+      3462
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c070cb77d03f0c0b",
+    "model_id": "MOD-c070cb77d03f0c0b",
+    "manufacturer": "에이치브이시스템",
+    "model": "MV-2500N",
+    "names": [
+      "Push-pull gauge Stand"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003468"
+    ],
+    "register_numbers": [
+      3468
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f969f377aa0fbbbe",
+    "model_id": "MOD-f969f377aa0fbbbe",
+    "manufacturer": "IMADA",
+    "model": "DST-500N",
+    "names": [
+      "Push-pull gauge"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003505"
+    ],
+    "register_numbers": [
+      3505
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e0c4b60e60186657",
+    "model_id": "MOD-e0c4b60e60186657",
+    "manufacturer": "IMADA",
+    "model": "ZTS-5000N",
+    "names": [
+      "Push-pull gauge"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003506"
+    ],
+    "register_numbers": [
+      3506
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a91763fa15a03a29",
+    "model_id": "MOD-a91763fa15a03a29",
+    "manufacturer": "Rothenberger",
+    "model": "RP50-S",
+    "names": [
+      "Hydraulic Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003511"
+    ],
+    "register_numbers": [
+      3511
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ad5c674ea4c9e088",
+    "model_id": "MOD-ad5c674ea4c9e088",
+    "manufacturer": "대경엔지니어링",
+    "model": "SET-50",
+    "names": [
+      "Edge Sharpness Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003557"
+    ],
+    "register_numbers": [
+      3557
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a5691e44ca266d63",
+    "model_id": "MOD-a5691e44ca266d63",
+    "manufacturer": "대경엔지니어링",
+    "model": "Ball Pressure Test Apparatus",
+    "names": [
+      "Ball Pressure Test Apparatus"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-003558"
+    ],
+    "register_numbers": [
+      3558
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1b6e33b29021f55a",
+    "model_id": "MOD-1b6e33b29021f55a",
+    "manufacturer": "에스씨엠테크놀러지",
+    "model": "Steel Ball Drop Tester",
+    "names": [
+      "Steel Ball Drop Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003604"
+    ],
+    "register_numbers": [
+      3604
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-69fa4500897ac3ba",
+    "model_id": "MOD-69fa4500897ac3ba",
+    "manufacturer": "에스씨엠테크놀러지",
+    "model": "Dynamic Force Tester",
+    "names": [
+      "Dynamic Force Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003605"
+    ],
+    "register_numbers": [
+      3605
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a7e5b5e05324f048",
+    "model_id": "MOD-a7e5b5e05324f048",
+    "manufacturer": "Svantek",
+    "model": "Svan958A",
+    "names": [
+      "Sound & Vibration Analyzer"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003609"
+    ],
+    "register_numbers": [
+      3609
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6f4e3bee2ef16c85",
+    "model_id": "MOD-6f4e3bee2ef16c85",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "EN-RC-2504-1K",
+    "names": [
+      "WALK-IN CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003639"
+    ],
+    "register_numbers": [
+      3639
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0ac9bfab9727e722",
+    "model_id": "MOD-0ac9bfab9727e722",
+    "manufacturer": "ENEX SCIENCE",
+    "model": "VTH-1207-7K-VH",
+    "names": [
+      "VIBRATION TEST CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003652"
+    ],
+    "register_numbers": [
+      3652
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-003657",
+    "model_id": null,
+    "manufacturer": "주식회사케이제이테크",
+    "model": "",
+    "names": [
+      "Hosedawn Test Nozzle"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-003657"
+    ],
+    "register_numbers": [
+      3657
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2cb9375147cabf41",
+    "model_id": "MOD-2cb9375147cabf41",
+    "manufacturer": "KJ Tech",
+    "model": "External icing Test Jig set",
+    "names": [
+      "External icing Test Jig set"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-003659"
+    ],
+    "register_numbers": [
+      3659
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-779cc57b12f63490",
+    "model_id": "MOD-779cc57b12f63490",
+    "manufacturer": "LZT",
+    "model": "M-15",
+    "names": [
+      "Flow meter for External icing Test"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-003660"
+    ],
+    "register_numbers": [
+      3660
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7c5da3151320479c",
+    "model_id": "MOD-7c5da3151320479c",
+    "manufacturer": "Conotec",
+    "model": "FOX-1004",
+    "names": [
+      "TEMPERATURE INDICATOR for External icing Test"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-003661"
+    ],
+    "register_numbers": [
+      3661
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-003662",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "",
+    "names": [
+      "Test bar for External icing Test"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-003662"
+    ],
+    "register_numbers": [
+      3662
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a90966a46108a186",
+    "model_id": "MOD-a90966a46108a186",
+    "manufacturer": "Guangzhou Zhilitong Electromechanical",
+    "model": "ZLT-GQ2",
+    "names": [
+      "Impact test ball"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-003704"
+    ],
+    "register_numbers": [
+      3704
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1a0b69ec97e94707",
+    "model_id": "MOD-1a0b69ec97e94707",
+    "manufacturer": "LAKESHORE",
+    "model": "4060",
+    "names": [
+      "ZERO GAUSS CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003767",
+      "EQ-003768"
+    ],
+    "register_numbers": [
+      3767,
+      3768
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-003965",
+    "model_id": null,
+    "manufacturer": "(주)에스와이씨",
+    "model": "",
+    "names": [
+      "RSE #3 Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003965"
+    ],
+    "register_numbers": [
+      3965
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d178da4f3587a872",
+    "model_id": "MOD-d178da4f3587a872",
+    "manufacturer": "Q-LAB",
+    "model": "Q-FOG/CRH1100-HSC",
+    "names": [
+      "Controlled Relative Humidity Cyclic Corrosion Tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-003976"
+    ],
+    "register_numbers": [
+      3976
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e8b58634fdb9f402",
+    "model_id": "MOD-e8b58634fdb9f402",
+    "manufacturer": "CHAMTECH",
+    "model": "CT-THR-3000D",
+    "names": [
+      "Temp & Humid Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-003977"
+    ],
+    "register_numbers": [
+      3977
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-81e7037e0bf8a2ef",
+    "model_id": "MOD-81e7037e0bf8a2ef",
+    "manufacturer": "주식회사케이제이테크",
+    "model": "IPX6",
+    "names": [
+      "Nozzle for IPx6"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004019"
+    ],
+    "register_numbers": [
+      4019
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2db6d3379a001a6f",
+    "model_id": "MOD-2db6d3379a001a6f",
+    "manufacturer": "주식회사케이제이테크",
+    "model": "IPX5",
+    "names": [
+      "Nozzle for IPx5"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004020"
+    ],
+    "register_numbers": [
+      4020
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5a89bc1bb028a2ba",
+    "model_id": "MOD-5a89bc1bb028a2ba",
+    "manufacturer": "AUTONICS",
+    "model": "MT4W",
+    "names": [
+      "Pressure meter for Dust chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004084"
+    ],
+    "register_numbers": [
+      4084
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5407ae1b0da499c8",
+    "model_id": "MOD-5407ae1b0da499c8",
+    "manufacturer": "OSUNG ST Co., Ltd.",
+    "model": "OST-DT1",
+    "names": [
+      "Dust Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004085"
+    ],
+    "register_numbers": [
+      4085
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-66ee816ec05097cd",
+    "model_id": "MOD-66ee816ec05097cd",
+    "manufacturer": "L.A.B. Equipment",
+    "model": "AD-LA125",
+    "names": [
+      "Capacity Drop Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004123"
+    ],
+    "register_numbers": [
+      4123
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004201",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "500 W Flame Copper Block with Thermocouple Wire"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004201"
+    ],
+    "register_numbers": [
+      4201
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004202",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "50 W Flame Copper Block with Thermocouple Wire"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004202"
+    ],
+    "register_numbers": [
+      4202
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004203",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Needle Flame Copper Block with Thermocouple Wire"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004203"
+    ],
+    "register_numbers": [
+      4203
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5978cb680c241f2a",
+    "model_id": "MOD-5978cb680c241f2a",
+    "manufacturer": "M Braun",
+    "model": "MB-Labstar",
+    "names": [
+      "Glove Box"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004259"
+    ],
+    "register_numbers": [
+      4259
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-76bac36c63be5ab7",
+    "model_id": "MOD-76bac36c63be5ab7",
+    "manufacturer": "BELL INDUSTRY",
+    "model": "Hemisphere",
+    "names": [
+      "Crush Jig"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004260"
+    ],
+    "register_numbers": [
+      4260
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2a2c8889c5eccaa2",
+    "model_id": "MOD-2a2c8889c5eccaa2",
+    "manufacturer": "BELL INDUSTRY",
+    "model": "Semicircular Bar",
+    "names": [
+      "Crush Jig"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004264"
+    ],
+    "register_numbers": [
+      4264
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4962bfc3288795d7",
+    "model_id": "MOD-4962bfc3288795d7",
+    "manufacturer": "DGBELL",
+    "model": "BE-6047-3T",
+    "names": [
+      "Crush/Acupuncture Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004265"
+    ],
+    "register_numbers": [
+      4265
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004270",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Fall Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004270"
+    ],
+    "register_numbers": [
+      4270
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-af679b3239296138",
+    "model_id": "MOD-af679b3239296138",
+    "manufacturer": "Votsch Industrietechnik",
+    "model": "VSC/KWT 450",
+    "names": [
+      "염수분무 시험기"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004300"
+    ],
+    "register_numbers": [
+      4300
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004312",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Spray nozzle for UL50_3"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004312"
+    ],
+    "register_numbers": [
+      4312
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004313",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Spray nozzle for UL50_2"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004313"
+    ],
+    "register_numbers": [
+      4313
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004314",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Spray nozzle for UL50_1"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004314"
+    ],
+    "register_numbers": [
+      4314
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-04f584942e32f1e8",
+    "model_id": "MOD-04f584942e32f1e8",
+    "manufacturer": "SAMWONTECH",
+    "model": "ST580",
+    "names": [
+      "Temp. meter for IPx7, IPx8"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004315"
+    ],
+    "register_numbers": [
+      4315
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d0e6a913fbddcea6",
+    "model_id": "MOD-d0e6a913fbddcea6",
+    "manufacturer": "SAMWONTECH",
+    "model": "TEMP2520",
+    "names": [
+      "Temp. meter for IPx1 to IPx9"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004316"
+    ],
+    "register_numbers": [
+      4316
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-05ef8adfb8459b35",
+    "model_id": "MOD-05ef8adfb8459b35",
+    "manufacturer": "Konics",
+    "model": "KN-2210W",
+    "names": [
+      "Pressure meter for IPx9, IPx9K"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004317"
+    ],
+    "register_numbers": [
+      4317
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-9a46b123bfffe318",
+    "model_id": "MOD-9a46b123bfffe318",
+    "manufacturer": "Sensys",
+    "model": "SC-2300",
+    "names": [
+      "Pressure meter for IPx1 - IPx6"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004318"
+    ],
+    "register_numbers": [
+      4318
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d9e3ae8627bb450a",
+    "model_id": "MOD-d9e3ae8627bb450a",
+    "manufacturer": "Turbines, Inc",
+    "model": "TM0050-1/2(KM2)",
+    "names": [
+      "Folw meter for IPx9"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004319"
+    ],
+    "register_numbers": [
+      4319
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2913b4e9341c2358",
+    "model_id": "MOD-2913b4e9341c2358",
+    "manufacturer": "RADIAN",
+    "model": "LRP-2000",
+    "names": [
+      "Depth meter for IPx7, IPx8"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004324"
+    ],
+    "register_numbers": [
+      4324
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004325",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Immersion tank for IPx7, IPx8"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004325"
+    ],
+    "register_numbers": [
+      4325
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-48817e829db6ffac",
+    "model_id": "MOD-48817e829db6ffac",
+    "manufacturer": "SHEN ZHEN",
+    "model": "AUTO-P22",
+    "names": [
+      "Nozzle for IPx6",
+      "Nozzle for IPx5"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004327",
+      "EQ-004328"
+    ],
+    "register_numbers": [
+      4327,
+      4328
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-004329",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Spray nozzle for IPx3, IPx4_2"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004329"
+    ],
+    "register_numbers": [
+      4329
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004330",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Spray nozzle for IPx3, IPx4_1"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004330"
+    ],
+    "register_numbers": [
+      4330
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b9d144345cab61af",
+    "model_id": "MOD-b9d144345cab61af",
+    "manufacturer": "Turbines, Inc",
+    "model": "TM0075-3/4(KM2)",
+    "names": [
+      "Flow meter for Spray nozzle, 4K"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004331"
+    ],
+    "register_numbers": [
+      4331
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-84aad869a6a96805",
+    "model_id": "MOD-84aad869a6a96805",
+    "manufacturer": "FLOMEC",
+    "model": "EGM008S511-811(KM2)",
+    "names": [
+      "Flow meter for IPx3, IPx4"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004332"
+    ],
+    "register_numbers": [
+      4332
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004333",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube for 4K (800R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004333"
+    ],
+    "register_numbers": [
+      4333
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004334",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube for 4K (600R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004334"
+    ],
+    "register_numbers": [
+      4334
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004335",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube for 4K (400R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004335"
+    ],
+    "register_numbers": [
+      4335
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004336",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube (1600R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004336"
+    ],
+    "register_numbers": [
+      4336
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004337",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube (1400R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004337"
+    ],
+    "register_numbers": [
+      4337
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004338",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube (1200R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004338"
+    ],
+    "register_numbers": [
+      4338
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004339",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube (1000R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004339"
+    ],
+    "register_numbers": [
+      4339
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004340",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube (800R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004340"
+    ],
+    "register_numbers": [
+      4340
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004341",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube (600R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004341"
+    ],
+    "register_numbers": [
+      4341
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004342",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Oscillating tube (400R)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004342"
+    ],
+    "register_numbers": [
+      4342
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004343",
+    "model_id": null,
+    "manufacturer": "Productive Alternatives",
+    "model": "",
+    "names": [
+      "Rain gauge set"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004343"
+    ],
+    "register_numbers": [
+      4343
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004344",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Drip box for IPx1, IPx2"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004344"
+    ],
+    "register_numbers": [
+      4344
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-81a77c238d73e084",
+    "model_id": "MOD-81a77c238d73e084",
+    "manufacturer": "HISCO",
+    "model": "131P25A",
+    "names": [
+      "Pressure gauge for 350 kPa",
+      "Pressure gauge for Splash test apparatus"
+    ],
+    "categories": [
+      "pressure_flow",
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004347",
+      "EQ-004350"
+    ],
+    "register_numbers": [
+      4347,
+      4350
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-4b8d62b5354d43b8",
+    "model_id": "MOD-4b8d62b5354d43b8",
+    "manufacturer": "Elex Polytech",
+    "model": "IP0801",
+    "names": [
+      "Splash test apparatus"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004351"
+    ],
+    "register_numbers": [
+      4351
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0526f839e49403f2",
+    "model_id": "MOD-0526f839e49403f2",
+    "manufacturer": "SHINKEN",
+    "model": "G-0265LSHP",
+    "names": [
+      "Vibration Test System"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004408"
+    ],
+    "register_numbers": [
+      4408
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-46a0b71984e191da",
+    "model_id": "MOD-46a0b71984e191da",
+    "manufacturer": "Weiss Technik North America",
+    "model": "EA55-2-4L-WC-X",
+    "names": [
+      "Altitude & Temperature chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004413"
+    ],
+    "register_numbers": [
+      4413
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-97c3f4cdf4f86662",
+    "model_id": "MOD-97c3f4cdf4f86662",
+    "manufacturer": "FAMTECH",
+    "model": "EDS/SY10-25",
+    "names": [
+      "Shock Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004580"
+    ],
+    "register_numbers": [
+      4580
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d284615ca4d9e49d",
+    "model_id": "MOD-d284615ca4d9e49d",
+    "manufacturer": "(주) 듀오컴",
+    "model": "HS-1900B",
+    "names": [
+      "EXPLOSION CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004617"
+    ],
+    "register_numbers": [
+      4617
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6a96c60fe0fbbb54",
+    "model_id": "MOD-6a96c60fe0fbbb54",
+    "manufacturer": "LDS",
+    "model": "V830-335 LPT COMBO",
+    "names": [
+      "Air Cooled Vibrator"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004618"
+    ],
+    "register_numbers": [
+      4618
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-257383ca6aaf4182",
+    "model_id": "MOD-257383ca6aaf4182",
+    "manufacturer": "ESPEC",
+    "model": "EHS-211M",
+    "names": [
+      "High Accelerated Stress Test System"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004619"
+    ],
+    "register_numbers": [
+      4619
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c3bd50d3f9f88133",
+    "model_id": "MOD-c3bd50d3f9f88133",
+    "manufacturer": "ESPEC",
+    "model": "TSA-101L-A",
+    "names": [
+      "Thermal Shock Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004620"
+    ],
+    "register_numbers": [
+      4620
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4fe8b83e46840e80",
+    "model_id": "MOD-4fe8b83e46840e80",
+    "manufacturer": "ESPEC",
+    "model": "PL-3KPH",
+    "names": [
+      "Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004621"
+    ],
+    "register_numbers": [
+      4621
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ca331de75d94ed37",
+    "model_id": "MOD-ca331de75d94ed37",
+    "manufacturer": "ESPEC",
+    "model": "PL-4KP",
+    "names": [
+      "Temperature & Humidity Chamber",
+      "온습도 챔버"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004623",
+      "EQ-004624",
+      "EQ-004625",
+      "EQ-004626"
+    ],
+    "register_numbers": [
+      4623,
+      4624,
+      4625,
+      4626
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-e2f3eab6c79e1b0b",
+    "model_id": "MOD-e2f3eab6c79e1b0b",
+    "manufacturer": "ESPEC",
+    "model": "ARS-0680",
+    "names": [
+      "Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004628"
+    ],
+    "register_numbers": [
+      4628
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5410137574209bb7",
+    "model_id": "MOD-5410137574209bb7",
+    "manufacturer": "ESPEC",
+    "model": "EBE-6E30W0PT2L-22",
+    "names": [
+      "Walk-in Type Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004629"
+    ],
+    "register_numbers": [
+      4629
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5864ca5089c1208e",
+    "model_id": "MOD-5864ca5089c1208e",
+    "manufacturer": "ESPEC",
+    "model": "PL-1KPH",
+    "names": [
+      "Temperature & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004630"
+    ],
+    "register_numbers": [
+      4630
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d7280686108ad584",
+    "model_id": "MOD-d7280686108ad584",
+    "manufacturer": "IMADA",
+    "model": "DS2-50N",
+    "names": [
+      "Push-Pull Gauge (DIGITAL)"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004637"
+    ],
+    "register_numbers": [
+      4637
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-864656020c90aa3c",
+    "model_id": "MOD-864656020c90aa3c",
+    "manufacturer": "ESPEC",
+    "model": "ES-106L",
+    "names": [
+      "THERMAL SHOCK CHAMBER"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004643"
+    ],
+    "register_numbers": [
+      4643
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-44d9ef6e082f44d2",
+    "model_id": "MOD-44d9ef6e082f44d2",
+    "manufacturer": "ESPEC",
+    "model": "EC-85MHHP",
+    "names": [
+      "CONSTANT TEMPRATURE-4"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-004645"
+    ],
+    "register_numbers": [
+      4645
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-caf2868579a374de",
+    "model_id": "MOD-caf2868579a374de",
+    "manufacturer": "THERMOTRON",
+    "model": "S-1.2-3800",
+    "names": [
+      "Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004667"
+    ],
+    "register_numbers": [
+      4667
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-3e27aabb8356f423",
+    "model_id": "MOD-3e27aabb8356f423",
+    "manufacturer": "ESPEC",
+    "model": "BPU-4",
+    "names": [
+      "Temperature chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004676"
+    ],
+    "register_numbers": [
+      4676
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0d3b18f1e901626b",
+    "model_id": "MOD-0d3b18f1e901626b",
+    "manufacturer": "ESPEC",
+    "model": "SPHH-202",
+    "names": [
+      "Safety Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-004681"
+    ],
+    "register_numbers": [
+      4681
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7468baa8049be6ca",
+    "model_id": "MOD-7468baa8049be6ca",
+    "manufacturer": "ESPEC",
+    "model": "SH-241",
+    "names": [
+      "Temp. & Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004682"
+    ],
+    "register_numbers": [
+      4682
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-93b4e5aae4680415",
+    "model_id": "MOD-93b4e5aae4680415",
+    "manufacturer": "ESPEC",
+    "model": "SPH-302",
+    "names": [
+      "Safety Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-004702"
+    ],
+    "register_numbers": [
+      4702
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-8b2938fdf2d5b7bc",
+    "model_id": "MOD-8b2938fdf2d5b7bc",
+    "manufacturer": "Hitachi",
+    "model": "EC-45MHHPS",
+    "names": [
+      "Temp.&Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004703"
+    ],
+    "register_numbers": [
+      4703
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6552fe49eeb975e2",
+    "model_id": "MOD-6552fe49eeb975e2",
+    "manufacturer": "Dongseo Science",
+    "model": "DS-VHPO64",
+    "names": [
+      "Vacuum Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-004727"
+    ],
+    "register_numbers": [
+      4727
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-03f4fcae455a45d0",
+    "model_id": "MOD-03f4fcae455a45d0",
+    "manufacturer": "Elex Polytech",
+    "model": "3352-04-20",
+    "names": [
+      "Drop test device"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004731"
+    ],
+    "register_numbers": [
+      4731
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-70d0de2e37790ec8",
+    "model_id": "MOD-70d0de2e37790ec8",
+    "manufacturer": "Elex Polytech",
+    "model": "UL2054",
+    "names": [
+      "Projectile tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004732"
+    ],
+    "register_numbers": [
+      4732
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a737092ff0190940",
+    "model_id": "MOD-a737092ff0190940",
+    "manufacturer": "Elex Polytech",
+    "model": "20.000 kN",
+    "names": [
+      "Compression tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004734"
+    ],
+    "register_numbers": [
+      4734
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7d1445dd2a0036a6",
+    "model_id": "MOD-7d1445dd2a0036a6",
+    "manufacturer": "Elex Polytech",
+    "model": "2-24-F102",
+    "names": [
+      "SCRATCHING TOOL"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004739"
+    ],
+    "register_numbers": [
+      4739
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a79372c96008c0ad",
+    "model_id": "MOD-a79372c96008c0ad",
+    "manufacturer": "Guangzhou Zhilitong Electromechanical",
+    "model": "ZLT-JDW1R",
+    "names": [
+      "POWER CORD FLEXIBILITY TESTER"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004746"
+    ],
+    "register_numbers": [
+      4746
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-292ff362b4b84fa5",
+    "model_id": "MOD-292ff362b4b84fa5",
+    "manufacturer": "Guangzhou Zhilitong Electromechanical",
+    "model": "ZLT-JDW1",
+    "names": [
+      "Swivel Test Machine"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004748"
+    ],
+    "register_numbers": [
+      4748
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-86477b8c567f3b47",
+    "model_id": "MOD-86477b8c567f3b47",
+    "manufacturer": "Guangzhou Zhilitong Electromechanical",
+    "model": "ZLT-LDQ1",
+    "names": [
+      "TRACKING TESTER"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004751"
+    ],
+    "register_numbers": [
+      4751
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b8b9088714c74d1d",
+    "model_id": "MOD-b8b9088714c74d1d",
+    "manufacturer": "에스씨엠테크놀러지",
+    "model": "DAC-HR450-UL",
+    "names": [
+      "Glow wire tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004756"
+    ],
+    "register_numbers": [
+      4756
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b717b4090b7019e3",
+    "model_id": "MOD-b717b4090b7019e3",
+    "manufacturer": "Elex Polytech",
+    "model": "335224-F101",
+    "names": [
+      "SPILLAGE TEST APPARATUS"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004768"
+    ],
+    "register_numbers": [
+      4768
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004775",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Balance Weight for Glow wire tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004775"
+    ],
+    "register_numbers": [
+      4775
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ce02b91bf7ca40b1",
+    "model_id": "MOD-ce02b91bf7ca40b1",
+    "manufacturer": "AUTONICS",
+    "model": "FX4S-I",
+    "names": [
+      "TIMER for Glow wire tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004776",
+      "EQ-004777",
+      "EQ-004778"
+    ],
+    "register_numbers": [
+      4776,
+      4777,
+      4778
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-a0a09507e0d14e0a",
+    "model_id": "MOD-a0a09507e0d14e0a",
+    "manufacturer": "AUTONICS",
+    "model": "FX4S",
+    "names": [
+      "TIMER for Glow wire tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004779"
+    ],
+    "register_numbers": [
+      4779
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-182e23491074680d",
+    "model_id": "MOD-182e23491074680d",
+    "manufacturer": "TOHO",
+    "model": "TTM-007",
+    "names": [
+      "Temperature control for Glow wire tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004780"
+    ],
+    "register_numbers": [
+      4780
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6929b9d6689c8aa0",
+    "model_id": "MOD-6929b9d6689c8aa0",
+    "manufacturer": "AUTONICS",
+    "model": "M4Y-AA-5",
+    "names": [
+      "Ampere meter for Glow wire tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-004781"
+    ],
+    "register_numbers": [
+      4781
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-059090f5fa982def",
+    "model_id": "MOD-059090f5fa982def",
+    "manufacturer": "SCM Technology",
+    "model": "GSI-I502",
+    "names": [
+      "Impact Hammer"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004782"
+    ],
+    "register_numbers": [
+      4782
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004784",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Crush Test Jig"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-004784"
+    ],
+    "register_numbers": [
+      4784
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-16d419316be823f8",
+    "model_id": "MOD-16d419316be823f8",
+    "manufacturer": "TERCHY",
+    "model": "MHCB-64LZ",
+    "names": [
+      "항온항습기"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-004940"
+    ],
+    "register_numbers": [
+      4940
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005021",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Ball Pressure Tester"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-005021"
+    ],
+    "register_numbers": [
+      5021
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-46eb324009564d86",
+    "model_id": "MOD-46eb324009564d86",
+    "manufacturer": "NANGYEAL",
+    "model": "NY-THR18750",
+    "names": [
+      "Temperature and Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005300"
+    ],
+    "register_numbers": [
+      5300
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005332",
+    "model_id": null,
+    "manufacturer": "HAN IL Industries",
+    "model": "",
+    "names": [
+      "항온항습조"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005332"
+    ],
+    "register_numbers": [
+      5332
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-60f1613e4949f259",
+    "model_id": "MOD-60f1613e4949f259",
+    "manufacturer": "Elex Polytech",
+    "model": "1973-I",
+    "names": [
+      "Impact Ball"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-005340"
+    ],
+    "register_numbers": [
+      5340
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5e97e7cd1ec031ee",
+    "model_id": "MOD-5e97e7cd1ec031ee",
+    "manufacturer": "SHINKEN",
+    "model": "G-0210N",
+    "names": [
+      "Vibration Test Set"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-005348"
+    ],
+    "register_numbers": [
+      5348
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-66c38da3c383e861",
+    "model_id": "MOD-66c38da3c383e861",
+    "manufacturer": "EMIC",
+    "model": "903-FN/H92850083",
+    "names": [
+      "VIBRATION TEST STATION"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-005361"
+    ],
+    "register_numbers": [
+      5361
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-76cc924fd160e4c0",
+    "model_id": "MOD-76cc924fd160e4c0",
+    "manufacturer": "Elex Polytech",
+    "model": "F1830-A",
+    "names": [
+      "Flame Height Gauge for 500 W Flame",
+      "Flame Height Gauge for Needle Flame",
+      "Flame Height Gauge for 50 W Flame"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-005374",
+      "EQ-005405",
+      "EQ-006257"
+    ],
+    "register_numbers": [
+      5374,
+      5405,
+      6257
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-7e143cab3b58e08a",
+    "model_id": "MOD-7e143cab3b58e08a",
+    "manufacturer": "ESPEC",
+    "model": "TSA-302EL-W",
+    "names": [
+      "Thermal shock chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005381"
+    ],
+    "register_numbers": [
+      5381
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e653dee4b0e55238",
+    "model_id": "MOD-e653dee4b0e55238",
+    "manufacturer": "Elex Polytech",
+    "model": "C900-01",
+    "names": [
+      "Bunsen Burner"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-005391"
+    ],
+    "register_numbers": [
+      5391
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a5bed08e346b20ea",
+    "model_id": "MOD-a5bed08e346b20ea",
+    "manufacturer": "ESPEC",
+    "model": "TSE-11-A",
+    "names": [
+      "Thermal Shock Test Chamber",
+      "Thermal Shock Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005451",
+      "EQ-005607"
+    ],
+    "register_numbers": [
+      5451,
+      5607
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-005464",
+    "model_id": null,
+    "manufacturer": "(주)에스와이씨",
+    "model": "",
+    "names": [
+      "RF #1 Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005464"
+    ],
+    "register_numbers": [
+      5464
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1445a2e64d568d15",
+    "model_id": "MOD-1445a2e64d568d15",
+    "manufacturer": "AUTONICS",
+    "model": "FX6",
+    "names": [
+      "Continuously operation tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-005481"
+    ],
+    "register_numbers": [
+      5481
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-bcb136e991662ee5",
+    "model_id": "MOD-bcb136e991662ee5",
+    "manufacturer": "이엑스피",
+    "model": "EX-TH400",
+    "names": [
+      "항온기"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005505"
+    ],
+    "register_numbers": [
+      5505
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e6a86024badd51d5",
+    "model_id": "MOD-e6a86024badd51d5",
+    "manufacturer": "(주)대영이엔티",
+    "model": "GT200AUF",
+    "names": [
+      "공조기(항온항습기)"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005541"
+    ],
+    "register_numbers": [
+      5541
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-163c5ae4573488b0",
+    "model_id": "MOD-163c5ae4573488b0",
+    "manufacturer": "Elex Polytech",
+    "model": "FLAME01-B-02A",
+    "names": [
+      "Needle Burner"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-005566"
+    ],
+    "register_numbers": [
+      5566
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005572",
+    "model_id": null,
+    "manufacturer": "(주)에스와이씨",
+    "model": "",
+    "names": [
+      "RF RSE #2 Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005572"
+    ],
+    "register_numbers": [
+      5572
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2f215e5439756602",
+    "model_id": "MOD-2f215e5439756602",
+    "manufacturer": "서영 EMC",
+    "model": "RS #1",
+    "names": [
+      "3 m Fully Anechoic Chamber #1"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005579"
+    ],
+    "register_numbers": [
+      5579
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a48a8bbd7cd6c679",
+    "model_id": "MOD-a48a8bbd7cd6c679",
+    "manufacturer": "냉열(주)",
+    "model": "NY-TH150",
+    "names": [
+      "항온 항습기"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005595"
+    ],
+    "register_numbers": [
+      5595
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1a41ddb816dd5f1b",
+    "model_id": "MOD-1a41ddb816dd5f1b",
+    "manufacturer": "서영 EMC",
+    "model": "EMS-01",
+    "names": [
+      "EMS Room #1"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005661"
+    ],
+    "register_numbers": [
+      5661
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005671",
+    "model_id": null,
+    "manufacturer": "정진전자",
+    "model": "",
+    "names": [
+      "연속동작시험기"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-005671"
+    ],
+    "register_numbers": [
+      5671
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4357593858df76a5",
+    "model_id": "MOD-4357593858df76a5",
+    "manufacturer": "SY Coporation",
+    "model": "RE-0303",
+    "names": [
+      "3 m Fully Anechoic Chamber #2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005687"
+    ],
+    "register_numbers": [
+      5687
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-53cb599a373413a0",
+    "model_id": "MOD-53cb599a373413a0",
+    "manufacturer": "SENTECH",
+    "model": "SI 1201-2328",
+    "names": [
+      "Thermocouple Wire (for ball pressure test)"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-005703"
+    ],
+    "register_numbers": [
+      5703
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-29ea961a7360d57e",
+    "model_id": "MOD-29ea961a7360d57e",
+    "manufacturer": "SY Coporation",
+    "model": "CE-01",
+    "names": [
+      "EMI Shield Room"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005761"
+    ],
+    "register_numbers": [
+      5761
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-54a62e542c2c2a88",
+    "model_id": "MOD-54a62e542c2c2a88",
+    "manufacturer": "SY Corporation",
+    "model": "RE-1001",
+    "names": [
+      "10 m Semi Anechoic Chamber #1"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005773"
+    ],
+    "register_numbers": [
+      5773
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e00d8843dae120e2",
+    "model_id": "MOD-e00d8843dae120e2",
+    "manufacturer": "SY Corporation",
+    "model": "RE-0301",
+    "names": [
+      "3 m Semi Anechoic Chamber #1 (RF 이관 / 등록번호 : HCT-RF-1123)"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005777"
+    ],
+    "register_numbers": [
+      5777
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fcbf5771563cb235",
+    "model_id": "MOD-fcbf5771563cb235",
+    "manufacturer": "서영 EMC",
+    "model": "RS #3",
+    "names": [
+      "3 m Fully Anechoic Chamber #3"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005782"
+    ],
+    "register_numbers": [
+      5782
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d1298d89a03b120e",
+    "model_id": "MOD-d1298d89a03b120e",
+    "manufacturer": "서영 EMC",
+    "model": "81RF",
+    "names": [
+      "Full anechoic chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005819"
+    ],
+    "register_numbers": [
+      5819
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0e2913abbf08c5c4",
+    "model_id": "MOD-0e2913abbf08c5c4",
+    "manufacturer": "고려엔지니어링",
+    "model": "KR-1005L",
+    "names": [
+      "항온 항습기"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005941"
+    ],
+    "register_numbers": [
+      5941
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-eebea6a43f9cc7e9",
+    "model_id": "MOD-eebea6a43f9cc7e9",
+    "manufacturer": "TABAI",
+    "model": "PL-2G",
+    "names": [
+      "항온 항습기"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005953"
+    ],
+    "register_numbers": [
+      5953
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005958",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "DP-21A/D9Z840073",
+    "names": [
+      "항온항습조"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005958"
+    ],
+    "register_numbers": [
+      5958
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005977",
+    "model_id": null,
+    "manufacturer": "(주)에스와이씨",
+    "model": "",
+    "names": [
+      "RF #2 Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005977"
+    ],
+    "register_numbers": [
+      5977
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005978",
+    "model_id": null,
+    "manufacturer": "(주)에스와이씨",
+    "model": "",
+    "names": [
+      "Semi Anechoic Chamber #2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005978"
+    ],
+    "register_numbers": [
+      5978
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005980",
+    "model_id": null,
+    "manufacturer": "(주)에스와이씨",
+    "model": "",
+    "names": [
+      "RF RSE #1 Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-005980"
+    ],
+    "register_numbers": [
+      5980
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-150d013cdc2a79b2",
+    "model_id": "MOD-150d013cdc2a79b2",
+    "manufacturer": "이엑스피",
+    "model": "EX-TH064",
+    "names": [
+      "항온 항습기"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-006046"
+    ],
+    "register_numbers": [
+      6046
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b13054e5c455580e",
+    "model_id": "MOD-b13054e5c455580e",
+    "manufacturer": "Korea Eng Co., Ltd",
+    "model": "KR-DR-001",
+    "names": [
+      "Drop Tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-006223"
+    ],
+    "register_numbers": [
+      6223
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e2fccc288002aed3",
+    "model_id": "MOD-e2fccc288002aed3",
+    "manufacturer": "Elex Polytech (SENTECH)",
+    "model": "F1830-A (K-Type)",
+    "names": [
+      "Needle Flame Copper Block with Thermocouple Wire",
+      "50 W Flame Copper Block with Thermocouple Wire",
+      "500 W Flame Copper Block with Thermocouple Wire"
+    ],
+    "categories": [
+      "fire_ip_test"
+    ],
+    "equipment_ids": [
+      "EQ-006254",
+      "EQ-006255",
+      "EQ-006256"
+    ],
+    "register_numbers": [
+      6254,
+      6255,
+      6256
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-05bd6ccbe6b22de4",
+    "model_id": "MOD-05bd6ccbe6b22de4",
+    "manufacturer": "ESPEC",
+    "model": "ESX-2CA",
+    "names": [
+      "Temp.& Humidity Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-006276"
+    ],
+    "register_numbers": [
+      6276
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ce8ccb1d4e105e46",
+    "model_id": "MOD-ce8ccb1d4e105e46",
+    "manufacturer": "Ergonomics",
+    "model": "SE200",
+    "names": [
+      "Sharp edge tester"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-006278"
+    ],
+    "register_numbers": [
+      6278
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-591c01b5a1fc27b9",
+    "model_id": "MOD-591c01b5a1fc27b9",
+    "manufacturer": "Elex Polytech",
+    "model": "ENT6500",
+    "names": [
+      "Dry Oven"
+    ],
+    "categories": [
+      "cooling_heating"
+    ],
+    "equipment_ids": [
+      "EQ-006279"
+    ],
+    "register_numbers": [
+      6279
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-24b5ff74750e8b72",
+    "model_id": "MOD-24b5ff74750e8b72",
+    "manufacturer": "IMADA",
+    "model": "FB-50K",
+    "names": [
+      "Push-Pull Gauge"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-006287"
+    ],
+    "register_numbers": [
+      6287
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f0daa70d09d2e436",
+    "model_id": "MOD-f0daa70d09d2e436",
+    "manufacturer": "ED&D",
+    "model": "ITB-01",
+    "names": [
+      "Impact Test Ball"
+    ],
+    "categories": [
+      "mechanical_test"
+    ],
+    "equipment_ids": [
+      "EQ-006292"
+    ],
+    "register_numbers": [
+      6292
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-88f3daeb6964573d",
+    "model_id": "MOD-88f3daeb6964573d",
+    "manufacturer": "ETAC",
+    "model": "TH412HA",
+    "names": [
+      "Temp. & Humidity Chamber 1",
+      "Temp. & Humidity Chamber 2"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-006313",
+      "EQ-006314"
+    ],
+    "register_numbers": [
+      6313,
+      6314
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-790be975c12c3d61",
+    "model_id": "MOD-790be975c12c3d61",
+    "manufacturer": "ESPEC",
+    "model": "PVL-5KPH",
+    "names": [
+      "Temp.& Humi. Vibro-chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-006316"
+    ],
+    "register_numbers": [
+      6316
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2e549d2e20ba5981",
+    "model_id": "MOD-2e549d2e20ba5981",
+    "manufacturer": "ESPEC",
+    "model": "PL-4J",
+    "names": [
+      "Temperature and Humidity chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-006341"
+    ],
+    "register_numbers": [
+      6341
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e5c97dd70d9b3827",
+    "model_id": "MOD-e5c97dd70d9b3827",
+    "manufacturer": "ESPEC",
+    "model": "TCC-150W",
+    "names": [
+      "Rapid-Rate Thermal Cycle Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-006342"
+    ],
+    "register_numbers": [
+      6342
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-006438",
+    "model_id": null,
+    "manufacturer": "B&K",
+    "model": "",
+    "names": [
+      "Anechoic Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-006438"
+    ],
+    "register_numbers": [
+      6438
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-bdf3e5c4dec3fb03",
+    "model_id": "MOD-bdf3e5c4dec3fb03",
+    "manufacturer": "NHS",
+    "model": "21000793",
+    "names": [
+      "Soundproof Chamber"
+    ],
+    "categories": [
+      "chamber"
+    ],
+    "equipment_ids": [
+      "EQ-006462"
+    ],
+    "register_numbers": [
+      6462
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "environment",
+    "registration_rows": 1
+  }
+]

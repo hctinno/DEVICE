@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_018.json",
+  "original_log_sha256": "e5bd0c1ec4b6b465f5dd7f50470ef75f18e182a266f228b43dd57e690f1d99bf",
+  "original_log_bytes": 32410,
+  "queries": [
+    "HIOKI ST4030A manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.com",
+    "https://6473ca9c-05ba-4f05-ad29-4dfc926eab1c.hiokikorea.com/product/product_view.html?c_id=A007007&p_no=364",
+    "https://sc-journal.com/device/hioki/st4030a/",
+    "https://www.cedesa.com.mx/pdf/hioki/hioki_ST4030A_manual.pdf",
+    "https://www.cedesa.com.mx/pdf/hioki/hioki_ST4030A_manual.pdf?srsltid=AfmBOooj2rnhLqkCapwixOg8O-pvc5VcIDVjiFeFCCrXhYc1t1XV0OSu",
+    "https://www.hioki.cn/products/st4030a",
+    "https://www.hioki.cn/resource/products/manuals-3",
+    "https://www.hioki.com/download/38640",
+    "https://www.hioki.com/euro-en/support/download/software/versionup/detail/id_n10010",
+    "https://www.hioki.com/global/products/electrical-safety-testers/impulse/id_6727",
+    "https://www.hioki.com/global/products/electrical-safety-testers/impulse/id_6745",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_497",
+    "https://www.hioki.com/jp-ja/products/electrical-safety-testers/impulse/id_6745",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n10010",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=364&p_no=364",
+    "https://www.hiokikorea.com/support/software_search.html?p=4"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

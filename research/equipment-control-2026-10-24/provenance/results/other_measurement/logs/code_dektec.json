@@ -1,0 +1,41 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/code_dektec.json",
+  "original_log_sha256": "8d32bd84505f9a796644ff40c62459ab95289b34c733ce273f61a35894b66b35",
+  "original_log_bytes": 29845,
+  "queries": [
+    "site:dektec.com \"DTA-2131\" \"DTAPI\"",
+    "site:dektec.com DTAPI Linux SDK Dta driver source",
+    "site:github.com \"DTA-2131\" driver"
+  ],
+  "discovered_urls": [
+    "https://dektec.com/news/2023/",
+    "https://dektec.com/products/PCIe/DTA-2110/",
+    "https://dektec.com/products/PCIe/DTA-2131/",
+    "https://dektec.com/products/PCIe/DTA-2136/",
+    "https://dektec.com/products/PCIe/DTA-2180/",
+    "https://dektec.com/products/PCIe/DTA-2182/",
+    "https://dektec.com/products/downloads/Catalogue.pdf",
+    "https://github.com/planetlabs/dta/blob/master/Readme",
+    "https://github.com/tsduck/tsduck/issues/1441",
+    "https://github.com/tsduck/tsduck/issues/550",
+    "https://www.dektec.com/ATSC3/",
+    "https://www.dektec.com/News/2016/",
+    "https://www.dektec.com/Products/Modulators/ToolSets/DAB/Downloads/DAB%20Toolset%20Leaflet.pdf",
+    "https://www.dektec.com/dektec/history/",
+    "https://www.dektec.com/downloads/SDK/",
+    "https://www.dektec.com/news/2016/",
+    "https://www.dektec.com/products/PCIe/DTA-2125/",
+    "https://www.dektec.com/products/PCIe/DTA-2131/downloads/DTA-2131%20Leaflet.pdf",
+    "https://www.dektec.com/products/PCIe/DTA-2139B/",
+    "https://www.dektec.com/products/SDK/",
+    "https://www.dektec.com/products/SDK/MatrixApi/",
+    "https://www.dektec.com/products/SDK/ffmpeg/",
+    "https://www.dektec.com/products/SDK/ffmpeg/linux/",
+    "https://www.dektec.com/products/SDK/ffmpeg/windows/",
+    "https://www.dektec.com/products/downloads/Catalogue.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open021.json",
+  "original_log_sha256": "14ccf9978b4d64655ca01e92e5a910f0c9ba25c66d40b580cf7305cc54c5950f",
+  "original_log_bytes": 27833,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.keysight.com.cn/cn/zh/lib/software-detail/driver/n57xx-n87xx-dc-power-supply-ivi-and-matlab-instrument-drivers-1670385.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

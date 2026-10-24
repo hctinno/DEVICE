@@ -1,0 +1,24 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_160.json",
+  "original_log_sha256": "5945c8d9730e9d2a6287f0427348c596e53be114a7e366dee7c8ee5f1947a79d",
+  "original_log_bytes": 23654,
+  "queries": [
+    "T&M SYSTEM \"FMSR-04B (10dB ATT+LNA)\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FMSR-04B (3G HPF+LNA)\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FMSR-05B (3dB ATT+LNA)\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FMSR-05B (Thru)\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://bohnenkamp.lv/uploads/Brochure_AIRPORT_SERVICE_en.pdf/",
+    "https://fcc.report/FCC-ID/A3LSMF741JPN/7377752.pdf",
+    "https://fcc.report/FCC-ID/A3LSMX520/8096194.pdf",
+    "https://fccid.io/A3LSMS926U/Test-Report/SM-S926U-DTS-802-11ax-Test-Report-6870026.pdf",
+    "https://fccid.io/ACJ9TGRI23D/Test-Report/RI23D-RFID-Test-Report-07302024-7519336.pdf",
+    "https://manuals.plus/m/78c26fd5e6f75b5d9c6093b48817f32a7309665f60ffce47f1383060074c34f9.pdf",
+    "https://manuals.plus/m/afaf830a06c38aba5cc319f2bd0cff74466c628baaf06164f790175bff4146bd.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

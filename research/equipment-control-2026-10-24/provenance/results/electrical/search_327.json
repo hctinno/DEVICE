@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_327.json",
+  "original_log_sha256": "3c097d5a7cf8929843bf51c78ce42b6b7219a109cbf00d618c0a29bf3f496bf4",
+  "original_log_bytes": 34180,
+  "queries": [
+    "DIGITEK POWER DIT1010 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://acs-sandbox.mybigcommerce.com/radio-programming/",
+    "https://acsradios.com/radio-programming/",
+    "https://dintek.com.tw/phocadownloadpap/manuals/DT-PM01%20User%20Guide.pdf",
+    "https://idips.com/wp-content/uploads/iu_digitech_04_eng.pdf",
+    "https://manualmachine.com/digitek/",
+    "https://manuals.group/results.php?search=DIGITEK",
+    "https://manuals.plus/asin/B00XNSYFJI.pdf",
+    "https://manuals.plus/category/digitek",
+    "https://manuals.plus/tag/digitek",
+    "https://manuals.plus/tag/digitek/page/3",
+    "https://manualzilla.com/doc/5670751/wt-1010?page=1",
+    "https://pdfcoffee.com/em-dti-1010-gb-pdf-free.html",
+    "https://www.deditec.de/en/downloads/software/",
+    "https://www.digicon-systems.com/_files/ugd/521a86_f4d848540f644f0baa898cc44e3563f3.pdf?index=true",
+    "https://www.digitek.net.in",
+    "https://www.diteltec.com/download/technical-manual-dt-p/?refresh=68a08a6234abd1755351650&wpdmdl=1025",
+    "https://www.manualslib.com/manual/1895954/Datcon-Dt1010-Series.html",
+    "https://www.manualslib.com/manual/3593230/Digitek-Dac-101.html?page=12",
+    "https://xn----8sbanh2blw.xn--p1ai/upload/medialibrary/instruction/digitek.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

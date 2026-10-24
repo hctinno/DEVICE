@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_078.json",
+  "original_log_sha256": "9a2fea442780c4dd3ea6eda7c403d9de38ffc791b50949ec3e849502a0eac7c7",
+  "original_log_bytes": 32684,
+  "queries": [
+    "Kingpo KP-8102A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://eb1bdm.redesmadrid.com/emisorasrad/emisorasrad.htm",
+    "https://eb1dgc.webcindario.com/emisorasradcb.htm",
+    "https://manualmachine.com/ipazzport/kp81010a/1547814-user-manual/",
+    "https://manuals.plus/m/2ee9883abff0c87ca199d493c911e1bd8d1602342a415fac977ba8c4250ab621",
+    "https://manuals.plus/m/416df1f5156a01fb706a62835a360a0fd0049cf603b8c1a73b4fe3b1a8c5eb5c",
+    "https://manuals.plus/m/55fda6a60fb04aaafadba6da8081014bbbda2248c0e8d3abe77e6c7e08a4f2de",
+    "https://manuals.plus/m/ff09caca64338192b44e0e2c31543977df48dfbbc5b48f6e992b42cbb883e6ab",
+    "https://polish.batterytestingmachine.com/photo/batterytestingmachine/document/94240/KP2021%20electrosurgical%20analyzer%20instruction%20manual.pdf",
+    "https://www.ameradio.com/product/100105/description.html",
+    "https://www.dgkingpo.com/wp-content/uploads/2025/10/Spark-Ignition-Test-Apparatus-Operation-Manual.pdf",
+    "https://www.epcom.net/products/KPG70D-KENWOOD-20807.html",
+    "https://www.kingpocn.com/upload/file/202409/1725373324644538.pdf",
+    "https://www.kingpocn.com/upload/file/202504/1744610324577688.pdf",
+    "https://www.kpower.com.tw/en/techsupport/tech_support_e.htm",
+    "https://www.manualsdir.com/manuals/415537/ipazzport-kp-810-02.html?page=8",
+    "https://www.radioscanner.ru/files/kenwood/1/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

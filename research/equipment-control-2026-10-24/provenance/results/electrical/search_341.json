@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_341.json",
+  "original_log_sha256": "7f21ca1ce162edeec4b2cd532ff50674f794df87a359dddef28d3ee17bd6611f",
+  "original_log_bytes": 31999,
+  "queries": [
+    "YOUNG SHIN YSE-20KB manual programming software"
+  ],
+  "discovered_urls": [
+    "https://help.omc-stepperonline.com/hc/s/articles/user-manual-for-the-new-version-software-of-the-y-series-closed-loop-driver",
+    "https://manuals.plus/m/ce955aeab88003a82bc7f65393a7bbd438a36bc449582676de3b94d72314df0f",
+    "https://microhello.com/u_file/2411/18/file/SP20seriesmanual.pdf",
+    "https://thyradrives.com/wp-content/uploads/2024/09/EC-series-small-PLC-Programming-manual425-11.pdf",
+    "https://www.electronics.jtekt.co.jp/en/download/plc/",
+    "https://www.electronics.jtekt.co.jp/jp/download/plc/",
+    "https://www.sflytech.com/English/Download/Manual/",
+    "https://www.sflytech.com/download/software/SP20_Manual_en.pdf",
+    "https://www.yildirimelektronik.com/dokuman/GW%20PSH%20Series%20UserManual.pdf",
+    "https://www.yokogawa.com/ch/solutions/discontinued/yss20-programming-package-for-windows/",
+    "https://www.yokogawa.com/solutions/discontinued/yss20-programming-package-for-windows/",
+    "https://www.yokogawa.com/tw/solutions/discontinued/yss20-programming-package-for-windows/",
+    "https://youngshinusa.com/products/stock/stock-labelers/stock-lm/",
+    "https://youngshinusa.com/products/young-shin/",
+    "https://youngshinusa.com/service-parts-2/",
+    "https://youngshinusa.com/service-parts-2/training/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

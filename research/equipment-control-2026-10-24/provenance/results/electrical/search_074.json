@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_074.json",
+  "original_log_sha256": "62f335ea1fc82a8532167caa839fb90d7b9fae13850e2906be80f108a77988cd",
+  "original_log_bytes": 28185,
+  "queries": [
+    "YB YB9640DM manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.chengbang.cn",
+    "https://bendixkingradios.com/blogs/learn-about-your-radio/how-do-i-program-my-radio",
+    "https://device.report/m/211914f841682208ee34d8535d724f0cc8b8a035788233ad01da2e7b679f5931_optim.pdf",
+    "https://usermanual.wiki/m/211914f841682208ee34d8535d724f0cc8b8a035788233ad01da2e7b679f5931_optim.pdf",
+    "https://wouxun.com/list.aspx",
+    "https://wouxun.com/list.aspx?page=1&sort=1",
+    "https://www.anyradios.com/customer-service/download-programming-software-user-manual-download/",
+    "https://www.manuallib.com/company/170955/",
+    "https://www.manuallib.com/download/TECHNOLOGY-YB-SENSOR-MANUAL.PDF",
+    "https://www.manuallib.com/file/69307/",
+    "https://www.manualslib.com/brand/yli-electronic/",
+    "https://www.multisis.com.tr/uploads/pdfcatalog/woodward_spmd10_yb_manual.pdf",
+    "https://www.tr-electronic.com/service/downloads/software",
+    "https://www.twowayradio.us/programming-software-users-manual/",
+    "https://www.wouxun.com/list.aspx?page=2&sort=1",
+    "https://www.wouxun.com/list.aspx?sort=1",
+    "https://www.yumpu.com/en/document/view/29764413/yb110ir-new-categories-on-acme-control-service-inc",
+    "https://ybmlog.co.il/wp-content/uploads/2020/05/DT_UM_EN_G.2_190715.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

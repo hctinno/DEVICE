@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item184.json",
+  "original_log_sha256": "c47abdb5f1fdf29b8901023b4d0f3aac835d055f113818007c307f2fe8d944bf",
+  "original_log_bytes": 14717,
+  "queries": [
+    "ATAGO \"PAL-03S\" software interface manual",
+    "site:github.com \"PAL-03S\" ATAGO"
+  ],
+  "discovered_urls": [
+    "http://www.atago.net/ur/",
+    "https://atago-net.prm-ssl.jp/en/atagodirect-index.php?key=ADc39147",
+    "https://atago-net.prm-ssl.jp/zh_tw/pdf/parfect_guide/salt-meter-guide_en_v03.pdf",
+    "https://atago-usa.com/PAL-03S-p570.html",
+    "https://atago.net/english/images/catalog/pal-03s_en.pdf",
+    "https://atago.net/pdf/perfect-guide/salt-en.pdf",
+    "https://www.atago-china.com/product_detail-57-51-243.html",
+    "https://www.atago.net/en/atagodirect-index.php?key=ADc39147",
+    "https://www.atago.net/fr/pdf/tanpin-catalog/pal_en.pdf?srsltid=AfmBOoq68ZigqTw_HzGBBC0RMGo_dU5riY8Qtc2M4cxsfE5C0gz_f3kQ",
+    "https://www.atago.net/japanese/new/user-manual.php",
+    "https://www.atago.net/product/?f=lineup%2Fpalseries.html&l=sj",
+    "https://www.atago.net/product/?k=ADc39147&l=en",
+    "https://www.fishersci.at/shop/products/atago-digital-hand-held-pocket-refractometer-pal-03s/10152132",
+    "https://www.fishersci.fi/shop/products/atago-digital-hand-held-pocket-refractometer-pal-03s/10152132",
+    "https://www.fishersci.no/shop/products/atago-digital-hand-held-pocket-refractometer-pal-03s/10152132",
+    "https://www.jjstech.com/pal-03s.html",
+    "https://www.manualslib.com/manual/2938951/Atago-Pal-03s.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

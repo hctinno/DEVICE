@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_140.json",
+  "original_log_sha256": "0e987c96ea8a6b31fb583eda6575515b560fd6d824869a4ad236395161ff66f8",
+  "original_log_bytes": 28718,
+  "queries": [
+    "HIOKI SM7120 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://hioki.tw/product-detail.php?id=262",
+    "https://hioki.tw/software-detail.php?id=188",
+    "https://manuals.plus/m/089b8b12ae00eab524ad9fff4a7f6f653dbdf4eee333bb44cde057488f1c639f.pdf",
+    "https://www.hioki.cn/home/support/softfiledown/dowlaodid/317.html",
+    "https://www.hioki.cn/products/sm7120",
+    "https://www.hioki.cn/resource/software/57",
+    "https://www.hioki.com/download/30559",
+    "https://www.hioki.com/download/30560",
+    "https://www.hioki.com/global/support/download/software",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n10091",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n10091",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n721670",
+    "https://www.hioki.com/us-en/products/electrometers/megohm/id_6613",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=103&p_no=103",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A006001&p_no=103",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A006001&p_no=103&s_tab=",
+    "https://www.metasite.co.kr/NewMeta/NM_files/HIOKI_SM7110_SM7120_im.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

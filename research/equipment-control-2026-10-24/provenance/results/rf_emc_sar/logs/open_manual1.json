@@ -1,0 +1,21 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/open_manual1.json",
+  "original_log_sha256": "444ad045042ea8b90e9a7f380b18c2a0d6e1d2cd9cbaf6954531a4b3c8102902",
+  "original_log_bytes": 120027,
+  "queries": [],
+  "discovered_urls": [
+    "http://www.anritsu.com",
+    "https://dl.cdn-anritsu.com/ja-jp/test-measurement/reffiles/Products-Solutions/MT8860C/MT8860C%20remote%20programming%20manual%20%28rev%20M%29.pdf",
+    "https://dl.cdn-anritsu.com/ja-jp/test-measurement/reffiles/Products-Solutions/MT8860C/MT8860C%20remote%20programming%20manual%20(rev%20M).pdf",
+    "https://electronicsera.in/drm-is-the-",
+    "https://manuals.teledynelecroy.com/wireless-protocol-suite-manuals/v5.00/automation-api-commands",
+    "https://www.ladybug-tech.com/downloads/documentation/PowerMeter_Programming%20Guide_2_1.pdf",
+    "https://www.narda-sts.com/index.php?dl=1&eID=dumpFile&f=1197&t=f&token=62b2fb02546ddc6b1aa6f67d5d3073adb5c069cd",
+    "https://www.redwoodcomm.com/lib/download.php?file_name=RWC2010B+Operating+Manual+v1.65_20230113.pdf&meta=free&save_file=a_202301140459530.pdf",
+    "https://www.trsrentelco.com/sites/default/files/resources-pdfs/Teseq_NSG5500_User_Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_058.json",
+  "original_log_sha256": "2676b4aaaff14ff96379f3a320ddaef712751c82b1880fc12048675780d1e524",
+  "original_log_bytes": 28010,
+  "queries": [
+    "KIKUSUI PLZ303W manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-category-en/pm_el-en/",
+    "https://in.kikusui.co.jp/kd/pm_el-in/",
+    "https://kikusui-europe.com/download-service/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/kd/pm_el-en_us/",
+    "https://maximinstruments.com/pdf_files/KIKUSUI_PLZ603W_Datasheet.pdf",
+    "https://nscainc.com/wp-content/uploads/pdf/KIK_PLZ153W.pdf",
+    "https://www.atecorp.com/getmedia/6b7c42ca-a751-4df4-93ab-a207980256b6/kikusui-plz303w_manual_1.pdf",
+    "https://www.eserviceinfo.com/fulltext.php?search_ft=KIKUSUI+PLZ-3W+Series+153W%2C+303W%2C+603W%2C+1003W+Operation",
+    "https://www.manualslib.com/manual/3683502/Kikusui-Plz-3wh-Series.html",
+    "https://www.manualslib.com/products/Kikusui-Plz-3w-Series-14427147.html",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Electronic-Loads&model=Kikusui-PLZ1003W&productID=994404D2F780483DCF26235C3EC4AC80&type=Test-Equipment-Sales",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Electronic-Loads&model=Kikusui-PLZ303W&productID=BF9B6D72CAC491FAD4F5079A73887D93&type=Test-Equipment-Sales",
+    "https://www.opweb.de/en/manufacturer/kikusui-electronics-corporation/plz-303w",
+    "https://www.scribd.com/document/711264038/Plz-303w-%EB%A7%A4%EB%89%B4%EC%96%BC"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

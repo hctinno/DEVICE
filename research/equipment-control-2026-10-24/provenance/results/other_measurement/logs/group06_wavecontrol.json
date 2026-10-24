@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group06_wavecontrol.json",
+  "original_log_sha256": "ba1a7d50121def8c7c2e1c0a04a85c68bfdc007f0f947d96133cabc9922c4173",
+  "original_log_bytes": 12556,
+  "queries": [
+    "Wavecontrol (\"WPH60\" OR \"WPF6\" OR \"WP400c\" OR \"WP400\") interface software API manual",
+    "site:github.com Wavecontrol"
+  ],
+  "discovered_urls": [
+    "https://apctech.com/wavecontrol-calibration",
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/115cfd3b-dcbf-4600-8857-f35d7bf33c36/Wavecontrol%20SMP2%20Field%20Strength%20Meter%20Data%20Sheet%20ver1.7.pdf",
+    "https://jsdenki.com.sg/wavecontrol/emf-exposure-assesement/probes/",
+    "https://miernikpola.pl/files/Products-and-services-list_WAVECONTROL_2022_EN--2-.pdf",
+    "https://teltai.com.tw/en/wavecontrol/",
+    "https://wavecontrol.cn/en/products/field-probes/",
+    "https://www.atecorp.com/products/wavecontrol/smp2",
+    "https://www.electrorent.com/us/products/cable/electromagnetic-measurement-tools/wavecontrol/wp400-wwp1001/01t1O000004TmTxQAK",
+    "https://www.es-france.com/18171-mesureur-de-champs-electromagnetiques-201335eu-decret-2016-1074-smp3.html",
+    "https://www.hik-consulting.pl/files/Products-and-services-list_WAVECONTROL_2022_EN--2-.pdf",
+    "https://www.hik-consulting.pl/pluginAppObj/pluginAppObj_1200_02/Products-and-services-list_WAVECONTROL_2022_EN--2-.pdf",
+    "https://www.mdltechnologies.co.uk/wavecontrol-field-probe-selection/",
+    "https://www.wavecontrol.com/emf-products/field-probes/",
+    "https://www.wavecontrol.com/rfsafety/images/data-sheets/en/Datasheet_SMP3_EN.pdf",
+    "https://www.wavecontrol.com/rfsafety/images/data-sheets/en/SMP2_Datasheet_EN.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

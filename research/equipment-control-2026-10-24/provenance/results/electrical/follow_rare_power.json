@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_rare_power.json",
+  "original_log_sha256": "745e563d6f49463d6fd8a9e9c5874eef6cdf22cdf352e64043abb01d28261b2f",
+  "original_log_bytes": 281,
+  "queries": [
+    "\"DREP-11050\" OR \"DREP-11020\" OR \"DEFC-1010VT\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

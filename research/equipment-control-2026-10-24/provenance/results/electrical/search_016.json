@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_016.json",
+  "original_log_sha256": "8056ef1cab45d0541fd6156dafcb2f1ad35c308ba4ae26de4c3ce5abdb8c7da9",
+  "original_log_bytes": 32356,
+  "queries": [
+    "TESEQ PA 5840 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://manuals.plus/m/ef4dbe8612f509b06ed71625aa0f36eea0ebee81afd68255cbe2b7c3a8f20266",
+    "https://manualzilla.com/doc/5716007/pa-5740-user-manual-english.indd",
+    "https://manualzilla.com/doc/5829624/pa-5840-user-manual-english.indd",
+    "https://manualzz.com/doc/6553622/teseq-autostar-emc-test-management-software-software-guide",
+    "https://maximinstruments.com/products/teseq_pa_5840_power_amplifier_battery_simulator",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/teseq/pa_5840_series_datasheet_2025-04-16_en.pdf?la=en&revision=4aa81f92-1a06-4f34-a91d-c839a21dab6d",
+    "https://www.ametek-cts.com/products/brands/teseq/pa-5840-series",
+    "https://www.atecorp.com/getmedia/79d9aff9-47a8-4bd8-a392-4649497cc012/teseq_pa_5840_brochure_1.pdf",
+    "https://www.atecorp.com/products/teseq/pa-5840",
+    "https://www.fuseco.com.au/test-equipment/products/pa-5840",
+    "https://www.manualsdir.com/manuals/319754/atec-teseq-pa5840.html",
+    "https://www.manualslib.com/manual/1926965/Teseo-Pa-5840-Series.html",
+    "https://www.manualslib.com/manual/1926965/Teseo-Pa-5840-Series.html?page=15",
+    "https://www.manualslib.fr/manual/456208/Ametek-Teseq-5000-Serie.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

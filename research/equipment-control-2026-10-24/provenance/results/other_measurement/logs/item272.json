@@ -1,0 +1,27 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item272.json",
+  "original_log_sha256": "604a918622b4058def7d20174ee0d8584cb155ef8ee1ae0b222f1d46a2101f17",
+  "original_log_bytes": 13430,
+  "queries": [
+    "(주)코아테크코리아 \"CTM-120S\" software interface manual",
+    "site:github.com \"CTM-120S\" (주)코아테크코리아"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/1bb1133e300429cbb4f300eb9f65a60e1402617f49f74d44af9cb9059d3235e8.pdf",
+    "https://escholarship.org/content/qt7dx478g4/qt7dx478g4_noSplash_a22b56ff096b9456c4c4f94dd06b3694.pdf",
+    "https://guide.etere.com/Chapter/Index?chapternumber=84.2.2.10",
+    "https://manuall.kr/household-appliances/air-conditioners/carrier-air-conditioners/",
+    "https://novastar.wiki/h-series/",
+    "https://studylib.net/doc/27173340/ecss-e-hb-32-26a-spacecraft-mechanical-loads-analyses-han",
+    "https://www.manualslib.com/brand/rca/",
+    "https://www.mee.gov.cn/xxgk2018/xxgk/xxgk06/201809/W020180926550554661272.pdf",
+    "https://www.scribd.com/document/1005001087/01-Eview-Personal-Alarm-Communication-Protocol-V20231227",
+    "https://www.scribd.com/document/1071020797/3hac084692-Pm-v250xt-type-a-En",
+    "https://www.usermanuals.au/msw?p=3",
+    "https://www.yagmarket.com/belge/molykote-g-1001-tds.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

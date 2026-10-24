@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_231.json",
+  "original_log_sha256": "4c93580ec142f6910229fac58234c6aaeaeb2bed808caf0227d4d489e3f246fc",
+  "original_log_bytes": 35180,
+  "queries": [
+    "MEDITEQ HFIT 7.0 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://ansinhmed.com/uploads/65d42799b21d514998ce6fd8/HFT700%20User%20Manual%28En%29%20for%20R1.00_20200408_compressed.pdf",
+    "https://arxiv.org/abs/1309.1863",
+    "https://arxiv.org/abs/1309.2093",
+    "https://arxiv.org/abs/1512.01178",
+    "https://device.report/m/38cfc8915fdcbdeea1b043f092128ea67eef763bbcd4086395eb3484bb1d6de5.pdf",
+    "https://htp.ro/media/productattach/m/e/medit_scan_labs_tx00_userguide_en_us.pdf",
+    "https://meditex.freshdesk.com/support/home",
+    "https://medteq.squarespace.com/download",
+    "https://medteq.squarespace.com/hfit_info",
+    "https://medteq.squarespace.com/testequipment",
+    "https://medteq.squarespace.com/testequipment/hfit7",
+    "https://medteq.squarespace.com/testequipment/hfitcal",
+    "https://support.medit.com/hc/en-us",
+    "https://www.idsmed.co.th/filesdirectserver/itp1/z_itp_17082021d2m1/02IFUz-z962595880855.pdf",
+    "https://www.medteq.net/article/hfhvmeasurement",
+    "https://www.medteq.net/download",
+    "https://www.wiki.meditex-software.com/index.php?title=Administrators_Support",
+    "https://www.wiki.meditex-software.com/index.php?title=HFEA_Interface_Manual",
+    "https://www.wiki.meditex-software.com/index.php?title=Main_Page"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

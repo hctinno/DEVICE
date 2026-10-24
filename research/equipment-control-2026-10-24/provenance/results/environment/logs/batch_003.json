@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_003.json",
+  "original_log_sha256": "5639e560ea67daf68eb47e531f96f6bdb120bc928d7260fccf56e9b23158dcd5",
+  "original_log_bytes": 23480,
+  "queries": [
+    "AUTONICS \"FX4S-1P4\" manual communication software GitHub",
+    "Kingpo \"KP-35072\" manual communication software GitHub",
+    "Kingpo \"KP-35791\" manual communication software GitHub",
+    "Sensys \"PSHJ0010BAPG(SC-2300)\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "http://www.autonics.com※1:",
+    "https://assets.tequipment.net/assets/1/26/Autonics_FXS_Series_-_Manual.pdf",
+    "https://cb-electronics.com/products/fx4s/",
+    "https://data.electronshik.ru/z/Datasheet/F/FXS_EN_manual.pdf",
+    "https://file.yizimg.com/434192/2015120317280190.pdf",
+    "https://forum.index.hu/Article/showArticle?na_order=1&na_start=14543&na_step=30&t=9093463",
+    "https://m.motiongearon.com/exec/front/Board/download/?filename=DWP-4265C_IPx4.pdf&no=6&realname=2024%2F10%2F04%2F2c19664587393cd93cb7435b38772b6a.pdf",
+    "https://parmaindia.com/autonics-fx4s-1p4-compact-digital-counter-timers-display-method-4-digit-7-segment-led-panel-mount-html.html",
+    "https://universalelektrik.com.tr/wp-content/uploads/2018/03/AUTONICS-fiyat-listesi-2018.pdf",
+    "https://www.autonics-tw.com/upload/files/UL%20Certificate%20of%20Compliance_FX4.pdf",
+    "https://www.autonics.com/in/model/FX4S-1P4",
+    "https://www.autonicschina.cn/cn/model/FX4S-1P4",
+    "https://www.autonicschina.cn/cn/series/FXS",
+    "https://www.manualslib.com/brand/autonics/timer.html",
+    "https://www.sensorindia.co.in/fx4s-1p4-autonics",
+    "https://www.testequity.com/product/10283292-FX4S-1P4",
+    "https://www.tme.com/ca/en/details/fx4s-1p4/impulse-counters/autonics/",
+    "https://www.tme.com/us/en-us/details/fx4s-1p4/impulse-counters/autonics/",
+    "https://www.tme.eu/ng/en/details/fx4s-1p4/impulse-counters/autonics/",
+    "https://www.tme.eu/no/en/details/fx4s-1p4/impulse-counters/autonics/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

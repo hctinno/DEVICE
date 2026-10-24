@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_019.json",
+  "original_log_sha256": "fd39d115b15db83a680f8ef2b78bb5b65a92a5d2c9cf8082aa22c4f0b50f4bb1",
+  "original_log_bytes": 30007,
+  "queries": [
+    "HIOKI 3153 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://manuals.plus/m/6b24fdc0ba31e4e145274b7d5d6298e34a5ee8af92d30438da474a65b6ed5216",
+    "https://manualzz.com/doc/63896935/hioki-automatic-insulation-withstanding-hitester-3153-ins",
+    "https://manualzz.com/doc/82902551/hioki-automatic-insulation-withstanding-hitester-3153-ins",
+    "https://meter.com.my/index.php/products-mainmenu-32/by-brands-mainmenu-75/item/1315-electrical-safety-testers-malaysia-supplier-malaysia-distributor-111121/6625-hio0231-hioki-3153-automatic-insulation-withstanding-hitester",
+    "https://www.hioki.cn/products/3153",
+    "https://www.hioki.cn/services/faq/893",
+    "https://www.hioki.co.kr/NEW_HIOKI/PI_Product_Cont.asp?Product_idx=195",
+    "https://www.hioki.com/download/30023",
+    "https://www.hioki.com/euro-en/products/electrical-safety-testers/hipot/id_5932",
+    "https://www.hioki.net.cn/m/products/show_34.html",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=110&p_no=110",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A007002&p_no=110",
+    "https://www.manualslib.com/manual/1521353/Hioki-3153.html",
+    "https://www.reddit.com/r/AskElectronics/comments/swy2pq",
+    "https://www.tequipment.net/assets/1/26/Documents/Hioki/3153e_05.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

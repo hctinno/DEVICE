@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_023.json",
+  "original_log_sha256": "9b2dc165f4343e7b2b0bfa581c02e94b797cb2bca33a8abc8714c0182df03a4d",
+  "original_log_bytes": 30362,
+  "queries": [
+    "YOKOGAWA MV2000 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/IMMV1000-01E.pdf",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=1138&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=1591&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=2375&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=303&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=976&mode=view",
+    "https://manualmachine.com/yokogawa/mv2000/1794944-user-manual/",
+    "https://manualzz.com/doc/23569174/yokogawa-mv-1000--mv-2000-data-logger-user-s-manual",
+    "https://manualzz.com/doc/6352011/yokogawa-mv-1000--mv-2000-data-logger-service-manual",
+    "https://myportal.yokogawa.com/s/download-details?",
+    "https://partner.yokogawa.com/global/",
+    "https://web-material3.yokogawa.com/IMMV1000-01E_020.pdf",
+    "https://web-material3.yokogawa.com/IMMV2000-02E_020.pdf",
+    "https://web-material3.yokogawa.com/M-4662.us.pdf",
+    "https://web-material3.yokogawa.com/M-4663.us.pdf",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.yokogawa.co.jp/solutions/discontinued/button-operated-mv1000-mv2000/",
+    "https://yokogawa.manymanuals-pt.com/sensors/button-operated-mv2000/user-manual-13442/51",
+    "https://yokogawa.manymanuals.com/sensors/button-operated-mv2000/user-manual-29579/110",
+    "https://yokogawa.manymanuals.com/sensors/button-operated-mv2000/user-manual-29579/112"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_001.json",
+  "original_log_sha256": "7b979e2be689a5320ea6c681482f8c9a5f9981308e56fc44dae99775b1e305a2",
+  "original_log_bytes": 34037,
+  "queries": [
+    "LUMILOOP LSPM2.0+ programming communication driver software GitHub"
+  ],
+  "discovered_urls": [
+    "https://absolute-emc.com/uploads/files/1767292803_LSPM_Manual.pdf",
+    "https://absolute-emc.com/uploads/files/1767292914_LSPM_Manual.pdf",
+    "https://ccn.web.tr/web-api/iframe-proxy?url=https%3A%2F%2Fgithub.com%2FLivox-SDK%2FLivox-SDK2",
+    "https://ccn.web.tr/web-api/iframe-proxy?url=https%3A%2F%2Fgithub.com%2FMinlor%2FLumiSync",
+    "https://docs.lumynlabs.com/drivers-and-firmware.html",
+    "https://github.com/Aymo/Lumo.git",
+    "https://github.com/Ericsii/Livox-SDK2",
+    "https://github.com/Livox-SDK/Livox-SDK2",
+    "https://github.com/Livox-SDK/Livox-SDK2.git",
+    "https://github.com/Minlor/LumiSync",
+    "https://github.com/Minlor/LumiSync.git",
+    "https://github.com/WCHSoftGroup/ch343ser_linux",
+    "https://githubhelp.com/Minlor/LumiSync",
+    "https://lumiloop.de/downloads/manuals/LSPM_Manual.pdf",
+    "https://propribory.ru/static/upl/16-12-2024/iborSNkfkwvLGJjI/LSProbe_Manual.pdf",
+    "https://qgithub.com/Aymo/Lumo",
+    "https://qgithub.com/Minlor/LumiSync",
+    "https://qgithub.com/stramanu/lumalou",
+    "https://www.fuseco.com.au/test-equipment/products/lsprobe-software-package-usb-flash-drive",
+    "https://www.nooploop.com/download/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

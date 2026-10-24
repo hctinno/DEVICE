@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item310.json",
+  "original_log_sha256": "4fb8efcba9cf9495651d66850f74fed93f6384bb83c04fb26804383ac0552ca1",
+  "original_log_bytes": 14061,
+  "queries": [
+    "AND \"AD-5701A\" software interface manual",
+    "site:github.com \"AD-5701A\" AND"
+  ],
+  "discovered_urls": [
+    "https://aanddindia.in/products/ad-5701a-e/",
+    "https://device.report/manual/7690336",
+    "https://gist.github.com/xieve/179d452b05fb0860128ec4a4f06ca680",
+    "https://manuals.plus/and/ad-5701a-3-channel-100-hour-timer-manual",
+    "https://manuals.plus/pt/and/ad-5701a-3-channel-100-hour-timer-manual",
+    "https://manualsee.com/blog/c3oyjuQaL.html",
+    "https://manualzilla.com/doc/6705724/%E5%8F%96%E6%89%B1%E8%AA%AC%E6%98%8E%E6%9B%B8---%E3%82%A8%E3%83%BC%E3%83%BB%E3%82%A2%E3%83%B3%E3%83%89%E3%83%BB%E3%83%87%E3%82%A4",
+    "https://manuzoid.com/manuals/rJwa8-AND%20AD-5701A%203-Channel%20100-Hour%20Timer%20User%20manual",
+    "https://www.aandd.co.jp/pdf_storage/catalog/sp/c_ad5701a-e.pdf",
+    "https://www.aandd.co.jp/pdf_storage/manual/sp/m_ad5701a.pdf",
+    "https://www.aandd.co.jp/pdf_storage/manual/sp/m_ad5701a_ad5701a-e.pdf",
+    "https://www.aandd.co.jp/products/electronic/timer_testing_instruments/digital_timer/ad5701a-e/",
+    "https://www.aandd.co.jp/products/electronic/timer_testing_instruments/digital_timer/ad5701a/",
+    "https://www.aandd.jp/products/manual/test_measuring/ad-5701a-e.pdf",
+    "https://www.aandd.jp/products/test_measuring/pdf/ad-5701a-e.pdf",
+    "https://www.aandd.jp/products/test_measuring/test_measuring.html",
+    "https://www.manualzz.com/doc/4759482/and-ad-5701a-%E3%82%BF%E3%82%A4%E3%83%9E%E3%83%BC-%E5%8F%96%E6%89%B1%E8%AA%AC%E6%98%8E%E6%9B%B8",
+    "https://www.orange-book.com/ja/c/products/index.html?itemCd=AD5701A+++++++++++++++++++++++8503"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

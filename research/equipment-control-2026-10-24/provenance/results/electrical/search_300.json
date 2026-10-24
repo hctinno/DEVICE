@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_300.json",
+  "original_log_sha256": "1b28bbad796511deb18f35c998090827da4fbba2a0436c6a6af91177c351225b",
+  "original_log_bytes": 32863,
+  "queries": [
+    "SEO HAN SP-12020 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.sflytech.com",
+    "https://astro-design.manymanuals.com/computer-accessories/portable-signal-generator-programming-software-sp/user-manual-932",
+    "https://datamax-oneil.manymanuals.pl/printers/class-series-programmer-s-manual/user-manual-10647/100",
+    "https://down.sflytech.com/english/Download/",
+    "https://down.sflytech.com/html/3128973325.html",
+    "https://ihluck77.tistory.com/category/%EC%9E%90%EB%8F%99%ED%99%94%EC%84%A4%EB%B9%84/Etc",
+    "https://manuals.plus/m/2c109ed7b537e423372464aa9e53dd4af4477a2b6bc85acdddb05003f27b96b8",
+    "https://manuals.plus/sfly/sp20-series-high-speed-programmer-manual",
+    "https://maxonamerica.com/discontinued-radios/",
+    "https://saeshin.com.br/wp-content/uploads/2024/05/SUS20_User_Manual_rev1.pdf",
+    "https://supereyes.ru/img/instructions/Manual_SFLY_series_SP20.pdf",
+    "https://www.denso-wave.com/en/adcd///download/category/soft-driver/sp/",
+    "https://www.hotmarker.com/download/",
+    "https://www.sflytech.com/Download/",
+    "https://www.sflytech.com/English/html/613485437.html",
+    "https://www.sflytech.com/download/software/SP20_Manual_en.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

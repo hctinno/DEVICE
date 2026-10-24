@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_itechs.json",
+  "original_log_sha256": "964032c7c877de8c6582ae979f77796df28a2f724c09a8d202571e1dcd32c1cf",
+  "original_log_bytes": 32870,
+  "queries": [
+    "ITECH IT6600C IT8900G Programming Guide"
+  ],
+  "discovered_urls": [
+    "https://jdingtech.com.tw/Official/download/brand%3DITECH%26model%3DGuide%26search%3D",
+    "https://max.book118.com/html/2025/0624/6035112220011150.shtm",
+    "https://usa.itechate.com/uploadfiles/usermanual/it8900gl/IT8900G-L%20User%20Manual-EN.pdf",
+    "https://www.4test.no/files/itech/manuals/IT6600C-Programming-Guide.pdf",
+    "https://www.altoo.dk/files/itech/manuals/IT6600C-Programming-Guide.pdf",
+    "https://www.itechate.com/en/index_226.aspx?key=it6000&page=5",
+    "https://www.itechate.com/en/product/dc-power-supply/IT6600C.html",
+    "https://www.manualslib.com/manual/3669174/Itech-It6600c-Series.html",
+    "https://www.manualslib.com/manual/3669174/Itech-It6600c-Series.html?page=42",
+    "https://www.manualslib.com/manual/3669174/Itech-It6600c-Series.html?page=54",
+    "https://www.manualslib.com/products/Itech-It6600c-Series-14399352.html",
+    "https://www.nippon-sokki.co.jp/itech/it6600c.html",
+    "https://www.ttid.co.uk/bidirectional-psus/itech/it6600c-series?page=1",
+    "https://www.ttid.co.uk/bidirectional-psus/itech/it6600c-series?qt-product_tabs=0",
+    "https://www.ttid.co.uk/dc-power-supplies/itech/it6600c-series"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

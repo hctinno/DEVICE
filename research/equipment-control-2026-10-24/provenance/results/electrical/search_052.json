@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_052.json",
+  "original_log_sha256": "b0a6558ff5e61271211e4b147c27d0025f88d55e691007ab274d22b2dbb1ed61",
+  "original_log_bytes": 23792,
+  "queries": [
+    "KIKUSUI PXB20K-50 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download/cat_battery-emulator-system/",
+    "https://global.kikusui.co.jp/download/cat_bi-directional-dc-power-supply/",
+    "https://global.kikusui.co.jp/download/pxb/",
+    "https://global.kikusui.co.jp/w2-2/dc-power-supply-en/pxb-en/battery-emulator-system/",
+    "https://global.kikusui.co.jp/w2-2/dc-power-supply-en/pxb-en/pxb-series-20kw-model/",
+    "https://global.kikusui.co.jp/w2-2/dc-power-supply-en/pxb-en/pxb-series-20kw-model/?attribute_pa_cc-a=30a-to-30a-en&attribute_pa_cv-v=0v-to-1500v-en&attribute_pa_wattage=20kw-en",
+    "https://kikusui-europe.com/download/cat_bi-directional-dc-power-supply/",
+    "https://kikusui-europe.com/download/pxb/",
+    "https://kikusui-europe.com/w2-2/dc-power-supply/pxb/pxb-series-20kw-model/",
+    "https://kikusui.co.jp/kiku/wp-content/manuals/P/PXB_USERS_R3_E1/HTML_PXB_USERS_R4_E1/10_appendix_PXB_E/Appendix.htm",
+    "https://kikusui.co.jp/kiku/wp-content/manuals/P/PXB_USERS_R3_E1/HTML_PXB_USERS_R6_E1/9_spec_PXB_E/9_spec_PXB_E.htm",
+    "https://kikusuiamerica.com/download/cat_battery-emulator-system/",
+    "https://kikusuiamerica.com/w2-2/dc-power-supply-en_us/pxb-en_us/battery-emulator-system/",
+    "https://ph.kikusui.co.jp/download/cat_battery-emulator-system/The",
+    "https://ph.kikusui.co.jp/w2-2/dc-power-supply-ph/pxb-series/battery-emulator-system/",
+    "https://sg.kikusui.co.jp/spec/pxb_communication-interface/",
+    "https://vn.kikusui.co.jp/download/cat_bi-directional-dc-power-supply/",
+    "https://vn.kikusui.co.jp/w2-2/dc-power-supply/pxb/pxb-series-20kw-model/",
+    "https://www.finaltest.com.mx/v/vspfiles/assets/datasheet/PXB_USERS_E1.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pxb_users_manual_en.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

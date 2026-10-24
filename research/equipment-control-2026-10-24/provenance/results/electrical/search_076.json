@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_076.json",
+  "original_log_sha256": "990386b700c12415d99641ce1a3c98d70fdf7398635b1d1fa4de7e04372f0e8b",
+  "original_log_bytes": 28695,
+  "queries": [
+    "YB YB9635 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://baofengtech.com/software/",
+    "https://fcc.report/FCC-ID/GCD-AYCEX5/4230361.pdf",
+    "https://manuals.plus/es/ae/1005008221670372",
+    "https://manuals.plus/m/ef1b3c6c4421ebe563ed2cfdaa232b3c3751f0399ada4794d4b135c2724f4791.pdf",
+    "https://partner.novexx.com/downloads/manuals/User_Manuals/EasyPlug_16_0924_En.pdf",
+    "https://usermanual.wiki/m/211914f841682208ee34d8535d724f0cc8b8a035788233ad01da2e7b679f5931_optim.pdf",
+    "https://wouxun.com/list.aspx",
+    "https://www.anyradios.com/customer-service/download-programming-software-user-manual-download/",
+    "https://www.baofengradio.cn/programming-soft/",
+    "https://www.manuallib.com/company/170955/",
+    "https://www.multisis.com.tr/uploads/pdfcatalog/woodward_spmd10_yb_manual.pdf",
+    "https://www.rtsystemsinc.com/Handhelds_c_902.html",
+    "https://www.scribd.com/document/906246163/Fireye-Burners-Logix",
+    "https://www.scribd.com/document/98905777/YB110",
+    "https://www.twowayradio.us/programming-software-users-manual/",
+    "https://www.wouxun.com/guide/software.aspx",
+    "https://www.wouxun.com/list.aspx?page=2&sort=1"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item180.json",
+  "original_log_sha256": "26598b260ab241441a8277a75ff42df31d6dfa7aa92fca39ab45037d7a8d5d01",
+  "original_log_bytes": 15041,
+  "queries": [
+    "RF OPTICS \"L-Box\" software interface manual",
+    "site:github.com \"L-Box\" RF OPTICS"
+  ],
+  "discovered_urls": [
+    "https://automator.nl/_file/1041/product_sheet_l-box_EN.pdf",
+    "https://de.scribd.com/document/839222421/NOTLBOX4GR-R01",
+    "https://device.report/m/f946b8c1bdb4931efaef6118bc6fd2d33e43410759f1d578889eec78e4a74233_optim.pdf",
+    "https://github.com/Leadaxe/LxBox",
+    "https://github.com/Leadaxe/LxBox/blob/main/LICENSING.md",
+    "https://github.com/Leadaxe/LxBox/blob/main/README.md",
+    "https://github.com/Leadaxe/LxBox/blob/main/docs/README.md",
+    "https://github.com/Leadaxe/LxBox/blob/main/docs/USER_GUIDE.md",
+    "https://github.com/Leadaxe/LxBox/blob/main/docs/releases/v1.1.1.md",
+    "https://github.com/Leadaxe/LxBox/issues/38",
+    "https://github.com/Leadaxe/LxBox/releases",
+    "https://github.com/licongxu/cosmo-agent-skills/blob/main/skills/hydrosim/flamingo/simulations/SKILL.md",
+    "https://github.com/topics/sing-box?l=dart",
+    "https://github.com/topics/sing-box?l=dart&o=desc&s=updated",
+    "https://github.com/topics/xhttp",
+    "https://pdfcoffee.com/ct-ge-hispeed-partes-del-equipo-pdf-free.html",
+    "https://www.acomee.com.mx/catalogos/catalogosi/IET%20LABS%20INC.pdf",
+    "https://www.ariat-tech.de/datasheet/18/ADMV4540-EVALZ.pdf",
+    "https://www.loytec.com/fr/support/telechargement/lbox-roc1",
+    "https://www.loytec.com/fr/support/telechargement/lbox-roc2",
+    "https://www.loytec.com/support/download/lbox-roc2",
+    "https://www.loytec.com/tw/support/download/lbox-roc1",
+    "https://www.loytec.com/tw/support/download/lbox-roc2",
+    "https://www.worldradiohistory.com/Archive-All-Communications/Communicationns-Quarterly/Communications-Quarterly-1992-01-Spring.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

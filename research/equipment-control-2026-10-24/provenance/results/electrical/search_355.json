@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_355.json",
+  "original_log_sha256": "f9c1aefa353d7d7deaa339071f55f30bff8fbf8cf655758b52bcd8b68cd7364e",
+  "original_log_bytes": 33098,
+  "queries": [
+    "TIAC SYSTEM CO., LTD. SX-100 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/2cf85e1c79a7b1d70663d4a9f8fa23952068f8b68a9d08ddfea67fc5f2dbd652",
+    "https://dtsheet.com/doc/1244163/2-1-specifications",
+    "https://manualzilla.com/doc/5968636/section-4-software-interface",
+    "https://manualzz.com/doc/13271872/spirax-sarco-sx-100-controller-quick-set-up-manual",
+    "https://toa.manymanuals.com/software/sx-2000-series/user-manual-40471/107",
+    "https://www.fujielectric.co.kr/board/board_view?code=download&no=99",
+    "https://www.fujielectric.com/products/drives_inverters/plc/news_detail/vup_np4h-swn_20.html",
+    "https://www.fujielectric.com/products/drives_inverters/plc/product_series/spf_unit_list_prgrm-standard_manual.html",
+    "https://www.fujielectric.com/products/drives_inverters/plc/product_series/sph_product_information_prgrm-standard_manual.html",
+    "https://www.scribd.com/document/808189717/MICREX-SX-Introduction-SX-Programmer-Standard-V3-FEH597",
+    "https://www.toa.co.in/toa-assets/SX-2000-series_OperatingInstructions_en.pdf",
+    "https://www.toa.co.in/toa-assets/SX-2000_SW_INSTR_EN.pdf",
+    "https://www.toa.com.hk/toa-assets/SX-2000_INSTL_INSTR_EN.pdf",
+    "https://www.toaelectronics.com/toa-assets/SX-2000-series_SettingSoftwareInstructions_en.pdf",
+    "https://www.wouxun.com/guide/software.aspx",
+    "https://www.yumpu.com/en/document/view/4164356/sx100-controller-site-manual-spirax-sarco"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,15 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/find_verification6.json",
+  "original_log_sha256": "f624839ce75b79a02792a719cc24bd919d239d80b5485eafa591013a2dc239b4",
+  "original_log_bytes": 71596,
+  "queries": [],
+  "discovered_urls": [
+    "https://dl.cdn-anritsu.com/en-au/test-measurement/files/Manuals/Operation-Manual/MP1570A_W1724AE_opm5_e_3_0.pdf",
+    "https://www.narda-sts.com/index.php?dl=1&eID=dumpFile&f=4025&t=f&token=c62e07d704534f10f02263b249d3c40591b655e6",
+    "https://www.trsrentelco.com/sites/default/files/resources-pdfs/Teseq_NSG5500_User_Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

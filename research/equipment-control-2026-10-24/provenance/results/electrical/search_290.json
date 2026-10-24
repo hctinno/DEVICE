@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_290.json",
+  "original_log_sha256": "1740eef92d68250f120b3b2bf4bd73715dc0c529f40b72d615731d86b470a597",
+  "original_log_bytes": 28667,
+  "queries": [
+    "ZES ZIMMER LMG670 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://electronicsandbooks.com/edt/manual/Hardware/Z/Zimmer%20Electronic%20Systems%20www.zes.com/LMG600/LMG670-4Seiter-EN-Web%20c20140528%20%5B5%5D.pdf",
+    "https://maximinstruments.com/products/zes_zimmer_lmg670_precision_power_analyzer_1_to_7_channels",
+    "https://www.bridgetronic.com/products/19592",
+    "https://www.manualslib.de/manual/16289/Zes-Zimmer-Lmg600.html",
+    "https://www.manualslib.de/manual/16289/Zes-Zimmer-Lmg600.html?page=141",
+    "https://www.manualslib.de/manual/179082/Zes-Zimmer-Lmg450.html?page=53",
+    "https://www.manualslib.de/manual/986202/Zes-Zimmer-Lmg600-Serie.html",
+    "https://www.zes.com/content/download/689/6677/file/Sensors_and_accessories_user_manual_LMG600.pdf",
+    "https://www.zes.com/de/Produkte/Software/LMG-CONTROL-fuer-LMG95-LMG450-und-LMG500",
+    "https://www.zes.com/de/Produkte/Vorgaengerprodukte/Messgeraete-und-Energiezaehler/LMG670",
+    "https://www.zes.com/en/Products/Predecessor-Products/Energy-and-Power-Meters/LMG640",
+    "https://www.zes.com/en/Products/Software",
+    "https://www.zes.com/en/content/download/2015/23452/file/LMG600_en_US.pdf",
+    "https://www.zes.com/index.php/Produkte/Vorgaengerprodukte/Messgeraete-und-Energiezaehler/LMG640",
+    "https://www.zes.com/~admin/index.php/Service/Downloads/Dokumente/Handbuecher"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

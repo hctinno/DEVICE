@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item454.json",
+  "original_log_sha256": "ba37ab7ca7c27592bba552cebe21b012a8a9013de70c7fb935ff7b55fbf49b50",
+  "original_log_bytes": 10859,
+  "queries": [
+    "AND \"GP-100K\" software interface manual",
+    "site:github.com \"GP-100K\" AND"
+  ],
+  "discovered_urls": [
+    "https://babycare.manualsonline.com/manuals/mfg/ad/gp100k.html?p=63",
+    "https://device.report/manual/15512168",
+    "https://krasstrom.ru/vessy/laboratornye-vesy/elektronnye-laboratornye-vesy-gp-100k-and",
+    "https://manualsdump.com/en/manuals/a-and-d-gp-61ks-gp-32ks-gp-40k-gp-32k-gp-61k-gp-60k-gp-30ks-gp-12k-gp-60ks-gp-20k/196279/2",
+    "https://manualsdump.com/en/manuals/a-and-d-gp-61ks-gp-32ks-gp-40k-gp-32k-gp-61k-gp-60k-gp-30ks-gp-12k-gp-60ks-gp-20k/196279/79",
+    "https://manualsdump.com/en/manuals/a-and-d-gp-61ks-gp-32ks-gp-40k-gp-32k-gp-61k-gp-60k-gp-30ks-gp-12k-gp-60ks-gp-20k/196279/8",
+    "https://manualzz.com/doc/7954968/aandd-gp-12k--gp-20k--gp-22k--gp-30k--gp-40k--gp-60k--gp-10",
+    "https://manuzoid.com/manuals/OEa4M-AND%20GP%20Series%20User%20manual",
+    "https://weighing.andonline.com/product/gp-series-precision-balances-gp-100k/",
+    "https://weighing.andonline.com/sites/default/files/documents/GP%20Instruction%20Manuel.pdf",
+    "https://weighing.andprecision.com/wp-content/uploads/2017/04/GP-Manual-ES-1.pdf",
+    "https://weighing.andprecision.com/wp-content/uploads/2017/04/gp-Manual-F-EN.pdf",
+    "https://www.and-store.com/assets/includes/pdf.asp?filename=Instruction+Manual&uploadid=1619",
+    "https://www.manualslib.com/products/AAndd-Gp-100k-3090873.html",
+    "https://www.richmondscientific.com/wp-content/uploads/2021/04/GP-100KS_Manual.pdf",
+    "https://www.scribd.com/document/612863373/GP-Series-GP-12K-GP-20K-GP-30K-GP-32K-GP-40K-GP-60KG-P-61K-GP-100K-GP-102K-GP-30KS-GP-32KS-GP-60KS-GP-61KS-GP-100KS-Precision-Balance",
+    "https://www.weighsouth.com/gp-100k/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

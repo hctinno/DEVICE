@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_028.json",
+  "original_log_sha256": "3ac18a339bbcef1c1d3ad01b7b4c10c49eef6a7fe598e174d427223ca0d7625a",
+  "original_log_bytes": 42227,
+  "queries": [
+    "APS CPS130S manual programming software"
+  ],
+  "discovered_urls": [
+    "https://acs-sandbox.mybigcommerce.com/radio-programming/",
+    "https://adaptivepower.com/Resources/Documents/APS_CPS100_Series_Power_Source_Operation_Manual-PN160953-10.pdf",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/slc-100150-programming-on-modern-pcs-aps-software-cable-setup",
+    "https://manuals.plus/m/34e7b34ce137012e4c294a62c5d6e31a10ed47c8a394eae6700e81bbf815ef8b",
+    "https://manuals.plus/m/8db4cdd124de23b4b1c269a35d67c544bb4e6ee2808410117a75d247c1fbcd99",
+    "https://manuals.plus/motorola/accessory-programming-software-manual",
+    "https://manuals.plus/tag/programming-software",
+    "https://manualsee.com/blog/cQR45uQaL.html",
+    "https://manualspro.net/443365-motorola-accessory-programming-software-user-guide",
+    "https://manualzilla.com/doc/5972526/manual",
+    "https://ppstsolutions.com/wp-content/uploads/Products/APS/CPS100/APS_CPS100_Series_Power_Source_Operation_Manual-PN160953-10.pdf",
+    "https://www.adaptivepower.com/Resources/Documents/APS_CPS100_Series_Power_Source_Operation_Manual-PN160953-10.pdf",
+    "https://www.dropbox.com/s/59m3kvvygpx9g98/gw_aps_uboot.blk?",
+    "https://www.dropbox.com/s/o981erg6zpxbah2/gw_aps_kernel.blk?",
+    "https://www.gwinstek.com/en-IN/faq/index/2//",
+    "https://www.gwinstek.com/en-US/download/index/97?cate=0&down=0&key=&ser=0&subcate=0",
+    "https://www.manualslib.com/products/Aps-Cfs300-Series-12076592.html",
+    "https://www.ppstsolutions.com/wp-content/uploads/Products/APS/CPS100/APS_CPS100_Series_Power_Source_Operation_Manual-PN160953-10.pdf",
+    "https://www.reddit.com/r/MotorolaSolutions/comments/1h3hahp"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

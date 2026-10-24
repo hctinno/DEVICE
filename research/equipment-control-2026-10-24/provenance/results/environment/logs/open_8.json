@@ -1,0 +1,15 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_8.json",
+  "original_log_sha256": "5ebb927728b4e8cc193d6e645ac71aa1a67bc9a2aca844ad1a827d546527e384",
+  "original_log_bytes": 6411,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.autonics.se/produkt/mt4y-mt4w-series/",
+    "https://www.autonics.se/produkt/mt4y-mt4w-series/:",
+    "https://www.electricaltest.com.cn/power-cord-testing-machine_c3"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

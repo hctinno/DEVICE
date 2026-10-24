@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_114.json",
+  "original_log_sha256": "1873aeeaaf09021dd03f8be45b43b76867ba9b32126445144c68ea3425c4a911",
+  "original_log_bytes": 30316,
+  "queries": [
+    "HIOKI RM3544 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.com",
+    "https://shop.hioki.eu/HIOKI-RM3544-Resistance-Meter",
+    "https://shop.hioki.eu/media/69/8f/01/1736500368/RM3544A981-04_Manual_EN.pdf?srsltid=AfmBOoo6O5Pe1W3Fnm45AthdCjrwICnisRpVC1GkXLMCJiex2L8Tx6dw&ts=1736500368",
+    "https://shop.hioki.eu/media/69/8f/01/1736500368/RM3544A981-04_Manual_EN.pdf?srsltid=AfmBOooNcHdDNZkd7vNtXjHjiWGnMN-fBSRJhPOFEuFm37hMXq_RHyQ5&ts=1736500368",
+    "https://www.cedesa.com.mx/pdf/hioki/hioki_RM3544_manual.pdf?var=GL4FQH3s9W",
+    "https://www.hioki.cn/products/rm3544",
+    "https://www.hioki.com/download/29612",
+    "https://www.hioki.com/global/products/resistance-meters/resistance/id_5998",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_302",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n9816",
+    "https://www.hioki.com/sg-en/support/download/software/versionup/detail/id_n9816",
+    "https://www.hioki.com/sg-en/support/faq/detail/id_339",
+    "https://www.hioki.com/us-en/id_5998",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A005001&p_no=80",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A005001&p_no=80&s_tab=tab3",
+    "https://www.hiokikorea.com/support/software_agree.html?c_id=A005001&fullpath=download%2F4079_s&p_no=80",
+    "https://www.hiokikorea.com/support/software_agree.html?c_id=A023001&fullpath=download%2F4079_s&p_no=81",
+    "https://www.reddit.com/r/AskElectronics/comments/swy2pq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

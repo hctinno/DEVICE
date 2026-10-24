@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_123.json",
+  "original_log_sha256": "7c17f8998cdceaa5a8f4b3897a511195ce17b0a5bb8efd67d723ae02af2242f6",
+  "original_log_bytes": 24520,
+  "queries": [
+    "TEXIO PS40-10AR manual programming software"
+  ],
+  "discovered_urls": [
+    "https://dev.texio.co.jp/en/product/detail/12",
+    "https://dev.texio.co.jp/en/product/lists/1/body",
+    "https://dev.texio.co.jp/product/detail/12",
+    "https://dev.texio.co.jp/uploads/B71-0497-01_TEXIO_ASR_User%20Manual_EN_11.pdf",
+    "https://product.texio.co.jp/uploads/PS-A_c_en1.pdf",
+    "https://product.texio.co.jp/uploads/TEXIO_ASR_401_User%20Manual_EN_06.pdf",
+    "https://www.gwinstek.co.kr/sub/sub02_01.php?cat_no=82&idx=108&offset=&pmode=view",
+    "https://www.manualslib.com/manual/1762144/Texio-Ps-A-Series.html",
+    "https://www.manualslib.com/manual/3863540/Texio-Ps40-10a.html",
+    "https://www.semiki.com/en/products-2/bo-nguon-dc-lap-trinh-texio-psa-psar-series-729",
+    "https://www.texio.co.jp/",
+    "https://www.texio.co.jp/en/download",
+    "https://www.texio.co.jp/en/product/detail/12",
+    "https://www.texio.co.jp/en/product/lists/texio",
+    "https://www.texio.co.jp/product/detailLineup/12",
+    "https://www.texio.co.jp/uploads/PS-A_c_en.pdf",
+    "https://www.texio.co.jp/uploads/PS-A_c_en1.pdf",
+    "https://www.texio.co.jp/wp-content/uploads/2019/10/2020_EN_Catalog.pdf",
+    "https://www.yumpu.com/en/document/view/52298607/ps40-programming-operation-manual/4"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

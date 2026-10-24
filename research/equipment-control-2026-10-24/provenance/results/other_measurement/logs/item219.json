@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item219.json",
+  "original_log_sha256": "47a92e6e7cea98e6745703e5bbba0c144c954a9524d83bf31fe3886bb936e914",
+  "original_log_bytes": 17233,
+  "queries": [
+    "BATEMIKA \"UT-one B03B\" software interface manual",
+    "site:github.com \"UT-one B03B\" BATEMIKA"
+  ],
+  "discovered_urls": [
+    "https://batemika.com/doc/UT-ONE-Applications-User-Manual.pdf",
+    "https://device.report/batemika/ut-one",
+    "https://device.report/m/4e149cf12dff58f63dc0814b6d5d279e3642a5239aafb3df2fa1546d77055802",
+    "https://device.report/m/de0014358cc79749743ba5615452f6c6d92b129a4ff12d979a88e55acf43e5d1",
+    "https://manuals.plus/category/batemika",
+    "https://manuals.plus/ko/batemika/ut-one-b03b-3-channel-thermometer-readout-manual",
+    "https://manuals.plus/m/38137c370660cce9537cd5c34321f29e4f03211737183a271f63ca9c74146ab4",
+    "https://manuals.plus/tag/readout",
+    "https://www.batemika.com/",
+    "https://www.batemika.com/Batemika-Reference-Resistors.html",
+    "https://www.batemika.com/Batemika-UT-ONE-B03B-Thermometer-Readout.html",
+    "https://www.batemika.com/Batemika-UT-ONE-Thermometer-Readouts-Comparison.html",
+    "https://www.batemika.com/doc/UT-ONE-B03B-Thermometer-Readout-User-Manual.pdf",
+    "https://www.stratatek.com/product-page/batemika-ut-one-b03b-3-channel-thermometer-readout-10-ppm-accuracy"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

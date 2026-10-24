@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item087.json",
+  "original_log_sha256": "9571a57e43a1d8842c23d2f6e747c45581dd1f81d5118963e1f53ba447ffb616",
+  "original_log_bytes": 14277,
+  "queries": [
+    "LUTRON \"YK-2001PHA\" software interface manual",
+    "site:github.com \"YK-2001PHA\" LUTRON"
+  ],
+  "discovered_urls": [
+    "https://dutapersada.co.id/en/product/lutron-yk-2001pha-water-quality-meter-ph-orp-do-cd-tds-salt/",
+    "https://inspectusa.com/lutron/manuals/",
+    "https://inspectusa.com/lutron/manuals/yk-2001pha-manual.pdf",
+    "https://jubileecorporation.com/catalogue/LUTRON%20-Meters.pdf",
+    "https://manuelutilisateur.fr/lutron-electronics/measuring-instrument/yk-2001pha/user-manual/1qjh0",
+    "https://manuzoid.com/manuals/ymmED-Lutron%20Electronics%20YK-2001PHA%20Operation%20Manual",
+    "https://ndtkala.co/wp-content/uploads/2023/09/YK-2001PHA.pdf",
+    "https://sc-journal.com/device/lutron-electronics/yk-2001pha/",
+    "https://valiometro.pe/wp-content/uploads/2024/02/Multiparametro-portatil-de-calidad-de-agua-LUTRON-YK-2001PHA_compressed-1.pdf",
+    "https://www.lutroninstruments.eu/ph-redox-orp-meters/ph-orp-do-conductivity-salt-meter-lutron-yk-2001pha/",
+    "https://www.manualslib.com/manual/1382762/Lutron-Electronics-Yk-2001pha.html",
+    "https://www.manualslib.com/manual/1382762/Lutron-Electronics-Yk-2001pha.html?page=4",
+    "https://www.manualslib.com/manual/1382762/Lutron-Electronics-Yk-2001pha.html?page=5",
+    "https://www.manualslib.com/manual/1382762/Lutron-Electronics-Yk-2001pha.html?page=6",
+    "https://www.manualslib.com/manual/1382762/Lutron-Electronics-Yk-2001pha.html?page=7",
+    "https://www.manualslib.com/products/Lutron-Electronics-Yk-2001pha-8944969.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

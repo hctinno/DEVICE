@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_173.json",
+  "original_log_sha256": "9e23d0d0b5fa9cddc073b5f1b2ed47da5d8243d8b5ba4f33047a95e2d321a5c0",
+  "original_log_bytes": 33037,
+  "queries": [
+    "YOKOGAWA WT310HC manual programming software"
+  ],
+  "discovered_urls": [
+    "http://tmi.yokogawa.com/",
+    "http://www.yokogawa.com/jp-ymi/tm/F-SOFT/",
+    "https://123deta.com/document/yeeeo94y-WT%E3%83%87%E3%82%A3%E3%82%B8%E3%82%BF%E3%83%AB%E3%83%91%E3%83%AF%E3%83%BC%E3%83%A1%E3%83%BC%E3%82%BF%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%82%BA%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB.html",
+    "https://cdn.tmi.yokogawa.com/1/5403/files/IMWT310-01EN.pdf",
+    "https://cdn.tmi.yokogawa.com/1/5676/files/IMWT310-17EN.pdf",
+    "https://manualzz.com/doc/6551901/yokogawa-wt300-wt310--wt310hc--wt332--wt333-digital-power",
+    "https://manualzz.com/doc/6694522/yokogawa-wt310-hc--wt330--wt310-digital-power-meter-user%E2%80%99",
+    "https://manualzz.com/doc/7300027/yokogawa-wt310--hc--wt330-digital-power-meter-user%E2%80%99s-manual",
+    "https://tmi.yokogawa.com/bx/solutions/discontinued/digital-power-meter-wt300/",
+    "https://tmi.yokogawa.com/ca/solutions/discontinued/digital-power-meter-wt300/",
+    "https://tmi.yokogawa.com/solutions/discontinued/digital-power-meter-wt300/",
+    "https://tmi.yokogawa.com/tw/solutions/discontinued/digital-power-meter-wt300/",
+    "https://www.manualslib.com/manual/1243922/Yokogawa-Wt310.html?page=89",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.scribd.com/document/879898693/EN-WTViewerFreePlus-Users-Manual",
+    "https://www.transcat.com/media/pdf/yokogawa-wt300-series-user-manual.pdf",
+    "https://www.yokogawa.com/pdf/provide/E/GW/IM/0000027038/0/IMWT310-02EN.pdf",
+    "https://www.yokogawa.com/ymi/support/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

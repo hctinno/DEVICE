@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_203.json",
+  "original_log_sha256": "86c54f9bc7521f9dd4ec924dbaf05da946cea8cc97df7ab3700fd92df9b75a3b",
+  "original_log_bytes": 29440,
+  "queries": [
+    "KIKUSUI PIA4830 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/",
+    "http://www.kikusui.co.jp/en/",
+    "http://www.kikusui.co.jp/en/download/",
+    "https://geniuss.kr/download/?bmode=view&idx=14408156",
+    "https://geniuss.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMTA0MTQ3NjYzODBlZmVkNzdhIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjExMTI1MWQ0NmFmY2Y2NGQyNyI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDIxMTEyNTg4YjcyYzA1ODEyMDUiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjZhMjEyMjRmYTExZmMiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://geniuss.kr/software/?idx=1850",
+    "https://global.kikusui.co.jp/download-category-en/pm_other-en/",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/programming-guidebooks/",
+    "https://happylibus.com/doc/254660/%E5%8F%96%E6%89%B1%E8%AA%AC%E6%98%8E%E6%9B%B8---kikusui-electronics-corp",
+    "https://kikusui-korea.co.kr/files/PDF/PAS_M.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PWR_M.pdf",
+    "https://kikusui.co.jp/download/cat-pia4810/",
+    "https://kikusui.co.jp/downloads/",
+    "https://kikusui.co.jp/kikusupport/pwr-01%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA%E3%81%A8pia4830%EF%BC%88%E3%83%91%E3%83%AF%E3%83%BC%E3%82%B5%E3%83%97%E3%83%A9%E3%82%A4%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%EF%BC%89/",
+    "https://kikusui.co.jp/w2-2/discon/pia4830/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manualzz.com/doc/61299789/kikusui-pas-20-54--pas-320-2--pas-40-9--pas-60-6--pas-80-",
+    "https://www.finaltest.com.mx/v/vspfiles/assets/datasheet/PIA4830_EC.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/kikusui-proCat_2022_cn.pdf",
+    "https://www.manualslib.com/manual/910734/Kikusui-Pas-10-35.html?page=57",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

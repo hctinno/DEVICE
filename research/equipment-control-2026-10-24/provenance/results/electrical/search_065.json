@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_065.json",
+  "original_log_sha256": "4e07a9763c0088a6f2a5ac15f36c2099d4a286060948ba4dcb206a0b76778363",
+  "original_log_bytes": 32571,
+  "queries": [
+    "SZCW DF3-D-A-5-A-P1 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://decowell.com/download",
+    "https://driveweb.com/manuals/",
+    "https://en.windcnc.com/service1/?keys=207",
+    "https://kitchen.manualsonline.com/manuals/mfg/linear/swc.html?p=14",
+    "https://komplektcnc.com.ua/content/files/sd-servo-drive-user-manual-szgh_komplektcnc-10437324.pdf",
+    "https://manuals.plus/m/af8d5822b1db05d2361366dfcd9e2c6fa4812b46b8bd84e9c502d4b329f146ff.pdf",
+    "https://www.bochu.com/download_en/",
+    "https://www.campbellsci.asia/shortcut",
+    "https://www.campbellsci.cc/shortcut",
+    "https://www.flashcutcnc.com/resources/product-manuals/",
+    "https://www.manuallib.com/download/2023-10-18/CFW%20%E6%A8%A1%E5%9D%97%E5%BC%8F%20SCR%20%E5%8A%9F%E7%8E%87%E6%8E%A7%E5%88%B6%E5%99%A8%E7%8B%AC%E7%AB%8B%20PID%20%E6%8E%A7%E5%88%B6%E7%A8%8B%E5%BA%8F%E6%89%8B%E5%86%8C.pdf",
+    "https://www.manualslib.com/manual/4128051/Szgh-880t.html?page=123",
+    "https://www.siglent.eu/downloads",
+    "https://www.thermaldevices.com/wp-content/uploads/2022/07/CFW-Programing-Manual.pdf",
+    "https://www.zwcnc.com/docs",
+    "https://www.zwcnc.com/vi/docs"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

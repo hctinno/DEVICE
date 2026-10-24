@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_292.json",
+  "original_log_sha256": "03cd47ede932a059e38538863df45ab0ec2d722acb30b7d23038c8b9b3c156c2",
+  "original_log_bytes": 29647,
+  "queries": [
+    "APPLIED KILOVOLTS 149-04 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://downloads.applied-automation.com/sam/honeywell/620/index.html",
+    "https://appliedkilovolts.com/docs/datasheets/149.pdf",
+    "https://appliedkilovolts.com/docs/datasheets/Alpha_IV.pdf",
+    "https://control.com/forums/threads/programming-manual.38204/post-170617",
+    "https://doczz.net/doc/8041855/rd-series---applied-kilovolts",
+    "https://electronicsandbooks.com/edt/manual/Hardware/A/Applied%20Kilovolts%20www.appliedkilovolts.com/Digital%20Control%20Description%20c20061130%20%5B15%5D.pdf",
+    "https://studylib.net/doc/27767573/kv-16r-program-manual",
+    "https://support.automationdirect.com/faq/showfaq.php?id=1635",
+    "https://www.applied-motion.com/s/faq",
+    "https://www.keyence.com/support/user/controls/plc/software/update/",
+    "https://www.mkt-sys.de/MKT-CD/upt/help/progt_01.htm",
+    "https://www.ritron.com/tools/",
+    "https://www.scribd.com/document/378172173/KV-SAD04",
+    "https://www.tek.com/en/search?keywords=openchoice&type%5B0%5D=type%3Asoftware",
+    "https://www.voltech.com/applications/at-editor-auto-programming/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

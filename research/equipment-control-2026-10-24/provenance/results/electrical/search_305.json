@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_305.json",
+  "original_log_sha256": "fea9fef84ca8ca33d8b00b25b564e11686e34dcd7b54877ca6c9d4a48a64010c",
+  "original_log_bytes": 30823,
+  "queries": [
+    "MASTECH HY3005D-3 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://eletronicabr.com/en/files/file/22534-technical-documentation-mastec-power-supply-hy3005-hy3005d-hy3005d-3/",
+    "https://eletronicabr.com/en/files/file/22534-technical-documentation-mastec-power-supply-hy3005-hy3005d-hy3005d-3/?tab=comments",
+    "https://eletronicabr.com/en/topic/130831-technical-documentation-mastec-power-supply-hy3005-hy3005d-hy3005d-3/",
+    "https://mail.mastechpowersupply.com/files/public/manuals/Manual_HY3005D_New.pdf",
+    "https://manualzz.com/doc/18900572/mastech-hy3000--hy5000-series-dc-power-supply-user-manual",
+    "https://manualzz.com/doc/23234841/mastech-power-supply-manual",
+    "https://manualzz.com/doc/23234841/mastech-power-supply-manual?lang=en",
+    "https://manualzz.com/doc/html/6948412/mastech-hy3005d-user-manual",
+    "https://mastechpowersupply.com/files/public/manuals/Manual_HY3005D_New.pdf",
+    "https://mcgrp.ru/manual/mastech/hy3005d-3",
+    "https://viva-telecom.org/4115/mastech/hy3005d-3/download/",
+    "https://www.manualslib.com/manual/2766253/Mastech-Hy3000m-Series.html",
+    "https://www.mastechpowersupplies.com/linear-power-supply-hy3005d-3.html",
+    "https://www.mastechpowersupplies.com/mastech-variable-triple-dc-linear-power-supply-30-v-5a-hy3005d-3.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

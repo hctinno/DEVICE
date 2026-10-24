@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_313.json",
+  "original_log_sha256": "49b54cc605bb673188dc9874dec3c81fdd49def77410862392764f11f079d9fa",
+  "original_log_bytes": 28668,
+  "queries": [
+    "KIKUSUI PAD 35 - 10L manual programming software"
+  ],
+  "discovered_urls": [
+    "https://dk.kikusui-europe.com/kd/pm_dc/",
+    "https://global.kikusui.co.jp/download-category-en/pm_dc-en-2/",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://in.kikusui.co.jp/kd/pm_dc-in/page/3/",
+    "https://kikusui-europe.com/kd/pm_dc/",
+    "https://kikusui-korea.co.kr/files/PDF/PAS_M.pdf",
+    "https://kikusui.co.jp/kd/pm_dc/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/kd/pm_dc-en_us/page/3/",
+    "https://manuals.repeater-builder.com/te-files/KIKUSUI/KIKUSUI%20PAD-L%20Series%20Instruction.pdf",
+    "https://manualzz.com/doc/4808463/kikusui-pad-l-series-power-supply-user-manual",
+    "https://vn.kikusui.co.jp/kd/pm_dc/",
+    "https://www.finaltest.com.mx/v/vspfiles/assets/datasheet/PXB_USERS_E1.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pwr-01_interface_manual_202402.pdf",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=DC-Power-Supplies&model=Kikusui-PAD-35-10L&productID=969F5BB7A74DA2D23A69056F732C784D&type=Test-Equipment-Sales",
+    "https://www.trading-247.com/products/kikusui-ultimate-owner-operation-instructions-service-manuals-edelivery"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

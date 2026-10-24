@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_155.json",
+  "original_log_sha256": "d6003aaedeccd37136409ab809f400bece4f6642b3eeec5df64da9b85fda053c",
+  "original_log_bytes": 32578,
+  "queries": [
+    "ODA EX30-40 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://industrialmonitordirect.com/blogs/knowledgebase/downloading-toshiba-ex-series-plc-manuals-and-software",
+    "https://kusami.vn/Uploaded/2018_10_03/Manual%20Ex%20Series.pdf",
+    "https://m.damoatool.com/product/ODA/EX-TB.html",
+    "https://sankho.jonjul-automation.com/product/ex30-40-oda-vietnam/",
+    "https://www.autobase.biz/English/AutoBaseHelp/Help10/Plc_Scan/ODA_ExSeries.htm",
+    "https://www.manualslib.com/manual/1769920/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/1769920/Oda-Ex-Series.html?page=9",
+    "https://www.manualslib.com/manual/2222851/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/2402093/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/2402093/Oda-Ex-Series.html?page=7",
+    "https://www.manualslib.com/manual/2402093/Oda-Ex-Series.html?page=8",
+    "https://www.manualslib.com/products/Oda-Ex-30-60-10868387.html",
+    "https://www.powertm.co.kr/pdf/oda/EX30-200.pdf",
+    "https://www.powertm.co.kr/pdf/oda/EX30-40.pdf",
+    "https://www.reddit.com/r/ex30/comments/1r6klol/opd_after_the_update_does_it_work_in_reverse/",
+    "https://www.tekkammall.com/goods/goods_view.php?goodsNo=1000005201"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

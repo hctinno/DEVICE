@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item304.json",
+  "original_log_sha256": "06dd9a5f62bd0b0a029ac9dd05c90255804b03abada05666b360d97c74d9e109",
+  "original_log_bytes": 16143,
+  "queries": [
+    "Whaleteq \"MECG 2.0\" software interface manual",
+    "site:github.com \"MECG 2.0\" Whaleteq"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/b28051dc5c64e1996d558dc66ba7806779ed68e2633901b3884c429303170e66",
+    "https://device.report/m/c4cecb5710675519c12d6fe95d8667bf011ac10fdfb44d9b1fff14f556207172",
+    "https://device.report/manual/15090857",
+    "https://helixindia.com/wp-content/uploads/2023/12/MECG-2.0-Multichannel-ECG-Test-System.pdf",
+    "https://manuals.plus/category/whaleteq",
+    "https://manuals.plus/m/c4cecb5710675519c12d6fe95d8667bf011ac10fdfb44d9b1fff14f556207172",
+    "https://manuals.plus/whaleteq/mecg-2-0-multichannel-ecg-test-system-manual",
+    "https://manuals.plus/whaleteq/mecg-2-0-multichannel-ecg-test-system-manual.pdf",
+    "https://www.manualslib.com/products/Whaleteq-100-Ec00101-14400238.html",
+    "https://www.scribd.com/document/711248401/MECG2-MANUAL",
+    "https://www.whaleteq.com/data/gdownload/files/ECG_EKG_Testing/MECG_2.0/Manual/UM_MECG2.0_EN_V1.4.0_250302.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/um_mecg%202.0_en_v1.3.0_241015.pdf",
+    "https://www.whaleteq.com/en/app/view16-mecg-20-range",
+    "https://www.whaleteq.com/en/app/view23-using-the-multichannel-ecg-tester-system-mecg-20-to-play-the-ecg-signals-containing-maternal-and-fetal-in-the-database",
+    "https://www.whaleteq.com/en/faq/1-ecg-ekg-tester/list",
+    "https://www.whaleteq.com/en/product/1/9-ecg-ekg-testing/view8-mecg-20"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

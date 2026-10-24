@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_299.json",
+  "original_log_sha256": "5f6021a240b16117b7f0935783f065ecf94f7b6713cc2c4a6446dfb376a314b5",
+  "original_log_bytes": 33496,
+  "queries": [
+    "UEI DL279 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Documents/UEi/ueidl269_manual.pdf",
+    "https://knowledge.keenfinity-group.com/intrusion-alarm-systems/article/how-to-program-the-zone-code-on-the-d6112-and-the-",
+    "https://manualzz.com/doc/34939057/uei-phoenix-dl269--dl279--dl289-clamp-on-meter-instructio",
+    "https://manualzz.com/doc/57510013/uei-phoenix-series-instruction-manual",
+    "https://manuzoid.com/manuals/wl1xA-UEi%20Phoenix%20Series%20User%20manual",
+    "https://res.cloudinary.com/iwh/image/upload/q_auto%2Cg_center/assets/1/26/Documents/UEi/dl279kit_manual.pdf",
+    "https://res.cloudinary.com/iwh/image/upload/q_auto%2Cg_center/assets/1/26/Documents/UEi/ueidl279_manual.pdf",
+    "https://sc-journal.com/uei-docs/",
+    "https://studyres.com/doc/7803165/instruction-manual",
+    "https://www.manualslib.com/manual/1935976/Uei-Phoenix-Series.html",
+    "https://www.manualslib.com/manual/2442637/Uei-Vei-Dl259.html",
+    "https://www.tequipment.net/UeiDL279.html",
+    "https://www.ueidaq.com/support/software-programming",
+    "https://www.ueidaq.com/zh/support/software-programming",
+    "https://www.ueitest.com/ECommerce/downloads.aspx",
+    "https://www.ueitest.com/ecommerce/site/content/PDFs/DL269/DL269%20MANUAL%20English.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

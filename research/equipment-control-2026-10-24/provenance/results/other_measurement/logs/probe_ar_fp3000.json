@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/probe_ar_fp3000.json",
+  "original_log_sha256": "ad1bf8c8572bc2b58323c2bf45e58fbfcaafda3741ff22d17017164426764b7e",
+  "original_log_bytes": 27711,
+  "queries": [
+    "\"AR\" \"FP3000\" interface manual",
+    "site:github.com \"FP3000\" probe"
+  ],
+  "discovered_urls": [
+    "https://aec.manymanuals-pt.com/uninterruptible-power-supplies-upss/fp3000/user-manual-24223",
+    "https://aec.manymanuals.com/uninterruptible-power-supplies-upss/fp3000/specifications-11028/13",
+    "https://aec.manymanuals.com/uninterruptible-power-supplies-upss/fp3000/specifications-11028/37",
+    "https://aec.manymanuals.com/uninterruptible-power-supplies-upss/fp3000/specifications-11028/72",
+    "https://aec.manymanuals.com/uninterruptible-power-supplies-upss/fp3000/specifications-11028/95",
+    "https://edgeworthcorp.com/product_category/test/",
+    "https://ftpmirror.your.org/pub/misc/bitsavers/magazines/Computer_Design/19910301.pdf",
+    "https://github.com/Poing3000/PurrPleaser3000S",
+    "https://manualzz.com/doc/26820386/rockwell-automation-flexpak-3000-power-module-instruction",
+    "https://static.byggtjanst.se/byggkatalogen/documents/dokument/3150/broschyr-taksaekerhet-23.pdf",
+    "https://stegar.se/collections/weland-stalab/products/weland-stal-fotplatta",
+    "https://stelem.com/wp-content/uploads/2020/03/catalog_no_pricing_alkota_9120.pdf",
+    "https://www.ahlsell.se/products/byggplat/taksakerhet/weland-stal/infastning/fasten/19051900",
+    "https://www.bevego.se/storage/1F98992ACF03937874870CEA1AFB9989E1768487E4EC84B4BD9FB7DA0E2327F8/acda9270a8a540cea0156ada7368a19f/pdf/media/cec97a3566784728a7f76d955427833e/Weland%20montanv_samlingsbok.pdf",
+    "https://www.bevego.se/storage/29C04C0668194368969B629D950676EC325A0EA7BE55769FBBB8DD874188C137/4a21382364bc4e4baf739f96ab4bffe2/pdf/media/e264b7345db943bb998b6c7e647644c2/Weland%20Sn%C3%B6rasskydd%20Prestandadeklaration.pdf",
+    "https://www.bevego.se/storage/407A81CDB490622A47500C8004DB7D82D8281868013BE9756F9FE48CA4410355/f26dab352d9446788f5fc818db3f2a69/pdf/media/1ab0e56f31fb4f26b4cb2cc58604c038/Weland%20Prestandadeklaration%20Skyddsr%C3%A4cke%20kring%20uppstigningslucka.pdf",
+    "https://www.pro-face.com/history.html",
+    "https://www.proface.co.jp/download.html",
+    "https://www.welandstal.se/produkter/taksakerhet/takbryggor/takbrygga-i-profildurk/?for=tegelpannor"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open011.json",
+  "original_log_sha256": "634542b7c84c9cc35038dc11f8b6e5b76662091790c7577b23e472130da3df07",
+  "original_log_bytes": 3537,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/Rohde-Schwarz/Examples/tree/main/Oscilloscopes/Python/rsmxo_ScpiPackage†github.com】",
+    "https://pypi.org/project/rsmxo/†pypi.org】",
+    "https://rsmxo.readthedocs.io/en/latest/readme.html",
+    "https://rsmxo.readthedocs.io/】"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

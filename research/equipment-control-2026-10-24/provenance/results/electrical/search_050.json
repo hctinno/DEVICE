@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_050.json",
+  "original_log_sha256": "8b009f031ba87e6da33903f8ec460781e19faa256741359b08977a0ade9bbece",
+  "original_log_bytes": 22588,
+  "queries": [
+    "HIOKI PW3337-02 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://hiokikorea.com/product/product_view.html?c_id=130&p_no=130&s_tab=",
+    "https://legatool.com/pub/media/wysiwyg/PDF-Catalog/Hioki/series_PW3330E1-94M.pdf",
+    "https://www.calplus.de/cpdownloads/ec0bfd000f253eff3acb1043e1c06979",
+    "https://www.gmciuk.com/manuals/hioki-pw3337_manual_186667.pdf",
+    "https://www.hioki.co.kr/HIOKI/Product_Program/download/PW3337E3-39M.pdf",
+    "https://www.hioki.com/download/28782",
+    "https://www.hioki.com/download_file/9965/2",
+    "https://www.hioki.com/euro-en/products/power-meters/3phase-ac-dc/id_5929",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_451",
+    "https://www.hioki.com/global/support/faq/detail/id_354",
+    "https://www.hioki.com/in-en/products/power-meters/3phase-ac-dc/id_5929",
+    "https://www.hioki.com/us-en/products/power-meters/3phase-ac-dc/id_5929",
+    "https://www.hioki.com/us-en/support/download/software/versionup/detail/id_196",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=131&p_no=131",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A010002&p_no=130",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A010002&p_no=130&s_tab=tab3",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A010002&p_no=131",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A010002&p_no=131&s_tab=tab3"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

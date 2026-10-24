@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_148.json",
+  "original_log_sha256": "f0763bd3512898d900b5c98e5ad82bb7d210bf317340bd1b7b46bc78164d93d2",
+  "original_log_bytes": 32459,
+  "queries": [
+    "Adphox Corporation XT-281 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://baofengtech.com/software/",
+    "https://device.report/m/5d23277114b13e3168d76c94896b508618c47b38132f261a0cb93fd860193c74",
+    "https://device.report/m/5d23277114b13e3168d76c94896b508618c47b38132f261a0cb93fd860193c74.pdf",
+    "https://fcc.report/FCC-ID/X46XT04/2142876.pdf",
+    "https://m.topdon.com/support",
+    "https://manuals.plus/m/c915b69ec9c86bed6ff2b01548a4604d566b977a6dd7cd2012e1ac53f1ce40a7_optim.pdf",
+    "https://wouxun.com/list.aspx",
+    "https://www.anyradios.com/customer-service/download-programming-software-user-manual-download/",
+    "https://www.instrumart.com/assets/ADT22XA-manual.pdf",
+    "https://www.irtec.com/en-irt/products/Wireless-Lighting-Control/WLC-Configuration-Tool/SRP-281",
+    "https://www.programmablepower.com/~/media/%7Bc5c43ef8-f0ae-4161-a216-446b5ab633c2%7D.ashx",
+    "https://www.scribd.com/document/723642367/Xt-Series-Users-Guide",
+    "https://www.titanradio.com/support",
+    "https://www.topdon.com/pages/software-download",
+    "https://www.wouxun.com/guide/software.aspx",
+    "https://www.wouxun.com/list.aspx?sort=1",
+    "https://www.xprintertech.com/download/xp-d281e"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

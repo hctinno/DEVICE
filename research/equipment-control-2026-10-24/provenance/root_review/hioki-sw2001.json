@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/root_review/hioki-sw2001.json",
+  "original_log_sha256": "fc4abd2f36d5f25af56e19650b4b0a8fd6f5cf11b6ebf4b6fb9df36bf68da860",
+  "original_log_bytes": 12460,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.hioki.com/us-en/support/download/software/versionup/detail/id_n1266324"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

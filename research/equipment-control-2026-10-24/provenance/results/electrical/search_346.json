@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_346.json",
+  "original_log_sha256": "70bac05cc2f32a44f6168e9ba4949788e130cfd445c4a243cbfeb628647cd7d2",
+  "original_log_bytes": 27834,
+  "queries": [
+    "FLUKE 8920A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.fluke.com/manuals/8920A_21imeng0000.pdf",
+    "https://bama.edebris.com/manuals/hp/8920",
+    "https://device.report/m/c54a2b4df6fd6808b4586074016babd56dbfa3f00ae13db5ed86eef2c6f55b47.pdf",
+    "https://lira.epac.to/DOCS-TECH/Manuals%20and%20Datasheets/Fluke/",
+    "https://manualmachine.com/fluke/8921a/4652187-service-manual/",
+    "https://manualzz.com/doc/23334093/fluke-8920a--8921a-true-rms-voltmeter-instruction-manual",
+    "https://manualzz.com/doc/3154868/fluke-8920a-operating-instructions",
+    "https://media.fluke.com/dc4c2507-619d-4934-9a85-b10800bf3d8d_original%20file.pdf",
+    "https://www.fluke.com/en-us/support/software-downloads",
+    "https://www.keysight.com/be/en/assets/9018-40251/user-manuals/9018-40251.pdf",
+    "https://www.keysight.com/il/en/assets/9018-40244/programming-guides/9018-40244.pdf",
+    "https://www.keysight.com/tw/zh/assets/9018-40244/programming-guides/9018-40244.pdf",
+    "https://www.metrologymanuals.com/documents/sha-a562329502d054244b6e719aed8aa120761cef72b5b9937d3e3f707f688125d6/fluke-8920a-8921a-true-rms-voltmeter-instruction-manual/",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Voltmeter&model=Fluke-8920A&productID=2C5850A2CBA23A5C505AD4BD6F93ED4B&type=Test-Equipment-Sales",
+    "https://www.opweb.de/en/manufacturer/fluke/8920a",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/fluke/comments/1v9fmiy/fluke_network_assistant_1t1000_firmware_update/",
+    "https://www.reddit.com/r/networking/comments/fku5dq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

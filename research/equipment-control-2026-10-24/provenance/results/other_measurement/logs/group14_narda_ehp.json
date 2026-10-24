@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group14_narda_ehp.json",
+  "original_log_sha256": "1e65a0879454394c3f659dd53d69877bbf49573a9c9fdb438d5e7c7b201d5621",
+  "original_log_bytes": 12688,
+  "queries": [
+    "\"EHP-200AC\" software commands manual"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/4ca993c490d36828e6e39d72eec623c4f96c00be0305d5d4bb9f2783d2d05f91",
+    "https://device.report/m/f043459abdd7a40c01d1be034618168f2fb2a66dcbe4ee33e9311470dbc99449",
+    "https://manuals.plus/m/2d5b5eacb0427d39c3fb31fea2759a55d387939786b3ff49bdeedc02e70a032b",
+    "https://manuals.plus/m/4516377ed56d06c2e78d34c7838080848aff9c84d7cd8cd0689d0030caea3685",
+    "https://manuals.plus/m/d72dbb17ba8f2b4198cc9aa2ce9841c555bd068c9cd10bb9bb32c3de266e9254",
+    "https://manuals.plus/m/f52a534ad0a05f7f4098e0a9792c1abe2cf78d1f28c1625b89916f6f1ab8b3d4",
+    "https://www.airmet.com.au/assets/documents/product/radiation/ehp200-manual.pdf",
+    "https://www.gruppompb.com/public/upload/EHP200A%20USER_MANUAL.pdf",
+    "https://www.lste.eu/en/emf/84-ehp-200ac.html",
+    "https://www.lste.eu/fi/emf/84-ehp-200ac.html",
+    "https://www.narda-sts.com/de/produkte/emf-messgeraete-und-loesungen/ehp-200a-ac/",
+    "https://www.narda-sts.com/en/products/emf-measuring-devices-and-solutions/ehp-200a-ac/",
+    "https://www.scribd.com/document/749404061/EHP200EN-71026-1-91",
+    "https://www.scribd.com/document/898207645/Datasheet-EHP-200"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

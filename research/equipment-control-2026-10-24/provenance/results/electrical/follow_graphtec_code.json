@@ -1,0 +1,40 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_graphtec_code.json",
+  "original_log_sha256": "efd839dbf3bc2dc586c7d04e44f1743da0860b7e39b34ff5bf06fbe5acf18473",
+  "original_log_bytes": 29339,
+  "queries": [
+    "site:github.com Graphtec GL840 GL240 GL2000"
+  ],
+  "discovered_urls": [
+    "http://www.ohthehugemanatee.net/2011/07/gpgl-reference-courtesy-of-graphtec/",
+    "http://www.prosportstransactions.com/baseball/index.htm",
+    "https://github.com/Fieldkit-Print/open-graphtec-server",
+    "https://github.com/HaralDev/GraphtecPython",
+    "https://github.com/Skrupellos/silhouette/blob/master/decode",
+    "https://github.com/Snow4DV/graphtec-gp-gl-manual/raw/main/Manual.pdf",
+    "https://github.com/Timmmm/robocut",
+    "https://github.com/deepin-community/hwdata/blob/master/pnp.ids",
+    "https://github.com/fablabnbg/inkscape-silhouette/blob/main/Commands.md",
+    "https://github.com/fablabnbg/inkscape-silhouette/blob/main/silhouette/Graphtec.py",
+    "https://github.com/fablabnbg/inkscape-silhouette/blob/master/silhouette/Graphtec.py#L305-L419",
+    "https://github.com/inkcut/inkcut/blob/master/docs/supported-devices.md",
+    "https://github.com/jaakkopasanen/AutoEq/blob/master/results/RANKING.md?plain=1",
+    "https://github.com/jnweiger/graphtecprint",
+    "https://github.com/jnweiger/robocut/blob/master/Plotter.cpp#L344-L586",
+    "https://github.com/mzks/glgl.git",
+    "https://github.com/mzks/glgl/",
+    "https://github.com/nosliwneb/robocut.git",
+    "https://github.com/pmonta/gerber2graphtec/blob/master/file2graphtec",
+    "https://github.com/pmonta/gerber2graphtec/blob/master/graphtec.py#L19-L110",
+    "https://github.com/robotallie/baseball-injuries",
+    "https://github.com/robotallie/mlb-disabled-list",
+    "https://github.com/tonnerre/Inkcut",
+    "https://github.com/vishnubob/silhouette/blob/master/src/gpgl.py",
+    "https://github.com/vishnubob/silhouette/blob/master/src/silhouette.py",
+    "https://web.archive.org/web/20160801023226/http://ohthehugemanatee.net/uploads/2011/07/GP-GL.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

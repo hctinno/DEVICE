@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_156.json",
+  "original_log_sha256": "a711be3a5f496c916b967759de6c7f21bf5c6b0c41c162150176bb22e02f8c34",
+  "original_log_bytes": 32877,
+  "queries": [
+    "ODA EX50-24 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/a1f8ffdbbe87a4ca1ba56070e701ae8399ed91c3552f15dd45be9073ced29f3c.pdf",
+    "https://docs.digi.com/resources/documentation/digidocs/90002435/os/cell-config-t.htm?TocPath=Interfaces%7CWide+Area+Networks+%28WANs%29%7CUsing+cellular+modems+in+a+Wireless+WAN+%28WWAN%29%7C_____1",
+    "https://kusami.vn/Uploaded/2018_10_03/Manual%20Ex%20Series.pdf",
+    "https://m.damoatool.com/product/ODA/EX-TB.html",
+    "https://www.autobase.biz/English/AutoBaseHelp/Help10/Plc_Scan/ODA_ExSeries.htm",
+    "https://www.logicbus.com.mx/pdf/catalogos/ODA-Product.pdf",
+    "https://www.manualslib.com/manual/1769920/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/1769920/Oda-Ex-Series.html?page=9",
+    "https://www.manualslib.com/manual/2222851/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/2222851/Oda-Ex-Series.html?page=39",
+    "https://www.manualslib.com/manual/2402093/Oda-Ex-Series.html",
+    "https://www.manualslib.com/manual/2402093/Oda-Ex-Series.html?page=7",
+    "https://www.metasite.co.kr/NewMeta/NM_files/ODA_NEX-Series_UM.pdf",
+    "https://www.stratatek.com/product-page/oda-ex50-12-switching-type-programmable-dc-power-supply-50v-12a-700w",
+    "https://www.stratatek.com/product-page/oda-ex50-72-2u-switching-type-programmable-dc-power-supply-50v-72a-4kw",
+    "https://www.studocu.vn/vn/document/dai-hoc-cong-nghiep-ha-noi/dung-sai-kt-do/ex-series-english-220825-ce/146550186"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

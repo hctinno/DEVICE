@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_349.json",
+  "original_log_sha256": "11fdeabf0e7e125e00ef0ff8b00ade5ec9f7328337f4aa2864c0c064022d31b8",
+  "original_log_bytes": 43532,
+  "queries": [
+    "CERTIS Touch & Leakage Current Tester manual programming software"
+  ],
+  "discovered_urls": [
+    "https://dk.manuzoid.com/manuals/yd1Ar-METREL%20EDA1322%20Brugervejledning",
+    "https://docs.rs-online.com/2dfe/A700000009816923.pdf",
+    "https://manualzz.com/doc/24009355/eec-7630-touch-current-tester-operation-manual",
+    "https://ro.scribd.com/document/808690307/Associated-Research-8204-Manual",
+    "https://studylib.net/doc/27928406/7630-manual-v-v1.3",
+    "https://www.calplus.de/cpdownloads/d0ac1ed0c5cb9ecbca3d2496ec1ad984",
+    "https://www.easymanua.ls/kikusui/tos9301/manual",
+    "https://www.etcrmeter.com/software-download_2",
+    "https://www.lisungroup.com/manual/ls6586-8qcl/",
+    "https://www.lisungroup.com/manual/ls6586-ge9f/",
+    "https://www.lisungroup.com/manual/wb2675d-tvgg/",
+    "https://www.manuallib.com/file/3181860/",
+    "https://www.manualzz.com/doc/48344453/tsuruga-8505-withstand-voltage-and-insulation-tester-instru",
+    "https://www.slideshare.net/slideshow/air-leak-tester-manual-completo/69611500"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

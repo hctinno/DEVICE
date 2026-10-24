@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_030.json",
+  "original_log_sha256": "30bd5041bd5cfa47c91ed35b22c5117cfb2548f60078ec05c64d4c6014161ca7",
+  "original_log_bytes": 33477,
+  "queries": [
+    "UCS 60990F345 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://community.cisco.com/t5/data-center-and-cloud-knowledge-base/ucs-quick-start-guide/ta-p/3112060",
+    "https://community.cisco.com/t5/tkb-%E3%83%87%E3%83%BC%E3%82%BF%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC-%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88/ucs-%E4%BA%92%E6%8F%9B%E6%80%A7%E7%A2%BA%E8%AA%8D%E3%83%84%E3%83%BC%E3%83%AB%E3%81%AE%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/ta-p/5078920",
+    "https://docs.software-univention.de/n/en/ucs.html",
+    "https://errata.software-univention.de/",
+    "https://manualzz.com/doc/29460588/sew-eurodrive-movisafe%C2%AE-ucs..b-compact-safety-modules-saf",
+    "https://realworlducs.com/step-by-step-process-install-of-drivers-on-ucs-crack-servers/",
+    "https://sensotek.ru/upload/iblock/ab0/ab00196592bd2d2f4100aabb2ad90399.pdf",
+    "https://software.cisco.com/download/home/286281356/type/283853158",
+    "https://team-development.cisco.com/c/en/us/support/servers-unified-computing/ucs-manager/series.html",
+    "https://ucshcltool.cloudapps.cisco.com/public/",
+    "https://ultraflexcontrolsystems.it/wp-content/uploads/2022/01/32367-86442M-C-SV-4A-8A-C-SV-IB-4A-8A.pdf",
+    "https://www.cisco.com/c/en/us/support/servers-unified-computing/ucs-c-series-integrated-management-controller/series.html",
+    "https://www.cisco.com/c/en/us/support/servers-unified-computing/ucs-manager/series.html",
+    "https://www.cisco.com/c/en/us/td/docs/unified_computing/ucs/ucs-manager/CLI-User-Guides/Firmware-Mgmt/6-0/b_UCSM_CLI_Firmware_Management_Guide_6-0/b_UCSM_CLI_Firmware_Management_Guide_chapter_011.html",
+    "https://www.cisco.com/c/en/us/td/docs/unified_computing/ucs/ucs-manager/GUI-User-Guides/Firmware-Mgmt/6-0/b_UCSM_GUI_Firmware_Management_Guide_6_0/b_UCSM_GUI_Firmware_Management_Guide_chapter_011.html",
+    "https://www.manualslib.com/manual/3455126/Cisco-Ucs-C-Series.html?page=17",
+    "https://www.ucs.com.pl/ucs-12%2C20%2Cpl.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

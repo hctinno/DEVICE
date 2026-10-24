@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_318.json",
+  "original_log_sha256": "37c41df40354add651823500060702bb7c8f9bc9545ee6e4098402d018da0688",
+  "original_log_bytes": 33449,
+  "queries": [
+    "B&K Precision 1747 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.bkprecision.com/search/manual/1747",
+    "https://bk-precision.manymanuals.com/power-suppliers/1747-manual",
+    "https://bk-precision.manymanuals.com/power-suppliers/1747-manual/user-manual-3918",
+    "https://bk-precision.manymanuals.com/power-suppliers/1747-manual/user-manual-3918/22",
+    "https://bk-precision.manymanuals.com/power-suppliers/1747-manual/user-manual-3918/6",
+    "https://manualzz.com/doc/20640170/bk-precision-1747-instruction-manual",
+    "https://manuzoid.com/manuals/5BrEW-B%26K%20Precision%201747%20User%20manual",
+    "https://s3-eu-west-1.amazonaws.com/sefram/downloads/manuals/en-us/1747_manual.pdf",
+    "https://www.bkprecision.com/products/device-programmers/1747?region_code=eu",
+    "https://www.bkprecision.com/products/model/1747?region_code=la",
+    "https://www.bkprecision.com/products/signal-generators/1747",
+    "https://www.bkprecision.com/products/video-cable/1747",
+    "https://www.bktw.com.tw/uploadfiles/1201/product/%E5%8F%AF%E7%A8%8B%E5%BC%8F%E7%9B%B4%E6%B5%81%E9%9B%BB%E6%BA%90%E4%BE%9B%E6%87%89%E5%99%A8/1700%E7%B3%BB%E5%88%97/1747/%E8%AA%AA%E6%98%8E%E6%9B%B81747_manual.pdf",
+    "https://www.globaltestsupply.com/pdfs/cache/www.globaltestsupply.com/1747/manual/1747-manual.pdf",
+    "https://www.manualslib.com/manual/878209/Bk-Precision-1747.html",
+    "https://www.manualslib.com/products/Bk-Precision-1747-3700968.html",
+    "https://www.reddit.com/r/AskElectronics/comments/13kbhjz",
+    "https://www.reddit.com/r/AskElectronics/comments/j9ytca"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

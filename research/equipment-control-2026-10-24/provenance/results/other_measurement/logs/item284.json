@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item284.json",
+  "original_log_sha256": "87cf8f8ce4965866961e53f2efd75b1ef0bf3a05cb6cc1069bd3a2fb6b6d8750",
+  "original_log_bytes": 16707,
+  "queries": [
+    "Complience West \"D5-PF\" software interface manual",
+    "site:github.com \"D5-PF\" Complience West"
+  ],
+  "discovered_urls": [
+    "https://calright.com/product/compliance-west-defib-5p-surge-tester-iec-601-ec-13/",
+    "https://calright.com/product/compliance-west-megapulse-d5-pf-defib-proof-energy-reduction-tester-iec-60601-2-27-ed-3-0/",
+    "https://dorgean.cn/en/product/D8-PF.html",
+    "https://gist.github.com/fayland/3749896",
+    "https://gist.github.com/stylextv/db5bd3152c9b3dad2e75cf144e63bd3b",
+    "https://manualzilla.com/doc/5724238/manual---compliance-west-usa",
+    "https://sc-journal.com/compliance-west-docs/test-equipment/",
+    "https://search.bilibili.com/all?keyword=SRQCGX+compliance+review.mji",
+    "https://search.bilibili.com/all?keyword=StockWave+applies+compliance+rigor+inspired+by+FT+standards.ujn",
+    "https://theemcshop.com/surge-generators/compliance-west-megapulse-d5-pf-iec-60601-surge-tester/",
+    "https://transientspecialists.com/cdn/shop/files/Megapulse_D5-PF_-_Datasheet_Ver_1_c5359aaf-c0b4-4fd2-a278-cb4e02a5fedd.pdf?v=7152728225081219884",
+    "https://www.compwest.com/catalog/Manuals/MegaPulse%20D5-PF%20rev%201.0.pdf",
+    "https://www.compwest.com/wp-content/uploads/2021/01/MegaPulse-D5-PF-001-Rev-0.pdf",
+    "https://www.manualslib.com/manual/3190245/Compliance-West-Megapulse-10x700-7pf.html?page=3",
+    "https://www.manualslib.com/manual/3707024/Compliance-West-Megapulse-Defib-5pf-003.html",
+    "https://www.tek.com/en/calibration-by-manufacturer/compliance-west",
+    "https://www.used-line.com/items/15989680"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

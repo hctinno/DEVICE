@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_213.json",
+  "original_log_sha256": "32395e4839fe4c678f3d6edbe92f2553b90b855c153732db306a759db4410796",
+  "original_log_bytes": 31113,
+  "queries": [
+    "SPEAG POWERSOURCE1 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.delta-t.co.uk/support.html",
+    "https://airtrack.com/technical-resources/",
+    "https://device.report/m/44c02e9694050602f722df7cc24c225251e21029173a5f1c0825c203a3ce39e9",
+    "https://device.report/m/c0fb99f8487ed65f2f663dc653e35c599a88721ee22d4194496ce7e42d65cd79",
+    "https://manuals.plus/m/176b4423869bb2a630cdd5c7cebcc894daad82633a7f419fe2025454188d8af3",
+    "https://owon.com.hk/products_owon_spe_series_1_ch_100w-300w_dc_power_supply",
+    "https://speag.swiss/assets/downloads/application-notes/POWERSOURCE1_manual.pdf",
+    "https://speag.swiss/components/emv-and-v-sources/powersource1-2",
+    "https://speag.swiss/downloads/easy6-2",
+    "https://speag.swiss/products/easy6/easy6/software-2",
+    "https://speag.swiss/zh_cmn/components-zh-cmn/emv-and-v-sources-zh-cmn/powersource1-2-zh-cmn",
+    "https://tm-co.co.jp/products/spe6053/",
+    "https://www.selectronic.com.au/splink/",
+    "https://www.spok.com/customer-support/user-guides/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

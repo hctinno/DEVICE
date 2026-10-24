@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item176.json",
+  "original_log_sha256": "edc01181a59110b5606bbf1cbc91f84dc36e71dc7228088bf65b0034854d0f7c",
+  "original_log_bytes": 16081,
+  "queries": [
+    "Ecotest \"DKG-21\" software interface manual",
+    "site:github.com \"DKG-21\" Ecotest"
+  ],
+  "discovered_urls": [
+    "https://device.report/ecotest/unit",
+    "https://ecotestgroup.com/pl/wp-content/uploads/sites/4/2014/08/DKG-21-Ecotest",
+    "https://ecotestgroup.com/product/dosebase/",
+    "https://ecotestgroup.com/product/ecotestcard/",
+    "https://ecotestgroup.com/product/pdc-ecomonitor-software/",
+    "https://ecotestgroup.com/wp-content/uploads/2014/08/DKG-21-EcotestCARD.pdf",
+    "https://ecotestgroup.com/wp-content/uploads/2026/01/dkg-21-m-operating-manual-2024-1.pdf",
+    "https://ecotestgroup.com/wp-content/uploads/sites/9/2014/08/DKG_21_OM_en_2022.pdf",
+    "https://en.wikipedia.org/wiki/Comparison_of_dosimeters",
+    "https://github.com/topics/dkg",
+    "https://manualzz.com/doc/34876222/ecotest-dkg-21-gamma-radiation-dosimeter-operating-manual",
+    "https://manualzz.com/manual/ECOTEST/DKG-21",
+    "https://www.cedesa.com.mx/ecotest/medidores/radioactividad/DKG-21-ECOTESTCARD/",
+    "https://www.cedesa.com.mx/pdf/ecotest/ecotest_DKG-21-ECOTESTCARD_user_manual.pdf?srsltid=AfmBOoplb_k-Oxf-ROI6v90pZ9ZaS_PFr6fRmp7zZucLzhp9h_zsNSV4",
+    "https://www.ecoprogress.net/wp-content/uploads/2024/09/DKG-21-1.pdf",
+    "https://www.manualslib.com/manual/1903503/Ecotest-Dkg-21.html",
+    "https://www.manualslib.com/manual/1903503/Ecotest-Dkg-21.html?page=19",
+    "https://www.manualslib.com/manual/1903503/Ecotest-Dkg-21.html?page=32",
+    "https://www.manualslib.com/manual/1903503/Ecotest-Dkg-21.html?page=39",
+    "https://www.qrv.cz/produkt/ecotest-card-dkg-21/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

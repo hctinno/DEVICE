@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/mitutoyo_500.json",
+  "original_log_sha256": "e1b6d9472ccdd40ef65e0ea6d51ae7f4917f41db976cf321468c8d754a059d79",
+  "original_log_bytes": 26346,
+  "queries": [
+    "site:mitutoyo \"293-821-30\" output",
+    "site:mitutoyo.co.jp \"500-151-30\" 出力",
+    "site:mitutoyo.co.jp \"500-153-30\" 出力",
+    "site:mitutoyo.co.jp \"500-180-30\" 出力"
+  ],
+  "discovered_urls": [
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-150-30/",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-151-30",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-151-30/",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-152-30/",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-153-30/",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-154-30/",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-155-30/",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-156-30/",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-158-30/",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-180-30/",
+    "https://www.mitutoyo.co.jp/products/measuring-tools/calipers/standard/digimatic/500-182-30/",
+    "https://www.mitutoyo.co.jp/public/cms-assets/support-and-services/pickup/express-service/data/express_service_list_20250708.pdf",
+    "https://www.mitutoyo.co.jp/useful/catalog-13-52/pdf/238.pdf",
+    "https://www2.mitutoyo.co.jp/eng/support/service/catalog/08/E12045.pdf",
+    "https://www2.mitutoyo.co.jp/eng/support/service/catalog/08/E12047.pdf",
+    "https://www2.mitutoyo.co.jp/eng/useful/catalog-2022/pdf/0250.pdf",
+    "https://www2.mitutoyo.co.jp/eng/useful/catalog-2025/seo/0466.html",
+    "https://www2.mitutoyo.co.jp/support/service/parts_list/pdf/500-76-2018-OCT.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

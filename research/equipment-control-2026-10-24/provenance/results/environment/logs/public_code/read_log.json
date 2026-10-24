@@ -1,0 +1,20 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/public_code/read_log.json",
+  "original_log_sha256": "cc14217753c76ba74f9993c490a23e54305a212381e8878859c38a969394e60e",
+  "original_log_bytes": 2307,
+  "queries": [],
+  "discovered_urls": [
+    "https://raw.githubusercontent.com/EspecNorthAmerica/ChamberConnectLibrary/master/LICENSE.md",
+    "https://raw.githubusercontent.com/EspecNorthAmerica/ChamberConnectLibrary/master/README.md",
+    "https://raw.githubusercontent.com/EspecNorthAmerica/ChamberConnectLibrary/master/chamberconnectlibrary/p300.py",
+    "https://raw.githubusercontent.com/akaeba/ATWG/master/ATWG/driver/espec/sh641.py",
+    "https://raw.githubusercontent.com/jmbattle/pyESPEC/master/ESPEC.py",
+    "https://raw.githubusercontent.com/jmbattle/pyESPEC/master/LICENSE",
+    "https://raw.githubusercontent.com/pymeasure/pymeasure/master/LICENSE.txt",
+    "https://raw.githubusercontent.com/pymeasure/pymeasure/master/pymeasure/instruments/thermotron/thermotron3800.py"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

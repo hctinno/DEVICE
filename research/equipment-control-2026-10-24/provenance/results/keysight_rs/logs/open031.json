@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open031.json",
+  "original_log_sha256": "3330159a2bbb5517204e601bd46cf7a88acbc18a1f7eca3b9d75a01283f22fc5",
+  "original_log_bytes": 8974,
+  "queries": [],
+  "discovered_urls": [
+    "http://www.mathworks.com/products/instrument】",
+    "https://www.mathworks.com/matlabcentral/fileexchange/5288-rohde-schwarz-cmd55-digital-radiocom-tester"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

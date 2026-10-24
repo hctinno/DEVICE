@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/open_chroma_driver.json",
+  "original_log_sha256": "6d8e0b4ba4a500ea58f159fcb90d1f5c5219f93f0eb6b5036cb868e4c0ed8fd2",
+  "original_log_bytes": 24323,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.chroma.com.cn/en/data_center/driver"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

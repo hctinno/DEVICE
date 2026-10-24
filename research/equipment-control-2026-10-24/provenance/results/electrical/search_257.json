@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_257.json",
+  "original_log_sha256": "bde0a8989a8429d22600c02078f65879fb6654b66403c6625095281fd8a4c1b7",
+  "original_log_bytes": 26419,
+  "queries": [
+    "Protek PWS-3003D manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/protek",
+    "https://fcc.report/FCC-ID/BEJ-LCWB007/7438079.pdf",
+    "https://fcc.report/FCC-ID/BEJWR24GA/7542023.pdf",
+    "https://manuals.plus/m/26d412f967ce2c16b098b7484819b1566e6e6cf7f7174aa8d3306fded3d87e37.pdf",
+    "https://manualzz.com/doc/69393536/protek-3003-3005-s-d-t-dc-%EC%A0%84%EC%9B%90-%EA%B3%B5%EA%B8%89%EA%B8%B0-%EC%82%AC%EC%9A%A9%EC%9E%90-%EB%A7%A4%EB%89%B4%EC%96%BC",
+    "https://protec-security.com.mx/soporte/manuales/usuarios",
+    "https://protekdevices.com/knowledge-base/",
+    "https://sc-journal.com/protek-docs/power-supply/",
+    "https://www.artisantg.com/info/Protek_3003B_Manual.pdf",
+    "https://www.gsi-protek.com/_files/ugd/e25996_7f12df5cde874c51a3eb07acaa36e5f3.pdf",
+    "https://www.gsi-protek.com/support",
+    "https://www.manualslib.com/brand/protek/power-supply.html",
+    "https://www.opweb.de/en/manufacturer/protek",
+    "https://www.opweb.de/pt/fabricante/protek",
+    "https://www.protekinst.com/support",
+    "https://www.proteksc.com/technical-support/",
+    "https://www.soriaudio.com/index.php?document_srl=37606084&mid=m_eqp"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_tgsprog1.json",
+  "original_log_sha256": "da3de46d4384bebdaea47969c637dad401bfe7597876169264d90a72ede18118",
+  "original_log_bytes": 29431,
+  "queries": [
+    "\"TDS5054\" \"TDS5000\" \"Programmer\""
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Documents/tektronix/tds5000b_programmer.pdf",
+    "https://device.report/tektronix/tds5000",
+    "https://docs.ampnuts.ru/eevblog.docs/Tektronix/TEK%20TDS%205000%20Series%20User.pdf",
+    "https://download.tek.com/manual/071116401.pdf",
+    "https://manuals.plus/m/9c9861ceaa8ea2f1ca2ef680585d53293166a4f924f0708b71aa72ec51716748",
+    "https://manualzilla.com/doc/6023747/tds5000-series-digital-phosphor-oscilloscopes-service-manual",
+    "https://manualzilla.com/doc/6036071/tds5000b-series-digital-phosphor-oscilloscopes-service-ma",
+    "https://manualzilla.com/doc/6038932/service-manual-tektronix-tds5104b--tds5054b",
+    "https://manualzz.com/doc/20063294/tektronix-tds5000-series-digital-phosphor-oscilloscope-pr",
+    "https://manualzz.com/doc/56071772/tektronix-tds5000b-series-read-this-first-manual",
+    "https://manualzz.com/doc/6271857/service-manual-tektronix-tds5104b--tds5054b",
+    "https://www.lost-manuals.com/pdf/tektronix--tds5052--user--ID14292.pdf",
+    "https://www.manualslib.com/manual/3652654/Tektronix-Tds5034.html",
+    "https://www.metasite.co.kr/NewMeta/NM_files/TDS5000_User_Manual.pdf",
+    "https://www.opweb.de/pdf/tektronix--tds5054--user--ID14292.pdf",
+    "https://www.scribd.com/document/484283222/Tek-TDS5000B-SM",
+    "https://www.tek.com/en/oscilloscope/tds5000-manual/tds5000-tds5000b-tds6000-tds6000b-tds7000-tds7000b-csda7000-csa7000b-dpo",
+    "https://www.tek.com/vn/oscilloscope/tds5000-manual/tds5000-tds5000b-tds6000-tds6000b-tds7000-tds7000b-csda7000-csa7000b-dpo"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

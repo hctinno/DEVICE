@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_039.json",
+  "original_log_sha256": "653d24cd2f2745295ea0c5270cbe7133e3170c7424bf25e03320f92805aa999e",
+  "original_log_bytes": 33077,
+  "queries": [
+    "Soken DAC-HR450-UL manual programming software"
+  ],
+  "discovered_urls": [
+    "https://baihecontrol.com/en/support",
+    "https://es.scribd.com/document/964714330/488053-SPANISH-High-Resolution-LCD-Encoders-Programming-Manual-8",
+    "https://ssl.soken-jp.com/en/aiagjp000000011m-att/DAC-HRT-1.Eca_2024.pdf",
+    "https://ssl.soken-jp.com/en/products/su60vf00000000hx-att/DAC-HRE-1.Eca_20230622.pdf",
+    "https://ssl.soken-jp.com/en/products/su60vf00000000xu-att/DAC-HRT-1.Eca_2024.pdf",
+    "https://temperaturcontr.com/soken-hot-line-coil-resistance",
+    "https://www.atnedcvh.com/FAQ_Download/",
+    "https://www.crambo.eu/tienda/index.php?controller=attachment&id_attachment=37154",
+    "https://www.dac-indonesia.com/support/drivers",
+    "https://www.dacsolution.com/support/product-manuals.html",
+    "https://www.harborfreight.com/customer-support/product-support/software-updates",
+    "https://www.manuallib.com/",
+    "https://www.soriaudio.com/index.php?document_srl=61403069&mid=m_eqp",
+    "https://www.sosen.com/download/download%20center/",
+    "https://www.thesintech.com/software",
+    "https://www.tucsen.com/Home/Product/download.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

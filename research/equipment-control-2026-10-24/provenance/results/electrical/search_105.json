@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_105.json",
+  "original_log_sha256": "84fa8b717e44017d7beb445686c2c491826277ccc16aa7eb8a776a230d65d244",
+  "original_log_bytes": 27381,
+  "queries": [
+    "HIOKI RM3548 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.testequity.com/te1/Documents/pdf/hioki/3548-um.pdf",
+    "https://hioki.tw/product-detail.php?id=253",
+    "https://hioki.tw/software-detail.php?id=208",
+    "https://hiokikorea.com/support/software_search.html",
+    "https://manualzz.com/doc/28267469/rm3548---hioki-usa",
+    "https://manualzz.com/doc/64874307/hioki-resistance-meter-rm3548-instruction-manual",
+    "https://manualzz.com/doc/82903404/hioki-resistance-meter-rm3548-instruction-manual",
+    "https://shop.hioki.eu/HIOKI-RM3548-Portable-Resistance-Meter",
+    "https://www.farnell.com/datasheets/3123987.pdf",
+    "https://www.hioki.com/download/41701",
+    "https://www.hioki.com/euro-en/products/resistance-meters/resistance/id_5827",
+    "https://www.hioki.com/id-id/products/resistance-meters/resistance/id_5827",
+    "https://www.hioki.com/support/download/manuals?page=89",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A005001&p_no=80&s_tab=tab3",
+    "https://www.hiokikorea.com/support/software_search.html",
+    "https://www.reddit.com/r/AskElectronics/comments/swy2pq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

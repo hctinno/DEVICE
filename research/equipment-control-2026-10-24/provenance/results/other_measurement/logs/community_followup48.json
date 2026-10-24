@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup48.json",
+  "original_log_sha256": "57e2d9f3372363768314dc86e32dfce19480dc262a5586d5ca36750aa4143af6",
+  "original_log_bytes": 353,
+  "queries": [
+    "site:github.com \"DTM3000\" \"LKM\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

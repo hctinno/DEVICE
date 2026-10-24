@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_214.json",
+  "original_log_sha256": "aaf1691f51e6ae734bc35f68e88fc4d68665c305b9e164d8b79cd5ddd7dc911d",
+  "original_log_bytes": 21913,
+  "queries": [
+    "TOYOTECH DP30-05TP manual programming software"
+  ],
+  "discovered_urls": [
+    "https://arxiv.org/abs/1406.7144",
+    "https://geniuss.kr/download/?bmode=view&idx=22155101",
+    "https://m.ohmye.co.kr/web/ohmye/TOYOTECH/DP30-single-series_M.pdf",
+    "https://toyotech.co.kr/product/view.php?cat_no=6&idx=19",
+    "https://toyotech.co.kr/support/manual.php?boardid=manual&idx=30&mNum=3&mode=view&sNum=2",
+    "https://toyotech.co.kr/support/manual.php?boardid=manual&idx=31&mNum=3&mode=view&sNum=2",
+    "https://toyotech.co.kr/support/manual.php?boardid=manual&mNum=3&mode=list&sNum=2",
+    "https://www.daara.co.kr/sell/s_view.php?no=1559384",
+    "https://www.eleparts.co.kr/data/goods_old/design/product_file/DAEYONG/DP30TP.pdf",
+    "https://www.nfcorp.co.jp/english/sup/dl/manual/pp/e_dp_cs.pdf",
+    "https://www.nfcorp.co.jp/files/DPSeries_InstructionManual_ControlSoftware_En.pdf",
+    "https://www.toyotech.co.kr/product/view.php?cat_no=6&idx=17",
+    "https://www.toyotech.co.kr/product/view.php?cat_no=6&idx=22",
+    "https://www.toyotech.co.kr/product/view.php?cat_no=6&idx=24",
+    "https://www.toyotech.co.kr/product/view.php?cat_no=6&idx=26",
+    "https://www.toyotech.co.kr/support/reference.php?boardid=reference&category=&offset=30&sk=&sw=",
+    "https://www.toyotech.co.kr/support/reference.php?boardid=reference&idx=11&mNum=3&mode=view&sNum=5"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

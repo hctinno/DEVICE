@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_128.json",
+  "original_log_sha256": "26dcd07f38879ad15bc7cad50dca77048e90c093d44beb769c5b0126dc24abd9",
+  "original_log_bytes": 30804,
+  "queries": [
+    "ZES ZIMMER LMG671 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.zes.com/ﬁrmware",
+    "https://allice.de/produkt/l671-bas-grundgeraet-lmg671c-zes-lmg-1603-5892-02/",
+    "https://de.scribd.com/document/910216038/LMG450-Benutzerhandbuch",
+    "https://tmesystems.net/image/catalog/product/Zes%20Zimmer/LMG671_20230224_Brochure_EN%20_1_.pdf",
+    "https://www.chkpowerquality.com.au/wp-content/uploads/2021/02/ZES_LMG671-20190228-EN.pdf",
+    "https://www.manualslib.de/manual/16289/Zes-Zimmer-Lmg600.html?page=141",
+    "https://www.manualslib.de/manual/841541/Zes-Zimmer-Lmg500.html?page=70",
+    "https://www.manualslib.de/manual/986202/Zes-Zimmer-Lmg600-Serie.html",
+    "https://www.zes.com/de/Produkte/Praezisions-Leistungsmessgeraete",
+    "https://www.zes.com/de/Produkte/Praezisions-Leistungsmessgeraete/LMG671",
+    "https://www.zes.com/de/Produkte/Praezisions-Leistungsmessgeraete/LMG671-ATE2",
+    "https://www.zes.com/de/Produkte/Software/LMG-CONTROL-fuer-LMG95-LMG450-und-LMG500",
+    "https://www.zes.com/de/Produkte/Zubehoer/LMG-Zubehoer",
+    "https://www.zes.com/en/Products/Precision-Power-Analyzers/LMG671",
+    "https://www.zes.com/en/Products/Precision-Power-Analyzers/LMG671-ATE2",
+    "https://www.zes.com/en/Products/Precision-Power-Analyzers/LMG671/Downloads/LMG671-Brochure",
+    "https://www.zes.com/en/content/download/1977/23128/file/App_How_to_read_specifications_v1.2_EN.pdf",
+    "https://www.zes.com/en/content/download/2015/23452/file/LMG600_en_US.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}
