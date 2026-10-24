@@ -1,0 +1,153 @@
+# HCT FCC 사례 조회 계약 021 v1
+
+2026-10-24 · Asia/Seoul. `FCC-CASE-CATALOG-021`/화면024 공통 v1 계약이다. 총괄이 keyset을 승인하고 값/분류 의미를 명료화했다. 원본 PDF·추출 본문·실제 값은 private에 보관하며 공개 테스트는 합성 자료만 쓴다.
+
+```python
+from labflow.fcc_report_cases import FccReportCaseCatalog, FccReportCaseError
+
+catalog = FccReportCaseCatalog(packet, pdf_sources)
+summary = catalog.summary()
+detail = catalog.case(case_id)
+matches = catalog.search(query)
+linked = catalog.match_intake(projected_summary, query)
+# JSON text 입력에는 동일 strict decoder를 사용하는 아래 helper만 제공한다.
+catalog2 = FccReportCaseCatalog.from_json(packet_json, pdf_sources)
+```
+
+`packet`은 plain dict/list와 JSON scalar만, `pdf_sources`는 정확한 `{소문자SHA256: bytes}` plain dict만 받는다. bytes subclass/bytearray/file-like/path/콜백·사용자 객체는 거절한다. 생성 중 원본 hash·크기·PDF signature/strict parse·물리 페이지·추출 근거를 검사한다. 생성 후 네 조회는 I/O·파싱·Store 변경 없이 detached 메모리 사본을 반환한다. 입력 변경과 반환값 변경은 객체/다음 조회에 영향을 주지 않는다.
+
+## 공통 표기와 예산
+
+아래 목록은 **정확한 키 집합**이다. 별도 명시가 없으면 누락·추가 키를 거절한다. `ID`는 `[A-Za-z0-9][A-Za-z0-9_.-]{0,127}`, `SHA`는 소문자64hex, `text(N)`은 공백만으로 구성되지 않은 길이 N 이하 문자열이다. nullable은 `null`이며 0·빈 문자열 기본값을 넣지 않는다. 정수는 `bool`을 포함하지 않는다. 날짜는 유효한 `YYYY-MM-DD`, 시각은 초/선택적 소수초와 `+09:00`을 가진 ISO8601이다. URL은 userinfo/control 문자 없는 HTTP(S) 링크이며 자동 열람하지 않는다.
+
+| 예산 | 상한 |
+|---|---|
+| packet UTF-8 JSON / 깊이 / 전체 node | 4 MiB / 16 / 50,000 |
+| packet 개별 문자열 / claim value 깊이 | 16,384자 / 6 |
+| searches / documents / cases | 128 / 16 / 128 |
+| PDF 개별 / bytes 합계 | 16 MiB / 64 MiB |
+| exhibit 관계 | 문서당64 / 전체256 |
+| claims | 사례당64 / 전체1,024 |
+| evidence | claim당8 / 전체4,096 |
+| quote / 인용 line 범위 | 8,192자 / 40줄 |
+| relations / reuse IDs | 사례당32 / 사례당32 |
+| 추출 페이지 / retained chars | PDF당200·전체800 / PDF당1,000,000·전체4,000,000 |
+| PDF 페이지 content stream | 기존 `ExtractionLimits`의 8 MiB |
+| 접수 projection JSON / 깊이 / 개별 문자열 | 8 MiB / 16 / 1 MiB |
+| 단일 반환 JSON | 8 MiB |
+
+원본·JSON·목록·합계 한도는 파서 호출 전에 검사한다. 전체 추출 예산이 남지 않으면 새 PDF를 미검증 성공으로 넣지 않고 limit 오류를 낸다. PDF별 기존 추출 한도에 따른 partial은 상태를 보존한다. 작업 예산은 기존 추출기의 cooperative 한계이며 OS 격리·hard timeout 보증이 아니다.
+
+## packet의 6 top-level 키
+
+`schema_version`, `corpus_id`, `scope`, `searches`, `documents`, `cases`만 허용한다. `schema_version`은 정수1, `corpus_id`는 ID다. 빈 corpus는 `documents=[]`, `cases=[]`, `pdf_sources={}`로 표현할 수 있다. 전체 수집 완료를 뜻하지 않는다.
+
+### scope — 7키
+
+- `issue_date_from`: 정확한 `2025-01-01`.
+- `cutoff_at`: 실제 조사 마감 +09:00 시각. 시작일 이후여야 한다. 시각의 실제성은 제공된 조사 기록이며 API가 새 조사를 인증하지 않는다.
+- `timezone`: 정확한 `Asia/Seoul`.
+- `population_status`: 정확한 `unconfirmed`.
+- `search_scope_notes`: `text(2048)` 배열0..32.
+- `unverified_ranges`: `text(2048)` 배열0..32.
+- `synthetic`: bool. 합성 fixture와 실제 private 보고서 입력을 구분한다.
+
+### searches의 각 행 — 12키
+
+`search_id` ID(유일), `institution_scope`(`hct_korea|hct_america|mixed|unresolved`), `query` text(4096), `url` HTTP(S), `searched_at` +09:00 시각, `status`(`ok|partial|blocked|failed`), `page_start` 양의 정수|null, `page_end` 양의 정수|null, `result_limit` 양의 정수|null, `candidate_count` 0 이상 정수|null, `unverified_ranges` text(2048) 배열0..32, `notes` text(2048)|null이다. 페이지 범위는 둘 다 null이거나 start≤end다. 검색 시각은 cutoff를 넘지 않는다. blocked/failed를 성공으로 바꾸거나 여러 검색의 중복 가능 후보 수를 모집단으로 합산하지 않는다.
+
+### documents의 각 행 — 6키
+
+`document_id` ID(유일), `sha256` SHA(물리 고유·중복 행 거절), `size_bytes` 양의 정수, `physical_pages` 양의 정수≤100,000, `exhibits` 배열1..64, `rights` 객체다. `pdf_sources` 키 집합은 이 SHA 집합과 정확히 같아야 한다. 실제 bytes 크기/SHA·`%PDF-` signature·strict parser 물리 페이지가 모두 일치해야 한다. HTML/malformed/읽을 수 없는 암호화/parser unavailable은 constructor 오류다. 실제 parse 가능한 image/partial/no-text PDF는 추출 상태를 보존하며 읽지 못한 페이지를 성공 근거로 쓰지 않는다.
+
+각 `exhibits` 행의 정확한 10키:
+
+`exhibit_id` text(128), `fcc_id` text(128)|null, `application_id` text(256)|null, `exhibit_type` text(256)|null, `url` HTTP(S)|null, `source_kind`(`official|mirror|existing_user`), `accessed_at` +09:00 시각, `official_match_status`(`unverified|listing_only|pdf_hash_matched|blocked`), `official_url` HTTP(S)|null, `search_ids` 유일 search ID 배열0..32다. 동일 문서의 같은 exhibit_id/url 관계 중복은 거절한다. 여러 다른 등재 관계는 같은 SHA 아래 유지한다. official의 url과 official_url은 FCC.gov/subdomain이어야 한다. mirror/official의 url은 null일 수 없다. listing_only/pdf_hash_matched에는 FCC official_url이 필요하다. 이 상태는 제공 검수 기록이며 API가 네트워크로 새 공식 확인을 하지 않는다. mirror PDF의 hash 검증만으로 official 상태를 올리지 않는다.
+
+`rights`의 정확한 4키는 `status`(`private_only|permission_recorded|unresolved`), `notes` text(2048)|null, `public_redistribution_allowed` false, `external_model_use_allowed` false다. 공개 열람과 Git 재배포/외부 모델 사용 허가는 별개이며 본 API는 이를 승인하지 않는다.
+
+공식/미러 공개 exhibit가 있는 PDF가 기존 추출기에서 encrypted로 거절되면, 021 전용 경로에서 **원본 bytes를 직접** strict reader로 한 번 읽는다. 빈 user password의 인증 결과가 정확히 USER_PASSWORD=1인 공개 permission PDF만 허용한다. reader 생성 시 단 한 번의 빈 문자열 인증을 사용하고, 인증 상태를 읽어 확인하며 재인증하지 않는다. owner 결과2·비밀 user 암호·existing_user만 있는 입력·알 수 없는 인증 상태는 거절한다. 다른 암호 인자/추측·재시도·전역 패치·원본 재작성/복호 PDF 저장은 없다. 기존 `document_extract`와 일반 접수의 encrypted 거절은 그대로다.
+
+이 경우 parser.name은 `pypdf-public-empty-user-password`, 진단 issue.code는 `public_empty_user_password_read`다. 진단 자체는 parser 경고가 아니며 citable을 차단하지 않는다. 실제 parser 경고·관측 불가·form 누락·페이지/내용/문자/합계 예산과 literal 검증은 기존 helper와 같은 조건을 적용한다. 인증 상태 확인은 현재 pypdf의 내부 상태에 의존하므로 호환되지 않는 상태에서는 성공으로 처리하지 않는다. 원본 SHA는 전달된 bytes의 SHA이며 다시 직렬화한 PDF의 SHA가 아니다. 위 추가 정책은 입력/출력 exact keyset을 바꾸지 않는다.
+
+### cases의 각 행 — 6키
+
+`case_id` ID(유일), `report_group_id` ID|null, `document_ids` 유일 document ID 배열1..16, `claims` 배열0..64, `relations` 배열0..32, `reuse_group_ids` 유일 ID 배열0..32다. report_group_id는 검수자가 확인한 계열이며 번호에서 추측 생성하지 않는다. unknown/빈 reuse ID 목록을 새 독립 그룹으로 꾸미지 않는다.
+
+각 relation은 `relation_id` ID(사례 내 유일), `kind`(`revision_of|part_of|appendix_of|exhibit_of`), `target_case_id` ID|null, `external_target` text(256)|null, `status`(`resolved|unresolved`) 5키다. resolved는 존재하는 다른 case_id와 null external_target, unresolved는 null target_case_id와 미확인 외부 식별자 문자열을 가진다.
+
+### claim — 7키, evidence — 입력 12키
+
+claim 키는 `claim_id` ID(사례 내 유일), `field` text(128), `value` JSON value|null, `unit` text(64)|null, `status`, `basis`, `evidence`다. field는 `report|issuer|product|method|setting|equipment|correction|result|normative` 중 하나로 시작하는 dotted 식별자다. 나머지 segment는 소문자 영문/숫자/underscore이며 전체 최대4 segment다.
+
+status는 `reviewed|extracted|not_reported|extraction_failed|ambiguous|conflicting`, basis는 `report_fact|government_rule|guidance|standard_reference_only|developer_inference|synthetic_policy`다. not_reported/extraction_failed는 value=null·evidence=[]다. reviewed/extracted는 value≠null·evidence≥1이며 root value의 빈/공백 문자열·빈 list/dict를 거절한다. **숫자0/0.0과 bool false는 유효한 원문 값**이며 누락으로 바꾸지 않는다. 그 밖의 JSON scalar와 비어 있지 않은 구조는 주어진 타입을 보존한다. ambiguous/conflicting은 null 또는 대안 값을 유지할 수 있다. reviewed는 제공된 검수 상태이며 기관 진위·과학·법률 판정을 API가 새로 인증한 결과가 아니다. 숫자/단위/판본은 변환하거나 PASS를 법적 요구로 올리지 않는다.
+
+evidence의 정확한 12키:
+
+`document_id` ID, `source_sha256` SHA, `file_page` 1-based 정수, `printed_page` text(128)|null(unknown 허용), `table` text(128)|null, `row` text(128)|null, `column` text(128)|null, `footnotes` text(512) 배열0..16, `text_sha256` SHA, `line_start` 양의 정수, `line_end` 양의 정수, `quote` text(8192)다. document는 해당 case.document_ids 안에 있어야 한다.
+
+같은 SHA의 실제 retained page와 `page_citation()` 결과에서 text hash·line 범위·**전체 선택 line quote**가 정확히 같아야 한다. citable은 page.status=ok이며 해당 페이지/전역의 parser 경고·관측 불가·누락 form resource가 없는 경우다. truncated/image/no-text/error/미처리 페이지는 거절한다. 문서가 다른 페이지/상한 때문에 partial이어도 이 조건을 통과한 페이지 literal만 사용할 수 있다. table/row/column/printed page/footnote는 제공된 위치 주석이며 PDF 기하·표 레이아웃을 새로 검증한 결과가 아니다. 구조화 value는 reviewer의 해석이고 literal 검증은 quote의 원문 대응이다. OCR·그래프 디지털화·native raw 변환은 하지 않는다.
+
+## preview와 그룹 계약
+
+preview의 정확한 **17키**: `case_id`, `report_group_id`, `report_number`, `revision`, `issuer_class`, `issue_date`, `scope_status`, `fcc_ids`, `product_family`, `manufacturer`, `models`, `rules`, `methods`, `equipment_models`, `review_status`, `document_ids`, `evaluation_group`이다. ID/nullable 필드는 입력 의미 그대로이며 문자열 목록은 중복 제거·안정 정렬한다.
+
+정확한 preview 대응 field:
+
+| preview | 검토된 claim field |
+|---|---|
+| report_number / revision / issue_date | `report.number` / `report.revision` / `report.issue_date` |
+| issuer_class | `issuer.classification`, `issuer.legal_name`, `issuer.address` |
+| fcc_ids | `report.fcc_ids` |
+| product_family / manufacturer / models | `product.family` / `product.manufacturer` / `product.models` |
+| rules / methods / equipment_models | `method.rules` / `method.references` / `equipment.models` |
+
+scalar preview는 reviewed·report_fact인 단일 문자열만 사용하며 상충하면 null이다. 목록은 해당 조건의 문자열/문자열 배열만 쓴다. methods는 reviewed의 report_fact 또는 standard_reference_only도 허용한다. issue_date는 ISO 날짜다. issuer_class는 `hct_korea|hct_america|unknown`이다. **issuer.classification만** reviewed developer_inference도 허용하며, 각각 실제 페이지 근거를 가진 reviewed report_fact인 legal_name/address가 모두 있어야 알려진 분류로 표시한다. 검수 분류를 원문 report_fact로 위장하거나 HCT 단어 출현으로 분류하지 않는다.
+
+scope_status는 `in_scope|pending|out_of_range|future`다. 미검토/상충/미기재 날짜는 pending, 시작일 이전은 out_of_range, cutoff 날짜 이후는 future다. summary/case는 이 상태를 모두 보존하고 검색 후보는 in_scope의 알려진 HCT 기관만 쓴다. review_status는 `reviewed|partial|unreviewed|conflicting`: 충돌 우선, 전 claim reviewed이면 reviewed, 일부 reviewed이면 partial, 없으면 unreviewed다. 필요한 preview가 상충해도 conflicting이다.
+
+evaluation_group의 정확한 3키는 `eligible` bool, `keys` 문자열 배열, `missing` 고정 사유 배열이다. 알려진 family/FCC ID/report group/source SHA/reuse ID를 각각 `family:`, `fcc:`, `report:`, `source:`, `reuse:` prefix로 만든다. family/FCC ID만 trim/casefold하며 ID/SHA는 그대로 보존한다. missing은 `product_family|fcc_ids|report_group_id|reuse_group_ids|issuer_class|scope_status|review_status` 중 누락/미적격 항목이다. 모두 충족해야 eligible이다. **eligible은 제공 metadata의 로컬 조건**이며 022의 canonical family group·전체 연결 성분 평가 분리 승인이 아니다. 빈 reuse 목록은 불명으로 보수적으로 false를 유지한다. 현재 API는 train/eval 배정·점수·모델 실행을 하지 않는다.
+
+## 모든 출력 wrapper와 document DTO
+
+모든 wrapper의 공통 **7키**:
+
+`schema_version` 정수1, `kind`, `corpus_id`, `execution_mode="report_derived"`, `synthetic` scope의 bool, `validation_scope="source_bytes_and_retained_page_literals_only"`, `verification`이다. verification은 정확한 5키 `hardware_verified`, `physical_verified`, `model_execution_verified`, `normative_compliance_verified`, `coverage_complete`가 모두 false다.
+
+출력 document는 입력6키에 `extraction`, `page_index`를 더한 **8키**다. extraction은 `status`, `complete`, `total_pages`, `processed_pages`, `parser`, `issues` 6키이며 기존 추출 상태를 보존한다. parser는 `name`, `version` 2키, issue는 `code`, `file_page` 2키(전역이면 null)다. page_index의 각 행은 `file_page`, `status`, `text_sha256`, `line_count`, `citable` 5키다. 전체 retained text/PDF bytes·물리 파일 경로는 반환하지 않는다. case quote만 private 근거로 반환한다.
+
+`summary()`는 common7 + `scope`, `searches`, `counts`, `documents`, `case_previews`의 **12 topkeys**다. scope/searches는 검증한 입력 사본, documents는 document DTO 배열, case_previews는 preview 배열이다.
+
+counts의 정확한 **15키**는 `candidate_count` null(중복 제거 모집단 미산정), `acquired_unique_pdfs`, `parsed_unique_pdfs`, `complete_text_pdfs`, `partial_text_pdfs`, `no_citable_text_pdfs`, `exhibit_relations`, `case_count`, `reviewed_claim_count`, `gap_or_unreviewed_claim_count`, `scope_counts`, `independent_group_eligible_cases`, `normative_comparison_completed_cases` null, `development_integrated_cases` null, `model_evaluated_cases` 정수0이다. 나머지 수는 이 packet 내 0 이상 정수이며 scope_counts는 `in_scope`, `pending`, `out_of_range`, `future` 4키다. 조사/추출/검토/규정 대조/개발/평가를 혼합 완료율로 만들지 않는다.
+
+`case(case_id)`는 common7 + `case`, `documents`의 **9 topkeys**다. case는 입력 case6키에 preview를 더한 7키이며, 출력 evidence는 입력12키에 `literal_verified=true`를 더한 13키다. documents는 그 사례의 document DTO 배열이다. evidence status는 문자 대응 검증이며 규정 적합·표 구조·측정 정확도 인증이 아니다.
+
+## search / match_intake — 같은 12 topkeys
+
+query는 정확한 `product_family`, `rule`, `method`, `model` 4키이며 각 값은 text(256)|null이다. 비교는 trim/casefold literal 일치만 쓴다. method 판본·모델 alias·표기 차이를 자동 대체하지 않는다. product family/rule/정확 method 세 값이 없으면 insufficient_evidence다. preview의 reviewed 조건·in_scope·기관 분류를 통과한 사례만 후보로 사용한다.
+
+두 함수의 출력은 common7 + `query`, `status`, `reason_codes`, `intake_binding`, `matches`의 **12키**다. status는 `candidates|no_match|insufficient_evidence`다. matches의 각 행은 `preview`, `model_relation` 2키이며 model_relation은 `exact_model|related_family|unspecified`다. 모델이 지정됐는데 같은 family의 다른 모델 사례만 있으면 관련 후보를 유지하되 status=insufficient_evidence·exact_model_case_missing이다. exact_model은 문자 식별자 일치이며 같은 실물/제조사/현재 지원 승인이 아니다. exact_model 우선 후 case_id로 정렬한다. 모델 미지정이면 unspecified다.
+
+reason_codes는 중복 없는 고정 배열로 `query_context_missing`, `no_reviewed_case`, `exact_model_case_missing`, `intake_product_unconfirmed`, `intake_market_unconfirmed`, `intake_market_not_fcc`, `intake_model_unconfirmed`, `intake_product_conflict`, `intake_model_conflict`, `intake_identity_unresolved`만 쓴다. enough query인데 현재 packet의 사례가 없으면 no_match/no_reviewed_case이며 제품 비지원 판정이 아니다.
+
+search의 intake_binding은 null이다. match_intake는 기존 `project_analysis`의 반환 dict를 읽는다. plain JSON projection의 다른 키는 보존 대상이 아니며 facts/questions만 판단에 사용한다. facts map은 최대64개이고 사용하는 product_type/market/model fact는 `value` text(4000), `status`(`explicit|inferred|uncertain|user_confirmed`), 선택적 `event_id`(ID 또는 양의 정수)만 허용한다. user_confirmed에는 event_id가 필요하다. explicit/user_confirmed 값만 쓰며 product_identity 질문이 남으면 insufficient_evidence다.
+
+intake_binding은 정확한 `product_family`, `market`, `model`, `fact_statuses` 4키다. 값은 지원된 확정값 또는 null이고, fact_statuses는 `product_type`, `market`, `model` 3키(실제 status 또는 null)다. market의 미국/FCC literal 허용 집합은 trim/casefold 기준 `FCC`, `US`, `USA`, `United States`, `United States of America`, `미국`이다. 그 밖의 시장·missing/inferred는 FCC로 가정하지 않는다. query family와 확정 product_type, 지정 query model과 확정 model이 다르거나 부족하면 insufficient_evidence다. query model이 null이고 접수 model이 확정됐으면 해당 model을 관계 분류에만 사용하며 query를 바꾸지 않는다. 기존 질문/승인/current generation/Store는 수정하지 않는다.
+
+## 고정 오류
+
+`FccReportCaseError(ValueError)`의 `.code`, `str(error)`, 유일한 `.args` 값은 다음 **9코드**다. private value/quote/bytes/URL·원시 exception/context를 넣지 않는다.
+
+| 코드 | 의미 |
+|---|---|
+| `fcc_case_invalid_packet` | JSON/6topkeys/하위 schema·ID·날짜·상태·관계 오류 |
+| `fcc_case_invalid_sources` | SHA:bytes 타입/집합/원본 hash·크기 불일치 |
+| `fcc_case_limit_exceeded` | 깊이/개수/크기/추출·응답 예산 초과 |
+| `fcc_case_pdf_invalid` | signature·strict parse·물리 페이지·암호화 PDF 오류 |
+| `fcc_case_extraction_unavailable` | 요구되는 기존 PDF parser를 사용할 수 없음 |
+| `fcc_case_invalid_evidence` | SHA/페이지/retained hash·line·literal·citable 불일치 |
+| `fcc_case_invalid_query` | query의 정확 키/값 또는 case_id 인자 형식 오류 |
+| `fcc_case_not_found` | 유효 ID의 사례가 현재 packet에 없음 |
+| `fcc_case_invalid_intake` | projection/facts/questions 형식 오류 |
+
+최초 검출 오류를 반환한다. 근거 부족/다른 제품·판본·시장 등 정상적인 비일치는 matches 상태이며 예외·실물 비지원으로 바꾸지 않는다. 생성 실패는 객체를 게시하지 않는다. 합성 회귀와 실제 P01 B001의 원본/페이지/검색·접수 검증을 별도 기록하고 전수 완료·실제 AI·실물 검증을 주장하지 않는다.
