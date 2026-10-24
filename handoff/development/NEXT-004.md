@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+최신 기준은 [통합015](INTEGRATION-015.md)의 기능 `ada7e2bdedfa30c68fbdccc248f43927bc930c0f`다.028/029/026fix의 소유4commit을 독립Yes 후 인수했고 새 전체 Python1578/Node103·source186불변·실제3PDF153쪽 재생/발견7/준비부족3/평가6null을 확인했다. corpus012는9고유PDF424쪽 인수·모집단unknown/공식대응0이다. 아래014 이하는 당시 이력이며 이 표를 우선한다.
+
+| 담당 | 현재 인수/독립 검토 | 실제 후속과 수용 조건 |
+|---|---|---|
+| 개발1 | 028인수d06fbdf.030f1500c1 최종독립Yes/receipt e04156d3을 다음016용동결, source4f4fd370·선택S04 16/밖24native0 | 031정식producer/packet/policy/claim·승인추적8JSON을root가해시인수해D3에연결배정. D1 text시도11/root0은별도. 다음CASE-PACKET035의기존manifest→canonical021/030 입력어댑터 최소계약제안 배정, 추가본문/공통파일변경0 |
+| 개발2 | 029인수66b4304. [032계약](../../docs/superpowers/specs/2026-10-24-intake-case-references-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-case-references.md) 승인→7b000136d0449fe133afa55023caa10e317ddeba 게시/독립최종Yes/receipt6142ead6·원격대조·다음016 동결 | 034 현재snapshot/불변참고이력 저장·조회 계약제안 배정. 아직공통Store/schema code/권한변경0·032evaluationnull/현재성false 유지 |
+| 개발3 | 026 원본+fix0807fe2 독립Yes/총괄57be7e6·ada7e2b.031private15합성·genuine030호환4조건 PASS/실제not_run을보존 | 독립Yes030 exactGitblob/동일dependency의031 한정읽기 software승인 기록. root가해시인수한정식packet/policy/producer/claimID8JSON·기존승인exact030을받아기존023 dBm→W 한셀만실행하도록실제배정, 실제I/O·API와합성분모분리·보고/comparisonnull |
+| 개발4 | 0277175393 독립Yes/receipt70482290, 다음016범위. owner12/17/14·전체1175와독립4HTTP/12UI구별 | [033B설계](../../docs/superpowers/specs/2026-10-24-fcc-case-discovery-ui-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-discovery-ui.md) 승인/구현실제배정.027부모+028 exact의존별도인수·소유10파일·lookup4/query4/원형DTO/typed예산·S03/S05동결7조회·기존024/권한/원문불변 |
+| P01 | 기존수집1~8 v028/v029/v030/새lead·America/SAR/규정대조 인수ACK.원본9/424·미보유/secondary/null/옛group 시점과구별 | 사용자준비0·새원문허가를기존metadata검수로대체하지않음. 법인/시설/TCB·날짜/개정/분할/부록/중복/공식대응/누락/규정미승인 유지, 실제개발공백만root↔P01 |
+
+015cut은026/028/029로고정게시한다.027/030/032/033/031은다음통합/실증이며이번1578/103·actual결과에합산하지않는다.총괄은완료단위의다음일을실제배정하고owner수정·검증→독립리뷰→통합/회귀→개발branch commit/push·remote대조를이어간다.원본/본문/복호문/측정값/암호 공개0·실제AI/실물/현장/외부제출 미실행,사용자준비0이다.
+
 최신 기준은 [통합014](INTEGRATION-014.md)의 기능 `af8e9cbf8773f54092fa223c41e3203eba18482a`다. 사례021·계산023·화면024·AI 문맥/응답025를 소유 수정·독립 최종 Yes 후 인수했다. 새 전체 Python1492/skip0·Node103·contract화면13/실제S03 12/S05 12 PASS, source182불변이다. 요청012는 P01→수집1~8 실제 배정/후속 운영을 유지하며 원본·별도참조7고유PDF348쪽을 인수했다. 아래013 이하는 당시 이력이며 이 표를 우선한다.
 
 | 담당 | 현재 인수/검토 | 실제 후속과 소유권 |

@@ -24,6 +24,8 @@ policy64KiB/depth6/node4096, source16/선택페이지총800, 기존 PDF source16
 
 ## 실제 수용과 추적
 
+실제 preflight에서 최초 제안의 basis SHA와 인수 파일이 불일치해 native0으로 정지한 실패를 보존했다. 총괄이 고정 S04-B0011 index와 실제21823B `P01-independent-review-S04.json`·같은16쪽 검수 범위를 대조해 basis를 `c337cd7bb64f7c38e4368a248b07f7670d8b6ec1edc55018df256b6e68569f93`로 정정했다. 원래 제안/실패와 별도 정정 receipt를 보존하며 source·페이지 집합·mode·권리 범위를 넓히지 않는다. 실제 reader의 permission integrity/mode 검사는 여전히 필수다.
+
 S04 EMC40쪽은 기존 P01 범위16쪽(2,3,5,6,8,9,11,14,15,16,17,18,19,22,23,40)만 accessibility로 검증한다. 실제 시도/retained/citable·원본 권리/변경 없음·범위 basis/정규 policy SHA는 caller private receipt에 남긴다. 남은24쪽 본문 미처리, 전체 의미 검토/기관·방법 승인0을 유지한다. actual reader가 범위를 수행할 수 없으면 실패/미실행으로 보고하고 성공을 만들지 않는다. 본문 일괄 JSON/복호 PDF는 쓰지 않는다.
 
 S06 America는 기존 visual/display-list 검수와 text/OCR0을 유지한다. native scope를 새로 발급하거나 None/빈 pages/허구 hash로021에 넣지 않고 metadata+미실행 gap으로 보존한다. S03/S05 기존 producer의 원바이트 재생,023/024의 변경 없는 DTO 수용·미선택 근거 거절과 default126 회귀를 확인한다.

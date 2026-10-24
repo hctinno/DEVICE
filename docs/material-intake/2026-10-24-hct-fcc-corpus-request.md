@@ -1,5 +1,7 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+최신 [통합015](../../handoff/development/INTEGRATION-015.md)는026/028/029의 구현·소유수정/독립Yes·새전체1578/103·실제API경계를확인했다. corpus현재원본/참조9고유PDF424쪽이며아래014 당시7/348·후속8/368은각시점동결이다.전수모집단/확정적격/전쪽의미검토·공식FCC대응을파일수로추정하지않고P01→수집1~8운영을계속한다.
+
 최신 인수·구현은 [통합014](../../handoff/development/INTEGRATION-014.md)다. 아래 최초 미산정/미보유와013 단계는 당시 이력으로 보존한다. 현재 고유 원본·별도 canonical reference는7PDF/348물리쪽이며 확정 적격7/전체 모집단/전수 완료와 구별한다. 실제 수집1~8 배정·후속 조사는 P01 한 창구로 계속된다.
 
 2026-10-24, Asia/Seoul. 신규 작업 `HCT-FCC-CORPUS-2025-2026-001`, 수집 창구 요청 `DEV-HCT-FCC-CORPUS-012`다. 사용자의 전달 파일 전체를 읽었으며 SHA-256은 `76ac8d9ee5b5836bfd99e8eecaa0492a2e0d3a9983a0329fe7b898afffed7eeb`다. 전달 파일은 공유 `.local/side-handoffs/hct-fcc-report-corpus-20261024/MAIN-PROMPT.txt`에 보존한다. 코드·메타데이터 외 원본/추출 본문/실제 측정값은 공개 Git에 추가하지 않는다.
@@ -76,3 +78,15 @@ S07 규정/판본12행·선택 원문 hash와 S08 관계/누락 주석은 개발
 기존 사용자 SM 재사용 metadata3JSON17593B와 좁힌 `P01-BGN-ROW-PROVENANCE-20261024-001`3JSON69158B는 별도 private 입력이며 신규 원본/collector증분0이다. LG 엄격 표시 반올림1상충·SM7/9/HT20·기준면/ATT/숨은정밀도 미확정을 보존하고 개발3에 전달했다. 전체 raw/Licensed 추가 준비를 요구하지 않는다.
 
 [후속대장](../../handoff/development/NEXT-004.md)에028 최종Yes/다음015·030계약승인/구현,029게시/독립리뷰,026 Important1 소유수정,027 정식route구현을 실제 배정했다. 준비된 자료부터 계속 연결하며 원문/본문/복호문/측정값/암호를 공개 Git·외부 모델에 보내지 않는다. 현재 사용자 결정/준비0이다.
+
+## 추가 원본·시점별 검수 — 통합015
+
+S01-B0014-v1 index4752B/SHA `7bd87848cdb3f2e4ede371d35962c2bfedd3a6ff99b0cefdf937b410f2d85880`·22payload776094B(21JSON/PDF1)을인수했다.새DFS1PDF20쪽은slave/외부master·NT/source시험·절차/capture/pulse·단위/보정·기준면·미확보판/사진을구별한다. S02-B0008-v1 index3385B/SHA `63de2c30d937296cda4dfcd19fef24a4a7874a8d4f8ed94ab9c2cd357bc09190`·14payload6181008B(13JSON/PDF1)을인수했다.새HCTAmerica1PDF56쪽은Bluetooth BR/EDR/FHSS이고b/g/n이아니다.두원본의bytes/SHA·strict leaf/Count·identity/mtime/mode/보안불변만root가재검증했고native본문/render0,기관/방법/교정·전체의미/물리승인0이다.현재9고유PDF424쪽이며옛7/8그룹대조는소급변경하지않는다.
+
+S07-B0009-v1 index3905B/SHA `980d61a6c7e4f3e3223feecb07d5b8686302fabc1bd38e79846755c800f412bf`·17JSON260538B와 S03-B0008-v1 index4741B/SHA `4f6c3fefd09efdab9d9d54916ff8913372a959885aa5663867c6efe9f6f50d01`·22payload105474B(21JSON/MD1)을인수/ACK했다.기존source관계/선택근거 보강이며신규PDF0이다. CW05의옛CAverage미검토와나중B0012한정검수·대화8/동결7·SAR0 30/38/suite43/181부분검수·상충/반올림/대시·caption/RSI/미전사·규정적용미확인을P01주석과같이보존한다.
+
+S01-B0015-v1 index4252B/SHA `1076f63013041bc4d190027ac0bd077e1c29072d9b302623f7aaece60d83531b`·19JSON62752B도인수/ACK했다. secondary검색/HTML lead3·별도FCCID관찰2이며실제SHA/bytes/page/parse/공식mapping은null·신규PDF/확정적격0이다.이전25candidate/8입력/부분descriptor와현재9원본전체대조를혼동하지않고모델·기관/사이트/TCB/issue·grant/검색날짜·빈검색기간과모집단미확인을구별한다.
+
+031의LG단일셀접근/행근거는index978B/SHA `40906b9dc370b96ff4ef5d7dfc40622d1d18baaa66d28d2097fd586873875645`·3JSON8734B만재사용했다.실제030 software의독립Yes와source·범위[1,2,6,11,25]/accessibility·권리관측을결합해개발1의정식producer와개발3의단일dBm→W 실증을연결중이다.기존메타데이터만으로case9/lineSHA를만들거나현재fixture준비·실제계산성공을주장하지않는다.원문추가/전체본문재발행/raw·Licensed·사용자재준비0이다.
+
+기존표준번호/판본·KDB/규정snapshot관계대조와현재방법승인·기관적합성·실장비실증은별개다.공식mapping0·모집단unknown/누락조사·권리private·그룹독립성unknown을유지하고준비된자료부터[다음작업](../../handoff/development/NEXT-004.md)에반영한다.전체수집완료를기다리지않으며현재사용자결정/준비0이다.
