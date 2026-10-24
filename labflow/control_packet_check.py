@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 
 from .control_packet_audit import audit_control_packet, ControlPacketAuditError
@@ -69,6 +70,7 @@ def main(argv=None) -> int:
         parser = _parser()
         if arguments == ["--help"]:
             parser.print_help(file=sys.stdout)
+            sys.stdout.flush()
             return 0
         packet_dir, expected = _arguments(parser, arguments)
         summary = audit_control_packet(packet_dir, expected_index_sha256=expected)
@@ -91,5 +93,36 @@ def main(argv=None) -> int:
     return status
 
 
+def _process_main():
+    """Finalize only module-owned process I/O; main() never replaces caller I/O."""
+    status = main()
+    for stream in (sys.stdout, sys.stderr):
+        if stream is None:
+            continue
+        try:
+            stream.flush()
+        except (OSError, ValueError):
+            if status == 0:
+                status = 1
+                try:
+                    _json_line(sys.stderr, {"error": "packet_cli_internal_error"})
+                except Exception:
+                    pass
+            try:
+                target = stream.fileno()
+                sink = os.open(os.devnull, os.O_WRONLY)
+                try:
+                    if sink != target:
+                        os.dup2(sink, target)
+                finally:
+                    if sink != target:
+                        os.close(sink)
+            except Exception:
+                # If even the failed descriptor cannot be repaired, this CLI
+                # process must not retry buffered I/O during interpreter shutdown.
+                os._exit(status)
+    return status
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(_process_main())

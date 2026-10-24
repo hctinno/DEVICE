@@ -38,6 +38,10 @@ status = main(["--packet-dir", str(packet_dir), "--index-sha256", expected_index
 
 `main(argv=None) -> int`는 `None`일 때 프로세스 인자만 읽는다. 호출자는 stdout/stderr와 반환 status를 함께 취급한다. 동결 audit 오류 10개만 공개하며 예상 밖 오류는 위 고정 CLI 코드로 정제한다.
 
+직접 호출한 `main()`은 호출자의 표준 스트림 객체·descriptor를 교체하거나 닫지 않는다. 모듈 실행 경계만 종료 전에 프로세스 stdout/stderr의 flush를 확인한다. 실패한 자식 프로세스 descriptor만 OS null sink로 돌려 종료 시 재flush 진단과 exit 120을 막는다. 정상 스트림에는 이 교체를 하지 않는다. 이 처리는 [Python의 종료 flush 동작](https://docs.python.org/3.12/library/sys.html#sys.exit)과 [broken pipe 처리 방식](https://docs.python.org/3.12/library/signal.html#note-on-sigpipe)을 따른다.
+
+stdout 출력이 실패하면 exit 1이며 stderr가 열려 있을 때 고정 `packet_cli_internal_error` JSON만 전달한다. stderr 수신쪽이 닫혀 있으면 오류 JSON을 전달할 수 없지만 stdout으로 옮겨 출력하지 않고 기존 오류 분류의 exit를 유지한다. 실패한 descriptor의 종료 정리도 불가능하면 해당 CLI 프로세스만 정해진 status로 종료하며 추가 원시 진단을 출력하지 않는다. null sink 정리는 사용자 자료 파일·DB를 변경하지 않는다.
+
 ## 동작 범위와 검증
 
 이 CLI는 자동 발견·선택·복사·쓰기·수입·압축 추출·예상 hash 생성·DB·SDK·네트워크·장비 제어를 하지 않는다. 외부 자료의 코드·HTML·압축 내부 명령을 실행하지 않는다. 로컬 파일의 읽기와 검증만 [audit의 한도/지원 범위](control_packet_audit_usage.md) 안에서 수행한다.

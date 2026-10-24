@@ -231,6 +231,102 @@ with patch.object(source, 'audit_control_packet', side_effect=error):
         self.assert_no_private_output(result.stdout)
         checker.assert_not_called()
 
+    def closed_pipe_process(self, args, *, stdout_closed=False, stderr_closed=False, launcher=None):
+        options = {"creationflags": subprocess.CREATE_NO_WINDOW} if os.name == "nt" else {}
+        command = [sys.executable, "-B"]
+        command += ["-c", launcher] if launcher is not None else ["-m", "labflow.control_packet_check"]
+        process = subprocess.Popen(
+            [*command, *args],
+            cwd=self.repo, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, encoding="utf-8", **options,
+        )
+        try:
+            if stdout_closed:
+                process.stdout.close()
+                process.stdout = None
+            if stderr_closed:
+                process.stderr.close()
+                process.stderr = None
+            stdout, stderr = process.communicate(timeout=20)
+            return subprocess.CompletedProcess([], process.returncode, stdout or "", stderr or "")
+        finally:
+            if process.poll() is None:
+                process.kill()
+                process.communicate()
+
+    def test_closed_stdout_keeps_internal_error_exit_and_no_shutdown_diagnostic(self):
+        before = self.snapshot()
+        result = self.closed_pipe_process(self.arguments(), stdout_closed=True)
+        self.assert_failure(result, "packet_cli_internal_error", 1)
+        self.assertEqual(before, self.snapshot())
+
+    def test_closed_help_stdout_is_internal_error_instead_of_success(self):
+        result = self.closed_pipe_process(["--help"], stdout_closed=True)
+        self.assert_failure(result, "packet_cli_internal_error", 1)
+
+    def test_closed_stderr_keeps_invalid_argument_exit_and_empty_stdout(self):
+        result = self.closed_pipe_process(["--PRIVATE-SECRET"], stderr_closed=True)
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(result.stdout, "")
+
+    def test_both_closed_pipes_keep_internal_error_exit(self):
+        result = self.closed_pipe_process(self.arguments(), stdout_closed=True, stderr_closed=True)
+        self.assertEqual(result.returncode, 1)
+
+    def test_failed_process_sink_repair_preserves_exit_without_shutdown_diagnostic(self):
+        launcher = """
+import os, runpy, sys
+from unittest.mock import patch
+original_open = os.open
+def guarded_open(path, *args, **kwargs):
+    if os.fspath(path) == os.devnull:
+        raise OSError('PRIVATE-SECRET null sink unavailable')
+    return original_open(path, *args, **kwargs)
+sys.argv = ['labflow.control_packet_check', *sys.argv[1:]]
+with patch.object(os, 'open', side_effect=guarded_open):
+    runpy.run_module('labflow.control_packet_check', run_name='__main__')
+"""
+        result = self.closed_pipe_process(self.arguments(), stdout_closed=True, launcher=launcher)
+        self.assert_failure(result, "packet_cli_internal_error", 1)
+
+    def test_main_caller_keeps_ownership_of_failed_streams(self):
+        module = importlib.import_module("labflow.control_packet_check")
+
+        class FailedStream:
+            closed = False
+
+            def write(self, value):
+                raise OSError("PRIVATE-SECRET stream write")
+
+            def flush(self):
+                raise OSError("PRIVATE-SECRET stream flush")
+
+            def fileno(self):
+                raise AssertionError("main must not access the caller's descriptor")
+
+            def close(self):
+                self.closed = True
+                raise AssertionError("main must not close the caller's stream")
+
+        failed = FailedStream()
+        stderr = io.StringIO()
+        with mock.patch.object(sys, "stdout", failed), redirect_stderr(stderr), \
+                mock.patch.object(os, "dup2") as duplicate:
+            self.assertEqual(module.main(self.arguments()), 1)
+            self.assertIs(sys.stdout, failed)
+            duplicate.assert_not_called()
+        self.assertEqual(json.loads(stderr.getvalue()), {"error": "packet_cli_internal_error"})
+        self.assertFalse(failed.closed)
+
+        stdout = io.StringIO()
+        with redirect_stdout(stdout), mock.patch.object(sys, "stderr", failed), \
+                mock.patch.object(os, "dup2") as duplicate:
+            self.assertEqual(module.main([]), 2)
+            self.assertIs(sys.stderr, failed)
+            duplicate.assert_not_called()
+        self.assertEqual(stdout.getvalue(), "")
+        self.assertFalse(failed.closed)
+
 
 if __name__ == "__main__":
     unittest.main()
