@@ -162,7 +162,7 @@ def _strings(value, count, length, *, ids=False, minimum=0, code="fcc_case_inval
     _list(value, count, minimum=minimum, code=code)
     for item in value:
         _id(item, code=code) if ids else _text(item, length, code=code)
-    if len(set(value)) != len(value):
+    if ids and len(set(value)) != len(value):
         _fail(code)
 
 
@@ -508,6 +508,8 @@ class FccReportCaseCatalog:
                     if (value is None or type(value) is str and not value.strip()
                             or type(value) in (list, dict) and not value or not claim["evidence"]):
                         _fail()
+                for evidence in claim["evidence"]:
+                    self._validate_evidence_metadata(case, evidence)
             _list(case["relations"], 32)
         for case in self._packet["cases"]:
             seen = set()
@@ -567,24 +569,32 @@ class FccReportCaseCatalog:
                             "text_sha256": page["text_sha256"], "line_count": len(page["line_spans"]),
                             "citable": self._citable(result, page)} for page in result["pages"]]}
 
-    def _validate_evidence(self, case, evidence):
+    def _validate_evidence_metadata(self, case, evidence):
         code = "fcc_case_invalid_evidence"
         _keys(evidence, _EVIDENCE, code)
         _id(evidence["document_id"], code=code); _sha(evidence["source_sha256"], code)
         _sha(evidence["text_sha256"], code)
         if evidence["document_id"] not in case["document_ids"]:
             _fail(code)
-        result = self._extractions[evidence["document_id"]]
-        if evidence["source_sha256"] != result["source"]["sha256"]:
+        document = self._document_rows[evidence["document_id"]]
+        if evidence["source_sha256"] != document["sha256"]:
             _fail(code)
         for key in ("file_page", "line_start", "line_end"):
             _integer(evidence[key], 1, code=code)
+        if evidence["file_page"] > document["physical_pages"]:
+            _fail(code)
         if evidence["line_end"] < evidence["line_start"] or evidence["line_end"] - evidence["line_start"] >= 40:
             _fail(code)
         for key in ("printed_page", "table", "row", "column"):
             _text(evidence[key], 128, nullable=True, code=code)
         _strings(evidence["footnotes"], 16, 512, code=code)
         _text(evidence["quote"], 8192, code=code)
+
+    def _validate_evidence(self, case, evidence):
+        code = "fcc_case_invalid_evidence"
+        result = self._extractions[evidence["document_id"]]
+        if evidence["source_sha256"] != result["source"]["sha256"]:
+            _fail(code)
         pages = [page for page in result["pages"] if page["page_number"] == evidence["file_page"]]
         if len(pages) != 1 or not self._citable(result, pages[0]):
             _fail(code)
