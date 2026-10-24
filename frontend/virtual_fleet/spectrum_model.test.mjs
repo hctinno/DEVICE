@@ -127,3 +127,37 @@ test('chart geometry uses declared crossings and reports an unrepresentable axis
   const collapsed=spectrumFixture();collapsed.bandwidth.left_offset_hz=0;collapsed.bandwidth.right_offset_hz=0;
   assert.equal(spectrumGeometry(validateSpectrumView(collapsed)).status,'error');
 });
+
+test('SVG float coordinate precision preserves distinctions before publishing chart geometry',()=>{
+  assert.equal(spectrumGeometry(validateSpectrumView(spectrumFixture('svg-precision'))).status,'error');
+  const value=spectrumFixture();value.trace.relative_levels_db[0]=-6.00000000001;
+  assert.equal(spectrumGeometry(validateSpectrumView(value)).status,'error');
+});
+
+test('non-enumerable object and array data fields cannot disappear from the validated JSON copy',()=>{
+  for(const change of [v=>Object.defineProperty(v,'schema_version',{enumerable:false}),
+    v=>Object.defineProperty(v.psd,'conditional_comparison',{enumerable:false}),
+    v=>Object.defineProperty(v.trace.frequency_offsets_hz,0,{enumerable:false}),
+    v=>{Object.assign(v,spectrumFixture('incomplete'));Object.defineProperty(v.bandwidth.reason_codes,0,{enumerable:false});}]) {
+    const value=spectrumFixture();change(value);assert.throws(()=>validateSpectrumView(value),/invalid_spectrum_view/);
+  }
+  const normal=spectrumFixture();Object.freeze(normal.psd);assert.deepEqual(validateSpectrumView(normal),normal);
+  const nullPrototype=Object.assign(Object.create(null),spectrumFixture());
+  nullPrototype.trace=Object.assign(Object.create(null),nullPrototype.trace);
+  nullPrototype.psd=Object.assign(Object.create(null),nullPrototype.psd);
+  const copy=validateSpectrumView(nullPrototype);assert.equal(copy.psd.conditional_comparison,'meets');
+  assert.deepEqual(validateSpectrumView(copy),copy);
+});
+
+test('JSON values are checked by their own indices rather than inherited array hooks',()=>{
+  const value=spectrumFixture();
+  Object.setPrototypeOf(value.trace.frequency_offsets_hz,Object.assign(Object.create(Array.prototype),{at(){return Infinity;}}));
+  value.bandwidth.right_offset_hz=1e9;
+  assert.throws(()=>validateSpectrumView(value),/invalid_spectrum_view/);
+  const reasons=spectrumFixture('incomplete');reasons.bandwidth.reason_codes=['unknown'];
+  Object.setPrototypeOf(reasons.bandwidth.reason_codes,Object.assign(Object.create(Array.prototype),{*[Symbol.iterator](){yield 'left_crossing_missing';}}));
+  assert.throws(()=>validateSpectrumView(reasons),/invalid_spectrum_view/);
+  const dense=spectrumFixture('incomplete');
+  for(const array of [dense.trace.frequency_offsets_hz,dense.trace.relative_levels_db,dense.bandwidth.reason_codes]) Object.setPrototypeOf(array,null);
+  assert.equal(validateSpectrumView(dense).bandwidth.reason_codes[0],'left_crossing_missing');
+});
