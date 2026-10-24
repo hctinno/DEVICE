@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+후속공통계약을고정했다. 현재root기능은01879f5e72/게시e2f998c(1677Python114Node123UI/source196)이며계약문서추가가새제품기능완료는아니다.
+
+| 담당 | 실제 다음 단위/인수 조건 |
+|---|---|
+| 개발1 | 037df001a독립Yes/d76fb700(직접216+추가9/실제LG0·긴경로기존14오류보존).040 B/S0·신규CLI3파일·정확rootbase+별도037의존·필수4인자/ready8·noStore시작/자기port0·합성E2E구현. 실제LG040원문준비미승인 |
+| 개발2 | 034c7c1b19독립Yes/038신규3구현진행. append/freshcurrent·historicalorigin/FK/CAS·기존Store/schema불변·원본private |
+| 개발3 | 036ea768900독립Yes/3e6b5828·직접136+추가13/실제PDF0.041은기존RFframe·센서goal4정책→meter acquire/advance/fetch→journal→별도literal평가의7합성시나리오계약검토. 새수학/026·036실행권한추론0·root019base대기 |
+| 개발4 | 039 B·소유10파일·명시case/claim/rule/method·정식036POST/typedUI·lastgood/generation/focus구현. 정확rootbase+별도036·037각3의존/수정0. rootactualdescriptor8은metadata-only파생1558B/5d423e40…/소스새읽기0,actual039은승인LG선택5/새한phase로분리 |
+| P01 | v0383패킷63payload4190668B 인수ACK. target추가1/23쪽과2024발행excluded1/46쪽·보유HAC8쪽을구별. target/reference12/489/29261984B/direct11+parent1/official0·excluded1/46/2771507B. 다음실제누락큐배정/검수계속 |
+
+다음019대기열은034원feature71982d+수정c7c1b19,036ea768900,037df001a의독립Yes·정확소유3파일각각이다. 아직root code미cherry이며018에미소급한다. 원본/실패/미커밋·소유권/권한false보존,사용자준비0.
+
 최신 [통합018](INTEGRATION-018.md) 기능은 `79f5e72ae3bd5c69f9757a67ec8e2e86a5342e02`다.033 exact4fd341c/소유10·독립Yes c1364322를 인수하고 새Python1677/Node114·source196불변/화면123 PASS를 확인했다.034/036/037은 이번 code cut에 뒤늦게 섞지 않는다.
 
 | 담당 | 현재 인수와 실제 후속 |

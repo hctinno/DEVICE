@@ -1,5 +1,7 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+v038 후속인수: S01B0019/S02B0012/S03B0010 index3pin·payload63/4190668B(JSON60/PDF2/MD1)를전체SHA/strictUTF8JSON·sourceidentity/mtime/mode불변으로인수/명시ACK했다. root새PDF2의strictleaf23/46·전체Count/경고0·emptyUSER1/권한불변·native/content/render/OCR0이다. 2025발행EMC1/23쪽은target증가, 2024-10-29 America원문1/46쪽은제외보존/target0으로구별해현재target/reference12PDF489쪽29261984B/direct11+parent1/official0와별도excluded1/46/2771507B를기록한다. 전부13을2025+실적으로세지않는다. HAC1정확8쪽보강은primary14/73·suite59/181/남은122·actual측정행0이며기재장비설명을API/제어/현재교정으로승격하지않는다. 공개값/quote/식별자/원문은추가0,전수/규범미승인·기존모델상충/실패/누락은같다. 아래018의11/466은게시당시수량이다.
+
 최신 [통합018](../../handoff/development/INTEGRATION-018.md)은033 검색·검토 화면과 실제S03/S05별7질의를 정식GET→DOM으로 연결했다. 새전체1677/114·화면123은 소프트웨어 검증이며 corpus 전수/규범승인이 아니다. S01B0018/S02B0011/S07B0010/S08B0013의67JSON352360B를 root가 전체pin/strictUTF8JSON/원바이트·identity불변으로 인수/명시ACK했다. 신규원문0·11원본/참조466쪽/28127705B/direct10+parent1/official0·모집단unknown, 실패/검색후보·부분규정해석7/상세pagebinding gap9·current9group10family의 독립성unknown을 보존한다. P01 v038의 기존수집1/2/3 실제배정·정확ACK3/26입력과 공개수집원격650699c를 대조했다. 수집전체와 기존작업을 계속하며 아래017 이하는 당시이력이다.
 
 최신 [통합017](../../handoff/development/INTEGRATION-017.md)은035준비API의독립Yes/새전체1671·103·지정화면31/실제JSON3call을확인했다. S08B0012 metadata13JSON188760B는옛10/431검수로동결,새S01B0017 EMC원문35p/23payload1349012B를별도정확인수ACK해현재11원본/참조466p다. 신규표지/본문모델상충·미전사/식별자private·fcc.report403≠official403/officialmapping0·전수/semantic/규범미확인을유지한다. P01에012-FOLLOWUP-20261024-001로기존S07두보고서인용판본/방법4~8행과S08추가1metadata delta실제배정을요청했다.새원문/유료표준/계정/사용자준비요청0이며아래016 이하는각시점기록이다.

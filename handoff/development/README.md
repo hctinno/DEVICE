@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+018 e2f998c의1677Python114Node123UI/source196은유지하고 [039 설계](../../docs/superpowers/specs/2026-10-24-fcc-case-calculation-ui-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-calculation-ui.md),[040 설계](../../docs/superpowers/specs/2026-10-24-fcc-case-serve-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-serve.md)을다음구현으로배정한다. 개발2 038·개발4 039·개발1 040구현과개발3 041계약/총괄019통합을계속한다. 코드/가상실행/원문준비·독립리뷰/게시를구별하며P01신규3패킷인수뒤target12/489·excluded1/46·전수unknown/사용자준비0이다. 아래018본문은각시점기록이다.
+
 최신 [통합018](INTEGRATION-018.md)은033/독립Yes·새1677Python114Node·source196불변·제품UI123을 인수했다.034 수정최종/036은 독립Yes이나018 code에 포함하지 않으며037리뷰를 병행한다. 개발2 [038 설계](../../docs/superpowers/specs/2026-10-24-intake-reference-ledger-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-reference-ledger.md) 신규3파일 구현을 실제배정했고 개발1/3/4는 지적우선과040/041/039 후속계약·검사준비를 받았다. P01 metadata67JSON ACK·원문11/466·실제v0383배정/ACK3·사용자준비0을 유지한다. [현재대장](NEXT-004.md)과 최신private followup을 우선하며 아래017 이하는 보존이력이다.
 
 최신 [통합017](INTEGRATION-017.md)은035소유3파일/독립Yes·새전체1671/Node103·source193불변·제품31/JSON3call·원문0을확인했다. 개발1은037 B명시host/신규3파일구현승인·정확017게시pin수신으로이어가고034A/036/033도계속한다. P01의원본11/466·EMC모델상충/S08옛10-only·후속S07/S08재사용요청과사용자준비0을유지한다. [현재대장](NEXT-004.md)을우선하며아래016 이하는당시이력이다.
