@@ -584,3 +584,222 @@ class StoreOpenExistingTests(unittest.TestCase):
             self.assertEqual(con.execute('SELECT synthetic FROM blobs').fetchone()[0], 1)
         with legacy as entered: self.assertIs(entered, legacy)
         with legacy.connection() as con: self.assertEqual(con.execute('SELECT 1').fetchone()[0], 1)
+
+
+class StoreConnectionTerminationTests(unittest.TestCase):
+    setUp = StoreOpenExistingTests.setUp
+
+    def connection_case(self, phase='close', *, primary=None, rollback=None, close=None):
+        """Observe public cleanup before GC fallback; never repair binding.active."""
+        number = len(getattr(self, 'evidence', []))
+        legacy = Store(self.base / ('termination-' + str(number)))
+        value = Store.open_existing(str(legacy.root))
+        reference = weakref.ref(value)
+        descriptors = list(value._existing_binding.handles)
+        original_connect, original_schema = sqlite3.connect, module._existing_schema
+        connections, entered, actual = [], False, None
+        state = {'active_before': value._existing_binding.active}
+
+        class FaultConnection(sqlite3.Connection):
+            def rollback(self):
+                super().rollback()
+                self.rollback_calls += 1
+                if self.rollback_error is not None:
+                    raise self.rollback_error
+
+            def commit(self):
+                super().commit()
+                self.commit_completed = True
+                if self.commit_error is not None:
+                    raise self.commit_error
+
+            def close(self):
+                self.close_calls += 1
+                super().close()
+                self.close_completed = True
+                if close is not None:
+                    raise close
+
+        def connect(*args, **kwargs):
+            con = original_connect(*args, factory=FaultConnection, **kwargs)
+            con.rollback_calls = con.close_calls = 0
+            con.rollback_error = primary if phase == 'admission_rollback' else None
+            con.commit_error = None
+            con.commit_completed = con.close_completed = False
+            connections.append(con)
+            return con
+
+        def admit(con):
+            original_schema(con)
+            if phase == 'admission':
+                con.rollback_error = rollback
+                raise primary
+
+        def live(descriptor):
+            try:
+                os.fstat(descriptor)
+                return True
+            except OSError:
+                return False
+
+        try:
+            with mock.patch.object(sqlite3, 'connect', side_effect=connect), \
+                    mock.patch.object(module, '_existing_schema', side_effect=admit):
+                try:
+                    with value.connection() as con:
+                        entered = True
+                        state['active_in_body'] = value._existing_binding.active
+                        con.rollback_error = rollback
+                        con.commit_error = primary if phase == 'commit' else None
+                        con.execute("INSERT INTO events(created_at,action,subject_id,details_json) "
+                                    "VALUES('SYN','termination','SYN','{}')")
+                        if phase == 'body':
+                            raise primary
+                except BaseException as error:
+                    actual = error
+                    error.__traceback__ = None
+            state.update(error=actual, entered=entered, active_after=value._existing_binding.active,
+                         sql_connections=len(connections),
+                         close_completed=all(c.close_completed for c in connections),
+                         close_calls=[c.close_calls for c in connections],
+                         rollback_calls=[c.rollback_calls for c in connections])
+            state['sql_closed'] = True
+            for con in connections:
+                try:
+                    con.execute('SELECT 1')
+                except sqlite3.ProgrammingError:
+                    pass
+                else:
+                    state['sql_closed'] = False
+            state['native_live_before_caller_close'] = sum(map(live, descriptors))
+            try:
+                value.close()
+            except BaseException as error:
+                state['caller_close_error'] = getattr(error, 'code', type(error).__name__)
+            else:
+                state['caller_close_error'] = None
+            state['native_live_after_caller_close'] = sum(map(live, descriptors))
+            check = original_connect(legacy.db)
+            try:
+                state['committed_rows'] = check.execute('SELECT count(*) FROM events').fetchone()[0]
+            finally:
+                check.close()
+        finally:
+            # A RED may skip SQL close too. Close only known fixture connections
+            # after observing the product, then let GC clean up leaked pins.
+            # Neither fallback substitutes for the public close observations.
+            state['fixture_SQL_cleanup_required'] = any(not c.close_completed for c in connections)
+            for connection in connections:
+                sqlite3.Connection.close(connection)
+            for error in (actual, primary, rollback, close):
+                if error is not None:
+                    error.__traceback__ = None
+            value = None
+            gc.collect()
+        state['store_collected'] = reference() is None
+        state['native_live_after_gc'] = sum(map(live, descriptors))
+        self.evidence = getattr(self, 'evidence', [])
+        self.evidence.append({**{k: v for k, v in state.items() if k != 'error'},
+                              'phase': phase, 'error_type': type(actual).__name__,
+                              'error_code': getattr(actual, 'code', None),
+                              'same_primary': actual is primary,
+                              'same_close': actual is close})
+        return state
+
+    def assert_released(self, state, *, entered=True, committed_rows=1):
+        self.assertEqual((state['active_before'], state['active_after']), (0, 0))
+        self.assertEqual(state['entered'], entered)
+        if entered:
+            self.assertEqual(state['active_in_body'], 1)
+        self.assertEqual(state['sql_connections'], 1)
+        self.assertTrue(state['close_completed'])
+        self.assertTrue(state['sql_closed'])
+        self.assertEqual(state['close_calls'], [1])
+        self.assertIsNone(state['caller_close_error'])
+        self.assertGreater(state['native_live_before_caller_close'], 0)
+        self.assertEqual(state['native_live_after_caller_close'], 0)
+        self.assertTrue(state['store_collected'])
+        self.assertEqual(state['native_live_after_gc'], 0)
+        self.assertEqual(state['committed_rows'], committed_rows)
+
+    def test_connection_termination_control_releases_SQL_and_native_resources(self):
+        state = self.connection_case('control')
+        self.assertIsNone(state['error'])
+        self.assert_released(state)
+
+    def test_connection_termination_close_control_base_exceptions_release_reservation(self):
+        for kind in (KeyboardInterrupt, SystemExit, GeneratorExit):
+            with self.subTest(kind=kind.__name__):
+                first = kind('SYN first close interruption')
+                state = self.connection_case(close=first)
+                self.assertIs(state['error'], first)
+                self.assert_released(state)
+
+    def test_connection_termination_first_body_failure_wins_over_cleanup_base_exceptions(self):
+        corrupt = sqlite3.DatabaseError('PRIVATE first body SQL')
+        corrupt.sqlite_errorcode = sqlite3.SQLITE_CORRUPT
+        for first, later, last in ((RuntimeError('SYN first body'), KeyboardInterrupt(), SystemExit()),
+                                   (KeyboardInterrupt(), SystemExit(), GeneratorExit()),
+                                   (SystemExit(), GeneratorExit(), KeyboardInterrupt()),
+                                   (corrupt, KeyboardInterrupt(), SystemExit())):
+            with self.subTest(first=type(first).__name__):
+                state = self.connection_case('body', primary=first, rollback=later, close=last)
+                if first is corrupt:
+                    self.assertIsInstance(state['error'], module.StoreOpenError)
+                    self.assertEqual(state['error'].code, 'store_open_integrity_invalid')
+                else:
+                    self.assertIs(state['error'], first)
+                self.assert_released(state, committed_rows=0)
+
+    def test_connection_termination_first_admission_failure_wins_over_cleanup_base_exceptions(self):
+        corrupt = sqlite3.DatabaseError('PRIVATE first admission SQL')
+        corrupt.sqlite_errorcode = sqlite3.SQLITE_CORRUPT
+        for first, code in ((KeyboardInterrupt(), None), (corrupt, 'store_open_integrity_invalid'),
+                            (module.StoreOpenError('store_open_schema_mismatch'), 'store_open_schema_mismatch')):
+            with self.subTest(first=type(first).__name__):
+                state = self.connection_case('admission', primary=first,
+                                             rollback=SystemExit(), close=GeneratorExit())
+                if code is None:
+                    self.assertIs(state['error'], first)
+                else:
+                    self.assertIsInstance(state['error'], module.StoreOpenError)
+                    self.assertEqual(state['error'].code, code)
+                self.assert_released(state, entered=False, committed_rows=0)
+
+    def test_connection_termination_first_commit_failure_wins_over_close_base_exceptions(self):
+        for first, code in ((KeyboardInterrupt(), None),
+                            (sqlite3.OperationalError('PRIVATE first commit SQL'), 'store_open_unavailable')):
+            with self.subTest(first=type(first).__name__):
+                state = self.connection_case('commit', primary=first, close=SystemExit())
+                if code is None:
+                    self.assertIs(state['error'], first)
+                else:
+                    self.assertIsInstance(state['error'], module.StoreOpenError)
+                    self.assertEqual(state['error'].code, code)
+                self.assert_released(state)
+
+    def test_connection_termination_first_admission_rollback_interruption_wins_over_close(self):
+        for kind in (KeyboardInterrupt, SystemExit, GeneratorExit):
+            with self.subTest(kind=kind.__name__):
+                first = kind('SYN first admission rollback')
+                state = self.connection_case('admission_rollback', primary=first, close=KeyboardInterrupt())
+                self.assertIs(state['error'], first)
+                self.assert_released(state, entered=False, committed_rows=0)
+
+    def test_connection_termination_ordinary_close_only_keeps_fixed_unavailable(self):
+        state = self.connection_case(close=OSError('PRIVATE ordinary close'))
+        self.assertIsInstance(state['error'], module.StoreOpenError)
+        self.assertEqual(state['error'].code, 'store_open_unavailable')
+        self.assertIsNone(state['error'].__context__)
+        self.assertIsNone(state['error'].__cause__)
+        self.assert_released(state)
+
+    def test_connection_termination_closed_store_never_reserves_or_decrements(self):
+        value = Store.open_existing(str(self.root))
+        value.close()
+        with self.assertRaises(module.StoreOpenError) as caught:
+            with value.connection():
+                self.fail('Closed Store yielded a connection')
+        self.assertEqual(caught.exception.code, 'store_open_closed')
+        self.assertEqual(value._existing_binding.active, 0)
+        value.close()
