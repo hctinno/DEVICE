@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_kikusui_plz1004whb.json",
+  "original_log_sha256": "ec2c6298647be8e517b382c60292ddf0d2fce9be025d0d73725d70f7f4d34503",
+  "original_log_bytes": 26053,
+  "queries": [
+    "Kikusui PLZ1004WHB"
+  ],
+  "discovered_urls": [
+    "https://calright.com/wp-content/uploads/2018/04/23382.pdf",
+    "https://jp.mercari.com/search?keyword=KIKUSUI",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_4W_D.pdf",
+    "https://kikusui.co.jp/sitemap-html/",
+    "https://kr.kikusui.co.jp/downloads/",
+    "https://kr.kikusui.co.jp/sitemap-html/",
+    "https://suumo.jp/chintai/bc_100520471890/",
+    "https://suumo.jp/chintai/jnc_000094701763/",
+    "https://suumo.jp/chintai/jnc_000094701763/?bc=100331086709",
+    "https://suumo.jp/chintai/jnc_000104681496/",
+    "https://suumo.jp/library/tf_01/sc_01104/to_1000876186/",
+    "https://www.kikusui-chem.co.jp/download/about.html",
+    "https://www.kikusui-chem.co.jp/download/search/product/",
+    "https://www.kikusui.cn/resources/001/pdf/kikusui-proCat_2022_cn.pdf",
+    "https://www.kikusui.com/en/Corporate"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

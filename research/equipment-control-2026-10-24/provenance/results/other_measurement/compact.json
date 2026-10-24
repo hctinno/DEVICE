@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/compact.json",
+  "original_log_sha256": "6fbbfb37e49ef0caea4f4b662190b6d0a953f15a18957454cbd3b5fe28ea3f4f",
+  "original_log_bytes": 96419,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

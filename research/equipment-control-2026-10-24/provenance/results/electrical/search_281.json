@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_281.json",
+  "original_log_sha256": "5de60e40016d255368353435601d447ee87990d550978cb13e566dd1e2e5f0ae",
+  "original_log_bytes": 31176,
+  "queries": [
+    "YOKOGAWA DX 230 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.logic-control.com/docs/kepware/Manuals/Drivers/Yokogawa/Yokogawa%20DX%20Serial%20Driver.pdf",
+    "https://downloads.softwaretoolbox.com/demodnld/prod_docs/topserver_help_pdf/Common/yokogawa-dx-serial-manual.pdf",
+    "https://manuals.plus/m/6d58b8492f78cb4e69839e166f56a1b09c2e43513bed2d9e52d61837d693e820.pdf",
+    "https://manualzz.com/doc/12576441/yokogawa-dx100--dx200--mv-series-data-recorders-help-manual",
+    "https://manualzz.com/doc/6583539/yokogawa-dxa120-dx-p-hardware-configurator-daqstandard-us",
+    "https://sine.ni.com/apps/utf8/niid_web_display.model_page?p_model_id=8009",
+    "https://support.ptc.com/help/kepware/drivers/en/kepware/drivers/YOKOGAWADXE/setup.html",
+    "https://support.ptc.com/help/kepware/drivers/en/kepware/drivers/YOKOGAWADXS/setup.html",
+    "https://web-material3.yokogawa.com/IM04L06A01-01E_050.pdf",
+    "https://web-material3.yokogawa.com/TI%2004L41B01-06EN.pdf",
+    "https://www.autobase.biz/English/AutoBaseHelp/Help10/Plc_Scan/YOKO_DX.htm",
+    "https://www.manualslib.com/manual/1616777/Yokogawa-Dx-Series.html",
+    "https://www.manualslib.es/manual/16165/Yokogawa-Daqstation-Dx200-Serie.html",
+    "https://www.opcturkey.com/uploads/v5-yokogawa-dx-serial-manual.pdf",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/PLC/comments/xy1v3z",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.yokogawa.com/de/solutions/discontinued/dx100p-dx200p-paperless-recorder/",
+    "https://www.yokogawa.com/solutions/discontinued/dx100p-dx200p-paperless-recorder/",
+    "https://yokogawaelectric.org/library/resources/faqs/ns-faq-dx-3046-spec/index.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

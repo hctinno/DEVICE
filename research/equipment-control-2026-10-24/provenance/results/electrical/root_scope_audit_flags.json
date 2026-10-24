@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/root_scope_audit_flags.json",
+  "original_log_sha256": "d2075645d381f05fd93840d305a8216aea90823d6180519a40d39fb408ad2c2b",
+  "original_log_bytes": 1162,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

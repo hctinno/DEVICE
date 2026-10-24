@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_212.json",
+  "original_log_sha256": "d0b1d9607cd611f0b689f50f6e9fd9e4bb360fc4754e9bde3f857b1531f91ccb",
+  "original_log_bytes": 33749,
+  "queries": [
+    "TESTO 175H1 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://alteksolutions.com.sg/product/testo-175-h1-temperature-and-humidity-data-logger/",
+    "https://anaum.com/products/testo-175-h1",
+    "https://fmit-instruments.com/product/testo-175h1/",
+    "https://instrotech.com/pub/media/manuals/manTES175-H1.pdf",
+    "https://site.jjstech.com/pdf/Testo/175%2C%20IM%2C%200971%201752%20en%2C%2004.pdf",
+    "https://static-int.testo.com/media/f2/c5/b1f06bfe5995/testo-175-Instruction-manual.pdf",
+    "https://static.rapidonline.com/pdf/57-5264_v1.pdf",
+    "https://testo.com.my/index.php/products-mainmenu-32/by-brands-mainmenu-75/megger-uk-mainmenu-89/item/135-humidity/505-tst0014-175h1-starter-set-complete-rh-temp-logger-set-w-display-software",
+    "https://testo.nt-rt.ru/images/manuals/175%20H1.pdf",
+    "https://testo.nz/products/testo-175-h1-data-logger",
+    "https://www.ics-schneider.de/produkte/testo-175-h1-datenlogger-temperatur-und-feuchte/?lang=en",
+    "https://www.inspectortools.com/testo-175h1-temperature-and-humidity-data-logger/",
+    "https://www.manualslib.com/manual/3847201/Testo-175-H1.html",
+    "https://www.testo.com/en-AE/testo-175-h1/p/0572-1754",
+    "https://www.testo.com/testo-175h1/p/0572-1754",
+    "https://www.testo.ru/ru-RU/testo-175-h1/p/0572-1754",
+    "https://www.testo.vn/testo-175-h1-temperature-and-humidity-data-logger"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

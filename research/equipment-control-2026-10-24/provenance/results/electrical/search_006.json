@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_006.json",
+  "original_log_sha256": "8724cc0bfcfb06b297af3a065134857655cd6c08ff8e2f9d3bb38122c0cc9cad",
+  "original_log_bytes": 33797,
+  "queries": [
+    "LUMILOOP LSPM1.0+ programming communication driver software GitHub"
+  ],
+  "discovered_urls": [
+    "https://absolute-emc.com/uploads/files/1668381604_LSPM_1.0_Manual.pdf",
+    "https://absolute-emc.com/uploads/files/1767292914_LSPM_Manual.pdf",
+    "https://ccn.web.tr/web-api/iframe-proxy?url=https%3A%2F%2Fgithub.com%2FMinlor%2FLumiSync",
+    "https://get.pimoroni.com/inky",
+    "https://github.com/Minlor/LumiSync",
+    "https://github.com/Minlor/LumiSync.git",
+    "https://github.com/Neumi/lumicomm",
+    "https://github.com/Neumi/lumicomm/blob/main/readme.md",
+    "https://github.com/czbiohub-sf/portable-luminometer",
+    "https://github.com/czbiohub/ulc-tube-reader/",
+    "https://github.com/reiserlab/LED-Display_G4_Firmware",
+    "https://githubhelp.com/Minlor/LumiSync",
+    "https://lumiloop.de/downloads/manuals/LSPM_Manual.pdf",
+    "https://lumiloop.de/downloads/quick-start-guides/LSPM_Quick_Start_Guide_EN.pdf",
+    "https://propribory.ru/static/upl/16-12-2024/iborSNkfkwvLGJjI/LSProbe_Manual.pdf",
+    "https://qgithub.com/Aymo/Lumo",
+    "https://qgithub.com/Minlor/LumiSync",
+    "https://qgithub.com/stramanu/lumalou",
+    "https://reiserlab.github.io/Modular-LED-Display/Generation%204/Firmware-Panels/docs/",
+    "https://thesycon.de/eng/usb_api.shtml",
+    "https://www.nooploop.com/download/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

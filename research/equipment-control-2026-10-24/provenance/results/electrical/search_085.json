@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_085.json",
+  "original_log_sha256": "2fa4d7b4570d904c2cca0eb669aec5003153837db8237f3b108849edf4f2848e",
+  "original_log_bytes": 32211,
+  "queries": [
+    "(주)대영이엔티 DREP-11050 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cn.transcend-info.com/files/Manual/Manual-DP110_v2.1_KR.pdf",
+    "https://en.motex.co.kr/68",
+    "https://idisglobal-admin.s3-accelerate.amazonaws.com/boardUpFileKR/DR-0815P_%EC%82%AC%EC%9A%A9%EC%84%A4%EB%AA%85%EC%84%9C_V8.2.pdf",
+    "https://jp.transcend-info.com/Manual/DrivePro/DP110/PDF/DP110_Manual_KR.pdf",
+    "https://moen.nidec.com/drives/Products/Software/Programming",
+    "https://uniinfo.co.kr/bbs/board.php?bo_table=down",
+    "https://www.hitecrcd.co.kr/support/resource-center/",
+    "https://www.jcprogrammer.com/download/driver/0/",
+    "https://www.jcprogrammer.com/download/software/",
+    "https://www.jeiotech.com/html.doc/company09.php",
+    "https://www.jenix.co.kr/03_2_kmanual.htm",
+    "https://www.jinirobotics.com/download_aibot",
+    "https://www.keyence.com/support/user/bt/download/dx/",
+    "https://www.kyongbo.co.kr/admin/fileDown.jsp?filename=2024_05_29_101539.pdf",
+    "https://www.kyongbo.co.kr/admin/fileDown6.jsp?filename=GD1-K01+%EC%82%AC%EC%9A%A9%EC%84%A4%EB%AA%85%EC%84%9C%28V1.00%29.pdf",
+    "https://www.kyongbo.co.kr/admin/fileDown6.jsp?filename=GD1-K01+%EC%82%AC%EC%9A%A9%EC%84%A4%EB%AA%85%EC%84%9C%28V1.40%29.pdf",
+    "https://www.kyongbo.kr/en/data/soft_list.jsp?level1=A02&level2=A0203&level3=A020312",
+    "https://www.pikorea.co.kr/ko/knowledge-center/downloads/product-documentation/D"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

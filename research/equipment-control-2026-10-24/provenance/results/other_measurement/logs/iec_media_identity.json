@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/iec_media_identity.json",
+  "original_log_sha256": "3f4826b88486c40433c59475846e9acf740ba15bacdf2006abb32331576c3229",
+  "original_log_bytes": 31448,
+  "queries": [
+    "IEC 62087-2 video test media reference signals equipment model"
+  ],
+  "discovered_urls": [
+    "https://assets.iec.ch/public/tc100/IEC62087-2_2023-ED2_Test-Clip-Details_r8.pdf?2024051246=",
+    "https://assets.vde-verlag.de/iec-normen/preview-pdf/info_iec62087-2%7Bed2.0%7Db.pdf",
+    "https://cdn.standards.iteh.ai/samples/103254/93f177df79d64aa1a5ebcd5608b13aee/IEC-62087-2-2023.pdf",
+    "https://en.wikipedia.org/wiki/Black_and_burst",
+    "https://en.wikipedia.org/wiki/VIT_signals",
+    "https://en.wikipedia.org/wiki/VQuad-HD",
+    "https://en.wikipedia.org/wiki/Video-signal_generator",
+    "https://standards.iteh.ai/catalog/standards/clc/6e5609e1-b6d1-451e-ae6f-fd2212b284ca/pren-iec-62087-2-2026",
+    "https://standards.iteh.ai/catalog/standards/iec/d8d3aa5c-8a18-4101-b47e-f1e09187fcd5/iec-62087-2-2015",
+    "https://standards.iteh.ai/catalog/standards/sist/fdcb49a2-2e20-4a09-b68d-f8a691784612/iec-",
+    "https://standards.theiteh.com/catalog/standards/clc/6e5609e1-b6d1-451e-ae6f-fd2212b284ca/pren-iec-62087-2-2026",
+    "https://theiteh.com/catalog/standards/iec/d8d3aa5c-8a18-4101-b47e-f1e09187fcd5/iec-62087-2-2015",
+    "https://webstore.ansi.org/standards/ansi/ANSICTA60022025",
+    "https://www.en-standard.eu/publicdoc/iec_previews/3183893.pdf",
+    "https://www.iec.ch/tc100/supportingdocuments",
+    "https://www.iteh.eu/catalog/standards/sist/34b26b40-fd11-4fd3-807f-c7192aa8948f/sist-en-iec-62087-2-2023",
+    "https://www.iteh.fr/catalog/standards/clc/6e5609e1-b6d1-451e-ae6f-fd2212b284ca/pren-iec-62087-2-2026",
+    "https://www.iteh.fr/catalog/standards/iec/d8d3aa5c-8a18-4101-b47e-f1e09187fcd5/iec-62087-2-2015",
+    "https://www.iteh.fr/catalog/standards/iec/fdcb49a2-2e20-4a09-b68d-f8a691784612/iec-62087-2-2023",
+    "https://www.iteh.fr/catalog/standards/sist/112ab27a-dcf6-4050-bf03-5167f6d24f1e/osist-pren-iec-62087-2-2026",
+    "https://www.iteh.us/catalog/standards/sist/34b26b40-fd11-4fd3-807f-c7192aa8948f/sist-en-iec-62087-2-2023",
+    "https://www.sis.se/en/produkter/telecommunications-audio-and-video-engineering/audio-video-and-audiovisual-engineering/amplifiers/iec-62087-22023/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

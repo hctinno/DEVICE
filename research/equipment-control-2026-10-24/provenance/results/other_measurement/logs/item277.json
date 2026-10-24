@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item277.json",
+  "original_log_sha256": "378ea1dc6f155d03bf0b34271fc7f2fb040de475c7c5fb4506250800796f51b9",
+  "original_log_bytes": 15591,
+  "queries": [
+    "Gemred \"Gemred 82305\" software interface manual",
+    "site:github.com \"Gemred 82305\" Gemred"
+  ],
+  "discovered_urls": [
+    "https://device.report/gemred/82305",
+    "https://hinsdale86.community.diligentoneplatform.com/document/6c99fbd9-4c81-4e8d-863e-7b1c4e73bc92/",
+    "https://hinsdale86.diligent.community/document/6c99fbd9-4c81-4e8d-863e-7b1c4e73bc92/",
+    "https://inspection.ie/products/gemred-82305-digital-angle-finder-200mm-7-inch-plastic-ruler",
+    "https://irishuys.nl/wp-content/uploads/2025/11/IKONN_Hoekmeter_HandleidingNL.pdf",
+    "https://manuals.plus/asin/B0C3QZFQVN",
+    "https://oro.open.ac.uk/100907/11/100907VOR.pdf",
+    "https://pdf.directindustry.com/pdf/gemred/2-in-1-digital-angle-finder-82305/244972-1009040.html",
+    "https://static1.squarespace.com/static/63c2d1976699b1595ac1ac93/t/693dc512adb6a357e76705d0/1765655826656/The_Effect_of_Gunshot_Angle_of_Incidence%2B%281%29.pdf",
+    "https://woodartsupply.com/products/gemred-82305-digital-angle-finder-protractor-aluminum",
+    "https://www.directindustry.es/prod/gemred/product-244972-2489427.html",
+    "https://www.gemred.com/de/gemred-82305-digital-angle-finder-review-guide/",
+    "https://www.gemred.com/digital-angle-view-finder/",
+    "https://www.gemred.com/gemred-82305-digital-angle-finder-protractor/",
+    "https://www.gemred.com/gemred-82305-digital-angle-finder-review-guide/",
+    "https://www.gemred.com/mini-digital-angle-finder/",
+    "https://www.gemred.com/precision-digital-angle-finder/",
+    "https://www.gemred.com/wp-content/uploads/2023/08/Jingrui-sensor-full-product-line_compressed.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

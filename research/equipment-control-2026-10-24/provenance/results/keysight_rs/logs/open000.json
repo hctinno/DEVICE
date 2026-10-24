@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open000.json",
+  "original_log_sha256": "405f585f04f0f2f0bb20387ecb0138be6dda073852a85580d42a5240216c4c8c",
+  "original_log_bytes": 27727,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.keysight.com/zz/en/lib/software-detail/driver/infiniivision-x-series-oscilloscope-ivi-instrument-drivers.pv.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

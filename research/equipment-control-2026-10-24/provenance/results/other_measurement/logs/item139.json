@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item139.json",
+  "original_log_sha256": "0b0f15c57a2c321a13bd5f951f93a7d277b9f40fbb0cd7ba9052110bf149461c",
+  "original_log_bytes": 15108,
+  "queries": [
+    "CASIO \"HS-3(V)\" software interface manual",
+    "site:github.com \"HS-3(V)\" CASIO"
+  ],
+  "discovered_urls": [
+    "https://casio.manymanuals.com/tools/hs-3-v",
+    "https://device.report/casio/stop",
+    "https://device.report/manual/10110049",
+    "https://freshmanuals.com/casio",
+    "https://hansaram.tistory.com/3487",
+    "https://manuals.plus/m/b7e2f48da4a8ac83480d333244418e6130fd868a1d1caebfa2ea5e776334d145",
+    "https://manuals.plus/m/b7e2f48da4a8ac83480d333244418e6130fd868a1d1caebfa2ea5e776334d145_optim.pdf",
+    "https://mc90.tistory.com/178",
+    "https://portablemedia.manualsonline.com/manuals/mfg/casio/hs3v.html?p=2",
+    "https://somanuals.com/html/6/Casio-Impact-Driver-HS-3V-User-Manual.html",
+    "https://support.casio.com/pdf/002/HS3V_HS6.pdf",
+    "https://www.casio.com/content/dam/casio/global/support/manuals/clock/pdf/002-ja/h/HS3V.pdf",
+    "https://www.easymanua.ls/casio/hs-3-v/manual",
+    "https://www.epa.gov.co/images/carpeta_2024/Normograma_LCM.pdf",
+    "https://www.manualscenter.com/manuals/casio/hs3v-owner-manual.html",
+    "https://www.manualshelf.com/manual/casio/hs-3-v/user-guide-english.html",
+    "https://www.viaindustrial.com/manuales_pdf/Cronometros_digitales_HS-3%28V%29_CASIO_Manual_Ingles.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

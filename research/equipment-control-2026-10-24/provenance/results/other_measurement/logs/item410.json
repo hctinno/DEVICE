@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item410.json",
+  "original_log_sha256": "abb97ffd2ee137101518233ff2197c1de235f3301d2a0cd0449a1aaeb4dc9fdf",
+  "original_log_bytes": 17910,
+  "queries": [
+    "SATO \"NSII-Q/35951\" software interface manual",
+    "site:github.com \"NSII-Q/35951\" SATO"
+  ],
+  "discovered_urls": [
+    "https://www.scribd.com/document/759527922/BOE-A-2024-6215"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

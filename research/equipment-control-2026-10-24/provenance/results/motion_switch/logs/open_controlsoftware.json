@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/open_controlsoftware.json",
+  "original_log_sha256": "bec27501b157553d2a3e47be5b2b02a86690df7598f15baa913e5fce2a6ae003",
+  "original_log_bytes": 26173,
+  "queries": [],
+  "discovered_urls": [
+    "https://forums.ni.com/t5/Instrument-Control-GPIB-Serial/GPIB-to-send-strings-to-third-party-software-run-machine/td-p/4167020",
+    "https://forums.ni.com/t5/Instrument-Control-GPIB-Serial/GPIB-to-send-strings-to-third-party-software-run-machine/td-p/4167020:",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/em-test/transient-emission-set_datasheet_-2025-07-11_en.pdf?la=en&revision=6b7ea611-f551-4699-8344-6bb1e7702bae",
+    "https://www.litepoint.com/wp-content/uploads/2019/03/IQ5631-Tech-Specs-071720-web-1.pdf",
+    "https://www.manualslib.com/manual/2402418/Ar-Fi7000.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_321.json",
+  "original_log_sha256": "9961ded5a7b4381cc9d8fcad0c062845e4c6587aa6e3f1f3b9bbc9bc7779e579",
+  "original_log_bytes": 26088,
+  "queries": [
+    "FLUKE 36 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://us.fluke.com/usen/support/manuals",
+    "https://actsonics.com/uploads/files/202507182309576330.pdf",
+    "https://assets.fluke.com/manuals/1735____gseng0000.pdf",
+    "https://assets.fluke.com/manuals/36______isspa0000.pdf",
+    "https://fluke.freshdesk.com/en/support/home",
+    "https://fluke.freshdesk.com/en/support/solutions",
+    "https://manualsnet.com/fluke/software",
+    "https://mcgrp.ru/files/viewer/378810/34",
+    "https://media.fluke.com/427fc017-3141-413e-9906-b10800bfda4e_original%20file.pdf",
+    "https://media.fluke.com/a3ad1944-b48b-444e-bab2-b10800d1408e_original%20file.pdf",
+    "https://media.fluke.com/a568c34f-231c-4efc-b945-b10800d9ac49_original%20file.pdf",
+    "https://my.fluke.com/en-US/support-request",
+    "https://www.fluke.com/en-us/support/manuals",
+    "https://www.fluke.com/en-us/support/software-downloads",
+    "https://www.fluke.com/en-us/support/software-licenses",
+    "https://www.fluke.com/en/product/fluke-software/fluke-dms-software",
+    "https://www.flukenetworks.com/support/manuals",
+    "https://www.flukeprocessinstruments.com/en-us/downloads/product-manuals",
+    "https://www.industrialcalibration.co.uk/downloads/Fluke%2036%20%28PN%20617701%20November%201996%29%20User%20Manual.pdf",
+    "https://www.opweb.de/en/manufacturer/fluke/36",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/fluke/comments/1s86sk5/freeopensource_desktop_appcli_app_for_fluke/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

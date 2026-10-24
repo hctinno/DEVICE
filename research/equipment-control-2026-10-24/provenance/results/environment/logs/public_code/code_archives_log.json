@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/public_code/code_archives_log.json",
+  "original_log_sha256": "03abd54ce0db5d07351bc177edd1970ae9118e9055cde6a010a7cc2a58b91a52",
+  "original_log_bytes": 21674,
+  "queries": [],
+  "discovered_urls": [
+    "https://codeload.github.com/SengerM/VotschTechnik-climate-chamber-Python/zip/refs/heads/main",
+    "https://codeload.github.com/Solla/IMADA_LoadCell_3rdPartyApplication/zip/refs/heads/master",
+    "https://codeload.github.com/fdmysterious/dstdsv/zip/refs/heads/master",
+    "https://codeload.github.com/luferau/Samwontech-TEMP2xxx/zip/refs/heads/master"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

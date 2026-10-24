@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_044.json",
+  "original_log_sha256": "6dffb68e355c3f0a85d72a21171d68af1e4abb58f9db89a66795155fc68e59fe",
+  "original_log_bytes": 27419,
+  "queries": [
+    "HIOKI LR8432 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/58699967cf4143052084d7e206e1186bf8188a564f3ff789e0ad00da8f03a723_optim.pdf",
+    "https://shop.hioki.eu/HIOKI-LR8432-Handheld-10-channel-Data-Logger-with-native-support-for-heat-flow-sensors",
+    "https://www.hioki.cn/products/lr8432",
+    "https://www.hioki.cn/resource/products/manuals-12",
+    "https://www.hioki.com/download/30163",
+    "https://www.hioki.com/euro-en/products/field-measuring/measurement/id_6586",
+    "https://www.hioki.com/global/products/field-measuring/measurement/id_6586",
+    "https://www.hioki.com/in-en/products/field-measuring/measurement/id_6586",
+    "https://www.hioki.com/redirect/content/product/6354",
+    "https://www.hioki.com/us-en/products/field-measuring/measurement/id_6586",
+    "https://www.hioki.com/us-en/support/download/windows",
+    "https://www.hioki.net.cn/m/products/show_682.html",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A002002&p_no=38",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A014004&p_no=38"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

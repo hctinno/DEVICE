@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/base_results.json",
+  "original_log_sha256": "a2c7ea7dc592c009e6b13c7c7e8f83d81fee775c72b8b090a474c9a45df55df8",
+  "original_log_bytes": 237024,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

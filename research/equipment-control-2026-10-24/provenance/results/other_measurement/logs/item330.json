@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item330.json",
+  "original_log_sha256": "ed4800f60988b30fd1c7270f732e7b5d0d8778e213dbf3b23f75133ad6e35679",
+  "original_log_bytes": 14250,
+  "queries": [
+    "AUTONICS \"LE3SB\" software interface manual",
+    "site:github.com \"LE3SB\" AUTONICS"
+  ],
+  "discovered_urls": [
+    "https://autonics.se/wp-content/uploads/2018/03/le3s_en_ca_ep_ke_02_057a_20171121_he_20171130.pdf",
+    "https://baoanjsc.com.vn/san-pham/bo-dat-thoi-gian-man-hinh-lcd-autonics-le3s-series-LE3SB_61731_vn.aspx",
+    "https://device.report/manual/7408312",
+    "https://electricasbogota.com/es/downloads/dl/file/id/245/product/2409/autonics_le3s_manual.pdf",
+    "https://es.scribd.com/document/630293351/Manual-SERIE-LE3S-pdf",
+    "https://manuals.plus/autonics/le3sa-lcd-digital-thumb-wheel-switch-timers-manual",
+    "https://manuals.plus/m/0e3d194ac1958fd6521771e6a984b7a3592a4cbee8410ab3791dafd477338a5d",
+    "https://s3.iautomatica.ru/uf/cc1/6amprrx7ic3jre7cxom0hik5qwqfyb5e/LE3S_EN_DRW171145AC_210210_INST_W.pdf",
+    "https://test.sensoren.ru/product/taymer_tsifrovoy_autonics_le3sb/",
+    "https://www.galco.com/le3sb-autonics.html",
+    "https://www.manualslib.com/brand/autonics/timer.html",
+    "https://www.manualslib.es/manual/260845/Autonics-Le3S-Serie.html",
+    "https://www.manualslib.es/manual/260845/Autonics-Le3S-Serie.html?page=4",
+    "https://www.manualslib.es/products/Autonics-Le3S-Serie-619914.html",
+    "https://www.scribd.com/document/455763956/Autonics-Product-Selection-Guide-2016-pdf",
+    "https://www.thepneumaticstore.com/images/pdf/Autonics%20LE3S%20Series%20Catalog.pdf",
+    "https://www.wolfautomation.com/content/autonics-le3s-instructmanual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

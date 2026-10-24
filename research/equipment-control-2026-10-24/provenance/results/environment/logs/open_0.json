@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_0.json",
+  "original_log_sha256": "4707f2a8ada50cde8a0d0be5aab7476b6f3cca5d735b19a03507a881d8b54c8f",
+  "original_log_bytes": 26817,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/EspecNorthAmerica/ChamberConnectLibrary",
+    "https://github.com/akaeba/ATWG.git",
+    "https://github.com/jmbattle/pyESPEC",
+    "https://pypi.org/project/ATWG/",
+    "https://www.espec.co.jp/english/inquiry/catalog/pcs.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

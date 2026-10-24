@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open008.json",
+  "original_log_sha256": "db828493556b91e97dc4155f981566126e0f4e0153b6f9c2fa7bb0556ca64ad9",
+  "original_log_bytes": 654,
+  "queries": [],
+  "discovered_urls": [
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxxSN_UserManual_en_25.pdf",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxxSN_UserManual_en_25.pdf:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

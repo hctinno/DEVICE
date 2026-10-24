@@ -1,0 +1,27 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/sparse_custom_rf.json",
+  "original_log_sha256": "74b6dda6eaf07054d88df76602113f8cc07815ec588b67419f6b7edb0b34da1c",
+  "original_log_bytes": 37508,
+  "queries": [
+    "\"EMC TOOL\" \"CURRENT SENSOR\" control",
+    "\"티앤엠시스템\" \"FBSR-04C\""
+  ],
+  "discovered_urls": [
+    "https://gillette.docs.pov.opsramp.com/support/reference/gateway-template-details/",
+    "https://manuals.plus/m/fcef54968fad099840fc2b3cab4f236c137e1bed2a360f79ab6022da8810d8de",
+    "https://maximinstruments.com/category/emc___emi_test_equipment%26page%3D8%26view%3Dlist%26sortby%3D",
+    "https://patents.justia.com/patent/12283805",
+    "https://poweruc.com/faq",
+    "https://studylib.net/doc/28069986/matlab-and-simulink-r2025b-motor-control-blockset-getting",
+    "https://vpctest.attaio.com/see/7762/Bulk_Current_Injection/?page=9",
+    "https://www.dacpol.eu/en/knowledge-base/featured/24",
+    "https://www.gcscal.com/elec_temp_detail.html",
+    "https://www.lem.com/en/drives",
+    "https://www.manualslib.com/manual/764157/Fourier-Microlog.html",
+    "https://www.semitron.de/blogpost/io-link-handbook-third-edition/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

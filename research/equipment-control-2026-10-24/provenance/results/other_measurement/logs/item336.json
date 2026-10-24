@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item336.json",
+  "original_log_sha256": "df082a6f0d232b11bece6f40b669faf1e5cc8f14a16446d9cf27df8c64d55cb8",
+  "original_log_bytes": 15115,
+  "queries": [
+    "ETS-Lindgren \"HI-6105\" software interface manual",
+    "site:github.com \"HI-6105\" ETS-Lindgren"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/0abf59700316587d48c7a257bd665dd29eb57ec59b9978ba094bac022b151b54_optim.pdf",
+    "https://device.report/m/5437a678b73dc1d7f1a68e65c610abddec3ea5f6f02fe58b809d41340538aa28",
+    "https://github.com/DependencyTrack/dependency-track/issues/6105",
+    "https://github.com/Mixologist6105",
+    "https://github.com/anthropics/claude-code/issues/6105",
+    "https://github.com/dotnet/aspnetcore/issues/6105",
+    "https://github.com/googlecolab/colabtools/issues/6063",
+    "https://github.com/homarr-labs/homarr/issues/6105",
+    "https://github.com/kirodotdev/Kiro/issues/6105",
+    "https://github.com/nopjne/drmdmp64_mass/issues/6",
+    "https://manualzilla.com/doc/5642354/manual---ets",
+    "https://manualzz.com/doc/1431263/ets-lindgren-hi-6122--hi-6153--hi-6105--hi-6022--hi-6053-",
+    "https://manualzz.com/doc/6581547/ets-lindgren-hi-4422-field-probe-owner-s-manual",
+    "https://manualzz.com/doc/o/1np8sq/ets-lindgren-hi-6005-hi-6022-emc-field-probe-owner-s-manual-7.0-probe-shield-care-and-replacement",
+    "https://www.atecorp.com/products/ets-lindgren/hi-6105",
+    "https://www.ets-lindgren.com/get-manuals/EMC%20Field%20Probes%20399395%20A.pdf",
+    "https://www.gruppompb.com/public/upload/MANUALE-V-H-HI-6005.pdf",
+    "https://www.manualsdir.com/manuals/636286/ets-lindgren-hi-6153-electric-field-probe-hi-6122-electric-field-probe-hi-6105-electric-field-probe-hi-6053-electric-field-probe-hi-6022-electric-field-probe-hi-6005-electric-field-probe.html?page=106",
+    "https://www.manualslib.com/manual/2081358/Ets-Lindgren-Hi-6122.html",
+    "https://www.manualslib.com/products/Esco-Technologies-Ets-Lindgren-Hi-6105-12120341.html",
+    "https://www.manualslib.com/products/Ets-Lindgren-Hi-6105-11574167.html",
+    "https://www.scribd.com/document/1032156779/SAR-Test-report",
+    "https://www.scribd.com/document/508646366/Cupc-p90-Kc-Report"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

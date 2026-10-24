@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item377.json",
+  "original_log_sha256": "c7d81a6fdbe3eb02ba3a29fbea33decc131b7f6c7eb1898a537377ea851175b6",
+  "original_log_bytes": 17749,
+  "queries": [
+    "BOSCH \"GLM50\" software interface manual",
+    "site:github.com \"GLM50\" BOSCH"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/147f8448da0a127558f0cb0ca15a8ef3afd232d4e9b34981750ed574740062a3",
+    "https://device.report/m/54f6dba2bd39a6e518572e7f258c47a414cfdb5758aba6ff731ff3ef34344dfe",
+    "https://gist.github.com/ketan",
+    "https://gist.github.com/ketan/054e9f4173aa53a04218fc545241f634",
+    "https://manuals.plus/m/147f8448da0a127558f0cb0ca15a8ef3afd232d4e9b34981750ed574740062a3",
+    "https://manualzz.com/doc/68824097/bosch-glm-50-c-manual-original",
+    "https://media.bosch-pt.com.tw/binary/manualsmedia/o594054v21_160992AD5T_202509.pdf",
+    "https://tigeo.ru/upload/iblock/a64/dmq9zxixpdnzml9y87622w28gufrx21l/Rukovodstvo-polzovatelya-Bosch-GLM50-C.pdf",
+    "https://toolguyd.com/bosch-laser-distan",
+    "https://www.bosch-professional.com/gb/en/products/glm50-21-0601075300",
+    "https://www.bosch-professional.com/in/en/products/glm50-21-06010753F0",
+    "https://www.bosch-professional.com/iq/en/products/glm50-21-06010753K0",
+    "https://www.bosch-professional.com/mz/en/products/glm50-21-06010753K0",
+    "https://www.bosch-pt.com.my/my/en/products/glm50-21-06010753K0",
+    "https://www.bosch-pt.com.sg/sg/en/products/glm-50-23-g-0601072VK0",
+    "https://www.bosch-pt.com.tw/manuals/professional/tw/zh/online-manual/200594090/Resources/pdf/GLM50-21__en.pdf",
+    "https://www.manualslib.com/manual/4198730/Bosch-Pro-Glm50-21.html",
+    "https://www.reddit.com/r/ShopCanada/comments/kelhm9",
+    "https://www.reddit.com/r/Tools/comments/db3jc3",
+    "https://www.reddit.com/r/Tools/comments/ma68iy",
+    "https://www.scribd.com/document/233575453/Telemetru-GLM-50-Professional-Manual-117747"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

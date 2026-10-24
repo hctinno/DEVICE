@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_testo_elitech.json",
+  "original_log_sha256": "39f079f4648b54397d2343111bfebbfdf89f0b05b7f92207b691df4561dba965",
+  "original_log_bytes": 29804,
+  "queries": [
+    "testo 174H 175H1 Elitech RC-4HC GitHub protocol"
+  ],
+  "discovered_urls": [
+    "http://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx",
+    "https://arxiv.org/abs/1910.04601",
+    "https://blog.sengotta.net/signed-mac-os-driver-for-winchiphead-ch340-serial-bridge/",
+    "https://device.report/m/00c50ae8623419ac427ae4b29efbbf78296c57c2f76c5a41d1086a12139867ea",
+    "https://elitech.uk.com/pages/elitech-software",
+    "https://github.com/NathanBaulch/ElitechLogCLI",
+    "https://github.com/civic/elitech-datareader",
+    "https://github.com/civic/elitech-datareader/blob/master/README.md",
+    "https://github.com/civic/elitech-datareader/blob/master/rc-4-data.md",
+    "https://github.com/pasccom/python-elitech",
+    "https://github.com/tenderlove/itiscold",
+    "https://instrotech.com/media/manuals/manTES174-H.pdf",
+    "https://m.media-amazon.com/images/I/B1VTOvPwRoL.pdf",
+    "https://manuals.plus/elitech/multi-use-temperature-data-logger-manual.pdf",
+    "https://manuals.plus/m/0f0462f1588516ff5b5bd5cf9ad33926a803b830901344c26b941b54e2c9705b",
+    "https://manuals.plus/m/771d320165817f448fca9a38aca20d922f1d4f407c39ea78c8e531108fd3056d",
+    "https://pypi.org/project/elitech-datareader/",
+    "https://tktech.vn/wp-content/uploads/huong-dan-su-dung-elitech-rc-4hc.pdf",
+    "https://www.elcoteam.com/attachment/get/26526/5f60bf3d5c320884154619-560T174.pdf",
+    "https://www.elitechglobal.com/service-support/resource-download_4/",
+    "https://www.elitechus.com/pages/new-manuals"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

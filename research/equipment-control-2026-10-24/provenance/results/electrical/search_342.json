@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_342.json",
+  "original_log_sha256": "9750a32ebc2e8e467de8ecd5c2c2b6287dbe40241cf21c5003002e89e773f4fc",
+  "original_log_bytes": 32078,
+  "queries": [
+    "KIKUSUI PLZ-300W manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.kiku-sui.co.jp/en/download/",
+    "http://www.kikusui.co.jp",
+    "https://device.report/m/31b4442695c23c88d280a93b8fd36f50350c2855618eeb4ab81b3912063fcc83.pdf",
+    "https://global.kikusui.co.jp/w2-2/software-en/wavy-series/",
+    "https://kikusui-europe.com/download-service/",
+    "https://kikusui-europe.com/soft-firm_updata/",
+    "https://kikusui-europe.com/w2-2/software/wavy-series/",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_4W_M.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_U_M.pdf",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/download/plz300w/",
+    "https://kikusuiamerica.com/w2-2/software-en-en_us/wavy-series/",
+    "https://manual.kikusui.co.jp/P/PLZ5WH2_USER_E7.pdf",
+    "https://rddocuments.kikusui.co.jp/oss/plz5wh",
+    "https://www.avalontest.com/plz300w-electronic-load-300-w-60-v-60-a",
+    "https://www.kikusui.cn/resources/001/pdf/plz-5w_users_manual_en.pdf",
+    "https://www.metasite.co.kr/NewMeta/NM_files/PLZ300W_-_Instruction_Manual.pdf",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Electronic-Loads&model=Kikusui-PLZ300W&productID=397CC0BB60BD4B1A43FA87ADF4658DF4&type=Test-Equipment-Sales",
+    "https://www.opweb.de/de/hersteller/kikusui-electronics-corporation/plz-300w",
+    "https://www.opweb.de/en/manufacturer/kikusui-electronics-corporation/plz-300w",
+    "https://www.scribd.com/document/679322851/kikusui-plz300w-manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

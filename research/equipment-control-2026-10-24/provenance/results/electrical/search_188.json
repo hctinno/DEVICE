@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_188.json",
+  "original_log_sha256": "4b7778c1496bca42ca55ab80b1d04b749bdbfc9951930e04a2741d2cea10175b",
+  "original_log_bytes": 27422,
+  "queries": [
+    "ODA TPT20-10 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.argox.com",
+    "https://doczz.net/doc/3024918/programming-guide-for-pt-10",
+    "https://electricasbogota.com/en/downloads/dl/file/id/2123/product/1227/touchwin_op20_programming_manual.pdf",
+    "https://icdn.tradew.com/file/201606/1569362/pdf/7915500.pdf",
+    "https://manuzoid.com/manuals/6xaA2-Ditel%20JR%20JR20-TPT%20Technical%20Manual",
+    "https://manuzoid.com/manuals/8j9MX-Thermo%20Fisher%20Scientific%20OdaStat%20Owner%27s%20manual",
+    "https://tekkammall.godohosting.com/oda/download/OPS-Series.pdf",
+    "https://www.alcaidc.com/public/Product/manual/OS214plus/Programming_Guide_EN.pdf",
+    "https://www.autobase.biz/English/AutoBaseHelp/Help10/Plc_Scan/ODA_ExSeries.htm",
+    "https://www.cce.gmbh/en/software-updates/software-counterfeit-detectors",
+    "https://www.logicbus.com/assets/PDF/catalogos/ODA-Product.pdf?srsltid=AfmBOor3M1zYsA9H0C-3ub3k5VMgMVcKanNoU9OyY17i7e6QAKQKpdO3",
+    "https://www.manualslib.com/manual/1623908/Oda-Ops-Series.html",
+    "https://www.manualslib.com/manual/1959324/Oda-Opm-Series.html",
+    "https://www.manualslib.com/products/Oda-Ex-20-60-10868378.html",
+    "https://www.odakarge.com/en/sintra-pc-tool-2/",
+    "https://www.powertm.co.kr/bbs/board.php?bo_table=program&sca=%EC%98%A4%EB%94%94%EC%97%90%EC%9D%B4%ED%85%8C%ED%81%AC%EB%86%80%EB%A1%9C%EC%A7%80&wr_id=5",
+    "https://www.scribd.com/document/401283994/PT20-Programming-Guide-pdf",
+    "https://www.supvan.com/html/csxz/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

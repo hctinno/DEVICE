@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_333.json",
+  "original_log_sha256": "25fccce4cca86caf74f30ce15c5f9bb8b36fa932a2ddb7a9a10097f2fc7622f4",
+  "original_log_bytes": 30078,
+  "queries": [
+    "FLUKE 45 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.fluke.com/manuals/45______umeng0400.pdf",
+    "https://docs.ampnuts.ru/eevblog.docs/Fluke/45.pdf",
+    "https://lira.epac.to/DOCS-TECH/Manuals%20and%20Datasheets/Fluke/",
+    "https://manualzz.com/doc/o/neoif/fluke-8846a-programmer-s-manual--fluke-45-command-emulation-summary",
+    "https://my.fluke.com/en-US/support-request",
+    "https://www.fluke.com/en-us/support/manuals",
+    "https://www.fluke.com/en-us/support/software-downloads",
+    "https://www.fluke.com/en-us/support/software-downloads?qt-software=0",
+    "https://www.manualslib.com/manual/1314320/Fluke-45.html",
+    "https://www.manualslib.com/manual/1314320/Fluke-45.html?page=77",
+    "https://www.manualslib.com/manual/1314320/Fluke-45.html?page=85",
+    "https://www.manualslib.com/manual/52680/Fluke-45.html",
+    "https://www.manualzz.com/doc/11265111/fluke-8846a-manual",
+    "https://www.opweb.de/en/manufacturer/fluke/45",
+    "https://www.reddit.com/r/ElectronicsRepair/comments/sr604j",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/fluke/comments/1qdn7ob/fluke_43_flukeview_software/",
+    "https://www.reddit.com/r/fluke/comments/1s86sk5/freeopensource_desktop_appcli_app_for_fluke/",
+    "https://www.reddit.com/r/learnpython/comments/14x643c",
+    "https://www.reddit.com/r/networking/comments/fku5dq",
+    "https://www.tequipment.net/Fluke45.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

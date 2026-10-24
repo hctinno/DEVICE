@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/root_scope_audit_flags.json",
+  "original_log_sha256": "d830ead50f8e684bef7917a182e40e6a855c68695bc3e3af96884d3b231e1b6f",
+  "original_log_bytes": 283,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

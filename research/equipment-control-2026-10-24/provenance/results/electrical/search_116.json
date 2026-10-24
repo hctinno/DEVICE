@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_116.json",
+  "original_log_sha256": "682844c99ecc7c37b3e08fbe7d4914535988fa02da70f784995695bbecdfb380",
+  "original_log_bytes": 22097,
+  "queries": [
+    "Tektronix DPO4104B manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/4f813abd-2971-462d-813a-363b52718d94/tek_dpo4054b.pdf",
+    "https://download.tek.com/manual/MDO4000-B-MSO-DPO4000B-and-MDO3000-Oscilloscope-Programmer-Manual-Rev-A.pdf",
+    "https://download.tek.com/manual/MDO4000-MSO4000B-and-DPO4000B-Oscilloscope-Programmer-Manual.pdf",
+    "https://download.tek.com/manual/MDO4000-MSO4000B-and-DPO4000B-Oscilloscope-Programmer-Manual_077051003.pdf",
+    "https://download.tek.com/manual/MDO4000B-MDO4000-MSO4000B-and-DPO4000B-Oscilloscope-Programmer-Manual.pdf",
+    "https://download.tek.com/manual/MDO4000B-MDO4000-MSO4000B-and-DPO4000B-Oscilloscope-Programmer-Manual_077051005.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/support/faqs/how-do-i-use-programmer-manual-my-instrument",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/ehpna7",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/zhhc1k",
+    "https://www.reddit.com/r/oscilloscope/comments/1ubdrwq/anyone_have_the_manual_for_a_dpu_411_type_ii/",
+    "https://www.tek.com.cn/oscilloscope/mso4000-dpo4000-manual/mdo4000c-mdo4000b-mdo4000-mso4000b-dpo4000b-and-mdo3000-0",
+    "https://www.tek.com.cn/support/software/firmware/dpo4014b-software",
+    "https://www.tek.com.cn/support/software/firmware/dpo4014b-software-0",
+    "https://www.tek.com/de/oscilloscope/mso4000-dpo4000-manual/mdo4000c-mdo4000b-mdo4000-mso4000b-dpo4000b-and-mdo3000-0",
+    "https://www.tek.com/en/oscilloscope/mso4000-dpo4000-manual/mdo4000c-mdo4000b-mdo4000-mso4000b-dpo4000b-and-mdo3000-0",
+    "https://www.tek.com/en/oscilloscope/mso4000-dpo4000-manual/mso4000b-and-dpo4000b-series",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?model=MDO4104-3",
+    "https://www.tek.com/en/support/software/driver/dpo2000-dpo3000-dpo4000-ivi-driver",
+    "https://www.tek.com/fr/oscilloscope/mso4000-dpo4000-manual/mdo4000c-mdo4000b-mdo4000-mso4000b-dpo4000b-and-mdo3000-0",
+    "https://www.tek.com/vn/oscilloscope/mso4000-dpo4000-manual/mdo4000c-mdo4000b-mdo4000-mso4000b-dpo4000b-and-mdo3000-0",
+    "https://www.tek.com/vn/oscilloscope/mso4000-dpo4000-manual/mso4000b-and-dpo4000b-series"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

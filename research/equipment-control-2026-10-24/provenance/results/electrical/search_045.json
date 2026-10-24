@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_045.json",
+  "original_log_sha256": "dede4ad06be8257dd7789cf79fa357fef2b212569458a983bac1762a37870257",
+  "original_log_bytes": 35965,
+  "queries": [
+    "CHROMA H-17020-V manual programming software"
+  ],
+  "discovered_urls": [
+    "https://instrumentcenter.se/upload/Products/Chroma/Datablad/17020-EN.pdf",
+    "https://support.ricoma.com/hc/en-us/sections/23174877595923-Chroma-Software",
+    "https://www.chromaate.com/eu/product/regenerative_battery_pack_test_system_17020_566",
+    "https://www.chromaeu.com/en/data_center/driver",
+    "https://www.chromaeu.com/en/products_list/ev_battery_simulator",
+    "https://www.chromausa.com/document-library/manuals-17020-series/",
+    "https://www.chromausa.com/pdf/17020%20Regenerative%20Battery%20Pack%20Test%20System%20052023.pdf",
+    "https://www.chromausa.com/pdf/17020%20Regenerative%20Battery%20Pack%20Test%20System%20052025.pdf",
+    "https://www.chromausa.com/pdf/17020-Regenerative%20Battery%20Test-072018.pdf",
+    "https://www.chromausa.com/product/17020-regenerative-battery-pack-test/",
+    "https://www.chromausa.com/sitemap/",
+    "https://www.n-denkei.com/india/items/product/17020-regenerative-battery-pack-test-system/",
+    "https://www.testwall.com/media/catalog/product/file/CHROMA201702020Datasheet-122060.pdf",
+    "https://www.weco.co.kr/goods/goods_view?no=63",
+    "https://www.yiqifuwu.com/index.php?a=downlist&brandcatname=%E6%B5%8B%E8%AF%95%E7%B3%BB%E7%BB%9F%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88&brands=19&c=index&catid=145&m=content",
+    "https://www.yumpu.com/en/document/view/35258068/regenerative-battery-pack-test-system-model-17020-mdl-",
+    "https://www.yumpu.com/en/document/view/46918450/regenerative-battery-pack-test-system-model-17020-chroma-"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

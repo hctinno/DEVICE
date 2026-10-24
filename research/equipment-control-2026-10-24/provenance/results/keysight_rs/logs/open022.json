@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open022.json",
+  "original_log_sha256": "38c27f6cf14a45054a74726d341d80f0d798b07b0831f5509108ac90be73ad9e",
+  "original_log_bytes": 27798,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.keysight.com.cn/cn/zh/lib/software-detail/driver/e36xx-e36xxx-dc-power-supply-ivi-and-matlab-instrument-drivers-1669314.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

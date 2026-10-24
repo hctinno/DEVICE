@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_198.json",
+  "original_log_sha256": "73616bbc9810af99b2d122733a11433e300d1769d85d8d7f608d1d17dae23bc0",
+  "original_log_bytes": 28863,
+  "queries": [
+    "FLUKE 355 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.fluke.com/manuals/353_355_umeng0000.pdf",
+    "https://fluke.freshdesk.com/en/support/home",
+    "https://media.fluke.com/23c824f0-c035-4004-a823-b2e30170f480_original%20file.pdf",
+    "https://my.fluke.com/en-US/support-request",
+    "https://www.fluke.com/en-au/product/electrical-testing/clamp-meters/fluke-355",
+    "https://www.fluke.com/en-ca/product/electrical-testing/clamp-meters/fluke-355",
+    "https://www.fluke.com/en-in/product/electrical-testing/clamp-meters/fluke-355",
+    "https://www.fluke.com/en-us/product/electrical-testing/clamp-meters/fluke-355",
+    "https://www.fluke.com/en-us/support/software-downloads",
+    "https://www.fluke.com/en/product/electrical-testing/clamp-meters/fluke-355",
+    "https://www.flukenetworks.com/support/content",
+    "https://www.flukeprocessinstruments.com/en-us/downloads/product-manuals",
+    "https://www.manualowl.com/m/Fluke/355/Manual/339972",
+    "https://www.manualowl.com/p/Fluke/355/Manual/187818",
+    "https://www.myflukestore.com/pdfs/cache/www.myflukestore.com/355/manual/355-manual.pdf",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/fluke/comments/1s86sk5/freeopensource_desktop_appcli_app_for_fluke/",
+    "https://www.reddit.com/r/networking/comments/fku5dq",
+    "https://www.tme.com/us/en-us/details/flk-355/meters-and-ac-dc-clamp-probes/fluke/fluke-355/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

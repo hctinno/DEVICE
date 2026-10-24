@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group11_ophir.json",
+  "original_log_sha256": "22f3d8d32723bbd82ca63dc3f9e54ad8c8ddf9ab2c958af172ef377a8cd661bf",
+  "original_log_bytes": 15938,
+  "queries": [
+    "Ophir Vega programming COM API software download",
+    "site:github.com Ophir Vega"
+  ],
+  "discovered_urls": [
+    "http://ophir.alwaysdata.net/dezoomify/dezoomify.html",
+    "https://device.report/m/612f9f4564c74abfcfe23880787b19c3c8077e36b70c314083b2f1ec56afc321",
+    "https://dorgean.com/Uploads/datasheet/vega-user-manual_1.pdf",
+    "https://gist.github.com/lovasoa?direction=asc&sort=created",
+    "https://github.com/Ophir-Spiricon/BP-Automation",
+    "https://github.com/topics/ophir?l=c%2B%2B",
+    "https://github.com/vega/vega-datasets/blob/main/data/airports.csv",
+    "https://manuals.plus/m/8d582f9aea819d35e76fd37dffdf8e66805a1cc20385cff7d148ab260e96a5c0",
+    "https://manuals.plus/m/a478985e2bd15d6f73963e9080640faaf79e5656210beaf301f30fdf0545de6d",
+    "https://manuals.plus/m/c5e7125a1e7ed9c5252fe363d9e192c88fd91972a3ef93997bc2a0f933817b05",
+    "https://manualzz.com/doc/7178250/ophir-vega-laser-power-energy-meter-user-manual",
+    "https://manualzz.com/doc/76262601/ophir-vega-user-manual",
+    "https://pymeasure.readthedocs.io/en/latest/api/instruments/ophir/ophir_base.html",
+    "https://www.instrumenthive.com/products/ophir-vega-nova-ii-laser-power-energy-meter-console/",
+    "https://www.ophiropt.com/blog/using-com-to-integrate-ophir-meters-into-your-own-pc-based-photonics-application/",
+    "https://www.ophiropt.com/g/software-pm/f/p/7Z07142",
+    "https://www.ophiropt.com/laser--measurement/software-download",
+    "https://www.ophiropt.com/mam/celum/celum_assets/op/resources/starcom_user_manual_0.pdf",
+    "https://www.ophiropt.com/medias/sys_master/opresources/h79/he5/9945638666270/vega_catalog_2/vega-catalog-2.pdf",
+    "https://www.ophiropt.ru/i/Vega.pdf",
+    "https://www.optoscience.com/our-vendors/ophiropt/display/",
+    "https://www.qiameter.com/upfile/datasheet/laser_measurement_instruments_catalog_0.pdf",
+    "https://www.teo.com.cn/public/filespath/files/Products/lasermeasurement/1.3.2.4_Pulsar.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

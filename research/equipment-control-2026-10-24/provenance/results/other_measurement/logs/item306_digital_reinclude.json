@@ -1,0 +1,40 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item306_digital_reinclude.json",
+  "original_log_sha256": "9d243bf8b1bf9456de3a67fd899e39d3493d204885dd59440e85428b91f4282e",
+  "original_log_bytes": 29353,
+  "queries": [
+    "\"BLUETEC\" \"82201B-00\"",
+    "\"Gemred\" \"82201B-00\" data output",
+    "site:github.com Gemred \"82201\""
+  ],
+  "discovered_urls": [
+    "https://bip.ump.edu.pl/attachments/download/15657",
+    "https://forum.bambulab.com/t/access-code-always-needs-to-be-re-entered/82201",
+    "https://gist.github.com/orcaman/a3e23c47489705dff93aace2e35f57d3",
+    "https://gist.github.com/tc14-dot/1d7c2dff4245bec128c9ee7b3e362beb?short_path=6234f59",
+    "https://github.com/NetherlandsForensicInstitute/demeuk",
+    "https://github.com/Shorstko/GibddStat/blob/master/regions.json",
+    "https://github.com/bambulab/BambuStudio/issues/5707",
+    "https://github.com/dotnet/maui/wiki/Known-Issues",
+    "https://github.com/dotnet/maui/wiki/Known-Issues/13b571ec08746851e1ff5e49cc42d8adfa11bb0a",
+    "https://github.com/dotnet/roslyn/issues/82200",
+    "https://github.com/dotnet/runtime/issues/82201",
+    "https://github.com/pytorch/pytorch/issues/82201",
+    "https://inspection.ie/collections/shop-levels-protractors",
+    "https://inspection.ie/collections/spirit-precision-levels-1736435384",
+    "https://kr.made-in-china.com/co_gemred/product_Digital-Protractor-Measuring-Tool-NO-82201B-00-_hessureyy.html",
+    "https://mqs.co.uk/collections/calibration-precision-level",
+    "https://mqs.co.uk/collections/spirit-precision-levels",
+    "https://mqs.co.uk/collections/spirit-precision-levels?page=1",
+    "https://www.goldsupplier.com/sale-360-digit.html",
+    "https://www.goldsupplier.com/sale-aluminum-protractor.html",
+    "https://www.goldsupplier.com/sale-measure-tool-manufacturer.html",
+    "https://www.goldsupplier.com/sale-pro-modulation.html",
+    "https://www.goldsupplier.com/sale-tools-for-woodworking-tool.html",
+    "https://www.mdpi.com/1930-8264/113/6/21097"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

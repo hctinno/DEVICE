@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/target_1.json",
+  "original_log_sha256": "c75390f45b81dc34e08cdd1af38a99ced99d1b945f7d3f558b7d9a1ddc5b3342",
+  "original_log_bytes": 25805,
+  "queries": [
+    "site:github.com \"Imada\" \"ZTS\"",
+    "site:github.com \"Svantek\"",
+    "site:github.com \"autonics\" \"MT4\"",
+    "site:github.com samwontech ST580 TEMP2520"
+  ],
+  "discovered_urls": [
+    "https://environmental-noise-calculation.onrender.com/",
+    "https://gist.github.com/VaughnGH/dfff6da4c274b2deef14e075e40a6bee",
+    "https://gist.github.com/kongmunist/033a50237cdeb67af5666aa4435afd19",
+    "https://github.com/AnalogJ/scrutiny/discussions/1027",
+    "https://github.com/ChironeX1976/environmental-noise-calculation-dashboard",
+    "https://github.com/ChironeX1976/standardnoisefile",
+    "https://github.com/K-Dense-AI/scientific-agents/blob/main/scientific-agents/acoustical-engineer/AGENTS.md",
+    "https://github.com/SamTheGreatCoder/Samsung-SmartCam",
+    "https://github.com/Solla/IMADA_LoadCell_3rdPartyApplication",
+    "https://github.com/iotwizz/iot-firmware-database",
+    "https://github.com/luferau/Samwontech-TEMP2xxx",
+    "https://github.com/mattische/bts/blob/main/manufacturers.json",
+    "https://github.com/mvp/uhubctl/blob/master/README.md?plain=1",
+    "https://github.com/nexussays/ble.net/blob/master/src/ble.net/RegisteredCompanyIds.cs",
+    "https://github.com/ponoor/step-series-universal-firmware",
+    "https://github.com/rweijnen/marstek-firmware-archive/blob/main/README.md",
+    "https://github.com/soltech-sw/release/releases",
+    "https://github.com/wltechblog/thingino-installers",
+    "https://tinyurl.com/4pjnujrn",
+    "https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers",
+    "https://youtu.be/oKC6fJYaPYc"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

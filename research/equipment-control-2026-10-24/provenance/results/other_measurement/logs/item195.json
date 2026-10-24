@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item195.json",
+  "original_log_sha256": "79425ab4e6bae07ff60abd987557877d2a3315285ca994de3c48f2a7375a84da",
+  "original_log_bytes": 17639,
+  "queries": [
+    "HEAD acoustics \"labCORE\" software interface manual",
+    "site:github.com \"labCORE\" HEAD acoustics"
+  ],
+  "discovered_urls": [
+    "https://audioxpress.com/news/head-acoustics-launches-modular-multi-channel-test-and-measurement-front-end-labcore",
+    "https://cdn.head-acoustics.cn/fileadmin/data/global/Datasheets/Analysis_Software/ACQUA_Standards/ACQUA-Standards-UG-P.1140-WB-60044-Data-Sheet.pdf",
+    "https://cdn.head-acoustics.com/fileadmin/data/global/Datasheets/Data_Acquisition/labCORE-Hardware-Platform-7700-Data-Sheet.pdf",
+    "https://device.report/m/3c3844e012ad43ad98cb6d3ddc725b1daa0c97eda96853cd51f268074ea19427",
+    "https://documents.thermofisher.com/TFS-Assets/ANZ/Datasheets/head-acoustics-labcore-hardware-platform.pdf",
+    "https://gist.github.com/rockerBOO/3ab58b371cd119f43f66d45cff5fe02e",
+    "https://github.com/toolsforexperiments",
+    "https://github.com/toolsforexperiments/labcore-old",
+    "https://gsma.my.site.com/mwcoem/servlet/servlet.FileDownload?file=00P1r000023LCMTEA4",
+    "https://manuals.plus/m/18de2ea51fb3659e8f6e5021c67ed0814fb52172af656c6df9ae26bfbaa3dbc5",
+    "https://manuals.plus/m/d80d69ea12b7963c8fa236cf736ebf2c7bcf76f4141074f354b3d0f0ebbc7ab2",
+    "https://tech-academy.amarisoft.com/HeadAcoustics.html",
+    "https://www.analog.com/en/support/our-partners/head-acoustics-gmbh.html",
+    "https://www.head-acoustics.cn/news-events/press-releases/press-details/acqua-software-release-62100-novel-distortion-analysis-and-more-options-in-audio-quality-analysis/",
+    "https://www.head-acoustics.com/jp/products/data-acquisition/modular-and-scalable/labcore/",
+    "https://www.head-acoustics.com/products/data-acquisition/labcore-extensions",
+    "https://www.head-acoustics.com/products/data-acquisition/labcore-extensions/",
+    "https://www.head-acoustics.com/products/data-acquisition/labcore/",
+    "https://www.scribd.com/document/881916029/Microsoft-Teams-AudioSpecification-5-0"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

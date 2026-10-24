@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item211.json",
+  "original_log_sha256": "0b92831559498cb47ccacc69e060ec743546fdacfb206a04008c84c72d801bd8",
+  "original_log_bytes": 12081,
+  "queries": [
+    "BOSCH \"GLM500\" software interface manual",
+    "site:github.com \"GLM500\" BOSCH"
+  ],
+  "discovered_urls": [
+    "https://bosch.manymanuals.fr/unknown/glm-500/manual-4820",
+    "https://bosch.manymanuals.it/unknown/glm-500/manual-4820",
+    "https://bosch.manymanuals.pl/unknown/glm-500/manual-4820",
+    "https://ec-shop.fielding.co.jp/shop/g/gEW-8323646/",
+    "https://fgeo.ru/upload/iblock/b3d/7p2qj8ek2rq6k908q4ey88fqx2lnd7ac/Rukovodstvo-polzovatelya-Bosch-GLM500.pdf",
+    "https://www.bosch-professional.jp/jp/ja/service/downloads/data-transfer-software-for-laser-rangefinder/",
+    "https://www.bosch-professional.jp/jp/ja/service/faq/",
+    "https://www.denzaido.com/page/159374/",
+    "https://www.koiss.co.kr/bbs-2/?board_page=17&order_by=fn_pid&order_type=asc&vid=351",
+    "https://www.koiss.co.kr/bbs-2/?order_by=fn_title&order_type=asc&vid=351",
+    "https://www.koiss.co.kr/bbs-2/?vid=350",
+    "https://www.koiss.co.kr/bbs/?vid=351",
+    "https://www.orange-book.com/ja/c/products/index.html?itemCd=GLM500++++++++++++++++++++++++6250",
+    "https://www.uedakanamono.co.jp/blog/glm500"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

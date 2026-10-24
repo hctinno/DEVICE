@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_274.json",
+  "original_log_sha256": "1c27899a068d396893bdcfba6e990c083ab5783a1f2281d05581752af90e7ce1",
+  "original_log_bytes": 35753,
+  "queries": [
+    "DIGITEK POWER DDPS manual programming software"
+  ],
+  "discovered_urls": [
+    "https://dearborngroup.com/documents/",
+    "https://device.report/m/0f0ad8dbb587c22fe5c2665597b8fbb635845d801ee9aa9da7e35f783b61679e.pdf",
+    "https://device.report/m/1e0c70cb9a70350b37eee9feb5bcb91ec3020b8c13abbcda0ff09d2445bac1e3",
+    "https://device.report/m/c543ebeeb487416170c85be1001006b1d766bdb11b65c9c80004394eb0143f1d",
+    "https://device.report/manuals/ej-et-ey-fj-fr-series-instruction-manual-data-information",
+    "https://device.report/manuals/rk6006c-constant-voltage-current-dc-power-supply-manual",
+    "https://en.wikipedia.org/wiki/Digitek",
+    "https://kellycodetectors.com/content/pdf/manuals/Teknetics_Digitek_Manual.pdf",
+    "https://manuals.plus/asin/B0DBQ9FXKX.pdf",
+    "https://manualzz.com/doc/30360454/adaptive-power-systems-dps-series-programmable-dc-power-s",
+    "https://sigrok.org/wiki/RDTech_DPS_series",
+    "https://smarthomebus.com/whats-new-updates.html",
+    "https://www.manualzz.com/doc/30360454/adaptive-power-systems-dps-series-programmable-dc-power-s",
+    "https://www.mediafire.com/folder/3iogirsx1s0vp/DPS_communication_upper_computer",
+    "https://www.powersoft.com/wp-content/uploads/2019/01/powersoft_DigiModIK_uguide_en_v2.3.pdf",
+    "https://www.scribd.com/document/522481326/Operation-and-PC-and-APP-Instruction-for-Digital-Control-Constant-Voltage-Constant-Current-Power-Supply-Without-Power-Part",
+    "https://www.scribd.com/document/906186010/Operation-and-PC-and-APP-Instruction-for-Digital-Control-Constant-Voltage-Constant-Current-Power-Supply-With-Power-Part",
+    "https://www.xeltek.com/resources/technical-articles/instructions-and-support/superprosoftware/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

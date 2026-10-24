@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_151.json",
+  "original_log_sha256": "ce39b00806b6d8a7bf96517d12bfd2d5e6a65ba9da72c2955688331f1072d5ff",
+  "original_log_bytes": 30629,
+  "queries": [
+    "KOREA SIMULATOR B03300 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.omron.eu/downloads/latest/manual/en/o032_cnc_operator_operation_manual_en.pdf",
+    "https://assets.omron.eu/downloads/manual/en/v6/o032_cnc_operator_operation_manual_en.pdf",
+    "https://cimon.atlassian.net/wiki/spaces/PlcKorea/pages/4435476569",
+    "https://dl.mitsubishielectric.com/dl/fa/document/manual/cnc/ib1501743/ib1501743engb.pdf",
+    "https://en.korsim.co.kr/",
+    "https://en.korsim.co.kr/shopinfo/company.html",
+    "https://koreasimulator.com/",
+    "https://korsim.co.kr/",
+    "https://smart-factory-plc.tistory.com/12",
+    "https://www.cimon.co.kr/product_tax/cicon/",
+    "https://www.fa.omron.com.cn/data_pdf/mnu/o032-e1-03_sysmac-rtnc.pdf",
+    "https://www.gobizkorea.com/mobile/mobileGoodsDetail.do?goods_no=GS20180317138426",
+    "https://www.gobizkorea.com/user/goods/frontGoodsDetail.do?goods_no=GS20180317138426",
+    "https://www.intrepidcs.co.kr/neoobd2-sim.html",
+    "https://www.mitsubishielectric.com/dl/fa/document/manual/plc_fx/jy992d74001/jy992d74001t.pdf",
+    "https://www.renesas.com/en/document/mat/cb30sim-v111-programming-manual",
+    "https://www.rohde-schwarz.com/kr/manual/winiqsim2/",
+    "https://www.tradekorea.com/product/detail/P833235/Simulation-software.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

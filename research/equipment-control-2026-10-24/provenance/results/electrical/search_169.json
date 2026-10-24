@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_169.json",
+  "original_log_sha256": "01b0517a92333dd506270dce986ba85e4b40b70a3706cb8865c52537a2846e9b",
+  "original_log_bytes": 30097,
+  "queries": [
+    "KIKUSUI PAS40-9 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/en/download/",
+    "https://global.kikusui.co.jp/download-category-en/pm_dc-en-2/",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://kikusui-europe.com/kd/pm_dc/",
+    "https://kikusui-korea.co.kr/files/PDF/PAS_D.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PAS_M.pdf",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manualzz.com/doc/61299789/kikusui-pas-20-54--pas-320-2--pas-40-9--pas-60-6--pas-80-",
+    "https://manualzz.com/doc/61917808/kikusui-pas-10-35--pas-40-18--pas-40-9--pas-80-9-operatio",
+    "https://marutsu-tm.jp/page_useditem/mrt0139_pas40-9/",
+    "https://sg.kikusui.co.jp/spec/pfx2500_applied-configuration/",
+    "https://vn.kikusui.co.jp/kd/pm_dc/",
+    "https://www.dfzk.com/prod_kikusui_pas40-9.html",
+    "https://www.manualslib.com/manual/1259372/Kikusui-Pas-10-35.html",
+    "https://www.manualslib.com/manual/910734/Kikusui-Pas-10-35.html?page=11",
+    "https://www.testone.com.tr/wp-content/uploads/product/dc-guc-kaynaklari/kikusui-pas-series/PAS-Series-DATASHEET.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

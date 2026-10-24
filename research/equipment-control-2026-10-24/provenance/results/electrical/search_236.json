@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_236.json",
+  "original_log_sha256": "361e7e42113c892dd722a714aeb50f02da65c897374f8b5d6b420a9e2c3386a6",
+  "original_log_bytes": 32509,
+  "queries": [
+    "YOKOGAWA SR1006 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://arxivar.ascontecnologic.com/Default.aspx?Testo179_1=M_RZ10000-SR10000_E_YO&doctype=MAN.INSTALLA",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&category=&idx=2518&mode=view&offset=430&sk=&sw=",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=1610&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=2023&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=791&mode=view",
+    "https://manualzz.com/doc/4218050/yokogawa-vagilantplant-sr10006-user-manual",
+    "https://quote.us.yokogawa.com/PageConfig/Index?itemType=Model&model=SR10006&pageId=1026.0",
+    "https://well-head.com.tw/ad_images/d_Prod_Instructions/32/a_0_1495875305.PDF",
+    "https://well-head.com.tw/ad_images/d_download/a_1_1272078685.PDF",
+    "https://www.longi.net/yokogawa-recorder-sr10000-user-guide/",
+    "https://www.manualslib.com/manual/1508561/Yokogawa-Sr10000-Series.html",
+    "https://www.manualslib.com/manual/3942043/Yokogawa-Vigilantplant-Sr10006.html",
+    "https://www.manualslib.com/products/Yokogawa-Vagilantplant-Sr10006-10255376.html",
+    "https://www.manualslib.com/products/Yokogawa-Vigilantplant-Sr10006-14261408.html",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.turbo-control.com/rwd1391/store/f3/SR10000%E6%89%8B%E5%86%8A-eng.pdf",
+    "https://www.turbo-control.com/rwd1391/store/f3/SR10000%E9%80%9A%E8%A8%8A.pdf",
+    "https://www.yuyou.com.tw/download.aspx"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

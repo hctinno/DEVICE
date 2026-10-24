@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_255.json",
+  "original_log_sha256": "349b60c006fc1313c625532272eb2562f7c0d9f8fbc4bf85e499001663ea870b",
+  "original_log_bytes": 30719,
+  "queries": [
+    "Elitech RC-4HC manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn1.npcdn.net/userfiles/18333/attachment/458984/20181012_14a99773794758c2e96f0ccfae4dcefe/Elitech_RC-4HC_Operating_Manaul.pdf",
+    "https://cdn1.npcdn.net/userfiles/18333/attachment/458984/20190630_5cbd28597a751a3ddb7c61aad8cc0cb0/RC-4-4HC-User-Manual.pdf",
+    "https://elitech.uk.com/pages/elitech-software",
+    "https://elitechkorea.co.kr/menual/rc-4hc.php",
+    "https://elitechmexico.mx/descargas/manuales?download=2%3Arc-4-series-manual",
+    "https://manuals.plus/ae/1005008155579269",
+    "https://manuals.plus/m/771d320165817f448fca9a38aca20d922f1d4f407c39ea78c8e531108fd3056d",
+    "https://tktech.vn/wp-content/uploads/huong-dan-su-dung-elitech-rc-4hc.pdf",
+    "https://www.elitech-europe.com/elitechlog-software/",
+    "https://www.elitechau.com/pages/software",
+    "https://www.elitechbrasil.ind.br/manuais",
+    "https://www.elitecheu.com/pages/software-1",
+    "https://www.elitecheu.com/pages/user-manual",
+    "https://www.elitechus.com/blogs/news/how-to-operate-elitech-data-logger-software",
+    "https://www.elitechus.com/en-de/pages/elitechlog-download",
+    "https://www.elitechus.com/pages/new-manuals",
+    "https://www.elitechus.com/pages/thermal-smart-software",
+    "https://www.mdgcold.com/wp-content/uploads/2025/09/Elitech-RC-4-Temperature-Data-Logger-User-Manual-Muti-language-Elitech-UK.pdf",
+    "https://www.youtube.com/watch?v=_nSr26Sm4f8",
+    "https://www.youtube.com/watch?v=h_3vl4y5NUU",
+    "https://www.youtube.com/watch?v=l6PcuKfEUHE"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

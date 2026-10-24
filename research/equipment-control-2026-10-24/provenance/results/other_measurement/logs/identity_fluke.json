@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/identity_fluke.json",
+  "original_log_sha256": "c64c6dce12346715111da6beedd00235bcbfd67451c13a91697592d4adcfda4e",
+  "original_log_bytes": 33647,
+  "queries": [
+    "Fluke \"QA-EA-3\" analyzer",
+    "Fluke \"QA-ES III\" remote commands Github"
+  ],
+  "discovered_urls": [
+    "https://assets.fluke.com/manuals/qaesiii_umeng0100.pdf",
+    "https://manualsnet.com/fluke/qa-es-iii",
+    "https://manualzz.com/doc/61550729/fluke-qa-es-iii-manual-de-usuario",
+    "https://manualzz.com/doc/66633131/fluke-qa-es-iii-getting-started",
+    "https://manualzz.com/doc/66633140/fluke-qa-es-iii-user-manual",
+    "https://media.fluke.com/8b33b52b-5ed0-4b92-ac14-b10800c087bd_original%20file.pdf",
+    "https://studylib.net/doc/27420813/qaesiii-umeng0100",
+    "https://www.flukebiomedical.com/products/electrosurgery-analyzers/qa-es-iii-electrosurgery-analyzer",
+    "https://www.flukebiomedical.com/sites/default/files/6005151f-en-qa-es-iii-ds_web.pdf",
+    "https://www.flukebiomedical.com/sites/default/files/qa-esiii_plug-in_user_manual.pdf",
+    "https://www.flukebiomedical.com/software/workflow-automation-software/ansur-test-automation",
+    "https://www.flukebiomedical.com/support/software-downloads?page=2",
+    "https://www.flukebiomedical.com/support/software-downloads?page=2&wbc_purpose=basic",
+    "https://www.manualslib.de/manual/274619/Fluke-Qa-Es-Iii.html?page=58",
+    "https://www.notice-facile.com/en/manual/1617128/fluke%2Bqa-es-iii",
+    "https://www.scribd.com/document/732792481/Fluke-qaesmkiii-man-en"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

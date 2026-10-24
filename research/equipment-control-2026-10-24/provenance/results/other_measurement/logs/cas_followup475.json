@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/cas_followup475.json",
+  "original_log_sha256": "f8af77c528bf60d148cb1fc72a7aef2c2ca535f2e4061592f841ed80df256d8f",
+  "original_log_bytes": 32559,
+  "queries": [
+    "CAS \"BWII-150\" manual RS232 interface",
+    "site:github.com CAS \"BWII-150\""
+  ],
+  "discovered_urls": [
+    "https://device.report/m/4c3a1e77fbe6797f30d1d725603b119670614506052a0f61b104e5b5294ce579",
+    "https://global.sentec.com/fileadmin/sites/2/2025/06/MMQ-250-V2-tCOM-Connectivity-Overview_DIGITAL.pdf",
+    "https://global.sentec.com/fileadmin/sites/2/2025/06/MMQ-423-V2-SDM_Connectivity_Overview-DIGITAL.pdf",
+    "https://global.sentec.com/transcutaneous-connectivity-overview-2/",
+    "https://manuals.plus/m/23ebee37b8eb5683bd3ff82511ce396b2e8deedc085e127cb2e31f02a3334de9",
+    "https://pt.scribd.com/document/655016308/manual-hardware-1",
+    "https://www.gnatus.com.br/wp-content/uploads/2025/01/Manual-FOTOPOLIMERIZADOR-O-LIGHT-II-REV-AGO24-2.pdf",
+    "https://www.gnatus.com.br/wp-content/uploads/2026/01/Manual-CONSULTORIO-KIDS-GEZINHA-SAFARI-REV-NOV.25.pdf",
+    "https://www.gnatus.com.br/wp-content/uploads/2026/01/Manual-FOTOPOLIMERIZADOR-Q-PRO-REV-MAR26.pdf",
+    "https://www.saotron.ru/cas-bcl.shtml",
+    "https://www.saotron.ru/cas-bs.shtml",
+    "https://www.saotron.ru/cas-bw.shtml",
+    "https://www.saotron.ru/cas-hcb.shtml",
+    "https://www.saotron.ru/cas-lsu.shtml",
+    "https://www.saotron.ru/cas-pwii.shtml",
+    "https://www.sentec.com/fileadmin/documents/Connectivity_Flyers/Connectivity_Overview_NA_RF-007993-b.pdf",
+    "https://www.sentec.com/transcutaneous-connectivity-overview/",
+    "https://www.tscas.ru/catalog/zapchasti_dlya_vesov_cas/zapchasti_dlya_avtomobilnykh_vesov/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

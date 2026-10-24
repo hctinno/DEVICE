@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_037.json",
+  "original_log_sha256": "ce937c056434dfbfdaa409b87de36f2c862a7aca9ee74e3e1aea405c0462c48e",
+  "original_log_bytes": 26015,
+  "queries": [
+    "KIKUSUI PCR6000W2 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://electronicsandbooks.com/edt/manual/Hardware/K/Kikusui%20db.kikusui.co.jp/PCR%20W2%20E6%20%5B139%5D.pdf",
+    "https://global.kikusui.co.jp/download-category-en/pm_ac-en/",
+    "https://global.kikusui.co.jp/dri-fir-upd/",
+    "https://in.kikusui.co.jp/dri-fir-upd/",
+    "https://in.kikusui.co.jp/kd/pm_ac-in/",
+    "https://kikusui-europe.com/download-service/",
+    "https://kikusui-europe.com/dri-fir-upd/",
+    "https://kikusui-korea.co.kr/files/PDF/PCR_W_D.pdf",
+    "https://kikusui.co.jp/downloads/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/dri-fir-upd/",
+    "https://manualzz.com/doc/60994387/kikusui-pcr6000we2-interface-manual",
+    "https://rddocuments.kikusui.co.jp/oss/pcrwe2",
+    "https://www.kikusui.cn/resources/001/pdf/pcr-wea_interface_manual.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pcr-wea_users_manual_en.pdf",
+    "https://www.kikusui.cn/resources/002/",
+    "https://www.manualslib.com/manual/1493383/Kikusui-Pcr-We-Series.html",
+    "https://www.metasite.co.kr/Newmeta/NM_files/PCR-W_W2.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

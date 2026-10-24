@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/base_scopes.json",
+  "original_log_sha256": "1df733db276065410777d29d62d3da80cde33f7462371e6c294e1e777e0c42bb",
+  "original_log_bytes": 136248,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

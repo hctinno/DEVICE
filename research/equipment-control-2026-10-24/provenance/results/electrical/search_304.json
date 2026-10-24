@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_304.json",
+  "original_log_sha256": "4e8117a1118d5a32356458b6d6364256f23f4038de9ed8dda8892d4f72b1fca5",
+  "original_log_bytes": 33398,
+  "queries": [
+    "FUJITSU EUL-1200K manual programming software"
+  ],
+  "discovered_urls": [
+    "http://emea.fujitsu.com/microelectronics",
+    "http://mcu.emea.fujitsu.com/mcu_tool/software.htm",
+    "http://www.fme.gsdc.de/gsdc.htm",
+    "http://www.fujitsu.com/emea/services/microelectronics/tsc/",
+    "https://americas.fujielectric.com/what-are-the-ways-to-program-an-ac-drive/",
+    "https://files.elektroda.pl/504882%2Cfujitsu_flashkit_programmer_v2_9.html",
+    "https://software.fujitsu.com/jp/manual/manualfiles/M050010/C120E261/03ENZ2A/c120e26103enz2.pdf",
+    "https://somanuals.com/html/8/Fujitsu-Stud-Sensor-SK-TSC-1125S-User-Manual.html",
+    "https://studylib.net/doc/18529056/elux-ng---fujitsu-technical-support-pages-from-fujitsu",
+    "https://studylib.net/doc/18623249/user-guide-pc-serial-programming-adapter-cable-for-fujitsu",
+    "https://www-origin.fujitsugeneral.com/shared/us/pdf-fgus-vrf-ctlg-2023-01.pdf",
+    "https://www.eurofred.com/medias/IM-UTR-YSTC-32-EN.pdf?attachment=true&context=bWFzdGVyfHJvb3R8MTI4MDg0M3xhcHBsaWNhdGlvbi9wZGZ8YURjM0wyaG1OeTg1TlRBNU9EWTVPREV6Tnprd0wwbE5YMVZVVWw5WlUxUkRYek15WDBWT0xuQmtaZ3w2YzhlZTdjZDYzOWEyNWQ3ODk0OWQ1NmVmZjIxZTY5ZDk2MTE2YzUzN2EyZWI3NjljYzdiYjJhYWMyMzI4NWYx",
+    "https://www.eurofred.com/recursos/documentos/download/218874",
+    "https://www.fujitsu-general.com/datafiles/W9708313061-0501_ST_En_UTY-ASGXZ1.pdf",
+    "https://www.fujitsu-general.com/datafiles/W9708870014-0802_IC_En_UTY-ALGXZ1.pdf",
+    "https://www.manualsdir.com/manuals/102335/fujitsu-fmc-16lx_fr.html?page=7",
+    "https://www.manualslib.com/manual/1394409/Fujitsu-Sk-96380-120pmt.html",
+    "https://www.manualslib.com/manual/1725028/Fujitsu-Mb91460-Series.html",
+    "https://www.manualslib.com/manual/2391419/Fujitsu-Sk-96380-120pmc.html",
+    "https://www.manualslib.com/manual/785821/Fujitsu-Motorkit-91f267-Mc.html?page=23",
+    "https://www.reddit.com/r/PLC/comments/16y3q3d",
+    "https://www.scribd.com/document/1042948313/Fujitsu-Flash-Programmer",
+    "https://www.yumpu.com/en/document/view/17887666/flash-programmer-fujitsu",
+    "https://www.yumpu.com/en/embed/view/dgQXhC4goYtFHD48"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

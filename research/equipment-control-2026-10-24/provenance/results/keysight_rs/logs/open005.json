@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open005.json",
+  "original_log_sha256": "d2d8b344e93b41c5942ceab60cd316f77b3a670451bb2d5f6078bd8117db680f",
+  "original_log_bytes": 15663,
+  "queries": [],
+  "discovered_urls": [
+    "http://cdn.rohde",
+    "http://windows.microsoft.com/de-de/windows/manage",
+    "http://www.rohde-schwarz.com/appnote/7TA1",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_application/application_notes/7ta1/7TA1_0e_rmt_mntrng_ctrl_of_brdbnd_amps.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_165.json",
+  "original_log_sha256": "140da52198ec721079a5a84e13bbd33916c1fab8da3bb268c53e6fab573e0e77",
+  "original_log_bytes": 29981,
+  "queries": [
+    "KIKUSUI PCZ1000A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/dri-fir-upd/pcz1000a-ivi/",
+    "https://global.kikusui.co.jp/w2-2/software-en/wavy-series/",
+    "https://kikusui-europe.com/w2-2/software/wavy-series/",
+    "https://kikusui-korea.co.kr/files/PDF/PCZ_1000A_M.pdf",
+    "https://kikusui.co.jp/download/cat-pcz1000a/",
+    "https://kikusui.co.jp/download/pcz1000a/",
+    "https://kikusuiamerica.com/download/pcz1000a%EF%BD%9Civi-com-%E5%A4%9A%E9%87%8D%E7%92%B0%E5%A2%83%E8%A8%88%E6%B8%AC%E5%99%A8%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90x64/",
+    "https://kikusuiamerica.com/w2-2/software-en-en_us/wavy-series/",
+    "https://sc-journal.com/device/kikusui/pcz1000a/",
+    "https://smtp.unitronicjaya.com/brosur/kikusui/PCZ1000A_E7.pdf",
+    "https://unitronicjaya.com/brosur/kikusui/PCZ1000A_E7.pdf",
+    "https://www.kikusui-kr.com/goods/goods_view.php?goodsNo=1000000030",
+    "https://www.manualslib.com/manual/1454905/Kikusui-Pcz1000a.html",
+    "https://www.manualslib.com/manual/1454905/Kikusui-Pcz1000a.html?page=15"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

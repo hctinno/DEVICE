@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_250.json",
+  "original_log_sha256": "b4a883d76a1eed4b3a2b1e13aae3374582597339cbc03c94fae4091e82383e00",
+  "original_log_bytes": 31720,
+  "queries": [
+    "FLUKE 325 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://us.fluke.com/usen/support/manuals",
+    "https://assets.fluke.com/manuals/32x_____cmeng0000.pdf",
+    "https://assets.fluke.com/manuals/32x_____umeng0000.pdf",
+    "https://assets.fluke.com/manuals/32x_____umeng0003.pdf",
+    "https://assets.fluke.com/manuals/32x_____umeng0100.pdf",
+    "https://device.report/m/8ce25564b06c29dabfd85369f52b21e83a719c6c871659a9e4ad5f09732ce806",
+    "https://device.report/m/a8097536dd8662d2439ca6ca233cc2ac714a877f89355056ceba5abd0862e18f",
+    "https://manualsfile.com/product/k4g0cfmu8v3.html",
+    "https://manualsnet.com/fluke/323",
+    "https://www.fluke.com/en-ca/product/electrical-testing/clamp-meters/fluke-325",
+    "https://www.fluke.com/en-us/product/electrical-testing/clamp-meters/fluke-325",
+    "https://www.fluke.com/en-us/support/technical-support",
+    "https://www.fluke.com/en/product/electrical-testing/clamp-meters/fluke-325",
+    "https://www.flukeprocessinstruments.com/en-us/downloads/product-manuals",
+    "https://www.manualowl.com/m/Fluke/325-CAL/Manual/651123",
+    "https://www.manualowl.com/m/Fluke/325-CAL/Manual/651123?page=15",
+    "https://www.notice-facile.com/en/manual/1331494/fluke%2B323",
+    "https://www.reddit.com/r/MetCal/comments/1s3etr8/fluke_287_program_multimeter_5560a/",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/fluke/comments/1q03wvh/old_324/",
+    "https://www.reddit.com/r/fluke/comments/1uvu3lv/fluke_325/",
+    "https://www.reddit.com/r/networking/comments/fku5dq",
+    "https://www.scribd.com/document/459661569/323-324-325-Calibration-Manual-Clamp-Meter",
+    "https://www.tme.com/us/en-us/details/flk-325/meters-and-ac-dc-clamp-probes/fluke/fluke-325/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

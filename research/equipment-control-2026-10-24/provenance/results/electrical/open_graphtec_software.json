@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/open_graphtec_software.json",
+  "original_log_sha256": "278c279d9de3ea09ae2ae30d624050809e43e93e1943981ed8183ca7f29199ae",
+  "original_log_bytes": 9687,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.graphteccorp.com/download/gl100_gl240_gl840-aps/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

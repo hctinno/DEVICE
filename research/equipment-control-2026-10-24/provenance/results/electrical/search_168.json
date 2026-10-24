@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_168.json",
+  "original_log_sha256": "3df94a2b1f2a520acd8a12df71653ef200f58bb5d9fbf999d48c192681933beb",
+  "original_log_bytes": 27659,
+  "queries": [
+    "KIKUSUI PLZ-50F manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-category-en/pm_el-en/",
+    "https://global.kikusui.co.jp/download/cat_plz-u/",
+    "https://global.kikusui.co.jp/download/plz-u/",
+    "https://global.kikusui.co.jp/w2-2/electronic-load-en/plz-u-en/plz-u-series/",
+    "https://in.kikusui.co.jp/download/cat_plz-u/",
+    "https://in.kikusui.co.jp/w2-2/electronic-load-in/plz-u-in/plz-u-series/",
+    "https://kikusui-europe.com/download-service/",
+    "https://kikusui-europe.com/products-index/electronic-load/plz-u/",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_U_D.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_U_M.pdf",
+    "https://kikusui.co.jp/download/plz-u/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/download/plz-u/",
+    "https://manualzz.com/doc/60985662/kikusui-plz-30f--plz-50f--plz150u--plz70ua-operation-manuals",
+    "https://ph.kikusui.co.jp/download/cat_plz-u/",
+    "https://ph.kikusui.co.jp/w2-2/electronic-load-ph/plz-u-series/plz-u-series/",
+    "https://smtp.unitronicjaya.com/brosur/kikusui/PLZ_U_R2_E1.pdf",
+    "https://telonic.co.uk/jg/wp-content/uploads/2021/05/Kikusui-PLZ-U-OperationManual.pdf",
+    "https://www.kikusui-kr.com/goods/goods_view.php?goodsNo=1000000029"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

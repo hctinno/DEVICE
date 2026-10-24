@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_017.json",
+  "original_log_sha256": "55a6024d2ec8638fa407035a3df83648df85e4cb77a8b31ff2cdf180362d5180",
+  "original_log_bytes": 26664,
+  "queries": [
+    "ITECH IT6015C-80-450 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/42dea70bcd15bf923ca3d75d98c5ed61fe5b50a1743989c2304df27d12ca1ef3",
+    "https://device.report/m/7166fe0175fd851220d485d8741cd884d6366113794fcd295c9e546bddfcc6c4",
+    "https://device.report/m/71c3eaf66f876b48cf6f44c1fd1ff13c99141cc68f4df60b0fb033abdbace43a",
+    "https://device.report/manuals/it6000c-series-user-manual-bi-directional-programmable-dc-power-supply",
+    "https://manuals.plus/m/d2deeb23b5f221e8a1d6cc5ccbd5997d44e667b583ff491a97c2f445fc554f67",
+    "https://manualzz.com/doc/73212148/itech-it6010d-80-300--it6015d-80-450-user-manual",
+    "https://mod-e.ru/catalog/istochniki_pitaniya_elektronnye_nagruzki/istochniki_pitaniya_postoyannogo_toka/itech_it6015c_80_450_dvunapravlennyy_programmiruemyy_istochnik_pitaniya_postoyannogo_toka_80_v_450_a.html",
+    "https://setup-electronica.es/wp-content/uploads/2019/01/it6000c-series-user-manual.pdf",
+    "https://www.4test.no/ITECH%2BIT6015C-80-450%2BBidirectional%2BProgrammable%2BDC%2BPower%2BSupply%2B15kW-%2B80V-%2B450A.htm",
+    "https://www.altoo.dk/files/itech/manuals/IT6000C-User-Manual.pdf?srsltid=AfmBOopSuB1JzMf47oO402bU2-SKzsg_0dtrsEGS3MdL3QHTTcix-iWo",
+    "https://www.calpower.it/gallery/cpit6000c-user-manual-201209en-s.pdf",
+    "https://www.itechate.com/en/info_128.aspx?itemid=535&lcid=87",
+    "https://www.itechate.com/uploadfiles/%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/user%20manual/it6000c/en-us/IT6000C%20User%20Manual-EN.pdf",
+    "https://www.manualslib.com/products/Itech-It6015c-80-450-12422484.html",
+    "https://www.scribd.com/document/842779106/IT6000C-User-Manual",
+    "https://www.scribd.com/document/977911631/IT6000C-User-Manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

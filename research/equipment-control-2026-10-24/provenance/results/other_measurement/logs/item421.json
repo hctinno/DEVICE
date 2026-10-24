@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item421.json",
+  "original_log_sha256": "c09fb1876738da9308c90b4ab24f5c28f7a741c3cc92d5ce05b766deff020872",
+  "original_log_bytes": 15505,
+  "queries": [
+    "ETS-Lindgren \"HI-6005\" software interface manual",
+    "site:github.com \"HI-6005\" ETS-Lindgren"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/5b9946267381c77a6c2a0676f16c3275ada67d5cb149546bd24a7f8a0d31d8bf",
+    "https://ets-lindgren.manymanuals.com/television-antennas/1052",
+    "https://github.com/GrapheneOS/os-issue-tracker/issues/6005",
+    "https://github.com/Jackett/Jackett/issues/6005",
+    "https://github.com/OpenMathLib/OpenBLAS/issues/6005",
+    "https://github.com/aws/aws-cli/issues/5221",
+    "https://github.com/expressjs/express/issues/6005",
+    "https://github.com/godotengine/godot-vscode-plugin/issues/473",
+    "https://github.com/tejtw/TQuant-Lab/blob/main/releases/zipline-2.2.0%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0.md",
+    "https://github.com/wekan/wekan/issues/6005",
+    "https://manualzz.com/doc/1431263/ets-lindgren-hi-6122--hi-6153--hi-6105--hi-6022--hi-6053-",
+    "https://manualzz.com/doc/6581547/ets-lindgren-hi-4422-field-probe-owner-s-manual",
+    "https://manualzz.com/doc/o/1np8sq/ets-lindgren-hi-6005-hi-6022-emc-field-probe-owner-s-manual-7.0-probe-shield-care-and-replacement",
+    "https://maximinstruments.com/products/ets_lindgren_hi_6005_electric_field_probe_100_khz___6_ghz",
+    "https://www.atecorp.com/getmedia/0ab213f1-987b-452d-94d7-06471723e898/emco-6005_manual_1.pdf",
+    "https://www.atecorp.com/products/ets-lindgren/hi-6005",
+    "https://www.ets-lindgren.com/get-manuals/EMC%20Field%20Probes%20H-600100%20K.pdf",
+    "https://www.ets-lindgren.com/sites/etsauthor/ProductsManuals/Probes_Monitors/HI-6005%20HI-6001%20H-600089%20B.pdf",
+    "https://www.manualsdir.com/manuals/636286/ets-lindgren-hi-6153-electric-field-probe-hi-6122-electric-field-probe-hi-6105-electric-field-probe-hi-6053-electric-field-probe-hi-6022-electric-field-probe-hi-6005-electric-field-probe.html?page=106",
+    "https://www.manualsdir.com/manuals/636286/ets-lindgren-hi-6153-electric-field-probe-hi-6122-electric-field-probe-hi-6105-electric-field-probe-hi-6053-electric-field-probe-hi-6022-electric-field-probe-hi-6005-electric-field-probe.html?page=120",
+    "https://www.manualsdir.com/models/ets-lindgren/hi-6005-electric-field-probe.html",
+    "https://www.manualslib.com/products/Esco-Technologies-Ets-Lindgren-Hi-6105-12120341.html",
+    "https://www.yumpu.com/en/document/view/19537364/hi-6005-battery-service-bulletin-ets-lindgren"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

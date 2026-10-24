@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_odaex.json",
+  "original_log_sha256": "6edfb06bd7196931e794805c94864512137f6e9e646d6f64e66d091ac4be4aa1",
+  "original_log_bytes": 29346,
+  "queries": [
+    "\"EX50-24\" \"RS232\""
+  ],
+  "discovered_urls": [
+    "https://es.digi.com/products/models",
+    "https://forums.digi.com/c/cellular-routers/23",
+    "https://hub.digi.com/support/products/cellular-extenders/digi-ex50-5g-cellular-router/?path=%2Fasset%2Fsupport%2Fdigi-ex50-firmware%2F",
+    "https://manuals.plus/m/487a83bd9f0bd2a2e3fa915ba87962c1e80b94218bb41223747b91efe2fada91",
+    "https://manualzz.com/doc/22307016/jed-t430-t440-projector-controller-user-s-manual",
+    "https://plc.client.jp/list_Toshiba.html",
+    "https://pmc-wireless.com/wp-content/uploads/2025/09/Tessco-Price-List-HCESC-CAT-25-10-1.27.pdf",
+    "https://pmc-wireless.com/wp-content/uploads/2025/09/Tessco_HCESC-CAT-20-12_v4.pdf",
+    "https://pmc-wireless.com/wp-content/uploads/2025/09/Tessco_HCESC-CAT-20-12_v6.pdf",
+    "https://tw.shuttle.com/Event/tw/Product_Guide_2015_V1_Trad_CN.pdf",
+    "https://www.digi.com/products/models",
+    "https://www.eserviceinfo.com/preview_html.php?fileid=40250&previewid=19937",
+    "https://www.eserviceinfo.com/preview_html.php?fileid=66540&previewid=34232",
+    "https://www.mouser.com/en/c/embedded-solutions/ethernet-communication-modules/routers/?pg=2&q=Embedded+Solutions+access",
+    "https://www.scribd.com/document/784813644/Digi-Ex50-Ug",
+    "https://www.scribd.com/document/791473449/Digi-EX50-User-Guide-90002435"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

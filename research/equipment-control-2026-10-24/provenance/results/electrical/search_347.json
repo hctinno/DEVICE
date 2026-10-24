@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_347.json",
+  "original_log_sha256": "8b042668a7f03ce5fd8cf459fbdd6d52eb425d7a3c5641eb652f9391c78e6cbf",
+  "original_log_bytes": 28617,
+  "queries": [
+    "California Instrument NSG 1007-5-208 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://accelonix.nl/product/emc-rf/transient-immunity-test/emc-software-transient-immunity-test/em-test-iec-control/",
+    "https://manualzilla.com/doc/6912378/nsg-1007-series-ii-ac-power-source-user-manual",
+    "https://manualzz.com/doc/4137068/nsg-1007-series-ii-ac-power-source-user-manual",
+    "https://manualzz.com/doc/70970919/atek-nsg-1007-15-208--nsg-1007-30-208-user-manual",
+    "https://manualzz.com/doc/o/3x80l/nsg-1007-series-ii-ac-power-source-user-manual-7.2-general",
+    "https://manualzz.com/doc/o/3x80x/nsg-1007-series-ii-ac-power-source-user-manual-9.6-omni-options",
+    "https://maximinstruments.com/pdf_files/TESEQ_NSG1007_Datasheet.pdf",
+    "https://testequipment.center/Products/Schaffner-NSG-1007-5",
+    "https://www.atecorp.com/getmedia/0d0e9f47-0b06-4a01-b3ac-1e409de2c5c0/teseq_nsg-1007_manual_1.pdf?srsltid=AfmBOopSkF5E7Txcg2hXddepou75pk-Eq6C-ow0LD4Y1-APUExkX7wLR",
+    "https://www.atecorp.com/getmedia/0d0e9f47-0b06-4a01-b3ac-1e409de2c5c0/teseq_nsg-1007_manual_1.pdf?srsltid=AfmBOorDAkPUlHt7wnqdW37rTXUoHEczelaVd8WjW_CquHSF5DGlGO5k",
+    "https://www.atecorp.com/products/california-instruments/csw5550",
+    "https://www.empos.cz/attachments/3/3c20ca132229eda1076982d6593dcb6f.pdf",
+    "https://www.manualslib.com/manual/2500250/Atek-Nsg-1007-Series.html",
+    "https://www.opweb.de/en/manufacturer/california-instruments",
+    "https://www.scribd.com/document/518173734/NSG-1007"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

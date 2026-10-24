@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open025.json",
+  "original_log_sha256": "8b0c5a56b688b06e4d69bfce7ac5cc1a7f2f0ff97362b930bcc0c41d0a79a10a",
+  "original_log_bytes": 676,
+  "queries": [],
+  "discovered_urls": [
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/OSP_OperatingManual_en_17.pdf",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/OSP_OperatingManual_en_17.pdf:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

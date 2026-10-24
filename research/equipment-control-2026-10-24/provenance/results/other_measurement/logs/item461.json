@@ -1,0 +1,24 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item461.json",
+  "original_log_sha256": "c82d7dc0005668dc2a099612daa2148578a1794109ef134b30e4b24be54a9c60",
+  "original_log_bytes": 11413,
+  "queries": [
+    "COM-POWER \"LB 168\" software interface manual",
+    "site:github.com \"LB 168\" COM-POWER"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/1118ac830ba81ccd9a26605f69edb8af52d1fd857e16098a9e3ee5350667c428.pdf",
+    "https://device.report/manual/17539699",
+    "https://manuals.plus/m/80f80ab7c24e4157c6779fb03ae2ffbb64bdfde2c077bb0541d7bfbf39aabcda",
+    "https://www.brltest.com/index.php?main_page=product_info&products_id=7946",
+    "https://www.brltest.com/index.php?main_page=products_new&page=85",
+    "https://www.globalspec.com/industrial-directory/rs485_simulator",
+    "https://www.machinio.com/model/o-168-mm",
+    "https://www.tequipment.net/Com-Power-pricelist/",
+    "https://www.tequipment.net/Com-Power/TS-568/EMI-Accessories/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

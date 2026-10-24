@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/open_controllerdetails.json",
+  "original_log_sha256": "ba275412c07139a822a71535f7eacd32c69a6c8b2f1083b742e4496c5f131f4a",
+  "original_log_bytes": 24409,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/eardali/turntable",
+    "https://www.ramayes.com/Data%20Files/Innco%20Systems/CO3000-en.pdf",
+    "https://www.reliantemc.com/innco-systems-product-catalog/",
+    "https://www.schwarzbeck.com/used-equipment/schwarzbeck-am-9144/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

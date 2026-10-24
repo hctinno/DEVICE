@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_032.json",
+  "original_log_sha256": "8edc877586332eb5a86d0d42b2bdc40eb325b63f443412116a1532c3f911f8be",
+  "original_log_bytes": 29583,
+  "queries": [
+    "YOKOGAWA 2558A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/1/6097/files/IM2558A-01EN.pdf",
+    "https://koreayokogawa.com/product/product-detail.php?idx=184",
+    "https://koreayokogawa.com/product/product-detail.php?idx=9",
+    "https://koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&idx=104&mode=view&offset=40&sk=&sw=",
+    "https://koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&idx=104&mode=view&offset=50",
+    "https://tmi.yokogawa.com/jp/solutions/products/generators-sources/standard/2558a-ac-voltage-current-standard/",
+    "https://tmi.yokogawa.com/solutions/products/generators-sources/standard/2558a-ac-voltage-current-standard/",
+    "https://tmi.yokogawa.com/us/solutions/products/generators-sources/standard/2558a-ac-voltage-current-standard/",
+    "https://www.electro-meters.com/wp-content/uploads/pdf/yokogawa/BU2558A-01EN.pdf",
+    "https://www.koreayokogawa.com/product/product-detail.php?idx=9",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&cat_no=&category=%EB%A7%A4%EB%89%B4%EC%96%BC&offset=70&sk=&sw=",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&mNum=3&mode=list&offset=60&sNum=2&sk=&sw=",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&idx=69&mNum=3&mode=view&sNum=2",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&idx=69&mNum=3&mode=view&sNum=4",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1ik88ek",
+    "https://www.yokogawa.com/pdf/provide/E/GW/IM/0000027302/0/IM2558A-01EN.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

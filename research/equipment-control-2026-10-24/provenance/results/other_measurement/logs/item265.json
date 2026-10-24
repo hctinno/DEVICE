@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item265.json",
+  "original_log_sha256": "2bf1c1af510c39d2b4c1b537d5ecee602c05ed76ded01d80a0938756df133c68",
+  "original_log_bytes": 384,
+  "queries": [
+    "B&WTek \"BTC261P-512-S\" software interface manual",
+    "site:github.com \"BTC261P-512-S\" B&WTek"
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

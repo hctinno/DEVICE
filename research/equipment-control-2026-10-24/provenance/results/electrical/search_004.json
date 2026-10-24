@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_004.json",
+  "original_log_sha256": "0510bce1d72e7e548c94752f236417a025491141d8095719a9508241ec7e9068",
+  "original_log_bytes": 35706,
+  "queries": [
+    "GREEN POWER BPC-1kV600A1C300kR1 programming communication driver software GitHub"
+  ],
+  "discovered_urls": [
+    "http://ip.address.of.machine`",
+    "http://ww1.microchip.com/downloads/en/DeviceDoc/PICkit%202%20v2.61.00%20Setup%20dotNET%20A.zip",
+    "https://forum.banggood.com/forum-topic-389422.html?page=2",
+    "https://free-pdk.github.io/",
+    "https://gitblind.noratr.app/topics/programmable-power-supply",
+    "https://github.com/microrobotics/SPPS3010D-232",
+    "https://github.com/openmotics",
+    "https://github.com/wolfiems/DPS-Communication-Tools",
+    "https://githubhelp.com/libdriver/bpc",
+    "https://inplay-inc.github.io/docs/in6xx/getting-started/download/in_prog-guide.html",
+    "https://ited.edu.kg/dj-nitehawk/Hybrid-Inverter-Monitor",
+    "https://manuals.plus/m/518ada4800821b87689f31e816a35b5786612321064587890048cb10b15d319e",
+    "https://nice-power.com.cn/Download",
+    "https://oshwhub.com/azidopp/project_ehjcgyyh",
+    "https://product.tdk.com.cn/system/files/dam/doc/product/power/switching-power/prg-power/instruction_manual/genesysplus-user-manual.pdf",
+    "https://qgithub.com/QuecPython",
+    "https://rensongroup.atlassian.net/wiki/spaces/PUB/pages/180224116/GEN%2B2%2B-%2BModule%2Bprogramming",
+    "https://sensorsandpower.angst-pfister.com/fileadmin/products/datasheets/231/SBP-001_1680-21407-0017-E-0418.pdf",
+    "https://sitelet.easiiodev.ai/sitelet?url=https%3A%2F%2Fgithub.com%2Fgonzho000%2Fchpc",
+    "https://www.getronic.de/wp-content/uploads/MeanWell-Power-Supply.pdf",
+    "https://www.kepcopower.com/support/klp-dev-guide-r3.pdf",
+    "https://www.renesas.com/en/document/apn/greenpak-configuration-and-programming-rh850",
+    "https://www.renesas.com/en/document/mat/greenpak-lite-development-board-manual?r=25450611"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

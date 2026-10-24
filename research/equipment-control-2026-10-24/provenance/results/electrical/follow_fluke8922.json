@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_fluke8922.json",
+  "original_log_sha256": "589bcea8271d8651ea07a284e9903702b03909e9f7127857bb8fd69033547b81",
+  "original_log_bytes": 28280,
+  "queries": [
+    "Fluke 8922A 8921A GPIB interface IEEE488"
+  ],
+  "discovered_urls": [
+    "https://accusrc.com/product-Fluke-8922A-3010",
+    "https://assets.fluke.com/manuals/5320A___umeng0100.pdf",
+    "https://device.report/m/337d13f6fcb64c67149043886c86271900d7c212453426d7e4efa3868d35c94c.pdf",
+    "https://device.report/m/edd02fc7ca4b5e9c327562498700e10ac4d42bec8a8fbd72272386d925fc0f58",
+    "https://download.elso.sk/fluke/manual/Fluke-8921A-dten.pdf",
+    "https://en.wikipedia.org/wiki/GPIB",
+    "https://en.wikipedia.org/wiki/Instrument_control",
+    "https://en.wikipedia.org/wiki/Instrument_driver",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://it.wikipedia.org/wiki/IEEE_488",
+    "https://manuals.plus/m/f3d5f9f15449a1dad9d06959a6f0261a5ccc5e08a158e777014a9c1d7d96a7a5",
+    "https://manualzilla.com/doc/7046926/fluke-8922a-user-s-manual",
+    "https://manualzilla.com/doc/7046926/fluke-8922a-user-s-manual?page=108",
+    "https://manualzz.com/doc/23334093/fluke-8920a--8921a-true-rms-voltmeter-instruction-manual",
+    "https://manualzz.com/doc/3154875/fluke-8922a-true-rms-voltmeter--8922a-003-counter-output-",
+    "https://pt.wikipedia.org/wiki/IEEE-488",
+    "https://sine.ni.com/apps/utf8/niid_web_display.download_page?p_id_guid=04706DBECEAD3C51E0440003BA7CCD71",
+    "https://testequipment.center/Product_Documents/Fluke-8920A-Specifications-DEE25.pdf",
+    "https://www.manualslib.com/manual/511889/Fluke-5522a.html?page=149",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Multimeter&model=Fluke-8921A&productID=648277775DD938541AFCA9837680D887&type=Test-Equipment-Sales",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Multimeter&model=Fluke-8922A&productID=F68D13BBFEB230E313B1A262443671E0&type=Test-Equipment-Sales",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Voltmeter&model=Fluke-8920A&productID=2C5850A2CBA23A5C505AD4BD6F93ED4B&type=Test-Equipment-Sales",
+    "https://www.tomshardware.com/peripherals/open-source-usb-to-gpib-adapter-v3-adds-integrated-ethernet-port-with-poe-support-new-version-of-legacy-gpib-and-ieee-488-support-hardware-expected-in-january"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

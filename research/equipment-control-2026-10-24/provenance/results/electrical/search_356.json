@@ -1,0 +1,27 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_356.json",
+  "original_log_sha256": "0e27838597d6832dd14dcae626f75cb17baae3c215c7726ac118780286f37a9b",
+  "original_log_bytes": 29214,
+  "queries": [
+    "Hung Chang 8902A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://www.adinstruments.es/WebRoot/StoreLES/Shops/62688782/552D/3E7C/6748/08F2/C197/C0A8/2AB9/7777/8902A_manual.pdf",
+    "https://www.eserviceinfo.com/downloadsm/78928/Agilent_08902-99001%208902A%20Operating%20and%20Calibration%20Aug87.html",
+    "https://www.keysight.com.cn/cn/zh/assets/9018-06326/release-notes/9018-06326.pdf",
+    "https://www.keysight.com/ch/de/product/8902A/measuring-receiver.html",
+    "https://www.keysight.com/hk/en/assets/9018-05418/user-manuals/9018-05418.pdf",
+    "https://www.keysight.com/ie/en/assets/9018-05418/user-manuals/9018-05418.pdf",
+    "https://www.keysight.com/it/en/support/8902A/measuring-receiver.html",
+    "https://www.keysight.com/kr/ko/assets/9018-05724/user-manuals/9018-05724.pdf",
+    "https://www.keysight.com/nl/en/assets/9018-05724/user-manuals/9018-05724.pdf",
+    "https://www.keysight.com/us/en/assets/9018-05724/user-manuals/9018-05724.pdf",
+    "https://www.manualsplus.com/hp-8902a-service-note-service-manual-pdf/",
+    "https://www.metrologymanuals.com/documents/sha-9d5214e1d9c1cd3f12cbb059999414a1651622d41dc233a58ea72015c34ae212/operation-and-calibration-manual/",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Calibrators&model=Keysight-%28Agilent%29-8902A&productID=2C15F5F4070C6FC61948DF00C427CC7F&type=Test-Equipment-Sales"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/emctoolkit_dsa800_source.json",
+  "original_log_sha256": "a75cedc2ec646f523fc0bc7b311d45d1c8523c673ce2e97561517f23c15f6d60",
+  "original_log_bytes": 20297,
+  "queries": [],
+  "discovered_urls": [
+    "http://int.rigol.com/File/TechDoc/20160603/DSA800E_ProgrammingGuide_EN.pdf",
+    "https://pyvisa.readthedocs.io/en/stable/",
+    "https://pyvisa.readthedocs.io/en/stable/getting_nivisa.html",
+    "https://raw.githubusercontent.com/fpgadeveloper/emc-toolkit/master/Python/emctools/src/rigol/dsa800.py"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

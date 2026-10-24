@@ -1,0 +1,159 @@
+{
+  "items_total": 480,
+  "processed": 480,
+  "unprocessed": 0,
+  "scope_counts": {
+    "included": 203,
+    "excluded_passive": 240,
+    "identity_unresolved": 37
+  },
+  "research_status_counts": {
+    "exact_source": 52,
+    "family_source": 48,
+    "searched_no_public_control_source": 101,
+    "excluded_passive": 240,
+    "identity_unresolved": 37,
+    "vendor_only": 2
+  },
+  "sources_total": 184,
+  "source_access_counts": {
+    "content_read": 5,
+    "search_index_only": 170,
+    "blocked": 2,
+    "download_read": 7
+  },
+  "exact_model_public_code": [
+    {
+      "item_id": "MOD-7c3fc3ece94b8615",
+      "manufacturer": "Ophir",
+      "model": "Vega",
+      "url": "https://github.com/JHees/Ophir-Vega",
+      "match_level": "exact_model",
+      "license": "GPL-3.0"
+    },
+    {
+      "item_id": "MOD-903b963e6b2e0daf",
+      "manufacturer": "Total Phase",
+      "model": "BEAGLE USB 480",
+      "url": "https://github.com/bluekitchen/bluetooth-logger/blob/master/totalphase-beagle-usb/capture_bluetooth_beagle480_5000.py",
+      "match_level": "exact_model",
+      "license": "파일 헤더: 수정 여부와 관계없이 소스/바이너리 재배포·사용 허용, 보증 부인. 별도 SDK 라이선스 확인 필요."
+    },
+    {
+      "item_id": "MOD-591a4076d8e0eb78",
+      "manufacturer": "Sekonic",
+      "model": "C-800",
+      "url": "https://github.com/akares/skreader-py",
+      "match_level": "exact_model",
+      "license": "MIT"
+    },
+    {
+      "item_id": "MOD-0ec94352eedc0098",
+      "manufacturer": "MINOLTA",
+      "model": "LS-100",
+      "url": "https://github.com/LBNL-ETA/lumicap/blob/master/lumicap/measure_lum.py",
+      "match_level": "exact_model",
+      "license": "Lawrence Berkeley National Laboratory 자체 라이선스(재배포 조건/보증 부인 포함)"
+    },
+    {
+      "item_id": "MOD-07acdafd56edae8b",
+      "manufacturer": "NTI AUDIO",
+      "model": "XL2",
+      "url": "https://github.com/demianh/xl2-monitor",
+      "match_level": "exact_model",
+      "license": "미확인"
+    }
+  ],
+  "family_public_code": [
+    {
+      "item_id": "MOD-2f8f89b52a8598e6",
+      "manufacturer": "MITUTOYO",
+      "model": "500-153-30",
+      "url": "https://github.com/tlbruns/Digimatic/blob/master/Digimatic.h",
+      "match_level": "family_candidate",
+      "license": "미확인"
+    },
+    {
+      "item_id": "MOD-63dd6cb28c9a729f",
+      "manufacturer": "MITUTOYO",
+      "model": "500-151-30",
+      "url": "https://github.com/tlbruns/Digimatic/blob/master/Digimatic.h",
+      "match_level": "family_candidate",
+      "license": "미확인"
+    },
+    {
+      "item_id": "MOD-9f8097c2850a2a60",
+      "manufacturer": "TESTO",
+      "model": "545",
+      "url": "https://github.com/testo/toolbox_classic",
+      "match_level": "documented_family",
+      "license": "Apache-2.0 (GitHub 라이선스 표기)"
+    },
+    {
+      "item_id": "MOD-e9302d87158c51e0",
+      "manufacturer": "SPIRENT",
+      "model": "SPT-SC10-S2",
+      "url": "https://github.com/Viavi-TestCenter/py-stcrestclient",
+      "match_level": "generic_vendor",
+      "license": "미확인"
+    },
+    {
+      "item_id": "MOD-bed98096cac22650",
+      "manufacturer": "MITUTOYO",
+      "model": "CD-60C",
+      "url": "https://github.com/tlbruns/Digimatic/blob/master/Digimatic.h",
+      "match_level": "family_candidate",
+      "license": "미확인"
+    },
+    {
+      "item_id": "MOD-e7652c91b49aa7a3",
+      "manufacturer": "MITUTOYO",
+      "model": "500-153",
+      "url": "https://github.com/tlbruns/Digimatic/blob/master/Digimatic.h",
+      "match_level": "family_candidate",
+      "license": "미확인"
+    },
+    {
+      "item_id": "MOD-36c56c149f31caa7",
+      "manufacturer": "MITUTOYO",
+      "model": "CD-30C",
+      "url": "https://github.com/tlbruns/Digimatic/blob/master/Digimatic.h",
+      "match_level": "family_candidate",
+      "license": "미확인"
+    },
+    {
+      "item_id": "MOD-a845b29c64461fbb",
+      "manufacturer": "Keller",
+      "model": "LE02",
+      "url": "https://github.com/KELLERAGfuerDruckmesstechnik/CodeSamplesAndProtocols",
+      "match_level": "generic_vendor",
+      "license": "미확인"
+    },
+    {
+      "item_id": "MOD-c6634312833a7f12",
+      "manufacturer": "DekTec",
+      "model": "DTA-2131-GOLD",
+      "url": "https://github.com/planetlabs/dta",
+      "match_level": "documented_family",
+      "license": "DekTec Linux SDK Version 1 (August 2012): 저작권/조건 유지하에 소스·바이너리 재배포 허용"
+    },
+    {
+      "item_id": "MOD-af45dc8bab6edc71",
+      "manufacturer": "TESTO",
+      "model": "175-H1",
+      "url": "https://github.com/testo/toolbox_classic",
+      "match_level": "documented_family",
+      "license": "Apache-2.0 (검색 목록 표시)"
+    },
+    {
+      "item_id": "MOD-8c012f2fd205cace",
+      "manufacturer": "National Instruments",
+      "model": "PCI-4461",
+      "url": "https://github.com/ni/nidaqmx-python",
+      "match_level": "documented_family",
+      "license": "MIT"
+    }
+  ],
+  "hardware_tests": "미실행",
+  "checks": "480개 입력 ID 일대일 대응, 모든 retained 검색기록 존재, not_searched=0, exact_source의 exact_model 근거 존재 검사 통과"
+}

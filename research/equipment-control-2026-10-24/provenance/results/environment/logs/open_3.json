@@ -1,0 +1,19 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_3.json",
+  "original_log_sha256": "9e0c20db72a1a2ecab3394ea8b67fa377111406ef453e86b9abdd5026bfeeebd",
+  "original_log_bytes": 23326,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/fdmysterious/dstdsv",
+    "https://github.com/luferau/Samwontech-TEMP2xxx",
+    "https://stackoverflow.com/questions/442833/how-to-force-driver-to-device-match-in-linux†stackoverflow.com】",
+    "https://www.samwontech.com/download/NOVA%20Series_comm%28Kor%29.pdf",
+    "https://www.samwontech.com/download/NOVA%20Series_comm%28Kor%29.pdf:",
+    "https://www.samwontech.com/download/TEMP2020_comm%28Eng%29.pdf",
+    "https://www.samwontech.com/download/TEMP2020_comm%28Eng%29.pdf:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

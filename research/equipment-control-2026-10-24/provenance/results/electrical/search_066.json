@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_066.json",
+  "original_log_sha256": "538c153d072b2c554f521b29a7486921615a09bfe60f33c775860b5e934099cd",
+  "original_log_bytes": 24309,
+  "queries": [
+    "Bonnin DDSJ-308F manual programming software"
+  ],
+  "discovered_urls": [
+    "http://en.nbchao.com/p/1124/Specification.html",
+    "https://build1f40s.jmri.org/manual/JMRI_2-12_Manual/Programmer_Setup.shtml",
+    "https://en1.nbchao.com/p/1124/",
+    "https://en1.nbchao.com/p/1124/Specification.html",
+    "https://en1.nbchao.com/pdf/25025/",
+    "https://gx.jiceng.zhengzhou.gov.cn/attachment/%E6%B2%B3%E5%8D%97%E7%A7%91%E8%AF%9A%E8%8A%82%E8%83%BD%E7%8E%AF%E4%BF%9D%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E5%BD%B1%E5%93%8D%E6%8A%A5%E5%91%8A%E8%A1%A8.pdf?Y9mnfDOxrYcRAIAx5MNMYgOGL_odJw1iQpaiUS8mzfDTliVgTWTw6mKrp-lnAt0V-_bqCg12RzcWX2ekbUDhavGZohtUrpZX=",
+    "https://jmri.jmri.org/manual/DP3_2-14_manual/Programmer_ServiceMode.shtml",
+    "https://manuals.plus/m/7be3c0cfb333549f7f924b53d6ba3c3457a811ec26333b3e64c49d87981da9db.pdf",
+    "https://signer.jmri.org/manual/JMRI_2-14_manual/Basic_Programming.shtml",
+    "https://www.doorking.com/easyconnect/programming-options/manual-entry-system-programming/",
+    "https://www.manualslib.com/manual/3139934/Minato-308-Series.html",
+    "https://www.manualslib.com/manual/3139934/Minato-308-Series.html?page=29",
+    "https://www.manualslib.com/manual/3139934/Minato-308-Series.html?page=42",
+    "https://www.manualslib.com/products/Minato-308-Series-13434189.html",
+    "https://www.minatoat.co.jp/en/product/dp/download/",
+    "https://www.sapeen.com/uploadFiles/file/20200518/6372541256661655317851634.pdf",
+    "https://www.sapeen.com/uploadFiles/file/20210928/6376841784511132505198041.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

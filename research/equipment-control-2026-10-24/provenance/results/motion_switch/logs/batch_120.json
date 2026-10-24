@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_120.json",
+  "original_log_sha256": "d84476aa3dd45107ed3c6683b22445693d2cdb00589fbe8ad809875a46e2d25c",
+  "original_log_bytes": 22205,
+  "queries": [
+    "STAUBLI \"CS9spe-TX2-60\" manual programming driver API GitHub",
+    "STAUBLI \"SP2 D21144507C\" manual programming driver API GitHub",
+    "STAUBLI \"TX2-60 L spe\" manual programming driver API GitHub",
+    "iBlue (CTTL) \"RTSB-A\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/2e6c349e95f499850c5f986367aa67e3c4bdb0ea8929d6ec63cb07ed80bef534",
+    "https://device.report/m/4d2a8e169f6dce53c2f7510cd9d8fcc0f44edbaf02b03f6a209da1761a8cc461",
+    "https://device.report/m/6c6809fae3a4239d36e2a45d8e6e0405ddcd813b7de368916d542d57d7a4f391",
+    "https://device.report/m/84b77bdf23641012f04cf4f918e393da4b136f1798df7564f87c6331f834d206.pdf",
+    "https://device.report/m/b859e544e4c356c1a9fca576447247b43f39635f164a6f0ab0a4e436a4b317bd",
+    "https://doc.zh-jieli.com/KDocs/master/%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF%E5%BA%94%E7%94%A8%E6%96%87%E6%A1%A3%E5%85%A5%E5%8F%A3%E6%B1%87%E6%80%BB/%E8%AE%A4%E8%AF%81%E8%B5%84%E6%96%99%E8%8E%B7%E5%8F%96%E6%B1%87%E6%80%BB%28%E6%9C%80%E6%96%B0%E8%B5%84%E6%96%99%E5%90%8E%E5%8F%B0%E4%BC%9A%E6%9B%B4%E6%96%B0%29/SZ21040416B01_JieLi-_AC6XXX-_BQB-RF.html",
+    "https://fcc.report/FCC-ID/A3LSMG736B/5877447.pdf",
+    "https://fcc.report/FCC-ID/A3LSMP625/7134454.pdf",
+    "https://fcc.report/FCC-ID/A3LSMX818U/6537904.pdf",
+    "https://fccid.io/A3LSMA256U/RF-Exposure-Info/A3LSMA256U-SAR-Char-Report-6968800.pdf",
+    "https://fccid.io/A3LSMX818U/RF-Exposure-Info/A3LSMX818U-WI-FI-6E-RF-Exposure-R1-6537904.pdf",
+    "https://github.com/the-aerospace-corporation/satcat5/blob/main/doc/INTERFACES.md",
+    "https://shiftsync.tricentis.com/technical-discussion-38/how-to-manage-duplicate-reusable-test-step-blocks-rtsb-when-exporting-test-cases-to-tosca-cloud-2959",
+    "https://www.ancitest.com/bluetooth-lab.html",
+    "https://www.bluetooth.com/develop-with-bluetooth/qualify/qualification-test-tools/validated-test-equipment/",
+    "https://www.yctlab.com/cn/laboratory/lysys.html",
+    "https://www.yctlab.com/en/laboratory/Bluetooth-lab.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

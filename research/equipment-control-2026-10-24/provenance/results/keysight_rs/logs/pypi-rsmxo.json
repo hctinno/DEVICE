@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/pypi-rsmxo.json",
+  "original_log_sha256": "4a6c530259f9241d1be786a23c91bcdc44b230f1a2e8f75cb2643ad8df54ecc0",
+  "original_log_bytes": 14794,
+  "queries": [],
+  "discovered_urls": [
+    "https://files.pythonhosted.org/packages/6d/35/9f9a6c47bb3eda7fa0fe4fac1a75111e140ea9fe98780de2e22572beeafd/rsmxo-2.8.0-py3-none-any.whl",
+    "https://files.pythonhosted.org/packages/6f/7e/2bdf9235bf4c7e400b70d2b3fe5ac38334083e6ea83f47cf2e858dc50c89/rsmxo-2.10.0.tar.gz",
+    "https://files.pythonhosted.org/packages/8b/b2/d13d7943e6cffb7eea505d88e9531f1682346fa58ca3fb7ac6e20b288f06/rsmxo-2.9.0.tar.gz",
+    "https://files.pythonhosted.org/packages/8c/6d/f4a6d5c9a0fdeda15966b2a3b318c5939bb41bee7c0c1196eb2adb956a1d/rsmxo-2.9.0-py3-none-any.whl",
+    "https://files.pythonhosted.org/packages/8c/7c/2df1801a4c8eb69de7b68277a63da7342bfefa4bc0052f1ec1e1965bdc3d/rsmxo-2.8.0.tar.gz",
+    "https://files.pythonhosted.org/packages/ac/58/ebb83dc85fcf3c4b77d82650fa820799b857c1f172389335106062a17a5e/rsmxo-2.10.2-py3-none-any.whl",
+    "https://files.pythonhosted.org/packages/d1/a1/14f2d85311dde0742013489c27ad7c7c66139e1a78520368989b2cb86d87/rsmxo-2.10.2.tar.gz",
+    "https://files.pythonhosted.org/packages/d5/b4/f162a78681e5dcb844141eee4e849f9cc1f7b09650ccb723ef0c6e6b8797/rsmxo-2.10.0-py3-none-any.whl",
+    "https://github.com/Rohde-Schwarz/Examples/",
+    "https://github.com/Rohde-Schwarz/Examples/tree/main/Oscilloscopes/Python/rsmxo_ScpiPackage",
+    "https://img.shields.io/pypi/dm/rsmxo.svg",
+    "https://img.shields.io/pypi/l/rsmxo.svg",
+    "https://img.shields.io/pypi/pyversions/pybadges.svg",
+    "https://img.shields.io/pypi/v/rsmxo.svg",
+    "https://pypi.org/project/",
+    "https://pypi.org/project/rsmxo/",
+    "https://pypi.org/project/rsmxo/2.10.2/",
+    "https://pypi.python.org/pypi/rsmxo/",
+    "https://readthedocs.org/projects/sphinx/badge/?version=master",
+    "https://rsmxo.readthedocs.io/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,534 @@
+[
+  {
+    "item_id": "MOD-485397c45d3bb043",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESCU18",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-4e1a45a25496a054",
+    "manufacturer": "Keysight",
+    "model": "DMM6500",
+    "status": "identity_unresolved",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 대장 제조사 Keysight와 달리 DMM6500 드라이버는 Keithley 제품. 제조사 표기 확인 필요."
+  },
+  {
+    "item_id": "MOD-975ed136304b8e9d",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESH3-Z6",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. LISN/인공회로망은 RF 회로가 수동이어도 경로·필터 선택용 원격 포트가 있을 수 있으므로 제외하지 않았다. 실제 커넥터·핀배열·지원 모델 확인 필요."
+  },
+  {
+    "item_id": "MOD-bc65be372e90c791",
+    "manufacturer": "Agilent",
+    "model": "80532F",
+    "status": "identity_unresolved",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 80532F를 85032F로 임의 수정하지 않음. 명판 확인 필요."
+  },
+  {
+    "item_id": "MOD-296540939c91ac1f",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "BBA300(25W)",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-8747c7d75eb77106",
+    "manufacturer": "Keysight",
+    "model": "U1733C",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-0719a66d0e73e087",
+    "manufacturer": "Keysight",
+    "model": "E7770A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-a87553a4a1cd4adc",
+    "manufacturer": "Keysight",
+    "model": "E7515B",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-c7163884035d1865",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "CMX500",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-0c6f59f938d02d63",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ZNL20",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-e6dbac5562c838f9",
+    "manufacturer": "Keysight",
+    "model": "Z2160A-118",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. Z2160A-118 / Z2160A-11B 구성품·옵션과 CATR 챔버 제어 SW를 확인하지 못함. Z2160A 일반 시스템이나 Z2160A-1A3 스위치를 같은 제어 대상으로 확정하지 않음."
+  },
+  {
+    "item_id": "MOD-a41bb0d8ebca9663",
+    "manufacturer": "Keysight",
+    "model": "SIGNAL GENERAOTR",
+    "status": "identity_unresolved",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-a97dab12cc2caa48",
+    "manufacturer": "HP",
+    "model": "HP Zbook",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-21899d98ead5dfe0",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSU26",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-695d6f1c81049281",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "CMW-Z800A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-4a92eb627823f5a1",
+    "manufacturer": "HP",
+    "model": "HP DESKTOP",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-d000f5df3de5ca39",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSP30",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-ed5a97fac9bfb7bd",
+    "manufacturer": "HP",
+    "model": "HP",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-da508b73def80918",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SCU-18F",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 검색 결과의 EMC 성적서 장비목록만으로 제조사·제어 API를 검증할 수 없어 제어자료 링크로 채택하지 않음."
+  },
+  {
+    "item_id": "MOD-7df1d2aa15c6bfb4",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SCU08F2",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 검색 결과의 EMC 성적서 장비목록만으로 제조사·제어 API를 검증할 수 없어 제어자료 링크로 채택하지 않음."
+  },
+  {
+    "item_id": "MOD-4a799650a8901b75",
+    "manufacturer": "Keysight",
+    "model": "Z2160A-11B",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. Z2160A-118 / Z2160A-11B 구성품·옵션과 CATR 챔버 제어 SW를 확인하지 못함. Z2160A 일반 시스템이나 Z2160A-1A3 스위치를 같은 제어 대상으로 확정하지 않음."
+  },
+  {
+    "item_id": "MOD-00891f051b0ba9be",
+    "manufacturer": "Keysight",
+    "model": "M1740A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-763ce00c7858ff4a",
+    "manufacturer": "HP",
+    "model": "HP ELITEDESK",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-b8e1ab30db920766",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SCU-01F",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 검색 결과의 EMC 성적서 장비목록만으로 제조사·제어 API를 검증할 수 없어 제어자료 링크로 채택하지 않음."
+  },
+  {
+    "item_id": "MOD-f13c72f9e16b2166",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "CMD 65",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-112e01ccca71a9d6",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SCU 18",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 검색 결과의 EMC 성적서 장비목록만으로 제조사·제어 API를 검증할 수 없어 제어자료 링크로 채택하지 않음."
+  },
+  {
+    "item_id": "MOD-89925f05063117a6",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SCU 01",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 검색 결과의 EMC 성적서 장비목록만으로 제조사·제어 API를 검증할 수 없어 제어자료 링크로 채택하지 않음."
+  },
+  {
+    "item_id": "MOD-31f2ebdf1b7371d4",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "IMS",
+    "status": "identity_unresolved",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-80424c77f7fb08e0",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SCU-08D",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 검색 결과의 EMC 성적서 장비목록만으로 제조사·제어 API를 검증할 수 없어 제어자료 링크로 채택하지 않음."
+  },
+  {
+    "item_id": "MOD-9972cf4fa99ce236",
+    "manufacturer": "RODHE&SCHWARZ",
+    "model": "SMIQ03B",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-1188175ba3165289",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSP40",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-33aae602d18b9a6e",
+    "manufacturer": "HP",
+    "model": "HP Pro 3330 MT",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-2fb2b847a3985f63",
+    "manufacturer": "HP",
+    "model": "HP Pro 3130 MT",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-907d1215ca61299a",
+    "manufacturer": "HP",
+    "model": "HP EliteDesk 800 G2 TWR",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-909220fe84be27dc",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SFU",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-3246d5dc96f9e5c7",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "CMD60",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-7ad995bbf6efbdb2",
+    "manufacturer": "HP",
+    "model": "ProDesk 400 G2 SFF i7-4790 SSD WIN10Home",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-b77c88a1185de0ce",
+    "manufacturer": "HP",
+    "model": "HP Compaq 8200",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-5f8f9bc0344b1168",
+    "manufacturer": "HP",
+    "model": "HP Compaq dc7900",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-5c055cbc221ed53c",
+    "manufacturer": "HP",
+    "model": "HP Compaq 8300",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-0ba6c20fcd8cbe88",
+    "manufacturer": "HP",
+    "model": "PAVILION T849K",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-9f75bc7dad608563",
+    "manufacturer": "HP",
+    "model": "HP438",
+    "status": "identity_unresolved",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-138b7f1bccc7bd86",
+    "manufacturer": "HP",
+    "model": "D09861T",
+    "status": "identity_unresolved",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-47ee9c1eb04e8da5",
+    "manufacturer": "HP",
+    "model": "SUNMAC 100",
+    "status": "identity_unresolved",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-e2e4420d55b45198",
+    "manufacturer": "HP",
+    "model": "8664A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "IDENTITY-EQ-005231",
+    "manufacturer": "HP",
+    "model": "",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-3d2d0fddf15dec26",
+    "manufacturer": "HP",
+    "model": "A1329KR",
+    "status": "needs_scope_review",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-e3cf1a623af58555",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESH3-Z5",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. LISN/인공회로망은 RF 회로가 수동이어도 경로·필터 선택용 원격 포트가 있을 수 있으므로 제외하지 않았다. 실제 커넥터·핀배열·지원 모델 확인 필요."
+  },
+  {
+    "item_id": "MOD-734c1b3f92a246b0",
+    "manufacturer": "HP",
+    "model": "6574A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-df45ffc9aa78fc4f",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "OSP",
+    "status": "identity_unresolved",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. OSP 계열명만 있으며 Power Meter 일반명과 불일치. 세부 모델·모듈 식별 필요."
+  },
+  {
+    "item_id": "MOD-0d43b9e59b2b1959",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESH2-Z5",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. LISN/인공회로망은 RF 회로가 수동이어도 경로·필터 선택용 원격 포트가 있을 수 있으므로 제외하지 않았다. 실제 커넥터·핀배열·지원 모델 확인 필요."
+  },
+  {
+    "item_id": "MOD-913e1f1adeb21362",
+    "manufacturer": "HP",
+    "model": "334A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-3666853da7e4b4a5",
+    "manufacturer": "HP",
+    "model": "8901B",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-9c5279bae33ef07d",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESI 40",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-92b09eac41c34eb8",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESH3",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-a19212d8008a525a",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESVS30",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-55b52f9931788255",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESVP",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-39d5bf453211b8bc",
+    "manufacturer": "HP",
+    "model": "8447E",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-35fe2a70cd8d8439",
+    "manufacturer": "HP",
+    "model": "8447F",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-a0ff35789a7d8f88",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SMT 02",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-41ba7cc98fa0a664",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SCU-18",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 검색 결과의 EMC 성적서 장비목록만으로 제조사·제어 API를 검증할 수 없어 제어자료 링크로 채택하지 않음."
+  },
+  {
+    "item_id": "MOD-366f6997ad84a975",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRVD",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  },
+  {
+    "item_id": "MOD-d13d98e0c695aa24",
+    "manufacturer": "HP",
+    "model": "339A/2025A05717",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함. 슬래시 뒤 식별문자열은 외부 검색에서 제외하고 모델 부분만 조회함(제어기/모듈 복합 표기는 별도 구성으로 검토)."
+  },
+  {
+    "item_id": "MOD-3f10ff948964cb49",
+    "manufacturer": "HP",
+    "model": "8901B / 3438A05231",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함. 슬래시 뒤 식별문자열은 외부 검색에서 제외하고 모델 부분만 조회함(제어기/모듈 복합 표기는 별도 구성으로 검토)."
+  },
+  {
+    "item_id": "MOD-15cc1da77924fac9",
+    "manufacturer": "HP",
+    "model": "6228B/2833A05366",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함. 슬래시 뒤 식별문자열은 외부 검색에서 제외하고 모델 부분만 조회함(제어기/모듈 복합 표기는 별도 구성으로 검토)."
+  },
+  {
+    "item_id": "MOD-a2b340f71659fffc",
+    "manufacturer": "HP",
+    "model": "8921A/3506A01648",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함. 슬래시 뒤 식별문자열은 외부 검색에서 제외하고 모델 부분만 조회함(제어기/모듈 복합 표기는 별도 구성으로 검토)."
+  },
+  {
+    "item_id": "MOD-acc5147e5ac3714e",
+    "manufacturer": "HP",
+    "model": "5345A/5355A/ 2426A10527",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함. 슬래시 뒤 식별문자열은 외부 검색에서 제외하고 모델 부분만 조회함(제어기/모듈 복합 표기는 별도 구성으로 검토)."
+  },
+  {
+    "item_id": "MOD-8877cc565453520f",
+    "manufacturer": "HP",
+    "model": "6286A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-0a995571f163450d",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "URV5",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. URV5를 URV55·NRVS로 바꾸어 지원을 추정하지 않았다. 이번 조회에서 정확한 공개 제어자료를 확인하지 못함."
+  },
+  {
+    "item_id": "MOD-588036aac40ce819",
+    "manufacturer": "HP",
+    "model": "89441A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-33d293149f1154c4",
+    "manufacturer": "HP",
+    "model": "6205C",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-d80f52316283d955",
+    "manufacturer": "HP",
+    "model": "6525A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-27486b761411caa7",
+    "manufacturer": "HP",
+    "model": "4329A",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-05a5823f180ea75b",
+    "manufacturer": "HP",
+    "model": "8970B",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-69cdb0a92245d64e",
+    "manufacturer": "HP",
+    "model": "8714ES",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요. 구형 HP는 HP-IB 전용 명령과 최신 SCPI를 구분해야 함."
+  },
+  {
+    "item_id": "MOD-77ea76d7a8b01c1a",
+    "manufacturer": "Agilent",
+    "model": "346B",
+    "status": "searched_no_public_control_source",
+    "notes": "설치·통신·실기 검증 미실행. 검색 색인 확인과 원문 다운로드 열람은 access로 구분. 인터페이스·펌웨어·라이선스·설치 옵션 및 코드 함수 범위는 실제 장비와 추가 대조 필요."
+  }
+]

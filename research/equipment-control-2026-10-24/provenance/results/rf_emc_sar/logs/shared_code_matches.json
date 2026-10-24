@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/shared_code_matches.json",
+  "original_log_sha256": "0825c08ccee0d6c3d9d1f3635bbcba3c4261064edde32bc0be98a09ed5dbc8a2",
+  "original_log_bytes": 2251,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

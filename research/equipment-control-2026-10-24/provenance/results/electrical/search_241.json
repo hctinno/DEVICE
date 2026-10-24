@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_241.json",
+  "original_log_sha256": "59804be6b40e48df9d287b2323f5565cef00fa49fa6af9a7a1e0b06a8f74d0a4",
+  "original_log_bytes": 29927,
+  "queries": [
+    "Brandenburg 149-04 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://bkpmedia.s3.amazonaws.com/downloads/software/pg4uwarb.zip",
+    "https://knx-td.sihub.siemens.com/sw_tools/main_fdt_v4_en.htm",
+    "https://paradox.ee/wp-content/uploads/2024/02/SMARTLINE-ENG-IM.pdf",
+    "https://www.bbh-products.de/en/support/downloads?cHash=36eca8e872e0b49a0837b97c677211bf&tx_bbhdownloads_downloads%5Baction%5D=download&tx_bbhdownloads_downloads%5Bcontroller%5D=Downloads&tx_bbhdownloads_downloads%5Bfile%5D=152",
+    "https://www.bbh-products.de/en/support/downloads?cHash=7279dc361e15bb0df13d1e27a2b5a90a&tx_bbhdownloads_downloads%5Baction%5D=download&tx_bbhdownloads_downloads%5Bcontroller%5D=Downloads&tx_bbhdownloads_downloads%5Bfile%5D=72",
+    "https://www.bbh-products.de/fileadmin/user_upload/HB-44810-810-11-09F-EN_SSCU_Installation_Manual.pdf",
+    "https://www.bkgrupe.lt/uploads/EVO-EI04%20Installation%20Manual.pdf",
+    "https://www.bkprecision.com/knowledge/products-qa/4/where-can-i-find-a-list-of-chips-supported-by-bk-programmers",
+    "https://www.elnec.com/en/products/software/",
+    "https://www.elnec.com/en/support/download/",
+    "https://www.fatek.com/en/download.php?act=list&cid=58",
+    "https://www.mkt-sys.de/MKT-CD/",
+    "https://www.mkt-sys.de/MKT-CD/upt/help/progt_01.htm",
+    "https://www.mkt-sys.de/MKT-CD/upt/help/progt_49.htm",
+    "https://www.retevis.com/downloads/software",
+    "https://www.ritron.com/tools/",
+    "https://www.tiscontrol.com/cn/learning_bus_lesson4.html",
+    "https://www.tr-electronic.com/service/downloads/software"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

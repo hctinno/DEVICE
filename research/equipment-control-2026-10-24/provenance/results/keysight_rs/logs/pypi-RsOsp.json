@@ -1,0 +1,20 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/pypi-RsOsp.json",
+  "original_log_sha256": "08d46ddc1d642595c4b4c99397e1ace4a7cee0a43658cb67b0119a8f0da2b924",
+  "original_log_bytes": 8297,
+  "queries": [],
+  "discovered_urls": [
+    "https://RsOsp.readthedocs.io/",
+    "https://files.pythonhosted.org/packages/10/52/2d6d01856907a7064497c36e2610a846bcc8f1523b3017c1df234cd0a4b8/RsOsp-2.10.17.75.tar.gz",
+    "https://files.pythonhosted.org/packages/6e/09/ab71f4e0d5e124ccec01b382a4a841dfc65fa5d0fa7106761db506c27301/RsOsp-1.0.4.58.tar.gz",
+    "https://files.pythonhosted.org/packages/7e/7b/13935f3c3d13fbe99b4ea5149d33afa6574318122fe35a8df356eb216e70/RsOsp-2.10.17.75-py3-none-any.whl",
+    "https://files.pythonhosted.org/packages/80/21/07147333112372676c2eb23e023099de0ff9579f9ac622ff62db76853fc1/RsOsp-1.0.4.58-py3-none-any.whl",
+    "https://github.com/Rohde-Schwarz/Examples/tree/main/Misc/Python/RsOsp_ScpiPackage",
+    "https://pypi.org/project/RsOsp/",
+    "https://pypi.org/project/RsOsp/2.10.17.75/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

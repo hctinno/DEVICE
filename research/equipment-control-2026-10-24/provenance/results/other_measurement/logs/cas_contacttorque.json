@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/cas_contacttorque.json",
+  "original_log_sha256": "c39848f87996c443389fc8fbd57ec2d62b98a07c43783573f3f439b978683bdb",
+  "original_log_bytes": 28903,
+  "queries": [
+    "CAS \"SA\" rotary torque RS025 software",
+    "CAS \"SA-5KM\" \"RS-025\""
+  ],
+  "discovered_urls": [
+    "https://actuation.curtisswright.com/en-gb/exlar-legacy-products/intelligent-drive-motor-actuators",
+    "https://azure-na-assets.contentstack.com/v3/assets/bltd89674ca5491ef9a/blt01da49f79d9c89e9/677fd696c7207d0c4f2c33bd/04577524ed1.pdf",
+    "https://device.report/m/383e241b937c8172a3ef352d78cb6627a6b5f8a39996f6e29e4fd3d8b062bf2f",
+    "https://en.windcnc.com/service1/?keys=212",
+    "https://holdfastaust.com.au/wp-content/uploads/2025/03/RAD-Australia-Catalogue-2025-DIGITAL_compressed.pdf",
+    "https://manuals.plus/m/8c6dc2e9a85c340d23e0c5bb92a0f259962d0410686c90a5298e49ff669e0297",
+    "https://primar.rs/katalozi/tohnichi/01%20-%20Tohnichi-Reference-Guide-2020-Generalni%20katalog-SA%20LOGOM.pdf",
+    "https://service.haascnc.com/sites/default/files/Locked/Manuals/Operator/2012/Rotary/Translated/Rotary_Tailstock_Operators_Manual_96-HR0315P_Rev_P_Croatian_April_2012.pdf",
+    "https://www.cas.co.kr/integration/index.jsp?code=202006246253ef978f",
+    "https://www.cas.co.kr/integration/index.jsp?code=20200625144bb2f4d7",
+    "https://www.cas.co.kr/integration/read.jsp?code=202006246253ef978f&no=158&reqPageNo=1",
+    "https://www.forserver.ru/shop/CID_14127_ALL.html",
+    "https://www.globalcas.com/integration/index.jsp?code=202006246253ef978f",
+    "https://www.globalcas.com/integration/index.jsp?code=20200625144bb2f4d7",
+    "https://www.haascnc.com/ro/service/troubleshooting-and-how-to/reference-documents/rotary---servo-motor-identification.alarm%3Dngc_4-116.html",
+    "https://www.indva.se/-/media/websites/local-websites/indva/files/downloads/970-4016-005_006-ac_parallel-manual-en.pdf?rev=c4ca540bfdfa4c299c6d443303a26fc1",
+    "https://www.scribd.com/document/646877957/SA-ServoDrive",
+    "https://www.servo2go.com/media/assets/catalog-library/pdfs/dti/RAS_Rotary_-Series_datasheet_letter.pdf",
+    "https://www.wlw.com/en/company/auma-riester-gmbh-co-kg-316346/products/drehantriebe-fuer-steuer-und-regelbetrieb-30798996"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

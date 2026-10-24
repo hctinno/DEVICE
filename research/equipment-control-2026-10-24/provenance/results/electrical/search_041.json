@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_041.json",
+  "original_log_sha256": "2938e5e25fb2127ba6419536b74f3f0660e47fe597268ccf6e31da454df94123",
+  "original_log_bytes": 25432,
+  "queries": [
+    "AUTONICS M4Y-AAR-5 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://autonics.ru/ru/service/data/list/119",
+    "https://autonics.se/wp-content/uploads/2018/03/M4Y_rohs_140114-1.pdf",
+    "https://device.report/autonics/meter",
+    "https://manuals.plus/autonics/m4y-series-panel-meters-manual",
+    "https://www.autonics-tw.com/products_detail/Autonics-M4Y-M5W-M4W-M4M-Ammeter",
+    "https://www.autonics.com/in/model/M4Y-AAR-5",
+    "https://www.autonics.com/us/series/M4YWM-Wattmeter",
+    "https://www.autonics.se/produkt/ampere-meter/",
+    "https://www.autonics.se/produkt/digital-scaling-meter/",
+    "https://www.autonics.se/produkt/tacho-speed-meter/",
+    "https://www.autonics.se/wp-content/uploads/2018/03/M4Y_M4W_M5W_M4M_cat_eng_160121-4.pdf",
+    "https://www.dubai-sensor.com/content/Docs/Catalogs/Autonics/Autonics_product_selection_guide.pdf",
+    "https://www.manualslib.com/manual/2762938/Autonics-Mt4y-Series.html?page=3",
+    "https://www.manualslib.com/manual/3345129/Autonics-M4y-Series.html",
+    "https://www.scribd.com/document/455763956/Autonics-Product-Selection-Guide-2016-pdf",
+    "https://www.tme.com/Document/a9a3f3216a3139a824b4a3a4efb988b7/M4Y-T-1_EN.pdf",
+    "https://www.wolfautomation.com/content/autonics-photoelectric-sensor-catalog.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

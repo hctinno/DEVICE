@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item402.json",
+  "original_log_sha256": "dfd22ee76f4cc05391c6cd47f1418a4801992bc5a02fdef220418cb74d1ce4fa",
+  "original_log_bytes": 12887,
+  "queries": [
+    "DKK-TOA \"CM-21P\" software interface manual",
+    "site:github.com \"CM-21P\" DKK-TOA"
+  ],
+  "discovered_urls": [
+    "https://dkktoamalaysia.com/index.php/sitemap",
+    "https://is77.co.kr/product/cm-21pcm-21pw%EB%8B%A8%EC%A2%85/113/",
+    "https://nisan-industry.com/wp-content/uploads/2022/04/Analyzers-Boiler-Sampling-Systems-For-Thermal-Power-Plants.pdf",
+    "https://openjicareport.jica.go.jp/pdf/11871555.pdf",
+    "https://sooki.co.jp/irental/allproduct/ct09/cm-21p/",
+    "https://tuat.repo.nii.ac.jp/record/2000006/files/202309TiaraNurPratiwi_F.pdf",
+    "https://wmo.co.jp/wp-content/uploads/H24wmo_rinya_4.pdf",
+    "https://www.chescientific.com/_products/eng/toa/",
+    "https://www.dkktoa.com/product/production_end/por.html",
+    "https://www.dkktoa.com/support/support.html",
+    "https://www.itjfs.com/index.php/ijfs/article/download/2180/846/11843",
+    "https://www.jsidre.or.jp/wordpress/wp-content/uploads/2024/10/nh_backnumber42-43.pdf",
+    "https://www.kohsieh.com.tw/ver4/newfile_410.htm",
+    "https://www.soriaudio.com/index.php?document_srl=30518799&mid=m_eqp",
+    "https://www.toadkk.co.jp/support/support_end/2023/o322i000000006it.html",
+    "https://www.toadkk.com/english/product/list.html",
+    "https://www.toadkk.com/english/product/production_end/por.html",
+    "https://www.yumpu.com/en/document/view/36856361/specification-sheet"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

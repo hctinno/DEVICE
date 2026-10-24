@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/targeted_codes_emc.json",
+  "original_log_sha256": "ee488eefe98c4dff304038e2ec6693ac4cd17636f0a850698171707c08d1615a",
+  "original_log_bytes": 25938,
+  "queries": [
+    "site:dektec.com downloads SDK DTAPI DTA-100 DTA-2115B",
+    "site:github.com \"Amplifier Research\" driver",
+    "site:github.com \"Spirent\" \"GSS6700\"",
+    "site:github.com \"TESEQ\" \"NSG\""
+  ],
+  "discovered_urls": [
+    "http://standards-oui.ieee.org/oui.txt",
+    "https://files.dektec.com/?p=persistent%2FCertifications%2FRoHS",
+    "https://gist.github.com/foxtrot/36d69b35ff328d6b77e04aca24079e87",
+    "https://gist.github.com/jeffThompson/619bc8612bbd03fa22c3",
+    "https://www.dektec.com/ATSC3/",
+    "https://www.dektec.com/downloads/SDK/",
+    "https://www.dektec.com/products/Modulators/",
+    "https://www.dektec.com/products/PCIe/DTA-2115B/",
+    "https://www.dektec.com/products/PCIe/DTA-2115B/downloads/DTA-2115B%20Datasheet.pdf",
+    "https://www.dektec.com/products/PCIe/DTA-2115B/downloads/DTA-2115B%20Leaflet.pdf",
+    "https://www.dektec.com/products/SDK/",
+    "https://www.dektec.com/products/SDK/MatrixApi/",
+    "https://www.dektec.com/products/SDK/MuxXpert/",
+    "https://www.dektec.com/products/SDK/ffmpeg/",
+    "https://www.dektec.com/products/applications/MuxXpert/",
+    "https://www.dektec.com/products/downloads/Catalogue.pdf",
+    "https://www.dektec.com/products/obsolete/",
+    "https://www.dektec.com/selector/modulators/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

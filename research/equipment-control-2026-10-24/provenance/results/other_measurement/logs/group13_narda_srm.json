@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group13_narda_srm.json",
+  "original_log_sha256": "946a91335ddab478f7675c6f7e381dfeb547fbbd196fcb4b12ef1ca899f188c9",
+  "original_log_bytes": 16274,
+  "queries": [
+    "\"SRM-3006\" remote control programming manual GitHub"
+  ],
+  "discovered_urls": [
+    "https://avalontest.com/images/uploaded/Manual_SRM-3006-Copy-3.pdf",
+    "https://manualzz.com/doc/26259287/narda-srm-3006-selective-radiation-meter-operating-manual",
+    "https://manualzz.com/doc/31465876/narda-srm-3006-selective-radiation-meter-operating-manual",
+    "https://manualzz.com/doc/61438738/narda-srm-3006-operating-manual",
+    "https://www.gruppompb.com/public/upload/MANUALE-V-03_04_2010-SRM-3600.pdf",
+    "https://www.gruppompb.com/public/upload/manuale-v-03_04_2010-srm-3600.pdf",
+    "https://www.gruppompb.uk.com/public/upload/MANUALE-SRM-3006.pdf",
+    "https://www.manualslib.com/manual/1674471/Narda-Srm-3006.html",
+    "https://www.manualslib.com/manual/1674471/Narda-Srm-3006.html?page=10",
+    "https://www.manualslib.com/manual/1674471/Narda-Srm-3006.html?page=188",
+    "https://www.manualslib.com/manual/1674471/Narda-Srm-3006.html?page=189",
+    "https://www.manualslib.com/manual/1674471/Narda-Srm-3006.html?page=69",
+    "https://www.manualslib.de/manual/15011/Narda-Srm-3006.html?page=208",
+    "https://www.manualslib.de/manual/15413/Narda-Srm-3006.html?page=190",
+    "https://www.scribd.com/document/441047480/SRM3006-Manual-pdf",
+    "https://www.scribd.com/document/878554972/Manual-SRM-3006"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_093.json",
+  "original_log_sha256": "9994f9056f9af0a7740894c42fa7770aac88a10b02e35f8add34dc96ed014331",
+  "original_log_bytes": 37228,
+  "queries": [
+    "PNE SOLUTION BT5V300A4CH manual programming software"
+  ],
+  "discovered_urls": [
+    "http://",
+    "http://10.224.5.121:8080",
+    "http://lab21042:8080",
+    "https://baihecontrol.com/en/support",
+    "https://click2electro.com/manual/",
+    "https://device.report/m/4c8f0d6b7b2faad91effb4ad591fe1140bfa8af327c4cb2d043cca3045e82d4d",
+    "https://device.report/m/9b6d5274269414af650b8ac998b861a65e732425b23a13d483ab92f0e4a0dbcb",
+    "https://device.report/m/9b7b196f65081aba916543bf38c15479e723bb32003a848329dac7ff7ab5ed18",
+    "https://device.report/m/c807a3a08ed870adbd1046e0630af039a234e75b12efe2859fd710617e5dfaa2",
+    "https://ecutek.atlassian.net/wiki/spaces/SUPPORT/pages/1572880",
+    "https://fr.micnodrive.com/services-support/download/",
+    "https://helpecu.com/ar/support/",
+    "https://manuals.plus/m/4948653ece6b2c4a78fdd9d4d79da901bb83b92c5b81b842b34137518c033fa2.pdf",
+    "https://manuals.plus/m/c2b66834c3e3fd7cfb47905e178b128c5e7f09a420c8b2a54fc6108a180df5c0",
+    "https://sandotech.ir/wp-content/uploads/2022/07/Programming-manual-1.pdf",
+    "https://www.keyence.com.sg/support/user/bt/download/",
+    "https://www.scribd.com/document/864307090/users-manual",
+    "https://www.valve-actuator-warehouse.com/technical_cut_sheets/PC_Tool_UserManual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item466.json",
+  "original_log_sha256": "05337250685ff049aadee8eaab6fd80f91e086892eb94f291efa0165fd89fdc4",
+  "original_log_bytes": 13207,
+  "queries": [
+    "Teston \"TH-103\" software interface manual",
+    "site:github.com \"TH-103\" Teston"
+  ],
+  "discovered_urls": [
+    "https://cdn.websurg.com/web/img/winners/WeBSurg_Winners_1_2.pdf",
+    "https://es.scribd.com/document/443593034/Catalogo-Storz",
+    "https://manualsplanet.com/thomson/thomson-neo-10/",
+    "https://manualzilla.com/doc/5648596/ce-rohs---martin",
+    "https://manuzoid.com/manuals/jp9pj-Thomson%20Amber%20TH-103%20Owner%20Manual",
+    "https://manuzoid.com/manuals/jp9pj-Thomson%20Amber%20TH-103%20Owner%27s%20manual",
+    "https://vm01.karefil.com/products/thomson",
+    "https://www.alldatasheet.co.kr/view.jsp?Searchword=TH-10&sField=3",
+    "https://www.gebruikershandleiding.com/Thomson-Amber-TH-103/preview-handleiding-803824.html",
+    "https://www.handleidingen.com/thomson/telefoon",
+    "https://www.helpowl.com/p/RCA/TH103/Research/12330",
+    "https://www.manualslib.com/manual/1020931/The-One-Th-103.html",
+    "https://www.tosunlux.eu/fa/category/voltage-tester-tool/page/2/",
+    "https://www.west-cs.co.uk/assets/Manuals/KS800-Manual-English.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

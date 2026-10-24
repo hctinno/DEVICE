@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_260.json",
+  "original_log_sha256": "f1b2306ca4e9e5b3084ff6c6de7437c4fd002b9198c363417f91ca9fc778eb0b",
+  "original_log_bytes": 21843,
+  "queries": [
+    "Takasago HX060-100M2 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://takasago-ss.co.jp/file/DOC-1908_02_ZX-S-H-Manual.pdf",
+    "https://www.manualslib.com/manual/2577983/Takasago-Hx-S-G2-Series.html",
+    "https://www.manualslib.com/manual/2577983/Takasago-Hx-S-G2-Series.html?page=115",
+    "https://www.manualslib.com/manual/2577983/Takasago-Hx-S-G2-Series.html?page=117",
+    "https://www.manualslib.com/manual/3116233/Takasago-Hx-S-G4-Series.html",
+    "https://www.takasago-ss.co.jp/file/DOC-1734-01_HXG2series_instruction-manual.pdf",
+    "https://www.takasago-ss.co.jp/file/DOC-1908-02_ZX-S-HHA_Manual_en.pdf",
+    "https://www.takasago-ss.co.jp/file/DOC-2008_3_HX-S-G4-Instruction-Manual.pdf",
+    "https://www.takasago-ss.co.jp/products/power_electronics/dc/hx/",
+    "https://www.takasago-ss.co.jp/products/power_electronics/dc/hx2/dimension.html",
+    "https://www.takasago-ss.co.jp/products/power_electronics/dc/hx2/fi_features.html",
+    "https://www.takasago-ss.co.jp/products/power_electronics/dc/hx2/option.html",
+    "https://www.takasago-ss.co.jp/products/power_electronics/dc/hx2/spec.html",
+    "https://www.takasago-ss.co.jp/products/power_electronics/dc/hxg/02.html",
+    "https://www.takasago-ss.co.jp/products/power_electronics/dc/hxg/04.html",
+    "https://www.takasago-ss.co.jp/support/product-maintenance/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

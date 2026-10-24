@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_094.json",
+  "original_log_sha256": "72754ea7c93eef7dc8fad8cc84d1c9ddc683be7d114369bd74e945c616449571",
+  "original_log_bytes": 25550,
+  "queries": [
+    "이지티엠아이 EDS-2120 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://eztmi.com/pages/eds-2000",
+    "https://eztmi.com/pages/oslist",
+    "https://eztmi.tistory.com/tag",
+    "https://ko.eliterobots.com/download",
+    "https://pimg2.daara.co.kr/mc/mem_img/36/36297/20200302/1583133243_100.pdf",
+    "https://www.daara.co.kr/sell/s_view.php?no=1538329",
+    "https://www.dropbox.com/scl/fi/8m5460sp12mgx1ilzy4zi/CS_UserManual_Profinet-data-format.xlsx?",
+    "https://www.dropbox.com/scl/fi/oenlsqf716jxg0osh58l2/EliteEthernetIP.eds?",
+    "https://www.edpia.co.kr/board/index.html?ano=20&cmd=download&fid=2&fname=NJ%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD2.pdf&id=catalogmo",
+    "https://www.eliterobots.com/download",
+    "https://www.euchner.com/en-us/service/downloads/software/",
+    "https://www.ic114.com/WebSite/SITE/SC/30L0.aspx?CHSV=&SV01=&SV02=&SV03=&listType=&ord01=NAME_ENG&pageNum=&srcZero=&tree=080901",
+    "https://www.ic114.com/WebSite/SITE/SC/30L0.aspx?CHSV=&SV01=&SV02=&SV03=&listType=&ord01=SALE_AMT&pageNum=&srcZero=&tree=080901",
+    "https://www.itoh-denki.com/software/",
+    "https://www.micro-epsilon.kr/service/download/operating-and-assembly-instructions/",
+    "https://www.mmcworld.co.kr/upload_data/iDCS_500P_pm.pdf",
+    "https://www.mroelectric.com/static/app/product/pdfs/TM.V7N.01%20%281%29.pdf",
+    "https://www.mroelectric.com/static/app/product/pdfs/TM.V7N.01%20%282%29.pdf",
+    "https://www.productinfo.schneider-electric.com/tesys_island_guides/8536ib1905-tesys-island-third-party-function-block-guide/English/8536IB1905EN_TeSys_island_Third_Party_Function_Block_Guide.pdf",
+    "https://www.tr-electronic.com/service/downloads"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

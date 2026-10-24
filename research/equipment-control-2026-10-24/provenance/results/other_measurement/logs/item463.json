@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item463.json",
+  "original_log_sha256": "f4336b2612c8247479297724565d739c970907a6b25ff91c2652e1e6e087a1be",
+  "original_log_bytes": 13095,
+  "queries": [
+    "Wandel & Goltermann \"OLS-6\" software interface manual",
+    "site:github.com \"OLS-6\" Wandel & Goltermann"
+  ],
+  "discovered_urls": [
+    "https://accusrc.com/product-W-G-OLS6-8698",
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/6cceea42-5a84-4880-84ec-0490d15e26f0/omk-5-6-7_ds_fop_tm_ae_0406.pdf",
+    "https://de.scribd.com/document/810246571/WinOLS-HelpDe",
+    "https://documentation.nokia.com/cgi-bin/dbaccessfilename.cgi/363211150_V1_AnyMedia%20Access%20System%20Releases%20up%20to%20R1.6%20and%20R1.13D%20ONU%20Installation%20Manual%20for%20Indoor%20Applications.pdf",
+    "https://documentation.nokia.com/cgi-bin/dbaccessfilename.cgi/363211155_V1_AnyMedia%20Access%20System%20Releases%20up%20to%20R1.6.1%20and%20R1.13D%20ONU%20Installation%20Manual%20for%20Outdoor%20Applications.pdf",
+    "https://eubd.edu.ba/02-ID/021-Zbornik2015-1.pdf",
+    "https://github.com/SaranjeetKaur/SaranjeetKaur",
+    "https://github.com/open-life-science/open-life-science.github.io/blob/main/knowledge-management.md",
+    "https://manualzz.com/doc/4633653/acterna-series-a-olp-5--series-g-olp-6--olp-8-optical-pow",
+    "https://oei-analitika.ru/kurilka/si_type_info.php?si_type_id=326762",
+    "https://www.ebay.at/sch/i.html?_nkw=wandel+goltermann+spm",
+    "https://www.ebay.ca/sch/i.html?_nkw=wandel+goltermann+ps",
+    "https://www.ebay.nl/sch/i.html?_nkw=wandel+goltermann&_sop=12",
+    "https://www.kabelkom.pl/data/files/omk6.pdf",
+    "https://www.manualslib.com/manual/1380303/Wandel-And-Goltermann-Olp-5.html",
+    "https://www.manualslib.com/manual/1380303/Wandel-And-Goltermann-Olp-5.html?page=30",
+    "https://www.manualslib.com/manual/3664510/Optokon-Mot-200.html",
+    "https://www.metasite.co.kr/Newmeta/NM_files/OLP-568_M.pdf",
+    "https://www.ruscable.ru/info/optic/measuring-tools.html",
+    "https://www.scribd.com/document/177681366/OMK-5-OMK-6-OMK-7-OMK-14C-OMK-15C-OMK-18C"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

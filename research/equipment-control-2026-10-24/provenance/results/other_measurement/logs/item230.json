@@ -1,0 +1,40 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item230.json",
+  "original_log_sha256": "9ec7a070794a2a1d9db0e966b8b4924ccc0af1f2994f869a576d4ba807637077",
+  "original_log_bytes": 15890,
+  "queries": [
+    "Whaleteq \"SEEG 100\" software interface manual",
+    "site:github.com \"SEEG 100\" Whaleteq"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/00c48d1b85da05bd722869fde49062f1014755d7ffaf4621f7c0d4277459b61b",
+    "https://device.report/m/233bb39d1b8ef46368ee5402770901f367689930259b2a5ffee16b7803c7e759",
+    "https://device.report/m/bfc9d2be384b7c278ac192b3b4b13cac70c8d54529b0cdc568d3e21f5bfecabd",
+    "https://device.report/m/bfc9d2be384b7c278ac192b3b4b13cac70c8d54529b0cdc568d3e21f5bfecabd_optim.pdf",
+    "https://device.report/manual/11066675",
+    "https://device.report/whaleteq/SEEG-100",
+    "https://device.report/whaleteq/seeg-100-single-channel-eeg-test-system",
+    "https://github.com/LiuYihey/Brain-Decoding-Guide",
+    "https://github.com/WiredBrains-Lab/seeg-localizer",
+    "https://github.com/brainstorm-tools/brainstorm3/blob/master/toolbox/gui/panel_ieeg.m",
+    "https://github.com/iewug/SEEG-Vis/blob/main/README.md",
+    "https://github.com/mne-tools/mne-python/blob/main/mne/defaults.py",
+    "https://github.com/nemarDatasets/on003029",
+    "https://github.com/rociavl/SEEG_automatic_segmentation",
+    "https://github.com/rociavl/SlicerSEEG",
+    "https://github.com/thuwansen/SEEG_analysis_code",
+    "https://manuals.plus/m/00c48d1b85da05bd722869fde49062f1014755d7ffaf4621f7c0d4277459b61b_optim.pdf",
+    "https://manuals.plus/m/5e2da14f17676d86e376ec080f60028aa1432a92393bd8d7e356e29ece104bb7",
+    "https://manuals.plus/whaleteq/seeg-100-single-channel-eeg-test-system-manual",
+    "https://manuals.plus/whaleteq/seeg-100e-single-channel-eeg-test-system-manual",
+    "https://manualspro.net/327433-whaleteq-seeg-100-single-channel-eeg-test-system-user-manual",
+    "https://www.manualslib.com/guide/4246457/whaleteq-seeg-100e-single-channel-eeg-test-system-user-manual.html",
+    "https://www.whaleteq-cn.com/en/product/2/14-eeg-testing/view15-seeg-100",
+    "https://www.whaleteq.com/data/gdownload/files/EEG_Test_System/SEEG100/Manual/UM_SEEG100_EN_V.1.3.0_241128.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/um_seeg100_en_v.1.3.0_241128.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_276.json",
+  "original_log_sha256": "c442cf20d85fbf28db9547a7bbfde3c3d33a73786bf1cf982a459498941abb41",
+  "original_log_bytes": 32572,
+  "queries": [
+    "MadgeTech PRHTemp2000 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Madgetech_pHTemp2000_pH_and_Temperature_Recorder_Product_User_Guide.pdf",
+    "https://manuals.plus/m/4f2a8410ea6b5e9fa75c7832a52643721306e5c4f31bff697969309bcb5eb7f6",
+    "https://manuals.plus/madgetech/phtemp2000-temperature-data-logger-manual",
+    "https://manualzilla.com/doc/5867805/madgetech-prhtemp2000-data-logger-manual-pdf",
+    "https://manualzz.com/doc/76439010/madgetech-phtemp2000-temperature-data-logger-user-guide",
+    "https://ptc1.com/assets/images/pdf/PRHTemp2000-UG.pdf",
+    "https://sc-journal.com/device/madgetech/prhtemp2000/",
+    "https://www.instrumart.com/assets/MadgeTech-PRHTemp2000-User-Guide.pdf",
+    "https://www.instrumart.com/assets/PRHTemp2000_Manual.pdf",
+    "https://www.madgetech.com/resources/documentation/",
+    "https://www.madgetech.com/wp-content/uploads/2019/03/prhtemp2000_ds.pdf",
+    "https://www.manualsdir.com/manuals/372417/madgetech-prhtemp2000-data-logger.html?page=10",
+    "https://www.manualsdir.com/manuals/372417/madgetech-prhtemp2000-data-logger.html?page=29",
+    "https://www.manualslib.com/guide/4255961/madgetech-phtemp2000-ph-temperature-data-logger-user-manual.html",
+    "https://www.manualslib.com/manual/2351934/Madgetech-Madgenet-Rfrhtemp2000a.html?page=3",
+    "https://www.manualslib.com/manual/812673/Madgetech-Tctemp2000.html?page=12",
+    "https://www.scribd.com/doc/229470550/PRHTemp2000-Manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

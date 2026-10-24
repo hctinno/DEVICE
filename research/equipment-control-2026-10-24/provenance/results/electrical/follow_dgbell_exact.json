@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_dgbell_exact.json",
+  "original_log_sha256": "62b2e1ea1f5db32ded4f78e9fc1560821fa30b51394ceadc95bdfe4fa7b21b0c",
+  "original_log_bytes": 23612,
+  "queries": [
+    "\"BE-6045W\""
+  ],
+  "discovered_urls": [
+    "https://belltestchamber.en.made-in-china.com/product/TGmpUSrMuRhV/China-Lithium-Cell-Internal-Short-Circuit-Testing-Machine.html",
+    "https://belltestchamber.en.made-in-china.com/product/lZGaeAyVrBkX/China-Li-ion-Cells-Battery-Internal-Short-Circuit-Test-Chamber-Manufacturer.html",
+    "https://belltestchamber.en.made-in-china.com/product/ynPpatkuREcH/China-Lithium-Battery-Internal-Short-Circuit-Test-Chamber-Lab.html",
+    "https://borikplus.rs/proizvodi/litijumske-baterije-lifepo4/bat-5kwh-51-2v-litijumska-baterija-sa-grejacem-51-2v-100ah/?attachment_id=46631&download_file=pqlzr93ogayku",
+    "https://hyrican.de/wp-content/uploads/Benutzerhandbuch/PowerStation/Reports/ENR00001%20%28UPP-600%29/A2103124-C01-R02%20600W%20%20PSE%20report.pdf",
+    "https://hyrican.de/wp-content/uploads/Benutzerhandbuch/PowerStation/Reports/ENR00001%20%28UPP-600%29/A2104269-C02-R01.pdf",
+    "https://info.cargosignal.com/hubfs/S19-B0609-1%20UN38.3.pdf",
+    "https://jfm.co.kr/download/JFM_Battery%20Testing%20Solutions_Catalog_EN_Rev.1_web.pdf",
+    "https://m.elecfans.com/p/v35933.html",
+    "https://manuals.plus/m/2573be4659684c28fb0799820b1680d4e76d8f924603438f2bc9aa1296492b03",
+    "https://pix.enerdis.be/LIV-300_PSE_180619.pdf",
+    "https://www.chinax.com/environmenttest-chamber/pz68ee55c-lab-servo-control-lithium-battery-internal-short-circuit-tester.html",
+    "https://www.directindustry.com/prod/guangdong-bell-experiment-equipment-co-ltd/product-216241-2247660.html",
+    "https://www.elecfans.com/p/v53979.html",
+    "https://www.scribd.com/document/813860028/GB28164%E6%8A%A5%E5%91%8A-M3S2P10867-MM",
+    "https://www.tradewheel.com/p/iec-battery-forced-internal-short-circuit-11333/",
+    "https://www.ybzhan.cn/chanpin/16473955.html",
+    "https://www.ybzhan.cn/chanpin/16552038.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

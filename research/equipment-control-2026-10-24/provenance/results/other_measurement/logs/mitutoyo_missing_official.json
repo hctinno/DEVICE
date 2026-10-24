@@ -1,0 +1,25 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/mitutoyo_missing_official.json",
+  "original_log_sha256": "91c590b0d9e3f4df7de24cc1362d88aaf5db6f197577674f293a46e115050c58",
+  "original_log_bytes": 22589,
+  "queries": [
+    "site:mitutoyo.co.jp \"CD-15CP\" \"なし\"",
+    "site:mitutoyo.co.jp \"CD-15CPX\" \"出力\"",
+    "site:mitutoyo.com \"500-159-30\" \"No\"",
+    "site:mitutoyo.eu \"293-821-30\" \"output\""
+  ],
+  "discovered_urls": [
+    "https://dev.mitutoyo.com/webfoo/wp-content/uploads/US-1005_Mitutoyo_Catalog.pdf",
+    "https://dev.pim.mitutoyo.com/products/small-tool-instruments-and-data-management/calipers/digimatic-calipers/absolute-digimatic-caliper/",
+    "https://mitutoyo.eu/application/files/1117/7493/7849/PRE_1278_-_Spring_Promotion_2026_WEB.pdf",
+    "https://mitutoyo.eu/application/files/2517/3220/6496/Mitutoyo_AUTUMN_Promotion_2024_rid.pdf",
+    "https://mitutoyo.eu/application/files/2717/3037/3417/PRE_1278_-_Mitutoyo_AUTUMN_Promotion_2024_WEB_sp.pdf",
+    "https://mitutoyo.eu/application/files/9717/6191/6753/PRE_1278_-_Winter_Promotion_2025_WEB.pdf",
+    "https://pim.mitutoyo.com/es/products/instrumentos-de-medicion-y-gestion-de-datos/calipers/digimatic-calipers/absolute-digimatic-caliper/",
+    "https://www.mitutoyo.com/Images/002/281/500-159-30.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

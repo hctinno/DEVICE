@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_187.json",
+  "original_log_sha256": "583d22a715c7258cb80f1c75e618932a4031d1759a1688bd36a6c568e5cd74a1",
+  "original_log_bytes": 30645,
+  "queries": [
+    "YOKOGAWA WT310 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/1/5602/files/IM760121-02E.pdf",
+    "https://cdn.tmi.yokogawa.com/IM760121-02E.pdf",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=1067&mode=view",
+    "https://koreayokogawa.com/product/product-detail.php?idx=184",
+    "https://koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&idx=27&mode=view&offset=80&sk=&sw=",
+    "https://koreayokogawa.com/support/download.php?boardid=download&idx=27&mNum=3&mode=view&sNum=4",
+    "https://manualzz.com/doc/7300027/yokogawa-wt310--hc--wt330-digital-power-meter-user%E2%80%99s-manual",
+    "https://www.koreayokogawa.com/product/product-detail.php?idx=32",
+    "https://www.koreayokogawa.com/product/product-detail.php?idx=33",
+    "https://www.koreayokogawa.com/support/download.php?boardid=download&category=%EB%A7%A4%EB%89%B4%EC%96%BC&idx=27&mode=view&offset=90&sk=&sw=",
+    "https://www.manualslib.com/manual/1243922/Yokogawa-Wt310.html",
+    "https://www.manualslib.com/manual/1243922/Yokogawa-Wt310.html?page=91",
+    "https://www.manualslib.com/products/Yokogawa-Wt310-8662650.html",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.scribd.com/document/879898693/EN-WTViewerFreePlus-Users-Manual",
+    "https://www.yokogawa.com/pdf/provide/E/GW/IM/0000027038/0/IMWT310-02EN.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

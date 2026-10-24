@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_336.json",
+  "original_log_sha256": "dd982d6342f7bad24846e1e37325af7279b2e227785c865c5ab88252a2427527",
+  "original_log_bytes": 32760,
+  "queries": [
+    "Digital EP-3010 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.ivoclarvivadent.com/digitalservices",
+    "https://data.dt-shop.com/fileadmin/media/ga/20987_ga_enu.pdf",
+    "https://data.dt-shop.com/fileadmin/media/ga/21951_ga_esp.pdf",
+    "https://meddentstore.org/docs/ivoclar-vivadent-programat-ep-3010-g2-manual-en.pdf",
+    "https://stomshop.pro",
+    "https://www.contec.com/download/donwload-list/?itemid=b5aadbcd-9ebd-499a-a2bc-54aef16a5630",
+    "https://www.contec.com/en/download/donwload-list/?itemid=93889b8b-6ec1-4d29-aa69-9e6d52cad7dd",
+    "https://www.contec.com/en/download/donwload-list/?itemid=b5aadbcd-9ebd-499a-a2bc-54aef16a5630",
+    "https://www.contec.com/products-services/edge-computing/embedded-computers/epc/epc-3010p4/support/",
+    "https://www.ivoclar.com/en_li/products/equipment/programat-press-furnaces",
+    "https://www.manualslib.com/manual/1792441/Ivoclar-Vivadent-Programat-Ep3010.html",
+    "https://www.manualslib.com/manual/2736165/Ivoclar-Vivadent-Programt-Ep-3010-G2.html?page=23",
+    "https://www.manualslib.com/manual/2736165/Ivoclar-Vivadent-Programt-Ep-3010-G2.html?page=28",
+    "https://www.manualslib.com/manual/2736165/Ivoclar-Vivadent-Programt-Ep-3010-G2.html?page=40",
+    "https://www.manualslib.com/manual/2736165/Ivoclar-Vivadent-Programt-Ep-3010-G2.html?page=42",
+    "https://www.manualslib.com/products/Ivoclar-Vivadent-Programat-Ep3010-10919448.html",
+    "https://www.orodent-groupe.com/ressource/programat-ep-3010_resources_instruction.pdf",
+    "https://www.scribd.com/document/935135423/programat-ep-3010-resources-instruction"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

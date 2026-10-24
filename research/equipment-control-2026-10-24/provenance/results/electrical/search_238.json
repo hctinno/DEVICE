@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_238.json",
+  "original_log_sha256": "74741e05b60b85b5a20050570ca33979dd6883eee06000bf4beff70ba91267fe",
+  "original_log_bytes": 30017,
+  "queries": [
+    "GRAPHTEC GL200A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://acquisitionpc.com/html/Quick-start.pdf",
+    "https://en.wikipedia.org/wiki/Graphtec",
+    "https://graphtec-graphtec.squarespace.com/ins-products-legacy",
+    "https://graphteciwatsu.com/en/support/download/datalogger/",
+    "https://manualzz.com/doc/62050486/graphtec-gl200a-service-manual",
+    "https://media.lontek.com.au/uploads/pages/graphtec/APSGL200_800-UM-151.pdf",
+    "https://media.lontek.com.au/uploads/pages/graphtec/GL200A-UM-151.pdf",
+    "https://www.acquisitionpc.com/html/support.html",
+    "https://www.graphteccorp.com/download/downloadapp/",
+    "https://www.graphteccorp.com/download/gl-connection/",
+    "https://www.graphteccorp.com/support/",
+    "https://www.graphteccorp.com/support/software/",
+    "https://www.graphteccorp.com/support/software/logger/",
+    "https://www.instrumart.com/assets/Graphtec-GL220-820-Software-Manual.pdf",
+    "https://www.manualslib.com/manual/1245037/Graphtec-Gl200.html",
+    "https://www.manualslib.com/manual/1245037/Graphtec-Gl200.html?page=8",
+    "https://www.manualslib.com/products/Graphtec-Gl200a-8665020.html",
+    "https://www.reddit.com/r/CommercialPrinting/comments/1p4qfe6/cutting_master_5graphtec_studio_2_setup_issue/",
+    "https://www.reddit.com/r/PlotterArt/comments/1i0hrln",
+    "https://www.reddit.com/r/VinylCutters/comments/1k42g3w",
+    "https://www.reddit.com/r/VinylCutters/comments/1lie5ou/craft_robo_cc30020_software/",
+    "https://www.reddit.com/r/VinylCutters/comments/1q6l8gy/did_i_make_a_huge_mistake/",
+    "https://www.reddit.com/r/VinylCutters/comments/1rcaa9d/graphtech_2026_trouble_shooting_anyone/",
+    "https://www.reddit.com/r/VinylCutters/comments/cyxlwx"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_193.json",
+  "original_log_sha256": "5e49c0d2cd9c435fc7855acd90a18a641a7f8b045859647aa454a8fc7f4bfafd",
+  "original_log_bytes": 31426,
+  "queries": [
+    "KIKUSUI PAS40-18 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-category-en/pm_dc-en-2/",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/w2-2/software-en/wavy-series/",
+    "https://kikusui-europe.com/kd/pm_dc/",
+    "https://kikusui-korea.co.kr/files/PDF/PAS_M.pdf",
+    "https://kikusui.co.jp/document-tag/pas40-18/",
+    "https://kikusui.co.jp/kd/pm_dc/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manualzz.com/doc/61299789/kikusui-pas-20-54--pas-320-2--pas-40-9--pas-60-6--pas-80-",
+    "https://manualzz.com/doc/61917808/kikusui-pas-10-35--pas-40-18--pas-40-9--pas-80-9-operatio",
+    "https://vn.kikusui.co.jp/kd/pm_dc/",
+    "https://www.manualslib.com/brand/kikusui/power-supply.html",
+    "https://www.manualslib.com/manual/910734/Kikusui-Pas-10-35.html?page=11",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US",
+    "https://www.testone.com.tr/wp-content/uploads/product/dc-guc-kaynaklari/kikusui-pas-series/PAS-Series-DATASHEET.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

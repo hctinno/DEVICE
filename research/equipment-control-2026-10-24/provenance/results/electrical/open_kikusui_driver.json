@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/open_kikusui_driver.json",
+  "original_log_sha256": "b7a9730ba82eca4ef53159de9e4af8358dd7e1a77127f03f622113392632b364",
+  "original_log_bytes": 23120,
+  "queries": [],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/drivers/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

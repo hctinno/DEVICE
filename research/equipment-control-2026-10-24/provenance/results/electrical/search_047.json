@@ -1,0 +1,40 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_047.json",
+  "original_log_sha256": "e1bfc227ec0381b79f125048e2f40c641f92b511c7c1ef7b448afb8a53eea78c",
+  "original_log_bytes": 28703,
+  "queries": [
+    "GRAPHTEC GL2000 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://daqkostech.imweb.me/products-datalogger-gl2000",
+    "https://dataloggergraphtec.it/pdf/Graphtec_GL2000.pdf",
+    "https://en.wikipedia.org/wiki/Graphtec",
+    "https://geniuss.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMTA0MTQ3NjYzODBlZmVkNzdhIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjEwNDE5ZDgwY2ZiNGZlNGE3MyI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDI1MDkyOTdiNGM2MmU4NzMwNzMiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5YzU0ODhjZDI3ZWIiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://graphteciwatsu.com/en/product/logger/gl2000/",
+    "https://graphteciwatsu.com/en/support/download/datalogger/",
+    "https://sc-journal.com/device/graphtec/gl2000/",
+    "https://t-m.kostech.net/products-datalogger-gl2000",
+    "https://www.ankersmit.fr/manuels-logiciels/",
+    "https://www.datatec.eu/media/f3/a9/20/1702454950/Graphtec-GL2000-EU-HB-1_DE.pdf?ts=1702454950",
+    "https://www.graphtec.in.th/article-79516-softwares.html",
+    "https://www.graphteccorp.com/",
+    "https://www.graphteccorp.com/download/downloadapp/",
+    "https://www.graphteccorp.com/download/firm_gl2000_gl980/",
+    "https://www.graphteccorp.com/download/gl-connection/",
+    "https://www.graphteccorp.com/download/gl980_gl2000-aps/",
+    "https://www.graphteccorp.com/support/software/logger/",
+    "https://www.mygraphtec.jp/site_download/manual/gl2000/GL2000-UM-154-02-01-ENG_Protect.pdf",
+    "https://www.mygraphtec.jp/site_download/manual/gl2000/GL2000-UM-853.pdf",
+    "https://www.reddit.com/r/CommercialPrinting/comments/1p4qfe6/cutting_master_5graphtec_studio_2_setup_issue/",
+    "https://www.reddit.com/r/CommercialPrinting/comments/1tgn9eo/graphtec_fcx_2000_how_tricky_is_it_to_work_with/",
+    "https://www.reddit.com/r/PlotterArt/comments/1i0hrln",
+    "https://www.reddit.com/r/VinylCutters/comments/18ojkib/looking_to_use_older_graphtec_with_current_ai/",
+    "https://www.reddit.com/r/VinylCutters/comments/1k42g3w",
+    "https://www.reddit.com/r/VinylCutters/comments/1rcaa9d/graphtech_2026_trouble_shooting_anyone/",
+    "https://www.reddit.com/r/VinylCutters/comments/cyxlwx"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

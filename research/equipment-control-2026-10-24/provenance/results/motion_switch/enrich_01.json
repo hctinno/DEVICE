@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/enrich_01.json",
+  "original_log_sha256": "4f88fd548c2ec93aa18b780417390b49e4889e54b1ee35db1a07962214bb16d6",
+  "original_log_bytes": 25395,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/eardali/turntable",
+    "https://innco-systems.de/en/products/antenna-masts/ma4000-ep-antenna-mast",
+    "https://innco-systems.de/en/products/antenna-masts/ma4640-xp-et-antenna-mast",
+    "https://innco-systems.de/files/Dateien/innco-Katalog-2017-03-17-MR.pdf",
+    "https://manuzoid.com/manuals/mdGqB-ETS-Lindgren%202122%20Positioner%20Owner%27s%20Manual",
+    "https://www.hik-consulting.pl/files/Schwarzbeck-K9144universal.pdf",
+    "https://www.innco-systems.de/en/products/antenna-masts/ma2000-ep-antenna-mast",
+    "https://www.innco-systems.de/en/products/antenna-stands",
+    "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+    "https://www.manualslib.com/manual/1566136/Innco-Co3000.html",
+    "https://www.ramayes.com/Data%20Files/Innco%20Systems/CO3000-en.pdf",
+    "https://www.reliantemc.com/innco-systems-product-catalog/",
+    "https://www.schwarzbeck.com/used-equipment/schwarzbeck-am-9144/",
+    "https://www.tdkrfsolutions.tdk.com/products/loop-/adjustable-tripod-tri-150r",
+    "https://www.tdkrfsolutions.tdk.com/products/loop-/remote-switch-module-rsm-02",
+    "https://www.tdkrfsolutions.tdk.com/products/loop-/system-interface-si-300",
+    "https://www.tdkrfsolutions.tdk.com/products/test-accessories/field-probe-positioner-pp-02"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

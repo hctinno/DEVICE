@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_156.json",
+  "original_log_sha256": "358786dbcc5ba2e2815b68c91c69c35ac28a5d6aa00dd082bb3c3875fcbb6209",
+  "original_log_bytes": 26612,
+  "queries": [
+    "DELL \"Dell OptiPlex 3070 Minitower\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FMSR-04B (3dB ATT+LNA)\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FMSR-04B (7G HPF+LNA)\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FMSR-04B (LNA)\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "http://www.lancom.com.mk",
+    "https://adg.vn/san-pham/desktop-optiplex-3070",
+    "https://device.report/m/0ba02d5bf6666c4149e346348f5116b7729bf8620325e3a43fede91ffa7e303d",
+    "https://device.report/m/a08f2a2719e27c5bb554163d8963ff39235bf4f403a8db27f871c3f94779c0ef.pdf",
+    "https://device.report/m/d2cb0c214919667ddd691439e8157d8d0df002546406d5dc689f864c248c81bd.pdf",
+    "https://en.wikipedia.org/wiki/Dell_OptiPlex",
+    "https://fccid.io/A3LSMS926U/Test-Report/SM-S926U-DTS-802-11ax-Test-Report-6870026.pdf",
+    "https://fccid.io/A3LSMX526B/Test-Report/A3LSMX526B-FCC-Evaluation-Report-R1-8060564.pdf",
+    "https://fccid.io/ACJ9TGRI23D/Test-Report/RI23D-RFID-Test-Report-07302024-7519336.pdf",
+    "https://sieuviet.vn/may-tinh-de-ban-dell-optiplex-3070-minitower-42ot370005",
+    "https://sieuviet.vn/may-tinh-de-ban-dell/page-22",
+    "https://www.dell.com/community/en/conversations/inspiron-desktops/cintel-uhd-630-vs-gtx-1050-super-help/647f9806f4ccf8a8deb20850?commentId=647f9813f4ccf8a8deb341d4&page=2",
+    "https://www.dell.com/support/kbdoc/nl-nl/000125345/optiplex-3070-visuele-handleiding-op-uw-computers",
+    "https://www.dell.com/support/product-details/da-dk/product/optiplex-3070-sff/resources/articles",
+    "https://www.dell.com/support/product-details/nl-nl/product/optiplex-3070-micro/resources/articles",
+    "https://www.dell.com/support/product-details/nl-nl/product/optiplex-3070-sff/resources/articles",
+    "https://www.jmtech.id/produk/detail/20035/dell-optiplex-3070-minitower-core-i39100-4gb-1tb-win-10-pro-195-inch",
+    "https://www.kilobaitas.lt/kompiuteriai_ir_komponentai/staliniai_kompiuteriai/kiti_staliniai_kompiuteriai/pcdelloptiplex3070businessminitowercpu_core_i5i5-95003000_mhzram_8gbddr42666_mhzssd_256gbgraphics_car/product.aspx?itemid=540086",
+    "https://www.lancom.com.mk/wp-content/uploads/2021/06/Optiplex.pdf",
+    "https://www.pocitacezababku.cz/dell-optiplex-3070-sff-i5-9500-32-gb-1000-gb-ssd-119618-PL-DELLOPT3070SFF-2-VR13-25.phtml"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

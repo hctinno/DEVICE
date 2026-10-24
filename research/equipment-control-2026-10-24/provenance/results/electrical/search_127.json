@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_127.json",
+  "original_log_sha256": "ae6b11e6f07ce0ca471a5efb5ee873b2792ee0e24e35e8771a5d94d2dfd017d5",
+  "original_log_bytes": 34115,
+  "queries": [
+    "FLUKE 772 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://register.fluke.com",
+    "http://us.fluke.com/usen/support/manuals",
+    "https://assets.fluke.com/manuals/772-773_cmeng0000.pdf",
+    "https://en.nbchao.com/pdf/18196/",
+    "https://manuals.plus/m/82b38026e00a9e8c935eb8b2d6faba67b69edd4cbaf3adf86f9051247aeb30c3",
+    "https://manualsfile.com/product/k4ggq123yax.html",
+    "https://manualzz.com/doc/12925101/fluke-772--773-milliamp-process-clamp-meter-instruction-s",
+    "https://sc-journal.com/device/fluke/772/",
+    "https://www.fluke-direct.com/app/webroot/pdfs/cache/www.fluke-direct.ca/fluke/multimeter/772/manual/fluke_772_multimeter_manual.pdf",
+    "https://www.fluke.com/en-gb/product/calibration-tools/ma-loop-calibrators/fluke-772",
+    "https://www.fluke.com/en-us/product/calibration-tools/ma-loop-calibrators/fluke-772",
+    "https://www.manualslib.com/manual/1591265/Fluke-772.html",
+    "https://www.manualslib.com/manual/451849/Fluke-772.html",
+    "https://www.myflukestore.com/pdfs/cache/www.myflukestore.com/fluke/multimeter/772/manual/fluke_772_multimeter_manual.pdf",
+    "https://www.myflukestore.com/product/fluke-772-milliamp-process-clamp-meter",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/fluke/comments/1ocepjk",
+    "https://www.reddit.com/r/fluke/comments/1wu64bp/fluke_77_iv_resistance_reading_never_clears_and/",
+    "https://www.reddit.com/r/networking/comments/fku5dq",
+    "https://www.scribd.com/document/753674899/Fluke-772-Multimeter-Manual",
+    "https://www.transcat.com/brand/fluke-store/fluke-clamp-meters/fluke-772-fluke-772"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

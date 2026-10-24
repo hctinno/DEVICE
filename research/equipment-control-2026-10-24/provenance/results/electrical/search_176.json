@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_176.json",
+  "original_log_sha256": "d1210a6cd4462b0b9f30629198af05f6e60491250814ff0d1b5ec136fc4584ae",
+  "original_log_bytes": 34128,
+  "queries": [
+    "KIKUSUI PBX40-10 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/downloads/",
+    "https://global.kikusui.co.jp/programming-guidebooks/",
+    "https://kikusui.co.jp/download/cat-pbx40-10-2/",
+    "https://kikusui.co.jp/downloads/",
+    "https://kikusui.co.jp/kiku/wp-content/manuals/P/PXB_USERS_R3_E1/HTML_PXB_USERS_R4_E2/7_system_PXB_E/7_system_PXB_E.htm",
+    "https://kikusui.co.jp/kiku/wp-content/manuals/P/PXB_USERS_R3_J1/HTML_PXB_USERS_R4_J2/8_system_PXB_J/8_system_PXB_J.htm",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manuals.repeater-builder.com/te-files/KIKUSUI/KIKUSUI%20PBX%20Series%20Operation.pdf",
+    "https://manualzilla.com/doc/6715863/%E5%8F%96%E6%89%B1%E8%AA%AC%E6%98%8E%E6%9B%B8%EF%BC%8F22.1mb---kikusui-electronics-corp",
+    "https://manualzz.com/manual/Kikusui/PBX%2B40-10",
+    "https://rdocuments.kikusui.co.jp/oss/pxb",
+    "https://www.kikusui-korea.co.kr/files/PDF/PXB_M.pdf",
+    "https://www.lost-manuals.com/pdf/kikusui-electronics-corporation--pbx40-25--user--ID9482.pdf",
+    "https://www.manualslib.com/manual/3683738/Kikusui-Pbx-Series.html",
+    "https://www.manualslib.com/products/Kikusui-Pbx40-10-14427671.html",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US",
+    "https://www.opweb.de/en/manufacturer/kikusui-electronics-corporation/pbx40-10",
+    "https://www.opweb.de/pdf/kikusui-electronics-corporation--pbx40-25--user--ID9482.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

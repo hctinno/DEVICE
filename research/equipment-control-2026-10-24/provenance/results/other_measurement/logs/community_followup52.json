@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup52.json",
+  "original_log_sha256": "519d362040960fb787bcd2b20dff9848c753436b1008f06183e1cdb514159627",
+  "original_log_bytes": 1328,
+  "queries": [
+    "site:github.com \"1300\" \"TES\""
+  ],
+  "discovered_urls": [
+    "https://github.com/RWTH-EBC/BuildingOPT/blob/master/design_computation_5R1C_statusquo.py",
+    "https://github.com/gpertea/stringtie/issues/19"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

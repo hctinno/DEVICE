@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item278.json",
+  "original_log_sha256": "cc60ce23923a897cf28e9ebf83fc8a0b31624b993f6003fd6e42e41af022d38b",
+  "original_log_bytes": 15880,
+  "queries": [
+    "AND \"CB-200\" software interface manual",
+    "site:github.com \"CB-200\" AND"
+  ],
+  "discovered_urls": [
+    "http://192.168.1.222:8080",
+    "http://www.jai.com",
+    "https://github.com/Replikanti/agentis",
+    "https://github.com/npm/npm/issues/12630",
+    "https://github.com/paiml/paiml-mcp-agent-toolkit/blob/master/README.md",
+    "https://github.com/paiml/paiml-mcp-agent-toolkit/issues/1367",
+    "https://github.com/tomquist/hm2mqtt/blob/main/docs/meters.md",
+    "https://manuals.plus/m/2ba92adef491e1828950c7e473ad8beca070e19642728a46185d6c8918f23cb8",
+    "https://manuals.plus/m/c06c9d1157c51c65be9991828ae8d006e70c759f7608fef9a04e166dbbe44dd5.pdf",
+    "https://manualzilla.com/doc/5799305/cm-200mcl-manual",
+    "https://pt.scribd.com/document/633309064/manual-cb200p2",
+    "https://shopspecialties.com/wp-content/uploads/2018/06/cb-200-350-500-ctb_ce_rev7_international.pdf",
+    "https://www.cleanburn.com/downloads/CB-200_350_500_CTB_BOOK.pdf",
+    "https://www.manualslib.com/manual/1276876/Icodis-Cb-200.html",
+    "https://www.manualslib.com/manual/1276876/Icodis-Cb-200.html?page=15",
+    "https://www.manualslib.com/manual/1276876/Icodis-Cb-200.html?page=22",
+    "https://www.neopsis.com/learn/cb240",
+    "https://www.neopsis.com/learn/cb240/configuration",
+    "https://www.neopsis.com/learn/cb240/devices",
+    "https://www.neopsis.com/learn/cb240/installation",
+    "https://www.neopsis.com/learn/cb240/parameters",
+    "https://www.neopsis.com/learn/cb240/system"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

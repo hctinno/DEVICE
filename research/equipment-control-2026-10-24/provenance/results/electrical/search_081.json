@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_081.json",
+  "original_log_sha256": "54750ca417af8127dd4e1149e306971388dfe8c583f1e7dcc507488ff26bcf47",
+  "original_log_bytes": 29724,
+  "queries": [
+    "HIOKI DT4261 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/041ced9be3a16ce1c804cf303d087aa83bf9c80d8008939dae5e6c363800fdc6_optim.pdf",
+    "https://fotronic.asset.akeneo.cloud/pdfs/media/dt426190_manual.pdf",
+    "https://fotronic.asset.akeneo.cloud/pdfs/media/hioki_dt426190_manual.pdf",
+    "https://hioki.tw/software-detail.php?id=175",
+    "https://manualzz.com/doc/64874261/hioki-digital-multimeter-dt4261-instruction-manual",
+    "https://shop.hioki.eu/HIOKI-DT4261-Industrial-Digital-Multimeter-for-Service-and-Maintenance",
+    "https://www.hioki.cn/home/support/softfiledown/dowlaodid/157.html",
+    "https://www.hioki.cn/products/dt4261",
+    "https://www.hioki.com/download/38163",
+    "https://www.hioki.com/global/products/testers/dmm-3/id_108097",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n9752",
+    "https://www.hioki.com/jp-ja/products/testers/dmm-3/id_108097",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n9752",
+    "https://www.hioki.com/support/download/manuals?page=37",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A015005&p_no=389",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A019005&p_no=389",
+    "https://www.legatool.com/pub/media/wysiwyg/PDF-Catalog/Hioki/DT4261A961-01.pdf",
+    "https://www.manualslib.com/manual/2524961/Hioki-Dt4261.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

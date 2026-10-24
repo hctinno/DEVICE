@@ -1,0 +1,83 @@
+{
+  "inventory_rows": 6470,
+  "inventory_items": 3137,
+  "identified_models": 2867,
+  "unidentified_rows": 270,
+  "groups": {
+    "rf_emc_sar": {
+      "items": 519,
+      "rows": 1036,
+      "manufacturers": 128
+    },
+    "other_measurement": {
+      "items": 480,
+      "rows": 863,
+      "manufacturers": 191
+    },
+    "electrical": {
+      "items": 360,
+      "rows": 786,
+      "manufacturers": 121
+    },
+    "environment": {
+      "items": 338,
+      "rows": 446,
+      "manufacturers": 112
+    },
+    "keysight_rs": {
+      "items": 334,
+      "rows": 1023,
+      "manufacturers": 8
+    },
+    "excluded_passive": {
+      "items": 870,
+      "rows": 1873,
+      "manufacturers": 165
+    },
+    "motion_switch": {
+      "items": 236,
+      "rows": 443,
+      "manufacturers": 69
+    }
+  },
+  "database_sha256": "1b51105dc845ee84803df14b012170cedd354180842740912f469b5231c8137b",
+  "completed_item_records": 3137,
+  "unsearched_items": 0,
+  "scope_counts": {
+    "included": 1433,
+    "excluded_passive": 1480,
+    "identity_unresolved": 176,
+    "needs_scope_review": 48
+  },
+  "scope_registration_rows": {
+    "included": 3251,
+    "excluded_passive": 2939,
+    "identity_unresolved": 205,
+    "needs_scope_review": 75
+  },
+  "research_status_counts": {
+    "family_source": 317,
+    "exact_source": 408,
+    "vendor_only": 206,
+    "searched_no_public_control_source": 502,
+    "excluded_passive": 1480,
+    "identity_unresolved": 176,
+    "needs_scope_review": 48
+  },
+  "unique_source_urls": 1624,
+  "model_source_associations": 2260,
+  "search_query_associations": 3341,
+  "exact_public_code_items": 71,
+  "documented_family_public_code_items": 28,
+  "source_kind_item_counts": {
+    "product_interface": 664,
+    "sdk_api": 43,
+    "programming_manual": 300,
+    "source_code": 140,
+    "support_portal": 163,
+    "driver": 128,
+    "control_software": 107
+  },
+  "hardware_verified_items": 0,
+  "url_format_warnings": 0
+}

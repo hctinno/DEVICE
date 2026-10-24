@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_181.json",
+  "original_log_sha256": "6d101033596f3110eb12d66404602a36d77e1ed4adce5371fd94246b88ed308d",
+  "original_log_bytes": 31828,
+  "queries": [
+    "HIOKI IR3455 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.com/",
+    "https://baa.vn/document/ir3455-hioki-dong-ho-do-dien-tro-6334-manual.pdf",
+    "https://manualzz.com/doc/37067395/hioki-ir3455",
+    "https://manualzz.com/doc/60132650/hioki-ir3455-instruction-manual",
+    "https://manualzz.com/doc/63897379/hioki-high-voltage-insulation-tester-ir3455-instruction-m",
+    "https://manualzz.com/manual/Hioki/IR3455",
+    "https://shop.hioki.eu/HIOKI-IR3455-High-Voltage-Insulation-Tester",
+    "https://www.hioki.com.vn/product/thiet-bi-do-cach-dien-cao-ap-ir3455/",
+    "https://www.hioki.com/download/30436",
+    "https://www.hioki.com/euro-en/products/insulation-testers/high-voltage/id_6631",
+    "https://www.hioki.com/sites/default/files/2021-04/IR3455A961-02.pdf",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A016002&p_no=231",
+    "https://www.manualslib.com/manual/1285407/Hioki-3455.html",
+    "https://www.manualslib.com/manual/1476662/Hioki-3455.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

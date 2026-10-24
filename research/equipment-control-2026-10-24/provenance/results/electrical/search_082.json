@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_082.json",
+  "original_log_sha256": "aee745bf4e95083e304efeca5e04aed11a9a4fb62bfd4562d3a18b09c686c971",
+  "original_log_bytes": 27415,
+  "queries": [
+    "(주)원익피앤이 PSC200-300P manual programming software"
+  ],
+  "discovered_urls": [
+    "http://doowonit.co.kr",
+    "https://en.jc-plc.com/download.html",
+    "https://espec.com/p300-demo/program/index.htm",
+    "https://imupos.com/upload/%5Bimu%5DS200J200_Installation_Guide_KO_v01%2820200728%29_final.pdf",
+    "https://industry.panasonic.com/ac/cdn/k/fasys/vision/mic/manual/pv200_um_k.pdf",
+    "https://lapasar.com/sellers/uploads/catalogue/E-80920-SA.pdf",
+    "https://owon.com.hk/download/index.asp?S=32",
+    "https://ssq.ls-electric.com/uploads/document/16952646101540/pmu_series.pdf",
+    "https://toyoda.jtekt.co.jp/e/products/OfcTpTop.php",
+    "https://woonyoung.com/bbs/board.php?bo_table=specification&page=495&wr_id=175",
+    "https://www.doowonit.co.kr/jbcgi/board/?acode=&code=board1&id=13&no=&p=detail&page=2",
+    "https://www.doowonit.co.kr/jbcgi/board/?acode=&code=board1&id=7&no=&p=detail&page=2",
+    "https://www.edpia.co.kr/board/index.html?ano=20&cmd=download&fid=2&fname=NJ%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD2.pdf&id=catalogmo",
+    "https://www.jtekt.co.jp/products/machine-tool/c/mecha/OfcTpTop.php",
+    "https://www.manualslib.com/manual/4034068/Fuji-Electric-Psc100-Series.html",
+    "https://www.mmcworld.co.kr/upload_data/iDCS_500P_pm.pdf",
+    "https://www.peter-electronic.com/en/service/document-center/operating-software/",
+    "https://www.smtechno.co.kr/bbs/board.php?bo_table=qa&page=1&sod=asc&sop=and&sst=wr_hit&wr_id=39",
+    "https://www.tek.com/ko/support/datasheets-manuals-software-downloads?series=EA-PSI+10000+%EC%8B%9C%EB%A6%AC%EC%A6%88+%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EB%B8%94+%ED%8C%8C%EC%9B%8C+%EC%84%9C%ED%94%8C%EB%9D%BC%EC%9D%B4&type=manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_311.json",
+  "original_log_sha256": "6628cf276b007e31255b6bc2c4cf900c8e10ab482c4115a8261fd5c9678b4028",
+  "original_log_bytes": 29536,
+  "queries": [
+    "Tektronix TDS 420A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Documents/TDS400_UserManual.pdf",
+    "https://download.tek.com/manual/070970306revA_web.pdf",
+    "https://download.tek.com/manual/070987600.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://w140.com/tekwiki/images/7/76/070-9556-00.pdf",
+    "https://w140.com/tekwiki/images/f/f5/070-9702-00.pdf",
+    "https://w140.com/tekwiki/wiki/TDS420A",
+    "https://www.manualslib.com/manual/1317151/Tektronix-Tds-420a.html?page=133",
+    "https://www.manualslib.com/manual/1317151/Tektronix-Tds-420a.html?page=134",
+    "https://www.manualslib.com/manual/2376190/Tektronix-Tds-420a.html?page=164",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Oscilloscopes&model=Tektronix-TDS420A&productID=C68C90B40B6C69F368E27FBDEA0ADEDB&type=Test-Equipment-Sales",
+    "https://www.opweb.de/pdf/tektronix--tds-420a--user--ID12068.pdf",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/zhhc1k",
+    "https://www.reddit.com/r/ElectronicsRepair/comments/sxdcto",
+    "https://www.reddit.com/r/oscilloscope/comments/1ubdrwq/anyone_have_the_manual_for_a_dpu_411_type_ii/",
+    "https://www.tek.com.cn/oscilloscope/tds420a-manual/tds420a-tds430a-tds460a-instruction-manual",
+    "https://www.tek.com/de/manual/tds-family-programmer-070970200",
+    "https://www.tek.com/de/manual/tds-family-programmer-manual",
+    "https://www.tek.com/en/manual/tds-family-programmer-070970200",
+    "https://www.tek.com/en/manual/tds-family-programmer-manual",
+    "https://www.tek.com/vn/manual/tds-family-programmer-manual",
+    "https://www.tek.com/vn/support/datasheets-manuals-software-downloads?model=tds754a"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

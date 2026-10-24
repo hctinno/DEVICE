@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_279.json",
+  "original_log_sha256": "80d715e5e300b6e447c2356228b9f5a1076abe4318e11f65fab08884a01d2731",
+  "original_log_bytes": 19330,
+  "queries": [
+    "Sorensen XFR 60 - 46 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://accusrc.com/product-Xantrex-XFR6046-5607",
+    "https://ametek.manymanuals.de/equipment/xfr-2800-watt-series/user-manual-45427/1",
+    "https://manualzz.com/doc/23810716/sorensen-xt-series-instruction-manual",
+    "https://manualzz.com/doc/6295930/xantrex-xfr-7.5-300--xfr-12-220--xfr-20-130--xfr-40-70--x",
+    "https://manualzz.com/doc/90287722/sorensen-xhr-series-user-guide",
+    "https://maximinstruments.com/pdf_files/Sorensen_XFR_12-100_Datasheet.pdf",
+    "https://maximinstruments.com/pdf_files/Sorensen_XFR_60-46_Datasheet.pdf",
+    "https://www.electronicsdatasheets.com/manufacturers/ametek-programmable-power/parts/xfr-6046",
+    "https://www.finaltest.net/Sorensen-XFR60-46-DC-Power-Supply-0-60-V-0-46-A-p/xfr%2060-46.htm",
+    "https://www.manualslib.com/manual/1480473/Ametek-Sorensen-Xfr-7-5-300.html?page=91",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=DC-Power-Supplies&model=Xantrex-XFR60-46&productID=C1BA0BA2A4341B751956BDCF39996BD0&type=Test-Equipment-Sales",
+    "https://www.programmablepower.com/-/media/project/ameteksxa/basesite/ametekprogrammablepowerv2/power-documents-here/eol-legacy-data-sheets-and-manuals/old-xfr-series.pdf?hash=DFB1C46E45D881145E528259AC0657BB&la=en&revision=bb2ad9b5-7b8b-4eb0-9df0-1cc0f9b1463a",
+    "https://www.programmablepower.com/products/dc-power-supplies/xfr-series",
+    "https://www.programmablepower.com/~/media/%7B03697f52-6b8e-42ea-9843-f67d6e8fa9bb%7D.ashx",
+    "https://www.psirep.com/system/files/2024-08/AMETEK%20XFR%20Series%20Datasheet.pdf",
+    "https://www.tek.com/en/calibration-by-manufacturer/sorensen",
+    "https://www.ttid.co.uk/dc-power-supplies/sorensen/xfr-series"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

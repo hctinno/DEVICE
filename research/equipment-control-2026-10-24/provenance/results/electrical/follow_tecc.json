@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_tecc.json",
+  "original_log_sha256": "99ad329d36c11d368629a23b9e36ad2a187473dbfb95a415024b62637f14f195",
+  "original_log_bytes": 29072,
+  "queries": [
+    "티이씨씨 TBCDS 통신 소프트웨어"
+  ],
+  "discovered_urls": [
+    "https://bizno.net/article/3668700139",
+    "https://h10032.www1.hp.com/ctg/Manual/c00697992.pdf",
+    "https://hjsfa.co.kr/files/2015/06/CJ2M_CJ2H.pdf",
+    "https://kosai.kr/r/131290.html",
+    "https://m2i.co.kr/uploaded/board/IRannounce/_38d1641c8a0536a6a7ba8437e358f94f1.pdf",
+    "https://prostock.kr/%EC%A2%85%EB%AA%A9/%ED%86%A0%ED%83%88%EC%86%8C%ED%94%84%ED%8A%B8/",
+    "https://prostock.kr/%EC%A2%85%EB%AA%A9/%ED%8B%B0%EB%B9%84%EC%94%A8/",
+    "https://prostock.kr/%EC%A2%85%EB%AA%A9/%ED%8B%B0%EC%97%90%EC%8A%A4%EC%95%84%EC%9D%B4/",
+    "https://thevc.kr/tvstorm/products",
+    "https://uitc.pusan.ac.kr/bbs/uitc/17751/829719/download.do",
+    "https://vins9.tistory.com/entry/%ED%81%B4%EB%A1%9C%EB%93%9C%EC%99%80-%EC%A3%BC%EC%8B%9D%EA%B3%B5%EB%B6%80-14-%ED%8B%B0%EC%97%90%EC%8A%A4%EC%9D%B4-%E2%80%94-7%EC%9B%94-14%EB%A7%8C%EC%9B%90%EC%97%90%EC%84%9C-9%EC%9B%94-31%EB%A7%8C%EC%9B%90%EA%B9%8C%EC%A7%80-%EC%9E%A5%EB%B9%84%ED%8E%B8%EC%9D%98-%EB%A7%88%EC%A7%80%EB%A7%89%EC%9D%80-%EC%9E%A5%EB%B9%84%EA%B0%80-%EC%95%84%EB%8B%88%EC%97%88%EB%8B%A4",
+    "https://www.dailyinvest.kr/news/articleView.html?idxno=64397",
+    "https://www.rti.com/hubfs/_Collateral/Executive-Briefs/RTI-executive-brief-Connectivity-Leader-for-SDV-KR.pdf",
+    "https://www.tbtsys.com/kor/main/",
+    "https://www.tek.com/ko/datasheet/digital-storage-oscilloscope-tbs1000c-series-datasheet",
+    "https://www.tisc.co.kr/bbs/content.php?co_id=sub31&co_lang=ko",
+    "https://www.tsis.co.kr/static/business/it-summary"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

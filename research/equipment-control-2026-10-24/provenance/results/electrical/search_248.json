@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_248.json",
+  "original_log_sha256": "b9f355bf05b083b99e09d71d5a768353bfbb112214fcbe2d6554cf3d6957a269",
+  "original_log_bytes": 33026,
+  "queries": [
+    "YOKOGAWA WT200 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/IM253421-01E.pdf",
+    "https://manualzz.com/doc/7082161/yokogawa-wt-gatewt-gatewt-software--wt-110--wt-110e--wt-1",
+    "https://manualzz.com/doc/o/20643h/yokogawa-wt200-user-manual-chapter-1-functional-overview-and-digital-display",
+    "https://tmi.yokogawa.com/au/solutions/discontinued/wt200-digital-power-meter-253421/",
+    "https://tmi.yokogawa.com/solutions/discontinued/wt200-digital-power-meter-253421/",
+    "https://web-material3.yokogawa.com/IMWX1-03E_080.pdf",
+    "https://www.koreayokogawa.com/contact/faq.php?boardid=faq&category=&offset=300&sk=&sw=",
+    "https://www.manualslib.com/manual/1540440/Yokogawa-Wt200.html?page=105",
+    "https://www.manualslib.com/manual/1540440/Yokogawa-Wt200.html?page=132",
+    "https://www.manualslib.com/manual/1540440/Yokogawa-Wt200.html?page=133",
+    "https://www.manualslib.com/manual/1540440/Yokogawa-Wt200.html?page=134",
+    "https://www.manualslib.com/manual/1540440/Yokogawa-Wt200.html?page=137",
+    "https://www.manualslib.com/manual/1540440/Yokogawa-Wt200.html?page=166",
+    "https://www.manualslib.com/manual/1540440/Yokogawa-Wt200.html?page=215",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

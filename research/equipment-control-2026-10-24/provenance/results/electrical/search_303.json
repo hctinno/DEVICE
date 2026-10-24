@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_303.json",
+  "original_log_sha256": "ea2d7fd6e2515be27ecd2543d6650d7340c95b8a2f62b8590efc95abaf4abe26",
+  "original_log_bytes": 28274,
+  "queries": [
+    "DAEGIL EL-200P manual programming software"
+  ],
+  "discovered_urls": [
+    "https://dearborngroup.com/documents/",
+    "https://industrialesandes.co/img/cms/A2-153/AE200.PDF",
+    "https://manualzilla.com/doc/5755736/user-s-manual",
+    "https://pt.scribd.com/document/958277873/Manual-de-Operacao-E200P",
+    "https://pwcontrol.eu/upload/iblock/c0e/f9ftjuko065wnw6gdsjomruajaoiap5w.pdf",
+    "https://www.autobase.biz/Korean/AutoBaseHelp/Help10/Plc_scan/DAEGIL_LOAD.htm",
+    "https://www.daeiltech.co.kr/wp-content/uploads/2021/02/New_ECO_Silver_Operating-manual.pdf",
+    "https://www.hilomax.com/technical-support/download/?downloadtype=1&parid=&topid=",
+    "https://www.manuallib.com/file/3148516/",
+    "https://www.manuallib.com/file/3154410/",
+    "https://www.scribd.com/document/506374243/8581471b-3cb8-4798-be42-07b2f6a06753",
+    "https://www.scribd.com/document/662089164/E200PS-Operation-Manual-V1-00-1",
+    "https://www.scribd.com/document/833285952/e200p",
+    "https://www.siapmicros.com/en/software_e_app/configurazione-sistemi-di-acquisizione/",
+    "https://www.smtechno.co.kr/shop/item.php?device=pc&it_id=EL-200P"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

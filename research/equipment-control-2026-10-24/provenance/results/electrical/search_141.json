@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_141.json",
+  "original_log_sha256": "fcae7895be5f841c60f17172b314129302f26c30893b18602527e54a2eeecb76",
+  "original_log_bytes": 29630,
+  "queries": [
+    "GRAPHTEC GL980 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://allice.de/graphtec/graphtec-gl980-datenlogger-8-kanal-multifunktion-x-y-schreiber/",
+    "https://assets.testequity.com/te1/Documents/pdf/graphtec/Graphtec_GL980_Data-Logger_User-Manual_0225.pdf",
+    "https://datalogger.in.th/index.php/downloadlink",
+    "https://en.wikipedia.org/wiki/Graphtec",
+    "https://graphtec.co.jp/tp21062/",
+    "https://graphtec.in.th/article-79516-1-softwares.html",
+    "https://graphteciwatsu.com/en/support/download/datalogger/",
+    "https://lhm-instrumentation.eu/PDF/Graphtec%20GL980%20User%20Manual.pdf",
+    "https://t-m.kostech.net/download.cm?tk=YToyOntpOjA7czoxMzoiNzMxYzAwZGRkMmRjYSI7aToxO3M6MjI6ImYyMDI1MDEyMTQ4ODkxYTg0NjliMmYiO30%3D",
+    "https://t-m.kostech.net/products-datalogger-gl980",
+    "https://www.graphteccorp.com/",
+    "https://www.graphteccorp.com/download/downloadapp/",
+    "https://www.graphteccorp.com/download/firm_gl2000_gl980/",
+    "https://www.graphteccorp.com/download/gl-connection/",
+    "https://www.graphteccorp.com/download/gl980_gl2000-aps/",
+    "https://www.graphteccorp.com/support/software/logger/",
+    "https://www.manualslib.com/products/Graphtec-Gl980-10364487.html",
+    "https://www.mygraphtec.jp/site_download/manual/gl980/GL980-UM-853.pdf",
+    "https://www.omniinstruments.co.uk/wp-content/uploads/2025/09/Graphtec-GL980-Data-Logger.pdf?d=0&file=custom%2Fupload%2FFile-1541521542.pdf",
+    "https://www.pm-instrumentation.com/storage/8035/APS%28GL980_2000%29-UM-151.pdf",
+    "https://www.reddit.com/r/CommercialPrinting/comments/1hfzbek",
+    "https://www.reddit.com/r/PlotterArt/comments/1i0hrln",
+    "https://www.reddit.com/r/VinylCutters/comments/17awevc",
+    "https://www.reddit.com/r/VinylCutters/comments/1k42g3w",
+    "https://www.reddit.com/r/VinylCutters/comments/cyxlwx"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

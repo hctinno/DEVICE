@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_220.json",
+  "original_log_sha256": "cc11a092919996486f1c0dbb5896df676b65ce227602e1fb09df45fbb4915f01",
+  "original_log_bytes": 28703,
+  "queries": [
+    "HIOKI CM4142 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Hioki_AC_Clamp_Meter_Instruction_Manual.pdf",
+    "https://hiokikorea.com/product/product_view.html?c_id=A023001&p_no=345",
+    "https://www.cedesa.com.mx/pdf/hioki/Hioki-CM4141-CM4142_manual.pdf",
+    "https://www.hioki.com/euro-en/products/clamp-meters/ac-clamp/id_6726",
+    "https://www.hioki.com/in-en/products/clamp-meters/ac-clamp/id_6726",
+    "https://www.hioki.com/jp-ja/products/clamp-meters/ac-clamp/id_6726",
+    "https://www.hioki.com/sites/default/files/2021-04/CM4141A980-03.pdf",
+    "https://www.hioki.com/support/download/manuals?page=16",
+    "https://www.hioki.com/us-en/products/clamp-meters/ac-clamp/id_6726",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A023001&p_no=345",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A023001&p_no=345&s_tab=tab3",
+    "https://www.hiokikorea.com/support/software_search.html",
+    "https://www.manualslib.com/manual/1589591/Hioki-Cm4141.html?page=33",
+    "https://www.manualslib.com/manual/2676909/Hioki-Cm4142-20.html?page=67",
+    "https://www.manualslib.com/products/Hioki-Cm4142-20-12592567.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

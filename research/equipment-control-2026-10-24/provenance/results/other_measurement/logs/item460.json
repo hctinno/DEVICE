@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item460.json",
+  "original_log_sha256": "c0c720871574c842104c89f9c03751b663e762967deb0d18344fed84c04ff6ba",
+  "original_log_bytes": 16246,
+  "queries": [
+    "COM-POWER \"DB 568\" software interface manual",
+    "site:github.com \"DB 568\" COM-POWER"
+  ],
+  "discovered_urls": [
+    "https://careersportal.ie/sites/default/files/documents/CAO%20Handbook%202024.pdf",
+    "https://device.report/m/11c6767c737097c29bfef706b7385880a22caba7e5b7b48016968bc0c0149e89.pdf",
+    "https://downloadcenter.amazone.de/file/view/infoid/620",
+    "https://eureka.patsnap.com/patent/JPWO2024150657A5",
+    "https://github.com/yugabyte/yugabyte-db/issues/11343",
+    "https://manuals.plus/m/0f9d4ad8d3017cb85e10ab9a43652799dfaba7575b54dc57a2bdc58ae47e8234",
+    "https://www.brltest.com/index.php?main_page=product_info&products_id=7946",
+    "https://www.brltest.com/index.php?main_page=products_new&page=85",
+    "https://www.globalspec.com/industrial-directory/rs485_simulator",
+    "https://www.machinio.com/general-analytical-equipment?search=ring+terminals",
+    "https://www.motor-talk.de/forum/vectra-b-radio-wechseln-wichtige-fragen-t1466468.html?page=1",
+    "https://www.scribd.com/document/368220665/IM05D01A01-01E",
+    "https://www.scribd.com/document/626916050/Apple-II-Reference-Manual-1979-Apple-Text",
+    "https://www.tequipment.net/Com-Power-pricelist/",
+    "https://www.tequipment.net/Com-Power/TS-568/EMI-Accessories/",
+    "https://www.universityofgalway.ie/media/registry/admissions/files/CAO-Handbook-2024.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

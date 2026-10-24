@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item397.json",
+  "original_log_sha256": "ae6ed59082e1313adaca73bb87612d0a776ac0d077b2f58f7aa354cb00218382",
+  "original_log_bytes": 14051,
+  "queries": [
+    "Dino-Lite \"AM-413T\" software interface manual",
+    "site:github.com \"AM-413T\" Dino-Lite"
+  ],
+  "discovered_urls": [
+    "https://assets.touchboards.com/assets/1/26/Documents/DinoLite/AM413T/am413t_doc_1.pdf",
+    "https://dino-lite.co.kr/board/%EC%9E%90%EB%A3%8C%EC%8B%A4/7/",
+    "https://dino-lite.co.kr/board/free/list.html?board_no=7",
+    "https://graintrade.org.au/wp-content/uploads/2024/09/VRSG-2021-2022-Web-Version.pdf",
+    "https://graintrade.org.au/wp-content/uploads/2024/09/Visual-Recognition-Standards-Guide-2022-Low-Resolution-file.pdf",
+    "https://microscopepartzo.net/am413t",
+    "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jvc2.86",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC8401883/",
+    "https://vpp.sbuf.se/Public/Documents/ProjectDocuments/0bbbf122-789c-4495-a5fa-2107ed60f85b/FinalReport/SBUF%2013401%20Slutrapport%20-%20Plastic%20Shrinkage%20Cracking%20In%20Concrete_LowRes2.pdf",
+    "https://www.dino-lite.co.kr/board/free/list.html?board_no=7",
+    "https://www.ebay.co.uk/itm/333800874602",
+    "https://www.ebay.co.uk/str/torontosurplusscientific",
+    "https://www.halotech.co.th/index.php?ac=cat_show_pro_detail&lay=show&pid=1104365",
+    "https://www.manuallib.com/download/pdf16/DINO-LITE-HAND-HELD-DIGITAL-MICROSCOPE-AM-413T-MANUAL.PDF",
+    "https://www.mdpi.com/1996-1944/14/16/4650",
+    "https://www.scribd.com/document/1025629812/Shrikage-cracks",
+    "https://www.scribd.com/document/835276552/0900766b80d67ca7",
+    "https://www.shoif.com/old_version/%E6%95%B0%E7%A0%81%E6%98%BE%E5%BE%AE%E9%95%9C%E9%87%87%E8%B4%AD%E6%8C%87%E5%8D%97.shtml"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

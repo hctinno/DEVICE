@@ -1,0 +1,26 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item418.json",
+  "original_log_sha256": "6196a2d81de166ad0be44084da29db487734a5b5155a0c2cfd03e4feca5b1c2d",
+  "original_log_bytes": 12080,
+  "queries": [
+    "Leader \"LMV-186AR\" software interface manual",
+    "site:github.com \"LMV-186AR\" Leader"
+  ],
+  "discovered_urls": [
+    "http://cafe.daum.net/tpm8657",
+    "https://rfdh.com/gnu2503/bbs/board.php?bo_table=market&wr_id=832",
+    "https://rfdh.com/gnu2503/bbs/search.php?device=pc&gr_id=&onetable=&page=199&sfl=wr_subject&sop=and&srows=10&stx=A",
+    "https://rfdh.com/gnu2503/bbs/search.php?device=pc&gr_id=&onetable=market&page=32&sfl=wr_subject&sop=and&srows=10&stx=to",
+    "https://rfdh.com/gnu2503/bbs/write.php?bo_table=market&w=r&wr_id=832",
+    "https://www.eserviceinfo.com/forum_search_wrap.php?searchtext=leader+LMV-185A",
+    "https://www.radiomuseum.org/m/leader2_j_en_1.html",
+    "https://www.radiomuseum.org/m/leader2_j_en_1~tube.html",
+    "https://www.radiomuseum.org/m/leader2_j_en_1~year.html",
+    "https://www.radiomuseum.org/m/leader2_j_es_noindex_1.html",
+    "https://www.techeyesonline.com/measuring-device/search/?companyId=330&keyword=M-2"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

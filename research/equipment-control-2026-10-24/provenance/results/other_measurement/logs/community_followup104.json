@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup104.json",
+  "original_log_sha256": "5ed36a5ff5893eb74b166b5bb9e3b0cc24ddaa6181fa13938d79f1b1d5deae6f",
+  "original_log_bytes": 359,
+  "queries": [
+    "site:github.com \"CF4-P61A\" \"YOTOHO\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

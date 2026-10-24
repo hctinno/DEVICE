@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_359.json",
+  "original_log_sha256": "bef26dd2c15da4722a6f7c5fabe3bebfca9348b12295aa12c29abe393197c10d",
+  "original_log_bytes": 33537,
+  "queries": [
+    "HCT R32 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://climatcontrol.bg/data/files/1653055474.pdf",
+    "https://eshine-t.com/support/manual/",
+    "https://hcthermal.com/products/control-panels/",
+    "https://www.eghca.com/_files/ugd/c46131_1b096e6b09124881ad7735d8724dd150.pdf",
+    "https://www.hcfa-russia.ru/services/dokumentatsiya/%D0%9F%D0%B0%D0%BD%D0%B5%D0%BB%D0%B8%20%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20HCFA%20TP2000%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D0%BF%D0%BE%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%BE%D0%BC%D1%83%20%D0%BE%D0%B1%D0%B5%D1%81%D0%BF%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D1%8E%20HCTDesigner",
+    "https://www.hoffmann-group.com/BG/en/soltec/areas-of-application/digital-manufacturing-solutions/hct/hct-windows-app/e/747352/",
+    "https://www.hoffmann-group.com/FI/en/ravemaf/areas-of-application/digital-manufacturing-solutions/hct/hct-windows-app/e/747352/",
+    "https://www.hoffmann-group.com/MT/en/mbbridge/areas-of-application/digital-manufacturing-solutions/hct/hct-windows-app/e/747352/",
+    "https://www.hoffmann-group.com/US/en/hus/areas-of-application/digital-manufacturing-solutions/hct/hct-windows-app/e/747352/",
+    "https://www.manualslib.com/manual/2792501/Metcal-Hct-1000.html?page=7",
+    "https://www.manualslib.com/manual/3087203/Hct-Mvp-R-Series.html?page=8",
+    "https://www.mouser.com/datasheet/2/305/HCT_1000_user_manual_multi_language-2956248.pdf?srsltid=AfmBOooRBE-lj4hs-OoNcmFHvr4RZW3sNaUnMQ3mElyZQEceSqc9LVJt",
+    "https://www.otomasyonavm.com/tr/hcfa-hmi-programlari",
+    "https://www.scribd.com/document/953813604/5744826",
+    "https://www.sfs.ch/CH/de/dl/anwendungsbereiche/digitale-fertigungsloesungen/hct/hct-windows-app/e/747352/",
+    "https://www.sfs.ch/CH/en/dl/areas-of-application/digital-manufacturing-solutions/hct/hct-windows-app/e/747352/",
+    "https://www.temperzone.biz/SiteAssets/Public/6165/GetFile/Temperzone_Service_Training_Manual_2016.PDF"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item189.json",
+  "original_log_sha256": "23ed7c8eef0e831c7951a3331efb5d972f8d9b4332cf917e5caa34b732d93696",
+  "original_log_bytes": 15291,
+  "queries": [
+    "Whaleteq AECG100 PPG-2R-940 SDK software download",
+    "site:github.com Whaleteq AECG100"
+  ],
+  "discovered_urls": [
+    "https://5.imimg.com/data5/SELLER/Doc/2023/4/300493350/WQ/QI/NX/3793955/whaleteq-aecg100-wearable-heart-rate-and-sp02-simulator.pdf",
+    "https://device.report/m/52433fa69ed576606aeb493cb593de2c9bb99860f2bb47a90d2d8329e1cfc289",
+    "https://github.com/jessiepullaro414/Manifold",
+    "https://helixindia.com/wp-content/uploads/2023/12/UM_SECG-5.0-AIO_EN_V.1.4.0_230922.pdf",
+    "https://manuals.plus/m/67cd1c3db1c420f83e0a5904c0639f19103e66af58417ea3a659cc39368832ec",
+    "https://www.eagletek.com.tw/products/whaleteq/aecg100",
+    "https://www.manualslib.com/manual/4336906/Whaleteq-Aecg100.html",
+    "https://www.manualslib.com/manual/4336906/Whaleteq-Aecg100.html?page=87",
+    "https://www.manualslib.com/products/Whaleteq-Ppg-2r-940-15235019.html",
+    "https://www.scribd.com/document/510004999/WhaleTeq-AECG100",
+    "https://www.whaleteq-cn.com/en/product/16-health-wearables-testing/list",
+    "https://www.whaleteq-cn.com/en/product/3/15-oximeter-device-testing/view20-ppg-2r-880-ppg-2r-940-reflectance-spo2-module",
+    "https://www.whaleteq-cn.com/en/product/4/16-health-wearables-testing/view21-aecg100",
+    "https://www.whaleteq.com/data/download/files/1667782891129476448.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/Oximeter_Device_Testing/PPG-2TF-660-2.0_Transmittance_SpO2_Module/manual/um_mix_en_v.1.9.0_251208.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/um_mix_en_v.1.7.0_240430%282%29.pdf",
+    "https://www.whaleteq.com/en",
+    "https://www.whaleteq.com/en/download/8-3d-drawing/list"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

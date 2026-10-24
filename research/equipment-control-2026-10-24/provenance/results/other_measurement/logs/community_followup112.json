@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup112.json",
+  "original_log_sha256": "59914e19c2ffe0f4986e3663bf7ab0c5a0c02fee81f73b8d5347a186351130c0",
+  "original_log_bytes": 356,
+  "queries": [
+    "site:github.com \"76447\" \"SHINWA\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

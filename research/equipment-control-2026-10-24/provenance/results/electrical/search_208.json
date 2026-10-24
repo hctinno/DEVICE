@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_208.json",
+  "original_log_sha256": "0d2a6237fca22b7dbd5aaab272606d0c31472d13a433ca9986f11fb40421eba3",
+  "original_log_bytes": 29321,
+  "queries": [
+    "DIGITEK POWER DEFC-1020 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://cloud.edebris.com/index.php/s/AFiJCyKKYpojYYZ",
+    "https://bama.edebris.com/manuals/bitsavers/pdf/digitek/",
+    "https://ccipower.com/product-category/legacy/?page=7",
+    "https://device.report/manuals/ej-et-ey-fj-fr-series-instruction-manual-data-information",
+    "https://en.wikipedia.org/wiki/Digitek",
+    "https://manualmachine.com/num/",
+    "https://manualzz.com/doc/33810603/installation-and-commissioning-manual-1020-1040",
+    "https://pt.scribd.com/document/447001368/1020-series-MANUAL-1020",
+    "https://pt.scribd.com/document/961687607/1102",
+    "https://www.dgfg.eu/wp-content/uploads/2018/02/51-52-25-113-DC1000-manual.pdf",
+    "https://www.dgfg.nl/wp-content/uploads/2018/02/51-52-25-113-DC1000-manual.pdf",
+    "https://www.fatek.com/en/download.php?act=list&cid=178",
+    "https://www.scribd.com/document/443762869/SED-MAN-Manual-for-GUI",
+    "https://www.scribd.com/document/561484074/Controladores-Digitales-Universal-DC-10001",
+    "https://www.scribd.com/document/561484141/Data-Sheet",
+    "https://www.scribd.com/document/820782214/DC%E7%B3%BB%E5%88%97%E6%96%B0%E6%AC%BE%E6%93%8D%E4%BD%9C%E8%AF%B4%E6%98%8E-1"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

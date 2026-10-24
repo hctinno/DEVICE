@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_160.json",
+  "original_log_sha256": "eb5c621401db1a8e602427601613c2bcd77fe30dde93362a21d1d8587cfa8d61",
+  "original_log_bytes": 33461,
+  "queries": [
+    "DIGITEK POWER DEFC-3150 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://5.imimg.com/data5/SELLER/Doc/2021/5/BI/GU/UV/3729956/fcbc-dy-31500e.pdf",
+    "https://abcdocz.com/doc/205211/",
+    "https://device.report/m/0f0ad8dbb587c22fe5c2665597b8fbb635845d801ee9aa9da7e35f783b61679e.pdf",
+    "https://digitop.ua/ru/support/",
+    "https://download.tek.com/manual/35320179.pdf",
+    "https://edisupport.kayako.com/en-us",
+    "https://industrialpro.in/downloads",
+    "https://manuals.group/results.php?search=DIGITEK",
+    "https://manualzilla.com/doc/5976507/user-manual-ppc",
+    "https://manuzoid.com/manuals/G8rJJ-JHCTech%20FEBC-3150%20User%20manual",
+    "https://optoanalysis.com/pdf/manuals/3150/3150_Manual.pdf",
+    "https://studylib.es/doc/4933086/3150-en-fr-sp",
+    "https://studylib.net/doc/25880272/manual-3150d-e",
+    "https://studylib.net/doc/26317084/ft-3120%C2%AE---ft-3150%C2%AE-smart-transceiver-data-book",
+    "https://www.controltechniques.com/CTDownloads/SharePoint/DownloadFile.aspx?DownloadID=4552&SiteID=4",
+    "https://www.mecoinst.com/uploads/products/manual-online/3150%2C2250hz-auto%2C3690auto.pdf",
+    "https://www.scribd.com/document/154698448/FO-3150-Service-and-Parts"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

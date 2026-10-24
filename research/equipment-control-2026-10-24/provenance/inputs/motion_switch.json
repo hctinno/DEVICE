@@ -1,0 +1,5634 @@
+[
+  {
+    "item_id": "MOD-70801126dc5b32a6",
+    "model_id": "MOD-70801126dc5b32a6",
+    "manufacturer": "TDK",
+    "model": "SI-300-2",
+    "names": [
+      "System Interface",
+      "SYSTEM INTERFACE"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-000049",
+      "EQ-000053",
+      "EQ-000257",
+      "EQ-001170",
+      "EQ-004276",
+      "EQ-004584",
+      "EQ-006207"
+    ],
+    "register_numbers": [
+      49,
+      53,
+      257,
+      1170,
+      4276,
+      4584,
+      6207
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 7
+  },
+  {
+    "item_id": "MOD-17406f2a73e81be3",
+    "model_id": "MOD-17406f2a73e81be3",
+    "manufacturer": "INNCO Systems",
+    "model": "CO3000",
+    "names": [
+      "Antenna Mast & Turn Table Controller",
+      "Controller(Antenna Mast & Turn Table)",
+      "Antenna Mast Controller",
+      "Antenna master controller",
+      "Ant MAST Controller"
+    ],
+    "categories": [
+      "motion_controller",
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-000056",
+      "EQ-000058",
+      "EQ-000649",
+      "EQ-001072",
+      "EQ-001329",
+      "EQ-001332",
+      "EQ-001466",
+      "EQ-001559",
+      "EQ-001562",
+      "EQ-002008",
+      "EQ-002010",
+      "EQ-002644",
+      "EQ-002645",
+      "EQ-002646",
+      "EQ-004044",
+      "EQ-004045",
+      "EQ-004046"
+    ],
+    "register_numbers": [
+      56,
+      58,
+      649,
+      1072,
+      1329,
+      1332,
+      1466,
+      1559,
+      1562,
+      2008,
+      2010,
+      2644,
+      2645,
+      2646,
+      4044,
+      4045,
+      4046
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 17
+  },
+  {
+    "item_id": "MOD-a4795d854aebb2d5",
+    "model_id": "MOD-a4795d854aebb2d5",
+    "manufacturer": "INNCO Systems",
+    "model": "MA4640-XP-ET",
+    "names": [
+      "Antenna Master",
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-000057",
+      "EQ-000059",
+      "EQ-001507",
+      "EQ-001684",
+      "EQ-005017"
+    ],
+    "register_numbers": [
+      57,
+      59,
+      1507,
+      1684,
+      5017
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 5
+  },
+  {
+    "item_id": "MOD-502876b18b3ca602",
+    "model_id": "MOD-502876b18b3ca602",
+    "manufacturer": "LUMILOOP",
+    "model": "CI-250+",
+    "names": [
+      "Field Probe Interface"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-000071",
+      "EQ-000185",
+      "EQ-000253"
+    ],
+    "register_numbers": [
+      71,
+      185,
+      253
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-c178348f813ebcfa",
+    "model_id": "MOD-c178348f813ebcfa",
+    "manufacturer": "TDK",
+    "model": "RSM-02",
+    "names": [
+      "RF Switch Solutions",
+      "Remote Switch Module"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-000078",
+      "EQ-000079",
+      "EQ-000080",
+      "EQ-002597",
+      "EQ-004870",
+      "EQ-004872",
+      "EQ-005552"
+    ],
+    "register_numbers": [
+      78,
+      79,
+      80,
+      2597,
+      4870,
+      4872,
+      5552
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 7
+  },
+  {
+    "item_id": "MOD-cff0f1eb6e86f4b1",
+    "model_id": "MOD-cff0f1eb6e86f4b1",
+    "manufacturer": "SCHWARZBECK",
+    "model": "OSP230",
+    "names": [
+      "OSP"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-000112"
+    ],
+    "register_numbers": [
+      112
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2d891eb21e7b5f53",
+    "model_id": "MOD-2d891eb21e7b5f53",
+    "manufacturer": "HCT",
+    "model": "HSMSP4T",
+    "names": [
+      "M/W Switch System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-000159",
+      "EQ-000160",
+      "EQ-000161",
+      "EQ-000217",
+      "EQ-000219",
+      "EQ-000220",
+      "EQ-000221",
+      "EQ-000226"
+    ],
+    "register_numbers": [
+      159,
+      160,
+      161,
+      217,
+      219,
+      220,
+      221,
+      226
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 8
+  },
+  {
+    "item_id": "MOD-17973c4d4adb04f8",
+    "model_id": "MOD-17973c4d4adb04f8",
+    "manufacturer": "HCT",
+    "model": "HRSM-SP4T",
+    "names": [
+      "M/W Switch System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-000225"
+    ],
+    "register_numbers": [
+      225
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0290b9ac3a73a147",
+    "model_id": "MOD-0290b9ac3a73a147",
+    "manufacturer": "STAUBLI",
+    "model": "SP1 D21142605",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-000236",
+      "EQ-005074"
+    ],
+    "register_numbers": [
+      236,
+      5074
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-a070152ee3f4449c",
+    "model_id": "MOD-a070152ee3f4449c",
+    "manufacturer": "STAUBLI",
+    "model": "SP1 D21139902",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-000238"
+    ],
+    "register_numbers": [
+      238
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-bdbd8100f0e74658",
+    "model_id": "MOD-bdbd8100f0e74658",
+    "manufacturer": "STAUBLI",
+    "model": "CS9spe-TX2-90",
+    "names": [
+      "Staubli Robot Controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-000240",
+      "EQ-000246",
+      "EQ-001427",
+      "EQ-001431"
+    ],
+    "register_numbers": [
+      240,
+      246,
+      1427,
+      1431
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-ae3381eb88ff361c",
+    "model_id": "MOD-ae3381eb88ff361c",
+    "manufacturer": "STAUBLI",
+    "model": "SP2 D21144508C",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-000242",
+      "EQ-000252",
+      "EQ-001426",
+      "EQ-001430"
+    ],
+    "register_numbers": [
+      242,
+      252,
+      1426,
+      1430
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-fd6ee9ae49895cd7",
+    "model_id": "MOD-fd6ee9ae49895cd7",
+    "manufacturer": "STAUBLI",
+    "model": "SP1 D21142106",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-000244"
+    ],
+    "register_numbers": [
+      244
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7ca315f7e4838690",
+    "model_id": "MOD-7ca315f7e4838690",
+    "manufacturer": "MANSON",
+    "model": "HCS-3604",
+    "names": [
+      "SWITCHING MODE POWER SUPPLY"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-000276"
+    ],
+    "register_numbers": [
+      276
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f18e8f535884e11c",
+    "model_id": "MOD-f18e8f535884e11c",
+    "manufacturer": "PEAK",
+    "model": "PLIN-LWL",
+    "names": [
+      "PLIN-LWL",
+      "Optical Coupler for LIN Data Transmission",
+      "Optical Coupler for LIN DataTransmission"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-000362",
+      "EQ-001064",
+      "EQ-001917",
+      "EQ-001918",
+      "EQ-002396",
+      "EQ-002397"
+    ],
+    "register_numbers": [
+      362,
+      1064,
+      1917,
+      1918,
+      2396,
+      2397
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 6
+  },
+  {
+    "item_id": "MOD-07708e341a98dd68",
+    "model_id": "MOD-07708e341a98dd68",
+    "manufacturer": "PEAK",
+    "model": "PCAN-LWL",
+    "names": [
+      "PCAN-LWL",
+      "Optical Coupler for CAN Data Transmission"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-000363",
+      "EQ-000364",
+      "EQ-000368",
+      "EQ-000369",
+      "EQ-000370",
+      "EQ-000371",
+      "EQ-001905",
+      "EQ-001906",
+      "EQ-001907",
+      "EQ-001908",
+      "EQ-001909",
+      "EQ-001910",
+      "EQ-001911",
+      "EQ-001912",
+      "EQ-001913",
+      "EQ-001914",
+      "EQ-001915",
+      "EQ-001916",
+      "EQ-002398",
+      "EQ-002399",
+      "EQ-002400",
+      "EQ-002401",
+      "EQ-002956",
+      "EQ-002957",
+      "EQ-002958",
+      "EQ-002959",
+      "EQ-004441",
+      "EQ-004442"
+    ],
+    "register_numbers": [
+      363,
+      364,
+      368,
+      369,
+      370,
+      371,
+      1905,
+      1906,
+      1907,
+      1908,
+      1909,
+      1910,
+      1911,
+      1912,
+      1913,
+      1914,
+      1915,
+      1916,
+      2398,
+      2399,
+      2400,
+      2401,
+      2956,
+      2957,
+      2958,
+      2959,
+      4441,
+      4442
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 28
+  },
+  {
+    "item_id": "MOD-7e87589f65487742",
+    "model_id": "MOD-7e87589f65487742",
+    "manufacturer": "HIOKI",
+    "model": "SW2001",
+    "names": [
+      "HIGH VOLTAGE MULTIPLEXER"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-000374"
+    ],
+    "register_numbers": [
+      374
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-dcc7cff433f18c12",
+    "model_id": "MOD-dcc7cff433f18c12",
+    "manufacturer": "Universal Robots",
+    "model": "UR5e",
+    "names": [
+      "Robotic Arms"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-000439"
+    ],
+    "register_numbers": [
+      439
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-000459",
+    "model_id": null,
+    "manufacturer": "ETS",
+    "model": "",
+    "names": [
+      "Turn table"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-000459"
+    ],
+    "register_numbers": [
+      459
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-917f0b46bcbe6729",
+    "model_id": "MOD-917f0b46bcbe6729",
+    "manufacturer": "SAMSUNG",
+    "model": "DM500TGZ",
+    "names": [
+      "데스크탑"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-000460"
+    ],
+    "register_numbers": [
+      460
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-402d3678468cdfb2",
+    "model_id": "MOD-402d3678468cdfb2",
+    "manufacturer": "MSI",
+    "model": "Crosshair A17 HX D9WGKG-R9",
+    "names": [
+      "사이버보안용 Laptop PC"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-000466"
+    ],
+    "register_numbers": [
+      466
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d8d9b774aa018655",
+    "model_id": "MOD-d8d9b774aa018655",
+    "manufacturer": "KSN",
+    "model": "KSN-1",
+    "names": [
+      "Antenna Positioner"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-000538"
+    ],
+    "register_numbers": [
+      538
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-8073d6c5ec3d7d45",
+    "model_id": "MOD-8073d6c5ec3d7d45",
+    "manufacturer": "시스템베이스(주)",
+    "model": "BASSO-1010UU/ISO",
+    "names": [
+      "USB Isolator",
+      "USB Isolator #3",
+      "USB Isolator #2",
+      "USB Isolator #1"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-000558",
+      "EQ-000559",
+      "EQ-000560",
+      "EQ-000573",
+      "EQ-000574",
+      "EQ-000575"
+    ],
+    "register_numbers": [
+      558,
+      559,
+      560,
+      573,
+      574,
+      575
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 6
+  },
+  {
+    "item_id": "IDENTITY-EQ-000562",
+    "model_id": null,
+    "manufacturer": "PortSwigger Ltd.",
+    "model": "",
+    "names": [
+      "Burp Suite Pro"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-000562"
+    ],
+    "register_numbers": [
+      562
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4ff68a4f2a826c4b",
+    "model_id": "MOD-4ff68a4f2a826c4b",
+    "manufacturer": "STAUBLI",
+    "model": "TX2-90 XL spe",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-000691",
+      "EQ-000692"
+    ],
+    "register_numbers": [
+      691,
+      692
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-6b92cbf630670c77",
+    "model_id": "MOD-6b92cbf630670c77",
+    "manufacturer": "INNCO Systems",
+    "model": "CO3000-4port",
+    "names": [
+      "Controller"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-000741"
+    ],
+    "register_numbers": [
+      741
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a82bc2052ab62250",
+    "model_id": "MOD-a82bc2052ab62250",
+    "manufacturer": "KEITHLEY",
+    "model": "S46-666612345678",
+    "names": [
+      "RF Switch System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-000848"
+    ],
+    "register_numbers": [
+      848
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-332964178fb65c1a",
+    "model_id": "MOD-332964178fb65c1a",
+    "manufacturer": "SCHWARZBECK",
+    "model": "AM 9144",
+    "names": [
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-000890",
+      "EQ-003227",
+      "EQ-003228"
+    ],
+    "register_numbers": [
+      890,
+      3227,
+      3228
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "IDENTITY-EQ-000923",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "Aegis, Cybellum",
+    "names": [
+      "Aegis, Cybellum"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-000923"
+    ],
+    "register_numbers": [
+      923
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-be678b10e07945b3",
+    "model_id": "MOD-be678b10e07945b3",
+    "manufacturer": "SPARROW",
+    "model": "Sparrow Enterprise",
+    "names": [
+      "Sparrow Enterprise"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-000925"
+    ],
+    "register_numbers": [
+      925
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4e657354694908fa",
+    "model_id": "MOD-4e657354694908fa",
+    "manufacturer": "SPEAG",
+    "model": "DASY5 Server",
+    "names": [
+      "SAR Dasy5 Measurement Server"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-000926"
+    ],
+    "register_numbers": [
+      926
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d37a35355738305f",
+    "model_id": "MOD-d37a35355738305f",
+    "manufacturer": "INNCO Systems",
+    "model": "DS1500-S-1t",
+    "names": [
+      "Turn Table"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-000932"
+    ],
+    "register_numbers": [
+      932
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e9d0be3a16dcaf77",
+    "model_id": "MOD-e9d0be3a16dcaf77",
+    "manufacturer": "MK",
+    "model": "88Q2112",
+    "names": [
+      "optoLAN 100/1000Base-T1"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-000935"
+    ],
+    "register_numbers": [
+      935
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ff013265aaf0c3df",
+    "model_id": "MOD-ff013265aaf0c3df",
+    "manufacturer": "Dualcomm",
+    "model": "ETAP-2003",
+    "names": [
+      "Network TAP"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-000939"
+    ],
+    "register_numbers": [
+      939
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5253bcec678fb924",
+    "model_id": "MOD-5253bcec678fb924",
+    "manufacturer": "DELL",
+    "model": "PowerEdge R660xs",
+    "names": [
+      "Server #5",
+      "Server #4"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-000947",
+      "EQ-000948"
+    ],
+    "register_numbers": [
+      947,
+      948
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-a26e09ce219b7164",
+    "model_id": "MOD-a26e09ce219b7164",
+    "manufacturer": "ASUS",
+    "model": "P5405CSA-NZ0064X",
+    "names": [
+      "Laptop PC #2"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-000949"
+    ],
+    "register_numbers": [
+      949
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c1595c0db6814e16",
+    "model_id": "MOD-c1595c0db6814e16",
+    "manufacturer": "INNCO Systems",
+    "model": "MA4000-EP",
+    "names": [
+      "Antenna Master"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-000985",
+      "EQ-005015"
+    ],
+    "register_numbers": [
+      985,
+      5015
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-1c8ac5afc05b33dd",
+    "model_id": "MOD-1c8ac5afc05b33dd",
+    "manufacturer": "AUTONICS",
+    "model": "TCN4M-24R",
+    "names": [
+      "Temperature controller for Oxygen bomb"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-001044"
+    ],
+    "register_numbers": [
+      1044
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d026f9134f54a672",
+    "model_id": "MOD-d026f9134f54a672",
+    "manufacturer": "INNCO Systems",
+    "model": "AS1700-EP-H",
+    "names": [
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001073",
+      "EQ-001330"
+    ],
+    "register_numbers": [
+      1073,
+      1330
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-53f2b86e7595daea",
+    "model_id": "MOD-53f2b86e7595daea",
+    "manufacturer": "INNCO Systems",
+    "model": "MA2000-EP",
+    "names": [
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001074",
+      "EQ-001331",
+      "EQ-001336"
+    ],
+    "register_numbers": [
+      1074,
+      1331,
+      1336
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-8016b815c89eea54",
+    "model_id": "MOD-8016b815c89eea54",
+    "manufacturer": "AUDIX",
+    "model": "EM1000",
+    "names": [
+      "Turn Table controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-001079",
+      "EQ-001558"
+    ],
+    "register_numbers": [
+      1079,
+      1558
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-001080",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "Turn Table",
+    "names": [
+      "Turn Table"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001080"
+    ],
+    "register_numbers": [
+      1080
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6dba26132154b3e9",
+    "model_id": "MOD-6dba26132154b3e9",
+    "manufacturer": "INNCO Systems",
+    "model": "Turn Table",
+    "names": [
+      "Turn Table"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001083"
+    ],
+    "register_numbers": [
+      1083
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1d6ca3136c88a53c",
+    "model_id": "MOD-1d6ca3136c88a53c",
+    "manufacturer": "HCT",
+    "model": "HRSMS#3(6G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001087"
+    ],
+    "register_numbers": [
+      1087
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-cbe87ffc623c20d3",
+    "model_id": "MOD-cbe87ffc623c20d3",
+    "manufacturer": "HCT",
+    "model": "HRSMS#3(7G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001088"
+    ],
+    "register_numbers": [
+      1088
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f7d9e76a33274f67",
+    "model_id": "MOD-f7d9e76a33274f67",
+    "manufacturer": "HCT",
+    "model": "HRSMS#3(3G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001089"
+    ],
+    "register_numbers": [
+      1089
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5679d725a5004767",
+    "model_id": "MOD-5679d725a5004767",
+    "manufacturer": "HCT",
+    "model": "HRSMS#3(1G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001090"
+    ],
+    "register_numbers": [
+      1090
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-02c20905c1e80e29",
+    "model_id": "MOD-02c20905c1e80e29",
+    "manufacturer": "HCT",
+    "model": "HRSMS#3(THRU+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001091"
+    ],
+    "register_numbers": [
+      1091
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001107",
+    "model_id": null,
+    "manufacturer": "에이플러스테크",
+    "model": "",
+    "names": [
+      "ANTENNA MAST"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001107"
+    ],
+    "register_numbers": [
+      1107
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-89b5929223aea635",
+    "model_id": "MOD-89b5929223aea635",
+    "manufacturer": "HCT",
+    "model": "INPUT3 + 7GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001134"
+    ],
+    "register_numbers": [
+      1134
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c2a44e85e774dfbc",
+    "model_id": "MOD-c2a44e85e774dfbc",
+    "manufacturer": "HCT",
+    "model": "INPUT3 + 6GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001135"
+    ],
+    "register_numbers": [
+      1135
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-3ea53dcc7d009688",
+    "model_id": "MOD-3ea53dcc7d009688",
+    "manufacturer": "HCT",
+    "model": "INPUT3 + 3GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001136"
+    ],
+    "register_numbers": [
+      1136
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0060f27d14c44e6c",
+    "model_id": "MOD-0060f27d14c44e6c",
+    "manufacturer": "HCT",
+    "model": "INPUT3 + 1GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001137"
+    ],
+    "register_numbers": [
+      1137
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fc252ae90fb940b0",
+    "model_id": "MOD-fc252ae90fb940b0",
+    "manufacturer": "HCT",
+    "model": "INPUT3 + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001138"
+    ],
+    "register_numbers": [
+      1138
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-355f07d718db0ceb",
+    "model_id": "MOD-355f07d718db0ceb",
+    "manufacturer": "HCT",
+    "model": "INPUT2 + 7GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001139"
+    ],
+    "register_numbers": [
+      1139
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-39a11bc3f560a860",
+    "model_id": "MOD-39a11bc3f560a860",
+    "manufacturer": "HCT",
+    "model": "INPUT2 + 6GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001140"
+    ],
+    "register_numbers": [
+      1140
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-9e8d754af3763256",
+    "model_id": "MOD-9e8d754af3763256",
+    "manufacturer": "HCT",
+    "model": "INPUT2 + 3GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001141"
+    ],
+    "register_numbers": [
+      1141
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-66a432b2aab9d997",
+    "model_id": "MOD-66a432b2aab9d997",
+    "manufacturer": "HCT",
+    "model": "INPUT2 + 1GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001142"
+    ],
+    "register_numbers": [
+      1142
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-afea88f25606ea6c",
+    "model_id": "MOD-afea88f25606ea6c",
+    "manufacturer": "HCT",
+    "model": "INPUT2 + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001143"
+    ],
+    "register_numbers": [
+      1143
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0317958db318b8b2",
+    "model_id": "MOD-0317958db318b8b2",
+    "manufacturer": "HCT",
+    "model": "INPUT1 + 7GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001144"
+    ],
+    "register_numbers": [
+      1144
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2353e3435d5c26a9",
+    "model_id": "MOD-2353e3435d5c26a9",
+    "manufacturer": "HCT",
+    "model": "INPUT1 + 6GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001145"
+    ],
+    "register_numbers": [
+      1145
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ba8fbbbd66c89d67",
+    "model_id": "MOD-ba8fbbbd66c89d67",
+    "manufacturer": "HCT",
+    "model": "INPUT1 + 3GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001146"
+    ],
+    "register_numbers": [
+      1146
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-8af124cec492f087",
+    "model_id": "MOD-8af124cec492f087",
+    "manufacturer": "HCT",
+    "model": "INPUT1 + 1GHz HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001147"
+    ],
+    "register_numbers": [
+      1147
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b380b3899e8948a6",
+    "model_id": "MOD-b380b3899e8948a6",
+    "manufacturer": "HCT",
+    "model": "INPUT1 + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001148"
+    ],
+    "register_numbers": [
+      1148
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-bead3df1be664895",
+    "model_id": "MOD-bead3df1be664895",
+    "manufacturer": "AR / Amplifier Research",
+    "model": "FI7000",
+    "names": [
+      "Field Probe Interface",
+      "Laser Probe Interface"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-001162",
+      "EQ-001168",
+      "EQ-001196",
+      "EQ-003362",
+      "EQ-004047",
+      "EQ-004378",
+      "EQ-004385",
+      "EQ-004386",
+      "EQ-004807",
+      "EQ-005319",
+      "EQ-006105"
+    ],
+    "register_numbers": [
+      1162,
+      1168,
+      1196,
+      3362,
+      4047,
+      4378,
+      4385,
+      4386,
+      4807,
+      5319,
+      6105
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 11
+  },
+  {
+    "item_id": "MOD-37a540a566aece5d",
+    "model_id": "MOD-37a540a566aece5d",
+    "manufacturer": "KSNet",
+    "model": "Antenna Mast",
+    "names": [
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001310",
+      "EQ-001311",
+      "EQ-001312"
+    ],
+    "register_numbers": [
+      1310,
+      1311,
+      1312
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-6b4cf50f7adb8837",
+    "model_id": "MOD-6b4cf50f7adb8837",
+    "manufacturer": "INNCO Systems",
+    "model": "AS1700-EP",
+    "names": [
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001333"
+    ],
+    "register_numbers": [
+      1333
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0a0d366f3a222de3",
+    "model_id": "MOD-0a0d366f3a222de3",
+    "manufacturer": "HCT",
+    "model": "Input 2 + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001349"
+    ],
+    "register_numbers": [
+      1349
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-121e551f3c6fb992",
+    "model_id": "MOD-121e551f3c6fb992",
+    "manufacturer": "HCT",
+    "model": "input 2 + 6G HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001350"
+    ],
+    "register_numbers": [
+      1350
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-044f3e943404d8e3",
+    "model_id": "MOD-044f3e943404d8e3",
+    "manufacturer": "HCT",
+    "model": "input 2 + 3.3G HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001351"
+    ],
+    "register_numbers": [
+      1351
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5adbb91312032a7a",
+    "model_id": "MOD-5adbb91312032a7a",
+    "manufacturer": "HCT",
+    "model": "Input 2 + 1.2G HPF+LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001352"
+    ],
+    "register_numbers": [
+      1352
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-74c64ce64e2f2c05",
+    "model_id": "MOD-74c64ce64e2f2c05",
+    "manufacturer": "HCT",
+    "model": "Input 1 + 6G HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001353"
+    ],
+    "register_numbers": [
+      1353
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e74c6e30c50c4752",
+    "model_id": "MOD-e74c6e30c50c4752",
+    "manufacturer": "HCT",
+    "model": "Input 1 + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001354"
+    ],
+    "register_numbers": [
+      1354
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5d86fa32c3887635",
+    "model_id": "MOD-5d86fa32c3887635",
+    "manufacturer": "STAUBLI",
+    "model": "TX2-90XL spe",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001428",
+      "EQ-001432"
+    ],
+    "register_numbers": [
+      1428,
+      1432
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-1f6f2b935128bc9c",
+    "model_id": "MOD-1f6f2b935128bc9c",
+    "manufacturer": "INNCO Systems",
+    "model": "DT2000-2t",
+    "names": [
+      "Turn Table"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001506"
+    ],
+    "register_numbers": [
+      1506
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f183d948fc590a8b",
+    "model_id": "MOD-f183d948fc590a8b",
+    "manufacturer": "ETS EMCO",
+    "model": "Model 2090 Multi-Device Controller",
+    "names": [
+      "Turn Table Controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-001555"
+    ],
+    "register_numbers": [
+      1555
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fd30e365c584f013",
+    "model_id": "MOD-fd30e365c584f013",
+    "manufacturer": "ETS",
+    "model": "Turn Table",
+    "names": [
+      "Turn Table"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001556"
+    ],
+    "register_numbers": [
+      1556
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001557",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "Turn Table",
+    "names": [
+      "Turn Table"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001557"
+    ],
+    "register_numbers": [
+      1557
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-001561",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "CO2000",
+    "names": [
+      "Antenna Mast Controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-001561"
+    ],
+    "register_numbers": [
+      1561
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e9a3d2f754c5bccc",
+    "model_id": "MOD-e9a3d2f754c5bccc",
+    "manufacturer": "INNCO Systems",
+    "model": "DS2000-S-1t",
+    "names": [
+      "Turn Table"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001638"
+    ],
+    "register_numbers": [
+      1638
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f2b16dff3342b71c",
+    "model_id": "MOD-f2b16dff3342b71c",
+    "manufacturer": "National Instruments",
+    "model": "GPIB-140B",
+    "names": [
+      "GPIB 버스 확장기"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-001649",
+      "EQ-001650"
+    ],
+    "register_numbers": [
+      1649,
+      1650
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-a8bf4c07b59f5923",
+    "model_id": "MOD-a8bf4c07b59f5923",
+    "manufacturer": "SoundDevices",
+    "model": "USBPre2",
+    "names": [
+      "High resolution audio interface"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-001651",
+      "EQ-003424",
+      "EQ-004089"
+    ],
+    "register_numbers": [
+      1651,
+      3424,
+      4089
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-53f6a5ac78f281d2",
+    "model_id": "MOD-53f6a5ac78f281d2",
+    "manufacturer": "삼성전자(주)",
+    "model": "F27T350FH",
+    "names": [
+      "LED Monitor #2",
+      "LED Monitor #1"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-001654",
+      "EQ-001655"
+    ],
+    "register_numbers": [
+      1654,
+      1655
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-92c4675a4a14f12b",
+    "model_id": "MOD-92c4675a4a14f12b",
+    "manufacturer": "CISCO",
+    "model": "CBS220-24T-4G",
+    "names": [
+      "Switch #1(DNI261200GW)"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001656"
+    ],
+    "register_numbers": [
+      1656
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7e75b9ede62a217d",
+    "model_id": "MOD-7e75b9ede62a217d",
+    "manufacturer": "T&M SYSTEM",
+    "model": "TMX0104C",
+    "names": [
+      "M/W Switch System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001667",
+      "EQ-001668",
+      "EQ-001669",
+      "EQ-001972",
+      "EQ-001973",
+      "EQ-002402",
+      "EQ-002403"
+    ],
+    "register_numbers": [
+      1667,
+      1668,
+      1669,
+      1972,
+      1973,
+      2402,
+      2403
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 7
+  },
+  {
+    "item_id": "MOD-239b350183b957b4",
+    "model_id": "MOD-239b350183b957b4",
+    "manufacturer": "INNCO Systems",
+    "model": "MA4640",
+    "names": [
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-001683",
+      "EQ-001685"
+    ],
+    "register_numbers": [
+      1683,
+      1685
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-a5e3b2887a50b062",
+    "model_id": "MOD-a5e3b2887a50b062",
+    "manufacturer": "EM TEST",
+    "model": "BS 200N100",
+    "names": [
+      "ELECTRONIC SWITCH"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001797",
+      "EQ-001798",
+      "EQ-002851",
+      "EQ-002852",
+      "EQ-002853",
+      "EQ-003063",
+      "EQ-003064"
+    ],
+    "register_numbers": [
+      1797,
+      1798,
+      2851,
+      2852,
+      2853,
+      3063,
+      3064
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 7
+  },
+  {
+    "item_id": "MOD-dd9ec0a58e2c2370",
+    "model_id": "MOD-dd9ec0a58e2c2370",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(3M_THRU)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001813"
+    ],
+    "register_numbers": [
+      1813
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c7a00e04beb4146d",
+    "model_id": "MOD-c7a00e04beb4146d",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(1M_THRU)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001814"
+    ],
+    "register_numbers": [
+      1814
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6793b4863eb25273",
+    "model_id": "MOD-6793b4863eb25273",
+    "manufacturer": "VECTOR",
+    "model": "VN1640A",
+    "names": [
+      "CAN/LIN Network Interface"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-001828",
+      "EQ-001829"
+    ],
+    "register_numbers": [
+      1828,
+      1829
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-001840",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Leakage Current Switch Box"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001840"
+    ],
+    "register_numbers": [
+      1840
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e5707969a738a889",
+    "model_id": "MOD-e5707969a738a889",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(3M_7G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001844"
+    ],
+    "register_numbers": [
+      1844
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5649e3a4a89a1b42",
+    "model_id": "MOD-5649e3a4a89a1b42",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(8G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001845"
+    ],
+    "register_numbers": [
+      1845
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a03446ab2f888193",
+    "model_id": "MOD-a03446ab2f888193",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(3M_6G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001846"
+    ],
+    "register_numbers": [
+      1846
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-24133b168218f3de",
+    "model_id": "MOD-24133b168218f3de",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(7G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001847"
+    ],
+    "register_numbers": [
+      1847
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-13f3d7c5126af7bc",
+    "model_id": "MOD-13f3d7c5126af7bc",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(3M_3G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001848"
+    ],
+    "register_numbers": [
+      1848
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-771162a28f152dbf",
+    "model_id": "MOD-771162a28f152dbf",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(3G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001849"
+    ],
+    "register_numbers": [
+      1849
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-cca805bb273df01d",
+    "model_id": "MOD-cca805bb273df01d",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(3M_1G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001850"
+    ],
+    "register_numbers": [
+      1850
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-016e71e77234112d",
+    "model_id": "MOD-016e71e77234112d",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(1G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001851"
+    ],
+    "register_numbers": [
+      1851
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a197e1e116198f83",
+    "model_id": "MOD-a197e1e116198f83",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(3M_THRU+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001852"
+    ],
+    "register_numbers": [
+      1852
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-da62dbd28f877c09",
+    "model_id": "MOD-da62dbd28f877c09",
+    "manufacturer": "HCT",
+    "model": "SM-R-604(THRU+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-001853"
+    ],
+    "register_numbers": [
+      1853
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-bb80edc3062df20f",
+    "model_id": "MOD-bb80edc3062df20f",
+    "manufacturer": "TESEO",
+    "model": "OBE-LIN",
+    "names": [
+      "LIN Convertor"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-001854",
+      "EQ-001855",
+      "EQ-002789",
+      "EQ-002790"
+    ],
+    "register_numbers": [
+      1854,
+      1855,
+      2789,
+      2790
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-6333b2439c316af4",
+    "model_id": "MOD-6333b2439c316af4",
+    "manufacturer": "INNCO Systems",
+    "model": "CO2000",
+    "names": [
+      "Turn Table controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002007",
+      "EQ-002009"
+    ],
+    "register_numbers": [
+      2007,
+      2009
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-002013",
+    "model_id": null,
+    "manufacturer": "에이플러스테크",
+    "model": "",
+    "names": [
+      "로봇팔 테이블"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-002013"
+    ],
+    "register_numbers": [
+      2013
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-002014",
+    "model_id": null,
+    "manufacturer": "에이플러스테크",
+    "model": "",
+    "names": [
+      "로봇팔 테이블"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-002014"
+    ],
+    "register_numbers": [
+      2014
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-575fe30d0e29065c",
+    "model_id": "MOD-575fe30d0e29065c",
+    "manufacturer": "(주)시원인터내셔널",
+    "model": "SW-AM-1.5",
+    "names": [
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-002053"
+    ],
+    "register_numbers": [
+      2053
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-06cc03c125adf25b",
+    "model_id": "MOD-06cc03c125adf25b",
+    "manufacturer": "STAUBLI",
+    "model": "MP6B-TX90XL",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-002127",
+      "EQ-002129",
+      "EQ-002131",
+      "EQ-004821",
+      "EQ-004840"
+    ],
+    "register_numbers": [
+      2127,
+      2129,
+      2131,
+      4821,
+      4840
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 5
+  },
+  {
+    "item_id": "MOD-712ff154617090eb",
+    "model_id": "MOD-712ff154617090eb",
+    "manufacturer": "STAUBLI",
+    "model": "CS8C",
+    "names": [
+      "Staubli Robot Controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002128",
+      "EQ-002130",
+      "EQ-002132",
+      "EQ-003155",
+      "EQ-003350",
+      "EQ-004835",
+      "EQ-004837",
+      "EQ-005073",
+      "EQ-005173",
+      "EQ-005187"
+    ],
+    "register_numbers": [
+      2128,
+      2130,
+      2132,
+      3155,
+      3350,
+      4835,
+      4837,
+      5073,
+      5173,
+      5187
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 10
+  },
+  {
+    "item_id": "MOD-1f80368739d6fee1",
+    "model_id": "MOD-1f80368739d6fee1",
+    "manufacturer": "STAUBLI",
+    "model": "CS8Cspeag-TX60L",
+    "names": [
+      "Staubli Robot Controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002133",
+      "EQ-002429"
+    ],
+    "register_numbers": [
+      2133,
+      2429
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-002303",
+    "model_id": null,
+    "manufacturer": "SCM Technology",
+    "model": "",
+    "names": [
+      "Leakage Current Switch Box"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-002303"
+    ],
+    "register_numbers": [
+      2303
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4e982a8482cccc63",
+    "model_id": "MOD-4e982a8482cccc63",
+    "manufacturer": "MK",
+    "model": "optoCAN-FD",
+    "names": [
+      "optoCAN-FD"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-002338",
+      "EQ-002339"
+    ],
+    "register_numbers": [
+      2338,
+      2339
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-63f1ef9a4991213d",
+    "model_id": "MOD-63f1ef9a4991213d",
+    "manufacturer": "STAUBLI",
+    "model": "SP1",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002428"
+    ],
+    "register_numbers": [
+      2428
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-dc524c644f7bdbd6",
+    "model_id": "MOD-dc524c644f7bdbd6",
+    "manufacturer": "STAUBLI",
+    "model": "TX-60 L spe",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-002430"
+    ],
+    "register_numbers": [
+      2430
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c34930ad8e74c908",
+    "model_id": "MOD-c34930ad8e74c908",
+    "manufacturer": "인스조이",
+    "model": "TMX0108",
+    "names": [
+      "RF Switch System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-002525"
+    ],
+    "register_numbers": [
+      2525
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-483d6635ac5bb0ab",
+    "model_id": "MOD-483d6635ac5bb0ab",
+    "manufacturer": "인스조이",
+    "model": "TMX0132C",
+    "names": [
+      "RF Switch System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-002526",
+      "EQ-003475",
+      "EQ-004195",
+      "EQ-004196"
+    ],
+    "register_numbers": [
+      2526,
+      3475,
+      4195,
+      4196
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-528b6e53cf665c56",
+    "model_id": "MOD-528b6e53cf665c56",
+    "manufacturer": "DELL",
+    "model": "PowerEdge r240",
+    "names": [
+      "Server #3 (1ZJ2MF3)",
+      "Server #2 (JYJ2MF3)",
+      "Server #1 (GYJ2MF3)"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-002599",
+      "EQ-002600",
+      "EQ-002601"
+    ],
+    "register_numbers": [
+      2599,
+      2600,
+      2601
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-dc0fb1154970e95e",
+    "model_id": "MOD-dc0fb1154970e95e",
+    "manufacturer": "DELL",
+    "model": "inspirion 15 7590",
+    "names": [
+      "Laptop PC #1 (2QTT103)"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-002602"
+    ],
+    "register_numbers": [
+      2602
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6ebb82a25a3253d3",
+    "model_id": "MOD-6ebb82a25a3253d3",
+    "manufacturer": "DELL",
+    "model": "inspiron 3891",
+    "names": [
+      "DeskTop PC #4 (2YDQSH3)",
+      "DeskTop PC #3 (B4C7ZH3)",
+      "DeskTop PC #2 (3YDQSH3)",
+      "DeskTop PC #1 (65C7ZH3)"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-002603",
+      "EQ-002604",
+      "EQ-002605",
+      "EQ-002606"
+    ],
+    "register_numbers": [
+      2603,
+      2604,
+      2605,
+      2606
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-6f4d2f3e9b7f1f79",
+    "model_id": "MOD-6f4d2f3e9b7f1f79",
+    "manufacturer": "ASUS",
+    "model": "GT-AXE11000",
+    "names": [
+      "Router"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-002618"
+    ],
+    "register_numbers": [
+      2618
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b37435014fa9d46a",
+    "model_id": "MOD-b37435014fa9d46a",
+    "manufacturer": "Hanyoung Nux",
+    "model": "NX3-02",
+    "names": [
+      "Lamp Controller"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002622"
+    ],
+    "register_numbers": [
+      2622
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-25a0acffff541a5c",
+    "model_id": "MOD-25a0acffff541a5c",
+    "manufacturer": "STAUBLI",
+    "model": "SP2 D21144507C",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002630",
+      "EQ-002632"
+    ],
+    "register_numbers": [
+      2630,
+      2632
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-6c8893f45380be54",
+    "model_id": "MOD-6c8893f45380be54",
+    "manufacturer": "STAUBLI",
+    "model": "CS9spe-TX2-60",
+    "names": [
+      "Staubli Robot Controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002631",
+      "EQ-002635"
+    ],
+    "register_numbers": [
+      2631,
+      2635
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-339ef605fdf59194",
+    "model_id": "MOD-339ef605fdf59194",
+    "manufacturer": "STAUBLI",
+    "model": "TX2-60 L spe",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-002633",
+      "EQ-002637"
+    ],
+    "register_numbers": [
+      2633,
+      2637
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-220b5e383f8af22f",
+    "model_id": "MOD-220b5e383f8af22f",
+    "manufacturer": "iBlue (CTTL)",
+    "model": "RTSB-A",
+    "names": [
+      "Control equipment of test system"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002677"
+    ],
+    "register_numbers": [
+      2677
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-0942372e6bc67cda",
+    "model_id": "MOD-0942372e6bc67cda",
+    "manufacturer": "LG Electronics",
+    "model": "17Z90N-VA76K",
+    "names": [
+      "Control equipment of test system"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002678",
+      "EQ-002679",
+      "EQ-002680",
+      "EQ-002681"
+    ],
+    "register_numbers": [
+      2678,
+      2679,
+      2680,
+      2681
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-636905eda793dda8",
+    "model_id": "MOD-636905eda793dda8",
+    "manufacturer": "Acoustics Engineering",
+    "model": "E7515-60023",
+    "names": [
+      "USB Audio Interface"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-002729"
+    ],
+    "register_numbers": [
+      2729
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-2da241fc3e8fc7a4",
+    "model_id": "MOD-2da241fc3e8fc7a4",
+    "manufacturer": "EM TEST",
+    "model": "AUTO WAVE",
+    "names": [
+      "AUTO WAVE CONTROL"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002756",
+      "EQ-002757",
+      "EQ-004953",
+      "EQ-005457",
+      "EQ-005458"
+    ],
+    "register_numbers": [
+      2756,
+      2757,
+      4953,
+      5457,
+      5458
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 5
+  },
+  {
+    "item_id": "MOD-2e175febab9f1ac9",
+    "model_id": "MOD-2e175febab9f1ac9",
+    "manufacturer": "SPIRENT",
+    "model": "SR5048L",
+    "names": [
+      "Test Configuration Unit"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002774"
+    ],
+    "register_numbers": [
+      2774
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-207e69830324252e",
+    "model_id": "MOD-207e69830324252e",
+    "manufacturer": "ETS-Lindgren",
+    "model": "2090",
+    "names": [
+      "Multi-device Positioning Controller",
+      "Positioning Controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002778",
+      "EQ-002784",
+      "EQ-006172"
+    ],
+    "register_numbers": [
+      2778,
+      2784,
+      6172
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-a57319e572a6db26",
+    "model_id": "MOD-a57319e572a6db26",
+    "manufacturer": "MK",
+    "model": "U2/12-1M",
+    "names": [
+      "Analog Optic Convertor"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-002905",
+      "EQ-002906"
+    ],
+    "register_numbers": [
+      2905,
+      2906
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-8bfdc0f65f8feba4",
+    "model_id": "MOD-8bfdc0f65f8feba4",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSM-01B (FBSR-06B용)",
+    "names": [
+      "Main Controller Unit"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002909"
+    ],
+    "register_numbers": [
+      2909
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-9ffa39f73758e4aa",
+    "model_id": "MOD-9ffa39f73758e4aa",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-06B (LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-002921"
+    ],
+    "register_numbers": [
+      2921
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-899d580f5ea035a5",
+    "model_id": "MOD-899d580f5ea035a5",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-06B (6G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-002922"
+    ],
+    "register_numbers": [
+      2922
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-035eec9d9ef19c9a",
+    "model_id": "MOD-035eec9d9ef19c9a",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-06B (3G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-002923"
+    ],
+    "register_numbers": [
+      2923
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f9c157407bfc800f",
+    "model_id": "MOD-f9c157407bfc800f",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-06B (1G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-002924"
+    ],
+    "register_numbers": [
+      2924
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ae30f480979980d2",
+    "model_id": "MOD-ae30f480979980d2",
+    "manufacturer": "INNCO Systems",
+    "model": "MA4640/800-XP-EP",
+    "names": [
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-002925"
+    ],
+    "register_numbers": [
+      2925
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4870ef3ac6a1737f",
+    "model_id": "MOD-4870ef3ac6a1737f",
+    "manufacturer": "Litepoint",
+    "model": "IQ5631",
+    "names": [
+      "Power and Delay Control Module"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002955"
+    ],
+    "register_numbers": [
+      2955
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f153026124f29923",
+    "model_id": "MOD-f153026124f29923",
+    "manufacturer": "Advantech",
+    "model": "IPC-610-H",
+    "names": [
+      "Control equipment of test system"
+    ],
+    "categories": [
+      "system_controller"
+    ],
+    "equipment_ids": [
+      "EQ-002979"
+    ],
+    "register_numbers": [
+      2979
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-760782227b0ac7bc",
+    "model_id": "MOD-760782227b0ac7bc",
+    "manufacturer": "BT SIG",
+    "model": "PTS dongle",
+    "names": [
+      "PTS dongle"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-003005",
+      "EQ-003006",
+      "EQ-003007",
+      "EQ-003008",
+      "EQ-003009"
+    ],
+    "register_numbers": [
+      3005,
+      3006,
+      3007,
+      3008,
+      3009
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 5
+  },
+  {
+    "item_id": "MOD-6d2894c2536e9d71",
+    "model_id": "MOD-6d2894c2536e9d71",
+    "manufacturer": "TNM System",
+    "model": "TMX0108",
+    "names": [
+      "RF Switch System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003105"
+    ],
+    "register_numbers": [
+      3105
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ad88d0ddbf0473a6",
+    "model_id": "MOD-ad88d0ddbf0473a6",
+    "manufacturer": "KEITHLEY",
+    "model": "S46-SV11",
+    "names": [
+      "RF Switch System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003106"
+    ],
+    "register_numbers": [
+      3106
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-320074c350715108",
+    "model_id": "MOD-320074c350715108",
+    "manufacturer": "티앤엠시스템",
+    "model": "TMX0132C4T",
+    "names": [
+      "RF Switch System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003107"
+    ],
+    "register_numbers": [
+      3107
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-836c3a59761861dd",
+    "model_id": "MOD-836c3a59761861dd",
+    "manufacturer": "VECTOR",
+    "model": "VN1630A",
+    "names": [
+      "CAN/LIN Network interface"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-003137",
+      "EQ-003138"
+    ],
+    "register_numbers": [
+      3137,
+      3138
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-dfdf08d1e8606eb4",
+    "model_id": "MOD-dfdf08d1e8606eb4",
+    "manufacturer": "STAUBLI",
+    "model": "SP1 D21142608A",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-003154"
+    ],
+    "register_numbers": [
+      3154
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-837fb21fed06e8f8",
+    "model_id": "MOD-837fb21fed06e8f8",
+    "manufacturer": "STAUBLI",
+    "model": "MPE6E-TX60L",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-003163"
+    ],
+    "register_numbers": [
+      3163
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6534b7303dbc83ed",
+    "model_id": "MOD-6534b7303dbc83ed",
+    "manufacturer": "티앤엠시스템",
+    "model": "FBSM-01B",
+    "names": [
+      "RF Amplifier & Filter Bank Switch Controller"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003172"
+    ],
+    "register_numbers": [
+      3172
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-61030411b28dd45d",
+    "model_id": "MOD-61030411b28dd45d",
+    "manufacturer": "EM TEST",
+    "model": "INA 2141",
+    "names": [
+      "INDUCTION COIL INTERFACE"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-003183"
+    ],
+    "register_numbers": [
+      3183
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a6a8bbeb2be48c88",
+    "model_id": "MOD-a6a8bbeb2be48c88",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-04C(Thru)",
+    "names": [
+      "RF SWITCHING SYSTEM"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003185"
+    ],
+    "register_numbers": [
+      3185
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e5840d8d0d969d1e",
+    "model_id": "MOD-e5840d8d0d969d1e",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-04C(7G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003186"
+    ],
+    "register_numbers": [
+      3186
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6cfd4000e8b6bed5",
+    "model_id": "MOD-6cfd4000e8b6bed5",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-04C(LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003187"
+    ],
+    "register_numbers": [
+      3187
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6b05af2437b89d7d",
+    "model_id": "MOD-6b05af2437b89d7d",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-04C(3dB ATT+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003188"
+    ],
+    "register_numbers": [
+      3188
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-84f68c0d79acf664",
+    "model_id": "MOD-84f68c0d79acf664",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-04C(10dB ATT+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003189"
+    ],
+    "register_numbers": [
+      3189
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c137ef79aed649d6",
+    "model_id": "MOD-c137ef79aed649d6",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-04C",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003190"
+    ],
+    "register_numbers": [
+      3190
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6e5728ebd9a505c3",
+    "model_id": "MOD-6e5728ebd9a505c3",
+    "manufacturer": "TNM System",
+    "model": "FBSM-01B",
+    "names": [
+      "RF Amplifier & Filter Bank Switch Controller"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003191"
+    ],
+    "register_numbers": [
+      3191
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-d0331218fc2d2d23",
+    "model_id": "MOD-d0331218fc2d2d23",
+    "manufacturer": "STAUBLI",
+    "model": "SP1 D21143300",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-003348"
+    ],
+    "register_numbers": [
+      3348
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-8d29e78ac34507df",
+    "model_id": "MOD-8d29e78ac34507df",
+    "manufacturer": "STAUBLI",
+    "model": "MP6E-TX90XL",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-003351"
+    ],
+    "register_numbers": [
+      3351
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-adcbbe23e4f7a464",
+    "model_id": "MOD-adcbbe23e4f7a464",
+    "manufacturer": "DELL",
+    "model": "Dell OptiPlex 3070 Minitower",
+    "names": [
+      "SAR system control PC"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-003393",
+      "EQ-003394",
+      "EQ-003395",
+      "EQ-003396"
+    ],
+    "register_numbers": [
+      3393,
+      3394,
+      3395,
+      3396
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-e6cb0c82c5fa5ecd",
+    "model_id": "MOD-e6cb0c82c5fa5ecd",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-04B (LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003445"
+    ],
+    "register_numbers": [
+      3445
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-3839445aeef24fc3",
+    "model_id": "MOD-3839445aeef24fc3",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-04B (7G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003447"
+    ],
+    "register_numbers": [
+      3447
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-4b0e651f9e3efa64",
+    "model_id": "MOD-4b0e651f9e3efa64",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-04B (3dB ATT+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003448"
+    ],
+    "register_numbers": [
+      3448
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7dc3ffe81568c258",
+    "model_id": "MOD-7dc3ffe81568c258",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-04B (3G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003449"
+    ],
+    "register_numbers": [
+      3449
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fcb808cff2596a64",
+    "model_id": "MOD-fcb808cff2596a64",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-04B (10dB ATT+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003450"
+    ],
+    "register_numbers": [
+      3450
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-3898b94bc876975e",
+    "model_id": "MOD-3898b94bc876975e",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-05B (Thru)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003493"
+    ],
+    "register_numbers": [
+      3493
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a1177503908c280d",
+    "model_id": "MOD-a1177503908c280d",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-05B (3dB ATT+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003494"
+    ],
+    "register_numbers": [
+      3494
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-9084fc7d64fc1856",
+    "model_id": "MOD-9084fc7d64fc1856",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-05B (10dB ATT+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003495"
+    ],
+    "register_numbers": [
+      3495
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e61e4106c870ab44",
+    "model_id": "MOD-e61e4106c870ab44",
+    "manufacturer": "VECTOR",
+    "model": "VN1640",
+    "names": [
+      "CANoe_VN1640A"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-003525",
+      "EQ-003526",
+      "EQ-003527",
+      "EQ-003528"
+    ],
+    "register_numbers": [
+      3525,
+      3526,
+      3527,
+      3528
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-1183928a970800db",
+    "model_id": "MOD-1183928a970800db",
+    "manufacturer": "대경엔지니어링",
+    "model": "Foot Switch Pressure Surface",
+    "names": [
+      "Foot Switch Pressure Surface"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003556"
+    ],
+    "register_numbers": [
+      3556
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c6502e39a122bcf5",
+    "model_id": "MOD-c6502e39a122bcf5",
+    "manufacturer": "E&R",
+    "model": "OSP220",
+    "names": [
+      "Open switch and control unit"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003769",
+      "EQ-003770"
+    ],
+    "register_numbers": [
+      3769,
+      3770
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-b9b244d2e58a93df",
+    "model_id": "MOD-b9b244d2e58a93df",
+    "manufacturer": "HCT",
+    "model": "Input 1 + 3.3G HPF + LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003801"
+    ],
+    "register_numbers": [
+      3801
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-5855a423fea8c673",
+    "model_id": "MOD-5855a423fea8c673",
+    "manufacturer": "HCT",
+    "model": "Input 1 + 1.2G HPF+LNA",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003802"
+    ],
+    "register_numbers": [
+      3802
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-003967",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "",
+    "names": [
+      "Antenna Master"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-003967"
+    ],
+    "register_numbers": [
+      3967
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-003968",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "",
+    "names": [
+      "Antenna Master"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-003968"
+    ],
+    "register_numbers": [
+      3968
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-257158c97bb8c52e",
+    "model_id": "MOD-257158c97bb8c52e",
+    "manufacturer": "EM TEST",
+    "model": "BSM 200N40",
+    "names": [
+      "SWITCH"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-003998",
+      "EQ-003999",
+      "EQ-004000",
+      "EQ-004001"
+    ],
+    "register_numbers": [
+      3998,
+      3999,
+      4000,
+      4001
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-5d7888c064224c1e",
+    "model_id": "MOD-5d7888c064224c1e",
+    "manufacturer": "TDK",
+    "model": "PP-02",
+    "names": [
+      "X-Y Positioner"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-004086"
+    ],
+    "register_numbers": [
+      4086
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-af8528a993701f9b",
+    "model_id": "MOD-af8528a993701f9b",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-03A (10dB ATT+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-004097"
+    ],
+    "register_numbers": [
+      4097
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e5b236385cd2e132",
+    "model_id": "MOD-e5b236385cd2e132",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-03A (3G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-004098"
+    ],
+    "register_numbers": [
+      4098
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fb313b674eee5ac6",
+    "model_id": "MOD-fb313b674eee5ac6",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-03A (3dB ATT+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-004099"
+    ],
+    "register_numbers": [
+      4099
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a40c7e9f39691889",
+    "model_id": "MOD-a40c7e9f39691889",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-03A (7G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-004100"
+    ],
+    "register_numbers": [
+      4100
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a0e7a84b7ebece1d",
+    "model_id": "MOD-a0e7a84b7ebece1d",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-03A (Thru)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-004101"
+    ],
+    "register_numbers": [
+      4101
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-004311",
+    "model_id": null,
+    "manufacturer": "JFM Engineering",
+    "model": "",
+    "names": [
+      "Turn table for IP Test"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-004311"
+    ],
+    "register_numbers": [
+      4311
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7d4bc9fd478b0449",
+    "model_id": "MOD-7d4bc9fd478b0449",
+    "manufacturer": "TDK",
+    "model": "SI-300",
+    "names": [
+      "System Interface",
+      "Field Probe monitor"
+    ],
+    "categories": [
+      "interface",
+      "sar"
+    ],
+    "equipment_ids": [
+      "EQ-004375",
+      "EQ-004376",
+      "EQ-004383",
+      "EQ-004384",
+      "EQ-005489",
+      "EQ-005919",
+      "EQ-006104",
+      "EQ-006118"
+    ],
+    "register_numbers": [
+      4375,
+      4376,
+      4383,
+      4384,
+      5489,
+      5919,
+      6104,
+      6118
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 8
+  },
+  {
+    "item_id": "MOD-bea24d8476417dcd",
+    "model_id": "MOD-bea24d8476417dcd",
+    "manufacturer": "National Instruments",
+    "model": "GPIB-140A",
+    "names": [
+      "GPIB Extender"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-004377",
+      "EQ-006211"
+    ],
+    "register_numbers": [
+      4377,
+      6211
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "IDENTITY-EQ-004420",
+    "model_id": null,
+    "manufacturer": "",
+    "model": "",
+    "names": [
+      "SAR system control PC"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-004420"
+    ],
+    "register_numbers": [
+      4420
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-623a6f778e08d927",
+    "model_id": "MOD-623a6f778e08d927",
+    "manufacturer": "LG",
+    "model": "B70EV",
+    "names": [
+      "SAR system control PC"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-004421",
+      "EQ-004422"
+    ],
+    "register_numbers": [
+      4421,
+      4422
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-b0e09f90f6a4ebcc",
+    "model_id": "MOD-b0e09f90f6a4ebcc",
+    "manufacturer": "EMC TOOL",
+    "model": "HIGH SPEED CAN",
+    "names": [
+      "HIGH SPEED CAN"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-004437",
+      "EQ-004438"
+    ],
+    "register_numbers": [
+      4437,
+      4438
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-0d3bd102d42db503",
+    "model_id": "MOD-0d3bd102d42db503",
+    "manufacturer": "STAUBLI",
+    "model": "SP1 D21142606B",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-004823",
+      "EQ-004830"
+    ],
+    "register_numbers": [
+      4823,
+      4830
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-a633a7aeadf0780b",
+    "model_id": "MOD-a633a7aeadf0780b",
+    "manufacturer": "Kvaser",
+    "model": "Kvaser USBcan Pro 2xHS v2",
+    "names": [
+      "USB can"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-004895",
+      "EQ-004898"
+    ],
+    "register_numbers": [
+      4895,
+      4898
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-4a8f96ff2f78e222",
+    "model_id": "MOD-4a8f96ff2f78e222",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-05B (3G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-004925"
+    ],
+    "register_numbers": [
+      4925
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ed43874ed74997fd",
+    "model_id": "MOD-ed43874ed74997fd",
+    "manufacturer": "SPIRENT",
+    "model": "CISCO 1811",
+    "names": [
+      "GPS System Router"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-004928"
+    ],
+    "register_numbers": [
+      4928
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-285c7a2e13d94702",
+    "model_id": "MOD-285c7a2e13d94702",
+    "manufacturer": "INCCO SYSTEMS GmbH",
+    "model": "MA 4000-XP-ET",
+    "names": [
+      "Antenna Mast"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-004961"
+    ],
+    "register_numbers": [
+      4961
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-7622702cd1a1955c",
+    "model_id": "MOD-7622702cd1a1955c",
+    "manufacturer": "INNCO Systems",
+    "model": "DT3000-3t",
+    "names": [
+      "Turn Table"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005014"
+    ],
+    "register_numbers": [
+      5014
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005029",
+    "model_id": null,
+    "manufacturer": "STAUBLI",
+    "model": "",
+    "names": [
+      "Remote Power Switch"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005029"
+    ],
+    "register_numbers": [
+      5029
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-126b5808776dbbd7",
+    "model_id": "MOD-126b5808776dbbd7",
+    "manufacturer": "STAUBLI",
+    "model": "TX90 XL",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005053",
+      "EQ-005072",
+      "EQ-005186"
+    ],
+    "register_numbers": [
+      5053,
+      5072,
+      5186
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "MOD-396926b95cffbb45",
+    "model_id": "MOD-396926b95cffbb45",
+    "manufacturer": "STAUBLI",
+    "model": "SP1 D21142603",
+    "names": [
+      "Joystick"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-005054",
+      "EQ-005188"
+    ],
+    "register_numbers": [
+      5054,
+      5188
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-a80216d1446f43dc",
+    "model_id": "MOD-a80216d1446f43dc",
+    "manufacturer": "STAUBLI",
+    "model": "RX60B L",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005061"
+    ],
+    "register_numbers": [
+      5061
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-518920612766ca86",
+    "model_id": "MOD-518920612766ca86",
+    "manufacturer": "STAUBLI",
+    "model": "CS7MB",
+    "names": [
+      "Staubli Robot Controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-005062",
+      "EQ-005127",
+      "EQ-005199",
+      "EQ-005292"
+    ],
+    "register_numbers": [
+      5062,
+      5127,
+      5199,
+      5292
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-9aa02ef29b067d23",
+    "model_id": "MOD-9aa02ef29b067d23",
+    "manufacturer": "SPEAG",
+    "model": "Joystick",
+    "names": [
+      "Staubli Teach Pendant"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-005063"
+    ],
+    "register_numbers": [
+      5063
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005065",
+    "model_id": null,
+    "manufacturer": "(주)컴퓨존",
+    "model": "",
+    "names": [
+      "SAR system control PC"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-005065"
+    ],
+    "register_numbers": [
+      5065
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c8ba825f6d289edf",
+    "model_id": "MOD-c8ba825f6d289edf",
+    "manufacturer": "STAUBLI",
+    "model": "TX60",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005069"
+    ],
+    "register_numbers": [
+      5069
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-42722982c903aff9",
+    "model_id": "MOD-42722982c903aff9",
+    "manufacturer": "DELL",
+    "model": "Alilenware",
+    "names": [
+      "DAKS Notebook"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-005113"
+    ],
+    "register_numbers": [
+      5113
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1a25f3033bd903fc",
+    "model_id": "MOD-1a25f3033bd903fc",
+    "manufacturer": "STAUBLI",
+    "model": "Joystick",
+    "names": [
+      "Staubli Teach Pendant"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-005128",
+      "EQ-005200",
+      "EQ-005230"
+    ],
+    "register_numbers": [
+      5128,
+      5200,
+      5230
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "IDENTITY-EQ-005141",
+    "model_id": null,
+    "manufacturer": "STAUBLI",
+    "model": "",
+    "names": [
+      "Remote Power Switch"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005141"
+    ],
+    "register_numbers": [
+      5141
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "IDENTITY-EQ-005175",
+    "model_id": null,
+    "manufacturer": "SPEAG",
+    "model": "",
+    "names": [
+      "SAR system control PC"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-005175"
+    ],
+    "register_numbers": [
+      5175
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-da398bf280eb0cef",
+    "model_id": "MOD-da398bf280eb0cef",
+    "manufacturer": "STAUBLI",
+    "model": "RX90B L",
+    "names": [
+      "Staubli Robot"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005198",
+      "EQ-005229",
+      "EQ-005259"
+    ],
+    "register_numbers": [
+      5198,
+      5229,
+      5259
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 3
+  },
+  {
+    "item_id": "IDENTITY-EQ-005208",
+    "model_id": null,
+    "manufacturer": "STAUBLI",
+    "model": "",
+    "names": [
+      "Remote Power Switch"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005208"
+    ],
+    "register_numbers": [
+      5208
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-9bbebaf5a29e281d",
+    "model_id": "MOD-9bbebaf5a29e281d",
+    "manufacturer": "DELL",
+    "model": "OPTIPLEX 990",
+    "names": [
+      "SAR system control PC"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-005272"
+    ],
+    "register_numbers": [
+      5272
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-8f08956414b84f81",
+    "model_id": "MOD-8f08956414b84f81",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-01B (7G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005297"
+    ],
+    "register_numbers": [
+      5297
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c1d02fe36c9dc7a0",
+    "model_id": "MOD-c1d02fe36c9dc7a0",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-05B (LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005382"
+    ],
+    "register_numbers": [
+      5382
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-377eba03f43977c0",
+    "model_id": "MOD-377eba03f43977c0",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FMSR-05B (7G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005383",
+      "EQ-006081"
+    ],
+    "register_numbers": [
+      5383,
+      6081
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-5b6aee403f6e24ce",
+    "model_id": "MOD-5b6aee403f6e24ce",
+    "manufacturer": "Elex Polytech",
+    "model": "TC60601-MD",
+    "names": [
+      "MD Switch BOX"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005393"
+    ],
+    "register_numbers": [
+      5393
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f43fbbb3313f648c",
+    "model_id": "MOD-f43fbbb3313f648c",
+    "manufacturer": "ETS-Lindgren",
+    "model": "2092",
+    "names": [
+      "MAPS positioner"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005396"
+    ],
+    "register_numbers": [
+      5396
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b24fb42ecea894c7",
+    "model_id": "MOD-b24fb42ecea894c7",
+    "manufacturer": "HD",
+    "model": "KMS560",
+    "names": [
+      "Slide Bar"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005417"
+    ],
+    "register_numbers": [
+      5417
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fb3e5a556af39432",
+    "model_id": "MOD-fb3e5a556af39432",
+    "manufacturer": "ADLINK",
+    "model": "3035C",
+    "names": [
+      "PXI"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-005426"
+    ],
+    "register_numbers": [
+      5426
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-e8c37c6513eddc8f",
+    "model_id": "MOD-e8c37c6513eddc8f",
+    "manufacturer": "AFJ INSTRUMENTS",
+    "model": "SW04",
+    "names": [
+      "SWITCHING OPERATION BOX"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005463"
+    ],
+    "register_numbers": [
+      5463
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-c4b4c04d80a8ce99",
+    "model_id": "MOD-c4b4c04d80a8ce99",
+    "manufacturer": "INNCO Systems",
+    "model": "AS2000-PP",
+    "names": [
+      "Antenna Master"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005465"
+    ],
+    "register_numbers": [
+      5465
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-b510871fe49bf859",
+    "model_id": "MOD-b510871fe49bf859",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-01B (THRU+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005469"
+    ],
+    "register_numbers": [
+      5469
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1eec9020b11888ce",
+    "model_id": "MOD-1eec9020b11888ce",
+    "manufacturer": "T&M SYSTEM",
+    "model": "FBSR-01B (3G HPF+LNA)",
+    "names": [
+      "RF Switching System"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005568"
+    ],
+    "register_numbers": [
+      5568
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fbe248a126f836e3",
+    "model_id": "MOD-fbe248a126f836e3",
+    "manufacturer": "ETS-Lindgren",
+    "model": "2115",
+    "names": [
+      "Medium-duty Positioner"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005571"
+    ],
+    "register_numbers": [
+      5571
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1157576cbd9a97de",
+    "model_id": "MOD-1157576cbd9a97de",
+    "manufacturer": "National Instruments",
+    "model": "GPIB-USB-HS",
+    "names": [
+      "GPIB Controller",
+      "GPIB-USB-HS"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-005577",
+      "EQ-005608",
+      "EQ-005809",
+      "EQ-006216"
+    ],
+    "register_numbers": [
+      5577,
+      5608,
+      5809,
+      6216
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 4
+  },
+  {
+    "item_id": "MOD-3119272d5b516e9f",
+    "model_id": "MOD-3119272d5b516e9f",
+    "manufacturer": "National Instruments",
+    "model": "GPIB-140A, EU",
+    "names": [
+      "GPIB Extender"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-005615"
+    ],
+    "register_numbers": [
+      5615
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-87cc4ecabe0ed6ad",
+    "model_id": "MOD-87cc4ecabe0ed6ad",
+    "manufacturer": "Amplifer Research",
+    "model": "PP-01",
+    "names": [
+      "PROBE POSITIONER"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-005684"
+    ],
+    "register_numbers": [
+      5684
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-a11d1935290dd4d5",
+    "model_id": "MOD-a11d1935290dd4d5",
+    "manufacturer": "HD",
+    "model": "HD 100",
+    "names": [
+      "Slide Bar Controller"
+    ],
+    "categories": [
+      "motion_controller"
+    ],
+    "equipment_ids": [
+      "EQ-005750"
+    ],
+    "register_numbers": [
+      5750
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-cbdeeaa71a499276",
+    "model_id": "MOD-cbdeeaa71a499276",
+    "manufacturer": "Amplifer Research",
+    "model": "FI7000/M1",
+    "names": [
+      "Interface"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-005796"
+    ],
+    "register_numbers": [
+      5796
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-9df0996ad24c165a",
+    "model_id": "MOD-9df0996ad24c165a",
+    "manufacturer": "EM TEST",
+    "model": "BSM200N40",
+    "names": [
+      "Mchanical switch for testing Transient Emission Voltage waveform"
+    ],
+    "categories": [
+      "switch_system"
+    ],
+    "equipment_ids": [
+      "EQ-005898"
+    ],
+    "register_numbers": [
+      5898
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-ec2a608945467369",
+    "model_id": "MOD-ec2a608945467369",
+    "manufacturer": "HAEFELY",
+    "model": "LFP6.1",
+    "names": [
+      "LINE INTERFACE TESTER"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-005903"
+    ],
+    "register_numbers": [
+      5903
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f16c3d89d94bad72",
+    "model_id": "MOD-f16c3d89d94bad72",
+    "manufacturer": "HAEFELY",
+    "model": "PLINE1610",
+    "names": [
+      "LINE INTERFACE TESTER SYSTEM"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-005913"
+    ],
+    "register_numbers": [
+      5913
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fab7df3c11c5a879",
+    "model_id": "MOD-fab7df3c11c5a879",
+    "manufacturer": "TDK RF Solutions",
+    "model": "SI-300",
+    "names": [
+      "System Interface"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-005920"
+    ],
+    "register_numbers": [
+      5920
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-f322229fd4e652e8",
+    "model_id": "MOD-f322229fd4e652e8",
+    "manufacturer": "IOTECH",
+    "model": "PARALLEL488",
+    "names": [
+      "BUS CONVERTER"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-005957"
+    ],
+    "register_numbers": [
+      5957
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-42531ed4f5eca7aa",
+    "model_id": "MOD-42531ed4f5eca7aa",
+    "manufacturer": "ADLINK",
+    "model": "3025C",
+    "names": [
+      "PXI"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-005976"
+    ],
+    "register_numbers": [
+      5976
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-1383d5c4f5f58423",
+    "model_id": "MOD-1383d5c4f5f58423",
+    "manufacturer": "National Instruments",
+    "model": "GPIB-140A/2",
+    "names": [
+      "GPIB Extender"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-006102",
+      "EQ-006103"
+    ],
+    "register_numbers": [
+      6102,
+      6103
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 2
+  },
+  {
+    "item_id": "MOD-dd60be1451d21f34",
+    "model_id": "MOD-dd60be1451d21f34",
+    "manufacturer": "TDK",
+    "model": "SI-300-02",
+    "names": [
+      "System Interface"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-006106"
+    ],
+    "register_numbers": [
+      6106
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-fe1c8ff9610eaca5",
+    "model_id": "MOD-fe1c8ff9610eaca5",
+    "manufacturer": "ETS-Lindgren",
+    "model": "2110",
+    "names": [
+      "Light-duty Positioner"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-006185"
+    ],
+    "register_numbers": [
+      6185
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-3732e9d8cb14b88e",
+    "model_id": "MOD-3732e9d8cb14b88e",
+    "manufacturer": "TDK",
+    "model": "TRI-150R",
+    "names": [
+      "Tripod for Horn Antenna master"
+    ],
+    "categories": [
+      "motion"
+    ],
+    "equipment_ids": [
+      "EQ-006210"
+    ],
+    "register_numbers": [
+      6210
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-6cc19436a1512fde",
+    "model_id": "MOD-6cc19436a1512fde",
+    "manufacturer": "DELL",
+    "model": "GX620",
+    "names": [
+      "Computer"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-006227"
+    ],
+    "register_numbers": [
+      6227
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-12d6058728999365",
+    "model_id": "MOD-12d6058728999365",
+    "manufacturer": "ETS-Lindgren",
+    "model": "108279",
+    "names": [
+      "Laptop Mount"
+    ],
+    "categories": [
+      "software_computer"
+    ],
+    "equipment_ids": [
+      "EQ-006243"
+    ],
+    "register_numbers": [
+      6243
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  },
+  {
+    "item_id": "MOD-34355fab79ef04b2",
+    "model_id": "MOD-34355fab79ef04b2",
+    "manufacturer": "B&K",
+    "model": "Type 3590C",
+    "names": [
+      "Antenna Cable for Air Interface(Type 7536, Type 31"
+    ],
+    "categories": [
+      "interface"
+    ],
+    "equipment_ids": [
+      "EQ-006441"
+    ],
+    "register_numbers": [
+      6441
+    ],
+    "initial_scope": "candidate_review",
+    "initial_reason": "설비/계측/인터페이스 또는 혼합 범주: 모델 단위 포함·제외·식별 확인 필요",
+    "assignment": "motion_switch",
+    "registration_rows": 1
+  }
+]

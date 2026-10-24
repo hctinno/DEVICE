@@ -1,0 +1,22 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item449.json",
+  "original_log_sha256": "9abe166f426be9a563bfb68c64f4470b3b72e197af89cfb566e340d0332de365",
+  "original_log_bytes": 9777,
+  "queries": [
+    "HCT \"1725HS\" software interface manual",
+    "site:github.com \"1725HS\" HCT"
+  ],
+  "discovered_urls": [
+    "https://manuals.plus/m/ca0387f8e5fc78d38c5de8717bcff7e7fbbb254431f53f1e79c80f7514ff815a.pdf",
+    "https://obsoletetellyemuseum.blogspot.com/2010/10/itt-nokia-crt-television.html?m=0",
+    "https://www.argentina.gob.ar/sites/default/files/ar_ea_cem_ope_10_01.pdf",
+    "https://www.argentina.gob.ar/sites/default/files/ar_faa_mlv_c26_002.pdf",
+    "https://www.argentina.gob.ar/sites/default/files/ar_faa_mlv_c26_003.pdf",
+    "https://www.eserviceinfo.com/chassis_model_make/Nokia_001.html",
+    "https://www.tvservice.org/files/tv_model-chassis_-_new_11.2006.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

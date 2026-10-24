@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/cas_followup343.json",
+  "original_log_sha256": "4ee63d1894dbcccd807d09736502fdf6c6cb01b4a08b9366d65e1598620386de",
+  "original_log_bytes": 20906,
+  "queries": [
+    "CAS \"MW-2N\" manual RS232 interface",
+    "site:github.com CAS \"MW-2N\""
+  ],
+  "discovered_urls": [
+    "https://adeq.state.ar.us/downloads/webdatabases/solidwaste/permittedfacilities/gendocs/24383.pdf",
+    "https://casvtech.com/customer/service/ask/page01/index.jsp?reqPageNo=423",
+    "https://cdn.komachine.com/media/product-catalog/cascor_31984_cxxapf.pdf",
+    "https://extapps.dec.ny.gov/data/DecDocs/442040/Report.HW.442040.2022-06-07.Semi-Annual%20Report%20Spring%202022.pdf",
+    "https://gist.github.com/AndreiCalazans/390e82a1c3edff852137cb3da813eceb",
+    "https://item.gmarket.co.kr/Item?goodsCode=2077465979",
+    "https://microprecision.com/calibration/cas-mw-2n/",
+    "https://scalesolutions.tistory.com/category/%EC%A3%BC%EB%AC%B8%20%EC%A0%9C%EC%9E%91%20%EC%82%AC%EB%A1%80/%EA%B3%84%EB%9F%89%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8",
+    "https://scalesolutions.tistory.com/m/324",
+    "https://shasa-scale.com/wp-content/uploads/2023/08/Manual_Book_WIIN_ENG_UM.pdf",
+    "https://stores.auction.co.kr/handango/List?Category=03000000&DisplayType=None&SortType=None",
+    "https://tstshop.co.kr/product/cas-%EC%B9%B4%EC%8A%A4%EC%A0%84%EC%9E%90%EC%A0%80%EC%9A%B8-mw-iin-mw-2n-mw-6000n-6000g01g-%EC%A0%95%EB%B0%80-%EB%AF%B8%EB%9F%89-%EC%A4%91%EB%9F%89%EA%B3%84%EB%9F%89-%EC%A0%84%EC%9E%90%EC%A0%80%EC%9A%B8/68/",
+    "https://www.cas79.co.kr/type6/item/showitem.php?car=42&cate_no=42&cha=&item_no=273",
+    "https://www.cas79.co.kr/type6/item/showitem.php?car=42&cate_no=42&cha=&item_no=412",
+    "https://www.cas79.co.kr/type6/item/showitem.php?car=42&cate_no=42&item_no=273",
+    "https://www.koentec.kr/?cate=%EC%B8%A1%EC%A0%95+%EC%9E%A5%EB%B9%84&command=view&contentId=2723d092b63885e0d7c260cc007e8b9d&page_num=4&sPhoto=&sType=&sValue=&wr_id=38",
+    "https://www.manualslib.com/manual/2377526/Cas-Mw-Ii-Series.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

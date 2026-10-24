@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/cas_followup279.json",
+  "original_log_sha256": "1750303220404a30f5372f8ed25e7382bdd00cf97a3416803fa7b08f4e134abc",
+  "original_log_bytes": 24702,
+  "queries": [
+    "CAS \"ECB-150\" manual RS232 interface",
+    "site:github.com CAS \"ECB-150\""
+  ],
+  "discovered_urls": [
+    "https://candientunhanhoa.com/can-dem-dien-tu-ecb-1674-15.html",
+    "https://cas-retail.com/wp-content/uploads/cas-produktkatalog-23.pdf",
+    "https://cas-waagen.de/pdf/cas-pl12r2v2-webs.pdf",
+    "https://centrul-de-cantare-si-balante.ro/wp-content/uploads/2017/01/Catalog-CAS.pdf",
+    "https://findtool.co.kr/product/cas-ecb-150-150kg-10g-%EC%B9%B4%EC%8A%A4-%EA%B3%A0%EC%A4%91%EB%9F%89-%EB%B2%A4%EC%B9%98%ED%98%95-%EC%A0%84%EC%9E%90%EC%A0%80%EC%9A%B8-%EA%B3%84%EC%88%98-%EC%A0%80%EC%9A%B8/2657/",
+    "https://m-shinsegaemall.ssg.com/mall/disp/brandMain.ssg?brandId=2000021676&dispCtgId=6000209194",
+    "https://pcsprecision.com.au/products/cas-ecb-series-counting-scale",
+    "https://scalesolutions.tistory.com/category/%EC%A0%84%EC%9E%90%EC%A0%80%EC%9A%B8/%EC%B9%B4%EC%8A%A4%20%28CAS%29?page=7",
+    "https://scidictplus.com/product/ecb-counting-scale/",
+    "https://www.bayraktarmutfak.com/index.php/joomla-2/contentall-comcontent-views-2/featured-articles-12/1983/055-terazi-bask%C3%BCl-cas-tart%C4%B1m-bask%C3%BClleri-ecb-say%C4%B1c%C4%B1-bask%C3%BCl-detail",
+    "https://www.caskorea.co.kr/shop/item.php?it_id=1587086176",
+    "https://www.casscale.com.au/wp-content/uploads/CAS-AU-2023-V1.0-Products_202302.pdf",
+    "https://www.jhc-technology.com/pdf/20978/KMDA-2602%20UM-EN%20A1.0.pdf",
+    "https://www.makinaturkiye.com/en/caselektronik/urunler",
+    "https://www.manualslib.com/brand/cas/scales.html",
+    "https://www.nvk.co.th/ibsg/iBSG%20Manual%20EN.pdf",
+    "https://www.pos99.com.au/cas-ecb-platform-counting-scale-30kg-75kg-150kg-or-250kg-capacity",
+    "https://www.sanec.net/isletme-ekipmanlari"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

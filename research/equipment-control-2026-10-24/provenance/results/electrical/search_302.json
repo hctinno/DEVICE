@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_302.json",
+  "original_log_sha256": "4d8b2667ed90e87ed5a768ebb29761a19f546cac33c33492804a81605d57941a",
+  "original_log_bytes": 29666,
+  "queries": [
+    "Tektronix TBS 1202B-EDU manual programming software"
+  ],
+  "discovered_urls": [
+    "https://download.tek.com/manual/TBS1000B-and-TBS1000B-EDU-Oscilloscope-User-Manual-Rev-A.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://haldus.taltech.ee/sites/default/files/2022-02/EE_ins_Lab_TBS_1072B_EDU.pdf",
+    "https://manualzz.com/doc/62187653/tektronix-tbs1202b-edu-user-manual",
+    "https://manualzz.com/doc/o/oenz7/tektronix-tbs1000b-series-user-manual-getting-started",
+    "https://mgoggin.sites.truman.edu/files/2019/08/TBS1000B-User-Manual-00_2015.pdf",
+    "https://w140.com/tekwiki/images/3/34/077-0886-00.pdf",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/oscilloscope/tds1000-manual",
+    "https://www.reddit.com/r/AskElectronics/comments/mr3y83",
+    "https://www.tek.com.cn/oscilloscope/tbs1000-digital-storage-oscilloscope-manual-0",
+    "https://www.tek.com.cn/oscilloscope/tbs1000-digital-storage-oscilloscope-manual/tbs1000b-and-tbs1000b-edu-series-2",
+    "https://www.tek.com.cn/oscilloscope/tds1000-manual",
+    "https://www.tek.com/de/oscilloscope/tbs1000b-edu-digital-storage-oscilloscope-manual/pc-courseware-editor-user-manual",
+    "https://www.tek.com/en/support/software/application/tbs1202b-edu-software",
+    "https://www.tek.com/en/support/software/application/tbs1202b-edu-software-1",
+    "https://www.tek.com/tw/support/software/application/tbs1202b-edu-software-1",
+    "https://www.tek.com/vn/oscilloscope/tbs1000b-edu-digital-storage-oscilloscope-manual/pc-courseware-editor-user-manual",
+    "https://www.tequipment.net/Tektronix/TBS1202B-EDU/Digital-Oscilloscopes/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

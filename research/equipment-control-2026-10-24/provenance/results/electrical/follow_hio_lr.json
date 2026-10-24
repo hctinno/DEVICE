@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_hio_lr.json",
+  "original_log_sha256": "dddfc1835df6c71986c1eb291aafaf66627783b9d80485f61b34d856c3dff567",
+  "original_log_bytes": 28667,
+  "queries": [
+    "HIOKI LR8431 LR8432 Logger Utility SF1000 USB"
+  ],
+  "discovered_urls": [
+    "https://cloud.gennect.net/app/Public/StoreTop/ItemDetail/SF1000~V2.02_V1.08~app",
+    "https://hioki-vietnam.vn/wp-content/uploads/2024/06/sf1000.pdf",
+    "https://hioki.tw/product-detail.php?id=340",
+    "https://hioki.tw/software-detail.php?id=167",
+    "https://manual.hioki.com/LR8450/en/Content/supplement/using_logger_utility.html",
+    "https://shop.hioki.eu/Maintenance/Loggers-recorders/",
+    "https://shop.hioki.eu/media/cb/e2/da/1736174892/LR8431B980-04_Manual_EN.pdf?srsltid=AfmBOoq45cAdMwaQ6NE-xOoGo2nIp1z7xOTPWZgKeN2KGV7PUpuqccyL&ts=1736174892",
+    "https://www.hioki.cn/faqs/info_1023.html",
+    "https://www.hioki.cn/html/support/faq_4",
+    "https://www.hioki.cn/profaq/1023/872.html",
+    "https://www.hioki.cn/profaq/1023/94.html",
+    "https://www.hioki.cn/services/faq/1023",
+    "https://www.hioki.com/download/30162",
+    "https://www.hioki.com/download/30164",
+    "https://www.hioki.com/euro-en/products/multichannel-data-loggers/multichannel/id_6605",
+    "https://www.hioki.com/sg-en/support/faq/detail/id_n1265011",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A002002&p_no=38"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_056.json",
+  "original_log_sha256": "2460b32e96fc9dc9ca8cf246a405c0220eeeb733f8f23ad6778eaac5ef31db84",
+  "original_log_bytes": 30906,
+  "queries": [
+    "YOKOGAWA MV230-3-1-1-1M manual programming software"
+  ],
+  "discovered_urls": [
+    "https://electronicsandbooks.com/edt/manual/Hardware/Y/Yokogawa/Manual%20by%20prefix/%21%20Unsorted/IMMV200-01E_042%20%5B326%5D.pdf",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=779&mode=view",
+    "https://manualzz.com/doc/7186031/yokogawa-mobilecorder-mv100--mv200-data-logger-user-s-manual",
+    "https://tmi.yokogawa.com/ca/support/",
+    "https://tmi.yokogawa.com/support/",
+    "https://web-material3.yokogawa.com/BU7901-01E_040.pdf",
+    "https://web-material3.yokogawa.com/BU7911-01E_010.us.pdf",
+    "https://www.koreayokogawa.com/support/download2.php",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.yokogawa.co.jp/library/",
+    "https://www.yokogawa.co.jp/library/search/",
+    "https://www.yokogawa.co.jp/solutions/discontinued/mv100mv200/",
+    "https://www.yokogawa.com/au/solutions/discontinued/mv100mv200/",
+    "https://www.yokogawa.com/ch/solutions/discontinued/mv100mv200",
+    "https://www.yokogawa.com/ymi/support/",
+    "https://yokogawaelectric.org/library/search/index.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

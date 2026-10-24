@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_184.json",
+  "original_log_sha256": "b77cd051cef137e00bd41be3c6fa063024aa8bb80286656029f438687693b44d",
+  "original_log_bytes": 24023,
+  "queries": [
+    "KAMBIC OB-15/2 BBLT manual programming software"
+  ],
+  "discovered_urls": [
+    "https://kambicmetrology.com/wp-content/uploads/2023/06/OB-BB-Technical-data-sheet_2023.pdf",
+    "https://kambicmetrology.com/wp-content/uploads/2023/06/OB-BBC-Non-Contact-Thermometer-Calibrator-TDS-2023.pdf",
+    "https://lhm-instrumentation.eu/PDF/Kambic%20OB-BB-BlackBody-Kalibratie-Bad_Datasheet_ENG.pdf",
+    "https://lhm-instrumentation.eu/PDF/User%20Manual%20OB-15-2-%20BBLT.pdf",
+    "https://pdf.medicalexpo.com/pdf/kambic-doo/calibration-bath/305863-253280.html",
+    "https://sc-journal.com/device/kambic/ob-152-bb/",
+    "https://sc-journal.com/device/kambic/obm/",
+    "https://sc-journal.com/kambic-docs/measuring-instruments/",
+    "https://val-center.com/downloads/0000/4932/OB-BB_Technical_data_sheet_Black_Body___40__250__-20__130.pdf",
+    "https://www.ffonseca.com/en/prod-ob-15-2-bbc-non-contact-thermometer-calibrator-kambic",
+    "https://www.gometrics.net/producto/bano-de-calibracion-alta-temperatura/",
+    "https://www.gometrics.net/producto/banos-de-calibracion-cavidad-de-cuerpo-negro-preparada/",
+    "https://www.manualslib.com/manual/1959411/Kambic-Obm.html",
+    "https://www.manualslib.com/manual/2407043/Kambic-Obm-Lt.html",
+    "https://www.merserwis.pl/oferta/kalibratory/kalibracja-temperatury/laznia-kalibracyjna/kambic-ob-b-laznie-kalibracyjne-wklad-czarny-opis",
+    "https://www.merserwis.pl/oferta/kalibratory/kalibracja-temperatury/laznia-kalibracyjna/kambic-ob-b-laznie-kalibracyjne-wklad-czarny-opis/",
+    "https://www.scribd.com/document/1018337813/OB-BB-Technical-data-sheet-2023"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

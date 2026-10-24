@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_225.json",
+  "original_log_sha256": "e5a5d1d5a6f679d1d2b58e95313d2d8ad3fbbd52aedb6432a940944c9fa954a2",
+  "original_log_bytes": 27322,
+  "queries": [
+    "Tektronix TDS2001C manual programming software"
+  ],
+  "discovered_urls": [
+    "https://docs.rs-online.com/6b2d/0900766b8137256c.pdf",
+    "https://download.tek.com/manual/077044401web.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://manualzz.com/doc/4216801/tektronix-tds2000c-tds2001c--tds2002c--tds2004c--tds2012c",
+    "https://mmrc.caltech.edu/Oscilliscope/TDS200%20Programer.pdf",
+    "https://testequipment.center/Product_Documents/Tektronix-TDS2001C-Specifications-F00B9.pdf",
+    "https://w140.com/tekwiki/images/e/e8/071-0493-01.pdf",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/oscilloscope/tds1000-manual",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/oscilloscope/tds1001b-manual/tds1000b-tds2000b-tds1000c-edu-tds2000c-and-tps2000b-series",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/support/faqs/how-do-i-use-programmer-manual-my-instrument",
+    "https://www.cedesa.com.mx/pdf/tektronix/textronix-TDS2000C_series_sheet.pdf?srsltid=AfmBOooIaOCbeMOFLUddswq2hkiZZ_Mb-u7xd-CSPH6ae95CzARos6bb",
+    "https://www.manualslib.com/manual/2502771/Tektronix-Tds200-Series.html",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/tqbr7h",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/zhhc1k",
+    "https://www.reddit.com/r/LabVIEW/comments/ttmjan",
+    "https://www.tek.com.cn/oscilloscope/tds1000-manual",
+    "https://www.tek.com.cn/support/software/firmware/firmware-update-tds2000c-russian-only",
+    "https://www.tek.com/en/oscilloscope/tds2000-manual/tds2000c-and-tds1000c-edu-series",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?model=tds2002",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?series=TDS2000C&type=manual",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?series=TDS2000C+Digital+Storage+Oscilloscope+%28Discontinued%29",
+    "https://www.tek.com/vn/support/datasheets-manuals-software-downloads?model=tds2024"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

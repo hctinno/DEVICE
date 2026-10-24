@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item281.json",
+  "original_log_sha256": "6a45229fe50ab7198aa0af0b93f2f6dd6237e510ca696d508f4b35277d9ee12e",
+  "original_log_bytes": 13987,
+  "queries": [
+    "IMADA \"HTGS-10N\" software interface manual",
+    "site:github.com \"HTGS-10N\" IMADA"
+  ],
+  "discovered_urls": [
+    "https://5.imimg.com/data5/SELLER/Doc/2025/4/506867833/PI/UV/HC/2575160/digital-torque-gauge.pdf",
+    "https://imada.it/pdf/htgshtga-e.pdf",
+    "https://madrastools.net/wp-content/uploads/2025/06/Imada.pdf",
+    "https://manuals.plus/m/1bce1eaea8a98c20a5e1f3b981f974831c8381e3a9897fe282873235db42a96d",
+    "https://manuals.plus/wp-content/uploads/2023/06",
+    "https://manualspro.net/204630-imada-htga-tfx-series-built-in-torque-gauge-user-manual",
+    "https://www.forcegauge.net/en/product/detail/htgs010",
+    "https://www.forcegauge.net/en/service/instruction_manual",
+    "https://www.forcegauge.net/en/service/instruction_manual%E3%80%80",
+    "https://www.forcegauge.net/pdf/htgshtga_e.pdf",
+    "https://www.forcegauge.net/product/detail/htgs010",
+    "https://www.imada.pl/%21data/offerAttachments/IMADA%20Katalog%202025-04%20-%20Torque%20and%20Food%20Testers.pdf",
+    "https://www.manualslib.de/manual/1521182/Schmidt-Htgs-Serie.html",
+    "https://www.mspmetrology.com.my/showproducts/productid/3060341/cid/180050/",
+    "https://www.mspmetrology.com/showproducts/productid/6562018/imada-standard-type-builtin-torque-gauges-htgstfx-series/",
+    "https://www.slideshare.net/slideshow/imada-15-cataloge/53469947",
+    "https://www.testequip.com.au/digital-torque-gauge-imada-htgs-htga-series",
+    "https://www.truetronixonline.com/pdf/file/IMADA%20Digital%20Torque%20Gauge%20HTGS%20-%20HTGA%20series.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

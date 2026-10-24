@@ -1,0 +1,18 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/open01.json",
+  "original_log_sha256": "6095ac20ff1f7911dc048a622869986a4b36d51b293e5b6ced4b0d192362e5ef",
+  "original_log_bytes": 27927,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/JHees/Ophir-Vega",
+    "https://lumiloop.de/downloads/manuals/LSProbe_Manual.pdf",
+    "https://lumiloop.de/downloads/manuals/LSProbe_Manual.pdf:",
+    "https://pylablib.readthedocs.io/en/latest/devices/Ophir.html",
+    "https://www.konicaminolta.com/instruments/download/software/display/ca-s40/index.html",
+    "https://www.totalphase.com/products/beagle-software-api/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_317.json",
+  "original_log_sha256": "aeb87196b1f402b54d70e29795c26ede07eeb0e0cc16276b6b1dd6c52607febc",
+  "original_log_bytes": 35715,
+  "queries": [
+    "BOONTON 4300 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://boonton.com/Portals/0/Products/RF%20Power%20Meters/4240/4240_InstructionManual.pdf",
+    "https://boonton.com/Portals/0/Products/RF%20Power%20Meters/4530/4530%20Instruction%20Manual%20v20140106.pdf",
+    "https://boonton.com/service-support/software-drivers/boonton-power-analyzer-suite-software",
+    "https://boonton.manymanuals.com/measuring-instruments/4530-peak-power-meter-user-manual/user-manual-24223/1",
+    "https://boonton.manymanuals.com/measuring-instruments/4530-peak-power-meter-user-manual/user-manual-24223/72",
+    "https://manualmachine.com/boontonelectronics/",
+    "https://manualmachine.com/boontonelectronics/4531/4660055-user-manual/",
+    "https://manuals.repeater-builder.com/te-files/BOONTON/BOONTON%2044-4500A%20Instruction.PDF",
+    "https://support.controltechnologycorp.com/index.php?Itemid=438&id=169&option=com_content&view=article",
+    "https://valuetronics.com/products/4300-boonton-rf-power-meter-used",
+    "https://www.boonton.com/Portals/0/Products/RF%20Power%20Meters/4530/4530%20Instruction%20Manual%20v20140106.pdf",
+    "https://www.ebay.com/itm/145157859210",
+    "https://www.lost-manuals.com/pdf/boonton-electronic--4400a--user--ID8479.pdf",
+    "https://www.manualsdir.com/manuals/401796/boonton-4530-peak-power-meter-user-manual.html?page=136",
+    "https://www.manualslib.com/brand/boonton/",
+    "https://www.manualslib.com/manual/3683185/Boonton-4530-Series.html",
+    "https://www.reddit.com/r/ClayBusters/comments/1g60jta",
+    "https://www.reddit.com/r/HamRadio/comments/1ks6ksh",
+    "https://www.scribd.com/document/847542004/4530-Instruction-Manual-v20140106"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

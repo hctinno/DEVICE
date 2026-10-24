@@ -1,0 +1,21 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/open_manual2.json",
+  "original_log_sha256": "e649f09ae3ac698f4156f35f2e757dc77dd9fd32c30edfc1428689220132dab4",
+  "original_log_bytes": 69058,
+  "queries": [],
+  "discovered_urls": [
+    "http://www.spirent.com",
+    "https://67fff93bef5e27578656-8f1778939e817ae59616c14c8e4da60d.ssl.cf1.rackcdn.com/Manuals/SimREMOTE/DGP00792AAA%20Issue%203-04%20SimREMOTE%20v7.02%20User%20Manual.pdf",
+    "https://67fff93bef5e27578656-8f1778939e817ae59616c14c8e4da60d.ssl.cf1.rackcdn.com/Manuals/SimREMOTE/DGP00792AAA%20Issue%203-04%20SimREMOTE%20v7.02%20User%20Manual.pdf:",
+    "https://arworld.us/wp-content/uploads/2021/12/100A400A_Manual-Rev-C.pdf",
+    "https://arworld.us/wp-content/uploads/2021/12/250W1000C-Manual-Rev-B.pdf",
+    "https://www.artisantg.com/89053-1",
+    "https://www.artisantg.com/info/Spirent_SR5500_Manual_202244155710.pdf",
+    "https://www.empowerrf.com/datasheet/Empower_RF_Amplifier_2135.pdf",
+    "https://www.montena.com/wp-content/uploads/2025/05/System_description_PCI_Tests_V63.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

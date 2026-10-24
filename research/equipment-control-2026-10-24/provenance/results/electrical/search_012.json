@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_012.json",
+  "original_log_sha256": "4ae5b5c0769dfe90bb0e276aafb8f7bc269b7f8f2cdab1afafa5af1b1496813c",
+  "original_log_bytes": 28284,
+  "queries": [
+    "LUMILOOP LSPM 2.0+ manual programming software"
+  ],
+  "discovered_urls": [
+    "https://absolute-emc.com/partners/lumiloop-gmbh-field-probes",
+    "https://absolute-emc.com/product/lspm-20-3-channel-power-meter-9khz-26_5-40ghz",
+    "https://absolute-emc.com/product/lspm-20-plus-3-channel-power-meter-9khz-26_5-40ghz",
+    "https://absolute-emc.com/uploads/files/1767292914_LSPM_Manual.pdf",
+    "https://fhi.nl/en/nieuws/lumiloop-lumiloop-lspm-released/",
+    "https://laplace.co.uk/products/lumiloop-lsmp-triple-high-speed-power-meter/",
+    "https://lumiloop.de/2024/07/lumiloop-software-update-available/",
+    "https://lumiloop.de/downloads/manuals/LSPM_Manual.pdf",
+    "https://lumiloop.de/products/lspm-rf-power-meter/",
+    "https://lumiloop.de/products/lspm-rf-power-meter/lspm-2-0/",
+    "https://lumiloop.de/support/",
+    "https://lumiloop.de/support/documents-and-downloads/",
+    "https://lumiloop.de/support/documents-and-downloads/?wpv-custom-download-category=datasheets&wpv-relationship-filter=510&wpv_post_search=&wpv_view_count=3003",
+    "https://www.manualslib.com/manual/3526014/Lumiloop-Lspm-1-0.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

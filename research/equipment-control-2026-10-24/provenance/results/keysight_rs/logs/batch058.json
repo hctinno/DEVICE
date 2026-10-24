@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/batch058.json",
+  "original_log_sha256": "1d924ab1c291b5e4d9fb92daf1cebfef7fbdcf9644977ea611687d11c205c62f",
+  "original_log_bytes": 32241,
+  "queries": [
+    "HP Agilent Keysight \"346B\" programming manual driver remote control"
+  ],
+  "discovered_urls": [
+    "https://docs.ampnuts.ru/eevblog.docs/HP_Agilent_Keysight/5980-0163E%20NFA%20Series%20Noise%20Figure%20Analyzer%20-%20Configuration%20Guide%20c20140826%20%5B8%5D.pdf",
+    "https://docs.ampnuts.ru/eevblog.docs/HP_Agilent_Keysight/index.htm",
+    "https://docs.rs-online.com/098f/A700000007884736.pdf",
+    "https://en.wikipedia.org/wiki/Radio_noise_source",
+    "https://www.df6na.de/man_hp.htm",
+    "https://www.electrorent.com/us/products/rf-and-microwave-power/noise-figure-meters/keysight-technologies/346b/01t1O000004TanTQAS",
+    "https://www.eserviceinfo.com/downloadsm/78550/Agilent_HP%20346A%20252C%20346B%20252C%20346C%20Operating%20%26%20Service.html",
+    "https://www.jabse.com/L0FnaWxlbnQvSFAgMzQ2QV8yNTJDIDM0NkJfMjUyQyAzNDZDIE9wZXJhdGluZyAmIFNlcnZpY2UucGRm",
+    "https://www.keysight.com/de/de/assets/9018-01420/user-manuals/9018-01420.pdf",
+    "https://www.keysight.com/so/en/assets/9018-01420/user-manuals/9018-01420.pdf",
+    "https://www.keysight.com/us/en/assets/9018-05097/user-manuals/9018-05097.pdf",
+    "https://www.keysight.com/vn/en/assets/9018-01420/user-manuals/9018-01420.pdf",
+    "https://www.keysight.com/zz/en/support/346B/noise-source-10-mhz-18-ghz-nominal-enr-15-db.html",
+    "https://www.manualslib.com/brand/keysight-technologies/industrial-electrical.html",
+    "https://www.manualslib.com/manual/1939681/Keysight-Technologies-346b.html",
+    "https://www.scribd.com/document/692306249/HP-346-Manual",
+    "https://www.transcat.ca/media/pdf/Keysight-Technologies-346C-Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

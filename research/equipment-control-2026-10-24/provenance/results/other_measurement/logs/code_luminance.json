@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/code_luminance.json",
+  "original_log_sha256": "b11e6e89a19b8d3bf67da0a525e518803240fc23dda351e237bb472ff8579f8e",
+  "original_log_bytes": 31599,
+  "queries": [
+    "site:github.com \"LS100\" \"Minolta\"",
+    "site:github.com/LBNL-ETA/lumicap LS-100 serial"
+  ],
+  "discovered_urls": [
+    "http://localhost:8000/health",
+    "http://localhost:8000/mcp",
+    "http://localhost:8000/mcp`",
+    "https://github.com/LBNL-ETA/AutoBFE",
+    "https://github.com/LBNL-ETA/CalFlexHub.git",
+    "https://github.com/LBNL-ETA/CalFlexhub",
+    "https://github.com/LBNL-ETA/DOPER",
+    "https://github.com/LBNL-ETA/EnergyPlus-MCP.git",
+    "https://github.com/LBNL-ETA/EnergyPlus-MCP/blob/main/README.md",
+    "https://github.com/LBNL-ETA/LBNLCPPCommon",
+    "https://github.com/LBNL-ETA/Windows-CalcEngine/releases/tag/Version_1.0.14",
+    "https://github.com/LBNL-ETA/Windows-CalcStandards",
+    "https://github.com/LBNL-ETA/Windows-CalcStandards.git",
+    "https://github.com/LBNL-ETA/frads/",
+    "https://github.com/LBNL-ETA/frads/blob/main/mkdocs.yml",
+    "https://github.com/LBNL-ETA/lumicap",
+    "https://github.com/LBNL-ETA/pmu_event_library",
+    "https://github.com/LBNL-ETA/pmu_event_library.git`",
+    "https://github.com/LBNL-ETA/pyWinCalc/releases",
+    "https://github.com/LBNL-ETA/py_igsdb_base_data",
+    "https://github.com/LBNL-ETA/py_igsdb_data_data.git`",
+    "https://github.com/lnlp/LMIC-node/blob/main/src/LMIC-node.cpp",
+    "https://github.com/psychopy/psychopy/blob/dev/psychopy/CHANGELOG.txt"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/missing_gauss.json",
+  "original_log_sha256": "72d509362a0e4f42d1aae527da75ee585b7dd56b237c933c47a5314cc0b24f6d",
+  "original_log_bytes": 30939,
+  "queries": [
+    "site:github.com \"HS5136\"",
+    "site:github.com \"PRD-240\"",
+    "site:pearsonelectronics.com \"PRD-240\" manual interface",
+    "site:schwarzbeck.com \"HS 5136\" output"
+  ],
+  "discovered_urls": [
+    "https://github.com/seo-skills/seo-audit-skill/blob/main/AGENTS.md",
+    "https://mail.pearsonelectronics.com/",
+    "https://mail.pearsonelectronics.com/news",
+    "https://mail.pearsonelectronics.com/support/downloads",
+    "https://pearsonelectronics.com/8-frontpage",
+    "https://pearsonelectronics.com/9-content",
+    "https://pearsonelectronics.com/component/users/?Itemid=101&view=remind",
+    "https://pearsonelectronics.com/pdf/Pearson%20PRD-240%20manual-booklet-short.pdf",
+    "https://www.pearsonelectronics.com/applications/emi-testing-applications",
+    "https://www.pearsonelectronics.com/index.php",
+    "https://www.pearsonelectronics.com/news/225-mil-std-461g-cs101-simplified",
+    "https://www.pearsonelectronics.com/pdf/754-020%20Rev-%20Test%20Procedure%20for%20PRD.pdf",
+    "https://www.pearsonelectronics.com/pdf/PRD-240-manual.pdf",
+    "https://www.pearsonelectronics.com/support/downloads",
+    "https://www.pearsonelectronics.com/support/manuals",
+    "https://www.schwarzbeck.com/Datenblatt/k5136.pdf",
+    "https://www.schwarzbeck.com/de/magtest-system/dc-test-radiating-loop/",
+    "https://www.schwarzbeck.com/magtest-system/",
+    "https://www.schwarzbeck.com/magtest-system/dc-test-helmholtz-coil/",
+    "https://www.schwarzbeck.com/magtest-system/dc-test-radiating-loop/",
+    "https://www.schwarzbeck.com/magtest-system/dc-test-radiating-loop/hs-5136/",
+    "https://www.schwarzbeck.com/stocklist/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

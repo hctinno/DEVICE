@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_354.json",
+  "original_log_sha256": "a289e9dc5fc0c81877305688f97d0ef8dbd606d69227764560215f139c61b5bf",
+  "original_log_bytes": 31353,
+  "queries": [
+    "Anritsu ML93B manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.anritsu.com/contact.asp",
+    "http://www.anritsu.com/en-us/products-solutions/products/ml2487b.aspx",
+    "http://www.anritsu.com/en-us/products-solutions/products/ml2488b.aspx",
+    "http://www.anritsu.com/en-us/products-solutions/products/ml2495a.aspx",
+    "http://www.anritsu.com/en-us/products-solutions/products/ml2496a.aspx",
+    "https://dl-qa.cdn-anritsu.com/en-us/test-measurement/files/Manuals/Maintenance-Manual/13000-00164K.pdf",
+    "https://dl.cdn-anritsu.com/en-us/test-measurement/files/Manuals/Programming-Manual/13000-00239J.pdf",
+    "https://manualmachine.com/anritsu/",
+    "https://www.analyticalelectronics.in/testequipment/manuals/anritsu.html",
+    "https://www.anritsu.com/en-US/test-measurement/support/downloads?category=programming-manual",
+    "https://www.anritsu.com/en-US/test-measurement/support/downloads?model=MT8212B",
+    "https://www.anritsu.com/en-in/test-measurement/support/downloads?category=programming-manual",
+    "https://www.artisantg.com/info/Anritsu_ML93A_Manual.pdf",
+    "https://www.artisantg.com/info/Anritsu_ML93B_Datasheet.pdf",
+    "https://www.jabse.com/L0Fucml0c3U-",
+    "https://www.mods.dk/manual.php?brand=anritsu",
+    "https://www.reddit.com/r/FiberOptics/comments/13vi7zt",
+    "https://www.scribd.com/document/889821059/Master-Series-PDF",
+    "https://www.surplussales.com/categories/3125-test-equipment-a-manuals/",
+    "https://www.surplussales.com/categories/3125-test-equipment-a-manuals/?direction=asc&sort=part_number",
+    "https://www.surplussales.com/categories/3125-test-equipment-a-manuals/?direction=desc&sort=price",
+    "https://www.surplussales.com/categories/3125-test-equipment-a-manuals/grid/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

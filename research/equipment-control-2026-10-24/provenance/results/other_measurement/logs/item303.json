@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item303.json",
+  "original_log_sha256": "09fb4ec7baa80b6723d9661f5f87f644ecd68bacd2a19844b9f0d1d88735eaa6",
+  "original_log_bytes": 17071,
+  "queries": [
+    "Whaleteq \"SECG 4.0\" software interface manual",
+    "site:github.com \"SECG 4.0\" Whaleteq"
+  ],
+  "discovered_urls": [
+    "https://abcdocz.com/doc/305504/single-channel-ecg-test-system---secg-4.0--user-manual",
+    "https://device.report/m/18b9089443d220db0444778bffa49f6c3859eb953d20468dd5a990134c20bc8a",
+    "https://device.report/m/18b9089443d220db0444778bffa49f6c3859eb953d20468dd5a990134c20bc8a.pdf",
+    "https://github.com/NVIDIA/yaml-sigil-spec/blob/main/THIRD_PARTY_NOTICES.md",
+    "https://github.com/cdxgen/cdxgen/blob/master/docs/ADVANCED.md",
+    "https://helixindia.com/wp-content/uploads/2023/12/secg4.0.pdf",
+    "https://manualzilla.com/doc/5859553/user-manual",
+    "https://manualzz.com/doc/6673876/whaleteq-secg-4.0-ecg-test-system-user-manual",
+    "https://sc-journal.com/device/whaleteq/secg-40/",
+    "https://www.manualslib.com/manual/2498033/Whaleteq-Secg-4-0.html",
+    "https://www.manualslib.com/manual/2498033/Whaleteq-Secg-4-0.html?page=23",
+    "https://www.manualslib.com/manual/2498033/Whaleteq-Secg-4-0.html?page=7",
+    "https://www.manualslib.com/manual/2498033/Whaleteq-Secg-4-0.html?page=8",
+    "https://www.secg.org/sec1-v2.pdf",
+    "https://www.whaleteq-cn.com/en/product/1/9-ecg-ekg-testing/view7-secg-40",
+    "https://www.whaleteq.com/data/gdownload/files/1673494662010856833.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/UM_SECG4.0_EN_V.1.2.0_241204.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/um_secg4.0_en_v.1.2.0_241204.pdf",
+    "https://www.whaleteq.com/en/faq/1-ecg-ekg-tester/list",
+    "https://www.whaleteq.com/en/product/1/9-ecg-ekg-testing/view7-secg-40"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

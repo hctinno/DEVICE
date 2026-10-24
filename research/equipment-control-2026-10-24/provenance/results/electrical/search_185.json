@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_185.json",
+  "original_log_sha256": "de9dba7ba48908708e2df34fff02ba58d0bed86feb722857cc60686e9926e740",
+  "original_log_bytes": 29260,
+  "queries": [
+    "Pico Technology 5244D manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tecotecshop.com/Repository/Pico%20Technology/PicoScope-5242D/PicoScope%205000D%20Series%20User%E2%80%99s%20Guide.pdf",
+    "https://cdn.tecotecshop.com/Repository/Pico%20Technology/PicoScope-5442D-MSO/PicoScope%205000D%20Series%20User%E2%80%99s%20Guide.pdf",
+    "https://en.wikipedia.org/wiki/PicoScope_%28software%29",
+    "https://en.wikipedia.org/wiki/Pico_Technology",
+    "https://manualmachine.com/picotechnology/",
+    "https://manualmachine.com/picotechnology/5244d/26595247-programmers-guide/",
+    "https://www.batronix.com/versand/downloads/nojs.html",
+    "https://www.epcb.it/scheda_prodotto.php?_id=&codice=767",
+    "https://www.interworldna.com/pico/picoscope_5000d.php",
+    "https://www.picotech.com/download/datasheets/picoscope-5000d-series-data-sheet.pdf",
+    "https://www.picotech.com/download/manuals/picoscope-5000d-series-users-guide.pdf",
+    "https://www.picotech.com/downloads",
+    "https://www.picotech.com/support/viewtopic.php?sid=d6baa7304b11276eeb0b1d161222aced&t=39891",
+    "https://www.picotech.com/support/viewtopic.php?t=38671",
+    "https://www.tehencom.com/oscilloscopes/pico-technology-picoscope-5244d-mso-oscilloscope-200mhz",
+    "https://www.tehencom.com/oscilloscopes/pico-technology-picoscope-5244d-oscilloscope-200mhz",
+    "https://www.tequipment.net/Pico/5244D/PC-Based-Oscilloscopes/",
+    "https://www.tme.eu/en/details/picoscope5244d/pc-connected-oscilloscopes/pico-technology/",
+    "https://www.yamato-net.co.jp/product/detail/9756/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

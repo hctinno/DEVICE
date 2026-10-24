@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_089.json",
+  "original_log_sha256": "1aefedad59de86a132581ebb3957a073c0304b4f0b04eb7912e347a248a4923f",
+  "original_log_bytes": 28027,
+  "queries": [
+    "ASSOCIATED RESEARCH 7715 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.testequity.com/te1/Documents/pdf/associated_research/Associated_Research_7715_Manual.pdf",
+    "https://intellirentco.com/portals/Intellirent/productfiles/AR%207715%20Manual.pdf",
+    "https://manualmachine.com/associatedresearch/7715/26595939-associated-research/",
+    "https://manualzz.com/doc/13915008/associated-research-hypotmax-7705--7710--7715--7720-hipot",
+    "https://www.arisafety.com/products/hypotmax-series.html",
+    "https://www.arisafety.com/support/instrument-drivers",
+    "https://www.arisafety.com/support/repair",
+    "https://www.arisafety.com/withstand-software.html",
+    "https://www.finaltest.com.mx/v/vspfiles/assets/datasheet/Associated_Research_HypotMAX_-_Manual.pdf",
+    "https://www.manualslib.com/manual/1186754/Associated-Research-Hypotmax-7705.html",
+    "https://www.manualslib.com/manual/1186754/Associated-Research-Hypotmax-7705.html?page=17",
+    "https://www.manualslib.com/manual/1186754/Associated-Research-Hypotmax-7705.html?page=88",
+    "https://www.manualslib.com/manual/2211576/Associated-Research-Hypotmax-7705.html",
+    "https://www.manualslib.com/manual/3105036/Ikonix-Associated-Research-Hypotmax-7710.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_hioki_code.json",
+  "original_log_sha256": "431861728f81e701d871b77e91af4e311f1c59d520bb3f17160b7f9f5fc68a2c",
+  "original_log_bytes": 26747,
+  "queries": [
+    "site:github.com HIOKI LR8450 PW3337 RM3544 BT3564"
+  ],
+  "discovered_urls": [
+    "https://buymeacoffee.com/webspidertq",
+    "https://github.com/SimonEismann/HTTP-Load-Generator",
+    "https://github.com/Teslafly/Hioki-IM3536-Lcr-meter-python-IVI-driver/blob/master/hioki/hiokiIM3536.py",
+    "https://github.com/TomWilkinson/Multimeter-Reviews",
+    "https://github.com/TomWilkinson/Multimeter-Reviews/blob/main/Hioki%20DT4282%20Review.pdf",
+    "https://github.com/V-Nandanwar/Power-Quality-Analyzer",
+    "https://github.com/V-Nandanwar/Power-Quality-Analyzer/releases/download/v1.0/Power_Quality_Analyzer.mp4",
+    "https://github.com/antoinecellerier/dmm-tools/blob/main/docs/research/new-device-candidates.md",
+    "https://github.com/danilo-massa/honeyd/blob/master/ethernet.c",
+    "https://github.com/determlab/shal/blob/main/docs/CATALOG.md",
+    "https://github.com/hioki",
+    "https://github.com/onaka-yurusugi/hioki_100ninkaigi",
+    "https://github.com/vpatkov/continuity-tester",
+    "https://github.com/webspiderteam/Bluetooth-DMM-For-Windows",
+    "https://github.com/webspiderteam/Bluetooth-DMM-For-Windows/releases",
+    "https://github.com/webspiderteam/Bluetooth-DMM-For-Windows/wiki"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

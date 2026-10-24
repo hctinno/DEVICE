@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_009.json",
+  "original_log_sha256": "f11a3adb71ccca253e0c99f94d42c0cd99aa5f731df84af2d92a2087978fc775",
+  "original_log_bytes": 29932,
+  "queries": [
+    "FLUKE 175 programming communication driver software GitHub"
+  ],
+  "discovered_urls": [
+    "https://assets.fluke.com/manuals/1736____cmeng0000.pdf",
+    "https://assets.fluke.com/manuals/19x_____pgeng0000.pdf",
+    "https://fluke.freshdesk.com/en/support/solutions/articles/19000162375-rest-api-programming-guide",
+    "https://github.com/antoinecellerier/dmm-tools/blob/main/docs/research/new-device-candidates.md",
+    "https://github.com/mscheidt1968/smt_cal_demo",
+    "https://github.com/topics/fluke",
+    "https://github.com/topics/fluke?o=asc&s=updated",
+    "https://github.com/zach-edf/fluke-app",
+    "https://media.fluke.com/00eab2c8-c62d-449a-a42e-b10800c12c64_original%20file.pdf",
+    "https://media.fluke.com/6b373280-b196-4fd6-9820-b10800c131b7_original%20file.pdf",
+    "https://media.fluke.com/e31ee6df-ce70-48e7-9ee6-b3010119288a_original%20file.pdf",
+    "https://pyhard2.sourceforge.net/drv.html",
+    "https://spegroup.ru/upload/wikifiles%202/Calibration_Manual_Fluke_1742_1746_1748.pdf",
+    "https://www.fluke.com/en-au/support/software-downloads",
+    "https://www.fluke.com/en-gb/support/software-downloads?qt-software=1",
+    "https://www.fluke.com/en-us/support/software-downloads",
+    "https://www.fluke.com/en-us/support/software-downloads?qt-software=0",
+    "https://www.fluke.com/it-it/supporto/download-software/fluke-753-754-windows-driver-downloads",
+    "https://www.reddit.com/r/AskElectricians/comments/1s86tho/freeopensource_desktop_appcli_app_for_fluke/",
+    "https://www.reddit.com/r/fluke/comments/1s86sk5/freeopensource_desktop_appcli_app_for_fluke/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/lxi-tools_lxi-tools_source.json",
+  "original_log_sha256": "a8e1ef12f685990fbeb45dd1aa1ad98904081657836e698e5532db047d64618a",
+  "original_log_bytes": 33370,
+  "queries": [],
+  "discovered_urls": [
+    "http://brew.sh",
+    "https://codeload.github.com/lxi-tools/lxi-tools/zip/refs/heads/master",
+    "https://github.com/Miqueas/GTK-Examples.git",
+    "https://github.com/Miqueas/Lua-GTK-Examples.git",
+    "https://github.com/lxi-tools/liblxi",
+    "https://github.com/lxi-tools/lxi-tools-windows-installer/releases",
+    "https://github.com/lxi-tools/lxi-tools/issues",
+    "https://github.com/lxi-tools/lxi-tools/releases",
+    "https://github.com/lxi-tools/lxi-tools/wiki/",
+    "https://img.shields.io/circleci/build/github/lxi-tools/lxi-tools)](https://circleci.com/gh/lxi-tools/lxi-tools/tree/master",
+    "https://img.shields.io/codefactor/grade/github/lxi-tools/lxi-tools)](https://www.codefactor.io/repository/github/lxi-tools/lxi-tools",
+    "https://img.shields.io/github/v/release/lxi-tools/lxi-tools?sort=semver)](https://github.com/lxi-tools/lxi-tools/releases",
+    "https://img.shields.io/repology/repositories/lxi-tools)](https://repology.org/project/lxi-tools/versions",
+    "https://img.shields.io/tokei/lines/github/lxi-tools/lxi-tools)](https://github.com/lxi-tools/lxi-tools",
+    "https://learn.microsoft.com/en-us/windows/wsl/install",
+    "https://lxi-tools.github.io",
+    "https://raw.githubusercontent.com/lxi-tools/lxi-tools/master/images/lxi-gui-script-in-action.png",
+    "https://www.msys2.org/",
+    "https://www.paypal.me/lundmar"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

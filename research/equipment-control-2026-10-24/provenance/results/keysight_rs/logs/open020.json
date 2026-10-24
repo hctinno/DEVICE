@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open020.json",
+  "original_log_sha256": "d002a12f36a4f5859e84fe13bb5158f4c5ca427c33ddc68e8aee9d50f8ce4b1e",
+  "original_log_bytes": 26637,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.keysight.com.cn/cn/zh/lib/software-detail/driver/rf-power-meter-ivi-instrument-drivers-1627801.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

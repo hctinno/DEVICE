@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_031.json",
+  "original_log_sha256": "847708723872e9a58a8e1fcc0b4c23aa826ae5a895d5ca138b70b7417eedc80b",
+  "original_log_bytes": 29075,
+  "queries": [
+    "DGBELL \"BE-6047-3T\" manual communication software GitHub",
+    "L.A.B. Equipment \"AD-LA125\" manual communication software GitHub",
+    "M Braun \"MB-Labstar\" manual communication software GitHub",
+    "OSUNG ST Co., Ltd. \"OST-DT1\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://cdn.labwrench.com/eMan/manualNo/3266/mbraun_labstar_workstation.pdf",
+    "https://d.otto.de/files/f14b4aef-ca30-5252-8ddf-12629998c983.pdf",
+    "https://github.com/ZaneDubya/MetroidMMC3/blob/master/dev.TxROM/code/Title.asm",
+    "https://manualzz.com/doc/8989978/m.braun-mb-200g--mb-300g-inert-gas-systems-technical-docu",
+    "https://publications.rwth-aachen.de/record/987756/files/987756.pdf",
+    "https://shop.mbraun.de/DEU/26216/Home.aspx",
+    "https://shop.mbraun.de/ENU/24815/Home.aspx",
+    "https://shop.mbraun.de/deu/26216/Home.aspx",
+    "https://spar.tamu.edu/Transparency/GetFile?dir=ItbRfpDocs&id=10373",
+    "https://www.aadee.ar/00pdf/industria_investigacion/LABstar.pdf",
+    "https://www.croris.hr/oprema/oprema/7341",
+    "https://www.ezzivacuum.com.au/index.php?limit=20&manufacturer_id=13&page=19&rt=product%2Fmanufacturer&sort=date_modified-ASC",
+    "https://www.ezzivacuum.com.au/index.php?limit=20&manufacturer_id=13&page=8&rt=product%2Fmanufacturer&sort=date_modified-ASC",
+    "https://www.ezzivacuum.com.au/index.php?limit=20&page=19&path=153&rt=product%2Fcategory&sort=date_modified-ASC",
+    "https://www.labwrench.com/manufacturer/1264/mbraun",
+    "https://www.mbraun.com/index.php/en/products/glovebox-workstations.html",
+    "https://www.scribd.com/document/1055935823/LABStar-User-Quick-Guide",
+    "https://www.speed-supply.net/list/l.php",
+    "https://www.tecalemitflow.fi/Download/28943/MBraun%20Glovebox%20Workstations%20Datasheet.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

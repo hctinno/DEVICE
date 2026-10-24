@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_230.json",
+  "original_log_sha256": "26c693a3391d7a428674836a630f5e9d4166c1d913f673f41124c9d9b9b2b214",
+  "original_log_bytes": 31087,
+  "queries": [
+    "에스씨엠테크놀러지 Leakage Current Tester (MD) manual programming software"
+  ],
+  "discovered_urls": [
+    "https://dataseoul.s3.ap-northeast-2.amazonaws.com/upload/S20210402095af0afb82fb/8ee2a6f954263.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAJZQOKHMYYDTTJAFA%2F20260621%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20260621T084441Z&X-Amz-Expires=60&X-Amz-Signature=0f200322014bf157d65aa08e9b1d4f33708b88b3d4a9cb1c4fc2d78a44324dee&X-Amz-SignedHeaders=host&response-cache-control=private%2C+no-store%2C+max-age%3D0&response-content-disposition=attachment%3B+filename%3D%22_GW_INSTEK_GLC-9000_USER-MANUAL_EN.pdf%22%3B+filename%2A%3DUTF-8%27%27%255BGW_INSTEK%255DGLC-9000_USER-MANUAL_EN.pdf&response-content-type=application%2Fpdf&response-expires=1997-07-28T05%3A00%3A00Z",
+    "https://geniuss.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMTA0MTQ3NjYzODBlZmVkNzdhIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjIwMjExNzk1OTk3Njc3ZjNmNSI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDIyMDIxMTY1NTMyMzMzZDg2YzkiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5OWQ4OTNkY2Y1NTAiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://geniuss.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMTA0MTQ3NjYzODBlZmVkNzdhIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjIwMjExNzk1OTk3Njc3ZjNmNSI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDIyMDIxMThlM2EzMzk3ZTM0MTMiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5Y2M5ODkwZTNjMDEiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://hstek.co.kr/product/product.php?idx=351&mode=view&offset=36",
+    "https://ite.softss.co.kr/eng/sub.php?menukey=129",
+    "https://manuals.plus/m/bc45cda042f472caab19df78053c5f8d3e88ad2a6e155945c1a6d2a5f590728b",
+    "https://manualzilla.com/doc/5728874/model-icm-03-user-s-manual",
+    "https://manualzz.com/doc/66197536/gw-instek-glc-9000-leakage-current-tester-user-manual",
+    "https://pdfcoffee.com/electrosurgical-analyzersqaesumeng01001pdf-pdf-free.html",
+    "https://ro.scribd.com/document/808690307/Associated-Research-8204-Manual",
+    "https://www.eitaiinst.com/pages/downloads",
+    "https://www.etcrmeter.com/software-download_2",
+    "https://www.gwinstek.co.kr/sub/sub01_01.php?cat_no=&idx=205&offset=&pmode=view",
+    "https://www.manualslib.com/manual/1233421/Extech-Instruments-7630.html",
+    "https://www.manualslib.com/manual/2844052/Meiruike-Rk9950-Series.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

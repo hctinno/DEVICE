@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_102.json",
+  "original_log_sha256": "48f9af50fd90bfad4841af3ea1a5782df2f846690492d2be0a5db4f90b339f5c",
+  "original_log_bytes": 31470,
+  "queries": [
+    "KAISE CORPORATION SK-3800 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.handheld.com/Site.aspx/na/en/developers/download_software/",
+    "http://www.kaise.com",
+    "http://www.kaise.com/NewEnglish.htm",
+    "http://www.kaise.com/automotive_2500E.htm",
+    "http://www.kaise.com/automotive_topE.htm",
+    "https://cdn.tecotecshop.com/Repository/Kaise/KAI02/e_instruction_sk8535_2.pdf",
+    "https://jw.manuals.plus/kalse/sk-3800-handy-milliohm-tester-manual",
+    "https://manualmachine.com/kaise/",
+    "https://manualsdump.com/en/manuals/hand_held_products-3900model-3800model/146828/117",
+    "https://www.kaise.com/catalog/e_catalog_sk3800.pdf",
+    "https://www.kaise.com/e_car_sk3800.html",
+    "https://www.kaise.com/e_car_sk8535_verup3.html",
+    "https://www.kaise.com/e_car_sk8536_verup.html",
+    "https://www.kaise.com/e_car_sk8551_verup.html",
+    "https://www.kaise.com/e_catalog.html",
+    "https://www.kaise.com/e_manual.html",
+    "https://www.kaise.com/manu/e_instruction_sk2500.pdf",
+    "https://www.kaise.com/manu/e_instruction_sk3800.pdf",
+    "https://www.scribd.com/document/1064849072/S3800-user-manual",
+    "https://www.scribd.com/document/595896246/3800-Manual",
+    "https://www.torano-te.jp/v/g00706783/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

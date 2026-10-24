@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_249.json",
+  "original_log_sha256": "98819a55c52ef4f27e9feca7e5e6f6037b4d0549347d5140eed3bd3078f9c1f6",
+  "original_log_bytes": 35206,
+  "queries": [
+    "DIGITEK POWER DDPS 100K manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.mediafire.com/folder/1qtg8k2c03IIj/DPS3005_file",
+    "https://ae01.alicdn.com/kf/S52c6512b8f854341acfd606199394704q.pdf",
+    "https://ae01.alicdn.com/kf/S83d32308a87b46ee9e1d7d2635dbf291K.pdf",
+    "https://dearborngroup.com/documents/",
+    "https://device.report/manuals/rk6006c-constant-voltage-current-dc-power-supply-manual",
+    "https://kt-prog.com/ecu-programmer-software-installation-guide/",
+    "https://manuals.plus/ae/1000004279003",
+    "https://manuals.plus/m/4a33375118efb97fdc1558109e44b53d155c2a975adc24f31369a98302ac31f0",
+    "https://www.dgtech.com/faqs/",
+    "https://www.manualzz.com/doc/30360454/adaptive-power-systems-dps-series-programmable-dc-power-s",
+    "https://www.mediafire.com/folder/3iogirsx1s0vp/DPS_communication_upper_computer",
+    "https://www.pwcontrol.eu/upload/iblock/5e0/ltssxo1fi4v21jk5864d4nanioge3tub.pdf",
+    "https://www.scribd.com/document/522481326/Operation-and-PC-and-APP-Instruction-for-Digital-Control-Constant-Voltage-Constant-Current-Power-Supply-Without-Power-Part",
+    "https://www.scribd.com/document/906186010/Operation-and-PC-and-APP-Instruction-for-Digital-Control-Constant-Voltage-Constant-Current-Power-Supply-With-Power-Part",
+    "https://www.sigrok.org/wiki/RDTech_DPS_series",
+    "https://www.telonics.com/software/",
+    "https://www.xeltek.com/resources/technical-articles/instructions-and-support/superprosoftware/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

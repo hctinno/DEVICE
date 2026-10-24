@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_031.json",
+  "original_log_sha256": "7fb94dca45bdfdec6a759b2a4b8244f7244bd95f6548d52a71e2ce40c4f634aa",
+  "original_log_bytes": 32269,
+  "queries": [
+    "FLUKE 17B MAX manual programming software"
+  ],
+  "discovered_urls": [
+    "https://manuals.plus/m/4d133af7ad8b0f82cfb028d31631185564d944a579105b3aaefb1ae77d459ae9",
+    "https://manuals.plus/m/95af6f3ba4c3bd60d377e3e547797d323bb1227529ede7de2bcff380e6fee989",
+    "https://manuals.plus/m/a08f426e25e8a61fffb82858b58684bd6f896eebc1a4ddb161c5e78a7e553a5f",
+    "https://manualzz.com/doc/67953811/fluke-17b-max-digital-multimeter-manual",
+    "https://manualzz.com/doc/78986893/fluke-17b-max-digital-multimeter-manual",
+    "https://media.fluke.com/2e715d66-c53d-43fe-ad5a-b2e2011a9ce7_original%20file.pdf",
+    "https://renew-www.tessol.com/products/logger/datalogger/accessory",
+    "https://tnps.kr/service/manual.php?boardid=down1&idx=134&mNum=5&mode=view&sNum=3",
+    "https://www.es.co.th/Documents/15B%2817B%29MAX_M.PDF",
+    "https://www.fluke.com/en-au/product/electrical-testing/digital-multimeters/fluke-17b-max",
+    "https://www.fluke.com/en-in/product/electrical-testing/digital-multimeters/fluke-17b-max",
+    "https://www.fluke.com/en-my/product/electrical-testing/digital-multimeters/fluke-17b-max",
+    "https://www.manuals.co.uk/fluke/17b-max/manual",
+    "https://www.notice-facile.com/en/manual/1355691/fluke%2B17b-max",
+    "https://www.reddit.com/r/AskElectronics/comments/1vdp8gy/fluke_17b_issue_in_continuity_mode/",
+    "https://www.reddit.com/r/fluke/comments/1o1poeq/is_this_normal_17b/",
+    "https://www.reddit.com/r/fluke/comments/1s86sk5/freeopensource_desktop_appcli_app_for_fluke/",
+    "https://www.reddit.com/r/fluke/comments/1vevkwx/17b_max01/",
+    "https://www.reddit.com/r/fluke/comments/1vm7kqq/fluke_17b_error/",
+    "https://www.tessol.com/data/item/1661839139/1661840041_6138_FLUKE15BMAX_17BMAXCalibrationManual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_040.json",
+  "original_log_sha256": "18b18c45751441135e38e32662e9ea6504dbc664209b607744ac21b75c4d8e0f",
+  "original_log_bytes": 29983,
+  "queries": [
+    "Sorensen XG60-25 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://accusrc.com/product-Sorensen-XG6025-9965",
+    "https://accusrc.com/uploads/datasheets/Sorensen%20XG60-28%20Datasheet.pdf",
+    "https://compumess.de/xg6-110-ac/dc-programmierbar-aus-6-v-dc-sorensen-ametek/",
+    "https://manuals.plus/m/bcce13e5387c155e6495d7e888a19320779775270dbc7b293bdc67e3bed70223",
+    "https://manualzz.com/doc/90287684/sorensen-sgx-series-high-power-modular-dc-supply-owner-s-",
+    "https://manualzz.com/doc/o/apcko/ametek-sorensen-xg-operation-manual-local-operation",
+    "https://maximinstruments.com/pdf_files/Sorensen_XG_300-5_Datasheet.pdf",
+    "https://maximinstruments.com/pdf_files/Sorensen_XG_60-25_Datasheet.pdf",
+    "https://maximinstruments.com/products/sorensen_xg_60_25_programmable_dc_power_supply_60v_25a_1500w",
+    "https://www.easymanua.ls/ametek/sorensen-xg-40-21/manual",
+    "https://www.easymanua.ls/ametek/sorensen-xg-40-38/manual",
+    "https://www.easymanua.ls/ametek/sorensen-xg-60-28/manual",
+    "https://www.lockinc.com.tw/v_comm/inc/product_file_download.asp?customer_id=2496&file_name=p_190326_07361.pdf&id=619793&lang=1",
+    "https://www.manualslib.com/products/Ametek-Sorensen-Xg-Series-9902123.html",
+    "https://www.netes.com.tr/netes/dosyalar/dosya/5F60F5B0F91B02DFC455D3AB7529EF7E.pdf",
+    "https://www.transcat.ca/media/pdf/ametek-programmable-power-programming-manual-sgx.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

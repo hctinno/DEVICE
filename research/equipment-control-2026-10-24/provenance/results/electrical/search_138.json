@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_138.json",
+  "original_log_sha256": "288b67653c75c32215c471158cf4be92eb592c8d3c1c00b64699fc002a0c4876",
+  "original_log_bytes": 27094,
+  "queries": [
+    "KIKUSUI PWR801ML manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download/cat_pwr-01/",
+    "https://global.kikusui.co.jp/download/pwr-01/",
+    "https://global.kikusui.co.jp/spec/pwr-01_800w_ac-input/",
+    "https://global.kikusui.co.jp/spec/pwr-01_800w_output/",
+    "https://global.kikusui.co.jp/w2-2/dc-power-supply-en/pwr-01-en/pwr-01-series-800w-model/?attribute_pa_cc-a=0-to-3-70a&attribute_pa_cv-v=0-to-650v-en&attribute_pa_wattage=800w-en",
+    "https://in.kikusui.co.jp/download/cat_pwr-01/",
+    "https://in.kikusui.co.jp/kikusupport/what-is-the-line-up/",
+    "https://in.kikusui.co.jp/w2-2/dc-power-supply-in/pwr-01-in/pwr-01-series-800w-model/",
+    "https://kikusui-europe.com/download/pwr-01/",
+    "https://kikusui-korea.co.kr/files/PDF/PWR_01_M.pdf",
+    "https://kikusui.co.jp/download/cat_pwr-01/",
+    "https://kikusui.co.jp/w2-2/dc-power-supply/pwr-01/pwr-01-800w/",
+    "https://kikusuiamerica.com/download/pwr-01/",
+    "https://kikusuiamerica.com/products-index/dc/pwr-01/",
+    "https://kikusuiamerica.com/w2-2/dc-power-supply-en_us/pwr-01-en_us/pwr-01-series-800w-model/",
+    "https://manual.kikusui.co.jp/P/PWR01_V3_E1.pdf",
+    "https://vn.kikusui.co.jp/download/cat_pwr-01/",
+    "https://vn.kikusui.co.jp/w2-2/dc-power-supply/pwr-01/pwr-01-series-800w-model/",
+    "https://www.kikusui.cn/resources/001/pdf/pwr-01_interface_manual_202402.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pwr-01_users_manual_en.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

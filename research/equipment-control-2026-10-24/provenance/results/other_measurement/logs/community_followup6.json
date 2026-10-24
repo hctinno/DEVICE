@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup6.json",
+  "original_log_sha256": "e6460531a9d2f87ff850ad62acf5e99b9b376aaa2283af2b16355e5dce6757ae",
+  "original_log_bytes": 355,
+  "queries": [
+    "site:github.com \"DG-S420\" \"BLUETEC\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

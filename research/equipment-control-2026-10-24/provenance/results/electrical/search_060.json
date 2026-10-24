@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_060.json",
+  "original_log_sha256": "337b95cf49ae3fdbe3da5157fe901d9a524864c88a607247a2a42ff5c7b86fdd",
+  "original_log_bytes": 27011,
+  "queries": [
+    "ITECH IT6018D-1500-40 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/1670255463cd3d19bb76865975c1ed90ec27f4f4ec0b5177546b3aaba0fddd12.pdf",
+    "https://device.report/m/e1812b93225085f7b6b056a5b149bb5caaeb2f8da451b5d7fd12e324b5a27b9e",
+    "https://manuals.plus/category/itech-wearables",
+    "https://manuals.plus/m/1670255463cd3d19bb76865975c1ed90ec27f4f4ec0b5177546b3aaba0fddd12",
+    "https://manuals.plus/m/8d8c78e3f383f378ead65a4ddbd4e473d1c01a1880cbea693ac6c8667003ee85",
+    "https://manualzz.com/doc/70617436/itech-it6005c-80-150--it6010c-80-300--it6018c-1500-40-use",
+    "https://manualzz.com/doc/73212148/itech-it6010d-80-300--it6015d-80-450-user-manual",
+    "https://project.itechate.com/uploadfiles/catalogue/IT6000D-en.pdf",
+    "https://usa.itechate.com/uploadfiles/2019/09/20190902105609569.pdf",
+    "https://www.4test.no/IT6018D-1500-40.htm",
+    "https://www.altoo.dk/files/itech/manuals/IT6000D-User-Manual.pdf?srsltid=AfmBOopgaOzCccIbfwyZpFuaNna_PGX7aVMgDpKaSyGuvnrFtW8SDgj2",
+    "https://www.altoo.dk/files/itech/manuals/IT6000D-User-Manual.pdf?srsltid=AfmBOoq-zcLJDRfHycclPgxIOk5-1MqhYQERykIgZYkYx9E2FvlcGLLd",
+    "https://www.itechate.com/en/product/dc-power-supply/IT6000D.html",
+    "https://www.itechate.com/uploadfiles/2019/09/20190902110036036.pdf",
+    "https://www.manualslib.com/brand/itech/power-supply.html",
+    "https://www.scribd.com/document/1006032626/IT6000D-Series-User-Manual",
+    "https://www.scribd.com/document/881847211/IT6000D-User-Manual",
+    "https://www.ttid.co.uk/dc-power-supplies/itech/it6000d-series"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item236.json",
+  "original_log_sha256": "1b1de3e3e52155584c5e50d35c356bfb59744970b9357249591538cf344ffd20",
+  "original_log_bytes": 14436,
+  "queries": [
+    "LUTRON \"AQ-9901SD\" software interface manual",
+    "site:github.com \"AQ-9901SD\" LUTRON"
+  ],
+  "discovered_urls": [
+    "https://inspectusa.com/lutron/webpages/mainitems/indexmodelp1.htm",
+    "https://lutron.com.vn/system/storage/download/AQ-9901SD.pdf.6C9J0Lr2cX4maui7xTwEKdvqk0BZznhR",
+    "https://manuals.plus/m/d3c3e4a666e9fafcd850554585353a809a5c2558d125d3c7f51443720b189ff3",
+    "https://manuelutilisateur.fr/lutron-electronics/measuring-instrument/aq-9901sd/installation-manual/1qq2v",
+    "https://manuzoid.com/manuals/60y1D-Lutron%20Electronics%20AQ-9901SD%20Operating%20instructions",
+    "https://meterbd.wixsite.com/meterbd/product-page/lutron-aq-9901sd-air-quality-meter",
+    "https://ndtkala.co/wp-content/uploads/2023/10/lutron-aq-9901sd.pdf",
+    "https://syariftama.com/product/lutron-aq-9901sd-air-quality-meter/",
+    "https://uji.co.id/product/pengukur-kualitas-udara-lutron-aq-9901sd/",
+    "https://www.icmaster.com.hk/PDF/LUTRON%20AQ9901SDO2.pdf",
+    "https://www.lutronelectronic.com/database/pdf/AQ-9901SD.pdf",
+    "https://www.lutronelectronic.com/webpages/mainitems/IndexmodelP1.htm",
+    "https://www.lutroninstruments.eu/oxymeters/co-and-co2-meter-aq-9901sd/",
+    "https://www.manualslib.com/brand/lutron-electronics/",
+    "https://www.manualslib.com/brand/lutron-electronics/measuring-instruments.html",
+    "https://www.official.cz/static/_user/pdf/lutron_short_form_2016b.pdf",
+    "https://www.yellowpages.net/product%2CLutron-AQ-9901SD-6-in-1-Air-Quality-Meter%2C15352.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

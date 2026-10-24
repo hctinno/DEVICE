@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_088.json",
+  "original_log_sha256": "32baa53533c9fd3655ea32dbde921f3485651f119ac116e0408d890be1db9a88",
+  "original_log_bytes": 31372,
+  "queries": [
+    "HCT \"SM-R-604(1M_THRU)\" manual programming driver API GitHub",
+    "HCT \"SM-R-604(3M_7G HPF+LNA)\" manual programming driver API GitHub",
+    "SCM Technology \"Leakage Current Switch Box\" manual programming driver API GitHub",
+    "VECTOR \"VN1640A\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://fr.mathworks.com/hardware-support/vector.html",
+    "https://github.com/ImArjunJ/jcan",
+    "https://infostera.ru/upload/iblock/35a/35ab158ab7151b3fcff9b9813fb3495a.pdf",
+    "https://manuals.plus/m/f8ff15ff31bd2aac57539e82c1a6089f55da7ca9dc63fca191cfd8534776193d_optim.pdf",
+    "https://manualzz.com/doc/1594125/vector-vn1600-vn1610--vn1611--vn1630a--vn1640a-can-lin-in",
+    "https://manualzz.com/doc/7007580/vector-vn1600-interface-family-vn1610--vn1611--vn1630a--v",
+    "https://tooltechnologyapplication.com.pl/Wed-06-Jul-2022-9100.html",
+    "https://uk.mathworks.com/hardware-support/vector.html",
+    "https://usermanual.wiki/m/eb9ebf0e2877b4df65e4a662e02730f30cc75aa2a9f4f446b23b1333db4ac52b.pdf",
+    "https://usermanual.wiki/m/f8ff15ff31bd2aac57539e82c1a6089f55da7ca9dc63fca191cfd8534776193d_optim.pdf",
+    "https://www.artisantg.com/info/Vector_VN1610_Manual_202521193556.pdf",
+    "https://www.drivermax.com/VN1640A-Vector-Informatik-GmbH-USB-VID-1248-PID-1071-22_14_10_0-2022-07-27-4528620-driver.htm",
+    "https://www.drivermax.com/VN1640A-Vector-Informatik-GmbH-USB-VID-1248-PID-1071-8_9_22_0-2014-01-10-2567869-driver.htm",
+    "https://www.drivermax.com/VN1640A-Vector-Informatik-GmbH-USB-VID-1248-PID-1072-23_10_18_0-2023-03-23-4610977-driver.htm",
+    "https://www.drivermax.com/VN1640A-Vector-Informatik-GmbH-USB-VID-1248-PID-1073-23_10_18_0-2023-03-23-4610978-driver.htm",
+    "https://www.vector.com/en/product/rp1210-api/",
+    "https://www.vector.com/en/product/vn1600/",
+    "https://www.vector.com/int/en/products/products-a-z/hardware/network-interfaces/vn16xx/",
+    "https://www.williscreek.co.za/Thu-23-Oct-2025-19366.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

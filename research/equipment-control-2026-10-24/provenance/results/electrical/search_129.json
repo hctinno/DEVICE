@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_129.json",
+  "original_log_sha256": "c85445bf5d3cd5009505746ec4723d1f42f910ce113fcb474fbae4717a47f4d8",
+  "original_log_bytes": 28876,
+  "queries": [
+    "KIKUSUI PVS 60-46 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/",
+    "https://cache.industry.siemens.com/dl/files/726/50896726/att_3827/v1/sinvert_operating_instructions_PVS_600Serie_en-US.pdf",
+    "https://global.kikusui.co.jp/download-category-en/ivi-en/",
+    "https://global.kikusui.co.jp/product-category/software-en/",
+    "https://global.kikusui.co.jp/programming-guidebooks/",
+    "https://in.kikusui.co.jp/download-service/",
+    "https://kikusui-korea.co.kr/files/PDF/PAS_M.pdf",
+    "https://kikusui.co.jp/download/cat-pvs12-100/",
+    "https://kikusui.co.jp/downloads/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/drivers/",
+    "https://kikusuiamerica.com/support/",
+    "https://sg.kikusui.co.jp/dri-fir-upd/guidebook/",
+    "https://testequipment.center/Product_Documents/Kikusui-PVS60-46-Specifications-E8EB8.pdf",
+    "https://www.manualslib.com/brand/kikusui/power-supply.html",
+    "https://www.manualslib.com/manual/1468387/Kikusui-Pvs-7-5-300.html",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

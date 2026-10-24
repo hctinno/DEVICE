@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_053.json",
+  "original_log_sha256": "ffbaf4c4be10d9b00b2d66c345f42814a365996e890b7faa645041addaf3bef3",
+  "original_log_bytes": 27301,
+  "queries": [
+    "KIKUSUI PWR401ML manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/download/cat_pwr-01/",
+    "https://global.kikusui.co.jp/download/pwr-01/",
+    "https://global.kikusui.co.jp/spec/pwr-01_400w_output/",
+    "https://global.kikusui.co.jp/w2-2/dc-power-supply-en/pwr-01-en/pwr-01-series-400w-model/",
+    "https://kikusui-europe.com/download/cat_pwr-01/",
+    "https://kikusui-europe.com/download/pwr-01/",
+    "https://kikusui-europe.com/w2-2/dc-power-supply/pwr-01/pwr-01-series-400w-model/",
+    "https://kikusui-korea.co.kr/files/PDF/PWR_01_M.pdf",
+    "https://kikusui.co.jp/download/cat_pwr-01/",
+    "https://kikusui.co.jp/w2-2/dc-power-supply/pwr-01/pwr-01/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/download/cat_pwr-01/",
+    "https://kikusuiamerica.com/download/pwr-01/",
+    "https://kikusuiamerica.com/products-index/dc/pwr-01/",
+    "https://kikusuiamerica.com/w2-2/dc-power-supply-en_us/pwr-01-en_us/pwr-01-series-400w-model/",
+    "https://www.kikusui-korea.co.kr/files/PDF/PWR_01_D.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pwr-01_interface_manual.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pwr-01_interface_manual_202402.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pwr-01_users_manual_en.pdf",
+    "https://www.n-denkei.com/taiwan/items/product/kikusui-pwr-01-2/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

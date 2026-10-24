@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_5.json",
+  "original_log_sha256": "96420f55c698caf9199f25bfce4e19ddb5acc833ad22dd3d25e681d40bea0a92",
+  "original_log_bytes": 27003,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/SengerM/VotschTechnik-climate-chamber-Python",
+    "https://github.com/Solla/IMADA_LoadCell_3rdPartyApplication",
+    "https://github.com/akaeba/ATWG",
+    "https://github.com/akaeba/ATWG.git",
+    "https://pymeasure.readthedocs.io/en/latest/api/instruments/thermotron/thermotron3800.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_272.json",
+  "original_log_sha256": "305accdea72abf3312bf2dcc23c2631d4c716fafe3b9617800d483de1885ee44",
+  "original_log_bytes": 31773,
+  "queries": [
+    "FUJITSU EUL-600aXL manual programming software"
+  ],
+  "discovered_urls": [
+    "http://support.ts.fujitsu.com/indexdownload.asp?",
+    "http://www.fme.gsdc.de/gsdc.htm",
+    "http://www.xfree86.org/",
+    "https://americas.fujielectric.com/what-are-the-ways-to-program-an-ac-drive/",
+    "https://manualzilla.com/doc/5821791/fujitsu-developer-suite-user-manual?page=153",
+    "https://manualzz.com/doc/13250927/fujitsu-f%C2%B2mc-16lx-workbench-software-application-note",
+    "https://manualzz.com/doc/o/g1bhy/fujitsu-f%C2%B2mc-16lx-workbench-software-application-note-7-download-program-to-flash-mcu",
+    "https://paperzz.com/doc/7923183/software-setup-manual",
+    "https://shop.lan-x.no/pdf/F689C7C6-68A0-4862-92E8-EB8A988C81B9.pdf",
+    "https://studylib.net/doc/18529056/elux-ng---fujitsu-technical-support-pages-from-fujitsu",
+    "https://support.ts.fujitsu.com/Search/SWP1106524.asp",
+    "https://support.ts.fujitsu.com/deskupdate/index.asp?lng=at",
+    "https://washiq.net/bc-technical-service/",
+    "https://www.fujielectric.com/products/sensors_measurements/instruments/product_series/software_controller.html",
+    "https://www.fujitsu-general.com/datafiles/W9708313061-0501_ST_En_UTY-ASGXZ1.pdf",
+    "https://www.fujitsu-general.com/datafiles/W9708870014-0802_IC_En_UTY-ALGXZ1.pdf",
+    "https://www.fujitsugeneral.com/shared/us/pdf-fgus-vrf-ctlg-2023-01.pdf",
+    "https://www.manualsdir.com/manuals/102335/fujitsu-fmc-16lx_fr.html?page=7",
+    "https://www.reddit.com/r/PLC/comments/16y3q3d",
+    "https://www.unipulse.com/product/setting-tool-sls12/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

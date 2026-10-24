@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_033.json",
+  "original_log_sha256": "7523525c96dd5483cc1efbd13b36c6358d4f4d07b02e7257c7414c1980b1f793",
+  "original_log_bytes": 27044,
+  "queries": [
+    "KIKUSUI PLZ150U manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/download/cat_plz-u/",
+    "https://global.kikusui.co.jp/download/plz-u/",
+    "https://global.kikusui.co.jp/w2-2/electronic-load-en/plz-u-en/plz-u-series/",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_U_D.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PLZ_U_M.pdf",
+    "https://kikusui.co.jp/download/plz-u/",
+    "https://kikusuiamerica.com/download/cat_plz-u/",
+    "https://kikusuiamerica.com/w2-2/electronic-load-en_us/plz-u-en_us/plz-u-series/",
+    "https://manualzz.com/doc/60985662/kikusui-plz-30f--plz-50f--plz150u--plz70ua-operation-manuals",
+    "https://ph.kikusui.co.jp/download/cat_plz-u/",
+    "https://ph.kikusui.co.jp/w2-2/electronic-load-ph/plz-u-series/plz-u-series/",
+    "https://sc-journal.com/device/kikusui/plz150u/",
+    "https://telonic.co.uk/jg/wp-content/uploads/2021/05/Kikusui-PLZ-U-OperationManual.pdf",
+    "https://www.manualslib.com/manual/1399201/Kikusui-Plz150u.html",
+    "https://www.manualslib.com/manual/1399201/Kikusui-Plz150u.html?page=122",
+    "https://www.manualslib.com/manual/1399201/Kikusui-Plz150u.html?page=64",
+    "https://www.manualslib.com/manual/1399201/Kikusui-Plz150u.html?page=68"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

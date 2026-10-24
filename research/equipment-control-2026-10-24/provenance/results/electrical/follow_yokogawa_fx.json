@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_yokogawa_fx.json",
+  "original_log_sha256": "057553abe5ed0bdb177211753d3619e5b681de28c752f1af2eadae5cdd6f7e5d",
+  "original_log_bytes": 29598,
+  "queries": [
+    "Yokogawa FX1000 FX1006 communication manual"
+  ],
+  "discovered_urls": [
+    "http://www.yokogawa.com/ns/fx1000/im/",
+    "https://manualmachine.com/yokogawa/fx1002/17904999-user-manual/",
+    "https://manualzz.com/doc/61478954/yokogawa-fx1000-user-manual",
+    "https://manualzz.com/doc/6592795/yokogawa-fx1000-fx1002--fx1004--fx1006--fx1008--fx1010--f",
+    "https://manualzz.com/doc/html/61685556/yokogawa-fx1000--fx1004--fx1006--fx1008--fx1010-installat",
+    "https://quote.us.yokogawa.com/PageConfig/Index?itemType=Model&model=FX1006&pageId=1444.0",
+    "https://web-material3.yokogawa.com/IM04L21B01-01EN.pdf",
+    "https://web-material3.yokogawa.com/IM04L21B01-01EN_030.pdf",
+    "https://web-material3.yokogawa.com/IM04L21B01-01EN_040.pdf",
+    "https://web-material3.yokogawa.com/IM04L21B01-17EN.pdf",
+    "https://www.manualsdir.com/manuals/360249/yokogawa-value-series-fx1000.html?page=74",
+    "https://www.manualslib.com/manual/1374950/Yokogawa-Fx1000.html",
+    "https://www.yokogawa.co.jp/solutions/products-and-services/measurement/data-acquisition-products/panel-mount-recorders/value-series-fx1000/",
+    "https://www.yokogawa.com/cn/solutions/products-and-services/measurement/data-acquisition-products/panel-mount-recorders/value-series-fx1000/",
+    "https://www.yokogawa.com/solutions/products-and-services/measurement/data-acquisition-products/panel-mount-recorders/value-series-fx1000/",
+    "https://www.yokogawaelectric.org/solutions/products-and-services/measurement/data-acquisition-products/panel-mount-recorders/value-series-fx1000/index.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

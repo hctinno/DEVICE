@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_acpower.json",
+  "original_log_sha256": "e8ececb54673d8aa2d756b29fc32ff2a55fbedfcb64e48391fbf38b155a1b278",
+  "original_log_bytes": 24966,
+  "queries": [
+    "에이씨피코리아 AFC-1010 AFC-3030 통신 매뉴얼"
+  ],
+  "discovered_urls": [
+    "https://assets.danfoss.com/documents/273180/AQ361180646341ko-000101.pdf",
+    "https://constructioninstruction.com/wp-content/uploads/2024/05/SPAN-Panel-32-Installation-Manual.pdf",
+    "https://datech.co.kr/home/bbs/board.php?bo_table=down",
+    "https://elec4.co.kr/media/pdf/201703Inside4_drone1.pdf",
+    "https://for-a.co.kr/165",
+    "https://hiokikorea.com/product/product_view.html?c_id=A015004&p_no=206",
+    "https://hjwpmonthly300.com/samsung-system-ac-error-codes/",
+    "https://kr.mitsubishielectric.com/fa/ko/board.do?act=UserSearch",
+    "https://m.lisan.co.kr/exec/front/Board/download/?filename=Flasher_10_%EC%82%AC%EC%9A%A9%EC%9E%90_%EC%84%A4%EB%AA%85%EC%84%9CE_100430.pdf&no=349&realname=bc044ec957c442ededf90344f22937f8.pdf",
+    "https://sh1000.co.kr/ko/pages/etc_02.php",
+    "https://stores.auction.co.kr/hvac34/List?Category=34000000&CategoryType=General&DisplayType=SmallImage&IsFreeShipping=False&MaxPrice=0&MinPrice=0&Page=0&PageIndex=0&PageSize=120&SortType=NewlyListed&isStarDeliveryItem=False",
+    "https://stores.auction.co.kr/hvac34/List?CategoryType=General&DisplayType=SmallImage&IsFreeShipping=False&MaxPrice=0&MinPrice=0&Page=11&PageIndex=11&PageSize=120&SortType=MostPopular&isStarDeliveryItem=False",
+    "https://www.datech.co.kr/home/bbs/board.php?bo_table=down",
+    "https://www.g2b.go.kr/pn/pnp/pnpe/UntyAtchFile/downloadFile.do?bidPbancNo=R25BK00924646&bidPbancOrd=000&fileSeq=3&fileType=",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A015004&p_no=206",
+    "https://www.se.com/kr/ko/download/document/SPD_BFER-8THM22_KO/",
+    "https://www.wison.co.kr/sub_product/prod1_view.php?cate=0001_&p_idx=229&pg=1"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

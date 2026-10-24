@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item345.json",
+  "original_log_sha256": "97884f3a78755a112a590ee6d4409b1754ea90cbeb73bb96fae410fda13705c6",
+  "original_log_bytes": 6483,
+  "queries": [
+    "Keller \"LE02\" software interface manual",
+    "site:github.com \"LE02\" Keller"
+  ],
+  "discovered_urls": [
+    "https://87cbc265-84a5-4eb2-8553-30a9c341113d.filesusr.com/ugd/132ee5_59b650986c5f4e578af811fde1aa7aa5.pdf",
+    "https://aprenderly.com/doc/1770804/manual-vfd-e?page=215",
+    "https://aprenderly.com/doc/1770804/manual-vfd-e?page=323",
+    "https://es.scribd.com/document/214761042/VFD-E-manual-sp-pdf",
+    "https://industry.plantautomation-technology.com/suppliers/keller-pressure/catalog/1653047280-KELLER-Interface-Converter.pdf",
+    "https://manualmachine.com/christie/enterohb/27823824-user-manual/",
+    "https://manualzilla.com/doc/5980578/christie-entero-hb-software-user-manual",
+    "https://manualzz.com/doc/6498346/christie-entero-hb-projector-software-user-manual",
+    "https://ru.scribd.com/doc/293241559/vfd-e-manual-rus-pdf",
+    "https://www.galcanada.com/downloads/controllers/GIV%20KEB%20AC%20PM%20Gearless%20Quickstart_old.pdf",
+    "https://www.manualslib.com/manual/2902457/Keb-Combivert-F5.html?page=159",
+    "https://www.manualslib.com/manual/4126128/Nidec-Motion-4000.html?page=501",
+    "https://www.novelty.fr/wp-content/uploads/downloaded/downloads/materiel_manuels/elation_tvl2000_manuel.pdf",
+    "https://www.scribd.com/document/439730010/KEB-v3-21-Rev1A-08-2014-pdf",
+    "https://www.scribd.com/document/774292009/KEB-v3-21-Rev1E-02-2017-1-Manual",
+    "https://www.vivitekcorp.com/files/20230824084947533.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

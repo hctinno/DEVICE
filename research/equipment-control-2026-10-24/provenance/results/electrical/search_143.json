@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_143.json",
+  "original_log_sha256": "e8bb080641b30717359d1476a8302ba7a7a16d3272311cf56e7a4db3fbfd79d9",
+  "original_log_bytes": 30427,
+  "queries": [
+    "CHROMA 61502 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://docs.ampnuts.ru/eevblog.docs/Chroma/61501_61502_61503_61504/E_61501-4UM_1001.pdf",
+    "https://manualzz.com/doc/6807883/chroma-6150-1--2--3--4-programmable-ac-source-user-s-manual",
+    "https://manualzz.com/doc/o/po07m/chroma-61501-user-manual-remote-operation",
+    "https://studylib.net/doc/27647507/chroma-61500-ac-source-user",
+    "https://www.chroma.si/IzmenicniViri/61501-EN.pdf",
+    "https://www.chromaate.com/eu/data_center/61500_61600_series_ac_power_source",
+    "https://www.chromaeu.com/en/data_center/driver",
+    "https://www.chromausa.com/document-library/manual-61500-series/",
+    "https://www.electronicsandbooks.com/edt/manual/Hardware/C/Chroma%20www.chomausa.com/UM-61501~4-acsource-v1.7-062013%20%5B132%5D.pdf",
+    "https://www.jabse.com/L0Nocm9tYQ--",
+    "https://www.manualsdir.com/manuals/318475/atec-chroma-61500-series.html?page=5",
+    "https://www.manualslib.com/manual/1282037/Chroma-61501.html?page=65",
+    "https://www.manualslib.com/manual/3842988/Chroma-61504.html",
+    "https://www.manualslib.com/manual/3842989/Chroma-61502.html",
+    "https://www.ntecusa.com/Test-Equipment-Sales/AC-Power-Supplies/Chroma-61502/20633B1140224CBF7ECFAE877F10F7D7"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

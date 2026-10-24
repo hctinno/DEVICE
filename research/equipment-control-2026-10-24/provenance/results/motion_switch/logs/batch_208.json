@@ -1,0 +1,41 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_208.json",
+  "original_log_sha256": "ab15077a321916ece649a30e3fe52378e6ed6ad40db784982a9f65991aee58ea",
+  "original_log_bytes": 28595,
+  "queries": [
+    "ETS-Lindgren \"2092\" manual programming driver API GitHub",
+    "Elex Polytech \"TC60601-MD\" manual programming driver API GitHub",
+    "HD \"KMS560\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FMSR-05B (7G HPF+LNA)\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://112.cachefly.net/telegraf/telegraf/actions",
+    "https://device.report/m/d019bddaba636df7224467ab9902472ffff3bf4d5de6552513de3820eb868c79.pdf",
+    "https://es.scribd.com/document/962916261/5-1-Descarga-e-Importacion-Dispositivos-Knx",
+    "https://fcc.report/FCC-ID/A3LSMF741JPN/7377752.pdf",
+    "https://fcc.report/FCC-ID/A3LSMX520/8096194.pdf",
+    "https://forum.timberwolf.io/viewtopic.php?sid=e91a0ccb8176903563fcf1fa0712b9a6&t=3731",
+    "https://garystockbridge617.getarchive.net/amp/media/ubekendt-italiensk-landskab-i-forgrunden-hagar-ismael-og-en-engel-1848-kms560-e051e4",
+    "https://ghe.derekchia.com/repo/wmbusmeters/wmbusmeters",
+    "https://gist.github.com/JuliusGel/fb6d800400899759ec1574904921b9a6",
+    "https://gitblind.noratr.app/wmbusmeters/wmbusmeters/issues",
+    "https://github.com/GoogleChrome/lighthouse/issues/2092",
+    "https://github.com/siddharthkp/lighthouse-ci/blob/c3938a2523434f26ea7963b0546fb241d4f21d36/index.js",
+    "https://github.itlym.cn/wmbusmeters/wmbusmeters/issues",
+    "https://lister.sikt.no/hyperkitty/list/nav-users%40lister.sikt.no/thread/PNHPB3574FWQFWCEFED7AKYEOCP7GGQ7/",
+    "https://manuals.plus/m/0550f066839e78060f2e40aa09cbc91e2c566db6aefb95f11b3f61b3d631937f.pdf",
+    "https://manuals.plus/m/f2353e9c2302f697ef6cc59e6e2fdd72c71387be7a70ea91ad6ad0def3a3147d",
+    "https://manuals.plus/m/f2353e9c2302f697ef6cc59e6e2fdd72c71387be7a70ea91ad6ad0def3a3147d.pdf",
+    "https://www.artisantg.com/PLC/65933-3/ESCO-ETS-Lindgren-2092-Positioning-Controller",
+    "https://www.fcc.report/FCC-ID/O2Z-BTXZ0/1851985.pdf",
+    "https://www.futurasmus-knxgroup.com/producto.php?cod_producto=13000",
+    "https://www.microsoft.com/en-us/download/details.aspx?",
+    "https://www.nmdc.ac.cn/jlbz/18401.jhtml",
+    "https://www.scribd.com/document/722052878/GZEM240100009101-D",
+    "https://www.sensoray.com/wiki/index.php?action=edit&oldid=1906&title=826"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

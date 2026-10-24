@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_117.json",
+  "original_log_sha256": "d93fd3e6b5dd301772720cbff8ab6691fe6fafd55a846d7f95d3c3ea2c4cf8dd",
+  "original_log_bytes": 23237,
+  "queries": [
+    "ETAC \"TH412HA\" Temp. & Humidity Chamber 1",
+    "IMADA \"FB-50K\" Push-Pull Gauge"
+  ],
+  "discovered_urls": [
+    "https://contents.growingnavi.com/pdf/P1137/imada_PS_PSS_PSM_FS_FB_.pdf",
+    "https://duon-tech.co.kr/product/%EB%8B%A4%EC%9D%B4%EC%96%BC-%ED%91%B8%EC%89%AC%ED%92%80%EA%B2%8C%EC%9D%B4%EC%A7%80-fb-50k/182/",
+    "https://imada.it/pdf/pp-e.pdf",
+    "https://omega-air.vn/may-do-luc-keo-nen-fb--fs-series-imada-p4182?d=1",
+    "https://shinzo.com.vn/thiet-bi-do-luc-keo-nen-imada-fb50k%26page%3D4",
+    "https://shinzo.com.vn/thiet-bi-do-luc-keo-nen-imada-fbfs-series",
+    "https://siplahtelkom.com/product/barang/4424922-push-pull-scale-50kgf-fb-50k",
+    "https://soldering102.blogspot.com/2016/05/pushpull-gauge-meter-imada-fb-50k.html",
+    "https://www.aajjo.com/product/50kg-imada-push-pull-gauge-fb-50k-in-pune-precision-tools-corporation",
+    "https://www.bhagwatihardwaredelhi.in/imada-japan-force-gauges-test-stands.html",
+    "https://www.elis.it/pdf/imada/Dinamometri-imada.pdf",
+    "https://www.excelinc.co.jp/products/pdf/imada_catalog.pdf",
+    "https://www.forcegauge.net/pdf/fb_e.pdf",
+    "https://www.indonetwork.co.id/product/jual-imada-push-pull-gauge-fb-50k-5863919",
+    "https://www.jri.co.kr/wp-content/uploads/2021/07/DS2-series_1_%EC%83%88%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.pdf",
+    "https://www.ruparupa.com/p/imada-push-pull-scale-50kgf-fb-50k-abu-abu.html",
+    "https://www.semiki.com/san-pham/imada-fb-50k-dong-ho-do-luc-keo-nen-50kg/",
+    "https://www.toolnshop.kr/viewgs/?goods=2815&gs=9707"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

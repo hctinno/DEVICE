@@ -1,0 +1,41 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/testo_github_verified.json",
+  "original_log_sha256": "b43fa4d5ec8a8589540843d42c3c1374f0ccae4cf21fe5a7da794eebf1e457ef",
+  "original_log_bytes": 21406,
+  "queries": [
+    "site:github.com \"testo\" \"545\" serial",
+    "site:github.com/testo/t175_t176_interface",
+    "site:github.com/testo/toolbox_classic 545"
+  ],
+  "discovered_urls": [
+    "https://github.com/Artikash/Textractor/blob/master/text.cpp",
+    "https://github.com/TopoToolbox",
+    "https://github.com/TopoToolbox/snapshot_data",
+    "https://github.com/TopoToolbox/topotoolbox3/blob/main/toolboxOptions.m",
+    "https://github.com/TopoToolbox/topotoolbox3/releases",
+    "https://github.com/YUDONGLING/",
+    "https://github.com/containers/toolbox",
+    "https://github.com/containers/toolbox/blob/main/profile.d/toolbox.sh",
+    "https://github.com/containers/toolbox/blob/main/toolbox",
+    "https://github.com/containers/toolbox/releases",
+    "https://github.com/coreos/toolbox/releases",
+    "https://github.com/olatiitalo/cutterPlugin/blob/master/cutter.pl",
+    "https://github.com/orgs/testo/repositories",
+    "https://github.com/ozontech/testo",
+    "https://github.com/ozontech/testo-toppings",
+    "https://github.com/ozontech/testo/blob/main/README.md",
+    "https://github.com/ozontech/testo/blob/main/examples/04_plugins/main_test.go",
+    "https://github.com/ozontech/testo/blob/main/examples/05_parallel/main_test.go",
+    "https://github.com/php-testo/testo",
+    "https://github.com/php-testo/testo/releases",
+    "https://github.com/testo",
+    "https://github.com/testo-lang",
+    "https://github.com/testo-lang/testo-examples",
+    "https://github.com/testo/toolbox_classic",
+    "https://training.github.com/downloads/github-git-cheat-sheet.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

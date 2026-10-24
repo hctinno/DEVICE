@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_289.json",
+  "original_log_sha256": "f0eaea5d635c69cde76ad92ac929c10ded3dc051c2d20cc9e24470aa73d228fd",
+  "original_log_bytes": 33877,
+  "queries": [
+    "YOKOGAWA 73201 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/IM73201-93Z2.pdf",
+    "https://cdn.tmi.yokogawa.com/IM73201E.pdf",
+    "https://cdn.tmi.yokogawa.com/files/uploaded/IM73201_E_070.pdf",
+    "https://devices.wolfram.com/devices/yokogawa-73201-r-digital-multimeter.html",
+    "https://guideslib.com/document/982063/yokogawa-73201-operation-user-s-manual-2/",
+    "https://manualmachine.com/yokogawa/73203/2499698-user-manual/",
+    "https://manualzz.com/doc/60235292/yokogawa-73201-user-manual",
+    "https://manualzz.com/doc/6693623/yokogawa-73201-user-manual",
+    "https://tmi.yokogawa.com/support/",
+    "https://www.koreayokogawa.com/support/download2.php",
+    "https://www.manualslib.com/brand/yokogawa/",
+    "https://www.manualslib.com/manual/1437639/Yokogawa-73201.html",
+    "https://www.manualslib.com/manual/646288/Yokogawa-73201.html",
+    "https://www.meter.com.my/index.php/products-mainmenu-32/by-brands-mainmenu-75/item/1126-digital-multimeters/5294-yokogawa-digital-multimeters-732-series",
+    "https://www.nexinstrument.com/assets/images/pdf/TY500.pdf",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.yokogawa.com/pdf/provide/E/GW/IM/0000026021/0/IM34M06Q16-01E.pdf",
+    "https://www.yokogawa.com/ymi/support/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

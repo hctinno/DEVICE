@@ -1,0 +1,21 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item348.json",
+  "original_log_sha256": "815ded746f06270a4a4a0e292a91ce1d922585400e374ef3bf3a641d8257c35e",
+  "original_log_bytes": 8123,
+  "queries": [
+    "Elex Polytech \"335-2-25-22\" software interface manual",
+    "site:github.com \"335-2-25-22\" Elex Polytech"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/60ddf3e1451a653602a3709ba353d2d46278b4e222bf3f32e0badf5d90b636e6",
+    "https://device.report/m/6149d87393f6bb621379e79afc22d720f51b91dbe620acd0dbe76df06df2bb61",
+    "https://es.scribd.com/document/359067501/CATALOGO-ATV71-pdf",
+    "https://es.scribd.com/document/934508443/03-ESMKT02023A15-cap3-Variadores",
+    "https://fr.scribd.com/document/443638742/catalogue-atv71-pdf",
+    "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/63422/SVN63422%20Slov.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

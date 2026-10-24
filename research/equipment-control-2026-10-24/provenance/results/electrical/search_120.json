@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_120.json",
+  "original_log_sha256": "b21c7c5f16eaaf6c664921f9d0584434764fc3777690727a3b6cdd4c80a2e839",
+  "original_log_bytes": 33328,
+  "queries": [
+    "KIKUSUI PWR1600L manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://goodmansystem.com/224/?idx=481",
+    "https://in.kikusui.co.jp/kikusupport/how-do-i-create-and-execute-sequences-in-pwr-01-series/",
+    "https://kikusui-korea.co.kr/files/PDF/PWR_M.pdf",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manualzz.com/doc/27673042/kikusui-pwr-400l--pwr-400m--pwr-400h--pwr-800l--pwr-800m-",
+    "https://manualzz.com/doc/60161926/kikusui-pwr400h--pwr400m--pwr800h--pwr800l--pwr800m-opera",
+    "https://manualzz.com/manual/Kikusui/PWR%2B1600L",
+    "https://manualzz.com/manual/Kikusui/PWR1600L",
+    "https://smtp.unitronicjaya.com/brosur/kikusui/PWR_USERS_E8.pdf",
+    "https://www.jays.co.kr/14_kikusui/KIKUSUI_Power-PWR-Series.asp?layer=1&maker=1",
+    "https://www.kikusui.cn/resources/001/pdf/pwr-01_interface_manual_202402.pdf",
+    "https://www.manualslib.com/brand/kikusui/power-supply.html",
+    "https://www.manualslib.com/manual/1042070/Kikusui-Pwr400l.html",
+    "https://www.manualslib.com/products/Kikusui-Pwr1600l-4037791.html",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

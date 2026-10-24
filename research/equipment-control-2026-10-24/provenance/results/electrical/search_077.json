@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_077.json",
+  "original_log_sha256": "96c1e8237662bc9ad91df7dcee81551513ff5a5ecd835d19c84777564dead476",
+  "original_log_bytes": 31720,
+  "queries": [
+    "Kingpo DF3-D-A-5-A-P1 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://en.kinco.cn",
+    "https://device.report/m/81981bc22c70f0a3eae34b3808743731815473eee29e6c2ce2dc23934cc067e9",
+    "https://device.report/m/bcc9e0c486f9c74b3d71fff46a09a441edaaaa3518c302c4ea542540a87709ae",
+    "https://en.kinco.cn/Download/D_enUserManual/PLC/Software%20manualfor%20K5_2019051",
+    "https://en.windcnc.com/service1/?keys=207",
+    "https://es.scribd.com/document/829503593/Manual-Kinco-Dtool-en-Espanol",
+    "https://manuals.plus/m/55fda6a60fb04aaafadba6da8081014bbbda2248c0e8d3abe77e6c7e08a4f2de",
+    "https://max.book118.com/html/2021/0628/8037012111003114.shtm",
+    "https://www.dgkingpo.com/wp-content/uploads/2025/10/Spark-Ignition-Test-Apparatus-Operation-Manual.pdf",
+    "https://www.electronics.jtekt.co.jp/en/download/plc/",
+    "https://www.electronics.jtekt.co.jp/en/knowledge-base/plc-10/",
+    "https://www.electronics.jtekt.co.jp/en/knowledge-base/plc-9/",
+    "https://www.icpdas-usa.com/king_product_documents.html",
+    "https://www.kinco.cn/product/158?classification_id=42",
+    "https://www.kingpocn.com/upload/file/202504/1744610324577688.pdf",
+    "https://www.pm-instrumentation.com/storage/13226/DF-family-Manual_V2.9_EN_20250902.pdf",
+    "https://www.scribd.com/document/747702794/Df3-Series-Manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

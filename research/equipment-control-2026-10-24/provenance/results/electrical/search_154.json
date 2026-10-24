@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_154.json",
+  "original_log_sha256": "19c4691120334d5a96c234bb9f2cd89fef0ff81e933493e71d04f1555e97c7a4",
+  "original_log_bytes": 33407,
+  "queries": [
+    "KIKUSUI TOS7200 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/download/cat_st/",
+    "https://global.kikusui.co.jp/download/tos7200/",
+    "https://global.kikusui.co.jp/w2-2/safety-tester-en/insulation-resistance-tester-en/tos7200/",
+    "https://goodmansystem.com/LAB/?bmode=view&idx=171442079",
+    "https://in.kikusui.co.jp/download/tos7200/",
+    "https://kikusui-korea.co.kr/files/PDF/TOS7200_M.pdf",
+    "https://kikusui-kr.com/goods/goods_view.php?goodsNo=1000000036",
+    "https://kikusui.co.jp/download/cat_st/",
+    "https://kikusui.co.jp/download/tos7200/",
+    "https://kikusui.co.jp/w2-2/safety-tester/insulation-resistance-tester/tos7200/",
+    "https://kikusuiamerica.com/download/cat_st/",
+    "https://kikusuiamerica.com/download/cat_st/?refresh=6a3a1a0f4c80f1782192655&wpdmdl=62579",
+    "https://kikusuiamerica.com/w2-2/safety-tester-en_us/insulation-resistance-tester-en_us/tos7200/",
+    "https://manualzilla.com/doc/5914237/user-s-manual%EF%BC%8F4.1mb---kikusui-electronics-corp",
+    "https://www.kikusui.cn/resources/001/pdf/tos7200_interface_manual.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/tos7200_users_manual_en.pdf",
+    "https://www.manuallib.com/file/kikusui-tos7200-user-manual/",
+    "https://www.manualslib.com/manual/1486511/Kikusui-Tos7200.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

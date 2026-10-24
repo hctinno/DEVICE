@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item239.json",
+  "original_log_sha256": "f66b0bc727e3700277baa725c24b9372815a102d4b55f09ac268a24fd3c07cf7",
+  "original_log_bytes": 16718,
+  "queries": [
+    "Fluke Biomedical \"451P\" software interface manual",
+    "site:github.com \"451P\" Fluke Biomedical"
+  ],
+  "discovered_urls": [
+    "http://www.elso.sk",
+    "https://assets.fluke.com/manuals/451P____omeng0101.pdf",
+    "https://download.elso.sk/fluke/manual/Fluke-Biomedical-2012.pdf",
+    "https://manualsnet.com/fluke/451p",
+    "https://mtcbiomedical.vn/images/upload/451p_manual.pdf",
+    "https://www.flukebiomedical.com/products/radiation-survey-meters/451p-radiation-detector-pressurized",
+    "https://www.flukebiomedical.com/resources/product-manual-search?ProductId=54790&page=2",
+    "https://www.flukebiomedical.com/sites/default/files/451p_omeng0102.pdf",
+    "https://www.flukebiomedical.com/sites/default/files/resources/451p_omeng0100.pdf",
+    "https://www.flukebiomedical.com/support/software-downloads?WBCMODE=PresentationUnpublished&page=4",
+    "https://www.flukebiomedical.com/support/software-downloads?page=0",
+    "https://www.flukebiomedical.com/support/software-downloads?page=1",
+    "https://www.manualsdir.com/manuals/767974/fluke-biomedical-451p.html",
+    "https://www.manualslib.com/guide/4414387/victoreen-451p-and-451p-de-si-ion-chamber-survey-meter-manual.html",
+    "https://www.manualslib.com/manual/1199917/Fluke-Victoreen-451p.html",
+    "https://www.manualslib.com/manual/1199917/Fluke-Victoreen-451p.html?page=12",
+    "https://www.manualslib.com/manual/1199917/Fluke-Victoreen-451p.html?page=16",
+    "https://www.manualslib.de/manual/222073/Fluke-Victoreen-451P.html",
+    "https://www.reddit.com/r/MedicalPhysics/comments/1hag65j"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

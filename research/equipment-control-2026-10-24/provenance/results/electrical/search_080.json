@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_080.json",
+  "original_log_sha256": "ec6c1ea89f0089654d489a3d624c217f6d8a4cf12143755de3bd74868871b134",
+  "original_log_bytes": 24624,
+  "queries": [
+    "ITECH IT8906G-150-600 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://compumess.de/it8906g-150-600-ac/dc-programmierbar-itech-electronics/",
+    "https://device.report/m/02705536eb8e4b8594d9ebeb008bab2e7cbe6f71bc0c9e749639942e91e1fbba",
+    "https://emin.vn/en/itechit8906g-150-600-itech-it8906g-150-600-dc-electronic-load-150v-600a-6kw-4u-10767183/pr.html",
+    "https://emin.vn/itechit8906g-150-600-tai-dien-tu-dc-itech-it8906g-150-600-150v-600a-6kw-4u-10767183/pr.html",
+    "https://jdingtech.com.tw/Official/download/brand%3DITECH%26model%3DProgram%26search%3D",
+    "https://manuals.plus/m/b162410b736e6b6a364446b870b32ccd724940f8ea476ea7573dcb8ef9dca5ce",
+    "https://manuals.plus/m/ffef5afe2513cf7d7b429bc903e7672ff5a5c5c4cf6425dbd49171c865677e59",
+    "https://usa.itechate.com/uploadfiles/usermanual/it8900gl/IT8900G-L%20User%20Manual-EN.pdf",
+    "https://www.altoo.dk/IT8906G-150-600.htm",
+    "https://www.itechate.com/en/product/dc-electronic-load/IT8900GL.html",
+    "https://www.itechate.com/uploadfiles/usermanual/it8900gl/IT8900G-L%20User%20Manual-EN.pdf",
+    "https://www.lidinco.com/product/tai-dien-tu-dc-cong-suat-cao-itech-it8900gl-series",
+    "https://www.manualslib.com/brand/itech/power-supply.html",
+    "https://www.manualslib.com/manual/3807198/Itech-It8900g-L-Series.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

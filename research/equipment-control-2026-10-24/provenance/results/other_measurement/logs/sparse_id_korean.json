@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/sparse_id_korean.json",
+  "original_log_sha256": "8e791d8a4a44da4d6a8fa5b41f5368f31a64cd555ba035d3e69f74fa07051e61",
+  "original_log_bytes": 28448,
+  "queries": [
+    "\"KOREA SIMULATOR\" \"Leak Tester\"",
+    "\"WAYTEC\" digital caliper software",
+    "\"에스와이씨\" \"VGP\"",
+    "\"한국차폐시스템\" \"VDI\""
+  ],
+  "discovered_urls": [
+    "https://acordaos.economia.gov.br/acordaos2/pdfs/processados/10314013284201002_5473489.pdf",
+    "https://acordaos.economia.gov.br/acordaos2/pdfs/processados/12782000014201032_5931933.pdf",
+    "https://en.korsim.co.kr/",
+    "https://m.etri.re.kr/preview/1781899246013/index.html",
+    "https://m.etri.re.kr/preview/1781899569247/index.html",
+    "https://patents.google.com/patent/KR101187563B1/en",
+    "https://patents.google.com/patent/KR20060068487A/en",
+    "https://printeratlas.com/impressoras-termicas/waytec/wp-100/",
+    "https://suporte.waytec.com.br/drivers/wp-100/Manual_WP-100.pdf",
+    "https://waytec.fr/en/4x4.html",
+    "https://waytec.fr/en/accessoires.html",
+    "https://waytec.pe/productos/t/licencias/",
+    "https://waytec.pe/productos/t/software/",
+    "https://www.baixesoft.com/download/drivers-da-impressora-termica-waytec-wlp-200",
+    "https://www.baixesoft.com/download/drivers-da-impressora-termica-waytec-wp-100",
+    "https://www.baixesoft.com/download/drivers-da-impressora-termica-waytec-wp-50",
+    "https://www.coupang.com/np/search?q=%EC%BA%98%EB%A6%AC%ED%8D%BC%EC%8A%A4%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EB%AF%B8%ED%84%B0",
+    "https://www.fichier-pdf.fr/2010/12/23/manuel-separbatt-200/manuel-separbatt-200.pdf",
+    "https://www.progmanet.com.br/wpfd_file/driver-waytec-wp-100/",
+    "https://www.projetoacbr.com.br/forum/profile/79334-daniel-s-almeida-junior/content/?type=forums_topic_post",
+    "https://www.regolink.com/gallery/regolamento-montecarlo-historique.pdf",
+    "https://www.waytecitalia.eu/servizi/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_fuji_eul.json",
+  "original_log_sha256": "7973696fdb4a9421b160bc5925242fb91743e51a2f1690959ad09d465a145c47",
+  "original_log_bytes": 23797,
+  "queries": [
+    "\"EUL-1200K\" OR \"EUL-600\" electronic load"
+  ],
+  "discovered_urls": [
+    "https://keisokukikaitori.com/kaitori-jirei-new.html",
+    "https://studyres.com/doc/1906711/chapter-4-chain-gas-phase-processes-in-the-external-action?page=108",
+    "https://www.oem.co.jp/search_cal/index.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

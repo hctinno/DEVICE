@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_245.json",
+  "original_log_sha256": "c812cf00be4f583b2fe07be5b4e58708d7b91d1aa44d68568aa06d4eaa55eeaa",
+  "original_log_bytes": 32165,
+  "queries": [
+    "KEITHLEY 2420 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://arxiv.org/abs/2406.16224",
+    "https://docs.alltest.net/manual/Alltest-Keithley-2420-UserManual.pdf",
+    "https://download.tek.com/manual/2420_902_01E.pdf",
+    "https://download.tek.com/software/supporting",
+    "https://elexbrno.cz/en/dldfile.php?id=16399",
+    "https://geniuss.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMTA0MTQ3NjYzODBlZmVkNzdhIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjIxMDI1MGE1OGJmMTkwYmI5YiI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDIyMTAyNTcyNDdkY2ZlNjQ1ZmUiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5ODMxOGZiZGJhM2UiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://manualmachine.com/keithley/2420/18573228-user-guide/",
+    "https://manualzilla.com/doc/5998739/kei-2420-service",
+    "https://manualzz.com/doc/4197229/keithley-2420-user-s-manual",
+    "https://manualzz.com/doc/6449095/keithley-model-2420-sourcemeter-service-manual",
+    "https://www.lost-manuals.com/pdf/keithley--2420--user--ID11266.pdf",
+    "https://www.manuallib.com/file/keithley-2400-series-user-manual/",
+    "https://www.manualslib.com/manual/3249007/Keithley-Sourcemeter-3a-2420.html?page=114",
+    "https://www.manualslib.com/manual/3249007/Keithley-Sourcemeter-3a-2420.html?page=126",
+    "https://www.manualslib.com/manual/3249007/Keithley-Sourcemeter-3a-2420.html?page=131",
+    "https://www.opweb.de/en/manufacturer/keithley/2420",
+    "https://www.reddit.com/r/AskElectronics/comments/1gp0yqp",
+    "https://www.reddit.com/r/AskElectronics/comments/md6emx/programming_keithley_2401_via_scpi/",
+    "https://www.reddit.com/r/AskElectronics/comments/u3s8vm",
+    "https://www.reddit.com/r/AskElectronics/comments/vjssuz",
+    "https://www.reddit.com/r/LabVIEW/comments/1d41sa7",
+    "https://www.reddit.com/r/LabVIEW/comments/x16hbx",
+    "https://www.tek.com/de/support/datasheets-manuals-software-downloads?series=SMU-Standardserie%C2%A02400+von+Keithley&type=manual",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?series=Keithley+2400+Standard+Series+SMU",
+    "https://www.tek.com/vn/support/datasheets-manuals-software-downloads?series=SMU+Series+ti%C3%AAu+chu%E1%BA%A9n+2400+Keithley"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

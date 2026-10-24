@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/code_xl2.json",
+  "original_log_sha256": "fe61e30687f36b5dd413be5808b0f5616748ede05b1b8b85f9b851b2b570a382",
+  "original_log_bytes": 39234,
+  "queries": [
+    "site:github.com/demianh/xl2-monitor license serial",
+    "site:nti-audio.com XL2 remote measurement ASCII commands"
+  ],
+  "discovered_urls": [
+    "http://localhost/api.php",
+    "https://github.com/DigitalNomadGroup/SerialMonitor",
+    "https://github.com/MaxAnderson95/Get-Monitor-Information",
+    "https://github.com/Tjs4002/SerialScope",
+    "https://github.com/arduino/serial-monitor",
+    "https://github.com/demianh/xl2-monitor",
+    "https://github.com/dhylands/serial-monitor",
+    "https://github.com/dhylands/serial-monitor.git",
+    "https://github.com/dsdtech-official/diSerial",
+    "https://github.com/gthvidsten/open-serial-port-monitor",
+    "https://github.com/julihirn/Serial-Monitor",
+    "https://github.com/qingningmneg/LemonSerialMonitor",
+    "https://github.com/qingningmneg/LemonSerialMonitor/blob/main/README.en.md",
+    "https://github.com/topics/serial-port-monitor",
+    "https://old25.nti-audio.com/en/applications/noise-measurement/unattended-noise-monitoring",
+    "https://old25.nti-audio.com/en/products/sound-level-meters/xl2-audio-acoustic-analyzer/functions",
+    "https://old25.nti-audio.com/en/products/sound-level-meters/xl2-audio-acoustic-analyzer/options",
+    "https://old25.nti-audio.com/en/products/vibration-meters/xl2-vibration-meter",
+    "https://old25.nti-audio.com/en/products/vibration-meters/xl2-vibration-meter/options",
+    "https://old25.nti-audio.com/en/support/know-how/noisescout-unattended-noise-monitoring",
+    "https://uk.shop.nti-audio.com/products/xl2-remote-measurement-option",
+    "https://www.nti-audio.com/Portals/0/data/en/XL2-Remote-Measurement-Manual.pdf",
+    "https://www.nti-audio.com/en/options/remote-measurement-option",
+    "https://www.nti-audio.com/en/options/vibration-option",
+    "https://www.nti-audio.com/en/products/cloud-software/noise-scout",
+    "https://www.nti-audio.com/en/products/sound-level-meters/xl2-audio-acoustic-analyzer",
+    "https://www.nti-audio.com/en/products/vibration-meters/xl2-vibration-meter",
+    "https://www.nti-audio.com/wp-content/uploads/XL2-Remote-Measurement-Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

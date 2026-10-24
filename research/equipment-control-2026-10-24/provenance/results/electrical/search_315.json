@@ -1,0 +1,42 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_315.json",
+  "original_log_sha256": "1d13eb70c082b8204603d5346bde952050be34bcaced49e68d6de94603a0e23d",
+  "original_log_bytes": 30419,
+  "queries": [
+    "Voltech PM3300 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://isurplus.com.au/manu",
+    "http://www.voltech.com/downloadfiles/ma",
+    "https://accusrc.com/uploads/datasheet",
+    "https://accusrc.com/uploads/datasheets/7597_PM1000+.pdf",
+    "https://accusrc.com/uploads/datasheets/7597_PM1000+.pdf?srsltid=AfmBOoq6Jd55Yu4cgCCO2RO",
+    "https://device.report/m/9ea1acbb5adaf4ef823d00c056d1463e6d712034492d2f0ce730e9fd43869508",
+    "https://device.report/m/fc05624567a641bd7662a894232913c0c695869184f033b928652e40477ae1d9",
+    "https://device.report/voltech",
+    "https://isurplus.com.au/manuals/Voltech",
+    "https://isurplus.com.au/manuals/Voltech%20PM300%20User%20Manual.pdf",
+    "https://manualzilla.com/doc/5896364/advanced-test-equipment-rentals",
+    "https://manualzz.com/doc/30436118/voltech-pm3000a-power-analyzer-user-manual",
+    "https://manualzz.com/doc/88016765/voltech-at-editor-dotnet-user-manual",
+    "https://teste",
+    "https://www",
+    "https://www.atecorp.com/getmedia/492a011a-cc12-427f-872f-ebbe17790021/voltech-pm3000-pm3300-ce_datasheet_1.pdf",
+    "https://www.manuallib.com/file/3187172/",
+    "https://www.manualslib.com/manual/1471570/Voltech-Pm3000ace.html",
+    "https://www.transcat.ca/media/pdf/Voltech-DC1000-User-Manual",
+    "https://www.transcat.com/media/pdf/Voltech-DC1000-User-Manual.pdf",
+    "https://www.vol.tech/download",
+    "https://www.voltech.com.cn/media/8d8595b24b2d21b/pm6-iec-soft",
+    "https://www.voltech.com/media/8d8595b0424ca58/pm3000ce-iec-software-manaul-v7-0.pdf",
+    "https://www.voltech.com/media/8d8595b05f0b984/pm3000ce-vpas-manual-v2.pdf",
+    "https://www.voltech.com/media/8d8595b24b2d21b/pm6-iec-software-manual-v4-0.pdf",
+    "https://www.voltech.com/pl/wsparcie/pobieranie/",
+    "https://www.voltech.com/support/",
+    "https://www.voltech.com/support/downloads/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

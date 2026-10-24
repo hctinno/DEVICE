@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_017.json",
+  "original_log_sha256": "91443b4bc0a181a66d8aabd0897efcbff4144f980193b282d6d9ec196157f068",
+  "original_log_bytes": 30657,
+  "queries": [
+    "ENEX SCIENCE \"EN-SFO-1004\" manual communication software GitHub",
+    "ENEX SCIENCE \"EN-STH-4050-1K\" manual communication software GitHub",
+    "SUZHOU SUSHI TESTING GROUP \"DC-6000-60\" manual communication software GitHub",
+    "Y.M.RTC \"YM-THC 2800S\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://blog.sina.cn/dpool/blog/s/blog_17c7a341a0102x27r.html",
+    "https://blowerbest.ru/tekhnika/vibrostend-sti-luchshie-modeli/",
+    "https://blowerbest.ru/tekhnika/vibrostend-sti/",
+    "https://emftest.ru/sti-elektrodinamicheskie-vibrostendy-serii-dc/",
+    "https://meiweijiaoyu.cn/static/file/202042985832.pdf",
+    "https://meiweijiaoyu.cn/static/file/2020615115720.pdf",
+    "https://th.stitestgroup.com/shop/standard-air-cooled-electrodynamic-shaker",
+    "https://www.szsqxwl.com/static/file/2020528163746.pdf",
+    "https://www.yrmade.com/DC-F.html",
+    "https://www.yunzhan365.com/basic/21127660.html",
+    "https://www.yunzhan365.com/basic/25616924.html",
+    "https://zetlab.ru/produkciya/izmeritelnoe-oborudovanie/sistemy-upravleniya-vibroispytaniyami-suv-i-vibrostendy/vibrostendy/bolshoy-moshchnosti/bolshoy-moshchnosti-su-shi-testing-group/",
+    "https://zetlab.ru/produkciya/izmeritelnoe-oborudovanie/sistemy-upravleniya-vibroispytaniyami-suv-i-vibrostendy/vibrostendy/bolshoy-moshchnosti/bolshoy-moshchnosti-su-shi-testing-group/dc-6000-60/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

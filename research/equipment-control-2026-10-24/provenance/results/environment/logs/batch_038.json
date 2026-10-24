@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_038.json",
+  "original_log_sha256": "235afbf8ae54ecf05a31945c15b26faa7b78a4f1cc8481e5690e0293c87b40f4",
+  "original_log_bytes": 23336,
+  "queries": [
+    "(주) 듀오컴 \"HS-1900B\" manual communication software GitHub",
+    "FAMTECH \"EDS/SY10-25\" manual communication software GitHub",
+    "SHINKEN \"G-0265LSHP\" manual communication software GitHub",
+    "Weiss Technik North America \"EA55-2-4L-WC-X\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://d.otto.de/files/f14b4aef-ca30-5252-8ddf-12629998c983.pdf",
+    "https://es.hongsbelt.com/brand-compatibility/",
+    "https://gd.hongsbelt.com/brand-compatibility/",
+    "https://hongsbelt.en.made-in-china.com/product/aFWAcVryMOhj/China-Hongsbelt-HS-1900b-Curved-Modular-Plastic-Conveyor-Belt-for-Frozen-Spiral-Conveyors.html",
+    "https://hongsbelt.eu/products/Series%20HS-1900%2850.8mm%20Pitch%29/HS-1900B/HS-1900B.pdf",
+    "https://juki.it/jukiazienda/images/allegati/JUKI_General_Catalogue_Non-Apparel%202020.pdf",
+    "https://kmarine.kr/pdf/01.pdf",
+    "https://m.media-amazon.com/images/I/B1kItCQ4fzS.pdf",
+    "https://manuals.plus/ov-innovations/lk-1900-bartacker-program-manual",
+    "https://mt.hongsbelt.com/brand-compatibility/",
+    "https://patents.google.com/patent/AU2020203964A1/en",
+    "https://patents.google.com/patent/EP4007438A1/en",
+    "https://www.directindustry-china.cn/prod/huanan-xinhai-shenzhen-technology-co-ltd/product-60581-2087917.html",
+    "https://www.directindustry.com/prod/huanan-xinhai-shenzhen-technology-co-ltd/product-60581-2087917.html",
+    "https://www.manualslib.com/products/Juki-Lk-1900bn-10536783.html",
+    "https://www.scribd.com/document/400784422/Rockwell-Automation-TechED-2018-SY10-Lab-Manual-Integrating-CENTERLINE-Motor-Control-Centers-with-Studio-5000-and-IntelliCENTER-Software-pdf",
+    "https://www.scribd.com/document/456419051/Tersus-Data-Communication-Programming-Manual",
+    "https://www.scribd.com/document/685748837/BVH2448GB",
+    "https://www.scribd.com/document/998476342/BVH2448GB"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

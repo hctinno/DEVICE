@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item197.json",
+  "original_log_sha256": "6ec398738abab92f8d86ef909724721de00006b57c6c6e226ad8e25ea9297df2",
+  "original_log_bytes": 16754,
+  "queries": [
+    "Raysafe \"X2\" software interface manual",
+    "site:github.com \"X2\" Raysafe"
+  ],
+  "discovered_urls": [
+    "https://gist.github.com/ImSpiDy/77223bc8b4bf3dcb5c3a42b756c2f40d",
+    "https://gist.github.com/icarinsth-debug/e0aa777dab2a5af15df46fad82e35127",
+    "https://propribory.ru/static/upl/20-05-2021/qjZbZnblnlvUDGPe/doc.pdf",
+    "https://sebiomedical.com/product/raysafe-x2/",
+    "https://setgad.com/wp/wp-content/uploads/2019/03/RAYSAFE-X2-UM-ESP.pdf",
+    "https://www.artecnica.com.mx/hubfs/5200132-1.1_raysafe_x2_solo.pdf?hsLang=es-mx",
+    "https://www.flukebiomedical.com/sites/default/files/5001083-raysafe_x2-manual-en-7.pdf",
+    "https://www.konex.net.br/manuais/X2Manual.pdf",
+    "https://www.manuallib.com/file/unfors-raysafe-x2-user-manual/",
+    "https://www.manualslib.com/manual/1202457/Raysafe-X2.html",
+    "https://www.manualslib.com/manual/2006489/Raysafe-X2.html?page=5",
+    "https://www.raysafe.com/products/x-ray-test-equipment/raysafe-x2",
+    "https://www.raysafe.com/products/x-ray-test-equipment/raysafe-x2-solo",
+    "https://www.raysafe.com/products/x-ray-test-equipment/raysafe-x2/x2-survey-sensor",
+    "https://www.raysafe.com/resources",
+    "https://www.raysafe.com/resources?page=0",
+    "https://www.raysafe.com/resources?page=1",
+    "https://www.raysafe.com/resources?page=10",
+    "https://www.raysafe.com/support/product-faq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

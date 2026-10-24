@@ -1,0 +1,27 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_tgsprog3.json",
+  "original_log_sha256": "371c39ddf9f3a21bd9ffec543ee72326ab4bbd9ef4c3ee0887833901036a8d73",
+  "original_log_bytes": 30708,
+  "queries": [
+    "\"TDS8000\" \"Programmer Manual\""
+  ],
+  "discovered_urls": [
+    "https://download.tek.com/manual/DSA8200-CSA800-TDS8000-Series-Programmer-Manual.pdf",
+    "https://manualmachine.com/tektronix/dsa8200/26787868-user-manual/",
+    "https://manuzoid.com/manuals/EnBDY-Tektronix%20CSA8000B%20Series%20Programmer%27s%20Manual",
+    "https://manuzoid.com/manuals/EnBDY-Tektronix%20DSA8200%20Series%20Programmer%27s%20Manual",
+    "https://w140.com/tekwiki/wiki/Manuals/077-xxxx",
+    "https://www.manualslib.com/manual/1308035/Tektronix-Dsa8200-Series.html",
+    "https://www.manualslib.com/manual/3983916/Tektronix-8000-Series.html",
+    "https://www.manualslib.com/manual/3983916/Tektronix-8000-Series.html?page=391",
+    "https://www.manualslib.com/manual/3983916/Tektronix-8000-Series.html?page=7",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Oscilloscopes&model=Tektronix-TDS8000&productID=0CC250BFFA90450A53BDD716FABCA17C&type=Test-Equipment-Sales",
+    "https://www.tek.com/en/oscilloscope/csa8000b-manual/8000-series-programmer-manual",
+    "https://www.tek.com/ko/support/datasheets-manuals-software-downloads?model=tds8000b",
+    "https://www.tek.com/vn/manual/dsa8200-0"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

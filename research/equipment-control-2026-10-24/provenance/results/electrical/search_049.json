@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_049.json",
+  "original_log_sha256": "61266023bf59c65595a49aee5f2afb5d034e4a8e5b8290e1cfdcef0d2aa48401",
+  "original_log_bytes": 30582,
+  "queries": [
+    "Graphtec GL240 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/7/Graphtec_Portable_Datalogger_Product_Selection_Guide_2017.pdf",
+    "https://en.wikipedia.org/wiki/Graphtec",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl240/download",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl240/faq",
+    "https://graphteciwatsu.com/en/support/download/datalogger/",
+    "https://manualzz.com/doc/64332527/graphtec-midi-logger-gl240-quick-start-manual",
+    "https://manualzz.com/doc/66888431/graphtec-midi-logger-gl240-quick-start-manual",
+    "https://t-m.kostech.net/download.cm?tk=YToyOntpOjA7czoxMzoiMTAxYjc4YWYwMzE4MSI7aToxO3M6MjI6ImYyMDI1MDEyMTEwY2MzZjE5MWFkOTIiO30%3D",
+    "https://www.acquisitionpc.com/html/support.html",
+    "https://www.graphtec.in.th/article-79516-softwares.html",
+    "https://www.graphtecamerica.com/data-logger/gl240",
+    "https://www.graphteccorp.com/download/downloadapp/",
+    "https://www.graphteccorp.com/download/gl-connection/",
+    "https://www.graphteccorp.com/download/gl100_gl240_gl840-aps/",
+    "https://www.graphteccorp.com/download/gl28-aps/",
+    "https://www.graphteccorp.com/support/software/logger/",
+    "https://www.instrumart.com/assets/Graphtec-GL240-manual.pdf",
+    "https://www.mygraphtec.jp/site_download/02_manual/data/GL240-UM-852.pdf",
+    "https://www.reddit.com/r/CommercialPrinting/comments/1p4qfe6/cutting_master_5graphtec_studio_2_setup_issue/",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/116yvs1",
+    "https://www.reddit.com/r/PlotterArt/comments/1i0hrln",
+    "https://www.reddit.com/r/VinylCutters/comments/18ojkib/looking_to_use_older_graphtec_with_current_ai/",
+    "https://www.reddit.com/r/VinylCutters/comments/1h0brka",
+    "https://www.reddit.com/r/VinylCutters/comments/1k42g3w",
+    "https://www.reddit.com/r/VinylCutters/comments/1lie5ou/craft_robo_cc30020_software/",
+    "https://www.reddit.com/r/VinylCutters/comments/1q6l8gy/did_i_make_a_huge_mistake/",
+    "https://www.reddit.com/r/VinylCutters/comments/1rcaa9d/graphtech_2026_trouble_shooting_anyone/",
+    "https://www.reddit.com/r/VinylCutters/comments/1rsqwv9/cutting_master_4_activating_data_link_alone/",
+    "https://www.reddit.com/r/VinylCutters/comments/cyxlwx"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

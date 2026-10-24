@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_tektronix_old.json",
+  "original_log_sha256": "a6144ab127f250e2085d7058edd85a483f8eb36b9a328049a4f33d3e80c359c3",
+  "original_log_bytes": 28098,
+  "queries": [
+    "Tektronix TDS5054 TDS7254B TDS8000 programmer manual"
+  ],
+  "discovered_urls": [
+    "https://download.tek.com/manual/070899203.pdf",
+    "https://download.tek.com/manual/DSA8200-CSA800-TDS8000-Series-Programmer-Manual.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://w140.com/tekwiki/images/7/7a/071-1226-03.pdf",
+    "https://w140.com/tekwiki/wiki/Manuals/077-xxxx",
+    "https://www.jabse.com/L1Rla3Ryb25peC8wNzExMjI3MDR3ZWJfMjAwOC4wOS4zMC4xMS4yNi4xOV8xMjcxNV9FTi5wZGY",
+    "https://www.opweb.de/en/manufacturer/tektronix/tds5054",
+    "https://www.reddit.com/r/AskElectronics/comments/1tmb6ix/recherche_de_panne_sur_oscilloscope/",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/14nmkw6",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/zhhc1k",
+    "https://www.semistarcorp.com/product/tektronix-manual/",
+    "https://www.tek.com.cn/oscilloscope/tds7054-manual/tdsvnm-can-and-lin-online-help",
+    "https://www.tek.com/en/oscilloscope/csa7404b-manual/csa7404b-tds7704b-tds7404b-tds7254b-tds7154b-user-manual",
+    "https://www.tek.com/en/oscilloscope/tds5054-manual/vm-series-programmer-manual",
+    "https://www.tek.com/en/oscilloscope/tds7054-manual/050-3635-00-instructions",
+    "https://www.tek.com/en/oscilloscope/tds7254-manual/oscilloscope-analysis-and-connectivity-made-easy-user-manual",
+    "https://www.tek.com/en/sitewide-content/manuals/4/5/6/4-5-6-series-mso-programmer-manual",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?model=tds5054b",
+    "https://www.tek.com/fr/oscilloscope/tds5054-manual/vm-series-programmer-manual",
+    "https://www.tek.com/ko/oscilloscope/tds5054-manual/vm-series-programmer-manual",
+    "https://xdevs.com/doc/Tektronix/TDS7000/TekScope_Opt_App_1.0.10_071-1883-01_063-3914-10/TekScope_Opt_App_1.0.10_071-1883-01_063-3914-10/Documents/ApplicationsInstallation.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/cas_followup157.json",
+  "original_log_sha256": "567cd2e9b93f8087345866a9129bdd25705e48a0abe208936efb75a3079f1c09",
+  "original_log_bytes": 31920,
+  "queries": [
+    "CAS \"BWII-15\" manual RS232 interface",
+    "site:github.com CAS \"BWII-15\""
+  ],
+  "discovered_urls": [
+    "https://bip.wszop.edu.pl/wp-content/uploads/2024/12/19.Problemy-wspolczesnej-kryminalistyki.pdf",
+    "https://device.report/m/f62b51fd326d99369bf8c858b2721e053d17a2b1b18685cba9f3b206615e485b",
+    "https://github.com/dolphin-emu/dolphin/blob/master/Data/Sys/wiitdb-fr.txt",
+    "https://manualsfile.com/product/pnks90y1qi.html",
+    "https://manualzz.com/doc/65627024/medela-babyweigh-ii-scale-instructions-for-use",
+    "https://manualzz.com/doc/en/25547502/medela-babyweigh-ii-scale-instruction-manual",
+    "https://manualzz.com/doc/en/65627024/medela-babyweigh-ii-scale-instructions-for-use",
+    "https://pt.scribd.com/document/655016308/manual-hardware-1",
+    "https://repositorio.ufmg.br//bitstreams/66282be6-6b35-43ed-aafd-a9223ed3372f/download",
+    "https://repositorio.ufmg.br/server/api/core/bitstreams/66282be6-6b35-43ed-aafd-a9223ed3372f/content",
+    "https://www.commodore.ca/gallery/magazines/gazette/Compute-Gazette-Issue-23.pdf",
+    "https://www.gametdb.com",
+    "https://www.manualslib.com/guide/3612256/medela-babyweigh-scale-manual.html",
+    "https://www.manualslib.com/manual/1238725/Medela-Babyweigh-Ii.html",
+    "https://www.manualslib.com/manual/2639924/Medela-Babyweigh-Ii.html",
+    "https://www.saotron.ru/cas-ap-ex.shtml",
+    "https://www.saotron.ru/cas-bw.shtml",
+    "https://www.saotron.ru/cas-bwii.shtml",
+    "https://www.sentec.com/fileadmin/documents/Connectivity_Flyers/Connectivity_Overview_NA_RF-007993-b.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item424.json",
+  "original_log_sha256": "82df178f2cf9f96bc9cba4ed7cddbf5d5fd3062f18f9fa56f08b111167e2b40d",
+  "original_log_bytes": 13571,
+  "queries": [
+    "EM TEST \"MV2616\" software interface manual",
+    "site:github.com \"MV2616\" EM TEST"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/13d324d315b2a45754db90bea30b5135b62d989f10ad50eb260baa56bf67a010",
+    "https://device.report/m/44ce370578c816a56ad285a1b9b81bb6157b43e6d4269f255d115360f2a79d0c",
+    "https://hanwhavision.eu/download/372321/?tmstv=1773463564",
+    "https://manuals.plus/m/a131daad3cc9866ff2f03a15a87e1f79dd28697d243192c4b64ed530f6910a6a",
+    "https://manuals.plus/m/cb3476a55b5cd8bb7adc65e4826e46c1069327d24a289cf3b7c4b7d9bf648f35",
+    "https://manualzz.com/doc/60138628/emtest-ucs-500-n7--ucs-500nx-series--usc-500-n5-manual",
+    "https://maximinstruments.com/pdf_files/EMTEST_UCS500N5P_Datasheet.pdf",
+    "https://www.emctest.it/public/pages/strumentazione/elenco/EM%20Test/UCS500-M/Manuali/User%20Manual%20UCS500Mx.pdf",
+    "https://www.manualslib.com/manual/2505961/Em-Test-Ucs-500mx.html?page=39",
+    "https://www.manualslib.com/manual/2505961/Em-Test-Ucs-500mx.html?page=40",
+    "https://www.manualslib.com/manual/2505961/Em-Test-Ucs-500mx.html?page=47",
+    "https://www.pref.fukushima.lg.jp/w4/hightech/db/equipment/detail.php?no=108",
+    "https://www.scribd.com/document/888749819/User-Manual-UCS500N5-N7",
+    "https://www.scribd.com/document/893252796/ucs-500mx",
+    "https://www.scribd.com/document/903775567/3-TRE17120169-Hawk-fw1-Fluid-Warmer-IEC-60601-1-2-2014-Test-Report"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

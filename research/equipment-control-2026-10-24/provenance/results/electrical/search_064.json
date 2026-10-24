@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_064.json",
+  "original_log_sha256": "f7ebba71fea85701ea544e6c8f4e8f6a4167c6b9d74c3283accc0b1ccbef1863",
+  "original_log_bytes": 35880,
+  "queries": [
+    "DGBELL BE-6045W manual programming software"
+  ],
+  "discovered_urls": [
+    "https://baofengradio.co.uk/software/",
+    "https://baofengtech.com//software",
+    "https://baofengtech.com/software//",
+    "https://baofengtech.com/support/",
+    "https://cornestech.co.jp/wp-content/uploads/2022/01/Operation-Manual_DG645.pdf",
+    "https://dbell.zendesk.com/hc/en-us/articles/360007745711-Firmware",
+    "https://dbell.zendesk.com/hc/en-us/articles/360025428852-Pairing-indoor-bell-with-outdoor-bell",
+    "https://device.report/m/07e5f07c5eb9fa3c8e86499e073d6afb4d71d878272ae86af0d2f9fb4459b9df",
+    "https://pwcontrol.eu/upload/iblock/3cd/ll2lvrcj39cbqkyc684esdfnuir48uhy.pdf",
+    "https://uv82c.baofengtech.com/support/",
+    "https://webchirp.org/",
+    "https://www.baofengradio.com/pages/download",
+    "https://www.bel.com.vn/data/news/3804/HDSD-M-MW-series.pdf",
+    "https://www.beseencontrol.com/BS158/SoftWare-Manual-07.pdf",
+    "https://www.elnec.com/en/support/download/",
+    "https://www.wouxun.com/guide/software.aspx"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

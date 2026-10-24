@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_207.json",
+  "original_log_sha256": "fbc4371d13ba50260767583a8617a3e21e6d85599a39b2e5e27f6aad31a9ddf9",
+  "original_log_bytes": 35097,
+  "queries": [
+    "DIGITEK POWER DDPS-7.5K manual programming software"
+  ],
+  "discovered_urls": [
+    "https://bucket-software00.s3.eu-west-1.amazonaws.com/web-power-electronics/media/drives/manuals/low/sd750fr/sd750fr_software_programming_en.pdf",
+    "https://device.report/m/4a36c7e9c0216a08bd00e4cbc59a74a24b2dfbfa5534c4738bb952e9bc440865",
+    "https://device.report/manuals/ej-et-ey-fj-fr-series-instruction-manual-data-information",
+    "https://doczz.net/doc/6006588/pdf-bedienungsanleitung",
+    "https://m.media-amazon.com/images/I/B1G%2BsWF7bbL.pdf",
+    "https://manuals.plus/m/518ada4800821b87689f31e816a35b5786612321064587890048cb10b15d319e",
+    "https://manualzilla.com/doc/5697101/manual-for-programmable-dc-power-supply",
+    "https://manualzz.com/doc/30360454/adaptive-power-systems-dps-series-programmable-dc-power-s",
+    "https://sigrok.org/wiki/RDTech_DPS_series",
+    "https://to7motor.com/downloads",
+    "https://www.manualzz.com/doc/30360454/adaptive-power-systems-dps-series-programmable-dc-power-s",
+    "https://www.mediafire.com/folder/3iogirsx1s0vp/DPS_communication_upper_computer",
+    "https://www.power-electronics.co.nz/assets/programming-manuals/SD750-SW-eng.pdf",
+    "https://www.scribd.com/document/522481326/Operation-and-PC-and-APP-Instruction-for-Digital-Control-Constant-Voltage-Constant-Current-Power-Supply-Without-Power-Part",
+    "https://www.scribd.com/document/709607354/Programmer-EN",
+    "https://www.scribd.com/document/906186010/Operation-and-PC-and-APP-Instruction-for-Digital-Control-Constant-Voltage-Constant-Current-Power-Supply-With-Power-Part"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

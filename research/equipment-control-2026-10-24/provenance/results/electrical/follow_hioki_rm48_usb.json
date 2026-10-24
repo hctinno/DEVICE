@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_hioki_rm48_usb.json",
+  "original_log_sha256": "98cb6192cde1faa89c5144a53496bc5667fd135a5636e1f38773be9ee68f0cb0",
+  "original_log_bytes": 30056,
+  "queries": [
+    "\"RM3548\" \"USB\" \"mass\""
+  ],
+  "discovered_urls": [
+    "https://manualzz.com/doc/28267469/rm3548---hioki-usa",
+    "https://manualzz.com/doc/81531707/hioki-resistance-meter-rm3548-50-instruction-manual",
+    "https://manualzz.com/doc/82903404/hioki-resistance-meter-rm3548-instruction-manual",
+    "https://manualzz.com/doc/o/1f12uz/hioki-rm3548-resistance-meter-instruction-manual-9%09specifications",
+    "https://technicalsystems.in/uploads/pdf/dataseat240522025612.pdf",
+    "https://www.es-france.com/img/cms/Catalogues/GC2022E1-1ZB_ES.pdf?srsltid=AfmBOooizJkPTxnFc0xiKfN50-7JlAysliuQC5nNIXleEdRi7oUaIVqp",
+    "https://www.hioki.com/euro-en/products/resistance-meters/resistance/id_5827",
+    "https://www.itm.com/pdfs/cache/www.itm.com/rm3548-50-wireless-kit/manual/rm3548-50-wireless-kit-manual.pdf",
+    "https://www.itm.com/pdfs/cache/www.itm.com/rm3548/manual/rm3548-manual.pdf",
+    "https://www.itm.com/pdfs/cache/www.itm.com/rm3548/manual/rm3548-manual.pdf?srsltid=AfmBOoqEMw1fgP3D-9c0faSo-A1sgsn2H2_9D6omoMPxY7N52zVuQb1l",
+    "https://www.manualslib.com/manual/1397772/Hioki-Rm3548.html?page=112",
+    "https://www.manualslib.com/manual/1397772/Hioki-Rm3548.html?page=127",
+    "https://www.manualslib.com/manual/1397772/Hioki-Rm3548.html?page=83",
+    "https://www.manualslib.com/manual/1397772/Hioki-Rm3548.html?page=94",
+    "https://www.manualslib.com/manual/1397772/Hioki-Rm3548.html?page=95",
+    "https://www.n-denkei.com/indonesia/items/product/hioki-resistance-meter-rm3548/",
+    "https://www.radius.co.id/produk/distributor-hioki-indonesia/hioki-resistance-meter/hioki-rm3548-resistance-meters/",
+    "https://www.transcat.com/media/pdf/hioki-rm3548-50-instruction-manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

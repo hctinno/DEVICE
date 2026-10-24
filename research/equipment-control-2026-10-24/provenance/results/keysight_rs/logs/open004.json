@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open004.json",
+  "original_log_sha256": "896f232f2ce9a934b86ae33f21004b8c5eb27b7151ff00fa022a6d93c9b46c31",
+  "original_log_bytes": 5094,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.rohde-schwarz.com/us/manual/remote-control-via-scpi_78701-1090624.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

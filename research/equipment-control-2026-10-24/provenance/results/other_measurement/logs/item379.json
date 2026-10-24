@@ -1,0 +1,42 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item379.json",
+  "original_log_sha256": "44352006a338486ffb67e65dc56d0a373a66724079a741ff2cebef26693c066d",
+  "original_log_bytes": 15292,
+  "queries": [
+    "(주)웨이컴 \"JW-1\" software interface manual",
+    "site:github.com \"JW-1\" (주)웨이컴"
+  ],
+  "discovered_urls": [
+    "https://5.imimg.com/data5/SELLER/Doc/2024/1/375357470/IA/GB/ZS/4287169/automatic-solenoid-valve-nc-atex-proof.pdf",
+    "https://device.report/m/30c0f9d24e29f388fa2d394cead78703644011de12a21deb7997baf871d8197b",
+    "https://ethw.org/Oral-History%3AMiwako_Doi",
+    "https://fcc.report/FCC-ID/SS6ISC-T8311/1624595.pdf",
+    "https://github.com/Nidane/Sugar-Fat-Study",
+    "https://github.com/canonical/secboot/issues/557",
+    "https://github.com/mamedev/mame/blob/master/src/mame/sigma/sigmab52.cpp",
+    "https://github.com/pikvm/pikvm/issues/1217",
+    "https://github.com/pikvm/ustreamer/issues/110",
+    "https://github.com/pikvm/ustreamer/issues/154",
+    "https://github.com/pikvm/ustreamer/issues/268",
+    "https://github.com/pikvm/ustreamer/issues/284",
+    "https://github.com/songshua295/MSPhraseTool",
+    "https://guidessimo.com/document/2360927/madas-jw-1-series-operation-user-s-manual-40.html",
+    "https://hexmos.com/freedevtools/man-pages/miscellaneous/miscellaneous-diversions/frontend-spec",
+    "https://manuals.plus/m/0ef3f4852c28804dc05128c879510770b8f69a3c956a5b02b6aee6ebe37399dd.pdf",
+    "https://manualzilla.com/doc/7313191/mircom-tx3-series-unit-installation",
+    "https://manualzz.com/doc/32220300/acom-jw-1-owner-s-manual",
+    "https://manuzoid.com/manuals/AkjwJ-Acom%20JW-1%20Owner%27s%20manual",
+    "https://mircom.manymanuals.es/smoke-detectors/fa-300-series/installation-manual-47351/22",
+    "https://sc-journal.com/device/acom/jw-1/",
+    "https://the-checkout-tech.com/estore/catalog/product_info.php/manufacturers_id/28/products_id/3458",
+    "https://the-checkout-tech.com/estore/catalog/product_info.php/products_id/3458",
+    "https://the-checkout-tech.com/manuals/TOC/scales/Acom/JW-1%20Operation%20and%20Calibration.TOC.pdf",
+    "https://usermanual.wiki/ISC-Technologies/ISC-T8311-1624595.pdf",
+    "https://www.manualslib.com/manual/948293/Acom-Jw-1.html",
+    "https://www.phoenixfireandsecurity.com/wp-content/uploads/2014/06/LT-951_FR-320_Installation_and_Operation_Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

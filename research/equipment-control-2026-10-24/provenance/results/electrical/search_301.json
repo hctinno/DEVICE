@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_301.json",
+  "original_log_sha256": "9f76a83d598271686ce9d194a8ba41f5d273fd771475ee2d6323e070be0d2828",
+  "original_log_bytes": 33869,
+  "queries": [
+    "XiTRON 2503AH manual programming software"
+  ],
+  "discovered_urls": [
+    "https://help.xitron.com/support/home",
+    "https://help.xitron.com/support/solutions",
+    "https://help.xitron.com/support/solutions/1000129216",
+    "https://help.xitron.com/support/solutions/folders/1000225666",
+    "https://vitrek.com/downloads/2503/2503AHmanual.pdf",
+    "https://vitrek.com/legacy_products/",
+    "https://vitrek.com/vitrek-download-library/",
+    "https://www.atecorp.com/getmedia/b21fd4d2-22e9-40be-9005-fa8ad1a0feef/xitron-2503ah_manual_1.pdf",
+    "https://www.scribd.com/document/743821464/Xitron-2503AH-USERS-GUIDE",
+    "https://www.tequipment.net/XiTron-pricelist/",
+    "https://www.tequipment.net/XiTron-pricelist/?pg=2",
+    "https://www.tequipment.net/XiTron/822-2503AH-3CH/AC/DC-Power-Meters/Analyzers/",
+    "https://www.tequipment.net/XiTron/822-2553EVAR-950-40/AC/DC-Power-Meters/Analyzers/",
+    "https://www.xitron.com/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

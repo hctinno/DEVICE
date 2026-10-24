@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open019.json",
+  "original_log_sha256": "369e497026e9cd3213037bce53da0921231b82b65c9b14d345070028f737309a",
+  "original_log_bytes": 25918,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.keysight.com.cn/cn/zh/assets/9018-03965/service-manuals/9018-03965.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

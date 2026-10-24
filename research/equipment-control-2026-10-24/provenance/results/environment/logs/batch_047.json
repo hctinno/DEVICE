@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_047.json",
+  "original_log_sha256": "13b000867f624b33f1492ec7fb4495a554b25c16e2182c4274904d1478318283",
+  "original_log_bytes": 22104,
+  "queries": [
+    "EMIC \"903-FN\" vibration controller manual software GitHub",
+    "HAN IL Industries 항온항습조 controller communication software manual GitHub",
+    "NANGYEAL \"NY-THR18750\" manual communication software GitHub",
+    "SHINKEN \"G-0210N\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://askindex.co.jp/p81saint99/wp-content/uploads/2016/09/%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%AA%E3%82%B9%E3%83%88.pdf",
+    "https://autobase.biz/English/Board/FormBoardView.aspx?ID=1084&data=EnglishDriverNews",
+    "https://device.report/m/a4c067c524a8be51526d4c5bffb58c1731e734f39197c165fd41493edb55dbc9",
+    "https://device.report/m/ac384111c323e64f69a91d8e1966fd5e656d16b829a26e5ab343fb71ec3d897c",
+    "https://emic-net.co.jp/en/download/file/pdf/CL-170-04-E.pdf",
+    "https://fccid.io/2AFEGFRWL46ROU19/Test-Report/Test-Report-20151016-v1-FRWL46ROU19-Test-Report-1-to-2-2792631.pdf",
+    "https://manuals.plus/m/bda533a3f4385383686e81e0a3fed8631dea87f733240dc88df84ca4e68f0475",
+    "https://manuals.plus/m/f0ef5c3d9e0df660dcc28c3a14755e6d0853ef02efc70064d68fbdcdee27a747",
+    "https://n-denkeiamericas.com/emic-f-series-vibration-testing-system/",
+    "https://www.autobase.biz/Vietnamese/Board/FormBoardView.aspx?ID=1083&data=VietnameseDriverNews",
+    "https://www.emic-net.co.jp/product/f/",
+    "https://www.emic-net.co.jp/product/ft/",
+    "https://www.keisokuten.jp/file.php?id=15469",
+    "https://www.n-denkei.com/america/items/product/vibration-test-equipment/",
+    "https://www.n-denkei.com/taiwan/items/product/emic-f/",
+    "https://www.nipron.co.jp/pdf/download/testdata_a/data/reliability_data_PCFX-220P-X2S.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

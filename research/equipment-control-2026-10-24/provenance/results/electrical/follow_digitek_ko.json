@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_digitek_ko.json",
+  "original_log_sha256": "312f3e94e5a5c03f0923ac4c0e38150839f32283ccf648929508a673b8db864d",
+  "original_log_bytes": 258,
+  "queries": [
+    "\"디지텍파워\" \"DDPS\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,41 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/sparse_remaining.json",
+  "original_log_sha256": "1d17818b2a5af8be40b3b67d19c0318c538186b8469cb020598901c26f780d5c",
+  "original_log_bytes": 22347,
+  "queries": [
+    "\"Elex Polytech\" \"Measuring device\"",
+    "\"YPIOIEER\" probes manufacturer",
+    "\"에스씨템테크놀러지\" \"Speed Indicator\"",
+    "\"코베토\" 디지털 각도계 모델 통신"
+  ],
+  "discovered_urls": [
+    "https://cpcontacts.toolsmall.net/autocart/market/product/product_list.php?category_num=37508",
+    "https://cpcontacts.toolsmall.net/autocart/market/product/product_list.php?category_num=37513",
+    "https://i-search.jd.com/search?cid2=36449&cid3=36480&enc=utf-8&keyword=%E5%B7%A5%E5%85%B7&nr=1783446937.98062_1&qrst=1&rt=1&stop=1&vt=2",
+    "https://jenkins.toolmt.co.kr/autocart/market/product/product_list.php?category_num=37508",
+    "https://openmarket.toolmt.co.kr/autocart/market/product/product_list.php?category_num=37508",
+    "https://openmarket.toolmt.co.kr/autocart/market/product/product_list.php?category_num=37513",
+    "https://pmtech21.com/board/free/read.html?board_no=2&no=137784",
+    "https://toolket.com/mypage/mypage_estimate.asp?mod=1&page=660",
+    "https://www.09yoki.com/goods/goods_list.php?cateCd=018",
+    "https://www.09yoki.com/goods/goods_list.php?cateCd=018024",
+    "https://www.09yoki.com/goods/goods_view.php?goodsNo=26985",
+    "https://www.09yoki.com/goods/goods_view.php?goodsNo=26986",
+    "https://www.accio.com/plp/ingun-high-current-probe",
+    "https://www.alibaba.com/countrysearch/CN/oscilloscope-probe-20mhz.html",
+    "https://www.ebuy7.com/hr/ypioieer-pioneer-passive-oscilloscope-probe-p6100-p2100-high-voltage-40kv-universal-bnc-port.html",
+    "https://www.ebuy7.com/id/ypioieer-pioneer-passive-oscilloscope-probe-p6100-p2100-high-voltage-40kv-universal-bnc-port.html",
+    "https://www.jd.com/brand/9855822c377be55b7d43.html?electedExtAttrSet=7305%2C&extAttrValue=expand_name%2C%40252964%3A%3A7305&sort_type=sort_redissale_desc",
+    "https://www.jd.com/chanpin/2617652.html",
+    "https://www.jd.com/hotitem/670d26dde045146299f.html",
+    "https://www.jd.com/jiage/9855423031d755fe19d3.html",
+    "https://www.jd.com/xinghao/9855423031d755fe19d3.html",
+    "https://www.jd.com/xinkuan/652efdf53f192dd03d0.html",
+    "https://www.toolmt.co.kr/autocart/market/product/product_list.php?category_num=37508&page=1",
+    "https://www.toolsmall.net/autocart/market/product/product_list.php?category_num=36954&order="
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

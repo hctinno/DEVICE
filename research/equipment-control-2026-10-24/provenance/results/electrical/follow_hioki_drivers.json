@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_hioki_drivers.json",
+  "original_log_sha256": "abe64ae1117ba6edd3f65c0f1e26cdde0fa6b5b30fd82e621551548fb07e06d9",
+  "original_log_bytes": 26551,
+  "queries": [
+    "HIOKI LR8431 LR8432 PW3337 RM3544 communication command manual LabVIEW"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Hioki_LR8431_User_Manual.pdf",
+    "https://hioki-vietnam.vn/wp-content/uploads/2024/06/selection-guide-data-loggers-lr8450_lr8410_lr8431_lr8432_lr8101_lr8102.pdf",
+    "https://hioki-vietnam.vn/wp-content/uploads/2024/06/sf1000.pdf",
+    "https://hiokikorea.com/product/product_view.html?c_id=130&p_no=130&s_tab=",
+    "https://hiokikorea.com/support/software_search.html?p=6",
+    "https://life.hiokikorea.com/support/software_search.html?p=6",
+    "https://www.hioki.cn/resource/products/manuals-6",
+    "https://www.hioki.co.jp/jp/support/softwaredownload/?list=141",
+    "https://www.hioki.com/download/30162",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_302",
+    "https://www.hioki.com/in-en/support/download/software/versionup/detail/id_196",
+    "https://www.hioki.com/sites/default/files/2021-03/client_upload_13_1473216557179.pdf",
+    "https://www.hioki.com/us-en/support/download/software/versionup/detail/id_196",
+    "https://www.hioki.com/us-en/support/faq/detail/id_339",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A005001&p_no=80",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A005001&p_no=80&s_tab=tab3",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A010002&p_no=130",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A010002&p_no=130&s_tab=tab3"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

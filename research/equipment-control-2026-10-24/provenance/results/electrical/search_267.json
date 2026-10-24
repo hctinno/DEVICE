@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_267.json",
+  "original_log_sha256": "0a9f3968e27ab44e47d60745770bf5b382fb44630aa8b576879da21d19956621",
+  "original_log_bytes": 27630,
+  "queries": [
+    "(주)티이씨씨 TBCDS-6030 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://download.jchyun.com/Download/Cool200-250.pdf",
+    "https://guelec.co.kr/gu-pages/manuals/TIVOLI%20PAS%20TD-EN.pdf",
+    "https://tbs2000.co.kr/bbs/board.php?tbl=bbs54",
+    "https://tools.zlg.cn/index.php",
+    "https://toyotech.co.kr/support/software.php?boardid=software&mNum=3&mode=list&sNum=4",
+    "https://toyotech.co.kr/support/software.php?boardid=software&offset=0",
+    "https://www.arktech.com.tw/%E4%B8%8B%E8%BC%89%E5%B0%88%E5%8D%80-2/%E7%A8%8B%E5%BC%8F%E5%B7%A5%E5%85%B7%E4%B8%8B%E8%BC%89/",
+    "https://www.ckdkorea.co.kr/resources/upload/product/pdf/%5BCC-1238K-2%5D%20ABSODEX%20%EA%B3%A0%EC%A0%95%EB%B0%80%20%ED%83%80%EC%9E%85%20AX7000X%20%EC%8B%9C%EB%A6%AC%EC%A6%88.pdf",
+    "https://www.hitecrcd.co.kr/support/resource-center/",
+    "https://www.icbanq.com/icdownload/V2_DATA/ICBShop/Board/202208/b049c597f8784e9e817cc3d8a3242a2c.pdf",
+    "https://www.jama888.com/tsc-support",
+    "https://www.jays.co.kr/12_Files/U3606B_UM.pdf",
+    "https://www.jcprogrammer.com/download/driver/0/",
+    "https://www.komachine.com/en/companies/t-e-c-c/products/102770-battery-cycler-tbcds-10kw",
+    "https://www.komachine.com/ko/companies/t-e-c-c/products/102766-battery-cycler-tbcdsseries",
+    "https://www.komachine.com/ko/companies/t-e-c-c/products/series/18858",
+    "https://www.tek.com/ko/support/datasheets-manuals-software-downloads?model=TCP0030A",
+    "https://www.tjmedia.com/manual/240322_B2_manual_v3.2.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

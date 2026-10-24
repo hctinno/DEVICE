@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_108.json",
+  "original_log_sha256": "7f1fce87f4ac54397e7b4e8a2d01d0c4b82f3099898bb44f928ff8cfbadee8d2",
+  "original_log_bytes": 28198,
+  "queries": [
+    "HIOKI LR8400 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://app.calldoorstep.inwww.hiokikorea.com/support/software_agree.html?c_id=A002001&fullpath=download%2F3694_s&p_no=366",
+    "https://ccc.dddd.hiokikorea.com/support/software_agree.html?c_id=A023001&fullpath=download%2F3694_s&p_no=35",
+    "https://hiokikorea.com/support/software_search.html?p=3",
+    "https://madeinbroke.com/Documentation/LR8400-20.pdf",
+    "https://www.hioki.cn/products/lr8400-21",
+    "https://www.hioki.cn/products/lr8402-21",
+    "https://www.hioki.co.jp/jp/support/softwaredownload/?mName=LR8450&search=on",
+    "https://www.hioki.co.kr/hioki/Product_Program/download/LR8400-20E4-07M-00K.pdf",
+    "https://www.hioki.com/download/28268",
+    "https://www.hioki.com/euro-en/products/multichannel-data-loggers/multichannel/id_5846",
+    "https://www.hioki.com/in-en/support/download",
+    "https://www.hioki.com/us-en/products/multichannel-data-loggers/multichannel/id_5846",
+    "https://www.hioki.com/us-en/support/download/software/versionup/detail/id_368",
+    "https://www.hiokikorea.com/support/software_search.html?p=4",
+    "https://www.hiokikorea.com/support/software_search.html?s_string=LR8450",
+    "https://www.mainscale.com/attachments/view/?attach_id=152722",
+    "https://www.transcat.ca/media/pdf/hioki-LR8400-datasheet.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

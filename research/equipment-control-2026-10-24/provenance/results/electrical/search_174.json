@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_174.json",
+  "original_log_sha256": "fa88738530eab5fdffbd03ef1d5e211a19bda1d7b5959fff465da2e4765f0a8e",
+  "original_log_bytes": 29644,
+  "queries": [
+    "KIKUSUI PBZ20-20 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download/cat_pbz/",
+    "https://global.kikusui.co.jp/products-index/dc/pbz/",
+    "https://global.kikusui.co.jp/spec/pbz_interface/",
+    "https://global.kikusui.co.jp/spec/pbz_other-functions/",
+    "https://global.kikusui.co.jp/w2-2/dc-power-supply-en/pbz-en/pbz-series/",
+    "https://global.kikusui.co.jp/w2-2/dc-power-supply-en/pbz-en/pbz20-20a/",
+    "https://kikusui-europe.com/spec/pbz_interface/",
+    "https://kikusui-korea.co.kr/files/PDF/PBZ_M.pdf",
+    "https://kikusui.co.jp/spec/pbz_interface/",
+    "https://kikusuiamerica.com/download/cat_pbz/",
+    "https://kikusuiamerica.com/products-index/dc/pbz/",
+    "https://kikusuiamerica.com/spec/pbz_other-functions/",
+    "https://kikusuiamerica.com/w2-2/dc-power-supply-en_us/pbz-en_us/pbz-series/",
+    "https://www.kikusui-korea.co.kr/files/PDF/PBZ_M.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pbz_interface_manual.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/pbz_users_manual_en.pdf",
+    "https://www.manualslib.com/manual/1216090/Kikusui-Pbz20-20.html",
+    "https://www.manualslib.com/manual/1473310/Kikusui-Pbz20-20.html?page=113"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

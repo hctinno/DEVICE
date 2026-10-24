@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_tecc_exact.json",
+  "original_log_sha256": "f8b89d5710a8f1052e59ee03c3561066ee705b552a55d7f0f77c177ce0b0a637",
+  "original_log_bytes": 6426,
+  "queries": [
+    "\"T.E.C.C\" \"TBCDS\""
+  ],
+  "discovered_urls": [
+    "https://m.media-amazon.com/images/I/B1kItCQ4fzS.pdf",
+    "https://www.komachine.com/en/companies/t-e-c-c/products/102770-battery-cycler-tbcds-10kw",
+    "https://www.komachine.com/ko/companies/t-e-c-c/products/102766-battery-cycler-tbcdsseries"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

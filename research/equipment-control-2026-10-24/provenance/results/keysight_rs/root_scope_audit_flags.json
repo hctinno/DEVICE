@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/root_scope_audit_flags.json",
+  "original_log_sha256": "84b80ea5ff6d31bf5603479a88fec03f283b78bf02acf977aa6c72082dd3e4c5",
+  "original_log_bytes": 2051,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

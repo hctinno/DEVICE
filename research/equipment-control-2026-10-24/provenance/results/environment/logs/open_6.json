@@ -1,0 +1,20 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_6.json",
+  "original_log_sha256": "fac8322cfa65992e7fa354b78dfa27ee4dbe8dcfb7a521d32fb8d7dd7c52f46e",
+  "original_log_bytes": 4156,
+  "queries": [],
+  "discovered_urls": [
+    "https://github.com/jmbattle/pyESPEC",
+    "https://github.com/jmbattle/pyESPEC'",
+    "https://github.com/luferau/Samwontech-TEMP2xxx",
+    "https://github.com/luferau/Samwontech-TEMP2xxx'",
+    "https://pymeasure.readthedocs.io/en/latest/api/instruments/thermotron/thermotron3800.html",
+    "https://pymeasure.readthedocs.io/en/latest/api/instruments/thermotron/thermotron3800.html'",
+    "https://www.espec.co.jp/english/inquiry/catalog/pcs.pdf",
+    "https://www.espec.co.jp/english/inquiry/catalog/pcs.pdf'"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

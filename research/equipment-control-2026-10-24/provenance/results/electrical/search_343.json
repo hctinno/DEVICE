@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_343.json",
+  "original_log_sha256": "72cf3ced98d5def857c4511b3999321148b57a88fdcd14213188eec7745c6a89",
+  "original_log_bytes": 30671,
+  "queries": [
+    "FLUKE 8922A manual programming software"
+  ],
+  "discovered_urls": [
+    "https://download.elso.sk/fluke/manual/Fluke-8921A-dten.pdf",
+    "https://download.elso.sk/fluke/manual/Fluke_8920A_8921A_Manual.pdf",
+    "https://electroniccalibrators.tpub.com/TB-9-6625-2324-35/TB-9-6625-2324-350013.htm",
+    "https://lira.epac.to/DOCS-TECH/Manuals%20and%20Datasheets/Fluke/",
+    "https://manuals.plus/m/f3d5f9f15449a1dad9d06959a6f0261a5ccc5e08a158e777014a9c1d7d96a7a5",
+    "https://manualzilla.com/doc/7046926/fluke-8922a-user-s-manual",
+    "https://manualzilla.com/doc/7046926/fluke-8922a-user-s-manual?page=108",
+    "https://manualzz.com/doc/3154875/fluke-8922a-true-rms-voltmeter--8922a-003-counter-output-",
+    "https://weighing.andprecision.com/wp-content/uploads/2017/04/AD-8922A_Manual_-_English.pdf",
+    "https://www.bobsmanuals.com/Electronics/Industrial/Fluke/8922A/manual/",
+    "https://www.fluke.com/en-us/support/software-downloads",
+    "https://www.metrologymanuals.com/documents/sha-ee6c302c30faf90bcaa9be56328d84afd78ba69dd0b015adbb527c034547d9c0/fluke-8922a-true-rms-voltmeter-instruction-manual/",
+    "https://www.metrologymanuals.com/manufacturers/fluke/models/8922a/",
+    "https://www.opweb.de/en/manufacturer/fluke/8922a",
+    "https://www.reddit.com/r/Metrology/comments/uj6o8j",
+    "https://www.reddit.com/r/networking/comments/fku5dq",
+    "https://www.scribd.com/document/835685903/FLUKE-8922A-Instruction"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,16 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_1.json",
+  "original_log_sha256": "a5b8a34a84b81211f07b3dce16a5e41181b0ac01e2b3c1df2e0c46733576ac42",
+  "original_log_bytes": 23769,
+  "queries": [],
+  "discovered_urls": [
+    "https://espec.com/na/products/family/sh_humidity/",
+    "https://www.biologic.net/softwares/tcu-server/",
+    "https://www.espec.co.jp/english/products/catalog/pj.pdf",
+    "https://www.espec.co.jp/english/products/catalog/tsdtse.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

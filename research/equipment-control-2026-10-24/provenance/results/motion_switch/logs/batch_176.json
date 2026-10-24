@@ -1,0 +1,26 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_176.json",
+  "original_log_sha256": "430fb3660af8f5fd754ca96687d5348897f38347fc51a4cb784a4a2e44680d37",
+  "original_log_bytes": 25291,
+  "queries": [
+    "JFM Engineering \"Turn table for IP Test\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FBSR-03A (3dB ATT+LNA)\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FBSR-03A (7G HPF+LNA)\" manual programming driver API GitHub",
+    "T&M SYSTEM \"FBSR-03A (Thru)\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/27f1530354e2b1242f73ec1ef1b18864dae4783cd78ce3459810871f63a9f687.pdf",
+    "https://device.report/m/448d5d39b08f30534a04ade046fa6e2ee0bade4a839a1aea164fe01f2a7e1088.pdf",
+    "https://device.report/m/56c08b324f0f32f231355a25eed2f81dcd0f4b8b1270ce5175fd1e040356ec06.pdf",
+    "https://device.report/m/8491e17a551495aa50b43ede012b949d5f78f5fabb4a5d5dd6e747eb0de65225.pdf",
+    "https://fcc.report/FCC-ID/A3LSMX520/8096194.pdf",
+    "https://fccid.io/m/491ad25b94643a3d774a6ea3a55bd0903f4f0aca87d1f042a5ae8703fda535c5.pdf",
+    "https://www.aajjo.com/lab-instrument/dust-chamber",
+    "https://www.aajjo.com/store/c-k-enterprise-vadodara/catalogue",
+    "https://www.researchgate.net/publication/372584361_OpenLB_User_Guide_Associated_with_Release_16_of_the_Code"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

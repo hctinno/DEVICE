@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_258.json",
+  "original_log_sha256": "47f7cae3d538da419e08915c84ab57b3f509b429bce625d3c47be62bc7806d39",
+  "original_log_bytes": 33529,
+  "queries": [
+    "CHINO KR2E6HSNOT manual programming software"
+  ],
+  "discovered_urls": [
+    "https://aniaprom.ru/index.php?download_id=8652&route=product%2Fproduct%2Fdownload",
+    "https://en.www.chino.co.jp/jp/serv/products/detail/?did=197",
+    "https://en.www.chino.co.jp/jp/serv/products/detail/?did=273",
+    "https://en.www.chino.co.jp/jp/serv/support/",
+    "https://en.www.chino.co.jp/jp/serv/support/call-center/usefull-setting/",
+    "https://en.www.chino.co.jp/jp/serv/support/download-software/",
+    "https://en.www.chino.co.jp/jp/serv/support/manual-en/?pcat=18&status=selectedCategory",
+    "https://manualzz.com/doc/10594787/chino-kr2s-graphic-recorder-instruction-manual",
+    "https://www.chino.co.jp/jp/serv/products/detail/?did=197",
+    "https://www.chino.co.jp/jp/serv/support/manual-en/?pcat=12&status=selectedCategory",
+    "https://www.chinoamerica.com/dl/manual/pdf_recorder/KR2S_Communications_INE-863B.pdf",
+    "https://www.chinoamerica.com/products/software/",
+    "https://www.chinoindia.com/uploads/products/kr2s-series/KR2S-General-INE-861A.pdf",
+    "https://www.chinoindia.com/uploads/products/kr2s-series/KR2S-PSE-801E-low-.pdf",
+    "https://www.instrumart.com/assets/chino-PASS_manual.pdf",
+    "https://www.manuallib.com/company/1130232/",
+    "https://www.manuallib.com/file/chino-kr-series-product-leaflet/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

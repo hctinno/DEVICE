@@ -1,0 +1,19 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/follow_extraopensource.json",
+  "original_log_sha256": "3d32e979e0aba756d7e37dc5d48bb306e252d38b300fc92f3f279cbfea933fdc",
+  "original_log_bytes": 20231,
+  "queries": [
+    "site:github.com \"AFJ\" \"SW04\"",
+    "site:github.com \"GPIB-140A\" OR \"GPIB-140B\"",
+    "site:github.com \"OBE-LIN\" OR \"optoCAN-FD\" OR \"U2/12-1M\"",
+    "site:github.com \"PLIN-LWL\" OR \"PCAN-LWL\""
+  ],
+  "discovered_urls": [
+    "https://github.com/arizvisa/windows-binary-tools/blob/master/pci_ids.txt",
+    "https://github.com/mbwibowo/ucsd-course-network/blob/master/raw_course_data/ECE.txt"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

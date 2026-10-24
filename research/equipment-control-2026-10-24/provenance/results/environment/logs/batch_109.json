@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_109.json",
+  "original_log_sha256": "c9c94d7f525adcad00dd3492962ba55bb83f769d02b826803eb4c7a6e58c47e6",
+  "original_log_bytes": 26342,
+  "queries": [
+    "CHAMTECH \"CT-THR-3000D\" Temp & Humid Chamber",
+    "DGBELL \"BE-6047-3T\" Crush/Acupuncture Tester",
+    "LZT \"M-15\" Flow meter for External icing Test",
+    "OSUNG ST Co., Ltd. \"OST-DT1\" Dust Chamber"
+  ],
+  "discovered_urls": [
+    "https://alatukurperminyakan.com/wp-content/uploads/2023/03/LC-Brochure-Liquid-Control.pdf",
+    "https://bigamart.com/product/lzt-m-15-flowmetersaim-0-1-1gpm-0-5-4lpm-water-liquid-flow-meter-tool-flowmeter-instrument/",
+    "https://bigamart.com/product/sourcingmap-lzt-m-15-2-0-gpm-1-2bsp-water-flow-measuring-panel-type-flowmeter/",
+    "https://bnyzwot.com/products/lzt-m-15-0-2-2gpm-1-7lpm-water-flow-meter-panel-mount-type-flowmeters",
+    "https://bnyzwot.com/products/lzt-m-15-0-3-3gpm-1-11lpm-water-flow-meter-panel-mount-type-flowmeter",
+    "https://equaboiler.com.ec/brand/lzt/",
+    "https://hanwhavision.eu/download/420428/?tmstv=1774870655",
+    "https://intrial.com.pe/producto/intrial/intrial-automatizacion-industrial/intrial-flujo/intrial-rotametros/flow-meter-05-5gpm2-18lpm-water-m-15-lzt/",
+    "https://item.gmarket.co.kr/Item?goodsCode=4488281883",
+    "https://kla-ac.jp/product/lzt-m-15-02-2gpm-1-7lpm-water-flow-meter-panel-mount-type-fl?ctgItemCd=250352731",
+    "https://lcmeter.com/wp-content/uploads/2022/03/MS100-15_M15.pdf",
+    "https://ntrs.nasa.gov/api/citations/19700003089/downloads/19700003089.pdf?attachment=true",
+    "https://patents.google.com/patent/JP5577933B2/en",
+    "https://repository.lib.ncsu.edu/bitstreams/45677094-6a26-4073-82bb-11d0d3357f24/download",
+    "https://richanddelish.com/products/1pc-lzt-m-15-water-rotameter-indicator-counter-water-liquid/250353634/",
+    "https://thesis.lakeheadu.ca/jspui/bitstream/2453/4845/1/SharifF2021d-1a.pdf",
+    "https://us101.co.kr/product/detail.html?cate_no=2063&display_group=1&product_no=1193467",
+    "https://www.retailmarket.net/products/uxcell-lzt-m-15-1-2bsp-0-5-5-gpm-water-flow-measuring-panel-type-flowmeter/",
+    "https://www.scribd.com/document/1052871201/Certification-XND-A6084RV-250827-en-IP52"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

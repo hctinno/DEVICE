@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item347.json",
+  "original_log_sha256": "555a73998a28b7294b3c87dc7e466fd0cbfcbf5d3a45e16f5cef2e2086d1c044",
+  "original_log_bytes": 15410,
+  "queries": [
+    "RIKEN KEIKI \"GX-8000\" software interface manual",
+    "site:github.com \"GX-8000\" RIKEN KEIKI"
+  ],
+  "discovered_urls": [
+    "http://www.rikenkeiki.co.jp/english/",
+    "https://envcoglobal.com/wp-content/uploads/2024/02/GX-8000_Datalog-Program.pdf",
+    "https://github.com/Git-Romer/pokecollector",
+    "https://github.com/felowil1337/ro-zero-calculator/blob/main/docs/ZERO_DAMAGE_GUIDE.md",
+    "https://manualzz.com/doc/33322530/riken-keiki-gx-8000-portable-gas-monitor-operating-manual",
+    "https://manualzz.com/doc/6743746/riken-keiki-gx-8000-portable-gas-monitor-operating-manual",
+    "https://product.rikenkeiki.co.jp/assets/img/products/54/man/PT0E-09811_GX-8000.pdf",
+    "https://product.rikenkeiki.co.jp/assets/img/products/55/man/PT0E-10811_GX-8000_O2.pdf",
+    "https://rikenkeiki-me.com/datasheets/",
+    "https://rikenkeiki-me.com/manuals/",
+    "https://s3.us-east-1.wasabisys.com/cdn.rkiinstruments.com/pdf/GX-8000_maintenance_manual.pdf",
+    "https://sc-journal.com/device/riken-keiki/gx-8000/",
+    "https://sc-journal.com/view/1406241/riken-keiki-gx-8000-operating-manual-46/",
+    "https://seatracker.org/viewtopic.php?t=59332",
+    "https://site.jjstech.com/pdf/RKI-Instruments-pdf/mGX-8000_eng.pdf",
+    "https://www.manualslib.com/manual/1279328/Riken-Keiki-Gx-8000.html",
+    "https://www.manualslib.com/manual/1285317/Riken-Keiki-Gx-8000.html",
+    "https://www.manualslib.com/manual/1285317/Riken-Keiki-Gx-8000.html?page=6",
+    "https://www.manualslib.com/products/Riken-Keiki-Gx-8000-8732700.html",
+    "https://www.rikenkeiki.co.jp/",
+    "https://www.scribd.com/document/692850417/Manual-GX-8000"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

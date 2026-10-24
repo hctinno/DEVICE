@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/community_followup312.json",
+  "original_log_sha256": "9c79a6f31a8fc8ca31fbd55ef9b98426634253af75188e1598812154de6fe1dc",
+  "original_log_bytes": 359,
+  "queries": [
+    "site:github.com \"JTE32A\" \"JYENTECH\""
+  ],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_073.json",
+  "original_log_sha256": "3f7fc140ec3a55594bbc6c95ccc6fd7010e62d094fbe8fdd419f4ba6b706a9a4",
+  "original_log_bytes": 28525,
+  "queries": [
+    "Kingpo 701 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://com-port.blogspot.com/2009/06/kenwood-programming-software-reference.html",
+    "https://soyal.com/download.php?keywords=701+server",
+    "https://soyal.com/faq.php?act=view&id=873",
+    "https://soyal.com/product.php?act=view&id=148",
+    "https://www.dgkingpo.com/wp-content/uploads/2025/10/Spark-Ignition-Test-Apparatus-Operation-Manual.pdf",
+    "https://www.inovonicsbroadcast.com/product/701",
+    "https://www.kingpocn.com/upload/file/202409/1725373324644538.pdf",
+    "https://www.kocom.com/customer/download_result.php?c_no=58&p_no=535",
+    "https://www.raytelsecurity.com/kbase/access-control-systems-and-products-support/dir/DESC/sort/rating/page/2/",
+    "https://www.raytelsecurity.com/media/uploads/K50i_User_Manual.pdf",
+    "https://www.scribd.com/document/433525935/85177-D",
+    "https://www.soyal.com/download.php?act=list&keywords=701server&page=2",
+    "https://www.soyal.com/faq.php?act=view&id=687",
+    "https://www.soyal.com/video.php?act=list&cid=13",
+    "https://xiepin.net/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

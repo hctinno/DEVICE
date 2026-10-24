@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_316.json",
+  "original_log_sha256": "1d5d9a2d8d4509cbaae3e23c6c05ab53876f5460ec1f11ea782a6d388dd8e5b2",
+  "original_log_bytes": 28305,
+  "queries": [
+    "TENULINE 5334B manual programming software"
+  ],
+  "discovered_urls": [
+    "https://www.keysight.com/in/en/assets/9018-05364/service-manuals/9018-05364.pdf",
+    "https://www.keysight.com/nl/en/assets/9018-05364/service-manuals/9018-05364.pdf",
+    "https://www.keysight.com/se/en/assets/9921-01985/reference-guides/5334B.pdf",
+    "https://www.keysight.com/us/en/assets/9018-05705/user-manuals/9018-05705.pdf",
+    "https://www.keysight.com/zz/en/assets/9018-05705/user-manuals/9018-05705.pdf",
+    "https://www.keysight.com/zz/en/assets/9921-01985/reference-guides/5334B.pdf",
+    "https://www.manualslib.es/manual/343590/Pr-Electronics-5334.html",
+    "https://www.manualslib.es/products/Pr-Electronics-5334B-936139.html",
+    "https://www.prelectronics.com/dk/produkter/temperaturtransmittere/5300/2-wire-programmable-transmitter-5334b/",
+    "https://www.prelectronics.com/es/productos/transmisores-de-temperatura/5300/2-wire-programmable-transmitter-5334b/",
+    "https://www.prelectronics.com/filearkiv/pdf-ftp/5300_series/5334/manual/5334v115_uk.pdf",
+    "https://www.prelectronics.com/products/temperature-transmitters/5300/2-wire-programmable-transmitter-5334b/",
+    "https://www.prelectronics.com/se/produkter/temperaturtransmittrar/5300/2-wire-programmable-transmitter-5334b/",
+    "https://www.scribd.com/document/990795140/5334v115-uk-250913-201038"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

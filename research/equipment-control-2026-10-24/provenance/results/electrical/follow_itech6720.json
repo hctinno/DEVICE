@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_itech6720.json",
+  "original_log_sha256": "2d6a1c73c35aefdcbd25d2218fa77a724288cc6d944f6b38c09af5aafb504776",
+  "original_log_bytes": 30547,
+  "queries": [
+    "ITECH IT6720 remote control communication interface no"
+  ],
+  "discovered_urls": [
+    "https://itechate.com/uploadfiles/2019/06/201906211031593159.pdf",
+    "https://manualsfile.com/product/k3x39f1e8yf.html",
+    "https://manualzz.com/doc/72202457/itech-it6722a--it6723--it6724--it6724b--it6724g--it6726g-",
+    "https://manuzoid.com/manuals/LjDgO-Itech%20IT6720%20User%20manual",
+    "https://oss.itechate.com/uploadfiles/2020/03/20200302160044044.pdf",
+    "https://sc-b.digikeyassets.com/en/products/detail/itech-electronic-co-ltd/IT6720/16685617",
+    "https://www.digikey.co.uk/en/products/detail/itech-electronic-co-ltd/IT6720/16685617",
+    "https://www.digikey.com/en/products/detail/itech-electronic-co-ltd/IT6720/16685617",
+    "https://www.itechate.com/en/info_128.aspx?itemid=545&lcid=91",
+    "https://www.itechate.com/en/product/dc-power-supply/IT6700.html",
+    "https://www.manuallib.com/file/itech-it6720-user-manual-afcf2d/",
+    "https://www.manualslib.com/manual/3688491/Itech-It6720.html",
+    "https://www.welectron.com/mediafiles/guides/itech/ITECH_IT6300_Programming-Guide.pdf",
+    "https://www.welectron.com/mediafiles/manuals/itech/ITECH_IT6700_Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

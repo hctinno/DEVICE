@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_353.json",
+  "original_log_sha256": "3499cfcb28a2a8ba67034e7d3b791ceccdca513ee1549acb6c19869887187d4e",
+  "original_log_bytes": 31918,
+  "queries": [
+    "KIKUSUI TOS 6100 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/sitemap-html/",
+    "https://global.kikusui.co.jp/support/",
+    "https://kikusui-europe.com/kikusupport/i-want-to-control-a-kikusui-product-with-a-programmable-logic-controller-plc-do-you-have-a-protocol-specification-or-communication-specification/",
+    "https://kikusui-korea.co.kr/files/PDF/TOS6200_M.pdf",
+    "https://kikusuiamerica.com/download-service/",
+    "https://kikusuiamerica.com/download/kfm2030-3/",
+    "https://kikusuiamerica.com/download/krb13-krb600/",
+    "https://kikusuiamerica.com/download/krb9-krb400-pcr-le/",
+    "https://kikusuiamerica.com/download/pd03m-s-pcr-la/",
+    "https://kikusuiamerica.com/download/pfx2331/",
+    "https://kikusuiamerica.com/download/pl02a-tos/",
+    "https://kikusuiamerica.com/download/plz4wb/",
+    "https://kikusuiamerica.com/download/tos5000a/",
+    "https://kikusuiamerica.com/download/tos7300/",
+    "https://kikusuiamerica.com/manual-search/",
+    "https://kr.kikusui.co.jp/kd/pm_tos/page/2/",
+    "https://manualzilla.com/doc/5787581/user-s-manual%EF%BC%8F3.2mb---kikusui-electronics-corp",
+    "https://manualzz.com/doc/4879566/%E8%8F%8A%E6%B0%B4%E9%9B%BB%E5%AD%90%E5%B7%A5%E6%A5%AD-tos-6100-%E4%BA%A4%E6%B5%81%E4%BD%8E%E6%8A%B5%E6%8A%97%E8%A9%A6%E9%A8%93%E5%99%A8-%E5%8F%96%E6%89%B1%E8%AA%AC%E6%98%8E%E6%9B%B8",
+    "https://tgcloud.cc/calibration/37486",
+    "https://tgcloud.cc/calibration/37489",
+    "https://www.analyticalelectronics.in/testequipment/manuals/kikusui.html",
+    "https://www.atecorp.com/getmedia/0115084b-2cb3-49b7-a916-0343b2aa30e3/kikusui-tos6100_manual_1.pdf",
+    "https://www.atecorp.com/getmedia/1f730ab4-a0ad-4834-be07-ec8d72abb12d/kikusui-tos6200-6210_manual_1.pdf",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

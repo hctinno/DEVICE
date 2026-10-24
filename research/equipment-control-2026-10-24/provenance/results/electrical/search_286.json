@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_286.json",
+  "original_log_sha256": "4651fc01c1192a0a09f581a924adcbeee4722ececa3e34808defea4f2f39d74d",
+  "original_log_bytes": 37079,
+  "queries": [
+    "Compliance West Leakage Current Tester manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Compliance_West_LCB-990_-_Manual.pdf",
+    "https://calright.com/wp-content/uploads/2018/01/6136.pdf",
+    "https://device.report/m/a88cde8d420120b12118604d7fc7aee02754bac5a385174690a8abebcf85d446",
+    "https://en.wikipedia.org/wiki/Portable_appliance_testing",
+    "https://manualzz.com/doc/37027214/compliance-west-usa-ht-3000p-dielectric-withstand-tester-",
+    "https://manualzz.com/doc/38689398/compliance-west-ht-2800p-instruction-manual",
+    "https://manualzz.com/doc/48492798/compliance-west-ht-s-ht-2000s--ht-2800s--ht-3000s--ht-420",
+    "https://manualzz.com/doc/68935937/compliance-west-ht-2000s--ht-2800s--ht-3000s-instruction-",
+    "https://www.compwest.com/catalog/Manuals/HT-5000P%20ac%20200mA%20rev%202.0.pdf",
+    "https://www.compwest.com/wp-content/uploads/2014/12/HT-5000P-V2-rev-7.0.pdf",
+    "https://www.compwest.com/wp-content/uploads/2015/11/LCB-Manual-Rev-7.pdf",
+    "https://www.manualslib.com/manual/1224581/Compliance-West-Ht-2800.html?page=15",
+    "https://www.manualslib.com/manual/1224581/Compliance-West-Ht-2800.html?page=17",
+    "https://www.manualslib.com/manual/1525993/Compliance-West-Ht-S-Series.html",
+    "https://www.manualslib.com/manual/3600597/Compliance-West-Ht-P-V2-Series.html",
+    "https://www.manualslib.com/manual/3942384/Compliance-West-Ht-2000p-V2.html",
+    "https://www.manualslib.com/manual/4123676/Compliance-West-Lcb-Series.html",
+    "https://www.tequipment.net/Compliance/HT-10KVPac/dc/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

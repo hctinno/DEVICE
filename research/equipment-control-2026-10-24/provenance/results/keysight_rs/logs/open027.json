@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open027.json",
+  "original_log_sha256": "8c4a5748d32d68e22477a5261356aa6d17f20ff09e197537566dd991577ba550",
+  "original_log_bytes": 10389,
+  "queries": [],
+  "discovered_urls": [
+    "http://www.rohde-schwarz.com/appnote/1SL398Rohde",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_application/application_notes/1sl398/1SL398_1e_GenDri.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

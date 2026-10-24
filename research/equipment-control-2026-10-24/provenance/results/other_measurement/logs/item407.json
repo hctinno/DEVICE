@@ -1,0 +1,43 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item407.json",
+  "original_log_sha256": "ddac633a5278546d85e3831b0dcd54a329cc75339b63408a7685769aea139553",
+  "original_log_bytes": 16229,
+  "queries": [
+    "BRUEL&KJAER \"4231\" software interface manual",
+    "site:github.com \"4231\" BRUEL&KJAER"
+  ],
+  "discovered_urls": [
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/54ffd7b3-7293-43b9-b162-c23a607815d5/Bruel%20%26%20Kjaer%20Hand-held%20Analyzer%20Types%202250%20and%202270%20Product%20Data%20Sheet.pdf",
+    "https://doc.es.aau.dk/fileadmin/doc.kom.aau.dk/labs_facillities/acoustics/man/bk_4231_TechnicalDocumentation.pdf",
+    "https://github.com/AdAway/AdAway/issues/4231",
+    "https://github.com/GraphiteEditor/Graphite/issues/4231",
+    "https://github.com/NginxProxyManager/nginx-proxy-manager/issues/4231",
+    "https://github.com/SigNoz/signoz.io/issues/4231",
+    "https://github.com/TandoorRecipes/recipes/issues/4231",
+    "https://github.com/UNSW-MTRN4231/4231SuppliedCode",
+    "https://github.com/flarum/framework/issues/4231",
+    "https://github.com/iovisor/bcc/issues/4231",
+    "https://github.com/openai/codex/issues/4231",
+    "https://github.com/orgs/music-assistant/discussions/4231",
+    "https://github.com/spatialaudio/audibility-constant-phase/blob/master/README.md",
+    "https://github.com/typeorm/typeorm/issues/4231",
+    "https://manuals.plus/m/d9fe03f51814af5b4075a405451ef34419618fb90f6890a735fc6a680d4943fb",
+    "https://manualzz.com/doc/66716848/bruel-and-kjaer-2245-user-manual",
+    "https://manualzz.com/doc/78139007/bruel-and-kjaer-2236-a-008-manual",
+    "https://manualzz.com/doc/en/25546169/bruel-and-kjaer-2240-user-manual",
+    "https://maximinstruments.com/pdf_files/BRUEL_KJAER_2236_Operation_Manual.pdf",
+    "https://www.analyticalelectronics.in/testequipment/manuals/bruel_kjaer.html",
+    "https://www.bksv.com/media/downloads/2250/be1712.pdf",
+    "https://www.ebay.co.uk/itm/116381878085",
+    "https://www.ebay.com/itm/116381878085",
+    "https://www.ebay.com/itm/165987136291",
+    "https://www.manualsdir.com/manuals/318685/atec-bruel-kjaer-2250-2270.html?page=20",
+    "https://www.manualslib.com/manual/1608051/Bruel-And-Kjaer-2245.html?page=46",
+    "https://www.manualslib.com/manual/2223018/Bruel-And-Kjaer-2245.html",
+    "https://www.manualslib.es/manual/298768/Bruel-And-Kjaer-2245.html?page=47"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group02_leybold.json",
+  "original_log_sha256": "a71b5b5fece4f12f76f443d1778178a5bcc702271f17f384a68dd545070ed7ae",
+  "original_log_bytes": 13341,
+  "queries": [
+    "\"Leybold\" \"PTR90\" interface manual",
+    "site:github.com Leybold PTR90"
+  ],
+  "discovered_urls": [
+    "https://ch.shop.leybold.com/medias/300980367-001-Instructions.pdf?attachment=true&context=bWFzdGVyfHJvb3R8NDMyOTgwfGFwcGxpY2F0aW9uL3BkZnxhR0l5TDJnME5TODJOekl6TWpRM09EVTVNekExTkM4ek1EQTVPREF6TmpkZk1EQXhYMGx1YzNSeWRXTjBhVzl1Y3k1d1pHWXxiODM4YzAxOWQyMTQ4YWQ3NjY4NWI5OTA1Mjc4NzU0Yjk1ZGEwMWM2ZWQzNjgwNTE4YzgxZjcxZWJlNzYxZTIz",
+    "https://ch.shop.leybold.com/medias/300980367-003-Instructions.pdf?attachment=true&context=bWFzdGVyfHJvb3R8NDE2NDI2fGFwcGxpY2F0aW9uL3BkZnxhR1JrTDJobFpDODJOekl6TWpRNE16azVPVGMzTkM4ek1EQTVPREF6TmpkZk1EQXpYMGx1YzNSeWRXTjBhVzl1Y3k1d1pHWXwxMjc3ODdhYjJmZTZkNTg0MWM3MTI0YjZjNWUyZmQ4NzcwZGY3ODEwZDhlNmU2ZWEyOWExNGJkYWZmZmE4ODJh",
+    "https://de.shop.leybold.com/medias/300980367-003-Instructions.pdf?attachment=true&context=bWFzdGVyfHJvb3R8NDE2NDI2fGFwcGxpY2F0aW9uL3BkZnxhR1JrTDJobFpDODJOekl6TWpRNE16azVPVGMzTkM4ek1EQTVPREF6TmpkZk1EQXpYMGx1YzNSeWRXTjBhVzl1Y3k1d1pHWXwxMjc3ODdhYjJmZTZkNTg0MWM3MTI0YjZjNWUyZmQ4NzcwZGY3ODEwZDhlNmU2ZWEyOWExNGJkYWZmZmE4ODJh",
+    "https://device.report/m/ba67c4759fa9dcdcfe0dedeb46fe6c97aa023e15ce03a83bf792bb3075eaa56a",
+    "https://es.shop.leybold.com/medias/300980367-003-Instructions.pdf?attachment=true&context=bWFzdGVyfHJvb3R8NDE2NDI2fGFwcGxpY2F0aW9uL3BkZnxhR1JrTDJobFpDODJOekl6TWpRNE16azVPVGMzTkM4ek1EQTVPREF6TmpkZk1EQXpYMGx1YzNSeWRXTjBhVzl1Y3k1d1pHWXwxMjc3ODdhYjJmZTZkNTg0MWM3MTI0YjZjNWUyZmQ4NzcwZGY3ODEwZDhlNmU2ZWEyOWExNGJkYWZmZmE4ODJh",
+    "https://github.com/AlexShkarin/pyLabLib/blob/main/docs/changelog.rst",
+    "https://github.com/Michele-Minervini/awesome-quantum-startups",
+    "https://github.com/slazav/device2",
+    "https://github.com/tbensky/PhysicsLabs",
+    "https://it.shop.leybold.com/medias/300680364-002-Instructions.pdf?attachment=true&context=bWFzdGVyfHJvb3R8MTUzNzI4NHxhcHBsaWNhdGlvbi9wZGZ8YUdRMEwyZzBNQzg1T0RnMU9UVXpPVEUyT1RNeE1DOHpNREEyT0RBek5qUmZNREF5WDBsdWMzUnlkV04wYVc5dWN5NXdaR1l8N2ZjM2UzNTlmMWI1YjFiNGQyMTU1Y2UwZGU5NTc1Y2JiMTYyMDY5ZDZmODZkMTUwZjEzMzJkY2Y4NGM2ODhkZg",
+    "https://it.shop.leybold.com/medias/300980367-003-Instructions.pdf?attachment=true&context=bWFzdGVyfHJvb3R8NDE2NDI2fGFwcGxpY2F0aW9uL3BkZnxhR1JrTDJobFpDODJOekl6TWpRNE16azVPVGMzTkM4ek1EQTVPREF6TmpkZk1EQXpYMGx1YzNSeWRXTjBhVzl1Y3k1d1pHWXwxMjc3ODdhYjJmZTZkNTg0MWM3MTI0YjZjNWUyZmQ4NzcwZGY3ODEwZDhlNmU2ZWEyOWExNGJkYWZmZmE4ODJh",
+    "https://manuals.plus/m/395ab3d9084c95038e8bbc0ccd045471a47e5cf8fb9777c4a1ac2ae872be0259",
+    "https://manualzz.com/doc/24328698/leybold-display-two--three-vacuum-gauge-controller-instru",
+    "https://manualzz.com/doc/28246195/leybold-graphix-one--two--three-vacuum-gauge-controller-i",
+    "https://manualzz.com/doc/29860350/oerlikon-leybold-vacuum-center-two--center-three-multi-ch",
+    "https://manualzz.com/doc/70489640/oerlikon-leybold-vacuum-230001--display-one-instruction-m",
+    "https://www.ajvs.com/leybold-ptr-90-n-penningvac-vacuum-gauge-20233",
+    "https://www.ajvs.com/leybold-ptr-90-rn-penningvac-vacuum-gauge-41337",
+    "https://www.ajvs.com/leybold-ptr-90-rn-penningvac-vacuum-gauge-58080",
+    "https://www.idealspectroscopy.com/en-us/Leybold-PENNINGVAC-PTR-90-Pirani-with-a-Cold-Cathode-Ionization-Sensor-Gauge-KF25-RJ45-Connector-PN%3A-230070/pp/P1011286",
+    "https://www.manualslib.com/manual/1551519/Leybold-Graphix-One.html",
+    "https://www.sens4.com/vacuum/tvc-3-truevac-controller"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

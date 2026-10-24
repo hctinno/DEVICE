@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_pwrdriver.json",
+  "original_log_sha256": "fe771c5498729fbb79a58c310c24c763af85aa72f4ba751a9c08d36ede1a175b",
+  "original_log_bytes": 30190,
+  "queries": [
+    "\"PWR800L\" \"driver\""
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/",
+    "https://device.report/m/50b630742de401d81776e292b3fc75099927acd4ef8c71db299d1cf4f1247b56",
+    "https://esd.eu/en",
+    "https://keras.io/",
+    "https://manualzilla.com/doc/5813681/kikusui-products-catalogue---kikusui-electronics-corp",
+    "https://manualzilla.com/doc/5938487/user-s-manual---kikusui-electronics-corp",
+    "https://manualzilla.com/doc/5957136/kikusui-products-catalogue",
+    "https://manualzz.com/doc/27673042/kikusui-pwr-400l--pwr-400m--pwr-400h--pwr-800l--pwr-800m-",
+    "https://manualzz.com/doc/60161926/kikusui-pwr400h--pwr400m--pwr800h--pwr800l--pwr800m-opera",
+    "https://patents.google.com/patent/JP2018145067A/en",
+    "https://patents.google.com/patent/JPWO2018155550A1/en",
+    "https://patents.justia.com/patent/11531362",
+    "https://waseda.repo.nii.ac.jp/record/65272/files/Honbun-8744.pdf",
+    "https://www.ebay.com/itm/186435056481",
+    "https://www.manualslib.com/manual/1042070/Kikusui-Pwr400l.html",
+    "https://www.python.org/",
+    "https://www.scribd.com/document/723666480/Fuente-de-Poder-PWR400L",
+    "https://www.tensorflow.org/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

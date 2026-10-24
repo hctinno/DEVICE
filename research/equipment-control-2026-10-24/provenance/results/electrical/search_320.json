@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_320.json",
+  "original_log_sha256": "e64d62d167a7db0864c83afa76a77105bcd7e42e67225d5d37125542550cf834",
+  "original_log_bytes": 30244,
+  "queries": [
+    "PACIFIC 360-AMX manual programming software"
+  ],
+  "discovered_urls": [
+    "https://en.wikipedia.org/wiki/Support_programs_for_OS/360_and_successors",
+    "https://manualzz.com/doc/23532402/pacific-power-source-amx-105-amx--amx-108-amx--amx-112-am",
+    "https://pacificpower.com/wp-content/uploads/2023/12/AMX_Series_Operation_Manual.pdf",
+    "https://sc-journal.com/device/pacific/amx-series/",
+    "https://www.amx.com/en-US/products/muse-automator",
+    "https://www.amx.com/en-US/support_downloads/download_types/configurationtool",
+    "https://www.amx.com/en-US/support_downloads/download_types/manual",
+    "https://www.amx.com/en-US/support_downloads/download_types/manualsarchive",
+    "https://www.manualshelf.com/manual/atec/pacific-power-360amx-amxt/manual-english/page-1.html",
+    "https://www.manualshelf.com/manual/atec/pacific-power-360amx-amxt/manual-english/page-3.html",
+    "https://www.manualshelf.com/manual/atec/pacific-power-360amx-amxt/manual-english/page-4.html",
+    "https://www.manualslib.com/manual/2304611/Pacific-Power-Source-Amx-Series.html",
+    "https://www.notice-facile.com/en/manual/1707247/pacific%2Bpower%2Bsource%2Bamx-series",
+    "https://www.ppstsolutions.com/wp-content/uploads/Products/PPS/AMX/AMX_Series_Operation_Manual.pdf",
+    "https://www.scribd.com/document/431243274/360AMX-Datasheet"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

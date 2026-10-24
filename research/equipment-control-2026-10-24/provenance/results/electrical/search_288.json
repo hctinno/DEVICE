@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_288.json",
+  "original_log_sha256": "7568d746aef2b434a69fe3465467de1beb5c9506383322005cb8988ef7f2b128",
+  "original_log_bytes": 30918,
+  "queries": [
+    "YOKOGAWA 73202 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/IM73201E.pdf",
+    "https://cdn.tmi.yokogawa.com/files/uploaded/IM73201_E_070.pdf",
+    "https://malaysiayokogawa.com/index.php/item/1126-digital-multimeters/5294-yokogawa-digital-multimeters-732-series",
+    "https://manualmachine.com/yokogawa/73203/2499698-user-manual/",
+    "https://manualzz.com/doc/47842053/yokogawa-732-02-user-manual",
+    "https://manualzz.com/doc/60235292/yokogawa-73201-user-manual",
+    "https://manualzz.com/doc/6693623/yokogawa-73201-user-manual",
+    "https://tmi.yokogawa.com/ca/support/",
+    "https://tmi.yokogawa.com/cl/support/download-software-drivers-firmware/",
+    "https://tmi.yokogawa.com/support/",
+    "https://www.100y.com.tw/product/45859",
+    "https://www.koreayokogawa.com/support/download2.php",
+    "https://www.manualslib.com/brand/yokogawa/",
+    "https://www.nexinstrument.com/assets/images/pdf/TY500.pdf",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/instrumentation/comments/1dpn03i",
+    "https://www.tehencom.com/Companies/Yokogawa/Yokogawa_Catalog_2010.pdf",
+    "https://www.yokogawa.com/pdf/provide/E/GW/IM/0000026021/0/IM34M06Q16-01E.pdf",
+    "https://www.yokogawa.com/ymi/support/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

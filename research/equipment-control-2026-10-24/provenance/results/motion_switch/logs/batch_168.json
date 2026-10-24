@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_168.json",
+  "original_log_sha256": "93b33d69a5d1f2addfee79d0257e7b55afa11ff2530ddeaf2f12956c477ee36f",
+  "original_log_bytes": 32754,
+  "queries": [
+    " \"Antenna Master\" manual programming driver API GitHub",
+    "HCT \"Input 1 + 1.2G HPF+LNA\" manual programming driver API GitHub",
+    "HCT \"Input 1 + 3.3G HPF + LNA\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://ardupilot.org/antennatracker/docs/logmessages.html",
+    "https://ardupilot.org/dev/docs/where-to-get-the-code.html",
+    "https://copiter.ardupilot.org/dev/index.html",
+    "https://disucss.ardupilot.org/dev/index.html",
+    "https://firmware.ardupilot.org",
+    "https://github.com/ArduPilot/ardupilot",
+    "https://github.qzink.me/ExpressLRS/ExpressLRS",
+    "https://gitlab.com/mattiasandri/ns-3-ntn/-/tree/master/src/antenna?ref_type=heads",
+    "https://mcuxpresso.nxp.com/mcuxsdk/latest/middleware/wifi_nxp/docs/freertos/Wi-Fi_API_reference_freertos.html",
+    "https://proxy.audy.io/v/s-Z2l0aHViLmNvbQ/ArduPilot/MissionPlanner",
+    "https://www.anritsu.com/en-US/test-measurement/support/downloads?category=programming-manual",
+    "https://www.anritsu.com/en-au/test-measurement/support/downloads?category=programming-manual",
+    "https://www.anritsu.com/en-in/test-measurement/support/downloads?category=programming-manual",
+    "https://www.anritsu.com/zh-cn/test-measurement/support/downloads?category=programming-manual",
+    "https://www.blackcatsystems.com/doc/AntennaMaster.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

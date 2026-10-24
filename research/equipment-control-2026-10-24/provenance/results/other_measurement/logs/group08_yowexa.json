@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group08_yowexa.json",
+  "original_log_sha256": "04937fa6da74b61f33a69d9a836516a8cbb1f1c4e58abdfc092a8ceddbfc295e",
+  "original_log_bytes": 13951,
+  "queries": [
+    "YOWEXA (\"YDP-20-D\" OR \"YDP-20E-H\" OR \"YDP-20\" OR \"YDP-20E\") software manual USB",
+    "site:github.com YOWEXA YDP"
+  ],
+  "discovered_urls": [
+    "https://gist.github.com/avipars/b0dcc97112538663a3cc3028f312c25d",
+    "https://gist.github.com/peteristhegreat/e85a0e54e3b04e6903ae70dad1bac9b9",
+    "https://gist.github.com/ydp",
+    "https://github.com/Kaosarah/WhatsApp-group-chat-analysis-",
+    "https://github.com/baidu/Unlimited-OCR/issues/48",
+    "https://github.com/durgaprasad00773",
+    "https://github.com/grandju51/piano-learning-android",
+    "https://github.com/horovod/horovod/issues/65",
+    "https://github.com/jiecolo/Math_learning_group/blob/master/README.md",
+    "https://github.com/makefu/dnsmap/blob/master/dnsmap.h",
+    "https://github.com/yandex-cloud/yc-delta",
+    "https://github.com/yandex-cloud/yc-delta/blob/develop/README.md",
+    "https://usa.yamaha.com/files/download/other_assets/0/333800/ydp160_en_om_c0.pdf",
+    "https://www.indotrading.com/jual-thermo-hygrometer",
+    "https://www.jd.com/jiage/98557e51924670b71b37.html?electedExtAttrSet=386%2C&extAttrValue=expand_name%2C%4010%3A%3A386&sort_type=sort_default",
+    "https://www.volza.com/p/data-or-loggers/hsn-code-9025/export-data/",
+    "https://ydp-portfolio.netlify.app/",
+    "https://ywcoating.com/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

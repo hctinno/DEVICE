@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_201.json",
+  "original_log_sha256": "4cb957c831b8d89c686a20096816430efa973a2f4856178e0777b146e4354f6f",
+  "original_log_bytes": 34152,
+  "queries": [
+    "DONGHWA DM-1010 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cnc-tehnologi.ru/files/DMShm_P.pdf",
+    "https://dragoasia.com/kr/product/software.php",
+    "https://files.icp-deutschland.de/produkte/K127867/web/DM-Series-Manual-v2.05.pdf",
+    "https://manualzilla.com/doc/5778584/dm1010-option-tsr---z-technology--inc",
+    "https://support.dts-insight.co.jp/model/dl/1470",
+    "https://w140.com/tekwiki/images/5/5e/070-2994-01.pdf",
+    "https://www.axima-obchod.cz/admin-data/storage/get/96-programovaci-manual-cpm1_cpm2_srm1.pdf",
+    "https://www.daho.co.kr/kr/product/list.php?code=10j0a0",
+    "https://www.daktronics.com/en-us/support/kb/DD2134554",
+    "https://www.daktronics.com/en-us/support/kb/DD2300918",
+    "https://www.daktronics.com/en-us/support/kb/DD2439119",
+    "https://www.daktronics.com/en-us/support/kb/DD2571264",
+    "https://www.dmatek.com.tw/dmadoc/Public/?a=view&g=Doc&id=55&m=Index&tree=14&version=V1.0",
+    "https://www.ebay.com/itm/156497531558",
+    "https://www.ebay.com/itm/317352575108",
+    "https://www.omron.com.tw/data_pdf/mnu/w379-e1-03_cvm1_c200hw-drm-v1.pdf",
+    "https://www.radioddity.com/pages/baofeng-download",
+    "https://www.radioddity.com/pages/new-baofeng-download-test"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

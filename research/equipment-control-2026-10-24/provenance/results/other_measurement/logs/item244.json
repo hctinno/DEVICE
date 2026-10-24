@@ -1,0 +1,27 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item244.json",
+  "original_log_sha256": "3f24f1146fe6be6a1c670c6016b578489ade2b5d96f87763abf62896cbb54f77",
+  "original_log_bytes": 11662,
+  "queries": [
+    "BLUEBIRD \"DG-TD230\" software interface manual",
+    "site:github.com \"DG-TD230\" BLUEBIRD"
+  ],
+  "discovered_urls": [
+    "https://09pro.com/product/detail.html?cate_no=373&display_group=1&product_no=11327",
+    "https://handman.co.kr/product/%EB%B8%94%EB%A3%A8%ED%85%8D-%EB%94%94%EC%A7%80%ED%84%B8%ED%86%A0%ED%81%AC%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84-dg-td230/13623/category/24/display/1/",
+    "https://item.gmarket.co.kr/Item?goodsCode=4076412879",
+    "https://keyang1.com/product/%EB%B8%94%EB%A3%A8%ED%85%8D-%EB%94%94%EC%A7%80%ED%84%B8-%ED%86%A0%ED%81%AC%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84-dg-td230-4007232/2918/",
+    "https://keyang1.com/product/%EB%B8%94%EB%A3%A8%ED%85%8D-%EB%94%94%EC%A7%80%ED%84%B8-%ED%86%A0%ED%81%AC%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84-dg-td260-4007241/2915/",
+    "https://kgmall.co.kr/product/list.html?cate_no=443",
+    "https://m.gsshop.com/prd/prd.gs?bnclick=prd-b02_prdb02A_apiPrdBrand&mseq=437159&prdid=1100973903",
+    "https://m.jjang114.co.kr/product/detail.html?product_no=2365",
+    "https://madtool.net/goods/view?no=8759",
+    "https://ww-w.toolnshop.co.kr/view/?goods=18477&gs%5B%5D=68482",
+    "https://ww.w.toolnshop.co.kr/viewgs/?goods=18477&gs=68482",
+    "https://www.atextool.co.kr/goods/goods_view.php?goodsNo=1000015242"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

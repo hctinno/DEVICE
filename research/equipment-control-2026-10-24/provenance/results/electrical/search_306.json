@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_306.json",
+  "original_log_sha256": "7b3b85fa2f653db410d47998c0315e5819112cba304acebdda4d1454041a882f",
+  "original_log_bytes": 28648,
+  "queries": [
+    "Tektronix TDS2022C manual programming software"
+  ],
+  "discovered_urls": [
+    "https://download.tek.com/manual/077044401web.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://media.distrelec.com/Web/Downloads/he/et/TDS2000C_eng_datasheet.pdf",
+    "https://sc-journal.com/device/tektronix/tds2022c/",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/oscilloscope/tds1000-manual",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/oscilloscope/tds1001b-manual/tds1000b-tds2000b-tds1000c-edu-tds2000c-and-tps2000b-series",
+    "https://wustekprdsitecorexp-cd.azurewebsites.net/en/oscilloscope/tds210-manual/tds200-tds1000-tds2000-tds1000b-tds2000b-and-tps2000-programmer",
+    "https://www.allaboutcircuits.com/test-measurement/oscilloscopes/tds2000c-series-tds2022c/manual/",
+    "https://www.api.motion.ac.in/uriundj/5O0421Y/fsintinciw/9O996057Y8/tektronix%2Btds%2B1012%2Buser%2Bmanual.pdf",
+    "https://www.cedesa.com.mx/pdf/tektronix/textronix-TDS2000C_series_sheet.pdf?srsltid=AfmBOooIaOCbeMOFLUddswq2hkiZZ_Mb-u7xd-CSPH6ae95CzARos6bb",
+    "https://www.electrotechsystems.com/wp-content/uploads/2015/11/4431T-Lit-Rev1-1_14.pdf",
+    "https://www.manualslib.com/manual/2397170/Tektronix-Tds2022c.html",
+    "https://www.manualslib.com/manual/2397173/Tektronix-Tds2022c.html",
+    "https://www.manualslib.com/products/Tektronix-Tds2022c-8793343.html",
+    "https://www.reddit.com/r/Skookum/comments/xik20b",
+    "https://www.reddit.com/r/oscilloscope/comments/1ubdrwq/anyone_have_the_manual_for_a_dpu_411_type_ii/",
+    "https://www.tech-fin.ru/ostsillografy/tds2022c",
+    "https://www.tek.com.cn/oscilloscope/tds1000-manual",
+    "https://www.tek.com/-/media/marketing-documents/2019_2020_tektronix_catalog.pdf",
+    "https://www.tek.com/en/oscilloscope/tds2000-manual/tds2000c-and-tds1000c-edu-series",
+    "https://www.tequipment.net/TektronixTDS2022C.asp"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

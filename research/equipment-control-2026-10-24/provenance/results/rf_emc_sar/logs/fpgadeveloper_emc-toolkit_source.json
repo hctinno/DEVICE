@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/fpgadeveloper_emc-toolkit_source.json",
+  "original_log_sha256": "6a4cc90d47a1f0cbeb14e2f157a07bc2ce1e10121553696a40003edcb6870b7b",
+  "original_log_bytes": 1699,
+  "queries": [],
+  "discovered_urls": [
+    "https://codeload.github.com/fpgadeveloper/emc-toolkit/zip/refs/heads/master"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

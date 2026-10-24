@@ -1,0 +1,26 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/pypi-fetch-summary.json",
+  "original_log_sha256": "443b879df67d5d5d876733ea8a49f3ec6beb801e34247086e288e4da11ca9258",
+  "original_log_bytes": 3785,
+  "queries": [],
+  "discovered_urls": [
+    "https://RsOsp.readthedocs.io/",
+    "https://RsSmcv.readthedocs.io/",
+    "https://github.com/Rohde-Schwarz/Examples/tree/main/Misc/Python/RsOsp_ScpiPackage",
+    "https://github.com/Rohde-Schwarz/Examples/tree/main/Oscilloscopes/Python/rsmxo_ScpiPackage",
+    "https://github.com/Rohde-Schwarz/Examples/tree/main/SignalGenerators/Python/RsSmbv_ScpiPackage",
+    "https://github.com/Rohde-Schwarz/Examples/tree/main/SignalGenerators/Python/RsSmcv_ScpiPackage",
+    "https://github.com/Rohde-Schwarz/Examples/tree/main/SignalGenerators/Python/RsSmw_ScpiPackage",
+    "https://github.com/Rohde-Schwarz/Examples/tree/main/SpectrumAnalyzers/Python/RsFsw_ScpiPackage",
+    "https://rohde-schwarz.github.io/RsFsw_PythonDocumentation/",
+    "https://rohde-schwarz.github.io/RsSmbv_PythonDocumentation",
+    "https://rohde-schwarz.github.io/RsSmbv_PythonDocumentation/",
+    "https://rohde-schwarz.github.io/RsSmw_PythonDocumentation",
+    "https://rohde-schwarz.github.io/RsSmw_PythonDocumentation/",
+    "https://rsmxo.readthedocs.io/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

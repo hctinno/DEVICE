@@ -1,0 +1,41 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item149.json",
+  "original_log_sha256": "a3c5511ac968a6e394131a6824b7698f72027ad1a25c3ad624015c18854688e2",
+  "original_log_bytes": 14772,
+  "queries": [
+    "TESTO \"405-V1\" software interface manual",
+    "site:github.com \"405-V1\" TESTO"
+  ],
+  "discovered_urls": [
+    "https://chatgpt.com/backend-api/",
+    "https://gist.github.com/rsmbyk/9183a18d618f74d261d2259bd2ed7894",
+    "https://github.com/anthropics/claude-ai-mcp/issues/563",
+    "https://github.com/bunq/doc/blob/develop/DESCRIPTION.md",
+    "https://github.com/chthollyphile/folia-major/blob/main/docs/lyric-api.md",
+    "https://github.com/eppser/danfoss-ak-sm-decoy",
+    "https://github.com/jlt-commons/lev",
+    "https://github.com/openai/codex/issues/54845",
+    "https://github.com/subzeroid/instagrapi/issues/2773",
+    "https://github.com/supabase/supabase/blob/master/apps/docs/content/guides/api/rest/postgrest-error-codes.mdx",
+    "https://manuals.plus/m/4a1bfc8aef0295f5c19c97066e4c5f986296172246609b032200c92e4557de4d",
+    "https://manualzilla.com/doc/6233655/commissioning-switching-on-changing-the-parameters-set",
+    "https://manualzz.com/doc/5473368/testo-405-v1-thermo-anemometer-instruction-manual",
+    "https://manualzz.com/doc/6220766/testo-405-v1-%E7%83%AD%E6%95%8F%E9%A3%8E%E9%80%9F%E4%BB%AA-%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C",
+    "https://manualzz.com/doc/9094000/testo-405-v1-thermo-anemometer-instruction-manual",
+    "https://media.testo.com/media/78/9b/a2ae4d335e8a/testo-405-Instruction-manual.pdf",
+    "https://static.chipdip.ru/lib/829/DOC021829327.pdf",
+    "https://static.testo.com/image/upload/Instruction-manual-and-Software/Instruction-manuals/testo-405-instruction-manual.pdf",
+    "https://www.manuallib.com/file/2168676/",
+    "https://www.manualslib.com/manual/2595377/Testo-405-V1.html",
+    "https://www.manualslib.de/manual/234863/Testo-405-V1.html",
+    "https://www.manualslib.de/manual/560932/Testo-405-V1.html",
+    "https://www.manualslib.de/manual/818667/Testo-405-V1.html",
+    "https://www.manualslib.fr/manual/515912/Testo-405-V1.html",
+    "https://www.nubicom.co.kr/testo/testo_405.jsp",
+    "https://www.testo-direct.com/pdfs/cache/www.testo-direct.com/0560-4053/manual/0560-4053-manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

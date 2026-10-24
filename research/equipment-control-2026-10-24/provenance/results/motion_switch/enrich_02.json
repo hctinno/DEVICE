@@ -1,0 +1,25 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/enrich_02.json",
+  "original_log_sha256": "e5e8a269cc879a65010303ee7b1f23035c64b45c7fcb2fb1c6d7f97c9ea4cd7b",
+  "original_log_bytes": 18251,
+  "queries": [],
+  "discovered_urls": [
+    "https://assets.staubli.com/Robotics/Local_content/Training-Booklet-2019-V5-Web.pdf",
+    "https://assets.staubli.com/Robotics/Training_brochure_Pardubice_EN.pdf",
+    "https://docs.universal-robots.com/Universal_Robots_ROS_Documentation/rolling/doc/ur_robot_driver/ur_robot_driver/doc/usage/startup.html",
+    "https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver",
+    "https://github.com/ros-industrial/staubli_val3_driver",
+    "https://manualmachine.com/etslindgren/2090/1422741-user-manual/",
+    "https://manualzz.com/doc/27141251/operator-manual",
+    "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY6_RD_20230302.pdf",
+    "https://speag.swiss/products/dasy8/dasy8-state-of-the-art-wireless-device-compliance-testing/platforms/platform-mp8i-tx2-90xl",
+    "https://speag.swiss/products/dasy8/m-sar-apd/product-lifetime",
+    "https://www.artisantg.com/PLC/65933-3/ESCO-ETS-Lindgren-2092-Positioning-Controller",
+    "https://www.ets-lindgren.com/get-manuals/2090%281%29.pdf",
+    "https://www.mdltechnologies.co.uk/technical-docs/2115-multi-axis-positioning-systems-maps.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

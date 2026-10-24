@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/open_hioki_rm3544.json",
+  "original_log_sha256": "cb64739f0ac5057793b359cc32eee9b743750bf05eae904329f39a914e4c03cc",
+  "original_log_bytes": 560,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_302",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_302:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

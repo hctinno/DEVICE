@@ -1,0 +1,11 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/final_review.json",
+  "original_log_sha256": "0c30518ac94c1d36ac7645629387c183c3ce2dc1a2c5f200928dc1caeb79851b",
+  "original_log_bytes": 1119,
+  "queries": [],
+  "discovered_urls": [],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

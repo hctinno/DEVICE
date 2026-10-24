@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_kikusui_older.json",
+  "original_log_sha256": "8dd8d0e836d08fbafed109c7c3468e0b60f127c5cd8c252f0fdfb1a50b2cecf9",
+  "original_log_bytes": 27605,
+  "queries": [
+    "Kikusui PAD110-20LA TOS8850 TOS6100 remote interface manual"
+  ],
+  "discovered_urls": [
+    "https://emin.com.mm/kikusuipad110-20la-kikusui-pad110-20la-regulated-dc-power-supply-110v-20a-63251/pr.html",
+    "https://global.kikusui.co.jp/download-category-en/pm_dc-en-2/",
+    "https://in.kikusui.co.jp/download/cat_pad-la/##",
+    "https://in.kikusui.co.jp/w2-2/dc-power-supply-in/pad-la-in/pad-la-series/",
+    "https://kikusui-korea.co.kr/files/PDF/PAT_M.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/TOS6200_M.pdf",
+    "https://kikusui.co.jp/download/pad-la/",
+    "https://kikusui.co.jp/kd/pm_dc/",
+    "https://kikusui.co.jp/products-index/dc/pad-la/",
+    "https://kikusui.co.jp/spec/pad-la_siyou/",
+    "https://manuals.plus/m/39faf5412952bbbafdd1a2a89a50c2f30ce55a8dd88713eac6c5527fb087549f",
+    "https://manuals.repeater-builder.com/te-files/KIKUSUI/KIKUSUI%20PAD-L%20Series%20Instruction.pdf",
+    "https://manualzz.com/doc/4752266/%E8%8F%8A%E6%B0%B4%E9%9B%BB%E5%AD%90%E5%B7%A5%E6%A5%AD-pad-la-pad-16--100la--pad-60--35la--pad-110--20la-",
+    "https://vn.kikusui.co.jp/download/cat_pad-la/",
+    "https://vn.kikusui.co.jp/w2-2/dc-power-supply/pad-la/pad-la-series/",
+    "https://www.kikusui.cn/resources/001/pdf/tos5300_interface_manual.pdf",
+    "https://www.manualslib.com/products/Kikusui-Pad-110-20la-11871940.html",
+    "https://www.n-denkei.com/malaysia/items/product/kikusui-valiable-regulated-dc-power-supply-pad-la-series/",
+    "https://www.n-denkei.com/vietnam/wp-content/uploads/sites/12/2021/09/KIKUSUI-PAT-T-Spec.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

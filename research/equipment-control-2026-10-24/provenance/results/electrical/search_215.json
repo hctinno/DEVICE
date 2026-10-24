@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_215.json",
+  "original_log_sha256": "a9bb134d8e5b55feffbf66ed5ba9985a581a6156ac22e1c4e5e6684263bb8b0b",
+  "original_log_bytes": 26690,
+  "queries": [
+    "Xantrex XT 20-3 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://manualsdump.com/en/manuals/xantrex_technology-xtr_850_watt-xtr6-110_xtr8-100_xtr12-70_xtr20-42_xtr33-25_xtr40-21_xtr60-14_xtr80-10.5_xtr100/119259/186",
+    "https://manualzz.com/doc/3592285/xantrex-xt-60-watt--xt-7-6--xt-15-4--xt-20-3--xt-30-2--xt",
+    "https://manualzz.com/doc/64241717/xantrex-hpd-60-5--xt-20-3--xt-30-2--xt-60-1--xt-7-6-opera",
+    "https://manualzz.com/manual/Xantrex/XT%2B20-3",
+    "https://support.olivertraveltrailers.com/portal/en/kb/articles/xantrex-inverter-error-20",
+    "https://www.artisantg.com/info/Ametek_Xantrex_Sorensen_XTS_7_6_Manual_2024829151648.pdf",
+    "https://www.manualshelf.com/manual/xantrex-technology/apg-hpd/power-supply-operating-manual-apg-xt-apg-hpd/page-22.html",
+    "https://www.manualslib.com/manual/713660/Xantrex-Xt-7-6.html",
+    "https://www.manualslib.com/products/Xantrex-Xt-20-3-9787897.html",
+    "https://www.metrologymanuals.com/documents/sha-0b421b4b284d3cf26084f6044e80cf01bc8908987c70fe82b4e601034953c322/xantrex-xt-series-programmable-dc-power-supply-operating-manual/",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=DC-Power-Supplies&model=Xantrex-XT20-3&productID=602971675740210D2AC918BFB0F38FAF&type=Test-Equipment-Sales",
+    "https://www.somanuals.com/html/17/Xantrex-Technology-Power-Supply-RS232-HPD-User-Manual.html",
+    "https://www.sphere.bc.ca/oldsite/test/2021-1-equipment/xantrex%20xt-series%20opman.pdf",
+    "https://xantrex.com/support/get-customer-support/",
+    "https://xantrex.com/wp-content/uploads/2023/02/975-1176-01-01-D.pdf",
+    "https://xantrex.com/wp-content/uploads/2024/03/975-1176-01-01-C.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

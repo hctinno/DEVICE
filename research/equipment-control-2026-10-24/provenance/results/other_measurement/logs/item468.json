@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item468.json",
+  "original_log_sha256": "2fa222483b21ea56f7637a305e1f151628723550e39caaff22ee21a621f8a8c3",
+  "original_log_bytes": 16236,
+  "queries": [
+    "B&K \"Type 2250\" software interface manual",
+    "site:github.com \"Type 2250\" B&K"
+  ],
+  "discovered_urls": [
+    "https://assets-us-01.kc-usercontent.com/ecb176a6-5a2e-0000-8943-84491e5fc8d1/07a36b9a-8ea8-461b-91ac-4b4053fcb48b/BK-2250C.pdf",
+    "https://b-k.manymanuals.com/measuring-testing-control/2250-light/user-manual-25055/15",
+    "https://b-k.manymanuals.com/measuring-testing-control/2250-light/user-manual-6908/7",
+    "https://cloud.hbkworld.com/en/knowledge/resource-center/articles/2245-drawing-board",
+    "https://cloud.hbkworld.com/en/products/support-resources/support-bksv/downloads/2250-maintenance/software-packages",
+    "https://cloud.hbkworld.com/en/products/support-resources/support-bksv/downloads/2250-maintenance/user-manuals",
+    "https://manualzz.com/doc/25345733/br%C3%BCel-and-kj%C3%A6r-type-2250-light--hand-held-analyzer-user-manual",
+    "https://manualzz.com/doc/o/2hw89y/bandk-2250-light-user-manual-getting-to-know-your-2250-light",
+    "https://reprorise.com/wp/wp-content/uploads/2000/01/BK_2250-User-Manual.pdf",
+    "https://www.bksv.com/de/services/downloads",
+    "https://www.bksv.com/downloads/2250/2250_User_Manual_BE171316.pdf",
+    "https://www.bksv.com/media/downloads/2250/be1712.pdf",
+    "https://www.hbkworld.com/de/services-support/support/support-bksv/downloads/2250-maintenance",
+    "https://www.hbkworld.com/en/products/support-resources/support-bksv/downloads",
+    "https://www.hbkworld.com/en/products/support-resources/support-bksv/downloads/2250-maintenance",
+    "https://www.hbkworld.com/en/products/support-resources/support-bksv/downloads/2250-maintenance/pc-demo-of-the-2250-2270-software"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

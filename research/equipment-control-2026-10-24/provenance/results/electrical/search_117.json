@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_117.json",
+  "original_log_sha256": "11373e9cb9e6d3e8736129a7659f17a3ee6401d3f4e8fd43dcf979f84ac7b773",
+  "original_log_bytes": 30787,
+  "queries": [
+    "HIOKI LR8431-20 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/26/Hioki_LR8431_User_Manual.pdf",
+    "https://hioki.tw/software-detail.php?id=131",
+    "https://hiokikorea.com/product/product_view.html?c_id=A002001&p_no=36",
+    "https://manualzz.com/doc/63897605/hioki-memory-hilogger-lr8431-20-instruction-manual",
+    "https://shop.hioki.eu/HIOKI-LR8431-Handheld-10-channel-Data-Logger-for-voltage-temperature-and-pulse-logging",
+    "https://www.elmack.co.in/images/Downloads/Catalogue/Hioki%20-%20LR8431_User%20Manual.pdf",
+    "https://www.hioki.com/download/30162",
+    "https://www.hioki.com/global/products/multichannel-data-loggers/multichannel/id_5799",
+    "https://www.hioki.com/id-id/products/multichannel-data-loggers/multichannel/id_5799",
+    "https://www.hioki.com/in-en/products/multichannel-data-loggers/multichannel/id_5799",
+    "https://www.hioki.com/in-en/support/download",
+    "https://www.hioki.com/us-en/support/download/software/versionup/detail/id_254",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A002001&p_no=36",
+    "https://www.manualslib.com/manual/1302099/Hioki-Lr8431-20.html",
+    "https://www.manualslib.com/manual/1302099/Hioki-Lr8431-20.html?page=177",
+    "https://www.youtube.com/watch?v=43RXmsdDicI"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

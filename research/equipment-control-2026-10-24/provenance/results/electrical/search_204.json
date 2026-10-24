@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_204.json",
+  "original_log_sha256": "43e6785fbd1b62ef5d829d9da81b140d416bdb9d964d2bd4b84b9f3835266ba7",
+  "original_log_bytes": 34638,
+  "queries": [
+    "DIGITEK POWER DDPS-60K manual programming software"
+  ],
+  "discovered_urls": [
+    "http://xxx.xxx.xxx.xxx",
+    "https://dearborngroup.com/documents/",
+    "https://device.report/m/0f0ad8dbb587c22fe5c2665597b8fbb635845d801ee9aa9da7e35f783b61679e.pdf",
+    "https://device.report/manuals/rk6006c-constant-voltage-current-dc-power-supply-manual",
+    "https://kt-prog.com/ecu-programmer-software-installation-guide/",
+    "https://manualzilla.com/doc/5934167/english",
+    "https://smarthomebus.com/whats-new-updates.html",
+    "https://www.adaptivepower.com/Resources/Documents/APS_DPS_Series_DC_Supply_Operation_Manual-PN_160935-10_rev1.4.pdf",
+    "https://www.digipas.com/support/firmware.php",
+    "https://www.emea.lambda.tdk.com/uk/technical-centre/software-tools",
+    "https://www.manualzz.com/doc/30360454/adaptive-power-systems-dps-series-programmable-dc-power-s",
+    "https://www.prehkeytec.com/support/faq/",
+    "https://www.scribd.com/document/522481326/Operation-and-PC-and-APP-Instruction-for-Digital-Control-Constant-Voltage-Constant-Current-Power-Supply-Without-Power-Part",
+    "https://www.scribd.com/document/906186010/Operation-and-PC-and-APP-Instruction-for-Digital-Control-Constant-Voltage-Constant-Current-Power-Supply-With-Power-Part",
+    "https://www.tek.com.cn/-/media/documents/2260as-900-01a_2260a_programming_manual.pdf",
+    "https://www.xeltek.com/resources/technical-articles/instructions-and-support/superprosoftware/",
+    "https://www.xppower.com/storage/products/series/resources/KT-Instruction-Manual-70-150kV.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

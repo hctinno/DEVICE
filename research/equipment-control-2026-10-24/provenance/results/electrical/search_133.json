@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_133.json",
+  "original_log_sha256": "db0c45e24540ae58581abccfdc41984fd5b2ab5ff3d64a341790825623e2f982",
+  "original_log_bytes": 30535,
+  "queries": [
+    "Sorensen SGI 60/250 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://ametek.manymanuals.com/equipment/sgi-series/user-manual-3090/75",
+    "https://ametek.manymanuals.com/equipment/sgi-series/user-manual-3090/84",
+    "https://api.compumess.de/files/Dokumente/SGI-Series_Operation_Manual_M550221-01_rAA.pdf",
+    "https://compumess.de/sga/i-60-500-ac/",
+    "https://manualzz.com/doc/23353286/ametek-sorensen-sgi-series-operation-manual",
+    "https://www.capovani.com/clientresources/107/108/65/365/Obj190366-SGI_Series_Op_Manual-M550221-01-RevC.pdf",
+    "https://www.easymanua.ls/ametek/sorensen-sgi-series/manual",
+    "https://www.easymanua.ls/ametek/sorensen-sgi-series/manual?p=63",
+    "https://www.easymanua.ls/ametek/sorensen-sgi-series/manual?p=66",
+    "https://www.easymanua.ls/ametek/sorensen-sgi-series/manual?p=73",
+    "https://www.fer.unizg.hr/_download/repository/SGI-Series_Operation_Manual_M550221-01_rV_%281%29.pdf",
+    "https://www.manualsdir.com/manuals/754262/ametek-sgi-series.html?page=54",
+    "https://www.manualslib.com/manual/791114/Ametek-Sorensen-Sgi-Series.html",
+    "https://www.manualslib.com/manual/791114/Ametek-Sorensen-Sgi-Series.html?page=76",
+    "https://www.scribd.com/document/1076907470/Sgi-series-Operation-Manual-m550221-01-Rab",
+    "https://www.wwx.com/clientresources/107/108/65/365/Obj190366-SGI_Series_Op_Manual-M550221-01-RevC.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

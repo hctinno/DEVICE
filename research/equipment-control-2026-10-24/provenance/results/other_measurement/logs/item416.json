@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item416.json",
+  "original_log_sha256": "f78b96b0a00475c2f2a9d162fec199d76bff8c2d4c92925ac5061d7486b80a56",
+  "original_log_bytes": 13565,
+  "queries": [
+    "ETS-Lindgren \"HI6005\" software interface manual",
+    "site:github.com \"HI6005\" ETS-Lindgren"
+  ],
+  "discovered_urls": [
+    "https://forum.radimation.com/viewtopic.php?t=788",
+    "https://manualzilla.com/doc/5642415/hi-4450-fp2080-fp4080-fp5080-isotropic-electric-field-pro",
+    "https://manualzilla.com/doc/5726982/hi-4422-fp2000--fp4000-fp5000-isotropic-electric---ets",
+    "https://manualzz.com/doc/6600350/holaday-industries--inc.-hi-4413p-fiber-optic-modem--hi-6",
+    "https://product.tdk.com/system/files/dam/doc/product/power/switching-power/ac-dc-converter/immunity_data/evs600w_iec.pdf",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/specifications/5216_3695_22/ELEKTRA_specs_en_5216-3695-22_v1600.pdf",
+    "https://theemcshop.com/brands/ets-lindgren/?limit=48&page=2",
+    "https://theemcshop.com/electric-e-field-probes-up-to-6-ghz/ets-lindgren-hi-6005-electric-field-probe/",
+    "https://www.cliffsnotes.com/study-notes/6568843",
+    "https://www.datatec.eu/media/6c/1a/61/1738110810/Rohde_Schwarz-5601.0018.02-DB-1_DE.pdf?srsltid=AfmBOoptctWkuWmXhPtlXRxdZSjJ_yH7G7Rxf7x90yvES5NjwobImSxg&ts=1738110810",
+    "https://www.ets-lindgren.com/sites/etsauthor/ProductsManuals/Probes_Monitors/HI-6005%20HI-6001%20H-600089%20B.pdf",
+    "https://www.mdpi.com/2079-9292/12/20/4247",
+    "https://www.mdpi.com/2079-9292/13/16/3111",
+    "https://www.researchgate.net/publication/241159047_A_New_Calibration_Method_for_an_Electric-field_Probe_using_TEM_Waveguides",
+    "https://www.slideshare.net/slideshow/hi6005-final-assessment-t1-2022docx/253594438",
+    "https://www.studypool.com/documents/8821335/hi6005-final-assessment"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,40 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_099.json",
+  "original_log_sha256": "4568b3a9466705ce003265acec2f20cc662cb12a58da10e83f4c8481e5794f5f",
+  "original_log_bytes": 32428,
+  "queries": [
+    "Graphtec GL220 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://core.instrumart.com/assets/GL220-User-Manual-151.pdf",
+    "https://dataloggermalaysia.com/images/pdf/gl220-software-controller-manual.pdf",
+    "https://en.wikipedia.org/wiki/Graphtec",
+    "https://graphtec-graphtec.squarespace.com/data-acquisition/gl7000/software",
+    "https://graphtec-graphtec.squarespace.com/data-logger/faq",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl220/faq",
+    "https://graphtec-graphtec.squarespace.com/ins-products-legacy",
+    "https://maximinstruments.com/products/graphtec_gl_220_data_acquisition___data_logger_10_channel",
+    "https://media.lontek.com.au/uploads/pages/graphtec/gl220-quick-start-guide.pdf",
+    "https://www.acquisitionpc.com/html/support.html",
+    "https://www.graphtec.in.th/article-79516-softwares.html",
+    "https://www.graphteccorp.com/download/downloadapp/",
+    "https://www.graphteccorp.com/download/gl-connection/",
+    "https://www.graphteccorp.com/support/software/",
+    "https://www.graphteccorp.com/support/software/logger/",
+    "https://www.instrumart.com/assets/Graphtec-GL220-820-Software-Manual.pdf",
+    "https://www.mygraphtec.jp/site_download/manual/APS%28GL-Connection%29-UM-159-10.pdf",
+    "https://www.reddit.com/r/CommercialPrinting/comments/1p4qfe6/cutting_master_5graphtec_studio_2_setup_issue/",
+    "https://www.reddit.com/r/PlotterArt/comments/1i0hrln",
+    "https://www.reddit.com/r/VinylCutters/comments/18ojkib/looking_to_use_older_graphtec_with_current_ai/",
+    "https://www.reddit.com/r/VinylCutters/comments/1k42g3w",
+    "https://www.reddit.com/r/VinylCutters/comments/1lie5ou/craft_robo_cc30020_software/",
+    "https://www.reddit.com/r/VinylCutters/comments/1rcaa9d/graphtech_2026_trouble_shooting_anyone/",
+    "https://www.reddit.com/r/VinylCutters/comments/1rsqwv9/cutting_master_4_activating_data_link_alone/",
+    "https://www.reddit.com/r/VinylCutters/comments/cyxlwx",
+    "https://www.tequipment.net/GraphtecGL220.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

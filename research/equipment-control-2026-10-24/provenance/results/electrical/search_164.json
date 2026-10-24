@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_164.json",
+  "original_log_sha256": "2b4bbe243c1733e4c124ec39ab50b55adc4505c6f28327067391651b144b5cb3",
+  "original_log_bytes": 28239,
+  "queries": [
+    "Tektronix TDS 3032 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.tek.com/Measurement/",
+    "https://docs.ampnuts.ru/eevblog.docs/Tektronix/TDS3000/TDS%2030XX%20manuals/Tektronix-TDS30XX-Datasheet-Sheet.PDF",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://manualzz.com/doc/6674968/tektronix-tds3000b-series-user-manual",
+    "https://reprorise.com/wp/wp-content/uploads/2023/03/TDS3032-TDS3000.pdf",
+    "https://www.100y.com.tw/pdf_file/TDS3034.pdf",
+    "https://www.aps.anl.gov/files/APS-Uploads/DET/Detector-Pool/Electronics/Tektronix/TDS3000_manual.pdf",
+    "https://www.avionteq.com/ja/Document/Tektronix-TDS3032-Specification-Sheet.PDF",
+    "https://www.cmc.ca/wp-content/uploads/2019/07/Tektronix-TDS3052B-Programming-Manual.pdf",
+    "https://www.eserviceinfo.com/downloadsm/70353/Tektronix_TEK%20TDS%203012%203012B%203014%203014B%203032%203032B%203034%203034B%203052%203052B%203054%203054B%20Programmer.html",
+    "https://www.jabse.com/L1Rla3Ryb25peA",
+    "https://www.manualslib.com/manual/3870978/Tektronix-Tds3032.html",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Oscilloscopes&model=Tektronix-TDS3032B&productID=470E944CAF1D2A61305B1C0D75727B38&type=Test-Equipment-Sales",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/zhhc1k",
+    "https://www.reddit.com/r/oscilloscope/comments/1ubdrwq/anyone_have_the_manual_for_a_dpu_411_type_ii/",
+    "https://www.tek.com.cn/product-model/tds3032",
+    "https://www.tek.com/en/oscilloscope/tds3014b-manual/tds3000-tds3000b-tds3000c-series",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?model=tds3032b",
+    "https://www.tek.com/vn/support/datasheets-manuals-software-downloads?model=tds3032",
+    "https://www.tek.com/vn/support/datasheets-manuals-software-downloads?model=tds3032b",
+    "https://www.tequipment.net/TektronixTDS3032.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,20 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/probe_speag_versions.json",
+  "original_log_sha256": "dd5e05a2bec242745c8fe9410f553ca8dbff4c99dd9a6b2e9ea073ff84f423eb",
+  "original_log_bytes": 17695,
+  "queries": [
+    "site:speag.swiss \"AM1DV2\" DASY",
+    "site:speag.swiss \"AM1DV3\" DASY",
+    "site:speag.swiss \"EUmmWV3\" \"EUmmWV4\"",
+    "site:speag.swiss \"SD HAC P02\" AMCC"
+  ],
+  "discovered_urls": [
+    "https://speag.swiss/assets/downloads/speagflyers/oldflyers/hacproduct-flyer.pdf",
+    "https://speag.swiss/assets/downloads/speagflyers/speag-HAC-flyer.pdf",
+    "https://speag.swiss/products/dasy8/m-hac"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

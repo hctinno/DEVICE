@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item145.json",
+  "original_log_sha256": "51adb693d0dcdbf27076c5e26a272d6003ad42e674d1f7062b9e79e3b8929f43",
+  "original_log_bytes": 12192,
+  "queries": [
+    "ACUBA \"CSIR-10\" software interface manual",
+    "site:github.com \"CSIR-10\" ACUBA"
+  ],
+  "discovered_urls": [
+    "https://bandoscale.com/goods/goods_view.php?goodsNo=306",
+    "https://cdri.res.in/publicity_band_public_interface",
+    "https://daaramall.co.kr/product/view.html?p_seq=128620",
+    "https://github.com/awhogan/CSIntel",
+    "https://github.com/demisto/content/blob/master/Packs/CrowdStrikeIntel/Integrations/FalconIntel/README.md",
+    "https://github.com/jaheyns/CfdOF/blob/master/CfdOF/CfdTools.py",
+    "https://github.com/topics/previous-papers",
+    "https://knifemall.co.kr/category/%EC%95%84%EC%BF%A0%EB%B0%94-aucuba/1152/",
+    "https://manuals.plus/m/ddfa9ce4be99bd8b2e78917b11736518f3bb8d87b73e04c49a55baf82be6f224.pdf",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC13418503/",
+    "https://scalecenter.bizdaara.com/m/sell_list.html?bc=&cid=scalecenter&key=&listtype=&ord=maxprice&p_state=&page=8&search=&uc=",
+    "https://www.11st.co.kr/products/2814230191",
+    "https://www.11st.co.kr/products/2839279608",
+    "https://www.11st.co.kr/products/2982533475",
+    "https://www.11st.co.kr/products/5351540928",
+    "https://www.csir.co.za/sites/default/files/Documents/CSIR%20RFP%20904-31-10-2019%20IP%20Camera%20Solution%20System.pdf",
+    "https://www.etenders.gov.za/home/Download/?blobName=f17978cb-5cb0-40a3-93e8-957168831461.pdf&downloadedFileName=EOI+8115+-07-11-2025_+Panel+of+Suitably+Qualified+Service+Providers+for+Provision+of+Forensic+Investigative+Services.pdf",
+    "https://www.ggjt.co.kr/goods/goods_view.php?goodsNo=90869",
+    "https://www.niscair.res.in/mandate-human-resource-division"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

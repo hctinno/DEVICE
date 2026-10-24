@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/identity_sato.json",
+  "original_log_sha256": "daaea7d28666f1bdb367328e9e316789e7c03e3ba695152fab2ded3b0d6210e7",
+  "original_log_bytes": 26728,
+  "queries": [
+    "SATO \"NSII-Q\" thermo hygrograph manual interface",
+    "site:github.com SATO \"NSII-Q\""
+  ],
+  "discovered_urls": [
+    "https://ichiban.com.my/products/672/Sato-Sigma-II-Thermohygrograph-Quartz-type-15-to-40-C-0-to-100-RH",
+    "https://legatool.com/pub/media/wysiwyg/PDF-Catalog/SK-Sato/Thermohygro_e_1.pdf",
+    "https://seacom.com.my/thermohygrograph-and-datalogger/35-sato-sigma-ii-nsii-q-thermohygrograph-7210-00-7211-00.html",
+    "https://shop.chescientific.com/en/products/7210-series-sigma-ii-thermohygrograph",
+    "https://slmeasurement.com.sg/recorder-datalogger-and-transmitter/20-thermohygrograph-7210-7211-.html",
+    "https://slmeasurement.com.sg/store/temperature-humidity/21-sato-thermohygrograph-7210-00.html",
+    "https://static.sksato.co.jp/catalog/9/6/a/7/96a71b981f0ec5d78c5923763634075174a7abd6_Sigma_II_Manual__2018.02_.pdf",
+    "https://static.sksato.co.jp/corporate/catalog/2023_GeneralCatalog.pdf",
+    "https://static.sksato.co.jp/manual/en/manual_7210-00.pdf",
+    "https://studylib.net/doc/18631384/table-of-contents",
+    "https://www.carlssoon-tech.com/showproducts/productid/2673754/sato-thermohygrograph-nsiiq-nsiis/",
+    "https://www.ictsl.net/downloads/SATO.pdf",
+    "https://www.n-denkei.com/indonesia/items/product/sk-sato-sigma-ii-thermohygrograph-quartz-type-%E2%88%9215-40c-0-100rh/",
+    "https://www.octaprimalestari.com/Products/SATO-JAPAN/7210-00-THERMOHYGROGRAPH-SATO.html",
+    "https://www.octaprimalestari.com/Products/SATO-JAPAN/THERMOHYGROGRAPH-MODEL-7211-SATO.html",
+    "https://www.produkanda.com/p/12804-081362449440-jual-thermo-hygro-recorder-sk-sato-sk-sato-distributor-indonesia",
+    "https://www.sksato.co.jp/en/7211-00/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

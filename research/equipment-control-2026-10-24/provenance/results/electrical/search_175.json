@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_175.json",
+  "original_log_sha256": "15102a3f47a1e5ade8971e471f6e9e38be687c8ecc2d7b8e98339f9342bfb172",
+  "original_log_bytes": 29519,
+  "queries": [
+    "KIKUSUI PAD110-20LA manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.kikusui.co.jp/",
+    "https://global.kikusui.co.jp/download-category-en/pm_dc-en-2/",
+    "https://global.kikusui.co.jp/download-service/",
+    "https://global.kikusui.co.jp/programming-guidebooks/",
+    "https://in.kikusui.co.jp/download/cat_pad-la/",
+    "https://in.kikusui.co.jp/download/cat_pad-la/##",
+    "https://in.kikusui.co.jp/w2-2/dc-power-supply-in/pad-la-in/pad-la-series/",
+    "https://kikusui-korea.co.kr/files/PDF/PAD_LA_D.pdf",
+    "https://kikusui-korea.co.kr/files/PDF/PAD_LA_M.pdf",
+    "https://kikusui.co.jp/download/pad-la/",
+    "https://kikusui.co.jp/kd/pm_dc/",
+    "https://kikusuiamerica.com/download-service/",
+    "https://manuals.plus/m/39faf5412952bbbafdd1a2a89a50c2f30ce55a8dd88713eac6c5527fb087549f",
+    "https://manuals.repeater-builder.com/te-files/KIKUSUI/KIKUSUI%20PAD-L%20Series%20Instruction.pdf",
+    "https://manualzilla.com/doc/6712119/%E5%8F%96%E6%89%B1%E8%AA%AC%E6%98%8E%E6%9B%B8%EF%BC%8F3.1mb---kikusui-electronics-corp",
+    "https://vn.kikusui.co.jp/download/cat_pad-la/",
+    "https://vn.kikusui.co.jp/w2-2/dc-power-supply/pad-la/pad-la-series/",
+    "https://www.es-france.com/img/cms/Catalogues/kikusui-proCat_en-ES.pdf",
+    "https://www.manualslib.com/products/Kikusui-Pad-110-20la-11871940.html",
+    "https://www.n-denkei.com/malaysia/items/product/kikusui-valiable-regulated-dc-power-supply-pad-la-series/",
+    "https://www.ni.com/gate/gb/GB_INFOLVINSTDRIVER/US"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

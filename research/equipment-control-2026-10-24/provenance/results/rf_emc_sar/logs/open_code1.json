@@ -1,0 +1,20 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/open_code1.json",
+  "original_log_sha256": "5f70679791933b100516dcc43e826b8e7ccd90221666b4d3bf81a8b4639ec785",
+  "original_log_bytes": 82836,
+  "queries": [],
+  "discovered_urls": [
+    "http://www.apache.org/licenses/LICENSE-2.0",
+    "https://android.googlesource.com/platform/tools/test/connectivity/%2B/refs/heads/main/acts/framework/acts/controllers/anritsu_lib/md8475a.py",
+    "https://android.googlesource.com/platform/tools/test/connectivity/+/refs/heads/main/acts/framework/acts/controllers/anritsu_lib/md8475a.py",
+    "https://github.com/fpgadeveloper/emc-toolkit",
+    "https://github.com/lakeshorecryotronics/python-driver",
+    "https://github.com/lxi-tools/lxi-tools",
+    "https://www.dektec.com/downloads/SDK/",
+    "https://www.totalphase.com/products/beagle-software-api/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

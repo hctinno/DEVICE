@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_toscatt.json",
+  "original_log_sha256": "d6997a940c7ffd8b206977cbea3c16692f74770e6f55e7263de60aadd8ea53b9",
+  "original_log_bytes": 28581,
+  "queries": [
+    "\"TOSCAT-3000\" software communication"
+  ],
+  "discovered_urls": [
+    "https://askindex.co.kr/en/product/detail/N90065",
+    "https://axel.as-1.co.jp/asone/d/44-1222-72/",
+    "https://catalog.lib.kyushu-u.ac.jp/opac_download_md/1500731/eng2466_abstract.pdf",
+    "https://deps.dips.or.kr/eps/equipMgr/view/19499?BcTypeCd=&DjAreaGuCd=&OrgRegTypeCd=&OrganClassCd=&SixCd=&UseScopeCd=&UseScopeMeanCd=&UseTypeCd=&menuId=MENU00313&pageNum=1551&rowCnt=9&schText=&sortGubun=NONE",
+    "https://iris.unife.it/bitstream/11392/2336345/2/Yamada_2015_J._Electrochem._Soc._162_A646.pdf",
+    "https://patentimages.storage.googleapis.com/cd/18/20/ebd06d3adc4d74/JP6318099B2.pdf",
+    "https://s-innovation.org/doc/pdf/%20filename%3D7-1-6SHOJI.pdf",
+    "https://shin-corporation.tistory.com/entry/TOSCAT-3000",
+    "https://toyo-system.co.jp/en/en-maintenance/",
+    "https://toyo-system.co.jp/en/products-toscat/",
+    "https://toyo-system.co.jp/ge/maintenance/",
+    "https://toyo-system.co.jp/maintenance/",
+    "https://toyo-system.co.jp/products-toscat/",
+    "https://usedsale.jp/usedlist/20240708-major-usedlist.pdf",
+    "https://www.ccn.yamanashi.ac.jp/~kfukui/equipments/",
+    "https://www.inpit.go.jp/content/100861578.pdf",
+    "https://www.rockssplc.com/toyo-toscat-3000-charging-and-discharging-tester",
+    "https://www.usedsale.jp/4u3646.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

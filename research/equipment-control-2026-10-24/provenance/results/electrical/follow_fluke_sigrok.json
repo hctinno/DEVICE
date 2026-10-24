@@ -1,0 +1,26 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_fluke_sigrok.json",
+  "original_log_sha256": "024f81e6afea7797bd06c2b2f840cd94183079523eb63fc5c4028f4b5d5ca189",
+  "original_log_bytes": 24911,
+  "queries": [
+    "site:github.com sigrok fluke 45 289"
+  ],
+  "discovered_urls": [
+    "https://github.com/PXLogic/PXView",
+    "https://github.com/anatol/libsigrok/blob/master/NEWS",
+    "https://github.com/antoinecellerier/dmm-tools/blob/main/docs/research/new-device-candidates.md",
+    "https://github.com/dgaff/dmm_util_gui/blob/master/README.md",
+    "https://github.com/martinling/libsigrok/blob/master/README.devices",
+    "https://github.com/merbanan/libsigrok/blob/master/README.devices",
+    "https://github.com/poljar/libsigrok/blob/master/NEWS",
+    "https://github.com/sigrokproject/libsigrok/blob/master/NEWS",
+    "https://github.com/sigrokproject/libsigrok/blob/master/configure.ac",
+    "https://github.com/sigrokproject/libsigrok/commits",
+    "https://github.com/sipeed/sigrok_slogic/blob/hardware-sipeed-slogic-analyzer-support/NEWS",
+    "https://github.com/sipeed/sigrok_slogic/blob/hardware-sipeed-slogic-analyzer-support/README.devices"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

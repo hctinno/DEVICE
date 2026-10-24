@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_158.json",
+  "original_log_sha256": "9fe5ed3504c1efa520fed96f856dfbea2bff6e3851b4897d2ece2efbbfab90cb",
+  "original_log_bytes": 32216,
+  "queries": [
+    "DIGITEK POWER DEFC-1100 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://cloud.edebris.com/index.php/s/AFiJCyKKYpojYYZ",
+    "https://asutp.org/news/digitec_automazione_industriale_manual_cutting_rack_013_2_011_0_016_0_017_0_boards/2025-04-30-438",
+    "https://bama.edebris.com/manuals/bitsavers/pdf/digitek/",
+    "https://device.report/m/edb99af3fe7f1ed3185e1cd9e074cf6258df95d775a6a5ad9e1f7ebc0a607550",
+    "https://docs.digi.com/resources/documentation/digidocs/pdfs/0190010e.pdf",
+    "https://itmikro.com.my/wp-content/uploads/2020/08/dpm380_380B-usermanual-v1-2.pdf",
+    "https://manualmachine.com/digitek/",
+    "https://manuals.group/results.php?search=DIGITEK",
+    "https://moen.nidec.com/en-US/drives/Downloads",
+    "https://spectra.ch/media/86/0f/a6/1765294517/Manual_DI-1100_V1.05_2021111501.pdf?ts=1765294517",
+    "https://www.ctronix.com/DigiQManual/digiq_manual_content_static.html",
+    "https://www.emea.lambda.tdk.com/uk/technical-centre/software-tools",
+    "https://www.powersoft.com/wp-content/uploads/2019/01/powersoft_DigiModIK_uguide_en_v2.3.pdf",
+    "https://www.proscale.com/pub/media/wysiwyg/Manuals/DigiFence_Operation_Rev_082020_.pdf",
+    "https://www.scribd.com/document/1054265120/Unico-110941-006",
+    "https://www.scribd.com/document/554282848/gc1100",
+    "https://www.scribd.com/document/850893764/DC1100-2500-en",
+    "https://www.voltech.com/support/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

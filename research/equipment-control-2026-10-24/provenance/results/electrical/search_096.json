@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_096.json",
+  "original_log_sha256": "9ac6ea2babce4175844eb43e0aeaddf3ffa45a66bc659f019558c0c333066c1a",
+  "original_log_bytes": 27424,
+  "queries": [
+    "NEWARE CT-4032-10V10A-NFA manual programming software"
+  ],
+  "discovered_urls": [
+    "https://batterygrading.com/blog/download-software/",
+    "https://neware.ltd/software/",
+    "https://neware.ltd/user-guide/",
+    "https://neware.ltd/wp-content/uploads/2024/05/BTS9.1-User-Manual-1.pdf",
+    "https://newarebattery.com/services-home/",
+    "https://newarebattery.com/wp-content/uploads/2019/05/BTS4000-User-Manual.pdf",
+    "https://newarelab.com/download",
+    "https://www.neware.cloud/Download/product-support",
+    "https://www.neware.cloud/service",
+    "https://www.neware.com.cn/Download/product-support",
+    "https://www.neware.net/supports/manuals-and-documentation.html",
+    "https://www.neware.net/supports/manuals-and-documentation/2.html",
+    "https://www.neware.net/supports/specifications.html",
+    "https://www.newarelab.com/download",
+    "https://www.newarelab.com/images/newaretester/Download/Neware-User-Manual-Neware-Battery-Testing-System.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

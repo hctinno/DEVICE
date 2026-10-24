@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_rm3544.json",
+  "original_log_sha256": "1afddc0b2a71a017a79bc29d2ef9b1a9bf4066701f953a07a6216cc3a9e65b04",
+  "original_log_bytes": 29698,
+  "queries": [
+    "HIOKI RM3544 RM3544-01 USB RS232 interface difference"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.com",
+    "https://apctech.com/rm3544-01.html",
+    "https://assets.testequity.com/te1/Documents/pdf/hioki/Hioki_RM3544_User_Manual.pdf",
+    "https://assets.testequity.com/te1/Documents/pdf/hioki/RM3544-RM3548-ds.pdf",
+    "https://assets.testequity.com/te1/Documents/pdf/hioki/RM3545-RM3544-ds.pdf",
+    "https://device.report/m/96e6cd9086e2902a202af2877d9b1776d6809bf7cd6f62ad6f432c99300d6ada",
+    "https://en.wikipedia.org/wiki/COM_%28hardware_interface%29",
+    "https://en.wikipedia.org/wiki/RS-232",
+    "https://manualzz.com/doc/28720079/hioki-rm3544--rm3544-01--rm3548-resistance-meter-user-manual",
+    "https://shop.hioki.eu/HIOKI-RM3544-01-Resistance-meter",
+    "https://shop.hioki.eu/media/69/8f/01/1736500368/RM3544A981-04_Manual_EN.pdf?srsltid=AfmBOoo6O5Pe1W3Fnm45AthdCjrwICnisRpVC1GkXLMCJiex2L8Tx6dw&ts=1736500368",
+    "https://shop.hioki.eu/media/fd/13/63/1754485628/RM3544_RM3548E16-57B.pdf?ts=1754485628",
+    "https://www.hioki.com/download/32902",
+    "https://www.hioki.com/global/products/resistance-meters/resistance/id_5998",
+    "https://www.hioki.com/jp-ja/products/resistance-meters/resistance/id_5998",
+    "https://www.hioki.com/us-en/id_5998",
+    "https://www.hioki.com/us-es/products/resistance-meters/resistance/id_5998",
+    "https://www.manualslib.com/manual/1305029/Hioki-Rm3544.html?page=9",
+    "https://www.manualzz.com/doc/63897814/hioki-resistance-meter-rm3544-rm3544-01-instruction-manual?lang=pl",
+    "https://www.manualzz.com/doc/o/29zrd7/hioki-resistance-meter-rm3544-rm3544-01-instruction-manual-specifications",
+    "https://www.mdltechnologies.co.uk/products/rm3544-resistance-meter/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

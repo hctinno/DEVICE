@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item477.json",
+  "original_log_sha256": "b7b27e3083a4bb181528d8daefef7da6c8d6e52ef26b344ee44628014f403c9c",
+  "original_log_bytes": 15863,
+  "queries": [
+    "GRAS \"42AP\" software interface manual",
+    "site:github.com \"42AP\" GRAS"
+  ],
+  "discovered_urls": [
+    "https://akron.be/wp-content/uploads/2019/07/GRAS-50GI-Manual.pdf",
+    "https://github.com/mary-grace/community-pulse-source",
+    "https://manuals.plus/m/34294291dcba5ab7fa8b786f7794b7a2edeb1c2e744816a3eab24c2a84b25ebc.pdf",
+    "https://manualzz.com/doc/68260531/gras-kemar-45bb--kemar-45bc-instruction-manual",
+    "https://shop.measureit.eu/var/import/Attachment/GRAS_catalogo_prodotti.pdf",
+    "https://uat.grasacoustics.com/fileadmin-gras/GRASProductCatalogue_WEB.pdf",
+    "https://uat.grasacoustics.com/products/product-pdf/257-42ap",
+    "https://www.grasacoustics.com/products/calibration-equipment/product/577-90ca-s2",
+    "https://www.grasacoustics.com/products/product/257-42ap",
+    "https://www.grasacoustics.com/products/reference-calibrator/product/257-42ap",
+    "https://www.manualslib.com/manual/1658622/Gras-90ca.html",
+    "https://www.manualslib.com/manual/1658622/Gras-90ca.html?page=13",
+    "https://www.manualslib.com/manual/1658622/Gras-90ca.html?page=48",
+    "https://www.manualslib.com/manual/1658622/Gras-90ca.html?page=60",
+    "https://www.manualslib.com/manual/2126704/Gras-42ap.html",
+    "https://www.manualslib.com/manual/2126704/Gras-42ap.html?page=15",
+    "https://www.manualslib.com/products/Gras-42ap-11686475.html",
+    "https://www.scribd.com/document/186074367/GRAS-Catalog-2013"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_graphtec_sdk.json",
+  "original_log_sha256": "dd0407ce516157b53ddb13f8a2411e44a20f15c353d372c89931addd6ca9615d",
+  "original_log_bytes": 27863,
+  "queries": [
+    "Graphtec GL840 GL240 SDK command programming manual"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/7/Graphtec_Portable_Datalogger_Product_Selection_Guide_2017.pdf",
+    "https://en.wikipedia.org/wiki/Graphtec",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl240/download",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl840/download",
+    "https://graphtec-graphtec.squarespace.com/data-logger/gl840/faq",
+    "https://graphteciwatsu.com/en/support/download/datalogger/",
+    "https://well-head.com.tw/list05.php?aV9wYWdlcz00Jl9TWVNfTE5HPUVOJmlfY2F0ZWdvcnlfaW5oZXJpdD0zJmlfZG93bmxvYWRfaW5oZXJpdD0yMg=%3D",
+    "https://www.graphtecchina.com/sdk/",
+    "https://www.graphteccorp.com/download/gl-connection/",
+    "https://www.graphteccorp.com/download/gl100_gl240_gl840-aps/",
+    "https://www.graphteccorp.com/download/gl28-aps/",
+    "https://www.graphteccorp.com/support/sdk/",
+    "https://www.graphteccorp.com/support/software/logger/",
+    "https://www.graphtecinstruments.com/content/User_Manuals/GL840-UM-151.pdf",
+    "https://www.instrumart.com/assets/Graphtec-GL240-manual.pdf",
+    "https://www.lerdthaisupply.co.th/album/product/pdf/a27abe3888cd1ce63ef9e2a23071cffe.pdf",
+    "https://www.mygraphtec.jp/site_download/catalog_en/GL840_240_KE10255_5P.pdf",
+    "https://www.mygraphtec.jp/site_download/catalog_en/GL840_240_KE10566_5P.pdf",
+    "https://www.reddit.com/r/PlotterArt/comments/1i0hrln",
+    "https://www.well-head.com.tw/list05.php?aV9wYWdlcz0zJl9TWVNfTE5HPUVOJmlfY2F0ZWdvcnlfaW5oZXJpdD0zJmlfZG93bmxvYWRfaW5oZXJpdD0yMg=%3D"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

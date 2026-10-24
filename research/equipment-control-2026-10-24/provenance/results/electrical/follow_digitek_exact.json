@@ -1,0 +1,24 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_digitek_exact.json",
+  "original_log_sha256": "cf5661a64d3cb9668b9fa60fa7a119a4940c5b0a6ccb1bf511bfe3a8b26db5d9",
+  "original_log_bytes": 25151,
+  "queries": [
+    "\"DIGITEK POWER\" \"DEFC\""
+  ],
+  "discovered_urls": [
+    "https://fcc.report/FCC-ID/NYOSEKS-07RX/453068.pdf",
+    "https://fcc.report/FCC-ID/OZ5URCMX-3000/561829.pdf",
+    "https://fcc.report/FCC-ID/VQP-RT321A/859855.pdf",
+    "https://fcc.report/FCC-ID/nyosaks02rx/613410.pdf",
+    "https://fccid.io/NYOSEKS-SL10ATX/Test-Report/Test-report-1233771.pdf",
+    "https://fccid.io/TH7-ABC-220HC/Test-Report/Test-Report-852959.pdf",
+    "https://investorshub.advfn.com/boards/read_msg.aspx?message_id=38346951",
+    "https://investorshub.advfn.com/boards/read_msg.aspx?message_id=40210703",
+    "https://manuals.plus/m/77544f07eb5cb199db510722f13b4f834ad4b690f4adce64e10239e2572bc936",
+    "https://www.kic21.co.kr/process/price?category=%EB%B6%80%EC%82%B0%EC%A7%80%EC%82%AC&page=23&sFrm=frm"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

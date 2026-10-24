@@ -1,0 +1,29 @@
+{
+  "input_items": 236,
+  "output_items": 236,
+  "individually_searched_items": 236,
+  "not_searched_items": 0,
+  "executed_queries": 316,
+  "scope_counts": {
+    "included": 152,
+    "identity_unresolved": 62,
+    "needs_scope_review": 18,
+    "excluded_passive": 4
+  },
+  "research_status_counts": {
+    "family_source": 37,
+    "exact_source": 41,
+    "identity_unresolved": 62,
+    "searched_no_public_control_source": 58,
+    "vendor_only": 16,
+    "needs_scope_review": 18,
+    "excluded_passive": 4
+  },
+  "items_with_sources": 123,
+  "source_entries": 199,
+  "unique_source_urls": 119,
+  "items_with_public_code_or_sdk": 29,
+  "literal_ellipsis_url_warnings": [],
+  "hardware_tests_performed": false,
+  "method": "공개자료 열람과 정적 파일 읽기만 수행. 원본 저장소·Git·DB·장비 접속/명령·프로그램 실행 없음. exact_source는 정확 모델의 공개 자료 존재이며 완전한 명령서/즉시 실행 가능성을 의미하지 않음."
+}

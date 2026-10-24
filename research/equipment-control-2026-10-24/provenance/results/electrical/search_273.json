@@ -1,0 +1,37 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_273.json",
+  "original_log_sha256": "0551cb8c277f0a530028bf9b4aea45b01a70aefb54344b152bd500fa86235dc1",
+  "original_log_bytes": 32562,
+  "queries": [
+    "YOKOGAWA TY530 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/1/2616/files/BUDMM-E.pdf",
+    "https://cdn.tmi.yokogawa.com/1/5558/files/IM90050-E.pdf",
+    "https://cdn.tmi.yokogawa.com/1/6271/files/IM97016-E.pdf",
+    "https://cdn.tmi.yokogawa.com/1/6272/files/IM92015-E.pdf",
+    "https://cdn.tmi.yokogawa.com/1/6273/files/IM92015-02E.pdf",
+    "https://cdn.tmi.yokogawa.com/1/6449/files/IMTY530-E.pdf",
+    "https://cdn.tmi.yokogawa.com/TY530_frontview_blue__1__1__lg.jpg",
+    "https://core.instrumart.com/assets/Yokogawa-TYSeries-Manual.pdf",
+    "https://manualzz.com/doc/19830523/yokogawa-ty-520--ty-530-digital-multimeter-user-s-manual",
+    "https://quote.us.yokogawa.com/PageConfig/Index?itemType=Part&model=TY530&pageId=560.0",
+    "https://tmi.yokogawa.com/cn/solutions/products/portable-and-bench-instruments/digital-multimeters/ty530-digital-multimeter/",
+    "https://tmi.yokogawa.com/eu/solutions/products/portable-and-bench-instruments/digital-multimeters/ty530-digital-multimeter/",
+    "https://tmi.yokogawa.com/kr/solutions/products/portable-and-bench-instruments/digital-multimeters/ty530-digital-multimeter/",
+    "https://tmi.yokogawa.com/solutions/products/portable-and-bench-instruments/digital-multimeters/ty530-digital-multimeter/",
+    "https://www.celesta.ro/en/produse-lateralen/3-solutii-testare-industriale-masurare-si-monitorizareen/30-multimetre-digitale-2/332-ty530-multimetru-digital-2",
+    "https://www.celesta.ro/en/produse-lateralen/3-solutii-testare-industriale-masurare-si-monitorizareen/30-multimetre-digitale-2/332-ty530-multimetru-digital-2/print?print=1",
+    "https://www.celesta.ro/en/produse-lateralen/3-solutii-testare-industriale-masurare-si-monitorizareen/30-multimetre-digitale/332-ty530-multimetru-digital",
+    "https://www.celesta.ro/produse-lateral/3-solutii-testare-industriale-masurare-si-monitorizare/30-multimetre-digitale/332-ty530-multimetru-digital",
+    "https://www.instrumart.com/assets/Yokogawa-TYSeries-Manual.pdf",
+    "https://www.manualslib.com/manual/3819966/Yokogawa-Ty530.html",
+    "https://www.quicktimeonline.com/assets/images/pdf/Yokogawa/UM_Digital%20Multimeter.pdf",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.yokogawa.com/ymi/support/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

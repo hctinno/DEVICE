@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/root_review/kikusui-plz.json",
+  "original_log_sha256": "927874263daa546f5345d32f75f689ffe9600de866d6a89e132cf93bd3a1a540",
+  "original_log_bytes": 13039,
+  "queries": [],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/dri-fir-upd/plz-ap/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

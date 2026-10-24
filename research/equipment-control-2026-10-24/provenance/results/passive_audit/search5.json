@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/passive_audit/search5.json",
+  "original_log_sha256": "3c0bd88447c63da334599cfbf8ba3a1914f0753cf8675f538cf8f17133297dac",
+  "original_log_bytes": 33357,
+  "queries": [
+    "\"EMCSOSIN\" \"WVT255\"",
+    "\"EMSwitch\" \"github\"",
+    "\"Kingpo\" \"KP-3315A\" remote",
+    "Weinschel 8310 Python driver GitHub"
+  ],
+  "discovered_urls": [
+    "https://0.vuetifyjs.com/systems/emerald/switch",
+    "https://dev.tek.com/en/driver-download",
+    "https://eureka.patsnap.com/patent/CN116640549B",
+    "https://ghe.derekchia.com/repo/russhughes/st7789_mpy",
+    "https://gist.github.com/firelightning13/c10dfa6e44526a95272e86957a61485d",
+    "https://github.com/Sensirion/python-i2c-driver",
+    "https://github.com/Sensirion/python-shdlc-driver",
+    "https://github.com/WasatchPhotonics/Wasatch.PY",
+    "https://github.com/lakeshorecryotronics/python-driver",
+    "https://github.com/vuetifyjs/0/releases",
+    "https://lake-shore-python-driver.readthedocs.io/_/downloads/en/latest/pdf/",
+    "https://microsoft.github.io/Qcodes/_modules/qcodes/instrument_drivers/weinschel/Weinschel_8320.html",
+    "https://microsoft.github.io/Qcodes/drivers_api/Weinschel.html",
+    "https://microsoft.github.io/Qcodes/examples/writing_drivers/Creating-Instrument-Drivers.html",
+    "https://microsoft.github.io/Qcodes/examples/writing_drivers/Creating-Simulated-PyVISA-Instruments.html",
+    "https://p.atoshin.com/index.php?u=aHR0cHM6Ly9naXRodWIuY29tL21jbGltOS9yc3Nk",
+    "https://pyvisa-sim.readthedocs.io/en/latest/definitions.html#properties",
+    "https://sensirion.github.io/python-i2c-driver/",
+    "https://sensirion.github.io/python-shdlc-driver/",
+    "https://sweep-me.net/python_projects",
+    "https://www.keysight.com/at/de/assets/9923-01357/quick-start-guides/M5301x-SW-Startup-Guide.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

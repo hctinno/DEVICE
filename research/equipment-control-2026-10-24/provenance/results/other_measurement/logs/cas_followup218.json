@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/cas_followup218.json",
+  "original_log_sha256": "a654eeaad33abb8927252be2a61748ad9629f36b2e8cf70e141205c79209129a",
+  "original_log_bytes": 35943,
+  "queries": [
+    "CAS \"HB-75\" manual RS232 interface",
+    "site:github.com CAS \"HB-75\""
+  ],
+  "discovered_urls": [
+    "https://bitsavers.computerhistory.org/pdf/centronics/101/37400020K_Centronics_Model_101A_Printer_Technical_Manual_May1978.pdf",
+    "https://catalog-inmarkon.ru/kip-lo/vesy/proizvoditeli/vesovoe-oborudovanie-cas/cas.hb.75/",
+    "https://dienmaytoancau.com.vn/san-pham-15573/",
+    "https://download.file-hunter.com/magazines/EN/What%20MSX/What%20MSX_%20Vol1%20No2%201985%20Summer.pdf",
+    "https://e-katalog.kz/CAS-HB-75.htm",
+    "https://ekaterinburg.smartcode.ru/vesovoe_oborudovanie/vesy/cas_hb-75",
+    "https://etalon.su/catalog/vesy-tovarnye/vesy-cas-hb/vesy-cas-hb-75/",
+    "https://gist.github.com/JagadeshDev/b92849d9be619dc3625b21a870096a0c",
+    "https://gist.github.com/cthoyt/a91ae12a94c7e1647e9d9d8fa61e80ce",
+    "https://github.com/RBSC/Carnivore2",
+    "https://github.com/openMSX/openMSX/blob/master/doc/release-history.txt",
+    "https://github.com/secdev/scapy/blob/master/scapy/layers/ntp.py",
+    "https://himbaza.com/tovarnye-vesy-cas-hb-75/",
+    "https://mcgrp.ru/manual/cas/hb-75",
+    "https://supersoniqs.com/wp-content/uploads/2010/08/playsoniq-user-manual-v1-3.pdf",
+    "https://www.cas-corp.ru/event.php/event%3D21628",
+    "https://www.complex-trade.ru/upload/iblock/b5d/b5da9a28b997b018f9e2ac415bffb79f.pdf",
+    "https://www.desta-lab.ru/product/6781/",
+    "https://www.mirvesov.ru/tovarnye-vesy/8284.htm",
+    "https://www.mirvesov.ru/tovarnye-vesy/cas/",
+    "https://www.vesisib.ru/catalog/tovarnye-vesy/tovarnye-vesy1/vesy-cas-hb-75/",
+    "https://www.worldradiohistory.com/Archive-Modern-Electronics/Computer-Craft-1992-04.pdf",
+    "https://www.xn--b1aaeeabb0hpc6ae.xn--p1ai/files/rukovodstva/rukovodstvo-cas-hb.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

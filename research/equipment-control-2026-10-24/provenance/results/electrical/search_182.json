@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_182.json",
+  "original_log_sha256": "a77e64087d655ecf3d5586868f5599e21c3997d251f04391696e6ef380a9de91",
+  "original_log_bytes": 27370,
+  "queries": [
+    "HIOKI BT3564 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://hioki.tw/product-detail.php?id=64",
+    "https://hioki.tw/software-detail.php?id=18",
+    "https://manuals.plus/m/5162b8db3af893535c1d5b62c28da5fcc44783d7a2d43e991fdb7b1814e58977_optim.pdf",
+    "https://www.hioki.cn/products/bt3564",
+    "https://www.hioki.cn/resource/products/manuals-4",
+    "https://www.hioki.com/download/30564",
+    "https://www.hioki.com/id-id/support/download/software/versionup/detail/id_n10086",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n10102",
+    "https://www.hioki.com/sites/default/files/manual/2024-09/BT3564A961-03.pdf",
+    "https://www.hioki.com/us-en/products/resistance-meters/battery/id_6695",
+    "https://www.hioki.com/us-es/products/resistance-meters/battery/id_6695",
+    "https://www.hiokikorea.com/support/software_search.html",
+    "https://www.huashengshuichan.com/products/bt3564",
+    "https://www.manualslib.com/manual/2184404/Hioki-Bt3564.html",
+    "https://www.manualslib.com/products/Hioki-Bt3564-11811334.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

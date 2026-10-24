@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_150.json",
+  "original_log_sha256": "9ad496c4015c1107e46c331d34967d339375fa579d38021cc496cac2982f4116",
+  "original_log_bytes": 28856,
+  "queries": [
+    "HIOKI 3288-20 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.com",
+    "https://cloud.gennect.net/dl",
+    "https://gennect.cn/dl",
+    "https://hioki.tw/product-detail.php?id=22",
+    "https://hioki.tw/product-detail.php?id=317",
+    "https://manuals.plus/hioki/3288-20-clamp-on-ac-dc-hitester-manual",
+    "https://manuals.plus/m/26ca81cab9cfb7703e5936615519c4b6e118dd3482e80d0d516fb830c352b53e",
+    "https://manuals.plus/m/5a01754c5fbac122c86806efb48a82e79b00383cbd12af08153537e92752cc40",
+    "https://manualzz.com/doc/27456805/hioki-3287--3288-20--clamp-meter-instruction-manual",
+    "https://shop.hioki.eu/HIOKI-3288-20-AC-DC-True-RMS-Clamp-Meter-with-1000-A-Current-Range",
+    "https://shop.hioki.eu/media/d9/88/28/1734434241/3287C961-03.pdf?ts=1734434987",
+    "https://static.chipdip.ru/lib2/a/677/DOC066677348.pdf",
+    "https://www.cedesa.com.mx/pdf/hioki/hioki_3288-20_user_manual.pdf?var=G941EZuqA2",
+    "https://www.hioki.cn/login.html",
+    "https://www.hioki.cn/products/3288-3288-20",
+    "https://www.hioki.com/download/30530",
+    "https://www.hioki.com/global/support/download",
+    "https://www.hioki.com/global/support/download/software",
+    "https://www.hioki.com/global/support/myhioki/registration/",
+    "https://www.hioki.com/in-en/products/clamp-meters/ac-dc-clamp/id_6049",
+    "https://www.hioki.com/jp-ja/products/clamp-meters/ac-dc-clamp/id_6049",
+    "https://www.hioki.com/us-en/products/clamp-meters/ac-dc-clamp/id_6049",
+    "https://www.seeanco.com/wp-content/uploads/Hioki-3288-and-3288-20-Clamp-On-AC_DC-HiTester-manual-seenco.pdf",
+    "https://www.transcat.com/media/pdf/hioki-3287-3288-user-manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

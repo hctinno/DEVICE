@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item228.json",
+  "original_log_sha256": "bc19de3bd363226d6a9416053db77c79c2aecc4e94ee78f3d920254ee422ae58",
+  "original_log_bytes": 16040,
+  "queries": [
+    "MILWAUKEE \"M12 ONEFTR38\" software interface manual",
+    "site:github.com \"M12 ONEFTR38\" MILWAUKEE"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/06746451ccea5a5207433747b8c178fa70c62125b8c4d3de9b87ad61ab781795",
+    "https://device.report/manual/8099474",
+    "https://manuals.plus/m/06746451ccea5a5207433747b8c178fa70c62125b8c4d3de9b87ad61ab781795",
+    "https://manuals.plus/m/bf91f430410a24918f4ab0411724068205c887bad98da69b3ff5f64ab9d108d0",
+    "https://manuals.plus/m/c0959765fddd3f14b166cf3e02217b1f74a49cb67dcb0690431079b6bcef3cf6",
+    "https://manuals.plus/milwaukee/m12-oneftr38-digital-torque-wrench-manual",
+    "https://manuals.plus/milwaukee/m12-oneftr38m12-oneftr12-digital-torque-wrench-manual",
+    "https://manualzz.com/doc/71249844/milwaukee-m12-oneftr38-original-instructions-manual",
+    "https://www.manualslib.com/manual/1809543/Milwaukee-M12-Oneftr38.html",
+    "https://www.manualslib.com/manual/2413573/Milwaukee-M12-Oneftr38.html?page=9",
+    "https://www.manualslib.com/manual/2509233/Milwaukee-M12-Oneftr38.html",
+    "https://www.manualslib.com/manual/2509233/Milwaukee-M12-Oneftr38.html?page=14",
+    "https://www.milwaukeetool.cn/downloadable/download/attachment/file/M12-ONEFTR38_M12-ONEFTR12_manual-1.pdf/id/1016/",
+    "https://www.milwaukeetool.co.nz/on/demandware.static/-/Sites/en_NZ/ProductResources/Powertools/Impacts%20%26%20Fastening/M12ONEFTR12-0C_M12ONEFTR38-0C_Product_Manual.pdf",
+    "https://www.milwaukeetool.com.au/on/demandware.static/-/Sites/en_AU/ProductResources/Powertools/Impacts%20%26%20Fastening/M12ONEFTR12-0C_M12ONEFTR38-0C_Product_Manual.pdf",
+    "https://www.milwaukeetool.com.au/on/demandware.static/-/Sites/en_AU/v1579472753317/ProductResources/Powertools/Impacts%20%26%20Fastening/M12ONEFTR12-0C_M12ONEFTR38-0C_Product_Manual.pdf",
+    "https://www.milwaukeetool.com.au/on/demandware.static/-/Sites/en_AU/v1742768030883/ProductResources/Powertools/Impacts%20%26%20Fastening/M12ONEFTR12-0C_M12ONEFTR38-0C_Product_Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

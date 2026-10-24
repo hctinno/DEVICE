@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_020.json",
+  "original_log_sha256": "8865b3b5331fca14771b4928ae31e6dd3ca578e8c6babea6fe6af489dc206b26",
+  "original_log_bytes": 28980,
+  "queries": [
+    "HIOKI ST4200 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn1.npcdn.net/userfiles/24834/attachment/5875301/20250610084647_000290494021d14d1ef83eead8556dbe/ST4200B971-00.pdf",
+    "https://geniuss.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMTA0MTQ3NjYzODBlZmVkNzdhIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjUxMjI5NGQ0Y2I3MjZlYjFlNiI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDI1MTIyOWY1MWVkZmJkZDFkMTEiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjY5OTA5N2EyZDAzNTAiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://geniuss.kr/post_file_download.cm?c=YTo1OntzOjEwOiJib2FyZF9jb2RlIjtzOjIyOiJiMjAyMTA0MTQ3NjYzODBlZmVkNzdhIjtzOjk6InBvc3RfY29kZSI7czoyMjoicDIwMjUxMjI5NGQ0Y2I3MjZlYjFlNiI7czo5OiJmaWxlX2NvZGUiO3M6MjI6InAyMDI1MTIyOWY1MWVkZmJkZDFkMTEiO3M6MTk6InBvc3RfZG93bmxvYWRfdG9rZW4iO3M6MTM6IjZhMDA3NTRiMjAxZDAiO3M6MTE6Im1lbWJlcl9jb2RlIjtOO30%3D",
+    "https://hioki.tw/software-download.php?page=1",
+    "https://hiokikorea.com/support/software_search.html",
+    "https://manual.hioki.com/en/ST4200-50/manual",
+    "https://manual.hioki.com/en/ST4200/manual",
+    "https://manualzz.com/doc/85263637/hioki-partial-discharge-detector-st4200--high-voltage-mul",
+    "https://weharang.hiokikorea.com/support/software_search.html",
+    "https://www.hioki.cn/products/st4200",
+    "https://www.hioki.cn/resource/products/manuals",
+    "https://www.hioki.com/download/42010",
+    "https://www.hioki.com/global/support/download/software/versionup/detail/id_n1388651",
+    "https://www.hioki.com/jp-ja/support/download/software/versionup/detail/id_n1388651",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A007007&p_no=447",
+    "https://www.hiokikorea.com/support/software_search.html",
+    "https://www.life.hiokikorea.com/support/software_search.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

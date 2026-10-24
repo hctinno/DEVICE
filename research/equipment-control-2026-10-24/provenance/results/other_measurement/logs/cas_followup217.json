@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/cas_followup217.json",
+  "original_log_sha256": "d5fd7fd9589d4beca2b317dbad6706e2465b1799ba218e46a781b0f7aef289a0",
+  "original_log_bytes": 34671,
+  "queries": [
+    "CAS \"HB-250\" manual RS232 interface",
+    "site:github.com CAS \"HB-250\""
+  ],
+  "discovered_urls": [
+    "https://download.hb-therm.eu/docs/O8319-ESpdf_50ccbdf21ca4b8d199480956c.pdf",
+    "https://e-katalog.kz/ua/CAS-HB-250.htm",
+    "https://entero.ru/item/244897",
+    "https://etalon.su/catalog/vesy-tovarnye/vesy-cas-hb/",
+    "https://etalon.su/catalog/vesy-tovarnye/vesy-cas-hb/vesy-cas-hb-250/",
+    "https://gist.github.com/JagadeshDev/b92849d9be619dc3625b21a870096a0c",
+    "https://gist.github.com/cthoyt/a91ae12a94c7e1647e9d9d8fa61e80ce",
+    "https://github.com/ModelDBRepository/2015954",
+    "https://himbaza.com/tovarnye-vesy-cas-hb-250/",
+    "https://manuals.plus/m/32e0a47b8a805c82ed66a7cff4d6dc93952737b91d93d3e7ba2a69ceceb98746.pdf",
+    "https://remkkm.ru/catalog/vesy_elektronnye/napolnye_vesy_cas_hb_povyshennoy_tochnosti/",
+    "https://smartcode.ru/vesovoe_oborudovanie/vesy/cas_hb-250",
+    "https://spb.compik-s.ru/vesy-napolnye-cas-hb-250",
+    "https://www.cas-corp.ru/event.php/event%3D21628",
+    "https://www.complex-trade.ru/commercial/253764/",
+    "https://www.mirvesov.ru/tovarnye-vesy/8286.htm",
+    "https://www.mirvesov.ru/tovarnye-vesy/cas/",
+    "https://www.vesisib.ru/catalog/tovarnye-vesy/tovarnye-vesy1/vesy-cas-hb-250/",
+    "https://www.xn--b1aaeeabb0hpc6ae.xn--p1ai/files/rukovodstva/rukovodstvo-cas-hb.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

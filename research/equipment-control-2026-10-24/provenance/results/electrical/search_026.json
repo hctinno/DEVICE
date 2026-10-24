@@ -1,0 +1,38 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_026.json",
+  "original_log_sha256": "3680616af6fbad7041b1778834d89b4da03fe3a7470a212ae72bd623971eddfe",
+  "original_log_bytes": 29943,
+  "queries": [
+    "KIKUSUI TOS9303LC manual programming software"
+  ],
+  "discovered_urls": [
+    "https://global.kikusui.co.jp/download/cat_st/",
+    "https://global.kikusui.co.jp/download/cat_tos9300/",
+    "https://global.kikusui.co.jp/dri-fir-upd/tos9300-firm/",
+    "https://global.kikusui.co.jp/w2-2/safety-tester-en/ac_withstand_voltage_tester-en/tos9300/",
+    "https://global.kikusui.co.jp/w2-2/safety-tester-en/leakage_current-en/tos9303lc/",
+    "https://kikusui-europe.com/download/cat_st/",
+    "https://kikusui-europe.com/download/cat_tos9300/",
+    "https://kikusui-europe.com/w2-2/safety-tester/ac_withstand_voltage_tester/tos9303/",
+    "https://kikusui-korea.co.kr/files/PDF/TOS9300_M.pdf",
+    "https://kikusui.co.jp/download/cat_st/",
+    "https://kikusui.co.jp/download/tos9300/",
+    "https://kikusui.co.jp/w2-2/safety-tester/leakage_current/tos9303lc/",
+    "https://kikusuiamerica.com/download/cat_st/",
+    "https://kikusuiamerica.com/download/cat_tos9300/",
+    "https://kikusuiamerica.com/dri-fir-upd/tos9300-firm/",
+    "https://kikusuiamerica.com/w2-2/safety-tester-en_us/ac_withstand_voltage_tester-en_us/tos9303/",
+    "https://kikusuiamerica.com/w2-2/safety-tester-en_us/ac_withstand_voltage_tester-en_us/tos9303lc/",
+    "https://manual.kikusui.co.jp/T/TOS93_USER_E5.pdf",
+    "https://manualzz.com/doc/58418780/kikusui-tos9300--tos9301--tos9302--tos9303--tos9303lc-use",
+    "https://vn.kikusui.co.jp/download/cat_st/",
+    "https://vn.kikusui.co.jp/download/cat_tos9300/",
+    "https://vn.kikusui.co.jp/w2-2/safety-tester/insulation-resistance-tester/tos9303/",
+    "https://www.kikusui.cn/resources/001/pdf/tos9300_interface_manual.pdf",
+    "https://www.kikusui.cn/resources/001/pdf/tos9300_users_manual_en.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

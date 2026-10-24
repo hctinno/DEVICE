@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_232.json",
+  "original_log_sha256": "5f45f943cf5f537ef85aba5ca5dc006068ce8fb11fe66ccf01e4f3d76c6025bb",
+  "original_log_bytes": 26780,
+  "queries": [
+    "Tektronix TDS7254B manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cms.trsrentelco.com/sites/default/files/resources-pdfs/Tektronix_TDS7254B_Manual.pdf",
+    "https://download.tek.com/manual/070899203.pdf",
+    "https://download.tek.com/manual/071107825.pdf",
+    "https://electronicsandbooks.com/edt/manual/Hardware/T/Tektronix%20www.tek.com/unclassified/071107815%2020040416%20Optional%20Applications%20Installation%20Manual%20%5B30%5D.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://manualmachine.com/tektronix/tds7154b/4653141-service-manual/",
+    "https://w140.com/tekwiki/images/7/7a/071-1226-03.pdf",
+    "https://www.jabse.com/L1Rla3Ryb25peC8wNzExMjI3MDR3ZWJfMjAwOC4wOS4zMC4xMS4yNi4xOV8xMjcxNV9FTi5wZGY",
+    "https://www.manualslib.com/products/Tektronix-Tds7254b-8821382.html",
+    "https://www.reddit.com/r/AskElectronics/comments/1tmb6ix/recherche_de_panne_sur_oscilloscope/",
+    "https://www.reddit.com/r/ElectricalEngineering/comments/zhhc1k",
+    "https://www.semistarcorp.com/product/tektronix-manual/",
+    "https://www.tek.com.cn/support/software/application/dpo7054-software-3",
+    "https://www.tek.com.cn/support/software/application/tdsptd-dpo7254-c-dpo7354-c-dpo-dsa-mso70000-b-c-win-xp-win-7",
+    "https://www.tek.com.cn/support/software/firmware/tds7154b-tds7254b-tds7404b-csa7404b-firmware-v513",
+    "https://www.tek.com/de/support/software/firmware/tds7154b-tds7254b-tds7404b-csa7404b-firmware-v513",
+    "https://www.tek.com/en/manual/tdsht3-2",
+    "https://www.tek.com/en/oscilloscope/csa7404b-manual/csa7404b-tds7704b-tds7404b-tds7254b-tds7154b-user-manual",
+    "https://www.tek.com/en/oscilloscope/tds7254-manual/oscilloscope-analysis-and-connectivity-made-easy-user-manual",
+    "https://www.tek.com/en/sitewide-content/manuals/4/5/6/4-5-6-series-mso-programmer-manual",
+    "https://www.tek.com/en/support/software/firmware/tds7154b-tds7254b-tds7404b-csa7404b-firmware-v513",
+    "https://xdevs.com/doc/Tektronix/TDS7000/TekScope_Opt_App_1.0.10_071-1883-01_063-3914-10/TekScope_Opt_App_1.0.10_071-1883-01_063-3914-10/Documents/ApplicationsInstallation.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

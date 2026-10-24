@@ -1,0 +1,13 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open002.json",
+  "original_log_sha256": "7ee302b7918681c7e9fefe7b11053a654fe52e30beafb2a1d4594ae30b0f2a23",
+  "original_log_bytes": 24032,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.keysight.com.cn/cn/zh/lib/software-detail/driver/advanced-power-system-n6900-n7900-and-rp7900-series-ivi-and-matlab-instrument-drivers-2379610.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

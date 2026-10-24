@@ -1,0 +1,19 @@
+{
+  "validated_at_utc": "2026-10-23T23:54:42.788905+00:00",
+  "register_rows": 6470,
+  "items": 3137,
+  "coverage": "all original equipment IDs represented exactly once",
+  "unsearched_items": 0,
+  "url_format_issues": 0,
+  "exact_source_status_issues": 0,
+  "original_database_unchanged": true,
+  "sqlite_integrity": "ok",
+  "sqlite_foreign_key_issues": 0,
+  "xlsx_all_rows_verified": true,
+  "xlsx_formula_cells": 0,
+  "github_code_urls_checked": 110,
+  "github_code_urls_http200": 110,
+  "github_code_url_failures": [],
+  "all_external_urls_downloaded": false,
+  "hardware_tested": false
+}

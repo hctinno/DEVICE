@@ -1,0 +1,39 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/batch015.json",
+  "original_log_sha256": "e3fc8ef0e1a98d55865fad008ced99d51f6bb4f5c67ec0416fb504f92bcdf679",
+  "original_log_bytes": 27660,
+  "queries": [
+    "Rohde Schwarz \"ESU26\" programming manual driver remote control",
+    "Rohde Schwarz \"ETL\" programming manual driver remote control",
+    "Rohde Schwarz \"NRP8S\" programming manual driver remote control",
+    "Rohde Schwarz \"RTO1004\" programming manual driver remote control"
+  ],
+  "discovered_urls": [
+    "https://cdn.rohde-schwarz.com.cn/pws/dl_downloads/dl_application/application_notes/1ma160/1MA160_0e_create_hardcopyusing_instrument_drivers.pdf",
+    "https://manualmachine.com/rohdeschwarz/esu8/26564460-operating-manual/",
+    "https://manualmachine.com/rohdeschwarz/esu8/26564468-operating-manual/",
+    "https://manualmachine.com/rohdeschwarz/nrp8s/17905850-user-manual/",
+    "https://manualzz.com/doc/10298945/rohde-and-schwarz-nrp--zxx--nrp-2--nrp-v--nrp-n-power-senso",
+    "https://manualzz.com/doc/67524386/rohdeandschwarz-etl-getting-started",
+    "https://manualzz.com/doc/71616416/rohde-and-schwarz-rands-nrp40t--rands-nrp6a--rands-nrp8s-getting-",
+    "https://manualzz.com/manual/Rohde%2B%2526%2BSchwarz/ESU%2B26",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_getting_started/ETL_GettingStarted_en_04.pdf",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESU_OperatingManual_en_04.pdf",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxxSN_UserManual_en_25.pdf",
+    "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/firmware/1425_8686_00/NRP_Series_OSA_en_15.pdf",
+    "https://www.manualslib.com/manual/1591513/Rohde-And-Schwarz-RAnds-Nrp-Series.html?page=44",
+    "https://www.manualslib.com/products/Rohde-And-Schwarz-RAnds-Nrp8s-10445082.html",
+    "https://www.rohde-schwarz.com/ch/handbuch/etl/",
+    "https://www.rohde-schwarz.com/cz/manual/etl/?change_c=CZ",
+    "https://www.rohde-schwarz.com/lat/manual/etl/",
+    "https://www.rohde-schwarz.com/us/manual/rs-etl-k470-cdr-signal-analysis-software-manual_78701-609674.html",
+    "https://www.rohde-schwarz.de/br/manual/manual-do-usuario-da-opcao-da-analise-de-sinal-vetorial-ofdm-rs-vse-k96_78701-609674.html",
+    "https://www.rohde-schwarz.de/fr/manuel/manuel-d-utilisation-relatif-a-l-application-de-mesure-analyse-vectorielle-des-signaux-ofdm-rs-vse-k96_78701-609674.html",
+    "https://www.rohde-schwarz.de/in/manual/etl/",
+    "https://www.scribd.com/document/816895799/NRP-Power-Sensors-GettingStarted-en-22"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

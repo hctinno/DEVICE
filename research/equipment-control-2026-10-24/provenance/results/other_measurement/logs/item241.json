@@ -1,0 +1,40 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item241.json",
+  "original_log_sha256": "d91475b53073de7378c7643a5ae5ec75f106890b42743667a4f6197b9f555bda",
+  "original_log_bytes": 15850,
+  "queries": [
+    "ETS Lindgren \"5G NR SISO\" software EMQuest",
+    "site:github.com ETS Lindgren EMQuest"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/4b250b588dfd22ea841359355e8ec63220f29c358ca70973287baba52967a162.pdf",
+    "https://electronics360.globalspec.com/article/21719/rohde-schwarz-and-ets-lindgren-partner-to-offer-ota-testing-solutions-for-next-gen-wireless-technologies",
+    "https://fcc.report/FCC-ID/2A5LO-TOZED5GCPEX21/5782195.pdf",
+    "https://github.com/ETS-Blockchain",
+    "https://github.com/EmileBrunelle/systeme-de-tournoi-lan-ets-2026/blob/main/docs/RESULTS.md",
+    "https://github.com/aditisolanke99/InsightSphere-Solution/blob/main/EMI-and-EMC-Test-Equipment-Market-Key-Trends.md",
+    "https://github.com/fediom/Gestion-des-ETS",
+    "https://github.com/manulife-ets",
+    "https://github.com/njchorda",
+    "https://github.com/stanley573/ets",
+    "https://ngiatlantic.eu/sites/default/files/2023-04/D3_5G%20Open%20RAN_final.pdf",
+    "https://redeweb.com/en/present/Rohde-Schwarz-and-ETs-Lindgren-team-up-to-deliver-OTA-testing-solutions-for-next-generation-wireless-technologies/",
+    "https://www.burgeon.com.tw/ota-chamber-ams-7000",
+    "https://www.designdevelopmenttoday.com/home/news/22927506/rohde-schwarz-etslindgren-partner-on-ota-testing-solutions-for-wireless-tech",
+    "https://www.ets-lindgren.com/sites/japanauthor/JapanPDFs/W1_%E3%83%AF%E3%82%A4%E3%83%A4%E3%83%AC%E3%82%B9%E3%82%BD%E3%83%AA%E3%83%A5%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E7%B7%8F%E5%90%88%E3%82%AB%E3%82%BF%E3%83%AD%E3%82%B0.pdf",
+    "https://www.everythingrf.com/News/details/19319-rohde-schwarz-and-ets-lindgren-partner-to-deliver-ota-testing-solutions-for-next-gen-wireless-technologies",
+    "https://www.everythingrf.com/news/details/7632-ETS-Lindgren-Enables-Existing-OTA-Test-Chambers-to-Support-5G-Testing",
+    "https://www.iotinsider.com/?p=15520",
+    "https://www.mwjournalchina.com/PDF/2019/0506/CoverFeature.pdf",
+    "https://www.mwrf.com/technologies/test-measurement/article/55246929/microwaves-rf-rohde-schwarz-ota-testing-solutions-for-next-gen-wireless-technologies",
+    "https://www.redeweb.com/Febrero-2025.pdf",
+    "https://www.rohde-schwarz.com/ca/about-us/news-press/all-news/rohde-schwarz-and-ets-lindgren-partner-to-offer-ota-testing-solutions-for-next-gen-wireless-technologies_229356-1532554.html",
+    "https://www.rohde-schwarz.com/ch/unternehmen/news-und-presse/all-news/rohde-schwarz-und-ets-lindgren-bieten-gemeinsam-ota-testloesungen-fuer-wireless-technologien-der-naechsten-generation_229356-1532554.html",
+    "https://www.starpointcomm.com/show-37-25-1.html",
+    "https://www.temcom.com/rohde-schwarz-and-ets-lindgren-offer-ota-test-solutions-for-next-generation-wireless-technologies/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

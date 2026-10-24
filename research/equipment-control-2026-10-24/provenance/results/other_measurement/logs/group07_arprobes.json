@@ -1,0 +1,28 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group07_arprobes.json",
+  "original_log_sha256": "0b216fa142ea22b292b375fe5aaafe01d22f3920756d3e088a4248444ebff157",
+  "original_log_bytes": 12659,
+  "queries": [
+    "Amplifier Research (\"FL7218\" OR \"FL8009\" OR \"FL7006\" OR \"FL7040\" OR \"FP3000\") remote commands manual",
+    "site:github.com (\"FL7006\" OR \"FL8009\" OR \"FL7218\" OR \"FL7040\" OR \"FP3000\")"
+  ],
+  "discovered_urls": [
+    "https://arworld.us/wp-content/uploads/2022/03/FL8000-Specification-111022.pdf",
+    "https://arworld.us/wp-content/uploads/2024/03/4206-011.pdf",
+    "https://device.report/m/a48e4e991e246642cda11f73ea8e013be99df34631be83f4bab4f4c19dc5d293",
+    "https://emagtech.com.cn/yqzl",
+    "https://theemcshop.com/brands/amplifier-research/?limit=36",
+    "https://theemcshop.com/brands/amplifier-research/?limit=48",
+    "https://theemcshop.com/emc-test-equipment/rf-field-strength-probes-meters/electric-e-field-probes-up-to-40-ghz/",
+    "https://theemcshop.com/emc-test-equipment/rf-field-strength-probes-meters/electric-e-field-probes-up-to-40-ghz/?page=1",
+    "https://theemcshop.com/test-equipment/electric-e-field-probes/field-probe-kits/",
+    "https://transientspecialists.com/cdn/shop/files/Field_Probe_FL8200FL8009FL8018FL8040FL8060FI8000-Rev_A_18a5f545-9b07-446b-9dec-60b8be0c0223.pdf?v=10247210232910277556",
+    "https://www.ar.ametek-cts.com/-/media/ametekcts/ar_amplifiers/data-sheets/field-probe/laser-probe-interface/fl8000-spec-111022.pdf?hash=0D60A01C12276F49BE2834D2C90BD3D7&la=en&revision=d37e8408-c14b-4dc1-bccf-2f8e60b7d63f",
+    "https://www.manualslib.com/manual/2860833/Ar-Worldwide-Fl8200.html?page=27",
+    "https://www.yifengtech.com.cn/yqzl"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

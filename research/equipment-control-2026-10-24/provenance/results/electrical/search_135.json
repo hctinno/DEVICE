@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_135.json",
+  "original_log_sha256": "cf9f5e0b530d665581cb5c65a7f9d93b19f2825dedc7ad7437813415b46b5aaa",
+  "original_log_bytes": 26998,
+  "queries": [
+    "NEWARE CE-7004-120V100A-R28 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.newarebattery.comUser",
+    "https://neware.com.cn/Download/Instructions",
+    "https://neware.com.cn/Download/software-support",
+    "https://neware.ltd/software/",
+    "https://newarebattery.com/services-home/",
+    "https://newarebatterytester.com/wp-content/uploads/2022/04/CE-7004-1000V100A-R28GC.pdf",
+    "https://newarelab.com/download",
+    "https://newarelab.com/support/neware-manual",
+    "https://www.neware-usa.com/uploadfile/2024/0531/2236c092d37472a.pdf",
+    "https://www.neware.cloud/Download/product-support",
+    "https://www.neware.cloud/service",
+    "https://www.neware.net/supports/manuals-and-documentation.html",
+    "https://www.neware.net/supports/manuals-and-documentation/2.html",
+    "https://www.neware.net/supports/specifications.html",
+    "https://www.newarebattery.com/wp-content/uploads/2022/05/CE-6000n-User-Manual.pdf",
+    "https://www.newarelab.com/download",
+    "https://www.reddit.com/r/accesscontrol/comments/1k68sjc"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

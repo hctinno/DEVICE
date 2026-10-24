@@ -1,0 +1,40 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_256.json",
+  "original_log_sha256": "02287f1e4a5c0ac75b594099701be3422255559131fe20850e5f09d0c64aef12",
+  "original_log_bytes": 30260,
+  "queries": [
+    "FLUKE 17B+ manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.fluke.com",
+    "https://assets.testequity.com/te1/Documents/pdf/fluke/Fluke_151718_umeng0100_User_Manual_0624.pdf",
+    "https://cdn.adiglobaldistribution.us/pim/Original/July-2026/HW_4404231_User_Manual",
+    "https://dam-assets.fluke.com/s3fs-public/6002719_0000_ENG_A_W.PDF",
+    "https://instrotech.com/amfile/file/download/file/15/product/6081/",
+    "https://m.enari.com.my/index.php?cat=Multimeters&products_id=3181432&ws=showproducts",
+    "https://m.enari.com.my/index.php?products_id=3181432&ws=showproducts",
+    "https://manuals.plus/m/4d133af7ad8b0f82cfb028d31631185564d944a579105b3aaefb1ae77d459ae9",
+    "https://manuals.plus/m/a08f426e25e8a61fffb82858b58684bd6f896eebc1a4ddb161c5e78a7e553a5f",
+    "https://manuals.plus/m/b1e72ebe92d6f8099cdca7772856ea71da3ef98213bb10bc50f86d0dfb0b47a9",
+    "https://manuals.plus/m/f04f5b10b4d0771a95af85d2f0a11644c9defc4f0be7ef56e7765cfaf874a391",
+    "https://manualzz.com/doc/24234245/fluke-17b--digital-multimeter-manual",
+    "https://media.fluke.com/f8ca9de4-481a-4125-8a46-b2d9006f431f_original%20file.pdf",
+    "https://my.fluke.com/en-US/support-request",
+    "https://pim-resources.coleparmer.com/instruction-manual/17785-13-14-15b-17b-digital-multimeters-manual.pdf",
+    "https://www.digikey.com/en/products/detail/fluke-electronics/FLUKE-17B/24398481",
+    "https://www.enari.com.my/index.php?products_id=3181403&ws=showproducts",
+    "https://www.fluke.com/en-us/product/electrical-testing/digital-multimeters/fluke-17b-plus",
+    "https://www.fluke.com/en-us/product/electrical-testing/digital-multimeters/fluke-17b-plus%0A",
+    "https://www.itm.com/pdfs/cache/www.itm.com/17b--esp/manual/17b--esp-manual.pdf",
+    "https://www.reddit.com/r/AskElectronics/comments/1vdp8gy/fluke_17b_issue_in_continuity_mode/",
+    "https://www.reddit.com/r/fluke/comments/1o1poeq/is_this_normal_17b/",
+    "https://www.reddit.com/r/fluke/comments/1s86sk5/freeopensource_desktop_appcli_app_for_fluke/",
+    "https://www.reddit.com/r/fluke/comments/1vdfyjk/fluke_17b_issue/",
+    "https://www.reddit.com/r/fluke/comments/1vm7kqq/fluke_17b_error/",
+    "https://www.reddit.com/r/networking/comments/fku5dq"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

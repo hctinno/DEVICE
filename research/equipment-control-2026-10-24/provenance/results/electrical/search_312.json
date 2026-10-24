@@ -1,0 +1,36 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_312.json",
+  "original_log_sha256": "0ca8951f7cd80c27f2d106639193b3aa91d268163a6eb5cf528b35217932c9ac",
+  "original_log_bytes": 36246,
+  "queries": [
+    "HIOKI 3532-50 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.cnHIOKI",
+    "http://www.hioki.co.jp/",
+    "http://www.hioki.com",
+    "http://www.hioki.com/",
+    "http://www.hioki.inHIOKI",
+    "http://www.hiokiusa.comHIOKI",
+    "https://assets.tequipment.net/assets/1/26/Documents/Hioki/3532-50e_04.pdf",
+    "https://manualzz.com/doc/28916040/hioki-3532-50-impedance-meter-instruction-manual",
+    "https://manualzz.com/doc/61292780/hioki-rs-232c-instruction-manual",
+    "https://www.hioki.cn/resource/software/84",
+    "https://www.hioki.com/download/28600",
+    "https://www.hioki.com/download/28696",
+    "https://www.hioki.com/in-en/support/download/software/versionup/detail/id_n9676",
+    "https://www.manualslib.com/manual/2238765/Hioki-3532-50.html",
+    "https://www.manualslib.com/manual/2238765/Hioki-3532-50.html?page=135",
+    "https://www.manualslib.com/manual/4194375/Hioki-Hitester-3532-50.html",
+    "https://www.manualslib.com/manual/4194375/Hioki-Hitester-3532-50.html?page=482",
+    "https://www.manualslib.com/manual/4194375/Hioki-Hitester-3532-50.html?page=497",
+    "https://www.manualslib.com/manual/4194375/Hioki-Hitester-3532-50.html?page=498",
+    "https://www.metrologymanuals.com/documents/sha-5f3d9d742577381781a4cf69e6c3d19620f239d0f11a3ced1d2a2c37898cf0fd/hioki-3532-50-lcr-hitester-instruction-manual/",
+    "https://www.reddit.com/r/AskElectronics/comments/swy2pq",
+    "https://www.scribd.com/document/843659724/Hioki-3532-50-Manual"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

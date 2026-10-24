@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_pico_sdk.json",
+  "original_log_sha256": "703ac318b1018fff31a8cbef9e4f7c6c13041e2b747f577701197a327a4b6cef",
+  "original_log_bytes": 25928,
+  "queries": [
+    "PicoScope 5244D PicoSDK 5000a API"
+  ],
+  "discovered_urls": [
+    "https://assets.tequipment.net/assets/1/7/PicoScope_5000_Series_%28A_API%29_Programmers_Guide.pdf",
+    "https://au.mathworks.com/matlabcentral/fileexchange/42820-picoscope-5000-series-a-api-matlab-generic-instrument-driver/files/examples/PS5000A_ID_Block_2_Scope_Example.m",
+    "https://cdn.tecotecshop.com/Repository/Pico%20Technology/PicoScope-5244D-MSO/PicoScope%205000%20Series%20%28A%20API%29%20Programmer%E2%80%99s%20Guide.pdf",
+    "https://ch.mathworks.com/matlabcentral/fileexchange/42820-picoscope-5000-series-a-api-matlab-generic-instrument-driver/files/examples/PS5000A_ID_Block_FFT_Example.m",
+    "https://github.com/picotech/picosdk-ps5000a-matlab-instrument-driver",
+    "https://github.com/picotech/picosdk-ps5000a-matlab-instrument-driver/blob/master/PS5000aConstants.m",
+    "https://github.com/picotech/picosdk-ps5000a-matlab-instrument-driver/blob/master/picotech_ps5000a_generic.mdd",
+    "https://github.com/picotech/picosdk-python-wrappers",
+    "https://manualmachine.com/picotechnology/5244d/26595247-programmers-guide/",
+    "https://picotech.com/support/viewtopic.php?p=152463&sid=a483bb4548048f505ea998b07aa0b0c0",
+    "https://picotech.com/support/viewtopic.php?sid=2c1755495d558be67463c06ef24d55d7&t=43362",
+    "https://www.interworldna.com/pico/picoscope_5000d.php",
+    "https://www.picotech.com/download/manuals/picoscope-5000-series-a-api-programmers-guide.pdf",
+    "https://www.picotech.com/library/knowledge-bases/oscilloscopes/picosdk-and-picoscope-models",
+    "https://www.picotech.com/support/viewtopic.php?p=150931&sid=d6d274804b50198aed3a3a357979eb3b",
+    "https://www.reddit.com/r/matlab/comments/194yjtr",
+    "https://www.saelig.com/category/picoscope-5000.htm",
+    "https://www.techsquare.co.th/tutorial/picoscope-programming-api/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

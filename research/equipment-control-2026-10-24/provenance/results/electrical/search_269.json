@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_269.json",
+  "original_log_sha256": "6214e35ee4943972df81e764dc37fdf7901cf5bfa1ff10882d960989705fc748",
+  "original_log_bytes": 31495,
+  "queries": [
+    "YOKOGAWA MV1000 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://cdn.tmi.yokogawa.com/IMMV1000-01E.pdf",
+    "https://electronicsandbooks.com/edt/manual/Hardware/Y/Yokogawa/Manual%20by%20prefix/M/IMMV1000-02E_010%2020071227%20MV1000%20First%20Step%20Guide%20%5B56%5D.pdf",
+    "https://en.wikipedia.org/wiki/V850",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&category=&idx=2637&mode=view&offset=110&sk=&sw=",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=541&mode=view",
+    "https://koreayokogawa.com/contact/qna.php?boardid=qna&idx=93&mode=view",
+    "https://manualzz.com/doc/23569174/yokogawa-mv-1000--mv-2000-data-logger-user-s-manual",
+    "https://manualzz.com/doc/6352011/yokogawa-mv-1000--mv-2000-data-logger-service-manual",
+    "https://web-material3.yokogawa.com/IMMV1000-01E_020.pdf",
+    "https://www.manualslib.com/manual/2752775/Yokogawa-Mvadvanced-Mv1000-Series.html",
+    "https://www.manualslib.com/manual/2752775/Yokogawa-Mvadvanced-Mv1000-Series.html?page=149",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.reddit.com/r/PLC/comments/1nsbvmx/need_help_with_yaskawa_v1000_vfd/",
+    "https://www.reddit.com/r/PLC/comments/e7kba3",
+    "https://www.yaskawa.com/products/drives/medium-voltage-drives/drives/mv1000-drive/-/content/_b5aba33f-74df-49a4-9d7a-2f83250b2190_Overview",
+    "https://www.yaskawa.com/products/drives/medium-voltage-drives/drives/mv1000-nema-3r/-/content/_163df7e2-7e64-48b0-bfa2-2d13ee1b3428_Overview",
+    "https://www.yaskawa.com/products/drives/medium-voltage-drives/software-tools/drivewizard-mv",
+    "https://www.yokogawa.co.jp/solutions/discontinued/button-operated-mv1000-mv2000/",
+    "https://www.yokogawa.com/ca/solutions/discontinued/button-operated-mv1000-mv2000/",
+    "https://y-link.yokogawa.com/YL000/",
+    "https://y-link.yokogawa.com/YL008/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

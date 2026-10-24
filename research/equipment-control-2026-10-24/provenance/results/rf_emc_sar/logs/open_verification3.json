@@ -1,0 +1,22 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/rf_emc_sar/logs/open_verification3.json",
+  "original_log_sha256": "2d025628b8aeecbb575ed5251f29f1ed1a95e2e23883f0362c7cad438b59402f",
+  "original_log_bytes": 158356,
+  "queries": [],
+  "discovered_urls": [
+    "http://www.emtest.com",
+    "https://dl.cdn-anritsu.com/en-au/test-measurement/files/Manuals/Operation-Manual/MP1570A_W1724AE_opm5_e_3_0.pdf",
+    "https://dl.cdn-anritsu.com/en-au/test-measurement/files/Manuals/Programming-Manual/MT8852B/MT8852B-Bluetooth%20tester-Programming%20Manual%20Rev%20X.pdf",
+    "https://download.tek.com/manual/077000304.pdf",
+    "https://jp.yamaha.com/files/download/other_assets/2/325442/txnacd1_remote_ctrl_prtcl_112-2_en.pdf",
+    "https://mcs-testequipment.com/content/files/TC-3000C-Manual.pdf",
+    "https://transientspecialists.com/cdn/shop/files/UserManual-AN200N100-E-V1.04_004_2.pdf?v=8237883472973856862",
+    "https://www.kanetec.co.jp/en/pdf/TM-901EXP_English.pdf",
+    "https://www.keysight.com/find/sa-ivi】",
+    "https://www.keysight.com/se/se/lib/software-detail/driver/base--xseries-signal-analyzers-ivi-and-matlab-instrument-drivers-2044474.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_240.json",
+  "original_log_sha256": "db79c337cf20aba1157148f111d09b8d65cf0bed9d1e9efd070d6030f6540b33",
+  "original_log_bytes": 34712,
+  "queries": [
+    "DIGITEK DDPS 3.6K manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.ftdichip.com/Drivers/VCP.htm",
+    "https://dearborngroup.com/documents/",
+    "https://digis.ru/upload/iblock/f78/DX6530_DX6535_DW6030_DW6035_ENGLISH%20PDF.pdf",
+    "https://ditek.co.kr/kr/sub/flash/manual/flashpak.asp",
+    "https://downloads.intelitek.com/programming.php",
+    "https://en.wikipedia.org/wiki/Digitek",
+    "https://manualmachine.com/digitek/",
+    "https://manuals.plus/category/digitek",
+    "https://manuals.plus/category/digitek/page/2",
+    "https://manuals.plus/category/digitek/page/3",
+    "https://smarthomebus.com/whats-new-updates.html",
+    "https://www.dgtech.com/documents/",
+    "https://www.digitek.net.in",
+    "https://www.ignitech.cz/en/vyrobky/dccdip/manual_dccdip_en.pdf",
+    "https://www.manson.com.hk/wp-content/uploads/2018/11/SDP-36xx-Software-manual.pdf",
+    "https://www.manualzz.com/doc/30360454/adaptive-power-systems-dps-series-programmable-dc-power-s",
+    "https://www.maxlinear.com/Third-Party-Programming-Support",
+    "https://www.mk3.com/uploads/files/user-manual/DigiMaster111/Digimaster_III_english_user_manual.pdf",
+    "https://www.xeltek.com/resources/technical-articles/instructions-and-support/superprosoftware/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

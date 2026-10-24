@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_183.json",
+  "original_log_sha256": "6f182de756098c4ae9212b257fc840bdba03632c3adb12e1f3d4c4625bbb5caf",
+  "original_log_bytes": 27035,
+  "queries": [
+    "HIOKI DT4254 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.hioki.com",
+    "https://docket.hiokikorea.com/product/product_view.html?c_id=A023001&p_no=216&s_tab=tab3",
+    "https://hiokikorea.com/product/product_view.html?c_id=A015002&p_no=215&s_tab=tab3",
+    "https://manuals.plus/hmn/hioki/dt4250-series-digital-multimeter-manual",
+    "https://manualzz.com/doc/39489024/hioki-dt425-2--3--4--5--6-digital-multimeter-instruction-",
+    "https://www.hioki.com/download/38639",
+    "https://www.hioki.com/download_file/9752/2",
+    "https://www.hioki.com/in-en/support/download/manuals?page=37",
+    "https://www.hioki.com/jp-ja/products/testers/dmm-3/id_5847",
+    "https://www.hioki.com/sg-en/products/testers/dmm-3/id_5847",
+    "https://www.hioki.com/sites/default/files/2021-04/DT4251A981-04.pdf",
+    "https://www.hioki.com/us-en/products/testers/dmm-3/id_5847",
+    "https://www.hioki.com/us-es/products/testers/dmm-3/id_5847",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A015002&p_no=215",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A015002&p_no=217",
+    "https://www.hiokikorea.com/product/product_view.html?c_id=A019007&p_no=216",
+    "https://www.itm.com/pdfs/cache/www.itm.com/dt4252/manual/dt4252-manual.pdf",
+    "https://www.testonesolar.com/wp-content/uploads/2018/01/DT4254_Manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

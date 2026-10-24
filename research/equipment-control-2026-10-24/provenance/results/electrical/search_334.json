@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_334.json",
+  "original_log_sha256": "90b333fe13fb1fccf8fac41845e91872f89ceb3510abcf171f73319936e946e2",
+  "original_log_bytes": 35197,
+  "queries": [
+    "GOULD 750 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://en.wikipedia.org/wiki/Systems_Engineering_Laboratories",
+    "https://industrialmanuals.com/Software%20System-c-1332.php",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/gould-pc0085-plc-program-clear-and-prog-mode-entry-procedure",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/gould-pc0085-programming-software-dos-communication-support",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/modicon-pc0085-pp-0105-100-handheld-programmer-operation",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/modicon-pp0105-programmer-manual-and-pc0085-setup-guide",
+    "https://industrialmonitordirect.com/blogs/knowledgebase/programming-gould-584984-plcs-from-pc-proworx-nxt-and-plc",
+    "https://industrialmonitordirect.com/cs/blogs/knowledgebase/resolving-gould-modicon-plc-communication-issues",
+    "https://literature.rockwellautomation.com/idc/groups/literature/documents/pm/750-pm001_-en-p.pdf",
+    "https://manuals.plus/m/21b4b31cef82211438d7c5978d6a32b888505e610658a44e30c285a916d20c69.pdf",
+    "https://manuals.plus/m/6e92e4d9817103f444c18a177ce006cf49453f53c3ed5f14bd8af934b581672a",
+    "https://manuals.plus/m/8fbdf333f51dc8a51abe91dec90edeaa3b283e1bdc407f8a343aa73d26584435",
+    "https://manualzz.com/doc/7212825/gould-5841-11-programmable-controller",
+    "https://retronic.ch/en/content/16-documentation",
+    "https://www.artisantg.com/PLC/75065-1/Schneider-Electric-Gould-P370-001-Micro-84-Programmer-Module",
+    "https://www.classicautomation.com/amfile/file/download/file/137/product/3021368/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

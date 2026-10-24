@@ -1,0 +1,42 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_044.json",
+  "original_log_sha256": "e45cdefc0457a08fd4d9ff0ff9be3104a4ab85794cf1449a2ddea24229f7270d",
+  "original_log_bytes": 32764,
+  "queries": [
+    "Elex Polytech \"2-24-F102\" manual communication software GitHub",
+    "Elex Polytech \"20.000 kN\" manual communication software GitHub",
+    "Guangzhou Zhilitong Electromechanical \"ZLT-JDW1\" manual communication software GitHub",
+    "Guangzhou Zhilitong Electromechanical \"ZLT-JDW1R\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://fireinspect.hr/o-nama/",
+    "https://fireinspect.hr/wp-content/uploads/2022/04/OVLASTENJE-ELEX-d.o.o..pdf",
+    "https://gala-software.croatia.biz/",
+    "https://ru.made-in-china.com/video-channel/zhilitong_mSZJtsuVfoWF_Power-Cord-Roations-Tester-of-IEC-60335-2-3-Testing-Equipment.html",
+    "https://www.bossgoo.com/product-detail/iec60335-1-fig-8-flexing-test-17570991.html",
+    "https://www.electricaltest.cn/product/iec60335-flexing-test-apparatus",
+    "https://www.electricaltest.com.cn/ce-certificate-for-glow-wire-tester-_n31",
+    "https://www.electricaltest.com.cn/ce-certificate-for-inclined-plane-device_n41",
+    "https://www.electricaltest.com.cn/ce-certificate-for-needle-flame-burner-_n32",
+    "https://www.electricaltest.com.cn/completed-flexible-cables-static-flexibility-tester-for-iec60245-2_p206.html",
+    "https://www.electricaltest.com.cn/hot-wire-lgnition-glow-wire-annealing-apparatus_sp_2",
+    "https://www.electricaltest.com.cn/iec-60335-1-testing-machine_sp_4",
+    "https://www.electricaltest.com.cn/iec-60335-flexibility-test-machine_sp_6",
+    "https://www.electricaltest.com.cn/iec-60335-power-cord-flexibility-tester_p44.html",
+    "https://www.electricaltest.com.cn/power-cord-testing-machine_c3",
+    "https://www.made-in-china.com/video-channel/zhilitong_YvdQCFHKEGcJ_Cable-Flexing-Test-Apparatus-for-IEC-60335-1-Testing-Equipment.html",
+    "https://www.made-in-china.com/video-channel/zhilitong_pKxQlIbusghD_Flexing-Test-Apparatus-for-IEC60335-Figure-8-Testing-Machine.html",
+    "https://www.sfyh.com/power-cord-flexibility-testing-equipment_t202774",
+    "https://zhilitong.en.made-in-china.com/product/ZKiEreLDHzhT/China-IEC60335-1-Figure-8-Testing-Equipment-for-Product-Safety.html",
+    "https://zhilitong.en.made-in-china.com/product/jXImWVvGEYky/China-Power-Cord-Flexibility-Testing-Equipment-for-IEC60335-1-25-14-Figure-8-Tester.html",
+    "https://zhilitong.en.made-in-china.com/product/mSZJtsuVfoWF/China-Power-Cord-Roations-Tester-of-IEC-60335-2-3-Testing-Equipment.html",
+    "https://zhilitong.en.made-in-china.com/product/oSCJMObUEgVE/China-Power-Cord-Flexing-Test-Machine-for-IEC-60335-1-Figure-8-Testing-Equipment.html",
+    "https://zhilitong.en.made-in-china.com/product/qKHQyrTxalcD/China-Swivel-Connection-Test-Apparatus-for-IEC60335-2-23-Testing-Equipment.html",
+    "https://zhilitong.en.made-in-china.com/product/rKonENGOneVb/China-Apparatus-for-Cord-Flexing-Test-of-UL1017-Test-Machine.html",
+    "https://zhilitong.en.made-in-china.com/product/uvCEeSbGbgWm/China-Flexibility-Test-Machine-for-IEC60335-Figure-8-Testing-Equipment.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

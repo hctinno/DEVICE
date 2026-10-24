@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_314.json",
+  "original_log_sha256": "33e6995c39f2e01c747017c51b3f7d2ac4f8353fa96471097af8b442f1d14738",
+  "original_log_bytes": 34462,
+  "queries": [
+    "Voltech PM6000 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.voltech.com/downloadfiles/ma",
+    "https://device.report/m/3f3a5acb5afde4228e130de12118d54b829f9795a6102150cf38f2b03e57427d",
+    "https://device.report/voltech",
+    "https://manuals.plus/m/44e7b47bc91edf1633d3422864f8dca2cae3b0c2294b0713bc96179cc4cfefe0",
+    "https://manuals.plus/m/73f7aafb10bb9455496a77593c8ad868de408b78e75426f64f89ab27decde314",
+    "https://manualzz.com/doc/34943482/voltech-pm6000-power-analyzer-user-manual",
+    "https://www.adinstruments.es/WebRoot/StoreLES/Shops/62688782/6747/58D4/7914/F8E6/3189/0A0C/6D0B/66D8/voltech-pm6000-power-analyzer-user-manual.pdf",
+    "https://www.avalontest.com/pm6000-power-analyzer",
+    "https://www.caltest.co.uk/",
+    "https://www.manuallib.com/file/voltech-pm6000-quick-start-guide/",
+    "https://www.scribd.com/document/761550669/voltech-pm6000-power-analyzer-user-manual",
+    "https://www.voltech.com.cn/media/8d8595b24b2d21b/pm6-iec-software-manual-v4-0.pdf",
+    "https://www.voltech.com.cn/media/8d8595b272744b6/pm6-user-manual-v20.pdf",
+    "https://www.voltech.com/cn/%E6%94%AF%E6%8C%81/pm-%E5%8A%9F%E7%8E%87%E5%88%86%E6%9E%90%E4%BB%AA%E6%97%A7%E7%89%88%E6%94%AF%E6%8C%81/",
+    "https://www.voltech.com/media/8d8595b0424ca58/pm3000ce-iec-software-manaul-v7-0.pdf",
+    "https://www.voltech.com/media/8d8595b272744b6/pm6-user-manual-v20.pdf",
+    "https://www.voltech.com/support/",
+    "https://www.voltech.com/support/downloads/",
+    "https://www.voltech.com/support/pm-power-analyser-legacy-support/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

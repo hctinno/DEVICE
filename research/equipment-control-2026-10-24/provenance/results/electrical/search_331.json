@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_331.json",
+  "original_log_sha256": "18310ff06d37525179cb1c64c54b112f56698e135a858f58816901517582630d",
+  "original_log_bytes": 27325,
+  "queries": [
+    "EM TEST ACS 500N6 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://accelonix.nl/product/emc-rf/programmable-ac-dc-power-sources/single-phase/emtest-acs-500n6/",
+    "https://accelonix.nl/wp-content/uploads/ACS500N6.pdf",
+    "https://en.excen-tech.com/oscillatory-wave-simulator-ocs-500n6-oscillatory-wave-simulator.html",
+    "https://manuals.plus/m/c0c86f18a4b5ef1628cb69e8d47d055d60067a980ba2e1b688f20c928f826dae",
+    "https://maximinstruments.com/products/em_test_acs_500n6_single_phase_ac_voltage_source_6_kva",
+    "https://maximinstruments.com/products/em_test_ocs_500n6_oscillatory_wave_simulator_en_iec_61000_4_12_4_18",
+    "https://www.ametek-cts.com/-/media/ametekcts/documents/quick-start-guide/quick-start-and-safety-single-pulse-generators-e-v110_en.pdf?hash=75AAEE96D84EF5ECCD7298E1E2389DAE&la=en&revision=83fd0684-3ff5-4ce0-bcc1-74e00fd94e4d",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/archive/data_sheet_acs_500n6_20080616.pdf?la=en&revision=95b0e20c-33db-4aaf-a6f9-4aa9b48a2031",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/em-test/acs_500n_series_datasheet_2022-11-11_en.pdf?la=en&revision=ee3997b4-2444-47d4-8765-9517d29c2d8e",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/em-test/acs_500n_series_datasheet_2024-12-13_en.pdf?la=en&revision=eebbe3ae-303b-4725-a043-7be5fe63ac85",
+    "https://www.ametek-cts.com/support/software-updates",
+    "https://www.manualsdir.com/manuals/318276/atec-em-test-dpa500n.html?page=2",
+    "https://www.manualslib.com/manual/2925609/Ametek-Ocs-500n6-Series.html",
+    "https://www.manualslib.com/manual/2925609/Ametek-Ocs-500n6-Series.html?page=16",
+    "https://www.manualslib.com/manual/2925609/Ametek-Ocs-500n6-Series.html?page=21",
+    "https://www.manualslib.com/manual/2925609/Ametek-Ocs-500n6-Series.html?page=54",
+    "https://www.maximinstruments.com/products/em_test_vss_500n6_voltage_surge_generator_1_2_50us___6kv",
+    "https://www.testunlimited.com/pdf/EMTest_ACS500N6_Datasheet.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

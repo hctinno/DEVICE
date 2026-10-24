@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_012.json",
+  "original_log_sha256": "cbe1e1f24f5a1c819b9611e745eaa4bc8904c380e8c2d2f626d87b44d2ba8e08",
+  "original_log_bytes": 32218,
+  "queries": [
+    "ENEX SCIENCE \"EN-HOF-150S\" manual communication software GitHub",
+    "ENEX SCIENCE \"EN-SFO-704\" manual communication software GitHub",
+    "ESPEC \"TSD-101-W\" manual communication software GitHub",
+    "Weiss Technik \"CWK240/40-150\" manual communication software GitHub"
+  ],
+  "discovered_urls": [
+    "https://2026.espec.com/na/products/family/tsd_thermal_shock/",
+    "https://5.imimg.com/data5/SELLER/Doc/2024/4/411034498/PV/UW/UN/50347617/espec-tsd-medium-thermal-shock-chambers.pdf",
+    "https://espec.co.th/en/news/detail?id=110",
+    "https://espec.co.th/en/testing/tsd-101-w",
+    "https://espec.com/na/products/compare_thermal_shock/210/231/index.html",
+    "https://espec.com/na/products/compare_thermal_shock/231/222/",
+    "https://espec.com/na/products/compare_thermal_shock/231/465/",
+    "https://espec.com/na/products/compare_thermal_shock/231/index.html",
+    "https://espec.com/na/products/family/tsd_thermal_shock",
+    "https://espec.com/na/products/model/tsd_100",
+    "https://tnf.ime.tsinghua.edu.cn/info/1350/1282.htm",
+    "https://www.espec.co.jp/english/inquiry/catalog/tsdtse.pdf",
+    "https://www.espec.co.jp/english/products/catalog/tsdtse.pdf",
+    "https://www.espec.co.jp/english/products/env-test/tsa/",
+    "https://www.labwrench.com/equipment/31551/espec-tsd-medium-thermal-shock-chambers"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

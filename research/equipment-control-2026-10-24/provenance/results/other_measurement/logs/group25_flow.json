@@ -1,0 +1,25 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/group25_flow.json",
+  "original_log_sha256": "d6673fb708856ed08a60f4acb65ba45e34d7966c6048a13903b1df3c03b0f8b4",
+  "original_log_bytes": 20374,
+  "queries": [
+    "\"JER-32\" flow meter manual",
+    "\"JTE32A\" flow meter",
+    "\"KP-35B3\" \"Z530\" pressure thickness",
+    "\"MJM482\" pressure meter"
+  ],
+  "discovered_urls": [
+    "https://checkrego.com.au/rego/AAA000/MJM",
+    "https://ftp.dwer.wa.gov.au/permit/10212/CPS%2010212-1%20Ecologia%20%282012%29%20Pityrodia%20sp.%20Marble%20Bar%20Targeted%20Flora%20Survey.pdf",
+    "https://ftp.dwer.wa.gov.au/permit/10212/CPS%2010212-1%20Ecologia%20%282016%29%20Iron%20Bridge%20North%20Star%20Stage%202%20Pityrodia%20sp.%20Marble%20Bar%20Regional%20Survey%202015.pdf",
+    "https://regarchive.com/oldplate/MJM",
+    "https://studylib.net/doc/28458468/hyundai-bandw-l28-32h---instruction-book",
+    "https://www.engineering.txst.edu/senior-design/prior-events/2023-fall/sdd-fall-2023/m1-01.html",
+    "https://www.evergreen.txst.edu/scholars.html",
+    "https://www.karnbibeln.se/interlinear/?book=24&chapter=32&verse=22"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

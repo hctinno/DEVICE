@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/motion_switch/logs/batch_052.json",
+  "original_log_sha256": "841d7ad5a0be806521b65326e9ef6fe498e3e3c19ba516385e22db551ffe2ade",
+  "original_log_bytes": 24965,
+  "queries": [
+    "HCT \"INPUT2 + 6GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT2 + 7GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT3 + 1GHz HPF + LNA\" manual programming driver API GitHub",
+    "HCT \"INPUT3 + LNA\" manual programming driver API GitHub"
+  ],
+  "discovered_urls": [
+    "https://bbs.archlinux.org/viewtopic.php?id=212427",
+    "https://bdm.unb.br/bitstream/10483/1426/1/2010_BrenoNascimento.pdf",
+    "https://codeby.net/threads/ne-mogu-otkatit-sya-yadro-linux-5-20-na-4-19-na-kali.69456/",
+    "https://doczz.net/doc/1066524/milestones---imca-electronics",
+    "https://forum.arduino.cc/t/dev-ttyusb0-port-option-greyed-out/1294111",
+    "https://forum.iobroker.net/topic/13687/cc2531-im-iobroker-mit-mqtt-einbinden",
+    "https://forums.openpli.org/topic/22290-new-it913x-drivers-not-working-in-new-kernel-with-et9000/page-3",
+    "https://linuxmint.com.ru/viewtopic.php?t=3361",
+    "https://manuals.plus/m/7258bd211f48cb4511521250e8409aed9b637e25194ca6437becd339808d0d62",
+    "https://manuals.plus/m/a5825fbf59ddb5984158af28fdb268a11225528625f5e86cc82904dbde41246f.pdf",
+    "https://manualzz.com/doc/29339380/kenwood-tk-8102-uhf-fm-transceiver-service-manual",
+    "https://manuelutilisateur.fr/samsung/tv/sp-65w3hf/user-manual/2dcf6",
+    "https://patents.google.com/patent/CN111431525A/zh",
+    "https://www.manualsdir.com/manuals/761350/comtech-ef-data-hpcst-5000.html?page=133",
+    "https://www.mouser.com/datasheet/2/382/data_sheet___312_series_gps_lna-3324421.pdf?srsltid=AfmBOop80veyndQ03i2th8YihB7_Oby41ZOn1fZI3BxhIe0gb9xgVAj9",
+    "https://www.vivaolinux.com.br/topico/Iniciantes-no-Linux/Ubuntu16044-muito-lento-no-boot/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

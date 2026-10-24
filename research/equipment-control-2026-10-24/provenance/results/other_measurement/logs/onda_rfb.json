@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/onda_rfb.json",
+  "original_log_sha256": "59312b82d29939a3256e4e6228702c291e55489a700bab8dde6356ce7700fa1d",
+  "original_log_bytes": 28737,
+  "queries": [
+    "Onda \"RFB-2000\" manual interface",
+    "site:github.com Onda RFB2000"
+  ],
+  "discovered_urls": [
+    "https://accelonix.nl/wp-content/uploads/Teseq_RF_Switch_network_high_power.pdf",
+    "https://afsumb2024.org/file/AFSUMB%202024_Abstract%20Book.pdf",
+    "https://gbrems.gbtp.or.kr/equip/equipDetail/874",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11418290/",
+    "https://sv.svsamford.com/34_onda",
+    "https://sv.svsamford.com/img/cms/Onda_RFB-2000_DataSheet%20%28chinese%29.pdf",
+    "https://valuetronics.com/collections/manufacturers-schaffner/products/rfb-2000-schaffner-interface-used",
+    "https://www.511718.com/p-10743.html",
+    "https://www.daara.co.kr/sell/s_view.php?no=1085152",
+    "https://www.dris.or.kr/equip/equipDetail/1505",
+    "https://www.ebay.com/p/2328875398",
+    "https://www.medical-xprt.com/products/application-ultrasound-measurement-instrumentation-solutions-for-physiotherapy-sector-medical-health-care",
+    "https://www.medical-xprt.com/products/onda-model-rfb-2000-radiation-force-balance-677951",
+    "https://www.ondacorp.com/images/brochures/Onda_RFB-2000_DataSheet.pdf",
+    "https://www.ondacorp.com/radiation-force/",
+    "https://www.ondacorp.com/wp-content/uploads/2020/10/ISTU09_Howardetal.pdf",
+    "https://www.ondacorp.com/wp-content/uploads/2024/11/onda-corporation-cal-L24-744-AC.pdf",
+    "https://www.profmbroadcast.com/product/sielco-rfb2000gx-fm-amplifier-2000-watts/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

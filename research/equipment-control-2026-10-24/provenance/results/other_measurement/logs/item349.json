@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item349.json",
+  "original_log_sha256": "3d8c2c0c12fd0792f5d51f80a1370f3d33e612283b7d4a198c4c6467f6ce3004",
+  "original_log_bytes": 8200,
+  "queries": [
+    "Elex Polytech \"F335-22-109\" software interface manual",
+    "site:github.com \"F335-22-109\" Elex Polytech"
+  ],
+  "discovered_urls": [
+    "https://de.scribd.com/document/945736477/Shift04-Www-rjexamresults-com",
+    "https://www.led-marine.org/pdf/led_brochure.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

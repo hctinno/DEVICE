@@ -1,0 +1,18 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/cas_followup142.json",
+  "original_log_sha256": "9e908367ea6ed37fe1258b93e64f0423fc605e1e07f349e8d872e44a4257469a",
+  "original_log_bytes": 13295,
+  "queries": [
+    "CAS \"CASTONII PLUS-EB\" manual RS232 interface",
+    "site:github.com CAS \"CASTONII PLUS-EB\""
+  ],
+  "discovered_urls": [
+    "https://axel.as-1.co.jp/asone/d/55-5482-95/",
+    "https://axel.as-1.co.jp/asone/d/55-5482-98/",
+    "https://axel.as-1.co.jp/asone/d/55-5483-33/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

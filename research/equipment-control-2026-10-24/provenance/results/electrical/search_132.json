@@ -1,0 +1,31 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_132.json",
+  "original_log_sha256": "a2532940d142807d19cd8ba3f5793be2235598261210e0da6ba4a7a6d1ad623b",
+  "original_log_bytes": 34221,
+  "queries": [
+    "NDE RPS 305 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://aprenderly.com/doc/1453424/sistema-de-configuraci%C3%B3n-desde-pc",
+    "https://commerce.boschsecurity.com/sgx/en/Remote-Programming-Software/p/2595124747/?goto=Downloads",
+    "https://commerce.keenfinity.tech/gb/en/Intrusion-Software/c/20954174603",
+    "https://commerce.keenfinity.tech/sg/en/Software/c/147669408779?q=%3A%3A%3Adefault&viewLayout=grid",
+    "https://commerce.radionix.com/xl/en/Remote-Programming-Software/p/2595124747/?goto=Downloads",
+    "https://commerce.radionix.com/xl/en/Software/c/147669408779",
+    "https://interelectronic.eu/uploads/files/rps_catalog_h.pdf",
+    "https://knowledge.keenfinity-group.com/intrusion-alarm-systems/article/how-to-backup-remote-programming-software-and-the-",
+    "https://knowledge.keenfinity-group.com/intrusion-alarm-systems/article/how-to-correct-remote-programming-software-fails-t",
+    "https://knowledge.keenfinity-group.com/intrusion-alarm-systems/article/remote-programming-software",
+    "https://knowledge.keenfinity-group.com/search.html?l=en&max=10&ol=&q=How-to-troubleshoot-Database-Connection-Failed-error-when",
+    "https://manuals.plus/m/cd22d2bfc1752106b07a507496c2b02f044c08577d668de664abc51c2a8073d7.pdf",
+    "https://studylib.es/doc/6302901/sistema-de-configuraci%C3%B3n-desde-pc",
+    "https://www.elettrotestspa.it/exe/62000582.pdf",
+    "https://www.icpdas-usa.com/documents/RPS_Series_usermanual_en.pdf",
+    "https://www.scribd.com/document/277348742/RPS-InGuide-Installation-Manual",
+    "https://www.scribd.com/document/771260092/BSYB5512-NOTICE-1"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_263.json",
+  "original_log_sha256": "c9b3fcf5487df2be7a0a099064decaeb5d7dd561339d147646676353ed52133c",
+  "original_log_bytes": 26830,
+  "queries": [
+    "T.E.C.C TBCDS-1010-PSU manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/95441ed58833f801f95faa332b5e06d3fdee691bd31486b3b4a278efe67ca3fc",
+    "https://device.report/m/f691f5c4c72766983c37c75ee2d9169ffe246a617fe540efa2072230cbe576c5",
+    "https://kb.guidantmeasurement.com/MS-Tech/mn06315.pdf",
+    "https://kb.guidantmeasurement.com/MS-Tech/mn06317.pdf",
+    "https://manuals.plus/m/3640a88aefaf2e4bcfe1cabc99de2dca6c4e07873fcb67a4114c7e0e471596bd",
+    "https://manualzz.com/doc/26986274/contrec-1010-a-bay-load-controller-reference-manual",
+    "https://nice-power.com.cn/Download",
+    "https://paperzz.com/doc/8519454/tct101-2abc-manual",
+    "https://studylib.net/doc/18907600/manual",
+    "https://tecsystem.it/docs/2023/img_cd5d766c4f.pdf",
+    "https://w.technovision.com/images/teccd_manual.pdf",
+    "https://www.manuallib.com/file/3175705/",
+    "https://www.manualslib.com/manual/1544571/Teledyne-Thcd-101.html?page=17",
+    "https://www.manualslib.com/manual/1544571/Teledyne-Thcd-101.html?page=20",
+    "https://www.scribd.com/document/763498535/PSU-Programming-Manual-en-Rev1-7-220513-1",
+    "https://www.tempco.com/Products/Temperature-Control/TEC-Temperature-Controllers-and-Accessories/Data-Communication-Accessories-Software.htm",
+    "https://www.tempco.com/Tempco/Resources/User-Manuals/TEC-Manuals/TBC-41.pdf",
+    "https://www.timeelectronics.com/assets/upload/download_centre/documents/1010-user-manual.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

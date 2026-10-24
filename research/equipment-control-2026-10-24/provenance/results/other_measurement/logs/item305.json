@@ -1,0 +1,25 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item305.json",
+  "original_log_sha256": "b1e154111bf9dfb0f878a9b5532c13b90580fdc940cf7f8776b6dfd8f6337f48",
+  "original_log_bytes": 14455,
+  "queries": [
+    "Whaleteq \"HFPA 150\" software interface manual",
+    "site:github.com \"HFPA 150\" Whaleteq"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/3a953aeda79b95a1cd49eb3acda6d5fd4b91a424c1dbc39b3fa206caf78d96b7",
+    "https://device.report/m/f61bf263f17cc9a221b850a36979a46b3623678df78c8297fb70b2274eb58e22.pdf",
+    "https://device.report/whaleteq/HFPA150",
+    "https://gist.github.com/Cyc-Evelyn/703efde417d63a75438602cbb3682554",
+    "https://mscn7training.com/TrainingDocs/Course%20Materials/MSC%20Competency/NAVSEA%20Backfit%20RCM%20Certification/Course%20Handouts/Completed%20Examples/4.%20SCBA%20BACS/3.%20Phase%202%20-%20SCBA-BACS%20%285519A%29%20FFA.pdf",
+    "https://trea.com/information/home-flood-prevention-appliance-system/patentapplication/bac59d3c-fec0-4e34-ac91-1d2e91f3b2f5",
+    "https://www.qsl.net/w2aew/youtube/ManHFPAV4.20454748.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/1671674060808330933.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/esu_accessories_testing/hfpa150/manual/um_hfpa150_sc_210618.pdf",
+    "https://www.whaleteq.com/data/gdownload/files/esu_accessories_testing/hfpa150/manual/um_hfpa150_tc_210618.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

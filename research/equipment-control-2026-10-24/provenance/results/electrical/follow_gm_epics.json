@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_gm_epics.json",
+  "original_log_sha256": "94fd56147e96af4ce35da0096d06555c6e60b06b91d61df35babb383356d953f",
+  "original_log_bytes": 34362,
+  "queries": [
+    "Yokogawa GM10 GitHub Yokogawa_DAS"
+  ],
+  "discovered_urls": [
+    "http://creativecommons.org/publicdomain/zero/1.0/",
+    "http://unlicense.org/",
+    "https://cdn.tmi.yokogawa.com/11/2971/files/GS04L55B01-01EN_180_Data%20Acquisition%20System%20GM%20_GM10%2C%20GM90MB%2C%20GM90PS_%20General%20Specifications.pdf",
+    "https://cdn.tmi.yokogawa.com/2/2633/files/GM10_Data_Acquisition_System_SMARTDAC_Yokogawa_Test_Measurement_GS04L55B01-01EN.pdf",
+    "https://de.mathworks.com/matlabcentral/fileexchange/68933-yokogawa-gm10-communication-interface",
+    "https://epics-modules.github.io/",
+    "https://epics-modules.github.io/Yokogawa_DAS/",
+    "https://epics-modules.github.io/Yokogawa_DAS/GM10Doc.html",
+    "https://web-material3.yokogawa.com/IM04L55B01-01EN.pdf",
+    "https://web-material3.yokogawa.com/IM04L61B01-11EN.pdf",
+    "https://www.electro-meters.com/wp-content/uploads/pdf/yokogawa/GS04L65B01-01EN.pdf",
+    "https://www.techeyesonline.com/measuring-device/detail/HINCD-00339-GM10/",
+    "https://www.yokogawa.com/ca/solutions/products-and-services/measurement/data-acquisition-products/data-logger/modular-gm10/",
+    "https://www.yokogawa.com/cn/solutions/products-and-services/measurement/data-acquisition-products/data-logger/modular-gm10/",
+    "https://www.yokogawa.com/de/solutions/products-and-services/measurement/data-acquisition-products/data-logger/modular-gm10/",
+    "https://www.yokogawa.com/id/solutions/products-and-services/measurement/data-acquisition-products/data-logger/modular-gm10/",
+    "https://www.yokogawa.com/kr/solutions/products-and-services/measurement/data-acquisition-products/data-logger/modular-gm10/",
+    "https://www.yokogawa.com/pl/solutions/products-and-services/measurement/data-acquisition-products/data-logger/modular-gm10/",
+    "https://www.yokogawa.com/za/solutions/products-and-services/measurement/data-acquisition-products/data-logger/modular-gm10/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

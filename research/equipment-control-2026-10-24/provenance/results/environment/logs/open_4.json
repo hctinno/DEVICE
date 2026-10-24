@@ -1,0 +1,17 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/open_4.json",
+  "original_log_sha256": "2a0007f78420f63cc1588877466389f52ff75cb15d83e32a3d6335e12d8a73c4",
+  "original_log_bytes": 24070,
+  "queries": [],
+  "discovered_urls": [
+    "https://backend.weiss-technik.com/webapp/weisstechnik/products/heat-technology/industrial-laboratory-ovens-voetschoven-lab/weisstechnik-Industrial-Laboratory-Ovens-EN.pdf",
+    "https://backend.weiss-technik.com/webapp/weisstechnik/products/heat-technology/industrial-laboratory-ovens-voetschoven-lab/weisstechnik-Industrial-Laboratory-Ovens-EN.pdf:",
+    "https://dooilchiller.com/bbs/board.php?bo_table=product&wr_id=18",
+    "https://svantek.com/wp-content/uploads/2023/01/SVAN958A-Man.EN_v.1.02_2023-03-03.pdf",
+    "https://www.kyongin.co.kr/prod01/37?sca=Flow+Monitor"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

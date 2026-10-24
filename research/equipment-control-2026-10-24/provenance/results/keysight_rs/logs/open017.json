@@ -1,0 +1,14 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/keysight_rs/logs/open017.json",
+  "original_log_sha256": "9d8375f1ce798e12209720afd2f0411b3c471dca9eb70818fbc5aa3b25b389e4",
+  "original_log_bytes": 690,
+  "queries": [],
+  "discovered_urls": [
+    "https://www.co.rohde-schwarz.com/us/products/test-and-measurement/preamplifier/rs-escu-enhanced-signal-conditioning-unit_334229.html",
+    "https://www.co.rohde-schwarz.com/us/products/test-and-measurement/preamplifier/rs-escu-enhanced-signal-conditioning-unit_334229.html:"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

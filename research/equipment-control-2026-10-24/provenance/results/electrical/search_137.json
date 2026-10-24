@@ -1,0 +1,32 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_137.json",
+  "original_log_sha256": "9edf379dd29eae480bc1c76a8725989b704321c0001133d7c60fe4fcc666de21",
+  "original_log_bytes": 33474,
+  "queries": [
+    "Sartorius Lab Instruments GmbH & Co KG MPS 6.6S manual programming software"
+  ],
+  "discovered_urls": [
+    "https://api.sartorius.com/document-hub/dam/download/25879/Electronic-Pipetting-Controller-Midi-Plus-User-Manual-en-Sartorius.pdf",
+    "https://datasheets.globalspec.com/ds/sartorius-lab-instruments-kg/msa6-6s-000-df/2a20b7fa-345e-4e69-a25b-26f1951ad57f",
+    "https://datasheets.globalspec.com/ds/sartorius-lab-instruments-kg/msa6-6s-000-dm/900a1b8b-1552-4170-8fb4-6e69ab4fdc50",
+    "https://datasheets.globalspec.com/ds/sartorius-lab-instruments-kg/msa6-6s-0tr-dm/77de0925-1060-400f-901a-33a332791b9c",
+    "https://device.report/m/cf87a4c478bead7c7427f63f3f064df84b843888fb8fd409d00a2cc5f25c14d5.pdf",
+    "https://mail.oei-analitika.ru/kurilka/si_type_info.php?si_type_id=384994",
+    "https://manualzz.com/doc/61279772/sartorius-cubis-mps-quick-reference-manual",
+    "https://shop.sartorius.com/medias/Manual-PMA-Management-Software.pdf?context=bWFzdGVyfGRvY3VtZW50c3wzMTk0MTJ8YXBwbGljYXRpb24vcGRmfGFEUXpMMmd4TUM4NU5qSXhPVEV4TnprM056a3d8MmZiM2JiZmRjYjlkYTY4NTY5YTczNGQ3YTVkMDhjNTMzODA2MDFhMjljMjIxZWM2N2FiMjkxMWZmMzYwY2FlZQ",
+    "https://shop.sartorius.com/shop/medias/-usermanual-en-Manual-Sartolab-MultiStation-WYS6108-e190601.pdf?attachment=true&context=bWFzdGVyfGRvY3VtZW50c3w0ODU2ODh8YXBwbGljYXRpb24vcGRmfGRvY3VtZW50cy9oZWUvaDgzLzg4NjY1NTQzODAzMTgucGRmfDcxMWZiOTVlYjYwY2EzMzEzMjcyNGFlZTRlOTQyYTJiOTdmYmY0NTcyZTI3MjZlOGVmYjhhYzQ0M2MxMWVhNjA",
+    "https://www.dataweigh.com/device/sartorius-lab/cubis/cubis-mps-pipette-calibrator/mps66s",
+    "https://www.manualslib.com/manual/1242122/Sartorius-Msa6-6s.html",
+    "https://www.manualslib.com/manual/1242122/Sartorius-Msa6-6s.html?page=157",
+    "https://www.manualslib.com/manual/1310285/Sartorius-Cubis-Mps.html",
+    "https://www.manualslib.de/manual/106905/Sartorius-Cubis-Mps-Serie.html",
+    "https://www.manualslib.de/manual/453202/sartorius-cubis-mps.html",
+    "https://www.sartorius.com/download/1225488/cubis-mps6-6s-datasheet-en-l-sartorius-pdf-21149--data.pdf",
+    "https://www.sartorius.com/en/products/weighing/laboratory-balances/accessories/software",
+    "https://www.sartorius.com/resource/blob/1225488/d800d6f853fa7a955bf64788b4e1ab63/cubis-mps6-6s-datasheet-en-l-sartorius-pdf-21149--data.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

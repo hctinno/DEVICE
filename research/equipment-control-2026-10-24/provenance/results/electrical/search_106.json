@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_106.json",
+  "original_log_sha256": "9388f4d975ca87203819b56b3215526029b110b0631df4ca93328ad36b54516f",
+  "original_log_bytes": 25893,
+  "queries": [
+    "CHROMA 63804 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://assets.testequity.com/te1/Documents/pdf/chroma-test-measurement-catalog.pdf",
+    "https://atec.manymanuals.com/equipment/chroma-63800-series/user-manual-40734/5",
+    "https://instrumentcenter.se/20.0.0.1/11033/6b6841d392ec97db3d7048b7adfb5db7.pdf",
+    "https://manualzz.com/doc/12084238/chroma-63800-series-electronic-load-user-manual",
+    "https://manualzz.com/doc/32071947/chroma-63800-63802--63803--63804-programmable-electronic-",
+    "https://manualzz.com/doc/56166585/chroma-63802--63803--63804-operation-and-programming-manual",
+    "https://manualzz.com/doc/html/56166585/chroma-63802--63803--63804-operation-and-programming-manual",
+    "https://manualzz.com/doc/o/1nxkpe/chroma-63802--63803--63804-operation-and-programming-manual-installation",
+    "https://manuzoid.com/manuals/Jvq1X-Chroma%2063802%20Operation%20%26%20Programming%20Manual",
+    "https://www.adeptor.no/media/multicase/documents/chroma/63800-en.pdf",
+    "https://www.chromausa.com/pdf/Br-63800-dcload-052014.pdf",
+    "https://www.chromausa.com/product/programmable-ac-electronic-load-63800/",
+    "https://www.chromausa.com/support/user-manuals/",
+    "https://www.manualslib.com/brand/chroma/test-equipment.html",
+    "https://www.manualslib.com/manual/1611573/Chroma-63800-Series.html",
+    "https://www.manualslib.com/products/Chroma-63804-10497395.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

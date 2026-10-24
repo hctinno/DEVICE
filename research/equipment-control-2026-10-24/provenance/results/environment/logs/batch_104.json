@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/environment/logs/batch_104.json",
+  "original_log_sha256": "04098beb19a722b76628f321e2b6f867d897c96e97ae2eef906ed9e69bed48d0",
+  "original_log_bytes": 32898,
+  "queries": [
+    "Kingpo \"57HS276-40A4-003\" Speed motor for Automatic scratch tester",
+    "Kingpo \"KP-DH01\" kettle insert-withdraw endurance test device",
+    "Kingpo \"KP-EI02\" Electric iron insert and withdraw endurance tester",
+    "Kingpo \"KP-EID01\" Drop test apparatus"
+  ],
+  "discovered_urls": [
+    "https://citeseerx.ist.psu.edu/document?doi=fdf84aa4510130276e80695e6e7e22e490d3c765&repid=rep1&type=pdf",
+    "https://en.nbd.ltd/trader/info/20CO0000000900741983",
+    "https://imperialmetals.com/assets/docs/2015-11-03-TSF-Life-of-Mine-Feasibility-Design-Golder.pdf",
+    "https://patentimages.storage.googleapis.com/7c/1d/d7/2560d87666dc3a/JP2014517120A.pdf",
+    "https://resistancezero.com/changelog.html",
+    "https://www.batterytestingmachine.com/sale-11595227-iec60335-2-3-clause-21-101-electric-iron-drop-tester-checking-mechanical-strength-of-electric-irons.html",
+    "https://www.batterytestingmachine.com/sale-53083432-iec60335-2-3-clause-21-101-electric-iron-drop-tester-with-40mm-drop-height-and-300000-mechanical-ser.html",
+    "https://www.chinax.com/batterytestingmachine/pz76f2d4b-iec60335-2-3-clause-21-101-electric-iron-drop-tester-electric-iron-safety-durability-testing.html",
+    "https://www.chinax.com/search-iron-40mm-keyed-alike-padlocks",
+    "https://www.chinax.com/search-ycs-101-stationary-electricity",
+    "https://www.ecer.com/china-food-service-equipment/page13.html",
+    "https://www.theseus.fi/bitstream/10024/95679/1/Suikkanen_Jani.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_309.json",
+  "original_log_sha256": "a2a7b96d6052b671649aadf932be28101be7f697e4fda64e4b02e29c8517e086",
+  "original_log_bytes": 35052,
+  "queries": [
+    "SIMPSON 228 manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.simpsonelectric.com",
+    "https://assets.tequipment.net/assets/1/26/Simpson_228_Manual.pdf",
+    "https://manuals.plus/m/982d593661131378dcd36324e1a68ff4c26494275a87ce44ed4c0d5aaa198d07",
+    "https://manuzoid.com/manuals/b2M69-Simpson%20228%20User%20manual",
+    "https://manuzoid.com/manuals/dBMO1-Simpson%20228%20Instruction%20manual",
+    "https://manuzoid.com/manuals/dBMO1-Simpson%20228%20User%20manual",
+    "https://simpson260.com/downloads/simpson_228_user_manual-2004.pdf",
+    "https://simpsonelectric.com/faqs-downloads/manuals-pdf/",
+    "https://simpsonelectric.com/technical-support/operators-manuals/",
+    "https://simpsonelectric.com/wp-content/uploads/File/228_manual.pdf",
+    "https://www.manualslib.com/manual/1633761/Simpson-228.html",
+    "https://www.manualslib.com/products/Simpson-228-3773026.html",
+    "https://www.ntecusa.com/product/dsp_unitDetails.cfm?cat=Meters&model=Simpson-228&productID=D1856096E94B378B31C145FCFC339418&type=Test-Equipment-Sales",
+    "https://www.opweb.de/de/hersteller/simpson/228",
+    "https://www.silca.biz/en/global/products/subaru-ad-software",
+    "https://www.simpson260.com/downloads/downloads-2.htm"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

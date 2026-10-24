@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/follow_elitech_code.json",
+  "original_log_sha256": "3d99af1dd9e50bd630f564ea3a9cc49b57cd93a4adf1ade47f83ef639d75ebae",
+  "original_log_bytes": 28339,
+  "queries": [
+    "site:github.com Elitech RC-4HC"
+  ],
+  "discovered_urls": [
+    "http://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx",
+    "http://{IP",
+    "https://blog.sengotta.net/signed-mac-os-driver-for-winchiphead-ch340-serial-bridge/",
+    "https://github.com/NathanBaulch/ElitechLogCLI",
+    "https://github.com/RFOXgithub/warehouse-stock-management-laravel-vue",
+    "https://github.com/braintapper/elitech-rcw-800-tcp-server",
+    "https://github.com/civic/elitech-datareader",
+    "https://github.com/civic/elitech-datareader/blob/master/README.md",
+    "https://github.com/civic/elitech-datareader/blob/master/example.py",
+    "https://github.com/civic/elitech-datareader/blob/master/rc-4-data.md",
+    "https://github.com/civic/elitech-datareader/issues/8",
+    "https://github.com/pasccom/python-elitech",
+    "https://github.com/scipy/scipy/issues/23445",
+    "https://github.com/tenderlove/itiscold",
+    "https://github.com/topics/elitech"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

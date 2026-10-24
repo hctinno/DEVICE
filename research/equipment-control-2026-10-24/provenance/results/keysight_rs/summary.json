@@ -1,0 +1,23 @@
+{
+  "items": 334,
+  "status": {
+    "family_source": 109,
+    "excluded_passive": 47,
+    "exact_source": 102,
+    "searched_no_public_control_source": 54,
+    "identity_unresolved": 8,
+    "needs_scope_review": 14
+  },
+  "scope": {
+    "included": 265,
+    "excluded_passive": 47,
+    "identity_unresolved": 8,
+    "needs_scope_review": 14
+  },
+  "not_searched": 0,
+  "source_code_rows": 55,
+  "exact_source_code_rows": 40,
+  "sources": 474,
+  "queries": 301,
+  "hardware_tested": false
+}

@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_243.json",
+  "original_log_sha256": "630c9b746c296cf7d40e477952dfda000fa49034861115a3aae2781a5f97ae29",
+  "original_log_bytes": 35393,
+  "queries": [
+    "EM TEST Netwave manual programming software"
+  ],
+  "discovered_urls": [
+    "http://www.emtest.com",
+    "https://2test.ru/solutions/proizvodstvo-radioelektroniki/kontrolno-izmeritelnye-pribory-kip-dlya-radioelektroniki/istochniki-pitaniya/multifunktsionalnyy-istochnik-pitaniya-postoyannogo-peremennogo-toka-em-test-netwave/",
+    "https://accelonix.nl/product/emc-rf/programmable-ac-dc-power-sources/three-phase/emtest-netwave-series-3-phase/",
+    "https://accelonix.nl/wp-content/uploads/EM-Test-UserManual-MFC1000_MFT30-100-E-V1.20.pdf",
+    "https://device.report/m/d0b04aa5c35a4b0db78f75c66b1d5455b5b517743b51eaa8bfb674246321b158",
+    "https://device.report/netwave",
+    "https://emtd-measurement.com/downloads/",
+    "https://en.excen-tech.com/products-emtest-automotive-emc-test-solutions-autowave.html",
+    "https://old.theemcshop.com/index.php?controller=attachment&id_attachment=112",
+    "https://transientspecialists.com/cdn/shop/files/User_Manual_DPA_4eaa28d3-9d17-4a81-80f5-6a25ea66222e.pdf?v=5409931688299573145",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/em-test/netwave-nwb_datasheet_2024-07-12_en.pdf?",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/em-test/netwave_7_3_datasheet_2024-12-13_en.pdf?la=en&revision=d5884b71-cf95-42b2-9554-283c593dddad",
+    "https://www.ametek-cts.com/-/media/ametekcts/importdata/documents/datasheets/em-test/netwave_90_series_datasheet_2024-12-13_en.pdf?la=en&revision=ff15ca3e-4283-4214-a7bb-7565e470395f",
+    "https://www.ametek-cts.com/support/software-updates",
+    "https://www.atecorp.com/products/em-test/netwave-1-phase",
+    "https://www.emci.ru/testg133.html",
+    "https://www.emci.ru/testg134.html",
+    "https://www.emctest.org/product/116.html",
+    "https://www.emtest-france.fr/logiciels",
+    "https://www.testunlimited.com/pdf/EMTest_NetWave3phase_Datasheet.pdf"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

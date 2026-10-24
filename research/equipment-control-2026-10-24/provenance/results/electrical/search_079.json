@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_079.json",
+  "original_log_sha256": "a4f5927647109f7e63211adec91a9068f4e739ccf2ffcc09039e90970b03c182",
+  "original_log_bytes": 19645,
+  "queries": [
+    "ITECH IT6642C-2250-100 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/642abd4bceea0311441d641a27adf0598c76abe1b930d49c28398d3d9480d458",
+    "https://geniuss.kr/download/?bmode=view&idx=170845707",
+    "https://usa.itechate.com/uploadfiles/catalogue/IT6600C-en.pdf",
+    "https://www.4test.no/files/itech/catalog/ITECH%20High%20Performance%20Product%20Catalog.pdf",
+    "https://www.altoo.dk/files/itech/manuals/IT6600C-User-Manual.pdf",
+    "https://www.itechate.com/en/info_128.aspx?itemid=638&lcid=87",
+    "https://www.lxinstruments.com/shop/bidirektionale-hochleistungs-dc-stromversorgung-und-last-it6600c-serie/ih-it6642c-2250-100",
+    "https://www.manualslib.com/brand/itech/power-supply.html",
+    "https://www.manualslib.com/manual/3669174/Itech-It6600c-Series.html",
+    "https://www.nippon-sokki.co.jp/itech/manual/IT6600C-EN.pdf",
+    "https://www.schulz-electronic.de/en/products/family/itech/it6600c-serie",
+    "https://www.schulz-electronic.de/en/products/filter?tx_scelproducts_search%5BcurrentPage%5D=20&tx_scelproducts_search%5Bordering%5D=interfaceTypesMin",
+    "https://www.schulz-electronic.de/en/products/filter?tx_scelproducts_search%5BcurrentPage%5D=27&tx_scelproducts_search%5Bordering%5D=controlModesMax",
+    "https://www.schulz-electronic.de/produkte/familien/itech/it6600c-serie",
+    "https://www.ttid.co.uk/bidirectional-psus/itech/it6600c-series?page=1",
+    "https://www.z-fone.com.tw/tw/product/show.php?kind=211&num=541&page=1"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

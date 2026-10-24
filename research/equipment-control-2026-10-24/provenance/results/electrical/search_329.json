@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_329.json",
+  "original_log_sha256": "107c0f816fa3b2b25ae7c4bfedbce5b020c8c06833020a51b4c940f9fd340064",
+  "original_log_bytes": 35170,
+  "queries": [
+    " 1015KVA manual programming software"
+  ],
+  "discovered_urls": [
+    "http://support.automation.siemens.com/WW/view/en/109480256",
+    "http://support.automation.siemens.com/WW/view/en/63452759",
+    "https://aksalatam.com/Content/Upload/Products/Diesel50hz3phase/AD1015.pdf",
+    "https://cache.industry.siemens.com/dl/files/541/109481541/att_862938/v1/PGsl_1015_en_en-US.pdf",
+    "https://fa-faq.mitsubishielectric.com/fa/products/software/inv/index.html",
+    "https://mitsubishielectric.in/fa/products/cnt/plceng/items/index.html",
+    "https://sieportal.siemens.com/en-ww/products-services/10229872",
+    "https://static.weg.net/medias/downloadcenter/hcc/h86/WEG-MVW01-programming-manual-10013258572-en.pdf",
+    "https://support.industry.siemens.com/cs/attachments/23906424/MODBUSManual_CQO1015N-5FM-1_Rev-02.pdf",
+    "https://us.mitsubishielectric.com/fa/en/products/software/inverter/",
+    "https://vfds.com/content/manuals/weg-cfw700-manual.pdf",
+    "https://www.altus.com.br/en/serie/programacao-clp/",
+    "https://www.mitsubishielectric.com/fa/id_en/products/software/inv/index.html",
+    "https://www.mitsubishielectric.com/fa/id_en/products_old/software/inv/index.html",
+    "https://www.mitsubishielectric.com/fa/vn_en/products/software/inv/index.html",
+    "https://www.ritron.com/tools/",
+    "https://www.se.com/ae/en/product-subcategory/5140-pac-and-plc-programming-software/",
+    "https://www.se.com/sa/en/product-subcategory/5140-pac-and-plc-programming-software/",
+    "https://www.se.com/us/en/product-subcategory/5140-pac-plc-programming-software/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

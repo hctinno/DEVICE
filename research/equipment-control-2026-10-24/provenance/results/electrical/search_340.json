@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_340.json",
+  "original_log_sha256": "5c694c774988482a7b14ad7db15145acff7a3c6a9d88535e0b408e42aba2e181",
+  "original_log_bytes": 27830,
+  "queries": [
+    "YOKOGAWA HR 2300 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://docs.ampnuts.ru/eevblog.docs/Yokogawa/?C=N&O=D",
+    "https://downloads.softwaretoolbox.com/demodnld/prod_docs/topserver_help_pdf/Common/yokogawa-hr-manual.pdf",
+    "https://support.ptc.com/help/kepware/drivers/en/kepware/drivers/YOKOGAWAHR2400/setup.html",
+    "https://tmi.yokogawa.com/bx/support/download-software-drivers-firmware/",
+    "https://tmi.yokogawa.com/ca/support/",
+    "https://tmi.yokogawa.com/cl/support/download-software-drivers-firmware/",
+    "https://tmi.yokogawa.com/mx/support/",
+    "https://web-material3.yokogawa.com/2/11148/files/LIM6210YK_D.pdf",
+    "https://www.kepware-opc.cz/downloads/Ovladace/yokagawa-suite/yokogawa-hr-serial-manual.pdf",
+    "https://www.koreayokogawa.com/support/download2.php",
+    "https://www.reddit.com/r/PLC/comments/1cz01or",
+    "https://www.velotic.com/products/kepware/kepware-server/drivers/yokogawa-hr",
+    "https://www.yokogawa.co.jp/library/search/",
+    "https://www.yokogawa.co.jp/member-site-info/",
+    "https://www.yokogawa.com/ymi/support/",
+    "https://yokogawaelectric.org/library/search/index.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

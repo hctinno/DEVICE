@@ -1,0 +1,33 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item258.json",
+  "original_log_sha256": "1f0b606405bee61e404f63408ab30b651561dc10c4b48123ed7b3fda15ca8f30",
+  "original_log_bytes": 13591,
+  "queries": [
+    "IMADA \"HTGA-10N\" software interface manual",
+    "site:github.com \"HTGA-10N\" IMADA"
+  ],
+  "discovered_urls": [
+    "https://duon-tech.co.kr/product/%EA%B3%A0%EA%B8%B0%EB%8A%A5%ED%83%80%EC%9E%85-%EB%94%94%EC%A7%80%ED%84%B8-%ED%86%A0%ED%81%AC%EA%B2%8C%EC%9D%B4%EC%A7%80-htga-10n/595/",
+    "https://duon-tech.co.kr/product/%EA%B3%A0%EA%B8%B0%EB%8A%A5%ED%83%80%EC%9E%85-%EB%94%94%EC%A7%80%ED%84%B8-%ED%86%A0%ED%81%AC%EA%B2%8C%EC%9D%B4%EC%A7%80-htga-10n/595/category/274/display/1/",
+    "https://manuals.plus/m/1bce1eaea8a98c20a5e1f3b981f974831c8381e3a9897fe282873235db42a96d",
+    "https://www.2emtrading.com/wp-content/uploads/2301-imada-torque-catalog-1.pdf",
+    "https://www.forcegauge.net/en/product/detail/htga010",
+    "https://www.forcegauge.net/en/service/instruction_manual",
+    "https://www.forcegauge.net/en/service/instruction_manual%E3%80%80",
+    "https://www.forcegauge.net/pdf/htgshtga_e.pdf",
+    "https://www.forcegauge.net/pdf/taa_e.pdf",
+    "https://www.forcegauge.net/product/detail/htga010",
+    "https://www.imada.pl/%21data/offerAttachments/IMADA%20Katalog%202023-01%20-%20Torque%20and%20Food%20Testers.pdf",
+    "https://www.imada.pl/%21data/offerAttachments/offerAttachment_17.pdf",
+    "https://www.manualslib.com/brand/schmidt/measuring-instruments.html",
+    "https://www.manualslib.de/manual/725068/Schmidt-Htg-Serie.html?page=13",
+    "https://www.scribd.com/document/527213354/20210907104329120",
+    "https://www.slideshare.net/slideshow/imada-15-cataloge/53469947",
+    "https://www.someco.fr/wp-content/uploads/2017/06/n20-206-207-208-couplemetre-manuel-htg-s_htgs_imada-someco-metrologie-et-controle.pdf",
+    "https://www.testequip.com.au/digital-torque-gauge-imada-htgs-htga-series"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

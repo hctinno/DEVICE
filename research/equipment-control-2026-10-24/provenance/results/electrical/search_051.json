@@ -1,0 +1,34 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_051.json",
+  "original_log_sha256": "902296aecb44dfacb948ed61ad5b587ed864f503594c0d4cb2676a26e1137fd2",
+  "original_log_bytes": 31171,
+  "queries": [
+    "KEITHLEY DMM6500 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://download.tek.com/manual/EN-DMM6500-900-01_Users_Manual_DMM6500-900-01A.pdf",
+    "https://en.wikipedia.org/wiki/Standard_Commands_for_Programmable_Instruments",
+    "https://manuals.plus/m/51d924833e0bfb4aa46698723d55375c353131edcc75805c925f3fb2e7d7f51a",
+    "https://manuals.plus/m/828ecdba630f4125801cfa4819272570df352167c258c9853fd0b027a3b56c4f",
+    "https://my.tek.com/en/tektalk/digital-multimeters/6eec8eaa-f940-ed11-9db0-00224806a9c6",
+    "https://www.cedesa.com.mx/pdf/keithley/ketihley-DMM6500_manual.pdf",
+    "https://www.manualslib.com/manual/1440440/Keithley-Dmm6500.html?page=100",
+    "https://www.manualslib.com/manual/1440440/Keithley-Dmm6500.html?page=50",
+    "https://www.manualslib.com/manual/2738720/Keithley-Dmm6500.html",
+    "https://www.reddit.com/r/AskElectricians/comments/1kw8180/received_expensive_multimeters_what_to_do/",
+    "https://www.reddit.com/r/AskElectronics/comments/1j8q4ry",
+    "https://www.reddit.com/r/AskElectronics/comments/md6emx/programming_keithley_2401_via_scpi/",
+    "https://www.tek.com.cn/support/datasheets-manuals-software-downloads?series=Keithley+DMM6500+6.5+%E4%BD%8D%E6%95%B0%E5%AD%97%E4%B8%87%E7%94%A8%E8%A1%A8%EF%BC%8C%E5%B8%A6%E5%9B%BE%E5%BD%A2%E8%A7%A6%E6%91%B8%E5%B1%8F&type=manual",
+    "https://www.tek.com/-/media/files/dmm6500-900-01b_user_aug_2019.pdf",
+    "https://www.tek.com/en/-/media/files/dmm6500-900-01b_user_aug_2019.pdf",
+    "https://www.tek.com/en/products/keithley/digital-multimeter/dmm6500-6-5-digit-multimeter",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?model=DMM6500",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?series=Keithley+DMM6500+6.5+Digit+Multimeter+with+Graphical+Touchscreen",
+    "https://www.tek.com/en/support/datasheets-manuals-software-downloads?series=Keithley+DMM6500+6.5+Digit+Multimeter+with+Graphical+Touchscreen&type=manual",
+    "https://www.tek.com/vn/support/datasheets-manuals-software-downloads?model=DMM6500"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

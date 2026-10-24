@@ -1,0 +1,35 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/other_measurement/logs/item469.json",
+  "original_log_sha256": "a86717c54d60a0783bc65bd9d18b28149d8aa108528d56d24410d98b50784be5",
+  "original_log_bytes": 14835,
+  "queries": [
+    "Wilcom \"T-207\" software interface manual",
+    "site:github.com \"T-207\" Wilcom"
+  ],
+  "discovered_urls": [
+    "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex%3A62023TJ0207",
+    "https://github.com/Grajales-Camilo/cuestion-de-datos-MinTIC-2026/blob/v2/specs/001-cuestion-de-datos-v2/data-model.md",
+    "https://github.com/torvalds/linux/blob/master/include/uapi/linux/if_tun.h",
+    "https://manuals.plus/m/63acbf6d0debb8ed3d140b081a6c324b78407e5f6b299b0a121c34670ec6ccd4.pdf",
+    "https://manuals.plus/m/cecacdde84fbe5a2c8bead602ea372f010de019b70bdcfaceb999768d4d946f5_optim.pdf",
+    "https://manuals.repeater-builder.com/te-files/MISCELLANEOUS/WILCOM%20T207%20Inst.Manual.pdf",
+    "https://manualzilla.com/doc/5765905/t-200-series",
+    "https://manualzz.com/doc/7015430/tescom-t-200-t-206--t-207--t-210-uninterruptible-power-su",
+    "https://sede.ayuntamientoparla.es/portal/sede/RecursosWeb/DOCUMENTOS/1/1_4070_1.pdf",
+    "https://sncmfg.com/wp-content/uploads/2018/01/INT-and-DINT-T0114-Application-Notes.pdf",
+    "https://www.dealsan.com/buy/wilcom",
+    "https://www.ebay.at/sch/i.html?_frs=1&_nkw=wilcom&_oac=1",
+    "https://www.ebay.at/sch/i.html?_nkw=wilcom",
+    "https://www.ebay.ie/sch/i.html?_nkw=wilcom",
+    "https://www.emstone.com/data/sales/ko/IHP_%EB%B0%A9%EC%86%A1%ED%86%B5%EC%8B%A0%EA%B8%B0%EC%9E%90%EC%9E%AC%EB%93%B1%28%EC%9C%A0%EC%84%A0-%EC%98%81%EC%83%81%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EA%B8%B0%29%EC%8B%9C%ED%97%98%EC%84%B1%EC%A0%81%EC%84%9C_20190909.pdf",
+    "https://www.hgpauction.com/auctions/6726/tellabs-sale-2/",
+    "https://www.manualslib.com/manual/2768777/Tescom-T-200-Series.html",
+    "https://www.manualslib.com/manual/2768777/Tescom-T-200-Series.html?page=17",
+    "https://www.manualslib.com/manual/4048043/Wilcom-T207.html",
+    "https://wyomingelectronics.com/shop/wilcom-model-t-207-longitudinal-balance-test-set/"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

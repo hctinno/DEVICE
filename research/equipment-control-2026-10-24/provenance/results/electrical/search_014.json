@@ -1,0 +1,30 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_014.json",
+  "original_log_sha256": "ed93029078f1052572102299c99082f73ada04dedfb1fad7d9c75d6d4b1e6710",
+  "original_log_bytes": 26076,
+  "queries": [
+    "ITECH IT7915P-350-90 manual programming software"
+  ],
+  "discovered_urls": [
+    "https://device.report/m/9c4ccd2a53f7a26b36dfe49f8334074d878e4b595754baaa7318a6a3001a397d",
+    "https://emin.vn/en/itechit7915-350-90-itech-it7915-350-90-regenerative-grid-simulator-350v-90a-15kva-100586/pr.html",
+    "https://manuals.plus/itech-electronic-co-ltd/it7900p-programmable-ac-power-supply-manual",
+    "https://oss.itechate.com/uploadfiles/catalogue/IT7900P-en.pdf",
+    "https://usa.itechate.com/uploadfiles/usermanual/it7900ep/IT7900EP%20User%20Manual-EN.pdf",
+    "https://www.4test.no/cgi-bin/cosmoshop/lshop.cgi?action=showdetail&artnum=IT7915-350-90&ls=en&ssl=1&wkid=17818640421747923",
+    "https://www.altoo.dk/files/itech/manuals/IT7900-User-Manual.pdf?srsltid=AfmBOoozdoc2tR7Nl5HnaEoDyqGak31tE1jWjjRkGHB63dbWzKGPrJsB",
+    "https://www.itechate.com/en/info_128.aspx?itemid=575&lcid=94",
+    "https://www.itechate.com/en/product/ac-power-supply/IT7900.html",
+    "https://www.itechate.com/en/product/ac-power-supply/IT7900P-regenerative-grid-simulator.html",
+    "https://www.itechate.com/uploadfiles/%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/user%20manual/it7900p/IT7900P%20User%20Manual-EN.pdf",
+    "https://www.manualslib.com/manual/2951331/Itech-It7900p-Series.html",
+    "https://www.manualslib.com/manual/3665769/Itech-It7900p-Series.html",
+    "https://www.manualslib.com/products/Itech-It7906p-350-30-13097314.html",
+    "https://www.manualslib.com/products/Itech-It7915-350-90-12479874.html",
+    "https://www.nippon-sokki.co.jp/itech/it7900p.html"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}

@@ -1,0 +1,29 @@
+{
+  "publication_format": "public_search_metadata_v1",
+  "original_log_path": "provenance/results/electrical/search_319.json",
+  "original_log_sha256": "ffe308752681e21cf94836b3a0263ec5016400374c59472efcb956f92c244134",
+  "original_log_bytes": 30808,
+  "queries": [
+    "E.D ENG ED-300S manual programming software"
+  ],
+  "discovered_urls": [
+    "https://daphatech.vn/wp-content/uploads/2020/04/EDS300-series-user-manual-V1.1.pdf",
+    "https://edisupport.kayako.com/en-us/category/6-downloads",
+    "https://manuals.plus/ae/1005008147691448",
+    "https://manuals.plus/ae/1005009610494189",
+    "https://manuals.plus/m/a4de1f99213396fc09988b4056eab1efe039bac5ea0c11de7f0e931d08881a83.pdf",
+    "https://old.acu-rite.com/pdf/manuals/300s_man_en_658632-22_ve02.pdf",
+    "https://studylib.net/doc/18848771/ed510-display-module",
+    "https://www.aerotech.com/resources/manuals-help-files/",
+    "https://www.hilomax.com/technical-support/download/?downloadtype=1&parid=&topid=",
+    "https://www.hilomax.com/technical-support/download/?downloadtype=1&parid=&topid=12",
+    "https://www.hilomax.com/technical-support/download/?downloadtype=3&parid=70&topid=12",
+    "https://www.mdsemi.co.kr/data.html",
+    "https://www.scribd.com/document/262264950/2-Manual-ETR300S-V1-0-Eng",
+    "https://www.scribd.com/document/581354260/ed-3-display-firmware-calibration",
+    "https://www.scribd.com/document/768398792/E300-Installation-Guide-Issue-1-0479-0005-01"
+  ],
+  "tool_error_flags": 0,
+  "third_party_response_body_included": false,
+  "note": "Public metadata derived from actual research logs. Open the source URLs for original content; model conclusions remain in results.json."
+}
