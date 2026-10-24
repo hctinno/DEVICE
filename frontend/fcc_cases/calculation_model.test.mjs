@@ -1,9 +1,12 @@
 //039 frozen typed contracts, 2026-10-24 Asia/Seoul.
-// Synthetic DTOs only: no genuine catalog, source PDF, HTTP, RF math or real values.
+// Synthetic DTOs; named Python regressions also construct a genuine synthetic catalog.
+// No collected source, actual measurement, HTTP or operational authorization.
 // Root frozen API; synthetic fixtures and original missingmodule evidence are separate.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 import fixture from './browser_check.cjs';
 import * as legacy from './model.mjs';
 
@@ -193,6 +196,115 @@ proposed('normal calculated response remains exact9/20 detached and preserves ve
   assert.deepEqual(value, f.response); expectedKeys(value, SHAPE9); expectedKeys(value.result, SHAPE20);
   value.result.inputs[0].sources[0].row = 'changed';
   assert.notDeepEqual(value, f.response);
+});
+
+// Literal expectations are independent of the JavaScript comparator. Python036/023
+// produces every response from the public genuine synthetic constructor, unsorted input.
+const sourceOrders = [
+  {name: 'BMP before supplementary table',
+    locators: [['SYNTHETIC-\u{10000}', 'ROW'], ['SYNTHETIC-\uE000', 'ROW']],
+    expected: [['SYNTHETIC-\uE000', 'ROW'], ['SYNTHETIC-\u{10000}', 'ROW']]},
+  {name: 'BMP before supplementary row',
+    locators: [['TABLE', 'SYNTHETIC-\u{10000}'], ['TABLE', 'SYNTHETIC-\uE000']],
+    expected: [['TABLE', 'SYNTHETIC-\uE000'], ['TABLE', 'SYNTHETIC-\u{10000}']]},
+  {name: 'Korean common prefix and supplementary suffix',
+    locators: [['표\u{10000}가', 'ROW'], ['표\uE000나', 'ROW'], ['표가나', 'ROW'],
+      ['표나', 'ROW'], ['표가', 'ROW'], ['표', 'ROW']],
+    expected: [['표', 'ROW'], ['표가', 'ROW'], ['표가나', 'ROW'], ['표나', 'ROW'],
+      ['표\uE000나', 'ROW'], ['표\u{10000}가', 'ROW']]},
+  {name: 'null table and row remain original nulls',
+    locators: [[null, 'SYNTHETIC-\u{10000}'], ['SYNTHETIC-\u{10000}', null],
+      [null, 'SYNTHETIC-\uE000'], ['SYNTHETIC-\uE000', null]],
+    expected: [[null, 'SYNTHETIC-\uE000'], [null, 'SYNTHETIC-\u{10000}'],
+      ['SYNTHETIC-\uE000', null], ['SYNTHETIC-\u{10000}', null]]},
+  {name: 'decomposed Korean and common prefix stay unnormalized',
+    locators: [['TABLE', '가나'], ['TABLE', '나'], ['TABLE', '가나나'],
+      ['TABLE', '가'], ['TABLE', '가']],
+    expected: [['TABLE', '가'], ['TABLE', '가'], ['TABLE', '가나'],
+      ['TABLE', '가나나'], ['TABLE', '나']]},
+  {name: 'ASCII prefixes retain Python lexical order',
+    locators: [['A-A', 'ROW'], ['AA', 'ROW'], ['A-', 'ROW'], ['A', 'ROW']],
+    expected: [['A', 'ROW'], ['A-', 'ROW'], ['A-A', 'ROW'], ['AA', 'ROW']]},
+  {name: 'duplicate evidence retains original multiplicity',
+    locators: [['SYNTHETIC-\u{10000}', 'ROW'], ['SYNTHETIC-\uE000', 'ROW'],
+      ['SYNTHETIC-\u{10000}', 'ROW'], ['SYNTHETIC-\uE000', 'ROW']],
+    expected: [['SYNTHETIC-\uE000', 'ROW'], ['SYNTHETIC-\uE000', 'ROW'],
+      ['SYNTHETIC-\u{10000}', 'ROW'], ['SYNTHETIC-\u{10000}', 'ROW']]},
+];
+let pythonSourceCases;
+function genuineSourceCases() {
+  if (pythonSourceCases) return pythonSourceCases;
+  const root = fileURLToPath(new URL('../../', import.meta.url));
+  const python = process.env.FCC_CASE_CALCULATION_PYTHON || fileURLToPath(new URL(
+    process.platform === 'win32' ? '../../.venv/Scripts/python.exe' : '../../.venv/bin/python', import.meta.url));
+  const program = String.raw`
+from copy import deepcopy
+import json, sys, types
+from pathlib import Path
+root = Path.cwd()
+package = types.ModuleType('tests'); package.__path__ = [str(root/'tests')]
+sys.modules['tests'] = package
+from tests.test_fcc_case_calculation import inputs
+from labflow.fcc_case_calculation import calculate_case_claim
+results = []
+for vector in json.load(sys.stdin):
+    def change(packet, reading):
+        original = reading['evidence'][0]
+        reading['evidence'] = [dict(deepcopy(original), table=table, row=row)
+                               for table, row in vector['locators']]
+    catalog, request, _, _ = inputs(change=change)
+    response = calculate_case_claim(catalog, request)
+    assert response['status'] == 'calculated'
+    results.append(dict(name=vector['name'], summary=catalog.summary(),
+                        detail=catalog.case(request['case_id']), request=request, response=response))
+print(json.dumps(results, ensure_ascii=False, allow_nan=False))
+`;
+  const result = spawnSync(python, ['-X', 'utf8', '-B', '-c', program], {
+    cwd: root, encoding: 'utf8', timeout: 30000, maxBuffer: 2 * 1024 * 1024,
+    env: {...process.env, PYTHONUTF8: '1', PYTHONIOENCODING: 'utf-8', PYTHONDONTWRITEBYTECODE: '1'},
+    input: JSON.stringify(sourceOrders.map(({name, locators}) => ({name, locators}))),
+  });
+  assert.ifError(result.error);
+  assert.equal(result.status, 0, result.stderr);
+  pythonSourceCases = JSON.parse(result.stdout);
+  assert.equal(pythonSourceCases.length, sourceOrders.length);
+  return pythonSourceCases;
+}
+
+for (const [index, vector] of sourceOrders.entries()) {
+  proposed('genuine Python036 source order: ' + vector.name, () => {
+    const f = genuineSourceCases()[index];
+    assert.equal(f.name, vector.name);
+    const before = clone(f), summary = model.parseFccCaseCalculationSummaryJson(JSON.stringify(f.summary));
+    const detail = model.parseFccCaseCalculationCaseJson(JSON.stringify(f.detail), f.request.case_id, summary);
+    assert.deepEqual(f.response.result.inputs[0].sources.map(source => [source.table, source.row]), vector.expected);
+    assert.deepEqual(model.parseFccCaseCalculationJson(JSON.stringify(f.response), f.request, detail), f.response);
+    assert.deepEqual(model.validateFccCaseCalculationResponse(f.response, f.request, detail), f.response);
+    assert.deepEqual(f, before);
+  });
+}
+
+proposed('genuine Python projection still rejects reversed missing added and duplicated sources', () => {
+  const f = genuineSourceCases()[0];
+  for (const mutate of [sources => sources.reverse(), sources => sources.pop(),
+    sources => sources.push({...clone(sources[0]), row: 'EXTRA-ROW'}),
+    sources => sources.push(clone(sources[0])), sources => { sources[0] = clone(sources[1]); }]) {
+    const response = clone(f.response);
+    mutate(response.result.inputs[0].sources);
+    invalid(() => model.validateFccCaseCalculationResponse(response, f.request, f.detail));
+  }
+  const duplicates = genuineSourceCases().at(-1), response = clone(duplicates.response);
+  response.result.inputs[0].sources.splice(0, 1);
+  invalid(() => model.validateFccCaseCalculationResponse(response, duplicates.request, duplicates.detail));
+});
+
+proposed('genuine null locators cannot be replaced with empty strings or normalized Korean labels', () => {
+  const nullable = genuineSourceCases()[3], response = clone(nullable.response);
+  response.result.inputs[0].sources[0].table = '';
+  invalid(() => model.validateFccCaseCalculationResponse(response, nullable.request, nullable.detail));
+  const korean = genuineSourceCases()[4], normalized = clone(korean.response);
+  normalized.result.inputs[0].sources[0].row = '가';
+  invalid(() => model.validateFccCaseCalculationResponse(normalized, korean.request, korean.detail));
 });
 
 proposed('128KiB raw result plus valid request echo fits response160KiB rather than a narrowed128KiB cap', () => {

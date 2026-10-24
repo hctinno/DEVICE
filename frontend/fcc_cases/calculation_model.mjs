@@ -127,6 +127,12 @@ function request(input){
  exact(command.input_claim_ids,'reading');id(command.input_claim_ids.reading);
  need(command.reported_result_claim_id===null && command.comparison_policy===null);return value;
 }
+function compareCodepoints(left,right){
+ const a=Array.from(left),b=Array.from(right);
+ for(let i=0;i<Math.min(a.length,b.length);i++){
+  const order=a[i].codePointAt(0)-b[i].codePointAt(0);if(order)return order;
+ }return a.length-b.length;
+}
 function projection(value,sourceDetail,command){
  exact(value,'role claim_id field value unit sources');
  need(value.role==='reading' && value.claim_id===command.input_claim_ids.reading && value.field==='result.rf_power_reading' && value.unit==='dBm');
@@ -137,7 +143,8 @@ function projection(value,sourceDetail,command){
  const compare=(left,right)=>{
   for(const key of ['document_id','file_page','line_start','line_end','table','row']){
    const a=left[key]??'',b=right[key]??'';
-   if(a!==b)return a<b?-1:1;
+   // Python023 orders strings by Unicode codepoint; numeric tuple fields stay numeric.
+   if(a!==b)return typeof a==='string'?compareCodepoints(a,b):a<b?-1:1;
   }return 0;
  };
  expected.sort(compare);need(same(value.sources,expected));
