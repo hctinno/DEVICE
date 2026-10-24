@@ -12,14 +12,14 @@
   },
   "unit_hashes_and_counts": {
     "payload_files": 14,
-    "payload_bytes": 60275,
+    "payload_bytes": 64242,
     "JSON_files": 14,
     "PDF_files": 0,
     "MD_files": 0,
-    "index_bytes": 3387,
-    "index_sha256": "a20b4de765f09633a27f9a1b676463f1ff60ae11f6dcfbfb2f45de7a0e3d15d8",
-    "P01_review_bytes": 6455,
-    "P01_review_sha256": "f5e56ad4550f2706e55637558f76b28a71a4ca3f1e344f0fc3fe09def691a649"
+    "index_bytes": 3388,
+    "index_sha256": "9d5627967ff5448dfa7663682fb213014197705813aa643c134d70ee56686cf3",
+    "P01_review_bytes": 6905,
+    "P01_review_sha256": "9eb78a83f59e8fc97fd1ec042aa5ff2ffefc450723379cf36498f1c17675095a"
   },
   "explicit_independent_ACKs": 1,
   "cumulative_private_collector_reviewed_and_ACKed": {
