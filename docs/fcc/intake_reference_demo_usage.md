@@ -45,8 +45,10 @@ ready JSON은 schema_version·kind·url·workspace·synthetic·ai_model_called·
 | 의존성·접수 준비·host 실패 | 1 | `intake_reference_demo_unavailable` |
 | 출력 실패 | 1 | `intake_reference_demo_output_failed` |
 | 정리 실패 | 1 | `intake_reference_demo_shutdown_failed` |
-| ready 전 Ctrl+C, 추가 오류 없음 | 130 | 없음 |
+| ready 전 최초 Ctrl+C | 130 | 없음 |
 
-오류는 `{"error":{"code":"..."}}` 형태로 한 번만 시도하며 최초 오류를 보존한다. 출력 전달 여부가 불명확해도 frame을 재전송하지 않는다. host 종료가 확인되지 않으면 Store를 먼저 닫거나 성공 종료 기록을 쓰지 않는다. 남은 원본과 실패 자료를 삭제하지 말고 실행 결과를 구분한다.
+최초 중단은 정리를 마친 뒤에도 보존한다. 준비 작업 뒤 또는 P0 Store를 닫다가 처음 Ctrl+C를 받으면 새 서버 단계로 넘어가지 않고 130으로 종료한다. 뒤따른 닫기·출력 오류가 먼저 결정된 130이나 고정 오류 코드를 덮지 않는다. 도움말을 출력한 뒤 모듈의 마지막 flush에서 처음 Ctrl+C를 받아도 130이다. ready 이후의 Ctrl+C와 반복 중단은 진행 중인 작업과 자원을 정상 회수한 경우 0을 유지한다.
+
+오류는 `{"error":{"code":"..."}}` 형태로 한 번만 시도하며 최초 오류를 보존한다. 출력 전달 여부가 불명확해도 frame을 재전송하지 않는다. host 종료가 확인되지 않으면 Store를 먼저 닫거나 성공 종료 기록을 쓰지 않는다. 130이 보존된 경우에도 회수되지 않은 자원을 성공으로 표시하지 않는다. 남은 원본과 실패 자료를 삭제하지 말고 실행 결과를 구분한다.
 
 조립 계약은 [057 설계](../superpowers/specs/2026-10-25-intake-reference-demo-design.md), 검토 기능은 [준비·등록 사용법](intake_reference_actions_usage.md), 기존 Store 실행은 [별도 CLI](intake_serve_usage.md)를 참조한다.
