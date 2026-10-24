@@ -195,6 +195,53 @@ class ReferenceSnapshotTests(unittest.TestCase):
         with self.store.connection() as con:con.execute("UPDATE intake_answers SET event_id='MISSING' WHERE intake_id=?",(self.intake,))
         self.error('delegation_invalid',lambda:self.read())
 
+    def test_later_recorded_field_cannot_hide_behind_an_older_answer_row(self):
+        respond(self.store,'ANSWER-MODEL','answer',intake_id=self.intake,answers={'model':'MODEL-B'})
+        respond(self.store,'ANSWER-PURPOSE','answer',intake_id=self.intake,answers={'purpose':'development'})
+        self.assertTrue(self.read()['readiness']['ready'])
+        with self.store.connection() as con:
+            request=json.loads(con.execute("SELECT request_json FROM intake_responses WHERE event_id='ANSWER-PURPOSE'").fetchone()[0])
+            request['answers']['model']='MODEL-C'
+            con.execute("UPDATE intake_responses SET request_json=? WHERE event_id='ANSWER-PURPOSE'",(canonical(request),))
+        self.error('delegation_invalid',lambda:self.read())
+
+    def test_latest_recorded_answer_field_cannot_be_missing_from_current_rows(self):
+        respond(self.store,'ANSWER-MULTI','answer',intake_id=self.intake,answers={'model':'MODEL-B','purpose':'development'})
+        with self.store.connection() as con:con.execute("DELETE FROM intake_answers WHERE intake_id=? AND field='model'",(self.intake,))
+        # Public refresh makes the live projection consistent with the missing row.
+        respond(self.store,'PROCEED-REFRESH','proceed',intake_id=self.intake)
+        self.error('delegation_invalid',lambda:self.read())
+
+    def test_current_answer_cannot_restore_a_valid_older_event_and_value(self):
+        respond(self.store,'ANSWER-OLD','answer',intake_id=self.intake,answers={'model':'MODEL-B'})
+        with self.store.connection() as con:old=con.execute("SELECT value,basis_json,event_id FROM intake_answers WHERE intake_id=? AND field='model'",(self.intake,)).fetchone()
+        respond(self.store,'ANSWER-NEW','answer',intake_id=self.intake,answers={'model':'MODEL-C'})
+        with self.store.connection() as con:con.execute("UPDATE intake_answers SET value=?,basis_json=?,event_id=? WHERE intake_id=? AND field='model'",(*old,self.intake))
+        respond(self.store,'PROCEED-REFRESH','proceed',intake_id=self.intake)
+        self.error('delegation_invalid',lambda:self.read())
+
+    def test_same_value_still_requires_the_latest_recorded_answer_event(self):
+        for event in ['ANSWER-OLD','ANSWER-NEW']:
+            respond(self.store,event,'answer',intake_id=self.intake,answers={'model':'MODEL-B'})
+        with self.store.connection() as con:con.execute("UPDATE intake_answers SET event_id='ANSWER-OLD' WHERE intake_id=? AND field='model'",(self.intake,))
+        respond(self.store,'PROCEED-REFRESH','proceed',intake_id=self.intake)
+        self.error('delegation_invalid',lambda:self.read())
+
+    def test_clean_repeated_multi_field_answers_keep_latest_event_and_strip_values(self):
+        respond(self.store,'ANSWER-OLD','answer',intake_id=self.intake,answers={'model':'MODEL-B'})
+        respond(self.store,'ANSWER-MULTI','answer',intake_id=self.intake,answers={'model':'  MODEL-B  ','purpose':' development '})
+        respond(self.store,'ANSWER-PURPOSE','answer',intake_id=self.intake,answers={'purpose':'development'})
+        result=self.read();fact=result['snapshot']['projection']['facts']['model']
+        self.assertEqual((fact['value'],fact['event_id']),('MODEL-B','ANSWER-MULTI'))
+        self.assertEqual(result['status'],'observed');self.assertTrue(result['readiness']['ready'])
+
+    def test_latest_answer_uses_database_event_sequence_not_response_identifier_order(self):
+        respond(self.store,'Z-LAST-ALPHABETICALLY','answer',intake_id=self.intake,answers={'model':'MODEL-B'})
+        respond(self.store,'A-LATEST-RECORDED','answer',intake_id=self.intake,answers={'model':'MODEL-C'})
+        result=self.read();fact=result['snapshot']['projection']['facts']['model']
+        self.assertEqual((fact['value'],fact['event_id']),('MODEL-C','A-LATEST-RECORDED'))
+        self.assertTrue(result['readiness']['ready'])
+
     def test_delegation_flags_cannot_outlive_corresponding_evidence(self):
         with self.store.connection() as con:con.execute("DELETE FROM intake_responses WHERE event_id='PROCEED-1'")
         self.error('delegation_invalid',lambda:self.read())
