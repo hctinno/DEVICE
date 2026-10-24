@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "recorded_at_Asia_Seoul": "2026-10-24T23:47:14.312850+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "corpus_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "publication_scope": "reviewed_nonsensitive_hash_count_and_bounded_status_only",
+  "publication_rights_decision": "Only nonsensitive bibliography/hash/count/status reviewed for this projection. Original redistribution and model-use rights remain unknown. Original/body/casevalues/images/code/identifiers/privatepaths/userfiles private.",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S02-B0023",
+      "review_scope": "America2026Q3_bounded_searchindex_metadata_no_PDF",
+      "inventory_sha256": "bcc7174f87c226f78dcd1be346931c05ddf6fc9c7b1eb8cbde92aec1bb13603e",
+      "private_intake_index_sha256": "4b9a40e1b30e07f7e8512cc3e19c40cf23e1f9948c0198509a29cdb3fa3ed208",
+      "private_intake_index_bytes": 3371,
+      "payload_files": 14,
+      "payload_bytes": 56063,
+      "JSON_files": 14,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "eee744c70f43fb0cedc049346cdc6a3473a10dbb8bdfb9f683707d6cc3beb762",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "metadata_discovery_direct_identity_issue_unknown_no_PDF"
+    },
+    {
+      "batch_id": "FCC-20261024A-S03-B0021",
+      "review_scope": "held_HAC2_next_eight_limited_wrapper_regions",
+      "inventory_sha256": "333dd3020ad3c6803959911b3a0bb400c1550bd024402a06e865dce6703a0918",
+      "private_intake_index_sha256": "2c85cfc4165fc7174066b2ccbf898d09feef652d4072099589e76d1a5051736b",
+      "private_intake_index_bytes": 5064,
+      "payload_files": 24,
+      "payload_bytes": 126144,
+      "JSON_files": 23,
+      "PDF_files": 0,
+      "MD_files": 1,
+      "receiver_receipt_sha256": "3518f9767a4eb9f414a2572cfac3536eec45447106186c94a2cc058e740fd589",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "held_wrapper_only_metadata_reference"
+    },
+    {
+      "batch_id": "FCC-20261024A-S04-B0021",
+      "review_scope": "domestic2026Q2_bounded_searchindex_metadata_no_PDF",
+      "inventory_sha256": "872efb3eaf91cde05abb4b9ca2bc9849657b513361b4757ddcb50faa166271e8",
+      "private_intake_index_sha256": "9812fe6f34750bbaea7ec1193157a6015414168fd1faab00e7b9d137ca6f2f83",
+      "private_intake_index_bytes": 3548,
+      "payload_files": 15,
+      "payload_bytes": 82746,
+      "JSON_files": 15,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "42417231b2820dc7d7cedae7be0b5fd289223fd9af939e5ec6389e00f797028e",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "bounded_domesticQ2_metadata_candidates_no_PDF"
+    },
+    {
+      "batch_id": "FCC-20261024A-S07-B0012",
+      "review_scope": "held_rule_snapshot_and_approved_metadata_bounded_interpretation",
+      "inventory_sha256": "fb5d3015ec5b87f75cef9406a2cdbd759615d56e4444ba9afbdd6ef58cdd0735",
+      "private_intake_index_sha256": "4383e984008ae2022c4117a4ddfb5c1b060a77c5af6748537c6acb641f2a12d8",
+      "private_intake_index_bytes": 4436,
+      "payload_files": 20,
+      "payload_bytes": 66884,
+      "JSON_files": 20,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "ca9b899c9b19a62b7f4d4483ec47faef9a3c11ac13516634c00a4b3700951e54",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "held_official_XML_rule_snapshot_bounded_inference_currentunknown"
+    },
+    {
+      "batch_id": "FCC-20261024A-S08-B0017",
+      "review_scope": "sanitized_Part96_descriptor_metadata_delta1",
+      "inventory_sha256": "0c70cb44302c578fa6fed7934b48ae8d91ad3c53834efaee9b829810e721011d",
+      "private_intake_index_sha256": "6b0729341a2f58bb20a637f93d62ce5f564ce35f40e9989a2db1723b389a6fa8",
+      "private_intake_index_bytes": 3222,
+      "payload_files": 13,
+      "payload_bytes": 164124,
+      "JSON_files": 13,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "2ebc5d36928a435c7a7349fbc10c3c1d924622cbe1d5bc47610eb09e3744e4bb",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "sanitized_descriptor_metadata_delta_only_no_source_audit"
+    }
+  ],
+  "new_independently_accepted_private_packets": 5,
+  "new_private_payload": {
+    "files": 86,
+    "bytes": 495961,
+    "JSON": 85,
+    "PDF": 0,
+    "MD": 1
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 106,
+    "independently_ACKed": 106
+  },
+  "corpus_private_packets_including_exclusion_and_pending_link_review": {
+    "reviewed": 71,
+    "independently_ACKed": 71
+  },
+  "new_reviewed_bibliography": [],
+  "new_originals_reviewed_privately": 0,
+  "new_target_reference_originals": 0,
+  "new_PDF_payloads_published_to_Git": 0,
+  "current_target_reference_cohort": {
+    "PDFs": 17,
+    "physical_pages": 650,
+    "bytes": 38603877,
+    "direct_issuer_issue": 16,
+    "parent_only": 1,
+    "official_mapping_confirmed": 0
+  },
+  "separately_retained_excluded": {
+    "PDFs": 1,
+    "physical_pages": 46,
+    "bytes": 2771507,
+    "target_increment": 0
+  },
+  "separately_retained_pending_report_link": {
+    "PDFs": 1,
+    "physical_pages": 53,
+    "bytes": 4626750,
+    "target_increment": 0
+  },
+  "all_retained_request_originals_not_eligible_count": {
+    "PDFs": 19,
+    "physical_pages": 749,
+    "bytes": 46002134,
+    "eligible19_claim": false,
+    "legacy22_included": false
+  },
+  "fresh_source_verification_scope": {
+    "new_report_originals": 0,
+    "prior17_frozen_verifications_preserved": true,
+    "all17_fresh_reverification": false,
+    "held_HAC2_allowed_regions_native_and_safe_visual_rechecked": 8,
+    "held_official_XML_sections_independently_hashed_and_read": 4,
+    "full_HAC_or_Part96_semantics_reviewed": false
+  },
+  "bounded_metadata_discovery": {
+    "America2026Q3": {
+      "search_queries": 4,
+      "ordinary_HTML": 0,
+      "search_occurrences": 8,
+      "unique_indexed_URLs": 7,
+      "selected_metadata_candidates": 1,
+      "secondary_issue_claims": 1,
+      "direct_issuer_issue_PDF_or_eligible": 0,
+      "two_query_appearances_same_URL_not_two_independent_sources": true
+    },
+    "domestic2026Q2": {
+      "search_queries": 4,
+      "ordinary_HTML": 1,
+      "search_occurrences": 26,
+      "selected_metadata_candidates": 12,
+      "selected_search_and_HTML": [
+        6,
+        6
+      ],
+      "secondary_issue_claims": 1,
+      "issue_unknown": 11,
+      "direct_issuer_issue_PDF_or_eligible": 0,
+      "unselected_query_occurrences": 19,
+      "unselected_HTML_labels": 56,
+      "known_undelivered_HTML_lines": 329,
+      "prefix_month_does_not_determine_issue_month": true
+    },
+    "P01_online_replay": 0,
+    "claims_retained_as_frozen_producer_observations": true,
+    "searchcap_zeroquery_occurrences_not_population_or_absence": true
+  },
+  "bounded_HAC_review_status": {
+    "new_primary_region_observations": 8,
+    "direct_body_title_confirmations": 0,
+    "limited_wrapper_observations": 8,
+    "physical_pages": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "HAC1_primary_region_inspections": [
+      73,
+      73
+    ],
+    "HAC2_primary_region_inspections": [
+      31,
+      70
+    ],
+    "suite_primary_region_inspections": [
+      142,
+      181
+    ],
+    "unvisited_primary_regions": 39,
+    "inspection_counter_includes_wrappers_not_readable_titles_full_cells_semantics_or_calibration_success": true,
+    "body_calibration_identity_raster_unreviewed": true,
+    "numeric_rows_calculations_DUT_measurements": 0,
+    "direct_identity_not_inherited_from_parent_or_PDFmetadata": true,
+    "OCR_or_full_identity_raster": false
+  },
+  "bounded_normative_interpretation": {
+    "actual_owner_literal_request": "FOLLOWUP-20261024-007",
+    "P01_normalized_ID_is_not_owner_literal": true,
+    "fixed_inputs": 13,
+    "official_XML_snapshot_sections": 4,
+    "interpretation_relationships": 6,
+    "open_gaps": 6,
+    "report_PDF_newcasefacts_or_new_arithmetic": 0,
+    "report_issue_held_snapshot_metadata_derivation_verifiedcapture_and_live_dates_distinct": true,
+    "later_snapshot_not_historical_or_live_current_applicability_approval": true,
+    "missing_KDB_or_standard_name_edition_in_approved_slice_is_not_source_absence": true,
+    "actual_DUT_plane_aggregation_duty_gainorigin_chain_bgn_automation_fixture_or_SDK_support": null
+  },
+  "bounded_metadata_delta": {
+    "sanitized_descriptors": 1,
+    "fixed_metadata_inputs": 17,
+    "given_SHA_comparison_blocks": [
+      16,
+      22,
+      1,
+      1
+    ],
+    "given_SHA_pairs": 40,
+    "equal_missing_self": [
+      0,
+      0,
+      0
+    ],
+    "new_typed_locator_occurrences_verified": 121,
+    "historical_authorities_preserved_without_dereference": 18,
+    "historical_member_keys_preserved": 18,
+    "historical_groups_preserved": 14,
+    "current_projected_members": 19,
+    "current_metadata_components": {
+      "target": 13,
+      "excluded": 1,
+      "pending": 1,
+      "all": 15
+    },
+    "primary_plus_two_variants_one_report_node": true,
+    "new_current_cutoff_not_self_comparator": true,
+    "old39_75_67_220_old11_scopes_unchanged": true,
+    "different_SHA_is_not_data_independence": true,
+    "source_original_operations_casevalues_AI_folds_scores": 0
+  },
+  "privacy_and_failure_status": {
+    "original_ACK_READY_control_images_failures_unchanged": true,
+    "source_unique_values_rows_or_perIDhashes_retrieved_or_reprinted": false,
+    "old_report_applicant_fields_not_reaccessed": true,
+    "bounded_checks_not_global_absenceproof": true,
+    "P01_guard_condition_failure_preserved_not_producer_error": true,
+    "one_previous_footer_exclusion_boundary_touched_body_edge": true,
+    "P01_did_not_open_previous_edge_image": true,
+    "new_own_safe_region_verified_with_body_clearance": true,
+    "old_tracking_field006_preserved_with_actual007_scope_annotation": true
+  },
+  "receiver_validation": {
+    "all_exact_payload_SHA_bytes_UTF8_reviewhash_verified": true,
+    "root_original_or_nested_reference_operations": 0,
+    "native_render_OCR_new_arithmetic_or_physical_replay": 0,
+    "byte_ACK_not_full_semantic_currentnormative_or_physical_approval": true
+  },
+  "new_user_preparation_requests": 0,
+  "AI_evaluation_training_external_models_or_physical_runs": 0,
+  "open_scope": [
+    "all remaining issue periods legalissuers sites products categories search tails",
+    "officialmapping rulehistory currentapplicability and missingstandards",
+    "remaining HAC2regions and visitedlimitedsemantic fulltable plot calibration gaps",
+    "parts revisions appendices setup photos reuseddata independence",
+    "actualchain referenceplane installation metrology and physicalsite validation"
+  ],
+  "whole_census_complete": false,
+  "full_semantic_functional_conformity_or_physical_validation": false,
+  "original_text_case_values_images_code_identifiers_private_paths_user_materials_exported": false,
+  "verification_scope": "Private exactbyte intake and explicitly bounded metadata/static review only; document integrity not function/metrology/conformity validation."
+}
