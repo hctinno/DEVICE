@@ -18,7 +18,20 @@
 | `frontend/intake_reference_actions/browser_check.cjs` | 기존 component 보존, 별도 genuine integrated 검증 |
 | `docs/fcc/intake_reference_actions_usage.md` | 실제 실행/미실행·증거·한계 갱신 |
 
-C1 actions.mjs/test, A1 model/view/test, 050 transport/test/기존 checker/usage, backend/core/Store/schema·부모·공유 대장·CSP는 보호한다. 이 밖의 수정이 필요하면 소유 밖 변경으로 보고하며 다섯 파일에 억지로 우회 코드를 넣지 않는다. 독립 F2 지적이 도착하면 기존050 소유 수정을 우선 처리한다.
+C1 actions.mjs/test, A1 model/view/test, 050 transport/test와 아래 최소 호환 예외2 밖의 기존050 checker/usage, backend/core/Store/schema·부모·공유 대장·CSP는 보호한다. 이 밖의 수정이 필요하면 소유 밖 변경으로 보고하며 다섯 파일에 억지로 우회 코드를 넣지 않는다. 독립 F2 지적이 도착하면 기존050 소유 수정을 우선 처리한다.
+
+## C2-COMPAT-050 — 기존 화면 검사의 최소 호환 예외
+
+C2 착수 후 기존050 검사에서 새 화면과 충돌하는 전제 두 곳을 확인했다. F1 `--mode frontend`의 정적 파일 목록에는 실제 C1 모듈 경로가 없고, F2 `--mode integrated`는 `#intake-reference-actions-panel`이 0개라고 단언한다. 새 sibling을 추가하는 C2에서 이 두 전제를 그대로 유지할 수 없다. 기본 C2 소유5·API·R1·수용20은 유지하며, 다음 정확2를 개발4의 별도 최소 호환 작업으로만 추가한다.
+
+| 별도 예외2 — 정확 공개핀과 총괄의 실제 추가 배정 뒤 | 허용 범위 |
+| --- | --- |
+| `frontend/intake_references/browser_check.cjs` | F1 기존 정적 allowlist에 실제 `/intake-reference-actions/actions.mjs` 파일1만 추가. F2의 옛 부재 전제만 sibling1/detail 밖으로 갱신하고 기존 A1·수동 현재조회·부모/metadata/source 계수 의미를 유지 |
+| `docs/fcc/intake_reference_ui_usage.md` | 위 호환 변경과 새 실행/미실행·기존F2/C2 검증 범위를 짧게 기록. 과거 수치·실패 기록 보존 |
+
+F1은 원래 명시 wire-fixture 검사이고 F2는 실제 같은 host다. F2에 ASSETS adapter·가짜 파일·성공 응답·별도 proxy를 넣지 않는다. 검사를 건너뛰거나 현재 파일 내용에 따라 assertion을 완화하지 않는다. C1 constructor와 앱 연결이 자동 source 요청을 만들지 않는 의미를 보존하며, 계수가 실제 달라지면 원인을 보고하고 성공 기대값을 맞추기 위해 바꾸지 않는다. 실제 static4의 검증은 C2-20과 구분해 실행한 범위만 센다. transport/API/test·backend·CSP와 그 밖의 파일은 보호한다.
+
+기존 C2 branch의 정확 제품 base `c03e4403639b0f3bf1dd7116b1f549557c3b6482`·현재 미커밋·기본5 작업은 그대로 둔다. 이 예외의 공개 계약 핀과 추가2 소유가 실제 전달되기 전에는 추가2를 수정하지 않는다. 전달 뒤 같은 branch에서 기본5와 구분되는 작은 호환 commit2로 보존하고, combined 후보에서 기존 F1/F2를 새 phase로 검증한다. 선행 실패와 기존 PASS는 덮어쓰거나 합산하지 않는다. 예외 선언 자체는 제품 구현·검사 통과가 아니다.
 
 ## 공개 연결 경계
 
@@ -71,6 +84,6 @@ state8은 `context,phase,pending,prepare_allowed,append_allowed,preview,registra
 | C2-17 / G | current/prepare/append/replay source 동시 진입·취소 | 공용source1/queue0·고정busy, 부모 finally 전 선반환0. metadata는 source0. pass-through 실제부모 trace와 bytes/read·parse0 분리 |
 | C2-18 / G | active 중 close·abort·정리 실패 | admission닫기→parentfinally/active0→actions.close1/None→worker/socket/session→caller043close. native handle/port/sidecar 회수, 실패 보존 |
 | C2-19 / R | 배정 base의 Node·A1·050 F1/F2·원형intake/기존조회·계산 | 새 phase/정확 소스핀으로 실행. C1 210/23/18·root2092 같은 이전 수를 새 검사수에 합산하지 않음 |
-| C2-20 / R | 정적경로/MIME/CSP·악성wire·비노출·문서/핀 | 실제asset4와 alias/미존재404·securityself. DTO 외 handle/원7/CSRF/cookie/private 원문은 DOM/storage/URL/log/download/영수증0. 소유5외 원본/DB/provenance 불변·UTF8/링크·회수 영수증 |
+| C2-20 / R | 정적경로/MIME/CSP·악성wire·비노출·문서/핀 | 실제asset4와 alias/미존재404·securityself. DTO 외 handle/원7/CSRF/cookie/private 원문은 DOM/storage/URL/log/download/영수증0. 기본소유5와 위 별도예외2 밖 원본/DB/provenance 불변·UTF8/링크·회수 영수증 |
 
 P0 준비와 P1 HTTP의 SQL/DDL·보존 자료 읽기·파싱 분모를 분리한다. metadata source0는 기존 metadata SQL0이라는 뜻이 아니다. 정상 G는 실제 부모를 통과하고, F는 전송만 명시적으로 유실/지연시키며 가짜 응답·provider·ASSETS/독립 proxy로 성공을 만들지 않는다. 전체 Python/정상 분류별 실제 재현·회수는 실행한 것만 세고 나머지는 미실행으로 남긴다.

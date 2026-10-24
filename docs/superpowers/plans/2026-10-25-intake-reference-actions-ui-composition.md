@@ -13,7 +13,7 @@
 ## Global Constraints
 
 - C1/049는 통합029, F2는 root031 `1f17e0a764f9cc2e4b41f17869ede04a992802d7`에서 최종 인수·게시(새 Node230·관련 HTTP Python58·DOM12)됐다. 053 후보 `5eee86b4f1baf029bf99bb73fd59f0278bbda836`는 독립 최종 Yes/C0I0 뒤 root032 기능 `b29237126d119ed18db85ae4654f6caae9f96b47`에 인수됐고 새 전체Python2242/skip0·기존화면 실제HTTP/DOM12가 통과했다. accepted053/static1·정확 최종root base/소유5의 실제 별도 배정 전 제품/branch/cherry-pick/공개 파일/fixture/브라우저 실행0. 현재1f17e0a와 기존160732c는 미래 C2 실행 base가 아니다. 원 branch·No/RED/cold·원계획을 보존한다.
-- 미래 소유는 app.js/index.html/styles.css와 C1 browser_check.cjs/usage 정확5. 보호 부모·C1 core/API·050 secret·backend·공유 문서·CSP 변경0.
+- 기본 소유는 app.js/index.html/styles.css와 C1 browser_check.cjs/usage 정확5. 고정 설계의 C2-COMPAT-050 별도예외2는 공개핀·총괄 실제 추가 배정 뒤에만 허용한다. 보호 부모·C1 core/API·050 transport/test/secret·backend·공유 문서·CSP 변경0.
 - C1 공개 state8/view5·event3, A1 reader2/context3·050 반환5 유지. 자동 source/새 tokenstore/provider/current·권한 발급0; production025 미제공 capfalse 유지.
 - 실제 검증 fixture는 기존 public API의 합성025·genuine043/부모, 같은 host port0만 사용한다. 고객 PDF·실제 모델·실장비·Hancom0. 정상 genuine phase와 명시 전송 fault phase를 구별한다.
 
@@ -35,6 +35,14 @@
 - [ ] checker의 component 경로를 보존하며 실제 app을 쓰는 integrated 경로에 C2-02~09 assertions를 먼저 추가한다. sibling mount 없음 또는 연결 동작 부재의 RED를 실제 실행하고 원본을 보존한다. C2-06은 뒤쪽 bubbling listener에서 다른 접수 선택 버튼.click()·#refresh.click()·pending 진입을 동기로 실행해 main/context/pending·C1 setter/action 변화0을 단언한다. 해제 microtask 자체는 source/queue/replay0이며 terminal destroy도 별도 확인한다. URL/secret CLI option을 추가하지 않는다.
 - [ ] 고정 설계의 문맥 전달·latest pending·event guard·pagehide/pageshow를 app에 추가한다. R1은 root listener 뒤 bubbling 동안 guard 유지→end-of-stack microtask 해제만이다. selection/main refresh/pending은 state/request/DOM 또는 C1 setter 이전 return, terminal destroy만 alive/listener 닫기와 C1 destroy를 허용한다. index sibling과 scoped CSS만 추가한다. 예: stale generation event 뒤 history delta=0, 현재 event 한 번 뒤 history delta=1/current·prepare·append delta=0, main2가 pending이면 main1 finally 뒤 버튼은 닫힘을 단언한다.
 - [ ] 같은 명령 `node frontend/intake_reference_actions/browser_check.cjs --mode integrated`의 새 app phase GREEN과 390/1440 화면·keyboard/외부 초점을 확인한다. C1 의미 지적이면 현재 C1 소유수정으로 별도 우선 보고하고 C2에서 우회하지 않는다.
+
+## T1.5 — 기존050 검사의 최소 호환2
+
+**Files:** 별도 실제 배정 뒤 `frontend/intake_references/browser_check.cjs`, `docs/fcc/intake_reference_ui_usage.md` 정확2. 기본 C2 소유5와 구분되는 작은 commit으로 보존한다. 기존 C2 base/branch·미커밋은 재작성하지 않는다.
+
+- [ ] 공개 C2-COMPAT-050 핀과 추가2 소유의 실제 배정을 확인한다. F1 static 목록의 모듈 누락과 F2의 옛 panel0 전제를 원소스/실제 실패로 구분해 보존한다.
+- [ ] F1 기존 static allowlist에 실제 C1 모듈 파일1만 추가한다. F2의 부재 전제만 새 sibling1/detail 밖으로 바꾸며 기존 수동조회·wire·부모/source 계수·CSP·오류/수명 검사를 보존한다. ASSETS adapter·조건부 skip·가짜 성공·새 API0이다.
+- [ ] combined C2 후보에서 F1/F2 새 phase를 실행한다. C2 own checker의 static4·genuine 준비/등록 수용과 기존 F2 읽기 검증을 구별한다. 계수 변화는 원인 확인 전 기대값을 바꾸지 않는다. 사용법에 새 실행과 미실행만 갱신한다.
 
 ## T2 — 같은 host genuine HTTP·회수·인계
 

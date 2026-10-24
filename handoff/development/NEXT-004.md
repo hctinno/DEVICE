@@ -1,5 +1,7 @@
 # 후속 개발 인수 대장 004
 
+2026-10-25 C2-COMPAT-050: 개발4의 기본5 구현은 계속한다. 기존050 F1 static allowlist의 C1 모듈1 누락·F2의 C2 panel0 전제는 [갱신 C2 계약](../../docs/superpowers/specs/2026-10-25-intake-reference-actions-ui-composition-design.md)의 별도예외2로 좁혔다. 독립 정적검토·공개 정확핀·총괄의 추가2 실제배정 전 protected050 checker/usage 수정0이다. 배정 뒤 같은 C2 branch에서 기본5와 별도 commit2·combined F1/F2 검증으로 잇고, 원base c03e440/미커밋·과거 실패·계수는 보존한다. 이 문서 변경의 제품 검사는0이다.
+
 최신 [통합032](INTEGRATION-032.md): 047 CLI·053 같은host 준비/등록의 독립 최종Yes와 소유6을 인수했다. 새 전체Python2242/skip0·실제기존화면12/source236·기존232 불변이며 Node230은031 이전 실행이다.
 
 | 담당 | 후속 작업과 소유 |
