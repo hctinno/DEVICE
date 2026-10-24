@@ -1,0 +1,116 @@
+{
+  "recorded_at": "2026-10-25T05:25:48.792894+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "unit": "B034_one_original_bounded_identity_review",
+  "publication_scope": "reviewed nonsensitive bibliography/hash/count/status only",
+  "new_private_payload": {
+    "files": 17,
+    "bytes": 4029649,
+    "JSON": 16,
+    "PDF": 1,
+    "MD": 0
+  },
+  "unit_hashes_and_counts": {
+    "payload_files": 17,
+    "payload_bytes": 4029649,
+    "JSON_files": 16,
+    "PDF_files": 1,
+    "MD_files": 0,
+    "index_bytes": 3917,
+    "index_sha256": "89fcec2e76ea6e4a9c5e1c924cad958da1d90ac8489d3e7fe6fd0959b050aa4a",
+    "P01_review_bytes": 8203,
+    "P01_review_sha256": "d4d5c6cb976818ee8335d9dd7821ad2732dc675a08cc84eb53224fdafec4dc7e"
+  },
+  "explicit_independent_ACKs": 1,
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 138,
+    "independently_ACKed": 138
+  },
+  "cumulative_request012_reviewed_and_ACKed": {
+    "reviewed": 103,
+    "independently_ACKed": 103
+  },
+  "remaining_reviewed_private_intake_pending_packets": 0,
+  "source_cohorts": {
+    "target_or_parent_reference": {
+      "PDFs": 18,
+      "physical_pages": 690,
+      "bytes": 40988413,
+      "direct_issuer_issue_static_predicate": 17,
+      "parent_only": 1,
+      "official_mapping": 0
+    },
+    "excluded_before2025": {
+      "PDFs": 1,
+      "physical_pages": 46,
+      "bytes": 2771507
+    },
+    "pending_report_link": {
+      "PDFs": 1,
+      "physical_pages": 53,
+      "bytes": 4626750
+    },
+    "pending_direct_identity": {
+      "PDFs": 3,
+      "physical_pages": 141,
+      "bytes": 10065998
+    },
+    "all_retained_not_eligible": {
+      "PDFs": 23,
+      "physical_pages": 930,
+      "bytes": 58452668
+    },
+    "legacy22_separate": true
+  },
+  "new_original_bibliography": [
+    {
+      "reported_number": "HA2603-0033-R01-2",
+      "sha256": "cfa7b4bee7b57c3340a59a62d8390bdc9c6ef667d98e98b3cc27b648ddac105a",
+      "bytes": 3925488,
+      "physical_pages": 48,
+      "strict_page_tree_structure_checked": true,
+      "encrypted": false,
+      "rights": "unknown/private-only",
+      "status": "pending direct identity; target increment0",
+      "legal_issuer": null,
+      "issue_date": null,
+      "direct_FCC_scope": null,
+      "numeric_revision": null,
+      "direct_parent_body_relationship": null,
+      "actual_label_body_mismatch_observed": false,
+      "whole_label_body_mapping": null
+    }
+  ],
+  "new_originals": 1,
+  "target_increment": 0,
+  "fresh_review_scope": {
+    "new_originals": 1,
+    "prior22_frozen_proofs_preserved_not_fresh23_audit": true,
+    "bounded_native_observations": 6,
+    "public_identity_fields": 3,
+    "sample_pagination_rows": 3,
+    "safe_footer_regions_actually_viewed": 4,
+    "cover_fields_native_only_no_image_render_due_to_sourceimage_geometry": 2,
+    "uninspected_middle_pagination_not_inferred": true,
+    "reportnumber_matches_prior_child_authorclaim_not_verified_parentbody_reuse_or_alias": true,
+    "permission_features_OCR_decryptedexport_bodydump_wholeidentityraster": 0,
+    "full_source_privacy_or_identifier_absence_proven": false,
+    "root_byte_ACK_not_new_semantic_or_currentnormative_physical_validation": true
+  },
+  "bounded_HAC_review_status": {
+    "suite_regions_visited": 181,
+    "suite_regions_total": 181,
+    "new_regionvisits": 0,
+    "wrapper_visits_not_fullsemantic_allcells_plotnumbers_calibration_HACsuite_or_census_completion": true
+  },
+  "remaining_scope": {
+    "whole_population": "unknown/open",
+    "all_periods_issuers_sites_products_categories_revisions_parts_appendices_setup_photos_tails": "open",
+    "source_identity_rights_fullsemantic_currentnormative_reuse_independence_AI_physical_conformity_complete": false,
+    "known44_SHA_metadata_not_fresh44rawaudit_or_independence": true,
+    "unencrypted_or_copy_permission_not_reproduction_training_publication_grant": true,
+    "source_body_casevalues_images_code_identifiers_privatepaths_user_materials_public": false,
+    "new_external_model_API_training_evaluation_folds_scores": 0,
+    "new_user_preparation_requests": 0
+  }
+}
