@@ -1,10 +1,12 @@
 """One synthetic stop delivery boundary over the existing exact virtual DUT."""
 from dataclasses import dataclass
 import hashlib
+from inspect import getattr_static
 import json
 import math
 import re
 import threading
+from types import FunctionType
 from uuid import uuid4
 
 from .virtual_fleet.core import VirtualFleet
@@ -21,20 +23,46 @@ _REASONS = {'observed_stopped','transport_unavailable','permission_denied','mode
 _STATUSES = {'ok','pending','invalid','unsupported','error','disconnected'}
 _STATES = {'idle','configured','unconfigured','transmitting','arming','waiting','settling','unavailable','awaiting_fresh_observation'}
 _PACKET_LIMIT, _RECEIPT_LIMIT, _AUTHOR_LIMIT = 32*1024,96*1024,256*1024
+_PACKET_DEPTH, _RECEIPT_DEPTH, _AUTHOR_DEPTH = 32,32,36
 _FLEET_METHODS = {name:getattr(VirtualFleet,name) for name in ('execute','observations')}
 _CLASS_BY_ROLE = {**dict.fromkeys(rf.ROLE_PORTS,rf.RFDevice),
     **dict.fromkeys(instruments.ROLE_PORTS,instruments._Instrument),**facility.DEVICE_FACTORIES}
-_METHODS = {(kind,name):getattr(kind,name) for kind in set(_CLASS_BY_ROLE.values())
-            for name in ('perform','advance','observation','author_control')}
+
+
+def _members(kind):
+    names = {name for base in kind.__mro__ for name,value in vars(base).items()
+             if isinstance(value,(FunctionType,property,staticmethod,classmethod))}
+    return {name:getattr_static(kind,name) for name in names}
+
+
+def _codes(member):
+    if isinstance(member,FunctionType): return (member.__code__,)
+    if isinstance(member,(staticmethod,classmethod)): return _codes(member.__func__)
+    if isinstance(member,property):
+        return tuple(function.__code__ for function in (member.fget,member.fset,member.fdel) if function is not None)
+    return ()
+
+
+_MEMBER_PINS = {kind:{name:(member,_codes(member)) for name,member in _members(kind).items()}
+                for kind in {VirtualFleet,*_CLASS_BY_ROLE.values()}}
+
+
+def _check_members(instance,kind):
+    current, expected = _members(kind),_MEMBER_PINS[kind]
+    if set(current)!=set(expected): raise ValueError('dut_stop_fleet_invalid')
+    data = object.__getattribute__(instance,'__dict__')
+    for name,(member,codes) in expected.items():
+        if name in data or current[name] is not member or _codes(current[name])!=codes:
+            raise ValueError('dut_stop_fleet_invalid')
 
 
 class _Unconfirmed(Exception):
     pass
 
 
-def _copy(value,limit=_RECEIPT_LIMIT):
+def _copy(value,limit=_RECEIPT_LIMIT,*,max_depth=_RECEIPT_DEPTH):
     def walk(item,depth=0):
-        if depth>32: raise ValueError()
+        if depth>max_depth: raise ValueError()
         if type(item) is dict:
             if any(type(key) is not str for key in item): raise ValueError()
             return {key:walk(child,depth+1) for key,child in item.items()}
@@ -76,8 +104,7 @@ class _Configuration:
 
 def _integrity(fleet):
     if type(fleet) is not VirtualFleet: raise ValueError('dut_stop_fleet_invalid')
-    for name,method in _FLEET_METHODS.items():
-        if name in fleet.__dict__ or getattr(VirtualFleet,name) is not method: raise ValueError('dut_stop_fleet_invalid')
+    _check_members(fleet,VirtualFleet)
     if any(type(getattr(fleet,name,None)) is not dict for name in ('_devices','_profiles','_nodes')):
         raise ValueError('dut_stop_fleet_invalid')
     if set(fleet._devices)!=set(fleet._nodes): raise ValueError('dut_stop_fleet_invalid')
@@ -88,9 +115,7 @@ def _integrity(fleet):
         except (KeyError,TypeError):
             raise ValueError('dut_stop_fleet_invalid') from None
         if type(device) is not expected: raise ValueError('dut_stop_fleet_invalid')
-        for method in ('perform','advance','observation','author_control'):
-            if method in device.__dict__ or getattr(expected,method) is not _METHODS[expected,method]:
-                raise ValueError('dut_stop_fleet_invalid')
+        _check_members(device,expected)
 
 
 def _clock(value):
@@ -198,13 +223,20 @@ class SyntheticDutStopAdapter:
         receipt['commands'].append({'request_id':command_id,'action':action})
         event = {'request_id':command_id,'action':action,'raw_response':None,'received_response':None,'error_code':None}
         author['exchanges'].append(event)
+        if action=='stop':
+            receipt['acknowledgement'] = {'received':False,'completion':'unknown','origin':'none'}
         try:
-            raw = _copy(self._command(command_id,action),_PACKET_LIMIT)
-            event['raw_response'] = raw
-            return raw,event
+            raw = self._command(command_id,action)
         except BaseException:
             event['error_code'] = 'runtime_error'
             raise
+        try:
+            packet = _copy(raw,_PACKET_LIMIT,max_depth=_PACKET_DEPTH)
+        except (ValueError,TypeError,RecursionError,OverflowError):
+            event['error_code'] = 'invalid_response'
+            raise _Unconfirmed('invalid_response') from None
+        event['raw_response'] = packet
+        return packet,event
 
     def _checkpoint(self,context,read=None):
         if not self._configuration_valid(): raise _Unconfirmed('configuration_changed')
@@ -231,9 +263,41 @@ class SyntheticDutStopAdapter:
         if not self._configuration_valid(): receipt.update(status='unconfirmed',reason_code='configuration_changed')
         if receipt['reason_code'] not in _REASONS: receipt.update(status='unconfirmed',reason_code='runtime_error')
         stored = _copy(receipt)
+        # Keep the attempted commands/context before composing private diagnostics.
+        self._cache[request_id] = stored
         author['receipt'] = _copy(stored)
-        self._cache[request_id],self._authors[request_id] = stored,_copy(author,_AUTHOR_LIMIT)
+        try:
+            diagnostic = _copy(author,_AUTHOR_LIMIT,max_depth=_AUTHOR_DEPTH)
+        except (ValueError,TypeError,RecursionError,OverflowError):
+            stored.update(status='unconfirmed',reason_code='runtime_error')
+            diagnostic = self._recover_author(request_id,stored,author)
+        self._authors[request_id] = diagnostic
         return _copy(stored)
+
+    def _recover_author(self,request_id,receipt,author):
+        # Four bounded packets + one receipt use at most 224 KiB. Rebuild only
+        # fixed metadata/events so an invalid wrapper cannot discard those packets.
+        diagnostic = {'schema_version':1,'kind':'synthetic_dut_stop_author_record','request_id':request_id,
+            'configuration':self._configuration,'request_context':_copy(receipt['request_context']),
+            'exchanges':[],'receipt':_copy(receipt),'diagnostic_error':'author_record_invalid'}
+        candidates = author.get('exchanges')
+        if type(candidates) is not list: candidates = []
+        for index,command in enumerate(receipt['commands']):
+            event = {**command,'raw_response':None,'received_response':None,'error_code':None}
+            candidate = candidates[index] if index<len(candidates) else None
+            if (type(candidate) is not dict or candidate.get('request_id')!=command['request_id']
+                    or candidate.get('action')!=command['action']):
+                event['error_code'] = 'invalid_response'
+            else:
+                error = candidate.get('error_code')
+                event['error_code'] = error if error in (None,'runtime_error','invalid_response') else 'invalid_response'
+                for field in ('raw_response','received_response'):
+                    try:
+                        event[field] = _copy(candidate.get(field),_PACKET_LIMIT,max_depth=_PACKET_DEPTH)
+                    except (ValueError,TypeError,RecursionError,OverflowError):
+                        event['error_code'] = 'invalid_response'
+            diagnostic['exchanges'].append(event)
+        return _copy(diagnostic,_AUTHOR_LIMIT,max_depth=_AUTHOR_DEPTH)
 
     def stop(self,request_id):
         _identifier(request_id,'dut_stop_request_invalid')
@@ -304,4 +368,4 @@ class SyntheticDutStopAdapter:
         _identifier(request_id,'dut_stop_request_invalid')
         with self._lock:
             if request_id not in self._authors: raise ValueError('dut_stop_request_unknown')
-            return _copy(self._authors[request_id],_AUTHOR_LIMIT)
+            return _copy(self._authors[request_id],_AUTHOR_LIMIT,max_depth=_AUTHOR_DEPTH)
