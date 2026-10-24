@@ -208,6 +208,25 @@ def _index_rows(index):
     return validated
 
 
+def _zip_supported_header(flags, method):
+    # Deflate options, data descriptor and UTF-8 are the supported v1 flags.
+    if (flags & ~0x080E or method not in (zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED)
+            or (method == zipfile.ZIP_STORED and flags & 6)):
+        _fail("packet_zip_invalid")
+
+
+def _zip_extra_without_zip64(raw):
+    position = 0
+    while position < len(raw):
+        if position + 4 > len(raw):
+            _fail("packet_zip_invalid")
+        field, length = struct.unpack_from("<HH", raw, position)
+        position += 4
+        if field == 1 or position + length > len(raw):
+            _fail("packet_zip_invalid")
+        position += length
+
+
 def _zip_directory_preflight(stream, entry_budget):
     # Bound directory allocation before ZipFile builds its list of ZipInfo objects.
     stream.seek(0, os.SEEK_END)
@@ -242,13 +261,23 @@ def _zip_directory_preflight(stream, entry_budget):
         header = stream.read(46)
         if len(header) != 46 or header[:4] != b"PK\x01\x02":
             _fail("packet_zip_invalid")
+        flags, method = struct.unpack_from("<HH", header, 8)
+        _zip_supported_header(flags, method)
+        compressed, uncompressed = struct.unpack_from("<II", header, 20)
+        disk_start = struct.unpack_from("<H", header, 34)[0]
+        local_offset = struct.unpack_from("<I", header, 42)[0]
+        if 0xFFFFFFFF in (compressed, uncompressed, local_offset) or disk_start == 0xFFFF:
+            _fail("packet_zip_invalid")
         actual_count += 1
         if actual_count > entry_budget:
             _fail("packet_limit_exceeded")
         lengths = struct.unpack_from("<HHH", header, 28)
-        position += 46 + sum(lengths)
-        if position > end_offset:
+        next_position = position + 46 + sum(lengths)
+        if next_position > end_offset:
             _fail("packet_zip_invalid")
+        stream.seek(position + 46 + lengths[0])
+        _zip_extra_without_zip64(stream.read(lengths[1]))
+        position = next_position
     if actual_count != count:
         _fail("packet_zip_invalid")
     return count
@@ -259,8 +288,22 @@ def _zip_member_crc(stream, member):
     header = stream.read(30)
     if len(header) != 30 or header[:4] != b"PK\x03\x04":
         _fail("packet_zip_invalid")
+    flags, method = struct.unpack_from("<HH", header, 6)
+    _zip_supported_header(flags, method)
+    if flags != member.flag_bits or method != member.compress_type:
+        _fail("packet_zip_invalid")
+    local_crc, local_compressed, local_uncompressed = struct.unpack_from("<III", header, 14)
+    if 0xFFFFFFFF in (local_compressed, local_uncompressed):
+        _fail("packet_zip_invalid")
+    if not flags & 8 and (local_crc != member.CRC or local_compressed != member.compress_size
+                          or local_uncompressed != member.file_size):
+        _fail("packet_zip_invalid")
     name_length, extra_length = struct.unpack_from("<HH", header, 26)
-    stream.seek(member.header_offset + 30 + name_length + extra_length)
+    stream.seek(member.header_offset + 30 + name_length)
+    extra = stream.read(extra_length)
+    if len(extra) != extra_length:
+        _fail("packet_zip_invalid")
+    _zip_extra_without_zip64(extra)
     remaining, produced, crc = member.compress_size, 0, 0
     decoder = zlib.decompressobj(-zlib.MAX_WBITS) if member.compress_type == zipfile.ZIP_DEFLATED else None
     while remaining:

@@ -29,6 +29,20 @@ def zip_bytes(*, compression=zipfile.ZIP_DEFLATED, name="sample.txt", data=b"sam
     return buffer.getvalue()
 
 
+def central_extra(raw, extra, *, zip64_sizes=False):
+    raw = bytearray(raw)
+    central = raw.index(b"PK\x01\x02")
+    end = raw.rindex(b"PK\x05\x06")
+    name_length, old_extra_length = struct.unpack_from("<HH", raw, central + 28)
+    insertion = central + 46 + name_length + old_extra_length
+    struct.pack_into("<H", raw, central + 30, old_extra_length + len(extra))
+    struct.pack_into("<I", raw, end + 12, struct.unpack_from("<I", raw, end + 12)[0] + len(extra))
+    if zip64_sizes:
+        struct.pack_into("<II", raw, central + 20, 0xFFFFFFFF, 0xFFFFFFFF)
+    raw[insertion:insertion] = extra
+    return bytes(raw)
+
+
 class ControlPacketAuditTests(unittest.TestCase):
     def setUp(self):
         fixture_root = Path(__file__).resolve().parents[1] / ".local" / "CONTROL-PACKET-002-D1" / "fixtures"
@@ -358,6 +372,102 @@ class ControlPacketAuditTests(unittest.TestCase):
                 self.payload("bad.zip", raw)
                 self.save_index()
                 self.error("packet_zip_invalid")
+
+    def test_zip64_local_headers_and_extras_are_rejected(self):
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as archive:
+            with archive.open("sample.txt", "w", force_zip64=True) as member:
+                member.write(b"synthetic")
+        variants = [buffer.getvalue()]
+        for offset in (18, 22):
+            raw = bytearray(zip_bytes())
+            struct.pack_into("<I", raw, offset, 0xFFFFFFFF)
+            variants.append(bytes(raw))
+        # Even an unnecessary ZIP64 extra with ordinary sizes is unsupported.
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as archive:
+            info = zipfile.ZipInfo("sample.txt")
+            info.extra = struct.pack("<HH", 1, 0)
+            archive.writestr(info, b"synthetic")
+        variants.append(buffer.getvalue())
+        for number, raw in enumerate(variants):
+            with self.subTest(variant=number):
+                self.payload("zip64-local.zip", raw)
+                self.save_index()
+                self.error("packet_zip_invalid")
+
+    def test_zip64_central_fields_and_extras_rejected_before_allocation(self):
+        base = zip_bytes(compression=zipfile.ZIP_STORED, data=b"synthetic")
+        variants = [central_extra(base, struct.pack("<HHQQ", 1, 16, 9, 9), zip64_sizes=True),
+                    central_extra(base, struct.pack("<HH", 1, 0))]
+        for offset, format_, sentinel in ((20, "<I", 0xFFFFFFFF), (24, "<I", 0xFFFFFFFF),
+                                          (42, "<I", 0xFFFFFFFF), (34, "<H", 0xFFFF)):
+            raw = bytearray(base)
+            struct.pack_into(format_, raw, raw.index(b"PK\x01\x02") + offset, sentinel)
+            variants.append(bytes(raw))
+        for number, raw in enumerate(variants):
+            with self.subTest(variant=number):
+                self.payload("zip64-central.zip", raw)
+                self.save_index()
+                with mock.patch.object(audit.zipfile, "ZipFile", side_effect=AssertionError("allocated ZIP64")):
+                    self.error("packet_zip_invalid")
+
+    def test_unknown_well_formed_zip_extra_remains_supported(self):
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as archive:
+            info = zipfile.ZipInfo("sample.txt")
+            info.extra = struct.pack("<HH", 0xCAFE, 3) + b"abc"
+            archive.writestr(info, b"synthetic")
+        self.payload("ordinary-extra.zip", buffer.getvalue())
+        self.save_index()
+        self.assertEqual(self.run_audit()["zip_uncompressed_bytes"], 9)
+
+    def test_local_header_flags_and_method_must_be_supported_and_match(self):
+        for offset, value in ((6, 1), (6, 0x40), (6, 0x2000), (6, 8), (6, 0x800),
+                              (6, 2), (8, 99), (8, zipfile.ZIP_STORED)):
+            with self.subTest(offset=offset, value=value):
+                raw = bytearray(zip_bytes())
+                struct.pack_into("<H", raw, offset, value)
+                self.payload("local-mismatch.zip", bytes(raw))
+                self.save_index()
+                self.error("packet_zip_invalid")
+
+    def test_unsupported_flags_in_both_headers_are_rejected(self):
+        raw = bytearray(zip_bytes())
+        for offset in (6, raw.index(b"PK\x01\x02") + 8):
+            struct.pack_into("<H", raw, offset, 0x2000)
+        self.payload("unsupported-flags.zip", bytes(raw))
+        self.save_index()
+        self.error("packet_zip_invalid")
+
+    def test_supported_utf8_local_and_central_headers_are_valid(self):
+        self.payload("utf8.zip", zip_bytes(name="synthetic-\uac00.txt"))
+        self.save_index()
+        self.assertEqual(self.run_audit()["zip_entry_count"], 1)
+
+    def test_local_crc_and_sizes_match_central_without_data_descriptor(self):
+        for offset in (14, 18, 22):
+            with self.subTest(offset=offset):
+                raw = bytearray(zip_bytes())
+                value = struct.unpack_from("<I", raw, offset)[0]
+                struct.pack_into("<I", raw, offset, value ^ 1)
+                self.payload("local-metadata.zip", bytes(raw))
+                self.save_index()
+                self.error("packet_zip_invalid")
+
+    def test_supported_data_descriptor_local_zero_fields_are_valid(self):
+        class Unseekable(io.BytesIO):
+            def seek(self, *args, **kwargs):
+                raise io.UnsupportedOperation("synthetic streaming sink")
+
+        buffer = Unseekable()
+        with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("streamed.txt", b"synthetic")
+        raw = buffer.getvalue()
+        self.assertTrue(struct.unpack_from("<H", raw, 6)[0] & 8)
+        self.payload("descriptor.zip", raw)
+        self.save_index()
+        self.assertEqual(self.run_audit()["zip_uncompressed_bytes"], 9)
 
     def test_zip_entry_limit_preflight(self):
         buffer = io.BytesIO()
