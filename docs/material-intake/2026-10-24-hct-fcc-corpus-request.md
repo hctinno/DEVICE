@@ -1,5 +1,11 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+2026-10-24 B016: S02B0018/S03B0016/S04B0016 정확3묶음52payload3372303B(50JSON·1PDF·1MD)을독립private clone에byte인수·명시ACK3했다.index/집합/SHA/bytes/UTF8/PDFmagic·공유원본identity/mtime/mode불변·P01review3전체/좌표보강3을확인했다.root PDF는bytecopy/hash/magic1,parser/native/render/OCR/산술0으로P01의20쪽구조/4primary·11facts/요약6행한정검토와구별한다.권리unknown/비공개·원보안보존/복호문·식별자·원시값공개0이다.
+
+ACK후대상16PDF603쪽36642346B=직접15+parent1,제외1/46/2771507B·대응보류1/53/4626750B·전체보존18/702/44040603B는적격18이아니다.새DFS의NT/PASS/Note2·Slavewithoutdetection은source진술이며현재규범/실측승인0이다.S02정확fccid.io링크403/PDF0은공식FCC403·부재아님,재시도/대체0.S03wrapper8/직접본문제목0·HAC한정107/181·미방문74,원ACK8~12와실제max8·관측8·원제어cutoff단계차이/기존한계를보존한다.
+
+FOLLOWUP-20261024-006을P01에실제요청해S08이비면새1metadata delta만기존대장에연결하고S07이비면KDB보고서인용판본을기존공식보유근거/판본대장과4~6행으로대조하도록했다.기보유자료먼저재사용·없는현재판본/해석미확인·원문재다운로드/반복실패/수치전사/실측PASS판단0이다.B016공개4d3abe8ac35ce7bff295c56cf5c52343a7149a9f 원격exact·공개3파일/ACK3·87/87·52/52와FOLLOWUP006 v049 실제배정ACK2/고정입력29·task/동결ACK원바이트를대조했다. [통합024](../../handoff/development/INTEGRATION-024.md)synthetic CLI검증은이자료의전체계산/모델/실물승인이아니다.공식0/전수unknown·사용자준비0·P01한창구·원문비공개를유지하고아래B015는당시기록이다.
+
 2026-10-24 B015: S02B0017/S03B0015/S04B0015/S08B0015 정확4묶음66payload568724B(65JSON·1MD/PDF0)을 비공개 byte 인수·명시ACK4했다. index/집합/SHA/bytes/UTF8·공유원본 identity/mtime/mode와 P01검토4 전체를 확인했다. 공개1b65c7bae68ef584dc05243b2cc3493d3ce4a666 원격exact·공개3파일/ledger·ACK영수증대조,collector84/84·corpus49/49다. 신규원문0/대상15PDF583쪽33525071B=직접14+부모1·별도제외1/46·대응보류1/53·전체보존17/682는적격17이아니다.
 
 America Q4/국내Q3 secondary12개씩의선택검색/미래available/기관역할·접근실패·rights/발행미확인과잠재식별자값비전송한계를보존한다. HAC보유physical47~54관측8=직접제목1/한계7,누적primary-region inspection99/181·미방문82이며성공제목99나전쪽의미검토가아니다.p51인쇄쪽수null·기존41/45·calibration미검토를유지한다.S08 descriptor2/고정metadata16/locator186/SHA비교75=차이75/누락0은데이터독립성·현재15새전수검수가아니다.root새PDF stat/open/hash/native/render/OCR/copy/산술0이다.

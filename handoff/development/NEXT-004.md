@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합024](INTEGRATION-024.md) 기능fdd40c13/045신규3·새2015Python156Node/source217·실제자식9·journal7/별도평가0을고정한다.
+
+| 담당 | 다음 실제 단위 |
+|---|---|
+| 개발1 |049backend private최종계약/static3delta→독립리뷰·공개specplan/acceptedbase→기존ui_server/test·신규usage3 구현.047은그뒤 |
+| 개발2 |0238997e27/046spec·plan·043/042 exactpin ACK·전용branch 신규3 코어 구현.실제host/HTTP/DOM후속분리 |
+| 개발3 |[048 설계](../../docs/superpowers/specs/2026-10-24-virtual-fleet-rf-signal-read-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-virtual-fleet-rf-signal-read.md) A/new3 exact게시base 실제배정.새run/evaluate/서버0 |
+| 개발4 |044A1 38e0e1b 독립Yes C0I0/typed30+추가12/DOM18+추가5→다음cut인수. A2frontend계획/서버static3·정확소유배정후구현 |
+| 총괄 |024정확게시/048즉시배정·044정확인수/적절회귀·049계약/공용hook·다음통합.담당제품대신구현0 |
+| P01 |B0163 byte인수ACK/대상16/603·HAC한정107/181. P01공개4d3abe8a exact·87/87·52/52. FOLLOWUP006 S08신규1metadata delta/S07기존공식판본4~6행 실제배정ACK2/고정입력29 대조완료 |
+
+새고객PDF/DOM/실제모델·실물0. 사용자준비0·공식0/전수unknown과원본비공개를유지한다.실제메시지·정확base·sourcepin·scope는최신privatefollowup을따르고아래023은당시기록이다.
+
 최신 [통합023](INTEGRATION-023.md)의043/기능938406ca·새1980Python/156Node·소스215·genuine043→0427call을 고정한다.
 
 | 담당 | 현재·다음 작은 단위 |
