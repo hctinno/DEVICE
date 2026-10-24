@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+최신 기준은 [통합012](INTEGRATION-012.md)의 기능1635cf2/새 전체 Python1237·skip0/Node86·실제화면46묶음·가상Fleet정지17사례다. DELTA015·STOP013 수정·UI017은 독립 최종 Yes 후 인수했다. 신규 corpus 지시 전체/SHA와 [P01 요청012·실제 v0218배정](../../docs/material-intake/2026-10-24-hct-fcc-corpus-request.md)을 보존하며 아래011 당시 표보다 다음 현재 표를 우선한다.
+
+| 담당 | 현재 보존/검토 | 현재 실제 다음 단위 |
+|---|---|---|
+| 개발1 | PREPARE004 수정fa7c354 독립 최종 재검토, 소유 branch/실패/119검사·실제S08 보존. 미통합 | [CASE-CATALOG021/VIEW024 계약](../../docs/superpowers/specs/2026-10-24-hct-fcc-case-catalog-design.md)의 새 branch `codex/dev1-fcc-case-catalog021-20261024`/신규3파일 ACK. exact usage/DTO→페이지 근거/조회·접수 연결 구현 |
+| 개발2 | STOP013 b9f2e01 최종 Yes/총괄3a18b34 인수. HARNESS016 7d8968a 소유 게시/34전용·실제20과labelled8/직렬화1 별도, 독립 최종 코드 리뷰 대기 | [GROUPS022](../../docs/superpowers/specs/2026-10-24-fcc-case-evaluation-groups-design.md) 새branch/신규3파일 실제 배정. canonical family/FCC/report/SHA/reuse 전체연결 성분으로 평가 유출/부분 선택·부적격 거절 |
+| 개발3 | DELTA015 726aa5c 독립 Yes/총괄be66862 인수 | [E3632A019](../../docs/superpowers/specs/2026-10-24-e3632a-virtual-readback-design.md), branch `codex/dev3-e3632a-virtual-readback-019-20261024`/신규3파일 ACK. observations1 logical read와조건부measure≤1/typedDTO·부분진행·cache.011 검수12JSON 인수 전달. 다음corpus023 계산/가상 연결은019 종료 후 작은 계약 고정 |
+| 개발4 | UI01784e5a2e 독립 Yes/총괄1635cf2·Node86/실제DUT19 인수 | CASE-VIEW024 branch `codex/dev4-fcc-case-view024-20261024`/신규5파일 ACK.021 DTO 동결 전 UX·도구 준비,확정 후RED/GREEN·actual producer→GET→DOM을contract와분리 |
+| P01 | 기존 READBACK011 index b19883ff/12JSON224609B 인수 ACK·기존source7 재사용 검수 | CORPUS012 v021 실제8전송/정확 ACK 확인·기존22PDF 재사용 검수/최대4신규 첫B001·후속배치,전수모집단unknown |
+
+총괄은 담당 구현을 일괄 대신하지 않는다. 현재 단위 완료 뒤 다음 계약/구현을 바로 배정하며 CLI005는 보존 backlog다. 원본/복호문/실측값·암호·실제 SDK/네트워크/장비 명령/모델 호출은 추가 실행하지 않는다. 가상·원문 근거·계산·실제AI·물리 검증을 분리하고 현재 사용자 결정/준비0을 유지한다.
+
 현재 기준은 [통합011](INTEGRATION-011.md)의 기능3350fa3와 새 전체 Python1176/skip0·Node81·정식 API 브라우저의 DUT자료12/장비·NAV17/합성접수10=39묶음 PASS다. 합성source→최대API6사례도 별도 실행했다. RsInstrument 소프트웨어 Simulation10관측은 이전010의 보존 실행 증거다. 아래010/009/008·이전 배정 문장은 보존 이력이며 현재 단계는 이 표를 우선한다.
 
 | 담당 | 인수된 마지막 단위 | 현재 실제 후속 |

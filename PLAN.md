@@ -2,6 +2,8 @@
 
 작성일: 2026-10-23, Asia/Seoul
 
+2026-10-24 현재 [통합012](handoff/development/INTEGRATION-012.md): DELTA015·수정 STOP013·후속자료 UI017을 독립 Yes 후 인수했다. 새 전체 Python1237/Node86·실제 화면46묶음/가상Fleet정지17사례 PASS다. [신규 HCT FCC corpus012](docs/material-intake/2026-10-24-hct-fcc-corpus-request.md)는 발행2025~실제마감의 국내 HCT/America 전수 대상으로 P01→수집1~8 v021 실제 배정을 시작했다. 보유22PDF 재검수/첫작은B001부터 사례 조회021·화면024, 그룹평가022와019 후속 계산/가상 연결을 이어간다. 기존 branch/미커밋·소유 작업/첫b/g/n·Un-licensed 결정은 보존하며 모집단·단계별 수는 검수 전 미산정이다. 현재 사용자 준비0, 실물/실제AI 완료 주장은 없다. 아래011 이하는 보존 이력이다.
+
 2026-10-24 현재 [통합011](handoff/development/INTEGRATION-011.md): DUT API의 실제 읽기 화면·정확 연속3kHz 최대를 독립 Yes 후 인수해 새 전체 Python1176/skip0·Node81·실제브라우저39묶음/명시source최대6사례 PASS다. 후속 확보 metadata6그룹/22file만 새 pin으로 구분했고 P01의 기존009/010 자료를 재사용한다. [후속](handoff/development/NEXT-004.md)의 prepare004/stop013 지적 소유 수정, DELTA015/API·화면017을 실제 배정해 구현 중이다. 기존 데이터/소유권·전체 무인화 목표를 유지하며 실제 단말/RF/현장·실제 AI는 미검증, 사용자 추가 준비0이다. 아래010/008 이하는 보존 이력이다.
 
 2026-10-24 최신 [통합008](handoff/development/INTEGRATION-008.md): 고정 조사8dec2d7 인수·재검증과 현재 DB2867모델/6470장비관계 무변경 대조를 완료했다. [별도 제어자료 카탈로그](control_sources/README.md)와 [어댑터 계획](docs/fcc/control_adapter_roadmap.md)에 반영해 개발1 조회API/개발4 출처·지원단계 화면/개발3 N1914A 합성전송 경계를 실제 배정했다. 개발2 probe와 P01 CTRL001..006 추가 수집을 병렬로 계속한다. 보존replay 공통접점·frequency source·실제 계산브라우저를 인수해 관련Python274/actual spectrum8/self14 PASS를 확인했으며 직전 전체848과 구별한다. 실제 제품Mock/실물·현장 비교와 전체 업무 실증은 남아 있고 현재 사용자 추가 준비물0이다.
