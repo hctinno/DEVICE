@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+최신 기준은 [통합016](INTEGRATION-016.md)의기능 `c7ac91dff5ded5af0ce8407c8e8d408452585d0e`다.027/030/032 정확3소유commit·독립Yes 뒤 새전체1646/Node103·source193불변/제품route17+14를확인했다. S05추가검사는단일case의옛도구전제실패로11후2미실행을보존하고033 별도mode에배정했다. corpus012 현재10고유PDF431쪽/전수unknown·official0이며아래015 이하는당시이력이다.
+
+| 담당 | 인수와 현재 단계 | 실제 후속/수용조건 |
+|---|---|---|
+| 개발1 | 030인수db23e29.031정식8JSON lead64978982 인수/개발3 실제연결 | [035B설계](../../docs/superpowers/specs/2026-10-24-fcc-case-packet-preparation-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-packet-preparation.md) 승인/소유3파일 구현실제배정.128ID/입력evidence12/manifest2..128 설명정정·root 새index a57b6b3c/2JSON 제공·원문I/O0 |
+| 개발2 | 032인수c7ac91d.034A→B/R1 선택·정적C0/I2보존 | [034A설계](../../docs/superpowers/specs/2026-10-24-intake-reference-snapshot-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-reference-snapshot.md) 신규3파일 read-only mode=ro/same-con snapshot 구현배정. 공통Store/schema/기존readiness변경0·B별도계약·현재고객/모델0 |
+| 개발3 | 026기준0807fe2보존.031실제constructor/case/023/calculator각1·native5/밖0·reported/comparisonnull, ownerfbee1702/독립인수검토실제배정 | 031지적우선/036명시scalar계산→읽기화면최소계약제안 배정. 신규수학/자동claim선택/타담당033파일·실장비/권한변경0 |
+| 개발4 | 027인수d32c4b5.033별도lookup HTTP6/model9 RED·단일case조건ACK | 소유10파일/고정033구현·검증/최대정상8MiB부모각각/실제S03 2+S05 5조회·whole상충미확인/late답변·이전17/14 의미 보존 |
+| P01 | S01B0016/S02B0010/S03B0009 인수/명시ACK·10원본/참조431쪽 | 기존수집1~8만·S01 Q1태블릿EMC 한건/S08 현재10대옛22 frozenmetadata14 재대조 계속. 원문/전쪽semantic/모집단·판본/공식/권리/규범 gap을유지 |
+
+016cut은027/030/032로고정하며준비된033/034/035/036을뒤늦게추가해게시를미루지않는다.현재사용자준비0·실제모델/학습·실물/현장·외부제출미실행이다.
+
 최신 기준은 [통합015](INTEGRATION-015.md)의 기능 `ada7e2bdedfa30c68fbdccc248f43927bc930c0f`다.028/029/026fix의 소유4commit을 독립Yes 후 인수했고 새 전체 Python1578/Node103·source186불변·실제3PDF153쪽 재생/발견7/준비부족3/평가6null을 확인했다. corpus012는9고유PDF424쪽 인수·모집단unknown/공식대응0이다. 아래014 이하는 당시 이력이며 이 표를 우선한다.
 
 | 담당 | 현재 인수/독립 검토 | 실제 후속과 수용 조건 |
