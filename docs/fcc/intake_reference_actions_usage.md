@@ -20,6 +20,6 @@ python scripts/check_artifacts.py
 
 checker는 고정 synthetic wire와 실제 browser 구성요소만 사용하며 port0/소유 ignored `.local` 증거를 만든다. 실제 backend mode/임의 URL은 미구현 상태에서 거절한다. parent/실제HTTP·업무 원문/모델/장비 실행은 C1 수로 올리지 않는다. C2의 실제 static1/app3/동일 session·source gate·genuine API·종료 검증은 accepted backend와050 F2의 별도 정확base/배정 뒤 수행한다.
 
-2026-10-25 소유 C1 검증은 단위24개와 전체 Node210개(기존186+신규24, fail/skip0), component wire/DOM22개·기존 A1 trusted DOM18개를 구분한다. module 부재·실제 behavior·시간 제한/불명 보존·동시 동작/자원 반환·view 부재 RED를 보존했다. 첫 `.local` 없는 별도 체크아웃·CLI 선행 거절·390/1440/keyboard/focus·late-beforeparse·브라우저/정적서버 종료와 source 핀은 소유 영수증에서 확인한다. 최종 독립 제품 인수는 별도다.
+2026-10-25 소유 C1 검증은 단위24개와 전체 Node210개(기존186+신규24, fail/skip0), component wire/DOM23개·기존 A1 trusted DOM18개를 구분한다. module 부재·실제 behavior·시간 제한/불명 보존·동시 동작/자원 반환·view 부재·retired 뒤의 공개 결과불명 표시 RED를 보존했다. 첫 `.local` 없는 별도 체크아웃·CLI 선행 거절·390/1440/keyboard/focus·late-beforeparse·브라우저/정적서버 종료와 source 핀은 소유 영수증에서 확인한다. 최종 독립 제품 인수는 별도다. 원 준비가 폐기돼도 공개 결과불명 안내를 미저장으로 바꾸지 않는다.
 
 이 branch는 승인 A1 model/view만 의존하며 기존050 F1 app/transport를 합치지 않는다.050 F1의 기존 검증은 이전 별도 branch 결과이고 이번에 실제050/F2를 실행한 것으로 세지 않는다. 전체 backend Python·실제049/053/046 HTTP·025 입력 생산/모델·고객PDF·장비/현장은 미실행이다. root027 Python2092/Node186은 과거의 서로 다른 검증이다. component CSS는 수용 harness이며 제품 app/index/styles와 CSP는 변경하지 않았다.

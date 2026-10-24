@@ -163,6 +163,9 @@ async function main(argv=process.argv.slice(2)){
   await next('append','unsafe');await page.locator('.ra-append').click();await phase('uncertain');
   assert.match(await page.locator('.ra-status').innerText(),/정확하게 표현/);checks.push('unsafe_seq_keeps_uncertain_never_rounded_or_success');
   await page.locator('.ra-capabilities').click();await phase('uncertain');await next('append','expired');await page.locator('.ra-replay').click();await phase('retired');
+  assert.equal(await page.locator('.ra-unresolved').count(),1);assert.equal(await page.locator('.ra-unresolved').isVisible(),true);
+  assert.match(await page.locator('.ra-unresolved').innerText(),/등록 결과.*확인/);
+  checks.push('retired_keeps_prior_delivery_unknown_public_observation');
   checks.push('server_410_retired_without_fake_restoration');
   await next('history','denied');await page.locator('.ra-prepare').click();await phase('unconfigured');assert.equal(await page.locator('.ra-append').isDisabled(),true);
   checks.push('unconfigured_capability_closes_source_fixed_Korean_state');

@@ -232,10 +232,11 @@ function timeLabel(value){
 export function createIntakeReferenceActionsReview(container){
  let doc;try{doc=container.ownerDocument;need(container instanceof doc.defaultView.HTMLElement);}catch{fail(INVALID);}
  let alive=true,current={context:null,phase:'idle',pending:false,prepare_allowed:false,append_allowed:false,preview:null,registration:null,error_code:null};
- let lastPreview=null,lastRegistration=null;
+ let lastPreview=null,lastRegistration=null,dispatchContext=null,unresolved=null;
  const el=(tag,cls='',text)=>{const node=doc.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;};
  const root=el('section','reference-actions-review panel');root.setAttribute('aria-label','참고 검토 준비와 등록');
  const selection=el('p','ra-selection mono','접수를 선택하세요.'),status=el('p','ra-status','아직 준비하지 않았습니다.');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+ const unresolvedNote=el('p','ra-note ra-unresolved','이전에 전송한 등록 결과는 아직 확인되지 않았습니다. 이력에서 등록 여부를 확인하세요.');unresolvedNote.hidden=true;
  const controls=el('div','ra-controls');
  const buttons={capabilities:el('button','button ra-capabilities','준비 가능 여부 다시 확인'),prepare:el('button','button ra-prepare','검토 준비'),
   append:el('button','button ra-append','참고 이력 등록'),replay:el('button','button ra-replay','원래 요청 재전송')};
@@ -244,7 +245,7 @@ export function createIntakeReferenceActionsReview(container){
  const pNote=el('p','ra-note'),rNote=el('p','ra-note'),pBody=el('div','ra-preview'),rBody=el('div','ra-registration');
  pSection.append(el('h3','','검토 준비 관측'),pNote,pBody);rSection.append(el('h3','','참고 등록 관측'),rNote,rBody);columns.append(pSection,rSection);
  root.append(el('h2','','참고 검토 · 준비와 등록'),selection,
-  el('p','ra-note','보존자료와 참고 결합을 확인하고 명시적으로 참고 이력에 등록합니다. 시험 착수 권한은 변경되지 않습니다.'),controls,status,
+  el('p','ra-note','보존자료와 참고 결합을 확인하고 명시적으로 참고 이력에 등록합니다. 시험 착수 권한은 변경되지 않습니다.'),controls,status,unresolvedNote,
   el('p','ra-note','서버의 준비 기한을 따릅니다. 연결이 바뀌거나 응답을 확인하지 못하면 이력을 먼저 확인하세요.'),columns);container.append(root);
  const literal=value=>value===null?'null':Array.isArray(value)?value.join(', '):String(value);
  const fields=items=>{const dl=el('dl','ra-fields');for(const [key,value] of items){const row=el('div');row.append(el('dt','',key),el('dd','mono',literal(value)));dl.append(row);}return dl;};
@@ -279,6 +280,11 @@ export function createIntakeReferenceActionsReview(container){
  }
  function render(state){
   if(!alive)return;current=state;root.dataset.phase=state.phase;root.dataset.pending=String(state.pending);root.setAttribute('aria-busy',String(state.pending||['capabilities_pending','preparing','appending'].includes(state.phase)));
+  if(state.phase==='appending')dispatchContext=copy(state.context);
+  if(state.phase==='uncertain'&&dispatchContext&&(!unresolved||!origin(unresolved.context,dispatchContext)))unresolved={context:copy(dispatchContext),retired:false};
+  if(state.phase==='retired'&&unresolved)unresolved.retired=true;
+  if(state.phase==='recorded'&&state.registration&&unresolved&&!unresolved.retired&&origin(unresolved.context,dispatchContext))unresolved=null;
+  unresolvedNote.hidden=!unresolved||!origin(unresolved.context,state.context)||(state.phase==='uncertain'&&state.error_code!==UNSAFE);
   selection.textContent=state.context?state.context.intake_id+' · v'+state.context.revision:'현재 선택 없음';
   status.dataset.error=state.error_code||'';status.textContent=state.error_code===UNSAFE?'일부 번호를 이 화면에서 정확하게 표현할 수 없습니다. 원래 요청과 이전 결과를 유지합니다.':messages[state.phase];
   if(state.preview){pBody.replaceChildren(paintPreview(state.preview));lastPreview={context:copy(state.context),value:state.preview};}
@@ -302,6 +308,6 @@ export function createIntakeReferenceActionsReview(container){
  }
  render(current);
  const destroy=()=>{if(!alive)return;alive=false;controller.destroy();for(const [button,fn] of listeners)button.removeEventListener('click',fn);
-  lastPreview=null;lastRegistration=null;root.remove();};
+  lastPreview=null;lastRegistration=null;dispatchContext=null;unresolved=null;root.remove();};
  return Object.freeze({root,setContext:value=>controller.setContext(value),setPending:value=>controller.setPending(value),refreshCapabilities:()=>controller.refreshCapabilities(),destroy});
 }
