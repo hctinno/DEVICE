@@ -1,17 +1,20 @@
 import {createFccCaseReader} from '/fcc-cases/view.mjs';
 import {parseFccCaseJson, validateFccCaseSummary, FCC_CASE_ERROR_CODES} from '/fcc-cases/model.mjs';
+import {createFccCaseDiscovery} from '/fcc-cases/discovery_view.mjs';
+import {fccCaseLookupTarget, FCC_CASE_LOOKUP_MAX_BYTES} from '/fcc-cases/discovery_model.mjs';
 
 const state = document.querySelector('#fcc-route-state');
 const status = document.querySelector('#fcc-route-status');
 const retry = document.querySelector('#fcc-route-retry');
 const container = document.querySelector('#fcc-reader');
+const lookupSlot = document.querySelector('#fcc-lookup-slot');
 const allowedErrors = new Set([...FCC_CASE_ERROR_CODES, 'fcc_case_catalog_unconfigured', 'fcc_case_catalog_unavailable']);
-let reader = null, controller = null, generation = 0, alive = true;
+let reader = null, discovery = null, controller = null, generation = 0, alive = true;
 
-async function get(target, signal) {
+async function readResponse(target, signal, cap) {
   const response = await fetch(target, {signal, cache: 'no-store', credentials: 'same-origin', redirect: 'error'});
   const declared = response.headers.get('content-length');
-  if (declared !== null && (!/^\d+$/.test(declared) || Number(declared) > 8 * 1024 * 1024)) {
+  if (declared !== null && (!/^\d+$/.test(declared) || Number(declared) > cap)) {
     await response.body?.cancel();
     throw Error('invalid_fcc_case_response');
   }
@@ -23,7 +26,7 @@ async function get(target, signal) {
       const {done, value} = await stream.read();
       if (done) break;
       length += value.byteLength;
-      if (length > 8 * 1024 * 1024) throw Error('invalid_fcc_case_response');
+      if (length > cap) throw Error('invalid_fcc_case_response');
       chunks.push(value);
     }
   } catch (error) {
@@ -35,15 +38,18 @@ async function get(target, signal) {
   const bytes = new Uint8Array(length);
   let offset = 0;
   for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
-  const value = parseFccCaseJson(new TextDecoder('utf-8', {fatal: true, ignoreBOM: true}).decode(bytes));
+  const text = new TextDecoder('utf-8', {fatal: true, ignoreBOM: true}).decode(bytes);
   if (!response.ok) {
+    const value = parseFccCaseJson(text);
     const code = value?.error?.code;
     if (Object.keys(value).join() !== 'error' || !value.error || Object.keys(value.error).join() !== 'code'
         || !allowedErrors.has(code)) throw Error('invalid_fcc_case_response');
     throw Error(code);
   }
-  return value;
+  return text;
 }
+
+const get = async (target, signal) => parseFccCaseJson(await readResponse(target, signal, 8 * 1024 * 1024));
 
 async function connect() {
   if (!alive) return;
@@ -68,6 +74,12 @@ async function connect() {
     container.hidden = false;
     state.hidden = true;
     await reader.refresh();
+    if (!alive || ticket !== generation) return;
+    reader.root.insertBefore(lookupSlot, reader.root.querySelector('.fcc-summary'));
+    discovery = createFccCaseDiscovery(lookupSlot, {summary: first,
+      readLookup: (query, signal) => readResponse(fccCaseLookupTarget(query), signal, FCC_CASE_LOOKUP_MAX_BYTES),
+      selectCase: id => reader.select(id)});
+    lookupSlot.hidden = false;
   } catch (error) {
     if (!alive || ticket !== generation) return;
     const unconfigured = error?.message === 'fcc_case_catalog_unconfigured';
@@ -80,6 +92,6 @@ async function connect() {
 
 retry.addEventListener('click', () => { void connect(); });
 window.addEventListener('pagehide', () => {
-  alive = false; generation++; controller?.abort(); reader?.destroy();
+  alive = false; generation++; controller?.abort(); discovery?.destroy(); reader?.destroy();
 }, {once: true});
 void connect();

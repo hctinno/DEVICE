@@ -9,6 +9,7 @@ import tempfile
 import threading
 import unittest
 from unittest.mock import patch
+from urllib.parse import urlencode
 
 from reportlab.pdfgen import canvas
 
@@ -17,7 +18,7 @@ from labflow.document_extract import extract_document, page_citation
 from labflow.fcc_report_cases import FccReportCaseCatalog, FccReportCaseError
 
 
-def synthetic_catalog(*, empty=False):
+def synthetic_catalog(*, empty=False, rich=False, large=False):
     packet = {
         'schema_version': 1, 'corpus_id': 'SYNTHETIC-ROUTE027',
         'scope': {'issue_date_from': '2025-01-01', 'cutoff_at': '2026-10-24T12:00:00+09:00',
@@ -57,7 +58,28 @@ def synthetic_catalog(*, empty=False):
                     'status': 'extracted', 'basis': 'report_fact', 'evidence': [deepcopy(evidence)]}],
         'relations': [], 'reuse_group_ids': [],
     }]
+    if rich or large:
+        rows = [('report.number', 'SYNTHETIC-REPORT'), ('issuer.classification', 'hct_korea'),
+                ('issuer.legal_name', 'SYNTHETIC issuer'), ('issuer.address', 'SYNTHETIC address'),
+                ('report.issue_date', '2025-05-01'), ('product.family', 'smartphone'),
+                ('product.models', ['SYNTHETIC-MODEL']), ('method.rules', ['47 CFR 15.247']),
+                ('method.references', ['SYNTHETIC METHOD 2020'])]
+        for i, (field, value) in enumerate(rows):
+            packet['cases'][0]['claims'].append({
+                'claim_id': 'SYN-RICH-' + str(i), 'field': field, 'value': value, 'unit': None,
+                'status': 'reviewed', 'basis': 'developer_inference' if field == 'issuer.classification'
+                else 'standard_reference_only' if field == 'method.references' else 'report_fact',
+                'evidence': [deepcopy(evidence)]})
+        if large:
+            for field, count, lead in [('method.references', 127, 'SYNTHETIC-METHOD-'),
+                                       ('product.models', 39, 'SYNTHETIC-MODEL-')]:
+                row = next(c for c in packet['cases'][0]['claims'] if c['field'] == field)
+                row['value'] += [lead + str(i) + '-' + 'X' * 15950 for i in range(count)]
     return FccReportCaseCatalog(packet, {sha: blob})
+
+
+LOOKUP_QUERY = {'product_family': 'smartphone', 'rule': '47 CFR 15.247',
+                'method': 'SYNTHETIC METHOD 2020', 'model': 'SYNTHETIC-MODEL'}
 
 
 class FccCaseUiServerTests(unittest.TestCase):
@@ -271,6 +293,93 @@ class FccCaseUiServerTests(unittest.TestCase):
         for headers in [{'Host': 'attacker.invalid'}, {'Origin': 'https://attacker.invalid'},
                         {'Sec-Fetch-Site': 'cross-site'}]:
             self.error(server, '/api/fcc-cases/summary', 403, 'local_origin_required', headers=headers)
+
+    def test_lookup_uses_two_formal_methods_once_and_returns_exact_envelope_and_head(self):
+        catalog = synthetic_catalog(rich=True)
+        expected = {'schema_version': 1, 'kind': 'fcc_report_case_lookup',
+                    'search': catalog.search(LOOKUP_QUERY), 'discovery': catalog.discover(LOOKUP_QUERY)}
+        original_search, original_discover = FccReportCaseCatalog.search, FccReportCaseCatalog.discover
+        calls = []
+        def search(instance, query):
+            calls.append(('search', deepcopy(query))); return original_search(instance, query)
+        def discover(instance, query):
+            calls.append(('discover', deepcopy(query))); return original_discover(instance, query)
+        catalog.search = catalog.discover = lambda *_: (_ for _ in ()).throw(AssertionError('PRIVATE_CANARY callback'))
+        with patch.object(FccReportCaseCatalog, 'search', search), patch.object(FccReportCaseCatalog, 'discover', discover):
+            server = self.start(catalog, explicit=True)
+            target = '/api/fcc-cases/lookup?' + urlencode(LOOKUP_QUERY)
+            with patch.object(Path, 'read_bytes', side_effect=AssertionError('PRIVATE_CANARY original read')):
+                status, headers, body = self.request(server, target)
+            self.assertEqual(status, 200)
+            self.assertEqual(json.loads(body), expected)
+            self.assertEqual(calls, [('search', LOOKUP_QUERY), ('discover', LOOKUP_QUERY)])
+            head = self.request(server, target, 'HEAD')
+            self.assertEqual(head[0], 200); self.assertEqual(head[2], b'')
+            self.assertEqual(head[1]['Content-Length'], str(len(body)))
+            self.assertEqual(headers['Cache-Control'], 'no-store')
+
+    def test_lookup_missing_blank_partial_and_unicode_queries_keep_original_statuses(self):
+        server = self.start(synthetic_catalog(rich=True), explicit=True)
+        for suffix in ['', '?', '?model=']:
+            status, _, body = self.request(server, '/api/fcc-cases/lookup' + suffix)
+            self.assertEqual(status, 200)
+            value = json.loads(body)
+            self.assertEqual(value['search']['status'], 'insufficient_evidence')
+            self.assertEqual(value['discovery']['status'], 'insufficient_context')
+        status, _, body = self.request(server, '/api/fcc-cases/lookup?model=SYNTHETIC-MODEL')
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body)['discovery']['items'][0]['criteria']['rule']['status'], 'not_requested')
+        query = {key: '\U0001f9ea' * 256 for key in LOOKUP_QUERY}
+        target = '/api/fcc-cases/lookup?' + urlencode(query)
+        self.assertGreater(len(target), 4096)
+        status, _, body = self.request(server, target)
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body)['discovery']['query'], query)
+
+    def test_lookup_query_failures_are400_and_other_paths_stay_strict404(self):
+        server = self.start()
+        for query in ['unknown=x', 'model=A&model=B', 'model=%', 'model=%ff', 'model=++',
+                      urlencode({'model': '\U0001f9ea' * 257}), 'model=' + 'a' * 16384,
+                      'product_family=&rule=&method=&model=&x=1']:
+            self.error(server, '/api/fcc-cases/lookup?' + query, 400, 'fcc_case_invalid_query')
+        for target in ['/api/fcc-cases/lookup/', '//api/fcc-cases/lookup', '/api/fcc-cases/lookup%2F',
+                       '/api/fcc-cases/lookup#', '/api/fcc-cases/summary?model=A', '/fcc-cases?model=A']:
+            self.error(server, target, 404, 'route_not_found')
+        self.error(server, '/api/fcc-cases/lookup', 503, 'fcc_case_catalog_unconfigured')
+
+    def test_lookup_failure_never_publishes_partial_and_other_readers_remain_available(self):
+        catalog = synthetic_catalog(rich=True)
+        with patch.object(FccReportCaseCatalog, 'discover', side_effect=RuntimeError('PRIVATE_CANARY source')):
+            server = self.start(catalog, explicit=True)
+            self.error(server, '/api/fcc-cases/lookup?' + urlencode(LOOKUP_QUERY), 503, 'fcc_case_catalog_unavailable')
+            self.assertEqual(self.request(server, '/api/fcc-cases/summary')[0], 200)
+            self.assertEqual(self.request(server, '/api/fcc-cases/cases/SYN-CASE-A')[0], 200)
+        for method in ['POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']:
+            self.error(server, '/api/fcc-cases/lookup', 405, 'read_only', method=method)
+
+    def test_lookup_accepts_real_parent_large_values_and_envelope_larger_than8mib(self):
+        catalog = synthetic_catalog(large=True)
+        search, discovery = catalog.search(LOOKUP_QUERY), catalog.discover(LOOKUP_QUERY)
+        compact = lambda value: json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode('utf-8')
+        self.assertLess(len(compact(search)), 8 * 1024**2)
+        self.assertLess(len(compact(discovery)), 8 * 1024**2)
+        expected = {'schema_version': 1, 'kind': 'fcc_report_case_lookup', 'search': search, 'discovery': discovery}
+        self.assertGreater(len(compact(expected)), 8 * 1024**2)
+        server = self.start(catalog, explicit=True)
+        status, _, body = self.request(server, '/api/fcc-cases/lookup?' + urlencode(LOOKUP_QUERY))
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body), expected)
+        self.assertLessEqual(len(body), 16 * 1024**2 + 1024)
+
+    def test_lookup_rejects_invalid_inner_response_and_preserves_existing8mib_cap(self):
+        catalog = synthetic_catalog(rich=True)
+        invalid = catalog.discover(LOOKUP_QUERY); invalid['query']['model'] = 'X' * (8 * 1024**2)
+        with patch.object(FccReportCaseCatalog, 'discover', return_value=invalid):
+            server = self.start(catalog, explicit=True)
+            self.error(server, '/api/fcc-cases/lookup?' + urlencode(LOOKUP_QUERY), 503, 'fcc_case_catalog_unavailable')
+        for target in ['/fcc-cases/discovery_model.mjs', '/fcc-cases/discovery_view.mjs']:
+            self.assertEqual(self.request(server, target)[0], 200)
+        self.error(server, '/fcc-cases/discovery_model.test.mjs', 404, 'route_not_found')
 
 
 if __name__ == '__main__':

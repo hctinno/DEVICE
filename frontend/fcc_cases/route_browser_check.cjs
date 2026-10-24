@@ -20,16 +20,23 @@ function parseOptions(argv) {
   const values = {};
   for (let index = 0; index < argv.length; index += 2) {
     const key = argv[index], value = argv[index + 1];
-    if (!['--mode', '--caller-config', '--sha256'].includes(key) || Object.hasOwn(values, key)
+    if (!['--mode', '--caller-config', '--sha256', '--lookup-fixture', '--lookup-sha256'].includes(key) || Object.hasOwn(values, key)
         || typeof value !== 'string' || value.length === 0) throw Error('invalid_configuration');
     values[key] = value;
   }
   const mode = values['--mode'], config = values['--caller-config'], sha256 = values['--sha256'];
-  if (!['contract', 'actual'].includes(mode) || (mode === 'contract' && (config || sha256))
-      || (mode === 'actual' && (!config || !sha256))) throw Error('invalid_configuration');
+  const lookup = ['lookup-contract', 'lookup-actual'].includes(mode), actual = ['actual', 'lookup-actual'].includes(mode);
+  if (!['contract', 'actual', 'lookup-contract', 'lookup-actual'].includes(mode) || (!actual && (config || sha256))
+      || (actual && (!config || !sha256))) throw Error('invalid_configuration');
   if (config && (!path.isAbsolute(config) || path.extname(config).toLowerCase() !== '.json'
       || /[\0\r\n]/.test(config) || /^\\\\/.test(config))) throw Error('invalid_configuration');
   if (sha256 && !/^[a-f0-9]{64}$/.test(sha256)) throw Error('invalid_configuration');
+  const fixture = values['--lookup-fixture'], fixturePin = values['--lookup-sha256'];
+  if (mode === 'lookup-actual') {
+    if (!fixture || !fixturePin || !path.isAbsolute(fixture) || path.extname(fixture).toLowerCase() !== '.json'
+        || /[\0\r\n]/.test(fixture) || /^\\\\/.test(fixture) || !/^[a-f0-9]{64}$/.test(fixturePin)) throw Error('invalid_configuration');
+  } else if (fixture || fixturePin) throw Error('invalid_configuration');
+  if (lookup) return {mode, config, sha256, lookupFixture: fixture, lookupSha256: fixturePin};
   return {mode, config, sha256};
 }
 
@@ -54,6 +61,7 @@ function readPinned(file, pin, cap) {
 
 function sourceHashes() {
   const files = ['labflow/schema.sql', 'tests/test_fcc_case_ui_server.py', 'docs/fcc/fcc_case_route_usage.md'];
+  if (fs.existsSync(path.join(ROOT, 'docs/fcc/fcc_case_discovery_ui_usage.md'))) files.push('docs/fcc/fcc_case_discovery_ui_usage.md');
   const visit = (directory, extensions) => {
     for (const entry of fs.readdirSync(path.join(ROOT, directory), {withFileTypes: true})) {
       assert(!entry.isSymbolicLink(), 'linked_source');
@@ -255,6 +263,27 @@ try:
         packet, sources = synthetic_packet()
     else:
         raise ValueError('invalid_mode')
+    lookup_fixture = None
+    if request.get('lookup_checks') and mode == 'contract':
+        for case in packet['cases']:
+            next(claim for claim in case['claims'] if claim['field'] == 'product.models')['value'].append('SYNTHETIC <img src=x onerror=window.routePwned=true>')
+            for cid in ['zero', 'false']:
+                extra = deepcopy(next(claim for claim in case['claims'] if claim['claim_id'] == cid))
+                extra.update(claim_id='lookup-' + cid, field='product.models', status='extracted')
+                case['claims'].append(extra)
+    if request.get('lookup_checks') and mode == 'actual':
+        p = local_file(request['lookup_fixture'], '.json')
+        lookup_fixture = plain_json(read_file(p, p.stat().st_size, request['lookup_sha256'], 128 * 1024**2 + 65536),
+                                    128 * 1024**2 + 65536, 26, 16010000)
+        if (type(lookup_fixture) is not dict or set(lookup_fixture) != {'schema_version', 'kind', 'source_bundle_sha256', 'catalog_batch', 'expected_producer_sha256', 'cases'}
+                or type(lookup_fixture['schema_version']) is not int or lookup_fixture['schema_version'] != 1
+                or lookup_fixture['kind'] != 'fcc_case_lookup_fixture'
+                or type(lookup_fixture['catalog_batch']) is not str or re.fullmatch('[A-Za-z0-9_.-]{1,64}', lookup_fixture['catalog_batch']) is None
+                or type(lookup_fixture['source_bundle_sha256']) is not str or re.fullmatch('[a-f0-9]{64}', lookup_fixture['source_bundle_sha256']) is None
+                or lookup_fixture['expected_producer_sha256'] != config['expected_bundle']['sha256']):
+            raise ValueError('invalid_lookup_fixture')
+        if type(lookup_fixture['cases']) is not list or not 1 <= len(lookup_fixture['cases']) <= 8:
+            raise ValueError('invalid_lookup_fixture')
     started = time.monotonic()
     catalog = FccReportCaseCatalog(packet, sources)
     construction_seconds = time.monotonic() - started
@@ -274,6 +303,36 @@ try:
             raise ValueError('response_limit')
     encoded = (json.dumps(bundle, ensure_ascii=False, allow_nan=False, indent=2) + '\n').encode('utf-8')
     (evidence / 'constructed-bundle.json').write_bytes(encoded)
+    lookup_records = []
+    if request.get('lookup_checks'):
+        if lookup_fixture is None:
+            base_query = {'product_family': 'smartphone', 'rule': '47 CFR 15.247',
+                          'method': 'SYNTHETIC METHOD 2013', 'model': 'SYNTHETIC model'}
+            rows = [{'name': name, 'query': query} for name, query in [
+                ('synthetic_exact', base_query), ('synthetic_related', {**base_query, 'model': 'SYNTHETIC other'}),
+                ('synthetic_partial', {**dict.fromkeys(base_query), 'model': base_query['model']}),
+                ('synthetic_wrong_edition', {**base_query, 'method': 'SYNTHETIC METHOD 9999'}),
+                ('synthetic_insufficient', dict.fromkeys(base_query))]]
+        else:
+            rows = lookup_fixture['cases']
+        names = set()
+        for row in rows:
+            if (type(row) is not dict or set(row) != ({'name', 'query', 'expected_lookup'} if lookup_fixture else {'name', 'query'})
+                    or type(row['name']) is not str or re.fullmatch('[A-Za-z0-9][A-Za-z0-9_.-]{0,127}', row['name']) is None
+                    or row['name'] in names):
+                raise ValueError('invalid_lookup_fixture_row')
+            names.add(row['name'])
+            lookup = {'schema_version': 1, 'kind': 'fcc_report_case_lookup',
+                      'search': catalog.search(row['query']), 'discovery': catalog.discover(row['query'])}
+            for child in [lookup['search'], lookup['discovery']]:
+                if len(json.dumps(child, ensure_ascii=False, allow_nan=False, separators=(',', ':')).encode('utf-8')) > 8 * 1024**2:
+                    raise ValueError('lookup_child_limit')
+            if len(json.dumps(lookup, ensure_ascii=False, allow_nan=False, separators=(',', ':')).encode('utf-8')) > 16 * 1024**2 + 1024:
+                raise ValueError('lookup_limit')
+            if lookup_fixture is not None and not same(lookup, row['expected_lookup']):
+                raise ValueError('lookup_fixture_value_mismatch')
+            lookup_records.append({'name': row['name'], 'query': row['query'], 'expected_lookup': lookup})
+        (evidence / 'lookup-expected.json').write_text(json.dumps(lookup_records, ensure_ascii=False, allow_nan=False, separators=(',', ':')) + '\n', encoding='utf-8')
     workspace = evidence / 'workspace'
     store = Store(workspace)
     db_before = digest(store.db.read_bytes())
@@ -297,6 +356,12 @@ try:
                'expected_bundle_sha256': config['expected_bundle']['sha256'] if expected is not None else None,
                'source_before': inputs, 'workspace_db_before': db_before, 'workspace_db_identity_before': db_identity_before, 'ports': ports,
                'request_time_original_io_guard': True, 'pdf_or_plaintext_copy_written': False}
+    if request.get('lookup_checks'):
+        receipt['lookup'] = {'fixture_sha256': request.get('lookup_sha256'), 'queries': len(lookup_records),
+                             'catalog_batch': lookup_fixture['catalog_batch'] if lookup_fixture else 'SYNTHETIC',
+                             'source_bundle_sha256': lookup_fixture['source_bundle_sha256'] if lookup_fixture else None,
+                             'source_bundle_origin_verified_by_tool': False,
+                             'all_expected_lookup_values_equal': lookup_fixture is not None}
     (evidence / 'caller-startup.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     sys.addaudithook(audit); guard = True
     print(json.dumps({'ready': True, 'ports': ports}), flush=True)
@@ -356,7 +421,9 @@ async function startCaller(options, evidence) {
   child.on('error', () => readyReject(Error('caller_start_failed')));
   child.on('close', code => { exitCode = code; if (!settled) readyReject(Error('caller_start_failed')); closedResolve(code); });
   child.stdin.on('error', () => {});
-  child.stdin.write(JSON.stringify({mode: options.mode, config: options.config, sha256: options.sha256, evidence}) + '\n');
+  const lookup = options.mode.startsWith('lookup-');
+  child.stdin.write(JSON.stringify({mode: options.mode.endsWith('contract') ? 'contract' : 'actual', config: options.config,
+    sha256: options.sha256, evidence, ...(lookup ? {lookup_checks: true, lookup_fixture: options.lookupFixture, lookup_sha256: options.lookupSha256} : {})}) + '\n');
   const resource = {
     child, closed, outputLimitExceeded: () => outputExceeded,
     async close() {
@@ -370,11 +437,11 @@ async function startCaller(options, evidence) {
   catch (error) { await resource.close(); throw error; }
 }
 
-function request(port, target, method = 'GET', headers = {}) {
+function request(port, target, method = 'GET', headers = {}, cap = 8 * 1024 * 1024) {
   return new Promise((resolve, reject) => {
     const call = http.request({hostname: '127.0.0.1', port, path: target, method, headers}, response => {
       const chunks = []; let bytes = 0;
-      response.on('data', chunk => { bytes += chunk.length; if (bytes > 8 * 1024 * 1024) { call.destroy(Error('http_response_limit')); return; } chunks.push(chunk); });
+      response.on('data', chunk => { bytes += chunk.length; if (bytes > cap) { call.destroy(Error('http_response_limit')); return; } chunks.push(chunk); });
       response.on('end', () => resolve({status: response.statusCode, headers: response.headers, bytes: Buffer.concat(chunks)}));
     });
     call.setTimeout(8000, () => call.destroy(Error('http_timeout'))); call.on('error', reject); call.end();
@@ -395,8 +462,268 @@ function emptySummary(summary) {
   }};
 }
 
+async function lookupMain(options) {
+  const mode = options.mode.endsWith('contract') ? 'contract' : 'actual';
+  const evidence = reserveEvidence(ROOT), sourceBefore = sourceHashes(), checks = [];
+  let caller, browser, page, failure, timedOut = false;
+  const jsErrors = [], external = [], requests = [];
+  const result = {schema_version: 1, kind: 'fcc_case_lookup_product_browser', input_mode: mode,
+    contract_fixture: mode === 'contract', checks, actual028_constructed: false, legacy_producer_equal: false,
+    expected_fixture_equal: false, source_bundle_origin_verified_by_tool: false,
+    source_unchanged: false, source_inputs_unchanged: false, workspace_db_unchanged: false,
+    browser_closed: false, server_closed: false, child_closed: false, fault_injections: [],
+    hardware_verified: false, physical_verified: false, model_execution_verified: false, normative_compliance_verified: false};
+  const overall = setTimeout(() => { timedOut = true; caller?.child.kill(); void browser?.close().catch(() => {}); }, 180000);
+  const check = async (name, action) => {
+    const started = Date.now();
+    try { await wait(action(), 30000); checks.push({name, pass: true, elapsed_ms: Date.now() - started}); }
+    catch (error) { checks.push({name, pass: false, elapsed_ms: Date.now() - started}); throw error; }
+  };
+  try {
+    if (mode === 'actual') { readPinned(options.config, options.sha256, 65536); readPinned(options.lookupFixture, options.lookupSha256, 128 * 1024**2 + 65536); }
+    caller = await startCaller(options, evidence);
+    const startup = JSON.parse(fs.readFileSync(path.join(evidence, 'caller-startup.json'), 'utf8'));
+    const baseModel = await import(pathToFileURL(path.join(ROOT, 'frontend/fcc_cases/model.mjs')).href);
+    const model = await import(pathToFileURL(path.join(ROOT, 'frontend/fcc_cases/discovery_model.mjs')).href);
+    const bundle = baseModel.parseFccCaseBundleJson(fs.readFileSync(path.join(evidence, 'constructed-bundle.json'), 'utf8'));
+    const generatedFile = path.join(evidence, 'lookup-expected.json');
+    assert(fs.statSync(generatedFile).size <= 128 * 1024**2 + 65536);
+    const rows = JSON.parse(fs.readFileSync(generatedFile, 'utf8'));
+    assert(rows.length > 0 && rows.length <= 8);
+    for (const row of rows) model.validateFccCaseLookup(row.expected_lookup, bundle.summary);
+    result.actual028_constructed = startup.actual_class_constructed;
+    result.legacy_producer_equal = startup.expected_bundle_equal;
+    result.expected_fixture_equal = startup.lookup.all_expected_lookup_values_equal;
+    result.lookup_fixture_queries = rows.length;
+    result.caller = {pdf_count: startup.pdf_count, pdf_bytes: startup.pdf_bytes, physical_pages: startup.physical_pages,
+      case_count: startup.case_count, constructed_bundle_sha256: startup.constructed_bundle_sha256,
+      expected_bundle_sha256: startup.expected_bundle_sha256, catalog_source_sha256: startup.source_module_sha256,
+      ui_server_sha256: startup.ui_server_sha256, pypdf_version: startup.pypdf_version, ...startup.lookup};
+    assert.equal(startup.source_module_sha256, sourceBefore['labflow/fcc_report_cases.py'].sha256);
+    assert.equal(startup.ui_server_sha256, sourceBefore['labflow/ui_server.py'].sha256);
+    const ports = new Set(Object.values(caller.ports)), origin = 'http://127.0.0.1:' + caller.ports.configured;
+    const lookupURL = /\/api\/fcc-cases\/lookup(?:\?.*)?$/;
+    const observations = {numeric_zero: 0, boolean_false: 0, null: 0};
+    const countValues = value => { if (value === 0) observations.numeric_zero++; else if (value === false) observations.boolean_false++; else if (value === null) observations.null++; else if (value && typeof value === 'object') Object.values(value).forEach(countValues); };
+    await check('genuine028_before_http_legacy_and_lookup_fixture_pins', async () => {
+      assert(startup.actual_class_constructed && startup.request_time_original_io_guard && !startup.pdf_or_plaintext_copy_written);
+      if (mode === 'actual') assert(startup.expected_bundle_equal && startup.lookup.all_expected_lookup_values_equal);
+    });
+    for (const [index, row] of rows.entries()) {
+      await check('fixture_' + row.name + '_exact_GET_HEAD', async () => {
+        const target = model.fccCaseLookupTarget(row.query);
+        const response = await request(caller.ports.configured, target, 'GET', {}, model.FCC_CASE_LOOKUP_MAX_BYTES);
+        const head = await request(caller.ports.configured, target, 'HEAD', {}, model.FCC_CASE_LOOKUP_MAX_BYTES);
+        assert.equal(response.status, 200); assert.equal(head.status, 200); assert.equal(head.bytes.length, 0);
+        assert.equal(head.headers['content-length'], String(response.bytes.length)); assert.equal(response.headers['cache-control'], 'no-store');
+        const value = model.parseFccCaseLookupJson(new TextDecoder('utf-8', {fatal: true, ignoreBOM: true}).decode(response.bytes), bundle.summary);
+        assert.deepEqual(value, row.expected_lookup);
+        save(evidence, 'lookup-http-' + index + '.json', {headers: response.headers, body: response.bytes.toString('utf8')});
+        for (const item of value.discovery.items) for (const criterion of Object.values(item.criteria)) for (const claim of criterion.claims) countValues(claim.value);
+      });
+    }
+    result.projection_value_occurrences = {...observations, scope: 'criteria.claims.value_across_fixture_calls', synthetic: mode === 'contract'};
+    await check('lookup_unconfigured_queries_guards_and_no_private_routes', async () => {
+      const response = await request(caller.ports.unconfigured, '/api/fcc-cases/lookup');
+      assert.equal(response.status, 503); assert.deepEqual(JSON.parse(response.bytes), {error: {code: 'fcc_case_catalog_unconfigured'}});
+      for (const target of ['/api/fcc-cases/lookup?model=A&model=B', '/api/fcc-cases/lookup?unknown=x', '/api/fcc-cases/lookup?model=%ff']) assert.equal((await request(caller.ports.configured, target)).status, 400);
+      for (const target of ['/api/fcc-cases/summary?model=A', '//api/fcc-cases/lookup', '/api/fcc-cases/lookup/', '/fcc-cases/discovery_model.test.mjs']) assert.equal((await request(caller.ports.configured, target)).status, 404);
+      for (const method of ['POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']) assert.equal((await request(caller.ports.configured, '/api/fcc-cases/lookup', method)).status, 405);
+    });
+    const {chromium} = require('playwright'); browser = await chromium.launch({headless: true});
+    const context = await browser.newContext({viewport: {width: 1440, height: 1000}});
+    await context.route('**/*', route => {
+      const url = new URL(route.request().url());
+      if (url.protocol === 'http:' && url.hostname === '127.0.0.1' && ports.has(Number(url.port))) return route.continue();
+      external.push(route.request().url()); return route.abort();
+    });
+    context.on('page', current => {
+      current.on('pageerror', error => jsErrors.push(String(error)));
+      current.on('request', call => requests.push({url: call.url(), method: call.method()}));
+      current.setDefaultTimeout(10000); current.setDefaultNavigationTimeout(30000);
+    });
+    page = await context.newPage();
+    const fill = async (current, query) => { for (const key of ['product_family', 'rule', 'method', 'model']) await current.locator('.fcc-lookup-form [name=' + key + ']').fill(query[key] ?? ''); };
+    const submit = async (current, row) => {
+      const previous = Number(await current.locator('.fcc-lookup-results').getAttribute('data-generation') || 0);
+      await fill(current, row.query); await current.locator('.fcc-lookup-submit').click();
+      await current.waitForFunction(last => Number(document.querySelector('.fcc-lookup-results')?.dataset.generation || 0) > last, previous);
+      await current.locator('.fcc-lookup-status[data-state="success"]').waitFor();
+    };
+    async function dom(current, expected) {
+      assert((await current.locator('.fcc-lookup-search-state').textContent()).includes(expected.search.status));
+      assert.equal(await current.locator('.fcc-lookup-search-count').textContent(), String(expected.search.matches.length));
+      assert.equal(await current.locator('.fcc-lookup-discovery-count').textContent(), String(expected.discovery.items.length));
+      assert.equal(await current.locator('.fcc-lookup-match').count(), expected.search.matches.length);
+      for (let i = 0; i < expected.search.matches.length; i++) assert.equal(await current.locator('.fcc-lookup-match').nth(i).getAttribute('data-model-relation'), expected.search.matches[i].model_relation);
+      assert.equal(await current.locator('.fcc-lookup-item').count(), expected.discovery.items.length);
+      for (const item of expected.discovery.items) {
+        const card = current.locator('.fcc-lookup-item[data-case-id=' + JSON.stringify(item.preview.case_id) + ']');
+        assert.equal(await card.getAttribute('data-relation'), item.relation);
+        assert((await card.locator('.fcc-lookup-case-review').textContent()).includes(item.preview.review_status));
+        const values = card.locator(':scope > dl');
+        for (const [key, value] of [['검토 유의', item.review_issues], ['기존 search 조건 충족', item.search_eligibility.eligible], ['기존 search 부적격 사유', item.search_eligibility.reason_codes], ['이 조회의 실행 권한 부여', false]]) await field(values, key, value);
+        for (const [key, criterion] of Object.entries(item.criteria)) {
+          const condition = card.locator('[data-criterion=' + JSON.stringify(key) + ']');
+          assert.equal(await condition.getAttribute('data-state'), criterion.status);
+          for (const [label, value] of [['요청 값', criterion.query === null ? '미지정 (null)' : criterion.query], ['조건 상태', criterion.status], ['검토된 문자열', criterion.reviewed_values], ['matched_claim_ids', criterion.matched_claim_ids]]) await field(condition.locator(':scope > dl'), label, value);
+          for (const claim of criterion.claims) {
+            const claimNode = condition.locator('.fcc-lookup-claim[data-claim-id=' + JSON.stringify(claim.claim_id) + ']');
+            for (const [label, value] of [['claim_id', claim.claim_id], ['원래 값', claim.value], ['원래 단위', claim.unit], ['원래 상태', claim.status], ['원래 근거 종류', claim.basis]]) await field(claimNode.locator(':scope > dl'), label, value);
+            assert.equal(await claimNode.locator('.fcc-lookup-ref').count(), claim.evidence_refs.length);
+            for (let i = 0; i < claim.evidence_refs.length; i++) {
+              const ref = claim.evidence_refs[i], refNode = claimNode.locator('.fcc-lookup-ref').nth(i);
+              for (const [label, value] of [['문서 ID', ref.document_id], ['원본 SHA-256', ref.source_sha256], ['파일 페이지', ref.file_page], ['retained SHA-256', ref.text_sha256], ['줄 시작/끝', [ref.line_start, ref.line_end]], ['literal_verified', true]]) await field(refNode, label, value);
+            }
+          }
+        }
+      }
+      assert.equal(await current.evaluate(() => window.routePwned === true), false);
+    }
+    await check('initial_four_empty_inputs_no_automatic_lookup_or_selection', async () => {
+      await page.goto(origin + '/fcc-cases'); await page.locator('.fcc-index-status[data-state="success"]').waitFor();
+      await page.locator('.fcc-lookup-form').waitFor();
+      assert.equal(requests.filter(call => lookupURL.test(call.url)).length, 0);
+      for (const key of ['product_family', 'rule', 'method', 'model']) assert.equal(await page.locator('.fcc-lookup-form [name=' + key + ']').inputValue(), '');
+      assert.equal(await page.locator('.fcc-case-detail > article').count(), 0);
+    });
+    for (const row of rows) await check('fixture_' + row.name + '_GET_to_DOM', async () => { await submit(page, row); await dom(page, row.expected_lookup); });
+    const positive = rows.find(row => row.expected_lookup.discovery.items.length > 0); assert(positive, 'fixture_needs_review_material');
+    await submit(page, positive);
+    await check('case_evidence_uses_existing_reader_without_execution_controls', async () => {
+      const open = page.locator('.fcc-lookup-open').first(); await open.click();
+      await page.waitForFunction(() => document.activeElement?.dataset.focus === 'case-heading');
+      assert.equal(await page.locator('.fcc-case-detail > article').getAttribute('data-case-id'), positive.expected_lookup.discovery.items[0].preview.case_id);
+      await page.screenshot({path: path.join(evidence, 'lookup-detail-1440.png')});
+    });
+    await check('failed_query_retains_previous_query_results_and_case_detail', async () => {
+      const before = await page.locator('.fcc-lookup-results').innerHTML(), detail = await page.locator('.fcc-case-detail').innerHTML();
+      await page.route(lookupURL, route => route.fulfill({status: 503, contentType: 'application/json', body: '{"error":{"code":"fcc_case_catalog_unavailable"}}'}));
+      await page.locator('.fcc-lookup-submit').click(); await page.locator('.fcc-lookup-status[data-state="error"]').waitFor();
+      assert.equal(await page.locator('.fcc-lookup-results').innerHTML(), before); assert.equal(await page.locator('.fcc-case-detail').innerHTML(), detail);
+      await page.unroute(lookupURL);
+    });
+    result.fault_injections.push('unavailable_query_after_success');
+    await check('late_empty_reply_cannot_replace_newer_query_or_focus', async () => {
+      let release, firstStarted, count = 0;
+      const held = new Promise(resolve => { release = resolve; }), started = new Promise(resolve => { firstStarted = resolve; });
+      const emptyValue = structuredClone(positive.expected_lookup);
+      Object.assign(emptyValue.search, {status: 'no_match', reason_codes: ['no_reviewed_case'], matches: []});
+      Object.assign(emptyValue.discovery, {status: 'no_discovery_items', reason_codes: ['no_related_review_case'], items: []});
+      await page.evaluate(() => {
+        window.__lookupNativeFetch = window.fetch; window.__lookupIgnoreAbort = true;
+        window.fetch = (url, options) => {
+          if (String(url).includes('/api/fcc-cases/lookup') && window.__lookupIgnoreAbort) {
+            window.__lookupIgnoreAbort = false; const copy = {...options}; delete copy.signal;
+            return window.__lookupNativeFetch(url, copy).then(async response => { await response.clone().text(); window.__lookupOldDone = true; return response; });
+          }
+          return window.__lookupNativeFetch(url, options);
+        };
+      });
+      const handler = async route => { if (++count === 1) { firstStarted(); await held; await route.fulfill({status: 200, contentType: 'application/json', body: JSON.stringify(emptyValue)}); } else await route.continue(); };
+      await page.route(lookupURL, handler);
+      try {
+        await fill(page, positive.query); await page.locator('.fcc-lookup-submit').click(); await wait(started, 8000);
+        await submit(page, positive); const before = await page.locator('.fcc-lookup-results').innerHTML();
+        await page.locator('.fcc-lookup-open').first().click(); await page.waitForFunction(() => document.activeElement?.dataset.focus === 'case-heading');
+        release(); await page.waitForFunction(() => window.__lookupOldDone === true);
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        assert.equal(await page.locator('.fcc-lookup-results').innerHTML(), before);
+        assert.equal(await page.locator('.fcc-lookup-status').getAttribute('data-state'), 'success');
+        assert.equal(await page.evaluate(() => document.activeElement?.dataset.focus), 'case-heading');
+      } finally { release(); await page.unroute(lookupURL, handler); await page.evaluate(() => { window.fetch = window.__lookupNativeFetch; }); }
+    });
+    result.fault_injections.push('late_empty_lookup_ignoring_abort');
+    await check('initial_late503_unconfigured_cannot_replace_successful_second_submit', async () => {
+      const fresh = await context.newPage(); let release, firstStarted, count = 0;
+      const held = new Promise(resolve => { release = resolve; }), started = new Promise(resolve => { firstStarted = resolve; });
+      await fresh.addInitScript(() => {
+        const original = window.fetch; let first = true;
+        window.fetch = (url, options) => {
+          if (String(url).includes('/api/fcc-cases/lookup') && first) {
+            first = false; const copy = {...options}; delete copy.signal;
+            return original(url, copy).then(async response => { await response.clone().text(); window.__lookupOldErrorDone = true; return response; });
+          }
+          return original(url, options);
+        };
+      });
+      await fresh.route(lookupURL, async route => {
+        if (++count === 1) { firstStarted(); await held; await route.fulfill({status: 503, contentType: 'application/json', body: '{"error":{"code":"fcc_case_catalog_unconfigured"}}'}); }
+        else await route.continue();
+      });
+      try {
+        await fresh.goto(origin + '/fcc-cases'); await fresh.locator('.fcc-lookup-form').waitFor();
+        await fill(fresh, positive.query); await fresh.locator('.fcc-lookup-submit').click(); await wait(started, 8000);
+        await submit(fresh, positive); const before = await fresh.locator('.fcc-lookup-results').innerHTML();
+        release(); await fresh.waitForFunction(() => window.__lookupOldErrorDone === true);
+        await fresh.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        assert.equal(await fresh.locator('.fcc-lookup-results').innerHTML(), before);
+        assert.equal(await fresh.locator('.fcc-lookup-status').getAttribute('data-state'), 'success');
+        assert.equal(await fresh.locator('#fcc-route-state').isHidden(), true);
+      } finally { release(); await fresh.close(); }
+    });
+    result.fault_injections.push('initial_late503_ignoring_abort');
+    await check('current_lookup_completion_does_not_take_focus_from_explicit_case_selection', async () => {
+      let release, firstStarted;
+      const held = new Promise(resolve => { release = resolve; }), started = new Promise(resolve => { firstStarted = resolve; });
+      const handler = async route => { firstStarted(); await held; await route.continue(); };
+      await page.route(lookupURL, handler);
+      try {
+        await fill(page, positive.query); await page.locator('.fcc-lookup-submit').click(); await wait(started, 8000);
+        await page.locator('.fcc-lookup-open').first().click(); await page.waitForFunction(() => document.activeElement?.dataset.focus === 'case-heading');
+        release(); await page.locator('.fcc-lookup-status[data-state="success"]').waitFor();
+        assert.equal(await page.evaluate(() => document.activeElement?.dataset.focus), 'case-heading');
+      } finally { release(); await page.unroute(lookupURL, handler); }
+    });
+    if (mode === 'contract') await check('genuine_empty_catalog_and_unconfigured_are_distinct', async () => {
+      await page.goto('http://127.0.0.1:' + caller.ports.empty + '/fcc-cases'); await page.locator('.fcc-lookup-form').waitFor();
+      await fill(page, positive.query); await page.locator('.fcc-lookup-submit').click(); await page.locator('.fcc-lookup-status[data-state="success"]').waitFor();
+      assert.equal(await page.locator('.fcc-lookup-discovery-count').textContent(), '0');
+      await page.goto('http://127.0.0.1:' + caller.ports.unconfigured + '/fcc-cases'); await page.locator('#fcc-route-state[data-state="unconfigured"]').waitFor();
+      assert.equal(await page.locator('.fcc-lookup-form').count(), 0);
+      await page.goto(origin + '/fcc-cases'); await page.locator('.fcc-lookup-form').waitFor(); await submit(page, positive);
+    });
+    await check('390px_keyboard_lookup_and_existing_case_heading_focus', async () => {
+      await page.setViewportSize({width: 390, height: 844}); await fill(page, positive.query);
+      await page.locator('.fcc-lookup-submit').focus(); await page.locator('.fcc-lookup-submit').press('Enter');
+      await page.locator('.fcc-lookup-status[data-state="success"]').waitFor();
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      await page.screenshot({path: path.join(evidence, 'lookup-390.png')});
+      await page.locator('.fcc-lookup-open').first().focus(); await page.locator('.fcc-lookup-open').first().press('Enter');
+      await page.waitForFunction(() => document.activeElement?.dataset.focus === 'case-heading');
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      await page.screenshot({path: path.join(evidence, 'lookup-case-focus-390.png')});
+    });
+    await check('same_origin_get_only_no_runtime_js_or_external_requests', async () => {
+      assert.deepEqual(jsErrors, []); assert.deepEqual(external, []); assert(requests.every(call => call.method === 'GET'));
+      save(evidence, 'lookup-browser-requests.json', requests);
+    });
+  } catch (error) {
+    failure = error; fs.writeFileSync(path.join(evidence, 'failure-private.txt'), String(error.stack || error), {flag: 'wx'});
+    if (page && !page.isClosed()) await page.screenshot({path: path.join(evidence, 'failure.png')}).catch(() => {});
+  } finally {
+    try { if (browser) await wait(browser.close(), 8000); result.browser_closed = !browser || !browser.isConnected(); } catch {}
+    try {
+      if (caller) { result.child_exit_ok = (await caller.close()) === 0; result.child_closed = caller.child.exitCode !== null || caller.child.signalCode !== null; result.caller_output_limit_exceeded = caller.outputLimitExceeded(); }
+      else result.child_closed = true;
+      const file = path.join(evidence, 'caller-shutdown.json');
+      if (fs.existsSync(file)) Object.assign(result, JSON.parse(fs.readFileSync(file, 'utf8')));
+    } catch { result.child_closed = false; }
+    clearTimeout(overall);
+    result.source_unchanged = JSON.stringify(sourceBefore) === JSON.stringify(sourceHashes()); result.source_before = sourceBefore; result.source_files = Object.keys(sourceBefore).length;
+    result.timed_out = timedOut; result.external_requests = external.length; result.runtime_js_errors = jsErrors.length;
+    result.passed_checks = checks.filter(check => check.pass).length;
+    result.pass = !failure && !timedOut && result.source_unchanged && result.source_inputs_unchanged && result.workspace_db_unchanged
+      && result.browser_closed && result.server_closed && result.child_closed && result.child_exit_ok && !result.caller_output_limit_exceeded && result.request_time_original_open_attempts === 0;
+    save(evidence, 'result.json', result);
+  }
+  const receipt = {pass: result.pass, mode: options.mode, fixture_queries: result.lookup_fixture_queries || 0, checks: result.passed_checks, evidence: path.relative(ROOT, evidence).replace(/\\/g, '/')};
+  console.log(JSON.stringify(receipt)); if (!result.pass) throw Error('fcc_case_lookup_check_failed'); return receipt;
+}
+
 async function main(argv = process.argv.slice(2)) {
   const options = parseOptions(argv);
+  if (options.mode.startsWith('lookup-')) return lookupMain(options);
   if (options.mode === 'actual') readPinned(options.config, options.sha256, 65536);
   const evidence = reserveEvidence(ROOT), checks = [], sourceBefore = sourceHashes();
   let caller, browser, context, page, failure, timedOut = false;
