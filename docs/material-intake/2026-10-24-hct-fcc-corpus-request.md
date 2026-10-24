@@ -1,5 +1,9 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+2026-10-24 [통합025](../../handoff/development/INTEGRATION-025.md)은044 A1합성화면/typed구성요소 인수이며새보고서원문 작업0·실제042/043/제품HTTP검증0이다. P01 B0164d3abe8ac35ce7bff295c56cf5c52343a7149a9f 원격exact·collector87/87·corpus52/52·대상16PDF603쪽36642346B/직접15+parent1·공식0/전수unknown과별도제외/대응보류·rightsunknown을유지한다.고유보존18/702는적격18이아니다.
+
+FOLLOWUP006은P01→S07/S08 v049실제배정ACK2/고정입력29·원task/동결ACK SHA대조완료다. S07기존공식KDB4쪽/판본관계4~6행·S08새1metadata delta/최대39givenSHA비교는기존자료재사용·network/보고서재개봉/재다운로드/원시수치전사0으로진행한다. 기존v048검색2/HAC8예약·한정HAC107/181/미방문74·실제자료한계를보존한다.새READY는검수전증분0·사용자준비0·P01한창구·공유/원문비공개를유지한다. 아래B016는당시상세인수기록이다.
+
 2026-10-24 B016: S02B0018/S03B0016/S04B0016 정확3묶음52payload3372303B(50JSON·1PDF·1MD)을독립private clone에byte인수·명시ACK3했다.index/집합/SHA/bytes/UTF8/PDFmagic·공유원본identity/mtime/mode불변·P01review3전체/좌표보강3을확인했다.root PDF는bytecopy/hash/magic1,parser/native/render/OCR/산술0으로P01의20쪽구조/4primary·11facts/요약6행한정검토와구별한다.권리unknown/비공개·원보안보존/복호문·식별자·원시값공개0이다.
 
 ACK후대상16PDF603쪽36642346B=직접15+parent1,제외1/46/2771507B·대응보류1/53/4626750B·전체보존18/702/44040603B는적격18이아니다.새DFS의NT/PASS/Note2·Slavewithoutdetection은source진술이며현재규범/실측승인0이다.S02정확fccid.io링크403/PDF0은공식FCC403·부재아님,재시도/대체0.S03wrapper8/직접본문제목0·HAC한정107/181·미방문74,원ACK8~12와실제max8·관측8·원제어cutoff단계차이/기존한계를보존한다.

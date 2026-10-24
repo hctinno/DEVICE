@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합025](INTEGRATION-025.md) 기능43b04ae4/044A1신규5·새Node186/합성DOM18/source221·원래024source217/backend전체불변을고정한다.Python2015는이전실행이며이번재실행0이다.
+
+| 담당 | 실제 다음 작은 구현 |
+|---|---|
+| 개발1 |[049spec](../../docs/superpowers/specs/2026-10-24-intake-reference-http-host-design.md)/[plan](../../docs/superpowers/plans/2026-10-24-intake-reference-http-host.md)·이번exactbase·소유3로공식043/042→HTTP/세션·close·static2/미래transport404 구현·검증·게시 |
+| 개발2 |0238997e27/046공개contract·전용branch의신규3core 계속. 실제auth/HTTP/DOM은049후속통합 |
+| 개발3 |02439ad351/048공개contract·전용branch의신규3reader 계속. 새로운run/evaluate/HTTP0 |
+| 개발4 |[050spec](../../docs/superpowers/specs/2026-10-24-intake-reference-frontend-design.md)/[plan](../../docs/superpowers/plans/2026-10-24-intake-reference-frontend.md)·이번exactbase·소유7로F1frontendcore/wirefixtureDOM→게시. F2실제049/043/042HTTP는후속 |
+| 총괄 |정확publicbase/계약/소유실제배정·ACK→담당수정/독립리뷰/통합/검증/개발branchpush·원격대조·다음배정.제품rootapp은049/static3실제제공뒤통합 |
+| P01 |B0164d3abe8a/87·52·대상16/603/공식0/전수unknown·FOLLOWUP006 S07/S08실제ACK2/입력29·기존v048예약유지 |
+
+사용자준비0·공유/원본읽기전용·실제AI/현장/전수미완료.아래024는당시이력이며actualdispatch/핀/검증은최신privatefollowup우선이다.
+
 최신 [통합024](INTEGRATION-024.md) 기능fdd40c13/045신규3·새2015Python156Node/source217·실제자식9·journal7/별도평가0을고정한다.
 
 | 담당 | 다음 실제 단위 |
