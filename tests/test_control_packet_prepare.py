@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import errno
 import io
 import json
 import os
@@ -672,6 +673,182 @@ class ControlPacketPrepareTests(unittest.TestCase):
         self.assertEqual(permissions, {p: p.stat().st_mode for p in permissions})
         self.source.rename(self.source.with_name("released-source"))
         self.destination.rename(self.destination.with_name("released-destination"))
+
+
+class NativeWriterOutcomeTests(unittest.TestCase):
+    """Real native writer faults, including both sides of its context yield."""
+    def setUp(self):
+        parent = Path(__file__).resolve().parents[1] / ".local/CONTROL-PACKET-PREPARE-004-D1/first-outcome"
+        parent.mkdir(parents=True, exist_ok=True)
+        temporary = tempfile.TemporaryDirectory(dir=parent)
+        self.addCleanup(temporary.cleanup)
+        self.base = Path(temporary.name)
+        self.probes = []
+
+    def probe(self, boundary, first, secondary=None, *, forged=None, close_before_effect=False):
+        folder = self.base / str(len(self.probes))
+        folder.mkdir()
+        path, raw = folder / "synthetic.bin", b"synthetic native writer outcome\n"
+        backend = prepare._WindowsIO()
+        tree = prepare._Tree(folder, backend)
+        tree.directory(folder)
+        real_create, real_stat = backend.create_file, tree.file_stat
+        real_fstat, real_write = os.fstat, os.write
+        real_sync, real_close = os.fsync, os.close
+        state = dict(fd=None, fstat=0, file_stat=0, first=0, close=0, actual_close=0)
+
+        def trigger(location):
+            if first is not None and boundary == location and state["first"] == 0:
+                state["first"] = 1
+                raise first
+
+        def create(target):
+            descriptor = real_create(target)
+            state["fd"] = descriptor
+            return descriptor
+
+        def fstat(descriptor):
+            result = real_fstat(descriptor)
+            if descriptor == state["fd"]:
+                state["fstat"] += 1
+                trigger({1: "pre_yield_fstat", 2: "body_size_fstat", 3: "post_yield_fstat"}.get(state["fstat"]))
+            return result
+
+        def file_stat(target):
+            result = real_stat(target)
+            if target == path:
+                state["file_stat"] += 1
+                trigger({1: "pre_yield_file_stat", 2: "post_yield_file_stat"}.get(state["file_stat"]))
+            return result
+
+        def write(descriptor, data):
+            result = real_write(descriptor, data)
+            if descriptor == state["fd"]:
+                trigger("body_write")
+            return result
+
+        def sync(descriptor):
+            result = real_sync(descriptor)
+            if descriptor == state["fd"]:
+                trigger("body_fsync")
+            return result
+
+        def close(descriptor):
+            if descriptor == state["fd"] and state["close"] == 0:
+                state["close"] += 1
+                if not close_before_effect:
+                    real_close(descriptor)
+                    state["actual_close"] += 1
+                if secondary is not None:
+                    try:
+                        raise secondary
+                    except BaseException:
+                        if forged is not None:
+                            forged.__traceback__ = first.__traceback__
+                            secondary.__context__ = forged
+                        raise
+                return
+            return real_close(descriptor)
+
+        caught, result, remained = None, None, False
+        try:
+            with mock.patch.object(backend, "create_file", create), mock.patch.object(tree, "file_stat", file_stat), \
+                    mock.patch.object(prepare.os, "fstat", fstat), mock.patch.object(prepare.os, "write", write), \
+                    mock.patch.object(prepare.os, "fsync", sync), mock.patch.object(prepare.os, "close", close):
+                try:
+                    result = prepare._write_bytes(tree, path, raw, "packet_prepare_receipt_failed", sync=True)
+                except BaseException as error:
+                    caught = error
+            try:
+                real_fstat(state["fd"])
+                remained = True
+            except OSError as error:
+                self.assertEqual(error.errno, errno.EBADF)
+        finally:
+            # Only the test releases a descriptor whose injected close had no effect.
+            if remained:
+                real_close(state["fd"])
+            known = tuple(backend.held)
+            backend.close()
+            for descriptor in known:
+                with self.assertRaises(OSError) as closed:
+                    real_fstat(descriptor)
+                self.assertEqual(closed.exception.errno, errno.EBADF)
+        self.assertEqual(state["close"], 1)
+        self.assertEqual(remained, close_before_effect)
+        self.assertEqual((backend.held, backend.directories), ([], {}))
+        self.assertTrue(path.is_file())
+        if boundary is None and secondary is None:
+            self.assertIsNone(caught)
+            self.assertIsNotNone(result)
+            self.assertEqual(path.read_bytes(), raw)
+        self.probes.append(dict(boundary=boundary, primary=type(first).__name__,
+            secondary=type(secondary).__name__, same_primary=caught is first,
+            same_secondary=caught is secondary, close_calls=state["close"],
+            writer_EBADF=not remained, test_only_leftover_close=remained,
+            known_backend_fds_EBADF=True))
+        return caught
+
+    def matrix(self, boundary):
+        kinds = (OSError, KeyboardInterrupt, SystemExit, GeneratorExit)
+        for primary_type in kinds:
+            for secondary_type in (None,) + kinds:
+                with self.subTest(boundary=boundary, primary=primary_type.__name__,
+                                  secondary=getattr(secondary_type, "__name__", None)):
+                    first = primary_type("synthetic first exception")
+                    secondary = secondary_type("synthetic later close exception") if secondary_type else None
+                    self.assertIs(self.probe(boundary, first, secondary), first)
+
+    def test_pre_yield_fstat_preserves_first_exception_identity(self):
+        self.matrix("pre_yield_fstat")
+
+    def test_pre_yield_path_stat_preserves_first_exception_identity(self):
+        self.matrix("pre_yield_file_stat")
+
+    def test_body_write_preserves_first_exception_identity(self):
+        self.matrix("body_write")
+
+    def test_body_size_stat_preserves_first_exception_identity(self):
+        self.matrix("body_size_fstat")
+
+    def test_body_fsync_preserves_first_exception_identity(self):
+        self.matrix("body_fsync")
+
+    def test_post_yield_fstat_preserves_first_exception_identity(self):
+        self.matrix("post_yield_fstat")
+
+    def test_post_yield_path_stat_preserves_first_exception_identity(self):
+        self.matrix("post_yield_file_stat")
+
+    def test_close_without_primary_propagates_its_actual_exception(self):
+        self.probe(None, None)
+        for kind in (OSError, KeyboardInterrupt, SystemExit, GeneratorExit):
+            with self.subTest(close=kind.__name__):
+                first = kind("synthetic only close exception")
+                self.assertIs(self.probe(None, None, first), first)
+
+    def test_handled_caller_KI_is_not_promoted(self):
+        try:
+            raise KeyboardInterrupt("synthetic already handled caller exception")
+        except KeyboardInterrupt:
+            self.probe(None, None)
+            first = OSError("synthetic actual ordinary exception")
+            self.assertIs(self.probe("post_yield_file_stat", first), first)
+            closing = OSError("synthetic actual close exception")
+            self.assertIs(self.probe(None, None, closing), closing)
+
+    def test_forged_or_stale_KI_context_does_not_replace_actual_primary(self):
+        stale = KeyboardInterrupt("synthetic earlier native call")
+        self.assertIs(self.probe("body_fsync", stale), stale)
+        for forged in (KeyboardInterrupt("synthetic unraised context"), stale):
+            with self.subTest(context=forged.args):
+                first, closing = OSError("synthetic actual first"), OSError("synthetic later")
+                self.assertIs(self.probe("post_yield_file_stat", first, closing, forged=forged), first)
+
+    def test_ineffective_close_is_not_retried_or_claimed_closed(self):
+        first = KeyboardInterrupt("synthetic actual first")
+        self.assertIs(self.probe("body_fsync", first, OSError("synthetic ineffective close"),
+                                 close_before_effect=True), first)
 
 
 if __name__ == "__main__":

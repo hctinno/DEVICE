@@ -425,6 +425,7 @@ def _new_file(tree, path):
     if tree.backend is None:
         _fail("packet_prepare_copy_failed")
     descriptor = tree.backend.create_file(path)
+    primary = None
     try:
         info = os.fstat(descriptor)
         _not_reparse(info)
@@ -436,8 +437,15 @@ def _new_file(tree, path):
         if _identity(os.fstat(descriptor)) != tree.owned_files[path]:
             _fail("packet_prepare_path_invalid")
         tree.file_stat(path)
+    except BaseException as error:
+        primary = error
+        raise
     finally:
-        os.close(descriptor)
+        try:
+            os.close(descriptor)
+        except BaseException:
+            if primary is None:
+                raise
 
 
 def _write_all(descriptor, data, code):
