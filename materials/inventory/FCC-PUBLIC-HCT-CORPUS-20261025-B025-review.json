@@ -1,0 +1,172 @@
+{
+  "recorded_at_Asia_Seoul": "2026-10-25T01:22:50.586328+09:00",
+  "project_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "public_scope": "reviewed nonsensitive bibliography, hash, count and status only",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S02-B0027",
+      "review_scope": "America2025Q1_tail_search_novelty_prior_locator_and_unqualified_metadata",
+      "inventory_sha256": "7053eca9e562d162b62711dc889bd3d7dafc27a3f5520982c59248276b5dc65a",
+      "private_intake_index_sha256": "15905442e6ad1a227f5be03d6022a7d4a6866617358ee4f07588e51d9064e95c",
+      "private_intake_index_bytes": 3375,
+      "payload_files": 14,
+      "payload_bytes": 67328,
+      "JSON_files": 14,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "886f43ae82736ba4b4d2e148fdfe3e60631b3dc164371a00c809cc3467e70eb0",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "AmericaQ1_tail_unqualified_metadata_no_source"
+    },
+    {
+      "batch_id": "FCC-20261024A-S03-B0025",
+      "review_scope": "held_HAC2_next_eight_header_only_limited_regions",
+      "inventory_sha256": "9f87a494dece3cb31f55ad633482595bba562766e9b76cbec62312f7f4231cc0",
+      "private_intake_index_sha256": "3fcb74fa09f0d0cfddbaf08acdcdd0f65da1a5948a0a34b5565b629b97a4d3a0",
+      "private_intake_index_bytes": 5926,
+      "payload_files": 29,
+      "payload_bytes": 176654,
+      "JSON_files": 28,
+      "PDF_files": 0,
+      "MD_files": 1,
+      "receiver_receipt_sha256": "8ec80636fbf56c9be432b203d243a98f0d9bb0de0bb803598b7ac0ad88f311fe",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "held_HAC2_header_only_limited_no_footer_printed_identity"
+    }
+  ],
+  "new_independently_accepted_private_packets": 2,
+  "new_private_payload": {
+    "files": 43,
+    "bytes": 243982,
+    "JSON": 42,
+    "PDF": 0,
+    "MD": 1
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 117,
+    "independently_ACKed": 117
+  },
+  "corpus_private_packets_including_exclusion_and_pending_link_review": {
+    "reviewed": 82,
+    "independently_ACKed": 82
+  },
+  "source_cohorts": {
+    "target_and_parent_reference": {
+      "PDFs": 18,
+      "physical_pages": 690,
+      "bytes": 40988413,
+      "direct_issuer_issue": 17,
+      "parent_only": 1,
+      "official_mapping": 0
+    },
+    "excluded_before2025": {
+      "PDFs": 1,
+      "pages": 46,
+      "bytes": 2771507,
+      "target_increment": 0
+    },
+    "pending_report_link": {
+      "PDFs": 1,
+      "pages": 53,
+      "bytes": 4626750,
+      "target_increment": 0
+    },
+    "all_retained_request_originals": {
+      "PDFs": 20,
+      "pages": 789,
+      "bytes": 48386670,
+      "not_all_HCT2025plus_eligible": true
+    },
+    "legacy22_separate": true
+  },
+  "new_original_bibliography": [],
+  "fresh_source_verification_scope": {
+    "new_report_originals": 0,
+    "prior18_frozen_verifications_preserved": true,
+    "all18_fresh_reverification": false,
+    "held_HAC2_selected_region_character_counts_rechecked": 8,
+    "P01_own_wholepage_native_digests_separate_from_producer_counts": true,
+    "producer_native_digest_comparison_claimed": false,
+    "safe_header_regions_actually_viewed": 8,
+    "full_HAC_semantic_or_calibration_reviewed": false,
+    "root_original_or_nested_reference_operations": 0,
+    "unreviewed_producer_progress_not_included_in_approved_cohorts": true
+  },
+  "bounded_HAC_review_status": {
+    "new_header_regions": 8,
+    "physical_pages": [
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "footer_regions": 0,
+    "printed_page_numbers_and_total": null,
+    "bodytitle_conditions_numericrows_arithmetic_DUT": 0,
+    "direct_identity_fields_null": true,
+    "producer_character_counts_verified": 8,
+    "producer_native_digest_comparison_claimed": false,
+    "P01_own_native_digest_computation_separate": true,
+    "HAC1_region_inspections": [
+      73,
+      73
+    ],
+    "HAC2_region_inspections": [
+      63,
+      70
+    ],
+    "suite_region_inspections": [
+      174,
+      181
+    ],
+    "unvisited_regions": 7,
+    "wrapper_region_visits_not_all_cells_plot_semantics_or_calibration": true,
+    "large_calibration_identity_body_unreviewed": true
+  },
+  "bounded_metadata_discovery": {
+    "partition": "America_HCT_2025Q1_tail",
+    "issue_search_window": [
+      "2025-01-01",
+      "2025-03-31"
+    ],
+    "new_targeted_queries": 4,
+    "ordinary_HTML": 0,
+    "aggregate_unqualified_indexed_routes": 3,
+    "new_selected_leads": 0,
+    "direct_issue_issuer_sourcefacts_PDFs_eligible": 0,
+    "old4_literal_queries_independently_compared_overlap": 0,
+    "old10_allowlisted_fields_and_locators_independently_matched": true,
+    "old10_recount": 0,
+    "all3_routes_unopened_identity_dates_category_raw_unqualified": true,
+    "perquery_category_attribution": null,
+    "provider_pagination_cursor": null,
+    "unused_HTML_selected_allowance": [
+      6,
+      12
+    ],
+    "prior_Tide2024_exclusion_propagated_to_other9": false,
+    "P01_online_replay": 0,
+    "searchcap_zero_selected_not_population_zero_source_absence_or_quartercompletion": true
+  },
+  "privacy_and_failure_status": {
+    "old_originals_ACK_READY_control_failures_unchanged": true,
+    "source_unique_values_rows_or_perIDhashes_reprinted": false,
+    "old_applicant_or_deletedwrapper_values_reaccessed": false,
+    "source_PDF_privacy_scan_for_search_candidates_unexecuted": true,
+    "bounded_zero_literal_or_native_not_global_absenceproof": true,
+    "safe_header_geometry_independently_checked_and_viewed": true,
+    "footer_nulls_preserved": true
+  },
+  "remaining_scope": {
+    "whole_population": "unknown/open",
+    "all_periods_legalissuers_sites_products_categories_revisions_parts_appendices_setup_photos_tails": "open",
+    "full_semantic_current_normative_reuse_independence_native_raw_AI_physical_or_conformity_complete": false,
+    "new_external_model_API_training_evaluation_folds_scores": 0,
+    "new_user_preparation_requests": 0
+  }
+}
