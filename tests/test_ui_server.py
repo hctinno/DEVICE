@@ -11,6 +11,7 @@ import io
 import os
 from pathlib import Path
 import socket
+import sqlite3
 import time
 from unittest import mock
 
@@ -660,6 +661,208 @@ class ReferenceHostTests(unittest.TestCase):
             for value in [True, False, 1.0, '0', -1, 65536]:
                 self.fixed('invalid_request', lambda: create_server(self.store.root, port=value, intake_reference_store=self.store))
             bind.assert_not_called()
+
+    def _guard_boundary(self, change, method='GET'):
+        server = self.start(); rt = server._reference_runtime; now = [0.0]; rt.clock = lambda: now[0]
+        cookie, _ = self.bootstrap(server); parent, connect = rt.parent, sqlite3.connect
+        info = self.store._existing_binding.backend.info; calls, sql, native = [], [], []
+        def observed_parent(*args, **kwargs):
+            calls.append(args[2]['action']); return parent(*args, **kwargs)
+        def observed_sql(*args, **kwargs):
+            sql.append(1); return connect(*args, **kwargs)
+        def changed(*args, **kwargs):
+            value = info(*args, **kwargs)
+            if not native:
+                native.append(1); change(rt, now)
+            return value
+        original_binding = self.store._existing_binding
+        try:
+            with mock.patch.object(rt, 'parent', observed_parent), mock.patch.object(sqlite3, 'connect', observed_sql), \
+                    mock.patch.object(original_binding.backend, 'info', changed):
+                status, _, body = self.request(server, self.route(), method, headers={'Cookie':cookie})
+        finally: self.store._existing_binding = original_binding
+        self.assertTrue(native)
+        return status, body, calls, sql
+
+    def test_reference_history_GET_expiry_during_native_guard_rejects_before_parent_or_SQL(self):
+        def expire(rt, now): now[0] = 900.0
+        status, body, calls, sql = self._guard_boundary(expire)
+        self.assertEqual((status, json.loads(body)['error']['code']), (403, 'intake_reference_ui_access_denied'))
+        self.assertEqual((calls, sql), ([], []))
+        self.evidence = {'kind':'049_review_I1_expiry','method':'GET','status':403,'formal_parent_calls':0,'SQLite_connections':0}
+
+    def test_reference_history_HEAD_expiry_during_native_guard_rejects_before_parent_or_SQL(self):
+        def expire(rt, now): now[0] = 900.0
+        status, body, calls, sql = self._guard_boundary(expire, 'HEAD')
+        self.assertEqual((status, body), (403, b'')); self.assertEqual((calls, sql), ([], []))
+        self.evidence = {'kind':'049_review_I1_expiry','method':'HEAD','status':403,'formal_parent_calls':0,'SQLite_connections':0}
+
+    def test_reference_closing_during_native_guard_rejects_before_parent_or_SQL(self):
+        def closing(rt, now):
+            with rt.lock: rt.closing = True
+        status, _, calls, sql = self._guard_boundary(closing)
+        self.assertEqual(status, 503); self.assertEqual((calls, sql), ([], []))
+
+    def test_reference_binding_replaced_during_native_guard_rejects_before_parent_or_SQL(self):
+        def replaced(rt, now): self.store._existing_binding = object()
+        status, _, calls, sql = self._guard_boundary(replaced)
+        self.assertEqual(status, 503); self.assertEqual((calls, sql), ([], []))
+
+    def _native_guard_mutex(self, action):
+        server = self.start(); rt = server._reference_runtime
+        cookie, csrf = self.bootstrap(server) if action == 'current' else (None, None)
+        backend = self.store._existing_binding.backend; info = backend.info
+        entered, release = threading.Event(), threading.Event(); results, errors = [], []
+        def blocked(*args, **kwargs):
+            if not entered.is_set():
+                entered.set()
+                if not release.wait(5): raise AssertionError('native guard test release missing')
+            return info(*args, **kwargs)
+        def work():
+            try:
+                if action == 'hook':
+                    with server._reference_parent_call(): results.append(200)
+                elif action == 'current': results.append(self.current(server, cookie, csrf)[0])
+                else: results.append(self.request(server, self.route())[0])
+            except BaseException as error: errors.append(type(error).__name__)
+        acquired = False; active_during_native = source_during_native = None
+        with mock.patch.object(backend, 'info', blocked):
+            thread = threading.Thread(target=work); thread.start()
+            try:
+                self.assertTrue(entered.wait(3))
+                acquired = rt.lock.acquire(timeout=.15)
+                if acquired:
+                    active_during_native, source_during_native = rt.active, rt.source_active
+                    rt.lock.release()
+            finally: release.set(); thread.join(6)
+        self.assertFalse(thread.is_alive()); self.assertEqual(errors, []); self.assertEqual(results, [200])
+        self.assertTrue(acquired, 'native identity I/O held the runtime mutex')
+        self.assertEqual(active_during_native, 1)
+        self.assertIs(source_during_native, action == 'current')
+        self.evidence = {'kind':'049_review_I3_native_mutex','action':action,'actual_backend_info':True,
+                         'runtime_mutex_acquired_while_native_blocked':acquired,'active_during_native':active_during_native,
+                         'source_during_native':source_during_native,'result':200}
+
+    def test_reference_history_native_guard_releases_runtime_mutex(self):
+        self._native_guard_mutex('history')
+
+    def test_reference_current_native_guard_releases_runtime_mutex(self):
+        self._native_guard_mutex('current')
+
+    def test_reference_public_lease_native_guard_releases_runtime_mutex(self):
+        self._native_guard_mutex('hook')
+
+    def test_reference_completed_worker_refs_do_not_accumulate_during_host_lifetime(self):
+        server = self.start(); rt = server._reference_runtime; cookie = None; observations = []
+        for count in range(1, 22):
+            status, headers, _ = self.request(server, self.route(), headers={'Cookie':cookie} if cookie else None)
+            self.assertEqual(status, 200)
+            if cookie is None: cookie = headers['Set-Cookie'].split(';')[0]
+            deadline = time.monotonic() + 3
+            while time.monotonic() < deadline:
+                with rt.lock:
+                    if not rt.workers and not rt.clients: break
+                time.sleep(.005)
+            with rt.lock:
+                self.assertFalse(rt.workers); self.assertFalse(rt.clients); self.assertEqual(rt.active, 0)
+                if count in (1, 11, 21):
+                    observations.append({'HTTP_requests':count,'retained_terminated':sum(not t.is_alive() for t in rt.worker_refs),
+                                         'retained_refs':len(rt.worker_refs),'sessions':len(rt.sessions)})
+        self.assertTrue(all(row['retained_terminated'] == row['retained_refs'] == 0 for row in observations), observations)
+        self.evidence = {'kind':'049_review_I2_worker_refs','observations':observations}
+
+    def test_reference_close_joins_worker_after_runtime_finally_before_thread_return(self):
+        server = self.start(); completed, release, stopped = threading.Event(), threading.Event(), threading.Event()
+        original = server.process_request_thread; errors = []
+        def after_finally(*args):
+            try: original(*args)
+            finally: completed.set(); release.wait(5)
+        def close():
+            try: server.server_close()
+            except BaseException as error: errors.append(type(error).__name__)
+            finally: stopped.set()
+        with mock.patch.object(server, 'process_request_thread', after_finally):
+            self.assertEqual(self.request(server, self.route())[0], 200); self.assertTrue(completed.wait(3))
+            supervisor = threading.Thread(target=close); supervisor.start()
+            try:
+                self.assertFalse(stopped.wait(.1)); self.assertEqual(self.store._existing_binding.state, 'open')
+            finally: release.set(); supervisor.join(6)
+        self.assertFalse(supervisor.is_alive()); self.assertEqual(errors, [])
+        self.assertFalse(server._reference_runtime.worker_refs)
+        self.evidence = {'kind':'049_review_I2_worker_finally_join','close_waited_for_actual_thread_exit':True,
+                         'borrowed_Store_remained_open':True,'known_worker_refs_after_close':0}
+
+    def test_reference_close_waits_for_native_guard_owned_by_public_lease(self):
+        server = self.start(); rt = server._reference_runtime; backend = self.store._existing_binding.backend
+        original = backend.info; entered, release, stopped = threading.Event(), threading.Event(), threading.Event()
+        body, errors, close_errors = [], [], []
+        def blocked(*args, **kwargs):
+            entered.set()
+            if not release.wait(5): raise AssertionError('native release missing')
+            return original(*args, **kwargs)
+        def work():
+            try:
+                with server._reference_parent_call(source=True): body.append(1)
+            except ValueError as error: errors.append(error.args)
+        def close():
+            try: server.server_close()
+            except BaseException as error: close_errors.append(type(error).__name__)
+            finally: stopped.set()
+        waited = False
+        with mock.patch.object(backend, 'info', blocked):
+            worker = threading.Thread(target=work); worker.start(); self.assertTrue(entered.wait(3))
+            supervisor = threading.Thread(target=close); supervisor.start()
+            try:
+                deadline = time.monotonic() + 3
+                while not rt.closing and time.monotonic() < deadline: time.sleep(.005)
+                self.assertTrue(rt.closing); waited = not stopped.wait(.1)
+                self.assertEqual(self.store._existing_binding.state, 'open')
+            finally: release.set(); worker.join(6); supervisor.join(6)
+        self.assertFalse(worker.is_alive()); self.assertFalse(supervisor.is_alive())
+        self.assertEqual(close_errors, []); self.assertTrue(waited, 'close returned during owned native I/O')
+        self.assertEqual(body, []); self.assertEqual(errors, [('intake_reference_ui_unavailable',)])
+        self.assertEqual(rt.active, 0); self.assertFalse(rt.source_active)
+        self.evidence = {'kind':'049_review_I3_native_close','native_guard_owned_until_finally':True,
+                         'close_waited':waited,'parent_body_calls':0,'borrowed_Store_closed':False}
+
+    def test_reference_second_source429_precedes_native_IO_while_first_guard_is_blocked(self):
+        server = self.start(); rt = server._reference_runtime; cookie, csrf = self.bootstrap(server)
+        backend = self.store._existing_binding.backend; original = backend.info
+        entered, release, second_done = threading.Event(), threading.Event(), threading.Event(); first, second = [], []
+        def blocked(*args, **kwargs):
+            entered.set()
+            if not release.wait(5): raise AssertionError('native release missing')
+            return original(*args, **kwargs)
+        def current(result, done=None):
+            try: result.append(self.current(server, cookie, csrf)[0])
+            finally:
+                if done is not None: done.set()
+        fast = False
+        with mock.patch.object(backend, 'info', blocked):
+            one = threading.Thread(target=current, args=(first,)); one.start(); self.assertTrue(entered.wait(3))
+            two = threading.Thread(target=current, args=(second,second_done)); two.start()
+            try: fast = second_done.wait(.3)
+            finally: release.set(); one.join(6); two.join(6)
+        self.assertFalse(one.is_alive()); self.assertFalse(two.is_alive()); self.assertTrue(fast, 'second source waited behind native I/O')
+        self.assertEqual((first, second), ([200], [429])); self.assertEqual(rt.active, 0); self.assertFalse(rt.source_active)
+        self.evidence = {'kind':'049_review_I3_source_native_busy','second_source_before_native_release':429,
+                         'first_current':200,'queue':0,'active_after':0}
+
+    def test_reference_native_guard_failure_releases_source_and_parent_lease_quietly(self):
+        server = self.start(); rt = server._reference_runtime; cookie, csrf = self.bootstrap(server)
+        backend = self.store._existing_binding.backend
+        for failure in (OSError('PRIVATE native path'), KeyboardInterrupt()):
+            with self.subTest(failure=type(failure).__name__):
+                with mock.patch.object(backend, 'info', side_effect=failure), \
+                        mock.patch.object(rt, 'parent', wraps=rt.parent) as parent, \
+                        mock.patch('sys.stderr', new_callable=io.StringIO) as stderr:
+                    status, _, body = self.current(server, cookie, csrf)
+                    self.assertEqual((status, json.loads(body)['error']['code']), (503, 'intake_reference_ui_unavailable'))
+                    parent.assert_not_called(); self.assertEqual(stderr.getvalue(), '')
+                self.assertEqual(rt.active, 0); self.assertFalse(rt.source_active); self.assertFalse(rt.leases)
+                self.assertEqual(self.current(server, cookie, csrf)[0], 200)
+        self.evidence = {'kind':'049_review_I3_native_failure_finally','faults':['OSError','KeyboardInterrupt'],
+                         'failed_parent_calls':0,'active_source_leases_after_failure':0,'next_current':200}
 
 
 

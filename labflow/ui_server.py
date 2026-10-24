@@ -626,8 +626,18 @@ class _ReferenceRuntime:
     def check_store(self):
         try:
             with self.binding.lock:
+                if self.store.__dict__.get('_existing_binding') is not self.binding: _reference_fail()
                 type(self.store).__enter__(self.store)
                 self.binding.check_identity()
+        except BaseException:
+            _reference_fail()
+
+    def _binding_open(self):
+        # No native I/O or binding-lock wait inside the runtime admission lock.
+        try:
+            if self.store.__dict__.get('_existing_binding') is not self.binding or self.binding.state != 'open':
+                _reference_fail()
+            self.binding.check_owner(self.store)
         except BaseException:
             _reference_fail()
 
@@ -697,11 +707,38 @@ class _ReferenceRuntime:
 
     @contextmanager
     def parent_call(self, *, source=False):
+        with self._parent_lease(source=source):
+            self.check_store()
+            with self.lock:
+                if self.closing: _reference_fail()
+                self._binding_open()
+            yield None
+
+    @contextmanager
+    def _request_call(self, handler, intake_id, *, source=False):
+        def authenticate(*, touch=False):
+            if source: return self.authenticate(handler, intake_id, touch=touch)
+            sid = self.cookie(handler)
+            if sid is not None and self.session(sid) is None: _reference_fail('access_denied', 403)
+        with ExitStack() as lease:
+            with self.lock:
+                authenticate()
+                lease.enter_context(self._parent_lease(source=source))
+            # The lease owns native validation too, without any runtime-lock depth.
+            self.check_store()
+            with self.lock:
+                if self.closing: _reference_fail()
+                self._binding_open()
+                authenticate(touch=source)
+            yield None
+
+    @contextmanager
+    def _parent_lease(self, *, source=False):
         if type(source) is not bool: _reference_fail('invalid_request', 400)
         ident = threading.get_ident()
         with self.lock:
             if self.closing: _reference_fail()
-            self.check_store()
+            self._binding_open()
             if source and self.source_active: _reference_fail('unavailable', 429)
             self.active += 1; self.source_active |= source
             self.leases[ident] = self.leases.get(ident, 0) + 1
@@ -768,6 +805,7 @@ class _ReferenceHTTPServer(ThreadingHTTPServer):
         finally:
             with rt.lock:
                 rt.workers.discard(ident)
+                rt.worker_refs.discard(threading.current_thread())
                 if request.fileno() == -1: rt.clients.discard(request)
                 rt.changed.notify_all()
 
@@ -907,11 +945,7 @@ def _reference_dispatch(handler, runtime):
         if action == 'current': _reference_guard(handler, source=True)
         if action == 'history':
             request = _reference_history_query(parsed.query)
-            with runtime.lock:
-                sid = runtime.cookie(handler)
-                if sid is not None and runtime.session(sid) is None:
-                    _reference_fail('access_denied', 403)
-            with runtime.parent_call():
+            with runtime._request_call(handler, intake_id):
                 value = runtime.parent(runtime.store, intake_id, request, allow_retained_reads=False)
                 payload = _reference_response(value, intake_id, request)
                 handler._reference_headers = runtime.history_headers(handler, intake_id)
@@ -935,10 +969,7 @@ def _reference_dispatch(handler, runtime):
             except (TimeoutError, OSError): _reference_fail('unavailable', 408)
             if len(blob) != int(literal): _reference_fail('invalid_request', 400)
             request = _reference_body(blob)
-            with ExitStack() as lease:
-                with runtime.lock:
-                    runtime.authenticate(handler, intake_id, touch=True)
-                    lease.enter_context(runtime.parent_call(source=True))
+            with runtime._request_call(handler, intake_id, source=True):
                 value = runtime.parent(runtime.store, intake_id, request, allow_retained_reads=True)
                 payload = _reference_response(value, intake_id, request)
     except BaseException as error:
