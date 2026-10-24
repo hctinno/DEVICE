@@ -2,7 +2,7 @@
 
 작성일: 2026-10-23, Asia/Seoul
 
-2026-10-24 현재 [통합010](handoff/development/INTEGRATION-010.md): audit/CLI·DUT 읽기 API·catalog 탐색·정확 선언 구간 PSD·수정 SDK probe를 인수해 새 전체 Python1144 PASS/skip0·Node72·실제 catalog10+NAV7/기존접수10묶음을 확인했다. 고정 RsInstrument의 실제 소프트웨어 Simulation10관측도 별도 확인했다. P01 CONTROL009/제조시험010의 실제 요청·ACK/인수를 [카탈로그](control_sources/DUT-README.md)·[어댑터 계획](docs/fcc/control_adapter_roadmap.md)에 반영했다. [후속](handoff/development/NEXT-004.md)의 prepare004 소유 수정/stop013/max014/DUT UI012를 계속한다. 실제 단말/FW·RF/현장 업무·실제 AI 검증과 구별하며 사용자 추가 준비0이다. 아래009/008/007 수치는 보존 이력이다.
+2026-10-24 현재 [통합011](handoff/development/INTEGRATION-011.md): DUT API의 실제 읽기 화면·정확 연속3kHz 최대를 독립 Yes 후 인수해 새 전체 Python1176/skip0·Node81·실제브라우저39묶음/명시source최대6사례 PASS다. 후속 확보 metadata6그룹/22file만 새 pin으로 구분했고 P01의 기존009/010 자료를 재사용한다. [후속](handoff/development/NEXT-004.md)의 prepare004/stop013 지적 소유 수정, DELTA015/API·화면017을 실제 배정해 구현 중이다. 기존 데이터/소유권·전체 무인화 목표를 유지하며 실제 단말/RF/현장·실제 AI는 미검증, 사용자 추가 준비0이다. 아래010/008 이하는 보존 이력이다.
 
 2026-10-24 최신 [통합008](handoff/development/INTEGRATION-008.md): 고정 조사8dec2d7 인수·재검증과 현재 DB2867모델/6470장비관계 무변경 대조를 완료했다. [별도 제어자료 카탈로그](control_sources/README.md)와 [어댑터 계획](docs/fcc/control_adapter_roadmap.md)에 반영해 개발1 조회API/개발4 출처·지원단계 화면/개발3 N1914A 합성전송 경계를 실제 배정했다. 개발2 probe와 P01 CTRL001..006 추가 수집을 병렬로 계속한다. 보존replay 공통접점·frequency source·실제 계산브라우저를 인수해 관련Python274/actual spectrum8/self14 PASS를 확인했으며 직전 전체848과 구별한다. 실제 제품Mock/실물·현장 비교와 전체 업무 실증은 남아 있고 현재 사용자 추가 준비물0이다.
 

@@ -2,7 +2,10 @@
 
 2026-10-24 · Asia/Seoul. 지정 조사 커밋 `8dec2d783b99609b27fb37f82752f17146206f4d`의 [원본 레코드](../research/equipment-control-2026-10-24/deliverables/model_control_sources.json)를 그대로 두고, 현재 기준정보·프로필 후보·이전 참고 URL을 별도 읽기 자료로 연결한다. [설계](../docs/superpowers/specs/2026-10-24-control-source-catalog-design.md)와 [어댑터 계획](../docs/fcc/control_adapter_roadmap.md)을 따른다.
 
-[읽기 API](../docs/fcc/control_source_catalog_usage.md)와 기존 접수 서버의 [카탈로그 화면](../docs/fcc/control_source_ui_usage.md)을 통합했다. 모델/장비/프로필 ID·출처·라이선스·미평가 상태를 조회하며 원문 코드를 설치하거나 장비에 연결하지 않는다. [통합010](../handoff/development/INTEGRATION-010.md)의 실제 API 브라우저10+NAV7묶음과 전체 Python1144/Node72 회귀를 확인했다. [DUT30소스/9경로](DUT-README.md)의 [별도 읽기 API](../docs/fcc/dut_control_catalog_usage.md)도 통합했으며 DUT 화면012는 구현 중이다. 기존 장비 입력/해시를 덮어쓰지 않는다.
+[읽기 API](../docs/fcc/control_source_catalog_usage.md)와 기존 접수 서버의 [카탈로그 화면](../docs/fcc/control_source_ui_usage.md)을 통합했다. [DUT30소스/9경로](DUT-README.md)의 [별도 API](../docs/fcc/dut_control_catalog_usage.md)와 [DUT 읽기 화면](../docs/fcc/dut_control_ui_usage.md)도 사용할 수 있다. ID·출처·라이선스·미평가 상태를 조회하며 원문 설치/장비 연결은 하지 않는다. [통합011](../handoff/development/INTEGRATION-011.md)의 새 Python1176/Node81·정식 API 브라우저39묶음을 확인했다. 후속 확보 metadata6그룹/22file는 별도 입력이며 API015/화면017 구현 중이다. 기존 장비/DUT 입력·해시를 덮어쓰지 않는다.
+
+- [DUT-README.md](DUT-README.md): 기존30소스/9경로 고정 snapshot과 후속 확보의 범위·사용법.
+- [dut_manufacturer_delta.json](dut_manufacturer_delta.json): P01 공개metadata에서 선별하고 private bytes/SHA와 대조한6그룹/22file 참조. code/PDF body·원문 payload0. 기존 v1 화면/API는 이 입력을 자동 병합하지 않으며015/017의 별도 조회에 사용한다.
 
 - [registry_overlay.json](registry_overlay.json): 원본을 중복 저장하지 않는 3,137개 인수 메타데이터와 64개 프로필의 텍스트 후보. 원본 레코드와 item_id로 결합하면 인계 overlay의 레코드 전체를 복원한다. `integration_state`는 인계 당시 관찰이며 현재 앱의 장비 지원 상태가 아니다.
 - [source_url_index.json](source_url_index.json): URL 문자열을 그대로 비교한 1,690개 색인. 모델 출처 1,624개와 이전 참고 83개의 중복 17개를 보존한다. 출처별 권리·접근·근거는 원본의 관계 2,260개에 남아 있으며 URL 단위로 합치지 않는다.

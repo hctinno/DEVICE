@@ -1,6 +1,6 @@
 # DEVICE — DGM AutoLab / FCC AI 시험소
 
-최신 [통합010](handoff/development/INTEGRATION-010.md): 자료 audit/CLI·[DUT 읽기 API](docs/fcc/dut_control_catalog_usage.md)·카탈로그 탐색·정확 source PSD·고정 RsInstrument probe를 소유 수정/독립 Yes 후 통합했다. 새 전체 Python **1144 PASS·skip0**, Node **72 PASS**, 실제 catalog10+NAV7/기존 접수10묶음과 실제 SDK 소프트웨어 Simulation10관측을 확인했다. [P01 후속 자료 인수](docs/material-intake/2026-10-24-dut-manufacturer-receipts.md)와 [개발1~4 후속](handoff/development/NEXT-004.md)을 이어간다. 실제 DUT·RF/현장·실제 AI 검증은 남아 있고 사용자 추가 준비0이다. 아래009/008 이하는 보존 이력이다.
+최신 [통합011](handoff/development/INTEGRATION-011.md): [DUT 읽기 화면](docs/fcc/dut_control_ui_usage.md)과 [선언 밀도의 연속3kHz 최대](docs/fcc/virtual_frequency_psd_max_usage.md)를 독립 Yes 후 인수했다. 새 전체 Python **1176 PASS·skip0**, Node **81 PASS**, DUT자료 화면12/장비·NAV17/접수10의 **39묶음**과 실제 source→최대6사례를 확인했다. [후속](handoff/development/NEXT-004.md)의 개발1prepare004/개발2stop013 소유 수정·개발3후속확보API015·개발4화면017은 계속한다. 실제 단말/RF/현장·실제 AI 검증은 남아 있으며 사용자 추가 준비0이다. 아래010/008 이하는 보존 이력이다.
 
 최신 개발 인수는 [통합008](handoff/development/INTEGRATION-008.md)의 지정 장비 제어자료·보존 분석 replay·명시 밀도 source·실제 계산 브라우저다. [자료 카탈로그](control_sources/README.md)와 [어댑터 계획](docs/fcc/control_adapter_roadmap.md)에 출처/지원 단계를 분리했으며 [개발1~4 후속](handoff/development/NEXT-004.md)과 P01 추가 수집을 병렬로 진행한다. 자료 검증·합성 기능 통과를 실장비/현장 업무 완료로 표시하지 않는다.
 

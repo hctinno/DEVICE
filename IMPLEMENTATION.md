@@ -1,6 +1,6 @@
 # DGM AutoLab — 구현·시스템 설계 초안
 
-2026-10-24 [통합010](handoff/development/INTEGRATION-010.md): 기존 catalog API/화면·probe·N1914A 가상 경계 위에 읽기 packet audit/CLI, DUT 고정2JSON의30소스/9경로 API, catalog 탐색, 선언 구간 exact PSD, 격리된 실제 RsInstrument Simulation probe를 인수했다. 새 전체 Python1144/Node72·실제 catalog10+NAV7/접수10묶음과 실제 generic SDK10관측 PASS다. 원문 code/확보·권리/설치·모델 지원/실물 단계를 분리하며 기존 DB·64프로필·Store 권한은 같다. 다음은 source→새 private workspace 준비, 합성 DUT stop 검증, 연속3kHz 최대, DUT 실제 API 화면이다. 실제 RF·현장·실제 AI 검증은 남아 있다. 아래009/008은 이전 구현 기록이다.
+2026-10-24 [통합011](handoff/development/INTEGRATION-011.md): `frequency_psd_max.py`의 정확 Fraction 후보/적분/earliest tie와 `/dut-controls`의 실제 API 읽기 화면·명시 GET/HEAD/lazy snapshot을 독립 Yes 후 인수했다. 새 전체 Python1176/Node81·실제브라우저39묶음/명시source최대6사례 PASS다. MAX complete는 선언 밀도 support에 한정하고 DUT 자료 확보/권리/제품 지원을 분리한다. 기존 DUT2JSON/API·Core·Store·DB/64프로필은 유지하고 별도 delta 입력/015 API/017 화면으로 과거참고와 후속확보를 명시 결합한다. prepare004/stop013 미해결 후보는 미통합/소유 수정 중이다. 실제 RF/현장·실제 AI 검증은 남아 있다. 아래010/008 이하는 이전 기록이다.
 
 2026-10-24 [통합008](handoff/development/INTEGRATION-008.md)에서 보존 generation replay를 complete_job의 현재 profile 준비 전에 연결했고, 명시 밀도 source/정확3kHz 적분과 실제 Python→GET→spectrum DOM 검사를 인수했다. [제어자료 카탈로그](control_sources/README.md)는 원본 조사+별도 overlay의 읽기 입력이며 장비 DB/Store/프로필이나 실제지원 레지스트리를 대체하지 않는다. [어댑터 개발 순서](docs/fcc/control_adapter_roadmap.md)의 자료/원문·권리/재사용/통합/실물/현장 단계를 유지하며 catalog API·화면/정확 N1914A 합성 전송 경계를 개발1·4·3에 실제 배정했다. 기존 SDK/제품Mock/실물 지원으로 과장하지 않는다.
 

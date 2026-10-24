@@ -1,6 +1,6 @@
 # 개발1~4 운영·연결 확인
 
-현재 [통합010](INTEGRATION-010.md)에서 audit/CLI·DUT 읽기 API·catalog 탐색·정확 선언 구간 PSD·SDK probe를 소유 수정/독립 Yes 후 통합했다. 새 전체 Python1144/Node72·실제 catalog10+NAV7/접수10묶음과 실제 SDK 소프트웨어 Simulation10관측 PASS다. [후속대장](NEXT-004.md)의 개발1prepare004 No2 소유 수정·개발2stop013·개발3max014·개발4DUT UI012는 기존 소유 branch에서 계속한다. P01 CONTROL009/제조시험010 인수/ACK를 마쳤고 사용자 준비0이다. 아래009/008 이하는 각 당시 기록이다.
+현재 [통합011](INTEGRATION-011.md)의 MAX014·DUT UI012를 독립 Yes 후 인수했다. 새 전체 Python1176/Node81·DUT자료 화면12+기존27=39묶음/합성source실행6사례 PASS다. [후속대장](NEXT-004.md)의 개발1prepare004 No2/개발2stop013 No3 소유 수정·개발3DELTA015/개발4ACQUISITION-UI017 실제 배정/ACK·구현을 이어간다. P01 기존 자료를 재사용해 공개metadata6그룹/22file를 별도 pin으로 인수했고 새 수집 의존/사용자 준비0이다. 아래010/008 이하는 각 당시 기록이다.
 
 최신 단위는 [통합008](INTEGRATION-008.md)의 지정 vendor 조사 인수·보존 replay/밀도source/actual spectrum browser와 [후속대장](NEXT-004.md)의 catalog API·화면/N1914A 경계/probe다. P01 CTRL001..006 실제 배정 ACK·TRACE007 인수 후에도 자료 전체 완료를 기다리지 않고 구현·검증·통합을 이어간다. 아래 최초 연결/화면 착수 상태는 보존 이력이다.
 

@@ -41,6 +41,8 @@ ath10k 최초 ISC 전문 URL2건404는 보존했고 같은 commit의 `LICENSES/d
 
 ## 개발 반영
 
-[어댑터 계획](../fcc/control_adapter_roadmap.md)에 실제 지원 전 단계를 유지했다. 현재 [DUT API](../fcc/dut_control_catalog_usage.md)는 읽기 metadata다. 개발2 DUT-STOP013은 기존 VirtualFleet에서 권한/가용성/모델-FW gate와 ack-only·timeout·no-effect·disconnect·불일치 관측을 구분한다. logical AT/DIAG/GUI/ADB family는 합성 시나리오 구분이며 원문 코드 실행·실제 protocol binding·자동 fallback이 아니다. 개발4 UI012는 원문 확보/권리·환경 조건/제품 지원 미평가를 별도로 표시한다. 후속 delta015는 기존 snapshot과 이 영수증을 명시적으로 결합할 작은 읽기 단위로 준비한다.
+[어댑터 계획](../fcc/control_adapter_roadmap.md)에 실제 지원 전 단계를 유지했다. 현재 [DUT API](../fcc/dut_control_catalog_usage.md)와 [통합한 화면012](../fcc/dut_control_ui_usage.md)는 읽기 metadata이며 원문 확보/권리·환경 조건/제품 지원 미평가를 별도로 표시한다. 개발2 DUT-STOP013은 기존 VirtualFleet의 권한/가용성/모델-FW gate와 불확정 관측을 구분하는 후보이며 독립 No3 소유 수정 중/미통합이다. logical AT/DIAG/GUI/ADB family는 합성 선언이고 원문 실행·실제 protocol binding·자동 fallback이 아니다.
+
+후속 [delta 입력](../../control_sources/dut_manufacturer_delta.json)은 P01 공개commit ade1b913의19058B/SHA `5ee6223b65febdc4273cd94aaf43b46154e20acf0b19c2db0d3bdab5d2491b20`에서만 선별했다.6그룹/22file 참조를 총괄 private 원문 bytes/SHA와 대조하고 기존2pins는 그대로다.19,940 LF bytes/SHA `bf70269ae9f021830811c67be3b3c8daf929e61c07170dbec3ab4db25a311cdf`이며 body/암호/PC경로0이다. [API015](../superpowers/specs/2026-10-24-dut-manufacturer-delta-design.md)/[화면017](../superpowers/specs/2026-10-24-dut-acquisition-ui-design.md)을 builder Yes/실제 배정·ACK 후 각 소유 branch에서 구현 중이다. 기존 snapshot9/new6/null3을 분리하며 current v1이 이미 후속을 조회한다고 표시하지 않는다.
 
 수집 code import·실행/설치·AT 열거/발송·USB 변경·실장비 I/O **0**이다. 실제 SM-A176U 칩/FW/권한·RF 시작/완료/정지·안전성과 실측 비교는 미검증이다. 사용자 추가 준비0·가상 개발 차단0이며 상세 실물 입력은 실제 bench 검증 단위가 준비됐을 때 요청한다.
