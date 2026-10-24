@@ -58,6 +58,26 @@ def observations(records):
             if r['record_type'] == 'event' and r['event']['type'] == 'observation']
 
 
+def packets(value):
+    if type(value) is dict:
+        yield value
+        for child in value.values():
+            yield from packets(child)
+    elif type(value) is list:
+        for child in value:
+            yield from packets(child)
+
+
+def paired_receipt(records, device, action):
+    rid = next(r['event']['payload']['request_id'] for r in records
+               if r.get('event', {}).get('type') == 'intent'
+               and r['event']['payload']['body'].get('device_id') == device
+               and r['event']['payload']['body'].get('action') == action)
+    return next(r['event']['payload']['result'] for r in records
+                if r.get('event', {}).get('type') == 'receipt'
+                and r['event']['payload']['request_id'] == rid)
+
+
 class SignalScenarioTests(unittest.TestCase):
     def setUp(self):
         self.assertIsNotNone(importlib.util.find_spec(MODULE),
@@ -314,6 +334,76 @@ class SignalScenarioTests(unittest.TestCase):
         rehash(self.output / 'operator/events.jsonl', change)
         journal.read_operator_journal(self.output / 'operator/events.jsonl')
         self.assertNotEqual(self.evaluate(result)['verdict'], 'pass')
+
+    def test_I1_sample_configuration_revision_binds_visible_meter_context(self):
+        # Reviewer exact variant: change all three copies, keep visible revision2.
+        result = self.run_case()
+        changed = []
+        def change(records):
+            for item in packets(records):
+                if item.get('source_id') == 'meter' and item.get('input_source_id') == 'sensor' and 'configuration_revision' in item:
+                    item['configuration_revision'] = 999
+                    changed.append(True)
+        rehash(self.output / 'operator/events.jsonl', change)
+        self.assertEqual(len(changed), 3)
+        self.assertTrue(journal.read_operator_journal(self.output / 'operator/events.jsonl')['complete'])
+        self.assertIsNone(self.evaluate(result)['verdict'])
+
+    def test_I1_latest_visible_mode_must_match_declared_and_sample_mode(self):
+        result = self.run_case()
+        def change(records):
+            observations(records)[-1]['devices']['meter']['values']['configuration']['measurement_mode'] = 'peak'
+        rehash(self.output / 'operator/events.jsonl', change)
+        self.assertTrue(journal.read_operator_journal(self.output / 'operator/events.jsonl')['complete'])
+        self.assertIsNone(self.evaluate(result)['verdict'])
+
+    def test_I1_ok_author_meter_setup_does_not_override_declared_frequency(self):
+        result = self.run_case()
+        path = self.output / 'private/author.json'
+        author = read(path)
+        author['phases']['scenario_setup'][-1]['values']['configuration']['frequency_hz'] = 2460000000.0
+        self.assertEqual(author['phases']['scenario_setup'][-1]['status'], 'ok')
+        path.write_bytes(canonical(author))
+        self.assertTrue(journal.read_operator_journal(self.output / 'operator/events.jsonl')['complete'])
+        self.assertIsNone(self.evaluate(result)['verdict'])
+
+    def test_I1_author_current_nodes_and_paired_receipts_bind_public_configuration(self):
+        result = self.run_case()
+        variants = (
+            ('bootstrap_meter_mode', 'author',
+             lambda a: a['phases']['bootstrap'][21]['values']['configuration'].update(measurement_mode='peak')),
+            ('author_dut_configured', 'author',
+             lambda a: a['phases']['scenario_setup'][1]['values'].update(configured=False)),
+            ('author_sensor_configured', 'author',
+             lambda a: a['phases']['scenario_setup'][2]['values'].update(configured=False)),
+            ('author_meter_revision', 'author',
+             lambda a: a['phases']['scenario_setup'][3]['values'].update(configuration_revision=999)),
+            ('author_meter_unit', 'author',
+             lambda a: a['phases']['scenario_setup'][3]['values']['configuration'].update(unit='W')),
+            ('visible_dut_configured', 'journal',
+             lambda rs: observations(rs)[-1]['devices']['dut']['values'].update(configured=False)),
+            ('visible_sensor_configured', 'journal',
+             lambda rs: observations(rs)[-1]['devices']['sensor']['values'].update(configured=False)),
+            ('visible_meter_revision', 'journal',
+             lambda rs: observations(rs)[-1]['devices']['meter']['values'].update(configuration_revision=999)),
+            ('paired_meter_mode', 'journal',
+             lambda rs: paired_receipt(rs, 'meter', 'fetch')['values']['configuration'].update(measurement_mode='peak')),
+            ('paired_sensor_configured', 'journal',
+             lambda rs: paired_receipt(rs, 'sensor', 'read')['values'].update(configured=False)),
+            ('paired_dut_configured', 'journal',
+             lambda rs: paired_receipt(rs, 'dut', 'start')['values'].update(configured=False)),
+        )
+        for label, role, change in variants:
+            with self.subTest(label=label):
+                output = Path(self.temp.name) / label
+                shutil.copytree(self.output, output)
+                if role == 'author':
+                    path = output / 'private/author.json'
+                    value = read(path); change(value); path.write_bytes(canonical(value))
+                else:
+                    rehash(output / 'operator/events.jsonl', change)
+                self.assertTrue(journal.read_operator_journal(output / 'operator/events.jsonl')['complete'])
+                self.assertIsNone(self.evaluate(result, output=output)['verdict'])
 
     def test_latest_source_must_be_present_and_ok_even_with_historical_valid_samples(self):
         result = self.run_case()
