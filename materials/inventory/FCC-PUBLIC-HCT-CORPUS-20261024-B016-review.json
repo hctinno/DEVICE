@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "recorded_at_Asia_Seoul": "2026-10-24T21:31:12.037255+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "corpus_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "publication_scope": "reviewed_nonsensitive_bibliography_hash_count_and_bounded_status_only",
+  "publication_rights_decision": "Only reviewed nonsensitive bibliography/hash/count/status. Original PDF and body/case values/images/code/unique identifiers/private paths/user materials remain private. Unknown original redistribution or model-use rights are not approved.",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S02-B0018",
+      "review_scope": "exact_report_unacquired_blocked_route",
+      "inventory_sha256": "4cf4b395ae427888bf2f3032e4d3920438ab88a181756200de5722fe96178074",
+      "private_intake_index_sha256": "b7a63ee580cba261a9ba17e4dad3bd3fecab65095a0c0707381acdb331b89c1e",
+      "private_intake_index_bytes": 3048,
+      "payload_files": 12,
+      "payload_bytes": 35769,
+      "JSON_files": 12,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "ac74f43e78151b452d2eb252f2c2568e90caabbea5a98719f4f56f7e833feaf1",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "unacquired_exact_report_failure_PDF0"
+    },
+    {
+      "batch_id": "FCC-20261024A-S03-B0016",
+      "review_scope": "held_HAC_eight_limited_wrapper_region_inspections",
+      "inventory_sha256": "b1d36a2cd7d6f8c766231b0e51acac7d4c0bfeda39d900f99725279271a40eff",
+      "private_intake_index_sha256": "f2afcb439bfc2f60bd20c2653129ed943abf13d30bf952318ad00f00433e70d4",
+      "private_intake_index_bytes": 5079,
+      "payload_files": 24,
+      "payload_bytes": 112332,
+      "JSON_files": 23,
+      "PDF_files": 0,
+      "MD_files": 1,
+      "receiver_receipt_sha256": "7ece63ff728e138dcbcada8c3f7eaed0038d97271adfeae2bba9687074071490",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "held_wrapper_only_metadata_reference"
+    },
+    {
+      "batch_id": "FCC-20261024A-S04-B0016",
+      "review_scope": "one_DFS_original_bounded_private_case_review",
+      "inventory_sha256": "210bb265cd01cf604683135cfa1507cb7bb9ea3ff7684059ac3a849a363b5c96",
+      "private_intake_index_sha256": "dea5f8b6a22a71548e2cb6b744857752da61f11c829462ece14f599ca2d6f223",
+      "private_intake_index_bytes": 3721,
+      "payload_files": 16,
+      "payload_bytes": 3224202,
+      "JSON_files": 15,
+      "PDF_files": 1,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "4bfc367e452fb2ba3b26afd8ca3691495745f45a8a63bfcdb353aaeae84cc75c",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "target_reference_direct_issuer_issue_rightsunknown"
+    }
+  ],
+  "new_independently_accepted_private_packets": 3,
+  "new_private_payload": {
+    "files": 52,
+    "bytes": 3372303,
+    "JSON": 50,
+    "PDF": 1,
+    "MD": 1
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 87,
+    "independently_ACKed": 87
+  },
+  "corpus_private_packets_including_exclusion_and_pending_link_review": {
+    "reviewed": 52,
+    "independently_ACKed": 52
+  },
+  "new_reviewed_bibliography": [
+    {
+      "report_number": "HCT-RF-2507-FC082",
+      "numeric_revision": 0,
+      "revision_description": "Initial Release",
+      "issuer_as_printed": "HCT CO.,LTD.",
+      "issue_date": "2025-07-17",
+      "FCC_ID": "2BO3LTFBMEEBN6FU",
+      "model": "TFBMEEBN6FU",
+      "category": "DFS",
+      "sha256": "4f89d1a32e8a2161559b517cd5404897e5be6a7c8bdeecb98652212d7d271af4",
+      "bytes": 3117275,
+      "physical_pages": 20,
+      "rights": "unknown",
+      "original_publication_to_Git_approved": false,
+      "official_exhibit_mapping_confirmed": false
+    }
+  ],
+  "new_originals_reviewed_privately": 1,
+  "new_target_reference_originals": 1,
+  "new_PDF_payloads_published_to_Git": 0,
+  "current_target_reference_cohort": {
+    "PDFs": 16,
+    "physical_pages": 603,
+    "bytes": 36642346,
+    "direct_issuer_issue": 15,
+    "parent_only": 1,
+    "official_mapping_confirmed": 0
+  },
+  "separately_retained_excluded": {
+    "PDFs": 1,
+    "physical_pages": 46,
+    "bytes": 2771507,
+    "target_increment": 0
+  },
+  "separately_retained_pending_report_link": {
+    "PDFs": 1,
+    "physical_pages": 53,
+    "bytes": 4626750,
+    "target_increment": 0
+  },
+  "all_retained_request_originals_not_eligible_count": {
+    "PDFs": 18,
+    "physical_pages": 702,
+    "bytes": 44040603,
+    "eligible18_claim": false,
+    "legacy22_included": false
+  },
+  "fresh_source_verification_scope": {
+    "new_source_raw_SHA_bytes_magic_and_structure_rechecked": 1,
+    "prior15_frozen_verification_preserved": true,
+    "all16_fresh_source_reverification": false
+  },
+  "exact_report_acquisition_failure": {
+    "report_number_claim": "HA2507-0188-R02-01",
+    "route_host": "fccid.io",
+    "status": 403,
+    "status_basis": "frozen producer exact observed report-link access log; no repeated failed-route request",
+    "official_FCC_403_asserted": false,
+    "queries": 1,
+    "ordinary_HTML_attempts": 2,
+    "PDF_GETs": 0,
+    "PDFs": 0,
+    "direct_issue_issuer_identity_raw_fields": null,
+    "ordinary_mirror_observed": false,
+    "failure_not_absence_or_population_zero": true
+  },
+  "bounded_new_DFS_review": {
+    "primary_pages": 4,
+    "source_fact_records": 11,
+    "selected_summary_row_groups": 2,
+    "selected_summary_rows": 6,
+    "source_summary_labels_and_notes_distinguished_from_independent_result_approval": true,
+    "source_native_raw_or_new_DUT_measurements": 0,
+    "P01_separate_complete_value_locator_clarifications": 3,
+    "original_fact_values_READY_unchanged": true,
+    "source_AES_permissions_bytes_mtime_mode_unchanged": true,
+    "rights_unknown_nonpublic_transport_bucket_not_legalrestriction_finding": true
+  },
+  "bounded_HAC_review_status": {
+    "new_primary_region_observations": 8,
+    "direct_body_title_confirmations": 0,
+    "limited_wrapper_observations": 8,
+    "physical_pages": [
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "HAC1_primary_region_inspections": [
+      62,
+      73
+    ],
+    "suite_primary_region_inspections": [
+      107,
+      181
+    ],
+    "unvisited_primary_regions": 74,
+    "inspection_counter_includes_limited_wrappers_not_readable_titles_or_semantic_successes": true,
+    "calibration_identity_dates_factors_results_body_not_reviewed": true,
+    "numeric_rows_calculations_DUT_measurements": 0,
+    "OCR_or_full_identity_raster": false
+  },
+  "owner_followup005_disposition": {
+    "requested_originals_maximum": 2,
+    "bounded_new_original_accepted": 1,
+    "exact_other_report_unacquired": 1,
+    "both_bounded_outcomes_privately_ACKed": true,
+    "no_empty_success_or_whole_acquisition_goal_claim": true,
+    "no_duplicate_assignment_or_failedroute_retry": true
+  },
+  "privacy_and_failure_status": {
+    "P01_final_metadata_allowlist_and_memory_literal_checks_bounded_not_absenceproof": true,
+    "producer_and_P01_candidate_methods_and_counts_distinguished": true,
+    "original_ACK_READY_control_failure_history_preserved": true,
+    "old_ACK_scope_text_preserved_separate_actual_max8_clarification": true,
+    "identifier_values_rows_per_IDhashes_exported": false
+  },
+  "receiver_validation": {
+    "all_exact_payload_bytes_reviewhashes_strict_UTF8_verified": true,
+    "original_bytes_mtime_mode_unchanged": true,
+    "receiver_source_structure_scope": "See independent receipt; byte intake is separate from P01 bounded source review.",
+    "byte_ACK_not_semantic_normative_independence_or_physical_approval": true
+  },
+  "new_user_preparation_requests": 0,
+  "AI_evaluation_training_external_models_or_physical_runs": 0,
+  "open_scope": [
+    "whole population and remaining periods issuers sites products categories",
+    "report identity rights official mapping revisions parts appendices setup",
+    "limited titles untranscribed cells plots calibration data full semantics",
+    "historical/current standards applicability and unknown reused-data independence",
+    "actual installed chain calibration reference plane native raw real equipment and site validation"
+  ],
+  "whole_census_complete": false,
+  "full_semantic_functional_conformity_or_physical_validation": false,
+  "original_text_case_values_images_code_identifiers_private_paths_user_materials_exported": false,
+  "verification_scope": "Private exact-byte intake and stated bounded observations only; document integrity is not function/metrology/conformity validation."
+}
