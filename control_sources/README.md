@@ -9,6 +9,8 @@
 
 현재 DB를 SQLite `mode=ro`·`query_only`로 다시 대조했다. 모델 ID 2,867개, 장비 ID와 모델 관계 6,470개에 누락·불일치 0개이며 DB SHA-256은 전후 `1b51105dc845ee84803df14b012170cedd354180842740912f469b5231c8137b`로 같다. null model_id의 식별 항목 270개를 새 모델로 만들지 않았다. 최종 identity_unresolved 176개와는 다른 집계다. 등록행·조사 항목은 물리 가동 대수를 뜻하지 않는다.
 
+후속 실제 수집의 첫 CTRL001/005 [인수 영수증](../docs/material-intake/2026-10-24-control-sources-receipts.md)은32payload/1405872B다. 고정 조사 JSON/URL의 access·license를 이 영수증으로 자동 덮어쓰지 않으며 새 원문·권리 확인과 SDK/장비 동작 검증을 구별한다. 비공개 원문은 별도 private 인수에 보존하고 개발3 모델 계약에 준비된 근거부터 전달했다.
+
 64개 프로필의 비교 결과는 정규화 후보 37개, 다른 제조사 표기의 같은 모델 후보 9개, 텍스트 후보 없음 18개다. 다중 후보·별칭·기능별 파생 프로필을 보존하며 설치 자산·FW·옵션 binding을 확정하지 않는다. 원본 DB·Store·VirtualFleet catalog와 조사 SQLite를 서로 교체하지 않는다.
 
 모든 항목의 adapter_support_status는 `not_assessed`, vendor_binary_executed와 hardware_verified는 false다. SDK·SCPI·제조사 Mock·실장비 검증은 수행 증거가 생긴 별도 지원 기록으로 관리한다. 카탈로그 조회는 장비 연결·탐색·명령·외부 코드 설치를 실행하지 않는다. 로컬 인계의 원본·전체 해시 영수증은 `.local/vendor-control/20261024-001/`에 보존했고 이 공개 자료에는 PC 절대 경로나 사용자 원문 payload를 넣지 않았다.

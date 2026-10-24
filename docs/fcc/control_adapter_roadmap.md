@@ -31,6 +31,8 @@ N1921A는 독립 제어 제외여도 센서·교정·호스트 미터 관계를 
 
 ## SDK·Mock를 적용할 때
 
+현재 [CTRL008 첫 인수](../material-intake/2026-10-24-control-sources-receipts.md)의 전력계14영역/45근거와 시설17근거를 개발에 연결했다. N1914A 어댑터는 기존 A/window1 ASCII 합성 subset에 한정하며 P-Series 명령·센서·교정을 혼합하지 않는다. 개발2에는 [SDK-SIM-006](../superpowers/specs/2026-10-24-rsinstrument-simulation-probe-design.md)의 실제 RsInstrument Simulation 검사 도구를 후속 배정했고, 기존 모델 probe의 독립 리뷰2건 소유 수정을 우선한다. SDK 고정 배포/source·권리/deps를 인수하기 전에는 stdlib 경계만 구현하고 실제 제품 실행은 미실행으로 유지한다.
+
 Keysight v1.1 PDF(46쪽, SHA-256 `90fd83edc588ef382d957120e506098127dceb6c6aaa29baa3bc3fcadc95eaa1`)의 17도구·6절차, offline describe/resolve/preview·Mock를 참고한다. 다운로드1.1/build1.1.20과 오래된 온라인0.1을 섞지 않고 실제 바이너리/IDF를 고정한다. N9030A 공식 X-Series IVI 근거와 v1.1 IDF 표의 N9030B는 다르다. 표 부재는 영구 미지원 단정도 아니다.
 
 명시 preview 승인과 annotation 힌트를 구별한다. annotation은 서버가 강제하는 권한 장치가 아니며 승인 우회를 전제로 무인 운전을 만들지 않는다. IDF 없는 unchecked를 성공으로 올리지 않는다. 기본 명령별 오류 poll/첫 오류 중단과 끝에서만 poll할 때의 계속 실행 가능성, 오류 큐 소비, 독점 세션·명령 timestamp를 우리 증거에 연결한다. 메모리 세션의 재시작 소실·중복/취소/불확정 실행은 영속 journal/복구에서 별도 검증한다.
