@@ -22,6 +22,43 @@ build_intake_case_reference_receipt(
 
 첫032는 **029 평가 입력/expectation/fold/score 계산 인수를 받지 않는다.** 평가 상태는 미실행/null로 고정한다. worker·Store·schema·queue·질문·알림·위임·fixture 권한은 변경하지 않는다.
 
+## 현재 facts에서 부분 query와 검토 목록 만들기
+
+2026-10-25 Asia/Seoul. 다음은 기존021 공개 API를 조립하는 caller 절차이며 신규 제품 모듈은 없다. 이미 준비된 genuine `FccReportCaseCatalog`와 **같은 관측에서 보존한** projection을 입력한다. caller가 함께 받은 intake/revision/context/result/projection 식별·원 projection·원 질문을 그대로 보존한다. 없는 식별이나 원문 인용을 새로 만들지 않는다. [034 현재 snapshot](../../docs/fcc/intake_reference_snapshot_usage.md)의 최소 projection은 field별 원인용을 포함하지 않으므로, 다른 관측의 submission과 섞어 page 근거를 인증하지 않는다. catalog/접수 준비 I/O와 아래 두 읽기 호출을 구별한다.
+
+```python
+# supplied_catalog: caller가 이미 준비한 genuine FccReportCaseCatalog.
+# supplied_projection: 같은 관측의 facts/원 질문. 식별·원본은 별도 보존한다.
+# supplied_*는 이미 제공받은 입력이며 이 예제에서 접수/사례/producer를 만들지 않는다.
+all_null_query = {
+    "product_family": None, "rule": None, "method": None, "model": None,
+}
+intake_match = supplied_catalog.match_intake(supplied_projection, all_null_query)
+binding = intake_match["intake_binding"]
+partial_query = {
+    "product_family": binding["product_family"],
+    "rule": None,
+    "method": None,
+    "model": binding["model"],
+}
+review_material = supplied_catalog.discover(partial_query)
+```
+
+`match_intake`는 all-null exact4 query도 받고, `intake_binding`에 인정된 product_family/market/model과 원 `fact_statuses`를 반환한다. product_type/model의 `explicit` 또는 `user_confirmed`만 부분 query에 반영한다. user_confirmed는 원 event_id가 필요하다. inferred/uncertain·누락은 null로 남기며 스마트폰/FCC/규정·판본을 기본값으로 채우지 않는다. 원 projection은 부모가 trim한 binding 값과 별도로 보존한다.
+
+- 최초 `intake_match`는 rule/method가 없으므로 `insufficient_evidence`, `query_context_missing`를 유지한다. identity·시장·제품 부족 이유와 원 질문을 삭제하거나 후속 discovery 상태로 덮지 않는다. 일반 충돌 질문 전체를 parent reason_codes로 변환했다고 주장하지 않는다.
+- `discover`는 query만 받는다. 시장이 비FCC이거나 누락돼도 같은 부분 query라면 검토 목록이 같을 수 있다. 따라서 **원 `intake_match`·질문과 `review_material`을 함께 보존**한다. 목록 표시가 현재 접수 준비/적용성 판정을 해결하지 않는다.
+- rule/method는 null이며 각 criterion의 `status=not_requested`다. 검토 item의 `search_eligibility.eligible=false`/원 reason_codes와 `execution_authorized=false`, `review_issues`, `criteria`의 reviewed_values·원 claim/evidence_refs를 그대로 읽는다. 보고서의 규정·방법 값, 목록 순위나 관련 모델을 현재 의뢰의 적용 규정·확정 사례로 복사하지 않는다. 모든 query 값이 null이면 `insufficient_context`/`discovery_context_missing`/빈 items를 유지한다.
+- fact value는 최대4000자지만 query 값은 최대256자다. 허용된 fact라도 부분 query가 이 한도를 넘으면 `discover`의 원 `FccReportCaseError(code="fcc_case_invalid_query")`로 보류한다. 절단·별칭 치환·다른 값 재시도나 빈 성공 결과로 오류를 감추지 않는다. 오류 전에 받은 원 projection/질문·binding·부분 query를 보존한다.
+
+이 절차는 case_ids를 선택하지 않고 025/032 응답을 만들거나 등록하지 않는다. 정식 rule/method literal과 적용 근거의 공급, 명시 사례 선택은 후속 단계다. 그 입력이 마련됐을 때 [025 context/응답 경계](../../docs/fcc/fcc_case_review_usage.md)와 아래032 결합 검사를 사용한다. 원문 인용·독립 평가·실제 모델 이해·실행 권한을 이 조립으로 승격하지 않는다.
+
+### 부분 caller의 소유 검증 범위
+
+새 합성 catalog fixture1개와 기존 합성 projection helper를 재사용해 8조건을 실제 호출했다. explicit, event가 있는 user_confirmed, facts 누락, inferred/uncertain, 제품 충돌+identity 질문, 비FCC 시장, 시장 누락, 257자 fact의 query 거절을 구별했다. 공개 `match_intake`8회·`discover`8회 중 discovery 반환7회와 예상 원 오류1회를 확인했다. 원값/상태·질문·입력/fixture 불변, 불충분 이유·false 권한·검토 인용과 권리/공식 대응 미확인 사유를 보존했다.
+
+합성 PDF/packet 준비와 API 관측을 분리했고, 두 API 호출 중 파일/SQL/socket/subprocess I/O 관측은0이다. Store를 열거나 실제034 current snapshot을 읽지 않았으며 실제 모델/외부 API·CLI/HTTP·실장비 검사는0이다. 이 8조건은 부분 caller 조립의 검증이며 기존032/통합 회귀와 별도 분모다. 실제 의미 이해·완전 query·사례 확정·DB 현재성·현장 검증은 미완료다. 이번 문서 변경으로 전체 회귀를 재실행하지 않았다.
+
 ## intake_snapshot — 정확 13키
 
 ```json
