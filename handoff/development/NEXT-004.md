@@ -1,5 +1,7 @@
 # 후속 개발 인수 대장 004
 
+016 게시후갱신:031 독립Yes/C0/I0 receipt9a8ed14b…/lead989dd34c…인수(독립합성16/새PDF0·owner actual본문5/023·RF각1분리). 개발3은[036 B계산서비스](../../docs/superpowers/specs/2026-10-24-fcc-case-calculation-service-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-fcc-case-calculation-service.md)의016base/new3파일RED→구현을실제배정받았다.035 owner49ef565/소유3·관련173/full1117·actualJSON3call은독립리뷰실제배정/미인수이며지적우선,개발1다음037명시host계약제안도배정했다.034A/033구현계속·source193/1646/103/31은016당시검증이고새후속완료로세지않는다.
+
 최신 기준은 [통합016](INTEGRATION-016.md)의기능 `c7ac91dff5ded5af0ce8407c8e8d408452585d0e`다.027/030/032 정확3소유commit·독립Yes 뒤 새전체1646/Node103·source193불변/제품route17+14를확인했다. S05추가검사는단일case의옛도구전제실패로11후2미실행을보존하고033 별도mode에배정했다. corpus012 현재10고유PDF431쪽/전수unknown·official0이며아래015 이하는당시이력이다.
 
 | 담당 | 인수와 현재 단계 | 실제 후속/수용조건 |
