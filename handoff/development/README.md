@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+최신 [통합021](INTEGRATION-021.md)은 기능8cd888f·039 feature+fix2/소유10·독립 최종 Yes, 새1866Python156Node/소스210·화면81이다. 개발1은043의 고정 [설계](../../docs/superpowers/specs/2026-10-24-store-open-existing-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-store-open-existing.md)와 정확 게시 base에서 기존 Store 수정+신규test/usage3을 구현한다. 개발2 042 dad5801·개발3 041 I1 수정3c3932f의 독립 검토를 계속하며 개발4 044 A/v2 정적 Yes는 실제 접수 화면의 다음 계약이다. P01 metadata4 새ACK/새PDF0·대상13/522·제외1/46·대응보류1/53을 유지한다. [현재 대장](NEXT-004.md)과 최신 private followup을 우선하고 아래020 이하는 보존한다. 사용자 결정/준비0·실제AI/물리/현행규범 미검증이다.
+
 최신 [통합020](INTEGRATION-020.md)의 기능 기준은141042da/새1857Python114Node·소스206이다. 038·040의 소유4커밋/6파일만 인수했고 독립 최종 Yes·genuine 합성 참고5call/CLI 자식2를 확인했다. 개발1은043 공식 opener의 합성 probe/계약, 개발2는572cacf 기반042 신규3 구현, 개발3은041 최종 회귀·게시, 개발4는039 Unicode I1 수정8e804c3 독립 재검토와044 계약을 이어간다. 기존 branch를 새 통합 base로 임의 재작성하지 않는다. P01 게시74e86aea/73·38·대상13/522·제외1/46·대응 보류1/53을 구별하며 [현재 대장](NEXT-004.md)과 최신 private followup을 우선한다. 사용자 결정/준비0·전수/실제AI·물리 미검증이며 아래042/019는 당시 이력이다.
 
 현재root기능은01920b5185/1777Python114Node/source202다. [042 고정 설계](../../docs/superpowers/specs/2026-10-24-intake-reference-review-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-reference-review.md)의v3/공개builder독립Yes를확인해정확게시base+승인038source196c·문구8f별도의존으로개발2신규3파일구현을배정한다. 040I1수정eba7caa재리뷰/043공식Store계약,039a6354afe독립리뷰/044최소참고이력화면계약,041구현을병행한다. [현재대장](NEXT-004.md)과최신privatefollowup을함께읽고이미위임된가역적개발을사용자재확인으로멈추지않는다. P01한창구/소유권·원본·실패보존과사용자준비0·전체AI/실물미검증을유지한다.

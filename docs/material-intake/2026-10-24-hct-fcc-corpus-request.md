@@ -1,5 +1,11 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+후속v042/043의 S02B0015/S03B0013/S04B0013와 S01B0021 네 metadata 묶음73payload439053B(JSON72/MD1/PDF0)을 전체 SHA/bytes/정확집합/strict UTF8·sourceidentity/mtime/mode 불변으로 독립 인수·명시ACK했다. P01review4 전체를 읽었으며 root 새원문stat/open/hash/native/render/OCR/복사·산술0이다. 대상13/522·제외1/46·대응보류1/53·공식0/전수unknown은 불변이다. P01이 수신clone을 전체 재대조해 collector77/77·012자료/제외/보류검토42/42로 기록했고 공개 fa26db34b5f6526a10eee2c42e8d0d5cfaa9412f를 root가 원격 대조했다. 검수 묶음 수를 전수 모집단 완료로 올리지 않는다. 다음v044 S02/S04 각 정확링크 max1PDF·S03 보유HAC1 physical39~46는 실제3배정/ACK3·입력33으로 진행하며 검수 전 원문증가0이다.
+
+S02 Q3의8secondary lead/4query·ordinaryHTML5(usable4/limited1)는 issue/issuer/rawnull·원인null을 보존한다. S04 Q2의12query issueclaim/47returned occurrence·7title관계는 원문 발행/기관 승인이나 전수 모집단이 아니다. S03 보유HAC1 physical31~38의 제목/조건·공간축X[m]/Y[m]·footer만 P01이 한정 대조해 primary83/181·남은98이며 숫자plot/limit/pass·실측·현재지원은 미확인이다. S01의 승인5쪽 후속7facts·장비2블록6기재행/18허용cell은 설치·실제chain·현재교정/API binding을 증명하지 않는다. D.F 거리 문맥·단위상충/복합보정·§11.13.3인용·tool별parser index·보수 inset/식별자한정검사·P01초기실패를 보존한다. reused3facts/원문6·8·23 재열람0·새PDF/적격증가0이다.
+
+이 자료 인수와 별도로 [통합021](../../handoff/development/INTEGRATION-021.md)은 이전 승인40쪽 원문의 선택5쪽을 root 새phase로 읽어 실제 사례 계산UI/정식API/DOM을 검증했다. 이는 이번 metadata 묶음을 source-native로 재검수하거나 수집 적격/규범/실물 검증으로 올린 것이 아니다. 다음 작은 인계/구현은 P01 한 창구와 [현재 배정](../../handoff/development/NEXT-004.md)으로 계속하며 사용자 준비0이다. 아래v040/020 이하는 당시 기록이다.
+
 v040/041의 S01B0020·S02B0014·S03B0012·S08B0014 네 묶음78payload/6735749B(JSON75/PDF2/MD1)을 전체 SHA/bytes/정확집합/strict UTF8·원본identity/mtime/mode 불변으로 인수·명시ACK했다. P01 검토4를 읽고 새PDF의 root strict 구조33/53쪽·Count일치/경고0·emptyUSER/권한불변만 확인했다. root content/native/render/OCR·원문 산술 재실행0이다. 국내 HCT BLE33쪽은 대상·참조에 더하고, HCT America53쪽은 요청 report와 실제 report 이름이 맞지 않아 대응 보류로 분리한다. 대상·부모참조13PDF522쪽30866481B(직접issuer/issue12+parent-only1), 2024발행 제외1PDF46쪽2771507B, 대응 보류1PDF53쪽4626750B다. 합계15보존 원문을2025+적격15로 세지 않는다. P01 공개 게시74e86aea53c41c39806db160fa94348bdc4013d3 exact·collector73/73/012검토38/38을 확인했다. 전수모집단unknown/공식대응0·부분 의미검수·상충/미전사/실패를 유지한다.
 
 BLE의 result PASS/Status NT·Note3/4/5는 별도 의미로 보존하고 과거자료 spotcheck/전기적 동일성 설명을 새 conducted 측정으로 바꾸지 않는다. 복합보정을 구성요소/기준면으로 분해하지 않으며 Bluetooth 판본 상충도 자동 정정하지 않는다. HAC 보유 원문8쪽 보강은 suite primary75/181·남은106의 한정 P01 관측이며 실제 측정·교정 검증이 아니다. S08은 과거 고정14metadata·대상12/489+제외1/46 cutoff의67비교/10그룹/95anchor이며 새 BLE/대응 보류를 소급하지 않는다.

@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합021](INTEGRATION-021.md)의 기능8cd888f/039 소유2커밋·10파일과 새1866Python/156Node·소스210·제품화면81을 고정한다. 새 실자료9는 승인5쪽의 root 새phase이며 owner 과거actual9를 재계수하지 않았다.
+
+| 담당 | 실제 다음 작은 작업 |
+|---|---|
+| 개발1 | [043 설계](../../docs/superpowers/specs/2026-10-24-store-open-existing-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-store-open-existing.md) 최종 고정/정확 root 게시base→`codex/dev1-store-open043-20261024`의 소유3 구현. exact Store·raw문자열/native lifetime READ\|WRITE denyDELETE·close/legacy호환·cleanrollback/정확4profile·고정9오류/상한·새 API 수용을 수행 |
+| 개발2 | 042 dad580152753b9be0a53e0531c32c4baa5b9a994·신규3/owner37+394·합성API11은 독립 리뷰 중. 지적 소유수정→최종Yes/정확delta→다음root통합. 사용자 화면의 prepare/append 접점은 정제 계약 뒤 후속 |
+| 개발3 | 041 최초 ebf835e는 독립 No C0/I1. 선언 설정/visible context/sample revision 불일치3을 pass로 수용한 문제를 소유 수정3c3932f/3파일로 보완해 재독립 리뷰. owner31/full1808/Node114와 최초27/1804·No/원본142를 분리. 다음045 공식 가상시나리오 CLI 계약만 준비하며 I1 우선 |
+| 개발4 | 0398e804c3 독립 최종 Yes/root021 인수 완료.044 A(history7 GET/HEAD·명시freshcurrent10 POST)/v2 보완은 정적 Yes.042/043 정식 API·host active 감독/borrowed close·exactbase/공유소유권을 고정해 실제 제품 접수 화면으로 구현. 첫genuine합성 HTTP→043→042/038/034→DOM이 수용이며 production자료 추가 준비를 요구하지 않음 |
+| P01 | 새metadata4(3묶음52payload342692B+S01후속21JSON96361B) exact인수/ACK. 대상13/522·제외1/46·대응보류1/53/공식0·모집단unknown 유지. 보유근거의 실제 누락만 좁혀 후속 실제배정/검수·인계, 실제chain/교정/지원 공백을 검색 추정으로 닫지 않음 |
+
+043의 합성 probe5그룹/정적 Yes는 제품 API PASS가 아니다. 실제 소유 구현·RED/전용/관련/공통회귀·독립수정·root통합까지 이어간다. 기존 branch/미커밋/원본/실패와 수집P01 단일창구를 보존하며 사용자 결정/준비0이다. 아래020 이하는 당시 상태다.
+
 최신 [통합020](INTEGRATION-020.md)은 기능141042da/정확038·040 소유4커밋·6파일, 새1857Python/114Node·소스206 불변이다. 별도 genuine 합성 참고5call과 실제 CLI 자식2를 확인했다. 039·041·042 제품은 이 cut에 포함하지 않는다.
 
 | 담당 | 현재 실제 작업과 다음 수용 조건 |
