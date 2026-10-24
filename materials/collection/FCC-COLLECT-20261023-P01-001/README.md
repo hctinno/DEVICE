@@ -56,3 +56,5 @@
 2026-10-24 추가 검수한 제조사 문헌5종의 [서지·권리 검수](../../inventory/FCC-PUBLIC-MANUAL-ACCESS-20261024-004-review.json) · [접근 안내 manifest](../../manifests/FCC-PUBLIC-MANUAL-ACCESS-20261024-004.json) · [접근 안내 ZIP](../../packages/FCC-PUBLIC-MANUAL-ACCESS-20261024-004.zip)을 제공한다. 이미 취득한 원문의 메타데이터 투영이며 원문과 사용자 사례 자료는 포함하지 않는다. 전체 프로토콜·현재 자산·가상 또는 실장비 실행의 검증 집계와 구분한다.
 
 [접근 안내001/002 독립 검수](../../inventory/FCC-PUBLIC-ACCESS-QA-20261024-001.json): 지정2개 ZIP/10개 원문 참조의 문서 무결성 검수 통과. 최종 커밋 바이트 비교는 P01 제공 blob 기준이다.
+
+2026-10-24 CTRL-003의 backend 소스 2종에 대한 [정적 근거·권리 검수](../../inventory/FCC-PUBLIC-CONTROL-SOURCES-20261024-001-review.json), [접근 안내 manifest](../../manifests/FCC-PUBLIC-CONTROL-SOURCES-20261024-001.json), [ZIP](../../packages/FCC-PUBLIC-CONTROL-SOURCES-20261024-001.zip)을 추가했다. 고정 버전·원본 해시·MIT 고지·의존성과 시뮬레이션 한계를 보존한 메타데이터 투영이다. 원문 확보·정적 검수와 SDK 실행/실물 지원 검증을 구분한다.

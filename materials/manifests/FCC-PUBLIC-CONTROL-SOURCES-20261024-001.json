@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "package_id": "FCC-PUBLIC-CONTROL-SOURCES-20261024-001",
+  "created_at": "2026-10-24T10:28:22.955646+09:00",
+  "synthetic": false,
+  "notes": "P01 reviewed bibliography/access metadata for two already acquired fixed-commit backend source archives. No source code, archive, installer, private report or real measurement payload. Projection is not a new source acquisition or a runtime/hardware-support approval.",
+  "documents": [
+    {
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "title": "RsInstrument fixed-commit source archive",
+      "kind": "driver",
+      "version": "pyproject/__init__ 1.131.0; README history 1.131.0.128; commit b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa",
+      "publisher": "Rohde & Schwarz",
+      "published_at": null,
+      "retrieved_at": "2026-10-24T10:02:53+09:00",
+      "representation": "original",
+      "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/tree/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa",
+      "download_url": "https://codeload.github.com/Rohde-Schwarz/RsInstrument/zip/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-CONTROL-SOURCES-20261024-001"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Root MIT permission and notice texts were verified in each retained source archive. This package supplies bibliographic and access metadata; archive assets, transitive dependencies and native runtimes are not granted blanket redistribution clearance.",
+      "notes": "The fixed-commit source archive was acquired and hash/size/CRC checked locally. No source archive or code payload is included here. Source existence and declared simulation behavior are separate from build/install, model support, real I/O and hardware validation."
+    },
+    {
+      "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+      "title": "PyVISA-sim 0.7.0 fixed-tag-commit source archive",
+      "kind": "driver",
+      "version": "tag 0.7.0; commit f7af67e299ccdc95ccfccbe9edcb7490aa189d6f",
+      "publisher": "PyVISA-sim project",
+      "published_at": null,
+      "retrieved_at": "2026-10-24T10:02:53+09:00",
+      "representation": "original",
+      "source_url": "https://github.com/pyvisa/pyvisa-sim/tree/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f",
+      "download_url": "https://codeload.github.com/pyvisa/pyvisa-sim/zip/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f",
+      "language": "en",
+      "request_ids": [
+        "FCC-PUBLIC-CONTROL-SOURCES-20261024-001"
+      ],
+      "model_ids": [],
+      "status": "read_only",
+      "rights": "unknown",
+      "rights_notes": "Root MIT permission and notice texts were verified in each retained source archive. This package supplies bibliographic and access metadata; archive assets, transitive dependencies and native runtimes are not granted blanket redistribution clearance.",
+      "notes": "The fixed-commit source archive was acquired and hash/size/CRC checked locally. No source archive or code payload is included here. Source existence and declared simulation behavior are separate from build/install, model support, real I/O and hardware validation."
+    }
+  ]
+}

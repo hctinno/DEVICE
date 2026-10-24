@@ -1,0 +1,815 @@
+{
+  "package_id": "FCC-PUBLIC-CONTROL-SOURCES-20261024-001",
+  "request_id": "DEV-CONTROL-SOURCES-008",
+  "reviewed_at": "2026-10-24T10:28:22.955646+09:00",
+  "decision": "bibliographic_access_and_static_source_findings_metadata_only",
+  "already_acquired_original_records": 2,
+  "new_network_acquisitions_by_projection": 0,
+  "public_source_originals_code_or_installer_payloads": 0,
+  "private_user_report_or_measurement_payloads": 0,
+  "source_reviews": [
+    {
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "title": "RsInstrument fixed-commit source archive",
+      "version": "pyproject/__init__ 1.131.0; README history 1.131.0.128; commit b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa",
+      "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/tree/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa",
+      "download_url": "https://codeload.github.com/Rohde-Schwarz/RsInstrument/zip/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa",
+      "locally_verified_original_sha256": "01eaa9b33bf047ae420ee49280fe74addecd98ad4e04456919c08ca0dd100649",
+      "original_bytes": 658514,
+      "root_license": "MIT",
+      "license_member": "RsInstrument-b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/LICENSE",
+      "license_bytes": 1086,
+      "license_sha256": "3001d91a28ce49f5d4795d55cad96c965c61d65ce4488edf648b5c8c4e59d193",
+      "full_root_permission_and_notice_observed": true,
+      "public_original_or_code_payload_included": false
+    },
+    {
+      "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+      "title": "PyVISA-sim 0.7.0 fixed-tag-commit source archive",
+      "version": "tag 0.7.0; commit f7af67e299ccdc95ccfccbe9edcb7490aa189d6f",
+      "source_url": "https://github.com/pyvisa/pyvisa-sim/tree/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f",
+      "download_url": "https://codeload.github.com/pyvisa/pyvisa-sim/zip/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f",
+      "locally_verified_original_sha256": "7fc2bc8cd2392fa33295da94253b86e9119ef9ab2140693ac2f9aa83302cfc51",
+      "original_bytes": 68802,
+      "root_license": "MIT",
+      "license_member": "pyvisa-sim-f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/LICENSE.txt",
+      "license_bytes": 1109,
+      "license_sha256": "958027b4705ed5f88a8472ad79a507fa07347002e5028c0a72ca902dcb0d4824",
+      "full_root_permission_and_notice_observed": true,
+      "public_original_or_code_payload_included": false
+    }
+  ],
+  "static_findings": [
+    {
+      "evidence_id": "S07-B0006-E-RS-DISTRIBUTION",
+      "source_key": "rsinstrument",
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "evidence_level": "new_original_fact",
+      "topic": "fixed version, license and declared dependencies",
+      "observation": "고정 커밋의 pyproject 및 __init__는 1.131.0, README 이력은 1.131.0.128을 표기한다. 루트 LICENSE는 MIT이며 Python>=3.10과 기본/선택 의존성이 선언돼 있다.",
+      "boundary": "선택한 것은 커밋 소스 ZIP이다. 배포 wheel/sdist·의존성 lock·설치 환경을 검증한 것은 아니다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "pyproject.toml",
+          "member_sha256": "553da1093fc5d6f266e2b159367ef47b59df1faefe1d38bdaa3e25831d1400fc",
+          "member_bytes": 5993,
+          "line_start": 1,
+          "line_end": 21,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/pyproject.toml#L1-L21"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "pyproject.toml",
+          "member_sha256": "553da1093fc5d6f266e2b159367ef47b59df1faefe1d38bdaa3e25831d1400fc",
+          "member_bytes": 5993,
+          "line_start": 53,
+          "line_end": 64,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/pyproject.toml#L53-L64"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "pyproject.toml",
+          "member_sha256": "553da1093fc5d6f266e2b159367ef47b59df1faefe1d38bdaa3e25831d1400fc",
+          "member_bytes": 5993,
+          "line_start": 118,
+          "line_end": 124,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/pyproject.toml#L118-L124"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/__init__.py",
+          "member_sha256": "0ac352c00909f52e9d18d1c797504792ce3200b4a48f409d5de2f37f58e056d3",
+          "member_bytes": 1715,
+          "line_start": 1,
+          "line_end": 7,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/__init__.py#L1-L7"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "README.rst",
+          "member_sha256": "e09f4a9201f81903befb99ca4224938ad63a83ab83e9480a1265cdcea56b4666",
+          "member_bytes": 19666,
+          "line_start": 43,
+          "line_end": 60,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/README.rst#L43-L60"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "LICENSE",
+          "member_sha256": "3001d91a28ce49f5d4795d55cad96c965c61d65ce4488edf648b5c8c4e59d193",
+          "member_bytes": 1086,
+          "line_start": 1,
+          "line_end": 21,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/LICENSE#L1-L21"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-RS-PLATFORM",
+      "source_key": "rsinstrument",
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "evidence_level": "source_code_static_review",
+      "topic": "OS branches and buses",
+      "observation": "선택 VISA 경로에 Windows/Linux/Darwin 분기가 있으며, 예제/문서는 VXI-11·HiSLIP·GPIB·USB-TMC·ASRL 및 별도 raw LAN socket 진입점을 보여준다.",
+      "boundary": "공통 통신 경로/예제의 존재다. 현재 OS/비트수/설치 VISA 또는 특정 장비·FW·옵션·SCPI 완전성을 보증하지 않는다. 공개 예제 주소/식별값은 실제 현장 설정으로 취급하지 않는다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSession.py",
+          "member_sha256": "8f33e48a20b0660fa9b93f1d1ed77d17342c8fe6048d9865ce30654280ec9ffc",
+          "member_bytes": 56207,
+          "line_start": 281,
+          "line_end": 316,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSession.py#L281-L316"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "docs/source/Example_HelloWorld.py",
+          "member_sha256": "060199ee9ee05a9df157e94265cfa5cc87da3f1329499ea6a3b9e059c4135ae4",
+          "member_bytes": 1263,
+          "line_start": 12,
+          "line_end": 15,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/docs/source/Example_HelloWorld.py#L12-L15"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "docs/source/Chapter_04_InitiateSession.rst",
+          "member_sha256": "6edb4efbf69a9455fccf44d39b398a1dfc3b23d08eda71851ecff8513ab131ec",
+          "member_bytes": 4126,
+          "line_start": 14,
+          "line_end": 16,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/docs/source/Chapter_04_InitiateSession.rst#L14-L16"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "docs/source/Chapter_04_InitiateSession.rst",
+          "member_sha256": "6edb4efbf69a9455fccf44d39b398a1dfc3b23d08eda71851ecff8513ab131ec",
+          "member_bytes": 4126,
+          "line_start": 52,
+          "line_end": 64,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/docs/source/Chapter_04_InitiateSession.rst#L52-L64"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-RS-ERROR",
+      "source_key": "rsinstrument",
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "evidence_level": "source_code_static_review",
+      "topic": "error queue and per-operation checking",
+      "observation": "기본 query_instr_status=True이며 일반 write 경로가 check_status를 호출한다. 설정에 따라 STB를 확인한 뒤 오류 큐를 배출하고 남은 오류를 예외로 처리한다. 큐 조회는 clear-on-read이며 억제 규칙으로 반환 오류가 필터링될 수 있다.",
+      "boundary": "검사 비활성화·block_check_status·억제 규칙과 호출 경로에 따라 달라진다. 모든 저수준/IVI 호출이 매번 동일하게 폴링된다고 일반화하지 않는다. 오류 없음은 RF 유효성 판정이 아니다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/Instrument.py",
+          "member_sha256": "969475d88dbce0d9fc3b317ab3547d1828cb2f1020312d9db3a3d840de8aed1c",
+          "member_bytes": 68776,
+          "line_start": 66,
+          "line_end": 75,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/Instrument.py#L66-L75"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/Instrument.py",
+          "member_sha256": "969475d88dbce0d9fc3b317ab3547d1828cb2f1020312d9db3a3d840de8aed1c",
+          "member_bytes": 68776,
+          "line_start": 644,
+          "line_end": 717,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/Instrument.py#L644-L717"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/Instrument.py",
+          "member_sha256": "969475d88dbce0d9fc3b317ab3547d1828cb2f1020312d9db3a3d840de8aed1c",
+          "member_bytes": 68776,
+          "line_start": 761,
+          "line_end": 784,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/Instrument.py#L761-L784"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSession.py",
+          "member_sha256": "8f33e48a20b0660fa9b93f1d1ed77d17342c8fe6048d9865ce30654280ec9ffc",
+          "member_bytes": 56207,
+          "line_start": 631,
+          "line_end": 647,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSession.py#L631-L647"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "docs/source/Chapter_07_ErrorChecking.rst",
+          "member_sha256": "d8e7a0f628090140c86663726904764be5aa55dc7b4ca360801663c355bc119e",
+          "member_bytes": 7673,
+          "line_start": 3,
+          "line_end": 42,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/docs/source/Chapter_07_ErrorChecking.rst#L3-L42"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "docs/source/Chapter_07_ErrorChecking.rst",
+          "member_sha256": "d8e7a0f628090140c86663726904764be5aa55dc7b4ca360801663c355bc119e",
+          "member_bytes": 7673,
+          "line_start": 135,
+          "line_end": 145,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/docs/source/Chapter_07_ErrorChecking.rst#L135-L145"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-RS-OPC",
+      "source_key": "rsinstrument",
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "evidence_level": "source_code_static_review",
+      "topic": "timeout and completion mechanisms",
+      "observation": "OPC 동기화는 설정/전송 종류에 따라 STB 폴링 또는 OPC 질의를 선택한다. 비 VXI 등 경로는 VISA timeout을 임시 변경 후 복원한다. disable_opc_query 설정은 실제 질의 없이 True를 반환한다.",
+      "boundary": "I/O timeout과 작업 완료 timeout의 용도를 분리한다. True 반환만으로 실제 완료를 입증하지 않으며 세션·설정·응답 경로가 필요하다. 동작 및 시간 정확성은 실행하지 않았다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSession.py",
+          "member_sha256": "8f33e48a20b0660fa9b93f1d1ed77d17342c8fe6048d9865ce30654280ec9ffc",
+          "member_bytes": 56207,
+          "line_start": 796,
+          "line_end": 838,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSession.py#L796-L838"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSession.py",
+          "member_sha256": "8f33e48a20b0660fa9b93f1d1ed77d17342c8fe6048d9865ce30654280ec9ffc",
+          "member_bytes": 56207,
+          "line_start": 1033,
+          "line_end": 1078,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSession.py#L1033-L1078"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "docs/source/Chapter_09_OpcSyncCommunication.rst",
+          "member_sha256": "7292ada4a381fa995a4d068ab8accbd653e2e32b50897e7bcc440943a7563d20",
+          "member_bytes": 1732,
+          "line_start": 4,
+          "line_end": 10,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/docs/source/Chapter_09_OpcSyncCommunication.rst#L4-L10"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-RS-SIMULATION",
+      "source_key": "rsinstrument",
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "evidence_level": "source_code_static_review",
+      "topic": "cache and default simulated results",
+      "observation": "VisaSessionSim은 명령 헤더별 값을 캐시하고 미설정 문자열 질의에 Simulating을 반환한다. OPC=True, 오류 질의=None 및 상태값 0/False의 고정 경로와 미설정 이진 데이터의 정해진 패턴이 존재한다.",
+      "boundary": "문자열/기본 응답·캐시 재생이다. 계측기 명령 집합·주파수/시간/파형·안전 정지·RF 측정 결과를 모델링했다는 증거가 아니다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSessionSim.py",
+          "member_sha256": "ffc201f95e4d1894d41bcb0935534e0fb21b49996426da5c9d02ea697126bf17",
+          "member_bytes": 8906,
+          "line_start": 13,
+          "line_end": 50,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSessionSim.py#L13-L50"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSessionSim.py",
+          "member_sha256": "ffc201f95e4d1894d41bcb0935534e0fb21b49996426da5c9d02ea697126bf17",
+          "member_bytes": 8906,
+          "line_start": 77,
+          "line_end": 96,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSessionSim.py#L77-L96"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSessionSim.py",
+          "member_sha256": "ffc201f95e4d1894d41bcb0935534e0fb21b49996426da5c9d02ea697126bf17",
+          "member_bytes": 8906,
+          "line_start": 106,
+          "line_end": 113,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSessionSim.py#L106-L113"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSessionSim.py",
+          "member_sha256": "ffc201f95e4d1894d41bcb0935534e0fb21b49996426da5c9d02ea697126bf17",
+          "member_bytes": 8906,
+          "line_start": 127,
+          "line_end": 179,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSessionSim.py#L127-L179"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSessionSim.py",
+          "member_sha256": "ffc201f95e4d1894d41bcb0935534e0fb21b49996426da5c9d02ea697126bf17",
+          "member_bytes": 8906,
+          "line_start": 185,
+          "line_end": 208,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSessionSim.py#L185-L208"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-RS-LIFECYCLE",
+      "source_key": "rsinstrument",
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "evidence_level": "source_code_static_review",
+      "topic": "simulation reset, reconnect and close",
+      "observation": "시뮬레이터 생성자는 빈 캐시를 만들고 close는 active를 False로 바꾼다. 강제 재접속 경로는 새 세션 객체를 생성한다. reset은 설정된 reset 명령과 OPC/상태 검사 호출이다.",
+      "boundary": "검토한 코드에 영속화/재시작 복구 계약은 없다. 직접 세션 재사용/잠금 공유와 물리 장비 상태 복구를 혼동하지 않는다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSessionSim.py",
+          "member_sha256": "ffc201f95e4d1894d41bcb0935534e0fb21b49996426da5c9d02ea697126bf17",
+          "member_bytes": 8906,
+          "line_start": 49,
+          "line_end": 62,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSessionSim.py#L49-L62"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSessionSim.py",
+          "member_sha256": "ffc201f95e4d1894d41bcb0935534e0fb21b49996426da5c9d02ea697126bf17",
+          "member_bytes": 8906,
+          "line_start": 77,
+          "line_end": 84,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSessionSim.py#L77-L84"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/VisaSessionSim.py",
+          "member_sha256": "ffc201f95e4d1894d41bcb0935534e0fb21b49996426da5c9d02ea697126bf17",
+          "member_bytes": 8906,
+          "line_start": 227,
+          "line_end": 235,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/VisaSessionSim.py#L227-L235"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/Instrument.py",
+          "member_sha256": "969475d88dbce0d9fc3b317ab3547d1828cb2f1020312d9db3a3d840de8aed1c",
+          "member_bytes": 68776,
+          "line_start": 200,
+          "line_end": 237,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/Instrument.py#L200-L237"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/Instrument.py",
+          "member_sha256": "969475d88dbce0d9fc3b317ab3547d1828cb2f1020312d9db3a3d840de8aed1c",
+          "member_bytes": 68776,
+          "line_start": 742,
+          "line_end": 759,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/Instrument.py#L742-L759"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-RS-MCP",
+      "source_key": "rsinstrument",
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "evidence_level": "source_code_static_review",
+      "topic": "MCP and example entry points",
+      "observation": "패키지는 RsInstrument-mcp 콘솔 및 python -m RsInstrument.mcp 진입점을 제공하고 FastMCP 기반 조립 함수를 포함한다. CLI와 run API의 기본 transport는 서로 다르다. 고정 소스에는 사용자/내장 도구 조립 예제와 외부 공식 Examples 링크가 있다.",
+      "boundary": "도구를 실행·등록·노출하지 않았다. 외부 Examples 저장소는 번들 README의 링크까지만 인용하며 별도 커밋/개별 모델 예제/라이선스를 이번에 확보한 것으로 세지 않는다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "pyproject.toml",
+          "member_sha256": "553da1093fc5d6f266e2b159367ef47b59df1faefe1d38bdaa3e25831d1400fc",
+          "member_bytes": 5993,
+          "line_start": 53,
+          "line_end": 55,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/pyproject.toml#L53-L55"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "pyproject.toml",
+          "member_sha256": "553da1093fc5d6f266e2b159367ef47b59df1faefe1d38bdaa3e25831d1400fc",
+          "member_bytes": 5993,
+          "line_start": 118,
+          "line_end": 124,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/pyproject.toml#L118-L124"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/mcp/__main__.py",
+          "member_sha256": "c31706dd40fe6ce029966e9e877abcf04b095d34f819138c70e605c892fe9a7d",
+          "member_bytes": 175,
+          "line_start": 1,
+          "line_end": 6,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/mcp/__main__.py#L1-L6"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/mcp/cli.py",
+          "member_sha256": "d7f926440223ad7f8cf3e19df98c913e70397e9a48c46237eada7a0dbf50883e",
+          "member_bytes": 6526,
+          "line_start": 75,
+          "line_end": 93,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/mcp/cli.py#L75-L93"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/mcp/server.py",
+          "member_sha256": "629cc5dc9137f7bfd5f3b2d7ec7f5e73c21687ebb94fe9fd159f48c105feb2af",
+          "member_bytes": 3299,
+          "line_start": 39,
+          "line_end": 78,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/mcp/server.py#L39-L78"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/mcp/server.py",
+          "member_sha256": "629cc5dc9137f7bfd5f3b2d7ec7f5e73c21687ebb94fe9fd159f48c105feb2af",
+          "member_bytes": 3299,
+          "line_start": 81,
+          "line_end": 109,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/mcp/server.py#L81-L109"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "README.rst",
+          "member_sha256": "e09f4a9201f81903befb99ca4224938ad63a83ab83e9480a1265cdcea56b4666",
+          "member_bytes": 19666,
+          "line_start": 32,
+          "line_end": 40,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/README.rst#L32-L40"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "docs/source/Example_ComposeBuiltinTools_MCP.py",
+          "member_sha256": "20bf6f7873a2063938c8c6eb579227454cb0f1e397a430b37bfc762224d4c2b0",
+          "member_bytes": 1784,
+          "line_start": 1,
+          "line_end": 12,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/docs/source/Example_ComposeBuiltinTools_MCP.py#L1-L12"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-RS-MCP-STATE",
+      "source_key": "rsinstrument",
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "evidence_level": "source_code_static_review",
+      "topic": "MCP policy scope and state save/recall",
+      "observation": "검토한 쓰기 도구는 정책 승인 함수 뒤에 context-managed RsInstrument 세션을 열고 닫는다. Save/Recall 도구는 계측기 SAV/RCL 호출이다. health 응답은 서버 식별/버전의 고정 응답이다.",
+      "boundary": "MCP 쓰기 정책은 core write 전체의 권한 경계와 같지 않다. Save/Recall은 서버/시뮬레이터의 영속 재시작 복구를 뜻하지 않는다. health 성공은 장비·RF·AI 업무 완료가 아니다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/mcp/basic_tools.py",
+          "member_sha256": "188fd58b8bd349efa208b9cc643c9c4113fe6dabbce45edd261d8157fdbb82cc",
+          "member_bytes": 8026,
+          "line_start": 87,
+          "line_end": 120,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/mcp/basic_tools.py#L87-L120"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/mcp/state_storage.py",
+          "member_sha256": "1713fbd40f6fc59d49875133660961c6a5e3829dd7cd07c5ae2deaafea558d50",
+          "member_bytes": 2182,
+          "line_start": 24,
+          "line_end": 69,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/mcp/state_storage.py#L24-L69"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/mcp/server.py",
+          "member_sha256": "629cc5dc9137f7bfd5f3b2d7ec7f5e73c21687ebb94fe9fd159f48c105feb2af",
+          "member_bytes": 3299,
+          "line_start": 63,
+          "line_end": 69,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/mcp/server.py#L63-L69"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Internal/Instrument.py",
+          "member_sha256": "969475d88dbce0d9fc3b317ab3547d1828cb2f1020312d9db3a3d840de8aed1c",
+          "member_bytes": 68776,
+          "line_start": 761,
+          "line_end": 784,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Internal/Instrument.py#L761-L784"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-RS-IVI",
+      "source_key": "rsinstrument",
+      "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+      "evidence_level": "source_code_static_review",
+      "topic": "generic IVI-Python helpers",
+      "observation": "IviDirectIo/IviUtility 래퍼가 포함되며 직접 I/O 일부는 block_check_status=True로 공통 core를 호출한다.",
+      "boundary": "IVI-Python 보조 API의 정적 존재다. 장비별 IVI class driver/설치 IVI 또는 VISA 런타임의 배포 권리·비트수·모델/FW 지원을 확인한 것이 아니다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Fixed_Files/ivi_direct_io.py",
+          "member_sha256": "47849ec2d8a3db10afbe6dc09cd4810fc65bc30f75656971bcd2312f0eca73c5",
+          "member_bytes": 2257,
+          "line_start": 1,
+          "line_end": 53,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Fixed_Files/ivi_direct_io.py#L1-L53"
+        },
+        {
+          "document_id": "S07-B0006-RsInstrument-b600fd6c-01eaa9b33bf0",
+          "member": "RsInstrument/Fixed_Files/ivi_utility.py",
+          "member_sha256": "47808061e82840d124eb221a398b4f2f545208a3e2ce02bf5f693034fc37530d",
+          "member_bytes": 4750,
+          "line_start": 26,
+          "line_end": 59,
+          "source_url": "https://github.com/Rohde-Schwarz/RsInstrument/blob/b600fd6cf693dbcfa3cbfba0f638dfa14ff2c0aa/RsInstrument/Fixed_Files/ivi_utility.py#L26-L59"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-SIM-DISTRIBUTION",
+      "source_key": "pyvisa-sim",
+      "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+      "evidence_level": "new_original_fact",
+      "topic": "fixed tag, packaging, license and dependencies",
+      "observation": "선택 태그는 0.7.0이며 변경 이력에도 0.7.0이 있다. 루트 MIT LICENSE와 Python>=3.10·의존성 선언을 확인했다. 버전은 동적 메타데이터이며 source ZIP에 생성 version.py는 없다. README의 과거 Python 시험 문구와 현행 선언/변경 이력은 구분한다.",
+      "boundary": "최신판 전체를 판정한 것은 아니다. release API 공개 시점과 이력의 날짜를 구분하고, 빌드/설치 가능성·wheel 내용·현재 환경 호환성을 검증하지 않았다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "LICENSE.txt",
+          "member_sha256": "958027b4705ed5f88a8472ad79a507fa07347002e5028c0a72ca902dcb0d4824",
+          "member_bytes": 1109,
+          "line_start": 1,
+          "line_end": 21,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/LICENSE.txt#L1-L21"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyproject.toml",
+          "member_sha256": "bed057cb69abedbb77d58bf3063e6ce714b8ac6a8e279ee1986e343254d3c538",
+          "member_bytes": 3628,
+          "line_start": 1,
+          "line_end": 46,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyproject.toml#L1-L46"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyproject.toml",
+          "member_sha256": "bed057cb69abedbb77d58bf3063e6ce714b8ac6a8e279ee1986e343254d3c538",
+          "member_bytes": 3628,
+          "line_start": 55,
+          "line_end": 62,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyproject.toml#L55-L62"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/__init__.py",
+          "member_sha256": "d85fde253c3c73fced9c0228761d4c278f22a28a949f297e7e33df974ede9b2f",
+          "member_bytes": 452,
+          "line_start": 9,
+          "line_end": 17,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/__init__.py#L9-L17"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "CHANGES.rst",
+          "member_sha256": "e0f16443dcb669ed31c8b5f5a82bc78aee0721f9c088a43f594b49ec59393c0e",
+          "member_bytes": 2356,
+          "line_start": 1,
+          "line_end": 8,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/CHANGES.rst#L1-L8"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "README.rst",
+          "member_sha256": "e33fff0a39bab55a442f0d578f246cd700be66f0050e882ea9224b4a4d09ab78",
+          "member_bytes": 2778,
+          "line_start": 56,
+          "line_end": 62,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/README.rst#L56-L62"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-SIM-RESOURCES",
+      "source_key": "pyvisa-sim",
+      "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+      "evidence_level": "source_code_static_review",
+      "topic": "backend selection and resource classes",
+      "observation": "문서는 @sim 또는 사용자 YAML 경로@sim을 설명한다. 패키지는 TCPIP/GPIB/RS232/USB 자원 유형을 선언하고, parser는 YAML 자원별 장치 객체를 구성한다.",
+      "boundary": "가상 메시지 자원이다. 실제 버스 드라이버·장비 검색·모델/SCPI 전체 구현이나 물리 I/O 지원 검증이 아니다. 리소스 문자열/장치 이름 일치만으로 지원 판정하지 않는다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyproject.toml",
+          "member_sha256": "bed057cb69abedbb77d58bf3063e6ce714b8ac6a8e279ee1986e343254d3c538",
+          "member_bytes": 3628,
+          "line_start": 1,
+          "line_end": 6,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyproject.toml#L1-L6"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyproject.toml",
+          "member_sha256": "bed057cb69abedbb77d58bf3063e6ce714b8ac6a8e279ee1986e343254d3c538",
+          "member_bytes": 3628,
+          "line_start": 29,
+          "line_end": 44,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyproject.toml#L29-L44"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "docs/source/index.rst",
+          "member_sha256": "e21517326e92e116e29d6143b32efe25fd806d470e2537f0cde0ea25e4f17f97",
+          "member_bytes": 1410,
+          "line_start": 11,
+          "line_end": 33,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/docs/source/index.rst#L11-L33"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "docs/source/definitions.rst",
+          "member_sha256": "045b8f7dd4854cf92b510c11614a3ea6dcc0f74faccd082142dbcedc1b4fed27",
+          "member_bytes": 7423,
+          "line_start": 218,
+          "line_end": 237,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/docs/source/definitions.rst#L218-L237"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/parser.py",
+          "member_sha256": "7b987f2f08e6daa74da702d382301bed610924ab0b2912d5cd53af90fe46a5eb",
+          "member_bytes": 11728,
+          "line_start": 397,
+          "line_end": 417,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/parser.py#L397-L417"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-SIM-DIALOG",
+      "source_key": "pyvisa-sim",
+      "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+      "evidence_level": "source_code_static_review",
+      "topic": "dialog, property, random response and errors",
+      "observation": "명시 대화 바이트를 매칭하고 getter/setter·형식/범위/valid 목록을 처리한다. RANDOM 응답 경로 및 설정한 오류 큐의 clear-on-read 동작이 있다. 명령 처리는 정의된 대화/속성/오류/채널 경로에 한정된다.",
+      "boundary": "상태 및 오류 응답은 YAML/코드 정의 범위다. 임의 모델 SCPI, 실제 오류 특성·아날로그/무선 물리·AI 업무 흐름을 자동 생성하지 않는다. 랜덤 응답을 실측이나 자동으로 재현 가능한 물리 모델로 간주하지 않는다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/component.py",
+          "member_sha256": "53e71b37189e11711f11f0189429f7b05bf7226663fe4a31818d32dbacf9f54e",
+          "member_bytes": 11157,
+          "line_start": 175,
+          "line_end": 200,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/component.py#L175-L200"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/component.py",
+          "member_sha256": "53e71b37189e11711f11f0189429f7b05bf7226663fe4a31818d32dbacf9f54e",
+          "member_bytes": 11157,
+          "line_start": 288,
+          "line_end": 319,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/component.py#L288-L319"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/component.py",
+          "member_sha256": "53e71b37189e11711f11f0189429f7b05bf7226663fe4a31818d32dbacf9f54e",
+          "member_bytes": 11157,
+          "line_start": 344,
+          "line_end": 387,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/component.py#L344-L387"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/devices.py",
+          "member_sha256": "b9931b97130e5a2cecd3d4739d955e565047111f5755ef084f459fbdcb515370",
+          "member_bytes": 12224,
+          "line_start": 81,
+          "line_end": 93,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/devices.py#L81-L93"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/devices.py",
+          "member_sha256": "b9931b97130e5a2cecd3d4739d955e565047111f5755ef084f459fbdcb515370",
+          "member_bytes": 12224,
+          "line_start": 312,
+          "line_end": 341,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/devices.py#L312-L341"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "docs/source/definitions.rst",
+          "member_sha256": "045b8f7dd4854cf92b510c11614a3ea6dcc0f74faccd082142dbcedc1b4fed27",
+          "member_bytes": 7423,
+          "line_start": 182,
+          "line_end": 200,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/docs/source/definitions.rst#L182-L200"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-SIM-TIMEOUT",
+      "source_key": "pyvisa-sim",
+      "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+      "evidence_level": "source_code_static_review",
+      "topic": "message read completion and timeout",
+      "observation": "세션 read는 종단/EOM·읽기 개수에 따라 반환하고, 대기 시간이 지나면 error_timeout을 반환한다. highlevel은 이 상태를 VISA timeout 예외로 바꾼다.",
+      "boundary": "메시지 읽기 완료와 시간 초과다. 계측기 작업 완료나 OPC/트리거·RF 스윕의 물리 시간을 구현한 증거가 아니다. 실제 시간/예외 경로는 실행하지 않았다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/sessions/session.py",
+          "member_sha256": "ad226e9219cf1951f2c1d05bd29d833b77a62cf6ffd76832e9b9217e8eb04121",
+          "member_bytes": 9689,
+          "line_start": 210,
+          "line_end": 278,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/sessions/session.py#L210-L278"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/highlevel.py",
+          "member_sha256": "c8c8d8685f11f030fb09b8a017adfd48102f4942caaa00ea779c896a374021fc",
+          "member_bytes": 12164,
+          "line_start": 246,
+          "line_end": 258,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/highlevel.py#L246-L258"
+        }
+      ]
+    },
+    {
+      "evidence_id": "S07-B0006-E-SIM-LIFECYCLE",
+      "source_key": "pyvisa-sim",
+      "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+      "evidence_level": "source_code_static_review",
+      "topic": "resource state lifetime versus restart",
+      "observation": "backend 초기화는 YAML에서 장치 집합을 생성한다. 동일 backend에서 세션 open은 해당 resource의 장치 객체를 연결하고 close는 세션 핸들만 삭제한다. 자원별 parser 생성과 세션별 핸들은 구분된다.",
+      "boundary": "같은 backend의 닫기/재열기를 무조건 장치 초기화로 보지 않는다. 프로세스/전체 backend 재시작 시 영속 복구 계약은 검토 코드에서 확인되지 않았다.",
+      "anchors": [
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/highlevel.py",
+          "member_sha256": "c8c8d8685f11f030fb09b8a017adfd48102f4942caaa00ea779c896a374021fc",
+          "member_bytes": 12164,
+          "line_start": 63,
+          "line_end": 72,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/highlevel.py#L63-L72"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/highlevel.py",
+          "member_sha256": "c8c8d8685f11f030fb09b8a017adfd48102f4942caaa00ea779c896a374021fc",
+          "member_bytes": 12164,
+          "line_start": 137,
+          "line_end": 179,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/highlevel.py#L137-L179"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/parser.py",
+          "member_sha256": "7b987f2f08e6daa74da702d382301bed610924ab0b2912d5cd53af90fe46a5eb",
+          "member_bytes": 11728,
+          "line_start": 397,
+          "line_end": 417,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/parser.py#L397-L417"
+        },
+        {
+          "document_id": "S07-B0006-PyVISA-sim-0.7.0-f7af67e2-7fc2bc8cd239",
+          "member": "pyvisa_sim/devices.py",
+          "member_sha256": "b9931b97130e5a2cecd3d4739d955e565047111f5755ef084f459fbdcb515370",
+          "member_bytes": 12224,
+          "line_start": 125,
+          "line_end": 139,
+          "source_url": "https://github.com/pyvisa/pyvisa-sim/blob/f7af67e299ccdc95ccfccbe9edcb7490aa189d6f/pyvisa_sim/devices.py#L125-L139"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "source_archives_SHA_bytes_CRC": 2,
+    "root_MIT_permission_notices": 2,
+    "unique_source_members": 31,
+    "source_line_anchor_entries": 66,
+    "source_code_install_import_execution": 0,
+    "hardware_tests": 0
+  },
+  "package": {
+    "path": "materials/packages/FCC-PUBLIC-CONTROL-SOURCES-20261024-001.zip",
+    "sha256": "55c857d6f3ec27602c433ca09fcdb7641fb1158eac20cd3d0b76fa1a0cadaf0d",
+    "bytes": 1166,
+    "manifest_bytes_equal": true,
+    "crc_valid": true,
+    "cumulative_import": {
+      "package_id": "FCC-PUBLIC-CONTROL-SOURCES-20261024-001",
+      "downloaded": 0,
+      "unavailable": 2,
+      "already_imported": false
+    }
+  },
+  "support_status": "not_assessed_by_source_acquisition",
+  "scope": "Source identity, access/license evidence and static implementation boundaries; no installed-environment, full protocol, RF accuracy, workflow or physical validation."
+}
