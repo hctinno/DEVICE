@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-10-24 [통합020](handoff/development/INTEGRATION-020.md)은038 불변 참고이력·040 명시 서버 CLI를 인수했다. 새 전체1857Python/114Node·소스206 불변, 합성 참고업무5call·CLI/HTTP 자식2를 확인했다. 옛 append 관측과 새 현재, metadata 이력과 보존 원문 실제 읽기, noStore 사례 서버와 기존 접수 Store를 구별한다. 다음은043 공식 기존 Store opener→044 접수 참고이력/명시 현재 화면이며042 API 구현을 병행한다. 039 계산화면의 Unicode 순서 I1 수정8e804c3는 독립 재검토,041 합성7시나리오는 최종 회귀 후 독립 검토로 잇는다. P01 대상13/522·제외1/46·보고서 대응 보류1/53을 별도 관리하고 전수/현행규범/실제AI·물리 검증 완료로 세지 않는다. 사용자 결정/준비0, 기존 미커밋·소유권·실패 기록을 보존한다.
+
 2026-10-24 후속:[042 설계](docs/superpowers/specs/2026-10-24-intake-reference-review-design.md)·[계획](docs/superpowers/plans/2026-10-24-intake-reference-review.md)을고정했다. 개발2는기존exactStore/catalog를trustedcaller로받아준비→명시참고등록→정제이력/새현재로잇는신규3파일을구현한다. C1준비이유9를preview11에보존하고retainedbytes실제읽기와metadatahistory·옛append관측/재전송을구별한다. API완료를UI완료로보지않고043공식기존Storeopener·044접수화면의이력/명시현재조회와후속등록버튼까지단계적으로연결한다. 040I1fix/039최종후보의독립리뷰·041합성7시나리오구현도계속하며기존작업과실패/원본을보존한다. 이문서추가에대한새제품실행0/기능019소스202불변·사용자준비0이다.
 
 2026-10-24 후속:[041 설계](docs/superpowers/specs/2026-10-24-virtual-fleet-rf-signal-scenario-design.md)·[계획](docs/superpowers/plans/2026-10-24-virtual-fleet-rf-signal-scenario.md)을 고정했다. 기존 DUT RF frame/센서정책·전력계와 한 bounded harness의 합성7종·별도 literal평가/실제journal 검증, catalog exact gate·저장실패 원본보존을 신규3파일로 구현한다. root 계획의 meter configure 순서 전사오류도 독립delta에서 수정했으며 센서 취득 전 setup4에서 완료한다. 다음038·040는 새019 cut에 섞지 않고 별도리뷰/통합하며039 구현을 유지한다.042 명시 참고검토·043 기존Store opener는 후속 사용자 화면 접점을 위한 최소계약이며 아직 제품완료가 아니다. 수집v0392묶음은 신규PDF0, 사용자준비0이다.

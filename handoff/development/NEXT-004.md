@@ -1,5 +1,19 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합020](INTEGRATION-020.md)은 기능141042da/정확038·040 소유4커밋·6파일, 새1857Python/114Node·소스206 불변이다. 별도 genuine 합성 참고5call과 실제 CLI 자식2를 확인했다. 039·041·042 제품은 이 cut에 포함하지 않는다.
+
+| 담당 | 현재 실제 작업과 다음 수용 조건 |
+|---|---|
+| 개발1 | 040 eba7caa 최종 독립 Yes/root020 인수 완료. 043 `Store.open_existing`의 exact Store·비생성 rw/ro·lifetime native identity pin/명시 close·고정 schema 계약을 정리한다. 합성 feasibility probe만 먼저 승인했으며 Store 제품 수정은 최종 설계/계획 고정 후 배정한다 |
+| 개발2 | 게시572cacf의042 설계/계획과 승인038 두 커밋 별도의존으로 신규3 구현 중. preview11/reason9·prepare/append/history/current·보존 원문 읽기와 metadata 이력/옛 append·CAS/권한false·상한/정제 오류를 검증하고 정확 commit/push 후 독립 리뷰 |
+| 개발3 | exact0e698b0의041 신규3 최종 회귀·게시. 주합성7/평가7·semantic8군/저장10은 owner 실제 증거와 독립 검토를 구별한다. 부모 정책·수식 무변경, 평가 byte와 게시 manifest binding·실패 원본 보존을 유지 |
+| 개발4 | 039 원후보a6354afe는 독립 No C0/I1(UTF16 대 codepoint 순서). 소유 수정8e804c3/정확3·typed42/Node156/full1740·LG재읽기0를 독립 재검토한다. 기존 actual9를 새 수정본 결과로 소급하지 않는다. 다음044는 history/명시fresh current의 실제 접수 화면 계약만 정리하며042/043 전 공유 코드 변경0 |
+| P01 | 게시74e86aea exact·collector73/73/012검토38/38. 대상13/522·제외1/46·대응보류1/53, 전수unknown/공식0. S03 v042 HAC 다음8쪽/기존 S02 READY 내용 검수/S01 v043 최소방법·보정·장비허용열을 계속하고 중복배정하지 않는다. 대응 공백은 metadata 재사용3JSON/새원문·집계증가0으로 답하되 보고서 동일성 보류 유지 |
+
+043은 B 공식별도 opener, 기존 생성형 Store 기본동작 보존, clean rollback만 입장 허용/sidecar·WAL 지원 보류, startup quick_check/integrity_check/전역FK·blob원문 검증0을 고정했다. metadata schema/header 수준의 입장을 DB 전체 무결성/원문 현재성 검증으로 올리지 않는다. 기존034/038이 자체 여는 SQLite 연결까지 수명/모든 mode guard가 소급된다고 주장하지 않는다. 제품 구현 전 v2 설계/계획과 독립 검토를 완료한다.
+
+기존 기능/소유권·미커밋/원본·실패는 보존하며 root는 담당 구현을 일괄 대행하지 않는다. 사용자 결정/준비0. 아래042/041/019는 각 시점 기록이다.
+
 현재통합기능은01920b5185/게시a028f8a·041계약0e698b0/1777Python114Node/source202다. 다음기능cut은독립Yes의정확소유commit만인수하며계약게시를제품검증수로추가하지않는다.
 
 | 담당 | 실제 다음 단계 |
