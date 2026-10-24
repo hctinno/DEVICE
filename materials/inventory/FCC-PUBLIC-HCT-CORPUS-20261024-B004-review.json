@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "project_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "review_unit": "B004",
+  "recorded_at": "2026-10-24T15:07:28.714449+09:00",
+  "timezone": "Asia/Seoul",
+  "public_scope": "Reviewed nonsensitive bibliography, original hash/size/pages and bounded static review/intake status.",
+  "report": {
+    "report_number": "HCT-RF-2508-FC012",
+    "revision_as_printed": "0",
+    "issuer_as_printed": "HCT CO., LTD.",
+    "report_issue_as_printed": "2025-08-21",
+    "identity_issue_proof_physical_page": 2,
+    "revision_proof_physical_page": 3,
+    "FCC_ID_as_printed": "2BO3LLGSWNAC62",
+    "model_as_printed": "LGSWNAC62",
+    "product_as_printed": "RF Module",
+    "applicant_as_printed": "LG Electronics Inc.",
+    "manufacturer_separately_verified": false,
+    "test_start_as_printed": "2025-06-27",
+    "test_end_as_printed": "2025-08-21",
+    "reported_classification": "NII / Part15.407 DFS",
+    "original": {
+      "sha256": "39ebabf3d553844f7a7144a1e234aaa70125ed39e91241602167a8fee7fe0bef",
+      "bytes": 686783,
+      "physical_pages": 20,
+      "PDF_magic_structure_raw_SHA_bytes_verified": true,
+      "mirror_original_URL": "https://manuals.plus/m/39ebabf3d553844f7a7144a1e234aaa70125ed39e91241602167a8fee7fe0bef.pdf",
+      "official_exhibit_id": null,
+      "official_application_id": null,
+      "official_mapping": "pending",
+      "exact_attachment_HTTP403_confirmed_in_this_unit": false,
+      "public_original_redistribution_authorized": false,
+      "source_original_or_permission_flags_modified": false
+    },
+    "bounded_review": {
+      "facts": 12,
+      "primary_fact_pages": [
+        2,
+        3,
+        5,
+        8,
+        9,
+        13,
+        14,
+        15,
+        17,
+        18,
+        20
+      ],
+      "additional_condition_pages": [
+        7,
+        11
+      ],
+      "selected_render_pages": 13,
+      "summary_table_rows": 6,
+      "figure_note_metric_count": 2,
+      "pages_without_primary_fact": 9,
+      "remaining_semantic_tables_figures_conditions_open": true,
+      "source_role": "Slave device without radar detection; external master kept distinct",
+      "reported_test_coverage_status": "UNII-2C report results; UNII-2A labelled NT, not treated as tested/passed",
+      "source_threshold_duration_and_pulse_quantity_descriptions_resolved": false,
+      "report_figures_are_native_instrument_raw": false,
+      "current_guidance_application_calibration_or_instrument_support_approved": false
+    },
+    "missing_relationships": [
+      "Official application/exhibit correspondence",
+      "Separate setup-photo file",
+      "Any predecessor/revision/part-chain completeness"
+    ]
+  },
+  "private_intake": {
+    "packets": 2,
+    "payload_files": 35,
+    "payload_bytes": 946375,
+    "JSON_files": 34,
+    "original_PDF_payloads": 1,
+    "indexes_all_payload_SHA_bytes_UTF8JSON_and_receiver_receipts_P01_checked": true,
+    "second_packet_scope": "Frozen metadata reconciliation of earlier7PDFs and old22baseline; not a new source or retroactive current8PDF audit.",
+    "intake_ACK_is_full_semantic_current_normative_or_physical_validation": false
+  },
+  "known_corpus_at_this_checkpoint": {
+    "actual_unique_PDFs": 8,
+    "original_bytes": 19507188,
+    "physical_pages": 368,
+    "bounded_source_review_and_independent_intake_or_reference_ACK_PDFs": 8,
+    "direct_issuer_issue_window_confirmed": 7,
+    "parent_relational_part_only": 1,
+    "official_mapping_confirmed": 0,
+    "old22_counted_as_new_HCT_eligible": 0,
+    "user_private_reports_counted_in_public_corpus": 0
+  },
+  "evaluation": {
+    "same_FCCID_family_revision_parts_SHA_reuse_groups_preserved": true,
+    "unknown_reuse_is_independent_data": false,
+    "actual_AI_evaluation_training_external_model_API_fold_or_score_runs": 0
+  },
+  "rights": {
+    "original_body_measurement_values_figures_code_user_materials_or_private_paths_included": false,
+    "original_rights": "unknown; public availability is not redistribution/training permission"
+  },
+  "whole_population": null,
+  "whole_corpus_complete": false,
+  "full_semantic_normative_native_raw_or_physical_validation": false,
+  "new_user_preparation_requests": 0,
+  "existing_public_collection_batch_count": 20
+}
