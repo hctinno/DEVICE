@@ -1,5 +1,6 @@
 """Start one explicit source-checked FCC catalog on the existing loopback UI."""
 import json
+import ntpath
 import os
 from pathlib import Path
 import re
@@ -50,6 +51,12 @@ def _text(value):
             and not any(ord(c) < 32 or ord(c) == 127 for c in value))
 
 
+def _raw_segments(value):
+    # Lexical splitting must precede Path/GetFullPathNameW alias normalization.
+    tail = ntpath.splitdrive(value)[1]
+    return all(_native._valid_segment(part) for part in re.split(r'[\\/]', tail) if part)
+
+
 def _arguments(argv):
     if type(argv) not in (list, tuple) or len(argv) != 8 or any(type(v) is not str for v in argv):
         _fail('fcc_case_server_invalid_argument')
@@ -61,7 +68,7 @@ def _arguments(argv):
     if set(result) != _OPTIONS:
         _fail('fcc_case_server_invalid_argument')
     config, pin, port = result['--config'], result['--config-sha256'], result['--port']
-    if (not _text(config) or not _text(pin) or not re.fullmatch('[0-9a-f]{64}', pin, re.ASCII)
+    if (not _text(config) or not _raw_segments(config) or not _text(pin) or not re.fullmatch('[0-9a-f]{64}', pin, re.ASCII)
             or not re.fullmatch('0|[1-9][0-9]{0,4}', port, re.ASCII) or int(port) > 65535):
         _fail('fcc_case_server_invalid_argument')
     try:
@@ -76,11 +83,7 @@ def _arguments(argv):
 
 def _state_snapshot(value):
     """Check only native directory components and four fixed entry attributes."""
-    if not _text(value) or not Path(value).is_absolute():
-        raise ValueError()
-    # GetFullPathNameW can erase a trailing dot before the native helper sees it.
-    components = re.split(r'[\\/]', value[len(Path(value).drive):])
-    if any(not _native._valid_segment(part) for part in components if part):
+    if not _text(value) or not _raw_segments(value) or not Path(value).is_absolute():
         raise ValueError()
     path = _native._local_path(value)
     backend = None

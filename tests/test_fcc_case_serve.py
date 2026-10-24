@@ -164,6 +164,37 @@ class FccCaseServeTests(unittest.TestCase):
         for value in ['', '-1', '+1', '00', '01', '65536', '1.0', ' 0', '0 ', '１２', '٠', '1\n']:
             args = self.args[:]; args[-1] = value; self.fail_before_load(args)
 
+    def config_alias_rejected_before_normalization(self, raw):
+        args = self.args[:]; args[1] = raw
+        with mock.patch.object(native, '_local_path', wraps=native._local_path) as normalized:
+            self.fail_before_load(args)
+        normalized.assert_not_called()
+
+    def test_config_ancestor_trailing_dot_is_rejected_before037_and_normalization(self):
+        self.config_alias_rejected_before_normalization(str(self.config.parent) + '.\\' + self.config.name)
+
+    def test_config_ancestor_trailing_space_is_rejected_before037_and_normalization(self):
+        self.config_alias_rejected_before_normalization(str(self.config.parent) + ' \\' + self.config.name)
+
+    def test_config_dot_component_is_rejected_before037_and_normalization(self):
+        self.config_alias_rejected_before_normalization(str(self.config.parent) + '\\.\\' + self.config.name)
+
+    def test_config_final_trailing_dot_or_space_is_rejected_before037_and_normalization(self):
+        for suffix in ['.', ' ']:
+            with self.subTest(suffix=suffix):
+                self.config_alias_rejected_before_normalization(str(self.config) + suffix)
+
+    def test_genuine_config_internal_spaces_succeed_and_owned_socket_closes(self):
+        directory = self.base / 'config directory with spaces'; directory.mkdir()
+        path = directory / 'config valid.json'; path.write_bytes(self.config.read_bytes())
+        self.config = path; self.args[1] = str(path)
+        before = self.snapshot()
+        original = host.load_fcc_case_catalog
+        status, out, err, servers, loaded, _ = self.run_main(loader_effect=original)
+        self.assertEqual((status, err, json.loads(out.getvalue())['catalog_state']), (0, '', 'configured'))
+        loaded.assert_called_once_with(path, expected_config_sha256=self.pin)
+        self.assertEqual(self.snapshot(), before); self.assertEqual(servers[0].fileno(), -1)
+
     def test_high_valid_port_is_forwarded_only_to_a_no_bind_fault_double(self):
         self.args[-1] = '65535'
         with mock.patch.object(host, 'load_fcc_case_catalog', return_value=self.result()), \
