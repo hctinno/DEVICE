@@ -2,13 +2,18 @@
 
 from copy import deepcopy
 import hashlib
+import inspect
 from io import BytesIO
 import json
+import logging
 import math
 import unittest
 from unittest import mock
 
 from pypdf import PdfReader, PdfWriter
+from pypdf._page import PageObject
+from pypdf.constants import UserAccessPermissions
+from pypdf.generic import ArrayObject, DictionaryObject, NameObject, NumberObject
 
 from labflow import fcc_report_cases as cases
 from labflow.document_extract import extract_document, page_citation
@@ -763,6 +768,316 @@ class FccReportCaseDiscoveryTests(unittest.TestCase):
             with self.subTest(mode=mode):
                 self.assertEqual(discovery["items"][0]["search_eligibility"]["eligible"], expected)
                 self.assertFalse(discovery["items"][0]["execution_authorized"])
+
+
+class FccReportPageScopeTests(unittest.TestCase):
+    """030 selected-source contract, using synthetic original bytes only."""
+
+    def setUp(self):
+        self.assertIn("page_scope", inspect.signature(cases.FccReportCaseCatalog).parameters,
+                      "030 optional page_scope is absent")
+        self.packet, self.sources, _ = fixture()
+        first = extract_document(next(iter(self.sources.values())), "DOC-A.pdf")["pages"][0]["text"]
+        self.replace(synthetic_pdf([first, "UNSELECTED SYNTHETIC MARKER", "SELECTED THIRD PAGE"]), 3)
+
+    def replace(self, payload, pages):
+        document = self.packet["documents"][0]
+        document.update(sha256=digest(payload), size_bytes=len(payload), physical_pages=pages)
+        self.sources = {document["sha256"]: payload}
+        for case in self.packet["cases"]:
+            for claim in case["claims"]:
+                for evidence in claim["evidence"]:
+                    evidence["source_sha256"] = document["sha256"]
+
+    def scope(self, pages=(1,), mode="native_text"):
+        return {"schema_version": 1, "sources": {sha: {"pages": list(pages), "mode": mode,
+                "basis_id": "SYNTHETIC-SCOPE-030", "basis_sha256": "d" * 64} for sha in self.sources}}
+
+    def catalog(self, policy=None):
+        return cases.FccReportCaseCatalog(self.packet, self.sources, page_scope=policy or self.scope())
+
+    def error(self, code, policy, packet=None, sources=None):
+        with self.assertRaises(cases.FccReportCaseError) as caught:
+            cases.FccReportCaseCatalog(packet or self.packet, sources or self.sources, page_scope=policy)
+        self.assertEqual(caught.exception.code, code)
+        self.assertEqual(caught.exception.args, (code,))
+        self.assertIsNone(caught.exception.__context__)
+
+    def encrypted(self, permissions, user="", owner="SYNTHETIC-OWNER"):
+        writer = PdfWriter(); writer.append(PdfReader(BytesIO(next(iter(self.sources.values())))))
+        writer.encrypt(user, owner_password=owner, permissions_flag=permissions)
+        stream = BytesIO(); writer.write(stream); writer.close()
+        return stream.getvalue()
+
+    def test_none_replays_existing_public_interfaces_and_from_json(self):
+        plain = cases.FccReportCaseCatalog(self.packet, self.sources)
+        explicit = cases.FccReportCaseCatalog(self.packet, self.sources, page_scope=None)
+        decoded = cases.FccReportCaseCatalog.from_json(json.dumps(self.packet), self.sources, page_scope=None)
+        self.assertEqual(plain.summary(), explicit.summary())
+        self.assertEqual(plain.case("CASE-A"), decoded.case("CASE-A"))
+        query = {"product_family": "sensor_node", "rule": "47 CFR 15.247", "method": "ANSI C63.10-2020", "model": "MODEL-A"}
+        self.assertEqual(plain.search(query), explicit.search(query))
+        self.assertEqual(plain.discover(query), explicit.discover(query))
+
+    def test_noncontiguous_pages_keep_original_numbers_and_partial_diagnostics(self):
+        policy = self.scope((3, 1)); before = deepcopy(policy)
+        result = self.catalog(policy).case("CASE-A")
+        doc = result["documents"][0]
+        self.assertEqual(policy, before)
+        self.assertEqual([page["file_page"] for page in doc["page_index"]], [1, 3])
+        self.assertEqual(doc["extraction"]["total_pages"], 3)
+        self.assertEqual(doc["extraction"]["processed_pages"], 2)
+        self.assertEqual(doc["extraction"]["status"], "partial")
+        self.assertFalse(doc["extraction"]["complete"])
+        self.assertEqual(doc["extraction"]["parser"]["name"], "pypdf-selected-pages")
+        issues = doc["extraction"]["issues"]
+        self.assertIn({"code": "page_scope_applied", "file_page": None}, issues)
+        self.assertIn({"code": "page_scope_native_text", "file_page": None}, issues)
+        self.assertIn({"code": "page_scope_outside_unprocessed", "file_page": None}, issues)
+        self.assertEqual([r["file_page"] for r in issues if r["code"] == "page_scope_requested"], [1, 3])
+        self.assertTrue(all(page["citable"] for page in doc["page_index"]))
+        self.assertEqual(set(result), COMMON | {"case", "documents"})
+
+    def test_content_and_text_calls_visit_only_selected_pages_without_legacy_filtering(self):
+        content_calls, text_calls = [], []
+        content, text = PageObject.get_contents, PageObject.extract_text
+        def selected_content(page, *args, **kwargs):
+            content_calls.append(page.pdf.get_page_number(page) + 1)
+            return content(page, *args, **kwargs)
+        def selected_text(page, *args, **kwargs):
+            text_calls.append(page.pdf.get_page_number(page) + 1)
+            return text(page, *args, **kwargs)
+        with mock.patch.object(PageObject, "get_contents", new=selected_content), \
+                mock.patch.object(PageObject, "extract_text", new=selected_text), \
+                mock.patch.object(cases, "extract_document", side_effect=AssertionError("full read")), \
+                mock.patch.object(cases, "_public_read_pdf", side_effect=AssertionError("legacy public read")):
+            self.catalog(self.scope((3, 1)))
+        self.assertEqual(text_calls, [1, 3])
+        self.assertEqual(set(content_calls), {1, 3})
+
+    def test_evidence_outside_selection_is_rejected_without_native_processing(self):
+        with mock.patch.object(PageObject, "extract_text", side_effect=AssertionError("native read")) as called:
+            self.error("fcc_case_invalid_evidence", self.scope((2,)))
+        called.assert_not_called()
+
+    def test_bad_policy_source_and_page_shapes_fail_before_native_processing(self):
+        policies = [False, {}, {"schema_version": True, "sources": {}}, {"schema_version": 1, "sources": {}},
+                    {"schema_version": 1, "sources": {"0" * 64: next(iter(self.scope()["sources"].values()))}}]
+        for changes in ({"pages": []}, {"pages": [1, 1]}, {"pages": [True]}, {"pages": [0]}, {"pages": [4]},
+                        {"mode": "print"}, {"basis_id": "C:/not-a-basis"}, {"basis_sha256": "D" * 64}, {"approval": True}):
+            policy = self.scope(); next(iter(policy["sources"].values())).update(changes); policies.append(policy)
+        for policy in policies:
+            with self.subTest(policy_type=type(policy).__name__), \
+                    mock.patch.object(PageObject, "extract_text", side_effect=AssertionError("native read")) as called:
+                self.error("fcc_case_invalid_packet", policy)
+                called.assert_not_called()
+
+    def test_policy_bytes_depth_nodes_and_page_limits_are_preflight_limits(self):
+        policies = [self.scope(tuple(range(1, 202))), {"extra": ["x" * 100] * 800}, {"extra": [0] * 4100}]
+        nested = None
+        for _ in range(9): nested = [nested]
+        policies.append({"extra": nested})
+        for policy in policies:
+            with self.subTest(kind=list(policy)), mock.patch("pypdf.PdfReader", side_effect=AssertionError("reader opened")) as reader:
+                self.error("fcc_case_limit_exceeded", policy)
+                reader.assert_not_called()
+
+    def test_global_requested_page_budget_is_checked_before_opening_sources(self):
+        packet = deepcopy(self.packet); packet.update(documents=[], cases=[]); sources = {}; scope = {"schema_version": 1, "sources": {}}
+        for i in range(5):
+            payload = b"%PDF-1.7\nSYNTHETIC-" + str(i).encode(); sha = digest(payload)
+            doc = deepcopy(self.packet["documents"][0]); doc.update(document_id="DOC-" + str(i), sha256=sha, size_bytes=len(payload), physical_pages=200)
+            packet["documents"].append(doc); sources[sha] = payload
+            scope["sources"][sha] = {"pages": list(range(1, 201)), "mode": "native_text", "basis_id": "SYNTHETIC-030", "basis_sha256": "d" * 64}
+        with mock.patch("pypdf.PdfReader", side_effect=AssertionError("reader opened")) as reader:
+            self.error("fcc_case_limit_exceeded", scope, packet, sources)
+        reader.assert_not_called()
+
+    def test_all_source_count_metadata_is_verified_before_first_native_operation(self):
+        writer = PdfWriter(); writer.add_blank_page(width=100, height=100)
+        writer._pages.get_object()[NameObject("/Count")] = NumberObject(2)
+        stream = BytesIO(); writer.write(stream); writer.close(); payload = stream.getvalue(); sha = digest(payload)
+        doc = deepcopy(self.packet["documents"][0]); doc.update(document_id="BAD-COUNT", sha256=sha, size_bytes=len(payload), physical_pages=2)
+        self.packet["documents"].append(doc); self.sources[sha] = payload
+        with mock.patch.object(PageObject, "get_contents", side_effect=AssertionError("native content before all-source count")) as content, \
+                mock.patch.object(PageObject, "extract_text", side_effect=AssertionError("native text")) as text:
+            self.error("fcc_case_pdf_invalid", self.scope())
+        content.assert_not_called(); text.assert_not_called()
+
+    def test_nested_pages_count_mismatch_is_not_hidden_by_correct_root_count(self):
+        writer = PdfWriter(); writer.append(PdfReader(BytesIO(next(iter(self.sources.values())))), pages=(0, 1))
+        root = writer._pages.get_object(); leaf_ref = root["/Kids"][0]
+        child = DictionaryObject({NameObject("/Type"): NameObject("/Pages"), NameObject("/Count"): NumberObject(2),
+                                  NameObject("/Kids"): ArrayObject([leaf_ref]), NameObject("/Parent"): writer._pages})
+        child_ref = writer._add_object(child); root[NameObject("/Kids")] = ArrayObject([child_ref]); root[NameObject("/Count")] = NumberObject(1)
+        leaf_ref.get_object()[NameObject("/Parent")] = child_ref
+        stream = BytesIO(); writer.write(stream); writer.close(); self.replace(stream.getvalue(), 1)
+        with mock.patch.object(PageObject, "extract_text", side_effect=AssertionError("native text")) as text:
+            self.error("fcc_case_pdf_invalid", self.scope())
+        text.assert_not_called()
+
+    def test_accessibility_preserves_copy_false_and_does_not_authorize_native_mode(self):
+        permissions = UserAccessPermissions.PRINT | UserAccessPermissions.EXTRACT_TEXT_AND_GRAPHICS
+        payload = self.encrypted(permissions); self.replace(payload, 3); before = digest(payload)
+        result = self.catalog(self.scope(mode="accessibility")).case("CASE-A")
+        self.assertEqual(result["documents"][0]["extraction"]["parser"]["name"],
+                         "pypdf-public-empty-user-password-accessibility-selected-pages")
+        self.assertEqual([p["file_page"] for p in result["documents"][0]["page_index"]], [1])
+        self.assertEqual(digest(payload), before)
+        self.assertFalse(result["documents"][0]["rights"]["public_redistribution_allowed"])
+        self.error("fcc_case_extraction_unavailable", self.scope(mode="native_text"))
+        self.assertEqual(extract_document(payload, "synthetic.pdf")["status"], "encrypted")
+
+    def test_encrypted_native_mode_reads_once_only_with_copy_flag(self):
+        from pypdf._encryption import Encryption
+        self.replace(self.encrypted(UserAccessPermissions.EXTRACT), 3)
+        original, attempts = Encryption.verify, []
+        def verify(encryption, password, **kwargs):
+            attempts.append(password); return original(encryption, password, **kwargs)
+        with mock.patch.object(Encryption, "verify", new=verify), \
+                mock.patch.object(PdfReader, "decrypt", side_effect=AssertionError("retry")), \
+                mock.patch.object(PdfWriter, "write", side_effect=AssertionError("PDF rewrite")):
+            result = self.catalog().summary()
+        self.assertEqual(attempts, [""])
+        self.assertEqual(result["documents"][0]["extraction"]["parser"]["name"], "pypdf-public-empty-user-password-selected-pages")
+
+    def test_print_only_and_unknown_permission_integrity_do_not_allow_content(self):
+        self.replace(self.encrypted(UserAccessPermissions.PRINT), 3)
+        for mode in ("native_text", "accessibility"):
+            with mock.patch.object(PageObject, "extract_text", side_effect=AssertionError("native text")) as text:
+                self.error("fcc_case_extraction_unavailable", self.scope(mode=mode))
+            text.assert_not_called()
+        for known in (None, False):
+            with mock.patch.object(PdfReader, "are_permissions_valid", new_callable=mock.PropertyMock, return_value=known), \
+                    mock.patch.object(PageObject, "extract_text", side_effect=AssertionError("native text")) as text:
+                self.error("fcc_case_extraction_unavailable", self.scope())
+            text.assert_not_called()
+
+    def test_all_source_permission_preflight_precedes_first_native_read(self):
+        payload = self.encrypted(UserAccessPermissions.PRINT); sha = digest(payload)
+        doc = deepcopy(self.packet["documents"][0]); doc.update(document_id="NO-COPY", sha256=sha, size_bytes=len(payload))
+        self.packet["documents"].append(doc); self.sources[sha] = payload
+        with mock.patch.object(PageObject, "get_contents", side_effect=AssertionError("content before permission preflight")) as content:
+            self.error("fcc_case_extraction_unavailable", self.scope())
+        content.assert_not_called()
+
+    def test_secret_owner_only_and_existing_user_encryption_remain_rejected(self):
+        packet, sources = deepcopy(self.packet), self.sources.copy()
+        for user, owner, kind in (("SECRET", "OWNER", "mirror"), ("SECRET", "", "mirror"), ("", "OWNER", "existing_user")):
+            self.packet, self.sources = deepcopy(packet), sources.copy()
+            self.replace(self.encrypted(UserAccessPermissions.all(), user=user, owner=owner), 3)
+            self.packet["documents"][0]["exhibits"][0]["source_kind"] = kind
+            self.error("fcc_case_pdf_invalid", self.scope())
+
+    def test_page_hash_quotes_detached_scope_and_output_keep_original_source(self):
+        policy = self.scope((1,)); original = deepcopy(policy); catalog = self.catalog(policy)
+        before = catalog.case("CASE-A")
+        next(iter(policy["sources"].values()))["pages"][:] = [2]
+        self.packet["cases"][0]["claims"][0]["value"] = "changed input"
+        result = catalog.case("CASE-A"); result["documents"][0]["page_index"].clear()
+        self.assertEqual(catalog.case("CASE-A"), before)
+        evidence = before["case"]["claims"][0]["evidence"][0]
+        self.assertTrue(evidence["literal_verified"])
+        self.assertEqual(evidence["quote"], "SYNTHETIC REPORT: SYN-001")
+        self.assertEqual(evidence["source_sha256"], next(iter(self.sources)))
+        decoded = cases.FccReportCaseCatalog.from_json(json.dumps(fixture()[0]), fixture()[1],
+            page_scope={"schema_version": 1, "sources": {sha: {**next(iter(original["sources"].values())), "pages": [1]}
+                                                        for sha in fixture()[1]}})
+        self.assertEqual(decoded.case("CASE-A")["case"]["claims"][0]["evidence"][0]["quote"], evidence["quote"])
+
+    def test_selected_empty_image_warning_and_limits_do_not_create_false_citations(self):
+        first = extract_document(next(iter(self.sources.values())), "DOC-A.pdf")["pages"][0]["text"]
+        self.replace(synthetic_pdf([first, None, "THIRD"], images={1}), 3)
+        self.packet["cases"][0]["claims"] = []
+        result = self.catalog(self.scope((2,))).summary()
+        page = result["documents"][0]["page_index"][0]
+        self.assertEqual(page["status"], "image_only"); self.assertFalse(page["citable"])
+        self.assertEqual(result["documents"][0]["extraction"]["status"], "partial")
+        self.assertEqual(result["counts"]["no_citable_text_pdfs"], 1)
+        self.packet, self.sources, _ = fixture()
+        with mock.patch.object(cases._extract, "_warnings_observable", return_value=False):
+            self.error("fcc_case_invalid_evidence", self.scope())
+
+    def test_empty_corpus_accepts_empty_policy_without_pretending_page_success(self):
+        self.packet.update(documents=[], cases=[]); self.sources.clear()
+        result = cases.FccReportCaseCatalog(self.packet, self.sources, page_scope={"schema_version": 1, "sources": {}}).summary()
+        self.assertEqual(result["documents"], []); self.assertEqual(result["counts"]["parsed_unique_pdfs"], 0)
+
+    def test_indirect_kids_and_count_are_valid_page_tree_metadata(self):
+        writer = PdfWriter(); writer.append(PdfReader(BytesIO(next(iter(self.sources.values())))))
+        root = writer._pages.get_object()
+        root[NameObject("/Kids")] = writer._add_object(root["/Kids"])
+        root[NameObject("/Count")] = writer._add_object(NumberObject(3))
+        stream = BytesIO(); writer.write(stream); writer.close(); self.replace(stream.getvalue(), 3)
+        self.assertEqual(self.catalog().summary()["documents"][0]["extraction"]["processed_pages"], 1)
+
+    def test_missing_authentication_or_permission_interfaces_fail_unavailable(self):
+        self.replace(self.encrypted(UserAccessPermissions.EXTRACT), 3)
+        from pypdf._encryption import Encryption
+        original = Encryption.verify
+        def missing_authentication(encryption, password, **kwargs):
+            result = original(encryption, password, **kwargs)
+            del encryption._password_type
+            return result
+        with mock.patch.object(Encryption, "verify", new=missing_authentication), \
+                mock.patch.object(PageObject, "get_contents", side_effect=AssertionError("content read")) as content:
+            self.error("fcc_case_extraction_unavailable", self.scope())
+        content.assert_not_called()
+        with mock.patch.object(PdfReader, "are_permissions_valid", new_callable=mock.PropertyMock,
+                               side_effect=AttributeError("unsupported property")), \
+                mock.patch.object(PageObject, "extract_text", side_effect=AssertionError("text read")) as text:
+            self.error("fcc_case_extraction_unavailable", self.scope())
+        text.assert_not_called()
+
+    def test_selected_failures_limits_and_full_scope_preserve_real_page_statuses(self):
+        self.packet["cases"][0]["claims"] = []
+        all_pages = self.catalog(self.scope((1, 2, 3))).summary()["documents"][0]
+        self.assertEqual(all_pages["extraction"]["status"], "ok"); self.assertTrue(all_pages["extraction"]["complete"])
+        self.assertNotIn("page_scope_outside_unprocessed", {issue["code"] for issue in all_pages["extraction"]["issues"]})
+        with mock.patch.object(cases._extract, "_inspect_content", side_effect=cases._extract._ContentLimit()):
+            doc = self.catalog(self.scope((3,))).summary()["documents"][0]
+        self.assertEqual(doc["page_index"][0]["status"], "limit_exceeded"); self.assertFalse(doc["page_index"][0]["citable"])
+        with mock.patch.object(PageObject, "extract_text", side_effect=ValueError("synthetic malformed text")):
+            doc = self.catalog(self.scope((2,))).summary()["documents"][0]
+        self.assertEqual(doc["page_index"][0]["status"], "error"); self.assertEqual(doc["extraction"]["processed_pages"], 1)
+        with mock.patch.object(PageObject, "extract_text", return_value="X" * 1000001) as text:
+            doc = self.catalog(self.scope((1, 3))).summary()["documents"][0]
+        self.assertEqual(text.call_count, 1)
+        self.assertEqual([p["file_page"] for p in doc["page_index"]], [1])
+        self.assertEqual(doc["page_index"][0]["status"], "truncated"); self.assertFalse(doc["page_index"][0]["citable"])
+        self.assertIn({"code": "page_scope_requested", "file_page": 3}, doc["extraction"]["issues"])
+
+    def test_late_preflight_failure_closes_all_open_readers_without_content(self):
+        payload = self.encrypted(UserAccessPermissions.PRINT); sha = digest(payload)
+        doc = deepcopy(self.packet["documents"][0]); doc.update(document_id="DENIED", sha256=sha, size_bytes=len(payload))
+        self.packet["documents"].append(doc); self.sources[sha] = payload
+        closed, close = [], PdfReader.close
+        def tracked_close(reader):
+            stream = reader.stream
+            close(reader); closed.append(stream)
+        with mock.patch.object(PdfReader, "close", new=tracked_close), \
+                mock.patch.object(PageObject, "get_contents", side_effect=AssertionError("native content")) as content:
+            self.error("fcc_case_extraction_unavailable", self.scope())
+        content.assert_not_called(); self.assertEqual(len(closed), 2)
+        self.assertTrue(all(stream.closed for stream in closed))
+
+    def test_different_source_selections_keep_separate_warning_locations(self):
+        payload = synthetic_pdf(["OTHER SOURCE FIRST", "OTHER SOURCE SECOND"]); sha = digest(payload)
+        doc = deepcopy(self.packet["documents"][0]); doc.update(document_id="OTHER", sha256=sha, size_bytes=len(payload), physical_pages=2)
+        self.packet["documents"].append(doc); self.sources[sha] = payload
+        self.packet["cases"][0]["document_ids"].append("OTHER")
+        policy = self.scope(); policy["sources"][sha]["pages"] = [2]
+        original = PageObject.extract_text
+        def warned_text(page, *args, **kwargs):
+            result = original(page, *args, **kwargs)
+            if result.startswith("OTHER"):
+                logging.getLogger("pypdf").warning("synthetic selected warning")
+            return result
+        with mock.patch.object(PageObject, "extract_text", new=warned_text):
+            docs = self.catalog(policy).case("CASE-A")["documents"]
+        self.assertTrue(docs[0]["page_index"][0]["citable"])
+        self.assertFalse(docs[1]["page_index"][0]["citable"])
+        self.assertIn({"code": "parser_warning", "file_page": 2}, docs[1]["extraction"]["issues"])
 
 
 if __name__ == "__main__":
