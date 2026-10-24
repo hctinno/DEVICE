@@ -1,5 +1,7 @@
 # 후속 개발 인수 대장 004
 
+2026-10-25 계약 후속: [055 별도 CW 관측 설계](../../docs/superpowers/specs/2026-10-25-virtual-fleet-rf-signal-waveform-observation-design.md)·[계획](../../docs/superpowers/plans/2026-10-25-virtual-fleet-rf-signal-waveform-observation.md)을 private v1 정적 Yes와 공개 준비v2 독립 delta·canonical 투영 Yes/C0I0 뒤 고정했다. 048 보존 context→041 선언→054 I/Q 수학을 별도 private 관측으로 게시하는 신규3이며, 새 [0,N/Fs)와 옛 RF tick·sensor aperture는 비동기다. source4 pin·phase6·부모 full-code 표·first error/KI·exclusive 단일 link를 닫았다. 제품 구현/055 C01~C12는 아직0이고 다음은 이 정확054 포함 게시base·신규3을 개발3에 실제 배정하는 단계다. 통합030 기능6fb74328/게시160732c·Python2205·Node210·source232는 그대로이며 이번 새 제품 검사는0이다. 개발1 047·개발2 053 구현을 유지하고 개발4 F2 1e3719a5는 owner 게시/독립 제품리뷰 중이며 다음 C2 공개 준비v2 문서만 실제 배정했다. P01 B027 c3c87eb9의 공개3/실제ACK3·42JSON/새PDF0·collector123/123·corpus88/88 및 v063 ACK1/입력17·v064 ACK2/입력21을 대조했다. 대상18PDF/690쪽·direct17+parent1·공식0·한정영역181/181은 전문·교정·전수 완료가 아니다. 미검수 다음 원문은 미접근·미가산이다. 사용자 준비0, 아래는 각 당시 기록이다.
+
 최신 [통합030](INTEGRATION-030.md)을 우선한다. root source232에는054 순수 I/Q가 추가됐고 기존 engine·업무 DTO·false flags는 그대로다.
 
 | 담당 | 실제 현재 작업과 소유 |
