@@ -1,5 +1,7 @@
 # DEVICE — DGM AutoLab / FCC AI 시험소
 
+최신 [통합009](handoff/development/INTEGRATION-009.md): 제어자료 조회 API·[실제 카탈로그 화면](docs/fcc/control_source_ui_usage.md), 모델 probe의 독립 지적 수정, N1914A 가상 어댑터를 인수해 전체 Python997/Node67·실제 catalog10/기존 접수10묶음 PASS를 확인했다. P01 CTRL008의8패킷을 인수했고 [개발1~4 다음 작업](handoff/development/NEXT-004.md)과 DUT 공개 소스/제어 경로 조회를 이어간다. 실제 SDK 검증·실물·현장 업무 완료와 구별한다. 아래 통합008은 직전 보존 이력이다.
+
 최신 개발 인수는 [통합008](handoff/development/INTEGRATION-008.md)의 지정 장비 제어자료·보존 분석 replay·명시 밀도 source·실제 계산 브라우저다. [자료 카탈로그](control_sources/README.md)와 [어댑터 계획](docs/fcc/control_adapter_roadmap.md)에 출처/지원 단계를 분리했으며 [개발1~4 후속](handoff/development/NEXT-004.md)과 P01 추가 수집을 병렬로 진행한다. 자료 검증·합성 기능 통과를 실장비/현장 업무 완료로 표시하지 않는다.
 
 다른 PC·에이전트도 이 GitHub 저장소를 체크아웃해 같은 자료와 코드를 사용한다. 최초 인계 기준은 `codex/fcc-lab-foundation`이며, 개발총괄의 후속 구현은 `codex/pipeline-dev-20261023-intake`에 있다. [HANDOFF.md](HANDOFF.md)와 [AGENTS.md](AGENTS.md)를 먼저 읽고, 자료 수집 담당은 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)를 따른다. 로컬 커밋은 push한 뒤에 다른 세션에 공유된다.

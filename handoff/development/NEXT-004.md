@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+현재 기준은 [통합009](INTEGRATION-009.md)의 API/화면·수정probe·가상meter와 전체 Python997/Node67·실제catalog10/기존접수10 PASS다. 아래008·이전 배정 문장은 보존 이력이며 현재 단계는 이 표를 우선한다.
+
+| 담당 | 인수된 마지막 단위 | 현재 실제 후속 |
+|---|---|---|
+| 개발1 | catalog a65c09e→eb94d42, 독립 Yes | packet-audit7b87815 No2→ownerfix308ad99 재리뷰 Yes·총괄 인수 대기. [CLI003](../../docs/superpowers/specs/2026-10-24-control-packet-cli-design.md) 새 branch/RED 보존·복구 후 구현 |
+| 개발2 | MODEL005 d0a+23d14d5→bbf5ce3/9aa7f13, 최종 Yes | SDK-SIM006 고정 MIT source/의존성·실제 첫관측의 부모PID 실패 보존/수정. 실제 성공 집계0 |
+| 개발3 | METER00680be39d→1854ec8, 독립 Yes | PSD0071712e59 독립 Yes·총괄 인수 대기. 다음 DUT-CATALOG010 경로/출처 조회 신규3파일 실제 배정, root가 정제입력/pin·계약 준비 |
+| 개발4 | catalogUI13cde90→1a55837, 독립 Yes | [NAV002](../../docs/superpowers/specs/2026-10-24-control-catalog-navigation-design.md) URL fragment·이력/선택 복원·모바일/늦은응답 검사/최종 소유 게시 |
+| P01 | CTRL0088패킷128payload/4443631B·JSON104 인수 | DEV-DUT-CONTROL009를 v018/S07에 실제 배정. AnyWay 공식 공개경로/기존자료만 작은 후속. live지시 v5는 별도 범위 대조 |
+
+총괄은8패킷·DUT30소스의 정적 인수를 마쳤고 현재 branch/기존 DB·64프로필·공유 원본을 보존했다. 미검증 SDK/단말/실물/현장 성공을 주장하지 않으며 현재 사용자 결정·준비물0이다.
+
 2026-10-24, Asia/Seoul. [연속 개발 운영](README.md)과 [최신 통합008](INTEGRATION-008.md), [통합 007](INTEGRATION-007.md), [006](INTEGRATION-006.md), [005](INTEGRATION-005.md), [FLOW003 통합](INTEGRATION-004.md)을 따른다. 각 단위는 담당 구현→검증→독립 리뷰/소유 수정→총괄 인수/회귀→개발 브랜치 게시→다음 배정으로 이어간다. 전체 수집 완료를 기다리지 않는다.
 
 최신 실제 배정: 개발1 CTRL-CATALOG-001/개발4 CTRL-CATALOG-UI-001은 [동일 계약](../../docs/superpowers/specs/2026-10-24-control-source-catalog-design.md)으로 API/HTTP·읽기 화면을 병렬 구현한다. base c7818d0, pinned JSON LF 공통88be601을 전달했다. 개발3 [METER-ADAPTER-006](../../docs/superpowers/specs/2026-10-24-n1914a-virtual-adapter-design.md)은 builder Yes·base12f51d5에서 신규3파일을 구현하며 개발2 MODEL-PROBE005는 계속한다. P01 [CTRL001..006](../../docs/material-intake/2026-10-24-control-sources-requests.md) 실제 발송·수집1~8 배정 ACK를 받았다. 아래 이전 배정의 최신 완료/후속은 이 문단과 통합008을 우선한다.

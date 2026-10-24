@@ -2,6 +2,8 @@
 
 작성일: 2026-10-23, Asia/Seoul
 
+2026-10-24 현재 [통합009](handoff/development/INTEGRATION-009.md): catalog 조회API/실제화면·수정model probe·가상 N1914A 어댑터를 인수해 새 전체 Python997/skip0·Node67·실제catalog10/기존접수10묶음 PASS다. P01 CTRL0088패킷과 DUT30소스의 정적 인수를 [카탈로그](control_sources/README.md)·[어댑터 계획](docs/fcc/control_adapter_roadmap.md)에 연결하며 기존 상태를 보존했다. [후속](handoff/development/NEXT-004.md)의 audit owner fix/CLI·SDK006·PSD007·NAV002와 DUT경로 조회를 계속한다. 실제 SDK 성공·실물/현장 업무 실증은 미확인이고 현재 사용자 추가 준비0이다. 아래008/007 수치는 보존 이력이다.
+
 2026-10-24 최신 [통합008](handoff/development/INTEGRATION-008.md): 고정 조사8dec2d7 인수·재검증과 현재 DB2867모델/6470장비관계 무변경 대조를 완료했다. [별도 제어자료 카탈로그](control_sources/README.md)와 [어댑터 계획](docs/fcc/control_adapter_roadmap.md)에 반영해 개발1 조회API/개발4 출처·지원단계 화면/개발3 N1914A 합성전송 경계를 실제 배정했다. 개발2 probe와 P01 CTRL001..006 추가 수집을 병렬로 계속한다. 보존replay 공통접점·frequency source·실제 계산브라우저를 인수해 관련Python274/actual spectrum8/self14 PASS를 확인했으며 직전 전체848과 구별한다. 실제 제품Mock/실물·현장 비교와 전체 업무 실증은 남아 있고 현재 사용자 추가 준비물0이다.
 
 2026-10-24 최신 [통합 007](handoff/development/INTEGRATION-007.md): 분석 이력 보존·모델 prompt/응답 경계·BW/PSD 읽기 구성요소를 인수해 Python848·Node59·spectrum contract browser12/실제 접수10그룹 PASS를 확인했다. 현재 [후속 대장](handoff/development/NEXT-004.md)의 replay·로컬 분석 교환·frequency source·실제 계산 브라우저와 P01 TRACE007을 진행한다. 실제 모델/실물/전체 업무 검증은 별도이며 사용자 추가 준비물0이다.

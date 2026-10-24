@@ -9,7 +9,7 @@
 | 자료 메타데이터 인수 | 고정 조사8dec2d7, 3137항목·1690URL, 현재 DB 모델2867·장비6470관계 일치 | 원본 관계별 권리·접근·판본을 보존한 읽기 조회 통합 |
 | 원문 확보·적용성/라이선스 검토 | 색인/원문/차단을 별도 기록. P01 CTRL001..006 실제 추가 요청 | 정확 모델·FW/옵션·센서/버스별 command/source/function 적용 범위와 권리 확인 |
 | 재사용 동작 검증 | 기존 자체 합성 N1914A subset·VirtualFleet/fixture만 실행. 제조사 SDK/Mock 미실행 | 고정 코드/배포본·전송 test double 또는 실제 제조사 Mock의 독립 실행 증거 |
-| 개발 통합 | 접수/증거/가상 실행/결과 화면과 기존 하네스 구현. 새 자료 API/화면 진행 | 소유 SHA·독립 리뷰·현재 공통본 기능/오류/복구 검사·브랜치 게시 |
+| 개발 통합 | 접수/증거/가상 실행/결과 화면·하네스와 새 catalog API/실제HTTP화면·수정probe/N1914A 합성 어댑터 인수. 전체997/Node67/실제 두10묶음 PASS | 다음 단위도 소유 SHA·독립 리뷰·현재 공통본 기능/오류/복구 검사·브랜치 게시 |
 | 실장비 비교 | 미실행 | 위임된 정확 bench·교정·연결·FW/옵션에서 원시 응답/trace와 계산 비교 |
 | 현장 업무 검증 | 미실행 | 실제 의뢰·시료·전체 시험/데이터/판정/보고서/품질 흐름과 개입 기록 |
 
@@ -31,7 +31,7 @@ N1921A는 독립 제어 제외여도 센서·교정·호스트 미터 관계를 
 
 ## SDK·Mock를 적용할 때
 
-현재 [CTRL008 첫 인수](../material-intake/2026-10-24-control-sources-receipts.md)의 전력계14영역/45근거와 시설17근거를 개발에 연결했다. N1914A 어댑터는 기존 A/window1 ASCII 합성 subset에 한정하며 P-Series 명령·센서·교정을 혼합하지 않는다. 개발2에는 [SDK-SIM-006](../superpowers/specs/2026-10-24-rsinstrument-simulation-probe-design.md)의 실제 RsInstrument Simulation 검사 도구를 후속 배정했고, 기존 모델 probe의 독립 리뷰2건 소유 수정을 우선한다. SDK 고정 배포/source·권리/deps를 인수하기 전에는 stdlib 경계만 구현하고 실제 제품 실행은 미실행으로 유지한다.
+현재 [CTRL0088패킷 인수](../material-intake/2026-10-24-control-sources-receipts.md)의 모델별 근거를 개발에 연결했다. N1914A 어댑터는 기존 A/window1 ASCII 합성 subset에 한정하며 P-Series 명령·센서·교정을 혼합하지 않는다. 기존 모델 probe의 독립 No2는 소유 수정/재리뷰 Yes 후 통합했다. 개발2 [SDK-SIM-006](../superpowers/specs/2026-10-24-rsinstrument-simulation-probe-design.md)은 고정 RsInstrument 소스·개별 의존성/권리·해시를 private 환경에 고정해 실제 Simulation을 연결 중이다. 첫 관측의 부모PID 결합 검증 실패를 보존했으며 성공 집계0/실제 RF·정확모델 지원 미평가다. 공개 패키지 설치 안내나 합성 테스트 성공을 SDK 실행 검증으로 대체하지 않는다.
 
 Keysight v1.1 PDF(46쪽, SHA-256 `90fd83edc588ef382d957120e506098127dceb6c6aaa29baa3bc3fcadc95eaa1`)의 17도구·6절차, offline describe/resolve/preview·Mock를 참고한다. 다운로드1.1/build1.1.20과 오래된 온라인0.1을 섞지 않고 실제 바이너리/IDF를 고정한다. N9030A 공식 X-Series IVI 근거와 v1.1 IDF 표의 N9030B는 다르다. 표 부재는 영구 미지원 단정도 아니다.
 
@@ -42,3 +42,9 @@ Windows USB/GPIB는 VISA, LAN direct와 Linux Ubuntu24.04 direct LAN의 범위�
 R&S Simulation의 캐시/단순 완료·오류, Keysight Mock, PyVISA-sim은 통신 계약/상태·고장/RF물리/AI업무/실측 비교 중 실제 검사한 범위만 기록한다. 현재 실제 제품 Mock는 미실행이다. 원문 설치·동기화·장비 discovery 예시를 실행 권한으로 승격하지 않는다. 기존 위임 없이 장비 출력·축 이동·시험장 탐색을 하지 않는다.
 
 사용자 제공 SM-A176U의 Un-licensed 전체 흐름 가상화와 b/g/n/FCC §15.247 첫 전도 출력 순서를 유지한다. Licensed 추가 암호/raw는 보류하며 raw 전체 확보를 소프트웨어 개발의 선행조건으로 만들지 않는다. 필요한 현장 입력은 해당 단위가 준비됐을 때 기존 자료로 해결되지 않는 정확한 FW·옵션·controller/port/권리·교정/실측 비교 항목만 구체화한다.
+
+## DUT 공개 소스와 별도 제어 경로
+
+고정 DUT30소스/32압축·10538파일/안정판2를 정적 검증했고 기존1690장비 URL과 별도 자료로 연결한다. 첫 작은 구현은 개발3 DUT-CATALOG010의 경로별 capability/출처 읽기 조회다. Appium/Mobly/scrcpy 일반 경로는 ADB 의존을 보존하며 OEM SDK/CLI·Windows GUI·Serial/USB/HID는 정확 도구·모델·FW·권한·명령/응답·완료/정지 근거가 필요한 후보로 표시한다. AnyWay 전용 공식 SDK/전체 프로토콜은 미확보이며 P01 DEV-DUT-CONTROL009에서 기존 자료부터 대조한다.
+
+Mobly master의 Python>=3.14와 안정판1.13.1의>=3.11, pywinauto258파일 subset와 별도0.6.9 sdist를 구별한다. 현재 Python3.12.4 환경을 자동 업그레이드하거나 원문 설치 스크립트를 실행하지 않는다. mt76/NXP/qcacld/AOSP Wi-Fi의 공개 코드와 SM-A176U의 실제 칩셋·RF API 지원은 다른 단계다. 부트로더/펌웨어 서비스와 iOS 참고는 일반 시험 fallback이나 첫 실증 선행조건이 아니다. 실제 단말 접속·RF출력·USB/서비스 변경은 이번 개발 범위에서 수행하지 않는다.
