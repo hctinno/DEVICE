@@ -25,7 +25,7 @@ except ControlPacketAuditError as error:
 
 루트부터 각 payload까지 조상을 `lstat`로 확인해 symlink/junction/reparse point를 거절한다. 모든 payload는 open 전 regular file이어야 한다. 읽기 전용 descriptor를 열어 파일 identity와 조상을 다시 확인하고 읽기 후에도 identity/조상을 확인한다. 파일당 64 MiB, payload 합계 128 MiB, `.json` 파일당 8 MiB로 제한한다. 선언값과 실제 stream의 크기/SHA를 모두 비교한다. JSON은 대소문자 구분 없는 `.json` 확장자에 대해 index와 같은 strict 구문 검사를 한다. 미나열 파일은 검사하거나 수입하지 않는다.
 
-ZIP은 대소문자 구분 없는 `.zip` 확장자로 식별한다. 패킷 전체에서 entry 2,000개, 해제 바이트 합계 128 MiB, entry당 64 MiB를 사전 검사한다. 중앙 디렉터리의 개수도 목록 할당 전에 확인한다. v1은 **STORED/DEFLATED**를 지원한다. 암호화·BZIP2/LZMA·알 수 없는 압축 방식·ZIP64 중앙 디렉터리는 거절한다. 이는 해당 형식의 SDK나 도구 지원 여부를 평가한 결과가 아니다.
+ZIP은 대소문자 구분 없는 `.zip` 확장자로 식별한다. 패킷 전체에서 entry 2,000개, 해제 바이트 합계 128 MiB, entry당 64 MiB를 사전 검사한다. 중앙 디렉터리의 개수도 목록 할당 전에 확인한다. v1은 **STORED/DEFLATED**를 지원한다. 암호화·BZIP2/LZMA·알 수 없는 압축 방식·ZIP64는 거절한다. local/central header의 ZIP64 size/offset/disk sentinel과 `0x0001` extra, ZIP64 EOCD/locator를 각각 확인한다. 양쪽 flags/method는 지원 범위 안에서 동일해야 하며, data descriptor가 없는 local CRC/size도 central과 같아야 한다. 지원 flags는 DEFLATE 압축 옵션·data descriptor·UTF-8이며 일반 extra는 유효한 길이의 필드만 허용한다. 이는 해당 형식의 SDK나 도구 지원 여부를 평가한 결과가 아니다.
 
 CRC 검사는 압축 데이터를 제한된 chunk로 읽으며 DEFLATE 출력 길이도 제한한다. 실제 해제 바이트 수와 CRC를 비교하므로 위조된 작은 해제 크기 뒤의 데이터를 성공으로 처리하지 않는다. 내부 경로·symlink 항목은 바이트 검사의 대상일 뿐 추출·실행·링크 추적하지 않는다. `.tar.gz`/`.tgz`는 **SHA/bytes만** 검사하며 GZIP CRC·TAR 구조·내부 JSON은 검증하지 않는다. 나머지 확장자도 SHA/bytes 검사만 한다.
 
