@@ -22,11 +22,11 @@ C1 actions.mjs/test, A1 model/view/test, 050 transport/test와 아래 최소 호
 
 ## C2-COMPAT-050 — 기존 화면 검사의 최소 호환 예외
 
-C2 착수 후 기존050 검사에서 새 화면과 충돌하는 전제 두 곳을 확인했다. F1 `--mode frontend`의 정적 파일 목록에는 실제 C1 모듈 경로가 없고, F2 `--mode integrated`는 `#intake-reference-actions-panel`이 0개라고 단언한다. 새 sibling을 추가하는 C2에서 이 두 전제를 그대로 유지할 수 없다. 기본 C2 소유5·API·R1·수용20은 유지하며, 다음 정확2를 개발4의 별도 최소 호환 작업으로만 추가한다.
+C2 착수 후 기존050 검사에서 새 화면과 충돌하는 전제 세 곳을 확인했다. F1 `--mode frontend`의 정적 파일 목록에는 실제 C1 모듈 경로가 없고, 같은 F1의 DOM 검사는 A1 패널 바로 다음이 알림 패널이라고 단언한다. F2 `--mode integrated`는 `#intake-reference-actions-panel`이 0개라고 단언한다. 새 sibling을 추가하는 C2에서 이 세 전제를 그대로 유지할 수 없다. 기본 C2 소유5·API·R1·수용20은 유지하며, 다음 정확2를 개발4의 별도 최소 호환 작업으로만 추가한다.
 
 | 별도 예외2 — 정확 공개핀과 총괄의 실제 추가 배정 뒤 | 허용 범위 |
 | --- | --- |
-| `frontend/intake_references/browser_check.cjs` | F1 기존 정적 allowlist에 실제 `/intake-reference-actions/actions.mjs` 파일1만 추가. F2의 옛 부재 전제만 sibling1/detail 밖으로 갱신하고 기존 A1·수동 현재조회·부모/metadata/source 계수 의미를 유지 |
+| `frontend/intake_references/browser_check.cjs` | F1 기존 정적 allowlist에 실제 `/intake-reference-actions/actions.mjs` 파일1만 추가. F1의 옛 직접 인접 단언1을 `intake-view → A1 → C2 → notification-view`의 정확한 sibling 순서·각 패널1·detail 밖 단언으로 갱신. F2의 옛 부재 전제만 sibling1/detail 밖으로 갱신하고 기존 A1·수동 현재조회·부모/metadata/source 계수 의미를 유지 |
 | `docs/fcc/intake_reference_ui_usage.md` | 위 호환 변경과 새 실행/미실행·기존F2/C2 검증 범위를 짧게 기록. 과거 수치·실패 기록 보존 |
 
 F1은 원래 명시 wire-fixture 검사이고 F2는 실제 같은 host다. F2에 ASSETS adapter·가짜 파일·성공 응답·별도 proxy를 넣지 않는다. 검사를 건너뛰거나 현재 파일 내용에 따라 assertion을 완화하지 않는다. C1 constructor와 앱 연결이 자동 source 요청을 만들지 않는 의미를 보존하며, 계수가 실제 달라지면 원인을 보고하고 성공 기대값을 맞추기 위해 바꾸지 않는다. 실제 static4의 검증은 C2-20과 구분해 실행한 범위만 센다. transport/API/test·backend·CSP와 그 밖의 파일은 보호한다.

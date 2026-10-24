@@ -41,7 +41,7 @@
 **Files:** 별도 실제 배정 뒤 `frontend/intake_references/browser_check.cjs`, `docs/fcc/intake_reference_ui_usage.md` 정확2. 기본 C2 소유5와 구분되는 작은 commit으로 보존한다. 기존 C2 base/branch·미커밋은 재작성하지 않는다.
 
 - [ ] 공개 C2-COMPAT-050 핀과 추가2 소유의 실제 배정을 확인한다. F1 static 목록의 모듈 누락과 F2의 옛 panel0 전제를 원소스/실제 실패로 구분해 보존한다.
-- [ ] F1 기존 static allowlist에 실제 C1 모듈 파일1만 추가한다. F2의 부재 전제만 새 sibling1/detail 밖으로 바꾸며 기존 수동조회·wire·부모/source 계수·CSP·오류/수명 검사를 보존한다. ASSETS adapter·조건부 skip·가짜 성공·새 API0이다.
+- [ ] F1 기존 static allowlist에 실제 C1 모듈 파일1만 추가한다. F1의 옛 A1→알림 직접 인접 단언1은 `intake-view → A1 → C2 → notification-view`의 정확한 sibling 순서·각 패널1·detail 밖으로 갱신하고, 그 실패 원본을 보존한다. F2의 부재 전제만 새 sibling1/detail 밖으로 바꾸며 기존 수동조회·wire·부모/source 계수·CSP·오류/수명 검사를 보존한다. ASSETS adapter·조건부 skip·가짜 성공·새 API0이다.
 - [ ] combined C2 후보에서 F1/F2 새 phase를 실행한다. C2 own checker의 static4·genuine 준비/등록 수용과 기존 F2 읽기 검증을 구별한다. 계수 변화는 원인 확인 전 기대값을 바꾸지 않는다. 사용법에 새 실행과 미실행만 갱신한다.
 
 ## T2 — 같은 host genuine HTTP·회수·인계
