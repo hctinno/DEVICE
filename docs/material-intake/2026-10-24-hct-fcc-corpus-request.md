@@ -1,5 +1,7 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+최신 [통합018](../../handoff/development/INTEGRATION-018.md)은033 검색·검토 화면과 실제S03/S05별7질의를 정식GET→DOM으로 연결했다. 새전체1677/114·화면123은 소프트웨어 검증이며 corpus 전수/규범승인이 아니다. S01B0018/S02B0011/S07B0010/S08B0013의67JSON352360B를 root가 전체pin/strictUTF8JSON/원바이트·identity불변으로 인수/명시ACK했다. 신규원문0·11원본/참조466쪽/28127705B/direct10+parent1/official0·모집단unknown, 실패/검색후보·부분규정해석7/상세pagebinding gap9·current9group10family의 독립성unknown을 보존한다. P01 v038의 기존수집1/2/3 실제배정·정확ACK3/26입력과 공개수집원격650699c를 대조했다. 수집전체와 기존작업을 계속하며 아래017 이하는 당시이력이다.
+
 최신 [통합017](../../handoff/development/INTEGRATION-017.md)은035준비API의독립Yes/새전체1671·103·지정화면31/실제JSON3call을확인했다. S08B0012 metadata13JSON188760B는옛10/431검수로동결,새S01B0017 EMC원문35p/23payload1349012B를별도정확인수ACK해현재11원본/참조466p다. 신규표지/본문모델상충·미전사/식별자private·fcc.report403≠official403/officialmapping0·전수/semantic/규범미확인을유지한다. P01에012-FOLLOWUP-20261024-001로기존S07두보고서인용판본/방법4~8행과S08추가1metadata delta실제배정을요청했다.새원문/유료표준/계정/사용자준비요청0이며아래016 이하는각시점기록이다.
 
 최신 [통합016](../../handoff/development/INTEGRATION-016.md)은027/030/032 소유3commit·독립Yes·새전체1646/103·정식route17+14를확인했다. 새S01B0016의SAR시험제외계산7p와교정S02B0010/SARtailS03B0009를정확인수/ACK해현재원본/별도참조10고유PDF431쪽이다. 이는적격10/전수·전쪽의미/실측SAR·기관면제·현행규범승인이아니다. 공식FCC대응0/모집단unknown·법인/시설/TCB·날짜/판본/분할/부록/중복/누락·권리/미전사셀을유지하며P01→기존수집1~8을계속한다. 아래015/014의수량은각시점동결이다.

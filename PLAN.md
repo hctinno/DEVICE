@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-10-24 [통합018](handoff/development/INTEGRATION-018.md):033의 같은catalog search/discover 조회와 별도 검토패널을 독립Yes/소유10파일로 인수했다. 새전체1677/Node114·source196불변·제품UI123(새55/기존68)을 확인했다.034 I001수정·036의 독립Yes는 다음 code cut,037은 독립리뷰다. 개발2 [038 불변 참고이력](docs/superpowers/specs/2026-10-24-intake-reference-ledger-design.md)·[계획](docs/superpowers/plans/2026-10-24-intake-reference-ledger.md) 구현을 실제배정했고039계산화면·040시작접점·041가상준비연결의 작은계약/검사를 병행한다. P01 신규metadata4/원문증가0·11/466·모집단unknown/규범미승인/사용자준비0을 유지한다. 아래017 이하는 보존이력이다.
+
 작성일: 2026-10-23, Asia/Seoul
 
 2026-10-24 [통합017](handoff/development/INTEGRATION-017.md):035 metadata준비API를독립Yes/소유3파일로인수하고새전체1671/Node103·source193불변·지정제품31/실제JSON3call을확인했다. corpus11/466의전수·적격/semantic·공식미확인을유지하고EMC모델상충을자동정정하지않는다.037 BWindows명시startup loader를신규3파일로승인·배정하며034A/036/033을계속한다. P01후속012-001은기존S07/S08의좁은재사용delta요청이고사용자준비0이다. 아래016 이하는보존이력이다.

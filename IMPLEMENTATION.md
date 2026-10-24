@@ -1,5 +1,7 @@
 # DGM AutoLab — 구현·시스템 설계 초안
 
+2026-10-24 [통합018](handoff/development/INTEGRATION-018.md): GET/HEAD `/api/fcc-cases/lookup`은 메모리catalog의 search/discover 각각1회와 exact4봉투/엄격query4를 제공한다. 별도 검토패널은 조건문자일치·전체상충/부분검토·미지정/미확인·기존검색적격을 구별하고 명시 근거보기/마지막정상·generation/focus를 유지한다. 내부8MiB×2/봉투16MiB+1024 정상상한·0/false/null/권한false를 보존했다. 새전체1677/Node114·source196·제품123 PASS이며 계산POST는 아직후속039다. [038 설계](docs/superpowers/specs/2026-10-24-intake-reference-ledger-design.md)의 same-con 불변append/현재조회 분리와3namespace만 개발2에 배정한다. corpus11/466/official0·규범/실제AI·물리 미검증은 같다. 아래017 이하는 당시이력이다.
+
 2026-10-24 [통합017](handoff/development/INTEGRATION-017.md):고정manifest·명시packet/scope JSON2를검증하는035 pure API를인수했다. 기존metadata4검증공유/None·genuine원문/literal경계를보존하고preparedmetadata의PDF/literal·권리·실행false를유지한다. 새전체1671/Node103·source193불변·제품31·실제JSON3call/원문0 PASS다. 다음037명시Windows read-only host→035→genuine생성자1은별도신규3파일로배정하고서버/CLI/Store를바꾸지않는다. corpus11/466·모델상충/옛10범위·현재규범/실측·실제AI미검증은같다. 아래016 이하는보존이력이다.
 
 2026-10-24 [통합016](handoff/development/INTEGRATION-016.md): 명시host catalog→정식read-only route027·전체Count/권한 선검사후선택native030·genuine case/decoder와전체snapshot 참고결합032를인수했다. 새전체 Python1646/Node103·source193불변/제품route17+14 PASS. S05단일case옛도구전제실패와부분11검사는보존한다.031 실제literal 한셀의기존023→RF계산 owner결과는private/독립검토이며reportedW/comparisonnull이다.035 메모리packet준비·034A mode=ro 현재snapshot·033조회와036명시계산UI계약을분리배정하고Store/DB/worker·권한/전체AI·물리미검증을유지한다. 아래015 이하는보존이력이다.

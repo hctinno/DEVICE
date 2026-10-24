@@ -1,5 +1,7 @@
 # DGM AutoLab — 개발·수집 세션 인계
 
+최신 [통합018](handoff/development/INTEGRATION-018.md)은033 검색·검토 화면 exact4fd341c→root기능 `79f5e72ae3bd5c69f9757a67ec8e2e86a5342e02`/소유10파일·독립Yes를 인수했다. 새 전체Python1677/Node114·source196불변·새lookup55/기존route31·reader37=화면123 PASS다. P01 metadata4묶음67JSON/352360B를 인수·ACK했고 원본/참조11PDF466쪽·전수unknown/official0은 같다.034 I001 수정c7c1b19 재독립Yes와036 ea768900 독립Yes는 다음019용이며 이번 code cut에 합산하지 않는다. [038 불변이력 설계](docs/superpowers/specs/2026-10-24-intake-reference-ledger-design.md)·[계획](docs/superpowers/plans/2026-10-24-intake-reference-ledger.md)을 고정해 개발2에 c7c1b19/new3파일 구현을 실제배정했다.037 독립리뷰·039 계약/검사준비·040/041 짧은후속과 P01 v038 실제3배정/ACK3을 이어간다. 사용자준비0/실제AI·물리완료 미주장, 아래017 이하는 당시이력이다.
+
 갱신일: 2026-10-24, Asia/Seoul. 이전 배정·인수 이력은 보존한다.
 
 최신 [통합017](handoff/development/INTEGRATION-017.md)은035 exact49ef565→root기능 `de6173fbc1c9a8a0164f43ea54b25acae0cd9617`/소유3파일·독립Yes를인수했다. 새전체Python1671/Node103·source193불변·지정제품31·실제metadataAPI3call/원문0을확인했다. corpus11원본/참조466쪽·전수unknown/official0,신규EMC표지/본문모델상충·S08옛10-only검수를보존한다. P01에012-FOLLOWUP-20261024-001의S07판본/방법4~8행·S08추가1metadata delta실제배정을요청했고037 B신규3파일구현을승인/017정확게시pin전달로잇는다.034A/036/033구현·검증도계속하며사용자준비0/실제AI·물리완료미주장,아래016 이하는당시이력이다.

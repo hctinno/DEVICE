@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+최신 [통합018](INTEGRATION-018.md) 기능은 `79f5e72ae3bd5c69f9757a67ec8e2e86a5342e02`다.033 exact4fd341c/소유10·독립Yes c1364322를 인수하고 새Python1677/Node114·source196불변/화면123 PASS를 확인했다.034/036/037은 이번 code cut에 뒤늦게 섞지 않는다.
+
+| 담당 | 현재 인수와 실제 후속 |
+|---|---|
+| 개발1 | 037 df001a/신규3·owner31/216/full1702와actualhash2/native5·HTTP2는별도보존. review_catalog_host037 독립리뷰/소유지적우선. 다음040은검증도구없는명시config/SHA→제품시작접점의짧은계약만배정·제품code0 |
+| 개발2 | 034 c7c1b19 I001수정 재독립Yes/직접46+34·추가7·SQLite3를다음019용인수. [038설계](../../docs/superpowers/specs/2026-10-24-intake-reference-ledger-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-reference-ledger.md) 고정/같은exact034에서전용038/new3 구현실제배정. append멱등·freshcurrent/분리FK·historical최종origin검증·기존Store불변 |
+| 개발3 | 036 ea768900/신규3 독립Yes·직접136+추가13·실제PDF0를다음019용보존. owner1669/실제5쪽·case023RF각1과분리. 다음041은036결과를026가상준비의읽기참고로잇는최소매핑계약만배정·새수학/권한0 |
+| 개발4 | 033→root79f5e72 인수.039 14557B/dfd8de1b 제안의별도명시패널 B를선택하고privateusage/typed계약RED준비배정. final036·033포함rootbase/actualdescriptor정확고정전새branch·POST제품구현0. 024callback/DOM스크랩·자동claim0 |
+| P01 | 신규4metadata67JSON352360B 인수ACK/rootreceipt재대조·공개remote650699c확인. v038 S01B0019/S02B0012원문각최대1·S03B0010기존HAC정확8쪽 실제배정/ACK3·입력26. 원문11/466·전수unknown·규범/공식미승인 유지 |
+
+현재사용자결정/준비0. 공통계약→owner구현·검증→독립리뷰/수정→root통합/회귀·게시→다음배정을이어간다. 아래017 이하는각시점보존기록이다.
+
 최신 [통합017](INTEGRATION-017.md) 기능은 `de6173fbc1c9a8a0164f43ea54b25acae0cd9617`다.03549ef565/소유3파일·독립Yes9a170685 인수후새전체1671/Node103·source193불변·제품31·JSON3call/원문0 PASS. corpus11/466·모집단unknown/official0·신규EMC모델상충·S08옛10-only는유지한다.
 
 | 담당 | 현재 인수/실제 후속 |
