@@ -378,12 +378,29 @@ def _envelope(value, *, tick=None, revision=None, identity=None, identities=None
     _require(type(outputs) is dict and all(type(v) is dict for v in outputs.values()))
 
 
+def _meter_context(values, meter, revision=None):
+    """Bind the declared meter settings to its public configuration context."""
+    configuration = values.get('configuration')
+    expected = dict(meter, trigger_source='immediate', window=1)
+    _same(configuration, expected)
+    current = values.get('configuration_revision')
+    _require(_natural(current) and (revision is None or current == revision))
+    return current
+
+
 def _setup_receipt_accepted(receipt, index, declared):
+    values = receipt['values']
+    if index == 3:
+        try:
+            _meter_context(values, declared['meter'])
+        except RfSignalScenarioError:
+            return False
+    elif values.get('configured') is not True:
+        return False
     if receipt['status'] in {'ok', 'pending'}:
         return True
     # Same meter configuration preserves the old invalidated acquisition state.
     # This is configuration evidence only, never an accepted measurement.
-    values = receipt['values']
     if (index == 3 and receipt.get('device_id') == 'meter' and receipt['status'] == 'invalid'
             and receipt.get('setup_changed') is False
             and values.get('reason') == 'configuration_changed' and values.get('outputs') == {}):
@@ -422,6 +439,21 @@ def _validate_author(author, request, provenance, identities):
     _keys(author['initial_context'], ('tick', 'setup_revision'))
     _same(author['initial_context'], dict(tick=setup[-1]['tick'],
                                          setup_revision=setup[-1]['setup_revision']))
+    bootstrap_meter = bootstrap[13]['values']
+    old_revision = _meter_context(
+        bootstrap_meter, describe_rf_signal_scenario('pulsed_time_mean')['meter'])
+    for receipt, identity in zip(bootstrap, bootstrap_nodes):
+        if identity == 'meter':
+            _meter_context(receipt['values'], describe_rf_signal_scenario('pulsed_time_mean')['meter'],
+                           old_revision)
+            sample = receipt['values']['outputs'].get('measurement')
+            if sample is not None:
+                _require(sample.get('configuration_revision') == old_revision)
+    changed = setup[-1].get('setup_changed')
+    _require(type(changed) is bool)
+    _require(changed == (_canonical(bootstrap_meter['configuration']) !=
+                         _canonical(setup[-1]['values']['configuration'])))
+    _meter_context(setup[-1]['values'], declared['meter'], old_revision + int(changed))
     return author['initial_context']
 
 
@@ -465,12 +497,16 @@ def _meter_packet(sample, declared, observed, sensor, acquisition):
              and sample['unit'] == 'dBm' and sample['quantity'] == declared['meter']['measurement_mode']
              and sample['simulation_basis'] == 'declared_synthetic_policy' and sample['window'] == 1)
     _require(_natural(sample['configuration_revision']) and _finite(sample['value']))
+    _require(sample['configuration_revision'] ==
+             observed['devices']['meter']['values']['configuration_revision'])
     for key in ('frequency_hz', 'duty_cycle', 'crest_factor_db'):
         _require(sample[key] == sensor[key])
     _require(_natural(sample['acquisition_tick']) and acquisition is not None
              and max(acquisition['tick'], sensor['acquisition_tick']) < sample['acquisition_tick'] <= observed['tick']
              and sample['acquisition_setup_revision'] == observed['setup_revision']
-             and acquisition['setup_revision'] == observed['setup_revision'])
+             and acquisition['setup_revision'] == observed['setup_revision']
+             and sample['configuration_revision'] == acquisition['values']['configuration_revision']
+             and sample['frequency_hz'] == declared['meter']['frequency_hz'])
 
 
 def _evaluate_events(request, declared, report, stored, author, catalog):
@@ -478,6 +514,7 @@ def _evaluate_events(request, declared, report, stored, author, catalog):
     provenance = dict(runtime_origin='preinitialized', catalog_sha256=_CATALOG_SHA,
                       topology_sha256=_sha(_canonical(topology)), engine_sha256=_engine())
     initial = _validate_author(author, request, provenance, identities)
+    meter_revision = author['phases']['scenario_setup'][-1]['values']['configuration_revision']
     _same(stored['header']['provenance'], provenance)
     _require(stored['complete'] is True and stored['unresolved_request_ids'] == []
              and report['unresolved_request_ids'] == [] and report['usage']['reserved_ticks'] == 0
@@ -516,6 +553,10 @@ def _evaluate_events(request, declared, report, stored, author, catalog):
             body = intent['body']
             identity = body.get('device_id')
             _envelope(receipt, identity=identity, identities=identities)
+            if identity == 'meter':
+                _meter_context(receipt['values'], declared['meter'], meter_revision)
+            elif identity in {'dut', 'sensor'}:
+                _require(receipt['values'].get('configured') is True)
             changed = receipt.get('setup_changed', False)
             _require(type(changed) is bool)
             _require(receipt['setup_revision'] == intent['before_revision'] + int(changed))
@@ -541,6 +582,10 @@ def _evaluate_events(request, declared, report, stored, author, catalog):
             for identity, node in observed['devices'].items():
                 _envelope(node, tick=observed['tick'], revision=observed['setup_revision'],
                           identity=identity, identities=identities)
+                if identity == 'meter':
+                    _meter_context(node['values'], declared['meter'], meter_revision)
+                elif identity in {'dut', 'sensor'}:
+                    _require(node['values'].get('configured') is True)
             if last is None:
                 _same(dict(tick=observed['tick'], setup_revision=observed['setup_revision']), initial)
                 _require('cause_request_id' not in payload)

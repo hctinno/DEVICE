@@ -59,6 +59,8 @@ bootstrap23 receipt와 setup4(`dut.stop`, DUT signal configure, sensor triggered
 
 공개 evaluator는 새 런타임·RF 연산 없이 고정 경로의 실제 journal/author를 읽는다. hash chain·request/seed·선언·run/instance·catalog/topology/engine·profile/role·intent/receipt·fresh tick/revision과 마지막 fetch 뒤 source/coupled/sensor/meter를 확인한다. 정답은 별도 고정 literal, 수치 절대오차는1e-9dB이고 frequency/duty/crest/unit/quantity/ID는 정확 대조한다. 유효한 기대 불일치는 completed/fail, 손상은 failed/null이며 읽기 불능은 정제한 예외다. 의미 평가와 폴더 저장 완료는 별도 단계다.
 
+meter의 선언 3설정은 정상 ok setup에서도 author의 마지막 설정·모든 최신 관측·대응 receipt의 공개 configuration과 일치해야 한다. bootstrap에서 설정 변경 여부에 따라 이어진 configuration revision을 관측·취득 receipt·sample까지 결합한다. DUT·센서는 공개 configured 표시와 실제 RF/취득 필드를 확인하고 제공하지 않는 설정 필드를 만들어내지 않는다. 설정·revision 모순은 유효 hash chain이 있어도 PASS로 올리지 않는다.
+
 파일은 `operator/events.jsonl`, `private/author.json`, `public-result.json`, `private-manifest.json`이다. runtime_origin은 preinitialized, resumable=false다. bootstrap 이전부터의 replay·durable resume·물리 정밀도를 보장하지 않는다. engine digest는 고정 부모 Fleet19파일만 포함한 `9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42`이며 새041 모듈은 별도 소유 pin으로 추적한다. 코드 관측 digest이고 attestation이 아니다.
 
 평가 전 journal/author의 bytes·SHA를 고정하고 평가 후에도 같은 바이트인지 확인한다. 이 사본의 해시를 게시 manifest에 사용하며, 성공 반환 전에 complete manifest와 정확3행(public-result/journal/author)의 실제 bytes·SHA·binding을 다시 검증한다. 이때만 저장 outer10과 반환이 같다. public outer artifacts에는 journal만 있고 manifest는 자기 자신을 해시하지 않는다.
