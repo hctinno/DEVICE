@@ -1,5 +1,9 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+2026-10-24 B018 추가 인수: P01 공개1ef774de 원격exact·공개3blob/ledger·private3묶음47payload145358B(JSON46/MD1/PDF0)·명시ACK3를 대조했다. collector95/95·corpus60/60, 대상·참조16PDF603쪽36642346B=직접15+parent1·공식0/전수unknown은 그대로다. 별도제외1/46·연결보류1/53·고유보존18/702는 적격18이 아니다. S02 metadata 표제 차이는원문body상충확인이아니며 P01 fresh도구실패/HTTPnull·무재시도, S04 producer의정확device.report403은 공식FCC/부재/권리판정이 아니다. HAC1 마지막3은P01의한정wrapper3/bodytitle0·누적118/181/미방문63/HAC1지역73/73일뿐 전문semantic·교정완료가 아니다. oldqueue99/115/new8과현재unit3를구별한다.
+
+v051은 실제3배정/ACK3·고정입력34(10/14/10)다. S02 America2026Q2·S04국내2026Q1 각 metadata query4/HTML6/선택12·PDF0, S03기보유HAC2 physical8..15·정수max8·새PDF/network/copy0로 이어진다. 동결context95/92·formal115/QA118을나중95/95/formal118로소급수정하지않는다. 원본/ACK/READY/실패·같은차단route무재시도·사용자준비0을유지한다. 이cut이후 새검수/ACK는 최신privatefollowup으로구별하고 검수전 수를올리지않는다.
+
 2026-10-24 [통합025](../../handoff/development/INTEGRATION-025.md)은044 A1합성화면/typed구성요소 인수이며새보고서원문 작업0·실제042/043/제품HTTP검증0이다. P01 B0164d3abe8ac35ce7bff295c56cf5c52343a7149a9f 원격exact·collector87/87·corpus52/52·대상16PDF603쪽36642346B/직접15+parent1·공식0/전수unknown과별도제외/대응보류·rightsunknown을유지한다.고유보존18/702는적격18이아니다.
 
 FOLLOWUP006은P01→S07/S08 v049실제배정ACK2/고정입력29·원task/동결ACK SHA대조완료다. S07기존공식KDB4쪽/판본관계4~6행·S08새1metadata delta/최대39givenSHA비교는기존자료재사용·network/보고서재개봉/재다운로드/원시수치전사0으로진행한다. 기존v048검색2/HAC8예약·한정HAC107/181/미방문74·실제자료한계를보존한다.새READY는검수전증분0·사용자준비0·P01한창구·공유/원문비공개를유지한다. 아래B016는당시상세인수기록이다.
