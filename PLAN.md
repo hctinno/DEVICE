@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-10-25 [통합029](handoff/development/INTEGRATION-029.md): 참고이력 HTTP049와 준비·등록 구성요소052 C1을 인수했다. Python2,175/Node210·화면23+18·실제 읽기 HTTP 경계 검증을 통과했으며 전체 시험소·실제 AI·실장비 완성을 뜻하지 않는다. 다음은 047 운영 CLI, 053 같은 서버의 명시 준비·등록, 050 F2 실제 화면 연결이다. C2 메인 화면 조립은 accepted053/static1·acceptedF2·정확 base/소유 배정 뒤로 유지한다. 054 순수 I/Q 후보의 독립 검토와 055 최소 연결 제안은 별도다. Un-licensed 우선/raw·Licensed 추가 암호 보류·첫 스마트폰2.4GHz b/g/n conducted-power 순서와 사용자 준비0을 유지한다.
+
 2026-10-25 후속 계약: [053 설계](docs/superpowers/specs/2026-10-25-intake-reference-actions-host-design.md)·[계획](docs/superpowers/plans/2026-10-25-intake-reference-actions-host.md)의같은Store/잠금/세션/source1·명시prepare/append/replay는049 최종인수뒤개발2소유3으로잇는다. [054 설계](docs/superpowers/specs/2026-10-25-virtual-fleet-rf-signal-waveform-design.md)·[계획](docs/superpowers/plans/2026-10-25-virtual-fleet-rf-signal-waveform.md)의순수CW/사각pulse I/Q·전력/에너지는정적Yes뒤개발3신규3구현으로배정한다. 두계약게시를제품완료로세지않으며기존waveform false·전체업무/물리목표·첫b/g/n/Un-licensed우선은유지한다. 028source227/Python2121/Node186/CLI14는이전실행이고추가제품회귀0,자료17/650·HAC한정158/181·공식0/전수unknown/사용자준비0이다.
 
 2026-10-25 [통합028](handoff/development/INTEGRATION-028.md): 저장조회051 CLI 인수·새 Python2121/Node186·소스227·실제자식14를 확인했다. 다음054는 scalar/주파수밀도와 구별한 CW·사각pulse의 유계한 정규화 I/Q 생성/순수전력·에너지 분석 private A/new3이며 v1 정적No C0I1의 양의subnormal 거절범위를 보완한v2→재독립검토→공개계약/정확base→구현으로 잇는다. 기존 waveform false/041 crest정책/전체물리목표는 유지한다. 049 소유수정 재검토→실제050F2/app, 052 C1→053 같은host→C2 순서로 병행한다. 자료 대상17/650·HAC한정150/181·공식0/전수unknown이며 원시/Licensed보류·Un-licensed우선·첫b/g/n·사용자준비0은 같다.
