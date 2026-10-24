@@ -1,0 +1,1213 @@
+{
+  "schema_version": 1,
+  "kind": "dut_control_source_metadata",
+  "provenance": {
+    "source_catalog_sha256": "c0f605799430cc4b7c157b29dd020ced4c28a57bce06d8283951d6d557848efa",
+    "control_paths_sha256": "77fe97c745c3d395bdb994aab7ada697454439a7c9084afc4af1f6ca6d263440",
+    "main_prompt_v5_sha256": "b1cb4f3ddaf32dd11227a039eadee889835594210796e7a544948acd327148df",
+    "manufacturer_addendum_sha256": "d4c01c8419648f16849bcfc2b712321d57e9f99b6378346c3dcc52af06b4f5df"
+  },
+  "counts": {
+    "source_units": 30,
+    "github_projects": 25,
+    "aosp_components": 4,
+    "pinned_submodules": 1,
+    "archive_files": 32,
+    "archive_bytes": 74333207,
+    "snapshot_files_verified": 10538,
+    "stable_source_distributions": 2
+  },
+  "sources": [
+    {
+      "id": "DUT-A01",
+      "category": "adb_core",
+      "base_url": "https://android.googlesource.com/platform/packages/modules/adb",
+      "commit": "1cf2f017d312f73b3dc53bda85ef2610e35a80e9",
+      "status": "acquired",
+      "archive_bytes": 7158707,
+      "archive_sha256": "96fee8b9f34c485a8ba89f15a577c5caac30e479b51338fab12b964f3ca3b20b",
+      "snapshot_scope": "Complete module commit archive; Git history and external projects/dependencies not included",
+      "snapshot_file_count": 321,
+      "license_evidence_files": [
+        {
+          "path": "MODULE_LICENSE_APACHE2",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "NOTICE",
+          "sha256": "cf14d0774dd1e5f5ae0416edbc5c0de706c474e9402e3fe367e9103cd13891f7",
+          "bytes": 10695
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-A02",
+      "category": "android_wifi_framework_reference",
+      "base_url": "https://android.googlesource.com/platform/packages/modules/Wifi",
+      "commit": "10246c5ae40b8872b670a8b28f9a0bbd8ba62e57",
+      "status": "acquired",
+      "archive_bytes": 4779087,
+      "archive_sha256": "197e01ddcb4af7a0dff237865b98c62267e23473fc91b76f560749f82d27b733",
+      "snapshot_scope": "Complete module commit archive; Git history and external projects/dependencies not included",
+      "snapshot_file_count": 1598,
+      "license_evidence_files": [],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-A03",
+      "category": "android_connectivity_test_framework",
+      "base_url": "https://android.googlesource.com/platform/tools/test/connectivity",
+      "commit": "7f1a634ce1576e1cd8f2f5fb130f067f2d0c6db2",
+      "status": "acquired",
+      "archive_bytes": 2922711,
+      "archive_sha256": "3f44feb737a006c25071350d6d72c506b079610fb59298050f4cca2b2d2ea554",
+      "snapshot_scope": "Complete module commit archive; Git history and external projects/dependencies not included",
+      "snapshot_file_count": 1263,
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+          "bytes": 11357
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-A04",
+      "category": "bootloader_service_reference",
+      "base_url": "https://android.googlesource.com/platform/system/core",
+      "commit": "a3b721a32242006b59cb12bd62c9133632af3a2d",
+      "subtree": "fastboot",
+      "status": "acquired",
+      "archive_bytes": 185031,
+      "archive_sha256": "dc78839ccf68199b151c5cc2fb33478c367b23e2b8fd4208c89fe36b548b1c61",
+      "snapshot_scope": "Entire fastboot subtree at fixed AOSP system/core commit; no claim of Samsung fastboot support",
+      "snapshot_file_count": 101,
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "1bc6c8aff995afb8905dce226367c3e564eb68e4969bfe491229b8b50f19ebe1",
+          "bytes": 1267
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "application_boundary": "Bootloader/firmware service reference; not a normal fallback after ADB failure. No flash/unlock/reset/reboot/partition command executed or newly authorized.",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G01",
+      "category": "android_test_orchestration",
+      "repository": "google/mobly",
+      "repository_url": "https://github.com/google/mobly",
+      "commit": "c4bfe95549b726d1a12e3d4c4cf1943cfa98f22e",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 322874,
+      "archive_sha256": "6c3aa2f0e41d9d6c5fb8b6bfdbe915ea60a609dbeaa6ccf923f51f46030bfed0",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 119,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G02",
+      "category": "android_on_device_api",
+      "repository": "google/mobly-snippet-lib",
+      "repository_url": "https://github.com/google/mobly-snippet-lib",
+      "commit": "3c705915cad43acd88a8815b3f3e3cf9455a60a4",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 219293,
+      "archive_sha256": "71b3586b66531c2df5a0f1f2c86e102cb95f3e4de85c9e923f5bb1a3fa8def27",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 92,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358
+        },
+        {
+          "path": "third_party/sl4a/LICENSE",
+          "sha256": "608081987fbfb5cfd13a7b8e0616116157584aade8d6ddd022cc71c6599bd822",
+          "bytes": 9170
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G03",
+      "category": "android_on_device_api",
+      "repository": "google/mobly-bundled-snippets",
+      "repository_url": "https://github.com/google/mobly-bundled-snippets",
+      "commit": "58f776dc51637f3399b3894141d4f09a4709be50",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 138589,
+      "archive_sha256": "fec0a223a181751bada11888c36baed7f552aeddca2be3a17b2f63c3f8d72553",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 44,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G04",
+      "category": "android_ui",
+      "repository": "google/snippet-uiautomator",
+      "repository_url": "https://github.com/google/snippet-uiautomator",
+      "commit": "eb6977e34429133d61d71da2441e178dff18baaa",
+      "git_ref": "refs/heads/main",
+      "status": "acquired",
+      "archive_bytes": 3047673,
+      "archive_sha256": "c8df9c61e6d85c311b034cca4465d8b57f274d222a0fd708f2ccefbb518a3a66",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 58,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G05",
+      "category": "android_ui_framework",
+      "repository": "appium/appium",
+      "repository_url": "https://github.com/appium/appium",
+      "commit": "a6a69d36d34079c85bde89f0725e230fbc3ff999",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 7144711,
+      "archive_sha256": "7aea21a614268f88d48d64395dcf37353e1df3a559657ee018c2e82ab4f45b46",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 965,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "5cb791a45cafc4bdaef57f3ba49fb7691a98c756e8148467f9e241295728490f",
+          "bytes": 11387
+        },
+        {
+          "path": "packages/logger/LICENSE",
+          "sha256": "7f75bb21103e77b7acfcf88a6ad0286741a18b5d13c4326160346e8cf7e356ad",
+          "bytes": 717
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G06",
+      "category": "android_ui",
+      "repository": "appium/appium-uiautomator2-driver",
+      "repository_url": "https://github.com/appium/appium-uiautomator2-driver",
+      "commit": "8d0128ac9d5782aa3e9f0cf1c773805280970a91",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 505323,
+      "archive_sha256": "02ac4127f98db25c6f21598032ff3b2957a4b5dc2d0e15a64c0cda73c6726382",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 158,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "43178a7d73663d609f172ad78b0755ccc14f14c2b49e506b2a160b52821caa19",
+          "bytes": 11384
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G07",
+      "category": "android_ui",
+      "repository": "appium/appium-uiautomator2-server",
+      "repository_url": "https://github.com/appium/appium-uiautomator2-server",
+      "commit": "56bf27a222b9aa242e6a40cf87825b78b443b7be",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 1929935,
+      "archive_sha256": "2a368b632c60daf2b8bb3f250db022cedebba3d7197f7c942110f92edad283eb",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 1024,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "ae9194687e7f3b7d85e8eeb5c973e22d52c4653b1e4332fa0e5c6e82b038ab29",
+          "bytes": 10282
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G08",
+      "category": "adb_wrapper",
+      "repository": "appium/appium-adb",
+      "repository_url": "https://github.com/appium/appium-adb",
+      "commit": "ba7ad47f5e1187073d520fcec1ace112d5e6f826",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 558347,
+      "archive_sha256": "dbea0670f5c21f9650cd461882b13d19a651d03dec03caff1a445dd76df058ed",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 80,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "ae9194687e7f3b7d85e8eeb5c973e22d52c4653b1e4332fa0e5c6e82b038ab29",
+          "bytes": 10282
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G09",
+      "category": "adb_wrapper",
+      "repository": "openatx/adbutils",
+      "repository_url": "https://github.com/openatx/adbutils",
+      "commit": "2382f08ba9394c6a3410ed25ffb89c02801850ec",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 209429,
+      "archive_sha256": "440bb8d5c356d046efc9713266f5965696068e6a0e6e3adb535a5e2144c5d2eb",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 53,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "426f967a2f4288b1f6a50b24a6d5e6cbb91d01350429b9e8d5fe5be5ce901acf",
+          "bytes": 1064
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G10",
+      "category": "android_ui",
+      "repository": "openatx/uiautomator2",
+      "repository_url": "https://github.com/openatx/uiautomator2",
+      "commit": "3adba4a59382bf64cf0eee515f9d9102b5acff99",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 780722,
+      "archive_sha256": "c32587d9f8c575aa27503a4a9386bf5f7d269d7fa993d91cbff134242d588f88",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 139,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "a02d9350d45a1fe284a24bf10fd54da93a8c0ff29a088a61681b8d97021a3754",
+          "bytes": 1064
+        },
+        {
+          "path": "uibox/LICENSE",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G11",
+      "category": "android_legacy_agent",
+      "repository": "openatx/atx-agent",
+      "repository_url": "https://github.com/openatx/atx-agent",
+      "commit": "0c30c9749ef662f3aec83db3a04f5c4f82e32d48",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 76067,
+      "archive_sha256": "08796820aafd1ceea4a064ae8c80a04f66c8fb5d632342825ff27059e33c6e64",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 44,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "f578acd26e5aae1d4ef2f8533f4da80f84b95f26ae3a3b3c8b448782cce0209a",
+          "bytes": 2202
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G12",
+      "category": "android_screen",
+      "repository": "Genymobile/scrcpy",
+      "repository_url": "https://github.com/Genymobile/scrcpy",
+      "commit": "a60891aea193d92e7e5c3942700eca63f9d19a5f",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 697719,
+      "archive_sha256": "20faa424046b3c47b3251a1e84480d94e9cfe92d1d4dd00d582fc526624269f1",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 387,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "01c12035bf35af37241298dc7ad538eb2a07e5c940437bc6876feeaa9d1951d0",
+          "bytes": 11387
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G13",
+      "category": "windows_vendor_gui",
+      "repository": "pywinauto/pywinauto",
+      "repository_url": "https://github.com/pywinauto/pywinauto",
+      "commit": "ecd3276df6093a6e1adbb115af55c532cad7ebab",
+      "git_ref": "refs/heads/master",
+      "status": "source_files_and_release_acquired",
+      "archive_bytes": 765212,
+      "archive_sha256": "912e15f7ab81401194c5e95f7e69c8a13011663eabe2be0c44d7646fcc8773a4",
+      "snapshot_scope": "Pinned commit source/document/config file subset, every file checked against Git blob OID; complete official release sdist retained separately. Large compiled GUI sample fixtures not copied.",
+      "source_file_count": 258,
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "18a999a95b7b23d86c410b4534e44d69f6d8ce13c3a53719b06ab895d8a2e73a",
+          "bytes": 1504
+        },
+        {
+          "path": "apps/Notepad2-mod/License.txt",
+          "sha256": "e24984e129b9e235784cba4dbc02fe069badb34519332ef2fa7e189a88557217",
+          "bytes": 1561
+        },
+        {
+          "path": "apps/Notepad2-mod/x64/License.txt",
+          "sha256": "e24984e129b9e235784cba4dbc02fe069badb34519332ef2fa7e189a88557217",
+          "bytes": 1561
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G14",
+      "category": "windows_vendor_gui",
+      "repository": "FlaUI/FlaUI",
+      "repository_url": "https://github.com/FlaUI/FlaUI",
+      "commit": "fd7cc64ab01908a0ae4cc7d05e704caa34f98d16",
+      "git_ref": "refs/heads/main",
+      "status": "acquired",
+      "archive_bytes": 467524,
+      "archive_sha256": "07f5263aa8b343904dd22ace261247603197d3906aed82b9aac26d00b28a13d9",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 464,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE.txt",
+          "sha256": "19081f6a9c517997e66ecc7ccabb97cf384888285571c984be3b95fd0b62f1c9",
+          "bytes": 1074
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G15",
+      "category": "serial_at_transport",
+      "repository": "pyserial/pyserial",
+      "repository_url": "https://github.com/pyserial/pyserial",
+      "commit": "a5c48d445fbc1943d4fabf8d9090a50fda3172fd",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 211844,
+      "archive_sha256": "e3f31a621340c079aa11a2e18b1d42ab005143c9a75f796eec03f550cac13338",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 89,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE.txt",
+          "sha256": "f30d42819c1b52d6b9bb3d95414e587cb60bb0934aa6c8844eea7bfbd43d5e50",
+          "bytes": 1886
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G16",
+      "category": "usb_transport",
+      "repository": "pyusb/pyusb",
+      "repository_url": "https://github.com/pyusb/pyusb",
+      "commit": "3241c0e6a7debafd7597925e8403d9d3ea02ed93",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 110030,
+      "archive_sha256": "ce9c036d4534a9c80735e02c6afa1041347b528b53b47a04b93ca42ebaade3b8",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 43,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "03e39fdcee9c18f2f9d0c3500a993ddeac050695eb81070ea41347587c76a7fe",
+          "bytes": 1513
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G17",
+      "category": "hid_transport",
+      "repository": "libusb/hidapi",
+      "repository_url": "https://github.com/libusb/hidapi",
+      "commit": "852cc68b8e0e4c7eba0815ef992951cd8b75c55b",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 520517,
+      "archive_sha256": "5c9bc1bf18961d56cd472e2369fb469ab55fdb43443e44ff7b8d96c67fa06f28",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 218,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE-bsd.txt",
+          "sha256": "30eb1bef29b46f8ba7ab8b416035dbd93cb034a45481dd97815b944284582cd2",
+          "bytes": 1534
+        },
+        {
+          "path": "LICENSE-gpl3.txt",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "bytes": 35147
+        },
+        {
+          "path": "LICENSE-orig.txt",
+          "sha256": "fb5436aa63d1b71a8dfbf74ecaf1a5b4e1ec4df7f80074d11fec99284f69ca5f",
+          "bytes": 264
+        },
+        {
+          "path": "LICENSE.txt",
+          "sha256": "7d3b087c34f35d4d538e3bcddd1ff8f66e92f9ef336881999482800ddf840913",
+          "bytes": 530
+        },
+        {
+          "path": "src/tests/windows/driver/LICENSE.txt",
+          "sha256": "07639618c7b94ab9953cc61715f6325877e1854dca611ed9b1bd54497cf5e93a",
+          "bytes": 2665
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G18",
+      "category": "hid_transport",
+      "repository": "trezor/cython-hidapi",
+      "repository_url": "https://github.com/trezor/cython-hidapi",
+      "commit": "2924f2c76a6b34ecfa45818d3c2cb5087e1c7a39",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 34399,
+      "archive_sha256": "e2cb3c4197178cd0ef3e9c3bf73b9f7200abda7f2e90fd30b75ba3107c882e33",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 29,
+      "symlink_entries_retained_in_archive_only": [
+        "hidraw.pyx"
+      ],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE-bsd.txt",
+          "sha256": "5b4ef7439d2f82a2af57f1fb4a90366dd888a3d56444e5835441dd17ff31c716",
+          "bytes": 1517
+        },
+        {
+          "path": "LICENSE-gpl3.txt",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "bytes": 35147
+        },
+        {
+          "path": "LICENSE-orig.txt",
+          "sha256": "e632cd50f8ebcef7192176d676c1e7c053a64fef91e9b62594e921589067a6e9",
+          "bytes": 87
+        },
+        {
+          "path": "LICENSE.txt",
+          "sha256": "276c1c27bbaa34fd62f4e92ad7cf9f7f8f193c0440c9da86c389de0dae192f47",
+          "bytes": 558
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G19",
+      "category": "chipset_rf_reference",
+      "repository": "openwrt/mt76",
+      "repository_url": "https://github.com/openwrt/mt76",
+      "commit": "467ae2e3f190baf737e15e318906da0dc7d0ab91",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 22130588,
+      "archive_sha256": "6e1584674eb6e4b39253498ae52a76a3c0ee56e0e05b16e37a4db06a26f15b23",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 326,
+      "symlink_entries_retained_in_archive_only": [
+        "firmware/mt7662.bin",
+        "firmware/mt7662_rom_patch.bin"
+      ],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "62e2779395b3af6786cfe10a143a99383297c22387ef8588b2d563e79bb00d4c",
+          "bytes": 1490
+        },
+        {
+          "path": "firmware/LICENSE",
+          "sha256": "77c0eb6b7915fdb17b328c1eff3d2074bff2025e88603ac59e01ffc07ba0b541",
+          "bytes": 2100
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "application_boundary": "Chipset/Linux driver or testmode reference only. No SM-A176U chipset, firmware, manufacturing-mode or Android compatibility established.",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G20",
+      "category": "chipset_rf_reference",
+      "repository": "nxp-imx/mwifiex",
+      "repository_url": "https://github.com/nxp-imx/mwifiex",
+      "commit": "2e481212d262758cbd4d0fc7ea95a2ad5f704bc3",
+      "git_ref": "refs/heads/lf-6.18.20_2.0.0",
+      "status": "acquired",
+      "archive_bytes": 1674084,
+      "archive_sha256": "dad168a88ae7f166d91789472e2e8573c93b2b4af0f4d6a3dd99457a4d6034bb",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 103,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "67d461bc478d220fcdf99c59d8ea17fffbd1881718281aa4947eb608fcd568bb",
+          "bytes": 18275
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "application_boundary": "Chipset/Linux driver or testmode reference only. No SM-A176U chipset, firmware, manufacturing-mode or Android compatibility established.",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G21",
+      "category": "chipset_rf_reference",
+      "repository": "sonyxperiadev/vendor-qcom-opensource-wlan-qcacld-3.0",
+      "repository_url": "https://github.com/sonyxperiadev/vendor-qcom-opensource-wlan-qcacld-3.0",
+      "commit": "5badf8e096acd1056080b00f2c3736bd495cb3c5",
+      "git_ref": "refs/heads/wlan-cld3.driver.lnx.2.0.r155-rel",
+      "status": "acquired",
+      "archive_bytes": 7108621,
+      "archive_sha256": "b8bcd44bef82fdc716c75126e5f4a08f370bc9ffc66923fdd2e3dbf7349d3a8c",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 1324,
+      "symlink_entries_retained_in_archive_only": [
+        "api",
+        "cmn"
+      ],
+      "license_evidence_files": [],
+      "license_review_status": "No top-level LICENSE selected; per-file copyright/license headers must be reviewed. FTM time-sync is not manufacturing FTM proof.",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "application_boundary": "Chipset/Linux driver or testmode reference only. No SM-A176U chipset, firmware, manufacturing-mode or Android compatibility established.",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G22",
+      "category": "usb_transport",
+      "repository": "libusb/libusb",
+      "repository_url": "https://github.com/libusb/libusb",
+      "commit": "6a1aff0b39c724657fd92b2d2bf82eb532344570",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 603839,
+      "archive_sha256": "5cb1fee27f268a7388081519ce27e98966206e7955a5e187b0f17a8c74cc99cf",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 181,
+      "symlink_entries_retained_in_archive_only": [
+        "README.md"
+      ],
+      "license_evidence_files": [
+        {
+          "path": "COPYING",
+          "sha256": "36b6d3fa47916943fd5fec313c584784946047ec1337a78b440e5992cb595f89",
+          "bytes": 26434
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G23",
+      "category": "future_ios_transport",
+      "repository": "libimobiledevice/libimobiledevice",
+      "repository_url": "https://github.com/libimobiledevice/libimobiledevice",
+      "commit": "fa0f79190142bc309307967c058f89c1b36eb6b8",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 622605,
+      "archive_sha256": "f14055212653650bd0c20e4687753b5b3b5a0ec37729a08cd18259712ebddddd",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 229,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "3rd_party/ed25519/LICENSE",
+          "sha256": "f68d76b9c1c2271422e55134ea94cf71f2ac3fc3ed6a7ec6b83a1a0538753214",
+          "bytes": 874
+        },
+        {
+          "path": "3rd_party/libsrp6a-sha512/LICENSE",
+          "sha256": "6b420542f5295bd85e285a2142eca27be4f700e4bd1648450c07be4f82548a85",
+          "bytes": 2802
+        },
+        {
+          "path": "COPYING",
+          "sha256": "7619c753cac95d4740220223bde48a032606fcaccde5e546f9bc444c81ab356d",
+          "bytes": 17988
+        },
+        {
+          "path": "COPYING.LESSER",
+          "sha256": "e237fa56668030e928551ddd60f05df5fe957f75eab874bbd017e085ed722e7c",
+          "bytes": 26434
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "application_boundary": "Future iOS reference only; not an added prerequisite for the current Android/FCC Wi-Fi pilot and not proof of RF test-mode control.",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G24",
+      "category": "future_ios_transport",
+      "repository": "doronz88/pymobiledevice3",
+      "repository_url": "https://github.com/doronz88/pymobiledevice3",
+      "commit": "4b4e3c04b418d57f205924aae5e314979cc9ccb5",
+      "git_ref": "refs/heads/master",
+      "status": "acquired",
+      "archive_bytes": 2738993,
+      "archive_sha256": "0c8e5f3bf0f452a493fe2ebd8c0824f04c738aba4c05b652375f4903de73d552",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 536,
+      "symlink_entries_retained_in_archive_only": [
+        ".claude/skills/pymobiledevice3-device-operator",
+        ".claude/skills/tss-batch-prefetch",
+        ".codex/skills/release"
+      ],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "bytes": 35147
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "application_boundary": "Future iOS reference only; not an added prerequisite for the current Android/FCC Wi-Fi pilot and not proof of RF test-mode control.",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-G25",
+      "category": "samsung_firmware_service_reference",
+      "repository": "Benjamin-Dobell/Heimdall",
+      "repository_url": "https://github.com/Benjamin-Dobell/Heimdall",
+      "commit": "3997d5cc607e6c603c6e7c0d07e42e9868c62af2",
+      "status": "acquired",
+      "archive_bytes": 5575186,
+      "archive_sha256": "dca0690db6c0a4a0fa6c788dd887e99bb9557c1bbdf2ec6589bf335cb7f380f8",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 100,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE",
+          "sha256": "d10159c7e40ed1a2af78695beecc0fc0b8e7b5bd7973a4efd864da8c494a7eb4",
+          "bytes": 1079
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "application_boundary": "Bootloader/firmware service reference; not a normal fallback after ADB failure. No flash/unlock/reset/reboot/partition command executed or newly authorized.",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    },
+    {
+      "id": "DUT-S01",
+      "category": "pinned_submodule",
+      "repository": "libusb/hidapi",
+      "commit": "d6b2a974608dec3b76fb1e36c189f22b9cf3650c",
+      "parent_source_id": "DUT-G18",
+      "parent_path": "hidapi",
+      "status": "acquired",
+      "archive_bytes": 452921,
+      "archive_sha256": "e72b71904604238de9e04e4b456acbb30cb2c65fe96797043e572aff39cb8939",
+      "snapshot_scope": "All regular/symlink payloads in commit source archive; no Git history. Git submodule and LFS object dereferencing are separate acquisition tasks.",
+      "snapshot_file_count": 192,
+      "symlink_entries_retained_in_archive_only": [],
+      "license_evidence_files": [
+        {
+          "path": "LICENSE-bsd.txt",
+          "sha256": "30eb1bef29b46f8ba7ab8b416035dbd93cb034a45481dd97815b944284582cd2",
+          "bytes": 1534
+        },
+        {
+          "path": "LICENSE-gpl3.txt",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "bytes": 35147
+        },
+        {
+          "path": "LICENSE-orig.txt",
+          "sha256": "fb5436aa63d1b71a8dfbf74ecaf1a5b4e1ec4df7f80074d11fec99284f69ca5f",
+          "bytes": 264
+        },
+        {
+          "path": "LICENSE.txt",
+          "sha256": "7d3b087c34f35d4d538e3bcddd1ff8f66e92f9ef336881999482800ddf840913",
+          "bytes": 530
+        }
+      ],
+      "license_review_status": "original_license_files_or_headers_retained_file_level_review_pending",
+      "license_review": "Original LICENSE/COPYING/NOTICE and file headers retained; per-file reuse review required",
+      "installed_product_support": "not_assessed",
+      "device_or_firmware_supported": "not_assessed",
+      "adapter_integrated": false,
+      "vendor_code_executed": false,
+      "hardware_verified": false
+    }
+  ],
+  "stable_releases": [
+    {
+      "source_id": "DUT-G01",
+      "release_version": "1.13.1",
+      "requires_python": ">=3.11",
+      "metadata_url": "https://pypi.org/pypi/mobly/json",
+      "archive_bytes": 205892,
+      "archive_sha256": "5f7ad9efdefba04d3f6d3d6a61819b862ce8ef6c944811c6c1e2938aa0921496"
+    },
+    {
+      "source_id": "DUT-G13",
+      "release_version": "0.6.9",
+      "metadata_url": "https://pypi.org/pypi/pywinauto/json",
+      "archive_bytes": 434734,
+      "archive_sha256": "94d710bfa796df245250f952ffa65d97233d9807bcd42e052b71b81af469b6de"
+    }
+  ],
+  "dependency_declarations": [
+    {
+      "source_id": "DUT-G01",
+      "member_path": "pyproject.toml",
+      "sha256": "e55e9713f6695ec3f0f0df9e72a3db5c2908804dfafd79e07413ef2ff85c64ea",
+      "declarations": {
+        "name": "mobly",
+        "version": "1.13.1",
+        "requires-python": ">=3.14",
+        "dependencies": [
+          "portpicker",
+          "pywin32; platform_system == \"Windows\"",
+          "pyyaml"
+        ],
+        "optional-dependencies": {
+          "testing": [
+            "pytest"
+          ]
+        },
+        "build_requires": [
+          "setuptools>=61.2"
+        ]
+      },
+      "installed_dependency_lock_verified": false
+    },
+    {
+      "source_id": "DUT-G05",
+      "member_path": "package.json",
+      "sha256": "0b62469124d02b905b5bf24e1bccf006f742966db308ae8670abf86ccf80f488",
+      "declarations": {
+        "name": "appium-monorepo",
+        "version": "0.0.0",
+        "engines": {
+          "node": "^20.19.0 || ^22.12.0 || >=24.0.0",
+          "npm": ">=10"
+        }
+      },
+      "installed_dependency_lock_verified": false
+    },
+    {
+      "source_id": "DUT-G06",
+      "member_path": "package.json",
+      "sha256": "7c2a99ea55157dd4f2961a71576242253236237ae222aa44ebc67dfe230cd89d",
+      "declarations": {
+        "name": "appium-uiautomator2-driver",
+        "version": "8.7.0",
+        "engines": {
+          "node": "^20.19.0 || ^22.12.0 || >=24.0.0",
+          "npm": ">=10"
+        },
+        "dependencies": {
+          "@appium/css-locator-to-native": "^1.0.1",
+          "appium-adb": "^16.0.4",
+          "appium-android-driver": "^14.0.8",
+          "appium-uiautomator2-server": "^10.6.0",
+          "asyncbox": "^6.4.3",
+          "axios": "^1.18.0",
+          "io.appium.settings": "^8.0.1",
+          "portscanner": "^2.2.0",
+          "teen_process": "^4.2.0"
+        },
+        "optionalDependencies": {
+          "sharp": "^0.x"
+        },
+        "peerDependencies": {
+          "appium": "^3.0.0-rc.2"
+        }
+      },
+      "installed_dependency_lock_verified": false
+    }
+  ],
+  "reference_environment": {
+    "python_version": "3.12.4",
+    "node_version": "24.16.0",
+    "comparison_scope": "declared_interpreter_constraints_only_not_install_or_product_support",
+    "mobly_master_python_constraint_satisfied": false,
+    "mobly_1_13_1_python_constraint_satisfied": true,
+    "appium_and_uiautomator2_node_constraint_satisfied": true,
+    "npm_android_sdk_jdk_device_requirements_checked": false
+  },
+  "manufacturing_references": {
+    "additional_reviewed_references": [
+      {
+        "reference_id": "samsung_at_legacy",
+        "url": "https://github.com/apeppels/galaxy-at-tool",
+        "review_scope": "README_and_source_review",
+        "file_path_if_known": "README.md",
+        "file_blob_oid_if_verified": "3cea2bad28961eb7c09d41f57ce32ca0c70c2691",
+        "repository_commit_pinned": null,
+        "whole_repository_archive_acquired": false,
+        "new_local_source_copy_saved": false,
+        "target_device_support": "not_verified",
+        "reuse_license_review": "required_per_file_before_reuse"
+      },
+      {
+        "reference_id": "android_at_research",
+        "url": "https://github.com/FICS/atcmd",
+        "review_scope": "README_review",
+        "file_path_if_known": "README.md",
+        "file_blob_oid_if_verified": "a9a9fa1a78c5ef8babf7067e84dd903167196458",
+        "repository_commit_pinned": null,
+        "whole_repository_archive_acquired": false,
+        "new_local_source_copy_saved": false,
+        "target_device_support": "not_verified",
+        "reuse_license_review": "required_per_file_before_reuse"
+      },
+      {
+        "reference_id": "qualcomm_diag",
+        "url": "https://github.com/P1sec/QCSuper",
+        "review_scope": "README_and_architecture_review",
+        "file_path_if_known": null,
+        "file_blob_oid_if_verified": null,
+        "repository_commit_pinned": null,
+        "whole_repository_archive_acquired": false,
+        "new_local_source_copy_saved": false,
+        "target_device_support": "not_verified",
+        "reuse_license_review": "required_per_file_before_reuse"
+      },
+      {
+        "reference_id": "qualcomm_ath10k_testmode",
+        "url": "https://github.com/torvalds/linux/blob/master/drivers/net/wireless/ath/ath10k/testmode.c",
+        "review_scope": "source_review",
+        "file_path_if_known": null,
+        "file_blob_oid_if_verified": null,
+        "repository_commit_pinned": null,
+        "whole_repository_archive_acquired": false,
+        "new_local_source_copy_saved": false,
+        "target_device_support": "not_verified",
+        "reuse_license_review": "required_per_file_before_reuse"
+      },
+      {
+        "reference_id": "samsung_legacy_muic",
+        "url": "https://github.com/LineageOS/android_kernel_samsung_universal8890/blob/lineage-18.1/include/linux/muic/muic.h",
+        "review_scope": "source_lines_101_to_106",
+        "file_path_if_known": "include/linux/muic/muic.h",
+        "file_blob_oid_if_verified": "dcd7c4f56e67e0eb43d852acb8a6453d169041d9",
+        "repository_commit_pinned": null,
+        "whole_repository_archive_acquired": false,
+        "new_local_source_copy_saved": false,
+        "target_device_support": "not_verified",
+        "reuse_license_review": "required_per_file_before_reuse"
+      },
+      {
+        "reference_id": "etsi_at_reference",
+        "url": "https://www.etsi.org/deliver/etsi_ts/127000_127099/127007/18.08.00_60/ts_127007v180800p.pdf",
+        "review_scope": "PDF_sections_8.2_and_8.37_pages_119_and_152_in_memory",
+        "file_path_if_known": null,
+        "file_blob_oid_if_verified": null,
+        "repository_commit_pinned": null,
+        "whole_repository_archive_acquired": false,
+        "new_local_source_copy_saved": false,
+        "target_device_support": "not_verified",
+        "reuse_license_review": "required_per_file_before_reuse"
+      },
+      {
+        "reference_id": "usb_type_c_reference",
+        "url": "https://www.ti.com/jp/lit/pdf/ssztc87",
+        "review_scope": "official_reference_review",
+        "file_path_if_known": null,
+        "file_blob_oid_if_verified": null,
+        "repository_commit_pinned": null,
+        "whole_repository_archive_acquired": false,
+        "new_local_source_copy_saved": false,
+        "target_device_support": "not_verified",
+        "reuse_license_review": "required_per_file_before_reuse"
+      },
+      {
+        "reference_id": "samsung_diagnostic_reference",
+        "url": "https://www.samsung.com/co/support/mobile-devices/galaxy-support-how-to-use-the-test-menu-for-the-main-camera/",
+        "review_scope": "official_reference_review",
+        "file_path_if_known": null,
+        "file_blob_oid_if_verified": null,
+        "repository_commit_pinned": null,
+        "whole_repository_archive_acquired": false,
+        "new_local_source_copy_saved": false,
+        "target_device_support": "not_verified",
+        "reuse_license_review": "required_per_file_before_reuse"
+      },
+      {
+        "reference_id": "qualcomm_sdk_distribution",
+        "url": "https://www.qualcomm.com/internet-of-things/products/flight-rb5-platform/software",
+        "review_scope": "official_reference_review",
+        "file_path_if_known": null,
+        "file_blob_oid_if_verified": null,
+        "repository_commit_pinned": null,
+        "whole_repository_archive_acquired": false,
+        "new_local_source_copy_saved": false,
+        "target_device_support": "not_verified",
+        "reuse_license_review": "required_per_file_before_reuse"
+      }
+    ],
+    "additional_reviewed_reference_count": 9,
+    "newly_acquired_repository_archives": 0,
+    "new_links_in_equipment_url_index": false,
+    "anyway_official_public_sdk_or_complete_protocol": "not_verified",
+    "sm_a176u_chipset_or_transport_support": "not_established_by_this_review",
+    "samsung_legacy_muic_resistance_ohm_to_code": {
+      "255000": "ADC_JIG_USB_OFF",
+      "301000": "ADC_JIG_USB_ON",
+      "523000": "ADC_JIG_UART_OFF",
+      "619000": "ADC_JIG_UART_ON"
+    },
+    "etsi_reference_version": "TS 127 007 V18.8.0 (2025-01), not an assertion of the latest applicable edition",
+    "clac": "Optional; lists commands available for the user; does not establish all hidden command syntax or RF test procedures.",
+    "cfun": "Selects MT functionality level; not a complete Wi-Fi RF test configuration API.",
+    "unverified_user_supplied_claims": [
+      "AnyWay universally required for Samsung certification",
+      "255k/523k as generic batteryless auto-power-on settings",
+      "Universal Samsung USB-C VDM factory entry",
+      "AT+VERSNAME=1,2 as generic factory mode transition",
+      "70-80 percent of certification commands are standard",
+      "Universal challenge-response at a fixed bootloader/kernel layer",
+      "Diagnostic UI or AT OK as proof of RF configuration/start/stop"
+    ],
+    "already_acquired_member_checks": [
+      {
+        "source_id": "DUT-G21",
+        "commit": "5badf8e096acd1056080b00f2c3736bd495cb3c5",
+        "member_path": "core/hdd/src/wlan_hdd_ftm.c",
+        "member_sha256": "a3fe4a7e114f872204c01c82fe619cbc76319456f340c214f9cb7ab943ad0c3a",
+        "member_git_blob_oid": "23135e3fc22ba61d18003b594cad3f539894ee06",
+        "acquisition_scope": "already_acquired_archive_member_independently_verified",
+        "manufacturing_test_code_present": true,
+        "product_support": "not_assessed"
+      },
+      {
+        "source_id": "DUT-G19",
+        "commit": "467ae2e3f190baf737e15e318906da0dc7d0ab91",
+        "member_path": "testmode.c",
+        "member_sha256": "6439bb1b39e7e664c140e01da250cfede36bb041d8262817d14060a7da45f9fe",
+        "member_git_blob_oid": "6ee160bda882e447b2e5c54e82483f9ff69f10e4",
+        "acquisition_scope": "already_acquired_archive_member_independently_verified",
+        "manufacturing_test_code_present": true,
+        "product_support": "not_assessed"
+      }
+    ]
+  },
+  "support_status": "not_assessed",
+  "hardware_verified": false,
+  "source_code_executed": false,
+  "automatic_fallback_enabled": false,
+  "remaining_public_source_gaps": [
+    "AnyWay-specific official public SDK/API/source not verified",
+    "Exact SM-A176U OEM RF commands/FW/stop-state contract not verified",
+    "External build dependencies, toolchains, proprietary firmware and non-acquired LFS objects remain separate",
+    "Per-file licensing and practical adapter/model compatibility require independent review"
+  ]
+}

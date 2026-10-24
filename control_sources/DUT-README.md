@@ -1,0 +1,14 @@
+# DUT 제어 경로와 공개 소스
+
+2026-10-24 · Asia/Seoul. [장비 제어자료](README.md)를 보완하는 별도 읽기 입력이다. [인수·실제 요청](../docs/material-intake/2026-10-24-dut-control-intake.md)과 [조회 API 설계](../docs/superpowers/specs/2026-10-24-dut-control-catalog-design.md)를 따른다. 기존 DB/64프로필/1690장비 URL을 교체하거나 자동 병합하지 않는다.
+
+- [dut_sources.json](dut_sources.json): GitHub25+AOSP4+정확 HID submodule1의30소스, 안정판2, commit·archive/파일·라이선스 근거·부분확보 범위·선언 의존성과 미평가 상태다. 원시 코드/압축은 private이며 이 공개 파일에는 metadata만 있다.
+- [dut_paths.json](dut_paths.json): ADB/Android UI·시험/OEM SDK·CLI/Windows GUI/Serial/USB·HID/칩셋 RF/서비스·펌웨어/iOS의9경로와 조건이다. 실행 dispatcher나 설치·제품 지원 목록이 아니다.
+
+30고정소스의32압축74333207B와 내부10538파일 SHA, 안정판231파일 읽기, pywinauto258 Git blob을 독립 검증했다. G13은 소스/문서/설정 subset이며 전체 개발ZIP으로 표시하지 않는다.0.6.9 sdist는 별도다. Mobly master Python>=3.14와1.13.1 안정판>=3.11, Appium/UiAutomator2의 Node선언을3.12.4/24.16.0 기준으로 비교했다. npm/Android SDK/JDK·제품·설치/전이의존성은 검증하지 않았다. 이 스냅샷은 다른 PC의 현재 환경 검사 결과가 아니다.
+
+qcacld의 WLAN factory test mode/조건부 QCMBR 전달부와 mt76 시험모드 코드는 실제 보유 압축에서 다시 확인했다. 제조시험 공개 코드의 존재를 보존하며 SM-A176U의 칩셋·드라이버·FW·권한·RF 명령 전체 지원으로 전이하지 않는다. ftm_time_sync는 다른 기능이다.
+
+5차의 추가 웹검토9건은 코드 후보5건과 ETSI/TI/Samsung/Qualcomm 참고4건이다. 신규 전체 저장소 압축은0개이며 기존30소스/32압축 집계와 분리했다. P01에 필요한 정확 commit·파일·권리·지원 범위만 실제 요청했다. 구형 MUIC 표/AT+CLAC·CFUN·진단 메뉴·프로세스 성공은 최신 USB-C·RF 적용/송신·정지 증거를 대신하지 않는다.
+
+ADB 의존 Appium/Mobly/scrcpy를 독립 fallback으로 세지 않는다. AnyWay 공식 SDK/전체 프로토콜은 미확인이며 GUI·Serial/USB 후보의 존재가 AnyWay 호환을 뜻하지 않는다. 서비스/부트로더·iOS 참고를 일반 시험의 자동 대안이나 첫 실증 필수조건으로 쓰지 않는다. 모든 실제 단말/FW/모델 지원은 미평가이고 자동 fallback·원문 실행·설치·단말 연결0이다.

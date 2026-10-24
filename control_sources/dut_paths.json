@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "source_catalog": "dut_sources.json",
+  "kind": "proposed_DUT_backend_capability_catalog_not_running_dispatcher",
+  "unconditional_fallback_enabled": false,
+  "bench_validation_performed": false,
+  "selection_rule": "제품·기능·FW·권한·사용 가능한 검증 경로로 선택. 실패를 근거 없이 다른 경로 성공으로 바꾸지 않음.",
+  "paths": [
+    {
+      "backend": "adb",
+      "sources": [
+        "DUT-A01",
+        "DUT-G08",
+        "DUT-G09"
+      ],
+      "independent_of_adb": false,
+      "use": "기기 식별·공개 OS/앱 호출·로그/파일",
+      "conditions": [
+        "대상 제품의 ADB 노출 및 호스트 인증",
+        "지원 OS/권한/기능 확인"
+      ]
+    },
+    {
+      "backend": "android_ui_and_test",
+      "sources": [
+        "DUT-G01",
+        "DUT-G02",
+        "DUT-G03",
+        "DUT-G04",
+        "DUT-G05",
+        "DUT-G06",
+        "DUT-G07",
+        "DUT-G10",
+        "DUT-G11",
+        "DUT-G12",
+        "DUT-A03"
+      ],
+      "independent_of_adb": "usually_no_for_standard_bootstrap",
+      "use": "시험 앱/UI·시나리오·관측",
+      "conditions": [
+        "일반적인 설치/부트스트랩 경로는 ADB/계측 권한에 의존",
+        "scrcpy OTG 입력 같은 별도 모드를 전체 화면/RF 제어로 전이하지 않음"
+      ]
+    },
+    {
+      "backend": "oem_sdk_cli",
+      "sources": [],
+      "independent_of_adb": "unknown_per_tool",
+      "use": "AnyWay 등 정식 OEM 시험도구 API/CLI/시퀀스",
+      "conditions": [
+        "정확한 도구/지그/버전과 공개 또는 정식 이용 가능한 호출 규약",
+        "모델/FW/권한/송신·정지 응답 검증"
+      ],
+      "acquisition_status": "public_anyway_interface_not_verified"
+    },
+    {
+      "backend": "windows_vendor_gui",
+      "sources": [
+        "DUT-G13",
+        "DUT-G14"
+      ],
+      "independent_of_adb": true,
+      "use": "PC 시험도구가 제공하는 UI의 자동 조작 후보",
+      "conditions": [
+        "실제 도구가 Windows 프로그램인지 확인",
+        "UIA/Win32 접근·세션/권한·완료·오류/정지 확인",
+        "AnyWay 제품 호환은 아직 미검증"
+      ]
+    },
+    {
+      "backend": "serial_at_or_documented_protocol",
+      "sources": [
+        "DUT-G15"
+      ],
+      "independent_of_adb": true,
+      "use": "공개 명령서가 있는 COM/UART/AT 경로",
+      "conditions": [
+        "제품이 해당 인터페이스를 제공",
+        "모델/FW별 공식 명령·단위·ACK·완료·오류 문서"
+      ]
+    },
+    {
+      "backend": "usb_hid_documented_protocol",
+      "sources": [
+        "DUT-G16",
+        "DUT-G17",
+        "DUT-G18",
+        "DUT-G22",
+        "DUT-S01"
+      ],
+      "independent_of_adb": true,
+      "use": "공개 USB/HID/제어기 전송",
+      "conditions": [
+        "정확한 VID/PID/인터페이스/드라이버 및 공개 프로토콜",
+        "USB 라이브러리만으로 삼성 OEM 명령 지원을 추정하지 않음"
+      ]
+    },
+    {
+      "backend": "chipset_rf_reference",
+      "sources": [
+        "DUT-G19",
+        "DUT-G20",
+        "DUT-G21",
+        "DUT-A02"
+      ],
+      "independent_of_adb": "depends_on_host_driver_and_firmware",
+      "use": "공개 testmode·드라이버/API 의미 및 시뮬레이터 계약 참고",
+      "conditions": [
+        "실제 Wi-Fi 칩셋·드라이버·FW·MFG 권한과 정확히 대응",
+        "일반 Wifi 명령/FTM ranging을 인증용 제조 시험 명령으로 취급하지 않음"
+      ]
+    },
+    {
+      "backend": "firmware_service_reference",
+      "sources": [
+        "DUT-G25",
+        "DUT-A04"
+      ],
+      "independent_of_adb": true,
+      "use": "별도 부트로더/서비스 프로토콜 참고",
+      "conditions": [
+        "일반 시험 실행의 자동 fallback에 포함하지 않음",
+        "제품별 공식 지원과 별도 서비스 작업 범위 확인"
+      ]
+    },
+    {
+      "backend": "future_ios",
+      "sources": [
+        "DUT-G23",
+        "DUT-G24"
+      ],
+      "independent_of_adb": true,
+      "use": "후속 iOS 연결/관측 참고",
+      "conditions": [
+        "현재 Android 첫 실증 선행조건 아님",
+        "페어링/OS/권한·기능별 검증, RF 명령 지원 미확정"
+      ]
+    }
+  ]
+}
