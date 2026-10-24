@@ -9,7 +9,7 @@ export function validateSpectrumView(value) {
     if(item===null || typeof item!=='object' || Array.isArray(item) || ![Object.prototype,null].includes(Object.getPrototypeOf(item))) fail(path);
     const keys=Reflect.ownKeys(item), expected=fields.split(' ');
     if(keys.length!==expected.length || keys.some(key=>typeof key!=='string' || !expected.includes(key))) fail(path);
-    if(Object.values(Object.getOwnPropertyDescriptors(item)).some(field=>field.get || field.set)) fail(path);
+    if(Object.values(Object.getOwnPropertyDescriptors(item)).some(field=>!field.enumerable || !Object.hasOwn(field,'value'))) fail(path);
   };
   const number=(item,path)=>{if(typeof item!=='number' || !Number.isFinite(item)) fail(path);};
   const id=(item,path)=>{if(typeof item!=='string' || !/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/.test(item)) fail(path);};
@@ -17,7 +17,11 @@ export function validateSpectrumView(value) {
   const fixed=(item,values,path)=>{for(const [key,expected] of Object.entries(values)) if(item[key]!==expected) fail(path+'.'+key);};
   const array=(item,path,min,max)=>{
     if(!Array.isArray(item) || item.length<min || item.length>max || Reflect.ownKeys(item).length!==item.length+1) fail(path);
-    if(Object.values(Object.getOwnPropertyDescriptors(item)).some(field=>field.get || field.set)) fail(path);
+    const descriptors=Object.getOwnPropertyDescriptors(item);
+    if(!Object.hasOwn(descriptors.length,'value') || descriptors.length.enumerable) fail(path);
+    for(let index=0;index<item.length;index++) {
+      const field=descriptors[index];if(!field || !field.enumerable || !Object.hasOwn(field,'value')) fail(path);
+    }
   };
   try {
     object(value,'schema_version kind trace bandwidth psd','view');
@@ -43,7 +47,8 @@ export function validateSpectrumView(value) {
     if(bandwidth.capture_id!==trace.capture_id) fail('bandwidth.capture_id');
     array(bandwidth.reason_codes,'bandwidth.reason_codes',0,REASONS.length);
     let previous=-1;
-    for(const reason of bandwidth.reason_codes) {
+    for(let position=0;position<bandwidth.reason_codes.length;position++) {
+      const reason=bandwidth.reason_codes[position];
       const index=REASONS.indexOf(reason);if(index<=previous) fail('bandwidth.reason_codes');previous=index;
     }
     const numbers=['left_offset_hz','right_offset_hz','bandwidth_hz','margin_hz'];
@@ -53,7 +58,7 @@ export function validateSpectrumView(value) {
       if(bandwidth.reason_codes.length) fail('bandwidth.complete');
       for(const key of numbers) number(bandwidth[key],'bandwidth.'+key);
       if(bandwidth.bandwidth_hz<=0 || bandwidth.left_offset_hz>bandwidth.right_offset_hz
-        || bandwidth.left_offset_hz<frequencies[0] || bandwidth.right_offset_hz>frequencies.at(-1)) fail('bandwidth.range');
+        || bandwidth.left_offset_hz<frequencies[0] || bandwidth.right_offset_hz>frequencies[frequencies.length-1]) fail('bandwidth.range');
       if(!['meets','below'].includes(bandwidth.conditional_comparison)) fail('bandwidth.conditional_comparison');
     } else fail('bandwidth.status');
     object(psd,'schema_version kind capture_id input_sha256 algorithm_id input_basis power_dbm power_mw reference_bandwidth_hz maximum_dbm margin_db conditional_comparison source_coverage max_search_complete synthetic hardware_verified ai_model_called method_approval regulatory_scope_complete','psd');
@@ -77,6 +82,25 @@ export function formatSpectrumNumber(value) {
   return Number(value.toPrecision(7)).toString();
 }
 
+// Only representation identities are checked here: distinct source locations
+// must remain distinct in the coordinate values stored by SVG. This never
+// changes source numbers or engineering comparisons.
+export function spectrumCoordinatesRepresentable(value,projection) {
+  const {points,threshold_y,crossings}=projection, trace=value.trace;
+  if(points.length!==trace.frequency_offsets_hz.length || !Number.isFinite(threshold_y)) return false;
+  const frequencies=new Map(), levels=new Map([[threshold_y,-6]]);
+  const keep=(map,coordinate,source)=>{
+    if(!Number.isFinite(coordinate) || (map.has(coordinate) && map.get(coordinate)!==source)) return false;
+    map.set(coordinate,source);return true;
+  };
+  for(let index=0;index<points.length;index++) {
+    const point=points[index];
+    if((index && point.x<=points[index-1].x) || !keep(frequencies,point.x,trace.frequency_offsets_hz[index]) || !keep(levels,point.y,trace.relative_levels_db[index])) return false;
+  }
+  for(const point of crossings) if(!keep(frequencies,point.x,point.offset_hz)) return false;
+  return !crossings.length || (crossings.length===2 && crossings[0].x<crossings[1].x);
+}
+
 // Screen coordinates only. No bandwidth interpolation, power conversion,
 // canonical input hash or conditional engineering comparison is recomputed.
 export function spectrumGeometry(value) {
@@ -95,6 +119,9 @@ export function spectrumGeometry(value) {
     {side:'right',x:x(bandwidth.right_offset_hz),offset_hz:bandwidth.right_offset_hz},
   ] : [];
   if(crossings.length && (!crossings.every(point=>Number.isFinite(point.x)) || crossings[0].x>=crossings[1].x)) return error();
+  const svgProjection={points:points.map(point=>({x:Math.fround(point.x),y:Math.fround(point.y)})),threshold_y:Math.fround(threshold),
+    crossings:crossings.map(point=>({...point,x:Math.fround(point.x)}))};
+  if(!spectrumCoordinatesRepresentable(value,svgProjection)) return error();
   const middle=xs[0]+span/2, ticks=[xs[0],...(middle>xs[0] && middle<xs.at(-1) ? [middle]:[]),xs.at(-1)];
   return {status:'ready',width:760,height:320,plot,points,threshold_y:threshold,crossings,
     x_ticks:ticks.map(value=>({x:x(value),value})),y_ticks:[0,-6,low].map(value=>({y:y(value),value}))};
