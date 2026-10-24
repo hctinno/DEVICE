@@ -1,5 +1,7 @@
 # DEVICE — DGM AutoLab / FCC AI 시험소
 
+최신 개발 인수는 [통합008](handoff/development/INTEGRATION-008.md)의 지정 장비 제어자료·보존 분석 replay·명시 밀도 source·실제 계산 브라우저다. [자료 카탈로그](control_sources/README.md)와 [어댑터 계획](docs/fcc/control_adapter_roadmap.md)에 출처/지원 단계를 분리했으며 [개발1~4 후속](handoff/development/NEXT-004.md)과 P01 추가 수집을 병렬로 진행한다. 자료 검증·합성 기능 통과를 실장비/현장 업무 완료로 표시하지 않는다.
+
 다른 PC·에이전트도 이 GitHub 저장소를 체크아웃해 같은 자료와 코드를 사용한다. 최초 인계 기준은 `codex/fcc-lab-foundation`이며, 개발총괄의 후속 구현은 `codex/pipeline-dev-20261023-intake`에 있다. [HANDOFF.md](HANDOFF.md)와 [AGENTS.md](AGENTS.md)를 먼저 읽고, 자료 수집 담당은 [handoff/AGENT_PROMPT.md](handoff/AGENT_PROMPT.md)를 따른다. 로컬 커밋은 push한 뒤에 다른 세션에 공유된다.
 
 **1차 구축 목표는 FCC RF·EMC·SAR**다. 수집 세션들은 하나의 로컬 프로젝트에서 각자 자료만 저장하고 Git은 별도 P01만 수행한다. [확정한 수집1~수집8 역할](handoff/parallel/README.md)과 [메인(P01)이 총괄하는 운영 설계](docs/superpowers/specs/2026-10-23-fcc-parallel-collection-design.md)를 따른다. 기존 수집자는 수집1이다. 실제 로컬 준비와 자동 지시 전달 기능은 별도 확인하며 클라우드에서 새 수집 세션을 실행한 것은 아니다.

@@ -2,6 +2,8 @@
 
 갱신일: 2026-10-24, Asia/Seoul. 이전 배정·인수 이력은 보존한다.
 
+최신 [통합 008](handoff/development/INTEGRATION-008.md): 사용자 지정 조사8dec2d7를 기존 개발 브랜치에 인수하고 자료1053파일·현재 DB모델2867/장비6470관계 일치·DB/64프로필 불변을 확인했다. 보존 replay의 complete_job 접점·밀도source·실제계산 브라우저를 인수해 새 관련Python274/actual spectrum8/self14 PASS와 독립 Yes를 확인했다. [자료 카탈로그](control_sources/README.md)·[어댑터 계획](docs/fcc/control_adapter_roadmap.md)을 만들고 P01 CTRL001..006을 실제 발송·8명 배정 ACK, TRACE007 12행을 인수했다. 개발1 API/개발4 출처·지원단계 화면/개발3 N1914A 합성 경계를 새 배정하고 개발2 probe를 계속한다. 아래848은 직전 전체 결과이며 이번 자료 인수의 새 전체 검사 수가 아니다. 사용자 추가 준비물0, 실제 SDK/제품 Mock/실물·현장 비교 미실행이다.
+
 최신 인수/검증은 [통합 기록 007](handoff/development/INTEGRATION-007.md)이다. 개발1 immutable 분석 이력, 개발2 모델 prompt/strict 응답 경계, 개발4 BW/PSD 구성요소의 소유 수정·독립 Yes 후 새 전체 Python **848 PASS·skip0**, Node **59 PASS**, spectrum contract browser12·기존 실제 접수 TXT/PDF10그룹 PASS를 확인했다. 실제 계산→spectrum 브라우저는 다음 도구로 구현 중이며 contract 검사를 실제 계산 연결로 세지 않는다. GEN-B2 replay·MODEL-PROBE·frequency source·actual browser를 이미 배정했고 P01도 TRACE007 기존 근거를 매핑 중이다. 아래 이전 미인수/검증 수는 보존 이력이다.
 
 현재 추가 인수: 개발3의 선언 trace/현재 관측 문맥 결합을 독립 Yes 후 인수해 관련 Python **188 PASS**(신규23 포함)를 확인했다. [통합 기록 006](handoff/development/INTEGRATION-006.md)을 따른다. 개발4의 BW/PSD 구성요소는 SVG 좌표 붕괴·비열거 필드 사본 누락의 소유 수정 중이며 아직 인수하지 않았다. 개발3 frequency source와 개발4 실제 계산 브라우저 도구도 바로 배정했다. 아래 전체771은 직전 공통본의 전체 실행 결과다.
