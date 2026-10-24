@@ -760,6 +760,134 @@ class FccReportCaseCatalog:
     def search(self, query):
         return self._matches(self._query(query))
 
+    @staticmethod
+    def _discovery_text_values(claim, *, scalar=False):
+        value = claim["value"]
+        if type(value) is str and value.strip():
+            return [value]
+        if not scalar and type(value) is list and all(type(item) is str and item.strip() for item in value):
+            return value
+        return []
+
+    def _discovery_criterion(self, case, name, query):
+        field, bases = {
+            "product_family": ("product.family", ("report_fact",)),
+            "rule": ("method.rules", ("report_fact",)),
+            "method": ("method.references", ("report_fact", "standard_reference_only")),
+            "model": ("product.models", ("report_fact",)),
+        }[name]
+        claims = sorted((claim for claim in case["claims"] if claim["field"] == field),
+                        key=lambda claim: claim["claim_id"])
+        eligible, projections = [], []
+        positions = ("document_id", "source_sha256", "file_page", "text_sha256", "line_start", "line_end")
+        for claim in claims:
+            values = self._discovery_text_values(claim, scalar=name == "product_family")
+            if claim["status"] == "reviewed" and claim["basis"] in bases and values:
+                eligible.append((claim["claim_id"], values))
+            refs = [{key: evidence[key] for key in (*positions, "literal_verified")}
+                    for evidence in claim["evidence"]]
+            refs.sort(key=lambda ref: tuple(ref[key] for key in positions))
+            projections.append({"claim_id": claim["claim_id"], "status": claim["status"], "basis": claim["basis"],
+                                "value": claim["value"], "unit": claim["unit"], "evidence_refs": refs})
+        values = _unique([value for _, members in eligible for value in members])
+        if len(values) > 128:
+            _fail("fcc_case_limit_exceeded")
+        matched = [identifier for identifier, members in eligible
+                   if query is not None and _normalize(query) in {_normalize(value) for value in members}]
+        if query is None:
+            status = "not_requested"
+        elif (any(claim["status"] == "conflicting" for claim in claims)
+                or name == "product_family" and len(values) > 1):
+            status = "conflicting"
+        elif any(claim["status"] == "ambiguous" for claim in claims):
+            status = "unconfirmed"
+        elif matched:
+            status = "matched"
+        elif not values or len(eligible) != len(claims):
+            status = "unconfirmed"
+        else:
+            status = "mismatched"
+        return {"query": query, "status": status, "reviewed_values": values,
+                "matched_claim_ids": matched, "claims": projections}
+
+    @staticmethod
+    def _discovery_search_gate(preview, query):
+        reasons = set()
+        if any(query[key] is None for key in ("product_family", "rule", "method")):
+            reasons.add("query_context_missing")
+        if preview["issuer_class"] == "unknown":
+            reasons.add("issuer_unconfirmed")
+        if preview["scope_status"] != "in_scope":
+            reasons.add("scope_" + preview["scope_status"])
+        if preview["review_status"] == "conflicting":
+            reasons.add("case_conflicting")
+        for key, values in (("product_family", [preview["product_family"]] if preview["product_family"] else []),
+                            ("rule", preview["rules"]), ("method", preview["methods"]), ("model", preview["models"])):
+            if query[key] is None:
+                continue
+            if not values:
+                reasons.add(key + "_unconfirmed")
+            elif _normalize(query[key]) not in {_normalize(value) for value in values}:
+                reasons.add(key + "_mismatch")
+        return {"eligible": not reasons, "reason_codes": sorted(reasons)}
+
+    def _discovery_issues(self, case, preview):
+        issues = set()
+        review = {"conflicting": "case_conflicting", "partial": "partial_review", "unreviewed": "unreviewed_case"}
+        if preview["review_status"] in review:
+            issues.add(review[preview["review_status"]])
+        if preview["issuer_class"] == "unknown":
+            issues.add("issuer_unconfirmed")
+        if preview["scope_status"] != "in_scope":
+            issues.add("scope_" + preview["scope_status"])
+        if set(preview["evaluation_group"]["missing"]) & {"product_family", "fcc_ids", "report_group_id", "reuse_group_ids"}:
+            issues.add("group_unconfirmed")
+        for identifier in case["document_ids"]:
+            document = self._documents[identifier]
+            if document["extraction"]["status"] == "partial":
+                issues.add("source_partial")
+            if not any(page["citable"] for page in document["page_index"]):
+                issues.add("source_without_citable_pages")
+            if (not document["rights"]["public_redistribution_allowed"]
+                    or not document["rights"]["external_model_use_allowed"]):
+                issues.add("rights_restricted")
+            if any(exhibit["official_match_status"] != "pdf_hash_matched" for exhibit in document["exhibits"]):
+                issues.add("official_mapping_unverified")
+        return sorted(issues)
+
+    @_public("fcc_case_invalid_query")
+    def discover(self, query):
+        """Find material for review without granting execution or changing search."""
+        query = self._query(query)
+        if all(value is None for value in query.values()):
+            return self._response(self._wrapper("fcc_report_case_discovery", query=query,
+                status="insufficient_context", reason_codes=["discovery_context_missing"], items=[]))
+        items = []
+        for case in self._cases.values():
+            criteria = {key: self._discovery_criterion(case, key, query[key])
+                        for key in ("product_family", "rule", "method", "model")}
+            if any(criteria[key]["status"] == "mismatched" for key in ("product_family", "rule", "method")):
+                continue
+            model_mismatch = criteria["model"]["status"] == "mismatched"
+            if model_mismatch and not all(criteria[key]["status"] == "matched"
+                                          for key in ("product_family", "rule", "method")):
+                continue
+            requested = [criterion["status"] for criterion in criteria.values() if criterion["query"] is not None]
+            relation = ("conflicting" if "conflicting" in requested else
+                        "unconfirmed" if "unconfirmed" in requested else
+                        "related_model" if model_mismatch else "criteria_matched")
+            preview = self._previews[case["case_id"]]
+            items.append({"preview": preview, "relation": relation, "criteria": criteria,
+                          "review_issues": self._discovery_issues(case, preview),
+                          "search_eligibility": self._discovery_search_gate(preview, query), "execution_authorized": False})
+        rank = {"criteria_matched": 0, "related_model": 1, "conflicting": 2, "unconfirmed": 3}
+        items.sort(key=lambda item: (rank[item["relation"]],
+                   -sum(criterion["status"] == "matched" for criterion in item["criteria"].values()),
+                   item["preview"]["case_id"]))
+        return self._response(self._wrapper("fcc_report_case_discovery", query=query,
+            status="review_items" if items else "no_discovery_items",
+            reason_codes=[] if items else ["no_related_review_case"], items=items))
+
     @_public("fcc_case_invalid_intake")
     def match_intake(self, projected_summary, query):
         query = self._query(query)

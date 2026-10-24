@@ -546,5 +546,224 @@ class FccReportCaseTests(unittest.TestCase):
         self.assertEqual(result["scope"]["population_status"], "unconfirmed")
 
 
+class FccReportCaseDiscoveryTests(unittest.TestCase):
+    """028 contract RED; existing 021 selectors keep their original meaning."""
+
+    def setUp(self):
+        self.packet, self.sources, _ = fixture()
+        self.query = {"product_family": "sensor_node", "rule": "47 CFR 15.247",
+                      "method": "ANSI C63.10-2020", "model": "MODEL-A"}
+        self.assertTrue(callable(getattr(cases.FccReportCaseCatalog, "discover", None)), "028 discover API is absent")
+
+    def catalog(self):
+        return cases.FccReportCaseCatalog(self.packet, self.sources)
+
+    def test_discovery_exact_wrapper_and_projection_keys(self):
+        result = self.catalog().discover(self.query)
+        self.assertEqual(set(result), COMMON | {"query", "status", "reason_codes", "items"})
+        self.assertEqual(result["kind"], "fcc_report_case_discovery")
+        self.assertEqual(result["status"], "review_items")
+        item = result["items"][0]
+        self.assertEqual(set(item), {"preview", "relation", "criteria", "review_issues", "search_eligibility", "execution_authorized"})
+        self.assertEqual(set(item["criteria"]), set(self.query))
+        self.assertEqual(item["relation"], "criteria_matched")
+        self.assertEqual(item["search_eligibility"], {"eligible": True, "reason_codes": []})
+        self.assertIs(item["execution_authorized"], False)
+        for criterion in item["criteria"].values():
+            self.assertEqual(set(criterion), {"query", "status", "reviewed_values", "matched_claim_ids", "claims"})
+            for claim in criterion["claims"]:
+                self.assertEqual(set(claim), {"claim_id", "status", "basis", "value", "unit", "evidence_refs"})
+
+    def test_other_field_conflict_is_discoverable_without_opening_legacy_gates(self):
+        conflict = deepcopy(self.packet["cases"][0]["claims"][0])
+        conflict.update(claim_id="RESULT-CONFLICT", field="result.optional_value", status="conflicting", value=[1, 2])
+        self.packet["cases"][0]["claims"].append(conflict)
+        catalog = self.catalog(); before = catalog.case("CASE-A")
+        self.assertEqual(catalog.search(self.query)["status"], "no_match")
+        item = catalog.discover(self.query)["items"][0]
+        self.assertEqual(item["preview"]["review_status"], "conflicting")
+        self.assertEqual(item["relation"], "criteria_matched")
+        self.assertFalse(item["search_eligibility"]["eligible"])
+        self.assertIn("case_conflicting", item["search_eligibility"]["reason_codes"])
+        self.assertIn("case_conflicting", item["review_issues"])
+        analysis = {"identity": "single", "missing_fields": [], "facts": [
+            {"field": field, "value": value, "status": "explicit", "evidence": [{"role": "request"}]}
+            for field, value in (("product_type", "sensor_node"), ("market", "FCC"), ("model", "MODEL-A"))]}
+        projected = project_analysis(analysis, [], {}, delegated=False, deferred=False)
+        projected_before = deepcopy(projected)
+        self.assertEqual(catalog.match_intake(projected, self.query)["status"], "no_match")
+        self.assertEqual(projected, projected_before)
+        self.assertEqual(catalog.case("CASE-A"), before)
+
+    def test_unknown_nonstring_zero_false_and_null_are_preserved_as_unconfirmed(self):
+        original = deepcopy(self.packet)
+        for value, status in ((0, "reviewed"), (False, "reviewed"), (None, "extraction_failed")):
+            self.packet = deepcopy(original)
+            claim = next(c for c in self.packet["cases"][0]["claims"] if c["field"] == "product.family")
+            claim.update(value=value, status=status)
+            if value is None:
+                claim["evidence"] = []
+            with self.subTest(value_type=type(value).__name__):
+                criterion = self.catalog().discover(self.query)["items"][0]["criteria"]["product_family"]
+                self.assertEqual(criterion["status"], "unconfirmed")
+                self.assertEqual(criterion["reviewed_values"], [])
+                self.assertEqual(criterion["matched_claim_ids"], [])
+                self.assertEqual(type(criterion["claims"][0]["value"]), type(value))
+                self.assertEqual(criterion["claims"][0]["value"], value)
+                self.assertEqual(criterion["claims"][0]["status"], status)
+
+    def test_confirmed_wrong_rule_edition_and_product_are_excluded(self):
+        catalog = self.catalog()
+        for changes in ({"rule": "47 CFR 15.249"}, {"method": "ANSI C63.10-2013"}, {"product_family": "router"}):
+            result = catalog.discover({**self.query, **changes})
+            self.assertEqual(result["status"], "no_discovery_items")
+            self.assertEqual(result["reason_codes"], ["no_related_review_case"])
+            self.assertEqual(result["items"], [])
+        item = catalog.discover({**self.query, "model": "OTHER-MODEL"})["items"][0]
+        self.assertEqual(item["relation"], "related_model")
+        self.assertEqual(item["criteria"]["model"]["status"], "mismatched")
+        self.assertFalse(item["search_eligibility"]["eligible"])
+        legacy = catalog.search({**self.query, "model": "OTHER-MODEL"})
+        self.assertEqual(legacy["status"], "insufficient_evidence")
+        self.assertEqual(legacy["matches"][0]["model_relation"], "related_family")
+        self.assertIn("exact_model_case_missing", legacy["reason_codes"])
+        partial = {"product_family": None, "rule": None, "method": None, "model": "OTHER-MODEL"}
+        self.assertEqual(catalog.discover(partial)["items"], [])
+
+    def test_partial_query_is_review_only_and_all_null_needs_context(self):
+        catalog = self.catalog()
+        partial = {"product_family": "sensor_node", "rule": None, "method": None, "model": None}
+        item = catalog.discover(partial)["items"][0]
+        self.assertEqual(item["criteria"]["rule"]["status"], "not_requested")
+        self.assertFalse(item["search_eligibility"]["eligible"])
+        self.assertIn("query_context_missing", item["search_eligibility"]["reason_codes"])
+        self.assertEqual(catalog.search(partial)["status"], "insufficient_evidence")
+        result = catalog.discover(dict.fromkeys(self.query))
+        self.assertEqual(result["status"], "insufficient_context")
+        self.assertEqual(result["reason_codes"], ["discovery_context_missing"])
+        self.assertEqual(result["items"], [])
+
+    def test_conflicting_criterion_preserves_alternatives_and_literal_refs(self):
+        claim = deepcopy(next(c for c in self.packet["cases"][0]["claims"] if c["field"] == "product.family"))
+        claim.update(claim_id="FAMILY-B", value="router")
+        self.packet["cases"][0]["claims"].append(claim)
+        catalog = self.catalog()
+        item = catalog.discover(self.query)["items"][0]
+        criterion = item["criteria"]["product_family"]
+        self.assertEqual(item["relation"], "conflicting")
+        self.assertEqual(criterion["status"], "conflicting")
+        self.assertEqual(criterion["reviewed_values"], ["router", "sensor_node"])
+        self.assertEqual(len(criterion["claims"]), 2)
+        detail = {c["claim_id"]: c for c in catalog.case("CASE-A")["case"]["claims"]}
+        for projected in criterion["claims"]:
+            for ref in projected["evidence_refs"]:
+                self.assertEqual(set(ref), {"document_id", "source_sha256", "file_page", "text_sha256",
+                                            "line_start", "line_end", "literal_verified"})
+                source = detail[projected["claim_id"]]["evidence"][0]
+                self.assertEqual(ref, {key: source[key] for key in ref})
+
+    def test_discovery_detached_and_no_io_reparse_or_store_changes(self):
+        catalog = self.catalog()
+        with mock.patch.object(cases, "extract_document", side_effect=AssertionError("reparse")), \
+                mock.patch("builtins.open", side_effect=AssertionError("file")), \
+                mock.patch("socket.socket", side_effect=AssertionError("network")), \
+                mock.patch("sqlite3.connect", side_effect=AssertionError("DB")):
+            expected = catalog.discover(self.query)
+            result = catalog.discover(self.query)
+            result["items"][0]["criteria"]["product_family"]["claims"][0]["value"] = "changed output"
+            self.assertEqual(catalog.discover(self.query), expected)
+        for query in ({**self.query, "model": False}, {**self.query, "extra": True}):
+            with self.assertRaises(cases.FccReportCaseError) as caught:
+                catalog.discover(query)
+            self.assertEqual(caught.exception.code, "fcc_case_invalid_query")
+        with mock.patch.object(cases, "_OUTPUT_BYTES", 16):
+            with self.assertRaises(cases.FccReportCaseError) as caught:
+                catalog.discover(self.query)
+            self.assertEqual(caught.exception.code, "fcc_case_limit_exceeded")
+
+    def test_discovery_sort_does_not_depend_on_case_or_claim_order(self):
+        second = deepcopy(self.packet["cases"][0]); second["case_id"] = "CASE-B"
+        self.packet["cases"].insert(0, second)
+        expected = self.catalog().discover(self.query)
+        self.packet["cases"].reverse()
+        for case in self.packet["cases"]:
+            case["claims"].reverse()
+        result = self.catalog().discover(self.query)
+        self.assertEqual([item["preview"]["case_id"] for item in result["items"]], ["CASE-A", "CASE-B"])
+        self.assertEqual(result, expected)
+
+    def test_equivalent_value_representative_and_evidence_refs_are_order_independent(self):
+        original = next(c for c in self.packet["cases"][0]["claims"] if c["field"] == "product.family")
+        duplicate = deepcopy(original); duplicate.update(claim_id="FAMILY-B", value=" SENSOR_NODE ")
+        original["evidence"].append(deepcopy(self.packet["cases"][0]["claims"][0]["evidence"][0]))
+        original["evidence"][0]["footnotes"] = ["Repeated", "Repeated"]
+        self.packet["cases"][0]["claims"].append(duplicate)
+        expected = self.catalog().discover(self.query)
+        self.packet["cases"][0]["claims"].reverse()
+        for claim in self.packet["cases"][0]["claims"]:
+            claim["evidence"].reverse()
+        catalog = self.catalog()
+        self.assertEqual(catalog.discover(self.query), expected)
+        criterion = expected["items"][0]["criteria"]["product_family"]
+        self.assertEqual(criterion["reviewed_values"], ["SENSOR_NODE"])
+        self.assertEqual([row["value"] for row in criterion["claims"]], ["sensor_node", " SENSOR_NODE "])
+        original_out = next(c for c in catalog.case("CASE-A")["case"]["claims"] if c["claim_id"] == original["claim_id"])
+        self.assertTrue(any(e["footnotes"] == ["Repeated", "Repeated"] for e in original_out["evidence"]))
+
+    def test_reviewed_value_budget_accepts_128_and_rejects_129_without_truncation(self):
+        claim = next(c for c in self.packet["cases"][0]["claims"] if c["field"] == "method.references")
+        claim["value"] = [self.query["method"]] + ["SYNTHETIC-METHOD-" + str(i) for i in range(127)]
+        result = self.catalog().discover(self.query)
+        self.assertEqual(len(result["items"][0]["criteria"]["method"]["reviewed_values"]), 128)
+        claim["value"].append("SYNTHETIC-METHOD-129")
+        with self.assertRaises(cases.FccReportCaseError) as caught:
+            self.catalog().discover(self.query)
+        self.assertEqual(caught.exception.code, "fcc_case_limit_exceeded")
+
+    def test_relation_ranking_preserves_confirmed_related_conflicting_unknown(self):
+        original = self.packet["cases"][0]
+        for identifier in ("CASE-B", "CASE-C", "CASE-D"):
+            case = deepcopy(original); case["case_id"] = identifier
+            if identifier == "CASE-B":
+                next(c for c in case["claims"] if c["field"] == "product.models")["value"] = ["MODEL-B"]
+            elif identifier == "CASE-C":
+                duplicate = deepcopy(next(c for c in case["claims"] if c["field"] == "product.family"))
+                duplicate.update(claim_id="CONFLICT-FAMILY", value="router"); case["claims"].append(duplicate)
+            else:
+                next(c for c in case["claims"] if c["field"] == "product.family").update(
+                    status="extraction_failed", value=None, evidence=[])
+            self.packet["cases"].insert(0, case)
+        result = self.catalog().discover(self.query)
+        self.assertEqual([(item["preview"]["case_id"], item["relation"]) for item in result["items"]],
+                         [("CASE-A", "criteria_matched"), ("CASE-B", "related_model"),
+                          ("CASE-C", "conflicting"), ("CASE-D", "unconfirmed")])
+
+    def test_discovery_gate_agrees_with_exact_legacy_search_across_context_gaps(self):
+        original = deepcopy(self.packet)
+        for mode in ("normal", "issuer", "past", "future", "date_unknown", "conflict", "family_unknown", "partial_query", "other_model"):
+            self.packet = deepcopy(original); query = dict(self.query)
+            claims = self.packet["cases"][0]["claims"]
+            if mode == "issuer":
+                next(c for c in claims if c["field"] == "issuer.legal_name")["status"] = "extracted"
+            elif mode in ("past", "future"):
+                next(c for c in claims if c["field"] == "report.issue_date")["value"] = "2024-12-31" if mode == "past" else "2027-01-01"
+            elif mode in ("date_unknown", "family_unknown"):
+                field = "report.issue_date" if mode == "date_unknown" else "product.family"
+                next(c for c in claims if c["field"] == field).update(status="not_reported", value=None, evidence=[])
+            elif mode == "conflict":
+                next(c for c in claims if c["field"] == "report.revision")["status"] = "conflicting"
+            elif mode == "partial_query":
+                query.update(rule=None, method=None, model=None)
+            elif mode == "other_model":
+                query["model"] = "OTHER-MODEL"
+            catalog = self.catalog(); legacy = catalog.search(query); discovery = catalog.discover(query)
+            expected = legacy["status"] == "candidates" and any(
+                item["preview"]["case_id"] == "CASE-A" and item["model_relation"] in {"exact_model", "unspecified"}
+                for item in legacy["matches"])
+            with self.subTest(mode=mode):
+                self.assertEqual(discovery["items"][0]["search_eligibility"]["eligible"], expected)
+                self.assertFalse(discovery["items"][0]["execution_authorized"])
+
+
 if __name__ == "__main__":
     unittest.main()

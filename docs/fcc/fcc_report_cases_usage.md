@@ -10,6 +10,7 @@ summary = catalog.summary()
 detail = catalog.case(case_id)
 matches = catalog.search(query)
 linked = catalog.match_intake(projected_summary, query)
+review_material = catalog.discover(query)  # 028: 검토 자료 발견, 실행 위임 없음
 # JSON text 입력에는 동일 strict decoder를 사용하는 아래 helper만 제공한다.
 catalog2 = FccReportCaseCatalog.from_json(packet_json, pdf_sources)
 ```
@@ -151,3 +152,65 @@ intake_binding은 정확한 `product_family`, `market`, `model`, `fact_statuses`
 | `fcc_case_invalid_intake` | projection/facts/questions 형식 오류 |
 
 최초 검출 오류를 반환한다. 근거 부족/다른 제품·판본·시장 등 정상적인 비일치는 matches 상태이며 예외·실물 비지원으로 바꾸지 않는다. 생성 실패는 객체를 게시하지 않는다. 합성 회귀와 실제 P01 B001의 원본/페이지/검색·접수 검증을 별도 기록하고 전수 완료·실제 AI·실물 검증을 주장하지 않는다.
+
+## CASE-DISCOVERY028 추가 계약 v1 — 총괄 승인
+
+이 절은 021의 `search`/`match_intake`/평가 적격·실행 위임을 변경하지 않는 별도 읽기 API 계약이다. 기존 메모리 인덱스에 `catalog.discover(query)`를 추가한다. 별도 reader/새 packet/DB를 만들면 같은 원문 검증과 상태가 중복되므로, 검증된 객체의 조회만 확장한다. 소유 변경은 이 usage와 기존 모듈/테스트 3파일이다. 원본·기존 producer·source 권리를 보존한다.
+
+목적은 정확한 방법·제품 사실이 있어도 다른 결과/절차의 충돌 때문에 기존 search에서 제외되는 사례, 부분 추출·미검토 사례를 **검토할 자료**로 찾는 것이다. 발견 결과는 진행 후보·지원 승인·실행 권한·평가 분리 승인이 아니다. 충돌을 reviewed로 바꾸거나 공백을 채워 넣지 않는다.
+
+### 요청·한도·오류
+
+요청은 기존 `query`의 정확4키/타입/trim/casefold 문자 일치를 그대로 사용한다. product_family/rule/method/model 중 하나 이상을 지정하면 부분 질의를 허용한다. 모두 null이면 `insufficient_context`/`discovery_context_missing`과 빈 items다. 경로/콜백/새 bytes·추출기·Store·외부 I/O를 받지 않는다.
+
+생성자의 021 예산은 그대로다. 발견 조회는 사례128, 사례당 claim64, claim당 evidence8, packet 전체 evidence4096 범위만 읽으며 한 criterion의 서로 다른 reviewed_values는 최대128개다. 별도 응답 UTF-8 JSON은 기존8MiB를 적용한다. 초과하면 `fcc_case_limit_exceeded`이며 조용히 잘라낸 성공을 반환하지 않는다. 9개 고정 오류와 `FccReportCaseError`를 그대로 재사용하며 query 오류는 `fcc_case_invalid_query`다. 생성 후 조회의 입력/반환 사본·I/O0 조건도 같다.
+
+### wrapper 정확11키
+
+기존 common7 + `query`, `status`, `reason_codes`, `items`다. kind만 `fcc_report_case_discovery`이며 verification의 false5·report_derived·synthetic/source 검증 범위는 그대로다.
+
+- status: `review_items|no_discovery_items|insufficient_context`.
+- reason_codes: review_items이면 [], no_discovery_items이면 [`no_related_review_case`], insufficient_context이면 [`discovery_context_missing`]. 이는 현재 packet의 발견 결과이며 제품 부적합/비지원 판정이 아니다.
+- query: 검증·trim한 기존4키 사본.
+- items: 아래 객체 배열0..128. 숨겨진 pagination이나 truncation은 없다.
+
+### item 정확6키
+
+`preview`, `relation`, `criteria`, `review_issues`, `search_eligibility`, `execution_authorized`다.
+
+preview는 기존17키/기존 값 그대로이며 충돌/partial/평가 그룹을 수정하지 않는다. execution_authorized는 항상 false다. 이는 발견 조회가 권한을 발급하지 않는다는 뜻이며 기존 사용자 위임·Store를 변경하지 않는다.
+
+relation은 제공된 질의 조건에 한해 `criteria_matched|related_model|conflicting|unconfirmed`다. 관련 field 자체에 충돌이 있으면 conflicting, 미확인이 있으면 unconfirmed, 모두 확인됐고 모델만 다르면 related_model, 요청한 조건이 모두 일치하면 criteria_matched 순으로 정한다. 다른 field의 충돌이 있는 사례도 criteria_matched일 수 있으나 preview.review_status/검토 유의/기존 search 게이트는 충돌을 계속 표시한다. relation은 사례 전체의 검토 완료 상태가 아니다.
+
+criteria는 정확 `product_family`, `rule`, `method`, `model`의 4키다. 각 criterion의 정확5키는 `query`, `status`, `reviewed_values`, `matched_claim_ids`, `claims`다.
+
+- query는 해당 요청 문자열 또는 null.
+- status는 `matched|conflicting|unconfirmed|mismatched|not_requested`다. null 질의에는 not_requested를 사용한다.
+- reviewed_values는 해당 field의 검토된 문자열 값만 trim/casefold 중복 제거·안정 정렬한 배열0..128이다. 동등 값의 대표는 원래 문자열의 Python 문자 순서 정렬에서 처음 나온 값을 trim해 사용하고, 최종 목록은 trim/casefold 키로 정렬한다. family는 단일 문자열만, 나머지는 문자열 또는 문자열 배열만 쓴다. 숫자/false/null을 문자열로 바꾸지 않는다.
+- matched_claim_ids는 요청 문자열을 문자 일치로 뒷받침하는 적격 reviewed claim ID의 유일 배열이다. 이 배열이 있어도 별도 충돌 상태를 무시하지 않는다.
+- claims는 해당 field의 원래 모든 claim을 ID 순서로 보존한 아래 projection 배열0..64다. 미검토·다른 basis·충돌·숫자0/false/null도 삭제하거나 성공으로 변환하지 않는다.
+
+field 대응은 product_family→product.family, rule→method.rules, method→method.references, model→product.models다. 확인된 문자열에는 reviewed report_fact만 사용하고 method.references만 기존처럼 reviewed standard_reference_only도 허용한다. 이는 보고서의 방법 참조이며 규범 적용 승인으로 해석하지 않는다. 다른 basis/상태/타입은 claims에 보존하되 적격 reviewed 문자열로 올리지 않는다.
+
+claim projection의 정확6키는 `claim_id`, `status`, `basis`, `value`, `unit`, `evidence_refs`다. value/unit/status/basis는 입력의 원래 타입/값이며 field는 상위 criterion 대응으로 정한다. evidence_refs의 정확7키는 `document_id`, `source_sha256`, `file_page`, `text_sha256`, `line_start`, `line_end`, `literal_verified`다. 각 ref는 생성자에서 검증한 실제 evidence의 사본이며 마지막 값은 true다. ref는 앞의6개 위치 필드 순서의 tuple로 정렬해 입력 순서가 결과를 바꾸지 않게 한다. claim 원값과 중복을 허용하는 일반 노트/각주는 변경하지 않는다. quote·인쇄 페이지·표/행·각주는 기존 `case()`에서 확인한다. 발견 API가 원문을 재인용/재추출하거나 native raw를 만든다는 뜻이 아니다.
+
+### 조건 판정·포함·정렬
+
+관련 field의 explicit conflicting 상태 또는 family의 서로 다른 적격 reviewed scalar 값이 있으면 conflicting이다. ambiguous가 남으면 unconfirmed다. 그 밖에 요청과 일치하는 적격 reviewed 문자열이 있으면 matched, 적격 값이 없거나 검토되지 않은 관련 claim이 남으면 unconfirmed, 적격 값만 있고 모두 다르면 mismatched다. 요청 없는 field도 claims/알려진 값은 보존하되 status는 not_requested다.
+
+제품군/rule/정확 method 중 **확정된 mismatched**가 있으면 해당 사례를 제외한다. 미확인·상충을 확정 불일치로 버리지 않는다. 모델이 mismatched이면 제품군/rule/method 세 조건을 모두 요청했고 모두 matched인 경우에만 related_model로 유지하며, 그 문맥이 없으면 제외한다. 모델만 지정한 질의에 임의의 다른 모델을 관련 제품으로 묶지 않는다. 따라서 미확인 사례는 넓은 질의에 unconfirmed로 발견될 수 있으나 그 조건의 일치 사례로 표시하지 않는다. 이는 기존 search의 후보 수/판정에 영향을 주지 않는다.
+
+정렬은 relation의 criteria_matched, related_model, conflicting, unconfirmed 순서, 같은 relation 안에서는 요청한 matched criterion 수 내림차순, 마지막 case_id 오름차순이다. packet/claim/evidence 입력 순서가 발견 결과 순서를 바꾸지 않는다.
+
+review_issues는 안정 정렬한 고정 문자열 배열이다: `case_conflicting`, `partial_review`, `unreviewed_case`, `issuer_unconfirmed`, `scope_pending`, `scope_out_of_range`, `scope_future`, `group_unconfirmed`, `source_partial`, `source_without_citable_pages`, `rights_restricted`, `official_mapping_unverified`만 쓴다. 이는 검토 유의 사항이며 실제 위반 판정이 아니다. 권리/공식 대응/추출 원래 metadata는 `case()`에서 확인한다.
+
+search_eligibility는 정확 `eligible`, `reason_codes` 2키다. eligible은 이 **사례가 현재 query로 기존 search의 정확 후보가 될 조건**만 나타내며 match_intake·평가 그룹·실물 실행 권한을 대신하지 않는다. 기존 search가 요구하는 제품군/rule/method가 부족하거나 preview의 기관/범위/충돌 또는 정확 제품·방법/지정 모델 근거가 부족하면 false다. 지정 모델의 exact_model이 필요하며, 기존 search.matches에 related_family 행이 남았다는 사실만으로 true가 되지 않는다. 모델이 미지정이면 기존 search처럼 추가 모델 일치를 요구하지 않는다.
+
+사유는 `query_context_missing`, `issuer_unconfirmed`, `scope_pending`, `scope_out_of_range`, `scope_future`, `case_conflicting`, `product_family_unconfirmed`, `rule_unconfirmed`, `method_unconfirmed`, `model_unconfirmed`, `product_family_mismatch`, `rule_mismatch`, `method_mismatch`, `model_mismatch`만 쓴다. 같은 사례의 기존 search 필터를 그대로 반영하고 부분 검토/그룹 불명 자체를 새로운 search 금지 조건으로 추가하지 않는다. eligible=true라도 execution_authorized는 false이며 접수 질문/승인/위임/Store를 쓰지 않는다.
+
+### RED·실제 수용 순서
+
+1. 기존38개/기존 인터페이스 상태를 보존하고 discover 부재와 상충 사례 발견·미확인/0false/null 보존·다른 rule/판본 제외·다른 모델 관련성·부분 질의/순서/사본·예산/I/O0를 RED로 기록한다.
+2. 총괄이 승인한 정확 계약에 따라 검증된 메모리 조회만 최소 구현한다. 기존 search/match_intake/평가/실행 계약은 바꾸지 않는다.
+3. 합성 발견 검사와 기존 추출·접수 회귀를 실행한다. 실제 S03 2사례와 S05 상충1사례를 각각 기존 pinned packet/원본으로 다시 생성하고 새 discover/기존 search·접수 결과·원본 불변을 대조한다. 이전 producer/실패 기록은 보존한다.
+4. 소유3파일 UTF-8/정적/문서 무결성·정확 branch/remote SHA를 확인해 게시하고 총괄 독립 검토를 받는다. 023 두 경계 후속 검토가 도착하면 먼저 처리한다.
