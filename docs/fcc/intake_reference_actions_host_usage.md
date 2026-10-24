@@ -40,6 +40,63 @@ case_context/validated_response는 공개025가 구성·검증한 값이며046�
 | 등록 결과 | 2MiB/20/200000 |
 | 준비 예약 | host3/session2, 각21MiB/합63MiB, 절대900초 |
 
+## 기존 공개025 caller 조립
+
+다음은 이미 승인된 값들을 가진 **명시 caller의 조립 설명**이다. 새 운영 producer나 실행 서비스가 아니다. `supplied_*`는 기존 caller가 보유한 catalog·의뢰/선택 근거·원 응답·expected producer·기존 위임 값이며 이 문서가 생성하거나 추정하지 않는다. 실제 AI가 새 의뢰를 이해해 query/선택·raw 응답을 생산하는 공급 경로는 별도다. [025 사용법](fcc_case_review_usage.md)의 원형·불충분·verification 한계를 유지한다.
+
+raw 응답을 가진 경로는 공개 build→선택적 prompt 구성→decode 순서다. query는 `product_family,rule,method,model` exact4, case_ids는 명시 선택≤16이다. prompt의 messages를 만드는 것만으로 외부 전송·모델 호출·사용 권한이 생기지 않는다.
+
+```python
+from labflow.fcc_case_review import (
+    build_case_review_context, build_case_review_prompt,
+    decode_case_review_response,
+)
+
+# supplied 값은 기존 caller가 제공한다. 모델/키/외부 API를 호출하지 않는다.
+context = build_case_review_context(
+    supplied_catalog, query=supplied_query, case_ids=supplied_case_ids)
+if supplied_need_prompt:
+    prompt = build_case_review_prompt(
+        context, producer_name=supplied_expected_producer_name)
+validated_response = decode_case_review_response(
+    supplied_raw_response, context,
+    producer_name=supplied_expected_producer_name)
+```
+
+decoder는 해당 context를 대상으로 한 raw str/bytes를 받아 context_id·expected producer literal·선택 가능한 reference·정상 상태를 검증한다. 이미 정식025가 검증한 in-memory context/validated response를 가진 경우에는 위 build/decode를 반복하지 않고 **그 원래 두 DTO와 검증에 쓴 producer 이름**을 이어 쓴다. validated dict를 raw decoder에 넣거나 kind/producer/reference를 조합해 raw 성공 응답을 만들지 않는다. 원 검증 호출·context/source_binding·실패와 불확실성을 보존한다. 이름 일치나 `validated_fcc_case_review` kind는 실제 제공자·모델 수행·의미 정확도·독립 품질 평가의 인증이 아니다.
+
+다음은 그 결과를 같은053 host의 startup 옵션에 넘기는 조립이다. serving/종료는 기존 supervisor가 담당하며, snippet 자체가 전체 실행 서비스를 제공하지 않는다.
+
+```python
+from labflow.store import Store
+from labflow.ui_server import create_server
+
+review_inputs = ({
+    'intake_id': supplied_intake_id,
+    'case_context': context,
+    'validated_response': validated_response,
+    'producer_name': supplied_expected_producer_name,
+},)
+store = Store.open_existing(str(supplied_workspace))
+try:
+    server = create_server(
+        supplied_workspace, port=0, fcc_case_catalog=supplied_catalog,
+        intake_reference_store=store,
+        intake_reference_read_scope=supplied_authorized_read_ids,
+        intake_reference_append_scope=supplied_authorized_append_ids,
+        intake_reference_review_inputs=review_inputs,
+    )
+except BaseException:
+    store.close()  # startup 실패에는 진입한 HTTP 작업이 없다.
+    raise          # 원 오류를 정상 미구성으로 숨기지 않는다.
+```
+
+정상 시작 후에는 기존 supervisor의 `server.server_close()`가 부모 finally/active0·046 close·worker/socket/session 회수를 끝낸 뒤 caller가 `store.close()`한다. browser는 history bootstrap 후 명시 prepare·별도 명시 append/원래7 replay만 수행한다. startup 조립이 등록을 호출하거나 read/append 권한을 새로 만들지 않는다.
+
+- 025 producer 이름은 nonblank UTF8≤200이지만042/046은 ASCII150 ID를 요구한다. 원래 expected 이름이 두 범위의 교집합에 있을 때만 조립한다. 긴/한글/공백 이름을 rename/truncate해 우회하지 않는다.
+- startup 입력은 복사·고정되며 live 입력 추가/교체 public API는 없다. `replace_handle_id`는 같은 입력의 준비 교체다. 새로운 의뢰/응답의 공급과 drain/새 host 구성은 별도 운영 결정이며 옛 준비/세션을 복구했다고 표시하지 않는다.
+- 알려진 입력 미제공은 `review_inputs=()`·capfalse다. 존재하는 잘못된 context/응답/producer는 원 오류·원본을 보존해 실패시키며 `except: review_inputs=()`로 숨기지 않는다. 정상 insufficient_evidence/no_candidate도 그대로 유지한다.
+
 ## metadata bootstrap와 같은 세션
 
 `GET /api/intake-references/{id}/history?limit=1`은 기존 history7 body를 유지한다. 보존 원문 읽기 없이 같은 세션의 read/CSRF header와 새 capability header를 제공한다.
@@ -107,6 +164,8 @@ active 동안046 close를 반복 호출하거나 busy/unknown을 성공으로 �
 
 이번 개발의 전용/회귀·실제 HTTP·SQL/원문·드레인/자원 회수 결과는 후보 인계 영수증에 별도로 기록한다. 문서 무결성 검사는 UTF8/로컬 링크 확인이며 계측 정확도·규범 적합성·현장 자동화를 검증하지 않는다. 합성 fixture 결과를 고객 원문·실제 모델·실장비·전체 시험소 업무 검증으로 올리지 않는다.
 
-2026-10-25 새 검증은 전용18개·전체 Python2193개(skip0)·Node210개(fail/skip0)다. 같은 두 합성 작업공간의 실제 HTTP에서 정식025/043/046/042/038을 사용해 정상 등록·원래 replay·head_conflict·commit 응답 유실 뒤 원래 replay를 확인했다. source 경합3개는429, 부모 실행 중 metadata는200이며 active parent drain·history 반환 후 만료의 capfalse/재발급0·옛 cookie403을 확인했다. 최초 등록의 DDL8/INSERT3, 충돌 INSERT2/head쓰기0과 replay의 추가쓰기/보존 원문 읽기0을 분리했다. native/SQL I/O 중 runtime mutex 점유0, active0 뒤 mutex 밖 actions.close()→None, 소유 스레드의 실제 SQLite close 반환36개와 caller 종료 뒤 DB rename/포트 회수를 확인했다.
+2026-10-25의 **기존053 구현 후보5eee86b 검증**은 전용18개·전체 Python2193개(skip0)·Node210개(fail/skip0)다. 같은 두 합성 작업공간의 실제 HTTP에서 정식025/043/046/042/038을 사용해 정상 등록·원래 replay·head_conflict·commit 응답 유실 뒤 원래 replay를 확인했다. source 경합3개는429, 부모 실행 중 metadata는200이며 active parent drain·history 반환 후 만료의 capfalse/재발급0·옛 cookie403을 확인했다. 최초 등록의 DDL8/INSERT3, 충돌 INSERT2/head쓰기0과 replay의 추가쓰기/보존 원문 읽기0을 분리했다. native/SQL I/O 중 runtime mutex 점유0, active0 뒤 mutex 밖 actions.close()→None, 소유 스레드의 실제 SQLite close 반환36개와 caller 종료 뒤 DB rename/포트 회수를 확인했다. 이 수치와 [root032 인수 기록](../../handoff/development/INTEGRATION-032.md)은 이번 caller 문서 보강의 새 실행 결과로 세지 않는다.
 
-실행기 이름 충돌과 관측기 cross-thread 정리 실패의 원본도 보존했다. 후자는 HTTP 두 시나리오 완료 뒤 영수증 정리에서 발생했으며, 완료 DB를 불변 복사하고 같은 합성 fixture의 참고 namespace만 검사 준비 단계에서 복원해 관측을 보완했다. 이는 제품의 commit/결과불명 처리나 자동 rollback 동작이 아니다. 기존 원본·이력·응답과 fixture 준비 SQL을 제품 SQL과 구별해 보존했다.052 C2/F2 DOM·고객/수집 원문·실제 모델·실장비·현장 검증은 미실행이다.
+같은 기존053 후보 검증의 실행기 이름 충돌과 관측기 cross-thread 정리 실패 원본도 보존했다. 후자는 HTTP 두 시나리오 완료 뒤 영수증 정리에서 발생했으며, 완료 DB를 불변 복사하고 같은 합성 fixture의 참고 namespace만 검사 준비 단계에서 복원해 관측을 보완했다. 이는 제품의 commit/결과불명 처리나 자동 rollback 동작이 아니다. 기존 원본·이력·응답과 fixture 준비 SQL을 제품 SQL과 구별해 보존했다. 이 owner 검증에는052 C2/F2 DOM·고객/수집 원문·실제 모델·실장비·현장 검증이 포함되지 않았다.
+
+이번 caller 문서 보강은 UTF8·로컬 링크·code fence AST/실제 공개 signature·문서1개 diff만 확인한다. 새 fixture/HTTP/브라우저/모델 호출·전체 회귀는 실행하지 않는다.
