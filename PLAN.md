@@ -2,6 +2,8 @@
 
 작성일: 2026-10-23, Asia/Seoul
 
+2026-10-24 최신 후속: PDF 분석 변경 탐지·제한된 합성 접수 자동 발견/분석·선언 BW6/PSD 계산을 인수해 새 전체 Python **771 PASS**, 실제 TXT/PDF 브라우저 **10그룹 PASS**를 확인했다. [통합 기록 005](handoff/development/INTEGRATION-005.md)와 [후속 대장](handoff/development/NEXT-004.md)에 소유 SHA/수정/한계/다음 구현을 남긴다. 개발1 ledger·개발2 모델 경계·개발3 관측 결합·개발4 계산 화면을 계속하며 사용자 추가 준비물은 현재 0건이다.
+
 2026-10-24 우선순위: 제공 SM-A176U의 **Un-licensed 전체 장비/시험 흐름**으로 [VLAB-ALL-001](handoff/development/VLAB-ALL-001.md)을 진행한다. [catalog](virtual_profiles/README.md)는 보고서 218사용행/장비 master 대조를 반영한 64프로필/24역할이다. 개발1~4의 공통 런타임·RF·계측·시설·운영 화면을 총괄 복제본에 통합했다. 전체 프로필의 합성 정상·단절·복구와 연결 시험 6종, 실제 64프로필 화면을 검사했다. [실행 안내](docs/fcc/virtual_fleet_usage.md)와 [통합 기록 002](handoff/development/INTEGRATION-002.md)를 따른다. 원시데이터는 기능·가상환경 개발의 선행조건이 아니며 Licensed 추가 암호/최종 raw는 보류한다. 추가 사용자 자료 없이 계속 개발하고 실제 FW/도구/bench 상태는 실장비 연동 전에 확인한다. 합성 검사는 제조사 전체 기능·규격 정확도·물리 트윈·실물 검증 완료가 아니다.
 
 [VLAB-HARNESS-002](handoff/development/VLAB-HARNESS-002.md)의 관측 기반 fixture 실행기·제한 예산·운영 journal·분리 평가·완료 기록 화면을 개발1~4의 최종 커밋으로 인수·통합했다. [사용법](docs/fcc/virtual_fleet_harness_check_usage.md)과 [통합 기록 003](handoff/development/INTEGRATION-003.md)에 실행과 검증 범위를 남긴다. 최종 Python 533개·Node 34개·브라우저 수용 36개가 통과했다. 실제 모델 호출·학습·자동 재시작 재개·활성 하네스 HTTP 제어는 후속이다. 총괄은 설계·배정·인수·통합·검증을 맡으며, 사용량 제한으로 중단된 담당 세션에는 이어서 진행하도록 전달한다.

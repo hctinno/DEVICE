@@ -2,6 +2,8 @@
 
 갱신일: 2026-10-24, Asia/Seoul. 이전 배정·인수 이력은 보존한다.
 
+최신 후속 통합: GEN-004A 보존 분석 변경 탐지, WATCH-004A 합성 의뢰 반복 발견/분석, SPECTRUM-004A BW6/PSD 계산을 소유 수정·독립 재리뷰 Yes 후 인수했다. [통합 기록 005](handoff/development/INTEGRATION-005.md)의 새 전체 Python **771 PASS·skip 0**, 실제 TXT/PDF 종단 브라우저 **10그룹 PASS**와 한계를 따른다. 개발1 이력 ledger, 개발2 모델 prompt/응답 경계, 개발3 관측 문맥 결합, 개발4 BW/PSD 읽기 화면을 실제 구현으로 배정했다. 아래 666개 등은 이전 단위의 보존 이력이다.
+
 최신 구현: [FLOW-003 실제 연결](docs/fcc/intake_fixture_check_usage.md)을 인수·수정·통합했다. 합성 TXT/2쪽 PDF의 접수·근거 분석·위임·단일 센서 실행·Store 게시·same-origin 결과 화면을 연결하며 현재 binding과 역사 결과를 구별한다. 전체 Python 666개·Node 44개·브라우저 32개 검사 그룹 PASS다. [통합 기록 004](handoff/development/INTEGRATION-004.md)의 소스 SHA·리뷰·한계·후속 배정을 따른다. 개발1 GEN-004A, 개발2 WATCH-004A, 개발3 SPECTRUM-004A, 개발4 실제 브라우저 수용 도구를 이미 배정했다. 뒤의 FLOW003 계약 검토 문장은 보존 이력이며 착수 지시를 기다리는 상태로 읽지 않는다.
 
 2026-10-24 최신 결정: 사용자 제공 SM-A176U 자료를 비공개로 인수하고 **Un-licensed 전체 장비/시험 흐름 가상화**를 우선한다. 원시데이터는 기능·가상환경 개발의 선행조건이 아니며 Licensed 추가 암호/최종 raw 확인은 보류한다. [전체 장비 개발 배정](handoff/development/VLAB-ALL-001.md), [64프로필 catalog](virtual_profiles/README.md), [현재 사용자 입력](docs/material-intake/2026-10-23-user-inputs.md)을 따른다. 개발1~4의 RF/계측/시설·런타임/UI를 총괄 복제본에 통합했다. [실행 안내](docs/fcc/virtual_fleet_usage.md)와 [통합 기록 002](handoff/development/INTEGRATION-002.md)에 출처·수정·검증·남은 범위를 기록했다. 전체 Python 415개, Node 26개와 실제 64프로필 브라우저 7개가 통과했다. 이 수를 실장비 정확도나 전체 무인시험소 완료로 읽지 않는다. 아래의 이전 첫 프로필/개발 단위 기록은 보존 이력이다.
