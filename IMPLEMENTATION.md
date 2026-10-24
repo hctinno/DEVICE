@@ -4,6 +4,8 @@
 
 2026-10-24 후속 [통합 005](handoff/development/INTEGRATION-005.md): `intake_generation.py`는 보존 PDF profile 변경의 읽기 탐지, `intake_supervisor.py`는 atomic synthetic scan과 제한된 기존 분석 worker 반복, `virtual_fleet/spectrum_math.py`는 명시 합성 BW/PSD 계산을 담당한다. 현재 완료 job/fixture 권한을 generation 탐지가 자동 변경하지 않는다. 새 ledger·모델 prompt/decoder·관측 결합·계산 화면은 후속 단위로 구현 중이다.
 
+추가 [통합 006](handoff/development/INTEGRATION-006.md)의 `virtual_fleet/spectrum_capture.py`를 인수했다. 현재 scalar 취득 관측과 별도 선언 trace의 ID/hash/clock/revision을 검증하고 rf_trace_observed=false를 보존한다. 주파수 밀도 source는 다음 신규 모듈로 구현 중이며 기존 scalar 역할을 자동 확장하지 않았다.
+
 2026-10-24 [접수→단일 가상 시험 연결](docs/fcc/intake_fixture_check_usage.md): `intake_documents.py`가 보존 PDF 문맥/페이지 인용, `intake_fixture_jobs.py`가 별도 readiness/queue, `intake_fixture_bridge.py`가 bounded 게시, `virtual_fleet/method_adapter.py`가 명시 recipe를 담당한다. `intake_fixture_check.py`는 새 합성 TXT/PDF의 실제 연결을 실행하고 기존 intake UI가 같은 접수의 현재/과거 가상 결과를 읽는다. [통합 기록 004](handoff/development/INTEGRATION-004.md)의 합성 검증 범위를 따르며 실제 모델·현장·전체 방법 검증은 후속이다.
 
 개발 인수 후 [접수 기반](docs/fcc/active_intake_usage.md)을 추가했다. `active_intake.py`는 source/묶음/revision, `intake_analysis.py`는 텍스트 문맥/인용/사실·질문 계약, `intake_jobs.py`는 임대/응답/재개/로컬 알림을 담당한다. 기존 측정 case와 미확정 intake는 별도 객체이며 모델 작업자·상시 서비스·다형식 파서는 후속이다.

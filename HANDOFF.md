@@ -2,6 +2,8 @@
 
 갱신일: 2026-10-24, Asia/Seoul. 이전 배정·인수 이력은 보존한다.
 
+현재 추가 인수: 개발3의 선언 trace/현재 관측 문맥 결합을 독립 Yes 후 인수해 관련 Python **188 PASS**(신규23 포함)를 확인했다. [통합 기록 006](handoff/development/INTEGRATION-006.md)을 따른다. 개발4의 BW/PSD 구성요소는 SVG 좌표 붕괴·비열거 필드 사본 누락의 소유 수정 중이며 아직 인수하지 않았다. 개발3 frequency source와 개발4 실제 계산 브라우저 도구도 바로 배정했다. 아래 전체771은 직전 공통본의 전체 실행 결과다.
+
 최신 후속 통합: GEN-004A 보존 분석 변경 탐지, WATCH-004A 합성 의뢰 반복 발견/분석, SPECTRUM-004A BW6/PSD 계산을 소유 수정·독립 재리뷰 Yes 후 인수했다. [통합 기록 005](handoff/development/INTEGRATION-005.md)의 새 전체 Python **771 PASS·skip 0**, 실제 TXT/PDF 종단 브라우저 **10그룹 PASS**와 한계를 따른다. 개발1 이력 ledger, 개발2 모델 prompt/응답 경계, 개발3 관측 문맥 결합, 개발4 BW/PSD 읽기 화면을 실제 구현으로 배정했다. 아래 666개 등은 이전 단위의 보존 이력이다.
 
 최신 구현: [FLOW-003 실제 연결](docs/fcc/intake_fixture_check_usage.md)을 인수·수정·통합했다. 합성 TXT/2쪽 PDF의 접수·근거 분석·위임·단일 센서 실행·Store 게시·same-origin 결과 화면을 연결하며 현재 binding과 역사 결과를 구별한다. 전체 Python 666개·Node 44개·브라우저 32개 검사 그룹 PASS다. [통합 기록 004](handoff/development/INTEGRATION-004.md)의 소스 SHA·리뷰·한계·후속 배정을 따른다. 개발1 GEN-004A, 개발2 WATCH-004A, 개발3 SPECTRUM-004A, 개발4 실제 브라우저 수용 도구를 이미 배정했다. 뒤의 FLOW003 계약 검토 문장은 보존 이력이며 착수 지시를 기다리는 상태로 읽지 않는다.
