@@ -484,5 +484,11 @@ class ReaderContractTests(unittest.TestCase):
             except BaseException as e:caught=e
         self.assertIs(caught,first);self.assertFalse(self.backends[-1].held)
 
+
+    def test_large_integer_in_numeric_field_is_evidence_invalid(self):
+        self.bundle["analysis"]["metrics"]["time_mean_mw"]=10**400
+        self.write()
+        self.assert_code("evidence_invalid")
+
 if __name__=="__main__":
     unittest.main()
