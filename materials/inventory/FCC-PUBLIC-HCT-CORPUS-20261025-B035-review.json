@@ -1,0 +1,113 @@
+{
+  "recorded_at": "2026-10-25T05:51:04.742048+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "unit": "B035_held_report_three_citation_fragments_only",
+  "publication_scope": "reviewed nonsensitive bibliography/hash/count/status only",
+  "new_private_payload": {
+    "files": 14,
+    "bytes": 63608,
+    "JSON": 14,
+    "PDF": 0,
+    "MD": 0
+  },
+  "unit_hashes_and_counts": {
+    "payload_files": 14,
+    "payload_bytes": 63608,
+    "JSON_files": 14,
+    "PDF_files": 0,
+    "MD_files": 0,
+    "index_bytes": 3389,
+    "index_sha256": "7d486ede21d70ee870fe2501bd7f8b8fe2623f86d847993506a7736cfdb2d4dc",
+    "P01_review_bytes": 7041,
+    "P01_review_sha256": "24bb83713c753f2959838c83300777c22b05a384ba84da7cb13223333a0a2dd7"
+  },
+  "explicit_independent_ACKs": 1,
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 139,
+    "independently_ACKed": 139
+  },
+  "cumulative_request012_reviewed_and_ACKed": {
+    "reviewed": 104,
+    "independently_ACKed": 104
+  },
+  "remaining_reviewed_private_intake_pending_packets": 0,
+  "source_cohorts": {
+    "target_or_parent_reference": {
+      "PDFs": 18,
+      "physical_pages": 690,
+      "bytes": 40988413,
+      "direct_issuer_issue_static_predicate": 17,
+      "parent_only": 1,
+      "official_mapping": 0
+    },
+    "excluded_before2025": {
+      "PDFs": 1,
+      "physical_pages": 46,
+      "bytes": 2771507
+    },
+    "pending_report_link": {
+      "PDFs": 1,
+      "physical_pages": 53,
+      "bytes": 4626750
+    },
+    "pending_direct_identity": {
+      "PDFs": 3,
+      "physical_pages": 141,
+      "bytes": 10065998
+    },
+    "all_retained_not_eligible": {
+      "PDFs": 23,
+      "physical_pages": 930,
+      "bytes": 58452668
+    },
+    "legacy22_separate": true
+  },
+  "new_original_bibliography": [],
+  "new_originals": 0,
+  "target_increment": 0,
+  "new_physical_ledger_versions": 0,
+  "bounded_review_status": {
+    "individual_public_citation_fragments_verified": 3,
+    "small_blocks": 1,
+    "selected_rows": 1,
+    "source_physical_page": 2,
+    "printed_locator_reused_from_prior_metadata_not_footer_reopened": true,
+    "same_row_order_not_reconstructed_sentence_or_punctuation": true,
+    "complete_citation_sentence": null,
+    "public_role_label": null,
+    "full_FCC_scope": null,
+    "method_edition": null,
+    "current_rule": null,
+    "legal_issuer_issue_alias_parent_body_reuse_or_SDKfixture_confirmed": false,
+    "initial_unknown_word_gate_not_relaxed_or_recovered": true,
+    "native_only_no_source_imagegeometry_or_pixels_render_OCR_bodydump_or_export": true,
+    "source_original_bytes_mtime_mode_unchanged": true,
+    "source_permission_features_actually_executed": 0,
+    "metadata_or_native_zero_not_source_identifier_absence_proof": true,
+    "source_privacy_census_or_wholeidentityraster_completed": false,
+    "rights": "unknown/private-only",
+    "unencrypted_not_reproduction_training_publication_grant": true,
+    "root_byte_ACK_not_new_semantic_or_currentnormative_model_validation": true
+  },
+  "bounded_HAC_review_status": {
+    "suite_regions_visited": 181,
+    "suite_regions_total": 181,
+    "new_regionvisits": 0,
+    "wrapper_visits_not_fullsemantic_allcells_plotnumbers_calibration_HACsuite_or_census_completion": true
+  },
+  "prior_owner_final_acceptance": {
+    "prior_public_commits": 3,
+    "private_metadata_proofs": 6,
+    "new_packet_source_counter_increment": 0,
+    "device_inode_tuple_checked_by_actual_meaning": true,
+    "new_development_remote_or_functional_or_physical_validation": false
+  },
+  "remaining_scope": {
+    "whole_population": "unknown/open",
+    "all_periods_issuers_sites_products_categories_revisions_parts_appendices_setup_photos_tails": "open",
+    "whole_semantic_currentnormative_reuse_independence_model_AI_physical_conformity_complete": false,
+    "source_body_citation_strings_casevalues_images_code_identifiers_privatepaths_user_materials_public": false,
+    "new_external_model_API_training_evaluation_folds_scores": 0,
+    "new_user_preparation_requests": 0
+  }
+}
