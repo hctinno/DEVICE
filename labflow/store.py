@@ -472,11 +472,11 @@ class _ExistingBinding:
                 else:
                     body_error = error
             if failure is not None or body_error is not None:
-                if con.in_transaction:
-                    try:
+                try:
+                    if con.in_transaction:
                         con.rollback()
-                    except Exception:
-                        pass
+                except BaseException:
+                    pass
             else:
                 # Check identity without rejecting this connection's own journal.
                 self.check_owner(owner); self.check_identity()
@@ -486,24 +486,28 @@ class _ExistingBinding:
             if failure is None and body_error is None:
                 failure = _open_code(error)
         except BaseException as error:
-            if body_error is None:
+            if failure is None and body_error is None:
                 body_error = error
         finally:
-            if con is not None:
-                if failure is not None or body_error is not None:
+            try:
+                if con is not None:
                     try:
-                        if con.in_transaction:
+                        if (failure is not None or body_error is not None) and con.in_transaction:
                             con.rollback()
-                    except Exception:
-                        pass
-                try:
-                    con.close()
-                except Exception:
-                    if failure is None and body_error is None:
-                        failure = 'store_open_unavailable'
-            if reserved:
-                with self.lock:
-                    self.active -= 1
+                    except BaseException:
+                        pass  # A primary failure is already recorded.
+                    try:
+                        con.close()
+                    except BaseException as error:
+                        if failure is None and body_error is None:
+                            if isinstance(error, Exception):
+                                failure = 'store_open_unavailable'
+                            else:
+                                body_error = error
+            finally:
+                if reserved:
+                    with self.lock:
+                        self.active -= 1
         if body_error is not None:
             raise body_error
         if failure is not None:
