@@ -1,4 +1,4 @@
-import {validateSpectrumView,formatSpectrumNumber,spectrumGeometry,SPECTRUM_REASONS} from './spectrum_model.mjs';
+import {validateSpectrumView,formatSpectrumNumber,spectrumGeometry,spectrumCoordinatesRepresentable,SPECTRUM_REASONS} from './spectrum_model.mjs';
 
 // Include this constant in the host's self-served stylesheet. Rendering does
 // not insert inline styles, load resources, or modify global page state.
@@ -44,10 +44,11 @@ function metadata(doc,entries) {
 function chart(doc,value) {
   const figure=element(doc,'figure','spectrum-chart');figure.append(element(doc,'h3','','상대 레벨과 -6 dB 교차'));
   const geometry=spectrumGeometry(value);
-  if(geometry.status==='error') {
+  const displayError=()=>{
     const error=element(doc,'p','spectrum-chart-error','차트 표시 불가 · 주파수/레벨 범위가 화면 좌표의 표현 한계를 넘었습니다. 게시된 수치와 사유를 확인하세요.');
-    error.dataset.spectrumChartError=geometry.code;error.setAttribute('role','status');figure.append(error);return figure;
-  }
+    error.dataset.spectrumChartError='chart_axis_unrepresentable';error.setAttribute('role','status');figure.append(error);return figure;
+  };
+  if(geometry.status==='error') return displayError();
   const svg=(tag,attributes={},text)=>{
     const node=doc.createElementNS('http://www.w3.org/2000/svg',tag);
     for(const [key,content] of Object.entries(attributes)) node.setAttribute(key,String(content));
@@ -66,15 +67,33 @@ function chart(doc,value) {
     image.append(svg('line',{x1:tick.x,x2:tick.x,y1:p.bottom,y2:p.bottom+5,stroke:'#667f9c'}),
       svg('text',{x:tick.x,y:p.bottom+27,'text-anchor':index===0?'start':index===geometry.x_ticks.length-1?'end':'middle',class:'tick'},formatSpectrumNumber(tick.value)));
   }
+  const polyline=svg('polyline',{points:geometry.points.map(point=>point.x+','+point.y).join(' '),fill:'none',stroke:'#63d9ed','stroke-width':2.5,'vector-effect':'non-scaling-stroke','data-spectrum':'trace'});
+  const thresholdLine=svg('line',{x1:p.left,x2:p.right,y1:geometry.threshold_y,y2:geometry.threshold_y,stroke:'#668bff','stroke-width':1.7,'stroke-dasharray':'7 5','vector-effect':'non-scaling-stroke','data-spectrum':'threshold'});
   image.append(svg('text',{x:p.left,y:16,class:'axis-label'},'상대 레벨 (dB)'),
-    svg('text',{x:(p.left+p.right)/2,y:310,'text-anchor':'middle',class:'axis-label'},'주파수 오프셋 (Hz)'),
-    svg('polyline',{points:geometry.points.map(point=>point.x+','+point.y).join(' '),fill:'none',stroke:'#63d9ed','stroke-width':2.5,'vector-effect':'non-scaling-stroke','data-spectrum':'trace'}),
-    svg('line',{x1:p.left,x2:p.right,y1:geometry.threshold_y,y2:geometry.threshold_y,stroke:'#668bff','stroke-width':1.7,'stroke-dasharray':'7 5','vector-effect':'non-scaling-stroke','data-spectrum':'threshold'}));
+    svg('text',{x:(p.left+p.right)/2,y:310,'text-anchor':'middle',class:'axis-label'},'주파수 오프셋 (Hz)'),polyline,thresholdLine);
+  const crossLines=[], markers=[];
   for(const point of geometry.crossings) {
-    image.append(svg('line',{x1:point.x,x2:point.x,y1:p.top,y2:p.bottom,stroke:'#f3c477','stroke-dasharray':'2 5','stroke-width':1.5,'data-spectrum':'crossing-'+point.side}),
-      svg('circle',{cx:point.x,cy:geometry.threshold_y,r:4,fill:'#f3c477'}));
+    const line=svg('line',{x1:point.x,x2:point.x,y1:p.top,y2:p.bottom,stroke:'#f3c477','stroke-dasharray':'2 5','stroke-width':1.5,'data-spectrum':'crossing-'+point.side});
+    const marker=svg('circle',{cx:point.x,cy:geometry.threshold_y,r:4,fill:'#f3c477'});
+    crossLines.push(line);markers.push(marker);image.append(line,marker);
   }
-  if(geometry.crossings.length) image.append(svg('line',{x1:geometry.crossings[0].x,x2:geometry.crossings[1].x,y1:p.bottom-13,y2:p.bottom-13,stroke:'#f3c477','stroke-width':3,'data-spectrum':'bandwidth'}));
+  const bandLine=geometry.crossings.length ? svg('line',{x1:geometry.crossings[0].x,x2:geometry.crossings[1].x,y1:p.bottom-13,y2:p.bottom-13,stroke:'#f3c477','stroke-width':3,'data-spectrum':'bandwidth'}):null;
+  if(bandLine) image.append(bandLine);
+  // SVG numeric accessors may round more aggressively than JS doubles. Check
+  // the staged nodes before publishing any chart into the caller's container.
+  try {
+    const points=Array.from({length:polyline.points.numberOfItems},(_,index)=>{
+      const point=polyline.points.getItem(index);return {x:point.x,y:point.y};
+    });
+    const threshold=thresholdLine.y1.baseVal.value;
+    const crossings=crossLines.map((line,index)=>({...geometry.crossings[index],x:line.x1.baseVal.value}));
+    if(!spectrumCoordinatesRepresentable(value,{points,threshold_y:threshold,crossings})
+      || thresholdLine.y2.baseVal.value!==threshold || ![thresholdLine.x1.baseVal.value,thresholdLine.x2.baseVal.value].every(Number.isFinite)
+      || crossLines.some((line,index)=>line.x2.baseVal.value!==crossings[index].x || ![line.y1.baseVal.value,line.y2.baseVal.value].every(Number.isFinite)
+        || markers[index].cx.baseVal.value!==crossings[index].x || markers[index].cy.baseVal.value!==threshold)
+      || (bandLine && (!Number.isFinite(bandLine.y1.baseVal.value) || bandLine.y2.baseVal.value!==bandLine.y1.baseVal.value
+        || bandLine.x1.baseVal.value!==crossings[0].x || bandLine.x2.baseVal.value!==crossings[1].x || bandLine.x1.baseVal.value>=bandLine.x2.baseVal.value))) return displayError();
+  } catch {return displayError();}
   const legend=element(doc,'ul','spectrum-legend');
   for(const [label,type] of [['원래 상대 레벨 · 실선',''],['-6 dB · 파선','threshold'],['게시된 교차/폭 · 점선','crossing']]) {
     const item=element(doc,'li'), swatch=element(doc,'span','spectrum-swatch '+type);swatch.setAttribute('aria-hidden','true');item.append(swatch,doc.createTextNode(label));legend.append(item);
@@ -108,12 +127,12 @@ export function renderSpectrumView(container,value) {
     power.append(element(doc,'h3','','단일 3kHz PSD'),element(doc,'p','spectrum-status'+(psd.conditional_comparison==='above'?' warning':''),'한 구간의 계산'),metadata(doc,[
       ['게시된 구간 전력',unit(psd.power_dbm,'dBm')+' · '+unit(psd.power_mw,'mW'),'psd-power'],['선언 구간',unit(psd.reference_bandwidth_hz,'Hz')],
       ['선언 최대',unit(psd.maximum_dbm,'dBm')],['게시된 margin',unit(psd.margin_db,'dB'),'psd-margin'],
-      ['게시된 조건부 비교',psd.conditional_comparison==='meets'?'선언 경계 이하 (조건부)':'선언 경계 초과 (조건부)','psd-comparison',psd.conditional_comparison],['입력 basis',basis],
+      ['게시된 조건부 비교',psd.conditional_comparison==='meets'?'선언 경계 이하 (조건부)':'선언 경계 초과 (조건부)','psd-comparison',psd.conditional_comparison],['입력 기준',basis],
     ]),element(doc,'p','spectrum-note','전대역 최대 탐색 미실행 · 전체 PSD 최대값으로 간주하지 않습니다.'));
-    grid.append(band,power);root.append(grid,element(doc,'p','spectrum-note','조건부 비교는 게시자의 계산 결과입니다. 표시 float가 선언 경계와 같아 보여도 고정밀 결과 enum을 그대로 보존합니다.'));
+    grid.append(band,power);root.append(grid,element(doc,'p','spectrum-note','화면 수치가 반올림되어 경계와 같아 보여도 원래 계산된 비교를 표시합니다.'));
     const identity=element(doc,'section','spectrum-card');identity.append(element(doc,'h3','','입력 식별과 범위'));
     const list=metadata(doc,[['BW trace capture',trace.capture_id],['BW 게시자 제공 입력 SHA-256',bw.input_sha256],['PSD 입력 capture',psd.capture_id],['PSD 게시자 제공 입력 SHA-256',psd.input_sha256]]);
-    for(const node of list.querySelectorAll('dd')) node.classList.add('spectrum-mono');identity.append(list,element(doc,'p','spectrum-note','PSD capture는 별도로 선언된 입력입니다. 같은 취득으로 임의 연결하지 않습니다. 입력 hash의 Python canonical 재계산은 이 화면에서 수행하지 않습니다.'));
+    for(const node of list.querySelectorAll('dd')) node.classList.add('spectrum-mono');identity.append(list,element(doc,'p','spectrum-note','PSD capture는 별도로 선언된 입력입니다. 같은 취득으로 임의 연결하지 않습니다. 입력 SHA-256은 계산 결과에 포함된 식별자입니다.'));
     root.append(identity,element(doc,'p','spectrum-note','이 결과는 합성 계산 범위의 읽기 화면입니다. 실제 RF 취득·현행 방법 승인·기관 적합성을 입증하지 않습니다.'));
     container.replaceChildren(root);return root;
   } catch {throw new Error('spectrum_render_failed');}

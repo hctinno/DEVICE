@@ -29,6 +29,9 @@ function spectrumFixture(variant='complete') {
     value.trace.frequency_offsets_hz=[-1e308,-1,0,1,1e308];
     value.trace.relative_levels_db=[-100,-12,0,-12,-100];
     Object.assign(value.bandwidth,{left_offset_hz:-0.5,right_offset_hz:0.5,bandwidth_hz:1,margin_hz:-499999,conditional_comparison:'below'});
+  } else if (variant === 'svg-precision') {
+    value.trace.frequency_offsets_hz=[-1e15,-1,0,1,1e15];
+    Object.assign(value.bandwidth,{left_offset_hz:-1,right_offset_hz:1,bandwidth_hz:2,margin_hz:-499998,conditional_comparison:'below'});
   } else if (variant !== 'complete') throw new Error('unknown_contract_fixture');
   return value;
 }
@@ -111,6 +114,19 @@ async function main() {
       }
       assert.equal(await page.locator('#mount img, #mount script').count(),0);assert.equal(await page.evaluate(()=>window.spectrumXss),undefined);
     });
+    await check('non-enumerable nested fields and array items are rejected without changing the last good comparison',async()=>{
+      const before=await dom();
+      for(const hidden of ['comparison','trace-array','reason-array']) {
+        const error=await page.evaluate(({value,hidden})=>{
+          if(hidden==='comparison') Object.defineProperty(value.psd,'conditional_comparison',{enumerable:false});
+          else if(hidden==='trace-array') Object.defineProperty(value.trace.relative_levels_db,0,{enumerable:false});
+          else Object.defineProperty(value.bandwidth.reason_codes,0,{enumerable:false});
+          try{window.spectrumRender(value);return null;}catch(error){return error.message;}
+        },{value:spectrumFixture(hidden==='reason-array'?'incomplete':'complete'),hidden});
+        assert.equal(error,'invalid_spectrum_view');assert.equal(await dom(),before);
+        assert.equal(await page.locator('[data-field=psd-comparison]').getAttribute('data-comparison'),'meets');
+      }
+    });
     await check('renderer exceptions are sanitized and leave the previous fragment intact',async()=>{
       const before=await dom();
       const error=await page.evaluate(value=>{
@@ -130,6 +146,35 @@ async function main() {
       await render('axis-error');assert.equal(await page.locator('svg').count(),0);
       assert.match(await page.locator('[data-spectrum-chart-error]').innerText(),/차트 표시 불가/);
       assert.match(await page.locator('[data-field=bandwidth-value]').innerText(),/1 Hz/);
+    });
+    await check('SVG coordinate precision cannot collapse positive published bandwidth into a zero width line',async()=>{
+      await render('svg-precision');
+      const stored=await page.locator('[data-spectrum=bandwidth]').evaluateAll(nodes=>nodes.map(node=>({left:node.x1.baseVal.value,right:node.x2.baseVal.value,width:node.getBBox().width})));
+      assert.equal(await page.locator('[data-spectrum-chart-error]').count(),1,JSON.stringify(stored));
+      assert.equal(await page.locator('svg').count(),0);
+      assert.match(await page.locator('[data-field=bandwidth-value]').innerText(),/2 Hz/);
+      assert.equal(await page.locator('[data-field=bandwidth-comparison]').getAttribute('data-comparison'),'below');
+      await render('complete');assert.equal(await page.locator('[data-spectrum=bandwidth]').count(),1);
+    });
+    await check('staged native SVG values are checked before publishing a chart',async()=>{
+      await page.evaluate(value=>{
+        const original=document.createElementNS.bind(document);
+        document.createElementNS=(namespace,tag,...args)=>{
+          const node=original(namespace,tag,...args);
+          if(tag==='line') {
+            const set=node.setAttribute.bind(node);
+            node.setAttribute=(name,content)=>{set(name,content);if(name==='data-spectrum' && String(content).startsWith('crossing-')) {
+              Object.defineProperty(node,'x1',{value:{baseVal:{value:406}}});Object.defineProperty(node,'x2',{value:{baseVal:{value:406}}});
+            }};
+          }
+          return node;
+        };
+        try{window.spectrumRender(value);}finally{document.createElementNS=original;}
+      },spectrumFixture());
+      assert.equal(await page.locator('[data-spectrum-chart-error]').count(),1);assert.equal(await page.locator('svg').count(),0);
+      assert.match(await page.locator('[data-field=bandwidth-value]').innerText(),/500000 Hz/);
+      assert.equal(await page.locator('[data-field=bandwidth-comparison]').getAttribute('data-comparison'),'meets');
+      await render('complete');assert.equal(await page.locator('[data-spectrum=bandwidth]').count(),1);
     });
     await check('long literal ASCII IDs and a 390px view remain readable without horizontal overflow',async()=>{
       const value=spectrumFixture();value.trace.capture_id='C'.repeat(128);value.bandwidth.capture_id=value.trace.capture_id;value.psd.capture_id='capture:__proto__';
