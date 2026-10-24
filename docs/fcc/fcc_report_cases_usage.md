@@ -13,6 +13,8 @@ linked = catalog.match_intake(projected_summary, query)
 review_material = catalog.discover(query)  # 028: 검토 자료 발견, 실행 위임 없음
 # JSON text 입력에는 동일 strict decoder를 사용하는 아래 helper만 제공한다.
 catalog2 = FccReportCaseCatalog.from_json(packet_json, pdf_sources)
+# 030: caller가 이미 확인한 범위를 명시할 때만 선택 읽기를 사용한다.
+scoped = FccReportCaseCatalog(packet, pdf_sources, page_scope=page_scope)
 ```
 
 `packet`은 plain dict/list와 JSON scalar만, `pdf_sources`는 정확한 `{소문자SHA256: bytes}` plain dict만 받는다. bytes subclass/bytearray/file-like/path/콜백·사용자 객체는 거절한다. 생성 중 원본 hash·크기·PDF signature/strict parse·물리 페이지·추출 근거를 검사한다. 생성 후 네 조회는 I/O·파싱·Store 변경 없이 detached 메모리 사본을 반환한다. 입력 변경과 반환값 변경은 객체/다음 조회에 영향을 주지 않는다.
@@ -214,3 +216,27 @@ search_eligibility는 정확 `eligible`, `reason_codes` 2키다. eligible은 이
 2. 총괄이 승인한 정확 계약에 따라 검증된 메모리 조회만 최소 구현한다. 기존 search/match_intake/평가/실행 계약은 바꾸지 않는다.
 3. 합성 발견 검사와 기존 추출·접수 회귀를 실행한다. 실제 S03 2사례와 S05 상충1사례를 각각 기존 pinned packet/원본으로 다시 생성하고 새 discover/기존 search·접수 결과·원본 불변을 대조한다. 이전 producer/실패 기록은 보존한다.
 4. 소유3파일 UTF-8/정적/문서 무결성·정확 branch/remote SHA를 확인해 게시하고 총괄 독립 검토를 받는다. 023 두 경계 후속 검토가 도착하면 먼저 처리한다.
+
+## PAGE-SCOPE030 — 선택 페이지 읽기 v1
+
+`FccReportCaseCatalog(packet, pdf_sources, *, page_scope=None)`와 `from_json(packet_json, pdf_sources, *, page_scope=None)`의 keyword-only 정책이다. None은 기존021/028 경로·동작·producer와 동일하다. 명시 정책은 생성 전에 실제 source와 검증하며 전체 내용을 추출한 뒤 필터하지 않는다. reader/콜백/retained 결과·가짜 DTO를 주입하는 접점은 없다.
+
+policy는 정확2키 `schema_version=1`, `sources`의 plain JSON dict다. sources는 원본 SHA를 키로 하는 plain dict이며 documents/pdf_sources의 SHA 집합과 정확히 같아야 한다. 빠진 source를 기본 전체 추출로 처리하지 않는다. 빈 corpus만 sources={}를 허용한다.
+
+각 source entry의 정확4키는 `pages`, `mode`, `basis_id`, `basis_sha256`이다. pages는 source당1..200개/전체800개 이하의 유일한 양의 정수 배열이며 bool·중복·빈 배열·원래 physical_pages 밖을 거절한다. 입력을 바꾸지 않고 오름차순 사본으로 처리한다. mode는 `native_text|accessibility`, basis_id는 기존 ID 문법128자 이내, basis_sha256은 소문자64hex다. basis는 caller가 보존한 기존 범위 근거의 추적 참조다. API가 그 외부 문서·권한·라이선스를 인증하거나 새로 승인하지 않는다.
+
+policy 예산은 정규 UTF-8 JSON64KiB/깊이6/node4096/source16이다. 기존 source16MiB/합계64MiB·retained 문자 source100만/합계400만·선택 페이지 content8MiB 한도를 유지한다. 모든 policy/bytes·SHA·strict page-tree leaf 수/모순 Count·범위·mode와 permission integrity를 **모든 source의 첫 native 내용 처리 전** 검증한다. Count만 실제 물리 페이지 수로 믿지 않는다. 지원하지 않는/모호한 reader 구조는 실패로 남긴다. 제한은 기존과 같은 협력적 예산이며 OS 격리·강제 timeout 보증이 아니다.
+
+선택 밖 페이지에는 content inspection·text·image decode·OCR·render를 실행하지 않는다. strict xref/page-tree metadata 검증은 전체 원문 내용을 읽었다는 뜻이 아니다. 암호화 source는 기존 official/mirror 공개출처 gate·빈 USER 단1회·결과1만 허용한다. owner/secret/private-only 암호 경계는 유지한다. 암호화된 명시 scope는 permission integrity가 정확 True여야 하며 native_text는 EXTRACT16, accessibility는 EXTRACT_TEXT_AND_GRAPHICS512를 확인한다. printtrue만으로 native 읽기를 허용하지 않는다. 비암호 source에는 PDF permission bit가 없으며 이를 관측된 권리 허가로 만들지 않는다. copyfalse/print/accessibility·rightsunknown/private와 footer는 그대로다. 권한 변경·복호 PDF 저장·본문 일괄 export·OCR 우회는 하지 않는다.
+
+출력 키와 enum은 추가하지 않는다. total_pages는 원래 전체 물리 페이지, processed_pages는 실제 선택 페이지 시도 수이고 page_index에는 실제 시도한 원래 file_page만 둔다. 선택 밖은 미처리로 생략하며 empty/error/가짜 hash 또는 새 not_processed 행을 만들지 않는다. 부분 선택이면 partial/complete=false이고, 선택한 페이지의 실제 ok/image_only/no_text/truncated/error·경고/폼 누락을 보존한다. 모든 물리 페이지를 명시 선택한 경우에는 기존 추출 상태 규칙을 적용한다. partial 집계는 부분 처리 상태이며 사용 가능한 본문/전체 의미 검토의 성공 수가 아니다. 실제 인용 가능 페이지와 no_citable_text_pdfs도 함께 확인한다.
+
+진단은 전역 `page_scope_applied`, 해당 mode의 `page_scope_native_text` 또는 `page_scope_accessibility`, 요청한 페이지마다 `page_scope_requested`/file_page, 부분 선택의 전역 `page_scope_outside_unprocessed`다. encrypted 읽기에는 기존 `public_empty_user_password_read`도 남긴다. 이는 실제 parser warning과 구별하며 정상 선택 페이지의 인용을 막지 않는다. parser.name은 일반 `pypdf-selected-pages`, 공개 암호화 native `pypdf-public-empty-user-password-selected-pages`, 공개 암호화 accessibility `pypdf-public-empty-user-password-accessibility-selected-pages`다. basis private 경로/hash를 진단 문자열에 넣지 않는다.
+
+인용에는 실제 시도한 선택 페이지의 정상·비공백 retained text와 hash/전체 선택 line quote가 필요하다. 기존 전역/해당 페이지 parser 경고·관측 불가·form resource 누락/내용 한도/오류는 그대로 차단한다. 선택 자체는 citable 승인이 아니다. 미선택/미처리 페이지를 가리키는 evidence는 fcc_case_invalid_evidence다. source의 partial이나 범위 밖 사실을 reviewed로 채우지 않는다.
+
+기존9오류를 재사용한다. 잘못된 policy/source key/page 범위·빈/중복/bool은 invalid_packet, 예산은 limit_exceeded, 원본 SHA/크기는 invalid_sources, strict 구조/leaf·Count·암호 읽기는 pdf_invalid, mode/permission integrity/가용성 부족은 extraction_unavailable, 미선택·미인용 근거는 invalid_evidence다. 앞의 접두사 fcc_case_와 고정 문자열/args/context 규칙이 그대로 적용된다.
+
+caller는 private에 정규 policy/hash·기존 basis pin·실제 시도/retained/citable 페이지·권한 관측과 원본 identity/mtime/mode/bytes/SHA 불변 영수증을 보존한다. API는 파일을 쓰지 않고 전체 retained 본문을 반환하지 않는다. 기존 summary/case/search/match_intake/discover·평가·권한·consumer 키를 유지한다.
+
+실제 S04는 P01의 확인된 accessibility16쪽만 사용하고 나머지24쪽을 미처리/의미 검토 공백으로 남긴다. 새 native text/hash는 해당 parser의 실제 결과로 생성하며 P01의 다른 parser hash를 재사용하지 않는다. S06은 visual/display-list와 text/OCR0을 보존한다. native scope를 발급하거나 None/빈 pages/허구 retained hash로 성공 case를 만들지 않고 metadata+미실행 gap으로 남긴다. 공개 예제/테스트에는 합성 PDF만 사용하며, S03/S05 default producer 원바이트와 수정 없는023/024 consumer 수용을 별도로 확인한다.

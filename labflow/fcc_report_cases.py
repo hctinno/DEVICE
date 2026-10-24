@@ -68,16 +68,16 @@ def _encoded(value):
 
 
 def _plain(value, *, code="fcc_case_invalid_packet", byte_limit=_PACKET_BYTES, depth_limit=16,
-           string_limit=16384, detach=True):
+           string_limit=16384, node_limit=50000, detach=True):
     stack, nodes, size = [(value, 0)], 0, 0
     while stack:
         item, depth = stack.pop()
         nodes += 1
-        if nodes > 50000 or depth > depth_limit:
+        if nodes > node_limit or depth > depth_limit:
             _fail("fcc_case_limit_exceeded")
         kind = type(item)
         if kind is dict:
-            if nodes + len(stack) + 2 * len(item) > 50000:
+            if nodes + len(stack) + 2 * len(item) > node_limit:
                 _fail("fcc_case_limit_exceeded")
             size += 2 + max(0, 2 * len(item) - 1)
             for key, child in item.items():
@@ -85,7 +85,7 @@ def _plain(value, *, code="fcc_case_invalid_packet", byte_limit=_PACKET_BYTES, d
                     _fail(code)
                 stack.append((key, depth + 1)); stack.append((child, depth + 1))
         elif kind is list:
-            if nodes + len(stack) + len(item) > 50000:
+            if nodes + len(stack) + len(item) > node_limit:
                 _fail("fcc_case_limit_exceeded")
             size += 2 + max(0, len(item) - 1)
             stack.extend((child, depth + 1) for child in item)
@@ -326,9 +326,212 @@ def _public_read_pdf(payload, filename, limits):
     return result
 
 
+def _page_scope(policy, documents):
+    policy = _plain(policy, byte_limit=64 * 1024, depth_limit=6, node_limit=4096)
+    _keys(policy, {"schema_version", "sources"})
+    if type(policy["schema_version"]) is not int or policy["schema_version"] != 1:
+        _fail()
+    sources = policy["sources"]
+    if type(sources) is dict and len(sources) > 16:
+        _fail("fcc_case_limit_exceeded")
+    if type(sources) is not dict or set(sources) != {document["sha256"] for document in documents}:
+        _fail()
+    total = 0
+    for document in documents:
+        entry = sources[document["sha256"]]
+        _keys(entry, {"pages", "mode", "basis_id", "basis_sha256"})
+        _list(entry["pages"], 200, minimum=1)
+        for number in entry["pages"]:
+            _integer(number, 1, document["physical_pages"])
+        if len(set(entry["pages"])) != len(entry["pages"]):
+            _fail()
+        entry["pages"].sort()
+        _choice(entry["mode"], {"native_text", "accessibility"})
+        _id(entry["basis_id"]); _sha(entry["basis_sha256"])
+        total += len(entry["pages"])
+        if total > 800:
+            _fail("fcc_case_limit_exceeded")
+    return sources
+
+
+def _strict_leaf_count(reader):
+    """Validate every tree Count without opening any page content stream."""
+    from pypdf.generic import ArrayObject, DictionaryObject
+
+    root = reader.root_object["/Pages"].get_object()
+    if not isinstance(root, DictionaryObject) or root.get("/Type") != "/Pages":
+        _fail("fcc_case_pdf_invalid")
+    counts, seen, stack = {}, set(), [(root, False)]
+    while stack:
+        node, exiting = stack.pop()
+        identity = id(node)
+        if exiting:
+            actual = sum(counts[id(child.get_object())] for child in node["/Kids"])
+            if node["/Count"] != actual:
+                _fail("fcc_case_pdf_invalid")
+            counts[identity] = actual
+            continue
+        if not isinstance(node, DictionaryObject) or identity in seen:
+            _fail("fcc_case_pdf_invalid")
+        seen.add(identity)
+        if node.get("/Type") == "/Page" and "/Kids" not in node:
+            counts[identity] = 1
+        elif node.get("/Type") == "/Pages":
+            kids, count = node.get("/Kids"), node.get("/Count")
+            kids = kids.get_object() if kids is not None else None
+            count = count.get_object() if count is not None else None
+            if (not isinstance(kids, ArrayObject) or not isinstance(count, int)
+                    or isinstance(count, bool) or count < 0):
+                _fail("fcc_case_pdf_invalid")
+            stack.append((node, True))
+            stack.extend((child.get_object(), False) for child in reversed(kids))
+        else:
+            _fail("fcc_case_pdf_invalid")
+    return counts[id(root)]
+
+
+class _ScopedPdf:
+    """An original-byte reader kept only between metadata preflight and reading."""
+
+    def __init__(self, payload, document, scope):
+        self.reader, self.stream = None, BytesIO(payload)
+        self.warnings, self.observable = _extract._PdfWarnings(), _extract._warnings_observable()
+        self.scope = scope
+        logger = logging.getLogger("pypdf")
+        logger.addHandler(self.warnings)
+        try:
+            try:
+                import pypdf
+                from pypdf._encryption import PasswordType
+                from pypdf.constants import UserAccessPermissions
+            except ImportError:
+                _fail("fcc_case_extraction_unavailable")
+            if not payload.startswith(b"%PDF-"):
+                _fail("fcc_case_pdf_invalid")
+            if not callable(getattr(pypdf.PdfReader, "_handle_encryption", None)):
+                _fail("fcc_case_extraction_unavailable")
+
+            class RejectEncryptedReader(pypdf.PdfReader):
+                def _handle_encryption(self, password):
+                    raise _extract._EncryptedPdf()
+
+            try:
+                self.reader = RejectEncryptedReader(self.stream, strict=True)
+            except _extract._EncryptedPdf:
+                self.stream.close()
+                if not any(exhibit["source_kind"] in {"official", "mirror"} for exhibit in document["exhibits"]):
+                    _fail("fcc_case_pdf_invalid")
+                self.stream = BytesIO(payload)
+                self.reader = pypdf.PdfReader(self.stream, strict=True, password="")
+                encryption = getattr(self.reader, "_encryption", None)
+                if not hasattr(encryption, "_password_type"):
+                    _fail("fcc_case_extraction_unavailable")
+                authentication = encryption._password_type
+                if type(authentication) is not PasswordType:
+                    _fail("fcc_case_extraction_unavailable")
+                if not self.reader.is_encrypted or authentication != PasswordType.USER_PASSWORD:
+                    _fail("fcc_case_pdf_invalid")
+            if self.reader.is_encrypted:
+                required = (UserAccessPermissions.EXTRACT if scope["mode"] == "native_text"
+                            else UserAccessPermissions.EXTRACT_TEXT_AND_GRAPHICS)
+                try:
+                    permissions = self.reader.user_access_permissions
+                    integrity = self.reader.are_permissions_valid
+                except Exception:
+                    _fail("fcc_case_extraction_unavailable")
+                if (integrity is not True or not isinstance(permissions, UserAccessPermissions)
+                        or not permissions & required):
+                    _fail("fcc_case_extraction_unavailable")
+            if not callable(getattr(self.reader, "_flatten", None)):
+                _fail("fcc_case_extraction_unavailable")
+            actual = _strict_leaf_count(self.reader)
+            self.reader._flatten()
+            if not isinstance(getattr(self.reader, "flattened_pages", None), list):
+                _fail("fcc_case_extraction_unavailable")
+            if actual != document["physical_pages"] or len(self.reader.flattened_pages) != actual:
+                _fail("fcc_case_pdf_invalid")
+            if type(getattr(pypdf, "__version__", None)) is not str:
+                _fail("fcc_case_extraction_unavailable")
+            self.total_pages, self.version = actual, pypdf.__version__
+        except Exception as error:
+            self.close()
+            if isinstance(error, FccReportCaseError):
+                raise
+            _fail("fcc_case_pdf_invalid")
+        finally:
+            logger.removeHandler(self.warnings)
+            self.observable = self.observable and _extract._warnings_observable()
+
+    def close(self):
+        try:
+            if self.reader is not None:
+                self.reader.close()
+        finally:
+            self.stream.close()
+            self.warnings.close()
+
+    def read(self, document, limits):
+        result = _extract._new_result(document["document_id"] + ".pdf", document["sha256"], document["size_bytes"], limits)
+        encrypted = self.reader.is_encrypted
+        parser = ("pypdf-public-empty-user-password-accessibility-selected-pages" if self.scope["mode"] == "accessibility"
+                  else "pypdf-public-empty-user-password-selected-pages") if encrypted else "pypdf-selected-pages"
+        result["parser"] = {"name": parser, "version": self.version}
+        result["total_pages"] = self.total_pages
+        for code in ("page_scope_applied", "page_scope_" + self.scope["mode"]):
+            _extract._issue(result, code)
+        if encrypted:
+            _extract._issue(result, "public_empty_user_password_read")
+        for number in self.scope["pages"]:
+            _extract._issue(result, "page_scope_requested", number)
+        partial = len(self.scope["pages"]) < self.total_pages
+        if partial:
+            _extract._issue(result, "page_scope_outside_unprocessed")
+        remaining = limits.max_output_chars
+        logger = logging.getLogger("pypdf")
+        logger.addHandler(self.warnings)
+        try:
+            for number in self.scope["pages"]:
+                if not remaining:
+                    _extract._issue(result, "output_limit", number)
+                    break
+                self.warnings.page_number = number
+                try:
+                    page = self.reader.flattened_pages[number - 1]
+                    has_image, has_marks, missing_form_resources = _extract._inspect_content(
+                        page.get_contents(), page.get("/Resources", {}), self.reader, limits.max_page_content_bytes)
+                    if missing_form_resources:
+                        _extract._issue(result, "form_resources_missing", number)
+                    text = page.extract_text()
+                    if not isinstance(text, str):
+                        raise ValueError("Unexpected PDF text result")
+                    truncated = len(text) > remaining
+                    status = ("truncated" if truncated else "ok" if text.strip() else
+                              "image_only" if has_image else "no_text" if has_marks else "empty")
+                    result["pages"].append(_extract._page(number, text[:remaining], status))
+                    remaining -= min(len(text), remaining)
+                    if status in {"image_only", "no_text"}:
+                        _extract._issue(result, "ocr_required" if status == "image_only" else "no_text", number)
+                    if truncated:
+                        _extract._issue(result, "output_limit", number)
+                        break
+                except _extract._ContentLimit:
+                    result["pages"].append(_extract._page(number, "", "limit_exceeded"))
+                    _extract._issue(result, "content_limit", number)
+                except Exception:
+                    result["pages"].append(_extract._page(number, "", "error"))
+                    _extract._issue(result, "page_error", number)
+        finally:
+            logger.removeHandler(self.warnings)
+        for number in sorted(self.warnings.pages, key=lambda page: page or 0):
+            _extract._issue(result, "parser_warning", number)
+        if not self.observable or not _extract._warnings_observable():
+            _extract._issue(result, "parser_warnings_unobservable")
+        return _extract._status(result, "partial" if partial else _extract._pdf_status(result))
+
+
 class FccReportCaseCatalog:
     @_public("fcc_case_invalid_packet")
-    def __init__(self, packet, pdf_sources):
+    def __init__(self, packet, pdf_sources, *, page_scope=None):
         packet = _plain(packet)
         _keys(packet, {"schema_version", "corpus_id", "scope", "searches", "documents", "cases"})
         if type(packet["schema_version"]) is not int or packet["schema_version"] != 1:
@@ -340,8 +543,16 @@ class FccReportCaseCatalog:
         self._validate_cases()
         blobs = self._sources(pdf_sources)
         self._extractions, self._documents = {}, {}
+        if page_scope is not None:
+            scopes = _page_scope(page_scope, packet["documents"])
+            for case in packet["cases"]:
+                for claim in case["claims"]:
+                    for evidence in claim["evidence"]:
+                        if evidence["file_page"] not in scopes[evidence["source_sha256"]]["pages"]:
+                            _fail("fcc_case_invalid_evidence")
+            self._read_scoped(blobs, scopes)
         remaining_pages, remaining_chars = 800, 4000000
-        for document in packet["documents"]:
+        for document in packet["documents"] if page_scope is None else ():
             if remaining_pages <= 0 or remaining_chars <= 0:
                 _fail("fcc_case_limit_exceeded")
             payload = blobs[document["sha256"]]
@@ -380,8 +591,29 @@ class FccReportCaseCatalog:
 
     @classmethod
     @_public("fcc_case_invalid_packet")
-    def from_json(cls, packet_json, pdf_sources):
-        return cls(_decode(packet_json), pdf_sources)
+    def from_json(cls, packet_json, pdf_sources, *, page_scope=None):
+        return cls(_decode(packet_json), pdf_sources, page_scope=page_scope)
+
+    def _read_scoped(self, blobs, scopes):
+        readers = []
+        try:
+            # Every source must pass metadata, leaf-count and permission checks
+            # before the first selected page's content stream can be opened.
+            for document in self._packet["documents"]:
+                readers.append(_ScopedPdf(blobs[document["sha256"]], document, scopes[document["sha256"]]))
+            remaining_chars = 4000000
+            for document, reader in zip(self._packet["documents"], readers):
+                if remaining_chars <= 0:
+                    _fail("fcc_case_limit_exceeded")
+                limits = ExtractionLimits(max_input_bytes=_PDF_BYTES, max_pages=200,
+                                          max_output_chars=min(1000000, remaining_chars), max_page_content_bytes=8 * _MIB)
+                result = reader.read(document, limits)
+                remaining_chars -= sum(len(page["text"]) for page in result["pages"])
+                self._extractions[document["document_id"]] = result
+                self._documents[document["document_id"]] = self._document_dto(document, result)
+        finally:
+            for reader in readers:
+                reader.close()
 
     def _validate_scope_searches(self):
         scope = self._packet["scope"]
