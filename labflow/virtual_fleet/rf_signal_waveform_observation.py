@@ -1,6 +1,5 @@
 """Explicit CW mathematics bound to one stored synthetic RF read version."""
 import errno
-import contextlib
 import hashlib
 import json
 import math
@@ -14,10 +13,6 @@ from .. import control_packet_prepare as _native
 from . import rf_signal_read as _reader, rf_signal_scenario as _scenario, rf_signal_waveform as _waveform
 
 
-_NATIVE_WRITE_CODE = _native._write_bytes.__code__
-_NATIVE_FILE_CODE = _native._new_file.__wrapped__.__code__
-_NATIVE_CLOSE_LINE = max(line for _, _, line in _NATIVE_FILE_CODE.co_lines() if line is not None)
-_CONTEXT_EXIT_CODE = contextlib._GeneratorContextManager.__exit__.__code__
 _PREFIX = "rf_signal_waveform_observation_"
 _CODES = frozenset(_PREFIX + suffix for suffix in (
     "invalid_argument", "source_unavailable", "source_ineligible", "destination_exists",
@@ -31,13 +26,13 @@ _FLAGS = dict(data_origin="authored_synthetic", synthetic=True, hardware_verifie
               model_scope="normalized_baseband_sample_math_v1")
 _PINS = (
     ("read048", "labflow/virtual_fleet/rf_signal_read.py", 25927,
-     "7f513872497b22e243722560ea2757043e940edb0439ce8e8e91ecc336441873"),
+     "3999ab598acdc86639d82f2e451295f378ebb3dc827f070c6d670f8cd2a59540"),
     ("describe041", "labflow/virtual_fleet/rf_signal_scenario.py", 44423,
      "bae395d27975dcfe5a64c5a4ea2ae86dccfa87f6d88c9e2c25b2283333a77cae"),
     ("waveform054", "labflow/virtual_fleet/rf_signal_waveform.py", 7581,
      "7566fb5a90c538275d5f511a3335a68cf3b9e85d7f1cd92b44a11d992f569d1d"),
-    ("native_helper", "labflow/control_packet_prepare.py", 28907,
-     "c6fcc54fbac917a5a24a1b07e4ff2b3f82945383ca01d581c1829e9ed0341e6c"),
+    ("native_helper", "labflow/control_packet_prepare.py", 29100,
+     "8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7"),
 )
 _READ_CODES = dict(zip(
     ("rf_signal_read_" + suffix for suffix in
@@ -420,56 +415,6 @@ def _summary(bundle, raw, relative):
     return _snapshot(result, 8192, "math_unavailable")
 
 
-def _writer_interruption(error, tree, path, raw):
-    """Recover only the actual KI passed into this pinned writer's exit."""
-    first = BaseException.__context__.__get__(error)
-    if not isinstance(first, KeyboardInterrupt):
-        return None
-    traces, tb = [], BaseException.__traceback__.__get__(error)
-    while tb is not None and len(traces) < 16:
-        traces.append(tb)
-        tb = tb.tb_next
-    writer = next((tb.tb_frame for tb in traces
-                   if tb.tb_frame.f_code is _NATIVE_WRITE_CODE
-                   and tb.tb_frame.f_globals is _native.__dict__
-                   and tb.tb_frame.f_locals.get("tree") is tree
-                   and tb.tb_frame.f_locals.get("path") is path
-                   and tb.tb_frame.f_locals.get("raw") is raw
-                   and tb.tb_frame.f_locals.get("sync") is True), None)
-    if writer is None:
-        return None
-    exit_frame = next((tb.tb_frame for tb in traces if tb.tb_frame.f_code is _CONTEXT_EXIT_CODE
-                       and tb.tb_frame.f_back is writer), None)
-    if exit_frame is None:
-        return None
-    active = exit_frame.f_locals
-    manager = active.get("self")
-    if (active.get("value") is not first or active.get("typ") is not type(first)
-            or type(manager) is not contextlib._GeneratorContextManager
-            or manager.gen.gi_code is not _NATIVE_FILE_CODE):
-        return None
-    # The exception argument is supplied by the with statement. A fabricated
-    # __context__, even with a copied traceback, is not that active exception.
-    closing = next((tb.tb_frame for tb in traces
-                    if tb.tb_frame.f_code is _NATIVE_FILE_CODE and tb.tb_lineno == _NATIVE_CLOSE_LINE
-                    and tb.tb_frame.f_back is exit_frame
-                    and tb.tb_frame.f_locals.get("tree") is tree
-                    and tb.tb_frame.f_locals.get("path") is path), None)
-    if closing is None or closing.f_locals.get("descriptor") != writer.f_locals.get("descriptor"):
-        return None
-    return first
-
-
-def _write_pending(tree, path, raw):
-    try:
-        return _native._write_bytes(tree, path, raw, "packet_prepare_receipt_failed", sync=True)
-    except Exception as error:
-        first = _writer_interruption(error, tree, path, raw)
-        if first is not None:
-            raise first from None
-        raise
-
-
 def _persist(tree, pins, bundle, state):
     raw = _canonical(bundle) + b"\n"
     folder = tree.root / ".local/rf-waveform-observations" / bundle["request"]["observation_name"]
@@ -484,7 +429,7 @@ def _persist(tree, pins, bundle, state):
     state["leaf"] = (folder, owned, (info.st_dev, info.st_ino))
     tree.directory(folder)
     state.update(phase="write_pending", operation="write_pending")
-    stamp = _write_pending(tree, pending, raw)
+    stamp = _native._write_bytes(tree, pending, raw, "packet_prepare_receipt_failed", sync=True)
     state.update(phase="verify_pending", operation="verify_pending")
     pinned = tree.backend.open_read(pending, pin=True)
     _verify_file(tree, pending, pinned, stamp, raw)

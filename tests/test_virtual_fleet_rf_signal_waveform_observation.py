@@ -209,12 +209,12 @@ class ObservationContractTests(_Support):
                                                      "source_snapshot_sha256 packet_sha256 dependency_pins".split()))
         pins = value["provenance"]["dependency_pins"]
         self.assertEqual([row["role"] for row in pins], ["read048", "describe041", "waveform054", "native_helper"])
-        self.assertEqual([row["lf_bytes"] for row in pins], [25927, 44423, 7581, 28907])
+        self.assertEqual([row["lf_bytes"] for row in pins], [25927, 44423, 7581, 29100])
         self.assertEqual([row["lf_sha256"] for row in pins], [
-            "7f513872497b22e243722560ea2757043e940edb0439ce8e8e91ecc336441873",
+            "3999ab598acdc86639d82f2e451295f378ebb3dc827f070c6d670f8cd2a59540",
             "bae395d27975dcfe5a64c5a4ea2ae86dccfa87f6d88c9e2c25b2283333a77cae",
             "7566fb5a90c538275d5f511a3335a68cf3b9e85d7f1cd92b44a11d992f569d1d",
-            "c6fcc54fbac917a5a24a1b07e4ff2b3f82945383ca01d581c1829e9ed0341e6c"])
+            "8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7"])
         for row in pins:
             self.assertEqual(set(row), {"role", "lf_bytes", "lf_sha256"})
         for public in (result, value["recipe"], value["packet"], value["analysis"]):
@@ -689,6 +689,97 @@ class ObservationIntegrationTests(_Support):
 
 
 class ObservationWriterOutcomeTests(_Support):
+    def generator_fault(self, boundary, first, cofault):
+        """Fault real pre/post-yield validation, then actually close its fd."""
+        real_create, real_fstat = native._WindowsIO.create_file, native.os.fstat
+        real_stat, real_close = native._Tree.file_stat, native.os.close
+        state = dict(fd=None, fstat=0, file_stat=0, close=0)
+        self.probes = getattr(self, "probes", [])
+        name = "edge055_" + str(len(self.probes))
+
+        def create(backend, path):
+            descriptor = real_create(backend, path)
+            if path.name == "observation.pending.json":
+                state["fd"] = descriptor
+            return descriptor
+
+        def fstat(descriptor):
+            result = real_fstat(descriptor)
+            if descriptor == state["fd"] and state["close"] == 0:
+                state["fstat"] += 1
+                if (boundary == "pre_yield_fstat" and state["fstat"] == 1
+                        or boundary == "post_yield_fstat" and state["fstat"] == 3):
+                    raise first
+            return result
+
+        def file_stat(tree, path):
+            result = real_stat(tree, path)
+            if path.name == "observation.pending.json":
+                state["file_stat"] += 1
+                if (boundary == "pre_yield_file_stat" and state["file_stat"] == 1
+                        or boundary == "post_yield_file_stat" and state["file_stat"] == 2):
+                    raise first
+            return result
+
+        def close(descriptor):
+            if descriptor == state["fd"] and state["close"] == 0:
+                real_close(descriptor)
+                state["close"] = 1
+                if cofault:
+                    raise OSError(errno.EIO, "synthetic error after actual generator close")
+                return
+            return real_close(descriptor)
+
+        caught, result = None, None
+        with mock.patch.object(native._WindowsIO, "create_file", create), \
+                mock.patch.object(native.os, "fstat", fstat), mock.patch.object(native._Tree, "file_stat", file_stat), \
+                mock.patch.object(native.os, "close", close):
+            try:
+                result = self.invoke({**REQUEST, "observation_name": name})
+            except BaseException as error:
+                caught = error
+        folder = self.base / ".local/rf-waveform-observations" / name
+        marker = json.loads((folder / "failure.json").read_bytes())
+        self.assertIsNone(result)
+        self.assertFalse((folder / "observation.json").exists())
+        self.assertTrue((folder / "observation.pending.json").is_file())
+        self.assertEqual([call.call_count for call in self.calls], [1, 1, 1, 1])
+        self.assertEqual(len(self.backends), 2 * (len(self.probes) + 1))
+        self.assertEqual(state["close"], 1)
+        with self.assertRaises(OSError) as closed:
+            real_fstat(state["fd"])
+        self.assertEqual(closed.exception.errno, errno.EBADF)
+        interrupted = isinstance(first, KeyboardInterrupt)
+        self.probes.append(dict(kind="055_actual_native_generator", boundary=boundary, cofault=cofault,
+            primary=type(first).__name__, same_primary=caught is first, writer_EBADF=True,
+            backend2_per_call=True, parent4_each1=True, summary0_final0_pending_preserved=True))
+        if interrupted:
+            self.assertIs(caught, first)
+        else:
+            self.assertIs(type(caught), observer.RfSignalWaveformObservationError)
+            self.assertEqual(caught.code, PREFIX + "write_failed")
+        self.assertEqual(marker, dict(schema_version=1, kind="rf_baseband_observation_failure",
+            phase="write_pending", status="interrupted" if interrupted else "failed",
+            error_code=None if interrupted else PREFIX + "write_failed", publication_attempted=False))
+
+    def generator_matrix(self, boundary):
+        for kind in (KeyboardInterrupt, OSError):
+            for cofault in (False, True):
+                with self.subTest(boundary=boundary, primary=kind.__name__, cofault=cofault):
+                    self.generator_fault(boundary, kind("synthetic real generator first exception"), cofault)
+
+    def test_native_pre_yield_fstat_keeps_first_outcome_after_close(self):
+        self.generator_matrix("pre_yield_fstat")
+
+    def test_native_pre_yield_path_stat_keeps_first_outcome_after_close(self):
+        self.generator_matrix("pre_yield_file_stat")
+
+    def test_native_post_yield_fstat_keeps_first_outcome_after_close(self):
+        self.generator_matrix("post_yield_fstat")
+
+    def test_native_post_yield_path_stat_keeps_first_outcome_after_close(self):
+        self.generator_matrix("post_yield_file_stat")
+
     def writer_fault(self, first, *, close_error=True, name="observe055", forge_context=False,
                      marker_error=False, cleanup_error=False):
         """Use the real pinned writer; only its actual fsync/close calls fault."""
