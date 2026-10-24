@@ -50,7 +50,11 @@ def _integer(value, low, high):
     _require(type(value) is int and low <= value <= high)
 
 def _number(value):
-    _require(type(value) in (int, float) and math.isfinite(value))
+    try:
+        valid = type(value) in (int, float) and math.isfinite(value)
+    except OverflowError:
+        valid = False
+    _require(valid)
 
 def _hash(value):
     return type(value) is str and _HASH.fullmatch(value) is not None
