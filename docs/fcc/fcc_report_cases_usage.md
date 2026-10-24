@@ -36,7 +36,7 @@ catalog2 = FccReportCaseCatalog.from_json(packet_json, pdf_sources)
 | 접수 projection JSON / 깊이 / 개별 문자열 | 8 MiB / 16 / 1 MiB |
 | 단일 반환 JSON | 8 MiB |
 
-원본·JSON·목록·합계 한도는 파서 호출 전에 검사한다. 전체 추출 예산이 남지 않으면 새 PDF를 미검증 성공으로 넣지 않고 limit 오류를 낸다. PDF별 기존 추출 한도에 따른 partial은 상태를 보존한다. 작업 예산은 기존 추출기의 cooperative 한계이며 OS 격리·hard timeout 보증이 아니다.
+원본·JSON·목록·합계 한도와 evidence의 형식/quote·line·각주 한도는 파서 호출 전에 검사한다. 유일하다고 명시한 ID 배열의 중복은 거절하고, 일반 노트/각주 문자열 배열의 반복은 그대로 보존한다. 전체 추출 예산이 남지 않으면 새 PDF를 미검증 성공으로 넣지 않고 limit 오류를 낸다. PDF별 기존 추출 한도에 따른 partial은 상태를 보존한다. 작업 예산은 기존 추출기의 cooperative 한계이며 OS 격리·hard timeout 보증이 아니다.
 
 ## packet의 6 top-level 키
 
