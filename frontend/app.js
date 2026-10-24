@@ -1,10 +1,19 @@
 import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot} from './model.mjs';
 import {validateFixtureRuns, describeFixtureRecord, requireStableFixtureRecords, createFixtureReadGate} from './intake_flow_model.mjs';
+import {validateIntakeReferenceContext} from './intake-references/model.mjs';
+import {createIntakeReferenceReview} from './intake-references/view.mjs';
+import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
 
 const $ = selector => document.querySelector(selector);
 const state = {records: [], notices: [], selected: location.hash.slice(1), loaded: false, request: 0, view: 'intakes'};
 const flow = {gate:createFixtureReadGate(), context:null, payload:null, selected:'', pending:false,
   stale:false, status:'가상 기록 조회 대기', updatedText:'아직 조회하지 않음'};
+const referenceTransport = createIntakeReferenceTransport();
+const referencePanel = createIntakeReferenceReview($('#intake-reference-panel'), {
+  readHistory:referenceTransport.readHistory, readCurrent:referenceTransport.readCurrent,
+});
+let referenceDestroyed = false;
+let referenceSuspended = false;
 const roles = {request: '의뢰 자료', product: '제품 자료', reference: '참고 자료'};
 const producerKinds = {fixture: '합성 분석 예시', manual: '수동 분석', model: '모델 분석자 선언'};
 const errorMessages = {
@@ -401,7 +410,10 @@ function prepareView(next) {
   // Build every panel off-DOM before committing either DOM or application state.
   const list = buildList(next);
   const view = {...next, selected: list.selected};
-  return {view, list, metrics: buildMetrics(view), detail: buildDetail(view), notifications: buildNotifications(view)};
+  const selected = view.records.find(record => record.intake_id === view.selected);
+  const referenceContext = validateIntakeReferenceContext(selected ? {intake_id:selected.intake_id,
+    revision:selected.revision, snapshotGeneration:view.snapshotGeneration ?? 0} : null);
+  return {view, list, referenceContext, metrics: buildMetrics(view), detail: buildDetail(view), notifications: buildNotifications(view)};
 }
 
 function publishView(prepared) {
@@ -413,12 +425,15 @@ function publishView(prepared) {
   $('#notice-count').textContent = prepared.view.notices.length;
   $('#last-updated').textContent = prepared.view.updatedText;
   Object.assign(state, prepared.view);
+  referenceTransport.setContext(prepared.referenceContext);
+  referencePanel.setContext(prepared.referenceContext);
   syncFixtureContext();
 }
 
 function changeView(view) {
   state.view = view;
   $('#intake-view').hidden = view !== 'intakes'; $('#notification-view').hidden = view !== 'notifications';
+  $('#intake-reference-panel').hidden = view !== 'intakes';
   $('#page-title').textContent = view === 'intakes' ? '접수 운영' : '알림 기록';
   for (const button of document.querySelectorAll('[data-view]')) {
     if (button.dataset.view === view) button.setAttribute('aria-current', 'page');
@@ -428,6 +443,8 @@ function changeView(view) {
 
 async function refresh() {
   const request = ++state.request;
+  referenceTransport.setPending(true);
+  referencePanel.setPending(true);
   state.controller?.abort();
   const controller = new AbortController(); state.controller = controller;
   const timer = setTimeout(() => controller.abort(), 10000);
@@ -464,11 +481,33 @@ async function refresh() {
   } finally {
     clearTimeout(timer);
     if (request === state.request) {
+      if (!referenceSuspended) {
+        referenceTransport.setPending(false);
+        referencePanel.setPending(false);
+      }
       $('#refresh').disabled = false; $('#refresh').textContent = '↻ 새로고침';
       $('#intake-view').setAttribute('aria-busy', 'false');
     }
   }
 }
+
+addEventListener('pagehide', event => {
+  if (event.persisted) {
+    referenceSuspended = true;
+    referenceTransport.setPending(true);
+    referencePanel.setPending(true);
+  } else {
+    referenceDestroyed = true;
+    referenceTransport.destroy();
+    referencePanel.destroy();
+  }
+});
+addEventListener('pageshow', event => {
+  if (event.persisted && !referenceDestroyed) {
+    referenceSuspended = false;
+    refresh();
+  }
+});
 
 function renderFilteredIntakes() {
   if (!state.loaded) return;
