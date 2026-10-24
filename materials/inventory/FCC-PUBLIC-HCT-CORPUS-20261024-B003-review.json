@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "project_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "review_unit": "B003",
+  "recorded_at": "2026-10-24T14:45:28.212809+09:00",
+  "timezone": "Asia/Seoul",
+  "scope": "Reviewed nonsensitive bibliography, raw file hash and static intake/review status only.",
+  "publication_rights": {
+    "original_PDF_body_measurement_values_images_or_code_included": false,
+    "original_redistribution_or_training_permission_inferred": false,
+    "public_metadata_scope": "Public report identity, source URLs, original SHA/size/pages and bounded static status; originals remain private."
+  },
+  "report": {
+    "report_number": "HCT-RF-2509-FC016-R4",
+    "revision": "R4",
+    "issuer_as_printed": "HCT CO., LTD.",
+    "report_issue_as_printed": "2025-10-23",
+    "issue_proof_physical_page": 2,
+    "issuer_proof_physical_page": 2,
+    "FCC_ID_as_printed": "BEJLGSBWAC92",
+    "model_as_printed": "LGSBWAC92",
+    "product_as_printed": "RF Module",
+    "applicant_as_printed": "LG Electronics Inc.",
+    "manufacturer_independently_confirmed": false,
+    "test_start_as_printed": "2025-09-09",
+    "test_end_as_printed": "2025-09-18",
+    "reported_category": "Part15.247 digital transmission system; actual report b/g/n mode labels verified",
+    "mirror_exhibit_id_candidate": "8724310",
+    "official_exhibit_mapping": "pending; prior HTTP403 preserved",
+    "original": {
+      "sha256": "fb84f02c7a170a449d5cde8b82e4d886b6ef7a426ff130bc4d0e8c67b3f21fd6",
+      "bytes": 1735205,
+      "physical_pages": 40,
+      "PDF_magic_and_structure_verified": true,
+      "original_bytes_or_permissions_changed": false,
+      "mirror_original_URL": "https://manuals.plus/m/fb84f02c7a170a449d5cde8b82e4d886b6ef7a426ff130bc4d0e8c67b3f21fd6.pdf",
+      "exhibit_listing_candidate_URL": "https://fccid.io/BEJLGSBWAC92/Test-Report/LGSBWAC92-DTS-FCC-C2PC-Test-Report-R4-8724310",
+      "rights": "unknown; no public original/body/image/measurement redistribution approved"
+    },
+    "bounded_review": {
+      "source_fact_count": 12,
+      "selected_primary_physical_pages": [
+        2,
+        3,
+        5,
+        6,
+        8,
+        11,
+        25
+      ],
+      "peak_average_result_row_instances": 8,
+      "reported_linear_power_sum_checks": 8,
+      "pages_without_primary_fact": 33,
+      "selected_pages_are_not_full_page_or_full_table_semantic_completion": true,
+      "method_context": "Report describes direct conducted sensor/meter connection. Exact per-row integration, gating, duty, losses, correction plane and combined uncertainty remain unresolved.",
+      "lineage_context": "Summary maxima across original and C2PC data are separate from current result subset; predecessor/reused-data parent unresolved.",
+      "report_result_vs_rule_guidance_standard_inference_native_raw_support_distinct": true,
+      "whole_report_current_normative_calibration_fixture_or_physical_validation": false
+    }
+  },
+  "private_followup_intake": {
+    "bounded_packets": 4,
+    "payload_files": 71,
+    "payload_bytes": 406439,
+    "JSON_files": 70,
+    "MD_files": 1,
+    "original_PDF_payloads": 0,
+    "separate_reference_originals_independently_verified": 1,
+    "all_indexes_payloads_SHA_bytes_UTF8_JSON_checked": true,
+    "explicit_receiver_ACK_and_P01_readonly_clone_rehash": true,
+    "ACK_is_not_whole_semantics_current_rules_or_physical_validation": true
+  },
+  "corpus_known_originals": {
+    "unique_actual_PDFs": 7,
+    "bytes": 18820405,
+    "physical_pages": 348,
+    "bounded_source_review_and_independent_intake_or_reference_ACK_PDFs": 7,
+    "direct_report_issuer_and_issue_window_confirmed": 6,
+    "parent_relational_part_only": 1,
+    "official_exhibit_mapping_confirmed": 0,
+    "prior_retained22_counted_as_new_HCT_eligible": 0,
+    "user_private_report_reuse_counted_as_public_corpus_PDF": 0,
+    "new_downloads_in_this_followup_control": 0
+  },
+  "remaining": [
+    "Whole issuer/report population and unsearched pages, periods, categories and sites",
+    "Official FCC application/exhibit mapping, predecessor revisions, split/appendix/setup/photo completeness",
+    "All remaining semantic pages/tables/conditions, extraction failures and internal source conflicts",
+    "Full exact standard texts and historical/current method applicability",
+    "Native instrument raw data, present firmware/options/support and physical/field validation"
+  ],
+  "evaluation": {
+    "family_revision_part_SHA_and_reuse_grouping_preserved": true,
+    "unknown_reuse_independence_approved": false,
+    "actual_AI_evaluation_training_external_model_API_transmissions_or_scores": 0
+  },
+  "whole_corpus_complete": false,
+  "new_user_preparation_requests": 0,
+  "existing_public_collection_batch_count": 20
+}
