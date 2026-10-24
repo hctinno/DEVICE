@@ -58,6 +58,37 @@ class DutDouble:
         return {'method': 'manufacturing_references'}
 
 
+class DeltaDouble:
+    created = 0
+    broken = False
+    delay = 0
+
+    def __init__(self):
+        type(self).created += 1
+        time.sleep(type(self).delay)
+        if type(self).broken:
+            raise RuntimeError('PRIVATE_DELTA_PATH_CANARY')
+        self.ready = True
+
+    def summary(self):
+        assert self.ready
+        return {'method': 'delta_summary'}
+
+    def records(self):
+        return [{'reference_id': 'qualcomm_diag'}]
+
+    def reference(self, reference_id):
+        if reference_id == 'missing_reference':
+            raise DutError('dut_delta_item_not_found')
+        if reference_id == 'broken_reference':
+            class BrokenCode(ValueError):
+                @property
+                def code(self):
+                    raise RuntimeError('PRIVATE_DELTA_ERROR_CANARY')
+            raise BrokenCode()
+        return {'reference_id': reference_id}
+
+
 class DutControlUiServerTests(unittest.TestCase):
     def setUp(self):
         DutDouble.created = 0
@@ -66,7 +97,14 @@ class DutControlUiServerTests(unittest.TestCase):
         fake = types.ModuleType('labflow.dut_control_catalog')
         fake.DutControlCatalog = DutDouble
         fake.DutControlCatalogError = DutError
-        self.module_patch = patch.dict(sys.modules, {'labflow.dut_control_catalog': fake})
+        DeltaDouble.created = 0
+        DeltaDouble.broken = False
+        DeltaDouble.delay = 0
+        delta = types.ModuleType('labflow.dut_manufacturer_delta')
+        delta.DutManufacturerDeltaCatalog = DeltaDouble
+        delta.DutManufacturerDeltaError = DutError
+        self.module_patch = patch.dict(sys.modules, {'labflow.dut_control_catalog': fake,
+                                                    'labflow.dut_manufacturer_delta': delta})
         self.module_patch.start()
         self.addCleanup(self.module_patch.stop)
         self.tmp = tempfile.TemporaryDirectory()
@@ -179,6 +217,71 @@ class DutControlUiServerTests(unittest.TestCase):
             self.assertEqual(self.request('/api/dut-controls/summary', headers=headers)[0], 403)
         for method in ['POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']:
             self.assertEqual(self.request('/api/dut-controls/summary', method)[0], 405)
+        self.assertEqual(DutDouble.created, 0)
+
+    def test_delta_get_head_bindings_and_sanitized_errors_are_separate(self):
+        for suffix, expected in [('/summary', {'method': 'delta_summary'}),
+                                 ('/records', [{'reference_id': 'qualcomm_diag'}]),
+                                 ('/references/qualcomm_diag', {'reference_id': 'qualcomm_diag'})]:
+            target = '/api/dut-controls/acquisitions' + suffix
+            get = self.request(target)
+            self.assertEqual(get[0], 200)
+            self.assertEqual(json.loads(get[2]), expected)
+            self.assertEqual(get[1]['Cache-Control'], 'no-store')
+            self.assertIn("connect-src 'self'", get[1]['Content-Security-Policy'])
+            head = self.request(target, 'HEAD')
+            self.assertEqual((head[0], head[1]['Content-Length'], head[2]), (200, str(len(get[2])), b''))
+        for reference_id, status, code in [('missing_reference', 404, 'dut_delta_item_not_found'),
+                                           ('broken_reference', 503, 'dut_delta_unavailable')]:
+            target = '/api/dut-controls/acquisitions/references/' + reference_id
+            get, head = self.request(target), self.request(target, 'HEAD')
+            self.assertEqual(get[0], status)
+            self.assertEqual(json.loads(get[2]), {'error': {'code': code}})
+            self.assertEqual((head[0], head[1]['Content-Length'], head[2]), (status, str(len(get[2])), b''))
+        self.assertEqual(DeltaDouble.created, 1)
+        self.assertEqual(DutDouble.created, 0)
+
+    def test_delta_exact_ascii_id_and_raw_target_guards_precede_lazy_loading(self):
+        prefix = '/api/dut-controls/acquisitions'
+        for reference_id in ['', 'Qdiag', '9diag', 'diag-', 'a' * 97, 'diag%0A', '%252fdiag']:
+            response = self.request(prefix + '/references/' + reference_id)
+            self.assertEqual(response[0], 400)
+            self.assertEqual(json.loads(response[2]), {'error': {'code': 'dut_delta_invalid_query'}})
+        for suffix in ['/summary?x=1', '/records/', '/references//diag', '/references/diag%2Ffile',
+                       '/references/diag%5Cfile', '/references/%', '/references/%FF', '/unknown',
+                       '/references/diag/extra', '/summary#fragment']:
+            self.assertEqual(self.request(prefix + suffix)[0], 404)
+        for headers in [{'Host': 'attacker.invalid'}, {'Origin': 'https://attacker.invalid'},
+                        {'Sec-Fetch-Site': 'cross-site'}]:
+            self.assertEqual(self.request(prefix + '/summary', headers=headers)[0], 403)
+        for method in ['POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']:
+            self.assertEqual(self.request(prefix + '/summary', method)[0], 405)
+        self.assertEqual(DeltaDouble.created, 0)
+        self.assertEqual(self.request(prefix + '/references/%71ualcomm_diag')[0], 200)
+        self.assertEqual(self.request(prefix + '/references/' + 'a' * 96)[0], 200)
+
+    def test_delta_failure_retries_without_blocking_original_dut_or_equipment_or_intake(self):
+        from labflow.store import Store
+        Store(self.tmp.name)
+        DeltaDouble.broken = True
+        failed = self.request('/api/dut-controls/acquisitions/summary')
+        self.assertEqual(failed[0], 503)
+        self.assertEqual(json.loads(failed[2]), {'error': {'code': 'dut_delta_unavailable'}})
+        for target in ['/api/intakes', '/api/control-sources/summary', '/api/dut-controls/summary',
+                       '/api/dut-controls/manufacturing-references', '/api/dut-controls/routes']:
+            self.assertEqual(self.request(target)[0], 200)
+        DeltaDouble.broken = False
+        self.assertEqual(self.request('/api/dut-controls/acquisitions/summary')[0], 200)
+        self.assertEqual(DeltaDouble.created, 2)
+        DutDouble.broken = True
+        self.assertEqual(self.request('/api/dut-controls/acquisitions/records')[0], 200)
+
+    def test_delta_concurrent_first_queries_publish_one_complete_own_snapshot(self):
+        DeltaDouble.delay = .1
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            responses = list(pool.map(lambda _: self.request('/api/dut-controls/acquisitions/summary'), range(6)))
+        self.assertEqual([response[0] for response in responses], [200] * 6)
+        self.assertEqual(DeltaDouble.created, 1)
         self.assertEqual(DutDouble.created, 0)
 
 
