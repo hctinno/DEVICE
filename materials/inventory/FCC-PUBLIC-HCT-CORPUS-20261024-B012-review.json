@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "recorded_at_Asia_Seoul": "2026-10-24T19:00:58.123092+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "corpus_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "publication_scope": "reviewed_nonsensitive_bibliography_hash_and_bounded_status_only",
+  "publication_rights_decision": "Only public bibliographic identity, raw hashes/page counts and review/intake status. No originals/body/case values/images/code/unique identifiers/user materials/private paths.",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S01-B0020",
+      "review_scope": "bounded_BLE_original_review",
+      "inventory_sha256": "58fef1e8cab087b71566616e9b1be861c7a6bc780b2111c9839a04f25ba600be",
+      "private_intake_index_sha256": "e3bdc70a23d442bb12e8cc9581bf331eab33f5a4d2bdce3a86075ac8e5c146d0",
+      "private_intake_index_bytes": 5420,
+      "payload_files": 26,
+      "payload_bytes": 1712490,
+      "JSON_files": 25,
+      "PDF_files": 1,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "3f3d24f7acbdf9a80cdf73b5478a6615e7697d36338a7fcaf93945dd6c3bfbd8",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "target_reference"
+    },
+    {
+      "batch_id": "FCC-20261024A-S02-B0014",
+      "review_scope": "bounded_original_review_with_report_link_admission_hold",
+      "inventory_sha256": "423c7efd884d47310238bfed18640cf667d73ee9e4ce231e8de91a69d42c2636",
+      "private_intake_index_sha256": "e3c66d80eafea26799823c0fed2feeec133492ae753ea66052e04aec988306b9",
+      "private_intake_index_bytes": 3747,
+      "payload_files": 16,
+      "payload_bytes": 4726952,
+      "JSON_files": 15,
+      "PDF_files": 1,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "e9dad2835456898e66be145b4563078bda0e42db14a9261006b1c8a2b369c84b",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "pending_report_link"
+    },
+    {
+      "batch_id": "FCC-20261024A-S03-B0012",
+      "review_scope": "held_HAC_method_and_header_review",
+      "inventory_sha256": "95ed1996ff808663afd43f41a9154350232c67ff628f1d37fb4476b2737e76ec",
+      "private_intake_index_sha256": "2a7b08061bf9086ae57e5d4f49c9693b59b77749c91fcf8436cc61664d11c494",
+      "private_intake_index_bytes": 4904,
+      "payload_files": 23,
+      "payload_bytes": 130223,
+      "JSON_files": 22,
+      "PDF_files": 0,
+      "MD_files": 1,
+      "receiver_receipt_sha256": "3dfd555bd897273a05ba7e6221d8981b9549aa165c4eefee41b9c2bf1ad5fa17",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "held_metadata_reference"
+    },
+    {
+      "batch_id": "FCC-20261024A-S08-B0014",
+      "review_scope": "historical_12target_plus1excluded_metadata_delta_audit",
+      "inventory_sha256": "6610d06127e8354803daaf82037fae848a2514ed1b74d48f1efcee82d4f0d27f",
+      "private_intake_index_sha256": "59a3eb64202bdc0d1ed4cc26476380333d7d6a0f37e6d7c97e7e1a22690b0e12",
+      "private_intake_index_bytes": 3229,
+      "payload_files": 13,
+      "payload_bytes": 166084,
+      "JSON_files": 13,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "2ca6cc666a5eb576ed98c0488ae9915035d18982227350bd64a267f9082d04fa",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "held_metadata_reference"
+    }
+  ],
+  "new_independently_accepted_private_packets": 4,
+  "new_private_payload": {
+    "files": 78,
+    "bytes": 6735749,
+    "JSON": 75,
+    "PDF": 2,
+    "MD": 1
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 73,
+    "independently_ACKed": 73
+  },
+  "corpus_private_packets_including_exclusion_and_pending_link_review": {
+    "reviewed": 38,
+    "independently_ACKed": 38
+  },
+  "new_reviewed_bibliography": [
+    {
+      "report_number": "HCT-RF-2501-FC080",
+      "revision": "0 / Initial Release",
+      "issue_date": "2025-01-24",
+      "issuer_as_printed": "HCT CO.,LTD.",
+      "FCC_ID": "BEJ-LCWB008",
+      "model_as_printed": "LCWB-008",
+      "product_as_printed": "RF Module",
+      "physical_pages": 33,
+      "bytes": 1604497,
+      "sha256": "f4c2574cff843138b91568c3fce21fe4404241db1427d98bc9474d8c41e72630",
+      "cohort": "target_reference",
+      "direct_source_identity_issue_and_issuer_reviewed": true,
+      "official_exhibit_mapping_confirmed": false,
+      "bounded_primary_pages_reviewed": 7,
+      "context_pages_reviewed": 1,
+      "source_version_vs_index_conflict": "preserved_unresolved",
+      "report_result_status_and_prior_data_reuse_distinction": "preserved_no_fresh_conducted_result_inferred",
+      "private_identifier_output_exception_and_network_failure_recovery": "preserved_no_values_republished"
+    },
+    {
+      "report_number_as_acquired": "HA2506-0043-R01-01",
+      "numeric_revision": null,
+      "issue_date": "2025-09-04",
+      "issuer_as_printed": "HCT America, Inc.",
+      "FCC_ID": "MG3-J1TH021",
+      "model_as_printed": "J1TH021",
+      "physical_pages": 53,
+      "bytes": 4626750,
+      "sha256": "1324e841832c1521749a12d0e8418fea77ce83a7f1bc006d7dbbebab4da311cd",
+      "requested_index_report_label": "HA250129-UEI-002-R01-01",
+      "cohort": "pending_report_link",
+      "direct_issue_and_issuer_date_window_predicate_reviewed": true,
+      "requested_report_correspondence": "unresolved_mismatch",
+      "target_eligible_increment": 0,
+      "official_exhibit_mapping_confirmed": false,
+      "printed_page_sequence_vs_printed_total_conflict": "preserved_no_truncation_or_repair",
+      "query_quarter_vs_actual_issue_quarter": "preserved_not_inherited",
+      "original_preserved_without_substitution_or_identity_alias": true,
+      "bounded_primary_pages_reviewed": 8
+    }
+  ],
+  "current_target_reference_cohort": {
+    "PDFs": 13,
+    "physical_pages": 522,
+    "bytes": 30866481,
+    "direct_issuer_issue": 12,
+    "parent_only": 1,
+    "official_mapping_confirmed": 0
+  },
+  "separately_retained_excluded": {
+    "PDFs": 1,
+    "physical_pages": 46,
+    "bytes": 2771507,
+    "target_increment": 0
+  },
+  "separately_retained_pending_report_link": {
+    "PDFs": 1,
+    "physical_pages": 53,
+    "bytes": 4626750,
+    "target_increment": 0
+  },
+  "all_retained_request_originals_not_eligible_count": {
+    "PDFs": 15,
+    "physical_pages": 621,
+    "bytes": 38264738,
+    "eligible15_claim": false,
+    "legacy22_included": false
+  },
+  "new_originals_reviewed_privately": 2,
+  "new_target_reference_originals": 1,
+  "new_pending_report_link_originals": 1,
+  "new_PDF_payloads_published_to_Git": 0,
+  "bounded_HAC_review_status": {
+    "new_primary_pages": 8,
+    "new_source_facts": 8,
+    "numeric_rows": 0,
+    "numeric_calculations": 0,
+    "HAC1_primary_coverage": [
+      30,
+      73
+    ],
+    "suite_primary_coverage": [
+      75,
+      181
+    ],
+    "remaining_primary_pages": 106,
+    "method_header_author_claim_photo_heading_plot_heading_only": true,
+    "identity_calibration_rows_photos_and_plot_body_not_transcribed": true,
+    "all_cells_full_semantics_currentrules_or_hardware_approved": false
+  },
+  "historical_metadata_delta_status": {
+    "audit_target_reference_PDFs": 12,
+    "audit_excluded_PDFs": 1,
+    "new_metadata_SHA_comparisons": 67,
+    "equal_SHA_metadata_matches": 0,
+    "target_groups": 9,
+    "excluded_groups": 1,
+    "new_input_anchors_resolved": 95,
+    "historical_old10_pointers_preserved_without_following": 10,
+    "old220_comparison_block_unchanged": true,
+    "fresh_PDF_operations_sourcefacts_or_independence_proof": false,
+    "audit_not_retroactively_extended_to_current13_and_pending1": true
+  },
+  "new_user_preparation_requests": 0,
+  "AI_evaluation_training_external_models_or_physical_runs": 0,
+  "open_scope": [
+    "whole population and unsearched periods institutions sites products categories",
+    "official mapping requested report correspondence revisions parts appendices setup",
+    "untranscribed cells plots and full semantic review",
+    "full standards historical/current applicability source conflicts and unknown reuse",
+    "native raw independent evaluation and real equipment/site validation"
+  ],
+  "whole_census_complete": false,
+  "full_semantic_functional_conformity_or_physical_validation": false,
+  "original_text_case_values_images_code_identifiers_private_paths_user_materials_exported": false,
+  "historical_public20batch_count_changed": false,
+  "verification_scope": "Independent packet bytes and specified bounded source review; document integrity is not functionality/metrology/conformity evidence."
+}
