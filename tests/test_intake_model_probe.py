@@ -3,7 +3,6 @@ import copy
 import hashlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
-import multiprocessing
 import os
 from pathlib import Path
 import subprocess
@@ -26,7 +25,6 @@ CANARY = 'PRIVATE_LOOPBACK_PROBE_CANARY'
 RESULT_KEYS = {'schema_version', 'kind', 'execution_mode', 'synthetic', 'hardware_verified',
                'model_execution_verified', 'state_mutations', 'status', 'reason_code',
                'request_sha256', 'response_sha256', 'response_complete', 'analysis'}
-REAL_CHILD = probe._probe_child
 
 
 def response_for(prompt):
@@ -95,7 +93,7 @@ class Handler(BaseHTTPRequestHandler):
                 return
             self.send_response(500 if mode == 'http_error' else 302 if mode == 'redirect' else 200)
             self.send_header('Content-Type', 'application/json')
-            if mode == 'chunked':
+            if mode.startswith('chunked'):
                 self.send_header('Transfer-Encoding', 'chunked')
             elif mode != 'close_delimited':
                 self.send_header('Content-Length', str(len(body)+(100 if mode == 'partial' else 0)))
@@ -109,11 +107,24 @@ class Handler(BaseHTTPRequestHandler):
                     self.wfile.write(bytes([byte]))
                     self.wfile.flush()
                     if self.server.stopped.wait(.15): break
-            elif mode == 'chunked':
+            elif mode.startswith('chunked'):
+                wire = b''
                 for offset in range(0, len(body), 71):
                     chunk = body[offset:offset+71]
-                    self.wfile.write(format(len(chunk), 'x').encode('ascii')+b'\r\n'+chunk+b'\r\n')
-                self.wfile.write(b'0\r\n\r\n')
+                    wire += format(len(chunk), 'x').encode('ascii')+b'\r\n'+chunk+b'\r\n'
+                wire += {'chunked': b'0\r\n\r\n',
+                         'chunked_trailer': b'0\r\nX-Probe: complete\r\n\r\n',
+                         'chunked_extensions': b'0;end=ok\r\nX-Probe: complete\r\n\r\n',
+                         'chunked_zero_eof': b'0\r\n',
+                         'chunked_trailer_eof': b'0\r\nX-Probe: partial',
+                         'chunked_trailer_no_blank': b'0\r\nX-Probe: complete\r\n',
+                         'chunked_lf_trailer': b'0\r\n\n',
+                         'chunked_lf_size': b'0\n\r\n',
+                         'chunked_bad_separator': b'0\r\n\r\n'}[mode]
+                if mode == 'chunked_bad_separator':
+                    wire = wire.replace(body[:71]+b'\r\n', body[:71]+b'XY', 1)
+                self.server.response_wire = wire
+                self.wfile.write(wire)
                 self.wfile.flush()
             else:
                 self.wfile.write(body)
@@ -121,26 +132,6 @@ class Handler(BaseHTTPRequestHandler):
             self.close_connection = True
         except (OSError, ValueError):
             self.close_connection = True
-
-
-def crashing_child(*args):
-    os._exit(7)
-
-
-def no_dns_child(*args):
-    with patch('socket.getaddrinfo', side_effect=AssertionError('DNS forbidden')):
-        REAL_CHILD(*args)
-
-
-def noisy_exchange(*args, **kwargs):
-    os.write(1, CANARY.encode('ascii'))
-    os.write(2, CANARY.encode('ascii'))
-    raise RuntimeError(CANARY)
-
-
-def noisy_child(*args):
-    with patch.object(probe, '_exchange', side_effect=noisy_exchange):
-        REAL_CHILD(*args)
 
 
 class ModelProbeTests(unittest.TestCase):
@@ -262,7 +253,7 @@ class ModelProbeTests(unittest.TestCase):
             'http://127.0.0.1:1234/other', 'http://2130706433:1234/analysis']
         from contextlib import ExitStack
         targets = ['pathlib.Path.stat', 'pathlib.Path.lstat', 'pathlib.Path.open',
-                   'multiprocessing.get_context', 'socket.socket', 'os.open']
+                   'labflow.intake_model_probe._start_child', 'socket.socket', 'os.open']
         with ExitStack() as stack:
             guards = [stack.enter_context(patch(target, side_effect=AssertionError(target))) for target in targets]
             for endpoint in endpoints:
@@ -291,7 +282,7 @@ class ModelProbeTests(unittest.TestCase):
         marker = existing/'marker'
         marker.write_bytes(CANARY.encode('ascii'))
         for output in (existing, marker, self.root/'missing/leaf'):
-            with patch('multiprocessing.get_context') as process, patch('socket.socket') as network:
+            with patch.object(probe, '_start_child') as process, patch('socket.socket') as network:
                 with self.assertRaises(ValueError): self.call('http://127.0.0.1:1234/analysis', output_dir=output)
                 process.assert_not_called()
                 network.assert_not_called()
@@ -307,7 +298,7 @@ class ModelProbeTests(unittest.TestCase):
                 return SimpleNamespace(st_mode=info.st_mode, st_file_attributes=1024)
             return info
         with patch.object(Path, 'lstat', reparse), patch('os.open') as writes, \
-             patch('multiprocessing.get_context') as processes:
+             patch.object(probe, '_start_child') as processes:
             with self.assertRaises(ValueError): self.call('http://127.0.0.1:1234/analysis')
             writes.assert_not_called()
             processes.assert_not_called()
@@ -349,6 +340,33 @@ class ModelProbeTests(unittest.TestCase):
         self.assert_result(result, 'rejected')
         self.assertIs(result['response_complete'], False)
 
+    def test_chunked_trailer_must_have_complete_final_crlf(self):
+        for mode in ('chunked_zero_eof', 'chunked_trailer_eof', 'chunked_trailer_no_blank', 'chunked_lf_trailer'):
+            with self.subTest(mode=mode):
+                server, endpoint = self.server(mode)
+                result, output = self.call(endpoint)
+                self.assert_result(result, 'rejected')
+                self.assertIs(result['response_complete'], False)
+                self.assertIsNone(result['response_sha256'])
+                self.assertEqual((output/'response-prefix.bin').read_bytes(), server.response_body)
+
+    def test_valid_chunked_trailer_is_strictly_decoded_in_parent(self):
+        for mode in ('chunked_trailer', 'chunked_extensions'):
+            server, endpoint = self.server(mode)
+            result, output = self.call(endpoint)
+            self.assert_result(result, 'validated_response')
+            self.assertIs(result['response_complete'], True)
+            self.assertEqual((output/'response-prefix.bin').read_bytes(), server.response_body)
+
+    def test_chunk_size_and_data_delimiters_must_be_complete_crlf(self):
+        for mode in ('chunked_lf_size', 'chunked_bad_separator'):
+            with self.subTest(mode=mode):
+                server, endpoint = self.server(mode)
+                result, _ = self.call(endpoint)
+                self.assert_result(result, 'rejected')
+                self.assertIs(result['response_complete'], False)
+                self.assertIsNone(result['response_sha256'])
+
     def test_oversize_response_retains_only_bounded_unverified_prefix(self):
         server, endpoint = self.server('too_large')
         result, output = self.call(endpoint)
@@ -387,17 +405,23 @@ class ModelProbeTests(unittest.TestCase):
         server, endpoint = self.server()
         with patch.dict(os.environ, {'HTTP_PROXY': proxy_endpoint, 'ALL_PROXY': proxy_endpoint,
                                     'http_proxy': proxy_endpoint, 'NO_PROXY': ''}), \
-             patch.object(probe, '_probe_child', no_dns_child):
+             patch.object(probe, '_BOOTSTRAP', "import socket; socket.getaddrinfo=lambda *a,**k: (_ for _ in ()).throw(AssertionError('DNS forbidden')); "+probe._BOOTSTRAP):
             result, _ = self.call(endpoint)
         self.assert_result(result, 'validated_response')
         self.assertEqual((len(server.requests), len(proxy.requests)), (1, 0))
 
     def test_slow_headers_and_body_obey_parent_total_deadline_and_cleanup(self):
-        baseline = {child.pid for child in multiprocessing.active_children()}
+        children = []
+        actual = probe._start_child
+        def start(*args):
+            child = actual(*args)
+            children.append(child)
+            return child
         for mode in ('slow_header', 'slow_body'):
             server, endpoint = self.server(mode)
             started = time.monotonic()
-            result, output = self.call(endpoint, timeout_seconds=1.2)
+            with patch.object(probe, '_start_child', side_effect=start):
+                result, output = self.call(endpoint, timeout_seconds=1.2)
             self.assertLess(time.monotonic()-started, 3)
             self.assert_result(result, 'timeout')
             self.assertEqual(result['reason_code'], 'deadline_exceeded')
@@ -405,11 +429,12 @@ class ModelProbeTests(unittest.TestCase):
             self.assertIsNone(result['response_sha256'])
             self.assertEqual(len(server.requests), 1)
             self.assertLessEqual((output/'response-prefix.bin').stat().st_size, 2*1024*1024+1)
-        self.assertEqual({child.pid for child in multiprocessing.active_children()}, baseline)
+        self.assertEqual(len(children), 2)
+        self.assertTrue(all(child.pid and child.poll() is not None for child in children))
 
     def test_child_crash_is_sanitized_and_not_retried(self):
         server, endpoint = self.server()
-        with patch.object(probe, '_probe_child', crashing_child):
+        with patch.object(probe, '_BOOTSTRAP', 'import os; os._exit(7)'):
             result, _ = self.call(endpoint)
         self.assert_result(result, 'rejected')
         self.assertEqual(result['reason_code'], 'child_failed')
@@ -443,13 +468,12 @@ class ModelProbeTests(unittest.TestCase):
         server, endpoint = self.server()
         context_file = self.root/'context.json'
         context_file.write_text(canonical(self.context), encoding='utf-8')
+        noisy_bootstrap = "import os; os.write(1,b'"+CANARY+"'); os.write(2,b'"+CANARY+"'); raise RuntimeError('"+CANARY+"')"
         script = (
-            "import sys,json; sys.path.insert(0,'tests'); "
-            "from pathlib import Path; from unittest.mock import patch; "
-            "from test_intake_model_probe import noisy_child; "
+            "import sys,json; from pathlib import Path; "
             "from labflow import intake_model_probe as p; "
             "context=json.loads(Path(sys.argv[1]).read_text(encoding='utf-8')); "
-            "guard=patch.object(p,'_probe_child',noisy_child); guard.start(); "
+            "p._BOOTSTRAP="+repr(noisy_bootstrap)+"; "
             "result=p.probe_loopback_analysis(context,endpoint=sys.argv[2],producer_name=sys.argv[3],output_dir=sys.argv[4]); "
             "print(result['reason_code'])"
         )
@@ -459,7 +483,35 @@ class ModelProbeTests(unittest.TestCase):
             env={**os.environ, 'PYTHONUTF8': '1', 'PYTHONDONTWRITEBYTECODE': '1'})
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertNotIn(CANARY, completed.stdout+completed.stderr)
-        self.assertEqual(completed.stdout.strip(), 'transport_error')
+        self.assertNotIn('Traceback', completed.stdout+completed.stderr)
+        self.assertEqual(completed.stdout.strip(), 'child_failed')
+        self.assertEqual(server.requests, [])
+
+    def test_caller_main_is_not_replayed_or_leaked_before_child_target(self):
+        server, endpoint = self.server()
+        context_file = self.root/'bootstrap-context.json'
+        context_file.write_text(canonical(self.context), encoding='utf-8')
+        caller = self.root/'caller.py'
+        caller.write_text(
+            "import os,sys,json\nfrom pathlib import Path\n"
+            "if __name__ == '__mp_main__':\n"
+            "    os.write(1, b'"+CANARY+"')\n"
+            "    os.write(2, b'"+CANARY+"')\n"
+            "    raise RuntimeError('"+CANARY+"')\n"
+            "if __name__ == '__main__':\n"
+            "    sys.path.insert(0,sys.argv[1])\n"
+            "    from labflow.intake_model_probe import probe_loopback_analysis\n"
+            "    context=json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))\n"
+            "    result=probe_loopback_analysis(context,endpoint=sys.argv[3],producer_name=sys.argv[4],output_dir=sys.argv[5])\n"
+            "    print(result['status'])\n", encoding='utf-8')
+        completed = subprocess.run([sys.executable, '-X', 'utf8', '-B', str(caller),
+            str(Path(__file__).resolve().parents[1]), str(context_file), endpoint, NAME,
+            str(self.root/'bootstrap-run')], capture_output=True, text=True, encoding='utf-8', timeout=15)
+        self.assertNotIn(CANARY, completed.stdout+completed.stderr)
+        self.assertNotIn('Traceback', completed.stdout+completed.stderr)
+        self.assertEqual(completed.returncode, 0)
+        self.assertEqual(completed.stdout.strip(), 'validated_response')
+        self.assertEqual(len(server.requests), 1)
 
     def test_reparse_response_file_is_rejected_before_following_exists_stat(self):
         from types import SimpleNamespace
@@ -477,7 +529,7 @@ class ModelProbeTests(unittest.TestCase):
 
     def test_child_start_failure_is_sanitized_without_retry_or_network(self):
         server, endpoint = self.server()
-        with patch('multiprocessing.get_context', side_effect=OSError(CANARY)) as starts:
+        with patch.object(probe, '_start_child', side_effect=OSError(CANARY)) as starts:
             result, output = self.call(endpoint)
         self.assert_result(result, 'rejected')
         self.assertEqual(result['reason_code'], 'child_start_failed')
@@ -487,11 +539,11 @@ class ModelProbeTests(unittest.TestCase):
 
     def test_parent_deadline_includes_process_startup_time(self):
         server, endpoint = self.server()
-        actual = multiprocessing.get_context
-        def slow_context(*args):
+        actual = probe._start_child
+        def slow_start(*args):
             time.sleep(.2)
             return actual(*args)
-        with patch('multiprocessing.get_context', side_effect=slow_context):
+        with patch.object(probe, '_start_child', side_effect=slow_start):
             result, _ = self.call(endpoint, timeout_seconds=.1)
         self.assert_result(result, 'timeout')
         self.assertEqual(result['reason_code'], 'deadline_exceeded')
@@ -501,7 +553,7 @@ class ModelProbeTests(unittest.TestCase):
         server, endpoint = self.server()
         output = self.root/'write-failure'
         with patch.object(probe, '_write_new', side_effect=OSError(CANARY)), \
-             patch('multiprocessing.get_context') as processes:
+             patch.object(probe, '_start_child') as processes:
             with self.assertRaisesRegex(ValueError, '^probe_evidence_error$'):
                 self.call(endpoint, output_dir=output)
             processes.assert_not_called()
@@ -541,30 +593,34 @@ class ModelProbeTests(unittest.TestCase):
     def test_owned_child_cleanup_uses_kill_only_after_terminate_did_not_stop(self):
         actions = []
         class Child:
-            alive = True
-            def is_alive(self): return self.alive
+            returncode = None
+            def poll(self): return self.returncode
             def terminate(self): actions.append('terminate')
-            def join(self, seconds): actions.append(('join', seconds))
+            def wait(self, timeout):
+                actions.append(('wait', timeout))
+                if self.returncode is None: raise subprocess.TimeoutExpired('owned', timeout)
             def kill(self):
                 actions.append('kill')
-                self.alive = False
+                self.returncode = 0
         child = Child()
         self.assertIs(probe._stop(child), True)
-        self.assertEqual(actions, ['terminate', ('join', .25), 'kill', ('join', .25)])
+        self.assertEqual(actions, ['terminate', ('wait', .25), 'kill', ('wait', .25)])
 
     def test_unconfirmed_child_is_quarantined_without_reading_live_response_files(self):
-        from types import SimpleNamespace
         actions = []
         class Child:
-            exitcode = None
-            def start(self): actions.append('start')
-            def is_alive(self): return True
-            def join(self, seconds): actions.append('join')
+            returncode = None
+            def poll(self): return None
+            def wait(self, timeout):
+                actions.append('wait')
+                raise subprocess.TimeoutExpired('owned', timeout)
             def terminate(self): actions.append('terminate')
             def kill(self): actions.append('kill')
             def close(self): actions.append('close')
-        factory = SimpleNamespace(Process=lambda **kwargs: Child())
-        with patch('multiprocessing.get_context', return_value=factory), \
+        def start(*args):
+            actions.append('start')
+            return Child()
+        with patch.object(probe, '_start_child', side_effect=start), \
              patch.object(probe.time, 'monotonic', side_effect=[0, 1]), \
              patch.object(probe, '_read', side_effect=AssertionError('live response')) as reads, \
              patch('socket.socket') as network:
@@ -582,7 +638,7 @@ class ModelProbeTests(unittest.TestCase):
         parent = self.root/('x'*max(1, 175-len(str(self.root))))
         parent.mkdir()
         target = parent/('y'*70)
-        with patch('multiprocessing.get_context') as processes, patch('os.open') as writes:
+        with patch.object(probe, '_start_child') as processes, patch('os.open') as writes:
             with self.assertRaisesRegex(ValueError, '^probe_output_invalid$'):
                 self.call('http://127.0.0.1:1234/analysis', output_dir=target)
             processes.assert_not_called()

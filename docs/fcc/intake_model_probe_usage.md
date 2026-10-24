@@ -23,11 +23,11 @@ output_dir는 부모가 이미 존재하는 새 로컬 디렉터리다. 기존 �
 
 POST body는 build_analysis_prompt의 exact DTO를 canonical UTF-8 JSON으로 직렬화한 bytes이며 Content-Type은 application/json이다. 서버의 200 body는 raw analysis JSON이다. 공급자 API 형식이나 실제 모델 응답으로 표시하지 않는다.
 
-전송은 import 가능한 trusted spawn child 하나에서 수행한다. child에는 port·동결한 요청 bytes·private 증거 위치·timeout만 전달한다. Store·token·lease는 보내지 않는다. child의 Python stdout/stderr와 native 출력은 폐기하고 원시 예외는 작은 고정 코드로 바꾼다. 서버의 오류 본문은 public 결과나 오류 메시지에 복사하지 않는다.
+전송은 고정 entrypoint의 trusted child 하나에서 수행한다. OS process 생성부터 stdin/stdout/stderr를 DEVNULL로 지정하고 `-I -S -B`로 격리한 Python의 고정 bootstrap만 실행한다. 호출자의 `__main__`을 재-import하거나 부모 전역 stdio를 바꾸지 않는다. child에는 port·private 증거 위치·timeout·요청 hash만 전달한다. child는 이미 동결해 쓴 prompt bytes를 제한 크기로 읽고 동일 hash를 확인한다. Store·token·lease는 보내지 않는다. bootstrap과 import 단계부터 Python stdout/stderr·native 출력·원시 traceback을 전달하지 않으며 전송 예외는 작은 고정 코드로 바꾼다. 서버의 오류 본문은 public 결과나 오류 메시지에 복사하지 않는다.
 
-부모 monotonic deadline은 child 생성/시작 전에 계산하므로 startup·header·slow body를 합쳐 제한한다. 대기가 일찍 반환되면 남은 시간을 다시 확인한다. 초과하면 자기 child만 terminate/join 0.25초, 필요하면 kill/join 0.25초로 정리한다. 타 process/server는 종료하지 않는다. OS process 생성과 부모의 동기 파일 I/O·정리 전체는 강제 취소할 수 없으므로 API 전체 호출의 엄격한 실시간 상한은 아니다.
+부모 monotonic deadline은 child 생성/시작 전에 계산하므로 startup·header·slow body를 합쳐 제한한다. 대기가 일찍 반환되면 남은 시간을 다시 확인한다. 초과하면 자기 child만 terminate/wait 0.25초, 필요하면 kill/wait 0.25초로 정리한다. 타 process/server는 종료하지 않는다. OS process 생성과 부모의 동기 파일 I/O·정리 전체는 강제 취소할 수 없으므로 API 전체 호출의 엄격한 실시간 상한은 아니다.
 
-child는 response prefix를 flush하며 최대 2 MiB+1 bytes까지만 보존한다. HTTP header의 UTF-8·완결·Content-Length/Transfer-Encoding 충돌과 body 완결을 확인한다. redirect·비200·과대·불완전 응답은 성공으로 바꾸지 않는다. child 종료와 증거 길이/hash를 확인한 뒤 **부모가** strict decoder로 producer·context·파일/페이지/quote를 검사한다.
+child는 response prefix를 flush하며 최대 2 MiB+1 bytes까지만 보존한다. HTTP header의 UTF-8·완결·Content-Length/Transfer-Encoding 충돌과 body 완결을 확인한다. chunked는 size line·data delimiter·마지막 trailer section의 CRLF를 실제로 확인하며 `0\r\n` 뒤 EOF나 잘린 trailer를 완결로 취급하지 않는다. 정상적인 빈 trailer·trailer header·chunk extension은 허용한다. redirect·비200·과대·불완전 응답은 성공으로 바꾸지 않는다. child 종료와 증거 길이/hash를 확인한 뒤 **부모가** strict decoder로 producer·context·파일/페이지/quote를 검사한다.
 
 종료를 확인하지 못하면 `termination_failed`로 격리한다. 이 경우 응답 파일을 읽거나 닫힌 증거 manifest로 취급하지 않으며 자동 새 child 재시도는 없다. 사용자 취소나 OS 실패를 안전한 중단이라고 과장하지 않는다.
 
@@ -76,4 +76,4 @@ python -X utf8 -B -m unittest discover -s tests -q
 python scripts/check_artifacts.py
 ```
 
-전용 검사는 자기 127.0.0.1 port0 fake 서버만 사용한다. 기존 8765/8766 서버에 연결하지 않는다. 실제 TXT/PDF context→child POST→부모 decode, 정확한 2 MiB/과대 prefix, 오류/redirect/proxy/DNS·UTF-8/중복 키/NaN/Unicode·근거 결합, partial/slow header/slow body, crash/startup/정리, 경로 거절·별칭·증거 변조, domain DB byte 불변을 확인한다. raw 응답은 합성으로 작성한 계약 fixture이며 실제 AI 출력이 아니다.
+전용 검사는 자기 127.0.0.1 port0 fake 서버만 사용한다. 기존 8765/8766 서버에 연결하지 않는다. 실제 TXT/PDF context→child POST→부모 decode, 정확한 2 MiB/과대 prefix, 오류/redirect/proxy/DNS·UTF-8/중복 키/NaN/Unicode·근거 결합, chunk/trailer 완결·partial/slow header/slow body, crash/startup/정리, caller bootstrap 재실행·출력 유출 방지, 경로 거절·별칭·증거 변조, domain DB byte 불변을 확인한다. raw 응답은 합성으로 작성한 계약 fixture이며 실제 AI 출력이 아니다.
