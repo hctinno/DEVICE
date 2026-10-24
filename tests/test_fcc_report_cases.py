@@ -238,6 +238,24 @@ class FccReportCaseTests(unittest.TestCase):
         with mock.patch.object(cases, "extract_document", side_effect=AssertionError("parser called")):
             self.error("fcc_case_limit_exceeded")
 
+    def test_evidence_quote_line_and_footnote_limits_are_checked_before_parser(self):
+        original = deepcopy(self.packet)
+        for changes in ({"quote": "x" * 8193}, {"line_end": 41}, {"footnotes": ["note"] * 17}):
+            self.packet = deepcopy(original)
+            self.claim("report.number")["evidence"][0].update(changes)
+            with self.subTest(changes=list(changes)), \
+                    mock.patch.object(cases, "extract_document", side_effect=AssertionError("parser called")) as parser:
+                self.error("fcc_case_limit_exceeded" if "footnotes" in changes else "fcc_case_invalid_evidence")
+                parser.assert_not_called()
+
+    def test_repeated_non_identifier_notes_and_footnotes_are_preserved(self):
+        self.packet["scope"]["search_scope_notes"] = ["Same note", "Same note"]
+        self.claim("report.number")["evidence"][0]["footnotes"] = ["Same footnote", "Same footnote"]
+        catalog = self.catalog()
+        self.assertEqual(catalog.summary()["scope"]["search_scope_notes"], ["Same note", "Same note"])
+        self.assertEqual(catalog.case("CASE-A")["case"]["claims"][0]["evidence"][0]["footnotes"],
+                         ["Same footnote", "Same footnote"])
+
     def test_html_malformed_encrypted_and_wrong_physical_pages_are_not_verified(self):
         original_packet, original_sources = deepcopy(self.packet), self.sources.copy()
         for payload in (b"<html>not a PDF</html>", b"%PDF-1.7\nmalformed"):
