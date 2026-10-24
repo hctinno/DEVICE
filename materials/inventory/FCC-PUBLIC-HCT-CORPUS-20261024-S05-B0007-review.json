@@ -1,0 +1,91 @@
+{
+  "record_id": "FCC-PUBLIC-HCT-CORPUS-20261024-S05-B0007",
+  "project_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "reviewed_at": "2026-10-24T13:53:24.958456+09:00",
+  "publication_kind": "non_sensitive_bibliography_hash_scope_status_only",
+  "source": {
+    "report_id": "HCT-RF-2601-FC001-R1",
+    "revision": "1",
+    "FCC_ID": "2BO3LLGSRFR3W",
+    "title": "LGSRFR3W FCC RF test report R1",
+    "issuer": "HCT CO., LTD., Republic of Korea",
+    "report_issue_date": "2026-01-19",
+    "report_family": "Part15.255 RF module",
+    "original_SHA256": "f17c3c261dca660238ef64c9ef053f9a9136163690c88d7a0bdfd43cf67e08ff",
+    "original_bytes": 4866367,
+    "physical_pages": 42,
+    "observed_official_attachment_URL": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9017308",
+    "actual_public_mirror_copy_URL": "https://fccid.io/m/f17c3c261dca660238ef64c9ef053f9a9136163690c88d7a0bdfd43cf67e08ff.pdf",
+    "access": "official_attachment403_preserved; mirror_actual_PDF_bytes_verified",
+    "official_application_and_exhibit_body_mapping": "pending",
+    "revision0_original_and_external_setup_photo": "not_acquired",
+    "public_original_redistribution_rights": "not_established"
+  },
+  "bounded_review": {
+    "new_unique_original_PDFs": 1,
+    "issuer_and_issue_window_confirmed_from_report": 1,
+    "physical_pages_all_text_hashes_checked": 42,
+    "private_bounded_facts": 16,
+    "power_arithmetic_rows_recomputed": 4,
+    "selected_AC_margin_rows_recomputed": 2,
+    "independently_visually_reviewed_pages": 5,
+    "full_semantic_analysis_complete": false,
+    "official_body_or_application_mapping_verified": 0,
+    "current_normative_approval": 0,
+    "independent_AI_evaluation_or_external_model_training": 0,
+    "new_native_raw_or_fresh_measurements_or_physical_validation": 0,
+    "open_conflict_categories": [
+      "summary_and_result_table_limits_reference_planes_units_detectors",
+      "procedure_and_result_supply_conditions"
+    ],
+    "missing": [
+      "revision0_original",
+      "external_setup_photo",
+      "remaining_plot_table_semantics",
+      "exact_standard_fulltext_crosscheck",
+      "official_application_exhibit_relationship"
+    ]
+  },
+  "private_development_intake": {
+    "payload_files": 17,
+    "payload_bytes": 5002139,
+    "JSON_files": 16,
+    "original_PDFs": 1,
+    "index_bytes": 3919,
+    "index_SHA256": "75d00b3f1e06a2bcf9cb498723464af6ee7cf9d3695359768200123086ccc552",
+    "state": "independent_receiver_ACK_and_P01_source_clone_all_payload_hashes_verified",
+    "receiver_ACK_is_not_full_content_or_normative_review": true
+  },
+  "parent_access_failure": {
+    "previous_unit_original_PDFs": 0,
+    "previous_HTML_failure_preserved": true,
+    "access_recovered_by_this_actual_mirror_PDF": true,
+    "official403_not_resolved": true,
+    "same_report_not_counted_twice": true
+  },
+  "whole_corpus": {
+    "issue_window_start": "2025-01-01",
+    "overall_collection_closed_at": null,
+    "scope": "HCT domestic issuers/facilities and HCT America; all products, RF/EMC/SAR/HAC/DFS, revisions, parts, appendices and setup",
+    "total_population": null,
+    "population_coverage": "unverified_open",
+    "complete": false,
+    "this_unit_does_not_complete_bgn_Part15_247_case_or_HCT_America_coverage": true
+  },
+  "public_payload": {
+    "originals": 0,
+    "extracted_report_body": 0,
+    "case_measurement_values": 0,
+    "photos_or_rendered_images": 0,
+    "source_code": 0
+  },
+  "boundaries": [
+    "Part15.255 report facts are not a b/g/n Part15.247 case.",
+    "Report-derived power and sourcePASS are not native instrument raw, fresh measurement or legal conformity approval.",
+    "Historic equipment/calibration citations are not current asset availability, calibration validity or adapter support.",
+    "Public accessibility is not redistribution or external-model/training permission; originals and bounded facts remain private.",
+    "This additional projection does not change historical20public collection batch counts or establish whole laboratory completion."
+  ],
+  "new_user_preparation_requests": 0
+}
