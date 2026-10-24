@@ -67,7 +67,7 @@ analysis는 첫 I/O 전에 유한 JSON·유효 UTF-8·최대 8MiB의 독립 사�
 
 replay 오류는 generation_replay_ 접두사의 invalid_analysis/analysis_limit/invalid_job, origin_invalid/token_mismatch/submission_mismatch, result_invalid/snapshot_invalid/binding_invalid/storage_error다. 알려진 ledger schema 오류는 기존 generation_ledger_schema_mismatch를 유지한다. raw token·제출 내용·경로·원시 예외는 오류에 넣지 않는다.
 
-[replay 검사](../../tests/test_intake_generation_replay.py)는 실제 수입 V2와 과거 revision, profile 변경·parser 미설치 상태, 부재만 None, 손상/불일치 거절, 최초 DB/blob 읽기 이후 caller 변조, detached 반환, 단일 DB 읽기·raw token 조회0·전체 rows/DB/source/blob bytes 불변을 확인한다. complete_job의 최초 snapshot 이후·현재 준비 이전에 호출하는 공통 접점과 통합 회귀는 총괄 소유다.
+[replay 검사](../../tests/test_intake_generation_replay.py)는 실제 수입 V2와 과거 revision, profile 변경·parser 미설치 상태, 부재만 None, 손상/불일치 거절, 최초 DB/blob 읽기 이후 caller 변조, detached 반환, 단일 DB 읽기·raw token 조회0·전체 rows/DB/source/blob bytes 불변을 확인한다. 총괄은 complete_job의 최초 snapshot 이후·현재 준비 이전에 helper를 연결했다. [공통 통합 회귀](../../tests/test_intake_generation_replay_integration.py)의 stale profile·과거 revision 원래 summary·부재 legacy 경로·거절 시 fallback 금지를 RED(2실패/1오류)→GREEN4개로 확인했다. 관련 GEN/jobs/documents/worker/fixture/source 검사274개가 skip 없이 통과했고 당시 소스 bytes는 불변이다.
 
 ## 실패와 검증
 
@@ -78,6 +78,7 @@ ValueError에는 고정 generation_ 코드만 넣는다. 입력·기대값은 in
 ```powershell
 python -B -m unittest discover -s tests -p test_intake_generation_ledger.py
 python -B -m unittest discover -s tests -p test_intake_generation_replay.py
+python -B -m unittest discover -s tests -p test_intake_generation_replay_integration.py
 python -B -m unittest discover -s tests -p 'test_intake*.py'
 python -B scripts/check_artifacts.py
 ```

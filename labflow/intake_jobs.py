@@ -170,6 +170,13 @@ def complete_job(store, job_id, token, analysis, *, now=None):
         raise ValueError('Invalid analysis JSON') from None
     if now is not None:
         timestamp(now)
+    # An imported completion is validated against its retained profile before
+    # current document preparation. None alone permits the legacy path; a
+    # damaged origin or mismatched replay must propagate its rejection.
+    from . import intake_generation_ledger
+    retained = intake_generation_ledger.replay_imported_completion(store, job_id, token, analysis)
+    if retained is not None:
+        return retained
     with store.connection() as con:
         job = con.execute('SELECT * FROM intake_jobs WHERE job_id=?', (job_id,)).fetchone()
         if job is None or job['token'] != token:
