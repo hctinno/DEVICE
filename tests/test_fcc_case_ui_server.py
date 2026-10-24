@@ -5,6 +5,9 @@ import http.client
 from io import BytesIO
 import json
 from pathlib import Path
+import socket
+import subprocess
+import sys
 import tempfile
 import threading
 import unittest
@@ -380,6 +383,205 @@ class FccCaseUiServerTests(unittest.TestCase):
         for target in ['/fcc-cases/discovery_model.mjs', '/fcc-cases/discovery_view.mjs']:
             self.assertEqual(self.request(server, target)[0], 200)
         self.error(server, '/fcc-cases/discovery_model.test.mjs', 404, 'route_not_found')
+
+
+class FccCaseCalculationUiServerTests(unittest.TestCase):
+    """039 genuine synthetic service versus bounded transport; collected source0."""
+    setUp = FccCaseUiServerTests.setUp
+    start = FccCaseUiServerTests.start
+    request = FccCaseUiServerTests.request
+    error = FccCaseUiServerTests.error
+
+    def inputs(self, **kwargs):
+        from tests.test_fcc_case_calculation import inputs
+        return inputs(**kwargs)[:2]
+
+    def post(self, server, body=b'{}', *, headers=None, target='/api/fcc-cases/calculations', short=False):
+        if not isinstance(body, bytes):
+            body = json.dumps(body, ensure_ascii=False, allow_nan=False, separators=(',', ':')).encode('utf-8')
+        if headers is None:
+            headers = [('Content-Type', 'application/json'), ('Content-Length', str(len(body)))]
+        connection = http.client.HTTPConnection(*server.server_address, timeout=8)
+        try:
+            # One packet avoids a Windows race: the intentionally invalid header
+            # can be rejected before http.client sends its separate body packet.
+            connection.connect()
+            rows = ['POST ' + target + ' HTTP/1.1',
+                    'Host: 127.0.0.1:' + str(server.server_port)]
+            rows += [key + ': ' + value for key, value in headers]
+            connection.sock.sendall(('\r\n'.join(rows) + '\r\n\r\n').encode('ascii') + body)
+            if short:
+                connection.sock.shutdown(socket.SHUT_WR)
+            response = http.client.HTTPResponse(connection.sock)
+            response.begin()
+            return response.status, dict(response.getheaders()), response.read()
+        finally:
+            connection.close()
+
+    def test_none_fresh_process_keeps021036_import0_and_static503(self):
+        program = '''
+import http.client,json,sys,tempfile,threading
+from labflow.ui_server import create_server
+with tempfile.TemporaryDirectory() as workspace:
+ server=create_server(workspace,port=0)
+ thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+ try:
+  connection=http.client.HTTPConnection(*server.server_address,timeout=5)
+  connection.request('POST','/api/fcc-cases/calculations',body=b'{}',headers={'Content-Type':'application/json'})
+  response=connection.getresponse();status=response.status;body=json.loads(response.read());connection.close()
+  print(json.dumps({'status':status,'body':body,'021':'labflow.fcc_report_cases' in sys.modules,'036':'labflow.fcc_case_calculation' in sys.modules}))
+ finally:
+  server.shutdown();server.server_close();thread.join(5)
+  assert not thread.is_alive()
+'''
+        result = subprocess.run([sys.executable, '-X', 'utf8', '-B', '-c', program],
+                                cwd=Path(__file__).resolve().parents[1], capture_output=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr.decode('utf-8'))
+        self.assertEqual(json.loads(result.stdout), {'status': 503,
+            'body': {'error': {'code': 'fcc_case_catalog_unconfigured'}}, '021': False, '036': False})
+
+    def test_genuine_post_exact036_once_and_no_store_or_execution_authority(self):
+        from labflow import fcc_case_calculation as service
+        catalog, command = self.inputs()
+        expected = service.calculate_case_claim(catalog, command)
+        with patch.object(service, 'calculate_case_claim', wraps=service.calculate_case_claim) as observed:
+            server = self.start(catalog, explicit=True)
+            status, headers, body = self.post(server, command)
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body), expected)
+        self.assertEqual(observed.call_count, 1)
+        self.assertEqual(headers['Cache-Control'], 'no-store')
+        self.assertEqual(headers['X-Content-Type-Options'], 'nosniff')
+        self.assertEqual(headers['Content-Length'], str(len(body)))
+        self.assertFalse(expected['execution_authorized'])
+        self.assertEqual(expected['result']['inputs'][0]['value'], 0)
+
+    def test_insufficient_and_service_rejected_are200_and_invalid_context_is_null(self):
+        catalog, command = self.inputs()
+        server = self.start(catalog, explicit=True)
+        wrong_rule = deepcopy(command); wrong_rule['calculation_request']['rule'] += '-OTHER'
+        status, _, body = self.post(server, wrong_rule)
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body)['status'], 'insufficient_evidence')
+        self.assertIsNone(json.loads(body)['result']['calculation'])
+        invalid = deepcopy(command); invalid['schema_version'] = True
+        status, _, body = self.post(server, invalid)
+        value = json.loads(body)
+        self.assertEqual(status, 200)
+        self.assertEqual(value['error_code'], 'fcc_case_calculation_invalid_request')
+        self.assertEqual(value['status'], 'rejected')
+        self.assertIsNone(value['request_context']); self.assertIsNone(value['case_id'])
+        missing = deepcopy(command); missing['case_id'] = 'SYNTH-MISSING'
+        status, _, body = self.post(server, missing)
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body)['error_code'], 'fcc_case_not_found')
+        self.assertEqual(json.loads(body)['request_context'], missing)
+
+    def test_calculation_get_head_post_only_and_other405_policies_preserved(self):
+        catalog, command = self.inputs(); server = self.start(catalog, explicit=True)
+        get_status, headers, get_body = self.request(server, '/api/fcc-cases/calculations')
+        self.assertEqual(get_status, 405); self.assertEqual(headers['Allow'], 'POST')
+        head_status, head_headers, head_body = self.request(server, '/api/fcc-cases/calculations', method='HEAD')
+        self.assertEqual(head_status, 405); self.assertEqual(head_body, b'')
+        self.assertEqual(head_headers['Content-Length'], str(len(get_body)))
+        for target in ['/', '/api/fcc-cases/summary', '/api/fcc-cases/lookup',
+                       '/api/fcc-cases/calculations?x=1', '/api/fcc-cases//calculations',
+                       '/api/fcc-cases/%63alculations', '/api/fcc-cases/calculations/']:
+            status, _, body = self.post(server, command, target=target)
+            self.assertEqual(status, 405, target)
+            self.assertEqual(json.loads(body), {'error': {'code': 'read_only'}})
+        for method in ['PUT', 'PATCH', 'DELETE', 'OPTIONS']:
+            self.assertEqual(self.request(server, '/api/fcc-cases/calculations', method=method)[0], 405)
+        for target in ['/api/fcc-cases/summary', '/api/fcc-cases/cases/' + command['case_id']]:
+            self.assertEqual(self.request(server, target)[0], 200)
+
+    def test_wire_headers_json_depth_nodes_are_bounded_before_service(self):
+        from labflow import fcc_case_calculation as service
+        catalog, _ = self.inputs()
+        variants = [
+            (b'{}', [('Content-Type', 'application/json')], 411, 'fcc_case_calculation_invalid_request'),
+            (b'{}', [('Content-Type', 'text/plain'), ('Content-Length', '2')], 415, 'fcc_case_calculation_invalid_request'),
+            (b'{}', [('Content-Type', 'application/json'), ('Content-Length', '2'), ('Content-Length', '2')], 400, 'fcc_case_calculation_invalid_request'),
+            (b'{}', [('Content-Type', 'application/json'), ('Content-Length', '2'), ('Transfer-Encoding', 'chunked')], 400, 'fcc_case_calculation_invalid_request'),
+            (b'{}', [('Content-Type', 'application/json'), ('Content-Length', '2'), ('Expect', '100-continue')], 417, 'fcc_case_calculation_invalid_request'),
+            (b'', [('Content-Type', 'application/json'), ('Content-Length', '-1')], 400, 'fcc_case_calculation_invalid_request'),
+            (b'', [('Content-Type', 'application/json'), ('Content-Length', '65537')], 413, 'fcc_case_calculation_limit_exceeded'),
+            (b'{}', [('Content-Type', 'application/json'), ('Content-Length', '2'), ('Content-Encoding', 'gzip')], 415, 'fcc_case_calculation_invalid_request'),
+        ]
+        for body in [b'\xef\xbb\xbf{}', b'{"x":1,"x":2}', b'{"x":NaN}', b'{"x":"\\ud800"}', b'{}x']:
+            variants.append((body, [('Content-Type', 'application/json'), ('Content-Length', str(len(body)))], 400, 'fcc_case_calculation_invalid_request'))
+        for body in [('[' * 33 + '0' + ']' * 33).encode(), ('[' + ','.join(['null'] * 4096) + ']').encode()]:
+            variants.append((body, [('Content-Type', 'application/json'), ('Content-Length', str(len(body)))], 413, 'fcc_case_calculation_limit_exceeded'))
+        with patch.object(service, 'calculate_case_claim', side_effect=AssertionError('PRIVATE_CANARY')) as observed:
+            server = self.start(catalog, explicit=True)
+            for body, headers, expected_status, code in variants:
+                with self.subTest(status=expected_status, body_bytes=len(body)):
+                    status, response_headers, raw = self.post(server, body, headers=headers)
+                    self.assertEqual(status, expected_status)
+                    self.assertEqual(json.loads(raw), {'error': {'code': code}})
+                    self.assertEqual(response_headers['Cache-Control'], 'no-store')
+                    self.assertNotIn(b'PRIVATE_CANARY', raw)
+            self.assertEqual(observed.call_count, 0)
+
+    def test_new_post_same_origin_is_strict_without_relaxing_existing_guards(self):
+        catalog, command = self.inputs(); server = self.start(catalog, explicit=True)
+        for origin in ['https://example.invalid', 'http://localhost:' + str(server.server_port)]:
+            raw = json.dumps(command).encode()
+            status, _, body = self.post(server, raw, headers=[('Content-Type', 'application/json'),
+                ('Content-Length', str(len(raw))), ('Origin', origin)])
+            self.assertEqual(status, 403)
+            self.assertEqual(json.loads(body), {'error': {'code': 'local_origin_required'}})
+        for site in ['cross-site', 'same-site']:
+            status, _, _ = self.post(server, b'{}', headers=[('Content-Type', 'application/json'),
+                ('Content-Length', '2'), ('Sec-Fetch-Site', site)])
+            self.assertEqual(status, 403)
+
+    def test_short_and_timed_out_body_fail_closed_before_service(self):
+        from labflow import fcc_case_calculation as service
+        catalog, _ = self.inputs()
+        with patch.object(service, 'calculate_case_claim', side_effect=AssertionError('PRIVATE_CANARY')) as observed:
+            server = self.start(catalog, explicit=True)
+            headers = [('Content-Type', 'application/json'), ('Content-Length', '10')]
+            status, _, body = self.post(server, b'{}', headers=headers, short=True)
+            self.assertEqual(status, 400)
+            self.assertEqual(json.loads(body), {'error': {'code': 'fcc_case_calculation_invalid_request'}})
+            status, _, body = self.post(server, b'{}', headers=headers)
+            self.assertEqual(status, 408)
+            self.assertEqual(json.loads(body), {'error': {'code': 'fcc_case_calculation_unavailable'}})
+            self.assertEqual(observed.call_count, 0)
+
+    def test_genuine_long_parent_result_and_echo_not_narrowed_and_bad_output_sanitized(self):
+        from labflow import fcc_case_calculation as service
+        catalog, command = self.inputs(family='𠮷' * 16370, copies=8, explicit=True)
+        expected = service.calculate_case_claim(catalog, command)
+        self.assertEqual(expected['status'], 'calculated')
+        self.assertGreater(len(json.dumps(expected['result'], ensure_ascii=False).encode('utf-8')), 65536)
+        server = self.start(catalog, explicit=True)
+        status, _, body = self.post(server, command)
+        self.assertEqual(status, 200); self.assertEqual(json.loads(body), expected)
+        bad = deepcopy(expected); bad['execution_authorized'] = True
+        with patch.object(service, 'calculate_case_claim', return_value=bad):
+            other = self.start(catalog, explicit=True)
+            status, _, body = self.post(other, command)
+        self.assertEqual(status, 503)
+        self.assertEqual(json.loads(body), {'error': {'code': 'fcc_case_calculation_unavailable'}})
+
+    def test_optional036_failure_keeps_old_get_and_only_new_assets_are_served(self):
+        catalog, command = self.inputs(); original = ui_server.importlib.import_module
+        def fault(name, package=None):
+            if name == '.fcc_case_calculation':
+                raise RuntimeError('PRIVATE_CANARY')
+            return original(name, package)
+        with patch.object(ui_server.importlib, 'import_module', side_effect=fault):
+            server = self.start(catalog, explicit=True)
+            self.assertEqual(self.request(server, '/api/fcc-cases/summary')[0], 200)
+            status, _, body = self.post(server, command)
+        self.assertEqual(status, 503)
+        self.assertEqual(json.loads(body), {'error': {'code': 'fcc_case_calculation_unavailable'}})
+        for target in ['/fcc-cases/calculation_model.mjs', '/fcc-cases/calculation_view.mjs']:
+            self.assertEqual(self.request(server, target)[0], 200)
+        for target in ['/fcc-cases/calculation_model.test.mjs', '/fcc-cases/calculation_browser_check.cjs']:
+            self.assertEqual(self.request(server, target)[0], 404)
 
 
 if __name__ == '__main__':
