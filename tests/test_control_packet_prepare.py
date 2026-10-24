@@ -1,0 +1,480 @@
+"""Synthetic private-copy contracts; no collected payload fixtures or imports."""
+
+from __future__ import annotations
+
+import hashlib
+import io
+import json
+import os
+from pathlib import Path
+import stat
+import subprocess
+import tempfile
+import types
+import unittest
+import zipfile
+from unittest import mock
+
+from labflow import control_packet_prepare as prepare
+from labflow.control_packet_audit import audit_control_packet, ControlPacketAuditError
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+class ControlPacketPrepareTests(unittest.TestCase):
+    def setUp(self):
+        fixture_root = Path(__file__).resolve().parents[1] / ".local" / "CONTROL-PACKET-PREPARE-004-D1" / "fixtures"
+        fixture_root.mkdir(parents=True, exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(dir=fixture_root)
+        self.addCleanup(self.temp.cleanup)
+        self.base = Path(self.temp.name)
+        self.source = self.base / "\ud569\uc131-PRIVATE-SOURCE"
+        self.source.mkdir()
+        self.workspace = self.base / "\ud569\uc131-private-workspace"
+        self.workspace.mkdir()
+        self.packet_id = "SYNTHETIC-PREPARE-v1"
+        self.index = {
+            "request_id": "DEV-CONTROL-SOURCES-008", "revision": "SYNTHETIC-v1",
+            "source_code_executed": False, "runtime_or_hardware_support_confirmed": False,
+            "public_export_allowed": False, "files": [],
+            "observation": {"secret": "PRIVATE-SECRET", "serial": "PRIVATE-SERIAL"},
+        }
+        self.payload("metadata/data.json", b'{"synthetic":true,"secret":"PRIVATE-BODY"}')
+        self.payload("originals/source.py", b"raise RuntimeError('MUST NOT IMPORT PRIVATE-SERIAL')")
+        (self.source / "development-receipt.json").write_bytes(b'{"unlisted":"PRIVATE-SECRET"}')
+        self.save_index()
+
+    @property
+    def destination(self):
+        return self.workspace / ".local" / "control-packets" / self.packet_id
+
+    def payload(self, path, data):
+        file = self.source.joinpath(*path.split("/"))
+        file.parent.mkdir(parents=True, exist_ok=True)
+        file.write_bytes(data)
+        self.index["files"] = [row for row in self.index["files"] if row["path"].casefold() != path.casefold()]
+        self.index["files"].append({"path": path, "bytes": len(data), "sha256": sha(data)})
+
+    def save_index(self):
+        raw = json.dumps(self.index, ensure_ascii=True, separators=(",", ":")).encode("utf-8") + b"\n"
+        (self.source / "intake-v1.json").write_bytes(raw)
+        self.pin = sha(raw)
+
+    def call(self, **overrides):
+        options = {"expected_index_sha256": self.pin, "workspace_root": self.workspace,
+                   "packet_id": self.packet_id}
+        source = overrides.pop("source_dir", self.source)
+        options.update(overrides)
+        return prepare.prepare_control_packet(source, **options)
+
+    def snapshot(self):
+        return {p.relative_to(self.source).as_posix(): (p.read_bytes(), p.stat().st_size, p.stat().st_mtime_ns)
+                for p in self.source.rglob("*") if p.is_file()}
+
+    def error(self, code, **overrides):
+        with self.assertRaises(prepare.ControlPacketPrepareError) as caught:
+            self.call(**overrides)
+        error = caught.exception
+        self.assertIsInstance(error, ValueError)
+        self.assertEqual(error.code, code)
+        self.assertEqual(str(error), code)
+        self.assertEqual(error.args, (code,))
+        self.assertIsNone(error.__context__)
+        for forbidden in (str(self.source), str(self.workspace), "PRIVATE-SECRET", "PRIVATE-SERIAL", "PRIVATE-BODY"):
+            self.assertNotIn(forbidden, repr(error))
+
+    def incomplete(self):
+        self.assertTrue(self.destination.is_dir())
+        self.assertFalse((self.destination / "prepared-receipt.json").exists())
+
+    def test_exact_private_copy_receipt_and_source_unchanged(self):
+        before = self.snapshot()
+        expected_audit = audit_control_packet(self.source, expected_index_sha256=self.pin)
+        result = self.call()
+        self.assertEqual(result, {
+            "schema_version": 1, "kind": "control_packet_prepare", "packet_id": self.packet_id,
+            "destination_relpath": ".local/control-packets/" + self.packet_id,
+            "index_sha256": self.pin, "state": "complete", "audit_summary": expected_audit,
+            "support_status": "not_assessed", "public_export_allowed": False,
+            "source_code_executed": False, "runtime_or_hardware_support_confirmed": False,
+            "hardware_verified": False,
+        })
+        self.assertEqual(before, self.snapshot())
+        marker = self.destination / "prepared-receipt.json"
+        self.assertEqual(json.loads(marker.read_bytes()), result)
+        temporary = list(self.destination.glob(".prepared-receipt-*.tmp"))
+        self.assertEqual(len(temporary), 1)
+        self.assertEqual(temporary[0].read_bytes(), marker.read_bytes())
+        expected_files = {row["path"] for row in self.index["files"]} | {"intake-v1.json"}
+        actual_files = {p.relative_to(self.destination).as_posix()
+                        for p in self.destination.rglob("*") if p.is_file()}
+        self.assertEqual(actual_files - {"prepared-receipt.json", temporary[0].name}, expected_files)
+        for relative in expected_files:
+            self.assertEqual((self.destination / relative).read_bytes(), (self.source / relative).read_bytes())
+        self.assertEqual(audit_control_packet(self.destination, expected_index_sha256=self.pin), expected_audit)
+        self.assertNotIn("PRIVATE-", json.dumps(result))
+
+    def test_return_is_detached_from_receipt_and_next_preparation(self):
+        result = self.call()
+        marker = self.destination / "prepared-receipt.json"
+        original = marker.read_bytes()
+        result["audit_summary"]["payload_bytes"] = -1
+        result["state"] = "caller-change"
+        self.assertEqual(marker.read_bytes(), original)
+        result2 = self.call(packet_id="SYNTHETIC-PREPARE-v2")
+        self.assertGreater(result2["audit_summary"]["payload_bytes"], 0)
+        self.assertEqual(result2["state"], "complete")
+
+    def test_archives_remain_opaque_copies_without_extraction_or_execution(self):
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("../must_not_be_extracted.py", b"raise RuntimeError('MUST NOT EXECUTE')")
+        self.payload("archives/source.zip", buffer.getvalue())
+        self.payload("archives/source.tar.gz", b"opaque TAR.GZ is checked only by SHA/bytes")
+        self.save_index()
+        before = self.snapshot()
+        result = self.call()
+        self.assertEqual(result["audit_summary"]["zip_crc_checked_count"], 1)
+        self.assertEqual(result["audit_summary"]["tar_gz_sha_only_count"], 1)
+        self.assertEqual((self.destination / "archives/source.zip").read_bytes(), buffer.getvalue())
+        self.assertFalse((self.destination.parent / "must_not_be_extracted.py").exists())
+        self.assertEqual(before, self.snapshot())
+
+    def test_invalid_argument_types_hash_and_packet_id_before_writes(self):
+        for key, values in {
+            "packet_id": [None, True, 1, "", ".", "..", "a/b", "C:x", "NUL", "con.txt", "COM1",
+                          "a.", "a ", "a" * 81, "\ud55c\uae00"],
+            "expected_index_sha256": [None, 1, self.pin.upper(), "x" * 64, "a" * 63],
+            "workspace_root": [None, b"bytes"], "source_dir": [None, b"bytes"],
+        }.items():
+            for value in values:
+                with self.subTest(key=key, value_type=type(value).__name__):
+                    self.error("packet_prepare_invalid_argument", **{key: value})
+        self.assertFalse((self.workspace / ".local").exists())
+
+    def test_nonlocal_and_ambiguous_roots_are_rejected(self):
+        for key in ("source_dir", "workspace_root"):
+            for value in ("\\\\invalid\\PRIVATE-SECRET", "//invalid/PRIVATE-SECRET", "x\x00y", "../PRIVATE-SECRET"):
+                with self.subTest(key=key, kind=value[:2]):
+                    self.error("packet_prepare_path_invalid", **{key: value})
+        self.assertFalse(self.destination.exists())
+
+    def test_missing_or_non_directory_workspace_and_source_are_rejected(self):
+        file = self.base / "PRIVATE-file"
+        file.write_bytes(b"synthetic")
+        for key in ("workspace_root", "source_dir"):
+            for value in (self.base / "missing", file):
+                with self.subTest(key=key, leaf=value.name):
+                    self.error("packet_prepare_path_invalid", **{key: value})
+        self.assertFalse(self.destination.exists())
+
+    def test_existing_empty_nonempty_or_file_destination_is_never_changed(self):
+        before = self.snapshot()
+        parent = self.destination.parent
+        parent.mkdir(parents=True)
+        for suffix, kind in (("empty", "empty"), ("nonempty", "directory"), ("file", "file")):
+            packet_id = self.packet_id + "-" + suffix
+            target = parent / packet_id
+            if kind == "file":
+                target.write_bytes(b"foreign file")
+            else:
+                target.mkdir()
+                if kind == "directory":
+                    (target / "foreign.txt").write_bytes(b"foreign content")
+            with self.subTest(kind=kind):
+                self.error("packet_prepare_destination_exists", packet_id=packet_id)
+                if kind == "file":
+                    self.assertEqual(target.read_bytes(), b"foreign file")
+                elif kind == "directory":
+                    self.assertEqual((target / "foreign.txt").read_bytes(), b"foreign content")
+                else:
+                    self.assertEqual(list(target.iterdir()), [])
+        self.assertEqual(before, self.snapshot())
+
+    def test_source_as_destination_ancestor_is_rejected(self):
+        before = self.snapshot()
+        self.error("packet_prepare_path_invalid", workspace_root=self.source)
+        self.assertEqual(before, self.snapshot())
+        self.assertFalse((self.source / ".local").exists())
+
+    def test_same_source_and_destination_is_rejected(self):
+        destination = self.destination
+        destination.parent.mkdir(parents=True)
+        self.source.rename(destination)
+        self.source = destination
+        before = self.snapshot()
+        self.error("packet_prepare_path_invalid")
+        self.assertEqual(before, self.snapshot())
+
+    def test_source_inside_destination_is_rejected(self):
+        self.destination.mkdir(parents=True)
+        nested = self.destination / "source"
+        self.source.rename(nested)
+        self.source = nested
+        before = self.snapshot()
+        self.error("packet_prepare_path_invalid")
+        self.assertEqual(before, self.snapshot())
+
+    def test_manifest_completion_marker_collision_before_destination_creation(self):
+        for path in ("prepared-receipt.json", "PREPARED-RECEIPT.JSON"):
+            with self.subTest(path=path):
+                self.payload(path, b"{}")
+                self.save_index()
+                self.error("packet_prepare_path_invalid")
+                self.assertFalse(self.destination.exists())
+
+    def test_manifest_completion_marker_directory_collision(self):
+        self.payload("prepared-receipt.json/child.txt", b"synthetic")
+        self.save_index()
+        self.error("packet_prepare_path_invalid")
+        self.assertFalse(self.destination.exists())
+
+    def test_initial_audit_failure_makes_no_destination(self):
+        before = self.snapshot()
+        self.error("packet_prepare_verification_failed", expected_index_sha256="0" * 64)
+        self.assertEqual(before, self.snapshot())
+        self.assertFalse((self.workspace / ".local").exists())
+
+    def test_reparse_source_workspace_parent_and_leaf_are_rejected(self):
+        parent = self.destination.parent
+        parent.mkdir(parents=True)
+        original_lstat = os.lstat
+        for target in (self.source, self.workspace, parent, self.source / "metadata" / "data.json"):
+            with self.subTest(target=target.name):
+                def reparse(path, *args, **kwargs):
+                    result = original_lstat(path, *args, **kwargs)
+                    if Path(path) == target:
+                        return types.SimpleNamespace(st_mode=result.st_mode, st_file_attributes=0x400)
+                    return result
+                with mock.patch.object(prepare.os, "lstat", side_effect=reparse):
+                    self.error("packet_prepare_path_invalid")
+        self.assertFalse(self.destination.exists())
+
+    def test_opened_destination_identity_must_match_its_path(self):
+        original_open, original_fstat = os.open, os.fstat
+        created = set()
+
+        def track(path, flags, *args, **kwargs):
+            descriptor = original_open(path, flags, *args, **kwargs)
+            if flags & os.O_EXCL:
+                created.add(descriptor)
+            return descriptor
+
+        def changed(descriptor):
+            info = original_fstat(descriptor)
+            if descriptor in created:
+                return types.SimpleNamespace(st_mode=info.st_mode, st_file_attributes=0,
+                                             st_dev=info.st_dev, st_ino=info.st_ino + 1)
+            return info
+
+        with mock.patch.object(prepare.os, "open", side_effect=track), \
+                mock.patch.object(prepare.os, "fstat", side_effect=changed):
+            self.error("packet_prepare_path_invalid")
+        self.incomplete()
+
+    def test_unexpected_audit_shape_or_support_is_not_persisted(self):
+        for mode in ("extra", "support", "schema"):
+            def unexpected(path, **kwargs):
+                result = audit_control_packet(path, **kwargs)
+                if mode == "extra":
+                    result["raw_source_path"] = str(self.source)
+                elif mode == "support":
+                    result["hardware_verified"] = True
+                else:
+                    result["schema_version"] = True
+                return result
+            with self.subTest(mode=mode), mock.patch.object(prepare, "audit_control_packet", side_effect=unexpected):
+                self.error("packet_prepare_verification_failed", packet_id=self.packet_id + "-" + mode)
+            self.assertFalse((self.destination.parent / (self.packet_id + "-" + mode)).exists())
+
+    def test_real_private_parent_junction_does_not_receive_writes(self):
+        outside = self.base / "outside"
+        outside.mkdir()
+        link = self.workspace / ".local"
+        if os.name == "nt":
+            run = subprocess.run(["cmd.exe", "/d", "/c", "mklink", "/J", str(link), str(outside)],
+                                 capture_output=True, creationflags=subprocess.CREATE_NO_WINDOW)
+            run.check_returncode()
+        else:
+            link.symlink_to(outside, target_is_directory=True)
+        try:
+            self.error("packet_prepare_path_invalid")
+            self.assertEqual(list(outside.iterdir()), [])
+        finally:
+            if os.name == "nt":
+                os.rmdir(link)
+            else:
+                link.unlink()
+
+    def test_source_read_failure_after_creation_preserves_partial_copy(self):
+        before = self.snapshot()
+        original_read = os.read
+
+        def failed(fd, size):
+            if self.destination.exists():
+                raise OSError("PRIVATE-SECRET read")
+            return original_read(fd, size)
+
+        with mock.patch.object(prepare.os, "read", side_effect=failed):
+            self.error("packet_prepare_source_changed")
+        self.incomplete()
+        self.assertEqual(before, self.snapshot())
+
+    def test_source_change_during_copy_is_not_completed(self):
+        original_read = os.read
+        changed = False
+
+        def mutate(fd, size):
+            nonlocal changed
+            data = original_read(fd, size)
+            if self.destination.exists() and not changed:
+                changed = True
+                (self.source / "originals" / "source.py").write_bytes(b"changed synthetic source")
+            return data
+
+        with mock.patch.object(prepare.os, "read", side_effect=mutate):
+            self.error("packet_prepare_source_changed")
+        self.incomplete()
+        self.assertTrue(changed)
+
+    def test_source_mtime_only_change_is_detected(self):
+        original_read = os.read
+        changed = False
+
+        def mutate(fd, size):
+            nonlocal changed
+            data = original_read(fd, size)
+            if self.destination.exists() and not changed:
+                changed = True
+                path = self.source / "metadata" / "data.json"
+                info = path.stat()
+                os.utime(path, ns=(info.st_atime_ns, info.st_mtime_ns + 1000000000))
+            return data
+
+        with mock.patch.object(prepare.os, "read", side_effect=mutate):
+            self.error("packet_prepare_source_changed")
+        self.incomplete()
+
+    def test_short_reads_and_positive_short_writes_are_completed(self):
+        before = self.snapshot()
+        original_read, original_write = os.read, os.write
+        with mock.patch.object(prepare.os, "read", side_effect=lambda fd, size: original_read(fd, min(size, 7))), \
+                mock.patch.object(prepare.os, "write", side_effect=lambda fd, data: original_write(fd, data[:5])):
+            result = self.call()
+        self.assertEqual(result["state"], "complete")
+        self.assertEqual(before, self.snapshot())
+
+    def test_zero_or_failed_destination_write_preserves_source_and_stage(self):
+        original_id = self.packet_id
+        for mode in ("zero", "exception"):
+            self.packet_id = original_id + "-" + mode
+            before = self.snapshot()
+            fault = {"return_value": 0} if mode == "zero" else {"side_effect": OSError("PRIVATE-SECRET write")}
+            with self.subTest(mode=mode), mock.patch.object(prepare.os, "write", **fault):
+                self.error("packet_prepare_copy_failed")
+            self.incomplete()
+            self.assertEqual(before, self.snapshot())
+            self.assertTrue(any(path.is_file() for path in self.destination.rglob("*")))
+
+    def test_existing_file_injected_during_copy_is_not_overwritten(self):
+        original_open = os.open
+        injected = None
+
+        def collide(path, flags, *args, **kwargs):
+            nonlocal injected
+            path = Path(path)
+            if flags & os.O_EXCL and path.name == "data.json" and injected is None:
+                path.write_bytes(b"foreign content")
+                injected = path
+            return original_open(path, flags, *args, **kwargs)
+
+        with mock.patch.object(prepare.os, "open", side_effect=collide):
+            self.error("packet_prepare_copy_failed")
+        self.incomplete()
+        self.assertIsNotNone(injected)
+        self.assertEqual(injected.read_bytes(), b"foreign content")
+
+    def test_final_source_audit_failure_preserves_partial_copy(self):
+        count = 0
+
+        def changed(path, **kwargs):
+            nonlocal count
+            if Path(path) == self.source:
+                count += 1
+                if count == 2:
+                    raise ControlPacketAuditError("packet_payload_mismatch")
+            return audit_control_packet(path, **kwargs)
+
+        with mock.patch.object(prepare, "audit_control_packet", side_effect=changed):
+            self.error("packet_prepare_source_changed")
+        self.incomplete()
+
+    def test_destination_audit_failure_or_mismatch_does_not_publish(self):
+        original_id = self.packet_id
+        for mode in ("failure", "mismatch"):
+            self.packet_id = original_id + "-" + mode
+            def failed(path, **kwargs):
+                result = audit_control_packet(path, **kwargs)
+                if Path(path) == self.destination:
+                    if mode == "failure":
+                        raise ControlPacketAuditError("packet_json_invalid")
+                    result["payload_bytes"] += 1
+                return result
+            with self.subTest(mode=mode), mock.patch.object(prepare, "audit_control_packet", side_effect=failed):
+                self.error("packet_prepare_verification_failed")
+            self.incomplete()
+
+    def test_receipt_publish_failure_keeps_complete_tmp_without_marker(self):
+        before = self.snapshot()
+        with mock.patch.object(prepare.os, "link", side_effect=OSError("PRIVATE-SECRET no hardlinks")):
+            self.error("packet_prepare_receipt_failed")
+        self.incomplete()
+        temporary = list(self.destination.glob(".prepared-receipt-*.tmp"))
+        self.assertEqual(len(temporary), 1)
+        self.assertEqual(json.loads(temporary[0].read_bytes())["state"], "complete")
+        self.assertEqual(before, self.snapshot())
+
+    def test_receipt_write_or_flush_failure_keeps_partial_without_marker(self):
+        original_open, original_write = os.open, os.write
+        original_id = self.packet_id
+        for mode in ("write", "flush"):
+            self.packet_id = original_id + "-" + mode
+            receipt_descriptors = set()
+
+            def track(path, flags, *args, **kwargs):
+                fd = original_open(path, flags, *args, **kwargs)
+                if Path(path).name.startswith(".prepared-receipt-"):
+                    receipt_descriptors.add(fd)
+                return fd
+
+            def write(fd, data):
+                if mode == "write" and fd in receipt_descriptors:
+                    raise OSError("PRIVATE-SECRET receipt write")
+                return original_write(fd, data)
+
+            with self.subTest(mode=mode), mock.patch.object(prepare.os, "open", side_effect=track), \
+                    mock.patch.object(prepare.os, "write", side_effect=write):
+                if mode == "flush":
+                    with mock.patch.object(prepare.os, "fsync", side_effect=OSError("PRIVATE-SECRET flush")):
+                        self.error("packet_prepare_receipt_failed")
+                else:
+                    self.error("packet_prepare_receipt_failed")
+            self.incomplete()
+            self.assertEqual(len(list(self.destination.glob(".prepared-receipt-*.tmp"))), 1)
+
+    def test_concurrent_final_marker_is_preserved_without_overwrite(self):
+        original_link = os.link
+
+        def collide(source, destination, *args, **kwargs):
+            Path(destination).write_bytes(b"foreign marker")
+            return original_link(source, destination, *args, **kwargs)
+
+        with mock.patch.object(prepare.os, "link", side_effect=collide):
+            self.error("packet_prepare_receipt_failed")
+        self.assertEqual((self.destination / "prepared-receipt.json").read_bytes(), b"foreign marker")
+
+
+if __name__ == "__main__":
+    unittest.main()
