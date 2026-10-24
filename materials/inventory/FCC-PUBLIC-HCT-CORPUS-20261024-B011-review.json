@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "recorded_at_Asia_Seoul": "2026-10-24T18:30:06.924077+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "corpus_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "publication_scope": "reviewed_nonsensitive_hash_and_bounded_status_only",
+  "publication_rights_decision": "Only hashes/counts and bounded source-review status. No report bytes/body/case values/images/code/unique identifiers/user materials/private paths.",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S02-B0013",
+      "review_scope": "bounded_America_Q2_secondary_metadata_discovery",
+      "inventory_sha256": "0e38d77c37d4b08d0da28ab8665ae6f05d704d610b3d72f0641c637c659ecb61",
+      "private_intake_index_sha256": "2aa5a710c97259043b5bcf1ca3788428a20c2f25768d5bc332350eef0b0d29e2",
+      "private_intake_index_bytes": 3208,
+      "payload_files": 13,
+      "payload_bytes": 81522,
+      "JSON_files": 13,
+      "PDF_files": 0,
+      "receiver_receipt_sha256": "89995bbe071317fa05ec79ca80bffaa5e8be5f753736aef29c08b980cbe07411",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "new_original_PDFs": 0
+    },
+    {
+      "batch_id": "FCC-20261024A-S03-B0011",
+      "review_scope": "held_HAC1_pages13to20_method_reference_and_screening_analysis",
+      "inventory_sha256": "ef5b7ab766735f9c591fa465a9f14ef75ddd7c204ac5d3521510a8f1600d97c6",
+      "private_intake_index_sha256": "3215f7eba21bca4c0dba60c30dea4564b7130a676a05b36c992c120a07ec7c51",
+      "private_intake_index_bytes": 4896,
+      "payload_files": 23,
+      "payload_bytes": 125722,
+      "JSON_files": 22,
+      "PDF_files": 0,
+      "receiver_receipt_sha256": "6d2130869afa4f6a4cef1f475f8e560f35ed5f1c9c146a57e2654ba4721e0c33",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "new_original_PDFs": 0
+    }
+  ],
+  "new_independently_accepted_private_packets": 2,
+  "new_private_payload": {
+    "files": 36,
+    "bytes": 207244,
+    "JSON": 35,
+    "MD": 1,
+    "PDF": 0
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 69,
+    "independently_ACKed": 69
+  },
+  "corpus_private_packets_including_exclusion_review": {
+    "reviewed": 34,
+    "independently_ACKed": 34
+  },
+  "current_source_cohort_unchanged": {
+    "PDFs": 12,
+    "physical_pages": 489,
+    "bytes": 29261984,
+    "direct_issuer_issue": 11,
+    "parent_only": 1,
+    "official_mapping_confirmed": 0
+  },
+  "separately_retained_excluded_unchanged": {
+    "PDFs": 1,
+    "physical_pages": 46,
+    "bytes": 2771507,
+    "target_increment": 0
+  },
+  "new_PDFs_in_this_publication": 0,
+  "bounded_America_metadata": {
+    "queries": 4,
+    "ordinary_HTML_indexes": 4,
+    "selected_secondary_leads": 12,
+    "report_labels": 10,
+    "setup_labels": 2,
+    "explicit_Q2_report_issue_claims": 0,
+    "actual_PDFs_issuer_issue_confirmations_sourcefacts": 0,
+    "all_report_issue_issuer_site_and_actual_file_fields_unknown": true,
+    "P01_revisited_secondary_indexes": 4,
+    "selected_title_rows_independently_compared": 8,
+    "four_query_snippet_report_numbers_not_reopened_as_originals": true,
+    "one_ISED_only_title_not_promoted_to_FCC_eligibility": true,
+    "literal_hyphen_variants_roles_and_unknown_legal_entity_relations_preserved": true,
+    "old_excluded_Tide_issue_not_inherited_by_other_nine_Q1leads": true,
+    "selection_cap_index_tail_unsearched_periods_not_population_totals": true
+  },
+  "bounded_HAC_analysis": {
+    "additional_physical_pages": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "bounded_facts": 8,
+    "selected_numeric_block": 1,
+    "selected_rows": 4,
+    "numeric_additions_checked": 4,
+    "new_actual_DUT_measurement_results": 0,
+    "new_simulations": 0,
+    "MIF_definition_and_printed_column_unit_conflict": "preserved_unresolved",
+    "selected_obscured_limit_values": "null_extraction_failed_cause_unknown",
+    "source_screening_dispositions_are_not_new_physical_verdicts": true,
+    "validation_spacing_not_DUT_spacing_or_current_calibration": true,
+    "potential_internal_table_reference_inconsistency_preserved": true,
+    "maximum_target_single_tolerance_and_measured_output_not_conflated": true,
+    "identity_and_UID_table_data_rows_excluded": true,
+    "P01_native_page_SHA_checks": 8,
+    "P01_safe_source_renders_visually_read": 8,
+    "memory_candidate_count": 24,
+    "literal_hits_in_new_metadata": 0,
+    "bounded_screen_is_not_absence_proof": true,
+    "HAC1_primary_coverage": [
+      22,
+      73
+    ],
+    "suite_primary_coverage": [
+      67,
+      181
+    ],
+    "remaining_primary_pages": 114,
+    "all_cells_full_semantics_currentrules_current_calibration_or_hardware_pass": false
+  },
+  "open_scope": [
+    "whole population and unsearched periods institutions sites categories",
+    "original acquisition official exhibit mapping revisions parts appendices setup",
+    "untranscribed cells plots and full semantic review",
+    "full standards historical/current applicability model conflicts and unknown reuse",
+    "native raw independent evaluation and real equipment/site validation"
+  ],
+  "new_user_preparation_requests": 0,
+  "AI_evaluation_training_external_models_or_physical_runs": 0,
+  "whole_census_complete": false,
+  "full_semantic_functional_conformity_or_physical_validation": false,
+  "original_text_case_values_images_code_identifiers_private_paths_user_materials_exported": false,
+  "historical_public20batch_count_changed": false,
+  "verification_scope": "Independent packet bytes and specified bounded review only. Document integrity is not functional/metrology/conformity evidence."
+}
