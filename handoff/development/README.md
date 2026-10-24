@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+현재root기능은01920b5185/1777Python114Node/source202다. [042 고정 설계](../../docs/superpowers/specs/2026-10-24-intake-reference-review-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-reference-review.md)의v3/공개builder독립Yes를확인해정확게시base+승인038source196c·문구8f별도의존으로개발2신규3파일구현을배정한다. 040I1수정eba7caa재리뷰/043공식Store계약,039a6354afe독립리뷰/044최소참고이력화면계약,041구현을병행한다. [현재대장](NEXT-004.md)과최신privatefollowup을함께읽고이미위임된가역적개발을사용자재확인으로멈추지않는다. P01한창구/소유권·원본·실패보존과사용자준비0·전체AI/실물미검증을유지한다.
+
 현재 root는019 게시a028f8a/기능20b5185·1777Python114Node/source202를 유지한다. [041 고정 설계](../../docs/superpowers/specs/2026-10-24-virtual-fleet-rf-signal-scenario-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-virtual-fleet-rf-signal-scenario.md)의 소유제안v3/공개delta독립Yes를 확인했고 게시 후 정확base로 개발3 신규3파일 구현을 배정한다. 신규7/7·변조8·저장10은 아직 미실행이다. 개발1 040후보 독립리뷰/043계약, 개발2 038독립Yes·문구수정/042이유I1보완, 개발4 039 구현을 계속한다. P01후속002 실제배정·ACK/준비된묶음 인수는 총괄한창구로 이어가며 [현재대장](NEXT-004.md)과 최신privatefollowup을 함께 읽는다. 사용자 결정/준비0·전체AI/물리완료 미주장.
 
 최신 [통합019](INTEGRATION-019.md)은034 수정·036·037을 정확 소유4커밋/9파일·독립 최종Yes 뒤 인수했다. 새 전체Python1777/Node114·소스202 불변·로더→계산·읽기HTTP5/접수034→032 합성연결을 확인했다. 개발1 040와개발4 039의 기존 구현을 유지하고 개발2 038 독립 리뷰·042 최소접점 계약, 개발3 041 출력실패 계약 보완을 이어간다. P01 게시4ba0177·대상/참조12PDF489쪽·별도제외1/46·v039 실제배정3/ACK3을 유지한다. [현재대장](NEXT-004.md)과 최신 private followup을 함께 읽는다. 사용자 준비0·실제AI/물리/규범 미검증이며 아래018은 당시 기록이다.

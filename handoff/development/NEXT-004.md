@@ -1,5 +1,17 @@
 # 후속 개발 인수 대장 004
 
+현재통합기능은01920b5185/게시a028f8a·041계약0e698b0/1777Python114Node/source202다. 다음기능cut은독립Yes의정확소유commit만인수하며계약게시를제품검증수로추가하지않는다.
+
+| 담당 | 실제 다음 단계 |
+|---|---|
+| 개발1 | 040I1 rawconfig검사fix eba7caa(owner39/295/full1747·No전원후보보존)를재독립리뷰.최종Yes뒤root통합.다음043공식Store무초기화opener계약준비 |
+| 개발2 | [042 설계](../../docs/superpowers/specs/2026-10-24-intake-reference-review-design.md)·[계획](../../docs/superpowers/plans/2026-10-24-intake-reference-review.md)확정/preview11·reason9·준비C1→032→현재C2/038CAS·소유신규3구현.038source196c+doc8f는별도의존·독립Yes/직접121API32와분모분리 |
+| 개발3 | 041 exact0e698b0+spec/plan으로신규3구현.부모정책/수식불변·주7평가7·semantic8·저장10분리.설정이이미같아남아있는invalid receipt는원상태보존·정확configuration/changed=false를확인하고fresh취득으로만이어감 |
+| 개발4 | 039최종a6354afe/소유10·ownerfull1740Node147/actual9contract21·protected024033와실패보존은독립리뷰.다음044는접수참고이력/history+명시freshcurrent의첫실제화면·최소정식HTTP계약만준비.042/043권한·Store/CSRF/세대/retained읽기분모를지키며공유code변경0 |
+| P01 | 012-FOLLOWUP-20261024-002의S01예외검수/S02·S03v040/S08v041을기존owner로계속.검수전신규원문·잘못된보고서대응을대상수에자동가산하지않고target12/489·excluded1/46/official0·모집단unknown유지 |
+
+042의 A25/H8은미실행수용계획이다. 사용자결정/준비0이며수집전체/리뷰확인만기다리지않고준비된단위의구현·검증·독립수정·통합/회귀·개발branch게시를계속한다. 아래041/019는당시보존기록이다.
+
 최신 공통 기능은019 게시a028f8a/기능20b5185·1777Python114Node/source202다.041 설계와 계획의 v3/공개delta 독립Yes C0I0를 고정하며 기능 회귀와 계약 검토를 구별한다.
 
 | 담당 | 다음 실제 단계와 소유권 |
