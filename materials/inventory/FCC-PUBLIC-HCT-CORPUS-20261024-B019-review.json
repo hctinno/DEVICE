@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "recorded_at_Asia_Seoul": "2026-10-24T22:43:34.495345+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "corpus_id": "HCT-FCC-CORPUS-2025-2026-001",
+  "publication_scope": "reviewed_nonsensitive_bibliography_hash_count_and_bounded_status_only",
+  "publication_rights_decision": "Only reviewed nonsensitive bibliography/hash/count/status. Original PDF/body/case values/images/code/unique identifiers/private paths/user materials remain private. Unknown redistribution/model-use rights not approved.",
+  "private_units": [
+    {
+      "batch_id": "FCC-20261024A-S02-B0021",
+      "review_scope": "America2026Q2_bounded_metadata_discovery",
+      "inventory_sha256": "e107c66e2bd013ddef7eb14f904960f880863afbd1023e0e422ed6b7593516c2",
+      "private_intake_index_sha256": "e6e3f96e1be03cd1824433dfedf78ee024474df1256f7314279548415963ddbc",
+      "private_intake_index_bytes": 3373,
+      "payload_files": 14,
+      "payload_bytes": 66561,
+      "JSON_files": 14,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "53e92fbf21b34ac19074e365169ddf8b314a580ab79e19e210c31afc70d454af",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "America2026Q2_metadata4_original0"
+    },
+    {
+      "batch_id": "FCC-20261024A-S03-B0019",
+      "review_scope": "held_HAC2_next_eight_limited_wrapper_region_inspections",
+      "inventory_sha256": "0d34be58b34b20b30547229ddac523137d27cfbecc5f5e6df8db880dcad84a96",
+      "private_intake_index_sha256": "eaf19abd1aa29dd6d1ef4d1c5a7f4bd7961073b3560d2cf65f4db194702bbc08",
+      "private_intake_index_bytes": 4895,
+      "payload_files": 23,
+      "payload_bytes": 113669,
+      "JSON_files": 22,
+      "PDF_files": 0,
+      "MD_files": 1,
+      "receiver_receipt_sha256": "47e4cf276986b23b217a5335b3efc2c5fc310292841586df8df158116bcca9b1",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "held_HAC2_next8_limited_wrapper_only_metadata_reference"
+    },
+    {
+      "batch_id": "FCC-20261024A-S04-B0019",
+      "review_scope": "domestic2026Q1_bounded_metadata_discovery",
+      "inventory_sha256": "e44be1dd6440b56a789c1199bf6c5121dda99764542e07beaeb077c6b21df60e",
+      "private_intake_index_sha256": "0ba64abc4f2667abf042daf842f1fdbc396fc2d2509b1db87b9711832b5a2578",
+      "private_intake_index_bytes": 3549,
+      "payload_files": 15,
+      "payload_bytes": 94290,
+      "JSON_files": 15,
+      "PDF_files": 0,
+      "MD_files": 0,
+      "receiver_receipt_sha256": "6dbd62d87f8ae3e6e77522bf894162442cd694086775a189e96b31898a516da9",
+      "P01_all_payload_clone_hash_and_byte_comparison": true,
+      "cohort_disposition": "domestic2026Q1_metadata12_original0"
+    }
+  ],
+  "new_independently_accepted_private_packets": 3,
+  "new_private_payload": {
+    "files": 52,
+    "bytes": 274520,
+    "JSON": 51,
+    "PDF": 0,
+    "MD": 1
+  },
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 98,
+    "independently_ACKed": 98
+  },
+  "corpus_private_packets_including_exclusion_and_pending_link_review": {
+    "reviewed": 63,
+    "independently_ACKed": 63
+  },
+  "new_reviewed_bibliography": [],
+  "new_originals_reviewed_privately": 0,
+  "new_target_reference_originals": 0,
+  "new_PDF_payloads_published_to_Git": 0,
+  "current_target_reference_cohort": {
+    "PDFs": 16,
+    "physical_pages": 603,
+    "bytes": 36642346,
+    "direct_issuer_issue": 15,
+    "parent_only": 1,
+    "official_mapping_confirmed": 0
+  },
+  "separately_retained_excluded": {
+    "PDFs": 1,
+    "physical_pages": 46,
+    "bytes": 2771507,
+    "target_increment": 0
+  },
+  "separately_retained_pending_report_link": {
+    "PDFs": 1,
+    "physical_pages": 53,
+    "bytes": 4626750,
+    "target_increment": 0
+  },
+  "all_retained_request_originals_not_eligible_count": {
+    "PDFs": 18,
+    "physical_pages": 702,
+    "bytes": 44040603,
+    "eligible18_claim": false,
+    "legacy22_included": false
+  },
+  "fresh_source_verification_scope": {
+    "new_report_originals": 0,
+    "prior16_verification_preserved": true,
+    "all16_fresh_source_reverification": false,
+    "held_HAC2_allowed_regions_native_and_safe_visual_rechecked": 8,
+    "full_HAC_body_or_calibration_review": false
+  },
+  "bounded_metadata_search_status": {
+    "America2026Q2": {
+      "producer_queries": 4,
+      "ordinary_HTML_attempts": 2,
+      "search_hits": 7,
+      "selected_metadata_leads": 4,
+      "report_titles": 2,
+      "setup_titles": 2,
+      "direct_issue_issuer_site_original_PDF_or_eligible": 0,
+      "new_Q2_issue_confirmations": 0,
+      "secondary_exposure_issue_claim_outside_search_quarter_not_direct_or_whole_corpus_exclusion": true,
+      "future_setup_availability_labels": 2,
+      "future_labels_not_current_publication_or_issue": true,
+      "P01_fresh_online_replay": false,
+      "P01_frozen_selection_schema_nulls_locators_and_exception_boundary_checked": true
+    },
+    "domestic2026Q1": {
+      "producer_queries": 4,
+      "search_result_occurrences": 54,
+      "ordinary_HTML_attempts": 4,
+      "usable_HTML": 3,
+      "failed_HTML": 1,
+      "tool_reported_failed_index_status": 403,
+      "actual_failed_index_HTTP_status": null,
+      "same_failed_route_retry": 0,
+      "official_FCC_denial_or_rights_restriction_proven": false,
+      "selected_metadata_leads": 12,
+      "search_claims": 4,
+      "HTML_exhibit_claims": 8,
+      "secondary_Q1_issue_claims": 1,
+      "other_issue_unknown": 11,
+      "direct_issue_issuer_identity_original_PDF_or_eligible": 0,
+      "P01_fresh_ordinary_indexes_rechecked": 1,
+      "P01_rechecked_selected_title_associations": 4,
+      "unobserved_exhibit_asset_URLs": 8,
+      "hyphenated_title_vs_URL_alias_confirmed": false,
+      "unselected_query_occurrences_producer_accounting": 46,
+      "unselected_count_not_unique_report_population": true
+    },
+    "search_claims_HTML_titles_caps_zero_queries_are_not_originals_population_or_whole_period_coverage": true
+  },
+  "bounded_HAC_review_status": {
+    "new_primary_region_observations": 8,
+    "direct_body_title_confirmations": 0,
+    "limited_wrapper_observations": 8,
+    "source_part": "HAC2_parent_relation_only",
+    "physical_pages": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "HAC1_primary_region_inspections": [
+      73,
+      73
+    ],
+    "HAC2_primary_region_inspections": [
+      15,
+      70
+    ],
+    "suite_primary_region_inspections": [
+      126,
+      181
+    ],
+    "unvisited_primary_regions": 55,
+    "direct_issuer_issue_FCCID_revision_model_not_inherited_from_parent_or_PDFmetadata": true,
+    "HAC1_no_unvisited_region_is_not_full_cell_semantic_or_calibration_completion": true,
+    "inspection_counter_includes_limited_wrappers_not_readable_titles_or_semantic_successes": true,
+    "calibration_identity_dates_factors_results_body_not_reviewed": true,
+    "numeric_rows_calculations_DUT_measurements": 0,
+    "OCR_or_full_identity_raster": false
+  },
+  "privacy_and_failure_status": {
+    "initial_removed_attachment_wrapper_title_rows": 3,
+    "actual_unique_identifier_content_confirmed": false,
+    "P01_removed_title_values_rows_perIDhashes_retrieved_or_reprinted": false,
+    "valuefree_exception_and_final_selection_boundary_preserved": true,
+    "unknown_removed_title_literal_test_executed": false,
+    "allowlist_memory_or_zero_literal_checks_are_absenceproof": false,
+    "P01_all_raster_guard_assumption_failed_before_render_then_narrow_body_exclusion_recovered": true,
+    "producer_failure_inferred_from_P01_assumption": false,
+    "old_source_ACK_READY_control_and_failure_history_unchanged": true,
+    "identifier_values_rows_per_IDhashes_exported": false
+  },
+  "receiver_validation": {
+    "all_exact_payload_bytes_reviewhashes_strict_UTF8_verified": true,
+    "shared_source_bytes_mtime_mode_unchanged": true,
+    "original_PDF_stat_open_hash_native_render_OCR_copy_or_new_arithmetic": 0,
+    "byte_ACK_not_semantic_normative_independence_or_physical_approval": true
+  },
+  "new_user_preparation_requests": 0,
+  "AI_evaluation_training_external_models_or_physical_runs": 0,
+  "open_scope": [
+    "whole population and remaining periods issuers sites products categories",
+    "report identity rights official mapping revisions parts appendices setup photos",
+    "HAC2 unvisited regions and all visited limited titles untranscribed cells plots calibration data full semantics",
+    "historical/current standards applicability and unknown reused-data independence",
+    "actual installed chain calibration reference plane native raw real equipment and site validation"
+  ],
+  "whole_census_complete": false,
+  "full_semantic_functional_conformity_or_physical_validation": false,
+  "original_text_case_values_images_code_identifiers_private_paths_user_materials_exported": false,
+  "verification_scope": "Private exact-byte intake and stated bounded observations only; document integrity not function/metrology/conformity validation."
+}
