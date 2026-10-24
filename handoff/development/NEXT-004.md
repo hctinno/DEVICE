@@ -1,5 +1,18 @@
 # 후속 개발 인수 대장 004
 
+2026-10-25 계약후속: root 제품은028/051까지이며 아래 계약과 실제 구현/검증을 구별한다.
+
+| 담당 | 고정 소유와 다음 실행 |
+| --- | --- |
+| 개발1 |049 같은branch/directparentc24e·소유3 I4 RED→최소header수정→전용/관련/genuine/필요전체→독립재검토. 공개049완료후만료정책7caf/2706·2bf·원No 보존.047은최종049인수뒤신규3 별도배정 |
+| 개발2 |[053 설계](../../docs/superpowers/specs/2026-10-25-intake-reference-actions-host-design.md)·[계획](../../docs/superpowers/plans/2026-10-25-intake-reference-actions-host.md) 정적Yes. accepted049 인수→기존ui_server/test 명시D1→D2이관+newusage3→정확base 실제전달후RED. 그전승인부모의합성검증준비만 |
+| 개발3 |[054 설계](../../docs/superpowers/specs/2026-10-25-virtual-fleet-rf-signal-waveform-design.md)·[계획](../../docs/superpowers/plans/2026-10-25-virtual-fleet-rf-signal-waveform.md) v2/private·public 정적Yes.이번정확게시base/new3 실제배정뒤CW/사각pulse generator/analyzer 구현·독립정답/회귀·게시 |
+| 개발4 |052 C1 실제base81ac/new4 유지·controller24/첫DOM20뒤추가경계/전체Node/관련DOM 검증중.050 F1/50a9·No/RED/F2계획보존;진짜049/static3뒤F2,053/static1뒤C2 |
+| 총괄 |공통계약/소유권고정·정확게시/원격대조·실제후속배정.완료후보는독립리뷰/수정→통합/적절회귀→개발branch게시.담당제품일괄대신0 |
+| P01 |B0236c5ee15a 공개exact/112·77·2묶음42metadata232558B/새PDF0 실제ACK.대상17/650·한정HAC158/181/미방문23·공식0/전수unknown.v059 실제ACK2/입력25와기존v058 S02예약을구별하고미검수PDF미가산 |
+
+source227/Python2121/Node186/CLI14는028의이전실행이며이번계약추가회귀0이다. 실제AI/모델·계측/교정·현장·전체전수완료미주장,사용자결정/준비0이다.아래는당시기록이다.
+
 최신 [통합028](INTEGRATION-028.md)을 우선한다. source227의 root 제품은051 저장조회 CLI까지이며 현재 RF 파형/실제host/app 완성을 뜻하지 않는다.
 
 | 담당 | 현재 소유와 다음 작은 구현 |

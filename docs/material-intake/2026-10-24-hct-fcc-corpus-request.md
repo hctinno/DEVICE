@@ -1,5 +1,7 @@
 # HCT FCC 공개 성적서 신규 인수 요청 012
 
+2026-10-25 B023 추가인수/공개대조: S03/S04 두metadata묶음42payload232558B(JSON41/MD1/PDF0)를정확색인/집합/전SHA·bytes·UTF8·P01review2전체로인수하고실제ACK2했다. P01 B0236c5ee15a 공개3/원격exact·collector112/112·corpus77/77와v059 실제ACK2/입력25(15/10)를대조했다. 기보유HAC2 40..47의안전header8은한정158/181·미방문23/HAC2 47/70이고footer0/printednull·P01자체nativeSHA와producercharacter대조를구별한다. 국내Q3 selected9=새5+기존4는관측cutoff/현재선택시점을구별하고별도mirror를raw동일/alias/독립성으로올리지않는다. root원문PDF/그림/XML/중첩reference stat·open·hash/native/render/OCR/copy/새산술/network0·공유불변이다. 대상17PDF650쪽/직접16+parent1/공식0·별도제외1/46·연결보류1/53·전수unknown은같다. 수집2의별도PDF READY는transport단계이며P01내용/권리/개발인수전까지root미접근·미가산이다. 다음S03held48..55 최대8/간격1pt·S04국내Q4 actualcutoffmetadata를실제배정했고기존v058S02소유/예약을유지한다. 사용자준비0이다.
+
 2026-10-25 B022 공개·비공개 인수와v058 실제배정: P01 B02138ac8f31 원격exact/공개3·collector106/106·corpus71/71을대조했다.이후B022 S02-B0024/S03-B0022/S04-B0022/S02-B0025 metadata4묶음64payload293931B(JSON63/MD1/PDF0)를총괄clone에exact색인/집합/SHA/bytes/strictUTF8·공유원본속성불변으로인수하고실제ACK4를전달했다.공개B022574bf4d9 exact/공개3과후속v058 실제ACK3/입력35도대조했다.대상·참조17PDF650쪽38603877B/직접16+parent1·별도제외1/46·대응보류1/53·공식0/전수unknown은불변이다.
 
 기보유HAC2 physical32..39의안전header8에대한P01 nativeSHA/실제시각검토를한정인수해150/181·미방문31·HAC2 39/70이다.footer0/printedpage-totalnull·본문/수치/교정미검토를유지한다.root는PDF/그림/XML/중첩reference stat·open·hash/native/render/OCR/copy/새산술/network0이다.S03 fullprecision p39 최소clearance13.09307861328125pt와prose13.097351pt는별도주석으로구별하고원본을수정하지않았다.한정header지역을전체semantic/측정/지원승인으로올리지않는다.
