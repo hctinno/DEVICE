@@ -19,6 +19,7 @@ from urllib.parse import parse_qsl, unquote, urlsplit
 from .ui_read_model import IntakeReadModel, ReadModelError
 
 ASSETS = {
+    '/ai-connections/panel.mjs': ('ai_connections/panel.mjs', 'text/javascript; charset=utf-8'),
     '/': ('index.html', 'text/html; charset=utf-8'),
     '/styles.css': ('styles.css', 'text/css; charset=utf-8'),
     '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
@@ -1385,7 +1386,21 @@ def _reference_dispatch(handler, runtime):
 def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None,
                   intake_reference_store=None, intake_reference_read_scope=(),
                   intake_reference_append_scope=(), intake_reference_review_inputs=(),
-                  intake_test_intent_inputs=(), intake_docx_reference_selection=None):
+                  intake_test_intent_inputs=(), intake_docx_reference_selection=None, ai_connections=None):
+    ai_runtime = ai_server_wrapper = None
+    if ai_connections is not None:
+        ai_module = importlib.import_module('.ai_connection_ui', __package__)
+        ai_runtime = ai_module.AIConnectionRuntime(ai_connections)
+        ai_server_wrapper = ai_module.wrap_ai_server
+
+    def ai_dispatch(handler):
+        if not handler.path.startswith('/api/ai-connections/'):
+            return False
+        if ai_runtime is None:
+            handler.close_connection = True
+            handler.error(503, 'ai_connection_ui_unconfigured')
+            return True
+        return ai_runtime.dispatch(handler)
     intent_review = None
     if (type(intake_test_intent_inputs) is not tuple or len(intake_test_intent_inputs) > 1
             or intake_test_intent_inputs and (type(intake_test_intent_inputs[0]) is not tuple
@@ -1548,6 +1563,7 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                     and self.headers.get('Sec-Fetch-Site') != 'cross-site')
 
         def do_GET(self):
+            if ai_dispatch(self): return
             self._fcc_post_only = False
             if _reference_dispatch(self, reference): return
             if not self.allowed_request():
@@ -1748,10 +1764,12 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
         do_HEAD = do_GET
 
         def reject_write(self):
+            if ai_dispatch(self): return
             if _reference_dispatch(self, reference): return
             self.error(405, 'read_only')
 
         def do_POST(self):
+            if ai_dispatch(self): return
             if _reference_dispatch(self, reference): return
             raw_target = self.requestline.split()[1]
             if self.path != _FCC_CALC_PATH or raw_target != _FCC_CALC_PATH:
@@ -1815,9 +1833,11 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
         do_PUT = do_PATCH = do_DELETE = do_OPTIONS = reject_write
 
     if reference is None:
-        return ThreadingHTTPServer((host, port), Handler)
+        server_type = ai_server_wrapper(ThreadingHTTPServer, ai_runtime) if ai_runtime is not None else ThreadingHTTPServer
+        return server_type((host, port), Handler)
     try:
-        server = _ReferenceHTTPServer((host, port), Handler, reference)
+        server_type = ai_server_wrapper(_ReferenceHTTPServer, ai_runtime) if ai_runtime is not None else _ReferenceHTTPServer
+        server = server_type((host, port), Handler, reference)
     except Exception:
         server = None
     if server is None: _reference_fail()
