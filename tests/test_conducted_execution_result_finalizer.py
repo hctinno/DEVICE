@@ -736,6 +736,62 @@ class GenuineSelectedFinalizerTests(_SelectionBoundaryCase):
         (self.work / 'genuine-selected-receipt.json').write_bytes(C(receipt))
 
 
+class SelectorDependencyBoundaryTests(_SelectionBoundaryCase):
+    def selection_dependency_parent_value_error_is_held_before_writer(self):
+        from labflow.virtual_fleet import conducted_twin_result as parent
+        self.assertNotIn('labflow.virtual_fleet.conducted_measurement_selector', sys.modules)
+        self.assertIsNone(self.execution['failure'])
+        before = {p.name: p.read_bytes() for p in self.evidence.iterdir()}
+        primary = ValueError('AUTHORED_UNEXPECTED_PARENT_BUILDER_VALUE_ERROR')
+        select = api._select_result
+        escaped = []
+
+        def selecting(plan, setup, journal, report):
+            try:
+                return select(plan, setup, journal, report)
+            except BaseException as observed:
+                escaped.append(observed)
+                raise
+
+        with patch.object(parent, 'build_conducted_twin_result', side_effect=primary) as builder, \
+                patch.object(api, '_select_result', side_effect=selecting), \
+                patch.object(api, '_build_result', side_effect=AssertionError('NO_EXTRA_BUILDER')) as extra, \
+                patch.object(api, '_write_result', side_effect=AssertionError('NO_WRITER_AFTER_SELECTOR_ERROR')) as writer:
+            with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                self.call(measurement_ref=None, measurement_selection_policy=copy.deepcopy(SELECTION_POLICY))
+        self.assertEqual(len(escaped), 1)
+        self.assertIs(escaped[0], primary)
+        self.assertEqual(builder.call_count, 1)
+        self.assertEqual(extra.call_count, 0)
+        self.assertEqual(writer.call_count, 0)
+        error = got.exception
+        self.assertEqual(error.code, 'conducted_execution_result_finalizer_measurement_selection_failed')
+        self.assertEqual(error.stage, 'selection')
+        held = error.receipt
+        self.assertEqual(len(held), 12)
+        self.assertEqual(held['status'], 'held')
+        self.assertEqual(held['failure'], dict(code=error.code, stage='selection'))
+        self.assertEqual(held['secondary_errors'], [])
+        self.assertIsNone(held['measurement_selection'])
+        self.assertIsNone(held['result'])
+        self.assertIsNone(held['artifact'])
+        self.assertEqual(len(held['input_files']), 5)
+        self.assertTrue(held['verification']['evidence_snapshot_verified'])
+        self.assertFalse(held['execution_authority'])
+        self.assertFalse(held['verification']['execution_rerun'])
+        self.assertEqual(C(held['execution_receipt']), self.original)
+        self.assertEqual(C(self.execution), self.original)
+        self.assertEqual({p.name: p.read_bytes() for p in self.evidence.iterdir()}, before)
+        self.assertFalse((self.work / '.local/conducted-result-artifacts').exists())
+        self.assertNotIn('AUTHORED_UNEXPECTED_PARENT_BUILDER_VALUE_ERROR', C(held).decode('utf-8'))
+        (self.work / 'dependency-held-receipt.json').write_bytes(C(held))
+        (self.work / 'dependency-observation.json').write_bytes(C(dict(
+            ordinary_fault='ValueError', selector_calls=1, parent_fault_calls=builder.call_count,
+            selector_exception_is_original=escaped[0] is primary, additional_builder_calls=extra.call_count,
+            parent_real_calculation_calls=0, writer_calls=writer.call_count, native_inputs_unchanged=True,
+            new_runtime=0, model_calls=0, profile_calls=0, operational_sql_calls=0)))
+
+
 def prepare_facts_demo(root):
     """Saved synthetic request -> genuine context -> scripted strict analysis -> facts plan."""
     from labflow.active_intake import register_source, scan_source
@@ -887,6 +943,9 @@ if __name__ == '__main__':
     elif '--selection-boundary' in sys.argv:
         sys.argv.remove('--selection-boundary')
         unittest.main(defaultTest=_selection_test_names(MeasurementSelectionInputTests, SelectedFinalizerBoundaryTests, GenuineSelectedFinalizerTests))
+    elif '--selection-dependency' in sys.argv:
+        sys.argv.remove('--selection-dependency')
+        unittest.main(defaultTest=_selection_test_names(SelectorDependencyBoundaryTests))
     elif '--fresh' in sys.argv or '--fresh-from-intake-facts' in sys.argv:
         import argparse
         parser = argparse.ArgumentParser()
