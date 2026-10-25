@@ -137,6 +137,7 @@ class TypedDependencies:
         return row
 
     def run_batch(self,matrix,prompt_bytes,response_schema_bytes,*,adc_path,evidence_dir,budget_path,approval_path,cancel_event=None):
+        self.calls.append('run_batch')
         self.entered.set()
         while not self.release.wait(.01):
             if cancel_event.is_set(): self.cancel_seen.set(); break
@@ -402,6 +403,29 @@ class AIConnectionTests(unittest.TestCase):
                 self.assertEqual(selected['state'],'failure');self.assertEqual(selected['reason_code'],code)
                 self.assertIsNone(selected['usage']);self.assertIsNone(selected['cost']);self.assertEqual(selected['attempted'],bool(count))
                 self.assertNotIn('artifacts',json.dumps(result))
+
+    def test_evidence_directory_failure_before_runner_preserves_known_zero(self):
+        self.ready();self.config['evidence_root'].write_text('synthetic regular file',encoding='utf-8')
+        budget_before=self.config['budget_path'].read_bytes()
+        server=self.start();headers=self.bootstrap(server)
+        for matrix in (False,True):
+            with self.subTest(matrix=matrix):
+                status,_,value=self.request(server,'run','POST',dict(expected_revision=1,scenario_id='SYN-CONNECTION',
+                    model_id=None if matrix else MODELS[1],overrides={},matrix=matrix),headers)
+                self.assertEqual(status,202);result=self.until_finished(server,headers,value['run_id'])
+                self.assertEqual(self.dep.calls.count('run_batch'),0);self.assertFalse(self.dep.entered.is_set())
+                self.assertFalse(any(isinstance(c,tuple) and c[0]=='mock_wire' for c in self.dep.calls))
+                self.assertEqual(result['error_code'],'ai_connection_ui_unavailable')
+                self.assertIs(type(result['attempts_used']),int);self.assertEqual(result['attempts_used'],0)
+                self.assertIsNone(result['execution_mode']);self.assertEqual(len(result['cells']),6)
+                self.assertEqual(sum(c['settings'] is not None for c in result['cells']),6 if matrix else 1)
+                for cell in result['cells']:
+                    self.assertEqual(cell['state'],'not_run');self.assertIs(cell['attempted'],False)
+                    self.assertEqual(cell['reason_code'],'unavailable' if cell['settings'] is not None else 'not_selected')
+                    self.assertIsNone(cell['usage']);self.assertIsNone(cell['cost'])
+                self.assertEqual(self.config['budget_path'].read_bytes(),budget_before)
+                self.assertIsInstance(server._ai_connection_runtime.runs[value['run_id']]['failure'],OSError)
+                self.assertNotIn(str(self.config['evidence_root']),json.dumps(result))
 
     def test_original_D2_exception_receipt_is_kept_private_when_row_recording_fails(self):
         self.ready();self.dep.failure_code='vertex_response_auth_failed';self.dep.raise_after_receipt=True
