@@ -1,6 +1,6 @@
 # 현재 접수 facts → conducted 계획 읽기
 
-`labflow.intake_current_facts_plan.read_current_conducted_plan_from_facts`는 현재 접수의 검증된 문맥·분석을 읽어 기존 facts 조립기로 연결하는 단일 in-process API다. caller가 source_settings/basis를 따로 제공하지 않아도 원 facts와 인용문으로 계획을 조립한다. 기존 `IntakeReadModel`, 서버, D2, facts/plan 부모와 권한 정책은 변경하지 않는다.
+`labflow.intake_current_facts_plan.read_current_conducted_plan_from_facts`는 현재 접수의 검증된 문맥·분석을 읽어 기존 facts 조립기로 연결하는 단일 in-process API다. caller가 source_settings/basis를 따로 제공하지 않아도 원 facts와 인용문으로 계획을 조립한다. 기존 `IntakeReadModel`의 현재 읽기에 보존된 schema1 text 지원을 추가했으며 서버, D2, facts/plan 부모와 권한 정책은 변경하지 않는다.
 
 2026-10-26 기준 [구현](../../labflow/intake_current_facts_plan.py), [새 합성 검사](../../tests/test_intake_current_facts_plan.py), [facts 조립기 사용법](intake_facts_to_conducted_plan_usage.md)을 함께 확인한다. 이 작업의 facts002 부모 변경은 시작 시 독립 검수 대기 의존성이었다. 인수 여부는 해당 변경의 별도 검수 결과를 따른다.
 
@@ -49,18 +49,28 @@ facts_plan = result['facts_plan']
 
 ## 읽기 범위와 오류
 
-지원 범위는 기존 current reader와 같다. 현재 완료된 synthetic V2/PDF 접수이며, 보존 원문·추출 profile·source provenance·분석 및 현재 revision의 검증을 그대로 재사용한다. V1/plain text, nonsynthetic, 미완료/새 revision의 분석 부재, 근거 변조 등을 새 성공 경로로 우회하지 않는다. PDF 원문을 새로 파싱하거나 준비·보존 작업을 추가하지 않는다.
+지원 범위는 현재 완료된 synthetic V2/PDF와, 아래의 실제 보존 근거를 모두 확인한 schema1 text-only 접수다. PDF는 기존 capture와 retained graph 검증을 그대로 실행한다. 원 capture API 자체는 바꾸지 않았으므로 schema1의 원 reference capture는 여전히 legacy_analysis/unavailable이며, 이 현재 계획 읽기의 좁은 text 경로와 구별한다. nonsynthetic, 미완료/새 revision의 분석 부재, 근거 변조 등을 성공으로 처리하지 않는다. 원문 parser·준비·보존 작업은 추가하지 않는다.
+
+TXT의 schema1 분석에는 `context_id`가 없다. 원 분석에 이 필드를 사후 삽입하거나 schema2로 승격하지 않는다. 현재 읽기는 같은 read transaction의 등록 source·현재 revision·files_json·fingerprint·완료 job/result를 사용한다. 기존 pure binding/profile 규칙과 확인한 UTF-8-sig source bytes로 manifest의 결정적 해시 한 개를 계산한다. 이 후보는 실제 이미 보존된 blob을 찾기 위한 locator다. 해당 hash의 실제 blob이 존재하고 canonical bytes가 정확히 일치해야 계속 진행하며, 반환 documents는 실제 stored manifest에서 읽는다. 후보 manifest를 저장하거나 디렉터리를 통탐색해 대체 후보를 고르지 않는다.
+
+현재 profile의 지원 text suffix인 `.txt`, `.md`, `.csv`, `.tsv`, `.json`만 포함된 묶음에서 이 경로를 사용한다. 이들은 기존 준비 규칙의 plain UTF-8 text로 확인하며 JSON/CSV 등의 새 parser를 실행하지 않는다. 파일 개수·각 text/전체 text·manifest는 기존 profile과 등록 한도를 따른다. 변경된 업로드가 아직 안정화되지 않아 `upload_incomplete`이면 이전 완료 revision으로 현재 TXT 문맥을 반환하지 않는다. 지원 밖 suffix, UTF-8 해독 불가, 원 제한 때문에 text가 미확인인 자료는 unavailable이다. 실제 보존 manifest 부재, 현재 profile 변경, revision/file/source binding·raw SHA·byte 길이·catalog kind/provenance·strict citation·현재 projection/events의 불일치도 반환하지 않는다. empty text나 불확실한 원 사실은 기존 strict analysis/plan의 null·blocked·질문 정책을 따르며 새 RF 값이나 승인을 채우지 않는다.
+
+원 schema1의 `analysis.get('context_id')`는 계속 None이다. 현재 public8의 `analysis_context_id`는 검증한 실제 stored manifest hash이며 현재 문맥의 locator 역할을 한다. 이를 원래 producer가 받았던 prompt나 원 schema1 분석에 이미 존재하던 context binding의 증거로 표현하지 않는다. source6는 이 문맥·원 facts의 명시 값을 facts002가 자동 조립한다. 정상 TXT 자료에 이미 충분한 같은 조건의 값·단위가 있으면 별도의 RF6 수기 선택 없이 준비 상태가 될 수 있고, 부족한 단위·조건은 그대로 보류한다.
+
+TXT의 source와 manifest 파일은 기존 Store의 native reader를 재사용해 읽기 handle로 고정한다. 같은 transaction 동안 실제 SHA·identity·단일 link·byte 길이를 검증하고, 사용 후 같은 held handle과 알려진 경로의 identity/stamp·SHA·현재 profile·DB identity를 다시 대조한다. 새 파일을 만들거나 원문을 다시 파싱하지 않는다. Store 수명이 held handle을 정리한다. 이 관측은 현재 제공 snapshot의 검사이며 미래 버전 고정이나 모든 ABA 변화를 검출했다는 주장이 아니다.
 
 API 호출은 기존 Store의 읽기 전용 열기와 read transaction만 사용한다. Store 초기화·migration, claim, 등록·retention·사용자 답변, 큐 변경·파일/DB 쓰기·AI·HTTP·장비 실행을 호출하지 않는다. 이 동작은 새 DB를 만드는 함수가 아니다. workspace가 없으면 만들지 않고 부모의 `store_missing` 오류를 전파한다.
 
-기존 `ReadModelError`의 코드·객체, reader나 facts 조립기에서 발생한 오류·MemoryError·KeyboardInterrupt·SystemExit·그 밖의 BaseException을 이 API가 감싸거나 성공 결과로 바꾸지 않는다. 부모 안에서 이미 정한 오류 변환·정리 정책도 변경하지 않는다. 부모 읽기에 실패하면 facts 조립기를 호출하지 않으며 가짜 context/analysis/plan을 만들지 않는다.
+기존 `ReadModelError` 코드와 reader/facts 조립기에서 surfaced된 오류·MemoryError·KeyboardInterrupt·SystemExit·그 밖의 BaseException을 얇은 API가 감싸거나 성공 결과로 바꾸지 않는다. 현재 reader는 SQL과 native Store의 정리를 모두 시도하며, 정리 중 두 번째 중단이 나도 처음 오류 객체를 보존한다. 처음 오류가 없을 때 정리가 실패해도 준비한 문맥을 성공 반환하지 않는다. 기존 source/sqlite 오류의 typed 변환은 유지한다. 부모 읽기에 실패하면 facts 조립기를 호출하지 않으며 가짜 context/analysis/plan을 만들지 않는다. 실패한 close의 자원 상태를 알 수 없으면 회수됐다고 주장하지 않는다.
 
 ## 검증 범위
 
-새 검사15개는 disposable authored PDF의 genuine 등록·추출·보존·분석 완료 후 실제 current reader와 facts 조립기를 호출한다. 테스트 setup의 새 DB/PDF 생성·claim·완료 쓰기는 전용 임시 폴더에서만 수행한다. API 읽기 중의 무쓰기 검증과 이 setup 작업을 구별한다.
+첫 읽기 API의 검사15개는 disposable authored PDF의 genuine 등록·추출·보존·분석 완료 후 실제 current reader와 facts 조립기를 호출한다. 테스트 setup의 새 DB/문서 생성·claim·완료 쓰기는 전용 임시 폴더에서만 수행한다. API 읽기 중의 무쓰기 검증과 이 setup 작업을 구별한다.
 
 검증은 자동 양성 조립과 exact wrapper 비교, 각각 한 번인 genuine 호출, 단위 부족, 명시/기본/오래된 pin, 원래 모델 문맥과 현재 문맥의 구별, 새 revision, V1·nonsynthetic·미완료·없는 접수, 보존 근거 변조, 원 오류·BaseException 객체 전파를 확인한다. 읽기 전용 파일 속성과 bytes/fstat/ns 불변, 실제 RO SQL 및 종료된 연결, native Store binding의 closed/active0/descriptor0도 별도 assertion으로 확인한다. 반환 snapshot 변경은 저장 원형이나 다음 읽기·facts wrapper를 바꾸지 않는다.
 
 검증의 SQLite/Store 자원 수는 disposable setup과 읽기를 포함한 관측값으로 보고한다. 전역 process handle 잔여분을 모두 이 API에 귀속하거나 보편적 회수 증거로 해석하지 않는다. 실제 모델 추가 호출은0이고 과거 실제 응답·고객 자료·운영 profile·permit·실장비를 사용하지 않는다. 기존 광범위 회귀 결과를 새 검사 수로 합산하지 않는다.
+
+2026-10-26 TXT 확장의 새 검사14개는 실제 보존된 TXT의 자동 양성/단위 부족·원 schema1/원 null 보존, 결정적 locator와 actual manifest 부재·대체 blob 무시, pinned source의 쓰기 거절·통탐색0, 원 bytes/manifest/catalog/현재 profile·파일목록/source ID/인용/projection 변조, unread text, upload_incomplete와 stale revision/C1, 무쓰기·준비/parser/AI/HTTP0, TXT/PDF의 처음 오류·late close·native cleanup을 확인했다. 기존 PDF/current 경계21개도 별도 회귀로 확인했다. 이전 TXT 부정 사례 두 곳은 실제 보존 근거가 검증되는 새 지원 범위로 바뀌었으며, nonsynthetic·미완료의 부정 기대는 유지한다. 원 실패 로그와 원 소스는 보존하며 각 실행 분모를 합산하지 않는다.
 
 문서는 `python scripts/check_artifacts.py`로 무결성을 확인한다. 문서 검사와 합성 소프트웨어 통과는 실제 계측 정확도·규범 적합성·전체 시험소 무인화 완료를 입증하지 않는다.
