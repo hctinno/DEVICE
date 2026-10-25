@@ -13,11 +13,18 @@ def run_codex_virtual_loop(
     *, catalog_path: Path, catalog_sha256: str, response_schema_bytes: bytes,
     executable: Path, requested_model: str, scenario: str,
     evidence_dir: Path, execution_origin: str, cancel_event=None,
+    source_settings=None,
 ) -> dict:
     ...
 ```
 
 이 함수가 합성 가상 실행의 정식 entry다. 기존 사용자의 합성 가상 실행 위임 범위에서 직접 호출하며, noauth intake CLI·issuer·account·reservation을 만들어 사용하지 않는다. 실제 접수 issuer 연결은 OPEN이다. 이 함수는 새 승인 bool이나 원격 실행 권한을 발급하지 않는다. 실제 Codex 호출은 총괄의 독립 수용 뒤 기존 Codex 시험 위임 안에서 별도 수행하며 owner 검증은 mock subprocess만 사용한다.
+
+2026-10-26 연결 확장: 선택 keyword source_settings=None 하나를 추가한다. None은 기존 factory 호출의 condition/scenario·seed0·power_dbm12.5와 원 파일 종류·DTO 형상을 유지한다. 제공값은 native dict exact6 frequency_hz/power_dbm/bandwidth_hz/duty_cycle/modulation/crest_factor_db다. bool·숫자 subclass·문자열 숫자·NaN/Inf·float 범위 밖 정수·누락/추가 키를 거절하고, 주파수/BW 양수·RF interval 유한/하한0·duty (0,1]·crest≥0·modulation의 native 1..200자 nonblank를 증거 생성·factory·producer 전에 검사한다. 값의 보충·변환·clamp는 없다.
+
+제공 source는 한 번 분리 복사하고 prepare_sensor_trial에 power_dbm=그 원 power 및 source_settings=그 원 exact6으로 전달한다. trial/runtime/harness는 계속 run당1개다. 제공 시에만 caller-request.json의 execution.source_settings에 같은 선언을 보존한다. None에는 이 키를 추가하지 않는다. 원 source pin·run ID·시각처럼 실제 실행마다 달라지는 근거를 이전 파일 bytes로 위장하지 않는다. 실제 장치/profile의 후행 거절은 기존 factory 책임이며 전역 rollback이나 모든 부정 입력의 무부작용을 새로 보장하지 않는다.
+
+이 첫 확장은 setup snapshot·journal 형상을 추가하지 않는다. 수용된 D3 setup 기록 API를 실행 base에 연결하고 별도 근거 형상을 승인받기 전에는 setup 기록의 빈 목록을 실제 setup0으로 해석하지 않는다. 단순 caller source6를 실제 설정 호출 목록이나 기준면 보정 근거로 승격하지 않는다.
 
 execution_origin은 actual_cli 또는 mock_subprocess의 명시적인 **caller 출처 선언**이다. native producer receipt에는 실제/mock을 인증하는 필드가 없으므로 origin_authenticated=false, ai_model_called=null로 표시하고 그 선언을 인증·권한으로 사용하지 않는다. 테스트는 genuine producer의 subprocess만 알려진 Python test child로 치환하고 원 producer lifecycle·raw 파일·receipt를 검증한다. mock 선언 자체가 subprocess를 치환하거나 실제 실행을 차단하는 기능은 아니다. 실제 실행 권한은 이 값으로 획득되지 않는다.
 
