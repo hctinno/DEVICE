@@ -2,7 +2,9 @@
 
 이 화면은 기존 제공 snapshot·fixture 기록과 별도로 지정 산출물의 읽기 관측을 표시한다. 전체 무인 시험소의 구현 완료, 실제 AI 실행, 실장비·현장 검증, 규격 적합성 또는 성적서 발행 승인을 뜻하지 않는다.
 
-현재 구현은 공개 `intake_conducted_artifact_readback` 계약을 받는 frontend이다. 새 `GET /api/intakes/{id}/conducted-artifact-readback`의 실제 서버 인수와 생산 DOM·Store 읽기 검증은 아직 미실행이다. 합성 계약 검사 통과를 실제 HTTP·파일 검증 통과로 바꾸지 않는다. 현재 작업은 공개 base `4c7c7c49e185f659683b5855cbd3a774618bc0c1`에 frontend 후보 `dbc8a205ee7d3a27dc93c0cd15c2dad17b91a0bf`를 일반 cherry-pick한 분기에서 착수했다. 착수 당시 해당 후보의 독립 수용은 pending이었다. 이후 총괄은 조건부 독립 검토를 보존하며 `0f78b958fbbe331ebcfdd2f93f4a085a4bc018f2`로 수용했고, current artifact 후보 `9ecc33bee9c256f5cbed552d6369bfe7c3543c06`도 수용했다고 후행 통보했다. 공개 통합 `5a68b7a90ae699a83593e886042e7b8f88db2080`의 선행 수용과 새 D1 GET의 수용은 별개이며, 이 frontend의 실제 GET·DOM 검증은 계속 pending이다. 원 선행 검증·실패·한계 기록을 덮어쓰지 않는다.
+2026-10-26 Asia/Seoul 후행 상태: 공개 `intake_conducted_artifact_readback` 계약을 받는 frontend를 수용된 보호 GET에 연결했다. GET 후보 `efc77fbdc55f5326eefaa7300354cc96e29d60ce`의 총괄 조건부 인수 뒤 정확 공개 base `a5ed74565ebb971766703ef9b13467be1cb50985`의 새 독립 복제본에서 검증했다. 보존된 합성 정상·측정 무효·RF 연결 단절 3사례의 새 GET 3건과 생산 화면 390/1440 총 6건이 통과했다. 별도 typed UI 조건 26건과 실제 검증을 구분한다. 이것은 작성자 검증이며 frontend의 독립 인수는 별도다. D1의 새 시연 startup 연결도 별도 pending 작업이다. 이 화면 검증에서 모델·가상 RF·writer·runtime을 새로 실행하지 않았다.
+
+이전 착수 기록: 공개 base `4c7c7c49e185f659683b5855cbd3a774618bc0c1`에 frontend 후보 `dbc8a205ee7d3a27dc93c0cd15c2dad17b91a0bf`를 일반 cherry-pick했을 때는 선행 수용과 실제 GET·DOM이 pending이었다. 이후 총괄은 원 조건부 검토를 보존하며 dbc8을 `0f78b958fbbe331ebcfdd2f93f4a085a4bc018f2`로, current artifact `9ecc33bee9c256f5cbed552d6369bfe7c3543c06`도 수용했다. frontend 체크포인트 `ae46ae7051d89d9f5ac99431d654221b6227c753` → `e12b5dfbd1adf8ed69319d25bb46677fc1fc6698` → `ea5fb4e836c6886af7d52320b481054867626f65`만 새 a5ed 복제본에 순서대로 일반 cherry-pick했다. 매 단계 소유·사전 파일·변경 후 Git 바이트·비소유 파일의 바이트와 native 수정 시각을 확인했다. 원 복제본·proof·실패·pending 당시 기록은 변경하지 않았다.
 
 ## 표시 범위
 
@@ -49,11 +51,28 @@ binding은 `intake_id`, `revision`, `analysis_context_id`, `context_sha256`, `an
 
 ## 검증 기록
 
-2026-10-26 Asia/Seoul 기준으로 최초 새 typed 계약 검사 11개와 관련 기존 preview/result/unified 검사 24개, 총 35개가 이전 outer 초안에서 통과했다. 이후 공통 transport node 상한 검사 1개를 RED로 추가했고, 새 48/400,000 한도에서 storage 계약 검사 12개가 통과했다. app 구문 검사를 통과했다. 최초 RED·공통 한도 RED·초회 검사 오류 3개는 로컬 proof에 보존했다. 실제 GET·Store readonly·생산 DOM·모델·runtime·실장비·현장 검증은 이 시점에서 미실행이다.
+2026-10-26 Asia/Seoul의 실행 분모는 다음과 같다. 서로 다른 회차를 합산하지 않는다.
+
+| 관측 | 결과와 범위 |
+| --- | --- |
+| 이전 typed 단위 검사 | 이전 outer 초안에서 새 11개 + 관련 기존 24개 = 35개 통과. 원 RED와 초회 오류 3개를 보존했다. |
+| 공통 한도 변경 후 typed 단위 검사 | 별도 cap RED 뒤 48/400,000의 storage 계약 12개 통과. 새 genuine 복제본에서 이 12개를 다시 실행하거나 합산하지 않았다. |
+| 실제 새 GET | 보존 정상·무효·단절 3사례의 HTTP 200, matched binding6와 후행 unchanged. 원 result·manifest·draft를 원 3파일과 대조했다. |
+| 보존 HTTP body | 새 GET 3개와 같은 사례의 목록·계획·기존 제공 결과 9개, 총 12개. 브라우저의 추가 읽기 요청 전체 횟수와는 다르다. |
+| 생산 DOM | 3사례 × 390/1440 = 6개 통과. 원 값·단위·기준면·invalid/null·닫힌 상세·unknown·판정 미평가·가로 넘침을 확인했다. |
+| 별도 typed UI 조건 | 정상 사례의 13조건 × 2폭 = 26개 통과. 실제 reader가 이 오류를 생성했다고 주장하지 않는다. |
+| 알려진 호스트 자원 | 호스트 3개의 serve thread·listener 종료, child exit 0·port 재사용을 확인했다. |
+| 원자료 불변 | 사례별 원 130파일의 bytes·SHA-256·정수 mtime_ns를 읽기 전후 대조했다. |
+| SQL·전체 native handle | 개별 SQL close hook은 직접 계측하지 않았다. 모든 SQL/native handle이 닫혔다고 주장하지 않는다. |
+| 새 모델·가상 RF·runtime·실장비·현장 | 미실행. 원 실물/규범/전체 업무 검증은 미완료다. |
+
+typed UI 조건은 reader 오류 뒤 이전 관측 보존, 알 수 없는 key, stale 재확인, 다른 계획, 다른 접수 제외, invalid 측정, DRAFT 텍스트 표시, 현재 C1 차이, 늦은 이전 generation 배제, 보기 숨김·복귀, 렌더링 실패, 잘못된 UTF-8, stream cap 취소·자동 retry 없음이다. 원 정상 −19.5 dBm과 보정 11 dBm, 무효·단절 사례의 측정·보정 null을 계산 없이 대조했다. DRAFT 문자열은 원 UTF-8 텍스트와 일치하며 script로 실행하지 않는다.
+
+최초 새 복제본의 source 328 기대 검사는 실제 tracked 코드 326에서 실패했다. 원 실패·exit 1을 보존한 뒤 총괄이 모집단을 정정했다. 정확 a5ed의 추적 `.py/.js/.mjs/.cjs`는 326개이며, 총괄 고정 검증 모집단 328개와 교집합 308·고정 모집단 전용 20·추적 코드 전용 18로 구별한다. 파일을 추가하거나 누락을 수선해 숫자를 맞추지 않았다. 매 cherry 전후에는 전체 추적 1,989파일 중 소유 기존 4개를 제외한 바이트·native 수정 시각도 대조했다.
 
 생산 DOM 수용 도구에는 `VLAB_ARTIFACT_STORAGE_VIEW_ONLY=1` 모드를 추가했다. 이 모드는 `VLAB_ARTIFACT_STORAGE_REPLAY_INDEX`로 전달한 절대 경로 index를 요구하며, `kind=explicit_own_saved_artifact_readback`, `backend_accepted=true`, `new_runtime_calls=0`과 명시한 자기 소유 저장 입력만 사용한다. 각 case의 `name`, `workspace`, `intake_id`, `server_options`, `source_roots`, `expected_http`, `expected_relation`, `expected_current`, 선택적 `typed_faults`를 전달한다. `server_options`에는 이미 검토된 서버 시작 인자를 그대로 전달하며 port는 도구가 0으로 지정한다. 승인된 backend가 없을 때 flag를 true로 만들어 실행하지 않는다. 새 Store·fixture·runtime·writer를 만드는 fallback은 없다.
 
-이 도구는 실제 GET 응답과 typed UI counterfactual을 별도 분모로 기록한다. native before/after는 자식 Python에서 `mtime_ns`를 정수로 보존하고 원 바이트 지문과 함께 대조한다. 실제 서버 정지·thread 종료·listener close·port 재사용을 확인한다. observer 실패 회차는 새 출력 폴더에 보존한다. 이 모드 역시 backend 인수 전에는 준비 상태이며 실행하지 않았다.
+이 도구는 실제 GET 응답과 typed UI counterfactual을 별도 분모로 기록한다. native before/after는 자식 Python에서 `mtime_ns`를 정수로 보존하고 원 바이트 지문과 함께 대조한다. 실제 서버 정지·thread 종료·listener close·port 재사용을 확인한다. observer 실패 회차는 새 출력 폴더에 보존한다. backend 인수 전에는 준비 상태로 유지했고, 수용된 정확 a5ed에서만 위 실제 검증을 수행했다. 원 GET의 총괄 foreign-503 관측기 봉투 단언 실패·exit 1·해당 503 body 미보존과 메서드 설명 M1은 선행 조건부 인수 범위이며 이 화면 검증으로 지우지 않는다.
 
 저장소 루트에서 `node --test --test-name-pattern="artifact storage view|unified provided flow|result readonly|conducted preview" frontend/intake_flow_model.test.mjs`로 해당 검사만 실행할 수 있다. 문서 변경 후 `python scripts/check_artifacts.py`를 수행한다. 이 검사는 문서 무결성 검사이며 계측 정확도·시험소 기능·기관 적합성의 증거가 아니다.
 
