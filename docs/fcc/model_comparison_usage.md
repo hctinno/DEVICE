@@ -1,6 +1,6 @@
 # Vertex 연결 비교 실행
 
-2026-10-25, Asia/Seoul. [공통 설계](../superpowers/specs/2026-10-25-vertex-ai-connection-design.md)와 [공식 모델 카탈로그](vertex_ai_connection_catalog.json)를 따르는 작은 연결 실행 경계다. [구현](../../labflow/model_comparison.py)은 프로필/설정 담당 모듈과 REST 응답 담당 모듈을 직접 연결한다. 현재 소유 단위의 검증은 [가상 단위 검사](../../tests/test_model_comparison.py) 37개이며 실제 ADC 읽기·인증 갱신·네트워크·Vertex 생성은 모두 0이다. 실제 의존성 결합·처음 6회 생성과 독립 제품 검수는 총괄이 수행한다.
+2026-10-25, Asia/Seoul. [공통 설계](../superpowers/specs/2026-10-25-vertex-ai-connection-design.md)와 [공식 모델 카탈로그](vertex_ai_connection_catalog.json)를 따르는 작은 연결 실행 경계다. [구현](../../labflow/model_comparison.py)은 프로필/설정 담당 모듈과 REST 응답 담당 모듈을 직접 연결한다. 현재 소유 단위의 검증은 [가상 단위 검사](../../tests/test_model_comparison.py) 39개이며 실제 ADC 읽기·인증 갱신·네트워크·Vertex 생성은 모두 0이다. 실제 의존성 결합·처음 6회 생성과 독립 제품 검수는 총괄이 수행한다.
 
 ## API와 선택
 
@@ -90,6 +90,8 @@ kind=vertex_comparison_budget, 최초 한도6/3072, revision0, 예약0, active_r
 
 D2 성공 tuple2만 strict decoder에 전달한다. receipt18의 settings/bindings·request host/model/quota·시도 횟수·STOP·worker 회수·의존성·usage/cost·취소/검증 상태와 artifact6를 검사한다. 원 request/schema/settings/provider request는 원 bytes와 대조하고, provider response/final text는 파일 크기·SHA·완결성으로 읽기 대조한다. 반환 final bytes도 파일과 같아야 한다. raw/thought 내용을 UI나 로그에 복사하지 않는다.
 
+D2의 부재 artifact는 present=false, bytes=정확한 native int 0, sha256=null, complete=false, overflow=false, extent=absent로 받는다. bytes의 null/bool/float/다른 정수는 보정하지 않고 거절한다.
+
 known VertexResponseError의 고정 code를 첫 실패로 보존한다. 유효 failed receipt는 값 그대로 남기며 strict decode를 하지 않는다. receipt가 없거나 유효하지 않아 실제 생성 횟수를 알 수 없으면 unknown/null이다. KI/SystemExit/GeneratorExit/MemoryError 및 예상하지 못한 adapter 예외는 원 객체를 전파하며 예약은 남는다. 로컬 중단을 원격 취소나 과금0 증거로 승격하지 않는다.
 
 | DTO | 정확 키 수 | 핵심 |
@@ -110,7 +112,7 @@ matrix128KiB, budget64KiB, row/batch 각1MiB를 상한으로 둔다. receipt/art
 
 ## 검증과 남은 범위
 
-신규37 검사는 가상 프로필/전송만 쓴다. 고정행/선택/override 불변, scope와 만료, 누적 재시작·중복·동시 in-flight, 원 설정 한도 거절, 예약 후 취소/시간, strict wire, receipt/artifact 변조, known 실패·unknown·제어 예외를 포함한다. OS 잠금은 이 Windows 호스트에서 검사했다. 다른 OS의 파일시스템·프로세스 강제 종료·실제 D1/D2 결합·원격 API·실제 모델은 별도 검증 대상이다.
+신규39 검사는 가상 프로필/전송만 쓴다. 고정행/선택/override 불변, scope와 만료, 누적 재시작·중복·동시 in-flight, 원 설정 한도 거절, 예약 후 취소/시간, strict wire, receipt/artifact 변조, known 실패·unknown·제어 예외를 포함한다. OS 잠금은 이 Windows 호스트에서 검사했다. 다른 OS의 파일시스템·프로세스 강제 종료·실제 D1/D2 결합·원격 API·실제 모델은 별도 검증 대상이다.
 
 고정 오류는 ModelComparisonError(ValueError)이며 code/str/args가 동일하고 cause/context가 없는 model_comparison_invalid_input, model_comparison_limit_exceeded, model_comparison_state_error, model_comparison_dependency_unavailable이다. operational 거절은 고정 reason_code와 not_run/unknown 기록으로 구별한다. 원 인증 오류 내용이나 파일 경로를 오류 메시지로 만들지 않는다.
 

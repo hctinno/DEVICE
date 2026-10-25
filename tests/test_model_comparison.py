@@ -495,5 +495,60 @@ class ComparisonTests(unittest.TestCase):
         self.assertEqual(out["rows"][0]["budget"]["generation_post_attempts"],0)
         self.assertEqual(json.loads(self.budget.read_bytes())["reserved_calls"],1)
 
+    def auth_failed_fixture(self, *args, **kwargs):
+        """Synthetic D2 auth failure: no provider response or generated text."""
+        raw,r=self.produce(*args,**kwargs)
+        r.update(status="failed",failure=dict(code="vertex_response_auth_failed",phase="auth"))
+        r["attempts"].update(generation_post_attempts=0,auth_refresh_completed=False)
+        r["response"].update(http_status=None,auth_http_status=400,finish_reason=None,
+            reported_model_version=None,provider_response_id=None,text_parts=None,thought_parts=None)
+        r["cost"]["kind"]="not_applicable"
+        r["cancellation"]["provider_completion"]="not_started"
+        r["verification"]["wire_complete"]=False
+        for key in ("provider_response","final_text"):
+            descriptor=r["artifacts"][key]
+            (kwargs["evidence_dir"]/descriptor["path"]).unlink()
+            descriptor.update(present=False,bytes=0,sha256=None,complete=False,
+                              overflow=False,extent="absent")
+        return r
+
+    def test_auth_failure_absent_artifacts_preserve_known_zero(self):
+        originals=[]
+        def failed(*args,**kwargs):
+            receipt=self.auth_failed_fixture(*args,**kwargs)
+            originals.append(copy.deepcopy(receipt))
+            raise VertexError("auth_failed",receipt)
+        with patch.object(sys.modules["labflow.vertex_response"],"produce_vertex_response",failed):
+            out=self.run_batch()
+        row=out["rows"][0]
+        self.assertEqual(row["status"],"failed")
+        self.assertEqual(row["reason_code"],"vertex_response_auth_failed")
+        self.assertEqual(row["receipt"],originals[0])
+        self.assertEqual(row["strict_decode"]["status"],"not_run")
+        self.assertEqual(row["budget"]["generation_post_attempts"],0)
+        self.assertEqual(out["summary"]["generation_post_attempts"],0)
+        self.assertEqual(out["summary"]["generation_post_attempts_unknown_rows"],0)
+        budget=json.loads(self.budget.read_bytes())
+        self.assertIsNone(budget["active_run_id"])
+        self.assertEqual(budget["entries"][0]["state"],"failed")
+        self.assertEqual((budget["reserved_calls"],budget["reserved_output_tokens"]),(1,512))
+        self.assertEqual(len(self.calls),1)
+
+    def test_absent_artifact_bytes_are_exact_native_zero(self):
+        for index,value in enumerate((None,False,0.0,-1,1)):
+            self.seed()
+            def failed(*args,**kwargs):
+                receipt=self.auth_failed_fixture(*args,**kwargs)
+                receipt["artifacts"]["provider_response"]["bytes"]=value
+                raise VertexError("auth_failed",receipt)
+            with self.subTest(value=value),patch.object(
+                    sys.modules["labflow.vertex_response"],"produce_vertex_response",failed):
+                out=self.run_batch(evidence_dir=self.root/f"absent-{index}")
+            self.assertEqual(out["rows"][0]["status"],"unknown")
+            self.assertIsNone(out["rows"][0]["receipt"])
+            self.assertIsNone(out["rows"][0]["budget"]["generation_post_attempts"])
+            self.assertIsNotNone(json.loads(self.budget.read_bytes())["active_run_id"])
+
+
 if __name__=="__main__":
     unittest.main()
