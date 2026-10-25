@@ -135,14 +135,14 @@ const PLAN_FIELDS=['frequency_hz','power_dbm','bandwidth_hz','duty_cycle','modul
 const PLAN_FACTS='product_type customer manufacturer model market purpose features antenna_gain power_target firmware'.split(' ');
 const PLAN_GAPS='native_input_invalid analysis_invalid context_invalid expected_revision_changed_or_invalid expected_context_changed_or_invalid analysis_evidence_invalid conflicting_intake_fact missing_intake_field follow_up_missing_field product_identity unread_documents uncertain_intake_fact intent_value_not_in_request_quote invalid_source_settings unknown_source_field missing_setting unsupported_modulation invalid_setting invalid_rf_domain invalid_method unknown_method_field unsupported_method_field missing_method_field invalid_basis unknown_basis_field missing_or_invalid_basis unsupported_or_invalid_basis basis_value_mismatch basis_quote_value_mismatch basis_evidence_invalid'.split(' ');
 const previewNeed=value=>{if(!value)throw Error('intake_conducted_preview_invalid_response');};
-function previewJSON(raw,cap=262144,countKeys=false){
+function previewJSON(raw,cap=262144,countKeys=false,{maxDepth=40,maxNodes=100000,ranges=null}={}){
   previewNeed(typeof raw==='string'&&new TextEncoder().encode(raw).length<=cap);
   let i=0,nodes=0;const space=()=>{while(/[\x20\t\r\n]/.test(raw[i]||'!'))i++;};
   const string=()=>{const start=i++;while(i<raw.length){if(raw[i]==='\\'){i+=2;continue;}if(raw[i++]==='"'){const text=JSON.parse(raw.slice(start,i));previewNeed(text.isWellFormed());return text;}}throw Error('intake_conducted_preview_invalid_response');};
   const value=depth=>{
-    previewNeed(depth<=40&&++nodes<=100000);space();const c=raw[i];if(c==='"')return string();
-    if(c==='{'){i++;space();const out=Object.create(null);if(raw[i]==='}'){i++;return out;}while(true){space();previewNeed(raw[i]==='"');const key=string();if(countKeys)previewNeed(++nodes<=100000);previewNeed(!Object.hasOwn(out,key));space();previewNeed(raw[i++]===':');out[key]=value(depth+1);space();const end=raw[i++];if(end==='}')return out;previewNeed(end===',');}}
-    if(c==='['){i++;space();const out=[];if(raw[i]===']'){i++;return out;}while(true){out.push(value(depth+1));space();const end=raw[i++];if(end===']')return out;previewNeed(end===',');}}
+    previewNeed(depth<=maxDepth&&++nodes<=maxNodes);space();const start=i,c=raw[i],finish=out=>{ranges?.set(out,[start,i]);return out;};if(c==='"')return string();
+    if(c==='{'){i++;space();const out=Object.create(null);if(raw[i]==='}'){i++;return finish(out);}while(true){space();previewNeed(raw[i]==='"');const key=string();if(countKeys)previewNeed(++nodes<=maxNodes);previewNeed(!Object.hasOwn(out,key));space();previewNeed(raw[i++]===':');out[key]=value(depth+1);space();const end=raw[i++];if(end==='}')return finish(out);previewNeed(end===',');}}
+    if(c==='['){i++;space();const out=[];if(raw[i]===']'){i++;return finish(out);}while(true){out.push(value(depth+1));space();const end=raw[i++];if(end===']')return finish(out);previewNeed(end===',');}}
     for(const [token,result]of [['true',true],['false',false],['null',null]])if(raw.startsWith(token,i)){i+=token.length;return result;}
     const number=/^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/.exec(raw.slice(i));previewNeed(number);i+=number[0].length;
     const parsed=Number(number[0]);if(!/[.eE]/.test(number[0])&&!Number.isSafeInteger(parsed))return BigInt(number[0]);
@@ -212,7 +212,10 @@ function validatePlanPreviewPacket(v,context){
 const RESULT_INVALID=new Set('acquisition_invalid evidence_context_missing input_limit invalid_evidence journal_header_invalid journal_integrity_invalid journal_invalid journal_limit journal_state_invalid measurement_invalid measurement_path_conflict measurement_stale native_input_invalid observation_clock_regression observation_invalid output_limit plan_basis_invalid plan_binding_invalid plan_binding_mismatch plan_hash_mismatch plan_intake_invalid plan_invalid plan_limit plan_method_invalid plan_verification_invalid receipt_advance_clock receipt_identity_or_clock receipt_invalid report_invalid run_binding_mismatch setup_advance_invalid setup_clock_mismatch setup_duplicate_request setup_hash_mismatch setup_identity_invalid setup_invalid setup_limit setup_receipt_invalid source_metadata_mismatch source_settings_mismatch topology_hash_mismatch topology_invalid'.split(' ')),RESULT_INCOMPLETE=new Set('correction_overflow execution_incomplete journal_incomplete measurement_missing measurement_not_referenced measurement_reference_missing path_ambiguous path_configuration_invalid path_configuration_missing path_selection_missing plan_blocked post_setup_configuration setup_failed setup_missing setup_partial unit_conversion_failed unsupported_path_device'.split(' ')),RESULT_GAP_ONLY=new Set('correction_basis_invalid correction_basis_missing metric_mismatch'.split(' '));
 const RESULT_REASONS='provided_revision_changed expected_current_binding_missing expected_intake_mismatch expected_revision_mismatch expected_context_mismatch expected_analysis_context_mismatch expected_analysis_mismatch result_plan_binding_unavailable result_plan_binding_mismatch result_plan_hash_mismatch result_plan_input_hash_mismatch result_report_hash_mismatch result_run_binding_mismatch'.split(' ');
 export function parseConductedResultView(raw,context){
-  const v=previewJSON(raw,1048576,true),need=x=>{if(!x)throw Error('intake_conducted_result_invalid');};
+  return validateConductedResultPacket(previewJSON(raw,1048576,true),context);
+}
+function validateConductedResultPacket(v,context){
+  const need=x=>{if(!x)throw Error('intake_conducted_result_invalid');};
   const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
   const keys=(x,fields)=>need(object(x)&&Object.keys(x).length===fields.split(' ').length&&Object.keys(x).every(k=>fields.split(' ').includes(k)));
   const text=x=>typeof x==='string'&&x.trim().length>0,sha=x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x);
@@ -269,6 +272,101 @@ export function parseConductedResultView(raw,context){
   }
   keys(r.verification,'synthetic hardware_verified physical_verified source_bytes method_approval trust_scope execution_authority');need(r.verification.synthetic===true&&r.verification.hardware_verified===false&&r.verification.physical_verified===false&&r.verification.source_bytes==='not_reopened'&&r.verification.method_approval==='not_assessed'&&r.verification.trust_scope==='provided_host_snapshots_and_hash_consistency'&&r.verification.execution_authority===false);
   return v;
+}
+
+const ARTIFACT_BINDING='intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256'.split(' ');
+export const CONDUCTED_ARTIFACT_HTTP_BYTES=12*1024*1024+1;
+// Validate the public reader's attestation. File-byte/hash checks belong to the
+// native reader; this parser neither reserializes parents nor grants authority.
+export function parseConductedArtifactReadback(raw,context){
+  const need=x=>{if(!x)throw Error('intake_conducted_artifact_readback_invalid');};
+  const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+  const keys=(x,names)=>{const fields=names.split(' ');need(object(x)&&Object.keys(x).length===fields.length&&fields.every(k=>Object.hasOwn(x,k)));};
+  const equal=(a,b)=>ARTIFACT_BINDING.every(k=>a[k]===b[k]);
+  const sha=x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x),positive=x=>Number.isSafeInteger(x)&&x>0;
+  const text=x=>typeof x==='string'&&x.trim().length>0;
+  const literals=(x,expected)=>{keys(x,Object.keys(expected).join(' '));need(Object.entries(expected).every(([k,v])=>x[k]===v));};
+  const binding=(x,nullable=false)=>{keys(x,ARTIFACT_BINDING.join(' '));need((nullable&&x.intake_id===null||text(x.intake_id))&&(nullable&&x.revision===null||positive(x.revision)));for(const k of ARTIFACT_BINDING.slice(2))need(nullable&&x[k]===null||sha(x[k]));};
+  const ranges=new WeakMap(),v=previewJSON(raw,CONDUCTED_ARTIFACT_HTTP_BYTES,true,{maxDepth:48,maxNodes:400000,ranges});
+  const bytes=x=>{const range=ranges.get(x);need(range);return new TextEncoder().encode(raw.slice(...range)).length;};
+  const bounded=(part,cap)=>{
+    need(bytes(part)<=cap);let nodes=0;
+    const walk=(item,depth)=>{need(depth<=32&&++nodes<=1000000);if(Array.isArray(item))for(const child of item)walk(child,depth+1);else if(object(item))for(const [key,child]of Object.entries(item)){walk(key,depth+1);walk(child,depth+1);}};
+    walk(part,0);
+  };
+  keys(v,'schema_version kind status current artifact relation verification');
+  need(v.schema_version===1&&v.kind==='intake_conducted_artifact_readback'&&['matched','blocked','different_intake','different_plan','stale'].includes(v.status));
+  keys(v.current,'context analysis facts_plan');bounded(v.current,8*1024*1024);
+  const c=v.current.context,f=v.current.facts_plan,rel=v.relation;
+  keys(c,'job_id intake_id revision synthetic documents analysis_context_id analysis_contract instructions');
+  need(c.intake_id===context.intake_id&&c.revision===context.revision&&positive(c.revision)&&object(v.current.analysis));
+  keys(f,'schema_version kind status plan_input assembly_gaps questions');
+  need(f.schema_version===1&&f.kind==='intake_facts_to_conducted_plan'&&['ready_for_simulation','blocked'].includes(f.status)&&f.plan_input?.status===f.status&&Array.isArray(f.assembly_gaps)&&Array.isArray(f.questions));
+  keys(rel,'status current_binding artifact_binding fields recheck reasons');need(rel.status===v.status);binding(rel.current_binding,true);
+  need(equal(rel.current_binding,f.plan_input.binding));keys(rel.fields,ARTIFACT_BINDING.join(' '));
+  keys(rel.recheck,'status context_sha256_before context_sha256_after analysis_sha256_before analysis_sha256_after');
+  const recheck=rel.recheck;for(const k of Object.keys(recheck).filter(k=>k!=='status'))need(sha(recheck[k]));
+  const contextChanged=recheck.context_sha256_before!==recheck.context_sha256_after,analysisChanged=recheck.analysis_sha256_before!==recheck.analysis_sha256_after;
+  need(recheck.status===(contextChanged||analysisChanged?'changed':'unchanged'));
+  validatePlanPreviewPacket({schema_version:1,kind:'intake_conducted_plan_preview',intake_id:c.intake_id,revision:c.revision,context_sha256:recheck.context_sha256_before,context_scope:'current_provided_context',selection_status:'matched',plan_input:f.plan_input},context);
+  if(f.status==='ready_for_simulation'){
+    binding(rel.current_binding);need(rel.current_binding.analysis_context_id===c.analysis_context_id&&rel.current_binding.context_sha256===recheck.context_sha256_before&&rel.current_binding.analysis_sha256===recheck.analysis_sha256_before);
+  }
+  need(Array.isArray(rel.reasons)&&rel.reasons.every(text)&&new Set(rel.reasons).size===rel.reasons.length);
+  const reasons=[],artifact=v.artifact;let status='blocked';
+  if(artifact===null){
+    need(rel.artifact_binding===null&&ARTIFACT_BINDING.every(k=>rel.fields[k]===null));
+    if(rel.reasons.includes('current_pin_missing'))reasons.push('current_pin_missing');
+    if(f.status==='blocked')reasons.push('current_plan_blocked');need(reasons.length>0);
+  }else{
+    need(f.status==='ready_for_simulation');bounded(artifact,2*1024*1024);
+    keys(artifact,'schema_version kind selection storage result manifest draft verification');need(artifact.schema_version===1&&artifact.kind==='conducted_result_artifact_read');
+    const s=artifact.selection,storage=artifact.storage,m=artifact.manifest,r=artifact.result;
+    keys(s,'artifact_name expected_manifest_sha256 expected_result_sha256 run_id runtime_instance_id');
+    need(typeof s.artifact_name==='string'&&/^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$/.test(s.artifact_name)&&sha(s.expected_manifest_sha256)&&sha(s.expected_result_sha256)&&text(s.run_id)&&text(s.runtime_instance_id));
+    literals(storage,{status:'manifest_payloads_verified',completion_marker:'manifest.json',manifest_sha256:s.expected_manifest_sha256,result_sha256:s.expected_result_sha256,draft_sha256:storage?.draft_sha256,verified_file_count:3,binding_scope:'full_bound'});need(sha(storage.draft_sha256));
+    keys(m,'schema_version kind artifact_name run_id runtime_instance_id result_sha256 result_status files verification execution_authority');need(bytes(m)+1<=8192);
+    need(m.schema_version===1&&m.kind==='conducted_result_artifact_manifest'&&m.artifact_name===s.artifact_name&&m.run_id===s.run_id&&m.runtime_instance_id===s.runtime_instance_id&&m.result_sha256===s.expected_result_sha256&&m.result_status===r?.status&&m.execution_authority===false);
+    literals(m.verification,{report_status:'DRAFT',binding_scope:'full_bound',data_origin:'provided_synthetic_result',storage_hashes_verified:true,hardware_verified:false,physical_verified:false,method_approval:'not_assessed',conformity_status:'not_assessed',execution_authorized:false,rerun_authorized:false});
+    need(Array.isArray(m.files)&&m.files.length===2);for(const [i,row]of m.files.entries()){
+      keys(row,'path bytes sha256 media_type');need(row.path===['result.json','draft.md'][i]&&row.media_type===['application/json','text/markdown'][i]&&positive(row.bytes)&&row.bytes<=[1048577,262144][i]&&sha(row.sha256));
+    }
+    need(typeof artifact.draft==='string'&&new TextEncoder().encode(artifact.draft).length<=262144&&new TextEncoder().encode(artifact.draft).length===m.files[1].bytes&&m.files[1].sha256===storage.draft_sha256&&artifact.draft.startsWith('# Conducted result DRAFT\n\nProvided synthetic snapshot. Storage completion is not conformity PASS.\n'));
+    literals(artifact.verification,{source_references:'not_opened',current_binding:'caller_provided_hashes_and_ids_only',historical_publication_order:'not_verified',writer_outcome:'not_verified',draft_content:'not_interpreted',hardware_verified:false,physical_verified:false,source_authenticity_verified:false,method_approval:'not_assessed',conformity_status:'not_assessed',issuance_approval:'not_assessed',execution_authority:false,rerun_authority:false});
+    need(bytes(r)+1<=1048577);binding(rel.artifact_binding);need(object(r.binding)&&Object.keys(r.binding).length===11&&equal(rel.artifact_binding,r.binding.plan_input?.binding??{}));
+    need(r.binding.run_id===s.run_id&&r.binding.runtime_instance_id===s.runtime_instance_id);
+    const ac={intake_id:rel.artifact_binding.intake_id,revision:rel.artifact_binding.revision};
+    validatePlanPreviewPacket({schema_version:1,kind:'intake_conducted_plan_preview',...ac,context_sha256:rel.artifact_binding.context_sha256,context_scope:'current_provided_context',selection_status:'matched',plan_input:r.binding.plan_input},ac);
+    validateConductedResultPacket({schema_version:1,kind:'intake_conducted_result_view',...ac,context_sha256:rel.artifact_binding.context_sha256,source_kind:'provided_snapshot',expected_current_binding:rel.artifact_binding,relation:{status:'matched',reasons:[],provided_revision:ac.revision},result:r},ac);
+    for(const k of ARTIFACT_BINDING){const same=rel.current_binding[k]===rel.artifact_binding[k];need(rel.fields[k]===same);if(!same)reasons.push('artifact_'+k+'_mismatch');}
+    status=!rel.fields.intake_id?'different_intake':reasons.length?'different_plan':'matched';
+  }
+  if(contextChanged)reasons.push('current_context_changed');if(analysisChanged)reasons.push('current_analysis_changed');if(contextChanged||analysisChanged)status='stale';
+  need(status===v.status&&reasons.length===rel.reasons.length&&reasons.every((reason,i)=>rel.reasons[i]===reason));
+  literals(v.verification,{scope:'two_readonly_current_snapshots_and_provided_artifact_pins',current_completion:'not_assessed',permanent_current_approval:false,method_approval:'not_assessed',regulatory:'not_assessed',physical_verified:false,execution_authority:false,rerun_authority:false,business_writes:false,artifact_history:'reader_scope_only'});
+  return v;
+}
+
+export function describeConductedArtifactStorage(intake,observations={}){
+  const observation=observations.storage,packet=observation?.value,context=packet?.current?.context;
+  const belongs=context?.intake_id===intake.intake_id&&(!observation.context||observation.context.intake_id===intake.intake_id);
+  const artifact=belongs&&packet.artifact?.result.binding.plan_input.binding.intake_id===intake.intake_id?packet.artifact:null;
+  const foreign=Boolean(packet&&(!belongs||packet.artifact&&!artifact));
+  const queue=describeIntakeGapQueue(intake,observations),planGate=queue.groups.find(x=>x.source==='plan_gaps'),plan=observations.plan?.value;
+  const sameBinding=(a,b)=>a&&b&&ARTIFACT_BINDING.every(k=>a[k]===b[k]);
+  const reasons=[];if(foreign)reasons.push('different_intake');
+  if(observations.intakeStale||observations.parentPending)reasons.push('parent_snapshot_unconfirmed');
+  if(observation?.pending||observation?.parentPending||observation?.stale)reasons.push('observation_unconfirmed');
+  if(packet&&observation?.context?.generation!==(observations.generation??0))reasons.push('snapshot_generation_changed');
+  if(belongs&&context.revision!==intake.revision)reasons.push('revision_changed');
+  if(packet&&(planGate.state!=='current'||plan?.plan_input.status!=='ready_for_simulation'||!sameBinding(plan?.plan_input.binding,packet.relation.current_binding)||plan?.context_sha256!==packet.relation.recheck.context_sha256_before))reasons.push('current_plan_unconfirmed');
+  if(packet&&packet.status!=='matched')reasons.push(packet.status);
+  const current=Boolean(belongs&&artifact&&packet.status==='matched'&&!reasons.length);
+  const scope=current?'current':!packet?'none':foreign?'blocked':reasons.some(x=>['parent_snapshot_unconfirmed','observation_unconfirmed','snapshot_generation_changed','revision_changed','stale'].includes(x))?'unconfirmed':'blocked';
+  return {source_kind:'artifact_storage_readback',current,scope,foreign,reasons,status:belongs?packet.status:'unknown',code:observation?.errorCode??null,
+    original_status:artifact?.result.status??null,artifact:artifact?structuredClone(artifact):null,
+    current_facts:belongs?structuredClone(packet.current):null,relation:belongs&&!foreign?structuredClone(packet.relation):null,
+    execution_authority:false,permanent_current_approval:false,ai:'unknown',conformity:'not_assessed'};
 }
 
 const QUEUE_EVIDENCE=new Set('source_statement_unsupported source_quote_mismatch source_condition_unbound source_fact_missing'.split(' '));
@@ -357,6 +455,7 @@ function unifyProvidedWorkflow(view,intake,observations){
   const plan=same(observations.plan?.value),packet=same(observations.result?.value),r=packet?.result;
   const planCurrent=Boolean(plan&&planGate.state==='current');
   const planReady=planCurrent&&plan.plan_input.status==='ready_for_simulation';
+  const storage=describeConductedArtifactStorage(intake,observations);
   const current=Boolean(r&&planReady&&resultGate.state==='current'&&r.status==='recorded'
     &&r.raw_measurement!==null&&r.calculation.corrected!==null);
   const reasons=[...new Set([...planGate.reasons,...resultGate.reasons,
@@ -411,13 +510,15 @@ function unifyProvidedWorkflow(view,intake,observations){
       label:current?'제공 측정·계산 기록':r?`제공 결과 ${r.status} · 현재 사용 차단`:selected?`기존 fixture · ${step.label}`:'제공 측정·계산 미관측',
       tone:current?'info':r?'warning':step.tone,
       lines:[relation,...(current?measurementLines:[]),...fixtureLines(step)],previous_lines:r&&!current?measurementLines:[]};
-    return {...common,label:plan||r?'제공 기록 · 저장·독립평가 미확인':selected?`기존 fixture · ${step.label}`:'저장·독립평가 미확인',tone:'neutral',lines:[
+    return {...common,label:storage.current?'산출물 고정 3파일 읽기 일치 · 판정 미평가':plan||r?'제공 기록 · 저장·독립평가 미확인':selected?`기존 fixture · ${step.label}`:'저장·독립평가 미확인',tone:storage.current?'info':'neutral',lines:[
       '제공 snapshot: 저장 완료 marker·DRAFT 검증 미확인',
+      storage.current?`별도 산출물 읽기: 고정 3파일 bytes·hash·full binding 일치 관측 · 원 결과 ${storage.original_status}`:storage.scope==='none'?'별도 산출물 읽기: unknown · 미관측':`별도 산출물 읽기: ${storage.scope} · 현재 관계 미확인`,
+      '산출물 읽기 일치는 당시 관측입니다. 작성 결과·게시 순서·영구 현재 승인·규범 판정을 보증하지 않습니다.',
       '제공 snapshot: 실제 AI 호출 여부 unknown · 정리·독립평가 미확인',
       '제공 snapshot: 작업 결과·규범 미평가(not_assessed) · 실측 대조 미실행',
       ...fixtureLines(step),
     ]};
   });
-  return {...view,provided:p,steps,context:{...view.context,fixture_relation:view.context.relation,
+  return {...view,provided:p,artifact_storage:storage,steps,context:{...view.context,fixture_relation:view.context.relation,
     provided_scope:scope,relation:`${relation} · 기존 fixture: ${view.context.relation}`}};
 }

@@ -9,7 +9,7 @@ const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
 fs.mkdirSync(LOCAL,{recursive:true});
 const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
 function proofWrite(file,data){
   const target=path.resolve(file);assert.ok(target.startsWith(PROOF+path.sep));const files=[];
@@ -857,4 +857,115 @@ async function unifiedProvidedFlowMain(){
   finally{if(browser)await browser.close();}
 }
 
-(process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+// Requires an accepted genuine backend and explicit own saved inputs. No seed,
+// model, runtime, writer, or fallback fixture is constructed by this observer.
+const artifactStorageHost=String.raw`
+import sys,json,threading,socket,hashlib
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+from labflow.ui_server import create_server
+spec=json.loads(Path(sys.argv[2]).read_bytes());proof=Path(spec['proof_root']).resolve()
+proof.relative_to(Path(sys.argv[1]).resolve()/'.local')
+def save(name,value):
+ raw=(json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode('utf-8');target=proof/name;target.resolve().relative_to(proof)
+ files=[p for p in proof.rglob('*') if p.is_file()]
+ assert len(files)+(not target.exists())<=512 and sum(p.stat().st_size for p in files)-(target.stat().st_size if target.exists() else 0)+len(raw)<=33554432
+ target.write_bytes(raw)
+ return dict(path=str(target),bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest())
+def snapshot():
+ rows=[]
+ for supplied in spec['source_roots']:
+  root=Path(supplied);assert root.is_absolute() and root.exists() and not root.is_symlink()
+  for p in sorted(root.rglob('*') if root.is_dir() else [root]):
+   assert not p.is_symlink()
+   if p.is_file():
+    stat=p.stat();raw=p.read_bytes();rows.append(dict(path=str(p),bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest(),mtime_ns=stat.st_mtime_ns))
+ return rows
+before=snapshot();before_pin=save(spec['native_prefix']+'-native-before.json',before)
+thread=server=None;port=None
+try:
+ with create_server(Path(spec['workspace']),port=0,**spec['server_options']) as server:
+  port=server.server_port;thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+  print(json.dumps(dict(origin='http://127.0.0.1:'+str(port),intake_id=spec['intake_id'],before_pin=before_pin)),flush=True)
+  try:
+   if sys.stdin.readline().strip()!='stop':raise ValueError('artifact_storage_observer_stop_required')
+  finally:server.shutdown();thread.join(10)
+finally:
+ after=snapshot();after_pin=save(spec['native_prefix']+'-native-after.json',after)
+ if port is not None:
+  probe=socket.socket();probe.bind(('127.0.0.1',port));probe.close()
+  resource=dict(loop_stopped=not thread.is_alive(),listener_closed=server.socket.fileno()==-1,port_rebind=True,source_unchanged=before==after,before_pin=before_pin,after_pin=after_pin,new_runtime_calls=0,actual_model_calls=0,hardware_calls=0)
+  print(json.dumps(dict(resource=resource)),flush=True)
+`;
+async function artifactStorageViewMain(){
+  const indexFile=process.env.VLAB_ARTIFACT_STORAGE_REPLAY_INDEX;assert.ok(indexFile&&path.isAbsolute(indexFile),'explicit accepted-backend replay index required');
+  const index=JSON.parse(fs.readFileSync(indexFile,'utf8'));assert.equal(index.kind,'explicit_own_saved_artifact_readback');assert.equal(index.backend_accepted,true);assert.equal(index.new_runtime_calls,0);
+  const model=await import(require('node:url').pathToFileURL(path.join(ROOT,'frontend/intake_flow_model.mjs')).href),encode=model.conductedPreviewValue;
+  const observations=[],faults=[],resources=[];let browser;
+  const recordFault=(width,fault,detail={})=>{faults.push({width,fault,scope:'typed UI/transport counterfactual; no genuine reader outcome inferred',...detail});proofWrite(path.join(OUTPUT,'typed-progress.json'),JSON.stringify(faults,null,2));};
+  try{
+    browser=await chromium.launch({headless:true});
+    for(const entry of index.cases){
+      assert.match(entry.name,/^[A-Za-z0-9_-]{1,64}$/);assert.ok(path.isAbsolute(entry.workspace)&&Array.isArray(entry.source_roots)&&entry.source_roots.length>0);
+      const specFile=path.join(OUTPUT,entry.name+'-host-spec.json');proofWrite(specFile,JSON.stringify({...entry,proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/'+entry.name}));const host=startPreviewHost(specFile,artifactStorageHost,'artifact_storage_host.py');let info,firstFailure=null;
+      try{
+        info=await host.next();const url=info.origin+'/api/intakes/'+encodeURIComponent(info.intake_id)+'/conducted-artifact-readback',planURL=info.origin+'/api/intakes/'+encodeURIComponent(info.intake_id)+'/conducted-plan-preview';
+        const bodies={};for(const [name,suffix]of [['intakes','/api/intakes'],['plan','/api/intakes/'+info.intake_id+'/conducted-plan-preview'],['result','/api/intakes/'+info.intake_id+'/conducted-result'],['storage',url.slice(info.origin.length)]]){
+          const response=await fetch(info.origin+suffix),raw=Buffer.from(await response.arrayBuffer());proofWrite(path.join(OUTPUT,entry.name+'-'+name+'.json'),raw);bodies[name]={status:response.status,raw};
+        }
+        const intake=JSON.parse(bodies.intakes.raw).intakes.find(x=>x.intake_id===info.intake_id);assert.ok(intake);
+        const genuine=bodies.storage.status===200?model.parseConductedArtifactReadback(bodies.storage.raw.toString('utf8'),intake):null;
+        assert.equal(bodies.storage.status,entry.expected_http);if(genuine)assert.equal(genuine.status,entry.expected_relation);
+        for(const width of [390,1440]){
+          const context=await browser.newContext({viewport:{width,height:950}}),page=await context.newPage(),errors=[],external=[],methods=[];page.setDefaultTimeout(8000);
+          page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(info.origin+'/'))external.push(r.url());if(r.url().includes('/api/'))methods.push(r.method());});
+          const card=page.locator('#conducted-artifact-storage'),idle=()=>page.waitForFunction(()=>!document.querySelector('#refresh').disabled&&document.querySelector('#conducted-artifact-storage')?.dataset.pending==='false'&&document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+          const refresh=async()=>{await idle();await page.locator('#conducted-artifact-refresh').click();await idle();};
+          const parentRefresh=async()=>{await page.locator('#refresh').click();await idle();};
+          const current=()=>page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true');
+          const reset=async()=>{await page.unroute(url);await refresh();await current();};
+          try{
+            await page.goto(info.origin+'/#'+info.intake_id);await card.waitFor();await idle();assert.equal(await page.locator('[data-workflow-step]').count(),7);
+            assert.equal(await card.getAttribute('data-current'),String(entry.expected_current));
+            if(genuine?.artifact&&genuine.relation.artifact_binding.intake_id===intake.intake_id){assert.equal(await card.locator('[data-artifact-raw="draft"]').textContent(),genuine.artifact.draft);assert.equal(await card.getAttribute('data-result-status'),genuine.artifact.result.status);}
+            assert.ok((await card.innerText()).includes('게시 순서'));assert.ok((await page.locator('[data-workflow-step="assessment"] [data-workflow-summary]').innerText()).includes('실제 AI 호출 여부 unknown'));
+            await card.scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,entry.name+'-'+width+'.png'));
+            const layout=await card.evaluate(node=>({left:node.getBoundingClientRect().left,right:node.getBoundingClientRect().right,client:node.clientWidth,scroll:node.scrollWidth,viewport:innerWidth}));proofWrite(path.join(OUTPUT,entry.name+'-'+width+'-layout.json'),JSON.stringify(layout));assert.ok(layout.left>=-1&&layout.right<=width+1&&layout.scroll<=layout.client+1);
+            observations.push({case:entry.name,width,HTTP:bodies.storage.status,relation:genuine?.status??null,current:entry.expected_current,scope:'genuine accepted D1 GET + production DOM; saved synthetic inputs, no new model/runtime/writer',overflow:false});
+            if(entry.typed_faults&&entry.expected_current){
+              const typed=async(name,mutate,{valid=true,expectedCurrent=false,check=async()=>{}}={})=>{
+                const packet=structuredClone(genuine);mutate(packet);const raw=encode(packet);if(valid)model.parseConductedArtifactReadback(raw,intake);else assert.throws(()=>model.parseConductedArtifactReadback(raw,intake));
+                proofWrite(path.join(OUTPUT,'typed-'+name+'-'+width+'.json'),raw);await page.route(url,r=>r.fulfill({contentType:'application/json',body:raw}));await refresh();assert.equal(await card.getAttribute('data-current'),String(expectedCurrent));await check();recordFault(width,name);await reset();
+              };
+              await page.route(url,r=>r.fulfill({status:503,contentType:'application/json',body:JSON.stringify({error:{code:'conducted_result_artifact_read_input_changed'}})}));await refresh();assert.equal(await card.getAttribute('data-current'),'false');assert.equal(await card.locator('[data-artifact-raw="draft"]').textContent(),genuine.artifact.draft);recordFault(width,'reader-error-retains-previous');await reset();
+              await typed('unknown-key',p=>p.extra=true,{valid:false});
+              await typed('stale-recheck',p=>{p.status=p.relation.status='stale';p.relation.recheck.status='changed';p.relation.recheck.analysis_sha256_after='5'.repeat(64);p.relation.reasons=['current_analysis_changed'];});
+              await typed('different-plan',p=>{p.status=p.relation.status='different_plan';p.artifact.result.binding.plan_input.binding.plan_sha256='5'.repeat(64);p.relation.artifact_binding.plan_sha256='5'.repeat(64);p.relation.fields.plan_sha256=false;p.relation.reasons=['artifact_plan_sha256_mismatch'];});
+              await typed('foreign-artifact',p=>{p.status=p.relation.status='different_intake';p.artifact.result.binding.plan_input.binding.intake_id='I-TYPED-FOREIGN-STORAGE';p.relation.artifact_binding.intake_id='I-TYPED-FOREIGN-STORAGE';p.relation.fields.intake_id=false;p.relation.reasons=['artifact_intake_id_mismatch'];p.artifact.selection.artifact_name=p.artifact.manifest.artifact_name='TYPED-FOREIGN-STORAGE';},{check:async()=>{assert.equal(await card.locator('[data-artifact-raw="draft"]').count(),0);assert.ok(!(await card.textContent()).includes('TYPED-FOREIGN-STORAGE'));}});
+              await typed('invalid-measurement',p=>{p.artifact.result.status=p.artifact.manifest.result_status='invalid';p.artifact.result.raw_measurement=null;p.artifact.result.calculation.corrected=null;p.artifact.result.failure={code:'measurement_invalid',field:'measurement_ref'};},{expectedCurrent:true,check:async()=>{assert.equal(await card.getAttribute('data-result-status'),'invalid');assert.ok((await card.textContent()).includes('미제공(null)'));}});
+              await typed('draft-text-only',p=>{p.artifact.draft+='\n<script>window.__artifactExecuted=true</script>';p.artifact.manifest.files[1].bytes=Buffer.byteLength(p.artifact.draft);},{expectedCurrent:true,check:async()=>{assert.match(await card.locator('[data-artifact-raw="draft"]').textContent(),/<script>/);assert.equal(await page.evaluate(()=>window.__artifactExecuted),undefined);}});
+              const plan=JSON.parse(bodies.plan.raw);plan.context_sha256=plan.plan_input.binding.context_sha256='5'.repeat(64);await page.route(planURL,r=>r.fulfill({contentType:'application/json',body:JSON.stringify(plan)}));await parentRefresh();assert.equal(await card.getAttribute('data-current'),'false');recordFault(width,'plan-C1-mismatch');await page.unroute(planURL);await parentRefresh();await current();
+              let seen,release,completed;const started=new Promise(r=>seen=r),hold=new Promise(r=>release=r),finished=new Promise(r=>completed=r);let first=true,lateError=null;
+              await page.route(url,async route=>{if(!first)return route.continue();first=false;seen();await hold;try{const late=structuredClone(genuine);late.artifact.draft+='\nLATE_STORAGE_GENERATION';late.artifact.manifest.files[1].bytes=Buffer.byteLength(late.artifact.draft);await route.fulfill({contentType:'application/json',body:encode(late)});}catch(error){lateError=error.message;}finally{completed();}});
+              await page.locator('#conducted-artifact-refresh').click();await started;await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.pending==='true');await page.locator('#refresh').click();await idle();await current();release();await finished;await page.unroute(url);assert.ok(!(await card.textContent()).includes('LATE_STORAGE_GENERATION'));recordFault(width,'late-prior-generation-excluded',{route_observation_error:lateError});
+              await page.route(url,r=>r.fulfill({contentType:'application/json',body:Buffer.from([0xff])}));await refresh();assert.equal(await card.getAttribute('data-current'),'false');recordFault(width,'invalid-UTF8-retains-previous');await reset();
+              const oversize=model.CONDUCTED_ARTIFACT_HTTP_BYTES+1,oversizeFile=path.join(OUTPUT,'typed-oversize-zero-body.bin');if(!fs.existsSync(oversizeFile))proofWrite(oversizeFile,Buffer.alloc(oversize));
+              await page.evaluate(({endpoint,size})=>{const original=window.fetch;window.__storageFetchOriginal=original;window.__storageCanceled=false;window.__storageTypedCalls=0;window.fetch=(input,options)=>{if(String(input).endsWith(endpoint)){window.__storageTypedCalls++;return Promise.resolve(new Response(new ReadableStream({start(c){c.enqueue(new Uint8Array(size));},cancel(){window.__storageCanceled=true;}}),{headers:{'Content-Type':'application/json'}}));}return original(input,options);};},{endpoint:new URL(url).pathname,size:oversize});
+              try{await refresh();assert.equal(await card.getAttribute('data-current'),'false');assert.deepEqual(await page.evaluate(()=>[window.__storageCanceled,window.__storageTypedCalls]),[true,1]);recordFault(width,'stream-cap-cancel-no-auto-retry');}finally{await page.evaluate(()=>{window.fetch=window.__storageFetchOriginal;delete window.__storageFetchOriginal;});}await refresh();await current();
+            }
+            assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.ok(methods.every(x=>x==='GET'));
+          }finally{await context.close();}
+        }
+      }catch(error){firstFailure=error;throw error;}finally{
+        try{
+          if(info&&host.alive()){host.child.stdin.end('stop\n');const item=await host.next(),code=await host.exited;assert.equal(code,0,host.stderr());assert.equal(host.stderr(),'');assert.ok(item.resource.loop_stopped&&item.resource.listener_closed&&item.resource.port_rebind&&item.resource.source_unchanged);resources.push({case:entry.name,...item.resource,child_exit:code});}
+          else{if(host.alive())host.child.kill();await host.exited;}
+        }catch(error){resources.push({case:entry.name,cleanup_observation_error:error.message,cleanup_verified:false,first_error_preserved:Boolean(firstFailure)});if(!firstFailure)throw error;}
+      }
+    }
+    proofWrite(path.join(OUTPUT,'artifact-storage-results.json'),JSON.stringify({status:'pass',observations,typed_faults:faults,resources,new_runtime_calls:0,actual_model_calls:0,hardware_calls:0},null,2));console.log(JSON.stringify({status:'pass',genuine_DOM:observations.length,typed_faults:faults.length,output:OUTPUT}));
+  }catch(error){proofWrite(path.join(OUTPUT,'artifact-storage-failure.json'),JSON.stringify({status:'fail',message:error.message,observations,typed_faults:faults,resources},null,2));throw error;}
+  finally{if(browser)await browser.close();}
+}
+
+(process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
