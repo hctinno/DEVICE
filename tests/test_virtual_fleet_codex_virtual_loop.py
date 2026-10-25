@@ -22,7 +22,7 @@ except ModuleNotFoundError as error:
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL = ROOT / '.local'
-PROOF = LOCAL / 'CODEX-PERSISTENT-VIRTUAL-LOOP-001'
+PROOF = LOCAL / 'DEV2-INTAKE-PLAN-VIRTUAL-EXECUTION-001'
 SCHEMA = json.loads((ROOT / 'docs/fcc/codex_first_decision_contract.json').read_text(encoding='utf-8'))['response_schema']['literal_utf8'].encode('utf-8')
 
 
@@ -237,8 +237,81 @@ class LoopTests(unittest.TestCase):
     def test_public_signature_and_exports(self):
         self.assertEqual(api.__all__, ['run_codex_virtual_loop', 'CodexVirtualLoopError'])
         signature = inspect.signature(api.run_codex_virtual_loop)
-        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event'])
+        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings'])
+        self.assertIsNone(signature.parameters['source_settings'].default)
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in signature.parameters.values()))
+
+    def declared_source(self):
+        return dict(frequency_hz=2.412e9, power_dbm=11, bandwidth_hz=20e6,
+                    duty_cycle=.5, modulation='OFDM', crest_factor_db=4)
+
+    def test_source_settings_rejected_before_side_effects(self):
+        class DictSubclass(dict):
+            pass
+        class IntSubclass(int):
+            pass
+        source = self.declared_source()
+        invalid = [True, [], 'source', DictSubclass(source), {},
+                   {**source, 'extra': 1}, {k: v for k, v in source.items() if k != 'power_dbm'}]
+        for key in ('frequency_hz', 'power_dbm', 'bandwidth_hz', 'duty_cycle', 'crest_factor_db'):
+            invalid.extend({**source, key: value} for value in (True, '11', float('nan'), float('inf'), 10**400, IntSubclass(11)))
+        invalid.extend({**source, **change} for change in [dict(frequency_hz=0), dict(bandwidth_hz=0),
+            dict(frequency_hz=1, bandwidth_hz=3), dict(frequency_hz=1.7e308, bandwidth_hz=1.7e308),
+            dict(duty_cycle=0), dict(duty_cycle=1.01), dict(crest_factor_db=-1),
+            dict(modulation=None), dict(modulation=' '), dict(modulation='a'*201), dict(modulation='\ud800')])
+        for value in invalid:
+            with self.subTest(value_type=type(value).__name__):
+                e = self.failure('invalid_input', source_settings=value)
+                self.assertIsNone(e.receipt)
+                self.assertFalse((self.driver.root / ('run-' + str(self.invocations))).exists())
+        self.assertEqual(self.trials, [])
+        self.assertEqual(self.driver.calls, [])
+
+    def test_source_settings_none_preserves_factory_and_shape(self):
+        calls = []
+        original = self.real_prepare
+        def prepare(catalog, **options):
+            calls.append(copy.deepcopy(options))
+            return original(catalog, **options)
+        self.real_prepare = prepare
+        self.sequence = [dict(kind='stop', claim='blocked', reason='legacy factory')]
+        r = self.call(source_settings=None); self.shape(r)
+        self.assertEqual(calls, [dict(condition='normal', seed=0, power_dbm=12.5)])
+        self.assertEqual(set(r['artifacts']), {'request', 'schema', 'legacy_report', 'legacy_events', 'assessment'})
+        request = json.loads((self.driver.root / 'run-1/caller-request.json').read_bytes())
+        self.assertEqual(set(request['execution']), {'catalog_path', 'executable'})
+
+    def test_source_settings_same_trial_fresh_observation(self):
+        source = self.declared_source(); before = C(source); calls = []
+        original = self.real_prepare
+        def prepare(catalog, **options):
+            calls.append(options)
+            return original(catalog, **options)
+        self.real_prepare = prepare
+        r = self.call(source_settings=source); self.shape(r)
+        self.assertEqual(C(source), before)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(set(calls[0]), {'condition', 'seed', 'power_dbm', 'source_settings'})
+        self.assertEqual(C(calls[0]['source_settings']), before)
+        self.assertIsNot(calls[0]['source_settings'], source)
+        self.assertIs(type(calls[0]['power_dbm']), int)
+        self.assertEqual(len(self.trials), 1); self.assertEqual(self.evaluated, self.trials)
+        self.assertTrue(r['evidence_assessment']['goal_observed'])
+        measurement = self.trials[0].runtime.observations()['devices']['sensor']['values']['outputs']['measurement']
+        self.assertEqual(measurement['frequency_hz'], source['frequency_hz'])
+        self.assertEqual(measurement['duty_cycle'], source['duty_cycle'])
+        request = json.loads((self.driver.root / 'run-1/caller-request.json').read_bytes())
+        self.assertEqual(C(request['execution']['source_settings']), before)
+
+    def test_source_settings_detached_from_late_caller_mutation(self):
+        source = self.declared_source(); original = C(source)
+        self.after_produce = lambda: source.update(power_dbm=99)
+        r = self.call(source_settings=source); self.shape(r)
+        self.assertEqual(source['power_dbm'], 99)
+        self.assertTrue(r['evidence_assessment']['goal_observed'])
+        self.assertEqual(len(self.trials), 1)
+        request = json.loads((self.driver.root / 'run-1/caller-request.json').read_bytes())
+        self.assertEqual(C(request['execution']['source_settings']), original)
 
     def test_preflight_before_factory_or_process(self):
         for change in [dict(execution_origin=True), dict(scenario='other'), dict(requested_model='other'),
