@@ -69,3 +69,52 @@ node frontend/intake_flow_browser_check.cjs
 위 브라우저 검사는 `run_fixture_flow`의 TXT/PDF·합성 분석/가상 runtime/저장을 실제로 실행한 뒤 기존 보호 GET와 production DOM을390/1440px에서 대조한다. 실제 모델·auth·운영 원장·실장비는 사용하지 않는다. 준비 변경·자료 revision 변경과 별도 합성 접수의 누락/충돌도 확인하며, failed/uncertain/unsupported와 HTTP 실패의 typed 전송 주입은 genuine 실행 분모와 구별한다. 기본 실행은 기존 접수 흐름의 SQL/readiness double 검사를 유지하며, 별도 기존9 검사는 `VLAB_EXISTING_NINE=1`일 때만 실행한다.
 
 매 실행의 증거는 새 `.local/first-twin-browser-<임의값>`에 생성한다. 선택적인 `VLAB_FLOW_PROOF_ROOT`도 `.local` 아래의 존재하는 독립 namespace만 허용하고 그 안에 새 하위 폴더를 만든다. 증거 쓰기 전512파일/32MiB 한도를 확인하며 기존 출력·실패를 덮어쓰지 않는다. fixture workspace는 native 임시 폴더에서 처리하며 전체 DB/원본 폴더를 증거로 복제하지 않는다.
+
+## 현재 접수의 가상 계획 미리보기
+
+`#intake-workflow`의 계획 단계는 기존 [conducted 합성 계획 어댑터](intake_conducted_twin_plan_usage.md)의 결과를 별도로 조회한다. `case_id`·`plan_id`가 연결된 실제 시험계획은 아직 없으며, 이 미리보기는 G1 발급·G2 예약·G4 실행·G5 종료나 실제 AI/장비 운전을 수행하지 않는다. 기존 `fixture-runs`와 접수 snapshot의 외피·의미는 바꾸지 않는다.
+
+호스트의 trusted native 호출만 다음 선택을 제공한다. CLI 옵션·환경변수·GET body/query·파일 경로로 설정이나 승인을 받지 않는다.
+
+```python
+create_server(workspace, port=0, conducted_plan_preview_inputs={
+    'intake_id': selected_intake_id,
+    'revision': selected_revision,
+    'source_settings': explicitly_provided_source_settings,
+    'basis': explicitly_provided_basis,
+    'method': explicitly_provided_method,
+})
+```
+
+이 선택은 native dict exact5이며, intake ID와 bool 아닌 양의 revision을 검사한다. 나머지 값은 위 어댑터의 exact source6/basis6/method4 계약을 따른다. 시작 때 plain native JSON·64KiB/깊이32/100,000노드 한도 안에서 분리한 불변 JSON bytes만 보존하고 listener를 연다. 잘못된 외피·타입·상한은 고정 `intake_conducted_preview_invalid_input` ValueError로 시작 전에 실패한다. source/basis/method의 누락·유효성 판단은 genuine 어댑터가 수행한다.
+
+`GET /api/intakes/{intake_id}/conducted-plan-preview`는 매번 같은 readonly DB transaction의 현재 revision·완료 submission·live projection과 보존 PDF/context/extraction을 대조한다. 첫 지원은 **synthetic·현재 완료 V2/PDF**다. 접수/출처뿐 아니라 보존 자료 graph의 합성 표지도 확인한다. TXT/V1, 비합성·출처 미확인 또는 미완료는 명시 unavailable이며 이전 완료 분석으로 대체하지 않는다. `Store.open_existing`와 기존 retained-source 검증·context 계약 생성 helper를 재사용한다. Store 초기화·migration·claim·PDF 재파싱/prepare·retain·queue 쓰기는 없다. 보존 blob bytes/SHA 읽기는 실제로 수행하며 I/O0으로 보고하지 않는다.
+
+`IntakeReadModel.current_conducted_plan_context()`는 이때의 native context8과 원 submission을 분리해 취득한다. instructions에는 현재 readonly planning 문맥임을 명시한다. 이 C1 SHA는 **현재 제공 context의 지문이며 원 모델 prompt 복원/원 prompt SHA가 아니다**. 조회 시점의 snapshot을 뜻하며 응답 뒤에도 DB가 계속 같다는 보장은 아니다. 실제 파일/현장 최신성·실행 권한을 발급하지 않는다.
+
+200 응답은 exact8 wrapper이며 아래 키만 가진다. `plan_input`은 어댑터의 공개 exact8과 전체 nested 형상을 그대로 보존한다.
+
+```text
+schema_version=1  kind=intake_conducted_plan_preview
+intake_id  revision  context_sha256
+context_scope=current_provided_context
+selection_status=matched|not_provided|other_intake|revision_changed
+plan_input
+```
+
+native 선택이 없거나 다른 접수/현재 버전이면 그 설정을 적용하지 않는다. 빈 source/basis/method를 genuine 어댑터에 전달한 원 `blocked`·gaps·null을 표시하며 예제값을 채우지 않는다. basis가 거절된 값은 `source_settings`와 `basis_refs`의 null을 유지하고 `gap.provided`에만 원 제공값을 남긴다. 그 값으로 실행 입력을 복원하지 않는다. 별도 case/plan·실행·승인 키를 추가하지 않는다.
+
+현재 접수 ID/revision/context 지문과 고정 report/binding/plan/verification을 대조하고 응답은256KiB/깊이40/100,000노드로 제한한다. 계약 위반·과대는 truncate나 빈 성공으로 바꾸지 않는다. 기존 loopback Host/Origin/Fetch 보호, no-store·CSP를 재사용하고 새 경로의 중복 보호 헤더·GET framing/body/query·encoded alias를 거절한다. HEAD는405/Allow GET이며 나머지 쓰기 메서드는 기존 read_only405다. 브라우저 요청 기한10초, 새 handler socket5초다. 작은 잘못된 body는32KiB까지 해석 없이 소비하고 닫으며, 결과 쓰기 중 client가 연결을 끊으면 두 번째 응답·재시도를 시도하지 않는다.
+
+고정 오류 body는 기존 `{"error":{"code":"..."}}`다. `intake_conducted_preview_invalid_request`는400, origin 보호는403, `intake_not_found`는404다. `store_missing`/`store_unavailable`, `intake_conducted_preview_synthetic_required`, `intake_conducted_preview_analysis_unavailable`, `intake_conducted_preview_v2_pdf_required`, `intake_conducted_preview_source_invalid`, `intake_conducted_preview_invalid_response`, `intake_conducted_preview_unavailable`는503이다. unknown/실패를 ready로 바꾸지 않는다. KeyboardInterrupt/SystemExit/GeneratorExit/MemoryError의 observed control은 응답으로 변환하지 않고 전파한다.
+
+화면은 `#conducted-plan-preview/status/content/refresh`에서 같은 접수의 제품·목적·시장과 source6의 값/단위·근거 종류·원 인용, 합성 방법/metric/기준면과 gaps를 표시한다. 규제 한계·불확도 null과 not_assessed, 실행 권한 false는 유지한다. 어댑터의 `source_bytes=not_reopened`·`current_version=caller_snapshot_only`와 서버의 현재 보존 자료 읽기 관측은 서로 다른 범위다. 규제 적합성·실측 예측력·실측 대조를 미평가/미실행으로 표시한다.
+
+전용 parser는 원 integer lexeme의 안전 범위 밖 값을 BigInt로 보존하고 제공0/null·원 거절값을 구별한다. 기존 snapshot/fixture parser는 넓히지 않는다. 공개 Citation/Question/Gap 변형과 모든 고정 nested 키·enum을 검사하며 원문을 DOM text로만 표시한다. 접수/revision/snapshot generation/요청 순번 교대와 hide/pagehide에서 요청을 퇴역시킨다. 전송·형상·과대·기한·렌더 실패는 같은 scope의 마지막 정상 내용을 보존하되 `이전 관측 · 현재 관계 미확인`으로 표시한다. 자동 모델/재시도/실물 동작은 없다.
+
+```powershell
+$env:VLAB_CONDUCTED_PREVIEW_ONLY = '1'
+node frontend/intake_flow_browser_check.cjs
+```
+
+이 검사는 자체 합성 PDF의 실제 core retention/completion, genuine readonly 취득·계획 어댑터·보호 GET·production DOM을390/1440에서 연결한다. 지원된 DTO와 unavailable 관측, typed 오류·합성 deadline callback/DOM 주입은 별도 분모다. 합성 분석 함수 사용을 실제 AI/분석 worker 실행으로 세지 않는다. 결과는 새 `.local/conducted-preview-browser-<임의값>`(또는 명시 독립 proof root의 새 하위 폴더)에 남긴다. 원 테스트/오류·실패 증거와 다른 task의 고정 출력은 덮어쓰지 않는다.
