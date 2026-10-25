@@ -3,6 +3,7 @@ import copy
 from contextlib import ExitStack
 import hashlib
 import importlib
+import importlib.util
 import inspect
 import json
 import os
@@ -10,6 +11,7 @@ from pathlib import Path
 import tempfile
 import threading
 import unittest
+import uuid
 from unittest.mock import patch
 import zipfile
 
@@ -21,7 +23,7 @@ except ModuleNotFoundError as error:
     api = None
 
 ROOT = Path(__file__).resolve().parents[1]
-LOCAL = ROOT / '.local'
+LOCAL = ROOT / '.local' / 'codex-virtual-loop-fixtures' / ('run-' + uuid.uuid4().hex)
 PROOF = LOCAL / 'DEV2-INTAKE-PLAN-VIRTUAL-EXECUTION-001'
 SCHEMA = json.loads((ROOT / 'docs/fcc/codex_first_decision_contract.json').read_text(encoding='utf-8'))['response_schema']['literal_utf8'].encode('utf-8')
 
@@ -34,23 +36,109 @@ def H(data):
     return hashlib.sha256(data).hexdigest()
 
 
+class _ProofBudget:
+    def __init__(self, root):
+        self.root = root.resolve()
+        self.files, self.reserved = {}, {}
+        self.total = 0
+        self.lock = threading.RLock()
+        self.checkpoint()
+
+    def path(self, path):
+        path = path.resolve()
+        if not path.is_relative_to(self.root):
+            raise AssertionError('OWNER_PROOF_PATH_OUTSIDE_LOCAL')
+        return path
+
+    @staticmethod
+    def check(count, total):
+        if count > 512 or total > 33554432:
+            raise AssertionError('OWNER_PROOF_ADMISSION_EXCEEDED')
+
+    def charge(self, path, size, *, replace=False):
+        self.charge_known(self.path(path), size, replace=replace)
+
+    def charge_known(self, path, size, *, replace=False):
+        with self.lock:
+            previous = self.files.get(path, 0)
+            size = size if replace else max(previous, size)
+            total = self.total - previous + size
+            self.check(len(self.files) + int(path not in self.files), total)
+            self.files[path] = size
+            self.total = total
+
+    def checkpoint(self):
+        with self.lock:
+            observed = {}
+            total = 0
+            for path in self.root.rglob('*'):
+                if path.is_symlink():
+                    raise AssertionError('OWNER_PROOF_LINK_FORBIDDEN')
+                if path.is_file():
+                    size = path.stat().st_size
+                    observed[path.resolve()] = size
+                    total += size
+                    self.check(len(observed), total)
+            for path, size in self.reserved.items():
+                observed[path] = max(observed.get(path, 0), size)
+            total = sum(observed.values())
+            self.check(len(observed), total)
+            self.files, self.total = observed, total
+
+    def reserve_native(self, path, size):
+        path = self.path(path)
+        with self.lock:
+            self.charge(path, size)
+            self.reserved[path] = size
+
+    def settle_native(self, path):
+        path = self.path(path)
+        with self.lock:
+            self.reserved.pop(path, None)
+            if path.exists():
+                self.charge(path, path.stat().st_size, replace=True)
+            elif path in self.files:
+                self.total -= self.files.pop(path)
+
+    def forget_removed(self, folder):
+        folder = self.path(folder)
+        if folder.exists():
+            return
+        with self.lock:
+            for path in list(self.files):
+                if path.is_relative_to(folder):
+                    self.total -= self.files.pop(path)
+                    self.reserved.pop(path, None)
+
+
+_ACCOUNTING = None
+
+
+def _proof_budget():
+    global _ACCOUNTING
+    if _ACCOUNTING is None or _ACCOUNTING.root != LOCAL.resolve():
+        _ACCOUNTING = _ProofBudget(LOCAL)
+    return _ACCOUNTING
+
+
 def admit(path, size):
-    path = path.resolve()
-    if not path.is_relative_to(LOCAL.resolve()):
-        raise AssertionError('OWNER_PROOF_PATH_OUTSIDE_LOCAL')
-    files = [p for p in LOCAL.rglob('*') if p.is_file()]
-    old = path.stat().st_size if path.exists() else 0
-    if len(files) + int(not path.exists()) > 512 or sum(p.stat().st_size for p in files) - old + size > 33554432:
-        raise AssertionError('OWNER_PROOF_ADMISSION_EXCEEDED')
+    _proof_budget().charge(path, size)
 
 
 class _Writer:
     def __init__(self, handle, path):
-        self.handle, self.path = handle, path
+        self.handle = handle
+        self.budget = _proof_budget()
+        self.path = self.budget.path(path)
 
     def write(self, data):
-        size = len(data.encode('utf-8')) if type(data) is str else len(data)
-        admit(self.path, max(self.path.stat().st_size, self.handle.tell() + size))
+        if type(data) is str:
+            size = len(data.encode(self.handle.encoding or 'utf-8'))
+            if os.name == 'nt':
+                size += data.count('\n')  # Reserve Windows text newline expansion conservatively.
+        else:
+            size = len(data)
+        self.budget.charge_known(self.path, self.handle.tell() + size)
         return self.handle.write(data)
 
     def __getattr__(self, name):
@@ -69,6 +157,7 @@ class LoopTests(unittest.TestCase):
         self.stack = self.enterContext(ExitStack())
         scratch = LOCAL / 'persistent-loop-test-scratch'
         scratch.mkdir(parents=True, exist_ok=True)
+        PROOF.mkdir(parents=True, exist_ok=True)
         self.stack.enter_context(patch.object(tempfile, 'tempdir', str(scratch)))
         self.stack.enter_context(patch.dict(os.environ, TMP=str(scratch), TEMP=str(scratch), PYTHONDONTWRITEBYTECODE='1'))
         original_open = Path.open
@@ -112,6 +201,7 @@ class LoopTests(unittest.TestCase):
         PROOF.mkdir(parents=True, exist_ok=True)
         archive = PROOF / (self._testMethodName + '-' + folder.name + '.zip')
         try:
+            _proof_budget().checkpoint()
             admit(archive, 0)
             with archive.open('xb') as output, zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED) as saved:
                 for file in sorted(folder.rglob('*')):
@@ -124,6 +214,7 @@ class LoopTests(unittest.TestCase):
             self.driver.doCleanups()
             raise
         self.driver.doCleanups()
+        _proof_budget().forget_removed(folder)
 
     @staticmethod
     def adaptive(prompt):
@@ -160,12 +251,16 @@ class LoopTests(unittest.TestCase):
         self.driver.control.write_bytes(C(dict(mode=self.producer_mode, wire=C(wire).hex())))
         if self.timeout_override is not None:
             kwargs['timeout_seconds'] = self.timeout_override
+        native = kwargs['evidence_dir'] / 'last-message.bin'
+        _proof_budget().reserve_native(native, 2097153)
         try:
             response = self.real_produce(prompt_bytes, schema_bytes, **kwargs)
         except BaseException:
             if self.after_produce:
                 self.after_produce()
             raise
+        finally:
+            _proof_budget().settle_native(native)
         if self.after_produce:
             self.after_produce()
         return response
@@ -240,6 +335,52 @@ class LoopTests(unittest.TestCase):
         self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings'])
         self.assertIsNone(signature.parameters['source_settings'].default)
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in signature.parameters.values()))
+
+    def test_proof_admission_uses_only_this_execution_namespace(self):
+        self.assertNotEqual(LOCAL, ROOT / '.local')
+        original_rglob = Path.rglob
+        visited = []
+        def scoped(path, pattern, *args, **kwargs):
+            self.assertNotEqual(path, ROOT / '.local', 'Historical root evidence must never be scanned')
+            visited.append(path)
+            return original_rglob(path, pattern, *args, **kwargs)
+        with patch.object(Path, 'rglob', scoped):
+            admit(PROOF / 'namespace-admission-probe', 1)
+            self.assertEqual(visited, [])
+            _proof_budget().checkpoint()
+        self.assertEqual(visited, [LOCAL])
+        with self.assertRaisesRegex(AssertionError, 'OWNER_PROOF_ADMISSION_EXCEEDED'):
+            admit(PROOF / 'namespace-size-probe', 33554433)
+        spec = importlib.util.spec_from_file_location('second_pure_loop_fixture_import', Path(__file__))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self.assertNotEqual(module.LOCAL, LOCAL)
+
+    def test_proof_write_accounting_and_native_reservation(self):
+        budget = _proof_budget()
+        path = self.driver.root / 'accounted-writes.bin'
+        text = self.driver.root / 'accounted-text.txt'
+        native = self.driver.root / 'reserved-native.bin'
+        with patch.object(Path, 'rglob', side_effect=AssertionError('HOTPATH_INVENTORY_FORBIDDEN')):
+            with path.open('xb') as stream:
+                stream.write(b'a' * 31); stream.write(b'b' * 17)
+                stream.seek(0); stream.write(b'c')
+            self.assertEqual(budget.files[path.resolve()], 48)
+            with text.open('w', encoding='utf-8') as stream:
+                stream.write('a\nb\n')
+            self.assertGreaterEqual(budget.files[text.resolve()], text.stat().st_size)
+            budget.reserve_native(native, 2097153)
+            self.assertEqual(budget.files[native.resolve()], 2097153)
+            with open(native, 'xb') as stream:
+                stream.write(b'child')
+            budget.settle_native(native)
+            self.assertEqual(budget.files[native.resolve()], 5)
+        with self.assertRaisesRegex(AssertionError, 'OWNER_PROOF_ADMISSION_EXCEEDED'):
+            budget.reserve_native(self.driver.root / 'oversize-native.bin', 33554433)
+        fake = {LOCAL / ('reserved-' + str(i)): 0 for i in range(512)}
+        with patch.object(budget, 'files', fake), patch.object(budget, 'total', 0):
+            with self.assertRaisesRegex(AssertionError, 'OWNER_PROOF_ADMISSION_EXCEEDED'):
+                admit(PROOF / 'file513', 0)
 
     def declared_source(self):
         return dict(frequency_hz=2.412e9, power_dbm=11, bandwidth_hz=20e6,
