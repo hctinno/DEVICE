@@ -91,6 +91,8 @@ decoder는 원주소 membership과 제공 page hash까지 확인한다. source t
 
 고정 오류 class는 IntakeTestIntentModelBoundaryError다. code/str/args는 `intake_test_intent_model_` 뒤 아래 suffix를 붙인 고정 문자열만 가지며 원 입력·예외 context를 노출하지 않는다.
 
+호출자가 이미 `except`에서 다른 오류를 처리 중이어도 정제 오류의 `__context__`와 `__cause__`는 None이며, 호출자 오류의 객체·내용은 보존한다. `KeyboardInterrupt`·`SystemExit`·`GeneratorExit` 제어 신호는 정제 오류로 바꾸지 않고 그대로 전파한다.
+
 | suffix | 의미 |
 |---|---|
 | invalid_input | view/source/native JSON 형상·extra key·cycle/subclass·Unicode·중복 주소 오류 |

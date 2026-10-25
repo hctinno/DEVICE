@@ -337,6 +337,84 @@ class ModelBoundaryTests(unittest.TestCase):
         with patch.object(api.hashlib,'sha256',side_effect=RuntimeError('PRIVATE-CANARY')):
             self.fixed('internal_error',lambda:self.build(empty_case()))
 
+    def caller_error(self,kind):
+        if kind=='value': return ValueError('CALLER-PRIVATE-CONTEXT')
+        if kind=='group':
+            return ExceptionGroup('CALLER-PRIVATE-GROUP',[ValueError('CALLER-PRIVATE-CHILD'),RuntimeError('CALLER-PRIVATE-OTHER')])
+        p=empty_case(); p['producer_name']=' '
+        try: self.build(p)
+        except api.IntakeTestIntentModelBoundaryError as error: return error
+        self.fail('The nested public API call must reject its producer')
+
+    def handling(self,caller,call):
+        def state(error):
+            return (id(error),repr(error.args),str(error),dict(error.__dict__),error.__context__,error.__cause__,
+                    error.__traceback__,error.__suppress_context__,tuple(state(child) for child in getattr(error,'exceptions',())))
+        try: raise caller
+        except BaseException as active:
+            before=state(caller)
+            try: result=call()
+            except BaseException as error: outcome=(None,error)
+            else: outcome=(result,None)
+            self.assertIs(active,caller); self.assertEqual(state(caller),before)
+        return outcome
+
+    def test_fixed_errors_detach_from_active_caller_exceptions(self):
+        p=empty_case(); invalid=deepcopy(p); invalid['producer_name']=' '; before=raw([p,invalid])
+        calls=[('builder','producer_invalid',lambda:self.build(invalid)),
+               ('decoder','response_invalid',lambda:api.decode_intake_test_intent_response(b'\xff',**p))]
+        for kind in ('value','group','nested_api'):
+            for name,suffix,call in calls:
+                with self.subTest(caller=kind,api=name):
+                    result,error=self.handling(self.caller_error(kind),call)
+                    code='intake_test_intent_model_'+suffix
+                    self.assertIsNone(result); self.assertIs(type(error),api.IntakeTestIntentModelBoundaryError)
+                    self.assertEqual((error.code,str(error),error.args),(code,code,(code,)))
+                    self.assertIsNone(error.__context__); self.assertIsNone(error.__cause__)
+        self.assertEqual(raw([p,invalid]),before)
+
+    def test_internal_errors_detach_from_active_caller_exceptions(self):
+        p=empty_case(); body=raw(wire(p)); before=raw(p)
+        calls=[('builder',lambda:self.build(p)),('decoder',lambda:api.decode_intake_test_intent_response(body,**p))]
+        faults=[lambda:RuntimeError('INTERNAL-PRIVATE-CONTEXT'),
+                lambda:ExceptionGroup('INTERNAL-PRIVATE-GROUP',[ValueError('INTERNAL-PRIVATE-CHILD')])]
+        for kind in ('value','group','nested_api'):
+            for name,call in calls:
+                for make_fault in faults:
+                    caller=self.caller_error(kind); fault=make_fault()
+                    with self.subTest(caller=kind,api=name,fault=type(fault).__name__):
+                        with patch.object(api.hashlib,'sha256',side_effect=fault):
+                            result,error=self.handling(caller,call)
+                        code='intake_test_intent_model_internal_error'
+                        self.assertIsNone(result); self.assertIs(type(error),api.IntakeTestIntentModelBoundaryError)
+                        self.assertEqual((error.code,str(error),error.args),(code,code,(code,)))
+                        self.assertIsNone(error.__context__); self.assertIsNone(error.__cause__)
+        self.assertEqual(raw(p),before)
+
+    def test_success_in_active_caller_handler_keeps_results_and_caller(self):
+        p=empty_case(); body=raw(wire(p)); before=raw(p)
+        calls=[('builder',GOLDEN['prompt'],lambda:self.build(p)),
+               ('decoder',GOLDEN['decoded'],lambda:api.decode_intake_test_intent_response(body,**p))]
+        for kind in ('value','group','nested_api'):
+            for name,want,call in calls:
+                with self.subTest(caller=kind,api=name):
+                    result,error=self.handling(self.caller_error(kind),call)
+                    self.assertIsNone(error); self.assertEqual(sha(result),want)
+        self.assertEqual(raw(p),before)
+
+    def test_baseexception_controls_escape_both_wrappers_unchanged(self):
+        p=empty_case(); body=raw(wire(p)); before=raw(p)
+        calls=[('builder',lambda:self.build(p)),('decoder',lambda:api.decode_intake_test_intent_response(body,**p))]
+        for signal in (KeyboardInterrupt,SystemExit,GeneratorExit):
+            for name,call in calls:
+                with self.subTest(signal=signal.__name__,api=name):
+                    control=signal('CONTROL-PRIVATE-CONTEXT')
+                    with patch.object(api.hashlib,'sha256',side_effect=control):
+                        result,error=self.handling(self.caller_error('value'),call)
+                    self.assertIsNone(result); self.assertIs(error,control)
+                    self.assertEqual(control.args,('CONTROL-PRIVATE-CONTEXT',))
+        self.assertEqual(raw(p),before)
+
     def test_w17_w18_gate_and_error_priority(self):
         p=empty_case(); p['intake_view']['synthetic']=False
         self.fixed('input_not_synthetic',lambda:self.build(p))
