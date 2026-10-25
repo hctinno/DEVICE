@@ -218,10 +218,9 @@ class CurrentFactsPlanTests(unittest.TestCase):
         self.assertEqual(result['facts_plan']['status'],'ready_for_simulation')
         self.assertEqual(self.files(fixture),before)
 
-    def test_plain_text_nonsynthetic_and_incomplete_keep_parent_unavailable_errors(self):
+    def test_nonsynthetic_and_incomplete_keep_parent_unavailable_errors(self):
         api=self.api();module=importlib.import_module(api.__module__)
-        cases=[({'kind':'text'},'intake_conducted_preview_v2_pdf_required'),
-               ({'synthetic':False},'intake_conducted_preview_synthetic_required'),
+        cases=[({'synthetic':False},'intake_conducted_preview_synthetic_required'),
                ({'completed':False},'intake_conducted_preview_analysis_unavailable')]
         for index,(options,code) in enumerate(cases):
             with self.subTest(options=options):
@@ -312,6 +311,75 @@ class CurrentFactsPlanTests(unittest.TestCase):
         self.assertTrue(first['facts_plan']['plan_input']['intake']['source_facts'])
         third=api(fixture['store'].root,fixture['intake_id'],method=METHOD)
         self.assertEqual(third,second);self.assertEqual(self.files(fixture),before)
+
+
+class CurrentTextFactsPlanTests(unittest.TestCase):
+    """Actual retained schema1 TXT, without promoting original analysis binding."""
+    maxDiff=None
+
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory(prefix='current-txt-facts-');self.addCleanup(self.tmp.cleanup)
+        self.root=Path(self.tmp.name)
+
+    def fixture(self,**kwargs):return completed_fixture(self.root/'authored',kind='text',**kwargs)
+
+    def read(self,fixture,**pins):
+        from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
+        return read_current_conducted_plan_from_facts(fixture['store'].root,fixture['intake_id'],method=METHOD,**pins)
+
+    def test_genuine_txt_retained_manifest_yields_current_public8_and_automatic_plan(self):
+        from labflow.intake_reference_snapshot import read_intake_reference_snapshot
+        fixture=self.fixture();original=copy.deepcopy(fixture['analysis'])
+        legacy=read_intake_reference_snapshot(fixture['store'],fixture['intake_id'])
+        self.assertEqual(legacy['status'],'unavailable');self.assertIn('legacy_analysis',legacy['reason_codes'])
+        result=self.read(fixture)
+        self.assertEqual(set(result),{'context','analysis','facts_plan'})
+        self.assertEqual(len(result['context']),8)
+        self.assertEqual(result['analysis'],original);self.assertEqual(original['schema_version'],1)
+        self.assertNotIn('context_id',result['analysis'])
+        self.assertEqual(result['context']['analysis_context_id'],fixture['context']['analysis_context_id'])
+        self.assertNotEqual(result['context']['instructions'],fixture['context']['instructions'])
+        self.assertTrue(fixture['store'].blob_path(result['context']['analysis_context_id']).is_file())
+        self.assertEqual(result['facts_plan']['status'],'ready_for_simulation')
+        self.assertEqual(result['facts_plan']['plan_input']['plan']['source_settings'],dict(
+            frequency_hz=906000000,power_dbm=-13,bandwidth_hz=125000,duty_cycle=.4,modulation='LAB-FSK',crest_factor_db=1))
+        self.assertIs(result['facts_plan']['plan_input']['verification']['execution_authority'],False)
+        self.assertEqual(read_intake_reference_snapshot(fixture['store'],fixture['intake_id'])['status'],'unavailable')
+
+    def test_txt_missing_unit_keeps_raw_nulls_questions_and_schema1_without_manual_settings(self):
+        fixture=self.fixture(duty='40');result=self.read(fixture)
+        self.assertEqual(result['facts_plan']['status'],'blocked')
+        plan=result['facts_plan']['plan_input']['plan']
+        self.assertIsNone(plan['source_settings']['duty_cycle'])
+        self.assertIsNone(plan['basis_refs']['duty_cycle'])
+        self.assertIsNone(plan['numeric_limit_dbm']);self.assertIsNone(plan['uncertainty_db'])
+        self.assertEqual([q['reason'] for q in result['facts_plan']['questions']],['source_unit_missing'])
+        self.assertEqual(result['analysis'],fixture['analysis']);self.assertNotIn('context_id',result['analysis'])
+
+    def test_first_txt_error_survives_secondary_native_close_control(self):
+        from labflow.store import _ExistingBinding
+        fixture=self.fixture();original_close=_ExistingBinding.close
+        first=KeyboardInterrupt('first-txt-error');secondary=SystemExit('secondary-close-control');bindings=[]
+        def close(binding):
+            original_close(binding);bindings.append(binding);raise secondary
+        with patch('labflow.ui_read_model._current_text_manifest',side_effect=first),\
+             patch.object(_ExistingBinding,'close',close):
+            with self.assertRaises(KeyboardInterrupt) as caught:self.read(fixture)
+        self.assertIs(caught.exception,first)
+        self.assertTrue(bindings)
+        self.assertTrue(all(b.state=='closed' and b.active==0 and not b.handles for b in bindings))
+
+    def test_successful_txt_body_does_not_return_success_when_native_close_is_unknown(self):
+        from labflow.store import _ExistingBinding
+        fixture=self.fixture();original_close=_ExistingBinding.close
+        error=MemoryError('post-close-unavailable');bindings=[]
+        def close(binding):
+            original_close(binding);bindings.append(binding);raise error
+        with patch.object(_ExistingBinding,'close',close):
+            with self.assertRaises(MemoryError) as caught:self.read(fixture)
+        self.assertIs(caught.exception,error)
+        self.assertTrue(bindings)
+        self.assertTrue(all(b.state=='closed' and not b.handles for b in bindings))
 
 
 if __name__=='__main__':unittest.main()
