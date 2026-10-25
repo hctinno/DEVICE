@@ -2,11 +2,11 @@
 
 이 화면은 기존 제공 snapshot·fixture 기록과 별도로 지정 산출물의 읽기 관측을 표시한다. 전체 무인 시험소의 구현 완료, 실제 AI 실행, 실장비·현장 검증, 규격 적합성 또는 성적서 발행 승인을 뜻하지 않는다.
 
-현재 구현은 공개 `intake_conducted_artifact_readback` 계약을 받는 frontend이다. 새 `GET /api/intakes/{id}/conducted-artifact-readback`의 실제 서버 인수와 생산 DOM·Store 읽기 검증은 아직 미실행이다. 합성 계약 검사 통과를 실제 HTTP·파일 검증 통과로 바꾸지 않는다. 현재 작업은 공개 base `4c7c7c49e185f659683b5855cbd3a774618bc0c1`에 frontend 후보 `dbc8a205ee7d3a27dc93c0cd15c2dad17b91a0bf`를 일반 cherry-pick한 분기에서 진행하며, 해당 후보의 독립 수용은 pending이다.
+현재 구현은 공개 `intake_conducted_artifact_readback` 계약을 받는 frontend이다. 새 `GET /api/intakes/{id}/conducted-artifact-readback`의 실제 서버 인수와 생산 DOM·Store 읽기 검증은 아직 미실행이다. 합성 계약 검사 통과를 실제 HTTP·파일 검증 통과로 바꾸지 않는다. 현재 작업은 공개 base `4c7c7c49e185f659683b5855cbd3a774618bc0c1`에 frontend 후보 `dbc8a205ee7d3a27dc93c0cd15c2dad17b91a0bf`를 일반 cherry-pick한 분기에서 착수했다. 착수 당시 해당 후보의 독립 수용은 pending이었다. 이후 총괄은 조건부 독립 검토를 보존하며 `0f78b958fbbe331ebcfdd2f93f4a085a4bc018f2`로 수용했고, current artifact 후보 `9ecc33bee9c256f5cbed552d6369bfe7c3543c06`도 수용했다고 후행 통보했다. 공개 통합 `5a68b7a90ae699a83593e886042e7b8f88db2080`의 선행 수용과 새 D1 GET의 수용은 별개이며, 이 frontend의 실제 GET·DOM 검증은 계속 pending이다. 원 선행 검증·실패·한계 기록을 덮어쓰지 않는다.
 
 ## 표시 범위
 
-업무 흐름 6단계의 **별도 산출물 저장 읽기** 카드는 현재 계획 관측과 compound 응답을 함께 대조한다. 현재 접수·버전·snapshot generation, 계획 C1, binding 6항목, 읽기 후 current context/analysis 재확인이 모두 일치할 때만 **고정 3파일 bytes·hash·full binding 일치 관측**으로 표시한다. 이 관계는 관측 당시의 대조이며 계속 현재임을 보장하는 승인이나 lease가 아니다.
+업무 흐름 6단계의 **저장 사본 확인** 카드는 현재 계획 관측과 compound 응답을 함께 대조한다. 앞에는 **저장 사본 3파일 일치 / 현재 관계 확인·확인 불가 / 측정 무효·미완료·기록 관측 / 판정 미평가**를 표시한다. 실제 AI 호출의 unknown과 원 측정·보정 값·단위·기준면도 함께 표시하며 다시 계산하지 않는다. 현재 접수·버전·snapshot generation, 계획 C1, binding 6항목, 읽기 후 current context/analysis 재확인이 모두 일치할 때만 현재 관계를 확인한 관측으로 표시한다. 이 관계는 관측 당시의 대조이며 계속 현재임을 보장하는 승인이나 lease가 아니다.
 
 binding은 `intake_id`, `revision`, `analysis_context_id`, `context_sha256`, `analysis_sha256`, `plan_sha256`이다. 원 compound의 현재 context·analysis·facts-plan은 변환하거나 보충하지 않는다. 브라우저는 기존 현재 계획 관측의 C1과 binding을 사용하며 산출물의 binding으로 현재 기준을 만들어내지 않는다.
 
@@ -20,7 +20,7 @@ binding은 `intake_id`, `revision`, `analysis_context_id`, `context_sha256`, `an
 
 ## 원문과 지문
 
-원 manifest JSON, 별도 원 result JSON, DRAFT UTF-8 텍스트, 원 facts-plan의 공백·질문·null, 관계·재확인 결과를 펼침 영역에서 보존한다. DRAFT는 텍스트 노드로만 표시하며 Markdown·HTML·스크립트로 해석하지 않는다. 다운로드·재실행·발행 버튼은 없다.
+긴 산출물/run/runtime 식별자, 해시, 기술 검증 flags와 원 조회 코드는 텍스트 펼침 영역에서 확인한다. 원 manifest JSON, 별도 원 result JSON, DRAFT UTF-8 텍스트, 원 facts-plan의 공백·질문·null, 관계·재확인 결과도 같은 방식으로 보존한다. 상세 영역을 접어도 값·출처·unknown을 삭제하거나 상태를 계산하지 않는다. DRAFT는 텍스트 노드로만 표시하며 Markdown·HTML·스크립트로 해석하지 않는다. 다운로드·재실행·발행 버튼은 없다.
 
 | 지문 | 정확한 바이트 범위 |
 | --- | --- |
