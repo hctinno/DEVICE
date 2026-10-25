@@ -268,6 +268,43 @@ def _scripted_pdf_analysis(context, *, rf_quote=_CONDUCTED_RF_QUOTE, invalid_cit
         'identity': 'single', 'facts': facts, 'missing_fields': []}
 
 
+def _conducted_artifact_startup(plan, method, finalized, artifact_root):
+    """Compose read selection from original current pins and committed artifact."""
+    failed=False;selection=None
+    try:
+        if type(plan) is not dict or type(finalized) is not dict:raise ValueError()
+        if plan.get('status')!='ready_for_simulation' or finalized.get('status')!='stored':return None
+        result,artifact=finalized.get('result'),finalized.get('artifact')
+        if result is None or artifact is None:return None
+        if type(artifact) is not dict or type(artifact.get('storage')) is not dict:raise ValueError()
+        if artifact['storage'].get('status')!='complete':return None
+        if (type(result) is not dict or type(result.get('schema_version')) is not int or result['schema_version']!=1
+                or result.get('kind')!='conducted_twin_result' or result.get('status') not in ('recorded','incomplete','invalid')
+                or type(artifact.get('schema_version')) is not int or artifact['schema_version']!=1
+                or artifact.get('kind')!='conducted_result_artifact' or artifact.get('result_status')!=result['status']
+                or artifact.get('execution_authority') is not False):raise ValueError()
+        from .virtual_fleet.conducted_result_artifact import _verification,MAX_MANIFEST_BYTES
+        if canonical(artifact.get('verification'))!=canonical(_verification('full_bound')):raise ValueError()
+        if type(artifact_root) not in (str,type(Path())) or not Path(artifact_root).is_absolute():raise ValueError()
+        root=Path(artifact_root);binding=plan['binding']
+        from .ui_server import _conducted_artifact_readback_selection
+        selection=json.loads(_conducted_artifact_readback_selection(dict(
+            intake_id=binding['intake_id'],method=method,expected_revision=binding['revision'],
+            expected_context_sha256=binding['context_sha256'],artifact_workspace_root=str(root),
+            artifact_name=artifact['artifact_name'],expected_manifest_sha256=artifact['storage']['sha256'],
+            expected_result_sha256=sha256(canonical(result).encode('utf-8')).hexdigest(),
+            run_id=artifact['run_id'],runtime_instance_id=artifact['runtime_instance_id'])))
+        if selection['artifact_workspace_root']!=str(root):raise ValueError()
+        marker='.local/conducted-result-artifacts/'+selection['artifact_name']+'/manifest.json'
+        if (type(artifact['storage'].get('commit_marker')) is not str or artifact['storage']['commit_marker']!=marker
+                or type(artifact['storage'].get('bytes')) is not int
+                or not 1<=artifact['storage']['bytes']<=MAX_MANIFEST_BYTES):raise ValueError()
+    except (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):raise
+    except Exception:failed=True
+    if failed:raise ValueError('conducted_workflow_artifact_startup_invalid') from None
+    return selection
+
+
 def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None, mock_model=None, scenario='normal'):
     """Opt-in authored PDF -> current C1 -> genuine plan/execution/result/DRAFT."""
     if scenario not in _CONDUCTED_SCENARIOS:
@@ -413,10 +450,11 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
                       'loss_compensation_applied': False, 'loss_compensation_sign': 1})
         _conducted_json(output, 'execution-original.json', execution)
         phase = 'finalize_explicit_measurement'
+        artifact_root=output
         finalized = finalize_conducted_execution_result(execution,
             expected_execution_sha256=sha256(canonical(execution).encode('utf-8')).hexdigest(),
             evidence_dir=output / 'x', measurement_ref=measurement_ref,
-            workspace_root=output, artifact_name='draft-' + run_uuid[:12])
+            workspace_root=artifact_root, artifact_name='draft-' + run_uuid[:12])
         _conducted_json(output, 'finalizer-original.json', finalized)
         result, artifact = finalized['result'], finalized['artifact']
         current_after = IntakeReadModel(store.root).current_conducted_plan_context(intake_id)
@@ -425,6 +463,8 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         phase = 'bind_readonly_server'
         server_options['conducted_result_snapshot'] = {'intake_id': intake_id, 'revision': context['revision'],
             'expected_current_binding': plan['binding'], 'result': result}
+        selection=_conducted_artifact_startup(plan,method,finalized,artifact_root)
+        if selection is not None:server_options['conducted_artifact_readback_inputs']=selection
         _conducted_json(output, 'server-startup-original.json', server_options)
         stored = bool(finalized['status'] == 'stored' and artifact and artifact['storage']['status'] == 'complete')
         recorded = bool(result and result['status'] == 'recorded')
@@ -456,7 +496,7 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
                 code = str(error)
             _conducted_json(output, 'failure.json', {'code': code or 'conducted_workflow_incomplete',
                 'phase': phase, 'synthetic': True, 'actual_model_calls': 0, 'hardware_verified': False})
-        except Exception:
+        except BaseException:
             pass
         raise
 

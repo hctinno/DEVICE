@@ -177,6 +177,33 @@ CLI는 원 summary와 실제 loopback URL을 출력한다. 새 폴더의 `public
 
 현재 authored 정상 조건은 raw −19.5 dBm·corrected 11 dBm, result recorded·storage complete·DRAFT·규범 not_assessed를 실제로 연결했다. 동일 현재 plan/expected binding/D3 원 결과를 보호 GET와 production DOM390/1440에서 대조했다. 이 수치는 고정 합성 전파의 결과이며 실제 SM-A176U 측정이나 물리 예측 성능이 아니다. 원 null verdict/limit/uncertainty·실제 AI unknown 표시를 유지한다. 첫 mock의 안정화 전 acquire는 invalid로 저장됐으며 그 원 실패를 보존하고 새 실행에서 동작 대기 순서만 수정했다. 기존 기본 TXT genuine1, 새 typed 진입/interrupt 정리3과 실제 새 opt-in 실행·HTTP/DOM은 별도 분모다. 기존183/168·다른 owner core/test/private proof·실제 모델·auth·원장·장비·Office는 이번 검증에 사용하지 않았다.
 
+### 생성한 artifact를 저장 읽기 GET에 연결
+
+2026-10-26 후속 startup 조립은 opt-in `--conducted-workflow`에만 적용한다. [보호 artifact GET](intake_artifact_readback_host_usage.md)의 trusted native10을 `run_conducted_flow`가 반환하는 `server_options.conducted_artifact_readback_inputs`와 `server-startup-original.json`에 함께 보존한다. main은 기존처럼 `server_options`를 그대로 `create_server`에 넘기며 새 CLI flag·환경변수·query/body 선택은 없다. 기본 TXT/PDF fixture, summary/URL 출력, 기존 preview/result snapshot과 종료 방식은 유지한다.
+
+현재 checkout은 root `5a68b7a` + GET `efc77fb` 정확3의 정상 cherry를 전제로 한다. GET 자체의 독립 phase2는 이 작업 시점에 진행 중이며, 아래의 새 작성자 연결 검증을 최종 구현 출시나 독립 인수로 표시하지 않는다. 부모 서버·Store·UI·finalizer·reader를 수정하지 않는다.
+
+| native10 값 | 유일한 원 출처 |
+| --- | --- |
+| `intake_id`, `expected_revision`, `expected_context_sha256` | 실행 전 현재 문맥에서 만든 **원 ready plan.binding** |
+| `method` | 같은 plan 조립에 명시한 원 method |
+| `artifact_workspace_root` | 실제 finalizer에 전달한 같은 로컬 절대 `output` Path |
+| `artifact_name`, `run_id`, `runtime_instance_id` | 실제 `finalized.artifact`의 원 writer summary |
+| `expected_manifest_sha256` | 실제 artifact summary의 `storage.sha256` |
+| `expected_result_sha256` | 원 `finalized.result`의 canonical UTF-8 JSON SHA-256, **LF 제외** |
+
+writer의 `files`에 있는 result.json SHA는 저장 파일의 LF까지 포함하므로 expected_result pin으로 쓰지 않는다. result/artifact binding에서 current pin을 복사하거나, 후행 현재 값으로 원 기대를 덮어써 일치를 만들지 않는다. root는 실제 finalizer에 넘긴 동일 객체로 전달하고 명시 로컬 절대 경로를 검증한다. 상대 경로나 artifact marker에서 root/name을 추정하거나 이전 폴더를 검색하지 않는다. marker는 반환된 이름의 고정 namespace와 일치하는지 확인할 뿐 선택 root를 도출하지 않는다.
+
+원 ready plan + finalizer `stored` + artifact `complete` + non-null 원 result가 있을 때만 선택을 추가한다. result의 recorded/incomplete/invalid는 그대로 둔다. **저장된 invalid/incomplete도 원 상태를 읽기 위한 선택**이며 fixture 통과·측정 유효·규범 승인으로 승격하지 않는다. invalid artifact와 현재 plan의 binding이 맞으면 GET 관계는 matched일 수 있지만 원 invalid/null과 fixture_acceptance fail은 유지된다.
+
+초기 blocked/unsupported/rejected, held·저장 실패, artifact 또는 result null에는 새 선택 key가 없다. complete를 주장하는 원형이 schema/kind·result status·false 권한·manifest pin/marker/byte 길이와 모순되면 `conducted_workflow_artifact_startup_invalid`로 실패하고 값을 채우지 않는다. parent native 한도와 기존 startup64KiB/깊이32 한도를 유지한다. 실패 증거 기록에 추가 오류나 중단이 나도 처음 flow 오류/control을 보존하고 재시도하지 않는다.
+
+`--port`가 없으면 startup 선택만 같은 결과와 함께 저장한다. port를 지정하면 새 configured GET host의 보호·요청 worker 종료 대기 정책을 사용한다. GET는 두 읽기 시점의 현재/저장 관계를 확인하며 미래 실행이나 영구 현재 승인이 아니다. 원 summary의 source_current/fixture_acceptance와 preview/result의 expected binding을 변경하지 않는다.
+
+새 검사는 조립·상태·오류7, 실제 새 정상/측정 무효 authored MOCK→finalizer→GET2, 기존 기본 TXT/CLI 회귀2를 별도 분모로 확인했다. 실제 두 흐름은 로컬 compiler2회와 생성된 MOCK의 metadata/proposal20회, 총22 Python Popen launch이며 WinAPI 이벤트22와 같은 호출을 중복 집계하지 않는다. 설치 Codex나 실제 모델 호출은0이다. 기존 TXT 회귀의 별도 native spawn1은 기존 SyntheticTextProvider 분석 worker 경로로 소스 확인했으며, 새 MOCK 실행 분모와 구별한다.
+
+두 실제 GET는 원 파일/Store metadata를 바꾸지 않고 원 result와 actual manifest/result pin을 전달했다. 측정 무효는 저장 complete/DRAFT와 invalid·보정 null·fixture 실패를 함께 유지했다. 원 입력·MOCK 원소스/binary/응답·실행·finalizer·startup·payload와 실패 기록을 작성자 증거로 보존했다. 전역 native handle 잔여와 관측 범위는 모두 닫힘으로 추정하지 않는다. 실제 AI·실측·규범 전수·전체 시험소 업무 검증은 미실행이다.
+
 ## 명시 실패 시나리오
 
 `--conducted-scenario`는 `--conducted-workflow`에만 사용한다. 생략하면 기존 정상 정책이며, 각 명령은 새 authored PDF·mock·Store·출력 폴더를 만든다. 예를 들어 다음은 새 문서에서 듀티 단위만 누락한다.
