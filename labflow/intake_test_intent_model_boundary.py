@@ -32,6 +32,14 @@ def _fail(code):
     raise IntakeTestIntentModelBoundaryError(code)
 
 
+def _raise_fixed(code):
+    try: raise IntakeTestIntentModelBoundaryError(code) from None
+    except IntakeTestIntentModelBoundaryError as error:
+        # Bare rethrow preserves the cleared chain even in a caller's handler.
+        error.__context__=None; error.__cause__=None
+        raise
+
+
 def _C(value):
     return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')
 
@@ -366,7 +374,7 @@ def build_intake_test_intent_prompt(intake_view,source_views,*,scope,producer_na
     try: return _prepare(intake_view,source_views,scope,producer_name,[0])[1]
     except IntakeTestIntentModelBoundaryError as error: code=error.code
     except Exception: code=_PREFIX+'internal_error'
-    raise IntakeTestIntentModelBoundaryError(code) from None
+    _raise_fixed(code)
 
 
 def decode_intake_test_intent_response(response,intake_view,source_views,*,scope,producer_name):
@@ -384,4 +392,4 @@ def decode_intake_test_intent_response(response,intake_view,source_views,*,scope
         return _guard(result,_LIMITS['max_decoded_bytes'])[0]
     except IntakeTestIntentModelBoundaryError as error: code=error.code
     except Exception: code=_PREFIX+'internal_error'
-    raise IntakeTestIntentModelBoundaryError(code) from None
+    _raise_fixed(code)
