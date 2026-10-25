@@ -9,7 +9,7 @@ const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
 fs.mkdirSync(LOCAL,{recursive:true});
 const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
 function proofWrite(file,data){
   const target=path.resolve(file);assert.ok(target.startsWith(PROOF+path.sep));const files=[];
@@ -974,4 +974,61 @@ async function artifactStorageViewMain(){
   finally{if(browser)await browser.close();}
 }
 
-(process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+async function artifactStorageKeyboardMain(){
+  const indexFile=process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_INDEX;assert.ok(indexFile&&path.isAbsolute(indexFile),'explicit keyboard saved-input index required');
+  const index=JSON.parse(fs.readFileSync(indexFile,'utf8'));assert.equal(index.kind,'explicit_own_saved_artifact_readback');assert.equal(index.backend_accepted,true);assert.equal(index.new_runtime_calls,0);assert.deepEqual(index.cases.map(x=>x.name),['normal','measurement-invalid']);
+  const model=await import(require('node:url').pathToFileURL(path.join(ROOT,'frontend/intake_flow_model.mjs')).href),flows=[],resources=[];let browser;
+  const record=()=>proofWrite(path.join(OUTPUT,'keyboard-progress.json'),JSON.stringify({flows,resources},null,2));
+  try{
+    browser=await chromium.launch({headless:true});
+    for(const entry of index.cases){
+      const flow={case:entry.name,width:1440,scope:'genuine saved-input native keyboard flow; refresh failure alone is typed HTTP503',steps:[],issues:[]};flows.push(flow);
+      const specFile=path.join(OUTPUT,entry.name+'-host-spec.json');proofWrite(specFile,JSON.stringify({...entry,proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/'+entry.name}));
+      const host=startPreviewHost(specFile,artifactStorageHost,'keyboard_storage_host.py');let info,firstFailure=null;
+      try{
+        info=await host.next();const url=info.origin+'/api/intakes/'+encodeURIComponent(info.intake_id)+'/conducted-artifact-readback';
+        const direct=await fetch(url),raw=Buffer.from(await direct.arrayBuffer());proofWrite(path.join(OUTPUT,entry.name+'-genuine-storage.json'),raw);assert.equal(direct.status,200);
+        const packet=model.parseConductedArtifactReadback(raw.toString('utf8'),{intake_id:entry.intake_id,revision:entry.server_options.conducted_artifact_readback_inputs.expected_revision});assert.equal(packet.status,'matched');
+        const context=await browser.newContext({viewport:{width:1440,height:950}}),page=await context.newPage(),errors=[],external=[],methods=[];page.setDefaultTimeout(8000);let pointerEvents=0;
+        await page.addInitScript(()=>{window.__keyboardPointerEvents=0;addEventListener('pointerdown',()=>window.__keyboardPointerEvents++);});
+        page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(info.origin+'/'))external.push(r.url());if(r.url().includes('/api/'))methods.push(r.method());});
+        const card=page.locator('#conducted-artifact-storage'),idle=()=>page.waitForFunction(()=>!document.querySelector('#refresh').disabled&&document.querySelector('#conducted-artifact-storage')?.dataset.pending==='false'&&document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+        const tabTo=async(selector,reverse=false)=>{for(let tabs=0;tabs<180;tabs++){if(await page.evaluate(s=>document.activeElement?.matches(s),selector))return tabs;await page.keyboard.press(reverse?'Shift+Tab':'Tab');}throw Error('keyboard target unreachable: '+selector);};
+        const focused=()=>page.evaluate(()=>({tag:document.activeElement?.tagName,id:document.activeElement?.id,text:document.activeElement?.textContent?.slice(0,100),connected:document.activeElement?.isConnected}));
+        const saveStep=async(name,detail={})=>{flow.steps.push({name,focus:await focused(),...detail});record();};
+        const originalDraft=()=>card.locator('[data-artifact-raw="draft"]').textContent();
+        const originalResult=()=>card.locator('[data-artifact-raw="result"]').textContent();
+        try{
+          await page.goto(info.origin+'/');await idle();await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true');
+          const selectTabs=await tabTo('#intake-list button');await page.keyboard.press('Enter');assert.equal(await page.locator('#intake-list button[aria-current="true"]').count(),1);assert.equal((await focused()).id,'detail-title');await saveStep('keyboard-intake-selection',{tabs:selectTabs});
+          const cardTabs=await tabTo('#conducted-artifact-refresh');assert.equal(await page.locator('#conducted-artifact-refresh').getAttribute('aria-disabled'),'false');await saveStep('keyboard-storage-card',{tabs:cardTabs});
+          for(const [key,press]of [['draft','Enter'],['manifest','Space'],['facts-plan','Enter']]){
+            const selector='#conducted-artifact-storage details:has([data-artifact-raw="'+key+'"]) > summary';await tabTo(selector);
+            await page.keyboard.press(press);assert.equal(await page.locator(selector).evaluate(s=>s.parentElement.open),true);assert.equal(await page.locator(selector).getAttribute('role'),null);assert.equal(await page.locator(selector).getAttribute('aria-expanded'),null);await saveStep('keyboard-open-'+key,{native_summary:true,key:press});
+            await page.keyboard.press(press);assert.equal(await page.locator(selector).evaluate(s=>s.parentElement.open),false);assert.equal(await page.locator(selector).evaluate(s=>document.activeElement===s),true);await saveStep('keyboard-close-'+key);
+          }
+          assert.equal(await originalDraft(),packet.artifact.draft);const beforeResult=await originalResult();
+          await tabTo('#conducted-artifact-refresh',true);await page.route(url,r=>r.fulfill({status:503,contentType:'application/json',body:JSON.stringify({error:{code:'conducted_result_artifact_read_input_changed'}})}));
+          await page.keyboard.press('Enter');await idle();assert.equal(await card.getAttribute('data-current'),'false');assert.equal(await originalDraft(),packet.artifact.draft);assert.equal(await originalResult(),beforeResult);assert.match(await card.locator('[data-artifact-relation-summary]').textContent(),/확인 불가/);
+          const failureFocus=await focused();if(failureFocus.id!=='conducted-artifact-refresh')flow.issues.push({code:'keyboard_refresh_focus_lost',observed:failureFocus,expected:'conducted-artifact-refresh'});await saveStep('typed-refresh-error-previous-observation',{scope:'typed503 only; original genuine values and native keyboard path unchanged'});await screenshot(page,path.join(OUTPUT,entry.name+'-keyboard-error.png'));await page.unroute(url);
+          const backTabs=await tabTo('#intake-list button',true);await page.keyboard.press('Enter');assert.equal((await focused()).id,'detail-title');await saveStep('keyboard-return-same-intake',{tabs:backTabs});
+          await tabTo('#conducted-artifact-refresh');await page.keyboard.press('Enter');await idle();await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true');
+          const recoveredFocus=await focused();if(recoveredFocus.id!=='conducted-artifact-refresh')flow.issues.push({code:'keyboard_recovery_focus_lost',observed:recoveredFocus,expected:'conducted-artifact-refresh'});
+          assert.equal(await originalDraft(),packet.artifact.draft);assert.equal(await originalResult(),beforeResult);assert.match(await card.locator('[data-artifact-judgement]').innerText(),/not_assessed/);assert.match(await card.locator('[data-artifact-judgement]').innerText(),/unknown/);assert.equal(await card.getAttribute('data-result-status'),packet.artifact.result.status);
+          if(entry.name==='measurement-invalid')assert.match(await card.locator('[data-artifact-judgement]').innerText(),/측정 무효[\s\S]*미제공\(null\)/);
+          for(const other of index.cases.filter(x=>x.intake_id!==entry.intake_id))assert.ok(!(await card.textContent()).includes(other.intake_id));
+          pointerEvents=await page.evaluate(()=>window.__keyboardPointerEvents);assert.equal(pointerEvents,0);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.ok(methods.every(x=>x==='GET'));
+          await saveStep('keyboard-recovery-current',{pointer_events:pointerEvents,source_intake:packet.current.context.intake_id,original_result_status:packet.artifact.result.status,raw_and_draft_preserved:true});await screenshot(page,path.join(OUTPUT,entry.name+'-keyboard-current.png'));
+          flow.status=flow.issues.length?'fail':'pass';flow.page_errors=errors;flow.pointer_events=pointerEvents;record();
+        }finally{await context.close();}
+      }catch(error){firstFailure=error;flow.status='error';flow.error=error.message;record();throw error;}finally{
+        try{if(info&&host.alive()){host.child.stdin.end('stop\n');const item=await host.next(),code=await host.exited;assert.equal(code,0,host.stderr());assert.equal(host.stderr(),'');assert.ok(item.resource.loop_stopped&&item.resource.listener_closed&&item.resource.port_rebind&&item.resource.source_unchanged);resources.push({case:entry.name,...item.resource,child_exit:code});}else{if(host.alive())host.child.kill();await host.exited;}record();}
+        catch(error){resources.push({case:entry.name,cleanup_verified:false,error:error.message,first_error_preserved:Boolean(firstFailure)});record();if(!firstFailure)throw error;}
+      }
+    }
+    const status=flows.every(x=>x.status==='pass')?'pass':'fail';proofWrite(path.join(OUTPUT,'keyboard-results.json'),JSON.stringify({status,flows,resources,new_model_RF_runtime_calls:0,wide26_or_puretyped12_repeated:0,SQL_close_directly_instrumented:false},null,2));assert.equal(status,'pass','native keyboard focus gaps recorded');console.log(JSON.stringify({status,keyboard_flows:flows.length,output:OUTPUT}));
+  }catch(error){proofWrite(path.join(OUTPUT,'keyboard-failure.json'),JSON.stringify({status:'fail',message:error.message,flows,resources},null,2));throw error;}
+  finally{if(browser)await browser.close();}
+}
+
+(process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});

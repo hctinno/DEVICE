@@ -77,3 +77,17 @@ typed UI 조건은 reader 오류 뒤 이전 관측 보존, 알 수 없는 key, s
 저장소 루트에서 `node --test --test-name-pattern="artifact storage view|unified provided flow|result readonly|conducted preview" frontend/intake_flow_model.test.mjs`로 해당 검사만 실행할 수 있다. 문서 변경 후 `python scripts/check_artifacts.py`를 수행한다. 이 검사는 문서 무결성 검사이며 계측 정확도·시험소 기능·기관 적합성의 증거가 아니다.
 
 현재 화면의 원 workflow 설명은 [기존 fixture 사용법](intake_fixture_check_usage.md), 프로젝트 범위와 남은 작업은 [PLAN.md](../../PLAN.md), 설계 기준은 [IMPLEMENTATION.md](../../IMPLEMENTATION.md)에서 확인한다.
+
+## 후속 키보드 운영 경로
+
+2026-10-26 Asia/Seoul의 `DEV4-ARTIFACT-STORAGE-KEYBOARD-FLOW-001`은 정확 `aac9e2699dc5321b4c7dcb436723f318501f4a93`를 기준으로 한 별도 작업이다. 착수 당시 aac9의 독립 UI 인수는 pending이었으며, 이 키보드 관측으로 앞선 genuine 6개·typed 26개 또는 원 단위 검사 12개의 수용을 대신하지 않는다. 원 복제본과 봉인 proof에는 추가로 쓰지 않았다.
+
+정상·측정 무효의 보존 자료 두 사례에서 각각 데스크톱 1440 한 경로만 수행했다. Tab으로 접수 버튼에 도달하고 Enter로 선택하면 상세 제목에 포커스가 간다. 다시 Tab으로 저장 사본 카드에 도달한 뒤 원 DRAFT·manifest·facts-plan의 native summary를 Enter 또는 Space로 열고 닫는다. native details의 키보드 동작과 의미를 유지하며 별도 ARIA role·가짜 expanded 속성·새 단축키를 추가하지 않는다.
+
+첫 관측에서 native 펼침·접수 선택은 정상으로 확인했지만, 저장 사본 새로고침의 조회 오류 뒤와 실제 정상 응답 복귀 뒤에 버튼 포커스가 BODY로 사라졌다. 원 RED 두 흐름과 포커스 유실 네 관측·exit 1을 보존했다. 비동기 응답이 카드 노드를 교체하는 두 접점에서, 교체 직전에 새로고침 버튼이 포커스를 가진 경우에만 교체 후 같은 버튼에 `focus({preventScroll:true})`를 적용하도록 최소 수정했다. 이전·새 카드와 현재 선택 접수 ID가 같고, 새 버튼이 문서에 연결되어 실제 표시되며 native disabled가 아니고, 접수 보기가 활성인 경우에만 복원한다. 기존 aria-disabled 조회 중 표시는 유지한다. 카드 밖의 포커스를 가져오거나 parser·generation·측정·판정 상태를 바꾸지 않는다.
+
+수정 후 같은 두 흐름이 통과했다. 마우스 pointer 입력 0으로 조회 오류·이전 관측과 현재 접수 복귀 뒤에도 버튼 포커스가 유지됐다. 오류는 별도 typed HTTP 503이며 실제 reader가 실패했다고 해석하지 않는다. 복귀는 실제 보호 GET의 원 응답이다. 원 DRAFT·result, 정상 수치, 무효/null, 현재 관계, unknown·판정 미평가와 다른 사례의 접수 내용 제외를 대조했다. 이 검증은 native 키보드/Chromium 범위이며 스크린리더 음성·모바일 키보드 검증은 수행하지 않았다.
+
+첫 RED 두 흐름, 최소 복원 직후 GREEN 두 흐름, 접수·연결·표시 조건을 명시한 최종 guard 변경 후 GREEN 두 흐름은 별도 회차다. 최종 변경이 닿은 같은 두 경로만 확인했으며 이전 회차와 합산하지 않는다. 각 회차의 두 호스트가 child exit 0·serve thread/listener 종료·port 재사용을 확인했고, 동일한 원 두 자료의 각 130파일을 bytes·SHA-256·정수 mtime_ns로 전후 대조했다. 전체 여섯 호스트 관측을 성공 흐름 여섯 개로 합산하지 않는다. 개별 SQL close는 직접 계측하지 않았으며 전체 native handle 회수를 주장하지 않는다. 새 모델·RF·runtime·writer와 기존 wide 26개·순수 typed 12개 재실행은 없다.
+
+작은 수용 도구는 `VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY=1`, `VLAB_ARTIFACT_STORAGE_KEYBOARD_INDEX`의 명시 절대 경로를 사용한다. 기존 `explicit_own_saved_artifact_readback` index에서 `normal`, `measurement-invalid` 두 사례와 이미 수용된 backend·원 server_options만 전달한다. `VLAB_FLOW_PROOF_ROOT`는 이 작업의 새 `.local` 증거 폴더로 지정한다. 도구는 키보드 단계·포커스·원자료 불변·알려진 호스트 종료를 별도 결과로 기록하며 새 Store나 실행 자료를 만드는 fallback이 없다.
