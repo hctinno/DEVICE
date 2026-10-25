@@ -200,7 +200,7 @@ class _Protocol:
             counts['turn_completed']+=1
             if not _keys(e,('type',),('usage',)) or self.state!='items' or self.opened or self.final is None:_fail('stream_invalid')
             if 'usage' in e:
-                usage=e['usage'];keys=('input_tokens','cached_input_tokens','output_tokens','reasoning_output_tokens')
+                usage=e['usage'];keys=('input_tokens','cached_input_tokens','cache_write_input_tokens','output_tokens','reasoning_output_tokens')
                 if not _keys(usage,(),keys) or any(type(v) is not int or not 0<=v<=_LIMITS['max_json_integer'] for v in usage.values()):_fail('stream_invalid')
                 if 'cached_input_tokens' in usage and 'input_tokens' in usage and usage['cached_input_tokens']>usage['input_tokens']:_fail('stream_invalid')
                 self.r['usage']={k:usage.get(k) for k in keys}

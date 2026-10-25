@@ -78,6 +78,14 @@ elif mode=='usage_bool': events[-1]['usage']['input_tokens']=True
 elif mode=='usage_negative': events[-1]['usage']['input_tokens']=-1
 elif mode=='usage_cached': events[-1]['usage']['cached_input_tokens']=11
 elif mode=='usage_unknown': events[-1]['usage']['private_header']='FAKE_SECRET_DO_NOT_ECHO'
+elif mode.startswith('cache_write_'):
+    values={'cache_write_positive':17,'cache_write_zero':0,'cache_write_max':9223372036854775807,
+            'cache_write_bool':True,'cache_write_negative':-1,'cache_write_float':1.5,'cache_write_null':None,
+            'cache_write_string':'7','cache_write_overflow':9223372036854775808,'cache_write_unknown':7,
+            'cache_write_only':7}
+    if mode=='cache_write_only':events[-1]['usage']={}
+    events[-1]['usage']['cache_write_input_tokens']=values[mode]
+    if mode=='cache_write_unknown':events[-1]['usage']['cache_write_other_tokens']=0
 elif mode=='premature_complete': events[2:]=[events[-1],events[2]]
 elif mode=='after_complete': events.append({'type':'turn.started'})
 elif mode=='events_flood': events=events[:2]+[{'type':'item.completed','item':{'id':'r'+str(i),'type':'reasoning','text':''}} for i in range(4096)]
@@ -177,7 +185,7 @@ class ProducerTests(unittest.TestCase):
             self.assertEqual((len(b),hashlib.sha256(b).hexdigest()),(desc['bytes'],desc['sha256']))
         self.assertEqual((self.evidence/'request.json').read_bytes(),PROMPT);self.assertEqual((self.evidence/'response-schema.json').read_bytes(),SCHEMA)
         self.assertEqual(r['model']['requested'],'gpt-6.1-sol');self.assertIsNone(r['model']['resolved']);self.assertIsNone(r['model']['remote_request_id'])
-        self.assertEqual(r['usage'],dict(input_tokens=10,cached_input_tokens=2,output_tokens=3,reasoning_output_tokens=None))
+        self.assertEqual(r['usage'],dict(input_tokens=10,cached_input_tokens=2,cache_write_input_tokens=None,output_tokens=3,reasoning_output_tokens=None))
         self.assertEqual(r['controls']['unknown'],CONTRACT['controls_unknown_exact16']);self.assertEqual(r['limits'],CONTRACT['limits'])
         self.assertEqual(len(self.calls),2);self.assertEqual(self.calls[0],[str(self.exe),'--version'])
         invocation=json.loads((self.evidence/'invocation.json').read_bytes());self.assertEqual(invocation['model_argv'],self.calls[1]);self.assertEqual(len(self.calls[1]),18)
@@ -411,6 +419,29 @@ class ProducerTests(unittest.TestCase):
             release.set()
             for thread in threading.enumerate():
                 if thread.name.startswith('codex-cli-response-'):thread.join(3)
+
+    def test_cache_write_values_are_preserved_without_new_relations(self):
+        keys={'input_tokens','cached_input_tokens','cache_write_input_tokens','output_tokens','reasoning_output_tokens'}
+        for mode,value in [('cache_write_positive',17),('cache_write_zero',0),('cache_write_max',9223372036854775807),('cache_write_only',7)]:
+            with self.subTest(mode=mode):
+                wire,receipt=self.call(mode)
+                self.assertEqual(wire,RAW);self.assertEqual(set(receipt['usage']),keys)
+                self.assertEqual(receipt['usage']['cache_write_input_tokens'],value)
+                self.assertIs(type(receipt['usage']['cache_write_input_tokens']),int)
+                self.assertEqual(receipt['cost'],dict(kind='unknown',amount=None,currency=None,price_version=None))
+                if mode=='cache_write_only':
+                    self.assertTrue(all(receipt['usage'][key] is None for key in keys-{'cache_write_input_tokens'}))
+
+    def test_cache_write_missing_is_null_and_usage_absence_stays_null(self):
+        wire,receipt=self.call();self.assertEqual(wire,RAW)
+        self.assertIn('cache_write_input_tokens',receipt['usage']);self.assertIsNone(receipt['usage']['cache_write_input_tokens'])
+        wire,receipt=self.call('no_usage');self.assertEqual(wire,RAW);self.assertIsNone(receipt['usage'])
+
+    def test_cache_write_invalid_values_and_other_unknown_key_are_rejected(self):
+        for mode in ['cache_write_bool','cache_write_negative','cache_write_float','cache_write_null','cache_write_string','cache_write_overflow','cache_write_unknown']:
+            with self.subTest(mode=mode):
+                code='limit_exceeded' if mode=='cache_write_overflow' else 'stream_invalid'
+                self.failure(mode,code)
 
 
 if __name__=='__main__':unittest.main()

@@ -55,6 +55,8 @@ JSONL은 LF로 끝나는 strict UTF-8 object여야 한다. thread.started1 → t
 
 성공은 status=complete·wire_complete=true, version/model attempt 각각1, thread/turn/final/완료 각각1, tool0, 양쪽 EOF·child 회수·reader join·pipe/artifact close가 true다. remote identity·semantic quality·external data authority·storage authenticity flag는 false다. usage 자체가 없으면 null이고 optional token 수가 빠져도 null이다. 비용은 model attempt0이면 not_applicable, 그 외 unknown이며 amount/currency/price_version은 null이다. CLI 내부 network/retry 수를 모델 process 시도 수로 추정하지 않는다.
 
+usage가 있으면 input_tokens/cached_input_tokens/cache_write_input_tokens/output_tokens/reasoning_output_tokens 정확5키로 투영한다. 각 제공 값은 bool 아닌 비음수 signed64 정수이며 원값을 보존하고, 빠진 필드만 null로 둔다. cache_write_input_tokens의0도 그대로 기록하며 입력 token 수와의 새 관계나 비용을 추정하지 않는다. cached_input_tokens<=input_tokens 조건은 두 필드가 함께 제공될 때 그대로 적용하고, 그 밖의 unknown key는 계속 거절한다. 원4필드 계약·당시 후보와 검증 증거는 보존하며 새 공통5필드 계약과 함께 사용한다.
+
 | artifact 키 | 상대 파일 |
 |---|---|
 | prompt | request.json |
