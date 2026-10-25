@@ -1,0 +1,127 @@
+{
+  "recorded_at": "2026-10-25T12:09:17.266606+09:00",
+  "request_id": "DEV-HCT-FCC-CORPUS-012",
+  "unit": "B041_bounded_indexedPDF_access_failure_metadata_intake",
+  "publication_scope": "nonsensitive hash/count/status only",
+  "new_private_payload": {
+    "files": 14,
+    "bytes": 71962,
+    "JSON": 14,
+    "PDF": 0,
+    "MD": 0
+  },
+  "unit_hashes_and_counts": {
+    "payload_files": 14,
+    "payload_bytes": 71962,
+    "JSON_files": 14,
+    "PDF_files": 0,
+    "MD_files": 0,
+    "index_bytes": 3389,
+    "index_sha256": "d778db7c593f5c9426bd8fbefca911bfe5ada693d124196491c5a2c6ee80a9a3",
+    "P01_review_bytes": 7478,
+    "P01_review_sha256": "118c6c470bf32ef20d865e62a5be1b7fe938f9f6331bf7391e4e66b09b6936f4"
+  },
+  "explicit_independent_ACKs": 1,
+  "cumulative_private_collector_reviewed_and_ACKed": {
+    "reviewed": 145,
+    "independently_ACKed": 145
+  },
+  "cumulative_request012_reviewed_and_ACKed": {
+    "reviewed": 110,
+    "independently_ACKed": 110
+  },
+  "remaining_reviewed_private_intake_pending_packets": 0,
+  "previous_publication": {
+    "unit": "B040",
+    "commit": "4f2966dcd3898f833a9e14d1c4cc98a2285be36c",
+    "manifest_sha256": "3f4dc9a5347f34b71c53ee442f5ad06fb8b15e8795ec321deac1843804c41bc7",
+    "postpublication_correction_preserved": true
+  },
+  "source_cohorts": {
+    "target_or_parent_reference": {
+      "PDFs": 18,
+      "physical_pages": 690,
+      "bytes": 40988413,
+      "direct_issuer_issue_static_predicate": 17,
+      "parent_only": 1,
+      "official_mapping": 0
+    },
+    "excluded_before2025": {
+      "PDFs": 1,
+      "physical_pages": 46,
+      "bytes": 2771507
+    },
+    "pending_report_link": {
+      "PDFs": 1,
+      "physical_pages": 53,
+      "bytes": 4626750
+    },
+    "pending_direct_identity": {
+      "PDFs": 5,
+      "physical_pages": 254,
+      "bytes": 19314880
+    },
+    "all_retained_not_eligible": {
+      "PDFs": 25,
+      "physical_pages": 1043,
+      "bytes": 67701550
+    },
+    "legacy22_separate": true
+  },
+  "new_originals": 0,
+  "target_increment": 0,
+  "new_physical_ledger_versions": 0,
+  "bounded_review_status": {
+    "exact_indexed_PDF_GET_attempts": 1,
+    "actual_HTTP_status": 403,
+    "actual_MIME": "text/plain",
+    "tool_error": null,
+    "queries": 0,
+    "ordinary_HTML_views": 0,
+    "redirects_followed": 0,
+    "same_endpoint_retries": 0,
+    "explicit_response_body_read_bytes": 0,
+    "PDF_payloads": 0,
+    "native_render_OCR": 0,
+    "challenge_body_detection": null,
+    "source_SHA_bytes_magic_pages_AES_permissions_and_structure": null,
+    "PDF_magic_structure_tests_unexecuted_not_PASS": true,
+    "direct_body_identity_and_citation_fields_null": 17,
+    "new_observations_blocks_rows": [
+      0,
+      0,
+      0
+    ],
+    "only_approved_secondary_lead_allowfields_retained_not_new_facts": true,
+    "secondary_issue_claim_title_reportprefix_model_or_URLtoken_not_directidentity": true,
+    "actual_labelbody_mismatch_observed": false,
+    "full_labelbody_mapping": null,
+    "outside_issuer_period_scope_exclusion_confirmed": false,
+    "HTTP403_not_sourceabsence_officialFCCrefusal_legalrestriction_or_cause_proof": true,
+    "no_physical_excluded_pendinglink_pendingdirect_original_cohort_from_PDF0": true,
+    "known47_givenSHA_metadata_only_no_actualrawcomparison_fresh47audit_or_reuse_independence": true,
+    "prior_metadata_hash_lists_not_fresh_nested_file_or_original_verification": true,
+    "P01_online_replay_or_source_original_operations": 0,
+    "source_privacy_census_or_identifier_absence_proven": false,
+    "metadata_patternzero_not_original_privacyabsence_proof": true,
+    "rights_unknown_privateonly_not_legalrestriction_or_reproduction_training_publication_grant": true,
+    "all_prior25_original_proofs_frozen_not_fresh_wholeaudit": true,
+    "root_byte_ACK_not_fullsemantic_currentnormative_model_physical_approval": true,
+    "P01_observer_shape_failures_preserved": 2,
+    "P01_recovery_exact_metadata_types_only_not_producer_failure_or_source_gate_expansion": true
+  },
+  "bounded_HAC_review_status": {
+    "suite_regions_visited": 181,
+    "suite_regions_total": 181,
+    "new_regionvisits": 0,
+    "wrapper_visits_not_fullsemantic_allcells_plotnumbers_calibration_HACsuite_or_census_completion": true
+  },
+  "remaining_scope": {
+    "whole_population": "unknown/open",
+    "all_periods_issuers_sites_products_categories_revisions_parts_appendices_setup_photos_tails": "open",
+    "whole_semantic_currentnormative_reuse_independence_model_AI_physical_conformity_complete": false,
+    "source_body_citation_strings_casevalues_images_code_identifiers_privatepaths_user_materials_public": false,
+    "new_external_model_API_training_evaluation_folds_scores": 0,
+    "new_user_preparation_requests": 0
+  }
+}
