@@ -722,7 +722,8 @@ def _receipt(value, settings, prompt, schema, directory, raw, success, error_cod
         response["http_status"] != 200 or response["auth_http_status"] != 200 or
         response["finish_reason"] != "STOP" or
         not _integer(response["text_parts"],1) or
-        cancel["requested"] is not False or cancel["local_worker_stopped"] is not True or
+        cancel["requested"] is not False or
+        not (cancel["local_worker_stopped"] is None or cancel["local_worker_stopped"] is True) or
         cancel["provider_completion"] != "observed_stop" or
         any(cleanup[k] is not True for k in ("worker_reaped","transport_handles_closed","artifact_handles_closed")) or
         cleanup["worker_exit_code"] != 0 or cleanup["secondary_errors"] != [] or

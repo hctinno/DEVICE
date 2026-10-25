@@ -803,5 +803,63 @@ class ComparisonTests(unittest.TestCase):
         budget=json.loads(self.budget.read_bytes())
         self.assertEqual(budget["reserved_calls"],1);self.assertIsNotNone(budget["active_run_id"])
 
+    def test_natural_completion_nullable_stop_is_preserved(self):
+        original=self.produce
+        for index,stopped in enumerate((None,True)):
+            self.seed();receipts=[]
+            def natural(*args,**kw):
+                raw,r=original(*args,**kw)
+                r["cancellation"]["local_worker_stopped"]=stopped
+                receipts.append(copy.deepcopy(r));return raw,r
+            with self.subTest(stopped=stopped),patch.object(
+                    sys.modules["labflow.vertex_response"],"produce_vertex_response",natural):
+                out=self.run_batch(self.matrix(selection="selected",model_id=MODELS[0],
+                    overrides={"thinking_level":"LOW"}),evidence_dir=self.root/f"natural-{index}")
+                row=out["rows"][0]
+                self.assertEqual(row["status"],"success")
+                self.assertEqual(row["receipt"],receipts[0])
+                self.assertIs(row["receipt"]["cancellation"]["local_worker_stopped"],stopped)
+                self.assertEqual(row["budget"]["generation_post_attempts"],1)
+                budget=json.loads(self.budget.read_bytes())
+                self.assertIsNone(budget["active_run_id"])
+                self.assertEqual(budget["entries"][0]["state"],"complete")
+                self.assertEqual((budget["reserved_calls"],budget["reserved_output_tokens"]),(1,512))
+
+    def test_natural_completion_false_or_forged_stop_rejected(self):
+        original=self.produce
+        for index,value in enumerate((False,0,1,"true")):
+            self.seed()
+            def invalid(*args,**kw):
+                raw,r=original(*args,**kw);r["cancellation"]["local_worker_stopped"]=value
+                return raw,r
+            with self.subTest(value=value),patch.object(
+                    sys.modules["labflow.vertex_response"],"produce_vertex_response",invalid):
+                out=self.run_batch(evidence_dir=self.root/f"bad-stop-{index}")
+                self.assertEqual(out["rows"][0]["reason_code"],"receipt_invalid")
+                self.assertEqual(out["rows"][0]["status"],"unknown")
+                self.assertIsNotNone(json.loads(self.budget.read_bytes())["active_run_id"])
+
+    def test_natural_completion_null_keeps_other_success_requirements(self):
+        original=self.produce
+        changes=(lambda r:r["cleanup"].update(worker_reaped=False),
+            lambda r:r["cleanup"].update(worker_exit_code=1),
+            lambda r:r["cleanup"].update(transport_handles_closed=False),
+            lambda r:r["cleanup"].update(artifact_handles_closed=False),
+            lambda r:r["response"].update(finish_reason="MAX_TOKENS"),
+            lambda r:r["verification"].update(wire_complete=False),
+            lambda r:r["cancellation"].update(requested=True))
+        for index,change in enumerate(changes):
+            self.seed()
+            def invalid(*args,**kw):
+                raw,r=original(*args,**kw)
+                r["cancellation"]["local_worker_stopped"]=None;change(r);return raw,r
+            with self.subTest(index=index),patch.object(
+                    sys.modules["labflow.vertex_response"],"produce_vertex_response",invalid):
+                out=self.run_batch(evidence_dir=self.root/f"natural-evidence-{index}")
+                self.assertEqual(out["rows"][0]["reason_code"],"receipt_invalid")
+                self.assertNotEqual(out["rows"][0]["status"],"success")
+                self.assertEqual(json.loads(self.budget.read_bytes())["reserved_calls"],1)
+
+
 if __name__=="__main__":
     unittest.main()
