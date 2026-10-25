@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "checked_on_kst": "2026-10-25",
+  "request_id": "DEV-VERTEX-GEMINI-20261025-001",
+  "provider": "vertex_ai",
+  "service": "aiplatform.googleapis.com",
+  "project_id": "project-a6310591-f8cc-487c-9e3",
+  "quota_project_id": "project-a6310591-f8cc-487c-9e3",
+  "rest_api_version": "v1",
+  "default_location": "global",
+  "location_hosts": {
+    "global": "https://aiplatform.googleapis.com",
+    "us": "https://aiplatform.us.rep.googleapis.com",
+    "eu": "https://aiplatform.eu.rep.googleapis.com"
+  },
+  "models": [
+    {"model_id": "gemini-4-argon", "label": "Gemini 4 Argon", "thinking_levels": ["LOW", "MEDIUM", "HIGH"], "default_thinking_level": "MEDIUM", "documented_locations": ["global", "us", "eu"], "account_access": "unverified"},
+    {"model_id": "gemini-3.8-flash", "label": "Gemini 3.8 Flash", "thinking_levels": ["LOW", "MEDIUM", "HIGH"], "default_thinking_level": "MEDIUM", "documented_locations": ["global", "us", "eu"], "account_access": "unverified"}
+  ],
+  "defaults": {"max_output_tokens": 512, "timeout_seconds": 60},
+  "supported_setting_ranges": {"max_output_tokens": [64, 8192], "timeout_seconds": [1, 120]},
+  "disabled": ["MINIMAL", "OFF", "thinking_budget", "automatic_retry", "automatic_continuation", "tools", "grounding", "paid_upgrade", "iam_expansion", "partner_subscription", "ai_studio_fallback"],
+  "transport_dependencies": {"google-auth": "2.62.0", "requests": "2.34.2", "google-genai": "not used; documented Argon minimum 2.30.1"},
+  "credit_eligibility": "Google first-party service route; target account trial status, remaining credit and expiry require account-specific verification",
+  "official_sources": [
+    {"topic": "Argon ID, supported thinking, regions, SDK minimum and continuation limits", "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-4-argon"},
+    {"topic": "Flash ID, LOW/MEDIUM/HIGH default and locations", "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash"},
+    {"topic": "Thinking per-model table and thinking budget restriction", "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking"},
+    {"topic": "Global and multi-region REST hostnames and resource paths", "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations"},
+    {"topic": "GenerateContent REST v1", "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/rest/v1/projects.locations.publishers.models/generateContent"},
+    {"topic": "REST thinkingConfig.thinkingLevel and response metadata", "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/models/inference"},
+    {"topic": "Trial credit limits, AI Studio and partner exclusions; paid upgrade can charge", "url": "https://docs.cloud.google.com/free/docs/free-cloud-features"},
+    {"topic": "ADC locations and distinction from gcloud CLI authentication", "url": "https://docs.cloud.google.com/docs/authentication/application-default-credentials"},
+    {"topic": "Explicit project and billing-project controls for ADC login", "url": "https://docs.cloud.google.com/sdk/gcloud/reference/auth/application-default/login"},
+    {"topic": "Quota project selection", "url": "https://docs.cloud.google.com/docs/quotas/set-quota-project"},
+    {"topic": "Google-maintained auth package 2.62.0, release 2026-10-12", "url": "https://pypi.org/project/google-auth/2.62.0/"},
+    {"topic": "Requests package 2.34.2, release 2026-05-14", "url": "https://pypi.org/project/requests/2.34.2/"}
+  ]
+}

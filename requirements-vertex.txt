@@ -1,0 +1,3 @@
+# Optional Vertex REST transport. Existing base requirements remain independent.
+google-auth==2.62.0
+requests==2.34.2
