@@ -200,16 +200,16 @@ P01 인수 색인 v1의 7개 packet·105개 inventory 파일·로컬 원본 22�
 
 최종 목표는 **디지털 트윈 기반 AI 무인시험소**다. 제품·의뢰 정보에서 목적·시장과 적용 범위를 이해하고, 근거 있는 방법·계획, DUT·장비·경로 실행, 원본 취득, 보정·계산·판정, 저장·성적서·독립 검토를 같은 시험건으로 연결한다. 정상 지원 범위에서는 사용자가 제품 분류·규격·조건·단계 진행을 반복 지정하지 않는다. 첫 실증의 물리 연결·교체·시료 배치는 사람이 수행하며 자동 물리 작업은 전체 목표의 후속 단계다.
 
-현재 갱신: 2026-10-26 통합066, 기능 `7cd74b3a` / source318. 첫 합성 종단·오류·현재 사실/저장 검수를 작은 단위로 수용했다. 각 실행·검수 분모를 전체 완성률로 환산하지 않는다. 총괄의 기존 전체 소스 목록 검사는 바이트 SHA 대조이며, 그 목록만으로 native 메타데이터까지 검증했다는 표현은 정정한다. 별도 원본·담당·저장 파일 native pin 검사의 실제 범위는 유지하고, 이후 전체 소스의 관측 native 보존은 별도 전후 목록으로 확인한다.
+현재 갱신: 2026-10-26 통합066, 기능 `9d3a3392` / source322. 첫 합성 종단·오류·현재 사실/저장 검수를 작은 단위로 수용했다. 각 실행·검수 분모를 전체 완성률로 환산하지 않는다. 총괄의 기존 전체 소스 목록 검사는 바이트 SHA 대조이며, 그 목록만으로 native 메타데이터까지 검증했다는 표현은 정정한다. 별도 원본·담당·저장 파일 native pin 검사의 실제 범위는 유지하고, 이후 전체 소스의 관측 native 보존은 별도 전후 목록으로 확인한다.
 
 | 구분 | 현재 재사용 가능한 구현·증거 | 정확한 미완료 연결 / 다음 수용 조건 |
 |---|---|---|
-| 자료 확보 | Un-licensed·장비/DUT·공개 사본 private 색인. 보존429PDF와 대상18PDF/690쪽·전체쪽수null을 구별, B075/B076 후행 대조 종료 | B077~B080 새4단위는 수신등록/미ACK이며 보존·검수 완료로 가산하지 않음. 기관/발행·권리·공식 대응·전수 모집단은 별도; 공유/원본 읽기전용 |
+| 자료 확보 | Un-licensed·장비/DUT·공개 사본 private 색인. 보존475PDF와 대상18PDF/690쪽·전체쪽수null을 구별, B077~B080 새46PDF 제한 ACK/후행 readonly 대조 종료 | B081/B082 새2단위는 수신등록/미ACK이며 보존·내용 검수 완료로 가산하지 않음. 기관/발행·권리·공식 대응·전수 모집단은 별도; 공유/원본 읽기전용 |
 | 내용·근거 검수 | P01 첫 조건·N01/XML·6규칙 metadata, 방법 관계3/근거metadata8/미해결12를 private 인수/후행 종료 | 사례 peak/MCS6와 개발 on-average/MCS0·현행 KDB/ANSI·판본/plane/보정·동일 조건 IO/split/holdout 미확정. 반복 설정/PASS를 규범으로 승격하지 않음 |
-| 규격·방법 판단 | 명시 source6→계획/generic 조건 gate·문법002·현재 PDF941와 TXT16cf readonly facts 수용. TXT/PDF 관련 root35 PASS, 원 schema1/None과 stored locator 구별 | 실제 Codex17 원문은 동일 조건 결합/명시 duty 단위 두 질문으로 blocked. 규격·판본·시험방법·한계 자동 확정은 미완료. CLI7e/실제 현재 Store→조건 gate a3aa는 동결·독립 검수 |
+| 규격·방법 판단 | 명시 source6→계획/generic 조건 gate·문법002·현재 PDF941와 TXT16cf readonly facts 수용. TXT/PDF 관련 root35 PASS, 원 schema1/None과 stored locator 구별 | 실제 Codex17 원문은 동일 조건 결합/명시 duty 단위 두 질문으로 blocked. 규격·판본·시험방법·한계 자동 확정은 미완료. 현재자료 CLI7e는 root12/별도 child4 수용, 실제 현재 Store→조건 gate a3aa는 동결·독립 검수 |
 | 가상 모델·시험방법 | 같은 DUT/장비/경로·setup/취득·journal/report→result builder·native DRAFT writer·finalizer576 수용. 불확도805/root25는 명시 성분·상관/k 근거 없으면 hold/null | 합성 상태/산술 모델이며 실제 보정·물리 정확도 미검증. 명시 quantity/기준면/부호/이미보정 부족은 null. 불확도 DRAFT 부록17cf 검수·고정 event 대신 유일 acquire/최초 완료 ref 선택 구현 |
 | AI 자율 실행 | 실제 Codex 접수17번째 strict/독립 의미3 PASS. 같은 runtime 계획→도구/관측/종료 loop·provenance743 및 정식 native permit host735 수용(root14+별도9) | 실제 AI 전체 가상시험 종단 과업 미실행. 등록921 동결/독립 검수, 고정 ref17은 실제 AI의 다른 도구 순서에 일반화하지 않음. 정식 측정 선택 finalizer 구현. 기존17/Vertex 소진·unknown 비용 초기화0 |
-| 전체 가상 업무 | 정식 opt-in CLI1: 합성 PDF→원 facts/같은 계획→native MOCK5→원 측정·보정·JSON/DRAFT→같은 보호 API/화면. 실패2d/root11 및 별도 fresh CLI2/HTTP2는 무효/null/실패 이력·DRAFT 저장 | 개발용 명시 conducted_synthetic/on/source_output 한 조건, task/conformity not_assessed. transport/recovery-failure는 현재 진입점 미지원. 일관된 요약dbc8·고정 readera039 수용(root20) 뒤 현재관계9ecc/보호 GET/저장 검수 화면을 연결 중; 실제 AI·규범/전체 인증 완료 아님 |
+| 전체 가상 업무 | 정식 opt-in CLI1: 합성 PDF→원 facts/같은 계획→native MOCK5→원 측정·보정·JSON/DRAFT→같은 보호 API/화면. 실패2d/root11 및 별도 fresh CLI2/HTTP2는 무효/null/실패 이력·DRAFT 저장 | 개발용 명시 conducted_synthetic/on/source_output 한 조건, task/conformity not_assessed. transport/recovery-failure는 현재 진입점 미지원. 일관된 요약dbc8(root Node10/genuine DOM6/typed18)·고정 readera039(root20)·현재관계9ecc(root12/같은첫 저장사본 API1 matched)를 수용, 보호 GET/저장 검수 화면을 연결 중; 실제 AI·규범/전체 인증 완료 아님 |
 | 실측 대조·보정 | 순수 비교e4/root26와 명시4파일 비교 CLI1b/root33 수용. 같은 방법·조건·metric·plane/단위·명시 tolerance·lineage/split 부족은 not_assessed | 참조 진위·실측 정확도·허용 차이/불확도 권위·보정용/독립 검증용 실제 자료 분리·새 실측 대조 미실행 |
 | 현장 업무·물리 작업 | 시료 취급/배선/이동까지 전체 목표에 유지, 첫 실증은 사람이 물리 연결·교체·시료 배치 | 실장비·현장·자동 물리 작업 검증 미실행. 일부 가상/저장/API 성공을 전체 시험소 완료로 표시하지 않음 |
 

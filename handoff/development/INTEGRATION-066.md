@@ -1,8 +1,20 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `7cd74b3a5556715b912558b422ff9a8a31fc9adb` / source318를 통합·검증했으며 이번 갱신의 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `9d3a3392e7b16328b607784dfa0f39e133857d31` / source322를 통합·검증했으며 이번 갱신의 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
 
-## source318 최신 수용·막힌 연결
+## source322 최신 연결과 검증
+
+현재자료 CLI7e는 independent qualified Yes 뒤 기능75042332로 수용했다. 독립 원12=11 PASS/부분 출력 중복 집계 observer No1은 원 raw·별도 observer-only selfcheck 판독으로 보존하며 소급 덮지 않았다. root direct12와 별도 module4 methods/actual Python child7 PASS를 확인했다. 실제 모델·원17·운영profile/인증은0이다.
+
+일관된 업무 요약dbc8는 qualified Yes 뒤 기능0f78b958로 수용했다. 독립 원12슬롯은10진입/9 PASS/1 미완료/2 미실행이며 genuine fixture 동시선택/stale C1 및 변경된 analysis/revision 지연은 제한이 있다. 추가 서버는 별도 사전권한으로만1개를 사용했고 원404 observer 단언·길이 산식 오류/원 실패를 보존했다. root는 선택 Node10이 Unicode reporter 집계에서 멈춘 원10 reported PASS/child exit 미기록을 보존하고, 실행 metadata를 먼저 기록하는 별도 TAP10 확인만 수행했다. 이를20 PASS로 더하지 않는다. 새 public browser는 보존한 root 정상/측정무효/복구된 단절3의 원 Store/startup만 genuine 보호 GET9·production DOM390/1440의6관측으로 읽었고 typed18은 별도다. 서버3 종료/listener·재bind와 원3세트·source320의 바이트/관측 native5종 전후 불변을 확인했다. 새 RF runtime/model0이다. 제공 계획/원 run/event/원 측정·계산이 기존 fixture 미선택에 가려지지 않으며 저장/실제 AI·정리·독립평가를 DTO만으로 완료 처리하지 않는다.
+
+현재 저장사본 관계9ecc는 qualified Yes 뒤 신규3으로 수용했다. 독립12/12+후행176과 genuine 관계6/supplied fault6·실SQL drift 미검증을 구별했다. root 새12 PASS 후 **같은 첫 공개 합성 PDF 업무의 원 저장사본**에 public API1을 호출했다. current pin은 별도 원 startup에서, artifact pin은 명시 원 manifest에서 취득해 서로 복사하지 않았다. current binding6 matched/후행 unchanged·원 result/manifest/DRAFT3 일치를 확인했고 원 Store·보존자료/저장사본·source322 bytes/native5는 불변이다. 고정3파일 관측 일치만 검증하며 writer outcome/과거 게시 순서·실제 AI·물리·규범/전체 업무 완료는 미확인이다. root inventory의 과거 native 표기 정정은 아래대로 유지한다.
+
+P01 B077~B080은 source74 metadata와 receiver90=23/23/23/21·원receipt16의 readonly 대조를 닫았다. 새46PDF/193305473B·P01표기3178쪽(root독립null)은 private raw·제한 metadata ACK이며 issuer/date/model/권리/훈련/본문·규범 승인0이다. collector184/corpus149/보존475·known34145부분합/unknown1·전체쪽수null과 대상18/690을 구별한다. B081/B082는 미ACK 별도2단위, CMG 공백12/해소0·N02 STOP/2of2와 기존 수집은 유지한다.
+
+개발1은 보호 저장 GET, 개발2는 cc72 유일 측정선택을 원 finalizer에 연결, 개발3은 저장 readback CLI, 개발4는 저장검수 화면을 소유 분리해 계속한다. a3aa/921/cc72·불확도부록17cf는 독립 검수·후속이다. 원 source/WIP/봉인/실패·actual17/Vertex6·소진 예산·Un-licensed 우선·원본/공유 읽기전용을 유지하며 이번 새 실제 모델/실물 호출·사용자 준비는0이다.
+
+## source318 당시 수용·막힌 연결 — 보존 이력
 
 검증 표기 정정: 총괄의 기존 `verify_integration030_batch.py` 전체 소스 목록은 경로별 바이트 SHA만 비교한다. 이 목록에 의존한 이전 root 영수증의 `raw/native`·`unowned native` 표현 중 native 불변은 미관측이며, 원 영수증을 덮지 않고 후행 정정을 남겼다. 바이트 불변·계산 대조는 원 증거대로 유지한다. 담당 source freeze·원 입력/저장3파일·실제 native guard의 별도 전후 관측까지 취소하는 정정이 아니다. 이번부터 전체 source의 bytes/SHA와 관측 native5종을 별도 Python 정수 목록으로 취득해 향후 전후 검증에 사용한다. 과거 시점의 metadata를 소급 확인했다고 주장하지 않는다.
 
