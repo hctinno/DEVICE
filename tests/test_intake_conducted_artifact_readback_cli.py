@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import sqlite3
+import stat
 import subprocess
 import sys
 import tempfile
@@ -49,6 +50,93 @@ class Capture(io.StringIO):
         return len(value)-1 if self.short else len(value)
     def reconfigure(self, **kwargs):
         raise AssertionError("borrowed main must not configure streams")
+
+
+CHILD_PROCESS_RESULTS = []
+CHILD_AUDIT_POLICY = []
+MAX_CHILD_OBSERVATION_BYTES = 1024 * 1024
+MAX_CHILD_AUDIT_BYTES = 64 * 1024
+MAX_CHILD_OBSERVATION_FILES = 32
+MAX_CHILD_OBSERVATION_TOTAL = 8 * 1024 * 1024
+
+
+def _write_child_observation(audit_root, path, raw, *, limit):
+    """Test observations only: bounded, one native exclusive plain-file write."""
+    audit_root, path = Path(audit_root), Path(path)
+    if (type(raw) is not bytes or type(limit) is not int or not 0 <= limit <= MAX_CHILD_OBSERVATION_BYTES
+            or len(raw) > limit):
+        raise ValueError("child observation limit")
+    if (not audit_root.is_absolute() or audit_root != audit_root.resolve(strict=True)
+            or not path.is_absolute() or path.parent != audit_root
+            or not path.name or not all(c.isascii() and (c.isalnum() or c in "._-") for c in path.name)):
+        raise ValueError("child observation path")
+    root_info = audit_root.lstat()
+    if (not stat.S_ISDIR(root_info.st_mode) or stat.S_ISLNK(root_info.st_mode)
+            or getattr(root_info, "st_file_attributes", 0) & 0x400):
+        raise ValueError("child observation root")
+    entries = [p.lstat() for p in audit_root.iterdir()]
+    if len(entries) >= MAX_CHILD_OBSERVATION_FILES or sum(s.st_size for s in entries) + len(raw) > MAX_CHILD_OBSERVATION_TOTAL:
+        raise ValueError("child observation aggregate limit")
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(path, flags, 0o600)
+    try:
+        info = os.fstat(descriptor)
+        if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or info.st_size != 0:
+            raise ValueError("child observation plain file")
+        if os.write(descriptor, raw) != len(raw):
+            raise OSError("child observation short write")
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def _child_audit_root(case):
+    directory = tempfile.TemporaryDirectory(prefix="public-cli-child-audit-")
+    case.addCleanup(directory.cleanup)
+    audit_root = Path(directory.name).resolve(strict=True)
+    probe = audit_root / "exclusive-probe.bin"
+    _write_child_observation(audit_root, probe, b"retained", limit=MAX_CHILD_AUDIT_BYTES)
+    with case.assertRaises(FileExistsError):
+        _write_child_observation(audit_root, probe, b"changed", limit=MAX_CHILD_AUDIT_BYTES)
+    case.assertEqual(probe.read_bytes(), b"retained")
+    limited = audit_root / "limit-probe.bin"
+    with case.assertRaises(ValueError):
+        _write_child_observation(audit_root, limited, b"x", limit=0)
+    case.assertFalse(limited.exists())
+    CHILD_AUDIT_POLICY.append(dict(exclusive_no_overwrite=True, oversized_rejected_before_create=True,
+                                  explicit_disposable_root=True, private_helper_required=False))
+    return audit_root
+
+
+def _preserve_child_process(audit_root, audit, mode, completed, stdout):
+    stderr = completed.stderr
+    if type(stdout) is not bytes or type(stderr) is not bytes:
+        raise TypeError("child process bytes required")
+    if len(stdout) > MAX_CHILD_OBSERVATION_BYTES or len(stderr) > MAX_CHILD_OBSERVATION_BYTES:
+        raise ValueError("child process observation limit")
+    record = dict(mode=mode, returncode=completed.returncode, stdout_hex=stdout.hex(), stderr_hex=stderr.hex(),
+        stdout_observation="closed_pipe_no_capture" if completed.stdout is None else "captured",
+        audit_filename=audit.name, captured_before_audit_parse=True)
+    CHILD_PROCESS_RESULTS.append(record)
+    _write_child_observation(audit_root, audit.with_suffix(".stdout.bin"), stdout, limit=MAX_CHILD_OBSERVATION_BYTES)
+    _write_child_observation(audit_root, audit.with_suffix(".stderr.bin"), stderr, limit=MAX_CHILD_OBSERVATION_BYTES)
+    receipt = dict(mode=mode, returncode=completed.returncode, stdout_observation=record["stdout_observation"],
+        stdout_bytes=len(stdout), stdout_sha256=hashlib.sha256(stdout).hexdigest(),
+        stderr_bytes=len(stderr), stderr_sha256=hashlib.sha256(stderr).hexdigest(), captured_before_audit_parse=True)
+    _write_child_observation(audit_root, audit.with_suffix(".process.json"), canonical(receipt) + b"\n", limit=MAX_CHILD_AUDIT_BYTES)
+    return record
+
+
+def _read_child_audit(audit, process):
+    try:
+        with audit.open("rb") as handle:
+            raw = handle.read(MAX_CHILD_AUDIT_BYTES + 1)
+        if len(raw) > MAX_CHILD_AUDIT_BYTES:
+            raise ValueError("child audit limit")
+        return json.loads(raw)
+    except (OSError, ValueError, UnicodeError) as error:
+        # A failed/missing audit must not erase the already observed process result.
+        raise AssertionError("child audit unavailable; process_before_audit=" + canonical(process).decode("utf-8")) from error
 
 
 class SmokeTests(unittest.TestCase):
@@ -276,9 +364,11 @@ class GenuineFlowTests(unittest.TestCase):
         child=r'''# DEV3_READBACK_CLI_CHILD
 import hashlib,json,os,runpy,socket,sqlite3,sys
 from pathlib import Path
-root=Path.cwd();owner=Path(sys.argv[1]);audit_path=Path(sys.argv[2]);mode=sys.argv[3]
-sys.path[:0]=[str(root),str(owner)]
-import guarded_io as guard
+root=Path.cwd();audit_root=Path(sys.argv[1]);audit_path=Path(sys.argv[2]);mode=sys.argv[3]
+sys.path.insert(0,str(root))
+from importlib.util import spec_from_file_location,module_from_spec
+observer_spec=spec_from_file_location("public_child_observer",root/"tests/test_intake_conducted_artifact_readback_cli.py")
+observer=module_from_spec(observer_spec);observer_spec.loader.exec_module(observer)
 import labflow.intake_conducted_artifact_readback as parent
 audit=dict(api_calls=0,readonly_connections=0,closed_connections=0,native_backends=0,known_native_closed=False,actual_model=0,network=0,business_writes=0,hardware=0)
 def forbidden(*a,**k):raise AssertionError("forbidden actual execution")
@@ -327,10 +417,10 @@ finally:
  audit["closed_connections"]=sum(id(c) in closed_ids for c in connections)
  audit["native_connection_types_preserved"]=all(type(c) is sqlite3.Connection for c in connections)
  sys.setprofile(None)
- guard.write_bytes(audit_path,(json.dumps(audit,indent=2)+"\n").encode())
+ observer._write_child_observation(audit_root,audit_path,(json.dumps(audit,indent=2)+"\n").encode("utf-8"),limit=observer.MAX_CHILD_AUDIT_BYTES)
 raise SystemExit(status)
 '''
-        owner=Path(tempfile.gettempdir()).parent
+        audit_root=_child_audit_root(self)
         before=self.inventory()
         cases=(("matched",self.options,0,1),("blocked",{**self.options,"expected_revision":None},2,1),
                ("unavailable",{**self.options,"artifact_name":"missing-explicit-artifact"},3,1),
@@ -340,9 +430,9 @@ raise SystemExit(status)
                 path=self.data.base/("child-"+str(number)+".json")
                 if options is not None:path.write_bytes(canonical(options))
                 args=["--help"] if options is None else [*self.argv[:-1],str(path)]
-                audit=owner/("child-audit-"+os.environ.get("DEV3_READBACK_CLI_RUN_TAG","standalone")+"-"+str(number)+".json")
+                audit=audit_root/("child-audit-"+str(number)+".json")
                 self.assertFalse(audit.exists(),"preserve original child audit")
-                command=[sys.executable,"-B","-X","utf8","-c",child,str(owner),str(audit),mode,*args]
+                command=[sys.executable,"-B","-X","utf8","-c",child,str(audit_root),str(audit),mode,*args]
                 environment={**os.environ,"PYTHONUTF8":"0","PYTHONIOENCODING":"cp1252","PYTHONDONTWRITEBYTECODE":"1"}
                 if mode=="closed":
                     read_fd,write_fd=os.pipe();os.close(read_fd)
@@ -351,7 +441,8 @@ raise SystemExit(status)
                     stdout=b""
                 else:
                     completed=subprocess.run(command,cwd=ROOT,env=environment,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30);stdout=completed.stdout
-                details=json.loads(audit.read_bytes())
+                process=_preserve_child_process(audit_root,audit,mode,completed,stdout)
+                details=_read_child_audit(audit,process)
                 self.assertEqual(completed.returncode,expected,repr(details));self.assertEqual(details["api_calls"],calls)
                 self.assertTrue(details["known_native_closed"]);self.assertEqual(details["readonly_connections"],details["closed_connections"])
                 self.assertIs(details["native_connection_types_preserved"],True);self.assertEqual(details["business_writes"],0)
@@ -548,16 +639,16 @@ class OptionalComparisonGenuineTests(unittest.TestCase):
             if type(v) is str and v.startswith("# DEV3_READBACK_CLI_CHILD"))
         child=original_child.replace("import labflow.intake_conducted_artifact_readback as parent","import labflow.intake_conducted_artifact_comparison as parent")
         child=child.replace("parent.read_current_conducted_artifact","parent.compare_current_conducted_artifact")
-        owner=Path(tempfile.gettempdir()).parent;before=self.inventory()
+        audit_root=_child_audit_root(self);before=self.inventory()
         for number,(mode,expected,calls) in enumerate((("optional",2,1),("invalid",1,0),("closed",1,1),("interrupt",130,1)),1):
             with self.subTest(mode=mode):
                 comparison=self.comparison
                 if mode=="invalid":
                     comparison=self.data.base/"bad-optional.json";comparison.write_bytes(b"{}")
                 args=[*self.argv[:-1],str(comparison)]
-                audit=owner/("optional-child-"+os.environ.get("DEV3_READBACK_CLI_RUN_TAG","standalone")+"-"+str(number)+".json")
+                audit=audit_root/("optional-child-"+str(number)+".json")
                 self.assertFalse(audit.exists())
-                command=[sys.executable,"-B","-X","utf8","-c",child,str(owner),str(audit),mode,*args]
+                command=[sys.executable,"-B","-X","utf8","-c",child,str(audit_root),str(audit),mode,*args]
                 env={**os.environ,"PYTHONUTF8":"0","PYTHONIOENCODING":"cp1252","PYTHONDONTWRITEBYTECODE":"1"}
                 if mode=="closed":
                     read_fd,write_fd=os.pipe();os.close(read_fd)
@@ -566,7 +657,8 @@ class OptionalComparisonGenuineTests(unittest.TestCase):
                     stdout=b""
                 else:
                     completed=subprocess.run(command,cwd=ROOT,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30);stdout=completed.stdout
-                details=json.loads(audit.read_bytes())
+                process=_preserve_child_process(audit_root,audit,mode,completed,stdout)
+                details=_read_child_audit(audit,process)
                 self.assertEqual(completed.returncode,expected,repr(details));self.assertEqual(details["api_calls"],calls)
                 self.assertEqual(details["readonly_connections"],details["closed_connections"]);self.assertTrue(details["known_native_closed"])
                 self.assertEqual(details["business_writes"],0);self.assertNotIn(b"Traceback",completed.stderr)
