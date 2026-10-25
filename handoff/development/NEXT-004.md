@@ -1,5 +1,23 @@
 # 후속 개발 인수 대장 004
 
+## FIRST-TWIN — 2026-10-25 실제 후속 배정
+
+[PLAN의 한 장 현황표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)를 현재 목표/공백 기준으로 삼는다. 아래 배정은 기존 후보·미커밋·독립 기대·실패·원본을 보존하고 현재 수정/수용 뒤 이어가는 **코드 구현**이다. 새 프로젝트 관리 문서를 만들지 않는다. 총괄은 소유 구현을 대신하지 않고 검수·통합·회귀·게시와 다음 배정을 담당한다.
+
+| 담당 / 실제 요청 ID | 현재 보존·검수 | 다음 작은 구현·배타적 소유 |
+|---|---|---|
+| 개발1 `DEV1-INTAKE-CONDUCTED-TWIN-PLAN-001` | G3 c7c 독립 qualified Yes의 원 timeout·fixture 형상 오류와 분리 재검증을 보존, 총괄 인수 중. host-composition private 계약 보존 | 신규 `labflow/intake_conducted_twin_plan.py`, 대응 tests, usage 정확3. 기존 접수/사실 검증 재사용 → 제품·목적·시장·누락/근거/방법 버전·명시 설정의 가상 계획 입력. 부족/충돌/잘못된 근거는 blocked, 규범 적용·실측 승인 생성 금지 |
+| 개발2 `DEV2-CODEX-PERSISTENT-VIRTUAL-LOOP-001` | effect0c7/총괄061 보존. saved readback v1 No/I1·v3 정적 Yes 계약 보존 | 신규 `labflow/virtual_fleet/codex_virtual_loop.py`, 대응 tests, usage 정확3. 같은 runtime의 관측→genuine producer/strict→허용 가상 도구→새 관측→종료. 모델/도구/tick 각각 최대8·outer180초·producer60초·재시도0. owner 실제모델0, root 독립 수용 후 기존 위임의 좁은 실제 시험 |
+| 개발3 `DEV3-PLAN-DRIVEN-CONDUCTED-TWIN-001` | 동일입력 비교8f56 독립 Yes/원12 PASS, 총괄 인수 중 | 기존 `virtual_fleet/integration.py`, 대응 integration tests, 신규 usage 정확3. `create_conducted_example(..., source_settings=None)`로 caller exact6 설정을 DUT/계측기에 전달하고 legacy None 보존. 독립 dB 차분·on/time 평균·stale 무효 검증. 실측/파형 정확도 미승인 |
+| 개발4 `DEV4-FIRST-TWIN-WORKFLOW-VIEW-001` | 제공기록 UI817b 원14/47 독립 검수·필요 소유 수정 우선 | 기존 `frontend/app.js`, `intake_flow_model.mjs`, 대응 Node test/browser check, 기존 fixture check usage 정확5. 동일 접수/기록의 제품→계획→실행→측정·판정→근거·미지원 단계 표시. 기존 보호 GET/DTO 재사용·서버/Store 변경0·미제공 수치·계획·AI·판정은 미연결/미실행 표시 |
+| P01 `DEV-HCT-TWIN-FIRST-001` | 기존 수집1~8와 corpus/보류 원본 유지. S01 `TWIN-FIRST-20261025-S01-B0001` 실제 전송·active 확인 | 기존 허용 자료의 제품→규범/방법→설정/기준면/보정/한계→원본 페이지를 검수한 첫 packet. 보고서 조건/규범/개발자 추론 분리·unknown null·공식 대응 상태 별도. 새 필요한 공백만 한 창구 수집 |
+
+개발1·3의 공통 설정은 exact6 `frequency_hz,power_dbm,bandwidth_hz,duty_cycle,modulation,crest_factor_db`다. 값과 출처/개발자 선언 합성을 분리하며 모르는 값을 기존 예제에서 채우지 않는다. 개발2의 첫 루프는 기존 `acquire_fresh_rf_sensor` 범위이고 계획 configure·규범 판정·정식 접수 issuer/예약/launch의 후속 연결을 완료로 표시하지 않는다. 개발4는 API에 없는 plan/원수치/단위·기준면/FCC 판정/실측 대조를 생성하지 않는다. 형식·연결·효과·작업 성공·물리 정확도는 독립 분모로 기록한다.
+
+이번 root 첫 시연: 새 합성 TXT(-4 dBm)와 PDF(-1 dBm) 각1을 접수→준비→scripted 가상 취득→결과/운영 journal 저장까지 실행해 exit0·fixture 평가 PASS를 확인했다. `task_outcome=not_assessed`, actual AI/실물0, case/plan 자동 생성0이므로 첫 완결 업무 성공으로 집계하지 않는다. 재현은 [기존 실행 안내](../../docs/fcc/intake_fixture_check_usage.md)의 `python -B -X utf8 -m labflow.intake_fixture_check --document-kind pdf --power-dbm -4 --port 0`이며 출력 loopback URL에서 같은 접수의 가상 실행 기록을 새로고침한다. 새 출력 디렉터리를 사용하고 과거 증거를 덮어쓰지 않는다.
+
+정상·정보 부족·잘못된 근거·측정 무효·통신/장비 오류·복구 실패를 단계별 검증한 뒤 동일 계획의 종단 회귀를 수행한다. 각 후보는 구현→관련 검증→독립 검수/소유 수정→총괄 인수·회귀→개발 branch commit/push·원격 exact SHA 대조→후속 순서다. source/model/규범/실물 전체 성공으로 합산하지 않는다. 새 실장비/망/출력/이동·외부 제출 위임0, 동일 Vertex 예산 소진 유지, 현재 새 사용자 준비0이다. 아래는 이전 시점의 보존 기록이다.
+
 2026-10-25 [통합061](INTEGRATION-061.md): 개발2 단일 가상 행동 효과평가 0c7 신규3을 독립 qualified Yes 뒤 기능3f99c543/source288에 인수했다. 새 총괄 관련 Python124 PASS와 기존286 raw 불변을 확인했다. 독립 원42는 일치41·준비 형상 불일치1을 보존하며 별도 선봉인2 PASS와 합산하지 않는다. 메모리 증거의 일관성·관측효과만 평가하고 전체 task/권위/실물 검증은 미완료다. 담당 첫 준비의 임시 raw 미보존·traceback만 보존 한계도 남긴다. 개발1 G3·개발3 동일입력 비교·개발4 제공기록 화면의 실제 구현을 유지하고 개발2 저장기록 readonly 연결 계약을 다음 배정했다. P01 B052 혼합11 구조확인/known550쪽+raw보류1/쪽수null의 인수·후행대조를 닫아156/156·corpus121/121·보존142/전체쪽수null/known부분9741을 구별한다. 동일 Vertex6/3072 소진·무료크레딧 전용·새실모델0·사용자준비0이며 아래는 당시 기록이다.
 
 2026-10-25 [통합060](INTEGRATION-060.md): 개발3 가상작업자 동일입력 Codex/Vertex 비교 설계·계획2를 private 정적Yes·공개53필드 type/C1/본문규범2 독립Yes 뒤 게시했다. 정보부족 합성case1·기존API3/row15/batch8·후보형식/binding만 고정하고 과업/행동/effect/closedloop·등록8은 후속이다. 독립12논리 봉인은미실행이며5구체seam은첫관측전후행고정한다. source286/기능8b5d362b 불변, 새제품0이다. 개발1G3·개발2효과평가·개발4제공기록화면은정확SETUP/새봉인뒤CORE-GO를실제로받아담당구현을잇는다. P01B050 후행대조154/154·corpus119/119·보존118≠적격118/대상18·690쪽이다. 새실모델0/동일소진Vertex6/3072·무료크레딧전용/비용null·사용자준비0이며 아래는당시기록이다.
