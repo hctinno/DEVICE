@@ -23,6 +23,7 @@ MODELS = ('gemini-4-argon', 'gemini-3.8-flash')
 TARGET = 'project-a6310591-f8cc-487c-9e3'
 CAPABILITIES = ('read_profile', 'edit_profile', 'run_registered_synthetic', 'cancel_own')
 _SHA = re.compile(r'[a-f0-9]{64}\Z')
+_D3_RUN_ID = re.compile(r'vertex-run:[a-f0-9]{64}\Z')
 _ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.:-]{0,63}\Z')
 _PROFILE = frozenset('schema_version profile_id provider project_id location quota_project_id auth_profile_id selected_model models revision'.split())
 _SETTINGS = frozenset('schema_version kind profile_id profile_revision provider service project_id location quota_project_id auth_profile_id model_id thinking_level max_output_tokens timeout_seconds profile_sha256 settings_sha256'.split())
@@ -32,7 +33,7 @@ _LIMITS = dict(generation_posts=6,max_output_tokens=512,reserved_output_tokens=3
 _PUBLIC_FAILURES = frozenset({'ai_connection_ui_unavailable'} | {'vertex_response_'+s for s in
     'invalid_input invalid_settings credential_invalid credential_quota_mismatch dependency_unavailable evidence_error auth_failed http_error response_invalid incomplete blocked limit_exceeded timeout cancelled cleanup_failed internal_error'.split()} |
     {'model_comparison_'+s for s in 'invalid_input limit_exceeded state_error dependency_unavailable'.split()})
-_REASONS = frozenset('not_selected pending cancelled cancel_requested budget_rejected budget_exhausted approval_rejected approval_invalid credential_invalid credential_quota_mismatch auth_failed wall_budget busy state_error dependency_unavailable invalid_input limit_exceeded transport_unknown response_invalid incomplete blocked timeout cleanup_failed internal_error unavailable'.split())
+_REASONS = frozenset('not_selected cancelled budget_rejected wall_limit gate_rejected dependency_unavailable credential_metadata_invalid budget_unavailable run_already_reserved budget_busy receipt_invalid connection_verified connection_response_invalid batch_stopped'.split())
 
 
 class AIConnectionUIError(ValueError):
@@ -267,7 +268,8 @@ class AIConnectionRuntime:
             for entry in ledger['entries']:
                 _keys(entry,'reservation_id batch_id run_id row_index matrix_sha256 settings_sha256 output_tokens state record_ref receipt_ref'.split())
                 _need(type(entry['reservation_id']) is str and entry['reservation_id'] not in reservations and _integer(entry['row_index'],0,5) and
-                      all(type(entry[k]) is str and _SHA.fullmatch(entry[k]) for k in ('run_id','matrix_sha256','settings_sha256')) and
+                      type(entry['run_id']) is str and _D3_RUN_ID.fullmatch(entry['run_id']) and
+                      all(type(entry[k]) is str and _SHA.fullmatch(entry[k]) for k in ('matrix_sha256','settings_sha256')) and
                       _integer(entry['output_tokens'],64,8192) and entry['state'] in ('reserved','complete','failed','unknown') and
                       all(entry[k] is None or type(entry[k]) is str and len(entry[k])<=4096 for k in ('record_ref','receipt_ref')))
                 reservations.add(entry['reservation_id']);output+=entry['output_tokens']
@@ -385,7 +387,7 @@ class AIConnectionRuntime:
               len(selected['row_indexes'])==(6 if request['matrix'] else 1) and all(_integer(i,0,5) for i in selected['row_indexes']) and len(set(selected['row_indexes']))==len(selected['row_indexes']))
         if request['matrix']: _need(selected['row_indexes']==list(range(6)))
         for index,slot in enumerate(matrix['rows']):
-            _keys(slot,('row_index','run_id','settings'));_need(type(slot['row_index']) is int and slot['row_index']==index and type(slot['run_id']) is str and _SHA.fullmatch(slot['run_id']))
+            _keys(slot,('row_index','run_id','settings'));_need(type(slot['row_index']) is int and slot['row_index']==index and type(slot['run_id']) is str and _D3_RUN_ID.fullmatch(slot['run_id']))
             if index not in selected['row_indexes']: _need(slot['settings'] is None);continue
             settings=_settings(slot['settings']);overrides=dict(request['overrides'])
             model=MODELS[index//3]
@@ -426,7 +428,14 @@ class AIConnectionRuntime:
             _keys(row['budget'],('budget_id','reservation_id','reserved_calls','reserved_output_tokens','generation_post_attempts'))
             _keys(row['timing'],('started_at','finished_at','elapsed_ms'))
             count=row['budget']['generation_post_attempts'];_need(count is None or _integer(count,0,1));attempts.append(count)
-            reason=row['reason_code'];_need(reason is None or reason in _REASONS or type(reason) is str and reason in {'vertex_response_'+s for s in 'invalid_input invalid_settings credential_invalid credential_quota_mismatch dependency_unavailable evidence_error auth_failed http_error response_invalid incomplete blocked limit_exceeded timeout cancelled cleanup_failed internal_error'.split()})
+            reason=row['reason_code'];_need(type(reason) is str and (reason in _REASONS or reason in {'vertex_response_'+s for s in 'invalid_input invalid_settings credential_invalid credential_quota_mismatch dependency_unavailable evidence_error auth_failed http_error response_invalid incomplete blocked limit_exceeded timeout cancelled cleanup_failed internal_error'.split()}))
+            decoded=row['strict_decode']
+            if decoded['status']=='checked':
+                _need(row['status']=='success' and reason=='connection_verified' and decoded['error_code'] is None)
+            elif decoded['status']=='rejected':
+                _need(row['status']=='failed' and reason=='connection_response_invalid' and decoded['error_code']=='connection_response_invalid')
+            else:
+                _need(row['status']!='success' and reason not in ('connection_verified','connection_response_invalid') and decoded['error_code'] is None)
             cell.update(state={'failed':'failure'}.get(row['status'],row['status']),reason_code=reason,attempted=None if count is None else bool(count),
                         strict_decode={'checked':'pass','rejected':'fail','not_run':'not_run'}[row['strict_decode']['status']],quality='not_run',latency_ms=row['timing']['elapsed_ms'])
             _need(cell['latency_ms'] is None or _number(cell['latency_ms']))
