@@ -1,5 +1,28 @@
 # Conducted workflow의 수동 operator 준비
 
+## 최초 실패 보존 수정 — 2026-10-26
+
+DEV2-WORKFLOW-REGISTRATION-FIRST-FAILURE-FIX-001은 정확921bdca27249fb785c1cea12f9a177cfe9a3e256에서 시작한 별도 clone/branch의 core/test/usage3 수정이다. 기존921·7226·cc72와 원 증거는 동결 유지한다. root의 등록 원 dynamic12/12 통과 통지와 후행 Important1을 구별하며 원12를 재실행하거나 이번 분모에 더하지 않는다. 이 수정의 독립 검수는 아직 대기다.
+
+원 구현은 최초 ordinary 실패를 primary에 저장한 뒤에도 후행 cleanup control을 control에 저장하고 마지막에 던졌다. outward 전파 조건 한 줄만 `isinstance(primary, _CONTROL)`로 바꿨다. 최초가 control이면 같은 객체를 던지고, 최초가 ordinary이면 기존 실패 DTO를 반환한다. 오류 수집·first code/phase·후행 errors와 SQL/marker/native close·publish 상태 계산은 바꾸지 않는다. 새 DTO·OS 진입·정책/권한/위임값·ref 변경은 없다.
+
+- [x] genuine authored source/Store/G3/D1 입력과 일회용 OS boundary에서 ordinary SQL fsync 실패→후행 directory-close KI/MemoryError의 원 동작 RED2 보존
+- [x] 최종 outward 선택 한 줄 수정
+- [x] 새 영향 경계2와 필요한 기존 최초control2만 분리 검증
+
+수정 전 RED2는0.646s에 각각 후행 KeyboardInterrupt/MemoryError가 밖으로 전파되어 기대대로 FAIL했다. 수정 후 새2는0.728s PASS, 별도 legacy2는0.640s PASS이며 각 failure/error/skip0이다. legacy는 원 SQL-close 최초 MemoryError와 최초 write KeyboardInterrupt→후행 ordinary close 오류의 같은 객체 전파를 확인한 기존 두 검사다. 기본8/전체boundary9/독립원12의 일괄 반복은0이다.
+
+fault seam은 실제 SQL 생성·commit/close 뒤 Python fsync에 첫 OSError를 주고, 실제 directory knownclose를 끝낸 뒤 후행 control을 주는 경계다. SQL fsync fault와 directory close 호출은 각1회, publish0이다. 원 failure marker와 failed/phase=sql·first native_or_data_rejected·후행 directory_close/interrupted가 유지됐다. 새 staging/SQL baseline·permit2행은 실패 원형으로 보존했으며 fsync 실패를 durable 준비 성공으로 표시하지 않는다. 기존 target은 없고 result.profile=null/files={}·dispatch=not_invoked다. 기존 산출물을 덮거나 삭제·이동/재시도하지 않는다.
+
+재현과 영향 검사는 다음 opt-in 두 경로로만 고른다. 부모의 기존 테스트·일반 source 검증은 정적 AST/raw 대조로 보존하고, 원 최초 예외 선택 외 구현을 바꾸지 않는다.
+
+```powershell
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --first-failure -v
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --first-control-legacy -v
+```
+
+실제 운영 OS profile/새 실 permit/host/모델/원17/ADC/Vertex/실장비와 다른 세션·하위 agent 실행은0이다. 실제 비동기 신호의 모든 시점이나 현장 검증을 이 fault-seam 결과로 주장하지 않는다. 문서 무결성·소유3 raw/index/commit·원격 exact와 보존 proof pin은 최종 인계 기록에 남긴다. 아래는 원921의 공개 계약·검증 이력이며 이 수정의 통과 수와 합산하지 않는다.
+
 2026-10-26 Asia/Seoul. DEV2-CONDUCTED-WORKFLOW-REGISTRATION-001. 게시 ab45019e411fbd9ebde1ec091acb6e054d83af1b에 자기735만 정상 cherry한 bb7412d가 시작점이다. [735 host](codex_registered_conducted_workflow_host_usage.md)는 이 단위 시작 때 미수용 의존이었다. 후행 root 통지로 독립 qualified Yes와 root4c7c7c49e185f659683b5855cbd3a774618bc0c1 수용을 확인했다. 원 normal positive incomplete1과 별도 genuine normal1을 구별하며 이 준비 API의 검수 결과로 합산하지 않는다. 기존 host/intake permit/운영17/Store/D1/D3/UI를 수정하지 않는다.
 
 ## 실제 trust source 공백과 최소 계약

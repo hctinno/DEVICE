@@ -344,7 +344,7 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
             try:io.close_dirs()
             except BaseException as exc:error(exc,'directory_close')
             for close_error in io.close_errors:error(close_error,'known_close')
-    if control is not None:raise control
+    if isinstance(primary,_CONTROL):raise primary
     return result
 
 
