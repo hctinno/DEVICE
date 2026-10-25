@@ -214,7 +214,7 @@ class AIConnectionTests(unittest.TestCase):
         self.config['scenarios']=(dict(scenario_id='SYN-CONNECTION',evaluator_id='connection-json-v1',prompt_bytes=prompt,response_schema_bytes=schema),)
         self.config['adc_path'].write_text('synthetic metadata marker',encoding='utf-8')
         limits=dict(generation_posts=6,max_output_tokens=512,reserved_output_tokens=3072,timeout_seconds=60,wall_seconds=300,retries=0,continuations=0)
-        approval=dict(schema_version=1,kind='vertex_comparison_approval',approval_id='SYN-APPROVAL',scope_id='SYN-CONNECTION/v1',budget_id='SYN-BUDGET',project_id=TARGET,quota_project_id=TARGET,auth_profile_id='vertex-trial',scenario_id='SYN-CONNECTION',evaluator_id='connection-json-v1',prompt_sha256=hashlib.sha256(prompt).hexdigest(),response_schema_sha256=hashlib.sha256(schema).hexdigest(),execution_mode='actual',trial=dict(status='confirmed',source='root_console',observed_at=time.time(),credit_amount='1',credit_currency='KRW',remaining_days=90),limits=limits,issued_at=time.time()-1,expires_at=time.time()+300)
+        approval=dict(schema_version=1,kind='vertex_comparison_approval',approval_id='SYN-APPROVAL',scope_id='SYN-SCOPE:CONNECTION-001',budget_id='SYN-BUDGET',project_id=TARGET,quota_project_id=TARGET,auth_profile_id='vertex-trial',scenario_id='SYN-CONNECTION',evaluator_id='connection-json-v1',prompt_sha256=hashlib.sha256(prompt).hexdigest(),response_schema_sha256=hashlib.sha256(schema).hexdigest(),execution_mode='actual',trial=dict(status='confirmed',source='root_console',observed_at=time.time(),credit_amount='1',credit_currency='KRW',remaining_days=90),limits=limits,issued_at=time.time()-1,expires_at=time.time()+300)
         self.config['approval_path'].write_bytes(canonical(approval))
         self.config['budget_path'].write_bytes(canonical(dict(schema_version=1,kind='vertex_comparison_budget',budget_id='SYN-BUDGET',project_id=TARGET,revision=0,call_limit=6,output_token_limit=3072,reserved_calls=0,reserved_output_tokens=0,active_run_id=None,entries=[])))
         if saved:
@@ -351,16 +351,66 @@ class AIConnectionTests(unittest.TestCase):
         finally:release.set();worker.join(1)
         runtime.close();self.assertFalse(worker.is_alive())
 
+    def test_opaque_ASCII_scope_ids_follow_D3_identifier_grammar_without_dispatch(self):
+        self.ready();server=self.start();headers=self.bootstrap(server)
+        approval=json.loads(self.config['approval_path'].read_text());budget_before=self.config['budget_path'].read_bytes()
+        for scope_id in ('VTX-TRIAL-CONNECTION-20261025-001','A','a_.:-Z09','9'+'x'*127):
+            with self.subTest(scope_id=scope_id):
+                value=copy.deepcopy(approval);value['scope_id']=scope_id
+                raw=canonical(value);self.config['approval_path'].write_bytes(raw)
+                status,_,state=self.request(server,'state',headers=headers)
+                self.assertEqual(status,200);self.assertEqual(state['trial']['state'],'confirmed')
+                self.assertEqual(state['gate'],dict(run_allowed=True,reasons=[]))
+                self.assertEqual(self.config['approval_path'].read_bytes(),raw)
+                self.assertEqual(self.config['budget_path'].read_bytes(),budget_before)
+        self.assertNotIn('run_batch',self.dep.calls);self.assertNotIn('build_matrix',self.dep.calls)
+
+    def test_slash_derived_and_invalid_scope_ids_block_before_dispatch(self):
+        self.ready();server=self.start();headers=self.bootstrap(server)
+        approval=json.loads(self.config['approval_path'].read_text());budget_before=self.config['budget_path'].read_bytes()
+        invalid=('SYN-CONNECTION/v1','','a'*129,'_scope','.scope',':scope','-scope','with space','with\nnewline',
+                 '한글','é','a/b','a\\b',None,0,True,[],{})
+        for scope_id in invalid:
+            with self.subTest(scope_id=scope_id):
+                value=copy.deepcopy(approval);value['scope_id']=scope_id
+                raw=canonical(value);self.config['approval_path'].write_bytes(raw)
+                status,_,state=self.request(server,'state',headers=headers)
+                self.assertEqual(status,200);self.assertFalse(state['gate']['run_allowed'])
+                self.assertIn('trial_unconfirmed',state['gate']['reasons'])
+                status,_,body=self.request(server,'run','POST',dict(expected_revision=1,scenario_id='SYN-CONNECTION',
+                    model_id=None,overrides={},matrix=True),headers)
+                self.assertEqual((status,body),(409,{'error':{'code':'ai_connection_ui_gate_blocked'}}))
+                self.assertEqual(self.config['approval_path'].read_bytes(),raw)
+                self.assertEqual(self.config['budget_path'].read_bytes(),budget_before)
+        self.assertNotIn('run_batch',self.dep.calls);self.assertNotIn('build_matrix',self.dep.calls)
+
     def test_unadmitted_approval_and_corrupt_ledger_never_show_ready_gate(self):
         self.ready();server=self.start();headers=self.bootstrap(server)
         approval=json.loads(self.config['approval_path'].read_text());budget=json.loads(self.config['budget_path'].read_text())
-        for mutation in ('wrong_scope','bool_limit','corrupt_entry'):
+        for mutation in ('invalid_scope','wrong_scenario','wrong_evaluator','wrong_prompt','wrong_schema',
+                         'wrong_project','wrong_quota','wrong_auth','trial_unconfirmed','bool_limit','wrong_budget','corrupt_entry'):
             a=copy.deepcopy(approval);b=copy.deepcopy(budget)
-            if mutation=='wrong_scope':a['scope_id']='unrelated-scope'
+            if mutation=='invalid_scope':a['scope_id']='SYN-CONNECTION/v1'
+            if mutation=='wrong_scenario':a['scenario_id']='UNREGISTERED-SCENARIO'
+            if mutation=='wrong_evaluator':a['evaluator_id']='other-evaluator'
+            if mutation=='wrong_prompt':a['prompt_sha256']='f'*64
+            if mutation=='wrong_schema':a['response_schema_sha256']='f'*64
+            if mutation=='wrong_project':a['project_id']='other-project'
+            if mutation=='wrong_quota':a['quota_project_id']='other-project'
+            if mutation=='wrong_auth':a['auth_profile_id']='other-auth'
+            if mutation=='trial_unconfirmed':a['trial']['status']='unknown'
             if mutation=='bool_limit':a['limits']['retries']=False
+            if mutation=='wrong_budget':b['budget_id']='OTHER-BUDGET'
             if mutation=='corrupt_entry':b['entries']=[{'unexpected':'record'}]
             self.config['approval_path'].write_bytes(canonical(a));self.config['budget_path'].write_bytes(canonical(b))
-            with self.subTest(mutation=mutation):self.assertFalse(self.request(server,'state',headers=headers)[2]['gate']['run_allowed'])
+            with self.subTest(mutation=mutation):
+                self.assertFalse(self.request(server,'state',headers=headers)[2]['gate']['run_allowed'])
+                status,_,body=self.request(server,'run','POST',dict(expected_revision=1,scenario_id='SYN-CONNECTION',
+                    model_id=None,overrides={},matrix=True),headers)
+                self.assertEqual((status,body),(409,{'error':{'code':'ai_connection_ui_gate_blocked'}}))
+                self.assertEqual(self.config['approval_path'].read_bytes(),canonical(a))
+                self.assertEqual(self.config['budget_path'].read_bytes(),canonical(b))
+        self.assertNotIn('run_batch',self.dep.calls);self.assertNotIn('build_matrix',self.dep.calls)
 
     def test_worker_start_failure_releases_reservation_and_expiry_timer(self):
         self.ready();server=self.start();headers=self.bootstrap(server);original=threading.Thread.start

@@ -240,8 +240,8 @@ class AIConnectionRuntime:
             _need(approval['schema_version']==1 and type(approval['schema_version']) is int and approval['kind']=='vertex_comparison_approval' and
                   approval['project_id']==approval['quota_project_id']==TARGET and approval['auth_profile_id']=='vertex-trial' and approval['execution_mode']=='actual')
             scenario=self.scenarios[approval['scenario_id']]
-            _need(approval['scope_id']==approval['scenario_id']+'/v1' and
-                  all(type(approval[k]) is str and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}',approval[k]) for k in ('approval_id','budget_id')))
+            _need(all(type(approval[k]) is str and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}',approval[k])
+                      for k in ('approval_id','scope_id','budget_id')))
             _need(approval['evaluator_id']==scenario['evaluator_id'] and approval['prompt_sha256']==hashlib.sha256(scenario['prompt_bytes']).hexdigest() and
                   approval['response_schema_sha256']==hashlib.sha256(scenario['response_schema_bytes']).hexdigest() and approval['limits']==_LIMITS)
             _keys(approval['limits'],_LIMITS)
