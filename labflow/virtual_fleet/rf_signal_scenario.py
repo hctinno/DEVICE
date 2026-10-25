@@ -19,7 +19,7 @@ _CODES = frozenset(_PREFIX + x for x in (
     'invalid_request', 'unsupported_catalog', 'output_unavailable',
     'execution_incomplete', 'evidence_invalid', 'evidence_unavailable'))
 _CATALOG_SHA = '6f27b5d9ac3d3805b7f198dc0d186865cbfdcaf489d4bceba0572f99709313ff'
-_ENGINE_SHA = '9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42'
+_ENGINE_SHA = '7816f87dcf8aa648d628935493f74dee3a54f993ba2bae87f9a1e102a8b4ccab'
 _PARENTS = (
     '__init__.py', '__main__.py', 'catalog.py', 'core.py', 'evaluation.py',
     'facility.py', 'frequency_psd.py', 'frequency_psd_max.py',

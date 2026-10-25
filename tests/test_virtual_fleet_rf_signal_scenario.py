@@ -115,17 +115,38 @@ class SignalScenarioTests(unittest.TestCase):
                 self.assertEqual(result['assessment']['verdict'], 'pass')
                 self.assertEqual(result, read(output / 'public-result.json'))
                 author = read(output / 'private/author.json')
+                current_engine = '7816f87dcf8aa648d628935493f74dee3a54f993ba2bae87f9a1e102a8b4ccab'
+                self.assertEqual(author['provenance']['engine_sha256'], current_engine)
                 self.assertEqual(len(author['phases']['bootstrap']), 23)
                 self.assertEqual(len(author['phases']['scenario_setup']), 4)
                 self.assertEqual(author['seed'], 7)
                 self.assertNotIn('frequency_hz', result['declared_setup']['sensor'])
                 stored = journal.read_operator_journal(output / 'operator/events.jsonl')
+                self.assertEqual(stored['header']['provenance']['engine_sha256'], current_engine)
                 self.assertTrue(stored['complete'])
                 self.assertEqual(stored['unresolved_request_ids'], [])
                 final = next(e['payload']['observation'] for e in reversed(stored['events'])
                              if e['type'] == 'observation')
                 meter = final['devices']['meter']['values']['outputs'].get('measurement')
                 sensor = final['devices']['sensor']['values']['outputs'].get('measurement')
+                duty, crest, modulation = (1.0, 0.0, 'CW') if sid == 'cw_peak' else (0.25, 3.0, 'OFDM')
+                self.assertEqual(result['declared_setup'], dict(
+                    source_signal=dict(frequency_hz=frequency, power_dbm=12.5, bandwidth_hz=20000000.0,
+                                       duty_cycle=duty, crest_factor_db=crest, modulation=modulation),
+                    sensor=dict(calibration_valid=sid != 'sensor_uncalibrated', acquisition_policy='triggered'),
+                    meter=dict(frequency_hz=2460000000.0 if sid == 'meter_frequency_conflict' else frequency,
+                               measurement_mode='on_average' if quantity is None else quantity, unit='dBm'),
+                    reference_plane='sensor_input', basis='declared_synthetic_policy'))
+                for identity, port, power in (('dut', 'rf', 12.5), ('coupler', 'coupled', -18.0)):
+                    packet = final['devices'][identity]['values']['outputs'][port]
+                    self.assertEqual(packet, dict(
+                        frequency_hz=frequency, power_dbm=power, bandwidth_hz=20000000.0,
+                        duty_cycle=duty, crest_factor_db=crest, modulation=modulation,
+                        source_id=identity, status='ok', valid=True))
+                if sensor is not None:
+                    self.assertEqual((sensor['value'], sensor['power_dbm'], sensor['unit'],
+                                      sensor['frequency_hz'], sensor['duty_cycle'], sensor['crest_factor_db']),
+                                     (-18.0, -18.0, 'dBm', frequency, duty, crest))
                 if expected is None:
                     self.assertIsNone(meter)
                     self.assertEqual(result['report']['termination']['policy_claim'], 'blocked')
@@ -145,6 +166,7 @@ class SignalScenarioTests(unittest.TestCase):
                 self.assertEqual(result['report']['assessment']['status'], 'not_assessed')
                 manifest = read(output / 'private-manifest.json')
                 self.assertIs(manifest['complete'], True)
+                self.assertEqual(manifest['engine_sha256'], current_engine)
                 self.assertEqual({r['path'] for r in manifest['files']},
                                  {'public-result.json', 'operator/events.jsonl', 'private/author.json'})
                 for row in manifest['files']:
@@ -153,6 +175,24 @@ class SignalScenarioTests(unittest.TestCase):
                     self.assertEqual(row['sha256'], hashlib.sha256(data).hexdigest())
                 self.assertEqual(result['verification']['data_origin'], 'authored_synthetic')
                 self.assertIs(result['verification']['hardware_verified'], False)
+
+    def test_unknown_actual_engine_is_rejected_before_runtime_without_relabelling(self):
+        names = ('__init__.py __main__.py catalog.py core.py evaluation.py facility.py frequency_psd.py '
+                 'frequency_psd_max.py frequency_source.py harness.py harness_check.py instruments.py '
+                 'integration.py journal.py method_adapter.py policies.py rf.py spectrum_capture.py spectrum_math.py').split()
+        package = Path(self.temp.name) / 'engine'
+        package.mkdir()
+        for name in names:
+            shutil.copyfile(ROOT / 'labflow/virtual_fleet' / name, package / name)
+        path = package / 'rf.py'
+        path.write_bytes(path.read_bytes() + b'\n# unknown source, not an approved engine\n')
+        with patch.object(self.api, '__file__', str(package / 'rf_signal_scenario.py')), patch.object(
+                integration, 'create_conducted_example', side_effect=AssertionError('unapproved runtime')) as factory:
+            result = self.run_case()
+        self.assertEqual((result['status'], result['error_code']), ('failed', PREFIX + 'evidence_invalid'))
+        self.assertIsNone(result['report'])
+        factory.assert_not_called()
+        self.assertFalse((self.output / 'private-manifest.json').exists())
 
     def test_one_harness_reuses_parent_policy_and_setup_before_fresh_acquire(self):
         real = integration.create_conducted_example

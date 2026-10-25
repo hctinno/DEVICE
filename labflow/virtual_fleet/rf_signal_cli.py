@@ -22,12 +22,12 @@ _ENGINE_FILES = (
     'facility.py', 'frequency_psd.py', 'frequency_psd_max.py', 'frequency_source.py',
     'harness.py', 'harness_check.py', 'instruments.py', 'integration.py', 'journal.py',
     'method_adapter.py', 'policies.py', 'rf.py', 'spectrum_capture.py', 'spectrum_math.py')
-_ENGINE_SHA = '9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42'
+_ENGINE_SHA = '7816f87dcf8aa648d628935493f74dee3a54f993ba2bae87f9a1e102a8b4ccab'
 _CATALOG_SHA = '6f27b5d9ac3d3805b7f198dc0d186865cbfdcaf489d4bceba0572f99709313ff'
 _CATALOG_PATH = 'virtual_profiles/sm_a176u_unlicensed.json'
 _CODE_PINS = {
     'labflow/virtual_fleet/rf_signal_scenario.py':
-        (44423, 'bae395d27975dcfe5a64c5a4ea2ae86dccfa87f6d88c9e2c25b2283333a77cae'),
+        (44423, 'f5471dde9786983152992e04fa2dade8b5ac927b1c25e5c0303c30bb664db1aa'),
     'labflow/control_packet_prepare.py':
         (29100, '8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7')}
 _PARENT_CODES = frozenset('rf_signal_scenario_' + name for name in (

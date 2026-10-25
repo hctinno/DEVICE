@@ -31,3 +31,7 @@ stdout은 최대 8KiB의 compact UTF-8 JSON 한 줄이다. 정확 14키는 `sche
 `main(argv=None) -> int`는 caller streams를 교체·닫지 않는다. module entry만 UTF-8 strict/newline과 최종 flush를 처리한다. 자기 native 자원은 finally에서 반환한다. Ctrl+C는 부모 finally 이후 정제하며 가상 안전정지·취득 완료를 주장하지 않는다. 041의 30초 cooperation budget은 전체 OS hard timeout이 아니다.
 
 전용 수용은 strict argv/help/pin·namespace 선행 거절, 실제 자식 7종·측정5/차단2, fault 주입과 실제 child I/O·종료·자원 회수를 구별한다. 기존041 실행 수와 새045 실행 수를 합치지 않는다. [구현 계획](../superpowers/plans/2026-10-24-virtual-fleet-rf-signal-cli.md)의 관련·전체 회귀와 문서 검사는 각각 별도 증거로 남긴다.
+
+## 2026-10-26 실행 source 호환성
+
+이 변경의 새 실행 대상은 engine19 ordered GitLF SHA `7816f87dcf8aa648d628935493f74dee3a54f993ba2bae87f9a1e102a8b4ccab`다. scenario와 native helper의 실제 source size/SHA pin도 정확히 갱신하고 입력·handle·raw 전후 검사를 유지한다. CLI가 새로 생성한 manifest와 journal은 모두 현재 engine 해시여야 하며 옛 `9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42`로 재표기하지 않는다. 과거 저장 기록은 readonly 048 API/읽기 CLI로만 해석한다. wildcard 또는 임의 hash 허용은 없다. 기존 CLI의 genuine7 조건 검사와 별도 retained CLI1이 통과했다. 실제 모델·장비 실행은 없다.

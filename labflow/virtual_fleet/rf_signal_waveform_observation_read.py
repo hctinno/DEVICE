@@ -22,6 +22,12 @@ _PINS = (
     ("describe041", 44423, "bae395d27975dcfe5a64c5a4ea2ae86dccfa87f6d88c9e2c25b2283333a77cae"),
     ("waveform054", 7581, "7566fb5a90c538275d5f511a3335a68cf3b9e85d7f1cd92b44a11d992f569d1d"),
     ("native_helper", 29100, "8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7"))
+# A saved bundle names one coherent caller version, never a per-role mixture.
+_CURRENT_PINS = (
+    ("read048", 26249, "8cf602b50aac2cb56f1df7b807b19dcfebfdeff588dfe0904cef16a943581472"),
+    ("describe041", 44423, "f5471dde9786983152992e04fa2dade8b5ac927b1c25e5c0303c30bb664db1aa"),
+    ("waveform054", 7581, "7566fb5a90c538275d5f511a3335a68cf3b9e85d7f1cd92b44a11d992f569d1d"),
+    ("native_helper", 29100, "8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7"))
 _MAX_BODY = 3 * 1048576
 _MAX_FILE = _MAX_BODY + 1
 _HASH = re.compile(r"[0-9a-f]{64}\Z", re.ASCII)
@@ -237,9 +243,12 @@ def _bundle(value, summary, name):
     p=value["provenance"]; _keys(p,"binding_scope reference_plane rf_manifest_sha256 source_snapshot_sha256 packet_sha256 dependency_pins")
     _require(p["binding_scope"] == "declared_source_projection_only" and p["reference_plane"] == "declared_dut_output")
     _require(type(p["dependency_pins"]) is list and len(p["dependency_pins"]) == 4)
-    for actual,(role,size,digest) in zip(p["dependency_pins"],_PINS):
+    pins=[]
+    for actual in p["dependency_pins"]:
         _keys(actual,"role lf_bytes lf_sha256")
-        _require(actual["role"] == role and type(actual["lf_bytes"]) is int and actual["lf_bytes"] == size and actual["lf_sha256"] == digest)
+        _require(type(actual["role"]) is str and type(actual["lf_bytes"]) is int and type(actual["lf_sha256"]) is str)
+        pins.append((actual["role"],actual["lf_bytes"],actual["lf_sha256"]))
+    _require(tuple(pins) in (_PINS,_CURRENT_PINS))
     expected_source=summary["source"]; expected_math=summary["math"]
     _require(req["run_name"] == expected_source["run_name"]
              and all(source["metadata"][k] == expected_source[k] for k in ("run_id","runtime_instance_id")))
