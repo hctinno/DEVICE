@@ -69,6 +69,8 @@ def _arguments(argv):
     if argv.count('--intent-view') > 1:
         _fail('invalid_argument')
     intent_view = '--intent-view' in argv
+    if intent_view and argv[0] != '--intent-view' and argv[-1] != '--intent-view':
+        _fail('invalid_argument')
     argv = [value for value in argv if value != '--intent-view']
     if not argv:
         return None, intent_view
