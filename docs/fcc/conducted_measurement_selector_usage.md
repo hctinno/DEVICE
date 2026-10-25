@@ -21,3 +21,7 @@ verification은 `policy="unique_same_run_sensor_acquisition"`, `scope="provided_
 검증 setup의 새 합성 native runtime·journal 파일 생성은 순수 API의 IO0과 구분한다. 서로 다른 event 번호·유일 완료·반복 관측·복수/0 획득·불완전 prefix·foreign run·방법/quantity/시간 관계 및 부모 callcount·원 입력 불변을 확인한다. 기존 광범위 회귀·원17·운영 profile·실측/현장 자료는 재사용하지 않는다. 물리 정확도·권위·전역 자원 검증은 미수행이다.
 
 2026-10-26 검증: 새 unittest 12개 통과(failure/error/skip 0). 같은 실행에서 원 native 입력·출력 8행을 보존했다. 서로 다른 번호의 최초 완료 ref, 반복 관측, 복수/0 획득·미완료, 부모 invalid/incomplete 보존과 호출 0/1회를 확인했다. 첫 분류 실패 1건과 모듈 부재 RED는 원본 로그에 보존했다. 실장비·현장 검증은 미실행이다.
+
+2026-10-26 C/I 수정: 원 cc72의 ordinary data-error catch가 유효 입력 후 부모 실행 내부 ValueError 등도 input_invalid로 변환하던 결함을 수정했다. 실제 builder_call과 반환 이후 builder_result 검증 출처를 구분해, builder_call의 ordinary 예외만 최초 원 객체로 전파한다. 알려진 _Hold/_Failure와 잘못된 native 입력·반환 DTO의 blocked 경로는 유지한다. 예외 문구로 분류하거나 다른 ref를 시도하지 않는다. 원 C0I1/실패/원12는 보존 이력이며 수정 후 검증은 별도 분모다.
+
+C/I 수정 검증: 새 논리3과 broad handler 영향 회귀원12를 수정 clone에서 한 번 실행해 15개 통과(failure/error/skip 0). 수정 전 새 RED 논리1/subcase7 실패를 보존했다. 예상 밖 ordinary 부모 예외7의 동일 객체 전파와 알려진 입력/반환 검증5의 blocked를 같은 검사 증거에 보존했다. 원 cc72와 개발총괄 검수 원본은 변경하지 않았다.
