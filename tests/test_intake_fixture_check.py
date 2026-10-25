@@ -115,5 +115,65 @@ class ConductedWorkflowEntryTests(unittest.TestCase):
             self.assertEqual(snapshot, {'original': 'result'})
 
 
+class ConductedFailureScenarioTests(unittest.TestCase):
+    def test_missing_duty_unit_blocks_from_original_pdf_with_partial_plan_and_no_runtime(self):
+        from labflow.intake_fixture_check import run_conducted_flow
+        with tempfile.TemporaryDirectory() as temporary:
+            result = run_conducted_flow(Path(temporary) / 'missing', measurement_ref='event:17',
+                mock_model='gpt-6.1-sol', scenario='missing-duty-unit')
+            self.assertEqual(result['summary']['status'], 'blocked')
+            self.assertEqual(result['summary']['runtime_calls'], 0)
+            self.assertEqual(result['summary']['draft_status'], 'not_run')
+            original = json.loads((result['output'] / 'facts-plan-original.json').read_bytes())
+            self.assertIsNone(original['plan_input']['plan']['source_settings']['duty_cycle'])
+            self.assertIsNone(original['plan_input']['plan']['basis_refs']['duty_cycle'])
+            self.assertEqual(result['server_options']['conducted_plan_preview_inputs']['source_settings'],
+                             original['plan_input']['plan']['source_settings'])
+            features = next(f for f in original['plan_input']['intake']['source_facts'] if f['field'] == 'features')
+            self.assertIn('duty_cycle: 50;', features['value'])
+            self.assertNotIn('duty_cycle: 50 %', features['evidence'][0]['quote'])
+            self.assertFalse((result['output'] / 'x').exists())
+
+    def test_invalid_new_mock_citation_preserves_strict_error_without_completing_analysis(self):
+        from labflow.intake_fixture_check import run_conducted_flow
+        from labflow.ui_read_model import IntakeReadModel
+        with tempfile.TemporaryDirectory() as temporary:
+            result = run_conducted_flow(Path(temporary) / 'citation', measurement_ref='event:17',
+                mock_model='gpt-6.1-sol', scenario='invalid-citation')
+            self.assertEqual(result['summary']['status'], 'rejected')
+            self.assertEqual(result['summary']['reason'], 'analysis_response_invalid')
+            self.assertEqual(result['summary']['runtime_calls'], 0)
+            failure = json.loads((result['output'] / 'failure.json').read_bytes())
+            self.assertEqual(failure['code'], 'analysis_response_invalid')
+            self.assertEqual(failure['phase'], 'strict_scripted_analysis')
+            self.assertIsNone(IntakeReadModel(result['workspace']).snapshot(result['summary']['intake_id'])['intake']['analysis'])
+            self.assertTrue((result['output'] / 'analysis-MOCK-original.json').is_file())
+            self.assertFalse((result['output'] / 'analysis-strict.json').exists())
+            self.assertFalse((result['output'] / 'facts-plan-original.json').exists())
+            self.assertFalse((result['output'] / 'x').exists())
+
+    def test_unavailable_fault_seams_are_unsupported_without_store_or_fake_device_result(self):
+        from labflow.intake_fixture_check import run_conducted_flow
+        with tempfile.TemporaryDirectory() as temporary:
+            for scenario in ('transport-error', 'recovery-failure'):
+                with self.subTest(scenario=scenario):
+                    result = run_conducted_flow(Path(temporary) / scenario, measurement_ref='event:17',
+                        mock_model='gpt-6.1-sol', scenario=scenario)
+                    self.assertEqual(result['summary']['status'], 'unsupported')
+                    self.assertEqual(result['summary']['runtime_calls'], 0)
+                    self.assertIsNone(result['workspace'])
+                    self.assertEqual(result['summary']['draft_status'], 'not_run')
+                    self.assertIn('public_seam', result['summary'])
+                    self.assertEqual(list(result['output'].iterdir()), [result['output'] / 'public-summary.json'])
+
+    def test_unknown_scenario_is_rejected_before_output_creation(self):
+        from labflow.intake_fixture_check import run_conducted_flow
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / 'unknown'
+            with self.assertRaisesRegex(ValueError, '^conducted_workflow_scenario_unsupported$'):
+                run_conducted_flow(output, scenario='arbitrary-fault')
+            self.assertFalse(output.exists())
+
+
 if __name__ == '__main__':
     unittest.main()

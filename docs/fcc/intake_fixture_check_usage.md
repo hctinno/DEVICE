@@ -176,3 +176,31 @@ caller가 명시한 같은 journal의 `event:17`만 finalizer에 전달한다. r
 CLI는 원 summary와 실제 loopback URL을 출력한다. 새 폴더의 `public-summary.json`은 원 raw packet·corrected·result/storage 상태와 반환된 bound 파일 path/bytes/SHA를 포함한다. `analysis-context-original.json`, `analysis-prompt.json`, `analysis-MOCK-original.json`, `analysis-strict.json`, `current-readonly-context-analysis.json`, `facts-plan-original.json`, `execution-original.json`, `finalizer-original.json`, `server-startup-original.json` 및 `x/`의 원 실행 증거를 남긴다. D3 payload는 같은 출력 폴더 아래 `.local/conducted-result-artifacts/draft-<새 ID>/result.json`, `draft.md`, `manifest.json`이다. 별도 service·Store schema·사용자 원본 입력·화면 실행 버튼을 만들지 않는다. 종료는 기존 `Ctrl+C`다.
 
 현재 authored 정상 조건은 raw −19.5 dBm·corrected 11 dBm, result recorded·storage complete·DRAFT·규범 not_assessed를 실제로 연결했다. 동일 현재 plan/expected binding/D3 원 결과를 보호 GET와 production DOM390/1440에서 대조했다. 이 수치는 고정 합성 전파의 결과이며 실제 SM-A176U 측정이나 물리 예측 성능이 아니다. 원 null verdict/limit/uncertainty·실제 AI unknown 표시를 유지한다. 첫 mock의 안정화 전 acquire는 invalid로 저장됐으며 그 원 실패를 보존하고 새 실행에서 동작 대기 순서만 수정했다. 기존 기본 TXT genuine1, 새 typed 진입/interrupt 정리3과 실제 새 opt-in 실행·HTTP/DOM은 별도 분모다. 기존183/168·다른 owner core/test/private proof·실제 모델·auth·원장·장비·Office는 이번 검증에 사용하지 않았다.
+
+## 명시 실패 시나리오
+
+`--conducted-scenario`는 `--conducted-workflow`에만 사용한다. 생략하면 기존 정상 정책이며, 각 명령은 새 authored PDF·mock·Store·출력 폴더를 만든다. 예를 들어 다음은 새 문서에서 듀티 단위만 누락한다.
+
+```powershell
+python -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --document-kind pdf --measurement-ref event:17 --mock-model gpt-6.1-sol --conducted-scenario missing-duty-unit --port 0
+```
+
+| 선택 | 새 입력 또는 공개 seam | 실제 보존·표시 상태 |
+| --- | --- | --- |
+| `normal` | 기존 한 조건·정상 다섯 동작 그대로 | recorded·complete·DRAFT, 원 raw/corrected, 수용 exit0 |
+| `missing-duty-unit` | 새 PDF의 `duty_cycle: 50`에 명시 단위 없음 | genuine strict 분석은 수용, facts의 `source_unit_missing`·원 token/span·추가 질문 보존. partial plan의 duty/basis=null·blocked, runtime0·결과/초안 not_run, exit1 |
+| `invalid-citation` | 새 scripted MOCK 응답의 features 인용을 그 새 PDF와 불일치하도록 작성 | genuine strict의 `analysis_response_invalid`와 원 응답 prefix를 보존. 그 소유 claim만 fail_job, 분석 미완료·runtime0·결과/초안 not_run, exit1 |
+| `measurement-invalid` | 새 mock에서 DUT 안정화 전 acquire, 이후 read | 실제 invalid receipt/관측→genuine D3 measurement_invalid, 원 raw/corrected=null·result invalid·storage complete·DRAFT, exit1 |
+| `restored-disconnect` | 기존 public loop의 `restored_disconnect` | 실제 DUT.start의 disconnected와 sensor invalid를 기록. 고정 다섯 동작은 공개 복구 시각 전 종료하므로 복구 성공/복구 실패 검증으로 부르지 않음. 원 measurement_invalid/null·invalid·complete·DRAFT, exit1 |
+| `transport-error` | 공개 plan/loop에 일반 transport fault 주입 인자 없음 | unsupported·runtime0·Store/UI/결과/초안 not_run, 정확 public_seam 공백을 summary에 보존, exit1 |
+| `recovery-failure` | 같은 entry에 failed-restoration/persistent-disconnect 선택 인자 없음 | unsupported·runtime0·Store/UI/결과/초안 not_run. 기존 restored_disconnect를 복구 실패 주입으로 바꾸지 않음, exit1 |
+
+측정 무효의 새 mock 정책만 `DUT.start → sensor.acquire → advance1 → sensor.read → stop`으로 작성한 뒤 컴파일한다. 정상과 RF 단절은 기존 정상 정책의 원 소스 bytes·동작 순서를 유지한다. 기존 원 응답·고객 파일·기존 출력·measurement_ref·수치·binding을 사후 수정하지 않는다. 실패 예시의 mock `completed` 주장은 원 정책의 주장으로 남으며 fixture 수용 성공·정상 측정·규범 PASS로 올리지 않는다.
+
+실행 전 오류·blocked에서도 새 폴더의 `public-summary.json`에 scenario·runtime_calls·result/storage/draft 상태와 null을 남긴다. 무효 측정에서도 원 `execution-original.json`, `finalizer-original.json`, 실제 D3 payload/manifest와 DRAFT를 보존한다. 이때 저장 complete와 결과 invalid는 별개다. 인용 거절은 원 `analysis-MOCK-original.json`과 `failure.json`의 strict prefix·phase를 먼저 보존하며 strict/plan/실행/초안 파일을 만들어 성공처럼 채우지 않는다. 명시 시나리오에서 예상한 그 strict 오류만 rejected로 반환해 실패한 Store의 읽기 화면을 열 수 있다. 다른 native 오류와 제어 예외는 기존 최초 오류 경로로 전파한다.
+
+blocked의 partial source6/basis6는 원 plan에서 서버 startup에 전달한다. 같은 현재 C1/plan binding·partial plan을 보호 GET와 대조하며 duty를 %나 ratio로 추정하지 않는다. 화면은 기존 부모 plan의 `missing_setting`/`missing_or_invalid_basis`와 null을 보여 준다. facts wrapper의 추가 assembly_gaps/questions는 원 `facts-plan-original.json`에 남으며 기존 DTO에 새 필드를 끼워 넣지 않는다. 인용 거절의 UI는 계획 `intake_conducted_preview_analysis_unavailable`·결과 `intake_conducted_result_missing`과 분석 미완료 상태를 표시한다. strict 원 code는 `failure.json`에 있으며 기존 HTTP 계약이 그 원 code를 제공한다고 주장하지 않는다.
+
+가상 장치 단절과 producer transport 오류를 구별한다. 이 범위에서 연결한 장치 seam은 기존 [SensorTrial 공개 단절 조건](plan_driven_sensor_trial_usage.md)뿐이며 새 harness·장비 고장 모델·공통 DTO·Store schema·ui_read_model을 수정하지 않는다. 일반 통신/복구 실패를 fake DTO나 producer 비정상 exit로 만들어 장비 오류라고 표시하지 않는다. 지원 밖 선택은 summary만 보존하며 UI listener를 열지 않는다.
+
+이 단위에서는 실제 CLI7(정상1·계획 차단1·strict 거절1·무효 측정1·RF 단절1·미지원2), 신규 native 진입 검사4, 기존 TXT1·typed main interrupt1, 보호 GET15/production DOM10을 구분해 확인했다. 정상 DOM2가 통과한 뒤 검사자의 원 code/한국어 label 가정1이 실패해 원 HTTP3·서버 종료를 보존했다. 제품/CLI/정상 DOM을 재실행하지 않고 나머지 네 화면만 label+큐 원 code로 이어 검사했다. 정상 mock 원 소스는 선행 정상과 exact bytes다. 각 actual 조회 서버5와 실패 관측 서버1은 종료·포트 재사용을 별도 확인했다. 기존183/168 전부 재실행0·실제 모델/인증/실장비/Office0이며 합성 관측·저장·규범 not_assessed를 전체 시험소·실물 성공으로 바꾸지 않는다.
