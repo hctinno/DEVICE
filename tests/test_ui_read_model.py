@@ -202,5 +202,93 @@ class ConductedPlanContextTests(unittest.TestCase):
         self.assertEqual(error.exception.code,'intake_conducted_preview_synthetic_required')
 
 
+
+def provided_result_fixture(fixture):
+    """Typed public result snapshot, not a D3 builder/execution observation."""
+    from copy import deepcopy
+    model=IntakeReadModel(fixture['store'].root)
+    settings=dict(frequency_hz=915000000,power_dbm=-4,bandwidth_hz=1000000,duty_cycle=1,modulation='CW-synthetic',crest_factor_db=0)
+    basis={k:dict(kind='developer_declared_synthetic',value=v,unit=u,evidence=[]) for (k,v),u in zip(settings.items(),['Hz','dBm','Hz','ratio','label','dB'])}
+    plan=model.conducted_plan_preview(fixture['intake_id'],dict(intake_id=fixture['intake_id'],revision=1,source_settings=settings,basis=basis,method=dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output')))['plan_input']
+    canonical=lambda value:hashlib.sha256(json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+    report=dict(schema_version=1,kind='virtual_fleet_harness_result',run_id='provided-run',runtime_instance_id='provided-runtime',synthetic=True,hardware_verified=False,ai_model_called=False,policy=dict(kind='fixture',id='typed-provided'),termination=dict(reason='policy_stop',policy_claim='completed'),task_outcome='not_assessed',cleanup=dict(status='not_assessed',evidence_refs=[]),usage=dict(decisions=0,logical_requests=0,transport_retries=0,tick_delta=0,reserved_ticks=0,elapsed_ms=0),evidence=dict(measurement_refs=['provided-event'],operator_transcript_ref='provided-journal'),unresolved_request_ids=[],assessment=dict(status='not_assessed',verdict=None,evaluator_id=None,evidence_refs=[],summary_code=None))
+    edge=dict(source=dict(device_id='dut',port='rf_out'),target=dict(device_id='sensor',port='rf_in'),kind='rf')
+    topology=dict(devices=[dict(id='dut',profile_id='provided-dut'),dict(id='sensor',profile_id='provided-sensor')],connections=[edge])
+    packet=dict(status='ok',valid=True,value=-4,unit='dBm',frequency_hz=915000000,power_dbm=-4,duty_cycle=1,crest_factor_db=0,acquisition_tick=0,acquisition_setup_revision=0,source_id='sensor',provided_extra={'zero':0})
+    result=dict(schema_version=1,kind='conducted_twin_result',status='recorded',binding=dict(plan_input=plan,run_report=report,plan_input_sha256=canonical(plan),setup_sha256=canonical([]),journal_file_sha256='a'*64,journal_head_sha256='b'*64,report_sha256=canonical(report),topology_sha256=canonical(topology),run_id='provided-run',runtime_instance_id='provided-runtime',measurement_ref='provided-event'),raw_measurement=dict(packet=packet,event_id='provided-event',sequence=1,device_id='sensor',tick=0,setup_revision=0,quantity=dict(metric='on',reference_plane='sensor_input',loss_compensation_applied=False,loss_compensation_sign=1),reference_plane='sensor_input'),setup_provenance=dict(records=[],topology=topology,path=[edge]),calculation=dict(raw_power_w=dict(value=0.00039810717055349735,unit='W'),raw_reference_plane='sensor_input',correction_ledger=[],target_reference_plane='source_output',corrected=dict(value=-4,unit='dBm',power_w=0.00039810717055349735),conformity=dict(status='not_assessed',verdict=None,numeric_limit_dbm=None,uncertainty_db=None)),gaps=[],failure=None,verification=dict(synthetic=True,hardware_verified=False,physical_verified=False,source_bytes='not_reopened',method_approval='not_assessed',trust_scope='provided_host_snapshots_and_hash_consistency',execution_authority=False))
+    return dict(intake_id=fixture['intake_id'],revision=1,expected_current_binding=deepcopy(plan['binding']),result=result)
+
+
+class ConductedResultReadTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(prefix='provided-result-');self.addCleanup(self.temp.cleanup)
+        self.fixture=conducted_context_fixture(Path(self.temp.name));self.model=IntakeReadModel(self.fixture['store'].root)
+        self.snapshot=provided_result_fixture(self.fixture)
+
+    def read(self):
+        self.assertTrue(callable(getattr(self.model,'conducted_result_view',None)),'missing provided result readonly getter')
+        return self.model.conducted_result_view(self.fixture['intake_id'],self.snapshot)
+
+    def test_provided_snapshot_original_result_current_binding_and_zero_are_preserved(self):
+        before=json.loads(json.dumps(self.snapshot));database=self.fixture['store'].db.read_bytes()
+        value=self.read();self.assertEqual(value['source_kind'],'provided_snapshot');self.assertEqual(value['relation']['status'],'matched')
+        self.assertEqual(value['result'],before['result']);self.assertEqual(value['expected_current_binding'],before['expected_current_binding'])
+        self.assertEqual(value['result']['raw_measurement']['tick'],0);self.assertEqual(value['result']['calculation']['conformity']['verdict'],None)
+        value['result']['raw_measurement']['packet']['value']=88
+        self.assertEqual(self.read()['result'],before['result']);self.assertEqual(self.snapshot,before);self.assertEqual(self.fixture['store'].db.read_bytes(),database)
+
+    def test_invalid_original_and_partial_generated_fields_remain_json_not_cast(self):
+        result=self.snapshot['result'];result.update(status='invalid',binding={},failure=dict(code='measurement_invalid',field='observation.sensor'),gaps=[None,42,{'malformed':'original'}])
+        result['raw_measurement']['packet']={'status':'bad','value':'-3e7','unit':None,'extra':[0,False]}
+        result['raw_measurement']['quantity']=['malformed',0];result['raw_measurement']['tick']='kept'
+        result['setup_provenance']['records']={'bad':'original'};result['setup_provenance']['topology']=['kept']
+        result['calculation']['corrected']=None
+        value=self.read();self.assertEqual(value['result'],result);self.assertEqual(value['relation']['status'],'blocked')
+        self.assertIn('result_plan_binding_unavailable',value['relation']['reasons'])
+        result.update(status='incomplete',binding={'plan_input':provided_result_fixture(self.fixture)['result']['binding']['plan_input'],'run_report':None},failure=dict(code='setup_partial',field='setup_snapshot'))
+        result['gaps']=[dict(code='setup_partial',field='setup_snapshot',provided=None,blocking=True)]
+        self.assertEqual(self.read()['result'],result)
+
+    def test_unknown_normal_gap_or_failure_path_is_rejected_but_invalid_original_gaps_are_opaque(self):
+        from copy import deepcopy
+        original=deepcopy(self.snapshot)
+        for fault in ['gap','d1_gap_path','failure_path','nested_failure_path','original_report_shape','topology']:
+            self.snapshot=deepcopy(original)
+            if fault=='gap':self.snapshot['result']['gaps']=[dict(code='future',field='quantity',provided=None,blocking=False)]
+            elif fault=='d1_gap_path':self.snapshot['result']['gaps']=[dict(code='missing_setting',field='future_private_path',provided=None,blocking=False)]
+            elif fault=='nested_failure_path':self.snapshot['result'].update(status='incomplete',failure=dict(code='setup_partial',field='plan_input.plan.future'))
+            elif fault=='original_report_shape':self.snapshot['result']['binding']['run_report']={}
+            elif fault=='failure_path':self.snapshot['result'].update(status='incomplete',failure=dict(code='setup_partial',field='future_private_path'))
+            else:self.snapshot['result']['setup_provenance']['topology']={}
+            with self.subTest(fault=fault),self.assertRaises(ReadModelError):self.read()
+
+    def test_missing_expected_binding_revision_context_and_original_plan_hash_block_with_reasons(self):
+        from copy import deepcopy
+        original=deepcopy(self.snapshot)
+        for fault in ['missing','revision','context','plan_hash','result_hash']:
+            self.snapshot=deepcopy(original)
+            if fault=='missing':self.snapshot['expected_current_binding']=None
+            elif fault=='revision':self.snapshot['revision']=2
+            elif fault=='context':self.snapshot['expected_current_binding']['context_sha256']='f'*64
+            elif fault=='plan_hash':self.snapshot['result']['binding']['plan_input']['plan']['source_settings']['power_dbm']=0
+            else:self.snapshot['result']['binding']['report_sha256']='f'*64
+            with self.subTest(fault=fault):
+                value=self.read();self.assertEqual(value['relation']['status'],'blocked');self.assertTrue(value['relation']['reasons']);self.assertEqual(value['result'],self.snapshot['result'])
+
+    def test_unknown_contract_or_authority_never_publishes_and_original_source_is_rechecked(self):
+        from copy import deepcopy
+        original=deepcopy(self.snapshot)
+        for fault in ['extra','authority','failure','conformity']:
+            self.snapshot=deepcopy(original)
+            if fault=='extra':self.snapshot['result']['extra']='future'
+            elif fault=='authority':self.snapshot['result']['verification']['execution_authority']=True
+            elif fault=='failure':self.snapshot['result'].update(status='invalid',failure={'code':'future','field':'input'})
+            else:self.snapshot['result']['calculation']['conformity']['verdict']='pass'
+            with self.subTest(fault=fault),self.assertRaises(ReadModelError):self.read()
+        self.snapshot=original
+        self.fixture['store'].blob_path(self.fixture['context']['documents'][0]['sha256']).write_bytes(b'changed')
+        with self.assertRaises(ReadModelError):self.read()
+
+
 if __name__ == '__main__':
     unittest.main()

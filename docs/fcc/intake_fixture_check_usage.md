@@ -118,3 +118,26 @@ node frontend/intake_flow_browser_check.cjs
 ```
 
 이 검사는 자체 합성 PDF의 실제 core retention/completion, genuine readonly 취득·계획 어댑터·보호 GET·production DOM을390/1440에서 연결한다. 지원된 DTO와 unavailable 관측, typed 오류·합성 deadline callback/DOM 주입은 별도 분모다. 합성 분석 함수 사용을 실제 AI/분석 worker 실행으로 세지 않는다. 결과는 새 `.local/conducted-preview-browser-<임의값>`(또는 명시 독립 proof root의 새 하위 폴더)에 남긴다. 원 테스트/오류·실패 증거와 다른 task의 고정 출력은 덮어쓰지 않는다.
+
+
+## 전도 결과 제공 snapshot 읽기 전용 화면
+
+확정 [D3 공개 계약412c](https://github.com/hctinno/DEVICE/blob/412c288f762eb58c6591da486d32b1f918724fde/docs/fcc/conducted_twin_result_usage.md)(UTF-8/GitLF15333B, SHA256 `28891c9fc381251e215516d1063fe93ada0c4a5672a9e91c2388ca6b823b845c`)의 shape만 읽는다. D3 core/tests/private proof를 열거나 builder를 import·실행하지 않는다. e8e의 독립 수용은 이 작업 시작 때 pending이며 writer도 미구현이다. stored/live 결과 취득·생성 origin/진위·실물 정확도·규범 승인으로 승격하지 않는다.
+
+`create_server(..., conducted_result_snapshot=None)`의 native snapshot만 사용하며 CLI/env·GET body/query·임의 파일경로를 입력으로 받지 않는다. None은 제공 결과 미제공이다. 제공 시 exact4는 `intake_id`(ASCII 식별자), `revision`(positive int, bool 금지), `expected_current_binding`(D1 binding6 또는 null), `result`(D3 원 top10)다. 호출자 hook 없이 plain native JSON만 canonical UTF-8 bytes로 deep detach한다. 타입/키/바이트/깊이/노드 오류는 bind 전 `ValueError('intake_conducted_result_invalid_input')`다. D3 result shape는 매 GET 대조하며 원형이 invalid DTO라는 것과 전송 계약 위반을 구별한다.
+
+`GET /api/intakes/{intake_id}/conducted-result`는 현재 완료 V2/PDF·합성 출처 확인 접수만 지원한다. 매번 기존 current native context를 RO로 재검증한다. Store 초기화/claim/prepare/PDF 재파싱/보존 쓰기/결과 파일 탐색은 없으며 기존 snapshot/fixture-runs/planDTO·Store schema·queue·registry7을 변경하지 않는다. 기존 Host/Origin/Fetch 보호·no-store/CSP를 재사용하고 중복 보호 헤더·GET framing/body/query·encoded alias를 거절한다. HEAD는405/Allow GET, 쓰기는 기존 read_only405다.
+
+native 시작 입력 전체와 HTTP 응답 전체는 각각1MiB, 깊이40, 노드100000 이내다. object 키도 새 결과 parser/서버의 노드 분모에 포함한다. 내부 D1 표시 validator는 기존 packet 검사 규칙을 재사용하지만 원 preview의256KiB 기본 한도와 DTO는 바꾸지 않는다. 브라우저10초/handler5초 기한, 잘못된 작은 body의32KiB 제한 소비, disconnect 후 두 번째 응답/재시도 금지를 적용한다. 과대·계약 위반을 truncate/빈 성공으로 바꾸지 않으며 observed MemoryError/KeyboardInterrupt/SystemExit/GeneratorExit는 전파한다.
+
+성공 응답 wrapper는 exact9 `schema_version=1, kind="intake_conducted_result_view", intake_id, revision, context_sha256, source_kind="provided_snapshot", expected_current_binding, relation, result`다. 상위 ID/revision/C1은 현재 RO 관측이다. `relation`은 exact3 `status`(matched/blocked), `reasons`(중복 없는 string[]), `provided_revision`(시작 snapshot의 positive int)이다. `result`는 원 D3 exact10을 그대로 보존하고 새 실제AI flag나 계산값을 만들지 않는다. sourcekind provided_snapshot과 원 verification.synthetic=true는 실제 AI 호출 증거가 아니며 flag 미제공은 unknown이다.
+
+D1 binding6은 intake_id/revision/analysis_context_id/context_sha256/analysis_sha256/plan_sha256이다. 앞5개를 현재 native context/analysis와, plan hash를 원 embedded plan과 대조한다. 존재하는 D3 plan_input/report canonical SHA와 run/runtime 관계도 제공 자료 안에서 대조한다. 이 대조는 현재 계획과 hash 일관성 범위이며 journal/setup/topology 원 bytes나 생성 origin을 재검증하지 않는다. 원 prompt 복원이 아닌 현재 제공 C1이다. expected-current binding이 null이거나 충돌하면 HTTP200의 relation blocked와 이유로 표시하고 원 D3 result는 유지한다. 원 result.status=recorded도 차단/승인과 별개이며 작업·규범 PASS를 뜻하지 않는다.
+
+relation 이유 enum은 `provided_revision_changed, expected_current_binding_missing, expected_intake_mismatch, expected_revision_mismatch, expected_context_mismatch, expected_analysis_context_mismatch, expected_analysis_mismatch, result_plan_binding_unavailable, result_plan_binding_mismatch, result_plan_hash_mismatch, result_plan_input_hash_mismatch, result_report_hash_mismatch, result_run_binding_mismatch`다. report의 binding0/2/11·raw8/setup3/calculation6/ledger11/conformity4/verification7 및 D3의62 failure/gap literal은 공개 계약을 따른다. invalid의 원 plan/report/packet metadata/quantity/records/topology/gaps는 opaque native JSON으로 보존하고 normal 타입으로 캐스팅하지 않는다. 이미 생성된 W·부분 결과를 삭제하거나 null을0으로 바꾸지 않는다. 정상 packet의 추가 원키와 topology/edge 미사용 키도 보존한다. 원수치/단위·기준면·loss/propagation/compensation·보정 근거는 제공값을 표시할 뿐 화면에서 다시 계산하지 않는다.
+
+고정 오류 body는 기존 `{"error":{"code":"..."}}`다. `intake_conducted_result_missing`, `intake_conducted_result_unavailable`, `intake_conducted_result_invalid`는503이며 미제공/취득 불가/형상·한도 위반을 구분한다. `intake_conducted_result_invalid_request`는400, origin 보호403, `intake_not_found`는404다. 현재 context의 `store_missing/store_unavailable` 및 기존 `intake_conducted_preview_{synthetic_required,analysis_unavailable,v2_pdf_required,source_invalid}`도503으로 보존한다. 알 수 없는 예외는 정제 unavailable이며 원 exception/body/파일 경로를 유출하지 않는다.
+
+화면 `#conducted-result-view/status/content`는 7단계 measurement 영역에서 제공값·원 status·공백/부분 실패·규범not_assessed·권한false를 표시한다. 새 버튼/입력/실행권한은 없고 기존 부모 refresh/접수 선택만 재사용한다. 기존 fixture의 원수치 미제공/실제AI false 표시는 선택한 기존 fixture에 한정한다. 접수/revision/generation/순번 교체·hide/pagehide에 요청을 퇴역시키고 late/abort/전송·형상·렌더 실패에서는 같은 scope의 마지막 정상 내용을 유지하되 이전 관측/현재 관계 미확인으로 표시한다.
+
+`VLAB_CONDUCTED_RESULT_ONLY=1`로 기존 browser check를 실행한다. 자체 typed provided D3 snapshot과 genuine current RO capture·보호 GET·production DOM390/1440을 연결한다. 이는 D3 builder/실행/저장/계산 정확도 검증이 아니며 새 실제 모델·실장비0이다. 정상·부분·invalid0/2/11·expected missing/conflict·source/revision 변화를 포함한 실제 HTTP/DOM 관측과 별도 typed 전송/형상/DOM/deadline/late 주입은 분리해 기록한다. 원 실패와 이전 task 증거는 덮어쓰지 않는다.
