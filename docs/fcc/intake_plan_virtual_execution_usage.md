@@ -12,13 +12,13 @@ run_intake_plan_virtual_execution(
     expected_revision, expected_context_sha256, expected_plan_input_sha256,
     catalog_path: Path, catalog_sha256: str, response_schema_bytes: bytes,
     executable: Path, requested_model: str, scenario: str,
-    evidence_dir: Path, execution_origin: str, cancel_event=None,
+    evidence_dir: Path, execution_origin: str, cancel_event=None, quantity=None,
 ) -> dict
 ```
 
 신규 소유3은 labflow/intake_plan_virtual_execution.py, tests/test_intake_plan_virtual_execution.py, 이 usage다. 기존 소유3은 [Codex loop](../../labflow/virtual_fleet/codex_virtual_loop.py), [그 검사](../../tests/test_virtual_fleet_codex_virtual_loop.py), [그 usage](virtual_fleet_codex_virtual_loop_usage.md)다. 첫 commit은 기존3의 source_settings=None 연결만, 그 다음 신규3은 접수 결합만 맡는다. D1 원 builder·D3 SensorTrial/결과 builder·Store·계산/보정/판정·모델 권위를 수정하지 않는다.
 
-기반은 root 공개 c1a61e74와 own da52의 정상 cherry 297ee2e다. da52 원 clone·원 실패·proof는 동결하고 이 새 branch만 수정한다. D3 setup 기록6ca는 공개 source를 읽기 전용 fetch했으며 현재 실행 base에는 없다.
+이번 접점의 기반은 root 공개 53cc55b4와 자기 source6/portable fixture/adapter의 정상 cherry3(c3c7e7f)다. 수용된 D3 setup 기록6ca의 공개 collector/getter API가 이 실행 base에 있다. 이전 da52·source6·adapter clone/실패/proof는 동결하고 이 새 branch의 소유6만 수정한다. D3 결과 builder는 호출하지 않는다.
 
 ## 입력과 실행 전 gate
 
@@ -43,13 +43,13 @@ IntakePlanVirtualExecutionError는 고정 code/str/args와 가능한 detached re
 
 execution_origin은 기존 caller 선언일 뿐 origin_authenticated=false/ai_model_called=null 한계를 유지한다. intake native host/G4 미연결, 실제 Store 현재 상태·원본 재개방·실행권한 검증은 false로 남긴다. ready·C1 일치·관측 성공으로 issuer/예약/권위나 전체 업무 완료를 만들지 않는다.
 
-## setup·journal의 추가 seam 제안 — 미승인·미구현
+## 동일 Trial의 setup·journal 접점
 
 수용된 D3 6ca의 prepare_sensor_trial(..., setup_records=None)와 trial.setup_snapshot()을 재사용할 위치는 동일 trial의 prepare 직후, 첫 harness event 전이다. 실제 기록을 얻으려면 setup_records=[]를 제공해야 한다. None일 때 빈 snapshot은 미기록이며 실제 setup이 없었다는 뜻이 아니다. 원 record exact8(request_id/operation/device_id/action/parameters/receipt/tick/setup_revision)에는 run/runtime이 없으므로 값을 추가해 원 목록을 바꾸지 않는다.
 
-최소 추가 제안은 원 snapshot 파일과 별도 host binding에서 setup C1을 같은 run/runtime에 연결하는 것이다. 현재 loop가 보존하는 원 legacy-harness-report.json/events.json의 metadata/hash와 같은 trial 출처를 묶어야 한다. 이 artifact/반환 형상은 아직 승인값으로 만들지 않는다.
+2026-10-26 후속은 원 snapshot 파일과 genuine post-run journal header에서 setup C1을 같은 run/runtime에 연결한다. adapter가 D1 재구축으로 확인한 binding6과 caller가 명시한 quantity만 공개 loop의 선택 keyword로 전달한다. loop는 같은 trial의 실제 setup collector/getter·topology를 기록하며 legacy report/events도 보존한다. bound mode에만 원 setup/journal artifact metadata가 추가된다. top10/원 loop top14·step12와 native host/권위 미검증 상태는 유지한다.
 
-신규 adapter가 [genuine OperatorJournal/read_operator_journal](../../labflow/virtual_fleet/journal.py)을 재사용할 수 있다. 실행 뒤 원 events로 구성하면 post-run compatibility journal임을 명시하고 live 기록으로 위장하지 않는다. 원 report/event run/runtime, 실제 setup C1, 원 plan binding6과 관측된 catalog/topology/engine 근거를 provenance에 연결하는 형상은 총괄의 추가 결정 대상이다. legacy ai_model_called=false를 실제 AI 호출 인증으로 승격하지 않는다.
+loop가 [genuine OperatorJournal/read_operator_journal](../../labflow/virtual_fleet/journal.py)을 재사용하고 원 events로 post-run compatibility journal을 구성한다. 원 report/event run/runtime, 실제 setup C1, 원 plan binding6과 관측 catalog/topology/engine 근거를 provenance에 연결한다. adapter는 새 파일 writer·계산을 만들지 않고 원 loop 결과와 metadata를 전달한다. legacy ai_model_called=false를 실제 AI 호출 인증으로 승격하지 않는다.
 
 센서 packet에는 metric/plane/loss_compensation_applied/sign이 없다. on/sensor_input/false/sign1을 자동 기입하지 않는다. 같은 실행의 명시 근거가 있을 때만 보존하고, 없으면 D3 결과 보정은 null로 남겨야 한다. 새 수치 계산·손실 합산·판정·결과 builder는 이 adapter 소유가 아니다.
 

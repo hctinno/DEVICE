@@ -189,12 +189,16 @@ def _attach(result, value):
     result['execution']['producer_calls_started'] = count if type(count) is int and 0 <= count <= 8 else None
     result['status'] = captured['status']
     result['failure'] = captured['failure']
+    host = captured['execution'].get('host_evidence')
+    if type(host) is dict:
+        result['verification']['setup_journal_connected'] = (
+            host.get('binding_verified') is True and _C(host.get('plan_binding')) == _C(result['plan_input']['binding']))
 
 
 def run_intake_plan_virtual_execution(context, analysis, plan_input, *, expected_revision,
         expected_context_sha256, expected_plan_input_sha256, catalog_path: Path, catalog_sha256: str,
         response_schema_bytes: bytes, executable: Path, requested_model: str, scenario: str,
-        evidence_dir: Path, execution_origin: str, cancel_event=None) -> dict:
+        evidence_dir: Path, execution_origin: str, cancel_event=None, quantity=None) -> dict:
     """Revalidate caller snapshots then enter one delegated synthetic loop; never grant authority."""
     result = _result(execution_origin)
     try:
@@ -215,7 +219,8 @@ def run_intake_plan_virtual_execution(context, analysis, plan_input, *, expected
         original = _run_loop(catalog_path=catalog_path, catalog_sha256=catalog_sha256,
             response_schema_bytes=response_schema_bytes, executable=executable, requested_model=requested_model,
             scenario=scenario, evidence_dir=evidence_dir, execution_origin=execution_origin,
-            cancel_event=cancel_event, source_settings=source)
+            cancel_event=cancel_event, source_settings=source, plan_binding=result['plan_input']['binding'],
+            quantity=quantity)
     except _CONTROL:
         raise
     except CodexVirtualLoopError as error:

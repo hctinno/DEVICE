@@ -24,7 +24,7 @@ except ModuleNotFoundError as error:
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL = ROOT / '.local' / 'codex-virtual-loop-fixtures' / ('run-' + uuid.uuid4().hex)
-PROOF = LOCAL / 'DEV2-INTAKE-PLAN-VIRTUAL-EXECUTION-001'
+PROOF = LOCAL / 'DEV2-CONDUCTED-EXECUTION-PROVENANCE-001'
 SCHEMA = json.loads((ROOT / 'docs/fcc/codex_first_decision_contract.json').read_text(encoding='utf-8'))['response_schema']['literal_utf8'].encode('utf-8')
 
 
@@ -332,8 +332,10 @@ class LoopTests(unittest.TestCase):
     def test_public_signature_and_exports(self):
         self.assertEqual(api.__all__, ['run_codex_virtual_loop', 'CodexVirtualLoopError'])
         signature = inspect.signature(api.run_codex_virtual_loop)
-        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings'])
+        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings', 'plan_binding', 'quantity'])
         self.assertIsNone(signature.parameters['source_settings'].default)
+        self.assertIsNone(signature.parameters['plan_binding'].default)
+        self.assertIsNone(signature.parameters['quantity'].default)
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in signature.parameters.values()))
 
     def test_proof_admission_uses_only_this_execution_namespace(self):
@@ -416,7 +418,7 @@ class LoopTests(unittest.TestCase):
             return original(catalog, **options)
         self.real_prepare = prepare
         self.sequence = [dict(kind='stop', claim='blocked', reason='legacy factory')]
-        r = self.call(source_settings=None); self.shape(r)
+        r = self.call(source_settings=None, plan_binding=None, quantity=None); self.shape(r)
         self.assertEqual(calls, [dict(condition='normal', seed=0, power_dbm=12.5)])
         self.assertEqual(set(r['artifacts']), {'request', 'schema', 'legacy_report', 'legacy_events', 'assessment'})
         request = json.loads((self.driver.root / 'run-1/caller-request.json').read_bytes())
@@ -453,6 +455,129 @@ class LoopTests(unittest.TestCase):
         self.assertEqual(len(self.trials), 1)
         request = json.loads((self.driver.root / 'run-1/caller-request.json').read_bytes())
         self.assertEqual(C(request['execution']['source_settings']), original)
+
+    def bound_plan(self):
+        from test_intake_conducted_twin_plan import fixture
+        from labflow.intake_conducted_twin_plan import build_conducted_twin_plan_input
+        context, analysis, options = fixture()
+        options['source_settings'] = self.declared_source()
+        for key, value in options['source_settings'].items():
+            options['basis'][key]['value'] = value
+        plan = build_conducted_twin_plan_input(context, analysis, **options)
+        self.assertEqual(plan['status'], 'ready_for_simulation')
+        return plan
+
+    def test_bound_setup_and_postrun_journal_use_same_trial(self):
+        from labflow.virtual_fleet.journal import read_operator_journal
+        plan = self.bound_plan(); collector = []; snapshots = []; calls = []
+        original = self.real_prepare
+        def prepare(catalog, **options):
+            self.assertEqual(options['setup_records'], [])
+            collector.append(options['setup_records']); calls.append(options)
+            trial = original(catalog, **options)
+            getter = trial.setup_snapshot
+            def capture():
+                value = getter(); snapshots.append(value); return value
+            trial.setup_snapshot = capture
+            return trial
+        self.real_prepare = prepare
+        quantity = dict(metric='on', reference_plane='sensor_input', loss_compensation_applied=False, loss_compensation_sign=1)
+        result = self.call(source_settings=plan['plan']['source_settings'], plan_binding=plan['binding'], quantity=quantity)
+        self.shape(result)
+        self.assertEqual(len(calls), 1); self.assertEqual(len(snapshots), 1); self.assertEqual(len(self.trials), 1)
+        folder = self.driver.root / 'run-1'
+        setup = json.loads((folder / 'setup-snapshot.json').read_bytes())
+        self.assertTrue(setup); self.assertLessEqual(len(setup), 32)
+        self.assertEqual(C(setup), C(collector[0])); self.assertEqual(C(setup), C(snapshots[0]))
+        self.assertIsNot(collector[0], snapshots[0])
+        journal = read_operator_journal(folder / 'operator-journal.jsonl')
+        header = journal['header']; provenance = header['provenance']
+        self.assertEqual((header['run_id'], header['runtime_instance_id']), (result['run_id'], self.trials[0].runtime_instance_id))
+        self.assertEqual(C(provenance['plan_binding']), C(plan['binding']))
+        self.assertEqual(provenance['setup_sha256'], H(C(setup)))
+        self.assertEqual(provenance['topology_sha256'], H(C(provenance['topology'])))
+        self.assertEqual(provenance['quantity'], quantity)
+        self.assertEqual(provenance['recording_mode'], 'post_run_from_retained_events')
+        self.assertEqual(C(journal['events']), C(json.loads((folder / 'legacy-harness-events.json').read_bytes())))
+        self.assertTrue(journal['complete'])
+        self.assertFalse(header['ai_model_called']); self.assertIsNone(result['execution']['ai_model_called'])
+        self.assertTrue(result['execution']['host_evidence']['binding_verified'])
+        self.assertTrue(result['evidence_assessment']['goal_observed'])
+
+    def test_quantity_missing_or_wrong_is_never_filled(self):
+        from labflow.virtual_fleet.journal import read_operator_journal
+        plan = self.bound_plan()
+        self.sequence = [dict(kind='stop', claim='blocked', reason='quantity declaration only')]
+        self.call(source_settings=plan['plan']['source_settings'], plan_binding=plan['binding'])
+        journal = read_operator_journal(self.driver.root / 'run-1/operator-journal.jsonl')
+        self.assertNotIn('quantity', journal['header']['provenance'])
+        wrong = dict(metric='peak', reference_plane='source_output', loss_compensation_applied=True, loss_compensation_sign=False)
+        self.call(source_settings=plan['plan']['source_settings'], plan_binding=plan['binding'], quantity=wrong)
+        journal = read_operator_journal(self.driver.root / 'run-2/operator-journal.jsonl')
+        self.assertEqual(C(journal['header']['provenance']['quantity']), C(wrong))
+        self.assertIs(journal['header']['provenance']['quantity']['loss_compensation_sign'], False)
+
+    def test_bound_input_rejected_before_artifacts_or_factory(self):
+        plan = self.bound_plan()
+        cases = [dict(plan_binding={}, source_settings=self.declared_source()),
+                 dict(plan_binding=plan['binding']), dict(quantity=dict(metric='on'))]
+        for field, value in [('revision',True),('context_sha256','bad'),('intake_id',1)]:
+            cases.append(dict(source_settings=self.declared_source(), plan_binding={**plan['binding'], field:value}))
+        for options in cases:
+            self.failure('invalid_input', **options)
+            self.assertFalse((self.driver.root / ('run-' + str(self.invocations))).exists())
+        self.assertEqual(self.trials, []); self.assertEqual(self.driver.calls, [])
+
+    def test_actual_partial_setup_retains_null_receipt(self):
+        from labflow.virtual_fleet.core import VirtualFleet
+        plan = self.bound_plan(); original = VirtualFleet.execute; counter = [0]
+        def execute(fleet, *args, **kwargs):
+            counter[0] += 1
+            if counter[0] == 4:
+                raise RuntimeError('AUTHORED_SETUP_FAILURE')
+            return original(fleet, *args, **kwargs)
+        with patch.object(VirtualFleet, 'execute', execute):
+            error = self.failure('capture_failed', source_settings=plan['plan']['source_settings'], plan_binding=plan['binding'])
+        setup = json.loads((self.driver.root / 'run-1/setup-snapshot.json').read_bytes())
+        self.assertTrue(setup)
+        self.assertIsNone(setup[-1]['receipt']); self.assertIsNone(setup[-1]['tick'])
+        self.assertEqual(error.receipt['execution']['host_evidence']['setup_status'], 'partial')
+        self.assertIsNone(error.receipt['execution']['runtime_instance_id'])
+        self.assertFalse(error.receipt['artifacts']['operator_journal']['present'])
+        self.assertEqual(error.receipt['budget']['producer_calls_started'], 0)
+
+    def test_setup_control_identity_and_raw_prefix(self):
+        from labflow.virtual_fleet.core import VirtualFleet
+        plan = self.bound_plan(); original = VirtualFleet.execute; counter = [0]
+        control = KeyboardInterrupt('AUTHORED_SETUP_CONTROL')
+        def execute(fleet, *args, **kwargs):
+            counter[0] += 1
+            if counter[0] == 4:raise control
+            return original(fleet, *args, **kwargs)
+        with patch.object(VirtualFleet, 'execute', execute):
+            with self.assertRaises(KeyboardInterrupt) as got:
+                self.call(source_settings=plan['plan']['source_settings'], plan_binding=plan['binding'])
+        self.assertIs(got.exception, control)
+        setup = json.loads((self.driver.root / 'run-1/setup-snapshot.json').read_bytes())
+        self.assertIsNone(setup[-1]['receipt'])
+        self.assertEqual(self.driver.calls, [])
+
+    def test_journal_failure_keeps_original_producer_code(self):
+        from labflow.virtual_fleet.journal import read_operator_journal
+        plan = self.bound_plan(); original = api._Journal.__call__; counter = [0]
+        self.producer_mode = 'nonzero'
+        def append(journal, event):
+            counter[0] += 1
+            if counter[0] == 2:raise OSError('AUTHORED_JOURNAL_FAILURE')
+            return original(journal, event)
+        with patch.object(api._Journal, '__call__', append):
+            error = self.failure('codex_cli_response_process_failed', source_settings=plan['plan']['source_settings'], plan_binding=plan['binding'])
+        self.assertGreater(counter[0], 1)
+        self.assertEqual(error.receipt['budget']['reserved_model_calls'], 1)
+        journal = read_operator_journal(self.driver.root / 'run-1/operator-journal.jsonl')
+        self.assertFalse(journal['complete'])
+        self.assertTrue(error.receipt['artifacts']['operator_journal']['present'])
+        self.assertIn('post_run_journal_failed', error.receipt['cleanup']['secondary_errors'])
 
     def test_preflight_before_factory_or_process(self):
         for change in [dict(execution_origin=True), dict(scenario='other'), dict(requested_model='other'),

@@ -17,6 +17,7 @@ from .harness import FleetHarness as _Harness
 from .integration import get_role_actions as _actions
 from .model_operator_boundary import (ModelOperatorBoundaryError,
     build_operator_prompt as _build, decode_operator_response as _decode)
+from .journal import OperatorJournal as _Journal, read_operator_journal as _read_journal
 from .codex_virtual_one_action import (_copy as _native_copy,
     _complete_receipt as _producer_profile, _Fault as _ParentFault)
 
@@ -194,8 +195,28 @@ def _settings(value):
     return _copy(value, 65536, 'invalid_input')
 
 
-def _preflight(catalog_path, catalog_sha, schema, executable, model, scenario, directory, origin, event, source_settings):
+def _host_binding(value):
+    if value is None:
+        return None
+    keys = {'intake_id', 'revision', 'analysis_context_id', 'context_sha256', 'analysis_sha256', 'plan_sha256'}
+    value = _copy(value, 65536, 'invalid_input')
+    if (type(value) is not dict or set(value) != keys or type(value['revision']) is not int
+            or value['revision'] < 1
+            or any(type(value[key]) is not str or not _ID.fullmatch(value[key])
+                   for key in ('intake_id', 'analysis_context_id'))
+            or any(type(value[key]) is not str or not _SHA.fullmatch(value[key])
+                   for key in ('context_sha256', 'analysis_sha256', 'plan_sha256'))):
+        _fail('invalid_input')
+    return value
+
+
+def _preflight(catalog_path, catalog_sha, schema, executable, model, scenario, directory, origin, event,
+               source_settings, plan_binding, quantity):
     source = _settings(source_settings)
+    binding = _host_binding(plan_binding)
+    quantity = None if quantity is None else _copy(quantity, 65536, 'invalid_input')
+    if binding is not None and source is None or binding is None and quantity is not None:
+        _fail('invalid_input')
     for path in (catalog_path, executable, directory):
         _path(path)
     if (type(catalog_sha) is not str or not _SHA.fullmatch(catalog_sha) or type(schema) is not bytes
@@ -215,7 +236,7 @@ def _preflight(catalog_path, catalog_sha, schema, executable, model, scenario, d
         _fail('invalid_input')
     if _H(_read(catalog_path, 1048576, 'unsupported_source')) != catalog_sha:
         _fail('unsupported_source')
-    return source
+    return source, binding, quantity
 
 
 def _absent(path):
@@ -223,11 +244,15 @@ def _absent(path):
 
 
 class _Loop:
-    def __init__(self, catalog, catalog_sha, schema, executable, model, scenario, directory, origin, event, start, source_settings):
+    def __init__(self, catalog, catalog_sha, schema, executable, model, scenario, directory, origin, event,
+                 start, source_settings, plan_binding, quantity):
         self.catalog_path, self.catalog_sha, self.schema = catalog, catalog_sha, schema
         self.executable, self.model, self.scenario, self.directory = executable, model, scenario, directory
         self.origin, self.event, self.start, self.deadline = origin, event, start, start + 180
         self.source_settings = source_settings
+        self.plan_binding, self.quantity = plan_binding, quantity
+        self.setup_records = self.setup_snapshot = self.host_topology = None
+        self.source_pins = {}
         self.stage = 'setup'; self.first = self.control = None
         self.trial = self.runtime = self.harness = None
         self.step = None; self.before = None; self.sources = {}; self.events = []; self.event_bytes = 0
@@ -259,6 +284,13 @@ class _Loop:
                 root_authority_verified=False,remote_identity_verified=False,actual_wall_time_verified=False,
                 model_quality_verified=False,hardware_verified=False,physical_cleanup_verified=False,
                 full_task_verified=False,storage_authenticity_verified=False))
+        if plan_binding is not None:
+            self.r['artifacts'].update(setup_snapshot=_absent('setup-snapshot.json'),
+                                       operator_journal=_absent('operator-journal.jsonl'))
+            self.r['execution']['host_evidence'] = dict(plan_binding=_copy(plan_binding), setup_status='not_started',
+                setup_sha256=None, topology_sha256=None, quantity=quantity,
+                recording_mode='post_run_from_retained_events', journal_file_sha256=None,
+                journal_head_sha256=None, journal_complete=None, binding_verified=False)
 
     def phase(self, stage):
         self.stage = stage
@@ -307,6 +339,7 @@ class _Loop:
         if error is not None:
             self.observe(error) if isinstance(error,_CONTROL) else self.error('cleanup_failed','cleanup')
             self.secondary('host_close_failed')
+        return good
 
     def space(self, reserve=0, reserve_files=0):
         count = total = 0
@@ -362,7 +395,7 @@ class _Loop:
             path=self.directory/'calls'/f"{self.step['index']:04d}"/filename
         else:
             desc=self.r['artifacts'][key]; path=self.directory/desc['path']
-            cap=8388608 if key=='legacy_events' else 65536 if key in {'schema','assessment'} else 262144
+            cap=8388608 if key=='legacy_events' else 1048576 if key=='setup_snapshot' else 65536 if key in {'schema','assessment'} else 262144
         self.write(path,value if raw else _C(value),cap,desc,final=final)
 
     def observation(self, key, value, *, final=False):
@@ -418,6 +451,74 @@ class _Loop:
             except BaseException as error:
                 self.observe(error); self.secondary('runtime_guard_restore_unconfirmed')
         self.guards.clear()
+
+    def capture_setup(self, success):
+        if self.plan_binding is None or self.setup_snapshot is not None or self.setup_records is None:
+            return
+        value = self.trial.setup_snapshot() if success else self.setup_records
+        value = _copy(value, 1048576, 'capture_failed')
+        if (type(value) is not list or len(value) > 32
+                or success and _C(value) != _C(self.setup_records)):
+            _fail('capture_failed')
+        self.setup_snapshot = value
+        host = self.r['execution']['host_evidence']
+        host['setup_status'] = 'complete' if success and value else 'partial'
+        host['setup_sha256'] = _H(_C(value))
+        self.artifact('setup_snapshot', value, final=True)
+        if success:
+            if not value:
+                _fail('capture_failed')
+            self.host_topology = _copy(self.trial.topology, 1048576, 'capture_failed')
+            host['topology_sha256'] = _H(_C(self.host_topology))
+
+    def capture_journal(self):
+        if (self.plan_binding is None or self.host_topology is None or self.setup_snapshot is None
+                or not self.r['artifacts']['setup_snapshot']['complete']):
+            return
+        host = self.r['execution']['host_evidence']
+        provenance = dict(runtime_origin='preinitialized', catalog_sha256=self.catalog_sha,
+            topology=self.host_topology, topology_sha256=host['topology_sha256'],
+            engine_sha256=_H(_C(self.source_pins)),
+            engine_fingerprint_kind='sha256_canonical_host_source_pins_v1', source_pins=self.source_pins,
+            plan_binding=self.plan_binding, setup_sha256=host['setup_sha256'],
+            recording_mode='post_run_from_retained_events')
+        if self.quantity is not None:
+            provenance['quantity'] = self.quantity
+        path = self.directory / 'operator-journal.jsonl'
+        desc = self.r['artifacts']['operator_journal']
+        journal = None; appended = closed = False
+        try:
+            self.space(self.event_bytes + 1048576, 1)
+            self.known.add(path)
+            journal = _Journal(path, run_id=self.r['run_id'],
+                runtime_instance_id=self.r['execution']['runtime_instance_id'], provenance=provenance)
+            for event in self.events:
+                journal(event)
+            appended = True
+        except BaseException as error:
+            self.observe(error) if isinstance(error, _CONTROL) else self.error('retention_failed', 'journal')
+            self.secondary('post_run_journal_failed')
+        finally:
+            if journal is not None:
+                closed = self.close(journal)
+        try:
+            raw = _read(path, 9437184, 'retention_failed', self)
+            desc.update(present=True, bytes=len(raw), sha256=_H(raw), complete=appended and closed,
+                        extent='whole_file' if appended and closed else 'prefix')
+            observed = _read_journal(path)
+            if observed['integrity']['file_sha256'] != _H(raw):
+                _fail('retention_failed')
+            header = observed['header']; actual = header['provenance']
+            if (header['run_id'] != self.r['run_id']
+                    or header['runtime_instance_id'] != self.r['execution']['runtime_instance_id']
+                    or _C(actual) != _C(provenance) or appended and _C(observed['events']) != _C(self.events)):
+                _fail('retention_failed')
+            host.update(journal_file_sha256=_H(raw), journal_head_sha256=observed['integrity']['head_sha256'],
+                        journal_complete=observed['complete'], binding_verified=appended and closed)
+            self.space()
+        except BaseException as error:
+            self.observe(error) if isinstance(error, _CONTROL) else self.error('retention_failed', 'journal')
+            self.secondary('post_run_journal_unconfirmed')
 
     def source(self):
         self.check()
@@ -628,9 +729,14 @@ class _Loop:
             path=Path(__file__).resolve().parents[1]/name
             raw=_read(path,1048576,'unsupported_source',self)
             self.sources[path]=(len(raw),_H(raw)); pins['labflow/'+name]=dict(bytes=len(raw),sha256=_H(raw))
+        self.source_pins = pins
         execution = dict(catalog_path=str(self.catalog_path), executable=str(self.executable))
         if self.source_settings is not None:
             execution['source_settings'] = self.source_settings
+        if self.plan_binding is not None:
+            execution['plan_binding'] = self.plan_binding
+            if self.quantity is not None:
+                execution['quantity'] = self.quantity
         self.artifact('request',dict(schema_version=1,kind='codex_virtual_loop_request',run_id=self.r['run_id'],
             declaration=self.r['declaration'],limits=self.r['budget']['limits'],source_pins=pins,
             execution=execution))
@@ -639,7 +745,13 @@ class _Loop:
             catalog=_load(self.catalog_path); self.actions=_actions()
             if len(catalog['profiles'])!=64:
                 _fail('unsupported_source')
-            if self.source_settings is None:
+            if self.plan_binding is not None:
+                self.setup_records = []
+                self.r['execution']['host_evidence']['setup_status'] = 'initializing'
+                self.trial=_prepare(catalog,condition=self.scenario,seed=0,
+                    power_dbm=self.source_settings['power_dbm'],source_settings=self.source_settings,
+                    setup_records=self.setup_records)
+            elif self.source_settings is None:
                 self.trial=_prepare(catalog,condition=self.scenario,seed=0,power_dbm=12.5)
             else:
                 self.trial=_prepare(catalog,condition=self.scenario,seed=0,
@@ -654,6 +766,7 @@ class _Loop:
         except Exception:
             _fail('capture_failed')
         self.r['execution']['runtime_instance_id']=self.trial.runtime_instance_id
+        self.capture_setup(True)
         self.guard_runtime()
         def policy(context):
             return self.policy(context)
@@ -693,6 +806,11 @@ class _Loop:
         self.stage='cleanup'
         self.r['execution']['cancellation']['requested']=bool(self.event is not None and self.event.is_set())
         report=events=None
+        if self.plan_binding is not None and self.setup_snapshot is None:
+            try:
+                self.capture_setup(False)
+            except BaseException as error:
+                self.observe(error); self.secondary('setup_capture_unconfirmed')
         if self.harness is not None:
             if self.harness.result() is None:
                 try:
@@ -718,6 +836,7 @@ class _Loop:
                 self.artifact('assessment',self.r['evidence_assessment'],final=True)
             except BaseException as error:
                 self.observe(error)
+        self.capture_journal()
         self.restore_runtime()
         self.trial=self.runtime=self.harness=None
         self.r['cleanup']['runtime_references_released']=True
@@ -738,15 +857,15 @@ class _Loop:
 
 def run_codex_virtual_loop(*, catalog_path: Path, catalog_sha256: str, response_schema_bytes: bytes,
         executable: Path, requested_model: str, scenario: str, evidence_dir: Path,
-        execution_origin: str, cancel_event=None, source_settings=None) -> dict:
+        execution_origin: str, cancel_event=None, source_settings=None, plan_binding=None, quantity=None) -> dict:
     """Run one explicitly delegated synthetic loop; provenance declarations grant no authority."""
     runner=None; receipt=None; code=None; control=None
     try:
         start=_now()
-        source=_preflight(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
-                          evidence_dir,execution_origin,cancel_event,source_settings)
+        source,binding,declared_quantity=_preflight(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
+                          evidence_dir,execution_origin,cancel_event,source_settings,plan_binding,quantity)
         runner=_Loop(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
-                     evidence_dir,execution_origin,cancel_event,start,source)
+                     evidence_dir,execution_origin,cancel_event,start,source,binding,declared_quantity)
         try:
             runner.run()
         except BaseException as error:
