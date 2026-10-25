@@ -284,5 +284,163 @@ class SensorEvaluationTests(unittest.TestCase):
         self.assertFalse(hasattr(trial.runtime, 'author_control'))
 
 
+    def plan_source(self,**changes):
+        source=dict(frequency_hz=2.412e9,power_dbm=11.0,bandwidth_hz=10e6,
+                    duty_cycle=.5,modulation='OFDM',crest_factor_db=4.0)
+        source.update(changes)
+        return source
+
+    def test_source_reaches_one_factory_and_same_detached_followup_setup(self):
+        from unittest.mock import patch
+        from labflow.virtual_fleet import evaluation
+        from labflow.virtual_fleet.core import VirtualFleet
+        source=self.plan_source();original=deepcopy(source);factory_args=[];dut_args=[];fleets=[]
+        factory=evaluation.create_conducted_example;execute=VirtualFleet.execute
+        def create(catalog,**kw):
+            factory_args.append(kw);result=factory(catalog,**kw);fleets.append(result[0]);return result
+        def command(fleet,request,device,action,parameters=None):
+            if device=='dut' and action=='configure':dut_args.append(parameters)
+            return execute(fleet,request,device,action,parameters)
+        try:
+            with patch.object(evaluation,'create_conducted_example',create),patch.object(VirtualFleet,'execute',command):
+                trial=prepare_sensor_trial(self.catalog,power_dbm=source['power_dbm'],source_settings=source)
+        except TypeError as error:self.fail('source_settings optional keyword unavailable: '+str(error))
+        self.assertEqual(len(factory_args),1);self.assertEqual(len(fleets),1)
+        sent=factory_args[0]['source_settings']
+        self.assertIsNot(sent,source);self.assertEqual(sent,original)
+        self.assertEqual(dut_args,[original,original]);self.assertIs(dut_args[-1],sent)
+        self.assertIs(trial._fleet,fleets[0]);self.assertEqual(source,original)
+        source['frequency_hz']=2.45e9;source['power_dbm']=12.5
+        result,events=self.evidence(trial)
+        self.assertEqual(evaluate_sensor_run(trial,result,events)['verdict'],'pass')
+
+    def test_plan_power_path_and_signal_metadata_reach_evaluator(self):
+        for power in (-4.0,11.0,14.0):
+            source=self.plan_source(power_dbm=power)
+            trial=prepare_sensor_trial(self.catalog,power_dbm=power,source_settings=source)
+            result,events=self.evidence(trial)
+            observed=trial.runtime.observations()['devices']
+            measurement=observed['sensor']['values']['outputs']['measurement']
+            coupled=observed['coupler']['values']['outputs']['coupled']
+            self.assertAlmostEqual(measurement['value'],power-10-.5-20,places=9)
+            self.assertAlmostEqual(coupled['power_dbm'],power-30.5,places=9)
+            self.assertEqual(measurement['frequency_hz'],source['frequency_hz'])
+            self.assertEqual(measurement['duty_cycle'],source['duty_cycle'])
+            self.assertEqual(measurement['crest_factor_db'],source['crest_factor_db'])
+            self.assertEqual(coupled['bandwidth_hz'],source['bandwidth_hz'])
+            grade=evaluate_sensor_run(trial,result,events)
+            self.assertEqual((grade['status'],grade['verdict'],grade['evaluator_id']),
+                             ('completed','pass','rf_sensor_fixture_v1'))
+            self.assertNotIn('expected_sensor_dbm',json.dumps(grade))
+
+    def test_power_mismatch_and_nonfinite_reject_before_factory_both_entries(self):
+        from unittest.mock import patch
+        from labflow.virtual_fleet import evaluation
+        source=self.plan_source()
+        cases=[(12.5,source),(True,source),(float('nan'),source),(float('inf'),source),
+               (10**400,source),(11.0,{**source,'power_dbm':True}),
+               (11.0,{**source,'power_dbm':float('nan')}),(11.0,{k:v for k,v in source.items() if k!='power_dbm'})]
+        with patch.object(evaluation,'create_conducted_example',side_effect=AssertionError('no factory on power mismatch')):
+            with self.assertRaises(ValueError):prepare_sensor_trial(self.catalog,source_settings=source)
+            for index,(power,supplied) in enumerate(cases):
+                for constructor in (prepare_sensor_trial,evaluation.SensorTrial):
+                    with self.subTest(index=index,entry=constructor.__name__),self.assertRaises(ValueError):
+                        constructor(self.catalog,condition='normal',seed=0,power_dbm=power,source_settings=supplied)
+
+    def test_matching_numeric_power_and_factory_owns_range_validation(self):
+        from unittest.mock import patch
+        from labflow.virtual_fleet import evaluation,integration
+        source=self.plan_source(power_dbm=11)
+        trial=evaluation.SensorTrial(self.catalog,condition='normal',seed=3,power_dbm=11.0,source_settings=source)
+        result,events=self.evidence(trial)
+        self.assertEqual(evaluate_sensor_run(trial,result,events)['verdict'],'pass')
+        invalid=[{**source,'frequency_hz':True},{**source,'duty_cycle':0},
+                 {**source,'bandwidth_hz':float('inf')},{**source,'extra':0},
+                 {k:v for k,v in source.items() if k!='bandwidth_hz'}]
+        for index,supplied in enumerate(invalid):
+            with self.subTest(index=index),patch.object(evaluation,'create_conducted_example',wraps=integration.create_conducted_example) as factory,patch.object(
+                    integration,'create_fleet',side_effect=AssertionError('factory must reject before fleet')):
+                with self.assertRaises(ValueError):
+                    prepare_sensor_trial(self.catalog,power_dbm=11,source_settings=supplied)
+                self.assertEqual(factory.call_count,1)
+
+    def test_none_preserves_legacy_observation_goal_and_author_contract(self):
+        from unittest.mock import patch
+        from labflow.virtual_fleet import evaluation
+        original=deepcopy(self.catalog)
+        for power in (-4,12.5,17):
+            implicit=prepare_sensor_trial(self.catalog,power_dbm=power,seed=7)
+            with patch.object(evaluation,'create_conducted_example',wraps=evaluation.create_conducted_example) as factory:
+                explicit=prepare_sensor_trial(self.catalog,power_dbm=power,seed=7,source_settings=None)
+            self.assertEqual(factory.call_args.kwargs,{'seed':7})
+            self.assertEqual(implicit.runtime.observations(),explicit.runtime.observations())
+            self.assertEqual(implicit.goal,explicit.goal)
+            self.assertEqual(implicit.author_record(),explicit.author_record())
+            self.assertNotIn('source_settings',explicit.author_record())
+            result,events=self.evidence(explicit)
+            self.assertEqual(evaluate_sensor_run(explicit,result,events)['verdict'],'pass')
+        self.assertEqual(self.catalog,original)
+
+    def test_plan_disconnect_recovery_and_failed_recovery_preserve_schedule(self):
+        source=self.plan_source();before=deepcopy(source)
+        persistent=prepare_sensor_trial(self.catalog,condition='persistent_disconnect',
+                                        power_dbm=11,source_settings=source)
+        result,events=self.evidence(persistent,wait=8,measure=False)
+        self.assertEqual(evaluate_sensor_run(persistent,result,events)['verdict'],'pass')
+        restored=prepare_sensor_trial(self.catalog,condition='restored_disconnect',power_dbm=11,source_settings=source)
+        result,events=self.evidence(restored,wait=4)
+        self.assertEqual(evaluate_sensor_run(restored,result,events)['verdict'],'pass')
+        author=restored.author_record()
+        self.assertEqual(author['release_tick'],author['start_tick']+4)
+        failed=prepare_sensor_trial(self.catalog,condition='restored_disconnect',power_dbm=11,source_settings=source)
+        result,events=self.evidence(failed)
+        self.assertEqual(evaluate_sensor_run(failed,result,events)['verdict'],'fail')
+        self.assertEqual(source,before)
+
+    def test_plan_stale_and_changed_signal_metadata_cannot_rebind_oracle(self):
+        source=self.plan_source(duty_cycle=1.0,crest_factor_db=0)
+        trial=prepare_sensor_trial(self.catalog,power_dbm=11,source_settings=source)
+        result,events=self.evidence(trial)
+        self.assertEqual(evaluate_sensor_run(trial,result,events)['verdict'],'pass')
+        stale,old_events=self.evidence(trial,measure=False,prefix='second',run_id='second-run')
+        stale['termination']={'reason':'policy_stop','policy_claim':'completed'}
+        self.assertEqual(evaluate_sensor_run(trial,stale,old_events)['verdict'],'fail')
+        for device,port,key,value in [('coupler','coupled','bandwidth_hz',20e6),
+                ('coupler','coupled','frequency_hz',2.45e9),('coupler','coupled','modulation','CW'),
+                ('sensor','measurement','duty_cycle',True),('sensor','measurement','crest_factor_db',False),
+                ('sensor','measurement','frequency_hz',2.45e9)]:
+            altered=deepcopy(events)
+            for event in altered:
+                if event['type']=='observation':
+                    packet=event['payload']['observation']['devices'][device]['values']['outputs'].get(port)
+                    if packet:packet[key]=value
+            with self.subTest(device=device,key=key):
+                self.assertEqual(evaluate_sensor_run(trial,result,altered)['verdict'],'fail')
+
+    def test_plan_public_context_excludes_private_source_oracle_and_author(self):
+        from labflow.virtual_fleet.harness import FleetHarness
+        from labflow.virtual_fleet.integration import get_role_actions
+        source=self.plan_source();trial=prepare_sensor_trial(self.catalog,power_dbm=11,source_settings=source)
+        contexts=[]
+        def policy(context):
+            contexts.append(deepcopy(context))
+            return {'kind':'stop','claim':'blocked','reason':'public-context inspection only'}
+        harness=FleetHarness(trial.runtime,policy,goal=trial.goal,catalog=trial.catalog,topology=trial.topology,
+                             role_actions=get_role_actions(),runtime_instance_id=trial.runtime_instance_id)
+        harness.run()
+        self.assertEqual(len(contexts),1)
+        self.assertEqual(set(contexts[0]),{'schema_version','goal','catalog','topology','role_actions','observations','last_receipt','remaining_budget'})
+        forbidden={'source_settings','_source_settings','expected_sensor_dbm','condition','seed','author_events'}
+        def check(value):
+            if isinstance(value,dict):
+                self.assertTrue(forbidden.isdisjoint(value))
+                for child in value.values():check(child)
+            elif isinstance(value,list):
+                for child in value:check(child)
+        check(contexts[0])
+        self.assertEqual(set(trial.goal),{'kind','dut_id','sensor_id','minimum_acquisition_tick'})
+        self.assertFalse(hasattr(trial.runtime,'author_control'))
+
+
 if __name__ == '__main__':
     unittest.main()

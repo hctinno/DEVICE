@@ -27,6 +27,23 @@ def _natural(value):
     return type(value) is int and value >= 0
 
 
+def _source_declaration(power_dbm, source_settings):
+    if source_settings is None:
+        return None
+    if (type(source_settings) is not dict or any(type(key) is not str for key in source_settings)
+            or 'power_dbm' not in source_settings):
+        raise ValueError('Invalid synthetic source declaration')
+    try:
+        matches = (_number(power_dbm) and _number(source_settings['power_dbm'])
+                   and power_dbm == source_settings['power_dbm'])
+    except OverflowError:
+        matches = False
+    if not matches:
+        raise ValueError('Synthetic source power must match finite power_dbm')
+    # Full exact6/native/range validation belongs to the existing bench factory.
+    return dict(source_settings)
+
+
 class _OperatorRuntime:
     """Narrow, trusted host facade. It is never supplied to policy context."""
     def __init__(self, trial):
@@ -49,18 +66,24 @@ class _OperatorRuntime:
 
 class SensorTrial:
     """Private authored trial; public goal and operator facade are separate."""
-    def __init__(self, catalog, *, condition, seed, power_dbm):
+    def __init__(self, catalog, *, condition, seed, power_dbm, source_settings=None):
+        source = _source_declaration(power_dbm, source_settings)
+        if source is not None and (condition not in CONDITIONS or type(seed) is not int):
+            raise ValueError('Invalid synthetic author setup')
         self.catalog = deepcopy(catalog)
-        self._fleet, self.topology, bootstrap = create_conducted_example(catalog, seed=seed)
+        options = {} if source is None else {'source_settings': source}
+        self._fleet, self.topology, bootstrap = create_conducted_example(catalog, seed=seed, **options)
+        self._source_settings = source
         self.runtime_instance_id = uuid.uuid4().hex
         self._condition, self._seed = condition, seed
         self._power_dbm = float(power_dbm)
         self._author_events = []
         self._release_tick = None
         self._expected_sensor_dbm = float(power_dbm) - 10 - .5 - 20
-        setup = [('dut', 'configure', {'frequency_hz': 2.45e9, 'power_dbm': power_dbm,
-                                     'bandwidth_hz': 20e6, 'duty_cycle': .25,
-                                     'modulation': 'OFDM', 'crest_factor_db': 3}),
+        dut_settings = ({'frequency_hz': 2.45e9, 'power_dbm': power_dbm,
+                         'bandwidth_hz': 20e6, 'duty_cycle': .25,
+                         'modulation': 'OFDM', 'crest_factor_db': 3} if source is None else source)
+        setup = [('dut', 'configure', dut_settings),
                  ('sensor', 'configure', {'calibration_valid': True, 'acquisition_policy': 'triggered'}),
                  ('dut', 'stop', {})]
         self._setup_receipts = []
@@ -115,11 +138,13 @@ class SensorTrial:
                          'author_events': self._author_events})
 
 
-def prepare_sensor_trial(catalog, *, condition='normal', seed=0, power_dbm=12.5):
+def prepare_sensor_trial(catalog, *, condition='normal', seed=0, power_dbm=12.5, source_settings=None):
     """Host-only factory; original catalog and source files are never modified."""
-    if condition not in CONDITIONS or type(seed) is not int or not _number(power_dbm):
+    if (condition not in CONDITIONS or type(seed) is not int
+            or (source_settings is None and not _number(power_dbm))):
         raise ValueError('Invalid synthetic author setup')
-    return SensorTrial(catalog, condition=condition, seed=seed, power_dbm=power_dbm)
+    options = {} if source_settings is None else {'source_settings': source_settings}
+    return SensorTrial(catalog, condition=condition, seed=seed, power_dbm=power_dbm, **options)
 
 
 def _assessment(status, verdict, code, refs=()):
@@ -224,11 +249,24 @@ def _valid_measurement(trial, observation, acquisition, baseline_tick):
             trial._release_tick is None or measurement['acquisition_tick'] <= trial._release_tick):
         return False
     expected = trial._expected_sensor_dbm
+    source = trial._source_settings
+    if source is None:
+        frequency, duty, crest = 2.45e9, .25, 3
+    else:
+        # The accepted host declaration is private, not an oracle learned from events.
+        numeric = ('frequency_hz', 'bandwidth_hz', 'duty_cycle', 'crest_factor_db')
+        if (any(not _number(coupled.get(key)) or coupled[key] != source[key] for key in numeric)
+                or type(coupled.get('modulation')) is not str
+                or coupled['modulation'] != source['modulation']
+                or any(not _number(measurement.get(key))
+                       for key in ('frequency_hz', 'duty_cycle', 'crest_factor_db'))):
+            return False
+        frequency, duty, crest = source['frequency_hz'], source['duty_cycle'], source['crest_factor_db']
     return (abs(measurement['value'] - expected) <= 1e-9
             and abs(measurement['power_dbm'] - expected) <= 1e-9
             and abs(coupled['power_dbm'] - expected) <= 1e-9
-            and measurement.get('frequency_hz') == 2.45e9
-            and measurement.get('duty_cycle') == .25 and measurement.get('crest_factor_db') == 3)
+            and measurement.get('frequency_hz') == frequency
+            and measurement.get('duty_cycle') == duty and measurement.get('crest_factor_db') == crest)
 
 
 def evaluate_sensor_run(trial, result, events):
