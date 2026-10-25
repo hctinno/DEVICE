@@ -429,6 +429,7 @@ from labflow.intake_jobs import claim_job,complete_job
 from labflow.intake_worker import SyntheticTextProvider
 def main():
  mode=sys.argv[2];calls=[];genuine=adapter.build_conducted_twin_plan_input
+ adapter_raw=Path(adapter.__file__).read_bytes();adapter_git_lf=adapter_raw.replace(b'\r\n',b'\n')
  def observed(*args,**kwargs):
   report=genuine(*args,**kwargs);calls.append(report);return report
  adapter.build_conducted_twin_plan_input=observed
@@ -444,7 +445,7 @@ def main():
   server=create_server(fixture['store'].root,port=0,conducted_plan_preview_inputs=inputs)
   thread=threading.Thread(target=server.serve_forever,kwargs={'poll_interval':.01},daemon=True);thread.start()
   print(json.dumps({'origin':'http://127.0.0.1:'+str(server.server_port),'intake_id':fixture['intake_id'],'mode':mode,
-   'adapter_path':str(Path(adapter.__file__).resolve()),'adapter_sha256':hashlib.sha256(Path(adapter.__file__).read_bytes()).hexdigest()}),flush=True)
+   'adapter_path':str(Path(adapter.__file__).resolve()),'adapter_bytes':len(adapter_raw),'adapter_sha256':hashlib.sha256(adapter_raw).hexdigest(),'adapter_git_lf_bytes':len(adapter_git_lf),'adapter_git_lf_sha256':hashlib.sha256(adapter_git_lf).hexdigest()}),flush=True)
   try:
    for line in sys.stdin:
     command=line.strip()
@@ -465,6 +466,21 @@ def main():
    print(json.dumps({'resource':{'loop_stopped':True,'listener_closed':True,'port_rebind':True,'adapter_calls':len(calls),'actual_model_calls':0,'hardware_calls':0}}),flush=True)
 if __name__=='__main__':main()
 `;
+
+function verifyPreviewAdapterSource(info){
+  const fixed=fs.realpathSync(path.join(ROOT,'labflow','intake_conducted_twin_plan.py'));
+  assert.equal(fs.realpathSync(info.adapter_path),fixed);
+  const raw=fs.readFileSync(fixed);
+  // Normalize only CRLF byte pairs. Preserve raw bytes/hash as a separate pin.
+  const gitLF=Buffer.from(raw.toString('latin1').replaceAll('\r\n','\n'),'latin1');
+  const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+  const pins={adapter_path:fixed,raw:{bytes:raw.length,sha256:hash(raw)},git_lf:{bytes:gitLF.length,sha256:hash(gitLF)},normalization:'CRLF bytes to LF only'};
+  assert.equal(info.adapter_bytes,pins.raw.bytes);assert.equal(info.adapter_sha256,pins.raw.sha256);
+  assert.equal(info.adapter_git_lf_bytes,pins.git_lf.bytes);assert.equal(info.adapter_git_lf_sha256,pins.git_lf.sha256);
+  assert.equal(pins.git_lf.sha256,'0286769450f4efef874602164b2bfdb5aa0ac2f027aa48fcc4c0a219f230ebc9');
+  return pins;
+}
+
 function startPreviewHost(mode){
   const file=path.join(OUTPUT,'preview_host.py');if(!fs.existsSync(file))proofWrite(file,previewHost);
   const python=process.env.VLAB_PYTHON||path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
@@ -477,13 +493,13 @@ function startPreviewHost(mode){
   return {child,next,exited,alive:()=>exitCode===null,stderr:()=>stderr,command:async cmd=>{child.stdin.write(cmd+'\n');assert.equal((await next()).control,cmd);}};
 }
 async function conductedPreviewMain(){
-  const observations=[],faults=[],resources=[];let browser;
+  const observations=[],faults=[],resources=[],sourcePins=[];let browser;
   try{
     browser=await chromium.launch({headless:true});
     for(const mode of ['matched','missing','other','old-revision','basis-missing','text','non-synthetic','incomplete','unconfirmed-source']){
       const host=startPreviewHost(mode);let info;
       try{
-        info=await host.next();assert.equal(info.adapter_sha256,'0286769450f4efef874602164b2bfdb5aa0ac2f027aa48fcc4c0a219f230ebc9');
+        info=await host.next();sourcePins.push({mode,...verifyPreviewAdapterSource(info)});
         const endpoint=info.origin+'/api/intakes/'+info.intake_id+'/conducted-plan-preview';
         const observe=async(width,phase='initial')=>{
           const context=await browser.newContext({viewport:{width,height:900}}),page=await context.newPage(),errors=[],external=[],methods=[];let previewRequests=0;
@@ -554,7 +570,7 @@ async function conductedPreviewMain(){
         else{if(host.alive())host.child.kill();await host.exited;}
       }
     }
-    proofWrite(path.join(OUTPUT,'preview-results.json'),JSON.stringify({status:'pass',observations,typed_faults:faults,resources,actual_model_calls:0,hardware_calls:0},null,2));
+    proofWrite(path.join(OUTPUT,'preview-results.json'),JSON.stringify({status:'pass',observations,typed_faults:faults,resources,adapter_source_pins:sourcePins,actual_model_calls:0,hardware_calls:0},null,2));
     console.log(JSON.stringify({status:'pass',observations:observations.length,typed_faults:faults.length,output:OUTPUT}));
   }catch(error){proofWrite(path.join(OUTPUT,'preview-failure.json'),JSON.stringify({status:'fail',message:error.message,observations,typed_faults:faults,resources},null,2));throw error;}
   finally{if(browser)await browser.close();}
