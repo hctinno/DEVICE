@@ -1,5 +1,7 @@
 # 후속 개발 인수 대장 004
 
+2026-10-25 [통합060](INTEGRATION-060.md): 개발3 가상작업자 동일입력 Codex/Vertex 비교 설계·계획2를 private 정적Yes·공개53필드 type/C1/본문규범2 독립Yes 뒤 게시했다. 정보부족 합성case1·기존API3/row15/batch8·후보형식/binding만 고정하고 과업/행동/effect/closedloop·등록8은 후속이다. 독립12논리 봉인은미실행이며5구체seam은첫관측전후행고정한다. source286/기능8b5d362b 불변, 새제품0이다. 개발1G3·개발2효과평가·개발4제공기록화면은정확SETUP/새봉인뒤CORE-GO를실제로받아담당구현을잇는다. P01B050 후행대조154/154·corpus119/119·보존118≠적격118/대상18·690쪽이다. 새실모델0/동일소진Vertex6/3072·무료크레딧전용/비용null·사용자준비0이며 아래는당시기록이다.
+
 2026-10-25 [통합059](INTEGRATION-059.md): 개발4 제공 캠페인 기록 전용 화면 설계·계획2를 private v2·공개7묶음 type/C1 독립Yes 뒤 게시했다. 원/effective/출처·부분합/null·14형상/history20·readback-only 보호GET/시작전 genuine reader1/불변cache·권위false2를 고정한다. 새독립14논리/47예정 봉인은 제품/HTTP/DOM0이며 정확base/소유기존8/SETUP 뒤 담당구현으로 잇는다. 개발1 G3 SETUP직접대조·새기대봉인, 개발2 효과평가 CORE-GO 실제구현, 개발3 동일입력비교 정적Yes 뒤 공개투영을 유지한다. P01 B049 후행대조153/153·corpus118/118·보존106≠적격106/대상18·690쪽이다. source286/기능8b5d362b·새실모델0/소진Vertex6/3072·무료크레딧전용/비용null·사용자준비0이며 아래는당시기록이다.
 
 2026-10-25 [통합058](INTEGRATION-058.md): 개발1 G3 접수 claim 전 합성 context 준비 설계·계획2를 v2 원No/I1 보존·v3 최소수정 정적Yes·공개19절 type/C1 독립Yes 뒤 게시했다. 준비창 whole-job 재대조와 반환 뒤 기존once/public8·claim eligibility의 범위를 구별하고 retain 부작용·업무DML0·실제issuer 권위OPEN을 고정한다. source286/기능8b5d362b 불변이며 새제품0이다. 개발2 효과평가는 새독립14논리/42예정 봉인·정확039 SETUP 뒤 실제 CORE-GO, 개발3 동일입력비교 계약·개발4 제공기록화면 v2 정적Yes 뒤 공개투영/새봉인을 잇는다. P01 B048 후행대조152/152·corpus117/117·보존94≠적격94/대상18·690쪽을 닫았다. 새실모델0·소진Vertex6/3072·무료크레딧전용/비용null·사용자준비0이며 아래는당시기록이다.
