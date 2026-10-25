@@ -381,6 +381,10 @@ _REFERENCE_PARENT_SUFFIXES = {
     'IntakeReferenceStateError': ('intake_reference_state_', 'invalid_argument store_invalid transaction_required '
         'intake_not_found input_limit source_integrity_invalid projection_inconsistent delegation_invalid storage_error')}
 _REFERENCE_BASE_SHUTDOWN = ThreadingHTTPServer.shutdown
+_DOCX_ERRORS = {'intake_docx_reference_' + suffix: status for suffix, status in {
+    'invalid_argument': 400, 'store_invalid': 503, 'intake_not_found': 404,
+    'intake_unavailable': 409, 'revision_changed': 409, 'document_not_found': 404,
+    'source_integrity_invalid': 503, 'input_limit': 413, 'storage_error': 503}.items()}
 _REFERENCE_ACTION_ERRORS = {'unconfigured': 503, 'invalid_request': 400, 'input_limit': 413,
     'access_denied': 403, 'review_input_unavailable': 503, 'prepared_unavailable': 410,
     'request_conflict': 409, 'unavailable': 503}
@@ -418,6 +422,137 @@ def _reference_need(condition):
 
 def _reference_keys(value, names):
     _reference_need(type(value) is dict and value.keys() == set(names.split()))
+
+
+def _docx_binding(value):
+    """Detach the existing exact5; does not inspect a Store or source file."""
+    _reference_keys(value, 'source_id intake_id revision revision_fingerprint document')
+    for key in ('source_id', 'intake_id'): _reference_id(value[key])
+    _reference_int(value['revision'], 1, 2**53 - 1)
+    _reference_sha(value['revision_fingerprint'])
+    document = value['document']; _reference_keys(document, 'path sha256 bytes')
+    path = document['path']
+    _reference_need(type(path) is str and bool(path) and len(path) <= 1024
+        and not path.startswith('/') and '\\' not in path and ':' not in path
+        and not any(ord(c) < 32 or ord(c) == 127 for c in path)
+        and all(part not in {'', '.', '..'} for part in path.split('/'))
+        and path.lower().endswith('.docx'))
+    try: _reference_need(len(path.encode('utf-8')) <= 1024)
+    except UnicodeError: _reference_fail()
+    _reference_sha(document['sha256']); _reference_int(document['bytes'], 0, 16 * 1024**2)
+    return {key: value[key] for key in ('source_id', 'intake_id', 'revision', 'revision_fingerprint')} | {
+        'document': {key: document[key] for key in ('path', 'sha256', 'bytes')}}
+
+
+def _docx_json(value):
+    """DOCX-only value-node/depth and canonical byte budgets; legacy unchanged."""
+    cap = 2097152; nodes = size = 0
+    def limit(): _reference_fail('input_limit', 413)
+    def add(amount):
+        nonlocal size
+        size += amount
+        if size > cap: limit()
+    def string(item):
+        if len(item) > cap: limit()
+        try: return len(json.dumps(item, ensure_ascii=False).encode('utf-8'))
+        except (ValueError, UnicodeError): _reference_fail()
+    def walk(item, depth=0):
+        nonlocal nodes
+        nodes += 1
+        if nodes > 200000 or depth > 64: limit()
+        if item is None or type(item) is bool:
+            add(len(json.dumps(item))); return item
+        if type(item) is int:
+            _reference_need(abs(item) <= 2**53 - 1)
+            add(len(str(item))); return item
+        if type(item) is str:
+            add(string(item)); return item
+        _reference_need(type(item) in (dict, list))
+        if len(item) > 200000: limit()
+        add(2 + max(0, len(item) - 1))
+        if type(item) is list: return [walk(child, depth + 1) for child in item]
+        copy = {}
+        for key, child in item.items():
+            _reference_need(type(key) is str)
+            add(string(key) + 1)
+            copy[key] = walk(child, depth + 1)
+        return copy
+    copy = walk(value)
+    raw = json.dumps(copy, ensure_ascii=False, sort_keys=True, allow_nan=False, separators=(',', ':')).encode('utf-8')
+    if len(raw) > cap: limit()
+    return copy, raw
+
+
+def _docx_response(value, intake_id, *, selection=None):
+    value, raw = _docx_json(value)
+    _reference_keys(value, 'schema_version kind artifact_id artifact_bytes synthetic reference')
+    def schema(item): _reference_need(type(item) is int and item == 1)
+    def text(item, *, nonempty=False): _reference_need(type(item) is str and (not nonempty or bool(item)))
+    def array(item): _reference_need(type(item) is list)
+    def number(item, minimum=0): _reference_int(item, minimum, 2**53 - 1)
+    schema(value['schema_version']); _reference_need(value['kind'] == 'intake_docx_reference_retained')
+    _reference_sha(value['artifact_id']); _reference_int(value['artifact_bytes'], 1, 9 * 1024**2)
+    _reference_need(type(value['synthetic']) is bool)
+    reference = value['reference']; _reference_keys(reference, 'schema_version kind binding result')
+    schema(reference['schema_version']); _reference_need(reference['kind'] == 'intake_docx_reference')
+    binding = _docx_binding(reference['binding']); _reference_need(binding['intake_id'] == intake_id)
+    if selection is not None:
+        _reference_need(value['artifact_id'] == selection[0] and binding == selection[1])
+    result = reference['result']
+    _reference_keys(result, 'schema_version source reader status complete scope limits blocks text_sha256 issues statistics')
+    schema(result['schema_version']); source = result['source']; _reference_keys(source, 'filename sha256 size_bytes')
+    _reference_need(source == {'filename': binding['document']['path'], 'sha256': binding['document']['sha256'],
+                               'size_bytes': binding['document']['bytes']}
+                    and type(source['size_bytes']) is int)
+    reader = result['reader']; _reference_keys(reader, 'name version')
+    text(reader['name']); text(reader['version']); text(result['status'], nonempty=True)
+    _reference_need(type(result['complete']) is bool); _reference_sha(result['text_sha256'])
+    scope = result['scope']; _reference_keys(scope, 'profile part page_numbers')
+    text(scope['profile']); _reference_need(scope['part'] is None or type(scope['part']) is str)
+    _reference_need(scope['page_numbers'] == 'unavailable')
+    for key in ('limits', 'statistics'): _reference_need(type(result[key]) is dict)
+    def locator(item, *, nullable=False):
+        if nullable and item is None: return
+        _reference_keys(item, 'part path'); text(item['part']); array(item['path'])
+        for step in item['path']:
+            _reference_keys(step, 'kind element_index'); text(step['kind']); number(step['element_index'], 1)
+    structures = 0
+    def structure():
+        nonlocal structures
+        structures += 1
+        if structures > 2000: _reference_fail('input_limit', 413)
+    def blocks(items):
+        array(items)
+        for block in items:
+            structure(); _reference_need(type(block) is dict)
+            kind = block.get('kind')
+            if kind == 'paragraph':
+                _reference_keys(block, 'kind locator text text_sha256 complete breaks')
+                locator(block['locator']); text(block['text']); _reference_sha(block['text_sha256'])
+                _reference_need(type(block['complete']) is bool); array(block['breaks'])
+                for br in block['breaks']:
+                    _reference_keys(br, 'offset kind'); number(br['offset']); text(br['kind'], nonempty=True)
+            elif kind == 'unsupported':
+                _reference_keys(block, 'kind locator reason'); locator(block['locator']); text(block['reason'], nonempty=True)
+            elif kind == 'table':
+                _reference_keys(block, 'kind locator grid_columns rows'); locator(block['locator'])
+                if block['grid_columns'] is not None: number(block['grid_columns'])
+                array(block['rows'])
+                for row in block['rows']:
+                    structure(); _reference_keys(row, 'locator grid_before grid_after cells')
+                    locator(row['locator']); number(row['grid_before']); number(row['grid_after']); array(row['cells'])
+                    for cell in row['cells']:
+                        structure(); _reference_keys(cell, 'locator grid_start grid_span v_merge merge_origin blocks')
+                        locator(cell['locator']); number(cell['grid_start'], 1); number(cell['grid_span'], 1)
+                        _reference_need(cell['v_merge'] in ('none', 'restart', 'continue'))
+                        locator(cell['merge_origin'], nullable=True); blocks(cell['blocks'])
+            else: _reference_fail()
+    blocks(result['blocks']); array(result['issues'])
+    if len(result['issues']) > 128: _reference_fail('input_limit', 413)
+    for issue in result['issues']:
+        _reference_keys(issue, 'code locator occurrences')
+        text(issue['code'], nonempty=True); locator(issue['locator'], nullable=True); number(issue['occurrences'], 1)
+    return raw
 
 
 def _reference_int(value, minimum=1, maximum=2**63-1):
@@ -591,7 +726,7 @@ def _reference_body(blob, action='current'):
                 or type(value['schema_version']) is not int or value['schema_version'] != 1):
             raise ValueError()
         if action == 'current':
-            if value['action'] != 'current': raise ValueError()
+            if value['action'] not in ('current', 'docx_retained'): raise ValueError()
         else:
             for key in (('review_input_id', 'replace_handle_id') if action == 'prepare' else
                         ('handle_id', 'preparation_id', 'expected_snapshot_id', 'expected_head_record_id')):
@@ -717,6 +852,7 @@ class _ReferenceRuntime:
         self.active = 0; self.source_active = False; self.closing = self.closed = False
         self.loop_thread = None; self.loop_failure = False; self.close_lock = threading.Lock()
         self.actions = None; self.actions_closed = False; self.append_scope = ()
+        self.docx_selection = self.docx_parent = self.docx_error_type = None
         self.action_methods = {}; self.action_errors = {}; self.action_error_type = None
         self.check_store()
         api = importlib.import_module('.intake_reference_review', __package__)
@@ -724,6 +860,22 @@ class _ReferenceRuntime:
         _reference_need(callable(self.parent))
         self.parent_errors = {getattr(api, name): frozenset(prefix + suffix for suffix in names.split())
                               for name, (prefix, names) in _REFERENCE_PARENT_SUFFIXES.items()}
+
+    def configure_docx(self, selection):
+        try:
+            _reference_need(type(selection) is tuple and len(selection) == 2)
+            artifact_id, supplied = selection; _reference_sha(artifact_id)
+            binding = _docx_binding(supplied)
+            _reference_need(self.allowed(binding['intake_id']))
+        except Exception:
+            _reference_fail('invalid_request', 400)
+        try:
+            module = importlib.import_module('.intake_docx_reference', __package__)
+            parent, error_type = module.read_retained_intake_docx_reference, module.IntakeDocxReferenceError
+            _reference_need(callable(parent) and type(error_type) is type and issubclass(error_type, ValueError))
+        except Exception:
+            _reference_fail()
+        self.docx_selection, self.docx_parent, self.docx_error_type = (artifact_id, binding), parent, error_type
 
     def configure_actions(self, catalog, append_scope, review_inputs):
         self.append_scope = _reference_scope(append_scope)
@@ -873,6 +1025,8 @@ class _ReferenceRuntime:
             allowed = item is not None and self.allowed(intake_id)
             headers.append(('X-Intake-Reference-Read-Allowed', 'true' if allowed else 'false'))
             if allowed: headers.append(('X-Intake-Reference-CSRF', item['csrf']))
+            if allowed and self.docx_selection is not None and self.docx_selection[1]['intake_id'] == intake_id:
+                headers.append(('X-Intake-Reference-Docx-Selected', 'true'))
             return self.action_headers(headers, sid if allowed else None, intake_id)
 
     def action_binding(self, session_id):
@@ -1117,6 +1271,7 @@ def _reference_dispatch(handler, runtime):
     handler._reference_handling = True
     handler.close_connection = True
     code, status, payload, action = None, None, None, None
+    docx_request = False
     try:
         if len(raw_target.encode('utf-8')) > 1024: _reference_fail('input_limit', 413)
         if (parsed.scheme or parsed.netloc or parsed.fragment or raw_target != path + ('?' + parsed.query if '?' in raw_target else '')
@@ -1178,11 +1333,22 @@ def _reference_dispatch(handler, runtime):
             except (TimeoutError, OSError): _reference_fail('unavailable', 408)
             if len(blob) != int(literal): _reference_fail('invalid_request', 400)
             request = _reference_body(blob) if action == 'current' else _reference_body(blob, action)
+            docx_request = action == 'current' and request['action'] == 'docx_retained'
             if action == 'append' and request['intake_id'] != intake_id: _reference_fail('invalid_request', 400)
+            if action == 'current' and request['action'] == 'docx_retained' and (
+                    runtime.docx_selection is None or runtime.docx_selection[1]['intake_id'] != intake_id):
+                _reference_fail('unconfigured')
             with runtime._request_call(handler, intake_id, source=True, action=action if action != 'current' else None) as binding:
                 if action == 'current':
-                    value = runtime.parent(runtime.store, intake_id, request, allow_retained_reads=True)
-                    payload = _reference_response(value, intake_id, request)
+                    if request['action'] == 'docx_retained':
+                        if runtime.docx_selection is None or runtime.docx_selection[1]['intake_id'] != intake_id:
+                            _reference_fail('unconfigured')
+                        artifact_id, selected_binding = runtime.docx_selection
+                        value = runtime.docx_parent(runtime.store, artifact_id, expected_binding=_docx_binding(selected_binding))
+                        payload = _docx_response(value, intake_id, selection=runtime.docx_selection)
+                    else:
+                        value = runtime.parent(runtime.store, intake_id, request, allow_retained_reads=True)
+                        payload = _reference_response(value, intake_id, request)
                 else:
                     value = runtime.action_methods[action](runtime.actions, binding, intake_id, request)
                     payload = _reference_action_response(value, intake_id, request, action)
@@ -1195,6 +1361,10 @@ def _reference_dispatch(handler, runtime):
             code, status = error.code, error.status
         elif runtime is not None and action in {'prepare', 'append'}:
             code, status = runtime.action_failure(error)
+        elif runtime is not None and docx_request and type(error) is runtime.docx_error_type:
+            candidate = getattr(error, 'code', None)
+            if type(candidate) is str and candidate in _DOCX_ERRORS:
+                code, status = candidate, _DOCX_ERRORS[candidate]
         elif runtime is not None and type(error) in runtime.parent_errors:
             candidate = getattr(error, 'code', None)
             if type(candidate) is str and candidate in runtime.parent_errors[type(error)]:
@@ -1215,7 +1385,7 @@ def _reference_dispatch(handler, runtime):
 def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None,
                   intake_reference_store=None, intake_reference_read_scope=(),
                   intake_reference_append_scope=(), intake_reference_review_inputs=(),
-                  intake_test_intent_inputs=()):
+                  intake_test_intent_inputs=(), intake_docx_reference_selection=None):
     intent_review = None
     if (type(intake_test_intent_inputs) is not tuple or len(intake_test_intent_inputs) > 1
             or intake_test_intent_inputs and (type(intake_test_intent_inputs[0]) is not tuple
@@ -1242,8 +1412,9 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 break
         return payload
 
-    if intake_reference_store is None and not (type(intake_reference_append_scope) is tuple and not intake_reference_append_scope
-            and type(intake_reference_review_inputs) is tuple and not intake_reference_review_inputs):
+    if intake_reference_store is None and (intake_docx_reference_selection is not None or not (
+            type(intake_reference_append_scope) is tuple and not intake_reference_append_scope
+            and type(intake_reference_review_inputs) is tuple and not intake_reference_review_inputs)):
         _reference_fail('invalid_request', 400)
     if intake_reference_store is not None and (type(host) is not str or host != '127.0.0.1'
             or type(port) is not int or not 0 <= port <= 65535):
@@ -1260,6 +1431,7 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
             setup_failure = ('unavailable', 503)
     if setup_failure is not None: _reference_fail(*setup_failure)
     if reference is not None:
+        if intake_docx_reference_selection is not None: reference.configure_docx(intake_docx_reference_selection)
         reference.configure_actions(fcc_case_catalog, intake_reference_append_scope, intake_reference_review_inputs)
     fcc_summary = fcc_case = fcc_search = fcc_discover = fcc_error_type = fcc_calculate = None
     if fcc_case_catalog is not None:

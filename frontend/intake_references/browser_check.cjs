@@ -26,6 +26,7 @@ function createSyntheticBundle(){
 async function main(argv=process.argv.slice(2)){
  if(argv.length===2&&argv[0]==='--mode'&&argv[1]==='frontend')return frontendMain();
  if(argv.length===2&&argv[0]==='--mode'&&argv[1]==='integrated')return integratedMain();
+ if(argv.length===2&&argv[0]==='--mode'&&argv[1]==='docx')return docxMain();
  const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
  const {createHash}=require('node:crypto'),{execFileSync}=require('node:child_process');
  assert.equal(argv.length,0,'invalid_configuration');
@@ -835,5 +836,125 @@ function createIntentReview(record){
   questions:[],reason_codes:['applicability_not_assessed','intent_missing'],
   verification:{...Object.fromEntries(flags.map(key=>[key,false])),intake_citations_checked:false,basis_literals_checked:false},limits};
 }
-module.exports={createSyntheticBundle,createIntentReview,main};
+// Declared DTO/mutation input only; never a genuine retention/admission oracle.
+function createDocxObservation(){
+ const sha='a'.repeat(64),locator={part:'/word/document.xml',path:[{kind:'body',element_index:1},{kind:'paragraph',element_index:1}]};
+ return {schema_version:1,kind:'intake_docx_reference_retained',artifact_id:'b'.repeat(64),artifact_bytes:1024,synthetic:true,
+  reference:{schema_version:1,kind:'intake_docx_reference',binding:{source_id:'SYN-DOCX',intake_id:'DOCX-WIRE',revision:1,
+   revision_fingerprint:'c'.repeat(64),document:{path:'request.docx',sha256:sha,bytes:123}},
+  result:{schema_version:1,source:{filename:'request.docx',sha256:sha,size_bytes:123},reader:{name:'reference_docx',version:'1'},
+   status:'ok',complete:true,scope:{profile:'wordprocessingml-transitional-body-v1',part:'/word/document.xml',page_numbers:'unavailable'},
+   limits:{},blocks:[{kind:'paragraph',locator,text:'DECLARED WIRE BODY <script>',text_sha256:'d'.repeat(64),complete:true,breaks:[]}],
+   text_sha256:'d'.repeat(64),issues:[],statistics:{}}}};
+}
+async function docxMain(){
+ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+ const root=path.resolve(__dirname,'../..'),evidence=fs.mkdtempSync(path.join(root,'.local/dx-dom-'));
+ const value=createDocxObservation(),b=value.reference.binding,bundle=createSyntheticBundle();
+ bundle.history.intake_id=b.intake_id;
+ const record={source_id:b.source_id,intake_id:b.intake_id,revision:1,bundle:'DOCX declared wire',status:'analyzed',
+  delegated:false,deferred:false,synthetic:true,measurement_support:'unverified',
+  analysis:{facts:{},questions:[{key:'unread_documents',paths:[b.document.path],message:'Unread original'}],next_action:'needs_information'},
+  files:[{...b.document}],history:[{revision:1,fingerprint:b.revision_fingerprint,created_at:100,files:[{...b.document}]}],jobs:[]};
+ const snapshot={schema_version:1,generated_at:'2026-10-25T00:00:00Z',intakes:[record],notifications:[]};
+ const files={'/':'index.html','/app.js':'app.js','/model.mjs':'model.mjs','/styles.css':'styles.css','/intake_flow_model.mjs':'intake_flow_model.mjs',
+  '/virtual_fleet/harness_model.mjs':'virtual_fleet/harness_model.mjs',
+  '/intake-references/model.mjs':'intake_references/model.mjs','/intake-references/transport.mjs':'intake_references/transport.mjs',
+  '/intake-references/view.mjs':'intake_references/view.mjs','/intake-reference-actions/actions.mjs':'intake_reference_actions/actions.mjs'};
+ let selected=true,mode='ok',browser,server,page,failure=null,releaseHeld=null,holdReady=null;const calls=[],checks=[],errors=[];
+ const report={phase:'DOCX declared wire DOM',genuine_API_Store_native:false,checks};
+ try{
+  server=http.createServer((req,res)=>{
+   res.setHeader('Cache-Control','no-store');
+   const file=files[req.url];if(file){res.setHeader('Content-Type',file.endsWith('.css')?'text/css':file.endsWith('.html')?'text/html':'text/javascript');return res.end(fs.readFileSync(path.join(root,'frontend',file)));}
+   res.setHeader('Content-Type','application/json; charset=utf-8');
+   if(req.url==='/api/intakes')return res.end(JSON.stringify(snapshot));
+   if(req.url===`/api/intake-references/${b.intake_id}/history?limit=20`||req.url===`/api/intake-references/${b.intake_id}/history`){
+    res.setHeader('Set-Cookie','dgm_wire=synthetic; HttpOnly; SameSite=Strict; Path=/api/intake-references/');
+    res.setHeader('X-Intake-Reference-Read-Allowed','true');res.setHeader('X-Intake-Reference-CSRF','1'.repeat(64));
+    res.setHeader('X-Intake-Reference-Prepare-Allowed','false');res.setHeader('X-Intake-Reference-Append-Allowed','false');
+    if(selected)res.setHeader('X-Intake-Reference-Docx-Selected','true');return res.end(JSON.stringify(bundle.history));
+   }
+   if(req.method==='POST'&&req.url===`/api/intake-references/${b.intake_id}/current`){
+    let body='';req.on('data',chunk=>body+=chunk);req.on('end',()=>{
+     const request=JSON.parse(body);calls.push({exact2:Object.keys(request).length===2&&request.schema_version===1&&request.action==='docx_retained',
+      csrf_shape:/^[a-f0-9]{64}$/.test(req.headers['x-intake-reference-csrf']||''),origin_present:!!req.headers.origin});
+     if(mode==='fail'){res.statusCode=409;return res.end(JSON.stringify({error:{code:'intake_docx_reference_revision_changed'}}));}
+     if(mode==='forbidden'){res.statusCode=403;return res.end('{"error":{"code":"intake_reference_ui_access_denied"}}');}
+     if(mode==='hold'){releaseHeld=()=>{if(!res.destroyed)res.end(JSON.stringify(value));};holdReady?.();return;}
+     const response=copy(value);if(mode==='invalid')response.reference.result.scope.page_numbers=1;
+     if(mode==='unknown'){response.reference.result.status='unknown stored status';response.reference.result.reader.name='<script>literal reader</script>';}
+     res.end(JSON.stringify(response));
+    });return;
+   }
+   res.statusCode=404;res.end('{"error":{"code":"route_not_found"}}');
+  });
+  await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
+  const {chromium}=require('playwright');browser=await chromium.launch({headless:true});
+  page=await browser.newPage({viewport:{width:1440,height:1000}});page.setDefaultTimeout(6000);page.on('pageerror',e=>errors.push(e.message));
+  await page.goto('http://127.0.0.1:'+server.address().port);await page.locator('.ir-history-status[data-state="ready"]').waitFor();
+  assert.equal(await page.locator('.docx-retained-observation').count(),1,'selected history must reveal the DOCX control');
+  assert.equal(calls.length,0);checks.push('selected_hint_requires_explicit_source');
+  const button=page.getByRole('button',{name:'DOCX 보존 관측 읽기',exact:true});
+  await button.focus();await page.keyboard.press('Enter');await page.locator('.docx-retained-observation[data-state="ready"]').waitFor();
+  assert.equal(calls.length,1);assert.ok(calls.every(x=>x.exact2&&x.csrf_shape&&x.origin_present));
+  assert.equal(await button.evaluate(n=>n===document.activeElement),true);checks.push('keyboard_exact2_source_private_token_focus');
+  assert.equal(await page.locator('.docx-retained-observation').getByText('DECLARED WIRE BODY <script>',{exact:true}).count(),0);
+  assert.equal(await page.locator('.docx-retained-observation a').count(),0);checks.push('native_body_not_quote_link_or_HTML');
+  for(const width of [390,1440]){await page.setViewportSize({width,height:width===390?844:1000});
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await page.screenshot({path:path.join(evidence,`docx-${width}.png`),fullPage:true});}
+  checks.push('390_1440_existing_CSS_no_overflow');
+  const summary=page.locator('.docx-retained-observation details summary').first();await summary.focus();await page.keyboard.press('Enter');
+  assert.equal(calls.length,1);checks.push('details_keyboard_has_no_IO');
+  mode='fail';await button.click();await page.locator('.docx-retained-observation[data-state="error"]').waitFor();
+  assert.ok((await page.locator('.docx-retained-observation').innerText()).includes(value.artifact_id));checks.push('source_failure_keeps_previous_observation');
+  mode='invalid';await button.click();await page.locator('.docx-retained-observation[data-state="error"]').waitFor();
+  checks.push('invalid_native_wire_not_repaired');
+  mode='unknown';await button.click();await page.locator('.docx-retained-observation[data-state="ready"]').waitFor();
+  assert.equal(await page.locator('.docx-retained-observation script').count(),0);
+  assert.ok((await page.locator('.docx-retained-observation').innerText()).includes('<script>literal reader</script>'));checks.push('unknown_declarations_remain_literal');
+  const countBeforeMetadata=calls.length;record.analysis.questions[0].message='UPDATED UNREAD';
+  await page.locator('#refresh').click();await page.getByText('UPDATED UNREAD',{exact:true}).waitFor();await page.locator('.ir-history-status[data-state="ready"]').waitFor();
+  assert.equal(calls.length,countBeforeMetadata);assert.equal(await page.locator('.docx-retained-observation').count(),1);
+  assert.ok((await page.locator('.docx-retained-observation').innerText()).includes(value.artifact_id));checks.push('analysis_only_metadata_refresh_preserves_previous_file_observation_without_source_IO');
+  mode='forbidden';await button.click();await page.locator('.docx-retained-observation[data-state="error"]').waitFor();
+  assert.equal(await button.isDisabled(),true);assert.ok((await page.locator('.docx-retained-observation').innerText()).includes(value.artifact_id));
+  await page.locator('.ir-history-refresh').click();await page.locator('.ir-history-status[data-state="ready"]').waitFor();assert.equal(await button.isEnabled(),true);
+  checks.push('source403_disables_and_requires_explicit_history_refresh');
+  const beforeRenderFailure=calls.length;
+  await page.evaluate(()=>{const original=document.createElement;document.createElement=function(tag,...args){if(tag==='section'){document.createElement=original;throw Error('declared render preparation failure');}return original.call(this,tag,...args);};});
+  await button.click();await page.locator('.docx-retained-observation[data-state="error"]').waitFor();
+  assert.equal(calls.length,beforeRenderFailure);assert.equal(errors.length,0);
+  assert.ok((await page.locator('.docx-retained-observation').innerText()).includes(value.artifact_id));checks.push('off_DOM_prepare_failure_keeps_last_good_without_source');
+  selected=false;await page.locator('.ir-history-refresh').click();await page.locator('.ir-history-status[data-state="ready"]').waitFor();
+  assert.equal(await page.locator('.docx-retained-observation').count(),0);checks.push('successful_history_absence_removes_section');
+  selected=true;await page.locator('.ir-history-refresh').click();await page.locator('.ir-history-status[data-state="ready"]').waitFor();
+  mode='hold';let held=new Promise(resolve=>{holdReady=resolve;});await button.click();await held;
+  snapshot.intakes=[{...copy(record),intake_id:'DOCX-OTHER',bundle:'OTHER DOCX declaration'}];
+  await page.locator('#refresh').click();await page.getByText('OTHER DOCX declaration',{exact:true}).first().waitFor();releaseHeld();releaseHeld=null;
+  assert.equal(await page.locator('.docx-retained-observation').count(),0);checks.push('late_source_cannot_publish_into_other_intake');
+  snapshot.intakes=[record];mode='ok';await page.locator('#refresh').click();await page.locator('.ir-history-status[data-state="ready"]').waitFor();
+  await button.click();await page.locator('.docx-retained-observation[data-state="ready"]').waitFor();
+  mode='hold';held=new Promise(resolve=>{holdReady=resolve;});await button.click();await held;
+  const sourceBeforeRestore=calls.length;await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true})));
+  assert.equal(await button.isDisabled(),true);releaseHeld();releaseHeld=null;
+  await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));await page.locator('.ir-history-status[data-state="ready"]').waitFor();
+  assert.equal(calls.length,sourceBeforeRestore);checks.push('BFCache_aborts_browser_ticket_without_automatic_source');
+  mode='hold';held=new Promise(resolve=>{holdReady=resolve;});await button.click();await held;
+  await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pagehide',{persisted:false})));releaseHeld();releaseHeld=null;
+  assert.equal(await page.locator('.docx-retained-observation').count(),0);checks.push('terminal_destroy_retires_source_and_section');
+  assert.equal(errors.length,0);report.status='pass';
+ }catch(error){failure=error;report.status='fail';report.error=String(error.message);
+  if(page)report.page_state=await page.evaluate(()=>({error:document.querySelector('#error-banner')?.textContent,
+   history:document.querySelector('.ir-history-status')?.textContent,history_state:document.querySelector('.ir-history-status')?.dataset.state,
+   last_updated:document.querySelector('#last-updated')?.textContent})).catch(()=>null);}
+ finally{
+  releaseHeld?.();if(browser)await browser.close();if(server)await new Promise(resolve=>server.close(resolve));
+  report.browser_closed=true;report.server_closed=true;report.source_calls=calls;report.javascript_errors=errors;
+  fs.writeFileSync(path.join(evidence,'result.json'),JSON.stringify(report,null,2)+'\n');
+ }
+ console.log(JSON.stringify({phase:report.phase,status:report.status,checks:checks.length,evidence}));
+ if(failure)throw failure;return report;
+}
+module.exports={createSyntheticBundle,createIntentReview,createDocxObservation,main};
 if(require.main===module)main().catch(error=>{process.stderr.write(error.message+'\n');process.exitCode=1;});

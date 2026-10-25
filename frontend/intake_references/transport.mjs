@@ -8,6 +8,8 @@ const knownCodes=new Set(Object.entries({
  ledger:['input_limit','intake_not_found','integrity_invalid','invalid_argument','origin_invalid','parent_invalid','request_conflict','schema_mismatch','storage_error','store_invalid'],
  state:['delegation_invalid','input_limit','intake_not_found','invalid_argument','projection_inconsistent','source_integrity_invalid','storage_error','store_invalid','transaction_required'],
 }).flatMap(([prefix,suffixes])=>suffixes.map(suffix=>`intake_reference_${prefix}_${suffix}`)));
+const docxCodes=new Set('invalid_argument store_invalid intake_not_found intake_unavailable revision_changed document_not_found source_integrity_invalid input_limit storage_error'
+ .split(' ').map(suffix=>'intake_docx_reference_'+suffix));
 const ownQuery=value=>{
  if(!value||typeof value!=='object'||![Object.prototype,null].includes(Object.getPrototypeOf(value)))throw Error();
  const keys=Reflect.ownKeys(value);if(keys.length!==2||!keys.includes('limit')||!keys.includes('before_seq'))throw Error();
@@ -18,10 +20,10 @@ const ownQuery=value=>{
  return copy;
 };
 const same=(a,b)=>a!==null&&b!==null&&a.intake_id===b.intake_id&&a.revision===b.revision&&a.snapshotGeneration===b.snapshotGeneration;
-const wireError=raw=>{
+const wireError=(raw,docx=false)=>{
  // The only accepted non-2xx shape has exactly these two keys and a literal known code.
  const match=/^[ \t\r\n]*\{[ \t\r\n]*"error"[ \t\r\n]*:[ \t\r\n]*\{[ \t\r\n]*"code"[ \t\r\n]*:[ \t\r\n]*"([a-z_]+)"[ \t\r\n]*\}[ \t\r\n]*\}[ \t\r\n]*$/.exec(raw);
- return match&&knownCodes.has(match[1])?match[1]:UNAVAILABLE;
+ return match&&(knownCodes.has(match[1])||docx&&docxCodes.has(match[1]))?match[1]:UNAVAILABLE;
 };
 
 export function createIntakeReferenceTransport(...args){
@@ -103,24 +105,26 @@ export function createIntakeReferenceTransport(...args){
    const url=kind==='history'?base+`/history?limit=${query.limit}`+(query.before_seq===null?'':`&before_seq=${query.before_seq}`):base+'/current';
    const options={method:kind==='history'?'GET':'POST',signal:controller.signal,
     credentials:'same-origin',cache:'no-store',redirect:'error',headers:{Accept:'application/json'}};
-   if(kind==='current'){
+    if(kind!=='history'){
     options.headers['Content-Type']='application/json; charset=utf-8';
     options.headers['X-Intake-Reference-CSRF']=usedSecret.token;
-    options.body=JSON.stringify({schema_version:1,action:'current'});
+     options.body=JSON.stringify({schema_version:1,action:kind});
    }
    const response=await fetch(url,options);guard();
    const raw=await bounded(response);guard();
    if(!response.ok){
-    const code=wireError(raw);
-    if(kind==='current'&&secret===usedSecret&&
+     const code=wireError(raw,kind==='docx_retained');
+     if(kind!=='history'&&secret===usedSecret&&
      (response.status===403||code==='intake_reference_ui_session_unavailable'||code.endsWith('_access_denied')))clearSecret();
     throw failure(code);
    }
-   if(kind==='current')return raw;
+    if(kind!=='history')return raw;
    const allowed=response.headers.get('X-Intake-Reference-Read-Allowed'),token=response.headers.get('X-Intake-Reference-CSRF');
    if((allowed!=='true'&&allowed!=='false')||(allowed==='true'&&(token===null||!/^[a-f0-9]{64}$/.test(token)))||
     (allowed==='false'&&token!==null))throw failure(UNAVAILABLE);
-   guard();secret=allowed==='true'?{token}:null;
+    const selected=response.headers.get('X-Intake-Reference-Docx-Selected');
+    if(selected!==null&&(selected!=='true'||allowed!=='true'))throw failure(UNAVAILABLE);
+    guard();secret=allowed==='true'?{token,docxSelected:selected==='true'}:null;
    return {raw_json:raw,read_allowed:allowed==='true'};
   }
   try{return await Promise.race([work(),aborted]);}
@@ -131,6 +135,11 @@ export function createIntakeReferenceTransport(...args){
   }
  }
  const readHistory=async(id,query,signal)=>{const parsed=validate(id,signal,query,true);return perform('history',id,parsed,signal);};
- const readCurrent=async(id,signal)=>{validate(id,signal);if(secret===null)throw failure(INVALID);return perform('current',id,null,signal);};
- return {readHistory,readCurrent,setContext,setPending,destroy};
+  const readCurrent=async(id,signal,kind='current',...extra)=>{validate(id,signal);
+   if(extra.length||(kind!=='current'&&kind!=='docx_retained'))throw invalidInput();
+   if(kind==='docx_retained'&&(secret===null||!secret.docxSelected))throw failure('intake_reference_ui_unconfigured');
+   if(secret===null)throw failure(INVALID);
+   return perform(kind,id,null,signal);};
+  const hasRetainedDocxSelection=()=>alive&&!pending&&context!==null&&secret!==null&&secret.docxSelected;
+  return {readHistory,readCurrent,setContext,setPending,destroy,hasRetainedDocxSelection};
 }

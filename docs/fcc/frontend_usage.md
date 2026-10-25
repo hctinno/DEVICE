@@ -74,3 +74,40 @@ node --test frontend/review_check.cjs
 공통 스키마·Store·접수/하네스/가상 모듈·CLI를 변경하지 않았다. 현재 계약으로 조회가 가능하여 차단된 공통 변경은 없다. 다음 단계의 답변/보류 변경 API는 기존 `respond`의 신뢰 경계·event ID·대상 확인을 유지해야 한다. 알림 전달 확인/발생 시각, 대량 조회의 페이지 구분, 원본 파일 뷰어, 실시간 작업 갱신은 총괄과 별도 계약이 필요하다.
 
 업로드, AI 자동 대화·상시 모델 작업자, 가상 시험 실행 제어, 실장비/현장 운전, 공식 성적서 발행은 이 화면에 연결하지 않았다. 실측 비교·현장 검증·기관 적합성 검증은 미실행이다. 이번 통과는 접수 조회 기능과 합성 상태의 소프트웨어 검증이다.
+
+## DOCX 보존 관측 읽기
+
+신뢰된 로컬 호출자는 실제 DOCX 보존 receipt에서 받은 artifact ID와 `reference.binding` 한 개를 host에 고정할 수 있다. `workspace`, `intake_id`, `retained_receipt`는 이미 수행한 명시 보존 업무의 실제 값이다. browser가 파일 경로나 artifact ID를 선택하거나 원본을 다시 해석하지 않는다.
+
+```python
+from labflow.store import Store
+from labflow.ui_server import create_server
+
+store = Store.open_existing(str(workspace))
+server = create_server(
+    store.root, port=0,
+    intake_reference_store=store,
+    intake_reference_read_scope=(intake_id,),
+    intake_docx_reference_selection=(
+        retained_receipt['artifact_id'], retained_receipt['reference']['binding']),
+)
+```
+
+서버 실행·종료는 [기존 reference host 수명](intake_reference_host_usage.md)을 따른다. Store는 호출자가 소유하며 server의 source 요청과 worker가 실제 drain된 뒤 닫는다. 생성 시에는 원본·artifact admission을 실행하지 않는다. 선택을 공급하지 않는 기존 CLI와 `create_server` 기본값에는 새 DOCX 구역·버튼·source 요청이 없다.
+
+선택한 접수에서 기존 이력 조회가 성공하고 read scope/session이 허용되면 **DOCX 보존 관측 읽기** 버튼이 나타난다. 버튼은 기존 session·CSRF·Origin 검사가 적용되는 current POST의 `action=docx_retained` 분기를 명시 실행한다. 원본·등록·보존 bytes를 그 요청에서 확인한 원 관측을 읽으며 native 재파싱이나 retention 쓰기를 하지 않는다. 일반 `/api/intakes` GET과 history body에는 native 본문을 넣지 않는다. history의 선택 안내 헤더는 구성 안내이며 별도 source 권한이나 현재성 증명이 아니다.
+
+화면은 실제 artifact ID/bytes·등록 synthetic·원 source/revision/fingerprint/document 결합, reader/profile/status/complete 선언, issues와 실제 part/element-child/physical-cell·merge 위치를 원 값대로 표시한다. 페이지는 `unavailable`이며 PDF page/text-line 인용이나 문단 본문·HTML·링크·다운로드로 바꾸지 않는다. `ok`, `empty`, `partial`, native 실패와 unknown 선언을 구별한다. 보존 관측은 현재 분석의 `requires_parser`/unread·열린 질문을 해소하거나 사실·인용·실행을 승인하지 않는다.
+
+파일에 결합된 이전 관측과 현재 분석을 구별한다. 분석만 바뀌면 이전 명시 요청 관측을 유지할 수 있지만 새 확인 결과로 바꾸지 않는다. 다른 revision/fingerprint/문서 SHA·bytes로는 재결합하지 않는다. 실패 시 고정 오류와 이전 성공 관측을 함께 구별하고, **성공 history 응답에서 선택 헤더가 없을 때** 현재 구역을 제거한다. 일반 metadata GET에는 원래 이 선택 헤더가 없으므로 그 부재를 선택 소멸로 해석하지 않는다.
+
+원본/보존 읽기 한도와 별도로 이 화면의 전체 관측 한도는 UTF-8 2MiB, 깊이64, JSON value200000, native 구조2000, issues128이다. 초과는 HTTP413 `intake_reference_ui_input_limit`이며 저장 실패나 native 실패를 뜻하지 않는다. D1의 원 admission 한도 오류는 별도 `intake_docx_reference_input_limit`다. 현재 결합 변경은409 `intake_docx_reference_revision_changed`, 무결성 확인 실패는503 `intake_docx_reference_source_integrity_invalid`로 반환하며 잘라낸 성공이나 빈 관측으로 수리하지 않는다. 전체 오류·형상은 [공개 설계](../superpowers/specs/2026-10-25-intake-docx-retained-observation-ui-design.md)를 따른다.
+
+Tab/Enter로 버튼과 위치 details를 사용할 수 있다. details 펼침은 추가 읽기를 하지 않는다. 권한 오류 뒤에는 이력을 명시 새로 조회해야 하며, 다른 source 작업 중429·browser 취소·timeout·종료를 새 권한이나 실제 서버 취소 완료로 간주하지 않는다. 마지막 성공 관측은 반환 이후의 현재성을 보증하지 않는다.
+
+관련 client 검사는 아래 범위다. `--mode docx`는 선언 wire/오류 mutation의 실제 브라우저 검사이며, 실제 retention→readonly admission→보호 HTTP→DOM 검증과 분모가 다르다.
+
+```powershell
+node --test frontend/model.test.mjs frontend/snapshot.test.mjs frontend/intake_references/model.test.mjs frontend/intake_references/transport.test.mjs
+node frontend/intake_references/browser_check.cjs --mode docx
+```

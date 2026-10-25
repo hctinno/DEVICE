@@ -5,6 +5,22 @@ export const FIELDS = {
 };
 export const FACT_LABELS = {explicit: '원문 명시', inferred: '분석자 추론', uncertain: '불확실', user_confirmed: '사용자 답변'};
 export const JOB_LABELS = {queued: '대기', running: '분석 중', completed: '분석 완료', failed: '실패', superseded: '이전 버전으로 종료'};
+// A selection-confusion check only; it does not perform physical admission.
+export function docxReferenceMatchesRecord(observation, record) {
+  try {
+    const b=observation.reference.binding;
+    const sha=x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x);
+    if (!b || !b.document || typeof b.source_id!=='string' || typeof b.intake_id!=='string' ||
+        !Number.isSafeInteger(b.revision)||b.revision<1||!sha(b.revision_fingerprint)||!sha(b.document.sha256)||
+        typeof b.document.path!=='string'||!b.document.path||!Number.isSafeInteger(b.document.bytes)||b.document.bytes<0||
+        !record || b.source_id!==record.source_id || b.intake_id!==record.intake_id ||
+        b.revision!==record.revision || !Array.isArray(record.history) || !Array.isArray(record.files)) return false;
+    const revisions=record.history.filter(row=>row&&row.revision===b.revision);
+    const files=record.files.filter(file=>file&&file.path===b.document.path);
+    return revisions.length===1 && revisions[0].fingerprint===b.revision_fingerprint && files.length===1 &&
+      files[0].sha256===b.document.sha256 && files[0].bytes===b.document.bytes;
+  } catch { return false; }
+}
 const STATES = {
   deferred: ['보류', 'neutral', 'Ⅱ', '저장된 보류 의사입니다. 화면에서 자동 재개하지 않습니다.'],
   upload_incomplete: ['자료 미완성', 'warning', '!', '입력 묶음의 안정화 또는 파일 보완이 필요합니다.'],

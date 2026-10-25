@@ -21,12 +21,37 @@ function harness(t,responder=()=>reply()){
 }
 const rejects=(promise,code=UNAVAILABLE)=>assert.rejects(promise,error=>error instanceof Error&&error.message===code&&Object.keys(error).length===0);
 
-test('factory exports exactly one constructor and five closures, with no construction I/O or injected options',t=>{
+test('factory exports exactly one constructor and six closures, with no construction I/O or injected options',t=>{
  assert.deepEqual(Object.keys(api),['createIntakeReferenceTransport']);
  const {transport,calls}=harness(t);
- assert.deepEqual(Object.keys(transport).sort(),['destroy','readCurrent','readHistory','setContext','setPending']);
+ assert.deepEqual(Object.keys(transport).sort(),['destroy','hasRetainedDocxSelection','readCurrent','readHistory','setContext','setPending']);
  assert.equal(calls.length,0);
  for(const options of [{}, {fetch:()=>{}},null])assert.throws(()=>api.createIntakeReferenceTransport(options),{message:INVALID});
+});
+test('DOCX selection hint only enables an explicit exact2 source POST with the existing private token',async t=>{
+ const {transport,calls,history}=harness(t,()=>reply(raw,{headers:{'X-Intake-Reference-Docx-Selected':'true'}}));
+ assert.equal(transport.hasRetainedDocxSelection(),false);
+ await history();assert.equal(transport.hasRetainedDocxSelection(),true);
+ assert.deepEqual(await transport.readCurrent(context.intake_id,new AbortController().signal,'docx_retained'),raw);
+ assert.deepEqual(JSON.parse(calls[1].options.body),{schema_version:1,action:'docx_retained'});
+ assert.equal(calls[1].options.headers['X-Intake-Reference-CSRF'],tokenA);
+ transport.setPending(true);assert.equal(transport.hasRetainedDocxSelection(),false);
+});
+test('DOCX missing or lost selection never fetches and malformed headers never grant a selection',async t=>{
+ let config={};const {transport,calls,history}=harness(t,()=>reply(raw,config));await history();
+ assert.equal(transport.hasRetainedDocxSelection(),false);
+ await rejects(transport.readCurrent(context.intake_id,new AbortController().signal,'docx_retained'),'intake_reference_ui_unconfigured');
+ for(config of [{headers:{'X-Intake-Reference-Docx-Selected':'false'}},{allowed:'false',token:null,headers:{'X-Intake-Reference-Docx-Selected':'true'}}]){
+  await rejects(history());assert.equal(transport.hasRetainedDocxSelection(),false);
+ }
+ const before=calls.length;await rejects(transport.readCurrent(context.intake_id,new AbortController().signal,'docx_retained'),'intake_reference_ui_unconfigured');
+ assert.equal(calls.length,before);
+});
+test('DOCX source403 drops only its private selection and cannot resume it from an old response',async t=>{
+ const {transport,history,calls}=harness(t,n=>n===1?reply(raw,{headers:{'X-Intake-Reference-Docx-Selected':'true'}}):reply('{"error":{"code":"intake_reference_ui_access_denied"}}',{status:403}));
+ await history();await rejects(transport.readCurrent(context.intake_id,new AbortController().signal,'docx_retained'),'intake_reference_ui_access_denied');
+ assert.equal(transport.hasRetainedDocxSelection(),false);
+ await rejects(transport.readCurrent(context.intake_id,new AbortController().signal,'docx_retained'),'intake_reference_ui_unconfigured');assert.equal(calls.length,2);
 });
 test('same_origin_exact_paths_and_body: null cursor omitted, bounded cursor literal and current exact2',async t=>{
  const {transport,calls,history,current}=harness(t);
