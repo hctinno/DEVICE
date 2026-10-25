@@ -204,6 +204,24 @@ writer의 `files`에 있는 result.json SHA는 저장 파일의 LF까지 포함�
 
 두 실제 GET는 원 파일/Store metadata를 바꾸지 않고 원 result와 actual manifest/result pin을 전달했다. 측정 무효는 저장 complete/DRAFT와 invalid·보정 null·fixture 실패를 함께 유지했다. 원 입력·MOCK 원소스/binary/응답·실행·finalizer·startup·payload와 실패 기록을 작성자 증거로 보존했다. 전역 native handle 잔여와 관측 범위는 모두 닫힘으로 추정하지 않는다. 실제 AI·실측·규범 전수·전체 시험소 업무 검증은 미실행이다.
 
+## 같은 원 선택으로 저장 사본 검수하기
+
+2026-10-26 후속 `DEV1-CONDUCTED-DEMO-READBACK-INPUT-001`은 위 원 native10 선택이 생긴 경우, `server-startup-original.json`을 먼저 저장한 뒤 **같은 output의 `readback-inputs.json`**을 추가로 배타 저장한다. 내용은 검증된 원 선택에서 `intake_id`만 제외한 exact9다. current pin·방법·artifact pin을 다시 조립하거나 해시를 재산출하지 않는다. intake ID는 원 startup에서, workspace는 사용자가 명시한 같은 output의 `s`에서 별도로 전달한다. 원 startup10·summary DTO·기존 CLI 출력에는 새 표시 필드를 추가하지 않는다.
+
+다음은 사용자가 이미 생성한 새 output 하나를 명시해 실행하는 명령이다. [CLI 공개 수용30cd](https://github.com/hctinno/DEVICE/blob/30cd27bc47e70e93713d984b8ac545e801217b9c/docs/fcc/intake_conducted_artifact_readback_cli_usage.md)의 모듈이 있는 checkout에서 실행한다. 이 변경의 정확 base `aae3d46`에는 해당 CLI 모듈을 추가하지 않았으며, 원 startup 변경의 독립 인수는 이 작업 시점에 pending이다. 별도 수용 CLI를 확인한 연결 검증을 startup의 독립 인수나 확정 출시로 표시하지 않는다.
+
+```powershell
+$demoOutput = 'C:/disposable-demo/my-new-conducted-flow'
+$savedStartup = Get-Content -Raw -Encoding utf8 -LiteralPath "$demoOutput/server-startup-original.json" | ConvertFrom-Json
+python -B -X utf8 -m labflow.intake_conducted_artifact_readback_cli --workspace "$demoOutput/s" --intake-id $savedStartup.conducted_artifact_readback_inputs.intake_id --readback-json "$demoOutput/readback-inputs.json"
+```
+
+`$demoOutput`은 사용자가 선택한 실제 로컬 절대 경로로 바꾼다. 원 선택과 새 파일이 있는 경우에만 사용하며, output이나 과거 파일을 자동으로 찾지 않는다. blocked/unsupported/rejected·held·null 선택에는 새 파일이 없다. 기존 파일이나 실패 폴더를 덮어쓰지 않고 원 512파일/32MiB 한도를 쓰기 전에 확인한다. 새 파일 쓰기에 실패하면 원 startup과 이미 쓰인 partial을 보존하고 첫 오류/control을 그대로 전파한다. 데모가 명령을 생성·실행하거나 결과·현재 기대를 교정하지 않는다.
+
+이 단위는 신규 pure/typed7과 기존 출력·종료 관련2를 별도 검증했다. cap2 분기는 명시 metadata projection이며 실제 디스크 한계 도달 실험으로 세지 않는다. 공개 CLI는 root 수용 `30cd27bc47e70e93713d984b8ac545e801217b9c`의 원 모듈(10174B, GitLF SHA256 `598c3c351f78a0463152796db57c20c293560ebc338d89ae570dd5c452c88b5f`)을 사용해 실제 Python child1로 확인했다. 새 합성 측정 무효 흐름의 원 exact9 파일을 그대로 전달했고 exit0/matched에도 원 invalid·보정 null·fixture fail을 유지했다. stdout/stderr/exit는 파싱 전에 보존했고 출력·Store131파일의 raw/fstat/ns/Win32 정보는 조회 전후 동일했다. child 내부 SQL/handle은 계측하지 않았으며 프로세스 종료 관측과 구별한다.
+
+첫 합성 준비 후 작성자 소스 관측기가 writer의 pending/최종 hard-link 쌍에 nlink1을 요구해 CLI 전 중단한 기록을 보존했다. 제품 경계를 바꾸지 않고 알려진 artifact6이 nlink2인 실제 상태를 기록하여 별도 새 흐름에서 이어갔다. 준비 두 흐름의 compiler2·생성 MOCK20은 Python 조회 child1과 별도 분모이며 실제 모델·설치 Codex·RF 출력·물리 동작0이다. matched/exit0는 저장 읽기와 두 관측 시점의 결합 일치다. 실행 중 snapshot/generation 승인·저장 측정 PASS·실측 판정·전체 무인시험소 완료를 뜻하지 않는다.
+
 ## 명시 실패 시나리오
 
 `--conducted-scenario`는 `--conducted-workflow`에만 사용한다. 생략하면 기존 정상 정책이며, 각 명령은 새 authored PDF·mock·Store·출력 폴더를 만든다. 예를 들어 다음은 새 문서에서 듀티 단위만 누락한다.

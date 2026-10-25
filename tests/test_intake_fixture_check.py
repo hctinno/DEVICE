@@ -429,5 +429,138 @@ class ConductedArtifactStartupGenuineTests(unittest.TestCase):
         self.exercise('measurement-invalid','invalid','fail')
 
 
+class ConductedReadbackInputTests(unittest.TestCase):
+    """Export original trusted pins; typed flow seams never launch a runtime."""
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(prefix='demo-readback-input-');self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name)
+
+    def api(self):
+        from labflow import intake_fixture_check as module
+        self.assertTrue(hasattr(module,'_conducted_readback_inputs'),'assigned readback input export is absent')
+        return module._conducted_readback_inputs
+
+    def selection(self):
+        return dict(intake_id='I-original-only',method=dict(method_id='authored-on',method_version=3,metric='on',reference_plane='source_output'),
+            expected_revision=7,expected_context_sha256='a'*64,artifact_workspace_root=str(self.root/'original-artifact-root'),
+            artifact_name='draft-original',expected_manifest_sha256='b'*64,expected_result_sha256='c'*64,
+            run_id='run-original',runtime_instance_id='runtime-original')
+
+    def test_export_preserves_all_nine_original_values_and_excludes_only_intake_id(self):
+        from copy import deepcopy
+        selection=self.selection();before=deepcopy(selection)
+        self.api()(self.root,selection)
+        raw=(self.root/'readback-inputs.json').read_bytes();value=json.loads(raw)
+        self.assertEqual(value,dict(method=dict(method_id='authored-on',method_version=3,metric='on',reference_plane='source_output'),
+            expected_revision=7,expected_context_sha256='a'*64,artifact_workspace_root=str(self.root/'original-artifact-root'),
+            artifact_name='draft-original',expected_manifest_sha256='b'*64,expected_result_sha256='c'*64,
+            run_id='run-original',runtime_instance_id='runtime-original'))
+        self.assertEqual(selection,before);self.assertTrue(raw.endswith(b'\n'))
+        self.assertEqual([p.name for p in self.root.iterdir()],['readback-inputs.json'])
+
+    def test_none_selection_and_initial_blocked_or_unsupported_flows_create_no_readback_file(self):
+        from labflow import intake_fixture_check as module
+        self.api()(self.root,None);self.assertEqual(list(self.root.iterdir()),[])
+        with patch.object(module,'_conducted_mock_compiler',return_value=self.root/'not-executed-compiler'):
+            for scenario,kind,want in (('missing-duty-unit','pdf','blocked'),('normal','text','unsupported')):
+                with self.subTest(scenario=scenario,kind=kind):
+                    result=module.run_conducted_flow(self.root/(want+'-flow'),document_kind=kind,
+                        measurement_ref='event:17',mock_model='gpt-6.1-sol',scenario=scenario)
+                    self.assertEqual(result['summary']['status'],want)
+                    self.assertFalse((result['output']/'readback-inputs.json').exists())
+                    self.assertEqual(result['summary']['runtime_calls'],0)
+
+    def test_existing_readback_file_and_its_metadata_are_never_overwritten(self):
+        import os
+        api=self.api();target=self.root/'readback-inputs.json';original=b'original partial evidence\x00\n'
+        target.write_bytes(original)
+        with target.open('rb') as stream:before=os.fstat(stream.fileno())
+        with self.assertRaises(FileExistsError):api(self.root,self.selection())
+        with target.open('rb') as stream:after=os.fstat(stream.fileno());self.assertEqual(stream.read(),original)
+        self.assertEqual((before.st_size,before.st_ino,before.st_mtime_ns,before.st_ctime_ns),
+            (after.st_size,after.st_ino,after.st_mtime_ns,after.st_ctime_ns))
+
+    def test_projected_file_and_byte_caps_refuse_before_creating_the_new_file(self):
+        from types import SimpleNamespace
+        api=self.api()
+        for count,size in ((512,0),(1,32*1024*1024)):
+            with self.subTest(projected_count=count,projected_size=size):
+                item=SimpleNamespace(is_file=lambda:True,stat=lambda:SimpleNamespace(st_size=size))
+                with patch.object(Path,'rglob',return_value=[item]*count):
+                    with self.assertRaises(ValueError) as caught:api(self.root,self.selection())
+                self.assertEqual(str(caught.exception),'conducted_workflow_evidence_limit')
+                self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_partial_write_and_original_controls_remain_without_retry_or_cleanup(self):
+        api=self.api();open_original=Path.open
+        class Stop(BaseException):pass
+        for index,error in enumerate((OSError('first partial write'),KeyboardInterrupt('first'),MemoryError('first'),SystemExit(41),GeneratorExit('first'),Stop('first'))):
+            with self.subTest(error=type(error).__name__):
+                folder=self.root/str(index);folder.mkdir();target=folder/'readback-inputs.json';calls=[]
+                class Partial:
+                    def __enter__(inner):inner.stream=open_original(target,'xb');return inner
+                    def __exit__(inner,*args):return inner.stream.__exit__(*args)
+                    def write(inner,raw):calls.append(raw);inner.stream.write(raw[:17]);raise error
+                def opened(path,*args,**kwargs):
+                    return Partial() if path==target else open_original(path,*args,**kwargs)
+                with patch.object(Path,'open',opened):
+                    with self.assertRaises(type(error)) as caught:api(folder,self.selection())
+                self.assertIs(caught.exception,error);self.assertEqual(len(calls),1)
+                self.assertEqual(target.read_bytes(),calls[0][:17])
+
+    def typed_flow(self,folder,*,held=False):
+        from labflow import intake_fixture_check as module
+        from labflow.virtual_fleet.conducted_result_artifact import _verification
+        result=dict(schema_version=1,kind='conducted_twin_result',status='invalid',binding=dict(run_id='typed-run',runtime_instance_id='typed-runtime'),
+            raw_measurement=None,calculation=dict(corrected=None),gaps=[dict(code='typed-invalid')])
+        artifact=dict(schema_version=1,kind='conducted_result_artifact',artifact_name='draft-typed',run_id='typed-run',runtime_instance_id='typed-runtime',
+            result_status='invalid',storage=dict(status='complete',commit_marker='.local/conducted-result-artifacts/draft-typed/manifest.json',bytes=1000,sha256='b'*64),
+            files=[],verification=_verification('full_bound'),execution_authority=False)
+        final=dict(status='held' if held else 'stored',result=None if held else result,artifact=None if held else artifact,failure=None)
+        # Real PDF/current/plan/startup/writes; typed external execution/finalizer.
+        execution=dict(kind='typed_no_runtime',execution=dict(trial_factory_calls=0,producer_calls_started=0))
+        with patch.object(module,'_conducted_mock_compiler',return_value=self.root/'never-executed-compiler'),\
+             patch.object(module,'_compile_conducted_mock',return_value=self.root/'never-executed-mock'),\
+             patch('labflow.intake_plan_virtual_execution.run_intake_plan_virtual_execution',return_value=execution),\
+             patch('labflow.conducted_execution_result_finalizer.finalize_conducted_execution_result',return_value=final):
+            return module.run_conducted_flow(folder,measurement_ref='event:17',mock_model='gpt-6.1-sol')
+
+    def test_typed_complete_flow_exports_saved_startup_values_while_held_null_creates_no_file(self):
+        self.api()
+        for held in (False,True):
+            with self.subTest(held=held):
+                flow=self.typed_flow(self.root/('held' if held else 'complete'),held=held)
+                output=flow['output'];saved=json.loads((output/'server-startup-original.json').read_bytes())
+                self.assertEqual(saved,flow['server_options']);self.assertEqual(flow['summary']['fixture_acceptance'],'fail')
+                self.assertEqual(flow['summary']['runtime_calls'],0)
+                self.assertNotIn('readback_inputs',flow['summary'])
+                target=output/'readback-inputs.json'
+                if held:
+                    self.assertFalse(target.exists());self.assertNotIn('conducted_artifact_readback_inputs',saved)
+                else:
+                    selected=saved['conducted_artifact_readback_inputs'];exported=json.loads(target.read_bytes())
+                    self.assertEqual(set(exported),set('method expected_revision expected_context_sha256 artifact_workspace_root artifact_name expected_manifest_sha256 expected_result_sha256 run_id runtime_instance_id'.split()))
+                    self.assertEqual(dict(exported,intake_id=selected['intake_id']),selected)
+                    self.assertEqual(flow['summary']['result_status'],'invalid');self.assertIsNone(flow['summary']['corrected'])
+
+    def test_new_file_failure_keeps_original_startup_partial_bytes_and_first_error(self):
+        from labflow import intake_fixture_check as module
+        self.api();first=OSError('first readback publication');late=SystemExit('secondary failure evidence')
+        output=self.root/'partial-flow';write=module._conducted_write
+        def writing(folder,relative,raw):
+            if relative=='readback-inputs.json':
+                with (folder/relative).open('xb') as stream:stream.write(b'original partial\n')
+                raise first
+            if relative=='failure.json':raise late
+            return write(folder,relative,raw)
+        with patch.object(module,'_conducted_write',side_effect=writing):
+            with self.assertRaises(OSError) as caught:self.typed_flow(output)
+        self.assertIs(caught.exception,first);self.assertEqual((output/'readback-inputs.json').read_bytes(),b'original partial\n')
+        startup=json.loads((output/'server-startup-original.json').read_bytes())
+        self.assertIn('conducted_artifact_readback_inputs',startup)
+        self.assertTrue((output/'finalizer-original.json').is_file())
+        self.assertFalse((output/'public-summary.json').exists())
+
+
 if __name__ == '__main__':
     unittest.main()
