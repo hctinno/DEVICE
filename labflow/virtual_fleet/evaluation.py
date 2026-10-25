@@ -9,7 +9,8 @@ import math
 import re
 import uuid
 
-from .integration import create_conducted_example
+from .integration import (create_conducted_example, _validate_setup_records,
+                          _begin_setup_record, _finish_setup_record)
 from .core import STATUSES
 
 
@@ -66,12 +67,15 @@ class _OperatorRuntime:
 
 class SensorTrial:
     """Private authored trial; public goal and operator facade are separate."""
-    def __init__(self, catalog, *, condition, seed, power_dbm, source_settings=None):
+    def __init__(self, catalog, *, condition, seed, power_dbm, source_settings=None, setup_records=None):
+        _validate_setup_records(setup_records)
         source = _source_declaration(power_dbm, source_settings)
         if source is not None and (condition not in CONDITIONS or type(seed) is not int):
             raise ValueError('Invalid synthetic author setup')
         self.catalog = deepcopy(catalog)
         options = {} if source is None else {'source_settings': source}
+        if setup_records is not None:
+            options['setup_records'] = setup_records
         self._fleet, self.topology, bootstrap = create_conducted_example(catalog, seed=seed, **options)
         self._source_settings = source
         self.runtime_instance_id = uuid.uuid4().hex
@@ -88,10 +92,14 @@ class SensorTrial:
                  ('dut', 'stop', {})]
         self._setup_receipts = []
         for i, (device, action, parameters) in enumerate(setup):
-            result = self._fleet.execute(f'fixture:setup:{i}', device, action, parameters)
+            request_id = f'fixture:setup:{i}'
+            record = _begin_setup_record(setup_records, request_id, 'execute', device, action, parameters)
+            result = self._fleet.execute(request_id, device, action, parameters)
+            _finish_setup_record(record, result)
             if result['status'] not in {'ok', 'pending'}:
                 raise ValueError('Synthetic trial setup failed')
             self._setup_receipts.append(result)
+        self._setup_records = [] if setup_records is None else deepcopy(setup_records)
         initial = self._fleet.observations()
         self._start_tick = initial['tick']
         self._goal = {'kind': 'acquire_fresh_rf_sensor', 'dut_id': 'dut',
@@ -107,6 +115,10 @@ class SensorTrial:
     @property
     def goal(self):
         return deepcopy(self._goal)
+
+    def setup_snapshot(self):
+        """Detached host setup calls, excluding private author state and later activity."""
+        return deepcopy(self._setup_records)
 
     def _author_change(self, value):
         event_id = 'author:' + uuid.uuid4().hex
@@ -138,12 +150,14 @@ class SensorTrial:
                          'author_events': self._author_events})
 
 
-def prepare_sensor_trial(catalog, *, condition='normal', seed=0, power_dbm=12.5, source_settings=None):
+def prepare_sensor_trial(catalog, *, condition='normal', seed=0, power_dbm=12.5, source_settings=None, setup_records=None):
     """Host-only factory; original catalog and source files are never modified."""
     if (condition not in CONDITIONS or type(seed) is not int
             or (source_settings is None and not _number(power_dbm))):
         raise ValueError('Invalid synthetic author setup')
     options = {} if source_settings is None else {'source_settings': source_settings}
+    if setup_records is not None:
+        options['setup_records'] = setup_records
     return SensorTrial(catalog, condition=condition, seed=seed, power_dbm=power_dbm, **options)
 
 
