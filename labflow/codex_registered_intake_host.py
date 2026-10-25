@@ -563,6 +563,7 @@ def _run(scenario, model):
         record['phase']='reserve'
         reserved=dict(permit_id=config['permit_id'],context_sha256=_H(_C(context)),registration_sha256=config['registration_sha256'],
             store_root=str(store_root),requested_model=model,reserved_model_attempts=1)
+        record['history']=None
         attempted=True
         active_bytes=_C(reserved)
         active_info=_active_guard(active_path,active_bytes)
@@ -589,23 +590,36 @@ def _run(scenario, model):
             try:store.close()
             except BaseException as exc:error(exc,'store_close')
         if con is not None:
+            transaction_settled=finish_mutation_attempted=finish_committed=False
             try:
                 if con.in_transaction:con.rollback()
+                transaction_settled=not con.in_transaction
                 if attempted:
                     actual,receipt_pin,cleanup,caller_pin=_observation(record['once'],evidence,entered)
                     if not consumed or not cleanup or actual is None:
                         record['status']='unknown'
                     con.execute('BEGIN IMMEDIATE')
-                    events,_,_=_history(con,anchor,config,root)
+                    events,record['history'],_=_history(con,anchor,config,root)
                     if not consumed or ('consumed',config['permit_id']) not in events or ('finished',config['permit_id']) in events:
                         _fail('history_unsettled')
                     finished=dict(permit_id=config['permit_id'],status=record['status'],local_model_processes=actual,
                         cleanup_confirmed=cleanup,producer_receipt=receipt_pin,caller_receipt=caller_pin,once=record['once'],errors=record['errors'].copy())
+                    record['history']=None
+                    finish_mutation_attempted=True
                     _append(con,'finished',config['permit_id'],finished);con.commit()
+                    finish_committed=True
                     _,record['history'],_=_history(con,anchor,config,root)
                     record['reservation']['state']='finished'
                     record['phase']='finished'
-            except BaseException as exc:error(exc,'finish')
+            except BaseException as exc:
+                error(exc,'finish')
+                if not transaction_settled:record['history']=None
+                elif finish_mutation_attempted and not finish_committed and control is None:
+                    try:
+                        if con.in_transaction:con.rollback()
+                        if not con.in_transaction:
+                            _,record['history'],_=_history(con,anchor,config,root)
+                    except BaseException as refresh_error:error(refresh_error,'history_refresh')
             finally:
                 try:con.close()
                 except BaseException as exc:error(exc,'journal_close')
