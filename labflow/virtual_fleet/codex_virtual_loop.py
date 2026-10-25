@@ -170,7 +170,32 @@ def _read(path, cap, code, owner=None):
                     _fail(code)
 
 
-def _preflight(catalog_path, catalog_sha, schema, executable, model, scenario, directory, origin, event):
+def _settings(value):
+    if value is None:
+        return None
+    keys = {'frequency_hz', 'power_dbm', 'bandwidth_hz', 'duty_cycle', 'modulation', 'crest_factor_db'}
+    if type(value) is not dict or any(type(key) is not str for key in value) or set(value) != keys:
+        _fail('invalid_input')
+    for key in keys - {'modulation'}:
+        number = value[key]
+        try:
+            valid = type(number) in (int, float) and math.isfinite(number)
+        except OverflowError:
+            valid = False
+        if not valid:
+            _fail('invalid_input')
+    text = value['modulation']
+    if (type(text) is not str or not text.strip() or len(text) > 200
+            or value['frequency_hz'] <= 0 or value['bandwidth_hz'] <= 0
+            or not 0 < value['duty_cycle'] <= 1 or value['crest_factor_db'] < 0
+            or value['frequency_hz'] - value['bandwidth_hz'] / 2 < 0
+            or not math.isfinite(value['frequency_hz'] + value['bandwidth_hz'] / 2)):
+        _fail('invalid_input')
+    return _copy(value, 65536, 'invalid_input')
+
+
+def _preflight(catalog_path, catalog_sha, schema, executable, model, scenario, directory, origin, event, source_settings):
+    source = _settings(source_settings)
     for path in (catalog_path, executable, directory):
         _path(path)
     if (type(catalog_sha) is not str or not _SHA.fullmatch(catalog_sha) or type(schema) is not bytes
@@ -190,6 +215,7 @@ def _preflight(catalog_path, catalog_sha, schema, executable, model, scenario, d
         _fail('invalid_input')
     if _H(_read(catalog_path, 1048576, 'unsupported_source')) != catalog_sha:
         _fail('unsupported_source')
+    return source
 
 
 def _absent(path):
@@ -197,10 +223,11 @@ def _absent(path):
 
 
 class _Loop:
-    def __init__(self, catalog, catalog_sha, schema, executable, model, scenario, directory, origin, event, start):
+    def __init__(self, catalog, catalog_sha, schema, executable, model, scenario, directory, origin, event, start, source_settings):
         self.catalog_path, self.catalog_sha, self.schema = catalog, catalog_sha, schema
         self.executable, self.model, self.scenario, self.directory = executable, model, scenario, directory
         self.origin, self.event, self.start, self.deadline = origin, event, start, start + 180
+        self.source_settings = source_settings
         self.stage = 'setup'; self.first = self.control = None
         self.trial = self.runtime = self.harness = None
         self.step = None; self.before = None; self.sources = {}; self.events = []; self.event_bytes = 0
@@ -601,15 +628,22 @@ class _Loop:
             path=Path(__file__).resolve().parents[1]/name
             raw=_read(path,1048576,'unsupported_source',self)
             self.sources[path]=(len(raw),_H(raw)); pins['labflow/'+name]=dict(bytes=len(raw),sha256=_H(raw))
+        execution = dict(catalog_path=str(self.catalog_path), executable=str(self.executable))
+        if self.source_settings is not None:
+            execution['source_settings'] = self.source_settings
         self.artifact('request',dict(schema_version=1,kind='codex_virtual_loop_request',run_id=self.r['run_id'],
             declaration=self.r['declaration'],limits=self.r['budget']['limits'],source_pins=pins,
-            execution=dict(catalog_path=str(self.catalog_path),executable=str(self.executable))))
+            execution=execution))
         self.source()
         try:
             catalog=_load(self.catalog_path); self.actions=_actions()
             if len(catalog['profiles'])!=64:
                 _fail('unsupported_source')
-            self.trial=_prepare(catalog,condition=self.scenario,seed=0,power_dbm=12.5)
+            if self.source_settings is None:
+                self.trial=_prepare(catalog,condition=self.scenario,seed=0,power_dbm=12.5)
+            else:
+                self.trial=_prepare(catalog,condition=self.scenario,seed=0,
+                    power_dbm=self.source_settings['power_dbm'],source_settings=self.source_settings)
             self.runtime=self.trial.runtime
             if len(self.trial.topology['devices'])!=64 or not _ID.fullmatch(self.trial.runtime_instance_id):
                 _fail('capture_failed')
@@ -704,15 +738,15 @@ class _Loop:
 
 def run_codex_virtual_loop(*, catalog_path: Path, catalog_sha256: str, response_schema_bytes: bytes,
         executable: Path, requested_model: str, scenario: str, evidence_dir: Path,
-        execution_origin: str, cancel_event=None) -> dict:
+        execution_origin: str, cancel_event=None, source_settings=None) -> dict:
     """Run one explicitly delegated synthetic loop; provenance declarations grant no authority."""
     runner=None; receipt=None; code=None; control=None
     try:
         start=_now()
-        _preflight(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
-                   evidence_dir,execution_origin,cancel_event)
+        source=_preflight(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
+                          evidence_dir,execution_origin,cancel_event,source_settings)
         runner=_Loop(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
-                     evidence_dir,execution_origin,cancel_event,start)
+                     evidence_dir,execution_origin,cancel_event,start,source)
         try:
             runner.run()
         except BaseException as error:
