@@ -9,7 +9,7 @@ const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
 fs.mkdirSync(LOCAL,{recursive:true});
 const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
 function proofWrite(file,data){
   const target=path.resolve(file);assert.ok(target.startsWith(PROOF+path.sep));const files=[];
@@ -64,7 +64,10 @@ async function main() {
     const intake = snapshot.intakes[0], other = snapshot.intakes[1];
     const route = `/api/intakes/${intake.intake_id}/fixture-runs`;
     const original = await (await context.request.get(origin+route)).json();
-    const loaded = async page => page.locator('#fixture-status').filter({hasText:'가상 기록 조회 완료'}).waitFor();
+    const loaded = async page => {
+      await page.locator('#fixture-status').filter({hasText:'가상 기록 조회 완료'}).waitFor();
+      await page.waitForFunction(()=>!document.querySelector('#conducted-plan-refresh')||document.querySelector('#conducted-plan-refresh').getAttribute('aria-disabled')==='false');
+    };
     const refreshIntakes = async page => {
       await page.locator('#refresh').click();
       await page.waitForFunction(() => !document.querySelector('#refresh').disabled);
@@ -352,7 +355,9 @@ async function workflowMain(){
             await page.locator('#fixture-status').filter({hasText:'가상 기록 조회 완료'}).waitFor();
             const workflow=page.locator('#intake-workflow');await workflow.waitFor();assert.equal(await workflow.locator('[data-workflow-step]').count(),7);
             const text=await workflow.innerText();for(const missing of ['시험계획 미연결','원수치/단위·기준면 미제공','규격 판정 미실행','실측 대조 미실행','물리 정확도 미검증'])assert.ok(text.includes(missing));
-            assert.equal(await workflow.locator('button,input,select,a').count(),0);assert.doesNotMatch(text,/FCC PASS|전체 업무 완료|실측 완료/);
+            assert.equal(await workflow.locator('input,select,a').count(),0);
+            assert.deepEqual(await workflow.locator('button').evaluateAll(nodes=>nodes.map(node=>node.id)),['conducted-plan-refresh']);
+            assert.doesNotMatch(text,/FCC PASS|전체 업무 완료|실측 완료/);
             if(mode==='demo')assert.match(text,/시장 충돌|conflict_market/);
             else{
               if(phase==='revise')assert.ok(text.includes('자료 미확인'));
@@ -411,4 +416,147 @@ async function workflowMain(){
   }catch(error){proofWrite(path.join(OUTPUT,'workflow-failure.json'),JSON.stringify({status:'fail',message:error.message,checks,typed_faults:faults,resources},null,2));throw error;}
   finally{if(browser)await browser.close();}
 }
-(process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+const previewHost=String.raw`
+import json,sys,tempfile,threading,socket,hashlib
+from pathlib import Path
+sys.path[:0]=[sys.argv[1],str(Path(sys.argv[1])/'tests')]
+from test_ui_read_model import conducted_context_fixture
+from test_ui_server import conducted_preview_inputs
+from labflow.ui_server import create_server
+from labflow import intake_conducted_twin_plan as adapter
+from labflow.active_intake import scan_source
+from labflow.intake_jobs import claim_job,complete_job
+from labflow.intake_worker import SyntheticTextProvider
+def main():
+ mode=sys.argv[2];calls=[];genuine=adapter.build_conducted_twin_plan_input
+ def observed(*args,**kwargs):
+  report=genuine(*args,**kwargs);calls.append(report);return report
+ adapter.build_conducted_twin_plan_input=observed
+ with tempfile.TemporaryDirectory(prefix='conducted-preview-') as directory:
+  fixture=conducted_context_fixture(Path(directory)/'fixture',kind='text' if mode=='text' else 'pdf',completed=mode!='incomplete',synthetic=mode!='non-synthetic')
+  if mode=='unconfirmed-source':
+   with fixture['store'].connection() as con:con.execute('UPDATE blobs SET synthetic=0 WHERE sha256=?',(fixture['context']['documents'][0]['sha256'],))
+  inputs=conducted_preview_inputs(fixture['intake_id'])
+  if mode=='missing':inputs=None
+  elif mode=='other':inputs['intake_id']='I-other'
+  elif mode=='old-revision':inputs['revision']=99
+  elif mode=='basis-missing':inputs['source_settings']['power_dbm']=0;del inputs['basis']['power_dbm']
+  server=create_server(fixture['store'].root,port=0,conducted_plan_preview_inputs=inputs)
+  thread=threading.Thread(target=server.serve_forever,kwargs={'poll_interval':.01},daemon=True);thread.start()
+  print(json.dumps({'origin':'http://127.0.0.1:'+str(server.server_port),'intake_id':fixture['intake_id'],'mode':mode,
+   'adapter_path':str(Path(adapter.__file__).resolve()),'adapter_sha256':hashlib.sha256(Path(adapter.__file__).read_bytes()).hexdigest()}),flush=True)
+  try:
+   for line in sys.stdin:
+    command=line.strip()
+    if command=='stop':break
+    if command=='revise':
+     (fixture['inbox']/'request'/'revision.txt').write_text('firmware: synthetic revision 2\n',encoding='utf-8')
+     scan_source(fixture['store'],'PLAN-PREVIEW-SYN',now=120);scan_source(fixture['store'],'PLAN-PREVIEW-SYN',now=120.01)
+    elif command=='complete_revision':
+     job=claim_job(fixture['store'],'preview-revision',now=121)
+     context={key:job[key] for key in ('job_id','intake_id','revision','synthetic','documents','analysis_context_id','analysis_contract','instructions')}
+     complete_job(fixture['store'],job['job_id'],job['token'],SyntheticTextProvider().analyze(context),now=122)
+    else:raise ValueError('unknown test control')
+    print(json.dumps({'control':command}),flush=True)
+  finally:
+   address=server.server_address;server.shutdown();server.server_close();thread.join(5)
+   assert not thread.is_alive() and server.socket.fileno()==-1
+   with socket.socket() as probe:probe.bind(address)
+   print(json.dumps({'resource':{'loop_stopped':True,'listener_closed':True,'port_rebind':True,'adapter_calls':len(calls),'actual_model_calls':0,'hardware_calls':0}}),flush=True)
+if __name__=='__main__':main()
+`;
+function startPreviewHost(mode){
+  const file=path.join(OUTPUT,'preview_host.py');if(!fs.existsSync(file))proofWrite(file,previewHost);
+  const python=process.env.VLAB_PYTHON||path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
+  const child=spawn(python,['-B','-X','utf8',file,ROOT,mode],{cwd:ROOT,windowsHide:true,stdio:['pipe','pipe','pipe']});
+  let buffer='',stderr='',exitCode=null;const queue=[],waiters=[];
+  child.stderr.on('data',chunk=>{stderr+=chunk.toString();if(stderr.length>8192)child.kill();});
+  child.stdout.on('data',chunk=>{buffer+=chunk.toString();while(buffer.includes('\n')){const i=buffer.indexOf('\n'),line=buffer.slice(0,i);buffer=buffer.slice(i+1);const value=JSON.parse(line);if(waiters.length){const w=waiters.shift();clearTimeout(w.timer);w.resolve(value);}else queue.push(value);}});
+  const exited=new Promise(resolve=>child.once('exit',code=>{exitCode=code;for(const w of waiters.splice(0)){clearTimeout(w.timer);w.reject(Error('preview host exited '+code+': '+stderr));}resolve(code);}));
+  const next=()=>new Promise((resolve,reject)=>{if(queue.length)return resolve(queue.shift());if(exitCode!==null)return reject(Error('preview host exited '+exitCode+': '+stderr));const w={resolve,reject};w.timer=setTimeout(()=>{const i=waiters.indexOf(w);if(i>=0)waiters.splice(i,1);reject(Error('preview host response timeout: '+stderr));},15000);waiters.push(w);});
+  return {child,next,exited,alive:()=>exitCode===null,stderr:()=>stderr,command:async cmd=>{child.stdin.write(cmd+'\n');assert.equal((await next()).control,cmd);}};
+}
+async function conductedPreviewMain(){
+  const observations=[],faults=[],resources=[];let browser;
+  try{
+    browser=await chromium.launch({headless:true});
+    for(const mode of ['matched','missing','other','old-revision','basis-missing','text','non-synthetic','incomplete','unconfirmed-source']){
+      const host=startPreviewHost(mode);let info;
+      try{
+        info=await host.next();assert.equal(info.adapter_sha256,'0286769450f4efef874602164b2bfdb5aa0ac2f027aa48fcc4c0a219f230ebc9');
+        const endpoint=info.origin+'/api/intakes/'+info.intake_id+'/conducted-plan-preview';
+        const observe=async(width,phase='initial')=>{
+          const context=await browser.newContext({viewport:{width,height:900}}),page=await context.newPage(),errors=[],external=[],methods=[];let previewRequests=0;
+          page.setDefaultTimeout(5000);page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(info.origin+'/'))external.push(r.url());if(r.url().includes('/api/'))methods.push(r.method());if(r.url()===endpoint)previewRequests++;});
+          try{
+            await page.goto(info.origin+'/#'+info.intake_id);const panel=page.locator('#conducted-plan-preview');await panel.waitFor();
+            await page.waitForFunction(()=>document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+            const response=await context.request.get(endpoint),status=response.status(),body=await response.json();
+            if(status===200){
+              await page.locator('#conducted-plan-status').filter({hasText:'조회 완료'}).waitFor();
+              const text=await panel.innerText();assert.ok(text.includes(body.context_sha256)&&text.includes('현재 제공 context')&&text.includes('원 모델 prompt 복원 아님'));
+              assert.ok(text.includes('실행 권한 없음')&&text.includes('규제 적합성 미평가')&&text.includes('실측 예측력 미평가'));
+              assert.equal(await panel.getAttribute('data-preview-status'),body.plan_input.status);
+              assert.equal(await panel.locator('[data-plan-setting]').count(),6);
+              if(body.plan_input.status==='ready_for_simulation'){assert.equal(mode,'matched');assert.equal(phase,'initial');assert.ok(text.includes('가상 계획 입력 준비'));}
+              else{assert.ok(text.includes('가상 계획 입력 보류'));assert.ok(body.plan_input.gaps.length>0);assert.equal(await panel.locator('[data-plan-gap]').count(),body.plan_input.gaps.length);}
+              if(mode==='basis-missing'){const row=panel.locator('[data-plan-setting="power_dbm"]');assert.ok((await row.innerText()).includes('미제공(null)'));assert.ok(text.includes('원 제공값: 0'));}
+              if(mode==='matched'&&phase==='initial'){
+                await panel.evaluate(node=>node.scrollIntoView({block:'start'}));await screenshot(page,path.join(OUTPUT,'preview-top-'+width+'.png'));
+                await panel.locator('table').scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'preview-settings-'+width+'.png'));
+                const good=await panel.locator('#conducted-plan-content').innerText();
+                for(const fault of ['HTTP503','authority','binding','oversize']){
+                  const altered=structuredClone(body);if(fault==='authority')altered.plan_input.verification.execution_authority=true;if(fault==='binding')altered.intake_id='I-other';
+                  await page.route(endpoint,r=>r.fulfill({status:fault==='HTTP503'?503:200,contentType:'application/json',body:fault==='HTTP503'?'{"error":{"code":"intake_conducted_preview_unavailable"}}':fault==='oversize'?' '.repeat(262145):JSON.stringify(altered)}));
+                  await page.locator('#conducted-plan-refresh').click();await page.locator('#conducted-plan-status').filter({hasText:'이전 관측'}).waitFor();
+                  await page.waitForFunction(()=>document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+                  assert.equal(await panel.locator('#conducted-plan-content').innerText(),good);assert.equal(await panel.getAttribute('data-preview-current'),'false');
+                  await page.unroute(endpoint);faults.push({width,fault,scope:'typed HTTP/contract injection after genuine read; not genuine adapter success'});
+                }
+                const beforeRender=previewRequests;
+                await page.evaluate(()=>{const native=document.createElement.bind(document);document.createElement=(tag,...args)=>{if(tag==='caption'){document.createElement=native;throw Error('synthetic preview render failure');}return native(tag,...args);};});
+                await page.locator('#conducted-plan-refresh').click();await page.waitForFunction(()=>document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+                assert.equal(previewRequests,beforeRender);assert.equal(await panel.locator('#conducted-plan-content').innerText(),good);
+                faults.push({width,fault:'render-before-request',scope:'synthetic DOM failure, last-good kept and no new GET'});
+                await page.waitForFunction(()=>!document.querySelector('#fixture-refresh')?.disabled);
+                let deadlineRelease,deadlineArrived;const deadlineHold=new Promise(r=>deadlineRelease=r),deadlineSeen=new Promise(r=>deadlineArrived=r);
+                await page.evaluate(()=>{const set=window.setTimeout,clear=window.clearTimeout,timers=new Map();window.setTimeout=function(fn,ms,...args){const id=set.call(window,fn,ms,...args);if(ms===10000)timers.set(id,()=>fn(...args));return id;};window.clearTimeout=function(id){timers.delete(id);return clear.call(window,id);};window.__previewClock={fire(){const pending=[...timers];for(const [id,fn]of pending){clear.call(window,id);timers.delete(id);fn();}return pending.length;},restore(){for(const id of timers.keys())clear.call(window,id);window.setTimeout=set;window.clearTimeout=clear;delete window.__previewClock;}};});
+                await page.route(endpoint,async route=>{deadlineArrived();await deadlineHold;await route.abort().catch(()=>{});});
+                try{
+                  await page.locator('#conducted-plan-refresh').click();await deadlineSeen;assert.equal(await page.evaluate(()=>__previewClock.fire()),1);
+                  await page.waitForFunction(()=>document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');assert.equal(await panel.locator('#conducted-plan-content').innerText(),good);assert.equal(await panel.getAttribute('data-preview-current'),'false');
+                  faults.push({width,fault:'deadline-callback',scope:'synthetic10s callback, no elapsed-wall-time claim; last-good kept'});
+                }finally{deadlineRelease();await page.unroute(endpoint);await page.evaluate(()=>__previewClock.restore());}
+                let release,arrived;const hold=new Promise(r=>release=r),seen=new Promise(r=>arrived=r);let first=true;
+                await page.evaluate(()=>{window.__previewFetch=window.fetch;window.fetch=(url,options)=>window.__previewFetch(url,String(url).endsWith('/conducted-plan-preview')?{...options,signal:undefined}:options);});
+                await page.route(endpoint,async route=>{if(!first)return route.continue();first=false;arrived();await hold;const late=structuredClone(body);late.plan_input.intake.facts.product_type.value='LATE-INJECTED';await route.fulfill({json:late}).catch(()=>{});});
+                try{
+                  await page.locator('#conducted-plan-refresh').click();await seen;await page.locator('#refresh').click();
+                  await page.locator('#conducted-plan-status').filter({hasText:'조회 완료'}).waitFor();release();await page.waitForTimeout(100);
+                  assert.ok(!(await panel.innerText()).includes('LATE-INJECTED'));faults.push({width,fault:'late-after-snapshot',scope:'typed late transport ignoring abort; current generation preserved'});
+                }finally{release();await page.unroute(endpoint);await page.evaluate(()=>{window.fetch=window.__previewFetch;delete window.__previewFetch;});}
+              }
+            }else{
+              assert.equal(status,503);await page.locator('#conducted-plan-status').filter({hasText:'미지원'}).waitFor();assert.equal(await panel.locator('[data-plan-setting]').count(),0);
+            }
+            assert.equal(await panel.locator('input,select,a').count(),0);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+            assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.ok(methods.every(x=>x==='GET'));
+            observations.push({mode,width,phase,status,adapter_report:status===200,scope:'genuine retained completion -> current RO context -> genuine D1 adapter when supported -> protected GET -> production DOM; synthetic analyzer function, actual model0'});
+          }finally{await context.close();}
+        };
+        for(const width of [390,1440])await observe(width);
+        if(mode==='matched'){
+          await host.command('revise');for(const width of [390,1440])await observe(width,'new-incomplete-revision');
+          await host.command('complete_revision');for(const width of [390,1440])await observe(width,'completed-revision-with-old-selection');
+        }
+      }finally{
+        if(host.alive()&&info){host.child.stdin.end('stop\n');const value=await host.next(),code=await host.exited;assert.equal(code,0,host.stderr());assert.equal(host.stderr(),'');assert.ok(value.resource?.loop_stopped&&value.resource.listener_closed&&value.resource.port_rebind);resources.push({mode,...value.resource,child_exit:code});}
+        else{if(host.alive())host.child.kill();await host.exited;}
+      }
+    }
+    proofWrite(path.join(OUTPUT,'preview-results.json'),JSON.stringify({status:'pass',observations,typed_faults:faults,resources,actual_model_calls:0,hardware_calls:0},null,2));
+    console.log(JSON.stringify({status:'pass',observations:observations.length,typed_faults:faults.length,output:OUTPUT}));
+  }catch(error){proofWrite(path.join(OUTPUT,'preview-failure.json'),JSON.stringify({status:'fail',message:error.message,observations,typed_faults:faults,resources},null,2));throw error;}
+  finally{if(browser)await browser.close();}
+}
+(process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});

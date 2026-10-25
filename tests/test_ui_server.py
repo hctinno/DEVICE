@@ -1693,5 +1693,158 @@ class CampaignStartupBoundaryTests(unittest.TestCase):
             self.assertEqual(str(caught.exception), 'vertex_campaign_readback_invalid_input')
 
 
+def conducted_preview_inputs(intake_id, revision=1):
+    settings=dict(frequency_hz=915000000,power_dbm=-4,bandwidth_hz=1000000,duty_cycle=1,modulation='CW-synthetic',crest_factor_db=0)
+    units=('Hz','dBm','Hz','ratio','label','dB')
+    basis={key:dict(kind='developer_declared_synthetic',value=value,unit=units[index],evidence=[])
+           for index,(key,value) in enumerate(settings.items())}
+    return dict(intake_id=intake_id,revision=revision,source_settings=settings,basis=basis,
+                method=dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
+
+
+class ConductedPlanPreviewHTTPTests(unittest.TestCase):
+    def setUp(self):
+        from test_ui_read_model import conducted_context_fixture
+        self.temp=tempfile.TemporaryDirectory(prefix='preview-http-');self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name);self.fixture=conducted_context_fixture(self.root/'input')
+        self.module=importlib.import_module('labflow.intake_conducted_twin_plan')
+        self.assertEqual(Path(self.module.__file__).resolve(),Path(__file__).resolve().parents[1]/'labflow/intake_conducted_twin_plan.py')
+        self.calls=[];genuine=self.module.build_conducted_twin_plan_input
+        def observed(*args,**kwargs):
+            result=genuine(*args,**kwargs);self.calls.append((deepcopy(args),deepcopy(kwargs),deepcopy(result)));return result
+        spy=mock.patch.object(self.module,'build_conducted_twin_plan_input',side_effect=observed);spy.start();self.addCleanup(spy.stop)
+        self.reader_spy=spy
+
+    def start(self, inputs=None):
+        try:server=create_server(self.fixture['store'].root,port=0,conducted_plan_preview_inputs=inputs)
+        except TypeError as error:self.fail('missing assigned preview startup API: '+str(error))
+        thread=threading.Thread(target=server.serve_forever,kwargs={'poll_interval':.01},daemon=True);thread.start()
+        def stop():
+            address=server.server_address;server.shutdown();server.server_close();thread.join(5)
+            self.assertFalse(thread.is_alive());self.assertEqual(server.socket.fileno(),-1)
+            with socket.socket() as probe:probe.bind(address)
+        self.addCleanup(stop);return server
+
+    def read(self,server,*,path=None,headers=None,body=None,method='GET'):
+        address=server.server_address;origin='http://127.0.0.1:'+str(address[1])
+        endpoint=path or '/api/intakes/'+self.fixture['intake_id']+'/conducted-plan-preview'
+        connection=http.client.HTTPConnection(*address,timeout=5)
+        try:
+            connection.request(method,endpoint,body=body,headers={'Origin':origin,'Sec-Fetch-Site':'same-origin',**(headers or {})})
+            response=connection.getresponse();raw=response.read()
+            return response.status,dict(response.getheaders()),json.loads(raw) if raw else None
+        finally:connection.close()
+
+    def test_genuine_projection_every_GET_and_startup_inputs_are_detached(self):
+        inputs=conducted_preview_inputs(self.fixture['intake_id']);server=self.start(inputs)
+        inputs['source_settings']['power_dbm']=17;inputs['basis']['power_dbm']['value']=17
+        before=self.fixture['store'].db.read_bytes()
+        for unused in range(2):
+            status,headers,value=self.read(server)
+            self.assertEqual(status,200);self.assertEqual(headers['Cache-Control'],'no-store')
+            self.assertEqual(set(value),set('schema_version kind intake_id revision context_sha256 context_scope selection_status plan_input'.split()))
+            self.assertEqual(value['context_scope'],'current_provided_context');self.assertEqual(value['selection_status'],'matched')
+            self.assertEqual(value['plan_input'],self.calls[-1][2]);self.assertEqual(value['plan_input']['status'],'ready_for_simulation')
+            self.assertEqual(value['plan_input']['plan']['source_settings']['power_dbm'],-4)
+            self.assertFalse(value['plan_input']['verification']['execution_authority'])
+            self.assertEqual(value['context_sha256'],value['plan_input']['binding']['context_sha256'])
+        self.assertEqual(len(self.calls),2);self.assertEqual(self.fixture['store'].db.read_bytes(),before)
+
+    def test_absent_wrong_intake_and_old_revision_inputs_keep_blocked_nulls_and_gaps(self):
+        for inputs,label in [(None,'not_provided'),(conducted_preview_inputs('I-another'),'other_intake'),(conducted_preview_inputs(self.fixture['intake_id'],99),'revision_changed')]:
+            with self.subTest(selection=label):
+                server=self.start(inputs);status,_,value=self.read(server)
+                self.assertEqual(status,200);self.assertEqual(value['selection_status'],label)
+                self.assertEqual(value['plan_input']['status'],'blocked');self.assertTrue(value['plan_input']['gaps'])
+                self.assertTrue(all(item is None for item in value['plan_input']['plan']['source_settings'].values()))
+
+    def test_rejected_basis_keeps_original_value_only_in_gap(self):
+        inputs=conducted_preview_inputs(self.fixture['intake_id']);inputs['source_settings']['power_dbm']=0;del inputs['basis']['power_dbm']
+        server=self.start(inputs);status,_,value=self.read(server);self.assertEqual(status,200)
+        plan=value['plan_input'];self.assertEqual(plan['status'],'blocked');self.assertIsNone(plan['plan']['source_settings']['power_dbm']);self.assertIsNone(plan['plan']['basis_refs']['power_dbm'])
+        self.assertTrue(any(g['field']=='basis.power_dbm' and g['provided']==0 for g in plan['gaps']))
+
+    def test_protection_GET_framing_and_no_query_or_path_input(self):
+        server=self.start(conducted_preview_inputs(self.fixture['intake_id']))
+        self.assertEqual(self.read(server,headers={'Origin':'https://outside.invalid'})[0],403)
+        self.assertEqual(self.read(server,body=b'x')[0],400)
+        endpoint='/api/intakes/'+self.fixture['intake_id']+'/conducted-plan-preview'
+        self.assertEqual(self.read(server,path=endpoint+'?power_dbm=20')[0],400)
+        self.assertEqual(self.read(server,method='POST')[0],405)
+        self.assertEqual(len(self.calls),0)
+        self.assertEqual(self.read(server)[0],200)
+
+    def test_startup_exact_native_selection_and_64KiB_limit_fail_before_bind(self):
+        inputs=conducted_preview_inputs(self.fixture['intake_id'])
+        for value in ([inputs],{**inputs,'revision':True},{**inputs,'extra':'path'},{**inputs,'method':{'oversize':'x'*65536}}):
+            with self.subTest(kind=type(value).__name__),mock.patch('http.server.HTTPServer.server_bind',side_effect=AssertionError('must fail before listen')):
+                with self.assertRaisesRegex(ValueError,'^intake_conducted_preview_invalid_input$'):
+                    create_server(self.fixture['store'].root,port=0,conducted_plan_preview_inputs=value)
+
+    def test_changed_source_and_new_revision_cannot_return_cached_ready(self):
+        from labflow.active_intake import scan_source
+        server=self.start(conducted_preview_inputs(self.fixture['intake_id']));self.assertEqual(self.read(server)[0],200)
+        (self.fixture['inbox']/'request'/'new.txt').write_text('synthetic new revision',encoding='utf-8')
+        scan_source(self.fixture['store'],'PLAN-PREVIEW-SYN',now=120);scan_source(self.fixture['store'],'PLAN-PREVIEW-SYN',now=120.01)
+        status,_,value=self.read(server);self.assertEqual(status,503);self.assertEqual(value['error']['code'],'intake_conducted_preview_analysis_unavailable')
+        self.assertEqual(len(self.calls),1)
+
+    def test_output_contract_or_256KiB_failure_is_not_truncated_or_success(self):
+        server=self.start(conducted_preview_inputs(self.fixture['intake_id']));genuine=self.module.build_conducted_twin_plan_input.side_effect
+        for fault in ('authority','output_size'):
+            def invalid(*args,**kwargs):
+                value=genuine(*args,**kwargs)
+                if fault=='authority':value['verification']['execution_authority']=True
+                else:
+                    value['status']='blocked';value['verification']['evidence']='not_validated'
+                    value['gaps']=[dict(code='invalid_setting',field='input',provided='x'*262144,blocking=True)]
+                return value
+            self.module.build_conducted_twin_plan_input.side_effect=invalid
+            with self.subTest(fault=fault):
+                status,_,value=self.read(server);self.assertEqual(status,503);self.assertEqual(value['error']['code'],'intake_conducted_preview_invalid_response')
+        self.module.build_conducted_twin_plan_input.side_effect=genuine
+
+    def test_disconnected_client_closes_without_second_response_or_server_traceback(self):
+        import types
+        from email.message import Message
+        from urllib.parse import urlsplit
+        server=self.start(conducted_preview_inputs(self.fixture['intake_id']))
+        endpoint='/api/intakes/'+self.fixture['intake_id']+'/conducted-plan-preview';headers=Message()
+        headers['Host']='127.0.0.1:'+str(server.server_port);attempts=[];errors=[]
+        def disconnected(status,raw):
+            attempts.append(status);raise ConnectionAbortedError('synthetic client disconnect')
+        handler=types.SimpleNamespace(command='GET',path=endpoint,headers=headers,rfile=io.BytesIO(),
+            connection=types.SimpleNamespace(settimeout=lambda value:None),send_payload=disconnected,
+            error=lambda status,code:errors.append((status,code)))
+        server.RequestHandlerClass.read_conducted_preview(handler,self.fixture['intake_id'],urlsplit(endpoint),endpoint)
+        self.assertEqual(attempts,[200]);self.assertEqual(errors,[]);self.assertTrue(handler.close_connection)
+
+    def test_adapter_control_exception_is_not_converted_to_a_preview_response(self):
+        import types
+        from email.message import Message
+        from urllib.parse import urlsplit
+        server=self.start(conducted_preview_inputs(self.fixture['intake_id']))
+        endpoint='/api/intakes/'+self.fixture['intake_id']+'/conducted-plan-preview';headers=Message();headers['Host']='127.0.0.1:'+str(server.server_port)
+        responses=[];handler=types.SimpleNamespace(command='GET',path=endpoint,headers=headers,rfile=io.BytesIO(),connection=types.SimpleNamespace(settimeout=lambda value:None),
+            send_payload=lambda *args:responses.append(args),error=lambda *args:responses.append(args))
+        with mock.patch.object(self.module,'build_conducted_twin_plan_input',side_effect=MemoryError('synthetic control')),self.assertRaises(MemoryError):
+            server.RequestHandlerClass.read_conducted_preview(handler,self.fixture['intake_id'],urlsplit(endpoint),endpoint)
+        self.assertEqual(responses,[])
+
+    def test_disconnected_error_response_is_closed_without_second_write(self):
+        import types
+        from email.message import Message
+        from urllib.parse import urlsplit
+        server=self.start(conducted_preview_inputs(self.fixture['intake_id']))
+        endpoint='/api/intakes/'+self.fixture['intake_id']+'/conducted-plan-preview';headers=Message();headers['Host']='127.0.0.1:'+str(server.server_port);attempts=[]
+        def disconnected(status,code):
+            attempts.append((status,code));raise ConnectionAbortedError('synthetic error response disconnect')
+        handler=types.SimpleNamespace(command='GET',path=endpoint,headers=headers,rfile=io.BytesIO(),connection=types.SimpleNamespace(settimeout=lambda value:None),
+            send_payload=lambda *args:self.fail('must not publish success'),error=disconnected)
+        with mock.patch.object(self.module,'build_conducted_twin_plan_input',side_effect=ValueError('synthetic invalid response')):
+            server.RequestHandlerClass.read_conducted_preview(handler,self.fixture['intake_id'],urlsplit(endpoint),endpoint)
+        self.assertEqual(attempts,[(503,'intake_conducted_preview_invalid_response')]);self.assertTrue(handler.close_connection)
+
+
 if __name__ == '__main__':
     unittest.main()
