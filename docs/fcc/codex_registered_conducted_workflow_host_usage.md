@@ -1,5 +1,46 @@
 # 등록 합성 conducted workflow의 native host
 
+## 명시 측정 선택 workflow v2 — 2026-10-26
+
+DEV2-REGISTERED-WORKFLOW-SELECTION-HOST-001은 정확 공개 base30cd27bc47e70e93713d984b8ac545e801217b9c의 독립 clone에서 host/test/usage3만 수정한다. 불필요한 의존 cherry는 없다. 수용 [selector](conducted_measurement_selector_usage.md) e258과 [선택 finalizer](conducted_execution_result_finalizer_usage.md) 7226+15b의 원 API를 사용한다. 등록921+d2e·원 운영profile/ref17·원 proof는 변경하지 않는다. 이 host 후보의 독립 검수는 아직 대기다.
+
+공개 main(argv=None)->int와 CLI/scenario/model·고정 profile 위치·operator-control·anchor/permit 형상은 그대로다. registered-workflow.json만 두 형상을 명시 분기한다. schema_version은 native int이며 bool/float는 받지 않는다.
+
+| workflow 형상 | 측정 선택 계약 |
+| --- | --- |
+| v1 exact12 | 원 nonempty measurement_ref string1~200자. measurement_selection_policy 키가 있으면 거절. 원 finalizer에 ref만 전달하며 새 keyword0 |
+| v2 exact13 | 원12키+measurement_selection_policy. measurement_ref는 반드시 null, policy는 exact2 schema_version:int1/kind:unique_same_run_sensor_acquisition |
+
+v2의 policy 누락/None/추가 키/다른 종류, non-null ref, v1에 policy 추가, 버전 bool/float/미지원값은 소비 전 원 profile_invalid/scope_mismatch/binding_mismatch 경계로 거절한다. 암묵적 None/default·v1→v2/profile 변환·last/PASS/ref 보정·fallback은 없다. 예를 들어 기존 ref17을 null로 바꾸기만 한 v1은 유효한 선택 정책이 아니다. v2의 전체 원 bytes SHA는 기존 config/permit의 workflow_sha256에 그대로 결합되며 policy 자체가 승인·추가 예산을 발급하지 않는다.
+
+native 등록/G3/current C1·analysis/plan/source6/basis·quantity/tools와 원 schema를 모두 통과한 v2에만 measurement_ref=None과 원 policy를 기존 finalizer에 전달한다. finalizer가 원 native5파일을 재검증하고 selector1/내부 builder1을 사용하며 host는 선택·수치를 재계산하지 않는다. 선택 DTO exact9는 원 finalizer-receipt.json의 measurement_selection에 그대로 보존하고, host receipt exact12·finalization exact5와 원 파일/ledger pin을 유지한다. v2의 finalizer receipt exact12와 v1의 exact11을 구별한다.
+
+selectorblocked이면 held/별도 result/artifact null/write0 및 원 선택 candidate/reasons/result·최초 producer 실패가 원 nested DTO에 남는다. valid selected 저장은 원 producer 실패와 DRAFT/task 미평가가 함께 남을 수 있으며, stored를 업무 성공·규범 승인으로 승격하지 않는다. host의 completed 판정식과 unknown/실제 local process 관측은 원형 그대로다. 실제 AI·물리/규범 검증을 성공값으로 채우지 않는다.
+
+원 한도는 workflow64KiB·execution256KiB·finalizer2MiB/후행 reserve8파일·3MiB, loop8회/180s/producer60s/retry0·192파일/32MiB다. 입력·원장·취소·모델·claim/소비/finish·최초 오류와 cleanup을 변경하지 않는다. source의 변경은 _prepare의 두 형상/측정 계약 분기와 _run의 v2 전용 keyword 전달뿐이다.
+
+- [x] 정확base/소유3 실파일명·finalizer18328/58d8·selector9241/4361 pin 확인, 비소유 raw/native baseline 보존
+- [x] v2 미지원 준비 RED·policy 전달 부재의 실제 MOCK5 RED 보존
+- [x] v2 exact13 준비·원 finalizer 정책 연결과 v1 keyword0 유지
+- [x] 새 selection_ opt-in 작은 cohort와 닿는 legacy/최초control 경계 분리 검증
+
+기존 기본14/별도9와 parent 전체 테스트는 반복하지 않았다. 최종 새 boundary4는1.587s, v2 blocked1은1.091s, legacy v1 한 건은1.131s, v2 genuine MOCK5와 같은 profile 재진입 차단 한 건은7.475s에 각각 PASS했으며 failure/error/skip0이다. 서로 다른7논리/분리4cohort다. 준비1과 genuine1의 중간 반복 통과를 이 분모에 더하지 않는다. default discovery는 원 test_14, 기존 --boundary는9이며 새 검사는 selection_ opt-in으로만 선택한다.
+
+genuine v2는 실제 같은 Trial/runtime의 원 plan→MOCK 도구5→첫 acquire 완료 선택→raw -19.5 dBm/원 보정11 dBm→원 JSON/DRAFT·완료 marker를 확인했다. selector9/원 result·파일 bytes/SHA·같은 run/runtime chain과 원 ledger baseline/permit/reserved/consumed/finished5를 보존했다. 같은 profile 재진입은 not_run이고 새 dispatch0·SQL/claim/workflow 원 bytes 불변이다. 이 한 runtime의 Python mock model process는5이고 실제 모델은0이다. version 거절의 v2 blocked와 legacy v1은 각각 mock version child1/model0이며, 원 failure·소비·finish와 null/원 DRAFT 상태를 구별한다.
+
+boundary4는 양성 v2 준비, 잘못된 형상16개 소비 전 거절, 원 quantity bool/source6/current context/tools/hash 검증 유지, 최초 G3 MemoryError→후행 owned Store close 오류의 같은 객체 전파를 확인했다. 상위 cap·ledger·취소·firsterror/cleanup helper와 원14/9 method는 정적 AST/원 bytes로 대조한다. 검증 fixture는 일회용 native OS 경계와 authored synthetic17 metadata·disposable Store/SQL이며 실제 운영17·권한 record가 아니다.
+
+원 준비 RED의 profile_invalid ERROR1(0.138s)과 기대 실패로 정리한 RED FAIL1(0.152s), 준비 GREEN1(0.227s), policy 전달 전 MOCK5의 failed RED1(4.424s), 첫 전달 GREEN1(4.697s)을 별도 보존한다. 실제 실패/원 SQL·prefix·producer 영수증을 삭제·이동/수리·재시도하지 않는다. 최종 재진입 검사는 자동 retry 기능이 아니라 같은 consumed profile의 명시 재호출 거절 검사다.
+
+```powershell
+python -B -X utf8 tests/test_codex_registered_conducted_workflow_host.py --selection-boundary -v
+python -B -X utf8 tests/test_codex_registered_conducted_workflow_host.py --selection-genuine -v
+python -B -X utf8 tests/test_codex_registered_conducted_workflow_host.py --selection-blocked -v
+python -B -X utf8 tests/test_codex_registered_conducted_workflow_host.py --selection-legacy -v
+```
+
+소유 test의 쓰기는 실행별512파일/32MiB O(1) admission을 유지하며 알려진 native 쓰기는 먼저 예약한다. 원14/9 전체 실행이나 실제 installed CLI·모델·운영profile·새 실 permit·root 위임 record 자동 생성·원17·ADC·Vertex·시험소 네트워크/장비는 이번 범위에서0이다. 다음 등록 metadata/preflight의 명시 v2 binding은 이 host 수용 뒤 별도 registration3 단위다. 아래는 원735의 v1 공개 계약과 당시 검증 이력이며 이번 분모와 합산하지 않는다.
+
 2026-10-26 Asia/Seoul. DEV2-REGISTERED-CONDUCTED-WORKFLOW-HOST-001. base9fe7e5a41c6f427a77f9592a690e9c027073b9c4에 자기 finalizer576만 정상 cherry한 3b06e8b 위의 신규3이다. [finalizer](conducted_execution_result_finalizer_usage.md)의 새 실행0과 이 opt-in host의 유계 가상 실행을 구별한다.
 
 ## 실제 공백과 진입점
@@ -23,7 +64,7 @@ root는 아래 파일·native 경로·새 빈 runs/permit_id를 실제 등록 �
 | root-continuation-anchor.json | schema_version/kind/inherited_history exact3; kind=codex_conducted_workflow_root_anchor; 64KiB |
 | operator-control.json | schema_version/kind/anchor_sha256/journal_id/permit_id/registration_sha256/workflow_sha256/registered_input_root/store_root/executable exact10; kind=codex_registered_conducted_workflow_control; 16KiB |
 | registered-intake-v1.json | 기존 native 등록 manifest exact5와 실제 원 폴더 전체 bytes/SHA; 256KiB |
-| registered-workflow.json | schema_version/kind/scenario_id/context_sha256/analysis_sha256/plan_input_sha256/source_settings/quantity/allowed_tools/measurement_ref/catalog_sha256/schema_sha256 exact12; kind=codex_registered_conducted_workflow; 64KiB |
+| registered-workflow.json | v1은 schema_version/kind/scenario_id/context_sha256/analysis_sha256/plan_input_sha256/source_settings/quantity/allowed_tools/measurement_ref/catalog_sha256/schema_sha256 exact12. v2는 위 명시 measurement_selection_policy를 추가한 exact13; kind=codex_registered_conducted_workflow; 64KiB |
 | analysis.json / plan-input.json | root가 보존한 원 native 분석·D1 exact8 plan; 각각256KiB |
 | catalog.json / response-schema.json | 원 catalog≤1MiB, 승인 원 literal schema≤64KiB; SHA 검증, 재직렬화0 |
 | cancel-request.json | exact1 requested:bool; 1KiB, 단계 사이 읽음. missing/invalid는 실행 차단 또는 진입 뒤 unknown |
@@ -34,7 +75,7 @@ inherited_history는 기존 actual_codex_model_processes/known_total_before_this
 
 root/input/Store는 서로 중첩되지 않는다. Store.open_existing와 genuine registered context를 사용하고 실제 source 등록·current public8 C1·원 analysis/plan C1·source6를 대조한다. 원 plan은 ready_for_simulation 및 conducted_synthetic/version1/on/source_output 개발 계약이어야 한다. 원 basis를 조립·복구하지 않는다. quantity는 명시 on/sensor_input/false/+1 exact4이며 bool을 숫자1로 취급하지 않는다. allowed_tools는 기존 loop의 dut.start/sensor.acquire/sensor.read/advance1/stop exact5다.
 
-analysis.json/plan-input.json은 LF 없는 canonical native JSON이며 각 hash는 그 원 bytes와 같다. workflow.measurement_ref는 root가 명시한 observation ID string1~200자다. source6와 같은 raw 값·숫자 타입을 유지하며 다른 event·마지막 값·PASS를 자동 선택하지 않는다. 명시 ID가 실제 report/journal에 없으면 D3의 원 incomplete/null 이유를 보존한다. scenario_id는 등록 건 선택자이며 이 첫 host의 가상 실행 scenario는 normal이다.
+analysis.json/plan-input.json은 LF 없는 canonical native JSON이며 각 hash는 그 원 bytes와 같다. v1 workflow.measurement_ref는 root가 명시한 observation ID string1~200자다. source6와 같은 raw 값·숫자 타입을 유지하며 다른 event·마지막 값·PASS를 자동 선택하지 않는다. 명시 ID가 실제 report/journal에 없으면 D3의 원 incomplete/null 이유를 보존한다. v2는 앞의 ref=null/명시 정책 계약으로만 원 selector에 전달한다. scenario_id는 등록 건 선택자이며 이 host의 가상 실행 scenario는 normal이다.
 
 승인 schema는 기존 public literal3052B/SHA256 aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb다. root가 다른 schema와 hash를 함께 주어도 소비 전에 unsupported_schema다. 새 client/schema 지원은 별도 검증 대상이다.
 
@@ -77,7 +118,7 @@ reserved는 permit_id/context_sha256/workflow_sha256/plan_input_sha256/requested
 
 operator_scope는 검증 전 not_validated, 원 native profile/원장/원문을 대조한 뒤 native_operator_control이다. execution_scope=one_registered_synthetic_conducted_workflow, origin_authenticated=false, remote_model_identity_verified=false, measurement=not_assessed, hardware_verified=false다. 현재 OS 위치 해석·요청 argv·실제 local process 시작·원격 principal/server model identity를 구별한다. 원 adapter의 actual_cli 선언·ai_model_called=null·intake_native_host_connected=false를 고치지 않는다.
 
-receipt Pin은 bytes/sha256 exact2다. runs/permit_id/execution-receipt.json(≤256KiB)은 원 adapter DTO, finalizer-receipt.json(≤2MiB)은 원 finalizer DTO다. producer_receipts는 index/bytes/sha256 목록이고 index의 고정 경로는 loop/calls/0001/producer/receipt.json 형식이다. 원 failed step의 receipt_sha256이 null이어도 원 DTO와 실제 고정 receipt file·모델·prompt/schema를 대조해 별도 pin을 기록할 수 있다. 원 null pin을 채우거나 receipt status를 고치지는 않는다.
+receipt Pin은 bytes/sha256 exact2다. runs/permit_id/execution-receipt.json(≤256KiB)은 원 adapter DTO, finalizer-receipt.json(≤2MiB)은 v1 exact11/v2 선택 evidence를 가진 exact12 원 finalizer DTO다. producer_receipts는 index/bytes/sha256 목록이고 index의 고정 경로는 loop/calls/0001/producer/receipt.json 형식이다. 원 failed step의 receipt_sha256이 null이어도 원 DTO와 실제 고정 receipt file·모델·prompt/schema를 대조해 별도 pin을 기록할 수 있다. 원 null pin을 채우거나 receipt status를 고치지는 않는다.
 
 version 거절처럼 model attempt0/start=false가 원 receipt에 있으면 local0이다. attempt1인데 start=false인 모호한 spawn, 원 receipt 부재/불일치·unknown DTO는 local=null·unknown이며0으로 가정하지 않는다. model child가 아예 없던 metadata 실패의 model_child_reaped=null은 원형 그대로 두고 소유한 자원의 회수만 판단한다. cleanup_confirmed는 CLI child/pipe/artifact 및 runtime reference의 범위이며 DUT 출력 OFF·물리 안전·원격 취소의 증명이 아니다.
 
