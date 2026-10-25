@@ -777,6 +777,7 @@ def _execute(matrix,index,prompt,schema,adc,directory,budget_path,approval_path,
         digest = _record(directory,record)
         _finish_record(budget_path,approval,reservation,record,digest)
         return record
+    transport_error = None
     try:
         result = d2.produce_vertex_response(prompt,schema,settings=_snapshot(settings),
             adc_path=adc,evidence_dir=directory/("row-"+str(index)),cancel_event=event)
@@ -785,6 +786,7 @@ def _execute(matrix,index,prompt,schema,adc,directory,budget_path,approval_path,
         if (type(code) is not str or not code.startswith("vertex_response_") or
             code.removeprefix("vertex_response_") not in _VERTEX_CODES):
             raise
+        transport_error = error
         receipt = None
         if error.receipt is not None:
             try:
@@ -817,8 +819,22 @@ def _execute(matrix,index,prompt,schema,adc,directory,budget_path,approval_path,
                 reservation=reservation,budget=budget,started=started,decoded=decoded,
                 elapsed=max(0,(time.monotonic()-clock)*1000),
                 attempts=receipt["attempts"]["generation_post_attempts"])
-    digest = _record(directory,record)
-    _finish_record(budget_path,approval,reservation,record,digest)
+    persistence_failed = False
+    try:
+        digest = _record(directory,record)
+        _finish_record(budget_path,approval,reservation,record,digest)
+    except (ModelComparisonError,OSError):
+        if transport_error is None:
+            raise
+        BaseException.add_note(transport_error,"model_comparison_persistence_failed")
+        persistence_failed = True
+    if persistence_failed:
+        try:
+            raise transport_error from None
+        except d2.VertexResponseError:
+            transport_error.__cause__ = transport_error.__context__ = None
+            transport_error.__suppress_context__ = True
+            raise
     return record
 
 
