@@ -53,7 +53,7 @@
 
 순서는 제품·목적·시장과 현재 자료 → 누락·충돌과 해석 범위 → 시험계획·방법 → 가상 준비·실행 → 측정·계산·규격 판정 → 기록 저장·독립평가 → 실측 대조다. 제품·목적·시장은 저장된 접수 분석과 원문 인용을 표시하며, 새 자료 버전에 분석이 없으면 `자료 미확인`으로 둔다. 이전 버전의 분석이나 기록을 새 버전의 사실로 채우지 않는다. 열린 질문이 없어도 시험 준비 완료로 표시하지 않는다.
 
-현재 API의 `case_id`·`plan_id`는 null이다. 따라서 `시험계획 미연결`·`시험방법 실행 절차 미제공`을 표시한다. 공개 측정 ref가 있어도 원수치·단위·기준면이나 보정·계산 결과는 제공되지 않으므로 `원수치/단위·기준면 미제공`·`규격 판정 미실행`을 유지한다. 규정·방법 후보의 문자 대조와 실행 가능한 시험계획은 별개다.
+기존 fixture API의 `case_id`·`plan_id`는 null이다. 그 출처만 있을 때 `시험계획 미연결`·`시험방법 실행 절차 미제공`을 표시한다. 그 fixture 공개 측정 ref만으로는 원수치·단위·기준면이나 보정·계산 결과가 제공되지 않는다. 별도 현재 conducted 제공 기록이 있으면 아래 통합 요약에서 그 원수치·계산과 출처를 함께 표시하되 DB Case/Plan 생성·규범 승인과 구분한다. 규정·방법 후보의 문자 대조와 실행 가능한 시험계획은 별개다.
 
 `completed`는 `실행 기록 저장`이다. 정책의 완료 주장, 기술 작업 상태, 가상 측정 근거, 독립 가상 효과 평가, `task not_assessed`와 정리 미평가를 구별한다. 가상 평가가 pass여도 FCC 적합·전체 업무 완료·물리 정확도 검증으로 승격하지 않는다. `실측 대조 미실행`·`물리 정확도 미검증`을 항상 표시한다. `ai_model_called=false`는 이 가상 실행의 속성이며 접수 분석자의 실제 모델 사용 여부를 새로 증명하지 않는다.
 
@@ -204,3 +204,23 @@ blocked의 partial source6/basis6는 원 plan에서 서버 startup에 전달한�
 가상 장치 단절과 producer transport 오류를 구별한다. 이 범위에서 연결한 장치 seam은 기존 [SensorTrial 공개 단절 조건](plan_driven_sensor_trial_usage.md)뿐이며 새 harness·장비 고장 모델·공통 DTO·Store schema·ui_read_model을 수정하지 않는다. 일반 통신/복구 실패를 fake DTO나 producer 비정상 exit로 만들어 장비 오류라고 표시하지 않는다. 지원 밖 선택은 summary만 보존하며 UI listener를 열지 않는다.
 
 이 단위에서는 실제 CLI7(정상1·계획 차단1·strict 거절1·무효 측정1·RF 단절1·미지원2), 신규 native 진입 검사4, 기존 TXT1·typed main interrupt1, 보호 GET15/production DOM10을 구분해 확인했다. 정상 DOM2가 통과한 뒤 검사자의 원 code/한국어 label 가정1이 실패해 원 HTTP3·서버 종료를 보존했다. 제품/CLI/정상 DOM을 재실행하지 않고 나머지 네 화면만 label+큐 원 code로 이어 검사했다. 정상 mock 원 소스는 선행 정상과 exact bytes다. 각 actual 조회 서버5와 실패 관측 서버1은 종료·포트 재사용을 별도 확인했다. 기존183/168 전부 재실행0·실제 모델/인증/실장비/Office0이며 합성 관측·저장·규범 not_assessed를 전체 시험소·실물 성공으로 바꾸지 않는다.
+
+## 같은 업무 요약의 제공 기록과 기존 fixture
+
+일곱 단계의 요약은 기존 fixture 선택과 별도 conducted 제공 관측을 출처별로 표시한다. 현재 intake/revision/generation·C1·계획 binding6을 대조한 recorded 결과와 non-null 원 측정·보정이 있으면 계획 입력 readiness, 원 run/runtime/event, raw 값·단위·기준면, 원 corrected와 규범 not_assessed를 `제공 기록`으로 요약한다. 기존 fixture가 없다는 이유로 이 원 결과를 없는 것으로 덮지 않는다. 계획은 `제공 계획 입력`이며 DB의 case_id/plan_id 생성이나 방법 승인·실행 권한을 뜻하지 않는다.
+
+기존 fixture도 선택돼 있으면 그 원 요청/버전·상태·run/runtime·근거 refs·AI false·평가를 `기존 fixture` 출처로 유지한다. 두 run/event를 합치거나 같은 문구의 근거를 dedup하지 않는다. 제공 snapshot의 run_report에 legacy AI false가 있어도 제공 기록의 실제 AI 여부로 사용하지 않는다. 제공 DTO만으로 저장 완료 marker·DRAFT 검증·실제 실행 진위·정리·독립평가를 확인하지 않으며 저장/AI/정리/독립평가는 미확인, 실측은 미실행으로 남긴다.
+
+pending/stale·부모 조회 실패·generation/C1/binding 불일치·blocked 계획·invalid/incomplete/null은 새 현재 측정으로 승격하지 않는다. 같은 접수의 이전/차단 원형은 별도 details에 원 run/event·값/null로 남기고, 다른 접수의 원형은 현재 요약에서 제외한다. 현재성 gate는 기존 큐의 source/revision/generation/C1/binding 검사를 재사용하며 기존 plan/result parser·HTTP/Store schema를 확장하지 않는다. 원수치·보정은 다시 계산하지 않고 zero/negative zero도 제공값 그대로 보존한다. 기존 fixture 조회만 대기 중일 때의 상태와 제공 결과의 현재성을 서로 대신 쓰지 않는다.
+
+요약은 기존 plan/result 관측 게시·퇴역과 부모/fixture 상태 변화에 맞춰 갱신하며 하위 상세 카드·기존 선택 이력을 유지한다. 렌더가 실패하면 마지막 요약을 이전 관측으로 표시한다. 긴 C1/run ID와 JSON은 요약 내부에서 줄바꿈해 모바일 카드 밖으로 잘리지 않게 한다. 새 조회·실행·저장·승인 버튼은 없다.
+
+별도 새 browser mode는 caller가 명시한 자기 보존 합성 Store와 원 startup만 읽는다. 자동으로 과거 폴더를 찾거나 CLI/provider/가상 runtime을 시작하지 않는다. UTF-8 replay index는 `kind="explicit_own_saved_authored_outputs"`, `new_runtime_calls=0`, `cases=[{"name":"normal", "output":"명시한 기존 output의 절대 경로"}, ...]` 형상이다. 각 output은 `public-summary.json`, `s/`, 있으면 `server-startup-original.json`을 포함한다. 정상·차단·분석 거절·측정 무효·단절의 보존 출처를 각각 normal/plan-blocked/analysis-rejected/result-invalid/RF-disconnected 이름으로 명시할 수 있다. 원 자료·Store·startup을 고치거나 결과 binding을 현재값으로 교정하지 않는다.
+
+```powershell
+$env:VLAB_UNIFIED_PROVIDED_FLOW_ONLY = '1'
+$env:VLAB_UNIFIED_FLOW_REPLAY_INDEX = (Resolve-Path '.local/unified-replay-index.json').Path
+node frontend/intake_flow_browser_check.cjs
+```
+
+이 UI 단위는 자기보존 2d의 다섯 Store/원 startup을 현재 코드의 보호 GET15·production DOM390/1440 10관측으로 재사용했다. 새 가상 실행·CLI·실제 모델·장비0이며 재생을 새 실행으로 세지 않는다. 별도 typed18은 fixture 공존/fixture-only·결과/부모 HTTP503·plan pending·C1 불일치·incomplete null·다른 접수·요약 렌더 실패다. 원 데이터의 정상·오류와 typed projection을 구분한다. 신규 Node10, 조회 host5의 종료·포트 재사용, 요약 내부의 실제 영역/scroll 폭도 확인했다. 원 RED10, null-prototype 객체를 clone과 비교한 검사자 가정 오류1, 대기 route 해제 순서의 검사기 오류, 모바일 내부 잘림 RED를 각각 보존했다. 문서의 예전 실행 수와 이 검증 수를 합산하지 않으며 기존183/168 전체는 반복하지 않았다. CLI/test/backend/read-model·D1/D2/D3·Store/schema는 이 단위에서 수정하지 않았다.

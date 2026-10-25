@@ -339,3 +339,99 @@ test('gap queue retains an unfamiliar fact namespace as uninterpreted instead of
   const input=gapQueueInputs();input.options.plan.value.plan_input.gaps=[{code:'missing_intake_field',field:'intake.native_auth',provided:null,blocking:true}];
   const row=queueGroup(gapQueue(input),'plan_gaps').items[0];assert.equal(row.category,'uninterpreted');assert.equal(row.state,'blocked');assert.equal(row.raw.field,'intake.native_auth');
 });
+
+function unifiedInput(){
+  const context={intake_id:'I-1',revision:2,generation:7,request_id:''};
+  return {intake:workflowIntake(),options:{provided:{generation:7,intakeStale:false,
+    plan:{context:{...context},value:preview(),pending:false,parentPending:false,stale:false},
+    result:{context:{...context},value:parseResult(),pending:false,parentPending:false,stale:false}}}};
+}
+const unified=input=>workflow(input.intake,input.options);
+test('unified provided flow summarizes current matched plan run and measurement without empty fixture shadow',()=>{
+  const input=unifiedInput(),view=unified(input),p=view.provided;
+  assert.equal(p.current,true);assert.equal(p.scope,'current');assert.equal(p.plan_ready,true);
+  assert.match(stepText(view,'plan'),/제공 계획.*ready_for_simulation/);
+  assert.match(stepText(view,'plan'),/case_id=null.*plan_id=null/);
+  assert.match(stepText(view,'virtual'),/provided-run.*provided-runtime/);
+  assert.match(stepText(view,'measurement'),/provided-event/);
+  assert.match(stepText(view,'measurement'),/-4 \/ dBm/);
+  assert.match(stepText(view,'measurement'),/not_assessed/);
+  assert.doesNotMatch(step(view,'virtual').label,/선택한 가상 기록 없음/);
+  assert.doesNotMatch(step(view,'measurement').label,/게시된 측정 근거 미확인/);
+  assert.equal(view.context.provided_scope,'current');assert.equal(view.steps.length,7);
+});
+test('unified provided flow never infers storage draft AI cleanup independent evaluation or physical completion',()=>{
+  const view=unified(unifiedInput()),p=view.provided;
+  for(const key of ['storage','ai','cleanup','independent_evaluation'])assert.equal(p[key],'unknown');
+  assert.equal(p.physical,'not_run');assert.equal(p.execution_authority,false);
+  assert.match(stepText(view,'assessment'),/저장.*미확인/);assert.match(stepText(view,'assessment'),/실제 AI.*unknown/);
+  assert.match(stepText(view,'physical'),/실측 대조 미실행/);
+  assert.doesNotMatch(stepText(view,'assessment'),/ai_model_called=false/);
+});
+test('unified provided flow preserves selected fixture history and provided history as distinct sources',()=>{
+  const input=unifiedInput();input.options.payload=currentFixture();input.options.request_id='REQ-UI-1';
+  const before=structuredClone(input.options.payload),view=unified(input);
+  assert.equal(view.context.fixture_scope,'current');assert.equal(view.context.request_id,'REQ-UI-1');
+  assert.match(stepText(view,'virtual'),/기존 fixture.*run:ui-1/);assert.match(stepText(view,'virtual'),/provided-run/);
+  assert.match(stepText(view,'virtual'),/기존 fixture: 실행 기록 저장/);
+  assert.match(stepText(view,'assessment'),/기존 fixture.*ai_model_called=false/);
+  assert.deepEqual(step(view,'measurement').refs,['event:18']);
+  assert.deepEqual(input.options.payload,before);assert.equal(view.provided.run_id,'provided-run');
+});
+test('unified provided flow fences stale pending parent and generation observations into previous-only summaries',()=>{
+  for(const fault of ['plan-pending','result-pending','parent','generation','stale']){
+    const input=unifiedInput(),p=input.options.provided;
+    if(fault==='plan-pending')p.plan.pending=true;if(fault==='result-pending')p.result.pending=true;
+    if(fault==='parent')p.intakeStale=true;if(fault==='generation')p.result.context.generation=6;if(fault==='stale')p.result.stale=true;
+    const view=unified(input);assert.equal(view.provided.current,false,fault);assert.notEqual(view.provided.scope,'current');
+    assert.ok(step(view,'measurement').previous_lines.some(line=>line.includes('provided-event')),fault);
+    assert.doesNotMatch(step(view,'measurement').label,/제공 측정·계산 기록/);
+  }
+});
+test('unified provided flow blocks C1 binding relation and blocked plan without repairing originals',()=>{
+  for(const fault of ['C1','binding','relation','plan']){
+    const input=unifiedInput(),p=input.options.provided;
+    if(fault==='C1')p.result.value.context_sha256='f'.repeat(64);
+    if(fault==='binding')p.result.value.expected_current_binding.plan_sha256='f'.repeat(64);
+    if(fault==='relation')p.result.value.relation={status:'blocked',reasons:['provided_revision_changed'],provided_revision:1};
+    if(fault==='plan'){p.plan.value.plan_input.status='blocked';p.plan.value.plan_input.gaps=[{code:'missing_setting',field:'source_settings.duty_cycle',provided:null,blocking:true}];}
+    const before=structuredClone(p),view=unified(input);assert.equal(view.provided.current,false,fault);assert.deepEqual(structuredClone(p),before);
+    assert.ok(step(view,'measurement').previous_lines.length>0);
+  }
+});
+test('unified provided flow excludes other intake run and values instead of inheriting them into current scope',()=>{
+  const input=unifiedInput(),p=input.options.provided;
+  p.plan.value.intake_id='I-other';p.result.value.intake_id='I-other';p.result.value.result.binding.run_id='OTHER-RUN-SECRET';
+  const view=unified(input);assert.equal(view.provided.current,false);assert.equal(view.provided.run_id,null);
+  assert.equal(view.provided.raw_measurement,null);assert.doesNotMatch(JSON.stringify(view),/OTHER-RUN-SECRET/);
+});
+test('unified provided flow keeps invalid incomplete and null originals without measurement or storage promotion',()=>{
+  for(const status of ['invalid','incomplete']){
+    const input=unifiedInput(),r=input.options.provided.result.value.result;
+    r.status=status;r.raw_measurement=null;r.calculation.corrected=null;r.failure={code:'measurement_missing',field:'measurement_ref'};
+    const view=unified(input);assert.equal(view.provided.current,false);assert.equal(view.provided.original_status,status);
+    assert.equal(view.provided.raw_measurement,null);assert.equal(view.provided.corrected,null);assert.equal(view.provided.storage,'unknown');
+    assert.ok(step(view,'measurement').previous_lines.some(line=>line.includes('미제공(null)')));
+    assert.doesNotMatch(step(view,'measurement').label,/제공 측정·계산 기록/);
+  }
+});
+test('unified provided flow reports ready input without inventing execution when provided result is absent',()=>{
+  const input=unifiedInput();input.options.provided.result={value:null,errorCode:'intake_conducted_result_missing'};
+  const view=unified(input);assert.equal(view.provided.plan_ready,true);assert.equal(view.provided.current,false);
+  assert.equal(view.provided.run_id,null);assert.match(stepText(view,'plan'),/ready_for_simulation/);
+  assert.match(stepText(view,'measurement'),/제공.*미/);
+});
+test('unified provided flow keeps fixture-only semantics and scopes its AI flag when provided observations are unavailable',()=>{
+  const input=unifiedInput();input.options.payload=currentFixture();input.options.request_id='REQ-UI-1';
+  input.options.provided.plan={value:null};input.options.provided.result={value:null};const view=unified(input);
+  assert.equal(view.context.fixture_scope,'current');assert.equal(view.provided.current,false);
+  assert.match(stepText(view,'virtual'),/기존 fixture.*run:ui-1/);assert.deepEqual(step(view,'measurement').refs,['event:18']);
+  assert.match(stepText(view,'assessment'),/기존 fixture.*ai_model_called=false/);
+});
+test('unified provided flow preserves zero and detached raw values without recomputing correction',()=>{
+  const input=unifiedInput(),r=input.options.provided.result.value.result;
+  r.raw_measurement.packet.value=0;r.calculation.corrected.value=-0;const view=unified(input);
+  assert.equal(view.provided.raw_measurement.packet.value,0);assert.equal(Object.is(view.provided.corrected.value,-0),true);
+  assert.match(stepText(view,'measurement'),/0 \/ dBm/);
+  view.provided.raw_measurement.packet.value=42;assert.equal(r.raw_measurement.packet.value,0);
+});
