@@ -6,9 +6,9 @@
 
 | 담당 / 실제 요청 ID | 현재 보존·검수 | 다음 작은 구현·배타적 소유 |
 |---|---|---|
-| 개발1 `DEV1-INTAKE-CONDUCTED-TWIN-PLAN-001` | G3 c7c 독립 qualified Yes의 원 timeout·fixture 형상 오류와 분리 재검증을 보존, 총괄 인수 중. host-composition private 계약 보존 | 신규 `labflow/intake_conducted_twin_plan.py`, 대응 tests, usage 정확3. 기존 접수/사실 검증 재사용 → 제품·목적·시장·누락/근거/방법 버전·명시 설정의 가상 계획 입력. 부족/충돌/잘못된 근거는 blocked, 규범 적용·실측 승인 생성 금지 |
+| 개발1 `DEV1-INTAKE-CONDUCTED-TWIN-PLAN-001` | G3 c7c → root9f16046·통합062 관련209 PASS. 원 timeout·fixture 형상 오류와 분리 재검증/host-composition private 계약 보존 | 신규 `labflow/intake_conducted_twin_plan.py`, 대응 tests, usage 정확3. 기존 접수/사실 검증 재사용 → 제품·목적·시장·누락/근거/방법 버전·명시 설정의 가상 계획 입력. 부족/충돌/잘못된 근거는 blocked, 규범 적용·실측 승인 생성 금지 |
 | 개발2 `DEV2-CODEX-PERSISTENT-VIRTUAL-LOOP-001` | effect0c7/총괄061 보존. saved readback v1 No/I1·v3 정적 Yes 계약 보존 | 신규 `labflow/virtual_fleet/codex_virtual_loop.py`, 대응 tests, usage 정확3. 같은 runtime의 관측→genuine producer/strict→허용 가상 도구→새 관측→종료. 모델/도구/tick 각각 최대8·outer180초·producer60초·재시도0. owner 실제모델0, root 독립 수용 후 기존 위임의 좁은 실제 시험 |
-| 개발3 `DEV3-PLAN-DRIVEN-CONDUCTED-TWIN-001` | 동일입력 비교8f56 독립 Yes/원12 PASS, 총괄 인수 중 | 기존 `virtual_fleet/integration.py`, 대응 integration tests, 신규 usage 정확3. `create_conducted_example(..., source_settings=None)`로 caller exact6 설정을 DUT/계측기에 전달하고 legacy None 보존. 독립 dB 차분·on/time 평균·stale 무효 검증. 실측/파형 정확도 미승인 |
+| 개발3 `DEV3-PLAN-DRIVEN-CONDUCTED-TWIN-001` | 동일입력 비교8f56 → root71b90495·독립 Yes/원12 PASS·통합062 관련209 PASS | 기존 `virtual_fleet/integration.py`, 대응 integration tests, 신규 usage 정확3. `create_conducted_example(..., source_settings=None)`로 caller exact6 설정을 DUT/계측기에 전달하고 legacy None 보존. 독립 dB 차분·on/time 평균·stale 무효 검증. 실측/파형 정확도 미승인 |
 | 개발4 `DEV4-FIRST-TWIN-WORKFLOW-VIEW-001` | 제공기록 UI817b 원14/47 독립 검수·필요 소유 수정 우선 | 기존 `frontend/app.js`, `intake_flow_model.mjs`, 대응 Node test/browser check, 기존 fixture check usage 정확5. 동일 접수/기록의 제품→계획→실행→측정·판정→근거·미지원 단계 표시. 기존 보호 GET/DTO 재사용·서버/Store 변경0·미제공 수치·계획·AI·판정은 미연결/미실행 표시 |
 | P01 `DEV-HCT-TWIN-FIRST-001` | 기존 수집1~8와 corpus/보류 원본 유지. S01 `TWIN-FIRST-20261025-S01-B0001` 실제 전송·active 확인 | 기존 허용 자료의 제품→규범/방법→설정/기준면/보정/한계→원본 페이지를 검수한 첫 packet. 보고서 조건/규범/개발자 추론 분리·unknown null·공식 대응 상태 별도. 새 필요한 공백만 한 창구 수집 |
 
