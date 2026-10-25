@@ -661,33 +661,55 @@ function buildConductedArtifactStorage(record,snapshot=state,current=storageView
   const view=describeConductedArtifactStorage(record,{generation:snapshot.snapshotGeneration||0,intakeStale:snapshot.view!=='intakes'||(!freshParent&&(gapQueueState.intakeStale||gapQueueState.parentPending)),plan:conducted,storage:current});
   const area=el('section','section-rule');area.id='conducted-artifact-storage';area.style.minWidth='0';area.style.overflowWrap='anywhere';
   area.dataset.sourceKind='artifact_storage_readback';area.dataset.current=String(view.current);area.dataset.scope=view.scope;area.dataset.pending=String(current.pending||current.parentPending);area.dataset.resultStatus=view.original_status||'unknown';
-  area.append(el('h4','','별도 산출물 저장 읽기'));
-  const status=el('p','inline-note',view.current?'고정 3파일 bytes·hash·full binding 일치 관측':view.foreign?'다른 접수의 산출물 제외':view.scope==='unconfirmed'?'이전 관측 · 현재 관계 미확인':current.status);
+  area.append(el('h4','','저장 사본 확인'));
+  const status=el('p','inline-note',view.current?'저장 사본 3파일 일치 · 현재 관계 확인':view.foreign?'다른 접수의 저장 사본 제외 · 현재 관계 확인 불가':current.pending?'저장 사본 조회 중 · 현재 관계 확인 불가':view.artifact?'저장 사본 3파일 일치 · 현재 관계 확인 불가':'저장 사본 미확인 · 현재 관계 확인 불가');
   status.id='conducted-artifact-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  const refresh=el('button','button','산출물 저장 읽기 새로고침');refresh.id='conducted-artifact-refresh';refresh.type='button';refresh.setAttribute('aria-disabled',String(current.pending||current.parentPending));
+  const refresh=el('button','button','저장 사본 새로고침');refresh.id='conducted-artifact-refresh';refresh.type='button';refresh.setAttribute('aria-disabled',String(current.pending||current.parentPending));
   refresh.addEventListener('click',()=>{if(refresh.getAttribute('aria-disabled')!=='true')void refreshArtifactStorage();});
-  area.append(status,refresh,el('p','inline-note','지정한 manifest.json · result.json · draft.md의 읽기 관측입니다. 기존 제공 snapshot·fixture와 별도 출처이며 작성 결과·게시 순서·실제 AI·영구 현재 승인·규범 판정은 미확인입니다.'));
+  area.append(status,refresh,el('p','inline-note','출처: 별도 합성 산출물 읽기 · 기존 제공 snapshot·fixture와 구분합니다. 현재 관계는 이 조회 시점의 관측이며 작성 결과·게시 순서·영구 현재 승인은 미확인입니다.'));
   const content=el('div');content.id='conducted-artifact-content';content.dataset.artifactOriginal='';
   const original=(title,value,name)=>{const details=el('details'),pre=el('pre','mono',typeof value==='string'?value:conductedPreviewValue(value));details.append(el('summary','',title));pre.style.whiteSpace='pre-wrap';pre.style.overflowWrap='anywhere';pre.style.maxWidth='100%';pre.dataset.artifactRaw=name;details.append(pre);content.append(details);};
+  const judgement=el('div'),a=view.artifact;judgement.dataset.artifactJudgement='';
+  const measurementLabel=a?.result.status==='invalid'?'측정 무효 · 원 상태 invalid':a?.result.status==='incomplete'?'측정 미완료 · 원 상태 incomplete':a?'원 측정 기록 관측 · recorded':'미관측(unknown)';
+  const decisionRows=metadata([
+    ['저장 사본',a?view.current?'3파일 일치 관측':'3파일 일치 · 이전·차단 관측':'일치 여부 미확인(unknown)'],
+    ['현재 관계',view.current?'확인 · 이 조회 시점':view.foreign?'확인 불가 · 다른 접수 자료 제외':'확인 불가 · 미관측 또는 이전·차단 관측'],
+    ['측정',measurementLabel],['판정','미평가(not_assessed)'],['실제 AI 호출','미확인(unknown)'],
+  ]);const decisionValues=decisionRows.querySelectorAll('dd');decisionValues[0].dataset.artifactCopySummary='';decisionValues[1].dataset.artifactRelationSummary='';judgement.append(decisionRows);
+  if(a){
+    const raw=a.result.raw_measurement,corrected=a.result.calculation.corrected,format=conductedPreviewValue;
+    const valueRows=metadata([
+      [view.current?'원 측정 기록':'이전·차단 원 측정',raw===null?'미제공(null)':`${format(raw.packet?.value)} ${format(raw.packet?.unit)} · 기준면 ${format(raw.reference_plane)}`],
+      [view.current?'원 보정 기록':'이전·차단 원 보정',corrected===null?'미제공(null)':`${format(corrected.value)} ${format(corrected.unit)} · 기준면 ${format(a.result.calculation.target_reference_plane)}`],
+    ]);for(const value of valueRows.querySelectorAll('dd'))value.dataset.artifactObservedValue='';judgement.append(valueRows);
+  }
+  content.append(judgement);
+  if(current.errorCode||view.scope==='unconfirmed')content.append(el('p','inline-note',current.errorCode?'조회 실패 · 마지막 관측 보존 · 현재 관계 확인 불가':'이전 관측 보존 · 현재 관계 확인 불가'));
   if(view.artifact){
     const a=view.artifact,s=a.storage,m=a.manifest;
-    content.append(badge(view.current?'저장 읽기 일치 관측':`이전·차단 관측 · ${view.status}`,view.current?'info':'warning'),metadata([
+    const technical=el('details');technical.append(el('summary','','관측 출처·식별자·지문·검증 범위'),metadata([
       ['별도 산출물 / 원 상태',`${a.selection.artifact_name} / ${a.result.status}`],['별도 run / runtime',`${a.selection.run_id} / ${a.selection.runtime_instance_id}`],
       ['manifest 원 파일 SHA-256 · LF 포함',s.manifest_sha256],['result canonical SHA-256 · LF 제외',s.result_sha256],['result 원 파일 SHA-256 · LF 포함',m.files[0].sha256],['draft 원 UTF-8 SHA-256',s.draft_sha256],
       ['읽은 파일 수 / 결합 범위',`${s.verified_file_count} / ${s.binding_scope}`],['원 측정 / 보정',`${conductedPreviewValue(a.result.raw_measurement)} / ${conductedPreviewValue(a.result.calculation.corrected)}`],
       ['원 측정 유효성 / 규범',`${a.result.status} / ${a.result.calculation.conformity.status}`],['실행 / 재실행 권한',`${a.verification.execution_authority} / ${a.verification.rerun_authority}`],
-    ]));
+    ]));content.append(technical);
     original('원 manifest JSON · 관측 hash/bytes',m,'manifest');original('원 DRAFT UTF-8 텍스트',a.draft,'draft');original('별도 원 결과 JSON · invalid/null 보존',a.result,'result');
     original('읽기 검증 범위 · 작성 결과·순서 미확인',a.verification,'verification');
   }
   if(view.current_facts)original('관측 당시 원 facts-plan · 공백·질문·null',view.current_facts.facts_plan,'facts-plan');
   if(view.relation)original('원 현재 binding 대조 · 읽기 후 재확인',view.relation,'relation');
-  if(view.code||view.reasons.length)content.append(el('p','inline-note',`원 조회 코드 ${conductedPreviewValue(view.code)} · 연결 차단 ${conductedPreviewValue(view.reasons)}`));
+  if(view.code||view.reasons.length)original('원 조회 코드·연결 차단 사유',{code:view.code,reasons:view.reasons},'observation-status');
   area.append(content);return area;
 }
 function refreshArtifactStorageCard(){
   const record=state.records.find(x=>x.intake_id===state.selected),target=$('#conducted-artifact-storage');if(!record||!target)return;
-  try{target.replaceWith(buildConductedArtifactStorage(record));}catch{target.dataset.current='false';target.dataset.scope='unconfirmed';const status=$('#conducted-artifact-status');if(status)status.textContent='화면 확인 실패 · 이전 관측 · 현재 관계 미확인';}
+  try{target.replaceWith(buildConductedArtifactStorage(record));}catch{
+    storageView.stale=true;target.dataset.current='false';target.dataset.scope='unconfirmed';
+    const copy=target.querySelector('[data-artifact-copy-summary]'),relation=target.querySelector('[data-artifact-relation-summary]');
+    if(copy)copy.textContent='이전 관측 · 현재 저장 상태 미확인';if(relation)relation.textContent='확인 불가 · 화면 확인 실패';
+    for(const value of target.querySelectorAll('[data-artifact-observed-value]'))if(!value.dataset.previous){value.textContent='이전 관측: '+value.textContent;value.dataset.previous='true';}
+    const status=$('#conducted-artifact-status');if(status)status.textContent='화면 확인 실패 · 이전 관측 · 현재 관계 확인 불가';refreshWorkflowSummary();
+  }
 }
 function publishArtifactStorage(next){
   const record=state.records.find(x=>x.intake_id===state.selected),target=$('#conducted-artifact-storage');if(!record||!target)return false;
