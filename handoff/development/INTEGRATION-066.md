@@ -1,8 +1,18 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `9d3a3392e7b16328b607784dfa0f39e133857d31` / source322를 통합·검증했으며 이번 갱신의 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `cd8e1c09acf01ee3dff62fc594c1b6665b6da7ba` / source326를 통합·검증했으며 이번 갱신의 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
 
-## source322 최신 연결과 검증
+## source326 측정 선택 오류 수정·현재 조건 연결
+
+유일한 sensor.acquire의 첫 구조적 완료를 고르는 cc72는 원 독립12/12 뒤 추가 반증1에서 Important1/No가 확인됐다. builder 내부의 예상 밖 일반 예외를 input_invalid로 바꾸던 구간만 e258에서 고쳤다. 새 독립8/8은 ordinary7종의 최초 동일 객체 전파와 잘못된 반환 DTO 보류1을 확인했고 원12·원 No/기대·추가 반증은 바꾸거나 재실행하지 않았다. control/native 입력 검증은 변경 전후 정적 범위로 구별한다. 총괄은 cc72→e258를 정상 cherry하고 새 root15(원 기능12+수정3)를 검증했다. 실제 AI/새 RF 실행·장비 호출은0이다.
+
+현재 Store의 facts·gate·후행 context를 결합하는 a3aa를 qualified로 수용했다. 원12진입은9 PASS·관측기 단언 실패2·SQL drift 미완료1이고, 원 응답 재판독은 새 호출이 아니다. 필요한 승인 근거가 없는 genuine HOLD를 보존하며 genuine REVIEW 양성과 유효 분석 SHA drift는 미확인이다. 총괄14 PASS는 이 한계를 규범 판단 완료로 바꾸지 않는다. root의 처음 잘못된 테스트 모듈 locator ImportError1/API0은 원 로그로 남기고 동결 파일명에서 정확한 locator를 읽은 별도14를 실행했으며 selector15 반복0이다. 앞 manifest 필드 files/entries 오인 KeyError도 target/cherry 전 실패로 보존했다.
+
+source326과 기존322는 바이트·실제로 관측한 native5종을 전후 대조했다. 과거 hash-only 전체 목록의 native 미관측 정정은 유지하며 소급 주장하지 않는다. 921의 원 동적12 PASS와 별도 정적 최초 오류 우선순위 I1/No를 구별했다. 개발2는 정확921의 별도 clone에서 registration3만 수정 중이며 원 실패·SQL·기존 profile/permit17을 건드리지 않는다. 선택 finalizer7226과 보호 GET efc77fbd/CLI1cf는 정확 source 동결 후 별도 독립 검수 대상이다.
+
+첫 합성 PDF/MOCK 업무와 현재 저장사본 검수·기존 화면의 검증 범위는 아래 source322 기록을 유지한다. 다음은 개발1 시연 startup의 원 current/artifact 입력 연결, 개발2 오류 수정 후 선택 finalizer, 개발3 current result→기존 비교기, 개발4 저장검수 genuine 화면이다. P01의 새 B081~B084 48PDF는 미ACK4단위이며 보존475에 가산하지 않는다. 다음 새4단위 또는 실제 방법 근거 변화만 묶어 인계하고 N02 STOP/기존 수집을 유지한다. 새 사용자 준비·실제 AI·실물 호출0, task/규범·물리 정확도·현장 전체 미완료다.
+
+## source322 당시 연결과 검증 — 보존 이력
 
 현재자료 CLI7e는 independent qualified Yes 뒤 기능75042332로 수용했다. 독립 원12=11 PASS/부분 출력 중복 집계 observer No1은 원 raw·별도 observer-only selfcheck 판독으로 보존하며 소급 덮지 않았다. root direct12와 별도 module4 methods/actual Python child7 PASS를 확인했다. 실제 모델·원17·운영profile/인증은0이다.
 
