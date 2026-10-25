@@ -1,6 +1,7 @@
 /* Actual protected HTTP -> typed dependency double -> record -> Chromium DOM. Cloud calls0. */
 const fs=require('node:fs'),path=require('node:path'),{spawn}=require('node:child_process'),assert=require('node:assert/strict');
 const {chromium}=require('playwright');
+const http=require('node:http'),crypto=require('node:crypto');
 const ROOT=path.resolve(__dirname,'../..'),LOCAL=path.join(ROOT,'.local');fs.mkdirSync(LOCAL,{recursive:true});
 const OUT=fs.mkdtempSync(path.join(LOCAL,'vertex-ui-dom-'));
 const python=process.env.VERTEX_UI_PYTHON||'python';
@@ -45,6 +46,7 @@ finally:
 `;
 fs.writeFileSync(path.join(OUT,'browser_host.py'),helper,'utf8');
 const checks=[],resources=[],failures=[];
+const replayChecks=[],replayResources=[];
 function host(mode,dir){
  const child=spawn(python,['-X','utf8','-B',path.join(OUT,'browser_host.py'),ROOT,dir,mode],{stdio:['pipe','pipe','pipe']});
  let pending='',stderr='',queue=[],waiters=[];child.stderr.on('data',b=>{stderr+=b.toString();if(stderr.length>8192)child.kill();});
@@ -121,7 +123,74 @@ async function scenario(browser,width,mode){
   resources.push({width,mode,...resource,child_exit:exited.code,browser_context_closed:true});
  }
 }
+async function registeredReplay(browser,width,packet){
+ const positive=new Map();for(const r of packet.records)if(r.variant==='registered-pass'&&!positive.has(r.scenario_id))positive.set(r.scenario_id,r);
+ assert.equal(positive.size,7,'owned genuine HTTP capture must contain all seven independently registered inputs');
+ const records=[...positive.values(),...packet.records.filter(r=>r.variant==='strict-reject'||r.variant.startsWith('transport-'))];
+ assert.equal(records.length,12);assert.ok(records.every(r=>r.scope.startsWith('genuine D1+D3')));
+ const sockets=new Set();let origin,context,current,delivered=false,overlay=false,page;const errors=[],requests=[],external=[];
+ const server=http.createServer((req,res)=>{
+  const name=new URL(req.url,'http://127.0.0.1').pathname;
+  if(name==='/'){res.setHeader('Content-Type','text/html; charset=utf-8');res.end('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/styles.css"><button id="show-ai">모델 연결</button><main id="panel"></main><script type="module">import {createAIConnectionPanel} from "/panel.mjs";globalThis.panel=createAIConnectionPanel(document.querySelector("#panel"));document.querySelector("#show-ai").addEventListener("click",()=>panel.show());</script>');}
+  else if(name==='/panel.mjs'||name==='/styles.css'){res.setHeader('Content-Type',name.endsWith('.mjs')?'text/javascript; charset=utf-8':'text/css; charset=utf-8');res.end(fs.readFileSync(path.join(ROOT,name==='/panel.mjs'?'frontend/ai_connections/panel.mjs':'frontend/styles.css')));}
+  else{res.statusCode=404;res.end();}
+ });
+ server.on('connection',socket=>{sockets.add(socket);socket.on('close',()=>sockets.delete(socket));});
+ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const address=server.address();origin='http://127.0.0.1:'+address.port;
+ const dir=path.join(OUT,'registered-replay-'+width);fs.mkdirSync(dir);
+ try{
+  context=await browser.newContext({viewport:{width,height:900}});page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+  page.on('request',r=>{if(!r.url().startsWith(origin+'/'))external.push(r.url());if(r.url().includes('/api/ai-connections/'))requests.push({method:r.method(),path:new URL(r.url()).pathname});});
+  await page.route(origin+'/api/ai-connections/**',async route=>{
+   const request=route.request(),name=new URL(request.url()).pathname.split('/').pop(),headers={'Content-Type':'application/json','X-AI-Connection-CSRF':'a'.repeat(64)};let value;
+   if(name==='session')value={schema_version:1,kind:'ai_connection_session',capabilities:['read_profile','edit_profile','run_registered_synthetic','cancel_own'],expires_at:Date.now()/1000+900};
+   else if(name==='state'){
+    value=JSON.parse(JSON.stringify(delivered?current.after:current.state));
+    if(overlay)value.scenarios.push({scenario_id:'unsupported-synthetic-x',label:'미지원 · synthetic overlay',input_sha256:'1'.repeat(64),schema_sha256:'2'.repeat(64),evaluator_id:'unsupported-evaluator'});
+   }else if(name==='run'){
+    assert.equal(request.method(),'POST');assert.equal(request.headers()['x-ai-connection-csrf'],'a'.repeat(64));
+    const body=request.postDataJSON();assert.equal(body.scenario_id,current.scenario_id);assert.equal(body.matrix,false);assert.equal(Object.keys(body).length,5);value=current.queued;
+   }else{assert.equal(name,current.terminal.run_id);value=current.terminal;delivered=true;}
+   await route.fulfill({status:name==='run'?202:200,headers,body:JSON.stringify(value)});
+  });
+  for(const record of records){
+   current=record;delivered=false;overlay=false;await page.goto(origin+'/');await page.locator('#show-ai').click();await page.locator('#ai-scenario').waitFor();
+   assert.equal(await page.locator('#ai-scenario option').count(),7);assert.ok((await page.locator('#panel').innerText()).includes('인증 메타데이터 사전 점검'));
+   await page.locator('#ai-scenario').selectOption(record.scenario_id);await page.locator('#ai-run-selected').click();
+   await page.waitForFunction(()=>document.querySelector('.ai-result')?.textContent.includes('finished'));
+   assert.equal(await page.locator('.ai-result tbody tr').count(),6);
+   const observed=await page.locator('.ai-result').innerText(),selected=record.terminal.cells.find(c=>c.settings!==null);
+   assert.ok(observed.includes(selected.reason_code));assert.ok(observed.includes('미평가')&&observed.includes('비용 미확인'));
+   assert.ok(!observed.includes('provider-response.bin')&&!observed.includes('vertex-exchange:'));
+   if(record.scenario_id.startsWith('intent-')||record.scenario_id.startsWith('intake-'))assert.ok(observed.includes('의미평가 미연결'));
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+   replayChecks.push({width,scenario_id:record.scenario_id,variant:record.variant,source_run_id:record.terminal.run_id,scope:'same genuine protected HTTP DTO replay only; new genuine API/producer executions0'});
+   await page.screenshot({path:path.join(dir,record.scenario_id+'-'+record.variant+'.png'),fullPage:true});
+  }
+  const starts=requests.filter(r=>r.method==='POST'&&r.path.endsWith('/run')).length;current=positive.get('DGM-AI-CONNECTION-001');delivered=false;overlay=true;
+  await page.locator('#ai-refresh').click();await page.waitForFunction(()=>document.querySelector('#ai-scenario')?.options.length===8);
+  assert.equal(await page.locator('#ai-run-selected').getAttribute('aria-disabled'),'false','global ready gate alone must not masquerade as unsupported selection gating');
+  await page.locator('#ai-scenario').selectOption('unsupported-synthetic-x');
+  assert.equal(await page.locator('#ai-run-selected').getAttribute('aria-disabled'),'true');assert.equal(await page.locator('#ai-run-matrix').getAttribute('aria-disabled'),'true');
+  await page.locator('#ai-run-selected').dispatchEvent('click');assert.equal(requests.filter(r=>r.method==='POST'&&r.path.endsWith('/run')).length,starts);
+  assert.ok((await page.locator('#panel').innerText()).includes('미지원입니다'));replayChecks.push({width,scope:'synthetic catalog negative overlay; unsupported selection sends no POST'});
+  assert.equal(external.length,0);assert.equal(errors.length,0);
+ }catch(error){if(page)await page.screenshot({path:path.join(dir,'failure.png'),fullPage:true}).catch(()=>{});failures.push({width,mode:'registered-replay',message:error.message,page_errors:errors});throw error;}
+ finally{
+  if(context)await context.close();server.closeIdleConnections?.();await new Promise(resolve=>server.close(resolve));
+  const closeDeadline=Date.now()+2000;while(sockets.size&&Date.now()<closeDeadline)await new Promise(resolve=>setTimeout(resolve,10));
+  const probe=http.createServer();await new Promise(resolve=>probe.listen(address.port,'127.0.0.1',resolve));await new Promise(resolve=>probe.close(resolve));
+  assert.equal(server.listening,false);assert.equal(sockets.size,0);replayResources.push({width,browser_context_closed:true,listener_closed:true,sockets_closed:true,port_rebind:true,genuine_API_executions:0,fake_D2_productions:0});
+ }
+}
 (async()=>{let browser;try{browser=await chromium.launch({headless:true});for(const width of [390,1440])for(const mode of ['controls','matrix'])await scenario(browser,width,mode);
- fs.writeFileSync(path.join(OUT,'result.json'),JSON.stringify({status:'pass',checks,resources,real_GCP_calls:0,real_model_calls:0,scope:'actual protected HTTP and Chromium with test-only typed concrete dependency doubles'},null,2));console.log(JSON.stringify({status:'pass',checks:checks.length,output:OUT}));
- }catch(error){fs.writeFileSync(path.join(OUT,'failure.json'),JSON.stringify({status:'fail',message:error.message,checks,resources,failures},null,2));console.error(JSON.stringify({status:'fail',message:error.message,output:OUT}));process.exitCode=1;}
+ let replay={status:'not_run',reason:'owned genuine HTTP capture not supplied'};
+ if(process.env.VERTEX_UI_HTTP_REPLAY){
+  const file=fs.realpathSync(process.env.VERTEX_UI_HTTP_REPLAY);assert.ok(file.startsWith(LOCAL+path.sep));assert.ok(fs.statSync(file).size<=33554432);
+  const bytes=fs.readFileSync(file),packet=JSON.parse(bytes);assert.equal(packet.actual_model_calls,0);fs.writeFileSync(path.join(OUT,'genuine-HTTP-captures.json'),bytes);
+  for(const width of [390,1440])await registeredReplay(browser,width,packet);
+  replay={status:'pass',capture_sha256:crypto.createHash('sha256').update(bytes).digest('hex'),registered_unique_inputs:7,checks:replayChecks,resources:replayResources,genuine_API_executions:0,fake_D2_productions:0,scope:'DTO copies; never added to genuine API pass counts'};
+ }
+ fs.writeFileSync(path.join(OUT,'result.json'),JSON.stringify({status:'pass',checks,resources,registered_replay:replay,real_GCP_calls:0,real_model_calls:0,scope:'legacy protected HTTP typed doubles and separate genuine HTTP DTO replay'},null,2));console.log(JSON.stringify({status:'pass',checks:checks.length,registered_replay_checks:replayChecks.length,output:OUT}));
+ }catch(error){fs.writeFileSync(path.join(OUT,'failure.json'),JSON.stringify({status:'fail',message:error.message,checks,resources,registered_replay_checks:replayChecks,registered_replay_resources:replayResources,failures},null,2));console.error(JSON.stringify({status:'fail',message:error.message,output:OUT}));process.exitCode=1;}
  finally{if(browser)await browser.close();}})();

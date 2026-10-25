@@ -34,6 +34,20 @@ _PUBLIC_FAILURES = frozenset({'ai_connection_ui_unavailable'} | {'vertex_respons
     'invalid_input invalid_settings credential_invalid credential_quota_mismatch dependency_unavailable evidence_error auth_failed http_error response_invalid incomplete blocked limit_exceeded timeout cancelled cleanup_failed internal_error'.split()} |
     {'model_comparison_'+s for s in 'invalid_input limit_exceeded state_error dependency_unavailable'.split()})
 _REASONS = frozenset('not_selected cancelled budget_rejected wall_limit gate_rejected dependency_unavailable credential_metadata_invalid budget_unavailable run_already_reserved budget_busy receipt_invalid connection_verified connection_response_invalid batch_stopped'.split())
+_REASONS |= frozenset(('intake_response_verified','intake_response_invalid','intent_response_verified','intent_response_invalid'))
+_SCENARIOS = {
+    'DGM-AI-CONNECTION-001': ('connection-json-v1','연결 응답 형상','connection_verified','connection_response_invalid','connection_only'),
+    **dict.fromkeys(('intake-synthetic-s01','intake-synthetic-s02','intake-synthetic-s03'),
+        ('intake-understanding-v1','접수 분석','intake_response_verified','intake_response_invalid','semantic_evaluator_not_connected')),
+    **dict.fromkeys(('intent-synthetic-i01','intent-synthetic-i02','intent-synthetic-i03'),
+        ('intake-test-intent-semantic-v1','의뢰 이해 후보','intent_response_verified','intent_response_invalid','semantic_evaluator_not_connected')),
+}
+_STRICT_REASONS = frozenset(value for item in _SCENARIOS.values() for value in item[2:4])
+
+
+def _scenario(scenario_id, evaluator_id):
+    item=_SCENARIOS.get(scenario_id) if type(scenario_id) is str else None
+    return item if item is not None and item[0]==evaluator_id else None
 
 
 class AIConnectionUIError(ValueError):
@@ -221,7 +235,7 @@ class AIConnectionRuntime:
             mismatch = code == 'vertex_response_credential_quota_mismatch'
         return dict(state='other_quota' if mismatch else 'missing',credential_file_ready=False,checked_at=time.time())
 
-    def _policy(self, profile, auth):
+    def _policy(self, profile, auth, scenario_id=None):
         # Read-only UI projection. D3 independently admits and reserves the authoritative files.
         trial=dict(state='unknown',checked_at=None)
         budget=dict(limit_calls=6,reserved_calls=None,remaining_calls=None,limit_output_tokens=3072,reserved_output_tokens=None,wall_budget_seconds=300)
@@ -241,6 +255,8 @@ class AIConnectionRuntime:
             _need(approval['schema_version']==1 and type(approval['schema_version']) is int and approval['kind']=='vertex_comparison_approval' and
                   approval['project_id']==approval['quota_project_id']==TARGET and approval['auth_profile_id']=='vertex-trial' and approval['execution_mode']=='actual')
             scenario=self.scenarios[approval['scenario_id']]
+            _need(_scenario(scenario['scenario_id'],scenario['evaluator_id']) is not None and
+                  (scenario_id is None or approval['scenario_id']==scenario_id))
             _need(all(type(approval[k]) is str and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}',approval[k])
                       for k in ('approval_id','scope_id','budget_id')))
             _need(approval['evaluator_id']==scenario['evaluator_id'] and approval['prompt_sha256']==hashlib.sha256(scenario['prompt_bytes']).hexdigest() and
@@ -284,7 +300,7 @@ class AIConnectionRuntime:
         profile = self._load(); auth = self._auth(profile); trial,budget,reasons = self._policy(profile,auth)
         if not auth['credential_file_ready']: reasons.insert(0,'quota_mismatch' if auth['state']=='other_quota' else 'credential_missing')
         if profile['revision'] == 0: reasons.append('profile_not_saved')
-        if not self.scenarios: reasons.append('scenario_unavailable')
+        if not any(_scenario(s['scenario_id'],s['evaluator_id']) for s in self.scenarios.values()): reasons.append('scenario_unavailable')
         with self.lock:
             if self.active: reasons.append('busy')
             own = [r['view'] for r in self.runs.values() if r['owner'] == owner and r['view'] is not None]
@@ -294,7 +310,7 @@ class AIConnectionRuntime:
                                  defaults=dict(thinking_level='MEDIUM',max_output_tokens=512,timeout_seconds=60),
                                  ranges=dict(max_output_tokens=[64,8192],timeout_seconds=[1,120])),
                     capabilities=list(CAPABILITIES),auth=auth,trial=trial,budget=budget,gate=dict(run_allowed=not reasons,reasons=list(dict.fromkeys(reasons))),
-                    scenarios=[dict(scenario_id=i['scenario_id'],label=i['scenario_id'],input_sha256=hashlib.sha256(i['prompt_bytes']).hexdigest(),
+                    scenarios=[dict(scenario_id=i['scenario_id'],label=((_scenario(i['scenario_id'],i['evaluator_id']) or (None,'미지원'))[1]+' · '+i['scenario_id']),input_sha256=hashlib.sha256(i['prompt_bytes']).hexdigest(),
                                     schema_sha256=hashlib.sha256(i['response_schema_bytes']).hexdigest(),evaluator_id=i['evaluator_id']) for i in self.scenarios.values()],
                     active_run_id=active,recent_runs=[{k:v[k] for k in ('run_id','state','matrix','scenario_id','created_at','finished_at')} for v in own[-16:]])
 
@@ -332,6 +348,8 @@ class AIConnectionRuntime:
 
     def _start_registered(self, owner, request, profile):
         _need(request['scenario_id'] in self.scenarios)
+        scenario=self.scenarios[request['scenario_id']]
+        _need(_scenario(scenario['scenario_id'],scenario['evaluator_id']) is not None)
         with self.lock:
             _need(not self.closing,'unavailable',503)
             _need(self.active is None and not getattr(self,'saving',False),'busy',429)
@@ -341,7 +359,7 @@ class AIConnectionRuntime:
         try:
             module=_module('model_comparison')
             _need(callable(getattr(module,'build_vertex_comparison_matrix',None)) and callable(getattr(module,'run_vertex_comparison_batch',None)),'unavailable',503)
-            auth=self._auth(profile);_,_,reasons=self._policy(profile,auth)
+            auth=self._auth(profile);_,_,reasons=self._policy(profile,auth,request['scenario_id'])
             _need(auth['credential_file_ready'] and not reasons,'gate_blocked',409)
             scenario=self.scenarios[request['scenario_id']]
             matrix=module.build_vertex_comparison_matrix(profile,scenario['prompt_bytes'],scenario['response_schema_bytes'],batch_id='AIUI-'+secrets.token_hex(16),
@@ -402,6 +420,7 @@ class AIConnectionRuntime:
                      response_complete=None,strict_decode='not_run',quality='not_run',usage=None,cost=None,latency_ms=None,error_code=None) for i,slot in enumerate(matrix['rows'])]
 
     def _record_cells(self, report, matrix):
+        contract=_scenario(matrix['scenario_id'],matrix['evaluator_id']);_need(contract is not None)
         _keys(report,'schema_version kind batch_id matrix_sha256 execution_mode rows summary business_assessment'.split())
         _need(report['schema_version']==1 and type(report['schema_version']) is int and report['kind']=='vertex_comparison_batch' and report['batch_id']==matrix['batch_id'] and
               report['matrix_sha256']==matrix['matrix_sha256'] and report['execution_mode'] in ('actual','mock','replay') and
@@ -423,7 +442,7 @@ class AIConnectionRuntime:
             _need(row['binding']==expected and type(row['binding']['scenario_version']) is int and type(row['binding']['evaluator_version']) is int)
             _keys(row['strict_decode'],('status','evaluator_id','error_code'));_keys(row['assessment'],('status','verdict','reason_code'))
             _need(row['strict_decode']['status'] in ('checked','rejected','not_run') and row['strict_decode']['evaluator_id']==matrix['evaluator_id'] and
-                  row['assessment']['status']=='not_assessed' and row['assessment']['verdict'] is None and row['assessment']['reason_code']=='connection_only')
+                  row['assessment']['status']=='not_assessed' and row['assessment']['verdict'] is None and row['assessment']['reason_code']==contract[4])
             if row['strict_decode']['status']=='checked':_need(row['strict_decode']['error_code'] is None)
             _keys(row['budget'],('budget_id','reservation_id','reserved_calls','reserved_output_tokens','generation_post_attempts'))
             _keys(row['timing'],('started_at','finished_at','elapsed_ms'))
@@ -431,11 +450,11 @@ class AIConnectionRuntime:
             reason=row['reason_code'];_need(type(reason) is str and (reason in _REASONS or reason in {'vertex_response_'+s for s in 'invalid_input invalid_settings credential_invalid credential_quota_mismatch dependency_unavailable evidence_error auth_failed http_error response_invalid incomplete blocked limit_exceeded timeout cancelled cleanup_failed internal_error'.split()}))
             decoded=row['strict_decode']
             if decoded['status']=='checked':
-                _need(row['status']=='success' and reason=='connection_verified' and decoded['error_code'] is None)
+                _need(row['status']=='success' and reason==contract[2] and decoded['error_code'] is None)
             elif decoded['status']=='rejected':
-                _need(row['status']=='failed' and reason=='connection_response_invalid' and decoded['error_code']=='connection_response_invalid')
+                _need(row['status']=='failed' and reason==contract[3] and decoded['error_code']==contract[3])
             else:
-                _need(row['status']!='success' and reason not in ('connection_verified','connection_response_invalid') and decoded['error_code'] is None)
+                _need(row['status']!='success' and reason not in _STRICT_REASONS and decoded['error_code'] is None)
             cell.update(state={'failed':'failure'}.get(row['status'],row['status']),reason_code=reason,attempted=None if count is None else bool(count),
                         strict_decode={'checked':'pass','rejected':'fail','not_run':'not_run'}[row['strict_decode']['status']],quality='not_run',latency_ms=row['timing']['elapsed_ms'])
             _need(cell['latency_ms'] is None or _number(cell['latency_ms']))
