@@ -656,7 +656,7 @@ def _receipt(value, settings, prompt, schema, directory, raw, success, error_cod
                 _fail()
             if success and key == "final_text" and b != raw:
                 _fail()
-        elif (desc["bytes"] is not None or desc["sha256"] is not None or
+        elif (not _integer(desc["bytes"],0,0) or desc["sha256"] is not None or
               desc["complete"] is not False or desc["overflow"] is not False or desc["extent"] != "absent"):
             _fail()
         if success and (desc["present"] is not True or desc["complete"] is not True or
