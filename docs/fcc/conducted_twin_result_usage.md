@@ -50,3 +50,41 @@ plan SHA와 source6, 실제 마지막 DUT configure·선택 관측의 source met
 원 입력/부분 실패/원 report를 성공으로 덮어쓰지 않는다. 출력 한도를 넘으면 정제 output_limit 실패 DTO를 반환하며 부분 결과를 성공처럼 자르지 않는다. 공식판본·규범 한계·불확도 승인이 없으므로 conformity.status="not_assessed", verdict/numeric_limit_dbm/uncertainty_db=null이다. 실제 실측 예측력·현장/교정·전체 업무 완료를 주장하지 않는다. P01 실제 packet·고객 원문을 열거나 모델에 보내지 않는다.
 
 소유24/24와 별도 관련284/284가 failure/error/skip0으로 통과했다. 관련 분모는 D1 plan34·integration23·evaluation33·RF41·instruments42·core22·harness39·method_adapter25·journal25다. 소유 검사는 genuine D1·같은 Trial의 setup·genuine harness/journal/report 및 독립 Decimal 수치 대조를 사용한다. malformed 중첩·receipt identity/clock·D1 authority/basis·지수문자·source power 결합의 추가 RED를 보존했다. 독립 검토와 실제 D2 통합은 별도다. 원 RED와 제한을 보존한다. 실제 provider/모델 인증/실장비/고객원본 호출0, 기존 Codex16/Vertex6/3072 상태 변경0이다.
+
+## 중첩 DTO와 실패 시 보존형
+
+`number`는 bool을 제외한 native 유한 int/float, `JSON`은 native JSON 재귀 값이다. 아래의 “정상”은 해당 검증을 통과한 형상이다. 검증 전에 복사하는 원입력 필드는 `invalid`에서도 원 JSON을 보존할 수 있다. consumer는 status/failure/gaps를 먼저 읽고 이 필드를 성공 자료로 단정하지 않는다. nullable은 숫자0이 아니며, 단계별 미생성 키와 null도 구별한다.
+
+| object | 실제 키·타입 | null·미생성·상태 |
+| --- | --- | --- |
+| binding | 초기 `{}` → `plan_input,run_report` exact2 → 아래 hash/ID9를 더한 exact11 | native snapshot 자체가 거절되면 빈 object. 첫2값은 원 `JSON`이며 정상은 D1 exact8/report exact15. 중간 실패에서 아직 생성하지 않은 hash/ID 키는 생략된다. |
+| binding 추가9 | `plan_input_sha256,setup_sha256,journal_file_sha256,journal_head_sha256,report_sha256,topology_sha256`: SHA256 string; `run_id,runtime_instance_id,measurement_ref`: opaque string | 9키는 run·plan·setup·topology 결합 검사를 지난 뒤 함께 생성한다. plan/report hash는 canonical JSON, journal file/head는 검증한 원 canonical journal의 해시다. |
+| raw_measurement | `packet,event_id,sequence,device_id,tick,setup_revision,quantity,reference_plane` exact8 | 전체가 null일 수 있다. `packet`은 원 object; device_id는 항상 `sensor`. 다른 원 metadata는 `JSON`이며 정상은 ID string·sequence/tick/revision int다. 잘못된 값도 실패 원형으로 남을 수 있다. |
+| raw packet 정상 필수11 | `status="ok",valid=true,value:number,unit="dBm",frequency_hz:number,power_dbm:number,duty_cycle:number,crest_factor_db:number,acquisition_tick:int,acquisition_setup_revision:int,source_id="sensor"` | packet은 open object다. 추가 원키를 버리지 않는다. 정상 value=power_dbm이며 raw packet을 예상값으로 대체하지 않는다. invalid packet도 원형으로 남으므로 normal 타입을 강제 캐스팅하지 않는다. |
+| raw quantity | 정상 exact4 `metric="on",reference_plane="sensor_input",loss_compensation_applied=false,loss_compensation_sign=1` | 미제공이면 null. 잘못된 선언은 원 `JSON`으로 보존한다. raw reference_plane은 이 선언의 원 값 또는 null이며 승인된 target plane을 뜻하지 않는다. |
+| setup_provenance | `records,topology,path` exact3 | records는 제공 원 `JSON`(정상 Record[]≤32); topology는 null 또는 제공 원 `JSON`(정상 object); path는 선택 경로 Edge[]이며 아직 생성되지 않았으면 `[]`. |
+| Record 정상8 | `request_id:string,operation:"execute"\|"advance",device_id:string\|null,action:string\|null,parameters:object\|null,receipt:object\|null,tick:int\|null,setup_revision:int\|null` | 실제 setup usage의 원 record다. advance 인자는 `{"ticks":int}`. 예외 시 null receipt/시점을 0이나 성공으로 바꾸지 않는다. 잘못된 records/row도 제공 원형으로 남을 수 있다. |
+| topology 정상 | `devices,connections`; Node는 `id,profile_id` string; Edge는 `source,target,kind`, endpoint는 `device_id,port` string | 실제 원 topology를 보존한다. 선택 path의 kind는 `rf`이며 Edge/Node의 미사용 원키도 임의 삭제하지 않는다. path는 DUT부터 sensor까지 순서다. |
+| calculation | `raw_power_w,raw_reference_plane,correction_ledger,target_reference_plane,corrected,conformity` exact6 | 모든 status에서 존재한다. raw_reference_plane은 원 선언 `JSON` 또는 null, target_reference_plane은 유효 plan의 `source_output` 또는 null. |
+| raw_power_w | null 또는 `{value:number>0,unit:"W"}` exact2 | 원 dBm의 단위 변환이다. correction 근거가 없어도 존재할 수 있다. 실패가 이미 계산한 원 단위 변환을 지우지는 않는다. |
+| correction_ledger | Ledger[] | 기본 `[]`. 전체 보정 근거·계산을 통과한 뒤에만 한 번 게시한다. 규범/교정 ledger가 아니다. |
+| Ledger | `device_id,output_port,setting,loss_db,record_index,request_id,tick,setup_revision,propagation_db,already_applied,compensation_db` exact11 | 첫3·request_id는 string, loss/propagation/compensation은 number(dB), index/tick/revision은 int, already_applied는 false. record_index는 records의 0기준 위치. setting은 `attenuation_db,loss_db,coupling_db,through_loss_db` 중 실제 사용한 키다. propagation_db=−loss, compensation_db=+loss의 의미를 구별한다. |
+| corrected | null 또는 `{value:number,unit:"dBm",power_w:number>0}` exact3 | target source_output 합성 계산이다. missing·already applied·wrong basis는 null이며 raw 숫자로 채우지 않는다. |
+| conformity | `status:"not_assessed",verdict:null,numeric_limit_dbm:null,uncertainty_db:null` exact4 | 모든 status에서 고정. storage/record 완료와 적합 PASS를 구별한다. |
+| gaps | 원 D1 gaps 순서 + 새 Gap[] | 정상 Gap은 `code:string,field:string,provided:JSON,blocking:bool` exact4. 새 행은 provided=null/blocking=true다. 제공 D1 gaps가 list이면 검증 전에 원소를 보존하므로 malformed 원소도 `JSON`일 수 있다. 원 D1 literal enum은 D1 usage를 따른다. |
+| failure | null 또는 `{code:string,field:string}` exact2 | 원 exception/body를 담지 않는다. 정보 부족은 failure=null인 gap-only와 failure가 있는 중단을 구별한다. |
+| verification | `synthetic:true,hardware_verified:false,physical_verified:false,source_bytes:"not_reopened",method_approval:"not_assessed",trust_scope:"provided_host_snapshots_and_hash_consistency",execution_authority:false` exact7 | 모든 DTO에서 같은 고정값. 실패 입력에 실측/권한 주장이 있어도 이를 승인하지 않는다. |
+
+`recorded`는 명시한 합성 target 계산까지 끝났다는 뜻이며 failure=null이다. nonblocking D1 gaps는 남을 수 있다. `incomplete`는 근거 부족·미완료/부분 setup·방법 불일치이며, `invalid`는 구조/결합/유효성/한계 거절이다. 두 상태 모두 이미 추출한 raw/report/원입력을 보존할 수 있으므로 “실패이면 모든 값 null”이라고 가정하지 않는다. output_limit은 원형을 성공처럼 자르지 않고 빈 기본 형상의 정제 invalid DTO로 대체한다.
+
+## 이 builder가 추가하는 오류 literal 전체
+
+아래62개는 원 D1 gaps의 enum과 별개다. `failure.field` 및 새 gap.field는 `input,output,plan_input`과 그 `binding,gaps,status,verification,intake,plan,plan.basis_refs`, `journal_read`와 그 `events,header,integrity`, `setup_snapshot`/`setup_snapshot.<0기준 index>`, `topology,run_report,measurement_ref,calculation,observation.<device_id>`를 사용한다. gap-only에서는 `quantity`/`quantity.metric`도 사용한다. 부모 validator·RF/계산 함수의 거절 중 별도 literal로 처리하지 않은 예외는 `invalid_evidence`로 정제하며 원 예외 text를 반환하지 않는다.
+
+| status/failure | literal code 전체 |
+| --- | --- |
+| invalid / failure exact2 | `acquisition_invalid`, `evidence_context_missing`, `input_limit`, `invalid_evidence`, `journal_header_invalid`, `journal_integrity_invalid`, `journal_invalid`, `journal_limit`, `journal_state_invalid`, `measurement_invalid`, `measurement_path_conflict`, `measurement_stale`, `native_input_invalid`, `observation_clock_regression`, `observation_invalid`, `output_limit`, `plan_basis_invalid`, `plan_binding_invalid`, `plan_binding_mismatch`, `plan_hash_mismatch`, `plan_intake_invalid`, `plan_invalid`, `plan_limit`, `plan_method_invalid`, `plan_verification_invalid`, `receipt_advance_clock`, `receipt_identity_or_clock`, `receipt_invalid`, `report_invalid`, `run_binding_mismatch`, `setup_advance_invalid`, `setup_clock_mismatch`, `setup_duplicate_request`, `setup_hash_mismatch`, `setup_identity_invalid`, `setup_invalid`, `setup_limit`, `setup_receipt_invalid`, `source_metadata_mismatch`, `source_settings_mismatch`, `topology_hash_mismatch`, `topology_invalid` |
+| incomplete / failure exact2 | `correction_overflow`, `execution_incomplete`, `journal_incomplete`, `measurement_missing`, `measurement_not_referenced`, `measurement_reference_missing`, `path_ambiguous`, `path_configuration_invalid`, `path_configuration_missing`, `path_selection_missing`, `plan_blocked`, `post_setup_configuration`, `setup_failed`, `setup_missing`, `setup_partial`, `unit_conversion_failed`, `unsupported_path_device` |
+| incomplete / failure=null, gap-only | `correction_basis_invalid`, `correction_basis_missing`, `metric_mismatch` |
+
+제어 예외 MemoryError/KeyboardInterrupt 등은 DTO로 바꾸지 않고 전파한다. 오류/정보 부족에서 원 값·실패 prefix·이력을 삭제하거나 도메인·규범 승인으로 승격하지 않는다. 이 절은 e8e의 실제 source를 정적으로 대조한 문서 계약이며 알고리즘·테스트 변경이나 제품 검사 재실행이 아니다.
