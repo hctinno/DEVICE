@@ -14,6 +14,7 @@ def run_codex_virtual_loop(
     executable: Path, requested_model: str, scenario: str,
     evidence_dir: Path, execution_origin: str, cancel_event=None,
     source_settings=None,
+    plan_binding=None, quantity=None,
 ) -> dict:
     ...
 ```
@@ -24,7 +25,13 @@ def run_codex_virtual_loop(
 
 제공 source는 한 번 분리 복사하고 prepare_sensor_trial에 power_dbm=그 원 power 및 source_settings=그 원 exact6으로 전달한다. trial/runtime/harness는 계속 run당1개다. 제공 시에만 caller-request.json의 execution.source_settings에 같은 선언을 보존한다. None에는 이 키를 추가하지 않는다. 원 source pin·run ID·시각처럼 실제 실행마다 달라지는 근거를 이전 파일 bytes로 위장하지 않는다. 실제 장치/profile의 후행 거절은 기존 factory 책임이며 전역 rollback이나 모든 부정 입력의 무부작용을 새로 보장하지 않는다.
 
-이 첫 확장은 setup snapshot·journal 형상을 추가하지 않는다. 수용된 D3 setup 기록 API를 실행 base에 연결하고 별도 근거 형상을 승인받기 전에는 setup 기록의 빈 목록을 실제 setup0으로 해석하지 않는다. 단순 caller source6를 실제 설정 호출 목록이나 기준면 보정 근거로 승격하지 않는다.
+첫 source6 확장과 별도로, 2026-10-26 DEV2-CONDUCTED-EXECUTION-PROVENANCE-001은 plan_binding/quantity 선택 경계를 추가한다. plan_binding=None·quantity=None에는 기존 factory keyword·파일·top14/step12·AI flag를 유지하며 setup/journal을 생성하지 않는다. bound mode는 원 D1 binding6이 명시될 때만 열고 source_settings exact6도 필수다. quantity만 있거나 source 없는 binding은 증거/factory/producer 전에 거절한다. binding은 native exact6 intake_id/revision/analysis_context_id/context_sha256/analysis_sha256/plan_sha256이며 positive native revision·ID·SHA를 검증한다. caller snapshot 결합일 뿐 실행권한이 아니다.
+
+bound mode에서는 prepare 전에 fresh 빈 collector를 만들고 같은 SensorTrial factory에 setup_records로 한 번 전달한다. 반환된 trial의 setup_snapshot()을 첫 harness event 전에 한 번 읽어 실제 collector와 대조하고 원 exact8 record list를 setup-snapshot.json에 보존한다. factory 예외의 원 collector/null receipt·시점도 partial로 보존한다. None getter의 빈 목록은 미기록이며 setup 무실행이 아니다. 별도 trial을 만들거나 원 record에 run/runtime을 삽입하지 않는다.
+
+원 events가 모인 뒤 genuine OperatorJournal로 operator-journal.jsonl을 구성한다. timing은 post_run_from_retained_events이며 live/durable 취득으로 표시하지 않는다. 원 report/events와 같은 run/runtime, 원 plan_binding6, 실제 setup canonical SHA·topology와 SHA, 실제 source pin manifest의 canonical SHA(engine_fingerprint_kind=sha256_canonical_host_source_pins_v1)를 provenance에 결합한다. quantity는 caller의 유계 native 제공값만 보존하고 None이면 key를 생략한다. on/sensor_input/false/+1이나 손실값에서 양·기준면·부호를 추정하지 않는다. genuine journal이 거절하는 제공 형상은 원 caller request와 실패로 보존하며 정규화해 통과시키지 않는다.
+
+bound mode에만 artifacts.setup_snapshot/operator_journal 원 파일 metadata와 execution.host_evidence를 추가한다. host_evidence는 원 binding/setup/topology SHA·quantity·post-run timing·journal complete/원 file/head SHA를 담으며 partial/unknown은 null 또는 명시 상태다. journal의 native 형상·해시/완료는 public read_operator_journal로 재대조한다. legacy journal/report의 ai_model_called=false는 그대로이며 실제 producer lifecycle·origin_authenticated=false/ai_model_called=null을 대체하지 않는다. 원 256KiB 출력·192파일/32MiB 관측 evidence·8/180/60/retry0 한도를 올리지 않는다. 새 계산·결과 builder·measurement_ref 선택·Store·G4 권위는 추가하지 않는다.
 
 execution_origin은 actual_cli 또는 mock_subprocess의 명시적인 **caller 출처 선언**이다. native producer receipt에는 실제/mock을 인증하는 필드가 없으므로 origin_authenticated=false, ai_model_called=null로 표시하고 그 선언을 인증·권한으로 사용하지 않는다. 테스트는 genuine producer의 subprocess만 알려진 Python test child로 치환하고 원 producer lifecycle·raw 파일·receipt를 검증한다. mock 선언 자체가 subprocess를 치환하거나 실제 실행을 차단하는 기능은 아니다. 실제 실행 권한은 이 값으로 획득되지 않는다.
 
