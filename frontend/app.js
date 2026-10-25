@@ -659,7 +659,7 @@ function syncResultView(){
 function buildConductedArtifactStorage(record,snapshot=state,current=storageView){
   const freshParent=(snapshot.snapshotGeneration??0)!==(state.snapshotGeneration??0);
   const view=describeConductedArtifactStorage(record,{generation:snapshot.snapshotGeneration||0,intakeStale:snapshot.view!=='intakes'||(!freshParent&&(gapQueueState.intakeStale||gapQueueState.parentPending)),plan:conducted,storage:current});
-  const area=el('section','section-rule');area.id='conducted-artifact-storage';area.style.minWidth='0';area.style.overflowWrap='anywhere';
+  const area=el('section','section-rule');area.id='conducted-artifact-storage';area.dataset.intakeId=record.intake_id;area.style.minWidth='0';area.style.overflowWrap='anywhere';
   area.dataset.sourceKind='artifact_storage_readback';area.dataset.current=String(view.current);area.dataset.scope=view.scope;area.dataset.pending=String(current.pending||current.parentPending);area.dataset.resultStatus=view.original_status||'unknown';
   area.append(el('h4','','저장 사본 확인'));
   const status=el('p','inline-note',view.current?'저장 사본 3파일 일치 · 현재 관계 확인':view.foreign?'다른 접수의 저장 사본 제외 · 현재 관계 확인 불가':current.pending?'저장 사본 조회 중 · 현재 관계 확인 불가':view.artifact?'저장 사본 3파일 일치 · 현재 관계 확인 불가':'저장 사본 미확인 · 현재 관계 확인 불가');
@@ -701,9 +701,16 @@ function buildConductedArtifactStorage(record,snapshot=state,current=storageView
   if(view.code||view.reasons.length)original('원 조회 코드·연결 차단 사유',{code:view.code,reasons:view.reasons},'observation-status');
   area.append(content);return area;
 }
+function replaceArtifactStorageCard(target,prepared){
+  // An asynchronous read rebuilds this card without ending keyboard navigation.
+  const button=target.querySelector('#conducted-artifact-refresh'),next=prepared.querySelector('#conducted-artifact-refresh');
+  const restore=button&&document.activeElement===button&&target.dataset.intakeId===prepared.dataset.intakeId&&prepared.dataset.intakeId===state.selected;
+  target.replaceWith(prepared);
+  if(restore&&next?.isConnected&&!next.disabled&&next.getClientRects().length&&state.view==='intakes'&&!referenceSuspended&&!referenceDestroyed)next.focus({preventScroll:true});
+}
 function refreshArtifactStorageCard(){
   const record=state.records.find(x=>x.intake_id===state.selected),target=$('#conducted-artifact-storage');if(!record||!target)return;
-  try{target.replaceWith(buildConductedArtifactStorage(record));}catch{
+  try{replaceArtifactStorageCard(target,buildConductedArtifactStorage(record));}catch{
     storageView.stale=true;target.dataset.current='false';target.dataset.scope='unconfirmed';
     const copy=target.querySelector('[data-artifact-copy-summary]'),relation=target.querySelector('[data-artifact-relation-summary]');
     if(copy)copy.textContent='이전 관측 · 현재 저장 상태 미확인';if(relation)relation.textContent='확인 불가 · 화면 확인 실패';
@@ -713,7 +720,7 @@ function refreshArtifactStorageCard(){
 }
 function publishArtifactStorage(next){
   const record=state.records.find(x=>x.intake_id===state.selected),target=$('#conducted-artifact-storage');if(!record||!target)return false;
-  const prepared=buildConductedArtifactStorage(record,state,next);target.replaceWith(prepared);Object.assign(storageView,next);refreshGapQueue();return true;
+  const prepared=buildConductedArtifactStorage(record,state,next);replaceArtifactStorageCard(target,prepared);Object.assign(storageView,next);refreshGapQueue();return true;
 }
 function retireArtifactStorage(){
   storageView.gate.invalidate();storageView.controller?.abort();Object.assign(storageView,{controller:null,pending:false,parentPending:true,stale:true});refreshArtifactStorageCard();
