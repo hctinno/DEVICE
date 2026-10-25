@@ -476,15 +476,19 @@ class AIConnectionRuntime:
         return cells,None if any(v is None for v in attempts) else sum(attempts)
 
     def _work(self,rid,module,scenario):
-        run=self.runs[rid];matrix=run['matrix']
+        run=self.runs[rid];matrix=run['matrix'];runner_entered=False
         try:
             with self.lock:
                 run['view']['state']='running';run['view']['attempts_used']=None
                 for cell in run['view']['cells']:
                     if cell['settings'] is not None: cell.update(state='running',attempted=None)
             self.paths['evidence_root'].mkdir(parents=True,exist_ok=True)
-            report=module.run_vertex_comparison_batch(copy.deepcopy(matrix),scenario['prompt_bytes'],scenario['response_schema_bytes'],adc_path=self.paths['adc_path'],
-                    evidence_dir=self.paths['evidence_root']/('ai-run-'+rid),budget_path=self.paths['budget_path'],approval_path=self.paths['approval_path'],cancel_event=run['cancel'])
+            runner=module.run_vertex_comparison_batch
+            args=(copy.deepcopy(matrix),scenario['prompt_bytes'],scenario['response_schema_bytes'])
+            kwargs=dict(adc_path=self.paths['adc_path'],evidence_dir=self.paths['evidence_root']/('ai-run-'+rid),
+                        budget_path=self.paths['budget_path'],approval_path=self.paths['approval_path'],cancel_event=run['cancel'])
+            runner_entered=True
+            report=runner(*args,**kwargs)
             cells,attempts=self._record_cells(report,matrix)
             with self.lock: run['view'].update(cells=cells,attempts_used=attempts,execution_mode=report['execution_mode'])
         except BaseException as error:
@@ -492,10 +496,11 @@ class AIConnectionRuntime:
                 run['failure']=error
                 try:code=getattr(error,'code',None)
                 except Exception:code=None
-                code=code if type(code) is str and code in _PUBLIC_FAILURES else 'ai_connection_ui_unavailable'
-                run['view'].update(cells=self._planned(matrix),attempts_used=None,error_code=code)
+                code=code if runner_entered and type(code) is str and code in _PUBLIC_FAILURES else 'ai_connection_ui_unavailable'
+                run['view'].update(cells=self._planned(matrix),attempts_used=None if runner_entered else 0,error_code=code)
                 for cell in run['view']['cells']:
-                    if cell['settings'] is not None: cell.update(state='unknown',reason_code='unavailable',attempted=None)
+                    if cell['settings'] is not None:
+                        cell.update(state='unknown' if runner_entered else 'not_run',reason_code='unavailable',attempted=None if runner_entered else False)
         finally:
             run['timer'].cancel()
             with self.lock:
