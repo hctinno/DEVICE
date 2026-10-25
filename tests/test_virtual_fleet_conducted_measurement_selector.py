@@ -162,3 +162,56 @@ class MeasurementSelectorTests(unittest.TestCase):
         self.blocked([None,*self.normal[1:]])
         class Foreign(list):pass
         self.blocked([self.normal[0],Foreign(self.normal[1]),*self.normal[2:]],"input_invalid")
+
+
+FIX_PROOF = dict(ordinary=[], known=[])
+
+
+class SelectorBuilderFailureFixTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.api=importlib.import_module(MODULE)
+        spec=importlib.util.spec_from_file_location("selector_fix_native_fixture",Path(__file__).with_name("test_virtual_fleet_conducted_twin_result.py"))
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        case=module.ConductedTwinResultTests();cls.addClassCleanup(case.doCleanups)
+        cls.args=case.genuine()[0]
+        FIX_PROOF["native_inputs"]=deepcopy(cls.args)
+
+    def test_unexpected_ordinary_builder_errors_preserve_first_object(self):
+        for error in (ValueError("unexpected builder"),TypeError("unexpected builder"),KeyError("unexpected builder"),
+                      OverflowError(),RecursionError(),UnicodeError(),StopIteration()):
+            with self.subTest(error=type(error).__name__):
+                before=deepcopy(self.args)
+                with patch.object(result_api,"build_conducted_twin_result",side_effect=error) as parent:
+                    with self.assertRaises(type(error)) as caught:
+                        self.api.select_conducted_measurement(*self.args)
+                self.assertIs(caught.exception,error);self.assertEqual(parent.call_count,1);self.assertEqual(self.args,before)
+                FIX_PROOF["ordinary"].append(dict(error_type=type(error).__name__,same_object=True,parent_calls=1,inputs_unchanged=True))
+
+    def test_malformed_native_input_and_known_parent_failure_still_block(self):
+        for marker in (object(),"\ud800"):
+            args=deepcopy(self.args);args[0]["extra"]=marker
+            with patch.object(result_api,"build_conducted_twin_result",side_effect=AssertionError("input parent0")) as parent:
+                value=self.api.select_conducted_measurement(*args)
+            self.assertEqual(value["status"],"blocked");self.assertEqual(parent.call_count,0)
+            self.assertIsNone(value["measurement_ref"]);self.assertIsNone(value["request_id"]);self.assertIsNone(value["result"])
+            self.assertFalse(value["verification"]["fallback_attempted"])
+            FIX_PROOF["known"].append(dict(origin="malformed provided native input",status="blocked",parent_calls=0))
+        error=result_api._Failure("native_input_invalid","input")
+        with patch.object(result_api,"build_conducted_twin_result",side_effect=error) as parent:
+            value=self.api.select_conducted_measurement(*self.args)
+        self.assertEqual(value["status"],"blocked");self.assertEqual(parent.call_count,1)
+        self.assertEqual(value["reasons"][0]["code"],"parent_validation")
+        self.assertEqual(value["reasons"][0]["detail"],dict(code="native_input_invalid"))
+        self.assertIsNotNone(value["candidate"]);self.assertIsNone(value["result"])
+        FIX_PROOF["known"].append(dict(origin="existing typed parent _Failure",status="blocked",parent_calls=1))
+
+    def test_malformed_returned_dto_still_uses_known_validation_route(self):
+        for returned in (dict(bad=float("nan")),dict(bad="\ud800")):
+            with patch.object(result_api,"build_conducted_twin_result",return_value=returned) as parent:
+                value=self.api.select_conducted_measurement(*self.args)
+            self.assertEqual(value["status"],"blocked");self.assertEqual(parent.call_count,1)
+            self.assertIsNotNone(value["candidate"]);self.assertIsNone(value["result"])
+            self.assertIsNone(value["measurement_ref"]);self.assertIsNone(value["request_id"])
+            self.assertFalse(value["verification"]["fallback_attempted"])
+            FIX_PROOF["known"].append(dict(origin="malformed parent returned DTO",status="blocked",parent_calls=1))

@@ -124,9 +124,10 @@ def select_conducted_measurement(plan_input, setup_snapshot, journal_read, run_r
         stage = "selection"
         acquisition = _structure(stored, validated)
         candidate = _first_completion(stored, acquisition, output)
-        stage = "builder"
+        stage = "builder_call"
         output["verification"]["builder_calls"] = 1
         result = _result.build_conducted_twin_result(plan, setup, stored, report, measurement_ref=candidate["measurement_ref"])
+        stage = "builder_result"
         _result._snapshot(result)
         _need(type(result) is dict and set(result) == set(_result._base())
               and type(result["schema_version"]) is int and result["schema_version"] == 1
@@ -146,6 +147,8 @@ def select_conducted_measurement(plan_input, setup_snapshot, journal_read, run_r
                                     else "input_invalid" if stage == "input" else "parent_validation",
                                     field=error.field, detail=dict(code=error.code)))
     except (ValueError, TypeError, KeyError, OverflowError, RecursionError, UnicodeError, StopIteration):
+        if stage == "builder_call":
+            raise
         output.update(status="blocked", measurement_ref=None, request_id=None)
         output["reasons"].append(dict(code="output_invalid" if stage == "output" else "input_invalid", field=stage, detail=None))
     return output
