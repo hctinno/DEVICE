@@ -1081,5 +1081,301 @@ class ComparisonTests(unittest.TestCase):
         budget=json.loads(self.budget.read_bytes())
         self.assertEqual(budget["reserved_calls"],1);self.assertIsNotNone(budget["active_run_id"])
 
+    def operator_material(self):
+        spec=Path(__file__).resolve().parents[1]/"docs/superpowers/specs/2026-10-25-virtual-operator-model-comparison-design.md"
+        body=spec.read_text(encoding="utf-8").split("```json\n",1)[1].split("\n```",1)[0]
+        pack=json.loads(body)["canonical_input"]
+        return pack,pack["prompt_literal_utf8"].encode("utf-8"),pack["response_schema_literal_utf8"].encode("utf-8")
+
+    def operator_matrix(self,**kw):
+        _,prompt,schema=self.operator_material()
+        return mc.build_vertex_comparison_matrix(self.p,prompt,schema,
+            batch_id=kw.pop("batch_id","operator-batch-1"),scenario_id="operator-synthetic-o01",
+            evaluator_id="virtual-operator-wire-v1",**kw)
+
+    def test_operator_fixed_pair_requires_registration(self):
+        try:
+            matrix=self.operator_matrix()
+        except mc.ModelComparisonError as error:
+            self.fail("fixed operator pair rejected before registration: "+error.code)
+        self.assertEqual(len(matrix),11)
+        self.assertEqual(len(matrix["rows"]),6)
+        self.assertEqual(matrix["scenario_id"],"operator-synthetic-o01")
+        self.assertEqual(matrix["evaluator_id"],"virtual-operator-wire-v1")
+        self.assertEqual(matrix["binding"]["prompt_sha256"],"55e618165ab033b48c03589b02a10d5651c952f9b2c5334cc56afc0b4687d85b")
+        self.assertEqual(matrix["binding"]["response_schema_sha256"],"aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb")
+        self.assertEqual(self.calls,[]);self.assertEqual(self.inspections,[])
+
+    def operator_response(self,proposal=None):
+        return canonical(dict(schema_version=1,kind="virtual_operator_response",
+            request_sha256="18438b686208d6c55f3c539e6d1e3e96f91601bd6c69577234bc6cf015a4d8c3",
+            producer=dict(kind="model",name="dgm-virtual-operator-v1"),
+            proposal=dict(kind="stop",claim="blocked",reason="No connected capability is supplied.") if proposal is None else proposal))
+
+    def admit_operator(self):
+        _,prompt,schema=self.operator_material()
+        self.edit(self.approval,lambda a:a.update(scenario_id="operator-synthetic-o01",
+            evaluator_id="virtual-operator-wire-v1",prompt_sha256=sha(prompt),response_schema_sha256=sha(schema)))
+        self.response=self.operator_response()
+
+    def run_operator(self,matrix=None,**kw):
+        _,prompt,schema=self.operator_material()
+        args=dict(adc_path=self.adc,evidence_dir=self.evidence,budget_path=self.budget,approval_path=self.approval)
+        args.update(kw)
+        return mc.run_vertex_comparison_batch(self.operator_matrix() if matrix is None else matrix,prompt,schema,**args)
+
+    def test_operator_asset_and_genuine_prompt_identity(self):
+        from labflow.virtual_fleet import model_operator_boundary as boundary
+        pack,prompt,schema=self.operator_material()
+        raw=(Path(__file__).resolve().parents[1]/"docs/fcc/virtual_operator_comparison_inputs.json").read_bytes()
+        self.assertEqual((len(raw),sha(raw)),(6607,"0dfe3bae594b0db6646d3c8882059b364c1b34cc7bdfbccdc3c2024e970c6e5a"))
+        self.assertEqual(raw,canonical(pack))
+        built=boundary.build_operator_prompt(pack["context"],**pack["ids"],
+            producer_name=pack["producer_name"],delegation=pack["delegation"])
+        self.assertEqual(canonical(built),prompt)
+        self.assertEqual((len(schema),sha(schema)),(3052,"aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb"))
+        self.assertNotEqual(canonical(json.loads(schema)),schema)
+
+    def test_operator_pair_rejects_changed_bytes(self):
+        _,prompt,schema=self.operator_material()
+        changed=json.loads(prompt);body=json.loads(changed["messages"][1]["content"])
+        body["request"]["user_input"]["public_context"]["observations"]["tick"]=1
+        changed["messages"][1]["content"]=canonical(body).decode("utf-8")
+        cases=[(prompt+b"\n",schema,"operator-synthetic-o01","virtual-operator-wire-v1"),
+            (prompt,canonical(json.loads(schema)),"operator-synthetic-o01","virtual-operator-wire-v1"),
+            (canonical(changed),schema,"operator-synthetic-o01","virtual-operator-wire-v1"),
+            (prompt,schema,"operator-synthetic-o02","virtual-operator-wire-v1"),
+            (prompt,schema,"operator-synthetic-o01","intake-understanding-v1"),
+            (bytearray(prompt),schema,"operator-synthetic-o01","virtual-operator-wire-v1")]
+        for raw,literal,scenario,evaluator in cases:
+            with self.subTest(scenario=scenario),self.assertRaises(mc.ModelComparisonError):
+                mc.build_vertex_comparison_matrix(self.p,raw,literal,batch_id="operator-denied",
+                    scenario_id=scenario,evaluator_id=evaluator)
+        self.assertEqual(self.calls,[]);self.assertEqual(self.inspections,[])
+
+    def test_operator_genuine_builder_drift_dependency_and_controls(self):
+        from labflow.virtual_fleet import model_operator_boundary as boundary
+        genuine=boundary.build_operator_prompt
+        def drift(*args,**kw):
+            prompt=genuine(*args,**kw);prompt["messages"][0]["content"]+=" changed";return prompt
+        with patch.object(boundary,"build_operator_prompt",drift),self.assertRaises(mc.ModelComparisonError):
+            self.operator_matrix()
+        original=mc.importlib.import_module
+        def missing(name):
+            if name=="labflow.virtual_fleet.model_operator_boundary":raise ModuleNotFoundError(name=name)
+            return original(name)
+        with patch.object(mc.importlib,"import_module",missing),self.assertRaises(mc.ModelComparisonError) as caught:
+            self.operator_matrix()
+        self.assertEqual(caught.exception.code,"model_comparison_dependency_unavailable")
+        for control in (KeyboardInterrupt("operator"),SystemExit(19),GeneratorExit("operator")):
+            with self.subTest(control=type(control).__name__):
+                with patch.object(boundary,"build_operator_prompt",side_effect=control),self.assertRaises(type(control)) as caught:
+                    self.operator_matrix()
+                self.assertIs(caught.exception,control)
+        self.assertEqual(self.calls,[]);self.assertEqual(self.inspections,[])
+
+    def test_operator_candidate_strict_binding_only(self):
+        from labflow.virtual_fleet import model_operator_boundary as boundary
+        _,prompt,_=self.operator_material();native=json.loads(prompt)
+        proposals=[dict(kind="execute",device_id="dut",action="start",parameters={}),
+            dict(kind="execute",device_id="sensor",action="acquire",parameters={}),
+            dict(kind="execute",device_id="sensor",action="read",parameters={}),dict(kind="advance",ticks=1)]
+        proposals += [dict(kind="stop",claim=claim,reason="Candidate only.") for claim in ("completed","blocked","unsupported","failed")]
+        genuine=boundary.decode_operator_response
+        for index,proposal in enumerate(proposals):
+            self.seed();self.admit_operator();self.response=self.operator_response(proposal);captured=[]
+            def decode(raw,request):
+                self.assertIs(raw,self.response);self.assertEqual(request,native)
+                result=genuine(raw,request);captured.append(result);return result
+            with patch.object(boundary,"decode_operator_response",decode):
+                out=self.run_operator(self.operator_matrix(selection="selected"),evidence_dir=self.root/f"operator-valid-{index}")
+            row=out["rows"][4]
+            self.assertEqual((len(out),len(row)),(8,15))
+            self.assertEqual((row["status"],row["reason_code"]),("success","operator_response_verified"))
+            self.assertEqual(row["strict_decode"],dict(status="checked",evaluator_id="virtual-operator-wire-v1",error_code=None))
+            self.assertEqual(row["assessment"],dict(status="not_assessed",verdict=None,reason_code="semantic_evaluator_not_connected"))
+            self.assertEqual(out["business_assessment"],"not_assessed")
+            self.assertEqual(captured,[json.loads(self.response)])
+            self.assertEqual(set(captured[0]),{"schema_version","kind","request_sha256","producer","proposal"})
+            self.assertFalse(row["receipt"]["verification"]["remote_identity_verified"])
+            self.assertFalse(row["receipt"]["verification"]["semantic_quality_verified"])
+
+    def test_operator_matrix_six_modes_same_literal(self):
+        self.admit_operator();out=self.run_operator()
+        self.assertEqual(out["summary"]["success_rows"],6)
+        self.assertEqual([(s["model_id"],s["thinking_level"]) for s in self.calls],[(m,l) for m in MODELS for l in LEVELS])
+        self.assertEqual(out["summary"]["cumulative_reserved_output_tokens"],3072)
+        for row in out["rows"]:
+            self.assertEqual(row["binding"]["prompt_sha256"],"55e618165ab033b48c03589b02a10d5651c952f9b2c5334cc56afc0b4687d85b")
+            self.assertEqual(row["binding"]["schema_sha256"],"aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb")
+            self.assertEqual(row["receipt"]["artifacts"]["prompt"]["bytes"],2131)
+            self.assertEqual(row["receipt"]["artifacts"]["response_schema"]["bytes"],3052)
+
+    def test_operator_strict_rejects_wire_and_proposal(self):
+        from labflow.virtual_fleet import model_operator_boundary as boundary
+        _,prompt,_=self.operator_material();native=json.loads(prompt);valid=json.loads(self.operator_response());variants=[]
+        for change,code in [
+            (lambda w:w.update(request_sha256="1"*64),"response_binding_mismatch"),
+            (lambda w:w["producer"].update(name="other-producer"),"response_producer_mismatch"),
+            (lambda w:w.update(schema_version=True),"response_invalid"),
+            (lambda w:w.update(extra=False),"response_invalid"),
+            (lambda w:w.update(proposal=dict(kind="execute",device_id="dut",action="stop",parameters={})),"proposal_invalid"),
+            (lambda w:w.update(proposal=dict(kind="advance",ticks=True)),"proposal_invalid"),
+            (lambda w:w.update(proposal=dict(kind="stop",claim="needs_information",reason="x")),"proposal_invalid"),
+            (lambda w:w.update(proposal=dict(kind="stop",claim="blocked",reason=" "*4)),"proposal_invalid"),
+            (lambda w:w.update(proposal=dict(kind="stop",claim="blocked",reason="x"*4097)),"proposal_invalid"),
+            (lambda w:w.update(proposal=dict(kind="advance",ticks=2**63)),"limit_exceeded")]:
+            wire=copy.deepcopy(valid);change(wire);variants.append((canonical(wire),code))
+        variants += [(self.operator_response().replace(b'"schema_version":1',b'"schema_version":1,"schema_version":1'),"response_invalid"),
+            (b"```json\n"+self.operator_response()+b"\n```","response_invalid"),(b"\xff","response_invalid")]
+        for index,(raw,code) in enumerate(variants):
+            with self.subTest(code=code,index=index):
+                with self.assertRaises(boundary.ModelOperatorBoundaryError) as caught:boundary.decode_operator_response(raw,native)
+                self.assertEqual(caught.exception.code,"model_operator_boundary_"+code)
+                self.assertIsNone(caught.exception.__cause__);self.assertIsNone(caught.exception.__context__)
+                self.seed();self.admit_operator();self.response=raw
+                out=self.run_operator(self.operator_matrix(selection="selected"),evidence_dir=self.root/f"operator-invalid-{index}")
+                row=out["rows"][4]
+                self.assertEqual((row["status"],row["reason_code"]),("failed","operator_response_invalid"))
+                self.assertEqual(row["strict_decode"],dict(status="rejected",evaluator_id="virtual-operator-wire-v1",error_code="operator_response_invalid"))
+                self.assertEqual(row["assessment"]["status"],"not_assessed")
+                self.assertEqual((self.root/f"operator-invalid-{index}"/"row-4"/"response-text.bin").read_bytes(),raw)
+
+    def test_operator_65536_cap_preserves_untrimmed_artifact(self):
+        for cap in (65536,65537):
+            self.seed();self.admit_operator();self.response+=b" "*(cap-len(self.response))
+            out=self.run_operator(self.operator_matrix(selection="selected"),evidence_dir=self.root/f"operator-cap-{cap}")
+            row=out["rows"][4]
+            self.assertEqual(row["status"],"success" if cap==65536 else "failed")
+            self.assertEqual(row["receipt"]["artifacts"]["final_text"]["bytes"],cap)
+            self.assertEqual((self.root/f"operator-cap-{cap}"/"row-4"/"response-text.bin").read_bytes(),self.response)
+
+    def test_operator_transport_failures_skip_decoder(self):
+        from labflow.virtual_fleet import model_operator_boundary as boundary
+        for index,kind in enumerate(("incomplete","auth_failed","unknown")):
+            self.seed();self.admit_operator()
+            def failed(*args,**kw):
+                if kind=="incomplete":raise self.partial_incomplete_error_fixture(*args,**kw)
+                if kind=="auth_failed":raise VertexError(kind,self.auth_failed_fixture(*args,**kw))
+                raise VertexError("http_error")
+            with patch.object(sys.modules["labflow.vertex_response"],"produce_vertex_response",failed),patch.object(
+                    boundary,"decode_operator_response",side_effect=AssertionError("decoder after failed transport")):
+                out=self.run_operator(evidence_dir=self.root/f"operator-transport-{index}")
+            row=out["rows"][0];self.assertEqual(row["strict_decode"]["status"],"not_run")
+            self.assertEqual(row["budget"]["generation_post_attempts"],None if kind=="unknown" else 0 if kind=="auth_failed" else 1)
+            self.assertIsNone(row["assessment"]["verdict"])
+            self.assertEqual(json.loads(self.budget.read_bytes())["reserved_calls"],1)
+
+    def test_operator_prior_approval_and_spent_ledger_stay_closed(self):
+        out=self.run_operator(evidence_dir=self.root/"operator-unapproved")
+        self.assertEqual(out["rows"][0]["reason_code"],"gate_rejected")
+        self.assertEqual(self.calls,[]);self.assertEqual(self.inspections,[])
+        self.run_batch();self.admit_operator();before=self.budget.read_bytes()
+        out=self.run_operator(evidence_dir=self.root/"operator-spent")
+        self.assertEqual(out["rows"][0]["reason_code"],"budget_rejected")
+        self.assertEqual(self.budget.read_bytes(),before);self.assertEqual(len(self.calls),6)
+
+    def test_operator_first_transport_error_survives_record_failure(self):
+        self.admit_operator();record=mc._record;errors=[];snapshots=[]
+        def failed(*args,**kw):
+            error=self.partial_incomplete_error_fixture(*args,**kw);errors.append(error)
+            snapshots.append(canonical(error.receipt));raise error
+        def blocked(directory,row):
+            if row["row_index"]==5:(directory/"row-5.record.json").mkdir()
+            return record(directory,row)
+        with patch.object(sys.modules["labflow.vertex_response"],"produce_vertex_response",failed),patch.object(
+                mc,"_record",blocked),self.assertRaises(VertexError) as caught:
+            self.run_operator(self.operator_matrix(selection="selected",overrides={"thinking_level":"HIGH"}))
+        self.assertIs(caught.exception,errors[0]);self.assertEqual(canonical(errors[0].receipt),snapshots[0])
+        self.assertEqual(caught.exception.__notes__,["model_comparison_persistence_failed"])
+        self.assertIsNone(caught.exception.__cause__);self.assertIsNone(caught.exception.__context__)
+        self.assertEqual(json.loads(self.budget.read_bytes())["reserved_calls"],1)
+
+    def test_operator_decoder_controls_preserve_identity_and_release_locks(self):
+        from labflow.virtual_fleet import model_operator_boundary as boundary
+        for index,control in enumerate((KeyboardInterrupt("decoder"),SystemExit(21),GeneratorExit("decoder"))):
+            self.seed();self.admit_operator()
+            with patch.object(boundary,"decode_operator_response",side_effect=control),self.assertRaises(type(control)) as caught:
+                self.run_operator(self.operator_matrix(selection="selected"),evidence_dir=self.root/f"operator-control-{index}")
+            self.assertIs(caught.exception,control)
+            self.assertEqual(json.loads(self.budget.read_bytes())["reserved_calls"],1)
+            with mc._locked(self.budget):self.assertEqual(json.loads(self.budget.read_bytes())["reserved_calls"],1)
+
+    def test_operator_candidate_no_action_or_store(self):
+        self.admit_operator();self.response=self.operator_response(dict(kind="stop",claim="completed",reason="Candidate claim only."))
+        original=mc._dependency;allowed={"labflow.ai_connection_profiles","labflow.vertex_response","labflow.virtual_fleet.model_operator_boundary"}
+        def dependency(name):
+            if name not in allowed:raise AssertionError("action/Store dependency is outside candidate scope")
+            return original(name)
+        pack,_,_=self.operator_material();before=canonical(pack)
+        with patch.object(mc,"_dependency",dependency):out=self.run_operator(self.operator_matrix(selection="selected"))
+        self.assertEqual(out["rows"][4]["assessment"],dict(status="not_assessed",verdict=None,reason_code="semantic_evaluator_not_connected"))
+        self.assertEqual(canonical(pack),before);self.assertNotIn("score",out["rows"][4])
+        self.assertFalse(out["rows"][4]["receipt"]["verification"]["credit_verified"])
+
+    def test_operator_same_inputs_for_existing_producers(self):
+        import os
+        from labflow import codex_cli_response as codex
+        from labflow.virtual_fleet import model_operator_boundary as boundary
+        self.admit_operator();_,prompt,schema=self.operator_material();wire=self.response;processes=[];captured=[]
+        class Process:
+            def __init__(process,argv,**kw):
+                self.assertIs(kw["shell"],False)
+                process.stdin=None;process.input_fd=None
+                if argv[1:]==["--version"]:data=b"codex-cli 0.163.0-alpha.11.2\n"
+                else:
+                    self.assertEqual(argv[argv.index("--model")+1],"gpt-6.1-sol")
+                    self.assertEqual(Path(argv[argv.index("--output-schema")+1]).read_bytes(),schema)
+                    Path(argv[argv.index("--output-last-message")+1]).write_bytes(wire)
+                    events=[dict(type="thread.started",thread_id="offline-thread"),dict(type="turn.started"),
+                        dict(type="item.completed",item=dict(id="candidate",type="agent_message",text=wire.decode("utf-8"))),
+                        dict(type="turn.completed")]
+                    data=b"".join(canonical(e)+b"\n" for e in events)
+                    process.input_fd,write=os.pipe();process.stdin=os.fdopen(write,"wb",buffering=0)
+                streams=[]
+                for part in (data,b""):
+                    read,write=os.pipe();os.write(write,part);os.close(write);streams.append(os.fdopen(read,"rb",buffering=0))
+                process.stdout,process.stderr=streams;process.returncode=0;processes.append(process)
+            def poll(process):return process.returncode
+            def wait(process,timeout=None):
+                if process.input_fd is not None:
+                    chunks=[]
+                    while True:
+                        part=os.read(process.input_fd,65536)
+                        if not part:break
+                        chunks.append(part)
+                    os.close(process.input_fd);process.input_fd=None;captured.append(b"".join(chunks))
+                return process.returncode
+            def terminate(process):process.returncode=-1
+            def kill(process):process.returncode=-1
+        executable=self.root/"codex.exe";executable.write_bytes(b"offline placeholder; never executed")
+        with patch.object(codex.subprocess,"Popen",Process):
+            raw,receipt=codex.produce_codex_cli_response(prompt,schema,executable=executable,
+                requested_model="gpt-6.1-sol",evidence_dir=self.root/"codex-offline",timeout_seconds=2)
+        descriptor=receipt["artifacts"]["final_text"]
+        self.assertEqual(descriptor["path"],"final-text.bin")
+        self.assertIs(descriptor["complete"],True);self.assertIs(descriptor["overflow"],False)
+        self.assertEqual(descriptor["extent"],"whole_file")
+        with (self.root/"codex-offline"/"final-text.bin").open("rb") as handle:
+            original=handle.read(65537)
+        self.assertEqual(original,raw)
+        self.assertEqual((descriptor["bytes"],descriptor["sha256"]),(len(raw),sha(raw)))
+        decoded=boundary.decode_operator_response(raw,json.loads(prompt))
+        out=self.run_operator(self.operator_matrix(selection="selected"))
+        self.assertEqual(captured,[prompt]);self.assertEqual(raw,wire);self.assertEqual(decoded,json.loads(wire))
+        self.assertEqual(receipt["kind"],"codex_cli_response_receipt");self.assertEqual(receipt["status"],"complete")
+        self.assertEqual(receipt["bindings"]["prompt_sha256"],out["rows"][4]["binding"]["prompt_sha256"])
+        self.assertEqual(receipt["bindings"]["schema_sha256"],out["rows"][4]["binding"]["schema_sha256"])
+        self.assertFalse(receipt["verification"]["external_data_authority_verified"])
+        self.assertFalse(receipt["verification"]["semantic_quality_verified"])
+        for key in ("version_child_reaped","model_child_reaped","readers_joined","pipes_closed","artifacts_closed"):
+            self.assertIs(receipt["cleanup"][key],True)
+        for process in processes:
+            self.assertIsNone(process.input_fd)
+            self.assertTrue(process.stdout.closed);self.assertTrue(process.stderr.closed)
+            self.assertTrue(process.stdin is None or process.stdin.closed)
+        self.assertFalse(any(t.name.startswith("codex-cli-response-") for t in threading.enumerate()))
+
+
 if __name__=="__main__":
     unittest.main()
