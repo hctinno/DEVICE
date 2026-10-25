@@ -1476,11 +1476,100 @@ def _conducted_result_response(value,intake_id):
     return raw
 
 
+_CONDUCTED_ARTIFACT_BODY_BYTES=12*1024*1024
+
+
+def _conducted_artifact_json(value,cap,depth=48,nodes=400000):
+    from .fcc_report_cases import _plain
+    _plain(value,byte_limit=cap,depth_limit=depth,node_limit=nodes,string_limit=cap,detach=False)
+    return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')
+
+
+def _conducted_artifact_readback_selection(value):
+    if value is None:return None
+    failed=False;raw=None
+    try:
+        keys=set('intake_id method expected_revision expected_context_sha256 artifact_workspace_root artifact_name expected_manifest_sha256 expected_result_sha256 run_id runtime_instance_id'.split())
+        if type(value) is not dict or set(value)!=keys:raise ValueError()
+        value=dict(value);root=value['artifact_workspace_root']
+        if type(root) not in (str,type(Path())) or not Path(root).is_absolute():raise ValueError()
+        if type(value['intake_id']) is not str or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,149}',value['intake_id'],re.ASCII):raise ValueError()
+        revision,sha=value['expected_revision'],value['expected_context_sha256']
+        if revision is not None and (type(revision) is not int or not 1<=revision<=2**63-1):raise ValueError()
+        if sha is not None and (type(sha) is not str or not re.fullmatch(r'[a-f0-9]{64}',sha,re.ASCII)):raise ValueError()
+        if type(value['method']) is not dict:raise ValueError()
+        from .virtual_fleet import conducted_result_artifact_read as reader
+        value['artifact_workspace_root']=str(reader._arguments(root,value['artifact_name'],value['expected_manifest_sha256'],
+            value['expected_result_sha256'],value['run_id'],value['runtime_instance_id']))
+        raw=_conducted_artifact_json(value,65536,32,50000)
+    except (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):raise
+    except Exception:failed=True
+    if failed:raise ValueError('intake_conducted_artifact_readback_host_invalid_input') from None
+    return raw
+
+
+def _conducted_artifact_readback_response(value,intake_id,selection):
+    raw=_conducted_artifact_json(value,_CONDUCTED_ARTIFACT_BODY_BYTES)
+    def keys(item,names):
+        if type(item) is not dict or set(item)!=set(names.split()):raise ValueError()
+    keys(value,'schema_version kind status current artifact relation verification')
+    if (type(value['schema_version']) is not int or value['schema_version']!=1 or value['kind']!='intake_conducted_artifact_readback'
+            or value['status'] not in ('matched','blocked','different_intake','different_plan','stale')):raise ValueError()
+    verification=dict(scope='two_readonly_current_snapshots_and_provided_artifact_pins',current_completion='not_assessed',
+        permanent_current_approval=False,method_approval='not_assessed',regulatory='not_assessed',physical_verified=False,
+        execution_authority=False,rerun_authority=False,business_writes=False,artifact_history='reader_scope_only')
+    if _conducted_artifact_json(value['verification'],65536)!=_conducted_artifact_json(verification,65536):raise ValueError()
+    api=importlib.import_module('.intake_conducted_artifact_readback',__package__)
+    current_binding=api._current_value(value['current'],intake_id)
+    relation=value['relation'];keys(relation,'status current_binding artifact_binding fields recheck reasons')
+    names='intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256'
+    keys(relation['fields'],names)
+    if (relation['status']!=value['status'] or _conducted_artifact_json(relation['current_binding'],65536)!=_conducted_artifact_json(current_binding,65536)
+            or any(item is not None and type(item) is not bool for item in relation['fields'].values())):raise ValueError()
+    recheck=relation['recheck'];keys(recheck,'status context_sha256_before context_sha256_after analysis_sha256_before analysis_sha256_after')
+    if recheck['status'] not in ('unchanged','changed') or any(type(recheck[key]) is not str or not re.fullmatch(r'[a-f0-9]{64}',recheck[key],re.ASCII) for key in recheck if key!='status'):raise ValueError()
+    reasons={'current_pin_missing','current_plan_blocked','current_context_changed','current_analysis_changed'}|{'artifact_'+name+'_mismatch' for name in names.split()}
+    if type(relation['reasons']) is not list or any(type(item) is not str or item not in reasons for item in relation['reasons']):raise ValueError()
+    artifact=value['artifact']
+    if artifact is None:
+        if value['status'] not in ('blocked','stale') or relation['artifact_binding'] is not None or any(item is not None for item in relation['fields'].values()):raise ValueError()
+    else:
+        if value['status']=='blocked':raise ValueError()
+        pins={name:selection[name] for name in ('artifact_name','expected_manifest_sha256','expected_result_sha256','run_id','runtime_instance_id')}
+        binding=api._artifact_value(artifact,pins)
+        if _conducted_artifact_json(relation['artifact_binding'],65536)!=_conducted_artifact_json(binding,65536):raise ValueError()
+        expected=dict(source_references='not_opened',current_binding='caller_provided_hashes_and_ids_only',
+            historical_publication_order='not_verified',writer_outcome='not_verified',draft_content='not_interpreted',
+            hardware_verified=False,physical_verified=False,source_authenticity_verified=False,method_approval='not_assessed',
+            conformity_status='not_assessed',issuance_approval='not_assessed',execution_authority=False,rerun_authority=False)
+        if (_conducted_artifact_json(artifact['verification'],65536)!=_conducted_artifact_json(expected,65536)
+                or type(artifact['manifest']) is not dict or artifact['manifest'].get('execution_authority') is not False):raise ValueError()
+        from .ui_read_model import validate_conducted_result_report
+        validate_conducted_result_report(artifact['result'])
+    return raw
+
+
+def _conducted_artifact_readback_error(error):
+    fallback='intake_conducted_artifact_readback_host_unavailable'
+    try:
+        from .intake_conducted_artifact_readback import IntakeConductedArtifactReadbackError,_CODES as current_codes
+        from .virtual_fleet.conducted_result_artifact_read import ConductedResultArtifactReadError,_CODES as reader_codes
+        allowed={ReadModelError:{'store_missing','store_unavailable','intake_not_found','intake_conducted_preview_invalid_request',
+            'intake_conducted_preview_synthetic_required','intake_conducted_preview_analysis_unavailable',
+            'intake_conducted_preview_source_invalid','intake_conducted_preview_v2_pdf_required'},
+            IntakeConductedArtifactReadbackError:current_codes,ConductedResultArtifactReadError:reader_codes}
+        codes=allowed.get(type(error));code=error.code if codes is not None else None
+        return code if type(code) is str and code in codes else fallback
+    except BaseException:return fallback  # A classification fault cannot replace the first read failure.
+
+
 def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None,
                   intake_reference_store=None, intake_reference_read_scope=(),
                   intake_reference_append_scope=(), intake_reference_review_inputs=(),
                   intake_test_intent_inputs=(), intake_docx_reference_selection=None, ai_connections=None,
-                  ai_connection_campaign_readback=None, conducted_plan_preview_inputs=None, conducted_result_snapshot=None):
+                  ai_connection_campaign_readback=None, conducted_plan_preview_inputs=None, conducted_result_snapshot=None,
+                  conducted_artifact_readback_inputs=None):
+    artifact_readback_selection=_conducted_artifact_readback_selection(conducted_artifact_readback_inputs)
     conducted_selection = _conducted_preview_selection(conducted_plan_preview_inputs)
     result_snapshot = _conducted_result_selection(conducted_result_snapshot)
     ai_runtime = ai_server_wrapper = None
@@ -1610,6 +1699,10 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
             return delta_instance
 
     class Handler(BaseHTTPRequestHandler):
+        def setup(self):
+            if artifact_readback_selection is not None:self.request.settimeout(5)
+            return super().setup()
+
         def log_message(self, format, *args):
             # No document names or source text in the web-server log.
             pass
@@ -1679,6 +1772,9 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 path = unquote(parsed.path, encoding='utf-8', errors='strict')
             except ValueError:
                 return self.error(404, 'route_not_found')
+            artifact_match=re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})/conducted-artifact-readback',path)
+            if artifact_match:
+                return self.read_conducted_artifact_readback(artifact_match[1],parsed,path)
             result_match = re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})/conducted-result',path)
             if result_match:
                 return self.read_conducted_result(result_match[1],parsed,path)
@@ -1783,6 +1879,44 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
             except (OSError, ValueError):
                 self.error(503, 'store_unavailable')
 
+
+        def read_conducted_artifact_readback(self,intake_id,parsed,path):
+            try:return Handler._read_conducted_artifact_readback(self,intake_id,parsed,path)
+            except (OSError,TimeoutError):self.close_connection=True
+
+        def _read_conducted_artifact_readback(self,intake_id,parsed,path):
+            self.close_connection=True;self.connection.settimeout(5)
+            def fail(status,code):
+                try:return self.error(status,code)
+                except BaseException:
+                    # Preserve the first non-success decision if error publication fails.
+                    self.close_connection=True
+            try:_reference_guard(self)
+            except _ReferenceFailure:return fail(403,'local_origin_required')
+            if self.command!='GET':
+                self._reference_allow='GET';return fail(405,'intake_conducted_artifact_readback_host_read_only')
+            lengths=self.headers.get_all('Content-Length',[])
+            framed=(not self.headers.get_all('Transfer-Encoding') and not self.headers.get_all('Content-Encoding')
+                and not self.headers.get_all('Expect') and len(lengths)<=1 and (not lengths or re.fullmatch('0+',lengths[0],re.ASCII)))
+            if (not framed or parsed.query or parsed.fragment or self.path!=path
+                    or self.requestline.split()[1]!=path):
+                if len(lengths)==1 and re.fullmatch(r'[0-9]{1,5}',lengths[0],re.ASCII) and int(lengths[0])<=32768 and not self.headers.get_all('Transfer-Encoding'):
+                    try:self.rfile.read(int(lengths[0]))
+                    except (OSError,TimeoutError):pass
+                return fail(400,'intake_conducted_artifact_readback_host_invalid_request')
+            if artifact_readback_selection is None:return fail(503,'intake_conducted_artifact_readback_host_not_provided')
+            selection=json.loads(artifact_readback_selection)
+            if selection['intake_id']!=intake_id:return fail(503,'intake_conducted_artifact_readback_host_other_intake')
+            try:
+                api=importlib.import_module('.intake_conducted_artifact_readback',__package__)
+                options={key:value for key,value in selection.items() if key!='intake_id'}
+                value=api.read_current_conducted_artifact(model.database.parent,intake_id,**options)
+            except (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):raise
+            except Exception as error:return fail(503,_conducted_artifact_readback_error(error))
+            try:raw=_conducted_artifact_readback_response(value,intake_id,selection)
+            except (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):raise
+            except Exception:return fail(503,'intake_conducted_artifact_readback_host_invalid_response')
+            return self.send_payload(200,raw+b'\n')
 
         def read_conducted_result(self,intake_id,parsed,path):
             try:return Handler._read_conducted_result(self,intake_id,parsed,path)
@@ -1940,6 +2074,7 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
         do_HEAD = do_GET
 
         def reject_write(self):
+            if re.match(r'^/api/intakes/[^/?#]+/conducted-artifact-readback(?:[?#]|$)',self.path):return self.do_GET()
             if ai_dispatch(self): return
             if _reference_dispatch(self, reference): return
             self.error(405, 'read_only')
@@ -2010,7 +2145,10 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
 
     if reference is None:
         server_type = ai_server_wrapper(ThreadingHTTPServer, ai_runtime) if ai_runtime is not None else ThreadingHTTPServer
-        return server_type((host, port), Handler)
+        server=server_type((host, port), Handler)
+        if artifact_readback_selection is not None:
+            server.daemon_threads=False;server.block_on_close=True
+        return server
     try:
         server_type = ai_server_wrapper(_ReferenceHTTPServer, ai_runtime) if ai_runtime is not None else _ReferenceHTTPServer
         server = server_type((host, port), Handler, reference)
