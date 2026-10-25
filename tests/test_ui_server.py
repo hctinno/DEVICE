@@ -1926,5 +1926,393 @@ class ConductedResultHTTPTests(unittest.TestCase):
         self.assertEqual(responses,[])
 
 
+ARTIFACT_HTTP_OBSERVATIONS=[]
+
+
+def artifact_readback_host_fixture(root):
+    """Fresh public PDF/MOCK artifact preparation only; no parent test methods."""
+    import shutil
+    from test_intake_conducted_artifact_readback import CurrentArtifactReadbackTests
+    class AuthoredSeed(unittest.TestCase):pass
+    root=Path(root);root.mkdir(parents=True)
+    try:
+        CurrentArtifactReadbackTests.setUpClass.__func__(AuthoredSeed)
+        workspace=root/'state';shutil.copytree(AuthoredSeed.source_state,workspace)
+        artifact=root/'artifacts';leaf=artifact/'.local/conducted-result-artifacts/current-one';leaf.mkdir(parents=True)
+        for name,raw in AuthoredSeed.raw.items():(leaf/name).write_bytes(raw)
+        selection=dict(deepcopy(AuthoredSeed.pins),intake_id=AuthoredSeed.intake_id,
+            artifact_workspace_root=artifact,**AuthoredSeed.artifact_pins)
+        return dict(workspace=workspace,artifact_root=artifact,intake_id=AuthoredSeed.intake_id,
+            selection=selection,current=deepcopy(AuthoredSeed.current),result=deepcopy(AuthoredSeed.result))
+    finally:AuthoredSeed.doClassCleanups()
+
+
+class ConductedArtifactReadbackHTTPTests(unittest.TestCase):
+    maxDiff=None
+
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(prefix='artifact-readback-http-');self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name);self.fixture_data=None
+
+    def data(self):
+        if self.fixture_data is None:self.fixture_data=artifact_readback_host_fixture(self.root/'authored')
+        return self.fixture_data
+
+    def start(self,selection=None):
+        workspace=self.fixture_data['workspace'] if self.fixture_data else self.root/'missing-state'
+        try:server=create_server(workspace,port=0,conducted_artifact_readback_inputs=selection)
+        except TypeError:self.fail('assigned trusted artifact readback startup keyword is absent')
+        thread=threading.Thread(target=server.serve_forever,kwargs={'poll_interval':.01},daemon=True);thread.start()
+        def stop():
+            address=server.server_address;server.shutdown();server.server_close();thread.join(5)
+            self.assertFalse(thread.is_alive());self.assertEqual(server.socket.fileno(),-1)
+            with socket.socket() as probe:probe.bind(address)
+        self.addCleanup(stop);return server
+
+    def endpoint(self,intake_id=None):
+        return '/api/intakes/'+(intake_id or (self.fixture_data['intake_id'] if self.fixture_data else 'I-authored'))+'/conducted-artifact-readback'
+
+    def read(self,server,*,path=None,headers=None,body=None,method='GET'):
+        address=server.server_address;origin='http://127.0.0.1:'+str(address[1])
+        endpoint=path or self.endpoint();connection=http.client.HTTPConnection(*address,timeout=5)
+        try:
+            connection.request(method,endpoint,body=body,headers={'Origin':origin,'Sec-Fetch-Site':'same-origin',**(headers or {})})
+            response=connection.getresponse();raw=response.read(12582914)
+            self.assertLessEqual(len(raw),12582913)
+            observed=dict(status=response.status,headers=dict(response.getheaders()),body=raw,method=method)
+            ARTIFACT_HTTP_OBSERVATIONS.append(observed)
+            return response.status,observed['headers'],json.loads(raw) if raw else None,raw
+        finally:connection.close()
+
+    def test_not_provided_selection_is_explicit_503_without_parent_import_store_or_created_workspace(self):
+        imported=host_module.importlib.import_module
+        def forbid_parent(name,*args,**kwargs):
+            if name=='.intake_conducted_artifact_readback':raise AssertionError('absent selection imported parent')
+            return imported(name,*args,**kwargs)
+        with mock.patch.object(host_module.importlib,'import_module',side_effect=forbid_parent),\
+             mock.patch('labflow.ui_server.IntakeReadModel.current_conducted_plan_context',side_effect=AssertionError('absent selection read Store')):
+            server=self.start();status,headers,value,raw=self.read(server)
+        self.assertEqual(status,503);self.assertEqual(value,{'error':{'code':'intake_conducted_artifact_readback_host_not_provided'}})
+        self.assertEqual(headers['Cache-Control'],'no-store');self.assertFalse((self.root/'missing-state').exists())
+
+    def test_genuine_parent_exact7_current_artifact_relation_is_delivered_unchanged_with_utf8_lf(self):
+        data=self.data();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        genuine=module.read_current_conducted_artifact;returned=[]
+        def observed(*args,**kwargs):
+            value=genuine(*args,**kwargs);returned.append(value);return value
+        with mock.patch.object(module,'read_current_conducted_artifact',side_effect=observed) as reader:
+            server=self.start(data['selection']);status,headers,value,raw=self.read(server)
+        self.assertEqual(reader.call_count,1);self.assertEqual(status,200);self.assertEqual(value,returned[0])
+        from labflow.store import canonical
+        self.assertEqual(raw,canonical(returned[0]).encode('utf-8')+b'\n')
+        self.assertEqual(headers['Content-Type'],'application/json; charset=utf-8')
+        self.assertEqual(int(headers['Content-Length']),len(raw));self.assertEqual(headers['Cache-Control'],'no-store')
+        self.assertIn("default-src 'none'",headers['Content-Security-Policy'])
+        self.assertEqual(value['status'],'matched');self.assertEqual(value['current'],data['current'])
+        self.assertEqual(value['artifact']['result'],data['result'])
+        self.assertEqual(value['artifact']['storage']['status'],'manifest_payloads_verified')
+        self.assertEqual(value['verification']['current_completion'],'not_assessed')
+        self.assertIs(value['verification']['execution_authority'],False)
+
+    def test_response_guard_rejects_numeric_flags_and_non_native_binding_types(self):
+        data=self.data();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        options={key:value for key,value in data['selection'].items() if key!='intake_id'}
+        original=module.read_current_conducted_artifact(data['workspace'],data['intake_id'],**options)
+        for part in ('outer','reader','binding'):
+            with self.subTest(part=part):
+                value=deepcopy(original)
+                if part=='outer':value['verification']['execution_authority']=0
+                elif part=='reader':value['artifact']['verification']['hardware_verified']=0
+                else:value['relation']['current_binding']['revision']=True
+                with self.assertRaises((ValueError,module.IntakeConductedArtifactReadbackError)):
+                    host_module._conducted_artifact_readback_response(value,data['intake_id'],data['selection'])
+
+    def state_files(self):
+        result={}
+        for path in self.root.rglob('*'):
+            if path.is_file():
+                with path.open('rb') as stream:raw=stream.read();info=os.fstat(stream.fileno())
+                result[path.relative_to(self.root).as_posix()]=(hashlib.sha256(raw).hexdigest(),info.st_size,info.st_ino,
+                    info.st_nlink,info.st_mtime_ns,info.st_ctime_ns,getattr(info,'st_file_attributes',None))
+        return result
+
+    def handler(self,server,*,send=None,error=None):
+        from email.message import Message
+        from types import SimpleNamespace
+        endpoint=self.endpoint();headers=Message();headers['Host']='127.0.0.1:'+str(server.server_port)
+        headers['Origin']='http://'+headers['Host'];headers['Sec-Fetch-Site']='same-origin'
+        return SimpleNamespace(server=server,client_address=('127.0.0.1',12345),command='GET',path=endpoint,
+            requestline='GET '+endpoint+' HTTP/1.1',headers=headers,rfile=io.BytesIO(),
+            connection=SimpleNamespace(settimeout=lambda value:None),send_payload=send or mock.Mock(),error=error or mock.Mock())
+
+    def raw_read(self,server,headers):
+        address=server.server_address;host='127.0.0.1:'+str(address[1])
+        request='GET '+self.endpoint()+' HTTP/1.1\r\nHost: '+host+'\r\n'+''.join(k+': '+v+'\r\n' for k,v in headers)+'\r\n'
+        connection=socket.create_connection(address,timeout=5);response=None
+        try:
+            connection.sendall(request.encode('ascii'));response=http.client.HTTPResponse(connection);response.begin()
+            raw=response.read(12582914);self.assertLessEqual(len(raw),12582913)
+            ARTIFACT_HTTP_OBSERVATIONS.append(dict(status=response.status,headers=dict(response.getheaders()),body=raw,method='raw GET'))
+            return response.status,json.loads(raw) if raw else None
+        finally:
+            if response is not None:response.close()
+            connection.close()
+
+    def test_trusted_selection_is_detached_and_other_intake_is_503_without_fallback_read(self):
+        data=self.data();selection=deepcopy(data['selection']);original=deepcopy(selection)
+        module=importlib.import_module('labflow.intake_conducted_artifact_readback');genuine=module.read_current_conducted_artifact
+        with mock.patch.object(module,'read_current_conducted_artifact',wraps=genuine) as reader:
+            server=self.start(selection)
+            selection['method']['metric']='PRIVATE-CHANGED';selection['artifact_workspace_root']=self.root/'missing-private'
+            status,_,value,_=self.read(server,path=self.endpoint('I-other-authored'))
+            self.assertEqual(status,503);self.assertEqual(value['error']['code'],'intake_conducted_artifact_readback_host_other_intake')
+            self.assertEqual(reader.call_count,0)
+            status,_,value,_=self.read(server);self.assertEqual(status,200);self.assertEqual(value['status'],'matched')
+        self.assertEqual(reader.call_count,1);args,kwargs=reader.call_args
+        self.assertEqual(args,(data['workspace'].resolve(),data['intake_id']))
+        expected={key:value for key,value in original.items() if key!='intake_id'}
+        expected['artifact_workspace_root']=str(expected['artifact_workspace_root'])
+        self.assertEqual(kwargs,expected)
+
+    def test_startup_native10_validation_is_fixed_and_precedes_any_socket_bind(self):
+        data=self.data();selection=data['selection']
+        invalid=[{},dict(selection,workspace='PRIVATE-UNSELECTABLE'),dict(selection,intake_id='../private'),
+            dict(selection,expected_revision=True),dict(selection,expected_context_sha256='F'*64),
+            dict(selection,artifact_workspace_root='relative/private'),dict(selection,artifact_workspace_root=r'\\private\share'),
+            dict(selection,artifact_name='../private'),dict(selection,run_id=False),dict(selection,method={'bad':float('nan')}),
+            dict(selection,method={'bad':'\ud800'}),dict(selection,method={'bad':'x'*65537})]
+        missing=dict(selection);missing.pop('runtime_instance_id');invalid.append(missing)
+        with socket.socket() as occupied:
+            occupied.bind(('127.0.0.1',0));occupied.listen();port=occupied.getsockname()[1]
+            for item in invalid:
+                with self.subTest(keys=list(item)):
+                    with self.assertRaises(ValueError) as caught:
+                        create_server(data['workspace'],port=port,conducted_artifact_readback_inputs=item)
+                    self.assertEqual(str(caught.exception),'intake_conducted_artifact_readback_host_invalid_input')
+
+    def test_canonical_GET_origin_framing_duplicates_and_methods_never_select_through_request(self):
+        data=self.data();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        with mock.patch.object(module,'read_current_conducted_artifact',side_effect=AssertionError('invalid HTTP entered parent')) as reader:
+            server=self.start(data['selection']);endpoint=self.endpoint()
+            for headers in ({'Host':'outside.invalid'},{'Origin':'https://outside.invalid'},{'Origin':'null'},
+                            {'Sec-Fetch-Site':'cross-site'},{'Origin':'http://localhost:'+str(server.server_port)}):
+                with self.subTest(headers=headers):self.assertEqual(self.read(server,headers=headers)[0],403)
+            for path in (endpoint+'?artifact_workspace_root=PRIVATE',endpoint+'#private',endpoint.replace('/api/','/%61pi/'),
+                         'http://127.0.0.1:'+str(server.server_port)+endpoint,'/'+endpoint):
+                with self.subTest(path=path):self.assertIn(self.read(server,path=path)[0],(400,404))
+            self.assertEqual(self.read(server,body=b'PRIVATE body')[0],400)
+            for method in ('POST','PUT','PATCH','DELETE','OPTIONS','HEAD'):
+                status,headers,_,_=self.read(server,method=method)
+                self.assertEqual(status,405);self.assertEqual(headers['Allow'],'GET')
+            for fields,status in (([('Host','127.0.0.1:'+str(server.server_port))],403),
+                ([('Origin','http://127.0.0.1:'+str(server.server_port)),('Origin','http://127.0.0.1:'+str(server.server_port))],403),
+                ([('Sec-Fetch-Site','same-origin'),('Sec-Fetch-Site','none')],403),
+                ([('Content-Length','0'),('Content-Length','0')],400),([('Transfer-Encoding','chunked')],400),
+                ([('Content-Encoding','gzip')],400),([('Expect','100-continue')],400)):
+                with self.subTest(fields=fields):self.assertEqual(self.raw_read(server,fields)[0],status)
+            self.assertEqual(reader.call_count,0)
+
+    def test_typed_parent_errors_are_whitelisted_and_private_unknown_errors_never_echo(self):
+        data=self.data();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        from labflow.ui_read_model import ReadModelError
+        from labflow.virtual_fleet.conducted_result_artifact_read import ConductedResultArtifactReadError
+        errors=[(ReadModelError('store_missing'),'store_missing'),
+            (module.IntakeConductedArtifactReadbackError('intake_conducted_artifact_readback_current_recheck_failed'),'intake_conducted_artifact_readback_current_recheck_failed'),
+            (ConductedResultArtifactReadError('conducted_result_artifact_read_evidence_invalid'),'conducted_result_artifact_read_evidence_invalid'),
+            (ReadModelError('PRIVATE-CODE'), 'intake_conducted_artifact_readback_host_unavailable'),
+            (RuntimeError('PRIVATE path auth source'),'intake_conducted_artifact_readback_host_unavailable'),
+            (OSError('PRIVATE disk source'),'intake_conducted_artifact_readback_host_unavailable')]
+        server=self.start(data['selection'])
+        for error,code in errors:
+            with self.subTest(error=type(error).__name__),mock.patch.object(module,'read_current_conducted_artifact',side_effect=error) as reader:
+                status,_,value,raw=self.read(server)
+                self.assertEqual(status,503);self.assertEqual(value,{'error':{'code':code}})
+                self.assertNotIn(b'PRIVATE',raw);self.assertEqual(reader.call_count,1)
+
+    def test_genuine_None_pin_blocked_and_different_plan_and_intake_are_original_HTTP200_data(self):
+        data=self.data();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        selections=[(dict(data['selection'],expected_revision=None),'blocked'),
+            (dict(data['selection'],method=dict(data['selection']['method'],metric='peak')),'different_plan')]
+        another=artifact_readback_host_fixture(self.root/'another-authored')
+        different=dict(data['selection'])
+        for name in ('artifact_workspace_root','artifact_name','expected_manifest_sha256','expected_result_sha256','run_id','runtime_instance_id'):
+            different[name]=another['selection'][name]
+        selections.append((different,'different_intake'))
+        for selection,expected in selections:
+            with self.subTest(status=expected):
+                server=self.start(selection);returned=[];genuine=module.read_current_conducted_artifact
+                def observe(*args,**kwargs):
+                    value=genuine(*args,**kwargs);returned.append(value);return value
+                with mock.patch.object(module,'read_current_conducted_artifact',side_effect=observe) as reader:
+                    status,_,value,_=self.read(server)
+                self.assertEqual(reader.call_count,1);self.assertEqual(status,200);self.assertEqual(value,returned[0])
+                self.assertEqual(value['status'],expected);self.assertIs(value['verification']['permanent_current_approval'],False)
+                if expected=='blocked':self.assertIsNone(value['artifact']);self.assertIn('current_pin_missing',value['relation']['reasons'])
+
+    def test_typed_stale_compound_is_preserved_as_data_without_becoming_a_genuine_new_current_read(self):
+        data=self.data();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        options={key:value for key,value in data['selection'].items() if key!='intake_id'}
+        value=module.read_current_conducted_artifact(data['workspace'],data['intake_id'],**options)
+        value['status']=value['relation']['status']='stale';value['relation']['recheck']['status']='changed'
+        value['relation']['recheck']['context_sha256_after']='f'*64;value['relation']['reasons']=['current_context_changed']
+        server=self.start(data['selection'])
+        with mock.patch.object(module,'read_current_conducted_artifact',return_value=value) as reader:
+            status,_,returned,_=self.read(server)
+        self.assertEqual(status,200);self.assertEqual(returned,value);self.assertEqual(reader.call_count,1)
+        self.assertEqual(returned['verification']['current_completion'],'not_assessed')
+
+    def test_invalid_nonfinite_surrogate_cap_depth_and_node_outputs_have_no_partial_or_private_payload(self):
+        data=self.data();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        options={key:value for key,value in data['selection'].items() if key!='intake_id'}
+        original=module.read_current_conducted_artifact(data['workspace'],data['intake_id'],**options)
+        self.assertEqual(host_module._CONDUCTED_ARTIFACT_BODY_BYTES,12582912)
+        from labflow.store import canonical
+        raw=canonical({'value':'authored'}).encode('utf-8')
+        self.assertEqual(host_module._conducted_artifact_json({'value':'authored'},len(raw)),raw)
+        with self.assertRaises(Exception):host_module._conducted_artifact_json({'value':'authored'},len(raw)-1)
+        for invalid in ({'bad':float('nan')},{'bad':'\ud800'},{'bad':[None]*400001}):
+            with self.assertRaises(Exception):host_module._conducted_artifact_json(invalid,12582912)
+        deep=[];cursor=deep
+        for unused in range(49):child=[];cursor.append(child);cursor=child
+        with self.assertRaises(Exception):host_module._conducted_artifact_json(deep,12582912)
+        server=self.start(data['selection'])
+        invalids=[{'PRIVATE-INVALID':1},dict(original,verification=dict(original['verification'],execution_authority=True))]
+        for invalid in invalids:
+            with mock.patch.object(module,'read_current_conducted_artifact',return_value=invalid):
+                status,_,value,wire=self.read(server)
+                self.assertEqual(status,503);self.assertEqual(value['error']['code'],'intake_conducted_artifact_readback_host_invalid_response')
+                self.assertNotIn(b'PRIVATE',wire)
+        cap=len(canonical(original).encode('utf-8'))-1
+        with mock.patch.object(module,'read_current_conducted_artifact',return_value=original),mock.patch.object(host_module,'_CONDUCTED_ARTIFACT_BODY_BYTES',cap):
+            self.assertEqual(self.read(server)[2]['error']['code'],'intake_conducted_artifact_readback_host_invalid_response')
+
+    def test_first_parent_failure_is_not_replaced_by_a_late_error_publication_control(self):
+        from labflow.ui_read_model import ReadModelError
+        from urllib.parse import urlsplit
+        data=self.data();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        server=self.start(data['selection']);attempts=[];primary=ReadModelError('store_missing');late=KeyboardInterrupt('later diagnostic')
+        def broken(status,code):attempts.append((status,code));raise late
+        handler=self.handler(server,error=broken);endpoint=self.endpoint()
+        with mock.patch.object(module,'read_current_conducted_artifact',side_effect=primary) as reader:
+            returned=server.RequestHandlerClass.read_conducted_artifact_readback(handler,data['intake_id'],urlsplit(endpoint),endpoint)
+        self.assertIsNone(returned);self.assertEqual(reader.call_count,1)
+        self.assertEqual(attempts,[(503,'store_missing')]);self.assertTrue(handler.close_connection)
+
+    def test_original_controls_and_delivery_failures_never_retry_parent_or_append_second_response(self):
+        from urllib.parse import urlsplit
+        data=self.data();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        options={key:value for key,value in data['selection'].items() if key!='intake_id'}
+        original=module.read_current_conducted_artifact(data['workspace'],data['intake_id'],**options)
+        server=self.start(data['selection']);endpoint=self.endpoint()
+        class Stop(BaseException):pass
+        for control in (KeyboardInterrupt('first'),MemoryError('first'),SystemExit(51),GeneratorExit('first'),Stop('first')):
+            with self.subTest(control=type(control).__name__):
+                handler=self.handler(server)
+                with mock.patch.object(module,'read_current_conducted_artifact',side_effect=control) as reader:
+                    with self.assertRaises(type(control)) as caught:
+                        server.RequestHandlerClass.read_conducted_artifact_readback(handler,data['intake_id'],urlsplit(endpoint),endpoint)
+                self.assertIs(caught.exception,control);self.assertEqual(reader.call_count,1)
+                handler.send_payload.assert_not_called();handler.error.assert_not_called();self.assertTrue(handler.close_connection)
+        for failure in (OSError('disconnected'),MemoryError('delivery'),SystemExit('delivery')):
+            attempts=[]
+            def broken(status,raw):attempts.append((status,raw));raise failure
+            handler=self.handler(server,send=broken)
+            with mock.patch.object(module,'read_current_conducted_artifact',return_value=original) as reader:
+                if isinstance(failure,OSError):
+                    server.RequestHandlerClass.read_conducted_artifact_readback(handler,data['intake_id'],urlsplit(endpoint),endpoint)
+                else:
+                    with self.assertRaises(type(failure)) as caught:
+                        server.RequestHandlerClass.read_conducted_artifact_readback(handler,data['intake_id'],urlsplit(endpoint),endpoint)
+                    self.assertIs(caught.exception,failure)
+            self.assertEqual(reader.call_count,1);self.assertEqual(len(attempts),1);handler.error.assert_not_called()
+            self.assertTrue(handler.close_connection)
+
+    def test_genuine_HTTP_runtime_is_query_only_with_closed_SQL_native_and_unchanged_files_without_services(self):
+        from labflow.store import _ExistingBinding
+        data=self.data();before=self.state_files();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        genuine=module.read_current_conducted_artifact;reader=module._reader;original_close=reader._cleanup._close
+        connect=sqlite3.connect;acquire=_ExistingBinding.acquire;connections=[];bindings=[];backends=[];statements=[];connect_args=[]
+        def observed_connect(*args,**kwargs):
+            con=connect(*args,**kwargs);con.set_trace_callback(statements.append);connections.append(con);connect_args.append((args,kwargs));return con
+        def observed_acquire(binding):
+            try:return acquire(binding)
+            finally:bindings.append(binding)
+        def observed_close(backend):
+            result=original_close(backend);backends.append((backend,result));return result
+        def observed_parent(*args,**kwargs):
+            value=genuine(*args,**kwargs)
+            for con in connections:
+                with self.assertRaises(sqlite3.ProgrammingError) as caught:con.execute('SELECT 1')
+                self.assertIn('closed database',str(caught.exception))
+            return value
+        def forbidden(*args,**kwargs):raise AssertionError('readback GET entered setup/write/model/process service')
+        with ExitStack() as stack:
+            for target in ('labflow.store.Store.__init__','labflow.store.Store.connection','labflow.store.Store.write_blob',
+                'labflow.store.Store.register_blob','labflow.store.Store.event','labflow.intake_jobs.claim_job',
+                'labflow.intake_jobs.complete_job','labflow.intake_jobs.respond','labflow.active_intake.scan_source',
+                'labflow.intake_documents.prepare_analysis_documents','labflow.intake_worker.SyntheticTextProvider.analyze',
+                'labflow.intake_worker.run_worker','labflow.document_extract.extract_document',
+                'labflow.virtual_fleet.harness.FleetHarness.run','labflow.virtual_fleet.conducted_result_artifact.write_conducted_result_artifact','subprocess.Popen'):
+                stack.enter_context(mock.patch(target,side_effect=forbidden))
+            stack.enter_context(mock.patch.object(sqlite3,'connect',side_effect=observed_connect))
+            stack.enter_context(mock.patch.object(_ExistingBinding,'acquire',observed_acquire))
+            stack.enter_context(mock.patch.object(reader._cleanup,'_close',side_effect=observed_close))
+            stack.enter_context(mock.patch.object(module,'read_current_conducted_artifact',side_effect=observed_parent))
+            server=self.start(data['selection']);status,_,value,_=self.read(server)
+        self.assertEqual(status,200);self.assertEqual(value['status'],'matched');self.assertEqual(self.state_files(),before)
+        self.assertEqual(len(bindings),2);self.assertTrue(connections)
+        self.assertTrue(all('?mode=ro' in args[0] and kwargs.get('uri') is True for args,kwargs in connect_args))
+        writes={'INSERT','UPDATE','DELETE','CREATE','ALTER','DROP','REPLACE','VACUUM','ATTACH','DETACH','REINDEX'}
+        self.assertTrue(all(sql.strip().split()[0].upper() not in writes for sql in statements))
+        self.assertTrue(all(binding.state=='closed' and binding.active==0 and not binding.handles for binding in bindings))
+        self.assertEqual(len(backends),1);self.assertTrue(all(result is None and not backend.held for backend,result in backends))
+
+    def test_known_server_shutdown_waits_for_genuine_parent_native_cleanup_and_request_worker(self):
+        data=self.data();before=self.state_files();module=importlib.import_module('labflow.intake_conducted_artifact_readback')
+        reader=module._reader;original_open=reader._open;entered=threading.Event();release=threading.Event();closed=threading.Event()
+        backends=[];outcomes=[];server=self.start(data['selection']);self.addCleanup(release.set)
+        def hold(tree,*args,**kwargs):
+            value=original_open(tree,*args,**kwargs)
+            if not backends:
+                backends.append(tree.backend);entered.set()
+                if not release.wait(5):raise AssertionError('synthetic release deadline')
+            return value
+        def request():
+            try:outcomes.append(self.read(server)[0])
+            except (OSError,http.client.HTTPException):outcomes.append('delivery_unknown')
+        def close():
+            try:server.shutdown();server.server_close()
+            finally:closed.set()
+        worker=threading.Thread(target=request);closer=None
+        with mock.patch.object(reader,'_open',side_effect=hold):
+            worker.start()
+            try:
+                self.assertTrue(entered.wait(5));self.assertTrue(backends[0].held)
+                closer=threading.Thread(target=close);closer.start();self.assertFalse(closed.wait(.05))
+            finally:
+                release.set();worker.join(5)
+                if closer is not None:closer.join(5)
+        self.assertFalse(worker.is_alive());self.assertIsNotNone(closer);self.assertFalse(closer.is_alive())
+        self.assertTrue(closed.is_set());self.assertEqual(server.socket.fileno(),-1);self.assertFalse(backends[0].held)
+        self.assertIn(outcomes[0],(200,'delivery_unknown'));self.assertEqual(self.state_files(),before)
+        idle=self.start(data['selection']);accepted=threading.Event();done=threading.Event()
+        original_setup=idle.RequestHandlerClass.setup
+        def setup(handler):original_setup(handler);accepted.set()
+        client=None;idle_closer=None
+        def close_idle():
+            try:idle.shutdown();idle.server_close()
+            finally:done.set()
+        try:
+            with mock.patch.object(idle.RequestHandlerClass,'setup',setup):
+                client=socket.create_connection(idle.server_address,timeout=7)
+                client.sendall(b'GET /api/intakes/');self.assertTrue(accepted.wait(2))
+                idle_closer=threading.Thread(target=close_idle);idle_closer.start()
+                self.assertTrue(done.wait(7));idle_closer.join(1);self.assertFalse(idle_closer.is_alive())
+                self.assertEqual(idle.socket.fileno(),-1);self.assertEqual(client.recv(1),b'')
+        finally:
+            if client is not None:client.close()
+            if idle_closer is not None:idle_closer.join(1)
+
+
 if __name__ == '__main__':
     unittest.main()
