@@ -2,6 +2,50 @@
 
 2026-10-26 Asia/Seoul. 제품 함수는 이미 실행된 [D2 adapter](intake_plan_virtual_execution_usage.md)의 원 receipt와 명시 evidence_dir만 받는다. 새 실행·모델·Store·장비 호출은 없다. 독립 수용 전인 후보 의존성을 포함해 시작한 개발 후보이며, 후행 인수 상태와 이 후보의 독립 검토는 구별한다. 전체 시험소 업무·규범 승인·물리 정확도 검증은 별도다.
 
+## 명시 측정 선택 연결
+
+DEV2-MEASUREMENT-SELECTED-FINALIZER-001은 root가 지정한 base4c7c7c49e185f659683b5855cbd3a774618bc0c1의 독립 clone에서 이 finalizer/core/test/usage3만 변경한다. 기존 등록921·host735·고정 ref17 profile·운영17은 수정하지 않는다. 후행 [D3 selector](conducted_measurement_selector_usage.md) cc72d9ba55eb36f6f67bb3cda650b2d5086651ff의 신규3만 정상 cherry한 f1cae01ee8de778b5d3ed913fbbeeb74c7f18f9f가 구현 부모다. root 제공 bytes/SHA와 원 source commit=cherry commit=working bytes를 대조했다. D3의 독립 수용은 아직 pending 의존이며 이 연결의 독립 검수와도 별도다.
+
+새 keyword-only 인자는 measurement_selection_policy=None이다. 기본 None이면 기존 measurement_ref 문자열/None과 원 exact11 receipt·원 DTO·권한·marker-last·partial/first-error 경계를 그대로 사용하며 selector 호출0이다. 명시 정책은 native exact dict `{schema_version: 1, kind: "unique_same_run_sensor_acquisition"}`만 허용한다. bool-as-int/subclass/추가 키를 거절하며 measurement_ref와 policy가 둘 다 non-None이면 입력 오류다. profile의 원 ref를 사후에 교체하는 기능이 아니다.
+
+명시 정책 경로만 receipt에 measurement_selection을 추가한 exact12다. 처음 null에서 원 native5파일의 pin/knownclose·binding 대조 뒤 pure selector를 한 번 호출해 반환한 detached 원 선택 DTO를 보존한다. 최종 root 계약은 exact9 schema_version/kind/status/candidate/measurement_ref/request_id/reasons/result/verification이다. 앞 exact8 초안은 이력이며 후행 exact9가 우선한다. candidate는 null 또는 request_id/intent_ref/receipt_ref/measurement_ref/sequence exact5의 원 추적 근거다. selected만 top ref/request를 제공하며 blocked는 둘 다 null이고 candidate와 원 invalid/incomplete result를 nested 선택 DTO에 보존한다. D3가 내부 builder를 한 번 호출하고 돌려준 원 result를 기존 writer에 전달하며 finalizer에서 수치를 다시 계산하지 않는다. 유일한 양의 sensor.acquire 요청의 최초 native 완료 관측을 구조·clock·setup·report로 대조한다. 값/PASS/마지막 측정 선택, 최초 완료가 invalid인 경우 fallback, 자동 retry, 새 runtime은 없다.
+
+선택 blocked면 기존 FinalizerError의 stage=selection·held receipt, result/artifact=null·writer0이다. 원 producer 실패가 있으면 최초 failure로 남기고 뒤의 선택 사유를 secondary_errors에 보존한다. 원 선택 증거를 보존하며 승인이나 실측 성공으로 승격하지 않는다. native5파일/close/binding에서 실패하면 selector도 실행하지 않는다. 선택 결과를 저장하는 marker를 별도로 만들지 않는다.
+
+전달 방식 대안 중 selector ref만 받아 finalizer가 다시 계산하는 경로 대신, root가 D3 내부 builder1/원 result 반환을 고정했다. 공개 API를 임의로 추측해 import하거나 새 실행으로 fixture를 만들지 않는다. 기존 20개 전체 replay는 이번 기본 실행 범위가 아니다. 변경이 닿는 legacy 문자열·None·early error를 이름 붙인 작은 cohort로, 새 연결 접점8개 안팎을 별도 cohort로 검증하고 새로운 결함이 남을 때만 범위를 넓힌다.
+
+- [x] 지정 base·소유3·비소유1964 raw baseline 및 기존 retained fixture locator 확인
+- [x] root의 정책/반환/blocked/builder1/검증 범위 고정
+- [x] 선택 policy keyword의 작은 계약 RED와 기존 분기 seam 준비
+- [x] root가 전달한 D3 공개 API/source pin binding 후 selector1→원 result→writer 연결
+- [x] 닿는 기존 분기·새 접점을 분리 검증하고 AST/원 DTO/first-error 경계 확인
+
+Git 게시와 원격 exact 대조·보존 proof pin은 최종 인계 기록에서 확인한다. 이 후보의 독립 검수는 아직 대기다.
+
+실제 installed profile·새 실 permit·실제 모델·ADC·Vertex·실장비와 새 runtime은0이다. 보존 입력의 genuine 선택·저장과 새 runtime/모델 실행을 구별한다. 아래 576의 원 사용법·20개/별도 fresh 시연 이력은 이 후속 실행 수와 합산하지 않는다.
+
+소스 binding 전 준비 검사는 계약1(0.000s), 입력2(0.057s), 명시 authored-protocol 접점3(0.543s), 원 byte legacy3(0.407s)가 각 별도 실행으로 통과했다. protocol은 실제 D3 선택을 대체한 경계 검사이며 genuine selector 검증이 아니다. legacy3은 문자열 한 건·None 미선택/null·early execution pin error만 재생했다. 원20 전체와 새 runtime을 실행하지 않았다. 첫 legacy3의2PASS/None 기대 오류1FAIL은 원 D3의 invalid/null을 incomplete로 좁힌 테스트 기대 오류이며, 원 결과를 바꾸지 않고 기대만 기존 invalid/incomplete 범위로 정정했다. 초기 protocol 준비의 중복 def/IndentationError(API0), 후행 keyword 부재의 RED3도 별도로 보존한다.
+
+추가 준비 authored-protocol5는1.036s PASS이며 앞3과 중복 합산하지 않는다. source binding 후 단독 genuine1은0.250s PASS, 최종 새 cohort는 입력2+protocol5+genuine1=8개가1.298s PASS, 별도 legacy3은0.391s PASS이며 각각 failure/error/skip0이다. 반복 통과를 독립 분모에 더하지 않는다. genuine 선택은 원 intent event:11/receipt event:12/최초 완료 event:17을 보존하며 raw -19.5 dBm과 원 보정11 dBm/result 전체가 기존 legacy의 저장 DTO bytes와 일치했다. selector1·그 내부 builder_calls1·추가 finalizer builder0이고 native writer payload/완료 marker pin도 확인했다. 새 runtime·부모 D3 tests 실행0이며 원20을 확대 실행할 새 제품 결함은 남지 않았다.
+
+새 검사는 selection_ 접두어와 명시 --selection-contract/--selection-legacy/--selection-input/--selection-protocol/--selection-genuine/--selection-boundary opt-in으로만 고른다. 기본 discovery의 기존20에 새 fixture 의존이나 genuine selector 실행을 섞지 않는다. 원20은 열거만 했으며 공개 signature 기대에 새 keyword만 추가한 기존 한 검사 외의 원 method AST는 같다. 새 cohort에는 보존된 recorded/producer_failure 고정 입력12파일과 이전 legacy의 원 result2파일을 명시 fixture root로 공급했다. authored-protocol은 완전한 native DTO의 경계 double이며 실제 선택·수치 검증으로 보고하지 않는다.
+
+explicit 경로에서만 고정 D3 모듈을 lazy import한다. root source pin 전 실제 import/selector0을 유지한 뒤, 후행 source binding 후 위 genuine 접점을 실행했다. policy 검사는1KiB, 선택 DTO의 native snapshot은2MiB 이내다. D3의 제공 입력16MiB/4096 events/32 setup·부모 result1MiB 제한을 finalizer가 완화하거나 재계산으로 우회하지 않는다. selection stage의 자체 code는 measurement_selection_blocked/measurement_selection_invalid/measurement_selection_failed를 기존 prefix 뒤에 붙인다.
+
+의존 추가 전 WIP3 raw/native/index 사본과 staged0을 보존했다. 사전 verifier가 D3 test 경로를 잘못 추정해 실패했는데 뒤 cherry가 계속 실행된 순서 오류도 기록했다. 실제 added-only3·원 parent/세 source pin·전후 WIP3 raw/native/index 불변을 사후 대조했으며 stash/reset/덮기/정리0이다. 잘못된 복원 patch의 거절도 파일 변경0으로 보존했다. `_snapshot/_note/_adapter/_read_inputs/_bind`·원 error class·기존 receipt 생성식과 CONTROL handler AST는 동일하다.
+
+```python
+receipt = finalize_conducted_execution_result(
+    execution_receipt, expected_execution_sha256=execution_sha256,
+    evidence_dir=evidence_dir, measurement_ref=None,
+    measurement_selection_policy={"schema_version": 1,
+                                  "kind": "unique_same_run_sensor_acquisition"},
+    workspace_root=workspace_root, artifact_name="explicit-selected-result",
+)
+```
+
+검증용 명시 fixture root를 공급한 상태에서 `python -B -X utf8 tests/test_conducted_execution_result_finalizer.py --selection-boundary -v`와 `--selection-legacy -v`를 별도 실행한다. 이 명령은 보존 byte 재생이며 --fresh 경로와 합치지 않는다. proof는 실행별512파일/32MiB admission을 쓰고 native writer용32파일/8MiB를 먼저 예약한 뒤 한 번 관측한다. 기존 산출물·실패 prefix를 삭제하거나 이동해 재시도하지 않는다.
+
 ## 공개 계약과 순서
 
 ```python
@@ -17,7 +61,7 @@ receipt = finalize_conducted_execution_result(
 )
 ```
 
-expected_execution_sha256은 LF 없는 원 adapter canonical JSON의 lowercase SHA256이다. 이는 제공 snapshot의 일관성 pin이며 실제 AI·발급자 인증이 아니다. measurement_ref=None은 D3의 원 missing-reference 이유와 null을 보존한다. 마지막 값·PASS·유리한 측정을 고르지 않는다.
+expected_execution_sha256은 LF 없는 원 adapter canonical JSON의 lowercase SHA256이다. 이는 제공 snapshot의 일관성 pin이며 실제 AI·발급자 인증이 아니다. measurement_selection_policy=None 경로에서 measurement_ref=None은 D3의 원 missing-reference 이유와 null을 보존한다. 마지막 값·PASS·유리한 측정을 고르지 않는다.
 
 고정 파일5개만 열어 원 adapter의 artifact descriptor와 bytes/SHA를 대조한다: caller-request.json(256KiB), setup-snapshot.json(1MiB), operator-journal.jsonl(9MiB), legacy-harness-report.json(256KiB), legacy-harness-events.json(8MiB). 경로를 descriptor나 nested raw ref에서 만들지 않는다. 다른 run·전체 디렉터리·wildcard 검색은 없다. native adapter≤256KiB/depth32/nodes1M, 읽기 합계≤32MiB, 입력5와 writer 최대7 경로는512개 미만이다. Windows 공통 handle-relative reader의 reparse·identity·stamp·읽기 pin을 사용하며 다른 플랫폼 fallback은 없다. 읽기 pin 해제까지 확인한 detached snapshot으로 다음 단계에 들어간다.
 
@@ -27,7 +71,7 @@ genuine read_operator_journal → [D3 순수 builder](conducted_twin_result_usag
 
 ## 반환·실패
 
-반환 exact11은 schema_version, kind, status, execution_receipt, input_files, result, artifact, failure, secondary_errors, verification, execution_authority다. kind=conducted_execution_result_finalizer, status=held/stored는 저장 상태만 뜻한다. execution_receipt는 detached 원형, input_files는 고정 파일의 검증 bytes/SHA, result와 artifact는 각각 원 D3 DTO다. 미도달 값은 null이며 다른 run ID나 성공 값을 채우지 않는다.
+기존 경로의 반환 exact11은 schema_version, kind, status, execution_receipt, input_files, result, artifact, failure, secondary_errors, verification, execution_authority다. 명시 선택 경로는 위 measurement_selection 한 필드만 추가한 exact12다. kind=conducted_execution_result_finalizer, status=held/stored는 저장 상태만 뜻한다. execution_receipt는 detached 원형, input_files는 고정 파일의 검증 bytes/SHA, result와 artifact는 각각 원 D3 DTO다. 미도달 값은 null이며 다른 run ID나 성공 값을 채우지 않는다.
 
 원 producer/adapter failure가 있으면 최초 failure로 보존한다. 이후 입력·builder·writer·close 오류는 secondary_errors에 남기며 원인을 덮지 않는다. D3 failure도 원형으로 보존한다. ConductedExecutionResultFinalizerError는 정제 code, stage, receipt를 제공하며 실패 receipt.status=held다. D3 writer 오류의 code/phase/publication_attempted는 보존한다. 원 예외 문자열·객체 repr는 저장하지 않는다. KeyboardInterrupt/SystemExit/GeneratorExit/MemoryError는 같은 객체로 전파한다.
 

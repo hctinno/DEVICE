@@ -98,7 +98,7 @@ class FinalizerTests(unittest.TestCase):
     def test_public_contract_and_original_dto(self):
         self.assertEqual(api.__all__, ['finalize_conducted_execution_result', 'ConductedExecutionResultFinalizerError'])
         signature = inspect.signature(api.finalize_conducted_execution_result)
-        self.assertEqual(list(signature.parameters), 'execution_receipt expected_execution_sha256 evidence_dir measurement_ref workspace_root artifact_name'.split())
+        self.assertEqual(list(signature.parameters), 'execution_receipt expected_execution_sha256 evidence_dir measurement_ref measurement_selection_policy workspace_root artifact_name'.split())
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in list(signature.parameters.values())[1:]))
         result = self.call()
         self.assertEqual(set(result), set('schema_version kind status execution_receipt input_files result artifact failure secondary_errors verification execution_authority'.split()))
@@ -334,6 +334,408 @@ class FinalizerTests(unittest.TestCase):
             self.failure('input_invalid',measurement_ref=True)
 
 
+class MeasurementSelectionContractTests(unittest.TestCase):
+    def selection_explicit_policy_has_optional_keyword_only_boundary(self):
+        signature = inspect.signature(api.finalize_conducted_execution_result)
+        self.assertIn('measurement_selection_policy', signature.parameters,
+                      'The explicit selection policy boundary has not been implemented')
+        parameter = signature.parameters['measurement_selection_policy']
+        self.assertIs(parameter.default, None)
+        self.assertEqual(parameter.kind, inspect.Parameter.KEYWORD_ONLY)
+
+
+class _SelectionProofBudget:
+    def __init__(self):
+        self.slots = {}
+        self.total = self.reserved_files = 0
+
+    def charge(self, path, size):
+        path = Path(os.path.abspath(path))
+        if not path.is_relative_to(SELECTION_RUN):
+            raise AssertionError('SELECTION_PROOF_OUTSIDE_OWNED_NAMESPACE')
+        delta = max(0, size - self.slots.get(path, 0))
+        assert len(self.slots) + self.reserved_files + (path not in self.slots) <= 512
+        assert self.total + delta <= 33554432
+        self.total += delta
+        self.slots[path] = max(size, self.slots.get(path, 0))
+
+    def reserve_native(self):
+        assert len(self.slots) + self.reserved_files + 32 <= 512
+        assert self.total + 8388608 <= 33554432
+        self.reserved_files += 32
+        self.total += 8388608
+
+    def settle_native(self, root):
+        self.reserved_files -= 32
+        self.total -= 8388608
+        for path in root.rglob('*'):
+            if path.is_file():
+                self.charge(path, path.stat().st_size)
+
+
+SELECTION_RUN = ROOT / '.local/sf' / uuid.uuid4().hex[:8]
+SELECTION_BUDGET = _SelectionProofBudget()
+
+
+class _SelectionWriter:
+    def __init__(self, stream, path):
+        self.stream, self.path = stream, path
+
+    def write(self, value):
+        size = len(value.encode('utf-8')) * 2 if type(value) is str else len(value)
+        SELECTION_BUDGET.charge(self.path, self.stream.tell() + size)
+        return self.stream.write(value)
+
+    def __getattr__(self, key):
+        return getattr(self.stream, key)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        return self.stream.__exit__(*args)
+
+
+class _SelectionBoundaryCase(unittest.TestCase):
+    def setUp(self):
+        value = os.environ.get('DGM_FINALIZER_REPLAY_ROOT')
+        self.assertTrue(value, 'Explicit retained-byte replay fixtures are required; runtime fallback0')
+        self.fixtures = Path(value)
+        self.work = SELECTION_RUN / uuid.uuid4().hex[:8]
+        self.work.mkdir(parents=True)
+        SELECTION_BUDGET.reserve_native()
+        self.addCleanup(lambda: SELECTION_BUDGET.settle_native(self.work))
+        original = Path.open
+
+        def bounded(path, mode='r', *args, **kwargs):
+            if any(item in mode for item in 'wax+'):
+                SELECTION_BUDGET.charge(path, path.stat().st_size if path.exists() else 0)
+                return _SelectionWriter(original(path, mode, *args, **kwargs), path)
+            return original(path, mode, *args, **kwargs)
+
+        self.enterContext(patch.object(Path, 'open', bounded))
+        for name in ('socket.socket.connect', 'socket.getaddrinfo'):
+            self.enterContext(patch(name, side_effect=AssertionError('NETWORK_FORBIDDEN')))
+        (self.work / 'test-case.txt').write_text(self._testMethodName, encoding='utf-8')
+        self.sequence = 0
+        self.load('recorded')
+
+    def load(self, case):
+        self.sequence += 1
+        source = self.fixtures / case
+        self.evidence = self.work / ('e' + str(self.sequence))
+        self.evidence.mkdir()
+        for leaf in FILES.values():
+            path = source / leaf
+            if path.is_file():
+                (self.evidence / leaf).write_bytes(path.read_bytes())
+        self.execution = json.loads((source / 'execution-receipt.json').read_bytes())
+        self.original = C(self.execution)
+
+    def call(self, **changes):
+        options = dict(expected_execution_sha256=H(C(self.execution)), evidence_dir=self.evidence,
+                       measurement_ref='event:17', workspace_root=self.work, artifact_name='result')
+        options.update(changes)
+        return api.finalize_conducted_execution_result(self.execution, **options)
+
+    def original_receipt(self, result):
+        self.assertEqual(set(result), set('schema_version kind status execution_receipt input_files result artifact failure secondary_errors verification execution_authority'.split()))
+        self.assertEqual(C(result['execution_receipt']), self.original)
+        self.assertEqual(C(self.execution), self.original)
+        self.assertFalse(result['execution_authority'])
+        self.assertFalse(result['verification']['execution_rerun'])
+
+
+class LegacySelectionBoundaryTests(_SelectionBoundaryCase):
+    def selection_legacy_explicit_reference_keeps_original_dto_and_native_marker(self):
+        with patch.object(api, '_select_result', side_effect=AssertionError('NO_LEGACY_SELECTOR'), create=True):
+            result = self.call()
+        self.original_receipt(result)
+        self.assertEqual(result['status'], 'stored')
+        self.assertEqual(result['result']['status'], 'recorded')
+        self.assertEqual(set(result['result']), set('schema_version kind status binding raw_measurement setup_provenance calculation gaps failure verification'.split()))
+        self.assertEqual(result['result']['raw_measurement']['packet']['power_dbm'], -19.5)
+        self.assertEqual(result['artifact']['storage']['status'], 'complete')
+        marker = self.work / result['artifact']['storage']['commit_marker']
+        self.assertEqual(H(marker.read_bytes()), result['artifact']['storage']['sha256'])
+        stored = next(row for row in result['artifact']['files'] if row['path'].endswith('/result.json'))
+        self.assertEqual(C(json.loads((self.work / stored['path']).read_bytes())), C(result['result']))
+        (self.work / 'legacy-receipt.json').write_bytes(C(result))
+
+    def selection_legacy_none_keeps_original_unselected_status_and_null_measurement(self):
+        with patch.object(api, '_select_result', side_effect=AssertionError('NO_LEGACY_SELECTOR'), create=True):
+            result = self.call(measurement_ref=None, measurement_selection_policy=None)
+        self.original_receipt(result)
+        self.assertEqual(result['status'], 'stored')
+        self.assertIn(result['result']['status'], ('incomplete', 'invalid'))
+        self.assertIsNone(result['result']['raw_measurement'])
+        self.assertIsNone(result['result']['calculation']['corrected'])
+        self.assertEqual(result['artifact']['result_status'], result['result']['status'])
+        (self.work / 'legacy-receipt.json').write_bytes(C(result))
+
+    def selection_early_execution_pin_error_prevents_reader_selector_and_publication(self):
+        with patch.object(api, '_read_inputs', side_effect=AssertionError('NO_READ')), \
+                patch.object(api, '_select_result', side_effect=AssertionError('NO_SELECTOR'), create=True), \
+                patch.object(api, '_build_result', side_effect=AssertionError('NO_BUILD')), \
+                patch.object(api, '_write_result', side_effect=AssertionError('NO_WRITE')):
+            with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                self.call(expected_execution_sha256='0' * 64)
+        error = got.exception
+        self.assertEqual(error.code, 'conducted_execution_result_finalizer_execution_hash_mismatch')
+        self.assertEqual(error.stage, 'input')
+        self.original_receipt(error.receipt)
+        self.assertEqual(error.receipt['input_files'], {})
+        self.assertIsNone(error.receipt['result'])
+        self.assertIsNone(error.receipt['artifact'])
+        self.assertFalse((self.work / '.local/conducted-result-artifacts').exists())
+        (self.work / 'legacy-receipt.json').write_bytes(C(error.receipt))
+
+
+class MeasurementSelectionInputTests(_SelectionBoundaryCase):
+    def input_failure(self, policy, measurement_ref=None):
+        self.assertIn('measurement_selection_policy', inspect.signature(api.finalize_conducted_execution_result).parameters,
+                      'The explicit selection policy boundary has not been implemented')
+        with patch.object(api, '_read_inputs', side_effect=AssertionError('NO_READ')), \
+                patch.object(api, '_select_result', side_effect=AssertionError('NO_SELECTOR'), create=True), \
+                patch.object(api, '_build_result', side_effect=AssertionError('NO_BUILD')), \
+                patch.object(api, '_write_result', side_effect=AssertionError('NO_WRITE')):
+            with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                self.call(measurement_ref=measurement_ref, measurement_selection_policy=policy)
+        error = got.exception
+        self.assertEqual(error.code, 'conducted_execution_result_finalizer_input_invalid')
+        self.assertEqual(error.stage, 'input')
+        self.assertEqual(error.receipt['status'], 'held')
+        self.assertIsNone(error.receipt['measurement_selection'])
+        self.assertEqual(error.receipt['input_files'], {})
+        self.assertIsNone(error.receipt['result'])
+        self.assertIsNone(error.receipt['artifact'])
+        self.assertEqual(C(error.receipt['execution_receipt']), self.original)
+        self.assertFalse((self.work / '.local/conducted-result-artifacts').exists())
+
+    def selection_explicit_policy_and_reference_are_mutually_exclusive_before_io(self):
+        self.input_failure(dict(schema_version=1, kind='unique_same_run_sensor_acquisition'), measurement_ref='event:17')
+
+    def selection_policy_requires_closed_native_shape_before_io(self):
+        class NonNative(dict):
+            pass
+        for value in (True, 1, 'unique_same_run_sensor_acquisition', [], {},
+                      dict(schema_version=True, kind='unique_same_run_sensor_acquisition'),
+                      dict(schema_version=1.0, kind='unique_same_run_sensor_acquisition'),
+                      dict(schema_version=1, kind='other'),
+                      dict(schema_version=1, kind='unique_same_run_sensor_acquisition', approved=True),
+                      NonNative(schema_version=1, kind='unique_same_run_sensor_acquisition')):
+            with self.subTest(value_type=type(value).__name__):
+                self.input_failure(value)
+
+
+SELECTION_POLICY = dict(schema_version=1, kind='unique_same_run_sensor_acquisition')
+
+
+class SelectedFinalizerBoundaryTests(_SelectionBoundaryCase):
+    def selected_call(self, **changes):
+        self.assertIn('measurement_selection_policy', inspect.signature(api.finalize_conducted_execution_result).parameters,
+                      'The explicit selection policy boundary has not been implemented')
+        return self.call(measurement_ref=None, measurement_selection_policy=copy.deepcopy(SELECTION_POLICY), **changes)
+
+    def blocked_frame(self, *, with_candidate=False):
+        candidate = None
+        result = None
+        if with_candidate:
+            candidate = dict(request_id='AUTHORED-PROTOCOL-REQUEST', intent_ref='event:11', receipt_ref='event:12',
+                             measurement_ref='event:17', sequence=17)
+            result = json.loads((self.fixtures / 'legacy-none-result.json').read_bytes())
+        return dict(schema_version=1, kind='conducted_measurement_selection', status='blocked', candidate=candidate,
+                    measurement_ref=None, request_id=None,
+                    reasons=[dict(code='authored_protocol_blocked', field='candidate', detail='PROTOCOL_ONLY_NOT_GENUINE_SELECTION')],
+                    result=result, verification=dict(policy='unique_same_run_sensor_acquisition', scope='provided_snapshots_only',
+                        builder_calls=int(with_candidate), fallback_attempted=False, model_execution_verified=False,
+                        hardware_verified=False, physical_verified=False, method_approval='not_assessed',
+                        conformity='not_assessed', execution_authority=False))
+
+    def selection_native_fixed_file_and_close_failure_prevent_selector_and_writer(self):
+        self.assertIn('measurement_selection_policy', inspect.signature(api.finalize_conducted_execution_result).parameters)
+        path = self.evidence / 'caller-request.json'
+        path.write_bytes(path.read_bytes() + b' ')
+        with patch.object(api, '_select_result', side_effect=AssertionError('NO_SELECTOR'), create=True):
+            with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                self.selected_call()
+        self.assertEqual(got.exception.stage, 'read')
+        self.assertIsNone(got.exception.receipt['measurement_selection'])
+        self.load('recorded')
+        close = api._native._WindowsIO.close
+
+        def failed_close(backend):
+            close(backend)
+            raise OSError('AUTHORED_CLOSE_ERROR')
+
+        with patch.object(api._native._WindowsIO, 'close', failed_close), \
+                patch.object(api, '_select_result', side_effect=AssertionError('NO_SELECTOR'), create=True):
+            with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                self.selected_call()
+        self.assertEqual(got.exception.code, 'conducted_execution_result_finalizer_evidence_close_failed')
+        self.assertIsNone(got.exception.receipt['measurement_selection'])
+        self.assertFalse((self.work / '.local/conducted-result-artifacts').exists())
+
+    def selection_blocked_preserves_original_failure_candidate_and_nested_result(self):
+        self.assertIn('measurement_selection_policy', inspect.signature(api.finalize_conducted_execution_result).parameters)
+        self.load('producer_failure')
+        first = copy.deepcopy(self.execution['failure'])
+        for candidate in (False, True):
+            frame = self.blocked_frame(with_candidate=candidate)
+            original = C(frame)
+            with patch.object(api, '_select_result', return_value=frame, create=True), \
+                    patch.object(api, '_build_result', side_effect=AssertionError('NO_EXTRA_BUILD')), \
+                    patch.object(api, '_write_result', side_effect=AssertionError('NO_BLOCKED_WRITE')):
+                with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                    self.selected_call()
+            error = got.exception
+            self.assertEqual(error.code, 'conducted_execution_result_finalizer_measurement_selection_blocked')
+            self.assertEqual(error.stage, 'selection')
+            held = error.receipt
+            self.assertEqual(len(held), 12)
+            self.assertEqual(held['failure'], first)
+            self.assertEqual(held['secondary_errors'][-1], dict(code=error.code, stage='selection'))
+            self.assertEqual(C(held['measurement_selection']), original)
+            self.assertIsNone(held['result'])
+            self.assertIsNone(held['artifact'])
+            self.assertEqual(len(held['input_files']), 5)
+            self.assertEqual(C(self.execution), self.original)
+            frame['reasons'].append(dict(code='caller_mutation', field='', detail=''))
+            self.assertEqual(C(held['measurement_selection']), original)
+            (self.work / ('blocked-' + str(candidate) + '.json')).write_bytes(C(held))
+        self.assertFalse((self.work / '.local/conducted-result-artifacts').exists())
+
+    def selection_controls_keep_identity_and_unexpected_failure_cannot_write(self):
+        self.assertIn('measurement_selection_policy', inspect.signature(api.finalize_conducted_execution_result).parameters)
+        with patch.object(api, '_write_result', side_effect=AssertionError('NO_CONTROL_WRITE')):
+            for control in (KeyboardInterrupt(), SystemExit(9), GeneratorExit(), MemoryError()):
+                with self.subTest(control=type(control).__name__):
+                    with patch.object(api, '_select_result', side_effect=control, create=True):
+                        with self.assertRaises(type(control)) as got:
+                            self.selected_call()
+                    self.assertIs(got.exception, control)
+            with patch.object(api, '_select_result', side_effect=OSError('SECRET_EXCEPTION_SELECTOR'), create=True):
+                with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                    self.selected_call()
+        self.assertEqual(got.exception.code, 'conducted_execution_result_finalizer_measurement_selection_failed')
+        self.assertEqual(got.exception.stage, 'selection')
+        self.assertIsNone(got.exception.receipt['result'])
+        self.assertIsNone(got.exception.receipt['artifact'])
+        self.assertNotIn('SECRET_EXCEPTION', C(got.exception.receipt).decode('utf-8'))
+
+
+    def selection_malformed_or_oversized_dto_never_reaches_writer(self):
+        self.assertIn('measurement_selection_policy', inspect.signature(api.finalize_conducted_execution_result).parameters)
+        missing = self.blocked_frame(); missing.pop('candidate')
+        wrong_version = self.blocked_frame(); wrong_version['schema_version'] = True
+        bad_candidate = self.blocked_frame(); bad_candidate['candidate'] = dict(approved=True)
+        bad_blocked_refs = self.blocked_frame(); bad_blocked_refs['measurement_ref'] = 'event:17'
+        huge = self.blocked_frame(); huge['reasons'][0]['detail'] = 'x' * 2097153
+        class NonNative(dict):
+            pass
+        for frame, suffix in ((missing, 'measurement_selection_invalid'),
+                              (wrong_version, 'measurement_selection_invalid'),
+                              (bad_candidate, 'measurement_selection_invalid'),
+                              (bad_blocked_refs, 'measurement_selection_invalid'),
+                              (huge, 'input_invalid'), (NonNative(self.blocked_frame()), 'input_invalid')):
+            with self.subTest(suffix=suffix):
+                with patch.object(api, '_select_result', return_value=frame), \
+                        patch.object(api, '_build_result', side_effect=AssertionError('NO_EXTRA_BUILD')), \
+                        patch.object(api, '_write_result', side_effect=AssertionError('NO_INVALID_WRITE')):
+                    with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                        self.selected_call()
+                self.assertEqual(got.exception.code, 'conducted_execution_result_finalizer_' + suffix)
+                self.assertEqual(got.exception.stage, 'selection')
+                self.assertIsNone(got.exception.receipt['result'])
+                self.assertIsNone(got.exception.receipt['artifact'])
+        self.assertFalse((self.work / '.local/conducted-result-artifacts').exists())
+
+    def selection_writer_failure_preserves_original_failure_and_selection(self):
+        self.assertIn('measurement_selection_policy', inspect.signature(api.finalize_conducted_execution_result).parameters)
+        self.load('producer_failure')
+        first = copy.deepcopy(self.execution['failure'])
+        result = json.loads((self.fixtures / 'legacy-recorded-result.json').read_bytes())
+        frame = self.blocked_frame(with_candidate=True)
+        frame.update(status='selected', measurement_ref=frame['candidate']['measurement_ref'],
+                     request_id=frame['candidate']['request_id'], reasons=[], result=result)
+        original = C(frame)
+
+        def failed_writer(value, **options):
+            self.assertEqual(C(value), C(result))
+            self.assertEqual(options['expected_result_sha256'], H(C(result)))
+            self.assertEqual(options['run_id'], self.execution['binding']['run_id'])
+            self.assertEqual(options['runtime_instance_id'], self.execution['binding']['runtime_instance_id'])
+            raise OSError('SECRET_EXCEPTION_WRITER')
+
+        with patch.object(api, '_select_result', return_value=frame), \
+                patch.object(api, '_build_result', side_effect=AssertionError('NO_EXTRA_BUILD')), \
+                patch.object(api, '_write_result', side_effect=failed_writer):
+            with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                self.selected_call()
+        error = got.exception
+        self.assertEqual(error.code, 'conducted_execution_result_finalizer_storage_failed')
+        self.assertEqual(error.stage, 'writer')
+        held = error.receipt
+        self.assertEqual(held['failure'], first)
+        self.assertEqual(C(held['measurement_selection']), original)
+        self.assertEqual(C(held['result']), C(result))
+        self.assertIsNone(held['artifact'])
+        self.assertEqual(held['secondary_errors'][-1], dict(code=error.code, stage='writer'))
+        self.assertNotIn('SECRET_EXCEPTION', C(held).decode('utf-8'))
+        self.assertFalse((self.work / '.local/conducted-result-artifacts').exists())
+        (self.work / 'held-writer-protocol.json').write_bytes(C(held))
+
+
+class GenuineSelectedFinalizerTests(_SelectionBoundaryCase):
+    def selection_reuses_one_genuine_result_and_native_storage(self):
+        self.assertIn('measurement_selection_policy', inspect.signature(api.finalize_conducted_execution_result).parameters)
+        # This opt-in cohort is run only after root supplies the frozen selector source.
+        actual_select = api._select_result
+        observed = []
+
+        def select(plan, setup, journal, report):
+            before = C([plan, setup, journal, report])
+            selection = actual_select(plan, setup, journal, report)
+            self.assertEqual(C([plan, setup, journal, report]), before)
+            observed.append(C(selection))
+            return selection
+
+        with patch.object(api, '_select_result', side_effect=select), \
+                patch.object(api, '_build_result', side_effect=AssertionError('NO_SECOND_BUILDER')):
+            receipt = self.call(measurement_ref=None, measurement_selection_policy=copy.deepcopy(SELECTION_POLICY))
+        self.assertEqual(len(observed), 1)
+        self.assertEqual(len(receipt), 12)
+        self.assertEqual(receipt['status'], 'stored')
+        selection = receipt['measurement_selection']
+        self.assertEqual(set(selection), set('schema_version kind status candidate measurement_ref request_id reasons result verification'.split()))
+        self.assertEqual(selection['status'], 'selected')
+        self.assertEqual(selection['measurement_ref'], 'event:17')
+        self.assertEqual(selection['verification']['builder_calls'], 1)
+        self.assertEqual(set(selection['candidate']), set('request_id intent_ref receipt_ref measurement_ref sequence'.split()))
+        self.assertEqual(selection['candidate']['measurement_ref'], selection['measurement_ref'])
+        self.assertEqual(selection['candidate']['request_id'], selection['request_id'])
+        self.assertEqual(C(selection), observed[0])
+        self.assertEqual(C(receipt['result']), C(selection['result']))
+        retained_result = json.loads((self.fixtures / 'legacy-recorded-result.json').read_bytes())
+        self.assertEqual(C(receipt['result']), C(retained_result))
+        self.assertEqual(receipt['result']['raw_measurement']['packet']['power_dbm'], -19.5)
+        self.assertEqual(receipt['result']['calculation']['corrected']['unit'], 'dBm')
+        self.assertEqual(receipt['result']['calculation']['corrected']['value'], 11.0)
+        self.assertEqual(C(receipt['execution_receipt']), self.original)
+        self.assertEqual(C(self.execution), self.original)
+        self.assertFalse(receipt['execution_authority'])
+        self.assertFalse(receipt['verification']['execution_rerun'])
+        self.assertEqual(receipt['artifact']['storage']['status'], 'complete')
+        marker = self.work / receipt['artifact']['storage']['commit_marker']
+        self.assertEqual(H(marker.read_bytes()), receipt['artifact']['storage']['sha256'])
+        for row in receipt['artifact']['files']:
+            raw = (self.work / row['path']).read_bytes()
+            self.assertEqual((len(raw), H(raw)), (row['bytes'], row['sha256']))
+            if row['path'].endswith('/result.json'):
+                self.assertEqual(C(json.loads(raw)), C(selection['result']))
+        (self.work / 'genuine-selected-receipt.json').write_bytes(C(receipt))
+
+
 def prepare_facts_demo(root):
     """Saved synthetic request -> genuine context -> scripted strict analysis -> facts plan."""
     from labflow.active_intake import register_source, scan_source
@@ -462,8 +864,30 @@ def fresh_demo(measurement_ref, *, from_facts=False):
     print(json.dumps(summary,ensure_ascii=False))
 
 
+def _selection_test_names(*classes):
+    return [cls.__name__ + '.' + name for cls in classes for name in cls.__dict__ if name.startswith('selection_')]
+
+
 if __name__ == '__main__':
-    if '--fresh' in sys.argv or '--fresh-from-intake-facts' in sys.argv:
+    if '--selection-contract' in sys.argv:
+        sys.argv.remove('--selection-contract')
+        unittest.main(defaultTest=_selection_test_names(MeasurementSelectionContractTests))
+    elif '--selection-legacy' in sys.argv:
+        sys.argv.remove('--selection-legacy')
+        unittest.main(defaultTest=_selection_test_names(LegacySelectionBoundaryTests))
+    elif '--selection-input' in sys.argv:
+        sys.argv.remove('--selection-input')
+        unittest.main(defaultTest=_selection_test_names(MeasurementSelectionInputTests))
+    elif '--selection-protocol' in sys.argv:
+        sys.argv.remove('--selection-protocol')
+        unittest.main(defaultTest=_selection_test_names(SelectedFinalizerBoundaryTests))
+    elif '--selection-genuine' in sys.argv:
+        sys.argv.remove('--selection-genuine')
+        unittest.main(defaultTest=_selection_test_names(GenuineSelectedFinalizerTests))
+    elif '--selection-boundary' in sys.argv:
+        sys.argv.remove('--selection-boundary')
+        unittest.main(defaultTest=_selection_test_names(MeasurementSelectionInputTests, SelectedFinalizerBoundaryTests, GenuineSelectedFinalizerTests))
+    elif '--fresh' in sys.argv or '--fresh-from-intake-facts' in sys.argv:
         import argparse
         parser = argparse.ArgumentParser()
         modes = parser.add_mutually_exclusive_group(required=True)

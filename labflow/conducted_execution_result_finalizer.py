@@ -21,6 +21,8 @@ _SHA = re.compile(r'[a-f0-9]{64}\Z', re.ASCII)
 _BINDING = set('intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256'.split())
 _TOP = set('schema_version kind status failure binding plan_input loop execution artifacts verification'.split())
 _LOOP = set('schema_version kind run_id status failure declaration budget steps termination evidence_assessment execution cleanup artifacts verification'.split())
+_SELECTION = set('schema_version kind status candidate measurement_ref request_id reasons result verification'.split())
+_CANDIDATE = set('request_id intent_ref receipt_ref measurement_ref sequence'.split())
 _FILES = {
     'request': ('caller-request.json', 262144),
     'setup_snapshot': ('setup-snapshot.json', 1048576),
@@ -277,26 +279,77 @@ def _bind(plan, loop, run, runtime, values, journal):
     _same(values['legacy_events'],journal['events'])
 
 
+def _selection_policy(value, measurement_ref):
+    value = _snapshot(value, limit=1024)
+    if (measurement_ref is not None or type(value) is not dict or set(value) != {'schema_version','kind'}
+            or type(value['schema_version']) is not int or value['schema_version'] != 1
+            or value['kind'] != 'unique_same_run_sensor_acquisition'):
+        _reject('input_invalid')
+
+
+def _select_result(plan, setup, journal, report):
+    # The source-bound selector is loaded only for an explicit policy invocation.
+    from .virtual_fleet.conducted_measurement_selector import select_conducted_measurement
+    return select_conducted_measurement(plan, setup, journal, report)
+
+
+def _selection_result(value):
+    if (type(value) is not dict or set(value) != _SELECTION
+            or type(value['schema_version']) is not int or value['schema_version'] != 1
+            or value['kind'] != 'conducted_measurement_selection' or value['status'] not in ('selected','blocked')
+            or type(value['reasons']) is not list or type(value['verification']) is not dict
+            or type(value['verification'].get('builder_calls')) is not int
+            or value['verification']['builder_calls'] not in (0,1)):
+        _reject('measurement_selection_invalid')
+    candidate = value['candidate']
+    if candidate is not None:
+        if (type(candidate) is not dict or set(candidate) != _CANDIDATE
+                or type(candidate['sequence']) is not int or candidate['sequence'] < 1
+                or any(type(candidate[key]) is not str or not candidate[key] or len(candidate[key])>200
+                       for key in _CANDIDATE-{'sequence'})):
+            _reject('measurement_selection_invalid')
+    if value['status'] == 'blocked':
+        if value['measurement_ref'] is not None or value['request_id'] is not None:
+            _reject('measurement_selection_invalid')
+        _reject('measurement_selection_blocked')
+    if (candidate is None or value['measurement_ref'] != candidate['measurement_ref']
+            or value['request_id'] != candidate['request_id'] or value['verification']['builder_calls'] != 1
+            or type(value['result']) is not dict):
+        _reject('measurement_selection_invalid')
+    return value['result']
+
+
 def finalize_conducted_execution_result(execution_receipt, *, expected_execution_sha256,
-        evidence_dir, measurement_ref=None, workspace_root, artifact_name):
+        evidence_dir, measurement_ref=None, measurement_selection_policy=None, workspace_root, artifact_name):
     """Pin fixed same-run evidence, call genuine builder, and store its unchanged DTO."""
     receipt = dict(schema_version=1,kind='conducted_execution_result_finalizer',status='held',
         execution_receipt=None,input_files={},result=None,artifact=None,failure=None,secondary_errors=[],
         verification=dict(evidence_snapshot_verified=False,recording_mode=None,origin_authenticated=False,
             ai_model_called=None,execution_rerun=False,source_bytes_reopened=False,hardware_verified=False,
             physical_verified=False,full_task_verified=False,method_approval='not_assessed'),execution_authority=False)
+    selected_mode = measurement_selection_policy is not None
+    if selected_mode:
+        receipt['measurement_selection'] = None
     stage = 'input'
     try:
         plan,loop,run,runtime = _adapter(execution_receipt,expected_execution_sha256,receipt)
         if measurement_ref is not None and (type(measurement_ref) is not str or len(measurement_ref)>200):
             _reject('input_invalid')
+        if selected_mode:
+            _selection_policy(measurement_selection_policy, measurement_ref)
         stage = 'read'
         values,journal = _read_inputs(evidence_dir,loop['artifacts'],receipt)
         stage = 'binding'
         _bind(plan,loop,run,runtime,values,journal)
         receipt['verification'].update(evidence_snapshot_verified=True,recording_mode='post_run_from_retained_events')
-        stage = 'builder'
-        result = _build_result(plan,values['setup_snapshot'],journal,values['legacy_report'],measurement_ref=measurement_ref)
+        if selected_mode:
+            stage = 'selection'
+            selection = _snapshot(_select_result(plan,values['setup_snapshot'],journal,values['legacy_report']), limit=2097152)
+            receipt['measurement_selection'] = selection
+            result = _selection_result(selection)
+        else:
+            stage = 'builder'
+            result = _build_result(plan,values['setup_snapshot'],journal,values['legacy_report'],measurement_ref=measurement_ref)
         receipt['result'] = result
         if result['failure'] is not None:
             _note(receipt,result['failure'])
@@ -314,7 +367,7 @@ def finalize_conducted_execution_result(execution_receipt, *, expected_execution
         else:
             code = error.code if isinstance(error,_Reject) else _PREFIX+{
                 'input':'input_invalid','read':'evidence_read_failed','binding':'binding_mismatch',
-                'builder':'builder_failed','writer':'storage_failed'}[stage]
+                'builder':'builder_failed','selection':'measurement_selection_failed','writer':'storage_failed'}[stage]
             item = dict(code=code,stage=stage)
         _note(receipt,item)
         raise ConductedExecutionResultFinalizerError(code,stage,receipt) from None
