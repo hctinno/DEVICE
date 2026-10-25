@@ -305,6 +305,12 @@ def _conducted_artifact_startup(plan, method, finalized, artifact_root):
     return selection
 
 
+def _conducted_readback_inputs(output, selection):
+    """Save already validated startup pins for the optional readonly CLI."""
+    if selection is not None:
+        _conducted_json(output,'readback-inputs.json',{key:value for key,value in selection.items() if key!='intake_id'})
+
+
 def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None, mock_model=None, scenario='normal'):
     """Opt-in authored PDF -> current C1 -> genuine plan/execution/result/DRAFT."""
     if scenario not in _CONDUCTED_SCENARIOS:
@@ -466,6 +472,7 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         selection=_conducted_artifact_startup(plan,method,finalized,artifact_root)
         if selection is not None:server_options['conducted_artifact_readback_inputs']=selection
         _conducted_json(output, 'server-startup-original.json', server_options)
+        _conducted_readback_inputs(output,selection)
         stored = bool(finalized['status'] == 'stored' and artifact and artifact['storage']['status'] == 'complete')
         recorded = bool(result and result['status'] == 'recorded')
         summary.update(status='stored' if stored else 'held', runtime_calls=execution['execution']['trial_factory_calls'],
