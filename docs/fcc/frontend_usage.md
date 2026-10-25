@@ -211,3 +211,25 @@ node frontend/ai_connections/browser_check.cjs
 ```
 
 이 검증은 실제 ADC/인증/모델·실 ledger·현장 장비를 사용하지 않는다. 원 실패/unknown·nullable usage/cost·no-reset/no-refund를 보존하며 실제 최초6과의 근거·분모를 구별한다.
+
+# 제공 캠페인 기록 · 읽기 전용
+
+이 영역은 [공개 UI 설계](../superpowers/specs/2026-10-25-vertex-campaign-readback-ui-design.md)와 [reader 사용법](vertex_campaign_readback_usage.md)의 제공 기록만 표시한다. 등록7 실행 화면과 다른 읽기 경로이며 의미 평가·현재 권한·원본 artifact 검증·실제 회계 반영을 새로 수행하지 않는다. 현재 registry는7개 그대로다.
+
+호스트가 명시적으로 선택한 native tuple2 `(manifest, artifacts)`를 `create_server(..., ai_connection_campaign_readback=(selected_manifest, selected_artifacts))`로 주입한다. artifacts는 source ID→immutable bytes/None의 native dict다. 파일 경로·업로드·URL·자동 탐색·callback을 입력하지 않는다. genuine `build_vertex_connection_campaign_readback`을 listen 전에1회 호출한 뒤 분리된 C1 JSON bytes와 선택 지문만 보존한다. 같은 GET를 반복해도 reader·생성·예약을 다시 수행하지 않는다. caller가 반환 뒤 입력 dict를 바꿔도 cache는 바뀌지 않는다.
+
+`ai_connections=None`과 이 tuple만 주면 readback-only host가 된다. 정상 session/guard/CSRF는 재사용하며 실행 state/auth/policy·D1/D2·worker/producer·Store/DB·승인/원장/ADC는 이 읽기 경로에서 사용하지 않는다. 해당 host는 제공 기록과 기존 정적 자산만 노출하고, 기본 앱의 `/api/intakes` 등 workspace/catalog 경로와 percent-encoded 별칭도503 unconfigured로 닫는다. 기존 실행 host/default host는 그대로다. 두 설정이 모두 None이면 종전 unconfigured, 기존 실행 설정만 있고 tuple이 없으면 캠페인 GET는503이다.
+
+`제공 기록 조회`를 누르면 AI session bootstrap 후 `GET /api/ai-connections/campaign-readback`을 보낸다. body/query는 없으며 기존 loopback Host·same-origin·Fetch·cookie/CSRF·900초 범위를 검사한다. 응답 직전 만료/closing도 다시 확인한다. HTTP200 body는 D3 report9 그대로이고 `X-AI-Campaign-Selection`은 manifest C1의 opaque SHA-256이다. 새 wrapper DTO나 기존 State12/Run16/Cell17의 새 key는 없다. 정상 unknown/issues는 HTTP200이며 원본 누락을 미실행/성공으로 바꾸지 않는다. HEAD/다른 method405·Allow GET, 보호 위반403, 잘못된 GET framing400, 미구성503을 구별한다.
+
+입력 cap은 reader source32/파일1MiB/전체8MiB다. 신규 응답만1MiB/depth32/node40000이고 기존 Session4KiB/State64KiB/Run256KiB 한도는 유지한다. browser10초·서버 socket5초를 사용한다. startup의 입력 형상/cap 실패는 고정 `vertex_campaign_readback_invalid_input` ValueError로 listen 전에 실패한다. 반환 projection 계약 위반/출력 cap도 listener 없이 실패하며 truncate/빈 성공으로 대체하지 않는다. readback-only의 유효 session에 들어온 미구성 POST는32KiB 이하의 명확한 body만 해석 없이 소비하고503으로 닫아 Windows의 unread-body reset을 피한다.
+
+화면 접점은 `#ai-campaign-read/status/summary/cells/issues`, source 영역은 `#ai-campaign-sources`다. 모드를 선택하거나 모델을 실행하는 버튼은 없다. 여섯 축의 종합 상태와 원/effective 상태·해석 출처·선언 origin·원/재생 mode·원/effective generation을 전용 한국어 열로 나란히 표시한다. 나머지20필드의 관측·예약·사용량 근거는 키보드로 펼치는 details에 둔다. 원 연결 없는 replay6와 미실행/coverage5의 **없는 key**는 `제공 항목 없음`, 명시 null은 `미확인(null)`, native0은 `0`으로 구별한다.
+
+history.source_ids는 원/재생/영수증의 통합 참조다. 원/replay별 ID나 개별 competing replay 이력을 복원하지 않는다. 반환 history·issue/source만 표시하며 원 success가 있어도 축 unknown을 덮지 않는다. source.status=valid는 raw/외형 처리 상태이며 모델 성공·권한 검증이 아니다. 선언 bytes/SHA를 현재 파일 검사 결과로 해석하지 않는다.
+
+전체 totals12와 출처별 origin10, usage6의 metric3은 서로 구별한다. 알려진 부분합0/불명 exchange 수0이 전체 사용량0·완결을 뜻하지 않으며 total null을 유지한다. 출처별 참조가 겹칠 수 있어 합산하지 않고 누적 snapshot도 sum/max/latest로 현 잔액에 적용하지 않는다. origin에 없는 new_actual_calls/by_generation_origin을 채우지 않는다. 비용 kind=not_applicable도 금액0이 아니며 amount/currency/price_version·ledger_balance/remaining_capacity는 null이다. `provided_records_only`·권한/기초 자료 검증 false2·업무 품질 미평가는 항상 분리 표시한다.
+
+새 readback parser만 BigInt로 원 int64 및 최대192×int64의 부분합을 보존한다. Number로 반올림하거나 기존 실행 parser/clone에 BigInt를 섞지 않는다. 요청 실패·timeout·잘못된 JSON/header/false 위조·렌더 실패는 같은 session/binding의 마지막 정상 관측을 이전 관측으로 보존한다. 같은 nonce의 선택 지문 변경은 거절한다. 새 nonce는 다음 GET 완료 전에도 옛 scope를 퇴역시키며 hide/BFCache/destroy는 HTTP/timer/늦은 응답을 회수한다. 자동 재조회·재실행·원장 reset/refund는 없다.
+
+합성 검사는 `CampaignReadbackHTTPTests`와 공통 host 검사, Node typed parser, genuine reader→보호 loopback HTTP→production panel의390/1440 DOM으로 구별한다. fixture는 owned 테스트의 새 메모리 선택6종과 공개 shape primitive만 쓰며 실제 producer/decoder/모델 실행 증거가 아니다. 실패 전송/clock/DOM 주입과 기존 typed 실행 UI·선택적 DTO replay는 별도 분모다. `VERTEX_UI_PROOF_ROOT`는 `.local` 아래의 새 증거 namespace이며 모든 쓰기 전512파일/32MiB를 검사한다. 브라우저 helper·한정 화면·정제 report·자원 회수 기록만 남기고 원 temp workspace 전체를 복제하지 않는다.

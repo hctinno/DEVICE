@@ -26,19 +26,82 @@ const keys=(v,names)=>{need(v!==null&&typeof v==='object'&&!Array.isArray(v));co
 const equalList=(v,expected)=>Array.isArray(v)&&v.length===expected.length&&v.every((x,i)=>x===expected[i]);
 const clone=value=>JSON.parse(JSON.stringify(value));
 
-function strictJSON(raw){
-  need(typeof raw==='string'&&new TextEncoder().encode(raw).length<=262144);
+function strictJSON(raw,campaign=false){
+  need(typeof raw==='string'&&new TextEncoder().encode(raw).length<=(campaign?1048576:262144));
   let i=0,nodes=0;const space=()=>{while(/[\x20\t\r\n]/.test(raw[i]||'!'))i++;};
   const string=()=>{const start=i++;while(i<raw.length){if(raw[i]==='\\'){i+=2;continue;}if(raw[i++]==='"'){
     const v=JSON.parse(raw.slice(start,i));need(!/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/u.test(v));return v;}}throw Error();};
-  const value=depth=>{need(depth<=32&&++nodes<=20000);space();const c=raw[i];
+  const value=depth=>{need(depth<=32&&++nodes<=(campaign?40000:20000));space();const c=raw[i];
     if(c==='"')return string();
     if(c==='{'){i++;space();const out=Object.create(null);if(raw[i]==='}'){i++;return out;}while(true){space();need(raw[i]==='"');const key=string();need(!Object.hasOwn(out,key));space();need(raw[i++]===':');out[key]=value(depth+1);space();const end=raw[i++];if(end==='}')return out;need(end===',');}}
     if(c==='['){i++;space();const out=[];if(raw[i]===']'){i++;return out;}while(true){out.push(value(depth+1));space();const end=raw[i++];if(end===']')return out;need(end===',');}}
     for(const [token,v]of[['true',true],['false',false],['null',null]])if(raw.startsWith(token,i)){i+=token.length;return v;}
-    const match=/^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/.exec(raw.slice(i));need(match);i+=match[0].length;const v=Number(match[0]);need(Number.isFinite(v)&&!Object.is(v,-0));if(!/[.eE]/.test(match[0]))need(Number.isSafeInteger(v));return v;
+    const match=/^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/.exec(raw.slice(i));need(match);i+=match[0].length;
+    if(campaign){need(/^(?:0|[1-9]\d{0,21})$/.test(match[0]));return BigInt(match[0]);}
+    const v=Number(match[0]);need(Number.isFinite(v)&&!Object.is(v,-0));if(!/[.eE]/.test(match[0]))need(Number.isSafeInteger(v));return v;
   };
   const result=value(0);space();need(i===raw.length);return result;
+}
+
+const CAMP_ORIGINS=['actual','mock','replay','unknown'],CAMP_STATES=['success','failed','not_run','unknown'];
+const CAMP_ISSUES='missing_source source_pin_mismatch invalid_source_json unsupported_source_version source_shape_invalid binding_mismatch identity_conflict orphan_receipt unlinked_replay replay_binding_mismatch multiple_attempts absent_cell'.split(' ');
+const CAMP_TOTALS='observed_attempts observed_reservations reserved_output_tokens_known generation_post_attempts_known generation_post_attempts_unknown_records generation_post_attempts usage cost ledger_balance remaining_capacity'.split(' ');
+const CAMP_HISTORY='source_ids batch_id run_id original_status effective_status reason_code interpretation_source original_execution_mode replay_execution_mode generation_origin requested_model_id reported_model_version budget_id reservation_id exchange_ref original_generation_post_attempts generation_post_attempts budget_snapshots usage cost'.split(' ');
+const CAMP_INT64=9223372036854775807n,CAMP_AGGREGATE=1770887431076116954944n;
+const campID=v=>typeof v==='string'&&/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/.test(v);
+const campInt=(v,hi=192n,lo=0n)=>typeof v==='bigint'&&v>=lo&&v<=hi;
+function campaignValue(value){return value===undefined?'제공 항목 없음':value===null?'미확인(null)':String(value);}
+
+function parseCampaignReadback(raw){
+  // This validates only the public display projection. D3 alone resolves records,
+  // receipts, replay links, conflicts and arithmetic; the UI never reconstructs them.
+  const v=strictJSON(raw,true);
+  const ids=(a,min=1)=>{need(Array.isArray(a)&&a.length>=min&&a.length<=32);for(let i=0;i<a.length;i++)need(campID(a[i])&&(!i||a[i-1]<a[i]));};
+  const axes=(a,min=1)=>{need(Array.isArray(a)&&a.length>=min&&a.length<=6);for(let i=0;i<a.length;i++)need(campInt(a[i],5n)&&(!i||a[i-1]<a[i]));};
+  const cost=(c,history=false)=>{keys(c,['kind','amount','currency','price_version']);need((history?['unknown','not_applicable']:['unknown']).includes(c.kind)&&c.amount===null&&c.currency===null&&c.price_version===null);};
+  const usage=u=>{keys(u,USAGE);for(const value of Object.values(u))need(nullable(value,x=>campInt(x,CAMP_INT64)));};
+  const issues=list=>{need(Array.isArray(list));for(const issue of list){keys(issue,['code','source_ids','affected_cells']);need(CAMP_ISSUES.includes(issue.code));ids(issue.source_ids,0);axes(issue.affected_cells);}};
+  const totals=(t,whole)=>{
+    keys(t,whole?[...CAMP_TOTALS,'new_actual_calls','by_generation_origin']:CAMP_TOTALS);
+    for(const k of ['observed_attempts','observed_reservations','generation_post_attempts_known','generation_post_attempts_unknown_records'])need(campInt(t[k]));
+    need(campInt(t.reserved_output_tokens_known,98304n)&&nullable(t.generation_post_attempts,campInt)&&t.ledger_balance===null&&t.remaining_capacity===null);
+    keys(t.usage,USAGE);for(const metric of Object.values(t.usage)){keys(metric,['known_subtotal','unknown_exchange_count','total']);need(campInt(metric.known_subtotal,CAMP_AGGREGATE)&&campInt(metric.unknown_exchange_count)&&nullable(metric.total,x=>campInt(x,CAMP_AGGREGATE)));}
+    cost(t.cost);
+    if(whole){need(t.new_actual_calls===0n);keys(t.by_generation_origin,CAMP_ORIGINS);for(const origin of CAMP_ORIGINS)totals(t.by_generation_origin[origin],false);}
+  };
+  keys(v,'schema_version kind campaign_id pair cells totals sources issues assurance'.split(' '));
+  need(v.schema_version===1n&&v.kind==='vertex_connection_campaign_readback'&&campID(v.campaign_id));
+  keys(v.pair,'scenario_id scenario_version evaluator_id evaluator_version prompt_sha256 schema_sha256'.split(' '));
+  need(v.pair.scenario_id==='DGM-AI-CONNECTION-001'&&v.pair.scenario_version===1n&&v.pair.evaluator_id==='connection-json-v1'&&v.pair.evaluator_version===1n&&
+    v.pair.prompt_sha256==='bef332ef64fbf9e916cf4ab37ec344bdffb84136111bfe192cce862969443230'&&v.pair.schema_sha256==='a7b7c8a96d6e8602eef36b6afac804de833dc7566fe386fc158ebe1eac4f47c9');
+  keys(v.assurance,['basis','root_authorization_verified','underlying_artifacts_verified']);need(v.assurance.basis==='provided_records_only'&&v.assurance.root_authorization_verified===false&&v.assurance.underlying_artifacts_verified===false);
+  need(Array.isArray(v.cells)&&v.cells.length===6);
+  for(const [i,c]of v.cells.entries()){
+    keys(c,'row_index model_id thinking_level status history not_run_observations issues'.split(' '));
+    need(c.row_index===BigInt(i)&&c.model_id===MODELS[Math.floor(i/3)]&&c.thinking_level===LEVELS[i%3]&&CAMP_STATES.includes(c.status));
+    need(Array.isArray(c.history)&&Array.isArray(c.not_run_observations)&&c.history.length+c.not_run_observations.length<=32);issues(c.issues);
+    for(const h of c.history){
+      if(h.original_status===null){
+        keys(h,'source_ids original_status effective_status interpretation_source generation_origin replay_execution_mode'.split(' '));
+        need(h.effective_status==='unknown'&&h.interpretation_source==='provided_row_replay'&&h.replay_execution_mode==='replay');
+      }else{
+        keys(h,CAMP_HISTORY);need(CAMP_STATES.includes(h.original_status)&&CAMP_STATES.includes(h.effective_status)&&campID(h.reason_code)&&
+          ['original','provided_row_replay'].includes(h.interpretation_source)&&h.original_execution_mode==='actual'&&[null,'replay'].includes(h.replay_execution_mode));
+        need(campID(h.batch_id)&&campID(h.run_id)&&nullable(h.requested_model_id,x=>MODELS.includes(x))&&
+          nullable(h.reported_model_version,x=>typeof x==='string'&&/^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,255}$/.test(x)&&!(/^[A-Za-z]:\//.test(x)||/^file:/i.test(x))));
+        need(nullable(h.budget_id,campID)&&nullable(h.reservation_id,campID)&&nullable(h.exchange_ref,x=>typeof x==='string'&&/^vertex-exchange:[a-f0-9]{32}$/.test(x))&&
+          nullable(h.original_generation_post_attempts,x=>campInt(x,1n))&&nullable(h.generation_post_attempts,x=>campInt(x,1n)));
+        need(Array.isArray(h.budget_snapshots)&&h.budget_snapshots.length===1);
+        for(const snapshot of h.budget_snapshots){keys(snapshot,['source_ids','reserved_calls','reserved_output_tokens']);ids(snapshot.source_ids);need(nullable(snapshot.reserved_calls,x=>campInt(x,6n))&&nullable(snapshot.reserved_output_tokens,x=>campInt(x,3072n)));}
+        if(h.usage!==null)usage(h.usage);cost(h.cost,true);
+      }
+      ids(h.source_ids);need(CAMP_ORIGINS.includes(h.generation_origin));
+    }
+    for(const n of c.not_run_observations){keys(n,['source_ids','batch_id','run_id','reason_code','generation_origin']);ids(n.source_ids);need(campID(n.batch_id)&&campID(n.run_id)&&campID(n.reason_code)&&CAMP_ORIGINS.includes(n.generation_origin));}
+  }
+  totals(v.totals,true);need(Array.isArray(v.sources)&&v.sources.length<=32);
+  for(const source of v.sources){keys(source,'source_id format bytes sha256 generation_origin affected_cells status'.split(' '));need(campID(source.source_id)&&['batch','row','receipt'].includes(source.format)&&campInt(source.bytes,1048576n,1n)&&typeof source.sha256==='string'&&SHA.test(source.sha256)&&CAMP_ORIGINS.includes(source.generation_origin)&&['valid','missing','invalid'].includes(source.status));axes(source.affected_cells);need(source.affected_cells.length===(source.format==='batch'?6:1));}
+  issues(v.issues);return v;
 }
 
 function validateProfile(v){
@@ -127,9 +190,10 @@ export function createAIConnectionPanel(root){
   let alive=true,visible=false,csrf=null,sessionBinding=null,epoch=0,poll=null,busy=false,current=null,good=null,run=null,previous=null,draft=null,message='연결 설정을 조회하지 않았습니다.';
   let runModel=MODELS[1],runModelEdited=false,scenario='',overrides={thinking_level:'',max_output_tokens:'',timeout_seconds:''};
   let painted=null;
+  let campaignGood=null,campaignStale=true,campaignBusy=false,campaignEpoch=0,campaignMessage='제공 기록은 버튼을 눌러 조회합니다.';
   const requests=new Set();
   const el=(tag,text='',className='')=>{const n=document.createElement(tag);n.textContent=text;if(className)n.className=className;return n;};
-  const stop=()=>{epoch++;clearTimeout(poll);poll=null;for(const c of requests)c.abort();requests.clear();};
+  const stop=()=>{epoch++;campaignEpoch++;if(campaignBusy||campaignGood)campaignMessage='조회 수명 변경으로 중지했습니다. 이전 관측은 현재 조회 결과가 아닙니다.';campaignBusy=false;if(campaignGood)campaignStale=true;clearTimeout(poll);poll=null;for(const c of requests)c.abort();requests.clear();};
   const field=(label,id,input)=>{const box=el('label',label,'ai-field');input.id=id;box.htmlFor=id;box.append(input);return box;};
   const select=(options,value,change)=>{const s=el('select');for(const [v,label]of options){const o=el('option',label);o.value=v;s.append(o);}s.value=value;s.addEventListener('change',()=>change(s.value));return s;};
   const input=(value,change)=>{const n=el('input');n.type='number';n.step='any';n.value=String(value);n.addEventListener('input',()=>change(n.value));return n;};
@@ -144,6 +208,74 @@ export function createAIConnectionPanel(root){
       const usage=el('td',`비용 미확인\n${c.usage===null?'사용량 미제공':USAGE.map(k=>`${k}: ${c.usage[k]??'미제공'}`).join('\n')}`);row.append(usage);const source=el('td');
       if(c.settings){const details=el('details'),summary=el('summary','적용 설정 보기');details.append(summary);for(const k of ['profile_revision','model_id','thinking_level','max_output_tokens','timeout_seconds','profile_sha256','settings_sha256'])details.append(el('p',`${k}: ${c.settings[k]}`));if(c.reported_model_version!==null)details.append(el('p',`공급자 modelVersion 선언: ${c.reported_model_version}`));if(c.response_id!==null)details.append(el('p',`공급자 responseId: ${c.response_id}`));source.append(details);}else source.append(el('span','미선택 · 설정 없음'));row.append(source);body.append(row);}
     table.append(body);scroll.append(table);area.append(scroll);return area;
+  }
+  function renderCampaign(){
+    const area=el('section','','ai-execution');area.id='ai-campaign';area.append(el('h3','제공 캠페인 기록 · 읽기 전용'));
+    const status=el('p',campaignMessage,'ai-status');status.id='ai-campaign-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+    area.append(status,button('제공 기록 조회','ai-campaign-read',readCampaign,busy||campaignBusy));
+    area.append(el('p','제공된 기록의 해석 · 업무 품질 미평가. 인증 메타데이터 사전 점검과 현재 실행 결과는 별도입니다.','inline-note'));
+    if(!campaignGood)return area;
+    const report=campaignGood.report;
+    if(campaignStale)area.append(el('p','이전 관측 · 현재 조회 미확인. 이 기록을 현재 권한이나 원본 검증으로 승격하지 않습니다.','ai-warning'));
+    area.append(el('p',`캠페인 ${report.campaign_id}\n선택 지문 ${campaignGood.selection}`,'mono'));
+    area.append(el('p','provided_records_only · 권한 확인 미검증(false) · 기초 자료 검증 미검증(false)','ai-warning'));
+    area.append(el('p','원 기록 모드 actual은 실제 호출 인증이 아닙니다. 제공 재생 해석은 새 시도·예약·생성을 만들지 않습니다.','inline-note'));
+    const stateLabel=value=>value===undefined?campaignValue(value):value===null?'원 연결 없음(null)':({success:'기록 성공',failed:'기록 실패',not_run:'미실행 관측',unknown:'판단 불명'}[value]||campaignValue(value));
+    const originLabel=value=>({actual:'실제 선언(actual)',mock:'모의 선언(mock)',replay:'재생 선언(replay)',unknown:'출처 불명(unknown)'}[value]||campaignValue(value));
+    const usageLabels=['프롬프트 토큰','응답 토큰','전체 토큰','추론 토큰','캐시 토큰','도구 프롬프트 토큰'];
+    const labels=(node,items)=>{for(const [label,value]of items)node.append(el('p',label+': '+campaignValue(value)));};
+    const refs=values=>values===undefined?undefined:values.length?values.join(', '):'없음';
+    const axisRefs=values=>values.map(i=>`${MODELS[Math.floor(Number(i)/3)]} ${LEVELS[Number(i)%3]}`).join(', ');
+    const table=(caption,headings,rows)=>{
+      const scroll=el('div','','ai-table-scroll'),t=el('table'),head=el('tr'),body=el('tbody');t.append(el('caption',caption));
+      for(const title of headings){const th=el('th',title);th.scope='col';head.append(th);}const th=el('thead');th.append(head);t.append(th);
+      for(const values of rows){const row=el('tr');for(const value of values){const td=el('td');if(value&&typeof value==='object'&&value.nodeType)td.append(value);else td.textContent=campaignValue(value);row.append(td);}body.append(row);}
+      t.append(body);scroll.append(t);return {scroll,body};
+    };
+    const issueLabels=['선택 원본 누락','원본 지문 불일치','원본 JSON 무효','미지원 원본 버전','원본 형상 무효','연결 정보 불일치','식별/상충 기록 충돌','연결 없는 영수증','원 연결 없는 재생','재생 연결 불일치','같은 축의 여러 시도','해당 축 기록 없음'];
+    const issueTable=(caption,items)=>table(caption,['문제','관측 참조','영향 축'],items.map(i=>[`${issueLabels[CAMP_ISSUES.indexOf(i.code)]} (${i.code})`,refs(i.source_ids),axisRefs(i.affected_cells)])).scroll;
+    const cells=el('section');cells.id='ai-campaign-cells';const axes=table('6개 축의 종합 기록 상태',['모델·추론','축 종합 기록 상태','제공된 문제 코드'],report.cells.map(c=>[`${c.model_id} ${c.thinking_level}`,stateLabel(c.status),c.issues.map(i=>i.code).join(', ')||'없음']));
+    for(const [i,row]of [...axes.body.children].entries())row.dataset.campaignAxis=String(i);cells.append(axes.scroll);
+    for(const c of report.cells){
+      const group=el('section','','ai-execution');group.append(el('h4',`${c.model_id} ${c.thinking_level} · ${stateLabel(c.status)}`));
+      if(c.history.length){
+        const rows=c.history.map(h=>{
+          const evidence=el('details');evidence.append(el('summary',h.original_status===null?'원 연결 없는 제공 재생':'관측·예약·사용량 근거'));
+          labels(evidence,[['관측 참조(통합)',refs(h.source_ids)],['원 배치 ID',h.batch_id],['원 행 ID',h.run_id],['원 행 사유',h.reason_code],['요청 모델',h.requested_model_id],['공급자 보고 모델',h.reported_model_version],['관측 예산 참조',h.budget_id],['관측 예약 참조',h.reservation_id],['연결 exchange 참조',h.exchange_ref]]);
+          evidence.append(el('p','관측 참조는 원 행·연결 재생·영수증의 통합 집합입니다. 원/replay별 ID를 추정하지 않습니다.','inline-note'));
+          if(h.budget_snapshots){
+            evidence.append(el('h5','누적 예약 스냅샷 · 합산/현재 잔액 추정 없음'));
+            for(const s of h.budget_snapshots)labels(evidence,[['스냅샷 관측 참조',refs(s.source_ids)],['누적 호출 예약',s.reserved_calls],['누적 출력 예약',s.reserved_output_tokens]]);
+          }else labels(evidence,[['누적 예약 스냅샷',undefined]]);
+          if(h.usage)for(const [i,key]of USAGE.entries())labels(evidence,[[`해당 관측 ${usageLabels[i]}`,h.usage[key]]]);
+          else labels(evidence,[['해당 관측 사용량',h.usage]]);
+          if(h.cost)labels(evidence,[['비용 상태',h.cost.kind],['금액',h.cost.amount],['통화',h.cost.currency],['가격 버전',h.cost.price_version]]);
+          else labels(evidence,[['비용 상태',undefined]]);
+          return [stateLabel(h.original_status),stateLabel(h.effective_status),h.interpretation_source==='original'?'원 기록':'제공 row 재생 해석',originLabel(h.generation_origin),`${campaignValue(h.original_execution_mode)} / ${h.replay_execution_mode===null?'적용 재생 없음(null)':campaignValue(h.replay_execution_mode)}`,h.original_generation_post_attempts,h.generation_post_attempts,evidence];
+        });
+        const history=table('원 시도·제공 재생 이력',['원 기록 상태','제공 해석 후 상태','해석 출처','선언된 생성 출처','원 / 적용 재생 모드','원 생성 시도','해석 후 생성 시도','관측 근거'],rows);
+        for(const [i,row]of [...history.body.children].entries())row.dataset.campaignHistory=c.history[i].original_status===null?'unlinked':'original';group.append(history.scroll);
+      }else group.append(el('p','반환된 원 시도·재생 이력 없음'));
+      if(c.not_run_observations.length)group.append(table('미실행·coverage 관측',['관측 참조','원 배치 ID','원 행 ID','원 사유','선언 출처'],c.not_run_observations.map(n=>[refs(n.source_ids),n.batch_id,n.run_id,(n.reason_code==='not_selected'?'미선택 coverage · ':'호출 전 중단 사유 · ')+n.reason_code,originLabel(n.generation_origin)])).scroll);
+      if(c.issues.length)group.append(issueTable('해당 축의 문제',c.issues));cells.append(group);
+    }
+    cells.append(el('p','상충 재생의 개별 상세가 모두 별도 history로 제공되지는 않습니다. 반환된 이력과 문제·source 참조만 표시합니다.','inline-note'));area.append(cells);
+    const summary=el('section','','ai-execution');summary.id='ai-campaign-summary';summary.append(el('h4','제공 관측 집계'));
+    const showTotals=(t,title,whole)=>{
+      summary.append(table(title,['항목','제공 값'],[
+        ['관측 고유 시도 수',t.observed_attempts],['관측 고유 예약 수',t.observed_reservations],['예약 설정 cap의 알려진 부분합',t.reserved_output_tokens_known],
+        ['생성 시도의 알려진 부분합',t.generation_post_attempts_known],['생성 시도 불명 관측 수',t.generation_post_attempts_unknown_records],['생성 시도 전체 합',t.generation_post_attempts],
+        ['현재 원장 잔액',t.ledger_balance],['현재 잔여 실행량',t.remaining_capacity],...(whole?[['reader의 새 실제 호출',t.new_actual_calls]]:[])]).scroll);
+      summary.append(table(title+' · 사용량',['사용량 필드','알려진 부분합','사용량 불명 exchange 수','전체 합'],USAGE.map((key,i)=>[usageLabels[i],t.usage[key].known_subtotal,t.usage[key].unknown_exchange_count,t.usage[key].total])).scroll);
+      labels(summary,[['집계 비용 상태',t.cost.kind],['집계 금액',t.cost.amount],['집계 통화',t.cost.currency],['집계 가격 버전',t.cost.price_version]]);
+    };
+    showTotals(report.totals,'전체 제공 관측 · 실제 공급자 호출 총량 아님',true);
+    for(const origin of CAMP_ORIGINS)showTotals(report.totals.by_generation_origin[origin],'선언된 생성 출처별 · '+originLabel(origin),false);
+    summary.append(el('p','알려진 부분합 0은 전체 사용량 0의 증거가 아닙니다. 불명 exchange 수 0도 완결 증거가 아니며 전체 합 null을 유지합니다. 출처별 참조는 겹칠 수 있어 합산하지 않습니다. 누적 스냅샷·예약을 차감하거나 현 잔액/비용을 추정하지 않습니다. not_applicable도 금액 0이 아닙니다.','inline-note'));area.append(summary);
+    const sources=el('section','','ai-execution');sources.id='ai-campaign-sources';sources.append(el('h4','제공 source 처리 상태'));
+    sources.append(el('p','source의 처리 유효(valid)는 모델 성공을 뜻하지 않습니다. 연결/식별 문제는 축 종합 상태와 issues를 함께 보세요. 크기와 raw 지문은 manifest 선언값입니다.','ai-warning'));
+    sources.append(table('선택 source',['제공 source ID','기록 형식','선언 크기','선언 raw 지문','선언 출처','영향 축','source 처리 상태'],report.sources.map(s=>[s.source_id,s.format,s.bytes,s.sha256,originLabel(s.generation_origin),axisRefs(s.affected_cells),({valid:'처리 유효(valid)',missing:'누락(missing)',invalid:'처리 무효(invalid)'})[s.status]])).scroll);area.append(sources);
+    const issues=el('section','','ai-execution');issues.id='ai-campaign-issues';issues.append(issueTable('제공 기록 전체의 문제',report.issues));area.append(issues);return area;
   }
   function paint(){
     if(!alive)return;
@@ -176,17 +308,20 @@ export function createAIConnectionPanel(root){
     }
     if(run)fragment.append(renderResult(run,'현재 실행 관측'));
     if(previous&&(!run||previous.run_id!==run.run_id))fragment.append(renderResult(previous,'이전 성공 관측 · 현재 실행 결과와 별도'));
-    root.replaceChildren(fragment);root.classList.add('ai-connection-panel');root.setAttribute('aria-busy',String(busy));
+    fragment.append(renderCampaign());
+    root.replaceChildren(fragment);root.classList.add('ai-connection-panel');root.setAttribute('aria-busy',String(busy||campaignBusy));
     if(focus){const target=root.querySelector('#'+focus);target?.focus({preventScroll:true});if(typeof selection==='number'&&target?.type==='text')target.setSelectionRange(selection,selection);}
   }
   function render(){
-    try{paint();painted={good,current,run,previous,draft};}
+    try{paint();painted={good,current,run,previous,draft,campaignGood};}
     catch{
       stop();busy=false;
-      if(painted){good=painted.good;run=painted.run;previous=painted.previous;draft=painted.draft;}
+      if(painted){good=painted.good;run=painted.run;previous=painted.previous;draft=painted.draft;campaignGood=painted.campaignGood;}
+      campaignStale=true;campaignMessage='화면 준비 실패 · 이전 관측과 입력을 보존했습니다. 명시 조회로 확인하세요.';
       current=null;message='화면을 준비하지 못했습니다. 이전 관측과 입력을 보존했습니다. 명시 새로고침으로 확인하세요.';
       const status=root.querySelector('#ai-status');if(status)status.textContent=message;
-      for(const control of root.querySelectorAll('button'))control.setAttribute('aria-disabled',String(control.id!=='ai-refresh'));
+      const campaignStatus=root.querySelector('#ai-campaign-status');if(campaignStatus)campaignStatus.textContent=campaignMessage;
+      for(const control of root.querySelectorAll('button'))control.setAttribute('aria-disabled',String(!['ai-refresh','ai-campaign-read'].includes(control.id)));
     }
   }
   async function http(path,method='GET',body=null){
@@ -195,21 +330,28 @@ export function createAIConnectionPanel(root){
       const headers={};if(path!=='session'){need(csrf!==null);headers['X-AI-Connection-CSRF']=csrf;}if(body!==null)headers['Content-Type']='application/json';
       const response=await fetch(BASE+path,{method,headers,body:body===null?undefined:JSON.stringify(body),cache:'no-store',credentials:'same-origin',redirect:'error',signal:controller.signal});
       need(/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(response.headers.get('content-type')||''));
-      const maximum=path==='session'?4096:path==='state'||path==='profile'?65536:262144;
+      const maximum=path==='session'?4096:path==='campaign-readback'?1048576:path==='state'||path==='profile'?65536:262144;
       const declared=response.headers.get('content-length');if(declared!==null)need(/^\d+$/.test(declared)&&Number(declared)<=maximum);
       const reader=response.body.getReader(),decoder=new TextDecoder('utf-8',{fatal:true});let size=0,raw='';
       try{while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>maximum){await reader.cancel();throw Error();}raw+=decoder.decode(part.value,{stream:true});}raw+=decoder.decode();}finally{reader.releaseLock();}
       need(valid(requestEpoch));
       if(!response.ok){const error=strictJSON(raw);keys(error,['error']);keys(error.error,['code']);need(typeof error.error.code==='string'&&/^ai_connection_ui_[a-z_]+$/.test(error.error.code));if(response.status===403)csrf=null;throw Error(error.error.code);}
+      if(path==='campaign-readback'){
+        const selection=response.headers.get('x-ai-campaign-selection');need(typeof selection==='string'&&SHA.test(selection));
+        return {report:parseCampaignReadback(raw),selection}; // Private transport context, never a wire DTO.
+      }
       const kind=path==='session'?'session':path==='state'||path==='profile'?'state':'run';const value=parseDTO(raw,kind);
       if(path==='session'){
         const token=response.headers.get('x-ai-connection-csrf');need(typeof token==='string'&&SHA.test(token));
-        if(sessionBinding!==null&&sessionBinding!==token){
+        const changed=sessionBinding!==null&&sessionBinding!==token;
+        if(changed){
           run=previous=null;current=null;
+          campaignGood=null;campaignStale=true;campaignMessage='새 세션입니다. 제공 기록을 명시 조회하세요.';
           if(good)good={...good,active_run_id:null,recent_runs:[]};
-          if(painted)painted={...painted,current:null,good,run:null,previous:null};
+          if(painted)painted={...painted,current:null,good,run:null,previous:null,campaignGood:null};
         }
         sessionBinding=csrf=token;
+        if(changed)render();
       }
       return value;
     }finally{clearTimeout(timer);requests.delete(controller);}
@@ -220,6 +362,18 @@ export function createAIConnectionPanel(root){
     run=value;if(value.state==='finished'&&!value.error_code)previous=value;
   }
   function schedule(){clearTimeout(poll);if(alive&&visible&&run&&run.state!=='finished')poll=setTimeout(()=>void pollRun(),1000);}
+  async function readCampaign(){
+    if(!alive||!visible||busy||campaignBusy)return;
+    const token=++campaignEpoch,lifetime=epoch;campaignBusy=true;campaignStale=true;campaignMessage='제공 기록을 조회하고 있습니다.';render();
+    if(!valid(lifetime)||token!==campaignEpoch)return;
+    try{
+      await http('session');if(!valid(lifetime)||token!==campaignEpoch)return;
+      const value=await http('campaign-readback');if(!valid(lifetime)||token!==campaignEpoch)return;
+      need(!campaignGood||campaignGood.session!==sessionBinding||campaignGood.selection===value.selection);
+      campaignGood={...value,session:sessionBinding};campaignStale=false;campaignMessage='제공 캠페인 기록을 조회했습니다. 업무 품질·실제 권한은 미평가/미검증입니다.';render();
+    }catch{if(valid(lifetime)&&token===campaignEpoch){campaignStale=true;campaignMessage='제공 기록 조회 실패 · 이전 관측을 보존합니다. 현재 조회는 미확인입니다.';}}
+    finally{if(valid(lifetime)&&token===campaignEpoch){campaignBusy=false;render();}}
+  }
   async function pollRun(){const token=epoch,id=run?.run_id;if(!id||!valid(token))return;let terminalObserved=false;
     try{const value=await http('runs/'+id);if(!valid(token)||run?.run_id!==id)return;publishRun(value);message='실행 상태를 확인했습니다.';
       if(value.state==='finished'){
@@ -236,7 +390,7 @@ export function createAIConnectionPanel(root){
     try{await http('session');if(!valid(token))return;const next=await http('state');if(!valid(token))return;
       current=good=next;if(!draft||draft.revision!==next.profile.revision)draft=clone(next.profile);if(!runModelEdited)runModel=next.profile.selected_model;if(!scenario||!next.scenarios.some(s=>s.scenario_id===scenario))scenario=next.scenarios[0]?.scenario_id||'';
       if(next.active_run_id){const value=await http('runs/'+next.active_run_id);if(!valid(token))return;publishRun(value);}message='연결 상태를 조회했습니다. 모델 실행은 버튼으로 요청합니다.';
-    }catch{if(valid(token)){current=null;message='연결 상태 조회 실패 · 이전 관측을 보존합니다. 기능 설정과 연결을 확인하세요.';}}
+    }catch(error){if(valid(token)){current=null;message=error.message==='ai_connection_ui_unconfigured'?'연결 설정 미구성 · 제공 기록은 아래에서 별도로 조회할 수 있습니다.':'연결 상태 조회 실패 · 이전 관측을 보존합니다. 기능 설정과 연결을 확인하세요.';}}
     finally{if(valid(token)){busy=false;render();schedule();}}
   }
   async function save(){
@@ -268,7 +422,7 @@ export function createAIConnectionPanel(root){
   const show=()=>{if(!alive)return;root.hidden=false;if(visible)return;visible=true;render();void refresh();};
   const suspend=()=>{if(!alive)return;stop();csrf=null;current=null;busy=false;message='화면 수명 변경으로 조회를 중지했습니다. 다시 표시한 뒤 명시 새로고침으로 확인하세요.';if(visible)render();};
   const pagehide=e=>{if(e.persisted)suspend();else destroy();};
-  function destroy(){if(!alive)return;hide();alive=false;csrf=sessionBinding=null;current=good=run=previous=draft=null;root.replaceChildren();window.removeEventListener('pagehide',pagehide);window.removeEventListener('pageshow',suspend);}
+  function destroy(){if(!alive)return;hide();alive=false;csrf=sessionBinding=null;current=good=run=previous=draft=campaignGood=null;root.replaceChildren();window.removeEventListener('pagehide',pagehide);window.removeEventListener('pageshow',suspend);}
   window.addEventListener('pagehide',pagehide);window.addEventListener('pageshow',suspend);
   return Object.freeze({show,hide,refresh,destroy});
 }

@@ -1386,14 +1386,23 @@ def _reference_dispatch(handler, runtime):
 def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None,
                   intake_reference_store=None, intake_reference_read_scope=(),
                   intake_reference_append_scope=(), intake_reference_review_inputs=(),
-                  intake_test_intent_inputs=(), intake_docx_reference_selection=None, ai_connections=None):
+                  intake_test_intent_inputs=(), intake_docx_reference_selection=None, ai_connections=None,
+                  ai_connection_campaign_readback=None):
     ai_runtime = ai_server_wrapper = None
-    if ai_connections is not None:
+    if ai_connections is not None or ai_connection_campaign_readback is not None:
         ai_module = importlib.import_module('.ai_connection_ui', __package__)
-        ai_runtime = ai_module.AIConnectionRuntime(ai_connections)
+        ai_runtime = ai_module.AIConnectionRuntime(ai_connections, campaign_readback=ai_connection_campaign_readback)
         ai_server_wrapper = ai_module.wrap_ai_server
 
+    readback_only = ai_connections is None and ai_connection_campaign_readback is not None
+
     def ai_dispatch(handler):
+        if readback_only and not handler.path.startswith('/api/ai-connections/') and handler.path not in ASSETS:
+            # A supplied-record host must not fall through to workspace/DB reads,
+            # including percent-encoded aliases of the ordinary intake routes.
+            handler.close_connection = True
+            handler.error(503, 'ai_connection_ui_unconfigured')
+            return True
         if not handler.path.startswith('/api/ai-connections/'):
             return False
         if ai_runtime is None:

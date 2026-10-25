@@ -9,7 +9,7 @@ let api=null;
 if(fs.existsSync(file)){
   const context=vm.createContext({TextEncoder,TextDecoder,URL,setTimeout,clearTimeout});
   vm.runInContext(fs.readFileSync(file,'utf8').replace('export function createAIConnectionPanel','function createAIConnectionPanel')+
-    '\nglobalThis.testAPI={parseDTO,requestFor,createAIConnectionPanel,admitStart:typeof admitStart==="function"?admitStart:null,scenarioInfo:typeof scenarioInfo==="function"?scenarioInfo:null};',context);
+    '\nglobalThis.testAPI={parseDTO,requestFor,createAIConnectionPanel,admitStart:typeof admitStart==="function"?admitStart:null,scenarioInfo:typeof scenarioInfo==="function"?scenarioInfo:null,parseCampaign:typeof parseCampaignReadback==="function"?parseCampaignReadback:null,campaignValue:typeof campaignValue==="function"?campaignValue:null};',context);
   api=context.testAPI;
 }
 const requireAPI=()=>assert.ok(api,'assigned AI connection panel module is absent');
@@ -111,4 +111,58 @@ test('unsupported catalog metadata can be displayed but unknown row reasons and 
   assert.equal(decode(s).scenarios.length,2);
   const v=run();v.cells[4].reason_code='unregistered_reason';assert.throws(()=>decode(v,'run'));
   v.cells[4].reason_code='connection_verified';v.cells[4].quality='pass';assert.throws(()=>decode(v,'run'));
+});
+
+const campaignUsage='prompt_token_count candidates_token_count total_token_count thoughts_token_count cached_content_token_count tool_use_prompt_token_count'.split(' ');
+const campaignCost=()=>({kind:'unknown',amount:null,currency:null,price_version:null});
+const campaignTotals=()=>({observed_attempts:1,observed_reservations:1,reserved_output_tokens_known:256,generation_post_attempts_known:1,generation_post_attempts_unknown_records:0,generation_post_attempts:null,
+  usage:Object.fromEntries(campaignUsage.map(k=>[k,{known_subtotal:0,unknown_exchange_count:0,total:null}])),cost:campaignCost(),ledger_balance:null,remaining_capacity:null});
+const campaign=()=>{
+  const history={source_ids:['source-a'],batch_id:'BATCH-A',run_id:'RUN-A',original_status:'unknown',effective_status:'success',reason_code:'receipt_invalid',interpretation_source:'provided_row_replay',original_execution_mode:'actual',replay_execution_mode:'replay',generation_origin:'mock',requested_model_id:models[0],reported_model_version:'publishers/google/models/reported-version',budget_id:'BUDGET-A',reservation_id:'RES-A',exchange_ref:'vertex-exchange:'+'a'.repeat(32),original_generation_post_attempts:null,generation_post_attempts:1,
+    budget_snapshots:[{source_ids:['source-a'],reserved_calls:1,reserved_output_tokens:256}],usage:Object.fromEntries(campaignUsage.map(k=>[k,k==='total_token_count'?'UNSAFE_INT64':null])),cost:campaignCost()};
+  const totals={...campaignTotals(),new_actual_calls:0,by_generation_origin:Object.fromEntries(['actual','mock','replay','unknown'].map(k=>[k,campaignTotals()]))};
+  totals.usage.total_token_count.known_subtotal='UNSAFE_AGGREGATE';
+  return {schema_version:1,kind:'vertex_connection_campaign_readback',campaign_id:'UI-SYN-CAMPAIGN',pair:{scenario_id:'DGM-AI-CONNECTION-001',scenario_version:1,evaluator_id:'connection-json-v1',evaluator_version:1,prompt_sha256:'bef332ef64fbf9e916cf4ab37ec344bdffb84136111bfe192cce862969443230',schema_sha256:'a7b7c8a96d6e8602eef36b6afac804de833dc7566fe386fc158ebe1eac4f47c9'},
+    cells:Array.from({length:6},(_,i)=>({row_index:i,model_id:models[Math.floor(i/3)],thinking_level:['LOW','MEDIUM','HIGH'][i%3],status:'unknown',history:i===0?[history]:[],not_run_observations:[],issues:[]})),totals,
+    sources:[{source_id:'source-a',format:'row',bytes:100,sha256:'a'.repeat(64),generation_origin:'mock',affected_cells:[0],status:'valid'}],issues:[],assurance:{basis:'provided_records_only',root_authorization_verified:false,underlying_artifacts_verified:false}};
+};
+const campaignRaw=v=>JSON.stringify(v).replaceAll('"UNSAFE_INT64"','9223372036854775807').replaceAll('"UNSAFE_AGGREGATE"','1770887431076116954944');
+const campaignAPI=()=>{requireAPI();assert.equal(typeof api.parseCampaign,'function','missing isolated campaign parser');};
+
+test('campaign integers retain int64 and192-times-int64 precision without widening existing run parsing',()=>{
+  campaignAPI();const result=api.parseCampaign(campaignRaw(campaign()));
+  assert.equal(String(result.cells[0].history[0].usage.total_token_count),'9223372036854775807');
+  assert.equal(String(result.totals.usage.total_token_count.known_subtotal),'1770887431076116954944');
+  assert.equal(result.totals.usage.total_token_count.total,null);assert.equal(result.totals.usage.total_token_count.unknown_exchange_count,0n);
+  assert.equal(result.cells[0].status,'unknown');assert.equal(result.cells[0].history[0].effective_status,'success');
+  assert.equal(result.sources[0].status,'valid');assert.throws(()=>api.parseDTO('{"unsafe":9007199254740993}','state'));
+});
+
+test('campaign projection distinguishes unlinked6 and coverage5 from missing normal20 fields',()=>{
+  campaignAPI();const v=campaign();v.cells[0].history=[{source_ids:['source-a'],original_status:null,effective_status:'unknown',interpretation_source:'provided_row_replay',generation_origin:'mock',replay_execution_mode:'replay'}];
+  v.cells[1].not_run_observations=[{source_ids:['source-a'],batch_id:'BATCH-A',run_id:'RUN-A',reason_code:'not_selected',generation_origin:'mock'}];
+  const result=api.parseCampaign(campaignRaw(v));assert.equal(Object.hasOwn(result.cells[0].history[0],'usage'),false);
+  v.cells[0].history[0].usage=null;assert.throws(()=>api.parseCampaign(campaignRaw(v)));
+  const normal=campaign();delete normal.cells[0].history[0].budget_id;assert.throws(()=>api.parseCampaign(campaignRaw(normal)));
+});
+
+test('campaign parser refuses authority promotion, invented origin fields and invalid native numeric forms',()=>{
+  campaignAPI();
+  for(const change of [v=>v.assurance.root_authorization_verified=true,v=>v.schema_version=true,v=>v.totals.by_generation_origin.actual.new_actual_calls=0,v=>v.sources[0].status='success',v=>v.cells[0].history[0].budget_snapshots[0].reserved_calls=true]){
+    const v=campaign();change(v);assert.throws(()=>api.parseCampaign(campaignRaw(v)));
+  }
+  for(const token of ['1.0','1e0','-0'])assert.throws(()=>api.parseCampaign(campaignRaw(campaign()).replace('"schema_version":1','"schema_version":'+token)));
+  const long=campaign();long.campaign_id='X'.repeat(128);assert.equal(api.parseCampaign(campaignRaw(long)).campaign_id.length,128);long.campaign_id+='X';assert.throws(()=>api.parseCampaign(campaignRaw(long)));
+});
+
+test('campaign malformed JSON and transport caps cannot replace last-good data',()=>{
+  campaignAPI();const raw=campaignRaw(campaign());
+  for(const bad of [raw+'{}',raw.replace('"schema_version":1','"schema_version":1,"schema_version":1'),raw.replace('"ledger_balance":null','"ledger_balance":NaN'),' '.repeat(1048577)])assert.throws(()=>api.parseCampaign(bad));
+});
+
+test('campaign display values keep missing, null, native0 and false separate',()=>{
+  requireAPI();assert.equal(typeof api.campaignValue,'function');
+  assert.equal(api.campaignValue(undefined),'제공 항목 없음');assert.equal(api.campaignValue(null),'미확인(null)');
+  assert.equal(api.campaignValue(0n),'0');assert.equal(api.campaignValue(false),'false');
+  assert.equal(api.campaignValue(1770887431076116954944n),'1770887431076116954944');
 });
