@@ -37,6 +37,10 @@ expected_producer는 정확히 `{"kind":"model","name":producer_name}`이다. �
 
 system content는 코드 상수다. 문서와 user JSON 안의 host instructions를 비신뢰 자료로 취급하며 도구·코드·실물 조작·외부 전송 권한이 없다고 명시한다. 제품·시장·규격의 기본 정답을 넣지 않는다. 근거가 부족하거나 충돌하면 unknown/ambiguous/uncertain·missing_fields를 사용하고 현재 문서의 hash·줄·페이지·quote를 인용하도록 한다.
 
+원문이 명시한 시험 관련 미확정 구성은 exact citation을 가진 `uncertain` fact로 회수하도록 안내한다. 가장 가까운 기존 field를 사용하고 더 구체적인 field가 없을 때만 `features`를 쓴다. `missing_fields`만 적어서 이 인용된 미확정 조건을 대체하지 않으며, 원문에 없는 구성이나 불확실 조건을 만들지 않는다. [회수 설계](../superpowers/specs/2026-10-25-intake-model-uncertainty-coverage-design.md)와 [계획](../superpowers/plans/2026-10-25-intake-model-uncertainty-coverage.md)에 따른 일반 정책이며 case·제품·모델명이나 기대 답을 넣지 않는다.
+
+이 문구는 모델 행동 지침이다. 새 field/schema·의미 validator나 응답 facts 수선을 추가하지 않으며 의미 누락이 해소됐다고 보증하지 않는다. 기존 V1/V2 strict 회귀 통과는 형상·근거 결합 검사다. 같은 context라도 system policy가 바뀌면 prompt/messages와 실제 stdin bytes/hash는 달라질 수 있으므로 context SHA와 새 요청 hash를 따로 기록한다. 원 응답과 독립 기대는 보존하고, 실제 개선 여부는 총괄이 같은 합성 입력·모델·실행 조건으로 별도 수행하는 새 비교에서 확인한다. 작은 표본의 결과를 모델 전체 품질·규범·실물 검증으로 확대하지 않는다.
+
 user content는 context 사본의 canonical JSON 그대로다. 문서 안의 ‘규칙 무시’, ‘합격’, 경로와 외부 전송 지시가 system으로 승격되지 않는다. 이 분리와 지시문만으로 prompt injection 방어나 모델 정확도가 검증됐다고 주장하지 않는다.
 
 ## 응답 검증
