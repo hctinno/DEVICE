@@ -66,7 +66,7 @@ class IntakePlanExecutionTests(unittest.TestCase):
         self.assertFalse(result['execution']['intake_native_host_connected'])
         self.assertFalse(result['artifacts']['outer_receipt_retained'])
         for field in ('source_bytes_reopened', 'current_store_revision_observed', 'execution_authority_verified',
-                      'full_task_verified', 'setup_journal_connected', 'quantity_basis_verified'):
+                      'full_task_verified', 'quantity_basis_verified'):
             self.assertFalse(result['verification'][field])
 
     def blocked(self, **changes):
@@ -83,7 +83,7 @@ class IntakePlanExecutionTests(unittest.TestCase):
     def test_public_signature_and_exports(self):
         self.assertEqual(api.__all__, ['run_intake_plan_virtual_execution', 'IntakePlanVirtualExecutionError'])
         signature = inspect.signature(api.run_intake_plan_virtual_execution)
-        expected = 'context analysis plan_input expected_revision expected_context_sha256 expected_plan_input_sha256 catalog_path catalog_sha256 response_schema_bytes executable requested_model scenario evidence_dir execution_origin cancel_event'.split()
+        expected = 'context analysis plan_input expected_revision expected_context_sha256 expected_plan_input_sha256 catalog_path catalog_sha256 response_schema_bytes executable requested_model scenario evidence_dir execution_origin cancel_event quantity'.split()
         self.assertEqual(list(signature.parameters), expected)
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in list(signature.parameters.values())[3:]))
         self.assertTrue(issubclass(api.IntakePlanVirtualExecutionError, RuntimeError))
@@ -161,6 +161,7 @@ class IntakePlanExecutionTests(unittest.TestCase):
         self.assertEqual(result['binding']['run_id'], result['loop']['run_id'])
         self.assertEqual(result['binding']['runtime_instance_id'], result['loop']['execution']['runtime_instance_id'])
         self.assertTrue(result['verification']['ready_plan_revalidated'])
+        self.assertTrue(result['verification']['setup_journal_connected'])
         folder = self.loop.call_args.kwargs['evidence_dir']
         self.assertEqual({p.relative_to(folder).as_posix() for p in folder.rglob('*') if p.is_file()}, self.loop_files[0])
 
@@ -221,6 +222,25 @@ class IntakePlanExecutionTests(unittest.TestCase):
             self.assertTrue(result['execution']['loop_entered'])
             self.assertIsNone(result['execution']['trial_factory_calls'])
             self.assertIsNone(result['execution']['producer_calls_started'])
+
+    def test_caller_quantity_is_forwarded_unchanged(self):
+        quantity = dict(metric='peak', reference_plane='source_output', loss_compensation_applied=True, loss_compensation_sign=False)
+        self.driver.sequence = [dict(kind='stop', claim='blocked', reason='explicit quantity')]
+        result = self.call(quantity=quantity); self.shape(result)
+        self.assertEqual(C(self.loop.call_args.kwargs['plan_binding']), C(self.plan['binding']))
+        self.assertEqual(C(self.loop.call_args.kwargs['quantity']), C(quantity))
+        self.assertEqual(C(result['loop']['execution']['host_evidence']['quantity']), C(quantity))
+        self.assertTrue(result['verification']['setup_journal_connected'])
+        self.assertFalse(result['verification']['quantity_basis_verified'])
+
+    def test_quantity_omission_stays_missing_in_actual_journal(self):
+        from labflow.virtual_fleet.journal import read_operator_journal
+        self.driver.sequence = [dict(kind='stop', claim='blocked', reason='no quantity supplied')]
+        result = self.call(); self.shape(result)
+        path = self.loop.call_args.kwargs['evidence_dir'] / 'operator-journal.jsonl'
+        journal = read_operator_journal(path)
+        self.assertNotIn('quantity', journal['header']['provenance'])
+        self.assertIsNone(result['loop']['execution']['host_evidence']['quantity'])
 
 
 if __name__ == '__main__':
