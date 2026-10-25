@@ -9,7 +9,7 @@ const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
 fs.mkdirSync(LOCAL,{recursive:true});
 const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
 function proofWrite(file,data){
   const target=path.resolve(file);assert.ok(target.startsWith(PROOF+path.sep));const files=[];
@@ -764,4 +764,97 @@ async function gapQueueMain(){
   finally{if(browser)await browser.close();}
 }
 
-(process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+const unifiedSavedHost=String.raw`
+import sys,json,threading,socket
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+from labflow.ui_server import create_server
+saved=Path(sys.argv[2]);summary=json.loads((saved/'public-summary.json').read_bytes())
+startup=saved/'server-startup-original.json';options=json.loads(startup.read_bytes()) if startup.exists() else {}
+with create_server(saved/'s',port=0,**options) as server:
+ port=server.server_port;thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+ print(json.dumps({'origin':'http://127.0.0.1:'+str(port),'intake_id':summary['intake_id']}),flush=True)
+ try:
+  if sys.stdin.readline().strip()!='stop':raise ValueError('saved_host_stop_required')
+ finally:server.shutdown();thread.join(10)
+probe=socket.socket();probe.bind(('127.0.0.1',port));probe.close()
+print(json.dumps({'resource':{'loop_stopped':not thread.is_alive(),'listener_closed':server.socket.fileno()==-1,'port_rebind':True,'new_runtime_calls':0,'actual_model_calls':0,'hardware_calls':0}}),flush=True)
+`;
+function unifiedTypedFixture(id,revision){
+  const report={schema_version:1,kind:'virtual_fleet_harness_result',run_id:'typed-fixture-run',runtime_instance_id:'typed-fixture-runtime',synthetic:true,hardware_verified:false,ai_model_called:false,policy:{kind:'fixture',id:'typed-coexist'},termination:{reason:'policy_stop',policy_claim:'completed'},task_outcome:'not_assessed',cleanup:{status:'not_assessed',evidence_refs:[]},usage:{decisions:0,logical_requests:0,transport_retries:0,tick_delta:0,reserved_ticks:0,elapsed_ms:0},evidence:{measurement_refs:['typed-fixture-event'],operator_transcript_ref:'typed-fixture-journal'},unresolved_request_ids:[],assessment:{status:'not_assessed',verdict:null,evaluator_id:null,evidence_refs:[],summary_code:null}};
+  return {schema_version:1,intake_id:id,current_revision:revision,storage_available:true,more_available:false,records:[{request_id:'TYPED-FIXTURE-COEXIST',intake_id:id,revision,readiness_fingerprint:'a'.repeat(64),recipe_id:'conducted_sensor_fixture_v1',run_id:report.run_id,runtime_instance_id:report.runtime_instance_id,state:'completed',source_current:true,source_synthetic:true,synthetic:true,hardware_verified:false,ai_model_called:false,resumable:false,case_id:null,plan_id:null,error_code:null,report}]};
+}
+async function unifiedProvidedFlowMain(){
+  const indexFile=process.env.VLAB_UNIFIED_FLOW_REPLAY_INDEX;assert.ok(indexFile&&path.isAbsolute(indexFile),'explicit saved-output replay index required; no runtime/provider fallback');
+  const index=JSON.parse(fs.readFileSync(indexFile,'utf8'));assert.equal(index.kind,'explicit_own_saved_authored_outputs');assert.equal(index.new_runtime_calls,0);
+  const observations=[],faults=[],resources=[];let browser;
+  const model=await import(require('node:url').pathToFileURL(path.join(ROOT,'frontend/intake_flow_model.mjs')).href);
+  const recordFault=value=>{faults.push(value);const file=path.join(OUTPUT,'typed-progress.jsonl');proofWrite(file,(fs.existsSync(file)?fs.readFileSync(file,'utf8'):'')+JSON.stringify(value)+'\n');};
+  try{
+    browser=await chromium.launch({headless:true});
+    for(const entry of index.cases){
+      assert.ok(path.isAbsolute(entry.output));const summary=JSON.parse(fs.readFileSync(path.join(entry.output,'public-summary.json'),'utf8'));
+      const host=startPreviewHost(entry.output,unifiedSavedHost,'unified_saved_host.py');let info;
+      try{
+        info=await host.next();proofWrite(path.join(OUTPUT,entry.name+'-host-startup.json'),JSON.stringify({...info,saved_output:entry.output,new_runtime_calls:0}));const bodies={};
+        for(const [name,url]of [['intakes','/api/intakes'],['plan','/api/intakes/'+info.intake_id+'/conducted-plan-preview'],['result','/api/intakes/'+info.intake_id+'/conducted-result']]){
+          const response=await fetch(info.origin+url),raw=Buffer.from(await response.arrayBuffer());proofWrite(path.join(OUTPUT,entry.name+'-'+name+'.json'),raw);bodies[name]={status:response.status,value:JSON.parse(raw)};
+        }
+        for(const width of [390,1440]){
+          const context=await browser.newContext({viewport:{width,height:950}}),page=await context.newPage(),errors=[],external=[],methods=[];page.setDefaultTimeout(8000);
+          page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>{if(!request.url().startsWith(info.origin+'/'))external.push(request.url());if(request.url().includes('/api/'))methods.push(request.method());});
+          const root=page.locator('#intake-workflow'),part=id=>root.locator('[data-workflow-step="'+id+'"] [data-workflow-summary]');
+          const planURL=info.origin+'/api/intakes/'+info.intake_id+'/conducted-plan-preview',resultURL=info.origin+'/api/intakes/'+info.intake_id+'/conducted-result',intakesURL=info.origin+'/api/intakes';
+          const idle=()=>page.waitForFunction(()=>!document.querySelector('#refresh').disabled&&document.querySelector('#intake-gap-queue')?.dataset.pending==='false'&&!document.querySelector('#fixture-refresh')?.disabled);
+          const current=()=>page.waitForFunction(()=>document.querySelector('#intake-workflow')?.dataset.providedScope==='current');
+          const refresh=async()=>{await page.waitForFunction(()=>!document.querySelector('#refresh').disabled);await page.locator('#refresh').click();await idle();};
+          const previous=()=>root.locator('[data-workflow-previous]').allTextContents();
+          try{
+            await page.goto(info.origin+'/#'+info.intake_id);await root.waitFor();await idle();assert.equal(await root.locator('[data-workflow-step]').count(),7);
+            if(entry.name==='normal'){
+              await current();const original=JSON.parse(fs.readFileSync(path.join(entry.output,'finalizer-original.json'),'utf8')).result;
+              assert.equal(bodies.result.status,200);assert.equal(bodies.result.value.relation.status,'matched');assert.deepEqual(bodies.result.value.result,original);
+              assert.ok((await part('plan').innerText()).includes('ready_for_simulation'));assert.ok((await part('virtual').innerText()).includes(original.binding.run_id));assert.ok((await part('measurement').innerText()).includes('-19.5 / dBm'));assert.ok((await part('measurement').innerText()).includes('not_assessed'));
+              assert.ok(!(await part('virtual').locator('[data-workflow-summary-label]').innerText()).includes('선택한 가상 기록 없음'));assert.ok(!(await part('measurement').locator('[data-workflow-summary-label]').innerText()).includes('게시된 측정 근거 미확인'));
+              const assessment=await part('assessment').innerText();assert.ok(assessment.includes('저장 완료 marker·DRAFT 검증 미확인')&&assessment.includes('실제 AI 호출 여부 unknown')&&assessment.includes('정리·독립평가 미확인'));assert.ok(!assessment.includes('ai_model_called=false'));
+              await part('virtual').scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'unified-normal-'+width+'.png'));
+              const layout=await root.locator('[data-workflow-summary]').evaluateAll(nodes=>nodes.map(node=>({left:node.getBoundingClientRect().left,right:node.getBoundingClientRect().right,client:node.clientWidth,scroll:node.scrollWidth,viewport:innerWidth})));
+              proofWrite(path.join(OUTPUT,'unified-layout-'+width+'.json'),JSON.stringify(layout));assert.ok(layout.every(box=>box.left>=-1&&box.right<=box.viewport+1&&box.scroll<=box.client+1),'summary must fit its mobile card without internal clipping');
+
+              const fixture=unifiedTypedFixture(info.intake_id,summary.revision);model.validateFixtureRuns(fixture,{intake_id:info.intake_id,revision:summary.revision});proofWrite(path.join(OUTPUT,'typed-fixture-'+width+'.json'),JSON.stringify(fixture));
+              await page.route(info.origin+'/api/intakes/'+info.intake_id+'/fixture-runs',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(fixture)}));await refresh();await current();
+              assert.ok((await part('virtual').innerText()).includes('typed-fixture-run'));assert.ok((await part('virtual').innerText()).includes('기존 fixture: 실행 기록 저장'));assert.ok((await part('virtual').innerText()).includes(original.binding.run_id));assert.ok((await part('assessment').innerText()).includes('기존 fixture: 이 가상 실행의 실제 AI 호출 없음'));await part('virtual').scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'unified-typed-coexist-'+width+'.png'));recordFault({width,fault:'typed-fixture-coexist',scope:'typed fixture API projection alongside genuine saved provided snapshot; not another actual fixture execution'});
+              await page.route(resultURL,route=>route.fulfill({status:503,contentType:'application/json',body:'{"error":{"code":"intake_conducted_result_missing"}}'}));await refresh();assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok((await part('virtual').innerText()).includes('typed-fixture-run'));recordFault({width,fault:'typed-fixture-only-result-unavailable',scope:'typed HTTP availability; fixture identity retained independently'});await page.unroute(resultURL);await page.unroute(info.origin+'/api/intakes/'+info.intake_id+'/fixture-runs');await refresh();await current();
+
+              await page.route(resultURL,route=>route.fulfill({status:503,contentType:'application/json',body:'{"error":{"code":"intake_conducted_result_missing"}}'}));await refresh();assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok((await previous()).some(text=>text.includes(original.binding.measurement_ref)));recordFault({width,fault:'typed-result-HTTP503',scope:'last original provided observation kept in previous-only details'});await page.unroute(resultURL);await refresh();await current();
+              await page.route(intakesURL,route=>route.fulfill({status:503,contentType:'application/json',body:'{"error":{"code":"store_unavailable"}}'}));await refresh();assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok((await previous()).some(text=>text.includes(original.binding.run_id)));recordFault({width,fault:'typed-parent-HTTP503',scope:'parent currentness retired; no fresh result promotion'});await page.unroute(intakesURL);await refresh();await current();
+
+              let release,seen,finished,routeError;const hold=new Promise(resolve=>release=resolve),arrived=new Promise(resolve=>seen=resolve),handled=new Promise(resolve=>finished=resolve);await page.route(planURL,async route=>{seen();try{await hold;await route.fulfill({contentType:'application/json',body:JSON.stringify(bodies.plan.value)});}catch(error){routeError=error;}finally{finished();}});
+              try{await page.locator('#conducted-plan-refresh').click();await arrived;assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok((await previous()).some(text=>text.includes(original.binding.run_id)));recordFault({width,fault:'typed-plan-pending',scope:'pending plan blocks provided summary until bound response is observed'});}finally{release();await handled;await page.unroute(planURL);}if(routeError)throw routeError;await current();
+
+              const mismatched=structuredClone(bodies.plan.value);mismatched.context_sha256='f'.repeat(64);mismatched.plan_input.binding.context_sha256='f'.repeat(64);model.parseConductedPlanPreview(JSON.stringify(mismatched),{intake_id:info.intake_id,revision:summary.revision});proofWrite(path.join(OUTPUT,'typed-C1-mismatch-'+width+'.json'),JSON.stringify(mismatched));await page.route(planURL,route=>route.fulfill({contentType:'application/json',body:JSON.stringify(mismatched)}));await refresh();assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok((await previous()).some(text=>text.includes(original.binding.run_id)));recordFault({width,fault:'typed-plan-C1-mismatch',scope:'valid-shaped typed C1 counterfactual only; original result/binding untouched'});await page.unroute(planURL);await refresh();await current();
+              const partial=structuredClone(bodies.result.value);Object.assign(partial.result,{status:'incomplete',raw_measurement:null,failure:{code:'measurement_missing',field:'measurement_ref'},gaps:[{code:'measurement_missing',field:'measurement_ref',provided:null,blocking:true}]});Object.assign(partial.result.calculation,{corrected:null,raw_power_w:null,raw_reference_plane:null,correction_ledger:[]});model.parseConductedResultView(JSON.stringify(partial),{intake_id:info.intake_id,revision:summary.revision});proofWrite(path.join(OUTPUT,'typed-null-result-'+width+'.json'),JSON.stringify(partial));await page.route(resultURL,route=>route.fulfill({contentType:'application/json',body:JSON.stringify(partial)}));await refresh();assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok((await previous()).some(text=>text.includes('미제공(null)')));recordFault({width,fault:'typed-incomplete-null',scope:'typed nullable partial result kept as blocked original, no zero/completion substitution'});await page.unroute(resultURL);await refresh();await current();
+              const foreign=structuredClone(bodies.result.value);foreign.intake_id='I-OTHER';foreign.result.binding.run_id='FOREIGN-UNIFIED-SECRET';proofWrite(path.join(OUTPUT,'typed-other-intake-'+width+'.json'),JSON.stringify(foreign));await page.route(resultURL,route=>route.fulfill({contentType:'application/json',body:JSON.stringify(foreign)}));await refresh();assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok(!(await root.textContent()).includes('FOREIGN-UNIFIED-SECRET'));recordFault({width,fault:'typed-other-intake',scope:'strict transport parser rejects foreign response; previous original remains separate'});await page.unroute(resultURL);await refresh();await current();
+              await page.evaluate(()=>{const original=Object.getOwnPropertyDescriptor(Node.prototype,'textContent');window.__unifiedRestore=()=>Object.defineProperty(Node.prototype,'textContent',original);Object.defineProperty(Node.prototype,'textContent',{...original,set(value){if(value==='제공 측정·계산 기록')throw Error('typed unified render failure');return original.set.call(this,value);}});});
+              try{await page.locator('#conducted-plan-refresh').click();await idle();assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok((await root.textContent()).includes(original.binding.run_id));recordFault({width,fault:'typed-summary-render-failure',scope:'last summary retained with unconfirmed badges; no backend/model execution'});}finally{await page.evaluate(()=>{__unifiedRestore();delete window.__unifiedRestore;});}await refresh();await current();
+            }else{
+              assert.notEqual(await root.getAttribute('data-provided-scope'),'current');
+              if(entry.name==='plan-blocked'){assert.ok((await part('plan').innerText()).includes('blocked'));assert.ok(!(await part('virtual').innerText()).includes('operator-loop-run:'));}
+              if(['result-invalid','RF-disconnected'].includes(entry.name)){assert.ok((await part('measurement').innerText()).includes('invalid'));assert.ok((await previous()).some(text=>text.includes('미제공(null)')));}
+              if(entry.name==='analysis-rejected')assert.ok((await part('plan').innerText()).includes('미관측'));
+            }
+            assert.equal(await root.locator('[data-workflow-summary] button,[data-workflow-summary] input,[data-workflow-summary] select,[data-workflow-summary] a').count(),0);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.ok(methods.every(method=>method==='GET'));
+            observations.push({case:entry.name,width,origin:info.origin,scope:await root.getAttribute('data-provided-scope'),plan_HTTP:bodies.plan.status,result_HTTP:bodies.result.status,source:'genuine own saved Store/original startup replay; new runtime0/model0',overflow:false});
+          }finally{await context.close();}
+        }
+      }finally{
+        if(info&&host.alive()){host.child.stdin.end('stop\n');const resource=await host.next(),code=await host.exited;assert.equal(code,0,host.stderr());assert.equal(host.stderr(),'');assert.ok(resource.resource.loop_stopped&&resource.resource.listener_closed&&resource.resource.port_rebind);resources.push({case:entry.name,...resource.resource,child_exit:code});}
+        else{if(host.alive())host.child.kill();await host.exited;}
+      }
+    }
+    proofWrite(path.join(OUTPUT,'unified-results.json'),JSON.stringify({status:'pass',observations,typed_faults:faults,resources,new_runtime_calls:0,actual_model_calls:0,hardware_calls:0},null,2));console.log(JSON.stringify({status:'pass',genuine_DOM:observations.length,typed_faults:faults.length,output:OUTPUT}));
+  }catch(error){proofWrite(path.join(OUTPUT,'unified-failure.json'),JSON.stringify({status:'fail',message:error.message,observations,typed_faults:faults,resources},null,2));throw error;}
+  finally{if(browser)await browser.close();}
+}
+
+(process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});

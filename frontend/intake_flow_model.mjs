@@ -59,12 +59,12 @@ export function describeFixtureRecord(record, currentRevision) {
 
 // A display projection of the existing snapshot and exact fixture-runs API.
 // It does not select a method, infer readiness, execute work or assess a task.
-export function describeIntakeWorkflow(intake, {payload=null, request_id='', stale=false, pending=false, now=0}={}) {
+export function describeIntakeWorkflow(intake, {payload=null, request_id='', stale=false, pending=false, now=0, provided=null}={}) {
   const records=payload===null?[]:validateFixtureRuns(payload,{intake_id:intake.intake_id,revision:intake.revision}).records;
   const selected=records.find(record=>record.request_id===request_id) || null;
   const description=selected?describeFixtureRecord(selected,intake.revision):null;
   const report=selected?.report, result=description?.result;
-  const scope=selected?(stale||pending?'unconfirmed':selected.source_current?'current':'historical'):'none';
+  const scope=selected?(stale||pending||provided?.intakeStale||provided?.parentPending?'unconfirmed':selected.source_current?'current':'historical'):'none';
   const relation=scope==='unconfirmed'?'이전 조회 당시 문맥 · 현재 관계 미확인':description?.context || '선택한 가상 기록 없음';
   const revisions=(intake.history||[]).filter(item=>item.revision===intake.revision);
   const context={intake_id:intake.intake_id,revision:intake.revision,
@@ -77,7 +77,7 @@ export function describeIntakeWorkflow(intake, {payload=null, request_id='', sta
   const entry=(id,title,label,tone,lines,refs=[])=>({id,title,label,tone,lines,refs});
   const unconfirmed=['unconfirmed','historical'].includes(scope);
   const virtualLabel=description?.state.label || (payload===null?'가상 기록 미확인':!payload.storage_available?'가상 기록 저장 기능 미지원':'선택한 가상 기록 없음');
-  return {context,steps:[
+  const view={context,steps:[
     entry('intake','제품·목적·시장과 현재 자료',intakeState.label,intakeState.tone,
       [...identity.map(field=>`${FIELDS[field]}: ${facts[field]?.value??'자료 미확인'} · ${FACT_LABELS[facts[field]?.status]||'상태 미확인'}`),
         `현재 자료 버전 v${intake.revision} · 파일 ${(intake.files||[]).length}개`,
@@ -101,6 +101,7 @@ export function describeIntakeWorkflow(intake, {payload=null, request_id='', sta
     entry('physical','실측 대조','실측 대조 미실행','neutral',
       ['실장비 검증 없음(hardware_verified=false)','물리 정확도 미검증 · 실제 시료·계측 원본과 대조하지 않았습니다.']),
   ],citations:identity.flatMap(field=>factSources(intake,field))};
+  return provided===null?view:unifyProvidedWorkflow(view,intake,provided);
 }
 
 function canonical(value) {
@@ -343,4 +344,80 @@ export function describeIntakeGapQueue(intake,{generation=0,intakeStale=false,in
   const groups=[group('intake_questions','접수 원 질문',intakeState,intake.analysis?.questions,'question'),group('plan_questions','계획 원 질문',planState,planState.value?.plan_input?.intake?.questions,'question'),group('plan_gaps','계획 원 조건·공백',planState,planState.value?.plan_input?.gaps,'gap'),group('result_gaps','제공 결과 원 공백',resultState,resultState.value?.result?.gaps,'gap')];
   const all=groups.flatMap(group=>group.items),count=category=>all.filter(row=>row.category===category).length;
   return {context,groups,summary:{evidence_review:count('evidence_review'),current_facts:count('facts_required'),conditions:count('conditions_required'),system_errors:count('system_error'),unsupported:count('unsupported'),not_run:count('not_run'),blocked:count('blocked'),uninterpreted:count('uninterpreted')},execution_authority:false};
+}
+
+function unifyProvidedWorkflow(view,intake,observations){
+  const parentStale=Boolean(observations.intakeStale||observations.parentPending);
+  // Reuse the existing source/revision/generation/C1/binding fences. This is a
+  // display projection of already parsed observations, not another DTO validator.
+  const queue=describeIntakeGapQueue(intake,{...observations,intakeStale:parentStale});
+  const planGate=queue.groups.find(group=>group.source==='plan_gaps');
+  const resultGate=queue.groups.find(group=>group.source==='result_gaps');
+  const same=value=>value?.intake_id===intake.intake_id?value:null;
+  const plan=same(observations.plan?.value),packet=same(observations.result?.value),r=packet?.result;
+  const planCurrent=Boolean(plan&&planGate.state==='current');
+  const planReady=planCurrent&&plan.plan_input.status==='ready_for_simulation';
+  const current=Boolean(r&&planReady&&resultGate.state==='current'&&r.status==='recorded'
+    &&r.raw_measurement!==null&&r.calculation.corrected!==null);
+  const reasons=[...new Set([...planGate.reasons,...resultGate.reasons,
+    ...(r&&!planReady?['plan_not_ready']:[]),...(r&&r.status!=='recorded'?['result_not_recorded']:[]),
+    ...(r&&(r.raw_measurement===null||r.calculation.corrected===null)?['measurement_or_correction_null']:[])])];
+  const unstable=parentStale||[observations.plan,observations.result].some(value=>value?.pending||value?.parentPending||value?.stale)
+    ||reasons.some(value=>['snapshot_generation_changed','observation_unconfirmed','parent_snapshot_unconfirmed'].includes(value));
+  const foreign=Boolean(observations.plan?.value&&!plan||observations.result?.value&&!packet);
+  const scope=current?'current':r?(unstable?'unconfirmed':'blocked'):foreign?'blocked':'none';
+  const relation=current?'제공 snapshot · 현재 C1/계획 binding 대조 일치 · 생성·실행 진위 미확인'
+    :r?(scope==='unconfirmed'?'제공 이전 관측 · 현재 관계 미확인':`제공 원 상태 ${r.status} · 현재 측정으로 사용 차단`)
+      :foreign?'다른 접수의 제공 관측 제외':planReady?'제공 계획 입력 관측 · 제공 결과 미관측':'제공 계획·결과 미관측 또는 미제공';
+  const p={scope,current,relation,reasons,source_kind:'provided_snapshot',plan_scope:planGate.state,
+    plan_status:plan?.plan_input.status??null,plan_ready:planReady,plan_current:planCurrent,
+    original_status:r?.status??null,context_sha256:packet?.context_sha256??plan?.context_sha256??null,
+    provided_revision:packet?.relation.provided_revision??null,
+    run_id:r?.binding.run_id??null,runtime_instance_id:r?.binding.runtime_instance_id??null,
+    measurement_ref:r?.binding.measurement_ref??null,
+    raw_measurement:structuredClone(r?.raw_measurement??null),corrected:structuredClone(r?.calculation.corrected??null),
+    conformity:structuredClone(r?.calculation.conformity??null),failure:structuredClone(r?.failure??null),
+    storage:'unknown',ai:'unknown',cleanup:'unknown',independent_evaluation:'unknown',physical:'not_run',execution_authority:false};
+  const fmt=conductedPreviewValue,selected=view.context.request_id!==null;
+  const fixtureLines=step=>selected?[`기존 fixture: ${step.label}`,...step.lines.map(line=>`기존 fixture: ${line}`)]:['기존 fixture: 선택 기록 없음 · 제공 snapshot과 별도 출처'];
+  const runLines=r?[
+    `제공 기록: 원 run / runtime ${fmt(p.run_id)} / ${fmt(p.runtime_instance_id)}`,
+    `제공 기록: 원 event ${fmt(p.measurement_ref)} · 제공 버전 ${fmt(p.provided_revision)}`,
+    '제공 식별자 관측은 실제 실행·정리 확인을 뜻하지 않습니다.',
+  ]:[];
+  const measurementLines=r?[
+    `제공 기록: 원 상태 ${r.status}`,
+    `제공 기록: 원 값 / 단위 ${r.raw_measurement===null?fmt(null):`${fmt(r.raw_measurement.packet.value)} / ${fmt(r.raw_measurement.packet.unit)}`}`,
+    `제공 기록: 원 기준면 ${fmt(r.raw_measurement?.reference_plane??null)}`,
+    `제공 기록: 보정 ${fmt(r.calculation.corrected)} · target 기준면 ${fmt(r.calculation.target_reference_plane)}`,
+    `제공 기록: 원 event ${fmt(p.measurement_ref)}`,
+    `제공 기록: 규범 ${r.calculation.conformity.status} · 수치·보정을 화면에서 다시 계산하지 않습니다.`,
+  ]:[];
+  const steps=view.steps.map(step=>{
+    if(!['plan','virtual','measurement','assessment'].includes(step.id))return step;
+    const common={...step,provided_scope:scope,previous_lines:[],reference_source:'기존 fixture'};
+    if(step.id==='plan')return {...common,
+      label:planCurrent?`제공 계획 입력 · ${p.plan_status}`:plan?'제공 계획 이전 관측 · 현재 관계 미확인':'제공 계획 미관측 · DB 계획 미연결',
+      tone:planReady?'info':'warning',lines:[
+        'DB Case/Plan: case_id=null · plan_id=null',
+        planCurrent?`제공 계획: ${p.plan_status} · 현재 C1 ${fmt(plan.context_sha256)}`:'제공 계획의 현재 C1/조건 결합 미확인',
+        '제공 미리보기는 DB 계획 생성·방법 승인·실제 실행 권한이 아닙니다.',
+      ],previous_lines:plan&&!planCurrent?[`제공 이전 계획 상태 ${p.plan_status} · C1 ${fmt(plan.context_sha256)}`]:[]};
+    if(step.id==='virtual')return {...common,
+      label:current?'제공 실행 식별 관측':r?'제공 실행 관측 · 현재 사용 차단':selected?`기존 fixture · ${step.label}`:'제공 실행 관측 미확인',
+      tone:current?'info':r?'warning':step.tone,
+      lines:[relation,...(current?runLines:[]),...fixtureLines(step)],previous_lines:r&&!current?runLines:[]};
+    if(step.id==='measurement')return {...common,
+      label:current?'제공 측정·계산 기록':r?`제공 결과 ${r.status} · 현재 사용 차단`:selected?`기존 fixture · ${step.label}`:'제공 측정·계산 미관측',
+      tone:current?'info':r?'warning':step.tone,
+      lines:[relation,...(current?measurementLines:[]),...fixtureLines(step)],previous_lines:r&&!current?measurementLines:[]};
+    return {...common,label:plan||r?'제공 기록 · 저장·독립평가 미확인':selected?`기존 fixture · ${step.label}`:'저장·독립평가 미확인',tone:'neutral',lines:[
+      '제공 snapshot: 저장 완료 marker·DRAFT 검증 미확인',
+      '제공 snapshot: 실제 AI 호출 여부 unknown · 정리·독립평가 미확인',
+      '제공 snapshot: 작업 결과·규범 미평가(not_assessed) · 실측 대조 미실행',
+      ...fixtureLines(step),
+    ]};
+  });
+  return {...view,provided:p,steps,context:{...view.context,fixture_relation:view.context.relation,
+    provided_scope:scope,relation:`${relation} · 기존 fixture: ${view.context.relation}`}};
 }

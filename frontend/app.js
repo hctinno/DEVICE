@@ -292,10 +292,30 @@ function fixtureContext(view = state) {
 function sameFixtureSource(a, b) {
   return a && b && a.intake_id === b.intake_id && a.revision === b.revision;
 }
+function workflowProjection(record,payload,current,stale,snapshot=state){
+  const freshParent=(snapshot.snapshotGeneration??0)!==(state.snapshotGeneration??0);
+  return describeIntakeWorkflow(record,{payload,request_id:current.selected,stale,pending:current.pending,now:Date.now()/1000,
+    provided:{generation:snapshot.snapshotGeneration||0,
+      intakeStale:snapshot.view!=='intakes'||(!freshParent&&(gapQueueState.intakeStale||gapQueueState.parentPending)),
+      plan:conducted,result:resultView}});
+}
+function buildWorkflowStepSummary(step){
+  const summary=el('div');summary.style.minWidth='0';summary.style.overflowWrap='anywhere';summary.dataset.workflowSummary='';summary.dataset.providedScope=step.provided_scope||'none';
+  const label=badge(step.label,step.tone);label.dataset.workflowSummaryLabel='';summary.append(label);
+  for(const [index,line]of step.lines.entries()){
+    const detail=el('p','inline-note',line);detail.dataset.workflowSummaryLine='';
+    if(index===0&&['virtual','measurement'].includes(step.id))detail.dataset.workflowRelation='';summary.append(detail);
+  }
+  if(step.previous_lines?.length){
+    const previous=el('details');previous.dataset.workflowPrevious='';previous.append(el('summary','','제공 이전·차단 관측 원형'));
+    for(const line of step.previous_lines)previous.append(el('p','inline-note',line));summary.append(previous);
+  }
+  return summary;
+}
 function buildIntakeWorkflow(record, payload, current, stale, snapshot=state) {
-  const view=describeIntakeWorkflow(record,{payload,request_id:current.selected,stale,pending:current.pending,now:Date.now()/1000});
+  const view=workflowProjection(record,payload,current,stale,snapshot);
   const node=el('section','section-rule');node.id='intake-workflow';
-  node.dataset.intakeId=view.context.intake_id;node.dataset.revision=String(view.context.revision);node.dataset.fixtureScope=view.context.fixture_scope;
+  node.dataset.intakeId=view.context.intake_id;node.dataset.revision=String(view.context.revision);node.dataset.fixtureScope=view.context.fixture_scope;node.dataset.providedScope=view.provided.scope;
   node.append(el('h3','','같은 접수의 업무 흐름'),metadata([
     ['현재 접수 / 자료 버전',`${view.context.intake_id} / v${view.context.revision}`],
     ['현재 자료 fingerprint',view.context.revision_fingerprint??'미제공'],
@@ -306,28 +326,38 @@ function buildIntakeWorkflow(record, payload, current, stale, snapshot=state) {
   const list=el('ol','question-list');
   for(const step of view.steps){
     const item=el('li','question');item.dataset.workflowStep=step.id;
-    item.append(el('h4','',step.title),badge(step.label,step.tone));
-    for(const [lineIndex,line] of step.lines.entries()){
-      const displayLine=step.id==='measurement'&&[1,2].includes(lineIndex)?`선택한 기존 fixture 기록: ${line}`:step.id==='assessment'&&line.includes('ai_model_called=false')?`선택한 기존 fixture 기록: ${line}`:line;
-      const detail=el('p','inline-note',displayLine);
-      if(lineIndex===0&&['virtual','measurement'].includes(step.id))detail.dataset.workflowRelation='';
-      item.append(detail);
-    }
+    item.append(el('h4','',step.title),buildWorkflowStepSummary(step));
     if(step.id==='intake'&&view.citations.length)item.append(sources(view.citations));
     if(step.id==='plan')item.append(buildConductedPlanPreview(record,snapshot));
     if(step.id==='measurement')item.append(buildConductedResult(record,snapshot));
-    if(step.refs.length){const details=el('details');details.append(el('summary','',`공개 근거 참조 ${step.refs.length}개`));const refs=el('ul','fixture-refs');for(const ref of step.refs)refs.append(el('li','mono',ref));details.append(refs);item.append(details);}
+    if(step.refs.length){const details=el('details');details.append(el('summary','',`${step.reference_source||'공개'} 근거 참조 ${step.refs.length}개`));const refs=el('ul','fixture-refs');for(const ref of step.refs)refs.append(el('li','mono',ref));details.append(refs);item.append(details);}
     list.append(item);
   }
   node.append(buildGapQueue(record,snapshot),list);return node;
 }
 function markWorkflowUnconfirmed() {
-  const node=$('#intake-workflow');if(!node)return;
-  const selected=flow.payload?.records.some(record=>record.request_id===flow.selected);
-  node.dataset.fixtureScope=selected?'unconfirmed':'none';
-  const message=selected?'이전 조회 당시 문맥 · 현재 관계 미확인':'이 접수·자료 버전의 가상 기록 미확인';
-  const status=$('#workflow-observation');if(status)status.textContent=message;
-  for(const relation of node.querySelectorAll('[data-workflow-relation]'))relation.textContent=message;
+  refreshWorkflowSummary();
+}
+function refreshWorkflowSummary(){
+  const node=$('#intake-workflow'),record=state.records.find(item=>item.intake_id===state.selected);
+  if(!node||!record||node.dataset.intakeId!==record.intake_id||node.dataset.revision!==String(record.revision))return;
+  try{
+    const context=fixtureContext(),matched=sameFixtureSource(flow.context,context),payload=matched?flow.payload:null;
+    const stale=flow.stale||!matched||flow.context?.generation!==context?.generation;
+    const view=workflowProjection(record,payload,flow,stale),parts=view.steps.map(step=>({
+      target:node.querySelector(`[data-workflow-step="${step.id}"] [data-workflow-summary]`),prepared:buildWorkflowStepSummary(step)}));
+    if(parts.some(part=>!part.target))throw Error('workflow_summary_target_missing');
+    for(const part of parts)part.target.replaceWith(part.prepared);
+    node.dataset.fixtureScope=view.context.fixture_scope;node.dataset.providedScope=view.provided.scope;
+    $('#workflow-observation').textContent=view.context.relation;
+  }catch{
+    node.dataset.providedScope='unconfirmed';
+    const status=$('#workflow-observation');if(status)status.textContent='이전 업무 요약 · 현재 관계·표시 미확인';
+    for(const summary of node.querySelectorAll('[data-workflow-summary]')){
+      summary.dataset.providedScope='unconfirmed';const label=summary.querySelector('[data-workflow-summary-label]');
+      if(label)label.textContent='이전 업무 요약 · 현재 관계 미확인';
+    }
+  }
 }
 function buildFixturePanel(record, view, current = flow) {
   const panel = section('가상 실행 기록', '합성 시도 · 실측·FCC 판정 미검증');
@@ -660,6 +690,7 @@ function staleGapQueue(message){
   for(const row of area.querySelectorAll('[data-gap-queue-item]')){row.dataset.state='blocked';row.dataset.category='blocked';const label=row.querySelector('[data-gap-queue-category]');if(label)label.textContent='차단 · 이전 관측 · 현재 질문 아님';}
 }
 function refreshGapQueue(){
+  refreshWorkflowSummary();
   const target=$('#intake-gap-queue'),record=state.records.find(item=>item.intake_id===state.selected);if(!target||!record)return;
   if(state.view!=='intakes'){staleGapQueue('접수 보기 숨김 · 현재 질문 아님');return;}
   try{const prepared=buildGapQueue(record,state);target.replaceWith(prepared);}catch{staleGapQueue('큐 표시 확인 실패 · 이전 관측 · 현재 질문 아님');}
