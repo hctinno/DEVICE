@@ -69,3 +69,17 @@ python -B -X utf8 -m labflow.intake_conducted_artifact_readback_cli --workspace 
 선택 compared exit0는 허용차 밖에서도 비교 수행 완료만 뜻한다. measurement PASS·실측 진위·physical authority·실행 승인이 아니다. blocked/not_assessed는 원 DTO exit2이며 null3 입력의 not_assessed2가 정상이다. 기존 exact typed 목록에 bridge exact 타입/fixed2code만 선택 모드에서 unavailable3으로 더한다. 기타1/process 최초 KI130, borrowed control 원 객체·UTF8/quiet/fixedcode/partial retry0은 유지한다. 실제 비교 자료 없는 genuine compared/물리 정확도·현장 검증은 미실행이다. 새 wrapper 모듈·부모 수정·실측 자료 생성0이다.
 
 2026-10-26 검증: 변경 영향 기본 CLI17을 새 clone에서 한 번+선택 모드 새검사8=25개 통과(failure/error/skip 0). 기본 genuine1/child6과 선택 genuine1/child4를 같은 실행 증거에서 구분했다. 선택 null3→bridge1/readback1/comparator1의 원 not_assessed/null/exit2, readonly4/closed4·쓰기0·원source raw/native 불변을 확인했다. 선택 child 종료2/1/1/130이며 KI는 실제 프로세스 내 typed seam(원bridge 실행0)이다. 원 동결 증거와 분모는 변경하지 않았다.
+
+## Child 테스트 관측기의 이식성 수정
+
+2026-10-26. DEV3-CURRENT-ARTIFACT-CLI-TEST-PORTABILITY-FIX-001은 이 사용법과 기존 test 파일만 수정한다. 제품 CLI core·부모·bridge·Store·RF는 변경하지 않는다. 기존1cf/280/499의 source와 동결 증거도 변경하지 않는다. 이 수정은 공개 저장소에서 child 관측기를 재현하기 위한 것이며 실제 CLI 제품 C/I로 판정하지 않는다.
+
+기존 child가 private guarded_io.py와 tempfile.gettempdir().parent를 import 경로로 사용하던 의존성을 제거했다. 공개 test 자체가 메서드마다 명시 disposable auditroot를 만들며 child는 cwd의 공개 test 파일에서 관측 전용 helper를 로드한다. 임시 디렉터리를 sys.path에 넣지 않고 private owner 설정을 요구하지 않는다. cwd의 저장소 패키지, 명시 Python child, cp1252 환경에서의 UTF-8 출력·quiet broken pipe·KI/readonly 경계는 그대로 검증한다. 제품 guard를 끄거나 결과를 하드코드하지 않는다.
+
+관측기는 native O_EXCL plain file로만 bounded exclusive 기록한다. audit JSON은64 KiB, 개별 raw stdout/stderr는1 MiB, auditroot 전체는32파일/8 MiB다. reparse·symlink root/비정규 파일·경로 이탈·중복 파일을 거절하고 덮어쓰기·partial write 재시도를 하지 않는다. raw returncode/stdout/stderr를 audit 파싱 전에 파일과 native memory row에 먼저 보존한다. 닫힌 stdout pipe는 captured empty와 구분해 closed_pipe_no_capture로 기록한다. audit가 없거나 깨져도 실패 메시지에 이미 관측한 process 원값을 남기며 command/environment·인증정보를 관측 파일에 덤프하지 않는다.
+
+분모 보존: 원 owner17과 총괄17은 Smoke1을 포함한 같은 메서드 분모다. 총괄 원17은16 PASS와 child메서드1의6subcase ERROR였고 원6child의 세부 returncode/stdout/stderr는 audit 파싱 전 미보존이어서 unknown으로 남는다. 총괄이 먼저 언급한18/26은 눈으로 합산한 오기이며17/25로 정정했다. 원 로그·영수증·기존 owner17/25를 소급 변경하거나 테스트 수에 맞춰 메서드를 추가·삭제하지 않는다.
+
+이번 영향 검증은 기본 child메서드1/6subcases와 선택 child메서드1/4subcases만 수행한다. 통과했던 나머지17/25 wide·부모/RF·실제 모델/현장 검증은 반복하지 않는다. 새 RED 재현의 child 원값과 수정 후 결과는 원 총괄 unknown 이력과 구분한다.
+
+2026-10-26 수정 검증: 영향 child2메서드/10subcases만 실행해 PASS(error/failure/skip0). 기본 child6종료0/2/3/130/1/0, 선택 child4종료2/1/1/130을 audit 파싱 전 원 process 기록과 대조했다. 새 RED2/10error의 자식10 exit1/private import 실패는 원 총괄6의 unknown을 소급 변경하지 않는다. 기존 실제 child 기록을 재사용한 별도 audit-read-failure probe1에서 출구·stdout/stderr 보존을 확인했으며 추가 child/API0이다. 원 wide17/25/부모/RF를 반복하지 않았다.
