@@ -1,7 +1,7 @@
 """Bounded registered Vertex comparison; no transport, credential storage or UI.
 
 The host owns approval/ADC/budget paths. This module never seeds a budget or
-refunds a reservation. Only fixed synthetic connection/intake pairs are admitted.
+refunds a reservation. Only fixed synthetic connection/analysis/intent pairs are admitted.
 """
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
@@ -87,6 +87,66 @@ _INTAKE_CASES = {
             "bytes": 1410,
             "sha256": "ade0333e65ad87f0028e0f4f1fab6872b162664dc3accdf63b39d6a9721e984c"
         }
+    }
+}
+# Fixed input006 intent descriptors; public payload/caller packet hashes do not verify origin preimages.
+_INTENT_CASES = {
+    "intent-synthetic-i01": {
+        "context_sha256": "55d8703de4c5a4020e7fb06fea2019bbdf04e9a94ad5e39c567fce3fa7b6c04b",
+        "evaluator_id": "intake-test-intent-semantic-v1",
+        "evaluator_version": 1,
+        "input_bundle_sha256": "dfc61c6f19f52e3fda35de834febfcf6e4e8bdeaf5a2b8609af9063426c04cda",
+        "pack_revision": "intent-input-v1",
+        "producer_name": "SYN-PENDING-INTENT-MODEL-RUN",
+        "prompt": {
+            "bytes": 4822,
+            "sha256": "a710b9573af8bd433e654da06a20269b9a312c233a0c29448e5cc694aad03238"
+        },
+        "registration_sha256": "f75d3315139de405b829ceb0096e182a9aa8654537515b089353d5ff022f09cf",
+        "response_schema": {
+            "bytes": 2694,
+            "sha256": "937b3b9fa423bbfea40116495dd7cbed3937a3839e17445f08f7a37e48faf83d"
+        },
+        "scenario_id": "intent-synthetic-i01",
+        "scenario_version": 1
+    },
+    "intent-synthetic-i02": {
+        "context_sha256": "97a0b277e1ac9d99f1894ba4e6a8bf805c37860394eedfc65f8fc942215cf464",
+        "evaluator_id": "intake-test-intent-semantic-v1",
+        "evaluator_version": 1,
+        "input_bundle_sha256": "fe1e304e93475fe7a015986751af695e6805d51aab2a39bdd11df2d5121a346f",
+        "pack_revision": "intent-input-v1",
+        "producer_name": "SYN-PENDING-INTENT-MODEL-RUN",
+        "prompt": {
+            "bytes": 6178,
+            "sha256": "d32141932ea3b06d5d7b1ed39166072ebabbc4228e35768c2d438e73c46271be"
+        },
+        "registration_sha256": "f75d3315139de405b829ceb0096e182a9aa8654537515b089353d5ff022f09cf",
+        "response_schema": {
+            "bytes": 2694,
+            "sha256": "47bfac67fde55165684381d3c624a07566b2790916f148e7d3534e593ef1f75b"
+        },
+        "scenario_id": "intent-synthetic-i02",
+        "scenario_version": 1
+    },
+    "intent-synthetic-i03": {
+        "context_sha256": "a3ac906c77cccfbe64f465ab24b4b70d42fc6493fd3590c5b98ae150a46b769c",
+        "evaluator_id": "intake-test-intent-semantic-v1",
+        "evaluator_version": 1,
+        "input_bundle_sha256": "db0e2e15c0fbac18e5b40b842182ce90fd447abdd4806d5582ae3be1f11518d8",
+        "pack_revision": "intent-input-v1",
+        "producer_name": "SYN-PENDING-INTENT-MODEL-RUN",
+        "prompt": {
+            "bytes": 4783,
+            "sha256": "369f4bc2d816e821428c4acaacfe560bb885e42a15ce4b2a52884e12b65b5e7e"
+        },
+        "registration_sha256": "f75d3315139de405b829ceb0096e182a9aa8654537515b089353d5ff022f09cf",
+        "response_schema": {
+            "bytes": 2694,
+            "sha256": "75e492477ac8d7bb8949143b46941aec089359522c1741d70f969a135434f806"
+        },
+        "scenario_id": "intent-synthetic-i03",
+        "scenario_version": 1
     }
 }
 _LIMITS = dict(generation_posts=6, max_output_tokens=512, reserved_output_tokens=3072,
@@ -236,7 +296,7 @@ def _pair(prompt, schema, scenario, evaluator):
             _H(prompt) != _PROMPT_SHA or _H(schema) != _SCHEMA_SHA):
             _fail()
         return
-    case = _INTAKE_CASES.get(scenario)
+    case = _INTAKE_CASES.get(scenario) or _INTENT_CASES.get(scenario)
     if (case is None or evaluator != case["evaluator_id"] or
         len(prompt) != case["prompt"]["bytes"] or _H(prompt) != case["prompt"]["sha256"] or
         len(schema) != case["response_schema"]["bytes"] or
@@ -247,6 +307,40 @@ def _pair(prompt, schema, scenario, evaluator):
 
 def _intake_context(prompt, case):
     value = _json(prompt)
+    if case["scenario_id"] in _INTENT_CASES:
+        _keys(value, ("schema_version","kind","binding","expected_producer","messages","verification","limits"))
+        messages = value["messages"]
+        if type(messages) is not list or len(messages) != 2:
+            _fail()
+        _keys(messages[1], ("role","content"))
+        if messages[1]["role"] != "user" or type(messages[1]["content"]) is not str:
+            _fail()
+        user = _json(messages[1]["content"].encode("utf-8"))
+        _keys(user, ("request_sha256","request"))
+        request = user["request"]
+        _keys(request, ("schema_version","kind","binding","expected_producer","payload"))
+        payload = request["payload"]
+        _keys(payload, ("intake_evidence","sources","scope"))
+        view,sources,scope = payload["intake_evidence"],payload["sources"],payload["scope"]
+        packet = dict(intake_view=view,source_views=sources,scope=scope,producer_name=case["producer_name"])
+        bindings = dict(intake_view_sha256=_H(_C(view)),source_views_sha256=_H(_C(sources)),
+                        scope_sha256=_H(_C(scope)),payload_sha256=_H(_C(payload)))
+        request_sha = _H(_C(request))
+        producer = dict(kind="model",name=case["producer_name"])
+        if (_H(_C(payload)) != case["context_sha256"] or _H(_C(packet)) != case["input_bundle_sha256"] or
+            _C(request["binding"]) != _C(bindings) or user["request_sha256"] != request_sha or
+            _C(value["binding"]) != _C(dict(bindings,request_sha256=request_sha)) or
+            _C(request["expected_producer"]) != _C(producer) or _C(value["expected_producer"]) != _C(producer)):
+            _fail()
+        boundary = _dependency("labflow.intake_test_intent_model_boundary")
+        try:
+            rebuilt = boundary.build_intake_test_intent_prompt(view,sources,scope=scope,
+                                                              producer_name=case["producer_name"])
+        except ValueError:
+            _fail()
+        if _C(_snapshot(rebuilt)) != prompt:
+            _fail()
+        return payload
     _keys(value, ("schema_version","kind","binding","expected_producer","messages"))
     messages = value["messages"]
     if type(messages) is not list or len(messages) != 2:
@@ -764,6 +858,16 @@ def _receipt(value, settings, prompt, schema, directory, raw, success, error_cod
 
 
 def _decode(raw, matrix, prompt):
+    case = _INTENT_CASES.get(matrix["scenario_id"])
+    if case is not None:
+        payload = _intake_context(prompt,case)
+        boundary = _dependency("labflow.intake_test_intent_model_boundary")
+        try:
+            boundary.decode_intake_test_intent_response(raw,payload["intake_evidence"],payload["sources"],
+                scope=payload["scope"],producer_name=case["producer_name"])
+        except ValueError:
+            _fail()
+        return
     case = _INTAKE_CASES.get(matrix["scenario_id"])
     if case is not None:
         context = _intake_context(prompt,case)
@@ -788,8 +892,9 @@ def _now():
 def _row(matrix, slot, reason, *, status="not_run", receipt=None, reservation=None,
          budget=None, started=None, elapsed=0, decoded="not_run", attempts=0):
     settings = slot["settings"]
-    case = _INTAKE_CASES.get(matrix["scenario_id"])
-    response_invalid = "intake_response_invalid" if case is not None else "connection_response_invalid"
+    case = _INTAKE_CASES.get(matrix["scenario_id"]) or _INTENT_CASES.get(matrix["scenario_id"])
+    response_invalid = ("intent_response_invalid" if matrix["scenario_id"] in _INTENT_CASES else
+                        "intake_response_invalid" if case is not None else "connection_response_invalid")
     return dict(schema_version=1,kind="vertex_comparison_row",batch_id=matrix["batch_id"],
         run_id=slot["run_id"],row_index=slot["row_index"],
         binding=dict(scenario_id=matrix["scenario_id"],
@@ -926,13 +1031,15 @@ def _execute(matrix,index,prompt,schema,adc,directory,budget_path,approval_path,
             try:
                 _decode(raw,matrix,prompt)
                 decoded,status = "checked","success"
-                reason = ("intake_response_verified" if matrix["scenario_id"] in _INTAKE_CASES
+                reason = ("intent_response_verified" if matrix["scenario_id"] in _INTENT_CASES else
+                          "intake_response_verified" if matrix["scenario_id"] in _INTAKE_CASES
                           else "connection_verified")
             except ModelComparisonError as error:
                 if error.code == _PREFIX+"dependency_unavailable":
                     raise
                 decoded,status = "rejected","failed"
-                reason = ("intake_response_invalid" if matrix["scenario_id"] in _INTAKE_CASES
+                reason = ("intent_response_invalid" if matrix["scenario_id"] in _INTENT_CASES else
+                          "intake_response_invalid" if matrix["scenario_id"] in _INTAKE_CASES
                           else "connection_response_invalid")
             record = _row(matrix,slot,reason,status=status,receipt=receipt,
                 reservation=reservation,budget=budget,started=started,decoded=decoded,
