@@ -10,6 +10,14 @@ const REASONS='unconfigured credential_missing quota_mismatch trial_unconfirmed 
 const FAILURE_CODES=new Set(['ai_connection_ui_unavailable',
   ...'invalid_input invalid_settings credential_invalid credential_quota_mismatch dependency_unavailable evidence_error auth_failed http_error response_invalid incomplete blocked limit_exceeded timeout cancelled cleanup_failed internal_error'.split(' ').map(x=>'vertex_response_'+x),
   ...'invalid_input limit_exceeded state_error dependency_unavailable'.split(' ').map(x=>'model_comparison_'+x)]);
+const SCENARIOS={
+  'DGM-AI-CONNECTION-001':['connection-json-v1','연결 응답 형상','connection_verified','connection_response_invalid','업무 품질 미평가'],
+  ...Object.fromEntries(['intake-synthetic-s01','intake-synthetic-s02','intake-synthetic-s03'].map(id=>[id,['intake-understanding-v1','접수 분석','intake_response_verified','intake_response_invalid','의미평가 미연결 · 미평가']])),
+  ...Object.fromEntries(['intent-synthetic-i01','intent-synthetic-i02','intent-synthetic-i03'].map(id=>[id,['intake-test-intent-semantic-v1','의뢰 이해 후보','intent_response_verified','intent_response_invalid','의미평가 미연결 · 미평가']])),
+};
+function scenarioInfo(id,evaluator){const item=Object.hasOwn(SCENARIOS,id)?SCENARIOS[id]:null;return item&&(evaluator===undefined||item[0]===evaluator)?item:null;}
+const STRICT_REASONS=new Set(Object.values(SCENARIOS).flatMap(item=>item.slice(2,4)));
+const ROW_REASONS=new Set(['pending','unavailable',...'not_selected cancelled budget_rejected wall_limit gate_rejected dependency_unavailable credential_metadata_invalid budget_unavailable run_already_reserved budget_busy receipt_invalid batch_stopped'.split(' '),...STRICT_REASONS,...[...FAILURE_CODES].filter(x=>x.startsWith('vertex_response_'))]);
 const integer=(v,min=0,max=Number.MAX_SAFE_INTEGER)=>typeof v==='number'&&Number.isSafeInteger(v)&&!Object.is(v,-0)&&v>=min&&v<=max;
 const number=(v,min=0,max=Number.MAX_SAFE_INTEGER)=>typeof v==='number'&&Number.isFinite(v)&&!Object.is(v,-0)&&v>=min&&v<=max;
 const nullable=(v,check)=>v===null||check(v);
@@ -63,6 +71,7 @@ function parseDTO(raw,kind){
     need(nullable(v.active_run_id,x=>typeof x==='string'&&SHA.test(x))&&Array.isArray(v.recent_runs)&&v.recent_runs.length<=16);
     for(const r of v.recent_runs){keys(r,['run_id','state','matrix','scenario_id','created_at','finished_at']);need(SHA.test(r.run_id)&&['queued','running','cancelling','finished'].includes(r.state)&&typeof r.matrix==='boolean'&&ID.test(r.scenario_id)&&number(r.created_at)&&nullable(r.finished_at,number));}
   }else if(kind==='run'){
+    const contract=scenarioInfo(v.scenario_id);need(contract);
     keys(v,'schema_version kind run_id profile_revision scenario_id scenario_sha256 input_kind execution_mode state matrix created_at finished_at cancel_requested attempts_used cells error_code'.split(' '));
     need(typeof v.run_id==='string'&&SHA.test(v.run_id)&&integer(v.profile_revision,1)&&ID.test(v.scenario_id)&&SHA.test(v.scenario_sha256)&&v.input_kind==='registered_synthetic'&&
       [null,'actual','mock','replay'].includes(v.execution_mode)&&['queued','running','cancelling','finished'].includes(v.state)&&typeof v.matrix==='boolean'&&number(v.created_at)&&nullable(v.finished_at,number)&&
@@ -78,6 +87,10 @@ function parseDTO(raw,kind){
       else need(!v.matrix&&c.state==='not_run'&&c.reason_code==='not_selected');
       if(c.usage!==null){keys(c.usage,USAGE);for(const count of Object.values(c.usage))need(count===null||typeof count==='string'&&/^(0|[1-9]\d{0,18})$/.test(count)&&BigInt(count)<=9223372036854775807n);}
       if(c.state==='success')need(c.response_complete===true&&c.http_status===200&&c.finish_reason==='STOP'&&c.strict_decode==='pass');
+      need(ROW_REASONS.has(c.reason_code));
+      if(c.strict_decode==='pass')need(c.state==='success'&&c.reason_code===contract[2]);
+      else if(c.strict_decode==='fail')need(c.state==='failure'&&c.reason_code===contract[3]);
+      else need(c.state!=='success'&&!STRICT_REASONS.has(c.reason_code));
     }
     need(v.cells.filter(c=>c.settings!==null).length===(v.matrix?6:1));
   }else need(false);
@@ -85,7 +98,7 @@ function parseDTO(raw,kind){
 }
 
 function requestFor(profile,scenario,model,overrides,matrix){
-  validateProfile(profile);need(profile.revision>=1&&ID.test(scenario)&&typeof matrix==='boolean');
+  validateProfile(profile);need(profile.revision>=1&&ID.test(scenario)&&scenarioInfo(scenario)&&typeof matrix==='boolean');
   need(matrix?model===null:MODELS.includes(model));need(overrides!==null&&typeof overrides==='object'&&!Array.isArray(overrides));
   const allowed=matrix?['max_output_tokens','timeout_seconds']:['thinking_level','max_output_tokens','timeout_seconds'];
   for(const [key,value]of Object.entries(overrides)){need(allowed.includes(key));need(key==='thinking_level'?LEVELS.includes(value):key==='max_output_tokens'?integer(value,64,8192):number(value,1,120));}
@@ -124,10 +137,10 @@ export function createAIConnectionPanel(root){
   const finiteInput=(value,lo,hi,whole=false)=>{need(String(value).trim()!=='');const n=Number(value);need(whole?integer(n,lo,hi):number(n,lo,hi));return n;};
   const valid=token=>alive&&visible&&token===epoch;
   function renderResult(value,title){
-    const area=el('section','','ai-result');area.append(el('h3',title),el('p',`${value.state} · ${value.execution_mode??'실행 출처 미확인'} · 설정 revision ${value.profile_revision} · 생성 시도 ${value.attempts_used??'미확인'}`));
+    const contract=scenarioInfo(value.scenario_id),area=el('section','','ai-result');area.append(el('h3',title+' · '+contract[1]),el('p',`${value.state} · ${value.execution_mode??'실행 출처 미확인'} · 설정 revision ${value.profile_revision} · 생성 시도 ${value.attempts_used??'미확인'}`));
     if(value.error_code){const label=value.error_code==='vertex_response_auth_failed'?'인증 실패 관측':value.error_code==='vertex_response_incomplete'?'응답 미완료 관측':'실행 관측 미확정';area.append(el('p',label+' · 이번 결과의 완결을 확인하지 못했습니다. 이전 관측을 보존합니다.','ai-warning'));}
     const scroll=el('div','','ai-table-scroll'),table=el('table'),head=el('tr');for(const h of ['모델·추론','상태·사유','HTTP·완결','JSON·품질','사용량·비용','설정 근거'])head.append(el('th',h));const thead=el('thead');thead.append(head);table.append(thead);const body=el('tbody');
-    for(const c of value.cells){const row=el('tr');row.dataset.state=c.state;row.append(el('td',`${c.model_id}\n${c.thinking_level}`),el('td',`${c.state}${c.reason_code?' · '+c.reason_code:''}`),el('td',`${c.http_status??'미전송/미확인'} · ${c.response_complete===null?'미확인':c.response_complete?'완결':'미완결'}`),el('td',`JSON ${c.strict_decode} · 업무 품질 미평가`));
+    for(const c of value.cells){const row=el('tr');row.dataset.state=c.state;row.append(el('td',`${c.model_id}\n${c.thinking_level}`),el('td',`${c.state}${c.reason_code?' · '+c.reason_code:''}`),el('td',`${c.http_status??'미전송/미확인'} · ${c.response_complete===null?'미확인':c.response_complete?'완결':'미완결'}`),el('td',`JSON ${c.strict_decode} · ${contract[4]}`));
       const usage=el('td',`비용 미확인\n${c.usage===null?'사용량 미제공':USAGE.map(k=>`${k}: ${c.usage[k]??'미제공'}`).join('\n')}`);row.append(usage);const source=el('td');
       if(c.settings){const details=el('details'),summary=el('summary','적용 설정 보기');details.append(summary);for(const k of ['profile_revision','model_id','thinking_level','max_output_tokens','timeout_seconds','profile_sha256','settings_sha256'])details.append(el('p',`${k}: ${c.settings[k]}`));if(c.reported_model_version!==null)details.append(el('p',`공급자 modelVersion 선언: ${c.reported_model_version}`));if(c.response_id!==null)details.append(el('p',`공급자 responseId: ${c.response_id}`));source.append(details);}else source.append(el('span','미선택 · 설정 없음'));row.append(source);body.append(row);}
     table.append(body);scroll.append(table);area.append(scroll);return area;
@@ -142,19 +155,22 @@ export function createAIConnectionPanel(root){
     const state=current||good;
     if(state&&draft){
       fragment.append(el('p',`프로젝트 ${state.profile.project_id} · quota ${state.profile.quota_project_id} · aiplatform.googleapis.com · 저장 revision ${state.profile.revision}`,'ai-binding'));
-      const authLabels={missing:'인증파일 준비 미확인',other_quota:'quota 불일치',access_unknown:'인증파일 준비 · 모델 접근 미확인',verified:'실제 접근 확인 관측'};
-      fragment.append(el('p',`${authLabels[state.auth.state]} · 점검 ${when(state.auth.checked_at)}\n무료 체험 실행 허용 ${state.trial.state} · 확인 ${when(state.trial.checked_at)}\n최근 연결 조회의 잔여 생성 예산 ${state.budget.remaining_calls??'미확인'} / 6`));
-      if(state.auth.state==='access_unknown')fragment.append(el('p','모델 접근 미확인은 첫 연결 테스트의 차단 사유가 아닙니다. 다른 준비 조건이 충족되면 테스트로 확인합니다.','inline-note'));
+      const authLabels={missing:'인증파일 준비 미확인',other_quota:'quota 불일치',access_unknown:'인증파일 준비 · 모델 접근 미확인',verified:'사전 점검 확인'};
+      fragment.append(el('p',`인증 메타데이터 사전 점검 · ${authLabels[state.auth.state]} · 점검 ${when(state.auth.checked_at)}\n무료 체험 실행 허용 ${state.trial.state} · 확인 ${when(state.trial.checked_at)}\n최근 연결 조회의 잔여 생성 예산 ${state.budget.remaining_calls??'미확인'} / 6`));
+      fragment.append(el('p','실제 모델 접근·HTTP·완결·strict 결과는 아래 행별 관측에서 확인하세요.','inline-note'));
       if(!state.gate.run_allowed)fragment.append(el('p',state.gate.reasons.map(r=>reasonLabels[r]||r).join(' '),'ai-warning'));
       const form=el('section','','ai-profile');form.append(el('h3','모델별 저장 설정'));
       form.append(field('지역','ai-location',select(state.catalog.locations.map(x=>[x,x]),draft.location,v=>draft.location=v)),field('저장 기본 모델','ai-default-model',select(MODELS.map(x=>[x,x]),draft.selected_model,v=>draft.selected_model=v)));
       const grid=el('div','','ai-model-grid');for(const [i,model]of MODELS.entries()){const set=el('fieldset');set.append(el('legend',model));const values=draft.models[model];set.append(field('추론 수준','ai-level-'+i,select(LEVELS.map(x=>[x,x]),values.thinking_level,v=>values.thinking_level=v)),field('출력 토큰 64–8192','ai-output-'+i,input(values.max_output_tokens,v=>values.max_output_tokens=v)),field('timeout 초 1–120','ai-timeout-'+i,input(values.timeout_seconds,v=>values.timeout_seconds=v)));grid.append(set);}form.append(grid);
       const active=run&&run.state!=='finished';form.append(button('프로필 저장','ai-save',save,busy||!!active),button('저장값으로 되돌리기','ai-reset',()=>{draft=clone(state.profile);render();},busy));fragment.append(form);
       const execution=el('section','','ai-execution');execution.append(el('h3','이번 실행 override · 저장 설정과 별개'));
-      execution.append(field('등록 합성 입력','ai-scenario',select(state.scenarios.map(s=>[s.scenario_id,s.label]),scenario,v=>scenario=v)),field('선택 테스트 모델','ai-run-model',select(MODELS.map(x=>[x,x]),runModel,v=>{runModel=v;runModelEdited=true;})),
+      execution.append(field('등록 합성 입력','ai-scenario',select(state.scenarios.map(s=>[s.scenario_id,(scenarioInfo(s.scenario_id,s.evaluator_id)?'':'미지원 · ')+s.label]),scenario,v=>{scenario=v;render();})),field('선택 테스트 모델','ai-run-model',select(MODELS.map(x=>[x,x]),runModel,v=>{runModel=v;runModelEdited=true;})),
         field('선택 테스트 추론 override','ai-run-level',select([['','저장값 사용'],...LEVELS.map(x=>[x,x])],overrides.thinking_level,v=>overrides.thinking_level=v)),field('출력 override · 빈칸은 저장값','ai-run-output',input(overrides.max_output_tokens,v=>overrides.max_output_tokens=v)),field('timeout override · 빈칸은 저장값','ai-run-timeout',input(overrides.timeout_seconds,v=>overrides.timeout_seconds=v)));
-      const denied=busy||!!active||!current||!state.gate.run_allowed||state.profile.revision<1;
+      const selected=state.scenarios.find(s=>s.scenario_id===scenario),supported=selected&&scenarioInfo(selected.scenario_id,selected.evaluator_id);
+      const denied=busy||!!active||!current||!state.gate.run_allowed||state.profile.revision<1||!supported;
       execution.append(button('선택 모델 테스트 1회','ai-run-selected',()=>start(false),denied),button('6개 조합 비교','ai-run-matrix',()=>start(true),denied),button('실행 취소 요청','ai-cancel',cancel,busy||!active));
+      execution.append(el('p',supported?`${supported[1]} · 응답의 형식·인용 계약만 검사합니다. 의미평가·Store 입수·시험계획·시험 동작·결과 설명은 아직 미지원입니다.`:'선택 입력은 미지원입니다. 실행할 수 없습니다.','inline-note'));
+      execution.append(el('p','호스트 전역 준비와 선택 입력의 실행 승인은 별도입니다. 서버가 선택 입력의 승인과 같은 누적 예산을 실행 시 다시 검사합니다.','inline-note'));
       execution.append(el('p','6조합은 LOW/MEDIUM/HIGH 고정입니다. 추론 override를 비운 뒤 실행하세요. 최초 묶음의 512토큰·60초 상한을 초과하면 미실행 사유로 기록하며 저장값을 자동 변경하지 않습니다.','inline-note'));fragment.append(execution);
       if(state.recent_runs.length){const history=el('div','','ai-history');history.append(el('h3','이 세션의 실행 이력'));for(const r of state.recent_runs)history.append(button(`${r.matrix?'6조합':'선택1'} · ${r.state} · ${when(r.created_at)}`,'ai-history-'+r.run_id,()=>loadRun(r.run_id),busy));fragment.append(history);}
     }
@@ -233,6 +249,8 @@ export function createAIConnectionPanel(root){
   }
   async function start(matrix){
     if(busy||!current||!current.gate.run_allowed||run&&run.state!=='finished')return;
+    const selected=current.scenarios.find(s=>s.scenario_id===scenario);
+    if(!selected||!scenarioInfo(selected.scenario_id,selected.evaluator_id)){message='선택한 입력은 미지원입니다. 실행할 수 없습니다.';render();return;}
     let body;try{const values={};if(overrides.thinking_level)values.thinking_level=overrides.thinking_level;if(overrides.max_output_tokens!=='')values.max_output_tokens=finiteInput(overrides.max_output_tokens,64,8192,true);if(overrides.timeout_seconds!=='')values.timeout_seconds=finiteInput(overrides.timeout_seconds,1,120);body=requestFor(current.profile,scenario,matrix?null:runModel,values,matrix);}catch{message='이번 실행 override를 확인하세요. 6조합에는 추론 override를 넣을 수 없습니다.';render();return;}
     const capturedProfile=clone(current.profile),capturedScenario=current.scenarios.find(s=>s.scenario_id===body.scenario_id),token=epoch;
     busy=true;message='명시 실행을 요청하고 있습니다.';render();if(!valid(token))return;

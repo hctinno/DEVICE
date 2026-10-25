@@ -113,13 +113,25 @@ node frontend/intake_references/browser_check.cjs --mode docx
 ```
 # Vertex 연결 설정과 등록 합성 테스트
 
-이 영역은 `create_server(..., ai_connections=...)`를 명시한 host의 별도 기능이다. 기존 접수·보존자료 session/CSRF·35초 transport를 확장하지 않는다. 메뉴의 **모델 연결**을 선택할 때만 화면 모듈과 AI session을 조회한다. D1/D2/D3 정식 모듈이 설치되지 않은 경우 production은 명시 실패하며 모의 provider로 대체하지 않는다. 이번 UI 후보의 보호 HTTP/DOM 검사는 test-only typed dependency double이며 실제 인증·Vertex 호출 검증과 구별한다.
+이 영역은 `create_server(..., ai_connections=...)`를 명시한 host의 별도 기능이다. 기존 접수·보존자료 session/CSRF·35초 transport를 확장하지 않는다. 메뉴의 **모델 연결**을 선택할 때만 화면 모듈과 AI session을 조회한다. D1/D2/D3 정식 모듈이 없으면 명시 실패하며 모의 provider로 대체하지 않는다. 등록7 검증은 typed 경계, 정식 D1+D3/genuine decoder와 fake concrete D2만 둔 보호HTTP, 그 HTTP DTO의 DOM replay를 별도 분모로 기록한다. 이 합성 검증은 실제 인증·Vertex·업무 의미 검증이 아니다.
 
 ## Host의 정확 config6와 첫 연결 입력
 
 host config는 정확 `profile_path`, `adc_path`, `approval_path`, `budget_path`, `evidence_root`, `scenarios`다. 앞5개는 절대 native `Path`이며 reparse/symlink를 거절한다. 실제 credential 경로·파일·토큰을 UI로 보내지 않는다. profile/approval/budget/evidence는 각각 다른 private 경로다. UI는 승인·누적 budget을 작성하거나 초기화하지 않는다.
 
-`scenarios`는 tuple이며 각 등록값은 정확 `scenario_id`, `evaluator_id`, `prompt_bytes`, `response_schema_bytes`다. prompt/schema는 native bytes다. 브라우저가 원문·파일·endpoint·credential·mode·gate를 입력하거나 등록하는 API는 없다. 최초 scope는 `DGM-AI-CONNECTION-001/v1`, scenario ID는 `DGM-AI-CONNECTION-001`, evaluator는 `connection-json-v1`이며 두 version은1이다.
+`scenarios`는 tuple이며 각 등록값은 정확 `scenario_id`, `evaluator_id`, `prompt_bytes`, `response_schema_bytes`다. prompt/schema는 native bytes다. 브라우저가 원문·파일·endpoint·credential·mode·gate를 입력하거나 등록하는 API는 없다. version/family/assessment를 config에 추가하지 않는다. `scope_id`는 scenario에서 파생하지 않는 독립 ASCII ID이며 `[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}` 문법을 따른다. 슬래시가 들어간 ID는 거절한다. 선택 case와 승인 ID/evaluator/prompt/schema·project/quota/auth/trial/누적 예산을 서버가 별도로 정확 결합한다.
+
+지원 입력은 아래7개다. host가 원 pair를 기존 tuple에 제공하며 D3 public build가 등록 pair를 최종 검증한다. 알려지지 않은 ID/evaluator는 미지원으로 표시하고 실행을 막는다. 각 scenario/evaluator version은 native int1/1이다. 원 wire/schema 지문은 [등록7 공통 설계](../superpowers/specs/2026-10-25-vertex-registered-inputs-ui-design.md)와 [intent registry](vertex_intent_registry_contract.json)를 따른다.
+
+| scenario_id | evaluator_id | schema |
+|---|---|---|
+| DGM-AI-CONNECTION-001 | connection-json-v1 | 321 bytes |
+| intake-synthetic-s01 / s02 / s03 | intake-understanding-v1 | 공통1410 bytes |
+| intent-synthetic-i01 | intake-test-intent-semantic-v1 | 2694 / 937b3b9fa423bbfea40116495dd7cbed3937a3839e17445f08f7a37e48faf83d |
+| intent-synthetic-i02 | intake-test-intent-semantic-v1 | 2694 / 47bfac67fde55165684381d3c624a07566b2790916f148e7d3534e593ef1f75b |
+| intent-synthetic-i03 | intake-test-intent-semantic-v1 | 2694 / 75e492477ac8d7bb8949143b46941aec089359522c1741d70f969a135434f806 |
+
+intent schema3은 길이만 같고 request binding이 달라 SHA가 각각 다르다. 기존1410이나 하나의2694 schema로 대체하지 않는다. analysis의 genuine build_analysis_prompt/decode_analysis_response와 intent의 별도 build_intake_test_intent_prompt/decode_intake_test_intent_response를 D3가 직접 사용한다. UI는 raw context/응답을 해석하거나 private case dict를 import하지 않는다.
 
 아래 변수들은 host가 이미 준비한 private 경로다. 명시한 원 pair를 읽어 그대로 등록하며 새 입력을 발명하지 않는다. `isolated_adc_path`, 승인 파일 및 누적 ledger는 총괄이 준비한 것을 사용한다.
 
@@ -164,6 +176,8 @@ finally:
 
 자동 재시도·continuation·대체모델·추가 generation preflight는0이다. 모델 접근 미확인은 첫 테스트 자체의 차단 이유가 아니다. 인증 파일 metadata-ready와 auth/model access verified를 구별하며 실제403은 row 실패로 기록한다. trial은 상태·확인 시각만 표시하고 계정·잔액·credential 경로를 투영하지 않는다.
 
+상단은 인증 메타데이터 **사전 점검**이다. 실제 모델 접근·HTTP·완결·strict는 각 행의 관측으로 확인한다. 전역 gate가 준비됐어도 다른 선택 case의 승인을 뜻하지 않으며 선택 승인 불일치는 worker/예약/producer 전에409로 거절한다. case 변경·새 승인·새 profile/batch/clone은 같은 누적6/3072를 reset/refund하지 않는다. 소진/active면 모든 case의 추가 생성0이다. 등록7은 추가 실제 실행 권한이 아니다.
+
 화면 selectors: 메뉴 `[data-view="ai-connections"]`, root `#ai-connections-panel`, 저장 `#ai-save`, 지역 `#ai-location`, 저장 기본 모델 `#ai-default-model`, Argon/Flash 설정 `#ai-level-0/1`, `#ai-output-0/1`, `#ai-timeout-0/1`; 등록 입력 `#ai-scenario`, 선택 모델 `#ai-run-model`, 이번 override `#ai-run-level`, `#ai-run-output`, `#ai-run-timeout`; 선택1 `#ai-run-selected`, **최초 matrix6 `#ai-run-matrix`**, 취소 `#ai-cancel`. 최초 matrix6에는 추론 override를 비운다. 사용자 추가 인증 질문이나 파일 경로 입력을 만들지 않는다.
 
 ## HTTP·투영·수명
@@ -174,8 +188,26 @@ POST profile은 정확 `{profile,expected_revision}`, run은 `{expected_revision
 
 UI는 서버의 settings/profile hash를 opaque binding으로 비교하며 Python60.0을 JS60으로 재canonical하지 않는다. selected/matrix의 요청값·서버 snapshot·후속 record를 대조한다. 사용량은 원 nullable6키를 유지하되 signed64 정밀도를 잃지 않도록 decimal string/null로 투영한다. cost는null/미확인이다. actual/mock/replay와 입력 synthetic, HTTP/완결·strict decode·업무 품질을 구별하며 첫 연결의 업무 품질은 not_assessed다. D2 artifacts·raw/response/thought·credential·headers·파일 경로는 UI DTO에 넣지 않는다.
 
+connection strict reason은 connection_verified/connection_response_invalid, analysis는 intake_response_verified/intake_response_invalid, intent는 intent_response_verified/intent_response_invalid다. native version·입력군·strict/status/reason/error를 정확 결합하고 미등록 code를 거절한다. 업무 두 입력군은 assessment not_assessed/null/semantic_evaluator_not_connected이며 quality=not_run을 유지한다. evaluator 이름에 semantic이 있어도 의미평가 연결을 뜻하지 않는다. 원 origin zero SHA·검증 false/권한 false를 actual 전송이나 형상/인용 검사로 true로 바꾸지 않는다. Store 입수·의뢰 확정·규칙/시험법 정답·시험계획·가상/실장비 동작·결과 설명은 미지원이며 analysis→intent를 자동 연쇄 실행하지 않는다.
+
 수명 변경·늦은 응답·렌더 오류·요청 실패에는 이전 성공 관측과 draft를 보존하고 현재 권한/결과로 승격하지 않는다. POST 전달 불명은 자동 재전송하지 않고 명시 refresh로 자기 실행을 대조한다. 숨김·BFCache suspension은 poll/HTTP를 중단하고, destroy는 DOM/listener/nonce를 회수한다. 취소는 미전송 작업 중지·진행 중 로컬 종료 시도이며 원격 중단/무과금/예산 환불을 보장하지 않는다. close는 AI worker를 cancel하고 최대5초 join하며 살아 있으면 close_unconfirmed, 기존 HTTP cleanup은 finally에서 수행한다.
 
 실패 body는 `{error:{code}}`의 `ai_connection_ui_` 고정 코드만이다. invalid_request400/access_denied403/not_found404/method_not_allowed405/request_timeout408/revision_conflict409/profile_not_saved409/gate_blocked409/length_required411/input_limit413/unsupported_media415/expectation_failed417/busy429/unconfigured·session_unavailable·unavailable503을 구별한다. producer403/429는 run row의 provider 관측이며 UI session403과 다른 상태다. 실제 호출과 최종 업무·실장비 검증은 이 UI의 typed double 통과로 대체하지 않는다.
 
 D3 기록 I/O 실패 등으로 원 D2 예외가 올라오면 원 객체/receipt는 runtime의 private 실패 기록에 보존하고, run DTO에는 정식 D2/D3 whitelist의 고정 code만 넣는다. raw 예외·artifact 경로는 반환하지 않으며 aggregate 시도 수·실행 출처는 미확정/null로 둔다. 정상 failed row의 알려진 generation0/1과 absent artifact bytes0을 결측값으로 바꾸지 않는다. 새 세션이 발급되면 이전 세션 run의 controls/관측·history를 퇴역시키고 자동 재실행하지 않는다.
+
+## 등록7의 합성 보호HTTP와 DOM replay 검사
+
+기존 tests/test_ai_connection_ui.py 안의 RegisteredHTTPTests는 정식 D1 profile과 genuine D3 public builder/runner, 두 genuine 업무 decoder를 사용하고 D2 inspect/produce만 모의다. 원14 pair는 같은 테스트 파일의 literal이며 새 fixture 파일이나 `.local` 런타임 입력에 의존하지 않는다. 사전 metadata 횟수와 fake D2 생산/관측 시도를 별도로 기록한다. nullable 자연완료/legacy True·origin false/zero·intent65536/65537·cross-family·실패 decoder0·same budget·원 session/CSRF도 검사한다.
+
+`VERTEX_UI_HTTP_CAPTURE`는 선택적인 **출력** 경로다. 설정하지 않아도 owned HTTP 검사는 동일하게 실행된다. 기록된 보호HTTP DTO를 `VERTEX_UI_HTTP_REPLAY`로 browser_check에 제공하면390/1440 replay를 추가한다. replay의 API/producer 실행은0이며 DTO 사본의 표시 횟수를 genuine API 성공 수에 더하지 않는다. 제공하지 않은 replay는 not_run으로 명시한다.
+
+```powershell
+New-Item -ItemType Directory -Path .local -Force | Out-Null
+$env:VERTEX_UI_HTTP_CAPTURE = Join-Path (Resolve-Path .) '.local/registered-http.json'
+python -B -X utf8 -m unittest discover -s tests -p test_ai_connection_ui.py -v
+$env:VERTEX_UI_HTTP_REPLAY = $env:VERTEX_UI_HTTP_CAPTURE
+node frontend/ai_connections/browser_check.cjs
+```
+
+이 검증은 실제 ADC/인증/모델·실 ledger·현장 장비를 사용하지 않는다. 원 실패/unknown·nullable usage/cost·no-reset/no-refund를 보존하며 실제 최초6과의 근거·분모를 구별한다.
