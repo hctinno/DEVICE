@@ -1445,12 +1445,44 @@ def _conducted_preview_response(value):
     return _conducted_preview_json(value,262144)
 
 
+
+def _conducted_result_selection(value):
+    if value is None:return None
+    try:
+        raw=_conducted_preview_json(value,1048576,40);detached=json.loads(raw)
+        if type(detached) is not dict or set(detached)!=set('intake_id revision expected_current_binding result'.split()):raise ValueError()
+        if type(detached['intake_id']) is not str or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,149}',detached['intake_id'],re.ASCII):raise ValueError()
+        if type(detached['revision']) is not int or detached['revision']<1:raise ValueError()
+        if detached['expected_current_binding'] is not None:
+            from .ui_read_model import _result_binding
+            _result_binding(detached['expected_current_binding'])
+        return raw
+    except (ReadModelError,ValueError,TypeError,KeyError,UnicodeError,RecursionError,OverflowError):
+        raise ValueError('intake_conducted_result_invalid_input') from None
+
+
+def _conducted_result_response(value,intake_id):
+    from .ui_read_model import _result_keys,_result_need,_result_binding,_RESULT_REASON,validate_conducted_result_report
+    raw=_conducted_preview_json(value,1048576,40);value=json.loads(raw)
+    _result_keys(value,'schema_version kind intake_id revision context_sha256 source_kind expected_current_binding relation result')
+    _result_need(type(value['schema_version']) is int and value['schema_version']==1 and value['kind']=='intake_conducted_result_view' and value['intake_id']==intake_id and type(value['revision']) is int and value['revision']>0 and type(value['context_sha256']) is str and re.fullmatch(r'[a-f0-9]{64}',value['context_sha256']) and value['source_kind']=='provided_snapshot')
+    relation=value['relation'];_result_keys(relation,'status reasons provided_revision')
+    _result_need(type(relation['reasons']) is list and all(type(x) is str and x in _RESULT_REASON for x in relation['reasons']) and len(set(relation['reasons']))==len(relation['reasons']) and type(relation['provided_revision']) is int and relation['provided_revision']>0 and relation['status']==('blocked' if relation['reasons'] else 'matched'))
+    expected=value['expected_current_binding']
+    if expected is not None:_result_binding(expected)
+    if relation['status']=='matched':
+        _result_need(expected is not None and expected['intake_id']==intake_id and expected['revision']==value['revision'] and expected['context_sha256']==value['context_sha256'] and relation['provided_revision']==value['revision'])
+    validate_conducted_result_report(value['result'])
+    return raw
+
+
 def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None,
                   intake_reference_store=None, intake_reference_read_scope=(),
                   intake_reference_append_scope=(), intake_reference_review_inputs=(),
                   intake_test_intent_inputs=(), intake_docx_reference_selection=None, ai_connections=None,
-                  ai_connection_campaign_readback=None, conducted_plan_preview_inputs=None):
+                  ai_connection_campaign_readback=None, conducted_plan_preview_inputs=None, conducted_result_snapshot=None):
     conducted_selection = _conducted_preview_selection(conducted_plan_preview_inputs)
+    result_snapshot = _conducted_result_selection(conducted_result_snapshot)
     ai_runtime = ai_server_wrapper = None
     if ai_connections is not None or ai_connection_campaign_readback is not None:
         ai_module = importlib.import_module('.ai_connection_ui', __package__)
@@ -1647,6 +1679,9 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 path = unquote(parsed.path, encoding='utf-8', errors='strict')
             except ValueError:
                 return self.error(404, 'route_not_found')
+            result_match = re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})/conducted-result',path)
+            if result_match:
+                return self.read_conducted_result(result_match[1],parsed,path)
             preview_match = re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})/conducted-plan-preview',path)
             if preview_match:
                 return self.read_conducted_preview(preview_match[1],parsed,path)
@@ -1747,6 +1782,33 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 self.error(404 if exc.code == 'intake_not_found' else 503, exc.code)
             except (OSError, ValueError):
                 self.error(503, 'store_unavailable')
+
+
+        def read_conducted_result(self,intake_id,parsed,path):
+            try:return Handler._read_conducted_result(self,intake_id,parsed,path)
+            except (OSError,TimeoutError):self.close_connection=True
+
+        def _read_conducted_result(self,intake_id,parsed,path):
+            self.close_connection=True;self.connection.settimeout(5)
+            if self.command!='GET':
+                self._reference_allow='GET';return self.error(405,'intake_conducted_result_read_only')
+            lengths=self.headers.get_all('Content-Length',[])
+            framed=(not self.headers.get_all('Transfer-Encoding') and not self.headers.get_all('Content-Encoding') and not self.headers.get_all('Expect') and len(lengths)<=1 and (not lengths or re.fullmatch('0+',lengths[0],re.ASCII)))
+            if not framed or parsed.query or parsed.fragment or self.path!=path:
+                if len(lengths)==1 and re.fullmatch(r'[0-9]{1,5}',lengths[0],re.ASCII) and int(lengths[0])<=32768 and not self.headers.get_all('Transfer-Encoding'):
+                    try:self.rfile.read(int(lengths[0]))
+                    except (OSError,TimeoutError):pass
+                return self.error(400,'intake_conducted_result_invalid_request')
+            if len(self.headers.get_all('Host',[]))!=1 or len(self.headers.get_all('Origin',[]))>1 or len(self.headers.get_all('Sec-Fetch-Site',[]))>1:
+                return self.error(403,'local_origin_required')
+            try:
+                snapshot=json.loads(result_snapshot) if result_snapshot is not None else None
+                raw=_conducted_result_response(model.conducted_result_view(intake_id,snapshot),intake_id)
+            except ReadModelError as error:return self.error(404 if error.code=='intake_not_found' else 503,error.code)
+            except (ValueError,TypeError,KeyError,IndexError,UnicodeError,RecursionError,OverflowError):return self.error(503,'intake_conducted_result_invalid')
+            except (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):raise
+            except Exception:return self.error(503,'intake_conducted_result_unavailable')
+            return self.send_payload(200,raw)
 
         def read_conducted_preview(self,intake_id,parsed,path):
             try:

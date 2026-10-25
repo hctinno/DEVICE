@@ -134,13 +134,13 @@ const PLAN_FIELDS=['frequency_hz','power_dbm','bandwidth_hz','duty_cycle','modul
 const PLAN_FACTS='product_type customer manufacturer model market purpose features antenna_gain power_target firmware'.split(' ');
 const PLAN_GAPS='native_input_invalid analysis_invalid context_invalid expected_revision_changed_or_invalid expected_context_changed_or_invalid analysis_evidence_invalid conflicting_intake_fact missing_intake_field follow_up_missing_field product_identity unread_documents uncertain_intake_fact intent_value_not_in_request_quote invalid_source_settings unknown_source_field missing_setting unsupported_modulation invalid_setting invalid_rf_domain invalid_method unknown_method_field unsupported_method_field missing_method_field invalid_basis unknown_basis_field missing_or_invalid_basis unsupported_or_invalid_basis basis_value_mismatch basis_quote_value_mismatch basis_evidence_invalid'.split(' ');
 const previewNeed=value=>{if(!value)throw Error('intake_conducted_preview_invalid_response');};
-function previewJSON(raw){
-  previewNeed(typeof raw==='string'&&new TextEncoder().encode(raw).length<=262144);
+function previewJSON(raw,cap=262144,countKeys=false){
+  previewNeed(typeof raw==='string'&&new TextEncoder().encode(raw).length<=cap);
   let i=0,nodes=0;const space=()=>{while(/[\x20\t\r\n]/.test(raw[i]||'!'))i++;};
   const string=()=>{const start=i++;while(i<raw.length){if(raw[i]==='\\'){i+=2;continue;}if(raw[i++]==='"'){const text=JSON.parse(raw.slice(start,i));previewNeed(text.isWellFormed());return text;}}throw Error('intake_conducted_preview_invalid_response');};
   const value=depth=>{
     previewNeed(depth<=40&&++nodes<=100000);space();const c=raw[i];if(c==='"')return string();
-    if(c==='{'){i++;space();const out=Object.create(null);if(raw[i]==='}'){i++;return out;}while(true){space();previewNeed(raw[i]==='"');const key=string();previewNeed(!Object.hasOwn(out,key));space();previewNeed(raw[i++]===':');out[key]=value(depth+1);space();const end=raw[i++];if(end==='}')return out;previewNeed(end===',');}}
+    if(c==='{'){i++;space();const out=Object.create(null);if(raw[i]==='}'){i++;return out;}while(true){space();previewNeed(raw[i]==='"');const key=string();if(countKeys)previewNeed(++nodes<=100000);previewNeed(!Object.hasOwn(out,key));space();previewNeed(raw[i++]===':');out[key]=value(depth+1);space();const end=raw[i++];if(end==='}')return out;previewNeed(end===',');}}
     if(c==='['){i++;space();const out=[];if(raw[i]===']'){i++;return out;}while(true){out.push(value(depth+1));space();const end=raw[i++];if(end===']')return out;previewNeed(end===',');}}
     for(const [token,result]of [['true',true],['false',false],['null',null]])if(raw.startsWith(token,i)){i+=token.length;return result;}
     const number=/^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/.exec(raw.slice(i));previewNeed(number);i+=number[0].length;
@@ -153,8 +153,9 @@ export function conductedPreviewValue(value){
   const encode=v=>v===null?'null':typeof v==='string'?JSON.stringify(v):Array.isArray(v)?'['+v.map(encode).join(',')+']':typeof v==='object'?'{'+Object.entries(v).map(([k,x])=>JSON.stringify(k)+':'+encode(x)).join(',')+'}':Object.is(v,-0)?'-0':String(v);
   return value===undefined?'제공 항목 없음':value===null?'미제공(null)':typeof value==='object'?encode(value):Object.is(value,-0)?'-0':String(value);
 }
-export function parseConductedPlanPreview(raw,context){
-  const v=previewJSON(raw),need=previewNeed;
+export function parseConductedPlanPreview(raw,context){return validatePlanPreviewPacket(previewJSON(raw),context);}
+function validatePlanPreviewPacket(v,context){
+  const need=previewNeed;
   const keys=(x,names)=>{need(x!==null&&typeof x==='object'&&!Array.isArray(x));const actual=Object.keys(x);need(actual.length===names.length&&actual.every(k=>names.includes(k)));};
   const text=x=>typeof x==='string'&&x.trim().length>0;
   const sha=x=>typeof x==='string'&&x.length===64&&/^[a-f0-9]+$/.test(x);
@@ -204,5 +205,67 @@ export function parseConductedPlanPreview(raw,context){
   need(p.verification.current_version==='caller_snapshot_only'&&p.verification.source_bytes==='not_reopened'&&p.verification.regulatory==='not_assessed'&&p.verification.measurement_prediction==='not_assessed'&&p.verification.execution_authority===false);
   const ready=p.status==='ready_for_simulation';need(ready===!p.gaps.some(g=>g.blocking)&&p.verification.evidence===(ready?'validated_in_memory':'not_validated'));
   if(ready)need(v.selection_status==='matched'&&Object.values(p.binding).every(x=>x!==null));
+  return v;
+}
+
+const RESULT_INVALID=new Set('acquisition_invalid evidence_context_missing input_limit invalid_evidence journal_header_invalid journal_integrity_invalid journal_invalid journal_limit journal_state_invalid measurement_invalid measurement_path_conflict measurement_stale native_input_invalid observation_clock_regression observation_invalid output_limit plan_basis_invalid plan_binding_invalid plan_binding_mismatch plan_hash_mismatch plan_intake_invalid plan_invalid plan_limit plan_method_invalid plan_verification_invalid receipt_advance_clock receipt_identity_or_clock receipt_invalid report_invalid run_binding_mismatch setup_advance_invalid setup_clock_mismatch setup_duplicate_request setup_hash_mismatch setup_identity_invalid setup_invalid setup_limit setup_receipt_invalid source_metadata_mismatch source_settings_mismatch topology_hash_mismatch topology_invalid'.split(' ')),RESULT_INCOMPLETE=new Set('correction_overflow execution_incomplete journal_incomplete measurement_missing measurement_not_referenced measurement_reference_missing path_ambiguous path_configuration_invalid path_configuration_missing path_selection_missing plan_blocked post_setup_configuration setup_failed setup_missing setup_partial unit_conversion_failed unsupported_path_device'.split(' ')),RESULT_GAP_ONLY=new Set('correction_basis_invalid correction_basis_missing metric_mismatch'.split(' '));
+const RESULT_REASONS='provided_revision_changed expected_current_binding_missing expected_intake_mismatch expected_revision_mismatch expected_context_mismatch expected_analysis_context_mismatch expected_analysis_mismatch result_plan_binding_unavailable result_plan_binding_mismatch result_plan_hash_mismatch result_plan_input_hash_mismatch result_report_hash_mismatch result_run_binding_mismatch'.split(' ');
+export function parseConductedResultView(raw,context){
+  const v=previewJSON(raw,1048576,true),need=x=>{if(!x)throw Error('intake_conducted_result_invalid');};
+  const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+  const keys=(x,fields)=>need(object(x)&&Object.keys(x).length===fields.split(' ').length&&Object.keys(x).every(k=>fields.split(' ').includes(k)));
+  const text=x=>typeof x==='string'&&x.trim().length>0,sha=x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x);
+  const number=x=>typeof x==='bigint'||typeof x==='number'&&Number.isFinite(x),integer=x=>typeof x==='bigint'?x>=0n:Number.isSafeInteger(x)&&x>=0;
+  const binding=x=>{keys(x,'intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256');need(text(x.intake_id)&&/^[A-Za-z0-9][A-Za-z0-9_.-]{0,149}$/.test(x.intake_id)&&Number.isSafeInteger(x.revision)&&x.revision>0);for(const k of ['analysis_context_id','context_sha256','analysis_sha256','plan_sha256'])need(sha(x[k]));};
+  keys(v,'schema_version kind intake_id revision context_sha256 source_kind expected_current_binding relation result');
+  need(v.schema_version===1&&v.kind==='intake_conducted_result_view'&&v.intake_id===context.intake_id&&v.revision===context.revision&&Number.isSafeInteger(v.revision)&&v.revision>0&&sha(v.context_sha256)&&v.source_kind==='provided_snapshot');
+  keys(v.relation,'status reasons provided_revision');const relation=v.relation;
+  need(Array.isArray(relation.reasons)&&relation.reasons.every(x=>RESULT_REASONS.includes(x))&&new Set(relation.reasons).size===relation.reasons.length&&Number.isSafeInteger(relation.provided_revision)&&relation.provided_revision>0&&relation.status===(relation.reasons.length?'blocked':'matched'));
+  const resultField=/^(?:input|output|plan_input(?:\.(?:binding|gaps|status|verification|intake|plan(?:\.basis_refs)?))?|journal_read(?:\.(?:events|header|integrity))?|setup_snapshot(?:\.[0-9]+)?|topology|run_report|measurement_ref|calculation|observation\.[\s\S]+)$/;
+  const expected=v.expected_current_binding;if(expected!==null)binding(expected);
+  const reason=(condition,code)=>{if(condition)need(relation.status==='blocked'&&relation.reasons.includes(code));};
+  reason(expected===null,'expected_current_binding_missing');reason(relation.provided_revision!==v.revision,'provided_revision_changed');
+  if(expected!==null){reason(expected.intake_id!==v.intake_id,'expected_intake_mismatch');reason(expected.revision!==v.revision,'expected_revision_mismatch');reason(expected.context_sha256!==v.context_sha256,'expected_context_mismatch');}
+  const r=v.result;keys(r,'schema_version kind status binding raw_measurement setup_provenance calculation gaps failure verification');
+  need(r.schema_version===1&&r.kind==='conducted_twin_result'&&['recorded','incomplete','invalid'].includes(r.status));
+  need(object(r.binding));const b=r.binding,size=Object.keys(b).length;
+  if(size===2)keys(b,'plan_input run_report');
+  else if(size===11){keys(b,'plan_input run_report plan_input_sha256 setup_sha256 journal_file_sha256 journal_head_sha256 report_sha256 topology_sha256 run_id runtime_instance_id measurement_ref');for(const k of ['plan_input_sha256','setup_sha256','journal_file_sha256','journal_head_sha256','report_sha256','topology_sha256'])need(sha(b[k]));for(const k of ['run_id','runtime_instance_id','measurement_ref'])need(text(b[k]));}
+  else need(size===0);
+  const measurement=r.raw_measurement;
+  if(measurement!==null){keys(measurement,'packet event_id sequence device_id tick setup_revision quantity reference_plane');need(object(measurement.packet)&&measurement.device_id==='sensor');}
+  const setup=r.setup_provenance;keys(setup,'records topology path');need(Array.isArray(setup.path));
+  for(const edge of setup.path){need(object(edge)&&edge.kind==='rf'&&object(edge.source)&&object(edge.target));for(const side of ['source','target'])need(text(edge[side].device_id)&&text(edge[side].port));}
+  const calc=r.calculation;keys(calc,'raw_power_w raw_reference_plane correction_ledger target_reference_plane corrected conformity');need([null,'source_output'].includes(calc.target_reference_plane));
+  if(calc.raw_power_w!==null){keys(calc.raw_power_w,'value unit');need(number(calc.raw_power_w.value)&&calc.raw_power_w.value>0&&calc.raw_power_w.unit==='W');}
+  need(Array.isArray(calc.correction_ledger));for(const row of calc.correction_ledger){
+    keys(row,'device_id output_port setting loss_db record_index request_id tick setup_revision propagation_db already_applied compensation_db');
+    for(const k of ['device_id','output_port','request_id'])need(text(row[k]));for(const k of ['loss_db','propagation_db','compensation_db'])need(number(row[k]));for(const k of ['record_index','tick','setup_revision'])need(integer(row[k]));
+    need(['attenuation_db','loss_db','coupling_db','through_loss_db'].includes(row.setting)&&row.already_applied===false);
+  }
+  if(calc.corrected!==null){keys(calc.corrected,'value unit power_w');need(number(calc.corrected.value)&&calc.corrected.unit==='dBm'&&number(calc.corrected.power_w)&&calc.corrected.power_w>0);}
+  keys(calc.conformity,'status verdict numeric_limit_dbm uncertainty_db');need(calc.conformity.status==='not_assessed'&&calc.conformity.verdict===null&&calc.conformity.numeric_limit_dbm===null&&calc.conformity.uncertainty_db===null);
+  need(Array.isArray(r.gaps));if(r.status!=='invalid')for(const gap of r.gaps){keys(gap,'code field provided blocking');need([...PLAN_GAPS,...RESULT_INVALID,...RESULT_INCOMPLETE,...RESULT_GAP_ONLY].includes(gap.code)&&text(gap.field)&&typeof gap.blocking==='boolean');need(PLAN_GAPS.includes(gap.code)?/^(?:input|context|analysis|(?:binding|intake)\.[\s\S]+|(?:source_settings|method|basis)(?:\.[\s\S]+)?)$/.test(gap.field):resultField.test(gap.field)||['quantity','quantity.metric'].includes(gap.field));}
+  if(r.failure!==null){keys(r.failure,'code field');need(text(r.failure.field)&&resultField.test(r.failure.field)&&(r.status==='invalid'?RESULT_INVALID:r.status==='incomplete'?RESULT_INCOMPLETE:new Set()).has(r.failure.code));}
+  else need(r.status!=='invalid');
+  if(r.status!=='invalid'&&size>0){
+    const plan=b.plan_input;need(object(plan)&&object(plan.binding));const pc={intake_id:typeof plan.binding.intake_id==='string'?plan.binding.intake_id:v.intake_id,revision:Number.isSafeInteger(plan.binding.revision)&&plan.binding.revision>0?plan.binding.revision:v.revision};
+    validatePlanPreviewPacket({schema_version:1,kind:'intake_conducted_plan_preview',...pc,context_sha256:sha(plan.binding.context_sha256)?plan.binding.context_sha256:v.context_sha256,context_scope:'current_provided_context',selection_status:'matched',plan_input:plan},pc);
+  }
+  if(relation.status==='matched'){
+    need(expected!==null&&object(b.plan_input)&&object(b.plan_input.binding));binding(b.plan_input.binding);
+    need(Object.keys(expected).every(k=>expected[k]===b.plan_input.binding[k]));
+  }
+  if(r.status==='recorded'){
+    need(r.failure===null&&size===11&&measurement!==null&&calc.corrected!==null&&b.plan_input.status==='ready_for_simulation'&&object(b.run_report)&&Object.keys(b.run_report).length===15);
+    const packet=measurement.packet;need('status valid value unit frequency_hz power_dbm duty_cycle crest_factor_db acquisition_tick acquisition_setup_revision source_id'.split(' ').every(k=>Object.hasOwn(packet,k)));
+    need(packet.status==='ok'&&packet.valid===true&&packet.unit==='dBm'&&packet.source_id==='sensor');for(const k of ['value','frequency_hz','power_dbm','duty_cycle','crest_factor_db'])need(number(packet[k]));for(const k of ['acquisition_tick','acquisition_setup_revision'])need(integer(packet[k]));
+    need(packet.value===packet.power_dbm&&text(measurement.event_id)&&integer(measurement.sequence)&&measurement.sequence>0&&integer(measurement.tick)&&integer(measurement.setup_revision));
+    keys(measurement.quantity,'metric reference_plane loss_compensation_applied loss_compensation_sign');need(measurement.quantity.metric==='on'&&measurement.quantity.reference_plane==='sensor_input'&&measurement.quantity.loss_compensation_applied===false&&measurement.quantity.loss_compensation_sign===1);
+    need(Array.isArray(setup.records)&&setup.records.length<=32&&object(setup.topology)&&Array.isArray(setup.topology.devices)&&Array.isArray(setup.topology.connections));
+    for(const node of setup.topology.devices)need(object(node)&&text(node.id)&&text(node.profile_id));for(const edge of setup.topology.connections){need(object(edge)&&text(edge.kind)&&object(edge.source)&&object(edge.target));for(const side of ['source','target'])need(text(edge[side].device_id)&&text(edge[side].port));}
+    need(measurement.reference_plane==='sensor_input'&&calc.target_reference_plane==='source_output');for(const record of setup.records){keys(record,'request_id operation device_id action parameters receipt tick setup_revision');need(text(record.request_id)&&['execute','advance'].includes(record.operation));for(const k of ['device_id','action'])need(record[k]===null||text(record[k]));for(const k of ['parameters','receipt'])need(record[k]===null||object(record[k]));for(const k of ['tick','setup_revision'])need(record[k]===null||integer(record[k]));}
+  }
+  keys(r.verification,'synthetic hardware_verified physical_verified source_bytes method_approval trust_scope execution_authority');need(r.verification.synthetic===true&&r.verification.hardware_verified===false&&r.verification.physical_verified===false&&r.verification.source_bytes==='not_reopened'&&r.verification.method_approval==='not_assessed'&&r.verification.trust_scope==='provided_host_snapshots_and_hash_consistency'&&r.verification.execution_authority===false);
   return v;
 }

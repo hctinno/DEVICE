@@ -1846,5 +1846,85 @@ class ConductedPlanPreviewHTTPTests(unittest.TestCase):
         self.assertEqual(attempts,[(503,'intake_conducted_preview_invalid_response')]);self.assertTrue(handler.close_connection)
 
 
+
+class ConductedResultHTTPTests(unittest.TestCase):
+    def setUp(self):
+        from test_ui_read_model import conducted_context_fixture,provided_result_fixture
+        self.temp=tempfile.TemporaryDirectory(prefix='result-http-');self.addCleanup(self.temp.cleanup)
+        self.fixture=conducted_context_fixture(Path(self.temp.name));self.snapshot=provided_result_fixture(self.fixture)
+
+    def start(self,snapshot=None):
+        try:server=create_server(self.fixture['store'].root,port=0,conducted_result_snapshot=snapshot)
+        except TypeError as error:self.fail('missing provided result startup keyword: '+str(error))
+        thread=threading.Thread(target=server.serve_forever,kwargs={'poll_interval':.01},daemon=True);thread.start()
+        def stop():
+            address=server.server_address;server.shutdown();server.server_close();thread.join(5);self.assertFalse(thread.is_alive());self.assertEqual(server.socket.fileno(),-1)
+            with socket.socket() as probe:probe.bind(address)
+        self.addCleanup(stop);return server
+
+    def read(self,server,*,suffix='',headers=None,body=None,method='GET'):
+        connection=http.client.HTTPConnection(*server.server_address,timeout=6);origin='http://127.0.0.1:'+str(server.server_port)
+        try:
+            connection.request(method,'/api/intakes/'+self.fixture['intake_id']+'/conducted-result'+suffix,body=body,headers={'Origin':origin,'Sec-Fetch-Site':'same-origin',**(headers or {})})
+            response=connection.getresponse();raw=response.read();return response.status,dict(response.getheaders()),json.loads(raw) if raw else None
+        finally:connection.close()
+
+    def test_snapshot_detach_fresh_RO_GET_and_provided_only_no_builder(self):
+        original=deepcopy(self.snapshot);server=self.start(self.snapshot);self.snapshot['result']['raw_measurement']['packet']['value']=71
+        from labflow.ui_read_model import IntakeReadModel
+        genuine=IntakeReadModel.current_conducted_plan_context;calls=[]
+        def observed(model,intake):calls.append(intake);return genuine(model,intake)
+        database=self.fixture['store'].db.read_bytes()
+        with mock.patch.object(IntakeReadModel,'current_conducted_plan_context',observed):
+            for _ in range(2):
+                status,headers,value=self.read(server);self.assertEqual(status,200);self.assertEqual(value['result'],original['result']);self.assertEqual(value['relation']['status'],'matched');self.assertEqual(headers['Cache-Control'],'no-store')
+        self.assertEqual(len(calls),2);self.assertEqual(self.fixture['store'].db.read_bytes(),database)
+        self.assertNotIn('labflow.virtual_fleet.conducted_twin_result',sys.modules)
+
+    def test_missing_invalid_expected_binding_block_and_shape_error_are_distinct(self):
+        self.assertEqual(self.read(self.start())[2]['error']['code'],'intake_conducted_result_missing')
+        value=deepcopy(self.snapshot);value['expected_current_binding']=None
+        status,_,report=self.read(self.start(value));self.assertEqual(status,200);self.assertEqual(report['relation']['reasons'],['expected_current_binding_missing']);self.assertEqual(report['result'],value['result'])
+        value=deepcopy(self.snapshot);value['result']['verification']['execution_authority']=True
+        status,_,report=self.read(self.start(value));self.assertEqual(status,503);self.assertEqual(report['error']['code'],'intake_conducted_result_invalid')
+
+    def test_normal_embedded_plan_cannot_promote_D1_execution_authority(self):
+        snapshot=deepcopy(self.snapshot);snapshot['result']['binding']['plan_input']['verification']['execution_authority']=True
+        status,_,value=self.read(self.start(snapshot));self.assertEqual(status,503);self.assertEqual(value['error']['code'],'intake_conducted_result_invalid')
+
+    def test_exact_native_startup_caps_hooks_and_binding_type_before_listen(self):
+        class Hook(dict):
+            def __iter__(self):raise AssertionError('must not invoke hook')
+        for value in [Hook(self.snapshot),[],{**self.snapshot,'revision':True},{**self.snapshot,'extra':0},{**self.snapshot,'result':'x'*1048576}]:
+            with self.subTest(kind=type(value).__name__),mock.patch('http.server.HTTPServer.server_bind',side_effect=AssertionError('invalid input bound')):
+                with self.assertRaisesRegex(ValueError,'^intake_conducted_result_invalid_input$'):create_server(self.fixture['store'].root,port=0,conducted_result_snapshot=value)
+
+    def test_HTTP_guard_framing_query_HEAD_and_no_writes(self):
+        server=self.start(self.snapshot)
+        self.assertEqual(self.read(server,headers={'Origin':'https://outside.invalid'})[0],403)
+        self.assertEqual(self.read(server,body=b'x')[0],400);self.assertEqual(self.read(server,suffix='?path=secret')[0],400)
+        status,headers,value=self.read(server,method='HEAD');self.assertEqual(status,405);self.assertEqual(headers['Allow'],'GET');self.assertIsNone(value)
+        self.assertEqual(self.read(server,method='POST')[0],405)
+
+    def test_source_change_never_reuses_cached_result_currentness(self):
+        server=self.start(self.snapshot);self.assertEqual(self.read(server)[0],200)
+        self.fixture['store'].blob_path(self.fixture['context']['documents'][0]['sha256']).write_bytes(b'changed')
+        status,_,value=self.read(server);self.assertEqual(status,503);self.assertEqual(value['error']['code'],'intake_conducted_preview_source_invalid')
+
+    def test_output_cap_and_observed_control_are_not_success(self):
+        server=self.start(self.snapshot)
+        from labflow.ui_read_model import IntakeReadModel
+        with mock.patch.object(IntakeReadModel,'conducted_result_view',return_value={'oversize':'x'*1048576}):
+            self.assertEqual(self.read(server)[2]['error']['code'],'intake_conducted_result_invalid')
+        import types
+        from email.message import Message
+        from urllib.parse import urlsplit
+        endpoint='/api/intakes/'+self.fixture['intake_id']+'/conducted-result';headers=Message();headers['Host']='127.0.0.1:'+str(server.server_port)
+        responses=[];handler=types.SimpleNamespace(command='GET',path=endpoint,headers=headers,rfile=io.BytesIO(),connection=types.SimpleNamespace(settimeout=lambda value:None),send_payload=lambda *args:responses.append(args),error=lambda *args:responses.append(args))
+        with mock.patch.object(IntakeReadModel,'conducted_result_view',side_effect=MemoryError('control')),self.assertRaises(MemoryError):
+            server.RequestHandlerClass.read_conducted_result(handler,self.fixture['intake_id'],urlsplit(endpoint),endpoint)
+        self.assertEqual(responses,[])
+
+
 if __name__ == '__main__':
     unittest.main()
