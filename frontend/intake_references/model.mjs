@@ -7,9 +7,9 @@ const need=value=>{if(!value)fail();};
 const checked=run=>{try{return run();}catch(error){throw Error(error===unsafeToken?UNSAFE:INVALID);}};
 const scalarString=value=>need(typeof value==='string'&&!/[\uD800-\uDFFF]/u.test(value));
 const encoded=value=>new TextEncoder().encode(value).length;
-function plainCopy(input,cap=INTAKE_REFERENCE_VIEW_MAX_BYTES){
+function plainCopy(input,cap=INTAKE_REFERENCE_VIEW_MAX_BYTES,docx=false){
  let nodes=0;const visit=(value,depth=0)=>{
-  need(++nodes<=200000&&depth<=20);
+  need(++nodes<=200000&&depth<=(docx?64:20));
   if(value===null||typeof value==='boolean')return value;
   if(typeof value==='number'){need(Number.isFinite(value)&&Number.isInteger(value));if(!Number.isSafeInteger(value))fail(UNSAFE);return value;}
   if(typeof value==='string'){scalarString(value);need(value.length<=cap);return value;}
@@ -19,22 +19,22 @@ function plainCopy(input,cap=INTAKE_REFERENCE_VIEW_MAX_BYTES){
   if(array){need(value.length<=200000&&keys.length===value.length+1);for(let i=0;i<value.length;i++)need(Object.hasOwn(value,i));}
   for(const key of keys){if(array&&key==='length')continue;const item=Object.getOwnPropertyDescriptor(value,key);
    need(typeof key==='string'&&item.enumerable&&Object.hasOwn(item,'value'));scalarString(key);
-   if(!array)need(++nodes<=200000&&depth+1<=20);
+    if(!array&&!docx)need(++nodes<=200000&&depth+1<=20);
    Object.defineProperty(out,key,{value:visit(item.value,depth+1),enumerable:true,writable:true,configurable:true});
   }return out;
  };const out=visit(input);need(encoded(JSON.stringify(out))<=cap);return out;
 }
-function parse(raw){
+function parse(raw,docx=false){
  scalarString(raw);need(encoded(raw)<=INTAKE_REFERENCE_VIEW_MAX_BYTES);let p=0,nodes=0;
  const space=()=>{while(p<raw.length&&/[ \t\r\n]/.test(raw[p]))p++;};
  const string=()=>{const start=p++;let escaped=false;while(p<raw.length){const c=raw[p++];
   if(!escaped&&c==='"'){const value=JSON.parse(raw.slice(start,p));scalarString(value);return value;}
   if(!escaped&&c==='\\')escaped=true;else escaped=false;
  }fail();};
- const value=depth=>{need(++nodes<=200000&&depth<=20);space();const c=raw[p];
+  const value=depth=>{need(++nodes<=200000&&depth<=(docx?64:20));space();const c=raw[p];
   if(c==='"')return string();
   if(c==='{'||c==='['){p++;const object=c==='{',out=object?{}:[],end=object?'}':']';space();if(raw[p]===end){p++;return out;}
-   while(true){space();let key;if(object){need(raw[p]==='"'&&++nodes<=200000&&depth+1<=20);key=string();need(!Object.hasOwn(out,key));space();need(raw[p++]===':');}
+    while(true){space();let key;if(object){need(raw[p]==='"');if(!docx)need(++nodes<=200000&&depth+1<=20);key=string();need(!Object.hasOwn(out,key));space();need(raw[p++]===':');}
     const item=value(depth+1);if(object)Object.defineProperty(out,key,{value:item,enumerable:true,writable:true,configurable:true});else out.push(item);
     space();const next=raw[p++];if(next===end)break;need(next===',');
    }return out;
@@ -43,10 +43,10 @@ function parse(raw){
   const regex=/-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?/y;regex.lastIndex=p;
   const match=regex.exec(raw);need(match);p=regex.lastIndex;
   // Every numeric field in these DTOs is a Python int. Never round a float token.
-  need(!/[.eE]/.test(match[0]));const integer=BigInt(match[0]);
+   need(!/[.eE]/.test(match[0])&&(!docx||match[0]!=='-0'));const integer=BigInt(match[0]);
   if(integer>BigInt(Number.MAX_SAFE_INTEGER)||integer<BigInt(Number.MIN_SAFE_INTEGER))fail(UNSAFE);
   return Number(match[0]);
- };const result=value(0);space();need(p===raw.length);return plainCopy(result);
+  };const result=value(0);space();need(p===raw.length);return plainCopy(result,INTAKE_REFERENCE_VIEW_MAX_BYTES,docx);
 }
 const exact=(value,keys)=>need(value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).sort().join(' ')===keys.split(' ').sort().join(' '));
 const bool=value=>need(typeof value==='boolean');
@@ -134,5 +134,42 @@ function current(raw,intakeId){
 }
 export const validateIntakeReferenceContext=input=>checked(()=>context(input));
 export const parseIntakeReferenceHistoryJson=(raw,intakeId,query)=>checked(()=>history(raw,intakeId,query));
-export const parseIntakeReferenceCurrentJson=(raw,intakeId)=>checked(()=>current(raw,intakeId));
+function retainedDocx(raw,intakeId){
+ id(intakeId);const v=parse(raw,true);exact(v,'schema_version kind artifact_id artifact_bytes synthetic reference');
+ need(v.schema_version===1&&v.kind==='intake_docx_reference_retained');sha(v.artifact_id);integer(v.artifact_bytes,1,9437184);bool(v.synthetic);
+ const r=v.reference;exact(r,'schema_version kind binding result');need(r.schema_version===1&&r.kind==='intake_docx_reference');
+ const b=r.binding;exact(b,'source_id intake_id revision revision_fingerprint document');id(b.source_id);id(b.intake_id);
+ need(b.intake_id===intakeId);integer(b.revision);sha(b.revision_fingerprint);
+ const d=b.document;exact(d,'path sha256 bytes');scalarString(d.path);
+ need(d.path.length>0&&encoded(d.path)<=1024&&!d.path.startsWith('/')&&!/[\\:\x00-\x1f\x7f]/.test(d.path)&&
+  d.path.split('/').every(p=>p!==''&&p!=='.'&&p!=='..')&&d.path.toLowerCase().endsWith('.docx'));
+ sha(d.sha256);integer(d.bytes,0,16777216);
+ const n=r.result;exact(n,'schema_version source reader status complete scope limits blocks text_sha256 issues statistics');need(n.schema_version===1);
+ exact(n.source,'filename sha256 size_bytes');need(n.source.filename===d.path&&n.source.sha256===d.sha256&&n.source.size_bytes===d.bytes);integer(n.source.size_bytes,0,16777216);
+ exact(n.reader,'name version');scalarString(n.reader.name);scalarString(n.reader.version);scalarString(n.status);need(n.status.length>0);bool(n.complete);sha(n.text_sha256);
+ exact(n.scope,'profile part page_numbers');scalarString(n.scope.profile);nullable(n.scope.part,scalarString);need(n.scope.page_numbers==='unavailable');
+ for(const key of ['limits','statistics'])need(n[key]!==null&&typeof n[key]==='object'&&!Array.isArray(n[key]));
+ const locator=(loc,optional=false)=>{if(optional&&loc===null)return;exact(loc,'part path');scalarString(loc.part);list(loc.path,200000);
+  for(const step of loc.path){exact(step,'kind element_index');scalarString(step.kind);integer(step.element_index);}};
+ let count=0;const structure=()=>need(++count<=2000),nonempty=x=>{scalarString(x);need(x.length>0);};
+ const blocks=items=>{list(items,2000);for(const item of items){structure();
+  if(item.kind==='paragraph'){
+   exact(item,'kind locator text text_sha256 complete breaks');locator(item.locator);scalarString(item.text);sha(item.text_sha256);bool(item.complete);list(item.breaks,200000);
+   for(const br of item.breaks){exact(br,'offset kind');integer(br.offset,0);nonempty(br.kind);}
+  }else if(item.kind==='unsupported'){
+   exact(item,'kind locator reason');locator(item.locator);nonempty(item.reason);
+  }else if(item.kind==='table'){
+   exact(item,'kind locator grid_columns rows');locator(item.locator);nullable(item.grid_columns,x=>integer(x,0));list(item.rows,2000);
+   for(const row of item.rows){structure();exact(row,'locator grid_before grid_after cells');locator(row.locator);integer(row.grid_before,0);integer(row.grid_after,0);list(row.cells,2000);
+    for(const cell of row.cells){structure();exact(cell,'locator grid_start grid_span v_merge merge_origin blocks');locator(cell.locator);integer(cell.grid_start);integer(cell.grid_span);
+     choice(cell.v_merge,['none','restart','continue']);locator(cell.merge_origin,true);blocks(cell.blocks);}}
+  }else fail();
+ }};
+ blocks(n.blocks);list(n.issues,128);
+ for(const issue of n.issues){exact(issue,'code locator occurrences');nonempty(issue.code);locator(issue.locator,true);integer(issue.occurrences);}
+ return v;
+}
+export const parseIntakeReferenceCurrentJson=(raw,intakeId,kind='current')=>checked(()=>{
+ need(kind==='current'||kind==='docx_retained');return kind==='current'?current(raw,intakeId):retainedDocx(raw,intakeId);
+});
 export function createIntakeReferenceGate(){let current=null;return {begin(){current=Object.freeze({});return current;},clear(){current=null;},current(ticket){return current!==null&&ticket===current;}};}

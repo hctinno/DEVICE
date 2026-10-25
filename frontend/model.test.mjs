@@ -2,6 +2,49 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {describeState, factSources, filterIntakes, noticeContext,validateSnapshot} from './model.mjs';
 import wire from './intake_references/browser_check.cjs';
+import * as appModel from './model.mjs';
+import {parseIntakeReferenceCurrentJson} from './intake_references/model.mjs';
+
+test('DOCX tagged original6 preserves literal native observations and full current-file binding',()=>{
+ const value=wire.createDocxObservation(),b=value.reference.binding;
+ assert.deepEqual(parseIntakeReferenceCurrentJson(JSON.stringify(value),b.intake_id,'docx_retained'),value);
+ const record={source_id:b.source_id,intake_id:b.intake_id,revision:b.revision,
+  history:[{revision:1,fingerprint:b.revision_fingerprint}],files:[{...b.document}],analysis:null};
+ assert.equal(appModel.docxReferenceMatchesRecord(value,record),true);
+ for(const edit of [r=>r.source_id='OTHER',r=>r.revision=2,r=>r.history[0].fingerprint='e'.repeat(64),r=>r.files[0].bytes++]){
+  const other=structuredClone(record);edit(other);assert.equal(appModel.docxReferenceMatchesRecord(value,other),false);
+ }
+});
+test('DOCX literal unknown declarations stay separate from unmappable structures and unsafe wire numbers',()=>{
+ const value=wire.createDocxObservation(),id=value.reference.binding.intake_id;
+ value.reference.result.status='unknown native state';value.reference.result.reader.version='<script>literal</script>';
+ value.reference.result.scope.profile='future declaration';assert.deepEqual(parseIntakeReferenceCurrentJson(JSON.stringify(value),id,'docx_retained'),value);
+ for(const edit of [v=>v.reference.result.blocks[0].kind='new structure',v=>v.reference.result.scope.page_numbers=1,
+  v=>v.reference.result.complete=1,v=>v.reference.result.reader.name='\ud800',v=>v.reference.binding.revision=true]){
+  const bad=structuredClone(value);edit(bad);assert.throws(()=>parseIntakeReferenceCurrentJson(JSON.stringify(bad),id,'docx_retained'));
+ }
+ assert.throws(()=>parseIntakeReferenceCurrentJson(JSON.stringify(value).replace('"artifact_bytes":1024','"artifact_bytes":9007199254740993'),id,'docx_retained'));
+ assert.throws(()=>parseIntakeReferenceCurrentJson(JSON.stringify(value).replace('"artifact_bytes":1024','"artifact_bytes":1e3'),id,'docx_retained'));
+ assert.throws(()=>parseIntakeReferenceCurrentJson(JSON.stringify(value),id));
+});
+test('DOCX missing fingerprints cannot match missing metadata by undefined equality',()=>{
+ const value=wire.createDocxObservation(),b=value.reference.binding;
+ const record={source_id:b.source_id,intake_id:b.intake_id,revision:b.revision,history:[{revision:1}],files:[{...b.document}]};
+ delete b.revision_fingerprint;assert.equal(appModel.docxReferenceMatchesRecord(value,record),false);
+});
+test('DOCX byte depth value-node structure and issue boundaries reject the whole observation at plus one',()=>{
+ const make=wire.createDocxObservation,parse=v=>parseIntakeReferenceCurrentJson(JSON.stringify(v),'DOCX-WIRE','docx_retained');
+ let v=make();v.reference.result.statistics.padding='';let size=new TextEncoder().encode(JSON.stringify(v)).length;
+ v.reference.result.statistics.padding='x'.repeat(2097152-size);parse(v);v.reference.result.statistics.padding+='x';assert.throws(()=>parse(v));
+ for(const count of [60,61]){v=make();let chain=null;for(let i=0;i<count;i++)chain=[chain];v.reference.result.statistics.chain=chain;if(count===60)parse(v);else assert.throws(()=>parse(v));}
+ v=make();const nodes=x=>1+(x&&typeof x==='object'?Object.values(x).reduce((sum,child)=>sum+nodes(child),0):0);
+ v.reference.result.statistics.values=[];v.reference.result.statistics.values=Array(200000-nodes(v)).fill(null);parse(v);
+ v.reference.result.statistics.values.push(null);assert.throws(()=>parse(v));
+ v=make();const locator=v.reference.result.blocks[0].locator;v.reference.result.blocks=Array.from({length:2000},()=>({kind:'unsupported',locator:structuredClone(locator),reason:'declared mutation'}));parse(v);
+ v.reference.result.blocks.push(structuredClone(v.reference.result.blocks[0]));assert.throws(()=>parse(v));
+ v=make();v.reference.result.issues=Array.from({length:128},()=>({code:'stored issue',locator:null,occurrences:1}));parse(v);
+ v.reference.result.issues.push({...v.reference.result.issues[0]});assert.throws(()=>parse(v));
+});
 
 test('queue, running, failure, deferral and unsupported states stay distinguishable', () => {
   const base = {status: 'awaiting_analysis', revision: 1, jobs: [{revision: 1, state: 'queued'}]};

@@ -1,6 +1,6 @@
-import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot} from './model.mjs';
+import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot, docxReferenceMatchesRecord} from './model.mjs';
 import {validateFixtureRuns, describeFixtureRecord, requireStableFixtureRecords, createFixtureReadGate} from './intake_flow_model.mjs';
-import {validateIntakeReferenceContext} from './intake-references/model.mjs';
+import {validateIntakeReferenceContext,parseIntakeReferenceHistoryJson,parseIntakeReferenceCurrentJson} from './intake-references/model.mjs';
 import {createIntakeReferenceReview} from './intake-references/view.mjs';
 import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
 import {createIntakeReferenceActionsReview} from './intake-reference-actions/actions.mjs';
@@ -10,8 +10,10 @@ const state = {records: [], notices: [], selected: location.hash.slice(1), loade
 const flow = {gate:createFixtureReadGate(), context:null, payload:null, selected:'', pending:false,
   stale:false, status:'가상 기록 조회 대기', updatedText:'아직 조회하지 않음'};
 const referenceTransport = createIntakeReferenceTransport();
+const docx={context:null,hintContext:null,visible:false,allowed:false,busy:false,good:null,
+  phase:'idle',message:'보존 관측은 명시 버튼으로 읽습니다.',ticket:0,controller:null};
 const referencePanel = createIntakeReferenceReview($('#intake-reference-panel'), {
-  readHistory:referenceTransport.readHistory, readCurrent:referenceTransport.readCurrent,
+  readHistory:readReferenceHistory, readCurrent:referenceTransport.readCurrent,
 });
 const referenceActions = createIntakeReferenceActionsReview($('#intake-reference-actions-panel'));
 let referenceDestroyed = false;
@@ -29,6 +31,7 @@ function setReferencePending(value) {
   try {
     referencePending = value;
     if (value) {
+      invalidateDocxBrowser();
       referenceActions.setPending(true);
       if (referenceDestroyed) return false;
       referenceTransport.setPending(true);
@@ -57,6 +60,155 @@ function refreshRegisteredHistory(event) {
   }
 }
 referenceActions.root.addEventListener('intake-reference-history-refresh', refreshRegisteredHistory);
+
+function projectDocxContext(context,record) {
+  if (sameReferenceContext(docx.context,context)) return {...docx};
+  const good=context&&docx.context?.intake_id===context.intake_id&&docx.good&&
+    docxReferenceMatchesRecord(docx.good.value,record)?docx.good:null;
+  return {...docx,context,hintContext:null,visible:!!good,allowed:false,busy:false,good,
+    phase:good?'previous':'idle',message:good?'이전 명시 요청의 관측입니다. 현재성은 다시 확인하지 않았습니다.':'보존 관측은 명시 버튼으로 읽습니다.',
+    controller:null,ticket:docx.ticket+1};
+}
+
+function renderDocxResult(value) {
+  const fragment=document.createDocumentFragment(),b=value.reference.binding,n=value.reference.result;
+  fragment.append(metadata([['보존자료 ID',value.artifact_id],['실제 보존 bytes',value.artifact_bytes],
+    ['등록 자료 synthetic',String(value.synthetic)],['입력 출처',b.source_id],['접수 ID',b.intake_id],['자료 버전',b.revision],
+    ['전체 manifest fingerprint',b.revision_fingerprint],['문서 경로',b.document.path],['원본 SHA256',b.document.sha256],['원본 bytes',b.document.bytes],
+    ['Reader 이름 선언',n.reader.name],['Reader 버전 선언',n.reader.version],['Profile 선언',n.scope.profile],['Native part',n.scope.part===null?'null':n.scope.part],
+    ['Native 상태 선언',n.status],['Native complete',String(n.complete)],['페이지 정보',n.scope.page_numbers],['전체 text SHA256',n.text_sha256]]));
+  fragment.append(el('p','inline-note','Reader/profile/status는 저장된 선언이며 실행·지원·내용 진위는 미확인입니다. 분석 완료나 인용 승인을 뜻하지 않습니다.'));
+  const details=(title,rows)=>{const node=el('details');node.append(el('summary','',title),metadata(rows));return node;};
+  const structures=el('div','docx-structures');
+  const block=(item,parent)=>{
+    const rows=[['구조 종류',item.kind],['저장 locator',JSON.stringify(item.locator)]];
+    if(item.kind==='paragraph')rows.push(['문단 text SHA256',item.text_sha256],['문단 complete',String(item.complete)],['저장 break 정보',JSON.stringify(item.breaks)]);
+    if(item.kind==='unsupported')rows.push(['지원되지 않은 구조 사유',item.reason]);
+    if(item.kind==='table')rows.push(['선언 grid columns',item.grid_columns===null?'null':item.grid_columns]);
+    const node=details(item.kind+' · 저장 위치',rows);parent.append(node);
+    if(item.kind==='table')for(const row of item.rows){
+      const r=details('physical row',[['저장 locator',JSON.stringify(row.locator)],['grid before',row.grid_before],['grid after',row.grid_after]]);node.append(r);
+      for(const cell of row.cells){const c=details('physical cell',[['저장 locator',JSON.stringify(cell.locator)],['grid start',cell.grid_start],['grid span',cell.grid_span],
+        ['vMerge',cell.v_merge],['merge origin',JSON.stringify(cell.merge_origin)]]);r.append(c);for(const child of cell.blocks)block(child,c);}
+    }
+  };
+  for(const item of n.blocks)block(item,structures);fragment.append(structures);
+  const issues=details('Native issues · '+n.issues.length,[]);
+  for(const issue of n.issues)issues.append(metadata([['Issue code',issue.code],['저장 locator',JSON.stringify(issue.locator)],['원 occurrences',issue.occurrences]]));
+  fragment.append(issues);
+  for(const [title,value] of [['제공된 limits',n.limits],['제공된 statistics',n.statistics]]){
+    const node=el('details');node.append(el('summary','',title),el('p','mono detail-id',JSON.stringify(value)));fragment.append(node);
+  }
+  return fragment;
+}
+
+function buildDocxSection(record,next,skipResult=false) {
+  if(!next.visible||!next.context||record.intake_id!==next.context.intake_id||record.revision!==next.context.revision)return null;
+  const node=section('DOCX 보존 관측','원본·보존자료를 명시 요청 시점에 확인합니다.');node.classList.add('docx-retained-observation');
+  node.dataset.state=next.phase;node.setAttribute('aria-busy',String(next.busy));
+  const button=el('button','button docx-read','DOCX 보존 관측 읽기');button.type='button';
+  button.disabled=!next.allowed||referencePending||referenceSuspended||referenceDestroyed;
+  button.setAttribute('aria-disabled',String(next.busy||button.disabled));
+  button.addEventListener('click',readDocxObservation);
+  const status=el('p','inline-note docx-status',next.message);status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const note=el('p','inline-note docx-last-good',next.good&&next.phase!=='ready'?'이전 성공 관측을 보존했습니다. 이번 요청의 새 확인 결과가 아닙니다.':'');
+  const results=el('div','docx-results');
+  if(next.good&&!skipResult&&docxReferenceMatchesRecord(next.good.value,record))results.append(renderDocxResult(next.good.value));
+  node.append(button,status,note,results);return node;
+}
+
+function publishDocx(next) {
+  // Suspended pages may retire controls; source/history success callers have
+  // their own suspension guards and cannot publish a new observation here.
+  if(referenceDestroyed||!sameReferenceContext(next.context,referenceContext))return;
+  const record=state.records.find(r=>r.intake_id===state.selected);if(!record)return;
+  const existing=$('.docx-retained-observation'),sameGood=existing&&next.good===docx.good;
+  const prepared=buildDocxSection(record,next,!!sameGood);
+  if(referenceDestroyed||!sameReferenceContext(next.context,referenceContext))return;
+  if(!prepared)existing?.remove();
+  else if(existing){
+    if(!sameGood)existing.querySelector('.docx-results').replaceChildren(...prepared.querySelector('.docx-results').childNodes);
+    existing.querySelector('.docx-status').textContent=next.message;
+    existing.querySelector('.docx-last-good').textContent=prepared.querySelector('.docx-last-good').textContent;
+    existing.querySelector('.docx-read').disabled=prepared.querySelector('.docx-read').disabled;
+    existing.querySelector('.docx-read').setAttribute('aria-disabled',prepared.querySelector('.docx-read').getAttribute('aria-disabled'));
+    existing.dataset.state=next.phase;existing.setAttribute('aria-busy',String(next.busy));
+  }else $('#detail-panel .detail-body')?.append(prepared);
+  Object.assign(docx,next);
+}
+
+function docxRenderFailure(captured) {
+  if(referenceDestroyed||!sameReferenceContext(captured,referenceContext))return;
+  docx.controller?.abort();docx.controller=null;docx.ticket++;docx.busy=false;docx.phase='error';
+  docx.message='화면을 준비하지 못했습니다. 이전 성공 관측을 유지합니다.';
+  const node=$('.docx-retained-observation');if(!node)return;
+  node.dataset.state='error';node.setAttribute('aria-busy','false');
+  node.querySelector('.docx-status').textContent=docx.message;
+  node.querySelector('.docx-last-good').textContent=docx.good?'이전 성공 관측입니다. 새 확인 결과가 아닙니다.':'';
+  const button=node.querySelector('.docx-read');button.disabled=!docx.allowed||referencePending||referenceSuspended;
+  button.setAttribute('aria-disabled',String(button.disabled));
+}
+
+function invalidateDocxBrowser() {
+  if(!docx.visible&&!docx.controller&&!docx.allowed)return;
+  docx.controller?.abort();
+  const next={...docx,controller:null,ticket:docx.ticket+1,allowed:false,hintContext:null,busy:false,
+    phase:docx.good?'previous':'idle',message:'선택 안내를 다시 확인하고 있습니다. 이전 관측은 현재 확인 결과가 아닙니다.'};
+  try{publishDocx(next);Object.assign(docx,next);}catch{Object.assign(docx,next);docxRenderFailure(next.context);}
+}
+
+async function readReferenceHistory(id,query,signal) {
+  const captured=referenceContext;invalidateDocxBrowser();
+  try {
+    const response=await referenceTransport.readHistory(id,query,signal);
+    if(referenceDestroyed||referenceSuspended||referencePending||!sameReferenceContext(captured,referenceContext))return response;
+    const selected=referenceTransport.hasRetainedDocxSelection();
+    // Default absence does no extra parse. A previously shown feature must also
+    // validate a successful history before erasing its last-good observation.
+    if(selected||docx.visible)parseIntakeReferenceHistoryJson(response.raw_json,id,query);
+    if(selected)publishDocx({...docx,context:captured,hintContext:captured,visible:true,allowed:true,busy:false,
+      phase:docx.good?'previous':'idle',message:docx.good?'이전 명시 요청의 관측입니다. 새 읽기는 버튼으로 실행합니다.':'보존 관측은 명시 버튼으로 읽습니다.'});
+    else if(docx.visible)publishDocx({...docx,context:captured,hintContext:null,visible:false,allowed:false,busy:false,good:null,phase:'idle'});
+    return response;
+  } catch(error) {
+    if(!referenceDestroyed&&!referenceSuspended&&sameReferenceContext(captured,referenceContext)&&docx.visible){
+      try{publishDocx({...docx,allowed:false,hintContext:null,busy:false,phase:'error',message:'이력의 선택 안내를 확인하지 못했습니다. 이전 관측을 유지합니다.'});}
+      catch{docx.allowed=false;docxRenderFailure(captured);}
+    }
+    throw error;
+  }
+}
+
+async function readDocxObservation() {
+  if(!referenceCanChange()||referencePending||referenceSuspended||docx.busy||!docx.allowed||
+    !sameReferenceContext(docx.hintContext,referenceContext)||!referenceTransport.hasRetainedDocxSelection())return;
+  const captured=referenceContext,ticket=docx.ticket+1,controller=new AbortController();docx.controller?.abort();
+  try{publishDocx({...docx,ticket,controller,busy:true,phase:'pending',message:'보존자료를 이번 요청에서 확인하고 있습니다.'});}
+  catch{controller.abort();docxRenderFailure(captured);return;}
+  if(docx.ticket!==ticket||referenceDestroyed||referenceSuspended){controller.abort();return;}
+  const valid=()=>!referenceDestroyed&&!referenceSuspended&&!referencePending&&docx.ticket===ticket&&sameReferenceContext(captured,referenceContext);
+  try {
+    const raw=await referenceTransport.readCurrent(captured.intake_id,controller.signal,'docx_retained');if(!valid())return;
+    const value=parseIntakeReferenceCurrentJson(raw,captured.intake_id,'docx_retained');
+    const record=state.records.find(r=>r.intake_id===captured.intake_id);
+    if(!docxReferenceMatchesRecord(value,record))throw Error('invalid_intake_reference_view');
+    publishDocx({...docx,busy:false,controller:null,good:{context:captured,value},phase:'ready',
+      message:'이번 명시 요청 중 확인한 보존 읽기 관측 · 반환 이후 현재성 미확인'});
+  }catch(error){
+    if(!valid())return;
+    const messages={intake_docx_reference_revision_changed:'현재 원본·출처 결합이 변경되어 새 관측을 확인하지 못했습니다.',
+      intake_docx_reference_intake_unavailable:'현재 접수 상태에서 보존자료를 확인하지 못했습니다.',
+      intake_docx_reference_input_limit:'원자료 읽기 한도를 넘어 새 관측을 확인하지 못했습니다.',
+      intake_reference_ui_input_limit:'화면 표시 한도를 넘어 새 관측을 표시하지 못했습니다.',
+      intake_reference_ui_access_denied:'접근 허용을 다시 확인해야 합니다. 이력을 새로 조회하세요.',
+      intake_reference_ui_unconfigured:'이 접수의 명시 보존 선택을 사용할 수 없습니다.'};
+    try{publishDocx({...docx,busy:false,controller:null,allowed:referenceTransport.hasRetainedDocxSelection(),phase:'error',
+      message:messages[error.message]||'보존 읽기 응답을 확인하지 못했습니다. 이전 성공 관측이 있으면 유지합니다.'});}
+    catch{docxRenderFailure(captured);}
+  }finally{
+    if(valid()&&docx.busy)publishDocx({...docx,busy:false,controller:null});
+  }
+}
 const roles = {request: '의뢰 자료', product: '제품 자료', reference: '참고 자료'};
 const producerKinds = {fixture: '합성 분석 예시', manual: '수동 분석', model: '모델 분석자 선언'};
 const errorMessages = {
@@ -448,7 +600,7 @@ function noticeNode(notice, includeLink, view) {
   return node;
 }
 
-function buildDetail(view) {
+function buildDetail(view,docxNext=docx) {
   const record = view.records.find(item => item.intake_id === view.selected);
   if (!record) {
     return [empty(view.records.length ? '표시할 접수가 없습니다' : '첫 접수를 기다리고 있습니다', view.records.length
@@ -478,6 +630,7 @@ function buildDetail(view) {
   if (!related.length) notices.append(el('p', 'muted', '저장된 알림이 없습니다.'));
   else for (const notice of [...related].reverse()) notices.append(noticeNode(notice, false, view));
   body.append(notices);
+  const docxSection=buildDocxSection(record,docxNext);if(docxSection)body.append(docxSection);
   return [header, body];
 }
 
@@ -496,7 +649,8 @@ function prepareView(next) {
   const selected = view.records.find(record => record.intake_id === view.selected);
   const referenceContext = validateIntakeReferenceContext(selected ? {intake_id:selected.intake_id,
     revision:selected.revision, snapshotGeneration:view.snapshotGeneration ?? 0} : null);
-  return {view, list, referenceContext, metrics: buildMetrics(view), detail: buildDetail(view), notifications: buildNotifications(view)};
+  const docxNext=projectDocxContext(referenceContext,selected);
+  return {view, list, referenceContext,docxNext, metrics: buildMetrics(view), detail: buildDetail(view,docxNext), notifications: buildNotifications(view)};
 }
 
 function publishView(prepared) {
@@ -511,6 +665,8 @@ function publishView(prepared) {
     $('#notice-count').textContent = prepared.view.notices.length;
     $('#last-updated').textContent = prepared.view.updatedText;
     Object.assign(state, prepared.view);
+    if(docx.ticket!==prepared.docxNext.ticket)docx.controller?.abort();
+    Object.assign(docx,prepared.docxNext);
     referenceContext = prepared.referenceContext;
     referenceActions.setContext(referenceContext);
     if (referenceDestroyed) return;
@@ -591,6 +747,8 @@ addEventListener('pagehide', event => {
   } else {
     if (referenceDestroyed) return;
     referenceDestroyed = true;
+    docx.controller?.abort();docx.ticket++;docx.controller=null;docx.good=null;docx.allowed=false;docx.visible=false;
+    $('.docx-retained-observation')?.remove();
     referenceActions.root.removeEventListener('intake-reference-history-refresh', refreshRegisteredHistory);
     referenceActions.destroy();
     referenceTransport.destroy();

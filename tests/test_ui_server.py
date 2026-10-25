@@ -6,6 +6,7 @@ import threading
 import unittest
 from contextlib import ExitStack, contextmanager
 from copy import deepcopy
+from collections import Counter
 import importlib
 import io
 import os
@@ -14,6 +15,7 @@ import socket
 import sqlite3
 import sys
 import time
+import zipfile
 from unittest import mock
 
 from test_ui_read_model import IntakeFixture
@@ -158,12 +160,12 @@ class ReferenceHostTests(unittest.TestCase):
         self.store.db = original; self.store.close()
         self.fixed('unavailable', lambda: create_server(self.store.root, port=0, intake_reference_store=self.store))
 
-    def test_reference_static_exact3_accepted_A1_bytes_and_future_transport404_in_None(self):
+    def test_reference_static_exact3_DOCX_model_and_unchanged_A1_view_in_None(self):
         server = create_server(self.store.root, port=0)
         thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
         try:
             observed = {}
-            accepted = {'model': (12335, '93a6a2f2e45c9ed75e23fbc01399ae7ec3817c1a3ff2c97651198c97802a10d2'),
+            accepted = {'model': (16047, '160bbb9cfbb1bc10f6851f0cbc29cd4fc566a2419e3b5131eb5340fa32a6ccb8'),
                         'view': (14712, 'c3e38b254cc346d0bd64dc12b5f1ebae6e426ce17662c6d8f533f3da457b7417')}
             for name in ('model', 'view'):
                 route = '/intake-references/' + name + '.mjs'
@@ -1398,6 +1400,251 @@ class ServerTests(unittest.TestCase):
         status, _, body = self.request('/api/intakes')
         self.assertEqual(status, 503)
         self.assertEqual(json.loads(body), {'error': {'code': 'store_unavailable'}})
+
+
+class DocxReferenceHostTests(unittest.TestCase):
+    """Actual synthetic retention inputs; wire mutations are labelled separately."""
+    request = ReferenceHostTests.request
+    route = ReferenceHostTests.route
+    bootstrap = ReferenceHostTests.bootstrap
+    source_headers = ReferenceHostTests.source_headers
+    fixed = ReferenceHostTests.fixed
+
+    def setUp(self):
+        from labflow.active_intake import register_source, scan_source
+        from labflow.intake_docx_reference import retain_intake_docx_reference
+        temporary = tempfile.TemporaryDirectory(prefix='dx-', dir=Path(__file__).resolve().parents[1] / '.local')
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        inbox = self.root / 'inbox'; folder = inbox / 'synthetic'; folder.mkdir(parents=True)
+        path = folder / 'request.docx'
+        members = {
+            '[Content_Types].xml': '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>',
+            '_rels/.rels': '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="r1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>',
+            'word/document.xml': '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p><w:r><w:t>PRIVATE SYNTHETIC DOCX BODY</w:t></w:r></w:p></w:body></w:document>',
+        }
+        with zipfile.ZipFile(path, 'x', compression=zipfile.ZIP_DEFLATED) as archive:
+            for name, text in members.items(): archive.writestr(name, text.encode('utf-8'))
+        self.legacy = Store(self.root / 'state')
+        register_source(self.legacy, 'SYN-DOCX', inbox, synthetic=True, settle_seconds=1)
+        scan_source(self.legacy, 'SYN-DOCX', now=100, synthetic_only=True)
+        accepted = scan_source(self.legacy, 'SYN-DOCX', now=102, synthetic_only=True)['accepted'][0]
+        self.ident = accepted['intake_id']
+        self.store = Store.open_existing(str(self.legacy.root)); self.addCleanup(self.store.close)
+        self.receipt = retain_intake_docx_reference(self.store, self.ident, path.name,
+            expected_revision=1, expected_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+        self.selection = (self.receipt['artifact_id'], deepcopy(self.receipt['reference']['binding']))
+
+    def start(self, selection=True, scope='workspace'):
+        server = create_server(self.store.root, port=0, intake_reference_store=self.store,
+            intake_reference_read_scope=scope,
+            intake_docx_reference_selection=self.selection if selection else None)
+        thread = threading.Thread(target=server.serve_forever, kwargs={'poll_interval': .02}, daemon=True)
+        thread.start()
+        def stop():
+            server.server_close(); thread.join(5); self.assertFalse(thread.is_alive())
+        self.addCleanup(stop)
+        return server
+
+    def docx(self, server, cookie, csrf, value=None):
+        body = json.dumps({'schema_version': 1, 'action': 'docx_retained'} if value is None else value).encode('utf-8')
+        return self.request(server, self.route('current'), 'POST', body, self.source_headers(server, cookie, csrf))
+
+    def test_actual_retained_source_POST_is_selected_and_metadata_stays_source_free(self):
+        from labflow import intake_docx_reference as api
+        with mock.patch.object(api, 'read_retained_intake_docx_reference', wraps=api.read_retained_intake_docx_reference) as admitted:
+            server = self.start()
+            self.assertEqual(admitted.call_count, 0)
+            status, _, body = self.request(server, '/api/intakes')
+            self.assertEqual(status, 200)
+            self.assertNotIn(b'PRIVATE SYNTHETIC DOCX BODY', body)
+            self.assertNotIn(b'intake_docx_reference_retained', body)
+            status, headers, history = self.request(server, self.route())
+            self.assertEqual(status, 200)
+            self.assertEqual(headers.get('X-Intake-Reference-Docx-Selected'), 'true')
+            self.assertEqual(set(json.loads(history)), {'schema_version', 'kind', 'intake_id', 'available', 'records', 'next_before_seq', 'verification'})
+            self.assertEqual(admitted.call_count, 0)
+            cookie, csrf = headers['Set-Cookie'].split(';')[0], headers['X-Intake-Reference-CSRF']
+            status, _, raw = self.docx(server, cookie, csrf)
+            self.assertEqual(status, 200, raw)
+            value = json.loads(raw)
+            artifact = (self.store.root / 'blobs' / value['artifact_id']).read_bytes()
+            self.assertEqual(hashlib.sha256(artifact).hexdigest(), value['artifact_id'])
+            self.assertEqual(len(artifact), value['artifact_bytes'])
+            self.assertEqual(json.loads(artifact), value['reference'])
+            self.assertEqual(value['reference']['binding'], self.selection[1])
+            self.assertEqual(raw, json.dumps(value, ensure_ascii=False, sort_keys=True, allow_nan=False, separators=(',', ':')).encode('utf-8'))
+            self.assertEqual(admitted.call_count, 1)
+
+    def test_None_has_no_DOCX_import_hint_or_admission(self):
+        original = host_module.importlib.import_module
+        def imported(name, *args, **kwargs):
+            self.assertNotEqual(name, '.intake_docx_reference')
+            return original(name, *args, **kwargs)
+        with mock.patch.object(host_module.importlib, 'import_module', side_effect=imported):
+            server = self.start(selection=False)
+            status, headers, _ = self.request(server, self.route())
+            self.assertEqual(status, 200)
+            self.assertNotIn('X-Intake-Reference-Docx-Selected', headers)
+            status, _, raw = self.docx(server, headers['Set-Cookie'].split(';')[0], headers['X-Intake-Reference-CSRF'])
+            self.assertEqual((status, json.loads(raw)), (503, {'error': {'code': 'intake_reference_ui_unconfigured'}}))
+
+    def test_selected_history_hint_adds_no_SQL_or_document_admission(self):
+        from labflow import intake_docx_reference as api
+        verbs = Counter(); connect = sqlite3.connect
+        def traced(*args, **kwargs):
+            con = connect(*args, **kwargs)
+            def trace(statement):
+                text = statement.lstrip()
+                while text.startswith('-- '): text = text[3:].lstrip()
+                if text: verbs.update([text.split(None, 1)[0].upper()])
+            con.set_trace_callback(trace); return con
+        with mock.patch.object(sqlite3, 'connect', side_effect=traced), mock.patch.object(
+                api, 'read_retained_intake_docx_reference', wraps=api.read_retained_intake_docx_reference) as admission:
+            plain = self.start(selection=False); selected = self.start()
+            verbs.clear(); s1, h1, b1 = self.request(plain, self.route()); original = dict(verbs)
+            verbs.clear(); s2, h2, b2 = self.request(selected, self.route())
+            self.assertEqual((s1, s2), (200, 200)); self.assertEqual(json.loads(b1), json.loads(b2))
+            self.assertEqual(dict(verbs), original)
+            self.assertNotIn('X-Intake-Reference-Docx-Selected', h1)
+            self.assertEqual(h2['X-Intake-Reference-Docx-Selected'], 'true'); self.assertEqual(admission.call_count, 0)
+
+    def test_constructor_detaches_and_rejects_bad_scope_binding_before_bind(self):
+        for edit in [lambda b: b.update(extra=1), lambda b: b.update(revision=True),
+                     lambda b: b['document'].update(path='../private.docx')]:
+            binding = deepcopy(self.selection[1]); edit(binding)
+            self.fixed('invalid_request', lambda: create_server(self.store.root, port=0,
+                intake_reference_store=self.store, intake_reference_read_scope='workspace',
+                intake_docx_reference_selection=(self.selection[0], binding)))
+        self.fixed('invalid_request', lambda: self.start(scope=()))
+        server = self.start()
+        self.selection[1]['document']['sha256'] = '0' * 64
+        cookie, csrf = self.bootstrap(server)
+        self.assertEqual(self.docx(server, cookie, csrf)[0], 200)
+
+    def test_source_auth_and_extra_browser_selectors_never_admit(self):
+        from labflow import intake_docx_reference as api
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        body = b'{"schema_version":1,"action":"docx_retained"}'
+        with mock.patch.object(api, 'read_retained_intake_docx_reference', wraps=api.read_retained_intake_docx_reference) as admission:
+            # Constructor captured the real public callable; replace the runtime
+            # slot with this observation wrapper, without manufacturing success.
+            server._reference_runtime.docx_parent = admission
+            for change in [{'X-Intake-Reference-CSRF': '0' * 64}, {'Origin': 'http://attacker.invalid'},
+                           {'Sec-Fetch-Site': 'cross-site'}]:
+                headers = self.source_headers(server, cookie, csrf); headers.update(change)
+                self.assertEqual(self.request(server, self.route('current'), 'POST', body, headers)[0], 403)
+            for extra in [{'artifact_id': self.selection[0]}, {'path': 'request.docx'}, {'limits': {}}, {'expected_binding': self.selection[1]}]:
+                value = {'schema_version': 1, 'action': 'docx_retained', **extra}
+                self.assertEqual(self.docx(server, cookie, csrf, value)[0], 400)
+            self.assertEqual(admission.call_count, 0)
+
+    def test_fixed_D1_error_mapping_is_a_separate_declared_failure_boundary(self):
+        from labflow.intake_docx_reference import IntakeDocxReferenceError
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        mapping = {'invalid_argument':400, 'store_invalid':503, 'intake_not_found':404,
+            'intake_unavailable':409, 'revision_changed':409, 'document_not_found':404,
+            'source_integrity_invalid':503, 'input_limit':413, 'storage_error':503}
+        for suffix, status in mapping.items():
+            with self.subTest(suffix=suffix):
+                server._reference_runtime.docx_parent = mock.Mock(side_effect=IntakeDocxReferenceError(suffix))
+                actual, _, body = self.docx(server, cookie, csrf)
+                self.assertEqual((actual, json.loads(body)), (status, {'error': {'code': 'intake_docx_reference_' + suffix}}))
+        class Duck(ValueError):
+            code = 'intake_docx_reference_revision_changed'
+        server._reference_runtime.docx_parent = mock.Mock(side_effect=Duck('PRIVATE SOURCE'))
+        status, _, body = self.docx(server, cookie, csrf)
+        self.assertEqual((status, json.loads(body)), (503, {'error': {'code': 'intake_reference_ui_unavailable'}}))
+        self.assertNotIn(b'PRIVATE', body)
+
+    def test_actual_artifact_damage_is_not_empty_success(self):
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        artifact = self.store.root / 'blobs' / self.selection[0]
+        artifact.write_bytes(artifact.read_bytes() + b' ')
+        status, _, raw = self.docx(server, cookie, csrf)
+        self.assertEqual((status, json.loads(raw)), (503, {'error': {'code': 'intake_docx_reference_source_integrity_invalid'}}))
+
+    def test_returned_selection_and_legacy_error_class_do_not_cross_DOCX_branch(self):
+        from labflow.intake_docx_reference import IntakeDocxReferenceError
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        for change in ['artifact', 'source']:
+            value = deepcopy(self.receipt)
+            if change == 'artifact': value['artifact_id'] = '0' * 64
+            else: value['reference']['binding']['source_id'] = 'OTHER-SOURCE'
+            server._reference_runtime.docx_parent = mock.Mock(return_value=value)
+            status, _, raw = self.docx(server, cookie, csrf)
+            self.assertEqual((status, json.loads(raw)), (503, {'error': {'code': 'intake_reference_ui_unavailable'}}))
+        server._reference_runtime.parent = mock.Mock(side_effect=IntakeDocxReferenceError('revision_changed'))
+        status, _, raw = self.request(server, self.route('current'), 'POST', b'{"schema_version":1,"action":"current"}', self.source_headers(server, cookie, csrf))
+        self.assertEqual((status, json.loads(raw)), (503, {'error': {'code': 'intake_reference_ui_unavailable'}}))
+
+    def test_DOCX_display_byte_depth_and_value_node_boundaries_are_independent_of_storage(self):
+        def raw(value):
+            return json.dumps(value, ensure_ascii=False, sort_keys=True, allow_nan=False, separators=(',', ':')).encode('utf-8')
+        def rejected(value, status):
+            with self.assertRaises(ValueError) as caught: host_module._docx_response(value, self.ident)
+            self.assertEqual(caught.exception.status, status)
+        value = deepcopy(self.receipt); value['reference']['result']['statistics']['padding'] = ''
+        value['reference']['result']['statistics']['padding'] = 'x' * (2097152 - len(raw(value)))
+        self.assertEqual(len(host_module._docx_response(value, self.ident)), 2097152)
+        value['reference']['result']['statistics']['padding'] += 'x'; rejected(value, 413)
+        for length in [60, 61]:
+            value = deepcopy(self.receipt); child = None
+            for _ in range(length): child = [child]
+            value['reference']['result']['statistics']['chain'] = child
+            if length == 60: host_module._docx_response(value, self.ident)
+            else: rejected(value, 413)
+        value = deepcopy(self.receipt); values = []; value['reference']['result']['statistics']['values'] = values
+        def nodes(item):
+            return 1 + (sum(map(nodes, item.values())) if type(item) is dict else sum(map(nodes, item)) if type(item) is list else 0)
+        values.extend([None] * (200000 - nodes(value)))
+        host_module._docx_response(value, self.ident)
+        values.append(None); rejected(value, 413)
+
+    def test_DOCX_structure_issue_limits_unknown_declarations_and_invalid_shapes(self):
+        def rejected(value, status):
+            with self.assertRaises(ValueError) as caught: host_module._docx_response(value, self.ident)
+            self.assertEqual(caught.exception.status, status)
+        value = deepcopy(self.receipt); native = value['reference']['result']
+        locator = native['blocks'][0]['locator']
+        native['blocks'] = [{'kind':'unsupported', 'locator':deepcopy(locator), 'reason':'declared wire only'} for _ in range(2000)]
+        host_module._docx_response(value, self.ident)
+        native['blocks'].append(deepcopy(native['blocks'][0])); rejected(value, 413)
+        value = deepcopy(self.receipt); native = value['reference']['result']
+        native['issues'] = [{'code':'unknown stored issue', 'locator':None, 'occurrences':1} for _ in range(128)]
+        native['reader']['version'] = 'unconfirmed'; native['status'] = 'unknown stored status'; native['scope']['profile'] = '<literal>'
+        self.assertIn(b'unknown stored status', host_module._docx_response(value, self.ident))
+        native['issues'].append(deepcopy(native['issues'][0])); rejected(value, 413)
+        for edit in [lambda n: n['blocks'][0].update(kind='future-block'), lambda n: n.update(complete=1),
+                     lambda n: n['scope'].update(page_numbers=1), lambda n: n['statistics'].update(unsafe=2**53),
+                     lambda n: n['statistics'].update(value=1.5), lambda n: n['reader'].update(name='\ud800')]:
+            value = deepcopy(self.receipt); edit(value['reference']['result']); rejected(value, 503)
+
+    def test_DOCX_source_shares_exclusive_lease_and_drain_with_real_admission(self):
+        server = self.start(); cookie, csrf = self.bootstrap(server)
+        runtime = server._reference_runtime; entered = threading.Event(); release = threading.Event()
+        parent = runtime.docx_parent; outcomes = []
+        def held(*args, **kwargs):
+            self.assertFalse(runtime.lock._is_owned()); entered.set()
+            if not release.wait(5): raise RuntimeError('test parent release missing')
+            return parent(*args, **kwargs)
+        runtime.docx_parent = held
+        def request():
+            try: outcomes.append(self.docx(server, cookie, csrf)[0])
+            except (OSError, http.client.HTTPException): outcomes.append('delivery_unknown')
+        worker = threading.Thread(target=request); worker.start()
+        try:
+            self.assertTrue(entered.wait(5)); self.assertEqual(self.docx(server, cookie, csrf)[0], 429)
+            closed = threading.Event()
+            closer = threading.Thread(target=lambda: (server.server_close(), closed.set())); closer.start()
+            self.assertFalse(closed.wait(.05)); self.assertEqual(runtime.active, 1)
+            release.set(); worker.join(5); closer.join(5)
+            self.assertFalse(worker.is_alive()); self.assertFalse(closer.is_alive()); self.assertTrue(closed.is_set())
+            self.assertEqual(runtime.active, 0); self.assertFalse(runtime.source_active)
+            self.assertIn(outcomes[0], [200, 'delivery_unknown'])
+            with self.store.connection() as con: self.assertEqual(con.execute('SELECT 1').fetchone()[0], 1)
+        finally:
+            release.set(); worker.join(5)
 
 
 if __name__ == '__main__':
