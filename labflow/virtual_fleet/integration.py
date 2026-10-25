@@ -6,6 +6,34 @@ from .catalog import ROLES, validate_catalog
 from .core import VirtualFleet
 
 
+MAX_SETUP_RECORDS = 32
+
+
+def _validate_setup_records(records):
+    if records is not None and (type(records) is not list or records):
+        raise ValueError('setup_records requires a native empty list or None')
+
+
+def _begin_setup_record(records, request_id, operation, device_id, action, parameters):
+    if records is None:
+        return None
+    if len(records) >= MAX_SETUP_RECORDS:
+        raise ValueError('setup_records capacity exceeded')
+    record = {'request_id': request_id, 'operation': operation,
+              'device_id': device_id, 'action': action, 'parameters': deepcopy(parameters),
+              'receipt': None, 'tick': None, 'setup_revision': None}
+    records.append(record)
+    return record
+
+
+def _finish_setup_record(record, receipt):
+    if record is not None:
+        record['receipt'] = deepcopy(receipt)
+        if type(receipt) is dict:
+            record['tick'] = deepcopy(receipt.get('tick'))
+            record['setup_revision'] = deepcopy(receipt.get('setup_revision'))
+
+
 def _bindings():
     from . import facility, rf, instruments
     factories, actions = {}, {}
@@ -106,7 +134,7 @@ def _source_configuration(value):
     return dict(value)
 
 
-def create_conducted_example(catalog, *, seed=0, source_settings=None):
+def create_conducted_example(catalog, *, seed=0, source_settings=None, setup_records=None):
     """Create all catalog devices and initialize an explicit synthetic RF bench.
 
     The numeric recipe below is newly authored simulation input. No report
@@ -114,7 +142,9 @@ def create_conducted_example(catalog, *, seed=0, source_settings=None):
     Remaining catalog devices stay unconnected; their acceptance is separate.
     source_settings is an exact6 caller declaration, never measured Wi-Fi data.
     None preserves the original generic recipe and return tuple.
+    An optional native empty setup_records list captures actual call boundaries.
     """
+    _validate_setup_records(setup_records)
     catalog=validate_catalog(catalog)
     source = ({'frequency_hz':2.45e9,'power_dbm':12.5,'bandwidth_hz':20e6,
                'duty_cycle':.25,'modulation':'OFDM','crest_factor_db':3}
@@ -123,12 +153,18 @@ def create_conducted_example(catalog, *, seed=0, source_settings=None):
     fleet=create_fleet(catalog,topology,seed=seed)
     receipts=[]
     def command(device,action,parameters=None):
-        result=fleet.execute(f'example:action:{len(receipts)}',device,action,parameters)
+        request_id=f'example:action:{len(receipts)}'
+        record=_begin_setup_record(setup_records,request_id,'execute',device,action,parameters)
+        result=fleet.execute(request_id,device,action,parameters)
+        _finish_setup_record(record,result)
         receipts.append(result)
         if result['status'] not in {'ok','pending'}:
             raise ValueError(f'Synthetic example initialization failed: {device}/{action}')
     def advance(ticks):
-        result=fleet.advance(f'example:tick:{len(receipts)}',ticks)
+        request_id=f'example:tick:{len(receipts)}'
+        record=_begin_setup_record(setup_records,request_id,'advance',None,None,{'ticks':ticks})
+        result=fleet.advance(request_id,ticks)
+        _finish_setup_record(record,result)
         receipts.append(result)
         if result['status']!='ok':raise ValueError('Synthetic example clock failed')
 
