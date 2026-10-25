@@ -1,6 +1,6 @@
 # Vertex 연결 비교 실행
 
-2026-10-25, Asia/Seoul. [공통 설계](../superpowers/specs/2026-10-25-vertex-ai-connection-design.md)와 [공식 모델 카탈로그](vertex_ai_connection_catalog.json)를 따르는 작은 연결 실행 경계다. [구현](../../labflow/model_comparison.py)은 프로필/설정 담당 모듈과 REST 응답 담당 모듈을 직접 연결한다. 현재 소유 단위의 검증은 [가상 단위 검사](../../tests/test_model_comparison.py) 41개이며 실제 ADC 읽기·인증 갱신·네트워크·Vertex 생성은 모두 0이다. 실제 의존성 결합·처음 6회 생성과 독립 제품 검수는 총괄이 수행한다.
+2026-10-25, Asia/Seoul. [공통 설계](../superpowers/specs/2026-10-25-vertex-ai-connection-design.md)와 [공식 모델 카탈로그](vertex_ai_connection_catalog.json)를 따르는 작은 연결 실행 경계다. [구현](../../labflow/model_comparison.py)은 프로필/설정 담당 모듈과 REST 응답 담당 모듈을 직접 연결한다. 현재 소유 단위의 검증은 [가상 단위 검사](../../tests/test_model_comparison.py) 51개이며 실제 ADC 읽기·인증 갱신·네트워크·Vertex 생성은 모두 0이다. 실제 의존성 결합·처음 6회 생성과 독립 제품 검수는 총괄이 수행한다.
 
 ## API와 선택
 
@@ -51,16 +51,38 @@ matrix = build_vertex_comparison_matrix(
 
 ## 등록 입력과 판정 범위
 
-현재 등록 범위는 DGM-AI-CONNECTION-001/version1, connection-json-v1뿐이다.
+등록된 연결 scope는 DGM-AI-CONNECTION-001/version1, connection-json-v1이다. 접수 scope intake-synthetic-s01/s02/s03도 아래 명시 wire와 intake-understanding-v1로 고정 등록한다. 각 scenario/evaluator version은 정수1이며 pack revision 문자열 c57-v1과 구별한다.
 
 | 원 bytes | 길이 | SHA-256 |
 |---|---:|---|
 | prompt | 639 | bef332ef64fbf9e916cf4ab37ec344bdffb84136111bfe192cce862969443230 |
 | literal schema | 321 | a7b7c8a96d6e8602eef36b6afac804de833dc7566fe386fc158ebe1eac4f47c9 |
 
-원 pair를 다른 요약이나 재직렬화 bytes로 바꿀 수 없다. strict decoder는 단일 UTF-8 JSON object exact4의 schema_version을 native int 1, status를 문자열 ok, synthetic을 true, equipment_authorized를 false로 검사한다. 중복키·비유한 수·잘못된 UTF-8·Markdown·추가 텍스트/키·bool/float 버전은 거절하고 수선하지 않는다.
+원 pair를 다른 요약이나 재직렬화 bytes로 바꿀 수 없다. connection의 strict decoder는 단일 UTF-8 JSON object exact4의 schema_version을 native int 1, status를 문자열 ok, synthetic을 true, equipment_authorized를 false로 검사한다. 중복키·비유한 수·잘못된 UTF-8·Markdown·추가 텍스트/키·bool/float 버전은 거절하고 수선하지 않는다.
 
-연결 성공은 업무 품질 평가가 아니다. assessment는 항상 not_assessed/verdict=null/connection_only이고 batch.business_assessment도 not_assessed다. 기존 접수→의뢰 이해→계획→가상시험→설명, Codex 실제 응답과 독립 기대, Fleet/Store/장비 DB를 변경하지 않는다. S01~S03의 추가 비교는 별도 등록 입력·평가자와 추가 유계 승인이 필요하다. 논리 18셀은 18회 호출 권한이 아니다.
+연결 성공은 업무 품질 평가가 아니다. connection assessment는 not_assessed/verdict=null/connection_only이고 batch.business_assessment도 not_assessed다. 기존 접수→의뢰 이해→계획→가상시험→설명, Codex 실제 응답과 독립 기대, Fleet/Store/장비 DB를 변경하지 않는다. 등록 접수3도 실제 호출에는 해당 입력/evaluator의 별도 유계 승인이 필요하다. 논리 18셀은 18회 호출 권한이 아니다.
+
+## 접수 등록 입력과 genuine 해석
+
+[접수 비교 공통 설계](../superpowers/specs/2026-10-25-vertex-intake-comparison-design.md)에 따라 기존 runner의 private 상수와 명시 분기만 확장했다. public API3·모든 DTO 키·D2 receipt18을 유지하며 신규 wrapper/module·callback·임의 registry 설치를 받지 않는다.
+
+| scenario_id | C1 wire bytes | C1 wire SHA-256 |
+|---|---:|---|
+| intake-synthetic-s01 | 4280 | 33d8aae6d0a19b6d884666d3937453dca1c88bb254a5552183858f0fd870eb4d |
+| intake-synthetic-s02 | 4380 | a357cd1443371cef1aefec6dd3c93877733a7bc21db4ba0f809c1685ef8d2bbe |
+| intake-synthetic-s03 | 4342 | b9874f59e1bf3d7c2520fb1fe3553f2db7da796daf6c860b0ced310121f5c5d4 |
+
+세 입력은 동일 literal schema1410 bytes/SHA ade0333e65ad87f0028e0f4f1fab6872b162664dc3accdf63b39d6a9721e984c와 고정 neutral producer SYN-PENDING-MODEL-RUN을 사용한다. 원 raw prompt artifact4423/4523/4485와 명시 C1 wire의 SHA를 구별한다. caller의 pretty JSON이나 줄끝을 조용히 변환하지 않는다. 위 C1 bytes는 root가 과거 Codex의 실제 입력 metadata와 대조해 명시 선택한 값이며 원 모델 응답·독립 기대는 들어 있지 않다.
+
+private descriptor exact11은 scenario_id/scenario_version/evaluator_id/evaluator_version/pack_revision/input_bundle_sha256/registration_sha256/context_sha256/producer_name/prompt/response_schema다. 원 inputpack004의 bundle/registration provenance와 inputpack005의 명시 C1 wire를 연결한다. context_sha256은 C1 context SHA이며 raw export 파일 SHA와 다르다. prompt/schema descriptor는 bytes/sha256 exact2다. 이 metadata는 실행 권한이나 새 공개 DTO가 아니다.
+
+고정 prompt의 user message를 bounded strict JSON으로 읽어 context synthetic=True·schema1·C1 context SHA를 확인한다. 기존 build_analysis_prompt(context, *, producer_name)를 직접 호출해 전체 prompt DTO의 C1 값동일을 대조한다. system policy·binding·producer·원 DOCX text=null/unsupported/requires_parser를 수선하지 않는다. 등록 ID/evaluator·schema·wire/context가 맞지 않거나 genuine builder가 달라지면 인증/생성 전에 거절한다.
+
+D2의 유효 complete receipt와 원 artifact readback을 통과한 final bytes만 기존 decode_analysis_response(response, context, *, producer_name)에 전달한다. 인용/producer/불확실성 validation은 기존 코드가 수행한다. 실패·취소·incomplete·unknown transport에서는 접수 decoder를 호출하지 않는다.
+
+접수 strict 통과의 reason_code는 intake_response_verified, 거절은 intake_response_invalid다. assessment는 항상 not_assessed/verdict=null/reason_code=semantic_evaluator_not_connected이고 batch.business_assessment도 not_assessed다. neutral producer 선언은 실제 모델 신원이나 의미 정확도 증거가 아니다. requested/reported model은 원 settings/receipt에서 구별한다. 실제 의미평가는 root가 별도 고정한 독립 평가에서만 수행한다.
+
+새 decoded artifact·Store admission·제공-input 계약 평가 승격·숨은 다음 모델 호출·가상 동작은 추가하지 않는다. 원 final bytes와 context로 후속 genuine 해석을 재현할 수 있다. 기존 I1 known0/부재 bytes0과 I2 최초 transport 오류·원 receipt/partial 보존을 접수 분기에도 적용한다.
 
 ## 호스트 승인과 누적 예산
 
@@ -68,7 +90,7 @@ adc_path, evidence_dir, budget_path, approval_path는 보호된 호스트가 정
 
 승인은 root가 seed한 private exact17이다. UI bool이나 기존 prepared.json으로 열 수 없다. 키는 schema_version, kind, approval_id, scope_id, budget_id, project_id, quota_project_id, auth_profile_id, scenario_id, evaluator_id, prompt_sha256, response_schema_sha256, execution_mode, trial, limits, issued_at, expires_at이다. kind는 vertex_comparison_approval이다.
 
-scope는 위 고정 등록 pair·scenario/evaluator, project/quota project-a6310591-f8cc-487c-9e3, auth profile, root_console의 confirmed 무료 체험 관측에 결합한다. 양의 KRW 크레딧 문자열·잔여1~90일·관측시각·최대24시간 유효기간을 검증한다. 새 profile revision·model/level/override·selected/matrix·batch도 같은 scope에서 쓸 수 있다. 각 실행의 원 profile/settings/matrix/pair SHA는 별도로 다시 검증한다. 승인은 실시간 잔액 조회나 과금0의 보증이 아니다.
+scope는 선택한 고정 등록 pair·scenario/evaluator, project/quota project-a6310591-f8cc-487c-9e3, auth profile, root_console의 confirmed 무료 체험 관측에 결합한다. 양의 KRW 크레딧 문자열·잔여1~90일·관측시각·최대24시간 유효기간을 검증한다. 새 profile revision·model/level/override·selected/matrix·batch도 같은 scope에서 쓸 수 있다. 각 실행의 원 profile/settings/matrix/pair SHA는 별도로 다시 검증한다. 승인은 실시간 잔액 조회나 과금0의 보증이 아니다.
 
 고정 limits exact7은 generation_posts=6, max_output_tokens=512, reserved_output_tokens=3072, timeout_seconds=60, wall_seconds=300, retries=0, continuations=0이다. 프로필은 공식 global/us/eu·허용 model2/level3만 받는다. 요청과 quota project가 다르거나 알 수 없는 설정은 거절한다. 모델 접근 권한은 metadata 검사로 입증되지 않는다. D2 inspect의 model_access_verified=false를 실제 생성 성공으로 처리하거나 그 자체만으로 생성 전 거절하지 않는다.
 
@@ -112,8 +134,8 @@ matrix128KiB, budget64KiB, row/batch 각1MiB를 상한으로 둔다. receipt/art
 
 ## 검증과 남은 범위
 
-신규41 검사는 가상 프로필/전송만 쓴다. 고정행/선택/override 불변, scope와 만료, 누적 재시작·중복·동시 in-flight, 원 설정 한도 거절, 예약 후 취소/시간, strict wire, receipt/artifact 변조, known 실패·unknown·제어 예외를 포함한다. OS 잠금은 이 Windows 호스트에서 검사했다. 다른 OS의 파일시스템·프로세스 강제 종료·실제 D1/D2 결합·원격 API·실제 모델은 별도 검증 대상이다.
+관련51 검사는 가상 프로필/전송만 쓴다. 고정행/선택/override 불변, scope와 만료, 누적 재시작·중복·동시 in-flight, 원 설정 한도 거절, 예약 후 취소/시간, strict wire, receipt/artifact 변조, known 실패·unknown·제어 예외를 포함한다. 접수 신규10은 genuine decoder·등록3·교차입력/producer/schema·dependency·transport decoder0·누적 소진·최초 오류 보존을 가상 전송으로 검사했다. 원41과 별도 분모이며 가상 검사 합계51이다. OS 잠금은 이 Windows 호스트에서 검사했다. 다른 OS의 파일시스템·프로세스 강제 종료·실제 D1/D2 결합·원격 API·실제 모델은 별도 검증 대상이다.
 
 고정 오류는 ModelComparisonError(ValueError)이며 code/str/args가 동일하고 cause/context가 없는 model_comparison_invalid_input, model_comparison_limit_exceeded, model_comparison_state_error, model_comparison_dependency_unavailable이다. operational 거절은 고정 reason_code와 not_run/unknown 기록으로 구별한다. 원 인증 오류 내용이나 파일 경로를 오류 메시지로 만들지 않는다.
 
-문서 무결성 검사는 기능·계측 정확도·실장비/현장·규범 적합성·전체 업무 무인화의 증거가 아니다. 실제 생성6/기존 S01~S03 업무 비교·물리 시험소 검증은 이 담당 단위에서 미실행이다.
+문서 무결성 검사는 기능·계측 정확도·실장비/현장·규범 적합성·전체 업무 무인화의 증거가 아니다. 실제 생성6·등록 S01~S03의 실제 모델 비교/의미평가·물리 시험소 검증은 이 담당 단위에서 미실행이다.
