@@ -269,8 +269,68 @@ class RegistrationTests(unittest.TestCase):
         self.assertEqual(self.call()['status'],'not_prepared');self.assertEqual((self.stage/'guard').read_bytes(),b'KEEP_PARTIAL')
 
 
+    def first_failure_sql_sync_before_directory_control(self,control):
+        primary=OSError('AUTHORED_FIRST_SQL_FSYNC_FAILURE')
+        database=api._IO.database;fsync=api.os.fsync;close_dirs=api._IO.close_dirs
+        calls=dict(database_active=False,sql_fsync_faults=0,directory_close=0)
+        def sql(obj,*args,**kwargs):
+            calls['database_active']=True
+            try:return database(obj,*args,**kwargs)
+            finally:calls['database_active']=False
+        def sync(fd):
+            if calls['database_active']:
+                calls['sql_fsync_faults']+=1
+                raise primary
+            return fsync(fd)
+        def closing(obj):
+            calls['directory_close']+=1
+            close_dirs(obj)
+            raise control
+        escaped=result=None
+        with patch.object(api._IO,'database',sql),patch.object(api.os,'fsync',sync), \
+                patch.object(api._IO,'close_dirs',closing), \
+                patch.object(api,'_publish_directory',side_effect=AssertionError('NO_PUBLISH_AFTER_SQL_FAILURE')):
+            try:result=self.call()
+            except BaseException as observed:escaped=observed
+        sql_path=self.stage/'workflow-continuation.sqlite3'
+        self.assertTrue(sql_path.is_file());raw=sql_path.read_bytes()
+        con=sqlite3.connect(sql_path.as_uri()+'?mode=ro&immutable=1',uri=True)
+        try:kinds=[row[0] for row in con.execute('SELECT kind FROM codex_conducted_workflow_history ORDER BY seq')]
+        finally:con.close()
+        failure=json.loads((self.operator/'preparation-failure-v1.json').read_bytes())
+        outcome=dict(result=result,escaped_type=type(escaped).__name__ if escaped is not None else None,
+            escaped_is_later_control=escaped is control,first_error_type=type(primary).__name__,failure_record=failure,
+            sql_pin=dict(bytes=len(raw),sha256=H(raw)),sql_kinds=kinds,calls=calls,
+            staging_retained=self.stage.exists(),final_absent=not self.target.exists(),real_profile_model_host_calls=0)
+        self.put(self.root/'first-failure-observation.json',outcome)
+        self.assertEqual(calls,dict(database_active=False,sql_fsync_faults=1,directory_close=1))
+        self.assertEqual(kinds,['baseline','permit'])
+        self.assertTrue(self.stage.is_dir());self.assertFalse(self.target.exists())
+        self.assertIsNone(escaped,'A later directory control replaced the first ordinary SQL fsync failure')
+        self.assertEqual(len(result),11)
+        self.assertEqual(result['status'],'failed');self.assertEqual(result['phase'],'sql')
+        first=dict(phase='sql',code='codex_conducted_workflow_registration_native_or_data_rejected')
+        self.assertEqual(result['errors'],[first,dict(phase='directory_close',code='codex_conducted_workflow_registration_interrupted')])
+        self.assertEqual(failure['code'],first['code']);self.assertEqual(failure['phase'],'sql')
+        self.assertIsNone(result['profile']);self.assertEqual(result['files'],{})
+        self.assertEqual(result['verification']['dispatch'],'not_invoked')
+
+    def first_failure_ordinary_sql_sync_survives_later_keyboard_interrupt(self):
+        self.first_failure_sql_sync_before_directory_control(KeyboardInterrupt('AUTHORED_LATER_DIRECTORY_CONTROL'))
+
+    def first_failure_ordinary_sql_sync_survives_later_memory_error(self):
+        self.first_failure_sql_sync_before_directory_control(MemoryError('AUTHORED_LATER_DIRECTORY_CONTROL'))
+
+
 if __name__=='__main__':
-    if '--boundary' in sys.argv:
+    if '--first-failure' in sys.argv:
+        sys.argv.remove('--first-failure')
+        unittest.main(defaultTest=['RegistrationTests.'+name for name in RegistrationTests.__dict__ if name.startswith('first_failure_ordinary_')])
+    elif '--first-control-legacy' in sys.argv:
+        sys.argv.remove('--first-control-legacy')
+        unittest.main(defaultTest=['RegistrationTests.boundary_sql_close_first_control_is_preserved',
+                                  'RegistrationTests.boundary_body_control_survives_later_native_close'])
+    elif '--boundary' in sys.argv:
         sys.argv.remove('--boundary')
         unittest.main(defaultTest=['RegistrationTests.'+name for name in RegistrationTests.__dict__ if name.startswith('boundary_')])
     else:unittest.main()
