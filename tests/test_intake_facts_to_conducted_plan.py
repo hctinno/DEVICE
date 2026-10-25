@@ -373,4 +373,219 @@ class FactsToPlanTests(unittest.TestCase):
             self.assertIsNone(location['raw_value'])
 
 
+SUPPORT_BLOCK='\n'.join(['frequency_hz: 915000000 Hz','on_average_power: -11 dBm',
+    'bandwidth_hz: 250000 Hz','duty_cycle: 25 %','modulation: LAB-PULSE','crest_factor: 2 dB'])
+
+
+class CitedStatementSupportTests(unittest.TestCase):
+    """Fresh synthetic grammar examples; original model response is not a golden."""
+    maxDiff=None
+
+    def setUp(self):self.case()
+
+    def case(self,source=SUPPORT_BLOCK,value=None):
+        self.context,self.analysis,self.options=authored(source)
+        if value is not None:self.analysis['facts'][-1]['value']=value
+
+    def build(self):
+        from labflow.intake_facts_to_conducted_plan import build_conducted_plan_from_intake_facts
+        return build_conducted_plan_from_intake_facts(self.context,self.analysis,**self.options)
+
+    def settings(self,result):return result['plan_input']['plan']['source_settings']
+
+    def oracle(self):
+        settings=dict(frequency_hz=915000000,power_dbm=-11,bandwidth_hz=250000,
+            duty_cycle=0.25,modulation='LAB-PULSE',crest_factor_db=2)
+        literals=dict(frequency_hz=(915000000,'Hz'),power_dbm=(-11,'dBm'),bandwidth_hz=(250000,'Hz'),
+            duty_cycle=(25,'%'),modulation=('LAB-PULSE','label'),crest_factor_db=(2,'dB'))
+        refs=self.analysis['facts'][-1]['evidence']
+        basis={key:dict(kind='source_cited',value=value,unit=unit,evidence=copy.deepcopy(refs))
+               for key,(value,unit) in literals.items()}
+        return build_conducted_twin_plan_input(self.context,self.analysis,source_settings=settings,basis=basis,**self.options)
+
+    def split_case(self,missing_unit=False):
+        feature='; '.join(line for line in SUPPORT_BLOCK.splitlines() if not line.startswith('on_average_power:'))
+        if missing_unit:feature=feature.replace('25 %','25')
+        power='on_average_power: -11 dBm'
+        lines=['Source context for a synthetic example.','features: '+feature,
+               'power_target: '+power,'Method and accuracy remain unverified.']
+        self.case('\n'.join(lines),'Synthetic settings: '+feature)
+        doc=self.context['documents'][0]
+        def ref(index):
+            return dict(path=doc['path'],sha256=doc['sha256'],line_start=4+index,line_end=4+index,
+                        quote=lines[index],role='product')
+        self.analysis['facts'][-1]['evidence']=[ref(0),ref(1)]
+        self.analysis['facts'].append(dict(field='power_target',value='Invented setting: '+power+'; not a measurement',
+            status='explicit',evidence=[ref(0),ref(2)]))
+        self.analysis['facts'].append(dict(field='features',value=lines[3],status='uncertain',evidence=[ref(3)]))
+
+    def test_explicit_hz_aliases_match_the_genuine_parent_and_keep_original_units(self):
+        original=copy.deepcopy((self.context,self.analysis,self.options))
+        result=self.build()
+        self.assertEqual(result['status'],'ready_for_simulation')
+        self.assertEqual(result['plan_input'],self.oracle())
+        self.assertEqual((self.context,self.analysis,self.options),original)
+        self.assertEqual(result['questions'],[])
+
+    def test_closed_source_wrapper_and_supported_synthetic_description_preserve_raw_facts(self):
+        value='Synthetic settings: '+SUPPORT_BLOCK+'; not a measurement'
+        self.case('features: '+SUPPORT_BLOCK,value)
+        result=self.build()
+        self.assertEqual(result['status'],'ready_for_simulation')
+        self.assertEqual(result['plan_input'],self.oracle())
+        fact=result['plan_input']['intake']['source_facts'][-1]
+        self.assertEqual(fact['value'],value)
+        self.assertEqual(fact['evidence'][0]['quote'],'features: '+SUPPORT_BLOCK)
+        self.assertIs(result['plan_input']['verification']['execution_authority'],False)
+
+    def test_unitless_duty_is_not_defaulted_and_only_its_unit_is_asked(self):
+        self.case(SUPPORT_BLOCK.replace('25 %','25'))
+        result=self.build()
+        self.assertEqual(result['status'],'blocked')
+        self.assertIsNone(self.settings(result)['duty_cycle'])
+        self.assertTrue(all(v is not None for k,v in self.settings(result).items() if k!='duty_cycle'))
+        self.assertEqual([q['field'] for q in result['questions']],['source_settings.duty_cycle'])
+        self.assertEqual(result['questions'][0]['reason'],'source_unit_missing')
+        gap=next(g for g in result['assembly_gaps'] if g['field']=='source_settings.duty_cycle')
+        self.assertEqual((gap['provided'][0]['raw_value'],gap['provided'][0]['unit']),('25',None))
+
+    def test_split_explicit_candidates_keep_only_condition_and_missing_unit_questions(self):
+        self.split_case(missing_unit=True)
+        original=copy.deepcopy(self.analysis)
+        result=self.build()
+        self.assertEqual(result['status'],'blocked')
+        self.assertTrue(all(v is None for v in self.settings(result).values()))
+        self.assertEqual({q['field'] for q in result['questions']},{'source_settings','source_settings.duty_cycle'})
+        self.assertEqual({q['reason'] for q in result['questions']},{'source_condition_unbound','source_unit_missing'})
+        self.assertEqual(len(result['questions']),2)
+        self.assertEqual(result['plan_input']['intake']['source_facts'],original['facts'])
+        gap=next(g for g in result['assembly_gaps'] if g['code']=='source_condition_unbound')
+        self.assertEqual({m['unit'] for m in gap['provided']},{'Hz','dBm','label','dB'})
+        self.assertEqual({m['raw_value'] for m in gap['provided']},{'915000000','-11','250000','LAB-PULSE','2'})
+        self.assertTrue(any(g['code']=='uncertain_intake_fact' and g['blocking'] is False for g in result['plan_input']['gaps']))
+
+    def test_complete_but_separate_physical_quotes_still_require_condition_binding(self):
+        self.split_case()
+        result=self.build()
+        self.assertEqual(result['status'],'blocked')
+        self.assertTrue(all(v is None for v in self.settings(result).values()))
+        self.assertEqual([q['reason'] for q in result['questions']],['source_condition_unbound'])
+        self.assertEqual(len(result['assembly_gaps']),1)
+
+    def test_both_field_wrappers_in_one_physical_quote_can_support_the_genuine_parent(self):
+        feature='; '.join(line for line in SUPPORT_BLOCK.splitlines() if not line.startswith('on_average_power:'))
+        power='on_average_power: -11 dBm'
+        source='features: '+feature+'\npower_target: '+power
+        self.case(source,'Synthetic setting: '+feature)
+        ref=copy.deepcopy(self.analysis['facts'][-1]['evidence'][0])
+        self.analysis['facts'].append(dict(field='power_target',value='Invented settings: '+power,
+            status='explicit',evidence=[ref]))
+        result=self.build()
+        self.assertEqual(result['status'],'ready_for_simulation')
+        self.assertEqual(result['plan_input'],self.oracle())
+        self.assertEqual(result['assembly_gaps'],[])
+        self.assertEqual(result['questions'],[])
+
+    def test_only_closed_synthetic_qualifiers_are_supported_without_general_narrative_stripping(self):
+        for prefix in ('Synthetic setting: ','Invented settings: ','Synthetic simulator settings, not measurements: '):
+            with self.subTest(prefix=prefix):
+                self.case('features: '+SUPPORT_BLOCK,prefix+SUPPORT_BLOCK+'; not measurements or product capabilities')
+                result=self.build()
+                self.assertEqual(result['status'],'ready_for_simulation')
+                self.assertEqual(result['plan_input'],self.oracle())
+        for prefix,suffix in [('Do not use: ',''),('Synthetic settings 9: ',''),('Example explanation: ',''),
+                             ('Synthetic settings: ','; if another mode is selected'),('Synthetic settings: ','; not on-average power')]:
+            with self.subTest(prefix=prefix,suffix=suffix):
+                self.case('features: '+SUPPORT_BLOCK,prefix+SUPPORT_BLOCK+suffix)
+                result=self.build()
+                self.assertEqual(result['status'],'blocked')
+                self.assertTrue(all(v is None for v in self.settings(result).values()))
+
+    def test_negated_ambiguous_source_wrappers_are_not_repaired_from_good_fact_values(self):
+        for source in ('not features: '+SUPPORT_BLOCK,'limits: '+SUPPORT_BLOCK,
+                       'features: not '+SUPPORT_BLOCK,'features: '+SUPPORT_BLOCK+'\nmode: second'):
+            with self.subTest(source=source.splitlines()[0]):
+                self.case(source,'Synthetic settings: '+SUPPORT_BLOCK)
+                result=self.build()
+                self.assertEqual(result['status'],'blocked')
+                self.assertTrue(all(v is None for v in self.settings(result).values()))
+
+    def test_hz_alias_requires_explicit_hz_and_never_uses_the_key_as_a_unit_default(self):
+        for statement,code in [('frequency_hz: 915000000','source_unit_missing'),
+                               ('frequency_hz: 915 MHz','source_unit_unsupported'),
+                               ('frequency_hz: 915000000 Hz MHz','source_statement_unsupported')]:
+            with self.subTest(statement=statement):
+                self.case(SUPPORT_BLOCK.replace('frequency_hz: 915000000 Hz',statement))
+                result=self.build()
+                self.assertIsNone(self.settings(result)['frequency_hz'])
+                gap=next(g for g in result['assembly_gaps'] if g['field']=='source_settings.frequency_hz')
+                self.assertEqual(gap['code'],code)
+                self.assertEqual([q['field'] for q in result['questions']],['source_settings.frequency_hz'])
+        self.case(SUPPORT_BLOCK.replace('frequency_hz: 915000000 Hz','frequency: 915 MHz'))
+        self.assertEqual(self.build()['status'],'ready_for_simulation')
+
+    def test_supported_descriptions_cannot_override_mismatch_conflict_or_unverified_status(self):
+        self.case('features: '+SUPPORT_BLOCK,'Synthetic settings: '+SUPPORT_BLOCK.replace('915000000','916000000'))
+        result=self.build()
+        self.assertIsNone(self.settings(result)['frequency_hz'])
+        self.assertTrue(any(g['code']=='source_quote_mismatch' for g in result['assembly_gaps']))
+        self.case('features: '+SUPPORT_BLOCK+'\nfrequency_hz: 916000000 Hz',
+                  'Synthetic settings: '+SUPPORT_BLOCK+'\nfrequency_hz: 916000000 Hz')
+        result=self.build()
+        self.assertIsNone(self.settings(result)['frequency_hz'])
+        self.assertTrue(any(g['code']=='source_value_conflict' for g in result['assembly_gaps']))
+        self.case('features: '+SUPPORT_BLOCK,'Synthetic settings: '+SUPPORT_BLOCK)
+        self.analysis['facts'][-1]['status']='uncertain'
+        result=self.build()
+        self.assertTrue(all(v is None for v in self.settings(result).values()))
+        self.assertTrue(all(g['code']=='source_fact_unverified' for g in result['assembly_gaps']))
+
+    def test_metadata_spans_address_original_qualified_value_and_wrapped_quote(self):
+        self.split_case(missing_unit=True)
+        original=copy.deepcopy(self.analysis)
+        result=self.build()
+        for gap in result['assembly_gaps']:
+            self.assertEqual(set(gap),{'code','field','provided','blocking'})
+            for item in gap['provided']:
+                self.assertEqual(set(item),{'fact_index','evidence_index','raw_value','unit','value_span','quote_span'})
+                fact=original['facts'][item['fact_index']]
+                quote=fact['evidence'][item['evidence_index']]['quote']
+                left,right=item['value_span'];qleft,qright=item['quote_span']
+                self.assertTrue(0<=left<=right<=len(fact['value']))
+                self.assertTrue(0<=qleft<=qright<=len(quote))
+                self.assertIn(item['raw_value'],fact['value'][left:right])
+                self.assertIn(item['raw_value'],quote[qleft:qright])
+        self.assertEqual(self.analysis,original)
+        self.assertIsNone(result['plan_input']['plan']['numeric_limit_dbm'])
+        self.assertIsNone(result['plan_input']['plan']['uncertainty_db'])
+        self.assertEqual(result['plan_input']['plan']['assessment'],'not_assessed')
+
+    def test_qualifier_path_preserves_control_objects_and_performs_no_IO(self):
+        from labflow import intake_facts_to_conducted_plan as module
+        self.case('features: '+SUPPORT_BLOCK,'Synthetic settings: '+SUPPORT_BLOCK)
+        for error in (MemoryError('qualifier-control'),KeyboardInterrupt('qualifier-control'),SystemExit('qualifier-control')):
+            with self.subTest(kind=type(error).__name__):
+                with patch.object(module,'_quantity',side_effect=error):
+                    with self.assertRaises(type(error)) as caught:self.build()
+                self.assertIs(caught.exception,error)
+        def forbidden(*args,**kwargs):raise AssertionError('unexpected I/O')
+        with patch('builtins.open',forbidden),patch.object(sqlite3,'connect',forbidden),\
+             patch.object(subprocess,'Popen',forbidden),patch.object(socket,'socket',forbidden):
+            result=self.build()
+        self.assertEqual(result['status'],'ready_for_simulation')
+
+    def test_alias_source_still_requires_genuine_current_context_and_exact_citation(self):
+        self.options['expected_revision']+=1
+        result=self.build()
+        self.assertEqual(result['status'],'blocked')
+        self.assertEqual(result['assembly_gaps'],[])
+        self.assertEqual(result['questions'],[])
+        self.case('features: '+SUPPORT_BLOCK,'Synthetic settings: '+SUPPORT_BLOCK)
+        self.analysis['facts'][-1]['evidence'][0]['sha256']='0'*64
+        result=self.build()
+        self.assertEqual(result['status'],'blocked')
+        self.assertEqual(result['questions'],[])
+        self.assertTrue(any(g['code']=='analysis_evidence_invalid' for g in result['plan_input']['gaps']))
+
+
 if __name__=='__main__':unittest.main()
