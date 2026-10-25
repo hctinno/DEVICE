@@ -154,6 +154,42 @@ def _draft(result, result_hash, run_id, runtime_id, scope):
     return raw
 
 
+def _uncertainty_appendix(result, inputs, result_hash):
+    _reject(type(inputs) is dict and set(inputs) == {"components", "policy"}, "invalid_argument")
+    from . import conducted_uncertainty_budget as uncertainty
+    budget = uncertainty.build_conducted_uncertainty_budget(
+        result, components=inputs["components"], policy=inputs["policy"])
+    try:
+        budget = _result._snapshot(budget)
+        template = uncertainty._base()
+        _reject(type(budget) is dict and set(budget) == set(template)
+                and type(budget["schema_version"]) is int and budget["schema_version"] == 1
+                and budget["kind"] == template["kind"] and budget["status"] in ("calculated", "not_assessed")
+                and _result._canonical(budget["verification"]) == _result._canonical(template["verification"])
+                and _result._canonical(budget["conformity"]) == _result._canonical(template["conformity"]), "result_input_invalid")
+        bindings, values = budget["bindings"], budget["budget"]
+        _reject(type(bindings) is dict and set(bindings) == set(template["bindings"])
+                and (bindings["result_sha256"] == result_hash
+                     or budget["status"] == "not_assessed" and bindings["result_sha256"] is None)
+                and type(values) is dict and set(values) == set(template["budget"]), "result_input_invalid")
+        _reject(all(value is None for value in values.values()) if budget["status"] == "not_assessed"
+                else all(_result._number(value) and value >= 0 for value in values.values()), "result_input_invalid")
+        _reject(len(_result._canonical(budget)) <= uncertainty.MAX_OUTPUT_BYTES, "result_input_invalid")
+    except MemoryError:
+        raise
+    except ConductedResultArtifactError:
+        raise
+    except Exception:
+        raise ConductedResultArtifactError(_PREFIX + "result_input_invalid") from None
+    text = ("\n## Declared uncertainty review appendix\n\n"
+            "Arithmetic of provided assumptions; not actual calibration or method approval.\n"
+            "Components, correlation, completeness, evidence and physical applicability remain unverified.\n"
+            "This separate review trace is not applied to measurement, correction, limits or conformity.\n"
+            "Provided result SHA-256: " + result_hash + "\n\n```json\n")
+    text += json.dumps(budget, ensure_ascii=False, sort_keys=True, allow_nan=False, indent=2) + "\n```\n"
+    return text.encode("utf-8")
+
+
 def _verify_file(tree, path, descriptor, stamp, raw):
     if (_native._stamp(tree.backend.info(descriptor, directory=False)) != stamp
             or _native._stamp(tree.file_stat(path)) != stamp
@@ -241,14 +277,18 @@ def _failure_marker(tree, state, primary, request):
 
 
 def write_conducted_result_artifact(result, *, workspace_root, artifact_name,
-                                   expected_result_sha256, run_id, runtime_instance_id):
+                                   expected_result_sha256, run_id, runtime_instance_id, uncertainty_inputs=None):
     """New-leaf only. Marker commits storage hashes, never measurement authority."""
     backend, tree, summary, primary = None, None, None, None
     state = dict(phase="preflight", leaf=None, publication_attempted=False, manifest_verified=False)
     request = dict(run_id=run_id, runtime_instance_id=runtime_instance_id, result_sha256=expected_result_sha256)
     try:
         result, result_raw, scope = _input(result, artifact_name, expected_result_sha256, run_id, runtime_instance_id)
+        appendix = b"" if uncertainty_inputs is None else _uncertainty_appendix(result, uncertainty_inputs, expected_result_sha256)
         draft_raw = _draft(result, expected_result_sha256, run_id, runtime_instance_id, scope)
+        if uncertainty_inputs is not None:
+            draft_raw += appendix
+            _reject(len(draft_raw) <= MAX_DRAFT_BYTES, "draft_too_large")
         files = [dict(path="result.json", bytes=len(result_raw), sha256=_sha(result_raw), media_type="application/json"),
                  dict(path="draft.md", bytes=len(draft_raw), sha256=_sha(draft_raw), media_type="text/markdown")]
         verification = _verification(scope)
