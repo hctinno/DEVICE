@@ -42,7 +42,7 @@ LocalAppData는 [SHGetKnownFolderPath](https://learn.microsoft.com/en-us/windows
 
 현재 anchor의 admission null/false와 new_model_processes=0 등은 당시 미실행 snapshot으로 그대로 보존한다. 새 operator control과 원장의 실제 permit이 없으면 그 snapshot만으로 실행할 수 없다. 새 운영 설정도 기존 위임 범위를 넓히지 않으며 한 등록 합성건/지정 모델/한 permit에 결합한다. SHA는 이 결합과 변경 검출을 위한 값이다.
 
-anchor의 top exact15는 아래 묶음이다. 기록 시각/상태와 source 위치는 원 metadata이며 새 실행 권한·현재 계정 예산으로 해석하지 않는다.
+anchor의 top exact14는 아래 묶음이다. 기록 시각/상태와 source 위치는 원 metadata이며 새 실행 권한·현재 계정 예산으로 해석하지 않는다.
 
 | anchor 경로·exact 키 | 원 metadata의 유형·고정 의미 |
 | --- | --- |
