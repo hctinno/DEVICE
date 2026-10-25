@@ -1,0 +1,234 @@
+{
+  "context_definition": "intent only: C1 of public payload3 intake_evidence/sources/scope; existing analysis unchanged",
+  "input_bundle_definition": "C1 of public caller packet4 intake_view/source_views/scope/producer_name; no original preimage verification",
+  "interfaces": {
+    "assessment": {
+      "reason_code": "semantic_evaluator_not_connected",
+      "status": "not_assessed",
+      "verdict": null
+    },
+    "batch_business_assessment": "not_assessed",
+    "genuine_concrete": {
+      "builder": "build_intake_test_intent_prompt(intake_view,source_views,*,scope,producer_name)->dict",
+      "builder_output_keys": [
+        "schema_version",
+        "kind",
+        "binding",
+        "expected_producer",
+        "messages",
+        "verification",
+        "limits"
+      ],
+      "decoded_binding_keys": [
+        "intake_view_sha256",
+        "source_views_sha256",
+        "scope_sha256",
+        "payload_sha256",
+        "request_sha256",
+        "raw_response_sha256"
+      ],
+      "decoded_output_keys": [
+        "schema_version",
+        "kind",
+        "binding",
+        "expected_producer",
+        "proposal",
+        "verification",
+        "limits"
+      ],
+      "decoder": "decode_intake_test_intent_response(response,intake_view,source_views,*,scope,producer_name)->dict",
+      "genuine_execution_in_this_preparation": 0,
+      "module": "labflow.intake_test_intent_model_boundary",
+      "payload_keys": [
+        "intake_evidence",
+        "sources",
+        "scope"
+      ],
+      "request_keys": [
+        "schema_version",
+        "kind",
+        "binding",
+        "expected_producer",
+        "payload"
+      ],
+      "user_json_keys": [
+        "request_sha256",
+        "request"
+      ]
+    },
+    "new_public_API_or_wrapper_or_artifact": 0,
+    "preserved_key_counts": {
+      "D2_receipt": 18,
+      "approval": 17,
+      "batch": 8,
+      "budget": 11,
+      "entry": 10,
+      "matrix": 11,
+      "row": 15,
+      "row_binding": 9,
+      "selection": 4,
+      "summary": 11
+    },
+    "private_descriptor_proposal": {
+      "context_sha256_intent_only": "public payload C1 SHA: intake_evidence/sources/scope; original analysis-context definition unchanged",
+      "exact_keys": [
+        "scenario_id",
+        "scenario_version",
+        "evaluator_id",
+        "evaluator_version",
+        "pack_revision",
+        "input_bundle_sha256",
+        "registration_sha256",
+        "context_sha256",
+        "producer_name",
+        "prompt",
+        "response_schema"
+      ],
+      "input_bundle_sha256_intent_only": "public caller packet4 C1 SHA: intake_view/source_views/scope/producer_name; proposed pins in caller_packet_proposed_pins",
+      "original_full_preimage_verification": false,
+      "prompt_schema_keys": [
+        "bytes",
+        "sha256"
+      ],
+      "registration_sha256_proposed": "006 index raw SHA f75d3315139de405b829ceb0096e182a9aa8654537515b089353d5ff022f09cf",
+      "root_common_pin_required": false
+    },
+    "public_API3_unchanged": true,
+    "public_signatures": [
+      "build_vertex_comparison_matrix(profile,prompt_bytes,response_schema_bytes,*,batch_id,scenario_id,evaluator_id,selection='matrix',model_id=None,overrides=None)->dict",
+      "run_vertex_comparison_row(matrix,row_index,prompt_bytes,response_schema_bytes,*,adc_path,evidence_dir,budget_path,approval_path,cancel_event=None)->dict",
+      "run_vertex_comparison_batch(matrix,prompt_bytes,response_schema_bytes,*,adc_path,evidence_dir,budget_path,approval_path,cancel_event=None)->dict"
+    ],
+    "strict_reason_codes_proposed": {
+      "rejected": "intent_response_invalid",
+      "success": "intent_response_verified"
+    }
+  },
+  "invariants": {
+    "I1": "exact absent bytes native0 and original failed receipt/known generation0",
+    "I2": "first D2 error identity/args/code/receipt, clean cause/context, fixed secondary persistence note; active reservation not auto recovered",
+    "actual_mock_replay_separate": true,
+    "cumulative_limits": {
+      "continuations": 0,
+      "generation_posts": 6,
+      "max_output_tokens": 512,
+      "reserved_output_tokens": 3072,
+      "retries": 0,
+      "timeout_seconds": 60,
+      "wall_seconds": 300
+    },
+    "genuine_decoded_cap": 131072,
+    "genuine_depth": 32,
+    "genuine_integer": "signed int64",
+    "genuine_nodes": 200000,
+    "intent_response_cap": 65536,
+    "no_automatic_next_model_or_virtual_or_Store": true,
+    "no_new_seed_reset_refund": true,
+    "preserved_inputs": [
+      "004 original analysis artifacts",
+      "005 explicit analysis C1 wire",
+      "006 original intent inputs"
+    ],
+    "spent_or_active_dispatch": 0
+  },
+  "kind": "vertex_synthetic_intent_registry_implementation_contract",
+  "owned_existing3": [
+    "labflow/model_comparison.py",
+    "tests/test_model_comparison.py",
+    "docs/fcc/model_comparison_usage.md"
+  ],
+  "preserved_unverified": {
+    "existing_contract_evaluator": "intake_test_intent_evaluation remains provided_input_contract_check with actual_model_calls0 and actual_model_score null; not invoked or promoted",
+    "genuine_always_false": [
+      "origin_binding_verified",
+      "grounding_verified",
+      "source_authenticity_verified",
+      "source_currentness_verified",
+      "rights_verified",
+      "model_execution_verified",
+      "model_quality_verified",
+      "external_transmission_authorized",
+      "execution_authorized"
+    ],
+    "origin_fields": [
+      "provided_intake_sha256",
+      "provided_analysis_sha256",
+      "provided_projection_sha256",
+      "provided_sources_sha256"
+    ],
+    "origin_preimages_provided": false,
+    "origin_preimages_verified": false,
+    "origin_values": "exact four 64-character zero SHA declarations",
+    "schema_literal_note": "rule/method literal plain nonblank string length1..256, no enum/const; per-case request SHA enum is binding, not a semantic answer",
+    "semantic_expected_or_rule_method_answer_inserted": false,
+    "statement": "Local checks or D2 actual transport do not rewrite any genuine verification flag or prove semantics/rights/currentness/authority.",
+    "strict_local_checks": [
+      "input_shape_checked",
+      "response_json_checked",
+      "request_binding_checked",
+      "producer_binding_checked",
+      "reference_scope_checked"
+    ]
+  },
+  "registry": [
+    {
+      "context_sha256": "55d8703de4c5a4020e7fb06fea2019bbdf04e9a94ad5e39c567fce3fa7b6c04b",
+      "evaluator_id": "intake-test-intent-semantic-v1",
+      "evaluator_version": 1,
+      "input_bundle_sha256": "dfc61c6f19f52e3fda35de834febfcf6e4e8bdeaf5a2b8609af9063426c04cda",
+      "pack_revision": "intent-input-v1",
+      "producer_name": "SYN-PENDING-INTENT-MODEL-RUN",
+      "prompt": {
+        "bytes": 4822,
+        "sha256": "a710b9573af8bd433e654da06a20269b9a312c233a0c29448e5cc694aad03238"
+      },
+      "registration_sha256": "f75d3315139de405b829ceb0096e182a9aa8654537515b089353d5ff022f09cf",
+      "response_schema": {
+        "bytes": 2694,
+        "sha256": "937b3b9fa423bbfea40116495dd7cbed3937a3839e17445f08f7a37e48faf83d"
+      },
+      "scenario_id": "intent-synthetic-i01",
+      "scenario_version": 1
+    },
+    {
+      "context_sha256": "97a0b277e1ac9d99f1894ba4e6a8bf805c37860394eedfc65f8fc942215cf464",
+      "evaluator_id": "intake-test-intent-semantic-v1",
+      "evaluator_version": 1,
+      "input_bundle_sha256": "fe1e304e93475fe7a015986751af695e6805d51aab2a39bdd11df2d5121a346f",
+      "pack_revision": "intent-input-v1",
+      "producer_name": "SYN-PENDING-INTENT-MODEL-RUN",
+      "prompt": {
+        "bytes": 6178,
+        "sha256": "d32141932ea3b06d5d7b1ed39166072ebabbc4228e35768c2d438e73c46271be"
+      },
+      "registration_sha256": "f75d3315139de405b829ceb0096e182a9aa8654537515b089353d5ff022f09cf",
+      "response_schema": {
+        "bytes": 2694,
+        "sha256": "47bfac67fde55165684381d3c624a07566b2790916f148e7d3534e593ef1f75b"
+      },
+      "scenario_id": "intent-synthetic-i02",
+      "scenario_version": 1
+    },
+    {
+      "context_sha256": "a3ac906c77cccfbe64f465ab24b4b70d42fc6493fd3590c5b98ae150a46b769c",
+      "evaluator_id": "intake-test-intent-semantic-v1",
+      "evaluator_version": 1,
+      "input_bundle_sha256": "db0e2e15c0fbac18e5b40b842182ce90fd447abdd4806d5582ae3be1f11518d8",
+      "pack_revision": "intent-input-v1",
+      "producer_name": "SYN-PENDING-INTENT-MODEL-RUN",
+      "prompt": {
+        "bytes": 4783,
+        "sha256": "369f4bc2d816e821428c4acaacfe560bb885e42a15ce4b2a52884e12b65b5e7e"
+      },
+      "registration_sha256": "f75d3315139de405b829ceb0096e182a9aa8654537515b089353d5ff022f09cf",
+      "response_schema": {
+        "bytes": 2694,
+        "sha256": "75e492477ac8d7bb8949143b46941aec089359522c1741d70f969a135434f806"
+      },
+      "scenario_id": "intent-synthetic-i03",
+      "scenario_version": 1
+    }
+  ],
+  "schema_version": 1,
+  "static_registration_does_not_authorize_actual_generation": true
+}
