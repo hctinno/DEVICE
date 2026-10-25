@@ -51,6 +51,8 @@ def response(model,mode='normal'):
     elif mode=='fence':candidate['content']['parts']=[{'text':'```json\n{}\n```'}]
     elif mode=='bad_metadata':result['responseId']='FAKE SECRET\nheader'
     elif mode=='grounding':candidate['groundingMetadata']={}
+    elif mode=='root_grounding':result['groundingMetadata']={}
+    elif mode=='root_url_context':result['urlContextMetadata']={}
     return result
 
 
@@ -291,6 +293,15 @@ class VertexTests(unittest.TestCase):
         _,r=self.call()
         self.assertEqual(r['cancellation']['provider_completion'],'observed_stop')
         self.assertFalse(r['cancellation']['requested']);self.assertEqual(r['cleanup']['secondary_errors'],[])
+
+    def test_fix_outer_metadata_is_rejected_with_normal_and_candidate_controls(self):
+        wire,receipt=self.call();self.assertEqual(wire,RAW);self.assertTrue(receipt['verification']['wire_complete'])
+        self.failure('grounding','response_invalid')
+        for mode in ['root_grounding','root_url_context']:
+            with self.subTest(mode=mode):
+                error=self.failure(mode,'response_invalid')
+                self.assertEqual(error.receipt['attempts']['generation_post_attempts'],1)
+                self.assertFalse(error.receipt['verification']['wire_complete'])
 
     def test_review_parent_handle_close_failure_cannot_return_success(self):
         original=multiprocessing.process.BaseProcess.close;captured=[]

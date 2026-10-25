@@ -449,6 +449,7 @@ class _Run:
     def extract(self,data):
         value=_json(data,'response_invalid')
         if type(value) is not dict:_fail('response_invalid')
+        if any(k in value for k in ('groundingMetadata','urlContextMetadata')):_fail('response_invalid')
         if 'continuationToken' in value:_fail('incomplete')
         feedback=value.get('promptFeedback',{})
         if type(feedback) is not dict:_fail('response_invalid')
