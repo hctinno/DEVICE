@@ -4,6 +4,8 @@
 
 ## source318 최신 수용·막힌 연결
 
+검증 표기 정정: 총괄의 기존 `verify_integration030_batch.py` 전체 소스 목록은 경로별 바이트 SHA만 비교한다. 이 목록에 의존한 이전 root 영수증의 `raw/native`·`unowned native` 표현 중 native 불변은 미관측이며, 원 영수증을 덮지 않고 후행 정정을 남겼다. 바이트 불변·계산 대조는 원 증거대로 유지한다. 담당 source freeze·원 입력/저장3파일·실제 native guard의 별도 전후 관측까지 취소하는 정정이 아니다. 이번부터 전체 source의 bytes/SHA와 관측 native5종을 별도 Python 정수 목록으로 취득해 향후 전후 검증에 사용한다. 과거 시점의 metadata를 소급 확인했다고 주장하지 않는다.
+
 실패2d는 qualified Yes 뒤 기능0e6c에 수용했다. root 관련11 PASS와 별도 새 CLI 측정무효/복구된 단절2·보호HTTP2는 원 measurement invalid·corrected null·실패 이력·complete DRAFT를 보존했다. negative CLI exit1은 원대로이며 정상 측정 PASS로 세지 않는다. restored 경로는 아직 복구 전 종료되므로 recovery-failure 검증이 아니며 transport/recovery-failure 미지원은 그대로다. 독립 원 DOM 부분 관측/timeout·집계 보정도 보존했다.
 
 정식 workflow host735는 qualified Yes 뒤 기능4c7c에 수용했다. 독립 원12중11 PASS/정상 양성 미완결1과 별도 genuine 정상1을 구별했고 root basic14+별도 boundary9 PASS를 확인했다. 별도 유한 permit/고정 OS profile·원17 이력·무재시도/실패 guard를 보존하며 실제 운영 profile/새 permit은 준비하지 않았다. 실제 AI 호출0이고 fixed event:17을 다른 도구 순서의 측정으로 일반화하지 않는다. 정식 등록921·명시 유일 측정 선택 연결을 다음 구현으로 배정했다.
