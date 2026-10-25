@@ -31,6 +31,7 @@ ENGINE = ('__init__.py', '__main__.py', 'catalog.py', 'core.py', 'evaluation.py'
           'harness_check.py', 'instruments.py', 'integration.py', 'journal.py', 'method_adapter.py',
           'policies.py', 'rf.py', 'spectrum_capture.py', 'spectrum_math.py')
 ENGINE_SHA = '9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42'
+CURRENT_ENGINE_SHA = '7816f87dcf8aa648d628935493f74dee3a54f993ba2bae87f9a1e102a8b4ccab'
 CATALOG_SHA = '6f27b5d9ac3d3805b7f198dc0d186865cbfdcaf489d4bceba0572f99709313ff'
 SCENARIOS = ('pulsed_on_mean', 'pulsed_time_mean', 'pulsed_peak', 'cw_peak',
              'shifted_frequency', 'sensor_uncalibrated', 'meter_frequency_conflict')
@@ -270,6 +271,99 @@ class RfSignalReadTests(unittest.TestCase):
             before = fingerprint(self.base); value = self.invoke(); self.check_complete(value, sid)
             self.assertEqual(self.invoke(), value); self.assertEqual(fingerprint(self.base), before)
             self.backends.clear()
+
+    def test_explicit_current_and_legacy_stored_engines_are_readonly_without_reassessment(self):
+        for label, engine in (('legacy', ENGINE_SHA), ('current', CURRENT_ENGINE_SHA)):
+            with self.subTest(generation=label):
+                self.name = label
+                self.folder = self.namespace / label
+                self.fixture()
+                self.provenance['engine_sha256'] = engine
+                self.write_journal(self.events)
+                self.publish()
+                before = fingerprint(self.base)
+                try:
+                    value = self.invoke()
+                except reader.RfSignalReadError as error:
+                    self.fail('supported live source blocked readonly generation: ' + error.code)
+                self.check_complete(value)
+                self.assertEqual(self.invoke(), value)
+                self.assertEqual(fingerprint(self.base), before)
+                self.backends.clear()
+
+    def test_mixed_or_unknown_manifest_and_journal_engines_are_invalid_not_relabelled(self):
+        self.fixture()
+        pairs = ((ENGINE_SHA, CURRENT_ENGINE_SHA), (CURRENT_ENGINE_SHA, ENGINE_SHA),
+                 ('0' * 64, ENGINE_SHA), (ENGINE_SHA, '0' * 64), ('0' * 64, '0' * 64))
+        for manifest_engine, journal_engine in pairs:
+            with self.subTest(manifest=manifest_engine, journal=journal_engine):
+                self.provenance['engine_sha256'] = journal_engine
+                self.write_journal(self.events)
+                self.publish()
+                path = self.folder / 'private-manifest.json'
+                manifest = json.loads(path.read_bytes())
+                manifest['engine_sha256'] = manifest_engine
+                path.write_bytes(encoded(manifest) + b'\n')
+                before = fingerprint(self.base)
+                try:
+                    value = self.invoke()
+                except reader.RfSignalReadError as error:
+                    self.fail('live source gate hid saved-hash validation: ' + error.code)
+                self.check_withheld(value, 'invalid')
+                self.assertEqual(fingerprint(self.base), before)
+                self.backends.clear()
+
+    def test_unknown_actual_source_hash_still_blocks_before_saved_context(self):
+        self.fixture()
+        path = self.package / 'rf.py'
+        path.write_bytes(path.read_bytes() + b'\n# unapproved source\n')
+        before = fingerprint(self.base)
+        self.assert_error('input_changed')
+        self.assertEqual(fingerprint(self.base), before)
+
+    def test_genuine_current_cw_048_to_055_and_readonly_observation_reader(self):
+        from labflow.virtual_fleet import rf_signal_waveform as waveform
+        from labflow.virtual_fleet import rf_signal_waveform_observation as observer
+        from labflow.virtual_fleet import rf_signal_waveform_observation_read as observation_reader
+        self.name = 'genuine_current_cw'
+        self.folder = self.namespace / self.name
+        modules = ((reader, 'rf_signal_read.py'), (rf_signal_scenario, 'rf_signal_scenario.py'),
+                   (waveform, 'rf_signal_waveform.py'), (observer, 'rf_signal_waveform_observation.py'),
+                   (observation_reader, 'rf_signal_waveform_observation_read.py'))
+        for module, name in modules:
+            shutil.copyfile(ROOT / 'labflow/virtual_fleet' / name, self.package / name)
+        profile = self.base / 'virtual_profiles/sm_a176u_unlicensed.json'
+        profile.parent.mkdir()
+        shutil.copyfile(ROOT / 'virtual_profiles/sm_a176u_unlicensed.json', profile)
+        with ExitStack() as stack:
+            for module, name in modules:
+                stack.enter_context(mock.patch.object(module, '__file__', str(self.package / name)))
+            stack.enter_context(mock.patch.object(native, '__file__', str(self.base / 'labflow/control_packet_prepare.py')))
+            produced = rf_signal_scenario.run_rf_signal_scenario(
+                catalog.load_catalog(profile), dict(schema_version=1, scenario_id='cw_peak', seed=7),
+                self.folder, run_id='compat-current-run', runtime_instance_id='compat-current-runtime')
+            self.assertEqual(produced['status'], 'executed')
+            manifest = json.loads((self.folder / 'private-manifest.json').read_bytes())
+            self.assertEqual(manifest['engine_sha256'], CURRENT_ENGINE_SHA)
+            before = fingerprint(self.folder)
+            for method in ('run_rf_signal_scenario', 'evaluate_rf_signal_scenario'):
+                stack.enter_context(mock.patch.object(rf_signal_scenario, method, side_effect=AssertionError('RF rerun')))
+            source = reader.read_rf_signal_run(self.name)
+            self.assertEqual(source['measurement'], dict(value=-18.0, unit='dBm', quantity='peak', reference_plane='sensor_input'))
+            summary = observer.record_rf_baseband_observation(dict(
+                schema_version=1, run_name=self.name, observation_name='genuine_current_055',
+                sample_rate_hz=8, sample_count=2, seed=7))
+            for method in ('generate_rf_baseband_envelope', 'analyze_rf_baseband_envelope'):
+                stack.enter_context(mock.patch.object(waveform, method, side_effect=AssertionError('stored math recalculation')))
+            try:
+                value = observation_reader.read_rf_baseband_observation('genuine_current_055', expected_summary=summary)
+            except observation_reader.RfSignalWaveformObservationReadError as error:
+                self.fail('new genuine 055 record rejected by reader: ' + error.code)
+            self.assertEqual(value['historical_context']['historical_assessment'], source['historical_assessment'])
+            self.assertEqual(value['source']['manifest_sha256'], source['storage']['manifest_sha256'])
+            self.assertIs(value['execution_authorized'], False)
+            self.assertIs(value['rerun_authorized'], False)
+            self.assertEqual(fingerprint(self.folder), before)
 
     def test_historical_failed_assessment_keeps_raw_value_without_claiming_goal(self):
         self.fixture(verdict='fail'); self.check_complete(self.invoke(), verdict='fail')

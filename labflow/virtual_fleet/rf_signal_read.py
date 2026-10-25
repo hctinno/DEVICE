@@ -22,7 +22,10 @@ _ENGINE = (
     'frequency_psd.py', 'frequency_psd_max.py', 'frequency_source.py', 'harness.py',
     'harness_check.py', 'instruments.py', 'integration.py', 'journal.py', 'method_adapter.py',
     'policies.py', 'rf.py', 'spectrum_capture.py', 'spectrum_math.py')
-_ENGINE_SHA = '9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42'
+_ENGINE_SHA = '7816f87dcf8aa648d628935493f74dee3a54f993ba2bae87f9a1e102a8b4ccab'
+# Live source pins and the generating engine of a stored run are separate checks.
+_RECORDED_ENGINE_SHAS = frozenset((_ENGINE_SHA,
+    '9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42'))
 _CATALOG_SHA = '6f27b5d9ac3d3805b7f198dc0d186865cbfdcaf489d4bceba0572f99709313ff'
 _HELPER_SHA = '8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7'
 _FILES = {'private-manifest.json': 65536, 'public-result.json': 327680,
@@ -229,7 +232,8 @@ def _manifest(value):
     _keys(value, _MANIFEST)
     _require(type(value['schema_version']) is int and value['schema_version'] == 1
              and value['kind'] == 'private_rf_signal_scenario_manifest' and value['complete'] is True
-             and value['engine_sha256'] == _ENGINE_SHA and value['catalog_sha256'] == _CATALOG_SHA
+             and _hash(value['engine_sha256']) and value['engine_sha256'] in _RECORDED_ENGINE_SHAS
+             and value['catalog_sha256'] == _CATALOG_SHA
              and _hash(value['topology_sha256']))
     request = value['request']
     _keys(request, {'schema_version', 'scenario_id', 'seed'})
@@ -320,7 +324,8 @@ def _header(stored):
     provenance = header['provenance']
     _keys(provenance, {'runtime_origin', 'catalog_sha256', 'engine_sha256', 'topology_sha256'})
     _require(provenance['runtime_origin'] == 'preinitialized' and provenance['catalog_sha256'] == _CATALOG_SHA
-             and provenance['engine_sha256'] == _ENGINE_SHA and _hash(provenance['topology_sha256'])
+             and _hash(provenance['engine_sha256']) and provenance['engine_sha256'] in _RECORDED_ENGINE_SHAS
+             and _hash(provenance['topology_sha256'])
              and _identifier(header['run_id']) and _identifier(header['runtime_instance_id'])
              and header['run_id'] != header['runtime_instance_id'])
 

@@ -25,10 +25,10 @@ _FLAGS = dict(data_origin="authored_synthetic", synthetic=True, hardware_verifie
               method_approval="not_assessed", regulatory_scope_complete=False,
               model_scope="normalized_baseband_sample_math_v1")
 _PINS = (
-    ("read048", "labflow/virtual_fleet/rf_signal_read.py", 25927,
-     "3999ab598acdc86639d82f2e451295f378ebb3dc827f070c6d670f8cd2a59540"),
+    ("read048", "labflow/virtual_fleet/rf_signal_read.py", 26249,
+     "8cf602b50aac2cb56f1df7b807b19dcfebfdeff588dfe0904cef16a943581472"),
     ("describe041", "labflow/virtual_fleet/rf_signal_scenario.py", 44423,
-     "bae395d27975dcfe5a64c5a4ea2ae86dccfa87f6d88c9e2c25b2283333a77cae"),
+     "f5471dde9786983152992e04fa2dade8b5ac927b1c25e5c0303c30bb664db1aa"),
     ("waveform054", "labflow/virtual_fleet/rf_signal_waveform.py", 7581,
      "7566fb5a90c538275d5f511a3335a68cf3b9e85d7f1cd92b44a11d992f569d1d"),
     ("native_helper", "labflow/control_packet_prepare.py", 29100,

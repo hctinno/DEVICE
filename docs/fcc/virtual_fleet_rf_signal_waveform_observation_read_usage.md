@@ -70,3 +70,16 @@ RfSignalWaveformObservationReadError.code의 prefix는 rf_signal_waveform_observ
 동일 bytes로 읽기 전에 교체된 file object는 과거 identity가 기록에 없어 구별할 수 없다. 검사 사이 완전히 되돌린 변화나 최종 held 검사·해제/반환 뒤의 불변도 보장하지 않는다. 전원 차단 내구성·RF tick/sensor aperture와 새 [0,N/Fs) 동기화·교정/불확도·현재 규범/방법 승인·실제 AI·실장비/현장 검증은 별도다.
 
 이 reader는 의뢰·가상 실행·원시 데이터에서 성적서/AI 리뷰로 이어질 저장 수학 소비 접점이다. 전체 시험소 업무·물리 무인화 완료를 뜻하지 않는다.
+
+## 2026-10-26 055 저장 pin 호환성
+
+복구 정책은 기존 역사055의 reader/scenario/waveform/native helper 고정4 tuple과, 이번 current caller의 고정4 tuple을 각각 한 묶음으로 지원하는 것이다. 개별 role의 옛/새 hash를 임의 조합하지 않으며 unknown/mixed tuple은 evidence_invalid다. live native helper pin·원 pending/final same-object·해시·전후 변경·최초 예외·known owned cleanup 검증은 유지한다. 원 결과의 I/Q·수치·null·권위false를 재계산하거나 보정하지 않는다. legacy/current tuple·혼합 거절을 포함한 reader38개(literal/FakeIO 및 cleanup 검사)가 통과했다. 별도 genuine current/legacy RF 입력에서 새 055를 생성·읽은 native 결과와 합산하지 않는다.
+
+055 provenance의 허용 reader/scenario 쌍은 다음 두 행이다. 각 행은 공통 waveform/helper 핀과 함께 정확4 tuple을 이룬다.
+
+| generation | read048 LF bytes / SHA256 | describe041 LF bytes / SHA256 |
+|---|---|---|
+| legacy caller | 25927 / `3999ab598acdc86639d82f2e451295f378ebb3dc827f070c6d670f8cd2a59540` | 44423 / `bae395d27975dcfe5a64c5a4ea2ae86dccfa87f6d88c9e2c25b2283333a77cae` |
+| current caller | 26249 / `8cf602b50aac2cb56f1df7b807b19dcfebfdeff588dfe0904cef16a943581472` | 44423 / `f5471dde9786983152992e04fa2dade8b5ac927b1c25e5c0303c30bb664db1aa` |
+
+공통 waveform054는 7581 / `7566fb5a90c538275d5f511a3335a68cf3b9e85d7f1cd92b44a11d992f569d1d`, native helper는 29100 / `8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7`이다. 읽기 성공은 저장 bytes/기록 summary의 일치이며 현재 source로 과거 수학·실측을 재검증했다는 뜻이 아니다.
