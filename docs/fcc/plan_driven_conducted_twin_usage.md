@@ -19,6 +19,14 @@
 
 기존 DUT RF 정책과 같이 occupied interval의 하한 `frequency_hz - bandwidth_hz/2`는 0 이상이고 상한 합은 유한해야 한다. 큰 정수를 float 범위에서 표현할 수 없으면 거부한다. caller dict는 복사하며 수정하지 않는다. 각 기존 장치의 profile·주파수·overload 등 추가 정책도 계속 적용된다. 입력의 형식 수용이 측정 성공을 보장하지 않으며 실패 시 기본값 대체·clamp를 하지 않는다.
 
+## 거절 전 부작용의 범위
+
+catalog의 순수 검증·복사 다음에 source_settings를 검사한다. exact6/type/native/finite/문자·기본 RF interval·duty·crest 위반은 topology/fleet 생성과 모든 가상 configure 전에 ValueError로 거절한다. 이 검사는 caller의 catalog/source dict를 수정하지 않으며 실제 I/O를 하지 않는다.
+
+이 경계를 모든 부정 입력의 전역 원자성으로 확대하지 않는다. 기본 입력 검사를 통과해도 장치별 profile의 주파수·입력/출력 한도·측정 정책 등에서 뒤늦게 거절될 수 있다. 이때 호출 내부의 가상 fleet 생성과 앞선 configure·advance 등 일부 가상 초기화가 이미 진행됐을 수 있으며, 실패는 기존 ValueError로 전파되고 bench tuple은 반환하지 않는다. 부분 가상 상태의 rollback이나 모든 side effect 이전 거절을 보장하지 않는다. caller 입력은 보존하고, 실제 장비·계정·현장망은 어느 경로에서도 호출하지 않는다.
+
+소유 검사에서 기본 형식·수치 위반의 fleet 생성 전 거절을 확인했다. 별도 가상 관측에서는 유한하지만 기존 계측 profile 범위를 벗어난 주파수가 앞선 가상 DUT configure 이후 거절되는 경로를 확인했다. 이것은 지원 주파수나 실물 검증 근거가 아니라 거절 시점·부분 가상 상태의 한계다.
+
 ## 호출 예
 
 다음 값은 caller의 한 조건 선언 예시다. 제품 사양서·펌웨어·실측에서 확인한 값이라고 주장하지 않는다.
