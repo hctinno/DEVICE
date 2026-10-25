@@ -22,8 +22,9 @@ _PREFIX = 'intake_reference_demo_'
 _CODES = frozenset(_PREFIX + suffix for suffix in
     ('invalid_argument', 'unavailable', 'output_failed', 'shutdown_failed'))
 _HELP = ('Create a new synthetic PDF/TXT intake and manual reference fixture.\n'
-    'Usage: python -X utf8 -B -m labflow.intake_reference_demo [--output NEW_ABS_DIR]\n'
+    'Usage: python -X utf8 -B -m labflow.intake_reference_demo [--intent-view] [--output NEW_ABS_DIR]\n'
     'Only 127.0.0.1 and an owned ephemeral port are used. Open the ready URL.\n'
+    '--intent-view shows manually supplied candidates without citation or basis grounds.\n'
     'Click prepare, register, then replay the original request in the existing UI.\n'
     'No candidate, real model, hardware, RF run, or operational authority.\n'
     'Ctrl+C drains the server; all new originals and state remain in output.\n')
@@ -65,8 +66,12 @@ def _save(path, value):
 def _arguments(argv):
     if type(argv) not in (list, tuple) or any(type(value) is not str for value in argv):
         _fail('invalid_argument')
+    if argv.count('--intent-view') > 1:
+        _fail('invalid_argument')
+    intent_view = '--intent-view' in argv
+    argv = [value for value in argv if value != '--intent-view']
     if not argv:
-        return None
+        return None, intent_view
     if len(argv) != 2 or argv[0] != '--output':
         _fail('invalid_argument')
     value = argv[1]
@@ -87,7 +92,7 @@ def _arguments(argv):
             if (part.endswith((' ', '.')) or any(char in part for char in ':*?"<>|')
                     or Path(part).is_reserved()):
                 _fail('invalid_argument')
-    return path
+    return path, intent_view
 
 
 def _plain_directory(path):
@@ -155,7 +160,7 @@ def _close_owned(resource, method, first, *, remember_interrupt=False):
     return False
 
 
-def _prepare_demo(output: Path):
+def _prepare_demo(output: Path, *, intent_view=False):
     """Create only this module's sealed synthetic P0 inputs, then close P0."""
     from reportlab.pdfgen import canvas
 
@@ -190,12 +195,31 @@ def _prepare_demo(output: Path):
         if len(accepted) != 1:
             _fail('unavailable')
         intake_id = accepted[0]['intake_id']
-        result = run_worker(store, SyntheticTextProvider(), worker_id='demo-reference-analysis', max_jobs=1)
-        if len(result['results']) != 1 or result['results'][0]['status'] != 'completed':
-            _fail('unavailable')
+        if intent_view:
+            from .intake_jobs import claim_job, complete_job
+            from .active_intake import intake_status
+            from .intake_reference_snapshot import read_intake_reference_snapshot
+
+            job = claim_job(store, 'demo-reference-analysis', synthetic_only=True)
+            if type(job) is not dict or job.get('intake_id') != intake_id or job.get('synthetic') is not True:
+                _fail('unavailable')
+            context = {key: job[key] for key in ('job_id', 'intake_id', 'revision', 'synthetic',
+                'documents', 'analysis_contract', 'instructions')}
+            if 'analysis_context_id' in job:
+                context['analysis_context_id'] = job['analysis_context_id']
+            analysis = SyntheticTextProvider().analyze(context)
+            complete_job(store, job['job_id'], job['token'], analysis)
+        else:
+            result = run_worker(store, SyntheticTextProvider(), worker_id='demo-reference-analysis', max_jobs=1)
+            if len(result['results']) != 1 or result['results'][0]['status'] != 'completed':
+                _fail('unavailable')
         response = respond(store, 'DEMO-PROCEED-' + uuid.uuid4().hex, 'proceed', intake_id=intake_id)
         if response['status'] != 'recorded':
             _fail('unavailable')
+        if intent_view:
+            intake = {'context': context, 'analysis': analysis,
+                'projection': intake_status(store, intake_id)['analysis'],
+                'observation': read_intake_reference_snapshot(store, intake_id)}
     except BaseException:
         preparation_failed = True
         raise
@@ -225,7 +249,17 @@ def _prepare_demo(output: Path):
                'validated_response': validated, 'producer_name': _PRODUCER},)
     _save(output / 'review-input.json', {'authoring': 'manual_fixture', **_FLAGS,
         'packet': packet, 'query': query, 'wire': wire, 'review_inputs': list(inputs)})
-    return state, intake_id, catalog, inputs
+    intent_inputs = ()
+    if intent_view:
+        proposal = {'as_of': None, 'institution_scope': None, 'workflow_scope_id': None,
+            'fields': {field: [{'literal': literal, 'origin': 'explicit_supplied',
+                'intake_refs': [], 'basis_refs': []}] for field, literal in (
+                    ('rule', 'DEMO-RULE-NONNORMATIVE'), ('method', 'DEMO-METHOD-NONNORMATIVE-v1'))}}
+        sources = []
+        intent_inputs = ((intake, proposal, sources),)
+        _save(output / 'intent-input.json', {'authoring': 'manual_fixture', **_FLAGS,
+            'intake': intake, 'proposal': proposal, 'sources': sources})
+    return state, intake_id, catalog, inputs, intent_inputs
 
 
 def _cleanup(server, store, first, *, remember_interrupt=False):
@@ -258,7 +292,7 @@ def _execute(argv):
             phase = _PREFIX + 'output_failed'
             _write(sys.stdout, _HELP.encode('utf-8'))
             return 0, False
-        custom = _arguments(arguments)
+        custom, intent_view = _arguments(arguments)
         if custom is not None:
             _new_leaf(custom)
         else:
@@ -281,7 +315,7 @@ def _execute(argv):
         phase = _PREFIX + 'invalid_argument'
         output = _reserve(custom)
         phase = _PREFIX + 'unavailable'
-        state, intake_id, catalog, inputs = _prepare_demo(output)
+        state, intake_id, catalog, inputs, intent_inputs = _prepare_demo(output, intent_view=intent_view)
         store = Store.open_existing(str(state))
         if type(store) is not Store:
             store = None
@@ -289,7 +323,7 @@ def _execute(argv):
         server = _ui.create_server(store.root, host='127.0.0.1', port=0,
             intake_reference_store=store, fcc_case_catalog=catalog,
             intake_reference_read_scope=(intake_id,), intake_reference_append_scope=(intake_id,),
-            intake_reference_review_inputs=inputs)
+            intake_reference_review_inputs=inputs, intake_test_intent_inputs=intent_inputs)
         port = server.server_port
         if type(port) is not int or not 1 <= port <= 65535 or port in (8765, 8766):
             _fail('unavailable')

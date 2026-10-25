@@ -23,6 +23,7 @@ from labflow.store import Store
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = 'intake_reference_demo_'
+EVIDENCE = ROOT / '.local/INTENT-DEMO-CONNECTION-001'
 
 
 class DemoBoundaries(unittest.TestCase):
@@ -30,10 +31,9 @@ class DemoBoundaries(unittest.TestCase):
         return importlib.import_module('labflow.intake_reference_demo')
 
     def folder(self):
-        local = ROOT / '.local'; local.mkdir(exist_ok=True)
-        value = tempfile.TemporaryDirectory(prefix='demo057-unit-', dir=local)
-        self.addCleanup(value.cleanup)
-        return Path(value.name)
+        folder = EVIDENCE / 'boundaries' / uuid_hex()
+        folder.mkdir(parents=True, exist_ok=False)
+        return folder
 
     def invoke(self, args, **patches):
         api = self.api(); out, err = io.StringIO(), io.StringIO()
@@ -49,7 +49,7 @@ class DemoBoundaries(unittest.TestCase):
         server = SimpleNamespace(server_port=54321,
             serve_forever=mock.Mock(side_effect=serve or (lambda:events.append('serve'))),
             server_close=mock.Mock(side_effect=close or (lambda:events.append('host.close'))))
-        prepared = (state, 'DEMO-ID', object(), ({'intake_id':'DEMO-ID','case_context':{},'validated_response':{},'producer_name':'fixture'},))
+        prepared = (state, 'DEMO-ID', object(), ({'intake_id':'DEMO-ID','case_context':{},'validated_response':{},'producer_name':'fixture'},), ())
         out = io.StringIO() if stdout is None else stdout; err = io.StringIO()
         with mock.patch.object(api, '_dependencies'), \
                 mock.patch.object(api, '_prepare_demo', return_value=prepared, side_effect=prepare) as preparation, \
@@ -208,7 +208,7 @@ class DemoBoundaries(unittest.TestCase):
             folder=self.folder();output=folder/'fresh'
             store=object.__new__(Store);store.root=output/'state';store.close=mock.Mock(return_value=None)
             server=SimpleNamespace(server_port=port,serve_forever=mock.Mock(),server_close=mock.Mock(return_value=None))
-            with mock.patch.object(api,'_dependencies'),mock.patch.object(api,'_prepare_demo',return_value=(store.root,'DEMO-ID',object(),())), \
+            with mock.patch.object(api,'_dependencies'),mock.patch.object(api,'_prepare_demo',return_value=(store.root,'DEMO-ID',object(),(),())), \
                     mock.patch.object(Store,'open_existing',return_value=store),mock.patch.object(api._ui,'create_server',return_value=server):
                 code,out,err=self.invoke(['--output',str(output)])
             self.assertEqual(code,1);self.assertEqual(out,'');server.serve_forever.assert_not_called()
@@ -220,7 +220,7 @@ class DemoFirstInterrupts(unittest.TestCase):
 
     def p0(self, label, *, worker_error=None, close_events=()):
         api=importlib.import_module('labflow.intake_reference_demo')
-        folder=ROOT/'.local/INTAKE-DEMO-057/correction-v2/first-interrupt-evidence'/(label+'-'+uuid_hex())
+        folder=EVIDENCE/'first-interrupt-evidence'/(label+'-'+uuid_hex())
         folder.mkdir(parents=True,exist_ok=False);output=folder/'output'
         out,err=io.StringIO(),io.StringIO();worker=api.run_worker;real_close=Store.close
         calls={'genuine_completed_worker':0,'P0_close':0,'factory':0}
@@ -288,7 +288,7 @@ class DemoFirstInterrupts(unittest.TestCase):
 
     def process(self,args,*,out_events=(),err_events=(),prepare_error=None):
         api=importlib.import_module('labflow.intake_reference_demo')
-        folder=ROOT/'.local/INTAKE-DEMO-057/correction-v2/stream-evidence'/uuid_hex();folder.mkdir(parents=True,exist_ok=False)
+        folder=EVIDENCE/'stream-evidence'/uuid_hex();folder.mkdir(parents=True,exist_ok=False)
         output=folder/'output';events=[];exits=[]
         class Stream(io.StringIO):
             def __init__(self,failures):super().__init__();self.flushes=0;self.failures=dict(failures)
@@ -303,7 +303,7 @@ class DemoFirstInterrupts(unittest.TestCase):
         def exit_process(status):exits.append(status);raise SystemExit(status)
         with mock.patch.object(sys,'argv',['demo',*(args if args is not None else ['--output',str(output)])]), \
                 mock.patch.object(sys,'stdout',out),mock.patch.object(sys,'stderr',err),mock.patch.object(api,'_dependencies'), \
-                mock.patch.object(api,'_prepare_demo',return_value=(store.root,'DEMO-ID',object(),()),side_effect=prepare_error) as prepare, \
+                mock.patch.object(api,'_prepare_demo',return_value=(store.root,'DEMO-ID',object(),(),()),side_effect=prepare_error) as prepare, \
                 mock.patch.object(Store,'open_existing',return_value=store) as opened, \
                 mock.patch.object(api._ui,'create_server',return_value=server) as factory,mock.patch.object(api.os,'_exit',exit_process):
             try:status=api._process_main()
@@ -357,22 +357,288 @@ except SystemExit as ended:
         value=json.loads(result.stdout);self.assertEqual(value['status'],130);self.assertEqual(value['calls'],{'prepare':0,'factory':0});self.assertTrue(value['help_written'])
 
 
+class DemoIntentBoundaries(unittest.TestCase):
+    """The opt-in caller preserves real public P0 values, never a wire substitute."""
+
+    api = DemoBoundaries.api
+    folder = DemoBoundaries.folder
+    invoke = DemoBoundaries.invoke
+
+    def output(self, label):
+        root = EVIDENCE / 'intent-boundaries' / (label + '-' + uuid_hex())
+        root.mkdir(parents=True, exist_ok=False)
+        return root / 'output'
+
+    def require_option(self):
+        import inspect
+        self.assertIn('intent_view', inspect.signature(self.api()._prepare_demo).parameters,
+                      'the opt-in original-input preparation is absent')
+
+    def test_intent_flag_exact_grammar(self):
+        api = self.api(); output = self.output('grammar')
+        cases = [([], (None, False)), (['--output', str(output)], (output, False)),
+                 (['--intent-view'], (None, True)),
+                 (['--intent-view', '--output', str(output)], (output, True)),
+                 (['--output', str(output), '--intent-view'], (output, True))]
+        for args, expected in cases:
+            with self.subTest(args=args):
+                try: actual = api._arguments(args)
+                except ValueError: self.fail('a supported opt-in grammar was rejected')
+                self.assertEqual(actual, expected)
+        invalid = [['--intent-view', '--intent-view'], ['--intent-view', 'true'],
+                   ['--intent-view=true'], ['--intent-view', '--help'], ['--help', '--intent-view'],
+                   ['--intent-view', '--output'], ['--output', '--intent-view'],
+                   ['--intent-view', '--output', 'relative'], ['--intent-view', 1], {}, 'x']
+        with mock.patch.object(api, '_dependencies') as dependency, \
+                mock.patch.object(api, '_reserve') as reserve, mock.patch.object(api, '_prepare_demo') as prepare, \
+                mock.patch.object(api._ui, 'create_server') as factory:
+            for args in invalid:
+                with self.subTest(invalid=args):
+                    status, out, err = self.invoke(args)
+                    self.assertEqual((status, out), (2, ''))
+                    self.assertEqual(json.loads(err), {'error': {'code': PREFIX + 'invalid_argument'}})
+            for boundary in (dependency, reserve, prepare, factory): boundary.assert_not_called()
+
+    def test_default_keeps_worker_and_intent_unconfigured(self):
+        import builtins
+        api = self.api(); output = self.output('default'); output.mkdir()
+        original_import = builtins.__import__; intent_imports = []
+        def imported(name, *args, **kwargs):
+            if name.endswith('intake_test_intent'): intent_imports.append(name)
+            return original_import(name, *args, **kwargs)
+        with mock.patch.object(api, 'run_worker', wraps=api.run_worker) as worker, \
+                mock.patch.object(builtins, '__import__', imported):
+            result = api._prepare_demo(output)
+        self.assertEqual(worker.call_count, 1)
+        self.assertEqual(worker.call_args.kwargs['max_jobs'], 1)
+        self.assertEqual(len(result), 5, 'the default must carry the empty intent tuple')
+        self.assertEqual(result[4], ())
+        self.assertEqual(intent_imports, [])
+        self.assertFalse((output / 'intent-input.json').exists())
+        self.assertTrue((output / 'review-input.json').is_file())
+
+    def test_intent_genuine_original_inputs_and_missing_basis(self):
+        self.require_option()
+        from labflow import intake_jobs as jobs, active_intake as intake_api
+        from labflow import intake_reference_snapshot as snapshot_api
+        from labflow.intake_worker import SyntheticTextProvider
+        from labflow.intake_test_intent import build_intake_test_intent_review
+        from labflow.store import canonical
+        api = self.api(); output = self.output('genuine'); output.mkdir(); seen = {}
+        original_claim, original_complete = jobs.claim_job, jobs.complete_job
+        original_analysis = SyntheticTextProvider.analyze
+        original_status, original_snapshot = intake_api.intake_status, snapshot_api.read_intake_reference_snapshot
+        def claim(*args, **kwargs):
+            value = original_claim(*args, **kwargs); seen['claim'] = value
+            self.assertTrue(kwargs['synthetic_only']); return value
+        def analyze(provider, context):
+            seen['context'] = json.loads(canonical(context))
+            value = original_analysis(provider, context); seen['analysis'] = json.loads(canonical(value)); return value
+        def complete(*args, **kwargs):
+            self.assertTrue(canonical(args[3]) == canonical(seen['analysis']))
+            return original_complete(*args, **kwargs)
+        def status(*args, **kwargs):
+            value = original_status(*args, **kwargs); seen['projection'] = value['analysis']; return value
+        def capture(*args, **kwargs):
+            self.assertEqual(kwargs, {}, '034 expected revision and result SHA are both omitted')
+            value = original_snapshot(*args, **kwargs); seen['observation'] = value; return value
+        with mock.patch.object(jobs, 'claim_job', side_effect=claim) as claimed, \
+                mock.patch.object(jobs, 'complete_job', side_effect=complete) as completed, \
+                mock.patch.object(SyntheticTextProvider, 'analyze', analyze), \
+                mock.patch.object(intake_api, 'intake_status', side_effect=status), \
+                mock.patch.object(snapshot_api, 'read_intake_reference_snapshot', side_effect=capture), \
+                mock.patch.object(api, 'run_worker', side_effect=AssertionError('default worker used in opt-in')):
+            state, ident, catalog, reference_inputs, supplied = api._prepare_demo(output, intent_view=True)
+        self.assertEqual((claimed.call_count, completed.call_count), (1, 1))
+        self.assertEqual((type(supplied), len(supplied), type(supplied[0]), len(supplied[0])), (tuple, 1, tuple, 3))
+        intake, proposal, sources = supplied[0]
+        keys = {'job_id', 'intake_id', 'revision', 'synthetic', 'documents', 'analysis_contract', 'instructions', 'analysis_context_id'}
+        self.assertEqual(set(intake), {'context', 'analysis', 'projection', 'observation'})
+        self.assertEqual(set(intake['context']), keys)
+        self.assertTrue(all(canonical(intake['context'][key]) == canonical(seen['claim'][key]) for key in keys))
+        for name in ('context', 'analysis', 'projection', 'observation'):
+            self.assertTrue(canonical(intake[name]) == canonical(seen[name]), name + ' must preserve the original public value')
+        self.assertEqual((ident, state), (seen['claim']['intake_id'], output / 'state'))
+        self.assertEqual(intake['analysis']['schema_version'], 2)
+        self.assertEqual(intake['analysis']['producer']['kind'], 'fixture')
+        self.assertEqual(set(proposal), {'as_of', 'institution_scope', 'workflow_scope_id', 'fields'})
+        self.assertTrue(all(proposal[key] is None for key in ('as_of', 'institution_scope', 'workflow_scope_id')))
+        self.assertEqual(sources, [])
+        review = build_intake_test_intent_review(*supplied[0])
+        self.assertEqual((review['status'], len(review)), ('review_only', 9))
+        self.assertEqual(len(review['verification']), 14)
+        self.assertTrue(all(value is False for value in review['verification'].values()))
+        self.assertIn('applicability_not_assessed', review['reason_codes'])
+        for field, literal in [('rule', 'DEMO-RULE-NONNORMATIVE'), ('method', 'DEMO-METHOD-NONNORMATIVE-v1')]:
+            value = review['fields'][field]; self.assertEqual(value['status'], 'proposed')
+            candidate, = value['candidates']
+            self.assertEqual((candidate['literal'], candidate['origin'], candidate['literal_linked']), (literal, 'explicit_supplied', False))
+            self.assertEqual((candidate['intake_refs'], candidate['basis_refs'], candidate['period_checks']), ([], [], []))
+            self.assertEqual(candidate['reason_codes'], ['basis_missing', 'intake_ground_missing'])
+        self.assertEqual(len(reference_inputs), 1)
+        self.assertEqual(set(reference_inputs[0]), {'intake_id', 'case_context', 'validated_response', 'producer_name'})
+        self.assertEqual(reference_inputs[0]['validated_response']['status'], 'no_candidate')
+        saved = json.loads((output / 'intent-input.json').read_text(encoding='utf-8'))
+        self.assertEqual(saved['authoring'], 'manual_fixture')
+        self.assertTrue(saved['synthetic']); self.assertFalse(saved['ai_model_called'])
+        self.assertFalse(saved['hardware_verified']); self.assertFalse(saved['operational_authority_granted'])
+        self.assertTrue(all(canonical(saved[key]) == canonical(value) for key, value in zip(('intake', 'proposal', 'sources'), supplied[0])))
+        self.assertEqual(len(list((output / 'inbox').rglob('request.*'))), 2)
+
+    def test_intent_rejects_wrong_claim_without_P1(self):
+        self.require_option()
+        from labflow import intake_jobs as jobs
+        from labflow.intake_worker import SyntheticTextProvider
+        api = self.api(); original = jobs.claim_job
+        for variant in ('none', 'other_id', 'not_synthetic'):
+            output = self.output('wrong-claim-' + variant)
+            def claim(*args, **kwargs):
+                value = original(*args, **kwargs)
+                if variant == 'none': return None
+                return {**value, **({'intake_id': 'OTHER-INTAKE'} if variant == 'other_id' else {'synthetic': False})}
+            with self.subTest(variant=variant), mock.patch.object(jobs, 'claim_job', side_effect=claim) as claimed, \
+                    mock.patch.object(SyntheticTextProvider, 'analyze', side_effect=AssertionError('analysis on wrong claim')) as analyze, \
+                    mock.patch.object(Store, 'open_existing', wraps=Store.open_existing) as opened, \
+                    mock.patch.object(api._ui, 'create_server', side_effect=AssertionError('factory on wrong claim')) as factory:
+                code, out, err = self.invoke(['--intent-view', '--output', str(output)])
+                self.assertEqual((code, out), (1, ''))
+                self.assertEqual(json.loads(err), {'error': {'code': PREFIX + 'unavailable'}})
+                self.assertEqual(claimed.call_count, 1); analyze.assert_not_called(); opened.assert_not_called(); factory.assert_not_called()
+                self.assertEqual(len(list((output / 'inbox').rglob('request.*'))), 2)
+                self.assertFalse((output / 'closed.json').exists()); self.assertEqual(len(list(output.glob('failure-*.json'))), 1)
+
+    def test_intent_null_observation_is_preserved(self):
+        self.require_option()
+        from labflow import intake_reference_snapshot as snapshot_api
+        api = self.api(); output = self.output('null-observation'); output.mkdir()
+        original = snapshot_api.read_intake_reference_snapshot
+        def unavailable(*args, **kwargs):
+            self.assertEqual(original(*args, **kwargs)['status'], 'observed')
+            return None  # Declared unavailable observation; never fabricated as a capture.
+        with mock.patch.object(snapshot_api, 'read_intake_reference_snapshot', side_effect=unavailable):
+            result = api._prepare_demo(output, intent_view=True)
+        self.assertIsNone(result[4][0][0]['observation'])
+        saved = json.loads((output / 'intent-input.json').read_text(encoding='utf-8'))
+        self.assertIsNone(saved['intake']['observation'])
+
+    def p0_fault(self, label, *, complete_error=None, close_events=()):
+        from labflow import intake_jobs as jobs
+        api = self.api(); output = self.output(label)
+        original_complete, original_close = jobs.complete_job, Store.close
+        calls = {'completed': 0, 'close': 0}
+        def complete(*args, **kwargs):
+            value = original_complete(*args, **kwargs); calls['completed'] += 1
+            if complete_error is not None: raise complete_error
+            return value
+        def close(store):
+            number = calls['close']; calls['close'] += 1
+            event = close_events[number] if number < len(close_events) else None
+            if isinstance(event, KeyboardInterrupt): raise event
+            value = original_close(store)
+            if event is not None: raise event
+            return value
+        with mock.patch.object(jobs, 'complete_job', side_effect=complete), mock.patch.object(Store, 'close', close), \
+                mock.patch.object(Store, 'open_existing', wraps=Store.open_existing) as opened, \
+                mock.patch.object(api._ui, 'create_server', side_effect=AssertionError('P1 after first error')) as factory:
+            code, out, err = self.invoke(['--intent-view', '--output', str(output)])
+        self.assertEqual(calls['completed'], 1)
+        opened.assert_not_called(); factory.assert_not_called(); self.assertEqual(out, '')
+        self.assertEqual(len(list((output / 'inbox').rglob('request.*'))), 2)
+        self.assertFalse((output / 'closed.json').exists())
+        (output.parent / 'fault-receipt.json').write_text(json.dumps({'code': code, 'calls': calls,
+            'P1_open': opened.call_count, 'factory': factory.call_count, 'originals_preserved': True}), encoding='utf-8')
+        return code, err, calls
+
+    def test_intent_completed_analysis_first_KI_blocks_P1(self):
+        self.require_option()
+        code, err, calls = self.p0_fault('completed-KI', complete_error=KeyboardInterrupt(), close_events=(OSError(), None))
+        self.assertEqual((code, err, calls['close']), (130, '', 2))
+
+    def test_intent_first_P0_close_KI_blocks_P1(self):
+        self.require_option()
+        code, err, calls = self.p0_fault('close-first-KI', close_events=(KeyboardInterrupt(), OSError(), None))
+        self.assertEqual((code, err, calls['close']), (130, '', 3))
+
+    def test_intent_earlier_error_survives_close_KI(self):
+        self.require_option()
+        code, err, calls = self.p0_fault('error-before-close-KI', complete_error=OSError('private original error'),
+                                       close_events=(KeyboardInterrupt(), OSError(), None))
+        self.assertEqual((code, calls['close']), (1, 3))
+        self.assertEqual(json.loads(err), {'error': {'code': PREFIX + 'unavailable'}})
+
+    def test_intent_parent_error_and_output_failure_preserve_originals(self):
+        self.require_option()
+        from labflow import intake_test_intent as parent
+        api = self.api()
+        for suffix in ('invalid_input', 'limit_exceeded', 'source_error'):
+            output = self.output('parent-' + suffix)
+            with self.subTest(parent=suffix), mock.patch.object(parent, 'build_intake_test_intent_review',
+                    side_effect=parent.IntakeTestIntentError('test_intent_' + suffix)) as build, \
+                    mock.patch.object(api._ui._ReferenceHTTPServer, 'server_bind', side_effect=AssertionError('bind after parent error')) as bind:
+                code, out, err = self.invoke(['--intent-view', '--output', str(output)])
+                self.assertEqual((code, out), (1, '')); self.assertEqual(json.loads(err), {'error': {'code': PREFIX + 'unavailable'}})
+                self.assertEqual(build.call_count, 1); bind.assert_not_called()
+                self.assertEqual(len(list((output / 'inbox').rglob('request.*'))), 2)
+                self.assertTrue((output / 'intent-input.json').is_file()); self.assertFalse((output / 'closed.json').exists())
+        output = self.output('input-save-failure'); original = api._save
+        def save(path, value):
+            if path.name == 'intent-input.json': raise OSError('private output path')
+            return original(path, value)
+        with mock.patch.object(api, '_save', side_effect=save), mock.patch.object(api._ui, 'create_server') as factory:
+            code, out, err = self.invoke(['--intent-view', '--output', str(output)])
+        self.assertEqual((code, out), (1, '')); self.assertEqual(json.loads(err), {'error': {'code': PREFIX + 'unavailable'}})
+        factory.assert_not_called(); self.assertFalse((output / 'intent-input.json').exists())
+        self.assertEqual(len(list(output.glob('failure-*.json'))), 1)
+        self.assertEqual(len(list((output / 'inbox').rglob('request.*'))), 2)
+
+    def test_intent_owned_port_collision_closes_caller_store(self):
+        self.require_option()
+        api = self.api(); output = self.output('port-collision'); borrowed = []; original_open = Store.open_existing
+        original_bind = api._ui._ReferenceHTTPServer.server_bind
+        def opened(*args, **kwargs):
+            store = original_open(*args, **kwargs); borrowed.append(store); return store
+        with socket.socket() as occupied:
+            occupied.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+            occupied.bind(('127.0.0.1', 0)); occupied.listen()
+            def collide(server):
+                self.assertEqual(server.server_address, ('127.0.0.1', 0))
+                server.server_address = occupied.getsockname(); return original_bind(server)
+            with mock.patch.object(Store, 'open_existing', side_effect=opened), \
+                    mock.patch.object(api._ui._ReferenceHTTPServer, 'server_bind', collide):
+                code, out, err = self.invoke(['--output', str(output), '--intent-view'])
+        self.assertEqual((code, out), (1, '')); self.assertEqual(json.loads(err), {'error': {'code': PREFIX + 'unavailable'}})
+        self.assertEqual(len(borrowed), 1); self.assertEqual(len(borrowed[0]._existing_binding.handles), 0)
+        self.assertTrue((output / 'intent-input.json').is_file()); self.assertFalse((output / 'closed.json').exists())
+
+
 _CHILD = r'''
 import json,os,runpy,sqlite3,sys,threading,time
 from pathlib import Path
 
 def run():
  root,control,output=map(Path,sys.argv[1:4]);mode=sys.argv[4]
+ intent=mode.startswith('intent')
+ if intent:mode=mode.removeprefix('intent-') if mode!='intent' else 'normal'
  sys.path.insert(0,str(root))
  from labflow.store import Store
  stats={'phase':'P0','P0':{'Store_create':0,'Store_close':0,'parser':0,'prepare':0,'append':0,'current':0},
   'P1':{'open_existing':0,'factory':0,'serve':0,'host_close':0,'Store_close':0,'parser':0,
         'prepare':0,'append':0,'current':0,'history':0,'actions_close':0,'source_opens':0,'source_bytes':0},
-  'SQL':{},'SQLite_open':0,'SQLite_C_close':0,'KI_sent':0,'order':[]}
+  'SQL':{},'SQLite_open':0,'SQLite_C_close':0,'KI_sent':0,'order':[],
+  'stage':'startup','stage_SQL':{},'stage_sources':{},'intent_API':0,'P0_034':0,'default_worker':0}
  objects={};owned=[];armed=set();local=threading.local();raw_open=Path.open
  first_requests={};append_ordinal=[0]
  def save(name='proof.json'):
   with raw_open(control/name,'w',encoding='utf-8',newline='\n') as stream:json.dump(stats,stream,sort_keys=True)
+ def native_probes(blocked):
+  count=0
+  for path in [output/'state/lab.sqlite3',output/'state/blobs',output/'state',output]:
+   target=path.with_name(path.name+'.native-probe')
+   assert path.resolve().is_relative_to(root/'.local') and target.resolve().is_relative_to(root/'.local') and not target.exists()
+   try:path.rename(target)
+   except OSError:count+=bool(blocked)
+   else:target.rename(path);count+=not blocked
+  return count
  def audit(event,args):
   if event=='sqlite3.connect/handle':owned.append(args[0]);stats['SQLite_open']+=1
  sys.addaudithook(audit)
@@ -387,6 +653,9 @@ def run():
    row['DDL']+=verb in ('CREATE','DROP','ALTER','REINDEX')
    row['reference_DDL']+=verb in ('CREATE','DROP','ALTER','REINDEX') and 'intake_reference_' in sql
    row['datawrite']+=verb in ('INSERT','UPDATE','DELETE','REPLACE')
+   stage=stats['stage_SQL'].setdefault(stats['stage'],{'DDL':0,'datawrite':0,'statements':0})
+   stage['statements']+=1;stage['DDL']+=verb in ('CREATE','DROP','ALTER','REINDEX')
+   stage['datawrite']+=verb in ('INSERT','UPDATE','DELETE','REPLACE')
   con.set_trace_callback(trace)
  class Stream:
   def __init__(self,value):self.value=value
@@ -398,12 +667,17 @@ def run():
  def opened(path,*args,**kwargs):
   value=raw_open(path,*args,**kwargs)
   if stats['phase']=='P1' and path.parent==output/'state'/'blobs':
-   stats['P1']['source_opens']+=1;return Stream(value)
+   stats['P1']['source_opens']+=1
+   stage=stats['stage'];stats['stage_sources'][stage]=stats['stage_sources'].get(stage,0)+1
+   return Stream(value)
   return value
  def profile(frame,event,arg):
   nonlocal output
   package,name=frame.f_globals.get('__name__'),frame.f_code.co_name
   phase=stats['phase'];row=stats[phase]
+  if package=='labflow.intake_worker' and name=='run_worker' and event=='call':stats['default_worker']+=1
+  if package=='labflow.intake_reference_snapshot' and name=='read_intake_reference_snapshot' and event=='call' and phase=='P0':stats['P0_034']+=1
+  if package=='labflow.intake_test_intent' and name=='build_intake_test_intent_review' and event=='call':stats['intent_API']+=1
   if event=='c_call' and getattr(arg,'__name__',None) in ('execute','executemany','executescript','cursor'):
    owner=getattr(arg,'__self__',None);con=owner if type(owner) is sqlite3.Connection else getattr(owner,'connection',None)
    if any(con is c for c in owned):arm(con)
@@ -418,6 +692,11 @@ def run():
    stats['phase']='P1'
    stats['P0']['genuine_catalog']=type(arg[2]).__name__=='FccReportCaseCatalog'
    stats['P0']['inputs_exact4']=len(arg[3])==1 and set(arg[3][0])=={'intake_id','case_context','validated_response','producer_name'}
+   stats['intent_tuple_count']=len(arg[4])
+   if arg[4]:
+    packet,proposal,sources=arg[4][0]
+    stats['intent_original_shape']=(set(packet)=={'context','analysis','projection','observation'}
+     and not {'token','lease_until','attempt'}&set(packet['context']) and sources==[])
    stats['P0']['test_imports']=sum(name=='tests' or name.startswith(('tests.','test_')) for name in sys.modules)
    save('startup.json')
   if package=='labflow.ui_server' and name=='create_server':
@@ -431,6 +710,15 @@ def run():
     if mode=='closed_ready_stdout':os.close(1)
     service=arg.service_actions;wait=arg._reference_runtime.changed.wait;repeats=[0]
     def tick():
+     for marker in control.glob('stage-*'):
+      stats['stage']=marker.name[6:];marker.rename(marker.with_name('seen-'+marker.name))
+     if (control/'answer').exists():
+      from labflow.intake_jobs import respond
+      stats['stage']='answer-observer'
+      ident=next(iter(objects['server']._reference_runtime.scope))
+      value=respond(objects['store'],'DEMO-INTENT-ANSWER','answer',intake_id=ident,answers={'purpose':'USER-CHANGED-DEMO-PURPOSE'})
+      stats['observer_answer_recorded']=value['status']=='recorded'
+      (control/'answer').rename(control/'answered')
      if (control/'expire-core').exists():
       with arg._reference_runtime.actions._lock:
        for entry in arg._reference_runtime.actions._entries.values():entry.deadline=0
@@ -439,7 +727,7 @@ def run():
       with arg._reference_runtime.lock:
        for item in arg._reference_runtime.sessions.values():item['last_seen']=0
       (control/'expire-session').rename(control/'expired-session')
-     if (control/'checkpoint').exists():save('checkpoint.json');(control/'checkpoint').unlink()
+     if (control/'checkpoint').exists():save('checkpoint.json');(control/'checkpoint').rename(control/'checkpoint-done')
      for marker in control.glob('drain-*'):
       if arg._reference_runtime.active==0:marker.rename(marker.with_name('drained-'+marker.name[6:]))
      if (control/'interrupt').exists():stats['KI_sent']+=1;raise KeyboardInterrupt()
@@ -449,10 +737,11 @@ def run():
       repeats[0]+=1;stats['KI_sent']+=1;raise KeyboardInterrupt()
      return wait(timeout)
     arg.service_actions=tick;arg._reference_runtime.changed.wait=waiting
-  if package=='labflow.ui_server' and name=='serve_forever' and event=='call':row['serve']+=1
+  if package=='labflow.ui_server' and name=='serve_forever' and event=='call':row['serve']+=1;stats['stage']='view'
   if package=='labflow.ui_server' and name=='server_close' and event=='call':
    row['host_close']+=1;stats['order'].append('host.close');stats['active_at_close']=frame.f_locals['self']._reference_runtime.active
    (control/'closing').write_text('1',encoding='ascii')
+  if package=='labflow.ui_server' and name=='server_close' and event=='return':stats['order'].append('host.closed')
   if package=='labflow.document_extract' and name=='extract_document' and event=='call':row['parser']+=1
   if package=='labflow.intake_reference_review' and name in ('prepare_reference_review','append_reference_review','read_reference_review'):
    action={'prepare_reference_review':'prepare','append_reference_review':'append'}.get(name)
@@ -486,15 +775,19 @@ def run():
    if event=='call':
     row['Store_close']+=1;stats['order'].append(phase+'.Store.close')
     if phase=='P1':
+     stats['native_before_caller_close_blocked']=native_probes(True)
      server=objects['server'];rt=server._reference_runtime
      stats['at_Store_close']={'active':rt.active,'workers':len(rt.worker_refs),'clients':len(rt.clients),
       'loop':rt.loop_thread is not None,'socket':server.socket.fileno(),'sessions':len(rt.sessions),'actions_closed':rt.actions_closed}
    elif event=='return' and phase=='P1':
-    stats['native_handles_after']=len(objects['store']._existing_binding.handles);save()
+    stats['native_handles_after']=len(objects['store']._existing_binding.handles)
+    stats['native_after_caller_close_released']=native_probes(False);save()
  Path.open=opened;sys.setprofile(profile);threading.setprofile(profile)
  if mode=='closed_stdout':os.close(1)
  if mode=='closed_stderr':os.close(2)
- sys.argv=['labflow.intake_reference_demo']+([] if mode=='default' else ['--output',str(output)])
+ if mode=='default':
+  workspace=root/'.local/INTENT-DEMO-CONNECTION-001'/('cwd-'+control.parent.name[:12]);workspace.mkdir();os.chdir(workspace)
+ sys.argv=['labflow.intake_reference_demo']+([] if mode=='default' else ['--output',str(output)])+(['--intent-view'] if intent else [])
  runpy.run_module('labflow.intake_reference_demo',run_name='__main__')
 
 if __name__=='__main__':run()
@@ -503,7 +796,7 @@ if __name__=='__main__':run()
 
 class DemoNative(unittest.TestCase):
     def child(self, mode='normal'):
-        folder = ROOT / '.local/INTAKE-DEMO-057/test-evidence' / uuid_hex()
+        folder = EVIDENCE / 'native-evidence' / uuid_hex()
         folder.mkdir(parents=True, exist_ok=False)
         control = folder / 'control'; control.mkdir()
         script = folder / 'child.py'; script.write_text(_CHILD, encoding='utf-8', newline='\n')
@@ -585,6 +878,8 @@ class DemoNative(unittest.TestCase):
         self.assertEqual(proof['at_Store_close'],{'active':0,'workers':0,'clients':0,'loop':False,'socket':-1,'sessions':0,'actions_closed':True})
         self.assertEqual(proof['P1']['actions_close'],1);self.assertTrue(proof['actions_close_None'])
         self.assertEqual(proof['native_handles_after'],0);self.assertEqual(proof['SQLite_open'],proof['SQLite_C_close'])
+        self.assertEqual(proof['native_before_caller_close_blocked'],4);self.assertEqual(proof['native_after_caller_close_released'],4)
+        if proof['intent_tuple_count']==0:self.assertEqual(proof['intent_API'],0)
         self.moves(output,False)
         with socket.socket() as probe:
             probe.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1);probe.bind(('127.0.0.1',port))
@@ -668,7 +963,7 @@ class DemoNative(unittest.TestCase):
     def test_default_output_is_fresh_UUID_under_current_repository(self):
         process,placeholder,control=self.child('default');ready,port,_=self.ready(process)
         output=Path(ready['workspace']).parent
-        self.assertEqual(output.parent,ROOT/'.local/intake-reference-demo')
+        self.assertEqual(output.parent,EVIDENCE/('cwd-'+control.parent.name[:12])/'.local/intake-reference-demo')
         self.assertEqual(len(output.name),32);self.assertTrue(all(c in '0123456789abcdef' for c in output.name))
         self.assertFalse(placeholder.exists());self.moves(output,True)
         (control/'interrupt').write_text('1',encoding='ascii');proof=self.finish(process,output,control,port)
@@ -885,6 +1180,172 @@ async function waitFile(name){const until=Date.now()+5000;while(!fs.existsSync(p
 def uuid_hex():
     import uuid
     return uuid.uuid4().hex
+
+
+class DemoIntentNative(unittest.TestCase):
+    """Run the actual module and product DOM; no proxy, route stub or test import."""
+
+    ready = DemoNative.ready
+    http = DemoNative.http
+    wait_file = DemoNative.wait_file
+    snapshot = DemoNative.snapshot
+    moves = DemoNative.moves
+    finish = DemoNative.finish
+    prepare = DemoNative.prepare
+
+    def child(self, mode='normal'):
+        mode = mode if mode.startswith('intent') else ('intent' if mode == 'normal' else 'intent-' + mode)
+        value = DemoNative.child(self, mode)
+        self.last_control = value[2]
+        return value
+
+    def wait_node(self, marker, process):
+        until = time.monotonic() + 15
+        while not marker.exists() and process.poll() is None and time.monotonic() < until:
+            time.sleep(.01)
+        self.assertTrue(marker.exists(), 'native intent browser failed; preserved browser.json gives its stage')
+
+    def stage(self, control, name):
+        (control / ('stage-' + name)).write_text('1', encoding='ascii')
+        self.wait_file(control / ('seen-stage-' + name))
+
+    def browser_flow(self, width, mode='normal'):
+        process, output, control = self.child('intent'); ready, port, ident = self.ready(process)
+        before = self.snapshot(output); self.moves(output, True)
+        script = control / 'intent-browser.cjs'; script.write_text(_INTENT_BROWSER, encoding='utf-8', newline='\n')
+        env = os.environ.copy()
+        env.setdefault('NODE_PATH', 'C:/Users/HCT-2838/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules')
+        browser = subprocess.Popen(['node', str(script), ready['url'], str(control), str(width), mode],
+            cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        def close_browser():
+            if browser.poll() is None: browser.kill(); browser.communicate(timeout=10)
+        self.addCleanup(close_browser)
+        self.wait_node(control / 'view-ready', browser)
+        current = self.snapshot(output)
+        self.assertTrue(before == current, 'view must preserve all SQL and sealed input files')
+        (control / 'checkpoint').write_text('1', encoding='ascii'); self.wait_file(control / 'checkpoint-done')
+        view = json.loads((control / 'checkpoint.json').read_text(encoding='utf-8'))
+        (control / 'view-receipt.json').write_text(json.dumps(view), encoding='utf-8')
+        self.assertEqual(view['intent_API'], 1)
+        self.assertEqual(view['P0_034'], 1)
+        self.assertEqual(view['default_worker'], 0)
+        self.assertEqual(view['intent_tuple_count'], 1); self.assertTrue(view['intent_original_shape'])
+        self.assertEqual(view['stage_sources'].get('view', 0), 0)
+        self.assertEqual((view['stage_SQL']['view']['DDL'], view['stage_SQL']['view']['datawrite']), (0, 0))
+        self.assertGreater(view['stage_SQL']['view']['statements'], 0)
+        if mode == 'normal':
+            self.stage(control, 'C2'); (control / 'allow-c2').write_text('1', encoding='ascii')
+            self.wait_node(control / 'append-ready', browser); registered = self.snapshot(output)
+            self.stage(control, 'replay'); (control / 'allow-replay').write_text('1', encoding='ascii')
+        else:
+            (control / 'allow-c2').write_text('1', encoding='ascii')
+        out, err = browser.communicate(timeout=30)
+        (control / 'browser-stdout.log').write_bytes(out); (control / 'browser-stderr.log').write_bytes(err)
+        self.assertEqual(browser.returncode, 0, 'see sanitized intent browser.json')
+        self.assertEqual((out, err), (b'', b''))
+        value = json.loads((control / 'browser.json').read_text(encoding='utf-8'))
+        self.assertEqual(value['status'], 'pass')
+        if mode == 'normal':
+            after = self.snapshot(output)
+            self.assertTrue(registered == after, 'original replay must preserve all SQL and input bytes')
+            self.assertTrue(before[2] == after[2], 'C2 must preserve the original sealed inputs')
+            self.assertTrue(all(after[0][name] == count for name, count in before[0].items()))
+            for name in ('intake_reference_records', 'intake_reference_events', 'intake_reference_heads'):
+                self.assertEqual(after[0][name], 1)
+        (control / 'interrupt').write_text('1', encoding='ascii')
+        proof = self.finish(process, output, control, port)
+        self.assertEqual(proof['intent_API'], 1); self.assertEqual(proof['P0_034'], 1)
+        self.assertEqual(proof['default_worker'], 0)
+        self.assertEqual(proof['P1']['current'], 0)
+        if mode == 'normal':
+            self.assertEqual((proof['P1']['prepare'], proof['P1']['append']), (1, 2))
+            self.assertTrue(proof['original7_equal'])
+            self.assertEqual((proof['stage_SQL']['replay']['DDL'], proof['stage_SQL']['replay']['datawrite']), (0, 0))
+            self.assertGreater(proof['stage_sources'].get('C2', 0), 0)
+            self.assertEqual(proof['stage_sources'].get('replay', 0), 0)
+        else:
+            self.assertEqual((proof['P1']['prepare'], proof['P1']['append']), (0, 0))
+            self.assertTrue(proof['observer_answer_recorded'])
+        return value, proof
+
+    def test_intent_demo_real_DOM_and_C2_1440_390(self):
+        for width in (1440, 390):
+            with self.subTest(width=width): self.browser_flow(width)
+
+    def test_intent_same_revision_answer_removes_stale_metadata(self):
+        self.browser_flow(390, 'stale')
+
+    def test_intent_active_parent_abort_and_repeated_interrupt_drain(self):
+        DemoNative.test_active_parent_abort_source_one_metadata_and_repeated_interrupt_drain(self)
+        proof = json.loads((self.last_control / 'proof.json').read_text(encoding='utf-8'))
+        self.assertEqual((proof['intent_API'], proof['P0_034'], proof['default_worker']), (1, 1, 0))
+
+    def test_intent_ready_output_failure_preserves_inputs(self):
+        DemoNative.test_real_ready_output_failure_preserves_inputs_and_None_empty_stay_unconfigured(self)
+        proof = json.loads((self.last_control / 'proof.json').read_text(encoding='utf-8'))
+        self.assertEqual((proof['intent_API'], proof['P0_034'], proof['default_worker']), (1, 1, 0))
+
+
+_INTENT_BROWSER = r'''
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const [url,control,width,mode]=process.argv.slice(2),origin=new URL(url).origin;
+const result={status:'fail',width:Number(width),mode,counts:{prepare:0,append:0,current:0},external:0,downloads:0,errors:0,original7_equal:true};
+let browser,stage='launch',original=null;
+const mark=name=>fs.writeFileSync(path.join(control,name),'1',{flag:'wx'});
+async function waitFile(name){const until=Date.now()+15000;while(!fs.existsSync(path.join(control,name))){assert.ok(Date.now()<until);await new Promise(r=>setTimeout(r,20));}}
+const phase=(page,value)=>page.waitForFunction(v=>document.querySelector('.reference-actions-review')?.dataset.phase===v,value);
+const history=page=>page.waitForFunction(()=>document.querySelector('.ir-history-status')?.dataset.state==='ready');
+async function keyboard(page,selector){for(let i=0;i<100;i++){if(await page.evaluate(s=>document.activeElement?.matches(s),selector)){await page.keyboard.press('Enter');return;}await page.keyboard.press('Tab');}throw Error('keyboard_target_missing');}
+(async()=>{
+ try{
+  browser=await require('playwright').chromium.launch({headless:true});
+  const context=await browser.newContext({viewport:{width:Number(width),height:1000}}),page=await context.newPage();page.setDefaultTimeout(6000);
+  page.on('pageerror',()=>result.errors++);page.on('download',()=>result.downloads++);
+  page.on('request',request=>{if(!request.url().startsWith(origin+'/')){result.external++;return;}
+   const action=new URL(request.url()).pathname.split('/').at(-1);if(!Object.hasOwn(result.counts,action))return;
+   result.counts[action]++;if(action==='append'){const raw=JSON.stringify(request.postDataJSON());assert.equal(Object.keys(request.postDataJSON()).length,7);if(original===null)original=raw;else result.original7_equal&&=original===raw;}});
+  stage='initial';await page.goto(url);await history(page);await phase(page,'idle');
+  stage='supplied_metadata';const data=await page.evaluate(()=>fetch('/api/intakes').then(r=>r.json()));
+  assert.equal(data.intake_test_intent_reviews?.length,1);const review=data.intake_test_intent_reviews[0];
+  assert.equal(Object.keys(review).length,9);assert.equal(review.status,'review_only');
+  const record=data.intakes.find(v=>v.intake_id===review.input_binding.intake_id);assert.equal(record.revision,review.input_binding.revision);
+  assert.equal(Object.keys(review.verification).length,14);assert.ok(Object.values(review.verification).every(v=>v===false));
+  stage='actual_DOM';const section=page.locator('.test-intent-review');await section.waitFor();
+  assert.equal(await section.locator('button,blockquote').count(),0);assert.equal(await section.locator('.test-intent-checks dd').count(),2);
+  assert.equal(await section.locator('.test-intent-authority dd').count(),12);
+  assert.ok((await section.locator('.test-intent-checks dd,.test-intent-authority dd').allTextContents()).every(v=>v==='false'));
+  for(const [field,literal] of [['rule','DEMO-RULE-NONNORMATIVE'],['method','DEMO-METHOD-NONNORMATIVE-v1']]){
+   assert.equal(review.fields[field].status,'proposed');const [candidate]=review.fields[field].candidates;
+   assert.equal(candidate.literal,literal);assert.equal(candidate.origin,'explicit_supplied');assert.equal(candidate.literal_linked,false);
+   assert.deepEqual(candidate.intake_refs,[]);assert.deepEqual(candidate.basis_refs,[]);assert.deepEqual(candidate.period_checks,[]);
+   assert.deepEqual(candidate.reason_codes,['basis_missing','intake_ground_missing']);
+   assert.equal(await section.locator('summary').filter({hasText:literal}).count(),1);}
+  assert.ok((await section.innerText()).includes('applicability_not_assessed'));
+  const actionsBefore={...result.counts};await keyboard(page,'.test-intent-review summary');
+  assert.equal(await section.locator('details').first().getAttribute('open'),'');assert.deepEqual(result.counts,actionsBefore);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  await section.screenshot({path:path.join(control,'intent-'+width+'.png')});mark('view-ready');await waitFile('allow-c2');
+  if(mode==='stale'){
+   stage='answer_observer';mark('answer');await waitFile('answered');mark('stage-view-after-answer');await waitFile('seen-stage-view-after-answer');
+   const changed=await page.evaluate(()=>fetch('/api/intakes').then(r=>r.json()));
+   assert.equal(changed.intakes.find(v=>v.intake_id===record.intake_id).revision,record.revision);
+   assert.equal(Object.hasOwn(changed,'intake_test_intent_reviews'),false);
+   await page.locator('#refresh').click();await history(page);await phase(page,'idle');assert.equal(await page.locator('.test-intent-review').count(),0);
+   assert.deepEqual(result.counts,{prepare:0,append:0,current:0});result.same_revision_stale_hidden=true;
+  }else{
+   stage='prepare';await keyboard(page,'.ra-prepare');await phase(page,'ready');assert.ok((await page.locator('.ra-preview').innerText()).includes('no_candidate'));
+   stage='append';await keyboard(page,'.ra-append');await phase(page,'recorded');await history(page);mark('append-ready');await waitFile('allow-replay');
+   stage='replay';await keyboard(page,'.ra-replay');await phase(page,'recorded');await history(page);
+   assert.equal(await page.locator('.ra-registration .ra-fields>div').filter({hasText:'원래 요청 재전송 결과'}).locator('dd').innerText(),'true');
+   assert.deepEqual(result.counts,{prepare:1,append:2,current:0});assert.equal(result.original7_equal,true);
+  }
+  assert.equal(await page.evaluate(()=>localStorage.length+sessionStorage.length),0);
+  assert.equal(await page.locator('a[download]').count(),0);assert.equal(result.external,0);assert.equal(result.downloads,0);assert.equal(result.errors,0);
+  result.status='pass';await context.close();
+ }catch{result.stage=stage;process.exitCode=1;}
+ finally{if(browser)await browser.close();fs.writeFileSync(path.join(control,'browser.json'),JSON.stringify(result,null,2)+'\n');}
+})().catch(()=>{process.exitCode=1;});
+'''
 
 
 if __name__ == '__main__':
