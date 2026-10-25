@@ -1,5 +1,5 @@
 import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot, docxReferenceMatchesRecord} from './model.mjs';
-import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue, parseConductedResultView} from './intake_flow_model.mjs';
+import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue, parseConductedResultView, describeIntakeGapQueue} from './intake_flow_model.mjs';
 import {validateIntakeReferenceContext,parseIntakeReferenceHistoryJson,parseIntakeReferenceCurrentJson} from './intake-references/model.mjs';
 import {createIntakeReferenceReview} from './intake-references/view.mjs';
 import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
@@ -9,8 +9,9 @@ const $ = selector => document.querySelector(selector);
 const state = {records: [], notices: [], selected: location.hash.slice(1), loaded: false, request: 0, view: 'intakes'};
 const flow = {gate:createFixtureReadGate(), context:null, payload:null, selected:'', pending:false,
   stale:false, status:'가상 기록 조회 대기', updatedText:'아직 조회하지 않음'};
-const conducted={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'가상 계획 미리보기 조회 대기'};
-const resultView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'전도 결과 제공 기록 조회 대기'};
+const conducted={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'가상 계획 미리보기 조회 대기',errorCode:null};
+const resultView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'전도 결과 제공 기록 조회 대기',errorCode:null};
+const gapQueueState={intakeStale:true,parentPending:true,intakeCode:null};
 const referenceTransport = createIntakeReferenceTransport();
 const docx={context:null,hintContext:null,visible:false,allowed:false,busy:false,good:null,
   phase:'idle',message:'보존 관측은 명시 버튼으로 읽습니다.',ticket:0,controller:null};
@@ -318,7 +319,7 @@ function buildIntakeWorkflow(record, payload, current, stale, snapshot=state) {
     if(step.refs.length){const details=el('details');details.append(el('summary','',`공개 근거 참조 ${step.refs.length}개`));const refs=el('ul','fixture-refs');for(const ref of step.refs)refs.append(el('li','mono',ref));details.append(refs);item.append(details);}
     list.append(item);
   }
-  node.append(list);return node;
+  node.append(buildGapQueue(record,snapshot),list);return node;
 }
 function markWorkflowUnconfirmed() {
   const node=$('#intake-workflow');if(!node)return;
@@ -508,11 +509,11 @@ function buildConductedPlanPreview(record,snapshot=state,current=conducted){
 }
 function publishConductedPreview(next){
   const record=state.records.find(item=>item.intake_id===state.selected),target=$('#conducted-plan-preview');if(!record||!target)return false;
-  const prepared=buildConductedPlanPreview(record,state,next);target.replaceWith(prepared);Object.assign(conducted,next);return true;
+  const prepared=buildConductedPlanPreview(record,state,next);target.replaceWith(prepared);Object.assign(conducted,next);refreshGapQueue();return true;
 }
 function markConductedStale(message){
   conducted.stale=true;const target=$('#conducted-plan-preview');if(target)target.dataset.previewCurrent='false';
-  const status=$('#conducted-plan-status');if(status)status.textContent=message;
+  const status=$('#conducted-plan-status');if(status)status.textContent=message;refreshGapQueue();
 }
 function retireConductedObservation(){
   conducted.gate.invalidate();conducted.controller?.abort();conducted.controller=null;conducted.pending=false;conducted.parentPending=true;
@@ -526,7 +527,7 @@ async function refreshConductedPlanPreview(){
   const timer=setTimeout(()=>controller.abort(),10000);
   const current=()=>conducted.gate.isCurrent(ticket,conductedContext()||{})&&!referenceDestroyed&&!referenceSuspended;
   try{
-    if(!publishConductedPreview({...conducted,context,pending:true,stale:Boolean(conducted.value),status:'가상 계획 미리보기 조회 중'}))return;
+    if(!publishConductedPreview({...conducted,context,pending:true,errorCode:null,stale:Boolean(conducted.value),status:'가상 계획 미리보기 조회 중'}))return;
     const response=await fetch(`/api/intakes/${encodeURIComponent(context.intake_id)}/conducted-plan-preview`,{signal:controller.signal,cache:'no-store'});
     if(!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(response.headers.get('content-type')||''))throw Error();
     const length=response.headers.get('content-length');if(length!==null&&(!/^\d+$/.test(length)||Number(length)>262144))throw Error();
@@ -535,17 +536,17 @@ async function refreshConductedPlanPreview(){
     if(!current())return;
     if(!response.ok){const error=JSON.parse(raw);const code=error?.error?.code;if(typeof code!=='string'||!/^intake_conducted_preview_[a-z_]+$/.test(code))throw Error();throw Error(code);}
     const value=parseConductedPlanPreview(raw,context);if(!current())return;
-    publishConductedPreview({...conducted,context,value,pending:false,stale:false,status:'가상 계획 미리보기 조회 완료'});
+    publishConductedPreview({...conducted,context,value,pending:false,errorCode:null,stale:false,status:'가상 계획 미리보기 조회 완료'});
   }catch(error){controller.abort();if(current()){
     const label=({intake_conducted_preview_v2_pdf_required:'현재 완료 V2/PDF 필요',intake_conducted_preview_synthetic_required:'합성 접수만 지원',intake_conducted_preview_analysis_unavailable:'현재 완료 분석 미제공',intake_conducted_preview_source_invalid:'보존 자료·분석의 무결성 미확인'})[error.message]||'응답·전송·형상·화면 확인 실패';
-    conducted.pending=false;conducted.status=conducted.value?'조회 실패 · 이전 관측 · 현재 관계 미확인':`가상 계획 미리보기 미지원 · ${label}`;markConductedStale(conducted.status);
-  }}finally{clearTimeout(timer);if(current()){conducted.pending=false;conducted.controller=null;$('#conducted-plan-refresh')?.setAttribute('aria-disabled','false');}}
+    conducted.pending=false;conducted.errorCode=queueErrorCode(error);conducted.status=conducted.value?'조회 실패 · 이전 관측 · 현재 관계 미확인':`가상 계획 미리보기 미지원 · ${label}`;markConductedStale(conducted.status);
+  }}finally{clearTimeout(timer);if(current()){conducted.pending=false;conducted.controller=null;$('#conducted-plan-refresh')?.setAttribute('aria-disabled','false');refreshGapQueue();}}
 }
 function syncConductedContext(){
   const context=conductedContext();if(context&&sameFixtureSource(context,conducted.context)&&context.generation===conducted.context.generation)return;
   conducted.gate.invalidate();conducted.controller?.abort();const retain=sameFixtureSource(context,conducted.context);
-  Object.assign(conducted,{context,value:retain?conducted.value:null,controller:null,pending:false,stale:true,status:'가상 계획 미리보기 조회 대기'});
-  if(context)void refreshConductedPlanPreview();
+  Object.assign(conducted,{context,value:retain?conducted.value:null,controller:null,pending:false,stale:true,errorCode:null,status:'가상 계획 미리보기 조회 대기'});
+  if(context)void refreshConductedPlanPreview();else refreshGapQueue();
 }
 
 
@@ -586,10 +587,10 @@ function buildConductedResult(record,snapshot=state,current=resultView){
 }
 function publishResultView(next){
   const record=state.records.find(item=>item.intake_id===state.selected),target=$('#conducted-result-view');if(!record||!target)return false;
-  const prepared=buildConductedResult(record,state,next);target.replaceWith(prepared);Object.assign(resultView,next);return true;
+  const prepared=buildConductedResult(record,state,next);target.replaceWith(prepared);Object.assign(resultView,next);refreshGapQueue();return true;
 }
 function staleResultView(message){
-  resultView.stale=true;const node=$('#conducted-result-view');if(node)node.dataset.current='false';const status=$('#conducted-result-status');if(status)status.textContent=message;
+  resultView.stale=true;const node=$('#conducted-result-view');if(node)node.dataset.current='false';const status=$('#conducted-result-status');if(status)status.textContent=message;refreshGapQueue();
 }
 function retireResultView(){
   resultView.gate.invalidate();resultView.controller?.abort();resultView.controller=null;resultView.pending=false;resultView.parentPending=true;
@@ -601,7 +602,7 @@ async function refreshResultView(){
   const ticket=resultView.gate.begin(context);resultView.controller?.abort();const controller=new AbortController();resultView.controller=controller;const timer=setTimeout(()=>controller.abort(),10000);
   const current=()=>resultView.gate.isCurrent(ticket,conductedContext()||{})&&!referenceDestroyed&&!referenceSuspended;
   try{
-    if(!publishResultView({...resultView,context,pending:true,stale:Boolean(resultView.value),status:'전도 결과 제공 기록 조회 중'}))return;
+    if(!publishResultView({...resultView,context,pending:true,errorCode:null,stale:Boolean(resultView.value),status:'전도 결과 제공 기록 조회 중'}))return;
     const response=await fetch(`/api/intakes/${encodeURIComponent(context.intake_id)}/conducted-result`,{signal:controller.signal,cache:'no-store'});
     if(!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(response.headers.get('content-type')||''))throw Error();
     const length=response.headers.get('content-length');if(length!==null&&(!/^\d+$/.test(length)||Number(length)>1048576))throw Error();
@@ -610,18 +611,60 @@ async function refreshResultView(){
     if(!current())return;
     if(!response.ok){const code=JSON.parse(raw)?.error?.code;if(typeof code!=='string'||!/^(?:intake_conducted_(?:result|preview)_[a-z_]+|store_missing|store_unavailable|intake_not_found)$/.test(code))throw Error();throw Error(code);}
     const value=parseConductedResultView(raw,context);if(!current())return;
-    publishResultView({...resultView,context,value,pending:false,stale:false,status:value.relation.status==='matched'?'제공 snapshot 조회 · 현재 계획 binding 대조 일치':'제공 snapshot 조회 · 현재 계획 binding 차단'});
+    publishResultView({...resultView,context,value,pending:false,errorCode:null,stale:false,status:value.relation.status==='matched'?'제공 snapshot 조회 · 현재 계획 binding 대조 일치':'제공 snapshot 조회 · 현재 계획 binding 차단'});
   }catch(error){controller.abort();if(current()){
     const label=({intake_conducted_result_missing:'제공 snapshot 미제공',intake_conducted_result_invalid:'형상·한도·결합 부적합',intake_conducted_result_unavailable:'지정 접수의 제공 결과 미지원',intake_conducted_preview_source_invalid:'현재 보존 자료 무결성 미확인'})[error.message]||'응답·전송·형상·화면 확인 실패';
-    resultView.pending=false;resultView.status=resultView.value?'조회 실패 · 이전 관측 · 현재 관계 미확인':`전도 결과 조회 불가 · ${label}`;staleResultView(resultView.status);
-  }}finally{clearTimeout(timer);if(current()){resultView.pending=false;resultView.controller=null;const node=$('#conducted-result-view');if(node)node.dataset.pending=String(resultView.parentPending);}}
+    resultView.pending=false;resultView.errorCode=queueErrorCode(error);resultView.status=resultView.value?'조회 실패 · 이전 관측 · 현재 관계 미확인':`전도 결과 조회 불가 · ${label}`;staleResultView(resultView.status);
+  }}finally{clearTimeout(timer);if(current()){resultView.pending=false;resultView.controller=null;const node=$('#conducted-result-view');if(node)node.dataset.pending=String(resultView.parentPending);refreshGapQueue();}}
 }
 function syncResultView(){
   const context=conductedContext();if(context&&sameFixtureSource(context,resultView.context)&&context.generation===resultView.context.generation)return;
   resultView.gate.invalidate();resultView.controller?.abort();const retain=sameFixtureSource(context,resultView.context);
-  Object.assign(resultView,{context,value:retain?resultView.value:null,controller:null,pending:false,stale:true,status:'전도 결과 제공 기록 조회 대기'});
-  if(context)void refreshResultView();
+  Object.assign(resultView,{context,value:retain?resultView.value:null,controller:null,pending:false,stale:true,errorCode:null,status:'전도 결과 제공 기록 조회 대기'});
+  if(context)void refreshResultView();else refreshGapQueue();
 }
+
+
+function queueErrorCode(error){return typeof error?.message==='string'&&/^[a-z_]{1,128}$/.test(error.message)?error.message:'transport_or_shape_error';}
+function buildGapQueue(record,snapshot=state){
+  const freshParent=(snapshot.snapshotGeneration??0)!==(state.snapshotGeneration??0);
+  const model=describeIntakeGapQueue(record,{generation:snapshot.snapshotGeneration||0,intakeStale:freshParent?false:gapQueueState.intakeStale||gapQueueState.parentPending,intakeCode:freshParent?null:gapQueueState.intakeCode,plan:conducted,result:resultView});
+  const area=el('section','section-rule');area.id='intake-gap-queue';area.dataset.intakeId=record.intake_id;area.dataset.revision=String(record.revision);
+  area.dataset.pending=String(gapQueueState.parentPending||conducted.pending||resultView.pending);area.dataset.current=String(model.groups.every(group=>group.state==='current'));
+  area.append(el('h4','','예외·다음 조건 큐'));
+  const status=el('p','inline-note','원 출처·순서별 읽기 관측 · 표시 항목 없음은 시험 준비/실행 완료가 아닙니다.');status.id='gap-queue-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');area.append(status);
+  area.append(el('p','inline-note','제품 사실 질문은 원자료의 실제 부재·필수 재입력 판정이 아닙니다. 해석/근거 연결 검토와 시스템·시험조건, 미지원·미실행을 구분하며 답변·승인·실행은 연결하지 않습니다.'));
+  const labels={current:'현재 조회 scope',blocked:'차단 · 현재 질문 아님',unavailable:'관측 불가',not_run:'미실행·미관측'};
+  const categories={evidence_review:'해석·근거 연결 검토',facts_required:'제품 사실 확인',conditions_required:'시스템·시험조건 준비',system_error:'시스템·실행 오류',unsupported:'미지원',not_run:'미실행·미완료',uninterpreted:'미해석 원형',blocked:'차단 · 현재 질문 아님',observed:'출처 관측'};
+  for(const group of model.groups){
+    const section=el('section','question');section.dataset.gapQueueGroup=group.source;section.dataset.state=group.state;
+    section.append(el('h5','',group.label),badge(labels[group.state]||group.state,group.state==='blocked'?'warning':'neutral'),el('p','inline-note',`${group.source_kind} · ${categories[group.category]||group.category}`));
+    if(group.code||group.reasons.length)section.append(el('p','inline-note',`원 조회 코드: ${conductedPreviewValue(group.code)} · 연결 차단: ${conductedPreviewValue(group.reasons)}`));
+    const context=el('details');context.append(el('summary','','원 관측 접수·버전·조건 지문'),metadata([['관측 접수 / 버전 / 제공 버전',`${conductedPreviewValue(group.observed_intake_id)} / ${conductedPreviewValue(group.observed_revision)} / ${conductedPreviewValue(group.provided_revision)}`],['원 조건 SHA',conductedPreviewValue(group.condition_sha256)]]));section.append(context);
+    if(group.source==='result_gaps')section.append(el('p','inline-note','제공 snapshot의 원 공백 · 실제 AI 여부 unknown · 생성 origin/실물 진위 미확인'));
+    if(!group.items.length)section.append(el('p','inline-note',group.state==='current'?'이 원 출처에 표시된 질문/공백 없음 · 전체 완료 의미 아님':'현재 연결된 원 항목을 확인하지 못했습니다.'));
+    for(const row of group.items){
+      const item=el('article','file');item.dataset.gapQueueItem=group.source+':'+String(row.index);item.dataset.state=row.state;item.dataset.category=row.category;
+      item.append(el('h6','',`${group.label} · 원 순서 ${row.index===null?'미해석 목록':row.index+1}`));const category=badge(row.label,row.category==='system_error'?'danger':row.state==='blocked'?'warning':'neutral');category.dataset.gapQueueCategory='';item.append(category);
+      if(row.classification==='evidence_review'){const hint=el('p','inline-note',`해석·근거 연결 검토 · ${row.note}`);hint.dataset.gapQueueReview='';item.append(hint);}
+      if(row.raw&&typeof row.raw==='object'&&!Array.isArray(row.raw)&&typeof row.raw.message==='string')item.append(el('p','',row.raw.message));
+      const raw=metadata([['원 질문/공백 JSON · refs/null 포함',conductedPreviewValue(row.raw)]]);raw.dataset.gapQueueOriginal='';const original=el('details');original.append(el('summary','','원 JSON · refs/null 보존'),raw);item.append(original);section.append(item);
+    }
+    area.append(section);
+  }
+  return area;
+}
+function staleGapQueue(message){
+  const area=$('#intake-gap-queue');if(!area)return;area.dataset.current='false';
+  const status=$('#gap-queue-status');if(status)status.textContent=message;
+  for(const row of area.querySelectorAll('[data-gap-queue-item]')){row.dataset.state='blocked';row.dataset.category='blocked';const label=row.querySelector('[data-gap-queue-category]');if(label)label.textContent='차단 · 이전 관측 · 현재 질문 아님';}
+}
+function refreshGapQueue(){
+  const target=$('#intake-gap-queue'),record=state.records.find(item=>item.intake_id===state.selected);if(!target||!record)return;
+  if(state.view!=='intakes'){staleGapQueue('접수 보기 숨김 · 현재 질문 아님');return;}
+  try{const prepared=buildGapQueue(record,state);target.replaceWith(prepared);}catch{staleGapQueue('큐 표시 확인 실패 · 이전 관측 · 현재 질문 아님');}
+}
+function retireGapQueue(){gapQueueState.intakeStale=true;gapQueueState.parentPending=true;gapQueueState.intakeCode=null;refreshGapQueue();}
 
 function buildMetrics(view) {
   const counts = [['전체 접수', view.records.length, '▤', ''],
@@ -886,7 +929,9 @@ function publishView(prepared) {
     $('#result-count').textContent = prepared.list.count;
     $('#notice-count').textContent = prepared.view.notices.length;
     $('#last-updated').textContent = prepared.view.updatedText;
+    const freshGapSnapshot=(prepared.view.snapshotGeneration??0)!==(state.snapshotGeneration??0);
     Object.assign(state, prepared.view);
+    if(freshGapSnapshot){gapQueueState.intakeStale=false;gapQueueState.parentPending=false;gapQueueState.intakeCode=null;}
     if(docx.ticket!==prepared.docxNext.ticket)docx.controller?.abort();
     Object.assign(docx,prepared.docxNext);
     referenceContext = prepared.referenceContext;
@@ -899,6 +944,7 @@ function publishView(prepared) {
     syncConductedContext();
     resultView.parentPending=false;
     syncResultView();
+    refreshGapQueue();
   } finally { if (!referenceDestroyed) referenceGuard = false; }
 }
 
@@ -920,10 +966,12 @@ function changeView(view) {
   }
   syncConductedContext();
   syncResultView();
+  refreshGapQueue();
 }
 
 async function refresh() {
   if (!referenceCanChange()) return;
+  retireGapQueue();
   retireConductedObservation();
   retireResultView();
   const request = ++state.request;
@@ -949,6 +997,7 @@ async function refresh() {
     $('#announcer').textContent = `접수 ${state.records.length}건을 조회했습니다.`;
   } catch (error) {
     if (request !== state.request || !referenceCanChange()) return;
+    gapQueueState.intakeCode=queueErrorCode(error);
     const message = Object.hasOwn(errorMessages, error.message) ? errorMessages[error.message]
       : '서버 연결 또는 응답을 확인할 수 없습니다. 서버 실행 상태를 확인하고 다시 시도하세요.';
     const banner = $('#error-banner');
@@ -974,11 +1023,13 @@ async function refresh() {
       $('#conducted-plan-refresh')?.setAttribute('aria-disabled',String(conducted.pending));
       resultView.parentPending=false;
       const resultNode=$('#conducted-result-view');if(resultNode)resultNode.dataset.pending=String(resultView.pending);
+      gapQueueState.parentPending=false;refreshGapQueue();
     }
   }
 }
 
 addEventListener('pagehide', event => {
+  retireGapQueue();
   retireConductedObservation();
   retireResultView();
   if (event.persisted) {
