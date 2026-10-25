@@ -141,3 +141,16 @@ relation 이유 enum은 `provided_revision_changed, expected_current_binding_mis
 화면 `#conducted-result-view/status/content`는 7단계 measurement 영역에서 제공값·원 status·공백/부분 실패·규범not_assessed·권한false를 표시한다. 새 버튼/입력/실행권한은 없고 기존 부모 refresh/접수 선택만 재사용한다. 기존 fixture의 원수치 미제공/실제AI false 표시는 선택한 기존 fixture에 한정한다. 접수/revision/generation/순번 교체·hide/pagehide에 요청을 퇴역시키고 late/abort/전송·형상·렌더 실패에서는 같은 scope의 마지막 정상 내용을 유지하되 이전 관측/현재 관계 미확인으로 표시한다.
 
 `VLAB_CONDUCTED_RESULT_ONLY=1`로 기존 browser check를 실행한다. 자체 typed provided D3 snapshot과 genuine current RO capture·보호 GET·production DOM390/1440을 연결한다. 이는 D3 builder/실행/저장/계산 정확도 검증이 아니며 새 실제 모델·실장비0이다. 정상·부분·invalid0/2/11·expected missing/conflict·source/revision 변화를 포함한 실제 HTTP/DOM 관측과 별도 typed 전송/형상/DOM/deadline/late 주입은 분리해 기록한다. 원 실패와 이전 task 증거는 덮어쓰지 않는다.
+
+
+## 첫 흐름 예외·다음 조건 큐
+
+기존 same intake/revision의 접수 원 질문, 계획 원 질문, 계획 gaps, 제공 결과 gaps를 `#intake-gap-queue`의 네 출처 묶음으로 표시한다. 새 HTTP/백엔드/Store·스키마·계산·판정·실행 버튼은 없다. `describeIntakeGapQueue`는 이미 검증된 기존 snapshot/plan/result 관측만 표시용으로 투영하며 원 질문/조건의 순서·값·refs/null·큰 정수·미해석 JSON을 detached 사본으로 보존한다. 같은 문구도 출처/조건이 다르면 합치거나 dedup하지 않는다. 상세 지문·원 JSON은 접어서 볼 수 있고 분류/차단 이유는 보이는 상태로 유지한다.
+
+분류는 제품 사실 확인, 시스템·시험조건 준비, 시스템/실행 오류, 미지원, 미실행·미완료, 해석·근거 연결 검토, 미해석 원형, 차단이다. 제품 사실은 공개 field와 질문/사실 gap의 좁은 whitelist로만 분류한다. native/auth/등록·source 설정/방법/근거 조립 부족을 제품 사실 질문으로 바꾸지 않으며 새로운 사용자 필수 준비나 답변/승인을 생성하지 않는다. 원 blocking=false 등 원 조건도 변경하지 않는다.
+
+공개 힌트 `source_statement_unsupported, source_quote_mismatch, source_condition_unbound, source_fact_missing`는 해석·근거 연결 검토다. 값 조립/추출문법·근거형상·조건결합 미지원이나 provided=null은 원자료의 실제 부재를 입증하지 않는다. 이 공백만으로 RF6 재입력을 필수라고 판정하지 않는다. 원 질문과 내부 연결 공백이 함께 있으면 각각 별도 행·refs/조건으로 남는다. invalid/stale 원형에는 이 검토 힌트만 붙이고 현재 사실 질문으로 올리지 않는다. 기존 plan/result DTO validator의 enum/권위를 임의 확장하거나 D1/D2/D3 core·tests·private proof를 읽지 않는다.
+
+source context/revision/generation·관측 pending/stale·계획 binding6/C1·제공 결과 relation을 대조한다. 계획과 결과의 조건 binding이 다르거나 현재 계획 관측을 확인하지 못하면 result gap 연결을 차단한다. 다른 intake의 항목은 현재 큐에 넣지 않고, 같은 intake의 낡은 revision은 원형을 보존하되 blocked로 표시한다. 부모 조회 실패/렌더 실패와 late/abort에서는 원 항목을 유지하되 현재 질문으로 사용하지 않는다. 빈 목록/모든 표시 항목0은 전체 준비·실행·검증 완료를 뜻하지 않는다. 실제AI unknown/fixture 구분과 기존7단계/제공 결과 readonly 표시를 유지한다.
+
+`VLAB_GAP_QUEUE_ONLY=1`로 기존 browser check의 새 큐 검사만 실행한다. 새 Node는 `node --test --test-reporter=tap --test-name-pattern="gap queue" frontend/intake_flow_model.test.mjs`로 별도 선택한다. 기존183/168이나 이전 preview/result DOM 전체는 반복하지 않는다. 정상/미제공/시스템 오류/미지원/실제 새 revision/다른 조건/공개 해석 gap의 실제 보호 GET→production DOM390/1440 관측과 별도 typed 부모 실패·해석 질문 추가·late·렌더 주입을 구분한다. 제공 D3 데이터는 명시 typed snapshot이며 실제 builder·extractor·원자료 부재·모델/실물 성공 증거로 세지 않는다. 새 모델/외부망/장비/Office0, 원 실패와 raw 응답은 별도 bounded proof에 보존한다.

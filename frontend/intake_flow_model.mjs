@@ -269,3 +269,78 @@ export function parseConductedResultView(raw,context){
   keys(r.verification,'synthetic hardware_verified physical_verified source_bytes method_approval trust_scope execution_authority');need(r.verification.synthetic===true&&r.verification.hardware_verified===false&&r.verification.physical_verified===false&&r.verification.source_bytes==='not_reopened'&&r.verification.method_approval==='not_assessed'&&r.verification.trust_scope==='provided_host_snapshots_and_hash_consistency'&&r.verification.execution_authority===false);
   return v;
 }
+
+const QUEUE_EVIDENCE=new Set('source_statement_unsupported source_quote_mismatch source_condition_unbound source_fact_missing'.split(' '));
+const QUEUE_LABELS={evidence_review:'해석·근거 연결 검토',facts_required:'제품 사실 확인',conditions_required:'시스템·시험조건 준비',system_error:'시스템·실행 오류',unsupported:'미지원',not_run:'미실행·미완료',uninterpreted:'미해석 원형',blocked:'차단 · 현재 질문 아님'};
+const QUEUE_FACT_CODES=new Set('conflicting_intake_fact missing_intake_field follow_up_missing_field product_identity uncertain_intake_fact'.split(' '));
+const QUEUE_CONDITIONS=new Set('missing_setting missing_method_field missing_or_invalid_basis intent_value_not_in_request_quote correction_basis_invalid correction_basis_missing metric_mismatch path_configuration_missing path_selection_missing'.split(' '));
+const QUEUE_NOT_RUN=new Set('unread_documents execution_incomplete journal_incomplete measurement_missing measurement_not_referenced measurement_reference_missing setup_missing setup_partial plan_blocked'.split(' '));
+const QUEUE_UNSUPPORTED=new Set('unsupported_modulation unsupported_method_field unsupported_or_invalid_basis unknown_source_field unknown_method_field unknown_basis_field unsupported_path_device'.split(' '));
+const QUEUE_BINDING=new Set('expected_revision_changed_or_invalid expected_context_changed_or_invalid plan_binding_invalid plan_binding_mismatch plan_hash_mismatch run_binding_mismatch setup_hash_mismatch topology_hash_mismatch'.split(' '));
+export function describeIntakeGapQueue(intake,{generation=0,intakeStale=false,intakeCode=null,plan=null,result=null}={}){
+  const clone=value=>structuredClone(value),object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
+  const context={intake_id:intake.intake_id,revision:intake.revision,generation};
+  const fields=Object.keys(FIELDS),bindingFields='intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256'.split(' ');
+  const binding=value=>object(value)&&Object.keys(value).length===6&&bindingFields.every(key=>Object.hasOwn(value,key))&&typeof value.intake_id==='string'&&Number.isSafeInteger(value.revision)&&value.revision>0&&bindingFields.slice(2).every(key=>typeof value[key]==='string'&&/^[a-f0-9]{64}$/.test(value[key]));
+  const availability=code=>code==='intake_conducted_preview_v2_pdf_required'||code==='intake_conducted_preview_synthetic_required'?'unsupported':code==='intake_conducted_preview_analysis_unavailable'||code==='intake_conducted_result_missing'?'not_run':code==='store_missing'?'conditions_required':code?'system_error':'not_run';
+  const questionCategory=raw=>{
+    if(!object(raw)||typeof raw.key!=='string'||typeof raw.message!=='string')return 'uninterpreted';
+    if(QUEUE_EVIDENCE.has(raw.key)||QUEUE_EVIDENCE.has(raw.code))return 'evidence_review';
+    if(raw.key==='product_identity')return 'facts_required';
+    if(raw.key==='unread_documents'&&Array.isArray(raw.paths))return 'not_run';
+    if(fields.includes(raw.field)&&(raw.key==='missing_'+raw.field||raw.key==='conflict_'+raw.field))return 'facts_required';
+    return 'uninterpreted';
+  };
+  const gapCategory=raw=>{
+    if(object(raw)&&QUEUE_EVIDENCE.has(raw.code))return 'evidence_review';
+    if(!object(raw)||typeof raw.code!=='string'||typeof raw.field!=='string'||typeof raw.blocking!=='boolean'||!Object.hasOwn(raw,'provided'))return 'uninterpreted';
+    if(QUEUE_BINDING.has(raw.code))return 'blocked';
+    if(QUEUE_FACT_CODES.has(raw.code))return fields.some(field=>raw.field==='intake.'+field||raw.field==='intake.facts.'+field)||raw.code==='product_identity'&&raw.field==='intake.identity'?'facts_required':'uninterpreted';
+    if(QUEUE_CONDITIONS.has(raw.code))return 'conditions_required';
+    if(QUEUE_UNSUPPORTED.has(raw.code))return 'unsupported';
+    if(QUEUE_NOT_RUN.has(raw.code))return 'not_run';
+    if(PLAN_GAPS.includes(raw.code)||RESULT_INVALID.has(raw.code)||RESULT_INCOMPLETE.has(raw.code)||RESULT_GAP_ONLY.has(raw.code))return 'system_error';
+    return 'uninterpreted';
+  };
+  function sourceState(obs,kind){
+    const value=obs?.value,reasons=[];
+    if(!value)return {state:intakeStale?'blocked':obs?.errorCode?'unavailable':'not_run',category:availability(obs?.errorCode),reasons:intakeStale?['parent_snapshot_unconfirmed']:[],code:obs?.errorCode||null,observed_revision:null,value:null,include:false};
+    const revision=value.revision;
+    if(value.intake_id!==intake.intake_id)return {state:'blocked',category:'blocked',reasons:['other_intake'],code:obs?.errorCode||null,observed_revision:revision??null,value,include:false};
+    if(intakeStale)reasons.push('parent_snapshot_unconfirmed');
+    if(obs.stale||obs.pending||obs.parentPending)reasons.push('observation_unconfirmed');
+    if(!obs.context||obs.context.intake_id!==intake.intake_id||obs.context.revision!==intake.revision||revision!==intake.revision)reasons.push('revision_or_context_changed');
+    if(obs.context?.generation!==generation)reasons.push('snapshot_generation_changed');
+    if(kind==='plan'){
+      const b=value.plan_input?.binding;
+      if(value.context_scope!=='current_provided_context'||!binding(b)||b.intake_id!==value.intake_id||b.revision!==value.revision||b.context_sha256!==value.context_sha256)reasons.push('plan_binding_unconfirmed');
+      if(['other_intake','revision_changed'].includes(value.selection_status))reasons.push('plan_selection_changed');
+      if(Array.isArray(value.plan_input?.gaps)&&value.plan_input.gaps.some(raw=>object(raw)&&QUEUE_BINDING.has(raw.code)))reasons.push('plan_gap_binding_conflict');
+    }else{
+      const b=value.expected_current_binding;
+      if(value.source_kind!=='provided_snapshot'||value.relation?.status!=='matched'||!binding(b)||b.intake_id!==value.intake_id||b.revision!==value.revision||b.context_sha256!==value.context_sha256)reasons.push('provided_binding_unconfirmed');
+      if(Array.isArray(value.relation?.reasons))reasons.push(...value.relation.reasons);
+      if(value.result?.status==='invalid')reasons.push('invalid_result_original_only');
+    }
+    return {state:reasons.length?'blocked':'current',category:reasons.length?'blocked':'observed',reasons:[...new Set(reasons)],code:obs.errorCode||null,observed_revision:revision,value,include:true};
+  }
+  const planState=sourceState(plan,'plan'),resultState=sourceState(result,'result');
+  if(resultState.state==='current'){
+    if(planState.state!=='current'){resultState.state='blocked';resultState.category='blocked';resultState.reasons.push('current_plan_unavailable');}
+    else if(!binding(planState.value.plan_input?.binding)||!binding(resultState.value.expected_current_binding)||bindingFields.some(key=>planState.value.plan_input.binding[key]!==resultState.value.expected_current_binding[key])){resultState.state='blocked';resultState.category='blocked';resultState.reasons.push('plan_condition_mismatch');}
+  }
+  function group(source,label,state,raw,kind){
+    const normal=Array.isArray(raw),items=state.include?(normal?raw:raw===undefined?[]:[raw]):[];
+    const rows=items.map((value,index)=>{
+      let category=normal?(kind==='question'?questionCategory(value):gapCategory(value)):'uninterpreted';
+      const classification=category;
+      if(state.state==='blocked')category='blocked';
+      return {source,classification,note:classification==='evidence_review'?'원자료 부재는 미확인입니다. RF6 재입력 필요 여부는 이 공백만으로 정하지 않습니다.':null,index:normal?index:null,state:category==='blocked'||category==='uninterpreted'?'blocked':'current',category,label:QUEUE_LABELS[category],raw:clone(value)};
+    });
+    return {source,label,state:state.state,category:state.category,reasons:clone(state.reasons),code:state.code,observed_intake_id:state.value?.intake_id??intake.intake_id,observed_revision:state.observed_revision,provided_revision:source==='result_gaps'?state.value?.relation?.provided_revision??null:null,source_kind:source==='intake_questions'?'current_intake_snapshot':source==='result_gaps'?'provided_snapshot':'current_provided_context',condition_sha256:!state.include?null:source==='result_gaps'?state.value?.expected_current_binding?.plan_sha256??null:source.startsWith('plan_')?state.value?.plan_input?.binding?.plan_sha256??null:null,items:rows};
+  }
+  const intakeState={state:intakeStale?'blocked':intake.analysis?'current':'not_run',category:intakeStale?'blocked':intake.analysis?'observed':'not_run',reasons:intakeStale?['parent_snapshot_unconfirmed']:[],code:intakeCode,observed_revision:intake.revision,include:Boolean(intake.analysis),value:null};
+  const groups=[group('intake_questions','접수 원 질문',intakeState,intake.analysis?.questions,'question'),group('plan_questions','계획 원 질문',planState,planState.value?.plan_input?.intake?.questions,'question'),group('plan_gaps','계획 원 조건·공백',planState,planState.value?.plan_input?.gaps,'gap'),group('result_gaps','제공 결과 원 공백',resultState,resultState.value?.result?.gaps,'gap')];
+  const all=groups.flatMap(group=>group.items),count=category=>all.filter(row=>row.category===category).length;
+  return {context,groups,summary:{evidence_review:count('evidence_review'),current_facts:count('facts_required'),conditions:count('conditions_required'),system_errors:count('system_error'),unsupported:count('unsupported'),not_run:count('not_run'),blocked:count('blocked'),uninterpreted:count('uninterpreted')},execution_authority:false};
+}
