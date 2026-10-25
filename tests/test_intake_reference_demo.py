@@ -388,6 +388,7 @@ class DemoIntentBoundaries(unittest.TestCase):
         invalid = [['--intent-view', '--intent-view'], ['--intent-view', 'true'],
                    ['--intent-view=true'], ['--intent-view', '--help'], ['--help', '--intent-view'],
                    ['--intent-view', '--output'], ['--output', '--intent-view'],
+                   ['--output', '--intent-view', str(output)],
                    ['--intent-view', '--output', 'relative'], ['--intent-view', 1], {}, 'x']
         with mock.patch.object(api, '_dependencies') as dependency, \
                 mock.patch.object(api, '_reserve') as reserve, mock.patch.object(api, '_prepare_demo') as prepare, \
@@ -397,6 +398,7 @@ class DemoIntentBoundaries(unittest.TestCase):
                     status, out, err = self.invoke(args)
                     self.assertEqual((status, out), (2, ''))
                     self.assertEqual(json.loads(err), {'error': {'code': PREFIX + 'invalid_argument'}})
+            self.assertFalse(output.exists())
             for boundary in (dependency, reserve, prepare, factory): boundary.assert_not_called()
 
     def test_default_keeps_worker_and_intent_unconfigured(self):
