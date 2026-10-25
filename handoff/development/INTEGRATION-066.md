@@ -1,8 +1,22 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `5e9338cff49d0aac59625689e0208c54d8186266` / source312를 정상 push 후 원격 exact SHA로 대조했다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `7cd74b3a5556715b912558b422ff9a8a31fc9adb` / source318를 통합·검증했으며 이번 갱신의 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
 
-## source312 최신 수용·첫 종단 시연
+## source318 최신 수용·막힌 연결
+
+실패2d는 qualified Yes 뒤 기능0e6c에 수용했다. root 관련11 PASS와 별도 새 CLI 측정무효/복구된 단절2·보호HTTP2는 원 measurement invalid·corrected null·실패 이력·complete DRAFT를 보존했다. negative CLI exit1은 원대로이며 정상 측정 PASS로 세지 않는다. restored 경로는 아직 복구 전 종료되므로 recovery-failure 검증이 아니며 transport/recovery-failure 미지원은 그대로다. 독립 원 DOM 부분 관측/timeout·집계 보정도 보존했다.
+
+정식 workflow host735는 qualified Yes 뒤 기능4c7c에 수용했다. 독립 원12중11 PASS/정상 양성 미완결1과 별도 genuine 정상1을 구별했고 root basic14+별도 boundary9 PASS를 확인했다. 별도 유한 permit/고정 OS profile·원17 이력·무재시도/실패 guard를 보존하며 실제 운영 profile/새 permit은 준비하지 않았다. 실제 AI 호출0이고 fixed event:17을 다른 도구 순서의 측정으로 일반화하지 않는다. 정식 등록921·명시 유일 측정 선택 연결을 다음 구현으로 배정했다.
+
+불확도805는 independent Yes/원8논리12 API와 root25 PASS 뒤 기능65a8ec76으로 수용했다. explicit component·단위/metric/plane·k/상관 근거만 사용하며 근거 없음/overflow/positive underflow는 hold/null, caller Decimal context와 원 result/판정은 불변이다. 독립 극단·정확 한도는 정적 검토 범위이고 실제 calibration/완전성/물리·규범 승인을 뜻하지 않는다.
+
+TXT16cf는 independent qualified Yes 뒤 기능f61a1550에 수용했다. 원 literal11 PASS/T01 No1 및 별도 공개 norm 적합 관측을 소급 덮지 않았고 원 fixture/copy 관측 실패·같은 TXT 원 prompt 미검증을 보존했다. root는 신규 TXT14+기존 관련 PDF/current21=35 PASS를 확인했다. stored locator가 원 schema1 context_id 복원을 뜻하지 않으며 새 parse/retain/search/claim/업무 쓰기는 없다.
+
+고정 저장 readera039는 independent qualified Yes(원12예정 중11진입11일치·native mapped-change 미실행1/별도73대조) 뒤 수용했다. root 관련20 PASS로 manifest/result/DRAFT3의 canonical/raw hash·native 전후·full binding·원 invalid/incomplete·firsterror/close 실패를 검증했다. storage manifest_payloads_verified는 저장 사본의 관측 일치이고 historical publication order/writer outcome은 not_verified다. 실제 writer 성공·과거 실패 부재·실행·물리·규범 진위로 승격하지 않는다.
+
+현재 자료 CLI7e·현재 Store 조건 a3aa·불확도 부록17cf·현재 artifact 관계9ecc·등록921·일관된 요약dbc8는 동결·독립 검수 단계다. 개발1 보호 저장 GET/개발2 선택 finalizer/개발3 유일 acquisition selector/개발4 저장 검수 화면을 새 배타 단위로 실제 배정했다. 기존 관리 문서5만 갱신하고 다른 소유·공유/사용자 원본·actual17/Vertex6·소진 예산과 실패/봉인을 보존한다. P01 후행 B075/B076은 닫았고 B077~B080는 미ACK4단위이며 raw 보존량·권리/본문·현행 방법 검수와 대상18/690을 구별한다. 새 사용자 준비/결정은0이다.
+
+## source312 당시 수용·첫 종단 시연 — 보존 이력
 
 finalizer576은 독립 qualified Yes 뒤 기능fe30에 수용했다. 원 root20 전부는 fixture 환경 누락의 setUp 오류/API0으로 보존하고, 동결 담당 증거의 보존 replay46파일/6case를 명시 복사한 별도 root20 PASS로 검증했다. 이는 fresh runtime/모델 실행이 아니다. 담당의 과거 partial cleanup·그 뒤 자동 승인 거절/추가 삭제0 한계도 유지한다. 비교e4는 독립12/root26 뒤 ebd에, gapcbcc는 qualified Yes/root 새 Node10·genuine14·typed8 뒤 정상 수용했다. current941는 genuine 현재 readonly→facts/계획의 신규3으로 독립 Yes/root15 뒤 f507에 수용했다.
 
