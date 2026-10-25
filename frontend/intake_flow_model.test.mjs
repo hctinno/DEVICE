@@ -225,3 +225,38 @@ test('conducted preview does not round a large original rejected integer in gap 
 test('conducted preview rejects a gap field outside the published field paths',()=>{
   preview();assert.throws(()=>preview(v=>{v.plan_input.status='blocked';v.plan_input.verification.evidence='not_validated';v.plan_input.gaps=[{code:'missing_setting',field:'future_private_field',provided:null,blocking:true}];}));
 });
+
+function conductedResultPacket(){
+  const plan=preview().plan_input,binding=structuredClone(plan.binding),report={schema_version:1,kind:'virtual_fleet_harness_result',run_id:'provided-run',runtime_instance_id:'provided-runtime',synthetic:true,hardware_verified:false,ai_model_called:false,policy:{kind:'fixture',id:'typed-provided'},termination:{reason:'policy_stop',policy_claim:'completed'},task_outcome:'not_assessed',cleanup:{status:'not_assessed',evidence_refs:[]},usage:{decisions:0,logical_requests:0,transport_retries:0,tick_delta:0,reserved_ticks:0,elapsed_ms:0},evidence:{measurement_refs:['provided-event'],operator_transcript_ref:'provided-journal'},unresolved_request_ids:[],assessment:{status:'not_assessed',verdict:null,evaluator_id:null,evidence_refs:[],summary_code:null}};
+  const result={schema_version:1,kind:'conducted_twin_result',status:'recorded',binding:{plan_input:plan,run_report:report,plan_input_sha256:'a'.repeat(64),setup_sha256:'a'.repeat(64),journal_file_sha256:'a'.repeat(64),journal_head_sha256:'a'.repeat(64),report_sha256:'a'.repeat(64),topology_sha256:'a'.repeat(64),run_id:report.run_id,runtime_instance_id:report.runtime_instance_id,measurement_ref:'provided-event'},raw_measurement:{packet:{status:'ok',valid:true,value:-4,unit:'dBm',frequency_hz:915000000,power_dbm:-4,duty_cycle:1,crest_factor_db:0,acquisition_tick:0,acquisition_setup_revision:0,source_id:'sensor',extra:{zero:0}},event_id:'provided-event',sequence:1,device_id:'sensor',tick:0,setup_revision:0,quantity:{metric:'on',reference_plane:'sensor_input',loss_compensation_applied:false,loss_compensation_sign:1},reference_plane:'sensor_input'},setup_provenance:{records:[],topology:{devices:[],connections:[]},path:[]},calculation:{raw_power_w:{value:0.00039810717055349735,unit:'W'},raw_reference_plane:'sensor_input',correction_ledger:[],target_reference_plane:'source_output',corrected:{value:-4,unit:'dBm',power_w:0.00039810717055349735},conformity:{status:'not_assessed',verdict:null,numeric_limit_dbm:null,uncertainty_db:null}},gaps:[],failure:null,verification:{synthetic:true,hardware_verified:false,physical_verified:false,source_bytes:'not_reopened',method_approval:'not_assessed',trust_scope:'provided_host_snapshots_and_hash_consistency',execution_authority:false}};
+  return {schema_version:1,kind:'intake_conducted_result_view',intake_id:'I-1',revision:2,context_sha256:binding.context_sha256,source_kind:'provided_snapshot',expected_current_binding:binding,relation:{status:'matched',reasons:[],provided_revision:2},result};
+}
+function parseResult(packet=conductedResultPacket()){
+  assert.equal(typeof workflowAPI.parseConductedResultView,'function','missing strict provided result parser');
+  return workflowAPI.parseConductedResultView(typeof packet==='string'?packet:JSON.stringify(packet),{intake_id:'I-1',revision:2});
+}
+test('result readonly preserves provided source zero null and actualAI absence without turning recorded into conformity',()=>{
+  const value=parseResult();assert.equal(value.source_kind,'provided_snapshot');assert.equal(value.result.raw_measurement.tick,0);assert.equal(value.result.calculation.conformity.verdict,null);assert.equal(value.result.verification.execution_authority,false);assert.equal(Object.hasOwn(value.result.verification,'ai_model_called'),false);
+});
+test('result readonly keeps original invalid binding0/2/11 raw JSON gaps and partial calculation',()=>{
+  for(const count of [0,2,11]){
+    const packet=conductedResultPacket(),r=packet.result;r.status='invalid';r.failure={code:'measurement_invalid',field:'observation.sensor'};
+    if(count===0)r.binding={};if(count===2)r.binding={plan_input:42,run_report:['original']};
+    r.raw_measurement.packet={status:'bad',value:'-3e7',unit:null,extra:[false,0]};r.raw_measurement.quantity=[42];r.raw_measurement.tick='original';r.setup_provenance.records={bad:'original'};r.setup_provenance.topology=['original'];r.calculation.corrected=null;r.gaps=[null,42,{malformed:'original'}];packet.relation={status:'blocked',reasons:['result_plan_binding_unavailable'],provided_revision:2};
+    assert.deepEqual(JSON.parse(workflowAPI.conductedPreviewValue(parseResult(packet).result)),JSON.parse(JSON.stringify(r)));
+  }
+});
+test('result readonly accepts incomplete generated W while corrected is null and preserves malformed quantity declaration',()=>{
+  const packet=conductedResultPacket(),r=packet.result;r.status='incomplete';r.binding={plan_input:r.binding.plan_input,run_report:null};r.failure=null;r.gaps=[{code:'correction_basis_missing',field:'quantity',provided:null,blocking:true}];r.calculation.corrected=null;r.raw_measurement.quantity=['original'];
+  assert.equal(parseResult(packet).result.calculation.corrected,null);assert.ok(parseResult(packet).result.calculation.raw_power_w.value>0);
+});
+test('result readonly rejects future schema unknown failure authority promoted conformity and mismatched current binding',()=>{
+  parseResult();for(const change of [v=>v.result.extra=1,v=>v.result.verification.execution_authority=true,v=>v.result.calculation.conformity.verdict='pass',v=>v.result.status='future',v=>v.expected_current_binding.context_sha256='f'.repeat(64),v=>{v.result.status='invalid';v.result.failure={code:'future',field:'input'};},v=>v.result.raw_measurement.packet.valid=1,v=>v.result.binding.run_report={},v=>{v.result.status='incomplete';v.result.failure={code:'setup_partial',field:'plan_input.plan.future'};},v=>v.result.gaps=[{code:'metric_mismatch',field:'future_private_path',provided:null,blocking:true}],v=>v.result.gaps=[{code:'missing_setting',field:'future_private_path',provided:null,blocking:false}]]){const packet=conductedResultPacket();change(packet);assert.throws(()=>parseResult(packet));}
+});
+test('result readonly requires explicit blocked reason when expected-current binding is absent',()=>{
+  const packet=conductedResultPacket();packet.expected_current_binding=null;assert.throws(()=>parseResult(packet));packet.relation={status:'blocked',reasons:['expected_current_binding_missing'],provided_revision:2};assert.equal(parseResult(packet).relation.status,'blocked');
+});
+test('result readonly rejects duplicate raw fields nonfinite and output bounds while preserving unsafe original integers',()=>{
+  parseResult();const complete=JSON.stringify(conductedResultPacket());assert.throws(()=>parseResult(complete.replace('"schema_version":1','"schema_version":1,"schema_version":1')));for(const raw of [' '.repeat(1048577),'{}{}','{"schema_version":1,"schema_version":1}','{"n":NaN}'])assert.throws(()=>parseResult(raw));
+  const packet=conductedResultPacket();packet.result.status='invalid';packet.result.failure={code:'measurement_invalid',field:'observation.sensor'};packet.result.gaps=['RAW_INTEGER'];const raw=JSON.stringify(packet).replace('"RAW_INTEGER"','9007199254740993');assert.equal(workflowAPI.conductedPreviewValue(parseResult(raw).result.gaps[0]),'9007199254740993');
+});

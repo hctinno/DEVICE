@@ -3,6 +3,8 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 import json
+import math
+import hashlib
 import re
 import sqlite3
 
@@ -115,6 +117,121 @@ class ReadModelError(Exception):
         self.code = code
 
 
+
+_RESULT_INVALID = set('acquisition_invalid evidence_context_missing input_limit invalid_evidence journal_header_invalid journal_integrity_invalid journal_invalid journal_limit journal_state_invalid measurement_invalid measurement_path_conflict measurement_stale native_input_invalid observation_clock_regression observation_invalid output_limit plan_basis_invalid plan_binding_invalid plan_binding_mismatch plan_hash_mismatch plan_intake_invalid plan_invalid plan_limit plan_method_invalid plan_verification_invalid receipt_advance_clock receipt_identity_or_clock receipt_invalid report_invalid run_binding_mismatch setup_advance_invalid setup_clock_mismatch setup_duplicate_request setup_hash_mismatch setup_identity_invalid setup_invalid setup_limit setup_receipt_invalid source_metadata_mismatch source_settings_mismatch topology_hash_mismatch topology_invalid'.split())
+_RESULT_INCOMPLETE = set('correction_overflow execution_incomplete journal_incomplete measurement_missing measurement_not_referenced measurement_reference_missing path_ambiguous path_configuration_invalid path_configuration_missing path_selection_missing plan_blocked post_setup_configuration setup_failed setup_missing setup_partial unit_conversion_failed unsupported_path_device'.split())
+_RESULT_GAP_ONLY = set('correction_basis_invalid correction_basis_missing metric_mismatch'.split())
+_RESULT_D1_GAPS = set('native_input_invalid analysis_invalid context_invalid expected_revision_changed_or_invalid expected_context_changed_or_invalid analysis_evidence_invalid conflicting_intake_fact missing_intake_field follow_up_missing_field product_identity unread_documents uncertain_intake_fact intent_value_not_in_request_quote invalid_source_settings unknown_source_field missing_setting unsupported_modulation invalid_setting invalid_rf_domain invalid_method unknown_method_field unsupported_method_field missing_method_field invalid_basis unknown_basis_field missing_or_invalid_basis unsupported_or_invalid_basis basis_value_mismatch basis_quote_value_mismatch basis_evidence_invalid'.split())
+_RESULT_FIELD = re.compile(r'^(?:input|output|plan_input(?:\.(?:binding|gaps|status|verification|intake|plan(?:\.basis_refs)?))?|journal_read(?:\.(?:events|header|integrity))?|setup_snapshot(?:\.[0-9]+)?|topology|run_report|measurement_ref|calculation|observation\.[\s\S]+)$')
+_RESULT_REASON = set('provided_revision_changed expected_current_binding_missing expected_intake_mismatch expected_revision_mismatch expected_context_mismatch expected_analysis_context_mismatch expected_analysis_mismatch result_plan_binding_unavailable result_plan_binding_mismatch result_plan_hash_mismatch result_plan_input_hash_mismatch result_report_hash_mismatch result_run_binding_mismatch'.split())
+
+
+def _result_need(value):
+    if not value: raise ReadModelError('intake_conducted_result_invalid')
+
+
+def _result_keys(value, fields):
+    _result_need(type(value) is dict and set(value)==set(fields.split()))
+
+
+def _result_hash(value):
+    return hashlib.sha256(json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')).hexdigest()
+
+
+def _result_binding(value):
+    _result_keys(value,'intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256')
+    _result_need(type(value['intake_id']) is str and _IDENTIFIER.fullmatch(value['intake_id']) and type(value['revision']) is int and value['revision']>0)
+    for field in ('analysis_context_id','context_sha256','analysis_sha256','plan_sha256'):
+        _result_need(type(value[field]) is str and _HASH.fullmatch(value[field]))
+
+
+def validate_conducted_result_report(value):
+    """Shape only, from public412c usage; never import or execute the D3 builder.
+
+    Invalid input copies are deliberately opaque JSON, not normal packet casts.
+    Native JSON byte/depth/node limits are enforced at the server boundary.
+    """
+    need=_result_need;keys=_result_keys
+    number=lambda x:type(x) is int or type(x) is float and math.isfinite(x)
+    integer=lambda x:type(x) is int and x>=0
+    text=lambda x:type(x) is str and bool(x.strip())
+    sha=lambda x:type(x) is str and bool(_HASH.fullmatch(x))
+    keys(value,'schema_version kind status binding raw_measurement setup_provenance calculation gaps failure verification')
+    need(type(value['schema_version']) is int and value['schema_version']==1 and value['kind']=='conducted_twin_result' and value['status'] in ('recorded','incomplete','invalid'))
+    status=value['status'];binding=value['binding']
+    need(type(binding) is dict and (set(binding) in (set(),{'plan_input','run_report'},set('plan_input run_report plan_input_sha256 setup_sha256 journal_file_sha256 journal_head_sha256 report_sha256 topology_sha256 run_id runtime_instance_id measurement_ref'.split()))))
+    if len(binding)==11:
+        for key in ('plan_input_sha256','setup_sha256','journal_file_sha256','journal_head_sha256','report_sha256','topology_sha256'):need(sha(binding[key]))
+        for key in ('run_id','runtime_instance_id','measurement_ref'):need(text(binding[key]))
+    if status!='invalid' and binding:
+        plan=binding['plan_input'];keys(plan,'schema_version kind status binding intake plan gaps verification')
+        need(type(plan['schema_version']) is int and plan['schema_version']==1 and plan['kind']=='intake_conducted_twin_plan_input' and plan['status'] in ('ready_for_simulation','blocked'))
+        keys(plan['verification'],'evidence current_version source_bytes regulatory measurement_prediction execution_authority')
+        pv=plan['verification'];need(pv['execution_authority'] is False and pv['current_version']=='caller_snapshot_only' and pv['source_bytes']=='not_reopened' and pv['regulatory']=='not_assessed' and pv['measurement_prediction']=='not_assessed' and pv['evidence']==('validated_in_memory' if plan['status']=='ready_for_simulation' else 'not_validated'))
+        if status=='recorded':need(plan['status']=='ready_for_simulation')
+    raw=value['raw_measurement']
+    if raw is not None:
+        keys(raw,'packet event_id sequence device_id tick setup_revision quantity reference_plane');need(type(raw['packet']) is dict and raw['device_id']=='sensor')
+    setup=value['setup_provenance'];keys(setup,'records topology path');need(type(setup['path']) is list)
+    for edge in setup['path']:
+        need(type(edge) is dict and {'source','target','kind'}<=set(edge) and edge['kind']=='rf')
+        for side in ('source','target'):
+            endpoint=edge[side];need(type(endpoint) is dict and {'device_id','port'}<=set(endpoint) and text(endpoint['device_id']) and text(endpoint['port']))
+    calc=value['calculation'];keys(calc,'raw_power_w raw_reference_plane correction_ledger target_reference_plane corrected conformity')
+    need(calc['target_reference_plane'] in (None,'source_output'))
+    if calc['raw_power_w'] is not None:
+        keys(calc['raw_power_w'],'value unit');need(number(calc['raw_power_w']['value']) and calc['raw_power_w']['value']>0 and calc['raw_power_w']['unit']=='W')
+    need(type(calc['correction_ledger']) is list)
+    for row in calc['correction_ledger']:
+        keys(row,'device_id output_port setting loss_db record_index request_id tick setup_revision propagation_db already_applied compensation_db')
+        for key in ('device_id','output_port','request_id'):need(text(row[key]))
+        need(row['setting'] in ('attenuation_db','loss_db','coupling_db','through_loss_db') and row['already_applied'] is False)
+        for key in ('loss_db','propagation_db','compensation_db'):need(number(row[key]))
+        for key in ('record_index','tick','setup_revision'):need(integer(row[key]))
+    if calc['corrected'] is not None:
+        keys(calc['corrected'],'value unit power_w');need(number(calc['corrected']['value']) and calc['corrected']['unit']=='dBm' and number(calc['corrected']['power_w']) and calc['corrected']['power_w']>0)
+    keys(calc['conformity'],'status verdict numeric_limit_dbm uncertainty_db')
+    need(calc['conformity']==dict(status='not_assessed',verdict=None,numeric_limit_dbm=None,uncertainty_db=None))
+    need(type(value['gaps']) is list)
+    if status!='invalid':
+        for gap in value['gaps']:
+            keys(gap,'code field provided blocking');need(type(gap['code']) is str and gap['code'] in (_RESULT_D1_GAPS|_RESULT_INVALID|_RESULT_INCOMPLETE|_RESULT_GAP_ONLY) and text(gap['field']) and type(gap['blocking']) is bool)
+            if gap['code'] in _RESULT_D1_GAPS:need(re.fullmatch(r'(?:input|context|analysis|(?:binding|intake)\.[\s\S]+|(?:source_settings|method|basis)(?:\.[\s\S]+)?)',gap['field']))
+            else:need(_RESULT_FIELD.fullmatch(gap['field']) or gap['field'] in ('quantity','quantity.metric'))
+    failure=value['failure']
+    if failure is not None:
+        keys(failure,'code field');need(text(failure['field']) and _RESULT_FIELD.fullmatch(failure['field']) and type(failure['code']) is str and failure['code'] in (_RESULT_INVALID if status=='invalid' else _RESULT_INCOMPLETE if status=='incomplete' else set()))
+    elif status=='invalid':need(False)
+    if status=='recorded':
+        need(failure is None and len(binding)==11 and raw is not None and calc['corrected'] is not None)
+        need(type(binding['run_report']) is dict and len(binding['run_report'])==15)
+        packet=raw['packet'];need(set('status valid value unit frequency_hz power_dbm duty_cycle crest_factor_db acquisition_tick acquisition_setup_revision source_id'.split())<=set(packet))
+        need(packet['status']=='ok' and packet['valid'] is True and packet['unit']=='dBm' and packet['source_id']=='sensor')
+        for key in ('value','frequency_hz','power_dbm','duty_cycle','crest_factor_db'):need(number(packet[key]))
+        for key in ('acquisition_tick','acquisition_setup_revision'):need(integer(packet[key]))
+        need(packet['value']==packet['power_dbm'] and text(raw['event_id']) and integer(raw['sequence']) and raw['sequence']>0 and integer(raw['tick']) and integer(raw['setup_revision']))
+        keys(raw['quantity'],'metric reference_plane loss_compensation_applied loss_compensation_sign')
+        need(raw['quantity']['metric']=='on' and raw['quantity']['reference_plane']=='sensor_input' and raw['quantity']['loss_compensation_applied'] is False and type(raw['quantity']['loss_compensation_sign']) is int and raw['quantity']['loss_compensation_sign']==1)
+        need(type(setup['records']) is list and len(setup['records'])<=32 and type(setup['topology']) is dict)
+        topology=setup['topology'];need({'devices','connections'}<=set(topology) and type(topology['devices']) is list and type(topology['connections']) is list)
+        for node in topology['devices']:need(type(node) is dict and {'id','profile_id'}<=set(node) and text(node['id']) and text(node['profile_id']))
+        for edge in topology['connections']:
+            need(type(edge) is dict and {'source','target','kind'}<=set(edge) and text(edge['kind']))
+            for side in ('source','target'):need(type(edge[side]) is dict and {'device_id','port'}<=set(edge[side]) and text(edge[side]['device_id']) and text(edge[side]['port']))
+        need(raw['reference_plane']=='sensor_input' and calc['target_reference_plane']=='source_output')
+        for record in setup['records']:
+            keys(record,'request_id operation device_id action parameters receipt tick setup_revision')
+            need(text(record['request_id']) and record['operation'] in ('execute','advance'))
+            for key in ('device_id','action'):need(record[key] is None or text(record[key]))
+            for key in ('parameters','receipt'):need(record[key] is None or type(record[key]) is dict)
+            for key in ('tick','setup_revision'):need(record[key] is None or integer(record[key]))
+    keys(value['verification'],'synthetic hardware_verified physical_verified source_bytes method_approval trust_scope execution_authority')
+    need(value['verification']==dict(synthetic=True,hardware_verified=False,physical_verified=False,source_bytes='not_reopened',method_approval='not_assessed',trust_scope='provided_host_snapshots_and_hash_consistency',execution_authority=False))
+    # Equality alone would accept 1/0 in place of bool. Check their native types.
+    for key in ('synthetic','hardware_verified','physical_verified','execution_authority'):need(type(value['verification'][key]) is bool)
+    return value
+
+
 class _SnapshotStore:
     """Only the connection interface required by the pure service readers."""
     def __init__(self, connection):
@@ -206,6 +323,33 @@ class IntakeReadModel:
             basis=provided.get('basis',{}),method=provided.get('method',{}))
         return dict(schema_version=1,kind='intake_conducted_plan_preview',intake_id=intake_id,revision=context['revision'],
             context_sha256=context_sha,context_scope='current_provided_context',selection_status=status,plan_input=report)
+
+
+    def conducted_result_view(self, intake_id, snapshot=None):
+        if snapshot is None: raise ReadModelError('intake_conducted_result_missing')
+        if snapshot['intake_id']!=intake_id: raise ReadModelError('intake_conducted_result_unavailable')
+        report=validate_conducted_result_report(snapshot['result'])
+        native=self.current_conducted_plan_context(intake_id);context=native['context'];context_sha=_result_hash(context)
+        expected=snapshot['expected_current_binding'];reasons=[]
+        if snapshot['revision']!=context['revision']:reasons.append('provided_revision_changed')
+        if expected is None:reasons.append('expected_current_binding_missing')
+        else:
+            _result_binding(expected)
+            checks={'intake_id':('expected_intake_mismatch',intake_id),'revision':('expected_revision_mismatch',context['revision']),'context_sha256':('expected_context_mismatch',context_sha),'analysis_context_id':('expected_analysis_context_mismatch',context['analysis_context_id']),'analysis_sha256':('expected_analysis_mismatch',_result_hash(native['analysis']))}
+            for key,(reason,current) in checks.items():
+                if expected[key]!=current:reasons.append(reason)
+        binding=report['binding'];plan=binding.get('plan_input');plan_binding=plan.get('binding') if type(plan) is dict else None
+        try:_result_binding(plan_binding)
+        except ReadModelError:reasons.append('result_plan_binding_unavailable')
+        else:
+            if expected is not None and plan_binding!=expected:reasons.append('result_plan_binding_mismatch')
+            if type(plan.get('plan')) is not dict or _result_hash(plan['plan'])!=plan_binding['plan_sha256']:reasons.append('result_plan_hash_mismatch')
+        if len(binding)==11:
+            if _result_hash(plan)!=binding['plan_input_sha256']:reasons.append('result_plan_input_hash_mismatch')
+            if _result_hash(binding['run_report'])!=binding['report_sha256']:reasons.append('result_report_hash_mismatch')
+            run=binding['run_report']
+            if type(run) is not dict or run.get('run_id')!=binding['run_id'] or run.get('runtime_instance_id')!=binding['runtime_instance_id']:reasons.append('result_run_binding_mismatch')
+        return json.loads(json.dumps(dict(schema_version=1,kind='intake_conducted_result_view',intake_id=intake_id,revision=context['revision'],context_sha256=context_sha,source_kind='provided_snapshot',expected_current_binding=expected,relation=dict(status='blocked' if reasons else 'matched',reasons=reasons,provided_revision=snapshot['revision']),result=report),ensure_ascii=False,allow_nan=False))
 
     def fixture_runs(self, intake_id):
         """One pure read transaction; no queue claim, blob resolver or evaluator."""
