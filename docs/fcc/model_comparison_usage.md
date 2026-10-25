@@ -158,9 +158,102 @@ matrix128KiB, budget64KiB, row/batch 각1MiB를 상한으로 둔다. receipt/art
 
 이 API는 actual 전송 경로를 위한 호스트 승인만 받는다. 모의와 replay를 actual 승인으로 변환하는 production 분기는 없다. 단위 검사에서 actual 경로 DTO를 testpatch로 시뮬레이션한 결과의 증거 모드는 mock이며 실제 생성/요금/인증 증거가 아니다. 기존 provided-result replay나 실제 모델 결과와 별도 분모를 사용한다.
 
+## 가상 작업자 고정 후보 비교
+
+[가상 작업자 설계](../superpowers/specs/2026-10-25-virtual-operator-model-comparison-design.md)의 첫 정보 부족 case만 runner에서 추가 수용한다. scenario는 operator-synthetic-o01/version1, evaluator는 virtual-operator-wire-v1/version1, pack은 operator-input-v1, producer는 dgm-virtual-operator-v1이다. [고정 합성 자료](virtual_operator_comparison_inputs.json)는 context/delegation/ids/producer_name/prompt_literal_utf8/response_schema_literal_utf8 exact6의 C1이다.
+
+| 대상 | 원 bytes | SHA-256 |
+|---|---:|---|
+| context C1 | 318 | 7db07a21ecae1ef0221452516a71f9bb09ba235ec55b70e556fc3c5ac4d3d5b1 |
+| logical request core C1 | 887 | 18438b686208d6c55f3c539e6d1e3e96f91601bd6c69577234bc6cf015a4d8c3 |
+| prompt C1 | 2131 | 55e618165ab033b48c03589b02a10d5651c952f9b2c5334cc56afc0b4687d85b |
+| schema 원문 UTF-8 | 3052 | aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb |
+| input pack C1 | 6607 | 0dfe3bae594b0db6646d3c8882059b364c1b34cc7bdfbccdc3c2024e970c6e5a |
+
+schema는 공개 first-decision 계약의 literal3052/끝 LF를 그대로 사용한다. C1으로 재작성한 schema1435는 다른 pair이므로 거부한다. case ID/evaluator/전체 prompt/schema가 고정 bytes와 다르면 transport 전에 거부한다. 내부 helper는 공개 genuine build_operator_prompt로 context/delegation/ID/producer를 재구축해 full C1 prompt를 대조한다. case/scenario/정답/seed/truth를 context 안에 추가하지 않는다.
+
+순수 입력 준비 예시는 다음과 같다. C1 설정은 앞 절과 같으며 실제 모델을 호출하지 않는다.
+
+```python
+from pathlib import Path
+import json
+from labflow.virtual_fleet.model_operator_boundary import (
+    build_operator_prompt, decode_operator_response,
+)
+
+pack = json.loads(Path("docs/fcc/virtual_operator_comparison_inputs.json").read_bytes())
+prompt_bytes = pack["prompt_literal_utf8"].encode("utf-8")
+schema_bytes = pack["response_schema_literal_utf8"].encode("utf-8")
+prompt = build_operator_prompt(
+    pack["context"], **pack["ids"],
+    producer_name=pack["producer_name"], delegation=pack["delegation"],
+)
+```
+
+Vertex는 앞 절의 기존 API3를 그대로 사용하며 matrix 생성 때 scenario_id="operator-synthetic-o01", evaluator_id="virtual-operator-wire-v1"을 전달한다. 별도 공용 등록이 이뤄질 경우 input_kind는 registered_synthetic을 유지한다. 현재 backend/frontend UI의 closed7·공용4 파일·root tuple은 변경하지 않았고 8번째 UI admission을 완료한 것이 아니다. model catalog를 scenario registry로 바꾸지 않는다.
+
+strict_decode는 원본 bytes와 재구축 prompt를 genuine decode_operator_response에 직접 넘긴다. wire exact5는 schema_version/kind/request_sha256/producer/proposal이다. proposal은 dut/start 또는 sensor/acquire|read의 빈 parameters, advance ticks=1, stop의 completed|blocked|unsupported|failed 및 bounded nonblank reason만 허용한다. 새로운 refused/needs_information wire kind나 claim은 만들지 않는다.
+
+성공 row는 success/operator_response_verified/strict_decode.checked, 거부 row는 failed/operator_response_invalid/strict_decode.rejected다. 두 경우 assessment는 not_assessed/verdict=null/semantic_evaluator_not_connected이고 batch.business_assessment도 not_assessed다. 반환 row15/batch8과 public 함수3개는 유지하며 score나 실행 권한을 새 키·기본값으로 만들지 않는다. completed라는 stop claim도 실제 task 완료·정답·행동 적용·효과 평가를 뜻하지 않는다.
+
+genuine 경계의 response cap65536, depth32/nodes200000/native int64, duplicate/UTF-8/비유한 수/타입·키·binding·producer 검증과 control3/최초 오류 보존을 따른다. 65536은 상한 안이라는 뜻이며 임의 bytes의 유효성을 보장하지 않는다. 65537은 limit_exceeded다. fence 제거·strip·repair·producer/hash 보충·부분 결합·재시도 없이 원문 artifact를 보존한다. 상세 bounds와 최초 오류 본문 규범도 기계 JSON 밖에서 계속 적용된다.
+
+### Codex direct composition
+
+Codex는 기존 labflow.codex_cli_response.produce_codex_cli_response와 위 genuine decoder를 직접 조합한다. 새로운 provider·runner API·Codex UI·first-decision/one-action host 변경은 없다. 아래 호출은 향후 별도 실제 실행 위임을 받은 host의 순서를 설명하며 이번 구현 검증에서는 실제 CLI·모델을 호출하지 않았다.
+
+```python
+from labflow.codex_cli_response import produce_codex_cli_response
+import hashlib
+
+# executable/evidence_dir는 host가 명시한 절대 Path이며,
+# requested_model과 호출 예산도 별도로 위임돼 있어야 한다.
+raw, receipt = produce_codex_cli_response(
+    prompt_bytes, schema_bytes,
+    executable=executable, requested_model=requested_model,
+    evidence_dir=evidence_dir, timeout_seconds=60.0,
+)
+# genuine 반환 tuple만 사용하며, receipt는 변경하지 않는다.
+cleanup = receipt["cleanup"]
+bindings = receipt["bindings"]
+if not (
+    receipt["status"] == "complete" and receipt["failure"] is None
+    and receipt["verification"]["wire_complete"] is True
+    and all(cleanup[k] is True for k in (
+        "version_child_reaped", "model_child_reaped", "readers_joined",
+        "pipes_closed", "artifacts_closed",
+    ))
+    and bindings["prompt_sha256"] == hashlib.sha256(prompt_bytes).hexdigest()
+    and bindings["schema_sha256"] == hashlib.sha256(schema_bytes).hexdigest()
+):
+    raise ValueError("incomplete or mismatched Codex record")
+final = receipt["artifacts"]["final_text"]
+if not (
+    final["path"] == "final-text.bin" and final["present"] is True
+    and final["complete"] is True and final["overflow"] is False
+    and final["extent"] == "whole_file" and type(final["bytes"]) is int
+    and final["bytes"] == len(raw)
+    and final["sha256"] == hashlib.sha256(raw).hexdigest()
+):
+    raise ValueError("incomplete or mismatched final artifact")
+with (evidence_dir / "final-text.bin").open("rb") as handle:
+    original = handle.read(65537)
+if original != raw:
+    raise ValueError("final artifact readback mismatch")
+candidate = decode_operator_response(raw, prompt)
+```
+
+direct host는 genuine producer에서 받은 tuple만 사용한다. complete/failure=null/wire_complete=true 및 version/model child 회수·reader join·pipe/artifact 종료를 확인하고, receipt의 prompt_sha256/schema_sha256를 같은 원 bytes와 대조한다. final_text descriptor는 fixed final-text.bin의 whole_file/complete/overflow=false·native bytes·SHA와 반환 raw에 맞아야 한다. 원 파일을 bounded read로 재대조한 뒤 raw를 decoder에 그대로 전달한다. 외부에서 제공한 receipt나 fixture를 실제 모델 생성으로 인정하는 경로가 아니다.
+
+Codex receipt는 codex_cli_response_receipt, Vertex receipt는 vertex_response_receipt의 원 형상을 유지한다. logical request hash·full prompt hash·schema 원문 hash·transport invocation/provider payload hash는 각각 다르다. producer 이름·요청 model·reported model 문자열·일치 hash만으로 원격 identity/저장 진위/업무 의미/행동 권한을 증명하지 않는다. complete transport여도 candidate strict는 거부될 수 있으며, incomplete/timeout/cancel/cleanup 실패·unknown은 원형을 보존한다.
+
+Codex public API에는 output-token cap 인자가 없으므로 Vertex512 제한을 Codex에도 적용했다고 쓰지 않는다. 모든 실제 새 호출은 현재0이다. Vertex 동일6/3072 소진·free credits only를 유지하고, case 등록이나 delegation의 가상8/8/4/30/retries2·outer60/model_calls8을 새 호출 허가로 해석하지 않는다. 기존 승인서를 새 pair에 전용하거나 실제 ledger를 seed/reset/refund하지 않는다.
+
+이 단위의 가상 비교 검사는 기존64+operator 신규14=담당78이다. genuine builder/decoder와 bounded fake producer를 사용했고 Codex native pipe fixture는 실제 executable을 실행하지 않는다. fake 생성·credential metadata·approval·budget 파일은 각 테스트의 격리 자료다. 실제 Codex/Vertex/API/auth/ADC/live ledger/Store/고객/현장 접근은0이며 actual-shaped 행도 검증 증거의 출처는 mock이다. 독립12논리 봉인·후속 공용 admission 및 실제 모델·의미·행동·effect/task/closed_loop 검증은 이 담당78에 합산하지 않는다.
+
 ## 검증과 남은 범위
 
-관련64 검사는 가상 프로필/전송만 쓴다. 고정행/선택/override 불변, scope와 만료, 누적 재시작·중복·동시 in-flight, 원 설정 한도 거절, 예약 후 취소/시간, strict wire, receipt/artifact 변조, known 실패·unknown·제어 예외를 포함한다. 접수 신규10은 genuine decoder·등록3·교차입력/producer/schema·dependency·transport decoder0·누적 소진·최초 오류 보존을 가상 전송으로 검사했다. 원41과 접수 신규10의 기존51에 자연 완료 호환 신규3과 intent 신규10을 모두 보존한 총괄 가상 검사 합계64다. 담당54·61과 독립 분모는 합산하지 않는다. OS 잠금은 이 Windows 호스트에서 검사했다. 다른 OS의 파일시스템·프로세스 강제 종료·실제 D1/D2 결합·원격 API·실제 모델은 별도 검증 대상이다.
+기존64 검사는 가상 프로필/전송만 쓴다. 고정행/선택/override 불변, scope와 만료, 누적 재시작·중복·동시 in-flight, 원 설정 한도 거절, 예약 후 취소/시간, strict wire, receipt/artifact 변조, known 실패·unknown·제어 예외를 포함한다. 접수 신규10은 genuine decoder·등록3·교차입력/producer/schema·dependency·transport decoder0·누적 소진·최초 오류 보존을 가상 전송으로 검사했다. 원41과 접수 신규10의 기존51에 자연 완료 호환 신규3과 intent 신규10을 모두 보존한 총괄 가상 검사 합계64다. 담당54·61과 독립 분모는 합산하지 않는다. OS 잠금은 이 Windows 호스트에서 검사했다. 다른 OS의 파일시스템·프로세스 강제 종료·실제 D1/D2 결합·원격 API·실제 모델은 별도 검증 대상이다.
 
 고정 오류는 ModelComparisonError(ValueError)이며 code/str/args가 동일하고 cause/context가 없는 model_comparison_invalid_input, model_comparison_limit_exceeded, model_comparison_state_error, model_comparison_dependency_unavailable이다. operational 거절은 고정 reason_code와 not_run/unknown 기록으로 구별한다. 원 인증 오류 내용이나 파일 경로를 오류 메시지로 만들지 않는다.
 

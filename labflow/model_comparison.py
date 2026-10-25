@@ -1,7 +1,7 @@
 """Bounded registered Vertex comparison; no transport, credential storage or UI.
 
 The host owns approval/ADC/budget paths. This module never seeds a budget or
-refunds a reservation. Only fixed synthetic connection/analysis/intent pairs are admitted.
+refunds a reservation. Only fixed synthetic connection/analysis/intent/operator pairs are admitted.
 """
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
@@ -147,6 +147,18 @@ _INTENT_CASES = {
         },
         "scenario_id": "intent-synthetic-i03",
         "scenario_version": 1
+    }
+}
+_OPERATOR_CASES = {
+    "operator-synthetic-o01": {
+        "scenario_id": "operator-synthetic-o01", "scenario_version": 1,
+        "evaluator_id": "virtual-operator-wire-v1", "evaluator_version": 1,
+        "pack_revision": "operator-input-v1",
+        "input_bundle_sha256": "0dfe3bae594b0db6646d3c8882059b364c1b34cc7bdfbccdc3c2024e970c6e5a",
+        "context_sha256": "7db07a21ecae1ef0221452516a71f9bb09ba235ec55b70e556fc3c5ac4d3d5b1",
+        "producer_name": "dgm-virtual-operator-v1",
+        "prompt": {"bytes": 2131, "sha256": "55e618165ab033b48c03589b02a10d5651c952f9b2c5334cc56afc0b4687d85b"},
+        "response_schema": {"bytes": 3052, "sha256": "aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb"}
     }
 }
 _LIMITS = dict(generation_posts=6, max_output_tokens=512, reserved_output_tokens=3072,
@@ -296,13 +308,50 @@ def _pair(prompt, schema, scenario, evaluator):
             _H(prompt) != _PROMPT_SHA or _H(schema) != _SCHEMA_SHA):
             _fail()
         return
-    case = _INTAKE_CASES.get(scenario) or _INTENT_CASES.get(scenario)
+    case = _INTAKE_CASES.get(scenario) or _INTENT_CASES.get(scenario) or _OPERATOR_CASES.get(scenario)
     if (case is None or evaluator != case["evaluator_id"] or
         len(prompt) != case["prompt"]["bytes"] or _H(prompt) != case["prompt"]["sha256"] or
         len(schema) != case["response_schema"]["bytes"] or
         _H(schema) != case["response_schema"]["sha256"]):
         _fail()
-    _intake_context(prompt,case)
+    if scenario in _OPERATOR_CASES:
+        _operator_prompt(prompt,case)
+    else:
+        _intake_context(prompt,case)
+
+
+def _operator_prompt(prompt, case):
+    if (type(prompt) is not bytes or len(prompt) != case["prompt"]["bytes"] or
+        _H(prompt) != case["prompt"]["sha256"]):
+        _fail()
+    value = _json(prompt)
+    _keys(value, ("schema_version","kind","binding","expected_producer","messages"))
+    messages = value["messages"]
+    if type(messages) is not list or len(messages) != 2:
+        _fail()
+    _keys(messages[1], ("role","content"))
+    if messages[1]["role"] != "user" or type(messages[1]["content"]) is not str:
+        _fail()
+    user = _json(messages[1]["content"].encode("utf-8"))
+    _keys(user, ("request","request_sha256"))
+    request = user["request"]
+    _keys(request, ("schema_version","kind","binding","expected_producer","user_input"))
+    ids = request["binding"]
+    _keys(ids, ("run_id","runtime_instance_id","decision_id","model_request_id","context_sha256"))
+    data = request["user_input"]
+    _keys(data, ("public_context","delegation"))
+    if _H(_C(data["public_context"])) != case["context_sha256"]:
+        _fail()
+    boundary = _dependency("labflow.virtual_fleet.model_operator_boundary")
+    try:
+        rebuilt = boundary.build_operator_prompt(data["public_context"],
+            **{key:ids[key] for key in ("run_id","runtime_instance_id","decision_id","model_request_id")},
+            producer_name=case["producer_name"],delegation=data["delegation"])
+    except ValueError:
+        _fail()
+    if _C(_snapshot(rebuilt)) != prompt:
+        _fail()
+    return rebuilt
 
 
 def _intake_context(prompt, case):
@@ -858,6 +907,15 @@ def _receipt(value, settings, prompt, schema, directory, raw, success, error_cod
 
 
 def _decode(raw, matrix, prompt):
+    case = _OPERATOR_CASES.get(matrix["scenario_id"])
+    if case is not None:
+        request = _operator_prompt(prompt,case)
+        boundary = _dependency("labflow.virtual_fleet.model_operator_boundary")
+        try:
+            boundary.decode_operator_response(raw,request)
+        except ValueError:
+            _fail()
+        return
     case = _INTENT_CASES.get(matrix["scenario_id"])
     if case is not None:
         payload = _intake_context(prompt,case)
@@ -892,8 +950,10 @@ def _now():
 def _row(matrix, slot, reason, *, status="not_run", receipt=None, reservation=None,
          budget=None, started=None, elapsed=0, decoded="not_run", attempts=0):
     settings = slot["settings"]
-    case = _INTAKE_CASES.get(matrix["scenario_id"]) or _INTENT_CASES.get(matrix["scenario_id"])
+    case = (_INTAKE_CASES.get(matrix["scenario_id"]) or _INTENT_CASES.get(matrix["scenario_id"]) or
+            _OPERATOR_CASES.get(matrix["scenario_id"]))
     response_invalid = ("intent_response_invalid" if matrix["scenario_id"] in _INTENT_CASES else
+                        "operator_response_invalid" if matrix["scenario_id"] in _OPERATOR_CASES else
                         "intake_response_invalid" if case is not None else "connection_response_invalid")
     return dict(schema_version=1,kind="vertex_comparison_row",batch_id=matrix["batch_id"],
         run_id=slot["run_id"],row_index=slot["row_index"],
@@ -1032,6 +1092,7 @@ def _execute(matrix,index,prompt,schema,adc,directory,budget_path,approval_path,
                 _decode(raw,matrix,prompt)
                 decoded,status = "checked","success"
                 reason = ("intent_response_verified" if matrix["scenario_id"] in _INTENT_CASES else
+                          "operator_response_verified" if matrix["scenario_id"] in _OPERATOR_CASES else
                           "intake_response_verified" if matrix["scenario_id"] in _INTAKE_CASES
                           else "connection_verified")
             except ModelComparisonError as error:
@@ -1039,6 +1100,7 @@ def _execute(matrix,index,prompt,schema,adc,directory,budget_path,approval_path,
                     raise
                 decoded,status = "rejected","failed"
                 reason = ("intent_response_invalid" if matrix["scenario_id"] in _INTENT_CASES else
+                          "operator_response_invalid" if matrix["scenario_id"] in _OPERATOR_CASES else
                           "intake_response_invalid" if matrix["scenario_id"] in _INTAKE_CASES
                           else "connection_response_invalid")
             record = _row(matrix,slot,reason,status=status,receipt=receipt,
