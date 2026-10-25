@@ -1,5 +1,5 @@
 import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot, docxReferenceMatchesRecord} from './model.mjs';
-import {validateFixtureRuns, describeFixtureRecord, requireStableFixtureRecords, createFixtureReadGate} from './intake_flow_model.mjs';
+import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate} from './intake_flow_model.mjs';
 import {validateIntakeReferenceContext,parseIntakeReferenceHistoryJson,parseIntakeReferenceCurrentJson} from './intake-references/model.mjs';
 import {createIntakeReferenceReview} from './intake-references/view.mjs';
 import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
@@ -289,6 +289,40 @@ function fixtureContext(view = state) {
 function sameFixtureSource(a, b) {
   return a && b && a.intake_id === b.intake_id && a.revision === b.revision;
 }
+function buildIntakeWorkflow(record, payload, current, stale) {
+  const view=describeIntakeWorkflow(record,{payload,request_id:current.selected,stale,pending:current.pending,now:Date.now()/1000});
+  const node=el('section','section-rule');node.id='intake-workflow';
+  node.dataset.intakeId=view.context.intake_id;node.dataset.revision=String(view.context.revision);node.dataset.fixtureScope=view.context.fixture_scope;
+  node.append(el('h3','','같은 접수의 업무 흐름'),metadata([
+    ['현재 접수 / 자료 버전',`${view.context.intake_id} / v${view.context.revision}`],
+    ['현재 자료 fingerprint',view.context.revision_fingerprint??'미제공'],
+    ['선택 가상 요청 / 기록 버전',view.context.request_id?`${view.context.request_id} / v${view.context.record_revision}`:'미선택'],
+    ['선택 기록의 준비 fingerprint',view.context.readiness_fingerprint??'미제공'],
+  ]));
+  const observation=el('p','inline-note',view.context.relation);observation.id='workflow-observation';observation.setAttribute('role','status');node.append(observation);
+  const list=el('ol','question-list');
+  for(const step of view.steps){
+    const item=el('li','question');item.dataset.workflowStep=step.id;
+    item.append(el('h4','',step.title),badge(step.label,step.tone));
+    for(const [lineIndex,line] of step.lines.entries()){
+      const detail=el('p','inline-note',line);
+      if(lineIndex===0&&['virtual','measurement'].includes(step.id))detail.dataset.workflowRelation='';
+      item.append(detail);
+    }
+    if(step.id==='intake'&&view.citations.length)item.append(sources(view.citations));
+    if(step.refs.length){const details=el('details');details.append(el('summary','',`공개 근거 참조 ${step.refs.length}개`));const refs=el('ul','fixture-refs');for(const ref of step.refs)refs.append(el('li','mono',ref));details.append(refs);item.append(details);}
+    list.append(item);
+  }
+  node.append(list);return node;
+}
+function markWorkflowUnconfirmed() {
+  const node=$('#intake-workflow');if(!node)return;
+  const selected=flow.payload?.records.some(record=>record.request_id===flow.selected);
+  node.dataset.fixtureScope=selected?'unconfirmed':'none';
+  const message=selected?'이전 조회 당시 문맥 · 현재 관계 미확인':'이 접수·자료 버전의 가상 기록 미확인';
+  const status=$('#workflow-observation');if(status)status.textContent=message;
+  for(const relation of node.querySelectorAll('[data-workflow-relation]'))relation.textContent=message;
+}
 function buildFixturePanel(record, view, current = flow) {
   const panel = section('가상 실행 기록', '합성 시도 · 실측·FCC 판정 미검증');
   panel.id = 'fixture-panel';
@@ -329,7 +363,8 @@ function buildFixturePanel(record, view, current = flow) {
     const selected = payload.records.find(entry => entry.request_id === current.selected);
     if (selected) content.append(buildFixtureResult(selected, record.revision, stale));
   }
-  panel.append(controls, updated, content, el('p', 'inline-note', '실제 AI 호출 없음 · 실장비 검증 없음 · runtime 재개 지원 없음 · case/plan 자동 생성 없음'));
+  panel.append(buildIntakeWorkflow(record,payload,current,stale),controls, updated, content,
+    el('p', 'inline-note', '이 가상 실행의 실제 AI 호출 없음 · 실장비 검증 없음 · runtime 재개 지원 없음 · case/plan 자동 생성 없음'));
   return panel;
 }
 function buildFixtureResult(record, revision, stale) {
@@ -376,6 +411,8 @@ function publishFixturePanel(next) {
 }
 function fixtureFailure(reason) {
   flow.pending = false;
+  flow.stale = Boolean(flow.payload);
+  markWorkflowUnconfirmed();
   flow.status = `${reason} · ${flow.payload ? '마지막 성공 기록 유지' : '기록 조회 불가'}`;
   const status = $('#fixture-status'); if (status) status.textContent = flow.status;
   const refresh = $('#fixture-refresh'); if (refresh) refresh.disabled = false;
@@ -387,6 +424,8 @@ async function refreshFixtureRuns() {
   const controller = new AbortController(); flow.controller = controller;
   const timer = setTimeout(() => controller.abort(), 10000);
   flow.pending = true;
+  flow.stale = Boolean(flow.payload);
+  markWorkflowUnconfirmed();
   $('#fixture-refresh').disabled = true; $('#fixture-status').textContent = '가상 기록 조회 중…';
   try {
     const response = await fetch(`/api/intakes/${encodeURIComponent(context.intake_id)}/fixture-runs`, {signal:controller.signal, cache:'no-store'});

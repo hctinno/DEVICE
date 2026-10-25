@@ -1,4 +1,5 @@
 import {validateHarnessResponse, describeHarnessResult} from './virtual_fleet/harness_model.mjs';
+import {describeState, factSources, FIELDS, FACT_LABELS} from './model.mjs';
 
 const STATES = {
   queued: ['가상 실행 대기', 'neutral'], running: ['가상 실행 중', 'info'],
@@ -54,6 +55,52 @@ export function describeFixtureRecord(record, currentRevision) {
     : record.revision === currentRevision ? '같은 자료 버전 · 준비 상태 변경 기록'
       : `이전 자료 버전 v${record.revision} · 현재 v${currentRevision}`,
   result: record.report ? describeHarnessResult(record.report) : null};
+}
+
+// A display projection of the existing snapshot and exact fixture-runs API.
+// It does not select a method, infer readiness, execute work or assess a task.
+export function describeIntakeWorkflow(intake, {payload=null, request_id='', stale=false, pending=false, now=0}={}) {
+  const records=payload===null?[]:validateFixtureRuns(payload,{intake_id:intake.intake_id,revision:intake.revision}).records;
+  const selected=records.find(record=>record.request_id===request_id) || null;
+  const description=selected?describeFixtureRecord(selected,intake.revision):null;
+  const report=selected?.report, result=description?.result;
+  const scope=selected?(stale||pending?'unconfirmed':selected.source_current?'current':'historical'):'none';
+  const relation=scope==='unconfirmed'?'이전 조회 당시 문맥 · 현재 관계 미확인':description?.context || '선택한 가상 기록 없음';
+  const revisions=(intake.history||[]).filter(item=>item.revision===intake.revision);
+  const context={intake_id:intake.intake_id,revision:intake.revision,
+    revision_fingerprint:revisions.length===1?revisions[0].fingerprint??null:null,
+    request_id:selected?.request_id??null,record_revision:selected?.revision??null,
+    readiness_fingerprint:selected?.readiness_fingerprint??null,fixture_scope:scope,relation};
+  const facts=intake.analysis?.facts || {}, questions=intake.analysis?.questions || [];
+  const identity=['product_type','purpose','market'];
+  const intakeState=describeState(intake,now);
+  const entry=(id,title,label,tone,lines,refs=[])=>({id,title,label,tone,lines,refs});
+  const unconfirmed=['unconfirmed','historical'].includes(scope);
+  const virtualLabel=description?.state.label || (payload===null?'가상 기록 미확인':!payload.storage_available?'가상 기록 저장 기능 미지원':'선택한 가상 기록 없음');
+  return {context,steps:[
+    entry('intake','제품·목적·시장과 현재 자료',intakeState.label,intakeState.tone,
+      [...identity.map(field=>`${FIELDS[field]}: ${facts[field]?.value??'자료 미확인'} · ${FACT_LABELS[facts[field]?.status]||'상태 미확인'}`),
+        `현재 자료 버전 v${intake.revision} · 파일 ${(intake.files||[]).length}개`,
+        intake.synthetic?'합성 접수 자료':'제공 접수 자료 · 물리 시료 확인 미실행']),
+    entry('gaps','누락·충돌과 해석 범위',!intake.analysis?'누락·충돌 미확인':questions.length?`열린 질문 ${questions.length}개`:'저장된 열린 질문 없음',
+      !intake.analysis||questions.length?'warning':'neutral',!intake.analysis?['분석 결과가 없어 아직 확인하지 못했습니다.']:
+        [...questions.map(question=>`${question.key}: ${question.message}`),'저장된 분석의 질문 상태이며 시험 준비 완료를 뜻하지 않습니다.']),
+    entry('plan','시험계획·방법','시험계획 미연결','neutral',
+      ['case_id=null · plan_id=null','시험방법 실행 절차 미제공 · 규정·방법 후보의 문자 대조와 별개입니다.']),
+    entry('virtual','가상 준비·실행',virtualLabel,unconfirmed?'warning':description?.state.tone||'neutral',
+      [relation,...(selected?[`선택 요청 ${selected.request_id} · 기록 v${selected.revision}`,`선택 recipe ${selected.recipe_id}`,
+        `run ${selected.run_id??'예약 전'} · instance ${selected.runtime_instance_id??'예약 전'}`,
+        `오류 코드: ${selected.error_code??'기록된 오류 없음'}`]:[]),
+        ...(pending?['가상 기록 조회 중 · 현재 관계 확인 대기']:[]),'기술 작업 상태입니다. 시험계획 연결·실장비 준비 완료를 뜻하지 않습니다.']),
+    entry('measurement','측정·계산·규격 판정',report?`가상 측정 근거 ${report.evidence.measurement_refs.length}개`:'게시된 측정 근거 미확인',unconfirmed?'warning':'neutral',
+      [relation,'원수치/단위·기준면 미제공','보정·계산 결과 미제공','규격 판정 미실행'],report?.evidence.measurement_refs||[]),
+    entry('assessment','기록 저장·독립평가',result?.assessment.label||'저장·독립평가 미확인',unconfirmed?'warning':result?.assessment.tone||'neutral',
+      [`기술 저장 상태: ${virtualLabel}`,result?`하네스 종료: ${result.termination.label} · ${result.policyClaim}`:'게시된 공개 실행 결과 없음',
+        result?`독립 가상 효과 평가: ${result.assessment.label}`:'독립 가상 효과 평가 미확인',
+        '작업 결과 미평가(task not_assessed) · 정리 상태 미평가', '이 가상 실행의 실제 AI 호출 없음(ai_model_called=false)'],report?.assessment.evidence_refs||[]),
+    entry('physical','실측 대조','실측 대조 미실행','neutral',
+      ['실장비 검증 없음(hardware_verified=false)','물리 정확도 미검증 · 실제 시료·계측 원본과 대조하지 않았습니다.']),
+  ],citations:identity.flatMap(field=>factSources(intake,field))};
 }
 
 function canonical(value) {
