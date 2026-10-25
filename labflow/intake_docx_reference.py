@@ -355,3 +355,115 @@ def retain_intake_docx_reference(store,intake_id: str,document_path: str,*,
         error.__context__ = None
         error.__cause__ = None
         raise
+
+
+def _observation_arguments(store,artifact_id,expected):
+    if (not _sha(artifact_id) or type(expected) is not dict
+            or set(expected)!={'source_id','intake_id','revision','revision_fingerprint','document'}
+            or type(expected['document']) is not dict
+            or set(expected['document'])!={'path','sha256','bytes'}):
+        _fail('invalid_argument')
+    # Detach exact built-in values before any Store/physical I/O.
+    selected = {**expected,'document':dict(expected['document'])}
+    item = selected['document']
+    try:
+        if type(selected['source_id']) is not str:
+            _fail('invalid_argument')
+        identifier(selected['source_id'])
+        if (not _sha(selected['revision_fingerprint']) or type(item['bytes']) is not int
+                or not 0<=item['bytes']<=_SOURCE_BYTES):
+            _fail('invalid_argument')
+    except (ValueError,UnicodeError):
+        _fail('invalid_argument')
+    binding = _arguments(store,selected['intake_id'],item['path'],selected['revision'],item['sha256'])
+    return binding,selected
+
+
+def _retained_reference(payload,selected):
+    try:
+        reference = json.loads(payload.decode('utf-8'),object_pairs_hook=_pairs,
+                               parse_constant=lambda value:_fail('source_integrity_invalid'))
+        if (type(reference) is not dict or set(reference)!={'schema_version','kind','binding','result'}
+                or type(reference['schema_version']) is not int or reference['schema_version']!=1
+                or reference['kind']!=_KIND or canonical(reference).encode('utf-8')!=payload
+                or canonical(reference['binding'])!=canonical(selected)):
+            _fail('source_integrity_invalid')
+        result = reference['result']
+        if (type(result) is not dict or set(result)!={'schema_version','source','reader','status','complete',
+                'scope','limits','blocks','text_sha256','issues','statistics'}
+                or type(result['schema_version']) is not int or result['schema_version']!=1
+                or type(result['status']) is not str or not result['status']
+                or type(result['complete']) is not bool or not _sha(result['text_sha256'])
+                or any(type(result[key]) is not dict for key in ('reader','scope','limits','statistics'))
+                or any(type(result[key]) is not list for key in ('blocks','issues'))):
+            _fail('source_integrity_invalid')
+        reader,scope,item = result['reader'],result['scope'],selected['document']
+        if (set(reader)!={'name','version'} or any(type(value) is not str for value in reader.values())
+                or set(scope)!={'profile','part','page_numbers'} or type(scope['profile']) is not str
+                or scope['part'] is not None and type(scope['part']) is not str
+                or scope['page_numbers']!='unavailable'
+                or canonical(result['source'])!=canonical({'filename':item['path'],
+                    'sha256':item['sha256'],'size_bytes':item['bytes']})):
+            _fail('source_integrity_invalid')
+        return reference
+    except (ValueError,TypeError,UnicodeError,RecursionError) as error:
+        if isinstance(error,IntakeDocxReferenceError):
+            raise
+        _fail('source_integrity_invalid')
+
+
+def _observe_retained(store,artifact_id,expected):
+    binding,selected = _observation_arguments(store,artifact_id,expected)
+    with store.connection() as con:
+        con.execute('PRAGMA query_only=ON'); con.execute('BEGIN')
+        provenance = _current(con,selected)
+        row = con.execute('SELECT bytes FROM blobs WHERE sha256=?',(artifact_id,)).fetchone()
+        if row is None or type(row['bytes']) is not int or row['bytes']<=0:
+            _fail('source_integrity_invalid')
+        size = row['bytes']
+        if size>_OUTPUT_BYTES:
+            _fail('input_limit')
+        registered = _registered(con,artifact_id,size)
+        if registered is None or registered<int(any(provenance)):
+            _fail('source_integrity_invalid')
+    item = selected['document']
+    source_path,artifact_path = store.blob_path(item['sha256']),store.blob_path(artifact_id)
+    with ExitStack() as owned:
+        source,source_stamp = owned.enter_context(_source(binding,source_path,item['bytes'],pin=True))
+        artifact,artifact_stamp = owned.enter_context(_source(binding,artifact_path,size,pin=True))
+        _verified_read(binding,source_path,source,source_stamp,item['sha256'])
+        payload = _verified_read(binding,artifact_path,artifact,artifact_stamp,artifact_id,retain=True)
+        reference = _retained_reference(payload,selected)
+        with store.connection() as con:
+            con.execute('PRAGMA query_only=ON'); con.execute('BEGIN')
+            if _current(con,selected)!=provenance:
+                _fail('revision_changed')
+            if _registered(con,artifact_id,size)!=registered:
+                _fail('source_integrity_invalid')
+            _verified_read(binding,source_path,source,source_stamp,item['sha256'])
+            _verified_read(binding,artifact_path,artifact,artifact_stamp,artifact_id)
+    answer = {'schema_version':1,'kind':'intake_docx_reference_retained','artifact_id':artifact_id,
+              'artifact_bytes':size,'synthetic':bool(registered),'reference':reference}
+    if len(canonical(answer).encode('utf-8'))>_RECEIPT_BYTES:
+        _fail('input_limit')
+    return answer
+
+
+def read_retained_intake_docx_reference(store,artifact_id: str,*,expected_binding: dict) -> dict:
+    """Observe one explicit retained result and its current binding; no parsing or writes."""
+    try:
+        return _observe_retained(store,artifact_id,expected_binding)
+    except IntakeDocxReferenceError as error:
+        code = error.code
+    except (MemoryError,KeyboardInterrupt,SystemExit):
+        raise
+    except StoreOpenError as error:
+        code = 'storage_error' if error.code=='store_open_unavailable' else 'store_invalid'
+    except Exception:
+        code = 'storage_error'
+    try:
+        raise IntakeDocxReferenceError(code) from None
+    except IntakeDocxReferenceError as error:
+        error.__context__ = None
+        error.__cause__ = None
+        raise
