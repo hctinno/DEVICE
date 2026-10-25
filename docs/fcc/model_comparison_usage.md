@@ -1,6 +1,6 @@
 # Vertex 연결 비교 실행
 
-2026-10-25, Asia/Seoul. [공통 설계](../superpowers/specs/2026-10-25-vertex-ai-connection-design.md)와 [공식 모델 카탈로그](vertex_ai_connection_catalog.json)를 따르는 작은 연결 실행 경계다. [구현](../../labflow/model_comparison.py)은 프로필/설정 담당 모듈과 REST 응답 담당 모듈을 직접 연결한다. 현재 소유 단위의 검증은 [가상 단위 검사](../../tests/test_model_comparison.py) 51개이며 실제 ADC 읽기·인증 갱신·네트워크·Vertex 생성은 모두 0이다. 실제 의존성 결합·처음 6회 생성과 독립 제품 검수는 총괄이 수행한다.
+2026-10-25, Asia/Seoul. [공통 설계](../superpowers/specs/2026-10-25-vertex-ai-connection-design.md)와 [공식 모델 카탈로그](vertex_ai_connection_catalog.json)를 따르는 작은 연결 실행 경계다. [구현](../../labflow/model_comparison.py)은 프로필/설정 담당 모듈과 REST 응답 담당 모듈을 직접 연결한다. 현재 소유 단위의 검증은 [가상 단위 검사](../../tests/test_model_comparison.py) 61개이며 실제 ADC 읽기·인증 갱신·네트워크·Vertex 생성은 모두 0이다. 실제 의존성 결합·처음 6회 생성과 독립 제품 검수는 총괄이 수행한다.
 
 ## API와 선택
 
@@ -84,6 +84,30 @@ D2의 유효 complete receipt와 원 artifact readback을 통과한 final bytes�
 
 새 decoded artifact·Store admission·제공-input 계약 평가 승격·숨은 다음 모델 호출·가상 동작은 추가하지 않는다. 원 final bytes와 context로 후속 genuine 해석을 재현할 수 있다. 기존 I1 known0/부재 bytes0과 I2 최초 transport 오류·원 receipt/partial 보존을 접수 분기에도 적용한다.
 
+## Intent 등록과 원 origin 미검증
+
+[고정 intent 설계](../superpowers/specs/2026-10-25-vertex-intent-registry-design.md)·[기계 계약](vertex_intent_registry_contract.json)의 세 descriptor11을 기존 core의 명시 분기에 추가했다. 신규 제품 함수·helper·wrapper·registry API·callback은 없다. 공개 API3와 matrix/row/batch/receipt의 키를 유지한다.
+
+| scenario_id | C1 wire bytes / SHA-256 | literal schema bytes / SHA-256 |
+|---|---|---|
+| intent-synthetic-i01 | 4822 / a710b9573af8bd433e654da06a20269b9a312c233a0c29448e5cc694aad03238 | 2694 / 937b3b9fa423bbfea40116495dd7cbed3937a3839e17445f08f7a37e48faf83d |
+| intent-synthetic-i02 | 6178 / d32141932ea3b06d5d7b1ed39166072ebabbc4228e35768c2d438e73c46271be | 2694 / 47bfac67fde55165684381d3c624a07566b2790916f148e7d3534e593ef1f75b |
+| intent-synthetic-i03 | 4783 / 369f4bc2d816e821428c4acaacfe560bb885e42a15ce4b2a52884e12b65b5e7e | 2694 / 75e492477ac8d7bb8949143b46941aec089359522c1741d70f969a135434f806 |
+
+producer는 SYN-PENDING-INTENT-MODEL-RUN, evaluator는 intake-test-intent-semantic-v1, numeric scenario/evaluator version은1, pack revision은 intent-input-v1이다. schema 크기는 같지만 case별 request SHA enum 때문에 서로 다른 bytes/SHA를 쓴다. rule/method literal에는 정답 enum/const가 없으며 프로그램에 정답이나 빈 배열 fallback을 삽입하지 않는다.
+
+intent descriptor의 context_sha256은 공개 payload3(intake_evidence/sources/scope)의 C1 SHA다. input_bundle_sha256은 공개 caller packet4(intake_view/source_views/scope/producer_name)의 C1 SHA, registration_sha256은 input006 index의 원 SHA다. 기존 analysis context 정의·원004005를 바꾸지 않는다. 공개 view/payload의 지문 일치는 원 full intake/analysis/projection/source의 preimage 확인이 아니다.
+
+기존 검증 함수의 명시 분기에서 prompt7·user exact2·request exact5·payload exact3를 읽고 component SHA3·payload/caller packet/request·producer를 대조한다. 원 view/source/scope로 기존 build_intake_test_intent_prompt(intake_view,source_views,*,scope,producer_name)를 직접 호출하여 전체 C1 wire와 같은지 확인한다. 원 scope null/as_of·fact_index/evidence_index·page/text 주소와 unsupported DOCX를 수선하지 않는다.
+
+D2 complete/STOP·원 artifact/settings/input·회수 검증 뒤에만 원 final bytes를 decode_intake_test_intent_response(response,intake_view,source_views,*,scope,producer_name)에 그대로 전달한다. genuine decoder의 response cap65536/decoded cap131072·depth32/nodes200000/int64를 유지한다. D2 cap2MiB 안이어도 65537 응답은 strict 거절하며 원 artifact를 절단하거나 수리하지 않는다. failed/auth/incomplete/unknown transport에서는 intent decoder를 호출하지 않는다.
+
+input006의 origin_binding4는 정확한 zero SHA 선언이다. origin_binding_verified/grounding_verified/source_authenticity_verified/source_currentness_verified/rights_verified/model_execution_verified/model_quality_verified/external_transmission_authorized/execution_authorized의 원 false를 유지한다. 주소 membership이나 request/producer checked는 원본·현행성·권리·모델 품질/권한 증거가 아니다. genuine decoded7·binding6·proposal·verification을 재작성하거나 새 decoded artifact에 저장하지 않는다.
+
+strict 성공/거절 reason은 intent_response_verified/intent_response_invalid다. evaluator 이름에 semantic이 있어도 assessment는 not_assessed/verdict=null/semantic_evaluator_not_connected, batch.business_assessment도 not_assessed다. 원 full preimage를 갖지 않은 input006을 기존 Store에 입수하거나 제공-input 계약 평가를 실제 의미평가로 바꾸지 않는다.
+
+intent3은 독립된 등록 입력이다. 기존 접수 strict 성공 후 자동으로 intent/다음 모델·가상 동작·Store 작업을 실행하지 않는다. connection/analysis 승인으로 intent를 호출할 수 없고 같은 누적6/3072·소진/active·I1/I2를 유지한다. 추가 실제 실행/승인/예산 회수는 root의 별도 범위다. 신규10은 가상 전송과 genuine builder/decoder의 parser/주소 검증이며 실제 모델 규칙/방법 품질 점수는 아니다.
+
 ## 호스트 승인과 누적 예산
 
 adc_path, evidence_dir, budget_path, approval_path는 보호된 호스트가 정한 absolute native Path여야 한다. UI body의 임의 경로를 전달하지 않는다. reparse/symlink, Windows 짧은 이름·ADS·device/UNC 경로, regular file의 hardlink를 거절한다. evidence_dir는 새 폴더 또는 빈 폴더이며 부모가 이미 있어야 한다. 원 자료를 덮어쓰지 않는다. cancel_event는 정확한 threading.Event 또는 None이고 미리 set됐으면 metadata 검사·worker·인증·생성·예약 모두 0이다.
@@ -134,7 +158,7 @@ matrix128KiB, budget64KiB, row/batch 각1MiB를 상한으로 둔다. receipt/art
 
 ## 검증과 남은 범위
 
-관련51 검사는 가상 프로필/전송만 쓴다. 고정행/선택/override 불변, scope와 만료, 누적 재시작·중복·동시 in-flight, 원 설정 한도 거절, 예약 후 취소/시간, strict wire, receipt/artifact 변조, known 실패·unknown·제어 예외를 포함한다. 접수 신규10은 genuine decoder·등록3·교차입력/producer/schema·dependency·transport decoder0·누적 소진·최초 오류 보존을 가상 전송으로 검사했다. 원41과 별도 분모이며 가상 검사 합계51이다. OS 잠금은 이 Windows 호스트에서 검사했다. 다른 OS의 파일시스템·프로세스 강제 종료·실제 D1/D2 결합·원격 API·실제 모델은 별도 검증 대상이다.
+관련61 검사는 가상 프로필/전송만 쓴다. 고정행/선택/override 불변, scope와 만료, 누적 재시작·중복·동시 in-flight, 원 설정 한도 거절, 예약 후 취소/시간, strict wire, receipt/artifact 변조, known 실패·unknown·제어 예외를 포함한다. 접수 신규10은 genuine decoder·등록3·교차입력/producer/schema·dependency·transport decoder0·누적 소진·최초 오류 보존을 가상 전송으로 검사했다. 원41과 접수 신규10의 기존51에 intent 신규10을 추가한 가상 검사 합계61이다. OS 잠금은 이 Windows 호스트에서 검사했다. 다른 OS의 파일시스템·프로세스 강제 종료·실제 D1/D2 결합·원격 API·실제 모델은 별도 검증 대상이다.
 
 고정 오류는 ModelComparisonError(ValueError)이며 code/str/args가 동일하고 cause/context가 없는 model_comparison_invalid_input, model_comparison_limit_exceeded, model_comparison_state_error, model_comparison_dependency_unavailable이다. operational 거절은 고정 reason_code와 not_run/unknown 기록으로 구별한다. 원 인증 오류 내용이나 파일 경로를 오류 메시지로 만들지 않는다.
 
