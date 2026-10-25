@@ -1215,5 +1215,445 @@ class RetainedDocxReferenceTests(unittest.TestCase):
             with self.assertRaises(OSError): os.fstat(fd)
 
 
+class ObservedRetainedDocxTests(unittest.TestCase):
+    stage = RegisteredDocxReferenceTests.stage
+    arguments = RegisteredDocxReferenceTests.arguments
+    rows = RegisteredDocxReferenceTests.rows
+    blob = RegisteredDocxReferenceTests.blob
+    set_manifest = RegisteredDocxReferenceTests.set_manifest
+    retain = RetainedDocxReferenceTests.retain
+    registered = RetainedDocxReferenceTests.registered
+    before_connection = RetainedDocxReferenceTests.before_connection
+    pin_observation = RetainedDocxReferenceTests.pin_observation
+    assert_pins_closed = RetainedDocxReferenceTests.assert_pins_closed
+    SQL_fault = RetainedDocxReferenceTests.SQL_fault
+    assert_SQL_closed = RetainedDocxReferenceTests.assert_SQL_closed
+    flags = RetainedDocxReferenceTests.flags
+
+    def setUp(self):
+        self.api = __import__('labflow.intake_docx_reference', fromlist=['read_retained_intake_docx_reference'])
+        from labflow import control_packet_prepare
+        self.native = control_packet_prepare
+        parent = Path(__file__).resolve().parents[1] / '.local'
+        parent.mkdir(exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(prefix='docx-observe-', dir=parent)
+        self.addCleanup(self.temp.cleanup)
+        self.base = Path(self.temp.name).resolve()
+        self.creator = Store(self.base / 'state'); self.addCleanup(self.creator.close)
+        self.inbox = self.base / 'inbox'; self.bundle = self.inbox / 'one'; self.bundle.mkdir(parents=True)
+        register_source(self.creator, 'SYN-DOCX', self.inbox, synthetic=True, settle_seconds=1)
+        self.clock = 300
+        self.stage(package(paragraph('owner read observation 20261025') + table([
+            '<w:tr>' + cell('cell retained for observation') + '</w:tr>'], 1)))
+        self.store = Store.open_existing(str(self.creator.root)); self.addCleanup(self.store.close)
+        self.evidence = []
+        self.receipt = self.retain()
+        self.expected_binding = copy.deepcopy(self.receipt['reference']['binding'])
+        self.artifact = self.store.blob_path(self.receipt['artifact_id'])
+        if hasattr(self, 'proof_dir'):
+            self.proof_dir.mkdir(parents=True, exist_ok=True)
+            (self.proof_dir / 'original.docx').write_bytes(self.payload)
+            (self.proof_dir / 'retained.json').write_bytes(self.artifact.read_bytes())
+            (self.proof_dir / 'receipt.json').write_text(canonical(self.receipt), encoding='utf-8')
+
+    def observe(self, **changes):
+        function = getattr(self.api, 'read_retained_intake_docx_reference', None)
+        self.assertTrue(callable(function), 'Readonly retained observation API is not implemented')
+        args = dict(store=self.store, artifact_id=self.receipt['artifact_id'],
+                    expected_binding=copy.deepcopy(self.expected_binding))
+        args.update(changes)
+        return function(**args)
+
+    def oerror(self, suffix, **changes):
+        with self.assertRaises(self.api.IntakeDocxReferenceError) as caught:
+            self.observe(**changes)
+        error = caught.exception
+        self.assertEqual((error.code, str(error), error.args),
+                         ('intake_docx_reference_' + suffix,) * 2 + (('intake_docx_reference_' + suffix,),))
+        self.assertIsNone(error.__cause__); self.assertIsNone(error.__context__)
+        return error
+
+    def test_actual_retention_is_observed_without_native_or_writes(self):
+        before = self.rows(); blobs = self.creator.root / 'blobs'
+        files = {p.name: p.read_bytes() for p in blobs.iterdir() if p.is_file()}
+        connections, queries = [], []
+        original = self.store.connection
+        @contextmanager
+        def connection():
+            with original() as con:
+                connections.append(con); con.set_trace_callback(queries.append)
+                yield con
+        with mock.patch.object(self.store, 'connection', connection), \
+                mock.patch.object(self.api, 'read_docx', side_effect=AssertionError('unexpected native execution')), \
+                mock.patch.object(self.store, 'register_blob', side_effect=AssertionError('unexpected write')), \
+                mock.patch.object(self.store, 'close', wraps=self.store.close) as closed:
+            result = self.observe()
+        self.assertEqual(result, self.receipt)
+        self.assertEqual(self.rows(), before)
+        self.assertEqual({p.name: p.read_bytes() for p in blobs.iterdir() if p.is_file()}, files)
+        self.assertIn(self.receipt['artifact_id'], files)
+        self.assertEqual(len(connections), 2); self.assertEqual(sum(q == 'BEGIN' for q in queries), 2)
+        self.assertEqual(sum(q == 'PRAGMA query_only=ON' for q in queries), 2)
+        self.assertFalse(any(q.lstrip().upper().startswith(('INSERT', 'UPDATE', 'DELETE', 'CREATE', 'ALTER', 'DROP')) for q in queries))
+        closed.assert_not_called()
+        for con in connections:
+            with self.assertRaises(sqlite3.ProgrammingError): con.execute('SELECT 1')
+        self.assertEqual(result['reference']['result']['blocks'][0]['text'], 'owner read observation 20261025')
+        self.assertEqual(result['reference']['result']['blocks'][1]['rows'][0]['cells'][0]['blocks'][0]['text'],
+                         'cell retained for observation')
+        self.evidence.append({'artifact_id': result['artifact_id'], 'artifact_bytes': result['artifact_bytes'],
+                              'fresh_read_transactions': 2, 'native_during_observation': 0, 'SQL_writes': 0})
+
+    def test_observation_explicit_signature_and_invalid_selectors_precede_IO(self):
+        function = getattr(self.api, 'read_retained_intake_docx_reference', None)
+        self.assertTrue(callable(function))
+        signature = inspect.signature(function)
+        self.assertEqual(list(signature.parameters), ['store', 'artifact_id', 'expected_binding'])
+        self.assertIs(signature.parameters['expected_binding'].kind, inspect.Parameter.KEYWORD_ONLY)
+        cases = [{'artifact_id': v} for v in (None, True, '', 'A' * 64, '0' * 63, '../artifact')]
+        for field, value in [('source_id', True), ('source_id', '../source'), ('intake_id', ''),
+                             ('revision', True), ('revision', 0), ('revision', 1.0),
+                             ('revision_fingerprint', 'A' * 64)]:
+            cases.append({'expected_binding': {**self.expected_binding, field: value}})
+        for field, value in [('path', '../x.docx'), ('path', 'x.txt'), ('path', 'x\ud800.docx'),
+                             ('path', 'a' * 1020 + '.docx'), ('sha256', 'A' * 64),
+                             ('bytes', True), ('bytes', -1), ('bytes', 16777217)]:
+            binding = copy.deepcopy(self.expected_binding); binding['document'][field] = value
+            cases.append({'expected_binding': binding})
+        class DictSubclass(dict): pass
+        cases.extend({'expected_binding': value} for value in (None, {},
+            {**self.expected_binding, 'extra': 1}, DictSubclass(self.expected_binding)))
+        with mock.patch.object(self.store, 'connection', side_effect=AssertionError('unexpected I/O')):
+            for change in cases:
+                with self.subTest(change=repr(change)): self.oerror('invalid_argument', **change)
+
+    def test_observation_detaches_binding_before_IO(self):
+        binding = copy.deepcopy(self.expected_binding)
+        def mutate():
+            binding['source_id'] = 'CHANGED'; binding['document']['bytes'] = 0
+        with self.before_connection(1, mutate): result = self.observe(expected_binding=binding)
+        self.assertEqual(result['reference']['binding'], self.expected_binding)
+
+    def test_observation_requires_official_borrowed_open_Store(self):
+        for value in (self.creator, object()):
+            with self.subTest(store=type(value).__name__): self.oerror('store_invalid', store=value)
+        self.store.close(); self.oerror('store_invalid')
+
+    def test_observation_missing_or_stale_current_binding(self):
+        for field, value, code in [('intake_id', 'MISSING', 'intake_not_found'),
+                                   ('revision', 99, 'revision_changed'), ('source_id', 'OTHER', 'revision_changed'),
+                                   ('revision_fingerprint', '0' * 64, 'revision_changed')]:
+            with self.subTest(field=field):
+                self.oerror(code, expected_binding={**self.expected_binding, field: value})
+        binding = copy.deepcopy(self.expected_binding); binding['document']['path'] = 'absent.docx'
+        self.oerror('document_not_found', expected_binding=binding)
+
+    def test_observation_upload_incomplete_is_unavailable(self):
+        with self.creator.connection() as con:
+            con.execute("UPDATE intakes SET status='upload_incomplete' WHERE intake_id=?", (self.intake_id,))
+        self.oerror('intake_unavailable')
+
+    def test_observation_requires_registered_row_and_never_adopts_orphan(self):
+        with self.creator.connection() as con: con.execute('DELETE FROM blobs WHERE sha256=?', (self.receipt['artifact_id'],))
+        before = self.rows(); self.oerror('source_integrity_invalid'); self.assertEqual(self.rows(), before)
+        self.assertTrue(self.artifact.is_file())
+
+    def test_observation_invalid_registry_metadata_is_not_repaired(self):
+        for field, value in [('kind', 'other'), ('bytes', self.receipt['artifact_bytes'] + 1), ('synthetic', 2)]:
+            with self.subTest(field=field):
+                with self.creator.connection() as con:
+                    con.execute('UPDATE blobs SET bytes=?,kind=?,synthetic=? WHERE sha256=?',
+                                (self.receipt['artifact_bytes'], 'intake_docx_reference', 1, self.receipt['artifact_id']))
+                    con.execute('UPDATE blobs SET ' + field + '=? WHERE sha256=?', (value, self.receipt['artifact_id']))
+                before = self.rows(); self.oerror('source_integrity_invalid'); self.assertEqual(self.rows(), before)
+
+    def test_observation_oversize_registry_is_rejected_before_file_open(self):
+        with self.creator.connection() as con:
+            con.execute('UPDATE blobs SET bytes=? WHERE sha256=?', (9437185, self.receipt['artifact_id']))
+        with mock.patch.object(self.api, '_source', side_effect=AssertionError('opened before bound')):
+            self.oerror('input_limit')
+
+    def test_observation_missing_artifact_is_not_recreated(self):
+        self.artifact.unlink(); before = self.rows(); self.oerror('source_integrity_invalid')
+        self.assertEqual(self.rows(), before); self.assertFalse(self.artifact.exists())
+
+    def test_observation_corrupt_or_truncated_or_extended_artifact_is_rejected(self):
+        data = self.artifact.read_bytes()
+        for changed in (b'x' * len(data), data[:-1], data + b'x'):
+            with self.subTest(bytes=len(changed)):
+                self.artifact.write_bytes(changed); self.oerror('source_integrity_invalid')
+
+    def test_observation_current_original_hash_and_registered_bytes_are_required(self):
+        self.blob().write_bytes(b'x' * len(self.payload)); self.oerror('source_integrity_invalid')
+
+    def test_observation_hardlink_or_directory_artifact_is_rejected(self):
+        link = self.artifact.with_name('SYN-link')
+        os.link(self.artifact, link); self.oerror('source_integrity_invalid'); link.unlink()
+        self.artifact.unlink(); self.artifact.mkdir(); self.oerror('source_integrity_invalid')
+
+    def negative_artifact(self, payload):
+        # Explicitly forged NEGATIVE input, never evidence of genuine success.
+        sha = hashlib.sha256(payload).hexdigest(); self.creator.blob_path(sha).write_bytes(payload)
+        with self.creator.connection() as con:
+            self.creator.register_blob(con, sha, len(payload), 'intake_docx_reference', True)
+        return sha
+
+    def test_observation_strict_JSON_and_canonical_bytes(self):
+        data = self.artifact.read_bytes()
+        for payload in (b'\xef\xbb\xbf' + data, data + b'\n', b'{"x":1,"x":2}',
+                        b'{"x":NaN}', b'\xff', b'[' * 1500 + b']' * 1500):
+            with self.subTest(prefix=repr(payload[:30])):
+                self.oerror('source_integrity_invalid', artifact_id=self.negative_artifact(payload))
+
+    def test_observation_rejects_unsupported_envelope_or_native_types_and_binding(self):
+        changes = [('schema_version', True), ('schema_version', 2), ('kind', 'other'), ('extra', 1)]
+        for key, value in changes:
+            reference = copy.deepcopy(self.receipt['reference']); reference[key] = value
+            self.oerror('source_integrity_invalid', artifact_id=self.negative_artifact(canonical(reference).encode('utf-8')))
+        for key, value in [('schema_version', True), ('complete', 1), ('status', ''), ('reader', []),
+                           ('scope', {}), ('blocks', {}), ('limits', []), ('issues', {}),
+                           ('statistics', []), ('text_sha256', 'A' * 64), ('extra', 1)]:
+            with self.subTest(key=key):
+                reference = copy.deepcopy(self.receipt['reference']); reference['result'][key] = value
+                self.oerror('source_integrity_invalid', artifact_id=self.negative_artifact(canonical(reference).encode('utf-8')))
+        for edit in ('binding', 'source', 'page'):
+            reference = copy.deepcopy(self.receipt['reference'])
+            if edit == 'binding': reference['binding']['source_id'] = 'OTHER'
+            if edit == 'source': reference['result']['source']['size_bytes'] = True
+            if edit == 'page': reference['result']['scope']['page_numbers'] = 'available'
+            self.oerror('source_integrity_invalid', artifact_id=self.negative_artifact(canonical(reference).encode('utf-8')))
+
+    def test_observation_provenance_OR_and_conservative_registered_flag(self):
+        for values in ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1)):
+            with self.subTest(flags=values):
+                self.flags(values); result = self.observe(); self.assertIs(result['synthetic'], True)
+        with self.creator.connection() as con:
+            con.execute('UPDATE blobs SET synthetic=0 WHERE sha256=?', (self.receipt['artifact_id'],))
+        self.oerror('source_integrity_invalid')
+        self.flags((0, 0, 0)); self.assertIs(self.observe()['synthetic'], False)
+
+    def test_observation_provenance_change_between_snapshots_is_stale(self):
+        with self.before_connection(2, lambda: self.flags((1, 0, 1))):
+            self.oerror('revision_changed')
+
+    def test_observation_current_revision_change_between_snapshots_is_stale(self):
+        def mutate():
+            with self.creator.connection() as con:
+                con.execute('UPDATE intakes SET revision=revision+1 WHERE intake_id=?', (self.intake_id,))
+        with self.before_connection(2, mutate): self.oerror('revision_changed')
+
+    def test_observation_registered_flag_change_between_snapshots_is_invalid(self):
+        self.flags((0, 0, 0))
+        def mutate():
+            with self.creator.connection() as con:
+                con.execute('UPDATE blobs SET synthetic=0 WHERE sha256=?', (self.receipt['artifact_id'],))
+        with self.before_connection(2, mutate): self.oerror('source_integrity_invalid')
+
+    def test_observation_native_partial_empty_and_failure_are_preserved(self):
+        cases = [(package(), 'empty', True), (package(paragraph('read partial') + '<w:unknown/>'), 'partial', False),
+                 (b'new owner malformed payload', 'malformed_docx', False),
+                 (flagged(package(paragraph('encrypted read')), flag=1), 'encrypted', False)]
+        for data, status, complete in cases:
+            with self.subTest(status=status):
+                self.stage(data); self.receipt = self.retain()
+                self.expected_binding = copy.deepcopy(self.receipt['reference']['binding'])
+                with mock.patch.object(self.api, 'read_docx', side_effect=AssertionError('reparse')): result = self.observe()
+                self.assertEqual(result, self.receipt)
+                self.assertEqual((result['reference']['result']['status'], result['reference']['result']['complete']), (status, complete))
+                self.evidence.append({'genuine_retention_status': status, 'artifact_id': result['artifact_id'], 'observation_native_calls': 0})
+
+    def test_observation_unknown_declarations_are_literal_not_native_attestation(self):
+        def declared(data, name):
+            result = real_reader(data, name)
+            result['reader'] = {'name': 'SYN-unknown-reader', 'version': 'SYN-unknown'}
+            result['status'] = 'SYN-unknown-status'; result['scope']['profile'] = 'SYN-unknown-profile'
+            return result
+        with mock.patch.object(self.api, 'read_docx', side_effect=declared): self.receipt = self.retain()
+        self.expected_binding = copy.deepcopy(self.receipt['reference']['binding'])
+        self.assertEqual(self.observe(), self.receipt)
+        self.evidence.append({'declaration_injection_after_real_native_read': True, 'native_authenticity_proven': False})
+
+    def test_observation_real_pins_block_writes_rename_and_close_then_positive_controls(self):
+        verified = self.api._verified_read; blocked = []
+        held = tuple(self.store._existing_binding.handles)
+        def reading(binding, path, fd, stamp, sha, **options):
+            if options.get('retain'):
+                self.assertEqual(len(state['active']), 2)
+                for candidate in (self.blob(), self.artifact):
+                    with self.assertRaises(PermissionError):
+                        with candidate.open('r+b'): pass
+                    with self.assertRaises(OSError): candidate.rename(candidate.with_name(candidate.name + '.move'))
+                    blocked.append(candidate)
+            return verified(binding, path, fd, stamp, sha, **options)
+        with self.pin_observation() as state, mock.patch.object(self.api, '_verified_read', side_effect=reading): self.observe()
+        self.assert_pins_closed(state); self.assertEqual(tuple(self.store._existing_binding.handles), held)
+        self.assertEqual(len(blocked), 2)
+        for candidate in blocked:
+            with candidate.open('r+b'): pass
+            moved = candidate.with_name(candidate.name + '.move'); candidate.rename(moved); moved.rename(candidate)
+        self.evidence.append({'blocked_write': 2, 'blocked_rename': 2, 'positive_write': 2, 'positive_rename': 2, 'own_closed': 2})
+
+    def test_observation_source_artifact_each_two_full_chunked_reads_and_owned_close(self):
+        self.stage(package(paragraph('owner chunk observation ' * 9000)))
+        self.receipt = self.retain(); self.expected_binding = copy.deepcopy(self.receipt['reference']['binding'])
+        self.artifact = self.store.blob_path(self.receipt['artifact_id'])
+        if hasattr(self, 'proof_dir'):
+            (self.proof_dir / 'chunk-original.docx').write_bytes(self.payload)
+            (self.proof_dir / 'chunk-retained.json').write_bytes(self.artifact.read_bytes())
+        read = os.read; observed = []
+        with self.pin_observation() as state:
+            def reading(fd, count):
+                value = read(fd, count)
+                if fd in state['active']: observed.append((state['names'][fd], count, len(value)))
+                return value
+            with mock.patch('os.read', side_effect=reading): self.observe()
+        self.assert_pins_closed(state)
+        totals = {sha: sum(size for key, _, size in observed if key == sha) for sha in state['names'].values()}
+        self.assertEqual(totals, {self.expected_binding['document']['sha256']: 2 * len(self.payload),
+                                  self.receipt['artifact_id']: 2 * self.receipt['artifact_bytes']})
+        self.assertTrue(all(0 < count <= 65536 for _, count, _ in observed))
+        self.assertGreater(self.receipt['artifact_bytes'], 65536)
+        self.evidence.append({'full_read_totals': totals, 'own_pins_closed': 2, 'max_chunk': max(n for _, n, _ in observed)})
+
+    def test_observation_artifact_and_receipt_budget_edges_cleanup(self):
+        size = self.receipt['artifact_bytes']; receipt_size = len(canonical(self.receipt).encode('utf-8'))
+        for cap, success in ((size, True), (size - 1, False)):
+            with mock.patch.object(self.api, '_OUTPUT_BYTES', cap):
+                if success: self.assertEqual(self.observe(), self.receipt)
+                else: self.oerror('input_limit')
+        for cap, success in ((receipt_size, True), (receipt_size - 1, False)):
+            with self.pin_observation() as state, mock.patch.object(self.api, '_RECEIPT_BYTES', cap):
+                if success: self.assertEqual(self.observe(), self.receipt)
+                else: self.oerror('input_limit')
+            self.assert_pins_closed(state)
+
+    def test_observation_real_SQL_close_control_identity_first_and_second(self):
+        for ordinal in (1, 2):
+            for cls in (KeyboardInterrupt, SystemExit, GeneratorExit):
+                marker = cls('PRIVATE-close')
+                with self.subTest(ordinal=ordinal, cls=cls.__name__), self.SQL_fault(ordinal, close=marker) as cons:
+                    with self.assertRaises(cls) as caught: self.observe()
+                    self.assertIs(caught.exception, marker)
+                self.assert_SQL_closed(cons)
+
+    def test_observation_first_control_survives_actual_rollback_SQL_and_own_close(self):
+        current = self.api._current; count = []
+        primary = KeyboardInterrupt('PRIVATE-first')
+        def checked(con, binding):
+            count.append(1)
+            if len(count) == 2:
+                cons[-1].rollback_armed = True
+                raise primary
+            return current(con, binding)
+        with self.SQL_fault(2, rollback=SystemExit('PRIVATE-rollback'), close=GeneratorExit('PRIVATE-close')) as cons, \
+                self.pin_observation(close_errors=(SystemExit('PRIVATE-pin'), GeneratorExit('PRIVATE-pin2'))) as pins, \
+                mock.patch.object(self.api, '_current', side_effect=checked):
+            with self.assertRaises(KeyboardInterrupt) as caught: self.observe()
+        self.assertIs(caught.exception, primary); self.assert_SQL_closed(cons); self.assert_pins_closed(pins)
+
+    def test_observation_first_integrity_error_survives_later_pin_control(self):
+        with self.pin_observation(close_errors=(KeyboardInterrupt('PRIVATE-later'),)) as state, \
+                mock.patch.object(self.api, '_verified_read', side_effect=self.api.IntakeDocxReferenceError('source_integrity_invalid')):
+            self.oerror('source_integrity_invalid')
+        self.assert_pins_closed(state)
+
+    def test_observation_first_surfaced_memory_control_is_same_object(self):
+        primary = MemoryError('PRIVATE-first')
+        with self.pin_observation(close_errors=(SystemExit('PRIVATE-later'),)) as state, \
+                mock.patch.object(self.api, '_verified_read', side_effect=primary):
+            with self.assertRaises(MemoryError) as caught: self.observe()
+        self.assertIs(caught.exception, primary); self.assert_pins_closed(state)
+
+    def test_observation_SQL_ordinary_close_and_active_context_are_fixed_errors(self):
+        for ordinal in (1, 2):
+            with self.SQL_fault(ordinal, close=OSError('PRIVATE-sql')) as cons:
+                self.oerror('storage_error')
+            self.assert_SQL_closed(cons)
+        try: raise RuntimeError('PRIVATE-caller')
+        except RuntimeError:
+            self.oerror('invalid_argument', artifact_id='bad')
+
+    def test_observation_actual_own_close_first_controls_keep_identity(self):
+        for cls in (KeyboardInterrupt, SystemExit, GeneratorExit, MemoryError):
+            marker = cls('PRIVATE-own-close')
+            with self.subTest(cls=cls.__name__), self.pin_observation(close_errors=(marker, SystemExit('PRIVATE-second'))) as state:
+                with self.assertRaises(cls) as caught: self.observe()
+                self.assertIs(caught.exception, marker)
+            self.assert_pins_closed(state)
+
+    def test_observation_ineffective_close_leaves_known_fd_without_success(self):
+        refused = []
+        try:
+            with self.pin_observation() as state:
+                close = os.close
+                def ineffective(fd):
+                    if fd in state['active'] and state['names'][fd] == self.receipt['artifact_id'] and not refused:
+                        refused.append(fd); raise OSError('PRIVATE-no-op-close')
+                    return close(fd)
+                with mock.patch('os.close', side_effect=ineffective): self.oerror('storage_error')
+            self.assertEqual(state['active'], set(refused)); self.assertEqual(len(refused), 1)
+            self.assertEqual(os.fstat(refused[0]).st_size, self.receipt['artifact_bytes'])
+            self.store.close(); self.assertEqual(os.fstat(refused[0]).st_size, self.receipt['artifact_bytes'])
+            self.evidence.append({'success': False, 'own_fd_remaining_after_ineffective_close': 1,
+                                  'caller_close_does_not_own_fd': True, 'known_fd_test_cleanup_after_observation': True})
+        finally:
+            for fd in refused: os.close(fd)
+
+    def test_observation_source_and_artifact_swap_before_open_are_rejected(self):
+        backend = self.store._existing_binding.backend; opened = backend._relative
+        for target in (self.blob(), self.artifact):
+            with self.subTest(target=target.name):
+                changed = []
+                def swapping(parent, name, **options):
+                    if name == target.name and options.get('share') == 1 and not changed:
+                        data = target.read_bytes(); old = target.with_name(target.name + '.old')
+                        target.rename(old); target.write_bytes(data); old.unlink(); changed.append(True)
+                    return opened(parent, name, **options)
+                with mock.patch.object(backend, '_relative', side_effect=swapping): self.oerror('source_integrity_invalid')
+                self.assertEqual(changed, [True]); self.assertEqual(self.store._existing_binding.active, 0)
+
+    def test_observation_registry_deleted_at_second_snapshot_is_not_cached(self):
+        def removed():
+            with self.creator.connection() as con:
+                con.execute('DELETE FROM blobs WHERE sha256=?', (self.receipt['artifact_id'],))
+        with self.before_connection(2, removed), self.pin_observation() as pins: self.oerror('source_integrity_invalid')
+        self.assert_pins_closed(pins)
+
+    def test_observation_other_manifest_entry_and_missing_provenance_are_checked(self):
+        item = copy.deepcopy(self.expected_binding['document'])
+        def changed(): self.set_manifest([item, {'path': 'other.txt', 'sha256': '0' * 64, 'bytes': 1}])
+        with self.before_connection(2, changed): self.oerror('revision_changed')
+        self.set_manifest([item])
+        with self.creator.connection() as con:
+            con.execute('PRAGMA foreign_keys=OFF')
+            con.execute("DELETE FROM intake_sources WHERE source_id='SYN-DOCX'")
+        self.oerror('source_integrity_invalid')
+
+    def test_observation_real_read_error_and_short_EOF_never_return_prefix_success(self):
+        read = os.read
+        for corruption in ('error', 'short'):
+            with self.subTest(corruption=corruption), self.pin_observation() as pins:
+                def reading(fd, count):
+                    if fd in pins['active'] and pins['names'][fd] == self.receipt['artifact_id']:
+                        if corruption == 'error': raise OSError('PRIVATE-read')
+                        return b''
+                    return read(fd, count)
+                with mock.patch('os.read', side_effect=reading): self.oerror('source_integrity_invalid')
+            self.assert_pins_closed(pins)
+
+    def test_observation_ordinary_own_close_failure_is_fixed_without_retry(self):
+        with self.pin_observation(close_errors=(OSError('PRIVATE-own-close'),)) as pins: self.oerror('storage_error')
+        self.assert_pins_closed(pins)
+
+    def test_observation_parent_admission_classification_is_not_raw_restored(self):
+        corrupt = sqlite3.DatabaseError('PRIVATE-corrupt'); corrupt.sqlite_errorcode = sqlite3.SQLITE_CORRUPT
+        for marker, suffix in ((MemoryError('PRIVATE-parent'), 'storage_error'),
+                               (sqlite3.DatabaseError('PRIVATE-parent'), 'storage_error'),
+                               (corrupt, 'store_invalid')):
+            with self.subTest(marker=type(marker).__name__), self.SQL_fault(1, admission=marker) as cons:
+                self.oerror(suffix)
+            self.assert_SQL_closed(cons)
+
+
 if __name__=='__main__':
     unittest.main()

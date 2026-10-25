@@ -1,4 +1,4 @@
-# 접수 DOCX 참고 읽기와 명시 결과 보존
+# 접수 DOCX 참고 읽기·명시 보존·보존 결과 관측
 
 2026-10-25 Asia/Seoul. [`read_intake_docx_reference`](../../labflow/intake_docx_reference.py)는 기존 접수의 고정 원본을 선택해 [독립 DOCX reader](reference_docx_usage.md)로 읽는다. [공개 계약](../superpowers/specs/2026-10-25-intake-docx-reference-design.md)과 [계획](../superpowers/plans/2026-10-25-intake-docx-reference.md)을 따른다.
 
@@ -110,6 +110,36 @@ P 상한은 9MiB, receipt 전체는 10MiB다. 기존 manifest4MiB/files1000/원�
 
 receipt 성공은 native 결과 보존의 확인이다. partial/실패를 완전한 문서 해석·분석 완료·사실 채택으로 승격하지 않으며 기존 unread 질문도 해소하지 않는다. DOCX의 실제 retained artifact를 분석 context와 인용 검증에 연결하는 작업은 다음 계약이다. 이후 소비자는 옛 receipt나 ID만으로 현재 자료를 인정하지 않고 원본·current revision·provenance와 실제 artifact를 다시 확인해야 한다.
 
+## 명시 보존 결과의 읽기 관측
+
+`read_retained_intake_docx_reference(store, artifact_id, *, expected_binding)`은 실제 retention에서 얻은 한 ID와 기존 exact5 binding을 선택해 다시 읽는다. [공개 관측 계약](../superpowers/specs/2026-10-25-intake-docx-retained-observation-design.md)과 [계획](../superpowers/plans/2026-10-25-intake-docx-retained-observation.md)을 따른다. source/intake/revision/fingerprint/document 전체가 현재 접수와 맞아야 한다. 과거 revision을 찾아주거나 intake별 최신 artifact를 고르지 않는다.
+
+```python
+import copy
+from labflow.intake_docx_reference import read_retained_intake_docx_reference
+
+# trusted 프로그램이 이미 명시적으로 허용한 workspace/read scope와
+# 실제 retention receipt 한 개를 갖고 있다. browser/query/body 입력이 아니다.
+selected_id = retained_receipt["artifact_id"]
+selected_binding = copy.deepcopy(retained_receipt["reference"]["binding"])
+if selected_binding["intake_id"] not in allowed_intakes:
+    raise PermissionError("intake read scope denied")
+with Store.open_existing(state_root) as store:
+    observed = read_retained_intake_docx_reference(
+        store, selected_id, expected_binding=selected_binding
+    )
+```
+
+기존 server의 Store를 빌리는 trusted host는 같은 workspace와 명시 read scope를 확인하고 기존 `server._reference_parent_call(source=True)` lease 안에서 호출한다. API는 borrowed Store를 닫지 않는다. 이 lease는 HTTP 인증을 대신하지 않는다. 현재 metadata GET의 `_SnapshotStore`는 공식 Store가 아니며 원문 공급 권한도 아니다. 보호 source POST 배선·session/CSRF·UI 크기/표시·cache 정책은 별도 계약과 구현 범위다.
+
+관측은 공식 Store의 두 fresh query-only transaction에서 current 전체 binding과 source/revision/original provenance, 등록 artifact의 kind/bytes/flag를 확인한다. 원본과 artifact의 자기 소유 pin을 유지하며 각 파일을 64KiB chunk로 두 번 전체 해시 읽기하고, 경로/fd stamp·regular/no-reparse/nlink=1·정확한 크기와 canonical UTF-8 JSON을 확인한다. 입력 path1024B, manifest4MiB/files1000, 원본16MiB, 저장 artifact9MiB, 반환 receipt10MiB 한도는 기존과 같다. 저장 JSON의 byte 한도는 peak 메모리 사용량 보증이 아니다. native/OOXML 재파싱·등록/수리·Store/schema/worker 변경은 없다.
+
+반환은 기존 exact6 `schema_version, kind, artifact_id, artifact_bytes, synthetic, reference`다. 내부 exact4/reference 및 native11은 저장된 선언을 유지한다. registry synthetic는 current 3값의 OR보다 낮을 수 없다. current OR1/registry0은 거절하고, registry1/current0은 1을 보존한다. 읽기 중 provenance를 덮어써 수선하지 않는다. 미등록 orphan·파일 없음·손상·다른 binding·두 snapshot의 변화는 실패이며 옛 receipt로 대신 성공시키지 않는다. 고정 9코드와 첫 surfaced control 객체·후속 정리 실패 우선순위는 retention 경계를 따른다.
+
+`ok`/`complete` 또는 API 반환은 native 실제 실행·producer 진위/권리·내용 사실·locator/text hash의 의미 검증이 아니다. native reader/status/profile의 unknown 선언과 partial/empty/실패를 literal로 보존하고 지원·해석 성공으로 올리지 않는다. page unavailable·원 part/element 위치, 기존 requires_parser/unread/열린 질문, 분석·context·인용 권한을 유지한다. 새 해석이 필요하면 별도로 명시한 native/retention 작업을 수행한다.
+
+시간 key를 새로 반환하지 않는다. trusted caller가 실제 호출의 시작·완료·오류를 기록해야 하며 snapshot.generated_at을 native 해석/파일 확인 시각으로 바꾸지 않는다. 동일 receipt의 재사용은 새 관측이 아니다. 두 일치 snapshot 사이 ABA나 반환 후 파일·DB·권한 변경도 보증하지 않는다. 자기 close가 실제 수행되지 않은 채 실패하면 알려진 fd가 남을 수 있으며, API는 실패하고 caller Store.close가 이를 회수한다고 주장하지 않는다.
+
 ## 검사
 
 [`전용 검사`](../../tests/test_intake_docx_reference.py)는 직접 작성한 합성 DOCX/ZIP과 실제 register/scan·임시 Store·native reader를 사용한다. 실제 보존 payload/등록·bounded EEXIST/readback·OR/MAX, 실제 write/delete pin과 정상 반환 후 해제, 한도 경계/+1, 손상·동시 변경·같은 bytes의 실제 교체·링크, known fd/real SQLite close·첫 오류 객체를 검사한다. 실제 보존 뒤 mixed TXT/PDF claim/complete·fixture worker에서도 DOCX unread·미해소 질문과 거짓 인용 거절을 확인한다.
@@ -120,3 +150,5 @@ python scripts/check_artifacts.py
 ```
 
 지정 부모 모듈 회귀와 전용 검사는 별도 분모이며 이전 owner/독립/총괄 결과를 합산하지 않는다. 문서 무결성 검사는 시험소 기능·계측 정확도·기관 적합성 검증이 아니다. 실제 고객/OEM 원문·Office/COM/OCR/Hancom·모델·실장비/현장 실증은 이 합성 검사에 포함하지 않는다.
+
+읽기 관측 전용 검사는 새 합성 DOCX→실제 공식 retention의 bytes/등록→새 API를 사용한다. 두 fresh SELECT transaction·쓰기0·각 물리 파일의 두 전체 읽기·실제 pin/해제, current/provenance/등록 변경·손상·canonical/한도 거절, 실제 SQLite rollback/close와 own fd close의 첫/후속 예외를 관측한다. handwritten artifact는 거절용 음성 입력에서만 사용한다. unknown 선언 검사는 실제 native read 뒤 선언을 주입한 별도 경계 검사이며 수정 없는 native 실행 증거로 세지 않는다. 관측기·준비 실패는 제품 실패와 구별해 보존한다. HTTP/UI 공급·실제 고객 원문·producer 진위는 이 API 검사에서 미실행이다.
