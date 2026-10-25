@@ -480,6 +480,128 @@ raise SystemExit(host._process_main())
                 self.children.append(child);out,err=child.communicate(timeout=5)
                 self.assertEqual((child.returncode,out,err),(expected,b'',b''))
 
+    def faulty_journal(self,kind='finished',mode='insert',*,rollback_failure=False,history_failure=False,control=None):
+        connect=sqlite3.connect
+        state=dict(faulted=False,last_kind=None,finished_committed=False,rollback_calls=0,errors=[])
+        class Journal:
+            def __init__(self,con):self.con=con
+            def __getattr__(self,name):return getattr(self.con,name)
+            def native_error(self):
+                try:self.con.execute('SELECT * FROM authored_missing_journal_fault_table')
+                except sqlite3.OperationalError as exc:state['errors'].append(exc);raise
+            def execute(self,sql,parameters=()):
+                if history_failure and state['finished_committed'] and sql.startswith('PRAGMA table_info'):
+                    self.native_error()
+                if sql.startswith('INSERT INTO codex_intake_history'):
+                    state['last_kind']=parameters[0]
+                    if parameters[0]==kind and mode=='insert':
+                        state['faulted']=True
+                        if control is not None:
+                            self.con.execute(sql,parameters)
+                            raise control
+                        self.native_error()
+                return self.con.execute(sql,parameters)
+            def commit(self):
+                self.con.commit()
+                if state['last_kind']=='finished':state['finished_committed']=True
+                if state['last_kind']==kind and mode=='post_commit':
+                    state['faulted']=True;self.native_error()
+            def rollback(self):
+                state['rollback_calls']+=1
+                if rollback_failure and state['faulted']:self.native_error()
+                self.con.rollback()
+        def opener(path,*args,**kwargs):
+            con=connect(path,*args,**kwargs)
+            return Journal(con) if str(path).startswith('file:') and 'continuation.sqlite3' in str(path) else con
+        return patch('sqlite3.connect',side_effect=opener),state
+
+    def current_history(self):
+        con=sqlite3.connect(self.journal)
+        try:return self.api()._history(con,self.anchor,self.config,self.control)[1]
+        finally:con.close()
+
+    def test_finish_insert_failure_returns_durable_pending_history_not_prelaunch_zeroes(self):
+        fault,state=self.faulty_journal()
+        with fault:status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(5,'unknown'))
+        self.assertTrue(state['errors']);self.assertIsInstance(state['errors'][0],sqlite3.OperationalError)
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved','consumed'])
+        self.assertEqual(result['reservation']['state'],'consumed')
+        self.assertEqual(result['history'],self.current_history())
+        self.assertEqual((result['history']['reserved_single_use_permits'],result['history']['consumed_single_use_permits'],
+                          result['history']['pending_permits']),(1,1,1))
+        self.assertIsNone(result['history']['actual_total_model_processes'])
+        self.assertTrue((self.control/'active-run.json').exists())
+        self.assertEqual((self.evidence/'caller-receipt.json').read_bytes(),C(result['once']))
+
+    def test_reserved_postcommit_error_returns_verified_current_reservation(self):
+        fault,_=self.faulty_journal('reserved','post_commit')
+        with fault:status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(5,'unknown'))
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved'])
+        self.assertEqual(result['history'],self.current_history())
+        self.assertEqual(result['history']['reserved_single_use_permits'],1)
+        self.assertIsNone(result['history']['actual_total_model_processes'])
+        self.assertEqual(self.calls,[]);self.assertTrue((self.control/'active-run.json').exists())
+
+    def test_consumed_postcommit_error_returns_verified_pending_consumption(self):
+        fault,_=self.faulty_journal('consumed','post_commit')
+        with fault:status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(5,'unknown'))
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved','consumed'])
+        self.assertEqual(result['history'],self.current_history())
+        self.assertEqual(result['history']['consumed_single_use_permits'],1)
+        self.assertIsNone(result['history']['actual_total_model_processes'])
+        self.assertEqual(self.calls,[])
+
+    def test_finish_failure_and_failed_rollback_hold_history_null_without_retry(self):
+        fault,state=self.faulty_journal(rollback_failure=True)
+        with fault:status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(5,'unknown'))
+        self.assertIsNone(result['history'])
+        self.assertEqual(state['rollback_calls'],1)
+        self.assertEqual(result['errors'][0]['phase'],'finish')
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved','consumed'])
+        self.assertTrue((self.control/'active-run.json').exists())
+
+    def test_finished_commit_then_unverifiable_history_is_null_without_rollback_or_rewrite(self):
+        fault,state=self.faulty_journal(None,history_failure=True)
+        with fault:status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(5,'unknown'))
+        self.assertIsNone(result['history'])
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved','consumed','finished'])
+        self.assertEqual(state['rollback_calls'],0)
+        self.assertTrue((self.control/'active-run.json').exists())
+
+    def test_initial_rollback_failure_does_not_retry_or_expose_prelaunch_statistics(self):
+        fault,state=self.faulty_journal('consumed',rollback_failure=True)
+        with fault:status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(5,'unknown'))
+        self.assertIsNone(result['history']);self.assertEqual(state['rollback_calls'],1)
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved'])
+        self.assertEqual(self.calls,[])
+
+    def test_finish_control_remains_the_original_object_with_rollback_fault_configured(self):
+        control=MemoryError('authored first finish control')
+        fault,_=self.faulty_journal(rollback_failure=True,control=control)
+        with fault:
+            with self.assertRaises(MemoryError) as caught:self.invoke()
+        self.assertIs(caught.exception,control)
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved','consumed'])
+        self.assertTrue((self.control/'active-run.json').exists())
+
+    def test_finished_postcommit_error_returns_verified_committed_history(self):
+        fault,state=self.faulty_journal('finished','post_commit')
+        with fault:status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(5,'unknown'))
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved','consumed','finished'])
+        self.assertEqual(result['history'],self.current_history())
+        self.assertEqual((result['history']['known_total_model_processes'],result['history']['actual_total_model_processes'],
+                          result['history']['pending_permits']),(17,17,0))
+        self.assertEqual(state['rollback_calls'],0)
+        self.assertEqual(result['once']['status'],'completed')
+        self.assertTrue((self.control/'active-run.json').exists())
+
 
 if __name__=='__main__':
     unittest.main()

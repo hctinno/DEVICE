@@ -124,13 +124,15 @@ actual_global_call_cap이 null이라는 사실은 무제한 실행을 허용하�
 
 | 중첩 경로 | 키·의미 |
 | --- | --- |
-| history | 검증 전 null. exact10: inherited_model_processes, known_total_model_processes, actual_total_model_processes, unknown_finished_process_counts, pending_permits, reserved_single_use_permits, consumed_single_use_permits, usage_complete, unknown_usage_components, cost |
+| history | 검증 전 또는 durable 변경 후 재검증 불가면 null. exact10: inherited_model_processes, known_total_model_processes, actual_total_model_processes, unknown_finished_process_counts, pending_permits, reserved_single_use_permits, consumed_single_use_permits, usage_complete, unknown_usage_components, cost |
 | history 수치 | 첫 값은 기존 실제16. known_total은 이 값+새 finished의 관측0/1 부분합. actual_total은 새 pending/시작 수 unknown이 있으면 null. 예약/소비 수는 누적 native int이며 actual 호출 수와 별개 |
 | history unknown | usage_complete=false, unknown_usage_components/cost=null을 유지. unknown status/cleanup false는 실제 start 수를 알아도 새 실행 차단 |
 | reservation | 예약 전 null; 이후 exact4 permit_id, state, context_sha256, reservation_sha256. state는 reserved/consumed/finished이며 unknown 결과에서도 기존 소비가 남을 수 있음 |
 | once | 미호출 null, 호출 뒤 기존 exact10 원형; 판정 not_assessed를 유지 |
 | errors | exact2 `{phase:string, code:string}` 목록, 최대4. 고정 host/Store code만 노출; 원 경로·본문·SQL 예외 메시지를 출력하지 않음 |
 | verification | exact3 operator_scope:`not_validated`/`native_operator_control`, execution_scope:`one_registered_synthetic_intake`, measurement:`not_assessed` |
+
+history는 예약·소비·종료 변경 전 snapshot을 현재 통계로 재사용하지 않는다. 변경 전에 보류하고, transaction이 정리된 현재 원장을 검증했을 때만 반환한다. finish INSERT/commit이 실패하면 그 transaction을 한 번 정리한 뒤 검증 가능한 durable 이력을 읽으며, rollback 실패·후행 검증 불가·원 control이면 null을 유지한다. 이미 실패한 rollback을 재시도하거나 원 예약/소비/receipt/guard를 삭제·환불하지 않는다.
 
 once의 원 exact10은 `schema_version, kind, status, phase, job, binding, attempts, strict_decode, assessment, errors`다. attempts exact4 `producer_invocations, version_process_attempts, model_process_attempts, automatic_retries`를 보존한다. producer_invocations는 native0/1, version/model_process_attempts는0/1/null, automatic_retries는0이다. 세부 job/binding/assessment/error 의미는 위 기존 once 계약을 따른다.
 
