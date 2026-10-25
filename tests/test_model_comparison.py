@@ -550,5 +550,82 @@ class ComparisonTests(unittest.TestCase):
             self.assertIsNotNone(json.loads(self.budget.read_bytes())["active_run_id"])
 
 
+    def partial_incomplete_error_fixture(self, *args, **kwargs):
+        """Synthetic incomplete transport evidence, never a successful response."""
+        raw,receipt=self.produce(*args,**kwargs)
+        receipt.update(status="failed",failure=dict(code="vertex_response_incomplete",phase="collect"))
+        receipt["response"]["finish_reason"]="MAX_TOKENS"
+        receipt["verification"]["wire_complete"]=False
+        receipt["cancellation"]["provider_completion"]="observed_incomplete"
+        partial=b'{"candidates":['
+        desc=receipt["artifacts"]["provider_response"]
+        (kwargs["evidence_dir"]/desc["path"]).write_bytes(partial)
+        desc.update(bytes=len(partial),sha256=sha(partial),complete=False,extent="prefix")
+        desc=receipt["artifacts"]["final_text"]
+        (kwargs["evidence_dir"]/desc["path"]).unlink()
+        desc.update(present=False,bytes=0,sha256=None,complete=False,overflow=False,extent="absent")
+        return VertexError("incomplete",receipt)
+
+    def test_partial_transport_error_survives_persistence_failures(self):
+        real_record,real_finish=mc._record,mc._finish
+        for index,phase in enumerate(("record","finish")):
+            self.seed()
+            evidence=self.root/f"partial-storage-{index}"
+            originals=[]
+            def incomplete(*args,**kwargs):
+                error=self.partial_incomplete_error_fixture(*args,**kwargs)
+                originals.append((error,error.receipt,canonical(error.receipt),error.args,error.code))
+                raise error
+            def blocked_record(directory,row):
+                if row["row_index"]==5:
+                    (directory/"row-5.record.json").mkdir()
+                return real_record(directory,row)
+            def blocked_finish(path,*args):
+                (path.parent/(path.name+".blocked.tmp")).mkdir()
+                with patch.object(mc.uuid,"uuid4",return_value=types.SimpleNamespace(hex="blocked")):
+                    return real_finish(path,*args)
+            storage_patch=patch.object(mc,"_record",blocked_record) if phase=="record" else patch.object(mc,"_finish",blocked_finish)
+            with self.subTest(phase=phase),patch.object(
+                    sys.modules["labflow.vertex_response"],"produce_vertex_response",incomplete),storage_patch:
+                try:
+                    raise RuntimeError("private outer context must not escape")
+                except RuntimeError:
+                    with self.assertRaises(VertexError) as caught:
+                        self.run_batch(self.matrix(selection="selected",overrides={"thinking_level":"HIGH"}),
+                                       evidence_dir=evidence)
+                original,original_receipt,snapshot,args,code=originals[0]
+                self.assertIs(caught.exception,original)
+                self.assertIs(caught.exception.receipt,original_receipt)
+                self.assertEqual(caught.exception.args,args)
+                self.assertEqual(caught.exception.code,code)
+                self.assertEqual(canonical(caught.exception.receipt),snapshot)
+                self.assertIsNone(caught.exception.__cause__)
+                self.assertIsNone(caught.exception.__context__)
+                self.assertTrue(caught.exception.__suppress_context__)
+                self.assertEqual(caught.exception.__notes__,["model_comparison_persistence_failed"])
+                budget=json.loads(self.budget.read_bytes())
+                self.assertEqual((budget["reserved_calls"],budget["reserved_output_tokens"]),(1,512))
+                self.assertIsNotNone(budget["active_run_id"])
+                self.assertEqual(budget["entries"][0]["state"],"reserved")
+
+    def test_partial_transport_normal_persistence_control(self):
+        originals=[]
+        def incomplete(*args,**kwargs):
+            error=self.partial_incomplete_error_fixture(*args,**kwargs)
+            originals.append(error)
+            raise error
+        with patch.object(sys.modules["labflow.vertex_response"],"produce_vertex_response",incomplete):
+            out=self.run_batch(self.matrix(selection="selected",overrides={"thinking_level":"HIGH"}))
+        row=out["rows"][5]
+        self.assertEqual(row["status"],"failed")
+        self.assertEqual(row["reason_code"],"vertex_response_incomplete")
+        self.assertEqual(row["receipt"],originals[0].receipt)
+        self.assertEqual(json.loads((self.evidence/"row-5.record.json").read_bytes()),row)
+        budget=json.loads(self.budget.read_bytes())
+        self.assertIsNone(budget["active_run_id"])
+        self.assertEqual(budget["entries"][0]["state"],"failed")
+        self.assertEqual((budget["reserved_calls"],budget["reserved_output_tokens"]),(1,512))
+
+
 if __name__=="__main__":
     unittest.main()
