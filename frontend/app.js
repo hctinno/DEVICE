@@ -1,5 +1,5 @@
 import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot, docxReferenceMatchesRecord} from './model.mjs';
-import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue} from './intake_flow_model.mjs';
+import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue, parseConductedResultView} from './intake_flow_model.mjs';
 import {validateIntakeReferenceContext,parseIntakeReferenceHistoryJson,parseIntakeReferenceCurrentJson} from './intake-references/model.mjs';
 import {createIntakeReferenceReview} from './intake-references/view.mjs';
 import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
@@ -10,6 +10,7 @@ const state = {records: [], notices: [], selected: location.hash.slice(1), loade
 const flow = {gate:createFixtureReadGate(), context:null, payload:null, selected:'', pending:false,
   stale:false, status:'가상 기록 조회 대기', updatedText:'아직 조회하지 않음'};
 const conducted={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'가상 계획 미리보기 조회 대기'};
+const resultView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'전도 결과 제공 기록 조회 대기'};
 const referenceTransport = createIntakeReferenceTransport();
 const docx={context:null,hintContext:null,visible:false,allowed:false,busy:false,good:null,
   phase:'idle',message:'보존 관측은 명시 버튼으로 읽습니다.',ticket:0,controller:null};
@@ -306,12 +307,14 @@ function buildIntakeWorkflow(record, payload, current, stale, snapshot=state) {
     const item=el('li','question');item.dataset.workflowStep=step.id;
     item.append(el('h4','',step.title),badge(step.label,step.tone));
     for(const [lineIndex,line] of step.lines.entries()){
-      const detail=el('p','inline-note',line);
+      const displayLine=step.id==='measurement'&&[1,2].includes(lineIndex)?`선택한 기존 fixture 기록: ${line}`:step.id==='assessment'&&line.includes('ai_model_called=false')?`선택한 기존 fixture 기록: ${line}`:line;
+      const detail=el('p','inline-note',displayLine);
       if(lineIndex===0&&['virtual','measurement'].includes(step.id))detail.dataset.workflowRelation='';
       item.append(detail);
     }
     if(step.id==='intake'&&view.citations.length)item.append(sources(view.citations));
     if(step.id==='plan')item.append(buildConductedPlanPreview(record,snapshot));
+    if(step.id==='measurement')item.append(buildConductedResult(record,snapshot));
     if(step.refs.length){const details=el('details');details.append(el('summary','',`공개 근거 참조 ${step.refs.length}개`));const refs=el('ul','fixture-refs');for(const ref of step.refs)refs.append(el('li','mono',ref));details.append(refs);item.append(details);}
     list.append(item);
   }
@@ -543,6 +546,81 @@ function syncConductedContext(){
   conducted.gate.invalidate();conducted.controller?.abort();const retain=sameFixtureSource(context,conducted.context);
   Object.assign(conducted,{context,value:retain?conducted.value:null,controller:null,pending:false,stale:true,status:'가상 계획 미리보기 조회 대기'});
   if(context)void refreshConductedPlanPreview();
+}
+
+
+function buildConductedResult(record,snapshot=state,current=resultView){
+  const context=conductedContext(snapshot),matched=sameFixtureSource(context,current.context),value=matched?current.value:null;
+  const stale=current.stale||!matched||context.generation!==current.context.generation,area=el('section','section-rule');area.id='conducted-result-view';
+  area.dataset.pending=String(current.pending||current.parentPending);area.dataset.sourceKind='provided_snapshot';
+  area.dataset.current=String(Boolean(value&&!stale&&!current.pending&&!current.parentPending&&value.relation.status==='matched'));
+  area.dataset.resultStatus=value?.result.status||'unavailable';
+  area.append(el('h4','','전도 측정·계산 제공 기록'));
+  const status=el('p','inline-note',stale&&value?'이전 관측 · 현재 관계 미확인':matched?current.status:'전도 결과 제공 기록 조회 대기');status.id='conducted-result-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');area.append(status);
+  area.append(el('p','inline-note','provided_snapshot · 생성 origin/진위 미확인 · 저장/실시간 결과 조회 미지원 · 실제 AI 호출 여부 unknown'));
+  const content=el('div');content.id='conducted-result-content';const format=conductedPreviewValue;
+  if(value){
+    const r=value.result,raw=r.raw_measurement,c=r.calculation;
+    content.append(el('h5','','제공 원수치·계산'));
+    content.append(badge(`제공 원 상태: ${r.status}`,r.status==='invalid'?'danger':r.status==='incomplete'?'warning':'info'),metadata([
+      ['현재 접수 / 자료 버전',`${value.intake_id} / v${value.revision}`],['제공 snapshot 버전',String(value.relation.provided_revision)],['현재 제공 context C1 SHA-256',value.context_sha256],
+      ['현재 계획 binding 대조',value.relation.status==='matched'?'일치 · 제공 결과의 생성·물리 진위 승인이 아님':'차단 · 현재 계획의 결과로 사용 불가'],['차단 이유',format(value.relation.reasons)],
+      ['원 run / runtime',`${format(r.binding.run_id)} / ${format(r.binding.runtime_instance_id)}`],['선택 원 event',format(r.binding.measurement_ref)],
+    ]));
+    const expected=el('details');expected.append(el('summary','','명시 expected-current binding6'),metadata([['제공된 결합값',format(value.expected_current_binding)]]));content.append(expected);
+    if(raw===null)content.append(el('p','inline-note','원 측정 미생성(null)'));
+    else{
+      const packet=raw.packet;
+      content.append(metadata([['원 값 / 단위',`${format(packet.value)} / ${format(packet.unit)}`],['원 기준면',format(raw.reference_plane)],['원 quantity 선언',format(raw.quantity)],['원 event / seq',`${format(raw.event_id)} / ${format(raw.sequence)}`],['원 device / tick / setup revision',`${format(raw.device_id)} / ${format(raw.tick)} / ${format(raw.setup_revision)}`]]));
+      const detail=el('details');detail.append(el('summary','','원 packet 전체 · 실패 원형 포함'),metadata([['제공 원 JSON',format(packet)]]));content.append(detail);
+    }
+    content.append(metadata([['원 단위 변환 W',format(c.raw_power_w)],['단위 변환 원 기준면',format(c.raw_reference_plane)],['보정 target 기준면',format(c.target_reference_plane)],['제공 보정 dBm / W',format(c.corrected)],['규범 판정',c.conformity.status],['verdict / limit / uncertainty',`${format(c.conformity.verdict)} / ${format(c.conformity.numeric_limit_dbm)} / ${format(c.conformity.uncertainty_db)}`]]));
+    content.append(el('p','inline-note','규범 적합성·최종 판정 승인 미평가 · 실물/교정/전체 업무 검증 아님 · 화면에서 수치·보정을 다시 계산하지 않습니다.'));
+    const ledger=el('details');ledger.append(el('summary','',`원 correction ledger ${c.correction_ledger.length}개 · 전파 손실과 역보상 구분`));
+    for(const [i,row]of c.correction_ledger.entries()){const item=el('article','file');item.dataset.resultLedger=String(i);item.append(metadata([['device / output / setting',`${row.device_id} / ${row.output_port} / ${row.setting}`],['원 loss / propagation / compensation (dB)',`${format(row.loss_db)} / ${format(row.propagation_db)} / ${format(row.compensation_db)}`],['이미 적용 선언',format(row.already_applied)],['record index / request / tick / revision',`${format(row.record_index)} / ${row.request_id} / ${format(row.tick)} / ${format(row.setup_revision)}`]]));ledger.append(item);}content.append(ledger);
+    const setup=el('details');setup.append(el('summary','','제공 setup · topology · 선택 path'),metadata([['원 records',format(r.setup_provenance.records)],['원 topology',format(r.setup_provenance.topology)],['원 path',format(r.setup_provenance.path)]]));content.append(setup);
+    const gaps=el('div','question-list');for(const [i,gap]of r.gaps.entries()){const node=el('article','question');node.dataset.resultGap=String(i);node.append(metadata([['원 gap JSON',format(gap)]]));gaps.append(node);}content.append(gaps,metadata([['원 failure',format(r.failure)]]));
+    const verification=el('details');verification.append(el('summary','','원 D3 검증 범위'),metadata(Object.entries(r.verification).map(([key,value])=>[key,format(value)])));content.append(verification);
+  }
+  area.append(content);return area;
+}
+function publishResultView(next){
+  const record=state.records.find(item=>item.intake_id===state.selected),target=$('#conducted-result-view');if(!record||!target)return false;
+  const prepared=buildConductedResult(record,state,next);target.replaceWith(prepared);Object.assign(resultView,next);return true;
+}
+function staleResultView(message){
+  resultView.stale=true;const node=$('#conducted-result-view');if(node)node.dataset.current='false';const status=$('#conducted-result-status');if(status)status.textContent=message;
+}
+function retireResultView(){
+  resultView.gate.invalidate();resultView.controller?.abort();resultView.controller=null;resultView.pending=false;resultView.parentPending=true;
+  if(resultView.value)staleResultView('이전 관측 · 현재 관계 미확인');else resultView.stale=true;
+  const node=$('#conducted-result-view');if(node)node.dataset.pending='true';
+}
+async function refreshResultView(){
+  const context=conductedContext();if(!context||resultView.pending||resultView.parentPending||referenceDestroyed||referenceSuspended)return;
+  const ticket=resultView.gate.begin(context);resultView.controller?.abort();const controller=new AbortController();resultView.controller=controller;const timer=setTimeout(()=>controller.abort(),10000);
+  const current=()=>resultView.gate.isCurrent(ticket,conductedContext()||{})&&!referenceDestroyed&&!referenceSuspended;
+  try{
+    if(!publishResultView({...resultView,context,pending:true,stale:Boolean(resultView.value),status:'전도 결과 제공 기록 조회 중'}))return;
+    const response=await fetch(`/api/intakes/${encodeURIComponent(context.intake_id)}/conducted-result`,{signal:controller.signal,cache:'no-store'});
+    if(!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(response.headers.get('content-type')||''))throw Error();
+    const length=response.headers.get('content-length');if(length!==null&&(!/^\d+$/.test(length)||Number(length)>1048576))throw Error();
+    const reader=response.body.getReader(),decoder=new TextDecoder('utf-8',{fatal:true});let raw='',size=0;
+    try{while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>1048576){await reader.cancel();throw Error();}raw+=decoder.decode(part.value,{stream:true});}raw+=decoder.decode();}finally{reader.releaseLock();}
+    if(!current())return;
+    if(!response.ok){const code=JSON.parse(raw)?.error?.code;if(typeof code!=='string'||!/^(?:intake_conducted_(?:result|preview)_[a-z_]+|store_missing|store_unavailable|intake_not_found)$/.test(code))throw Error();throw Error(code);}
+    const value=parseConductedResultView(raw,context);if(!current())return;
+    publishResultView({...resultView,context,value,pending:false,stale:false,status:value.relation.status==='matched'?'제공 snapshot 조회 · 현재 계획 binding 대조 일치':'제공 snapshot 조회 · 현재 계획 binding 차단'});
+  }catch(error){controller.abort();if(current()){
+    const label=({intake_conducted_result_missing:'제공 snapshot 미제공',intake_conducted_result_invalid:'형상·한도·결합 부적합',intake_conducted_result_unavailable:'지정 접수의 제공 결과 미지원',intake_conducted_preview_source_invalid:'현재 보존 자료 무결성 미확인'})[error.message]||'응답·전송·형상·화면 확인 실패';
+    resultView.pending=false;resultView.status=resultView.value?'조회 실패 · 이전 관측 · 현재 관계 미확인':`전도 결과 조회 불가 · ${label}`;staleResultView(resultView.status);
+  }}finally{clearTimeout(timer);if(current()){resultView.pending=false;resultView.controller=null;const node=$('#conducted-result-view');if(node)node.dataset.pending=String(resultView.parentPending);}}
+}
+function syncResultView(){
+  const context=conductedContext();if(context&&sameFixtureSource(context,resultView.context)&&context.generation===resultView.context.generation)return;
+  resultView.gate.invalidate();resultView.controller?.abort();const retain=sameFixtureSource(context,resultView.context);
+  Object.assign(resultView,{context,value:retain?resultView.value:null,controller:null,pending:false,stale:true,status:'전도 결과 제공 기록 조회 대기'});
+  if(context)void refreshResultView();
 }
 
 function buildMetrics(view) {
@@ -819,6 +897,8 @@ function publishView(prepared) {
     syncFixtureContext();
     conducted.parentPending=false;
     syncConductedContext();
+    resultView.parentPending=false;
+    syncResultView();
   } finally { if (!referenceDestroyed) referenceGuard = false; }
 }
 
@@ -839,11 +919,13 @@ function changeView(view) {
     else button.removeAttribute('aria-current');
   }
   syncConductedContext();
+  syncResultView();
 }
 
 async function refresh() {
   if (!referenceCanChange()) return;
   retireConductedObservation();
+  retireResultView();
   const request = ++state.request;
   if (!setReferencePending(true)) return;
   state.controller?.abort();
@@ -890,12 +972,15 @@ async function refresh() {
       $('#intake-view').setAttribute('aria-busy', 'false');
       conducted.parentPending=false;
       $('#conducted-plan-refresh')?.setAttribute('aria-disabled',String(conducted.pending));
+      resultView.parentPending=false;
+      const resultNode=$('#conducted-result-view');if(resultNode)resultNode.dataset.pending=String(resultView.pending);
     }
   }
 }
 
 addEventListener('pagehide', event => {
   retireConductedObservation();
+  retireResultView();
   if (event.persisted) {
     if (!referenceCanChange()) return;
     referenceSuspended = true;
