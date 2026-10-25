@@ -535,6 +535,165 @@ print(json.dumps(resolve_run_settings(p, model_id='gemini-4-argon', overrides={'
         self.assertEqual(child.returncode, 0, stderr)
         self.assertEqual(json.loads(stdout), expected)
 
+    def native_short_path(self, path):
+        import ctypes
+        from ctypes import wintypes
+        function = ctypes.WinDLL('kernel32', use_last_error=True).GetShortPathNameW
+        function.argtypes = (wintypes.LPCWSTR, wintypes.LPWSTR, wintypes.DWORD)
+        function.restype = wintypes.DWORD
+        required = function(str(path), None, 0)
+        self.assertGreater(required, 0, ctypes.get_last_error())
+        buffer = ctypes.create_unicode_buffer(required)
+        self.assertTrue(0 < function(str(path), buffer, required) < required)
+        return Path(buffer.value)
+
+    def native_file_alias(self, path):
+        alias = path.parent / self.native_short_path(path).name
+        if os.path.normcase(str(alias)) == os.path.normcase(str(path)):
+            self.skipTest('Filesystem did not create an actual 8.3 file alias')
+        self.assertEqual((path.stat().st_dev, path.stat().st_ino),
+                         (alias.stat().st_dev, alias.stat().st_ino))
+        return alias
+
+    @unittest.skipUnless(os.name == 'nt', 'Native Windows 8.3 case')
+    def test_native_short_alias_cannot_bypass_long_name_lock_or_replace_original(self):
+        self.path = self.path.with_name('profile-long-filename-for-native-alias.json')
+        profile = self.saved()
+        alias = self.native_file_alias(self.path)
+        before = self.path.read_bytes()
+        code = '''
+import msvcrt, os, sys
+f = open(sys.argv[1], 'r+b', buffering=0)
+msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+print('locked', flush=True)
+sys.stdin.readline()
+os._exit(0)
+'''
+        child = self.child(code, self.path.with_name(self.path.name + '.lock'))
+        self.assertEqual(child.stdout.readline().strip(), 'locked')
+        self.error('locked', load_profile, self.path)
+        self.error('locked', load_profile, str(self.path).upper())
+        outcomes = {}
+        for name, call, args, kwargs in (
+            ('load', load_profile, (alias,), {}),
+            ('save', save_profile, (alias, profile), {'expected_revision': 1}),
+        ):
+            try:
+                result = call(*args, **kwargs)
+                outcomes[name] = {'success_revision': result['revision']}
+            except AIConnectionProfileError as exc:
+                outcomes[name] = exc.code
+        child.communicate('\n', timeout=10)
+        self.assertEqual(child.returncode, 0)
+        self.assertEqual(outcomes, {'load': 'ai_connection_profile_invalid_path',
+                                   'save': 'ai_connection_profile_invalid_path'},
+                         json.dumps({'outcomes': outcomes, 'long_exists': self.path.exists(),
+                                     'alias_exists': alias.exists(), 'alias_name': alias.name}))
+        self.assertEqual(self.path.read_bytes(), before)
+        self.assertEqual(load_profile(self.path)['revision'], 1)
+        self.assertFalse(alias.with_name(alias.name + '.lock').exists())
+
+    @unittest.skipUnless(os.name == 'nt', 'Native Windows 8.3 case')
+    def test_native_short_parent_alias_is_rejected_even_for_missing_profile(self):
+        parent = self.path.parent / 'directory-with-a-long-native-name'
+        parent.mkdir()
+        alias = self.native_short_path(parent)
+        if os.path.normcase(str(alias)) == os.path.normcase(str(parent)):
+            self.skipTest('Filesystem did not create an actual 8.3 directory alias')
+        self.assertEqual((parent.stat().st_dev, parent.stat().st_ino),
+                         (alias.stat().st_dev, alias.stat().st_ino))
+        self.error('invalid_path', load_profile, alias / 'missing.json')
+        self.assertFalse((parent / 'missing.json.lock').exists())
+
+    @unittest.skipUnless(os.name == 'nt', 'Native Windows 8.3 case')
+    def test_observed_native_alias_is_rejected_before_and_after_file_recreation(self):
+        self.path = self.path.with_name('profile-long-filename-for-native-race.json')
+        profile = self.saved()
+        alias = self.native_file_alias(self.path)
+        if '~' not in alias.name:
+            self.skipTest('This filesystem alias does not expose a generated tilde spelling')
+        original = self.path.read_bytes()
+        self.path.unlink()
+        self.assertFalse(alias.exists())
+        outcomes = {}
+        try:
+            result = load_profile(alias)
+            outcomes['before_creation'] = {'success_revision': result['revision']}
+        except AIConnectionProfileError as exc:
+            outcomes['before_creation'] = exc.code
+        pending = copy.deepcopy(profile)
+        pending['revision'] = 0
+        try:
+            result = save_profile(alias, pending, expected_revision=0)
+            outcomes['save_before_creation'] = {'success_revision': result['revision']}
+        except AIConnectionProfileError as exc:
+            outcomes['save_before_creation'] = exc.code
+        # Restore only the private native fixture; this is not a profile repair API.
+        self.path.write_bytes(original)
+        recreated_alias = self.native_file_alias(self.path)
+        self.assertEqual(recreated_alias, alias)
+        try:
+            result = load_profile(alias)
+            outcomes['after_creation'] = {'success_revision': result['revision']}
+        except AIConnectionProfileError as exc:
+            outcomes['after_creation'] = exc.code
+        self.assertEqual(outcomes, {'before_creation': 'ai_connection_profile_invalid_path',
+                                   'save_before_creation': 'ai_connection_profile_invalid_path',
+                                   'after_creation': 'ai_connection_profile_invalid_path'},
+                         json.dumps({'outcomes': outcomes, 'actual_alias': alias.name}))
+        self.assertFalse(alias.with_name(alias.name + '.lock').exists())
+        self.assertEqual(load_profile(self.path), profile)
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows long-name query fault')
+    def test_windows_long_name_check_is_not_skipped_for_a_path_without_tilde(self):
+        self.saved()
+        before = self.path.read_bytes()
+
+        def different_long_name(value, buffer, size):
+            buffer.value = str(self.path.with_name('different-long-native-name.json'))
+            return len(buffer.value)
+
+        with patch('labflow.ai_connection_profiles._GET_LONG_PATH',
+                   side_effect=different_long_name, create=True):
+            self.error('invalid_path', load_profile, self.path)
+        self.assertEqual(self.path.read_bytes(), before)
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows long-name query fault')
+    def test_windows_long_name_query_failure_is_fail_closed(self):
+        self.saved()
+        before = self.path.read_bytes()
+        with patch('labflow.ai_connection_profiles._GET_LONG_PATH', return_value=0, create=True):
+            self.error('invalid_path', load_profile, self.path)
+        self.assertEqual(self.path.read_bytes(), before)
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows publication race fault')
+    def test_windows_target_is_rechecked_after_fsync_before_atomic_replace(self):
+        from labflow import ai_connection_profiles as module
+        profile = self.saved()
+        before = self.path.read_bytes()
+        real_fsync = os.fsync
+        real_query = module._GET_LONG_PATH
+        after_fsync = False
+
+        def fsync_then_change_observation(fd):
+            nonlocal after_fsync
+            real_fsync(fd)
+            after_fsync = True
+
+        def target_now_has_another_long_name(value, buffer, size):
+            if after_fsync and os.path.normcase(value) == os.path.normcase(str(self.path)):
+                buffer.value = str(self.path.with_name('different-long-native-name.json'))
+                return len(buffer.value)
+            return real_query(value, buffer, size)
+
+        with patch.object(module.os, 'fsync', side_effect=fsync_then_change_observation), \
+                patch.object(module, '_GET_LONG_PATH', side_effect=target_now_has_another_long_name), \
+                patch.object(module.os, 'replace', wraps=os.replace) as replace:
+            self.error('invalid_path', save_profile, self.path, profile, expected_revision=1)
+            replace.assert_not_called()
+        self.assertEqual(self.path.read_bytes(), before)
+        self.assertEqual(list(self.path.parent.glob('.*.tmp')), [])
+
 
 if __name__ == '__main__':
     unittest.main()
