@@ -1,7 +1,7 @@
-"""Bounded Vertex connection comparison; no transport, credential storage or UI.
+"""Bounded registered Vertex comparison; no transport, credential storage or UI.
 
 The host owns approval/ADC/budget paths. This module never seeds a budget or
-refunds a reservation. Only the registered synthetic connection pair is admitted.
+refunds a reservation. Only fixed synthetic connection/intake pairs are admitted.
 """
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
@@ -29,6 +29,66 @@ _HOSTS = {"global":"https://aiplatform.googleapis.com",
 _SCENARIO, _EVALUATOR = "DGM-AI-CONNECTION-001", "connection-json-v1"
 _PROMPT_SHA = "bef332ef64fbf9e916cf4ab37ec344bdffb84136111bfe192cce862969443230"
 _SCHEMA_SHA = "a7b7c8a96d6e8602eef36b6afac804de833dc7566fe386fc158ebe1eac4f47c9"
+# Root-pinned inputpack004 provenance and explicitly selected inputpack005 C1 wire.
+_INTAKE_CASES = {
+    "intake-synthetic-s01": {
+        "scenario_id": "intake-synthetic-s01",
+        "scenario_version": 1,
+        "evaluator_id": "intake-understanding-v1",
+        "evaluator_version": 1,
+        "pack_revision": "c57-v1",
+        "input_bundle_sha256": "044f0fc2f362764e0932bc8ea3169f49e7d46b6c8f4c59d2377989a9ba315e29",
+        "registration_sha256": "35d73c90b1fb66dba426d34bb4f617b8d4d60113ea7fdd5f29d08bffc8fe0e80",
+        "context_sha256": "0b6f50c6a0ed279cf662b20382ccc11c4e5d50982891ee55168e295ed0bf6ee1",
+        "producer_name": "SYN-PENDING-MODEL-RUN",
+        "prompt": {
+            "bytes": 4280,
+            "sha256": "33d8aae6d0a19b6d884666d3937453dca1c88bb254a5552183858f0fd870eb4d"
+        },
+        "response_schema": {
+            "bytes": 1410,
+            "sha256": "ade0333e65ad87f0028e0f4f1fab6872b162664dc3accdf63b39d6a9721e984c"
+        }
+    },
+    "intake-synthetic-s02": {
+        "scenario_id": "intake-synthetic-s02",
+        "scenario_version": 1,
+        "evaluator_id": "intake-understanding-v1",
+        "evaluator_version": 1,
+        "pack_revision": "c57-v1",
+        "input_bundle_sha256": "2adbe7f9229cc1f58a164bf32e7cbca07516c6acf276473eac1e8027c6ce1723",
+        "registration_sha256": "56e5693fc341443c75696684d3af220d8f9682411ad2e3079725b0b2f72c7031",
+        "context_sha256": "a9678c043fba8a1cd65793429c98dbfd8fabd1e9bd5c752403c76de0f70c4f8f",
+        "producer_name": "SYN-PENDING-MODEL-RUN",
+        "prompt": {
+            "bytes": 4380,
+            "sha256": "a357cd1443371cef1aefec6dd3c93877733a7bc21db4ba0f809c1685ef8d2bbe"
+        },
+        "response_schema": {
+            "bytes": 1410,
+            "sha256": "ade0333e65ad87f0028e0f4f1fab6872b162664dc3accdf63b39d6a9721e984c"
+        }
+    },
+    "intake-synthetic-s03": {
+        "scenario_id": "intake-synthetic-s03",
+        "scenario_version": 1,
+        "evaluator_id": "intake-understanding-v1",
+        "evaluator_version": 1,
+        "pack_revision": "c57-v1",
+        "input_bundle_sha256": "2142040fa94bff1b53113bc5a6969eeb89c09db25049d3c6947d2bf752c7bdaa",
+        "registration_sha256": "66a16a250f73aaa553ddb2ae7681a0c5528b476abde053ff2c82b70ab57c2a7c",
+        "context_sha256": "c5679ce8cae37bf4989b6e7bb17cd69c9cb75ac2550cf14582ca1ae30ac6ee02",
+        "producer_name": "SYN-PENDING-MODEL-RUN",
+        "prompt": {
+            "bytes": 4342,
+            "sha256": "b9874f59e1bf3d7c2520fb1fe3553f2db7da796daf6c860b0ced310121f5c5d4"
+        },
+        "response_schema": {
+            "bytes": 1410,
+            "sha256": "ade0333e65ad87f0028e0f4f1fab6872b162664dc3accdf63b39d6a9721e984c"
+        }
+    }
+}
 _LIMITS = dict(generation_posts=6, max_output_tokens=512, reserved_output_tokens=3072,
                timeout_seconds=60, wall_seconds=300, retries=0, continuations=0)
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}\Z", re.ASCII)
@@ -169,11 +229,47 @@ def _dependency(name):
 
 def _pair(prompt, schema, scenario, evaluator):
     if (type(prompt) is not bytes or type(schema) is not bytes or
-        len(prompt) != 639 or len(schema) != 321 or
-        _H(prompt) != _PROMPT_SHA or _H(schema) != _SCHEMA_SHA or
-        type(scenario) is not str or scenario != _SCENARIO or
-        type(evaluator) is not str or evaluator != _EVALUATOR):
+        type(scenario) is not str or type(evaluator) is not str):
         _fail()
+    if scenario == _SCENARIO and evaluator == _EVALUATOR:
+        if (len(prompt) != 639 or len(schema) != 321 or
+            _H(prompt) != _PROMPT_SHA or _H(schema) != _SCHEMA_SHA):
+            _fail()
+        return
+    case = _INTAKE_CASES.get(scenario)
+    if (case is None or evaluator != case["evaluator_id"] or
+        len(prompt) != case["prompt"]["bytes"] or _H(prompt) != case["prompt"]["sha256"] or
+        len(schema) != case["response_schema"]["bytes"] or
+        _H(schema) != case["response_schema"]["sha256"]):
+        _fail()
+    _intake_context(prompt,case)
+
+
+def _intake_context(prompt, case):
+    value = _json(prompt)
+    _keys(value, ("schema_version","kind","binding","expected_producer","messages"))
+    messages = value["messages"]
+    if type(messages) is not list or len(messages) != 2:
+        _fail()
+    _keys(messages[1], ("role","content"))
+    if messages[1]["role"] != "user" or type(messages[1]["content"]) is not str:
+        _fail()
+    context = _json(messages[1]["content"].encode("utf-8"))
+    if (type(context) is not dict or context.get("synthetic") is not True or
+        _H(_C(context)) != case["context_sha256"]):
+        _fail()
+    contract = context.get("analysis_contract")
+    if (type(contract) is not dict or type(contract.get("schema_version")) is not int or
+        contract["schema_version"] != 1):
+        _fail()
+    boundary = _dependency("labflow.intake_model_boundary")
+    try:
+        rebuilt = boundary.build_analysis_prompt(context,producer_name=case["producer_name"])
+    except ValueError:
+        _fail()
+    if _C(_snapshot(rebuilt)) != prompt:
+        _fail()
+    return context
 
 
 def _options(options):
@@ -349,8 +445,9 @@ def _approval(path, matrix):
         not all(_identifier(a[k]) for k in ("approval_id","scope_id","budget_id")) or
         a["project_id"] != p["project_id"] or a["quota_project_id"] != p["quota_project_id"] or
         a["auth_profile_id"] != p["auth_profile_id"] or
-        a["scenario_id"] != _SCENARIO or a["evaluator_id"] != _EVALUATOR or
-        a["prompt_sha256"] != _PROMPT_SHA or a["response_schema_sha256"] != _SCHEMA_SHA or
+        a["scenario_id"] != matrix["scenario_id"] or a["evaluator_id"] != matrix["evaluator_id"] or
+        a["prompt_sha256"] != matrix["binding"]["prompt_sha256"] or
+        a["response_schema_sha256"] != matrix["binding"]["response_schema_sha256"] or
         a["execution_mode"] != "actual" or _C(a["limits"]) != _C(_LIMITS)):
         _fail("state_error")
     trial = a["trial"]
@@ -665,7 +762,16 @@ def _receipt(value, settings, prompt, schema, directory, raw, success, error_cod
     return r
 
 
-def _decode(raw):
+def _decode(raw, matrix, prompt):
+    case = _INTAKE_CASES.get(matrix["scenario_id"])
+    if case is not None:
+        context = _intake_context(prompt,case)
+        boundary = _dependency("labflow.intake_model_boundary")
+        try:
+            boundary.decode_analysis_response(raw,context,producer_name=case["producer_name"])
+        except ValueError:
+            _fail()
+        return
     value = _json(raw)
     _keys(value, ("schema_version","status","synthetic","equipment_authorized"))
     if (type(value["schema_version"]) is not int or value["schema_version"] != 1 or
@@ -681,19 +787,25 @@ def _now():
 def _row(matrix, slot, reason, *, status="not_run", receipt=None, reservation=None,
          budget=None, started=None, elapsed=0, decoded="not_run", attempts=0):
     settings = slot["settings"]
+    case = _INTAKE_CASES.get(matrix["scenario_id"])
+    response_invalid = "intake_response_invalid" if case is not None else "connection_response_invalid"
     return dict(schema_version=1,kind="vertex_comparison_row",batch_id=matrix["batch_id"],
         run_id=slot["run_id"],row_index=slot["row_index"],
-        binding=dict(scenario_id=_SCENARIO,scenario_version=1,evaluator_id=_EVALUATOR,
-            evaluator_version=1,prompt_sha256=matrix["binding"]["prompt_sha256"],
+        binding=dict(scenario_id=matrix["scenario_id"],
+            scenario_version=1 if case is None else case["scenario_version"],
+            evaluator_id=matrix["evaluator_id"],
+            evaluator_version=1 if case is None else case["evaluator_version"],
+            prompt_sha256=matrix["binding"]["prompt_sha256"],
             schema_sha256=matrix["binding"]["response_schema_sha256"],
             profile_sha256=matrix["binding"]["profile_sha256"],
             settings_sha256=None if settings is None else settings["settings_sha256"],
             matrix_sha256=matrix["matrix_sha256"]),
         settings=None if settings is None else _snapshot(settings),execution_mode="actual",
         status=status,reason_code=reason,receipt=receipt,
-        strict_decode=dict(status=decoded,evaluator_id=_EVALUATOR,
-                           error_code="connection_response_invalid" if decoded=="rejected" else None),
-        assessment=dict(status="not_assessed",verdict=None,reason_code="connection_only"),
+        strict_decode=dict(status=decoded,evaluator_id=matrix["evaluator_id"],
+                           error_code=response_invalid if decoded=="rejected" else None),
+        assessment=dict(status="not_assessed",verdict=None,
+            reason_code="connection_only" if case is None else "semantic_evaluator_not_connected"),
         budget=dict(budget_id=None if budget is None else budget["budget_id"],
             reservation_id=None if reservation is None else reservation["reservation_id"],
             reserved_calls=None if budget is None else budget["reserved_calls"],
@@ -811,10 +923,16 @@ def _execute(matrix,index,prompt,schema,adc,directory,budget_path,approval_path,
                 budget=budget,started=started,elapsed=max(0,(time.monotonic()-clock)*1000),attempts=None)
         else:
             try:
-                _decode(raw)
-                decoded,status,reason = "checked","success","connection_verified"
-            except ModelComparisonError:
-                decoded,status,reason = "rejected","failed","connection_response_invalid"
+                _decode(raw,matrix,prompt)
+                decoded,status = "checked","success"
+                reason = ("intake_response_verified" if matrix["scenario_id"] in _INTAKE_CASES
+                          else "connection_verified")
+            except ModelComparisonError as error:
+                if error.code == _PREFIX+"dependency_unavailable":
+                    raise
+                decoded,status = "rejected","failed"
+                reason = ("intake_response_invalid" if matrix["scenario_id"] in _INTAKE_CASES
+                          else "connection_response_invalid")
             record = _row(matrix,slot,reason,status=status,receipt=receipt,
                 reservation=reservation,budget=budget,started=started,decoded=decoded,
                 elapsed=max(0,(time.monotonic()-clock)*1000),
