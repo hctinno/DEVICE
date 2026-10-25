@@ -1,6 +1,6 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `86b0c55359d295ec5d37d4a903ddcf20cc1907db` / source298을 정상 push 후 원격 exact SHA로 대조했다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `77c6d6cd29b7616020c5232e67ffed37efdbbe4b` / source304를 정상 push 후 원격 exact SHA로 대조했다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
 
 | 수용 단위 | 독립 검수와 총괄 검증 | 범위·보존한 실패/미확인 |
 |---|---|---|
@@ -30,14 +30,20 @@ e3 저장은 독립8논리/12진입 PASS와 별도 root21 PASS, facts7d는 독�
 
 FCC B064~B072의 새107PDF/423845757B를 raw private 보관 ACK했고 P01 보고7846쪽과 총괄 독립 페이지수null을 구별했다. source/receiver native identity를 분리해170원파일과 receipt36을 보존했으며 PDFmagic/raw SHA만 확인·body/native/render/OCR/복호화/신원·발행·권리/적격 승인0이다. 적격18/690은 그대로다. 다음 요청 `DEV-HCT-TWIN-CONDUCTED-METHOD-GAPS-001`은 같은 첫 조건의 metric/방법·보정 기준면/부호/이미적용·독립대조 관계3만 P01의 기존 검수 경로로 좁혀 보낸 것이다. 원 STOP·검색2/2 예산은 보존하며 새검색·우회·유료원문 구매를 요청하지 않는다.
 
-## 실제 드러난 회귀와 다음 구현
+## 현재 후속 수용과 다음 구현
 
-기존 RF read048의19소스 aggregate가 accepted evaluation/integration 변경으로 역사9b에서 현재7816으로 바뀌었으나 reader/scenario가 옛 값만 허용해 저장 관측12가 reader에서 중단됐다. CRLF 문제가 아니다. 원 실패를 보존하고 개발3에 정확13경로의 현재/역사 coherent 호환·unknown/혼합 거절·새 genuine7/CLI/관측 복구를 실제 배정했다. 수용 전 전체 가상 회귀가 유지됐다고 보고하지 않는다.
+RF3ba는 source5/test3/usage5의 정확13경로로 현재7816과 명시 역사9b의 coherent 저장 기록만 허용하고 live는 현재 aggregate만 허용했다. mixed/unknown은 거절하고 engine19·평가/계산은 변경하지 않았다. 독립 qualified12 target 뒤 총괄 실제101/101 PASS로 수용했다. 원 root 외곽의 예상99 오기로 passed=false였던 receipt는 그대로 두고 실제101의 원 로그/return0/raw 불변을 별도 metadata로 확인했으며 재실행0이다. 독립 old055 동적 양성/CLI 미실행·전역 handle/물리 한계는 유지한다.
 
-facts→plan7d, bound실제setup/journal743, native artifact/DRAFT e3는 위 후속 수용을 완료했다. 제공 결과 readonly99a와 RF3ba·gatefcb는 독립 검수 중이다. 다음 actual 코드 배정은 개발1 generic 조건 gate3, 개발2 결과 finalizer3, 개발3 RF 호환13, 개발4 같은 접수 예외 큐5다. 원 후보/독립 clone/branch/파일 소유는 유지한다. 실제 AI 가상 도구 loop의 정식 실행·업무 평가, 종단 초안/화면, 규범/불확도 판정, 실측·현장·자동 물리 작업은 미완료다.
+gatefcb는 독립12/root24 PASS 뒤 수용했다. genuine current plan/C1·제공 원문 JSON 해시/조건 AST를 대조하지만 caller approval bool은 독립 권위가 아니며 normative verdict=null/authority=false다. parser002는 원 기대8논리/12 target qualified Yes·root 원35+신규13=48 PASS 뒤 수용했다. 실제17 원문 그대로의 별도 완료 probe는 명시 후보를 보존하고 source_condition/source_duty_cycle 두 질문으로 blocked다. 첫 outer findings extra key 관측 정지와 잘못된 nested plan key의 probe KeyError를 보존·각 별도 관측 수정했으며 원48 반복0/모델0/응답 편집0이다.
+
+99a 결과 화면은 독립 qualified Yes 뒤 root Python125/Node28 PASS·별도 실제 보호 HTTP/DOM32/typed16 PASS·14 host 종료/포트 재bind로 수용했다. 독립 전체 browser-runner all-green 주장은 하지 않으며 원 관측기/기존 refresh focus 보조 실패·actual revision/latehide 미실행을 보존한다. root의 기존384 helper와 정상 cherry 충돌은 index3단계/원 conflict를 보존한 뒤 소유 최종9 GitLF blob 그대로 해결했다. root 최초 Playwright 모듈 lookup 준비 실패는 DOM/HTTP 전이며 별도 browser-only에서 경로만 고쳐 Python125/Node28 반복0으로 완료했다. provided snapshot UI 증거는 D3 수학/실측이나 실제 AI 증거가 아니다.
+
+finalizer576·비교e4·예외 큐cbcc는 정상게시/동결 후 독립 검수 중이다. 후속 실제 코드 소유는 개발1 current readonly facts→plan3·개발2 별도 registered workflow host3·개발3 명시 snapshot 비교 CLI3·개발4 사용자용 opt-in 종단 시연3이다. 기존 후보/독립 clone/branch/원 실패·미커밋을 보존하며 총괄은 담당 구현을 대신하지 않는다. 실제 AI 도구 루프의 정식 실행/업무 평가·규범/불확도·실측/현장·자동 물리 작업은 미완료다.
 
 ## P01 인수와 시연
 
 N02 새4단위의 원 bytes/제한 metadata ACK와 후행 readonly 대조를 닫았다. 검색은2/2 소진, 구조 경고 rawheld PDF의 페이지/권한/본문은 미확인·미해석 그대로다. 새 `DEV-HCT-TWIN-RULE-PREDICATES-001`은 P01→S06 실제 배정/QA 후6규칙/6fact/unique16locator/12gap의 SOURCE12 JSON(총133863B)을 private 인수·receiver receipt16까지 후행 종료했다. AST·단위는 보존하지만 입력/실행context8은 null이고 HOLD/QUESTION/REVIEW는 개발 정책이다. private fixture/mapping·원문/인용·private path/SHA·사례별 규범값은 공개Git/모델0, generic 코드와 독립 합성 예제만 기존 코드 검수 경로를 따른다. FCC 후속 private 배치는 원문/권리/모집단 적격과 구별해 인수 대기하며 전체 수집을 개발 선행조건으로 삼지 않는다.
+
+새 방법 공백 요청은 P01→S06 실제 배정/QA 뒤 SOURCE8/48101B를 private 인수하고 exact receiver8+receipt4의 후행 readonly 종료까지 확인했다. 관계3/근거metadata8/미해결12·해소0, source와 developer recording requirement를 구별했다. 실제 ATT/cable/DCF의 plane/frequency/sign/alreadyapplied/actor/time·동일 조건 IO/split/holdout은 null이며 현행 ANSI/KDB/수치 PASS를 승인하지 않았다. eligible fixed URL0/HELD·새 GET/search0·검색2of2 소진을 유지한다. 후속 B073의 새12PDF22353676B는 raw private 보관ACK이며 P01831쪽/root 독립쪽수null, copyfalse9/copytrue3·원 암호화상태를 보존하고 본문/발행/신원/권리/대상 승인0이다.
 
 직접 실행은 [기존 시연 안내](../../docs/fcc/intake_fixture_check_usage.md)의 `python -B -X utf8 -m labflow.intake_fixture_check --document-kind pdf --power-dbm -4 --port 0`이다. 새 합성 접수→scripted 가상 센서→결과/운영 journal 저장과 출력 loopback URL을 확인한다. 기본 CLI에는 plan/result snapshot이 없어 unavailable가 정상이며, 실제 AI 종단·규범 판정 완료 시연이 아니다. Ctrl+C로 자신의 새 서버만 종료한다. 새 사용자 준비/결정은0이며 동일 조건 실측과 현장 권한·자료는 실제 해당 단계에서 최소 요청한다.
