@@ -200,18 +200,19 @@ P01 인수 색인 v1의 7개 packet·105개 inventory 파일·로컬 원본 22�
 
 최종 목표는 **디지털 트윈 기반 AI 무인시험소**다. 제품·의뢰 정보에서 목적·시장과 적용 범위를 이해하고, 근거 있는 방법·계획, DUT·장비·경로 실행, 원본 취득, 보정·계산·판정, 저장·성적서·독립 검토를 같은 시험건으로 연결한다. 정상 지원 범위에서는 사용자가 제품 분류·규격·조건·단계 진행을 반복 지정하지 않는다. 첫 실증의 물리 연결·교체·시료 배치는 사람이 수행하며 자동 물리 작업은 전체 목표의 후속 단계다.
 
-현재 갱신: 2026-10-26 통합066, 기능 `77c6d6cd` / source304. 표의 단계별 증거는 전체 완성률이 아니다.
+현재 갱신: 2026-10-26 통합066, 기능 `5e9338c` / source312. source310의 새 종단 시연 뒤 비교 CLI 신규2 source만 추가했고 기존310 raw/native는 불변이다. 표의 증거를 전체 완성률로 환산하지 않는다.
 
 | 구분 | 현재 재사용 가능한 구현·증거 | 정확한 미완료 연결 / 다음 수용 조건 |
 |---|---|---|
-| 자료 확보 | Un-licensed·장비/DUT 제어자료·HCT 공개 사본 private 보존/색인. 대상18PDF/690쪽과 기존 비공개 보존381PDF+후속 보관ACK12PDF/전체쪽수null 구별 | 전수 모집단·공식 대응·제품별 실제 지원 미확인. 후속 private 보관ACK와 본문/발행/신원/권리 검수는 별도이며 수량을 업무 완성률로 환산하지 않음 |
-| 내용·근거 검수 | 첫 조건/N01·공식 XML 조건부6fact/16locator/12gap, 6규칙 metadata SOURCE12 및 방법 관계3/근거metadata8/미해결12의 SOURCE8·receiver/receipt12 private 인수·후행 종료 | 보고서 peak와 개발 on-average, 현행 효력·현재 사례/KDB/ANSI 방법·기준면/보정·한계·불확도·holdout 미승인. 구조 경고 PDF는 미해석/미보정 보류. 규칙의 HOLD/REVIEW는 개발 정책 |
-| 규격·방법 판단 | D1 plan의 C1·출처·명시 source6/null/gaps 보존, 현재 접수 readonly→계획 API/화면 수용. facts→계획7d는 독립 qualified12 뒤 수용·root35 PASS | generic 조건 gate fcb는 독립12/root24 PASS, 문법002는 독립12/root48 PASS 뒤 수용. 실제 Codex 원문은 조건 결합/명시 duty 단위 두 질문으로 blocked. 현재 readonly facts→계획 자동 조립의 공개 read API를 개발1이 구현 중. 제공 조건 true/approval bool은 독립 규범 승인·실행 권한이 아님 |
-| 가상 모델·방법 | 동일 Trial DUT·계측기·RF 경로와 실제 setup 명령/receipt/실패 prefix, 같은 plan/setup/journal/report의 순수 결과 builder 수용·새 root90 PASS | quantity/기준면/부호/이미 보정이 없으면 corrected=null. 기존 RF aggregate 변경(9b→7816) 호환 회귀는 원 실패 보존 후3ba 독립12/root101 PASS로 현재/명시 역사 coherent 범위를 복구했다. 비교e4는 독립 검수 중. 물리 예측·실측 보정 미검증 |
-| AI 자율 실행 | 같은 runtime의 계획 source6→도구/관측/복구/종료 루프 및 native 등록/기존16 이력/단일 permit→genuine Codex 접수 수용. 실제 새1 strict/독립 의미3 PASS·총17 | 실제 AI 접수 의미와 실제 AI 가상 도구 루프의 종단 과업은 별도. bound 실제 setup/journal743 독립8 PASS 뒤 수용·root loop31+adapter14=45 PASS. 정식 실제 AI loop 실행·업무 평가 연결은 미완료이며 개발2가 별도 native 등록 workflow host3을 구현 중. 소진 Vertex 초기화/허위 승인/0 장부 금지 |
-| 전체 가상 업무 | 합성 입력→scripted 취득→journal/저장 시연과 같은 접수 7단계·계획 미리보기 수용. source6 계획→동일 가상 실행 root12 PASS | 실제 입력/사실→계획→bound측정→결과/초안→같은 화면의 첫 종단 수용 미완료. e3 저장은 독립12/root21 PASS 뒤 수용. finalizer 담당 fresh MOCK2는 등록 원문→facts→plan→같은 가상 측정/계산/JSON·DRAFT 연결, 독립/총괄 수용 전. 99a 결과 화면은 독립 qualified Yes와 root Python125/Node28·genuine32/typed16 뒤 수용. cbcc 예외 큐는 독립 검수, opt-in CLI 시연3 구현 중. fixture/모의·재생·실제 AI·저장완료/과업성공 구별 |
-| 실측 대조·보정 | 방법/모델 버전·원본·단위·계산·기준면·같은 run의 비교 입력 계약 | 같은 계획의 실물 어댑터, 대상별 허용 차이·불확도·보정용/독립 검증용 분리 및 새 실측 대조 미실행 |
-| 현장·물리 작업 | 전체 업무·시료 취급/배선/이동을 최종 범위에 유지. 첫 실증의 사람 셋업과 예외 경계 보존 | 실장비·현장·물리 무인 작업 검증 미실행. 일부 소프트웨어 성공을 전체 시험소 완료로 표시하지 않음 |
+| 자료 확보 | Un-licensed·장비/DUT 자료·공개 사본 private 색인. 기존405PDF와 후속24PDF raw 보관ACK, 대상18PDF/690쪽·전체쪽수null을 구별 | 후속 수신본 readonly 대조·발행/신원/권리·기관/판본·전수 모집단은 별도. 수집 공유/원본은 개발 측 읽기전용 |
+| 내용·근거 검수 | P01 첫 조건·N01/XML·6규칙 metadata, 방법 관계3/근거metadata8/미해결12를 private 인수/후행 대조 | 사례 peak/MCS6와 개발 on-average/MCS0·현행 KDB/ANSI·판본/plane/보정·IO/split/holdout 미확정. 반복 설정/PASS를 보편 규범으로 승격하지 않음 |
+| 규격·방법 판단 | 명시 근거 source6→계획, generic 조건 gate·문법002·현재 PDF 사실 readonly941 수용(root15). 원 값·단위·C1·최소 질문 보존 | 실제 Codex17 원문은 동일 조건 결합/명시 duty 단위 두 질문으로 blocked. 모델/시장만으로 규격·판본·시험방법·한계를 자동 확정하는 판단은 미완료. TXT16은 담당 검증 후 독립 검수 |
+| 가상 모델·시험방법 | 같은 DUT/장비/경로·실제 setup/취득·journal/report→result builder·native DRAFT writer·finalizer576 수용. 현재/명시 역사 RF101 회귀 유지 | 입력 조건의 합성 상태/산술 모델이다. 물리 정확도·실측 보정 미검증. 명시 quantity/기준면/부호/이미보정 부족은 null. 불확도805/초안 appendix17은 독립 검수 단계 |
+| AI 자율 실행 | 실제 Codex 접수17번째1건 strict/독립 의미3 PASS. 같은 runtime의 source6 계획→도구/관측/종료 loop·provenance743 수용 | 실제 AI가 전체 가상시험을 수행한 종단 과업은 미실행. 별도 host735는 동결/독립 검수, 정식 수동 operator 등록 API를 개발2에 배정. 기존17 permit/Vertex 소진·unknown 비용을 초기화하지 않음 |
+| 전체 가상 업무 | 새 정식 opt-in CLI1: 합성 PDF→원 근거 facts/같은 계획→native MOCK5→원 측정·보정·JSON/DRAFT→같은 보호 API/화면. root 진입7/Decimal/원5파일·marker/HTTP200·Origin403 PASS, 독립 qualified Yes | 개발용 명시 방법 conducted_synthetic/on/source_output·한 조건이다. task/conformity not_assessed. 기존 workflow 요약의 fixture 미선택·저장 조회와 새 제공 결과 연결을 개발4/3이 구현. 실패2d는 검수 중이며 실제 통신·복구실패 seam은 미지원 |
+| 실측 대조·보정 | 순수 비교e4와 명시4파일 비교 CLI1b 수용(root26/별도33). 같은 방법·조건·metric·plane/단위·명시 tolerance·lineage/split 부족은 not_assessed | 참조 사본 진위·실측 정확도·허용 차이/불확도의 권위·보정용/독립 검증용 실제 자료 분리·새 실측 대조 미실행 |
+| 현장 업무·물리 작업 | 시료 취급/배선/이동까지 전체 목표에 유지. 첫 실증은 사람이 물리 연결·교체·시료 배치 | 실장비·현장·자동 물리 작업 검증 미실행. 일부 가상/저장/연결 성공을 전체 시험소 완료로 표시하지 않음 |
+
 
 첫 완결 단위는 **SM-A176U Un-licensed 2.4 GHz Wi-Fi b/g/n의 기존 FCC 범위 중 전도 출력 한 항목·한 조건**이다. 접수 → 제품·목적·시장/누락 → 근거와 지원 범위가 있는 계획 → 가상 DUT·계측기·경로 준비 → 허용 도구 실행 → 무효/오류 복구 또는 중단 → 보정·계산·판정/원본·이력 저장 → 초안·독립 평가 → 동일 조건 실측 대조용 입출력 보존을 닫은 뒤 조건을 늘린다. 측정 metric과 기준면·한계가 미확정이면 미확정으로 남기며 일부 성공을 전체 시험 완료로 표시하지 않는다.
 

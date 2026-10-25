@@ -1,6 +1,19 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `77c6d6cd29b7616020c5232e67ffed37efdbbe4b` / source304를 정상 push 후 원격 exact SHA로 대조했다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `5e9338cff49d0aac59625689e0208c54d8186266` / source312를 정상 push 후 원격 exact SHA로 대조했다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
+
+## source312 최신 수용·첫 종단 시연
+
+finalizer576은 독립 qualified Yes 뒤 기능fe30에 수용했다. 원 root20 전부는 fixture 환경 누락의 setUp 오류/API0으로 보존하고, 동결 담당 증거의 보존 replay46파일/6case를 명시 복사한 별도 root20 PASS로 검증했다. 이는 fresh runtime/모델 실행이 아니다. 담당의 과거 partial cleanup·그 뒤 자동 승인 거절/추가 삭제0 한계도 유지한다. 비교e4는 독립12/root26 뒤 ebd에, gapcbcc는 qualified Yes/root 새 Node10·genuine14·typed8 뒤 정상 수용했다. current941는 genuine 현재 readonly→facts/계획의 신규3으로 독립 Yes/root15 뒤 f507에 수용했다.
+
+ab19의 기존 CLI opt-in3은 독립 qualified Yes/C0I0M0 뒤 기능ab45019에 수용했다. 독립 원12 recipes는7관측/4부분/1정적만이며12/12 dynamic PASS 주장을 하지 않는다. 실제 AI/운영 인증·17 SQL/실장비0, 우발 공개 수치 literal 노출·관측기 오류·전역 handle 미확인은 보존한다. root는 기존 TXT/PDF4+새 entry3=7 PASS 뒤 **새 정식 product CLI1**을 실행했다. authored PDF→genuine public8/strict MOCK 분석→현재 readonly C1/원 facts source6/계획→같은 DUT/장비/경로·genuine mock producer5/virtual runtime1→명시 event:17→finalizer/D3 result.json·draft.md·manifest→같은 protected result API와 production 화면까지 연결했다.
+
+원 raw -19.5dBm과 실제 경로의10+0.5+20dB 손실·명시 역보정30.5dB를 독립 Decimal80으로 대조해11dBm·0.012589254117941675W와 일치함을 확인했다. 수치는 이 개발용 합성 입력의 결과이며 성적서 재생값/새 실측이 아니다. 같은 원5입력의 bytes/SHA·run/runtime·C1/source6·저장 파일2와 완료 marker를 대조했다. protected API200 matched·다른 Origin403, 실제 CUA의 계획 readiness/같은 결과/원 ledger3 펼침을 확인했다. Ctrl+C 뒤 listener 종료/포트 재bind를 확인했으나 PTY 외곽 exit1을 앱 exit0으로 고치지 않았다. task/conformity not_assessed·한계/불확도/verdict null·물리 미검증은 그대로다. 기존 7단계 요약은 fixture 미선택과 제공 결과의 출처를 아직 일관되게 요약하지 않으므로 개발4 후속이다. DRAFT 저장 검증을 제공 snapshot API 자체의 진위 검증으로 확대하지 않는다.
+
+비교 CLI1b는 독립 qualified Yes/C0I0M0 뒤 신규3/기능5e9338c로 수용했다. 독립 main7+module5=12 진입 중 direct6 PASS/D03 관측기 TypeError 불완전, 원 child3 PASS/No2 뒤 같은 raw2의 diagnostic 형상 재판독을 구별한다. 원 fixture lineage 공백·모듈 Popen 관측기 오류·집계 오기와 원 기대를 보존했고 제품 재실행으로 숨기지 않았다. root의 새 CLI33 PASS는 이전 parent26/RF101 반복과 별개다. 실제 참조 진위·측정 정확도·FCC 적합성은 미검증이다.
+
+개발1 TXT16cf·개발2 host735·개발3 불확도805/appendix17·개발4 실패2d는 정상 게시/동결 후 독립 검수 단계다. 후속은 현재자료 CLI3/정식 workflow 등록3/고정 artifact reader3/일관된 제공 업무요약5로 배타 실제 배정했다. 기존 branch/WIP·원17/Vertex6·3072 소진·원 실패·독립 기대·수집 배정을 보존한다. 새 관리 문서/새 실제모델/실물은0이다.
+
 
 | 수용 단위 | 독립 검수와 총괄 검증 | 범위·보존한 실패/미확인 |
 |---|---|---|
@@ -30,7 +43,7 @@ e3 저장은 독립8논리/12진입 PASS와 별도 root21 PASS, facts7d는 독�
 
 FCC B064~B072의 새107PDF/423845757B를 raw private 보관 ACK했고 P01 보고7846쪽과 총괄 독립 페이지수null을 구별했다. source/receiver native identity를 분리해170원파일과 receipt36을 보존했으며 PDFmagic/raw SHA만 확인·body/native/render/OCR/복호화/신원·발행·권리/적격 승인0이다. 적격18/690은 그대로다. 다음 요청 `DEV-HCT-TWIN-CONDUCTED-METHOD-GAPS-001`은 같은 첫 조건의 metric/방법·보정 기준면/부호/이미적용·독립대조 관계3만 P01의 기존 검수 경로로 좁혀 보낸 것이다. 원 STOP·검색2/2 예산은 보존하며 새검색·우회·유료원문 구매를 요청하지 않는다.
 
-## 현재 후속 수용과 다음 구현
+## source304 당시 후속 수용과 다음 구현 — 보존 이력
 
 RF3ba는 source5/test3/usage5의 정확13경로로 현재7816과 명시 역사9b의 coherent 저장 기록만 허용하고 live는 현재 aggregate만 허용했다. mixed/unknown은 거절하고 engine19·평가/계산은 변경하지 않았다. 독립 qualified12 target 뒤 총괄 실제101/101 PASS로 수용했다. 원 root 외곽의 예상99 오기로 passed=false였던 receipt는 그대로 두고 실제101의 원 로그/return0/raw 불변을 별도 metadata로 확인했으며 재실행0이다. 독립 old055 동적 양성/CLI 미실행·전역 handle/물리 한계는 유지한다.
 
@@ -46,4 +59,4 @@ N02 새4단위의 원 bytes/제한 metadata ACK와 후행 readonly 대조를 닫
 
 새 방법 공백 요청은 P01→S06 실제 배정/QA 뒤 SOURCE8/48101B를 private 인수하고 exact receiver8+receipt4의 후행 readonly 종료까지 확인했다. 관계3/근거metadata8/미해결12·해소0, source와 developer recording requirement를 구별했다. 실제 ATT/cable/DCF의 plane/frequency/sign/alreadyapplied/actor/time·동일 조건 IO/split/holdout은 null이며 현행 ANSI/KDB/수치 PASS를 승인하지 않았다. eligible fixed URL0/HELD·새 GET/search0·검색2of2 소진을 유지한다. 후속 B073의 새12PDF22353676B는 raw private 보관ACK이며 P01831쪽/root 독립쪽수null, copyfalse9/copytrue3·원 암호화상태를 보존하고 본문/발행/신원/권리/대상 승인0이다.
 
-직접 실행은 [기존 시연 안내](../../docs/fcc/intake_fixture_check_usage.md)의 `python -B -X utf8 -m labflow.intake_fixture_check --document-kind pdf --power-dbm -4 --port 0`이다. 새 합성 접수→scripted 가상 센서→결과/운영 journal 저장과 출력 loopback URL을 확인한다. 기본 CLI에는 plan/result snapshot이 없어 unavailable가 정상이며, 실제 AI 종단·규범 판정 완료 시연이 아니다. Ctrl+C로 자신의 새 서버만 종료한다. 새 사용자 준비/결정은0이며 동일 조건 실측과 현장 권한·자료는 실제 해당 단계에서 최소 요청한다.
+최신 직접 실행은 [시연 안내](../../docs/fcc/intake_fixture_check_usage.md)의 `python -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --document-kind pdf --measurement-ref event:17 --mock-model gpt-6.1-sol --port 0`이다. 현재 root의 새 UUID에서 원 근거/계획·가상 측정/보정·JSON/DRAFT와 출력 loopback URL을 확인한다. 인위적 MOCK 정책이고 실제 AI/규범/실측 완료가 아니다. 같은 output을 재사용하지 않고 자신의 새 서버만 Ctrl+C로 종료한다. 기존 default TXT/PDF도 유지한다. B074 후행 대조는 종료했고 B075/B076 새24PDF는 raw private byte/제한 metadata ACK·후행 readonly 대조 단계다. 보관량과 대상18/690·본문/권리/발행·정체·현행 방법 검수를 구별하며 새 B077은 대기다. 현재 독립 가능한 구현에 필요한 새 사용자 준비/결정은0이다.
