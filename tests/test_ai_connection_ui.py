@@ -89,7 +89,7 @@ class TypedDependencies:
         indexes=list(range(6)) if selection=='matrix' else [MODELS.index(resolved['model_id'])*3+('LOW','MEDIUM','HIGH').index(resolved['thinking_level'])]
         for i in range(6):
             setting=self.resolve(profile,model_id=MODELS[i//3],overrides=dict(overrides or {},thinking_level=('LOW','MEDIUM','HIGH')[i%3])) if selection=='matrix' else resolved if i in indexes else None
-            rows.append(dict(row_index=i,run_id=hashlib.sha256((batch_id+str(i)).encode()).hexdigest(),settings=copy.deepcopy(setting)))
+            rows.append(dict(row_index=i,run_id='vertex-run:'+hashlib.sha256((batch_id+str(i)).encode()).hexdigest(),settings=copy.deepcopy(setting)))
         value=dict(schema_version=1,kind='vertex_comparison_matrix',batch_id=batch_id,scenario_id=scenario_id,evaluator_id=evaluator_id,
                    profile=copy.deepcopy(profile),binding=dict(profile_sha256=hashlib.sha256(canonical(profile)).hexdigest(),prompt_sha256=hashlib.sha256(prompt_bytes).hexdigest(),response_schema_sha256=hashlib.sha256(response_schema_bytes).hexdigest()),
                    limits=dict(generation_posts=6,max_output_tokens=512,reserved_output_tokens=3072,timeout_seconds=60,wall_seconds=300,retries=0,continuations=0),rows=rows,
@@ -121,7 +121,7 @@ class TypedDependencies:
                      profile_sha256=matrix['binding']['profile_sha256'],settings_sha256=settings['settings_sha256'] if settings else None,matrix_sha256=matrix['matrix_sha256'])
         if self.bad_binding: binding['matrix_sha256']='f'*64
         row=dict(schema_version=1,kind='vertex_comparison_row',batch_id=matrix['batch_id'],run_id=slot['run_id'],row_index=index,binding=binding,settings=copy.deepcopy(settings),execution_mode='mock',status='success' if attempted else 'not_run',
-                    reason_code=None if attempted else 'cancelled' if cancelled and settings else 'budget_rejected' if denied else 'not_selected',receipt=receipt,strict_decode=dict(status='checked' if attempted else 'not_run',evaluator_id=matrix['evaluator_id'],error_code=None),
+                    reason_code='connection_verified' if attempted else 'cancelled' if cancelled and settings else 'budget_rejected' if denied else 'not_selected',receipt=receipt,strict_decode=dict(status='checked' if attempted else 'not_run',evaluator_id=matrix['evaluator_id'],error_code=None),
                     assessment=dict(status='not_assessed',verdict=None,reason_code='connection_only'),budget=dict(budget_id='SYN-BUDGET',reservation_id='SYN-RESERVATION' if attempted else None,reserved_calls=1 if attempted else 0,reserved_output_tokens=settings['max_output_tokens'] if attempted else 0,generation_post_attempts=1 if attempted else 0),
                     timing=dict(started_at=time.time(),finished_at=time.time(),elapsed_ms=10 if attempted else None))
         if receipt and self.failure_code:
@@ -453,6 +453,72 @@ class AIConnectionTests(unittest.TestCase):
                 self.assertEqual(selected['state'],'failure');self.assertEqual(selected['reason_code'],code)
                 self.assertIsNone(selected['usage']);self.assertIsNone(selected['cost']);self.assertEqual(selected['attempted'],bool(count))
                 self.assertNotIn('artifacts',json.dumps(result))
+
+    def test_genuine_D3_run_id_namespace_is_validated_without_rewriting(self):
+        self.ready();server=self.start();runtime=server._ai_connection_runtime
+        profile=json.loads(self.config['profile_path'].read_bytes());scenario=self.config['scenarios'][0]
+        request=dict(expected_revision=1,scenario_id='SYN-CONNECTION',model_id=MODELS[1],overrides={},matrix=False)
+        matrix=self.dep.build(profile,scenario['prompt_bytes'],scenario['response_schema_bytes'],batch_id='SYN-ID',
+            scenario_id='SYN-CONNECTION',evaluator_id='connection-json-v1',selection='selected',model_id=MODELS[1],overrides={})
+        original=canonical(matrix);runtime._matrix(matrix,profile,scenario,request);self.assertEqual(canonical(matrix),original)
+        for invalid in ('1'*64,'vertex-run:'+'1'*63,'vertex-run:'+'A'*64,'other:'+'1'*64,'vertex-run:'+'1'*64+'\n',None,True):
+            with self.subTest(invalid=invalid):
+                changed=copy.deepcopy(matrix);changed['rows'][0]['run_id']=invalid
+                changed['matrix_sha256']=hashlib.sha256(canonical({k:v for k,v in changed.items() if k!='matrix_sha256'})).hexdigest()
+                with self.assertRaises(ValueError):runtime._matrix(changed,profile,scenario,request)
+
+    def test_genuine_budget_entry_identity_preserves_metadata_and_reservation(self):
+        self.ready();server=self.start();headers=self.bootstrap(server)
+        budget=json.loads(self.config['budget_path'].read_bytes())
+        budget.update(revision=1,reserved_calls=1,reserved_output_tokens=512,entries=[dict(reservation_id='SYN-RESERVATION',
+            batch_id='SYN-BATCH',run_id='vertex-run:'+'1'*64,row_index=0,matrix_sha256='2'*64,settings_sha256='3'*64,
+            output_tokens=512,state='complete',record_ref=None,receipt_ref=None)])
+        raw=canonical(budget);self.config['budget_path'].write_bytes(raw)
+        status,_,state=self.request(server,'state',headers=headers)
+        self.assertEqual(status,200);self.assertTrue(state['gate']['run_allowed'])
+        self.assertEqual((state['budget']['reserved_calls'],state['budget']['remaining_calls']),(1,5))
+        self.assertEqual(self.config['budget_path'].read_bytes(),raw)
+        for invalid in ('1'*64,'vertex-run:'+'1'*63,'vertex-run:'+'A'*64,'other:'+'1'*64,None,True):
+            with self.subTest(invalid=invalid):
+                changed=copy.deepcopy(budget);changed['entries'][0]['run_id']=invalid
+                raw=canonical(changed);self.config['budget_path'].write_bytes(raw)
+                status,_,state=self.request(server,'state',headers=headers)
+                self.assertEqual(status,200);self.assertFalse(state['gate']['run_allowed'])
+                self.assertIn('budget_unavailable',state['gate']['reasons']);self.assertEqual(self.config['budget_path'].read_bytes(),raw)
+        self.assertNotIn('run_batch',self.dep.calls)
+
+    def test_connection_record_reasons_are_closed_and_decode_is_bound(self):
+        self.ready();server=self.start();runtime=server._ai_connection_runtime
+        profile=json.loads(self.config['profile_path'].read_bytes());scenario=self.config['scenarios'][0]
+        matrix=self.dep.build(profile,scenario['prompt_bytes'],scenario['response_schema_bytes'],batch_id='SYN-REASONS',
+            scenario_id='SYN-CONNECTION',evaluator_id='connection-json-v1',selection='selected',model_id=MODELS[1],overrides={})
+        report=self.dep.run_batch(matrix,scenario['prompt_bytes'],scenario['response_schema_bytes'],**{k:self.config[k] for k in ('adc_path','budget_path','approval_path')},evidence_dir=self.root/'unused',cancel_event=threading.Event())
+        index=matrix['selection']['row_indexes'][0]
+        cells,count=runtime._record_cells(report,matrix);self.assertEqual(count,1);self.assertEqual(cells[index]['strict_decode'],'pass')
+        for reason in ('cancelled','budget_rejected','wall_limit','gate_rejected','dependency_unavailable','credential_metadata_invalid',
+                       'budget_unavailable','run_already_reserved','budget_busy','batch_stopped'):
+            with self.subTest(reason=reason):
+                changed=copy.deepcopy(report);row=changed['rows'][index]
+                row.update(status='not_run',reason_code=reason,receipt=None,strict_decode=dict(status='not_run',evaluator_id='connection-json-v1',error_code=None))
+                row['budget']['generation_post_attempts']=0
+                cells,count=runtime._record_cells(changed,matrix);self.assertEqual(count,0)
+                self.assertEqual(cells[index]['state'],'not_run');self.assertIs(cells[index]['attempted'],False)
+        rejected=copy.deepcopy(report);row=rejected['rows'][index]
+        row.update(status='failed',reason_code='connection_response_invalid',strict_decode=dict(status='rejected',evaluator_id='connection-json-v1',error_code='connection_response_invalid'))
+        cells,count=runtime._record_cells(rejected,matrix);self.assertEqual(count,1);self.assertEqual(cells[index]['strict_decode'],'fail')
+        unknown=copy.deepcopy(report);row=unknown['rows'][index]
+        row.update(status='unknown',reason_code='receipt_invalid',receipt=None,strict_decode=dict(status='not_run',evaluator_id='connection-json-v1',error_code=None))
+        row['budget']['generation_post_attempts']=None
+        cells,count=runtime._record_cells(unknown,matrix);self.assertIsNone(count);self.assertEqual(cells[index]['state'],'unknown')
+        for mutation in ('unknown_reason','checked_wrong_reason','checked_failed','rejected_wrong_code','wrong_assessment'):
+            with self.subTest(mutation=mutation):
+                changed=copy.deepcopy(rejected if mutation=='rejected_wrong_code' else report);row=changed['rows'][index]
+                if mutation=='unknown_reason':row['reason_code']='unregistered_reason'
+                if mutation=='checked_wrong_reason':row['reason_code']='connection_response_invalid'
+                if mutation=='checked_failed':row['status']='failed'
+                if mutation=='rejected_wrong_code':row['strict_decode']['error_code']='other_error'
+                if mutation=='wrong_assessment':row['assessment']['reason_code']='semantic_evaluator_not_connected'
+                with self.assertRaises(ValueError):runtime._record_cells(changed,matrix)
 
     def test_evidence_directory_failure_before_runner_preserves_known_zero(self):
         self.ready();self.config['evidence_root'].write_text('synthetic regular file',encoding='utf-8')
