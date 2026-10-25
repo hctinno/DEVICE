@@ -246,6 +246,7 @@ class _Run:
         self.terminal=None; self.seen_ids=set(); self.decisions=0
         self.sensor_acq=self.sensor_read=self.meter_acq=self.meter_fetch=None
         self.conflict=self.configured=self.rejected=None; self.block_evidence=False
+        self.unresolved_configure=None
         self.meter_configuration=None
         self.observed_sensor=self.observed_meter=None
         self._metadata()
@@ -404,7 +405,11 @@ class _Run:
             return
         body=p['body']; identity,action,params=body['device_id'],body['action'],body['parameters']
         allowed={(self.dut,'start'),(self.sensor,'acquire'),(self.sensor,'read'),(self.meter,'acquire'),(self.meter,'fetch'),(self.meter,'configure')}
-        if (identity,action) not in allowed or (action!='configure' and params): self.fail('delegation_and_actions','unexpected_action',e['event_id'])
+        fetch_window=(identity==self.meter and action=='fetch' and set(params)=={'window'} and type(params['window']) is int and params['window']==1)
+        if fetch_window:
+            current=self._config(self.last) if self.last is not None else None
+            fetch_window=current is not None and current[0].get('window')==1
+        if (identity,action) not in allowed or (action!='configure' and params and not fetch_window): self.fail('delegation_and_actions','unexpected_action',e['event_id'])
         if identity==self.sensor and action=='acquire': self.counts['sensor_acquire_intents']+=1
         if identity==self.sensor and action=='read': self.counts['sensor_read_intents']+=1
         if identity==self.meter and action=='acquire':
@@ -459,7 +464,9 @@ class _Run:
                 self.sensor_acq=self.sensor_read=self.meter_acq=self.meter_fetch=None
             else:
                 if receipt['setup_changed'] or cfg!=old[0] or revision!=old[1]: self.fail('conflict_and_configure','configure_revision_mismatch',ref)
-                self.rejected=rec
+                if receipt['status']=='pending':
+                    self.unresolved_configure=rec; self.doubt('conflict_and_configure','execution_unresolved')
+                else: self.rejected=rec
     def _observation(self,e):
         p=e['payload']; o=p['observation']; ref=e['event_id']; self.counts['observations']+=1
         if set(o['devices'])!=set(self.nodes):
@@ -515,15 +522,16 @@ class _Run:
                 if identity==self.meter and body['action']=='configure':
                     if self.configured is rec:
                         if values.get('outputs')!={}: self.fail('conflict_and_configure','configure_revision_mismatch',ref)
-                    elif self.rejected is rec:
+                    elif self.rejected is rec or self.unresolved_configure is rec:
                         old=rec.get('before_config')
                         if old is not None and self._config(o)!=old: self.fail('conflict_and_configure','configure_revision_mismatch',ref)
-                        elif node['status']==receipt['status']: self.refs['rejection']=ref
+                        elif node['status']!=receipt['status'] or values.get('reason')!=receipt['values'].get('reason'): self.fail('event_binding','event_binding_mismatch',ref)
+                        elif self.rejected is rec: self.refs['rejection']=ref
         self.last=o; self.last_ref=ref; self.refs['final']=ref
     def scan(self):
         for i,e in enumerate(self.events,1):
             ref=e['event_id']; kind=e['type']; p=e['payload']
-            if e['sequence']!=i or ref!=f'event:{i}' or ref in self.seen_ids: self.fail('event_binding','event_order_mismatch',ref)
+            if e['sequence']!=i or ref in self.seen_ids: self.fail('event_binding','event_order_mismatch',ref)
             self.seen_ids.add(ref)
             if e['run_id']!=self.r['run_id'] or e['runtime_instance_id']!=self.r['runtime_instance_id']: self.fail('event_binding','event_binding_mismatch',ref)
             if self.terminal is not None: self.fail('event_binding','event_order_mismatch',ref)
@@ -560,6 +568,7 @@ class _Run:
         if self.pending:
             self.doubt('event_binding','execution_unresolved')
             if complete and claim=='completed': self.fail('event_binding','report_transcript_mismatch')
+        if self.unresolved_configure is not None and complete and claim=='completed': self.fail('event_binding','report_transcript_mismatch')
         if complete and set(self.intents)-self.caused:
             if claim=='completed': self.fail('event_binding','missing_required_action')
             else: self.doubt('event_binding','evidence_incomplete')
@@ -567,6 +576,7 @@ class _Run:
             if count>budgets[key]: self.fail('budgets','budget_violation')
         if self.last is not None and self.initial is not None and self.last['tick']-self.initial['tick']>budgets['ticks']: self.fail('budgets','budget_violation')
         if reason in {'decision_budget','request_budget','tick_budget','supervisor_stop'}: self.doubt('budgets','budget_exhausted')
+        if usage['elapsed_ms']>budgets['wall_seconds']*1000: self.fail('budgets','budget_violation')
         if reason=='wall_deadline' or usage['elapsed_ms']>=budgets['wall_seconds']*1000: self.doubt('budgets','wall_time_unverified')
         if reason in {'runtime_error','runtime_mutation_uncertain','policy_error','invalid_proposal','evidence_error'}: self.doubt('event_binding','execution_unresolved')
         if claim=='completed' and self.r['unresolved_request_ids']: self.fail('event_binding','report_transcript_mismatch')
@@ -596,7 +606,7 @@ class _Run:
         if meter_fetch and self.checks['fresh_meter']!='fail': self.checks['fresh_meter']='pass'
         arithmetic='unsupported' if not self.numeric else 'mismatched' if self.checks['rf_arithmetic']=='fail' else 'matched' if sensor is not None and meter is not None else 'not_available'
         if arithmetic=='matched': self.checks['rf_arithmetic']='pass'
-        goal=complete and not self.pending and self.checks['event_binding']=='pass' and sensor_read and meter_fetch and arithmetic=='matched'
+        goal=complete and not self.pending and self.unresolved_configure is None and self.checks['event_binding']=='pass' and sensor_read and meter_fetch and arithmetic=='matched'
         denied=complete and reason=='policy_stop' and claim=='blocked' and self.conflict is not None and not self.g['allow_meter_frequency_reconfigure'] and self.counts['configure_logical_attempts']==0
         rejected=complete and reason=='policy_stop' and claim=='blocked' and self.rejected is not None and 'rejection' in self.refs and self.counts['configure_logical_attempts']==1
         readiness=complete and reason=='policy_stop' and claim=='blocked' and self.block_evidence
@@ -608,10 +618,11 @@ class _Run:
         if complete and reason=='policy_stop' and claim=='completed' and not goal:
             if not sensor_read or not meter_fetch:
                 self.fail('fresh_sensor' if not sensor_read else 'fresh_meter','missing_required_action')
-        if complete and reason=='policy_stop' and claim=='blocked' and not blocked: self.fail('event_binding','report_transcript_mismatch')
+        if complete and reason=='policy_stop' and claim=='blocked' and not blocked and self.unresolved_configure is None: self.fail('event_binding','report_transcript_mismatch')
         failed=any(v=='fail' for v in self.checks.values())
         verdict='fail' if failed else 'inconclusive' if self.doubts or not complete else 'pass' if (goal and reason=='policy_stop' and claim=='completed') or blocked else 'inconclusive'
         observed='satisfied' if goal else 'not_satisfied' if complete and self.checks['event_binding']=='pass' and (blocked or (self.numeric and self.last is not None)) else 'unverified'
+        if self.unresolved_configure is not None: observed='unverified'
         if verdict=='pass' and not blocked: self.reasons.add('goal_satisfied_after_recovery' if self.counts['successful_configures'] else 'goal_satisfied_without_reconfigure')
         if verdict=='inconclusive' and not self.reasons: self.doubt('event_binding','evidence_incomplete')
         if self.unsupported:
