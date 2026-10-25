@@ -200,16 +200,16 @@ P01 인수 색인 v1의 7개 packet·105개 inventory 파일·로컬 원본 22�
 
 최종 목표는 **디지털 트윈 기반 AI 무인시험소**다. 제품·의뢰 정보에서 목적·시장과 적용 범위를 이해하고, 근거 있는 방법·계획, DUT·장비·경로 실행, 원본 취득, 보정·계산·판정, 저장·성적서·독립 검토를 같은 시험건으로 연결한다. 정상 지원 범위에서는 사용자가 제품 분류·규격·조건·단계 진행을 반복 지정하지 않는다. 첫 실증의 물리 연결·교체·시료 배치는 사람이 수행하며 자동 물리 작업은 전체 목표의 후속 단계다.
 
-현재 갱신: 2026-10-26 통합066, 기능 `86b0c553` / source298. 표의 단계별 증거는 전체 완성률이 아니다.
+현재 갱신: 2026-10-26 통합066, 기능 `9fe7e5a4` / source302. 표의 단계별 증거는 전체 완성률이 아니다.
 
 | 구분 | 현재 재사용 가능한 구현·증거 | 정확한 미완료 연결 / 다음 수용 조건 |
 |---|---|---|
-| 자료 확보 | Un-licensed·장비/DUT 제어자료·HCT 공개 사본 private 보존/색인. 대상18PDF/690쪽과 단순 보존274PDF/전체쪽수null 구별 | 전수 모집단·공식 대응·제품별 실제 지원 미확인. 후속 FCC 배치는 private 인수 대기이며 수량을 업무 완성률로 환산하지 않음 |
+| 자료 확보 | Un-licensed·장비/DUT 제어자료·HCT 공개 사본 private 보존/색인. 대상18PDF/690쪽과 기존 보존274PDF+새 비공개 보관ACK107PDF/전체쪽수null 구별 | 전수 모집단·공식 대응·제품별 실제 지원 미확인. 후속107PDF의 private 보관ACK와 본문/발행/신원/권리 검수는 별도이며 수량을 업무 완성률로 환산하지 않음 |
 | 내용·근거 검수 | 첫 조건/N01·공식 XML 조건부6fact/16locator/12gap, 새6규칙 metadata SOURCE12와 receiver/receipt16의 private 인수·후행 종료 | 보고서 peak와 개발 on-average, 현행 효력·현재 사례/KDB/ANSI 방법·기준면/보정·한계·불확도·holdout 미승인. 구조 경고 PDF는 미해석/미보정 보류. 규칙의 HOLD/REVIEW는 개발 정책 |
-| 규격·방법 판단 | D1 plan의 C1·출처·명시 source6/null/gaps 보존, 현재 접수 readonly→계획 API/화면 수용. facts→계획7d는 게시·동결/독립 검수 | 실제 접수 facts를 설정 추출·계획으로 잇는7d 수용 필요. 새 generic 조건 gate를 개발1이 구현 중. 제공 조건 true/approval bool은 독립 규범 승인·실행 권한이 아님 |
+| 규격·방법 판단 | D1 plan의 C1·출처·명시 source6/null/gaps 보존, 현재 접수 readonly→계획 API/화면 수용. facts→계획7d는 독립 qualified12 뒤 수용·root35 PASS | 실제 Codex 원문 probe는 지원 문법·명시 duty 단위/동일 조건 결합 부족으로 blocked. generic 조건 gate fcb는 독립 검수, 개발1은 명시 alias/서술·최소 질문 코드를 구현 중. 제공 조건 true/approval bool은 독립 규범 승인·실행 권한이 아님 |
 | 가상 모델·방법 | 동일 Trial DUT·계측기·RF 경로와 실제 setup 명령/receipt/실패 prefix, 같은 plan/setup/journal/report의 순수 결과 builder 수용·새 root90 PASS | quantity/기준면/부호/이미 보정이 없으면 corrected=null. 기존 RF 저장 reader의 19소스 aggregate 변경(9b→7816) 호환 회귀는 실제 결함으로 개발3이 복구 중. 물리 예측·실측 보정 미검증 |
-| AI 자율 실행 | 같은 runtime의 계획 source6→도구/관측/복구/종료 루프 및 native 등록/기존16 이력/단일 permit→genuine Codex 접수 수용. 실제 새1 strict/독립 의미3 PASS·총17 | 실제 AI 접수 의미와 실제 AI 가상 도구 루프의 종단 과업은 별도. bound 실제 setup/journal743 독립 검수, 정식 loop 실행 경계·업무 평가 연결 미완료. 소진 Vertex 초기화/허위 승인/0 장부 금지 |
-| 전체 가상 업무 | 합성 입력→scripted 취득→journal/저장 시연과 같은 접수 7단계·계획 미리보기 수용. source6 계획→동일 가상 실행 root12 PASS | 실제 입력/사실→계획→bound측정→결과/초안→같은 화면의 첫 종단 수용 미완료. e3 저장·99a 결과 화면 독립 검수, 개발2 finalizer/개발4 예외 큐 실제 구현. fixture/모의·재생·실제 AI·저장완료/과업성공 구별 |
+| AI 자율 실행 | 같은 runtime의 계획 source6→도구/관측/복구/종료 루프 및 native 등록/기존16 이력/단일 permit→genuine Codex 접수 수용. 실제 새1 strict/독립 의미3 PASS·총17 | 실제 AI 접수 의미와 실제 AI 가상 도구 루프의 종단 과업은 별도. bound 실제 setup/journal743 독립8 PASS 뒤 수용·root loop31+adapter14=45 PASS. 정식 실제 AI loop 실행·업무 평가 연결은 미완료. 소진 Vertex 초기화/허위 승인/0 장부 금지 |
+| 전체 가상 업무 | 합성 입력→scripted 취득→journal/저장 시연과 같은 접수 7단계·계획 미리보기 수용. source6 계획→동일 가상 실행 root12 PASS | 실제 입력/사실→계획→bound측정→결과/초안→같은 화면의 첫 종단 수용 미완료. e3 저장은 독립12/root21 PASS 뒤 수용. finalizer 담당 fresh MOCK2는 등록 원문→facts→plan→같은 가상 측정/계산/JSON·DRAFT 연결, 독립/총괄 수용 전. 99a 화면 독립 검수·예외 큐/opt-in 시연 구현 중. fixture/모의·재생·실제 AI·저장완료/과업성공 구별 |
 | 실측 대조·보정 | 방법/모델 버전·원본·단위·계산·기준면·같은 run의 비교 입력 계약 | 같은 계획의 실물 어댑터, 대상별 허용 차이·불확도·보정용/독립 검증용 분리 및 새 실측 대조 미실행 |
 | 현장·물리 작업 | 전체 업무·시료 취급/배선/이동을 최종 범위에 유지. 첫 실증의 사람 셋업과 예외 경계 보존 | 실장비·현장·물리 무인 작업 검증 미실행. 일부 소프트웨어 성공을 전체 시험소 완료로 표시하지 않음 |
 
