@@ -47,3 +47,25 @@ borrowed `main`은 caller stream을 설정·닫지 않는다. 최초 KeyboardInt
 부모 의미와 저장 읽기 범위는 [readback 사용법](intake_conducted_artifact_readback_usage.md)을 따른다.
 
 2026-10-26 검증: 새 unittest 17개 통과(failure/error/skip 0). 같은 실행에서 genuine public CLI readback1과 실제 Python child6개를 보존했다. child 종료는 0/2/3/130/1/0이며, KI child는 실제 프로세스 내의 명시 typed 예외 seam(원 부모 실행0)이다. genuine readback의 readonly connection4개 모두 닫힘과 native authorizer 쓰기0을 확인했다. 준비 RW·이전 감사 가정 실패·최종 성공을 구분해 보존했다. 물리·현장 검증은 미실행이다.
+
+## 선택 비교 연결
+
+2026-10-26. DEV3-CURRENT-ARTIFACT-COMPARISON-CLI-001은 기존 CLI core/test/usage3만 확장한다. 선행1cf CLI와499 bridge는 independent pending 의존성이며 동결 원본·증거를 갱신하지 않는다. 옵션이 없으면 기존 필수3·readback DTO7/12MiB+LF/exit를 보존하고 bridge import/API0이다.
+
+```powershell
+python -B -X utf8 -m labflow.intake_conducted_artifact_readback_cli --workspace C:/disposable-demo/state --intake-id EXPLICIT_INTAKE_ID --readback-json C:/disposable-demo/readback.json --comparison-json C:/disposable-demo/comparison.json
+```
+
+--comparison-json은 absolute local JSON의 별도 paired 옵션으로 한 번만 지정한다. 파일 exact3의 자료 없는 명시 입력은 다음과 같다. 예시 측정값·허용차·lineage·승인값을 채워 넣지 않는다.
+
+```json
+{"reference": null, "comparator_policy": null, "lineage": null}
+```
+
+전체 null·누락/추가 key·중복·상대 경로·UNC·flag=value는 거절한다. strict UTF-8/no BOM/중복 key·비유한 수 금지, raw2 MiB/depth32/nodes100000이다. 기존 readback64 KiB/8/2048과 독립이며 총 raw 가산 상한은 2 MiB+64 KiB다. 부모 comparator의 twin 포함 입력2 MiB/cases128은 그대로이므로 파일 한도에 맞아도 원 not_assessed가 가능하다.
+
+두 JSON을 native pin한 뒤 단일 [bridge](intake_conducted_artifact_comparison_usage.md)에 caller 원입력9+3을 그대로 전달한다. 반환 뒤 두 pin의 raw·stamp를 재검사하고 known handle을 닫은 후 stdout을 한 번 쓴다. 실패에서 기본 readback으로 fallback하거나 partial write를 이어 쓰지 않는다. 원 bridge exact7 canonical body13 MiB+LF1, nested 원 DTO·사유·null·출처·권한 false를 보존한다.
+
+선택 compared exit0는 허용차 밖에서도 비교 수행 완료만 뜻한다. measurement PASS·실측 진위·physical authority·실행 승인이 아니다. blocked/not_assessed는 원 DTO exit2이며 null3 입력의 not_assessed2가 정상이다. 기존 exact typed 목록에 bridge exact 타입/fixed2code만 선택 모드에서 unavailable3으로 더한다. 기타1/process 최초 KI130, borrowed control 원 객체·UTF8/quiet/fixedcode/partial retry0은 유지한다. 실제 비교 자료 없는 genuine compared/물리 정확도·현장 검증은 미실행이다. 새 wrapper 모듈·부모 수정·실측 자료 생성0이다.
+
+2026-10-26 검증: 변경 영향 기본 CLI17을 새 clone에서 한 번+선택 모드 새검사8=25개 통과(failure/error/skip 0). 기본 genuine1/child6과 선택 genuine1/child4를 같은 실행 증거에서 구분했다. 선택 null3→bridge1/readback1/comparator1의 원 not_assessed/null/exit2, readonly4/closed4·쓰기0·원source raw/native 불변을 확인했다. 선택 child 종료2/1/1/130이며 KI는 실제 프로세스 내 typed seam(원bridge 실행0)이다. 원 동결 증거와 분모는 변경하지 않았다.

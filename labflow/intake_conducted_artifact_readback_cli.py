@@ -15,6 +15,14 @@ MAX_INPUT_BYTES = 64 * 1024
 MAX_INPUT_DEPTH = 8
 MAX_INPUT_NODES = 2048
 MAX_OUTPUT_BYTES = 12 * 1024 * 1024
+MAX_COMPARISON_INPUT_BYTES = 2 * 1024 * 1024
+MAX_COMPARISON_INPUT_DEPTH = 32
+MAX_COMPARISON_INPUT_NODES = 100000
+MAX_COMPARISON_OUTPUT_BYTES = 13 * 1024 * 1024
+_COMPARISON_FLAG = "--comparison-json"
+_COMPARISON_KEYS = frozenset(("reference", "comparator_policy", "lineage"))
+_COMPARISON_OUTPUT_KEYS = frozenset("schema_version kind status readback comparison reasons verification".split())
+_COMPARISON_STATUS = dict(compared=0, blocked=2, not_assessed=2)
 _PREFIX = "intake_conducted_artifact_readback_cli_"
 _FLAGS = ("--workspace", "--intake-id", "--readback-json")
 _KEYS = frozenset("method expected_revision expected_context_sha256 artifact_workspace_root artifact_name "
@@ -41,6 +49,12 @@ _HELP = ("\ubcf4\uc874 \uc800\uc7a5 \uc0ac\ubcf8 \uac80\uc218: one explicit curr
     "other 1; process KeyboardInterrupt 130.\n"
     "matched means a stored/current binding match, never measurement PASS or execution approval.\n"
     "No models, hardware, business writes, reruns, source repair or automatic current pin selection.\n")
+_HELP += ("Optional: --comparison-json ABS_LOCAL_JSON once with a separate value.\n"
+    "JSON exact3 reference/comparator_policy/lineage; explicit null3 allowed; no dataset defaults.\n"
+    "Strict UTF-8 <=2MiB/depth32/nodes100000, plus original readback64KiB.\n"
+    "Original bridge DTO7 body<=13MiB+LF: compared0 (also outside tolerance), blocked/not_assessed2; "
+    "fixed typed unavailable3/other1/process KI130.\n"
+    "Comparison performed never means measurement PASS, physical authenticity or execution approval.\n")
 
 
 class _Failure(ValueError):
@@ -52,16 +66,16 @@ def _fail(code):
 
 
 def _arguments(argv):
-    if type(argv) not in (list, tuple) or len(argv) != 6 or any(type(item) is not str for item in argv):
+    if type(argv) not in (list, tuple) or len(argv) not in (6, 8) or any(type(item) is not str for item in argv):
         _fail("invalid_argument")
     values = {}
     for key, value in zip(argv[::2], argv[1::2]):
-        if key not in _FLAGS or key in values or not value or value.startswith("--"):
+        if key not in (*_FLAGS, _COMPARISON_FLAG) or key in values or not value or value.startswith("--"):
             _fail("invalid_argument")
         values[key] = value
-    if set(values) != set(_FLAGS):
+    if not set(_FLAGS) <= set(values):
         _fail("invalid_argument")
-    return [values[key] for key in _FLAGS]
+    return [values[key] for key in _FLAGS] + [values.get(_COMPARISON_FLAG)]
 
 
 def _path(value):
@@ -73,12 +87,15 @@ def _path(value):
     return _native._local_path(value)
 
 
-def _bounded(value):
+def _bounded(value, *, comparison=False):
+    keys = _COMPARISON_KEYS if comparison else _KEYS
+    depth_limit = MAX_COMPARISON_INPUT_DEPTH if comparison else MAX_INPUT_DEPTH
+    node_limit = MAX_COMPARISON_INPUT_NODES if comparison else MAX_INPUT_NODES
     nodes = 0
     def visit(item, depth):
         nonlocal nodes
         nodes += 1
-        if depth > MAX_INPUT_DEPTH or nodes > MAX_INPUT_NODES:
+        if depth > depth_limit or nodes > node_limit:
             _fail("input_limit")
         if type(item) is dict:
             for key, child in item.items():
@@ -92,26 +109,28 @@ def _bounded(value):
         _dto._snapshot(value)
     except _dto._Failure:
         _fail("json_invalid")
-    if type(value) is not dict or set(value) != _KEYS:
+    if type(value) is not dict or set(value) != keys:
         _fail("json_invalid")
-    _path(value["artifact_workspace_root"])
+    if not comparison:
+        _path(value["artifact_workspace_root"])
     return value
 
 
-def _input(backend, path):
+def _input(backend, path, *, comparison=False):
+    limit = MAX_COMPARISON_INPUT_BYTES if comparison else MAX_INPUT_BYTES
     tree = _native._Tree(path.parent, backend)
     stamp = _native._stamp(tree.file_stat(path))
-    if not 0 <= stamp[2] <= MAX_INPUT_BYTES:
+    if not 0 <= stamp[2] <= limit:
         _fail("input_limit")
     descriptor = backend.open_read(path, pin=True)
     pin = (tree, path, descriptor, stamp, None)
     _shared._same(_native, backend, pin)
-    raw = _native._read_descriptor(descriptor, MAX_INPUT_BYTES, "packet_prepare_source_changed")
+    raw = _native._read_descriptor(descriptor, limit, "packet_prepare_source_changed")
     if len(raw) != stamp[2]:
         _fail("input_changed")
     pin = (tree, path, descriptor, stamp, raw)
     _shared._same(_native, backend, pin)
-    return _bounded(_shared._parse(raw)), pin
+    return _bounded(_shared._parse(raw), comparison=comparison), pin
 
 
 def _wire(value):
@@ -125,6 +144,41 @@ def _wire(value):
     if len(raw) > MAX_OUTPUT_BYTES:
         _fail("output_failed")
     return raw + b"\n", _STATUS[value["status"]]
+
+
+def _comparison_wire(value, bridge):
+    """Validate the original bridge using its nested native delivery guards."""
+    if (type(value) is not dict or set(value) != _COMPARISON_OUTPUT_KEYS
+            or type(value["schema_version"]) is not int or value["schema_version"] != 1
+            or value["kind"] != "intake_conducted_artifact_comparison"
+            or type(value["status"]) is not str or value["status"] not in _COMPARISON_STATUS):
+        _fail("unavailable")
+    readback, comparison = value["readback"], value["comparison"]
+    bridge._checked_readback(readback)
+    if value["status"] == "blocked":
+        if readback["status"] == "matched" or comparison is not None:
+            _fail("unavailable")
+    else:
+        if readback["status"] != "matched":
+            _fail("unavailable")
+        bridge._checked_comparison(comparison)
+        if comparison["status"] != value["status"]:
+            _fail("unavailable")
+    reasons, verification = value["reasons"], value["verification"]
+    expected = dict(readback=readback["relation"]["reasons"], comparison=None if comparison is None else comparison["reasons"])
+    if (type(reasons) is not dict or set(reasons) != {"readback", "comparison"} or _json(reasons) != _json(expected)
+            or type(verification) is not dict or any(verification.get(key) is not False for key in (
+                "execution_authority", "rerun_authority", "physical_verified", "hardware_verified", "model_execution_verified"))
+            or verification.get("metadata_authenticity") != "unknown"
+            or verification.get("method_approval") != "not_assessed" or verification.get("regulatory") != "not_assessed"
+            or type(verification.get("readback_calls")) is not int or verification["readback_calls"] != 1
+            or type(verification.get("comparison_calls")) is not int
+            or verification["comparison_calls"] != (0 if comparison is None else 1)):
+        _fail("unavailable")
+    raw = _json(value)
+    if len(raw) > MAX_COMPARISON_OUTPUT_BYTES:
+        _fail("output_failed")
+    return raw + b"\n", _COMPARISON_STATUS[value["status"]]
 
 
 def _error(error, phase):
@@ -156,7 +210,7 @@ def _diagnose(code):
 
 def main(argv=None) -> int:
     """Borrow streams; preserve the first control object after known cleanup."""
-    backend = primary = raw = None
+    backend = primary = raw = bridge = None
     phase = failed_phase = "input"
     status = 1
     try:
@@ -166,16 +220,27 @@ def main(argv=None) -> int:
             phase = "output"
             _write(sys.stdout, _HELP.encode("utf-8"))
             return 0
-        workspace, intake_id, source = _arguments(arguments)
+        workspace, intake_id, source, comparison_source = _arguments(arguments)
         _path(workspace)
         path = _path(source)
         backend = _native._WindowsIO()
         options, pin = _input(backend, path)
-        phase = "parent"
-        value = _parent.read_current_conducted_artifact(workspace, intake_id, **options)
-        phase = "delivery"
-        raw, status = _wire(value)
-        _shared._recheck(_native, backend, [pin])
+        pins = [pin]
+        if comparison_source is None:
+            phase = "parent"
+            value = _parent.read_current_conducted_artifact(workspace, intake_id, **options)
+            phase = "delivery"
+            raw, status = _wire(value)
+        else:
+            comparison_path = _path(comparison_source)
+            comparison_options, comparison_pin = _input(backend, comparison_path, comparison=True)
+            pins.append(comparison_pin)
+            from . import intake_conducted_artifact_comparison as bridge
+            phase = "parent"
+            value = bridge.compare_current_conducted_artifact(workspace, intake_id, **options, **comparison_options)
+            phase = "delivery"
+            raw, status = _comparison_wire(value, bridge)
+        _shared._recheck(_native, backend, pins)
     except BaseException as error:
         primary, failed_phase = error, phase
     finally:
@@ -194,7 +259,12 @@ def main(argv=None) -> int:
     if isinstance(primary, _CONTROLS):
         raise primary
     if primary is not None:
-        code, status = _error(primary, failed_phase)
+        if (failed_phase == "parent" and bridge is not None
+                and type(primary) is bridge.IntakeConductedArtifactComparisonError
+                and type(primary.code) is str and primary.code in bridge._CODES):
+            code, status = "unavailable", 3
+        else:
+            code, status = _error(primary, failed_phase)
         _diagnose(code)
     return status
 
