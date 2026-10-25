@@ -16,6 +16,18 @@ const referencePanel = createIntakeReferenceReview($('#intake-reference-panel'),
   readHistory:readReferenceHistory, readCurrent:referenceTransport.readCurrent,
 });
 const referenceActions = createIntakeReferenceActionsReview($('#intake-reference-actions-panel'));
+let aiConnectionPanel = null;
+let aiConnectionLoading = null;
+function showAIConnectionPanel() {
+  if (aiConnectionPanel) { aiConnectionPanel.show(); return; }
+  if (!aiConnectionLoading) aiConnectionLoading = import('./ai-connections/panel.mjs').then(module => {
+    aiConnectionPanel = module.createAIConnectionPanel($('#ai-connections-panel'));
+    if (state.view === 'ai-connections') aiConnectionPanel.show();
+  }).catch(() => {
+    aiConnectionLoading = null;
+    $('#ai-connections-panel').textContent = '모델 연결 화면을 불러오지 못했습니다. 다시 선택해 주세요.';
+  });
+}
 let referenceDestroyed = false;
 let referenceSuspended = false;
 let referencePending = false;
@@ -682,7 +694,12 @@ function changeView(view) {
   $('#intake-view').hidden = view !== 'intakes'; $('#notification-view').hidden = view !== 'notifications';
   $('#intake-reference-panel').hidden = view !== 'intakes';
   $('#intake-reference-actions-panel').hidden = view !== 'intakes';
-  $('#page-title').textContent = view === 'intakes' ? '접수 운영' : '알림 기록';
+  $('#page-title').textContent = view === 'intakes' ? '접수 운영' : view === 'ai-connections' ? '모델 연결' : '알림 기록';
+  $('#metrics').hidden = view === 'ai-connections';
+  $('.scope-note').hidden = view === 'ai-connections';
+  $('#last-updated').hidden = view === 'ai-connections';
+  $('.mode-tag').textContent = view === 'ai-connections' ? '설정 · 등록 합성 테스트' : '◉ 조회 전용';
+  if (view === 'ai-connections') showAIConnectionPanel(); else aiConnectionPanel?.hide();
   for (const button of document.querySelectorAll('[data-view]')) {
     if (button.dataset.view === view) button.setAttribute('aria-current', 'page');
     else button.removeAttribute('aria-current');
@@ -768,6 +785,6 @@ function renderFilteredIntakes() {
 }
 $('#search').addEventListener('input', renderFilteredIntakes);
 $('#filter').addEventListener('change', renderFilteredIntakes);
-$('#refresh').addEventListener('click', refresh);
+$('#refresh').addEventListener('click', () => state.view === 'ai-connections' ? aiConnectionPanel?.refresh() : refresh());
 for (const button of document.querySelectorAll('[data-view]')) button.addEventListener('click', () => changeView(button.dataset.view));
 refresh();

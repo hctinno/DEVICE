@@ -16,6 +16,7 @@
     <nav aria-label="주 메뉴">
       <button type="button" data-view="intakes" aria-current="page"><span aria-hidden="true">▤</span>접수 현황</button>
       <button type="button" data-view="notifications"><span aria-hidden="true">◷</span>알림 기록 <span id="notice-count" class="nav-count">0</span></button>
+      <button type="button" data-view="ai-connections"><span aria-hidden="true">◇</span>모델 연결</button>
       <a class="button" href="/control-sources">제어자료 카탈로그</a>
       <a class="button" href="/dut-controls">DUT 제어자료</a>
       <a class="button" href="/fcc-cases">FCC 보고서 사례</a>
@@ -43,6 +44,7 @@
     <div id="intake-reference-panel"><p class="inline-note">연결이 만료되면 이력을 새로 조회한 뒤 현재 상태를 명시 조회하세요.</p></div>
     <div id="intake-reference-actions-panel"></div>
     <section id="notification-view" class="panel notification-view" aria-label="전체 알림 기록" hidden></section>
+    <section id="ai-connections-panel" class="panel ai-connection-panel" aria-label="모델 연결 설정과 등록 합성 테스트" hidden></section>
     <footer class="main-footer"><span>DGM AutoLab · 접수 조회 v0.1</span><span>모델 자동 실행·실장비 제어 미연결</span></footer>
     <p id="announcer" class="sr-only" role="status" aria-live="polite"></p>
   </main>

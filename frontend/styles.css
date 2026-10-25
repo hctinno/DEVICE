@@ -3,6 +3,26 @@
   color: #1c2e45; background: #f3f6fa; font-size: 14px; line-height: 1.55; letter-spacing: -.02em;
   --navy: #12243c; --blue: #2267db; --cyan: #43c2d6; --border: #e1e7ef; --muted: #64748b;
 }
+.ai-connection-panel { margin-top: 16px; padding: 22px; min-width: 0; }
+.ai-connection-panel .ai-status { padding: 12px; border-left: 3px solid var(--blue); background: #eef4fd; }
+.ai-connection-panel .ai-warning { padding: 12px; background: #fff6e3; color: #744913; overflow-wrap: anywhere; }
+.ai-connection-panel .ai-profile, .ai-connection-panel .ai-execution, .ai-connection-panel .ai-result { margin-top: 22px; border-top: 1px solid var(--border); padding-top: 16px; min-width: 0; }
+.ai-connection-panel .ai-model-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 14px 0; }
+.ai-connection-panel fieldset { min-width: 0; border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.ai-connection-panel legend { font-weight: 700; overflow-wrap: anywhere; }
+.ai-connection-panel .ai-field { display: inline-flex; flex-direction: column; vertical-align: top; gap: 5px; margin: 8px 14px 8px 0; max-width: 100%; font-size: 12px; }
+.ai-connection-panel .ai-field input, .ai-connection-panel .ai-field select { width: 100%; max-width: 290px; min-height: 40px; border: 1px solid var(--border); border-radius: 6px; padding: 8px; color: var(--navy); background: white; }
+.ai-connection-panel .button { margin: 6px 8px 6px 0; min-height: 40px; white-space: normal; }
+.ai-connection-panel .button[aria-disabled="true"] { opacity: .5; cursor: default; }
+.ai-connection-panel .ai-table-scroll { overflow: auto; max-width: 100%; }
+.ai-connection-panel table { width: 100%; min-width: 760px; border-collapse: collapse; text-align: left; font-size: 12px; }
+.ai-connection-panel th, .ai-connection-panel td { border-bottom: 1px solid var(--border); padding: 10px; vertical-align: top; white-space: pre-line; overflow-wrap: anywhere; }
+.ai-connection-panel details { max-width: 260px; }
+.ai-connection-panel summary { cursor: pointer; }
+.ai-connection-panel p, .ai-connection-panel .ai-binding { overflow-wrap: anywhere; }
+.ai-connection-panel .ai-history { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.ai-connection-panel .ai-history h3 { width: 100%; }
+@media (max-width: 720px) { .ai-connection-panel { padding: 14px; } .ai-connection-panel .ai-model-grid { grid-template-columns: minmax(0, 1fr); } .ai-connection-panel .ai-field { display: flex; margin-right: 0; } }
 .reference-actions-review { margin-top: 16px; padding: 22px; min-width: 0; }
 .reference-actions-review .ra-controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
 .reference-actions-review .ra-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }

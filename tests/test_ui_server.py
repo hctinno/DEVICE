@@ -1341,6 +1341,17 @@ class ReferenceActionsHostTests(unittest.TestCase):
 
 
 class ServerTests(unittest.TestCase):
+    def test_optional_AI_panel_static_and_unconfigured_route_do_not_grant_reference_access(self):
+        status,headers,body=self.request('/ai-connections/panel.mjs')
+        self.assertEqual(status,200)
+        self.assertEqual(headers['Content-Type'],'text/javascript; charset=utf-8')
+        self.assertIn(b'createAIConnectionPanel',body)
+        status,headers,body=self.request('/api/ai-connections/session')
+        self.assertEqual(status,503)
+        self.assertEqual(json.loads(body),{'error':{'code':'ai_connection_ui_unconfigured'}})
+        self.assertNotIn('Set-Cookie',headers)
+        self.assertNotIn('X-Intake-Reference-CSRF',headers)
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
