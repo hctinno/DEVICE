@@ -171,23 +171,25 @@ def _quoted_value(basis, key):
 
 
 def _basis(result, basis, context, version):
+    provided_settings = result['plan']['source_settings'].copy()
+    result['plan']['source_settings'] = {key: None for key in _SETTINGS}
     if type(basis) is not dict:
-        _gap(result, 'invalid_basis', 'basis')
+        _gap(result, 'invalid_basis', 'basis', provided_settings)
         return
     for key in sorted(set(basis)-set(_SETTINGS)):
         _gap(result, 'unknown_basis_field', 'basis.'+key)
     for key in _SETTINGS:
+        provided = provided_settings[key]
         item = basis.get(key)
         if type(item) is not dict or set(item) != {'kind', 'value', 'unit', 'evidence'}:
-            _gap(result, 'missing_or_invalid_basis', 'basis.'+key)
+            _gap(result, 'missing_or_invalid_basis', 'basis.'+key, provided)
             continue
         kind, value, unit, refs = (item[k] for k in ('kind', 'value', 'unit', 'evidence'))
         if (type(kind) is not str or kind not in ('source_cited', 'developer_declared_synthetic')
                 or type(unit) is not str or unit not in _UNITS[key] or type(refs) is not list
                 or (kind == 'source_cited' and not refs) or (kind == 'developer_declared_synthetic' and refs)):
-            _gap(result, 'unsupported_or_invalid_basis', 'basis.'+key)
+            _gap(result, 'unsupported_or_invalid_basis', 'basis.'+key, provided)
             continue
-        provided = result['plan']['source_settings'][key]
         if provided is None:
             continue  # Basis never supplies a missing setting.
         if key == 'modulation':
@@ -195,19 +197,20 @@ def _basis(result, basis, context, version):
         else:
             same = _number(value) and Fraction(str(value))*Fraction(str(_UNITS[key][unit])) == Fraction(str(provided))
         if not same:
-            _gap(result, 'basis_value_mismatch', 'basis.'+key)
+            _gap(result, 'basis_value_mismatch', 'basis.'+key, provided)
             continue
         if kind == 'source_cited':
             try:
                 _citation_check(refs, context, version)
                 if not _quoted_value(item, key):
-                    _gap(result, 'basis_quote_value_mismatch', 'basis.'+key)
+                    _gap(result, 'basis_quote_value_mismatch', 'basis.'+key, provided)
                     continue
             except MemoryError:
                 raise
             except Exception:
-                _gap(result, 'basis_evidence_invalid', 'basis.'+key)
+                _gap(result, 'basis_evidence_invalid', 'basis.'+key, provided)
                 continue
+        result['plan']['source_settings'][key] = provided
         result['plan']['basis_refs'][key] = item
 
 

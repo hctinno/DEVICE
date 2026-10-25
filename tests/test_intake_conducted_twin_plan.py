@@ -302,6 +302,41 @@ class ConductedTwinPlanTests(unittest.TestCase):
             finally:
                 store.close()
 
+    def test_unverified_basis_holds_back_only_its_setting_and_preserves_provided_value(self):
+        original=copy.deepcopy(self.options)
+        for key,value in original['source_settings'].items():
+            with self.subTest(key=key):
+                self.options=copy.deepcopy(original);self.options['basis'][key]=None
+                result=self.blocked('basis.'+key)
+                self.assertIsNone(result['plan']['basis_refs'][key])
+                self.assertIsNone(result['plan']['source_settings'][key])
+                self.assertTrue(any(g['field']=='basis.'+key and g['provided']==value for g in result['gaps']))
+                for other,provided in original['source_settings'].items():
+                    if other!=key:self.assertEqual(result['plan']['source_settings'][other],provided)
+
+    def test_rejected_basis_variants_never_leave_an_execution_value(self):
+        original=copy.deepcopy(self.options)
+        doc=self.context['documents'][0]
+        good=dict(kind='source_cited',value=2412,unit='MHz',evidence=[dict(path=doc['path'],sha256=doc['sha256'],
+            line_start=4,line_end=4,quote='frequency: 2412 MHz',role='reference')])
+        invalid_refs=[]
+        for field,value in [('sha256','0'*64),('line_end',999),('quote','not in source')]:
+            item=copy.deepcopy(good);item['evidence'][0][field]=value;invalid_refs.append(item)
+        wrong_quote_quantity=copy.deepcopy(good);wrong_quote_quantity.update(value=2412000000,unit='Hz')
+        cases=[None,{},dict(kind='approved',value=2412,unit='MHz',evidence=[]),
+               dict(kind='developer_declared_synthetic',value=2413,unit='MHz',evidence=[]),
+               dict(kind='developer_declared_synthetic',value=2412,unit='wrong',evidence=[]),wrong_quote_quantity,*invalid_refs]
+        for item in cases:
+            with self.subTest(item=item):
+                self.options=copy.deepcopy(original);self.options['basis']['frequency_hz']=item
+                result=self.blocked('basis.frequency_hz')
+                self.assertIsNone(result['plan']['source_settings']['frequency_hz'])
+                self.assertIsNone(result['plan']['basis_refs']['frequency_hz'])
+                self.assertTrue(any(g['field']=='basis.frequency_hz' and g['provided']==2412000000 for g in result['gaps']))
+        self.options=copy.deepcopy(original);self.options['basis']=None
+        result=self.blocked('basis');self.assertTrue(all(v is None for v in result['plan']['source_settings'].values()))
+        self.assertTrue(any(g['field']=='basis' and g['provided']==original['source_settings'] for g in result['gaps']))
+
 
 if __name__=='__main__':
     unittest.main()
