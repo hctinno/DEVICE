@@ -1,0 +1,441 @@
+{
+  "budget_ownership": {
+    "application_retries": 0,
+    "auto_refund": false,
+    "in_flight_Event_cancellation_supported": false,
+    "max_slots": 4,
+    "model_call_reservation_cap": 8,
+    "outer_wall_seconds": 60.0,
+    "post_producer_event": "preserve original trace, decoder0 and remaining slots0",
+    "producer_cleanup_allowance_seconds": 6.0,
+    "producer_timeout": "min(60, remaining_wall-6) only when remaining_wall>6; no success after observed deadline",
+    "remote_requests_retries_billing_identity": "unknown/null; process attempts and reservation counts distinct",
+    "reset_used": false,
+    "root_global_remaining_authority": null,
+    "scope": "One explicit invocation, shared across planned slots; root owns account/prior-batch authorization"
+  },
+  "capture_only": {
+    "API": "FleetHarness(...).step() once with fixed private policy(context8)",
+    "OperatorJournal_actual_trace_write": false,
+    "capture_then_producer_outside_callback": true,
+    "context_mismatch": "operator_first_decision_capture_failed; producer0",
+    "expected_success_event_types": [
+      "observation",
+      "policy_decision",
+      "termination"
+    ],
+    "intent_receipt_model_dispatches": 0,
+    "legacy_report_modified": false,
+    "same_condition_public_context_sha256_equal_across_models": true,
+    "stop": {
+      "claim": "blocked",
+      "kind": "stop",
+      "reason": "host_first_decision_capture"
+    },
+    "task_assessment_calls": 0
+  },
+  "common_source_changes_for_selected_unit": [],
+  "deferred_common_changes": [
+    "actual model-driven harness/journal provenance and task grading",
+    "scope-refusal task grader",
+    "producer in-flight programmatic cancellation if required"
+  ],
+  "errors": {
+    "control": "Observed KI/SE/GE/MemoryError same object after best-effort bounded cleanup; no promised receipt attribute on control",
+    "host_prefix": "operator_first_decision_",
+    "host_suffixes": [
+      "invalid_input",
+      "unsupported_source",
+      "capture_failed",
+      "budget_exhausted",
+      "cancelled",
+      "retention_failed",
+      "timeout",
+      "cleanup_failed",
+      "internal_error"
+    ],
+    "opaque_parent_limit": "Cannot reconstruct a control exception swallowed inside a parent API; preserve exposed fixed failure/receipt and stop.",
+    "public_shape": ".code == str(error); args=(code,); cause/context=None; receipt null before evidence or detached failed batch",
+    "source_codes_preserved": [
+      "codex_cli_response_invalid_input",
+      "codex_cli_response_limit_exceeded",
+      "codex_cli_response_unsupported_client",
+      "codex_cli_response_evidence_error",
+      "codex_cli_response_spawn_failed",
+      "codex_cli_response_timeout",
+      "codex_cli_response_stream_invalid",
+      "codex_cli_response_process_failed",
+      "codex_cli_response_final_mismatch",
+      "codex_cli_response_cleanup_failed",
+      "codex_cli_response_internal_error",
+      "model_operator_boundary_invalid_input",
+      "model_operator_boundary_invalid_prompt",
+      "model_operator_boundary_response_invalid",
+      "model_operator_boundary_response_binding_mismatch",
+      "model_operator_boundary_response_producer_mismatch",
+      "model_operator_boundary_proposal_invalid",
+      "model_operator_boundary_limit_exceeded",
+      "model_operator_boundary_internal_error"
+    ]
+  },
+  "file_layout": {
+    "argv_owner": "original producer/invocation.json",
+    "batch_receipt_cap": 262144,
+    "caller_request_cap": 262144,
+    "caller_request_kind": "codex_operator_first_decision_request",
+    "collector_scope": "Known bounded artifact bytes only; no native CLI hard disk quota or unknown work-file authenticity guarantee",
+    "common": [
+      "caller-request.json",
+      "response-schema.json",
+      "batch-receipt.json"
+    ],
+    "common_schema_cap": 65536,
+    "host_close_wait": "max(0,min(2,remaining_wall)) seconds; no new time outside outer deadline, unconfirmed close is failure",
+    "no_rewrite_delete_repair": true,
+    "producer": "slot/producer/ original known artifact9 + receipt.json + work; original caps/failures unchanged",
+    "slot_artifacts": {
+      "binding": {
+        "cap": 65536,
+        "path": "binding.json"
+      },
+      "capture_events": {
+        "cap": 2097152,
+        "path": "capture-events.json"
+      },
+      "capture_report": {
+        "cap": 262144,
+        "path": "capture-report.json"
+      },
+      "context7": {
+        "cap": 1048576,
+        "path": "public-context7.json"
+      },
+      "context8": {
+        "cap": 1048576,
+        "path": "context8.json"
+      },
+      "prompt": {
+        "cap": 262144,
+        "path": "prompt.json"
+      },
+      "wire": {
+        "cap": 65536,
+        "path": "wire.json"
+      }
+    },
+    "slots": "slot-0001..slot-0004"
+  },
+  "fixed_delegation": {
+    "harness_budgets": {
+      "decisions": 64,
+      "logical_requests": 64,
+      "ticks": 32,
+      "transport_retries": 2,
+      "wall_seconds": 30
+    },
+    "outer_limits": {
+      "model_calls": 8,
+      "wall_seconds": 60
+    },
+    "scope": "rf_sensor_proposal_v1"
+  },
+  "fixed_recipe": {
+    "condition": "slot scenario",
+    "factory": "prepare_sensor_trial",
+    "power_dbm": 12.5,
+    "reuse_historical_runtime_ids": false,
+    "seed": 0
+  },
+  "kind": "codex_first_decision_implementation_contract",
+  "matrix_order": "caller scenarios order, within each caller model order; maximum4 slots",
+  "models": [
+    "gpt-6.1-sol",
+    "gpt-6-astra"
+  ],
+  "producer_name": "dgm-virtual-operator-v1",
+  "proposed_owned_new3": [
+    "labflow/virtual_fleet/codex_first_decision.py",
+    "tests/test_virtual_fleet_codex_first_decision.py",
+    "docs/fcc/virtual_fleet_codex_first_decision_usage.md"
+  ],
+  "public_function": {
+    "all_keyword_only": true,
+    "error_class": "CodexFirstDecisionError(RuntimeError)",
+    "exports_exact2": [
+      "run_codex_first_decisions",
+      "CodexFirstDecisionError"
+    ],
+    "name": "run_codex_first_decisions",
+    "no_provider_callback_or_registry": true,
+    "parameters": [
+      {
+        "name": "catalog_path",
+        "type": "exact native absolute Path"
+      },
+      {
+        "name": "catalog_sha256",
+        "type": "native str lowerhex64"
+      },
+      {
+        "name": "response_schema_bytes",
+        "type": "exact bytes, fixed literal below"
+      },
+      {
+        "name": "executable",
+        "type": "exact native absolute regular codex.exe Path"
+      },
+      {
+        "name": "requested_models",
+        "type": "native list of1..2 distinct native str allowed models"
+      },
+      {
+        "name": "scenarios",
+        "type": "native list of1..2 distinct native str allowed scenarios"
+      },
+      {
+        "name": "evidence_dir",
+        "type": "native absolute absent Path"
+      },
+      {
+        "default": null,
+        "name": "cancel_event",
+        "type": "None or exact native threading.Event"
+      }
+    ],
+    "return": "detached native batch dict exact12"
+  },
+  "receipt": {
+    "batch_id": "operator-first-batch:+uuid4 lowerhex32",
+    "cancellation": {
+      "remote_cancel_verified": false,
+      "scope": "between_stages_only"
+    },
+    "capture_flags": {
+      "legacy_ai_model_called": false,
+      "model_proposal_dispatches": 0
+    },
+    "cleanup_secondary_codes": [
+      "artifact_close_failed",
+      "receipt_write_failed",
+      "secondary_overflow"
+    ],
+    "counts": "reserved_slots/producer_calls 0..8; summed source version/model attempts nullable if unknown",
+    "exact_keys": {
+      "artifact_descriptor": [
+        "path",
+        "present",
+        "bytes",
+        "sha256",
+        "complete",
+        "overflow",
+        "extent"
+      ],
+      "batch": [
+        "schema_version",
+        "kind",
+        "batch_id",
+        "status",
+        "failure",
+        "declaration",
+        "budget",
+        "slots",
+        "cancellation",
+        "cleanup",
+        "execution",
+        "verification"
+      ],
+      "binding": [
+        "run_id",
+        "runtime_instance_id",
+        "decision_id",
+        "model_request_id",
+        "context_sha256",
+        "request_sha256"
+      ],
+      "binding_file": [
+        "binding",
+        "delegation",
+        "remaining_budget",
+        "catalog_sha256",
+        "schema_sha256"
+      ],
+      "budget": [
+        "limits",
+        "reserved_slots",
+        "producer_calls_started",
+        "version_process_attempts",
+        "model_process_attempts",
+        "elapsed_seconds",
+        "reset_used",
+        "application_retries"
+      ],
+      "caller_request": [
+        "schema_version",
+        "kind",
+        "batch_id",
+        "execution",
+        "declaration",
+        "source_pins",
+        "limits"
+      ],
+      "caller_request_execution": [
+        "catalog_path",
+        "executable"
+      ],
+      "cancellation": [
+        "requested",
+        "scope",
+        "observed_stage",
+        "remote_cancel_verified"
+      ],
+      "capture": [
+        "tick",
+        "setup_revision",
+        "profile_count",
+        "device_count",
+        "context8_sha256",
+        "context7_sha256",
+        "legacy_ai_model_called",
+        "model_proposal_dispatches"
+      ],
+      "cleanup": [
+        "host_artifacts_closed",
+        "secondary_errors",
+        "remote_cancel_verified"
+      ],
+      "declaration": [
+        "producer_name",
+        "scenarios",
+        "requested_models",
+        "catalog_sha256",
+        "schema_sha256"
+      ],
+      "execution": [
+        "mode",
+        "model_proposal_dispatches",
+        "task_assessment_status",
+        "task_score"
+      ],
+      "failure": [
+        "code",
+        "stage",
+        "slot_index"
+      ],
+      "harness_budgets": [
+        "decisions",
+        "logical_requests",
+        "ticks",
+        "wall_seconds",
+        "transport_retries"
+      ],
+      "limits": [
+        "model_calls",
+        "wall_seconds",
+        "producer_cleanup_allowance_seconds",
+        "harness_budgets"
+      ],
+      "slot": [
+        "slot_index",
+        "scenario",
+        "requested_model",
+        "status",
+        "stage",
+        "binding",
+        "capture",
+        "transport",
+        "wire",
+        "failure",
+        "artifacts"
+      ],
+      "slot_artifacts": [
+        "context8",
+        "context7",
+        "binding",
+        "prompt",
+        "capture_report",
+        "capture_events",
+        "wire"
+      ],
+      "slot_failure": [
+        "code",
+        "stage"
+      ],
+      "transport": [
+        "exchange_ref",
+        "receipt",
+        "receipt_sha256"
+      ],
+      "verification": [
+        "wire_complete",
+        "source_inputs_unchanged",
+        "remote_identity_verified",
+        "semantic_quality_verified",
+        "hardware_verified"
+      ]
+    },
+    "execution": {
+      "mode": "native_cli_first_decision",
+      "model_proposal_dispatches": 0,
+      "task_assessment_status": "not_executed",
+      "task_score": null
+    },
+    "failure_nullable": true,
+    "id_prefixes": {
+      "decision_id": "operator-first-decision:",
+      "model_request_id": "operator-first-request:",
+      "run_id": "operator-first-run:",
+      "runtime_instance_id": "fresh trial.runtime_instance_id unchanged"
+    },
+    "kind": "codex_operator_first_decision_batch",
+    "secondary_max": 8,
+    "slot_binding_capture_transport_wire_failure_nullable": true,
+    "slot_status": [
+      "not_executed",
+      "complete",
+      "failed"
+    ],
+    "stages": [
+      "not_started",
+      "validation",
+      "capture",
+      "prompt",
+      "reserve",
+      "producer",
+      "retention",
+      "decode",
+      "finalize",
+      "cleanup"
+    ],
+    "status": [
+      "complete",
+      "failed"
+    ],
+    "success": "all planned slots complete, strict wire and retention verified; no task or remote identity claim",
+    "transport_receipt": "unchanged original producer receipt18 or null; no host fields inserted",
+    "verification_false": [
+      "remote_identity_verified",
+      "semantic_quality_verified",
+      "hardware_verified"
+    ],
+    "wire": "unchanged detached genuine decoder wire5"
+  },
+  "response_schema": {
+    "bytes": 3052,
+    "literal_utf8": "{\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"kind\": {\n      \"const\": \"virtual_operator_response\"\n    },\n    \"producer\": {\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"kind\": {\n          \"const\": \"model\"\n        },\n        \"name\": {\n          \"const\": \"dgm-virtual-operator-v1\"\n        }\n      },\n      \"required\": [\n        \"kind\",\n        \"name\"\n      ],\n      \"type\": \"object\"\n    },\n    \"proposal\": {\n      \"oneOf\": [\n        {\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"action\": {\n              \"const\": \"start\"\n            },\n            \"device_id\": {\n              \"const\": \"dut\"\n            },\n            \"kind\": {\n              \"const\": \"execute\"\n            },\n            \"parameters\": {\n              \"additionalProperties\": false,\n              \"properties\": {},\n              \"required\": [],\n              \"type\": \"object\"\n            }\n          },\n          \"required\": [\n            \"kind\",\n            \"device_id\",\n            \"action\",\n            \"parameters\"\n          ],\n          \"type\": \"object\"\n        },\n        {\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"action\": {\n              \"enum\": [\n                \"acquire\",\n                \"read\"\n              ]\n            },\n            \"device_id\": {\n              \"const\": \"sensor\"\n            },\n            \"kind\": {\n              \"const\": \"execute\"\n            },\n            \"parameters\": {\n              \"additionalProperties\": false,\n              \"properties\": {},\n              \"required\": [],\n              \"type\": \"object\"\n            }\n          },\n          \"required\": [\n            \"kind\",\n            \"device_id\",\n            \"action\",\n            \"parameters\"\n          ],\n          \"type\": \"object\"\n        },\n        {\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"advance\"\n            },\n            \"ticks\": {\n              \"const\": 1\n            }\n          },\n          \"required\": [\n            \"kind\",\n            \"ticks\"\n          ],\n          \"type\": \"object\"\n        },\n        {\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"claim\": {\n              \"enum\": [\n                \"completed\",\n                \"blocked\",\n                \"unsupported\",\n                \"failed\"\n              ]\n            },\n            \"kind\": {\n              \"const\": \"stop\"\n            },\n            \"reason\": {\n              \"maxLength\": 4096,\n              \"minLength\": 1,\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"kind\",\n            \"claim\",\n            \"reason\"\n          ],\n          \"type\": \"object\"\n        }\n      ]\n    },\n    \"request_sha256\": {\n      \"pattern\": \"^[0-9a-f]{64}$\",\n      \"type\": \"string\"\n    },\n    \"schema_version\": {\n      \"const\": 1\n    }\n  },\n  \"required\": [\n    \"schema_version\",\n    \"kind\",\n    \"request_sha256\",\n    \"producer\",\n    \"proposal\"\n  ],\n  \"type\": \"object\"\n}\n",
+    "provider_acceptance": "not_executed",
+    "sha256": "aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb"
+  },
+  "risks_and_nonclaims": [
+    "Recovery10 decisions exceeds unchanged8 model cap in a one-call-per-decision loop; this unit is first-decision only.",
+    "Fresh IDs cause raw prompt/request hashes to differ across models; compare public_context/source/schema/producer equality separately, never claim identical raw bytes.",
+    "No actual model provenance is inserted into legacy fixture/journal; new host trace is separate.",
+    "No device command after capture/producer, no task assessment, no score or model quality from fixture PASS.",
+    "Event cancellation is cooperative between stages; no producer API change or hidden worker cancellation layer.",
+    "Large fullbench remains intact; no two-node substitute, token count or model output budget guess."
+  ],
+  "scenarios": [
+    "normal",
+    "restored_disconnect"
+  ],
+  "schema_version": 1
+}

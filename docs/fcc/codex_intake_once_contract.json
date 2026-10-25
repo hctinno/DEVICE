@@ -1,0 +1,63 @@
+{
+  "claim_without_lease_response": "unknown; preserve intent/first error; no fail_job without returned job/token; no retry",
+  "exact_unfilled_seam": "bind approved public context and one claimed synthetic job to concrete complete D2 receipt/raw artifacts before existing completion; no fixture provider extension",
+  "explicit_boundaries": [
+    "borrowed Store lifetime belongs to host; isolated approved synthetic Store and no concurrent fixture/supervisor",
+    "lease/token memory only, public8 whitelist; no log/DTO/model leak",
+    "schema1 only; PDF/schema2 rejected with model0",
+    "host pre-reserves one cumulative model attempt; reference is not new approval and caller does not implement global budget enforcement",
+    "unknown after completion/evidence/control is not automatic retry or fail_job",
+    "fail_job queued semantics and incremented claim attempt preserved"
+  ],
+  "kind": "codex_intake_once_implementation_contract",
+  "proposed_new3": [
+    "labflow/codex_intake_once.py",
+    "tests/test_codex_intake_once.py",
+    "docs/fcc/codex_intake_once_usage.md"
+  ],
+  "public_API": "run_codex_intake_once(store, approved_context, *, worker_id, producer_name, executable, requested_model, evidence_root, authorization_ref, timeout_seconds=60.0) -> dict",
+  "record_contract": {
+    "exact_top_level10": [
+      "schema_version",
+      "kind",
+      "status",
+      "phase",
+      "job",
+      "binding",
+      "attempts",
+      "strict_decode",
+      "assessment",
+      "errors"
+    ],
+    "new_fixed_error_suffix8": [
+      "invalid_input",
+      "unsupported_schema",
+      "scope_mismatch",
+      "evidence_error",
+      "receipt_binding_mismatch",
+      "job_finalize_failed",
+      "completion_unknown",
+      "internal_error"
+    ],
+    "states": [
+      "idle",
+      "completed",
+      "failed",
+      "unknown"
+    ]
+  },
+  "reuse_existing": [
+    "claim_job synthetic_only atomic filtering, no now, lease3600",
+    "build_analysis_prompt and build_analysis_response_schema",
+    "concrete produce_codex_cli_response",
+    "genuine decode_analysis_response then complete_job; fail_job at most once before completion"
+  ],
+  "schema_version": 1,
+  "unchanged": [
+    "fixture worker/supervisor",
+    "Store/schema",
+    "CLI/MCP/UI",
+    "provider registry/callback model",
+    "old profile/admission/current006 inputs and proofs"
+  ]
+}
