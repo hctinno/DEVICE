@@ -124,6 +124,12 @@ _CONDUCTED_RF_QUOTE = ('frequency: 2412 MHz; bandwidth: 20 MHz; on_average_power
                        'duty_cycle: 50 %; modulation: OFDM; crest_factor: 4 dB')
 _CONDUCTED_MOCK_NAME = 'DGM-AUTHORED-SCRIPTED-MOCK-PDF'
 _CONDUCTED_SCHEMA_SHA = 'aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb'
+_CONDUCTED_SCENARIOS = ('normal', 'missing-duty-unit', 'invalid-citation',
+                        'measurement-invalid', 'restored-disconnect', 'transport-error', 'recovery-failure')
+_CONDUCTED_UNSUPPORTED = {
+    'transport-error': 'The public plan/loop entry has no transport-fault injection parameter; producer failure is not a device communication error.',
+    'recovery-failure': 'The public entry has no failed-restoration or persistent-disconnect selector; restored_disconnect alone does not establish recovery failure.',
+}
 
 # A new, local mock binary, never the installed CLI. It implements only the
 # public producer envelope and an explicitly authored five-action policy.
@@ -207,8 +213,21 @@ def _conducted_mock_compiler():
     return None
 
 
-def _compile_conducted_mock(output, compiler):
-    _conducted_write(output, 'm/authored-mock.cs', _CONDUCTED_MOCK_CS)
+def _compile_conducted_mock(output, compiler, *, scenario='normal'):
+    source = _CONDUCTED_MOCK_CS
+    policy = ['dut.start', 'advance:1', 'sensor.acquire', 'advance:1', 'stop:completed']
+    if scenario == 'measurement-invalid':
+        # Author this new fixture before compilation; never edit retained responses.
+        original = ('else if(step==2 || step==4) proposal=D("kind","advance","ticks",1);\n'
+                    '      else if(step==3) proposal=D("kind","execute","device_id","sensor","action","acquire","parameters",D());')
+        replacement = ('else if(step==2) proposal=D("kind","execute","device_id","sensor","action","acquire","parameters",D());\n'
+                       '      else if(step==3) proposal=D("kind","advance","ticks",1);\n'
+                       '      else if(step==4) proposal=D("kind","execute","device_id","sensor","action","read","parameters",D());')
+        if source.count(original) != 1:
+            raise ValueError('conducted_workflow_mock_policy_invalid')
+        source = source.replace(original, replacement)
+        policy = ['dut.start', 'sensor.acquire', 'advance:1', 'sensor.read', 'stop:completed']
+    _conducted_write(output, 'm/authored-mock.cs', source)
     executable = output / 'm/codex.exe'
     compiled = subprocess.run([str(compiler), '/nologo', '/target:exe',
         '/r:System.Web.Extensions.dll', '/out:' + str(executable), str(output / 'm/authored-mock.cs')],
@@ -219,19 +238,19 @@ def _compile_conducted_mock(output, compiler):
         raise ValueError('conducted_workflow_mock_compile_failed')
     _conducted_json(output, 'm/mock-origin.json', {'kind': 'authored_scripted_mock',
         'installed_cli_used': False, 'actual_model_calls': 0,
-        'source_sha256': sha256(_CONDUCTED_MOCK_CS.encode('utf-8')).hexdigest(),
+        'source_sha256': sha256(source.encode('utf-8')).hexdigest(),
         'executable_sha256': sha256(executable.read_bytes()).hexdigest(),
-        'policy': ['dut.start', 'advance:1', 'sensor.acquire', 'advance:1', 'stop:completed']})
+        'scenario': scenario, 'policy': policy})
     return executable
 
 
-def _scripted_pdf_analysis(context):
+def _scripted_pdf_analysis(context, *, rf_quote=_CONDUCTED_RF_QUOTE, invalid_citation=False):
     """Author the declared mock response from this new PDF's exact citations."""
     facts = []
     for document in context['documents']:
         for page in document['pages']:
             for index, line in enumerate(page['text'].splitlines(), 1):
-                if line == _CONDUCTED_RF_QUOTE:
+                if line == rf_quote:
                     field, value = 'features', line
                 elif any(line.startswith(key + ': ') for key in ('product_type', 'model', 'market', 'purpose')):
                     field, value = line.split(': ', 1)
@@ -241,14 +260,18 @@ def _scripted_pdf_analysis(context):
                     'page_number': page['page_number'], 'text_sha256': page['text_sha256'],
                     'path': document['path'], 'sha256': document['sha256'],
                     'line_start': index, 'line_end': index, 'quote': line, 'role': 'request'}
+                if invalid_citation and field == 'features':
+                    evidence['quote'] = line + '; AUTHORED MOCK citation mismatch'
                 facts.append({'field': field, 'value': value, 'status': 'explicit', 'evidence': [evidence]})
     return {'schema_version': 2, 'context_id': context['analysis_context_id'],
         'producer': {'kind': 'model', 'name': _CONDUCTED_MOCK_NAME},
         'identity': 'single', 'facts': facts, 'missing_fields': []}
 
 
-def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None, mock_model=None):
+def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None, mock_model=None, scenario='normal'):
     """Opt-in authored PDF -> current C1 -> genuine plan/execution/result/DRAFT."""
+    if scenario not in _CONDUCTED_SCENARIOS:
+        raise ValueError('conducted_workflow_scenario_unsupported')
     output = Path(output_dir).resolve()
     if output.exists():
         raise ValueError('Output directory already exists')
@@ -257,20 +280,28 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         'synthetic': True, 'provider': 'authored_scripted_mock', 'ai_model_called': False,
         'hardware_verified': False, 'physical_verified': False, 'resumable': False,
         'fixture_acceptance': 'fail', 'runtime_calls': 0, 'document_kind': document_kind,
-        'task_outcome': 'not_assessed', 'conformity': 'not_assessed'}
+        'task_outcome': 'not_assessed', 'conformity': 'not_assessed', 'scenario': scenario,
+        'result_status': None, 'storage_status': None, 'draft_status': 'not_run',
+        'raw_measurement': None, 'corrected': None, 'files': None}
     compiler = _conducted_mock_compiler()
     reason = ('conducted_workflow_pdf_required' if document_kind != 'pdf' else
               'conducted_workflow_measurement_ref_required' if not isinstance(measurement_ref, str) or not measurement_ref else
               'conducted_workflow_mock_model_required' if mock_model not in ('gpt-6.1-sol', 'gpt-6-astra') else
-              'conducted_workflow_windows_mock_compiler_required' if compiler is None else None)
+              'conducted_workflow_windows_mock_compiler_required' if compiler is None else
+              'conducted_workflow_public_fault_seam_unavailable' if scenario in _CONDUCTED_UNSUPPORTED else None)
     if reason:
         summary.update(status='unsupported', reason=reason)
+        if scenario in _CONDUCTED_UNSUPPORTED:
+            summary['public_seam'] = {'entry': 'run_intake_plan_virtual_execution / run_codex_virtual_loop',
+                'supported_scenarios': ['normal', 'restored_disconnect'],
+                'allowed_tools': ['dut.start', 'sensor.acquire', 'sensor.read', 'advance:1', 'bounded stop'],
+                'missing': _CONDUCTED_UNSUPPORTED[scenario]}
         _conducted_json(output, 'public-summary.json', summary)
         return {'summary': summary, 'workspace': None, 'output': output}
     phase = 'prepare_intake'
     try:
         from reportlab.pdfgen import canvas
-        from .intake_jobs import claim_job, complete_job
+        from .intake_jobs import claim_job, complete_job, fail_job
         from .intake_model_boundary import build_analysis_prompt, decode_analysis_response
         from .intake_facts_to_conducted_plan import build_conducted_plan_from_intake_facts
         from .intake_plan_virtual_execution import run_intake_plan_virtual_execution
@@ -280,7 +311,9 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         run_uuid = uuid.uuid4().hex
         product = ['product_type: smartphone', 'model: SM-A176U', 'market: US',
                    'purpose: Wi-Fi 2.4 GHz conducted engineering simulation']
-        condition = ['Condition SYN-WIFI24-CH1; authored synthetic engineering condition.', _CONDUCTED_RF_QUOTE]
+        rf_quote = (_CONDUCTED_RF_QUOTE.replace('duty_cycle: 50 %', 'duty_cycle: 50')
+                    if scenario == 'missing-duty-unit' else _CONDUCTED_RF_QUOTE)
+        condition = ['Condition SYN-WIFI24-CH1; authored synthetic engineering condition.', rf_quote]
         _conducted_write(output, 'authored-request.txt', '\n'.join(product + condition) + '\n')
         folder = output / 'i/r'
         folder.mkdir(parents=True)
@@ -303,6 +336,7 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         if len(scanned['accepted']) != 1:
             raise ValueError('conducted_workflow_intake_not_accepted')
         intake_id = scanned['accepted'][0]['intake_id']
+        summary.update(intake_id=intake_id, revision=scanned['accepted'][0]['revision'])
         respond(store, 'CW-PROCEED-' + run_uuid, 'proceed', intake_id=intake_id)
         phase = 'strict_scripted_analysis'
         job = claim_job(store, 'conducted-MOCK-' + run_uuid, synthetic_only=True)
@@ -311,11 +345,29 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         context = {key: job[key] for key in ('job_id', 'intake_id', 'revision', 'synthetic',
                    'documents', 'analysis_context_id', 'analysis_contract', 'instructions')}
         prompt = build_analysis_prompt(context, producer_name=_CONDUCTED_MOCK_NAME)
-        raw = canonical(_scripted_pdf_analysis(context)).encode('utf-8')
+        raw = canonical(_scripted_pdf_analysis(context, rf_quote=rf_quote,
+                        invalid_citation=scenario == 'invalid-citation')).encode('utf-8')
         _conducted_json(output, 'analysis-context-original.json', context)
         _conducted_json(output, 'analysis-prompt.json', prompt)
         _conducted_write(output, 'analysis-MOCK-original.json', raw)
-        analysis = decode_analysis_response(raw, context, producer_name=_CONDUCTED_MOCK_NAME)
+        try:
+            analysis = decode_analysis_response(raw, context, producer_name=_CONDUCTED_MOCK_NAME)
+        except ValueError as error:
+            if scenario != 'invalid-citation' or str(error) != 'analysis_response_invalid':
+                raise
+            # Expected negative scenario: keep the genuine rejection and raw prefix,
+            # fail this owned claim, and expose only the incomplete Store for reading.
+            failure = {'code': str(error), 'phase': phase, 'synthetic': True,
+                       'actual_model_calls': 0, 'hardware_verified': False}
+            _conducted_json(output, 'failure.json', failure)
+            try:
+                fail_job(store, job['job_id'], job['token'])
+            except Exception:
+                _conducted_json(output, 'failure-secondary.json', {
+                    'code': 'conducted_workflow_failure_projection_unconfirmed', 'phase': 'fail_owned_claim'})
+            summary.update(status='rejected', reason=failure['code'], failure=failure)
+            _conducted_json(output, 'public-summary.json', summary)
+            return {'summary': summary, 'workspace': store.root, 'output': output}
         _conducted_json(output, 'analysis-strict.json', analysis)
         complete_job(store, job['job_id'], job['token'], analysis)
 
@@ -329,29 +381,34 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         assembled = build_conducted_plan_from_intake_facts(context, analysis,
             expected_revision=context['revision'], expected_context_sha256=context_pin, method=method)
         _conducted_json(output, 'facts-plan-original.json', assembled)
+        plan = assembled['plan_input']
+        server_options = {'conducted_plan_preview_inputs': {'intake_id': intake_id,
+            'revision': context['revision'], 'source_settings': plan['plan']['source_settings'],
+            'basis': plan['plan']['basis_refs'], 'method': method}}
         summary.update(intake_id=intake_id, revision=context['revision'], context_sha256=context_pin,
                        source6_assembly='genuine_cited_intake_facts', mock_model=mock_model)
         if assembled['status'] != 'ready_for_simulation':
             summary.update(status='blocked', reason='conducted_workflow_plan_blocked')
+            _conducted_json(output, 'server-startup-original.json', server_options)
             _conducted_json(output, 'public-summary.json', summary)
-            return {'summary': summary, 'workspace': store.root, 'output': output}
+            return {'summary': summary, 'workspace': store.root, 'output': output, 'server_options': server_options}
 
         phase = 'compile_authored_mock'
-        executable = _compile_conducted_mock(output, compiler)
+        executable = _compile_conducted_mock(output, compiler, scenario=scenario)
         project = Path(__file__).resolve().parents[1]
         contract = json.loads((project / 'docs/fcc/codex_first_decision_contract.json').read_bytes())
         schema = contract['response_schema']['literal_utf8'].encode('utf-8')
         if len(schema) != 3052 or sha256(schema).hexdigest() != _CONDUCTED_SCHEMA_SHA:
             raise ValueError('conducted_workflow_schema_unsupported')
         catalog = project / 'virtual_profiles/sm_a176u_unlicensed.json'
-        plan = assembled['plan_input']
         phase = 'execute_same_plan'
         execution = run_intake_plan_virtual_execution(context, analysis, plan,
             expected_revision=context['revision'], expected_context_sha256=context_pin,
             expected_plan_input_sha256=sha256(canonical(plan).encode('utf-8')).hexdigest(),
             catalog_path=catalog, catalog_sha256=sha256(catalog.read_bytes()).hexdigest(),
             response_schema_bytes=schema, executable=executable, requested_model=mock_model,
-            scenario='normal', evidence_dir=output / 'x', execution_origin='mock_subprocess',
+            scenario='restored_disconnect' if scenario == 'restored-disconnect' else 'normal',
+            evidence_dir=output / 'x', execution_origin='mock_subprocess',
             quantity={'metric': 'on', 'reference_plane': 'sensor_input',
                       'loss_compensation_applied': False, 'loss_compensation_sign': 1})
         _conducted_json(output, 'execution-original.json', execution)
@@ -366,15 +423,16 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         current_matches = canonical(current_after) == canonical(current)
         _conducted_json(output, 'current-readonly-after.json', current_after)
         phase = 'bind_readonly_server'
-        server_options = {'conducted_plan_preview_inputs': {'intake_id': intake_id,
-            'revision': context['revision'], 'source_settings': plan['plan']['source_settings'],
-            'basis': plan['plan']['basis_refs'], 'method': method},
-            'conducted_result_snapshot': {'intake_id': intake_id, 'revision': context['revision'],
-                'expected_current_binding': plan['binding'], 'result': result}}
+        server_options['conducted_result_snapshot'] = {'intake_id': intake_id, 'revision': context['revision'],
+            'expected_current_binding': plan['binding'], 'result': result}
         _conducted_json(output, 'server-startup-original.json', server_options)
         stored = bool(finalized['status'] == 'stored' and artifact and artifact['storage']['status'] == 'complete')
         recorded = bool(result and result['status'] == 'recorded')
-        summary.update(status='stored' if stored else 'held', runtime_calls=1,
+        summary.update(status='stored' if stored else 'held', runtime_calls=execution['execution']['trial_factory_calls'],
+            producer_calls=execution['execution']['producer_calls_started'],
+            runtime_scenario='restored_disconnect' if scenario == 'restored-disconnect' else 'normal',
+            failure=finalized['failure'], gaps=result['gaps'] if result else None,
+            draft_status=artifact['verification']['report_status'] if artifact else 'not_run',
             source_current=current_matches, result_status=result['status'] if result else None,
             storage_status=artifact['storage']['status'] if artifact else None,
             run_id=result['binding'].get('run_id') if result else None,
@@ -392,7 +450,9 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
             if receipt is not None:
                 _conducted_json(output, 'failure-original-receipt.json', receipt)
             code = getattr(error, 'code', None)
-            if code is None and isinstance(error, ValueError) and str(error).startswith('conducted_workflow_'):
+            if code is None and isinstance(error, ValueError) and (str(error).startswith('conducted_workflow_')
+                    or str(error) in {'analysis_context_invalid', 'analysis_context_limit', 'analysis_producer_invalid',
+                                      'analysis_response_invalid', 'analysis_response_limit'}):
                 code = str(error)
             _conducted_json(output, 'failure.json', {'code': code or 'conducted_workflow_incomplete',
                 'phase': phase, 'synthetic': True, 'actual_model_calls': 0, 'hardware_verified': False})
@@ -409,15 +469,20 @@ def main(argv=None):
     mode.add_argument('--conducted-workflow', action='store_true', help='Authored PDF plan/execution/result/DRAFT mock demo')
     parser.add_argument('--measurement-ref', help='Explicit same-journal reference for the opt-in workflow')
     parser.add_argument('--mock-model', choices=['gpt-6.1-sol', 'gpt-6-astra'], help='Logical model label for the generated mock executable only')
+    parser.add_argument('--conducted-scenario', choices=_CONDUCTED_SCENARIOS,
+                        help='New authored input/mock/runtime scenario; requires --conducted-workflow')
     parser.add_argument('--document-kind', choices=['text', 'pdf'], default='text')
     parser.add_argument('--port', type=int, help='After execution, serve the existing intake store on loopback')
     args = parser.parse_args(argv)
+    if args.conducted_scenario is not None and not args.conducted_workflow:
+        parser.error('--conducted-scenario requires --conducted-workflow')
     if args.port is not None and not 0 <= args.port <= 65535:
         parser.error('port must be between 0 and 65535')
     output = args.output or Path('.local/cw' if args.conducted_workflow else '.local/intake-fixture-check') / uuid.uuid4().hex[:12 if args.conducted_workflow else 32]
     try:
         result = (run_conducted_flow(output, document_kind=args.document_kind,
-                  measurement_ref=args.measurement_ref, mock_model=args.mock_model) if args.conducted_workflow
+                  measurement_ref=args.measurement_ref, mock_model=args.mock_model,
+                  scenario=args.conducted_scenario or 'normal') if args.conducted_workflow
                   else run_fixture_flow(output, power_dbm=args.power_dbm, document_kind=args.document_kind))
         print(json.dumps(result['summary'], ensure_ascii=False, allow_nan=False), flush=True)
         if args.port is not None and result['workspace'] is not None:
