@@ -42,6 +42,8 @@ print(result["status"], result["verdict"], result["observed_goal"])
 
 새 API는 action/request ID를 생성하지 않는다. execute receipt는 해당 node의 device_id/profile_id/role·plain bool setup_changed를 결합한다. advance receipt는 실제 global6/status ok/advanced_ticks plain int1/tick+1/비역행 revision이다. advance에 node identity나 가상의 setup_changed를 추가하지 않는다. public core output의 source_id는 **device ID**이며 profile ID는 node의 별도 필드다.
 
+event_id는 공개 journal의 유효 ASCII 식별자이며 `event:N` 접두를 강제하지 않는다. sequence 1..N·ID 고유성·동일 run/runtime과 모든 report 참조 결합은 유지한다. ID를 바꾼 자료는 report의 해당 참조도 같은 전단사 관계로 바꿔야 한다. meter.fetch는 빈 parameters 또는 현재 지원 설정과 같은 `{"window": 1}`을 받는다. window는 plain int여야 하며 bool·다른 창·다른 parameter/action·sample 불일치를 새 권한이나 지원으로 인정하지 않는다.
+
 ## 판정과 한계
 
 | 결과 | 의미 |
@@ -53,6 +55,12 @@ print(result["status"], result["verdict"], result["observed_goal"])
 | unsupported / null | 다른 goal/policy/최초 meter 모드·외부 mutation 선언 또는 이미 평가된 report. 새 권한/지원으로 해석하지 않음 |
 
 판정 우선순위는 fail > inconclusive > pass다. sensor/meter가 같은 오답이어도 선언 source ON power에서 선택 손실을 뺀 값과 다르면 fail이다. on_average에 duty/crest를 다시 적용하거나 coupler의 through 손실을 coupled 분기에 더하지 않는다. 허용오차는 절대 1e-9dB다.
+
+설정 응답 `pending`과 같은 pending cause에서 설정이 그대로인 blocked 종료는 known rejection이 아니다. `inconclusive / unverified`로 남기며, completed claim과 미결 설정이 함께 있으면 fail이다. invalid/unsupported/error/disconnected의 알려진 실패는 receipt와 cause의 status·reason 및 설정/configuration revision 불변이 맞고 blocked로 끝났을 때에만 종전의 조건부 pass/not_satisfied가 가능하다. 새 logical configure 재시도는 허용하지 않는다.
+
+기록된 `elapsed_ms > wall_seconds * 1000`은 `fail / budget_violation`이다. 예를 들어 선언 2.5초에 기록 2500.25ms는 초과다. 정확 경계 2500ms와 적법한 wall_deadline 종료는 실제 시계를 확인하지 못한 inconclusive로 구별한다. 한도 미만의 기록이나 종료 이유만으로 실제 시간 준수를 검증했다고 표시하지 않는다.
+
+`observed_goal`은 verdict와 별도다. 완전·지원되는 최종 기록에서 값이 독립 산술과 확실히 다르거나 취득 revision이 실제로 오래됐음이 입증되면 fail/not_satisfied가 가능하다. prefix·pending 또는 run/runtime/event 결합 모순으로 동일 실행의 근거가 성립하지 않거나 수치를 확인할 수 없으면 unverified다. 이 예시는 모든 source/unit/window/stale 조합의 reason-to-goal 매핑을 열거한 표가 아니다. 개별 문구의 해석 차이 때문에 이미 확인한 fail을 완화하거나 모든 측정 실패를 일괄 unverified로 바꾸지 않는다.
 
 결과 exact15에는 checks7/counts10, declaration/report/events/전체 입력 SHA와 run/runtime ID, 고정 reason_codes, 실제 event refs와 최초 error/실패 receipt refs가 있다. configure logical intent와 transport retry marker를 구별하며 실제 dispatch 횟수를 입증했다고 표시하지 않는다. 원 실패 receipt는 성공 후에도 참조로 남는다.
 

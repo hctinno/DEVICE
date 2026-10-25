@@ -143,6 +143,19 @@ def packets(p):
             for v in x: yield from walk(v)
     return walk(p['events'])
 
+def configure_stop(status,claim='blocked'):
+    """Owner memory evidence: one unchanged configure response and its cause."""
+    p=case('reject')
+    rid=next(e['payload']['request_id'] for e in p['events'] if e['type']=='intent' and e['payload']['body'].get('action')=='configure')
+    for e in p['events']:
+        if e['type']=='receipt' and e['payload']['request_id']==rid:
+            e['payload']['result']['status']=status
+        if e['type']=='observation' and e['payload'].get('cause_request_id')==rid:
+            e['payload']['observation']['devices']['display']['status']=status
+    p['report']['termination']['policy_claim']=claim
+    p['events'][-2]['payload']['proposal']['claim']=claim
+    return p
+
 class AssessmentTests(unittest.TestCase):
     def setUp(self): self.assertIsNotNone(api,'Assigned assessment API must exist')
     def assess(self,p): return api.assess_meter_frequency_recovery(p['report'],p['events'],declaration=p['declaration'])
@@ -360,5 +373,113 @@ class AssessmentTests(unittest.TestCase):
     def test_detached_output_and_repeatability(self):
         p=case('recovery'); before=raw(p); a=self.assess(p); b=self.assess(p); self.assertEqual(a,b)
         a['counts'].clear(); a['evidence_refs'].clear(); a['limits'].clear(); self.assertEqual(raw(p),before); self.assertEqual(self.assess(p),b)
+
+    def test_review_i1_native_opaque_ids_preserve_normal_and_recovery(self):
+        for mode in ('normal','recovery'):
+            with self.subTest(mode=mode):
+                p=case(mode); expected=self.assess(p)
+                self.assertEqual((expected['verdict'],expected['observed_goal']),('pass','satisfied'))
+                mapping={e['event_id']:f'Native-{i:03}.a_:q' for i,e in enumerate(p['events'],1)}
+                def renamed(x):
+                    if type(x) is str: return mapping.get(x,x)
+                    if type(x) is dict: return {k:renamed(v) for k,v in x.items()}
+                    if type(x) is list: return [renamed(v) for v in x]
+                    return x
+                p['report']=renamed(p['report'])
+                for e in p['events']: e['event_id']=mapping[e['event_id']]
+                expected=renamed(expected)
+                expected['bindings'].update(report_sha256=sha(p['report']),events_sha256=sha(p['events']),input_sha256=sha(p))
+                before=raw(p); self.assertEqual(self.assess(p),expected); self.assertEqual(raw(p),before)
+
+    def test_review_i1_opaque_ids_keep_sequence_uniqueness_runtime_and_refs(self):
+        for change in ('sequence','duplicate','runtime','report_ref'):
+            with self.subTest(change=change):
+                p=case(); mapping={e['event_id']:f'opaque-{i}' for i,e in enumerate(p['events'],1)}
+                for e in p['events']: e['event_id']=mapping[e['event_id']]
+                p['report']['evidence']['measurement_refs']=[mapping[r] for r in p['report']['evidence']['measurement_refs']]
+                if change=='sequence': p['events'][1]['sequence']+=1
+                elif change=='duplicate': p['events'][1]['event_id']=p['events'][0]['event_id']
+                elif change=='runtime': p['events'][1]['runtime_instance_id']='other-runtime'
+                else: p['report']['evidence']['measurement_refs']=['unrecorded-opaque-id']
+                self.assertEqual(self.assess(p)['verdict'],'fail')
+        for identity in ('non ascii \u03b1','_bad-start','a'*129):
+            p=case(); p['events'][0]['event_id']=identity
+            self.fixed('invalid_input',lambda:self.assess(p))
+
+    def test_review_i2_explicit_fetch_window_one_is_equivalent(self):
+        for mode in ('normal','recovery'):
+            with self.subTest(mode=mode):
+                p=case(mode)
+                p['declaration']['role_actions']['power_meter']['fetch']['parameters']={'window':{'type':'integer','required':False}}
+                for e in p['events']:
+                    body=e['payload'].get('body') if e['type']=='intent' else e['payload'].get('proposal') if e['type']=='policy_decision' else None
+                    if body is not None and body.get('action')=='fetch': body['parameters']={'window':1}
+                r=self.assess(p)
+                self.assertEqual((r['verdict'],r['observed_goal']),('pass','satisfied'))
+                self.assertEqual(r['counts']['meter_fetch_intents'],1)
+
+    def test_review_i2_fetch_window_keeps_parameter_and_action_limits(self):
+        for params in ({'window':True},{'window':False},{'window':1.0},{'window':2},{'window':4},{'window':1,'unit':'dBm'},{'frequency_hz':F}):
+            with self.subTest(params=params):
+                p=case()
+                for e in p['events']:
+                    body=e['payload'].get('body') if e['type']=='intent' else e['payload'].get('proposal') if e['type']=='policy_decision' else None
+                    if body is not None and body.get('action')=='fetch': body['parameters']=deepcopy(params)
+                r=self.assess(p); self.assertEqual(r['verdict'],'fail'); self.assertIn('unexpected_action',r['reason_codes'])
+        p=case()
+        for e in p['events']:
+            body=e['payload'].get('body') if e['type']=='intent' else e['payload'].get('proposal') if e['type']=='policy_decision' else None
+            if body is not None and body.get('action')=='read': body['parameters']={'window':1}
+        r=self.assess(p); self.assertEqual(r['verdict'],'fail'); self.assertIn('unexpected_action',r['reason_codes'])
+
+    def test_review_i3_recorded_wall_under_equal_over_fractional_budget(self):
+        for seconds,boundary in ((13.75,13750.0),(.125,125.0)):
+            for delta,verdict in ((-.25,'pass'),(0,'inconclusive'),(.25,'fail')):
+                with self.subTest(seconds=seconds,delta=delta):
+                    p=case(); p['declaration']['budgets']['wall_seconds']=seconds
+                    p['report']['usage']['elapsed_ms']=boundary+delta
+                    r=self.assess(p); self.assertEqual(r['verdict'],verdict)
+                    if delta>0: self.assertEqual(r['checks']['budgets'],'fail'); self.assertIn('budget_violation',r['reason_codes'])
+                    else: self.assertNotIn('budget_violation',r['reason_codes'])
+                    if delta>=0: self.assertIn('wall_time_unverified',r['reason_codes'])
+                    self.assertFalse(r['verification']['runtime_authenticity_verified'])
+
+    def test_review_i3_legal_wall_deadline_is_not_clock_compliance(self):
+        for elapsed,verdict in ((13749.75,'inconclusive'),(13750.0,'inconclusive'),(13750.25,'fail')):
+            with self.subTest(elapsed=elapsed):
+                p=case(); del p['events'][-2]; renumber(p)
+                p['declaration']['budgets']['wall_seconds']=13.75
+                p['report']['termination']={'reason':'wall_deadline','policy_claim':None}
+                p['report']['usage']['elapsed_ms']=elapsed
+                r=self.assess(p); self.assertEqual(r['verdict'],verdict); self.assertIn('wall_time_unverified',r['reason_codes'])
+                if elapsed>13750: self.assertIn('budget_violation',r['reason_codes'])
+                else: self.assertNotIn('budget_violation',r['reason_codes'])
+
+    def test_review_i4_pending_configure_blocked_is_unresolved_twice(self):
+        p=configure_stop('pending'); before=raw(p); a=self.assess(p); b=self.assess(p)
+        self.assertEqual(a,b); self.assertEqual(raw(p),before)
+        self.assertEqual((a['verdict'],a['observed_goal']),('inconclusive','unverified'))
+        self.assertIn('execution_unresolved',a['reason_codes']); self.assertNotIn('configuration_rejection_observed',a['reason_codes'])
+        self.assertEqual((a['counts']['configure_logical_attempts'],a['counts']['successful_configures']),(1,0))
+
+    def test_review_i4_pending_configure_completed_is_contradictory(self):
+        r=self.assess(configure_stop('pending','completed'))
+        self.assertEqual((r['verdict'],r['observed_goal']),('fail','unverified'))
+        self.assertIn('execution_unresolved',r['reason_codes']); self.assertIn('report_transcript_mismatch',r['reason_codes'])
+
+    def test_review_i4_known_unchanged_configuration_failures_stay_blocked(self):
+        for status in ('invalid','unsupported','error','disconnected'):
+            with self.subTest(status=status):
+                r=self.assess(configure_stop(status))
+                self.assertEqual((r['verdict'],r['observed_goal']),('pass','not_satisfied'))
+                self.assertIn('configuration_rejection_observed',r['reason_codes'])
+                self.assertEqual(r['counts']['configure_logical_attempts'],1)
+
+    def test_review_i4_known_configuration_failure_requires_matching_cause(self):
+        p=configure_stop('invalid')
+        rid=next(e['payload']['request_id'] for e in p['events'] if e['type']=='intent' and e['payload']['body'].get('action')=='configure')
+        cause=next(e for e in p['events'] if e['type']=='observation' and e['payload'].get('cause_request_id')==rid)
+        cause['payload']['observation']['devices']['display']['values']['reason']='different-rejection'
+        self.assertEqual(self.assess(p)['verdict'],'fail')
 
 if __name__=='__main__': unittest.main()
