@@ -13,11 +13,16 @@ from .store import canonical
 __all__=['build_conducted_plan_from_intake_facts']
 _FIELDS=_plan._SETTINGS
 _LABELS=dict(frequency='frequency_hz',on_average_power='power_dbm',bandwidth='bandwidth_hz',
+             frequency_hz='frequency_hz',bandwidth_hz='bandwidth_hz',
              duty_cycle='duty_cycle',modulation='modulation',crest_factor='crest_factor_db')
 _KNOWN_OTHER_POWER={'report_peak','reported_peak','peak_power','time_average_power'}
 _OTHER_POWER={'power','power_dbm'}|_KNOWN_OTHER_POWER
 _QUANTITY=re.compile(_plan._NUMBER+r'([A-Za-z%]+)\Z')
 _TOKEN=re.compile(r'[\w.+-]+\Z',re.UNICODE)
+_DISCLAIMER=r'not (?:a )?measurements?(?: or (?:confirmed )?product capabilit(?:y|ies))?'
+_PREFIX=re.compile(r'\s*(?:synthetic|invented)(?: simulator)? settings?(?:,\s*'+_DISCLAIMER+r')?\s*:\s*',re.I)
+_SUFFIX=re.compile(r';\s*'+_DISCLAIMER+r'\s*\Z',re.I)
+_WRAPPER=re.compile(r'(?:features|power_target)\s*:\s*',re.I)
 _INPUT_CODES={'native_input_invalid','analysis_invalid','context_invalid','analysis_evidence_invalid',
               'expected_revision_changed_or_invalid','expected_context_changed_or_invalid'}
 _MESSAGES=dict(frequency_hz='같은 조건의 명시 주파수와 단위를 확인해 주세요.',
@@ -58,7 +63,10 @@ def _quantity(rhs,key):
         return label,label,'label',label
     if len(rhs)>256:_reject('source_number_unrepresentable')
     match=_QUANTITY.fullmatch(rhs)
-    if not match:_reject('source_statement_unsupported')
+    if not match:
+        bare=re.fullmatch(_plan._NUMBER,rhs)
+        if bare:_reject('source_unit_missing' if len(bare.group(1))<=128 else 'source_number_unrepresentable')
+        _reject('source_statement_unsupported')
     token,unit=match.groups()
     if len(token)>128:_reject('source_number_unrepresentable')
     exponent=token.lower().partition('e')[2]
@@ -78,10 +86,19 @@ def _quantity(rhs,key):
 
 def _block(text):
     if text.count(';')+text.count('\n')>=128:return {},False,True
+    # Only this closed synthetic qualifier grammar is recognized. Arbitrary
+    # narrative, negation, conditions and internal unknown segments remain errors.
+    prefix=_PREFIX.match(text)
+    offset=prefix.end() if prefix else 0
+    body=text[offset:]
+    suffix=_SUFFIX.search(body)
+    if suffix:body=body[:suffix.start()]
     records={};unknown=False
-    for segment in re.finditer(r'[^;\n]+',text):
+    for segment in re.finditer(r'[^;\n]+',body):
         statement=segment.group().strip()
         if not statement:continue
+        wrapper=_WRAPPER.match(statement)
+        if wrapper:statement=statement[wrapper.end():]
         colon,equal=statement.find(':'),statement.find('=')
         positions=[p for p in (colon,equal) if p>=0]
         if not positions:unknown=True;continue
@@ -93,7 +110,7 @@ def _block(text):
         if other:key='power_dbm'
         if key is None:unknown=True;continue
         rhs=statement[at+1:].strip()
-        row=dict(span=[segment.start(),segment.end()],label=label,raw_value=None,unit=None,problem=None,
+        row=dict(span=[offset+segment.start(),offset+segment.end()],label=label,raw_value=None,unit=None,problem=None,
                  value=None,setting=None,normal=None)
         if other:
             row['problem']='source_power_quantity_unsupported'
@@ -105,6 +122,7 @@ def _block(text):
         else:
             try:
                 value,setting,unit,raw=_quantity(rhs,key)
+                if label in ('frequency_hz','bandwidth_hz') and unit!='Hz':_reject('source_unit_unsupported')
                 row.update(value=value,setting=setting,unit=unit,raw_value=raw,
                     normal=setting if key=='modulation' else Fraction(str(setting)))
             except _Unsupported as error:
@@ -114,6 +132,9 @@ def _block(text):
                     if match:
                         token,unit=match.groups()
                         row.update(raw_value=token if len(token)<=128 else None,unit=unit if len(unit)<=16 else None)
+                    else:
+                        bare=re.fullmatch(_plan._NUMBER,rhs)
+                        if bare and len(bare.group(1))<=128:row['raw_value']=bare.group(1)
         records.setdefault(key,[]).append(row)
     return records,unknown,False
 
@@ -216,18 +237,24 @@ def _assemble(analysis):
 def _questions(parent,gaps):
     if any(g['code'] in _INPUT_CODES for g in parent['gaps']):return []
     global_gap=next((g for g in gaps if g['field']=='source_settings'),None)
+    questions=[]
     if global_gap:
-        return [dict(key='source_condition',field='source_settings',reason=global_gap['code'],
-            message='같은 시험 조건에 결합된 명시 RF 값과 인용 블록을 확인해 주세요.')]
-    if any(g['code']=='invalid_rf_domain' for g in parent['gaps']):
+        questions.append(dict(key='source_condition',field='source_settings',reason=global_gap['code'],
+            message='제공된 인용 블록들이 같은 시험 조건에 결합되는 명시 근거를 확인해 주세요.'))
+    if not global_gap and any(g['code']=='invalid_rf_domain' for g in parent['gaps']):
         return [dict(key='source_domain',field='source_settings',reason='invalid_rf_domain',
             message='같은 조건의 주파수와 대역폭 범위를 확인해 주세요.')]
-    questions=[]
     for key in _FIELDS:
-        if parent['plan']['source_settings'][key] is not None:continue
         field='source_settings.'+key
-        issue=next((g for g in gaps if g['field']==field),None) or next((g for g in parent['gaps'] if g['field']==field),None)
-        questions.append(dict(key='source_'+key,field=field,reason=issue['code'] if issue else 'source_fact_missing',message=_MESSAGES[key]))
+        issue=next((g for g in gaps if g['field']==field),None)
+        if global_gap and issue is None:continue  # Withheld candidates need binding, not six replacement values.
+        if not global_gap and parent['plan']['source_settings'][key] is not None:continue
+        issue=issue or next((g for g in parent['gaps'] if g['field']==field),None)
+        code=issue['code'] if issue else 'source_fact_missing'
+        message=('제공된 '+key+' 값에 대응하는 명시 단위를 확인해 주세요.' if code=='source_unit_missing'
+            else '제공된 '+key+' 문장의 지원 형식·모호한 조건을 확인해 주세요.' if code=='source_statement_unsupported'
+            else _MESSAGES[key])
+        questions.append(dict(key='source_'+key,field=field,reason=code,message=message))
     return questions
 
 

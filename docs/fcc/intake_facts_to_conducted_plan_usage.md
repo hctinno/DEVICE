@@ -21,13 +21,13 @@ context는 public8, analysis는 기존 schema1/2다. fact는 field/value/status/
 
 ## 닫힌 문장과 동일 조건
 
-문법은 줄 또는 세미콜론으로 나눈 `label: value unit` / `label = value unit` 문장의 전체 일치다. 주변 숫자를 검색해 첫 값을 선택하지 않는다. 숫자는 부호·소수·지수 표기를 받되, literal 최대128자·지수 절댓값400 이내에서 finite native int/float로 정확히 표현할 수 있어야 한다. 긴 지수/비유한/Decimal 오류는 유계 거절하고 원 MemoryError/control은 보존한다.
+문법은 줄 또는 세미콜론으로 나눈 `label: value unit` / `label = value unit` 문장의 전체 일치다. 주변 숫자를 검색해 첫 값을 선택하지 않는다. 아래의 닫힌 wrapper·합성 설명 문법만 구별하며 일반 자연어를 걷어내지 않는다. 숫자는 부호·소수·지수 표기를 받되, literal 최대128자·지수 절댓값400 이내에서 finite native int/float로 정확히 표현할 수 있어야 한다. 긴 지수/비유한/Decimal 오류는 유계 거절하고 원 MemoryError/control은 보존한다.
 
 | 출력 키 | 지원 label | 명시 단위·범위 |
 | --- | --- | --- |
-| frequency_hz | frequency | Hz/kHz/MHz/GHz; positive number |
+| frequency_hz | frequency, frequency_hz | frequency는 Hz/kHz/MHz/GHz; frequency_hz alias는 명시 Hz만. positive number |
 | power_dbm | on_average_power | dBm; finite number. 기존 on-average/on average 철자도 허용 |
-| bandwidth_hz | bandwidth | Hz/kHz/MHz/GHz; positive number |
+| bandwidth_hz | bandwidth, bandwidth_hz | bandwidth는 Hz/kHz/MHz/GHz; bandwidth_hz alias는 명시 Hz만. positive number |
 | duty_cycle | duty_cycle | ratio/%; 환산 결과 0<값≤1 |
 | modulation | modulation | 명시 literal label≤200자; 별도 modulation enum 없음 |
 | crest_factor_db | crest_factor | dB; number≥0 |
@@ -43,13 +43,29 @@ modulation: CUSTOM-IQ
 crest_factor: 4 dB
 ```
 
-후보는 fact.value와 그 fact의 원 evidence.quote 양쪽의 같은 label·정규값에 결합돼야 한다. 명시 단위가 달라도 정확한 환산값이 같으면 비교할 수 있지만 basis의 value/unit은 원 quote 표기를 보존한다. unit 변환은 값의 동일성 검사이며 누락을 채우는 추정이 아니다. source_cited만 만들고 developer_declared_synthetic를 자동 발급하지 않는다.
+후보는 fact.value와 그 fact의 원 evidence.quote 양쪽의 동일 RF field·정규값에 결합돼야 한다. 명시 단위가 달라도 지원 label의 정확한 환산값이 같으면 비교할 수 있지만 basis의 value/unit은 원 quote 표기를 보존한다. unit 변환은 값의 동일성 검사이며 누락을 채우는 추정이 아니다. source_cited만 만들고 developer_declared_synthetic를 자동 발급하지 않는다.
+
+2026-10-26의 작은 문법 확장은 `frequency_hz`/`bandwidth_hz` alias 뒤에도 실제 `Hz`가 있어야 한다. alias에 단위가 없으면 `source_unit_missing`, alias와 다른 단위가 섞이면 `source_unit_unsupported`다. `duty_cycle: 25`에서 `%`나 `ratio`를 생성하지 않는다. 원 numeric token은 후보 metadata의 raw_value에 보존하고 unit은 null로 남긴다. 자료의 값이 없는 경우와 제공 문장·단위가 아직 지원되지 않는 경우를 구별한다.
+
+각 segment 앞에는 exact `features:` 또는 `power_target:` wrapper를 하나 허용한다. fact.value와 quote를 별도로 검사하고 원문·위치를 그대로 남긴다. 합성 설명 접두는 문장 전체의 시작에서 `Synthetic` 또는 `Invented`, 선택적 `simulator`, `setting` 또는 `settings`, 선택적 쉼표와 아래의 제한된 disclaimer, 마지막 `:`로만 구성된다. disclaimer는 `not`, 선택적 `a`, `measurement` 또는 `measurements`, 선택적 `or`와 선택적 `confirmed` 및 `product capability`/`product capabilities`다. 같은 disclaimer를 전체 마지막의 `;` 뒤에도 허용한다. 대소문자는 구별하지 않는다. 그 밖의 서술·부정·조건·중간 문장은 계속 미지원이며, 숫자만 추출하거나 불확실한 fact를 explicit으로 바꾸지 않는다.
+
+새 authored 예제의 source quote와 fact.value다. 제공된 wrapper와 제한된 합성 설명이 명시 RF 값의 근거 연결을 가리지 않도록 처리한다.
+
+```text
+source quote:
+features: frequency_hz: 915000000 Hz; bandwidth_hz: 250000 Hz; duty_cycle: 25 %; modulation: LAB-PULSE; crest_factor: 2 dB; on_average_power: -11 dBm
+
+fact.value:
+Synthetic settings: frequency_hz: 915000000 Hz; bandwidth_hz: 250000 Hz; duty_cycle: 25 %; modulation: LAB-PULSE; crest_factor: 2 dB; on_average_power: -11 dBm; not a measurement
+```
+
+서로 다른 metadata citation에 RF 문장이 없으면 그 인용에서 설정을 만들지 않는다. 실제 quantity citation과 그 fact.value의 명시 값·단위는 계속 일치해야 한다. 별도의 규범 미확정 features 문장이 RF 값을 말하지 않으면 source 설정으로 해석하지 않고 부모의 원 경고로 보존한다. 부모 warning의 blocking 여부와 projection은 변경하지 않는다.
 
 usable 후보는 explicit인 사실과 literal quote에 의해 지지돼야 한다. 동일 정규 numeric 값의 반복만 일치로 묶는다. 추론/불확실·다른 값·지원 밖 문장/단위·범위/비교/다중 목록·quote 불일치가 있으면 해당 field는 null이다. 첫 값/마지막 값/평균을 고르지 않는다. modulation은 하나의 명시 literal을 보존하고 MCS/HT20 등에서 추정하지 않는다.
 
 modulation의 공백 없는 단일 token 또는 escape 없는 큰따옴표 literal을 받는다. 예를 들어 `CUSTOM-IQ`와 `"CUSTOM IQ"`는 명시 label이며 `OFDM / CCK`에서 한 종류를 선택하지 않는다. 이 문법 제한은 RF modulation 지원 enum이 아니다.
 
-현재 analysis에는 RF condition ID가 없다. 같은 제품이라는 사실만으로 다른 행·모드·조건·출처를 연결하지 않는다. 첫 범위는 동일 physical citation/quote의 명시 블록에서 얻는 부분 또는 전체 벡터다. 같은 quote를 참조하는 지원 사실은 그 안에서 대조할 수 있다. 한 블록이 이미 지지하는 값의 반복은 합칠 수 있으나, 서로 보완적인 별도 블록을 짜깁기해야만 입력이 성립하면 source_settings를 보류하고 조건 확인 질문1개를 둔다. 한 블록의 일부 값만 있으면 유효 값은 유지하고 빠진 field만 묻는다.
+현재 analysis에는 RF condition ID가 없다. 같은 제품이라는 사실만으로 다른 행·모드·조건·출처를 연결하지 않는다. 첫 범위는 동일 physical citation/quote의 명시 블록에서 얻는 부분 또는 전체 벡터다. 같은 quote를 참조하는 지원 사실은 그 안에서 대조할 수 있다. 한 블록이 이미 지지하는 값의 반복은 합칠 수 있으나, 서로 보완적인 별도 블록을 짜깁기해야만 입력이 성립하면 source_settings를 보류하고 조건 확인 질문1개를 둔다. wrapper를 지원해도 physical quote identity를 합치지 않는다. 한 quote 안에 두 wrapper가 모두 명시돼 있는 경우와, 서로 다른 quote의 wrapper를 연결하는 경우를 구별한다. 한 블록의 일부 값만 있으면 유효 값은 유지하고 빠진 field만 묻는다.
 
 문장/후보 개수도 유계다. 한 블록은 최대128개 segment, 전체 후보는4096개 이내다. 초과하면 일부만 골라 성공 처리하지 않는다. channel→frequency, HT20→BW, duty/crest/손실·기준면·수치 한계의 default/예제 추정은 없다. report_peak/reported_peak/양불명 power를 on-average source 입력으로 바꾸지 않는다. 규범의 최소 BW/최대 power나 XML6 fact를 제품 동작 설정 또는 norm PASS로 올리지 않는다. 자유문장·표 행/열 연결은 지원 범위가 아니다.
 
@@ -79,11 +95,11 @@ method exact4는 caller가 그대로 명시한다. 현재 conducted_synthetic/na
 | value_span | fact.value 내 `[start, end]` 문자 index, end 미포함 |
 | quote_span | 원 evidence.quote 내 같은 형식의 문자 index; PDF 파일/printed page 좌표로 추정하지 않음 |
 
-matching 문장이 없으면 해당 span은 제공된 전체 value/quote를 가리킨다. 원문을 잘라 성공 처리하는 대신 index로 원 source_facts 전체를 유지한다. 현재 assembly code는 `source_fact_missing, source_fact_unverified, source_statement_unsupported, source_quote_mismatch, source_unit_unsupported, source_power_quantity_unsupported, source_value_conflict, source_condition_unbound, source_number_unrepresentable, source_candidate_limit`이다.
+matching 문장이 없으면 해당 span은 제공된 전체 value/quote를 가리킨다. 지원 접두·wrapper가 있어도 span은 원 value/quote의 문자 index를 가리킨다. 원문을 잘라 성공 처리하는 대신 index로 원 source_facts 전체를 유지한다. 현재 assembly code는 `source_fact_missing, source_fact_unverified, source_statement_unsupported, source_quote_mismatch, source_unit_missing, source_unit_unsupported, source_power_quantity_unsupported, source_value_conflict, source_condition_unbound, source_number_unrepresentable, source_candidate_limit`이다.
 
 지원 label을 알아볼 수 없는 features 원문도 미확인 field의 provided에 위치를 남긴다. 그 위치가 있다는 사실은 해당 문자열을 특정 RF 값이나 quantity로 해석했다는 뜻이 아니다. 그런 원문에서 raw_value/unit은 null이며 원 value/quote 전체가 보존된다.
 
-추가 Question은 key/field/reason/message exact4다. 평가 가능한 미확인 field당 최대1개, 조건 벡터 자체가 미결합이면 상위 조건 질문1개다. 입력 C1/strict analysis/인용이 무효하거나 method가 미지원이면 추출하지 않고 부모 blocked/gap을 보존하며 RF 질문을 불필요하게 늘리지 않는다.
+추가 Question은 key/field/reason/message exact4다. 평가 가능한 미확인 field당 최대1개, 조건 벡터 자체가 미결합이면 상위 조건 질문1개다. 조건 때문에 보류된 명시 후보는 다시 입력하도록 묻지 않는다. 조건 공백과 실제 단위 누락 등이 함께 있으면 조건 질문과 해당 field의 실제 추가 공백만 묻는다. 예를 들어 다섯 명시 후보가 다른 physical quote에 나뉘고 duty의 단위가 없으면 `source_condition_unbound`와 `source_unit_missing`의 질문2개이며 RF 값6개를 다시 요청하지 않는다. 지원하지 않는 문장은 제공 문장의 형식·모호함을, 단위 누락은 제공 값의 단위를 묻는다. 입력 C1/strict analysis/인용이 무효하거나 method가 미지원이면 추출하지 않고 부모 blocked/gap을 보존하며 RF 질문을 불필요하게 늘리지 않는다.
 
 key는 `source_`+6키 또는 source_condition/source_domain, field는 위 source 경로, reason은 해당 assembly code 또는 부모의 기존 숫자/domain gap code, message는 한국어 확인 문장이다. parent의 invalid_rf_domain은 주파수/BW 확인 질문1개로 묶는다. 원 parent 질문과 새 RF 질문은 서로 지우거나 덮어쓰지 않는다.
 
@@ -92,3 +108,5 @@ source6/basis는 검증된 항목만 전달하며 누락/상충/모호함은 nul
 ## 검증
 
 공개 합성 context/analysis와 genuine 부모를 사용한다. schema1 text와 schema2의 이미 제공된 정규화 페이지·인용만 다루며 PDF 원 파일을 읽지 않는다. 정상6값/단위 환산·중복·상충·부족·range/peak·조건 미결합·context/quote/hash 변경·control 전파·입력 불변을 구분한다. 실제 모델·고객 실값·P01 원 packet·타 owner proof·hidden expected는 사용하지 않는다. 합성 통과는 실제 계측 정확도·전체 시험소·규범 적합성 검증이 아니다.
+
+이번 source 문법 확장은 새 authored 합성13개에서 alias·source wrapper·제한된 설명·단위 누락·교차 조건·부정/모호함·단위 혼합·원 위치·control/I/O를 확인한다. 기존35개는 변경하지 않고 필요한 회귀1회로 확인하며 예전109 전수 결과를 새 검사로 합산하지 않는다. 허용된 과거 실제 합성 응답 probe는 별도 로컬 추출 관측에만 사용할 수 있고 공개 테스트 golden으로 복사하지 않는다. 원 context 본문이 없는 probe의 추출 관측을 실제 current C1의 genuine 전체 재검증으로 표현하지 않는다. 실제 미해결 단위·조건 결합은 계속 blocked일 수 있으며 정상적인 보류다.
