@@ -107,6 +107,8 @@ load/save는 `<프로필 파일명>.lock`에 비차단 OS 잠금을 사용한다
 
 경로의 `..`, UNC, 제어 문자, Windows 장치 이름·끝 점/공백·ADS 문자, 심볼릭 링크/reparse 경로, hardlink, 디렉터리·기타 비정규 파일을 거절한다. 잠금 sidecar에도 정규 파일·단일 링크 검사를 적용한다.
 
+Windows의 8.3 짧은 별칭은 같은 파일에 다른 sidecar를 만들 수 있으므로 지원하지 않는다. `GetLongPathNameW`로 존재하는 대상과 부모 경로의 긴 이름을 확인하고 대소문자 차이만 허용한다. 없는 파일도 부모를 확인한다. 경로 성분의 `~`는 파일 생성 전부터 예약하여 거절하며, 교체 직전에도 대상을 다시 확인한다. `~`가 없는 짧은 이름도 가능하므로 이 문자 검사만으로 판정하지 않는다. 긴 이름을 확인할 수 없으면 `invalid_path`로 닫힌다. [Microsoft 긴 이름 조회](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getlongpathnamew), [짧은 이름 조회와 파일시스템별 생성 조건](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getshortpathnamew).
+
 저장은 잠금 안에서 현재 revision을 읽고 입력 revision·expected_revision·현재 revision의 일치를 확인한 뒤 같은 디렉터리의 임시 파일에 쓰고 flush/fsync 후 atomic replace한다. 교체 후 잠금 안에서 재조회한다. 잘못된 입력·CAS 충돌·잠금 실패는 마지막 정상 프로필을 보존한다. 교체 이후의 I/O 오류는 새 revision이 이미 저장된 상태일 수 있으므로 반드시 재조회해서 확인한 후 다음 동작을 정한다. 전원 상실 시의 완전한 내구성은 검증하지 않았다.
 
 `AIConnectionProfileError(ValueError)`는 `.code`와 동일한 고정 메시지만 반환한다. 아래 표의 접미사 앞에 `ai_connection_profile_`가 붙는다. 입력값·경로·내부 OS 오류 내용은 메시지에 포함하지 않는다. `KeyboardInterrupt`·`SystemExit`는 동일 객체로 전파한다.
@@ -125,5 +127,7 @@ load/save는 `<프로필 파일명>.lock`에 비차단 OS 잠금을 사용한다
 ## 검증 범위
 
 실행 명령은 `python -m unittest discover -s tests -p test_ai_connection_profiles.py -v`다. 기본값·모델별 저장·override 분리·canonical 해시·형식/수치/비밀키 거절·손상 보존·CAS·실제 하위 프로세스의 OS 잠금/종료 해제·동시 writer·cold 재조회 및 replace/fsync/control fault를 검사한다. fault 주입 결과와 실제 파일/프로세스 결과는 구별한다. Windows symlink 생성 권한이 없는 환경에서는 해당 검사만 명시 skip하며 별도 실제 junction으로 reparse 부모 거절을 검사한다.
+
+8.3 검사는 OS가 실제 생성한 짧은 이름과 긴 이름의 파일 ID가 같은지 확인한 뒤 잠금 우회 거절, 부모 별칭, 생성 전·재생성 후 거절을 검사한다. 실제 8.3 이름이 없는 환경은 명시 skip하며 통과로 간주하지 않는다. 긴 이름 조회 실패·`~` 없는 이름의 변환·fsync 이후 교체 직전 재확인은 별도 fault 검사다.
 
 이 로컬 검사와 문서 무결성 검사는 실제 인증·모델 응답·과금·무료 크레딧·실장비·계측 정확도·기관 적합성 검증이 아니다. 실제 모델 호출은 이 모듈에서 0회다.

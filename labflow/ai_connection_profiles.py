@@ -15,6 +15,14 @@ import stat
 import tempfile
 
 
+if os.name == 'nt':
+    import ctypes
+    from ctypes import wintypes
+    _GET_LONG_PATH = ctypes.WinDLL('kernel32', use_last_error=True).GetLongPathNameW
+    _GET_LONG_PATH.argtypes = (wintypes.LPCWSTR, wintypes.LPWSTR, wintypes.DWORD)
+    _GET_LONG_PATH.restype = wintypes.DWORD
+
+
 _MODELS = ('gemini-4-argon', 'gemini-3.8-flash')
 _PROJECT = 'project-a6310591-f8cc-487c-9e3'
 _PROFILE_KEYS = {'schema_version', 'profile_id', 'provider', 'project_id', 'location',
@@ -127,8 +135,17 @@ def _unsafe_stat(info):
 def _unsafe_component(part):
     device = part.split('.', 1)[0].rstrip(' ').upper()
     return (part.endswith((' ', '.')) or any(c in part for c in ':*?"<>|') or
+            os.name == 'nt' and '~' in part or
             device in ('CON', 'PRN', 'AUX', 'NUL', 'CONIN$', 'CONOUT$') or
             len(device) == 4 and device[:3] in ('COM', 'LPT') and device[3] in '123456789¹²³')
+
+
+def _windows_long_name(path):
+    if os.name == 'nt':
+        buffer = ctypes.create_unicode_buffer(32768)
+        count = _GET_LONG_PATH(str(path), buffer, len(buffer))
+        if not 0 < count < len(buffer) or os.path.normcase(buffer.value) != os.path.normcase(str(path)):
+            _fail('invalid_path')
 
 
 def _path(value):
@@ -143,6 +160,8 @@ def _path(value):
     if any(_unsafe_component(part) for part in path.parts if part != path.anchor):
         _fail('invalid_path')
     path = Path(os.path.abspath(path))
+    if any(_unsafe_component(part) for part in path.parts if part != path.anchor):
+        _fail('invalid_path')
     for directory in reversed(path.parents):
         try:
             info = directory.lstat()
@@ -158,9 +177,13 @@ def _file_info(path):
     try:
         info = path.lstat()
     except FileNotFoundError:
+        info = None
+    if info is None:
+        _windows_long_name(path.parent)
         return None
     if _unsafe_stat(info) or not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
         _fail('invalid_path')
+    _windows_long_name(path)
     return info
 
 
@@ -310,6 +333,7 @@ def _save(path, profile, *, expected_revision):
                 stream.write(payload)
                 stream.flush()
                 os.fsync(stream.fileno())
+            _file_info(path)
             os.replace(temp_path, path)
             temp_path = None
             observed = _read(path)
