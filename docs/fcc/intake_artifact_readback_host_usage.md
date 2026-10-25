@@ -44,7 +44,7 @@ GET /api/intakes/{intake_id}/conducted-artifact-readback
 
 기존 loopback/Host·Origin·Sec-Fetch-Site guard를 재사용한다. client는 127.0.0.1이며 Host는 해당 port의 127.0.0.1 또는 localhost 한 개여야 한다. Origin이 있으면 Host와 같은 `http://` origin이어야 하며 중복 Origin/Fetch와 cross-site를 거절한다. Origin을 생략하는 기존 native GET 계약은 유지한다.
 
-원 request target과 canonical 경로가 같아야 한다. query·fragment·absolute URI·percent alias로 선택을 바꾸지 못한다. Content-Length는 없거나 단일 0 값만 허용하며 Transfer-Encoding·Content-Encoding·Expect와 요청 본문은 거절한다. Host/Origin/Fetch 오류는403, 잘못된 framing/선택용 query 등은400, 잘못된 route는404다. GET 외 메서드는405/Allow GET이며 HEAD는 본문을 전달하지 않는다. 거절된 요청은 부모를 호출하지 않는다.
+원 request target과 canonical 경로가 같아야 한다. query·fragment·absolute URI·percent alias로 선택을 바꾸지 못한다. Content-Length는 없거나 단일 0 값만 허용하며 Transfer-Encoding·Content-Encoding·Expect와 요청 본문은 거절한다. 기등록 메서드 요청의 Host/Origin/Fetch 오류는403, 잘못된 framing/선택용 query 등은400, 잘못된 route는404다. 기등록 GET 외 메서드와 HEAD는405/Allow GET이며 HEAD는 본문을 전달하지 않는다. 미구현 verb(TRACE 등)는 reference=None인 기본 호스트의 기존 stdlib501을 따른다. reference가 구성된 호스트에서는 기존 send_error/reference dispatch 규칙을 유지하며, 이 artifact 경로의 미구현 verb는400/intake_reference_ui_invalid_request로 종료한다. 어느 경우에도 artifact 부모를 조회하지 않는다. 미구현 verb 범위는 서버·stdlib 소스의 정적 확인이며 추가 HTTP 실행 검증은 아니다.
 
 선택이 없으면503 `intake_conducted_artifact_readback_host_not_provided`, 선택 intake_id와 경로 ID가 다르면503 `intake_conducted_artifact_readback_host_other_intake`다. 이 둘은 대체 데이터나 빈 성공 compound를 반환하지 않는다.
 
