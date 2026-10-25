@@ -32,3 +32,9 @@ verification5는 saved/current_scope/source_pins_verified/fresh_offline_evaluati
 `RfSignalReadError.code`는 rf_signal_read_invalid_argument/path_invalid/not_found/input_changed/evidence_invalid/unavailable의 고정6이다. 인자·namespace·환경·관측 변화는 정제 예외로 보고하고, present 증거 불일치는 storage.invalid/evidence_invalid DTO로 반환한다. 부재 자체는 정상 incomplete 관측이다. raw 예외·private 절대 경로·secret·원문을 노출하지 않는다. 먼저 생긴 실패는 cleanup 오류로 바꾸지 않는다.
 
 검증은 새 reader의 읽기 관측과 기존045 실행·정적/비공개 feasibility를 구별한다. [구현 계획](../superpowers/plans/2026-10-24-virtual-fleet-rf-signal-read.md)의 수용25와 관련/전체 회귀·문서 무결성을 별도로 기록한다. 실제 HTTP/UI와 명시 새 offline 의미 평가는 이후 별도 소유다.
+
+## 2026-10-26 현재 source와 역사 저장의 구별
+
+현재 호환 정책은 다음과 같다. reader가 실제 읽는 현재 engine19는 ordered GitLF SHA `7816f87dcf8aa648d628935493f74dee3a54f993ba2bae87f9a1e102a8b4ccab`와 고정 native helper를 요구한다. source raw hash·handle·전후 identity 검사는 유지한다. 저장된 manifest/journal provenance에는 이 해시 또는 과거 `9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42`만 허용하고 두 저장 해시가 서로 같아야 한다. unknown·혼합 해시는 invalid로 남긴다. 현재 reader가 과거 파일의 생성 source라고 주장하지 않으며 DTO14와 false flags를 바꾸지 않는다.
+
+과거 source로 새로 만든 독립 합성 fixture를 읽어 호환성을 검증하며, 과거 봉인 증빙·고객 원본을 재사용하지 않는다. 원 manifest/journal/파일 hash는 수정하지 않고 재실행·새 RF 평가·원본 repair도 하지 않는다. Git a9fd85c3e16fa98dc4e8ad2dc75dd0878520306e의 고정 source에서 새로 생성한 genuine 역사7개를 현재 source로 읽었고 생성28파일의 raw/native 불변을 확인했다. 현재·역사 저장 hash 혼합/unknown 거절도 별도로 검사했다.

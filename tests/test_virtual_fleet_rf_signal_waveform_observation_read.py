@@ -24,6 +24,11 @@ PINS = [
     dict(role="describe041",lf_bytes=44423,lf_sha256="bae395d27975dcfe5a64c5a4ea2ae86dccfa87f6d88c9e2c25b2283333a77cae"),
     dict(role="waveform054",lf_bytes=7581,lf_sha256="7566fb5a90c538275d5f511a3335a68cf3b9e85d7f1cd92b44a11d992f569d1d"),
     dict(role="native_helper",lf_bytes=29100,lf_sha256="8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7")]
+CURRENT_PINS = [
+    dict(role="read048",lf_bytes=26249,lf_sha256="8cf602b50aac2cb56f1df7b807b19dcfebfdeff588dfe0904cef16a943581472"),
+    dict(role="describe041",lf_bytes=44423,lf_sha256="f5471dde9786983152992e04fa2dade8b5ac927b1c25e5c0303c30bb664db1aa"),
+    dict(role="waveform054",lf_bytes=7581,lf_sha256="7566fb5a90c538275d5f511a3335a68cf3b9e85d7f1cd92b44a11d992f569d1d"),
+    dict(role="native_helper",lf_bytes=29100,lf_sha256="8cb516b60caf0f0c4655649415cc37fce4e47318c74f6916985756c2b97c3fa7")]
 FLAGS=dict(data_origin="authored_synthetic",synthetic=True,hardware_verified=False,
     physical_verified=False,ai_model_called=False,normative_compliance_verified=False,
     method_approval="not_assessed",regulatory_scope_complete=False,
@@ -163,6 +168,28 @@ class ReaderContractTests(unittest.TestCase):
         self.assertFalse(value["execution_authorized"]);self.assertFalse(value["rerun_authorized"])
         self.assertEqual(self.backends[0].close_calls,1);self.assertFalse(self.backends[0].held)
         self.assertNotIn("request",value);self.assertNotIn("source_snapshot",value)
+    def test_current_coherent_caller_pins_are_read_without_recalculation(self):
+        self.bundle['provenance']['dependency_pins']=deepcopy(CURRENT_PINS)
+        original=deepcopy(self.bundle)
+        self.write()
+        before={path.name:path.read_bytes() for path in self.folder.iterdir() if path.is_file()}
+        try:
+            value=self.run_reader()
+        except reader.RfSignalWaveformObservationReadError as error:
+            self.fail('supported current caller tuple rejected: '+error.code)
+        self.assertEqual(value['math'],{k:original[k] for k in ('recipe','packet','analysis')})
+        self.assertEqual(self.bundle,original)
+        self.assertEqual({path.name:path.read_bytes() for path in self.folder.iterdir() if path.is_file()},before)
+        self.assertIs(value['execution_authorized'],False)
+        self.assertIs(value['rerun_authorized'],False)
+
+    def test_individually_known_but_mixed_caller_pins_are_rejected(self):
+        for current_slot in (0,1):
+            self.bundle=literal()
+            self.bundle['provenance']['dependency_pins'][current_slot]=deepcopy(CURRENT_PINS[current_slot])
+            self.write()
+            with self.subTest(current_slot=current_slot):self.assert_code('evidence_invalid')
+
     def test_historical_fail_null_preserved(self):
         s=self.bundle["source_snapshot"];s["historical_assessment"].update(verdict="fail",summary_code="scenario_expectation_mismatch")
         s.update(outcome="assessment_failed",measurement_goal_succeeded=False)

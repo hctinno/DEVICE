@@ -70,3 +70,7 @@ leaf 소유 후 `failure.json`은 exclusive best-effort다. 정확6키(schema_ve
 최초 오류/KI는 marker·cleanup 실패가 덮지 않는다. KI는 정리 후 전파하고 marker가 안전하게 가능하면 interrupted/code null을 쓴다.055는 알려진 호출 내 소유 descriptor를 실제로 정리하며 helper.close 시작만으로 완료를 가정하지 않는다. 내부 writer는 공통 helper context/finally가 소유한다. helper는 pre-yield 검증·writer 본문·post-yield 검증에서 실제 발생한 최초 BaseException 객체(일반 예외·KI·SystemExit·GeneratorExit)를 그대로 보존하고 기존 close를 정확1회 시도한다. 최초 예외가 있을 때만 후행 close 예외를 억제하며, 최초 예외가 없으면 close 예외를 그대로 전파한다.055는 예외 context/traceback을 조사해 KI를 복원하지 않는다. 임의·stale·이미 처리된 caller context는 중단 근거가 아니다. close가 실제로 fd를 닫지 못한 경우까지 회수 완료를 주장하지 않는다. marker 기록에는 검증된 소유권이 남아 있어야 하며 unsafe reopen/덮어쓰기는 하지 않는다.
 
 publication_uncertain에서는 final 존재만으로 호출 성공을 추정하거나 다시 호출하지 않는다. 원래 pending/final/실패 bytes와 오류를 보존해 검토한다. 이 관측은 기존 시험소 전체 자동화·물리 운전·계측 정확도·기관 적합성의 완료 증거가 아니다.
+
+## 2026-10-26 caller source 호환성
+
+041/048의 current engine 호환 수정에 따라 이 관측기의 reader/scenario source size·GitLF SHA pin을 실제 코드와 일치시킨다. 다른 unknown code·engine·raw 변경은 계속 거절한다. 기존 native helper와 054 수학은 바꾸지 않는다. 048이 원 해시 일치를 확인한 역사 CW 기록도 별도 새 관측의 입력으로 사용할 수 있으나, 원 RF 실행이나 평가를 다시 수행하거나 원 저장물을 고치지 않는다. 새 055는 현재 caller pin과 원 snapshot/hash를 함께 보존한다. 새 genuine current CW의 RF→048→055→stored reader1과, 새 genuine legacy CW의 읽기CLI→055CLI→stored reader1을 실제 Windows native 저장으로 확인했다. 공통 native11·관측 native12의 최초 예외 검사는 각각 통과했으며 기존 writer21과는 별도 분모다.

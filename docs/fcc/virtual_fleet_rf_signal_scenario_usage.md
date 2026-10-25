@@ -61,7 +61,7 @@ bootstrap23 receipt와 setup4(`dut.stop`, DUT signal configure, sensor triggered
 
 meter의 선언 3설정은 정상 ok setup에서도 author의 마지막 설정·모든 최신 관측·대응 receipt의 공개 configuration과 일치해야 한다. bootstrap에서 설정 변경 여부에 따라 이어진 configuration revision을 관측·취득 receipt·sample까지 결합한다. DUT·센서는 공개 configured 표시와 실제 RF/취득 필드를 확인하고 제공하지 않는 설정 필드를 만들어내지 않는다. 설정·revision 모순은 유효 hash chain이 있어도 PASS로 올리지 않는다.
 
-파일은 `operator/events.jsonl`, `private/author.json`, `public-result.json`, `private-manifest.json`이다. runtime_origin은 preinitialized, resumable=false다. bootstrap 이전부터의 replay·durable resume·물리 정밀도를 보장하지 않는다. engine digest는 고정 부모 Fleet19파일만 포함한 `9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42`이며 새041 모듈은 별도 소유 pin으로 추적한다. 코드 관측 digest이고 attestation이 아니다.
+파일은 `operator/events.jsonl`, `private/author.json`, `public-result.json`, `private-manifest.json`이다. runtime_origin은 preinitialized, resumable=false다. bootstrap 이전부터의 replay·durable resume·물리 정밀도를 보장하지 않는다. 현재 새 실행의 engine digest는 고정 부모 Fleet19파일의 ordered GitLF actual `7816f87dcf8aa648d628935493f74dee3a54f993ba2bae87f9a1e102a8b4ccab`이며 새041 모듈은 별도 소유 pin으로 추적한다. 코드 관측 digest이고 attestation이 아니다.
 
 평가 전 journal/author의 bytes·SHA를 고정하고 평가 후에도 같은 바이트인지 확인한다. 이 사본의 해시를 게시 manifest에 사용하며, 성공 반환 전에 complete manifest와 정확3행(public-result/journal/author)의 실제 bytes·SHA·binding을 다시 검증한다. 이때만 저장 outer10과 반환이 같다. public outer artifacts에는 journal만 있고 manifest는 자기 자신을 해시하지 않는다.
 
@@ -79,3 +79,13 @@ python scripts/check_artifacts.py
 ```
 
 주7종/별도평가7(정상5·의도된 미완료2), valid-rehash 의미 변조8군, 저장 수용10행을 각각 기록한다. 반복성·부모/전체 회귀·독립 검토는 별도 분모다. 이전 metadata18회·031/036 실제 계산·기존 simulator 결과를 새041 분모로 합치지 않는다. 원본과 실패 기록을 보존하며 문서 검사는 시험소 기능·계측 정확도·기관 적합성의 검증이 아니다. 실제 모델/학습·실장비·현장망·실제 PDF·실측 및 FCC/ANSI 방법·기관 승인은 이번 실행 범위가 아니다.
+
+## 2026-10-26 engine 호환성 복구 범위
+
+DEV3-RF-ENGINE-COMPATIBILITY-001은 현재 source 핀과 저장 generation 검증을 구별해 기존 경로를 복구했다. source engine19의 ordered GitLF actual SHA `7816f87dcf8aa648d628935493f74dee3a54f993ba2bae87f9a1e102a8b4ccab`만 새 실행에 명시 지원한다. 과거 `9b128c2e397efffd118a0be05b856d489b6da7ba96b808acc369dc77d3780c42` 기록은 readonly reader의 별도 호환 정책을 따른다. 다른 engine·code/hash를 허용하거나 새 소스를 과거 해시로 재표기하지 않는다. 기존7 조건·packet·계산·method/권위false는 그대로 검증한다.
+
+수정 소유는 기존 source5(`labflow/virtual_fleet/`의 `rf_signal_scenario.py`, `rf_signal_read.py`, `rf_signal_cli.py`, `rf_signal_waveform_observation.py`, `rf_signal_waveform_observation_read.py`), 기존 test3(`tests/`의 `test_virtual_fleet_rf_signal_scenario.py`, `test_virtual_fleet_rf_signal_read.py`, `test_virtual_fleet_rf_signal_waveform_observation_read.py`), 이 문서 및 같은 `docs/fcc/`의 `virtual_fleet_rf_signal_read_usage.md`, `virtual_fleet_rf_signal_cli_usage.md`, `virtual_fleet_rf_signal_waveform_observation_usage.md`, `virtual_fleet_rf_signal_waveform_observation_read_usage.md`다. engine19 자체, evaluation/integration의 수학·설정, UI/D1/D2는 바꾸지 않는다. 실제·역사 합성 실행과 저장 읽기, fault injection의 분모는 따로 보고한다.
+
+현재7 genuine 검사는 meter의 -18.0 / -24.020599913279625 / -15.0 dBm 및 CW·이동 주파수·보정 불가/주파수 충돌의 원 null/blocked를 독립 literal로 대조했다. DUT12.5 dBm과 결합 경로 -18.0 dBm packet, duty/crest/modulation/frequency, sensor/meter 조건·same-run provenance도 검사했다. current source literal·typed stored hash·unknown source/혼합 검사의 GREEN6 논리, 새 native caller 연결 GREEN3 논리, 공통/관측 native23(11+12), 관측 reader38의 분모를 따로 보존한다. 과거 writer21은 별도 단위 결과다. 전체284·실모델·실장비·현장·규범 적합성 검증은 이 변경의 결과가 아니다.
+
+추가 선택 회귀22개는 source pin·manifest/journal 결합·unknown/mixed·raw 전후 변경·handle 고정·최초 오류/중단 경계를 확인해 통과했다. 문서 무결성 및 원 source/비소유 파일 보존은 별도 정적 검사로 보고한다. 준비 오류와 수정 전 실패 로그는 private owner 증빙에 그대로 보존한다.
