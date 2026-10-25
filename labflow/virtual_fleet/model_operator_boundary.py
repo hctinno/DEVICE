@@ -36,6 +36,7 @@ class ModelOperatorBoundaryError(ValueError):
         suffix = code.removeprefix(_PREFIX) if type(code) is str else "invalid_input"
         self.code = _PREFIX + (suffix if suffix in _CODES else "invalid_input")
         super().__init__(self.code)
+        self.__suppress_context__ = True
 
 
 def _fail(code):
