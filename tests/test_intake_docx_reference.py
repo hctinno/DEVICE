@@ -3,9 +3,11 @@ import importlib.util
 from contextlib import contextmanager
 import copy
 import hashlib
+import inspect
 import json
 import os
 from pathlib import Path
+import sqlite3
 import subprocess
 import tempfile
 import unittest
@@ -20,6 +22,10 @@ from tests.test_reference_docx import package, paragraph, table, cell, flagged
 class IntakeDocxAPIAbsenceTests(unittest.TestCase):
     def test_intake_docx_reference_api_exists(self):
         self.assertIsNotNone(importlib.util.find_spec('labflow.intake_docx_reference'))
+
+    def test_intake_docx_retention_api_exists(self):
+        from labflow import intake_docx_reference
+        self.assertTrue(callable(getattr(intake_docx_reference, 'retain_intake_docx_reference', None)))
 
 
 class RegisteredDocxReferenceTests(unittest.TestCase):
@@ -440,6 +446,773 @@ class RegisteredDocxReferenceTests(unittest.TestCase):
         state=intake_status(self.creator,self.intake_id)
         self.assertEqual(state['analysis']['unread_documents'],['request.docx'])
         self.assertNotIn('model',state['analysis']['facts'])
+
+
+class RetainedDocxReferenceTests(unittest.TestCase):
+    stage = RegisteredDocxReferenceTests.stage
+    arguments = RegisteredDocxReferenceTests.arguments
+    read = RegisteredDocxReferenceTests.read
+    rows = RegisteredDocxReferenceTests.rows
+    blob = RegisteredDocxReferenceTests.blob
+    mixed = RegisteredDocxReferenceTests.mixed
+    set_manifest = RegisteredDocxReferenceTests.set_manifest
+
+    def setUp(self):
+        RegisteredDocxReferenceTests.setUp(self)
+        from labflow import control_packet_prepare
+        self.native = control_packet_prepare
+        self.evidence = []
+
+    def retain(self, **changes):
+        function = getattr(self.api, 'retain_intake_docx_reference', None)
+        self.assertTrue(callable(function), 'Actual retention API is not implemented')
+        args = self.arguments(); args.update(changes)
+        return function(**args)
+
+    def rerror(self, suffix, **changes):
+        with self.assertRaises(self.api.IntakeDocxReferenceError) as caught:
+            self.retain(**changes)
+        error = caught.exception
+        self.assertEqual((error.code, str(error)), ('intake_docx_reference_' + suffix,) * 2)
+        self.assertIsNone(error.__cause__)
+        return error
+
+    def candidate(self):
+        reference = self.read()
+        payload = canonical(reference).encode('utf-8')
+        sha = hashlib.sha256(payload).hexdigest()
+        return sha, payload, self.creator.blob_path(sha)
+
+    def registered(self, sha):
+        with self.creator.connection() as con:
+            row = con.execute('SELECT bytes,kind,synthetic FROM blobs WHERE sha256=?', (sha,)).fetchone()
+        return None if row is None else tuple(row)
+
+    def flags(self, values):
+        args = self.arguments()
+        with self.creator.connection() as con:
+            con.execute('UPDATE intake_sources SET synthetic=? WHERE source_id=?', (values[0], 'SYN-DOCX'))
+            con.execute('UPDATE intake_revisions SET synthetic=? WHERE intake_id=? AND revision=?',
+                        (values[1], self.intake_id, args['expected_revision']))
+            con.execute('UPDATE blobs SET synthetic=? WHERE sha256=?', (values[2], args['expected_sha256']))
+
+    @contextmanager
+    def before_connection(self, number, action):
+        original = self.store.connection; calls = []
+        @contextmanager
+        def connection():
+            calls.append(1)
+            if len(calls) == number:
+                action()
+            with original() as con:
+                yield con
+        with mock.patch.object(self.store, 'connection', connection):
+            yield calls
+
+    def test_retention_exact_signature_does_not_accept_DTO_ID_or_limits(self):
+        self.assertTrue(callable(getattr(self.api, 'retain_intake_docx_reference', None)))
+        signature = inspect.signature(self.api.retain_intake_docx_reference)
+        self.assertEqual(list(signature.parameters), ['store', 'intake_id', 'document_path',
+                                                     'expected_revision', 'expected_sha256'])
+        for name in ('expected_revision', 'expected_sha256'):
+            self.assertIs(signature.parameters[name].kind, inspect.Parameter.KEYWORD_ONLY)
+
+    def test_retention_actual_payload_registration_native_once_and_borrowed_lifetime(self):
+        self.stage(package(paragraph('first') + table(['<w:tr>' + cell(blocks=table([
+            '<w:tr>' + cell('nested') + '</w:tr>'], 1)) + '</w:tr>'], 1) + paragraph('last')))
+        sha, payload, path = self.candidate(); before = self.rows()
+        original = self.store.connection; active, connections, queries, results = [], [], [], []
+        handles = tuple(self.store._existing_binding.handles)
+        @contextmanager
+        def connection():
+            with original() as con:
+                connections.append(con); active.append(con); con.set_trace_callback(queries.append)
+                try:
+                    yield con
+                finally:
+                    active.remove(con)
+        def parse(data, name):
+            self.assertEqual(active, [])
+            result = real_reader(data, name); results.append(copy.deepcopy(result)); return result
+        with mock.patch.object(self.store, 'connection', connection), \
+                mock.patch.object(self.store, 'close', wraps=self.store.close) as closed, \
+                mock.patch.object(self.store, 'write_blob', side_effect=AssertionError('unbounded writer')), \
+                mock.patch.object(self.store, 'verify_blob', side_effect=AssertionError('unbounded verifier')), \
+                mock.patch.object(self.api, 'read_docx', side_effect=parse):
+            receipt = self.retain()
+        closed.assert_not_called()
+        self.assertEqual(set(receipt), {'schema_version', 'kind', 'artifact_id', 'artifact_bytes', 'synthetic', 'reference'})
+        self.assertEqual((receipt['schema_version'], receipt['kind']), (1, 'intake_docx_reference_retained'))
+        self.assertEqual((receipt['artifact_id'], receipt['artifact_bytes'], receipt['synthetic']), (sha, len(payload), True))
+        self.assertIs(type(receipt['artifact_bytes']), int); self.assertIs(type(receipt['synthetic']), bool)
+        self.assertEqual(path.read_bytes(), payload)
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), receipt['artifact_id'])
+        self.assertEqual(receipt['reference'], json.loads(payload))
+        self.assertEqual(receipt['reference']['result'], results[0]); self.assertEqual(len(results), 1)
+        self.assertEqual(self.registered(sha), (len(payload), 'intake_docx_reference', 1))
+        after = self.rows(); before.pop('blobs'); after.pop('blobs'); self.assertEqual(before, after)
+        self.assertEqual(tuple(self.store._existing_binding.handles), handles)
+        self.assertEqual(self.store._existing_binding.active, 0)
+        for con in connections:
+            with self.assertRaises(sqlite3.ProgrammingError):
+                con.execute('SELECT 1')
+        dml = [q for q in queries if q.lstrip().upper().startswith(('INSERT', 'UPDATE', 'DELETE', 'CREATE', 'ALTER', 'DROP'))]
+        self.assertEqual(len(dml), 1); self.assertTrue(dml[0].startswith('INSERT INTO blobs'))
+        self.evidence.append({'observed_artifact_id': receipt['artifact_id'], 'actual_bytes': len(payload),
+                              'native_calls': len(results), 'SQL_closed': len(connections),
+                              'active_after': 0, 'caller_Store_close_calls': 0})
+
+    def test_retention_native_status_and_locator_are_not_upgraded(self):
+        cases = [(package(paragraph('known')), 'ok', True), (package(), 'empty', True),
+                 (package(paragraph('known') + '<w:unknown/>'), 'partial', False),
+                 (bytes.fromhex('d0cf11e0a1b11ae1'), 'unsupported_format', False),
+                 (flagged(package(), flag=1), 'encrypted', False), (b'bad', 'malformed_docx', False),
+                 (package(paragraph('x' * 1000001)), 'limit_exceeded', False)]
+        for data, status, complete in cases:
+            with self.subTest(status=status):
+                self.stage(data); expected = self.read(); receipt = self.retain()
+                self.assertEqual(receipt['reference'], expected)
+                result = receipt['reference']['result']
+                self.assertEqual((result['status'], result['complete']), (status, complete))
+                self.assertEqual(result['scope']['page_numbers'], 'unavailable')
+                self.assertEqual(len(result), 11)
+                self.evidence.append({'native_status': status, 'complete': complete,
+                                      'observed_artifact_id': receipt['artifact_id']})
+
+    def test_retention_native_parser_failure_DTO_is_retained(self):
+        with mock.patch('labflow.reference_docx.zipfile.ZipFile', side_effect=RuntimeError('PRIVATE')):
+            receipt = self.retain()
+        self.assertEqual(receipt['reference']['result']['status'], 'parser_error')
+        self.assertFalse(receipt['reference']['result']['complete'])
+        self.assertEqual(json.loads(self.creator.blob_path(receipt['artifact_id']).read_bytes()), receipt['reference'])
+        self.assertNotIn('PRIVATE', canonical(receipt))
+
+    def test_retention_reuses_only_actual_valid_registered_bytes(self):
+        first = self.retain(); path = self.creator.blob_path(first['artifact_id'])
+        before = path.stat()
+        with mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('overwrite')):
+            second = self.retain()
+        self.assertEqual(first, second)
+        after = path.stat()
+        self.assertEqual((before.st_ino, before.st_mtime_ns, before.st_size),
+                         (after.st_ino, after.st_mtime_ns, after.st_size))
+
+    def test_retention_valid_orphan_is_read_back_then_registered(self):
+        sha, payload, path = self.candidate(); path.write_bytes(payload)
+        self.assertIsNone(self.registered(sha))
+        with mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('orphan overwrite')):
+            receipt = self.retain()
+        self.assertEqual(receipt['artifact_id'], sha)
+        self.assertEqual(self.registered(sha), (len(payload), 'intake_docx_reference', 1))
+
+    def test_retention_registered_missing_file_is_not_recreated(self):
+        receipt = self.retain(); path = self.creator.blob_path(receipt['artifact_id']); path.unlink()
+        with mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('repair')):
+            self.rerror('source_integrity_invalid')
+        self.assertFalse(path.exists()); self.assertIsNotNone(self.registered(receipt['artifact_id']))
+
+    def test_retention_invalid_registered_bytes_kind_flags_are_not_repaired(self):
+        receipt = self.retain(); sha = receipt['artifact_id']; original = self.registered(sha)
+        for field, value in [('bytes', original[0] + 1), ('kind', 'raw'), ('synthetic', 2)]:
+            with self.subTest(field=field):
+                with self.creator.connection() as con:
+                    con.execute('UPDATE blobs SET ' + field + '=? WHERE sha256=?', (value, sha))
+                with mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('repair')):
+                    self.rerror('source_integrity_invalid')
+                with self.creator.connection() as con:
+                    self.assertEqual(con.execute('SELECT ' + field + ' FROM blobs WHERE sha256=?', (sha,)).fetchone()[0], value)
+                    con.execute('UPDATE blobs SET bytes=?,kind=?,synthetic=? WHERE sha256=?', (*original, sha))
+
+    def test_retention_source_provenance_OR_and_registered_MAX(self):
+        for number in range(8):
+            values = tuple((number >> bit) & 1 for bit in range(3))
+            with self.subTest(flags=values):
+                self.stage(package(paragraph('flags ' + str(number)))); self.flags(values)
+                receipt = self.retain()
+                self.assertIs(receipt['synthetic'], bool(any(values)))
+                self.assertEqual(self.registered(receipt['artifact_id'])[2], int(any(values)))
+        self.flags((0, 0, 0))
+        self.assertTrue(self.retain()['synthetic'])
+
+    def test_retention_invalid_source_provenance_is_not_false(self):
+        for values in [(2, 0, 0), (0, 'bad', 0), (0, 0, -1)]:
+            with self.subTest(flags=values):
+                self.flags(values)
+                with mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('write')):
+                    self.rerror('source_integrity_invalid')
+
+    def test_retention_wrong_existing_bytes_and_large_file_are_bounded_failures(self):
+        sha, payload, path = self.candidate()
+        for size, content in [(len(payload), b'x' * len(payload)), (17 * 1024 * 1024, None)]:
+            with self.subTest(size=size):
+                with path.open('wb') as stream:
+                    if content is None: stream.truncate(size)
+                    else: stream.write(content)
+                with mock.patch.object(self.store, 'verify_blob', side_effect=AssertionError('unbounded')):
+                    self.rerror('source_integrity_invalid')
+                self.assertEqual(path.stat().st_size, size); self.assertIsNone(self.registered(sha))
+
+    def test_retention_real_exclusive_create_collision_fails_then_explicit_retry_adopts(self):
+        sha, payload, path = self.candidate(); backend = self.store._existing_binding.backend
+        create = backend.create_file
+        def race(target):
+            self.assertEqual(target, path); target.write_bytes(payload)
+            return create(target)
+        with mock.patch.object(backend, 'create_file', side_effect=race):
+            self.rerror('storage_error')
+        self.assertEqual(path.read_bytes(), payload); self.assertIsNone(self.registered(sha))
+        self.assertEqual(self.retain()['artifact_id'], sha)
+
+    def test_retention_revision_change_before_writer_returns_no_receipt(self):
+        sha, _, path = self.candidate()
+        with self.before_connection(3, lambda: self.stage(package(paragraph('new revision')))):
+            self.rerror('revision_changed')
+        self.assertFalse(path.exists()); self.assertIsNone(self.registered(sha))
+
+    def test_retention_provenance_change_after_commit_preserves_real_failed_artifact(self):
+        sha, payload, path = self.candidate()
+        with self.before_connection(4, lambda: self.flags((0, 1, 1))):
+            self.rerror('revision_changed')
+        self.assertEqual(path.read_bytes(), payload)
+        self.assertEqual(self.registered(sha), (len(payload), 'intake_docx_reference', 1))
+        self.evidence.append({'receipt_returned': False, 'post_commit_file_bytes': len(payload),
+                              'registered': True, 'failure_code': 'revision_changed'})
+
+    def test_retention_input_and_store_errors_precede_native_or_writes(self):
+        for changes, code in [({'expected_revision': True}, 'invalid_argument'),
+                              ({'expected_sha256': 'A' * 64}, 'invalid_argument'),
+                              ({'document_path': '../x.docx'}, 'invalid_argument'),
+                              ({'store': self.creator}, 'store_invalid'),
+                              ({'intake_id': 'MISSING'}, 'intake_not_found')]:
+            with self.subTest(code=code), mock.patch.object(self.api, 'read_docx', side_effect=AssertionError('native')), \
+                    mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('write')):
+                self.rerror(code, **changes)
+
+    def test_retention_read_api_remains_read_only_after_retention(self):
+        receipt = self.retain(); before = self.rows()
+        self.assertEqual(self.read(), receipt['reference'])
+        self.assertEqual(self.rows(), before)
+
+    def test_retention_fixed_error_has_no_active_caller_exception_context(self):
+        try:
+            raise RuntimeError('PRIVATE caller ' + str(self.base))
+        except RuntimeError:
+            error = self.rerror('invalid_argument', expected_revision=False)
+            self.assertIsNone(error.__context__)
+
+    @contextmanager
+    def pin_observation(self, *, close_errors=()):
+        backend = self.store._existing_binding.backend
+        relative, close = backend._relative, os.close
+        state = {'opened': [], 'closed': [], 'active': set(), 'names': {}, 'maximum_active': 0}
+        errors = iter(close_errors)
+        def opened(parent, name, **options):
+            fd = relative(parent, name, **options)
+            if (len(name) == 64 and options.get('directory') is False
+                    and options.get('share') == 1 and not options.get('create', False)):
+                state['opened'].append(fd); state['active'].add(fd); state['names'][fd] = name
+                state['maximum_active'] = max(state['maximum_active'], len(state['active']))
+            return fd
+        def closed(fd):
+            tracked = fd in state['active']
+            close(fd)
+            if tracked:
+                state['active'].remove(fd); state['closed'].append(fd)
+                error = next(errors, None)
+                if error is not None:
+                    raise error
+        with mock.patch.object(backend, '_relative', side_effect=opened), mock.patch('os.close', side_effect=closed):
+            yield state
+
+    def assert_pins_closed(self, state, count=2):
+        self.assertEqual(len(state['opened']), count)
+        self.assertEqual(len(state['closed']), count)
+        self.assertEqual(state['active'], set())
+        self.assertEqual(self.store._existing_binding.active, 0)
+        for fd in state['opened']:
+            with self.assertRaises(OSError): os.fstat(fd)
+
+    def test_retention_resources_real_write_delete_pins_then_positive_controls(self):
+        source = self.blob(); register = self.store.register_blob; blocked = []
+        held = tuple(self.store._existing_binding.handles)
+        with self.pin_observation() as state:
+            def registering(con, sha, size, kind, synthetic):
+                self.assertEqual(len(state['active']), 2)
+                for path in (source, self.store.blob_path(sha)):
+                    with self.assertRaises(PermissionError):
+                        with path.open('r+b'): pass
+                    with self.assertRaises(OSError): path.rename(path.with_name(path.name + '.move'))
+                    blocked.append(path)
+                return register(con, sha, size, kind, synthetic)
+            with mock.patch.object(self.store, 'register_blob', side_effect=registering), \
+                    mock.patch.object(self.store, 'close', wraps=self.store.close) as closed:
+                receipt = self.retain()
+            closed.assert_not_called()
+        self.assert_pins_closed(state)
+        self.assertEqual(tuple(self.store._existing_binding.handles), held)
+        for path in blocked:
+            with path.open('r+b'): pass
+            moved = path.with_name(path.name + '.move'); path.rename(moved); moved.rename(path)
+        self.store.close()
+        for fd in held:
+            with self.assertRaises(OSError): os.fstat(fd)
+        self.evidence.append({'observed_artifact_id': receipt['artifact_id'], 'write_blocks': 2,
+                              'rename_blocks': 2, 'positive_write_controls': 2, 'positive_rename_controls': 2,
+                              'API_owned_pins_closed': 2, 'caller_native_pins_closed': len(held)})
+
+    def test_retention_resources_source_and_artifact_full_reads_are_chunked(self):
+        self.stage(package(paragraph('x' * 200000)))
+        read = os.read; observed = []
+        with self.pin_observation() as state:
+            def reading(fd, amount):
+                data = read(fd, amount)
+                if fd in state['active']: observed.append((state['names'][fd], amount, len(data)))
+                return data
+            with mock.patch('os.read', side_effect=reading): receipt = self.retain()
+        self.assert_pins_closed(state)
+        self.assertTrue(observed); self.assertTrue(all(0 < amount <= 65536 for _, amount, _ in observed))
+        source_sha = receipt['reference']['binding']['document']['sha256']
+        totals = {name: sum(size for key, _, size in observed if key == name) for name in {v[0] for v in observed}}
+        self.assertEqual(totals[source_sha], 2 * len(self.payload))
+        self.assertEqual(totals[receipt['artifact_id']], 2 * receipt['artifact_bytes'])
+        self.evidence.append({'source_pin_read_bytes': totals[source_sha],
+                              'artifact_pin_read_bytes': totals[receipt['artifact_id']],
+                              'maximum_chunk_request': max(v[1] for v in observed), 'closed_pins': 2})
+
+    def test_retention_edges_payload_and_receipt_budget_exact_and_plus_one(self):
+        self.flags((0, 0, 0)); first = self.retain()
+        payload_size = len(canonical(first['reference']).encode('utf-8'))
+        receipt_size = len(canonical(first).encode('utf-8'))
+        for constant, size in [('_OUTPUT_BYTES', payload_size), ('_RECEIPT_BYTES', receipt_size)]:
+            with self.subTest(constant=constant):
+                with mock.patch.object(self.api, constant, size): self.assertEqual(self.retain(), first)
+                with mock.patch.object(self.api, constant, size - 1), \
+                        mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('write')), \
+                        mock.patch.object(self.store, 'register_blob', side_effect=AssertionError('register')):
+                    self.rerror('input_limit')
+        self.assertEqual((self.api._OUTPUT_BYTES, self.api._RECEIPT_BYTES), (9 * 1024 * 1024, 10 * 1024 * 1024))
+        self.evidence.append({'real_P_bytes_for_budget_edge': payload_size,
+                              'real_receipt_bytes_for_budget_edge': receipt_size,
+                              'constant_lowering_is_admission_injection': True})
+
+    def test_retention_edges_source_swap_between_read_and_pin_is_rejected(self):
+        sha, _, path = self.candidate(); source = self.blob(); original = self.api._read_reference; swapped = []
+        def handoff(*args, **kwargs):
+            value = original(*args, **kwargs)
+            replacement = source.with_name('same-source'); replacement.write_bytes(self.payload)
+            os.replace(replacement, source); swapped.append(True)
+            return value
+        with mock.patch.object(self.api, '_read_reference', side_effect=handoff):
+            self.rerror('source_integrity_invalid')
+        self.assertEqual(swapped, [True]); self.assertFalse(path.exists()); self.assertIsNone(self.registered(sha))
+
+    def test_retention_edges_same_bytes_swap_after_writer_close_is_rejected(self):
+        sha, payload, path = self.candidate(); write = self.native._write_bytes; swaps = []
+        def writing(*args, **kwargs):
+            stamp = write(*args, **kwargs)
+            replacement = path.with_name('same-artifact'); replacement.write_bytes(payload)
+            os.replace(replacement, path); swaps.append(True)
+            return stamp
+        with mock.patch.object(self.native, '_write_bytes', side_effect=writing):
+            self.rerror('source_integrity_invalid')
+        self.assertEqual(swaps, [True]); self.assertEqual(path.read_bytes(), payload)
+        self.assertIsNone(self.registered(sha))
+
+    def test_retention_edges_same_bytes_existing_swap_before_native_open_is_rejected(self):
+        sha, payload, path = self.candidate(); path.write_bytes(payload)
+        backend = self.store._existing_binding.backend; relative = backend._relative; swaps = []
+        def opening(parent, name, **options):
+            if name == sha and options.get('share') == 1:
+                replacement = path.with_name('same-artifact'); replacement.write_bytes(payload)
+                os.replace(replacement, path); swaps.append(True)
+            return relative(parent, name, **options)
+        with mock.patch.object(backend, '_relative', side_effect=opening):
+            self.rerror('source_integrity_invalid')
+        self.assertEqual(swaps, [True]); self.assertEqual(path.read_bytes(), payload)
+        self.assertIsNone(self.registered(sha))
+
+    def test_retention_edges_hardlink_is_not_admitted_or_removed(self):
+        sha, payload, path = self.candidate(); path.write_bytes(payload)
+        alias = self.base / 'artifact-hardlink'; os.link(path, alias)
+        self.rerror('source_integrity_invalid')
+        self.assertEqual(path.read_bytes(), payload); self.assertEqual(alias.read_bytes(), payload)
+        self.assertIsNone(self.registered(sha))
+
+    def test_retention_edges_junction_is_not_followed(self):
+        sha, _, path = self.candidate(); target = self.base / 'junction-target'; target.mkdir()
+        self.assertTrue(target.resolve().is_relative_to(self.base))
+        subprocess.run(['cmd', '/c', 'mklink', '/J', str(path), str(target)], check=True, capture_output=True)
+        self.rerror('source_integrity_invalid')
+        self.assertTrue(path.exists()); self.assertEqual(list(target.iterdir()), [])
+        self.assertIsNone(self.registered(sha))
+
+    def test_retention_edges_other_manifest_entry_and_source_change_before_write(self):
+        for change in ('manifest', 'source'):
+            with self.subTest(change=change):
+                self.stage(package(paragraph('change ' + change))); sha, _, path = self.candidate()
+                def mutate():
+                    if change == 'manifest':
+                        state = intake_status(self.creator, self.intake_id)
+                        self.set_manifest(state['files'] + [{'path': 'other.txt', 'sha256': '1' * 64, 'bytes': 0}])
+                    else:
+                        folder = self.base / 'other-source'; folder.mkdir()
+                        register_source(self.creator, 'SYN-OTHER', folder, synthetic=False, settle_seconds=1)
+                        with self.creator.connection() as con:
+                            con.execute('UPDATE intakes SET source_id=? WHERE intake_id=?', ('SYN-OTHER', self.intake_id))
+                with self.before_connection(3, mutate): self.rerror('revision_changed')
+                self.assertFalse(path.exists()); self.assertIsNone(self.registered(sha))
+                # Restore the synthetic source for the next independent mutation.
+                with self.creator.connection() as con:
+                    con.execute('UPDATE intakes SET source_id=? WHERE intake_id=?', ('SYN-DOCX', self.intake_id))
+
+    def test_retention_edges_post_commit_registry_mismatch_is_preserved_failure(self):
+        sha, payload, path = self.candidate()
+        def mutate():
+            with self.creator.connection() as con:
+                con.execute('UPDATE blobs SET kind=? WHERE sha256=?', ('raw', sha))
+        with self.before_connection(4, mutate): self.rerror('source_integrity_invalid')
+        self.assertEqual(path.read_bytes(), payload); self.assertEqual(self.registered(sha)[1], 'raw')
+
+    def test_retention_edges_artifact_read_corruption_is_not_a_prefix_hash_success(self):
+        sha, _, path = self.candidate(); read = os.read; corrupted = []
+        with self.pin_observation(close_errors=(GeneratorExit(), SystemExit())) as state:
+            def reading(fd, amount):
+                data = read(fd, amount)
+                if state['names'].get(fd) == sha and data:
+                    corrupted.append(True); return bytes([data[0] ^ 1]) + data[1:]
+                return data
+            with mock.patch('os.read', side_effect=reading): self.rerror('source_integrity_invalid')
+        self.assertTrue(corrupted); self.assert_pins_closed(state)
+        self.assertTrue(path.is_file()); self.assertIsNone(self.registered(sha))
+
+    @contextmanager
+    def SQL_fault(self, number, *, admission=None, commit=None, rollback=None, close=None):
+        from labflow import store as store_module
+        connect, schema = sqlite3.connect, store_module._existing_schema
+        connections = []
+        class FaultConnection(sqlite3.Connection):
+            def rollback(self):
+                super().rollback(); self.real_rollbacks += 1
+                if self.ordinal == number and self.rollback_armed and rollback is not None:
+                    raise rollback
+            def commit(self):
+                super().commit(); self.real_commits += 1
+                if self.ordinal == number and commit is not None:
+                    raise commit
+            def close(self):
+                self.close_attempts += 1
+                super().close(); self.real_closed = True
+                if self.ordinal == number and close is not None:
+                    raise close
+        def opened(*args, **kwargs):
+            # Fixture arguments use the legacy Path connection. Count only the
+            # official borrowed Store's URI connections for failure phases.
+            if not kwargs.get('uri'):
+                return connect(*args, **kwargs)
+            con = connect(*args, factory=FaultConnection, **kwargs)
+            con.ordinal = len(connections) + 1
+            con.real_rollbacks = con.real_commits = con.close_attempts = 0
+            con.real_closed = con.rollback_armed = False
+            connections.append(con)
+            return con
+        def validated(con):
+            schema(con)
+            if con.ordinal == number and admission is not None:
+                con.rollback_armed = True
+                raise admission
+        with mock.patch.object(sqlite3, 'connect', side_effect=opened), \
+                mock.patch.object(store_module, '_existing_schema', side_effect=validated):
+            yield connections
+
+    def assert_SQL_closed(self, connections):
+        self.assertTrue(connections)
+        for con in connections:
+            self.assertTrue(con.real_closed); self.assertEqual(con.close_attempts, 1)
+            with self.assertRaises(sqlite3.ProgrammingError): con.execute('SELECT 1')
+        self.assertEqual(self.store._existing_binding.active, 0)
+
+    def test_retention_fault_actual_short_writes_complete_the_whole_payload(self):
+        sha, payload, path = self.candidate(); backend = self.store._existing_binding.backend
+        create, write = backend.create_file, os.write; writers, calls = [], []
+        def created(target):
+            fd = create(target); writers.append(fd); return fd
+        def written(fd, data):
+            if fd in writers:
+                calls.append(1); return write(fd, data[:7])
+            return write(fd, data)
+        with mock.patch.object(backend, 'create_file', side_effect=created), mock.patch('os.write', side_effect=written):
+            receipt = self.retain()
+        self.assertEqual(receipt['artifact_id'], sha); self.assertEqual(path.read_bytes(), payload)
+        self.assertGreater(len(calls), 1)
+        for fd in writers:
+            with self.assertRaises(OSError): os.fstat(fd)
+
+    def test_retention_fault_zero_write_and_FileExistsError_never_become_success(self):
+        for fault in ('zero_write', 'write_exists', 'fsync_exists', 'close_exists'):
+            with self.subTest(fault=fault):
+                self.stage(package(paragraph('fault ' + fault)))
+                sha, payload, path = self.candidate(); backend = self.store._existing_binding.backend
+                create, write, sync, close = backend.create_file, os.write, os.fsync, os.close
+                writer = []; calls = []
+                def created(target):
+                    fd = create(target); writer.append(fd); return fd
+                def written(fd, data):
+                    if fd in writer and fault in {'zero_write', 'write_exists'}:
+                        if not calls:
+                            calls.append(1); return write(fd, data[:7])
+                        if fault == 'zero_write': return 0
+                        raise FileExistsError('PRIVATE write, not create collision')
+                    return write(fd, data)
+                def synced(fd):
+                    sync(fd)
+                    if fd in writer and fault == 'fsync_exists':
+                        raise FileExistsError('PRIVATE fsync, not create collision')
+                def closed(fd):
+                    close(fd)
+                    if fd in writer and fault == 'close_exists' and not calls:
+                        calls.append(1); raise FileExistsError('PRIVATE close, not create collision')
+                with mock.patch.object(backend, 'create_file', side_effect=created), \
+                        mock.patch('os.write', side_effect=written), mock.patch('os.fsync', side_effect=synced), \
+                        mock.patch('os.close', side_effect=closed):
+                    self.rerror('storage_error')
+                self.assertIsNone(self.registered(sha)); self.assertEqual(self.store._existing_binding.active, 0)
+                raw = path.read_bytes()
+                self.assertEqual(raw, payload[:7] if fault in {'zero_write', 'write_exists'} else payload)
+                for fd in writer:
+                    with self.assertRaises(OSError): os.fstat(fd)
+                self.evidence.append({'fault': fault, 'receipt_returned': False, 'file_bytes': len(raw),
+                                      'file_sha256': hashlib.sha256(raw).hexdigest(), 'registered': False,
+                                      'known_writer_real_closed': True})
+                if fault in {'zero_write', 'write_exists'}:
+                    with mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('repair')):
+                        self.rerror('source_integrity_invalid')
+                    self.assertEqual(path.read_bytes(), raw)
+                else:
+                    self.assertEqual(self.retain()['artifact_id'], sha)
+
+    def test_retention_fault_first_native_interrupt_never_becomes_an_artifact(self):
+        for kind in (MemoryError, KeyboardInterrupt, SystemExit, GeneratorExit):
+            with self.subTest(kind=kind.__name__):
+                sha, _, path = self.candidate(); first = kind('SYN first native interruption')
+                with mock.patch.object(self.api, 'read_docx', side_effect=first), self.assertRaises(kind) as caught:
+                    self.retain()
+                self.assertIs(caught.exception, first)
+                self.assertFalse(path.exists()); self.assertIsNone(self.registered(sha))
+                self.assertEqual(self.store._existing_binding.active, 0)
+
+    def test_retention_fault_first_selection_real_SQL_close_interrupt_skips_native(self):
+        first = KeyboardInterrupt('SYN SQL close before native')
+        held = tuple(self.store._existing_binding.handles)
+        with self.SQL_fault(1, close=first) as connections, \
+                mock.patch.object(self.api, 'read_docx', side_effect=AssertionError('native')):
+            with self.assertRaises(KeyboardInterrupt) as caught: self.retain()
+        self.assertIs(caught.exception, first); self.assertEqual(len(connections), 1)
+        self.assert_SQL_closed(connections)
+        self.store.close()
+        for fd in held:
+            with self.assertRaises(OSError): os.fstat(fd)
+        self.evidence.append({'actual_SQL_close_completed': True, 'same_first_KI': True,
+                              'native_calls': 0, 'active_after': 0, 'caller_native_pins_closed': len(held)})
+
+    def test_retention_fault_body_control_exception_survives_rollback_SQL_and_file_close(self):
+        for kind in (MemoryError, KeyboardInterrupt, SystemExit, GeneratorExit):
+            with self.subTest(kind=kind.__name__):
+                self.stage(package(paragraph('body interruption ' + kind.__name__)))
+                sha, payload, path = self.candidate(); first = kind('SYN first body')
+                register = self.store.register_blob
+                def registering(con, *args):
+                    register(con, *args); con.rollback_armed = True; raise first
+                with self.pin_observation(close_errors=(OSError('PRIVATE later pin'), SystemExit())) as state, \
+                        self.SQL_fault(3, rollback=SystemExit(), close=GeneratorExit()) as connections, \
+                        mock.patch.object(self.store, 'register_blob', side_effect=registering):
+                    with self.assertRaises(kind) as caught: self.retain()
+                self.assertIs(caught.exception, first)
+                self.assert_pins_closed(state); self.assert_SQL_closed(connections)
+                self.assertEqual(path.read_bytes(), payload); self.assertIsNone(self.registered(sha))
+                self.evidence.append({'first_type': kind.__name__, 'same_first_object': True,
+                                      'SQL_connections_real_closed': len(connections), 'owned_pins_real_closed': 2,
+                                      'registered_after_real_rollback': False, 'failure_file_bytes': len(payload)})
+
+    def test_retention_fault_first_bridge_error_wins_over_later_base_cleanup(self):
+        sha, payload, path = self.candidate(); register = self.store.register_blob
+        def registering(con, candidate, size, kind, synthetic):
+            register(con, candidate, size, kind, synthetic)
+            con.execute('UPDATE blobs SET bytes=? WHERE sha256=?', (size + 1, candidate))
+            con.rollback_armed = True
+        with self.pin_observation(close_errors=(SystemExit(), GeneratorExit())) as state, \
+                self.SQL_fault(3, rollback=KeyboardInterrupt(), close=SystemExit()) as connections, \
+                mock.patch.object(self.store, 'register_blob', side_effect=registering):
+            self.rerror('source_integrity_invalid')
+        self.assert_pins_closed(state); self.assert_SQL_closed(connections)
+        self.assertEqual(path.read_bytes(), payload); self.assertIsNone(self.registered(sha))
+
+    def test_retention_fault_SQL_close_only_controls_keep_identity_after_commit(self):
+        for kind in (KeyboardInterrupt, SystemExit, GeneratorExit):
+            with self.subTest(kind=kind.__name__):
+                self.stage(package(paragraph('SQL close ' + kind.__name__)))
+                sha, payload, path = self.candidate(); first = kind('SYN first SQL close')
+                with self.pin_observation(close_errors=(OSError('PRIVATE later pin'), SystemExit())) as state, \
+                        self.SQL_fault(3, close=first) as connections:
+                    with self.assertRaises(kind) as caught: self.retain()
+                self.assertIs(caught.exception, first)
+                self.assert_pins_closed(state); self.assert_SQL_closed(connections)
+                self.assertEqual(path.read_bytes(), payload)
+                self.assertEqual(self.registered(sha), (len(payload), 'intake_docx_reference', 1))
+                self.evidence.append({'first_SQL_close_type': kind.__name__, 'same_first_object': True,
+                                      'commit_completed': True, 'receipt_returned': False, 'registered': True})
+
+    def test_retention_fault_parent_admission_and_commit_classification_is_not_raw_restored(self):
+        for phase in ('admission', 'commit'):
+            for kind, code in ((MemoryError, 'storage_error'), (sqlite3.DatabaseError, 'store_invalid')):
+                with self.subTest(phase=phase, first=kind.__name__):
+                    self.stage(package(paragraph(phase + kind.__name__)))
+                    sha, payload, path = self.candidate(); first = kind('PRIVATE first parent error')
+                    if kind is sqlite3.DatabaseError: first.sqlite_errorcode = sqlite3.SQLITE_CORRUPT
+                    faults = {phase: first}
+                    with self.pin_observation(close_errors=(SystemExit(), GeneratorExit())) as state, \
+                            self.SQL_fault(3, rollback=KeyboardInterrupt(), close=SystemExit(), **faults) as connections:
+                        self.rerror(code)
+                    self.assert_pins_closed(state, 1 if phase == 'admission' else 2)
+                    self.assert_SQL_closed(connections)
+                    if phase == 'admission':
+                        self.assertFalse(path.exists()); self.assertIsNone(self.registered(sha))
+                    else:
+                        self.assertEqual(path.read_bytes(), payload); self.assertIsNotNone(self.registered(sha))
+                    self.evidence.append({'first_parent_phase': phase, 'first_type': kind.__name__,
+                                          'existing_public_bridge_code': code, 'raw_exception_restored': False,
+                                          'committed_row_present': phase == 'commit'})
+
+    def test_retention_fault_ordinary_SQL_close_only_remains_storage_error(self):
+        sha, payload, path = self.candidate()
+        with self.pin_observation(close_errors=(GeneratorExit(), SystemExit())) as state, \
+                self.SQL_fault(3, close=OSError('PRIVATE ordinary close')) as connections:
+            self.rerror('storage_error')
+        self.assert_pins_closed(state); self.assert_SQL_closed(connections)
+        self.assertEqual(path.read_bytes(), payload); self.assertIsNotNone(self.registered(sha))
+
+    def test_retention_fault_file_close_first_controls_survive_second_close(self):
+        for kind in (KeyboardInterrupt, SystemExit, GeneratorExit):
+            with self.subTest(kind=kind.__name__):
+                self.stage(package(paragraph('pin close ' + kind.__name__)))
+                sha, payload, path = self.candidate(); first = kind('SYN first pin close')
+                with self.pin_observation(close_errors=(first, OSError('PRIVATE later source close'))) as state:
+                    with self.assertRaises(kind) as caught: self.retain()
+                self.assertIs(caught.exception, first); self.assert_pins_closed(state)
+                self.assertEqual(path.read_bytes(), payload); self.assertIsNotNone(self.registered(sha))
+
+    def test_retention_fault_output_memory_error_occurs_after_real_cleanup_and_commit(self):
+        sha, payload, path = self.candidate(); encode = self.api.canonical
+        first = MemoryError('SYN final serialization'); observed = []
+        with self.pin_observation() as state:
+            def encoded(value):
+                if type(value) is dict and value.get('kind') == 'intake_docx_reference_retained' and 'artifact_id' in value:
+                    self.assertEqual(state['active'], set()); observed.append(True); raise first
+                return encode(value)
+            with mock.patch.object(self.api, 'canonical', side_effect=encoded), self.assertRaises(MemoryError) as caught:
+                self.retain()
+        self.assertIs(caught.exception, first); self.assertEqual(observed, [True]); self.assert_pins_closed(state)
+        self.assertEqual(path.read_bytes(), payload); self.assertIsNotNone(self.registered(sha))
+
+    def test_retention_edges_missing_source_flag_row_is_not_false_provenance(self):
+        sha, _, path = self.candidate()
+        with self.creator.connection() as con:
+            con.execute('PRAGMA foreign_keys=OFF')
+            con.execute('DELETE FROM intake_sources WHERE source_id=?', ('SYN-DOCX',))
+        with mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('write')):
+            self.rerror('source_integrity_invalid')
+        self.assertFalse(path.exists()); self.assertIsNone(self.registered(sha))
+
+    def test_retention_edges_directory_is_not_an_artifact(self):
+        sha, _, path = self.candidate(); path.mkdir()
+        self.rerror('source_integrity_invalid')
+        self.assertTrue(path.is_dir()); self.assertEqual(list(path.iterdir()), [])
+        self.assertIsNone(self.registered(sha))
+
+    def test_retention_edges_no_registry_write_has_no_receipt(self):
+        sha, payload, path = self.candidate()
+        with self.pin_observation() as state, mock.patch.object(self.store, 'register_blob', return_value=None):
+            self.rerror('source_integrity_invalid')
+        self.assert_pins_closed(state); self.assertEqual(path.read_bytes(), payload)
+        self.assertIsNone(self.registered(sha))
+
+    def test_retention_empty_upload_remains_unavailable_before_native_or_writes(self):
+        self.stage(b''); before = self.rows()
+        self.assertEqual(intake_status(self.creator, self.intake_id)['status'], 'upload_incomplete')
+        with mock.patch.object(self.api, 'read_docx', side_effect=AssertionError('native')), \
+                mock.patch.object(self.native, '_write_bytes', side_effect=AssertionError('write')):
+            self.rerror('intake_unavailable')
+        self.assertEqual(self.rows(), before)
+
+    def test_retention_integration_mixed_claim_complete_rejects_DOCX_fact_citations(self):
+        from labflow.intake_jobs import claim_job, complete_job
+        from labflow.intake_worker import SyntheticTextProvider
+        from labflow.intake_model_boundary import build_analysis_prompt
+        self.mixed(); receipt = self.retain()
+        self.assertEqual(receipt['reference']['result']['blocks'][0]['text'], 'model: DOCX-MODEL')
+        job = claim_job(self.store, 'SYN-RETAIN-CLAIM', now=self.clock + 3)
+        doc = next(d for d in job['documents'] if d['path'] == 'request.docx')
+        self.assertEqual((doc['format'], doc['parse_status'], doc['text']), ('unsupported', 'requires_parser', None))
+        context = {name: job[name] for name in ['job_id', 'intake_id', 'revision', 'synthetic', 'documents',
+                                               'analysis_contract', 'instructions', 'analysis_context_id']}
+        self.assertEqual(build_analysis_prompt(context, producer_name='SYN-MODEL')['kind'], 'intake_model_prompt')
+        analysis = SyntheticTextProvider().analyze(job)
+        self.assertFalse(any(e['path'] == 'request.docx' for f in analysis['facts'] for e in f['evidence']))
+        bad = copy.deepcopy(analysis)
+        bad['facts'].append({'field': 'model', 'value': 'DOCX-MODEL', 'status': 'explicit', 'evidence': [{
+            'kind': 'text_line', 'path': doc['path'], 'sha256': doc['sha256'], 'line_start': 1, 'line_end': 1,
+            'quote': 'model: DOCX-MODEL', 'role': 'request'}]})
+        with self.assertRaises(ValueError): complete_job(self.store, job['job_id'], job['token'], bad, now=self.clock + 4)
+        bad['facts'][-1]['evidence'][0].update(kind='pdf_page', page_number=1,
+            extraction_id=receipt['artifact_id'], text_sha256=receipt['reference']['result']['text_sha256'])
+        with self.assertRaises(ValueError): complete_job(self.store, job['job_id'], job['token'], bad, now=self.clock + 4)
+        summary = complete_job(self.store, job['job_id'], job['token'], analysis, now=self.clock + 4)
+        self.assertEqual(summary['facts']['market']['value'], 'EU'); self.assertNotIn('model', summary['facts'])
+        self.assertEqual(summary['unread_documents'], ['request.docx'])
+        self.assertTrue(any(q['key'] == 'unread_documents' for q in summary['questions']))
+        self.assertIsNotNone(self.registered(receipt['artifact_id']))
+
+    def test_retention_integration_real_fixture_worker_keeps_DOCX_unread(self):
+        from labflow.intake_worker import run_worker, SyntheticTextProvider
+        self.mixed(); self.retain()
+        report = run_worker(self.store, SyntheticTextProvider(), worker_id='SYN-RETAIN-WORKER', max_jobs=1,
+                            max_run_seconds=15, provider_timeout_seconds=5, lease_seconds=10)
+        self.assertEqual(report['attempted_jobs'], 1); self.assertEqual(report['results'][0]['status'], 'completed')
+        state = intake_status(self.creator, self.intake_id)
+        self.assertEqual(state['analysis']['unread_documents'], ['request.docx'])
+        self.assertTrue(any(q['key'] == 'unread_documents' for q in state['analysis']['questions']))
+        self.assertNotIn('model', state['analysis']['facts'])
+
+    def test_retention_limit_ineffective_close_is_failure_and_not_claimed_recovered(self):
+        sha, payload, path = self.candidate(); refused = []
+        try:
+            with self.pin_observation() as state:
+                close = os.close
+                def ineffective(fd):
+                    if fd in state['active'] and state['names'][fd] == sha and not refused:
+                        refused.append(fd)
+                        raise OSError('SYN close deliberately not performed')
+                    return close(fd)
+                with mock.patch('os.close', side_effect=ineffective): self.rerror('storage_error')
+            self.assertEqual(len(refused), 1)
+            self.assertEqual(len(state['closed']), 1)
+            self.assertEqual(state['active'], set(refused))
+            self.assertEqual(self.store._existing_binding.active, 0)
+            self.assertEqual(os.fstat(refused[0]).st_size, len(payload))
+            self.assertEqual(path.read_bytes(), payload); self.assertIsNotNone(self.registered(sha))
+            self.store.close()
+            self.assertEqual(os.fstat(refused[0]).st_size, len(payload))
+            with self.assertRaises(OSError): path.rename(path.with_name(path.name + '.still-pinned'))
+            self.evidence.append({'receipt_returned': False, 'API_error': 'storage_error',
+                                  'deliberately_ineffective_close_attempts': 1, 'API_owned_fd_left_open': 1,
+                                  'caller_Store_close_does_not_own_this_fd': True,
+                                  'registered_commit_preserved': True,
+                                  'fixture_known_fd_cleanup_after_observation_only': True})
+        finally:
+            # This is test cleanup of the one known leaked descriptor, not a
+            # product retry or proof of universal ineffective-close recovery.
+            for fd in refused: os.close(fd)
+        for fd in refused:
+            with self.assertRaises(OSError): os.fstat(fd)
 
 
 if __name__=='__main__':
