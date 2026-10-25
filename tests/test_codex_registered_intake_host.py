@@ -1,0 +1,485 @@
+"""Disposable native control/Store/history; genuine D2, known Python child only."""
+import copy
+import ctypes
+from contextlib import redirect_stderr, redirect_stdout
+from datetime import datetime, timedelta, timezone
+import hashlib
+import importlib
+import importlib.util
+import io
+import json
+import os
+from pathlib import Path
+import sqlite3
+import subprocess
+import sys
+import tempfile
+from types import SimpleNamespace
+import unittest
+from unittest.mock import patch
+
+from labflow.active_intake import register_source, scan_source
+from labflow.store import Store, canonical
+
+
+REAL_POPEN = subprocess.Popen
+ANCHOR = 'root-continuation-anchor-20261026-v1.json'
+TABLE = 'CREATE TABLE codex_intake_history (seq INTEGER PRIMARY KEY,kind TEXT NOT NULL,permit_id TEXT,payload TEXT NOT NULL,UNIQUE(kind,permit_id))'
+CHILD = r'''
+import json,os,sys
+from pathlib import Path
+def deny(event,args):
+    if event in ('socket.connect','socket.getaddrinfo'):raise AssertionError('FAKE_CHILD_NETWORK_FORBIDDEN')
+sys.addaudithook(deny)
+if sys.argv[1]=='version':
+    os.write(1,b'codex-cli 0.163.0-alpha.11.2\n');sys.exit(0)
+prompt=json.loads(sys.stdin.buffer.read())
+schema=json.loads((Path.cwd().parent/'response-schema.json').read_bytes())
+analysis=dict(schema_version=1,producer=prompt['expected_producer'],identity='unknown',facts=[],
+              missing_fields=schema['properties']['missing_fields']['items']['enum'])
+wire=json.dumps(analysis,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf-8')
+Path(sys.argv[2]).write_bytes(wire)
+events=[dict(type='thread.started',thread_id='known-fake-native-child'),dict(type='turn.started'),
+ dict(type='item.completed',item=dict(id='a1',type='agent_message',text=wire.decode('utf-8'))),
+ dict(type='turn.completed',usage=dict(input_tokens=10,cached_input_tokens=2,output_tokens=3))]
+os.write(1,b''.join(json.dumps(e,separators=(',',':')).encode()+b'\n' for e in events))
+'''
+
+def C(value):
+    return canonical(value).encode('utf-8')
+
+def H(value):
+    return hashlib.sha256(value).hexdigest()
+
+
+class RegisteredNativeHostTests(unittest.TestCase):
+    maxDiff = None
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix='native-host-authored-')
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self.control = self.root/'native-control';self.control.mkdir()
+        self.bundle = self.root/'inbox'/'bundle';self.bundle.mkdir(parents=True)
+        (self.bundle/'request.txt').write_bytes(b'Authored synthetic candidate review only.\n')
+        initial = Store(self.root/'store')
+        try:
+            register_source(initial,'NATIVE-SYN',self.bundle.parent,synthetic=True,settle_seconds=1)
+            scan_source(initial,'NATIVE-SYN',now=100,synthetic_only=True)
+            accepted=scan_source(initial,'NATIVE-SYN',now=101,synthetic_only=True)['accepted'][0]
+            with initial.connection() as con:
+                revision=con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',
+                    (accepted['intake_id'],accepted['revision'])).fetchone()
+                self.selection=dict(source_id='NATIVE-SYN',intake_id=accepted['intake_id'],revision=accepted['revision'],
+                    job_id=accepted['job_id'],revision_fingerprint=revision['fingerprint'],files=json.loads(revision['files_json']))
+        finally:
+            initial.close()
+        self.history=dict(actual_codex_model_processes=16,known_total_before_this_host=16,unknown_usage_components=None,
+            usage_complete=False,cost=None,provenance_level='previous_verified_root_rollup_not_fresh_original_receipt_reaudit',
+            source_rollup=dict(path='authored-rollup-not-opened.json',bytes=1,sha256=H(b'authored rollup')),
+            published_source=dict(commit='a'*40,path='authored-public-metadata.md',bytes=1,sha256=H(b'authored public')))
+        self.anchor=dict(schema_version=1,kind='codex_intake_root_operator_continuation_anchor',
+            recorded_at_kst='2026-10-26T00:00:00+09:00',state='standing_delegation_recorded_no_reservation_or_model_started',
+            authority_source=dict(kind='direct_human_instructions_to_this_root_thread',instruction_reference='AUTHORED TEST FACSIMILE',
+                authority_is_not_inferred_from_uploaded_documents_or_model_output=True),
+            scope=dict(action='one_registered_synthetic_intake_run',allowed_models=['gpt-6.1-sol','gpt-6-astra'],
+                maximum_attempts_per_once=1,timeout_seconds_maximum=60,automatic_retries=0,
+                scope_is_existing_delegation_not_new_global_budget=True,customer_originals_or_decryption_external_transmission=False,
+                hardware_network_output_motion_submission=False),inherited_history=copy.deepcopy(self.history),
+            admission=dict(registered_input_root=None,registration_manifest=None,existing_store=None,cumulative_journal=None,
+                reservation=None,permitted_to_dispatch_now=False,missing_registration_or_journal_is_not_run=True,
+                actual_global_call_cap=None,global_cap_unknown_does_not_mean_unlimited=True,
+                exhausted_Vertex_ledger_is_separate_and_must_not_be_read_or_modified=True),
+            trust_boundary=dict(operator_control_directory=str(self.control),customer_input_argv_env_cannot_select_control_source=True,
+                native_operator_local_account_boundary=True,protection_against_same_account_arbitrary_code_execution=False),
+            new_model_processes=0,original_receipt_or_customer_body_reads=0,registration_created=False,
+            cumulative_journal_seeded=False,new_budget_or_active_permit_issued=False)
+        self.put(ANCHOR,self.anchor)
+        self.manifest=dict(schema_version=1,kind='codex_registered_synthetic_intake',scenario_id='NATIVE-CASE',
+            synthetic=True,registered_intake=self.selection)
+        self.put('registered-intake-v1.json',self.manifest)
+        self.exe=self.root/'codex.exe';self.exe.write_bytes(b'KNOWN FAKE PATH; NEVER EXECUTE THIS FILE')
+        self.config=dict(schema_version=1,kind='codex_registered_intake_operator_control',anchor_sha256=H(C(self.anchor)),
+            journal_id='AUTHORED-HISTORY',permit_id='AUTHORED-ONCE',registration_sha256=H(C(self.manifest)),
+            registered_input_root=str(self.bundle),store_root=str(self.root/'store'),executable=str(self.exe))
+        self.put('operator-control-v1.json',self.config)
+        self.permit=dict(schema_version=1,kind='codex_intake_single_use_permit',journal_id=self.config['journal_id'],
+            permit_id=self.config['permit_id'],anchor_sha256=self.config['anchor_sha256'],scenario_id='NATIVE-CASE',
+            requested_model='gpt-6.1-sol',registration_sha256=self.config['registration_sha256'],store_root=self.config['store_root'],
+            worker_id='native-fixture-worker',producer_name='NATIVE-AUTHORED',maximum_model_processes=1,
+            timeout_seconds=5,automatic_retries=0,expires_at=(datetime.now(timezone.utc)+timedelta(hours=1)).strftime('%Y-%m-%dT%H:%M:%SZ'))
+        self.journal=self.control/'continuation.sqlite3'
+        con=sqlite3.connect(self.journal)
+        try:
+            con.execute(TABLE)
+            baseline=dict(schema_version=1,kind='codex_intake_continuation_baseline',journal_id=self.config['journal_id'],
+                anchor_sha256=self.config['anchor_sha256'],inherited_history=copy.deepcopy(self.history))
+            con.execute('INSERT INTO codex_intake_history(kind,permit_id,payload) VALUES(?,?,?)',('baseline',None,canonical(baseline)))
+            con.execute('INSERT INTO codex_intake_history(kind,permit_id,payload) VALUES(?,?,?)',('permit',self.config['permit_id'],canonical(self.permit)))
+            con.commit()
+        finally:
+            con.close()
+        self.evidence=self.control/'runs'/self.config['permit_id'];self.evidence.mkdir(parents=True)
+        self.script=self.root/'known-fake-child.py';self.script.write_bytes(CHILD.encode())
+        self.calls=[];self.children=[];self.spawn_errors=[]
+        self.addCleanup(self.child_cleanup)
+
+    def put(self,name,value):
+        (self.control/name).write_bytes(C(value))
+
+    def api(self):
+        name='labflow.codex_registered_intake_host'
+        self.assertIsNotNone(importlib.util.find_spec(name),'native registered operator entrypoint is absent')
+        return importlib.import_module(name)
+
+    def child_cleanup(self):
+        live=[]
+        for child in self.children:
+            if child.poll() is None:live.append(child);child.kill()
+            child.wait(timeout=3)
+        self.assertEqual(live,[])
+
+    def spawn(self,argv,**kwargs):
+        try:
+            self.assertEqual(Path(argv[0]),self.exe)
+            self.assertFalse(kwargs['shell'])
+            stage='version' if argv[1:]==['--version'] else 'model'
+            self.calls.append(stage)
+            last=argv[argv.index('--output-last-message')+1] if stage=='model' else '-'
+            child=REAL_POPEN([sys.executable,'-B','-u',str(self.script),stage,last],**kwargs)
+            self.children.append(child)
+            return child
+        except BaseException as exc:
+            self.spawn_errors.append((type(exc).__name__,str(exc)))
+            raise
+
+    def invoke(self,args=None):
+        api=self.api();out,err=io.StringIO(),io.StringIO()
+        with patch.object(api,'_control_root',return_value=self.control), \
+                patch('labflow.codex_cli_response.subprocess.Popen',side_effect=self.spawn), \
+                redirect_stdout(out),redirect_stderr(err):
+            status=api.main(['--scenario-id','NATIVE-CASE','--model',self.permit['requested_model']] if args is None else args)
+        frame=(out.getvalue() or err.getvalue()).strip()
+        return status,json.loads(frame),out.getvalue(),err.getvalue()
+
+    def events(self):
+        con=sqlite3.connect(self.journal)
+        try:return [(r[0],r[1],json.loads(r[2])) for r in con.execute('SELECT kind,permit_id,payload FROM codex_intake_history ORDER BY seq')]
+        finally:con.close()
+
+    def job(self):
+        con=sqlite3.connect(self.root/'store'/'lab.sqlite3')
+        try:return con.execute('SELECT state,attempt FROM intake_jobs WHERE job_id=?',(self.selection['job_id'],)).fetchone()
+        finally:con.close()
+
+    def replace_event(self,kind,body):
+        con=sqlite3.connect(self.journal)
+        try:
+            con.execute('UPDATE codex_intake_history SET payload=? WHERE kind=? AND permit_id=?',
+                (canonical(body),kind,self.config['permit_id']));con.commit()
+        finally:con.close()
+
+    def new_permit(self):
+        self.config['permit_id']='AUTHORED-NEXT'
+        self.permit={**self.permit,'permit_id':self.config['permit_id']}
+        self.put('operator-control-v1.json',self.config)
+        con=sqlite3.connect(self.journal)
+        try:
+            con.execute('INSERT INTO codex_intake_history(kind,permit_id,payload) VALUES(?,?,?)',
+                ('permit',self.config['permit_id'],canonical(self.permit)));con.commit()
+        finally:con.close()
+        (self.control/'runs'/self.config['permit_id']).mkdir()
+
+    def refused(self):
+        before=self.events();api=self.api()
+        with patch.object(Store,'open_existing',wraps=Store.open_existing) as opener, \
+                patch.object(api,'run_codex_intake_once',wraps=api.run_codex_intake_once) as once:
+            status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(3,'not_run'),result)
+        self.assertEqual((opener.call_count,once.call_count),(0,0))
+        self.assertEqual(self.events(),before)
+        return result
+
+    def test_genuine_once_with_known_fake_child_extends_history_and_closes_store(self):
+        api=self.api();opened=[];original=Store.open_existing
+        def opener(path):
+            store=original(path);opened.append(store);return store
+        with patch.object(Store,'open_existing',side_effect=opener), \
+                patch.object(api,'prepare_registered_synthetic_context',wraps=api.prepare_registered_synthetic_context) as g3, \
+                patch.object(api,'run_codex_intake_once',wraps=api.run_codex_intake_once) as once:
+            status,result,out,err=self.invoke()
+        self.assertEqual((status,result['status'],err),(0,'completed',''),repr(self.spawn_errors))
+        self.assertEqual((g3.call_count,once.call_count,self.calls),(1,1,['version','model']))
+        self.assertIs(g3.call_args.args[0],once.call_args.args[0])
+        self.assertEqual(self.job(),('completed',1))
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved','consumed','finished'])
+        self.assertEqual(result['history']['known_total_model_processes'],17)
+        self.assertEqual(result['history']['actual_total_model_processes'],17)
+        self.assertFalse(result['history']['usage_complete']);self.assertIsNone(result['history']['cost'])
+        self.assertEqual([s._existing_binding.state for s in opened],['closed'])
+        self.assertEqual(self.events()[0][2]['inherited_history'],self.history)
+        self.assertEqual((self.evidence/'caller-receipt.json').exists(),True)
+        self.assertEqual(result['once']['strict_decode'],'accepted')
+
+    def test_same_permit_cannot_be_reset_with_a_new_empty_evidence_directory(self):
+        self.assertEqual(self.invoke()[0],0)
+        self.evidence.rename(self.evidence.with_name('preserved-first-evidence'));self.evidence.mkdir()
+        before=self.events();status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(3,'not_run'))
+        self.assertEqual(self.events(),before);self.assertEqual(self.calls,['version','model'])
+        self.assertEqual(self.job(),('completed',1))
+
+    def test_partial_prior_finished_record_blocks_new_permit_before_store_open(self):
+        self.assertEqual(self.invoke()[0],0)
+        partial=self.events()[-1][2];del partial['once'];self.replace_event('finished',partial)
+        self.new_permit();self.refused()
+
+    def test_missing_prior_caller_evidence_blocks_new_permit_before_store_open(self):
+        self.assertEqual(self.invoke()[0],0)
+        caller=self.evidence/'caller-receipt.json';caller.rename(caller.with_suffix('.preserved'))
+        self.new_permit();self.refused()
+
+    def test_missing_operator_config_does_not_turn_anchor_into_a_permit(self):
+        (self.control/'operator-control-v1.json').rename(self.control/'preserved-config.json')
+        self.refused();self.assertEqual(self.calls,[])
+
+    def test_missing_journal_is_not_created(self):
+        self.journal.rename(self.journal.with_suffix('.preserved'))
+        status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(3,'not_run'))
+        self.assertFalse(self.journal.exists());self.assertEqual(self.calls,[])
+
+    def test_expired_or_mismatched_permit_has_no_store_or_dispatch(self):
+        original=copy.deepcopy(self.permit)
+        for change in [dict(expires_at='2000-01-01T00:00:00Z'),dict(requested_model='gpt-6-astra'),
+                       dict(maximum_model_processes=2),dict(automatic_retries=1),dict(timeout_seconds=61),dict(timeout_seconds=True)]:
+            with self.subTest(change=change):
+                self.replace_event('permit',{**original,**change});self.refused()
+
+    def test_original_bytes_and_extra_file_are_not_silently_accepted(self):
+        path=self.bundle/'request.txt';original=path.read_bytes()
+        path.write_bytes(b'Changed original; retained working blob did not change.\n')
+        self.refused();path.write_bytes(original)
+        (self.bundle/'extra.txt').write_bytes(b'Unregistered synthetic addition.\n');self.refused()
+
+    def test_registration_hash_and_fingerprint_are_not_authority_defaults(self):
+        self.config['registration_sha256']='0'*64;self.put('operator-control-v1.json',self.config)
+        self.refused()
+
+    def test_pdf_is_rejected_before_original_bytes_or_store(self):
+        self.selection['files'][0]['path']='not-opened.PDF'
+        self.selection['revision_fingerprint']=H(C(self.selection['files']))
+        self.put('registered-intake-v1.json',self.manifest)
+        self.config['registration_sha256']=H(C(self.manifest));self.put('operator-control-v1.json',self.config)
+        self.permit['registration_sha256']=self.config['registration_sha256'];self.replace_event('permit',self.permit)
+        api=self.api()
+        with patch.object(api,'_read',wraps=api._read) as read:self.refused()
+        self.assertFalse(any(str(call.args[0]).endswith('.PDF') for call in read.call_args_list))
+
+    def test_zero_history_is_rejected_before_store(self):
+        self.anchor['inherited_history']['actual_codex_model_processes']=0
+        self.anchor['inherited_history']['known_total_before_this_host']=0
+        self.put(ANCHOR,self.anchor)
+        self.config['anchor_sha256']=H(C(self.anchor));self.put('operator-control-v1.json',self.config)
+        self.refused()
+
+    def test_busy_existing_journal_is_not_retried(self):
+        con=sqlite3.connect(self.journal)
+        try:
+            con.execute('BEGIN IMMEDIATE');self.refused()
+        finally:con.rollback();con.close()
+
+    def test_non_synthetic_working_source_never_reserves_or_claims(self):
+        con=sqlite3.connect(self.root/'store'/'lab.sqlite3')
+        try:con.execute('UPDATE intake_sources SET synthetic=0');con.commit()
+        finally:con.close()
+        before=self.events();status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(3,'not_run'))
+        self.assertEqual(self.events(),before);self.assertEqual(self.job(),('queued',0));self.assertEqual(self.calls,[])
+
+    def test_other_outstanding_job_is_not_claimed(self):
+        other=self.root/'other-inbox'/'one';other.mkdir(parents=True)
+        (other/'request.txt').write_bytes(b'Other synthetic registered case.\n')
+        store=Store.open_existing(str(self.root/'store'))
+        try:
+            register_source(store,'OTHER-SYN',other.parent,synthetic=True,settle_seconds=1)
+            scan_source(store,'OTHER-SYN',now=100,synthetic_only=True);scan_source(store,'OTHER-SYN',now=101,synthetic_only=True)
+        finally:store.close()
+        before=self.events();status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(3,'not_run'))
+        self.assertEqual(self.events(),before);self.assertEqual(self.job(),('queued',0));self.assertEqual(self.calls,[])
+
+    def test_original_changes_after_g3_block_before_reservation(self):
+        api=self.api();prepare=api.prepare_registered_synthetic_context
+        def changed(*args,**kwargs):
+            context=prepare(*args,**kwargs);(self.bundle/'request.txt').write_bytes(b'After G3 change.\n');return context
+        before=self.events()
+        with patch.object(api,'prepare_registered_synthetic_context',side_effect=changed):status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(3,'not_run'))
+        self.assertEqual(self.events(),before);self.assertEqual(self.job(),('queued',0));self.assertEqual(self.calls,[])
+
+    def test_control_objects_before_reservation_are_preserved(self):
+        api=self.api();before=self.events()
+        for kind in (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):
+            control=kind('authored control')
+            with self.subTest(kind=kind.__name__),patch.object(api,'prepare_registered_synthetic_context',side_effect=control):
+                with self.assertRaises(kind) as caught:self.invoke()
+                self.assertIs(caught.exception,control)
+        self.assertEqual(self.events(),before);self.assertEqual(self.calls,[])
+
+    def test_control_after_consumption_leaves_unknown_and_cannot_reexecute(self):
+        api=self.api();control=KeyboardInterrupt('authored control')
+        with patch.object(api,'run_codex_intake_once',side_effect=control):
+            with self.assertRaises(KeyboardInterrupt) as caught:self.invoke()
+        self.assertIs(caught.exception,control)
+        finished=self.events()[-1][2]
+        self.assertEqual(finished['status'],'unknown');self.assertIsNone(finished['local_model_processes'])
+        self.new_permit();self.refused();self.assertEqual(self.calls,[])
+
+    def test_model_spawn_failure_does_not_confuse_attempt_with_process_start(self):
+        original=self.spawn
+        def failure(argv,**kwargs):
+            if argv[1:]!=['--version']:
+                self.calls.append('model-spawn-failed');raise OSError('Authored fake spawn failure')
+            return original(argv,**kwargs)
+        self.spawn=failure
+        status,result,_,_=self.invoke()
+        self.assertIn(status,(4,5));self.assertEqual(result['once']['attempts']['model_process_attempts'],1)
+        self.assertEqual(self.events()[-1][2]['local_model_processes'],0)
+        self.assertEqual(result['history']['known_total_model_processes'],16)
+        self.assertEqual(result['history']['consumed_single_use_permits'],1)
+        self.assertEqual(self.calls,['version','model-spawn-failed'])
+
+    def test_store_close_failure_preserves_original_control(self):
+        api=self.api();control=KeyboardInterrupt('original dispatch control');close=Store.close
+        def failure(store):close(store);raise OSError('authored close failure after actual close')
+        with patch.object(api,'run_codex_intake_once',side_effect=control),patch.object(Store,'close',side_effect=failure,autospec=True):
+            with self.assertRaises(KeyboardInterrupt) as caught:self.invoke()
+        self.assertIs(caught.exception,control)
+        self.assertEqual(self.events()[-1][2]['status'],'unknown')
+
+    def test_arguments_cannot_select_control_or_supply_authority(self):
+        api=self.api()
+        for args in [[],['--scenario-id','NATIVE-CASE','--model','gpt-6.1-sol','--control-root',str(self.control)],
+                     ['--scenario-id','NATIVE-CASE','--scenario-id','NATIVE-CASE'],['--model','other','--scenario-id','NATIVE-CASE']]:
+            with self.subTest(args=args),patch.object(api,'_control_root',side_effect=AssertionError('must not resolve')):
+                with redirect_stderr(io.StringIO()):self.assertEqual(api.main(args),2)
+        with self.assertRaises(TypeError):api.main([],authorization={'approved':True})
+
+    def test_help_reads_no_control_and_writes_no_journal(self):
+        api=self.api();before=self.events()
+        with patch.object(api,'_control_root',side_effect=AssertionError('control forbidden')),redirect_stdout(io.StringIO()):
+            self.assertEqual(api.main(['--help']),0)
+        self.assertEqual(self.events(),before)
+
+    def test_late_journal_close_failure_blocks_a_new_permit(self):
+        connect=sqlite3.connect
+        class ClosingFailure:
+            def __init__(self,con):self.con=con
+            def __getattr__(self,name):return getattr(self.con,name)
+            def close(self):self.con.close();raise OSError('authored failure after native journal close')
+        def opener(path,*args,**kwargs):
+            con=connect(path,*args,**kwargs)
+            return ClosingFailure(con) if str(path).startswith('file:') and 'continuation.sqlite3' in str(path) else con
+        with patch('sqlite3.connect',side_effect=opener):status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(5,'unknown'))
+        self.new_permit();self.refused()
+
+    def test_existing_partial_active_guard_blocks_before_any_store(self):
+        (self.control/'active-run.json').write_bytes(b'{partial-guard')
+        self.refused();self.assertEqual(self.calls,[])
+
+    def test_known_folder_uses_current_token_and_frees_fake_native_memory(self):
+        api=self.api();buffer=ctypes.create_unicode_buffer(str(self.root/'fake-local-appdata'));freed=[];calls=[]
+        def folder(guid,flags,token,output):
+            calls.append((flags,token))
+            ctypes.cast(output,ctypes.POINTER(ctypes.c_void_p))[0]=ctypes.c_void_p(ctypes.addressof(buffer))
+            return 0
+        def free(pointer):freed.append(pointer.value)
+        def library(name,**kwargs):
+            return SimpleNamespace(SHGetKnownFolderPath=folder) if name=='shell32' else SimpleNamespace(CoTaskMemFree=free)
+        with patch.object(api.ctypes,'WinDLL',side_effect=library),patch.dict(os.environ,dict(LOCALAPPDATA='C:/wrong',USERPROFILE='C:/wrong')):
+            root=api._control_root()
+        self.assertEqual(root,self.root/'fake-local-appdata'/'DGMAutoLab'/'codex-intake-host')
+        self.assertEqual(calls,[(0,None)]);self.assertEqual(freed,[ctypes.addressof(buffer)])
+
+    def test_known_folder_keeps_original_control_when_memory_free_also_fails(self):
+        api=self.api();buffer=ctypes.create_unicode_buffer('C:/authored-only');control=KeyboardInterrupt('first native control')
+        def folder(guid,flags,token,output):
+            ctypes.cast(output,ctypes.POINTER(ctypes.c_void_p))[0]=ctypes.c_void_p(ctypes.addressof(buffer))
+            raise control
+        def free(pointer):raise OSError('secondary native free failure')
+        def library(name,**kwargs):
+            return SimpleNamespace(SHGetKnownFolderPath=folder) if name=='shell32' else SimpleNamespace(CoTaskMemFree=free)
+        with patch.object(api.ctypes,'WinDLL',side_effect=library):
+            with self.assertRaises(KeyboardInterrupt) as caught:api._control_root()
+        self.assertIs(caught.exception,control)
+
+    def test_failure_after_reservation_keeps_it_without_refund_or_retry(self):
+        api=self.api();append=api._append
+        def failure(con,kind,permit_id,body):
+            if kind=='consumed':raise OSError('authored consumption write failure')
+            return append(con,kind,permit_id,body)
+        with patch.object(api,'_append',side_effect=failure):status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(5,'unknown'))
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit','reserved'])
+        self.assertTrue((self.control/'active-run.json').exists())
+        self.assertEqual(self.calls,[]);self.assertEqual(self.job(),('queued',0))
+        self.new_permit();self.refused()
+
+    def test_native_guard_postwrite_control_is_preserved_and_blocks_more_runs(self):
+        api=self.api();write=api._active_guard;control=KeyboardInterrupt('postwrite first control')
+        def failure(*args):write(*args);raise control
+        with patch.object(api,'_active_guard',side_effect=failure):
+            with self.assertRaises(KeyboardInterrupt) as caught:self.invoke()
+        self.assertIs(caught.exception,control)
+        self.assertEqual([e[0] for e in self.events()],['baseline','permit'])
+        self.new_permit();self.refused();self.assertEqual(self.calls,[])
+
+    def test_real_once_rejects_context_changed_after_consumption_before_model(self):
+        api=self.api();append=api._append
+        def changed(con,kind,permit_id,body):
+            append(con,kind,permit_id,body)
+            if kind=='consumed':
+                (self.bundle/'request.txt').write_bytes(b'Authored new revision after reservation.\n')
+                store=Store.open_existing(str(self.root/'store'))
+                try:
+                    scan_source(store,'NATIVE-SYN',now=200,synthetic_only=True)
+                    scan_source(store,'NATIVE-SYN',now=201,synthetic_only=True)
+                finally:store.close()
+        with patch.object(api,'_append',side_effect=changed):status,result,_,_=self.invoke()
+        self.assertEqual((status,result['status']),(4,'failed'),result)
+        self.assertEqual(result['once']['attempts']['producer_invocations'],0)
+        self.assertEqual(self.calls,[])
+        self.assertEqual(result['history']['known_total_model_processes'],16)
+        self.assertEqual(result['history']['consumed_single_use_permits'],1)
+
+    def test_process_stream_failure_and_control_have_bounded_quiet_exit(self):
+        code=r'''
+import sys
+sys.path.insert(0,sys.argv[2])
+import labflow.codex_registered_intake_host as host
+if sys.argv[1]=='broken':
+    class Broken:
+        def reconfigure(self,**kwargs):pass
+        def write(self,payload):raise OSError('known fake broken output')
+        def flush(self):raise OSError('known fake final flush')
+    sys.stdout=Broken()
+    original=host.main
+    host.main=lambda:original(['--help'])
+else:
+    def interrupted():raise KeyboardInterrupt('known fake process control')
+    host.main=interrupted
+raise SystemExit(host._process_main())
+'''
+        path=self.root/'known-fake-stream-child.py';path.write_bytes(code.encode())
+        for mode,expected in [('broken',5),('control',130)]:
+            with self.subTest(mode=mode):
+                child=REAL_POPEN([sys.executable,'-X','utf8','-B',str(path),mode,str(Path(__file__).parents[1])],
+                    stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,
+                    creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+                self.children.append(child);out,err=child.communicate(timeout=5)
+                self.assertEqual((child.returncode,out,err),(expected,b'',b''))
+
+
+if __name__=='__main__':
+    unittest.main()
