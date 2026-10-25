@@ -1,0 +1,15 @@
+# 통합052 — 첫 가상판단과 등록 입력7 화면 계약
+
+2026-10-25, Asia/Seoul. 개발2 `5e58183b726dc005a6b99ad5b436ddbee2c1cac8`의 신규3을 독립 최종 Yes/C0I0M0 뒤 기능 `b9344609edc8935a41b5c8022189195e43338b8b`에 인수했다. [첫 판단 사용법](../../docs/fcc/virtual_fleet_codex_first_decision_usage.md)과 [공통 계약](../../docs/fcc/codex_first_decision_contract.json)을 따른다. source278→280이며 기존278 raw 불변·소유3 GitLF exact와 새 root25 PASS/실패·error·skip0을 확인했다.
+
+fresh full64 가상 trial에서 같은 관측 context를 고정해 FleetHarness를 한 번 capture하고 종료한 뒤 concrete Codex producer와 genuine builder/decoder를 직접 결합한다. 정상/복구 시나리오와 SOL/ASTRA의 명시 순서를 유지하고 선언된 호출·벽시계·예비시간·stage 취소/최초 오류를 기록한다. 모델 제안을 실제 가상 명령에 파견하거나 task evaluator를 호출하지 않는다. 고정 fixture의 성공을 실제 AI 폐루프 성공으로 바꾸지 않으며 score null·실물 미검증을 유지한다.
+
+독립 검수는 원 B8 봉인 그대로9묶음, 호출19회·fresh full64 trial17개·capture step17회·합성 producer14회·genuine decoder9회를 확인했다. factory의 가상 execute391/advance51은 준비 동작이며 모델 proposal 파견 수가 아니다. 담당25/27/30과 독립/총괄 분모를 합산하지 않았다. 실제 CLI·인증·모델·망·운영예산 접근0이며 시간/취소/trace 변조 거절·첫 오류/후행 close 오류 보존과 원 실패 기록을 유지했다.
+
+개발4의 등록7 보호 화면은 원002 No를 보존하고 후속003-v2/private3 및 같은 의미의 공개2를 정적 Yes/C0I0M0로 수용했다. [화면 설계](../../docs/superpowers/specs/2026-10-25-vertex-registered-inputs-ui-design.md)·[구현 계획](../../docs/superpowers/plans/2026-10-25-vertex-registered-inputs-ui.md)을 고정한다. connection1·접수 분석3·의뢰 이해3을 각 evaluator/각 prompt·schema SHA로 구별하고, 같은2694바이트 schema3의 서로 다른 SHA도 보존한다. 선택 입력과 승인 결합·family별 strict/status/reason/의미 미평가, 기존 config/API/DTO와 소유11 중 기존6 최소 delta를 유지한다. 이 정적 수용은 제품/API/HTTP/DOM 실행의 성공이 아니며, 별도 새 sourceblind 기대 봉인·공통 게시 정확 base/독립 clone/전용 branch·명시 GO 후 실제 구현한다. 정식 D1/D3와 fake concrete D2의 보호 HTTP 검증을 owned test에 남긴다.
+
+등록7의 안전한 합성 literal 입력만 별도 동결했다. 공개 source의 지정 prompt/schema assignment만 추출했으며 응답·기대·test 함수·producer 실행·고객 원문은 포함하지 않는다. 입력 묶음이 새 모델 전송 허가나 예산이 되는 것은 아니다. 현재 실제 Codex16·Vertex6/연결4성공2실패, 소진된 동일6/3072·추가 실제호출0·무료크레딧 전용·ADC둘불변·업무품질 not_assessed/비용 unknown-null은 [통합050](INTEGRATION-050.md) 그대로다.
+
+P01 B043은 별도 허용 범위에서 index+6JSON+12PDF 정확19를 root 소유 private 디렉터리에 원bytes 복제했다. 총 payload46296623바이트, PDF46203572바이트·물리쪽1284는 P01 구조검토 metadata와 대조한 값이며 root의 PDF 재계수가 아니다. 원본19는 전달 전 native baseline과 일치하고 receiver19의 별도 identity/전후불변·전raw SHA·strict JSON·common documents12·PDF magic12를 확인해 명시 byte/content ACK를 보냈다. HCT 발행기관·2025~2026 발행일·모델·보고서·rights는 미확인으로 유지해 private pending retention이며 적격 target 증가는0이다. 본문/native/OCR/render/decrypt·인용 재추출·모델 송신·학습·제품/실물 실행0, 한 인용셀의 ANSI C63.10-2013 관측을 현행 규범으로 승인하지 않는다. 원 prepared index와 잘못된 옛47 설명은 수정하지 않았다. P01 후행 receiver 검증과 별도 pending 대장을 따르며 대상18PDF/690쪽에 합산하지 않는다.
+
+개발1 단일 접수 경계는 [통합051](INTEGRATION-051.md)의26 PASS를 유지하며 다음 최소 host/CLI의 noauth와 실제 issuer 미정 경계를 공통 검수한다. 개발2의 virtual 명령1개 적용은 별도 후속 계약이며 현 first-decision API의 dispatch0은 유지한다. 개발3 readonly reader는 제공 row15/replay 해석으로 원 No의 사적 형식 blocker를 보완한다. 개발4는 위 정확 계약과 새 독립 기대를 받아 구현·검증·리뷰·통합을 잇는다. 수집은 P01 v081의 기존1~8 역할을 유지한다. 사용자 추가 준비0·공유/사용자 원본 읽기 전용·Un-licensed 우선·기존 branch/미커밋/담당 소유권을 보존한다. 실장비/출력/이동·현장망·Office/COM·포털 제출/외부 발송0, 현행 규범·전수·전체 AI 업무와 시험소 물리 무인화는 미완료다.
