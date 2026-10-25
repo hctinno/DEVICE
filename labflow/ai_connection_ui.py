@@ -151,21 +151,77 @@ def _private_path(value):
     return value
 
 
+def _campaign_snapshot(value):
+    """Detach native containers without invoking caller copy/serialization hooks."""
+    if type(value) is dict:
+        if any(type(key) is not str for key in value):
+            raise ValueError('vertex_campaign_readback_invalid_input') from None
+        return {key:_campaign_snapshot(child) for key,child in value.items()}
+    if type(value) in (list,tuple):
+        children=[_campaign_snapshot(child) for child in value]
+        return children if type(value) is list else tuple(children)
+    if type(value) in (str,int,float,bool,bytes,type(None)):
+        return value
+    raise ValueError('vertex_campaign_readback_invalid_input') from None
+
+
+def _campaign_cache(value):
+    if value is None:
+        return None, None
+    if type(value) is not tuple or len(value) != 2 or any(type(v) is not dict for v in value):
+        raise ValueError('vertex_campaign_readback_invalid_input') from None
+    # The selected inputs are native dictionaries and immutable bytes. The genuine
+    # reader validates them; no deepcopy callback or IO helper is used here.
+    try:
+        manifest, artifacts = (_campaign_snapshot(v) for v in value)
+    except RecursionError:
+        raise ValueError('vertex_campaign_readback_invalid_input') from None
+    reader = getattr(_module('vertex_campaign_readback'), 'build_vertex_connection_campaign_readback', None)
+    _need(callable(reader), 'unavailable', 503)
+    report = reader(manifest, artifacts)
+    try:
+        _keys(report, 'schema_version kind campaign_id pair cells totals sources issues assurance'.split())
+        _need(type(report['schema_version']) is int and report['schema_version'] == 1 and
+              report['kind'] == 'vertex_connection_campaign_readback' and type(report['campaign_id']) is str and
+              re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}', report['campaign_id'], re.ASCII))
+        _keys(report['assurance'], ('basis','root_authorization_verified','underlying_artifacts_verified'))
+        _need(report['assurance']['basis'] == 'provided_records_only' and
+              report['assurance']['root_authorization_verified'] is False and
+              report['assurance']['underlying_artifacts_verified'] is False)
+        _need(type(report['cells']) is list and len(report['cells']) == 6 and
+              all(type(report[k]) is list for k in ('sources','issues')) and type(report['totals']) is dict)
+        for index, cell in enumerate(report['cells']):
+            _keys(cell, 'row_index model_id thinking_level status history not_run_observations issues'.split())
+            _need(type(cell['row_index']) is int and cell['row_index'] == index and
+                  cell['model_id'] == MODELS[index//3] and cell['thinking_level'] == ('LOW','MEDIUM','HIGH')[index%3] and
+                  cell['status'] in ('success','failed','not_run','unknown'))
+        raw = _canonical(report)
+        _need(len(raw) <= 1048576)
+        selection = hashlib.sha256(_canonical(manifest)).hexdigest()
+    except Exception:
+        raise AIConnectionUIError('unavailable',503) from None
+    return raw, selection
+
+
 class AIConnectionRuntime:
-    def __init__(self, config):
-        _keys(config, ('profile_path','adc_path','approval_path','budget_path','evidence_root','scenarios'))
-        self.paths = {k:_private_path(config[k]) for k in config if k != 'scenarios'}
-        _need(len(set(os.path.normcase(str(p)) for p in self.paths.values())) == 5)
-        _need(type(config['scenarios']) is tuple and len(config['scenarios']) <= 128)
-        self.scenarios = {}
-        for item in config['scenarios']:
-            _keys(item, ('scenario_id','evaluator_id','prompt_bytes','response_schema_bytes'))
-            _need(type(item['scenario_id']) is str and _ID.fullmatch(item['scenario_id']) and
-                  type(item['evaluator_id']) is str and _ID.fullmatch(item['evaluator_id']) and
-                  item['scenario_id'] not in self.scenarios)
-            _need(type(item['prompt_bytes']) is bytes and len(item['prompt_bytes']) <= 262144 and
-                  type(item['response_schema_bytes']) is bytes and len(item['response_schema_bytes']) <= 65536)
-            self.scenarios[item['scenario_id']] = dict(item)
+    def __init__(self, config, *, campaign_readback=None):
+        _need(config is not None or campaign_readback is not None)
+        self.execution_configured = config is not None
+        self.paths, self.scenarios = {}, {}
+        if config is not None:
+            _keys(config, ('profile_path','adc_path','approval_path','budget_path','evidence_root','scenarios'))
+            self.paths = {k:_private_path(config[k]) for k in config if k != 'scenarios'}
+            _need(len(set(os.path.normcase(str(p)) for p in self.paths.values())) == 5)
+            _need(type(config['scenarios']) is tuple and len(config['scenarios']) <= 128)
+            for item in config['scenarios']:
+                _keys(item, ('scenario_id','evaluator_id','prompt_bytes','response_schema_bytes'))
+                _need(type(item['scenario_id']) is str and _ID.fullmatch(item['scenario_id']) and
+                      type(item['evaluator_id']) is str and _ID.fullmatch(item['evaluator_id']) and
+                      item['scenario_id'] not in self.scenarios)
+                _need(type(item['prompt_bytes']) is bytes and len(item['prompt_bytes']) <= 262144 and
+                      type(item['response_schema_bytes']) is bytes and len(item['response_schema_bytes']) <= 65536)
+                self.scenarios[item['scenario_id']] = dict(item)
+        self.campaign_json, self.campaign_selection = _campaign_cache(campaign_readback)
         self.lock = threading.RLock()
         self.sessions, self.runs, self.clients = {}, {}, set()
         self.request_workers=set();self.server_errors=[];self.loop_failure=False
@@ -565,7 +621,22 @@ class AIConnectionRuntime:
         _need(len(raw)==length); return _json(raw)
 
     def _send(self, handler, status, payload, headers=(), maximum=262144):
-        raw=_canonical(payload); _need(len(raw)<=maximum,'unavailable',503)
+        self._send_bytes(handler,status,_canonical(payload),headers,maximum)
+
+    def _discard_unconfigured_body(self, handler):
+        # Only an admitted POST in the new readback-only mode reaches here.
+        # Consume a bounded, unambiguous body so closing with unread bytes does
+        # not reset the503 response on Windows. Never interpret or execute it.
+        lengths=handler.headers.get_all('Content-Length',[])
+        if handler.command!='POST' or len(lengths)!=1 or any(handler.headers.get_all(k) for k in ('Transfer-Encoding','Content-Encoding','Expect')):
+            return
+        if not re.fullmatch(r'[0-9]+',lengths[0],re.ASCII):return
+        literal=lengths[0].lstrip('0') or '0'
+        if len(literal)>5 or int(literal)>32768:return
+        with suppress(OSError,TimeoutError):handler.rfile.read(int(literal))
+
+    def _send_bytes(self, handler, status, raw, headers=(), maximum=262144):
+        _need(type(raw) is bytes and len(raw)<=maximum,'unavailable',503)
         handler._ai_started=True; handler.close_connection=True
         handler.send_response(status)
         for key,value in [('Content-Type','application/json; charset=utf-8'),('Content-Length',str(len(raw))),('Cache-Control','no-store'),
@@ -581,9 +652,9 @@ class AIConnectionRuntime:
             self._guard(handler)
             route=handler.path[len(PREFIX):]
             _need(handler.requestline.split()[1] == handler.path and not any(c in route for c in '?%#\\') and '//' not in route,'not_found',404)
-            known=route in ('session','state','profile','run','cancel') or re.fullmatch(r'runs/[a-f0-9]{64}',route)
+            known=route in ('session','state','profile','run','cancel','campaign-readback') or re.fullmatch(r'runs/[a-f0-9]{64}',route)
             _need(known,'not_found',404)
-            expected='GET' if route in ('session','state') or route.startswith('runs/') else 'POST'
+            expected='GET' if route in ('session','state','campaign-readback') or route.startswith('runs/') else 'POST'
             _need(handler.command==expected,'method_not_allowed',405)
             if expected=='GET':
                 lengths=handler.headers.get_all('Content-Length',[])
@@ -594,6 +665,13 @@ class AIConnectionRuntime:
                 headers=[('X-AI-Connection-CSRF',item['csrf'])]
                 if cookie: headers.append(('Set-Cookie',cookie))
                 self._send(handler,200,dict(schema_version=1,kind='ai_connection_session',capabilities=list(CAPABILITIES),expires_at=item['expires']),headers,4096)
+            elif route=='campaign-readback':
+                _need(self.campaign_json is not None,'unconfigured',503)
+                self._session(handler)  # Recheck expiry/closing immediately before the immutable response.
+                self._send_bytes(handler,200,self.campaign_json,[('X-AI-Campaign-Selection',self.campaign_selection)],1048576)
+            elif not self.execution_configured:
+                self._discard_unconfigured_body(handler)
+                raise AIConnectionUIError('unconfigured',503)
             elif route=='state': self._send(handler,200,self._state(sid),maximum=65536)
             elif route=='profile': self._send(handler,200,self._save(sid,self._body(handler)),maximum=65536)
             elif route=='run': self._send(handler,202,self._start(sid,self._body(handler)))
@@ -602,7 +680,7 @@ class AIConnectionRuntime:
                 request=self._body(handler); _keys(request,('run_id',)); self._send(handler,200,self._cancel(sid,request['run_id']))
         except AIConnectionUIError as error:
             if not handler._ai_started:
-                self._send(handler,error.status,{'error':{'code':error.code}},[('Allow','GET' if handler.path.endswith(('session','state')) or '/runs/' in handler.path else 'POST')] if error.status==405 else ())
+                self._send(handler,error.status,{'error':{'code':error.code}},[('Allow','GET' if handler.path.endswith(('session','state','campaign-readback')) or '/runs/' in handler.path else 'POST')] if error.status==405 else ())
         except (OSError,TimeoutError): handler.close_connection=True
         except Exception:
             if not handler._ai_started: self._send(handler,503,{'error':{'code':'ai_connection_ui_unavailable'}})

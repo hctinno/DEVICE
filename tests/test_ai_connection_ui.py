@@ -832,4 +832,237 @@ class RegisteredHTTPTests(unittest.TestCase):
             with self.subTest(field=field),self.assertRaises(ValueError):runtime._record_cells(changed,matrix)
 
 
+def campaign_inputs():
+    """Six new in-memory selections from public shape primitives; no raw campaign files."""
+    import test_vertex_campaign_readback as shape
+    packets = []
+    rows = [shape.row(i, batch_id='UI-SYN-MIX') for i in range(6)]
+    rows[1] = shape.row(1, batch_id='UI-SYN-MIX', status='failed')
+    rows[2] = shape.row(2, batch_id='UI-SYN-MIX', status='unknown')
+    rows[3] = shape.row(3, batch_id='UI-SYN-MIX', placeholder=True)
+    rows[4] = shape.row(4, batch_id='UI-SYN-MIX', status='not_run')
+    rows[5]['receipt']['usage'] = {k: (0 if i % 2 == 0 else None) for i, k in enumerate(shape.USAGE)}
+    packets.append(('mixed', shape.selection({'UI-MIX': shape.batch(rows)})))
+    packets.append(('linked-replay', shape.replay_case()))
+    manifest, artifacts = shape.replay_case(); manifest['replay_links'] = []
+    packets.append(('unlinked-replay', (manifest, artifacts)))
+    manifest, artifacts = shape.replay_case()
+    competing = json.loads(artifacts['replay']); competing['timing']['elapsed_ms'] = 251.0
+    raw = canonical(competing); artifacts['competing'] = raw
+    manifest['sources'].append(dict(source_id='competing', format='row', bytes=len(raw),
+        sha256=hashlib.sha256(raw).hexdigest(), generation_origin='mock', affected_cells=[4]))
+    link = copy.deepcopy(manifest['replay_links'][0]); link['replay_source_id'] = 'competing'
+    manifest['replay_links'].append(link)
+    packets.append(('competing-replay', (manifest, artifacts)))
+    original = shape.row(0, batch_id='UI-SYN-DUP')
+    manifest, artifacts = shape.selection({'copy-a': original, 'copy-b': copy.deepcopy(original), 'receipt': original['receipt']})
+    manifest['sources'][1]['generation_origin'] = 'actual'
+    packets.append(('valid-source-conflict', (manifest, artifacts)))
+    batches = {}
+    for number in range(32):
+        rows = [shape.row(i, batch_id='UI-SYN-BIG-'+str(number)) for i in range(6)]
+        for row in rows: row['receipt']['usage'] = dict.fromkeys(shape.USAGE, 9223372036854775807)
+        batches['UI-BIG-'+str(number)] = shape.batch(rows)
+    packets.append(('big-partials', shape.selection(batches)))
+    for name, (manifest, _) in packets: manifest['campaign_id'] = 'UI-SYN-'+name
+    return packets
+
+
+class CampaignReadbackHTTPTests(unittest.TestCase):
+    """Genuine pure reader -> real protected HTTP; static synthetic inputs only."""
+    request = AIConnectionTests.request
+    bootstrap = AIConnectionTests.bootstrap
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='campaign-ui-http-')
+        self.addCleanup(self.temp.cleanup); self.root = Path(self.temp.name).resolve()
+        self.reader = importlib.import_module('labflow.vertex_campaign_readback')
+        self.assertEqual(Path(self.reader.__file__).resolve(), Path(__file__).resolve().parents[1]/'labflow/vertex_campaign_readback.py')
+        self.reader_outputs = []
+        real = self.reader.build_vertex_connection_campaign_readback
+        def observed(manifest, artifacts):
+            value = real(manifest, artifacts); self.reader_outputs.append(canonical(value)); return value
+        spy = patch.object(self.reader, 'build_vertex_connection_campaign_readback', side_effect=observed)
+        self.reader_spy = spy.start(); self.addCleanup(spy.stop)
+        original = socket.create_connection
+        def only_loopback(address, *args, **kwargs):
+            self.assertIn(address[0], ('127.0.0.1', 'localhost')); return original(address, *args, **kwargs)
+        guard = patch('socket.create_connection', side_effect=only_loopback); guard.start(); self.addCleanup(guard.stop)
+
+    def start(self, packet, **extra):
+        before = self.reader_spy.call_count
+        import http.server
+        bind = http.server.HTTPServer.server_bind
+        def after_projection(server):
+            self.assertEqual(self.reader_spy.call_count, before+1, 'reader must run once before bind/listen')
+            return bind(server)
+        try:
+            with patch.object(http.server.HTTPServer, 'server_bind', new=after_projection):
+                server = create_server(self.root, port=0, ai_connection_campaign_readback=packet, **extra)
+        except TypeError as error:
+            self.fail('missing assigned startup campaign tuple/host API: '+str(error))
+        thread = threading.Thread(target=server.serve_forever, kwargs={'poll_interval':.01}, daemon=True); thread.start()
+        def stop():
+            address = server.server_address; server.shutdown(); server.server_close(); thread.join(5)
+            self.assertFalse(thread.is_alive()); self.assertEqual(server.socket.fileno(), -1)
+            with socket.socket() as probe: probe.bind(address)
+            runtime = server._ai_connection_runtime
+            self.assertIsNone(runtime.active); self.assertIsNone(runtime.worker)
+            self.assertFalse(runtime.request_workers); self.assertEqual(runtime.server_errors, [])
+            self.assertFalse(runtime.loop_failure)
+        self.addCleanup(stop)
+        return server
+
+    def test_genuine_six_sets_use_one_startup_projection_and_detached_cache(self):
+        for name, packet in campaign_inputs():
+            with self.subTest(case=name):
+                before = self.reader_spy.call_count
+                binding = hashlib.sha256(canonical(packet[0])).hexdigest()
+                server = self.start(packet); headers = self.bootstrap(server)
+                packet[0]['campaign_id'] = 'CALLER-MUTATED'; packet[1].clear()
+                for unused in range(2):
+                    status, meta, report = self.request(server, 'campaign-readback', headers=headers)
+                    self.assertEqual(status, 200); self.assertEqual(meta['x-ai-campaign-selection'], binding)
+                    self.assertEqual(meta['cache-control'], 'no-store')
+                    self.assertEqual(canonical(report), self.reader_outputs[-1])
+                    self.assertEqual(report['campaign_id'], 'UI-SYN-'+name)
+                    self.assertEqual(report['assurance'], dict(basis='provided_records_only', root_authorization_verified=False, underlying_artifacts_verified=False))
+                    self.assertEqual(len(report['cells']), 6); self.assertEqual(report['totals']['new_actual_calls'], 0)
+                self.assertEqual(self.reader_spy.call_count, before+1)
+                if name == 'mixed':
+                    self.assertEqual([c['status'] for c in report['cells']], ['success','failed','unknown','not_run','not_run','success'])
+                elif name == 'linked-replay':
+                    history = report['cells'][4]['history'][0]
+                    self.assertEqual((history['original_status'], history['effective_status']), ('unknown','success'))
+                    self.assertIsNone(history['original_generation_post_attempts']); self.assertEqual(history['generation_post_attempts'], 1)
+                elif name == 'unlinked-replay':
+                    history = next(h for h in report['cells'][4]['history'] if h['original_status'] is None)
+                    self.assertEqual(set(history), {'source_ids','original_status','effective_status','interpretation_source','generation_origin','replay_execution_mode'})
+                elif name == 'competing-replay': self.assertEqual(report['cells'][4]['status'], 'unknown')
+                elif name == 'valid-source-conflict':
+                    self.assertTrue(all(s['status']=='valid' for s in report['sources']))
+                    self.assertEqual(report['cells'][0]['status'], 'unknown'); self.assertEqual(report['totals']['observed_reservations'], 1)
+                elif name == 'big-partials':
+                    metric = report['totals']['usage']['total_token_count']
+                    self.assertEqual(str(metric['known_subtotal']), '1770887431076116954944')
+                    self.assertIsNone(metric['total']); self.assertEqual(metric['unknown_exchange_count'], 0)
+                text = json.dumps(report)
+                for secret in ('DO-NOT-EXPOSE-AUTH-ID','DO-NOT-EXPOSE-RESPONSE-ID','provider-response.bin','response-text.bin'):
+                    self.assertNotIn(secret, text)
+
+    def test_readback_only_route_never_enters_execution_state_auth_or_policy(self):
+        from labflow.ai_connection_ui import AIConnectionRuntime
+        with patch.object(AIConnectionRuntime, '_state', side_effect=AssertionError('execution state forbidden')), \
+             patch.object(AIConnectionRuntime, '_auth', side_effect=AssertionError('auth forbidden')), \
+             patch.object(AIConnectionRuntime, '_policy', side_effect=AssertionError('ledger policy forbidden')):
+            server = self.start(campaign_inputs()[1][1]); headers = self.bootstrap(server)
+            self.assertEqual(self.request(server, 'campaign-readback', headers=headers)[0], 200)
+            for path, method, body in [('state','GET',None),('profile','POST',{}),('run','POST',{}),('cancel','POST',{}),('runs/'+'0'*64,'GET',None)]:
+                self.assertEqual(self.request(server, path, method, body, headers)[:1], (503,))
+        self.assertFalse(list(self.root.iterdir()), 'readback host must not create ADC/profile/ledger/database files')
+
+    def test_campaign_GET_reuses_session_guard_and_method_framing(self):
+        server = self.start(campaign_inputs()[1][1]); runtime = server._ai_connection_runtime
+        status, meta, body = self.request(server, 'campaign-readback', method='HEAD')
+        self.assertEqual(status, 405); self.assertEqual(meta['allow'], 'GET'); self.assertEqual(runtime.sessions, {})
+        self.assertEqual(self.request(server, 'campaign-readback')[0], 403)
+        headers = self.bootstrap(server)
+        for wrong in (dict(headers, Origin='https://outside.invalid'), dict(headers, **{'X-AI-Connection-CSRF':'f'*64})):
+            self.assertEqual(self.request(server, 'campaign-readback', headers=wrong)[0], 403)
+        self.assertEqual(self.request(server, 'campaign-readback', body=b'x', headers=headers)[0], 400)
+        self.assertEqual(self.request(server, 'campaign-readback?path=anything', headers=headers)[0], 404)
+        self.assertEqual(self.request(server, 'campaign-readback', method='POST', headers=headers)[0], 405)
+        self.assertEqual(self.request(server, 'campaign-readback', headers=headers)[0], 200)
+
+    def test_expired_read_scope_cannot_fetch_or_rebootstrap_implicitly(self):
+        server = self.start(campaign_inputs()[1][1]); headers = self.bootstrap(server)
+        runtime = server._ai_connection_runtime
+        for session in runtime.sessions.values(): session['deadline'] = time.monotonic()-1
+        status, meta, body = self.request(server, 'campaign-readback', headers=headers)
+        self.assertEqual(status, 403); self.assertNotIn('set-cookie', meta)
+        self.assertEqual(self.reader_spy.call_count, 1)
+
+    def test_optional_none_does_not_import_reader_or_change_unconfigured_host(self):
+        try:
+            with patch('importlib.import_module', side_effect=AssertionError('no optional dependency')):
+                server = create_server(self.root, port=0, ai_connection_campaign_readback=None)
+        except TypeError as error: self.fail('missing optional campaign keyword: '+str(error))
+        server.server_close(); self.assertEqual(self.reader_spy.call_count, 0)
+
+    def test_startup_native_tuple_and_source_cap_errors_happen_before_listen(self):
+        packet = campaign_inputs()[1][1]
+        oversized = copy.deepcopy(packet); oversized[0]['sources'][0]['bytes'] = 1048577
+        for invalid in ([*packet], (packet[0],), ({}, {}), (packet[0], 'path-not-map'), oversized):
+            with self.subTest(kind=type(invalid).__name__), patch('http.server.HTTPServer.server_bind', side_effect=AssertionError('must reject before bind')):
+                with self.assertRaisesRegex(ValueError, '^vertex_campaign_readback_invalid_input$'):
+                    create_server(self.root, port=0, ai_connection_campaign_readback=invalid)
+
+    def test_mixed_host_readback_does_not_load_execution_profile(self):
+        configured = AIConnectionTests(); configured.setUp(); self.addCleanup(configured.doCleanups)
+        server = self.start(campaign_inputs()[1][1], ai_connections=configured.config)
+        headers = self.bootstrap(server)
+        self.assertEqual(self.request(server, 'campaign-readback', headers=headers)[0], 200)
+        self.assertEqual(configured.dep.calls, [])
+        status, _, state = self.request(server, 'state', headers=headers)
+        self.assertEqual(status, 200); self.assertEqual(state['profile'], default_profile())
+        before = list(configured.dep.calls)
+        self.assertEqual(self.request(server, 'campaign-readback', headers=headers)[0], 200)
+        self.assertEqual(configured.dep.calls, before)
+
+    def test_expiry_is_rechecked_after_admission_before_response_bytes(self):
+        server = self.start(campaign_inputs()[1][1]); headers = self.bootstrap(server)
+        runtime = server._ai_connection_runtime; native = runtime._session; calls = []
+        def expire_after_admission(handler, bootstrap=False):
+            value = native(handler, bootstrap); calls.append(1)
+            if len(calls) == 1: value[1]['deadline'] = time.monotonic()-1
+            return value
+        with patch.object(runtime, '_session', side_effect=expire_after_admission):
+            status, _, body = self.request(server, 'campaign-readback', headers=headers)
+        self.assertEqual((status, body), (403, {'error':{'code':'ai_connection_ui_access_denied'}}))
+        self.assertEqual(self.reader_spy.call_count, 1)
+
+    def test_post_reader_contract_fault_or_output_cap_cannot_create_listener(self):
+        genuine = self.reader_spy.side_effect
+        for fault in ('authority','native_version','output_cap'):
+            def altered(manifest, artifacts):
+                report = genuine(manifest, artifacts)
+                if fault == 'authority': report['assurance']['root_authorization_verified'] = True
+                elif fault == 'native_version': report['schema_version'] = True
+                else: report['issues'] = report['issues']*5000
+                return report
+            self.reader_spy.side_effect = altered
+            with self.subTest(fault=fault), patch('http.server.HTTPServer.server_bind', side_effect=AssertionError('no listener for contract fault')):
+                with self.assertRaisesRegex(ValueError, '^ai_connection_ui_unavailable$'):
+                    create_server(self.root, port=0, ai_connection_campaign_readback=campaign_inputs()[1][1])
+        self.reader_spy.side_effect = genuine
+
+    def test_unconfigured_POST_consumes_its_small_declared_body_before_close(self):
+        # Unread request bytes caused a Windows10053 before the503 was received.
+        import io
+        from email.message import Message
+        server = self.start(campaign_inputs()[1][1]); headers = self.bootstrap(server)
+        message = Message()
+        for key, value in {**headers,'Host':'127.0.0.1:'+str(server.server_port),'Content-Length':'2','Content-Type':'application/json'}.items():message[key] = value
+        statuses = []
+        handler = types.SimpleNamespace(server=server,headers=message,path='/api/ai-connections/profile',command='POST',
+            requestline='POST /api/ai-connections/profile HTTP/1.1',rfile=io.BytesIO(b'{}'),wfile=io.BytesIO(),
+            send_response=statuses.append,send_header=lambda *unused:None,end_headers=lambda:None)
+        self.assertTrue(server._ai_connection_runtime.dispatch(handler)); self.assertEqual(statuses, [503])
+        self.assertEqual(handler.rfile.tell(), 2)
+
+    def test_nested_caller_mutation_during_projection_cannot_change_selection_binding(self):
+        packet = campaign_inputs()[1][1]; selected = hashlib.sha256(canonical(packet[0])).hexdigest()
+        genuine = self.reader_spy.side_effect
+        def caller_mutates_after_reader(manifest, artifacts):
+            report = genuine(manifest, artifacts)
+            packet[0]['sources'][0]['source_id'] = 'CALLER-RACE'
+            packet[0]['replay_links'][0]['settings_sha256'] = '0'*64
+            return report
+        self.reader_spy.side_effect = caller_mutates_after_reader
+        server = self.start(packet); headers = self.bootstrap(server)
+        status, meta, report = self.request(server, 'campaign-readback', headers=headers)
+        self.assertEqual(status, 200); self.assertEqual(meta['x-ai-campaign-selection'], selected)
+        self.assertEqual(report['sources'][0]['source_id'], 'original')
+
+
 if __name__=='__main__': unittest.main()

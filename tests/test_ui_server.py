@@ -1658,5 +1658,40 @@ class DocxReferenceHostTests(unittest.TestCase):
             release.set(); worker.join(5)
 
 
+class CampaignStartupBoundaryTests(unittest.TestCase):
+    def test_readback_only_host_never_dispatches_workspace_intake_read(self):
+        from test_ai_connection_ui import campaign_inputs
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory(prefix='campaign-scope-') as root:
+            server = create_server(Path(root), port=0, ai_connection_campaign_readback=campaign_inputs()[1][1])
+            thread = threading.Thread(target=server.serve_forever, kwargs={'poll_interval':.01}, daemon=True); thread.start()
+            try:
+                # The DB-facing leaf is forbidden. A wrong dispatch remains a clean
+                # HTTP200 assertion failure rather than touching a real database.
+                with patch('labflow.ui_server.IntakeReadModel.snapshot', return_value={'unexpected_dispatch':True}) as forbidden:
+                    for path in ('/api/intakes','/%61pi/intakes','/api/control-sources/summary'):
+                        connection = http.client.HTTPConnection(*server.server_address, timeout=4)
+                        try:
+                            connection.request('GET', path); response = connection.getresponse(); response.read()
+                            self.assertEqual(response.status, 503)
+                        finally: connection.close()
+                    self.assertEqual(forbidden.call_count, 0)
+                self.assertFalse(list(Path(root).iterdir()))
+            finally:
+                server.shutdown(); server.server_close(); thread.join(5)
+                self.assertFalse(thread.is_alive()); self.assertEqual(server.socket.fileno(), -1)
+
+    def test_invalid_campaign_fails_before_attempting_to_bind_occupied_port(self):
+        # A late reader would hit EADDRINUSE, rather than the fixed input error.
+        with tempfile.TemporaryDirectory(prefix='campaign-startup-') as root, socket.socket() as occupied:
+            occupied.bind(('127.0.0.1', 0)); occupied.listen()
+            try:
+                with self.assertRaises(ValueError) as caught:
+                    create_server(Path(root), port=occupied.getsockname()[1], ai_connection_campaign_readback=({}, {}))
+            except TypeError as error:
+                self.fail('missing assigned startup tuple forwarding: '+str(error))
+            self.assertEqual(str(caught.exception), 'vertex_campaign_readback_invalid_input')
+
+
 if __name__ == '__main__':
     unittest.main()
