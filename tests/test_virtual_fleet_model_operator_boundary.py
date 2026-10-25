@@ -336,12 +336,18 @@ class OperatorBoundaryTests(unittest.TestCase):
         self.error("response_binding_mismatch", lambda: api.decode_operator_response(raw, reference_prompt()))
 
     def test_error_constructor_normalizes_without_echo(self):
-        for value in ("unknown-secret", None, object(), 1):
-            err = api.ModelOperatorBoundaryError(value)
-            self.assertEqual(str(err), PREFIX+"invalid_input")
-            self.assertEqual(err.args, (PREFIX+"invalid_input",))
-        for value in ("limit_exceeded", PREFIX+"limit_exceeded"):
-            self.assertEqual(api.ModelOperatorBoundaryError(value).code, PREFIX+"limit_exceeded")
+        values = ("unknown-secret", None, object(), 1,
+                  "limit_exceeded", PREFIX+"limit_exceeded")
+        for index, value in enumerate(values):
+            with self.subTest(constructor_case=index):
+                err = api.ModelOperatorBoundaryError(value)
+                wanted = "invalid_input" if index < 4 else "limit_exceeded"
+                self.assertEqual(str(err), PREFIX+wanted)
+                self.assertEqual(err.code, PREFIX+wanted)
+                self.assertEqual(err.args, (PREFIX+wanted,))
+                self.assertIsNone(err.__cause__)
+                self.assertIsNone(err.__context__)
+                self.assertTrue(err.__suppress_context__)
 
     def test_active_caller_validation_errors_clear_context(self):
         for call, code in ((lambda: self.build(None), "invalid_input"),
