@@ -260,3 +260,82 @@ test('result readonly rejects duplicate raw fields nonfinite and output bounds w
   parseResult();const complete=JSON.stringify(conductedResultPacket());assert.throws(()=>parseResult(complete.replace('"schema_version":1','"schema_version":1,"schema_version":1')));for(const raw of [' '.repeat(1048577),'{}{}','{"schema_version":1,"schema_version":1}','{"n":NaN}'])assert.throws(()=>parseResult(raw));
   const packet=conductedResultPacket();packet.result.status='invalid';packet.result.failure={code:'measurement_invalid',field:'observation.sensor'};packet.result.gaps=['RAW_INTEGER'];const raw=JSON.stringify(packet).replace('"RAW_INTEGER"','9007199254740993');assert.equal(workflowAPI.conductedPreviewValue(parseResult(raw).result.gaps[0]),'9007199254740993');
 });
+
+function gapQueueInputs(){
+  const packet=conductedResultPacket(),plan=preview(),context={intake_id:'I-1',revision:2,generation:7};
+  plan.plan_input.intake.questions=[{key:'missing_firmware',field:'firmware',message:'firmware 확인'}];
+  plan.plan_input.gaps=[{code:'follow_up_missing_field',field:'intake.firmware',provided:null,blocking:false}];
+  const intake={intake_id:'I-1',revision:2,analysis:{questions:[{key:'missing_customer',field:'customer',message:'동일한 원 문구',refs:null},{key:'conflict_market',field:'market',values:['US','EU'],message:'동일한 원 문구',refs:['ref-B','ref-A']}]}};
+  packet.result.status='incomplete';packet.result.calculation.corrected=null;packet.result.failure={code:'measurement_missing',field:'measurement_ref'};packet.result.gaps=[{code:'measurement_missing',field:'measurement_ref',provided:null,blocking:true}];
+  return {intake,options:{generation:7,intakeStale:false,plan:{context:{...context},value:plan,pending:false,parentPending:false,stale:false,errorCode:null},result:{context:{...context},value:packet,pending:false,parentPending:false,stale:false,errorCode:null}}};
+}
+function gapQueue(input=gapQueueInputs()){
+  assert.equal(typeof workflowAPI.describeIntakeGapQueue,'function','missing readonly source-separated gap queue');
+  return workflowAPI.describeIntakeGapQueue(input.intake,input.options);
+}
+const queueGroup=(view,id)=>view.groups.find(group=>group.source===id);
+const rawRows=group=>group.items.map(item=>workflowAPI.conductedPreviewValue(item.raw));
+test('gap queue preserves source order duplicate text original refs and null without merging conditions',()=>{
+  const input=gapQueueInputs(),view=gapQueue(input);
+  assert.deepEqual(view.groups.map(g=>g.source),['intake_questions','plan_questions','plan_gaps','result_gaps']);
+  assert.deepEqual(queueGroup(view,'intake_questions').items.map(x=>x.index),[0,1]);
+  assert.deepEqual(rawRows(queueGroup(view,'intake_questions')),input.intake.analysis.questions.map(workflowAPI.conductedPreviewValue));
+  assert.equal(queueGroup(view,'intake_questions').items[0].raw.refs,null);
+  assert.deepEqual(queueGroup(view,'intake_questions').items[1].raw.refs,['ref-B','ref-A']);
+  assert.deepEqual(rawRows(queueGroup(view,'plan_gaps')),input.options.plan.value.plan_input.gaps.map(workflowAPI.conductedPreviewValue));
+  assert.equal(queueGroup(view,'intake_questions').items[0].category,'facts_required');assert.equal(queueGroup(view,'plan_questions').items[0].category,'facts_required');
+  queueGroup(view,'intake_questions').items[1].raw.refs.push('mutated');assert.deepEqual(input.intake.analysis.questions[1].refs,['ref-B','ref-A']);assert.equal(view.execution_authority,false);
+});
+test('gap queue never disguises native auth registration or source settings as product fact questions',()=>{
+  const input=gapQueueInputs();input.intake.analysis.questions=[{key:'missing_native_auth',field:'native_auth',message:'등록/auth 설정 필요',refs:null}];
+  input.options.plan.value.plan_input.gaps=[{code:'missing_setting',field:'source_settings.power_dbm',provided:0,blocking:true},{code:'missing_or_invalid_basis',field:'basis.power_dbm',provided:null,blocking:true}];
+  const view=gapQueue(input);assert.equal(queueGroup(view,'intake_questions').items[0].category,'uninterpreted');
+  assert.ok(queueGroup(view,'plan_gaps').items.every(x=>x.category==='conditions_required'));
+  assert.equal(queueGroup(view,'plan_gaps').items[0].raw.provided,0);assert.equal(queueGroup(view,'plan_gaps').items[1].raw.provided,null);
+});
+test('gap queue blocks stale pending generation and binding mismatches without dropping same-intake originals',()=>{
+  for(const fault of ['stale','pending','generation','binding']){
+    const input=gapQueueInputs(),obs=input.options.plan;
+    if(fault==='stale')obs.stale=true;if(fault==='pending')obs.pending=true;if(fault==='generation')obs.context.generation=6;if(fault==='binding')obs.value.plan_input.binding.context_sha256='f'.repeat(64);
+    const view=gapQueue(input);assert.equal(queueGroup(view,'plan_questions').state,'blocked');assert.ok(queueGroup(view,'plan_questions').items.every(x=>x.category==='blocked'));assert.deepEqual(rawRows(queueGroup(view,'plan_questions')),obs.value.plan_input.intake.questions.map(workflowAPI.conductedPreviewValue));assert.equal(queueGroup(view,'result_gaps').state,'blocked');
+  }
+});
+test('gap queue blocks different current plan condition hashes and preserves provided gaps as a separate source',()=>{
+  const input=gapQueueInputs();input.options.result.value.expected_current_binding.plan_sha256='f'.repeat(64);input.options.result.value.result.binding.plan_input.binding.plan_sha256='f'.repeat(64);
+  const view=gapQueue(input),group=queueGroup(view,'result_gaps');assert.equal(group.state,'blocked');assert.ok(group.reasons.includes('plan_condition_mismatch'));assert.equal(group.items[0].category,'blocked');assert.deepEqual(rawRows(group),input.options.result.value.result.gaps.map(workflowAPI.conductedPreviewValue));assert.equal(queueGroup(view,'plan_questions').state,'current');
+});
+test('gap queue excludes other intake data and labels old revision and provided-binding conflicts blocked',()=>{
+  const other=gapQueueInputs();other.options.plan.context.intake_id='I-other';other.options.plan.value.intake_id='I-other';assert.equal(queueGroup(gapQueue(other),'plan_questions').items.length,0);
+  const old=gapQueueInputs();old.options.plan.context.revision=1;old.options.plan.value.revision=1;const oldGroup=queueGroup(gapQueue(old),'plan_questions');assert.equal(oldGroup.state,'blocked');assert.equal(oldGroup.observed_revision,1);assert.equal(oldGroup.items[0].category,'blocked');
+  const provided=gapQueueInputs();provided.options.result.value.relation={status:'blocked',reasons:['provided_revision_changed'],provided_revision:1};const group=queueGroup(gapQueue(provided),'result_gaps');assert.equal(group.state,'blocked');assert.ok(group.reasons.includes('provided_revision_changed'));assert.equal(group.items[0].category,'blocked');
+});
+test('gap queue retains malformed invalid result JSON and large original integers without current-question promotion',()=>{
+  const input=gapQueueInputs(),r=input.options.result.value.result;r.status='invalid';r.failure={code:'measurement_invalid',field:'observation.sensor'};r.gaps=[null,42,9007199254740993n,{native_auth:'unknown',refs:null},{code:'missing_intake_field',field:'intake.market',provided:null,blocking:true}];
+  const view=gapQueue(input),group=queueGroup(view,'result_gaps');assert.equal(group.state,'blocked');assert.ok(group.items.every(x=>x.category==='blocked'));assert.deepEqual(rawRows(group),r.gaps.map(workflowAPI.conductedPreviewValue));assert.equal(workflowAPI.conductedPreviewValue(group.items[2].raw),'9007199254740993');
+});
+test('gap queue distinguishes unavailable unsupported and not-run headers from an empty fact list',()=>{
+  const input=gapQueueInputs();input.intake.analysis=null;input.options.plan={value:null,errorCode:'intake_conducted_preview_v2_pdf_required'};input.options.result={value:null,errorCode:'intake_conducted_result_missing'};
+  const view=gapQueue(input);assert.equal(queueGroup(view,'intake_questions').state,'not_run');assert.equal(queueGroup(view,'plan_gaps').category,'unsupported');assert.equal(queueGroup(view,'result_gaps').category,'not_run');assert.equal(view.summary.current_facts,0);assert.equal(Object.hasOwn(view,'approved'),false);
+});
+test('gap queue marks the entire last parent observation blocked after failed refresh while preserving originals',()=>{
+  const input=gapQueueInputs();input.options.intakeStale=true;const view=gapQueue(input);assert.ok(view.groups.every(g=>g.state==='blocked'));assert.ok(view.groups.flatMap(g=>g.items).every(x=>x.category==='blocked'));assert.equal(view.summary.current_facts,0);assert.deepEqual(rawRows(queueGroup(view,'intake_questions')),input.intake.analysis.questions.map(workflowAPI.conductedPreviewValue));
+});
+
+test('gap queue separates real fact questions from extraction evidence gaps without declaring RF reentry mandatory',()=>{
+  const input=gapQueueInputs(),codes=['source_statement_unsupported','source_quote_mismatch','source_condition_unbound','source_fact_missing'];
+  const diagnostics=codes.map((code,index)=>({key:code,code,field:'source_settings.frequency_hz',message:'해석 연결 상태 '+code,provided:null,refs:['condition-'+index]}));
+  diagnostics.push({...diagnostics[2],refs:['different-condition']});
+  input.intake.analysis.questions=[{key:'missing_model',field:'model',message:'제품 모델 사실 확인',refs:null},...diagnostics];
+  input.options.result.value.result.status='invalid';input.options.result.value.result.failure={code:'evidence_context_missing',field:'input'};
+  input.options.result.value.result.gaps=codes.map(code=>({code,field:'source_settings.frequency_hz',provided:null,blocking:true}));
+  const view=gapQueue(input),questions=queueGroup(view,'intake_questions').items,result=queueGroup(view,'result_gaps').items;
+  assert.equal(questions[0].category,'facts_required');assert.ok(questions.slice(1).every(row=>row.category==='evidence_review'));
+  assert.equal(questions.length,6);assert.deepEqual(questions[3].raw.refs,['condition-2']);assert.deepEqual(questions[5].raw.refs,['different-condition']);
+  assert.ok(result.every(row=>row.category==='blocked'&&row.classification==='evidence_review'));
+  assert.ok([...questions.slice(1),...result].every(row=>!row.label.includes('필수')&&row.note.includes('원자료 부재')));
+  assert.deepEqual(rawRows(queueGroup(view,'intake_questions')),input.intake.analysis.questions.map(workflowAPI.conductedPreviewValue));
+});
+test('gap queue retains an unfamiliar fact namespace as uninterpreted instead of inventing a system failure',()=>{
+  const input=gapQueueInputs();input.options.plan.value.plan_input.gaps=[{code:'missing_intake_field',field:'intake.native_auth',provided:null,blocking:true}];
+  const row=queueGroup(gapQueue(input),'plan_gaps').items[0];assert.equal(row.category,'uninterpreted');assert.equal(row.state,'blocked');assert.equal(row.raw.field,'intake.native_auth');
+});
