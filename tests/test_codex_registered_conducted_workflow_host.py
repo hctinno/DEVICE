@@ -331,6 +331,184 @@ class WorkflowHostTests(unittest.TestCase):
         self.assertTrue((self.profile/'workflow-claimed.json').is_file())
         self.assertEqual(result['errors'][-1]['phase'],'ledger_close')
 
+    def selection_bind_workflow(self,workflow):
+        self.config['workflow_sha256']=self.put('registered-workflow.json',workflow)
+        self.put('operator-control.json',self.config)
+        self.permit['workflow_sha256']=self.config['workflow_sha256']
+        con=sqlite3.connect(self.journal)
+        try:
+            con.execute("UPDATE codex_conducted_workflow_history SET payload=? WHERE kind='permit'",(C(self.permit).decode(),))
+            con.commit()
+        finally:con.close()
+
+    def selection_v2(self):
+        workflow=json.loads((self.profile/'registered-workflow.json').read_bytes())
+        self.assertEqual(workflow['schema_version'],1)
+        workflow.update(schema_version=2,measurement_ref=None,
+            measurement_selection_policy=dict(schema_version=1,kind='unique_same_run_sensor_acquisition'))
+        self.selection_bind_workflow(workflow)
+        return workflow
+
+    def selection_explicit_v2_prepares_exact13_without_dispatch(self):
+        workflow=self.selection_v2();before=(self.journal.read_bytes(),(self.profile/'registered-workflow.json').read_bytes())
+        owned=dict(store=None);prepared=None;rejected=None
+        try:
+            try:prepared=api._prepare(self.profile,self.config,'WFH-CASE',owned)
+            except api._Failure as error:rejected=str(error)
+        finally:
+            if owned['store'] is not None:owned['store'].close()
+        self.assertIsNone(rejected,'The explicit v2 workflow is rejected by the v1-only profile contract')
+        self.assertEqual(C(prepared[0]),C(workflow));self.assertEqual(len(prepared[0]),13)
+        self.assertEqual(C(prepared[3]),C(self.plan));self.assertEqual(self.argv,[])
+        self.assertEqual(before,(self.journal.read_bytes(),(self.profile/'registered-workflow.json').read_bytes()))
+        self.assertEqual(len(self.rows()),2);self.assertFalse((self.profile/'workflow-claimed.json').exists())
+        (self.folder/'v2-preflight.json').write_bytes(C(dict(status='validated',workflow=prepared[0],runtime_started=False,model_started=False)))
+
+    def selection_genuine_v2_mock5_preserves_selection_and_artifact_chain(self):
+        workflow=self.selection_v2();before_workflow=C(workflow);calls=[];finalize=api._finalize
+        def finalizing(execution,**options):
+            calls.append(copy.deepcopy(options))
+            return finalize(execution,**options)
+        with patch.object(api,'_finalize',side_effect=finalizing):code,record=self.call()
+        self.assertEqual((code,record['status']),(0,'completed'))
+        self.assertEqual(len(calls),1)
+        self.assertEqual(calls[0]['measurement_selection_policy'],workflow['measurement_selection_policy'])
+        self.assertIsNone(calls[0]['measurement_ref'])
+        finalized=json.loads((self.evidence/'finalizer-receipt.json').read_bytes())
+        self.assertEqual(len(record),12);self.assertEqual(len(record['finalization']),5);self.assertEqual(len(finalized),12)
+        selection=finalized['measurement_selection'];self.assertEqual(len(selection),9)
+        self.assertEqual(selection['status'],'selected');self.assertEqual(selection['verification']['builder_calls'],1)
+        self.assertEqual(selection['measurement_ref'],selection['candidate']['measurement_ref'])
+        self.assertEqual(selection['request_id'],selection['candidate']['request_id'])
+        self.assertEqual(C(selection['result']),C(finalized['result']))
+        self.assertEqual(finalized['result']['status'],'recorded')
+        self.assertEqual(finalized['result']['raw_measurement']['packet']['power_dbm'],-19.5)
+        self.assertEqual(finalized['result']['calculation']['corrected']['value'],11.0)
+        self.assertEqual(finalized['result']['calculation']['conformity']['status'],'not_assessed')
+        self.assertFalse(finalized['execution_authority']);self.assertFalse(finalized['verification']['physical_verified'])
+        for row in record['finalization']['artifact']['files']:
+            raw=(self.evidence/row['path']).read_bytes();self.assertEqual((len(raw),H(raw)),(row['bytes'],row['sha256']))
+        marker=self.evidence/record['finalization']['artifact']['storage']['commit_marker']
+        self.assertEqual(H(marker.read_bytes()),record['finalization']['artifact']['storage']['sha256'])
+        self.assertEqual([kind for kind,_ in self.rows()],['baseline','permit','reserved','consumed','finished'])
+        self.assertEqual(record['history']['inherited_model_processes'],17)
+        self.assertEqual(record['history']['local_model_processes'],5)
+        self.assertEqual(len([argv for argv in self.argv if '--model' in argv]),5)
+        self.assertEqual((self.profile/'registered-workflow.json').read_bytes(),before_workflow)
+        execution=json.loads((self.evidence/'execution-receipt.json').read_bytes())
+        self.assertEqual(execution['plan_input'],self.plan)
+        self.assertEqual(execution['loop']['budget']['limits']['model_calls'],8)
+        self.assertEqual(execution['loop']['budget']['application_retries'],0)
+        self.assertEqual(record['finalization']['receipt'],dict(bytes=(self.evidence/'finalizer-receipt.json').stat().st_size,sha256=H((self.evidence/'finalizer-receipt.json').read_bytes())))
+        (self.folder/'selected-chain-observation.json').write_bytes(C(dict(mock_model_processes=5,actual_model_processes=0,selection=selection,
+            execution_pin=record['execution']['receipt'],finalizer_pin=record['finalization']['receipt'],frame_status=record['status'])))
+        original_sql=self.journal.read_bytes();original_claim=(self.profile/'workflow-claimed.json').read_bytes();dispatches=len(self.argv)
+        retry_code,retry_record=self.call()
+        self.assertEqual((retry_code,retry_record['status']),(3,'not_run'));self.assertEqual(len(self.argv),dispatches)
+        self.assertEqual(self.journal.read_bytes(),original_sql)
+        self.assertEqual((self.profile/'workflow-claimed.json').read_bytes(),original_claim)
+        self.assertEqual((self.profile/'registered-workflow.json').read_bytes(),before_workflow)
+        (self.folder/'v2-reentry-observation.json').write_bytes(C(dict(new_dispatch=0,sql_bytes_unchanged=True,claim_bytes_unchanged=True,receipt=retry_record)))
+
+    def selection_closed_shapes_fail_before_permit_consumption(self):
+        original=json.loads((self.profile/'registered-workflow.json').read_bytes())
+        v2=copy.deepcopy(original);v2.update(schema_version=2,measurement_ref=None,
+            measurement_selection_policy=dict(schema_version=1,kind='unique_same_run_sensor_acquisition'))
+        cases=[]
+        def add(label,source,**changes):
+            value=copy.deepcopy(source);value.update(changes);cases.append((label,value))
+        add('v1-policy',original,measurement_selection_policy=v2['measurement_selection_policy'])
+        add('v1-null',original,measurement_ref=None)
+        value=copy.deepcopy(v2);value.pop('measurement_selection_policy');cases.append(('v2-missing-policy',value))
+        add('v2-ref-also-given',v2,measurement_ref='event:17')
+        add('v2-null-policy',v2,measurement_selection_policy=None)
+        add('v2-extra-field',v2,approved=True)
+        for version in (True,2.0,3):add('workflow-version-'+str(version),v2,schema_version=version)
+        for index,policy in enumerate(({},True,[],dict(schema_version=True,kind='unique_same_run_sensor_acquisition'),
+                dict(schema_version=1.0,kind='unique_same_run_sensor_acquisition'),dict(schema_version=1,kind='other'),
+                dict(schema_version=1,kind='unique_same_run_sensor_acquisition',approved=True))):
+            add('policy-'+str(index),v2,measurement_selection_policy=policy)
+        outcomes=[]
+        for label,value in cases:
+            with self.subTest(shape=label):
+                self.selection_bind_workflow(value)
+                code,record=self.call();self.assertEqual((code,record['status']),(3,'not_run'))
+                self.assertEqual(record['phase'],'registration');self.assertEqual(self.argv,[])
+                self.assertEqual(len(self.rows()),2);self.assertIsNone(record['reservation'])
+                self.assertFalse((self.profile/'workflow-claimed.json').exists())
+                outcomes.append(dict(label=label,workflow=value,receipt=record))
+        (self.folder/'rejected-shape-observations.json').write_bytes(C(outcomes))
+
+    def selection_v2_preserves_original_quantity_source_context_and_hash_checks(self):
+        original=self.selection_v2();outcomes=[]
+        cases=[]
+        for label,key,value in [('quantity-bool','quantity',dict(metric='on',reference_plane='sensor_input',loss_compensation_applied=False,loss_compensation_sign=True)),
+                ('source-changed','source_settings',{**original['source_settings'],'power_dbm':12}),
+                ('context-changed','context_sha256','0'*64),('tools-changed','allowed_tools',['sensor.acquire'])]:
+            workflow=copy.deepcopy(original);workflow[key]=value;cases.append((label,workflow))
+        for label,workflow in cases:
+            self.selection_bind_workflow(workflow)
+            code,record=self.call();self.assertEqual(code,3);self.assertEqual(record['status'],'not_run')
+            self.assertEqual(self.argv,[]);self.assertEqual(len(self.rows()),2)
+            outcomes.append(dict(label=label,workflow=workflow,receipt=record))
+        self.selection_bind_workflow(original)
+        self.put('registered-workflow.json',C(original)+b' ')
+        code,record=self.call();self.assertEqual(code,3);self.assertEqual(self.argv,[]);self.assertEqual(len(self.rows()),2)
+        self.assertTrue(record['errors'][0]['code'].endswith('binding_mismatch'))
+        outcomes.append(dict(label='raw-workflow-hash',receipt=record))
+        (self.folder/'binding-observations.json').write_bytes(C(outcomes))
+
+    def selection_bad_version_preserves_original_failure_and_blocked_evidence(self):
+        self.selection_v2();self.mode='bad_version';code,record=self.call()
+        self.assertEqual((code,record['status']),(4,'failed'))
+        self.assertEqual(len(self.argv),1);self.assertEqual(self.argv[0][1:],['--version'])
+        self.assertEqual(record['history']['local_model_processes'],0)
+        execution=json.loads((self.evidence/'execution-receipt.json').read_bytes())
+        finalizer=json.loads((self.evidence/'finalizer-receipt.json').read_bytes())
+        self.assertEqual(finalizer['failure'],execution['failure'])
+        self.assertEqual(finalizer['status'],'held');self.assertEqual(len(finalizer),12)
+        self.assertEqual(finalizer['measurement_selection']['status'],'blocked')
+        self.assertIsNone(finalizer['result']);self.assertIsNone(finalizer['artifact'])
+        self.assertIsNone(finalizer['measurement_selection']['result'])
+        self.assertEqual(finalizer['measurement_selection']['verification']['builder_calls'],0)
+        self.assertTrue(any(row['code']=='conducted_execution_result_finalizer_measurement_selection_blocked' for row in finalizer['secondary_errors']))
+        self.assertEqual([kind for kind,_ in self.rows()],['baseline','permit','reserved','consumed','finished'])
+        self.assertFalse((self.evidence/'.local/conducted-result-artifacts').exists())
+        self.assertTrue((self.profile/'workflow-claimed.json').is_file())
+        (self.folder/'blocked-observation.json').write_bytes(C(dict(mock_version_processes=1,mock_model_processes=0,actual_model_processes=0,receipt=record)))
+
+    def selection_v1_keeps_original_finalizer_keywords_and_receipt(self):
+        self.mode='bad_version';finalize=api._finalize;calls=[]
+        def finalizing(execution,**options):
+            calls.append(copy.deepcopy(options));return finalize(execution,**options)
+        with patch.object(api,'_finalize',side_effect=finalizing):code,record=self.call()
+        self.assertEqual(code,4);self.assertEqual(len(calls),1)
+        self.assertEqual(calls[0]['measurement_ref'],'event:17')
+        self.assertNotIn('measurement_selection_policy',calls[0])
+        finalizer=json.loads((self.evidence/'finalizer-receipt.json').read_bytes())
+        self.assertEqual(len(finalizer),11);self.assertNotIn('measurement_selection',finalizer)
+        self.assertEqual(finalizer['status'],'stored');self.assertEqual(record['history']['local_model_processes'],0)
+        self.assertEqual(len(record),12);self.assertEqual(len(record['finalization']),5)
+        self.assertEqual([kind for kind,_ in self.rows()],['baseline','permit','reserved','consumed','finished'])
+        (self.folder/'legacy-v1-observation.json').write_bytes(C(dict(finalizer_keyword_names=list(calls[0]),mock_version_processes=1,actual_model_processes=0,receipt=record)))
+
+    def selection_v2_first_control_survives_later_owned_store_close(self):
+        self.selection_v2();control=MemoryError('FIRST_V2_G3_CONTROL');opened=api.Store.open_existing
+        counts=dict(store_close=0)
+        def lease(path):
+            store=opened(path)
+            class Proxy:
+                def close(self):counts['store_close']+=1;store.close();raise OSError('LATER_OWNED_CLOSE')
+                def __getattr__(self,key):return getattr(store,key)
+            return Proxy()
+        with patch.object(api.Store,'open_existing',side_effect=lease), \
+                patch.object(api,'prepare_registered_synthetic_context',side_effect=control):
+            with self.assertRaises(MemoryError) as got:self.call()
+        self.assertIs(got.exception,control);self.assertEqual(counts,dict(store_close=1))
+        self.assertEqual(self.argv,[]);self.assertEqual(len(self.rows()),2)
+        self.assertFalse((self.profile/'workflow-claimed.json').exists())
+        (self.folder/'first-control-observation.json').write_bytes(C(dict(first_control_same_object=True,owned_store_close_attempts=1,dispatch0=True)))
+
     def boundary_missing_cancel_never_dispatches(self):
         read=api._read
         def missing(path,cap):
@@ -441,7 +619,25 @@ class WorkflowHostTests(unittest.TestCase):
 
 
 if __name__=='__main__':
-    if '--boundary' in sys.argv:
+    if '--selection-preflight' in sys.argv:
+        sys.argv.remove('--selection-preflight');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_explicit_v2_prepares_exact13_without_dispatch'])
+    elif '--selection-genuine' in sys.argv:
+        sys.argv.remove('--selection-genuine');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_genuine_v2_mock5_preserves_selection_and_artifact_chain'])
+    elif '--selection-boundary' in sys.argv:
+        sys.argv.remove('--selection-boundary');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_explicit_v2_prepares_exact13_without_dispatch',
+            'WorkflowHostTests.selection_closed_shapes_fail_before_permit_consumption',
+            'WorkflowHostTests.selection_v2_preserves_original_quantity_source_context_and_hash_checks',
+            'WorkflowHostTests.selection_v2_first_control_survives_later_owned_store_close'])
+    elif '--selection-blocked' in sys.argv:
+        sys.argv.remove('--selection-blocked');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_bad_version_preserves_original_failure_and_blocked_evidence'])
+    elif '--selection-legacy' in sys.argv:
+        sys.argv.remove('--selection-legacy');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_v1_keeps_original_finalizer_keywords_and_receipt'])
+    elif '--boundary' in sys.argv:
         sys.argv.remove('--boundary')
         names=['WorkflowHostTests.'+name for name in WorkflowHostTests.__dict__ if name.startswith('boundary_')]
         unittest.main(defaultTest=names)

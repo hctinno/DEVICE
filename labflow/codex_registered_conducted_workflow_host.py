@@ -170,13 +170,21 @@ def _prepare(root,config,scenario,owned):
     workflow_raw=_read(root/'registered-workflow.json',65536)
     if _H(workflow_raw)!=config['workflow_sha256']:_fail('binding_mismatch')
     workflow=_json(workflow_raw)
-    _keys(workflow,'schema_version kind scenario_id context_sha256 analysis_sha256 plan_input_sha256 source_settings quantity allowed_tools measurement_ref catalog_sha256 schema_sha256')
-    if (not _integer(workflow['schema_version'],1,1) or workflow['kind']!='codex_registered_conducted_workflow'
+    fields='schema_version kind scenario_id context_sha256 analysis_sha256 plan_input_sha256 source_settings quantity allowed_tools measurement_ref catalog_sha256 schema_sha256'
+    if type(workflow) is dict and _integer(workflow.get('schema_version'),2,2):fields+=' measurement_selection_policy'
+    _keys(workflow,fields)
+    if (not _integer(workflow['schema_version'],1,2) or workflow['kind']!='codex_registered_conducted_workflow'
             or workflow['scenario_id']!=scenario):_fail('scope_mismatch')
     _same(workflow['allowed_tools'],_TOOLS)
     quantity=workflow['quantity']
     _same(quantity,dict(metric='on',reference_plane='sensor_input',loss_compensation_applied=False,loss_compensation_sign=1))
-    if type(workflow['measurement_ref']) is not str or not 0<len(workflow['measurement_ref'])<=200:_fail('binding_mismatch')
+    if workflow['schema_version']==1:
+        if type(workflow['measurement_ref']) is not str or not 0<len(workflow['measurement_ref'])<=200:_fail('binding_mismatch')
+    else:
+        if workflow['measurement_ref'] is not None:_fail('binding_mismatch')
+        policy=workflow['measurement_selection_policy'];_keys(policy,'schema_version kind')
+        if (not _integer(policy['schema_version'],1,1)
+                or policy['kind']!='unique_same_run_sensor_acquisition'):_fail('scope_mismatch')
     manifest=_load(root,'registered-intake-v1.json',262144)
     files=manifest['registered_intake']['files']
     if type(files) is not list or len(files)>192 or sum(item['bytes'] for item in files)>33554432:_fail('evidence_limit')
@@ -316,9 +324,11 @@ def _run(scenario,model):
         if actual is None or not cleanup:_fail('execution_unknown')
         record['phase']='finalizer'
         budget.reserve(8,3*1048576)
+        selection_options={}
+        if workflow['schema_version']==2:selection_options['measurement_selection_policy']=workflow['measurement_selection_policy']
         try:
             finalized=_finalize(execution,expected_execution_sha256=_H(_C(execution)),evidence_dir=evidence/'loop',measurement_ref=workflow['measurement_ref'],
-                workspace_root=evidence,artifact_name='conducted-draft')
+                workspace_root=evidence,artifact_name='conducted-draft',**selection_options)
         except ConductedExecutionResultFinalizerError as exc:
             finalized=exc.receipt
         finalizer_pin=_save(evidence/'finalizer-receipt.json',finalized,budget,2097152)
