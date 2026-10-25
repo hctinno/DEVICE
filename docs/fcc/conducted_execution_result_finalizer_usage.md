@@ -1,5 +1,21 @@
 # 실행된 conducted 결과의 finalizer
 
+## 수용 selector 수정의 의존 경계 검증 — 2026-10-26
+
+정확7226ff857995be8e3a8788f7cd13cf353a633bfb의 별도 clone에서 수용 selector e2587e374794f902285301b01df4121ef4101fa2의 published 변경3만 정상 cherry했다. 부모는69db6f2b6477160ef054ac8ac4588f58966d732e다. root 통지의 수용 통합6de5ece1cce27a13c269a189475c0a9766a4a7cd/게시64d4391236fb2aca9bf096593cd3c5fb36a5fe54/source326을 연결하며, 이 의존 cohort의 검수·통과 수와 root의 새8/15를 합산하지 않는다.
+
+사전 검증과 cherry를 별도 단계로 실행했다. 변경3/원 parent/지정 core pin·disjoint·staged0·own3 raw/native/index가 모두 PASS한 뒤에만 cherry했고 전후 own3 불변을 다시 대조했다. 사전 실패 때 후속 cherry를 실행하는 경로는 없다. frozen7226/cc72/d2e와 기존 proof를 수정하지 않는다.
+
+최종 selected core는7226 원 bytes 그대로다. 새 opt-in `--selection-dependency` 한 검사는 보존된 recorded native6파일을 복사하고, selector 첫 import 전에 public 부모 builder에 명시 ValueError 한 종류를 주입한다. 실제 selector가 같은 최초 객체를 전파하는지 관측하고, finalizer의 기존 selection_failed/held·처음 failure/빈 secondary_errors·result/artifact/selection null·writer0을 확인했다. 실제 selector1/parent fault1/추가 builder0/parent 실제 계산0이며 native5파일과 원 receipt도 그대로다. 새 RF/runtime·모델·운영profile·운영SQL은 없다.
+
+새1은0.167s PASS(failure/error/skip0)다. 원8/legacy3/20이나 부모 테스트는 반복 실행하지 않았다. defaultNone/ref·원 DTO·marker-last는 core bytes 불변으로 유지하며 정상 selected/blocked 알고리즘·수치의 추가 검증으로 이 오류 주입을 보고하지 않는다. 새 fixture root에는 원 recorded 고정 입력6만 필요하며 `DGM_FINALIZER_REPLAY_ROOT`를 지정한 뒤 다음 명령을 실행한다.
+
+```powershell
+python -B -X utf8 tests/test_conducted_execution_result_finalizer.py --selection-dependency -v
+```
+
+별도 문서 Minor로 원 suffix 열거 한 문장에 measurement_selection_invalid/measurement_selection_blocked/measurement_selection_failed 세 항목만 보완했다. 이 변경은 UTF-8/문서·diff로 확인하며 동적 검사 분모에 추가하지 않는다. root의 원 SF08 writer0 기대 불일치와 후행 공개norm 판독은 각각 보존한다. selectorblocked만 writer0이며, valid selected의 저장은 원 producer failure와 DRAFT/task 미평가를 함께 보존할 수 있다. 그 stored 상태를 업무 성공·규범 승인으로 승격하지 않는다. 이 판독 정정에 맞추어 원 기대/코드/proof를 다시 쓰지 않는다. 아래는7226의 당시 계약·검증 이력이다.
+
 2026-10-26 Asia/Seoul. 제품 함수는 이미 실행된 [D2 adapter](intake_plan_virtual_execution_usage.md)의 원 receipt와 명시 evidence_dir만 받는다. 새 실행·모델·Store·장비 호출은 없다. 독립 수용 전인 후보 의존성을 포함해 시작한 개발 후보이며, 후행 인수 상태와 이 후보의 독립 검토는 구별한다. 전체 시험소 업무·규범 승인·물리 정확도 검증은 별도다.
 
 ## 명시 측정 선택 연결
@@ -77,7 +93,7 @@ genuine read_operator_journal → [D3 순수 builder](conducted_twin_result_usag
 
 verification은 evidence_snapshot_verified, recording_mode, origin_authenticated=false, ai_model_called=null, execution_rerun=false, source_bytes_reopened=false, hardware_verified=false, physical_verified=false, full_task_verified=false, method_approval=not_assessed다. execution_authority=false. storage complete는 원 result.status recorded/incomplete/invalid와 별도이며 정식 적합 판정은 not_assessed/null이다.
 
-자체 오류 prefix는 conducted_execution_result_finalizer_이며 suffix는 input_invalid, execution_hash_mismatch, unbound_execution, binding_mismatch, artifact_descriptor_invalid, evidence_missing, artifact_incomplete, artifact_hash_mismatch, evidence_changed, unsupported_platform, evidence_json_invalid, evidence_read_failed, evidence_close_failed, builder_failed, storage_failed다. writer의 publication_uncertain도 storage_failed receipt의 원 writer code/phase/publication_attempted로 구별한다. 실패 목적지·prefix를 지우거나 자동 재시도하지 않는다.
+자체 오류 prefix는 conducted_execution_result_finalizer_이며 suffix는 input_invalid, execution_hash_mismatch, unbound_execution, binding_mismatch, artifact_descriptor_invalid, evidence_missing, artifact_incomplete, artifact_hash_mismatch, evidence_changed, unsupported_platform, evidence_json_invalid, evidence_read_failed, evidence_close_failed, measurement_selection_invalid, measurement_selection_blocked, measurement_selection_failed, builder_failed, storage_failed다. writer의 publication_uncertain도 storage_failed receipt의 원 writer code/phase/publication_attempted로 구별한다. 실패 목적지·prefix를 지우거나 자동 재시도하지 않는다.
 
 ## 구현 source map·검증 계획
 
