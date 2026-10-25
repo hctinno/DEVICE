@@ -1,8 +1,24 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `cd8e1c09acf01ee3dff62fc594c1b6665b6da7ba` / source326를 통합·검증했으며 이번 갱신의 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 기능 `ed5ae3c8dfbb0e1fd4bdb601e052fac321e939e4` / 고정 source/runtime 검증 모집단330의 각 수용 범위를 통합했으며 이번 갱신의 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. 아래의 각 과거 수용 단계/분모와 최신 후속을 구별한다. 공유 수집 폴더·사용자 원본·기존 작업/독립 기대/실패를 보존했다. 현황은 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황), 실제 후속은 [현재 대장](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)에 통합한다.
 
-## source326 측정 선택 오류 수정·현재 조건 연결
+## 고정 검증 모집단330 — 정식 준비·선택 저장·보호 GET
+
+등록921은 원 동적12 PASS와 별도 정적 I1/No를 보존했다. d2e7의 마지막 guard 한 줄만 earliest primary 기준으로 고쳤고 독립 새 역순2 PASS·총괄 기본8+역순2+legacy first-control2의12 PASS를 확인했다. 실제 operator record/profile/permit 발급·모델 호출은0이며 테스트의 일회용 OS 경계와 운영을 구별한다.
+
+보호 GET efc7는 독립12 PASS(HTTP9/leaf3/서버2/prep0)·총괄14+관련2 PASS 뒤 qualified 수용했다. conflict/stale는 독립 typed 범위다. 같은 첫 가상 업무의 원 Store/manifest에서 HTTP2001 current binding6 matched/후행 unchanged·원 JSON/DRAFT3을 확인했다. root 직접 observer의 첫 import 준비 오류/API0 및 추가 foreign503의 오류 봉투 mapping을 문자열로 단언한 오류/원 exit1·503 raw 미보존은 남겼다. 원200 body만 재판독했고 새 GET 재호출0·다른 body 검증으로 소급하지 않는다. own server/thread 종료와 rebind·원 저장/소스 bytes/native 불변은 관측했다. GET외405 문구의 M1은167 doc1에서 기등록 메서드405/기본 미구현501/reference 기존400으로 명료화했으며 code/TRACE실행0이다.
+
+selected finalizer7226는 수용 selector e258의 새 dependency cohort에서 qualified C0I0M1를 받았다. 독립 원12는11일치·SF08의 넓은 root writer0 지시 정정 차이1을 원 봉인 그대로 남겼다. 공개 규범은 selector blocked→writer0이며, valid selected 저장은 최초 producer failure와 DRAFT를 같이 보존할 수 있다. 이를 task/측정 적합성 성공으로 올리지 않는다. 정정은 첫 target0 시점에 별도 append했고 코드/기대를 맞춰 고치지 않았다. suffix3 문구 M1은15b에서 보완했고 core는7226과 동일하다. 총괄 mixed12는11 PASS·dependency 첫 import 전제 실패1이다. 이미 앞 genuine 검사에서 selector가 import되어 해당 검사가 target 전에 멈췄고, 의도한 그1만 별도 Python에서 PASS했다. 통과11 반복0·원12 전체 PASS 소급0이다. 원 replay14는 byte manifest 일치, 원 mixed 코호트의 native 전후는 미저장으로 미관측, 새 isolated1과 source는 실제 native 전후 대조로 구별한다.
+
+CLI1cf는 독립 원12=11일치/준비·관측 미완료CD02 1, Python child4의 exit0/2/3/130과 KI주입/OS신호 미검증을 qualified로 인수했다. 총괄 원17은16 PASS·자식관측 메서드1의6오류다. 자식이 저장소 밖 private guarded_io를 import해 audit가 생기지 않았으며 원 child returncode/raw를 audit 파싱 전 저장하지 않아 세부 종료는 미기록이다. 제품 직접 경계·genuine API 성공과 검사 이식성 공백을 구별하고 원본을 보존한다. 개발3에 정확280 별도 test/usage2 수정만 배정했다. root의 한때18/17PASS 보고 오기는 실제 Ran17/16PASS로 즉시 정정했으며 원 로그/영수증은 바꾸지 않았다. 전체 root 회귀 통과 주장은 하지 않는다.
+
+고정 source/runtime 모집단은 labflow Python·tests 최상위 Python·frontend JS/MJS/CJS/CSS/HTML과 schema SQL/장비 DB/명시 profile·control JSON을 포함한다. 모든 tracked code 확장자 수와 다르다. a5ed 당시 고정328/전체 tracked py-js-mjs-cjs326, 교집합308/고정만20/전체코드만18을 실제 대조했고 306 보고 오기는 정정했다. 과거 hash-only 목록의 native 미관측 정정도 유지한다. 이번 source/runtime bytes·관측 native5 전후 보존은 별도 목록으로 실제 검사했다.
+
+P01 B081~B084 새48PDF/202148578B·P01표기3450쪽(root독립null)을 각각 private raw/제한 metadata ACK했고 전달전 baseline76 대 실제 receiver92/receipt16의 readonly 대조를 닫았다. collector188/corpus153/보존523·known37595부분합/unknown1/전체쪽수null과 대상18/690을 구별한다. 원본문/기관·발행일/모델·권리·규범·훈련 승인0이며 새 로컬 준비 미전달 단위는 가산하지 않는다. CMG12미해소/N02 STOP/수집1~8은 유지한다.
+
+다음 실제 코드는 개발1 startupaae 검수 뒤 readback 입력 저장, 개발2 정식 host의 명시 선택 정책 전달(등록은 별도), 개발3 CLI 자식관측 이식성 수정/bridge499·optional280 검수, 개발4 같은 saved3의 저장 검수 화면이다. 기존 시연 명령/원 UI·수학·실제 AI17·Vertex 소진 예산은 유지한다. 실제 AI 전체 과업·규범 자동 판단·실측 보정/현장·물리 자동화 미완료이며 새 사용자 준비0이다.
+
+## source326 당시 측정 선택 오류 수정·현재 조건 연결
 
 유일한 sensor.acquire의 첫 구조적 완료를 고르는 cc72는 원 독립12/12 뒤 추가 반증1에서 Important1/No가 확인됐다. builder 내부의 예상 밖 일반 예외를 input_invalid로 바꾸던 구간만 e258에서 고쳤다. 새 독립8/8은 ordinary7종의 최초 동일 객체 전파와 잘못된 반환 DTO 보류1을 확인했고 원12·원 No/기대·추가 반증은 바꾸거나 재실행하지 않았다. control/native 입력 검증은 변경 전후 정적 범위로 구별한다. 총괄은 cc72→e258를 정상 cherry하고 새 root15(원 기능12+수정3)를 검증했다. 실제 AI/새 RF 실행·장비 호출은0이다.
 
