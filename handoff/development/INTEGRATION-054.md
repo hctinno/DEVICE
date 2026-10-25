@@ -1,0 +1,15 @@
+# 통합054 — 가상 명령1회 실행과 제공 기록 조회 공통 계약
+
+2026-10-25, Asia/Seoul. 개발2의 [가상 명령 실행 설계](../../docs/superpowers/specs/2026-10-25-codex-virtual-one-action-design.md)·[계획](../../docs/superpowers/plans/2026-10-25-codex-virtual-one-action.md), 개발3의 [기록 조회 설계](../../docs/superpowers/specs/2026-10-25-vertex-campaign-readback-design.md)·[계획](../../docs/superpowers/plans/2026-10-25-vertex-campaign-readback.md) 정확4를 게시한다. 두 private 계약과 공개 투영이 독립 정적 수용됐고 최종 공개 v2는 각각 Yes/C0I0M0다. 이번은 문서 변경이며 기능 `b9344609edc8935a41b5c8022189195e43338b8b`의 source280은 불변이다. 실제 첫 가상판단의 새 root25 검증은 [통합052](INTEGRATION-052.md)의 결과로 구별한다.
+
+개발2는 fresh full64의 같은 독점 in-process lifetime에서 FleetHarness 공개 정책 경로에 prompt·단일 concrete producer·genuine strict decoder·host gate를 직접 결합한다. native bool인 가상 위임이 거짓이면 factory와 producer 전에 거절한다. 하위 한도는 decisions1/logical_requests1/ticks1/wall_seconds30/transport_retries0이며 기존 outer8/60에 호출 권한을 더하지 않는다. 정책 진입 때 이미 소모된 remaining.decisions0과 선언1을 구별한다. 허용된 proposal을 가상 명령 최대1회에 적용한 뒤 stop과 최대1 cleanup step으로 종료하며 종료된 first-decision capture나 private helper를 재개하지 않는다. 새 API/error 정확2, 신규 core/test/usage3과 host receipt12만 추가한다. 원 schema·wire·producer receipt와 legacy report는 유지한다. 협조 취소·원격 취소 false·output off null, task 평가·closed_loop·score 미평가 경계를 실제 모델이나 실물 운전 성공으로 승격하지 않는다.
+
+개발3은 제공된 manifest와 불변 bytes map만 받는 순수 reader 한 개와 신규 core/test/usage3이다. 기존 batch8·row15·receipt18을 외부 manifest7/source6/link11로 명시 연결하고 report9/cell7/중첩 assurance3을 반환한다. 원 unknown과 같은 시도의 supplied row15 replay 해석을 각각 보존하며 원자료를 바꾸지 않는다. 출처·예약·exchange·입력·설정 충돌과 누락은 unknown, 선택되지 않은 셀은 not_selected다. 모든 사본에서 같은 시도를 중복 제거하고 누적 예산 합산·환불·reset을 하지 않는다. known usage 부분합과 누락 null을 구별하며 비용은 미확인으로 남긴다. supplied 관계는 root 권한 증명이나 원 artifact 재검증이 아니므로 basis=provided_records_only/root_authorization_verified=false/underlying_artifacts_verified=false를 유지한다. 별도 trust framework·실행·원장 정정·재호출·실자료 자동 탐색을 추가하지 않는다.
+
+개발2 공개 v1의 없는 apis 참조 M1은 계획 문장 한 개만 고쳐 해소했다. 개발3 공개 v1의 PUBLIC-I1은 private 계약에서 빠진 manifest/report 키·enum·native 조건을 공개 표에 복원해 해소했다. 앞선 private v1 No와 private v2 Yes, 공개 v1 No는 서로 다른 검수 기록으로 보존한다. 정적 shape/hash 예시는 실제 runner·decoder·API 기능 증거가 아니다. 최종화 관측기 오류도 원본 보존 후 별도 정정했으며 제품 검사나 통과 분모로 합산하지 않는다.
+
+이 게시 뒤 각 담당에게 정확 base·전용 branch·독립 clone·신규3 소유를 고정하고 새 source-blind 기대 봉인 뒤 별도 CORE-GO를 전달한다. RED·합성 검증·독립 리뷰/수정·총괄 회귀·정상 커밋/푸시/원격 대조를 이어간다. 개발1은 [통합053](INTEGRATION-053.md)의43c4 기준 host 구현을 준비하며 실제 issuer는 OPEN이다. 개발4는0268 기준 기존6의 등록7 화면을 구현 중이다. 새 문서 게시를 이유로 이 두 담당의 base·미커밋·소유를 merge/rebase/reset하지 않는다.
+
+P01 B044는 새12PDF/35742157바이트·P01 표기819쪽과 JSON6/index를 root 소유 private에 exact19로 보존해 명시 byte/content-scope ACK를 보냈다. 기관·발행일·모델·보고서·rights 확인 대기이며 적격·독립 사례 증분0이다. 본문/native/OCR/render/decrypt/페이지 재계수·인용 재추출·모델 송신0이고 기술적 암호 상태는 권리 허가가 아니다. P01 후행 receiver 대조 전에는 [통합053](INTEGRATION-053.md)의147/147·112/112·보존37과 적격18/690에 선가산하지 않는다. 수집은 P01 한 창구와 기존 역할로 계속한다.
+
+새 실제 CLI·모델·인증·운영 예산 접근0이다. 기존 Codex16·Vertex6의 실제 연결4성공/2실패, 소진된 동일6회/3072 예약, 무료 체험 크레딧 전용·비용 unknown/null·업무품질 not_assessed/score null을 유지한다. 추가 승인·예산 reset·환불·결제/IAM 변경·실장비/출력/이동·현장망·Office/COM·포털 제출0이다. 공유/사용자 원본 읽기 전용·Un-licensed 우선·원 실패를 보존하며 사용자 추가 준비0이다. 실물·현행 규범·전수·전체 무인시험소 검증은 미완료다.
