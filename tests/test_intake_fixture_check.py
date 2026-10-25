@@ -175,5 +175,259 @@ class ConductedFailureScenarioTests(unittest.TestCase):
             self.assertFalse(output.exists())
 
 
+DEMO_STARTUP_OBSERVATIONS=[]
+
+
+class ConductedArtifactStartupTests(unittest.TestCase):
+    """New native startup provenance examples, not a result-validity oracle."""
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(prefix='demo-startup-');self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name)
+
+    def api(self):
+        from labflow import intake_fixture_check as module
+        self.assertTrue(hasattr(module,'_conducted_artifact_startup'),'assigned artifact startup helper is absent')
+        return module._conducted_artifact_startup
+
+    def values(self,status='recorded'):
+        from hashlib import sha256
+        from labflow.store import canonical
+        from labflow.virtual_fleet.conducted_result_artifact import _verification
+        plan=dict(status='ready_for_simulation',binding=dict(intake_id='I-original-current',revision=3,context_sha256='a'*64))
+        method=dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output')
+        result=dict(schema_version=1,kind='conducted_twin_result',status=status,
+            binding=dict(run_id='authored-artifact-run',runtime_instance_id='authored-runtime',
+                plan_input=dict(binding=dict(intake_id='I-do-not-copy',revision=97,context_sha256='d'*64))),
+            raw_measurement=None,calculation=dict(corrected=None),gaps=[dict(code='authored-gap')])
+        prefix='.local/conducted-result-artifacts/authored-artifact/'
+        artifact=dict(schema_version=1,kind='conducted_result_artifact',artifact_name='authored-artifact',
+            run_id='authored-artifact-run',runtime_instance_id='authored-runtime',result_status=status,
+            storage=dict(status='complete',commit_marker=prefix+'manifest.json',bytes=1000,sha256='b'*64),
+            files=[dict(path=prefix+'result.json',sha256=sha256((canonical(result)+'\n').encode()).hexdigest(),bytes=100),
+                dict(path=prefix+'draft.md',sha256='c'*64,bytes=100)],verification=_verification('full_bound'),execution_authority=False)
+        finalized=dict(status='stored',result=result,artifact=artifact,failure=None)
+        return plan,method,finalized
+
+    def test_native10_uses_original_current_plan_and_actual_finalizer_pins_not_file_LF_hash(self):
+        from copy import deepcopy
+        from hashlib import sha256
+        from labflow.store import canonical
+        api=self.api();plan,method,finalized=self.values();before=deepcopy((plan,method,finalized))
+        selected=api(plan,method,finalized,self.root)
+        self.assertEqual(set(selected),set('intake_id method expected_revision expected_context_sha256 artifact_workspace_root artifact_name expected_manifest_sha256 expected_result_sha256 run_id runtime_instance_id'.split()))
+        self.assertEqual(selected,dict(intake_id='I-original-current',method=method,expected_revision=3,expected_context_sha256='a'*64,
+            artifact_workspace_root=str(self.root),artifact_name='authored-artifact',expected_manifest_sha256='b'*64,
+            expected_result_sha256=sha256(canonical(finalized['result']).encode()).hexdigest(),
+            run_id='authored-artifact-run',runtime_instance_id='authored-runtime'))
+        self.assertNotEqual(selected['expected_result_sha256'],finalized['artifact']['files'][0]['sha256'])
+        self.assertEqual((plan,method,finalized),before);self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_stored_invalid_and_incomplete_remain_readable_but_held_blocked_and_null_have_no_selection(self):
+        api=self.api()
+        for status in ('recorded','incomplete','invalid'):
+            with self.subTest(status=status):
+                plan,method,finalized=self.values(status);selected=api(plan,method,finalized,self.root)
+                self.assertIsNotNone(selected);self.assertEqual(finalized['result']['status'],status)
+                self.assertIs(finalized['artifact']['execution_authority'],False)
+        for field in ('held','blocked','no_result','no_artifact','incomplete_storage'):
+            with self.subTest(field=field):
+                plan,method,finalized=self.values()
+                if field=='held':finalized['status']='held'
+                elif field=='blocked':plan['status']='blocked'
+                elif field=='no_result':finalized['result']=None
+                elif field=='no_artifact':finalized['artifact']=None
+                else:finalized['artifact']['storage']['status']='incomplete'
+                self.assertIsNone(api(plan,method,finalized,self.root))
+
+    def test_complete_metadata_contradictions_and_nonlocal_roots_fail_with_one_fixed_code(self):
+        api=self.api()
+        for field in ('result_status','version','authority','verification','manifest_sha','marker','manifest_bytes','revision','method_limit'):
+            with self.subTest(field=field):
+                plan,method,finalized=self.values();artifact=finalized['artifact']
+                if field=='result_status':artifact['result_status']='invalid'
+                elif field=='version':artifact['schema_version']=True
+                elif field=='authority':artifact['execution_authority']=0
+                elif field=='verification':artifact['verification']['hardware_verified']=0
+                elif field=='manifest_sha':artifact['storage']['sha256']='PRIVATE-NOT-A-HASH'
+                elif field=='marker':artifact['storage']['commit_marker']='PRIVATE-OTHER/manifest.json'
+                elif field=='manifest_bytes':artifact['storage']['bytes']=0
+                elif field=='revision':plan['binding']['revision']=True
+                else:method['oversize']='x'*65537
+                with self.assertRaises(ValueError) as caught:api(plan,method,finalized,self.root)
+                self.assertEqual(str(caught.exception),'conducted_workflow_artifact_startup_invalid')
+                self.assertIsNone(caught.exception.__context__)
+        for root in ('relative/private',r'\\private\share',object()):
+            with self.subTest(root_type=type(root).__name__):
+                plan,method,finalized=self.values()
+                with self.assertRaises(ValueError) as caught:api(plan,method,finalized,root)
+                self.assertEqual(str(caught.exception),'conducted_workflow_artifact_startup_invalid')
+
+    def test_startup_control_identity_is_not_normalized_or_used_for_approval(self):
+        api=self.api()
+        class Stop(BaseException):pass
+        for error in (KeyboardInterrupt('original'),MemoryError('original'),SystemExit(61),GeneratorExit('original'),Stop('original')):
+            with self.subTest(error=type(error).__name__):
+                plan,method,finalized=self.values()
+                with patch('labflow.ui_server._conducted_artifact_readback_selection',side_effect=error):
+                    with self.assertRaises(type(error)) as caught:api(plan,method,finalized,self.root)
+                self.assertIs(caught.exception,error)
+
+    def test_first_flow_control_survives_a_later_failure_evidence_control(self):
+        from labflow import intake_fixture_check as module
+        first=KeyboardInterrupt('first authored flow control');late=SystemExit('late evidence publication')
+        write=module._conducted_json
+        def evidence(output,relative,value):
+            if relative=='failure.json':raise late
+            return write(output,relative,value)
+        with patch.object(module,'_conducted_mock_compiler',return_value=self.root/'not-executed-compiler'),\
+             patch('labflow.intake_jobs.claim_job',side_effect=first),patch.object(module,'_conducted_json',side_effect=evidence):
+            with self.assertRaises(KeyboardInterrupt) as caught:
+                module.run_conducted_flow(self.root/'first-control',measurement_ref='event:17',mock_model='gpt-6.1-sol')
+        self.assertIs(caught.exception,first)
+
+    def test_initial_blocked_plan_has_no_artifact_selection_and_never_compiles_or_executes(self):
+        from labflow import intake_fixture_check as module
+        with patch.object(module,'_compile_conducted_mock',side_effect=AssertionError('blocked compiled')) as compiler,\
+             patch.object(module,'_conducted_artifact_startup',side_effect=AssertionError('blocked assembled artifact')) as helper:
+            result=module.run_conducted_flow(self.root/'blocked',measurement_ref='event:17',mock_model='gpt-6.1-sol',scenario='missing-duty-unit')
+        self.assertEqual(result['summary']['status'],'blocked');self.assertEqual(result['summary']['runtime_calls'],0)
+        self.assertNotIn('conducted_artifact_readback_inputs',result['server_options'])
+        compiler.assert_not_called();helper.assert_not_called()
+        self.assertFalse((result['output']/'x').exists())
+        original=json.loads((result['output']/'facts-plan-original.json').read_bytes())
+        self.assertIsNone(original['plan_input']['plan']['source_settings']['duty_cycle'])
+
+    def test_cli_forwards_the_original_three_options_and_retains_exit_and_close_behavior(self):
+        import io
+        from contextlib import redirect_stdout
+        from labflow import intake_fixture_check as module
+        plan,method,finalized=self.values('invalid');selection=self.api()(plan,method,finalized,self.root)
+        preview,snapshot={'original':'preview'},{'original':'invalid-result'}
+        options=dict(conducted_plan_preview_inputs=preview,conducted_result_snapshot=snapshot,conducted_artifact_readback_inputs=selection)
+        flow=dict(summary=dict(fixture_acceptance='fail',intake_id='I-original-current'),workspace=self.root/'s',server_options=options)
+        output=io.StringIO()
+        with patch.object(module,'run_conducted_flow',return_value=flow),patch('labflow.ui_server.create_server') as create,redirect_stdout(output):
+            server=create.return_value.__enter__.return_value;server.server_port=8123;server.serve_forever.side_effect=KeyboardInterrupt
+            code=module.main(['--conducted-workflow','--document-kind','pdf','--measurement-ref','event:17','--mock-model','gpt-6.1-sol','--port','0'])
+        self.assertEqual(code,1);create.assert_called_once_with(flow['workspace'],port=0,**options)
+        create.return_value.__exit__.assert_called_once_with(None,None,None)
+        self.assertEqual(json.loads(output.getvalue().splitlines()[0]),flow['summary'])
+        self.assertIn('http://127.0.0.1:8123/#I-original-current',output.getvalue())
+        self.assertEqual(snapshot,{'original':'invalid-result'})
+
+
+class ConductedArtifactStartupGenuineTests(unittest.TestCase):
+    """Two new authored native MOCK flows; no installed CLI or real model."""
+    maxDiff=None
+
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(prefix='cas-');self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name)
+
+    def files(self,root):
+        import os
+        from hashlib import sha256
+        observed={}
+        for path in root.rglob('*'):
+            if path.is_file():
+                with path.open('rb') as stream:raw=stream.read();info=os.fstat(stream.fileno())
+                observed[path.relative_to(root).as_posix()]=(sha256(raw).hexdigest(),info.st_size,info.st_ino,info.st_nlink,
+                    info.st_mtime_ns,info.st_ctime_ns,getattr(info,'st_file_attributes',None))
+        return observed
+
+    def preserve(self,root,event):
+        files={}
+        for path in root.rglob('*'):
+            if path.is_file():
+                relative=path.relative_to(root)
+                if relative.parts[0]=='s':continue  # Store bytes are observed, not exported as a second DB.
+                files[relative.as_posix()]=path.read_bytes()
+        total=sum(len(raw) for raw in files.values())
+        existing=sum(len(raw) for item in DEMO_STARTUP_OBSERVATIONS for raw in item.get('files',{}).values())
+        if len(files)>400 or total+existing>24*1024*1024:raise AssertionError('authored original capture limit')
+        event['files']=files;DEMO_STARTUP_OBSERVATIONS.append(event)
+
+    def exercise(self,scenario,expected_status,expected_acceptance):
+        import http.client
+        import importlib
+        import threading
+        from hashlib import sha256
+        from labflow import intake_fixture_check as module
+        from labflow.store import canonical
+        from labflow.ui_server import create_server
+        finalizer=importlib.import_module('labflow.conducted_execution_result_finalizer')
+        original_finalize=finalizer.finalize_conducted_execution_result;calls=[]
+        def finalize(*args,**kwargs):
+            value=original_finalize(*args,**kwargs);calls.append((kwargs,value));return value
+        helper=module._conducted_artifact_startup;output=self.root/'flow';event=dict(case=scenario,kind='new authored native MOCK flow')
+        first=None
+        try:
+            with patch.object(finalizer,'finalize_conducted_execution_result',side_effect=finalize),\
+                 patch.object(module,'_conducted_artifact_startup',wraps=helper) as assembled:
+                flow=module.run_conducted_flow(output,measurement_ref='event:17',mock_model='gpt-6.1-sol',scenario=scenario)
+            self.assertEqual(len(calls),1);self.assertEqual(assembled.call_count,1)
+            options=flow['server_options'];selected=options['conducted_artifact_readback_inputs']
+            original=calls[0][1];root=calls[0][0]['workspace_root']
+            self.assertIs(assembled.call_args.args[3],root);self.assertEqual(root,flow['output'])
+            self.assertEqual(selected['artifact_workspace_root'],str(root));self.assertTrue(Path(selected['artifact_workspace_root']).is_absolute())
+            plan=json.loads((output/'facts-plan-original.json').read_bytes())['plan_input']
+            self.assertEqual(selected['intake_id'],plan['binding']['intake_id'])
+            self.assertEqual(selected['expected_revision'],plan['binding']['revision'])
+            self.assertEqual(selected['expected_context_sha256'],plan['binding']['context_sha256'])
+            self.assertEqual(selected['method'],options['conducted_plan_preview_inputs']['method'])
+            self.assertEqual(selected['artifact_name'],original['artifact']['artifact_name'])
+            self.assertEqual(selected['expected_manifest_sha256'],original['artifact']['storage']['sha256'])
+            self.assertEqual(selected['expected_result_sha256'],sha256(canonical(original['result']).encode()).hexdigest())
+            self.assertEqual((selected['run_id'],selected['runtime_instance_id']),(original['artifact']['run_id'],original['artifact']['runtime_instance_id']))
+            row=next(row for row in original['artifact']['files'] if row['path'].endswith('/result.json'))
+            raw_result=(output/row['path']).read_bytes();self.assertEqual(sha256(raw_result).hexdigest(),row['sha256'])
+            self.assertNotEqual(selected['expected_result_sha256'],row['sha256'])
+            self.assertEqual(sha256(raw_result[:-1]).hexdigest(),selected['expected_result_sha256']);self.assertTrue(raw_result.endswith(b'\n'))
+            self.assertEqual(json.loads((output/'server-startup-original.json').read_bytes()),options)
+            self.assertEqual(json.loads((output/'finalizer-original.json').read_bytes()),original)
+            self.assertEqual(flow['summary']['result_status'],expected_status);self.assertEqual(flow['summary']['fixture_acceptance'],expected_acceptance)
+            self.assertEqual(flow['summary']['storage_status'],'complete');self.assertFalse(flow['summary']['ai_model_called'])
+            before=self.files(output);server=None;thread=None
+            with patch('subprocess.Popen',side_effect=AssertionError('GET reran a child')),\
+                 patch('labflow.store.Store.__init__',side_effect=AssertionError('GET initialized Store')):
+                try:
+                    server=create_server(flow['workspace'],port=0,**options)
+                    thread=threading.Thread(target=server.serve_forever,kwargs={'poll_interval':.01},daemon=True);thread.start()
+                    address=server.server_address;connection=http.client.HTTPConnection(*address,timeout=5)
+                    try:
+                        connection.request('GET','/api/intakes/'+selected['intake_id']+'/conducted-artifact-readback',
+                            headers={'Origin':'http://127.0.0.1:'+str(address[1]),'Sec-Fetch-Site':'same-origin'})
+                        response=connection.getresponse();raw=response.read(12582914);value=json.loads(raw)
+                        event.update(http_status=response.status,http_headers=dict(response.getheaders()),http_body=raw)
+                    finally:connection.close()
+                    self.assertEqual(response.status,200);self.assertEqual(raw,canonical(value).encode()+b'\n')
+                    self.assertEqual(value['status'],'matched');self.assertEqual(value['relation']['recheck']['status'],'unchanged')
+                    self.assertEqual(value['artifact']['result'],original['result']);self.assertEqual(value['artifact']['result']['status'],expected_status)
+                    self.assertEqual(value['artifact']['storage']['status'],'manifest_payloads_verified')
+                    self.assertIs(value['verification']['permanent_current_approval'],False);self.assertIs(value['verification']['execution_authority'],False)
+                    if expected_status=='invalid':self.assertIsNone(value['artifact']['result']['calculation']['corrected'])
+                finally:
+                    if server is not None:
+                        server.shutdown();server.server_close()
+                        if thread is not None:thread.join(5);self.assertFalse(thread.is_alive())
+                        self.assertEqual(server.socket.fileno(),-1)
+            self.assertEqual(self.files(output),before)
+            event.update(summary=flow['summary'],selection=selected,same_files_after_GET=True,known_server_closed=True)
+        except BaseException as error:first=error
+        finally:
+            if output.exists():
+                try:self.preserve(output,event)
+                except BaseException as error:
+                    DEMO_STARTUP_OBSERVATIONS.append(dict(case=scenario,capture_error=type(error).__name__))
+                    if first is None:first=error
+        if first is not None:raise first
+
+    def test_new_normal_native_mock_flow_hands_actual_finalizer_artifact_to_genuine_GET(self):
+        self.exercise('normal','recorded','pass')
+
+    def test_new_measurement_invalid_native_mock_artifact_is_readable_without_promoting_fixture(self):
+        self.exercise('measurement-invalid','invalid','fail')
+
+
 if __name__ == '__main__':
     unittest.main()
