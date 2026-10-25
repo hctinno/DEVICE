@@ -31,7 +31,7 @@
 - [ ] **Step 2:** 확정 signature/type·검사 순서·cap·새 evidence_dir/Path/no-reparse·지원 version의 사전 거절 검사를 먼저 작성한다. preflight 잘못된 입력의 process/evidence 생성0을 구분한다. literal schema bytes는 caller 입력이며 producer가 정답 schema를 새로 만들지 않는다.
 - [ ] **Step 3:** version metadata1 뒤 model attempt1의 정확 argv/stdin/cwd와 원 artifact를 구현한다. version 실패 뒤 model0, model 실패 뒤 재시도/fallback0이다. metadata와 모델 process를 같은 호출 수로 섞지 않는다.
 - [ ] **Step 4:** stdout/stderr 동시 bounded 수집, stdin writer, last-message 감시·prefix hash, line/event/native 한도를 검증한다. writer/reader lock 아래 IO/join/close를 하지 않고 deadline/stop을 따라 유계 회수한다. last-message collector cap과 disk hard quota는 구별한다.
-- [ ] **Step 5:** spec의 required/optional key와 ID/text/usage/lifecycle을 그대로 검증한다. atomic completed item은 허용하되 unknown·도구·중복/미결·EOF 손상은 거절한다. exit0만으로 성공시키지 않는다. JSONL에서 추출한 text bytes와 last-message bytes의 정확 일치를 확인한다.
+- [ ] **Step 5:** spec의 required/optional key와 ID/text/usage/lifecycle을 그대로 검증한다. 실제 지원 alpha에서 관측한 cache_write_input_tokens를 optional 비음수 int64로 수용해 receipt usage exact5에 원값 또는 부재 null로 전달한다. 그 밖의 unknown·도구·중복/미결·EOF 손상은 거절하고 atomic completed item은 허용한다. exit0만으로 성공시키지 않는다. JSONL에서 추출한 text bytes와 last-message bytes의 정확 일치를 확인한다.
 - [ ] **Step 6:** exact18 receipt·exact9 artifact descriptor·exchange_ref/receipt.json 수명을 구현한다. raw/input bytes를 바꾸지 않고 public receipt와 private 경로/raw를 분리한다. tuple2와 정제된 fixed exception 외 반환 형상은 만들지 않는다.
 - [ ] **Step 7:** 첫 오류와 secondary cleanup 순서, partial receipt·저장 실패를 검증한다. KI/SE/GE/MemoryError 동일 객체 전파, timeout/부분 출력/reader lock/종료 실패 뒤 새 요청·decoder/eval0을 확인한다.
 - [ ] **Step 8:** usage에 아래 직접 소비만 작성하고 관련 집중 회귀·정적·문서 검사를 수행한다. 예제의 실제 실행은 별도 위임 뒤에만 한다. test double/로컬 자식의 자원 검증을 native alpha의 실제 모델·통제 효과로 표시하지 않는다.

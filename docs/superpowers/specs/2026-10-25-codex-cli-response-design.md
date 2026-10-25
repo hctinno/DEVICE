@@ -72,7 +72,9 @@ thread.started 한 번 → turn.started 한 번 → item lifecycle → turn.comp
 
 허용 item subtype 이외는 모두 거절한다. command_execution/file_change/mcp_tool_call/web_search/todo_list/plan_update/refusal은 비허용 예시이며 unknown subtype도 같은 거절이다. unknown을 안전한 message로 추정하지 않는다. protocol refusal를 수용하지 않지만 자연어 거절의 완전 탐지를 keyword로 주장하지 않는다. 그런 답의 형식·의미는 뒤의 기존 decoder/독립 의미 검토가 담당한다.
 
-usage가 있으면 native object이고 optional key는 input_tokens/cached_input_tokens/output_tokens/reasoning_output_tokens뿐이다. 각 제공 값은 plain int 0..signed64max다. 빠진 key는 receipt에서 null, usage 자체 부재는 null이다. cached와 input이 둘 다 있으면 cached<=input이어야 한다. 다른 key/type은 stream_invalid다. usage가 0이거나 없다고 비용을 0으로 표시하지 않는다.
+usage가 있으면 native object이고 optional key는 input_tokens/cached_input_tokens/cache_write_input_tokens/output_tokens/reasoning_output_tokens뿐이다. 각 제공 값은 plain int 0..signed64max다. 빠진 key는 receipt에서 null, usage 자체 부재는 null이다. cached와 input이 둘 다 있으면 cached<=input이어야 한다. 다른 key/type은 stream_invalid다. usage가 0이거나 없다고 비용을 0으로 표시하지 않는다.
+
+2026-10-25 실제 지원 alpha의 합성 접수6 JSONL에서 cache_write_input_tokens가 보고됨을 확인해 이 optional 필드만 추가했다. 원4필드 계약·당시 독립 준수 Yes와 원 응답은 보존하며, 새5필드의 수용·원값 전달·필드 부재 null을 별도 회귀한다. 보고된 캐시 쓰기 수를 가격·전체 비용·원격 진위로 환산하지 않는다.
 
 JSONL의 완료 agent_message.text를 한 번 unescape하여 strict UTF-8로 얻은 bytes를 final-text.bin에 쓴다. 이것이 **반환할 response_bytes**다. analysis JSON을 다시 dumps하거나 trim/newline 제거/Markdown 제거/repair하지 않는다. last-message.bin의 원 bytes와 정확히 같아야 한다. exit0, 위 lifecycle/정상 양쪽 EOF, cap 준수, version 일치, 정상 cleanup을 모두 확인한 뒤에만 성공한다. 현재 alpha가 다른 framing/variant를 내면 fixed failure로 남긴다. 문서의 지원 profile과 실제 alpha 동작 수용은 같은 주장이 아니다.
 
@@ -90,7 +92,7 @@ JSONL의 완료 agent_message.text를 한 번 unescape하여 strict UTF-8로 얻
 | model | exact4 requested:두 허용 literal, resolved:null, cli_thread_id:ID 또는 null, remote_request_id:null |
 | attempts | exact5 version_process_attempts/model_process_attempts:0 또는1, application_retries:0, internal_network_requests/internal_network_retries:null |
 | lifecycle | exact10 model_process_started:bool, exit_code:int 또는 null, thread_started/turn_started/turn_completed/agent_messages/reasoning_items/tool_items:int 0..4096, stdout_eof/stderr_eof:bool |
-| usage | null 또는 exact4 input_tokens/cached_input_tokens/output_tokens/reasoning_output_tokens:plain 비음수 int 또는 null |
+| usage | null 또는 exact5 input_tokens/cached_input_tokens/cache_write_input_tokens/output_tokens/reasoning_output_tokens:plain 비음수 int 또는 null |
 | cost | exact4 kind=`unknown` 또는 `not_applicable`, amount/currency/price_version:null. model attempt0이면 not_applicable, 그 밖은 unknown |
 | timing | exact2 timeout_seconds:유한 float(0,60], local_elapsed_seconds:비음수 유한 float 또는 null |
 | controls | 아래 exact4 requested/documented/observed/unknown |

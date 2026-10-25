@@ -310,6 +310,11 @@
                 "maximum": 9223372036854775807,
                 "minimum": 0,
                 "type": "integer"
+              },
+              "cache_write_input_tokens": {
+                "maximum": 9223372036854775807,
+                "minimum": 0,
+                "type": "integer"
               }
             },
             "required": [],
@@ -2107,11 +2112,24 @@
                       "type": "null"
                     }
                   ]
+                },
+                "cache_write_input_tokens": {
+                  "anyOf": [
+                    {
+                      "maximum": 9223372036854775807,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 }
               },
               "required": [
                 "input_tokens",
                 "cached_input_tokens",
+                "cache_write_input_tokens",
                 "output_tokens",
                 "reasoning_output_tokens"
               ],
