@@ -261,5 +261,403 @@ class IntakeJobTests(unittest.TestCase):
         self.assertEqual({q['key'] for q in result['questions']},{'missing_antenna_gain','missing_power_target'})
 
 
+class PreclaimContextTests(unittest.TestCase):
+    """Authored synthetic registration; no installed CLI, model, or hardware."""
+    PUBLIC = ('job_id', 'intake_id', 'revision', 'synthetic', 'documents',
+              'analysis_context_id', 'analysis_contract', 'instructions')
+    NAME = 'SYN-PRECLAIM'
+
+    def setUp(self):
+        import json
+        from labflow import intake_jobs
+        self.jobs = intake_jobs
+        self.tmp = tempfile.TemporaryDirectory(prefix='preclaim-')
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self.inbox = self.root / 'inbox'
+        bundle = self.inbox / 'bundle'
+        bundle.mkdir(parents=True)
+        (bundle / 'request.txt').write_text('Synthetic sample for candidate review.\n', encoding='utf-8')
+        initial = Store(self.root / 'state')
+        register_source(initial, 'PRECLAIM-SYN', self.inbox, synthetic=True, settle_seconds=1)
+        scan_source(initial, 'PRECLAIM-SYN', now=100, synthetic_only=True)
+        receipt = scan_source(initial, 'PRECLAIM-SYN', now=101, synthetic_only=True)
+        accepted = receipt['accepted'][0]
+        with initial.connection() as con:
+            revision = con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',
+                                   (accepted['intake_id'], accepted['revision'])).fetchone()
+            self.selection = dict(source_id='PRECLAIM-SYN', intake_id=accepted['intake_id'],
+                revision=accepted['revision'], job_id=accepted['job_id'],
+                revision_fingerprint=revision['fingerprint'], files=json.loads(revision['files_json']))
+        initial.close()
+        self.store = Store.open_existing(str(initial.root))
+        self.addCleanup(self.store.close)
+        self.fake_calls = []
+
+    def prepare(self, selection=None, **kwargs):
+        api = getattr(self.jobs, 'prepare_registered_synthetic_context', None)
+        self.assertTrue(callable(api), 'approved public preclaim API is absent')
+        return api(self.store, self.selection if selection is None else selection,
+                   producer_name=kwargs.get('producer_name', self.NAME))
+
+    def business(self):
+        with self.store.connection() as con:
+            names = [r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")]
+            return {name: sorted(tuple(r) for r in con.execute('SELECT * FROM "'+name+'"'))
+                    for name in names if name != 'blobs'}
+
+    def job(self):
+        with self.store.connection() as con:
+            return dict(con.execute('SELECT * FROM intake_jobs WHERE job_id=?',
+                                    (self.selection['job_id'],)).fetchone())
+
+    def error(self, suffix, call=None):
+        with self.assertRaises(ValueError) as caught:
+            (call or self.prepare)()
+        error = caught.exception
+        self.assertEqual(type(error), ValueError)
+        self.assertEqual(error.args, ('intake_preclaim_context_'+suffix,))
+        self.assertIsNone(error.__cause__)
+        self.assertIsNone(error.__context__)
+        return error
+
+    def rescan(self, name, payload):
+        import json
+        (self.inbox / 'bundle' / name).write_bytes(payload)
+        scan_source(self.store, 'PRECLAIM-SYN', now=200, synthetic_only=True)
+        item = scan_source(self.store, 'PRECLAIM-SYN', now=201, synthetic_only=True)['accepted'][0]
+        with self.store.connection() as con:
+            row = con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',
+                              (item['intake_id'], item['revision'])).fetchone()
+        self.selection = dict(source_id='PRECLAIM-SYN', intake_id=item['intake_id'],
+            revision=item['revision'], job_id=item['job_id'],
+            revision_fingerprint=row['fingerprint'], files=json.loads(row['files_json']))
+
+    def once(self, context):
+        from unittest.mock import patch
+        from labflow.codex_intake_once import run_codex_intake_once
+        from test_codex_intake_once import OnceTests
+        executable = self.root / 'codex.exe'
+        executable.write_bytes(b'fake path; never executed')
+        evidence = self.root / 'once-evidence'
+        evidence.mkdir()
+        def fake(*args, **kwargs):
+            return OnceTests.fake_d2(self, *args, **kwargs)
+        with patch('labflow.codex_intake_once.produce_codex_cli_response', side_effect=fake) as d2, \
+                patch('labflow.codex_intake_once.claim_job', wraps=self.jobs.claim_job) as claim:
+            result = run_codex_intake_once(self.store, context, worker_id='preclaim-once',
+                producer_name=self.NAME, executable=executable, requested_model='gpt-6.1-sol',
+                evidence_root=evidence, authorization_ref='SYN-PRECLAIM-ONCE')
+        self.assertEqual(claim.call_count, 1)
+        return result, d2.call_count
+
+    def test_registered_source6_prepares_actual_public8_without_claim(self):
+        from unittest.mock import patch
+        from labflow.store import canonical
+        before, selection = self.business(), copy.deepcopy(self.selection)
+        old_blobs = set((self.store.root / 'blobs').iterdir())
+        with patch.object(self.jobs, 'claim_job') as claim, patch.object(self.jobs, 'complete_job') as complete, \
+                patch.object(self.jobs, 'fail_job') as fail, patch.object(self.jobs.uuid, 'uuid4') as token, \
+                patch.object(Store, 'close') as close:
+            context = self.prepare()
+        for call in (claim, complete, fail, token, close):
+            call.assert_not_called()
+        self.assertEqual(set(context), set(self.PUBLIC))
+        self.assertEqual(context['job_id'], selection['job_id'])
+        self.assertIs(context['synthetic'], True)
+        self.assertEqual(context['analysis_contract']['schema_version'], 1)
+        self.assertEqual(self.job()['attempt'], 0)
+        self.assertEqual(before, self.business())
+        self.assertEqual(self.selection, selection)
+        self.assertEqual(len(set((self.store.root / 'blobs').iterdir()) - old_blobs), 1)
+        context['documents'][0]['path'] = 'caller-mutated.txt'
+        again = self.prepare()
+        self.assertEqual(again['documents'][0]['path'], 'request.txt')
+        self.assertNotIn('token', canonical(again))
+
+    def test_separate_claim_oracle_matches_prepared_public8(self):
+        from labflow.store import canonical
+        context = self.prepare()
+        claimed = self.jobs.claim_job(self.store, 'oracle', synthetic_only=True)
+        self.assertEqual(claimed['attempt'], 1)
+        self.assertEqual(canonical(context), canonical({k: claimed[k] for k in self.PUBLIC}))
+
+    def test_fresh_once_uses_preclaim_output_without_prior_claim(self):
+        context = self.prepare()
+        self.assertEqual(self.job()['attempt'], 0)
+        result, d2 = self.once(context)
+        self.assertEqual((result['status'], result['strict_decode'], d2), ('completed', 'accepted', 1))
+        self.assertEqual(result['job']['attempt'], 1)
+        self.assertEqual(self.job()['attempt'], 1)
+        self.assertEqual(self.job()['state'], 'completed')
+        self.assertEqual(result['assessment']['status'], 'not_assessed')
+
+    def test_once_rechecks_public_context_and_current_revision(self):
+        context = self.prepare()
+        self.rescan('request.txt', b'Changed synthetic request.\n')
+        result, d2 = self.once(context)
+        self.assertEqual(d2, 0)
+        self.assertIn('codex_intake_once_scope_mismatch', [e['code'] for e in result['errors']])
+
+    def test_once_retains_existing_claim_eligibility(self):
+        context = self.prepare()
+        held = self.jobs.claim_job(self.store, 'other-worker', synthetic_only=True)
+        self.assertEqual(held['attempt'], 1)
+        result, d2 = self.once(context)
+        self.assertEqual((result['status'], d2), ('idle', 0))
+
+    def test_once_can_accept_same_public8_after_genuine_claim_and_fail(self):
+        context = self.prepare()
+        held = self.jobs.claim_job(self.store, 'intervening-worker', synthetic_only=True)
+        self.jobs.fail_job(self.store, held['job_id'], held['token'])
+        self.assertEqual((self.job()['state'], self.job()['attempt']), ('queued', 1))
+        result, d2 = self.once(context)
+        self.assertEqual((result['status'], result['job']['attempt'], d2), ('completed', 2, 1))
+
+    def test_genuine_queued_failure_private_fields_are_preserved(self):
+        from labflow.store import canonical
+        held = self.jobs.claim_job(self.store, 'prior-worker', synthetic_only=True)
+        self.jobs.fail_job(self.store, held['job_id'], held['token'])
+        before = self.business()
+        context = self.prepare()
+        self.assertEqual(before, self.business())
+        self.assertEqual(self.job()['token'], held['token'])
+        self.assertEqual(self.job()['attempt'], 1)
+        self.assertNotIn(held['token'], canonical(context))
+        self.assertNotIn('prior-worker', canonical(context))
+
+    def test_native_selection_rejects_types_and_subclasses_without_hooks(self):
+        from unittest.mock import patch
+        class Dict(dict):
+            def items(self):
+                raise AssertionError('mapping hook must not run')
+        class Text(str):
+            def __eq__(self, other):
+                raise AssertionError('string hook must not run')
+            __hash__ = str.__hash__
+        cases = [None, [], Dict(self.selection), {**self.selection, 'approved': True},
+                 {**self.selection, 'revision': True}, {**self.selection, 'revision': 0},
+                 {**self.selection, 'source_id': Text('PRECLAIM-SYN')},
+                 {**self.selection, 'files': tuple(self.selection['files'])},
+                 {**self.selection, 'files': [Dict(self.selection['files'][0])]},
+                 {**self.selection, 'files': [{**self.selection['files'][0], 'bytes': True}]},
+                 {**self.selection, 'files': [{**self.selection['files'][0], 'path': '../escape'}]},
+                 {**self.selection, 'files': [{**self.selection['files'][0], 'path': '\ud800'}]}]
+        keyed = {Text(k) if k == 'source_id' else k: v for k, v in self.selection.items()}
+        cases.append(keyed)
+        for value in cases:
+            with self.subTest(kind=type(value).__name__), patch.object(self.jobs, '_prepare') as prepare:
+                self.error('invalid_input', lambda: getattr(self.jobs, 'prepare_registered_synthetic_context')(
+                    self.store, value, producer_name=self.NAME))
+                prepare.assert_not_called()
+
+    def test_invalid_producer_is_rejected_before_preparation(self):
+        from unittest.mock import patch
+        for producer in (None, '', ' ', 1, 'x'*201, '\ud800'):
+            with self.subTest(producer=repr(producer)), patch.object(self.jobs, '_prepare') as prepare:
+                self.error('invalid_input', lambda: self.prepare(producer_name=producer))
+                prepare.assert_not_called()
+        with self.assertRaises(TypeError):
+            getattr(self.jobs, 'prepare_registered_synthetic_context')(self.store, self.selection)
+
+    def test_wrong_registered_binding_has_no_fallback(self):
+        from unittest.mock import patch
+        cases = [{**self.selection, 'intake_id': 'I-OTHER'},
+                 {**self.selection, 'source_id': 'OTHER'},
+                 {**self.selection, 'revision': 2},
+                 {**self.selection, 'revision_fingerprint': '0'*64}]
+        for selection in cases:
+            with self.subTest(selection=selection), patch.object(self.jobs, '_prepare') as prepare:
+                self.error('scope_mismatch', lambda: self.prepare(selection))
+                prepare.assert_not_called()
+        self.error('not_ready', lambda: self.prepare({**self.selection, 'job_id': 'J-ABSENT'}))
+
+    def test_files_order_is_not_sorted_or_repaired(self):
+        import hashlib
+        from labflow.store import canonical
+        self.rescan('other.txt', b'Other authored synthetic file.\n')
+        selection = copy.deepcopy(self.selection)
+        selection['files'].reverse()
+        selection['revision_fingerprint'] = hashlib.sha256(canonical(selection['files']).encode()).hexdigest()
+        self.error('scope_mismatch', lambda: self.prepare(selection))
+
+    def test_non_synthetic_source_and_revision_reject_before_prepare(self):
+        from unittest.mock import patch
+        for table in ('intake_sources', 'intake_revisions'):
+            with self.subTest(table=table):
+                with self.store.connection() as con:
+                    con.execute('UPDATE '+table+' SET synthetic=0')
+                with patch.object(self.jobs, '_prepare') as prepare, patch.object(Store, 'verify_blob') as raw:
+                    self.error('not_ready')
+                    prepare.assert_not_called(); raw.assert_not_called()
+                with self.store.connection() as con:
+                    con.execute('UPDATE '+table+' SET synthetic=1')
+
+    def test_running_expired_states_attempt_limit_and_upload_reject(self):
+        from unittest.mock import patch
+        for state, attempt, lease in [('running', 0, 0), ('running', 1, 99999999999),
+                                      ('completed', 1, None), ('failed', 3, None), ('queued', 3, None)]:
+            with self.subTest(state=state, attempt=attempt):
+                with self.store.connection() as con:
+                    con.execute('UPDATE intake_jobs SET state=?,attempt=?,lease_until=?', (state, attempt, lease))
+                with patch.object(self.jobs, '_prepare') as prepare:
+                    self.error('not_ready'); prepare.assert_not_called()
+        with self.store.connection() as con:
+            con.execute("UPDATE intake_jobs SET state='queued',attempt=0,lease_until=NULL")
+            con.execute("UPDATE intakes SET status='upload_incomplete'")
+        self.error('not_ready')
+
+    def test_pdf_metadata_rejects_before_bytes_parsing_or_retention(self):
+        from unittest.mock import patch
+        self.rescan('SOURCE.PDF', b'%PDF-authored-synthetic-no-parser\n')
+        before = self.business()
+        with patch.object(self.jobs, '_prepare') as prepare, patch.object(Store, 'verify_blob') as raw, \
+                patch.object(Store, 'write_blob') as retained:
+            self.error('unsupported_schema')
+            prepare.assert_not_called(); raw.assert_not_called(); retained.assert_not_called()
+        self.assertEqual(before, self.business())
+
+    def test_unsupported_file_remains_visible_with_null_text(self):
+        self.rescan('image.bin', b'authored unsupported synthetic content')
+        context = self.prepare()
+        document = next(d for d in context['documents'] if d['path']=='image.bin')
+        self.assertIsNone(document['text'])
+        self.assertEqual(document['parse_status'], 'requires_parser')
+
+    def test_every_private_job_snapshot_field_is_rechecked(self):
+        from unittest.mock import patch
+        original = self.jobs._prepare
+        for field, changed in [('state', 'running'), ('attempt', 1), ('token', 'PRIVATE-TOKEN'),
+                               ('lease_until', 123.0), ('worker_id', 'PRIVATE-WORKER'),
+                               ('result_json', '{"private":1}'), ('error_code', 'PRIVATE-ERROR'),
+                               ('created_at', 222.0)]:
+            before = self.job()
+            def race(store, revision):
+                prepared = original(store, revision)
+                with store.connection() as con:
+                    con.execute('UPDATE intake_jobs SET '+field+'=? WHERE job_id=?', (changed, before['job_id']))
+                return prepared
+            with self.subTest(field=field), patch.object(self.jobs, '_prepare', side_effect=race) as prepare:
+                self.error('state_changed')
+                self.assertEqual(prepare.call_count, 1)
+            self.assertEqual(self.job()[field], changed)
+            with self.store.connection() as con:
+                con.execute('UPDATE intake_jobs SET '+field+'=? WHERE job_id=?', (before[field], before['job_id']))
+
+    def test_source_and_current_revision_changes_during_prepare_are_rejected(self):
+        from unittest.mock import patch
+        original = self.jobs._prepare
+        for sql, restore in [("UPDATE intake_sources SET synthetic=0", "UPDATE intake_sources SET synthetic=1"),
+                             ("UPDATE intakes SET revision=2", "UPDATE intakes SET revision=1")]:
+            def race(store, revision):
+                prepared = original(store, revision)
+                with store.connection() as con:
+                    con.execute(sql)
+                return prepared
+            with self.subTest(sql=sql), patch.object(self.jobs, '_prepare', side_effect=race):
+                self.error('state_changed')
+            with self.store.connection() as con:
+                con.execute(restore)
+
+    def test_retained_tamper_failure_preserves_business_rows_and_failed_blob(self):
+        from unittest.mock import patch
+        before, original, retained = self.business(), self.jobs._prepare, []
+        def tamper(store, revision):
+            prepared = original(store, revision)
+            path = store.blob_path(prepared['context_id'])
+            path.write_bytes(b'preserved failed artifact')
+            retained.append(path)
+            return prepared
+        with patch.object(self.jobs, '_prepare', side_effect=tamper):
+            self.error('preparation_failed')
+        self.assertEqual(before, self.business())
+        self.assertEqual(retained[0].read_bytes(), b'preserved failed artifact')
+
+    def test_genuine_profile_change_is_not_success(self):
+        from unittest.mock import patch
+        from labflow import intake_documents
+        profile = intake_documents._profile()
+        changed = {**profile, 'max_text_bytes': 0}
+        with patch.object(intake_documents, '_profile', side_effect=[profile, changed]):
+            self.error('preparation_failed')
+
+    def test_existing_context_and_once_prompt_limits(self):
+        from unittest.mock import patch
+        from labflow import intake_documents
+        with patch.object(intake_documents, 'MAX_CONTEXT_BYTES', 64):
+            self.error('limit_exceeded')
+        self.rescan('request.txt', b'x'*(256*1024))
+        before = self.business()
+        self.error('limit_exceeded')
+        self.assertEqual(before, self.business())
+
+    def test_controls_keep_the_same_object_without_new_attributes(self):
+        from unittest.mock import patch
+        for phase in ('_prepare', '_verify'):
+            for kind in (KeyboardInterrupt, SystemExit, GeneratorExit, MemoryError):
+                control = kind('control')
+                before = dict(control.__dict__)
+                with self.subTest(phase=phase, kind=kind.__name__), \
+                        patch.object(self.jobs, phase, side_effect=control):
+                    with self.assertRaises(kind) as caught:
+                        self.prepare()
+                    self.assertIs(caught.exception, control)
+                    self.assertEqual(control.__dict__, before)
+        self.assertEqual(self.store._existing_binding.active, 0)
+
+    def test_fixed_failures_remove_raw_and_ambient_exception_context(self):
+        from unittest.mock import patch
+        try:
+            raise RuntimeError('PRIVATE-AMBIENT')
+        except RuntimeError:
+            with patch.object(self.jobs, '_prepare', side_effect=OSError('PRIVATE-PATH-SQL')):
+                self.error('preparation_failed')
+
+    def test_closed_store_preserves_genuine_error_and_borrowed_close_is_zero(self):
+        from unittest.mock import patch
+        from labflow.store import StoreOpenError
+        with patch.object(Store, 'close') as close:
+            self.prepare()
+            close.assert_not_called()
+        self.store.close()
+        with self.assertRaises(StoreOpenError) as caught:
+            self.prepare()
+        self.assertEqual(caught.exception.code, 'store_open_closed')
+
+    def test_exact_store_type_rejects_untrusted_connection_hook(self):
+        class OtherStore(Store):
+            def connection(self):
+                raise AssertionError('untrusted Store hook')
+        for value in (None, str(self.store.root), object.__new__(OtherStore)):
+            self.error('invalid_input', lambda: self.jobs.prepare_registered_synthetic_context(
+                value, self.selection, producer_name=self.NAME))
+
+    def test_input_alias_changes_do_not_replace_the_registered_snapshot(self):
+        from unittest.mock import patch
+        original = self.jobs._prepare
+        expected = copy.deepcopy(self.selection)
+        def mutate_input(store, revision):
+            self.selection['files'][0]['path'] = 'caller-changed.txt'
+            self.selection['job_id'] = 'J-CALLER-CHANGED'
+            return original(store, revision)
+        with patch.object(self.jobs, '_prepare', side_effect=mutate_input):
+            context = self.prepare()
+        self.assertEqual(context['job_id'], expected['job_id'])
+        self.assertEqual(context['documents'][0]['path'], expected['files'][0]['path'])
+
+    def test_original_retained_bytes_are_verified_and_failures_preserved(self):
+        before = self.business()
+        path = self.store.blob_path(self.selection['files'][0]['sha256'])
+        path.write_bytes(b'authored corruption remains as failure evidence')
+        self.error('preparation_failed')
+        self.assertEqual(before, self.business())
+        self.assertEqual(path.read_bytes(), b'authored corruption remains as failure evidence')
+
+    def test_preparation_does_not_reopen_the_original_source_folder(self):
+        import shutil
+        shutil.rmtree(self.inbox)
+        self.assertEqual(self.prepare()['documents'][0]['path'], 'request.txt')
+
+
 if __name__=='__main__':
     unittest.main()
