@@ -1,5 +1,5 @@
 import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot, docxReferenceMatchesRecord} from './model.mjs';
-import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue, parseConductedResultView, describeIntakeGapQueue} from './intake_flow_model.mjs';
+import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue, parseConductedResultView, describeIntakeGapQueue, parseConductedArtifactReadback, describeConductedArtifactStorage, CONDUCTED_ARTIFACT_HTTP_BYTES} from './intake_flow_model.mjs';
 import {validateIntakeReferenceContext,parseIntakeReferenceHistoryJson,parseIntakeReferenceCurrentJson} from './intake-references/model.mjs';
 import {createIntakeReferenceReview} from './intake-references/view.mjs';
 import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
@@ -11,6 +11,7 @@ const flow = {gate:createFixtureReadGate(), context:null, payload:null, selected
   stale:false, status:'가상 기록 조회 대기', updatedText:'아직 조회하지 않음'};
 const conducted={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'가상 계획 미리보기 조회 대기',errorCode:null};
 const resultView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'전도 결과 제공 기록 조회 대기',errorCode:null};
+const storageView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'산출물 저장 읽기 미관측',errorCode:null};
 const gapQueueState={intakeStale:true,parentPending:true,intakeCode:null};
 const referenceTransport = createIntakeReferenceTransport();
 const docx={context:null,hintContext:null,visible:false,allowed:false,busy:false,good:null,
@@ -297,7 +298,7 @@ function workflowProjection(record,payload,current,stale,snapshot=state){
   return describeIntakeWorkflow(record,{payload,request_id:current.selected,stale,pending:current.pending,now:Date.now()/1000,
     provided:{generation:snapshot.snapshotGeneration||0,
       intakeStale:snapshot.view!=='intakes'||(!freshParent&&(gapQueueState.intakeStale||gapQueueState.parentPending)),
-      plan:conducted,result:resultView}});
+      plan:conducted,result:resultView,storage:storageView}});
 }
 function buildWorkflowStepSummary(step){
   const summary=el('div');summary.style.minWidth='0';summary.style.overflowWrap='anywhere';summary.dataset.workflowSummary='';summary.dataset.providedScope=step.provided_scope||'none';
@@ -330,6 +331,7 @@ function buildIntakeWorkflow(record, payload, current, stale, snapshot=state) {
     if(step.id==='intake'&&view.citations.length)item.append(sources(view.citations));
     if(step.id==='plan')item.append(buildConductedPlanPreview(record,snapshot));
     if(step.id==='measurement')item.append(buildConductedResult(record,snapshot));
+    if(step.id==='assessment')item.append(buildConductedArtifactStorage(record,snapshot));
     if(step.refs.length){const details=el('details');details.append(el('summary','',`${step.reference_source||'공개'} 근거 참조 ${step.refs.length}개`));const refs=el('ul','fixture-refs');for(const ref of step.refs)refs.append(el('li','mono',ref));details.append(refs);item.append(details);}
     list.append(item);
   }
@@ -654,6 +656,74 @@ function syncResultView(){
   if(context)void refreshResultView();else refreshGapQueue();
 }
 
+function buildConductedArtifactStorage(record,snapshot=state,current=storageView){
+  const freshParent=(snapshot.snapshotGeneration??0)!==(state.snapshotGeneration??0);
+  const view=describeConductedArtifactStorage(record,{generation:snapshot.snapshotGeneration||0,intakeStale:snapshot.view!=='intakes'||(!freshParent&&(gapQueueState.intakeStale||gapQueueState.parentPending)),plan:conducted,storage:current});
+  const area=el('section','section-rule');area.id='conducted-artifact-storage';area.style.minWidth='0';area.style.overflowWrap='anywhere';
+  area.dataset.sourceKind='artifact_storage_readback';area.dataset.current=String(view.current);area.dataset.scope=view.scope;area.dataset.pending=String(current.pending||current.parentPending);area.dataset.resultStatus=view.original_status||'unknown';
+  area.append(el('h4','','별도 산출물 저장 읽기'));
+  const status=el('p','inline-note',view.current?'고정 3파일 bytes·hash·full binding 일치 관측':view.foreign?'다른 접수의 산출물 제외':view.scope==='unconfirmed'?'이전 관측 · 현재 관계 미확인':current.status);
+  status.id='conducted-artifact-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const refresh=el('button','button','산출물 저장 읽기 새로고침');refresh.id='conducted-artifact-refresh';refresh.type='button';refresh.setAttribute('aria-disabled',String(current.pending||current.parentPending));
+  refresh.addEventListener('click',()=>{if(refresh.getAttribute('aria-disabled')!=='true')void refreshArtifactStorage();});
+  area.append(status,refresh,el('p','inline-note','지정한 manifest.json · result.json · draft.md의 읽기 관측입니다. 기존 제공 snapshot·fixture와 별도 출처이며 작성 결과·게시 순서·실제 AI·영구 현재 승인·규범 판정은 미확인입니다.'));
+  const content=el('div');content.id='conducted-artifact-content';content.dataset.artifactOriginal='';
+  const original=(title,value,name)=>{const details=el('details'),pre=el('pre','mono',typeof value==='string'?value:conductedPreviewValue(value));details.append(el('summary','',title));pre.style.whiteSpace='pre-wrap';pre.style.overflowWrap='anywhere';pre.style.maxWidth='100%';pre.dataset.artifactRaw=name;details.append(pre);content.append(details);};
+  if(view.artifact){
+    const a=view.artifact,s=a.storage,m=a.manifest;
+    content.append(badge(view.current?'저장 읽기 일치 관측':`이전·차단 관측 · ${view.status}`,view.current?'info':'warning'),metadata([
+      ['별도 산출물 / 원 상태',`${a.selection.artifact_name} / ${a.result.status}`],['별도 run / runtime',`${a.selection.run_id} / ${a.selection.runtime_instance_id}`],
+      ['manifest 원 파일 SHA-256 · LF 포함',s.manifest_sha256],['result canonical SHA-256 · LF 제외',s.result_sha256],['result 원 파일 SHA-256 · LF 포함',m.files[0].sha256],['draft 원 UTF-8 SHA-256',s.draft_sha256],
+      ['읽은 파일 수 / 결합 범위',`${s.verified_file_count} / ${s.binding_scope}`],['원 측정 / 보정',`${conductedPreviewValue(a.result.raw_measurement)} / ${conductedPreviewValue(a.result.calculation.corrected)}`],
+      ['원 측정 유효성 / 규범',`${a.result.status} / ${a.result.calculation.conformity.status}`],['실행 / 재실행 권한',`${a.verification.execution_authority} / ${a.verification.rerun_authority}`],
+    ]));
+    original('원 manifest JSON · 관측 hash/bytes',m,'manifest');original('원 DRAFT UTF-8 텍스트',a.draft,'draft');original('별도 원 결과 JSON · invalid/null 보존',a.result,'result');
+    original('읽기 검증 범위 · 작성 결과·순서 미확인',a.verification,'verification');
+  }
+  if(view.current_facts)original('관측 당시 원 facts-plan · 공백·질문·null',view.current_facts.facts_plan,'facts-plan');
+  if(view.relation)original('원 현재 binding 대조 · 읽기 후 재확인',view.relation,'relation');
+  if(view.code||view.reasons.length)content.append(el('p','inline-note',`원 조회 코드 ${conductedPreviewValue(view.code)} · 연결 차단 ${conductedPreviewValue(view.reasons)}`));
+  area.append(content);return area;
+}
+function refreshArtifactStorageCard(){
+  const record=state.records.find(x=>x.intake_id===state.selected),target=$('#conducted-artifact-storage');if(!record||!target)return;
+  try{target.replaceWith(buildConductedArtifactStorage(record));}catch{target.dataset.current='false';target.dataset.scope='unconfirmed';const status=$('#conducted-artifact-status');if(status)status.textContent='화면 확인 실패 · 이전 관측 · 현재 관계 미확인';}
+}
+function publishArtifactStorage(next){
+  const record=state.records.find(x=>x.intake_id===state.selected),target=$('#conducted-artifact-storage');if(!record||!target)return false;
+  const prepared=buildConductedArtifactStorage(record,state,next);target.replaceWith(prepared);Object.assign(storageView,next);refreshGapQueue();return true;
+}
+function retireArtifactStorage(){
+  storageView.gate.invalidate();storageView.controller?.abort();Object.assign(storageView,{controller:null,pending:false,parentPending:true,stale:true});refreshArtifactStorageCard();
+}
+async function refreshArtifactStorage(){
+  const context=conductedContext();if(!context||storageView.pending||storageView.parentPending||referenceDestroyed||referenceSuspended)return;
+  const ticket=storageView.gate.begin(context);storageView.controller?.abort();const controller=new AbortController();storageView.controller=controller;const timer=setTimeout(()=>controller.abort(),10000);
+  const current=()=>storageView.gate.isCurrent(ticket,conductedContext()||{})&&!referenceDestroyed&&!referenceSuspended;
+  try{
+    if(!publishArtifactStorage({...storageView,context,pending:true,errorCode:null,stale:Boolean(storageView.value),status:'산출물 저장 읽기 조회 중'}))return;
+    const response=await fetch(`/api/intakes/${encodeURIComponent(context.intake_id)}/conducted-artifact-readback`,{signal:controller.signal,cache:'no-store'});
+    if(!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(response.headers.get('content-type')||''))throw Error('intake_conducted_artifact_readback_invalid');
+    const length=response.headers.get('content-length');if(length!==null&&(!/^\d+$/.test(length)||Number(length)>CONDUCTED_ARTIFACT_HTTP_BYTES))throw Error('intake_conducted_artifact_readback_input_limit');
+    const reader=response.body.getReader(),decoder=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true});let raw='',size=0,primary=null;
+    try{while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>CONDUCTED_ARTIFACT_HTTP_BYTES)throw Error('intake_conducted_artifact_readback_input_limit');raw+=decoder.decode(part.value,{stream:true});}raw+=decoder.decode();}
+    catch(error){primary=error;try{await reader.cancel();}catch{}throw error;}
+    finally{try{reader.releaseLock();}catch(error){if(!primary)throw error;}}
+    if(!current())return;
+    if(!response.ok){const code=JSON.parse(raw)?.error?.code;if(typeof code!=='string'||!/^(?:intake_conducted_(?:artifact_readback|preview)_[a-z_]+|conducted_result_artifact_read_[a-z_]+|store_missing|store_unavailable|intake_not_found)$/.test(code))throw Error('intake_conducted_artifact_readback_invalid');throw Error(code);}
+    const value=parseConductedArtifactReadback(raw,context);if(!current())return;
+    publishArtifactStorage({...storageView,context,value,pending:false,errorCode:null,stale:false,status:value.status==='matched'?'산출물 원 읽기 대조 관측':`산출물 원 관계 ${value.status} · 현재 사용 차단`});
+  }catch(error){controller.abort();if(current()){
+    storageView.pending=false;storageView.errorCode=queueErrorCode(error);storageView.stale=true;storageView.status=storageView.value?'조회 실패 · 이전 관측 · 현재 관계 미확인':'산출물 저장 읽기 미확인';refreshGapQueue();
+  }}finally{clearTimeout(timer);if(current()){storageView.pending=false;storageView.controller=null;refreshGapQueue();}}
+}
+function syncArtifactStorage(){
+  const context=conductedContext();if(context&&sameFixtureSource(context,storageView.context)&&context.generation===storageView.context.generation)return;
+  storageView.gate.invalidate();storageView.controller?.abort();const original=storageView.value?.current?.context,retain=!context||sameFixtureSource(context,original);
+  Object.assign(storageView,{context,value:retain?storageView.value:null,controller:null,pending:false,stale:true,errorCode:null,status:'산출물 저장 읽기 미관측'});
+  if(context)void refreshArtifactStorage();else refreshGapQueue();
+}
+
 
 function queueErrorCode(error){return typeof error?.message==='string'&&/^[a-z_]{1,128}$/.test(error.message)?error.message:'transport_or_shape_error';}
 function buildGapQueue(record,snapshot=state){
@@ -691,6 +761,7 @@ function staleGapQueue(message){
 }
 function refreshGapQueue(){
   refreshWorkflowSummary();
+  refreshArtifactStorageCard();
   const target=$('#intake-gap-queue'),record=state.records.find(item=>item.intake_id===state.selected);if(!target||!record)return;
   if(state.view!=='intakes'){staleGapQueue('접수 보기 숨김 · 현재 질문 아님');return;}
   try{const prepared=buildGapQueue(record,state);target.replaceWith(prepared);}catch{staleGapQueue('큐 표시 확인 실패 · 이전 관측 · 현재 질문 아님');}
@@ -975,6 +1046,8 @@ function publishView(prepared) {
     syncConductedContext();
     resultView.parentPending=false;
     syncResultView();
+    storageView.parentPending=false;
+    syncArtifactStorage();
     refreshGapQueue();
   } finally { if (!referenceDestroyed) referenceGuard = false; }
 }
@@ -997,6 +1070,7 @@ function changeView(view) {
   }
   syncConductedContext();
   syncResultView();
+  syncArtifactStorage();
   refreshGapQueue();
 }
 
@@ -1005,6 +1079,7 @@ async function refresh() {
   retireGapQueue();
   retireConductedObservation();
   retireResultView();
+  retireArtifactStorage();
   const request = ++state.request;
   if (!setReferencePending(true)) return;
   state.controller?.abort();
@@ -1054,6 +1129,7 @@ async function refresh() {
       $('#conducted-plan-refresh')?.setAttribute('aria-disabled',String(conducted.pending));
       resultView.parentPending=false;
       const resultNode=$('#conducted-result-view');if(resultNode)resultNode.dataset.pending=String(resultView.pending);
+      storageView.parentPending=false;
       gapQueueState.parentPending=false;refreshGapQueue();
     }
   }
@@ -1063,6 +1139,7 @@ addEventListener('pagehide', event => {
   retireGapQueue();
   retireConductedObservation();
   retireResultView();
+  retireArtifactStorage();
   if (event.persisted) {
     if (!referenceCanChange()) return;
     referenceSuspended = true;
