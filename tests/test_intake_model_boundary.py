@@ -10,7 +10,9 @@ from unittest.mock import patch
 
 from labflow.active_intake import register_source, scan_source
 from labflow.intake_jobs import claim_job
-from labflow.intake_model_boundary import build_analysis_prompt, decode_analysis_response
+from labflow.intake_model_boundary import (
+    build_analysis_prompt, build_analysis_response_schema, decode_analysis_response,
+)
 from labflow.document_extract import ExtractionLimits
 from labflow.store import Store, canonical
 
@@ -386,6 +388,70 @@ class ModelBoundaryTests(unittest.TestCase):
         response['facts'][0]['value'] = '\U0001f600'
         encoded = json.dumps(response, ensure_ascii=True).encode('utf-8')
         self.assertEqual(decode_analysis_response(encoded, self.context, producer_name=NAME), response)
+
+
+    def test_schema_mutation_does_not_change_existing_prompt_or_decoder(self):
+        before_prompt = build_analysis_prompt(self.context, producer_name=NAME)
+        before_analysis = self.decode()
+        schema = build_analysis_response_schema(producer_name=NAME)
+        schema['properties']['producer']['properties']['name']['enum'].clear()
+        schema['properties']['facts']['items']['properties']['evidence']['items'].clear()
+        schema['required'].clear()
+        self.assertEqual(build_analysis_prompt(self.context, producer_name=NAME), before_prompt)
+        self.assertEqual(self.decode(), before_analysis)
+
+
+class ResponseSchemaTests(unittest.TestCase):
+    def test_neutral_schema_canonical_bytes_match_fixed_literal(self):
+        schema = build_analysis_response_schema(producer_name='SYN-PENDING-MODEL-RUN')
+        encoded = json.dumps(schema, ensure_ascii=False, sort_keys=True,
+                             separators=(',', ':'), allow_nan=False).encode('utf-8')
+        self.assertIs(type(schema), dict)
+        self.assertEqual(len(encoded), 1410)
+        self.assertEqual(hashlib.sha256(encoded).hexdigest(),
+                         'ade0333e65ad87f0028e0f4f1fab6872b162664dc3accdf63b39d6a9721e984c')
+
+    def test_other_valid_producers_change_only_the_name_enum(self):
+        neutral = build_analysis_response_schema(producer_name='SYN-PENDING-MODEL-RUN')
+        for name in ('other-model', '  exact spaces  ', '모델/버전 \U0001f600', 'x' * 200,
+                     '가' * 200, '\x00', 'two\nlines'):
+            with self.subTest(name=repr(name)):
+                expected = copy.deepcopy(neutral)
+                expected['properties']['producer']['properties']['name']['enum'] = [name]
+                self.assertEqual(build_analysis_response_schema(producer_name=name), expected)
+
+    def test_producer_rejections_match_existing_boundary(self):
+        for name in (None, True, 0, [], {}, b'name', '', ' \t\n', 'x' * 201, '\ud800', '\udc00'):
+            with self.subTest(name=repr(name)):
+                with self.assertRaises(ValueError) as existing:
+                    build_analysis_prompt({}, producer_name=name)
+                with self.assertRaises(ValueError) as schema:
+                    build_analysis_response_schema(producer_name=name)
+                self.assertIs(type(schema.exception), type(existing.exception))
+                self.assertEqual(schema.exception.args, existing.exception.args)
+        with self.assertRaises(TypeError):
+            build_analysis_response_schema('positional-is-not-allowed')
+        with self.assertRaises(TypeError):
+            build_analysis_response_schema()
+
+    def test_each_call_detaches_every_nested_dict_and_list(self):
+        first = build_analysis_response_schema(producer_name='SYN-PENDING-MODEL-RUN')
+        second = build_analysis_response_schema(producer_name='SYN-PENDING-MODEL-RUN')
+
+        def containers(value):
+            if type(value) is dict:
+                return {id(value)}.union(*(containers(item) for item in value.values()))
+            if type(value) is list:
+                return {id(value)}.union(*(containers(item) for item in value))
+            return set()
+
+        self.assertFalse(containers(first) & containers(second))
+        baseline = copy.deepcopy(second)
+        first['properties']['missing_fields']['items']['enum'].append('PRIVATE_SCHEMA_CANARY')
+        first['properties']['facts']['items']['properties']['evidence']['items'].clear()
+        first.clear()
+        self.assertEqual(second, baseline)
+        self.assertEqual(build_analysis_response_schema(producer_name='SYN-PENDING-MODEL-RUN'), baseline)
 
 
 if __name__ == '__main__':

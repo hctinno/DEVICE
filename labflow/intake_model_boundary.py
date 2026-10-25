@@ -252,6 +252,49 @@ def _producer(name):
         raise _BoundaryError('analysis_producer_invalid') from None
 
 
+def build_analysis_response_schema(*, producer_name) -> dict:
+    """Build a detached provider-neutral literal schema-1 wire contract."""
+    producer = _producer(producer_name)
+    evidence = {
+        'type': 'object', 'additionalProperties': False,
+        'properties': {
+            'path': {'type': 'string'}, 'sha256': {'type': 'string'},
+            'line_start': {'type': 'integer'}, 'line_end': {'type': 'integer'},
+            'quote': {'type': 'string'},
+            'role': {'type': 'string', 'enum': ['request', 'product', 'reference']},
+        },
+        'required': ['path', 'sha256', 'line_start', 'line_end', 'quote', 'role'],
+    }
+    fact = {
+        'type': 'object', 'additionalProperties': False,
+        'properties': {
+            'field': {'type': 'string', 'enum': list(FIELDS)},
+            'value': {'type': 'string'},
+            'status': {'type': 'string', 'enum': ['explicit', 'inferred', 'uncertain']},
+            'evidence': {'type': 'array', 'items': evidence},
+        },
+        'required': ['field', 'value', 'status', 'evidence'],
+    }
+    return {
+        'type': 'object', 'additionalProperties': False,
+        'properties': {
+            'schema_version': {'type': 'integer', 'enum': [1]},
+            'producer': {
+                'type': 'object', 'additionalProperties': False,
+                'properties': {
+                    'kind': {'type': 'string', 'enum': ['model']},
+                    'name': {'type': 'string', 'enum': [producer['name']]},
+                },
+                'required': ['kind', 'name'],
+            },
+            'identity': {'type': 'string', 'enum': ['single', 'ambiguous', 'unknown']},
+            'missing_fields': {'type': 'array', 'items': {'type': 'string', 'enum': list(FIELDS)}},
+            'facts': {'type': 'array', 'items': fact},
+        },
+        'required': ['schema_version', 'producer', 'identity', 'missing_fields', 'facts'],
+    }
+
+
 def build_analysis_prompt(context, *, producer_name):
     """Build detached messages and provenance binding; never call a model."""
     expected = _producer(producer_name)

@@ -2,14 +2,21 @@
 
 2026-10-24, Asia/Seoul. MODEL-004B의 고정 설계 `docs/superpowers/specs/2026-10-24-model-analysis-boundary-design.md`에 따른 [순수 API](../../labflow/intake_model_boundary.py)와 [전용 검사](../../tests/test_intake_model_boundary.py)다. 현재 [분석 근거 검증기](../../labflow/intake_analysis.py)의 schema 1/2를 사용한다.
 
-기존 worker의 공개 context로 prompt DTO를 만들고 raw JSON 응답을 그 context에 대해 검증한다. 두 함수는 네트워크·DB·파일·PDF parser·provider를 호출하지 않는다. 모델 공급자·전송·SDK·계정·키·비용 설정을 추가하지 않으며 기존 worker는 계속 fixture-only다. `producer.kind="model"`은 호출자의 선언이다. 이 값만으로 실제 모델 호출·학습·정확도·업무 실행 권한을 입증하지 않는다.
+기존 worker의 공개 context로 prompt DTO를 만들고 raw JSON 응답을 그 context에 대해 검증한다. 세 함수는 네트워크·DB·파일·PDF parser·provider를 호출하지 않는다. 모델 공급자·전송·SDK·계정·키·비용 설정을 추가하지 않으며 기존 worker는 계속 fixture-only다. `producer.kind="model"`은 호출자의 선언이다. 이 값만으로 실제 모델 호출·학습·정확도·업무 실행 권한을 입증하지 않는다.
 
 ## API와 입력
 
 ```python
+build_analysis_response_schema(*, producer_name) -> dict
 build_analysis_prompt(context, *, producer_name) -> dict
 decode_analysis_response(response, context, *, producer_name) -> dict
 ```
+
+| 공개 API | 역할 |
+| --- | --- |
+| build_analysis_response_schema | provider 공통 literal response schema 1을 새 plain dict로 생성 |
+| build_analysis_prompt | context를 검증·고정하고 messages와 binding 생성 |
+| decode_analysis_response | 원 응답을 같은 context·producer에 대해 엄격 검증 |
 
 context는 기존 worker가 provider child에 보내는 dict다. 전체 claim row를 전달하지 않는다.
 
@@ -26,6 +33,14 @@ context는 기존 worker가 provider child에 보내는 dict다. 전체 claim ro
 context는 독립 strict JSON 사본으로 고정하고 canonical UTF-8 JSON으로 직렬화한다. 상한은 **6 MiB**다. 추가 host 키·token·lease·Store 객체·비 JSON 값·비유한 수·순환 객체·잘못된 UTF-8은 거절한다. 문서의 알려진 metadata 키·상대 경로·hash·페이지 text hash·줄 위치도 확인한다. 문서 내부 text/quote에 들어 있는 경로·명령 문자열은 비신뢰 user 자료로 보존한다. host 필드나 `document.path` 같은 metadata의 절대 경로·상위 경로 이동은 받지 않는다.
 
 producer_name은 비어 있지 않은 UTF-8 문자열이며 기존 producer name과 같은 200자 한도다. 공백만 있는 이름·boolean·잘못된 Unicode를 받지 않는다. source의 `synthetic` 값을 바꾸거나 worker의 제공자 권한을 확장하지 않는다.
+
+## Response schema DTO
+
+2026-10-25 Asia/Seoul 추가. `build_analysis_response_schema`는 기존 producer 검증을 그대로 사용한다. `producer.properties.name.enum`에는 전달한 이름이 정확히 하나 들어간다. 다른 유효 이름을 주면 이 enum만 바뀌며 이름의 공백·Unicode는 보존한다. 매 호출의 모든 dict/list는 새 객체이고 반환값 변경은 다음 호출·기존 prompt·decoder에 영향을 주지 않는다.
+
+`producer_name="SYN-PENDING-MODEL-RUN"`의 canonical UTF-8은 기존 literal과 byte 동일한 **1,410바이트**, SHA-256 `ade0333e65ad87f0028e0f4f1fab6872b162664dc3accdf63b39d6a9721e984c`다. Canonical은 `json.dumps(schema, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')`이며 끝 개행이 없다.
+
+이 wire 계약은 schema_version enum `[1]`, producer.kind enum `["model"]`, 기존 field·identity·status·role enum과 required/type/`additionalProperties=false`를 유지한다. provider별 변환은 수행하지 않는다. 기존 decoder의 schema 1/2·context binding·근거 내용 검증은 그대로 적용한다. schema 생성 자체는 응답·인용·모델 실행의 성공을 검증하지 않는다.
 
 ## Prompt DTO
 
