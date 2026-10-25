@@ -140,4 +140,110 @@ class FleetIntegrationTests(unittest.TestCase):
             self.assertFalse(thread.is_alive())
 
 
+    def twin_source(self):
+        return dict(frequency_hz=2.412e9,power_dbm=11.0,bandwidth_hz=10e6,
+                    duty_cycle=.5,modulation='OFDM',crest_factor_db=3.0)
+
+    def test_plan_source_configures_three_devices_consistently(self):
+        from labflow.virtual_fleet.core import VirtualFleet
+        source=self.twin_source();before=copy.deepcopy(source);commands={}
+        genuine=VirtualFleet.execute
+        def record(fleet,request,device,action,parameters=None):
+            if action=='configure' and device in {'dut','meter','analyzer'}:
+                commands[device]=copy.deepcopy(parameters)
+            return genuine(fleet,request,device,action,parameters)
+        try:
+            with patch.object(VirtualFleet,'execute',record):
+                fleet,topology,receipts=create_conducted_example(self.catalog,seed=5,source_settings=source)
+        except TypeError as error:
+            self.fail('optional source_settings is unavailable: '+str(error))
+        self.assertEqual(commands['dut'],before)
+        self.assertEqual(commands['meter']['frequency_hz'],before['frequency_hz'])
+        self.assertEqual(commands['analyzer']['frequency_hz'],before['frequency_hz'])
+        self.assertEqual(commands['analyzer']['bandwidth_hz'],before['bandwidth_hz'])
+        self.assertEqual(source,before);self.assertEqual(len(topology['devices']),64);self.assertTrue(receipts)
+        observed=fleet.observations()
+        signal=observed['devices']['dut']['values']['outputs']['rf']
+        self.assertEqual(signal['frequency_hz'],before['frequency_hz'])
+        self.assertEqual(signal['bandwidth_hz'],before['bandwidth_hz'])
+        for name in ('meter','analyzer'):
+            result=observed['devices'][name]['values']['outputs']['measurement']
+            self.assertTrue(result['valid']);self.assertEqual(result['frequency_hz'],before['frequency_hz'])
+        self.assertTrue(observed['synthetic']);self.assertFalse(observed['hardware_verified'])
+        source['power_dbm']=99
+        self.assertEqual(fleet.observations()['devices']['dut']['values']['outputs']['rf']['power_dbm'],before['power_dbm'])
+
+    def test_none_source_preserves_original_recipe_and_return(self):
+        first,top1,receipts1=create_conducted_example(self.catalog,seed=9)
+        second,top2,receipts2=create_conducted_example(self.catalog,seed=9,source_settings=None)
+        self.assertEqual(first.observations(),second.observations())
+        self.assertEqual(top1,top2);self.assertEqual(receipts1,receipts2)
+        source=first.observations()['devices']['dut']['values']['outputs']['rf']
+        self.assertEqual((source['frequency_hz'],source['power_dbm'],source['bandwidth_hz'],
+                          source['duty_cycle'],source['modulation'],source['crest_factor_db']),
+                         (2.45e9,12.5,20e6,.25,'OFDM',3))
+
+    def test_fresh_benches_track_three_db_source_change_and_path_math(self):
+        low=self.twin_source();high={**low,'power_dbm':low['power_dbm']+3}
+        a,_,_=create_conducted_example(self.catalog,seed=13,source_settings=low)
+        b,_,_=create_conducted_example(copy.deepcopy(self.catalog),seed=13,source_settings=high)
+        self.assertIsNot(a,b)
+        for fleet,source in ((a,low),(b,high)):
+            outputs=fleet.observations()['devices']
+            meter=outputs['meter']['values']['outputs']['measurement']['value']
+            analyzer=outputs['analyzer']['values']['outputs']['measurement']['value']
+            # Declared synthetic paths: coupled sensor vs through analyzer.
+            self.assertAlmostEqual(meter,source['power_dbm']-10-.5-20+10*math.log10(source['duty_cycle']),places=8)
+            self.assertAlmostEqual(analyzer,source['power_dbm']-10-.5-1.25,places=8)
+        for device in ('meter','analyzer'):
+            get=lambda fleet:fleet.observations()['devices'][device]['values']['outputs']['measurement']['value']
+            self.assertAlmostEqual(get(b)-get(a),3.0,places=8)
+            self.assertAlmostEqual(10**((get(b)-get(a))/10),10**.3,places=8)
+
+    def test_duty_changes_time_average_but_not_on_average(self):
+        source=self.twin_source();continuous={**source,'duty_cycle':1.0}
+        burst,_,_=create_conducted_example(self.catalog,source_settings=source)
+        steady,_,_=create_conducted_example(self.catalog,source_settings=continuous)
+        measure=lambda fleet,name:fleet.observations()['devices'][name]['values']['outputs']['measurement']['value']
+        self.assertAlmostEqual(measure(burst,'meter')-measure(steady,'meter'),10*math.log10(.5),places=8)
+        self.assertAlmostEqual(measure(burst,'analyzer'),measure(steady,'analyzer'),places=8)
+
+    def test_bad_source_settings_rejected_before_fleet_without_defaults(self):
+        from labflow.virtual_fleet import integration
+        class Scalar(float):pass
+        class Settings(dict):pass
+        valid=self.twin_source();invalid=[{},[],True,Settings(valid),{**valid,'extra':1}]
+        invalid += [{k:v for k,v in valid.items() if k!=missing} for missing in valid]
+        for key in ('frequency_hz','power_dbm','bandwidth_hz','duty_cycle','crest_factor_db'):
+            invalid += [{**valid,key:value} for value in (True,float('nan'),float('inf'),float('-inf'),'1',Scalar(1),10**400)]
+        invalid += [{**valid,'frequency_hz':0},{**valid,'bandwidth_hz':0},{**valid,'duty_cycle':0},
+                    {**valid,'duty_cycle':1.01},{**valid,'crest_factor_db':-1},
+                    {**valid,'frequency_hz':1,'bandwidth_hz':3},
+                    {**valid,'frequency_hz':1.7e308,'bandwidth_hz':1.7e308}]
+        invalid += [{**valid,'modulation':v} for v in (None,1,False,'',' '*3,'x'*201)]
+        for index,value in enumerate(invalid):
+            with self.subTest(index=index),patch.object(integration,'create_fleet',side_effect=AssertionError('must validate first')):
+                with self.assertRaises(ValueError):create_conducted_example(self.catalog,source_settings=value)
+
+    def test_source_reconfigure_invalidates_stale_measurement_then_fresh_acquire(self):
+        source=self.twin_source()
+        fleet,_,_=create_conducted_example(self.catalog,source_settings=source)
+        before=fleet.observations();old=before['devices']['meter']['values']['outputs']['measurement']
+        changed=fleet.execute('plan:change','dut','configure',{**source,'power_dbm':source['power_dbm']+3})
+        self.assertEqual(changed['status'],'ok')
+        for device in ('meter','analyzer'):
+            fetched=fleet.execute('plan:stale:'+device,device,'fetch')
+            self.assertNotEqual(fetched['status'],'ok')
+            self.assertNotIn('measurement',fetched['values'].get('outputs',{}))
+        fleet.execute('plan:start','dut','start');fleet.advance('plan:settle',3)
+        for device in ('meter','analyzer'):fleet.execute('plan:acquire:'+device,device,'acquire')
+        fleet.advance('plan:wait',2)
+        fresh=fleet.execute('plan:fresh','meter','fetch')
+        self.assertEqual(fresh['status'],'ok')
+        result=fresh['values']['outputs']['measurement']
+        self.assertGreater(result['acquisition_setup_revision'],old['acquisition_setup_revision'])
+        self.assertEqual(result['acquisition_setup_revision'],fleet.observations()['setup_revision'])
+        self.assertAlmostEqual(result['value']-old['value'],3.0,places=8)
+
+
 if __name__=='__main__':unittest.main()
