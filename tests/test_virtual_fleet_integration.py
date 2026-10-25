@@ -246,4 +246,137 @@ class FleetIntegrationTests(unittest.TestCase):
         self.assertAlmostEqual(result['value']-old['value'],3.0,places=8)
 
 
+    def setup_bench(self, **kwargs):
+        try:
+            return create_conducted_example(self.catalog, **kwargs)
+        except TypeError as error:
+            self.fail('setup_records optional keyword unavailable: ' + str(error))
+
+    def test_setup_records_match_each_actual_command_and_advance_once(self):
+        from labflow.virtual_fleet.core import VirtualFleet
+        records, actual = [], []
+        execute, advance = VirtualFleet.execute, VirtualFleet.advance
+
+        def command(fleet, request, device, action, parameters=None):
+            before = copy.deepcopy(parameters)
+            self.assertEqual(records[-1]['request_id'], request)
+            self.assertIsNone(records[-1]['receipt'])
+            result = execute(fleet, request, device, action, parameters)
+            actual.append(dict(request_id=request, operation='execute',
+                               device_id=device, action=action, parameters=before,
+                               receipt=copy.deepcopy(result), tick=result['tick'],
+                               setup_revision=result['setup_revision']))
+            return result
+
+        def tick(fleet, request, ticks=1):
+            self.assertEqual(records[-1]['request_id'], request)
+            self.assertIsNone(records[-1]['receipt'])
+            result = advance(fleet, request, ticks)
+            actual.append(dict(request_id=request, operation='advance',
+                               device_id=None, action=None, parameters={'ticks': ticks},
+                               receipt=copy.deepcopy(result), tick=result['tick'],
+                               setup_revision=result['setup_revision']))
+            return result
+
+        with patch.object(VirtualFleet, 'execute', command), patch.object(VirtualFleet, 'advance', tick):
+            returned = self.setup_bench(source_settings=self.twin_source(), setup_records=records)
+        fleet, topology, receipts = returned
+        self.assertEqual(len(returned), 3)
+        self.assertEqual(len(records), 23)
+        self.assertEqual(records, actual)
+        self.assertEqual([row['receipt'] for row in records], receipts)
+        self.assertEqual(len(topology['devices']), 64)
+        self.assertTrue(fleet.observations()['devices']['sensor']['values']['outputs']['measurement']['valid'])
+        self.assertEqual(json.loads(json.dumps(records, allow_nan=False)), records)
+
+    def test_setup_records_none_preserves_existing_return_and_observations(self):
+        for source in (None, self.twin_source()):
+            plain, top_a, receipts_a = create_conducted_example(self.catalog, seed=9, source_settings=source)
+            omitted, top_b, receipts_b = self.setup_bench(seed=9, source_settings=source, setup_records=None)
+            recorded, top_c, receipts_c = self.setup_bench(seed=9, source_settings=source, setup_records=[])
+            self.assertEqual(plain.observations(), omitted.observations())
+            self.assertEqual(plain.observations(), recorded.observations())
+            self.assertEqual(top_a, top_b)
+            self.assertEqual(top_a, top_c)
+            self.assertEqual(receipts_a, receipts_b)
+            self.assertEqual(receipts_a, receipts_c)
+
+    def test_setup_records_bad_collector_rejects_before_fleet_creation(self):
+        from labflow.virtual_fleet import integration
+        class Records(list):
+            pass
+        for supplied in ({}, (), True, 0, '', Records(), [None], [{'old': 'record'}]):
+            with self.subTest(kind=type(supplied).__name__), patch.object(
+                    integration, 'create_fleet', side_effect=AssertionError('no fleet on invalid collector')):
+                with self.assertRaises(ValueError):
+                    self.setup_bench(setup_records=supplied)
+
+    def test_setup_records_detach_source_nested_parameters_and_original_receipts(self):
+        records = []
+        source = self.twin_source()
+        before_catalog, before_source = copy.deepcopy(self.catalog), copy.deepcopy(source)
+        fleet, _, receipts = self.setup_bench(source_settings=source, setup_records=records)
+        original = copy.deepcopy(records)
+        route = next(row for row in records if row['device_id'] == 'switch_controller'
+                     and row['action'] == 'configure')
+        route['parameters']['routes'].append('caller edit')
+        self.assertNotIn('caller edit', next(row for row in original if row['request_id']
+                                             == route['request_id'])['parameters']['routes'])
+        receipts[0]['values']['caller_edit'] = True
+        self.assertEqual(records[0], original[0])
+        source['frequency_hz'] = 2.45e9
+        self.assertEqual(next(row for row in records if row['device_id'] == 'dut'
+                              and row['action'] == 'configure')['parameters'], before_source)
+        self.assertEqual(self.catalog, before_catalog)
+        self.assertEqual(fleet.observations()['devices']['dut']['values']['outputs']['rf']['frequency_hz'],
+                         before_source['frequency_hz'])
+
+    def test_setup_records_preserve_real_profile_failure_receipt_and_prefix(self):
+        records = []
+        source = {**self.twin_source(), 'frequency_hz': 1e12}
+        original = copy.deepcopy(source)
+        with self.assertRaises(ValueError):
+            self.setup_bench(source_settings=source, setup_records=records)
+        self.assertGreater(len(records), 1)
+        self.assertEqual((records[-1]['device_id'], records[-1]['action']), ('meter', 'configure'))
+        self.assertNotIn(records[-1]['receipt']['status'], {'ok', 'pending'})
+        self.assertEqual(records[-1]['tick'], records[-1]['receipt']['tick'])
+        self.assertEqual(records[-1]['setup_revision'], records[-1]['receipt']['setup_revision'])
+        self.assertEqual([row['receipt']['status'] for row in records[:3]], ['ok', 'ok', 'ok'])
+        self.assertEqual(source, original)
+
+    def test_setup_records_keep_attempt_without_fabricating_receipt_on_exception(self):
+        from labflow.virtual_fleet.core import VirtualFleet
+        records = []
+        execute = VirtualFleet.execute
+        def command(fleet, request, device, action, parameters=None):
+            if device == 'environment' and action == 'configure':
+                raise RuntimeError('test transport has no returned receipt')
+            return execute(fleet, request, device, action, parameters)
+        with patch.object(VirtualFleet, 'execute', command), self.assertRaises(RuntimeError):
+            self.setup_bench(setup_records=records)
+        self.assertEqual(len(records), 4)
+        self.assertEqual(records[-1]['parameters'], {'temperature_c': 23, 'humidity_percent': 45})
+        self.assertIsNone(records[-1]['receipt'])
+        self.assertIsNone(records[-1]['tick'])
+        self.assertIsNone(records[-1]['setup_revision'])
+        self.assertTrue(all(row['receipt']['status'] == 'ok' for row in records[:-1]))
+
+    def test_setup_records_capacity_rejects_before_next_actual_command(self):
+        from labflow.virtual_fleet import integration
+        from labflow.virtual_fleet.core import VirtualFleet
+        records, calls = [], []
+        execute = VirtualFleet.execute
+        def command(fleet, request, device, action, parameters=None):
+            calls.append(request)
+            return execute(fleet, request, device, action, parameters)
+        # Lower the real guard to exercise exhaustion without adding fake setup commands.
+        with patch.object(integration, 'MAX_SETUP_RECORDS', 2, create=True), patch.object(
+                VirtualFleet, 'execute', command), self.assertRaises(ValueError):
+            self.setup_bench(setup_records=records)
+        self.assertEqual(calls, ['example:action:0', 'example:action:1'])
+        self.assertEqual(len(records), 2)
+        self.assertTrue(all(row['receipt']['status'] == 'ok' for row in records))
+
+
 if __name__=='__main__':unittest.main()

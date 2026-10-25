@@ -442,5 +442,152 @@ class SensorEvaluationTests(unittest.TestCase):
         self.assertFalse(hasattr(trial.runtime,'author_control'))
 
 
+    def setup_trial(self, *, entry=None, **kwargs):
+        from labflow.virtual_fleet import evaluation
+        if entry is None:
+            entry = prepare_sensor_trial
+        try:
+            return entry(self.catalog, condition='normal', seed=7, power_dbm=11,
+                         source_settings=self.plan_source(), **kwargs)
+        except TypeError as error:
+            self.fail('setup_records optional keyword unavailable: ' + str(error))
+
+    def test_setup_snapshot_combines_same_factory_and_real_followup_calls(self):
+        from unittest.mock import patch
+        from labflow.virtual_fleet import evaluation
+        from labflow.virtual_fleet.core import VirtualFleet
+        records, actual, fleets = [], [], []
+        factory, execute, advance = evaluation.create_conducted_example, VirtualFleet.execute, VirtualFleet.advance
+        def create(catalog, **kwargs):
+            self.assertIs(kwargs['setup_records'], records)
+            result = factory(catalog, **kwargs)
+            fleets.append(result[0])
+            return result
+        def command(fleet, request, device, action, parameters=None):
+            before = deepcopy(parameters)
+            result = execute(fleet, request, device, action, parameters)
+            actual.append(dict(request_id=request, operation='execute', device_id=device,
+                               action=action, parameters=before, receipt=deepcopy(result),
+                               tick=result['tick'], setup_revision=result['setup_revision']))
+            return result
+        def tick(fleet, request, ticks=1):
+            result = advance(fleet, request, ticks)
+            actual.append(dict(request_id=request, operation='advance', device_id=None, action=None,
+                               parameters={'ticks': ticks}, receipt=deepcopy(result),
+                               tick=result['tick'], setup_revision=result['setup_revision']))
+            return result
+        with patch.object(evaluation, 'create_conducted_example', create), patch.object(
+                VirtualFleet, 'execute', command), patch.object(VirtualFleet, 'advance', tick):
+            trial = self.setup_trial(setup_records=records)
+        self.assertEqual(len(fleets), 1)
+        self.assertIs(trial._fleet, fleets[0])
+        self.assertEqual(len(records), 26)
+        self.assertEqual(records, actual)
+        self.assertEqual([row['request_id'] for row in records[-3:]],
+                         ['fixture:setup:0', 'fixture:setup:1', 'fixture:setup:2'])
+        self.assertEqual(records[-3]['parameters'], self.plan_source())
+        original = deepcopy(records)
+        snapshot = trial.setup_snapshot()
+        records.clear()
+        next(row for row in snapshot if row['action'] == 'configure' and row['device_id']
+             == 'switch_controller')['parameters']['routes'].append('caller edit')
+        snapshot[0]['receipt']['values']['caller_edit'] = True
+        self.assertEqual(trial.setup_snapshot(), original)
+        self.assertIsNot(trial.setup_snapshot(), trial.setup_snapshot())
+        result, events = self.evidence(trial)
+        self.assertEqual(evaluate_sensor_run(trial, result, events)['verdict'], 'pass')
+        self.assertEqual(trial.setup_snapshot(), original)
+
+    def test_setup_snapshot_opt_in_does_not_change_legacy_public_or_author_contract(self):
+        from unittest.mock import patch
+        from labflow.virtual_fleet import evaluation
+        plain = prepare_sensor_trial(self.catalog, power_dbm=17, seed=3)
+        with patch.object(evaluation, 'create_conducted_example', wraps=evaluation.create_conducted_example) as factory:
+            try:
+                omitted = prepare_sensor_trial(self.catalog, power_dbm=17, seed=3, setup_records=None)
+                recorded = prepare_sensor_trial(self.catalog, power_dbm=17, seed=3, setup_records=[])
+            except TypeError as error:
+                self.fail('setup_records optional keyword unavailable: ' + str(error))
+        self.assertEqual(factory.call_args_list[0].kwargs, {'seed': 3})
+        for trial in (omitted, recorded):
+            self.assertEqual(trial.runtime.observations(), plain.runtime.observations())
+            self.assertEqual(trial.goal, plain.goal)
+            self.assertEqual(trial.author_record(), plain.author_record())
+        self.assertEqual(plain.setup_snapshot(), [])
+        self.assertEqual(omitted.setup_snapshot(), [])
+        empty = omitted.setup_snapshot()
+        empty.append({'caller': 'edit'})
+        self.assertEqual(omitted.setup_snapshot(), [])
+        self.assertEqual(len(recorded.setup_snapshot()), 26)
+
+    def test_setup_snapshot_invalid_collector_rejects_both_entries_before_factory(self):
+        from unittest.mock import patch
+        from labflow.virtual_fleet import evaluation
+        class Records(list):
+            pass
+        with patch.object(evaluation, 'create_conducted_example',
+                          side_effect=AssertionError('no factory on invalid collector')):
+            for entry in (prepare_sensor_trial, evaluation.SensorTrial):
+                for supplied in ({}, (), True, Records(), [None]):
+                    with self.subTest(entry=entry.__name__, kind=type(supplied).__name__), self.assertRaises(ValueError):
+                        self.setup_trial(entry=entry, setup_records=supplied)
+
+    def test_setup_snapshot_preserves_factory_prefix_on_followup_exception(self):
+        from unittest.mock import patch
+        from labflow.virtual_fleet.core import VirtualFleet
+        records = []
+        execute = VirtualFleet.execute
+        def command(fleet, request, device, action, parameters=None):
+            if request == 'fixture:setup:1':
+                raise RuntimeError('test followup has no returned receipt')
+            return execute(fleet, request, device, action, parameters)
+        with patch.object(VirtualFleet, 'execute', command), self.assertRaises(RuntimeError):
+            self.setup_trial(setup_records=records)
+        self.assertEqual(len(records), 25)
+        self.assertEqual(records[-2]['request_id'], 'fixture:setup:0')
+        self.assertEqual(records[-2]['receipt']['status'], 'ok')
+        self.assertEqual(records[-1]['request_id'], 'fixture:setup:1')
+        self.assertEqual(records[-1]['parameters'], {'calibration_valid': True, 'acquisition_policy': 'triggered'})
+        self.assertIsNone(records[-1]['receipt'])
+        self.assertIsNone(records[-1]['tick'])
+        self.assertIsNone(records[-1]['setup_revision'])
+
+    def test_setup_snapshot_is_host_only_and_excludes_author_schedule_after_recovery(self):
+        from labflow.virtual_fleet.harness import FleetHarness
+        from labflow.virtual_fleet.integration import get_role_actions
+        records = []
+        try:
+            trial = prepare_sensor_trial(self.catalog, condition='restored_disconnect', seed=29,
+                                         power_dbm=11, source_settings=self.plan_source(), setup_records=records)
+        except TypeError as error:
+            self.fail('setup_records optional keyword unavailable: ' + str(error))
+        original = trial.setup_snapshot()
+        contexts = []
+        def policy(context):
+            contexts.append(deepcopy(context))
+            return {'kind': 'stop', 'claim': 'blocked', 'reason': 'public inspection'}
+        FleetHarness(trial.runtime, policy, goal=trial.goal, catalog=trial.catalog, topology=trial.topology,
+                     role_actions=get_role_actions(), runtime_instance_id=trial.runtime_instance_id).run()
+        self.assertEqual(set(contexts[0]), {'schema_version', 'goal', 'catalog', 'topology',
+                         'role_actions', 'observations', 'last_receipt', 'remaining_budget'})
+        forbidden = {'seed', 'condition', 'expected_sensor_dbm', 'author_events', 'author_control',
+                     'setup_records', 'setup_snapshot'}
+        def check(value):
+            if type(value) is dict:
+                self.assertTrue(forbidden.isdisjoint(value))
+                for child in value.values():
+                    check(child)
+            elif type(value) is list:
+                for child in value:
+                    check(child)
+        check(original)
+        check(contexts[0])
+        self.assertFalse(hasattr(trial.runtime, 'setup_snapshot'))
+        result, events = self.evidence(trial, wait=4)
+        self.assertEqual(evaluate_sensor_run(trial, result, events)['verdict'], 'pass')
+        self.assertEqual(trial.setup_snapshot(), original)
+        self.assertNotIn('setup_records', trial.author_record())
+
+
 if __name__ == '__main__':
     unittest.main()
