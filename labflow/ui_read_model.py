@@ -242,6 +242,103 @@ class _SnapshotStore:
         yield self._connection
 
 
+def _current_text_manifest(store,con,row,analysis,current_profile):
+    """One deterministic locator, verified against an already retained text graph.
+
+    Schema1 remains unbound to an original provider prompt. Only this current
+    read gets the actual retained manifest hash; no preparation/retention runs.
+    """
+    from pathlib import PurePosixPath
+    from . import intake_documents as documents
+    from . import intake_generation as generation
+    from . import intake_reference_snapshot as retained
+    from .intake_analysis import FIELDS,validate_analysis,project_analysis
+    from .active_intake import MAX_FILES
+    from .store import _open_native
+    invalid='intake_conducted_preview_source_invalid'
+    unavailable='intake_conducted_preview_analysis_unavailable'
+    if row['intake_status']=='upload_incomplete':raise ReadModelError(unavailable)
+    if (type(analysis) is not dict or type(analysis.get('schema_version')) is not int
+            or analysis['schema_version']!=1):raise ReadModelError(unavailable)
+    files=generation._files(row)
+    if not files or len(files)>MAX_FILES:raise ReadModelError(unavailable)
+    profile=documents._profile();profile_id=retained._hash(profile)
+    generation._profile(profile,profile_id)
+    if profile_id!=current_profile:raise ReadModelError(invalid)
+    binding=documents._binding(files,row['source_id'],row['intake_id'],row['revision'],row['fingerprint'])
+    owner=store._existing_binding;held={};graph={}
+    def read(sha,limit):
+        retained._sha(sha,'source_integrity_invalid')
+        if sha not in held:
+            path=store.blob_path(sha);before=owner.tree.file_stat(path)
+            if before.st_size>limit or before.st_nlink!=1:raise ReadModelError(invalid)
+            fd=owner.backend.open_read(path,pin=True)
+            info=owner.backend.info(fd,directory=False)
+            if _open_native._stamp(info)!=_open_native._stamp(before) or info.st_nlink!=1:
+                raise ReadModelError(invalid)
+            held[sha]=(path,fd,_open_native._stamp(info))
+            graph[sha]=(info.st_size,info.st_mtime_ns,info.st_mode,info.st_dev,info.st_ino)
+        path,fd,stamp=held[sha]
+        raw=_open_native._read_descriptor(fd,limit,'packet_prepare_source_changed')
+        if hashlib.sha256(raw).hexdigest()!=sha:raise ReadModelError(invalid)
+        return raw
+    remaining=profile['max_total_text_bytes'];expected_documents=[]
+    for item in files:
+        if (PurePosixPath(item['path']).suffix.lower() not in documents.TEXT_SUFFIXES
+                or item['bytes']>min(profile['max_text_bytes'],remaining)):
+            raise ReadModelError(unavailable)
+        raw=read(item['sha256'],item['bytes'])
+        if len(raw)!=item['bytes']:raise ReadModelError(invalid)
+        try:text=raw.decode('utf-8-sig')
+        except UnicodeError as error:raise ReadModelError(unavailable) from error
+        remaining-=len(raw)
+        expected_documents.append(dict(item,format='text',text=text,parse_status='text',
+            extraction_status='ok' if text.strip() else 'empty',issues=[]))
+    candidate=dict(schema_version=1,binding=binding,profile=profile,extraction_profile_id=profile_id,
+        documents=expected_documents)
+    encoded=retained._encoded(candidate)
+    if len(encoded)>profile['max_context_bytes']:raise ReadModelError(unavailable)
+    context_id=hashlib.sha256(encoded).hexdigest()
+    raw=read(context_id,profile['max_context_bytes'])
+    if raw!=encoded:raise ReadModelError(invalid)
+    manifest=retained._json(raw.decode('utf-8'),profile['max_context_bytes'],'source_integrity_invalid')
+    # The returned documents are decoded from the actual stored blob, never the
+    # candidate. Existing validators recheck original bytes without parsing.
+    if generation._documents(store,files,manifest['documents'],profile,profile_id)!=0:
+        raise ReadModelError(invalid)
+    provenance,confirmed=retained._provenance(con,row,graph)
+    if not confirmed:raise ReadModelError('intake_conducted_preview_synthetic_required')
+    if next(record for record in provenance['blobs'] if record['sha256']==context_id)['kind']!='analysis_context':
+        raise ReadModelError(invalid)
+    answers=retained._rows(con,'intake_answers',['field','intake_id','value','basis_json','event_id'],
+        'intake_id=?',(row['intake_id'],),len(FIELDS),'delegation_invalid')
+    questions=retained._rows(con,'intake_questions',['question_key','intake_id','question_json','state','last_revision'],
+        'intake_id=?',(row['intake_id'],),10000,'projection_inconsistent')
+    for question in questions:
+        if type(question['question_key']) is not str or question['state'] not in ('open','resolved'):
+            raise ReadModelError(invalid)
+        parsed=retained._json(question['question_json'],8*1024**2,'projection_inconsistent')
+        if type(parsed) is not dict or parsed.get('key')!=question['question_key']:raise ReadModelError(invalid)
+        retained._positive(question['last_revision'],'projection_inconsistent')
+        if question['last_revision']>row['revision']:raise ReadModelError(invalid)
+    retained._events(con,row['intake_id'],row,answers)
+    unread=validate_analysis(analysis,manifest['documents'],True,context_id=context_id)
+    projection=project_analysis(analysis,unread,{a['field']:a for a in answers},delegated=bool(row['delegated']),
+        deferred=bool(row['deferred']),required_fields=[q['question_key'][8:] for q in questions if q['question_key'].startswith('missing_')])
+    projection.update(intake_id=row['intake_id'],revision=row['revision'])
+    live=retained._json(row['analysis_json'],8*1024**2,'projection_inconsistent')
+    if not retained._same(live,projection):raise ReadModelError(invalid)
+    for sha,(path,fd,stamp) in held.items():
+        info=owner.backend.info(fd,directory=False);current=owner.tree.file_stat(path)
+        if (info.st_nlink!=1 or current.st_nlink!=1 or _open_native._stamp(info)!=stamp
+                or _open_native._stamp(current)!=stamp):raise ReadModelError(invalid)
+        if hashlib.sha256(_open_native._read_descriptor(fd,graph[sha][0],'packet_prepare_source_changed')).hexdigest()!=sha:
+            raise ReadModelError(invalid)
+    if documents.current_extraction_profile_id()!=profile_id:raise ReadModelError(invalid)
+    owner.check_owner(store);owner.check_identity()
+    return manifest,context_id
+
+
 class IntakeReadModel:
     def __init__(self, workspace):
         self.database = Path(workspace).resolve() / 'lab.sqlite3'
@@ -260,47 +357,61 @@ class IntakeReadModel:
         from . import intake_reference_snapshot as retained
         from .intake_jobs import _analysis_contract
         from .intake_model_boundary import build_analysis_prompt
+        first_error=None;native=None
         try:
-            with Store.open_existing(str(self.database.parent)) as store:
-                con = sqlite3.connect(self.database.as_uri() + '?mode=ro', uri=True, timeout=2)
-                try:
-                    con.row_factory = sqlite3.Row
-                    con.execute('PRAGMA query_only=ON'); con.execute('BEGIN')
-                    eligibility = con.execute('''SELECT i.revision,r.synthetic,s.synthetic AS source_synthetic,j.state
-                        FROM intakes i LEFT JOIN intake_revisions r ON r.intake_id=i.intake_id AND r.revision=i.revision
-                        LEFT JOIN intake_sources s ON s.source_id=i.source_id
-                        LEFT JOIN intake_jobs j ON j.intake_id=i.intake_id AND j.revision=i.revision
-                        WHERE i.intake_id=?''', (intake_id,)).fetchone()
-                    if eligibility is None:
-                        raise ReadModelError('intake_not_found')
-                    if eligibility['synthetic'] != 1 or eligibility['source_synthetic'] != 1:
-                        raise ReadModelError('intake_conducted_preview_synthetic_required')
-                    if eligibility['state'] != 'completed':
-                        raise ReadModelError('intake_conducted_preview_analysis_unavailable')
-                    capture = retained.capture_intake_reference_snapshot_in_transaction(store,con,intake_id)
-                    if capture['status'] == 'unavailable':
-                        reason = ('v2_pdf_required' if set(capture['reason_codes']) & {'legacy_analysis','no_pdf_context'}
-                                  else 'analysis_unavailable')
-                        raise ReadModelError('intake_conducted_preview_' + reason)
-                    if 'source_provenance_unconfirmed' in capture['readiness']['reason_codes']:
-                        raise ReadModelError('intake_conducted_preview_synthetic_required')
-                    if not capture['profile']['matches']:
-                        raise ReadModelError('intake_conducted_preview_source_invalid')
-                    # These existing bounded native readers preserve the same
-                    # transaction and retained graph checks; the public capture
-                    # intentionally contains only a smaller reference projection.
-                    row = retained._origin(con,intake_id)
-                    result = retained._json(row['result_json'],8*1024**2,'source_integrity_invalid')
-                    analysis = result['submission']
-                    files, manifest, _, _ = retained._graph(store,row,analysis)
-                    context = dict(job_id=row['job_id'],intake_id=intake_id,revision=row['revision'],synthetic=True,
-                        documents=manifest['documents'],analysis_context_id=analysis['context_id'],
-                        analysis_contract=_analysis_contract({'documents':manifest['documents'],'context_id':analysis['context_id']}),
-                        instructions='Current provided read-only synthetic planning context. This is not an original model prompt and grants no execution authority.')
-                    prompt = build_analysis_prompt(context,producer_name='current-readonly-plan')
-                    return {'context':json.loads(prompt['messages'][1]['content']),'analysis':analysis}
-                finally:
-                    con.close()
+            try:
+                with Store.open_existing(str(self.database.parent)) as store:
+                    con=None
+                    try:
+                        con = sqlite3.connect(self.database.as_uri() + '?mode=ro', uri=True, timeout=2)
+                        con.row_factory = sqlite3.Row
+                        con.execute('PRAGMA query_only=ON'); con.execute('BEGIN')
+                        eligibility = con.execute('''SELECT i.revision,r.synthetic,s.synthetic AS source_synthetic,j.state
+                            FROM intakes i LEFT JOIN intake_revisions r ON r.intake_id=i.intake_id AND r.revision=i.revision
+                            LEFT JOIN intake_sources s ON s.source_id=i.source_id
+                            LEFT JOIN intake_jobs j ON j.intake_id=i.intake_id AND j.revision=i.revision
+                            WHERE i.intake_id=?''', (intake_id,)).fetchone()
+                        if eligibility is None:
+                            raise ReadModelError('intake_not_found')
+                        if eligibility['synthetic'] != 1 or eligibility['source_synthetic'] != 1:
+                            raise ReadModelError('intake_conducted_preview_synthetic_required')
+                        if eligibility['state'] != 'completed':
+                            raise ReadModelError('intake_conducted_preview_analysis_unavailable')
+                        capture = retained.capture_intake_reference_snapshot_in_transaction(store,con,intake_id)
+                        row = retained._origin(con,intake_id)
+                        result = retained._json(row['result_json'],8*1024**2,'source_integrity_invalid')
+                        analysis = result['submission']
+                        if capture['status'] == 'unavailable':
+                            if capture['reason_codes']==['legacy_analysis']:
+                                manifest,context_id=_current_text_manifest(store,con,row,analysis,capture['profile']['current_profile_id'])
+                            else:
+                                reason = ('v2_pdf_required' if 'no_pdf_context' in capture['reason_codes'] else 'analysis_unavailable')
+                                raise ReadModelError('intake_conducted_preview_' + reason)
+                        else:
+                            if 'source_provenance_unconfirmed' in capture['readiness']['reason_codes']:
+                                raise ReadModelError('intake_conducted_preview_synthetic_required')
+                            if not capture['profile']['matches']:
+                                raise ReadModelError('intake_conducted_preview_source_invalid')
+                            # Keep the PDF capture and retained graph validation.
+                            files, manifest, _, _ = retained._graph(store,row,analysis)
+                            context_id=analysis['context_id']
+                        context = dict(job_id=row['job_id'],intake_id=intake_id,revision=row['revision'],synthetic=True,
+                            documents=manifest['documents'],analysis_context_id=context_id,
+                            analysis_contract=_analysis_contract({'documents':manifest['documents'],'context_id':context_id}),
+                            instructions='Current provided read-only synthetic planning context. This is not an original model prompt and grants no execution authority.')
+                        prompt = build_analysis_prompt(context,producer_name='current-readonly-plan')
+                        native={'context':json.loads(prompt['messages'][1]['content']),'analysis':analysis}
+                    except BaseException as error:
+                        first_error=error
+                    finally:
+                        if con is not None:
+                            try:con.close()
+                            except BaseException as error:
+                                if first_error is None:first_error=error
+            except BaseException as error:
+                if first_error is None:first_error=error
+            if first_error is not None:raise first_error
+            return native
         except ReadModelError:
             raise
         except sqlite3.Error as exc:

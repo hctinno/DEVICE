@@ -1,7 +1,10 @@
 """UI contracts use the real intake service and a separate synthetic store."""
+import copy
 import hashlib
 import json
+import os
 from pathlib import Path
+import sqlite3
 import tempfile
 import unittest
 from contextlib import ExitStack
@@ -171,8 +174,8 @@ class ConductedPlanContextTests(unittest.TestCase):
             native=reader(fixture['intake_id'])
         self.assertEqual(native['context']['revision'],1);self.assertEqual(fixture['store'].db.read_bytes(),before)
 
-    def test_TXT_V1_nonsynthetic_and_incomplete_are_explicit_unavailable(self):
-        for index,options in enumerate(({'kind':'text'},{'synthetic':False},{'completed':False})):
+    def test_nonsynthetic_and_incomplete_are_explicit_unavailable(self):
+        for index,options in enumerate(({'synthetic':False},{'completed':False})):
             fixture=conducted_context_fixture(self.root/str(index),**options);reader=self.reader(fixture)
             with self.subTest(options=options),self.assertRaises(ReadModelError) as error:reader(fixture['intake_id'])
             self.assertIn(error.exception.code,('intake_conducted_preview_v2_pdf_required','intake_conducted_preview_synthetic_required','intake_conducted_preview_analysis_unavailable'))
@@ -288,6 +291,206 @@ class ConductedResultReadTests(unittest.TestCase):
         self.snapshot=original
         self.fixture['store'].blob_path(self.fixture['context']['documents'][0]['sha256']).write_bytes(b'changed')
         with self.assertRaises(ReadModelError):self.read()
+
+
+class CurrentTextContextTests(unittest.TestCase):
+    """Current schema1 from actual retained bytes; no preparation in the reader."""
+    maxDiff=None
+
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory(prefix='current-txt-context-');self.addCleanup(self.tmp.cleanup)
+        self.root=Path(self.tmp.name)
+
+    def fixture(self,name='authored',kind='text',**kwargs):
+        from test_intake_current_facts_plan import completed_fixture
+        return completed_fixture(self.root/name,kind=kind,**kwargs)
+
+    def read(self,fixture):return IntakeReadModel(fixture['store'].root).current_conducted_plan_context(fixture['intake_id'])
+
+    def files(self,fixture):
+        from test_intake_current_facts_plan import CurrentFactsPlanTests
+        return CurrentFactsPlanTests.files(self,fixture)
+
+    def failure(self,fixture,code='intake_conducted_preview_source_invalid'):
+        before=self.files(fixture)
+        with self.assertRaises(ReadModelError) as caught:self.read(fixture)
+        self.assertEqual(caught.exception.code,code)
+        self.assertEqual(self.files(fixture),before)
+
+    def test_native_pins_hold_source_and_stored_manifest_without_blob_directory_search(self):
+        from labflow import intake_generation as generation
+        fixture=self.fixture();before=self.files(fixture);blobs=fixture['store'].root/'blobs'
+        source=fixture['store'].blob_path(fixture['context']['documents'][0]['sha256'])
+        original=generation._documents;seen=[]
+        def documents(store,*args):
+            seen.append(len(store._existing_binding.handles))
+            fd=None;blocked=False
+            try:
+                try:fd=os.open(source,os.O_WRONLY)
+                except PermissionError:blocked=True
+            finally:
+                if fd is not None:os.close(fd)
+            self.assertTrue(blocked,'pinned original source unexpectedly admitted a writer')
+            return original(store,*args)
+        with ExitStack() as stack:
+            for name in ('iterdir','glob','rglob'):
+                genuine=getattr(Path,name)
+                def guarded(path,*args,_genuine=genuine,**kwargs):
+                    if path==blobs:raise AssertionError('blob directory enumeration')
+                    return _genuine(path,*args,**kwargs)
+                stack.enter_context(patch.object(Path,name,guarded))
+            stack.enter_context(patch.object(generation,'_documents',side_effect=documents))
+            native=self.read(fixture)
+        self.assertEqual(native['analysis'],fixture['analysis']);self.assertEqual(len(seen),1)
+        self.assertGreaterEqual(seen[0],13)
+        self.assertEqual(self.files(fixture),before)
+
+    def test_missing_real_manifest_is_not_recreated_or_replaced_by_another_blob(self):
+        fixture=self.fixture();path=fixture['store'].blob_path(fixture['context']['analysis_context_id'])
+        raw=path.read_bytes();path.unlink()
+        alternate=fixture['store'].root/'blobs'/('e'*64);alternate.write_bytes(raw)
+        self.failure(fixture);self.assertFalse(path.exists())
+        self.assertEqual(alternate.read_bytes(),raw)
+
+    def test_original_blob_manifest_and_catalog_provenance_tampering_are_rejected(self):
+        for index,mode in enumerate(('source','manifest','synthetic','kind')):
+            with self.subTest(mode=mode):
+                fixture=self.fixture(str(index));sha=fixture['context']['documents'][0]['sha256']
+                manifest=fixture['context']['analysis_context_id']
+                if mode=='source':
+                    path=fixture['store'].blob_path(sha);path.write_bytes(path.read_bytes()+b'negative-case change')
+                elif mode=='manifest':fixture['store'].blob_path(manifest).write_bytes(b'{}')
+                else:
+                    with fixture['store'].connection() as con:
+                        if mode=='synthetic':con.execute('UPDATE blobs SET synthetic=0 WHERE sha256=?',(sha,))
+                        else:con.execute("UPDATE blobs SET kind='not-a-retained-context' WHERE sha256=?",(manifest,))
+                self.failure(fixture,'intake_conducted_preview_synthetic_required' if mode=='synthetic'
+                    else 'intake_conducted_preview_source_invalid')
+
+    def test_revision_file_binding_source_identity_strict_quote_and_projection_are_rechecked(self):
+        for index,mode in enumerate(('files','source_id','quote','projection')):
+            with self.subTest(mode=mode):
+                fixture=self.fixture(str(index))
+                if mode=='source_id':
+                    other=fixture['store'].root.parent/'other-inbox';other.mkdir()
+                    register_source(fixture['store'],'OTHER-AUTHORED-SOURCE',other,synthetic=True,settle_seconds=.001)
+                with fixture['store'].connection() as con:
+                    if mode=='files':
+                        row=con.execute('SELECT files_json FROM intake_revisions WHERE intake_id=?',(fixture['intake_id'],)).fetchone()
+                        files=json.loads(row['files_json']);files[0]['path']='different.txt'
+                        con.execute('UPDATE intake_revisions SET files_json=? WHERE intake_id=?',(json.dumps(files),fixture['intake_id']))
+                    elif mode=='source_id':
+                        con.execute('UPDATE intakes SET source_id=? WHERE intake_id=?',('OTHER-AUTHORED-SOURCE',fixture['intake_id']))
+                    elif mode=='quote':
+                        row=con.execute('SELECT result_json FROM intake_jobs WHERE intake_id=?',(fixture['intake_id'],)).fetchone()
+                        result=json.loads(row['result_json']);result['submission']['facts'][-1]['evidence'][0]['quote']='not in original source'
+                        result['summary']['submitted']=copy.deepcopy(result['submission'])
+                        con.execute('UPDATE intake_jobs SET result_json=? WHERE intake_id=?',(json.dumps(result),fixture['intake_id']))
+                    else:
+                        row=con.execute('SELECT analysis_json FROM intakes WHERE intake_id=?',(fixture['intake_id'],)).fetchone()
+                        live=json.loads(row['analysis_json']);live['next_action']='invalid-authored-projection'
+                        con.execute('UPDATE intakes SET analysis_json=? WHERE intake_id=?',(json.dumps(live),fixture['intake_id']))
+                self.failure(fixture)
+
+    def test_changed_current_profile_or_unread_text_is_unavailable_without_parser_fallback(self):
+        from labflow import intake_documents as documents
+        fixture=self.fixture('profile');original=documents._profile
+        def changed():
+            value=original();value['extractor_sha256']='0'*64;return value
+        with patch.object(documents,'_profile',side_effect=changed):self.failure(fixture)
+        for index,payload in enumerate((b'\xff',b'product_type: lab_receiver\n'+b'x'*(256*1024))):
+            fixture=self.fixture('unread'+str(index));(fixture['folder']/'request.txt').write_bytes(payload)
+            scan_source(fixture['store'],'CURRENT-FACTS-AUTHORED',now=120)
+            scan_source(fixture['store'],'CURRENT-FACTS-AUTHORED',now=120.01)
+            job=claim_job(fixture['store'],'unread-fixture',now=121)
+            from labflow.intake_worker import SyntheticTextProvider
+            analysis=SyntheticTextProvider().analyze(job)
+            complete_job(fixture['store'],job['job_id'],job['token'],analysis,now=122)
+            self.failure(fixture,'intake_conducted_preview_analysis_unavailable')
+
+    def test_txt_runtime_uses_only_ro_sql_and_never_prepares_retains_claims_or_runs(self):
+        fixture=self.fixture();before=self.files(fixture);connect=sqlite3.connect;calls=[]
+        def observed(*args,**kwargs):calls.append((args,kwargs));return connect(*args,**kwargs)
+        def forbidden(*args,**kwargs):raise AssertionError('unexpected preparation/write/parser/AI/HTTP')
+        with ExitStack() as stack:
+            for name in ('labflow.store.Store.__init__','labflow.store.Store.connection','labflow.store.Store.write_blob',
+                'labflow.store.Store.register_blob','labflow.store.Store.event','labflow.intake_jobs.claim_job',
+                'labflow.intake_jobs.complete_job','labflow.intake_jobs.prepare_registered_synthetic_context',
+                'labflow.intake_jobs._prepare','labflow.intake_documents.prepare_analysis_documents',
+                'labflow.intake_documents.verify_analysis_documents','labflow.intake_documents._retain',
+                'labflow.document_extract.extract_document','labflow.intake_documents.extract_document',
+                'labflow.intake_worker.SyntheticTextProvider.analyze','labflow.intake_worker.run_worker',
+                'subprocess.Popen','socket.socket'):
+                stack.enter_context(patch(name,side_effect=forbidden))
+            stack.enter_context(patch.object(sqlite3,'connect',side_effect=observed))
+            native=self.read(fixture)
+        self.assertEqual(native['analysis']['schema_version'],1)
+        self.assertTrue(calls);self.assertTrue(all('?mode=ro' in args[0] and kwargs.get('uri') is True for args,kwargs in calls))
+        self.assertEqual(self.files(fixture),before)
+
+    def test_txt_current_revision_and_pins_do_not_reuse_the_old_context(self):
+        from test_intake_current_facts_plan import METHOD,digest
+        from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts as read
+        from labflow.intake_worker import SyntheticTextProvider
+        fixture=self.fixture();old=read(fixture['store'].root,fixture['intake_id'],method=METHOD)
+        (fixture['folder']/'supplement.txt').write_text('Current text revision marker.\n',encoding='utf-8')
+        scan_source(fixture['store'],'CURRENT-FACTS-AUTHORED',now=120)
+        scan_source(fixture['store'],'CURRENT-FACTS-AUTHORED',now=120.01)
+        with self.assertRaises(ReadModelError) as caught:self.read(fixture)
+        self.assertEqual(caught.exception.code,'intake_conducted_preview_analysis_unavailable')
+        job=claim_job(fixture['store'],'current-txt-revision2',now=121)
+        analysis=SyntheticTextProvider().analyze(job);complete_job(fixture['store'],job['job_id'],job['token'],analysis,now=122)
+        stale=read(fixture['store'].root,fixture['intake_id'],method=METHOD,expected_revision=1,
+            expected_context_sha256=digest(old['context']))
+        self.assertEqual(stale['context']['revision'],2);self.assertEqual(stale['facts_plan']['status'],'blocked')
+        current=read(fixture['store'].root,fixture['intake_id'],method=METHOD)
+        self.assertEqual(current['facts_plan']['status'],'ready_for_simulation')
+        self.assertNotEqual(current['context']['analysis_context_id'],old['context']['analysis_context_id'])
+        self.assertNotIn('context_id',current['analysis'])
+
+    def test_txt_upload_incomplete_does_not_reuse_previous_completed_revision(self):
+        fixture=self.fixture()
+        path=fixture['folder']/'request.txt'
+        path.write_text(path.read_text(encoding='utf-8')+'Incoming change.\n',encoding='utf-8')
+        scan_source(fixture['store'],'CURRENT-FACTS-AUTHORED',now=120)
+        with fixture['store'].connection() as con:
+            row=con.execute('SELECT revision,status FROM intakes WHERE intake_id=?',(fixture['intake_id'],)).fetchone()
+        self.assertEqual((row['revision'],row['status']),(1,'upload_incomplete'))
+        self.failure(fixture,'intake_conducted_preview_analysis_unavailable')
+
+    def test_uncertain_original_facts_keep_null_basis_and_no_normative_authority(self):
+        from test_intake_current_facts_plan import METHOD
+        from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
+        fixture=self.fixture(completed=False);analysis=copy.deepcopy(fixture['analysis']);analysis['facts'][-1]['status']='uncertain'
+        with fixture['store'].connection() as con:
+            job=con.execute('SELECT job_id,token FROM intake_jobs WHERE intake_id=?',(fixture['intake_id'],)).fetchone()
+        complete_job(fixture['store'],job['job_id'],job['token'],analysis,now=102)
+        native=read_current_conducted_plan_from_facts(fixture['store'].root,fixture['intake_id'],method=METHOD)
+        self.assertEqual(native['analysis'],analysis);self.assertNotIn('context_id',native['analysis'])
+        wrapper=native['facts_plan'];self.assertEqual(wrapper['status'],'blocked')
+        self.assertTrue(all(value is None for value in wrapper['plan_input']['plan']['source_settings'].values()))
+        self.assertTrue(all(value is None for value in wrapper['plan_input']['plan']['basis_refs'].values()))
+        self.assertTrue(all(g['code']=='source_fact_unverified' for g in wrapper['assembly_gaps']))
+        self.assertIs(wrapper['plan_input']['verification']['execution_authority'],False)
+        self.assertIsNone(wrapper['plan_input']['plan']['numeric_limit_dbm']);self.assertIsNone(wrapper['plan_input']['plan']['uncertainty_db'])
+
+    def test_txt_and_pdf_first_graph_error_survives_late_native_close_and_releases_handles(self):
+        from labflow import intake_generation as generation
+        from labflow.store import _ExistingBinding
+        class Stop(BaseException):pass
+        original_documents=generation._documents;original_close=_ExistingBinding.close
+        for kind in ('text','pdf'):
+            with self.subTest(kind=kind):
+                fixture=self.fixture(kind,kind=kind);first=Stop('first-graph-'+kind);secondary=SystemExit('late-close');held=[]
+                def documents(store,*args):
+                    original_documents(store,*args)
+                    if kind=='text':self.assertGreaterEqual(len(store._existing_binding.handles),13)
+                    raise first
+                def close(binding):original_close(binding);held.append(binding);raise secondary
+                with patch.object(generation,'_documents',side_effect=documents),patch.object(_ExistingBinding,'close',close):
+                    with self.assertRaises(Stop) as caught:self.read(fixture)
+                self.assertIs(caught.exception,first);self.assertTrue(held)
+                self.assertTrue(all(b.state=='closed' and b.active==0 and not b.handles for b in held))
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-"""Read the current synthetic PDF facts into a plan; never restore a model prompt."""
+"""Read current retained synthetic text/PDF facts; never restore a model prompt."""
 import hashlib
 
 from .intake_facts_to_conducted_plan import build_conducted_plan_from_intake_facts
