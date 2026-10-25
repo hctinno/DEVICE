@@ -169,3 +169,59 @@ test('workflow classifies an analysis lease using only the supplied observation 
   assert.equal(step(workflow(intake,{now:25}),'intake').label,'분석 중');
   assert.equal(step(workflow(intake,{now:100}),'intake').label,'임대 만료 · 확인 필요');
 });
+
+const previewFields=['frequency_hz','power_dbm','bandwidth_hz','duty_cycle','modulation','crest_factor_db'];
+function previewPacket(){
+  const settings={frequency_hz:915000000,power_dbm:-4,bandwidth_hz:1000000,duty_cycle:1,modulation:'CW-synthetic',crest_factor_db:0};
+  const units=['Hz','dBm','Hz','ratio','label','dB'];
+  const citation={kind:'pdf_page',path:'synthetic-request.pdf',sha256:'a'.repeat(64),extraction_id:'b'.repeat(64),page_number:1,text_sha256:'c'.repeat(64),line_start:1,line_end:1,quote:'smartphone US synthetic check',role:'request'};
+  return {schema_version:1,kind:'intake_conducted_plan_preview',intake_id:'I-1',revision:2,context_sha256:'d'.repeat(64),context_scope:'current_provided_context',selection_status:'matched',plan_input:{
+    schema_version:1,kind:'intake_conducted_twin_plan_input',status:'ready_for_simulation',
+    binding:{intake_id:'I-1',revision:2,analysis_context_id:'e'.repeat(64),context_sha256:'d'.repeat(64),analysis_sha256:'f'.repeat(64),plan_sha256:'a'.repeat(64)},
+    intake:{facts:{product_type:{value:'smartphone',status:'explicit'},market:{value:'US',status:'explicit'},purpose:{value:'synthetic check',status:'explicit'}},source_facts:[{field:'product_type',value:'smartphone',status:'explicit',evidence:[citation]}],missing_fields:[],follow_up_missing_fields:[],questions:[]},
+    plan:{schema_version:1,method_id:'conducted_synthetic',method_version:1,metric:'on',reference_plane:'source_output',source_settings:settings,
+      basis_refs:Object.fromEntries(previewFields.map((key,i)=>[key,{kind:'developer_declared_synthetic',value:settings[key],unit:units[i],evidence:[]}]))},
+    gaps:[],verification:{evidence:'validated_in_memory',current_version:'caller_snapshot_only',source_bytes:'not_reopened',regulatory:'not_assessed',measurement_prediction:'not_assessed',execution_authority:false}}};
+}
+function preview(overrides){
+  assert.equal(typeof workflowAPI.parseConductedPlanPreview,'function','missing bounded preview parser');
+  const value=previewPacket();Object.assign(value.plan_input.plan,{numeric_limit_dbm:null,uncertainty_db:null,assessment:'not_assessed'});
+  if(overrides)overrides(value);
+  return workflowAPI.parseConductedPlanPreview(JSON.stringify(value),{intake_id:'I-1',revision:2});
+}
+test('conducted preview exact wrapper keeps current provided context separate from original prompt and execution authority',()=>{
+  const value=preview();assert.equal(value.context_scope,'current_provided_context');assert.equal(value.plan_input.status,'ready_for_simulation');
+  assert.equal(value.plan_input.verification.execution_authority,false);assert.equal(value.plan_input.plan.numeric_limit_dbm,null);
+  assert.equal(value.plan_input.plan.source_settings.crest_factor_db,0);assert.equal(value.plan_input.plan.assessment,'not_assessed');
+});
+test('conducted preview preserves blocked null settings and original rejected provided value without using it as a plan value',()=>{
+  const value=preview(v=>{const p=v.plan_input;p.status='blocked';p.verification.evidence='not_validated';p.plan.source_settings.power_dbm=null;p.plan.basis_refs.power_dbm=null;p.gaps=[{code:'missing_or_invalid_basis',field:'basis.power_dbm',provided:0,blocking:true}];});
+  assert.equal(value.plan_input.plan.source_settings.power_dbm,null);assert.equal(value.plan_input.gaps[0].provided,0);
+  assert.equal(typeof workflowAPI.conductedPreviewValue,'function');assert.equal(workflowAPI.conductedPreviewValue(null),'미제공(null)');assert.equal(workflowAPI.conductedPreviewValue(0),'0');
+});
+test('conducted preview supports only the published nested fact question citation and basis variants',()=>{
+  for(const shape of ['schema1','text_line','pdf_page']){
+    const value=preview(v=>{const c=v.plan_input.intake.source_facts[0].evidence[0];if(shape!=='pdf_page'){delete c.extraction_id;delete c.page_number;delete c.text_sha256;if(shape==='schema1')delete c.kind;else c.kind='text_line';}
+      const p=v.plan_input;p.status='blocked';p.verification.evidence='not_validated';p.intake.questions=[{key:'conflict_market',field:'market',values:['EU','US'],message:'충돌'},{key:'missing_firmware',field:'firmware',message:'누락'},{key:'product_identity',message:'대상 미확인'},{key:'unread_documents',paths:['synthetic-request.pdf'],message:'미독해'}];p.gaps=[{code:'product_identity',field:'intake.identity',provided:null,blocking:true}];});
+    assert.equal(value.plan_input.intake.questions.length,4);
+  }
+});
+test('conducted preview rejects another intake revision extra schema fields and promoted verification',()=>{
+  preview();
+  for(const change of [v=>v.intake_id='other',v=>v.revision=3,v=>v.plan_input.binding.context_sha256='0'.repeat(64),v=>v.context_scope='original_prompt',v=>v.plan_input.verification.execution_authority=true,v=>v.plan_input.plan.assessment='pass',v=>v.plan_input.plan.numeric_limit_dbm=30,v=>v.plan_input.plan.source_settings.frequency_hz=true,v=>v.plan_input.extra='future',v=>v.schema_version=true])assert.throws(()=>preview(change));
+});
+test('conducted preview refuses unknown gap question and citation keys and ready with a blocking gap',()=>{
+  preview();
+  for(const change of [v=>v.plan_input.gaps=[{code:'future',field:'input',provided:null,blocking:true}],v=>v.plan_input.gaps=[{code:'missing_setting',field:'source_settings.power_dbm',provided:null,blocking:true}],v=>v.plan_input.intake.source_facts[0].evidence[0].url='https://invalid.example',v=>v.plan_input.intake.questions=[{key:'future',message:'future'}],v=>v.plan_input.plan.basis_refs.power_dbm.unit='W'])assert.throws(()=>preview(change));
+});
+test('conducted preview raw JSON bounds and duplicate fields fail before a new result can be published',()=>{
+  preview();for(const raw of [' '.repeat(262145),'{}{}','{"schema_version":1,"schema_version":1}','{"n":NaN}'])assert.throws(()=>workflowAPI.parseConductedPlanPreview(raw,{intake_id:'I-1',revision:2}));
+});
+test('conducted preview does not round a large original rejected integer in gap evidence',()=>{
+  preview();const packet=previewPacket();Object.assign(packet.plan_input.plan,{numeric_limit_dbm:null,uncertainty_db:null,assessment:'not_assessed'});packet.plan_input.status='blocked';packet.plan_input.verification.evidence='not_validated';packet.plan_input.gaps=[{code:'invalid_setting',field:'source_settings.power_dbm',provided:'RAW_UNSAFE',blocking:true}];
+  const raw=JSON.stringify(packet).replace('"RAW_UNSAFE"','9007199254740993');const value=workflowAPI.parseConductedPlanPreview(raw,{intake_id:'I-1',revision:2});
+  assert.equal(workflowAPI.conductedPreviewValue(value.plan_input.gaps[0].provided),'9007199254740993');
+});
+test('conducted preview rejects a gap field outside the published field paths',()=>{
+  preview();assert.throws(()=>preview(v=>{v.plan_input.status='blocked';v.plan_input.verification.evidence='not_validated';v.plan_input.gaps=[{code:'missing_setting',field:'future_private_field',provided:null,blocking:true}];}));
+});

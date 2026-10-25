@@ -129,6 +129,84 @@ class IntakeReadModel:
     def __init__(self, workspace):
         self.database = Path(workspace).resolve() / 'lab.sqlite3'
 
+    def current_conducted_plan_context(self, intake_id):
+        """Current provided context, never a restored original provider prompt.
+
+        Reuse the existing retained-source/read-transaction validation. No Store
+        initializer, claim, parsing preparation, retention or queue mutation runs.
+        """
+        if type(intake_id) is not str or not _IDENTIFIER.fullmatch(intake_id):
+            raise ReadModelError('intake_conducted_preview_invalid_request')
+        if not self.database.is_file():
+            raise ReadModelError('store_missing')
+        from .store import Store
+        from . import intake_reference_snapshot as retained
+        from .intake_jobs import _analysis_contract
+        from .intake_model_boundary import build_analysis_prompt
+        try:
+            with Store.open_existing(str(self.database.parent)) as store:
+                con = sqlite3.connect(self.database.as_uri() + '?mode=ro', uri=True, timeout=2)
+                try:
+                    con.row_factory = sqlite3.Row
+                    con.execute('PRAGMA query_only=ON'); con.execute('BEGIN')
+                    eligibility = con.execute('''SELECT i.revision,r.synthetic,s.synthetic AS source_synthetic,j.state
+                        FROM intakes i LEFT JOIN intake_revisions r ON r.intake_id=i.intake_id AND r.revision=i.revision
+                        LEFT JOIN intake_sources s ON s.source_id=i.source_id
+                        LEFT JOIN intake_jobs j ON j.intake_id=i.intake_id AND j.revision=i.revision
+                        WHERE i.intake_id=?''', (intake_id,)).fetchone()
+                    if eligibility is None:
+                        raise ReadModelError('intake_not_found')
+                    if eligibility['synthetic'] != 1 or eligibility['source_synthetic'] != 1:
+                        raise ReadModelError('intake_conducted_preview_synthetic_required')
+                    if eligibility['state'] != 'completed':
+                        raise ReadModelError('intake_conducted_preview_analysis_unavailable')
+                    capture = retained.capture_intake_reference_snapshot_in_transaction(store,con,intake_id)
+                    if capture['status'] == 'unavailable':
+                        reason = ('v2_pdf_required' if set(capture['reason_codes']) & {'legacy_analysis','no_pdf_context'}
+                                  else 'analysis_unavailable')
+                        raise ReadModelError('intake_conducted_preview_' + reason)
+                    if 'source_provenance_unconfirmed' in capture['readiness']['reason_codes']:
+                        raise ReadModelError('intake_conducted_preview_synthetic_required')
+                    if not capture['profile']['matches']:
+                        raise ReadModelError('intake_conducted_preview_source_invalid')
+                    # These existing bounded native readers preserve the same
+                    # transaction and retained graph checks; the public capture
+                    # intentionally contains only a smaller reference projection.
+                    row = retained._origin(con,intake_id)
+                    result = retained._json(row['result_json'],8*1024**2,'source_integrity_invalid')
+                    analysis = result['submission']
+                    files, manifest, _, _ = retained._graph(store,row,analysis)
+                    context = dict(job_id=row['job_id'],intake_id=intake_id,revision=row['revision'],synthetic=True,
+                        documents=manifest['documents'],analysis_context_id=analysis['context_id'],
+                        analysis_contract=_analysis_contract({'documents':manifest['documents'],'context_id':analysis['context_id']}),
+                        instructions='Current provided read-only synthetic planning context. This is not an original model prompt and grants no execution authority.')
+                    prompt = build_analysis_prompt(context,producer_name='current-readonly-plan')
+                    return {'context':json.loads(prompt['messages'][1]['content']),'analysis':analysis}
+                finally:
+                    con.close()
+        except ReadModelError:
+            raise
+        except sqlite3.Error as exc:
+            raise ReadModelError('store_unavailable') from exc
+        except (OSError,ValueError,TypeError,KeyError,IndexError,UnicodeError,RecursionError,OverflowError) as exc:
+            raise ReadModelError('intake_conducted_preview_source_invalid') from exc
+
+    def conducted_plan_preview(self, intake_id, selection=None):
+        native = self.current_conducted_plan_context(intake_id)
+        context, analysis = native['context'], native['analysis']
+        raw = json.dumps(context,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')
+        import hashlib
+        context_sha = hashlib.sha256(raw).hexdigest()
+        status = ('not_provided' if selection is None else 'other_intake' if selection['intake_id'] != intake_id
+                  else 'revision_changed' if selection['revision'] != context['revision'] else 'matched')
+        provided = selection if status == 'matched' else {}
+        from .intake_conducted_twin_plan import build_conducted_twin_plan_input
+        report = build_conducted_twin_plan_input(context,analysis,expected_revision=context['revision'],
+            expected_context_sha256=context_sha,source_settings=provided.get('source_settings',{}),
+            basis=provided.get('basis',{}),method=provided.get('method',{}))
+        return dict(schema_version=1,kind='intake_conducted_plan_preview',intake_id=intake_id,revision=context['revision'],
+            context_sha256=context_sha,context_scope='current_provided_context',selection_status=status,plan_input=report)
+
     def fixture_runs(self, intake_id):
         """One pure read transaction; no queue claim, blob resolver or evaluator."""
         if not self.database.is_file():
