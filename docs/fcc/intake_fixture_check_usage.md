@@ -154,3 +154,25 @@ relation 이유 enum은 `provided_revision_changed, expected_current_binding_mis
 source context/revision/generation·관측 pending/stale·계획 binding6/C1·제공 결과 relation을 대조한다. 계획과 결과의 조건 binding이 다르거나 현재 계획 관측을 확인하지 못하면 result gap 연결을 차단한다. 다른 intake의 항목은 현재 큐에 넣지 않고, 같은 intake의 낡은 revision은 원형을 보존하되 blocked로 표시한다. 부모 조회 실패/렌더 실패와 late/abort에서는 원 항목을 유지하되 현재 질문으로 사용하지 않는다. 빈 목록/모든 표시 항목0은 전체 준비·실행·검증 완료를 뜻하지 않는다. 실제AI unknown/fixture 구분과 기존7단계/제공 결과 readonly 표시를 유지한다.
 
 `VLAB_GAP_QUEUE_ONLY=1`로 기존 browser check의 새 큐 검사만 실행한다. 새 Node는 `node --test --test-reporter=tap --test-name-pattern="gap queue" frontend/intake_flow_model.test.mjs`로 별도 선택한다. 기존183/168이나 이전 preview/result DOM 전체는 반복하지 않는다. 정상/미제공/시스템 오류/미지원/실제 새 revision/다른 조건/공개 해석 gap의 실제 보호 GET→production DOM390/1440 관측과 별도 typed 부모 실패·해석 질문 추가·late·렌더 주입을 구분한다. 제공 D3 데이터는 명시 typed snapshot이며 실제 builder·extractor·원자료 부재·모델/실물 성공 증거로 세지 않는다. 새 모델/외부망/장비/Office0, 원 실패와 raw 응답은 별도 bounded proof에 보존한다.
+
+## 입력 PDF에서 같은 계획·실행·결과·DRAFT까지
+
+기존 도구에 `--conducted-workflow`를 명시하면 새 합성 PDF 한 조건을 [facts 어댑터](intake_facts_to_conducted_plan_usage.md), [실행 어댑터](intake_plan_virtual_execution_usage.md), [결과 finalizer](conducted_execution_result_finalizer_usage.md)로 연결한다. 기존 기본 TXT/PDF·`--power-dbm` 단일 fixture 경로는 그대로다. opt-in과 `--power-dbm`은 함께 사용할 수 없다.
+
+```powershell
+python -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --document-kind pdf --measurement-ref event:17 --mock-model gpt-6.1-sol --port 0
+```
+
+`--output`을 생략하면 짧은 새 UUID 경로 `.local/cw/<새 UUID 일부>`에 만든다. 기존 경로는 비어 있어도 거절하며 실패한 폴더를 지우거나 재사용하지 않는다. Windows와 기존 PDF 의존성, 로컬 .NET Framework의 C# compiler가 필요한 개발 시연이다. compiler가 없거나 opt-in이 TXT이거나 명시 측정 ref·mock 모델명이 없으면 `unsupported`·이유·runtime0을 저장한다. 실제 provider·설치 CLI·인증으로 fallback하지 않는다. `--mock-model`은 생성한 mock executable이 공개 wire 계약을 통과하기 위한 caller의 명시 label이며 모델 호출이나 기본 공급자 선택이 아니다.
+
+이 경로는 자체 authored `SM-A176U/smartphone/US`·Wi-Fi 2.4 GHz engineering 문서와 한 physical quote의 `frequency: 2412 MHz; bandwidth: 20 MHz; on_average_power: 11 dBm; duty_cycle: 50 %; modulation: OFDM; crest_factor: 4 dB`를 새 PDF에 쓴다. 고객 실값·실제 제품 지원·코드의 D1 누락값 default가 아니다. genuine 등록·scan·합성 한정 claim의 public8로 prompt를 만들고, 명시 authored MOCK 원 응답을 genuine strict decoder로 검증해 완료한다. 임대 token은 prompt에 넣지 않는다. `producer.kind=model`은 mock 선언이며 실제 모델 실행을 뜻하지 않는다.
+
+완료한 PDF의 `IntakeReadModel.current_conducted_plan_context()`에서 현재 readonly context·analysis를 새로 얻는다. 이 exact C1을 facts 어댑터에 전달해 source6/basis를 실제 인용에서 조립한다. 원 producer prompt의 context를 현재값으로 선언하지 않는다. plan이 blocked면 원 wrapper/gaps/questions를 보존하고 runtime0이다. ready일 때만 그 원 plan과 명시 on/source_output 방법, on/sensor_input·보정 미적용·부호 +1 quantity를 기존 실행 어댑터에 전달한다. RF 설정을 수동으로 채우거나 다른 조건을 합치지 않는다.
+
+도구는 새 `m/authored-mock.cs`를 로컬 `m/codex.exe`로 컴파일한다. 이 독립 mock은 공개 version/JSONL/last-message envelope와 `DUT.start → advance1 → sensor.acquire → advance1 → stop` 다섯 동작만 제공한다. genuine producer의 원 subprocess·strict wire·동일 runtime·실제 setup collector·후행 관측·post-run journal을 사용하며 생산 코드 monkeypatch나 설치 Codex 실행 파일은 사용하지 않는다. mock 원 소스·binary SHA와 각 원 응답을 보존한다. 기존8호출/180초/호출60초/retry0·schema3052B 원 literal·파일 상한은 올리지 않는다.
+
+caller가 명시한 같은 journal의 `event:17`만 finalizer에 전달한다. ref가 없거나 유효하지 않으면 원 missing/invalid/gaps를 남기며 마지막 측정을 선택하지 않는다. genuine D3 builder/writer가 계산·저장한 원 결과와 DRAFT를 그대로 보존한다. 같은 현재 C1의 원 plan binding을 expected-current 값으로 서버에 전달하고 시작 후 보호 GET가 다시 현재 context와 대조한다. 결과 자신의 binding을 현재값으로 선언하거나 SHA를 사후 교정하지 않는다.
+
+CLI는 원 summary와 실제 loopback URL을 출력한다. 새 폴더의 `public-summary.json`은 원 raw packet·corrected·result/storage 상태와 반환된 bound 파일 path/bytes/SHA를 포함한다. `analysis-context-original.json`, `analysis-prompt.json`, `analysis-MOCK-original.json`, `analysis-strict.json`, `current-readonly-context-analysis.json`, `facts-plan-original.json`, `execution-original.json`, `finalizer-original.json`, `server-startup-original.json` 및 `x/`의 원 실행 증거를 남긴다. D3 payload는 같은 출력 폴더 아래 `.local/conducted-result-artifacts/draft-<새 ID>/result.json`, `draft.md`, `manifest.json`이다. 별도 service·Store schema·사용자 원본 입력·화면 실행 버튼을 만들지 않는다. 종료는 기존 `Ctrl+C`다.
+
+현재 authored 정상 조건은 raw −19.5 dBm·corrected 11 dBm, result recorded·storage complete·DRAFT·규범 not_assessed를 실제로 연결했다. 동일 현재 plan/expected binding/D3 원 결과를 보호 GET와 production DOM390/1440에서 대조했다. 이 수치는 고정 합성 전파의 결과이며 실제 SM-A176U 측정이나 물리 예측 성능이 아니다. 원 null verdict/limit/uncertainty·실제 AI unknown 표시를 유지한다. 첫 mock의 안정화 전 acquire는 invalid로 저장됐으며 그 원 실패를 보존하고 새 실행에서 동작 대기 순서만 수정했다. 기존 기본 TXT genuine1, 새 typed 진입/interrupt 정리3과 실제 새 opt-in 실행·HTTP/DOM은 별도 분모다. 기존183/168·다른 owner core/test/private proof·실제 모델·auth·원장·장비·Office는 이번 검증에 사용하지 않았다.

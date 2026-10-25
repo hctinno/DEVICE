@@ -79,5 +79,41 @@ class IntakeFixtureCheckTests(unittest.TestCase):
             self.assertEqual(market['evidence'][0]['page_number'], 2)
 
 
+class ConductedWorkflowEntryTests(unittest.TestCase):
+    def test_text_opt_in_is_explicitly_unsupported_without_runtime(self):
+        from labflow.intake_fixture_check import run_conducted_flow
+        with tempfile.TemporaryDirectory() as temporary:
+            result = run_conducted_flow(Path(temporary) / 'text', document_kind='text', measurement_ref='event:17')
+            self.assertEqual(result['summary']['status'], 'unsupported')
+            self.assertEqual(result['summary']['reason'], 'conducted_workflow_pdf_required')
+            self.assertEqual(result['summary']['runtime_calls'], 0)
+            self.assertIsNone(result['workspace'])
+
+    def test_missing_explicit_measurement_ref_never_selects_last_measurement(self):
+        from labflow.intake_fixture_check import run_conducted_flow
+        with tempfile.TemporaryDirectory() as temporary:
+            result = run_conducted_flow(Path(temporary) / 'reference', document_kind='pdf', measurement_ref=None)
+            self.assertEqual(result['summary']['status'], 'unsupported')
+            self.assertEqual(result['summary']['reason'], 'conducted_workflow_measurement_ref_required')
+            self.assertEqual(result['summary']['runtime_calls'], 0)
+            self.assertIsNone(result['workspace'])
+
+    def test_cli_serves_original_startup_bindings_and_closes_after_interrupt(self):
+        from labflow.intake_fixture_check import main
+        plan, snapshot = {'original': 'plan'}, {'original': 'result'}
+        flow = {'summary': {'fixture_acceptance': 'pass', 'intake_id': 'I-MOCK'},
+                'workspace': Path('owned-synthetic-state'),
+                'server_options': {'conducted_plan_preview_inputs': plan, 'conducted_result_snapshot': snapshot}}
+        with patch('labflow.intake_fixture_check.run_conducted_flow', create=True, return_value=flow), patch('labflow.ui_server.create_server') as create:
+            server = create.return_value.__enter__.return_value
+            server.server_port = 8123
+            server.serve_forever.side_effect = KeyboardInterrupt
+            code = main(['--conducted-workflow', '--document-kind', 'pdf', '--measurement-ref', 'event:17', '--port', '0'])
+            self.assertEqual(code, 0)
+            create.assert_called_once_with(flow['workspace'], port=0, **flow['server_options'])
+            create.return_value.__exit__.assert_called_once_with(None, None, None)
+            self.assertEqual(snapshot, {'original': 'result'})
+
+
 if __name__ == '__main__':
     unittest.main()
