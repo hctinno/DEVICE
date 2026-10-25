@@ -129,3 +129,80 @@ export function createFixtureReadGate() {
     invalidate() {sequence++;},
   };
 }
+
+const PLAN_FIELDS=['frequency_hz','power_dbm','bandwidth_hz','duty_cycle','modulation','crest_factor_db'];
+const PLAN_FACTS='product_type customer manufacturer model market purpose features antenna_gain power_target firmware'.split(' ');
+const PLAN_GAPS='native_input_invalid analysis_invalid context_invalid expected_revision_changed_or_invalid expected_context_changed_or_invalid analysis_evidence_invalid conflicting_intake_fact missing_intake_field follow_up_missing_field product_identity unread_documents uncertain_intake_fact intent_value_not_in_request_quote invalid_source_settings unknown_source_field missing_setting unsupported_modulation invalid_setting invalid_rf_domain invalid_method unknown_method_field unsupported_method_field missing_method_field invalid_basis unknown_basis_field missing_or_invalid_basis unsupported_or_invalid_basis basis_value_mismatch basis_quote_value_mismatch basis_evidence_invalid'.split(' ');
+const previewNeed=value=>{if(!value)throw Error('intake_conducted_preview_invalid_response');};
+function previewJSON(raw){
+  previewNeed(typeof raw==='string'&&new TextEncoder().encode(raw).length<=262144);
+  let i=0,nodes=0;const space=()=>{while(/[\x20\t\r\n]/.test(raw[i]||'!'))i++;};
+  const string=()=>{const start=i++;while(i<raw.length){if(raw[i]==='\\'){i+=2;continue;}if(raw[i++]==='"'){const text=JSON.parse(raw.slice(start,i));previewNeed(text.isWellFormed());return text;}}throw Error('intake_conducted_preview_invalid_response');};
+  const value=depth=>{
+    previewNeed(depth<=40&&++nodes<=100000);space();const c=raw[i];if(c==='"')return string();
+    if(c==='{'){i++;space();const out=Object.create(null);if(raw[i]==='}'){i++;return out;}while(true){space();previewNeed(raw[i]==='"');const key=string();previewNeed(!Object.hasOwn(out,key));space();previewNeed(raw[i++]===':');out[key]=value(depth+1);space();const end=raw[i++];if(end==='}')return out;previewNeed(end===',');}}
+    if(c==='['){i++;space();const out=[];if(raw[i]===']'){i++;return out;}while(true){out.push(value(depth+1));space();const end=raw[i++];if(end===']')return out;previewNeed(end===',');}}
+    for(const [token,result]of [['true',true],['false',false],['null',null]])if(raw.startsWith(token,i)){i+=token.length;return result;}
+    const number=/^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/.exec(raw.slice(i));previewNeed(number);i+=number[0].length;
+    const parsed=Number(number[0]);if(!/[.eE]/.test(number[0])&&!Number.isSafeInteger(parsed))return BigInt(number[0]);
+    previewNeed(Number.isFinite(parsed));return parsed;
+  };
+  const result=value(0);space();previewNeed(i===raw.length);return result;
+}
+export function conductedPreviewValue(value){
+  const encode=v=>v===null?'null':typeof v==='string'?JSON.stringify(v):Array.isArray(v)?'['+v.map(encode).join(',')+']':typeof v==='object'?'{'+Object.entries(v).map(([k,x])=>JSON.stringify(k)+':'+encode(x)).join(',')+'}':Object.is(v,-0)?'-0':String(v);
+  return value===undefined?'제공 항목 없음':value===null?'미제공(null)':typeof value==='object'?encode(value):Object.is(value,-0)?'-0':String(value);
+}
+export function parseConductedPlanPreview(raw,context){
+  const v=previewJSON(raw),need=previewNeed;
+  const keys=(x,names)=>{need(x!==null&&typeof x==='object'&&!Array.isArray(x));const actual=Object.keys(x);need(actual.length===names.length&&actual.every(k=>names.includes(k)));};
+  const text=x=>typeof x==='string'&&x.trim().length>0;
+  const sha=x=>typeof x==='string'&&x.length===64&&/^[a-f0-9]+$/.test(x);
+  const integer=x=>typeof x==='number'&&Number.isSafeInteger(x)&&x>0;
+  const number=x=>typeof x==='bigint'||typeof x==='number'&&Number.isFinite(x);
+  const nullable=(x,check)=>x===null||check(x);
+  const list=(x,check,max=100000)=>{need(Array.isArray(x)&&x.length<=max);for(const item of x)need(check(item));};
+  const citation=c=>{
+    const extra=c.kind==='pdf_page'?['kind','extraction_id','page_number','text_sha256']:c.kind==='text_line'?['kind']:[];
+    keys(c,['path','sha256','line_start','line_end','quote','role',...extra]);need(text(c.path)&&sha(c.sha256)&&integer(c.line_start)&&integer(c.line_end)&&c.line_end>=c.line_start&&text(c.quote)&&['request','product','reference'].includes(c.role));
+    if(extra.length===4)need(sha(c.extraction_id)&&sha(c.text_sha256)&&integer(c.page_number));return true;
+  };
+  const citations=(x,min=0)=>{list(x,citation,20);need(x.length>=min);};
+  keys(v,['schema_version','kind','intake_id','revision','context_sha256','context_scope','selection_status','plan_input']);
+  need(v.schema_version===1&&v.kind==='intake_conducted_plan_preview'&&v.intake_id===context.intake_id&&v.revision===context.revision&&integer(v.revision)&&sha(v.context_sha256)&&v.context_scope==='current_provided_context'&&['matched','not_provided','other_intake','revision_changed'].includes(v.selection_status));
+  const p=v.plan_input;keys(p,['schema_version','kind','status','binding','intake','plan','gaps','verification']);
+  need(p.schema_version===1&&p.kind==='intake_conducted_twin_plan_input'&&['ready_for_simulation','blocked'].includes(p.status));
+  keys(p.binding,['intake_id','revision','analysis_context_id','context_sha256','analysis_sha256','plan_sha256']);
+  need((p.binding.intake_id===null||p.binding.intake_id===v.intake_id)&&(p.binding.revision===null||p.binding.revision===v.revision)&&(p.binding.context_sha256===null||p.binding.context_sha256===v.context_sha256)&&nullable(p.binding.analysis_context_id,sha)&&nullable(p.binding.analysis_sha256,sha)&&sha(p.binding.plan_sha256));
+  keys(p.intake,['facts','source_facts','missing_fields','follow_up_missing_fields','questions']);
+  need(p.intake.facts!==null&&typeof p.intake.facts==='object'&&!Array.isArray(p.intake.facts));
+  for(const [field,fact]of Object.entries(p.intake.facts)){need(PLAN_FACTS.includes(field));keys(fact,['value','status']);need(text(fact.value)&&['explicit','inferred'].includes(fact.status));}
+  list(p.intake.source_facts,f=>{keys(f,['field','value','status','evidence']);need(PLAN_FACTS.includes(f.field)&&text(f.value)&&['explicit','inferred','uncertain'].includes(f.status));citations(f.evidence,1);return true;},200);
+  for(const key of ['missing_fields','follow_up_missing_fields'])list(p.intake[key],x=>PLAN_FACTS.includes(x),10);
+  list(p.intake.questions,q=>{
+    if(typeof q.key==='string'&&q.key.startsWith('conflict_')){keys(q,['key','field','values','message']);need(PLAN_FACTS.includes(q.field)&&q.key==='conflict_'+q.field);list(q.values,text);}
+    else if(typeof q.key==='string'&&q.key.startsWith('missing_')){keys(q,['key','field','message']);need(PLAN_FACTS.includes(q.field)&&q.key==='missing_'+q.field);}
+    else if(q.key==='product_identity')keys(q,['key','message']);
+    else{keys(q,['key','paths','message']);need(q.key==='unread_documents');list(q.paths,text);}
+    need(text(q.message));return true;
+  });
+  const plan=p.plan;keys(plan,['schema_version','method_id','method_version','metric','reference_plane','source_settings','basis_refs','numeric_limit_dbm','uncertainty_db','assessment']);
+  need(plan.schema_version===1&&[null,'conducted_synthetic'].includes(plan.method_id)&&(plan.method_version===null||plan.method_version===1)&&[null,'on','time','peak'].includes(plan.metric)&&[null,'source_output'].includes(plan.reference_plane)&&plan.numeric_limit_dbm===null&&plan.uncertainty_db===null&&plan.assessment==='not_assessed');
+  keys(plan.source_settings,PLAN_FIELDS);keys(plan.basis_refs,PLAN_FIELDS);
+  const units=[['Hz','kHz','MHz','GHz'],['dBm'],['Hz','kHz','MHz','GHz'],['ratio','%'],['label'],['dB']];
+  for(const [index,field]of PLAN_FIELDS.entries()){
+    const setting=plan.source_settings[field],basis=plan.basis_refs[field];
+    need((setting===null)===(basis===null));if(setting===null)continue;
+    need(field==='modulation'?text(setting)&&setting.length<=200:number(setting));
+    if(['frequency_hz','bandwidth_hz','duty_cycle'].includes(field))need(setting>0);
+    if(field==='duty_cycle')need(setting<=1);if(field==='crest_factor_db')need(setting>=0);
+    keys(basis,['kind','value','unit','evidence']);need(['source_cited','developer_declared_synthetic'].includes(basis.kind)&&units[index].includes(basis.unit)&&(field==='modulation'?text(basis.value):number(basis.value)));
+    citations(basis.evidence,basis.kind==='source_cited'?1:0);if(basis.kind==='developer_declared_synthetic')need(basis.evidence.length===0);
+  }
+  list(p.gaps,g=>{keys(g,['code','field','provided','blocking']);need(PLAN_GAPS.includes(g.code)&&text(g.field)&&/^(?:input|context|analysis|(?:binding|intake)\.[\s\S]+|(?:source_settings|method|basis)(?:\.[\s\S]+)?)$/.test(g.field)&&typeof g.blocking==='boolean');return true;});
+  keys(p.verification,['evidence','current_version','source_bytes','regulatory','measurement_prediction','execution_authority']);
+  need(p.verification.current_version==='caller_snapshot_only'&&p.verification.source_bytes==='not_reopened'&&p.verification.regulatory==='not_assessed'&&p.verification.measurement_prediction==='not_assessed'&&p.verification.execution_authority===false);
+  const ready=p.status==='ready_for_simulation';need(ready===!p.gaps.some(g=>g.blocking)&&p.verification.evidence===(ready?'validated_in_memory':'not_validated'));
+  if(ready)need(v.selection_status==='matched'&&Object.values(p.binding).every(x=>x!==null));
+  return v;
+}

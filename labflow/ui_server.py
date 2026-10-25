@@ -1383,11 +1383,74 @@ def _reference_dispatch(handler, runtime):
     return True
 
 
+def _conducted_preview_json(value, cap, depth_limit=40):
+    nodes = 0
+    def visit(item,depth=0):
+        nonlocal nodes
+        nodes += 1
+        if nodes > 100000 or depth > depth_limit: raise ValueError('preview_json_limit')
+        kind = type(item)
+        if kind is dict:
+            for key,child in item.items():
+                if type(key) is not str: raise ValueError('preview_json_type')
+                visit(key,depth+1);visit(child,depth+1)
+        elif kind is list:
+            for child in item: visit(child,depth+1)
+        elif kind is str: item.encode('utf-8','strict')
+        elif item is None or kind in (bool,int): pass
+        elif kind is float and math.isfinite(item): pass
+        else: raise ValueError('preview_json_type')
+    visit(value)
+    raw=json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8')
+    if len(raw)>cap:raise ValueError('preview_json_limit')
+    return raw
+
+
+def _conducted_preview_selection(value):
+    if value is None:return None
+    try:
+        if type(value) is not dict or set(value)!=set('intake_id revision source_settings basis method'.split()):raise ValueError()
+        if type(value['intake_id']) is not str or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,149}',value['intake_id'],re.ASCII):raise ValueError()
+        if type(value['revision']) is not int or value['revision']<1:raise ValueError()
+        return _conducted_preview_json(value,65536,32)
+    except (ValueError,TypeError,KeyError,UnicodeError,RecursionError,OverflowError):
+        raise ValueError('intake_conducted_preview_invalid_input') from None
+
+
+def _conducted_preview_response(value):
+    def keys(item,names):
+        if type(item) is not dict or set(item)!=set(names.split()):raise ValueError('preview_contract')
+    keys(value,'schema_version kind intake_id revision context_sha256 context_scope selection_status plan_input')
+    if (type(value['schema_version']) is not int or value['schema_version']!=1 or value['kind']!='intake_conducted_plan_preview'
+            or value['context_scope']!='current_provided_context' or value['selection_status'] not in ('matched','not_provided','other_intake','revision_changed')):raise ValueError('preview_contract')
+    report=value['plan_input'];keys(report,'schema_version kind status binding intake plan gaps verification')
+    if type(report['schema_version']) is not int or report['schema_version']!=1 or report['kind']!='intake_conducted_twin_plan_input' or report['status'] not in ('ready_for_simulation','blocked'):raise ValueError('preview_contract')
+    keys(report['binding'],'intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256')
+    for key in ('intake_id','revision','context_sha256'):
+        if report['binding'][key] is not None and report['binding'][key]!=value[key]:raise ValueError('preview_binding')
+    keys(report['verification'],'evidence current_version source_bytes regulatory measurement_prediction execution_authority')
+    verification=report['verification']
+    if (verification['execution_authority'] is not False or verification['current_version']!='caller_snapshot_only'
+            or verification['source_bytes']!='not_reopened' or verification['regulatory']!='not_assessed'
+            or verification['measurement_prediction']!='not_assessed'):raise ValueError('preview_verification')
+    keys(report['plan'],'schema_version method_id method_version metric reference_plane source_settings basis_refs numeric_limit_dbm uncertainty_db assessment')
+    if report['plan']['numeric_limit_dbm'] is not None or report['plan']['uncertainty_db'] is not None or report['plan']['assessment']!='not_assessed':raise ValueError('preview_assessment')
+    if type(report['gaps']) is not list:raise ValueError('preview_gaps')
+    for gap in report['gaps']:
+        keys(gap,'code field provided blocking')
+        if type(gap['blocking']) is not bool:raise ValueError('preview_gaps')
+    ready=report['status']=='ready_for_simulation'
+    if ready!=(not any(gap['blocking'] for gap in report['gaps'])):raise ValueError('preview_status')
+    if verification['evidence']!=('validated_in_memory' if ready else 'not_validated') or ready and value['selection_status']!='matched':raise ValueError('preview_status')
+    return _conducted_preview_json(value,262144)
+
+
 def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=None,
                   intake_reference_store=None, intake_reference_read_scope=(),
                   intake_reference_append_scope=(), intake_reference_review_inputs=(),
                   intake_test_intent_inputs=(), intake_docx_reference_selection=None, ai_connections=None,
-                  ai_connection_campaign_readback=None):
+                  ai_connection_campaign_readback=None, conducted_plan_preview_inputs=None):
+    conducted_selection = _conducted_preview_selection(conducted_plan_preview_inputs)
     ai_runtime = ai_server_wrapper = None
     if ai_connections is not None or ai_connection_campaign_readback is not None:
         ai_module = importlib.import_module('.ai_connection_ui', __package__)
@@ -1584,6 +1647,9 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 path = unquote(parsed.path, encoding='utf-8', errors='strict')
             except ValueError:
                 return self.error(404, 'route_not_found')
+            preview_match = re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})/conducted-plan-preview',path)
+            if preview_match:
+                return self.read_conducted_preview(preview_match[1],parsed,path)
             if parsed.fragment or parsed.scheme or parsed.netloc or ('?' in self.path and path not in {
                     '/api/control-sources', '/api/fcc-cases/lookup'}):
                 return self.error(404, 'route_not_found')
@@ -1681,6 +1747,45 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 self.error(404 if exc.code == 'intake_not_found' else 503, exc.code)
             except (OSError, ValueError):
                 self.error(503, 'store_unavailable')
+
+        def read_conducted_preview(self,intake_id,parsed,path):
+            try:
+                return Handler._read_conducted_preview(self,intake_id,parsed,path)
+            except (OSError,TimeoutError):
+                # A retired client may disconnect during either success or error
+                # publication. Never append a second response or retry the read.
+                self.close_connection=True
+
+        def _read_conducted_preview(self,intake_id,parsed,path):
+            self.close_connection=True
+            self.connection.settimeout(5)
+            if self.command!='GET':
+                self._reference_allow='GET'
+                return self.error(405,'intake_conducted_preview_read_only')
+            lengths=self.headers.get_all('Content-Length',[])
+            framed=(not self.headers.get_all('Transfer-Encoding') and not self.headers.get_all('Content-Encoding')
+                    and not self.headers.get_all('Expect') and len(lengths)<=1 and
+                    (not lengths or re.fullmatch('0+',lengths[0],re.ASCII)))
+            if not framed or parsed.query or parsed.fragment or self.path!=path:
+                if len(lengths)==1 and re.fullmatch(r'[0-9]{1,5}',lengths[0],re.ASCII) and int(lengths[0])<=32768 and not self.headers.get_all('Transfer-Encoding'):
+                    try:self.rfile.read(int(lengths[0]))
+                    except (OSError,TimeoutError):pass
+                return self.error(400,'intake_conducted_preview_invalid_request')
+            if len(self.headers.get_all('Host',[]))!=1 or len(self.headers.get_all('Origin',[]))>1 or len(self.headers.get_all('Sec-Fetch-Site',[]))>1:
+                return self.error(403,'local_origin_required')
+            try:
+                selection=json.loads(conducted_selection) if conducted_selection is not None else None
+                value=model.conducted_plan_preview(intake_id,selection)
+                raw=_conducted_preview_response(value)
+            except ReadModelError as error:
+                return self.error(404 if error.code=='intake_not_found' else 503,error.code)
+            except (ValueError,TypeError,KeyError,IndexError,UnicodeError,RecursionError,OverflowError):
+                return self.error(503,'intake_conducted_preview_invalid_response')
+            except (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):
+                raise
+            except Exception:
+                return self.error(503,'intake_conducted_preview_unavailable')
+            return self.send_payload(200,raw)
 
         def read_fcc_lookup(self, query):
             if fcc_case_catalog is None:

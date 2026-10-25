@@ -1,5 +1,5 @@
 import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot, docxReferenceMatchesRecord} from './model.mjs';
-import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate} from './intake_flow_model.mjs';
+import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue} from './intake_flow_model.mjs';
 import {validateIntakeReferenceContext,parseIntakeReferenceHistoryJson,parseIntakeReferenceCurrentJson} from './intake-references/model.mjs';
 import {createIntakeReferenceReview} from './intake-references/view.mjs';
 import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
@@ -9,6 +9,7 @@ const $ = selector => document.querySelector(selector);
 const state = {records: [], notices: [], selected: location.hash.slice(1), loaded: false, request: 0, view: 'intakes'};
 const flow = {gate:createFixtureReadGate(), context:null, payload:null, selected:'', pending:false,
   stale:false, status:'가상 기록 조회 대기', updatedText:'아직 조회하지 않음'};
+const conducted={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'가상 계획 미리보기 조회 대기'};
 const referenceTransport = createIntakeReferenceTransport();
 const docx={context:null,hintContext:null,visible:false,allowed:false,busy:false,good:null,
   phase:'idle',message:'보존 관측은 명시 버튼으로 읽습니다.',ticket:0,controller:null};
@@ -289,7 +290,7 @@ function fixtureContext(view = state) {
 function sameFixtureSource(a, b) {
   return a && b && a.intake_id === b.intake_id && a.revision === b.revision;
 }
-function buildIntakeWorkflow(record, payload, current, stale) {
+function buildIntakeWorkflow(record, payload, current, stale, snapshot=state) {
   const view=describeIntakeWorkflow(record,{payload,request_id:current.selected,stale,pending:current.pending,now:Date.now()/1000});
   const node=el('section','section-rule');node.id='intake-workflow';
   node.dataset.intakeId=view.context.intake_id;node.dataset.revision=String(view.context.revision);node.dataset.fixtureScope=view.context.fixture_scope;
@@ -310,6 +311,7 @@ function buildIntakeWorkflow(record, payload, current, stale) {
       item.append(detail);
     }
     if(step.id==='intake'&&view.citations.length)item.append(sources(view.citations));
+    if(step.id==='plan')item.append(buildConductedPlanPreview(record,snapshot));
     if(step.refs.length){const details=el('details');details.append(el('summary','',`공개 근거 참조 ${step.refs.length}개`));const refs=el('ul','fixture-refs');for(const ref of step.refs)refs.append(el('li','mono',ref));details.append(refs);item.append(details);}
     list.append(item);
   }
@@ -363,7 +365,7 @@ function buildFixturePanel(record, view, current = flow) {
     const selected = payload.records.find(entry => entry.request_id === current.selected);
     if (selected) content.append(buildFixtureResult(selected, record.revision, stale));
   }
-  panel.append(buildIntakeWorkflow(record,payload,current,stale),controls, updated, content,
+  panel.append(buildIntakeWorkflow(record,payload,current,stale,view),controls, updated, content,
     el('p', 'inline-note', '이 가상 실행의 실제 AI 호출 없음 · 실장비 검증 없음 · runtime 재개 지원 없음 · case/plan 자동 생성 없음'));
   return panel;
 }
@@ -450,6 +452,97 @@ function syncFixtureContext() {
   Object.assign(flow, {context, payload:retain ? flow.payload : null, selected:retain ? flow.selected : '',
     pending:false, stale:retain && Boolean(flow.payload), status:'가상 기록 조회 대기', updatedText:retain ? flow.updatedText : '아직 조회하지 않음'});
   if (context) refreshFixtureRuns();
+}
+
+function conductedContext(view=state){
+  const record=view.records.find(item=>item.intake_id===view.selected);
+  return record&&view.view==='intakes'?{intake_id:record.intake_id,revision:record.revision,generation:view.snapshotGeneration||0,request_id:''}:null;
+}
+function buildConductedPlanPreview(record,snapshot=state,current=conducted){
+  const context=conductedContext(snapshot),matched=sameFixtureSource(context,current.context);
+  const value=matched?current.value:null,stale=current.stale||!matched||context.generation!==current.context.generation;
+  const area=el('section','section-rule');area.id='conducted-plan-preview';
+  area.dataset.previewStatus=value?.plan_input.status||'unavailable';area.dataset.previewCurrent=String(Boolean(value&&!stale&&!current.pending&&!current.parentPending));
+  area.append(el('h4','','가상 계획 미리보기'));
+  const status=el('p','inline-note',stale&&value?'이전 관측 · 현재 관계 미확인':matched?current.status:'가상 계획 미리보기 조회 대기');
+  status.id='conducted-plan-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const refresh=el('button','button','가상 계획 미리보기 새로고침');refresh.id='conducted-plan-refresh';refresh.type='button';refresh.setAttribute('aria-disabled',String(current.pending||current.parentPending));
+  refresh.addEventListener('click',()=>{if(refresh.getAttribute('aria-disabled')!=='true')void refreshConductedPlanPreview();});
+  area.append(status,refresh,el('p','inline-note','현재 제공 context의 읽기 관측 · 원 모델 prompt 복원 아님 · 합성 계획 입력이며 실행 권한 없음'));
+  const content=el('div');content.id='conducted-plan-content';
+  if(value){
+    const p=value.plan_input,plan=p.plan,format=conductedPreviewValue;
+    content.append(badge(p.status==='ready_for_simulation'?'가상 계획 입력 준비 · ready_for_simulation':'가상 계획 입력 보류 · blocked',p.status==='ready_for_simulation'?'info':'warning'),metadata([
+      ['현재 제공 접수 / 버전',`${value.intake_id} / v${value.revision}`],['현재 제공 context C1 SHA-256',value.context_sha256],
+      ['제공 설정 선택',({matched:'같은 접수·버전의 명시 선택',not_provided:'제공 설정 없음',other_intake:'다른 접수의 설정 · 적용 안 함',revision_changed:'다른 버전의 설정 · 적용 안 함'})[value.selection_status]],
+      ['분석 원 context ID',format(p.binding.analysis_context_id)],['분석 SHA-256',format(p.binding.analysis_sha256)],['계획 입력 SHA-256',p.binding.plan_sha256],
+      ['합성 방법 / 버전',`${format(plan.method_id)} / ${format(plan.method_version)}`],['합성 metric / 기준면',`${format(plan.metric)} / ${format(plan.reference_plane)}`],
+      ['규제 한계값',format(plan.numeric_limit_dbm)],['불확도',format(plan.uncertainty_db)],['판정',plan.assessment],
+    ]));
+    content.append(el('p','inline-note','규제 적합성 미평가 · 실측 예측력 미평가 · 규격 판정/실측 대조/실행 승인은 별도입니다. 거절한 원 제공값을 입력값으로 복원하지 않습니다.'));
+    const fields=['frequency_hz','power_dbm','bandwidth_hz','duty_cycle','modulation','crest_factor_db'],labels=['주파수','합성 on-average 전력','대역폭','듀티','변조 선언','crest factor'],units=['Hz','dBm','Hz','ratio','label','dB'];
+    const scroll=el('div','table-scroll'),table=el('table','data-table'),head=el('tr'),body=el('tbody');table.append(el('caption','','명시 제공된 가상 source 설정 · 관측 측정값 아님'));
+    for(const label of ['항목','가상 입력값','계약 단위','근거']){const th=el('th','',label);th.scope='col';head.append(th);}const thead=el('thead');thead.append(head);table.append(thead);
+    for(const [index,field]of fields.entries()){
+      const row=el('tr');row.dataset.planSetting=field;row.append(el('td','',labels[index]),el('td','mono',format(plan.source_settings[field])),el('td','',units[index]));
+      const cell=el('td'),basis=plan.basis_refs[field];if(basis===null)cell.textContent='근거 미제공(null)';
+      else{const detail=el('details');detail.append(el('summary','',basis.kind==='source_cited'?'자료 인용 · 합성 조건':'개발자 선언 합성'),el('p','inline-note',`근거 제공값: ${format(basis.value)} ${basis.unit}`));if(basis.evidence.length)detail.append(sources(basis.evidence));else detail.append(el('p','inline-note','개발자가 명시한 합성 설정 · 원문/규정/실측 근거 아님'));cell.append(detail);}
+      row.append(cell);body.append(row);
+    }
+    table.append(body);scroll.append(table);content.append(scroll);
+    const gaps=el('div','question-list');
+    for(const [index,gap]of p.gaps.entries()){const node=el('article','question');node.dataset.planGap=String(index);node.append(badge(gap.blocking?'입력 차단 공백':'후속 준비 공백',gap.blocking?'warning':'neutral'),el('p','',`${gap.field} · ${gap.code}`),el('p','mono',`원 제공값: ${format(gap.provided)}`));gaps.append(node);}content.append(gaps);
+    const facts=el('details');facts.append(el('summary','','제품·목적·시장과 원 사실·질문'));
+    facts.append(metadata(Object.entries(p.intake.facts).map(([field,fact])=>[FIELDS[field],`${fact.value} · ${FACT_LABELS[fact.status]}`])),el('p','inline-note',`원 누락: ${format(p.intake.missing_fields)} · 후속 실물 준비 누락: ${format(p.intake.follow_up_missing_fields)}`));
+    for(const fact of p.intake.source_facts){const item=el('article','file');item.append(el('strong','',`${FIELDS[fact.field]}: ${fact.value}`),el('p','inline-note',FACT_LABELS[fact.status]),sources(fact.evidence));facts.append(item);}
+    for(const q of p.intake.questions)facts.append(el('p','inline-note',`${q.key}: ${q.message}${q.values?' · '+format(q.values):q.paths?' · '+format(q.paths):''}`));content.append(facts);
+    content.append(el('p','inline-note','아래는 순수 계획 어댑터의 검증 범위이며 현재 DB·보존 원문 읽기 관측과 구분합니다.'),metadata([
+      ['인용 검증',p.verification.evidence],['버전 범위',p.verification.current_version],['순수 어댑터의 원 bytes',p.verification.source_bytes],
+      ['규제 / 실측 예측',`${p.verification.regulatory} / ${p.verification.measurement_prediction}`],['실행 권한',String(p.verification.execution_authority)],
+    ]));
+  }
+  area.append(content);return area;
+}
+function publishConductedPreview(next){
+  const record=state.records.find(item=>item.intake_id===state.selected),target=$('#conducted-plan-preview');if(!record||!target)return false;
+  const prepared=buildConductedPlanPreview(record,state,next);target.replaceWith(prepared);Object.assign(conducted,next);return true;
+}
+function markConductedStale(message){
+  conducted.stale=true;const target=$('#conducted-plan-preview');if(target)target.dataset.previewCurrent='false';
+  const status=$('#conducted-plan-status');if(status)status.textContent=message;
+}
+function retireConductedObservation(){
+  conducted.gate.invalidate();conducted.controller?.abort();conducted.controller=null;conducted.pending=false;conducted.parentPending=true;
+  if(conducted.value)markConductedStale('이전 관측 · 접수 자료의 현재 관계 미확인');
+  else conducted.stale=true;
+  $('#conducted-plan-refresh')?.setAttribute('aria-disabled','true');
+}
+async function refreshConductedPlanPreview(){
+  const context=conductedContext();if(!context||conducted.pending||conducted.parentPending||referenceDestroyed||referenceSuspended)return;
+  const ticket=conducted.gate.begin(context);conducted.controller?.abort();const controller=new AbortController();conducted.controller=controller;
+  const timer=setTimeout(()=>controller.abort(),10000);
+  const current=()=>conducted.gate.isCurrent(ticket,conductedContext()||{})&&!referenceDestroyed&&!referenceSuspended;
+  try{
+    if(!publishConductedPreview({...conducted,context,pending:true,stale:Boolean(conducted.value),status:'가상 계획 미리보기 조회 중'}))return;
+    const response=await fetch(`/api/intakes/${encodeURIComponent(context.intake_id)}/conducted-plan-preview`,{signal:controller.signal,cache:'no-store'});
+    if(!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(response.headers.get('content-type')||''))throw Error();
+    const length=response.headers.get('content-length');if(length!==null&&(!/^\d+$/.test(length)||Number(length)>262144))throw Error();
+    const reader=response.body.getReader(),decoder=new TextDecoder('utf-8',{fatal:true});let raw='',size=0;
+    try{while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>262144){await reader.cancel();throw Error();}raw+=decoder.decode(part.value,{stream:true});}raw+=decoder.decode();}finally{reader.releaseLock();}
+    if(!current())return;
+    if(!response.ok){const error=JSON.parse(raw);const code=error?.error?.code;if(typeof code!=='string'||!/^intake_conducted_preview_[a-z_]+$/.test(code))throw Error();throw Error(code);}
+    const value=parseConductedPlanPreview(raw,context);if(!current())return;
+    publishConductedPreview({...conducted,context,value,pending:false,stale:false,status:'가상 계획 미리보기 조회 완료'});
+  }catch(error){controller.abort();if(current()){
+    const label=({intake_conducted_preview_v2_pdf_required:'현재 완료 V2/PDF 필요',intake_conducted_preview_synthetic_required:'합성 접수만 지원',intake_conducted_preview_analysis_unavailable:'현재 완료 분석 미제공',intake_conducted_preview_source_invalid:'보존 자료·분석의 무결성 미확인'})[error.message]||'응답·전송·형상·화면 확인 실패';
+    conducted.pending=false;conducted.status=conducted.value?'조회 실패 · 이전 관측 · 현재 관계 미확인':`가상 계획 미리보기 미지원 · ${label}`;markConductedStale(conducted.status);
+  }}finally{clearTimeout(timer);if(current()){conducted.pending=false;conducted.controller=null;$('#conducted-plan-refresh')?.setAttribute('aria-disabled','false');}}
+}
+function syncConductedContext(){
+  const context=conductedContext();if(context&&sameFixtureSource(context,conducted.context)&&context.generation===conducted.context.generation)return;
+  conducted.gate.invalidate();conducted.controller?.abort();const retain=sameFixtureSource(context,conducted.context);
+  Object.assign(conducted,{context,value:retain?conducted.value:null,controller:null,pending:false,stale:true,status:'가상 계획 미리보기 조회 대기'});
+  if(context)void refreshConductedPlanPreview();
 }
 
 function buildMetrics(view) {
@@ -724,6 +817,8 @@ function publishView(prepared) {
     referenceTransport.setContext(prepared.referenceContext);
     referencePanel.setContext(prepared.referenceContext);
     syncFixtureContext();
+    conducted.parentPending=false;
+    syncConductedContext();
   } finally { if (!referenceDestroyed) referenceGuard = false; }
 }
 
@@ -743,10 +838,12 @@ function changeView(view) {
     if (button.dataset.view === view) button.setAttribute('aria-current', 'page');
     else button.removeAttribute('aria-current');
   }
+  syncConductedContext();
 }
 
 async function refresh() {
   if (!referenceCanChange()) return;
+  retireConductedObservation();
   const request = ++state.request;
   if (!setReferencePending(true)) return;
   state.controller?.abort();
@@ -791,11 +888,14 @@ async function refresh() {
       }
       $('#refresh').disabled = false; $('#refresh').textContent = '↻ 새로고침';
       $('#intake-view').setAttribute('aria-busy', 'false');
+      conducted.parentPending=false;
+      $('#conducted-plan-refresh')?.setAttribute('aria-disabled',String(conducted.pending));
     }
   }
 }
 
 addEventListener('pagehide', event => {
+  retireConductedObservation();
   if (event.persisted) {
     if (!referenceCanChange()) return;
     referenceSuspended = true;
