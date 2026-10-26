@@ -122,7 +122,7 @@ class N1911AVirtualSession:
                 if configured not in ('dBm', 'W'):
                     return refuse('unit_outside_subset')
                 return self._reply(text, observation, response='DBM' if configured == 'dBm' else 'W')
-            return self._action(text, 'configure', {'unit': 'dBm' if unit == 'DBM' else 'W'})
+            return self._action(text, 'set_display_unit', {'unit': 'dBm' if unit == 'DBM' else 'W'})
 
         match = _TRIGGER.fullmatch(normalized)
         if match:
