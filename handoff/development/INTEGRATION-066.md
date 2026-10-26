@@ -1,6 +1,14 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `13e5c9c3d1399236e55b7029a8e4944a40d140c3` / 고정 source/runtime 검증 모집단333. 기존 소유·미커밋·원본·실패와 독립 기대를 보존해 정상 cherry로 통합했고 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. [PLAN 현황](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)·[실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 우선한다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `b728f78bf36621ab8b1f90b298e53ff3299c5b31` / 고정 source/runtime 검증 모집단333. 기존 소유·미커밋·원본·실패와 독립 기대를 보존해 정상 cherry로 통합했고 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. [PLAN 현황](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)·[실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 우선한다.
+
+## 후행 수용333 — 시연 프로세스 종료와 표준 회귀 발견성
+
+공개 --port browser 도구222의 strict URL 전 close가 ready Promise를 pending으로 두는 Important1/No를 보존하고 fix3bc를 별도 수용했다. 정확3줄 latch 수정은 독립 typed Child/fakeclock4 PASS로 valid URL/잘못된 prefix/no URL/기존 firstError 객체를 확인했고 argv/default-off/timer는 정적 불변이다. 총괄은222→3bc 정상 cherry와 정확 source hash·Node구문1을 확인했으며 source333 중 비소유332 raw/native는 같았다. 원 parent의 genuine child1/runtime1/DOM1440 1과 최종 delta의 typed4를 합쳐 최종 source 전체의 실제 --port 재실행으로 표시하지 않는다. 외부 PTY exit1·SQL/global cleanup 미확인은 유지한다.
+
+발견성851f는 class alias3+5만 추가하며 제거하면 원 전체 module AST와 직접87메서드가 같다. 독립 정적 Yes는 owner module/body/runtime를 실행하지 않고 표준 TestLoader 이름45→53·새8 각각 한 번을 확인했다. root는 후보 test2를 정상 cherry하고 표준 unittest가 선택하는 그8만 한 번 PASS, old45/wholeloop 재실행0을 확인했다. 이8은 수용 d0fa의 원 reservation8과 같은 논리이며 새로운 시험8로 합산하지 않는다. source333 중 비소유331 raw/native 불변이다. 첫 root metadata 관측기가 실제 verdict static Yes를 Yes와 비교해 멈춘 기록은 mutation/테스트0으로 남기고 원 intake를 재사용한 명시 판독 뒤 처음 테스트8을 실행했다.
+
+completed-current 등록b723은 임시 개발1의 공개 후보·기존3/owner444proof를 동결했고 다른 reviewer가 독립 PHASE1을 준비한다. 개발2 host3은 담당의 typed12/가상1 완료 보고와 별도 독립 PHASE1을 구별하며 아직 root 수용 전이다. 두 경로의 실제 등록→native publish→actual _prepare 결합은 개발2 다음 test/usage2에 배정했다. finalizer094e 독립 retained-input 검수와 개발3 optional workflow3·개발4 현재 질문390 도구2도 이어간다. P01 NETWORK HOLD/집계·미해결12와 추가 실제 모델0/기존17·6 소진/사용자 준비0을 유지한다. 아래는 이전 시점의 보존 이력이다.
 
 ## 최신 수용333 — native PDF·현재 질문·출력 선예약·오류 저장
 
