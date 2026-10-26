@@ -326,6 +326,55 @@ class RuntimeBoundaries(unittest.TestCase):
         with self.assertRaises(SystemExit):
             check.parser().parse_args(['--runtime', 'x', '--output', 'y', '--boot-timeout', '181'])
 
+    def test_rf_bridge_requires_explicit_boot_before_sdk_access(self):
+        args = check.parser().parse_args(['--runtime', 'x', '--output', 'y',
+                                          '--boot', '--rf-bridge-check'])
+        self.assertTrue(args.rf_bridge_check)
+        output = self.base / 'rf-option-proof'
+        result = check.execute(self.base / 'absent-runtime', output, rf_bridge_check=True)
+        self.assertEqual(result['first_failure']['code'], 'options_invalid')
+        self.assertEqual(result['android_os'], 'not_run')
+        self.assertEqual(result['rf_model'], 'not_assessed')
+
+    def test_rf_bridge_hook_runs_only_after_exact_guest_identity_inside_owned_lifetime(self):
+        from labflow import android_guest_rf_bridge as bridge
+        report = check.Report(self.base / 'rf-hook-proof')
+        runtime = self.base / 'runtime'
+        runtime.mkdir()
+        server = mock.MagicMock()
+        emulator = mock.MagicMock()
+        server.process.poll.return_value = None
+        emulator.process.poll.return_value = None
+        server.__enter__.return_value = server
+        emulator.__enter__.return_value = emulator
+        seen = []
+        def guest_hook(endpoint, owner, current, *, deadline, emulator_process):
+            self.assertIs(owner, server)
+            self.assertIs(emulator_process, emulator)
+            self.assertEqual(current.data['identity']['serial'], 'emulator-5680')
+            self.assertEqual(current.data['identity']['properties']['sys.boot_completed'], '1')
+            self.assertTrue(current.data['adb_verified'])
+            seen.append(deadline)
+            current.data['rf_bridge'] = {'valid': True, 'fixture': True}
+        answers = ['device', 'device', '1', 'ranchu', 'AOSP fixture', '1']
+        help_text = '-no-window -no-audio -no-snapshot -memory -port -grpc -gpu'
+        with mock.patch.object(check, 'resources', return_value={'available_mib': 8192}), \
+             mock.patch.object(check, 'assert_ports_free'), \
+             mock.patch.object(check, 'create_avd', return_value=self.base / 'avd'), \
+             mock.patch.object(check, 'claim_attempt'), \
+             mock.patch.object(check, 'OwnedProcess', side_effect=[server, emulator]), \
+             mock.patch.object(check, 'adb_read', side_effect=answers), \
+             mock.patch.object(bridge, 'run_guest_rf_check', side_effect=guest_hook):
+            check.boot_runtime(runtime, report, {}, check.Endpoint(), 1, 'auto',
+                               help_text, rf_bridge_check=True)
+        self.assertEqual(report.data['status'], 'rf_bridge_verified')
+        self.assertEqual(json.loads((report.output / 'result.json').read_text('utf-8'))['status'],
+                         'rf_bridge_verified')
+        self.assertEqual(len(seen), 1)
+        self.assertGreater(seen[0], time.monotonic())
+        server.__exit__.assert_called_once()
+        emulator.__exit__.assert_called_once()
+
 
 class ReviewFixes(unittest.TestCase):
     """Five review regressions; fake SDK bytes are never executed."""

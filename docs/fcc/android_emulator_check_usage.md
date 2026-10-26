@@ -54,6 +54,8 @@ python -m labflow.android_emulator_check --runtime .local/android-runtime --outp
 
 `get-state=device`, `ro.kernel.qemu=1`, `ro.hardware=ranchu|goldfish`, 비어 있지 않은 `ro.product.model`, `sys.boot_completed=1`이 모두 관측돼야 `android_os=booted`, `adb_verified=true`, `status=verified`다. 응답이 없거나 불충분하면 성공으로 승격하지 않는다. RF/OEM/AnyWay/physical은 계속 `not_assessed`다. 서버가 종료되면 다른 endpoint를 찾거나 자동 재시작하지 않는다.
 
+OS 신원 확인 후 같은 부팅·자기 ADB scope 안에서 합성 guest 컨트롤러와 VirtualFleet RF 모델을 이어 검사하려면 `--boot`에 `--rf-bridge-check`를 함께 지정한다. 정확한 guest 상태 전이·receipt와 host 합성 측정은 서로 다른 증거이며, 일반 AOSP guest의 셸 상태 변경이 삼성/OEM/AnyWay 무선 하드웨어 제어를 뜻하지 않는다. 옵션, 정리·실패 의미와 fixture 검증 범위는 [AOSP guest RF 브리지](android_guest_rf_bridge_usage.md)에 있다. 이 확장은 별도 heavy 부팅을 자동 시작하지 않으며 기존 한 번의 부팅 경계에서만 수행된다.
+
 connect/send/각 recv/status·length·body/get-state/getprop 전체에 같은 query 절대 deadline을 적용하고 모든 query에 남은 boot deadline을 전달한다. 자기 server 종료·잘못된 protocol 응답은 원 최초 오류와 PID/exit code를 보존해 즉시 drain한다. 정확 자기 serial의 `not found` 및 `device offline` service 응답만 boot 제한 안에서 재시도한다.
 
 ## 결과와 확인 범위
