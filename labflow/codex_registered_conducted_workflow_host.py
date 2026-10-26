@@ -10,6 +10,7 @@ import threading
 
 from . import codex_registered_intake_host as _native_host
 from .intake_jobs import prepare_registered_synthetic_context
+from .intake_current_facts_plan import read_current_conducted_plan_from_facts as _current_facts
 from .intake_conducted_twin_plan import build_conducted_twin_plan_input
 from .intake_plan_virtual_execution import (
     IntakePlanVirtualExecutionError, run_intake_plan_virtual_execution as _execute)
@@ -23,6 +24,8 @@ _CONTROL=(KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError)
 _MODELS=('gpt-6.1-sol','gpt-6-astra')
 _TOOLS=['dut.start','sensor.acquire','sensor.read','advance1','stop']
 _SCHEMA_SHA='aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb'
+_HANDOFF_CAP=8388608
+_TAIL_FILES,_TAIL_BYTES=10,5505024
 _DDL='CREATE TABLE codex_conducted_workflow_history(seq INTEGER PRIMARY KEY, kind TEXT NOT NULL, permit_id TEXT, payload TEXT NOT NULL, UNIQUE(kind,permit_id))'
 _C=lambda value:canonical(value).encode('utf-8')
 _H=_native_host._H
@@ -166,15 +169,71 @@ def _save(path,value,budget,cap):
     return _pin(raw)
 
 
+def _handoff_raw(workflow_sha256,current,execution_pin,finalizer_pin):
+    raw=_C(dict(schema_version=1,kind='codex_conducted_workflow_current_handoff',workflow_sha256=workflow_sha256,
+        current_facts_plan=current,execution_receipt=execution_pin,finalizer_receipt=finalizer_pin))
+    if len(raw)>_HANDOFF_CAP:_fail('evidence_limit')
+    _json(raw)
+    return raw
+
+
+def _completed_scope(store,selection,config):
+    with store.connection() as con:
+        con.execute('PRAGMA query_only=ON');con.execute('BEGIN')
+        if con.execute("SELECT 1 FROM intake_jobs WHERE state IN ('queued','running') LIMIT 1").fetchone():_fail('scope_mismatch')
+        row=con.execute('''SELECT j.*,r.fingerprint,r.files_json,r.synthetic AS revision_synthetic,
+            i.source_id,i.bundle,i.revision AS current_revision,i.status AS intake_status,i.analysis_json,
+            s.root AS source_root,s.synthetic AS source_synthetic
+            FROM intake_jobs j JOIN intake_revisions r ON r.intake_id=j.intake_id AND r.revision=j.revision
+            JOIN intakes i ON i.intake_id=j.intake_id JOIN intake_sources s ON s.source_id=i.source_id
+            WHERE j.job_id=? AND length(CAST(r.files_json AS BLOB))<=262144
+            AND length(CAST(j.result_json AS BLOB))<=8388608
+            AND length(CAST(i.analysis_json AS BLOB))<=8388608''',(selection['job_id'],)).fetchone()
+        if (row is None or row['state']!='completed' or row['source_synthetic']!=1 or row['revision_synthetic']!=1
+                or row['intake_status']=='upload_incomplete' or row['current_revision']!=selection['revision']):_fail('scope_mismatch')
+        if type(row['source_root']) is not str or type(row['bundle']) is not str:_fail('scope_mismatch')
+        source,bundle=Path(row['source_root']),Path(row['bundle'])
+        if (not source.is_absolute() or '..' in source.parts or bundle.anchor or len(bundle.parts)!=1
+                or row['bundle'] in ('.','..') or source/bundle!=Path(config['registered_input_root'])):_fail('scope_mismatch')
+        actual=dict(source_id=row['source_id'],intake_id=row['intake_id'],revision=row['revision'],job_id=row['job_id'],
+            revision_fingerprint=row['fingerprint'],files=_json(row['files_json'].encode('utf-8')))
+        _same(actual,selection)
+        return dict(row)
+
+
+def _prepare_current(store,selection,config,workflow,analysis,plan,owned):
+    before=_completed_scope(store,selection,config)
+    _same(plan['plan']['source_settings'],workflow['source_settings'])
+    method={key:plan['plan'][key] for key in ('method_id','method_version','metric','reference_plane')}
+    _same(method,dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
+    current=_current_facts(config['store_root'],selection['intake_id'],method=method,
+        expected_revision=selection['revision'],expected_context_sha256=workflow['context_sha256'])
+    raw=_C(current)
+    if len(raw)>8388608:_fail('evidence_limit')
+    current=_json(raw);_keys(current,'context analysis facts_plan')
+    facts=current['facts_plan'];_keys(facts,'schema_version kind status plan_input assembly_gaps questions')
+    if facts['status']!='ready_for_simulation' or facts['plan_input']['status']!='ready_for_simulation':_fail('plan_not_ready')
+    context=current['context']
+    _same({key:context[key] for key in ('job_id','intake_id','revision')},
+        {key:selection[key] for key in ('job_id','intake_id','revision')})
+    _same(context['synthetic'],True);_same(_H(_C(context)),workflow['context_sha256'])
+    _same(current['analysis'],analysis);_same(facts['plan_input'],plan)
+    _same(_completed_scope(store,selection,config),before)
+    owned['current_facts_plan']=current;owned['completed_scope']=before
+    return context
+
+
 def _prepare(root,config,scenario,owned):
     workflow_raw=_read(root/'registered-workflow.json',65536)
     if _H(workflow_raw)!=config['workflow_sha256']:_fail('binding_mismatch')
     workflow=_json(workflow_raw)
     fields='schema_version kind scenario_id context_sha256 analysis_sha256 plan_input_sha256 source_settings quantity allowed_tools measurement_ref catalog_sha256 schema_sha256'
-    if type(workflow) is dict and _integer(workflow.get('schema_version'),2,2):fields+=' measurement_selection_policy'
+    if type(workflow) is dict and _integer(workflow.get('schema_version'),2,3):fields+=' measurement_selection_policy'
+    if type(workflow) is dict and _integer(workflow.get('schema_version'),3,3):fields+=' context_scope'
     _keys(workflow,fields)
-    if (not _integer(workflow['schema_version'],1,2) or workflow['kind']!='codex_registered_conducted_workflow'
+    if (not _integer(workflow['schema_version'],1,3) or workflow['kind']!='codex_registered_conducted_workflow'
             or workflow['scenario_id']!=scenario):_fail('scope_mismatch')
+    if workflow['schema_version']==3 and workflow['context_scope']!='completed_current_provided':_fail('scope_mismatch')
     _same(workflow['allowed_tools'],_TOOLS)
     quantity=workflow['quantity']
     _same(quantity,dict(metric='on',reference_plane='sensor_input',loss_compensation_applied=False,loss_compensation_sign=1))
@@ -194,17 +253,20 @@ def _prepare(root,config,scenario,owned):
     analysis,plan=_json(analysis_raw),_json(plan_raw)
     if _C(plan)!=plan_raw or _C(analysis)!=analysis_raw:_fail('binding_mismatch')
     store=Store.open_existing(config['store_root']);owned['store']=store
-    _native_host._dedicated(store,selection['job_id'])
-    context=prepare_registered_synthetic_context(store,selection,producer_name=analysis['producer']['name'])
-    _native_host._dedicated(store,selection['job_id'])
-    _same(_H(_C(context)),workflow['context_sha256'])
-    _same(plan['plan']['source_settings'],workflow['source_settings'])
-    method={key:plan['plan'][key] for key in ('method_id','method_version','metric','reference_plane')}
-    _same(method,dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
-    rebuilt=build_conducted_twin_plan_input(context,analysis,expected_revision=context['revision'],expected_context_sha256=workflow['context_sha256'],
-        source_settings=workflow['source_settings'],basis=plan['plan']['basis_refs'],method=method)
-    _same(plan,rebuilt)
-    if plan['status']!='ready_for_simulation':_fail('plan_not_ready')
+    if workflow['schema_version']==3:
+        context=_prepare_current(store,selection,config,workflow,analysis,plan,owned)
+    else:
+        _native_host._dedicated(store,selection['job_id'])
+        context=prepare_registered_synthetic_context(store,selection,producer_name=analysis['producer']['name'])
+        _native_host._dedicated(store,selection['job_id'])
+        _same(_H(_C(context)),workflow['context_sha256'])
+        _same(plan['plan']['source_settings'],workflow['source_settings'])
+        method={key:plan['plan'][key] for key in ('method_id','method_version','metric','reference_plane')}
+        _same(method,dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
+        rebuilt=build_conducted_twin_plan_input(context,analysis,expected_revision=context['revision'],expected_context_sha256=workflow['context_sha256'],
+            source_settings=workflow['source_settings'],basis=plan['plan']['basis_refs'],method=method)
+        _same(plan,rebuilt)
+        if plan['status']!='ready_for_simulation':_fail('plan_not_ready')
     catalog=_read(root/'catalog.json',1048576);schema=_read(root/'response-schema.json',65536)
     if _H(catalog)!=workflow['catalog_sha256'] or _H(schema)!=workflow['schema_sha256']:_fail('binding_mismatch')
     if len(schema)!=3052 or _H(schema)!=_SCHEMA_SHA:_fail('unsupported_schema')
@@ -250,6 +312,7 @@ def _run(scenario,model):
             remote_model_identity_verified=False,measurement='not_assessed',hardware_verified=False))
     con=guard=primary=cancel=None;consumed=entered=claimed=rollback_attempted=False;owned=dict(store=None)
     execution=finalized=None;execution_pin=finalizer_pin=None;actual=None;cleanup=False;pins=[]
+    handoff=None;budget=None;handoff_merged=False;execution_options={}
     root=config=anchor=journal=evidence=None
     def error(exc,phase):
         nonlocal primary
@@ -294,7 +357,18 @@ def _run(scenario,model):
         cancel=_Cancel(root)
         if cancel.is_set():_fail('cancelled')
         if _read(root/'root-continuation-anchor.json',65536)!=anchor_raw or _read(root/'operator-control.json',16384)!=config_raw:_fail('binding_mismatch')
-        _native_host._registration(root,config,scenario);_native_host._expiry(permit['expires_at'])
+        selection=_native_host._registration(root,config,scenario);_native_host._expiry(permit['expires_at'])
+        if workflow['schema_version']==3:
+            store=Store.open_existing(config['store_root']);owned['store']=store
+            _same(_completed_scope(store,selection,config),owned['completed_scope'])
+            owned['store']=None;store.close()
+            current=owned['current_facts_plan']
+            maximum=_handoff_raw(config['workflow_sha256'],current,
+                dict(bytes=262144,sha256='0'*64),dict(bytes=2097152,sha256='0'*64))
+            budget=_OutputBudget(evidence);budget.reserve(1,len(maximum))
+            reservation=dict(files=budget.files+_TAIL_FILES,bytes=budget.bytes+_TAIL_BYTES)
+            if reservation['files']>192 or reservation['bytes']>33554432:_fail('evidence_limit')
+            handoff=(current,len(maximum));execution_options['evidence_reservation']=reservation
         record['verification']['operator_scope']='native_operator_control'
         reserved=dict(permit_id=config['permit_id'],context_sha256=workflow['context_sha256'],workflow_sha256=config['workflow_sha256'],
             plan_input_sha256=workflow['plan_input_sha256'],requested_model=model,maximum_model_processes=8)
@@ -312,11 +386,13 @@ def _run(scenario,model):
             execution=_execute(context,analysis,plan,expected_revision=context['revision'],expected_context_sha256=workflow['context_sha256'],
                 expected_plan_input_sha256=workflow['plan_input_sha256'],catalog_path=root/'catalog.json',catalog_sha256=workflow['catalog_sha256'],
                 response_schema_bytes=schema,executable=executable,requested_model=model,scenario='normal',evidence_dir=evidence/'loop',
-                execution_origin='actual_cli',cancel_event=cancel.event,quantity=workflow['quantity'])
+                execution_origin='actual_cli',cancel_event=cancel.event,quantity=workflow['quantity'],**execution_options)
         except IntakePlanVirtualExecutionError as exc:
             execution=exc.receipt;error(exc,'execution')
         closing_cancel=cancel;cancel=None;closing_cancel.close()
-        budget=_OutputBudget(evidence)
+        if handoff is None:budget=_OutputBudget(evidence)
+        else:
+            observed=_OutputBudget(evidence);budget.reserve(observed.files,observed.bytes);handoff_merged=True
         execution_pin=_save(evidence/'execution-receipt.json',execution,budget,262144)
         actual,cleanup,pins=_observe(execution,evidence,model,entered)
         record['execution']=dict(run_id=execution['binding']['run_id'],runtime_instance_id=execution['binding']['runtime_instance_id'],
@@ -325,7 +401,7 @@ def _run(scenario,model):
         record['phase']='finalizer'
         budget.reserve(8,3*1048576)
         selection_options={}
-        if workflow['schema_version']==2:selection_options['measurement_selection_policy']=workflow['measurement_selection_policy']
+        if workflow['schema_version'] in (2,3):selection_options['measurement_selection_policy']=workflow['measurement_selection_policy']
         try:
             finalized=_finalize(execution,expected_execution_sha256=_H(_C(execution)),evidence_dir=evidence/'loop',measurement_ref=workflow['measurement_ref'],
                 workspace_root=evidence,artifact_name='conducted-draft',**selection_options)
@@ -344,6 +420,15 @@ def _run(scenario,model):
         if cancel is not None:
             try:cancel.close()
             except BaseException as exc:error(exc,'cancellation_close')
+        if handoff is not None:
+            try:
+                if not handoff_merged:
+                    observed=_OutputBudget(evidence);budget.reserve(observed.files,observed.bytes);handoff_merged=True
+                raw=_handoff_raw(config['workflow_sha256'],handoff[0],execution_pin,finalizer_pin)
+                if len(raw)>handoff[1]:_fail('evidence_limit')
+                path=evidence/'current-handoff.json';_native_host._active_guard(path,raw)
+                if _read(path,_HANDOFF_CAP)!=raw:_fail('evidence_changed')
+            except BaseException as exc:error(exc,'current_handoff')
         if consumed:
             try:
                 actual,cleanup,pins=_observe(execution,evidence,model,entered)

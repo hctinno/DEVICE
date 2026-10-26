@@ -15,9 +15,9 @@ DEV2-WORKFLOW-HOST-FIRST-FAILURE-FIX-001은 정확226 base의 별도 clone/branc
 
 core는 초기 control→primary, nonlocal, 첫 객체 무조건 보존, 마지막 isinstance(primary, CONTROL)의 네 군데만 바꿨다. 새 테스트 메서드5+관측 helper2를 추가하고 원50개 메서드 AST는 동일하다. 세 raw namespace의 파일301/보존4,719,717바이트와 호출 관측32개는 재실행·준비 오류를 포함한 보존량이며 고유 통과 논리의 합계가 아니다. 각 호출에서 Store raw/native·업무 행·baseline/permit2 불변, known Store/ledger close 각1회, producer argv0을 관측했다. 최대 namespace는104파일/1,579,239바이트이며 OS 물리적 peak는 null이다. 실제 runtime/모델·OS KnownFolder 프로필/실제 permit·운영17 변경은0이다. private `.local/FHF-001/`에 첫 실패·proper RED·첫 GREEN·관측 원형과 source 보존 목록을 보존한다. 독립 검수·총괄 회귀·completed-current 구현은 이 통과 주장에 포함하지 않는다.
 
-## completed current 명시 경로 — 구현 전 고정안
+## completed current 명시 경로 — 구현 계약
 
-2026-10-26 Asia/Seoul. DEV2-WORKFLOW-CURRENT-HANDOFF-001은 정확226a5182fbc4f88d1321eea6a6cee0e668ac598d의 별도 clone/branch에서 host/test/usage3만 소유한다. 등록3·native-intake3·현재 reader·Store·D1/D3/D4 코드는 수정하지 않는다. 아래는 root가 승인한 최소 범위를 구체화한 사전 계약이며 독립 preseal 확인과 구현/검증은 아직 대기다. 원87/226과 과거 실패·proof는 동결 유지한다.
+2026-10-26 Asia/Seoul. DEV2-WORKFLOW-CURRENT-HANDOFF-001은 정확226a5182fbc4f88d1321eea6a6cee0e668ac598d에서 시작한 별도 clone/branch의 host/test/usage3만 소유한다. 원 WIP bytes29272/SHA0663a1b3는 정상 c19f21e에 보존하고 수용 d318 최초 오류 수정을 e741663으로 정상 cherry-pick했다. 문서 충돌은 두 계약을 모두 보존해 해소하고 core/test d318 exact에서 구현했다. 공동 예산의 post-hoc 합산만으로는 사전 보장이 안 된다는 root 지적을 보존하고, 별도 ERS d0fa의 수용 seam6을 7ce4bcb로 정상 cherry-pick한 뒤 host3를 재개했다. ERS 독립14/64 scopedYes·root 새8+signature2+genuine trial1=11 PASS와 이 후보의 통과는 별개다. ERS alias851은 이 후보에서 미반영이며 source6은 수용 d0fa exact다. native-intake3·schema3 등록3은 개발1 단독 소유이고 현재 reader·Store·D1/D3/D4 코드는 이번 수정 밖이다. 원87/226·원 No/실패·proof는 동결 유지한다.
 
 새 workflow는 native schema_version=3 exact14, 즉 v2 exact13+context_scope="completed_current_provided"다. ref=None/명시 policy exact2·원 workflow SHA/config/finite permit/모델/시간·파일 한도는 유지한다. v1/v2는 기존 queued/G3 경로를 그대로 사용하고 schema3만 completed readonly current/facts-plan API로 분기한다. instructions나 C1을 고쳐 원 provider 문맥을 현재처럼 만들지 않는다. current context/analysis/facts-plan의 원 입력을 사용하며 원 queued plan/result는 과거 원형이다.
 
@@ -26,20 +26,37 @@ completed 전용 범위 검사는 단순한 _dedicated 생략이 아니다. 새 
 1. registered_intake exact6의 source_id/intake_id/job_id/positive revision/fingerprint/files를 원 manifest·actual source/revision/job과 대조한다. 대상 job은 정확1개이고 그 intake/revision의 실제 completed job이어야 한다.
 2. 원 source와 revision의 synthetic=1, intake의 현재 revision 일치·upload_incomplete 아님, source의 실제 root/bundle이 원 registered_input_root와 일치, revision files_json/fingerprint가 선택 원형과 canonical 일치해야 한다. 다른 source·파일 목록·원문 bytes를 허용하는 범위 확대가 없다.
 3. 같은 Store 전체의 queued/running job은0이어야 한다. 다른 active job이 있거나 대상만 queued/running이면 차단한다. 기존 과거 completed 이력 자체를 삭제·수정하거나 대상으로 선택하지 않는다.
-4. scope snapshot 전후로 current readonly API를 한 번 호출한다. 원 context의 job/intake/revision와 원 analysis·current plan 전체 canonical SHA를 profile의 사전 명시 context/analysis/plan-input SHA 및 catalog/schema SHA에 대조하고 current plan은 ready여야 한다. scope/원 submission·현재 revision/files가 달라지면 소비 전 차단한다.
+4. scope snapshot 전후로 current readonly API를 한 번 호출한다. 원 context의 job/intake/revision와 원 analysis·current plan 전체 canonical SHA를 profile의 사전 명시 context/analysis/plan-input SHA 및 catalog/schema SHA에 대조하고 current plan은 ready여야 한다. scope/원 submission·현재 revision/files가 달라지면 소비 전 차단한다. 원 files를 다시 확인하는 마지막 native 등록 검사 뒤 completed SELECT snapshot도 소비 전에 다시 대조한다.
 5. 제품은 claim/complete/respond/행 UPDATE·DML/새 parser/Store 초기화·원 권한 발급을 호출하지 않는다. queued 자료만 있으면 진짜 public claim→strict 분석→complete_job이 별도 선행되어야 하며 새 scope가 그 절차를 위장하지 않는다.
 
-TXT만 첫 지원한다. 기존 native _registration의 PDF suffix unsupported_schema를 유지한다. D1 G3 schema2/PDF 지원과 formal native PDF 등록 지원은 별도이며 후자는 이번 소유 밖 인계 공백이다. 새 scope를 이유로 기존 helper 거절을 우회하지 않는다.
+이번 실증은 TXT1이다. owner base의 native _registration PDF suffix unsupported_schema는 변경하지 않았다. D1 G3 schema2/PDF·native PDF 입구·등록3은 개발1의 별도 변경/수용과 구별한다. 이 host의 TXT 모의 종단1을 PDF 정식 종단 지원의 검증으로 환산하지 않는다. 새 scope를 이유로 기존 helper 거절을 우회하지 않는다.
 
-실행은 위에서 확인한 동일 current context/analysis/plan으로 원 adapter→selector/finalizer를 사용한다. D3의 독립 current3 readback/export에 줄 공급 원형과 기존 execution/finalizer/artifact pin을 연결해 보존해야 한다. caller-request.json은 plan binding/source 설정만 담으므로 그것만으로 current context/analysis 전체를 보존했다고 주장하지 않는다. 추가 handoff 파일의 정확 형상/상한과 저장 순서는 root preseal에서 먼저 확정한다. 기존 DRAFT·actual model/physical/method 미평가를 바꾸지 않는다.
+실행은 위에서 확인한 동일 current context/analysis/plan으로 원 adapter→selector/finalizer를 사용한다. D3의 독립 current3 readback/export에 줄 공급 원형을 고정 `current-handoff.json`으로 보존한다. exact6은 schema_version:int1, kind:codex_conducted_workflow_current_handoff, workflow_sha256, current_facts_plan:원exact3, execution_receipt:원pin2|null, finalizer_receipt:원pin2|null이다. caller-request.json은 plan binding/source 설정만 담으므로 그 파일에서 current를 역산하지 않는다. summary12/finalization5·원 receipt/DTO에는 새 필드0이다. 원 current 지시/C1과 원 queued 지시/C1을 따로 보존한다. 이 파일은 입력 공급 기록이며 원 AI·권위·실측 진위 인증이 아니다.
+
+staticYes M1의 timing/용량은 다음과 같다. 전체 입력/현재 binding·output-ready 검증 전 파일0이다. v3만 소비 전 기존 _OutputBudget에서 H1파일을 먼저 예약한다. H는 고정 exact6의 원 current3/workflowSHA와 최대 execution pin(256KiB/64hex), finalizer pin(2MiB/64hex)을 직렬화한 길이이며 UTF-8 canonical 최대8MiB·기존 native JSON depth24/node50000/유한 수·int64를 통과해야 한다. 실제 pin 또는 null은 그 상계를 넘지 않는다. 최종 finally write는 이미 예약한 H 안에서 xb 최대1회이고 이 파일을 다시 reserve하지 않는다.
+
+같은 소비 전에 loop known 밖의 tail10파일/5505024B도 상계한다. execution-receipt1/262144B+writer reserve8/3145728B+finalizer-receipt1/2097152B다. 기존 native writer의 pending3+final3(하드링크의 각 논리 이름도 전체 bytes로 계산)+failure1은 최대7파일/2641920B = 2×(1MiB+256KiB+8KiB)+4KiB라 원8/3MiB 안이다. directory·loop known 산출물은 이 tail에 중복하지 않으며 원 profile/claim/SQL은 evidence-root 밖의 기존 별도 control cap을 유지한다. 이 source와 cap·include/exclude 목록을 private 사전 증명에 고정한다.
+
+host는 H+tail exact2 {files,bytes}를 수용 ERS의 evidence_reservation으로 실제 adapter→loop에 전달한다. loop의 매 write·producer·journal·final receipt admission이 같은192/32MiB에서 이를 미리 제외하므로 실행 종료 뒤 초과를 발견하는 방식으로 준수를 소급하지 않는다. 후행 host는 같은 H 예약에 실제 loop prefix를 합산하고 원 execution save·writer reserve·finalizer save를 O(1)로 admission한다. 원 execution/finalizer pin 또는 null 확정 뒤 finally에서 고정 파일을 기록한다. partial/존재 충돌이면 원 prefix와 최초 오류를 보존하고 repair/retry/overwrite0이다. 선행 ordinary를 후행 CONTROL로 뒤집지 않고 최초 CONTROL만 원객체로 전파한다. handoff 실패를 성공으로 가리지 않으며 summary12/finalization5에는 필드를 추가하지 않는다.
 
 계획은 사전 규범/독립 preseal→작은 RED→schema3/current scope 구현→typed 준비/차단·최초 오류→genuine MOCK≤1→source/Store 무쓰기/native 검증→정상게시·동결 순서다. 기존14/9·host7·registration7/parent 회귀를 반복하지 않는다. 새 TXT disposable Store 1건을 genuine public claim/strict/complete로 준비하고, product 호출과 setup의 DML·모델0을 분리한다. typed 실패는 보존 snapshot/새 test-only 복사본에서 수행한다. genuine loop는≤1이며 producer60초/loop180초/retry0/기존 disk cap을 유지한다. 실제 원Store/운영17·authority/profile/실permit·실제AI/ADC/Vertex/실장비·peer/하위 agent는0이다.
 
-- [ ] root 독립 preseal 및 handoff/최초 오류 범위 확정
-- [ ] 기존 v1/v2 보존·schema3/current binding의 작은 RED
-- [ ] completed1·미완료/다른분석/범위/드리프트·control/최초 실패의 typed 검사
-- [ ] 한 completed current snapshot의 genuine MOCK≤1·재소비 거절·원 current 공급/출력 보존
-- [ ] 문서·raw/native 무쓰기·실패 보존·정상 commit/push·pin 인계
+- [x] root 독립 preseal 및 M1 handoff 형상/시점·d318 최초 오류 범위 확정
+- [x] 기존 v1/v2 보존·schema3/current binding의 작은 RED
+- [x] completed1·미완료/다른분석/범위/드리프트·control/최초 실패의 typed 검사
+- [x] H+tail 소비 전 상계/수용 seam 전달·exact6/원pin|null·partial/존재 충돌 보존
+- [x] 한 completed current snapshot의 genuine MOCK1·재소비 거절·원 current 공급/출력 보존
+- [ ] 정상 commit/push·pin 인계 뒤 root 독립/통합 수용
+
+정식 _prepare(root,config,scenario,owned)의 반환은 원5tuple(workflow,context,analysis,plan_input,schema_bytes)이다. owned.store는 caller가 정확히 닫아야 하는 native lease이고 schema3 성공 때 current_facts_plan 원exact3와 completed_scope SELECT snapshot을 함께 보존한다. 원 _prepare 호출만으로 claim/complete/permit 소비/runtime/handoff 파일이 생기지 않는다. 개발1의 후속 registrar는 이 실제 검증면과 제공 원자료/현재 대조를 재사용할 수 있으며 정답 callback으로 생략하지 않는다.
+
+실제 기록: seed 준비 import 위치 실패1(생성 전), Store.open_existing의 str 요구 실패1(queued 준비 후 claim 전)을 보존한 뒤 새 TXT seed1을 public proceed/claim/strict/complete로 완료했다. 원 seed/profile의 finite fixture permit이 기다리는 동안 만료되어 그 bytes를 보존했고, 매 case의 별도 AUTHORED 복사본에만 setup 중 now+1h의 test-only expiry를 써서 workflow SHA에 묶었다. 실제 OS profile/permit/새 승인·기존 운영17·실모델은0이다. 같은 완료 Store/원 queued/current 문맥은 보존했다.
+
+RED preflight2/0.464초는 유효schema3 거절1/legacy PASS1이고 GREEN2/0.464초다. handoff RED3/0.807초는2failure/2error(subtest 포함), 첫 GREEN3/0.757초다. 최종 typed12는 preflight2/0.475초·closed shapes1/0.767초·binding1/1.691초·scope2/1.715초·handoff6/1.584초의 별도 cohort이며 모두 통과했다. 5SHA·selection4·다른 분석·원 파일·active/미완료/current drift·reader 최초 오류/known close1·8MiB/depth24/node50000·null pin·partial/존재 충돌을 포함한다. 원57 테스트 메서드 AST는 동일하다. typed12는 동일 함수 객체의 test_current_* alias로 표준 discovery에도 각1회 선택되며, 각 typed method의 test proof namespace만 별도512파일/32MiB로 제한한다. 제품 예산은 reset하지 않는다. genuine은 --current-genuine opt-in이고 같은 seed의 one-shot guard로 최대1회다.
+
+단 한 번의 genuine MOCK1은4.512초/exit0, 같은 원 APIs와 한 runtime·mock model child5·selector/finalizer stored/DRAFT를 실제 실행했다. H 최대8663B+tail5505024B = external11파일/5513687B, loop 잔여181파일/28040745B를 소비 전에 전달했다. 실제 handoff8661B, evidence106파일/3415971B다. Store raw/native·업무 행은 동일하고 새 AUTHORED workflow ledger만2→5, 같은 current 입력/plan·원 receipt pins·summary12/finalization5·재소비 거절·child reaped를 확인했다. current C1 6b8d8052와 원 queued C1 7ab5ecd3를 서로 바꾸지 않았다. actual AI/물리/규범 적합성·전체 업무 완료를 입증하지 않으며 원wall257초>180 관측 한계도 별도 보존한다. private `.local/WCH-001/`의 원 prefix·proof와 각 분모를 합산해 고유 통과를 부풀리지 않는다. final cohort exit 로그의 literal backslash-n 행끝은 원형 보존하고 도구 returncode0와 정식 집계에 구별해 기록한다.
+
+후속 공백은 개발1 schema3 정식 등록과 최종 host pin 결합, D3 readback/export 소비의 독립 current 재검증, PDF 정식 host의 별도 종단 검증이다. 이 TXT 모의1을 실제 AI·실장비·현장/규범·전체 무인화 수용으로 승격하지 않는다.
 
 ## 명시 측정 선택 workflow v2 — 2026-10-26
 
