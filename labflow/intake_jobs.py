@@ -4,7 +4,6 @@ No model API, external notification transport or hardware command is implicit.
 """
 import hashlib
 import json
-from pathlib import PurePosixPath
 import uuid
 
 from .active_intake import MAX_BUNDLE_BYTES, MAX_FILE_BYTES, MAX_FILES, timestamp
@@ -164,8 +163,6 @@ def prepare_registered_synthetic_context(store, registered_intake, *, producer_n
                     or revision['fingerprint'] != selection['revision_fingerprint']
                     or json.loads(revision['files_json']) != selection['files']):
                 _preclaim_fail('scope_mismatch')
-        if any(PurePosixPath(item['path']).suffix.lower() == '.pdf' for item in selection['files']):
-            _preclaim_fail('unsupported_schema')
         try:
             prepared = _prepare(store, revision)
         except MemoryError:
@@ -181,7 +178,7 @@ def prepare_registered_synthetic_context(store, registered_intake, *, producer_n
                 _preclaim_fail('state_changed')
             _verify(store, con, job, revision, prepared)
         public = _public_context(job, revision, prepared)
-        if public['analysis_contract']['schema_version'] != 1:
+        if public['analysis_contract']['schema_version'] not in (1, 2):
             _preclaim_fail('unsupported_schema')
         if len(canonical(public).encode('utf-8')) > MAX_CONTEXT_BYTES:
             _preclaim_fail('limit_exceeded')
