@@ -204,7 +204,7 @@ P01 인수 색인 v1의 7개 packet·105개 inventory 파일·로컬 원본 22�
 
 | 구분 | 현재 재사용 가능한 구현·증거 | 정확한 미완료 연결 / 다음 수용 조건 |
 |---|---|---|
-| 자료 확보 | Un-licensed·장비/DUT·공개 사본 private 색인. 보존569PDF와 대상18PDF/690쪽·전체쪽수null을 구별, B085~B088 새46PDF 제한 ACK/후행 readonly 대조 종료 | collector192/corpus157, known40615쪽은 부분합·unknown1. raw 보관과 본문·기관/발행일·모델·권리·전수 검수는 별도. 공유/원본 읽기전용·공식 FCC 대응0 |
+| 자료 확보 | Un-licensed·장비/DUT·공개 사본 private 색인. 보존616PDF와 대상18PDF/690쪽·전체쪽수null을 구별, B089~B092 새47PDF 제한 ACK/후행 readonly 대조 종료 | collector196/corpus161, known44570쪽은 부분합·unknown1. raw 보관과 본문·기관/발행일·모델·권리·전수 검수는 별도. 공유/원본 읽기전용·공식 FCC 대응0 |
 | 내용·근거 검수 | P01 첫 조건·N01/XML·6규칙 metadata, 방법 관계3/근거metadata8/미해결12를 private 인수/후행 종료 | 사례 peak/MCS6와 개발 on-average/MCS0·현행 KDB/ANSI·판본/plane/보정·동일 조건 IO/split/holdout 미확정. 반복 설정/PASS를 규범으로 승격하지 않음 |
 | 규격·방법 판단 | 명시 source6→조건 gate·문법002·TXT/PDF readonly facts·현재 자료 CLI·현재 Store gate를 수용 | 실제 Codex17 원문은 조건 결합/명시 duty 단위 두 질문으로 blocked이며 doc-only 재검수도 같은 부족을 확인. 규격·판본·한계 자동 확정 미완료. G3 등록의 PDF/schema2 지원과 queued/완료 C1 차이는 실제 연결 공백이며 개발1·2 다음 구현 |
 | 가상 모델·시험방법 | 같은 DUT/장비/경로·setup/취득·journal/report→result builder·native DRAFT writer·finalizer576 수용. 불확도805/root25는 명시 성분·상관/k 근거 없으면 hold/null | 합성 상태/산술 모델이며 실제 보정·물리 정확도 미검증. 명시 quantity/기준면/부호/이미보정 부족은 null. 불확도 DRAFT 부록17cf 검수 중. 유일 acquire/최초 완료 선택 cc72의 I1은 e258로 수정·독립8/총괄15 수용; 선택 finalizer7226+e258 qualified 수용: 총괄 원11PASS/분리 dependency1PASS, mixed first-import 준비 실패1 보존 |

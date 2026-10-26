@@ -12,7 +12,7 @@ bridge499는 같은 현재 저장 결과 객체를 비교에 넘기며 reference
 
 저장 aac9는 manifest/result/DRAFT 고정3의 읽기 일치·현재 binding과 recorded/incomplete/invalid·판정 미평가·AI unknown을 같은 접수 화면에 표시한다. 긴 핀/DTO는 닫힌 세부에 둔다. 독립12 슬롯은 실제11/10PASS·stream 관측 미완료1/foreign 실제 전환 미실행1이며 typed 범위와 구별한다. 총괄 Node12 PASS와 원 정상/측정무효/RF단절3의 genuine GET3·기존보호body12·390/1440 DOM6·별도 typed26을 확인했다. 자체 server/thread/listener 종료·child0/rebind와 원390파일/소스332 bytes·관측 native5 불변을 대조했다. 독립 SQL30 개별 close는 미확인이며 과거 closed 표기를 보정해 유지한다. keyboardbc49·새 생성 CLI startupaae/873·freshoperator1c16은 아직 별도 독립 검수 대상이다.
 
-P01 B085~B088 새46PDF/158083387B·P01표기3020쪽(root독립null)의 private raw/제한 metadata ACK와 source metadata74 대비 receiver90/원receipt16 readonly 후행 대조를 닫았다. collector192/corpus157/보존569PDF·2291007852B·known40615쪽 부분합/unknown1/전체쪽수null을 대상18PDF/690쪽·공식0과 구별한다. issuer/date/model/권리·본문·규범·훈련 승인0·CMG12미해소/N02 STOP를 유지한다.
+P01 B089~B092 새47PDF/194841946B·P01표기3955쪽(root독립null)의 private raw/제한 metadata ACK와 source metadata75 대비 receiver91/원receipt16 readonly 후행 대조를 닫았다. B092는 실제11PDF/receiver22이며 나머지12/23과 구별한다. collector196/corpus161/보존616PDF·2485849798B·known44570쪽 부분합/unknown1/전체쪽수null을 대상18PDF/690쪽·공식0과 구별한다. issuer/date/model/권리·본문·규범·훈련 승인0·CMG12미해소/N02 STOP를 유지한다.
 
 다음 실제 소유는 개발1 READY-DATA 후 G3 schema2/PDF 기존3, 개발2 정식 workflow 현재 사실 인계 최소3, 개발3 독립 current 입력의 readback export 기존3, 개발4 fresh CLI→저장카드 운영 시연 기존2다. 원 queued context와 completed readonly context의 C1가 다르고 G3가 현재 PDF를 거절하는 실제 공백을 코드로 잇되 기존 상태/권위값을 위조하지 않는다. 추가 실제 모델0·Codex17/동일 Vertex6/3072 소진·비용null·사용자 추가 준비0이며 아래330 기록은 당시 상태다.
 
