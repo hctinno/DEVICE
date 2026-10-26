@@ -527,3 +527,61 @@ test('artifact storage view applies the common transport 400000 node cap before 
   const packet=artifactStoragePacket();packet.current.analysis={nodes:Array(400001).fill(null)};
   assert.throws(()=>parseArtifact(packet));
 });
+
+// Typed public DTOs for the display projection; no source extraction or RF run.
+function minimumEvidenceInput(){
+  const input=gapQueueInputs(),packet=artifactStoragePacket(),facts=packet.current.facts_plan,p=facts.plan_input;
+  facts.status=p.status='blocked';p.plan.source_settings.duty_cycle=null;p.plan.basis_refs.duty_cycle=null;p.gaps=[{code:'missing_setting',field:'source_settings.duty_cycle',provided:null,blocking:true}];p.verification.evidence='not_validated';
+  const fact=structuredClone(p.intake.source_facts[0]);fact.field='features';fact.value='duty_cycle: 50';fact.evidence[0].quote=fact.value;p.intake.source_facts=[fact];
+  facts.questions=[{key:'source_duty_cycle',field:'source_settings.duty_cycle',reason:'source_unit_missing',message:'제공된 duty_cycle 값에 대응하는 명시 단위를 확인해 주세요.'}];
+  facts.assembly_gaps=[{code:'source_unit_missing',field:'source_settings.duty_cycle',provided:[{fact_index:0,evidence_index:0,raw_value:'50',unit:null,value_span:[0,14],quote_span:[0,14]}],blocking:true}];
+  packet.artifact=null;packet.status=packet.relation.status='blocked';packet.relation.artifact_binding=null;packet.relation.fields=Object.fromEntries(Object.keys(packet.relation.current_binding).map(k=>[k,null]));packet.relation.reasons=['current_plan_blocked'];
+  input.options.plan.value.plan_input=structuredClone(p);input.options.result={value:null};input.options.storage={context:{...input.options.plan.context},value:parseArtifact(packet),pending:false,parentPending:false,stale:false,errorCode:null};
+  return input;
+}
+function minimumEvidence(input=minimumEvidenceInput()){
+  const view=gapQueue(input);assert.ok(view.minimum_evidence,'minimum evidence projection missing');return view.minimum_evidence;
+}
+test('minimum evidence questions show only the explicit missing unit in a current blocked facts read',()=>{
+  const input=minimumEvidenceInput(),original=structuredClone(input),v=minimumEvidence(input);
+  assert.equal(v.current,true);assert.equal(v.state,'current');assert.equal(v.questions.length,1);assert.equal(v.questions[0].reason,'source_unit_missing');assert.equal(v.questions[0].kind,'source_check');assert.match(v.questions[0].prompt,/明示|명시/);assert.doesNotMatch(v.questions[0].prompt,/%|ratio|다시 입력|6개|필수/);
+  assert.equal(v.questions[0].origins[0].raw_question.reason,'source_unit_missing');assert.equal(v.questions[0].gaps[0].raw.provided[0].raw_value,'50');assert.equal(v.questions[0].gaps[0].raw.provided[0].unit,null);assert.equal(v.execution_authority,false);assert.deepEqual(structuredClone(input),original);
+});
+test('minimum evidence questions keep one condition check plus the actual unit gap without asking for all six values',()=>{
+  const input=minimumEvidenceInput(),f=input.options.storage.value.current.facts_plan;
+  f.questions.unshift({key:'source_condition',field:'source_settings',reason:'source_condition_unbound',message:'같은 조건인지 확인'});
+  f.assembly_gaps.unshift(...['frequency_hz','power_dbm','bandwidth_hz','modulation','crest_factor_db'].map((field,i)=>({code:'source_condition_unbound',field:'source_settings.'+field,provided:[{fact_index:0,evidence_index:0,raw_value:String(i),unit:null,value_span:[0,3],quote_span:[0,3]}],blocking:true})));
+  const v=minimumEvidence(input);assert.equal(v.questions.length,2);assert.equal(v.questions[0].reason,'source_condition_unbound');assert.match(v.questions[0].prompt,/같은 시험 조건|연결 근거/);assert.equal(v.questions[0].gaps.length,5);assert.equal(v.questions[1].gaps.length,1);assert.doesNotMatch(v.questions.map(q=>q.prompt).join(' '),/재입력|전부.*없|6개.*필수/);
+});
+test('minimum evidence questions separate unsupported language and units from missing source facts',()=>{
+  const input=minimumEvidenceInput(),f=input.options.storage.value.current.facts_plan;
+  const reasons=['source_statement_unsupported','source_unit_unsupported','source_fact_missing'];f.questions=reasons.map((reason,i)=>({key:'source_'+['modulation','power_dbm','frequency_hz'][i],field:'source_settings.'+['modulation','power_dbm','frequency_hz'][i],reason,message:'원 질문 '+i}));f.assembly_gaps=reasons.map((code,i)=>({code,field:f.questions[i].field,provided:null,blocking:true}));
+  const v=minimumEvidence(input);assert.deepEqual(v.questions.map(q=>q.kind),['development_review','development_review','source_check']);assert.ok(v.questions.slice(0,2).every(q=>q.title==='개발 지원 검토'));assert.doesNotMatch(v.questions.slice(0,2).map(q=>q.prompt).join(' '),/자료.*없|값.*입력|누락/);assert.match(v.questions[2].prompt,/원 위치|제공 기록/);
+});
+test('minimum evidence questions deduplicate reason and field while retaining every raw origin gap span quote and locator',()=>{
+  const input=minimumEvidenceInput(),f=input.options.storage.value.current.facts_plan;
+  f.questions.push({...structuredClone(f.questions[0]),message:'두 번째 원 문구'});f.assembly_gaps.push({...structuredClone(f.assembly_gaps[0]),provided:[{fact_index:0,evidence_index:0,raw_value:'50',unit:null,value_span:[1,13],quote_span:[2,14]}]});
+  const original=structuredClone(f),v=minimumEvidence(input),q=v.questions[0];assert.equal(v.questions.length,1);assert.deepEqual(q.origins.map(x=>x.question_index),[0,1]);assert.equal(q.origins[1].raw_question.message,'두 번째 원 문구');assert.deepEqual(q.gaps.map(x=>x.gap_index),[0,1]);assert.deepEqual(q.gaps[1].raw.provided[0].quote_span,[2,14]);assert.equal(q.source_facts[0].fact_index,0);assert.deepEqual(structuredClone(q.source_facts[0].raw),original.plan_input.intake.source_facts[0]);
+  q.gaps[0].raw.provided[0].unit='mutated';q.source_facts[0].raw.evidence[0].quote='mutated';assert.deepEqual(structuredClone(f),original);
+});
+test('minimum evidence questions do not create questions from RF nulls parent gaps or missing wrapper questions',()=>{
+  const input=minimumEvidenceInput(),f=input.options.storage.value.current.facts_plan;f.questions=[];f.assembly_gaps=previewFields.map(field=>({code:'source_fact_missing',field:'source_settings.'+field,provided:null,blocking:true}));
+  const v=minimumEvidence(input);assert.equal(v.current,true);assert.equal(v.questions.length,0);assert.equal(v.original.assembly_gaps.length,6);assert.equal(v.execution_authority,false);assert.equal(Object.hasOwn(v,'ready'),false);assert.equal(Object.hasOwn(v,'approved'),false);
+});
+test('minimum evidence questions fence parent pending stale generation C1 binding and recheck without promoting old questions',()=>{
+  for(const fault of ['parent','pending','stale','generation','revision','error','plan_pending','C1','binding','recheck','pins']){
+    const input=minimumEvidenceInput(),s=input.options.storage,packet=s.value;
+    if(fault==='parent')input.options.intakeStale=true;if(fault==='pending')s.pending=true;if(fault==='stale')s.stale=true;if(fault==='generation')s.context.generation--;if(fault==='revision')s.context.revision--;if(fault==='error')s.errorCode='intake_conducted_artifact_readback_host_unavailable';if(fault==='plan_pending')input.options.plan.pending=true;if(fault==='C1')input.options.plan.value.context_sha256='7'.repeat(64);if(fault==='binding')input.options.plan.value.plan_input.binding.analysis_sha256='7'.repeat(64);if(fault==='recheck'){packet.status=packet.relation.status='stale';packet.relation.recheck.status='changed';packet.relation.recheck.context_sha256_after='7'.repeat(64);}if(fault==='pins')packet.relation.reasons.push('current_pin_missing');
+    const v=minimumEvidence(input);assert.equal(v.current,false,fault);assert.equal(v.questions.length,0,fault);assert.equal(v.original.questions.length,1,fault);
+  }
+});
+test('minimum evidence questions exclude another intake and leave missing or unconfigured readback unknown',()=>{
+  const foreign=minimumEvidenceInput();foreign.options.storage.value.current.context.intake_id='I-OTHER';foreign.options.storage.value.current.facts_plan.questions[0].message='FOREIGN-MINIMUM-QUESTION';const v=minimumEvidence(foreign);assert.equal(v.current,false);assert.equal(v.questions.length,0);assert.equal(v.original,null);assert.doesNotMatch(JSON.stringify(v),/FOREIGN-MINIMUM-QUESTION/);
+  for(const storage of [null,{value:null},{value:null,errorCode:'intake_conducted_artifact_readback_host_not_provided'}]){const input=minimumEvidenceInput();input.options.storage=storage;const view=minimumEvidence(input);assert.equal(view.current,false);assert.equal(view.questions.length,0);assert.equal(view.original,null);}
+});
+test('minimum evidence questions retain unfamiliar reason and native metadata without inventing a supported question',()=>{
+  const input=minimumEvidenceInput(),f=input.options.storage.value.current.facts_plan;f.questions.push({key:'source_future',field:'source_settings.duty_cycle',reason:'future_reason',message:'모르는 원 질문'});f.questions.push({key:'missing_native_auth',field:'native_auth',reason:'source_fact_missing',message:'인증 질문 아님'});f.questions.push({key:'source_duty_cycle',field:'duty_cycle',reason:'source_unit_missing',message:'namespace가 빠진 원 질문'});f.assembly_gaps[0].provided[0].raw_value='900719925474099312345';f.assembly_gaps[0].provided[0].unit=null;f.assembly_gaps[0].provided[0].opaque={zero:0,negative:-0,big:900719925474099312345n};
+  for(const reason of ['constructor','toString','__proto__'])f.questions.push({key:'source_unknown',field:'source_settings.duty_cycle',reason,message:'모르는 원 reason'});
+  f.questions.push({key:'future_question',field:'source_settings.duty_cycle',reason:'source_unit_missing',message:'공개 key와 다른 원 질문'});
+  const v=minimumEvidence(input);assert.equal(v.questions.length,1);assert.deepEqual(v.uninterpreted_question_indexes,[1,2,3,4,5,6,7]);assert.equal(v.original.questions[1].reason,'future_reason');assert.equal(v.questions[0].gaps[0].raw.provided[0].opaque.big,900719925474099312345n);assert.equal(Object.is(v.questions[0].gaps[0].raw.provided[0].opaque.negative,-0),true);assert.equal(v.questions[0].gaps[0].raw.provided[0].opaque.zero,0);assert.equal(v.questions[0].gaps[0].raw.provided[0].unit,null);
+});

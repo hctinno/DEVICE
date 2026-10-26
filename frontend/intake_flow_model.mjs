@@ -376,7 +376,7 @@ const QUEUE_CONDITIONS=new Set('missing_setting missing_method_field missing_or_
 const QUEUE_NOT_RUN=new Set('unread_documents execution_incomplete journal_incomplete measurement_missing measurement_not_referenced measurement_reference_missing setup_missing setup_partial plan_blocked'.split(' '));
 const QUEUE_UNSUPPORTED=new Set('unsupported_modulation unsupported_method_field unsupported_or_invalid_basis unknown_source_field unknown_method_field unknown_basis_field unsupported_path_device'.split(' '));
 const QUEUE_BINDING=new Set('expected_revision_changed_or_invalid expected_context_changed_or_invalid plan_binding_invalid plan_binding_mismatch plan_hash_mismatch run_binding_mismatch setup_hash_mismatch topology_hash_mismatch'.split(' '));
-export function describeIntakeGapQueue(intake,{generation=0,intakeStale=false,intakeCode=null,plan=null,result=null}={}){
+export function describeIntakeGapQueue(intake,{generation=0,intakeStale=false,intakeCode=null,plan=null,result=null,storage=null}={}){
   const clone=value=>structuredClone(value),object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
   const context={intake_id:intake.intake_id,revision:intake.revision,generation};
   const fields=Object.keys(FIELDS),bindingFields='intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256'.split(' ');
@@ -440,8 +440,60 @@ export function describeIntakeGapQueue(intake,{generation=0,intakeStale=false,in
   }
   const intakeState={state:intakeStale?'blocked':intake.analysis?'current':'not_run',category:intakeStale?'blocked':intake.analysis?'observed':'not_run',reasons:intakeStale?['parent_snapshot_unconfirmed']:[],code:intakeCode,observed_revision:intake.revision,include:Boolean(intake.analysis),value:null};
   const groups=[group('intake_questions','접수 원 질문',intakeState,intake.analysis?.questions,'question'),group('plan_questions','계획 원 질문',planState,planState.value?.plan_input?.intake?.questions,'question'),group('plan_gaps','계획 원 조건·공백',planState,planState.value?.plan_input?.gaps,'gap'),group('result_gaps','제공 결과 원 공백',resultState,resultState.value?.result?.gaps,'gap')];
+  function minimumEvidence(){
+    // This consumes an already parsed readback. It does not supply new facts,
+    // infer RF settings, or require the artifact itself to have matched.
+    const packet=storage?.value,c=packet?.current?.context,f=packet?.current?.facts_plan;
+    const empty=(state,reasons,original=null)=>({state,current:false,reasons,questions:[],uninterpreted_question_indexes:[],original,execution_authority:false});
+    if(!packet)return empty(storage?.errorCode?'unavailable':'not_provided',storage?.errorCode?[storage.errorCode]:[]);
+    if(c?.intake_id!==intake.intake_id||storage.context?.intake_id!==intake.intake_id)return empty('blocked',['other_intake']);
+    const original=object(f)?clone(f):null,reasons=[];
+    if(intakeStale)reasons.push('parent_snapshot_unconfirmed');
+    if(storage.pending||storage.parentPending||storage.stale||storage.errorCode)reasons.push('observation_unconfirmed');
+    if(storage.context?.revision!==intake.revision||c.revision!==intake.revision)reasons.push('revision_changed');
+    if(storage.context?.generation!==generation)reasons.push('snapshot_generation_changed');
+    const b=packet.relation?.current_binding,recheck=packet.relation?.recheck,pb=planState.value?.plan_input?.binding;
+    if(planState.state!=='current'||plan?.errorCode||!binding(b)||!binding(pb)||bindingFields.some(key=>b?.[key]!==pb?.[key])||b?.analysis_context_id!==c.analysis_context_id||b?.context_sha256!==planState.value?.context_sha256)reasons.push('current_plan_binding_unconfirmed');
+    if(packet.schema_version!==1||packet.kind!=='intake_conducted_artifact_readback'||!object(f)||f.kind!=='intake_facts_to_conducted_plan'||f.schema_version!==1||!['ready_for_simulation','blocked'].includes(f.status)||!Array.isArray(f.questions)||!Array.isArray(f.assembly_gaps)||!binding(f.plan_input?.binding)||bindingFields.some(key=>b?.[key]!==f.plan_input?.binding[key]))reasons.push('facts_plan_unconfirmed');
+    if(packet.status==='stale'||recheck?.status!=='unchanged'||recheck?.context_sha256_before!==recheck?.context_sha256_after||recheck?.analysis_sha256_before!==recheck?.analysis_sha256_after||recheck?.context_sha256_before!==b?.context_sha256||recheck?.analysis_sha256_before!==b?.analysis_sha256||packet.relation?.reasons?.includes('current_pin_missing'))reasons.push('current_recheck_unconfirmed');
+    if(reasons.length)return empty('blocked',[...new Set(reasons)],original);
+    const rf={frequency_hz:'주파수',power_dbm:'source 전력',bandwidth_hz:'대역폭',duty_cycle:'듀티',modulation:'변조',crest_factor_db:'crest factor'};
+    const actions={
+      source_condition_unbound:['source_check','원 조건 연결 확인','원 인용들이 같은 시험 조건을 가리키는지 연결 근거를 확인하세요.'],
+      source_unit_missing:['source_check','명시 단위 확인','원 값에 대응하는 명시 단위만 원문에서 확인하세요.'],
+      source_statement_unsupported:['development_review','개발 지원 검토','제공된 문장의 형식과 해석 지원 범위를 검토하세요.'],
+      source_unit_unsupported:['development_review','개발 지원 검토','원문에 적힌 단위의 지원 범위를 검토하세요.'],
+      source_power_quantity_unsupported:['development_review','개발 지원 검토','원문 전력량 구분의 지원 범위를 검토하세요.'],
+      source_fact_missing:['source_check','원 위치·제공 기록 확인','현재 검증한 인용에서 해당 후보를 얻지 못했습니다. 원 위치·제공 기록을 확인하세요.'],
+      source_fact_unverified:['source_check','원 사실 근거 확인','제공된 사실과 그 명시 인용의 연결을 확인하세요.'],
+      source_quote_mismatch:['source_check','인용 연결 확인','원 값과 인용이 같은 문장을 가리키는지 확인하세요.'],
+      source_value_conflict:['source_check','원 값 충돌 확인','서로 다른 원 값과 각각의 조건·근거를 확인하세요.'],
+      source_number_unrepresentable:['development_review','개발 지원 검토','원 수치 표현의 처리 지원 범위를 검토하세요.'],
+      source_candidate_limit:['development_review','개발 지원 검토','원 후보 목록과 처리 한도를 검토하세요.'],
+      invalid_rf_domain:['source_check','주파수·대역폭 근거 확인','원 주파수·대역폭의 제공 근거와 조건을 확인하세요.'],
+    };
+    const grouped=new Map(),uninterpreted=[],sourceFacts=f.plan_input.intake?.source_facts;
+    f.questions.forEach((q,index)=>{
+      const field=typeof q?.field==='string'?q.field.replace(/^source_settings\./,''):null,action=typeof q?.reason==='string'&&Object.hasOwn(actions,q.reason)?actions[q.reason]:null;
+      if(!action||Object.keys(q).length!==4||!['key','field','reason','message'].every(k=>typeof q[k]==='string')||!q.message.trim()||!(q.field==='source_settings'||q.field.startsWith('source_settings.')&&Object.hasOwn(rf,field))){uninterpreted.push(index);return;}
+      if(!(q.field==='source_settings'?['source_condition','source_domain'].includes(q.key):q.key==='source_'+field)){uninterpreted.push(index);return;}
+      const key=q.reason+'\0'+q.field;
+      if(!grouped.has(key))grouped.set(key,{reason:q.reason,field:q.field,kind:action[0],title:action[1],prompt:(rf[field]?rf[field]+': ':'')+action[2],origins:[],gaps:[],source_facts:[]});
+      const row=grouped.get(key);row.origins.push({question_index:index,raw_question:clone(q)});
+    });
+    for(const row of grouped.values()){
+      const factIndexes=new Set();
+      f.assembly_gaps.forEach((gap,index)=>{
+        if(!object(gap)||gap.code!==row.reason||!(gap.field===row.field||row.field==='source_settings'&&typeof gap.field==='string'&&gap.field.startsWith('source_settings.')))return;
+        row.gaps.push({gap_index:index,raw:clone(gap)});
+        const candidates=Array.isArray(gap.provided)?gap.provided:[gap.provided];for(const candidate of candidates)if(object(candidate)&&Number.isSafeInteger(candidate.fact_index)&&candidate.fact_index>=0)factIndexes.add(candidate.fact_index);
+      });
+      if(Array.isArray(sourceFacts))sourceFacts.forEach((raw,index)=>{if(factIndexes.has(index))row.source_facts.push({fact_index:index,raw:clone(raw)});});
+    }
+    return {state:'current',current:true,reasons:[],questions:[...grouped.values()],uninterpreted_question_indexes:uninterpreted,original,execution_authority:false};
+  }
   const all=groups.flatMap(group=>group.items),count=category=>all.filter(row=>row.category===category).length;
-  return {context,groups,summary:{evidence_review:count('evidence_review'),current_facts:count('facts_required'),conditions:count('conditions_required'),system_errors:count('system_error'),unsupported:count('unsupported'),not_run:count('not_run'),blocked:count('blocked'),uninterpreted:count('uninterpreted')},execution_authority:false};
+  return {context,groups,minimum_evidence:minimumEvidence(),summary:{evidence_review:count('evidence_review'),current_facts:count('facts_required'),conditions:count('conditions_required'),system_errors:count('system_error'),unsupported:count('unsupported'),not_run:count('not_run'),blocked:count('blocked'),uninterpreted:count('uninterpreted')},execution_authority:false};
 }
 
 function unifyProvidedWorkflow(view,intake,observations){
