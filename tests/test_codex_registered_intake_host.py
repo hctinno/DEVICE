@@ -1,7 +1,7 @@
 """Disposable native control/Store/history; genuine D2, known Python child only."""
 import copy
 import ctypes
-from contextlib import redirect_stderr, redirect_stdout
+from contextlib import ExitStack, redirect_stderr, redirect_stdout
 from datetime import datetime, timedelta, timezone
 import hashlib
 import importlib
@@ -265,7 +265,7 @@ class RegisteredNativeHostTests(unittest.TestCase):
         self.config['registration_sha256']='0'*64;self.put('operator-control-v1.json',self.config)
         self.refused()
 
-    def test_pdf_is_rejected_before_original_bytes_or_store(self):
+    def test_missing_registered_pdf_is_rejected_before_original_bytes_or_store(self):
         self.selection['files'][0]['path']='not-opened.PDF'
         self.selection['revision_fingerprint']=H(C(self.selection['files']))
         self.put('registered-intake-v1.json',self.manifest)
@@ -601,6 +601,306 @@ raise SystemExit(host._process_main())
         self.assertEqual(state['rollback_calls'],0)
         self.assertEqual(result['once']['status'],'completed')
         self.assertTrue((self.control/'active-run.json').exists())
+
+
+NATIVE_PDF_PREP_OBSERVATIONS = []
+
+
+class NativePDFPreflightTests(unittest.TestCase):
+    """Fresh synthetic G3; native authority/ledger are explicit memory seams."""
+    NAME = 'NATIVE-PDF-AUTHORED-ONLY'
+    SCENARIO = 'NATIVE-PDF-LOCAL'
+
+    def setUp(self):
+        from reportlab.pdfgen import canvas
+        from labflow.intake_jobs import prepare_registered_synthetic_context
+        self.api = importlib.import_module('labflow.codex_registered_intake_host')
+        self.common = importlib.import_module('labflow.codex_intake_once')
+        self.temp = tempfile.TemporaryDirectory(prefix='native-pdf-preflight-')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.bundle = self.root/'inbox/bundle';self.bundle.mkdir(parents=True)
+        buffer=io.BytesIO();pdf=canvas.Canvas(buffer,invariant=1)
+        for lines in (('product_type: industrial_sensor','model: NATIVE-PDF-SYN'),
+                      ('market: EU','purpose: local development evaluation')):
+            text=pdf.beginText(48,790)
+            for line in lines:text.textLine(line)
+            pdf.drawText(text);pdf.showPage()
+        pdf.save();(self.bundle/'REQUEST.PDF').write_bytes(buffer.getvalue())
+        (self.bundle/'attachment.TXT').write_text('purpose: local development evaluation\n',encoding='utf-8')
+        self.store=Store(self.root/'state');self.addCleanup(self.store.close)
+        register_source(self.store,'NATIVE-PDF-SYN',self.bundle.parent,synthetic=True,settle_seconds=1)
+        scan_source(self.store,'NATIVE-PDF-SYN',now=100,synthetic_only=True)
+        item=scan_source(self.store,'NATIVE-PDF-SYN',now=101,synthetic_only=True)['accepted'][0]
+        with self.store.connection() as con:
+            row=con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',
+                            (item['intake_id'],item['revision'])).fetchone()
+        self.selection=dict(source_id='NATIVE-PDF-SYN',intake_id=item['intake_id'],revision=item['revision'],
+            job_id=item['job_id'],revision_fingerprint=row['fingerprint'],files=json.loads(row['files_json']))
+        self.context=prepare_registered_synthetic_context(self.store,self.selection,producer_name=self.NAME)
+        self.manifest=dict(schema_version=1,kind='codex_registered_synthetic_intake',scenario_id=self.SCENARIO,
+                           synthetic=True,registered_intake=self.selection)
+        self.registration=self.root/'registration-only';self.registration.mkdir()
+        (self.registration/'registered-intake-v1.json').write_bytes(C(self.manifest))
+        self.exe=self.root/'codex.exe';self.exe.write_bytes(b'authored path only; never executed')
+        self.record=dict(case=self._testMethodName,context=copy.deepcopy(self.context),actual_CLI=0,actual_models=0,
+            authority='native control/anchor/permit/journal seams in memory; no issued profile or permit',outcomes=[])
+        self.counter=0;self.addCleanup(self.capture)
+
+    def capture(self):
+        files={}
+        for path in self.root.rglob('*'):
+            if path.is_file() and path.suffix!='.sqlite3':files[path.relative_to(self.root).as_posix()]=path.read_bytes()
+        self.assertLessEqual(len(files),192);self.assertLessEqual(sum(map(len,files.values())),8*1024*1024)
+        NATIVE_PDF_PREP_OBSERVATIONS.append(dict(self.record,files=files))
+
+    def exercise(self, context=None, *, first=None, late=None, source_changed=False, genuine=False):
+        api=self.api;self.counter+=1;root=self.root/('memory-native-'+str(self.counter));root.mkdir()
+        evidence=root/'runs/MEMORY-ONLY';evidence.mkdir(parents=True)
+        (root/'registered-intake-v1.json').write_bytes(C(self.manifest))
+        anchor_bytes=C(dict(fixture_only=True));journal=root/'continuation.sqlite3'
+        config=dict(schema_version=1,kind='codex_registered_intake_operator_control',anchor_sha256=H(anchor_bytes),
+            journal_id='MEMORY-ONLY',permit_id='MEMORY-ONLY',registration_sha256=H(C(self.manifest)),
+            registered_input_root=str(self.bundle),store_root=str(self.store.root),executable=str(self.exe))
+        config_bytes=C(config);context=copy.deepcopy(self.context if context is None else context)
+        permit=dict(producer_name=self.NAME,worker_id='native-pdf-memory-worker',timeout_seconds=5,
+                    expires_at='2099-01-01T00:00:00Z')
+        trace=[];events={};registrations=[];preflights=[];once_calls=[]
+        info=SimpleNamespace(st_size=0,st_dev=1,st_ino=1)
+        class Journal:
+            in_transaction=False
+            closes=0
+            def execute(inner,sql,*args):
+                trace.append('sql:'+sql)
+                if first is not None and sql=='PRAGMA trusted_schema=OFF':raise first
+                if sql=='BEGIN IMMEDIATE':inner.in_transaction=True
+                return inner
+            def commit(inner):trace.append('commit');inner.in_transaction=False
+            def rollback(inner):trace.append('rollback');inner.in_transaction=False
+            def close(inner):
+                inner.closes+=1;trace.append('journal_close')
+                if late is not None:raise late
+        class Guard:
+            closes=0
+            def fileno(inner):return -7654321
+            def close(inner):inner.closes+=1;trace.append('guard_close')
+        class Borrowed:
+            def close(inner):trace.append('store_close')
+        con=Journal();guard=Guard();borrowed=self.store if genuine else Borrowed()
+        real_path,real_read,real_open,real_stat,real_connect=api._path,api._read,Path.open,os.fstat,sqlite3.connect
+        real_registration,real_dedicated,real_prepare=api._registration,api._dedicated,api.prepare_registered_synthetic_context
+        def path(value,*,directory):
+            value=Path(value)
+            return (value,info) if value==journal else real_path(value,directory=directory)
+        def read(value,cap):
+            if value==root/api._ANCHOR:return anchor_bytes
+            if value==root/'operator-control-v1.json':return config_bytes
+            return real_read(value,cap)
+        def opened(value,*args,**kwargs):
+            return guard if value==journal else real_open(value,*args,**kwargs)
+        def connect(value,*args,**kwargs):
+            return con if value==journal.as_uri()+'?mode=rw' else real_connect(value,*args,**kwargs)
+        def history(*args):
+            pending={config['permit_id']} if any(kind in ('reserved','consumed') for kind,_ in events) and ('finished',config['permit_id']) not in events else set()
+            return copy.deepcopy(events),dict(fixture_only=True),pending
+        def append(connection,kind,permit_id,body):
+            self.assertIs(connection,con);trace.append(kind);events[kind,permit_id]=copy.deepcopy(body)
+        def registration(*args):
+            registrations.append(True);trace.append('registration')
+            if source_changed and len(registrations)>1:api._fail('registration_changed')
+            return real_registration(*args) if genuine else copy.deepcopy(self.selection)
+        def dedicated(*args):
+            trace.append('dedicated')
+            if genuine:return real_dedicated(*args)
+        def prepare(*args,**kwargs):
+            trace.append('G3')
+            return real_prepare(*args,**kwargs) if genuine else context
+        def preflight(value,*,producer_name):
+            trace.append('preflight');result=self.common.preflight_codex_intake_once_inputs(value,producer_name=producer_name)
+            preflights.append(copy.deepcopy(result));return result
+        def once(*args,**kwargs):
+            trace.append('once');once_calls.append(C(args[1]))
+            return self.common.run_codex_intake_once(*args,**kwargs) if genuine else dict(status='failed',fixture_only=True)
+        def active(value,data):
+            trace.append('active_guard');return SimpleNamespace(st_dev=1,st_ino=1)
+        result=outward=None;authored_calls=[]
+        with ExitStack() as stack:
+            stack.enter_context(patch.object(api,'_control_root',return_value=root))
+            stack.enter_context(patch.object(api,'_path',side_effect=path))
+            stack.enter_context(patch.object(api,'_read',side_effect=read))
+            stack.enter_context(patch.object(api,'_anchor',return_value=None))
+            stack.enter_context(patch.object(Path,'open',new=opened))
+            stack.enter_context(patch.object(api.os,'fstat',side_effect=lambda fd:info if fd==-7654321 else real_stat(fd)))
+            stack.enter_context(patch.object(api.sqlite3,'connect',side_effect=connect))
+            stack.enter_context(patch.object(api,'_history',side_effect=history))
+            stack.enter_context(patch.object(api,'_permit',return_value=permit))
+            stack.enter_context(patch.object(api,'_append',side_effect=append))
+            stack.enter_context(patch.object(api,'_registration',side_effect=registration))
+            stack.enter_context(patch.object(api.Store,'open_existing',return_value=borrowed))
+            stack.enter_context(patch.object(api,'_dedicated',side_effect=dedicated))
+            stack.enter_context(patch.object(api,'prepare_registered_synthetic_context',side_effect=prepare))
+            stack.enter_context(patch.object(api,'preflight_codex_intake_once_inputs',side_effect=preflight,create=True))
+            stack.enter_context(patch.object(api,'run_codex_intake_once',side_effect=once))
+            if genuine:
+                from test_codex_intake_once import SchemaTwoOnceTests
+                helper=SchemaTwoOnceTests();case=dict(calls=authored_calls)
+                stack.enter_context(patch.object(self.common,'produce_codex_cli_response',side_effect=helper.producer(case)))
+            else:
+                stack.enter_context(patch.object(api,'_active_guard',side_effect=active))
+                stack.enter_context(patch.object(api,'_observation',return_value=(0,None,True,None)))
+            try:result=api._run(self.SCENARIO,'gpt-6.1-sol')
+            except BaseException as error:outward=error
+        observation=dict(trace=trace,events=[dict(kind=kind,body=body) for (kind,_),body in events.items()],
+            preflights=preflights,once_calls=len(once_calls),result=result,
+            outward_type=type(outward).__name__ if outward is not None else None,
+            journal_closes=con.closes,guard_closes=guard.closes,authored_stub_invocations=len(authored_calls),
+            genuine_source_Store_once=genuine,actual_CLI=0,actual_models=0)
+        self.record['outcomes'].append(observation)
+        return SimpleNamespace(record=result,outward=outward,trace=trace,events=events,preflights=preflights,
+                               once_calls=once_calls,guard=guard,journal=con,evidence=evidence,authored=authored_calls)
+
+    def test_registered_uppercase_pdf_and_mixed_bytes_pass_registration_before_any_authority(self):
+        config=dict(registration_sha256=H(C(self.manifest)),registered_input_root=str(self.bundle))
+        before={path.name:path.read_bytes() for path in self.bundle.iterdir()}
+        try:result=self.api._registration(self.registration,config,self.SCENARIO)
+        except ValueError as error:self.fail('registered authored complete PDF is categorically rejected: '+str(error))
+        self.assertEqual(result,self.selection)
+        self.assertEqual(before,{path.name:path.read_bytes() for path in self.bundle.iterdir()})
+
+    def test_common_complete_context_preflight_precedes_guard_reservation_and_consumption(self):
+        outcome=self.exercise()
+        self.assertEqual(len(outcome.preflights),1,'native host omitted the common pre-consume request check')
+        self.assertEqual(outcome.preflights[0]['status'],'validated')
+        for event in ('active_guard','reserved','consumed','once'):
+            self.assertLess(outcome.trace.index('preflight'),outcome.trace.index(event))
+        self.assertEqual(outcome.once_calls,[C(outcome.preflights[0]['context'])])
+
+    def test_quality_and_request_caps_stop_before_guard_reservation_consumption_or_once(self):
+        from labflow.intake_model_boundary import build_analysis_response_schema
+        for kind in ('partial','prompt_limit','schema_limit'):
+            context=copy.deepcopy(self.context)
+            if kind=='partial':next(d for d in context['documents'] if d.get('format')=='pdf')['complete']=False
+            if kind=='prompt_limit':context['instructions']='x'*262144
+            with self.subTest(kind=kind),ExitStack() as stack:
+                if kind=='schema_limit':
+                    schema=build_analysis_response_schema(producer_name=self.NAME,context=context);schema['description']='x'*65537
+                    stack.enter_context(patch.object(self.common,'build_analysis_response_schema',return_value=schema))
+                self.assertEqual(self.common.preflight_codex_intake_once_inputs(context,producer_name=self.NAME)['status'],'blocked')
+                outcome=self.exercise(context)
+                self.assertEqual(outcome.once_calls,[],'unsupported input consumed the manual seam before dispatch')
+                self.assertEqual(outcome.events,{})
+                self.assertNotIn('active_guard',outcome.trace)
+                self.assertEqual(outcome.record['status'],'not_run')
+
+    def test_first_ordinary_receipt_survives_all_late_cleanup_control_families(self):
+        for kind in (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):
+            first=OSError('AUTHORED_FIRST_ORDINARY');late=kind('AUTHORED_LATE_CONTROL')
+            with self.subTest(kind=kind.__name__):
+                outcome=self.exercise(first=first,late=late)
+                self.assertIsNone(outcome.outward,'a late cleanup control replaced the first ordinary receipt outcome')
+                self.assertEqual(outcome.record['errors'][0]['phase'],'history')
+                self.assertEqual(outcome.record['errors'][-1]['phase'],'journal_close')
+                self.assertEqual(outcome.journal.closes,1);self.assertEqual(outcome.guard.closes,1)
+                self.assertEqual(vars(first),{});self.assertEqual(vars(late),{})
+
+    def test_first_control_keeps_identity_when_journal_cleanup_later_fails(self):
+        for kind in (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):
+            first=kind('AUTHORED_FIRST_CONTROL')
+            with self.subTest(kind=kind.__name__):
+                outcome=self.exercise(first=first,late=OSError('AUTHORED_LATE_ORDINARY'))
+                self.assertIs(outcome.outward,first)
+                self.assertEqual(outcome.journal.closes,1);self.assertEqual(outcome.guard.closes,1)
+                self.assertEqual(outcome.events,{})
+                self.assertEqual(vars(first),{})
+
+    def test_source_recheck_after_G3_prevents_reservation_and_dispatch(self):
+        outcome=self.exercise(source_changed=True)
+        self.assertIsNone(outcome.outward)
+        self.assertEqual(outcome.record['status'],'not_run')
+        self.assertTrue(outcome.record['errors'][0]['code'].endswith('registration_changed'))
+        self.assertEqual(outcome.events,{})
+        self.assertEqual(outcome.once_calls,[])
+
+    def test_fresh_mixed_G3_real_once_and_strict_complete_with_memory_authority_seams(self):
+        outcome=self.exercise(genuine=True)
+        self.assertIsNone(outcome.outward)
+        self.assertEqual(outcome.record['status'],'completed')
+        self.assertEqual(outcome.record['once']['strict_decode'],'accepted')
+        self.assertEqual(len(outcome.authored),1)
+        self.assertEqual(outcome.record['once']['job']['attempt'],1)
+        self.assertEqual(outcome.record['once']['attempts']['automatic_retries'],0)
+        self.assertEqual([item for item in outcome.trace if item in ('reserved','consumed','once')],['reserved','consumed','once'])
+        self.assertEqual(outcome.record['reservation']['state'],'finished')
+        self.assertEqual(outcome.journal.closes,1);self.assertEqual(outcome.guard.closes,1)
+        self.assertFalse((outcome.evidence.parent.parent/'active-run.json').exists())
+
+    def test_legacy_text_only_schema_one_keeps_real_once_and_common_preflight(self):
+        from labflow.intake_jobs import prepare_registered_synthetic_context
+        base=self.root/'separate-text-case';bundle=base/'inbox/bundle';bundle.mkdir(parents=True)
+        (bundle/'request.TXT').write_text('product_type: industrial_sensor\nmodel: LEGACY-TEXT-SYN\n'
+            'market: EU\npurpose: local development evaluation\n',encoding='utf-8')
+        store=Store(base/'state');self.addCleanup(store.close)
+        register_source(store,'NATIVE-TEXT-SYN',bundle.parent,synthetic=True,settle_seconds=1)
+        scan_source(store,'NATIVE-TEXT-SYN',now=200,synthetic_only=True)
+        item=scan_source(store,'NATIVE-TEXT-SYN',now=201,synthetic_only=True)['accepted'][0]
+        with store.connection() as con:
+            row=con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',
+                            (item['intake_id'],item['revision'])).fetchone()
+        selection=dict(source_id='NATIVE-TEXT-SYN',intake_id=item['intake_id'],revision=item['revision'],
+            job_id=item['job_id'],revision_fingerprint=row['fingerprint'],files=json.loads(row['files_json']))
+        context=prepare_registered_synthetic_context(store,selection,producer_name=self.NAME)
+        self.store,self.bundle,self.selection,self.context=store,bundle,selection,context
+        self.manifest=dict(schema_version=1,kind='codex_registered_synthetic_intake',scenario_id=self.SCENARIO,
+                           synthetic=True,registered_intake=selection)
+        self.record['separate_legacy_context']=copy.deepcopy(context)
+        outcome=self.exercise(genuine=True)
+        self.assertIsNone(outcome.outward)
+        self.assertEqual(outcome.record['status'],'completed')
+        self.assertEqual(outcome.record['once']['strict_decode'],'accepted')
+        self.assertEqual(len(outcome.preflights),1)
+        self.assertEqual(outcome.preflights[0]['response_schema']['properties']['schema_version']['enum'],[1])
+        self.assertNotIn('context_id',outcome.preflights[0]['response_schema']['properties'])
+        self.assertEqual(len(outcome.authored),1)
+        self.assertEqual(outcome.record['once']['attempts']['automatic_retries'],0)
+
+    def test_bad_preflight_envelope_pins_and_byte_caps_never_reserve_or_dispatch(self):
+        original=self.common.preflight_codex_intake_once_inputs(self.context,producer_name=self.NAME)
+        self.assertEqual(original['status'],'validated')
+        for kind in ('boolean_version','authority','extra_key','extra_pin','prompt_hash','context','prompt_cap','schema_cap'):
+            bad=copy.deepcopy(original)
+            if kind=='boolean_version':bad['schema_version']=True
+            elif kind=='authority':bad['execution_authority']=True
+            elif kind=='extra_key':bad['unknown']=True
+            elif kind=='extra_pin':bad['pins']['unknown']='0'*64
+            elif kind=='prompt_hash':bad['pins']['prompt_sha256']='0'*64
+            elif kind=='context':
+                bad['context']['instructions']+=' authored changed snapshot'
+                bad['pins']['context_sha256']=H(C(bad['context']))
+            elif kind=='prompt_cap':
+                bad['prompt']['oversize']='x'*262144;bad['pins']['prompt_sha256']=H(C(bad['prompt']))
+            else:
+                bad['response_schema']['description']='x'*65537;bad['pins']['schema_sha256']=H(C(bad['response_schema']))
+            with self.subTest(kind=kind),patch.object(self.common,'preflight_codex_intake_once_inputs',return_value=bad):
+                outcome=self.exercise()
+                self.assertIsNone(outcome.outward)
+                self.assertEqual(outcome.record['status'],'not_run')
+                self.assertEqual(outcome.events,{})
+                self.assertEqual(outcome.once_calls,[])
+                self.assertNotIn('active_guard',outcome.trace)
+
+    def test_completed_once_first_store_close_error_and_late_control_keep_unknown_and_guard(self):
+        first=OSError('AUTHORED_FIRST_STORE_CLOSE');late=MemoryError('AUTHORED_LATE_JOURNAL_CLOSE')
+        with patch.object(self.store,'close',side_effect=first):
+            outcome=self.exercise(genuine=True,late=late)
+        self.assertIsNone(outcome.outward)
+        self.assertEqual(outcome.record['status'],'unknown')
+        self.assertEqual(outcome.record['errors'][0]['phase'],'store_close')
+        self.assertEqual(outcome.record['errors'][-1]['phase'],'journal_close')
+        self.assertEqual(outcome.record['once']['status'],'completed')
+        self.assertEqual(len(outcome.authored),1)
+        self.assertEqual(outcome.record['reservation']['state'],'finished')
+        self.assertTrue((outcome.evidence.parent.parent/'active-run.json').is_file())
+        self.assertEqual(vars(first),{});self.assertEqual(vars(late),{})
 
 
 if __name__=='__main__':

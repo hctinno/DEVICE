@@ -1,12 +1,14 @@
 # 등록 합성 접수의 native 운영 진입점
 
+2026-10-26 PDF 후속 입력 규범이다. 공통 once 계약/usage의 이전 native PDF 거절 범위는 이 후속으로 갱신하며, 기본 schema1·영수증·권한 규칙은 유지한다.
+
 ```text
 python -B -m labflow.codex_registered_intake_host --scenario-id ID --model gpt-6.1-sol
 ```
 
 모델 선택은 `gpt-6.1-sol` / `gpt-6-astra`다. `main(argv=None) -> int`는 scenario/model 두 선택자만 받는다. approval dict, control 경로, Store 경로, stdin 승인, provider hook은 받지 않는다. 기존 사용자 위임을 현재 OS 계정의 고정 운영 입력에 연결하며 임의 bool/SHA/고객 문서/모델 응답을 권위로 올리지 않는다. 자동 worker·poll·재시도는 없다.
 
-이 버전의 검수 시점에는 실제 등록 manifest·working Store·누적 원장·single-use permit이 제공되지 않았다. 현재 실제 실행은 `not_run`이 정상이다. 소유 검사는 분리된 native fixture와 알려진 Python 자식만 사용하며 설치 CLI·실제 모델·운영 원장은 실행하지 않는다. 이 연결의 성공은 RF/EMC 시험·규격 적합성·측정 예측력 검증이 아니다.
+최초 구현 검수에는 실제 등록 manifest·working Store·누적 원장·single-use permit이 제공되지 않아 `not_run`이었다. 2026-10-26 PDF 후속 검증은 새 합성 자료와 메모리상의 운영 입력·장부 경계를 사용한다. 운영 프로필·실permit·원 실제17 자료를 읽거나 설치 CLI·실제 모델을 실행하지 않았다. 아래 소프트웨어 지원은 실제 OS 계정의 운영 성공, RF/EMC 시험·규격 적합성·측정 예측력 검증을 뜻하지 않는다.
 
 [구현](../../labflow/codex_registered_intake_host.py), [검사](../../tests/test_codex_registered_intake_host.py)를 함께 확인한다.
 
@@ -18,6 +20,7 @@ python -B -m labflow.codex_registered_intake_host --scenario-id ID --model gpt-6
 | 기존 위임·등록 | 그 디렉터리의 root anchor / operator control / 등록 manifest | 원 등록 파일 목록·bytes·SHA와 실제 원 폴더 전체를 대조; source 문서가 승인 발급하지 않음 |
 | working Store | [Store.open_existing](store_open_existing_usage.md) | 기존 Store만 열고 caller가 닫음; 생성·migration 없음 |
 | current 준비 | [genuine G3](intake_preclaim_context_usage.md) | outstanding queued/running job 정확1을 앞뒤 확인; 등록 선택6→현재 public8, claim0 |
+| 소비 전 입력 검사 | [공통 pure preflight](codex_intake_once_usage.md#소비-전-순수-입력-검사) | G3·원본/등록·dedicated 확인 뒤 detached context/prompt/schema/pins·품질·256KiB/64KiB를 확인; active guard/예약/소비보다 먼저 수행 |
 | 누적 예약 | 고정 기존 `continuation.sqlite3` | `mode=rw`, `BEGIN IMMEDIATE`, root baseline/permit 검증 후 reserved→consumed 별도 durable commit |
 | 실행 | [concrete once](codex_intake_once_usage.md) | 같은 Store·G3 public8·permit ID로 정확1회; fresh claim/context/prompt 대조·strict/complete는 기존 구현 |
 | 자식·증거 | [concrete D2](codex_cli_response_usage.md) | version/model 과정·원 receipt/artifact 보존; model attempt 최대1, timeout ≤60초, retry0 |
@@ -84,7 +87,13 @@ root/input/Store는 서로 같거나 중첩될 수 없다. 증거·원장·manif
 
 source_id/intake_id/job_id는 identifier, revision은 positive native int다. files는 원 순서를 보존한 exact3 `{path, sha256, bytes}` 목록이고 revision_fingerprint는 그 목록의 canonical UTF-8 SHA256이다. 원 폴더의 전체 파일과 목록이 일치해야 하며 원 bytes/hash와 working Store의 genuine 등록 상태도 일치해야 한다. SHA/DB 값만 임의 복사한 것은 원 등록을 대신하지 않는다.
 
-경로는 상대 POSIX 파일 경로, 파일1~1000개·파일당32MiB·묶음128MiB 이내다. 경로 이탈·중복/case 충돌·reparse·추가 파일은 거절한다. 폴더는1000개/깊이32 이내다. PDF/schema2는 모델 전·원 PDF bytes 읽기 전에 거절한다. G3는 context/blob metadata를 retain할 수 있으므로 실패에도 DB bytes 불변을 주장하지 않는다.
+경로는 상대 POSIX 파일 경로, 파일1~1000개·파일당32MiB·묶음128MiB 이내다. 경로 이탈·중복/case 충돌·reparse·추가 파일은 거절한다. 폴더는1000개/깊이32 이내다. PDF도 원 등록 목록·폴더 전체·bytes/hash를 대조하며 확장자 대소문자로 일괄 거절하지 않는다. G3는 context/blob metadata를 retain할 수 있으므로 실패에도 DB bytes 불변을 주장하지 않는다.
+
+등록 파일 검증만으로 모델을 호출하지 않는다. G3와 원본·등록·dedicated 재확인 및 anchor/control 대조 뒤 `preflight_codex_intake_once_inputs`를 호출한다. 읽을 수 있는 schema1 텍스트와 전체 페이지가 정상 추출된 schema2 PDF/혼합 TXT만 지원한다. partial/unread/malformed·누락/잘린 페이지·추출 이슈는 원문·issue·null을 고치지 않고 `unsupported_schema`로 거절한다. 문맥/요청 바이트 초과는 `input_limit`이다. 일반 G3의 unread 노출은 유지한다.
+
+preflight exact9의 version/kind·authority false·validated/failure null·pins exact3를 확인하고 원 G3 context와 detached context가 C1으로 같아야 한다. C1 prompt는 262144바이트 이하, schema는 65536바이트 이하이며 context/prompt/schema SHA가 실제 C1 bytes와 같아야 한다. 이 검사와 품질 거절은 `attempted` 설정·active guard 생성·`reserved/consumed` event보다 먼저 끝나므로 지원외 입력이 permit을 소비하지 않는다. preflight는 queued 상태·원본 진위·예산·실행 권한을 발급하지 않는다.
+
+검사된 detached context로 기존 durable `reserved→consumed→once1` 경로를 사용한다. once는 같은 producer/public8의 prompt/schema를 만들고 fresh claim을 다시 대조하며 원 strict decoder로 PDF page/extraction/context/source SHA·text SHA·literal quote를 검증한다. 원 reserved event exact6·영수증·원장 형식은 바꾸지 않는다. 외부 상태가 예약 뒤 바뀐 경우 원 pending/unknown과 증거를 보존하며 예약·소비를 환급하거나 재시도하지 않는다.
 
 ## 기존 누적 원장의 SQL과 event
 
@@ -136,6 +145,10 @@ history는 예약·소비·종료 변경 전 snapshot을 현재 통계로 재사
 
 once의 원 exact10은 `schema_version, kind, status, phase, job, binding, attempts, strict_decode, assessment, errors`다. attempts exact4 `producer_invocations, version_process_attempts, model_process_attempts, automatic_retries`를 보존한다. producer_invocations는 native0/1, version/model_process_attempts는0/1/null, automatic_retries는0이다. 세부 job/binding/assessment/error 의미는 위 기존 once 계약을 따른다.
 
-exit는 completed0/not_run3/failed4/unknown5, 인자 오류2, help0이다. completed만 stdout, 나머지 JSON은 stderr다. frame은 UTF-8/LF·69632B 이내다. public main은 stream을 바꾸지 않고 관측 control 객체를 전파한다. module process는 stream을 소유해 broken output/최종 flush 재시도 traceback을 막고 KeyboardInterrupt130/그 밖의 control5로 끝낸다. 출력 전달 실패가 소비를 되돌리지 않으므로 같은 permit을 재실행하지 않는다.
+최초 오류의 순서를 유지한다. 일반 오류가 먼저면 원 고정 오류·phase를 receipt의 첫 항목으로 보존하며, 후행 정리의 CONTROL이 그 반환을 덮지 않는다. 첫 오류가 KeyboardInterrupt/SystemExit/GeneratorExit/MemoryError면 같은 객체를 전파한다. 후행 CONTROL을 관측한 뒤의 기존 정리 제한과 guard/원장 보존도 유지한다. 완료 이후 Store/원장 정리가 실패하면 unknown이며 이미 완료한 once를 실패로 되돌리지 않는다.
 
-소유 검사는 공개 authored 원본·disposable Store/계정 원장·분리 native control·known fake subprocess만 사용한다. 합성 history16→17은 실제 운영16을 수정하거나 실제 모델1을 실행한 증거가 아니다. 원 실패/RED·후속 PASS·관측기 오류를 보존하고 반복 코호트/부모 회귀/독립 검토의 분모는 합산하지 않는다. 실제 root 준비 항목은 등록 원본+manifest/current Store, 기존16 continuation baseline, 이번 permit, 실행 파일, 빈 증거 디렉터리, fixed operator control이며 검수 후 root가 제공한다.
+exit는 completed0/not_run3/failed4/unknown5, 인자 오류2, help0이다. completed만 stdout, 나머지 JSON은 stderr다. frame은 UTF-8/LF·69632B 이내다. public main은 stream을 바꾸지 않고 최초 CONTROL 객체를 전파한다. module process는 stream을 소유해 broken output/최종 flush 재시도 traceback을 막고 KeyboardInterrupt130/그 밖의 control5로 끝낸다. 출력 전달 실패가 소비를 되돌리지 않으므로 같은 permit을 재실행하지 않는다.
+
+최초 검사의 공개 authored 원본·disposable Store/계정 원장·분리 native control·known fake subprocess 이력은 보존한다. 합성 history16→17은 실제 운영16을 수정하거나 실제 모델1을 실행한 증거가 아니다. 이번 새 검사는 별도 class의 fresh 합성 PDF/TXT·등록 자료·Store와 메모리상의 anchor/control/permit/journal 경계만 사용한다. 실제 원본 등록/dedicated/G3→공통 preflight→실제 once/strict/complete 소프트웨어 경로, 기존 TXT/schema1, 지원외·typed envelope·pins·한도 거절과 최초 오류/unknown/guard를 확인한다. D2는 로컬 작성 receipt/artifact producer이며 그 시도수1 선언을 실제 child/model 실행으로 올리지 않는다. 실제 OS 권위·native 장부의 긍정 검증과 기존 전체 native/worker/RF 재실행은 이번 범위가 아니다.
+
+원 RED7·후속 신규7·별도 경계3와 최종 genuine 연결3의 실행 분모를 구별한다. 원 실패·원본·선봉인 입력/출력은 보존하며 실제 모델/CLI 호출은0이다. 실제 운영에는 별도로 위임된 등록 원본+manifest/current Store, 기존 continuation baseline, 미소진 permit, 실행 파일, 빈 증거 디렉터리와 fixed operator control이 필요하다. 이 코드나 검증 자료는 그 권한을 새로 발급하지 않는다.
