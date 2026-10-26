@@ -105,6 +105,21 @@ key는 `source_`+6키 또는 source_condition/source_domain, field는 위 source
 
 source6/basis는 검증된 항목만 전달하며 누락/상충/모호함은 null이다. numeric_limit_dbm와 uncertainty_db는 null, assessment/regulatory/measurement prediction은 not_assessed, execution_authority는 false다. 같은 입력은 deterministic/detached 결과를 내고 입력을 변경하지 않는다. 전체 입력은 기존 native JSON8MiB/깊이32/100000 node 한도를 따른다.
 
+## 보류 이유와 후속 확인의 구분
+
+기존 `reason`/gap code로 제공된 근거의 부족과 해석 지원 검토를 구분한다. 질문 DTO나 UI에 새 필드를 추가하지 않고, 아래는 후속 업무를 해석하는 기준이다. 코드가 있다는 사실을 사용자의 필수 시험장 준비·RF 설정 입력·실측 완료 조건으로 자동 승격하지 않는다.
+
+| 기존 code | 의미와 최소 후속 확인 |
+| --- | --- |
+| `source_condition_unbound` | 값 후보는 있지만 제공된 literal 인용들의 동일 조건 결합이 확인되지 않음. 원 인용·locator·조건 연결 근거를 검토하며 RF6값 전체의 재입력을 요구하지 않음. |
+| `source_unit_missing` | 원 값은 있지만 그 값에 대응하는 명시 단위가 없음. 원문에서 단위를 확인하며 수치 범위·키 이름으로 `%`/`ratio` 등을 추정하지 않음. |
+| `source_statement_unsupported` / `source_unit_unsupported` | 제공 문장·단위의 지원 형식이나 모호한 조건을 검토할 필요가 있음. 먼저 개발 해석 지원과 현재 근거를 확인하며 사용자 자료가 전부 없다는 뜻으로 바꾸지 않음. |
+| `source_fact_missing` | 현재 검증된 인용에서 해당 field의 지원 후보를 얻지 못함. 다른 이유의 보류와 구분하고 원 위치·제공 기록을 확인함. |
+
+서로 다른 행의 `features`와 `power_target`이 한 문서에 있고 합성 설정이라는 공통 설명을 인용해도, 그 설명만으로 동일 시험 조건을 결합하지 않는다. 원 응답의 evidence를 더 넓은 quote로 교체하거나 새 단위·조건 ID를 넣어 성공시키지 않는다. 명시적으로 결합된 동일 인용과 실제 단위가 제공된 새 입력은 기존 지원 문법으로 검증한다. 원 typed fact·quote/locator·후보 metadata·gap·basis·검증 flag를 보존하며 확인되지 않은 값은 null/blocked로 남긴다.
+
+2026-10-26의 허용된 기존 합성 모델 응답 개발 재사용 관측은 `source_condition_unbound`와 `source_unit_missing`의 보류 및 질문2개를 유지했다. 대상 Hz alias·wrapper·제한된 설명은 이미 지원되므로 이 예시를 통과시키기 위한 파서 확장을 추가하지 않았다. 이는 원 producer context8의 원 revision/hash를 사용한 pure 관측이며 현재 Store/C1 재취득·새 모델 호출·새 독립 holdout·성능 평가가 아니다. 별도 기존 합성 회귀3개로 단위 누락, 분리 인용의 최소 질문, 같은 인용의 정상 경계를 확인했다. core/test 동작 변경이 없어 기존48개 전수는 반복하지 않았다. 실제 계측·규범 승인·현장 검증은 미실행이다.
+
 ## 검증
 
 공개 합성 context/analysis와 genuine 부모를 사용한다. schema1 text와 schema2의 이미 제공된 정규화 페이지·인용만 다루며 PDF 원 파일을 읽지 않는다. 정상6값/단위 환산·중복·상충·부족·range/peak·조건 미결합·context/quote/hash 변경·control 전파·입력 불변을 구분한다. 실제 모델·고객 실값·P01 원 packet·타 owner proof·hidden expected는 사용하지 않는다. 합성 통과는 실제 계측 정확도·전체 시험소·규범 적합성 검증이 아니다.
