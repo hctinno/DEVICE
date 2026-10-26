@@ -32,7 +32,8 @@ def supplied():
             'run_id': 'operator-loop-run:authored', 'runtime_instance_id': 'runtime-authored'}
     calls = [dict(index=i, proposal={'kind': 'advance', 'ticks': 1}, before_tick=i,
                   after_tick=i + 1, receipt_status='ok', confirmed_dispatch_receipts=1,
-                  cli_tool_items=0, requested_model='gpt-6.1-sol', remote_resolved_model=None)
+                  cli_tool_items=0, requested_model='gpt-6.1-sol', remote_resolved_model=None,
+                  producer_status='complete', agent_messages=1, cli_exit_code=0)
              for i in range(1, 3)]
     execution = dict(kind='intake_plan_virtual_execution_result', status='bounded', binding=full,
                      execution=dict(mode='synthetic_only', origin_declaration='actual_cli',
@@ -43,13 +44,22 @@ def supplied():
                                steps=[dict(index=c['index'], binding=dict(run_id=full['run_id'],
                                    runtime_instance_id=full['runtime_instance_id']),
                                    dispatch=dict(receipt_status='ok', effect='changed', confirmed_receipts=1),
-                                   wire=dict(proposal=c['proposal'])) for c in calls]),
+                                   producer=dict(receipt=dict(status='complete',
+                                      lifecycle=dict(tool_items=0, agent_messages=1, exit_code=0),
+                                      attempts=dict(model_process_attempts=1, version_process_attempts=1),
+                                      model=dict(requested='gpt-6.1-sol', resolved=None))),
+                                   wire=dict(proposal=c['proposal'])) for c in calls],
+                               budget=dict(producer_calls_started=2,model_process_attempts=2,
+                                           version_process_attempts=2,reserved_model_calls=2,
+                                           harness_usage=dict(decisions=2),limits=dict(model_calls=2))),
                      plan_input=plan_input)
+    reason = dict(code='execution_incomplete', field='journal/report', detail=None)
+    failure = dict(code='conducted_execution_result_finalizer_measurement_selection_blocked',
+                   stage='selection')
     finalizer = dict(kind='conducted_execution_result_finalizer', status='held',
                      execution_receipt=execution, result=None, artifact=None,
-                     failure=dict(code='conducted_execution_result_finalizer_measurement_selection_blocked',
-                                  stage='selection'), measurement_selection=dict(status='blocked',
-                                  reasons=[dict(code='execution_incomplete')]),
+                     failure=failure, measurement_selection=dict(status='blocked',
+                                  reasons=[reason]),
                      verification=dict(hardware_verified=False))
     pins = {name: sha(key) for name, key in zip(
         ('evaluation', 'execution', 'finalizer', 'finished', 'handoff'), 'bcdef')}
@@ -69,7 +79,8 @@ def supplied():
                           origin_authenticated=False, remote_model_identity_verified=False),
                       finalization=dict(status='held', result=None, artifact=None,
                           measurement_builder_calls=0, persistent_DRAFT_evidence=False,
-                          measurement_selection_reasons=[dict(code='execution_incomplete')]),
+                          failure=failure, measurement_selection_status='blocked',
+                          measurement_selection_reasons=[reason]),
                       journal=dict(run_id=full['run_id'], runtime_instance_id=full['runtime_instance_id'],
                                    explicit_stop_decision_count=0, terminal_reason='decision_budget',
                                    final_virtual_dut_state='transmitting'),
@@ -81,6 +92,65 @@ def supplied():
 
 
 class OperatorAttemptViewTests(unittest.TestCase):
+    def test_rejects_python_equal_but_type_different_receipt_copies(self):
+        from labflow.operator_attempt_view import OperatorAttemptViewError, prepare_operator_attempt
+        def embedded(packet):
+            packet['finalizer']['execution_receipt'] = copy.deepcopy(packet['execution'])
+            packet['finalizer']['execution_receipt']['execution']['producer_calls_started'] = 2.0
+        def binding(packet):
+            packet['execution']['binding'] = copy.deepcopy(packet['execution']['binding'])
+            packet['execution']['binding']['revision'] = 2.0
+        for change in (embedded, binding):
+            with self.subTest(change=change):
+                packet=supplied();change(packet)
+                with self.assertRaises(OperatorAttemptViewError):prepare_operator_attempt(packet)
+
+    def test_rejects_loop_budget_or_cli_receipt_counter_conflict(self):
+        from labflow.operator_attempt_view import OperatorAttemptViewError, prepare_operator_attempt
+        for change in (
+            lambda p: p['execution']['loop']['budget'].__setitem__('producer_calls_started', 2.0),
+            lambda p: p['execution']['loop']['budget'].__setitem__('model_process_attempts', 1),
+            lambda p: p['execution']['loop']['steps'][0]['producer']['receipt']['lifecycle'].__setitem__('tool_items', 1),
+            lambda p: p['evaluation']['model_calls'][0].__setitem__('cli_tool_items', False),
+        ):
+            with self.subTest(change=change):
+                packet=supplied();change(packet)
+                with self.assertRaises(OperatorAttemptViewError):prepare_operator_attempt(packet)
+
+    def test_rejects_conflicting_receipt_state_and_preserves_hold_reasons(self):
+        from labflow.operator_attempt_view import OperatorAttemptViewError, prepare_operator_attempt
+        packet = supplied(); result = json.loads(prepare_operator_attempt(packet))
+        self.assertEqual(result['status'], 'bounded')
+        self.assertEqual(result['hold_reason'], 'execution_incomplete')
+        self.assertEqual(result['hold_reasons'],
+                         [dict(code='execution_incomplete', field='journal/report', detail=None)])
+        changes = (
+            lambda p: p['execution']['loop'].__setitem__('status', 'completed'),
+            lambda p: p['finalizer']['measurement_selection']['reasons'][0].__setitem__('code', 'measurement_missing'),
+            lambda p: p['evaluation']['finalization']['measurement_selection_reasons'][0].__setitem__('code', 'measurement_missing'),
+            lambda p: p['finalizer']['measurement_selection'].__setitem__('reasons', []),
+            lambda p: p['evaluation']['finalization'].__setitem__('measurement_selection_status', 'complete'),
+        )
+        for change in changes:
+            with self.subTest(change=change):
+                broken = supplied(); change(broken)
+                with self.assertRaises(OperatorAttemptViewError): prepare_operator_attempt(broken)
+
+    def test_rejects_non_integer_source_counters_instead_of_rewriting_them(self):
+        from labflow.operator_attempt_view import OperatorAttemptViewError, prepare_operator_attempt
+        changes = (
+            lambda p: p['evaluation']['model_calls'][0].__setitem__('index', True),
+            lambda p: p['execution']['loop']['steps'][0].__setitem__('index', True),
+            lambda p: p['execution']['loop']['steps'][0]['dispatch'].__setitem__('confirmed_receipts', 1.0),
+            lambda p: p['evaluation']['finalization'].__setitem__('measurement_builder_calls', 0.0),
+            lambda p: p['evaluation']['journal'].__setitem__('explicit_stop_decision_count', False),
+            lambda p: p['execution']['execution'].__setitem__('producer_calls_started', 2.0),
+        )
+        for change in changes:
+            with self.subTest(change=change):
+                packet = supplied(); change(packet)
+                with self.assertRaises(OperatorAttemptViewError): prepare_operator_attempt(packet)
+
     def test_projects_bounded_held_attempt_without_result_or_private_fields(self):
         from labflow.operator_attempt_view import prepare_operator_attempt
         sources = supplied()

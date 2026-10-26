@@ -221,8 +221,10 @@ export function parseOperatorAttemptView(raw,context){
   const sha=x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x),id=x=>typeof x==='string'&&/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,149}$/.test(x),integer=x=>Number.isSafeInteger(x);
   try{
     const v=previewJSON(raw,16384,true,{maxDepth:9,maxNodes:180});
-    keys(v,'schema_version kind status finalization storage termination_reason hold_reason virtual_dut_final_state source_kind declared_mode binding method model steps verification evidence');
+    keys(v,'schema_version kind status finalization storage termination_reason hold_reason hold_reasons virtual_dut_final_state source_kind declared_mode binding method model steps verification evidence');
     need(v.schema_version===1&&v.kind==='operator_attempt_view'&&v.status==='bounded'&&v.finalization==='held'&&v.storage==='not_created'&&v.termination_reason==='decision_budget'&&v.hold_reason==='execution_incomplete'&&v.virtual_dut_final_state==='transmitting'&&v.source_kind==='provided_actual_cli_record'&&v.declared_mode==='synthetic_only');
+    need(Array.isArray(v.hold_reasons)&&v.hold_reasons.length===1);keys(v.hold_reasons[0],'code field detail');
+    need(v.hold_reasons[0].code===v.hold_reason&&v.hold_reasons[0].field==='journal/report'&&v.hold_reasons[0].detail===null);
     const b=v.binding;keys(b,'intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256 plan_input_sha256 run_id runtime_instance_id job_id');
     need(b.intake_id===context.intake_id&&b.revision===context.revision&&integer(b.revision)&&b.revision>0&&id(b.intake_id)&&id(b.job_id)&&id(b.run_id)&&id(b.runtime_instance_id));
     for(const key of ['analysis_context_id','context_sha256','analysis_sha256','plan_sha256','plan_input_sha256'])need(sha(b[key]));

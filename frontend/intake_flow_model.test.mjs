@@ -10,7 +10,8 @@ test('operator attempt parser accepts held provenance but rejects extra and mism
   const step={index:1,action:'sensor.read',before_tick:16,after_tick:16,
     receipt_status:'ok',effect:'unchanged',cli_tool_items:0};
   const value={schema_version:1,kind:'operator_attempt_view',status:'bounded',finalization:'held',
-    storage:'not_created',termination_reason:'decision_budget',hold_reason:'execution_incomplete',virtual_dut_final_state:'transmitting',
+    storage:'not_created',termination_reason:'decision_budget',hold_reason:'execution_incomplete',
+    hold_reasons:[{code:'execution_incomplete',field:'journal/report',detail:null}],virtual_dut_final_state:'transmitting',
     source_kind:'provided_actual_cli_record',declared_mode:'synthetic_only',binding,
     method:{method_id:'conducted_synthetic',method_version:1,metric:'on',reference_plane:'source_output'},
     model:{requested_model:'gpt-6.1-sol',remote_resolved_model:null,process_count:1,cli_tool_items:0,
@@ -20,9 +21,12 @@ test('operator attempt parser accepts held provenance but rejects extra and mism
     evidence:{evaluation:sha,execution:sha,finalizer:sha,finished:sha,handoff:sha}};
   const parse=x=>workflowAPI.parseOperatorAttemptView(JSON.stringify(x),{intake_id:'I-authored',revision:2});
   assert.equal(parse(value).steps[0].action,'sensor.read');
+  assert.equal(parse(value).hold_reasons[0].code,'execution_incomplete');
+  assert.equal(parse(value).hold_reasons[0].field,'journal/report');
+  assert.equal(parse(value).hold_reasons[0].detail,null);
   for(const mutate of [x=>x.secret='private',x=>x.binding.intake_id='OTHER',x=>x.model.remote_resolved_model='claimed',
     x=>x.verification.hardware_verified=true,x=>x.model.process_count=2,x=>x.steps[0].action='<script>',
-    x=>x.steps[0].effect='unknown']){
+    x=>x.steps[0].effect='unknown',x=>x.hold_reasons[0].code='measurement_missing']){
     const broken=structuredClone(value);mutate(broken);assert.throws(()=>parse(broken));
   }
   assert.throws(()=>workflowAPI.parseOperatorAttemptView(JSON.stringify(value).replace('"process_count":1','"process_count":NaN'),{intake_id:'I-authored',revision:2}));

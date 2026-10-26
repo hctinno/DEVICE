@@ -518,7 +518,7 @@ function buildOperatorAttempt(record,snapshot=state,current=operatorAttempt){
       ['새 모델 프로세스 / 누적 / 잔여',`${m.process_count} / ${m.cumulative_processes} / ${m.remaining_processes}`],
       ['CLI 도구 항목 / 토큰·비용',`${m.cli_tool_items} / 미확인(null)`],
       ['종료 / 최종화',`${v.status} · ${v.termination_reason} / ${v.finalization}`],
-      ['저장 보류 이유',`${v.hold_reason} · 결과·DRAFT 생성 없음`],
+      ['저장 보류 이유',`${v.hold_reasons.map(reason=>`${reason.code} (${reason.field})`).join(', ')} · 결과·DRAFT 생성 없음`],
       ['최종 가상 DUT',`${v.virtual_dut_final_state} · stop 선택 없음`]]));
   const list=el('ol','question-list');list.dataset.operatorSteps='';
   for(const step of v.steps){const row=el('li','question');row.dataset.operatorStep=String(step.index);row.append(el('strong','',`${step.index}. ${step.action}`),el('p','inline-note',`tick ${step.before_tick} → ${step.after_tick} · receipt ${step.receipt_status} · effect ${step.effect} · CLI 도구 ${step.cli_tool_items}`));list.append(row);}area.append(list);

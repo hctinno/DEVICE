@@ -24,8 +24,16 @@ paths = {
         'handoff': 'current-handoff.json',
     }.items()},
 }
-source = {key: json.loads(path.read_bytes()) for key, path in paths.items()}
-source['source_pins'] = {key: hashlib.sha256(path.read_bytes()).hexdigest() for key, path in paths.items()}
+def retained_bytes(path):
+    with path.open('rb') as stream:
+        data = stream.read(1_048_577)
+    if len(data) > 1_048_576:
+        raise ValueError('supplied receipt too large')
+    return data
+
+blobs = {key: retained_bytes(path) for key, path in paths.items()}
+source = {key: json.loads(data) for key, data in blobs.items()}
+source['source_pins'] = {key: hashlib.sha256(data).hexdigest() for key, data in blobs.items()}
 server = create_server(Path(os.environ['DGM_INTAKE_WORKSPACE']), host='127.0.0.1', port=0,
                        operator_attempt_inputs=(source,))
 print(f'http://127.0.0.1:{server.server_port}/', flush=True)
@@ -39,3 +47,4 @@ finally:
 GET `/api/intakes/{intake_id}/operator-attempt`은 생성 시 검증·축소한 불변 JSON 캐시만 돌려준다. 매 GET에서 현재 접수/작업 ID, revision, 문맥·분석·계획·계획 입력 SHA를 이중 읽기로 재검사한다. 미제공은 `operator_attempt_not_provided`, 결박 불일치는 `operator_attempt_binding_mismatch`(503)이다. 요청에 파일명, 경로, 명령 또는 새 실행 인자를 넣는 API는 없다. HEAD/POST는 거절한다. source pin SHA는 제공 파일 bytes의 식별자이며 원본 진위의 외부 인증은 아니다.
 
 `actual_cli`는 보존 기록의 자체 origin 선언이다. 요청 모델명은 원격에서 실제 해결된 모델 신원과 다르며 그 값은 `null`이다. 토큰·비용 전체값도 `null`; 원격 신원, 실장비, 실행 권위는 모두 미확인/거짓이다. 화면의 가상 센서 행동·영수증은 실측·규격 판정 증거가 아니다. 이번 `decision_budget` 종료는 `execution_incomplete` 때문에 최종 결과와 저장 초안이 없다.
+`hold_reasons`는 최종화 영수증과 독립 평가의 이유 배열이 정확히 일치할 때만 표시한다. 지원하는 현재 보류 형상이 아니면 생성자가 입력을 거절한다.

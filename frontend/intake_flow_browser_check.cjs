@@ -1508,7 +1508,7 @@ async function operatorAttemptMain(){
     const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage(),errors=[];
     page.on('pageerror',error=>errors.push(error.message));
     const sha='a'.repeat(64),binding={intake_id:info.intake_id,revision:1,analysis_context_id:sha,context_sha256:sha,analysis_sha256:sha,plan_sha256:sha,plan_input_sha256:sha,run_id:'operator-loop-run:authored',runtime_instance_id:'runtime-authored',job_id:'J-authored'};
-    const packet={schema_version:1,kind:'operator_attempt_view',status:'bounded',finalization:'held',storage:'not_created',termination_reason:'decision_budget',hold_reason:'execution_incomplete',virtual_dut_final_state:'transmitting',source_kind:'provided_actual_cli_record',declared_mode:'synthetic_only',binding,
+    const packet={schema_version:1,kind:'operator_attempt_view',status:'bounded',finalization:'held',storage:'not_created',termination_reason:'decision_budget',hold_reason:'execution_incomplete',hold_reasons:[{code:'execution_incomplete',field:'journal/report',detail:null}],virtual_dut_final_state:'transmitting',source_kind:'provided_actual_cli_record',declared_mode:'synthetic_only',binding,
       method:{method_id:'conducted_synthetic',method_version:1,metric:'on',reference_plane:'source_output'},
       model:{requested_model:'gpt-6.1-sol',remote_resolved_model:null,process_count:2,cli_tool_items:0,cumulative_processes:25,remaining_processes:0,token_usage:null,cost:null},
       steps:[{index:1,action:'dut.start',before_tick:13,after_tick:13,receipt_status:'pending',effect:'changed',cli_tool_items:0},{index:2,action:'sensor.read',before_tick:16,after_tick:16,receipt_status:'ok',effect:'unchanged',cli_tool_items:0}],
