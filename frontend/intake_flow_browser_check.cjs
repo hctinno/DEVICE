@@ -9,7 +9,7 @@ const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
 fs.mkdirSync(LOCAL,{recursive:true});
 const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?'public-cli-port-demo-':process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?'current-questions-':process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?'public-cli-port-demo-':process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
 const FRESH_OUTPUT_ROOTS=[];
 function proofWrite(file,data){
@@ -1202,4 +1202,151 @@ async function operatorResultCopyMain(){
   console.log(JSON.stringify({status:'pass',genuine_normal_DOM:observations.length,output:OUTPUT}));
 }
 
-(process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?freshConductedOperatorMain(true):process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?operatorResultCopyMain():process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+function loadCurrentQuestionsInput(file,io=fs,retain=()=>{}){
+  const canonical=(supplied,directory)=>{
+    assert.ok(typeof supplied==='string'&&path.isAbsolute(supplied),'current questions requires absolute external paths');
+    const resolved=path.resolve(supplied),stat=io.lstatSync(resolved),real=io.realpathSync(resolved);
+    const normalize=p=>process.platform==='win32'?p.toLowerCase():p;
+    assert.equal(stat.isSymbolicLink(),false);assert.equal(normalize(real),normalize(resolved),'source aliases are not accepted');
+    assert.equal(directory?stat.isDirectory():stat.isFile(),true);return resolved;
+  };
+  const read=(supplied,name)=>{
+    const p=canonical(supplied,false);assert.ok(io.lstatSync(p).size<=65536,'current questions input exceeds 64 KiB');
+    const raw=io.readFileSync(p);assert.ok(raw.length<=65536);retain(name,raw);
+    return {raw,pin:{bytes:raw.length,sha256:createHash('sha256').update(raw).digest('hex')}};
+  };
+  const input=read(file,'execution-input.raw.json'),value=JSON.parse(input.raw.toString('utf8'));
+  assert.ok(value&&typeof value==='object'&&!Array.isArray(value));
+  const workspace=canonical(value.workspace,true),original=value.original_startup;
+  assert.match(value.intake_id,/^[A-Za-z0-9_.-]{1,128}$/);
+  assert.ok(original&&Number.isSafeInteger(original.bytes)&&original.bytes>0&&original.bytes<=65536);
+  assert.match(original.sha256,/^[a-f0-9]{64}$/);
+  const startup=read(original.path,'startup-original.raw.json');assert.deepEqual(startup.pin,{bytes:original.bytes,sha256:original.sha256});
+  assert.ok(Array.isArray(value.source_roots)&&value.source_roots.length>0&&value.source_roots.length<=8);
+  const roots=value.source_roots.map(p=>canonical(p,true));
+  const contains=(root,p)=>{const relative=path.relative(root,p);return relative===''||(!relative.startsWith('..'+path.sep)&&relative!=='..'&&!path.isAbsolute(relative));};
+  for(const p of [workspace,path.resolve(original.path)])assert.ok(roots.some(root=>contains(root,p)),'original workspace/startup must be covered by source roots');
+  // Select only execution paths. Large native integers and supplied options/results
+  // remain in the literal input; the host reads the pinned original startup.
+  return {spec:{name:'current-questions',workspace,intake_id:value.intake_id,original_startup_file:path.resolve(original.path),source_roots:roots},input_pin:input.pin,startup_pin:startup.pin};
+}
+async function currentQuestionsMain(){
+  const started=Date.now(),observations={width:390,stages:[],questions:[],keyboard:[],api:[],page_errors:[],external_requests:[]};
+  const resources={servers_started:0,current_get:0,readonly_api:0,dom_contexts:0,new_rf:0,workers:0,models:0,hardware:0,individual_SQL_hooks:false,individual_request_thread_hooks:false,global_process_census:false};
+  let host,browser,context,page,info,firstFailure=null,stopRequested=false,stage='input',hostRaw=[],hostErr=[];
+  const fail=error=>{firstFailure??=error;return error;};
+  const stopHost=()=>{if(host?.alive()&&!stopRequested){stopRequested=true;host.child.stdin.end('stop\n');}};
+  const timer=setTimeout(()=>{fail(Error('current questions active budget exceeded; cleanup required'));if(context)context.close().catch(fail);stopHost();},150000);
+  const forcedStop=setTimeout(()=>{if(host?.alive()){resources.forced_owned_host_stop=true;fail(Error('current questions cleanup budget exceeded'));host.child.kill();}},175000);
+  const checkpoint=label=>{stage=label;if(firstFailure)throw firstFailure;assert.ok(Date.now()-started<150000,'current questions active budget exceeded');};
+  const focus=locator=>locator.evaluate(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el);return {active:document.activeElement===el,focus_visible:el.matches(':focus-visible'),outline:s.outlineStyle,outline_width:s.outlineWidth,box_shadow:s.boxShadow,rect:{left:r.left,right:r.right,top:r.top,bottom:r.bottom},viewport:{width:innerWidth,height:innerHeight}};});
+  const active=()=>page.evaluate(()=>{const e=document.activeElement;return {tag:e?.tagName,id:e?.id??'',text:(e?.textContent??'').slice(0,160)};});
+  const tabTo=async(locator,label)=>{
+    let previous=null;
+    for(let i=0;i<140;i++){
+      checkpoint('keyboard '+label);
+      if(await locator.evaluate(el=>document.activeElement===el)){
+        const observed=await focus(locator);observations.keyboard.push({label,tabs:i,previous,focus:observed});
+        assert.equal(observed.active,true);assert.equal(observed.focus_visible,true);
+        assert.ok(observed.outline!=='none'&&parseFloat(observed.outline_width)>0||observed.box_shadow!=='none','keyboard focus indicator absent');
+        assert.ok(observed.rect.left>=0&&observed.rect.right<=observed.viewport.width&&observed.rect.top>=0&&observed.rect.bottom<=observed.viewport.height,'keyboard target is outside the viewport');
+        return previous;
+      }
+      previous=await active();await page.keyboard.press('Tab');
+    }
+    throw Error('keyboard target unreachable: '+label);
+  };
+  const capture=async label=>{
+    checkpoint(label);
+    const layout=await page.evaluate(()=>({width:innerWidth,scroll_width:document.documentElement.scrollWidth,body_scroll_width:document.body.scrollWidth,offenders:[...document.querySelectorAll('body *')].map(e=>{const r=e.getBoundingClientRect();return {tag:e.tagName,id:e.id,class:e.className,left:r.left,right:r.right,width:r.width};}).filter(r=>r.width>0&&(r.left<0||r.right>innerWidth)).slice(0,20)}));
+    observations.stages.push({label,layout});proofWrite(path.join(OUTPUT,label+'-layout.json'),JSON.stringify(layout,null,2));
+    await screenshot(page,path.join(OUTPUT,label+'-390.png'));return layout;
+  };
+  const noOverflow=layout=>assert.ok(layout.scroll_width<=layout.width,'horizontal document overflow: '+layout.scroll_width+' > '+layout.width);
+  try{
+    assert.equal(process.env.VLAB_CURRENT_QUESTIONS_ONLY,'1');
+    for(const [key,value]of Object.entries(process.env))if(key.startsWith('VLAB_')&&key.endsWith('_ONLY')&&key!=='VLAB_CURRENT_QUESTIONS_ONLY')assert.notEqual(value,'1','select only one browser mode');
+    const selection=loadCurrentQuestionsInput(process.env.VLAB_CURRENT_QUESTIONS_INPUT,fs,(name,raw)=>proofWrite(path.join(OUTPUT,name),raw));
+    proofWrite(path.join(OUTPUT,'execution-selection.json'),JSON.stringify(selection,null,2));
+    for(const root of selection.spec.source_roots){const relative=path.relative(root,PROOF);assert.ok(relative==='..'||relative.startsWith('..'+path.sep)||path.isAbsolute(relative),'proof must be outside original source roots');}
+    const specFile=path.join(OUTPUT,'current-host-spec.json');proofWrite(specFile,JSON.stringify({...selection.spec,proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/current'}));
+    checkpoint('host startup');resources.servers_started++;host=startPreviewHost(specFile,artifactStorageHost,'current_questions_host.py');
+    resources.host_pid=host.child.pid;proofWrite(path.join(OUTPUT,'known-host-started.json'),JSON.stringify({pid:host.child.pid,source:'one owned read-only startup host'},null,2));
+    host.child.stdout.on('data',chunk=>hostRaw.push(Buffer.from(chunk)));host.child.stderr.on('data',chunk=>hostErr.push(Buffer.from(chunk)));
+    info=await host.next();assert.match(info.origin,/^http:\/\/127\.0\.0\.1:[1-9][0-9]*$/);assert.equal(info.intake_id,selection.spec.intake_id);
+    browser=await chromium.launch({headless:true});context=await browser.newContext({viewport:{width:390,height:900}});resources.dom_contexts++;
+    page=await context.newPage();page.setDefaultTimeout(8000);const responseJobs=[],responses=[];
+    page.on('pageerror',error=>observations.page_errors.push(error.message));
+    await context.route('**/*',async route=>{
+      const request=route.request(),url=new URL(request.url());
+      if(url.origin!==info.origin){observations.external_requests.push(request.url());fail(Error('unexpected external request'));await route.abort();return;}
+      if(url.pathname.startsWith('/api/')){
+        resources.readonly_api++;if(url.pathname.endsWith('/conducted-current-facts'))resources.current_get++;
+        observations.api.push({method:request.method(),path:url.pathname});
+        if(request.method()!=='GET'||resources.readonly_api>12||resources.current_get>2){fail(Error('read-only API request budget or method exceeded'));await route.abort();return;}
+      }
+      await route.continue();
+    });
+    page.on('response',response=>{
+      if(!new URL(response.url()).pathname.startsWith('/api/'))return;
+      const index=responseJobs.length;
+      responseJobs.push((async()=>{const raw=await response.body(),url=new URL(response.url()),name='api-'+String(index+1).padStart(2,'0')+'.raw.json';proofWrite(path.join(OUTPUT,name),raw);responses.push({path:url.pathname,status:response.status(),raw,file:name});})().catch(fail));
+    });
+    checkpoint('load current questions');await page.goto(info.origin+'/#'+selection.spec.intake_id,{waitUntil:'networkidle',timeout:15000});
+    await page.waitForFunction(()=>{const q=document.querySelector('#intake-gap-queue');return q?.dataset.minimumCurrent==='true'&&q.dataset.minimumSource==='current_facts'&&q.dataset.pending==='false';},{},{timeout:12000});
+    await Promise.all(responseJobs);checkpoint('native current packet');
+    const current=responses.filter(r=>r.path.endsWith('/conducted-current-facts'));assert.ok(current.length>0&&current.length<=2);assert.equal(current.at(-1).status,200);
+    const packet=JSON.parse(current.at(-1).raw.toString('utf8')),native=packet.current,f=native.facts_plan;
+    assert.equal(packet.kind,'intake_current_facts_plan_view');assert.equal(packet.status,'available');assert.equal(packet.recheck.status,'unchanged');assert.deepEqual(packet.recheck.before,packet.recheck.after);
+    assert.equal(native.context.intake_id,selection.spec.intake_id);assert.equal(f.plan_input.binding.intake_id,selection.spec.intake_id);assert.equal(f.plan_input.binding.revision,native.context.revision);
+    observations.native={response_file:current.at(-1).file,intake_id:native.context.intake_id,revision:native.context.revision,status:f.status,questions:f.questions.length,recheck:packet.recheck};
+    const queue=page.locator('#intake-gap-queue'),questions=page.locator('[data-minimum-evidence-question][data-current="true"]:not([hidden])'),original=page.locator('[data-minimum-evidence-original]'),history=page.locator('[data-legacy-fixture-history]');
+    observations.initial={question_groups:await questions.count(),source:await queue.getAttribute('data-minimum-source'),revision:await queue.getAttribute('data-revision'),original_closed:!(await original.evaluate(e=>e.open)),history_closed:!(await history.evaluate(e=>e.open)),questions_closed:await questions.locator(':scope > details').evaluateAll(es=>es.every(e=>!e.open)),workflow_outside_history:await page.locator('#intake-workflow').evaluate(e=>e.closest('[data-legacy-fixture-history]')===null),actual_ai:await page.locator('#conducted-artifact-storage').getAttribute('data-actual-ai'),assessment:await page.locator('#conducted-artifact-storage').getAttribute('data-assessment'),judgement:await page.locator('[data-artifact-judgement]').innerText()};
+    const initial=await capture('initial-closed');
+    assert.ok(observations.initial.question_groups>0&&observations.initial.question_groups<=16);assert.equal(observations.initial.source,'current_facts');assert.equal(observations.initial.revision,String(native.context.revision));
+    assert.equal(await page.locator('#intake-workflow').getAttribute('data-intake-id'),selection.spec.intake_id);
+    for(const key of ['original_closed','history_closed','questions_closed','workflow_outside_history'])assert.equal(observations.initial[key],true,key);
+    assert.equal(observations.initial.actual_ai,'unknown');assert.equal(observations.initial.assessment,'not_assessed');assert.match(observations.initial.judgement,/unknown/);noOverflow(initial);
+    const observedIndexes=[];
+    for(let i=0;i<observations.initial.question_groups;i++){
+      const item=questions.nth(i),details=item.locator(':scope > details'),summary=details.locator(':scope > summary');
+      await tabTo(summary,'question-'+i);await page.keyboard.press('Enter');assert.equal(await details.evaluate(e=>e.open),true);
+      const layout=await capture('question-'+i+'-open'),cells=await details.locator(':scope > dl.metadata dd').allTextContents();assert.equal(cells.length,3);
+      const [origins,gaps,facts]=cells.map(text=>JSON.parse(text));observations.questions.push({origins,gaps,source_facts:facts});
+      assert.ok(origins.length>0&&gaps.length>0&&facts.length>0);
+      for(const row of origins){assert.deepEqual(row.raw_question,f.questions[row.question_index]);observedIndexes.push(row.question_index);}
+      for(const row of gaps)assert.deepEqual(row.raw,f.assembly_gaps[row.gap_index]);
+      for(const row of facts)assert.deepEqual(row.raw,f.plan_input.intake.source_facts[row.fact_index]);
+      noOverflow(layout);await page.keyboard.press('Enter');assert.equal(await details.evaluate(e=>e.open),false);assert.equal((await focus(summary)).active,true);
+    }
+    assert.deepEqual(observedIndexes.sort((a,b)=>a-b),f.questions.map((_,i)=>i),'every native question must remain linked once');
+    const originalSummary=original.locator(':scope > summary');await tabTo(originalSummary,'original');await page.keyboard.press('Space');assert.equal(await original.evaluate(e=>e.open),true);
+    const originalLayout=await capture('original-open'),originalCells=await original.locator(':scope > dl.metadata dd').allTextContents();assert.equal(originalCells.length,3);
+    const [scope,observation,originalFacts]=originalCells.map(text=>JSON.parse(text));observations.original={scope,observation,facts_plan:originalFacts};
+    assert.equal(scope.source,'current_facts');assert.deepEqual(observation.context,native.context);assert.deepEqual(observation.binding,f.plan_input.binding);assert.deepEqual(observation.recheck,packet.recheck);assert.deepEqual(observation.verification,packet.verification);assert.deepEqual(originalFacts,f);noOverflow(originalLayout);
+    await page.keyboard.press('Space');assert.equal(await original.evaluate(e=>e.open),false);
+    const historySummary=history.locator(':scope > summary'),previous=await tabTo(historySummary,'legacy-history');await page.keyboard.press('Enter');assert.equal(await history.evaluate(e=>e.open),true);
+    observations.history={copy:await history.innerText(),workflow_outside:await page.locator('#intake-workflow').evaluate(e=>e.closest('[data-legacy-fixture-history]')===null)};
+    const historyLayout=await capture('legacy-history-open');assert.match(observations.history.copy,/기존 fixture DB 범위/);assert.match(observations.history.copy,/별도로 조회/);assert.equal(observations.history.workflow_outside,true);noOverflow(historyLayout);
+    await page.keyboard.press('Enter');assert.equal(await history.evaluate(e=>e.open),false);assert.equal((await focus(historySummary)).active,true);
+    await page.keyboard.press('Shift+Tab');observations.reverse_tab={expected_previous:previous,actual:await active()};assert.deepEqual(observations.reverse_tab.actual,previous);
+    noOverflow(await capture('final-closed'));assert.deepEqual(observations.page_errors,[]);assert.deepEqual(observations.external_requests,[]);checkpoint('observations complete');
+  }catch(error){fail(error);observations.first_failure={stage,message:error.message};if(page&&!page.isClosed())try{await screenshot(page,path.join(OUTPUT,'first-failure-390.png'));}catch(captureError){observations.failure_capture_error=captureError.message;}}
+  finally{
+    if(browser)try{await browser.close();resources.browser_closed=true;}catch(error){resources.browser_closed=false;fail(error);}
+    if(host)try{
+      if(host.alive()){stopHost();const item=await host.next();resources.host=item.resource;}
+      resources.child_exit=await host.exited;resources.host_stderr=host.stderr();
+      assert.equal(resources.child_exit,0);assert.equal(resources.host_stderr,'');
+      assert.ok(resources.host?.loop_stopped&&resources.host.listener_closed&&resources.host.port_rebind&&resources.host.source_unchanged,'known host cleanup/native parity not fully observed');
+    }catch(error){resources.cleanup_failure=error.message;fail(error);}
+    clearTimeout(timer);clearTimeout(forcedStop);resources.elapsed_ms=Date.now()-started;
+    if(resources.elapsed_ms>=180000)fail(Error('current questions overall 180-second budget exceeded'));
+    proofWrite(path.join(OUTPUT,'host.stdout.raw'),Buffer.concat(hostRaw));proofWrite(path.join(OUTPUT,'host.stderr.raw'),Buffer.concat(hostErr));
+    proofWrite(path.join(OUTPUT,'current-questions-results.json'),JSON.stringify({status:firstFailure?'fail':'pass',first_failure:firstFailure?{stage:observations.first_failure?.stage??stage,message:firstFailure.message}:null,observations,resources,limits:{servers:1,current_get:2,readonly_api:12,dom390:1,overall_ms:180000},scope:'original external startup; actual loopback responses and keyboard; no fixture/result substitution'},null,2));
+  }
+  if(firstFailure)throw firstFailure;
+  console.log(JSON.stringify({status:'pass',mode:'current-questions-only',output:OUTPUT,resources}));
+}
+
+(process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?currentQuestionsMain():process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?freshConductedOperatorMain(true):process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?operatorResultCopyMain():process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
