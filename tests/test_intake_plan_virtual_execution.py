@@ -83,7 +83,7 @@ class IntakePlanExecutionTests(unittest.TestCase):
     def test_public_signature_and_exports(self):
         self.assertEqual(api.__all__, ['run_intake_plan_virtual_execution', 'IntakePlanVirtualExecutionError'])
         signature = inspect.signature(api.run_intake_plan_virtual_execution)
-        expected = 'context analysis plan_input expected_revision expected_context_sha256 expected_plan_input_sha256 catalog_path catalog_sha256 response_schema_bytes executable requested_model scenario evidence_dir execution_origin cancel_event quantity evidence_reservation'.split()
+        expected = 'context analysis plan_input expected_revision expected_context_sha256 expected_plan_input_sha256 catalog_path catalog_sha256 response_schema_bytes executable requested_model scenario evidence_dir execution_origin cancel_event quantity evidence_reservation model_process_limit wall_seconds_limit'.split()
         self.assertEqual(list(signature.parameters), expected)
         self.assertIsNone(signature.parameters['evidence_reservation'].default)
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in list(signature.parameters.values())[3:]))
