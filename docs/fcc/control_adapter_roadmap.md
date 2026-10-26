@@ -17,6 +17,8 @@
 
 ## 준비된 작은 단위부터 개발
 
+2026-10-26 Goal 재개 범위는 `virtual_profiles/sm_a176u_unlicensed.json`의 기존64프로필(성적서 장비61·DUT context1·보조2)과 확보된 DUT 공개 소스다. 이는 모델/제조사 표기·경로 파생을 보존한 프로필 분모이며 고유 장비 대수나 명령 구현 분모가 아니다. 명령별 근거·구현·독립 검증·업무 연결을 구체화하며 명령 수가 아직 확인되지 않은 모델은 미확인으로 유지한다. 보고서의 N1911A와 기존 자체 N1914A subset은 서로 다른 모델이다. 신규 virtual DUT bridge는 기존 VirtualLab의 public API를 재사용해 같은 가상 DUT/경로/계측 상태를 연결하고, opt-in emulator-only ADB identity 경로와 synthetic RF 제어를 구별하는 첫 단위로 실제 배정했다. 실제 Android/emulator·OEM/AnyWay RF 지원 검증은 이 구현만으로 완료되지 않는다. 최신 소유와 P01 전달 미확인은 [후속 대장](../../handoff/development/NEXT-004.md#goal-prehardware-001--2026-10-26-명시-재개)을 따른다.
+
 | 우선 | 대상·기존 연결점 | 다음 구현과 검증 | 근거 공백 |
 |---|---|---|---|
 | P0 | 제어자료/ID/출처 조회 | catalog/DUT API·화면/탐색 통합 완료. 별도 후속확보 API015/화면017을 소유 branch에서 구현. 총괄 원본/DB 대응·지원 상태 분리 | 현재 개발에 사용자 자료 추가0 |
