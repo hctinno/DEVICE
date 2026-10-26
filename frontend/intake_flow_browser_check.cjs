@@ -1,6 +1,6 @@
-/* Pure read UI acceptance. SQL/readiness doubles, no queue or runtime execution. */
+/* UI acceptance modes. Fresh authored-MOCK generation requires explicit opt-in. */
 const assert = require('node:assert/strict');
-const {spawn} = require('node:child_process');
+const {spawn,spawnSync} = require('node:child_process');
 const {createHash} = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -9,11 +9,12 @@ const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
 fs.mkdirSync(LOCAL,{recursive:true});
 const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
+const FRESH_OUTPUT_ROOTS=[];
 function proofWrite(file,data){
   const target=path.resolve(file);assert.ok(target.startsWith(PROOF+path.sep));const files=[];
-  const walk=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})){assert.equal(entry.isSymbolicLink(),false);const p=path.join(dir,entry.name);if(entry.isDirectory())walk(p);else if(entry.isFile())files.push(p);}};walk(PROOF);
+  const walk=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})){assert.equal(entry.isSymbolicLink(),false);const p=path.join(dir,entry.name);if(entry.isDirectory())walk(p);else if(entry.isFile())files.push(p);}};walk(PROOF);for(const root of FRESH_OUTPUT_ROOTS)if(fs.existsSync(root))walk(root);
   assert.ok(files.length+(fs.existsSync(target)?0:1)<=512);
   assert.ok(files.reduce((sum,p)=>sum+fs.statSync(p).size,0)-(fs.existsSync(target)?fs.statSync(target).size:0)+Buffer.byteLength(data)<=33554432);
   fs.writeFileSync(target,data);
@@ -884,7 +885,8 @@ def snapshot():
 before=snapshot();before_pin=save(spec['native_prefix']+'-native-before.json',before)
 thread=server=None;port=None
 try:
- with create_server(Path(spec['workspace']),port=0,**spec['server_options']) as server:
+ options=json.loads(Path(spec['original_startup_file']).read_bytes()) if 'original_startup_file' in spec else spec['server_options']
+ with create_server(Path(spec['workspace']),port=0,**options) as server:
   port=server.server_port;thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
   print(json.dumps(dict(origin='http://127.0.0.1:'+str(port),intake_id=spec['intake_id'],before_pin=before_pin)),flush=True)
   try:
@@ -1031,4 +1033,61 @@ async function artifactStorageKeyboardMain(){
   finally{if(browser)await browser.close();}
 }
 
-(process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+async function freshConductedOperatorMain(){
+  const python=process.env.VLAB_FRESH_CONDUCTED_PYTHON,output=process.env.VLAB_FRESH_CONDUCTED_OUTPUT;
+  assert.ok(python&&path.isAbsolute(python)&&fs.existsSync(python),'explicit root Python required');assert.ok(output&&path.isAbsolute(output),'explicit new short absolute output required');
+  const saved=path.resolve(output);assert.ok(saved.startsWith(LOCAL+path.sep)&&!saved.startsWith(PROOF+path.sep)&&!PROOF.startsWith(saved+path.sep));assert.equal(fs.existsSync(saved),false,'never overwrite/reuse an output, including a failed one');FRESH_OUTPUT_ROOTS.push(saved);
+  const args=['-B','-X','utf8','-m','labflow.intake_fixture_check','--conducted-workflow','--document-kind','pdf','--measurement-ref','event:17','--mock-model','gpt-6.1-sol','--output',saved];
+  let browser,host,info,firstFailure=null;const resources=[],observations=[];
+  const cliRecord={executable:python,argv:args,cwd:ROOT,with_port:false,timeout_ms:240000,max_output_buffer_bytes:2097152,generation_attempts:1,known_authored_fixture:true,actual_model_calls:0};
+  try{
+    proofWrite(path.join(OUTPUT,'generation-intent.json'),JSON.stringify(cliRecord,null,2));
+    const child=spawnSync(python,args,{cwd:ROOT,windowsHide:true,timeout:240000,maxBuffer:2097152,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1',PYTHONPATH:ROOT}});
+    // Retain exit and literal streams before attempting to parse any CLI data.
+    proofWrite(path.join(OUTPUT,'generation.stdout.bin'),child.stdout||Buffer.alloc(0));proofWrite(path.join(OUTPUT,'generation.stderr.bin'),child.stderr||Buffer.alloc(0));
+    Object.assign(cliRecord,{pid:child.pid,status:child.status,signal:child.signal,error_code:child.error?.code??null});proofWrite(path.join(OUTPUT,'generation-child.json'),JSON.stringify(cliRecord,null,2));
+    assert.equal(child.error,undefined,'original CLI launch/timeout/buffer failure retained');assert.equal(child.status,0,'original CLI failed; partial output retained, no retry');assert.equal(child.signal,null);
+    const summary=JSON.parse(fs.readFileSync(path.join(saved,'public-summary.json'),'utf8'));assert.deepEqual(JSON.parse(child.stdout.toString('utf8')),summary);
+    assert.equal(summary.kind,'conducted_intake_workflow_demo');assert.equal(summary.provider,'authored_scripted_mock');assert.equal(summary.synthetic,true);assert.equal(summary.ai_model_called,false);assert.equal(summary.hardware_verified,false);assert.equal(summary.physical_verified,false);
+    assert.equal(summary.runtime_calls,1);assert.equal(summary.producer_calls,5);assert.equal(summary.fixture_acceptance,'pass');assert.equal(summary.result_status,'recorded');assert.equal(summary.storage_status,'complete');assert.equal(summary.draft_status,'DRAFT');assert.equal(summary.task_outcome,'not_assessed');assert.equal(summary.conformity,'not_assessed');
+    const startupFile=path.join(saved,'server-startup-original.json'),startup=JSON.parse(fs.readFileSync(startupFile,'utf8')),readback=JSON.parse(fs.readFileSync(path.join(saved,'readback-inputs.json'),'utf8'));
+    const selection=startup.conducted_artifact_readback_inputs;assert.equal(Object.keys(selection).length,10);assert.equal(Object.keys(readback).length,9);const expected={...selection};delete expected.intake_id;assert.deepEqual(readback,expected);
+    assert.equal(selection.intake_id,summary.intake_id);assert.equal(selection.expected_revision,summary.revision);assert.equal(selection.expected_context_sha256,summary.context_sha256);assert.equal(selection.artifact_workspace_root,saved);assert.equal(selection.run_id,summary.run_id);assert.equal(selection.runtime_instance_id,summary.runtime_instance_id);
+    const original=JSON.parse(fs.readFileSync(path.join(saved,'finalizer-original.json'),'utf8')).result,facts=JSON.parse(fs.readFileSync(path.join(saved,'facts-plan-original.json'),'utf8')).plan_input.intake.facts;
+    const fileRoot=path.join(saved,'.local','conducted-result-artifacts',selection.artifact_name),draft=fs.readFileSync(path.join(fileRoot,'draft.md'),'utf8'),mock=JSON.parse(fs.readFileSync(path.join(saved,'m','mock-origin.json'),'utf8'));
+    const pins=Object.fromEntries(['public-summary.json','server-startup-original.json','readback-inputs.json','m/authored-mock.cs','m/codex.exe'].map(name=>{const raw=fs.readFileSync(path.join(saved,name));return [name,{bytes:raw.length,sha256:createHash('sha256').update(raw).digest('hex')}];}));
+    proofWrite(path.join(OUTPUT,'generated-source-pins.json'),JSON.stringify({pins,mock,readback_keys:Object.keys(readback),generation:cliRecord,versions:{node:process.version,playwright:require('playwright/package.json').version},source:'known author fixture and newly generated local MOCK; actual model0'},null,2));
+    const specFile=path.join(OUTPUT,'fresh-host-spec.json');proofWrite(specFile,JSON.stringify({name:'fresh',workspace:path.join(saved,'s'),intake_id:summary.intake_id,original_startup_file:startupFile,source_roots:[saved],proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/fresh'}));
+    host=startPreviewHost(specFile,artifactStorageHost,'fresh_original_startup_host.py');info=await host.next();
+    const bodies={};for(const [name,suffix]of [['intakes','/api/intakes'],['plan','/api/intakes/'+summary.intake_id+'/conducted-plan-preview'],['provided','/api/intakes/'+summary.intake_id+'/conducted-result'],['storage','/api/intakes/'+summary.intake_id+'/conducted-artifact-readback']]){
+      const response=await fetch(info.origin+suffix),raw=Buffer.from(await response.arrayBuffer());proofWrite(path.join(OUTPUT,'fresh-'+name+'.json'),raw);assert.equal(response.status,200);bodies[name]=JSON.parse(raw.toString('utf8'));
+    }
+    assert.deepEqual(bodies.provided.result,original);assert.deepEqual(bodies.storage.artifact.result,original);assert.equal(bodies.storage.artifact.draft,draft);assert.equal(bodies.storage.status,'matched');assert.equal(bodies.storage.relation.recheck.status,'unchanged');assert.deepEqual(bodies.storage.relation.current_binding,bodies.plan.plan_input.binding);assert.deepEqual(bodies.storage.relation.artifact_binding,bodies.plan.plan_input.binding);assert.equal(bodies.storage.artifact.storage.verified_file_count,3);
+    browser=await chromium.launch({headless:true});const context=await browser.newContext({viewport:{width:1440,height:950}}),page=await context.newPage(),errors=[],external=[],methods=[];page.setDefaultTimeout(8000);
+    page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(info.origin+'/'))external.push(r.url());if(r.url().includes('/api/'))methods.push(r.method());});
+    try{
+      await page.goto(info.origin+'/');await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true'&&document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+      await page.locator('#intake-list button[aria-current="true"]').click();const workflow=page.locator('#intake-workflow'),part=id=>workflow.locator('[data-workflow-step="'+id+'"] [data-workflow-summary]');assert.equal(await workflow.getAttribute('data-intake-id'),summary.intake_id);
+      const intakeText=await part('intake').innerText();for(const field of ['product_type','market','purpose']){assert.ok(facts[field]?.value,'known author field absent');assert.ok(intakeText.includes(facts[field].value),'operator intake must show original '+field);}
+      assert.equal(await page.locator('#conducted-plan-preview').getAttribute('data-preview-current'),'true');assert.match(await part('plan').innerText(),/ready_for_simulation/);
+      const factSummary=page.locator('#conducted-plan-content summary').filter({hasText:'제품·목적·시장과 원 사실·질문'});await factSummary.click();assert.ok((await page.locator('#conducted-plan-content').innerText()).includes('SM-A176U'));await factSummary.click();
+      assert.ok((await part('virtual').innerText()).includes(summary.run_id));assert.ok((await part('virtual').innerText()).includes(summary.runtime_instance_id));const measurementText=await part('measurement').innerText();assert.ok(measurementText.includes(String(summary.raw_measurement.packet.value))&&measurementText.includes(summary.raw_measurement.packet.unit)&&measurementText.includes(String(summary.corrected.value)));
+      const card=page.locator('#conducted-artifact-storage');assert.equal(await card.getAttribute('data-current'),'true');const judgement=await card.locator('[data-artifact-judgement]').innerText();assert.match(judgement,/3파일 일치/);assert.match(judgement,/not_assessed/);assert.match(judgement,/unknown/);
+      const sourceSummary=card.locator('details').first().locator('summary');await sourceSummary.click();assert.ok((await card.innerText()).includes(summary.run_id));assert.ok((await card.innerText()).includes(selection.expected_manifest_sha256));
+      const draftSummary=card.locator('details:has([data-artifact-raw="draft"]) > summary');await draftSummary.click();assert.equal(await card.locator('[data-artifact-raw="draft"]').isVisible(),true);assert.equal(await card.locator('[data-artifact-raw="draft"]').textContent(),draft);await screenshot(page,path.join(OUTPUT,'fresh-operator-DRAFT-1440.png'));await draftSummary.click();await sourceSummary.click();
+      await card.scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'fresh-operator-summary-1440.png'));assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.ok(methods.every(x=>x==='GET'));
+      observations.push({width:1440,source:'one generation CLI without port -> exact original startup readonly UI',known_author_fixture:true,intake_id:summary.intake_id,run_id:summary.run_id,runtime_instance_id:summary.runtime_instance_id,product_type:facts.product_type.value,purpose:facts.purpose.value,market:facts.market.value,original_raw:summary.raw_measurement,original_corrected:summary.corrected,storage_read:'fixed3 matched current relation observation',draft:'original UTF8 text',task:'not_assessed',conformity:'not_assessed',actual_AI_display:'unknown',typed_faults:0,versions:{node:process.version,chromium:browser.version()}});
+    }finally{await context.close();}
+  }catch(error){firstFailure=error;try{proofWrite(path.join(OUTPUT,'fresh-operator-failure.json'),JSON.stringify({status:'fail',message:error.message,cli:cliRecord,observations,resources,partial_output:saved,no_retry:true},null,2));}catch{console.error('fresh observer failure-receipt write also failed; first error retained');}throw error;}
+  finally{
+    let cleanupFailure=null;
+    try{if(host?.alive()){host.child.stdin.end('stop\n');const item=await host.next(),code=await host.exited;assert.ok(info,'startup was not observed');assert.equal(code,0,host.stderr());assert.equal(host.stderr(),'');assert.ok(item.resource.loop_stopped&&item.resource.listener_closed&&item.resource.port_rebind&&item.resource.source_unchanged);resources.push({...item.resource,child_exit:code});}else if(host){const code=await host.exited;resources.push({child_exit:code,cleanup_verified:false});}}
+    catch(error){resources.push({cleanup_verified:false,message:error.message,first_error_preserved:Boolean(firstFailure)});cleanupFailure=error;}
+    try{if(browser)await browser.close();}catch(error){resources.push({browser_close_verified:false,message:error.message});cleanupFailure??=error;}
+    try{proofWrite(path.join(OUTPUT,'fresh-operator-resources.json'),JSON.stringify(resources,null,2));}catch(error){cleanupFailure??=error;}
+    if(!firstFailure&&cleanupFailure)throw cleanupFailure;
+  }
+  proofWrite(path.join(OUTPUT,'fresh-operator-results.json'),JSON.stringify({status:'pass',generation_cli:cliRecord,observations,resources,generation_MOCK_flows:1,generation_virtual_runtime_calls:1,generation_producer_calls:5,actual_model_calls:0,readonly_server_new_runtime_calls:0,CLI_port_branch_tested:false,SQL_close_directly_instrumented:false,prior_wide_or_unit_repeated:0},null,2));console.log(JSON.stringify({status:'pass',generation_CLI:1,genuine_DOM:1,output:OUTPUT,generated_output:saved}));
+}
+
+(process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
