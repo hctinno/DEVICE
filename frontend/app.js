@@ -1,5 +1,5 @@
 import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot, docxReferenceMatchesRecord} from './model.mjs';
-import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue, parseConductedResultView, describeIntakeGapQueue, parseConductedArtifactReadback, describeConductedArtifactStorage, CONDUCTED_ARTIFACT_HTTP_BYTES} from './intake_flow_model.mjs';
+import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue, parseConductedResultView, describeIntakeGapQueue, parseConductedArtifactReadback, describeConductedArtifactStorage, CONDUCTED_ARTIFACT_HTTP_BYTES, parseConductedCurrentFacts, CONDUCTED_CURRENT_FACTS_HTTP_BYTES} from './intake_flow_model.mjs';
 import {validateIntakeReferenceContext,parseIntakeReferenceHistoryJson,parseIntakeReferenceCurrentJson} from './intake-references/model.mjs';
 import {createIntakeReferenceReview} from './intake-references/view.mjs';
 import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
@@ -12,6 +12,7 @@ const flow = {gate:createFixtureReadGate(), context:null, payload:null, selected
 const conducted={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'가상 계획 미리보기 조회 대기',errorCode:null};
 const resultView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'전도 결과 제공 기록 조회 대기',errorCode:null};
 const storageView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'산출물 저장 읽기 미관측',errorCode:null};
+const currentFactsView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,errorCode:null};
 const gapQueueState={intakeStale:true,parentPending:true,intakeCode:null};
 const referenceTransport = createIntakeReferenceTransport();
 const docx={context:null,hintContext:null,visible:false,allowed:false,busy:false,good:null,
@@ -366,7 +367,7 @@ function refreshWorkflowSummary(){
   }
 }
 function buildFixturePanel(record, view, current = flow) {
-  const panel = section('가상 실행 기록', '합성 시도 · 실측·FCC 판정 미검증');
+  const panel = section('접수 흐름·기록', '합성 관측 · 실측·FCC 판정 미검증');
   panel.id = 'fixture-panel';
   const context = fixtureContext(view);
   const matched = sameFixtureSource(current.context, context);
@@ -380,9 +381,9 @@ function buildFixturePanel(record, view, current = flow) {
   controls.append(status, refresh);
   const updated = el('p', 'inline-note', matched ? current.updatedText : '아직 조회하지 않음'); updated.id = 'fixture-updated';
   const content = el('div'); content.id = 'fixture-records';
-  if (!payload) content.append(el('p', 'muted', '이 접수·자료 버전의 가상 기록을 아직 확인하지 못했습니다.'));
+  if (!payload) content.append(el('p', 'muted', '이 접수·자료 버전의 기존 fixture 이력을 아직 확인하지 못했습니다.'));
   else if (!payload.storage_available) content.append(el('p', 'muted', '가상 기록 저장 기능이 없는 이전 저장소입니다. 조회로 초기화하거나 자료를 변경하지 않습니다.'));
-  else if (!payload.records.length) content.append(el('p', 'muted', '이 접수에 저장된 가상 실행 기록이 없습니다.'));
+  else if (!payload.records.length) content.append(el('p', 'muted', '이 접수의 기존 fixture DB에 이력이 없습니다.'));
   else {
     if (stale) content.append(el('p', 'state-note warning', '마지막 성공 기록입니다. 현재 준비 상태와의 관계는 다시 확인해야 합니다.'));
     const list = el('div', 'fixture-list');
@@ -405,8 +406,10 @@ function buildFixturePanel(record, view, current = flow) {
     const selected = payload.records.find(entry => entry.request_id === current.selected);
     if (selected) content.append(buildFixtureResult(selected, record.revision, stale));
   }
-  panel.append(buildIntakeWorkflow(record,payload,current,stale,view),controls, updated, content,
-    el('p', 'inline-note', '이 가상 실행의 실제 AI 호출 없음 · 실장비 검증 없음 · runtime 재개 지원 없음 · case/plan 자동 생성 없음'));
+  const history=el('details');history.dataset.legacyFixtureHistory='';history.open=matched&&Boolean($('#fixture-panel [data-legacy-fixture-history]')?.open);history.append(el('summary','','기존 fixture 실행 이력'),
+    el('p','inline-note','기존 fixture DB 범위입니다. 위의 현재 결과·저장 사본과 별도로 조회합니다.'),controls,updated,content,
+    el('p','inline-note','이 fixture 실행의 실제 AI 호출 없음 · 실장비 검증 없음 · runtime 재개 지원 없음 · case/plan 자동 생성 없음'));
+  panel.append(buildIntakeWorkflow(record,payload,current,stale,view),history);
   return panel;
 }
 function buildFixtureResult(record, revision, stale) {
@@ -760,15 +763,50 @@ function syncArtifactStorage(){
 }
 
 
+function retireCurrentFacts(){
+  currentFactsView.gate.invalidate();currentFactsView.controller?.abort();
+  Object.assign(currentFactsView,{controller:null,pending:false,parentPending:true,stale:true,errorCode:null});refreshGapQueue();
+}
+async function refreshCurrentFacts(){
+  const context=conductedContext();if(!context||currentFactsView.pending||currentFactsView.parentPending||referenceDestroyed||referenceSuspended)return;
+  const ticket=currentFactsView.gate.begin(context);currentFactsView.controller?.abort();const controller=new AbortController();currentFactsView.controller=controller;
+  const timer=setTimeout(()=>controller.abort(),10000),current=()=>currentFactsView.gate.isCurrent(ticket,conductedContext()||{})&&!referenceDestroyed&&!referenceSuspended;
+  Object.assign(currentFactsView,{context,pending:true,errorCode:null,stale:Boolean(currentFactsView.value)});refreshGapQueue();
+  try{
+    const response=await fetch(`/api/intakes/${encodeURIComponent(context.intake_id)}/conducted-current-facts`,{signal:controller.signal,cache:'no-store'});
+    if(!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(response.headers.get('content-type')||''))throw Error('intake_current_facts_plan_view_invalid');
+    const length=response.headers.get('content-length');if(length!==null&&(!/^\d+$/.test(length)||Number(length)>CONDUCTED_CURRENT_FACTS_HTTP_BYTES))throw Error('intake_current_facts_plan_view_input_limit');
+    const reader=response.body.getReader(),decoder=new TextDecoder('utf-8',{fatal:true});let raw='',size=0,complete=false;
+    try{while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>CONDUCTED_CURRENT_FACTS_HTTP_BYTES)throw Error('intake_current_facts_plan_view_input_limit');raw+=decoder.decode(part.value,{stream:true});}raw+=decoder.decode();complete=true;}
+    finally{if(!complete)try{await reader.cancel();}catch{}reader.releaseLock();}
+    if(!current())return;
+    if(!response.ok){
+      const code=JSON.parse(raw)?.error?.code;
+      if(typeof code!=='string'||!/^(?:intake_current_facts_plan_view_[a-z_]+|intake_conducted_preview_[a-z0-9_]+|store_missing|store_unavailable|intake_not_found|route_not_found)$/.test(code))throw Error('intake_current_facts_plan_view_invalid');
+      throw Error(code);
+    }
+    const value=parseConductedCurrentFacts(raw,context);if(!current())return;
+    Object.assign(currentFactsView,{context,value,pending:false,errorCode:null,stale:value.status!=='available'});refreshGapQueue();
+  }catch(error){controller.abort();if(current()){
+    const errorCode=queueErrorCode(error);Object.assign(currentFactsView,{pending:false,errorCode,stale:errorCode!=='intake_current_facts_plan_view_not_provided'});refreshGapQueue();
+  }}finally{clearTimeout(timer);if(current()){currentFactsView.pending=false;currentFactsView.controller=null;refreshGapQueue();}}
+}
+function syncCurrentFacts(){
+  const context=conductedContext();if(context&&sameFixtureSource(context,currentFactsView.context)&&context.generation===currentFactsView.context.generation)return;
+  currentFactsView.gate.invalidate();currentFactsView.controller?.abort();const previous=currentFactsView.value?.current?.context,retain=!context||sameFixtureSource(context,previous);
+  Object.assign(currentFactsView,{context,value:retain?currentFactsView.value:null,controller:null,pending:false,stale:true,errorCode:null});
+  if(context)void refreshCurrentFacts();else refreshGapQueue();
+}
+
 function queueErrorCode(error){return typeof error?.message==='string'&&/^[a-z_]{1,128}$/.test(error.message)?error.message:'transport_or_shape_error';}
 function buildGapQueue(record,snapshot=state){
   const freshParent=(snapshot.snapshotGeneration??0)!==(state.snapshotGeneration??0);
-  const model=describeIntakeGapQueue(record,{generation:snapshot.snapshotGeneration||0,intakeStale:freshParent?false:gapQueueState.intakeStale||gapQueueState.parentPending,intakeCode:freshParent?null:gapQueueState.intakeCode,plan:conducted,result:resultView,storage:storageView});
+  const model=describeIntakeGapQueue(record,{generation:snapshot.snapshotGeneration||0,intakeStale:freshParent?false:gapQueueState.intakeStale||gapQueueState.parentPending,intakeCode:freshParent?null:gapQueueState.intakeCode,plan:conducted,result:resultView,storage:storageView,currentFacts:currentFactsView});
   const area=el('section','section-rule');area.id='intake-gap-queue';area.dataset.intakeId=record.intake_id;area.dataset.revision=String(record.revision);
-  area.dataset.pending=String(gapQueueState.parentPending||conducted.pending||resultView.pending||storageView.pending);area.dataset.current=String(model.groups.every(group=>group.state==='current'));
-  const minimum=model.minimum_evidence;area.dataset.minimumCurrent=String(minimum.current);area.dataset.minimumState=minimum.state;
+  area.dataset.pending=String(gapQueueState.parentPending||conducted.pending||resultView.pending||storageView.pending||currentFactsView.pending);area.dataset.current=String(model.groups.every(group=>group.state==='current'));
+  const minimum=model.minimum_evidence;area.dataset.minimumCurrent=String(minimum.current);area.dataset.minimumState=minimum.state;area.dataset.minimumSource=minimum.source??'unconfirmed';area.dataset.currentFactsPending=String(currentFactsView.pending);
   area.append(el('h4','','다음 확인'));
-  const minimumStatus=el('p','inline-note',minimum.current?minimum.questions.length?`${minimum.questions.length}개 확인 항목`:'제공된 원 질문에 추가 확인 항목이 없습니다.':minimum.original?'이전 관측 · 현재 질문 연결 미확인':'추가 확인 질문을 아직 읽지 못했습니다.');minimumStatus.id='minimum-evidence-status';minimumStatus.setAttribute('role','status');minimumStatus.setAttribute('aria-live','polite');area.append(minimumStatus);
+  const minimumStatus=el('p','inline-note',minimum.current?minimum.questions.length?`${minimum.questions.length}개 확인 항목`:minimum.uninterpreted_question_indexes.length?'표시 형식이 확인되지 않은 원 질문이 있습니다. 상세를 확인하세요.':'제공된 원 질문에 추가 확인 항목이 없습니다.':minimum.original?'이전 관측 · 현재 질문 연결 미확인':'추가 확인 질문을 아직 읽지 못했습니다.');minimumStatus.id='minimum-evidence-status';minimumStatus.setAttribute('role','status');minimumStatus.setAttribute('aria-live','polite');area.append(minimumStatus);
   for(const [index,question]of minimum.questions.entries()){
     const item=el('article','question');item.dataset.minimumEvidenceQuestion=String(index);item.dataset.reason=question.reason;item.dataset.field=question.field;item.dataset.current='true';item.dataset.kind=question.kind;
     item.append(el('h5','',question.title),el('p','',question.prompt));
@@ -779,7 +817,7 @@ function buildGapQueue(record,snapshot=state){
   let originals=area;
   if(minimum.original){
     originals=el('details');originals.dataset.minimumEvidenceOriginal='';originals.append(el('summary','','원 질문·공백·출처 전체'),metadata([
-      ['현재 연결 확인 범위',conductedPreviewValue({state:minimum.state,reasons:minimum.reasons,uninterpreted_question_indexes:minimum.uninterpreted_question_indexes})],['원 facts-plan · 질문·공백·typed facts',conductedPreviewValue(minimum.original)],
+      ['현재 연결 확인 범위',conductedPreviewValue({source:minimum.source,state:minimum.state,reasons:minimum.reasons,uninterpreted_question_indexes:minimum.uninterpreted_question_indexes})],['원 현재 조회·binding·recheck',conductedPreviewValue(minimum.observation)],['원 facts-plan · 질문·공백·typed facts',conductedPreviewValue(minimum.original)],
     ]));area.append(originals);
   }
   const status=el('p','inline-note','원 출처·순서별 읽기 관측 · 표시 항목 없음은 시험 준비/실행 완료가 아닙니다.');status.id='gap-queue-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');area.append(status);
@@ -1099,6 +1137,8 @@ function publishView(prepared) {
     syncResultView();
     storageView.parentPending=false;
     syncArtifactStorage();
+    currentFactsView.parentPending=false;
+    syncCurrentFacts();
     refreshGapQueue();
   } finally { if (!referenceDestroyed) referenceGuard = false; }
 }
@@ -1122,6 +1162,7 @@ function changeView(view) {
   syncConductedContext();
   syncResultView();
   syncArtifactStorage();
+  syncCurrentFacts();
   refreshGapQueue();
 }
 
@@ -1131,6 +1172,7 @@ async function refresh() {
   retireConductedObservation();
   retireResultView();
   retireArtifactStorage();
+  retireCurrentFacts();
   const request = ++state.request;
   if (!setReferencePending(true)) return;
   state.controller?.abort();
@@ -1181,6 +1223,7 @@ async function refresh() {
       resultView.parentPending=false;
       const resultNode=$('#conducted-result-view');if(resultNode)resultNode.dataset.pending=String(resultView.pending);
       storageView.parentPending=false;
+      currentFactsView.parentPending=false;
       gapQueueState.parentPending=false;refreshGapQueue();
     }
   }
@@ -1191,6 +1234,7 @@ addEventListener('pagehide', event => {
   retireConductedObservation();
   retireResultView();
   retireArtifactStorage();
+  retireCurrentFacts();
   if (event.persisted) {
     if (!referenceCanChange()) return;
     referenceSuspended = true;
