@@ -30,7 +30,7 @@
 
 `build_analysis_response_schema(*, producer_name, context=None)`의 생략/None 기본 호출은 원 schema1 literal·canonical bytes를 보존한다. 명시적으로 검증한 schema1 context도 같은 schema를 반환한다. 검증한 schema2 context만 정확한 `context_id` enum과 닫힌 `text_line/pdf_page` evidence 대안을 만든다. PDF 인용은 원 path/source SHA·extraction ID·page 번호·text SHA·line 범위·literal quote를 요구하며 실제 일치 여부는 genuine strict decoder가 검증한다. schema를 받았다는 사실만으로 의미·인용의 정확성이 확인되지는 않는다.
 
-현재 `codex_registered_intake_host`의 PDF 등록 거절은 유지한다. 공통 once/schema2 연결은 정식 native host의 PDF 지원 완료를 뜻하지 않는다. 이번 단위에서 운영 profile·permit·소비·예약 정책을 변경하지 않는다.
+후보 `41af4902`의 [native 후속 규범](codex_registered_intake_host_usage.md)은 등록·원본·dedicated·G3 확인 뒤 완전히 읽을 수 있는 context의 공통 preflight(prompt 256KiB 이하·schema 64KiB 이하)를 기존 finite permit 소비와 once1보다 먼저 수행한다. 일반 G3의 unread/unknown 분석 가능은 native dispatch 허용을 뜻하지 않으며 partial/unread는 거절한다. 이 후속은 native3 독립 수용 전의 후보이고, 메모리 운영 경계의 결과는 실제 OS·issuer·권위·원 실제17 재실행 성공의 증거가 아니다. 정상 TXT·기본 schema1·영수증·예산·권한 규칙은 유지한다.
 
 ## 호출과 Store 수명
 
