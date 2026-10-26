@@ -7,9 +7,11 @@ import os
 from pathlib import Path
 import socket
 import stat
+import subprocess
 import sys
 import tempfile
 import threading
+import time
 import unittest
 from unittest import mock
 import zipfile
@@ -323,6 +325,164 @@ class RuntimeBoundaries(unittest.TestCase):
     def test_cli_invalid_options_are_rejected(self):
         with self.assertRaises(SystemExit):
             check.parser().parse_args(['--runtime', 'x', '--output', 'y', '--boot-timeout', '181'])
+
+
+class ReviewFixes(unittest.TestCase):
+    """Five review regressions; fake SDK bytes are never executed."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.base = Path(self.tmp.name)
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows junction boundary')
+    def test_f1_resume_nested_junction_cannot_write_outside_or_change_marker(self):
+        runtime = self.base / 'runtime'
+        runtime.mkdir()
+        outside = self.base / 'outside'
+        outside.mkdir()
+        original = outside / 'emulator.license.txt'
+        original.write_bytes(b'outside original')
+        junction = runtime / 'sources'
+        escaped = lambda p: str(p).replace("'", "''")
+        subprocess.run(['powershell', '-NoProfile', '-NonInteractive', '-Command',
+            f"New-Item -ItemType Junction -Path '{escaped(junction)}' -Target '{escaped(outside)}' | Out-Null"],
+            check=True, capture_output=True, timeout=10)
+        self.addCleanup(junction.rmdir)
+        for name in ('repository.xml', 'aosp-images.xml'):
+            (outside / name).write_bytes(b'<fixture/>')
+        specs = [dict(package=n, version='1', source=check.REPOSITORY,
+                      url='https://dl.google.com/android/repository/commandlinetools-win-15859902_latest.zip',
+                      size=1, checksum_type='sha256', checksum=check.CLI_SHA256,
+                      license_id='android-sdk-license', license_text='fixture terms')
+                 for n in ('cmdline-tools;22.0', 'platform-tools', 'emulator', check.IMAGE_PACKAGE)]
+        marker = runtime / check.OWNER_FILE
+        check.write_json(marker, dict(runtime=str(runtime), completed=False,
+            packages=[{k:v for k,v in s.items() if k != 'license_text'} for s in specs],
+            downloads=[], downloaded_bytes=0))
+        before_marker = marker.read_bytes()
+        before_outside = {p.name:p.read_bytes() for p in outside.iterdir()}
+        report = check.Report(self.base / 'proof')
+        with mock.patch.object(check, 'select_package', side_effect=specs), \
+             mock.patch.object(check, 'cached_archive', side_effect=check.BoundaryError('fixture_stop')):
+            with self.assertRaises(check.BoundaryError) as error:
+                check.install_runtime(runtime, report, True, resume=True)
+        self.assertEqual('linked_path', error.exception.code)
+        self.assertEqual(before_marker, marker.read_bytes())
+        self.assertEqual(before_outside, {p.name:p.read_bytes() for p in outside.iterdir()})
+
+    def fixture_runtime(self):
+        runtime = self.base / 'runtime'
+        names = ('platform-tools/adb.exe', 'emulator/emulator.exe',
+                 'emulator/qemu/windows-x86_64/qemu-system-x86_64.exe',
+                 'emulator/dependency.dll', 'system-images/android-36/default/x86_64/system.img')
+        for name in names:
+            path = runtime / 'sdk' / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b'fixture original')
+        digest = hashlib.sha256(b'fixture original').hexdigest()
+        check.write_json(runtime / check.OWNER_FILE, dict(runtime=str(runtime), completed=True,
+            executables={name:digest for name in names[:3]},
+            file_inventory={name:digest for name in names}, inventory_version=2))
+        return runtime
+
+    def test_f2_changed_image_is_rejected_before_native_execution(self):
+        runtime = self.fixture_runtime()
+        check.validate_runtime(runtime)
+        image = runtime / 'sdk/system-images/android-36/default/x86_64/system.img'
+        image.write_bytes(b'changed image')
+        with self.assertRaises(check.BoundaryError) as error:
+            check.validate_runtime(runtime)
+        self.assertEqual('runtime_file_changed', error.exception.code)
+        self.assertIn('system.img', str(error.exception))
+
+    def test_normal_inventory_preserves_owner_and_covers_native_dependency(self):
+        runtime = self.fixture_runtime()
+        marker = runtime / check.OWNER_FILE
+        original = marker.read_bytes()
+        result = check.validate_runtime(runtime)
+        self.assertEqual(original, marker.read_bytes())
+        self.assertIn('emulator/dependency.dll', result['file_inventory'])
+        self.assertIn('system-images/android-36/default/x86_64/system.img', result['file_inventory'])
+
+    def test_f3_server_exit_is_first_failure_and_stops_boot_immediately(self):
+        report = check.Report(self.base / 'proof')
+        runtime = self.base / 'runtime'
+        runtime.mkdir()
+        server = mock.MagicMock()
+        server.process.pid = 12345
+        server.process.poll.return_value = 7
+        emulator = mock.MagicMock()
+        emulator.process.poll.return_value = None
+        server.__enter__.return_value = server
+        server.__exit__.return_value = False
+        emulator.__enter__.return_value = emulator
+        emulator.__exit__.return_value = False
+        help_text = '-no-window -no-audio -no-snapshot -memory -port -grpc -gpu'
+        not_found = check.BoundaryError('adb_service_failure', "device 'emulator-5680' not found")
+        with mock.patch.object(check, 'resources', return_value={'available_mib': 8192}), \
+             mock.patch.object(check, 'assert_ports_free'), \
+             mock.patch.object(check, 'OwnedProcess', side_effect=[server, emulator]), \
+             mock.patch.object(check, 'adb_read', side_effect=[not_found,
+                 check.BoundaryError('owned_adb_server_exited', 'pid=12345 exit_code=7')]):
+            with self.assertRaises(check.BoundaryError) as error:
+                check.boot_runtime(runtime, report, {}, check.Endpoint(), 1, 'auto', help_text)
+        self.assertEqual('owned_adb_server_exited', error.exception.code)
+        self.assertEqual('owned_adb_server_exited', report.data['first_failure']['code'])
+        self.assertIn('exit_code=7', report.data['first_failure']['detail'])
+        # The owner may also exit after connect, while the wire read is active.
+        owner = mock.Mock()
+        owner.process.pid = 12345
+        owner.process.poll.side_effect = [None, 7]
+        stream = mock.MagicMock()
+        stream.__enter__.return_value = stream
+        stream.recv.return_value = b''
+        with mock.patch.object(check.socket, 'create_connection', return_value=stream):
+            with self.assertRaises(check.BoundaryError) as mid_read:
+                check.adb_read(check.Endpoint(), 'get-state', owner)
+        self.assertEqual('owned_adb_server_exited', mid_read.exception.code)
+        self.assertIn('exit_code=7', str(mid_read.exception))
+
+    def test_f4_slow_get_state_obeys_whole_operation_deadline(self):
+        with socket.socket() as listener:
+            listener.bind(('127.0.0.1', 0))
+            listener.listen(1)
+            listener.settimeout(2)
+            endpoint = check.Endpoint(adb_port=listener.getsockname()[1])
+            def peer():
+                with listener.accept()[0] as stream:
+                    stream.settimeout(1)
+                    length = int(check._receive(stream, 4), 16)
+                    check._receive(stream, length)
+                    try:
+                        for byte in b'OKAY0006device':
+                            time.sleep(0.02)
+                            stream.sendall(bytes([byte]))
+                    except OSError:
+                        pass  # Expected when the deadline closes our fixture peer.
+            worker = threading.Thread(target=peer)
+            worker.start()
+            server = mock.Mock()
+            server.process.poll.return_value = None
+            started = time.monotonic()
+            try:
+                with self.assertRaises(check.BoundaryError) as error:
+                    check.adb_read(endpoint, 'get-state', server, timeout=0.08)
+                elapsed = time.monotonic() - started
+                self.assertEqual('adb_timeout', error.exception.code)
+                self.assertLess(elapsed, 0.25)
+            finally:
+                worker.join(2)
+            self.assertFalse(worker.is_alive())
+
+    def test_f5_zip_dot_alias_is_rejected_before_any_extraction(self):
+        raw = io.BytesIO()
+        with zipfile.ZipFile(raw, 'w') as archive:
+            archive.writestr('pkg/tool.txt', b'first')
+            archive.writestr('pkg/./tool.txt', b'second overwrite')
+        target = self.base / 'extract'
+        with self.assertRaises(check.BoundaryError):
+            check.safe_extract(raw.getvalue(), target)
+        self.assertFalse(target.exists())
 
 
 if __name__ == '__main__':

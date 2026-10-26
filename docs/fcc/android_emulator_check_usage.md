@@ -10,6 +10,16 @@ python -m labflow.android_emulator_check --runtime .local/android-runtime --outp
 
 기본은 readonly native version/help/accel-check 및 자원 조회다. runtime이 없으면 `runtime_missing`, `android_os=not_run`, `adb_verified=false`와 종료 코드 2를 기록한다. 준비된 runtime의 기본 실행은 `runtime_ready`를 반환하지만 Android OS 실행 증거는 아니다.
 
+native 실행 전 SDK 전체 파일을 고정 inventory와 대조한다. 여기에는 system image·kernel·ramdisk와 emulator/ADB DLL 등 의존 파일도 포함된다. 변경·누락·추가 파일, 경로의 reparse point는 성공으로 처리하지 않는다. 새 설치의 inventory version2는 검증된 공식 archive 안의 원 파일 byte에서 작성하며, 설치된 현재 파일을 새 기준 hash로 채택하지 않는다.
+
+기존 version1 owner manifest는 그대로 보존한다. 원 metadata 및 당시 다운로드 SHA-256/size/checksum과 일치하는 보존 archive4에서 기대 inventory를 재구성하고 SDK 전체와 대조한다. 원 archive/증거가 없거나 서로 다르면 native 실행 전에 거절한다. 이 구형 runtime에서는 조회 때마다 archive 근거를 다시 검증한다. 무결성만 확인하고 native 실행을 하지 않으려면 다음을 사용한다.
+
+```powershell
+python -m labflow.android_emulator_check --runtime .local/android-runtime --output .local/android-integrity-01 --verify-only
+```
+
+성공 상태는 `runtime_integrity_verified`다. 새 output의 `runtime-integrity.json`에 archive 출처·전체 기대 파일 hash를 남기며 기존 owner manifest나 설치물은 고쳐 쓰지 않는다. archive/SDK 읽기에는 공유 600초 검증 deadline이 적용된다. 이 결과도 Android OS·ADB identity 증거가 아니다.
+
 ## 설치
 
 [SDK 약관과 배포 페이지](https://developer.android.com/studio), [sdkmanager 안내](https://developer.android.com/tools/sdkmanager), [Android CLI SDK 안내](https://developer.android.com/tools/agents/android-cli/commands/sdk)를 확인한 뒤 다음을 실행한다. SDK는 로컬 개발 목적으로 사용하며 바이너리·이미지·약관 원문을 Git이나 제품에 재배포하지 않는다. 다른 라이선스 ID가 나타나면 `new_license_review_required`로 중단한다.
@@ -23,6 +33,8 @@ python -m labflow.android_emulator_check --runtime .local/android-runtime --outp
 현재 공식 문서는 sdkmanager와 기존 emulator CLI를 deprecated로 안내한다. 이 도구는 Java나 IDE를 설치하지 않고 공식 archive로 필요한 구성요소를 설치한다. cmdline-tools의 Java 기반 sdkmanager/avdmanager 실행과 새 Android CLI 실행은 검증하지 않았다. 실제 설치된 native emulator/adb 실행 파일의 버전·help를 별도로 대조한다.
 
 불완전한 자기 runtime의 설치는 다음 명시 옵션으로 **한 번만** 재개할 수 있다. 기존 다운로드 byte budget과 package 목록을 보존하고, 완전한 archive의 크기·checksum을 다시 대조해 재사용한다. `.partial`을 자동 재다운로드하거나 원본을 덮어쓰지 않는다. 기존 게시 파일이 달라졌으면 중단한다. Windows rename 잠금 영향을 줄이기 위해 검증된 staging을 보존하고 새 파일만 복사한다.
+
+재개는 marker·metadata·약관·고정 하위 폴더와 전체 기존 tree의 junction/symlink/reparse point를 쓰기 전에 거절한다. 기존 약관은 원문이 일치하는지 읽어 확인하고 그대로 보존한다. ZIP의 `.`·빈 segment·중복/별칭 경로도 추출 폴더 생성 전에 거절한다.
 
 ```powershell
 python -m labflow.android_emulator_check --runtime .local/android-runtime --output .local/android-install-resume-01 --install --resume-install --accept-sdk-license
@@ -42,6 +54,8 @@ python -m labflow.android_emulator_check --runtime .local/android-runtime --outp
 
 `get-state=device`, `ro.kernel.qemu=1`, `ro.hardware=ranchu|goldfish`, 비어 있지 않은 `ro.product.model`, `sys.boot_completed=1`이 모두 관측돼야 `android_os=booted`, `adb_verified=true`, `status=verified`다. 응답이 없거나 불충분하면 성공으로 승격하지 않는다. RF/OEM/AnyWay/physical은 계속 `not_assessed`다. 서버가 종료되면 다른 endpoint를 찾거나 자동 재시작하지 않는다.
 
+connect/send/각 recv/status·length·body/get-state/getprop 전체에 같은 query 절대 deadline을 적용하고 모든 query에 남은 boot deadline을 전달한다. 자기 server 종료·잘못된 protocol 응답은 원 최초 오류와 PID/exit code를 보존해 즉시 drain한다. 정확 자기 serial의 `not found` 및 `device offline` service 응답만 boot 제한 안에서 재시도한다.
+
 ## 결과와 확인 범위
 
 `output/result.json`에 단계 결과·최초 오류·자원 전후·명령·소유 PID/종료 상태를 저장한다. `runtime/dgm-runtime-owner.json`에 URL·byte·checksum·SHA-256·license·설치 상태를, `runtime/sources`에 metadata/약관을, `runtime/archives`에 원 archive를 보존한다. 실패 원문은 각 output에 남으며 새 성공 output이 과거 실패를 대체하지 않는다. 경로/옵션을 받아들이기 전 거절한 CLI 오류는 stdout 또는 argparse stderr와 종료 코드 2로 알린다.
@@ -59,3 +73,5 @@ python -m labflow.android_emulator_check --runtime .local/android-runtime --outp
 | 실제 RF/OEM/AnyWay/실물·현장 | not_assessed |
 
 다음 실증 조건은 충분한 가용 RAM, 같은 고정 runtime 무결성, 자기 port 가용성이다. 그 조건이 갖춰진 환경에서 위 명시 부팅 명령을 실행하고 실제 identity 원 응답을 검수해야 한다. 현장 네트워크 검색·장비 운전·외부 모델·고객자료 전송은 이 단위의 범위가 아니다.
+
+위 archive4/native12/fixture27은 최초 후보의 작성자 기록이다. 독립 검수는 해당 후보에서 경로·이미지 무결성·서버 오류·절대 deadline·ZIP 별칭 5개 결함을 지적했으며 원 No와 실패를 보존한다. 수정 라운드는 별도 직접 RED→GREEN 및 영향 정상 경계, 기존 archive를 읽는 무결성 대조만 수행한다. 새 다운로드·재설치·native 조회·ADB server·OS 부팅은 수행하지 않으며 총괄 독립 재검수와 실제 guest 실증은 후속이다.
