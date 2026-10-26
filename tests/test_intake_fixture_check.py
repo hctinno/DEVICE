@@ -1042,5 +1042,266 @@ class ConductedTransportRecoveryGenuineTests(unittest.TestCase):
             ['dut.start','advance','sensor.acquire','advance','dut.start','sensor.acquire','advance'])
 
 
+
+# Opt-in method names keep the existing default cohort unchanged.
+_DECLARED_UNSET = object()
+WORKFLOW_DECLARED_OBSERVATIONS = []
+
+
+class WorkflowDeclaredUncertaintyTests(unittest.TestCase):
+    def setUp(self):
+        import copy
+        self.copy = copy.deepcopy
+        self.temp = tempfile.TemporaryDirectory(prefix='declared-workflow-')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.observed = []
+        self.sequence = 0
+        self.inputs = dict(components=None, policy=None)
+
+    def tearDown(self):
+        from hashlib import sha256
+        WORKFLOW_DECLARED_OBSERVATIONS.append(dict(name=self._testMethodName,
+            observations=self.observed, provided_seams_only=True, actual_RF=0,
+            actual_loop=0, actual_model=0, actual_SQL=0, actual_CLI=0, actual_budget=0,
+            output_files=[dict(path=p.relative_to(self.root).as_posix(), bytes=p.stat().st_size,
+                sha256=sha256(p.read_bytes()).hexdigest()) for p in sorted(self.root.rglob('*')) if p.is_file()]))
+
+    def module(self):
+        from labflow import intake_fixture_check
+        return intake_fixture_check
+
+    def legacy(self):
+        import importlib.util
+        import os
+        import sys
+        value = os.environ.get('DGM_WORKFLOW_LEGACY_SOURCE')
+        self.assertTrue(value, 'Supply the pinned original workflow source for opt-in parity')
+        spec = importlib.util.spec_from_file_location('labflow._declared_workflow_original', value)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        # Preserve the original project's schema/catalog locator for copied source.
+        module.__file__ = str(Path(__file__).resolve().parents[1] / 'labflow/intake_fixture_check.py')
+        return module
+
+    def exercise(self, module=None, inputs=_DECLARED_UNSET, *, primary=None, secondary=None):
+        from contextlib import ExitStack
+        from hashlib import sha256
+        from types import SimpleNamespace
+        from labflow.store import canonical
+        module = module or self.module()
+        self.sequence += 1
+        output = self.root / ('flow-' + str(self.sequence))
+        plan, method, final = ConductedArtifactStartupTests.values(self, 'incomplete')
+        plan['plan'] = dict(source_settings={}, basis_refs={})
+        final['result']['calculation']['conformity'] = dict(status='not_assessed', uncertainty_db=None)
+        final['result']['failure'] = None
+        context = dict(job_id='provided-job', intake_id=plan['binding']['intake_id'], revision=3,
+            synthetic=True, documents=[], analysis_context_id='provided-context',
+            analysis_contract={}, instructions='Provided boundary only; no actual intake or PDF validation.')
+        analysis = dict(schema_version=2, context_id='provided-context', facts=[], missing_fields=[])
+        current = dict(context=context, analysis=analysis)
+        execution = dict(kind='provided_no_runtime',
+            execution=dict(trial_factory_calls=0, producer_calls_started=0))
+        calls, passed = {}, []
+        class ProvidedText:
+            def setFont(self, *a):
+                pass
+            def textLine(self, *a):
+                pass
+        class ProvidedCanvas:
+            def __init__(self, *a, **k):
+                pass
+            def beginText(self, *a):
+                return ProvidedText()
+            def drawText(self, *a):
+                pass
+            def showPage(self):
+                pass
+            def save(self):
+                pass
+        class ProvidedStore:
+            def __init__(self, path):
+                self.root = Path(path)
+        copy = self.copy
+        class ProvidedCurrent:
+            def __init__(self, root):
+                pass
+            def current_conducted_plan_context(self, intake_id):
+                return copy(current)
+        native_json = module._conducted_json
+        def evidence(folder, relative, value):
+            if secondary is not None and relative == 'failure-original-receipt.json':
+                module._conducted_write(folder, relative, b'{"provided-failure":true}\n'[:19])
+                raise secondary
+            return native_json(folder, relative, value)
+        def finalized(original_execution, **options):
+            self.assertIs(original_execution, execution)
+            passed.append(options)
+            folder = output / '.local/conducted-result-artifacts/authored-artifact'
+            if primary is not None:
+                module._conducted_write(output, folder.relative_to(output) / 'result.pending.json',
+                    b'provided-partial-original-data'[:19])
+                raise primary
+            raw_result = (canonical(final['result']) + '\n').encode()
+            raw_draft = b'DRAFT\nProvided finalizer payload; not a genuine writer or measurement.\n'
+            raw_manifest = (canonical(dict(kind='provided_manifest', files=['result.json', 'draft.md'],
+                result_sha256=sha256(raw_result).hexdigest(), draft_sha256=sha256(raw_draft).hexdigest(),
+                applied_to_result=False)) + '\n').encode()
+            artifact = final['artifact']
+            artifact['storage'].update(bytes=len(raw_manifest), sha256=sha256(raw_manifest).hexdigest())
+            artifact['files'] = [dict(path=(folder.relative_to(output) / leaf).as_posix(),
+                bytes=len(raw), sha256=sha256(raw).hexdigest(), media_type=media)
+                for leaf, raw, media in [('result.json', raw_result, 'application/json'),
+                                        ('draft.md', raw_draft, 'text/markdown')]]
+            for leaf, raw in [('result.json', raw_result), ('draft.md', raw_draft), ('manifest.json', raw_manifest)]:
+                module._conducted_write(output, folder.relative_to(output) / leaf, raw)
+            return final
+        options = dict(measurement_ref='event:explicit-provided', mock_model='gpt-6.1-sol')
+        if inputs is not _DECLARED_UNSET:
+            options['uncertainty_inputs'] = inputs
+        try:
+            with ExitStack() as stack:
+                patches = [
+                    patch.object(module, '_conducted_mock_compiler', return_value=output / 'not-executed-compiler'),
+                    patch.object(module, '_compile_conducted_mock', return_value=output / 'not-executed-mock'),
+                    patch.object(module, 'Store', ProvidedStore),
+                    patch.object(module, 'register_source'),
+                    patch.object(module, 'scan_source', return_value=dict(accepted=[dict(intake_id=context['intake_id'], revision=3)])),
+                    patch.object(module, 'respond'),
+                    patch.object(module, '_scripted_pdf_analysis', return_value=analysis),
+                    patch.object(module, '_conducted_json', side_effect=evidence),
+                    patch.object(module.uuid, 'uuid4', return_value=SimpleNamespace(hex='1' * 32)),
+                    patch('reportlab.pdfgen.canvas.Canvas', ProvidedCanvas),
+                    patch('labflow.intake_jobs.claim_job', return_value=dict(context, token='provided-token')),
+                    patch('labflow.intake_jobs.complete_job'),
+                    patch('labflow.intake_jobs.fail_job'),
+                    patch('labflow.intake_model_boundary.build_analysis_prompt', return_value=dict(kind='provided_prompt')),
+                    patch('labflow.intake_model_boundary.decode_analysis_response', return_value=analysis),
+                    patch('labflow.intake_facts_to_conducted_plan.build_conducted_plan_from_intake_facts',
+                        return_value=dict(status='ready_for_simulation', plan_input=plan)),
+                    patch('labflow.intake_plan_virtual_execution.run_intake_plan_virtual_execution', return_value=execution),
+                    patch('labflow.conducted_execution_result_finalizer.finalize_conducted_execution_result', side_effect=finalized),
+                    patch('labflow.ui_read_model.IntakeReadModel', ProvidedCurrent)]
+                for item in patches:
+                    stack.enter_context(item)
+                result = module.run_conducted_flow(output, **options)
+            return result, passed, output
+        finally:
+            self.observed.append(dict(folder=output.name, finalizer_calls=len(passed),
+                finalizer_keywords=[list(value) for value in passed],
+                forwarded=[self.copy(value.get('uncertainty_inputs')) for value in passed],
+                primary=None if primary is None else type(primary).__name__,
+                secondary=None if secondary is None else type(secondary).__name__,
+                genuine_PDF_Store_plan_execution_finalizer=False))
+
+    def declared_explicit_native_copy_reaches_original_finalizer_boundary(self):
+        module = self.module()
+        original = self.copy(self.inputs)
+        with patch.object(module, '_conducted_export_frame', wraps=module._conducted_export_frame) as snapshot:
+            try:
+                result, passed, output = self.exercise(inputs=self.inputs)
+            except TypeError as error:
+                self.fail('Explicit uncertainty_inputs must reach the existing finalizer boundary: ' + str(error))
+        self.assertEqual(snapshot.call_count, 1)
+        self.assertEqual(snapshot.call_args.args[1], 262144)
+        self.assertEqual(len(passed), 1)
+        self.assertEqual(passed[0]['uncertainty_inputs'], original)
+        self.assertIsNot(passed[0]['uncertainty_inputs'], self.inputs)
+        passed[0]['uncertainty_inputs']['components'] = 'caller-alias-probe'
+        self.assertEqual(self.inputs, original)
+        self.assertEqual(result['summary']['result_status'], 'incomplete')
+        self.assertEqual(result['summary']['fixture_acceptance'], 'fail')
+        self.assertEqual(result['summary']['draft_status'], 'DRAFT')
+        saved = json.loads((output / 'finalizer-original.json').read_bytes())
+        self.assertIsNone(saved['result']['calculation']['conformity']['uncertainty_db'])
+        self.assertEqual(set(p.name for p in (output / '.local/conducted-result-artifacts/authored-artifact').iterdir()),
+            {'result.json', 'draft.md', 'manifest.json'})
+
+    def declared_omitted_none_keep_original_kwargs_summary_and_provided_three_bytes(self):
+        from labflow.store import canonical
+        original, original_calls, original_root = self.exercise(self.legacy())
+        expected = ['expected_execution_sha256', 'evidence_dir', 'measurement_ref', 'workspace_root', 'artifact_name']
+        self.assertEqual(list(original_calls[0]), expected)
+        prefix = '.local/conducted-result-artifacts/authored-artifact'
+        for label, value in [('omitted', _DECLARED_UNSET), ('none', None)]:
+            with self.subTest(mode=label):
+                module = self.module()
+                with patch.object(module, '_conducted_export_frame', wraps=module._conducted_export_frame) as snapshot:
+                    result, calls, root = self.exercise(inputs=value)
+                self.assertEqual(snapshot.call_count, 0)
+                self.assertEqual(list(calls[0]), expected)
+                self.assertEqual(canonical(result['summary']), canonical(original['summary']))
+                self.assertEqual((root / 'public-summary.json').read_bytes(),
+                    (original_root / 'public-summary.json').read_bytes())
+                for leaf in ('result.json', 'draft.md', 'manifest.json'):
+                    self.assertEqual((root / prefix / leaf).read_bytes(), (original_root / prefix / leaf).read_bytes())
+
+    def declared_invalid_native_inputs_close_before_output_compiler_store_and_runtime(self):
+        module = self.module()
+        hooks = []
+        class Foreign(dict):
+            def __iter__(self):
+                hooks.append('iter')
+                raise AssertionError('foreign hook')
+            def __deepcopy__(self, memo):
+                hooks.append('deepcopy')
+                raise AssertionError('foreign hook')
+        cycle = {}
+        cycle['cycle'] = cycle
+        for label, value in [('foreign', Foreign()), ('cycle', cycle),
+                             ('nonfinite', float('inf')), ('oversize', 'x' * 262145)]:
+            with self.subTest(case=label):
+                output = self.root / label
+                with patch.object(module, '_conducted_mock_compiler') as compiler, patch.object(module, 'Store') as store, \
+                        patch('labflow.intake_plan_virtual_execution.run_intake_plan_virtual_execution') as runtime, \
+                        patch('labflow.conducted_execution_result_finalizer.finalize_conducted_execution_result') as finalizer:
+                    with self.assertRaises(ValueError) as got:
+                        module.run_conducted_flow(output, uncertainty_inputs=value)
+                self.assertEqual(str(got.exception), 'conducted_workflow_readback_export_invalid')
+                self.assertFalse(output.exists())
+                for boundary in (compiler, store, runtime, finalizer):
+                    self.assertEqual(boundary.call_count, 0)
+        with patch.object(module, '_conducted_export_frame') as snapshot:
+            with self.assertRaisesRegex(ValueError, '^conducted_workflow_scenario_unsupported$'):
+                module.run_conducted_flow(self.root / 'scenario', scenario='unlisted', uncertainty_inputs=Foreign())
+        self.assertEqual(snapshot.call_count, 0)
+        control = MemoryError()
+        with patch.object(module, '_conducted_export_frame', side_effect=control), \
+                patch.object(module, '_conducted_mock_compiler') as compiler:
+            with self.assertRaises(MemoryError) as got:
+                module.run_conducted_flow(self.root / 'control', uncertainty_inputs=self.inputs)
+        self.assertIs(got.exception, control)
+        self.assertEqual(compiler.call_count, 0)
+        self.assertFalse((self.root / 'control').exists())
+        self.assertEqual(hooks, [])
+        self.observed.append(dict(invalid=['foreign', 'cycle', 'nonfinite', 'oversize'],
+            before_output_compiler_Store_runtime_finalizer=True, hooks=hooks, existing_scenario_error_first=True))
+
+    def declared_finalizer_first_errors_controls_and_partial_are_preserved(self):
+        module = self.module()
+        for primary in (KeyboardInterrupt(), SystemExit(7), GeneratorExit(), MemoryError(), OSError('provided-first')):
+            with self.subTest(primary=type(primary).__name__):
+                primary.receipt = dict(kind='provided_finalizer_failure', status='held', result=None)
+                primary.code = 'provided_finalizer_first_failure'
+                secondary = MemoryError() if type(primary) is OSError else None
+                before = self.sequence
+                with self.assertRaises(type(primary)) as got:
+                    self.exercise(inputs=self.inputs, primary=primary, secondary=secondary)
+                self.assertIs(got.exception, primary)
+                output = self.root / ('flow-' + str(before + 1))
+                partial = output / '.local/conducted-result-artifacts/authored-artifact/result.pending.json'
+                self.assertEqual(partial.read_bytes(), b'provided-partial-original-data'[:19])
+                self.assertFalse((partial.parent / 'manifest.json').exists())
+                self.assertEqual(len(list(partial.parent.iterdir())), 1)
+                if secondary is None:
+                    self.assertEqual(json.loads((output / 'failure-original-receipt.json').read_bytes()), primary.receipt)
+                    self.assertEqual(json.loads((output / 'failure.json').read_bytes())['code'], primary.code)
+                else:
+                    self.assertEqual((output / 'failure-original-receipt.json').stat().st_size, 19)
+
+
+
 if __name__ == '__main__':
     unittest.main()

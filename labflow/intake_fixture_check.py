@@ -470,10 +470,13 @@ def export_conducted_workflow_readback_inputs(output_dir, workflow_summary, fina
     return selection
 
 
-def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None, mock_model=None, scenario='normal'):
+def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None, mock_model=None, scenario='normal',
+        uncertainty_inputs=None):
     """Opt-in authored PDF -> current C1 -> genuine plan/execution/result/DRAFT."""
     if scenario not in _CONDUCTED_SCENARIOS:
         raise ValueError('conducted_workflow_scenario_unsupported')
+    if uncertainty_inputs is not None:
+        uncertainty_inputs = _conducted_export_frame(uncertainty_inputs, 262144)[0]
     output = Path(output_dir).resolve()
     if output.exists():
         raise ValueError('Output directory already exists')
@@ -612,10 +615,11 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         _conducted_json(output, 'execution-original.json', execution)
         phase = 'finalize_explicit_measurement'
         artifact_root=output
+        uncertainty_options = {} if uncertainty_inputs is None else {'uncertainty_inputs': uncertainty_inputs}
         finalized = finalize_conducted_execution_result(execution,
             expected_execution_sha256=sha256(canonical(execution).encode('utf-8')).hexdigest(),
             evidence_dir=output / 'x', measurement_ref=measurement_ref,
-            workspace_root=artifact_root, artifact_name='draft-' + run_uuid[:12])
+            workspace_root=artifact_root, artifact_name='draft-' + run_uuid[:12], **uncertainty_options)
         _conducted_json(output, 'finalizer-original.json', finalized)
         result, artifact = finalized['result'], finalized['artifact']
         current_after = IntakeReadModel(store.root).current_conducted_plan_context(intake_id)
