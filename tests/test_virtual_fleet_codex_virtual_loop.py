@@ -332,7 +332,7 @@ class LoopTests(unittest.TestCase):
     def test_public_signature_and_exports(self):
         self.assertEqual(api.__all__, ['run_codex_virtual_loop', 'CodexVirtualLoopError'])
         signature = inspect.signature(api.run_codex_virtual_loop)
-        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings', 'plan_binding', 'quantity', 'evidence_reservation'])
+        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings', 'plan_binding', 'quantity', 'evidence_reservation', 'model_process_limit', 'wall_seconds_limit'])
         self.assertIsNone(signature.parameters['source_settings'].default)
         self.assertIsNone(signature.parameters['plan_binding'].default)
         self.assertIsNone(signature.parameters['quantity'].default)
