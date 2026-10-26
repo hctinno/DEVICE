@@ -763,12 +763,27 @@ function syncArtifactStorage(){
 function queueErrorCode(error){return typeof error?.message==='string'&&/^[a-z_]{1,128}$/.test(error.message)?error.message:'transport_or_shape_error';}
 function buildGapQueue(record,snapshot=state){
   const freshParent=(snapshot.snapshotGeneration??0)!==(state.snapshotGeneration??0);
-  const model=describeIntakeGapQueue(record,{generation:snapshot.snapshotGeneration||0,intakeStale:freshParent?false:gapQueueState.intakeStale||gapQueueState.parentPending,intakeCode:freshParent?null:gapQueueState.intakeCode,plan:conducted,result:resultView});
+  const model=describeIntakeGapQueue(record,{generation:snapshot.snapshotGeneration||0,intakeStale:freshParent?false:gapQueueState.intakeStale||gapQueueState.parentPending,intakeCode:freshParent?null:gapQueueState.intakeCode,plan:conducted,result:resultView,storage:storageView});
   const area=el('section','section-rule');area.id='intake-gap-queue';area.dataset.intakeId=record.intake_id;area.dataset.revision=String(record.revision);
-  area.dataset.pending=String(gapQueueState.parentPending||conducted.pending||resultView.pending);area.dataset.current=String(model.groups.every(group=>group.state==='current'));
-  area.append(el('h4','','예외·다음 조건 큐'));
+  area.dataset.pending=String(gapQueueState.parentPending||conducted.pending||resultView.pending||storageView.pending);area.dataset.current=String(model.groups.every(group=>group.state==='current'));
+  const minimum=model.minimum_evidence;area.dataset.minimumCurrent=String(minimum.current);area.dataset.minimumState=minimum.state;
+  area.append(el('h4','','다음 확인'));
+  const minimumStatus=el('p','inline-note',minimum.current?minimum.questions.length?`${minimum.questions.length}개 확인 항목`:'제공된 원 질문에 추가 확인 항목이 없습니다.':minimum.original?'이전 관측 · 현재 질문 연결 미확인':'추가 확인 질문을 아직 읽지 못했습니다.');minimumStatus.id='minimum-evidence-status';minimumStatus.setAttribute('role','status');minimumStatus.setAttribute('aria-live','polite');area.append(minimumStatus);
+  for(const [index,question]of minimum.questions.entries()){
+    const item=el('article','question');item.dataset.minimumEvidenceQuestion=String(index);item.dataset.reason=question.reason;item.dataset.field=question.field;item.dataset.current='true';item.dataset.kind=question.kind;
+    item.append(el('h5','',question.title),el('p','',question.prompt));
+    const details=el('details');details.append(el('summary','','원 질문·연결 근거'),metadata([
+      ['원 질문 인덱스·원형',conductedPreviewValue(question.origins)],['원 공백 인덱스·provided/span',conductedPreviewValue(question.gaps)],['원 source facts·quote·locator',conductedPreviewValue(question.source_facts)],
+    ]));item.append(details);area.append(item);
+  }
+  let originals=area;
+  if(minimum.original){
+    originals=el('details');originals.dataset.minimumEvidenceOriginal='';originals.append(el('summary','','원 질문·공백·출처 전체'),metadata([
+      ['현재 연결 확인 범위',conductedPreviewValue({state:minimum.state,reasons:minimum.reasons,uninterpreted_question_indexes:minimum.uninterpreted_question_indexes})],['원 facts-plan · 질문·공백·typed facts',conductedPreviewValue(minimum.original)],
+    ]));area.append(originals);
+  }
   const status=el('p','inline-note','원 출처·순서별 읽기 관측 · 표시 항목 없음은 시험 준비/실행 완료가 아닙니다.');status.id='gap-queue-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');area.append(status);
-  area.append(el('p','inline-note','제품 사실 질문은 원자료의 실제 부재·필수 재입력 판정이 아닙니다. 해석/근거 연결 검토와 시스템·시험조건, 미지원·미실행을 구분하며 답변·승인·실행은 연결하지 않습니다.'));
+  originals.append(el('p','inline-note','제품 사실 질문은 원자료의 실제 부재·필수 재입력 판정이 아닙니다. 해석/근거 연결 검토와 시스템·시험조건, 미지원·미실행을 구분하며 답변·승인·실행은 연결하지 않습니다.'));
   const labels={current:'현재 조회 scope',blocked:'차단 · 현재 질문 아님',unavailable:'관측 불가',not_run:'미실행·미관측'};
   const categories={evidence_review:'해석·근거 연결 검토',facts_required:'제품 사실 확인',conditions_required:'시스템·시험조건 준비',system_error:'시스템·실행 오류',unsupported:'미지원',not_run:'미실행·미완료',uninterpreted:'미해석 원형',blocked:'차단 · 현재 질문 아님',observed:'출처 관측'};
   for(const group of model.groups){
@@ -785,12 +800,13 @@ function buildGapQueue(record,snapshot=state){
       if(row.raw&&typeof row.raw==='object'&&!Array.isArray(row.raw)&&typeof row.raw.message==='string')item.append(el('p','',row.raw.message));
       const raw=metadata([['원 질문/공백 JSON · refs/null 포함',conductedPreviewValue(row.raw)]]);raw.dataset.gapQueueOriginal='';const original=el('details');original.append(el('summary','','원 JSON · refs/null 보존'),raw);item.append(original);section.append(item);
     }
-    area.append(section);
+    originals.append(section);
   }
   return area;
 }
 function staleGapQueue(message){
   const area=$('#intake-gap-queue');if(!area)return;area.dataset.current='false';
+  area.dataset.minimumCurrent='false';const minimumStatus=$('#minimum-evidence-status');if(minimumStatus)minimumStatus.textContent='이전 관측 · 현재 질문 아님';for(const question of area.querySelectorAll('[data-minimum-evidence-question]')){question.dataset.current='false';question.hidden=true;}
   const status=$('#gap-queue-status');if(status)status.textContent=message;
   for(const row of area.querySelectorAll('[data-gap-queue-item]')){row.dataset.state='blocked';row.dataset.category='blocked';const label=row.querySelector('[data-gap-queue-category]');if(label)label.textContent='차단 · 이전 관측 · 현재 질문 아님';}
 }
