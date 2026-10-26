@@ -400,6 +400,97 @@ class ModelBoundaryTests(unittest.TestCase):
         self.assertEqual(build_analysis_prompt(self.context, producer_name=NAME), before_prompt)
         self.assertEqual(self.decode(), before_analysis)
 
+    def test_explicit_schema_two_context_has_closed_pdf_and_text_evidence_alternatives(self):
+        from jsonschema import Draft202012Validator
+        for kind in ('pdf', 'mixed'):
+            with self.subTest(kind=kind):
+                context = copy.deepcopy(self.contexts[kind])
+                before = raw(context)
+                schema = build_analysis_response_schema(producer_name=NAME, context=context)
+                Draft202012Validator.check_schema(schema)
+                candidate = analysis(context)
+                Draft202012Validator(schema).validate(candidate)
+                self.assertEqual(self.decode(candidate, context), candidate)
+                self.assertEqual(schema['properties']['schema_version']['enum'], [2])
+                self.assertEqual(schema['properties']['context_id']['enum'], [context['analysis_context_id']])
+                self.assertIn('context_id', schema['required'])
+                evidence = schema['properties']['facts']['items']['properties']['evidence']['items']['anyOf']
+                self.assertEqual({item['properties']['kind']['enum'][0] for item in evidence}, {'text_line', 'pdf_page'})
+                for item in evidence:
+                    self.assertIs(item['additionalProperties'], False)
+                    self.assertEqual(set(item['required']), set(item['properties']))
+                self.assertEqual(raw(context), before)
+
+    def test_explicit_schema_one_and_none_preserve_original_default_schema_bytes(self):
+        name = 'SYN-PENDING-MODEL-RUN'
+        original = raw(build_analysis_response_schema(producer_name=name))
+        self.assertEqual(len(original), 1410)
+        self.assertEqual(hashlib.sha256(original).hexdigest(),
+                         'ade0333e65ad87f0028e0f4f1fab6872b162664dc3accdf63b39d6a9721e984c')
+        for context in (None, copy.deepcopy(self.contexts['txt'])):
+            self.assertEqual(raw(build_analysis_response_schema(producer_name=name, context=context)), original)
+        self.assertEqual(build_analysis_response_schema(producer_name=name)['properties']['schema_version']['enum'], [1])
+        bad = copy.deepcopy(self.contexts['pdf'])
+        bad['analysis_contract']['context_id'] = '0' * 64
+        self.assert_clean_error(lambda: build_analysis_response_schema(producer_name=name, context=bad))
+
+    def test_schema_two_rejects_open_or_incomplete_wire_citations_and_wrong_context(self):
+        from jsonschema import Draft202012Validator
+        context = copy.deepcopy(self.contexts['mixed'])
+        schema = build_analysis_response_schema(producer_name=NAME, context=context)
+        validator = Draft202012Validator(schema)
+        original = analysis(context)
+        pdf = next(i for i, fact in enumerate(original['facts']) if fact['evidence'][0]['kind'] == 'pdf_page')
+        text = next(i for i, fact in enumerate(original['facts']) if fact['evidence'][0]['kind'] == 'text_line')
+        candidates = []
+        for key in ('kind', 'extraction_id', 'page_number', 'text_sha256', 'sha256', 'quote'):
+            bad = copy.deepcopy(original)
+            bad['facts'][pdf]['evidence'][0].pop(key)
+            candidates.append(bad)
+        for index, changes in ((text, {'page_number': 1}), (pdf, {'private': 'no'}),
+                               (pdf, {'kind': 'other'})):
+            bad = copy.deepcopy(original)
+            bad['facts'][index]['evidence'][0].update(changes)
+            candidates.append(bad)
+        for changes in ({'context_id': '0' * 64}, {'schema_version': 1}, {'private': 'no'}):
+            candidates.append({**copy.deepcopy(original), **changes})
+        for index, candidate in enumerate(candidates):
+            with self.subTest(index=index):
+                self.assertTrue(list(validator.iter_errors(candidate)))
+                self.assert_clean_error(lambda: self.decode(candidate, context))
+
+    def test_schema_two_variants_and_calls_detach_every_container_from_input(self):
+        context = copy.deepcopy(self.contexts['mixed'])
+        before = raw(context)
+        first = build_analysis_response_schema(producer_name=NAME, context=context)
+        second = build_analysis_response_schema(producer_name=NAME, context=context)
+        expected = copy.deepcopy(second)
+
+        def containers(value):
+            if type(value) is dict:
+                return {id(value)}.union(*(containers(item) for item in value.values()))
+            if type(value) is list:
+                return {id(value)}.union(*(containers(item) for item in value))
+            return set()
+
+        self.assertFalse(containers(first) & containers(second))
+        self.assertFalse(containers(first) & containers(context))
+        alternatives = first['properties']['facts']['items']['properties']['evidence']['items']['anyOf']
+        self.assertFalse(containers(alternatives[0]) & containers(alternatives[1]))
+        alternatives[0]['properties']['path'].clear()
+        first['properties']['context_id']['enum'].clear()
+        self.assertEqual(second, expected)
+        self.assertEqual(raw(context), before)
+
+    def test_schema_two_builder_propagates_first_context_control_identity(self):
+        for kind in (KeyboardInterrupt, SystemExit, GeneratorExit, MemoryError):
+            error = kind('authored control')
+            with self.subTest(kind=kind.__name__), patch('labflow.intake_model_boundary._snapshot', side_effect=error):
+                with self.assertRaises(kind) as observed:
+                    build_analysis_response_schema(producer_name=NAME, context=self.contexts['pdf'])
+                self.assertIs(observed.exception, error)
+                self.assertEqual(vars(error), {})
+
 
 class ResponseSchemaTests(unittest.TestCase):
     def test_neutral_schema_canonical_bytes_match_fixed_literal(self):

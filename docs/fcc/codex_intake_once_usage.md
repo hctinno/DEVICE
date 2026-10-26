@@ -1,6 +1,8 @@
 # Codex 합성 접수 단일 실행
 
-2026-10-25 Asia/Seoul. [고정 설계](../superpowers/specs/2026-10-25-codex-intake-once-design.md), [구현 계획](../superpowers/plans/2026-10-25-codex-intake-once.md), [기계 판독 계약](codex_intake_once_contract.json)을 따르는 수동 Python API다. [모듈](../../labflow/codex_intake_once.py)의 공개 실행 함수는 `run_codex_intake_once` 하나이며, 기존 fixture worker·supervisor·CLI·UI에는 연결하지 않는다.
+2026-10-26 Asia/Seoul. [기존 설계](../superpowers/specs/2026-10-25-codex-intake-once-design.md), [기존 구현 계획](../superpowers/plans/2026-10-25-codex-intake-once.md), [영수증 계약](codex_intake_once_contract.json)을 유지하는 수동 Python API다. 이 문서는 schema2 입력 지원과 순수 preflight를 추가한 규범이다. [모듈](../../labflow/codex_intake_once.py)의 공개 실행 함수는 `run_codex_intake_once` 하나이며, 기존 fixture worker·supervisor·CLI·UI에는 연결하지 않는다.
+
+기계 판독 계약의 초기 schema1 전용 입력 범위는 아래 규범으로 갱신한다. host의 지원 판별에는 순수 preflight 결과를 사용하며, 영수증 exact10·기존 고정 오류 코드는 유지한다.
 
 ## Host가 먼저 제공할 것
 
@@ -10,7 +12,25 @@
 - host가 누적 이력에서 **모델 최대 1회를 먼저 예약**한 예산. 실패·불명·새 프로세스·새 evidence 경로로 이 예약을 초기화하지 않는다. 이 함수는 전역 예산 장부나 승인 체계를 만들지 않는다.
 - 기존의 빈 private native `Path` 디렉터리인 `evidence_root`, native `Path`인 `codex.exe`, 명시한 `gpt-6.1-sol` 또는 `gpt-6-astra` 하나. `timeout_seconds`는 bool이 아닌 유한수이며 `0 < t <= 60`이다.
 
-지원 범위는 분석 schema1의 합성 접수다. 승인 context의 PDF/schema2는 claim 전에 거절한다. 새 모델·다른 실행 파일·임의 문서·다른 Store에 대한 권한으로 확장하지 않는다.
+지원 범위는 읽을 수 있는 schema1 합성 텍스트와, 전체 페이지가 정상 추출된 schema2 합성 PDF 및 혼합 텍스트다. 파일 확장자의 대소문자를 문서 형식 대신 사용하지 않는다. 새 모델·다른 실행 파일·임의 문서·다른 Store에 대한 권한으로 확장하지 않는다.
+
+## 소비 전 순수 입력 검사
+
+`preflight_codex_intake_once_inputs(approved_context, *, producer_name) -> dict`는 Store·원본 파일·parser·장부·모델을 호출하지 않고 동일 요청을 고정한다. 후속 host는 예약 소비 전에 이 검사와 필요한 현재 원본 검증을 수행할 수 있다. 이 API의 `validated`는 입력 지원·구조·바이트 검사 결과이며, 원본 진위·queued 상태·사용 권한·예산을 승인하지 않는다. 승인·누적 예산·실제 claim은 host와 기존 실행 경로의 책임이다.
+
+반환은 exact9다: `schema_version=1`, `kind=codex_intake_once_preflight`, `status`, `context`, `prompt`, `response_schema`, `pins`, `failure`, `execution_authority=False`. `validated`이면 detached context·genuine prompt·응답 schema와 `context_sha256/prompt_sha256/schema_sha256` exact3 pins를 반환하며 failure는 null이다. `blocked`이면 이 네 payload/pins 값은 null이고 failure는 기존의 정제된 고정 오류 코드다. raw 예외·원문은 오류에 넣지 않으며 제어 예외는 원 객체로 전파한다. C1은 UTF-8·키 정렬·공백 없는 canonical JSON이며 prompt는 262144바이트 이하, schema는 65536바이트 이하다.
+
+첫 실행 지원의 품질 규범은 다음과 같다.
+
+- 모든 텍스트는 `parse_status=text`, 비공백 text, issues 없음이어야 한다. 확장 형식이 있으면 `format=text`, `extraction_status=ok`여야 한다.
+- 모든 PDF는 `parse_status=ok`, `complete=True`, `issues=[]`이고 양의 `total_pages=processed_pages=len(pages)`여야 한다. 원래 페이지 순서가 정확히 1..N이며 모든 페이지는 `status=ok`, 비공백 text여야 한다. 기존 검증기가 원 text SHA·line spans를 먼저 검사한다.
+- partial·unread·malformed·빈/누락/잘린 페이지·추출 이슈는 claim/dispatch 전에 `codex_intake_once_unsupported_schema`로 거절한다. 구조·hash·contract 자체가 잘못되면 genuine `analysis_context_invalid` 등 원 고정 오류를 유지한다. 원문·issue·null·순서를 수선하거나 빈 값을 채우지 않는다.
+
+[일반 G3 준비 API](intake_preclaim_context_usage.md)는 unread PDF도 schema2 context로 노출할 수 있다. 일반 prompt/schema helper의 구조 검사와 이 실행용 품질 제한을 구별한다. 이미 완료한 접수를 새로운 queued 작업으로 바꾸거나 permit·예약을 환급하는 기능은 없다.
+
+`build_analysis_response_schema(*, producer_name, context=None)`의 생략/None 기본 호출은 원 schema1 literal·canonical bytes를 보존한다. 명시적으로 검증한 schema1 context도 같은 schema를 반환한다. 검증한 schema2 context만 정확한 `context_id` enum과 닫힌 `text_line/pdf_page` evidence 대안을 만든다. PDF 인용은 원 path/source SHA·extraction ID·page 번호·text SHA·line 범위·literal quote를 요구하며 실제 일치 여부는 genuine strict decoder가 검증한다. schema를 받았다는 사실만으로 의미·인용의 정확성이 확인되지는 않는다.
+
+현재 `codex_registered_intake_host`의 PDF 등록 거절은 유지한다. 공통 once/schema2 연결은 정식 native host의 PDF 지원 완료를 뜻하지 않는다. 이번 단위에서 운영 profile·permit·소비·예약 정책을 변경하지 않는다.
 
 ## 호출과 Store 수명
 
@@ -40,9 +60,9 @@ import 시 실행, CLI entry point, loop/poll/retry, provider callback/registry�
 
 ## 실행 순서와 증거
 
-1. genuine prompt builder와 schema helper로 승인 snapshot을 고정하고 기본 인자·schema1·빈 root를 확인한다. 비밀 없는 `attempt-intent.json`을 배타 기록한다.
+1. 기본 인자·빈 root와 공통 preflight로 승인 public8의 지원·품질·바이트를 확인한다. context/prompt/schema snapshot과 pins를 고정하고 비밀 없는 `attempt-intent.json`을 배타 기록한다.
 2. `claim_job(store, worker_id, synthetic_only=True, lease_seconds=3600)`을 `now` 없이 한 번 호출한다. 정확한 job allowlist 기능은 기존 claim에 없으므로 host의 단일 작업 격리가 필요하다.
-3. 반환 claim에서 public8만 복사해 승인 snapshot 전체와 canonical 값으로 비교한다. 다른 합성 job을 받으면 모델을 호출하지 않고 기존 실패 API를 최대 한 번 사용한다. 소비된 claim attempt는 복구하지 않는다.
+3. 반환 claim에서 public8만 복사해 같은 preflight를 다시 수행한다. context/prompt/schema 전체 canonical 값과 pins가 승인 snapshot과 같아야 한다. 다른 합성 job·원본·추출 결과·producer·schema이면 모델을 호출하지 않고 기존 실패 API를 최대 한 번 사용한다. 소비된 claim attempt는 복구하지 않는다.
 4. fresh genuine builder의 C1 prompt와 genuine helper의 C1 schema를 concrete D2 `produce_codex_cli_response`에 최대 한 번 전달한다. prompt 256KiB·schema 64KiB 상한을 적용한다. D2가 version metadata 최대1·model process 최대1·자동 retry0을 담당한다.
 5. 성공 tuple, complete receipt, 요청 model·producer·prompt/schema SHA, 시도수·정상 lifecycle/cleanup, whole/complete/no-overflow artifact 결합을 검사한다. 정해진 request/schema/final/last 파일은 원 bytes와 대조하고 `receipt.json`은 반환 receipt의 C1 bytes와 같아야 한다. 응답 상한은 2MiB, receipt 상한은 64KiB다. stdout event framing을 다시 해석하지 않는다.
 6. 원 response bytes를 genuine strict decoder에 그대로 넘긴다. 성공하면 token 없는 `job-binding.json`을 **complete 전에** 배타 기록하고 기존 `complete_job`을 `now` 없이 한 번 호출한다. 마지막으로 `caller-receipt.json`을 기록한다.
@@ -76,6 +96,6 @@ KeyboardInterrupt/SystemExit/GeneratorExit/MemoryError는 원 객체를 그대�
 
 ## 검증 범위
 
-[신규 검사](../../tests/test_codex_intake_once.py)는 authored synthetic 입력·폐기 가능한 Store·fake concrete D2만 사용한다. 승인 context 결합, 호출 순서/횟수, 비합성 원자 필터, receipt/artifact 변조, strict 거절, 완료 전후 실패, 제어 예외, lease/token 비노출, Store 수명 보존을 확인한다. 관련 D2·boundary·job·fixture worker 회귀는 별도 suite로 실행한다.
+[검사](../../tests/test_codex_intake_once.py)는 authored synthetic 입력·폐기 가능한 Store·fake concrete D2만 사용한다. 새 queued 대문자 PDF/혼합 TXT의 genuine G3→schema2 prompt→로컬 작성 producer→원 strict 인용→public claim/complete와 unread·partial no-dispatch, 변경된 인용/context/page/schema/hash, 정확한 바이트 상한, 최초 제어 예외와 재호출 경계를 확인한다. fake receipt의 version/model 시도수 선언은 실제 child/model 실행 증거가 아니다. [순수 경계 검사](../../tests/test_intake_model_boundary.py)는 원 기본 schema1 pin과 닫힌 schema2 형상·복사 독립성도 확인한다. 기존 호출 순서/횟수·receipt/artifact 변조·unknown/실패·lease/token 비노출·Store 수명 회귀는 필요한 범위에서 별도 실행한다.
 
 이 구현 검증에서 설치된 CLI·인증·실모델·망·운영 Store·실장비는 실행하지 않는다. 실제 모델 1회는 host가 별도 위임하고 누적 예산에 결합할 후속 검증이다. strict와 DB 완료는 독립 의미 품질, 규정 적용, 실물 시험, 기관 적합성이나 전체 무인 시험소 구현 완료를 입증하지 않는다.

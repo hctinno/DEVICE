@@ -245,6 +245,59 @@ def _finalize(record, root, intent_started):
     return record
 
 
+def preflight_codex_intake_once_inputs(approved_context, *, producer_name) -> dict:
+    """Pure request snapshot/quality/byte checks; no state or execution authority.
+
+    A validated result is still subject to host approval, budget and a fresh
+    public claim. Unread or partial documents remain data in the generic G3
+    path, but are outside this first execution scope. Never repair them here.
+    """
+    result = dict(schema_version=1, kind='codex_intake_once_preflight', status='blocked',
+                  context=None, prompt=None, response_schema=None, pins=None,
+                  failure=None, execution_authority=False)
+    try:
+        if (type(approved_context) is not dict or any(type(key) is not str for key in approved_context) or
+                set(approved_context) != set(_PUBLIC) or approved_context.get('synthetic') is not True):
+            _fail('invalid_input')
+        prompt = build_analysis_prompt(approved_context, producer_name=producer_name)
+        context = json.loads(prompt['messages'][1]['content'])
+        for document in context['documents']:
+            if document.get('format') == 'pdf':
+                pages = document['pages']
+                if (document['parse_status'] != 'ok' or document['complete'] is not True or document['issues'] or
+                        type(document['total_pages']) is not int or document['total_pages'] < 1 or
+                        document['total_pages'] != document['processed_pages'] or document['total_pages'] != len(pages) or
+                        any(page['page_number'] != number or page['status'] != 'ok' or not page['text'].strip()
+                            for number, page in enumerate(pages, 1))):
+                    _fail('unsupported_schema')
+            elif (document.get('format', 'text') != 'text' or document['parse_status'] != 'text' or
+                  not (document['text'] or '').strip() or
+                  document.get('extraction_status', 'ok') != 'ok' or document.get('issues', [])):
+                _fail('unsupported_schema')
+        schema = build_analysis_response_schema(producer_name=producer_name, context=context)
+        prompt_bytes, schema_bytes = _C(prompt), _C(schema)
+        if len(prompt_bytes) > 262144 or len(schema_bytes) > 65536:
+            _fail('invalid_input')
+        result.update(status='validated', context=context, prompt=prompt, response_schema=schema,
+                      pins=dict(context_sha256=_H(_C(context)), prompt_sha256=_H(prompt_bytes),
+                                schema_sha256=_H(schema_bytes)))
+    except _CONTROL:
+        raise
+    except Exception as error:
+        result['failure'] = _code(error, 'validation')
+    return result
+
+
+def _request_inputs(context, producer_name):
+    prepared = preflight_codex_intake_once_inputs(context, producer_name=producer_name)
+    if prepared['status'] != 'validated':
+        code = prepared['failure']
+        if code in _BOUNDARY_CODES:
+            raise ValueError(code)
+        raise _Failure(code[len(_PREFIX):])
+    return prepared
+
+
 def run_codex_intake_once(store, approved_context, *, worker_id, producer_name,
                          executable, requested_model, evidence_root, authorization_ref,
                          timeout_seconds=60.0) -> dict:
@@ -276,21 +329,9 @@ def run_codex_intake_once(store, approved_context, *, worker_id, producer_name,
                 _fail('invalid_input')
         except (OSError, ValueError, TypeError):
             _fail('invalid_input')
-        if (type(approved_context) is not dict or set(approved_context) != set(_PUBLIC) or
-                approved_context.get('synthetic') is not True):
-            _fail('invalid_input')
-        contract = approved_context.get('analysis_contract')
-        documents = approved_context.get('documents')
-        if (type(contract) is dict and type(contract.get('schema_version')) is int and contract['schema_version'] == 2 or
-                type(documents) is list and any(type(d) is dict and d.get('format') == 'pdf' for d in documents)):
-            _fail('unsupported_schema')
-        expected = build_analysis_prompt(approved_context, producer_name=producer_name)
-        context = json.loads(expected['messages'][1]['content'])
-        if context['analysis_contract']['schema_version'] != 1 or any(d.get('format') == 'pdf' for d in context['documents']):
-            _fail('unsupported_schema')
-        schema = _C(build_analysis_response_schema(producer_name=producer_name))
-        if len(_C(expected)) > 262144 or len(schema) > 65536:
-            _fail('invalid_input')
+        approved = _request_inputs(approved_context, producer_name)
+        expected, context = approved['prompt'], approved['context']
+        schema = _C(approved['response_schema'])
         intent_started = True
         _write_new(evidence_root / 'attempt-intent.json', dict(kind='codex_intake_once_intent', authorization_ref=authorization_ref,
                     approved_context_sha256=_H(_C(context)), requested_model=requested_model, producer_name=producer_name))
@@ -314,11 +355,10 @@ def run_codex_intake_once(store, approved_context, *, worker_id, producer_name,
             record['job'] = {key: claim[key] for key in ('job_id', 'intake_id', 'revision', 'attempt')}
             record['phase'] = 'scope'
             public = {key: claim[key] for key in _PUBLIC}
-            if public['analysis_contract']['schema_version'] != 1:
-                _fail('unsupported_schema')
-            fresh = build_analysis_prompt(public, producer_name=producer_name)
-            fresh_context = json.loads(fresh['messages'][1]['content'])
-            if fresh_context['synthetic'] is not True or _C(fresh_context) != _C(context) or _C(fresh) != _C(expected):
+            prepared = _request_inputs(public, producer_name)
+            fresh, fresh_context = prepared['prompt'], prepared['context']
+            if (_C(fresh_context) != _C(context) or _C(fresh) != _C(expected) or
+                    _C(prepared['response_schema']) != schema or prepared['pins'] != approved['pins']):
                 _fail('scope_mismatch')
             prompt = _C(fresh)
             record['binding'] = dict(authorization_ref=authorization_ref, context_sha256=_H(_C(fresh_context)),
