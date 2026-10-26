@@ -2,15 +2,16 @@
 
 ## GOAL-PREHARDWARE-001 — 2026-10-26 명시 재개
 
-사용자의 첨부 Goal 전체를 인수하고 실장비 연결 전 소프트웨어 개발·검증을 재개했다. root `codex/pipeline-dev-20261023-intake`의 `dfc26fe`와 기존 미푸시1·담당 clone·원 실패·private 증거를 보존한다. 일반 개발 채팅/P01 도구는 현재 제공되지 않아 기존 개발1~4/P01의 최신 상태는 미확인이다. 기존 채팅을 재개했다고 주장하지 않고 아래 실제 하위 에이전트 배정을 대체 실행 경로로 사용한다. 원 담당의 중지된 파일은 수정하지 않는다.
+사용자의 첨부 Goal 전체를 인수하고 실장비 연결 전 소프트웨어 개발·검증을 재개했다. root `codex/pipeline-dev-20261023-intake`의 기존 미푸시094e 전달과 재개 문서308e86e는 정상 push·원격 exact 대조했다. 추가 수용 기능은472의 `09f9c74`이며 독립 공개8(typed4/native4)·총괄 native 최초 read/후행 close CONTROL1 PASS와 새 사본6 불변을 확인했다. 담당 clone·원 실패·private 증거를 보존한다. 일반 개발 채팅/P01 도구는 현재 제공되지 않아 기존 개발1~4/P01의 최신 상태는 미확인이다. 기존 채팅을 재개했다고 주장하지 않고 아래 실제 하위 에이전트 배정을 대체 실행 경로로 사용한다. 원 담당의 중지된 파일은 수정하지 않는다.
 
 | 요청 / 담당 경계 | 실제 배정과 배타 소유 | 수용 조건 / 상태 |
 |---|---|---|
-| `DEV12-GOAL-CURRENT-HOST-COMPAT-001` / 기존 접근 가능한 작업자 | 독립 clone에서 7b04·b723·a8f 원 후보를 보존 인수하고 등록 test/usage2만 현재 host 지원에 맞게 수정 | 역사 미지원 음성은 명시 seam, 실제 등록→publish→현재 prepare 양성은 실제 API. RED/GREEN·관련 회귀·전용 branch commit/push·독립 리뷰 필요. 실제 배정됨 |
-| `REVIEW-GOAL-UNCERTAINTY-001` / 기존 독립 검수자 | root dfc + 472/f1d 공개 delta의 별도 clone 검수, 제품 수정 소유0 | 최초 read 실패 보존/None 호환/명시 입력 전달/부적절 shape 경계. 공개 delta 관련 실행만, 원 retained·private expected 수정0. 실제 배정됨 |
-| `DEV3-GOAL-VIRTUAL-DUT-BRIDGE-001` / 신규 하위 구현자 | 새 virtual_dut_bridge core/test/usage3. 기존 VirtualLab/N1914A public API 재사용 | 같은 인스턴스의 설정→측정·손실/stop/무효 전파. opt-in emulator-only ADB read transport는 합성 RF와 구별. 실제 ADB/모델/실물0. 실제 배정됨 |
-| 개발4 후속 / 총괄 다음 슬롯 | a257 원 No·response observation 미구현 clone 보존 | required current 응답 검증 후 keyboard/레이아웃까지 닫는 최소 수정. 아직 재배정하지 않음 |
-| P01 / 단일 수집 창구 | 기존 보유 제어자료·성적서·DUT source를 읽기 전용 재사용 | N1911A와 기존 N1914A subset의 정확 모델 차이, N9030A/FSV40 command/옵션 근거, 실제 Keysight Mock/IDF 배포물 공백을 좁혀 요청할 준비. 도구 부재로 신규 실제 전달0, 기존 수집 재개 여부 미확인 |
+| `DEV12-GOAL-CURRENT-HOST-COMPAT-001` / 기존 접근 가능한 작업자 | 7b04·b723·a8f를 독립 clone에 보존 인수한 뒤 등록 test/usage2 수정 `ced90ea` 전용 branch 게시·원격 대조 | 원 RED를 보존하고 고유30 PASS. 미지원 음성은 명시 seam, 실제 등록→publish→현재 prepare 양성2는 실제 API. 총괄 통합 전 독립 검수 대기 |
+| `REVIEW-GOAL-UNCERTAINTY-001` → `DEV3-GOAL-UNCERTAINTY-ADMISSION-001` | 472는 독립 Yes/root09f9c74 수용. f1d는 전달 계약 Yes/품질 No(P2)로 보존; 별도 작업자가 malformed exact2 top-shape 조기 거절2행+test/usage3을 수정한 `2da3ab5` 게시·원격 대조 | 공개8 PASS와 별도 malformed3 늦은 실행 관측을 구별. 수정은 신규3/기존typed4/관련9 PASS, 실제 RF/model0. 수정 독립 재검수로 연결, f1d는 아직 root 미통합 |
+| `DEV3-GOAL-VIRTUAL-DUT-BRIDGE-001` → `REVIEW-GOAL-VIRTUAL-DUT-BRIDGE-001` | 신규 bridge3 `1a693fe` 게시·원격 대조, 작성자 신규19/관련53 PASS. 독립 검수에서 자식/reader/pipe 정리 P2 2건 확인 | 독립 Decimal80·동일 lab/경로/stop/stale는 별도 확인. timeout 외 CONTROL과 inherited EOF 정리 문제가 있어 root 미수용. `DEV3-GOAL-VIRTUAL-DUT-CLEANUP-001` 수정 브리프 준비, 담당 다음 슬롯에 연결 |
+| `DEV3-GOAL-N1911A-FLEET-SCPI-001` / 신규 하위 구현자 다음 작업 | 정확 root09f9c74의 새 독립 clone에서 N1911A session/test/usage 신규3을 실제 배정 | 기존 정확 N1911A Fleet meter와 같은 runtime 재사용. 확보된 Edition21 PDF bytes/SHA를 root 읽기 대조했고 재수집0. 모델별 문법/취득/단위/오류 subset 구현, N1914A alias·실물 지원 승격0 |
+| `DEV4-GOAL-CURRENT-QUESTIONS-RESPONSE-001` / 기존 작업자의 다음 작업 | a257 원 No·중지 fix clone을 보존하고 새 clone의 browser helper/usage2 수정 실제 배정 | required current 응답 보존/검증 뒤 keyboard/레이아웃까지 진행. typed 후 새 genuine390≤1, 실제 RF/모델0. 실패 cap을 리셋하지 않음 |
+| P01 / 단일 수집 창구 | 기존 보유 제어자료·성적서·DUT source를 읽기 전용 재사용 | N1911A 모델별 기존 metadata와 retained PDF를 재사용할 수 있어 재수집 불필요. N9030A/FSV40 적용성·실제 Keysight Mock/IDF 배포물의 잔여 공백만 좁힐 예정. 도구 부재로 신규 실제 전달0, 기존 수집 재개 여부 미확인 |
 
 공통 계약은 기존 source6/plan6/setup8/measurement_ref/같은 run·runtime·결과 계보를 유지한다. 신규 bridge는 가상 DUT 상태를 복제하지 않고 같은 VirtualLab public API로만 연결한다. 실제 ADB 통신, synthetic RF 제어, 실제 OEM/AnyWay RF 제어의 근거를 혼합하지 않는다. 원 수치·규범 한계·권한이 미확정이면 null/미평가로 유지한다.
 
