@@ -1,5 +1,23 @@
 # 등록 합성 conducted workflow의 native host
 
+## 정식 등록 v3와 실제 host 준비면의 호환 — 2026-10-26
+
+DEV2-CURRENT-REGISTRATION-PREPARE-COMPAT-001은 원 host 후보7b04f32의 새 독립 clone/branch에서 이 usage와 기존 host test2만 소유한다. 개발1 후보 b7230c54edf421ece4a169c563e28b5e83eb8e1c의 registration3은 892ee055로 dependency 정상 cherry-pick했으며 원 bytes를 그대로 유지한다. host core32893B/SHA93f410f4와 원 ERS·H+tail·v1/v2·summary12/finalization5·sole genuine1도 변경하지 않는다. 원 host 후보와 이 최소 회귀의 독립/통합 수용은 별개다.
+
+공개 등록 ABI는 prepare_registered_conducted_workflow(*,scenario_id,requested_model)다. 제공 prepared-data schema3 exact16/context_scope completed_current_provided/ref null/명시 policy를 실제 검증하고 native stage를 작성한 뒤, 원 실제 _prepare(root,config,scenario,owned)의 5tuple/current3·원 native Store를 대조해 배타 게시한다. 새 회귀는 공개된 RegistrationTests의 disposable TXT 준비 경계만 재사용한다. operator-parent 위치를 AUTHORED 폴더로 치환하고 실제 권위/data 함수·native SQL/fsync/publish·실제 host 준비면을 실행한다. 이는 운영 계정·실제 승인·KnownFolder profile의 진위를 검증한 것이 아니다.
+
+의미있는 RED는 공개 git의 parent7b 등록 source 원bytes26816B/SHAce86c8cb를 private 제어명으로 읽기 전용 로드해 같은 metadata16을 거절시키는 의존성 기준선이다. RED1/0.269초는 target/stage/host 진입 전 not_prepared이며 원 prefix를 보존한다. b723 파일을 고치거나 실제 host를 정답 callback으로 교체한 결과가 아니다.
+
+동일한 TXT 내용의 새 AUTHORED disposable 경계에서 실제 b723+7b 연결2가1.033초/exit0 PASS했다. 양성은 metadata16→workflow3 exact14→native publish→staging 실제 _prepare1+게시 후 실제 _prepare1을 실행해 원5tuple/context/analysis/plan/schema와 owned.current_facts_plan exact3/completed_scope를 대조했다. 정확 등록 Store root와 각 known owned close1, 원5SHA·current/원queued C1 구별, 원 Store/source bytes·SHA/dev/inode/nlink/size/mtime/ctime/attributes 불변을 확인했다. control SQL은 baseline/permit2로 미소비이고 runs 폴더는 비어 있다. 음성은 제공 analysis만 달리하면 actual current/data gate가 staging/target/host 준비 전에 거절한다. 이2개를 원 등록13의 typed-host 양성/구형 host 거절 모집단에 합산하지 않는다.
+
+```powershell
+python -B -X utf8 tests/test_codex_registered_conducted_workflow_host.py --registration-compat -v
+```
+
+원 host test74개 메서드 AST·core·registration3·다른 소유를 보존하고 새 클래스2검사는 표준 discovery에도 선택된다. 실제 loop/가상 RF runtime/CLI/모델·추가 genuine·운영17/profile/permit/새 승인·공유/peer/agent는0이다. product 준비 동안 Store 초기화·실행·finalizer·CLI 진입도 거절하는 경계를 둔다. private `.local/CRPC-001/`에 source/ABI·parent 의존성 RED·actual GREEN·native 원형을 보존한다. 기존 WCH 원 seed/genuine/profile/로그를 복제해 수선하거나 다시 실행하지 않는다.
+
+미실행 기대 부채도 구별한다. b723의 test_completed_unfinished_real_host_remains_dependency_pending은 당시 구형 host 거절을 기대한 원 검사이며 이 새 host3 조합에서는 그 가정이 바뀐다. registrar test는 개발1 소유라 원형을 유지하고 실행하지 않았다. 해당 기대의 버전별 제어/후속 정리는 개발1·총괄이 담당하며, 이 연결2 PASS를 등록 전체 suite PASS로 표시하지 않는다. actual readonly current 독립 검수·D3 readback/export·PDF·실제AI/실측/규범/현장·전체 업무는 각각 별도 수용이다.
+
 ## 최초 오류 보존 보완 — 2026-10-26
 
 DEV2-WORKFLOW-HOST-FIRST-FAILURE-FIX-001은 정확226 base의 별도 clone/branch에서 host/test/usage3만 수정한다. completed-current WIP는 다른 clone에 그대로 동결하며 이 수정에 포함하지 않는다. 기존 _run.error는 최초 ordinary 오류가 있어도 후행 CONTROL을 마지막에 전파해 이미 만든 최초 실패 DTO를 가리는 문제가 있다. ordinary/CONTROL 여부와 관계없이 첫 오류 원객체 하나를 보존하고, 그 객체가 CONTROL인 경우에만 마지막에 그대로 전파하는 최소 수정이다. receipt 필드·정상 v1/v2 dispatch/permit/anchor/원 실행 경로는 바꾸지 않는다.
