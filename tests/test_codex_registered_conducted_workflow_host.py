@@ -1031,6 +1031,7 @@ class RegistrationPrepareCompatibilityTests(unittest.TestCase):
         from test_codex_conducted_workflow_registration import RegistrationTests,api as registrar
         self.registrar=registrar if _REGISTRATION_COMPAT_API is None else _REGISTRATION_COMPAT_API
         self.fixture=RegistrationTests('test_pure_preflight_is_detached_and_not_authority')
+        self.fixture.source_suffix=getattr(self,'source_suffix','.txt')
         self.fixture._testMethodName='actual_host_compat_'+self._testMethodName
         self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
         self.queued_context=json.loads(C(self.fixture.context));self.fixture.make_completed_inputs()
@@ -1039,7 +1040,7 @@ class RegistrationPrepareCompatibilityTests(unittest.TestCase):
 
     def snapshot(self):
         helper=self.fixture;result={}
-        paths=[p for p in helper.store_root.rglob('*') if p.is_file()]+[helper.root/'i/b/r.txt']
+        paths=[p for p in helper.store_root.rglob('*') if p.is_file()]+[helper.original]
         for path in paths:
             raw=path.read_bytes();s=path.stat(follow_symlinks=False)
             result[path.relative_to(helper.root).as_posix()]=dict(bytes=len(raw),sha256=H(raw),device=s.st_dev,inode=s.st_ino,
@@ -1109,6 +1110,56 @@ class RegistrationPrepareCompatibilityTests(unittest.TestCase):
         self.assertFalse(helper.stage.exists());self.assertFalse(helper.target.exists());self.assertEqual(self.snapshot(),before)
         helper.put(helper.root/'before-target-rejection.json',dict(result=result,source_before=before,source_after=self.snapshot(),
             host_prepare_calls=0,native_target_created=False,actual_loop_RF_models=0))
+
+
+class RegistrationPdfPrepareCompatibilityTests(RegistrationPrepareCompatibilityTests):
+    source_suffix='.pdf'
+
+    def setUp(self):
+        super().setUp()
+        helper=self.fixture;document=helper.context['documents'][0]
+        self.assertEqual((document['format'],document['total_pages'],len(document['pages'])),('pdf',1,1))
+        self.assertEqual(helper.analysis['schema_version'],2)
+        self.assertEqual(helper.analysis['context_id'],helper.context['analysis_context_id'])
+        self.assertEqual(H(helper.original.read_bytes()),document['sha256'])
+        self.assertTrue(all(e['kind']=='pdf_page' for f in helper.analysis['facts'] for e in f['evidence']))
+        store=Store.open_existing(str(helper.store_root))
+        try:
+            with store.connection() as con:
+                self.assertEqual(con.execute("SELECT count(*) FROM intake_jobs WHERE state IN ('queued','running')").fetchone()[0],0)
+                self.assertEqual(con.execute("SELECT state FROM intake_jobs").fetchone()[0],'completed')
+                self.assertEqual(con.execute("SELECT delegated FROM intakes").fetchone()[0],1)
+        finally:store.close()
+
+
+class CurrentUnsupportedSourceTests(unittest.TestCase):
+    def test_completed_current_host_and_registrar_reject_markdown_before_current_read(self):
+        from test_codex_conducted_workflow_registration import RegistrationTests,api as registrar
+        helper=RegistrationTests('test_pure_preflight_is_detached_and_not_authority')
+        helper.source_suffix='.md';helper._testMethodName=self._testMethodName
+        helper.setUp();self.addCleanup(helper.doCleanups)
+        helper.meta.update(schema_version=3,context_scope='completed_current_provided',measurement_ref=None,
+            measurement_selection_policy=dict(schema_version=1,kind='unique_same_run_sensor_acquisition'))
+        helper.bind()
+        result=helper.call();self.assertEqual(result['status'],'not_prepared')
+        self.assertEqual(result['errors'][0]['code'],'codex_conducted_workflow_registration_unsupported_schema')
+        workflow=dict(schema_version=3,kind='codex_registered_conducted_workflow',scenario_id='REG-CASE',
+            context_scope='completed_current_provided',context_sha256=H(C(helper.context)),
+            analysis_sha256=H(C(helper.analysis)),plan_input_sha256=H(C(helper.plan)),source_settings=helper.plan['plan']['source_settings'],
+            quantity=helper.q,allowed_tools=helper.meta['allowed_tools'],measurement_ref=None,
+            measurement_selection_policy=helper.meta['measurement_selection_policy'],catalog_sha256=helper.meta['files']['catalog.json']['sha256'],
+            schema_sha256=helper.meta['files']['response-schema.json']['sha256'])
+        helper.put(helper.data/'registered-workflow.json',workflow)
+        config=dict(workflow_sha256=H(C(workflow)),registration_sha256=helper.meta['files']['registered-intake-v1.json']['sha256'],
+            registered_input_root=helper.meta['registered_input_root'],store_root=str(helper.store_root))
+        owned=dict(store=None)
+        try:
+            with self.assertRaisesRegex(ValueError,'codex_registered_conducted_workflow_host_unsupported_schema'):
+                api._prepare(helper.data,config,'REG-CASE',owned)
+            self.assertIsNone(owned['store'])
+        finally:
+            if owned['store'] is not None:owned['store'].close()
+        self.assertFalse(helper.stage.exists());self.assertFalse(helper.target.exists())
 
 
 if __name__=='__main__':

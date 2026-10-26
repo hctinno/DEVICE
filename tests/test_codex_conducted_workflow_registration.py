@@ -17,7 +17,7 @@ import uuid
 
 ROOT=Path(__file__).resolve().parents[1];sys.path[:0]=[str(ROOT),str(ROOT/'tests')]
 from labflow.active_intake import register_source,scan_source
-from labflow.intake_jobs import prepare_registered_synthetic_context,claim_job,complete_job
+from labflow.intake_jobs import prepare_registered_synthetic_context,claim_job,complete_job,respond
 from labflow.intake_model_boundary import decode_analysis_response
 from labflow.intake_facts_to_conducted_plan import build_conducted_plan_from_intake_facts
 from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
@@ -92,7 +92,17 @@ class RegistrationTests(unittest.TestCase):
         inbox=self.root/'i';bundle=inbox/'b';bundle.mkdir(parents=True)
         lines=['product_type: smartphone','model: SM-A176U','market: US','purpose: synthetic conducted engineering',
             'frequency: 2412 MHz; bandwidth: 20 MHz; on_average_power: 11 dBm; duty_cycle: 50 %; modulation: OFDM; crest_factor: 4 dB']
-        (bundle/'r.txt').write_text('\n'.join(lines)+'\n',encoding='utf-8',newline='\n')
+        suffix=getattr(self,'source_suffix','.txt')
+        self.original=bundle/('r'+suffix)
+        if suffix=='.pdf':
+            from io import BytesIO
+            from reportlab.pdfgen import canvas
+            stream=BytesIO();document=canvas.Canvas(stream,invariant=1,pageCompression=0)
+            cursor=document.beginText(36,760);cursor.setFont('Helvetica',6);cursor.setLeading(12)
+            for line in lines:cursor.textLine(line)
+            document.drawText(cursor);document.showPage();document.save()
+            self.original.write_bytes(stream.getvalue())
+        else:self.original.write_text('\n'.join(lines)+'\n',encoding='utf-8',newline='\n')
         self.store_root=self.root/'s';store=Store(self.store_root)
         try:
             register_source(store,'REG-SYN',inbox,synthetic=True,settle_seconds=1)
@@ -103,8 +113,12 @@ class RegistrationTests(unittest.TestCase):
                 revision_fingerprint=rev['fingerprint'],files=json.loads(rev['files_json']))
             self.context=prepare_registered_synthetic_context(store,selection,producer_name='SCRIPTED-REG-MOCK')
             doc=self.context['documents'][0]
-            def fact(field,value,line):return dict(field=field,value=value,status='explicit',evidence=[dict(path=doc['path'],sha256=doc['sha256'],line_start=line,line_end=line,quote=lines[line-1],role='request')])
+            def fact(field,value,line):
+                evidence=dict(path=doc['path'],sha256=doc['sha256'],line_start=line,line_end=line,quote=lines[line-1],role='request')
+                if suffix=='.pdf':evidence.update(kind='pdf_page',extraction_id=doc['extraction_id'],page_number=1,text_sha256=doc['pages'][0]['text_sha256'])
+                return dict(field=field,value=value,status='explicit',evidence=[evidence])
             raw=dict(schema_version=1,producer=dict(kind='model',name='SCRIPTED-REG-MOCK'),identity='single',missing_fields=[],facts=[fact('product_type','smartphone',1),fact('model','SM-A176U',2),fact('market','US',3),fact('purpose','synthetic conducted engineering',4),fact('features',lines[4],5)])
+            if suffix=='.pdf':raw.update(schema_version=2,context_id=self.context['analysis_context_id'])
             self.analysis=decode_analysis_response(C(raw),self.context,producer_name='SCRIPTED-REG-MOCK')
             out=build_conducted_plan_from_intake_facts(self.context,self.analysis,expected_revision=1,expected_context_sha256=H(C(self.context)),
                 method=dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
@@ -142,7 +156,13 @@ class RegistrationTests(unittest.TestCase):
         """Genuine disposable completion; never make a completed row queued again."""
         store=Store.open_existing(str(self.store_root))
         try:
+            if getattr(self,'source_suffix','.txt')=='.pdf':
+                response=respond(store,'AUTHORED-PDF-PROCEED','proceed',intake_id=self.context['intake_id'])
+                self.assertEqual(response['status'],'recorded')
             job=claim_job(store,'completed-registration-fixture',now=102)
+            if getattr(self,'source_suffix','.txt')=='.pdf':
+                claimed={key:job[key] for key in self.context}
+                self.analysis=decode_analysis_response(C(self.analysis),claimed,producer_name='SCRIPTED-REG-MOCK')
             # The same already-decoded authored response belongs to this job;
             # a convenience text provider would omit its non-FIELDS RF line.
             complete_job(store,job['job_id'],job['token'],self.analysis,now=103)
@@ -609,6 +629,54 @@ class RegistrationTests(unittest.TestCase):
 
     def first_failure_ordinary_sql_sync_survives_later_memory_error(self):
         self.first_failure_sql_sync_before_directory_control(MemoryError('AUTHORED_LATER_DIRECTORY_CONTROL'))
+
+
+class CompletedPdfRegistrationTests(unittest.TestCase):
+    """Native PDF extraction, strict schema2 completion, then real registration."""
+    def setUp(self):
+        self.fixture=RegistrationTests('test_pure_preflight_is_detached_and_not_authority')
+        self.fixture.source_suffix='.pdf';self.fixture._testMethodName=self._testMethodName
+        self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
+        self.fixture.make_completed_inputs()
+
+    def rejected(self):
+        helper=self.fixture
+        result=helper.call()
+        self.assertEqual(result['status'],'not_prepared')
+        self.assertFalse(helper.stage.exists());self.assertFalse(helper.target.exists())
+        self.assertEqual(result['verification']['dispatch'],'not_invoked')
+        return result
+
+    def test_pdf_wrong_page_citation_rejected_by_native_decoder_and_registration(self):
+        helper=self.fixture;bad=copy.deepcopy(helper.analysis)
+        bad['facts'][0]['evidence'][0]['text_sha256']='0'*64
+        with self.assertRaises(ValueError):decode_analysis_response(C(bad),helper.context,producer_name='SCRIPTED-REG-MOCK')
+        helper.meta['files']['analysis.json']=helper.put(helper.data/'analysis.json',bad);helper.bind()
+        self.assertEqual(self.rejected()['errors'][0]['code'],'codex_conducted_workflow_registration_binding_mismatch')
+
+    def test_pdf_wrong_analysis_schema_rejected_before_publication(self):
+        helper=self.fixture;bad=copy.deepcopy(helper.analysis);bad['schema_version']=1
+        helper.meta['files']['analysis.json']=helper.put(helper.data/'analysis.json',bad);helper.bind()
+        self.rejected()
+
+    def test_pdf_original_source_drift_rejected_without_replacing_retained_pdf(self):
+        helper=self.fixture;retained=helper.context['documents'][0]['sha256']
+        helper.original.write_bytes(helper.original.read_bytes()+b'\nAUTHORED_DRIFT')
+        self.rejected()
+        store=Store.open_existing(str(helper.store_root))
+        try:self.assertEqual(H(store.verify_blob(retained).read_bytes()),retained)
+        finally:store.close()
+
+    def test_pdf_does_not_enable_legacy_queued_schema1_or_schema2(self):
+        helper=self.fixture;helper.meta.pop('context_scope')
+        for version in (1,2):
+            helper.meta['schema_version']=version
+            if version==1:
+                helper.meta.pop('measurement_selection_policy',None);helper.meta['measurement_ref']='event:17'
+            else:
+                helper.meta['measurement_ref']=None
+                helper.meta['measurement_selection_policy']=dict(schema_version=1,kind='unique_same_run_sensor_acquisition')
+            helper.bind();self.rejected()
 
 
 if __name__=='__main__':

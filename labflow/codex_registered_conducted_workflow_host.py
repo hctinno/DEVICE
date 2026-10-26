@@ -248,6 +248,8 @@ def _prepare(root,config,scenario,owned):
     files=manifest['registered_intake']['files']
     if type(files) is not list or len(files)>192 or sum(item['bytes'] for item in files)>33554432:_fail('evidence_limit')
     selection=_native_host._registration(root,config,scenario)
+    if workflow['schema_version']==3:
+        if any(Path(row['path']).suffix.lower() not in ('.txt','.pdf') for row in selection['files']):_fail('unsupported_schema')
     analysis_raw=_read(root/'analysis.json',262144);plan_raw=_read(root/'plan-input.json',262144)
     if _H(analysis_raw)!=workflow['analysis_sha256'] or _H(plan_raw)!=workflow['plan_input_sha256']:_fail('binding_mismatch')
     analysis,plan=_json(analysis_raw),_json(plan_raw)

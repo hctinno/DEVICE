@@ -1,5 +1,22 @@
 # Conducted workflow의 수동 operator 준비
 
+## 완료 current PDF 연결 — 2026-10-26
+
+DEV1-GOAL-COMPLETED-PDF-001은 기준 b92af6eb2080d273bf98f50222a182d663a87c7b에서 명시 schema3 `completed_current_provided` 등록에 TXT와 PDF만 허용한다. 아래 최초 v3의 TXT 한정 설명은 당시 이력이다. schema1/2 분기, metadata exact16·workflow exact14, 권위·계보·원17/추가8·180초/60초/retry0·원 literal 응답 schema는 변경하지 않는다. `.md` 등 다른 형식이나 단순 확장자 검사 제거를 지원하지 않는다.
+
+PDF는 원 파일과 SHA를 유지한 채 기존 native 등록 검증, 실제 PDF parser/retained extraction, schema2 page citation, current-context/analysis/facts-plan/source binding을 통과해야 한다. 동일 Store의 완료 job·현재 revision/source·ready plan과 active queued/running0을 요구하며 등록 전후 재대조도 유지한다. PDF를 TXT로 바꾸거나 preflight 성공만으로 host 준비를 대체하지 않는다. host에도 schema3의 TXT/PDF 허용 목록을 명시한다. 기준 host에는 별도 확장자 guard가 없었다.
+
+새 authored 한 페이지 PDF를 genuine scan → proceed → claim → strict schema2 decoder → complete로 준비했다. 공개 등록 API가 실제 native staging/게시를 수행하고 원 host `_prepare`를 staging과 게시 후 각각 한 번 호출해 5tuple을 확인한다. 원본 PDF·Store 전체 bytes/native metadata는 전후 동일하다. PDF 양성1·제공 분석 불일치1, 인용/분석 schema/원본 drift/완료 PDF의 legacy 분기 거절4, 다른 파일형식의 등록/host 거절1, 기존 TXT 회귀2가 통과했다. 등록기 TXT guard에 의한 양성 RED와 host 형식 guard 부재 RED를 보존했다.
+
+```powershell
+python -B -X utf8 -m unittest discover -s tests -p test_codex_registered_conducted_workflow_host.py -k RegistrationPdfPrepareCompatibilityTests -v
+python -B -X utf8 -m unittest discover -s tests -p test_codex_conducted_workflow_registration.py -k CompletedPdfRegistrationTests -v
+python -B -X utf8 -m unittest discover -s tests -p test_codex_registered_conducted_workflow_host.py -k CurrentUnsupportedSourceTests -v
+python -B -X utf8 -m unittest discover -s tests -p test_codex_registered_conducted_workflow_host.py -k RegistrationPrepareCompatibilityTests -v
+```
+
+운영자 위치와 위임 record는 일회용 test 경계다. 실제 KnownFolder·운영 permit·CLI/모델·실장비·고객 자료·원17 기록·사용량/token ledger는 읽거나 변경하지 않았다. 실제 모델 호출은0이며 이 검증은 운영 권한 발급·실측·실제 모델 능력의 증거가 아니다. 전체 suite는 이번 좁은 검증 분모에 포함하지 않는다.
+
 ## 완료 current 제공 등록 v3 — 2026-10-26
 
 DEV1-COMPLETED-CURRENT-REGISTRATION-001은 공개512ba0fb65c8ca0510f4196388bc038e3b6c64a0의 독립 clone/전용 branch에서 기존 registration core/test/usage3만 확장한다. 아래 v1/v2 및 최초 오류 기록은 당시 이력이다. public API 두 개와 CLI 인자, 반환 exact11, 원 `_FILES`5, trusted 위임 exact8, control/anchor/permit/ledger 및 `_LIMITS`는 그대로다. 새 위임·전역 예산·자동 승인값을 만들지 않는다.
