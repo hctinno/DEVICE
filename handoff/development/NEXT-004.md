@@ -7,13 +7,15 @@
 | 요청 / 담당 경계 | 실제 배정과 배타 소유 | 수용 조건 / 상태 |
 |---|---|---|
 | `DEV12-GOAL-CURRENT-HOST-COMPAT-001` / 기존 접근 가능한 작업자 | 7b04·b723·a8f를 독립 clone에 보존 인수한 뒤 등록 test/usage2 수정 `ced90ea` 전용 branch 게시·원격 대조 | 원 RED를 보존하고 고유30 PASS. 미지원 음성은 명시 seam, 실제 등록→publish→현재 prepare 양성2는 실제 API. 총괄 통합 전 독립 검수 대기 |
-| `REVIEW-GOAL-UNCERTAINTY-001` → `DEV3-GOAL-UNCERTAINTY-ADMISSION-001` | 472는 독립 Yes/root09f9c74 수용. f1d는 전달 계약 Yes/품질 No(P2)로 보존; 별도 작업자가 malformed exact2 top-shape 조기 거절2행+test/usage3을 수정한 `2da3ab5` 게시·원격 대조 | 공개8 PASS와 별도 malformed3 늦은 실행 관측을 구별. 수정은 신규3/기존typed4/관련9 PASS, 실제 RF/model0. 수정 독립 재검수로 연결, f1d는 아직 root 미통합 |
+| `REVIEW-GOAL-UNCERTAINTY-001` → `DEV3-GOAL-UNCERTAINTY-ADMISSION-001` | 472는 독립 Yes/root09f9c74 수용. 원 f1d No(P2)는 보존하고 exact2 조기 거절2행의 `2da3ab5`를 독립 재검수4 Yes 뒤 정상 인수 | root d709d93/59a4893. 총괄 신규 admission3 PASS 및 새 합성 PDF→MOCK5/runtime1→native 결과/DRAFT/선언 불확도 부록→현재 artifact readback matched1 확인. 원 한계/null·실제 AI0 유지 |
 | `DEV3-GOAL-VIRTUAL-DUT-BRIDGE-001` → `REVIEW-GOAL-VIRTUAL-DUT-BRIDGE-001` | 신규 bridge3 `1a693fe` 게시·원격 대조, 작성자 신규19/관련53 PASS. 독립 검수에서 자식/reader/pipe 정리 P2 2건 확인 | 독립 Decimal80·동일 lab/경로/stop/stale는 별도 확인. timeout 외 CONTROL과 inherited EOF 정리 문제가 있어 root 미수용. `DEV3-GOAL-VIRTUAL-DUT-CLEANUP-001` 수정 브리프 준비, 담당 다음 슬롯에 연결 |
-| `DEV3-GOAL-N1911A-FLEET-SCPI-001` / 신규 하위 구현자 다음 작업 | 정확 root09f9c74의 새 독립 clone에서 N1911A session/test/usage 신규3을 실제 배정 | 기존 정확 N1911A Fleet meter와 같은 runtime 재사용. 확보된 Edition21 PDF bytes/SHA를 root 읽기 대조했고 재수집0. 모델별 문법/취득/단위/오류 subset 구현, N1914A alias·실물 지원 승격0 |
+| `DEV3-GOAL-N1911A-FLEET-SCPI-001` / 신규 하위 구현자 다음 작업 | 정확 root09f9c74의 독립 clone에서 session/test/usage 신규3 `0008a4c` 구현·전용 branch 게시·원격 대조 | 작성자19/계측42/integration22 PASS, 같은 정확 N1911A/Fleet 상태·획득/단위/window/FIFO 연결. Edition21 PDF 재사용·재수집0. 다른 담당의 독립 검수로 연결하며 아직 root 미수용 |
 | `DEV4-GOAL-CURRENT-QUESTIONS-RESPONSE-001` / 기존 작업자의 다음 작업 | a257 원 No·중지 fix clone을 보존하고 새 clone의 browser helper/usage2 수정 실제 배정 | required current 응답 보존/검증 뒤 keyboard/레이아웃까지 진행. typed 후 새 genuine390≤1, 실제 RF/모델0. 실패 cap을 리셋하지 않음 |
 | P01 / 단일 수집 창구 | 기존 보유 제어자료·성적서·DUT source를 읽기 전용 재사용 | N1911A 모델별 기존 metadata와 retained PDF를 재사용할 수 있어 재수집 불필요. N9030A/FSV40 적용성·실제 Keysight Mock/IDF 배포물의 잔여 공백만 좁힐 예정. 도구 부재로 신규 실제 전달0, 기존 수집 재개 여부 미확인 |
 
 공통 계약은 기존 source6/plan6/setup8/measurement_ref/같은 run·runtime·결과 계보를 유지한다. 신규 bridge는 가상 DUT 상태를 복제하지 않고 같은 VirtualLab public API로만 연결한다. 실제 ADB 통신, synthetic RF 제어, 실제 OEM/AnyWay RF 제어의 근거를 혼합하지 않는다. 원 수치·규범 한계·권한이 미확정이면 null/미평가로 유지한다.
+
+통합59a4893의 새 전체 합성 검증1은 로컬 `.local/gp/u01`에 보존했다. scripted PDF 분석→MOCK producer5→동일 가상 runtime1→raw −19.5dBm/선언 손실30.5dB/보정11dBm→결과·DRAFT·완료 marker를 확인했다. 선언 성분0.3/0.4dB의 독립 Decimal80 RSS0.5·k2 확장1.0은 DRAFT 부록만 계산되며 원 result uncertainty=null/applied=false·conformity not_assessed다. 후속 실제 current/artifact 읽기는 matched이며 새 입력/출력131파일의 SHA가 전후 같았다. 이는 작성된 합성 입력/모의 AI의 코드·계산 통합 증거이고 실제 AI 계획·업무 품질·규범 판정·물리 정확도 증거가 아니다. 기존 R38/DU 원본을 재실행하거나 수정하지 않았다.
 
 사전 충돌 검토: 등록 test/usage2와 불확도 finalizer/workflow3, 신규 bridge3은 파일 소유가 겹치지 않는다. 7b04/b723/a8f는 정상 cherry 후 원 후보와 새 호환 delta를 구별한다. 불확도 검수자는 source 수정0이다. 병렬 구현을 금지하는 일반 스킬 문구보다 사용자의 명시 병렬·독립 clone 지시를 우선한다. 소진 예산을 총괄 판단으로 늘릴 수 있다는 일반 스킬 문구는 적용하지 않고 사용자 누적 한도를 유지한다. 변경 규모에 맞는 검증을 사용하고 새 봉인/검사 도구만 반복 개발하지 않는다.
 
