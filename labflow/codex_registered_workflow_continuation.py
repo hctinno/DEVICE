@@ -67,7 +67,7 @@ def _history(io,root,anchor,config):
             if primary is None:raise
 
 
-def _failed_execution(io,evidence,events,model,workflow):
+def _failed_execution(io,evidence,events,model,workflow,original_schema_sha):
     finished=events['finished']
     raw=io.read(evidence/'execution-receipt.json',262144)
     _same(_pin(raw),finished['execution_receipt']);execution=_host._json(raw)
@@ -85,8 +85,16 @@ def _failed_execution(io,evidence,events,model,workflow):
     if actual!=1 or not cleanup:_fail('original_spending_unknown')
     _same(pins,finished['producer_receipts'])
     loop=execution['loop'];steps=loop['steps']
+    # The retained failure must have used the exact historical profile that
+    # _prepare verified, even when its own receipt/ledger pins agree internally.
+    _same(original_schema_sha,workflow['schema_sha256'])
+    _same(loop['declaration'],dict(goal_kind='acquire_fresh_rf_sensor',scope='rf_sensor_proposal_v1',
+        scenario='normal',requested_model=model,producer_name='dgm-virtual-operator-v1',
+        catalog_sha256=workflow['catalog_sha256'],schema_sha256=original_schema_sha,
+        origin_declaration='actual_cli'))
     if len(steps)!=1 or loop['budget']['producer_calls_started']!=1:_fail('original_failure_not_eligible')
     step=steps[0];receipt=step['producer']['receipt']
+    _same(receipt['bindings']['schema_sha256'],original_schema_sha)
     io.read(evidence/'loop/calls/0001/producer/receipt.json',262144)
     lifecycle=receipt['lifecycle']
     if (receipt['status']!='failed' or receipt['failure']!=dict(code='codex_cli_response_stream_invalid',phase='collect')
@@ -200,9 +208,10 @@ def continue_registered_workflow(*,scenario_id,requested_model):
         selection=_host._native_host._registration(root,config,scenario_id)
         _same(_host._completed_scope(owned['store'],selection,config),owned['completed_scope'])
         closing=owned['store'];owned['store']=None;closing.close()
-        result['phase']='original_failure';old_execution,elapsed=_failed_execution(io,evidence,events,requested_model,workflow)
         from .virtual_fleet.operator_response_schema import current_response_schema_bytes,CURRENT_SCHEMA_SHA256,LEGACY_SCHEMA_SHA256
         if _H(historical_schema)!=LEGACY_SCHEMA_SHA256:_fail('original_schema_not_legacy')
+        result['phase']='original_failure';old_execution,elapsed=_failed_execution(
+            io,evidence,events,requested_model,workflow,_H(historical_schema))
         schema=current_response_schema_bytes()
         result['phase']='manual_record'
         manual_raw,manual=_manual_record(io,operator,source_raw,publication_raw,config,workflow,events,scenario_id,requested_model,CURRENT_SCHEMA_SHA256)

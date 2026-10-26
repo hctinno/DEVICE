@@ -41,7 +41,7 @@ API는 권위 파일을 만들지 않는다. 총괄이 기존 직접 사용자 g
 
 `original`은 journal_id, permit_id, workflow_sha256, registration_sha256, finished_sha256(원 finished canonical bytes SHA), execution_receipt, finalizer_receipt, producer_receipts exact8이다. receipt 세 필드는 원 finished row의 원형을 재사용한다. `case`는 scenario_id, requested_model, context_sha256, analysis_sha256, plan_input_sha256, source_settings_sha256(canonical source6 SHA), catalog_sha256 exact7이다. 원 scope나 같은 case를 새 위임으로 변환하지 않는다.
 
-original publication의 초기 SQL2행 pin과 현재 SQL finished5는 구별한다. 초기 SQL pin을 현재와 같다고 주장하지 않는다. 원 publication의 나머지 profile 파일·원 prepared metadata/source pin·원 claimed/reserved/consumed/finished 계보를 확인하고 SQL은 mode=ro/query_only로만 읽는다. 원 response schema는 legacy exact bytes/hash이며 새 loop는 논리 동치 current schema만 사용한다. old/current bytes와 hash가 섞이면 거절한다.
+original publication의 초기 SQL2행 pin과 현재 SQL finished5는 구별한다. 초기 SQL pin을 현재와 같다고 주장하지 않는다. 원 publication의 나머지 profile 파일·원 prepared metadata/source pin·원 claimed/reserved/consumed/finished 계보를 확인하고 SQL은 mode=ro/query_only로만 읽는다. 원 response schema는 legacy exact bytes/hash이며 원 실패의 loop declaration·producer receipt schema SHA도 그 검증된 원 profile에 각각 결박한다. 원 declaration의 catalog/scenario/model/origin도 같은 workflow/permit/실행 조건에 결박한다. 새 loop는 논리 동치 current schema만 사용한다. old/current bytes와 hash가 섞이면 거절한다.
 
 ## 예산·계보·종료
 

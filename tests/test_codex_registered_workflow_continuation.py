@@ -78,7 +78,10 @@ class ContinuationTests(RegistrationTests):
         execution=dict(status='failed',failure=failure,binding=dict(self.plan['binding'],plan_input_sha256=H(C(self.plan)),
             run_id='AUTHORED-ORIGINAL-RUN',runtime_instance_id='AUTHORED-ORIGINAL-RUNTIME'),
             loop=dict(budget=dict(producer_calls_started=1,elapsed_seconds=12.25),steps=[step],
-                cleanup=dict(host_artifacts_closed=True,runtime_references_released=True),declaration=dict(schema_sha256=H(legacy))))
+                cleanup=dict(host_artifacts_closed=True,runtime_references_released=True),
+                declaration=dict(goal_kind='acquire_fresh_rf_sensor',scope='rf_sensor_proposal_v1',scenario='normal',
+                    requested_model='gpt-6-astra',producer_name='dgm-virtual-operator-v1',
+                    catalog_sha256=self.workflow['catalog_sha256'],schema_sha256=H(legacy),origin_declaration='actual_cli')))
         execution_pin=self.put(self.evidence/'execution-receipt.json',execution)
         finalizer_pin=self.put(self.evidence/'finalizer-receipt.json',dict(status='held',failure=failure))
         self.finished=dict(permit_id='REG-P1',status='failed',local_model_processes=1,cleanup_confirmed=True,execution_receipt=execution_pin,
@@ -192,6 +195,52 @@ class ContinuationTests(RegistrationTests):
                 result=self.attempt();self.assertEqual(result['status'],'not_run',result)
             self.assertEqual(execute.call_count,0);self.assertFalse((self.evidence/api._NAMESPACE).exists())
 
+    def _assert_original_declaration_rejected(self,key,value):
+        self.fixture()
+        execution_path=self.evidence/'execution-receipt.json';producer_path=self.evidence/'loop/calls/0001/producer/receipt.json'
+        base=json.loads(execution_path.read_bytes());manual=copy.deepcopy(self.manual);finished=copy.deepcopy(self.finished)
+        changed=copy.deepcopy(base);changed['loop']['declaration'][key]=value
+        receipt=changed['loop']['steps'][0]['producer']['receipt']
+        if key=='schema_sha256':receipt['bindings']['schema_sha256']=value
+        receipt_pin=self.put(producer_path,receipt)
+        changed['loop']['steps'][0]['producer']['receipt_sha256']=H(C(receipt))
+        row=copy.deepcopy(finished);row['producer_receipts']=[dict(index=1,**receipt_pin)]
+        row['execution_receipt']=self.put(execution_path,changed)
+        con=sqlite3.connect(self.journal)
+        try:
+            con.execute("UPDATE codex_conducted_workflow_history SET payload=? WHERE kind='finished'",(C(row).decode(),))
+            con.commit()
+        finally:con.close()
+        record=copy.deepcopy(manual);record['original'].update(finished_sha256=H(C(row)),
+            execution_receipt=row['execution_receipt'],producer_receipts=row['producer_receipts'])
+        self.put(self.operator/api._RECORD,record)
+        with patch.object(host,'_execute',side_effect=AssertionError('EXECUTION_FORBIDDEN')) as execute:
+            result=self.attempt()
+        self.assertEqual(result['status'],'not_run',result)
+        self.assertEqual(result['phase'],'original_failure',result)
+        self.assertFalse((self.evidence/api._NAMESPACE).exists())
+        self.assertFalse((self.evidence/api._CLAIM).exists())
+        self.assertEqual(execute.call_count,0)
+
+    def test_original_arbitrary_schema_binding_rejected(self):
+        self._assert_original_declaration_rejected('schema_sha256','f'*64)
+
+    def test_original_other_known_schema_binding_rejected(self):
+        from labflow.virtual_fleet.operator_response_schema import CURRENT_SCHEMA_SHA256
+        self._assert_original_declaration_rejected('schema_sha256',CURRENT_SCHEMA_SHA256)
+
+    def test_original_catalog_binding_rejected(self):
+        self._assert_original_declaration_rejected('catalog_sha256','f'*64)
+
+    def test_original_scenario_binding_rejected(self):
+        self._assert_original_declaration_rejected('scenario','restored_disconnect')
+
+    def test_original_model_binding_rejected(self):
+        self._assert_original_declaration_rejected('requested_model','gpt-6.1-sol')
+
+    def test_original_origin_binding_rejected(self):
+        self._assert_original_declaration_rejected('origin_declaration','mock_subprocess')
+
     def test_genuine_lowered_same_profile_mock_continuation_once(self):
         self.fixture()
         from test_codex_registered_conducted_workflow_host import CHILD
@@ -259,6 +308,9 @@ NAMES=['test_unknown_or_missing_authority_never_creates_state','test_budget_dedu
        'test_original_ledger_states_unknown_count_and_cleanup_cannot_enter','test_original_partial_or_missing_ledger_and_source_drift_cannot_enter',
        'test_new_initial_registration_rejects_legacy_schema_before_staging',
        'test_missing_namespace_with_existing_claim_or_partial_namespace_is_terminal','test_original_zero_effect_failure_gate_rejects_agent_tools_and_unknown_elapsed',
+       'test_original_arbitrary_schema_binding_rejected','test_original_other_known_schema_binding_rejected',
+       'test_original_catalog_binding_rejected','test_original_scenario_binding_rejected',
+       'test_original_model_binding_rejected','test_original_origin_binding_rejected',
        'test_genuine_lowered_same_profile_mock_continuation_once']
 
 def load_tests(loader,tests,pattern):
