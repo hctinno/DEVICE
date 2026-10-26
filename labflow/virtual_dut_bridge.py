@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
-import threading
+import time
 import uuid
 
 from labflow.n1914a_virtual_adapter import N1914AVirtualAdapter
@@ -104,6 +104,8 @@ class EmulatorADBIdentity:
     Only a trusted native adb binary and a prepared local ADB server are suitable.
     """
     _RESPONSE_LIMIT = 4096
+    _EXIT_DRAIN_SECONDS = 1.0
+    _CLEANUP_WAIT_SECONDS = 1.0
 
     def __init__(self, *, adb_executable, emulator_serial, enabled=False, timeout_seconds=5):
         if enabled is not True:
@@ -137,53 +139,116 @@ class EmulatorADBIdentity:
                                   'HOMEDRIVE', 'HOMEPATH', 'LOCALAPPDATA'}}
         env['ADB_SERVER_SOCKET'] = 'tcp:127.0.0.1:5037'
         argv = [self._executable, '-s', self._serial, *command]
-        row = {'argv': argv, 'status': 'failed', 'code': None, 'response': '', 'returncode': None}
-        try:
-            process = subprocess.Popen(argv, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
-                                       stderr=subprocess.STDOUT, shell=False, env=env,
-                                       creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
-        except OSError:
-            row['code'] = 'adb_spawn_failed'
-            return row
+        cleanup = {'status': 'not_started', 'child_reaped': None, 'stdout_closed': None,
+                   'reader': 'not_created', 'errors': []}
+        row = {'argv': argv, 'status': 'failed', 'code': None, 'response': '',
+               'returncode': None, 'cleanup': cleanup}
         output = bytearray()
-        overflow = threading.Event()
-        read_failed = threading.Event()
+        primary = None
+        secondary = []
+        reaped = eof = False
+        process = stream = None
+        exit_drain_deadline = None
 
-        def drain():
-            try:
-                while True:
-                    chunk = process.stdout.read(min(256, self._RESPONSE_LIMIT + 1 - len(output)))
-                    if not chunk:
-                        return
-                    output.extend(chunk)
-                    if len(output) > self._RESPONSE_LIMIT:
-                        overflow.set()
-                        process.kill()
-                        return
-            except (OSError, ValueError):
-                read_failed.set()
+        def cleanup_error(operation, error):
+            cleanup['errors'].append({'operation': operation, 'type': type(error).__name__})
+            secondary.append(error)
 
-        reader = threading.Thread(target=drain, daemon=True)
-        reader.start()
         try:
-            row['returncode'] = process.wait(timeout=self._timeout)
-        except subprocess.TimeoutExpired:
-            row['status'], row['code'] = 'timeout', 'adb_timeout'
-            process.kill()
             try:
-                row['returncode'] = process.wait(timeout=1)
-            except subprocess.TimeoutExpired:
-                row['code'] = 'adb_cleanup_timeout'
-        reader.join(timeout=1)
+                process = subprocess.Popen(argv, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                                           stderr=subprocess.STDOUT, shell=False, env=env, bufsize=0,
+                                           creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+            except OSError:
+                row['code'] = 'adb_spawn_failed'
+                return row
+            stream = process.stdout
+            deadline = time.monotonic() + self._timeout
+            try:
+                descriptor = stream.fileno()
+                os.set_blocking(descriptor, False)
+            except (OSError, ValueError):
+                row['code'] = 'adb_response_unreadable'
+            while row['code'] is None:
+                try:
+                    while not eof:
+                        try:
+                            chunk = os.read(descriptor, min(256, self._RESPONSE_LIMIT + 1 - len(output)))
+                        except BlockingIOError:
+                            break
+                        if not chunk:
+                            eof = True
+                            break
+                        output.extend(chunk)
+                        if len(output) > self._RESPONSE_LIMIT:
+                            row['code'] = 'adb_response_limit'
+                            break
+                except OSError:
+                    row['code'] = 'adb_response_unreadable'
+                if row['code'] is not None:
+                    break
+                if not reaped:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        row['status'], row['code'] = 'timeout', 'adb_timeout'
+                        break
+                    try:
+                        row['returncode'] = process.wait(timeout=min(0.05, remaining))
+                    except subprocess.TimeoutExpired:
+                        continue
+                    reaped = True
+                    exit_drain_deadline = time.monotonic() + self._EXIT_DRAIN_SECONDS
+                if eof:
+                    break
+                remaining = exit_drain_deadline - time.monotonic()
+                if remaining <= 0:
+                    row['code'] = 'adb_response_unreadable'
+                    break
+                time.sleep(min(0.01, remaining))
+        except BaseException as error:
+            primary = error
+        finally:
+            # No blocking reader exists. Retry only this owned child's kill/wait
+            # after cleanup exceptions; every wait has its own finite deadline.
+            if process is not None:
+                stream = process.stdout if stream is None else stream
+                for _ in range(2):
+                    if reaped:
+                        break
+                    try:
+                        process.kill()
+                    except BaseException as error:
+                        cleanup_error('kill', error)
+                    try:
+                        row['returncode'] = process.wait(timeout=self._CLEANUP_WAIT_SECONDS)
+                        reaped = True
+                    except BaseException as error:
+                        cleanup_error('wait', error)
+                for _ in range(2):
+                    if stream.closed:
+                        break
+                    try:
+                        stream.close()
+                    except BaseException as error:
+                        cleanup_error('close', error)
+                cleanup.update(child_reaped=reaped, stdout_closed=stream.closed)
+                cleanup['status'] = ('completed_with_errors' if secondary else 'completed') if (
+                    reaped and stream.closed) else 'incomplete'
+        if primary is None and row['code'] is None and secondary:
+            primary = secondary[0]
+        if primary is not None:
+            # Never replace the first ordinary/control exception with cleanup.
+            try:
+                primary.virtual_dut_cleanup = cleanup
+                primary.virtual_dut_cleanup_errors = tuple(secondary)
+            except BaseException:
+                pass
+            raise primary
         row['response'] = bytes(output[:self._RESPONSE_LIMIT]).decode('ascii', errors='replace')
-        if not reader.is_alive():
-            process.stdout.close()
         if row['code'] is not None:
             return row
-        if overflow.is_set():
-            row['code'] = 'adb_response_limit'
-        elif reader.is_alive() or read_failed.is_set():
-            row['code'] = 'adb_response_unreadable'
+        if cleanup['status'] == 'incomplete':
+            row['code'] = 'adb_cleanup_incomplete'
         elif row['returncode'] != 0:
             row['code'] = 'adb_nonzero_exit'
         else:

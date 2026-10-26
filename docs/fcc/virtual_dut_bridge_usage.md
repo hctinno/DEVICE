@@ -59,7 +59,11 @@ assert stopped['corrected_dbm'] is None
 
 첫 응답은 정확한 `1`, 다음 hardware는 `ranchu` 또는 `goldfish`여야 한다. 둘 중 하나라도 불명확하면 다음 명령을 실행하지 않는다. 이후 state는 정확한 `device`, model은 1~128자의 단일 printable ASCII 행만 허용한다. conventional emulator serial과 두 QEMU 표식의 일치를 관측하는 정책이며 위조 표식에 대한 암호학적 인증은 아니다. 이 제한으로 식별할 수 없는 다른 emulator·물리 장치는 지원하지 않는다. `emulator_identity_confirmed=True`는 이 일련의 읽기 응답이 일치했다는 뜻이며 공장시험 모드·제품 펌웨어 적합성 증거가 아니다.
 
-`shell=False`, stdin 차단, 명령별 timeout 0.05~30초, stdout/stderr 합계 최대 4096바이트를 적용한다. 출력은 별도 bounded reader가 제한하며 초과하면 프로세스를 중단하고 잘린 prefix를 성공으로 해석하지 않는다. timeout에도 중단·재수거를 시도하고 추가 명령을 실행하지 않는다. 알 수 없는 응답·비정상 종료·시작 실패도 실패로 반환하며 허용 범위 내 원 응답과 argv를 `transcript`에 남긴다. Android 응답의 줄바꿈은 한 번의 LF/CRLF만 허용한다.
+`shell=False`, stdin 차단, 명령별 child 대기 timeout 0.05~30초, stdout/stderr 합계 최대 4096바이트를 적용한다. 같은 호출 스레드의 nonblocking `os.read`로 수집하며 제품 reader thread는 만들지 않는다. 출력 버퍼는 초과 확인용 1바이트까지4097B, 공개 응답은4096B 이하이고 잘린 prefix를 성공으로 해석하지 않는다. timeout/초과에는 자기 child만 중단·재수거하며 다음 명령을 실행하지 않는다. 알 수 없는 응답·비정상 종료·시작 실패도 실패로 반환하고 허용 범위 내 원 응답과 argv를 `transcript`에 남긴다. Android 응답의 줄바꿈은 한 번의 LF/CRLF만 허용한다.
+
+child 종료와 pipe EOF를 별도로 다룬다. 종료 뒤 다른 writer가 pipe를 보유해도 추가 drain은 최대1초이며, EOF가 없으면 기존 `adb_response_unreadable`로 실패하고 소유 read-end를 닫는다. 외부 writer나 다른 프로세스를 닫거나 종료하지 않는다. spawn 직후부터 정상·오류·취소·CONTROL 전체를 finally 경계로 감싸며 미회수 child의 kill/wait는 최대2회, 각 wait는1초다. raw read stream close도 최대2회 시도한다. 무제한 join·daemon reader·외부 helper가 없다. 논리적 대기 예산의 보수적 상한은 child timeout + exit drain1초 + cleanup wait2초이며, OS의 process 생성·syscall·스케줄 지연까지 wall-clock 보증하는 값은 아니다.
+
+각 transcript row의 `cleanup`에 child 회수·stdout 닫힘·reader 미생성·후행 오류의 operation/type을 기록한다. 정리 불가라면 `incomplete`를 명시하고 성공으로 처리하지 않는다. 원 wait/control 예외 객체는 그대로 전파하며 `virtual_dut_cleanup`, `virtual_dut_cleanup_errors`에서 정리 상태와 후행 예외를 구별할 수 있다. 최초 timeout/출력 초과 같은 반환 실패는 cleanup 오류로 덮지 않는다. 정상 수집 뒤 cleanup에서 처음 예외가 나면 그 최초 예외를 전파한다. nonblocking pipe를 제공하는 Python/OS가 필요하며, 이 단위는 Windows Python3.12의 표준 pipe에서 직접 검증했다.
 
 `devices`, `connect`, `tcpip`, forwarding, 설치, push/pull, 파일 쓰기, 임의 shell, 임의 getprop, RF configure/start/stop은 이 transport에 없다. native ADB 실행에는 해당 도구 자체의 서버·인증 동작이 따를 수 있으므로 실제 emulator 준비와 운전 권한은 다음 검증 단계에서 별도로 확인한다. 이 identity 객체는 RF bridge에 주입되지 않으며 Android 조회 성공을 합성 RF 설정의 원인으로 표시하지 않는다.
 
@@ -68,5 +72,7 @@ assert stopped['corrected_dbm'] is None
 2026-10-26 Asia/Seoul 기준 이번 작업에서 PATH의 `adb`/`emulator`는 발견되지 않았으며 `%LOCALAPPDATA%/Android/Sdk`, `C:/Android/Sdk`도 존재하지 않았다. `ANDROID_HOME`/`ANDROID_SDK_ROOT`는 미지정이었다. 이 확인은 파일·PATH 읽기뿐이며 ADB 실제 호출·Android emulator 시작·설치·다운로드·시스템 설정 변경은 0회다.
 
 신규 테스트는 genuine VirtualLab에서 전력 변화·경로 +3 dB의 raw -3 dB·보정 일관성·b/g/n·정지/단절 바닥 제외·취득 중/후 stale·취득 timeout/계측 단절·잘못된 인자를 검증한다. ADB는 네이티브 subprocess 경계만 테스트 대역으로 대체해 정확한 argv·허용목록·serial 거절·출력 상한·timeout·미지 응답을 검증한다. 가짜 응답을 실제 Android emulator 검증으로 세지 않는다.
+
+cleanup 후속은 독립 검수의 원 No2를 자기 표준 Python child/control 주입 및 명시 `os.pipe` writer 보유로 먼저 RED 재현했다. 수정 후 API 반환/CONTROL 전파 시 알려진 자기 child의 종료·회수, native read FD 닫힘, 남은 제품 reader0을 확인했다. 실제 EOF·합계 출력 초과·timeout·spawn/wait 오류·후행 정리 오류·네 CONTROL identity·공개 identity4쿼리 사이의 정리까지 표준 child로 검사했다. 이 child는 자원 수명 검증용 표준 Python이며 실제 ADB/Android 실행 증거가 아니다. 기존 전체19를 반복하지 않고 영향 transport5와 RF3만 별도로 선택했다.
 
 다음 단위는 검증된 SDK/emulator·명시한 로컬 대상의 실제 identity 관측이다. AnyWay/OEM의 실제 모델·도구·옵션·펌웨어·시험모드 지원은 자료 및 현장 검증 전까지 `not_assessed`다. 실제 AI 판단, 실물 RF 취득, 교정·센서 적합성, 현장 안전·전체 무인 업무는 이번 단위에서 검증하지 않았다.
