@@ -122,6 +122,11 @@ class Endpoint:
         return f'tcp:127.0.0.1:{self.adb_port}'
 
 
+def _require_rf_bridge_endpoint(endpoint: Endpoint):
+    if type(endpoint) is not Endpoint or endpoint != Endpoint(15037, 5680, 18554):
+        raise BoundaryError('rf_bridge_endpoint_invalid')
+
+
 def private_environment(runtime: Path, output: Path, endpoint: Endpoint,
                         base: dict | None = None) -> dict:
     env = dict(os.environ if base is None else base)
@@ -932,6 +937,8 @@ def create_avd(runtime: Path, output: Path):
 def boot_runtime(runtime: Path, report: Report, env: dict, endpoint: Endpoint,
                  timeout: int, acceleration: str, help_text: str,
                  rf_bridge_check: bool = False):
+    if rf_bridge_check:
+        _require_rf_bridge_endpoint(endpoint)
     if acceleration not in ('auto', 'off'):
         raise BoundaryError('acceleration_invalid')
     if acceleration == 'off':
@@ -1043,6 +1050,8 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
                 or (resume_install and not install) or (verify_only and (install or boot))
                 or type(rf_bridge_check) is not bool or (rf_bridge_check and not boot)):
             raise BoundaryError('options_invalid')
+        if rf_bridge_check:
+            _require_rf_bridge_endpoint(endpoint)
         report.data['resources_before'] = resources()
         if runtime == output or output in runtime.parents:
             raise BoundaryError('runtime_output_overlap')

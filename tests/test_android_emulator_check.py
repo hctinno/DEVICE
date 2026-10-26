@@ -336,6 +336,24 @@ class RuntimeBoundaries(unittest.TestCase):
         self.assertEqual(result['android_os'], 'not_run')
         self.assertEqual(result['rf_model'], 'not_assessed')
 
+    def test_rf_bridge_rejects_custom_endpoint_before_runtime_or_native_access(self):
+        endpoint = check.Endpoint(adb_port=15038, console_port=5678, grpc_port=18554)
+        with mock.patch.object(check, 'validate_runtime', side_effect=AssertionError('SDK read')):
+            result = check.execute(self.base / 'absent-runtime', self.base / 'rf-port-proof',
+                                   boot=True, rf_bridge_check=True, endpoint=endpoint)
+        self.assertEqual(result['first_failure']['code'], 'rf_bridge_endpoint_invalid')
+        self.assertEqual(result['android_os'], 'not_run')
+        self.assertEqual(result['adb_verified'], False)
+
+    def test_direct_boot_bridge_rejects_custom_endpoint_before_boot_claim(self):
+        endpoint = check.Endpoint(adb_port=15038, console_port=5678, grpc_port=18554)
+        report = check.Report(self.base / 'rf-direct-port-proof')
+        with mock.patch.object(check, 'claim_attempt', side_effect=AssertionError('boot claim')):
+            with self.assertRaises(check.BoundaryError) as error:
+                check.boot_runtime(self.base / 'runtime', report, {}, endpoint, 1, 'auto', '',
+                                   rf_bridge_check=True)
+        self.assertEqual(error.exception.code, 'rf_bridge_endpoint_invalid')
+
     def test_rf_bridge_hook_runs_only_after_exact_guest_identity_inside_owned_lifetime(self):
         from labflow import android_guest_rf_bridge as bridge
         report = check.Report(self.base / 'rf-hook-proof')

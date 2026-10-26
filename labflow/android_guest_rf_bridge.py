@@ -263,6 +263,7 @@ def _measurement(receipt, device, revision, after_tick):
 
 def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process):
     """Run one fixed guest control lifecycle and one same-Fleet RF observation."""
+    check._require_rf_bridge_endpoint(endpoint)
     _owned_identity(report, endpoint, server)
     source = dict(SOURCE_SETTINGS)
     tokens = _source_tokens(source)
@@ -282,6 +283,8 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process):
     report.save()
     fleet = None
     failure = None
+    install_attempted = False
+    install_confirmed = False
 
     def guard_owned():
         if server.process.poll() is not None:
@@ -314,9 +317,11 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process):
         result['host_rf_model']['setup_receipts'] = setup
         _fleet_action(fleet, result, 'initial-stop', 'dut', 'stop')
         guard_owned()
+        install_attempted = True
         installed = _exchange(endpoint, server, _install_service(), deadline)
         if installed != _SCRIPT_SHA256 + '  ' + _SCRIPT_PATH:
             raise check.BoundaryError('guest_script_hash_mismatch', installed[:256])
+        install_confirmed = True
         result['guest_controller']['install_sha256'] = _SCRIPT_SHA256
         guest('HELLO', 0, 'HELLO', 0)
         guest('CONFIG', 1, 'CONFIGURED', 1, config=True)
@@ -377,22 +382,29 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process):
             except Exception as stop_exc:
                 result['cleanup_errors'].append({'code': 'fleet_stop_error', 'detail': repr(stop_exc)})
     finally:
-        try:
-            if getattr(failure, 'code', None) == 'memory_emergency_stop':
-                raise check.BoundaryError('cleanup_skipped_memory_emergency')
-            cleaned = _exchange(endpoint, server, _cleanup_service(nonce), deadline)
-            if cleaned != 'DGM-CLEAN-OK':
-                raise check.BoundaryError('guest_cleanup_unconfirmed', cleaned[:256])
-            result['guest_controller']['cleanup'] = 'confirmed'
-        except BaseException as cleanup_exc:
+        if install_confirmed:
+            try:
+                if getattr(failure, 'code', None) == 'memory_emergency_stop':
+                    raise check.BoundaryError('cleanup_skipped_memory_emergency')
+                cleaned = _exchange(endpoint, server, _cleanup_service(nonce), deadline)
+                if cleaned != 'DGM-CLEAN-OK':
+                    raise check.BoundaryError('guest_cleanup_unconfirmed', cleaned[:256])
+                result['guest_controller']['cleanup'] = 'confirmed'
+            except BaseException as cleanup_exc:
+                result['guest_controller']['cleanup'] = 'unknown'
+                result['cleanup_errors'].append({'code': getattr(cleanup_exc, 'code', 'guest_cleanup_error'),
+                                                 'detail': str(cleanup_exc)})
+                if failure is None:
+                    failure = (cleanup_exc if isinstance(cleanup_exc, KeyboardInterrupt)
+                               else check.BoundaryError('guest_cleanup_unknown'))
+                    result['first_error'] = {'code': 'interrupted' if isinstance(failure, KeyboardInterrupt)
+                                             else failure.code, 'detail': str(failure)}
+        elif install_attempted:
             result['guest_controller']['cleanup'] = 'unknown'
-            result['cleanup_errors'].append({'code': getattr(cleanup_exc, 'code', 'guest_cleanup_error'),
-                                             'detail': str(cleanup_exc)})
-            if failure is None:
-                failure = (cleanup_exc if isinstance(cleanup_exc, KeyboardInterrupt)
-                           else check.BoundaryError('guest_cleanup_unknown'))
-                result['first_error'] = {'code': 'interrupted' if isinstance(failure, KeyboardInterrupt)
-                                         else failure.code, 'detail': str(failure)}
+            result['cleanup_errors'].append({'code': 'guest_install_effect_unknown',
+                                             'detail': 'Install was not hash-confirmed; guest deletion skipped'})
+        elif getattr(failure, 'code', None) == 'memory_emergency_stop':
+            result['guest_controller']['cleanup'] = 'unknown'
         result['valid'] = failure is None and result['guest_controller']['cleanup'] == 'confirmed'
         report.data['rf_model'] = ('synthetic_guest_bridge_verified' if result['valid']
                                    else 'synthetic_guest_bridge_invalid')

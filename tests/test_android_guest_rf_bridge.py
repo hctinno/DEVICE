@@ -25,12 +25,14 @@ class FakeGuest:
     """A separate stateful AOSP shell fixture, not a production transport hook."""
 
     def __init__(self, *, bad_status=False, fail_start=False, fail_cleanup=False,
-                 tamper=None):
+                 tamper=None, install_failure=None, preexisting_script=False):
         self.calls = []
         self.bad_status = bad_status
         self.fail_start = fail_start
         self.fail_cleanup = fail_cleanup
         self.tamper = tamper
+        self.install_failure = install_failure
+        self.preexisting_script = preexisting_script
         self.script_hash = None
         self.state = None
         self.revision = 0
@@ -42,11 +44,16 @@ class FakeGuest:
         if not service.startswith('shell:') or endpoint.serial != 'emulator-5680':
             raise AssertionError('unowned guest service')
         if service.startswith('shell:test ! -e '):
+            if self.install_failure and self.install_failure != 'bad_hash':
+                raise check.BoundaryError(self.install_failure)
             encoded = service.split('printf %s ', 1)[1].split(' | base64 -d', 1)[0]
             script = base64.b64decode(encoded, validate=True)
             self.script_hash = hashlib.sha256(script).hexdigest()
+            if self.install_failure == 'bad_hash':
+                return '0' * 64 + '  ' + SCRIPT
             return self.script_hash + '  ' + SCRIPT
         if service.startswith('shell:rm -f '):
+            self.preexisting_script = False
             if self.fail_cleanup:
                 raise check.BoundaryError('adb_timeout')
             return 'DGM-CLEAN-OK'
@@ -186,6 +193,55 @@ class GuestBridgeFixtureTests(unittest.TestCase):
         self.assertFalse(self.report.data['rf_bridge']['valid'])
         self.assertEqual(self.report.data['rf_bridge']['first_error']['code'],
                          'guest_cleanup_unknown')
+
+    def test_preexisting_guest_script_is_preserved_when_install_rejects_it(self):
+        guest = FakeGuest(install_failure='guest_adb_service_failure',
+                          preexisting_script=True)
+        with self.assertRaises(check.BoundaryError):
+            self.run_bridge(guest)
+        result = self.report.data['rf_bridge']
+        self.assertTrue(guest.preexisting_script)
+        self.assertEqual(len(guest.calls), 1)
+        self.assertFalse(result['valid'])
+        self.assertEqual(result['first_error']['code'], 'guest_adb_service_failure')
+        self.assertEqual(result['guest_controller']['cleanup'], 'unknown')
+        self.assertIn('fleet_stop', result['host_rf_model'])
+
+    def test_install_timeout_leaves_unconfirmed_guest_file_untouched(self):
+        guest = FakeGuest(install_failure='adb_timeout')
+        with self.assertRaises(check.BoundaryError):
+            self.run_bridge(guest)
+        result = self.report.data['rf_bridge']
+        self.assertEqual(len(guest.calls), 1)
+        self.assertFalse(result['valid'])
+        self.assertEqual(result['first_error']['code'], 'adb_timeout')
+        self.assertEqual(result['guest_controller']['cleanup'], 'unknown')
+
+    def test_unverified_partial_install_does_not_delete_guest_file(self):
+        guest = FakeGuest(install_failure='bad_hash')
+        with self.assertRaises(check.BoundaryError):
+            self.run_bridge(guest)
+        result = self.report.data['rf_bridge']
+        self.assertEqual(len(guest.calls), 1)
+        self.assertFalse(result['valid'])
+        self.assertEqual(result['first_error']['code'], 'guest_script_hash_mismatch')
+        self.assertEqual(result['guest_controller']['cleanup'], 'unknown')
+
+    def test_direct_bridge_rejects_custom_endpoint_before_guest_write(self):
+        endpoint = check.Endpoint(adb_port=15038, console_port=5678, grpc_port=18554)
+        report = check.Report(Path(self.tmp.name) / 'custom-endpoint')
+        report.data.update(android_os='booted', adb_verified=True,
+                           identity={'serial': endpoint.serial, 'state': 'device',
+                                     'properties': {'ro.kernel.qemu': '1', 'ro.hardware': 'ranchu',
+                                                    'ro.product.model': 'AOSP fixture',
+                                                    'sys.boot_completed': '1'}})
+        with mock.patch.object(bridge, '_exchange', side_effect=AssertionError('guest write')):
+            with self.assertRaises(check.BoundaryError) as error:
+                bridge.run_guest_rf_check(endpoint, self.server, report,
+                                          deadline=time.monotonic() + 30,
+                                          emulator_process=self.emulator)
+        self.assertEqual(error.exception.code, 'rf_bridge_endpoint_invalid')
+        self.assertNotIn('rf_bridge', report.data)
 
     def test_interrupt_during_cleanup_is_recorded_as_unknown(self):
         guest = FakeGuest()
