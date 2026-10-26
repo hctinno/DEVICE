@@ -4,7 +4,7 @@
   "explicit_boundaries": [
     "borrowed Store lifetime belongs to host; isolated approved synthetic Store and no concurrent fixture/supervisor",
     "lease/token memory only, public8 whitelist; no log/DTO/model leak",
-    "schema1 only; PDF/schema2 rejected with model0",
+    "default/schema1 literal compatible; explicitly validated complete schema2 PDF/text uses pure preflight, the same public claim recheck and genuine strict decoding; partial/unread no dispatch; separate native host still rejects PDF",
     "host pre-reserves one cumulative model attempt; reference is not new approval and caller does not implement global budget enforcement",
     "unknown after completion/evidence/control is not automatic retry or fail_job",
     "fail_job queued semantics and incremented claim attempt preserved"
@@ -48,7 +48,7 @@
   },
   "reuse_existing": [
     "claim_job synthetic_only atomic filtering, no now, lease3600",
-    "build_analysis_prompt and build_analysis_response_schema",
+    "preflight_codex_intake_once_inputs reuses build_analysis_prompt and context-aware build_analysis_response_schema before claim and on the same claimed public8; no execution authority granted",
     "concrete produce_codex_cli_response",
     "genuine decode_analysis_response then complete_job; fail_job at most once before completion"
   ],
