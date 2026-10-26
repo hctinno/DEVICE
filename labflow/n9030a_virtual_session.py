@@ -157,9 +157,13 @@ class N9030AVirtualSession:
                 number = _hertz(match[1])
                 if number is None:
                     return refuse('invalid_frequency_quantity', 'invalid')
-                if key == 'bandwidth_hz' and (config.get('frequency_hz') is None
-                                              or config['frequency_hz'] - number / 2 < 0):
-                    return refuse('span_outside_synthetic_window', 'invalid')
+                if key in ('frequency_hz', 'bandwidth_hz'):
+                    center = number if key == 'frequency_hz' else config.get('frequency_hz')
+                    span = number if key == 'bandwidth_hz' else config.get('bandwidth_hz')
+                    if (type(center) not in (int, float) or type(span) not in (int, float)
+                            or not math.isfinite(center) or not math.isfinite(span)
+                            or center - span / 2 < 0):
+                        return refuse('span_outside_synthetic_window', 'invalid')
                 return self._action(text, 'configure', {key: number})
 
         if re.fullmatch(_DET + r'\?', normalized):
