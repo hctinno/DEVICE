@@ -1,6 +1,20 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `e64a0ce01619a2b4c16af3611673805be9e62dfa` / 고정 source/runtime 검증 모집단333. 기존 소유·미커밋·원본·실패와 독립 기대를 보존해 정상 cherry로 통합했고 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. [PLAN 현황](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)·[실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 우선한다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `13e5c9c3d1399236e55b7029a8e4944a40d140c3` / 고정 source/runtime 검증 모집단333. 기존 소유·미커밋·원본·실패와 독립 기대를 보존해 정상 cherry로 통합했고 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. [PLAN 현황](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)·[실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 우선한다.
+
+## 최신 수용333 — native PDF·현재 질문·출력 선예약·오류 저장
+
+native41과 문구024를 수용했다. 독립12/12와 총괄 신규·영향11 PASS는 실제 G3/common preflight→once/strict/complete 연결과 최초 오류 경계를 검사하되 memory OS/permit seam이다. 운영 권위·실제 모델 성공으로 승격하지 않는다. schema2 준비 contract exact scope를 명료화한 문구만 추가하고 v1/원본문·기존17은 바꾸지 않았다.
+
+현재 질문 UI994를 독립 typed10·원 DU genuine GET1·전체 app DOM1440 1과 총괄 신규8/영향8 PASS 뒤 수용했다. first-class current exact7과 후행 freshness를 유지하며 configured 실패/stale를 과거 storage로 조용히 대체하지 않는다. 질문1의 원 unit/span/quote·권위false와 fixture history 분리를 보존한다. 원 CRLF observer 준비 오류·SQL 부분 범위·390 미실행은 남긴다. public CLI --port 도구222는 실제 owner child1/가상runtime1/DOM1440의 증거가 있지만 strict URL 전 close의 Important1/No가 있어 아직 미수용이다. 최소 fix3bc의 독립 검수 뒤 연결한다. 원 outer PTY exit1과 child 정상 종료/rebind를 구별한다.
+
+공동 evidence reservation d0fa는 독립14/64 관측과 총괄 신규8·signature2·genuine virtual trial1의11 PASS 뒤 수용했다. 원 정적 No/C0I1·wall 초과·observer framing/AST 실수와 별도 genuine Journal1의1914B/1byte 부족 사전 차단을 보존한다. None 추가keyword0·명시 exact2 strict ints·같은192파일/32MiB에서 전 producer/final/journal의 선예약을 유지한다. root 첫 선택기가 test_*만 읽어 reservation_*8을 빠뜨린 준비 실패는 product0이며 새 명시11 검증으로만 보완했다. 표준 TestLoader가 신규8을 찾도록 한 alias851f test2는 별도 검수 중이다. host H+tail10/5505024B 사전 증명은 개발2의 다음3이며 seam만으로 whole-host 예산 준수를 주장하지 않는다.
+
+명시 불확도 DRAFT 부록17cf는 독립 원writer1+신규11/관측186과 총괄 신규10 PASS로 수용했다. 선언 성분/상관/k가 없거나 미지원이면 not_assessed/null이며 원 result SHA·uNone/appliedFalse·판정 미평가를 유지한다. DRAFT에만 부록을 넣고 원 fixed3 전체 hash를 바인딩한다. 운영 교정·물리 정확도·규범 판정이 아니다. finalizer optional 전달094e는 다음 독립 검수이며 API 노출은 별도 fixture3로 구현한다.
+
+단절/복구실패f507은 독립 원5의 observer No2/PASS2/사전조건 미실행1을 보존하고, retained causal 추가3/3·hash/sequence 검증 범위로 qualified 수용했다. 원 회복185.093초 cleanup_failed·새 recovery62.281초와 transport72.562초를 구별하며 cap 초과를 소급 성공 처리하지 않는다. 새 root missing-ref admission1 PASS 뒤 실제 공개 Python CLI2를 각 새 output에서 실행했다. 단절5/4/2와 복구실패8/7/3의 결정/관측/도구, 같은 persistent_disconnect·각runtime1/ref17·29/journal20·32/fixed3를 대조했고 incomplete/execution_incomplete/null/저장complete/DRAFT·예상 CLI exit1을 보존했다. authored MOCK이며 실제 AI0·네이티브 transport exception/실물복구0이다. 자식 reaped를 관측했으나 SQL 개별 close·전역 descendants/physical peak는 unknown이다.
+
+개발1 앱의 notLoaded/message 거절은 기존 대화/clone을 보존하고 중복 신규 세션을 만들지 않았다. 기존 reviewer 한 명을 임시 개발1 등록3 구현자로 전환했으며 해당 코드의 독립 리뷰는 다른 사람에게 맡긴다. 개발2 host3·개발3 optional workflow3·개발4 현재 질문390 도구2에 다음 실제 CORE-GO를 보냈다. P01 NETWORK HOLD/닫힌 SOURCE·기존200/165/보존662/대상18·690/미해결12·N02 STOP을 유지한다. 추가 실모델0·동일 Codex17/Vertex6 소진·비용null·사용자 준비0이다. 아래는 이전 시점의 보존 이력이다.
 
 ## 고정 모집단333 — 공통 PDF 접수와 산출물 없는 현재 질문
 
