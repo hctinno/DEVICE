@@ -20,7 +20,11 @@ import uuid
 __all__ = ["build_vertex_comparison_matrix", "run_vertex_comparison_row",
            "run_vertex_comparison_batch", "ModelComparisonError"]
 
+from .virtual_fleet.operator_response_schema import (is_known_response_schema_bytes,
+    is_current_response_schema_bytes)
+
 _PROJECT = "project-a6310591-f8cc-487c-9e3"
+
 _MODELS = ("gemini-4-argon", "gemini-3.8-flash")
 _LEVELS = ("LOW", "MEDIUM", "HIGH")
 _HOSTS = {"global":"https://aiplatform.googleapis.com",
@@ -312,7 +316,8 @@ def _pair(prompt, schema, scenario, evaluator):
     if (case is None or evaluator != case["evaluator_id"] or
         len(prompt) != case["prompt"]["bytes"] or _H(prompt) != case["prompt"]["sha256"] or
         len(schema) != case["response_schema"]["bytes"] or
-        _H(schema) != case["response_schema"]["sha256"]):
+        (not is_known_response_schema_bytes(schema) if scenario in _OPERATOR_CASES
+         else _H(schema) != case["response_schema"]["sha256"])):
         _fail()
     if scenario in _OPERATOR_CASES:
         _operator_prompt(prompt,case)
@@ -1163,6 +1168,8 @@ def run_vertex_comparison_row(matrix, row_index, prompt_bytes, response_schema_b
         _fail()
     begin = time.monotonic()
     m = _matrix(matrix,prompt_bytes,response_schema_bytes)
+    if m['scenario_id'] in _OPERATOR_CASES and not is_current_response_schema_bytes(response_schema_bytes):
+        _fail()
     _prepare_paths(adc_path,evidence_dir,budget_path,approval_path,cancel_event)
     row = _execute(m,row_index,prompt_bytes,response_schema_bytes,adc_path,evidence_dir,
                    budget_path,approval_path,cancel_event,begin)
@@ -1175,6 +1182,8 @@ def run_vertex_comparison_batch(matrix, prompt_bytes, response_schema_bytes, *,
         adc_path, evidence_dir, budget_path, approval_path, cancel_event=None):
     begin = time.monotonic()
     m = _matrix(matrix,prompt_bytes,response_schema_bytes)
+    if m['scenario_id'] in _OPERATOR_CASES and not is_current_response_schema_bytes(response_schema_bytes):
+        _fail()
     _prepare_paths(adc_path,evidence_dir,budget_path,approval_path,cancel_event)
     rows,stopped = [],None
     for i,slot in enumerate(m["rows"]):
