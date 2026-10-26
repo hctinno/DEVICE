@@ -12,6 +12,7 @@ from .intake_plan_virtual_execution import _snapshot
 from .intake_conducted_twin_plan import build_conducted_twin_plan_input
 from .intake_jobs import prepare_registered_synthetic_context
 from .store import Store,canonical
+from .virtual_fleet.operator_response_schema import is_current_response_schema_bytes
 
 __all__=['preflight_conducted_workflow_inputs','prepare_registered_conducted_workflow','main']
 _PREFIX='codex_conducted_workflow_registration_'
@@ -383,7 +384,7 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         analysis=_json(rawfiles['analysis.json']);plan=_json(rawfiles['plan-input.json'])
         if _C(analysis)!=rawfiles['analysis.json'] or _C(plan)!=rawfiles['plan-input.json']:_fail('canonical_required')
         schema=rawfiles['response-schema.json']
-        if len(schema)!=3052 or _H(schema)!=_host._SCHEMA_SHA:_fail('unsupported_schema')
+        if not is_current_response_schema_bytes(schema):_fail('unsupported_schema')
         registration=_json(rawfiles['registered-intake-v1.json'])
         _keys(registration,'schema_version kind scenario_id synthetic registered_intake')
         if (type(registration['schema_version']) is not int or registration['schema_version']!=1
