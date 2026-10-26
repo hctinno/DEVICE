@@ -1,5 +1,50 @@
 # Conducted workflow의 수동 operator 준비
 
+## 명시 선택 정책의 등록 binding v2 — 2026-10-26
+
+DEV2-WORKFLOW-SELECTION-REGISTRATION-001은 정확87e343e3662fc186c420b4460063a0151c03c921의 새 독립 clone에서 registration core/test/usage3만 수정한다. 의존 [host87](codex_registered_conducted_workflow_host_usage.md)의 core26916B/SHA787620eb660dedc8f2b2cfe69da65aa567913385b7aa4336d4ccc73d304b2aa8을 바인딩했으며 독립 검수는 아직 pending이다. host/selector/finalizer/issuer/native helper를 수정하지 않는다. 이 등록 후보의 독립 검수도 별도 대기다.
+
+preflight_conducted_workflow_inputs는 기존 required keyword measurement_ref를 유지하고 optional measurement_selection_policy=None만 추가했다. None이면 원6입력 snapshot·ref string1~200 검증·exact7 반환·pins exact5·execution_authority=false가 그대로다. 명시 policy일 때만 원 snapshot에 정책을 추가하여 ref=None과 native exact2 `{schema_version: 1, kind: "unique_same_run_sensor_acquisition"}`를 검증한다. bool/float 버전·subclass·추가/누락 키·다른 정책·ref 동시값을 거절한다. None ref와 None policy를 선택의 기본값으로 해석하지 않는다. 반환·pin에 새 권한이나 선택 결과를 추가하지 않는다.
+
+고정 prepared-inputs-v1.json의 파일명과 trusted root-delegation-v1.json exact8은 유지한다. metadata의 원 bytes SHA를 기존 prepared_manifest_sha256으로 결합하며, 다음 두 schema만 명시 분기한다.
+
+| metadata | 생성 workflow |
+| --- | --- |
+| schema1 exact14 | 기존 ref string을 가진 workflow schema1 exact12. policy 키가 있으면 거절, preflight 새 keyword0 |
+| schema2 exact15 | 기존14키+measurement_selection_policy. ref=null과 위 native exact2 정책을 검증한 뒤 workflow schema2 exact13에 원값을 그대로 작성 |
+
+schema1 정책 추가/schema2 정책 누락·None·추가 키·ref 동시값·metadata version bool/float/미지원값은 staging 전에 거절한다. policy는 유일 취득 기록을 고르는 데이터 계약이며 위임·실행 권한·추가 workflow/모델 한도를 발급하지 않는다. 기존 profile 이동·v1 자동변환·원 ref17 수정·권한 infer/fallback은 없다. root record/권위 scope/_LIMITS·원17 baseline·만료·model/quantity/tools·G3/current C1/source6/basis·SQL/marker/knownclose/fsync/NX 게시·최초primary 우선·반환 exact11을 바꾸지 않는다.
+
+- [x] exactbase/의존 pin·독립 pending·소유3/비소유 raw/native baseline 확인
+- [x] optional policy 부재 RED2와 metadata v2 거절 RED1 보존
+- [x] 명시 schema2 metadata→pure preflight→동일 원 policy/ref의 workflow2 연결
+- [x] 작은 pure2/native publish1/boundary4의 분리7논리 검증
+
+preflight RED2는0.261s에2FAIL/error0, publish RED1은0.148s에1FAIL/error0이었다. 최초 pure2(0.237s)/publish1(0.543s)/boundary4(1.906s) 통과 뒤 별도 metadata 결합 입력의 누락을 발견했다. schema2/ref string/policy=None은 pureAPI의 기존 None 경로를 거쳐 staging까지 진행해0.514s의 추가 RED1 FAIL로 재현했다. 원 실패SQL/prefix는 보존하고 metadata v2에서 ref=None/policy non-None을 먼저 강제하는 guard를 보완했다. 이 guard는 pureAPI의 optional None/legacy 경로를 바꾸지 않는다.
+
+최종 pure2는 기존0.237s PASS(해당 함수 후행 변경0), 후행 native publish1은0.595s PASS, 별도 boundary4는1.997s PASS이며 각 failure/error/skip0이다. 서로 다른7논리/분리3cohort이며 중간 통과나 기존8/9·host7을 더하지 않는다. 기본 discovery의 기존8/--boundary9와 최초오류 수정의 원 opt-in은 그대로 두고 이번 selection_ 검사만 명시 선택한다.
+
+pure2는 v1 호출·explicit policy=None·명시 v2의 원 DTO/pins 일치와 원 input 불변·false 권위, 잘못된 policy8/ref 조합2 및 최초 MemoryError 객체 전파를 확인했다. boundary4는 metadata 형상17개, 원 manifestSHA 무결성과 권위 scope9 확대 거절, v2 ordinary SQL fsync→후행 MemoryError와 v2 최초 SQL close MemoryError→후행 directory ordinary 오류를 검사했다. 최초오류의 SQL/prefix·failure marker는 남기며 durable 준비 성공으로 고치지 않는다.
+
+native publish1은 genuine source 등록/Store/G3/D1과 native 쓰기/fsync/SQL2/NX sibling 게시 뒤, 같은 complete marker의 prepared manifest pin/원10파일·workflow policy·config/permit SHA/원17 baseline을 대조했다. published profile의 원 파일을 보존한 채 pending host의 _prepare까지 다시 확인했고 그 전후 원 파일/SQL bytes가 같다. 빈 runs/permit은 소비하지 않았고 같은 target 재호출은 not_prepared다. host main/producer/새 runtime·모델은0이다. 테스트의 AUTHORED_TEST_ONLY 위임 record·일회용 OS parent를 실제 위임/운영profile로 해석하지 않는다.
+
+```python
+preflight = preflight_conducted_workflow_inputs(
+    context, analysis, plan_input, quantity=quantity, allowed_tools=allowed_tools,
+    measurement_ref=None,
+    measurement_selection_policy={"schema_version": 1,
+                                  "kind": "unique_same_run_sensor_acquisition"},
+)
+```
+
+```powershell
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --selection-preflight -v
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --selection-publish -v
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --selection-boundary -v
+```
+
+새 정책 검증은 원 snapshot 상한 안에서 수행하고 원 files/cap/IO32파일·8MiB·proof512파일·32MiB를 유지한다. 실제 KnownFolder·기존 profile·원17 장부·새 실 permit·추가 승인 record 자동 생성·실제 모델·ADC·Vertex·실장비와 peer/하위 agent는0이다. 원1 v1 기본8/경계9·host7의 일괄 실행은0이며 SQL 원장·물리/규범 정확도·실제 AI 종단 검증으로 이 준비 결과를 승격하지 않는다. 아래 d2e/921 기록은 각 당시 이력으로 보존한다.
+
 ## 최초 실패 보존 수정 — 2026-10-26
 
 DEV2-WORKFLOW-REGISTRATION-FIRST-FAILURE-FIX-001은 정확921bdca27249fb785c1cea12f9a177cfe9a3e256에서 시작한 별도 clone/branch의 core/test/usage3 수정이다. 기존921·7226·cc72와 원 증거는 동결 유지한다. root의 등록 원 dynamic12/12 통과 통지와 후행 Important1을 구별하며 원12를 재실행하거나 이번 분모에 더하지 않는다. 이 수정의 독립 검수는 아직 대기다.
@@ -34,6 +79,7 @@ python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --first-co
 ```python
 preflight_conducted_workflow_inputs(
     context, analysis, plan_input, *, quantity, allowed_tools, measurement_ref,
+    measurement_selection_policy=None,
 ) -> dict
 
 prepare_registered_conducted_workflow(*, scenario_id, requested_model) -> dict
@@ -51,7 +97,7 @@ scope exact12는 allowed_models=[gpt-6.1-sol,gpt-6-astra], maximum_workflows=1, 
 
 inherited_history는735가 요구하는 원17 exact8 metadata다. actual_codex_model_processes/known_total_before_this_host=17, usage_complete=false, unknown_usage_components/cost=null, provenance_level=previous_verified_root_rollup_not_fresh_original_receipt_reaudit 및 원 source_rollup/published_source를 그대로 보존한다. 이 경로를 따라 운영17의 원 SQL/receipt를 열지 않는다. 0 seed·새 예산으로 바꾸지 않는다.
 
-prepared-inputs-v1.json exact14는 schema_version=1, kind=codex_conducted_workflow_prepared_data, scenario_id, requested_model, journal_id, permit_id, registered_input_root, store_root, executable, expires_at, quantity, allowed_tools, measurement_ref, files다. 이 파일의 원 bytes SHA가 위 trusted record의 prepared_manifest_sha256과 같아야 한다. 이것은 준비 데이터의 binding이며 이 metadata 자체가 권위 source는 아니다.
+prepared-inputs-v1.json의 schema1 exact14는 schema_version=1, kind=codex_conducted_workflow_prepared_data, scenario_id, requested_model, journal_id, permit_id, registered_input_root, store_root, executable, expires_at, quantity, allowed_tools, measurement_ref, files다. schema2 exact15는 위 명시 measurement_selection_policy를 추가하고 ref=null을 요구한다. 이 파일의 원 bytes SHA가 위 trusted record의 prepared_manifest_sha256과 같아야 한다. 이것은 준비 데이터의 binding이며 이 metadata 자체가 권위 source는 아니다.
 
 files exact5는 registered-intake-v1.json/analysis.json/plan-input.json/catalog.json/response-schema.json을 key로 가진 Pin{bytes,sha256}다. 실제 파일은 operator/prepared-data/의 같은 고정 leaf에서만 읽는다. arbitrary/nested raw ref 경로를 따라가지 않는다. manifest256KiB/analysis256KiB/plan256KiB/catalog1MiB/schema64KiB, metadata64KiB/위임64KiB를 상한으로 둔다. analysis/plan은 원 canonical JSON, schema는 승인 literal3052B/aa321 원 bytes다.
 

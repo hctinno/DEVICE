@@ -46,15 +46,24 @@ def _text(value):
     if type(value) is not str or not value.strip() or len(value)>2048:_fail('delegation_invalid')
 
 
-def preflight_conducted_workflow_inputs(context,analysis,plan_input,*,quantity,allowed_tools,measurement_ref):
+def preflight_conducted_workflow_inputs(context,analysis,plan_input,*,quantity,allowed_tools,measurement_ref,measurement_selection_policy=None):
     result=dict(schema_version=1,kind='conducted_workflow_input_preflight',status='invalid',pins=None,gaps=[],failure=None,execution_authority=False)
     try:
-        context,analysis,plan,quantity,tools,ref=_snapshot([context,analysis,plan_input,quantity,allowed_tools,measurement_ref])
+        if measurement_selection_policy is None:
+            context,analysis,plan,quantity,tools,ref=_snapshot([context,analysis,plan_input,quantity,allowed_tools,measurement_ref])
+        else:
+            context,analysis,plan,quantity,tools,ref,policy=_snapshot([context,analysis,plan_input,quantity,allowed_tools,measurement_ref,measurement_selection_policy])
         if type(plan) is not dict or plan.get('status')!='ready_for_simulation':
             result['gaps']=plan.get('gaps',[]) if type(plan) is dict else [];_fail('plan_not_ready')
         _same(quantity,dict(metric='on',reference_plane='sensor_input',loss_compensation_applied=False,loss_compensation_sign=1))
         _same(tools,_host._TOOLS)
-        if type(ref) is not str or not 0<len(ref)<=200:_fail('reference_invalid')
+        if measurement_selection_policy is None:
+            if type(ref) is not str or not 0<len(ref)<=200:_fail('reference_invalid')
+        else:
+            if ref is not None:_fail('reference_invalid')
+            if (type(policy) is not dict or set(policy)!= {'schema_version','kind'}
+                    or type(policy['schema_version']) is not int or policy['schema_version']!=1
+                    or policy['kind']!='unique_same_run_sensor_acquisition'):_fail('input_invalid')
         method={key:plan['plan'][key] for key in ('method_id','method_version','metric','reference_plane')}
         _same(method,dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
         rebuilt=build_conducted_twin_plan_input(context,analysis,expected_revision=context['revision'],expected_context_sha256=_H(_C(context)),
@@ -258,8 +267,12 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         result['operator_source']=_pin(source_raw)
         meta_raw=io.read(operator/'prepared-inputs-v1.json',65536)
         if _H(meta_raw)!=source['prepared_manifest_sha256']:_fail('binding_mismatch')
-        meta=_json(meta_raw);_keys(meta,'schema_version kind scenario_id requested_model journal_id permit_id registered_input_root store_root executable expires_at quantity allowed_tools measurement_ref files')
-        if type(meta['schema_version']) is not int or meta['schema_version']!=1 or meta['kind']!='codex_conducted_workflow_prepared_data':_fail('data_invalid')
+        meta=_json(meta_raw)
+        fields='schema_version kind scenario_id requested_model journal_id permit_id registered_input_root store_root executable expires_at quantity allowed_tools measurement_ref files'
+        if type(meta) is dict and type(meta.get('schema_version')) is int and meta['schema_version']==2:fields+=' measurement_selection_policy'
+        _keys(meta,fields)
+        if type(meta['schema_version']) is not int or meta['schema_version'] not in (1,2) or meta['kind']!='codex_conducted_workflow_prepared_data':_fail('data_invalid')
+        if meta['schema_version']==2 and (meta['measurement_ref'] is not None or meta['measurement_selection_policy'] is None):_fail('data_invalid')
         _same((meta['scenario_id'],meta['requested_model']),(scenario_id,requested_model))
         for key in ('journal_id','permit_id'):_host._native_host._id(meta[key])
         _native._valid_segment(meta['permit_id'])
@@ -291,7 +304,9 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         store=Store.open_existing(str(state));_host._native_host._dedicated(store,selection['job_id'])
         context=prepare_registered_synthetic_context(store,selection,producer_name=analysis['producer']['name'])
         _host._native_host._dedicated(store,selection['job_id'])
-        preflight=preflight_conducted_workflow_inputs(context,analysis,plan,quantity=meta['quantity'],allowed_tools=meta['allowed_tools'],measurement_ref=meta['measurement_ref'])
+        selection_options={}
+        if meta['schema_version']==2:selection_options['measurement_selection_policy']=meta['measurement_selection_policy']
+        preflight=preflight_conducted_workflow_inputs(context,analysis,plan,quantity=meta['quantity'],allowed_tools=meta['allowed_tools'],measurement_ref=meta['measurement_ref'],**selection_options)
         if preflight['status']!='validated':_fail('preflight_rejected')
         closing=store;store=None;closing.close()
         _host._native_host._registration(operator/'prepared-data',check_config,scenario_id)
@@ -302,6 +317,7 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         workflow=dict(schema_version=1,kind='codex_registered_conducted_workflow',scenario_id=scenario_id,context_sha256=preflight['pins']['context_sha256'],
             analysis_sha256=_H(rawfiles['analysis.json']),plan_input_sha256=_H(rawfiles['plan-input.json']),source_settings=plan['plan']['source_settings'],
             quantity=meta['quantity'],allowed_tools=meta['allowed_tools'],measurement_ref=meta['measurement_ref'],catalog_sha256=_H(rawfiles['catalog.json']),schema_sha256=_H(schema))
+        if meta['schema_version']==2:workflow.update(schema_version=2,measurement_selection_policy=meta['measurement_selection_policy'])
         config=dict(schema_version=1,kind='codex_registered_conducted_workflow_control',anchor_sha256=_H(_C(anchor)),journal_id=meta['journal_id'],permit_id=meta['permit_id'],
             registration_sha256=_H(rawfiles['registered-intake-v1.json']),workflow_sha256=_H(_C(workflow)),registered_input_root=str(original),store_root=str(state),executable=str(executable))
         baseline=dict(schema_version=1,kind='codex_conducted_workflow_continuation_baseline',journal_id=meta['journal_id'],anchor_sha256=config['anchor_sha256'],inherited_history=source['inherited_history'])
