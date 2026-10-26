@@ -320,7 +320,8 @@ def _selection_result(value):
 
 
 def finalize_conducted_execution_result(execution_receipt, *, expected_execution_sha256,
-        evidence_dir, measurement_ref=None, measurement_selection_policy=None, workspace_root, artifact_name):
+        evidence_dir, measurement_ref=None, measurement_selection_policy=None, workspace_root, artifact_name,
+        uncertainty_inputs=None):
     """Pin fixed same-run evidence, call genuine builder, and store its unchanged DTO."""
     receipt = dict(schema_version=1,kind='conducted_execution_result_finalizer',status='held',
         execution_receipt=None,input_files={},result=None,artifact=None,failure=None,secondary_errors=[],
@@ -337,6 +338,8 @@ def finalize_conducted_execution_result(execution_receipt, *, expected_execution
             _reject('input_invalid')
         if selected_mode:
             _selection_policy(measurement_selection_policy, measurement_ref)
+        if uncertainty_inputs is not None:
+            uncertainty_inputs = _snapshot(uncertainty_inputs)
         stage = 'read'
         values,journal = _read_inputs(evidence_dir,loop['artifacts'],receipt)
         stage = 'binding'
@@ -354,8 +357,9 @@ def finalize_conducted_execution_result(execution_receipt, *, expected_execution
         if result['failure'] is not None:
             _note(receipt,result['failure'])
         stage = 'writer'
+        uncertainty_options = {} if uncertainty_inputs is None else {'uncertainty_inputs': uncertainty_inputs}
         receipt['artifact'] = _write_result(result,workspace_root=workspace_root,artifact_name=artifact_name,
-            expected_result_sha256=_H(_C(result)),run_id=run,runtime_instance_id=runtime)
+            expected_result_sha256=_H(_C(result)),run_id=run,runtime_instance_id=runtime,**uncertainty_options)
         receipt['status'] = 'stored'
         return receipt
     except _CONTROL:
