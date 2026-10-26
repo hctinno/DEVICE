@@ -507,14 +507,18 @@ class PreclaimContextTests(unittest.TestCase):
             con.execute("UPDATE intakes SET status='upload_incomplete'")
         self.error('not_ready')
 
-    def test_pdf_metadata_rejects_before_bytes_parsing_or_retention(self):
-        from unittest.mock import patch
+    def test_malformed_pdf_remains_an_unread_schema2_context_without_claim(self):
         self.rescan('SOURCE.PDF', b'%PDF-authored-synthetic-no-parser\n')
         before = self.business()
-        with patch.object(self.jobs, '_prepare') as prepare, patch.object(Store, 'verify_blob') as raw, \
-                patch.object(Store, 'write_blob') as retained:
-            self.error('unsupported_schema')
-            prepare.assert_not_called(); raw.assert_not_called(); retained.assert_not_called()
+        try:
+            context = self.prepare()
+        except ValueError as error:
+            self.fail('PDF context is still categorically unsupported: '+str(error))
+        document = next(item for item in context['documents'] if item['path']=='SOURCE.PDF')
+        self.assertEqual(context['analysis_contract']['schema_version'],2)
+        self.assertIsNone(document['text']);self.assertEqual(document['pages'],[])
+        self.assertFalse(document['complete']);self.assertNotEqual(document['parse_status'],'ok')
+        self.assertTrue(document['issues']);self.assertEqual(self.job()['state'],'queued')
         self.assertEqual(before, self.business())
 
     def test_unsupported_file_remains_visible_with_null_text(self):
@@ -657,6 +661,180 @@ class PreclaimContextTests(unittest.TestCase):
         import shutil
         shutil.rmtree(self.inbox)
         self.assertEqual(self.prepare()['documents'][0]['path'], 'request.txt')
+
+
+G3_PDF_CONTEXT_OBSERVATIONS=[]
+
+
+class PreclaimPDFContextTests(unittest.TestCase):
+    """Fresh queued authored PDFs; public G3 only, no host/model/old Store."""
+    NAME='SYN-G3-PDF-CONTEXT'
+    PUBLIC=PreclaimContextTests.PUBLIC
+    prepare=PreclaimContextTests.prepare
+    business=PreclaimContextTests.business
+    job=PreclaimContextTests.job
+    error=PreclaimContextTests.error
+
+    def setUp(self):
+        import io
+        import json
+        from reportlab.pdfgen import canvas
+        from labflow import intake_jobs
+        self.jobs=intake_jobs;self.tmp=tempfile.TemporaryDirectory(prefix='g3-pdf-');self.addCleanup(self.tmp.cleanup)
+        self.root=Path(self.tmp.name);self.inbox=self.root/'inbox';bundle=self.inbox/'bundle';bundle.mkdir(parents=True)
+        self.source=bundle/'REQUEST.PDF';buffer=io.BytesIO();pdf=canvas.Canvas(buffer)
+        for lines in (('product_type: instrument','model: AUTHORED-G3-PDF'),
+                      ('purpose: queued schema2 context check','features: authored simulation only')):
+            text=pdf.beginText(48,790)
+            for line in lines:text.textLine(line)
+            pdf.drawText(text);pdf.showPage()
+        pdf.save();self.source.write_bytes(buffer.getvalue())
+        initial=Store(self.root/'state');register_source(initial,'G3-PDF-SYN',self.inbox,synthetic=True,settle_seconds=1)
+        scan_source(initial,'G3-PDF-SYN',now=100,synthetic_only=True)
+        item=scan_source(initial,'G3-PDF-SYN',now=101,synthetic_only=True)['accepted'][0]
+        with initial.connection() as con:
+            revision=con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',(item['intake_id'],item['revision'])).fetchone()
+        self.selection=dict(source_id='G3-PDF-SYN',intake_id=item['intake_id'],revision=item['revision'],job_id=item['job_id'],
+            revision_fingerprint=revision['fingerprint'],files=json.loads(revision['files_json']))
+        initial.close();self.store=Store.open_existing(str(initial.root));self.addCleanup(self.store.close)
+        self.record=dict(case=self._testMethodName,source='fresh own synthetic queued PDF')
+        self.addCleanup(self.capture)
+
+    def capture(self):
+        files={}
+        for path in self.root.rglob('*'):
+            if path.is_file() and path.suffix not in ('.sqlite3',):
+                files[path.relative_to(self.root).as_posix()]=path.read_bytes()
+        self.assertLessEqual(len(files),192);self.assertLessEqual(sum(map(len,files.values())),8*1024*1024)
+        G3_PDF_CONTEXT_OBSERVATIONS.append(dict(self.record,files=files))
+
+    def source_pin(self):
+        import hashlib
+        import os
+        with self.source.open('rb') as stream:raw=stream.read();info=os.fstat(stream.fileno())
+        return dict(sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw),ino=info.st_ino,nlink=info.st_nlink,mtime_ns=info.st_mtime_ns,ctime_ns=info.st_ctime_ns)
+
+    def ready(self):
+        try:return self.prepare()
+        except ValueError as error:self.fail('queued PDF schema2 context support missing: '+str(error))
+
+    def rescan(self,name,payload):
+        import json
+        (self.inbox/'bundle'/name).write_bytes(payload)
+        scan_source(self.store,'G3-PDF-SYN',now=200,synthetic_only=True)
+        item=scan_source(self.store,'G3-PDF-SYN',now=201,synthetic_only=True)['accepted'][0]
+        with self.store.connection() as con:
+            row=con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',(item['intake_id'],item['revision'])).fetchone()
+        self.selection=dict(source_id='G3-PDF-SYN',intake_id=item['intake_id'],revision=item['revision'],job_id=item['job_id'],
+            revision_fingerprint=row['fingerprint'],files=json.loads(row['files_json']))
+
+    def test_queued_pdf_produces_retained_public8_schema2_without_business_DML_or_claim(self):
+        import json
+        import sqlite3
+        from unittest.mock import patch
+        before=self.business();source=self.source_pin();tables=set(before);attempts=[];connect=sqlite3.connect
+        def observing(*args,**kwargs):
+            con=connect(*args,**kwargs)
+            def authorizer(action,one,two,database,trigger):
+                if action in (sqlite3.SQLITE_INSERT,sqlite3.SQLITE_UPDATE,sqlite3.SQLITE_DELETE) and one in tables:
+                    attempts.append(dict(action=action,table=one));return sqlite3.SQLITE_DENY
+                return sqlite3.SQLITE_OK
+            con.set_authorizer(authorizer);return con
+        with patch.object(sqlite3,'connect',side_effect=observing),\
+             patch.object(self.jobs,'claim_job',side_effect=AssertionError('G3 claimed')),\
+             patch.object(self.jobs,'complete_job',side_effect=AssertionError('G3 completed')),\
+             patch.object(self.jobs,'fail_job',side_effect=AssertionError('G3 failed job')),\
+             patch.object(Store,'close',side_effect=AssertionError('G3 closed borrowed Store')):
+            context=self.ready()
+        self.assertEqual(attempts,[]);self.assertEqual(before,self.business());self.assertEqual(source,self.source_pin())
+        self.assertEqual(set(context),set(self.PUBLIC));self.assertIs(context['synthetic'],True)
+        self.assertEqual(context['analysis_contract']['schema_version'],2)
+        self.assertEqual(context['analysis_contract']['context_id'],context['analysis_context_id'])
+        document=context['documents'][0];self.assertEqual(document['format'],'pdf');self.assertTrue(document['complete'])
+        self.assertEqual(document['total_pages'],2);self.assertEqual(len(document['pages']),2)
+        manifest=json.loads(self.store.verify_blob(context['analysis_context_id']).read_bytes())
+        extraction=json.loads(self.store.verify_blob(document['extraction_id']).read_bytes())
+        self.assertEqual(manifest['documents'],context['documents']);self.assertEqual(extraction['result']['pages'],document['pages'])
+        self.assertEqual((self.job()['state'],self.job()['attempt']),('queued',0))
+        self.record.update(context=context,source_pin=source,business_DML=attempts,claim_calls=0,borrowed_close_calls=0)
+
+    def test_mixed_text_pdf_prompt_and_strict_page_citations_remain_bound_to_original_context(self):
+        import json
+        from labflow.intake_model_boundary import build_analysis_prompt,decode_analysis_response
+        from labflow.store import canonical
+        self.rescan('notes.txt',b'manufacturer: Synthetic Vendor\n')
+        before=self.business();context=self.ready();prompt=build_analysis_prompt(context,producer_name=self.NAME)
+        self.assertEqual(json.loads(prompt['messages'][1]['content']),context)
+        self.assertEqual(context['analysis_contract']['schema_version'],2)
+        self.assertEqual(prompt['binding']['analysis_context_id'],context['analysis_context_id'])
+        document=next(item for item in context['documents'] if item['format']=='pdf');page=document['pages'][0]
+        evidence=dict(kind='pdf_page',path='REQUEST.PDF',sha256=document['sha256'],line_start=2,line_end=2,quote='model: AUTHORED-G3-PDF',
+            role='request',extraction_id=document['extraction_id'],page_number=1,text_sha256=page['text_sha256'])
+        analysis=dict(schema_version=2,context_id=context['analysis_context_id'],producer=dict(kind='model',name=self.NAME),identity='single',missing_fields=[],
+            facts=[dict(field='model',value='AUTHORED-G3-PDF',status='explicit',evidence=[evidence])])
+        decoded=decode_analysis_response(canonical(analysis).encode('utf-8'),context,producer_name=self.NAME)
+        self.assertEqual(decoded,analysis)
+        for field,value in (('quote','not present in original PDF'),('page_number',2),('extraction_id','0'*64),('text_sha256','0'*64)):
+            bad=copy.deepcopy(analysis);bad['facts'][0]['evidence'][0][field]=value
+            with self.subTest(field=field),self.assertRaises(ValueError):decode_analysis_response(canonical(bad).encode(),context,producer_name=self.NAME)
+        bad=copy.deepcopy(analysis);bad['context_id']='0'*64
+        with self.assertRaises(ValueError):decode_analysis_response(canonical(bad).encode(),context,producer_name=self.NAME)
+        self.assertEqual(before,self.business());self.record.update(context=context,prompt=prompt,analysis=decoded,new_model_calls=0)
+
+    def test_pdf_preparation_rechecks_private_job_after_retention_and_preserves_the_race(self):
+        from unittest.mock import patch
+        original=self.jobs._prepare;retained=[]
+        def race(store,revision):
+            value=original(store,revision);retained.append(value)
+            with store.connection() as con:con.execute("UPDATE intake_jobs SET token='AUTHORED-RACE' WHERE job_id=?",(self.selection['job_id'],))
+            return value
+        with patch.object(self.jobs,'_prepare',side_effect=race):self.error('state_changed')
+        self.assertEqual(self.job()['token'],'AUTHORED-RACE');self.assertEqual(self.job()['attempt'],0)
+        self.assertEqual(len(retained),1);self.assertTrue(self.store.blob_path(retained[0]['context_id']).is_file())
+        self.record.update(retained=retained,fault='explicit test job-token race, not G3 business write')
+
+    def test_pdf_extraction_tamper_rejects_and_keeps_original_failed_artifact(self):
+        from unittest.mock import patch
+        before=self.business();original=self.jobs._prepare;changed=[]
+        def tamper(store,revision):
+            value=original(store,revision);path=store.blob_path(value['documents'][0]['extraction_id'])
+            path.write_bytes(b'preserved authored PDF extraction failure');changed.append(path);return value
+        with patch.object(self.jobs,'_prepare',side_effect=tamper):self.error('preparation_failed')
+        self.assertEqual(before,self.business());self.assertEqual(len(changed),1)
+        self.assertEqual(changed[0].read_bytes(),b'preserved authored PDF extraction failure')
+        self.record.update(fault='explicit test extraction corruption preserved')
+
+    def test_pdf_public_context_limit_preserves_retained_prefix_and_business_state(self):
+        from unittest.mock import patch
+        from labflow.store import canonical
+        before=self.business();old=set((self.store.root/'blobs').iterdir())
+        self.assertLess(len(canonical(self.selection).encode('utf-8')),1024)
+        with patch.object(self.jobs,'MAX_CONTEXT_BYTES',1024):self.error('limit_exceeded')
+        self.assertEqual(before,self.business());self.assertGreater(len(set((self.store.root/'blobs').iterdir())-old),0)
+        self.record.update(fault='explicit public-context limit1024 above selection size; original production cap unchanged')
+
+    def test_first_observed_PDF_verify_controls_keep_identity_and_retained_prefix(self):
+        from unittest.mock import patch
+        before=self.business();source=self.source_pin()
+        for error in (KeyboardInterrupt('first PDF verify'),MemoryError('first PDF verify')):
+            with self.subTest(kind=type(error).__name__),patch.object(self.jobs,'_verify',side_effect=error):
+                with self.assertRaises(type(error)) as caught:self.ready()
+                self.assertIs(caught.exception,error);self.assertEqual(error.__dict__,{})
+        self.assertEqual(before,self.business());self.assertEqual(source,self.source_pin())
+        self.assertGreater(len(list((self.store.root/'blobs').iterdir())),1)
+        self.record.update(fault='two first verify controls; no retry/cleanup of retained prefix')
+
+    def test_inconsistent_schema2_context_binding_and_unknown_schema_do_not_return_success(self):
+        from unittest.mock import patch
+        before=self.business();original=self.jobs._public_context
+        for mode,want in (('context_id','preparation_failed'),('schema3','unsupported_schema')):
+            def changed(job,revision,prepared):
+                value=original(job,revision,prepared)
+                if mode=='context_id':value['analysis_contract']['context_id']='0'*64
+                else:value['analysis_contract']['schema_version']=3
+                return value
+            with self.subTest(mode=mode),patch.object(self.jobs,'_public_context',side_effect=changed):self.error(want)
+        self.assertEqual(before,self.business());self.record.update(fault='explicit wrong schema/context producer seam; original metadata retained')
 
 
 if __name__=='__main__':
