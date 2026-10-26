@@ -26,14 +26,16 @@ def bench():
     return fleet, N1911AVirtualSession(fleet, device_id='meter')
 
 
-def meter(power, *, unit='dBm', noise=0):
+def meter(power, *, unit='dBm', noise=0, maximum=30, mode='on_average', duty=1):
     device = DEVICE_FACTORIES['power_meter']({'profile_id': 'synthetic-meter',
-        'role': 'power_meter', 'simulation_parameters': {'noise_db': noise}}, 29)
+        'role': 'power_meter', 'simulation_parameters': {
+            'noise_db': noise, 'maximum_input_dbm': maximum}}, 29)
     ports = {'power': {'valid': True, 'enabled': True, 'voltage_v': 12}, 'sensor': {
         'valid': True, 'status': 'ok', 'unit': 'dBm', 'value': power, 'power_dbm': power,
-        'frequency_hz': 2.45e9, 'duty_cycle': 1, 'crest_factor_db': 0,
+        'frequency_hz': 2.45e9, 'duty_cycle': duty, 'crest_factor_db': 0,
         'source_id': 'synthetic-sensor', 'acquisition_tick': 0, 'acquisition_setup_revision': 0}}
-    device.perform('configure', {'unit': unit}, tick=0, setup_revision=0, inputs=ports)
+    device.perform('configure', {'unit': unit, 'measurement_mode': mode},
+                   tick=0, setup_revision=0, inputs=ports)
     device.perform('acquire', {}, tick=0, setup_revision=0, inputs=ports)
     device.advance(tick=2, setup_revision=0, inputs=ports)
     return device, ports
@@ -184,6 +186,67 @@ class N1911ADisplayUnitTests(unittest.TestCase):
                 self.assertEqual(reply['status'], 'error')
                 self.assertFalse(reply['setup_changed'])
                 self.assertEqual(output(device.observation(tick=2, setup_revision=0)), before)
+
+
+class DisplayNumericBoundaryTests(unittest.TestCase):
+    def test_large_finite_watts_uses_final_exponent_and_keeps_acquisition(self):
+        with localcontext() as context:
+            context.prec = 70
+            expected = float(Decimal(10) ** Decimal(306))
+        for first_unit in ('dBm', 'W'):
+            with self.subTest(first_unit=first_unit):
+                device, ports = meter(3090, unit=first_unit, maximum=4000)
+                before = device.observation(tick=2, setup_revision=0)
+                self.assertEqual(before['status'], 'ok')
+                changed = device.perform('set_display_unit', {'unit': 'W'}, tick=2,
+                                         setup_revision=0, inputs=ports)
+                self.assertEqual(changed['status'], 'ok')
+                self.assertFalse(changed['setup_changed'])
+                result = output(changed)
+                self.assertEqual(result['value'], expected)
+                self.assertEqual(result['acquisition_value'], 3090)
+                self.assertEqual(result['acquisition_tick'], 2)
+                self.assertEqual(result['configuration_revision'],
+                                 output(before)['configuration_revision'])
+                reverted = device.perform('set_display_unit', {'unit': 'dBm'}, tick=2,
+                                          setup_revision=0, inputs=ports)
+                self.assertEqual(output(reverted)['value'], 3090)
+                self.assertEqual(output(device.perform('fetch', {}, tick=2,
+                    setup_revision=0, inputs=ports)), output(reverted))
+
+    def test_unrepresentable_watts_rejects_setter_without_partial_state_change(self):
+        cases = [({'power': 4000, 'maximum': 4000}, 'display_value_overflow'),
+                 ({'power': -300, 'mode': 'time_average', 'duty': 1e-300},
+                  'display_value_underflow')]
+        for settings, reason in cases:
+            with self.subTest(reason=reason):
+                device, ports = meter(**settings)
+                before = device.observation(tick=2, setup_revision=0)
+                changed = device.perform('set_display_unit', {'unit': 'W'}, tick=2,
+                                         setup_revision=0, inputs=ports)
+                self.assertEqual(changed['status'], 'error')
+                self.assertEqual(changed['values']['reason'], reason)
+                self.assertFalse(changed['setup_changed'])
+                self.assertEqual(changed['values']['configuration'], before['values']['configuration'])
+                self.assertEqual(device.observation(tick=2, setup_revision=0), before)
+                self.assertEqual(output(device.perform('fetch', {}, tick=2,
+                    setup_revision=0, inputs=ports)), output(before))
+
+    def test_watts_acquisition_overflow_and_underflow_are_structured_invalid_not_zero(self):
+        cases = [({'power': 4000, 'maximum': 4000}, 'display_value_overflow'),
+                 ({'power': -300, 'mode': 'time_average', 'duty': 1e-300},
+                  'display_value_underflow')]
+        for settings, reason in cases:
+            with self.subTest(reason=reason):
+                device, ports = meter(unit='W', **settings)
+                observed = device.observation(tick=2, setup_revision=0)
+                self.assertEqual(observed['status'], 'invalid')
+                self.assertEqual(observed['values']['reason'], reason)
+                self.assertTrue(observed['values']['operation_complete'])
+                self.assertNotIn('measurement', observed['values']['outputs'])
+                recovered_unit = device.perform('set_display_unit', {'unit': 'dBm'}, tick=2,
+                                                setup_revision=0, inputs=ports)
+                self.assertNotIn('measurement', recovered_unit['values']['outputs'])
 
 
 if __name__ == '__main__':
