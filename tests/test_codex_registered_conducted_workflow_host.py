@@ -3,6 +3,7 @@ import copy
 from datetime import datetime, timedelta, timezone
 import hashlib
 import importlib
+import importlib.util
 import io
 import json
 import os
@@ -1022,7 +1023,103 @@ class CurrentWorkflowTests(unittest.TestCase):
     test_current_first_errors_survive_partial_handoff_once=current_first_errors_survive_partial_handoff_once
 
 
+_REGISTRATION_COMPAT_API=None
+
+
+class RegistrationPrepareCompatibilityTests(unittest.TestCase):
+    def setUp(self):
+        from test_codex_conducted_workflow_registration import RegistrationTests,api as registrar
+        self.registrar=registrar if _REGISTRATION_COMPAT_API is None else _REGISTRATION_COMPAT_API
+        self.fixture=RegistrationTests('test_pure_preflight_is_detached_and_not_authority')
+        self.fixture._testMethodName='actual_host_compat_'+self._testMethodName
+        self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
+        self.queued_context=json.loads(C(self.fixture.context));self.fixture.make_completed_inputs()
+        self.assertEqual(len(self.fixture.meta),16)
+        self.assertNotEqual(H(C(self.queued_context)),H(C(self.fixture.context)))
+
+    def snapshot(self):
+        helper=self.fixture;result={}
+        paths=[p for p in helper.store_root.rglob('*') if p.is_file()]+[helper.root/'i/b/r.txt']
+        for path in paths:
+            raw=path.read_bytes();s=path.stat(follow_symlinks=False)
+            result[path.relative_to(helper.root).as_posix()]=dict(bytes=len(raw),sha256=H(raw),device=s.st_dev,inode=s.st_ino,
+                nlink=s.st_nlink,mtime_ns=s.st_mtime_ns,ctime_ns=s.st_ctime_ns,attributes=s.st_file_attributes,reparse_tag=s.st_reparse_tag)
+        return result
+
+    def invoke(self):
+        helper=self.fixture
+        with patch.object(self.registrar,'_operator_parent',return_value=helper.parent):
+            return self.registrar.prepare_registered_conducted_workflow(scenario_id='REG-CASE',requested_model='gpt-6-astra')
+
+    def test_registration_v3_native_publish_and_actual_prepare(self):
+        helper=self.fixture;before=self.snapshot();original_prepare=api._prepare;original_close=Store.close;closed=[]
+        def close(store):closed.append(store);return original_close(store)
+        with patch.object(api,'_prepare',wraps=original_prepare) as stage_prepare,patch.object(Store,'close',close), \
+                patch.object(Store,'__init__',side_effect=AssertionError('NO_STORE_INITIALIZER_DURING_PREPARE')), \
+                patch.object(api,'_execute',side_effect=AssertionError('NO_RUNTIME')) as execute, \
+                patch.object(api,'_finalize',side_effect=AssertionError('NO_RF_FINALIZER')) as finalize, \
+                patch.object(subprocess,'Popen',side_effect=AssertionError('NO_CLI')) as child:
+            result=self.invoke();after_publish=self.snapshot()
+            helper.put(helper.root/'actual-registration-result.json',dict(result=result,source_before=before,source_after=after_publish,
+                class_scope='AUTHORED operator location; real native publisher and validators; no operating approval/profile',
+                host_prepare_calls=stage_prepare.call_count,target_exists=helper.target.exists(),stage_exists=helper.stage.exists()))
+            self.assertEqual(result['status'],'prepared','Actual prepared16/native publish/host5tuple dependency is not ready')
+            self.assertEqual(stage_prepare.call_count,1);stage_owned=stage_prepare.call_args.args[3]
+            self.assertIs(type(stage_owned['store']),Store);self.assertEqual(stage_owned['store'].root,helper.store_root)
+            self.assertEqual(sum(store is stage_owned['store'] for store in closed),1)
+            self.assertEqual(set(stage_owned['current_facts_plan']),{'context','analysis','facts_plan'})
+            config=json.loads((helper.target/'operator-control.json').read_bytes());workflow=json.loads((helper.target/'registered-workflow.json').read_bytes())
+            self.assertEqual((workflow['schema_version'],len(workflow),workflow['context_scope']),(3,14,'completed_current_provided'))
+            self.assertIsNone(workflow['measurement_ref']);self.assertEqual(workflow['measurement_selection_policy'],helper.meta['measurement_selection_policy'])
+            owned=dict(store=None)
+            try:
+                prepared=original_prepare(helper.target,config,'REG-CASE',owned)
+                self.assertIs(type(prepared),tuple);self.assertEqual(len(prepared),5)
+                self.assertEqual(C(prepared[:4]),C([workflow,helper.context,helper.analysis,helper.plan]))
+                self.assertEqual(prepared[4],(helper.target/'response-schema.json').read_bytes())
+                self.assertEqual(C(owned['current_facts_plan']),C(stage_owned['current_facts_plan']))
+                self.assertEqual(C(owned['completed_scope']),C(stage_owned['completed_scope']))
+                self.assertEqual((workflow['context_sha256'],workflow['analysis_sha256'],workflow['plan_input_sha256']),
+                    (H(C(helper.context)),H(C(helper.analysis)),H(C(helper.plan))))
+                post_store=owned['store'];self.assertIs(type(post_store),Store);self.assertEqual(post_store.root,helper.store_root)
+            finally:
+                if owned['store'] is not None:owned['store'].close()
+            self.assertEqual(sum(store is post_store for store in closed),1)
+            self.assertFalse(execute.called);self.assertFalse(finalize.called);self.assertFalse(child.called)
+        connection=sqlite3.connect((helper.target/'workflow-continuation.sqlite3').as_uri()+'?mode=ro',uri=True)
+        try:
+            connection.execute('PRAGMA query_only=ON');rows=connection.execute('SELECT kind,payload FROM codex_conducted_workflow_history ORDER BY seq').fetchall()
+        finally:connection.close()
+        self.assertEqual([row[0] for row in rows],['baseline','permit']);self.assertFalse((helper.target/'workflow-claimed.json').exists())
+        self.assertEqual(list((helper.target/'runs'/helper.meta['permit_id']).iterdir()),[]);self.assertFalse(helper.stage.exists())
+        self.assertEqual(self.snapshot(),before)
+        helper.put(helper.root/'actual-prepare-compat-observation.json',dict(prepared_metadata_fields=16,workflow_fields=14,
+            actual_staging_prepare_calls=1,actual_postpublish_prepare_calls=1,returned_tuple_fields=5,current_fields=['context','analysis','facts_plan'],
+            current_context_sha256=H(C(helper.context)),queued_context_sha256=H(C(self.queued_context)),source_before=before,source_after=self.snapshot(),
+            ledger_kinds=[row[0] for row in rows],known_staging_store_close=1,known_postpublish_store_close=1,
+            substituted_boundary='operator parent location only; native publication/authority-data validators and actual host prepare are real',
+            actual_loop_RF_models=0,operating_profiles_permits_17_changes=0))
+
+    def test_registration_v3_mismatched_data_stays_before_target(self):
+        helper=self.fixture;changed=json.loads(C(helper.analysis));changed['producer']['name']='DIFFERENT-SUPPLIED-ANALYSIS'
+        helper.meta['files']['analysis.json']=helper.put(helper.data/'analysis.json',changed);helper.bind();before=self.snapshot()
+        with patch.object(api,'_prepare',wraps=api._prepare) as prepared,patch.object(api,'_execute',side_effect=AssertionError('NO_RUNTIME')) as execute:
+            result=self.invoke()
+        self.assertEqual(result['status'],'not_prepared');self.assertFalse(prepared.called);self.assertFalse(execute.called)
+        self.assertFalse(helper.stage.exists());self.assertFalse(helper.target.exists());self.assertEqual(self.snapshot(),before)
+        helper.put(helper.root/'before-target-rejection.json',dict(result=result,source_before=before,source_after=self.snapshot(),
+            host_prepare_calls=0,native_target_created=False,actual_loop_RF_models=0))
+
+
 if __name__=='__main__':
+    if '--registration-parent-control' in sys.argv:
+        index=sys.argv.index('--registration-parent-control');control=Path(sys.argv[index+1]).absolute();del sys.argv[index:index+2]
+        if not control.is_relative_to(ROOT/'.local/CRPC-001'):raise ValueError('control source outside owner namespace')
+        spec=importlib.util.spec_from_file_location('labflow._crpc_parent_registration',control)
+        _REGISTRATION_COMPAT_API=importlib.util.module_from_spec(spec);spec.loader.exec_module(_REGISTRATION_COMPAT_API)
+        unittest.main(defaultTest=['RegistrationPrepareCompatibilityTests.test_registration_v3_native_publish_and_actual_prepare'])
+    if '--registration-compat' in sys.argv:
+        sys.argv.remove('--registration-compat');unittest.main(defaultTest=['RegistrationPrepareCompatibilityTests'])
     if '--current-seed' in sys.argv:
         index=sys.argv.index('--current-seed');_CURRENT_SEED_FILE=sys.argv[index+1];del sys.argv[index:index+2]
     if '--current-seed-prepare' in sys.argv:
