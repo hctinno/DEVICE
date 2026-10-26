@@ -85,11 +85,40 @@ class _IO:
         self.backend=_native._WindowsIO();self.parent=parent
         self.files={};self.reads=[];self.close_errors=[];self.dir_attempted=set();self.output_files=0;self.output_bytes=0
         self.claimed=False;self.published=False;self.publication_attempted=False
-        try:self.tree=_native._Tree(parent,self.backend)
+        try:
+            self.tree=_native._Tree(parent,self.backend)
+            self.parent_binding=self.directory_binding(parent)
         except BaseException:
             try:self.close_dirs()
             except BaseException:pass
             raise
+    def directory_binding(self,path):
+        # Keep the caller's fixed lexical root. MSIX may report a different
+        # final path; it must still identify the directory pinned by _Tree.
+        self.tree.directory(path)
+        resolved=_native._local_path(path.resolve(strict=True))
+        _,lexical=_host._native_host._path(path,directory=True)
+        _,physical=_host._native_host._path(resolved,directory=True)
+        identity=_native._identity(self.backend.info(self.backend.directories[path],directory=True))
+        if _native._identity(lexical)!=identity or _native._identity(physical)!=identity:_fail('path_invalid')
+        if path!=self.parent:
+            token=self.adopt(self.backend._relative(self.backend.directories[path.parent],path.name,directory=True))
+            primary=None
+            try:
+                if _native._identity(self.backend.info(token['fd'],directory=True))!=identity:_fail('path_invalid')
+            except BaseException as error:primary=error;raise
+            finally:
+                token['attempted']=True
+                try:_close_directory(token['fd'])
+                except BaseException as error:
+                    self.close_errors.append(error)
+                    if primary is None:raise
+        return resolved,identity
+    def namespace(self,path,target=None):
+        if path.parent!=self.parent or self.directory_binding(self.parent)!=self.parent_binding:_fail('path_invalid')
+        resolved,_=self.directory_binding(path)
+        if resolved!=self.parent_binding[0]/path.name:_fail('path_invalid')
+        if target is not None and target.resolve(strict=False)!=self.parent_binding[0]/target.name:_fail('path_invalid')
     def adopt(self,fd):
         token=dict(fd=fd,attempted=False);self.files[fd]=token;return token
     def close_file(self,token):
@@ -139,7 +168,7 @@ class _IO:
         fd=self.backend._relative(self.backend.directories[self.parent],stage.name,directory=True,create=True,access=0x1100A1,share=3)
         self.backend.directories[stage]=fd;self.backend.held.append(fd);self.claimed=True
         self.tree.directory(stage)
-        if stage.resolve(strict=True)!=stage:_fail('path_invalid')
+        self.namespace(stage)
     def database(self,path,baseline,permit,config,anchor):
         self.reserve(2,2097152)  # New DB plus its bounded transient rollback journal.
         fd=self.backend._relative(self.backend.directories[path.parent],path.name,directory=False,create=True,access=0xC0100000,share=3)
@@ -179,7 +208,7 @@ class _IO:
         if first is not None:raise first
     def publish(self,stage,target):
         if stage.parent!=self.parent or target.parent!=self.parent or stage.name!=_STAGE or target.name!=_TARGET:_fail('path_invalid')
-        if stage.resolve(strict=True)!=stage or target.resolve(strict=False)!=target:_fail('path_invalid')
+        self.namespace(stage,target)
         if _native._destination_exists(self.tree,target):_fail('destination_exists')
         # Windows directory rename requires descendant directory handles closed.
         first=None
@@ -200,6 +229,7 @@ class _IO:
             if old.is_relative_to(stage):self.backend.directories[target/old.relative_to(stage)]=self.backend.directories.pop(old)
         for old in list(self.tree.directories):
             if old.is_relative_to(stage):self.tree.directories[target/old.relative_to(stage)]=self.tree.directories.pop(old)
+        self.namespace(target)
     def close_dirs(self):
         first=None
         for fd in reversed(self.backend.held):
