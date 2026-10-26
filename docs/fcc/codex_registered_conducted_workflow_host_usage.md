@@ -1,5 +1,31 @@
 # 등록 합성 conducted workflow의 native host
 
+## completed current 명시 경로 — 구현 전 고정안
+
+2026-10-26 Asia/Seoul. DEV2-WORKFLOW-CURRENT-HANDOFF-001은 정확226a5182fbc4f88d1321eea6a6cee0e668ac598d의 별도 clone/branch에서 host/test/usage3만 소유한다. 등록3·native-intake3·현재 reader·Store·D1/D3/D4 코드는 수정하지 않는다. 아래는 root가 승인한 최소 범위를 구체화한 사전 계약이며 독립 preseal 확인과 구현/검증은 아직 대기다. 원87/226과 과거 실패·proof는 동결 유지한다.
+
+새 workflow는 native schema_version=3 exact14, 즉 v2 exact13+context_scope="completed_current_provided"다. ref=None/명시 policy exact2·원 workflow SHA/config/finite permit/모델/시간·파일 한도는 유지한다. v1/v2는 기존 queued/G3 경로를 그대로 사용하고 schema3만 completed readonly current/facts-plan API로 분기한다. instructions나 C1을 고쳐 원 provider 문맥을 현재처럼 만들지 않는다. current context/analysis/facts-plan의 원 입력을 사용하며 원 queued plan/result는 과거 원형이다.
+
+completed 전용 범위 검사는 단순한 _dedicated 생략이 아니다. 새 분기에만 같은 Store의 SELECT snapshot으로 다음을 전부 확인한다.
+
+1. registered_intake exact6의 source_id/intake_id/job_id/positive revision/fingerprint/files를 원 manifest·actual source/revision/job과 대조한다. 대상 job은 정확1개이고 그 intake/revision의 실제 completed job이어야 한다.
+2. 원 source와 revision의 synthetic=1, intake의 현재 revision 일치·upload_incomplete 아님, source의 실제 root/bundle이 원 registered_input_root와 일치, revision files_json/fingerprint가 선택 원형과 canonical 일치해야 한다. 다른 source·파일 목록·원문 bytes를 허용하는 범위 확대가 없다.
+3. 같은 Store 전체의 queued/running job은0이어야 한다. 다른 active job이 있거나 대상만 queued/running이면 차단한다. 기존 과거 completed 이력 자체를 삭제·수정하거나 대상으로 선택하지 않는다.
+4. scope snapshot 전후로 current readonly API를 한 번 호출한다. 원 context의 job/intake/revision와 원 analysis·current plan 전체 canonical SHA를 profile의 사전 명시 context/analysis/plan-input SHA 및 catalog/schema SHA에 대조하고 current plan은 ready여야 한다. scope/원 submission·현재 revision/files가 달라지면 소비 전 차단한다.
+5. 제품은 claim/complete/respond/행 UPDATE·DML/새 parser/Store 초기화·원 권한 발급을 호출하지 않는다. queued 자료만 있으면 진짜 public claim→strict 분석→complete_job이 별도 선행되어야 하며 새 scope가 그 절차를 위장하지 않는다.
+
+TXT만 첫 지원한다. 기존 native _registration의 PDF suffix unsupported_schema를 유지한다. D1 G3 schema2/PDF 지원과 formal native PDF 등록 지원은 별도이며 후자는 이번 소유 밖 인계 공백이다. 새 scope를 이유로 기존 helper 거절을 우회하지 않는다.
+
+실행은 위에서 확인한 동일 current context/analysis/plan으로 원 adapter→selector/finalizer를 사용한다. D3의 독립 current3 readback/export에 줄 공급 원형과 기존 execution/finalizer/artifact pin을 연결해 보존해야 한다. caller-request.json은 plan binding/source 설정만 담으므로 그것만으로 current context/analysis 전체를 보존했다고 주장하지 않는다. 추가 handoff 파일의 정확 형상/상한과 저장 순서는 root preseal에서 먼저 확정한다. 기존 DRAFT·actual model/physical/method 미평가를 바꾸지 않는다.
+
+계획은 사전 규범/독립 preseal→작은 RED→schema3/current scope 구현→typed 준비/차단·최초 오류→genuine MOCK≤1→source/Store 무쓰기/native 검증→정상게시·동결 순서다. 기존14/9·host7·registration7/parent 회귀를 반복하지 않는다. 새 TXT disposable Store 1건을 genuine public claim/strict/complete로 준비하고, product 호출과 setup의 DML·모델0을 분리한다. typed 실패는 보존 snapshot/새 test-only 복사본에서 수행한다. genuine loop는≤1이며 producer60초/loop180초/retry0/기존 disk cap을 유지한다. 실제 원Store/운영17·authority/profile/실permit·실제AI/ADC/Vertex/실장비·peer/하위 agent는0이다.
+
+- [ ] root 독립 preseal 및 handoff/최초 오류 범위 확정
+- [ ] 기존 v1/v2 보존·schema3/current binding의 작은 RED
+- [ ] completed1·미완료/다른분석/범위/드리프트·control/최초 실패의 typed 검사
+- [ ] 한 completed current snapshot의 genuine MOCK≤1·재소비 거절·원 current 공급/출력 보존
+- [ ] 문서·raw/native 무쓰기·실패 보존·정상 commit/push·pin 인계
+
 ## 명시 측정 선택 workflow v2 — 2026-10-26
 
 DEV2-REGISTERED-WORKFLOW-SELECTION-HOST-001은 정확 공개 base30cd27bc47e70e93713d984b8ac545e801217b9c의 독립 clone에서 host/test/usage3만 수정한다. 불필요한 의존 cherry는 없다. 수용 [selector](conducted_measurement_selector_usage.md) e258과 [선택 finalizer](conducted_execution_result_finalizer_usage.md) 7226+15b의 원 API를 사용한다. 등록921+d2e·원 운영profile/ref17·원 proof는 변경하지 않는다. 이 host 후보의 독립 검수는 아직 대기다.
