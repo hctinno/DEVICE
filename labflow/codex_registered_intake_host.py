@@ -16,7 +16,7 @@ import stat
 import sys
 import uuid
 
-from .codex_intake_once import run_codex_intake_once
+from .codex_intake_once import preflight_codex_intake_once_inputs, run_codex_intake_once
 from .intake_jobs import prepare_registered_synthetic_context
 from .store import Store, StoreOpenError, canonical, identifier
 
@@ -243,8 +243,6 @@ def _registration(root, config, scenario):
         if (type(name) is not str or not name or '\\' in name or PurePosixPath(name).is_absolute()
                 or any(part in ('','.','..') for part in name.split('/')) or not _int(item['bytes'],0,32*1024*1024)):
             _fail('registration_mismatch')
-        if PurePosixPath(name).suffix.lower() == '.pdf':
-            _fail('unsupported_schema')
         if name.casefold() in names:
             _fail('registration_mismatch')
         names.add(name.casefold());total += item['bytes']
@@ -497,12 +495,14 @@ def _run(scenario, model):
     record = dict(schema_version=1,kind='codex_registered_intake_host_receipt',status='not_run',phase='operator',
         scenario_id=scenario,requested_model=model,history=None,reservation=None,once=None,errors=[],
         verification=dict(operator_scope='not_validated',execution_scope='one_registered_synthetic_intake',measurement='not_assessed'))
-    store = con = guard = control = None
+    store = con = guard = control = first_error = None
     attempted = entered = consumed = False
     root = config = anchor = evidence = None
     active_path = active_info = active_bytes = None
     def error(exc, phase):
-        nonlocal control
+        nonlocal control, first_error
+        if first_error is None:
+            first_error = exc
         if isinstance(exc,_CONTROL) and control is None:
             control = exc
         code = str(exc) if type(exc) is _Failure else exc.code if isinstance(exc,StoreOpenError) else _PREFIX+(
@@ -560,6 +560,23 @@ def _run(scenario, model):
         if _read(root/_ANCHOR,65536)!=anchor_bytes or _read(root/'operator-control-v1.json',16384)!=config_bytes:
             _fail('source_changed')
         _expiry(permit['expires_at'])
+        prepared=preflight_codex_intake_once_inputs(context,producer_name=permit['producer_name'])
+        _keys(prepared,'schema_version kind status context prompt response_schema pins failure execution_authority')
+        if (not _int(prepared['schema_version'],1,1) or prepared['kind']!='codex_intake_once_preflight' or
+                prepared['execution_authority'] is not False):
+            _fail('invalid_policy')
+        if prepared['status']!='validated':
+            _fail('input_limit' if prepared['failure'] in ('analysis_context_limit','codex_intake_once_invalid_input') else 'unsupported_schema')
+        if prepared['failure'] is not None:
+            _fail('invalid_policy')
+        prompt_bytes,schema_bytes=_C(prepared['prompt']),_C(prepared['response_schema'])
+        if len(prompt_bytes)>262144 or len(schema_bytes)>65536:
+            _fail('input_limit')
+        _keys(prepared['pins'],'context_sha256 prompt_sha256 schema_sha256')
+        if (_C(prepared['context'])!=_C(context) or prepared['pins']!=dict(
+                context_sha256=_H(_C(context)),prompt_sha256=_H(prompt_bytes),schema_sha256=_H(schema_bytes))):
+            _fail('source_changed')
+        context=prepared['context']
         record['phase']='reserve'
         reserved=dict(permit_id=config['permit_id'],context_sha256=_H(_C(context)),registration_sha256=config['registration_sha256'],
             store_root=str(store_root),requested_model=model,reserved_model_attempts=1)
@@ -639,8 +656,8 @@ def _run(scenario, model):
                 # without overwriting anything. Original journal evidence remains.
                 try:_active_guard(active_path,active_bytes)
                 except BaseException:pass
-    if control is not None:
-        raise control
+    if isinstance(first_error,_CONTROL):
+        raise first_error
     return record
 
 
