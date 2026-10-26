@@ -1038,7 +1038,7 @@ async function artifactStorageKeyboardMain(){
 // so Ctrl+C reaches the public Python server; capture its two output streams.
 function startPublicPortCLI(python,args,record){
   assert.equal(process.stdin.isTTY,true,'public port demo requires its own PTY for graceful Ctrl+C');
-  let out=Buffer.alloc(0),err=Buffer.alloc(0),closed=false,controlCount=0,firstError=null,resolveReady,rejectReady;
+  let out=Buffer.alloc(0),err=Buffer.alloc(0),closed=false,controlCount=0,firstError=null,validURLReady=false,resolveReady,rejectReady;
   const ready=new Promise((resolve,reject)=>{resolveReady=resolve;rejectReady=reject;});
   const onControl=()=>{controlCount++;};process.on('SIGINT',onControl);
   const child=spawn(python,args,{cwd:ROOT,windowsHide:true,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1',PYTHONPATH:ROOT},stdio:['inherit','pipe','pipe']});
@@ -1053,7 +1053,7 @@ function startPublicPortCLI(python,args,record){
       if(out.length+err.length>2097152){stopFailedOwnedChild();throw Error('public CLI raw output exceeds original 2MiB cap; observed streams retained as failure');}
       if(kind==='stdout'){
         const match=/^DGM synthetic intake fixture: (http:\/\/127\.0\.0\.1:\d+\/#[A-Za-z0-9_.-]+)\r?$/m.exec(out.toString('utf8'));
-        if(match){const url=new URL(match[1]);assert.equal(url.hostname,'127.0.0.1');assert.ok(Number(url.port)>0);resolveReady({url:url.href,origin:url.origin});}
+        if(match){const url=new URL(match[1]);assert.equal(url.hostname,'127.0.0.1');assert.ok(Number(url.port)>0);validURLReady=true;resolveReady({url:url.href,origin:url.origin});}
       }
     }catch(error){firstError??=error;rejectReady(firstError);}
   };
@@ -1064,7 +1064,7 @@ function startPublicPortCLI(python,args,record){
       closed=true;clearTimeout(timer);Object.assign(record,{status:code,signal,exit_observed:true,own_PTY_SIGINT_observed:controlCount});
       // Literal final bytes and exit/signal are retained before callers interpret them.
       try{proofWrite(path.join(OUTPUT,'generation.stdout.bin'),out);proofWrite(path.join(OUTPUT,'generation.stderr.bin'),err);proofWrite(path.join(OUTPUT,'generation-child.json'),JSON.stringify(record,null,2));}catch(error){firstError??=error;}
-      if(!out.toString('utf8').includes('DGM synthetic intake fixture: '))rejectReady(firstError||Error('public CLI exited before a loopback URL; original streams retained, no retry'));
+      if(!validURLReady)rejectReady(firstError||Error('public CLI exited before a loopback URL; original streams retained, no retry'));
       resolve({code,signal,firstError,controlCount});
     });
   });
