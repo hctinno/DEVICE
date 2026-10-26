@@ -793,5 +793,137 @@ class WorkflowReadbackExportTests(unittest.TestCase):
             self.assertEqual(list(self.root.iterdir()),[])
 
 
+
+EVIDENCE_FIRST_FAILURE_OBSERVATIONS = []
+
+
+class ConductedEvidenceFirstFailureTests(unittest.TestCase):
+    """The real writer must retain a write failure through a later close failure."""
+    def exercise(self, first=None, last=None, *, existing=False, blocked_parent=False):
+        import os
+        from labflow import intake_fixture_check as module
+        with tempfile.TemporaryDirectory() as temporary:
+            folder=Path(temporary)
+            target=folder/('block/readback-inputs.json' if blocked_parent else 'readback-inputs.json')
+            selection=dict(intake_id='first-error-intake', expected_revision=3,
+                expected_context_sha256='a'*64, artifact_workspace_root=str(folder/'artifact'),
+                artifact_name='first-error-draft', expected_manifest_sha256='b'*64,
+                expected_result_sha256='c'*64, run_id='first-error-run', runtime_instance_id='first-error-runtime',
+                method=dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
+            expected=dict(expected_revision=3,expected_context_sha256='a'*64,artifact_workspace_root=str(folder/'artifact'),
+                artifact_name='first-error-draft',expected_manifest_sha256='b'*64,expected_result_sha256='c'*64,
+                run_id='first-error-run',runtime_instance_id='first-error-runtime',
+                method=dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
+            raw=(json.dumps(expected,sort_keys=True,ensure_ascii=False,allow_nan=False,separators=(',',':'))+'\n').encode()
+            seed=folder/'block' if blocked_parent else target
+            def metadata(path):
+                value=path.stat()
+                return dict(bytes=value.st_size,mtime_ns=value.st_mtime_ns,ctime_ns=value.st_ctime_ns,ino=value.st_ino)
+            before=None
+            if existing or blocked_parent:
+                seed.write_bytes(b'original-native-file\n');before=metadata(seed)
+            calls=dict(open=0,write=0,close=0,real_close=0)
+            descriptors=[]
+            opened_original=Path.open
+            class NativeFaultStream:
+                def __init__(inner,stream):
+                    inner.stream=stream;descriptors.append(stream.fileno())
+                def __enter__(inner):
+                    return inner
+                def write(inner,data):
+                    calls['write']+=1
+                    self.assertEqual(data,raw)
+                    count=inner.stream.write(data[:19] if first is not None else data)
+                    inner.stream.flush();os.fsync(inner.stream.fileno())
+                    if first is not None:raise first
+                    return count
+                def close(inner):
+                    calls['close']+=1
+                    inner.stream.close();calls['real_close']+=1
+                    if last is not None:raise last
+                def __exit__(inner,*args):
+                    inner.close()
+            def opened(path,mode='r',*args,**kwargs):
+                if path==target:
+                    self.assertEqual(mode,'xb');calls['open']+=1
+                    return NativeFaultStream(opened_original(path,mode,*args,**kwargs))
+                return opened_original(path,mode,*args,**kwargs)
+            caught=returned=None
+            try:
+                with patch.object(Path,'open',opened):
+                    if blocked_parent:
+                        returned=module._conducted_write(folder,'block/readback-inputs.json',raw)
+                    else:
+                        returned=module._conducted_readback_inputs(folder,selection)
+            except BaseException as error:
+                caught=error
+            fd_closed=None
+            if descriptors:
+                try:os.fstat(descriptors[0])
+                except OSError:fd_closed=True
+                else:fd_closed=False
+            actual=target.read_bytes() if target.is_file() else None
+            after=metadata(seed) if before is not None else None
+            row=dict(target=str(target),fault='native xb/write prefix+flush+fsync/real close, injected exceptions',
+                first_type=type(first).__name__ if first is not None else None,
+                close_type=type(last).__name__ if last is not None else None,
+                observed_type=type(caught).__name__ if caught is not None else None,
+                same_primary=first is not None and caught is first,same_secondary=last is not None and caught is last,
+                context_is_primary=caught is not None and first is not None and caught.__context__ is first,
+                calls=calls,fd_closed=fd_closed,partial_bytes=len(actual) if actual is not None else None,
+                raw_hex=actual.hex() if actual is not None else None,
+                expected_prefix_hex=raw[:19].hex(),expected_full_hex=raw.hex(),
+                original_seed_unchanged=before==after if before is not None else None,
+                before=before,after=after,existing=existing,blocked_parent=blocked_parent)
+            EVIDENCE_FIRST_FAILURE_OBSERVATIONS.append(row)
+            return caught,returned,row
+
+    def test_real_19byte_write_memoryerror_survives_later_close_oserror(self):
+        first,last=MemoryError('original native partial write'),OSError('secondary after real close')
+        caught,returned,row=self.exercise(first,last)
+        self.assertIs(caught,first)
+        self.assertEqual(row['calls'],dict(open=1,write=1,close=1,real_close=1))
+        self.assertTrue(row['fd_closed']);self.assertEqual(row['partial_bytes'],19)
+        self.assertEqual(row['raw_hex'],row['expected_prefix_hex'])
+
+    def test_ordinary_and_controls_keep_first_identity_after_close_controls(self):
+        pairs=((ValueError('first'),OSError('close')),(ValueError('first'),KeyboardInterrupt('close')),
+            (KeyboardInterrupt('first'),OSError('close')),(SystemExit(41),MemoryError('close')),
+            (GeneratorExit('first'),SystemExit(42)),(OSError('first'),GeneratorExit('close')))
+        for first,last in pairs:
+            with self.subTest(first=type(first).__name__,close=type(last).__name__):
+                caught,returned,row=self.exercise(first,last)
+                self.assertIs(caught,first)
+                self.assertEqual(row['calls'],dict(open=1,write=1,close=1,real_close=1))
+                self.assertTrue(row['fd_closed']);self.assertEqual(row['partial_bytes'],19)
+                self.assertEqual(row['raw_hex'],row['expected_prefix_hex'])
+
+    def test_close_only_error_or_control_is_original_after_full_native_write(self):
+        for last in (OSError('close'),KeyboardInterrupt('close'),MemoryError('close'),SystemExit(43),GeneratorExit('close')):
+            with self.subTest(close=type(last).__name__):
+                caught,returned,row=self.exercise(last=last)
+                self.assertIs(caught,last)
+                self.assertEqual(row['calls'],dict(open=1,write=1,close=1,real_close=1))
+                self.assertTrue(row['fd_closed']);self.assertEqual(row['raw_hex'],row['expected_full_hex'])
+
+    def test_success_closes_once_and_keeps_original_nine_field_lf_bytes(self):
+        caught,returned,row=self.exercise()
+        self.assertIsNone(caught);self.assertIsNone(returned)
+        self.assertEqual(row['calls'],dict(open=1,write=1,close=1,real_close=1))
+        self.assertTrue(row['fd_closed']);self.assertEqual(row['raw_hex'],row['expected_full_hex'])
+        value=json.loads(bytes.fromhex(row['raw_hex']))
+        self.assertEqual(len(value),9);self.assertNotIn('intake_id',value)
+
+    def test_collision_and_parent_failure_never_open_a_stream_or_change_original(self):
+        for existing,blocked in ((True,False),(False,True)):
+            with self.subTest(existing=existing,blocked_parent=blocked):
+                caught,returned,row=self.exercise(existing=existing,blocked_parent=blocked)
+                self.assertIsInstance(caught,OSError)
+                if existing:self.assertIsInstance(caught,FileExistsError)
+                self.assertTrue(row['original_seed_unchanged'])
+                self.assertEqual(row['calls'],dict(open=int(existing),write=0,close=0,real_close=0))
+                self.assertIsNone(row['fd_closed'])
+
+
 if __name__ == '__main__':
     unittest.main()
