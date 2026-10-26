@@ -17,7 +17,8 @@ from .harness import FleetHarness as _Harness
 from .integration import get_role_actions as _actions
 from .model_operator_boundary import (ModelOperatorBoundaryError,
     build_operator_prompt as _build, decode_operator_response as _decode)
-from .journal import OperatorJournal as _Journal, read_operator_journal as _read_journal
+from .journal import (OperatorJournal as _Journal, read_operator_journal as _read_journal,
+    _header as _journal_header, _record as _journal_record)
 from .codex_virtual_one_action import (_copy as _native_copy,
     _complete_receipt as _producer_profile, _Fault as _ParentFault)
 
@@ -74,6 +75,15 @@ def _fail(code):
 
 def _C(value):
     return json.dumps(value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
+
+
+def _reservation(value):
+    if value is None:return None
+    if type(value) is not dict:_fail('invalid_input')
+    value=value.copy()
+    if (set(value)!={'files','bytes'} or type(value['files']) is not int or type(value['bytes']) is not int
+            or not 0<=value['files']<=192 or not 0<=value['bytes']<=33554432):_fail('invalid_input')
+    return value
 
 
 def _H(data):
@@ -245,12 +255,13 @@ def _absent(path):
 
 class _Loop:
     def __init__(self, catalog, catalog_sha, schema, executable, model, scenario, directory, origin, event,
-                 start, source_settings, plan_binding, quantity):
+                 start, source_settings, plan_binding, quantity, evidence_reservation=None):
         self.catalog_path, self.catalog_sha, self.schema = catalog, catalog_sha, schema
         self.executable, self.model, self.scenario, self.directory = executable, model, scenario, directory
         self.origin, self.event, self.start, self.deadline = origin, event, start, start + 180
         self.source_settings = source_settings
         self.plan_binding, self.quantity = plan_binding, quantity
+        self.evidence_reservation=(0,0) if evidence_reservation is None else (evidence_reservation['files'],evidence_reservation['bytes'])
         self.setup_records = self.setup_snapshot = self.host_topology = None
         self.source_pins = {}
         self.stage = 'setup'; self.first = self.control = None
@@ -351,7 +362,8 @@ class _Loop:
             if not stat.S_ISREG(info.st_mode) or getattr(info,'st_file_attributes',0) & 1024:
                 _fail('retention_failed')
             count += 1; total += info.st_size
-        if count + reserve_files > _LIMITS['max_known_evidence_files'] or total + reserve > _LIMITS['max_observed_evidence_bytes']:
+        if (count + reserve_files + self.evidence_reservation[0] > _LIMITS['max_known_evidence_files']
+                or total + reserve + self.evidence_reservation[1] > _LIMITS['max_observed_evidence_bytes']):
             _fail('limit_exceeded')
 
     def write(self, path, data, cap, desc=None, *, final=False):
@@ -488,7 +500,11 @@ class _Loop:
         desc = self.r['artifacts']['operator_journal']
         journal = None; appended = closed = False
         try:
-            self.space(self.event_bytes + 1048576, 1)
+            header=_journal_header(self.r['run_id'],self.r['execution']['runtime_instance_id'],provenance)
+            # Fixed-width chain hashes have the same serialized size as zeros.
+            reserved=len(_journal_record('header',header,'0'*64)[1])
+            reserved+=sum(len(_journal_record('event',event,'0'*64)[1]) for event in self.events)
+            self.space(reserved, 1)
             self.known.add(path)
             journal = _Journal(path, run_id=self.r['run_id'],
                 runtime_instance_id=self.r['execution']['runtime_instance_id'], provenance=provenance)
@@ -857,15 +873,17 @@ class _Loop:
 
 def run_codex_virtual_loop(*, catalog_path: Path, catalog_sha256: str, response_schema_bytes: bytes,
         executable: Path, requested_model: str, scenario: str, evidence_dir: Path,
-        execution_origin: str, cancel_event=None, source_settings=None, plan_binding=None, quantity=None) -> dict:
+        execution_origin: str, cancel_event=None, source_settings=None, plan_binding=None, quantity=None, evidence_reservation=None) -> dict:
     """Run one explicitly delegated synthetic loop; provenance declarations grant no authority."""
     runner=None; receipt=None; code=None; control=None
     try:
+        reservation=_reservation(evidence_reservation)
+        options={} if reservation is None else dict(evidence_reservation=reservation)
         start=_now()
         source,binding,declared_quantity=_preflight(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
                           evidence_dir,execution_origin,cancel_event,source_settings,plan_binding,quantity)
         runner=_Loop(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
-                     evidence_dir,execution_origin,cancel_event,start,source,binding,declared_quantity)
+                     evidence_dir,execution_origin,cancel_event,start,source,binding,declared_quantity,**options)
         try:
             runner.run()
         except BaseException as error:
