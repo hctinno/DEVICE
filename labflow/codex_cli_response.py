@@ -13,8 +13,9 @@ import threading
 import time
 import uuid
 
-_VERSION='0.163.0-alpha.11.2'
-_BANNER=b'codex-cli 0.163.0-alpha.11.2\n'
+_CLIENT_VERSIONS=('0.163.0-alpha.11.2','0.164.0-alpha.11.1')
+_VERSION=_CLIENT_VERSIONS[0]
+_CLIENT_BANNERS={('codex-cli '+version+'\n').encode('ascii'):version for version in _CLIENT_VERSIONS}
 _PREFIX='codex_cli_response_'
 _CODES={'invalid_input','limit_exceeded','unsupported_client','evidence_error','spawn_failed',
         'timeout','stream_invalid','process_failed','final_mismatch','cleanup_failed','internal_error'}
@@ -70,6 +71,11 @@ def _fixed(code,receipt):
 
 def _keys(value,required,optional=()):
     return type(value) is dict and set(required)<=set(value)<=set(required)|set(optional)
+
+
+def _client_versions_match(supported,observed):
+    """Exact selected/observed profile agreement, shared by receipt consumers."""
+    return type(supported) is str and type(observed) is str and supported in _CLIENT_VERSIONS and observed==supported
 
 
 def _json(data,invalid):
@@ -321,12 +327,16 @@ class _Exchange:
             '--ephemeral','--skip-git-repo-check','--color','never','--json','--model',self.r['model']['requested'],
             '--output-schema',str(self.directory/_LAYOUT['response_schema']),
             '--output-last-message',str(self.directory/_LAYOUT['last_message']),'-']
-        invocation=dict(schema_version=1,kind='codex_cli_invocation',exchange_ref=self.r['exchange_ref'],
-            executable=executable,cwd=str(work),version_argv=self.version_argv,model_argv=self.model_argv,
-            requested_model=self.r['model']['requested'],supported_version=_VERSION,
-            timeout_seconds=self.r['timing']['timeout_seconds'],prompt_sha256=_sha(prompt),response_schema_sha256=_sha(schema))
-        data=_canonical(invocation);self.r['bindings']['invocation_sha256']=_sha(data);self.write('invocation',data)
         return work
+
+    def invocation(self,work):
+        self.phase='evidence'
+        invocation=dict(schema_version=1,kind='codex_cli_invocation',exchange_ref=self.r['exchange_ref'],
+            executable=str(self.executable),cwd=str(work),version_argv=self.version_argv,model_argv=self.model_argv,
+            requested_model=self.r['model']['requested'],supported_version=self.r['client']['supported_version'],
+            timeout_seconds=self.r['timing']['timeout_seconds'],prompt_sha256=self.r['bindings']['prompt_sha256'],
+            response_schema_sha256=self.r['bindings']['schema_sha256'])
+        data=_canonical(invocation);self.r['bindings']['invocation_sha256']=_sha(data);self.write('invocation',data)
 
     def stdout(self,data):
         pos=0
@@ -507,8 +517,9 @@ class _Exchange:
                     if code!=0:_fail('process_failed')
                 if code is not None and all(s.eof for s in sinks) and writer_done:
                     if kind=='version':
-                        if code!=0 or bytes(sinks[0].capture)!=_BANNER or sinks[1].desc['bytes']:_fail('unsupported_client')
-                        self.r['client']['observed_version']=_VERSION
+                        version=_CLIENT_BANNERS.get(bytes(sinks[0].capture))
+                        if code!=0 or version is None or sinks[1].desc['bytes']:_fail('unsupported_client')
+                        self.r['client'].update(supported_version=version,observed_version=version)
                     else:
                         self.phase='completion';self.protocol.finish();self.last(final=True)
                         self.r['controls']['observed']['tool_items']=self.r['lifecycle']['tool_items']
@@ -571,6 +582,7 @@ def produce_codex_cli_response(prompt_bytes: bytes,response_schema_bytes: bytes,
         exchange=_Exchange(evidence_dir,executable,requested_model,timeout_seconds,start,reference,declaration)
         work=exchange.setup(prompt_bytes,response_schema_bytes)
         exchange.process('version',exchange.version_argv,b'',work)
+        exchange.invocation(work)
         exchange.process('model',exchange.model_argv,prompt_bytes,work)
     except _Failure as error:
         code=error.code

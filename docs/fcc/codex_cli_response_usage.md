@@ -26,9 +26,13 @@ prompt는 canonical UTF-8 JSON object·최대256KiB다. canonical은 ensure_asci
 
 ## 실행과 통제 관측
 
-먼저 `[executable, "--version"]`을 한 번 시도한다. 지원 profile은 0.163.0-alpha.11.2 하나이며 exit0·정확 banner `codex-cli 0.163.0-alpha.11.2`와 LF·빈 stderr를 확인한다. 불일치나 metadata 실패 뒤 모델 process는0이다. PATH 탐색·shell wrapper·설치·업데이트·login·credential/config/rules 탐색이나 수정은 하지 않는다.
+먼저 `[executable, "--version"]`을 한 번 시도한다. 지원 profile은 정확 `0.163.0-alpha.11.2`와 `0.164.0-alpha.11.1` 두 개다. 각각 exit0·정확 banner `codex-cli <선택 버전>\n`의 UTF-8 bytes·LF·빈 stderr를 확인한다. 접미사·CRLF·다른 버전이나 metadata 실패 뒤 모델 process는0이다. 범위·latest·부분 문자열로 버전을 선택하지 않는다. PATH 탐색·shell wrapper·설치·업데이트·login·credential/config/rules 탐색이나 수정은 하지 않는다.
+
+허용 banner를 확인하면 receipt.client.supported_version/observed_version과 invocation.supported_version은 같은 선택 버전이다. 확인 전 failed receipt의 supported_version은 기존 `0.163.0-alpha.11.2`, observed_version은 null이며 지원이 확인됐다는 뜻이 아니다. invocation.json은 버전 확인 뒤 모델 실행 전에 한 번 기록하므로 버전 거절 시 absent다. 접수 단일 실행·first-decision·단일 가상 행동 소비자는 같은 명시 profile 판정을 재사용하며 unknown 버전과 selected/observed 불일치를 거절한다. 기존 `.163` fixture와 과거 실제 호출 기록은 그대로 유효하다.
 
 버전이 맞으면 비어 있는 private work 디렉터리에서 모델 process 한 번을 실행한다. shell=False, binary pipe와 숨김 실행을 사용하고 stdin에는 원 prompt bytes만 쓴다. exec에 ignore-user-config/ignore-rules/read-only sandbox/ephemeral/skip-git-repo-check/color never/json/model/output-schema/output-last-message와 stdin `-`를 명시한다. 실제 전체 argv·cwd·절대 파일 경로는 private invocation.json에만 기록한다.
+
+2026-10-26 설치 `.164`의 `--version`/`exec --help` 관측은 CLI 형상 확인이다. 실제 모델 JSONL·모델 사용 가능 여부·업무 품질은 이번 profile 추가에서 미검증이며 vendor 진위·원격 모델 identity를 인증하지 않는다. 공식 config 목록/exec help에서 출력 token hard cap은 확인되지 않았고 bytes/time cap은 token cap이 아니다. 미지원 token 옵션이나 새 provider fallback을 추가하지 않는다.
 
 | 구분 | Receipt의 뜻 |
 |---|---|
@@ -106,6 +110,7 @@ def run_delegated_analysis(context, schema_bytes, *, native_executable, new_exch
 
 ```powershell
 python -B -X utf8 -m unittest discover -s tests -p test_codex_cli_response.py -v
+python -B -X utf8 -m unittest tests.test_codex_cli_client_profiles -v
 python -B -X utf8 -m unittest discover -s tests -p test_intake_model_boundary.py -v
 python -B -X utf8 scripts/check_artifacts.py
 ```
