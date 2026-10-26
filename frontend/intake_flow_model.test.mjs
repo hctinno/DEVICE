@@ -3,6 +3,31 @@ import assert from 'node:assert/strict';
 import {validateFixtureRuns, describeFixtureRecord, requireStableFixtureRecords, createFixtureReadGate} from './intake_flow_model.mjs';
 import * as workflowAPI from './intake_flow_model.mjs';
 
+test('operator attempt parser accepts held provenance but rejects extra and mismatched fields',()=>{
+  const sha='a'.repeat(64),binding={intake_id:'I-authored',revision:2,analysis_context_id:sha,
+    context_sha256:sha,analysis_sha256:sha,plan_sha256:sha,plan_input_sha256:sha,
+    run_id:'operator-loop-run:authored',runtime_instance_id:'runtime-authored',job_id:'J-authored'};
+  const step={index:1,action:'sensor.read',before_tick:16,after_tick:16,
+    receipt_status:'ok',effect:'unchanged',cli_tool_items:0};
+  const value={schema_version:1,kind:'operator_attempt_view',status:'bounded',finalization:'held',
+    storage:'not_created',termination_reason:'decision_budget',hold_reason:'execution_incomplete',virtual_dut_final_state:'transmitting',
+    source_kind:'provided_actual_cli_record',declared_mode:'synthetic_only',binding,
+    method:{method_id:'conducted_synthetic',method_version:1,metric:'on',reference_plane:'source_output'},
+    model:{requested_model:'gpt-6.1-sol',remote_resolved_model:null,process_count:1,cli_tool_items:0,
+      cumulative_processes:25,remaining_processes:0,token_usage:null,cost:null},steps:[step],
+    verification:{origin_authenticated:false,remote_identity_verified:false,hardware_verified:false,
+      execution_authority:false,result_created:false,draft_created:false},
+    evidence:{evaluation:sha,execution:sha,finalizer:sha,finished:sha,handoff:sha}};
+  const parse=x=>workflowAPI.parseOperatorAttemptView(JSON.stringify(x),{intake_id:'I-authored',revision:2});
+  assert.equal(parse(value).steps[0].action,'sensor.read');
+  for(const mutate of [x=>x.secret='private',x=>x.binding.intake_id='OTHER',x=>x.model.remote_resolved_model='claimed',
+    x=>x.verification.hardware_verified=true,x=>x.model.process_count=2,x=>x.steps[0].action='<script>',
+    x=>x.steps[0].effect='unknown']){
+    const broken=structuredClone(value);mutate(broken);assert.throws(()=>parse(broken));
+  }
+  assert.throws(()=>workflowAPI.parseOperatorAttemptView(JSON.stringify(value).replace('"process_count":1','"process_count":NaN'),{intake_id:'I-authored',revision:2}));
+});
+
 export function fixture() {
   const report = {schema_version: 1, kind: 'virtual_fleet_harness_result', run_id: 'run:ui-1', runtime_instance_id: 'instance:ui-1',
     synthetic: true, hardware_verified: false, ai_model_called: false, policy: {kind: 'fixture', id: 'rf_sensor_v1'},

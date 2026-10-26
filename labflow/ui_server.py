@@ -1568,7 +1568,14 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                   intake_reference_append_scope=(), intake_reference_review_inputs=(),
                   intake_test_intent_inputs=(), intake_docx_reference_selection=None, ai_connections=None,
                   ai_connection_campaign_readback=None, conducted_plan_preview_inputs=None, conducted_result_snapshot=None,
-                  conducted_artifact_readback_inputs=None):
+                  conducted_artifact_readback_inputs=None, operator_attempt_inputs=()):
+    if type(operator_attempt_inputs) is not tuple or len(operator_attempt_inputs) > 1:
+        raise ValueError('operator_attempt_invalid_input')
+    operator_attempt_raw = None
+    if operator_attempt_inputs:
+        from .operator_attempt_view import prepare_operator_attempt
+        try: operator_attempt_raw = prepare_operator_attempt(operator_attempt_inputs[0])
+        except ValueError: raise ValueError('operator_attempt_invalid_input') from None
     artifact_readback_selection=_conducted_artifact_readback_selection(conducted_artifact_readback_inputs)
     conducted_selection = _conducted_preview_selection(conducted_plan_preview_inputs)
     result_snapshot = _conducted_result_selection(conducted_result_snapshot)
@@ -1774,6 +1781,9 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
             except ValueError:
                 return self.error(404, 'route_not_found')
             artifact_match=re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})/conducted-artifact-readback',path)
+            attempt_match=re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})/operator-attempt',path)
+            if attempt_match:
+                return self.read_operator_attempt(attempt_match[1],parsed,path)
             if artifact_match:
                 return self.read_conducted_artifact_readback(artifact_match[1],parsed,path)
             result_match = re.fullmatch(r'/api/intakes/([A-Za-z0-9][A-Za-z0-9_.-]{0,149})/conducted-result',path)
@@ -1921,6 +1931,33 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
             except (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):raise
             except Exception:return fail(503,'intake_conducted_artifact_readback_host_invalid_response')
             return self.send_payload(200,raw+b'\n')
+
+        def read_operator_attempt(self,intake_id,parsed,path):
+            self.close_connection=True;self.connection.settimeout(5)
+            try:_reference_guard(self)
+            except _ReferenceFailure:return self.error(403,'local_origin_required')
+            if self.command!='GET':
+                self._reference_allow='GET';return self.error(405,'operator_attempt_read_only')
+            lengths=self.headers.get_all('Content-Length',[])
+            framed=(not self.headers.get_all('Transfer-Encoding') and not self.headers.get_all('Content-Encoding')
+                    and not self.headers.get_all('Expect') and len(lengths)<=1
+                    and (not lengths or re.fullmatch('0+',lengths[0],re.ASCII)))
+            if not framed or parsed.query or parsed.fragment or self.path!=path:
+                return self.error(400,'operator_attempt_invalid_request')
+            if operator_attempt_raw is None:return self.error(503,'operator_attempt_not_provided')
+            from .operator_attempt_view import check_current_binding, OperatorAttemptViewError
+            prepared=json.loads(operator_attempt_raw);binding=prepared['binding']
+            if intake_id!=binding['intake_id']:return self.error(503,'operator_attempt_binding_mismatch')
+            selection=dict(intake_id=intake_id,revision=binding['revision'],source_settings={},basis={},
+                           method=prepared['method'])
+            try:
+                with current_facts_lock:current=model.conducted_current_facts_view(intake_id,selection)
+                check_current_binding(prepared,current)
+            except (OperatorAttemptViewError,ReadModelError):
+                return self.error(503,'operator_attempt_binding_mismatch')
+            except (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):raise
+            except Exception:return self.error(503,'operator_attempt_unavailable')
+            return self.send_payload(200,operator_attempt_raw)
 
         def read_conducted_result(self,intake_id,parsed,path):
             try:return Handler._read_conducted_result(self,intake_id,parsed,path)
