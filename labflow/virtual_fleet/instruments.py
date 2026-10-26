@@ -154,6 +154,22 @@ def _interpolate(points, frequency):
     return first[1] + (last[1] - first[1]) * (frequency - first[0]) / (last[0] - first[0])
 
 
+def _power_in_unit(power_dbm, unit):
+    if unit == 'dBm':
+        return power_dbm
+    # Apply the W scale in the exponent: a finite final value must not overflow
+    # merely because the intermediate mW value exceeds the float range.
+    try:
+        value = 10.0**((power_dbm - (30 if unit == 'W' else 0))/10)
+    except OverflowError:
+        raise _InputError('display_value_overflow') from None
+    if not math.isfinite(value):
+        raise _InputError('display_value_overflow')
+    if value == 0:
+        raise _InputError('display_value_underflow')
+    return value
+
+
 class _Instrument:
     def __init__(self, profile, seed):
         if not isinstance(profile, dict) or profile.get('role') not in ROLE_PORTS:
@@ -556,6 +572,7 @@ class _Instrument:
         if self.role == 'power_meter':
             # Keep one canonical acquired value, including the one noise sample.
             # Display projection must never call _measurement again.
+            _power_in_unit(power, unit)  # Fail through advance's structured error path.
             unit = 'dBm'
             extras['window'] = self._cfg['window']
         elif self.role in {'signal_analyzer', 'emi_receiver'}:
@@ -594,12 +611,8 @@ class _Instrument:
         if self.role == 'power_meter':
             result['acquisition_value'] = result['value']
             result['acquisition_unit'] = result['unit']
-            unit, power = self._cfg['unit'], result['value']
-            if unit == 'W':
-                power = 10**(power/10)/1000
-            elif unit == 'mW':
-                power = 10**(power/10)
-            result.update(value=power, unit=unit)
+            unit = self._cfg['unit']
+            result.update(value=_power_in_unit(result['value'], unit), unit=unit)
         return result
 
     def _rf_output(self):
@@ -674,6 +687,8 @@ class _Instrument:
             if action == 'set_display_unit':
                 if parameters['unit'] not in {'dBm', 'W'}:
                     raise _InputError('unsupported_display_unit')
+                if self._result is not None:
+                    _power_in_unit(self._result['value'], parameters['unit'])
                 self._cfg['unit'] = parameters['unit']
                 return self._response(setup_revision)
             if action == 'configure':

@@ -70,6 +70,8 @@ window 1~4는 화면의 measurement window이며 물리 입력 A/B가 아니다.
 
 UNIT는 같은 Fleet 전력계의 표시 전용 `set_display_unit`을 호출한다. `configuration.unit`만 바꾸고 setup/configuration revision·원 취득값·취득 tick·입력 signature·pending deadline·BUS 대기를 보존한다. 완료 데이터는 바로 새 단위로 FETCH할 수 있고 RF 시간 진행·잡음 재샘플·센서 재시작·새 INIT가 없다. 같은 장치를 빌린 다른 세션과 Fleet 공개 관측도 같은 표시 단위를 읽는다. 세션별 단위나 별도 측정 캐시는 없다. 새 action은 `unit=dBm|W`만 받으며 window/mode/옵션 설정을 받지 않는다.
 
+W 변환은 `10^((dBm−30)/10)`으로 계산하여 유한한 최종 값이 중간 mW 지수 때문에 넘치지 않게 한다. 공개 합성 정책에서 최대 입력을 크게 선언한 경우에도 3090 dBm→1e306 W 같은 유한값은 허용한다. 완료 취득의 새 단위 값이 float 범위를 실제로 넘거나 0으로 underflow하면 `status=error`, `values.reason=display_value_overflow|display_value_underflow`를 반환하고 이전 표시 설정·원 취득을 보존한다. pending에는 완료값이 없으므로 해당 검사는 취득 완료 때 수행하며, 표현 불가이면 숫자0 대신 invalid/측정 없음으로 남긴다. 이는 합성 수치 표현 경계이며 기본 N1911A 30 dBm 범위나 실제 장비 정확도 결함을 뜻하지 않는다.
+
 기존 일반 `configure(unit=...)`와 trigger/window/frequency/mode 설정 변경은 여전히 setup revision과 센서/측정 무효성에 전파된다. 이런 설정 뒤에는 sensor 안정화 tick과 새 INIT가 필요할 수 있다. 세션은 이를 자동 대기하거나 sensor 상태를 수선하지 않는다. INIT·FETCH·OPC·query·UNIT를 반복해도 clock은 진행되지 않는다. `advance` 또는 caller의 같은 Fleet 공개 advance만 시간이 된다. BUS는 INIT 뒤 trigger_wait이고 `*TRG` 뒤 실제 acquire가 진행한다. ABOR는 pending과 결과를 취소한다.
 
 FETCH는 기존 cached current-revision 결과만 반환한다. source/path/stop·설정 변경·단절·무효 교정 등은 원 Fleet의 무효 상태로 전파하고 `measurement=None`, `response=None`을 반환한다. `*OPC?`의 `1`은 meter pending 작업이 남지 않았다는 뜻이다. timeout·ABOR·측정 무효·합성 교정 실패 뒤에도 `1`일 수 있으며 유효 측정/실측 교정/규범 PASS가 아니다.
@@ -90,6 +92,6 @@ parser의 미지원/형식 거절은 `error_source=session_parser`로 inline 반
 
 신규 검증은 genuine `create_conducted_example`의 같은 Fleet에서 전도 경로·duty의 Decimal 기준, dBm/W, source+3 dB/경로+3 dB, 현재 window, IMM/BUS/trigger·명시 clock·ABOR·timeout·FIFO·stale/단절 및 exact model/role 거절을 검사한다. 별도 한 경계 테스트만 불완전한 error-query receipt를 제공 대역으로 넣는다. 이를 실제 SCPI transport·장비 관측으로 세지 않는다.
 
-표시 변경 회귀는 [전용 검사](../../tests/test_n1911a_display_unit.py)의 7개 테스트로 별도 실행한다. Decimal 독립 기준 0/−19.5 dBm→W·왕복, 잡음 재샘플 방지, 두 세션의 같은 Fleet 단위·원 계보, IMM/BUS 진행 취득의 완료 시점 보존, stale/stop/route/abort/disconnected의 무효 유지, 일반 configure 무효화와 표시 action 입력 거절을 확인한다. `python -m unittest discover -s tests -p test_n1911a_display_unit.py -v`를 사용한다.
+표시 변경 회귀는 [전용 검사](../../tests/test_n1911a_display_unit.py)의 기본 7개와 수치 경계 3개다. Decimal 독립 기준 0/−19.5 dBm→W·왕복, 잡음 재샘플 방지, 두 세션의 같은 Fleet 단위·원 계보, IMM/BUS 진행 취득의 완료 시점 보존, stale/stop/route/abort/disconnected의 무효 유지, 일반 configure 무효화와 표시 action 입력 거절을 확인한다. 수치 경계 3개는 별도 `python -m unittest discover -s tests -p test_n1911a_display_unit.py -k NumericBoundary -v`로 실행하며, 큰 유한 W·진짜 overflow/underflow·실패 후 원 상태 보존을 확인한다. 기본 전체와 수치 경계만의 실행 분모를 합산하지 않는다.
 
 미지원 범위는 waveform/trace, calibration/zero/reference routines, relative/ratio/difference, 외부/HOLD/internal trigger, continuous, optional FETCH expected/resolution/source-list, CH2, binary output, 전체 SCPI 상태 레지스터와 장비 bus다. 실제 펌웨어/옵션·센서 호환·교정·실측 정확도·규범/기관 적합성은 미확인이다. N1912A/N1913A/N1914A 등 다른 모델을 alias하지 않는다. 다음 연결은 이 제한된 명령 세션의 caller/어댑터 확장과 독립 검수이며 실물 운전 권한을 만들지 않는다.

@@ -54,6 +54,8 @@ device.author_control(fault, value)  # 작성자 전용; 운영자/HTTP에 노�
 
 전력계 전용 `set_display_unit({"unit":"W"})`은 현재 window의 표시만 바꾸는 명시 동작이며 dBm도 받는다. 같은 장치의 `configuration.unit`을 갱신하지만 `setup_changed=false`이며 setup/configuration revision과 원 취득·pending·BUS 대기·deadline을 보존한다. 출력 투영 단계에서 유효한 원 취득값만 변환하며 시간 진행·새 잡음 샘플·센서 재시작을 하지 않는다. stale/stop/path loss/단절 등 원 무효 상태는 그대로다. 이 action은 unit만 필수로 받고 mW·window·mode·추가 옵션을 거절한다. 일반 `configure(unit=...)`의 기존 무효화 계약과 configure의 mW 지원은 유지한다. 다른 역할에는 이 action이 없다.
 
+W 공통 변환은 수치적으로 안정적인 `10^((dBm−30)/10)`을 사용한다. 공개 합성 최대 입력 정책을 크게 선언했을 때 최종 유한값을 중간 mW overflow 때문에 거절하지 않는다. 완료 취득의 표시 변경은 변환 가능성을 먼저 확인하고 설정을 저장한다. 실제 float overflow/0으로 underflow하면 `error`와 `values.reason=display_value_overflow|display_value_underflow`를 반환하며 원 표시·취득·revision을 보존한다. W/mW로 새 취득하는 경우는 완료 시 같은 공통 검사에서 invalid/측정 없음으로 처리한다. pending 중 표시 변경도 완료 시에 검사하며 숫자0을 성공값으로 내지 않는다. 허용 입력 범위를 축소한 정책이 아니며 실제 RF 수치 범위의 검증 주장도 아니다.
+
 측정 역할의 `acquire`와 software의 `run`은 pending을 반환한다. advance로 완료한 뒤 `fetch`로 현재 결과를 읽는다. BUS 대기는 별도 trigger가 필요하다. abort는 작업과 결과를 취소한다. recover는 통신·전원 원인이 해소됐는지 확인한 뒤 idle로 돌아가며 새 acquire/start_tx가 필요하다. 취득 중 중복 acquire는 진행 작업을 새 취득으로 대체하지 않는다. 요청 ID 재시도 처리는 공통 runtime이 담당한다.
 
 진행 중 setup revision이나 입력이 바뀌면 취득을 무효화한다. 완료 결과도 현재 입력·전원·교정·source·revision이 유효할 때만 출력한다. 결과에 획득 tick/setup revision, 장치 설정 revision, source 및 단위·quantity를 남긴다.
@@ -139,7 +141,7 @@ assert abs(result["values"]["outputs"]["measurement"]["value"] - 3.9794000867) <
 
 이 단위의 42개 검사는 계산·단위·모드·트리거·전원·센서·취득 중/완료 후 변경·시간 초과·복구·seed·FIFO·창·조건별 부적합·VNA 보간/표준/외삽 금지·출력 크기·중첩 인수·주파수 일치·작성자 경계·역할별 측정 지원 범위·송신 상태 전이와 중복 요청을 확인한다. 검사는 `python -m unittest discover -s tests -p test_virtual_fleet_instruments.py -v`로 실행한다.
 
-추가 [표시 단위 검사](../../tests/test_n1911a_display_unit.py) 7개는 같은 엔진의 원 취득/표시 분리와 Decimal 수치 기준·잡음 샘플 순서·진행 취득·일반 configure 무효화 보존을 검증한다. [N1911A 세션](n1911a_virtual_session_usage.md)은 이 공개 action을 사용하며 RF 수학이나 측정 캐시를 복제하지 않는다.
+추가 [표시 단위 검사](../../tests/test_n1911a_display_unit.py)의 기본 7개는 같은 엔진의 원 취득/표시 분리와 Decimal 수치 기준·잡음 샘플 순서·진행 취득·일반 configure 무효화 보존을 검증한다. 수치 경계 3개는 큰 유한 W·표현 불가 overflow/underflow·실패 후 원 상태 보존을 별도로 검증한다. [N1911A 세션](n1911a_virtual_session_usage.md)은 이 공개 action을 사용하며 RF 수학이나 측정 캐시를 복제하지 않는다.
 
 고정 catalog commit `a548af3e5b7fa84e1a0c5ed93af064db689de371`, 파일 SHA-256 `037b92b4d32fc7c65d6e5ec0b518f5933c48745e3e5907c158b0317ab4923ea6`의 담당 16개 프로필 모두 factory/port 일치 및 합성 정상·통신 단절·복구 재취득을 실행했다. common core/facility와 연결한 전원→발생기→분석기→software DAG의 정상·미출력 무효 전파·재취득도 확인했다. 원본 감사 및 호환 script/coverage는 개발2의 비공개 작업 공간에 보존한다. 나머지 catalog 역할과 전체 UI/시험 조합 통합은 담당별 결과를 총괄이 인수한다.
 
