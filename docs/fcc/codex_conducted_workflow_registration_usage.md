@@ -14,10 +14,13 @@ staging 전에 기존 `read_current_conducted_plan_from_facts`의 실제 exact3 
 
 완료 scope는 current 읽기 전후에 비교하고 staging 뒤 정식 `_host._prepare(root, config, scenario, owned)`를 한 번 호출한다. 원 반환 5tuple workflow/context/analysis/plan/schema와 등록된 store_root에 대한 owned의 exact native Store lease를 확인한 뒤 actual current와 scope를 다시 읽어 최초 값과 대조한다. 같은 DB bytes를 복제한 다른 Store나 dependency가 반환한 context만으로 이 검사를 대신할 수 없다. Store lease와 knownclose, 원 파일 pin/current 재검사, SQL/fsync/배타 게시 및 최초 primary 우선 규칙을 유지한다. scope 변경·다른 active·형상/bytes/C1 불일치는 게시하지 않으며 이미 만든 staging/SQL/failure prefix를 보존한다. 이 유한 전후 관측은 외부 writer 배제·ABA·영구 current lease나 동일 계정 임의 코드 방어를 보장하지 않는다.
 
-개발2 host의 schema3 구현은 별도 의존이다. 이 단위의 native 양성 검사는 같은 `_host._prepare` signature/5tuple의 명시 typed dependency seam과 genuine 완료 Store/current를 함께 사용한다. 실제 root 위임 검증 함수를 patch하지 않는다. 현재 public host가 schema3을 거절하는 경로도 staging을 보존하는 실패로 확인하며, 이 상태를 whole OS/profile 통합 성공으로 표시하지 않는다. 실제 host 후보 인수와 재검증은 총괄의 후속 통합 조건이다.
+host 미지원 음성 검사는 `test_completed_unsupported_host_dependency_retains_staging`의 명시적인 unsupported-host seam으로 고정한다. 준비된 schema3을 `_host._prepare`에 전달한 뒤 의존성이 `NotImplementedError`를 내도록 하고, 실패·staging 보존·게시 없음이 실제 등록 API에서 유지되는지 검사한다. 현재 public host가 schema3을 지원하지 않는다고 가정하거나 실행 결과에 따라 skip하지 않는다. 기존 typed-host 양성은 같은 signature/5tuple의 공급 seam이며 실제 host 성공으로 표시하지 않는다.
+
+현재 host 지원은 별도 `RegistrationPrepareCompatibilityTests`가 genuine 완료 Store/current에서 실제 registration→native publish→원 `_prepare` 5tuple까지 확인한다. operator 위치만 일회용 경계로 대체하고 host `_prepare`는 원 함수를 호출한다. 원 source/Store bytes·native·현재 C1, known Store close와 baseline/permit 행을 확인하며 runtime/finalizer/CLI를 호출하지 않는다. 테스트용 수동 operator record는 실제 사람 위임이나 운영 profile 준비의 증거가 아니다. 아래 초기 후보의 schema3 미지원 실패와 당시 검증 기록은 역사로 보존한다.
 
 ```powershell
 python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --completed-current -v
+python -B -X utf8 tests/test_codex_registered_conducted_workflow_host.py --registration-compat -v
 ```
 
 새 검사는 실제 disposable TXT 등록/claim/strict 분석 완료를 준비한 뒤 readonly current를 사용한다. 생성 준비 실패와 schema3 미지원 RED를 각각 보존한다. 실제 KnownFolder/운영 profile·원17/새 실 permit·승인 발급·installed CLI·모델·runtime·장비/현장·수집 원본 접근은0이다. 아래 기존 host.main/version-child 및 전체 suite를 이 단위의 실행 분모로 더하지 않는다. 자체 구현 검증이며 독립 리뷰는 다른 검수자가 후속 수행한다.

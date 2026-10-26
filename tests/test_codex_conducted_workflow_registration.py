@@ -228,10 +228,18 @@ class RegistrationTests(unittest.TestCase):
             with self.assertRaises(MemoryError) as got:self.call()
         self.assertIs(got.exception,control);self.assertFalse(self.stage.exists());self.assertFalse(self.target.exists())
 
-    def test_completed_unfinished_real_host_remains_dependency_pending(self):
-        self.make_completed_inputs();result=self.call()
+    def test_completed_unsupported_host_dependency_retains_staging(self):
+        self.make_completed_inputs()
+        def unsupported_host(root,config,scenario,owned):
+            self.assertEqual(scenario,'REG-CASE')
+            self.assertEqual(json.loads((root/'registered-workflow.json').read_bytes())['schema_version'],3)
+            raise NotImplementedError('AUTHORED_SCHEMA3_HOST_UNSUPPORTED')
+        with patch.object(host,'_prepare',side_effect=unsupported_host) as prepared:
+            result=self.call()
+        self.assertEqual(prepared.call_count,1)
         self.assertEqual(result['status'],'failed');self.assertEqual(result['phase'],'current')
         self.assertTrue(self.stage.exists());self.assertFalse(self.target.exists())
+        self.assertFalse((self.operator/'preparation-complete-v1.json').exists())
 
     def test_completed_closed_metadata_rejects_ref_policy_extra_and_native_version(self):
         self.make_completed_inputs();original=copy.deepcopy(self.meta)
