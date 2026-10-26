@@ -1,5 +1,13 @@
 # 등록 합성 conducted workflow의 native host
 
+## 완료 current PDF의 실제 등록 연결 — 2026-10-26
+
+DEV1-GOAL-COMPLETED-PDF-001은 명시 workflow schema3 `completed_current_provided`에 한해 기존 native 등록 원형 검사 뒤 TXT/PDF 허용 목록을 적용한다. 기준 b92af6eb2080d273bf98f50222a182d663a87c7b host에는 이 suffix guard가 없었으므로 추가했다. `.md` 등은 Store/current 읽기 전에 `unsupported_schema`로 거절한다. v1/v2와 authority/caps/provenance/ledger/모델 실행 계약은 변경하지 않는다.
+
+PDF 내용은 기존 `read_current_conducted_plan_from_facts`가 검증한 원 retained parser·한 페이지 schema2 citation·완료 current 분석·동일 source/Store/revision/job과 ready plan을 사용한다. host가 PDF를 TXT로 바꾸거나 수동 source_settings로 current를 복원하지 않는다. 등록기의 실제 API → native 게시 → 실제 staging `_prepare`1·게시 후 `_prepare`1에서 workflow/context/analysis/plan/schema 5tuple과 current binding, 원본 PDF/Store bytes·native metadata 보존을 확인했다. 세부 등록 계약과 재현 명령은 [등록 사용법의 PDF 항목](codex_conducted_workflow_registration_usage.md)을 따른다.
+
+새 authored synthetic PDF/Store와 test-only operator 위치·위임 record에서 PDF 양성1/분석 불일치1, PDF 음성4, 다른 형식 거절1 및 기존 TXT2가 통과했다. source 변경은 registrar의 TXT-only guard를 TXT/PDF로 좁게 확장한1줄과 이 host v3 guard2줄이다. 실제 KnownFolder·운영 permit·원17/추가8·설치 CLI/실제 모델·고객자료·실장비·token ledger 접근/변경은0이다. 아래 초기 호환 이력의 TXT 검증 범위와 구별한다.
+
 ## 정식 등록 v3와 실제 host 준비면의 호환 — 2026-10-26
 
 DEV2-CURRENT-REGISTRATION-PREPARE-COMPAT-001은 원 host 후보7b04f32의 새 독립 clone/branch에서 이 usage와 기존 host test2만 소유한다. 개발1 후보 b7230c54edf421ece4a169c563e28b5e83eb8e1c의 registration3은 892ee055로 dependency 정상 cherry-pick했으며 원 bytes를 그대로 유지한다. host core32893B/SHA93f410f4와 원 ERS·H+tail·v1/v2·summary12/finalization5·sole genuine1도 변경하지 않는다. 원 host 후보와 이 최소 회귀의 독립/통합 수용은 별개다.

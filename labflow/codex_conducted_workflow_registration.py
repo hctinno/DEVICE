@@ -367,7 +367,7 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         completed_scope=None
         if meta['schema_version']==3:
             _host._native_host._registration(operator/'prepared-data',check_config,scenario_id)
-            if any(Path(row['path']).suffix.lower()!='.txt' for row in selection['files']):_fail('unsupported_schema')
+            if any(Path(row['path']).suffix.lower() not in ('.txt','.pdf') for row in selection['files']):_fail('unsupported_schema')
         store=Store.open_existing(str(state))
         if meta['schema_version']==3:
             current,completed_scope=_completed_snapshot(store,selection,original,analysis,plan)
