@@ -3,6 +3,7 @@ import copy
 from datetime import datetime,timedelta,timezone
 import hashlib
 import importlib
+import inspect
 import io
 import json
 import os
@@ -269,6 +270,138 @@ class RegistrationTests(unittest.TestCase):
         self.assertEqual(self.call()['status'],'not_prepared');self.assertEqual((self.stage/'guard').read_bytes(),b'KEEP_PARTIAL')
 
 
+    def selection_policy(self):
+        return dict(schema_version=1,kind='unique_same_run_sensor_acquisition')
+
+    def selection_preflight_v2_preserves_data_only_dto_and_legacy_pins(self):
+        self.assertIn('measurement_selection_policy',inspect.signature(api.preflight_conducted_workflow_inputs).parameters,
+            'The explicit selection preflight keyword has not been implemented')
+        before=C([self.context,self.analysis,self.plan,self.q]);options=dict(quantity=self.q,allowed_tools=self.meta['allowed_tools'])
+        legacy=api.preflight_conducted_workflow_inputs(self.context,self.analysis,self.plan,measurement_ref='event:17',**options)
+        explicit_none=api.preflight_conducted_workflow_inputs(self.context,self.analysis,self.plan,measurement_ref='event:17',measurement_selection_policy=None,**options)
+        selected=api.preflight_conducted_workflow_inputs(self.context,self.analysis,self.plan,measurement_ref=None,measurement_selection_policy=self.selection_policy(),**options)
+        self.assertEqual(C(legacy),C(explicit_none));self.assertEqual(C(legacy),C(selected))
+        self.assertEqual(set(selected),set('schema_version kind status pins gaps failure execution_authority'.split()))
+        self.assertEqual(selected['status'],'validated');self.assertFalse(selected['execution_authority'])
+        self.assertEqual(set(selected['pins']),set('context_sha256 analysis_sha256 plan_input_sha256 source_settings_sha256 quantity_sha256'.split()))
+        self.assertEqual(C([self.context,self.analysis,self.plan,self.q]),before)
+        self.assertFalse(self.stage.exists());self.assertFalse(self.target.exists())
+        self.put(self.root/'selection-preflight-observation.json',dict(legacy=legacy,explicit_none=explicit_none,selected=selected,io_or_execution=False))
+
+    def selection_preflight_policy_requires_native_exact2_and_explicit_null_ref(self):
+        self.assertIn('measurement_selection_policy',inspect.signature(api.preflight_conducted_workflow_inputs).parameters)
+        class NonNative(dict):pass
+        invalid=[True,{},[],dict(schema_version=True,kind='unique_same_run_sensor_acquisition'),
+            dict(schema_version=1.0,kind='unique_same_run_sensor_acquisition'),dict(schema_version=1,kind='other'),
+            dict(schema_version=1,kind='unique_same_run_sensor_acquisition',approved=True),NonNative(self.selection_policy())]
+        rows=[];options=dict(quantity=self.q,allowed_tools=self.meta['allowed_tools'])
+        for value in invalid:
+            result=api.preflight_conducted_workflow_inputs(self.context,self.analysis,self.plan,measurement_ref=None,measurement_selection_policy=value,**options)
+            self.assertEqual(result['status'],'invalid');self.assertIsNone(result['pins']);self.assertFalse(result['execution_authority'])
+            rows.append(dict(input_type=type(value).__name__,result=result))
+        for ref,policy in [('event:17',self.selection_policy()),(None,None)]:
+            result=api.preflight_conducted_workflow_inputs(self.context,self.analysis,self.plan,measurement_ref=ref,measurement_selection_policy=policy,**options)
+            self.assertEqual(result['status'],'invalid');rows.append(dict(ref=ref,policy=policy,result=result))
+        control=MemoryError('FIRST_EXPLICIT_PREFLIGHT_CONTROL')
+        with patch.object(api,'build_conducted_twin_plan_input',side_effect=control):
+            with self.assertRaises(MemoryError) as got:
+                api.preflight_conducted_workflow_inputs(self.context,self.analysis,self.plan,measurement_ref=None,measurement_selection_policy=self.selection_policy(),**options)
+        self.assertIs(got.exception,control);self.put(self.root/'policy-rejections.json',rows)
+
+    def selection_publish_v2_native_profile_matches_trusted_pin_and_host_prepare(self):
+        self.meta.update(schema_version=2,measurement_ref=None,measurement_selection_policy=self.selection_policy());self.bind()
+        manifest_raw=(self.operator/'prepared-inputs-v1.json').read_bytes();source_raw=(self.operator/'root-delegation-v1.json').read_bytes()
+        with patch.object(host,'main',side_effect=AssertionError('NO_HOST_RUN')),patch.object(subprocess,'Popen',side_effect=AssertionError('NO_CHILD_RUN')):
+            result=self.call()
+        self.assertEqual(result['status'],'prepared');self.assertEqual(len(result),11);self.assertEqual(len(result['files']),10)
+        self.assertFalse(self.stage.exists());self.assertTrue(self.target.is_dir())
+        workflow=json.loads((self.target/'registered-workflow.json').read_bytes())
+        self.assertEqual(workflow['schema_version'],2);self.assertEqual(len(workflow),13)
+        self.assertIsNone(workflow['measurement_ref']);self.assertEqual(C(workflow['measurement_selection_policy']),C(self.meta['measurement_selection_policy']))
+        self.assertEqual(result['operator_source'],dict(bytes=len(source_raw),sha256=H(source_raw)))
+        complete=json.loads((self.operator/'preparation-complete-v1.json').read_bytes())
+        self.assertEqual(complete['prepared_input'],dict(bytes=len(manifest_raw),sha256=H(manifest_raw)))
+        self.assertEqual(self.authority['prepared_manifest_sha256'],H(manifest_raw));self.assertEqual(complete['files'],result['files'])
+        config=json.loads((self.target/'operator-control.json').read_bytes());self.assertEqual(config['workflow_sha256'],H(C(workflow)))
+        before={p.name:p.read_bytes() for p in self.target.iterdir() if p.is_file()};owned=dict(store=None)
+        try:prepared=host._prepare(self.target,config,'REG-CASE',owned)
+        finally:
+            if owned['store'] is not None:owned['store'].close()
+        self.assertEqual(C(prepared[0]),C(workflow));self.assertEqual(C(prepared[3]),C(self.plan))
+        self.assertEqual(before,{p.name:p.read_bytes() for p in self.target.iterdir() if p.is_file()})
+        for leaf,pin in result['files'].items():self.assertEqual(dict(bytes=len(before[leaf]),sha256=H(before[leaf])),pin)
+        con=sqlite3.connect((self.target/'workflow-continuation.sqlite3').as_uri()+'?mode=ro&immutable=1',uri=True)
+        try:rows=con.execute('SELECT kind,payload FROM codex_conducted_workflow_history ORDER BY seq').fetchall()
+        finally:con.close()
+        self.assertEqual([row[0] for row in rows],['baseline','permit'])
+        self.assertEqual(json.loads(rows[0][1])['inherited_history'],self.authority['inherited_history'])
+        self.assertEqual(json.loads(rows[1][1])['workflow_sha256'],config['workflow_sha256'])
+        self.assertFalse(any((self.target/'runs/REG-P1').iterdir()))
+        self.put(self.root/'published-v2-binding.json',dict(result=result,workflow=workflow,manifest_pin=complete['prepared_input'],
+            host_prepare_same_snapshot=True,host_dispatches=0,child_processes=0,sql_rows=2))
+        first_sql=before['workflow-continuation.sqlite3'];again=self.call()
+        self.assertEqual(again['status'],'not_prepared');self.assertEqual((self.target/'workflow-continuation.sqlite3').read_bytes(),first_sql)
+
+    def selection_metadata_closed_versions_and_policy_fail_before_staging(self):
+        original=copy.deepcopy(self.meta);v2=copy.deepcopy(original)
+        v2.update(schema_version=2,measurement_ref=None,measurement_selection_policy=self.selection_policy())
+        cases=[]
+        def add(label,source,**changes):
+            value=copy.deepcopy(source);value.update(changes);cases.append((label,value))
+        add('v1-policy',original,measurement_selection_policy=self.selection_policy())
+        add('v1-null',original,measurement_ref=None)
+        missing=copy.deepcopy(v2);missing.pop('measurement_selection_policy');cases.append(('v2-missing-policy',missing))
+        add('v2-null-policy',v2,measurement_selection_policy=None)
+        add('v2-null-policy-with-string-ref',v2,measurement_selection_policy=None,measurement_ref='event:17')
+        add('v2-string-ref',v2,measurement_ref='event:17')
+        add('v2-extra-field',v2,approved=True)
+        for version in (True,2.0,3):add('version-'+str(version),v2,schema_version=version)
+        for index,policy in enumerate((True,{},[],dict(schema_version=True,kind='unique_same_run_sensor_acquisition'),
+                dict(schema_version=1.0,kind='unique_same_run_sensor_acquisition'),dict(schema_version=1,kind='other'),
+                dict(schema_version=1,kind='unique_same_run_sensor_acquisition',approved=True))):
+            add('policy-'+str(index),v2,measurement_selection_policy=policy)
+        observations=[]
+        for label,value in cases:
+            self.meta=value;self.bind();result=self.call()
+            self.assertEqual(result['status'],'not_prepared');self.assertFalse(self.stage.exists());self.assertFalse(self.target.exists())
+            self.assertIsNone(result['profile']);self.assertEqual(result['files'],{})
+            observations.append(dict(label=label,metadata=value,receipt=result))
+        self.put(self.root/'metadata-rejections.json',observations)
+
+    def selection_manifest_sha_and_existing_authority_scope_cannot_be_inferred(self):
+        self.meta.update(schema_version=2,measurement_ref=None,measurement_selection_policy=self.selection_policy());self.bind()
+        before=(self.operator/'root-delegation-v1.json').read_bytes()
+        self.meta['measurement_selection_policy']['kind']='other';self.put(self.operator/'prepared-inputs-v1.json',self.meta)
+        changed=self.call();self.assertEqual(changed['status'],'not_prepared')
+        self.assertEqual((self.operator/'root-delegation-v1.json').read_bytes(),before)
+        self.assertTrue(changed['errors'][0]['code'].endswith('binding_mismatch'))
+        self.meta['measurement_selection_policy']=self.selection_policy();self.authority['scope']['maximum_model_processes']=9;self.bind()
+        expanded=self.call();self.assertEqual(expanded['status'],'not_prepared')
+        self.assertFalse(self.stage.exists());self.assertFalse(self.target.exists())
+        self.assertEqual(expanded['verification']['authority_scope'],'not_validated')
+        self.put(self.root/'trusted-binding-rejections.json',dict(raw_manifest_change=changed,scope_expansion=expanded,
+            caller_metadata_is_authority=False,real_operator_record_created=False))
+
+    def selection_v2_first_ordinary_failure_keeps_partial_sql_before_later_control(self):
+        self.meta.update(schema_version=2,measurement_ref=None,measurement_selection_policy=self.selection_policy());self.bind()
+        self.first_failure_sql_sync_before_directory_control(MemoryError('LATER_V2_DIRECTORY_CONTROL'))
+
+    def selection_v2_first_control_identity_survives_later_directory_error(self):
+        self.meta.update(schema_version=2,measurement_ref=None,measurement_selection_policy=self.selection_policy());self.bind()
+        primary=MemoryError('FIRST_V2_SQL_CLOSE_CONTROL');close_sql=api._close_sql;close_dirs=api._IO.close_dirs
+        counts=dict(sql_close=0,directory_close=0)
+        def sql_close(con):counts['sql_close']+=1;close_sql(con);raise primary
+        def dirs(obj):counts['directory_close']+=1;close_dirs(obj);raise OSError('LATER_V2_DIRECTORY_CLOSE')
+        with patch.object(api,'_close_sql',side_effect=sql_close),patch.object(api._IO,'close_dirs',dirs), \
+                patch.object(api,'_publish_directory',side_effect=AssertionError('NO_PUBLISH_AFTER_CONTROL')):
+            with self.assertRaises(MemoryError) as got:self.call()
+        self.assertIs(got.exception,primary);self.assertEqual(counts,dict(sql_close=1,directory_close=1))
+        self.assertTrue((self.stage/'workflow-continuation.sqlite3').is_file());self.assertFalse(self.target.exists())
+        marker=json.loads((self.operator/'preparation-failure-v1.json').read_bytes())
+        self.assertEqual(marker['phase'],'sql');self.assertTrue(marker['code'].endswith('interrupted'))
+        self.put(self.root/'v2-first-control-observation.json',dict(first_control_same_object=True,counts=counts,failure_marker=marker,
+            retained_sql_pin=dict(bytes=(self.stage/'workflow-continuation.sqlite3').stat().st_size,sha256=H((self.stage/'workflow-continuation.sqlite3').read_bytes())),publish0=True))
+
     def first_failure_sql_sync_before_directory_control(self,control):
         primary=OSError('AUTHORED_FIRST_SQL_FSYNC_FAILURE')
         database=api._IO.database;fsync=api.os.fsync;close_dirs=api._IO.close_dirs
@@ -323,7 +456,23 @@ class RegistrationTests(unittest.TestCase):
 
 
 if __name__=='__main__':
-    if '--first-failure' in sys.argv:
+    if '--selection-preflight' in sys.argv:
+        sys.argv.remove('--selection-preflight');LOCAL=ROOT/'.local/wsr'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['RegistrationTests.selection_preflight_v2_preserves_data_only_dto_and_legacy_pins',
+            'RegistrationTests.selection_preflight_policy_requires_native_exact2_and_explicit_null_ref'])
+    elif '--selection-publish' in sys.argv:
+        sys.argv.remove('--selection-publish');LOCAL=ROOT/'.local/wsr'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['RegistrationTests.selection_publish_v2_native_profile_matches_trusted_pin_and_host_prepare'])
+    elif '--selection-boundary' in sys.argv:
+        sys.argv.remove('--selection-boundary');LOCAL=ROOT/'.local/wsr'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['RegistrationTests.selection_metadata_closed_versions_and_policy_fail_before_staging',
+            'RegistrationTests.selection_manifest_sha_and_existing_authority_scope_cannot_be_inferred',
+            'RegistrationTests.selection_v2_first_ordinary_failure_keeps_partial_sql_before_later_control',
+            'RegistrationTests.selection_v2_first_control_identity_survives_later_directory_error'])
+    elif '--selection-metadata' in sys.argv:
+        sys.argv.remove('--selection-metadata');LOCAL=ROOT/'.local/wsr'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['RegistrationTests.selection_metadata_closed_versions_and_policy_fail_before_staging'])
+    elif '--first-failure' in sys.argv:
         sys.argv.remove('--first-failure')
         unittest.main(defaultTest=['RegistrationTests.'+name for name in RegistrationTests.__dict__ if name.startswith('first_failure_ordinary_')])
     elif '--first-control-legacy' in sys.argv:
