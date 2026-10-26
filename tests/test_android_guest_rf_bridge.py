@@ -25,7 +25,8 @@ class FakeGuest:
     """A separate stateful AOSP shell fixture, not a production transport hook."""
 
     def __init__(self, *, bad_status=False, fail_start=False, fail_cleanup=False,
-                 tamper=None, install_failure=None, preexisting_script=False):
+                 tamper=None, install_failure=None, preexisting_script=False,
+                 config_failure=None, preexisting_state=False):
         self.calls = []
         self.bad_status = bad_status
         self.fail_start = fail_start
@@ -33,6 +34,8 @@ class FakeGuest:
         self.tamper = tamper
         self.install_failure = install_failure
         self.preexisting_script = preexisting_script
+        self.config_failure = config_failure
+        self.preexisting_state = preexisting_state
         self.script_hash = None
         self.state = None
         self.revision = 0
@@ -52,8 +55,11 @@ class FakeGuest:
             if self.install_failure == 'bad_hash':
                 return '0' * 64 + '  ' + SCRIPT
             return self.script_hash + '  ' + SCRIPT
-        if service.startswith('shell:rm -f '):
+        if (service.startswith('shell:rm -f ')
+                or service.startswith('shell:test -d /data/local/tmp/dgm-rf-')):
             self.preexisting_script = False
+            if '/state' in service:
+                self.preexisting_state = False
             if self.fail_cleanup:
                 raise check.BoundaryError('adb_timeout')
             return 'DGM-CLEAN-OK'
@@ -69,6 +75,8 @@ class FakeGuest:
             raise AssertionError('sequence gap')
         self.sequence = seq
         if operation == 'CONFIG':
+            if self.config_failure:
+                raise check.BoundaryError(self.config_failure)
             source = args[4:10]
             calculated = hashlib.sha256(('|'.join(source) + '\n').encode('ascii')).hexdigest()
             if calculated != args[10]:
@@ -145,6 +153,9 @@ class GuestBridgeFixtureTests(unittest.TestCase):
         self.assertTrue(self.emulator.sample.called)
         self.assertTrue(any(call.startswith('shell:sh ' + SCRIPT + ' CONFIG ') for call in guest.calls))
         self.assertTrue(any(call.startswith('shell:sh ' + SCRIPT + ' STOP ') for call in guest.calls))
+        scope = '/data/local/tmp/dgm-rf-' + result['guest_controller']['nonce'] + '.d'
+        self.assertTrue(any(scope + '/state' in call and 'rmdir ' + scope in call
+                            for call in guest.calls))
 
     def test_status_mismatch_never_becomes_valid_and_cleanup_is_recorded(self):
         guest = FakeGuest(bad_status=True)
@@ -227,6 +238,18 @@ class GuestBridgeFixtureTests(unittest.TestCase):
         self.assertEqual(result['first_error']['code'], 'guest_script_hash_mismatch')
         self.assertEqual(result['guest_controller']['cleanup'], 'unknown')
 
+    def test_preexisting_nonce_state_survives_unacknowledged_config(self):
+        guest = FakeGuest(config_failure='guest_adb_service_failure',
+                          preexisting_state=True)
+        with self.assertRaises(check.BoundaryError):
+            self.run_bridge(guest)
+        result = self.report.data['rf_bridge']
+        self.assertTrue(guest.preexisting_state)
+        self.assertFalse(result['valid'])
+        self.assertEqual(result['first_error']['code'], 'guest_adb_service_failure')
+        self.assertEqual(result['guest_controller']['cleanup'], 'unknown')
+        self.assertIn('fleet_stop', result['host_rf_model'])
+
     def test_direct_bridge_rejects_custom_endpoint_before_guest_write(self):
         endpoint = check.Endpoint(adb_port=15038, console_port=5678, grpc_port=18554)
         report = check.Report(Path(self.tmp.name) / 'custom-endpoint')
@@ -247,7 +270,8 @@ class GuestBridgeFixtureTests(unittest.TestCase):
         guest = FakeGuest()
         original = guest.__call__
         def interrupted(endpoint, server, service, deadline):
-            if service.startswith('shell:rm -f '):
+            if (service.startswith('shell:rm -f ')
+                    or service.startswith('shell:test -d /data/local/tmp/dgm-rf-')):
                 raise KeyboardInterrupt()
             return original(endpoint, server, service, deadline)
         with mock.patch.object(bridge, '_exchange', side_effect=interrupted):

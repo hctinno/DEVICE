@@ -29,15 +29,16 @@ _NONCE = re.compile(r'[0-9a-f]{32}')
 _MODULATION = re.compile(r'[A-Z][A-Z0-9_-]{0,31}')
 _SCRIPT = r'''#!/system/bin/sh
 set -eu
+umask 077
 [ "$#" -ge 3 ] || exit 64
 op=$1; nonce=$2; seq=$3; shift 3
 case "$nonce" in ''|*[!0-9a-f]*) exit 64;; esac
 [ "${#nonce}" -eq 32 ] || exit 64
 case "$seq" in ''|*[!0-9]*) exit 64;; esac
 [ "$seq" -le 16 ] || exit 64
-state_file=/data/local/tmp/dgm-rf-${nonce}.state
-temp_file=/data/local/tmp/dgm-rf-${nonce}.tmp
-[ ! -L "$state_file" ] && [ ! -L "$temp_file" ] || exit 65
+scope=/data/local/tmp/dgm-rf-${nonce}.d
+state_file=$scope/state
+temp_file=$scope/tmp
 hash_line() { value=$(printf '%s\n' "$1" | sha256sum); printf '%s' "${value%% *}"; }
 reply() {
     prefix="DGM1|$nonce|$seq|$state|$revision|$source_hash"
@@ -58,16 +59,17 @@ if [ "$op" = HELLO ]; then
     exit 0
 fi
 if [ "$op" = CONFIG ]; then
-    [ "$#" -eq 7 ] && [ "$seq" -eq 1 ] && [ ! -e "$state_file" ] || exit 65
+    [ "$#" -eq 7 ] && [ "$seq" -eq 1 ] || exit 65
     freq=$1; power=$2; bandwidth=$3; duty=$4; modulation=$5; crest=$6
     source_hash=$7
     actual=$(hash_line "$freq|$power|$bandwidth|$duty|$modulation|$crest")
     [ "$actual" = "$source_hash" ] || exit 65
+    mkdir "$scope" || exit 65
     state=CONFIGURED; revision=1
     save; reply
     exit 0
 fi
-[ "$#" -eq 0 ] && [ -f "$state_file" ] || exit 65
+[ "$#" -eq 0 ] && [ -d "$scope" ] && [ ! -L "$scope" ] && [ -f "$state_file" ] || exit 65
 IFS='|' read -r revision previous state source_hash freq power bandwidth duty modulation crest < "$state_file"
 [ "$seq" -eq "$((previous + 1))" ] || exit 65
 actual=$(hash_line "$freq|$power|$bandwidth|$duty|$modulation|$crest")
@@ -232,14 +234,19 @@ def _command_service(operation, nonce, sequence, source_tokens=(), source_hash=N
     return f'shell:sh {_SCRIPT_PATH} {operation} {nonce} {sequence}{tail}'
 
 
-def _cleanup_service(nonce):
+def _cleanup_service(nonce, *, state_owned=False):
     if _NONCE.fullmatch(nonce) is None:
         raise check.BoundaryError('guest_nonce_invalid')
-    state = f'/data/local/tmp/dgm-rf-{nonce}.state'
-    temporary = f'/data/local/tmp/dgm-rf-{nonce}.tmp'
-    return (f'shell:rm -f {_SCRIPT_PATH} {state} {temporary} && '
-            f'test ! -e {_SCRIPT_PATH} && test ! -e {state} && '
-            f'test ! -e {temporary} && printf DGM-CLEAN-OK')
+    if type(state_owned) is not bool:
+        raise check.BoundaryError('guest_cleanup_scope_invalid')
+    if not state_owned:
+        return (f'shell:rm -f {_SCRIPT_PATH} && test ! -e {_SCRIPT_PATH} && '
+                'printf DGM-CLEAN-OK')
+    scope = f'/data/local/tmp/dgm-rf-{nonce}.d'
+    state, temporary = f'{scope}/state', f'{scope}/tmp'
+    return (f'shell:test -d {scope} && test ! -L {scope} && '
+            f'rm -f {_SCRIPT_PATH} {state} {temporary} && rmdir {scope} && '
+            f'test ! -e {_SCRIPT_PATH} && test ! -e {scope} && printf DGM-CLEAN-OK')
 
 
 def _fleet_action(fleet, result, request, device, action, parameters=None):
@@ -285,6 +292,8 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process):
     failure = None
     install_attempted = False
     install_confirmed = False
+    config_attempted = False
+    config_confirmed = False
 
     def guard_owned():
         if server.process.poll() is not None:
@@ -324,7 +333,9 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process):
         install_confirmed = True
         result['guest_controller']['install_sha256'] = _SCRIPT_SHA256
         guest('HELLO', 0, 'HELLO', 0)
+        config_attempted = True
         guest('CONFIG', 1, 'CONFIGURED', 1, config=True)
+        config_confirmed = True
         guest('STATUS', 2, 'CONFIGURED', 1)
         _fleet_action(fleet, result, 'configure', 'dut', 'configure', dict(source))
         guest('START', 3, 'STARTED', 2)
@@ -386,10 +397,15 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process):
             try:
                 if getattr(failure, 'code', None) == 'memory_emergency_stop':
                     raise check.BoundaryError('cleanup_skipped_memory_emergency')
-                cleaned = _exchange(endpoint, server, _cleanup_service(nonce), deadline)
+                cleaned = _exchange(endpoint, server, _cleanup_service(
+                    nonce, state_owned=config_confirmed), deadline)
                 if cleaned != 'DGM-CLEAN-OK':
                     raise check.BoundaryError('guest_cleanup_unconfirmed', cleaned[:256])
-                result['guest_controller']['cleanup'] = 'confirmed'
+                result['guest_controller']['cleanup'] = ('unknown' if config_attempted
+                                                        and not config_confirmed else 'confirmed')
+                if result['guest_controller']['cleanup'] == 'unknown':
+                    result['cleanup_errors'].append({'code': 'guest_state_effect_unknown',
+                                                     'detail': 'CONFIG was not receipt-confirmed; nonce scope left intact'})
             except BaseException as cleanup_exc:
                 result['guest_controller']['cleanup'] = 'unknown'
                 result['cleanup_errors'].append({'code': getattr(cleanup_exc, 'code', 'guest_cleanup_error'),
