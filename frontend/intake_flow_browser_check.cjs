@@ -1230,6 +1230,13 @@ function loadCurrentQuestionsInput(file,io=fs,retain=()=>{}){
   // remain in the literal input; the host reads the pinned original startup.
   return {spec:{name:'current-questions',workspace,intake_id:value.intake_id,original_startup_file:path.resolve(original.path),source_roots:roots},input_pin:input.pin,startup_pin:startup.pin};
 }
+function validateCurrentQuestionsPacket(packet,intakeId){
+  assert.equal(packet.kind,'intake_current_facts_plan_view');assert.equal(packet.status,'available');
+  assert.equal(packet.recheck.status,'unchanged');assert.deepEqual(packet.recheck.before,packet.recheck.after);
+  const native=packet.current,f=native.facts_plan;
+  assert.equal(native.context.intake_id,intakeId);assert.equal(f.plan_input.binding.intake_id,intakeId);assert.equal(f.plan_input.binding.revision,native.context.revision);
+  return {packet,native,f};
+}
 function createCurrentQuestionsResponses({origin,intakeId,stage,retain,onFailure,timeoutMs=8000,currentLimit=16777216,otherLimit=262144}){
   const current='/api/intakes/'+intakeId+'/conducted-current-facts',base='/api/intakes/'+intakeId;
   const ancillary=new Set(['/api/intakes',base+'/fixture-runs',base+'/conducted-plan-preview',base+'/conducted-result',base+'/conducted-artifact-readback','/api/intake-references/'+intakeId+'/history']);
@@ -1266,8 +1273,10 @@ function createCurrentQuestionsResponses({origin,intakeId,stage,retain,onFailure
       if(raw.length>(row.meta.required?currentLimit:otherLimit)){finish(row,row.meta.required?'failed':'partial','body_too_large');return;}
       row.file=row.name+'.raw.json';if(!emit(row.file,raw)){finish(row,'failed','evidence_write_failed');return;}
       if(row.meta.required){
-        try{const value=JSON.parse(new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(raw));if(!value||typeof value!=='object'||Array.isArray(value))throw Error();}
+        let value;
+        try{value=JSON.parse(new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(raw));if(!value||typeof value!=='object'||Array.isArray(value))throw Error();}
         catch{finish(row,'failed','body_json_invalid');return;}
+        try{validateCurrentQuestionsPacket(value,intakeId);}catch{finish(row,'failed','current_semantics_invalid');return;}
       }
       responses.push({path:row.meta.path,status:row.meta.status,raw,file:row.file});finish(row,'saved');
     }).catch(error=>{
@@ -1294,7 +1303,7 @@ function createCurrentQuestionsResponses({origin,intakeId,stage,retain,onFailure
 
 async function currentQuestionsResponseTypedMain(){
   assert.equal(typeof createCurrentQuestionsResponses,'function','required response observer is not implemented');
-  const origin='http://127.0.0.1:12345',intakeId='I-authored',current='/api/intakes/'+intakeId+'/conducted-current-facts',valid=Buffer.from('{"kind":"intake_current_facts_plan_view"}'),checks=[];
+  const origin='http://127.0.0.1:12345',intakeId='I-authored',current='/api/intakes/'+intakeId+'/conducted-current-facts',valid=Buffer.from(JSON.stringify({kind:'intake_current_facts_plan_view',status:'available',recheck:{status:'unchanged',before:{revision:3},after:{revision:3}},current:{context:{intake_id:intakeId,revision:3},facts_plan:{plan_input:{binding:{intake_id:intakeId,revision:3}}}}})),checks=[];
   const fixture=extra=>{const files=new Map(),failures=[];const observer=createCurrentQuestionsResponses({origin,intakeId,stage:()=> 'typed',retain:(name,value)=>files.set(name,value),onFailure:error=>failures.push(error),timeoutMs:30,...extra});return {observer,files,failures};};
   const response=(pathname,body,status=200,method='GET')=>{const request={url:()=>origin+pathname,method:()=>method};return {url:request.url,request:()=>request,status:()=>status,body};};
   {
@@ -1320,20 +1329,58 @@ async function currentQuestionsResponseTypedMain(){
     const f=fixture({currentLimit:64});f.observer.response(response(current,async()=>Buffer.alloc(65)));await assert.rejects(f.observer.settle(),/required/);assert.equal(f.observer.responses.length,0);checks.push('oversize required body fails without truncation');
   }
   {
+    for(const mutate of [()=>({status:'unknown',current:null}),p=>({...p,kind:'unknown'}),p=>({...p,current:{...p.current,context:{intake_id:'I-other',revision:3}}}),p=>({...p,current:{...p.current,facts_plan:{plan_input:{binding:{intake_id:intakeId,revision:4}}}}}),p=>({...p,recheck:{status:'changed',before:{revision:2},after:{revision:3}}})]){
+      const f=fixture();f.observer.response(response(current,async()=>Buffer.from(JSON.stringify(mutate(JSON.parse(valid))))));f.observer.response(response(current,async()=>valid));
+      await assert.rejects(f.observer.settle(),/current_semantics_invalid/);assert.equal(f.observer.metadata()[0].body_state,'failed');assert.equal(f.observer.metadata()[1].body_state,'saved');assert.ok(f.files.has('api-01.raw.json'));assert.ok(f.failures.length>0);
+    }
+    checks.push('every required packet passes shared semantics; later valid cannot erase first failure');
+  }
+  {
     const f=fixture(),r=response(current,()=>new Promise(()=>{}));f.observer.response(r);f.observer.requestFailed(r.request());await assert.rejects(f.observer.settle(),/required/);
     const slow=fixture({timeoutMs:5});slow.observer.response(response(current,()=>new Promise(()=>{})));await assert.rejects(slow.observer.settle(),/required/);checks.push('cancellation and pending-body timeout settle before close');
   }
   proofWrite(path.join(OUTPUT,'current-questions-response-typed-results.json'),JSON.stringify({status:'pass',checks,genuine_browser_calls:0,models:0},null,2));console.log(JSON.stringify({status:'pass',typed:checks.length,output:OUTPUT}));
 }
 
+// The watchdog derives its target from its actual parent, never from user input.
+// It remains independent of the helper event loop and any pending browser/IO.
+function currentQuestionsWatchdogChild(){
+  const {spawn}=require('node:child_process');
+  const parent=process.ppid,lines=require('node:readline').createInterface({input:process.stdin});let timer;
+  lines.once('line',raw=>{
+    const deadline=Number(raw);
+    if(!Number.isSafeInteger(deadline)||deadline<=0)process.exit(2);
+    timer=setTimeout(()=>{
+      const killer=spawn('taskkill.exe',['/PID',String(parent),'/T','/F'],{windowsHide:true,stdio:'ignore',detached:true});
+      killer.on('error',()=>process.exit(3));killer.unref();
+      // taskkill includes this watchdog in the owned parent tree.
+    },Math.max(0,deadline-Date.now()));
+    lines.once('line',raw=>{if(raw==='done'){clearTimeout(timer);process.exit(0);}});
+  });
+  process.stdin.once('end',()=>{clearTimeout(timer);process.exit(0);});
+}
+function startCurrentQuestionsWatchdog(deadline){
+  assert.equal(process.platform,'win32','current questions hard process-tree deadline requires Windows taskkill');
+  const child=spawn(process.execPath,['-e','('+currentQuestionsWatchdogChild.toString()+')()'],{windowsHide:true,stdio:['pipe','ignore','ignore']});
+  const exited=new Promise(resolve=>{child.once('error',()=>resolve({code:null,signal:'spawn_error'}));child.once('exit',(code,signal)=>resolve({code,signal}));});
+  child.stdin.on('error',()=>{});child.stdin.write(String(deadline)+'\n');
+  return {pid:child.pid,ready:new Promise((resolve,reject)=>{child.once('spawn',resolve);child.once('error',reject);}),finish:async()=>{child.stdin.write('done\n');const result=await exited;assert.equal(result.code,0,'owned deadline watchdog did not disarm cleanly');}};
+}
+
 async function currentQuestionsMain(){
   const started=Date.now(),observations={width:390,stages:[],questions:[],keyboard:[],api:[],page_errors:[],external_requests:[]};
   const resources={servers_started:0,current_get:0,readonly_api:0,dom_contexts:0,new_rf:0,workers:0,models:0,hardware:0,individual_SQL_hooks:false,individual_request_thread_hooks:false,global_process_census:false};
-  let host,browser,context,page,info,responseObserver,firstFailure=null,stopRequested=false,stage='input',hostRaw=[],hostErr=[];
+  let host,browser,context,page,info,responseObserver,watchdog,firstFailure=null,stopRequested=false,stage='input',hostRaw=[],hostErr=[];
   const fail=error=>{firstFailure??=error;return error;};
   const stopHost=()=>{if(host?.alive()&&!stopRequested){stopRequested=true;host.child.stdin.end('stop\n');}};
   const timer=setTimeout(()=>{fail(Error('current questions active budget exceeded; cleanup required'));Promise.resolve().then(()=>responseObserver?.settle({requireCurrent:false})).catch(fail).finally(()=>{if(context)context.close().catch(fail);stopHost();});},90000);
   const forcedStop=setTimeout(()=>{if(host?.alive()){resources.forced_owned_host_stop=true;fail(Error('current questions cleanup budget exceeded'));host.child.kill();}},110000);
+  const hardDeadline=setTimeout(()=>{
+    fail(Error('current questions overall 120-second hard deadline exceeded'));resources.hard_deadline_exceeded=true;
+    // Do not await locked IO or browser.close. The independent watchdog kills
+    // only this helper's process tree even if this callback cannot run.
+    fs.writeFile(path.join(OUTPUT,'current-questions-deadline.json'),JSON.stringify({status:'fail',reason:'overall_deadline',overall_ms:120000}),()=>{});
+  },Math.max(0,120000-(Date.now()-started)));
   const checkpoint=label=>{stage=label;if(firstFailure)throw firstFailure;assert.ok(Date.now()-started<90000,'current questions active budget exceeded');};
   const focus=locator=>locator.evaluate(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el);return {active:document.activeElement===el,focus_visible:el.matches(':focus-visible'),outline:s.outlineStyle,outline_width:s.outlineWidth,box_shadow:s.boxShadow,rect:{left:r.left,right:r.right,top:r.top,bottom:r.bottom},viewport:{width:innerWidth,height:innerHeight}};});
   const active=()=>page.evaluate(()=>{const e=document.activeElement;return {tag:e?.tagName,id:e?.id??'',text:(e?.textContent??'').slice(0,160)};});
@@ -1360,6 +1407,8 @@ async function currentQuestionsMain(){
   };
   const noOverflow=layout=>assert.ok(layout.scroll_width<=layout.width,'horizontal document overflow: '+layout.scroll_width+' > '+layout.width);
   try{
+    watchdog=startCurrentQuestionsWatchdog(started+120000);await watchdog.ready;resources.watchdog_pid=watchdog.pid;
+    proofWrite(path.join(OUTPUT,'current-questions-deadline.json'),JSON.stringify({status:'fail',reason:'completion_not_confirmed; fail-closed until watchdog disarmed',overall_ms:120000}));
     assert.equal(process.env.VLAB_CURRENT_QUESTIONS_ONLY,'1');
     for(const [key,value]of Object.entries(process.env))if(key.startsWith('VLAB_')&&key.endsWith('_ONLY')&&key!=='VLAB_CURRENT_QUESTIONS_ONLY')assert.notEqual(value,'1','select only one browser mode');
     const selection=loadCurrentQuestionsInput(process.env.VLAB_CURRENT_QUESTIONS_INPUT,fs,(name,raw)=>proofWrite(path.join(OUTPUT,name),raw));
@@ -1394,9 +1443,7 @@ async function currentQuestionsMain(){
     await responseObserver.settle();checkpoint('native current packet');
     const responses=responseObserver.responses;
     const current=responses.filter(r=>r.path.endsWith('/conducted-current-facts'));assert.ok(current.length>0&&current.length<=2);assert.equal(current.at(-1).status,200);
-    const packet=JSON.parse(current.at(-1).raw.toString('utf8')),native=packet.current,f=native.facts_plan;
-    assert.equal(packet.kind,'intake_current_facts_plan_view');assert.equal(packet.status,'available');assert.equal(packet.recheck.status,'unchanged');assert.deepEqual(packet.recheck.before,packet.recheck.after);
-    assert.equal(native.context.intake_id,selection.spec.intake_id);assert.equal(f.plan_input.binding.intake_id,selection.spec.intake_id);assert.equal(f.plan_input.binding.revision,native.context.revision);
+    const {packet,native,f}=validateCurrentQuestionsPacket(JSON.parse(current.at(-1).raw.toString('utf8')),selection.spec.intake_id);
     observations.native={response_file:current.at(-1).file,intake_id:native.context.intake_id,revision:native.context.revision,status:f.status,questions:f.questions.length,recheck:packet.recheck};
     const queue=page.locator('#intake-gap-queue'),questions=page.locator('[data-minimum-evidence-question][data-current="true"]:not([hidden])'),original=page.locator('[data-minimum-evidence-original]'),history=page.locator('[data-legacy-fixture-history]');
     observations.initial={question_groups:await questions.count(),source:await queue.getAttribute('data-minimum-source'),revision:await queue.getAttribute('data-revision'),original_closed:!(await original.evaluate(e=>e.open)),history_closed:!(await history.evaluate(e=>e.open)),questions_closed:await questions.locator(':scope > details').evaluateAll(es=>es.every(e=>!e.open)),workflow_outside_history:await page.locator('#intake-workflow').evaluate(e=>e.closest('[data-legacy-fixture-history]')===null),actual_ai:await page.locator('#conducted-artifact-storage').getAttribute('data-actual-ai'),assessment:await page.locator('#conducted-artifact-storage').getAttribute('data-assessment'),judgement:await page.locator('[data-artifact-judgement]').innerText()};
@@ -1444,6 +1491,10 @@ async function currentQuestionsMain(){
     if(resources.elapsed_ms>=120000)fail(Error('current questions overall 120-second budget exceeded'));
     proofWrite(path.join(OUTPUT,'host.stdout.raw'),Buffer.concat(hostRaw));proofWrite(path.join(OUTPUT,'host.stderr.raw'),Buffer.concat(hostErr));
     proofWrite(path.join(OUTPUT,'current-questions-results.json'),JSON.stringify({status:firstFailure?'fail':'pass',first_failure:firstFailure?{stage:observations.first_failure?.stage??stage,message:firstFailure.message}:null,observations,resources,limits:{servers:1,current_get:2,readonly_api:12,dom390:1,overall_ms:120000},scope:'original external startup; actual loopback responses and keyboard; no fixture/result substitution'},null,2));
+    // Keep the native deadline armed through all awaited cleanup and evidence IO.
+    proofWrite(path.join(OUTPUT,'current-questions-deadline.json'),JSON.stringify({status:firstFailure?'fail':'disarmed',reason:firstFailure?'inspection_failed':'cleanup_and_evidence_complete',overall_ms:120000}));
+    if(watchdog)await watchdog.finish();
+    clearTimeout(hardDeadline);
   }
   if(firstFailure)throw firstFailure;
   console.log(JSON.stringify({status:'pass',mode:'current-questions-only',output:OUTPUT,resources}));
