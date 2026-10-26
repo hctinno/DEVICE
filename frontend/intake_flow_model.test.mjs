@@ -537,6 +537,7 @@ function minimumEvidenceInput(){
   facts.assembly_gaps=[{code:'source_unit_missing',field:'source_settings.duty_cycle',provided:[{fact_index:0,evidence_index:0,raw_value:'50',unit:null,value_span:[0,14],quote_span:[0,14]}],blocking:true}];
   packet.artifact=null;packet.status=packet.relation.status='blocked';packet.relation.artifact_binding=null;packet.relation.fields=Object.fromEntries(Object.keys(packet.relation.current_binding).map(k=>[k,null]));packet.relation.reasons=['current_plan_blocked'];
   input.options.plan.value.plan_input=structuredClone(p);input.options.result={value:null};input.options.storage={context:{...input.options.plan.context},value:parseArtifact(packet),pending:false,parentPending:false,stale:false,errorCode:null};
+  input.options.currentFacts={context:{...input.options.plan.context},value:null,pending:false,parentPending:false,stale:false,errorCode:'intake_current_facts_plan_view_not_provided'};
   return input;
 }
 function minimumEvidence(input=minimumEvidenceInput()){
@@ -584,4 +585,108 @@ test('minimum evidence questions retain unfamiliar reason and native metadata wi
   for(const reason of ['constructor','toString','__proto__'])f.questions.push({key:'source_unknown',field:'source_settings.duty_cycle',reason,message:'모르는 원 reason'});
   f.questions.push({key:'future_question',field:'source_settings.duty_cycle',reason:'source_unit_missing',message:'공개 key와 다른 원 질문'});
   const v=minimumEvidence(input);assert.equal(v.questions.length,1);assert.deepEqual(v.uninterpreted_question_indexes,[1,2,3,4,5,6,7]);assert.equal(v.original.questions[1].reason,'future_reason');assert.equal(v.questions[0].gaps[0].raw.provided[0].opaque.big,900719925474099312345n);assert.equal(Object.is(v.questions[0].gaps[0].raw.provided[0].opaque.negative,-0),true);assert.equal(v.questions[0].gaps[0].raw.provided[0].opaque.zero,0);assert.equal(v.questions[0].gaps[0].raw.provided[0].unit,null);
+});
+
+
+// New first-class current-facts DTOs are typed display tests, not native API results.
+function currentFactsPacket(current=minimumEvidenceInput().options.storage.value.current){
+  const value=structuredClone(current),b=value.facts_plan.plan_input.binding;
+  value.context.instructions='Typed current readonly planning context; not a native API result.';
+  const pins={context_sha256:b.context_sha256,analysis_sha256:b.analysis_sha256};
+  return {schema_version:1,kind:'intake_current_facts_plan_view',status:'available',current:value,
+    recheck:{status:'unchanged',before:{...pins},after:{...pins}},reasons:[],verification:{
+      scope:'two_readonly_current_snapshots',current_completion:'not_assessed',permanent_current_approval:false,
+      method_approval:'not_assessed',regulatory:'not_assessed',physical_verified:false,
+      execution_authority:false,rerun_authority:false,business_writes:false}};
+}
+function parseCurrentFacts(packet,context=gapQueueInputs().options.plan.context){
+  assert.equal(typeof workflowAPI.parseConductedCurrentFacts,'function','missing first-class current-facts parser');
+  return workflowAPI.parseConductedCurrentFacts(typeof packet==='string'?packet:JSON.stringify(packet),context);
+}
+function currentFactsInput(packet=currentFactsPacket()){
+  const input=minimumEvidenceInput();input.options.currentFacts={context:{...input.options.plan.context},
+    value:parseCurrentFacts(packet,input.options.plan.context),pending:false,parentPending:false,stale:false,errorCode:null};
+  return input;
+}
+test('current facts questions parse the original exact7 snapshot without creating an artifact compound',()=>{
+  const packet=currentFactsPacket(),before=structuredClone(packet),value=parseCurrentFacts(packet);
+  assert.equal(value.kind,'intake_current_facts_plan_view');assert.equal(value.status,'available');
+  assert.deepEqual(Object.keys(value),Object.keys(packet));assert.equal(Object.hasOwn(value,'artifact'),false);assert.equal(Object.hasOwn(value,'relation'),false);
+  assert.equal(value.current.facts_plan.questions[0].reason,'source_unit_missing');
+  assert.equal(value.current.facts_plan.assembly_gaps[0].provided[0].raw_value,'50');assert.equal(value.current.facts_plan.assembly_gaps[0].provided[0].unit,null);
+  assert.equal(workflowAPI.CONDUCTED_CURRENT_FACTS_HTTP_BYTES,9*1024*1024);assert.deepEqual(packet,before);
+});
+test('current facts questions reject malformed bounds authority recheck binding and foreign identity while preserving lossless raw metadata',()=>{
+  const packet=currentFactsPacket();packet.current.facts_plan.assembly_gaps[0].provided[0].opaque={big:'BIG_LITERAL',zero:0,negative:'NEGATIVE_LITERAL',unknown:null};
+  const raw=JSON.stringify(packet).replace('"BIG_LITERAL"','900719925474099312345').replace('"NEGATIVE_LITERAL"','-0');
+  const parsed=parseCurrentFacts(raw),opaque=parsed.current.facts_plan.assembly_gaps[0].provided[0].opaque;
+  assert.equal(opaque.big,900719925474099312345n);assert.equal(opaque.zero,0);assert.equal(Object.is(opaque.negative,-0),true);assert.equal(opaque.unknown,null);
+  for(const fault of ['extra','authority','C1','analysis','status','reason','foreign','revision','surrogate','current_limit']){
+    const v=currentFactsPacket();
+    if(fault==='extra')v.extra=null;if(fault==='authority')v.verification.execution_authority=true;
+    if(fault==='C1')v.recheck.before.context_sha256='7'.repeat(64);if(fault==='analysis')v.current.facts_plan.plan_input.binding.analysis_sha256='7'.repeat(64);
+    if(fault==='status')v.status='stale';if(fault==='reason')v.reasons=['current_changed'];if(fault==='foreign')v.current.context.intake_id='I-foreign';
+    if(fault==='revision')v.current.context.revision++;if(fault==='surrogate')v.current.context.instructions='\ud800';
+    if(fault==='current_limit')v.current.context.instructions='x'.repeat(8*1024*1024);
+    assert.throws(()=>parseCurrentFacts(v),undefined,fault);
+  }
+  assert.throws(()=>parseCurrentFacts(JSON.stringify(currentFactsPacket()).replace('{"schema_version":1','{"schema_version":1,"schema_version":1')));
+  assert.throws(()=>parseCurrentFacts(raw+' '.repeat(9*1024*1024)));
+  assert.throws(()=>parseCurrentFacts(raw.replace('900719925474099312345','1e999')));
+  const deep=currentFactsPacket();let nested=null;for(let i=0;i<49;i++)nested=[nested];deep.current.facts_plan.assembly_gaps[0].provided[0].opaque=nested;
+  assert.throws(()=>parseCurrentFacts(deep));
+  const nodes=currentFactsPacket();nodes.current.facts_plan.assembly_gaps[0].provided[0].opaque=Array(400001).fill(null);assert.throws(()=>parseCurrentFacts(nodes));
+});
+test('current facts questions use their own native binding and recheck independent of manual preview and unavailable storage',()=>{
+  const input=currentFactsInput();input.options.plan.pending=true;input.options.plan.errorCode='manual_preview_unavailable';
+  input.options.plan.value.plan_input.binding.plan_sha256='7'.repeat(64);input.options.storage.stale=true;input.options.storage.errorCode='old_storage_unavailable';
+  const v=minimumEvidence(input);assert.equal(v.current,true);assert.equal(v.source,'current_facts');assert.equal(v.questions.length,1);
+  assert.equal(v.questions[0].reason,'source_unit_missing');assert.equal(v.questions[0].gaps[0].raw.provided[0].unit,null);assert.equal(v.execution_authority,false);
+});
+test('current facts questions distinguish available normal zero from unavailable zero without using cached storage questions',()=>{
+  const normal=currentFactsPacket(artifactStoragePacket().current),input=currentFactsInput(normal),v=minimumEvidence(input);
+  assert.equal(v.current,true);assert.equal(v.questions.length,0);assert.equal(v.source,'current_facts');
+  input.options.currentFacts.value=null;input.options.currentFacts.errorCode='intake_conducted_preview_analysis_unavailable';input.options.currentFacts.stale=true;
+  const unavailable=minimumEvidence(input);assert.equal(unavailable.current,false);assert.equal(unavailable.questions.length,0);assert.equal(unavailable.state,'unavailable');
+});
+test('current facts questions share only pure grouping and retain condition unit unsupported indexes spans quotes and locators',()=>{
+  const packet=currentFactsPacket(),f=packet.current.facts_plan,condition={key:'source_condition',field:'source_settings',reason:'source_condition_unbound',message:'same condition evidence'};
+  f.questions.unshift(condition,{...condition,message:'second original condition question'});f.questions.push({key:'source_modulation',field:'source_settings.modulation',reason:'source_statement_unsupported',message:'unsupported original wording'});
+  f.assembly_gaps.unshift(...['frequency_hz','power_dbm','bandwidth_hz','modulation','crest_factor_db'].map(field=>({code:'source_condition_unbound',field:'source_settings.'+field,provided:[{fact_index:0,evidence_index:0,raw_value:'original',unit:null,value_span:[0,3],quote_span:[1,4]}],blocking:true})));
+  f.assembly_gaps.push({code:'source_statement_unsupported',field:'source_settings.modulation',provided:null,blocking:true});
+  const input=currentFactsInput(packet),v=minimumEvidence(input);assert.equal(v.questions.length,3);assert.deepEqual(v.questions[0].origins.map(x=>x.question_index),[0,1]);
+  assert.equal(v.questions[0].gaps.length,5);assert.deepEqual(v.questions[0].gaps[0].raw.provided[0].quote_span,[1,4]);
+  assert.equal(v.questions[1].reason,'source_unit_missing');assert.equal(v.questions[2].kind,'development_review');
+  assert.deepEqual(structuredClone(v.questions[0].source_facts[0].raw),f.plan_input.intake.source_facts[0]);
+  assert.doesNotMatch(v.questions.map(q=>q.prompt).join(' '),/6개.*필수|전부.*없|다시 입력|ratio|%/);
+});
+test('current facts questions fence stale pending parent generation C1 binding error and foreign observations without storage fallback',()=>{
+  for(const fault of ['stale','pending','parent_pending','parent_stale','generation','revision','C1','binding','error','changed','foreign']){
+    const input=currentFactsInput(),s=input.options.currentFacts,p=s.value;
+    if(fault==='stale')s.stale=true;if(fault==='pending')s.pending=true;if(fault==='parent_pending')s.parentPending=true;
+    if(fault==='parent_stale')input.options.intakeStale=true;if(fault==='generation')s.context.generation--;if(fault==='revision')s.context.revision--;
+    if(fault==='C1')p.recheck.before.context_sha256='7'.repeat(64);if(fault==='binding')p.current.facts_plan.plan_input.binding.context_sha256='7'.repeat(64);
+    if(fault==='error')s.errorCode='store_unavailable';if(fault==='changed'){p.status='stale';p.reasons=['current_changed'];p.recheck.status='changed';p.recheck.after.analysis_sha256='7'.repeat(64);}
+    if(fault==='foreign'){p.current.context.intake_id='I-foreign';p.current.facts_plan.questions[0].message='FOREIGN-CURRENT-QUESTION';}
+    const v=minimumEvidence(input);assert.equal(v.current,false,fault);assert.equal(v.questions.length,0,fault);
+    if(fault==='foreign')assert.doesNotMatch(JSON.stringify(v),/FOREIGN-CURRENT-QUESTION/);
+  }
+});
+test('current facts questions allow storage fallback only after explicit fresh unconfigured reply and an independent fresh storage read',()=>{
+  const input=minimumEvidenceInput(),v=minimumEvidence(input);assert.equal(v.current,true);assert.equal(v.source,'storage_fallback');
+  for(const fault of ['missing','unknown','foreign_code','not_found','unconfigured_stale','unconfigured_pending','unconfigured_generation','storage_stale','storage_pending','storage_error']){
+    const sample=minimumEvidenceInput();
+    if(fault==='missing')sample.options.currentFacts=null;if(fault==='unknown')sample.options.currentFacts.errorCode=null;
+    if(fault==='foreign_code')sample.options.currentFacts.errorCode='intake_current_facts_plan_view_other_intake';if(fault==='not_found')sample.options.currentFacts.errorCode='route_not_found';
+    if(fault==='unconfigured_stale')sample.options.currentFacts.stale=true;if(fault==='unconfigured_pending')sample.options.currentFacts.pending=true;
+    if(fault==='unconfigured_generation')sample.options.currentFacts.context.generation--;
+    if(fault==='storage_stale')sample.options.storage.stale=true;if(fault==='storage_pending')sample.options.storage.pending=true;if(fault==='storage_error')sample.options.storage.errorCode='store_unavailable';
+    assert.equal(minimumEvidence(sample).current,false,fault);assert.equal(minimumEvidence(sample).questions.length,0,fault);
+  }
+});
+test('current facts questions preserve cancel epochs across the same intake and generation',()=>{
+  const gate=createFixtureReadGate(),context={...gapQueueInputs().options.plan.context},old=gate.begin(context);
+  assert.equal(gate.isCurrent(old,context),true);gate.invalidate();assert.equal(gate.isCurrent(old,context),false);
+  const newer=gate.begin(context);assert.equal(gate.isCurrent(old,context),false);assert.equal(gate.isCurrent(newer,context),true);
+  assert.equal(gate.isCurrent(newer,{...context,generation:context.generation+1}),false);
 });

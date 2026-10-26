@@ -276,6 +276,38 @@ function validateConductedResultPacket(v,context){
 
 const ARTIFACT_BINDING='intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256'.split(' ');
 export const CONDUCTED_ARTIFACT_HTTP_BYTES=12*1024*1024+1;
+export const CONDUCTED_CURRENT_FACTS_HTTP_BYTES=9*1024*1024;
+// A first-class current snapshot. Native source/hash checks remain with the
+// readonly API; this parser validates its exact attestation without rewriting it.
+export function parseConductedCurrentFacts(raw,context){
+  const need=x=>{if(!x)throw Error('intake_current_facts_plan_view_invalid');};
+  const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+  const keys=(x,names)=>{const fields=names.split(' ');need(object(x)&&Object.keys(x).length===fields.length&&fields.every(k=>Object.hasOwn(x,k)));};
+  const sha=x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x),positive=x=>Number.isSafeInteger(x)&&x>0,text=x=>typeof x==='string'&&x.trim().length>0;
+  try{
+    const ranges=new WeakMap(),v=previewJSON(raw,CONDUCTED_CURRENT_FACTS_HTTP_BYTES,true,{maxDepth:48,maxNodes:400000,ranges});
+    keys(v,'schema_version kind status current recheck reasons verification');need(v.schema_version===1&&v.kind==='intake_current_facts_plan_view');
+    keys(v.current,'context analysis facts_plan');const range=ranges.get(v.current);need(range&&new TextEncoder().encode(raw.slice(...range)).length<=8*1024*1024);
+    const c=v.current.context,f=v.current.facts_plan;keys(c,'job_id intake_id revision synthetic documents analysis_context_id analysis_contract instructions');
+    need(c.intake_id===context.intake_id&&c.revision===context.revision&&positive(c.revision)&&c.synthetic===true&&text(c.job_id)&&sha(c.analysis_context_id)&&Array.isArray(c.documents)&&object(c.analysis_contract)&&typeof c.instructions==='string'&&object(v.current.analysis));
+    keys(f,'schema_version kind status plan_input assembly_gaps questions');need(f.schema_version===1&&f.kind==='intake_facts_to_conducted_plan'&&['ready_for_simulation','blocked'].includes(f.status)&&f.plan_input?.status===f.status&&Array.isArray(f.assembly_gaps)&&Array.isArray(f.questions));
+    const b=f.plan_input.binding;keys(b,'intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256');
+    need(b.intake_id===c.intake_id&&b.revision===c.revision&&b.analysis_context_id===c.analysis_context_id&&['analysis_context_id','context_sha256','analysis_sha256','plan_sha256'].every(k=>sha(b[k])));
+    // Reuse only the existing pure plan validator, never an artifact compound.
+    validatePlanPreviewPacket({schema_version:1,kind:'intake_conducted_plan_preview',intake_id:c.intake_id,revision:c.revision,context_sha256:b.context_sha256,context_scope:'current_provided_context',selection_status:'matched',plan_input:f.plan_input},context);
+    for(const gap of f.assembly_gaps){keys(gap,'code field provided blocking');need(typeof gap.code==='string'&&typeof gap.field==='string'&&typeof gap.blocking==='boolean');}
+    for(const q of f.questions){keys(q,'key field reason message');need(Object.values(q).every(text));}
+    const recheck=v.recheck;keys(recheck,'status before after');
+    for(const part of [recheck.before,recheck.after]){keys(part,'context_sha256 analysis_sha256');need(sha(part.context_sha256)&&sha(part.analysis_sha256));}
+    need(recheck.before.context_sha256===b.context_sha256&&recheck.before.analysis_sha256===b.analysis_sha256);
+    const changed=recheck.before.context_sha256!==recheck.after.context_sha256||recheck.before.analysis_sha256!==recheck.after.analysis_sha256;
+    need(recheck.status===(changed?'changed':'unchanged')&&v.status===(changed?'stale':'available')&&Array.isArray(v.reasons)&&v.reasons.length===(changed?1:0)&&(!changed||v.reasons[0]==='current_changed'));
+    const verification={scope:'two_readonly_current_snapshots',current_completion:'not_assessed',permanent_current_approval:false,method_approval:'not_assessed',regulatory:'not_assessed',physical_verified:false,execution_authority:false,rerun_authority:false,business_writes:false};
+    keys(v.verification,Object.keys(verification).join(' '));need(Object.entries(verification).every(([k,value])=>v.verification[k]===value));
+    return v;
+  }catch{throw Error('intake_current_facts_plan_view_invalid');}
+}
+
 // Validate the public reader's attestation. File-byte/hash checks belong to the
 // native reader; this parser neither reserializes parents nor grants authority.
 export function parseConductedArtifactReadback(raw,context){
@@ -376,7 +408,7 @@ const QUEUE_CONDITIONS=new Set('missing_setting missing_method_field missing_or_
 const QUEUE_NOT_RUN=new Set('unread_documents execution_incomplete journal_incomplete measurement_missing measurement_not_referenced measurement_reference_missing setup_missing setup_partial plan_blocked'.split(' '));
 const QUEUE_UNSUPPORTED=new Set('unsupported_modulation unsupported_method_field unsupported_or_invalid_basis unknown_source_field unknown_method_field unknown_basis_field unsupported_path_device'.split(' '));
 const QUEUE_BINDING=new Set('expected_revision_changed_or_invalid expected_context_changed_or_invalid plan_binding_invalid plan_binding_mismatch plan_hash_mismatch run_binding_mismatch setup_hash_mismatch topology_hash_mismatch'.split(' '));
-export function describeIntakeGapQueue(intake,{generation=0,intakeStale=false,intakeCode=null,plan=null,result=null,storage=null}={}){
+export function describeIntakeGapQueue(intake,{generation=0,intakeStale=false,intakeCode=null,plan=null,result=null,storage=null,currentFacts=null}={}){
   const clone=value=>structuredClone(value),object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
   const context={intake_id:intake.intake_id,revision:intake.revision,generation};
   const fields=Object.keys(FIELDS),bindingFields='intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256'.split(' ');
@@ -440,23 +472,7 @@ export function describeIntakeGapQueue(intake,{generation=0,intakeStale=false,in
   }
   const intakeState={state:intakeStale?'blocked':intake.analysis?'current':'not_run',category:intakeStale?'blocked':intake.analysis?'observed':'not_run',reasons:intakeStale?['parent_snapshot_unconfirmed']:[],code:intakeCode,observed_revision:intake.revision,include:Boolean(intake.analysis),value:null};
   const groups=[group('intake_questions','접수 원 질문',intakeState,intake.analysis?.questions,'question'),group('plan_questions','계획 원 질문',planState,planState.value?.plan_input?.intake?.questions,'question'),group('plan_gaps','계획 원 조건·공백',planState,planState.value?.plan_input?.gaps,'gap'),group('result_gaps','제공 결과 원 공백',resultState,resultState.value?.result?.gaps,'gap')];
-  function minimumEvidence(){
-    // This consumes an already parsed readback. It does not supply new facts,
-    // infer RF settings, or require the artifact itself to have matched.
-    const packet=storage?.value,c=packet?.current?.context,f=packet?.current?.facts_plan;
-    const empty=(state,reasons,original=null)=>({state,current:false,reasons,questions:[],uninterpreted_question_indexes:[],original,execution_authority:false});
-    if(!packet)return empty(storage?.errorCode?'unavailable':'not_provided',storage?.errorCode?[storage.errorCode]:[]);
-    if(c?.intake_id!==intake.intake_id||storage.context?.intake_id!==intake.intake_id)return empty('blocked',['other_intake']);
-    const original=object(f)?clone(f):null,reasons=[];
-    if(intakeStale)reasons.push('parent_snapshot_unconfirmed');
-    if(storage.pending||storage.parentPending||storage.stale||storage.errorCode)reasons.push('observation_unconfirmed');
-    if(storage.context?.revision!==intake.revision||c.revision!==intake.revision)reasons.push('revision_changed');
-    if(storage.context?.generation!==generation)reasons.push('snapshot_generation_changed');
-    const b=packet.relation?.current_binding,recheck=packet.relation?.recheck,pb=planState.value?.plan_input?.binding;
-    if(planState.state!=='current'||plan?.errorCode||!binding(b)||!binding(pb)||bindingFields.some(key=>b?.[key]!==pb?.[key])||b?.analysis_context_id!==c.analysis_context_id||b?.context_sha256!==planState.value?.context_sha256)reasons.push('current_plan_binding_unconfirmed');
-    if(packet.schema_version!==1||packet.kind!=='intake_conducted_artifact_readback'||!object(f)||f.kind!=='intake_facts_to_conducted_plan'||f.schema_version!==1||!['ready_for_simulation','blocked'].includes(f.status)||!Array.isArray(f.questions)||!Array.isArray(f.assembly_gaps)||!binding(f.plan_input?.binding)||bindingFields.some(key=>b?.[key]!==f.plan_input?.binding[key]))reasons.push('facts_plan_unconfirmed');
-    if(packet.status==='stale'||recheck?.status!=='unchanged'||recheck?.context_sha256_before!==recheck?.context_sha256_after||recheck?.analysis_sha256_before!==recheck?.analysis_sha256_after||recheck?.context_sha256_before!==b?.context_sha256||recheck?.analysis_sha256_before!==b?.analysis_sha256||packet.relation?.reasons?.includes('current_pin_missing'))reasons.push('current_recheck_unconfirmed');
-    if(reasons.length)return empty('blocked',[...new Set(reasons)],original);
+  function projectMinimumQuestions(f,source,observation,original){
     const rf={frequency_hz:'주파수',power_dbm:'source 전력',bandwidth_hz:'대역폭',duty_cycle:'듀티',modulation:'변조',crest_factor_db:'crest factor'};
     const actions={
       source_condition_unbound:['source_check','원 조건 연결 확인','원 인용들이 같은 시험 조건을 가리키는지 연결 근거를 확인하세요.'],
@@ -490,8 +506,50 @@ export function describeIntakeGapQueue(intake,{generation=0,intakeStale=false,in
       });
       if(Array.isArray(sourceFacts))sourceFacts.forEach((raw,index)=>{if(factIndexes.has(index))row.source_facts.push({fact_index:index,raw:clone(raw)});});
     }
-    return {state:'current',current:true,reasons:[],questions:[...grouped.values()],uninterpreted_question_indexes:uninterpreted,original,execution_authority:false};
+    return {state:'current',current:true,source,reasons:[],questions:[...grouped.values()],uninterpreted_question_indexes:uninterpreted,original,observation,execution_authority:false};
+  }  function minimumStorage(){
+    // This consumes an already parsed readback. It does not supply new facts,
+    // infer RF settings, or require the artifact itself to have matched.
+    const packet=storage?.value,c=packet?.current?.context,f=packet?.current?.facts_plan;
+    const empty=(state,reasons,original=null)=>({state,current:false,reasons,questions:[],uninterpreted_question_indexes:[],original,execution_authority:false});
+    if(!packet)return empty(storage?.errorCode?'unavailable':'not_provided',storage?.errorCode?[storage.errorCode]:[]);
+    if(c?.intake_id!==intake.intake_id||storage.context?.intake_id!==intake.intake_id)return empty('blocked',['other_intake']);
+    const original=object(f)?clone(f):null,reasons=[];
+    if(intakeStale)reasons.push('parent_snapshot_unconfirmed');
+    if(storage.pending||storage.parentPending||storage.stale||storage.errorCode)reasons.push('observation_unconfirmed');
+    if(storage.context?.revision!==intake.revision||c.revision!==intake.revision)reasons.push('revision_changed');
+    if(storage.context?.generation!==generation)reasons.push('snapshot_generation_changed');
+    const b=packet.relation?.current_binding,recheck=packet.relation?.recheck,pb=planState.value?.plan_input?.binding;
+    if(planState.state!=='current'||plan?.errorCode||!binding(b)||!binding(pb)||bindingFields.some(key=>b?.[key]!==pb?.[key])||b?.analysis_context_id!==c.analysis_context_id||b?.context_sha256!==planState.value?.context_sha256)reasons.push('current_plan_binding_unconfirmed');
+    if(packet.schema_version!==1||packet.kind!=='intake_conducted_artifact_readback'||!object(f)||f.kind!=='intake_facts_to_conducted_plan'||f.schema_version!==1||!['ready_for_simulation','blocked'].includes(f.status)||!Array.isArray(f.questions)||!Array.isArray(f.assembly_gaps)||!binding(f.plan_input?.binding)||bindingFields.some(key=>b?.[key]!==f.plan_input?.binding[key]))reasons.push('facts_plan_unconfirmed');
+    if(packet.status==='stale'||recheck?.status!=='unchanged'||recheck?.context_sha256_before!==recheck?.context_sha256_after||recheck?.analysis_sha256_before!==recheck?.analysis_sha256_after||recheck?.context_sha256_before!==b?.context_sha256||recheck?.analysis_sha256_before!==b?.analysis_sha256||packet.relation?.reasons?.includes('current_pin_missing'))reasons.push('current_recheck_unconfirmed');
+    if(reasons.length)return empty('blocked',[...new Set(reasons)],original);
+    return projectMinimumQuestions(f,'storage_fallback',null,original);
   }
+  function minimumEvidence(){
+    const s=currentFacts,empty=(state,reasons,original=null)=>({state,current:false,source:'current_facts',reasons,questions:[],uninterpreted_question_indexes:[],original,execution_authority:false});
+    const fresh=s?.context?.intake_id===intake.intake_id&&s.context.revision===intake.revision&&s.context.generation===generation&&!intakeStale&&!s.pending&&!s.parentPending&&!s.stale;
+    // Only a fresh, explicit unconfigured reply permits the independent legacy
+    // readback path. Missing/error/stale configured observations never fall back.
+    if(fresh&&s.errorCode==='intake_current_facts_plan_view_not_provided')return minimumStorage();
+    const p=s?.value,c=p?.current?.context,f=p?.current?.facts_plan;
+    if(!p){
+      const history=s?.errorCode==='intake_current_facts_plan_view_not_provided'&&s.context?.intake_id===intake.intake_id&&storage?.context?.intake_id===intake.intake_id&&storage?.value?.current?.context?.intake_id===intake.intake_id?storage.value.current.facts_plan:null;
+      const view=empty(s?.errorCode?'unavailable':'not_provided',s?.errorCode?[s.errorCode]:['current_facts_unobserved'],object(history)?clone(history):null);
+      if(history)view.source='storage_history';return view;
+    }
+    if(c?.intake_id!==intake.intake_id||s.context?.intake_id!==intake.intake_id)return empty('blocked',['other_intake']);
+    const original=object(f)?clone(f):null,reasons=[],b=f?.plan_input?.binding,r=p.recheck;
+    if(intakeStale)reasons.push('parent_snapshot_unconfirmed');
+    if(s.pending||s.parentPending||s.stale||s.errorCode)reasons.push('observation_unconfirmed');
+    if(s.context?.revision!==intake.revision||c.revision!==intake.revision)reasons.push('revision_changed');
+    if(s.context?.generation!==generation)reasons.push('snapshot_generation_changed');
+    if(p.schema_version!==1||p.kind!=='intake_current_facts_plan_view'||!object(f)||f.schema_version!==1||f.kind!=='intake_facts_to_conducted_plan'||!['ready_for_simulation','blocked'].includes(f.status)||f.plan_input?.status!==f.status||!Array.isArray(f.questions)||!Array.isArray(f.assembly_gaps)||!binding(b)||b.intake_id!==c.intake_id||b.revision!==c.revision||b.analysis_context_id!==c.analysis_context_id||p.verification?.execution_authority!==false||p.verification?.permanent_current_approval!==false)reasons.push('current_facts_unconfirmed');
+    if(p.status!=='available'||r?.status!=='unchanged'||r?.before?.context_sha256!==r?.after?.context_sha256||r?.before?.analysis_sha256!==r?.after?.analysis_sha256||r?.before?.context_sha256!==b?.context_sha256||r?.before?.analysis_sha256!==b?.analysis_sha256)reasons.push('current_recheck_unconfirmed');
+    if(reasons.length)return empty('blocked',[...new Set(reasons)],original);
+    return projectMinimumQuestions(f,'current_facts',clone({context:c,binding:b,recheck:r,verification:p.verification}),original);
+  }
+
   const all=groups.flatMap(group=>group.items),count=category=>all.filter(row=>row.category===category).length;
   return {context,groups,minimum_evidence:minimumEvidence(),summary:{evidence_review:count('evidence_review'),current_facts:count('facts_required'),conditions:count('conditions_required'),system_errors:count('system_error'),unsupported:count('unsupported'),not_run:count('not_run'),blocked:count('blocked'),uninterpreted:count('uninterpreted')},execution_authority:false};
 }
