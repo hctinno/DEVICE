@@ -1,6 +1,16 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `052fb424016d600ed53a27843fe7aeb3e23e8c05` / 고정 source/runtime 검증 모집단332. 기존 소유·미커밋·원본·실패와 독립 기대를 보존해 정상 cherry로 통합했고 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. [PLAN 현황](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)·[실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 우선한다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `e64a0ce01619a2b4c16af3611673805be9e62dfa` / 고정 source/runtime 검증 모집단333. 기존 소유·미커밋·원본·실패와 독립 기대를 보존해 정상 cherry로 통합했고 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. [PLAN 현황](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)·[실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 우선한다.
+
+## 고정 모집단333 — 공통 PDF 접수와 산출물 없는 현재 질문
+
+공통 bdfa는 schema1 기본 literal을 유지하며 명시 schema2의 닫힌 PDF/text 인용·context 결합, 실행 가능한 완전 readable 자료 preflight와 prompt256KiB/schema64KiB를 once claim 전후에 연결한다. 별도 기계 계약7d567의 문자열 leaf2만 수정해 문구 M1을 닫았다. 독립 원16=14PASS/관측기No2는 공개 lazy dependency allowlist 누락으로 complete 진입 뒤 running/완료 미관측이며 원 실패/두 lease를 수정·repair하지 않았다. 별도 새 namespace2는 TXT/schema1·PDF/schema2 각각 claim1→local typed producer1→strict1→complete/event1→실제 readonly 현재 snapshot1을 확인했다. 원16을 18PASS로 바꾸지 않는다. 총괄은 공개 AST 변경19를 한 번 선택해19PASS·source332 bytes/native 불변을 확인했다. 실제 AI/provider/권위·native PDF host/기존 firstfailure는 이 결과로 승격하지 않는다.
+
+최소 질문22906은 같은 현재 facts의 원 questions/gap/quote/locator를 보존해 단위·조건결합·unsupported·사실누락을 구별한다. 독립 typed8PASS 뒤 DOM 관측기 함수 brace 추출 누락의 첫 timeout/SyntaxError를 보존했고, 별도 append의 격리된 원 app 함수 DOM3만 통과했다. 선택 genuine HTTP0·전역 SQL unknown을 유지한다. 총괄 Node 신규8PASS이며 전체 app 수송 완료는 아니다.
+
+backend776은 기존 startup 선택 intake/revision/method만 사용해 산출물 없이 원 current exact3과 실제 후행2SHA를 읽고 고정7 envelope로 반환한다. 같은 factory RLock은 전역 writer lease/ABA 보증이 아니다. 독립 원11진입/79of80의 duty_cycle 축약 field 오기1·ready 미실행·lateclose partial을 재채점하지 않았다. genuine DU의 available/blocked·단위 질문/null·SHA 일치와 별도 typed stale/error를 구별하며 원15파일은 불변이다. 총괄 신규 model/HTTP13PASS, source는 새 test1 때문에332→333으로 증가하고 비소유 bytes/native는 불변이다. 이 endpoint→운영 질문 화면은 개발4 frontend3의 다음 실제 구현이다.
+
+개발1 native3·개발2 completed-current host3·개발3 단절/복구실패3·개발4 first-class current frontend3에 실제 CORE-GO를 보냈다. 원 WIP/No/부분파일/독립 봉인·P01 보존662/대상18·690·미해결12/STOP을 유지한다. Codex17·동일 Vertex6/3072 소진·새 실제 모델0·실측/현장0·사용자 추가 준비0이다. 아래332는 당시 수용 이력이다.
 
 ## 고정 모집단332 — 수정 수용과 새 합성 시연 한 건
 
