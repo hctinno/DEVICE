@@ -66,6 +66,19 @@ class N9030AVirtualSessionTests(unittest.TestCase):
         self.assertAlmostEqual(peak['measurement']['value'],
                                float(expected_input_dbm('12.5') + Decimal('3')), places=12)
 
+    def test_center_and_span_both_reject_negative_synthetic_window_atomically(self):
+        initial = self.fleet.observations()['devices']['analyzer']
+        scalar = self.session.fetch_current_scalar()['measurement']
+        for text in ('FREQ:CENT 1 HZ', 'FREQ:SPAN 5 GHZ'):
+            with self.subTest(text=text):
+                history = self.fleet.history()
+                reply = self.command(text)
+                self.assertEqual(reply['status'], 'invalid')
+                self.assertEqual(reply['code'], 'span_outside_synthetic_window')
+                self.assertEqual(self.fleet.history(), history)
+                self.assertEqual(self.fleet.observations()['devices']['analyzer'], initial)
+                self.assertEqual(self.session.fetch_current_scalar()['measurement'], scalar)
+
     def test_fetch_current_scalar_uses_fleet_receipt_and_independent_decimal_relation(self):
         first = self.session.fetch_current_scalar()
         self.assertEqual(first['status'], 'ok')
