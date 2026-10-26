@@ -98,7 +98,7 @@ class FinalizerTests(unittest.TestCase):
     def test_public_contract_and_original_dto(self):
         self.assertEqual(api.__all__, ['finalize_conducted_execution_result', 'ConductedExecutionResultFinalizerError'])
         signature = inspect.signature(api.finalize_conducted_execution_result)
-        self.assertEqual(list(signature.parameters), 'execution_receipt expected_execution_sha256 evidence_dir measurement_ref measurement_selection_policy workspace_root artifact_name'.split())
+        self.assertEqual(list(signature.parameters), 'execution_receipt expected_execution_sha256 evidence_dir measurement_ref measurement_selection_policy workspace_root artifact_name uncertainty_inputs'.split())
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in list(signature.parameters.values())[1:]))
         result = self.call()
         self.assertEqual(set(result), set('schema_version kind status execution_receipt input_files result artifact failure secondary_errors verification execution_authority'.split()))
@@ -924,8 +924,290 @@ def _selection_test_names(*classes):
     return [cls.__name__ + '.' + name for cls in classes for name in cls.__dict__ if name.startswith('selection_')]
 
 
+
+# Opt-in uncertainty forwarding checks use retained, explicitly supplied evidence.
+_UF_UNSET = object()
+UNCERTAINTY_FORWARD_OBSERVATIONS = []
+
+
+class UncertaintyForwardTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        root = os.environ.get('DGM_FINALIZER_UNCERTAINTY_REPLAY_ROOT')
+        self.assertTrue(root, 'Provide retained uncertainty fixture; no execution fallback')
+        self.fixtures = Path(root)
+        self.evidence = self.fixtures / 'evidence'
+        self.execution = json.loads((self.fixtures / 'execution-receipt.json').read_bytes())
+        self.original_execution = C(self.execution)
+        self.baseline = json.loads((self.fixtures / 'baseline-finalizer.json').read_bytes())
+        self.inputs = json.loads((self.fixtures / 'uncertainty-inputs.json').read_bytes())
+        self.assertEqual([c['standard_uncertainty_db'] for c in self.inputs['components']], [.3, .4])
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.work = Path(self.directory.name)
+        self.observed = {}
+
+    def tearDown(self):
+        files = []
+        for path in sorted(self.work.rglob('*')):
+            if path.is_file():
+                raw = path.read_bytes()
+                files.append(dict(path=path.relative_to(self.work).as_posix(), bytes=len(raw), sha256=H(raw)))
+        UNCERTAINTY_FORWARD_OBSERVATIONS.append(dict(name=self._testMethodName, observations=self.observed,
+            execution_unchanged=C(self.execution) == self.original_execution, output_files=files))
+
+    def call(self, inputs=_UF_UNSET, **changes):
+        options = dict(expected_execution_sha256=H(C(self.execution)), evidence_dir=self.evidence,
+            measurement_ref=self.baseline['result']['binding']['measurement_ref'],
+            workspace_root=self.work, artifact_name='u-result')
+        options.update(changes)
+        if inputs is not _UF_UNSET:
+            options['uncertainty_inputs'] = inputs
+        result = api.finalize_conducted_execution_result(self.execution, **options)
+        self.observed.setdefault('receipts', []).append(copy.deepcopy(result))
+        return result
+
+    def folder(self, root=None):
+        return (root or self.work) / '.local/conducted-result-artifacts/u-result'
+
+    def appendix(self, root=None):
+        fence = chr(96) * 3
+        text = (self.folder(root) / 'draft.md').read_text(encoding='utf-8')
+        return json.loads(text.split('## Declared uncertainty review appendix\n', 1)[1]
+            .split(fence + 'json\n', 1)[1].split('\n' + fence, 1)[0])
+
+    def assert_original_result(self, receipt, *, baseline=True, root=None):
+        folder = self.folder(root)
+        manifest = json.loads((folder / 'manifest.json').read_bytes())
+        self.assertEqual(set(p.name for p in folder.iterdir()),
+            set('result.json result.pending.json draft.md draft.pending.md manifest.json manifest.pending.json'.split()))
+        self.assertEqual([row['path'] for row in manifest['files']], ['result.json', 'draft.md'])
+        self.assertEqual(manifest['result_sha256'], H(C(receipt['result'])))
+        self.assertIsNone(receipt['result']['calculation']['conformity']['uncertainty_db'])
+        self.assertFalse(receipt['execution_authority'])
+        self.assertEqual((folder / 'draft.md').read_bytes().splitlines()[0],
+            (self.folder(self.fixtures / 'baseline-root') / 'draft.md').read_bytes().splitlines()[0])
+        if baseline:
+            self.assertEqual(C(receipt['result']), C(self.baseline['result']))
+            self.assertEqual((folder / 'result.json').read_bytes(),
+                (self.folder(self.fixtures / 'baseline-root') / 'result.json').read_bytes())
+
+    def uncertainty_explicit_calculated_same_result_and_native_readback(self):
+        from labflow.virtual_fleet import conducted_uncertainty_budget as budget
+        from labflow.virtual_fleet import conducted_result_artifact_read as reader
+        from labflow import intake_conducted_artifact_readback as current
+        writer = api._write_result
+        results = []
+        def forwarding(result, **options):
+            results.append(result)
+            self.assertEqual(C(options['uncertainty_inputs']), C(self.inputs))
+            return writer(result, **options)
+        with patch.object(api, '_write_result', side_effect=forwarding), \
+                patch.object(budget, 'build_conducted_uncertainty_budget', wraps=budget.build_conducted_uncertainty_budget) as parent:
+            try:
+                receipt = self.call(self.inputs)
+            except TypeError as error:
+                self.observed['unsupported_keyword'] = type(error).__name__
+                self.fail('Explicit native uncertainty_inputs must reach the existing writer: ' + str(error))
+        self.assertEqual(parent.call_count, 1)
+        self.assertIs(receipt['result'], results[0])
+        self.assertEqual(C(parent.call_args.args[0]), C(receipt['result']))
+        self.assertEqual(len(receipt), 11)
+        self.assertEqual(receipt['status'], 'stored')
+        self.assert_original_result(receipt)
+        review = self.appendix()
+        self.assertEqual(review['status'], 'calculated')
+        self.assertEqual(review['budget'], dict(combined_standard_uncertainty_db=.5, expanded_uncertainty_db=1.0))
+        self.assertFalse(review['verification']['applied_to_result'])
+        artifact = receipt['artifact']
+        selection = dict(artifact_name='u-result', expected_manifest_sha256=artifact['storage']['sha256'],
+            expected_result_sha256=H(C(receipt['result'])), run_id=artifact['run_id'],
+            runtime_instance_id=artifact['runtime_instance_id'])
+        read = reader.read_conducted_result_artifact(workspace_root=self.work, **selection)
+        self.assertEqual(read['storage']['status'], 'manifest_payloads_verified')
+        self.assertEqual(read['storage']['verified_file_count'], 3)
+        provided = json.loads((self.fixtures / 'provided-current.json').read_bytes())
+        class ProvidedCurrent:
+            def __init__(self, workspace):
+                pass
+            def current_conducted_plan_context(self, intake_id):
+                return copy.deepcopy({key: provided[key] for key in ('context', 'analysis')})
+        with patch.object(current._current, 'read_current_conducted_plan_from_facts',
+                side_effect=lambda *a, **k: copy.deepcopy(provided)) as first, \
+                patch.object(current, 'IntakeReadModel', ProvidedCurrent):
+            matched = current.read_current_conducted_artifact(self.work, provided['context']['intake_id'],
+                method=dict(method_id='conducted_synthetic', method_version=1, metric='on', reference_plane='source_output'),
+                expected_revision=provided['context']['revision'], expected_context_sha256=H(C(provided['context'])),
+                artifact_workspace_root=self.work, **selection)
+        self.assertEqual(first.call_count, 1)
+        self.assertEqual(matched['status'], 'matched')
+        self.assertFalse(matched['verification']['permanent_current_approval'])
+        self.observed.update(parent_calls=1, review=review, native_readback=read,
+            provided_current_boundary_readback=matched, actual_current_store=False)
+
+    def uncertainty_omitted_and_none_exact_original_bytes_and_kwargs(self):
+        from labflow.virtual_fleet import conducted_uncertainty_budget as budget
+        writer = api._write_result
+        calls = []
+        def original_kwargs(result, **options):
+            calls.append(list(options))
+            return writer(result, **options)
+        expected = 'workspace_root artifact_name expected_result_sha256 run_id runtime_instance_id'.split()
+        for label, value in [('omitted', _UF_UNSET), ('explicit-none', None)]:
+            with self.subTest(mode=label):
+                root = self.work / label
+                root.mkdir()
+                with patch.object(api, '_write_result', side_effect=original_kwargs), \
+                        patch.object(budget, 'build_conducted_uncertainty_budget', wraps=budget.build_conducted_uncertainty_budget) as parent:
+                    receipt = self.call(value, workspace_root=root)
+                self.assertEqual(parent.call_count, 0)
+                self.assertEqual(calls[-1], expected)
+                self.assertEqual(C(receipt), C(self.baseline))
+                for file in self.folder(self.fixtures / 'baseline-root').iterdir():
+                    self.assertEqual((self.folder(root) / file.name).read_bytes(), file.read_bytes())
+        self.observed.update(writer_keywords=calls, parent_calls=0, baseline_all_six_file_bytes_equal=True)
+
+    def uncertainty_missing_and_unsupported_remain_null(self):
+        from labflow.virtual_fleet import conducted_uncertainty_budget as budget
+        cases = [('components_missing', dict(self.inputs, components=None)),
+            ('correlation_unconfirmed', dict(self.inputs, policy=dict(self.inputs['policy'], correlation_assumption='correlated')))]
+        for reason, inputs in cases:
+            with self.subTest(reason=reason):
+                root = self.work / reason
+                root.mkdir()
+                with patch.object(budget, 'build_conducted_uncertainty_budget', wraps=budget.build_conducted_uncertainty_budget) as parent:
+                    receipt = self.call(inputs, workspace_root=root)
+                review = self.appendix(root)
+                self.assertEqual(parent.call_count, 1)
+                self.assertEqual(review['status'], 'not_assessed')
+                self.assertTrue(all(value is None for value in review['budget'].values()))
+                self.assertIn(reason, [row['code'] for row in review['reasons']])
+                self.assertFalse(review['verification']['applied_to_result'])
+                self.assert_original_result(receipt, root=root)
+                self.observed.setdefault('withheld_reviews', []).append(review)
+
+    def uncertainty_native_inputs_reject_before_open_without_hooks(self):
+        from labflow.virtual_fleet import conducted_uncertainty_budget as budget
+        hooks = []
+        class Foreign(dict):
+            def __iter__(self):
+                hooks.append('iter')
+                raise AssertionError('foreign hook invoked')
+            def __deepcopy__(self, memo):
+                hooks.append('deepcopy')
+                raise AssertionError('foreign hook invoked')
+        cycle = {}
+        cycle['cycle'] = cycle
+        for label, value in [('foreign', Foreign()), ('cycle', cycle), ('nan', float('nan')), ('oversize', 'x' * 262145)]:
+            with self.subTest(case=label):
+                with patch.object(api, '_read_inputs') as read, patch.object(api, '_build_result') as build, \
+                        patch.object(api, '_write_result') as write, \
+                        patch.object(budget, 'build_conducted_uncertainty_budget') as parent:
+                    with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                        self.call(value)
+                self.assertEqual(got.exception.code, 'conducted_execution_result_finalizer_input_invalid')
+                self.assertEqual(got.exception.stage, 'input')
+                self.assertIsNone(got.exception.receipt['result'])
+                for observer in (read, build, write, parent):
+                    self.assertEqual(observer.call_count, 0)
+        self.assertEqual(hooks, [])
+        self.observed.update(rejected_cases=['foreign', 'cycle', 'nan', 'oversize'], foreign_hooks=hooks)
+
+    def uncertainty_current_selector_keeps_closed_twelve_field_receipt(self):
+        from labflow.virtual_fleet import conducted_uncertainty_budget as budget
+        writer = api._write_result
+        results = []
+        def forwarding(result, **options):
+            results.append(result)
+            return writer(result, **options)
+        policy = dict(schema_version=1, kind='unique_same_run_sensor_acquisition')
+        with patch.object(api, '_write_result', side_effect=forwarding), \
+                patch.object(budget, 'build_conducted_uncertainty_budget', wraps=budget.build_conducted_uncertainty_budget) as parent:
+            receipt = self.call(self.inputs, measurement_ref=None, measurement_selection_policy=policy)
+        self.assertEqual(set(receipt), set(self.baseline) | {'measurement_selection'})
+        self.assertEqual(receipt['measurement_selection']['status'], 'selected')
+        self.assertIs(receipt['result'], receipt['measurement_selection']['result'])
+        self.assertIs(receipt['result'], results[0])
+        self.assertEqual(parent.call_count, 1)
+        self.assert_original_result(receipt, baseline=False)
+        self.assertEqual(self.appendix()['budget'], dict(combined_standard_uncertainty_db=.5, expanded_uncertainty_db=1.0))
+
+    def uncertainty_controls_and_first_failure_are_preserved(self):
+        from labflow.virtual_fleet import conducted_uncertainty_budget as budget
+        for control in (KeyboardInterrupt(), SystemExit(7), GeneratorExit(), MemoryError()):
+            with self.subTest(control=type(control).__name__):
+                with patch.object(budget, 'build_conducted_uncertainty_budget', side_effect=control) as parent:
+                    with self.assertRaises(type(control)) as got:
+                        self.call(self.inputs)
+                self.assertIs(got.exception, control)
+                self.assertEqual(parent.call_count, 1)
+        first = dict(code='intake_plan_virtual_execution_execution_failed', stage='execute')
+        for preserve in (False, True):
+            with self.subTest(prior_failure=preserve):
+                self.execution = json.loads(self.original_execution)
+                if preserve:
+                    self.execution['failure'] = copy.deepcopy(first)
+                    self.execution['loop']['failure'] = copy.deepcopy(first)
+                with patch.object(budget, 'build_conducted_uncertainty_budget', side_effect=RuntimeError('SECRET_UNCERTAINTY')) as parent:
+                    with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                        self.call(self.inputs)
+                error = got.exception
+                self.assertEqual(error.code, 'conducted_execution_result_finalizer_storage_failed')
+                self.assertEqual(error.receipt['status'], 'held')
+                self.assertEqual(C(error.receipt['result']), C(self.baseline['result']))
+                self.assertEqual(error.receipt['failure']['code'],
+                    first['code'] if preserve else 'conducted_result_artifact_write_failed')
+                self.assertNotIn('SECRET_UNCERTAINTY', C(error.receipt).decode())
+                self.assertEqual(parent.call_count, 1)
+                self.observed.setdefault('writer_failures', []).append(error.receipt)
+        self.execution = json.loads(self.original_execution)
+        close = api._native._WindowsIO.close
+        def close_then_error(backend):
+            close(backend)
+            raise OSError('SECRET_CLOSE')
+        with patch.object(api._native, '_read_descriptor', side_effect=OSError('SECRET_READ')), \
+                patch.object(api._native._WindowsIO, 'close', close_then_error), \
+                patch.object(budget, 'build_conducted_uncertainty_budget') as parent:
+            with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                self.call(self.inputs)
+        self.assertEqual(got.exception.code, 'conducted_execution_result_finalizer_evidence_read_failed')
+        self.assertEqual(got.exception.receipt['secondary_errors'][-1]['code'],
+            'conducted_execution_result_finalizer_evidence_close_failed')
+        self.assertEqual(parent.call_count, 0)
+        self.observed['read_and_close_failure'] = got.exception.receipt
+
+    def uncertainty_native_partial_write_keeps_original_result_and_raw_failure(self):
+        from labflow.virtual_fleet import conducted_uncertainty_budget as budget
+        write = api._native._write_bytes
+        attempts = []
+        def partial(tree, path, raw, code, *, sync=False):
+            if path.name == 'result.pending.json':
+                attempts.append(path)
+                write(tree, path, raw[:19], code, sync=True)
+                raise OSError('SECRET_PARTIAL')
+            return write(tree, path, raw, code, sync=sync)
+        with patch.object(api._native, '_write_bytes', side_effect=partial), \
+                patch.object(budget, 'build_conducted_uncertainty_budget', wraps=budget.build_conducted_uncertainty_budget) as parent:
+            with self.assertRaises(api.ConductedExecutionResultFinalizerError) as got:
+                self.call(self.inputs)
+        error = got.exception
+        self.assertEqual(error.code, 'conducted_execution_result_finalizer_storage_failed')
+        self.assertEqual(error.receipt['status'], 'held')
+        self.assertEqual(C(error.receipt['result']), C(self.baseline['result']))
+        self.assertEqual(parent.call_count, 1)
+        self.assertEqual(len(attempts), 1)
+        self.assertEqual(attempts[0].stat().st_size, 19)
+        self.assertFalse((self.folder() / 'manifest.json').exists())
+        self.assertNotIn('SECRET_PARTIAL', C(error.receipt).decode())
+        self.observed.update(partial_bytes=19, attempts=1, parent_calls=1, original_failure=error.receipt)
+
+
 if __name__ == '__main__':
-    if '--selection-contract' in sys.argv:
+    if '--uncertainty-forward' in sys.argv:
+        sys.argv.remove('--uncertainty-forward')
+        unittest.main(defaultTest=[UncertaintyForwardTests.__name__ + '.' + name
+            for name in UncertaintyForwardTests.__dict__ if name.startswith('uncertainty_')])
+    elif '--selection-contract' in sys.argv:
         sys.argv.remove('--selection-contract')
         unittest.main(defaultTest=_selection_test_names(MeasurementSelectionContractTests))
     elif '--selection-legacy' in sys.argv:

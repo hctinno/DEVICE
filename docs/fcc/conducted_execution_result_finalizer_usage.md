@@ -1,5 +1,35 @@
 # 실행된 conducted 결과의 finalizer
 
+## 명시적 불확도 검토 입력 전달 — 2026-10-26
+
+최종화 API에 keyword-only `uncertainty_inputs=None`을 추가했다. 생략 또는 None이면 writer에 이 키를 전달하지 않고 기존 인자·반환 exact11/선택 모드 exact12·result JSON·DRAFT·manifest bytes와 budget 호출0을 유지한다. 값이 있을 때만 기존 native snapshot 한도(UTF-8 262144 bytes, depth32)를 적용한 후 원 result 객체를 [기존 artifact writer](conducted_result_artifact_usage.md)에 전달한다. 외부 객체/subclass hook, 순환, 비유한 수, 초과 입력은 evidence open 전에 input_invalid로 거절한다.
+
+입력 형상은 native exact dict `{"components": components, "policy": policy}`다. [805 budget의 현재 지원](conducted_uncertainty_budget_usage.md)은 호출자가 명시한 성분·uncorrelated 가정·양의 coverage_factor와 그 근거다. 행렬·상관 추정·기본 k 또는 근거를 만들어 주지 않는다. 구성요소가 없거나 지원되지 않는 상관 가정이면 기존 budget의 not_assessed/null/reasons를 그대로 DRAFT 부록에 싣는다. 계산값을 정식 결과에 적용하지 않으므로 `result.calculation.conformity.uncertainty_db is None`과 `budget.verification.applied_to_result is False`는 유지한다.
+
+```python
+finalized = finalize_conducted_execution_result(
+    execution,
+    expected_execution_sha256=pin(execution),
+    evidence_dir=explicit_retained_evidence_dir,
+    measurement_ref=explicit_same_run_measurement_ref,
+    workspace_root=workspace_root,
+    artifact_name=unique_artifact_name,
+    uncertainty_inputs={"components": declared_components, "policy": declared_policy},
+)
+```
+
+새 실행 없이 이미 결합된 원 source/ref를 사용한다. 기존 `measurement_selection_policy`도 그대로 사용할 수 있으며 이때 measurement_ref=None 규칙을 유지한다. 불확도 옵션으로 selector·quantity·원 source·최초 오류를 수선하지 않는다. 저장 파일은 기존 result.json/draft.md/manifest.json 최종3개와 기존 pending3개이며, 추가 정보는 DRAFT 부록에만 있다. result JSON과 canonical input SHA는 원값을 유지하고 manifest는 실제 payload bytes/SHA를 결합한다.
+
+좁은 opt-in 검증은 `DGM_FINALIZER_UNCERTAINTY_REPLAY_ROOT`에 명시된 retained fixture만 사용한다. `python tests/test_conducted_execution_result_finalizer.py --uncertainty-forward`는 새7개만 선택하며 원20·writer21·부록10·기존 selector cohort나 새 실행을 자동 호출하지 않는다. fixture에는 원 실행 receipt, evidence5, 기존 None 결과/파일, 명시 입력과 제공-current 자료가 있어야 한다. 준비·수치 가정을 검사하기 전에 원 context/setup/report/events/raw를 저장해야 한다.
+
+이번 검증은 API 미지원 RED1 FAIL(준비 오류와 구별) 후 새7 PASS를 얻었다. 공개 legacy 부모 fixture 준비2회는 첫 ref17 가정 오류와 후속 report.status 키 가정 오류를 각각 실패로 보존했다. 둘째의 원 반환 자료를 먼저 동결했으므로 추가 RF0으로 복구했다. 이 fixture가 정식 반환한 명시 ref21을 사용했고 transport의 ref17/29 또는 새 latest 선택을 전용하지 않았다. adapter/loop envelope는 제공된 typed 자료이며 실제 CodexLoop 실행이 아니다. 테스트의 .3/.4 dB, 명시 uncorrelated/k2 기대 .5/1.0은 구현 전에 봉인한 산술 기대다.
+
+원 생략/None kwargs와 receipt·최종3/pending3 bytes 동일, 명시 budget1/원 result 동일, 부족/미지원 null, current selector exact12, 입력 조기 거절, 제어 예외 identity, 최초 오류와 native 19-byte partial 보존을 확인했다. 이후 검증 중 새 RF/모델/SQL/subprocess/실장비0이며 기존 전체 검사는 재실행하지 않았다. 17cf writer 후보를 의존성으로 재사용했으며 총괄 독립 수용은 별도 pending이다.
+
+같은 새 optional artifact를 [기존 native reader](conducted_result_artifact_read_usage.md)가 원 manifest와 payload3 검증으로 읽었다. 이어 기존 current readback 함수의 current 공급 경계 두 곳에 명시 자료를 제공하고 실제 native artifact reader를 사용한 연결 시험에서 matched였다. 실제 Store current/SQLite 검증이 아니며 reader·허용 조건은 수정하지 않았다. reader의 `draft_content=not_interpreted`와 current 미평가·영구 승인 false, DRAFT·물리/규범 미검증은 그대로다.
+
+
+
 ## 수용 selector 수정의 의존 경계 검증 — 2026-10-26
 
 정확7226ff857995be8e3a8788f7cd13cf353a633bfb의 별도 clone에서 수용 selector e2587e374794f902285301b01df4121ef4101fa2의 published 변경3만 정상 cherry했다. 부모는69db6f2b6477160ef054ac8ac4588f58966d732e다. root 통지의 수용 통합6de5ece1cce27a13c269a189475c0a9766a4a7cd/게시64d4391236fb2aca9bf096593cd3c5fb36a5fe54/source326을 연결하며, 이 의존 cohort의 검수·통과 수와 root의 새8/15를 합산하지 않는다.
