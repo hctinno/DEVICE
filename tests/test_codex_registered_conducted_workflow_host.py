@@ -14,6 +14,7 @@ import time
 import unittest
 from unittest.mock import patch
 import uuid
+from contextlib import contextmanager
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT/'tests')]
@@ -707,8 +708,338 @@ class WorkflowHostTests(unittest.TestCase):
         self.assertEqual(code,3);self.assertEqual(counts,dict(rollback=1,close=1));self.assertEqual(self.argv,[])
 
 
+_CURRENT_SEED_FILE=None
+_CURRENT_SEED_INFO=None
+
+
+def _current_seed():
+    global _CURRENT_SEED_INFO
+    if _CURRENT_SEED_INFO is not None:return _CURRENT_SEED_INFO
+    if _CURRENT_SEED_FILE is not None:
+        path=Path(_CURRENT_SEED_FILE).absolute()
+        assert path.is_relative_to(ROOT/'.local/wch')
+        value=json.loads(path.read_bytes());assert value['kind']=='authored_public_completed_TXT_seed'
+        _CURRENT_SEED_INFO=value;return value
+    from labflow.intake_jobs import claim_job,complete_job,respond
+    from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
+    helper=WorkflowHostTests(next(name for name in WorkflowHostTests.__dict__ if name.startswith('test_')))
+    helper._testMethodName='current_public_completed_TXT_setup_once';helper.setUp()
+    try:
+        queued=helper.folder/'q'
+        for path in helper.store_root.rglob('*'):
+            if path.is_file():
+                dest=queued/path.relative_to(helper.store_root);dest.parent.mkdir(parents=True,exist_ok=True)
+                with dest.open('xb') as stream:stream.write(path.read_bytes())
+        store=Store.open_existing(str(helper.store_root))
+        try:
+            respond(store,'WCH-SETUP-PROCEED','proceed',intake_id=helper.context['intake_id'])
+            claimed=claim_job(store,'WCH-PUBLIC-SETUP',now=102,synthetic_only=True)
+            assert claimed is not None and claimed['job_id']==helper.context['job_id']
+            context={key:claimed[key] for key in ('job_id','intake_id','revision','synthetic','documents','analysis_context_id','analysis_contract','instructions')}
+            assert C(context)==C(helper.context)
+            analysis=decode_analysis_response(C(helper.analysis),context,producer_name='SCRIPTED-WFH-MOCK')
+            complete_job(store,claimed['job_id'],claimed['token'],analysis,now=103)
+        finally:store.close()
+        current=read_current_conducted_plan_from_facts(helper.store_root,context['intake_id'],method=dict(
+            method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
+        assert current['facts_plan']['status']=='ready_for_simulation'
+        assert H(C(current['context']))!=H(C(context))
+        info=dict(kind='authored_public_completed_TXT_seed',folder=str(helper.folder),profile=str(helper.profile),
+            store_root=str(helper.store_root),queued_store=str(queued),script=str(helper.script),
+            queued_context=helper.context,queued_analysis=helper.analysis,queued_plan=helper.plan,
+            current=current,setup=dict(public_proceed=1,public_claim=1,claimed_strict_decode=1,public_complete=1,
+                genuine_runtime_calls=0,actual_models=0),seed_file=str(helper.folder/'seed.json'))
+        (helper.folder/'seed.json').write_bytes(C(info));_CURRENT_SEED_INFO=info;return info
+    finally:helper.doCleanups()
+
+
+class CurrentWorkflowTests(unittest.TestCase):
+    def setUp(self):
+        global LOCAL,BUDGET
+        previous=(LOCAL,BUDGET);LOCAL=LOCAL/uuid.uuid4().hex[:8];BUDGET=Budget()
+        def restore():
+            global LOCAL,BUDGET
+            LOCAL,BUDGET=previous
+        self.addCleanup(restore)
+
+    @contextmanager
+    def case(self,label,*,legacy=False,genuine=False):
+        seed=_current_seed();helper=WorkflowHostTests(next(name for name in WorkflowHostTests.__dict__ if name.startswith('test_')))
+        helper._testMethodName='current_'+label
+        def clone(owner):
+            def copy(source,target):
+                for path in Path(source).rglob('*'):
+                    if path.is_file():
+                        dest=target/path.relative_to(source);dest.parent.mkdir(parents=True,exist_ok=True)
+                        with dest.open('xb') as stream:stream.write(path.read_bytes())
+            copy(seed['profile'],owner.profile)
+            owner.journal=owner.profile/'workflow-continuation.sqlite3';owner.script=Path(seed['script'])
+            owner.config=json.loads((owner.profile/'operator-control.json').read_bytes())
+            owner.permit=json.loads(owner.rows()[1][1] if type(owner.rows()[1][1]) is str else C(owner.rows()[1][1]))
+            owner.permit['expires_at']=(datetime.now(timezone.utc)+timedelta(hours=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
+            if genuine:
+                owner.store_root=Path(seed['store_root'])
+            else:
+                owner.store_root=owner.folder/'s';copy(seed['queued_store'] if legacy else seed['store_root'],owner.store_root)
+                source=owner.folder/'i';copy(Path(seed['folder'])/'i',source)
+                connection=sqlite3.connect(owner.store_root/'lab.sqlite3')
+                try:connection.execute('UPDATE intake_sources SET root=?',(str(source),));connection.commit()
+                finally:connection.close()
+                owner.config['registered_input_root']=str(source/'case')
+            owner.config['store_root']=str(owner.store_root);owner.put('operator-control.json',owner.config)
+            owner.context=seed['queued_context'];owner.analysis=seed['queued_analysis'];owner.plan=seed['queued_plan']
+            if not legacy:
+                current=seed['current'];owner.context=current['context'];owner.analysis=current['analysis'];owner.plan=current['facts_plan']['plan_input']
+                workflow=json.loads((owner.profile/'registered-workflow.json').read_bytes())
+                workflow.update(schema_version=3,context_scope='completed_current_provided',measurement_ref=None,
+                    measurement_selection_policy=dict(schema_version=1,kind='unique_same_run_sensor_acquisition'),
+                    context_sha256=H(C(owner.context)),analysis_sha256=owner.put('analysis.json',owner.analysis),
+                    plan_input_sha256=owner.put('plan-input.json',owner.plan))
+                owner.selection_bind_workflow(workflow)
+        with patch.object(WorkflowHostTests,'make_profile',clone):helper.setUp()
+        try:yield helper
+        finally:helper.doCleanups()
+
+    def prepare(self,helper):
+        owned=dict(store=None)
+        try:return api._prepare(helper.profile,helper.config,'WFH-CASE',owned),owned.get('current_facts_plan')
+        finally:
+            if owned['store'] is not None:owned['store'].close()
+
+    def reject(self,helper):
+        before=helper.failure_snapshot()
+        with patch.object(api,'_execute',side_effect=AssertionError('NO_RUNTIME')) as execution:
+            code,result=helper.call()
+        self.assertEqual(code,3);self.assertEqual(result['status'],'not_run');self.assertFalse(execution.called)
+        self.assertEqual(helper.failure_snapshot(),before);self.assertEqual(helper.argv,[])
+        self.assertFalse((helper.profile/'workflow-claimed.json').exists());self.assertEqual(list(helper.evidence.iterdir()),[])
+        return result
+
+    def current_preflight_binds_completed_original_five_pins(self):
+        from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
+        with self.case('preflight') as helper:
+            before=helper.failure_snapshot()
+            with patch.object(api,'_current_facts',wraps=read_current_conducted_plan_from_facts,create=True) as reader, \
+                    patch.object(api._native_host,'_dedicated',side_effect=AssertionError('QUEUED_GATE_FORBIDDEN')), \
+                    patch.object(api,'prepare_registered_synthetic_context',side_effect=AssertionError('G3_FORBIDDEN')):
+                prepared,current=self.prepare(helper)
+            self.assertEqual(prepared[0]['schema_version'],3);self.assertEqual(len(prepared[0]),14)
+            self.assertEqual(C(current),C(_current_seed()['current']));self.assertEqual(C(prepared[1:4]),C([current['context'],current['analysis'],current['facts_plan']['plan_input']]))
+            self.assertEqual(reader.call_count,1);self.assertEqual(reader.call_args.kwargs['expected_context_sha256'],H(C(current['context'])))
+            self.assertEqual(helper.failure_snapshot(),before);self.assertEqual(helper.argv,[]);self.assertEqual(list(helper.evidence.iterdir()),[])
+
+    def current_legacy_queued_v1_v2_keep_original_preparation(self):
+        with self.case('legacy',legacy=True) as helper:
+            for version in (1,2):
+                if version==2:helper.selection_v2()
+                with patch.object(api,'_current_facts',side_effect=AssertionError('CURRENT_FORBIDDEN'),create=True):prepared,current=self.prepare(helper)
+                self.assertEqual(prepared[0]['schema_version'],version);self.assertEqual(C(prepared[1]),C(_current_seed()['queued_context']));self.assertIsNone(current)
+                self.assertEqual(len(helper.rows()),2);self.assertEqual(helper.argv,[])
+
+    def current_closed_shapes_reject_before_consumption(self):
+        def missing(v):v.pop('context_scope')
+        mutations=[missing,lambda v:v.update(context_scope='queued'),lambda v:v.update(schema_version=True),
+            lambda v:v.update(schema_version=3.0),lambda v:v.update(extra=1),lambda v:v.update(measurement_ref='last'),
+            lambda v:v.update(measurement_selection_policy=None),lambda v:v.update(schema_version=2)]
+        for index,mutate in enumerate(mutations):
+            with self.subTest(index=index),self.case('shape'+str(index)) as helper:
+                workflow=json.loads((helper.profile/'registered-workflow.json').read_bytes());mutate(workflow);helper.selection_bind_workflow(workflow);self.reject(helper)
+
+    def current_scope_failures_precede_current_read(self):
+        changes=[("UPDATE intake_jobs SET state='queued'",()),("UPDATE intake_jobs SET state='running'",()),
+            ("UPDATE intakes SET status='upload_incomplete'",()),("UPDATE intakes SET revision=2",()),
+            ("UPDATE intake_sources SET synthetic=0",()),("UPDATE intake_revisions SET synthetic=0",()),
+            ("UPDATE intakes SET bundle='other'",()),("UPDATE intake_sources SET root=root||'-other'",()),
+            ("UPDATE intake_revisions SET files_json='[]'",()),
+            ("INSERT INTO intakes(intake_id,source_id,bundle,revision,status) VALUES('OTHER','WFH-SYN','other',1,'queued')",()),
+            ("UPDATE intake_jobs SET state='failed'",())]
+        for index,(sql,args) in enumerate(changes):
+            with self.subTest(index=index),self.case('scope'+str(index)) as helper:
+                connection=sqlite3.connect(helper.store_root/'lab.sqlite3')
+                try:
+                    connection.execute(sql,args)
+                    if index==9:
+                        connection.execute("INSERT INTO intake_revisions VALUES('OTHER',1,?,'[]',1,101)",('0'*64,))
+                        connection.execute("INSERT INTO intake_jobs(job_id,intake_id,revision,state,created_at) VALUES('OTHER-JOB','OTHER',1,'queued',101)")
+                    connection.commit()
+                finally:connection.close()
+                with patch.object(api,'_current_facts',side_effect=AssertionError('SCOPE_MUST_REJECT_FIRST'),create=True) as reader:self.reject(helper)
+                self.assertFalse(reader.called)
+
+    def current_binding_and_original_file_drift_reject(self):
+        for field in ('context_sha256','analysis_sha256','plan_input_sha256','catalog_sha256','schema_sha256','analysis_other','original_file',
+                'selection_source_id','selection_intake_id','selection_job_id','selection_revision'):
+            with self.subTest(field=field),self.case(field) as helper:
+                workflow=json.loads((helper.profile/'registered-workflow.json').read_bytes())
+                if field=='analysis_other':
+                    analysis=json.loads(C(helper.analysis));analysis['producer']['name']='OTHER';workflow['analysis_sha256']=helper.put('analysis.json',analysis)
+                elif field=='original_file':(Path(helper.config['registered_input_root'])/'r.txt').write_bytes(b'CHANGED\n')
+                elif field.startswith('selection_'):
+                    manifest=json.loads((helper.profile/'registered-intake-v1.json').read_bytes());key=field.removeprefix('selection_')
+                    manifest['registered_intake'][key]=2 if key=='revision' else 'OTHER'
+                    helper.config['registration_sha256']=helper.put('registered-intake-v1.json',manifest)
+                    helper.permit['registration_sha256']=helper.config['registration_sha256']
+                else:workflow[field]='0'*64
+                helper.selection_bind_workflow(workflow);self.reject(helper)
+
+    def current_scope_drift_after_reader_rejects(self):
+        from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
+        with self.case('read_drift') as helper:
+            def drift(*args,**kwargs):
+                value=read_current_conducted_plan_from_facts(*args,**kwargs)
+                connection=sqlite3.connect(helper.store_root/'lab.sqlite3')
+                try:connection.execute("UPDATE intakes SET status='upload_incomplete'");connection.commit()
+                finally:connection.close()
+                return value
+            with patch.object(api,'_current_facts',side_effect=drift,create=True),patch.object(api,'_execute',side_effect=AssertionError('NO_RUNTIME')) as execution:code,result=helper.call()
+            self.assertEqual((code,result['status']),(3,'not_run'));self.assertFalse(execution.called);self.assertEqual(len(helper.rows()),2)
+            self.assertEqual(list(helper.evidence.iterdir()),[])
+
+    def current_handoff_reservation_and_null_pins_finally(self):
+        with self.case('finally_null') as helper:
+            before=helper.failure_snapshot();reservations=[];reserve=api._OutputBudget.reserve
+            def reserved(owner,files,size):reservations.append((files,size));return reserve(owner,files,size)
+            def fail(*args,**kwargs):
+                self.assertTrue(reservations and reservations[0][0]==1)
+                self.assertEqual(kwargs['evidence_reservation'],dict(files=11,bytes=reservations[0][1]+5505024))
+                self.assertFalse((helper.evidence/'current-handoff.json').exists());raise ValueError('FIRST_EXECUTION')
+            with patch.object(api._OutputBudget,'reserve',reserved),patch.object(api,'_execute',side_effect=fail):code,result=helper.call()
+            self.assertEqual((code,result['status']),(5,'unknown'));packet=json.loads((helper.evidence/'current-handoff.json').read_bytes())
+            self.assertEqual(set(packet),set('schema_version kind workflow_sha256 current_facts_plan execution_receipt finalizer_receipt'.split()))
+            self.assertEqual(packet['kind'],'codex_conducted_workflow_current_handoff');self.assertIs(type(packet['schema_version']),int);self.assertEqual(packet['schema_version'],1)
+            self.assertEqual(C(packet['current_facts_plan']),C(_current_seed()['current']));self.assertIsNone(packet['execution_receipt']);self.assertIsNone(packet['finalizer_receipt'])
+            after=helper.failure_snapshot();self.assertEqual(before['files'],after['files']);self.assertEqual(before['jobs'],after['jobs']);self.assertEqual(len(after['workflow_rows']),5)
+            self.assertEqual(helper.argv,[]);self.assertEqual(len(result),12)
+
+    def current_handoff_capacity_rejects_before_consume(self):
+        with self.case('reservation_denied') as helper:
+            with patch.object(api._OutputBudget,'reserve',side_effect=api._Failure(api._PREFIX+'evidence_limit')):self.reject(helper)
+
+    def current_handoff_packet_limits_before_output(self):
+        original=_current_seed()['current'];raw=api._handoff_raw('a'*64,original,None,None)
+        self.assertEqual(len(json.loads(raw)),6);self.assertLessEqual(len(raw),8388608)
+        depth=None
+        for _ in range(25):depth=[depth]
+        for questions in (['x'*8388608],[None]*50001,depth,[float('nan')],[2**64]):
+            current=json.loads(C(original));current['facts_plan']['questions']=questions
+            with self.assertRaises(ValueError):api._handoff_raw('a'*64,current,None,None)
+
+    def current_reader_first_errors_before_consume(self):
+        for control_first in (False,True):
+            with self.subTest(control_first=control_first),self.case('reader_first'+str(control_first)) as helper:
+                first=MemoryError('FIRST_READ_CONTROL') if control_first else ValueError('FIRST_READ_ORDINARY')
+                late=OSError('LATER_CLOSE') if control_first else MemoryError('LATER_CLOSE_CONTROL')
+                opened=api.Store.open_existing;count=[];before=helper.failure_snapshot()
+                def lease(path):
+                    store=opened(path);close=store.close
+                    def closing():count.append(path);close();raise late
+                    store.close=closing;return store
+                with patch.object(api.Store,'open_existing',side_effect=lease),patch.object(api,'_current_facts',side_effect=first):
+                    if control_first:
+                        with self.assertRaises(MemoryError) as got:helper.call()
+                        self.assertIs(got.exception,first)
+                    else:
+                        code,result=helper.call();self.assertEqual((code,result['status']),(3,'not_run'))
+                        self.assertEqual(result['errors'],[dict(phase='registration',code=api._PREFIX+'operation_failed'),dict(phase='store_close',code=api._PREFIX+'interrupted')])
+                self.assertEqual(len(count),1);self.assertEqual(helper.failure_snapshot(),before);self.assertEqual(helper.argv,[])
+                self.assertEqual(list(helper.evidence.iterdir()),[])
+
+    def current_handoff_never_overwrites_existing_prefix(self):
+        with self.case('no_overwrite') as helper:
+            path=helper.evidence/'current-handoff.json';active=api._native_host._active_guard;attempts=[]
+            def execute(*args,**kwargs):path.write_bytes(b'EXISTING_PREFIX');raise ValueError('FIRST_EXECUTION')
+            def guard(target,raw):
+                if target==path:attempts.append(target)
+                return active(target,raw)
+            with patch.object(api,'_execute',side_effect=execute),patch.object(api._native_host,'_active_guard',side_effect=guard):code,result=helper.call()
+            self.assertEqual((code,result['status']),(5,'unknown'));self.assertEqual(result['errors'][0]['phase'],'execution')
+            self.assertEqual(result['errors'][1]['phase'],'current_handoff');self.assertEqual(path.read_bytes(),b'EXISTING_PREFIX');self.assertEqual(len(attempts),1)
+            self.assertEqual(helper.argv,[])
+
+    def current_first_errors_survive_partial_handoff_once(self):
+        for control_first in (False,True):
+            with self.subTest(control_first=control_first),self.case('first'+str(control_first)) as helper:
+                first=MemoryError('FIRST_CONTROL') if control_first else ValueError('FIRST_ORDINARY');late=OSError('LATE_WRITE') if control_first else MemoryError('LATE_CONTROL')
+                active=api._native_host._active_guard;attempts=[];before=helper.failure_snapshot()
+                def partial(path,raw):
+                    if path.name!='current-handoff.json':return active(path,raw)
+                    attempts.append(path)
+                    with path.open('xb') as stream:stream.write(b'{')
+                    raise late
+                with patch.object(api,'_execute',side_effect=first),patch.object(api._native_host,'_active_guard',side_effect=partial):
+                    if control_first:
+                        with self.assertRaises(MemoryError) as got:helper.call()
+                        self.assertIs(got.exception,first)
+                    else:
+                        code,result=helper.call();self.assertEqual((code,result['status']),(5,'unknown'));self.assertEqual(result['errors'][0]['phase'],'execution')
+                        self.assertEqual(result['errors'][1]['phase'],'current_handoff')
+                self.assertEqual(len(attempts),1);self.assertEqual((helper.evidence/'current-handoff.json').read_bytes(),b'{')
+                after=helper.failure_snapshot();self.assertEqual(before['files'],after['files']);self.assertEqual(before['jobs'],after['jobs']);self.assertEqual(helper.argv,[])
+
+    def current_genuine_completed_same_snapshot_mock_once(self):
+        seed=_current_seed();marker=Path(seed['folder'])/'genuine-loop-one-shot.json'
+        with marker.open('xb') as stream:stream.write(C(dict(genuine_loop_max=1,actual_models=0)))
+        with self.case('genuine',genuine=True) as helper:
+            before=helper.failure_snapshot()
+            with patch.object(api,'_execute',wraps=api._execute) as execute,patch.object(api,'_finalize',wraps=api._finalize) as finalize:
+                code,result=helper.call()
+            self.assertEqual((code,result['status']),(0,'completed'));self.assertEqual(execute.call_count,1);self.assertEqual(finalize.call_count,1)
+            self.assertEqual(C(execute.call_args.args),C([seed['current']['context'],seed['current']['analysis'],seed['current']['facts_plan']['plan_input']]))
+            raw=(helper.evidence/'current-handoff.json').read_bytes();packet=json.loads(raw)
+            self.assertEqual(C(packet['current_facts_plan']),C(seed['current']));self.assertEqual(packet['workflow_sha256'],helper.config['workflow_sha256'])
+            for name in ('execution','finalizer'):
+                value=(helper.evidence/(name+'-receipt.json')).read_bytes();self.assertEqual(packet[name+'_receipt'],dict(bytes=len(value),sha256=H(value)))
+            execution=json.loads((helper.evidence/'execution-receipt.json').read_bytes());finalizer=json.loads((helper.evidence/'finalizer-receipt.json').read_bytes())
+            self.assertEqual(C(execution['plan_input']),C(seed['current']['facts_plan']['plan_input']))
+            self.assertEqual(C(finalize.call_args.args[0]),C(execution))
+            maximum=api._handoff_raw(helper.config['workflow_sha256'],seed['current'],dict(bytes=262144,sha256='0'*64),dict(bytes=2097152,sha256='0'*64))
+            self.assertEqual(execute.call_args.kwargs['evidence_reservation'],dict(files=11,bytes=len(maximum)+5505024))
+            self.assertEqual(finalizer['status'],'stored');self.assertEqual(len(result),12);self.assertEqual(len(result['finalization']),5)
+            after=helper.failure_snapshot();self.assertEqual(before['files'],after['files']);self.assertEqual(before['jobs'],after['jobs'])
+            calls=len(helper.argv);rows=helper.rows();code,reentry=helper.call();self.assertEqual(code,3);self.assertEqual(helper.rows(),rows);self.assertEqual(len(helper.argv),calls)
+            self.assertEqual((helper.evidence/'current-handoff.json').read_bytes(),raw);self.assertEqual(result['history']['local_model_processes'],5)
+            self.assertEqual(execution['loop']['budget']['application_retries'],0);self.assertTrue(all(child.poll() is not None for child in helper.children))
+            files=[p for p in helper.evidence.rglob('*') if p.is_file()]
+            self.assertLessEqual(len(files),192);self.assertLessEqual(sum(p.stat().st_size for p in files),33554432)
+            proof=dict(source_before=before,source_after=after,execution_reservation=execute.call_args.kwargs['evidence_reservation'],
+                handoff_reserved_files=1,handoff_reserved_bytes=len(maximum),tail_files=10,tail_bytes=5505024,
+                actual_handoff_bytes=len(raw),handoff_pin=dict(bytes=len(raw),sha256=H(raw)),evidence_files=len(files),evidence_bytes=sum(p.stat().st_size for p in files),
+                mock_model_processes=sum('--model' in argv for argv in helper.argv),actual_models=0,genuine_loop_calls=1,reconsume_blocked=True,
+                finalization=finalizer['status'],C1_current=H(C(seed['current']['context'])),C1_queued=H(C(seed['queued_context'])))
+            (helper.folder/'genuine-observation.json').write_bytes(C(proof))
+
+    test_current_preflight_binds_completed_original_five_pins=current_preflight_binds_completed_original_five_pins
+    test_current_legacy_queued_v1_v2_keep_original_preparation=current_legacy_queued_v1_v2_keep_original_preparation
+    test_current_closed_shapes_reject_before_consumption=current_closed_shapes_reject_before_consumption
+    test_current_scope_failures_precede_current_read=current_scope_failures_precede_current_read
+    test_current_binding_and_original_file_drift_reject=current_binding_and_original_file_drift_reject
+    test_current_scope_drift_after_reader_rejects=current_scope_drift_after_reader_rejects
+    test_current_handoff_reservation_and_null_pins_finally=current_handoff_reservation_and_null_pins_finally
+    test_current_handoff_capacity_rejects_before_consume=current_handoff_capacity_rejects_before_consume
+    test_current_handoff_packet_limits_before_output=current_handoff_packet_limits_before_output
+    test_current_reader_first_errors_before_consume=current_reader_first_errors_before_consume
+    test_current_handoff_never_overwrites_existing_prefix=current_handoff_never_overwrites_existing_prefix
+    test_current_first_errors_survive_partial_handoff_once=current_first_errors_survive_partial_handoff_once
+
+
 if __name__=='__main__':
-    if '--first-failure' in sys.argv:
+    if '--current-seed' in sys.argv:
+        index=sys.argv.index('--current-seed');_CURRENT_SEED_FILE=sys.argv[index+1];del sys.argv[index:index+2]
+    if '--current-seed-prepare' in sys.argv:
+        LOCAL=ROOT/'.local/wch'/uuid.uuid4().hex[:8];seed=_current_seed();print(json.dumps(dict(seed_file=seed['seed_file'],setup=seed['setup'])));raise SystemExit(0)
+    groups={'--current-preflight':['current_preflight_binds_completed_original_five_pins','current_legacy_queued_v1_v2_keep_original_preparation'],
+        '--current-shapes':['current_closed_shapes_reject_before_consumption'],
+        '--current-binding':['current_binding_and_original_file_drift_reject'],
+        '--current-scope':['current_scope_failures_precede_current_read','current_scope_drift_after_reader_rejects'],
+        '--current-handoff':['current_handoff_reservation_and_null_pins_finally','current_handoff_capacity_rejects_before_consume',
+            'current_handoff_packet_limits_before_output','current_reader_first_errors_before_consume',
+            'current_handoff_never_overwrites_existing_prefix','current_first_errors_survive_partial_handoff_once'],
+        '--current-genuine':['current_genuine_completed_same_snapshot_mock_once']}
+    group=next((key for key in groups if key in sys.argv),None)
+    if group is not None:
+        sys.argv.remove(group);LOCAL=ROOT/'.local/wch'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['CurrentWorkflowTests.'+name for name in groups[group]])
+    elif '--first-failure' in sys.argv:
         sys.argv.remove('--first-failure');LOCAL=ROOT/'.local/fhf'/uuid.uuid4().hex[:8]
         unittest.main(defaultTest=['WorkflowHostTests.failure_first_ordinary_survives_late_store_controls',
             'WorkflowHostTests.failure_first_ordinary_survives_late_ledger_control',
