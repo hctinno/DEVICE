@@ -10,7 +10,7 @@ import threading
 import time
 import uuid
 
-from ..codex_cli_response import CodexCliResponseError, produce_codex_cli_response as _produce
+from ..codex_cli_response import CodexCliResponseError, produce_codex_cli_response as _produce, _client_versions_match
 from .catalog import load_catalog as _load
 from .evaluation import prepare_sensor_trial as _prepare
 from .harness import FleetHarness as _Harness
@@ -216,7 +216,9 @@ def _complete_receipt(value, model, timeout):
         verification='wire_complete remote_identity_verified semantic_quality_verified external_data_authority_verified storage_authenticity_verified')
     for key,names in shapes.items():
         if type(value.get(key)) is not dict or set(value[key])!=set(names.split()): _fail('retention_failed')
-    constants=dict(client=dict(name='codex_cli',supported_version='0.163.0-alpha.11.2',observed_version='0.163.0-alpha.11.2',binary_content_sha256=None),
+    if not _client_versions_match(value['client']['supported_version'],value['client']['observed_version']): _fail('retention_failed')
+    version=value['client']['supported_version']
+    constants=dict(client=dict(name='codex_cli',supported_version=version,observed_version=version,binary_content_sha256=None),
         attempts=dict(version_process_attempts=1,model_process_attempts=1,application_retries=0,internal_network_requests=None,internal_network_retries=None),
         cost=dict(kind='unknown',amount=None,currency=None,price_version=None),
         controls=dict(requested=dict(ignore_user_config=True,ignore_rules=True,sandbox='read-only',ephemeral=True,empty_cwd=True,model_local_attempt_cap=1,automatic_retries=0),

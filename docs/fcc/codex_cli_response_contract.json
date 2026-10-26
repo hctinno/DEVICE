@@ -413,7 +413,10 @@
           "const": 1
         },
         "supported_version": {
-          "const": "0.163.0-alpha.11.2"
+          "enum": [
+            "0.163.0-alpha.11.2",
+            "0.164.0-alpha.11.1"
+          ]
         },
         "timeout_seconds": {
           "exclusiveMinimum": 0,
@@ -765,7 +768,10 @@
               "client": {
                 "properties": {
                   "observed_version": {
-                    "const": "0.163.0-alpha.11.2"
+                    "enum": [
+                      "0.163.0-alpha.11.2",
+                      "0.164.0-alpha.11.1"
+                    ]
                   }
                 }
               },
@@ -1605,11 +1611,15 @@
             "observed_version": {
               "enum": [
                 "0.163.0-alpha.11.2",
+                "0.164.0-alpha.11.1",
                 null
               ]
             },
             "supported_version": {
-              "const": "0.163.0-alpha.11.2"
+              "enum": [
+                "0.163.0-alpha.11.2",
+                "0.164.0-alpha.11.1"
+              ]
             }
           },
           "required": [
@@ -1618,7 +1628,40 @@
             "observed_version",
             "binary_content_sha256"
           ],
-          "type": "object"
+          "type": "object",
+          "allOf": [
+            {
+              "anyOf": [
+                {
+                  "properties": {
+                    "observed_version": {
+                      "type": "null"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "supported_version": {
+                      "const": "0.163.0-alpha.11.2"
+                    },
+                    "observed_version": {
+                      "const": "0.163.0-alpha.11.2"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "supported_version": {
+                      "const": "0.164.0-alpha.11.1"
+                    },
+                    "observed_version": {
+                      "const": "0.164.0-alpha.11.1"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
         },
         "controls": {
           "additionalProperties": false,
@@ -2203,14 +2246,25 @@
       "usage nullable/missing numeric fields null; cached<=input when both observed; no unknown usage key",
       "cost not_applicable iff model attempt0 else unknown; numeric/currency/price always null",
       "all verification flags other than observed wire_complete stay false",
-      "success all bindings hash/client observed version/thread ID nonnull; observed argv/empty cwd true and tool0; no secondary cleanup errors"
+      "success all bindings hash/client observed version/thread ID nonnull; observed argv/empty cwd true and tool0; no secondary cleanup errors",
+      "when observed_version is nonnull, supported_version and observed_version are the same exact allowlisted profile; invocation supported_version records that selection before model spawn"
     ],
-    "supported_version_literal": "0.163.0-alpha.11.2",
     "total_CLI_process_attempts_max": 2,
     "version_metadata_attempts_max": 1,
     "version_stderr_bytes": 0,
-    "version_stdout_bytes": 29,
-    "version_stdout_literal_utf8": "codex-cli 0.163.0-alpha.11.2\n",
-    "version_stdout_sha256": "73ae100e571629f5de76840afa0e9182e48c7dbb08b8df9d2a91a00a012ccd75"
+    "client_profiles": [
+      {
+        "supported_version_literal": "0.163.0-alpha.11.2",
+        "version_stdout_bytes": 29,
+        "version_stdout_literal_utf8": "codex-cli 0.163.0-alpha.11.2\n",
+        "version_stdout_sha256": "73ae100e571629f5de76840afa0e9182e48c7dbb08b8df9d2a91a00a012ccd75"
+      },
+      {
+        "supported_version_literal": "0.164.0-alpha.11.1",
+        "version_stdout_bytes": 29,
+        "version_stdout_literal_utf8": "codex-cli 0.164.0-alpha.11.1\n",
+        "version_stdout_sha256": "230c7fb4eaba503976290892b76e256e03f47a421b784363888ac852cceeb4cf"
+      }
+    ]
   }
 }
