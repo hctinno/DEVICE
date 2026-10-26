@@ -9,7 +9,7 @@ const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
 fs.mkdirSync(LOCAL,{recursive:true});
 const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?'public-cli-port-demo-':process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
 const FRESH_OUTPUT_ROOTS=[];
 function proofWrite(file,data){
@@ -1034,21 +1034,83 @@ async function artifactStorageKeyboardMain(){
   finally{if(browser)await browser.close();}
 }
 
-async function freshConductedOperatorMain(){
-  const python=process.env.VLAB_FRESH_CONDUCTED_PYTHON,output=process.env.VLAB_FRESH_CONDUCTED_OUTPUT;
+// Only the new explicit port mode requires an owned PTY. Keep stdin inherited
+// so Ctrl+C reaches the public Python server; capture its two output streams.
+function startPublicPortCLI(python,args,record){
+  assert.equal(process.stdin.isTTY,true,'public port demo requires its own PTY for graceful Ctrl+C');
+  let out=Buffer.alloc(0),err=Buffer.alloc(0),closed=false,controlCount=0,firstError=null,resolveReady,rejectReady;
+  const ready=new Promise((resolve,reject)=>{resolveReady=resolve;rejectReady=reject;});
+  const onControl=()=>{controlCount++;};process.on('SIGINT',onControl);
+  const child=spawn(python,args,{cwd:ROOT,windowsHide:true,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1',PYTHONPATH:ROOT},stdio:['inherit','pipe','pipe']});
+  Object.assign(record,{pid:child.pid??null,status:null,signal:null,exit_observed:false});
+  try{proofWrite(path.join(OUTPUT,'generation-running-child.json'),JSON.stringify(record,null,2));}catch(error){firstError??=error;rejectReady(firstError);}
+  const stopFailedOwnedChild=()=>{if(child.pid&&!closed&&!record.forced_owned_child_stop){record.forced_owned_child_stop=true;record.forced_owned_child_stop_result=child.kill('SIGTERM');}};
+  const timer=setTimeout(()=>{firstError??=Error('public CLI observer 240-second deadline exceeded');rejectReady(firstError);stopFailedOwnedChild();},240000);timer.unref();
+  const retain=(kind,chunk)=>{
+    if(kind==='stdout')out=Buffer.concat([out,chunk]);else err=Buffer.concat([err,chunk]);
+    try{
+      proofWrite(path.join(OUTPUT,'generation.live.'+kind+'.bin'),kind==='stdout'?out:err);
+      if(out.length+err.length>2097152){stopFailedOwnedChild();throw Error('public CLI raw output exceeds original 2MiB cap; observed streams retained as failure');}
+      if(kind==='stdout'){
+        const match=/^DGM synthetic intake fixture: (http:\/\/127\.0\.0\.1:\d+\/#[A-Za-z0-9_.-]+)\r?$/m.exec(out.toString('utf8'));
+        if(match){const url=new URL(match[1]);assert.equal(url.hostname,'127.0.0.1');assert.ok(Number(url.port)>0);resolveReady({url:url.href,origin:url.origin});}
+      }
+    }catch(error){firstError??=error;rejectReady(firstError);}
+  };
+  child.stdout.on('data',chunk=>retain('stdout',chunk));child.stderr.on('data',chunk=>retain('stderr',chunk));
+  const exited=new Promise(resolve=>{
+    child.on('error',error=>{firstError??=error;Object.assign(record,{error_code:error.code??'launch_error'});rejectReady(firstError);});
+    child.on('close',(code,signal)=>{
+      closed=true;clearTimeout(timer);Object.assign(record,{status:code,signal,exit_observed:true,own_PTY_SIGINT_observed:controlCount});
+      // Literal final bytes and exit/signal are retained before callers interpret them.
+      try{proofWrite(path.join(OUTPUT,'generation.stdout.bin'),out);proofWrite(path.join(OUTPUT,'generation.stderr.bin'),err);proofWrite(path.join(OUTPUT,'generation-child.json'),JSON.stringify(record,null,2));}catch(error){firstError??=error;}
+      if(!out.toString('utf8').includes('DGM synthetic intake fixture: '))rejectReady(firstError||Error('public CLI exited before a loopback URL; original streams retained, no retry'));
+      resolve({code,signal,firstError,controlCount});
+    });
+  });
+  return {child,ready,exited,alive:()=>!closed,streams:()=>({stdout:out,stderr:err}),finish:()=>{clearTimeout(timer);process.removeListener('SIGINT',onControl);}};
+}
+function freshNativeSnapshot(root){
+  const rows=[];const walk=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true}).sort((a,b)=>a.name<b.name?-1:1)){assert.equal(entry.isSymbolicLink(),false);const file=path.join(dir,entry.name);if(entry.isDirectory())walk(file);else if(entry.isFile()){const st=fs.statSync(file,{bigint:true}),raw=fs.readFileSync(file);rows.push({path:path.relative(root,file),bytes:st.size,sha256:createHash('sha256').update(raw).digest('hex'),mtime_ns:st.mtimeNs});}}};walk(root);return rows;
+}
+function nativeIntegerJSON(value){
+  if(typeof value==='bigint')return String(value);if(Array.isArray(value))return '['+value.map(nativeIntegerJSON).join(',')+']';
+  if(value!==null&&typeof value==='object')return '{'+Object.entries(value).map(([key,child])=>JSON.stringify(key)+':'+nativeIntegerJSON(child)).join(',')+'}';
+  return JSON.stringify(value);
+}
+async function rebindPublicPort(origin){
+  const net=require('node:net'),port=Number(new URL(origin).port),probe=net.createServer();
+  await new Promise((resolve,reject)=>{probe.once('error',reject);probe.listen({host:'127.0.0.1',port,exclusive:true},resolve);});
+  await new Promise((resolve,reject)=>probe.close(error=>error?reject(error):resolve()));return true;
+}
+
+async function freshConductedOperatorMain(publicPort=false){
+  const python=publicPort?process.env.VLAB_PUBLIC_CLI_PORT_PYTHON:process.env.VLAB_FRESH_CONDUCTED_PYTHON,output=publicPort?process.env.VLAB_PUBLIC_CLI_PORT_OUTPUT:process.env.VLAB_FRESH_CONDUCTED_OUTPUT;
   assert.ok(python&&path.isAbsolute(python)&&fs.existsSync(python),'explicit root Python required');assert.ok(output&&path.isAbsolute(output),'explicit new short absolute output required');
   const saved=path.resolve(output);assert.ok(saved.startsWith(LOCAL+path.sep)&&!saved.startsWith(PROOF+path.sep)&&!PROOF.startsWith(saved+path.sep));assert.equal(fs.existsSync(saved),false,'never overwrite/reuse an output, including a failed one');FRESH_OUTPUT_ROOTS.push(saved);
   const args=['-B','-X','utf8','-m','labflow.intake_fixture_check','--conducted-workflow','--document-kind','pdf','--measurement-ref','event:17','--mock-model','gpt-6.1-sol','--output',saved];
-  let browser,host,info,firstFailure=null;const resources=[],observations=[];
-  const cliRecord={executable:python,argv:args,cwd:ROOT,with_port:false,timeout_ms:240000,max_output_buffer_bytes:2097152,generation_attempts:1,known_authored_fixture:true,actual_model_calls:0};
+  if(publicPort)args.splice(args.indexOf('--output'),0,'--port','0');
+  let browser,host,info,publicCLI,nativeBefore,firstFailure=null;const resources=[],observations=[];
+  const cliRecord={executable:python,argv:args,cwd:ROOT,with_port:publicPort,timeout_ms:240000,max_output_buffer_bytes:2097152,generation_attempts:1,known_authored_fixture:true,actual_model_calls:0};
   try{
     proofWrite(path.join(OUTPUT,'generation-intent.json'),JSON.stringify(cliRecord,null,2));
+    let summary;
+    if(publicPort){
+      publicCLI=startPublicPortCLI(python,args,cliRecord);info=await publicCLI.ready;
+      const streams=publicCLI.streams();proofWrite(path.join(OUTPUT,'generation.preparse.stdout.bin'),streams.stdout);proofWrite(path.join(OUTPUT,'generation.preparse.stderr.bin'),streams.stderr);
+      summary=JSON.parse(fs.readFileSync(path.join(saved,'public-summary.json'),'utf8'));
+      assert.deepEqual(JSON.parse(streams.stdout.toString('utf8').split(/\r?\n/)[0]),summary);
+      assert.equal(new URL(info.url).hash,'#'+summary.intake_id);assert.equal(new URL(info.url).pathname,'/');
+      nativeBefore=freshNativeSnapshot(saved);proofWrite(path.join(OUTPUT,'public-port-native-before.json'),nativeIntegerJSON(nativeBefore));
+      proofWrite(path.join(OUTPUT,'actual-public-CLI-URL.json'),JSON.stringify({...info,source:'literal public CLI stdout, captured before parse',CLI_exit:'pending while server is live'},null,2));
+    }else{
     const child=spawnSync(python,args,{cwd:ROOT,windowsHide:true,timeout:240000,maxBuffer:2097152,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1',PYTHONPATH:ROOT}});
     // Retain exit and literal streams before attempting to parse any CLI data.
     proofWrite(path.join(OUTPUT,'generation.stdout.bin'),child.stdout||Buffer.alloc(0));proofWrite(path.join(OUTPUT,'generation.stderr.bin'),child.stderr||Buffer.alloc(0));
     Object.assign(cliRecord,{pid:child.pid,status:child.status,signal:child.signal,error_code:child.error?.code??null});proofWrite(path.join(OUTPUT,'generation-child.json'),JSON.stringify(cliRecord,null,2));
     assert.equal(child.error,undefined,'original CLI launch/timeout/buffer failure retained');assert.equal(child.status,0,'original CLI failed; partial output retained, no retry');assert.equal(child.signal,null);
-    const summary=JSON.parse(fs.readFileSync(path.join(saved,'public-summary.json'),'utf8'));assert.deepEqual(JSON.parse(child.stdout.toString('utf8')),summary);
+    summary=JSON.parse(fs.readFileSync(path.join(saved,'public-summary.json'),'utf8'));assert.deepEqual(JSON.parse(child.stdout.toString('utf8')),summary);
+    }
     assert.equal(summary.kind,'conducted_intake_workflow_demo');assert.equal(summary.provider,'authored_scripted_mock');assert.equal(summary.synthetic,true);assert.equal(summary.ai_model_called,false);assert.equal(summary.hardware_verified,false);assert.equal(summary.physical_verified,false);
     assert.equal(summary.runtime_calls,1);assert.equal(summary.producer_calls,5);assert.equal(summary.fixture_acceptance,'pass');assert.equal(summary.result_status,'recorded');assert.equal(summary.storage_status,'complete');assert.equal(summary.draft_status,'DRAFT');assert.equal(summary.task_outcome,'not_assessed');assert.equal(summary.conformity,'not_assessed');
     const startupFile=path.join(saved,'server-startup-original.json'),startup=JSON.parse(fs.readFileSync(startupFile,'utf8')),readback=JSON.parse(fs.readFileSync(path.join(saved,'readback-inputs.json'),'utf8'));
@@ -1058,16 +1120,18 @@ async function freshConductedOperatorMain(){
     const fileRoot=path.join(saved,'.local','conducted-result-artifacts',selection.artifact_name),draft=fs.readFileSync(path.join(fileRoot,'draft.md'),'utf8'),mock=JSON.parse(fs.readFileSync(path.join(saved,'m','mock-origin.json'),'utf8'));
     const pins=Object.fromEntries(['public-summary.json','server-startup-original.json','readback-inputs.json','m/authored-mock.cs','m/codex.exe'].map(name=>{const raw=fs.readFileSync(path.join(saved,name));return [name,{bytes:raw.length,sha256:createHash('sha256').update(raw).digest('hex')}];}));
     proofWrite(path.join(OUTPUT,'generated-source-pins.json'),JSON.stringify({pins,mock,readback_keys:Object.keys(readback),generation:cliRecord,versions:{node:process.version,playwright:require('playwright/package.json').version},source:'known author fixture and newly generated local MOCK; actual model0'},null,2));
-    const specFile=path.join(OUTPUT,'fresh-host-spec.json');proofWrite(specFile,JSON.stringify({name:'fresh',workspace:path.join(saved,'s'),intake_id:summary.intake_id,original_startup_file:startupFile,source_roots:[saved],proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/fresh'}));
-    host=startPreviewHost(specFile,artifactStorageHost,'fresh_original_startup_host.py');info=await host.next();
-    const bodies={};for(const [name,suffix]of [['intakes','/api/intakes'],['plan','/api/intakes/'+summary.intake_id+'/conducted-plan-preview'],['provided','/api/intakes/'+summary.intake_id+'/conducted-result'],['storage','/api/intakes/'+summary.intake_id+'/conducted-artifact-readback']]){
+    if(!publicPort){const specFile=path.join(OUTPUT,'fresh-host-spec.json');proofWrite(specFile,JSON.stringify({name:'fresh',workspace:path.join(saved,'s'),intake_id:summary.intake_id,original_startup_file:startupFile,source_roots:[saved],proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/fresh'}));
+      host=startPreviewHost(specFile,artifactStorageHost,'fresh_original_startup_host.py');info=await host.next();}
+    const bodies={};for(const [name,suffix]of [['intakes','/api/intakes'],['plan','/api/intakes/'+summary.intake_id+'/conducted-plan-preview'],['provided','/api/intakes/'+summary.intake_id+'/conducted-result'],['storage','/api/intakes/'+summary.intake_id+'/conducted-artifact-readback'],...(publicPort?[['current','/api/intakes/'+summary.intake_id+'/conducted-current-facts']]:[])]){
       const response=await fetch(info.origin+suffix),raw=Buffer.from(await response.arrayBuffer());proofWrite(path.join(OUTPUT,'fresh-'+name+'.json'),raw);assert.equal(response.status,200);bodies[name]=JSON.parse(raw.toString('utf8'));
     }
     assert.deepEqual(bodies.provided.result,original);assert.deepEqual(bodies.storage.artifact.result,original);assert.equal(bodies.storage.artifact.draft,draft);assert.equal(bodies.storage.status,'matched');assert.equal(bodies.storage.relation.recheck.status,'unchanged');assert.deepEqual(bodies.storage.relation.current_binding,bodies.plan.plan_input.binding);assert.deepEqual(bodies.storage.relation.artifact_binding,bodies.plan.plan_input.binding);assert.equal(bodies.storage.artifact.storage.verified_file_count,3);
+    if(publicPort){assert.equal(bodies.current.status,'available');assert.equal(bodies.current.current.facts_plan.status,'ready_for_simulation');assert.equal(bodies.current.current.facts_plan.questions.length,0);assert.equal(bodies.current.recheck.status,'unchanged');assert.deepEqual(bodies.current.recheck.before,bodies.current.recheck.after);assert.deepEqual(bodies.current.current.facts_plan.plan_input.binding,bodies.storage.relation.current_binding);}
     browser=await chromium.launch({headless:true});const context=await browser.newContext({viewport:{width:1440,height:950}}),page=await context.newPage(),errors=[],external=[],methods=[];page.setDefaultTimeout(8000);
     page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(info.origin+'/'))external.push(r.url());if(r.url().includes('/api/'))methods.push(r.method());});
     try{
-      await page.goto(info.origin+'/');await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true'&&document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+      await page.goto(publicPort?info.url:info.origin+'/');await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true'&&document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+      if(publicPort){await page.waitForFunction(()=>document.querySelector('#intake-gap-queue')?.dataset.minimumCurrent==='true'&&document.querySelector('#intake-gap-queue')?.dataset.minimumSource==='current_facts');assert.equal(await page.locator('[data-minimum-evidence-question][data-current="true"]:not([hidden])').count(),0);assert.match(await page.locator('#minimum-evidence-status').innerText(),/추가 확인 항목이 없습니다/);}
       await page.locator('#intake-list button[aria-current="true"]').click();const workflow=page.locator('#intake-workflow'),part=id=>workflow.locator('[data-workflow-step="'+id+'"] [data-workflow-summary]');assert.equal(await workflow.getAttribute('data-intake-id'),summary.intake_id);
       const intakeText=await part('intake').innerText();for(const field of ['product_type','market','purpose']){assert.ok(facts[field]?.value,'known author field absent');assert.ok(intakeText.includes(facts[field].value),'operator intake must show original '+field);}
       assert.equal(await page.locator('#conducted-plan-preview').getAttribute('data-preview-current'),'true');assert.match(await part('plan').innerText(),/ready_for_simulation/);
@@ -1077,18 +1141,31 @@ async function freshConductedOperatorMain(){
       const sourceSummary=card.locator('[data-artifact-technical] > summary');await sourceSummary.click();assert.ok((await card.innerText()).includes(summary.run_id));assert.ok((await card.innerText()).includes(selection.expected_manifest_sha256));
       const draftSummary=card.locator('details:has([data-artifact-raw="draft"]) > summary');await draftSummary.click();assert.equal(await card.locator('[data-artifact-raw="draft"]').isVisible(),true);assert.equal(await card.locator('[data-artifact-raw="draft"]').textContent(),draft);await screenshot(page,path.join(OUTPUT,'fresh-operator-DRAFT-1440.png'));await draftSummary.click();await sourceSummary.click();
       await card.scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'fresh-operator-summary-1440.png'));assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.ok(methods.every(x=>x==='GET'));
-      observations.push({width:1440,source:'one generation CLI without port -> exact original startup readonly UI',known_author_fixture:true,intake_id:summary.intake_id,run_id:summary.run_id,runtime_instance_id:summary.runtime_instance_id,product_type:facts.product_type.value,purpose:facts.purpose.value,market:facts.market.value,original_raw:summary.raw_measurement,original_corrected:summary.corrected,storage_read:'fixed3 matched current relation observation',draft:'original UTF8 text',task:'not_assessed',conformity:'not_assessed',actual_AI_display:'unknown',typed_faults:0,versions:{node:process.version,chromium:browser.version()}});
+      observations.push({width:1440,source:publicPort?'one actual public CLI --port0 -> literal CLI loopback URL -> production UI':'one generation CLI without port -> exact original startup readonly UI',known_author_fixture:true,intake_id:summary.intake_id,run_id:summary.run_id,runtime_instance_id:summary.runtime_instance_id,product_type:facts.product_type.value,purpose:facts.purpose.value,market:facts.market.value,original_raw:summary.raw_measurement,original_corrected:summary.corrected,storage_read:'fixed3 matched current relation observation',draft:'original UTF8 text',task:'not_assessed',conformity:'not_assessed',actual_AI_display:'unknown',typed_faults:0,versions:{node:process.version,chromium:browser.version()}});
     }finally{await context.close();}
   }catch(error){firstFailure=error;try{proofWrite(path.join(OUTPUT,'fresh-operator-failure.json'),JSON.stringify({status:'fail',message:error.message,cli:cliRecord,observations,resources,partial_output:saved,no_retry:true},null,2));}catch{console.error('fresh observer failure-receipt write also failed; first error retained');}throw error;}
   finally{
     let cleanupFailure=null;
+    if(publicCLI){
+      try{
+        if(browser){await browser.close();browser=null;}
+        if(publicCLI.alive())console.log(JSON.stringify({public_port_operator_ready_for_ctrl_c:true,pid:publicCLI.child.pid,origin:info?.origin??null,own_PTY_only:true,observations_complete:!firstFailure}));
+        const ended=await publicCLI.exited;
+        const after=freshNativeSnapshot(saved);proofWrite(path.join(OUTPUT,'public-port-native-after.json'),nativeIntegerJSON(after));
+        const same=nativeBefore?nativeIntegerJSON(nativeBefore)===nativeIntegerJSON(after):null;
+        const rebind=info?await rebindPublicPort(info.origin):null;
+        resources.push({public_CLI_pid:publicCLI.child.pid,child_exit:ended.code,child_signal:ended.signal,own_PTY_SIGINT_observed:ended.controlCount,listener_port_rebind:rebind,source_unchanged:same,source_files:after.length,native_times:'fs bigint / raw JSON integer, no Number roundtrip',CLI_main_loop:cliRecord.forced_owned_child_stop?'forced owned-child failure stop, cleanup not attested':'normal process exit after owned PTY Ctrl+C',thread_direct_hook:false,SQL_close_direct_hook:false,global_process_census:false,no_forced_process_kill:!cliRecord.forced_owned_child_stop});
+        assert.equal(ended.firstError,null);assert.equal(ended.code,0);assert.equal(ended.signal,null);assert.ok(ended.controlCount>0);assert.equal(same,true);assert.equal(rebind,true);
+      }catch(error){resources.push({public_port_cleanup_verified:false,message:error.message,first_error_preserved:Boolean(firstFailure)});cleanupFailure=error;}
+      finally{publicCLI.finish();}
+    }
     try{if(host?.alive()){host.child.stdin.end('stop\n');const item=await host.next(),code=await host.exited;assert.ok(info,'startup was not observed');assert.equal(code,0,host.stderr());assert.equal(host.stderr(),'');assert.ok(item.resource.loop_stopped&&item.resource.listener_closed&&item.resource.port_rebind&&item.resource.source_unchanged);resources.push({...item.resource,child_exit:code});}else if(host){const code=await host.exited;resources.push({child_exit:code,cleanup_verified:false});}}
     catch(error){resources.push({cleanup_verified:false,message:error.message,first_error_preserved:Boolean(firstFailure)});cleanupFailure=error;}
     try{if(browser)await browser.close();}catch(error){resources.push({browser_close_verified:false,message:error.message});cleanupFailure??=error;}
     try{proofWrite(path.join(OUTPUT,'fresh-operator-resources.json'),JSON.stringify(resources,null,2));}catch(error){cleanupFailure??=error;}
     if(!firstFailure&&cleanupFailure)throw cleanupFailure;
   }
-  proofWrite(path.join(OUTPUT,'fresh-operator-results.json'),JSON.stringify({status:'pass',generation_cli:cliRecord,observations,resources,generation_MOCK_flows:1,generation_virtual_runtime_calls:1,generation_producer_calls:5,actual_model_calls:0,readonly_server_new_runtime_calls:0,CLI_port_branch_tested:false,SQL_close_directly_instrumented:false,prior_wide_or_unit_repeated:0},null,2));console.log(JSON.stringify({status:'pass',generation_CLI:1,genuine_DOM:1,output:OUTPUT,generated_output:saved}));
+  proofWrite(path.join(OUTPUT,'fresh-operator-results.json'),JSON.stringify({status:'pass',generation_cli:cliRecord,observations,resources,generation_MOCK_flows:1,generation_virtual_runtime_calls:1,generation_producer_calls:5,actual_model_calls:0,readonly_server_new_runtime_calls:0,CLI_port_branch_tested:publicPort,SQL_close_directly_instrumented:false,prior_wide_or_unit_repeated:0},null,2));console.log(JSON.stringify({status:'pass',generation_CLI:1,genuine_DOM:1,...(publicPort?{CLI_port_branch_tested:true}:{}),output:OUTPUT,generated_output:saved}));
 }
 
 async function operatorResultCopyMain(){
@@ -1125,4 +1202,4 @@ async function operatorResultCopyMain(){
   console.log(JSON.stringify({status:'pass',genuine_normal_DOM:observations.length,output:OUTPUT}));
 }
 
-(process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?operatorResultCopyMain():process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+(process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?freshConductedOperatorMain(true):process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?operatorResultCopyMain():process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
