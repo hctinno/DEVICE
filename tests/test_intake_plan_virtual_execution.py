@@ -83,8 +83,9 @@ class IntakePlanExecutionTests(unittest.TestCase):
     def test_public_signature_and_exports(self):
         self.assertEqual(api.__all__, ['run_intake_plan_virtual_execution', 'IntakePlanVirtualExecutionError'])
         signature = inspect.signature(api.run_intake_plan_virtual_execution)
-        expected = 'context analysis plan_input expected_revision expected_context_sha256 expected_plan_input_sha256 catalog_path catalog_sha256 response_schema_bytes executable requested_model scenario evidence_dir execution_origin cancel_event quantity'.split()
+        expected = 'context analysis plan_input expected_revision expected_context_sha256 expected_plan_input_sha256 catalog_path catalog_sha256 response_schema_bytes executable requested_model scenario evidence_dir execution_origin cancel_event quantity evidence_reservation'.split()
         self.assertEqual(list(signature.parameters), expected)
+        self.assertIsNone(signature.parameters['evidence_reservation'].default)
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in list(signature.parameters.values())[3:]))
         self.assertTrue(issubclass(api.IntakePlanVirtualExecutionError, RuntimeError))
 
@@ -241,6 +242,53 @@ class IntakePlanExecutionTests(unittest.TestCase):
         journal = read_operator_journal(path)
         self.assertNotIn('quantity', journal['header']['provenance'])
         self.assertIsNone(result['loop']['execution']['host_evidence']['quantity'])
+
+
+class ReservationAdapterTests(unittest.TestCase):
+    def setUp(self):
+        self.context,self.analysis,self.options=fixture()
+        self.plan=build_conducted_twin_plan_input(self.context,self.analysis,**self.options)
+        self.arguments=dict(expected_revision=self.options['expected_revision'],expected_context_sha256=self.options['expected_context_sha256'],
+            expected_plan_input_sha256=H(C(self.plan)),catalog_path=Path('unused-catalog'),catalog_sha256='a'*64,
+            response_schema_bytes=b'{}',executable=Path('unused-executable'),requested_model='gpt-6-astra',
+            scenario='normal',evidence_dir=Path('unused-evidence'),execution_origin='mock_subprocess')
+
+    def invoke(self,**changes):
+        return api.run_intake_plan_virtual_execution(self.context,self.analysis,self.plan,**dict(self.arguments,**changes))
+
+    def reservation_none_explicit_forward_and_alias_isolation(self):
+        with patch.object(api,'_run_loop',return_value='TYPED_ONLY') as loop,patch.object(api,'_attach'):
+            omitted=self.invoke();self.assertNotIn('evidence_reservation',loop.call_args.kwargs)
+            explicit_none=self.invoke(evidence_reservation=None);self.assertNotIn('evidence_reservation',loop.call_args.kwargs)
+            self.assertEqual(C(omitted),C(explicit_none))
+            reservation=dict(files=11,bytes=5505024);expected=reservation.copy();captured=[]
+            def forward(**options):
+                value=options['evidence_reservation'];captured.append(value);self.assertIsNot(value,reservation)
+                reservation.update(files=0,bytes=0);self.assertEqual(value,expected);return 'TYPED_ONLY'
+            loop.side_effect=forward;result=self.invoke(evidence_reservation=reservation)
+            self.assertEqual(captured,[expected]);self.assertEqual(set(result),set(omitted));self.assertFalse(result['execution']['origin_authenticated'])
+
+    def reservation_invalid_before_validation_or_io(self):
+        class Number(int):pass
+        class Mapping(dict):pass
+        values=[{},[],True,Mapping(files=1,bytes=1),dict(files=Number(1),bytes=1),dict(files=True,bytes=0),
+            dict(files=0,bytes=False),dict(files=1.0,bytes=0),dict(files=-1,bytes=0),dict(files=193,bytes=0),
+            dict(files=0,bytes=-1),dict(files=0,bytes=33554433),dict(files=0,bytes=0,extra=0),dict(files=0)]
+        with patch.object(api,'_validate',side_effect=AssertionError('RESERVATION_MUST_REJECT_FIRST')) as validate, \
+                patch.object(api,'_run_loop',side_effect=AssertionError('NO_LOOP')) as loop, \
+                patch.object(Path,'open',side_effect=AssertionError('NO_IO')):
+            for value in values:
+                with self.subTest(value=repr(value)):
+                    result=self.invoke(evidence_reservation=value)
+                    self.assertEqual(result['failure'],dict(code='intake_plan_virtual_execution_invalid_input',stage='input'))
+                    self.assertEqual(result['execution']['trial_factory_calls'],0);self.assertEqual(result['status'],'blocked')
+            self.assertFalse(validate.called);self.assertFalse(loop.called)
+
+    def reservation_control_identity(self):
+        control=MemoryError('ORIGINAL_CONTROL')
+        with patch.object(api,'_run_loop',side_effect=control) as loop:
+            with self.assertRaises(MemoryError) as got:self.invoke(evidence_reservation=dict(files=0,bytes=0))
+        self.assertIs(got.exception,control);self.assertEqual(loop.call_count,1)
 
 
 if __name__ == '__main__':

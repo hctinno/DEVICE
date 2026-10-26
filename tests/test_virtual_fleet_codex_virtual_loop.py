@@ -332,10 +332,11 @@ class LoopTests(unittest.TestCase):
     def test_public_signature_and_exports(self):
         self.assertEqual(api.__all__, ['run_codex_virtual_loop', 'CodexVirtualLoopError'])
         signature = inspect.signature(api.run_codex_virtual_loop)
-        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings', 'plan_binding', 'quantity'])
+        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings', 'plan_binding', 'quantity', 'evidence_reservation'])
         self.assertIsNone(signature.parameters['source_settings'].default)
         self.assertIsNone(signature.parameters['plan_binding'].default)
         self.assertIsNone(signature.parameters['quantity'].default)
+        self.assertIsNone(signature.parameters['evidence_reservation'].default)
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in signature.parameters.values()))
 
     def test_proof_admission_uses_only_this_execution_namespace(self):
@@ -822,6 +823,119 @@ class LoopTests(unittest.TestCase):
         self.assertEqual(e.receipt['budget']['producer_calls_started'], 1)
         self.assertIsNone(e.receipt['steps'][0]['after'])
         self.assertEqual(e.receipt['steps'][0]['dispatch']['effect'], 'unknown')
+
+
+class ReservationLoopTests(unittest.TestCase):
+    def setUp(self):
+        self.folder=ROOT/'.local/ers'/uuid.uuid4().hex[:8];self.folder.mkdir(parents=True)
+        self.proof_files=0;self.proof_bytes=0
+        for name in ('_prepare','_produce'):
+            self.enterContext(patch.object(api,name,side_effect=AssertionError('NO_RUNTIME_OR_PRODUCER')))
+        for name in ('socket.socket.connect','socket.getaddrinfo'):
+            self.enterContext(patch(name,side_effect=AssertionError('NO_NETWORK')))
+
+    def file(self,name,raw):
+        self.assertLess(self.proof_files,128);self.assertLessEqual(self.proof_bytes+len(raw),8388608)
+        self.proof_files+=1;self.proof_bytes+=len(raw);path=self.folder/name;path.parent.mkdir(parents=True,exist_ok=True)
+        with path.open('xb') as stream:stream.write(raw)
+        return path
+
+    def options(self):
+        return dict(catalog_path=self.folder/'unused-catalog',catalog_sha256='a'*64,response_schema_bytes=b'{}',
+            executable=self.folder/'unused-executable',requested_model='gpt-6-astra',scenario='normal',
+            evidence_dir=self.folder/'loop',execution_origin='mock_subprocess')
+
+    def runner(self,reservation=None,*,omitted=False,binding=None):
+        captured=[];constructor=api._Loop;entries=[]
+        def construct(*args,**kwargs):captured.append(kwargs.copy());return constructor(*args,**kwargs)
+        def no_run(owner):entries.append(owner)
+        options=self.options()
+        if not omitted:options['evidence_reservation']=reservation
+        fixed=type('FixedUUID',(),dict(hex='a'*32))()
+        start=api._now()
+        with patch.object(api,'_preflight',return_value=(None,binding,None)),patch.object(api,'_now',return_value=start), \
+                patch.object(api.uuid,'uuid4',return_value=fixed),patch.object(api,'_Loop',side_effect=construct), \
+                patch.object(constructor,'run',no_run),patch.object(constructor,'finalize'),patch.object(constructor,'restore_runtime'):
+            result=api.run_codex_virtual_loop(**options)
+        self.assertEqual(len(entries),1);return entries[0],result,captured[0]
+
+    def reservation_file_byte_equalities_and_no_double_count(self):
+        runner,_,_=self.runner(dict(files=1,bytes=7));known=self.file('loop/known.bin',b'abc');self.file('external-host.bin',b'1234567')
+        runner.known.add(known)
+        runner.space(33554432-7-3,192-1-1)
+        for byte_count,file_count in ((33554432-7-3+1,0),(0,192-1)):
+            with self.subTest(bytes=byte_count,files=file_count):
+                with self.assertRaises(api._Fault) as got:runner.space(byte_count,file_count)
+                self.assertEqual(got.exception.code,'operator_virtual_loop_limit_exceeded')
+        full,_,_=self.runner(dict(files=192,bytes=33554432));full.space()
+        with self.assertRaises(api._Fault):full.space(1,0)
+        with self.assertRaises(api._Fault):full.space(0,1)
+
+    def reservation_none_shape_caps_and_alias_isolation(self):
+        old,omitted,old_args=self.runner(omitted=True);none,explicit_none,none_args=self.runner(None)
+        self.assertEqual(C(omitted),C(explicit_none));self.assertNotIn('evidence_reservation',old_args);self.assertNotIn('evidence_reservation',none_args)
+        old.space(33554432,192);none.space(33554432,192)
+        reservation=dict(files=2,bytes=9);owner,result,_=self.runner(reservation);reservation.update(files=0,bytes=0)
+        owner.space(33554432-9,192-2)
+        with self.assertRaises(api._Fault):owner.space(33554432-9+1,0)
+        self.assertEqual(set(result),set(omitted));self.assertEqual(result['budget']['limits'],omitted['budget']['limits'])
+        self.assertEqual(api._BUDGET,dict(decisions=8,logical_requests=8,ticks=8,wall_seconds=180,transport_retries=0))
+
+    def reservation_invalid_precedes_preflight_io(self):
+        class Number(int):pass
+        class Mapping(dict):pass
+        values=[{},[],True,Mapping(files=0,bytes=0),dict(files=Number(1),bytes=0),dict(files=False,bytes=0),
+            dict(files=0,bytes=True),dict(files=0,bytes=0.0),dict(files=-1,bytes=0),dict(files=193,bytes=0),
+            dict(files=0,bytes=-1),dict(files=0,bytes=33554433),dict(files=0),dict(files=0,bytes=0,extra=0)]
+        with patch.object(api,'_preflight',side_effect=AssertionError('NO_PREFLIGHT_IO')) as preflight, \
+                patch.object(api,'_Loop',side_effect=AssertionError('NO_LOOP')) as loop, \
+                patch.object(Path,'open',side_effect=AssertionError('NO_FILE')):
+            for value in values:
+                with self.subTest(value=repr(value)):
+                    with self.assertRaises(api.CodexVirtualLoopError) as got:api.run_codex_virtual_loop(**self.options(),evidence_reservation=value)
+                    self.assertEqual(got.exception.code,'operator_virtual_loop_invalid_input');self.assertIsNone(got.exception.receipt)
+            self.assertFalse(preflight.called);self.assertFalse(loop.called)
+
+    def reservation_control_and_final_write_admission(self):
+        control=MemoryError('ORIGINAL_CONTROL')
+        with patch.object(api,'_preflight',side_effect=control):
+            with self.assertRaises(MemoryError) as got:api.run_codex_virtual_loop(**self.options(),evidence_reservation=dict(files=0,bytes=0))
+        self.assertIs(got.exception,control)
+        owner,_,_=self.runner(dict(files=0,bytes=33554432))
+        with patch.object(Path,'open',side_effect=AssertionError('NO_XB_BEFORE_ADMISSION')) as opened:
+            with self.assertRaises(api._Fault):owner.write(self.folder/'loop-receipt.json',b'{}',262144,final=True)
+        self.assertFalse(opened.called)
+        producer_bytes=sum(cap for _,cap in api._PRODUCER_FILES.values())+2097152
+        owner,_,_=self.runner(dict(files=0,bytes=33554432-producer_bytes+1))
+        with self.assertRaises(api._Fault):owner.space(producer_bytes,len(api._PRODUCER_FILES)+4)
+
+    def reservation_journal_exact_header_rows_before_creation(self):
+        from labflow.virtual_fleet.journal import OperatorJournal,read_operator_journal
+        binding=dict(intake_id='RES',revision=1,analysis_context_id='context:typed',context_sha256='a'*64,analysis_sha256='b'*64,plan_sha256='c'*64)
+        topology=dict(label='x'*440000)
+        def configured(reservation):
+            owner,_,_=self.runner(reservation,binding=binding);owner.host_topology=topology;owner.setup_snapshot=[{}]
+            owner.r['execution']['runtime_instance_id']='runtime:reservation';host=owner.r['execution']['host_evidence']
+            host.update(topology_sha256=H(C(topology)),setup_sha256='d'*64);owner.r['artifacts']['setup_snapshot']['complete']=True
+            event=dict(schema_version=1,kind='operator_event',event_id='event:one',run_id=owner.r['run_id'],
+                runtime_instance_id='runtime:reservation',sequence=1,type='termination',payload=dict(code='run_terminated',unresolved_request_ids=[]))
+            owner.events=[event];owner.event_bytes=len(C(event));return owner
+        sample=configured(dict(files=0,bytes=0));host=sample.r['execution']['host_evidence']
+        provenance=dict(runtime_origin='preinitialized',catalog_sha256=sample.catalog_sha,topology=topology,topology_sha256=host['topology_sha256'],
+            engine_sha256=H(C(sample.source_pins)),engine_fingerprint_kind='sha256_canonical_host_source_pins_v1',source_pins=sample.source_pins,
+            plan_binding=binding,setup_sha256=host['setup_sha256'],recording_mode='post_run_from_retained_events')
+        reference=self.folder/'reference.jsonl';self.assertLessEqual(self.proof_bytes+1048576,8388608);self.proof_files+=1;self.proof_bytes+=1048576
+        with OperatorJournal(reference,run_id=sample.r['run_id'],runtime_instance_id='runtime:reservation',provenance=provenance) as journal:journal(sample.events[0])
+        actual=reference.read_bytes();self.assertTrue(read_operator_journal(reference)['complete']);size=len(actual)
+        self.assertGreater(size,sample.event_bytes);self.assertLess(size,sample.event_bytes+1048576)
+        owner=configured(dict(files=191,bytes=33554432-size));owner.directory.mkdir(parents=True,exist_ok=True)
+        self.assertLess(self.proof_files,128);self.assertLessEqual(self.proof_bytes+size,8388608);self.proof_files+=1;self.proof_bytes+=size
+        with patch.object(api,'_Journal',wraps=OperatorJournal) as writer:owner.capture_journal()
+        path=owner.directory/'operator-journal.jsonl';self.assertTrue(writer.called);self.assertEqual(path.read_bytes(),actual)
+        self.assertTrue(owner.r['execution']['host_evidence']['binding_verified']);self.assertIsNone(owner.first)
+        denied=configured(dict(files=191,bytes=33554432-size+1));denied.directory=self.folder/'denied';denied.directory.mkdir()
+        with patch.object(api,'_Journal',side_effect=AssertionError('JOURNAL_MUST_NOT_OPEN')) as writer:denied.capture_journal()
+        self.assertFalse(writer.called);self.assertFalse((denied.directory/'operator-journal.jsonl').exists());self.assertIsNotNone(denied.first)
 
 
 if __name__ == '__main__':
