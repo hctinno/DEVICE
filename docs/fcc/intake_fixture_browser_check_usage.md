@@ -66,6 +66,17 @@ Playwright를 별도 설치했다면 기존처럼 `NODE_PATH`를 지정한다. �
 
 host 1개와 390×900 브라우저 context 1개에서 원 API 응답을 먼저 보존하고 같은 접수·revision·current binding과 recheck를 확인한다. 현재 질문의 source는 `current_facts`여야 한다. Tab으로 질문과 원문, 기존 fixture 이력에 접근해 Enter·Space로 열고 닫으며 focus 표시와 Shift+Tab 복귀를 확인한다. 열린 질문의 원 질문 인덱스, 공백·provided/span, source facts·quote·locator와 전체 facts-plan을 관측한 응답과 대조한다. 해석 가능한 원 질문이 없는 입력은 성공으로 처리하지 않는다. 초기·열린 상세·최종 화면의 가로 넘침, 실제 AI `unknown`, 판정 `not_assessed`, 기존 fixture 이력의 별도 범위와 초기 닫힘도 관찰한다.
 
-실제 API 요청을 변조하지 않으며 GET 이외 요청과 외부 요청을 차단하고 실패로 남긴다. API GET은 총 12회, 현재 조회는 2회 이내다. 활성 검사는 150초에 중단하고 정리를 포함한 전체 한도는 180초다. 원 source의 bytes/hash와 정수 나노초 수정 시각을 전후 대조하며 알려진 host의 loop·listener 종료, 포트 재바인드와 child 종료를 확인한다. 개별 SQL 연결·요청 thread·전체 PC process는 직접 계측하지 않는다.
+실제 API 요청을 변조하지 않으며 GET 이외 요청과 외부 요청을 차단하고 실패로 남긴다. API GET은 총 12회, 현재 조회는 2회 이내다. 활성 검사는 90초에 중단하고 110초에 남은 자기 host의 강제 종료를 시도한다. 정리를 포함한 전체 한도는 120초다. 원 source의 bytes/hash와 정수 나노초 수정 시각을 전후 대조하며 알려진 host의 loop·listener 종료, 포트 재바인드와 child 종료를 확인한다. 개별 SQL 연결·요청 thread·전체 PC process는 직접 계측하지 않는다.
+
+응답 body를 요청하기 전에 `api-NN.metadata.json`에 method·허용된 pathname·HTTP status·관측 stage·필수 여부를 기록한다. query/header/token과 임의 URL은 남기지 않으며 모르는 path는 고정 표식으로 적고 실패한다. 본문 관측 결과는 별도 `api-NN.body-observation.json`에 남긴다. 현재 접수의 `conducted-current-facts`는 필수이며 HTTP 200, 최대 16 MiB, 온전한 UTF-8 JSON object와 기존 current/revision/C1 검사를 통과하고 원 bytes가 보존돼야 한다. 실패·초과·취소·내용 미지는 실패이며 다른 응답이나 과거 snapshot으로 대체하지 않는다. pending 필수 body가 완료 또는 명시 실패로 정리되기 전에 keyboard나 browser close로 넘어가지 않는다.
+
+같은 접수의 fixture/preview/result/artifact/history 등 경로가 확인된 부수 GET만 body 미확보를 `partial`로 구별한다. 부수 body는 최대 256 KiB이며 초과는 절단하지 않고 partial로 적는다. body 관측별 대기 한도는 8초다. 해당 경로·status·stage·고정 사유를 남기고 필수 current의 body 검증은 그대로 유지한다. 로컬 증거 쓰기 실패는 부수 응답이어도 전체 실패다. browser 종료 직전과 직후에 알려진 pending body를 다시 정리하고 실제 관측 metadata를 최종 결과에 보존한다.
+
+브라우저·서버 없이 자기 response 대역으로 body 지연, required 실패/취소/초과/미지, 부수 partial, query 제거와 barrier를 검사하는 공개 opt-in은 다음과 같다. 기존 기본 모드와 current 입력/서버 DTO를 바꾸지 않는다.
+
+```powershell
+$env:VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY = '1'
+node frontend/intake_flow_browser_check.cjs
+```
 
 새 출력 폴더에 원 입력·startup, API 응답, 화면 PNG·넘침 원인, 키보드 관측, host 원 출력과 `current-questions-results.json`을 남긴다. 파일 512개·32 MiB 한도를 유지한다. 종료 코드 0과 결과 `status: pass`를 함께 확인하며 첫 실패와 부분 관측도 보존한다. 관측하지 못한 항목은 통과로 간주하지 않는다. 이는 로컬 화면·읽기 경로 검사이며 실제 AI 업무, 규범 판정, 계측 정확도 또는 현장 무인화의 증거가 아니다.

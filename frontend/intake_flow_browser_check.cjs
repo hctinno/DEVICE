@@ -9,7 +9,7 @@ const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
 fs.mkdirSync(LOCAL,{recursive:true});
 const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?'current-questions-':process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?'public-cli-port-demo-':process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY==='1'?'current-questions-typed-':process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?'current-questions-':process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?'public-cli-port-demo-':process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
 const FRESH_OUTPUT_ROOTS=[];
 function proofWrite(file,data){
@@ -1230,15 +1230,111 @@ function loadCurrentQuestionsInput(file,io=fs,retain=()=>{}){
   // remain in the literal input; the host reads the pinned original startup.
   return {spec:{name:'current-questions',workspace,intake_id:value.intake_id,original_startup_file:path.resolve(original.path),source_roots:roots},input_pin:input.pin,startup_pin:startup.pin};
 }
+function createCurrentQuestionsResponses({origin,intakeId,stage,retain,onFailure,timeoutMs=8000,currentLimit=16777216,otherLimit=262144}){
+  const current='/api/intakes/'+intakeId+'/conducted-current-facts',base='/api/intakes/'+intakeId;
+  const ancillary=new Set(['/api/intakes',base+'/fixture-runs',base+'/conducted-plan-preview',base+'/conducted-result',base+'/conducted-artifact-readback','/api/intake-references/'+intakeId+'/history']);
+  const rows=[],requests=new WeakMap(),responses=[];let firstFailure=null;
+  const safePath=p=>p===current||ancillary.has(p)?p:'[unrecognized-api-path]';
+  const signal=(row,reason)=>{const error=Error((row?.meta.required?'required current response ':'response observation ')+reason);firstFailure??=error;onFailure(error);};
+  const emit=(name,value)=>{try{retain(name,value);return true;}catch{signal(null,'evidence_write_failed');return false;}};
+  const snapshot=row=>({...row.meta,body_state:row.state,reason:row.reason,file:row.file,bytes:row.bytes});
+  function finish(row,state,reason=null){
+    if(row.done)return;row.done=true;clearTimeout(row.timer);row.state=state;row.reason=reason;
+    emit(row.name+'.body-observation.json',snapshot(row));
+    if(state==='failed')signal(row,reason);row.resolve();
+  }
+  function record(request,status=null){
+    if(requests.has(request))return requests.get(request);
+    if(rows.length>=12){signal(null,'response_limit');return null;}
+    let pathname='',sameOrigin=false,method='unknown';
+    try{const url=new URL(request.url());pathname=url.pathname;sameOrigin=url.origin===origin;const value=request.method();if(['GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS'].includes(value))method=value;}catch{}
+    const recognized=sameOrigin&&(pathname===current||ancillary.has(pathname)),index=rows.length+1;
+    const row={meta:{index,method,path:sameOrigin?safePath(pathname):'[outside-origin]',status:Number.isInteger(status)&&status>=100&&status<=599?status:null,stage:String(stage()).replace(/[^A-Za-z0-9 _-]/g,'?').slice(0,64),required:sameOrigin&&pathname===current},recognized,state:'pending',reason:null,file:null,bytes:null,done:false};
+    row.name='api-'+String(index).padStart(2,'0');row.settled=new Promise(resolve=>row.resolve=resolve);rows.push(row);requests.set(request,row);
+    if(!emit(row.name+'.metadata.json',snapshot(row)))finish(row,'failed','evidence_write_failed');
+    if(!recognized||method!=='GET')finish(row,'failed','unrecognized_readonly_response');
+    return row;
+  }
+  function response(response){
+    const row=record(response.request(),response.status());if(!row||row.done)return;
+    if(row.meta.required&&row.meta.status!==200){finish(row,'failed','http_status_invalid');return;}
+    row.timer=setTimeout(()=>finish(row,row.meta.required?'failed':'partial','body_timeout'),timeoutMs);
+    Promise.resolve().then(()=>row.done?null:response.body()).then(raw=>{
+      if(row.done)return;
+      if(!Buffer.isBuffer(raw)){finish(row,row.meta.required?'failed':'partial','body_type_unknown');return;}
+      row.bytes=raw.length;
+      if(raw.length>(row.meta.required?currentLimit:otherLimit)){finish(row,row.meta.required?'failed':'partial','body_too_large');return;}
+      row.file=row.name+'.raw.json';if(!emit(row.file,raw)){finish(row,'failed','evidence_write_failed');return;}
+      if(row.meta.required){
+        try{const value=JSON.parse(new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(raw));if(!value||typeof value!=='object'||Array.isArray(value))throw Error();}
+        catch{finish(row,'failed','body_json_invalid');return;}
+      }
+      responses.push({path:row.meta.path,status:row.meta.status,raw,file:row.file});finish(row,'saved');
+    }).catch(error=>{
+      const message=typeof error?.message==='string'?error.message:'';
+      const reason=/No data found|navigated away|Network.getResponseBody/.test(message)?'cdp_body_unavailable':'body_read_failed';
+      finish(row,row.meta.required?'failed':'partial',reason);
+    });
+  }
+  function requestFailed(request){
+    let pathname;try{pathname=new URL(request.url()).pathname;}catch{return;}
+    if(!pathname.startsWith('/api/'))return;
+    const row=record(request);if(!row)return;
+    if(row.done){if(!row.lateFailure){row.lateFailure=true;emit(row.name+'.late-failure.json',{...row.meta,reason:'request_failed_after_body'});if(row.meta.required)signal(row,'request_failed_after_body');}return;}
+    finish(row,row.meta.required?'failed':'partial','request_failed');
+  }
+  async function settle({requireCurrent=true}={}){
+    let size;do{size=rows.length;await Promise.all(rows.slice().map(row=>row.settled));}while(rows.length!==size);
+    if(requireCurrent&&!rows.some(row=>row.meta.required)){signal({meta:{required:true}},'not_observed');}
+    if(firstFailure)throw firstFailure;
+    if(rows.some(row=>row.meta.required&&row.state!=='saved'))throw Error('required current response incomplete');
+  }
+  return {response,requestFailed,settle,responses,safePath,metadata:()=>rows.map(snapshot)};
+}
+
+async function currentQuestionsResponseTypedMain(){
+  assert.equal(typeof createCurrentQuestionsResponses,'function','required response observer is not implemented');
+  const origin='http://127.0.0.1:12345',intakeId='I-authored',current='/api/intakes/'+intakeId+'/conducted-current-facts',valid=Buffer.from('{"kind":"intake_current_facts_plan_view"}'),checks=[];
+  const fixture=extra=>{const files=new Map(),failures=[];const observer=createCurrentQuestionsResponses({origin,intakeId,stage:()=> 'typed',retain:(name,value)=>files.set(name,value),onFailure:error=>failures.push(error),timeoutMs:30,...extra});return {observer,files,failures};};
+  const response=(pathname,body,status=200,method='GET')=>{const request={url:()=>origin+pathname,method:()=>method};return {url:request.url,request:()=>request,status:()=>status,body};};
+  {
+    const f=fixture({timeoutMs:1000});let resolve,advanced=false;const pending=new Promise(r=>resolve=r);
+    f.observer.response(response(current,()=>{assert.ok(f.files.has('api-01.metadata.json'));return pending;}));
+    const barrier=f.observer.settle().then(()=>advanced=true);await new Promise(setImmediate);assert.equal(advanced,false);
+    resolve(valid);await barrier;assert.equal(advanced,true);assert.equal(f.failures.length,0);assert.deepEqual(f.observer.responses[0].raw,valid);checks.push('required body retained before keyboard or close barrier');
+  }
+  {
+    const f=fixture();f.observer.response(response('/api/intakes?token=DO_NOT_RECORD',async()=>{throw Error('body unavailable token=DO_NOT_RECORD');}));f.observer.response(response(current,async()=>valid));
+    await f.observer.settle();assert.equal(f.failures.length,0);assert.equal(f.observer.metadata().filter(x=>x.body_state==='partial').length,1);assert.doesNotMatch(JSON.stringify([...f.files]),/DO_NOT_RECORD/);checks.push('confirmed ancillary body failure is sanitized partial');
+  }
+  {
+    const f=fixture();f.observer.response(response(current,async()=>{throw Error('No data found for resource token=DO_NOT_RECORD');}));f.observer.response(response(current,async()=>valid));
+    await assert.rejects(f.observer.settle(),/required/);assert.ok(f.failures.length>0);assert.doesNotMatch(JSON.stringify(f.observer.metadata()),/DO_NOT_RECORD/);checks.push('required failure cannot be replaced by another body');
+  }
+  {
+    for(const body of [async()=>undefined,async()=>Buffer.from('not-json'),async()=>Buffer.from([255])]){const f=fixture();f.observer.response(response(current,body));await assert.rejects(f.observer.settle(),/required/);assert.ok(f.failures.length>0);}
+    const status=fixture();status.observer.response(response(current,async()=>valid,503));await assert.rejects(status.observer.settle(),/required/);assert.equal(status.observer.metadata()[0].status,503);
+    const f=fixture();f.observer.response(response('/api/unknown/DO_NOT_RECORD',async()=>valid));await assert.rejects(f.observer.settle());assert.doesNotMatch(JSON.stringify(f.observer.metadata()),/DO_NOT_RECORD/);checks.push('unknown content or unrecognized path cannot pass');
+  }
+  {
+    const f=fixture({currentLimit:64});f.observer.response(response(current,async()=>Buffer.alloc(65)));await assert.rejects(f.observer.settle(),/required/);assert.equal(f.observer.responses.length,0);checks.push('oversize required body fails without truncation');
+  }
+  {
+    const f=fixture(),r=response(current,()=>new Promise(()=>{}));f.observer.response(r);f.observer.requestFailed(r.request());await assert.rejects(f.observer.settle(),/required/);
+    const slow=fixture({timeoutMs:5});slow.observer.response(response(current,()=>new Promise(()=>{})));await assert.rejects(slow.observer.settle(),/required/);checks.push('cancellation and pending-body timeout settle before close');
+  }
+  proofWrite(path.join(OUTPUT,'current-questions-response-typed-results.json'),JSON.stringify({status:'pass',checks,genuine_browser_calls:0,models:0},null,2));console.log(JSON.stringify({status:'pass',typed:checks.length,output:OUTPUT}));
+}
+
 async function currentQuestionsMain(){
   const started=Date.now(),observations={width:390,stages:[],questions:[],keyboard:[],api:[],page_errors:[],external_requests:[]};
   const resources={servers_started:0,current_get:0,readonly_api:0,dom_contexts:0,new_rf:0,workers:0,models:0,hardware:0,individual_SQL_hooks:false,individual_request_thread_hooks:false,global_process_census:false};
-  let host,browser,context,page,info,firstFailure=null,stopRequested=false,stage='input',hostRaw=[],hostErr=[];
+  let host,browser,context,page,info,responseObserver,firstFailure=null,stopRequested=false,stage='input',hostRaw=[],hostErr=[];
   const fail=error=>{firstFailure??=error;return error;};
   const stopHost=()=>{if(host?.alive()&&!stopRequested){stopRequested=true;host.child.stdin.end('stop\n');}};
-  const timer=setTimeout(()=>{fail(Error('current questions active budget exceeded; cleanup required'));if(context)context.close().catch(fail);stopHost();},150000);
-  const forcedStop=setTimeout(()=>{if(host?.alive()){resources.forced_owned_host_stop=true;fail(Error('current questions cleanup budget exceeded'));host.child.kill();}},175000);
-  const checkpoint=label=>{stage=label;if(firstFailure)throw firstFailure;assert.ok(Date.now()-started<150000,'current questions active budget exceeded');};
+  const timer=setTimeout(()=>{fail(Error('current questions active budget exceeded; cleanup required'));Promise.resolve().then(()=>responseObserver?.settle({requireCurrent:false})).catch(fail).finally(()=>{if(context)context.close().catch(fail);stopHost();});},90000);
+  const forcedStop=setTimeout(()=>{if(host?.alive()){resources.forced_owned_host_stop=true;fail(Error('current questions cleanup budget exceeded'));host.child.kill();}},110000);
+  const checkpoint=label=>{stage=label;if(firstFailure)throw firstFailure;assert.ok(Date.now()-started<90000,'current questions active budget exceeded');};
   const focus=locator=>locator.evaluate(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el);return {active:document.activeElement===el,focus_visible:el.matches(':focus-visible'),outline:s.outlineStyle,outline_width:s.outlineWidth,box_shadow:s.boxShadow,rect:{left:r.left,right:r.right,top:r.top,bottom:r.bottom},viewport:{width:innerWidth,height:innerHeight}};});
   const active=()=>page.evaluate(()=>{const e=document.activeElement;return {tag:e?.tagName,id:e?.id??'',text:(e?.textContent??'').slice(0,160)};});
   const tabTo=async(locator,label)=>{
@@ -1275,26 +1371,28 @@ async function currentQuestionsMain(){
     host.child.stdout.on('data',chunk=>hostRaw.push(Buffer.from(chunk)));host.child.stderr.on('data',chunk=>hostErr.push(Buffer.from(chunk)));
     info=await host.next();assert.match(info.origin,/^http:\/\/127\.0\.0\.1:[1-9][0-9]*$/);assert.equal(info.intake_id,selection.spec.intake_id);
     browser=await chromium.launch({headless:true});context=await browser.newContext({viewport:{width:390,height:900}});resources.dom_contexts++;
-    page=await context.newPage();page.setDefaultTimeout(8000);const responseJobs=[],responses=[];
-    page.on('pageerror',error=>observations.page_errors.push(error.message));
+    page=await context.newPage();page.setDefaultTimeout(8000);
+    responseObserver=createCurrentQuestionsResponses({origin:info.origin,intakeId:selection.spec.intake_id,stage:()=>stage,retain:(name,value)=>proofWrite(path.join(OUTPUT,name),Buffer.isBuffer(value)?value:JSON.stringify(value,null,2)),onFailure:fail});
+    page.on('pageerror',()=>{observations.page_errors.push('page_script_error');fail(Error('page script error'));});
+    page.on('requestfailed',request=>responseObserver.requestFailed(request));
     await context.route('**/*',async route=>{
       const request=route.request(),url=new URL(request.url());
-      if(url.origin!==info.origin){observations.external_requests.push(request.url());fail(Error('unexpected external request'));await route.abort();return;}
+      if(url.origin!==info.origin){observations.external_requests.push({reason:'outside_origin',stage});fail(Error('unexpected external request'));await route.abort();return;}
       if(url.pathname.startsWith('/api/')){
         resources.readonly_api++;if(url.pathname.endsWith('/conducted-current-facts'))resources.current_get++;
-        observations.api.push({method:request.method(),path:url.pathname});
+        observations.api.push({method:request.method()==='GET'?'GET':'unsupported',path:responseObserver.safePath(url.pathname)});
         if(request.method()!=='GET'||resources.readonly_api>12||resources.current_get>2){fail(Error('read-only API request budget or method exceeded'));await route.abort();return;}
       }
       await route.continue();
     });
     page.on('response',response=>{
-      if(!new URL(response.url()).pathname.startsWith('/api/'))return;
-      const index=responseJobs.length;
-      responseJobs.push((async()=>{const raw=await response.body(),url=new URL(response.url()),name='api-'+String(index+1).padStart(2,'0')+'.raw.json';proofWrite(path.join(OUTPUT,name),raw);responses.push({path:url.pathname,status:response.status(),raw,file:name});})().catch(fail));
+      try{if(new URL(response.url()).pathname.startsWith('/api/'))responseObserver.response(response);}
+      catch{fail(Error('response metadata unavailable'));}
     });
     checkpoint('load current questions');await page.goto(info.origin+'/#'+selection.spec.intake_id,{waitUntil:'networkidle',timeout:15000});
     await page.waitForFunction(()=>{const q=document.querySelector('#intake-gap-queue');return q?.dataset.minimumCurrent==='true'&&q.dataset.minimumSource==='current_facts'&&q.dataset.pending==='false';},{},{timeout:12000});
-    await Promise.all(responseJobs);checkpoint('native current packet');
+    await responseObserver.settle();checkpoint('native current packet');
+    const responses=responseObserver.responses;
     const current=responses.filter(r=>r.path.endsWith('/conducted-current-facts'));assert.ok(current.length>0&&current.length<=2);assert.equal(current.at(-1).status,200);
     const packet=JSON.parse(current.at(-1).raw.toString('utf8')),native=packet.current,f=native.facts_plan;
     assert.equal(packet.kind,'intake_current_facts_plan_view');assert.equal(packet.status,'available');assert.equal(packet.recheck.status,'unchanged');assert.deepEqual(packet.recheck.before,packet.recheck.after);
@@ -1333,6 +1431,7 @@ async function currentQuestionsMain(){
     noOverflow(await capture('final-closed'));assert.deepEqual(observations.page_errors,[]);assert.deepEqual(observations.external_requests,[]);checkpoint('observations complete');
   }catch(error){fail(error);observations.first_failure={stage,message:error.message};if(page&&!page.isClosed())try{await screenshot(page,path.join(OUTPUT,'first-failure-390.png'));}catch(captureError){observations.failure_capture_error=captureError.message;}}
   finally{
+    if(responseObserver)try{await responseObserver.settle({requireCurrent:false});}catch(error){fail(error);}
     if(browser)try{await browser.close();resources.browser_closed=true;}catch(error){resources.browser_closed=false;fail(error);}
     if(host)try{
       if(host.alive()){stopHost();const item=await host.next();resources.host=item.resource;}
@@ -1340,13 +1439,14 @@ async function currentQuestionsMain(){
       assert.equal(resources.child_exit,0);assert.equal(resources.host_stderr,'');
       assert.ok(resources.host?.loop_stopped&&resources.host.listener_closed&&resources.host.port_rebind&&resources.host.source_unchanged,'known host cleanup/native parity not fully observed');
     }catch(error){resources.cleanup_failure=error.message;fail(error);}
+    if(responseObserver){try{await responseObserver.settle({requireCurrent:false});}catch(error){fail(error);}observations.response_metadata=responseObserver.metadata();}
     clearTimeout(timer);clearTimeout(forcedStop);resources.elapsed_ms=Date.now()-started;
-    if(resources.elapsed_ms>=180000)fail(Error('current questions overall 180-second budget exceeded'));
+    if(resources.elapsed_ms>=120000)fail(Error('current questions overall 120-second budget exceeded'));
     proofWrite(path.join(OUTPUT,'host.stdout.raw'),Buffer.concat(hostRaw));proofWrite(path.join(OUTPUT,'host.stderr.raw'),Buffer.concat(hostErr));
-    proofWrite(path.join(OUTPUT,'current-questions-results.json'),JSON.stringify({status:firstFailure?'fail':'pass',first_failure:firstFailure?{stage:observations.first_failure?.stage??stage,message:firstFailure.message}:null,observations,resources,limits:{servers:1,current_get:2,readonly_api:12,dom390:1,overall_ms:180000},scope:'original external startup; actual loopback responses and keyboard; no fixture/result substitution'},null,2));
+    proofWrite(path.join(OUTPUT,'current-questions-results.json'),JSON.stringify({status:firstFailure?'fail':'pass',first_failure:firstFailure?{stage:observations.first_failure?.stage??stage,message:firstFailure.message}:null,observations,resources,limits:{servers:1,current_get:2,readonly_api:12,dom390:1,overall_ms:120000},scope:'original external startup; actual loopback responses and keyboard; no fixture/result substitution'},null,2));
   }
   if(firstFailure)throw firstFailure;
   console.log(JSON.stringify({status:'pass',mode:'current-questions-only',output:OUTPUT,resources}));
 }
 
-(process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?currentQuestionsMain():process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?freshConductedOperatorMain(true):process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?operatorResultCopyMain():process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+(process.env.VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY==='1'?currentQuestionsResponseTypedMain():process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?currentQuestionsMain():process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?freshConductedOperatorMain(true):process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?operatorResultCopyMain():process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
