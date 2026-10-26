@@ -91,3 +91,47 @@ typed UI 조건은 reader 오류 뒤 이전 관측 보존, 알 수 없는 key, s
 첫 RED 두 흐름, 최소 복원 직후 GREEN 두 흐름, 접수·연결·표시 조건을 명시한 최종 guard 변경 후 GREEN 두 흐름은 별도 회차다. 최종 변경이 닿은 같은 두 경로만 확인했으며 이전 회차와 합산하지 않는다. 각 회차의 두 호스트가 child exit 0·serve thread/listener 종료·port 재사용을 확인했고, 동일한 원 두 자료의 각 130파일을 bytes·SHA-256·정수 mtime_ns로 전후 대조했다. 전체 여섯 호스트 관측을 성공 흐름 여섯 개로 합산하지 않는다. 개별 SQL close는 직접 계측하지 않았으며 전체 native handle 회수를 주장하지 않는다. 새 모델·RF·runtime·writer와 기존 wide 26개·순수 typed 12개 재실행은 없다.
 
 작은 수용 도구는 `VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY=1`, `VLAB_ARTIFACT_STORAGE_KEYBOARD_INDEX`의 명시 절대 경로를 사용한다. 기존 `explicit_own_saved_artifact_readback` index에서 `normal`, `measurement-invalid` 두 사례와 이미 수용된 backend·원 server_options만 전달한다. `VLAB_FLOW_PROOF_ROOT`는 이 작업의 새 `.local` 증거 폴더로 지정한다. 도구는 키보드 단계·포커스·원자료 불변·알려진 호스트 종료를 별도 결과로 기록하며 새 Store나 실행 자료를 만드는 fallback이 없다.
+
+## 새 합성 의뢰의 운영 흐름 점검
+
+2026-10-26 Asia/Seoul의 `DEV4-FRESH-CONDUCTED-OPERATOR-WALKTHROUGH-001`은 **생성 CLI 1회 → 생성한 원 startup을 사용하는 읽기 전용 UI** 경로다. CLI의 `--port` 분기를 실행·검증한 것이 아니다. 입력은 개발자가 작성한 합성 PDF와 새 로컬 MOCK이며 사용자 원문·실제 모델·실측 자료가 아니다. app·model·backend·profile을 추가하거나 수정하지 않았다.
+
+정확 base `bc49b85da3a73e7f8d43afb9127234f4cb596774`의 새 복제본에 D1의 `aae3d46033c80d3d5a1ee8a2bfebe3f00e93f8c1` → `873647b41b5d9998fb8a514043697a86588b4d52`를 기존 fixture 3파일만 일반 cherry-pick했다. 각 사전 파일과 변경 후 Git 바이트·다른 추적 파일의 native 수정 시각을 대조했다. 이 작업 시점에는 두 D1 변경과 bc49의 독립 인수가 pending이므로 의존성 사용과 독립 수용을 구분한다. 이전 복제본·원 실패·봉인 증거에는 추가로 쓰지 않았다.
+
+새 opt-in 모드는 `VLAB_FRESH_CONDUCTED_OPERATOR_ONLY=1`이며, 명시한 기존 root 가상환경 Python과 **아직 존재하지 않는 짧은 절대 output 경로**를 요구한다. 후보 checkout을 cwd와 `PYTHONPATH`로 고정해 다음 공개 CLI를 정확히 한 번 실행한다.
+
+```text
+<root 가상환경 Python> -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --document-kind pdf --measurement-ref event:17 --mock-model gpt-6.1-sol --output <새 짧은 절대 경로>
+```
+
+`gpt-6.1-sol`은 생성 MOCK의 명시 label이다. 실제 공급자·설치 Codex·auth·ADC로 fallback하지 않는다. 관측기의 생성 child 한도는 240초, stdout/stderr buffer 상한은 2 MiB다. 기존 loop 180초·producer 60초·retry 0과 native 파일 cap은 변경하지 않는다. child 종료 코드·signal·launch/timeout 오류·literal stdout/stderr를 결과 JSON 파싱 전에 보존한다. 기존 폴더·실패 partial을 덮거나 지우지 않으며 자동 재시도하지 않는다. 생성 CLI의 원 쓰기 cap은 output 단위 512파일/32 MiB이고, 관측기의 후속 쓰기는 새 proof와 생성 output의 합계도 같은 한도로 확인한다.
+
+실행 예시의 경로는 현재 저장소와 검증한 환경에 맞춰 명시한다. `VLAB_FLOW_PROOF_ROOT`는 이 작업만의 새 `.local` 증거 폴더로 준비하고, output은 만들지 않는다.
+
+```powershell
+$env:VLAB_FRESH_CONDUCTED_OPERATOR_ONLY = '1'
+$env:VLAB_FRESH_CONDUCTED_PYTHON = '<검증한 root 가상환경 Python 절대 경로>'
+$env:VLAB_PYTHON = $env:VLAB_FRESH_CONDUCTED_PYTHON
+$env:VLAB_FRESH_CONDUCTED_OUTPUT = Join-Path (Get-Location).Path '.local/fo/새이름'
+$env:VLAB_FLOW_PROOF_ROOT = '<새 증거 폴더 절대 경로>'
+node frontend/intake_flow_browser_check.cjs
+```
+
+생성한 `server-startup-original.json`은 Python readonly wrapper가 파일에서 직접 읽어 기존 서버에 전달한다. 원 native10 선택과 `readback-inputs.json` exact9를 대조하며, 현재 pin·방법·단위·artifact pin을 다시 조립하거나 수선하지 않는다. 새 child 서버는 기존 stdin `stop`·shutdown/join·server close·port 재사용으로 닫는다. 공유 콘솔 Ctrl+C나 다른 프로세스 kill은 사용하지 않았다.
+
+첫 단일 회차는 생성 CLI exit 0·signal null, 원 stdout과 `public-summary.json` 일치로 통과했다. 새 MOCK의 source/binary·compiler log·원 receipt를 보존했다. 별도의 Python 메타정보 조회는 생성 CLI 횟수와 구분한다.
+
+| 관측 분모 | 이 회차의 결과 |
+| --- | --- |
+| 생성 CLI | 1 child, 포트 옵션 없음, exit 0, 실제 모델 0 |
+| 생성 C# 프로그램 | source와 새 MOCK executable 각각 1개, 생성 경로의 compiler 호출 1회 |
+| 원 producer receipt | 5개. 각 version process 1 + model로 명명된 MOCK exec 1이므로 기록된 MOCK 시도는 version 5·exec 5다. application retry 0 |
+| 새 가상 runtime | 1개. 이 분모를 실제 모델·실물 실행이나 readonly 서버의 실행 수와 합치지 않는다. |
+| 읽기 전용 HTTP·화면 | 원 목록·계획·기존 제공 결과·저장 readback의 HTTP body 4개와 1440 pointer 운영 경로 1개 |
+| 원 접수·측정·저장 대조 | smartphone / SM-A176U / US / Wi-Fi 2.4 GHz engineering 목적 → 같은 현재 계획·run·runtime·event:17, 원 −19.5 dBm·보정 11 dBm, 저장 3파일·원 DRAFT·판정 미평가·실제 AI unknown |
+| 알려진 자원 | 생성 CLI 종료와 원 producer receipt의 자식 회수 표식, readonly host 1개의 thread/listener 종료·child exit 0·port 재사용. 생성 131파일의 bytes·SHA·정수 mtime_ns를 UI 읽기 전후 대조 |
+| 미실행·unknown | CLI `--port`, 개별 SQL close hook·전역 자손 프로세스/handle 전수 검사, 실제 AI·장비·현장·규범 검증. receipt의 descendants/remote/null 값은 유지 |
+
+환경 메타정보는 Python 3.12.4, Windows 11, pypdf 6.21.2, reportlab 4.5.1, Node v24.19.0, Chromium 151.0.7922.34다. 원 `version.stdout`의 `codex-cli 0.163.0-alpha.11.2`는 **생성 MOCK이 보고한 문자열**이며 설치 Codex 버전의 관측이 아니다. 원 실행의 `ai_model_called=null`과 summary·mock-origin의 실제 모델 0, 화면의 unknown은 각각 출처와 의미가 달라 합치지 않는다.
+
+이 단일 경로에서 app 결함은 발견하지 않았으며 app 수정 0이다. 새 typed 오류·기존 화면 6/26·키보드 2·순수 단위 검사 12개를 재실행하거나 합산하지 않았다. 원 DRAFT는 UTF-8 텍스트로 펼쳐 대조한 뒤 닫았으며, 성적서 발행·규범 PASS·실제 사용자 업무 완료로 승격하지 않는다.
