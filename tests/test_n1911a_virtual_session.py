@@ -96,9 +96,8 @@ class N1911ASessionTests(unittest.TestCase):
         changed = self.command('UNIT1:POWer W')
         self.assertEqual(changed['fleet_receipt']['values']['configuration']['unit'], 'W')
         self.assertEqual(self.command('UNIT:POWER?')['response'], 'W')
-        self.assertIsNone(self.command('FETCH?')['response'])
-        self.session.advance(2)  # Existing upstream sensor must settle at the new setup revision.
-        reply = self.fresh()
+        reply = self.command('FETCH?')
+        self.assertEqual(reply['status'], 'ok')
         with localcontext() as context:
             context.prec = 50
             watts = Decimal(10) ** ((expected_dbm() - Decimal(30)) / Decimal(10))

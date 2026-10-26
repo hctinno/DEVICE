@@ -52,6 +52,8 @@ device.author_control(fault, value)  # 작성자 전용; 운영자/HTTP에 노�
 
 공통 동작은 `configure`, `reset`, `recover`, `read_error`, `abort`다. configure 인수는 아래 표의 선택 필드이며 잘못된 설정은 기존 설정을 바꾸지 않는다. 변경된 설정은 이전 취득·결과를 무효화하고 `setup_changed=true`를 반환한다. reset은 설정을 기본값으로 되돌리고 작업·출력을 멈춘다. reset으로 오류 FIFO를 지우지 않는다. read_error는 30개 한도의 FIFO에서 하나를 꺼내며 빈 큐는 `error:null`이다. 오류 문자열은 가상 API 코드이며 제조사 SCPI 오류 번호가 아니다.
 
+전력계 전용 `set_display_unit({"unit":"W"})`은 현재 window의 표시만 바꾸는 명시 동작이며 dBm도 받는다. 같은 장치의 `configuration.unit`을 갱신하지만 `setup_changed=false`이며 setup/configuration revision과 원 취득·pending·BUS 대기·deadline을 보존한다. 출력 투영 단계에서 유효한 원 취득값만 변환하며 시간 진행·새 잡음 샘플·센서 재시작을 하지 않는다. stale/stop/path loss/단절 등 원 무효 상태는 그대로다. 이 action은 unit만 필수로 받고 mW·window·mode·추가 옵션을 거절한다. 일반 `configure(unit=...)`의 기존 무효화 계약과 configure의 mW 지원은 유지한다. 다른 역할에는 이 action이 없다.
+
 측정 역할의 `acquire`와 software의 `run`은 pending을 반환한다. advance로 완료한 뒤 `fetch`로 현재 결과를 읽는다. BUS 대기는 별도 trigger가 필요하다. abort는 작업과 결과를 취소한다. recover는 통신·전원 원인이 해소됐는지 확인한 뒤 idle로 돌아가며 새 acquire/start_tx가 필요하다. 취득 중 중복 acquire는 진행 작업을 새 취득으로 대체하지 않는다. 요청 ID 재시도 처리는 공통 runtime이 담당한다.
 
 진행 중 setup revision이나 입력이 바뀌면 취득을 무효화한다. 완료 결과도 현재 입력·전원·교정·source·revision이 유효할 때만 출력한다. 결과에 획득 tick/setup revision, 장치 설정 revision, source 및 단위·quantity를 남긴다.
@@ -60,7 +62,7 @@ start_tx/stop_tx로 실제 송신 상태가 바뀌면 진행 중 취득·완료 
 
 | 역할 | configure 필드 | 추가 동작 |
 |---|---|---|
-| power_meter | frequency_hz, measurement_mode, unit, window, trigger_source | acquire/fetch, trigger, calibrate, verify_calibration |
+| power_meter | frequency_hz, measurement_mode, unit, window, trigger_source | acquire/fetch, trigger, set_display_unit, calibrate, verify_calibration |
 | signal_analyzer | frequency_hz, bandwidth_hz, rbw_hz, normalization_hz, measurement, measurement_mode, detector | acquire/fetch, calibrate, verify_calibration |
 | emi_receiver | frequency_hz, bandwidth_hz, rbw_hz, measurement, measurement_mode, detector, impedance_ohm, antenna_factor_db_per_m | acquire/fetch, calibrate, verify_calibration |
 | signal_generator | frequency_hz, bandwidth_hz, power_dbm, duty_cycle, crest_factor_db, modulation | start_tx/stop_tx |
@@ -78,7 +80,7 @@ start_tx/stop_tx로 실제 송신 상태가 바뀌면 진행 중 취득·완료 
 RF `power_dbm`은 ON 구간 평균이다. `0 < duty_cycle <= 1`, `crest_factor_db`는 ON 평균에서 peak까지의 dB 차다. 상위 경로의 감쇠·이득을 다시 적용하지 않는다.
 
 - `measurement_mode`: on_average는 입력 ON 평균, time_average는 `ON + 10 log10(duty)`, peak는 `ON + crest`다. crest가 없는 비 CW 입력의 peak는 무효다. RF의 modulation이 명시적 CW일 때만 crest 누락을 0으로 허용한다. 센서 packet은 modulation을 보장하지 않으므로 crest 누락을 추정하지 않는다.
-- meter의 unit은 dBm/W/mW다. `W = 10^(dBm/10)/1000`으로 변환한다. 센서 packet은 status=ok, valid=true, unit=dBm, value=power_dbm, frequency_hz, duty_cycle, crest_factor_db(선택), acquisition_tick/setup_revision, source_id를 갖는다. 미래 tick·다른 revision·불일치 수치·허용되지 않은 센서는 거절한다.
+- meter의 unit은 dBm/W/mW다. `W = 10^(dBm/10)/1000`으로 변환한다. 원 취득값은 모드·잡음을 반영한 dBm으로 한 번 저장하고 출력에 `acquisition_value/acquisition_unit`으로 표시한다. `value/unit`은 현재 configuration.unit으로 투영하므로 dBm↔W 왕복도 원 값을 바꾸지 않는다. 최초 W/mW 설정으로 취득해도 원 취득 단위는 dBm인 합성 엔진 정책이며 제조사 내부 구현의 재현 주장이 아니다. 센서 packet은 status=ok, valid=true, unit=dBm, value=power_dbm, frequency_hz, duty_cycle, crest_factor_db(선택), acquisition_tick/setup_revision, source_id를 갖는다. 미래 tick·다른 revision·불일치 수치·허용되지 않은 센서는 거절한다.
 - meter의 window는 1~4 측정 창이며 입력 센서는 한 port다. fetch의 선택 window 인수도 1~4다. 이 가상 정책은 창 선택을 포함한 설정 변경 뒤 이전 창의 결과를 재사용하지 않는다. 창 번호를 물리 센서 수로 해석하지 않는다.
 - meter trigger_source는 immediate/bus다. configure로 bus를 선택하는 것만으로 arm되지 않는다. acquire→trigger_wait→trigger→acquiring→advance→complete 순서다. 대기·정체 timeout에는 측정값을 내지 않는다.
 - analyzer/EMI의 detector는 rms/peak/quasi_peak다. peak는 ON+crest를 사용한다. quasi_peak는 시간 평균과 peak 사이의 tick 기반 합성 envelope이며 CISPR 응답을 재현한 검파기가 아니다. 두 경우 필요한 crest와 입력 상한을 확인한다.
@@ -136,6 +138,8 @@ assert abs(result["values"]["outputs"]["measurement"]["value"] - 3.9794000867) <
 ## 검증 기록과 남은 범위
 
 이 단위의 42개 검사는 계산·단위·모드·트리거·전원·센서·취득 중/완료 후 변경·시간 초과·복구·seed·FIFO·창·조건별 부적합·VNA 보간/표준/외삽 금지·출력 크기·중첩 인수·주파수 일치·작성자 경계·역할별 측정 지원 범위·송신 상태 전이와 중복 요청을 확인한다. 검사는 `python -m unittest discover -s tests -p test_virtual_fleet_instruments.py -v`로 실행한다.
+
+추가 [표시 단위 검사](../../tests/test_n1911a_display_unit.py) 7개는 같은 엔진의 원 취득/표시 분리와 Decimal 수치 기준·잡음 샘플 순서·진행 취득·일반 configure 무효화 보존을 검증한다. [N1911A 세션](n1911a_virtual_session_usage.md)은 이 공개 action을 사용하며 RF 수학이나 측정 캐시를 복제하지 않는다.
 
 고정 catalog commit `a548af3e5b7fa84e1a0c5ed93af064db689de371`, 파일 SHA-256 `037b92b4d32fc7c65d6e5ec0b518f5933c48745e3e5907c158b0317ab4923ea6`의 담당 16개 프로필 모두 factory/port 일치 및 합성 정상·통신 단절·복구 재취득을 실행했다. common core/facility와 연결한 전원→발생기→분석기→software DAG의 정상·미출력 무효 전파·재취득도 확인했다. 원본 감사 및 호환 script/coverage는 개발2의 비공개 작업 공간에 보존한다. 나머지 catalog 역할과 전체 UI/시험 조합 통합은 담당별 결과를 총괄이 인수한다.
 

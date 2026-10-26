@@ -107,6 +107,9 @@ def _actions(role):
     if role == 'power_meter':
         actions['trigger'] = {'parameters': {}, 'completion': 'start an armed BUS acquisition'}
         actions['fetch']['parameters'] = {'window': _parameter('integer')}
+        actions['set_display_unit'] = {
+            'parameters': {'unit': _parameter('string', required=True)},
+            'completion': 'dBm/W presentation only; preserves acquisition and setup revision'}
     if role == 'test_software':
         actions['run'] = copy.deepcopy(actions['acquire'])
     return actions
@@ -551,10 +554,9 @@ class _Instrument:
         extras = {'frequency_hz': source['frequency_hz'], 'duty_cycle': source['duty_cycle'],
                   'crest_factor_db': source.get('crest_factor_db')}
         if self.role == 'power_meter':
-            if unit == 'W':
-                power = 10**(power/10)/1000
-            elif unit == 'mW':
-                power = 10**(power/10)
+            # Keep one canonical acquired value, including the one noise sample.
+            # Display projection must never call _measurement again.
+            unit = 'dBm'
             extras['window'] = self._cfg['window']
         elif self.role in {'signal_analyzer', 'emi_receiver'}:
             detector = self._cfg['detector']
@@ -586,6 +588,19 @@ class _Instrument:
                     unit, quantity = 'dBuV/m', 'field_strength'
             extras['detector'] = detector
         return {**base, 'value': power, 'unit': unit, 'quantity': quantity, **extras}
+
+    def _display_measurement(self):
+        result = copy.deepcopy(self._result)
+        if self.role == 'power_meter':
+            result['acquisition_value'] = result['value']
+            result['acquisition_unit'] = result['unit']
+            unit, power = self._cfg['unit'], result['value']
+            if unit == 'W':
+                power = 10**(power/10)/1000
+            elif unit == 'mW':
+                power = 10**(power/10)
+            result.update(value=power, unit=unit)
+        return result
 
     def _rf_output(self):
         self._power()
@@ -633,7 +648,7 @@ class _Instrument:
                     outputs['data'] = copy.deepcopy(self._result)
                     outputs['control'] = {'valid': True, 'requested_state': 'complete', 'verdict': self._result['verdict']}
                 else:
-                    outputs['measurement'] = copy.deepcopy(self._result)
+                    outputs['measurement'] = self._display_measurement()
                     if 'data' in ROLE_PORTS[self.role]['outputs']:
                         outputs['data'] = copy.deepcopy(self._result)
         values = {'state': visible_state, 'reason': self._reason, 'configuration': copy.deepcopy(self._cfg),
@@ -656,6 +671,11 @@ class _Instrument:
             self._parameters(action, parameters)
             if self._faults['disconnected'] and action not in {'read_error', 'abort', 'reset'}:
                 raise _InputError('communication_unavailable')
+            if action == 'set_display_unit':
+                if parameters['unit'] not in {'dBm', 'W'}:
+                    raise _InputError('unsupported_display_unit')
+                self._cfg['unit'] = parameters['unit']
+                return self._response(setup_revision)
             if action == 'configure':
                 candidate = copy.deepcopy(self._cfg)
                 candidate.update(parameters)
@@ -745,7 +765,7 @@ class _Instrument:
         except _InputError as error:
             reason = str(error)
             self._queue(reason)
-            if action == 'configure':
+            if action in {'configure', 'set_display_unit'}:
                 return self._response(setup_revision, status='error', extra={'reason': reason})
             self._invalidate(reason, 'disconnected' if reason == 'communication_unavailable' else 'invalid')
             return self._response(setup_revision)
