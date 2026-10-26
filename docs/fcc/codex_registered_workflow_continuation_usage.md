@@ -43,6 +43,8 @@ API는 권위 파일을 만들지 않는다. 총괄이 기존 직접 사용자 g
 
 original publication의 초기 SQL2행 pin과 현재 SQL finished5는 구별한다. 초기 SQL pin을 현재와 같다고 주장하지 않는다. 원 publication의 나머지 profile 파일·원 prepared metadata/source pin·원 claimed/reserved/consumed/finished 계보를 확인하고 SQL은 mode=ro/query_only로만 읽는다. 원 response schema는 legacy exact bytes/hash이며 원 실패의 loop declaration·producer receipt schema SHA도 그 검증된 원 profile에 각각 결박한다. 원 declaration의 catalog/scenario/model/origin도 같은 workflow/permit/실행 조건에 결박한다. 새 loop는 논리 동치 current schema만 사용한다. old/current bytes와 hash가 섞이면 거절한다.
 
+원 actual schema400은 collect 오류 직후 child를 중단해 stdout artifact가 `complete=false`, `extent=prefix`, stdout/stderr EOF false인 기록이다. 이 상태를 whole file/완료로 변경하지 않는다. 같은 retained bytes/SHA·receipt/SQL pin·cleanup을 확인한 뒤, **줄 끝 개행이 있는 정확한 4개 JSONL 이벤트** `thread.started → turn.started → error → turn.failed`에 한해 terminal prefix를 읽는다. 두 오류 메시지는 같은 JSON 문자열이어야 하며 중첩 type/error/status의 400·`invalid_json_schema`·`text.format.schema`·고정 `oneOf` strict 거절 문구가 정확히 일치해야 한다. terminal 누락·잘림·후속 이벤트·다른 오류·정리 불확정이면 수동 계속은 claim/producer 전에 거절한다. 이는 원 provider 성공이나 stream 전체 EOF를 주장하지 않는다.
+
 ## 예산·계보·종료
 
 원17+원1+새N≤25, 같은 추가 위임의 1+N≤8, 새 local cap≤7을 producer 진입 전 lower ABI에 전달한다. 원 loop의 finite elapsed와 이 entry 준비시간을 wall180에서 공제한다. 기본 유한 수동 기록·원 permit deadline은 더 낮은 상한으로 적용한다. 검증된 별도 native source와 `expires_at=null` 조합에서만 달력 기한을 빼며 180초/60초/retry0 및 소모 회계는 그대로다. producer≤60/retry0은 기존 lower runner가 강제한다. token hard cap/가격/원격 identity는 미확인·cost=null을 유지한다.
