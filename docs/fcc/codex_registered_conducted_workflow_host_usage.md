@@ -1,5 +1,11 @@
 # 등록 합성 conducted workflow의 native host
 
+## current schema와 원 실패 보존 — 2026-10-26
+
+DEV1-GOAL-MANUAL-CONTINUATION-001은 schema helper의 current exact3052/e045c19a를 새 initial 실행에 요구한다. `_prepare`의 역사 binding 읽기는 legacy aa321fa5와 current bytes/hash의 정확 조합만 지원하며 profile을 마이그레이션하지 않는다. 새 initial 등록·실행은 legacy를 거절한다. 기존 claimed/finished5는 여전히 consumed로 거절한다.
+
+같은 시험건의 known schema400/agent0/tool0/known1/cleanup 확정 실패에 한정한 [명시 수동 계속](codex_registered_workflow_continuation_usage.md)은 별도 root native 기록과 고정 원 run 하위 계보를 검증한다. 원 일반 host를 재사용해 permit을 다시 소비하거나 원 maximum_workflows1을 늘리지 않는다. 새 loop local7·원17+1 포함≤25/elapsed·disk 차감이며 원 failed/원 ledger는 불변이다. 이 소프트웨어 연결은 실제 AI·현장 검증이 아니다.
+
 ## MSIX 고정 경로의 등록·준비 연결 — 2026-10-26
 
 MSIX KnownFolder의 lexical 경로와 LocalCache 해석 경로가 달라도 원 native directory ID·부모관계·해석 일관성이 검증된 같은 객체만 등록기의 `_IO` claim/게시에서 허용한다. 정규화된 경로로 host authority를 교체하지 않는다. host core의 원 `_profile_root` → `_path`는 lexical 고정 경로를 그대로 사용하며 source/current/PDF/원파일 검증 계약을 유지한다. 상세 검증은 [등록기의 MSIX 항목](codex_conducted_workflow_registration_usage.md)을 따른다.

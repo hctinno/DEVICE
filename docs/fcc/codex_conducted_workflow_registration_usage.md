@@ -1,5 +1,11 @@
 # Conducted workflow의 수동 operator 준비
 
+## current schema 신규 준비 — 2026-10-26
+
+DEV1-GOAL-MANUAL-CONTINUATION-001 후 새 initial 준비는 [schema helper](../../labflow/virtual_fleet/operator_response_schema.py)의 current exact3052/e045c19a만 수용한다. legacy aa321fa5가 남은 과거 profile은 host `_prepare`가 원 bytes/hash를 검증해 읽을 수 있지만 새 등록·initial 실행은 거절한다. 아래 aa321 기록은 당시 이력이며 자동 변환·profile 수선 지시가 아니다.
+
+원 소비된 단일 permit·baseline17을 새 profile로 다시 발급하지 않는다. 같은 첫 합성 시험건의 known schema400 실패 뒤 남은7은 [별도 명시 수동 계속 경로](codex_registered_workflow_continuation_usage.md)에서 원 사용자 grant·총괄의 좁은 해석 기록·원 failed/receipt pins를 native로 검증한다. 이 등록 API는 그 기록을 발급하지 않고 원 scope maximum_workflows1과 기존 publication 계약을 유지한다.
+
 ## MSIX native 경로의 동일 객체 확인 — 2026-10-26
 
 완료 PDF 연결 후 실제 MSIX KnownFolder에서 lexical 경로와 `resolve()`의 LocalCache 경로가 달라 staging이 실패한 기록은 보존한다. 이 후속 수정은 고정 lexical authority root를 유지하며 `_IO`의 claim·publish에서 같은 객체를 검증한다. 기존 `_Tree`/Windows backend가 핸들로 고정한 디렉터리 ID와 lexical/해석 경로의 native ID가 모두 같아야 한다. 두 경로의 모든 조상은 기존 native 경로 검사로 reparse/junction을 거절한다. 최초 부모의 ID·해석 경로는 이후에도 같아야 하고, stage/target의 해석 부모관계와 pinned parent에서 name-relative 재개방한 자식 ID가 일치해야 한다. 게시 후에도 같은 target 객체를 다시 확인한다. 해석된 경로를 새 authority root로 바꾸지 않는다.

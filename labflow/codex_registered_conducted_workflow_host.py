@@ -17,13 +17,15 @@ from .intake_plan_virtual_execution import (
 from .conducted_execution_result_finalizer import (
     ConductedExecutionResultFinalizerError, finalize_conducted_execution_result as _finalize)
 from .store import Store, StoreOpenError, canonical
+from .virtual_fleet.operator_response_schema import (
+    CURRENT_SCHEMA_SHA256, is_current_response_schema_bytes, is_known_response_schema_bytes)
 
 __all__=['main']
 _PREFIX='codex_registered_conducted_workflow_host_'
 _CONTROL=(KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError)
 _MODELS=('gpt-6.1-sol','gpt-6-astra')
 _TOOLS=['dut.start','sensor.acquire','sensor.read','advance1','stop']
-_SCHEMA_SHA='aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb'
+_SCHEMA_SHA=CURRENT_SCHEMA_SHA256
 _HANDOFF_CAP=8388608
 _TAIL_FILES,_TAIL_BYTES=10,5505024
 _DDL='CREATE TABLE codex_conducted_workflow_history(seq INTEGER PRIMARY KEY, kind TEXT NOT NULL, permit_id TEXT, payload TEXT NOT NULL, UNIQUE(kind,permit_id))'
@@ -271,7 +273,9 @@ def _prepare(root,config,scenario,owned):
         if plan['status']!='ready_for_simulation':_fail('plan_not_ready')
     catalog=_read(root/'catalog.json',1048576);schema=_read(root/'response-schema.json',65536)
     if _H(catalog)!=workflow['catalog_sha256'] or _H(schema)!=workflow['schema_sha256']:_fail('binding_mismatch')
-    if len(schema)!=3052 or _H(schema)!=_SCHEMA_SHA:_fail('unsupported_schema')
+    # Historical profiles are read without migration; the native fresh-run
+    # boundary below still requires the current exact provider profile.
+    if not is_known_response_schema_bytes(schema):_fail('unsupported_schema')
     return workflow,context,analysis,plan,schema
 
 
@@ -355,6 +359,7 @@ def _run(scenario,model):
         if len(events)!=2:_fail('permit_already_consumed')
         permit=events['permit'];_same(permit['requested_model'],model);_native_host._expiry(permit['expires_at'])
         record['phase']='registration';workflow,context,analysis,plan,schema=_prepare(root,config,scenario,owned)
+        if not is_current_response_schema_bytes(schema):_fail('unsupported_schema')
         closing_store=owned['store'];owned['store']=None;closing_store.close()
         cancel=_Cancel(root)
         if cancel.is_set():_fail('cancelled')
