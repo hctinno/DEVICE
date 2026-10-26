@@ -9,6 +9,7 @@ import time
 
 from . import codex_registered_conducted_workflow_host as _host
 from . import codex_conducted_workflow_registration as _registration
+from . import codex_registered_workflow_expiry_reauthorization as _calendar
 from . import control_packet_prepare as _native
 from .store import Store, canonical
 
@@ -140,18 +141,19 @@ def _manual_record(io,operator,source_raw,publication_raw,config,workflow,events
     _same(value['case'],dict(scenario_id=scenario,requested_model=model,context_sha256=workflow['context_sha256'],
         analysis_sha256=workflow['analysis_sha256'],plan_input_sha256=workflow['plan_input_sha256'],
         source_settings_sha256=_H(_C(workflow['source_settings'])),catalog_sha256=workflow['catalog_sha256']))
-    _host._native_host._expiry(value['expires_at'])
+    if value['expires_at'] is not None:_host._native_host._expiry(value['expires_at'])
     return raw,value
 
 
 def continue_registered_workflow(*,scenario_id,requested_model):
     result=dict(schema_version=1,kind='codex_registered_workflow_continuation_receipt',status='not_run',phase='authority',
         scenario_id=scenario_id if type(scenario_id) is str else None,requested_model=requested_model if type(requested_model) is str else None,
-        original=None,manual_record=None,reservation=None,execution=None,finalization=None,history=None,errors=[],
+        original=None,manual_record=None,calendar_reauthorization=None,reservation=None,execution=None,finalization=None,history=None,errors=[],
         verification=dict(authority_scope='not_validated',dispatch='not_invoked',same_account_arbitrary_code_defense=False,
             origin_authenticated=False,remote_model_identity_verified=False,hardware_verified=False,measurement='not_assessed'))
     io=cancel=None;owned=dict(store=None);primary=None;claimed=entered=namespace_created=False;execution=finalized=None
     root=evidence=target=budget=workflow=config=manual=None;old_execution=None;actual=None;cleanup=False;pins=[];handoff=None
+    calendar_deadline=calendar_pin=None
     started=time.monotonic();execution_pin=finalizer_pin=None
     def error(exc,phase):
         nonlocal primary
@@ -201,8 +203,6 @@ def continue_registered_workflow(*,scenario_id,requested_model):
                 _native._destination_exists(io.tree,evidence/_CLAIM)):_fail('already_claimed')
         result['phase']='history';events=_history(io,root,anchor,config)
         _same(events['permit']['requested_model'],requested_model)
-        # An expired original permit is not revived by a fresh manual record.
-        _host._native_host._expiry(events['permit']['expires_at'])
         result['phase']='current';workflow,context,analysis,plan,historical_schema=_host._prepare(root,config,scenario_id,owned)
         if workflow['schema_version']!=3:_fail('completed_current_profile_required')
         selection=_host._native_host._registration(root,config,scenario_id)
@@ -216,6 +216,10 @@ def continue_registered_workflow(*,scenario_id,requested_model):
         result['phase']='manual_record'
         manual_raw,manual=_manual_record(io,operator,source_raw,publication_raw,config,workflow,events,scenario_id,requested_model,CURRENT_SCHEMA_SHA256)
         result['manual_record']=_pin(manual_raw)
+        result['phase']='calendar_authority'
+        calendar_deadline,calendar_pin=_calendar.calendar_deadline(
+            io,operator,source_raw,publication_raw,manual_raw,manual,events,CURRENT_SCHEMA_SHA256)
+        result['calendar_reauthorization']=calendar_pin
         original_budget=_host._OutputBudget(evidence)
         limits=_remaining_budget(1,elapsed,original_budget.files,original_budget.bytes)
         current=owned['current_facts_plan']
@@ -239,16 +243,18 @@ def continue_registered_workflow(*,scenario_id,requested_model):
         if executable.name.lower()!='codex.exe':_fail('executable_invalid')
         cancel=_host._Cancel(root)
         if cancel.is_set():_fail('cancelled')
-        io.current();_host._native_host._expiry(manual['expires_at'])
+        io.current()
         ttl=lambda value:(datetime.strptime(value,'%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)-datetime.now(timezone.utc)).total_seconds()
-        wall=min(limits['wall_seconds_limit']-(time.monotonic()-started),ttl(manual['expires_at']),ttl(events['permit']['expires_at']))
+        calendar_remaining=lambda:float('inf') if calendar_deadline is None else min(ttl(manual['expires_at']),ttl(calendar_deadline))
+        wall=min(limits['wall_seconds_limit']-(time.monotonic()-started),calendar_remaining())
         if wall<=6:_fail('wall_budget_exhausted')
         result['phase']='claim'
         # Two fixed create-once objects: losing a directory or one marker does
         # not make a previous attempt fresh. A partial prefix stays terminal.
         io.tree.directory(evidence)
         claim=dict(schema_version=1,kind='same_case_manual_continuation_claim',attempt=1,original=result['original'],
-            manual_record=result['manual_record'],prior_model_processes=1,maximum_additional_model_processes=7,
+            manual_record=result['manual_record'],calendar_reauthorization=calendar_pin,
+            prior_model_processes=1,maximum_additional_model_processes=7,
             current_schema_sha256=CURRENT_SCHEMA_SHA256,original_elapsed_seconds=elapsed,wall_seconds_limit=wall)
         # Mark claimed before the first possible partial write; the resulting
         # marker or namespace is never removed by this API.
@@ -259,9 +265,9 @@ def continue_registered_workflow(*,scenario_id,requested_model):
         budget=_host._OutputBudget(evidence)
         io.write(target/'claim-v1.json',_C(claim))
         result['reservation']=dict(state='claimed',claim=_pin(_C(claim)),namespace=_NAMESPACE,maximum_additional_model_processes=7)
-        result['verification']['authority_scope']='fixed_native_root_same_case_manual_record'
+        result['verification']['authority_scope']='fixed_native_root_same_case_calendar_reauthorization' if calendar_pin else 'fixed_native_root_same_case_manual_record'
         result['phase']='execution';cancel.start();entered=True;result['verification']['dispatch']='invoked'
-        wall=min(limits['wall_seconds_limit']-(time.monotonic()-started),ttl(manual['expires_at']),ttl(events['permit']['expires_at']))-1.0
+        wall=min(limits['wall_seconds_limit']-(time.monotonic()-started),calendar_remaining())-1.0
         if wall<=6:_fail('wall_budget_exhausted')
         try:
             execution=_host._execute(context,analysis,plan,expected_revision=context['revision'],expected_context_sha256=workflow['context_sha256'],
@@ -305,7 +311,8 @@ def continue_registered_workflow(*,scenario_id,requested_model):
                     actual_total_model_processes=18+actual if actual is not None and cleanup else None)
                 io.current()
                 finish=dict(schema_version=1,kind='same_case_manual_continuation_finished',attempt=1,status=result['status'],
-                    original=result['original'],manual_record=result['manual_record'],local_model_processes=actual,cleanup_confirmed=cleanup,
+                    original=result['original'],manual_record=result['manual_record'],calendar_reauthorization=calendar_pin,
+                    local_model_processes=actual,cleanup_confirmed=cleanup,
                     execution_receipt=execution_pin,finalizer_receipt=finalizer_pin,producer_receipts=pins,errors=result['errors'].copy(),
                     current_valid_result='continuation' if result['status']=='completed' else None,original_failure_preserved=True)
                 if handoff is not None:

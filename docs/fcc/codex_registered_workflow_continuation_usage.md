@@ -37,7 +37,7 @@ API는 권위 파일을 만들지 않는다. 총괄이 기존 직접 사용자 g
 | scope | 원 등록 `_LIMITS` exact12, maximum_workflows1/model8/wall180/producer60/retry0 원형 |
 | current_schema_sha256 | current helper의 exact current SHA |
 | remaining_model_processes | integer 7 |
-| expires_at | 유한 UTC `YYYY-MM-DDTHH:MM:SSZ`, 기존 permit 만료도 별도 검사 |
+| expires_at | 기본은 유한 UTC `YYYY-MM-DDTHH:MM:SSZ`와 원 permit 만료 검사. `null`은 [별도 고정 native 달력 기한 해제 source](codex_registered_workflow_expiry_reauthorization_usage.md)가 검증될 때만 허용 |
 
 `original`은 journal_id, permit_id, workflow_sha256, registration_sha256, finished_sha256(원 finished canonical bytes SHA), execution_receipt, finalizer_receipt, producer_receipts exact8이다. receipt 세 필드는 원 finished row의 원형을 재사용한다. `case`는 scenario_id, requested_model, context_sha256, analysis_sha256, plan_input_sha256, source_settings_sha256(canonical source6 SHA), catalog_sha256 exact7이다. 원 scope나 같은 case를 새 위임으로 변환하지 않는다.
 
@@ -45,13 +45,13 @@ original publication의 초기 SQL2행 pin과 현재 SQL finished5는 구별한�
 
 ## 예산·계보·종료
 
-원17+원1+새N≤25, 같은 추가 위임의 1+N≤8, 새 local cap≤7을 producer 진입 전 lower ABI에 전달한다. 원 loop의 finite elapsed와 이 entry 준비시간을 wall180에서 공제하고 수동 기록·원 permit deadline의 남은 시간으로 더 낮춘다. producer≤60/retry0은 기존 lower runner가 강제한다. token hard cap/가격/원격 identity는 미확인·cost=null을 유지한다.
+원17+원1+새N≤25, 같은 추가 위임의 1+N≤8, 새 local cap≤7을 producer 진입 전 lower ABI에 전달한다. 원 loop의 finite elapsed와 이 entry 준비시간을 wall180에서 공제한다. 기본 유한 수동 기록·원 permit deadline은 더 낮은 상한으로 적용한다. 검증된 별도 native source와 `expires_at=null` 조합에서만 달력 기한을 빼며 180초/60초/retry0 및 소모 회계는 그대로다. producer≤60/retry0은 기존 lower runner가 강제한다. token hard cap/가격/원격 identity는 미확인·cost=null을 유지한다.
 
 원 run 전체192파일/32MiB 관측치에 새 control·finalizer·현재 handoff 상계를 먼저 공제한 evidence_reservation을 lower runner에 전달한다. 원 출력을 새 directory라는 이유로0으로 세지 않는다. 원 파일은 native read pin으로 유지한다. source/context/current completed/plan을 새 runtime 직전에 다시 검증한다.
 
 새 namespace는 원 `runs/<original_permit_id>/manual-continuation-01` 하나다. 원 run의 `manual-continuation-claimed-v1.json`과 해당 directory를 native create-once로 고정한다. marker를 먼저 쓰므로 namespace가 소실돼도 marker가 남으면 재진입을 거절한다. 기존 directory가 있으면 marker/claim/finish가 없거나 실패·부분·unknown이어도 거절하며 이름/output 변경 인자가 없다. 같은 계정의 두 객체 동시 삭제 공격에 대한 인증·방어를 주장하지 않는다. 원 ledger에 append하거나 원 claim을 다시 소비하지 않는다. 새 claim-v1.json은 prior_model_processes1, 추가cap7, current schema, 원 elapsed와 새 wall 상계를 기록한다. 실제 lower wall은 claim 준비시간과1초 보수 여유를 추가 공제해 더 낮춘다.
 
-새 runtime/attempt·execution/finalizer·producer pins와 원 run/runtime 계보를 별도 보존한다. current-handoff.json과 finished-v1.json의 current_valid_result는 completed 때만 continuation이다. 원 failed raw가 새 성공으로 바뀌지 않는다. error/unknown/부분 상태는 보존하고 자동 재시도하지 않는다. 새 결과 저장·계산·DRAFT는 기존 execute/finalize를 그대로 호출한다.
+새 runtime/attempt·execution/finalizer·producer pins와 원 run/runtime 계보를 별도 보존한다. 달력 기한 해제 시 해당 root source Pin을 공개 receipt·claim·finished에 기록한다. current-handoff.json과 finished-v1.json의 current_valid_result는 completed 때만 continuation이다. 원 failed raw가 새 성공으로 바뀌지 않는다. error/unknown/부분 상태는 보존하고 자동 재시도하지 않는다. 새 결과 저장·계산·DRAFT는 기존 execute/finalize를 그대로 호출한다.
 
 ## 검증 범위
 
