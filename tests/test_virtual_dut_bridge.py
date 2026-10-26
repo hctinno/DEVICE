@@ -565,6 +565,38 @@ class ADBCleanupTests(unittest.TestCase):
         self.assertIs(caught.exception, first)
         self.assert_product_clean(self.observe('at_immediate_post_spawn_control'))
 
+    def test_nonzero_exit_response_survives_secondary_close_error(self):
+        script = 'import os,sys; os.write(1,b"device\\n"); sys.exit(7)'
+        for close_error in (None, OSError('secondary after native close')):
+            with self.subTest(close_error=type(close_error).__name__):
+                result = caught = None
+                with patch.object(subprocess, 'Popen', side_effect=lambda *a, **k:
+                                  self.spawn(script, close_error=close_error)):
+                    try:
+                        result = self.transport()._read(('get-state',))
+                    except OSError as error:
+                        caught = error
+                state = self.observe('at_exit7_close_' + type(close_error).__name__)
+                state.update(row_returned=result is not None, close_error_raised=caught is close_error and caught is not None)
+                self.assert_product_clean(state)
+                self.assertIsNone(caught, 'Observed exit7 must retain its row before secondary cleanup errors')
+                self.assertEqual(result['status'], 'failed')
+                self.assertEqual(result['code'], 'adb_nonzero_exit')
+                self.assertEqual(result['returncode'], 7)
+                self.assertEqual(result['response'], 'device\n')
+                self.assertEqual(result['cleanup']['errors'], [] if close_error is None else
+                                 [{'operation': 'close', 'type': 'OSError'}])
+
+    def test_successful_exit_still_propagates_its_first_cleanup_error(self):
+        first = OSError('first failure is after successful native close')
+        with patch.object(subprocess, 'Popen', side_effect=lambda *a, **k:
+                          self.spawn('import os; os.write(1,b"device\\n")', close_error=first)):
+            with self.assertRaises(OSError) as caught:
+                self.transport()._read(('get-state',))
+        self.assertIs(caught.exception, first)
+        self.assertEqual(first.virtual_dut_cleanup['status'], 'completed_with_errors')
+        self.assert_product_clean(self.observe('at_exit0_first_cleanup_error'))
+
 
 if __name__ == '__main__':
     unittest.main()
