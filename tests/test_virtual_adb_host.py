@@ -5,9 +5,12 @@ import json
 import os
 from pathlib import Path
 import socket
+import sys
 import tempfile
 import time
+import traceback
 import unittest
+from unittest.mock import patch
 
 from labflow.virtual_fleet.catalog import load_catalog
 from labflow.virtual_fleet.integration import create_conducted_example
@@ -187,8 +190,99 @@ class VirtualAdbHostTests(unittest.TestCase):
                           deps_path=Path(os.environ['DGM_ADBUTILS_DEPS']))
 
     @unittest.skipUnless(os.environ.get('DGM_ADBUTILS_SOURCE'), 'pinned source path opt-in required')
+    def test_genuine_helper_owns_client_until_return_on_success_and_both_failures(self):
+        from labflow import virtual_adb_check as check
+        self.assertTrue(callable(getattr(check, 'virtual_adb_shell', None)),
+                        'public connection-owning shell helper is required')
+        denied, connections, captured, retained_errors = [], [], [], []
+        with self.module.VirtualAdbHost(self.fleet, port=0) as server:
+            with check.own_wire_only(server.endpoint, denied, connections):
+                adbutils, _ = check._pinned_client(Path(os.environ['DGM_ADBUTILS_SOURCE']),
+                                                  Path(os.environ['DGM_ADBUTILS_DEPS']))
+                client = adbutils.AdbClient(host=server.endpoint[0], port=server.endpoint[1], socket_timeout=1)
+                def observe_public_return(frame, event, value):
+                    if event == 'return' and frame.f_code.co_name == 'make_connection' and isinstance(value, adbutils.AdbConnection):
+                        captured.append((value, value.conn))
+                for serial, command, should_fail in [
+                        (self.module.SERIAL, 'getprop ro.product.model', False),
+                        (self.module.SERIAL, 'getprop ro.kernel.qemu', True),
+                        ('OTHER', 'dgm-twin rf status', True)]:
+                    before = len(captured)
+                    previous_profile = sys.getprofile()
+                    try:
+                        sys.setprofile(observe_public_return)
+                        try:
+                            reply = check.virtual_adb_shell(client, serial, command, timeout=1)
+                        except adbutils.AdbError as exc:
+                            retained_errors.append(exc)  # Keep the original traceback alive.
+                            self.assertTrue(should_fail)
+                            self.assertIn('check_okay', ''.join(traceback.format_exception(exc)))
+                        else:
+                            self.assertFalse(should_fail)
+                            self.assertEqual(reply, 'DGM Virtual DUT')
+                    finally:
+                        sys.setprofile(previous_profile)
+                    self.assertEqual(len(captured), before + 1)
+                    connection, peer = captured[-1]
+                    self.assertTrue(connection.closed)
+                    self.assertEqual(peer.fileno(), -1)
+                self.assertEqual(len(retained_errors), 2)
+                self.assertTrue(all(exc.__traceback__ is not None for exc in retained_errors))
+        self.assertEqual(denied, [])
+        self.assertEqual(server.resources()['active_connections'], 0)
+        self.assertEqual(server.resources()['active_workers'], 0)
+        self.assertFalse(server.resources()['thread_alive'])
+        self.assertTrue(all(connection.closed and peer.fileno() == -1 for connection, peer in captured))
+
+    @unittest.skipUnless(os.environ.get('DGM_ADBUTILS_SOURCE'), 'pinned source path opt-in required')
+    def test_genuine_cli_preserves_partial_error_trace_and_closed_client(self):
+        from labflow import virtual_adb_check as check
+        captured, retained_errors, calls = [], [], []
+        adbutils, _ = check._pinned_client(Path(os.environ['DGM_ADBUTILS_SOURCE']),
+                                          Path(os.environ['DGM_ADBUTILS_DEPS']))
+        real_shell = check.virtual_adb_shell
+        def actual_wire_failure(client, serial, command, *, timeout=2):
+            calls.append(command)
+            # Project caller fault seam only: SDK codec/server are unchanged,
+            # and the second command gets a genuine server FAIL on the wire.
+            if len(calls) == 2:
+                command = 'getprop ro.kernel.qemu'
+            try:
+                return real_shell(client, serial, command, timeout=timeout)
+            except adbutils.AdbError as exc:
+                retained_errors.append(exc)
+                raise
+        def observe_public_return(frame, event, value):
+            if event == 'return' and frame.f_code.co_name == 'make_connection' and isinstance(value, adbutils.AdbConnection):
+                captured.append((value, value.conn))
+        with tempfile.TemporaryDirectory() as folder:
+            previous_profile = sys.getprofile()
+            try:
+                sys.setprofile(observe_public_return)
+                with patch.object(check, 'virtual_adb_shell', actual_wire_failure):
+                    result = check.run_check(Path(folder) / 'partial-run',
+                                             source_path=Path(os.environ['DGM_ADBUTILS_SOURCE']),
+                                             deps_path=Path(os.environ['DGM_ADBUTILS_DEPS']))
+            finally:
+                sys.setprofile(previous_profile)
+            self.assertEqual(result['status'], 'incomplete')
+            self.assertEqual(len(result['steps']), 1)
+            self.assertEqual(result['error']['type'], 'AdbError')
+            self.assertIn('check_okay', ''.join(result['error']['traceback']))
+            self.assertEqual(len(retained_errors), 1)
+            self.assertIsNotNone(retained_errors[0].__traceback__)
+            self.assertEqual(result['denied_operations'], [])
+            self.assertEqual(len(captured), 3)
+            self.assertTrue(all(connection.closed and peer.fileno() == -1 for connection, peer in captured))
+            self.assertEqual(result['resources_after_close']['active_connections'], 0)
+            self.assertEqual(result['resources_after_close']['active_workers'], 0)
+            self.assertFalse(result['resources_after_close']['thread_alive'])
+            self.assertEqual(json.loads((Path(folder) / 'partial-run/result.json').read_text()), result)
+
+    @unittest.skipUnless(os.environ.get('DGM_ADBUTILS_SOURCE'), 'pinned source path opt-in required')
     def test_genuine_client_failures_and_fallback_process_guard(self):
-        from labflow.virtual_adb_check import _pinned_client, own_wire_only
+        from labflow.virtual_adb_check import (_pinned_client, own_wire_only,
+                                               virtual_adb_get_state, virtual_adb_shell)
         import subprocess
         denied, connections = [], []
         with self.module.VirtualAdbHost(self.fleet, port=0) as server:
@@ -196,18 +290,11 @@ class VirtualAdbHostTests(unittest.TestCase):
                 adbutils, _ = _pinned_client(Path(os.environ['DGM_ADBUTILS_SOURCE']),
                                             Path(os.environ['DGM_ADBUTILS_DEPS']))
                 client = adbutils.AdbClient(host=server.endpoint[0], port=server.endpoint[1], socket_timeout=1)
-                device = client.device(serial=self.module.SERIAL)
-                self.assertEqual(device.get_state(), 'device')
-                with client.make_connection() as connection:
-                    connection.send_command('host:transport:OTHER')
-                    with self.assertRaises(adbutils.AdbError):
-                        connection.check_okay()
-                with device.open_transport() as connection:
-                    connection.send_command('shell:getprop ro.kernel.qemu')
-                    with self.assertRaises(adbutils.AdbError):
-                        connection.check_okay()
-                # Use the public connection context on FAIL paths: the pinned
-                # .shell implementation does not close if open_shell raises.
+                self.assertEqual(virtual_adb_get_state(client, self.module.SERIAL), 'device')
+                with self.assertRaises(adbutils.AdbError):
+                    virtual_adb_shell(client, 'OTHER', 'dgm-twin rf stop')
+                with self.assertRaises(adbutils.AdbError):
+                    virtual_adb_shell(client, self.module.SERIAL, 'getprop ro.kernel.qemu')
                 with self.assertRaises(PermissionError):
                     subprocess.Popen(['dgm-never-executed'])
         self.assertEqual(denied, ['subprocess.Popen'])
@@ -216,30 +303,31 @@ class VirtualAdbHostTests(unittest.TestCase):
 
     @unittest.skipUnless(os.environ.get('DGM_ADBUTILS_SOURCE'), 'pinned source path opt-in required')
     def test_genuine_client_power_path_delta_matches_decimal_on_same_fleet(self):
-        from labflow.virtual_adb_check import _pinned_client, own_wire_only
+        from labflow.virtual_adb_check import _pinned_client, own_wire_only, virtual_adb_shell
         denied, connections = [], []
         with self.module.VirtualAdbHost(self.fleet, port=0) as server:
             with own_wire_only(server.endpoint, denied, connections):
                 adbutils, _ = _pinned_client(Path(os.environ['DGM_ADBUTILS_SOURCE']),
                                             Path(os.environ['DGM_ADBUTILS_DEPS']))
                 client = adbutils.AdbClient(host=server.endpoint[0], port=server.endpoint[1], socket_timeout=2)
-                device = client.device(serial=self.module.SERIAL)
+                def shell(command, timeout=2):
+                    return virtual_adb_shell(client, self.module.SERIAL, command, timeout=timeout)
                 for index, (power, loss) in enumerate([(9, .5), (18, 2)]):
-                    configured = json.loads(device.shell('dgm-twin rf configure ' + json.dumps({**SOURCE, 'power_dbm': power})))
+                    configured = json.loads(shell('dgm-twin rf configure ' + json.dumps({**SOURCE, 'power_dbm': power})))
                     self.assertEqual(configured['status'], 'ok')
                     self.assertEqual(self.fleet.execute('genuine:path:' + str(index), 'switch',
                                                        'configure', {'loss_db': loss})['status'], 'ok')
                     for command in ['dgm-twin rf start', 'dgm-twin advance 3',
                                     'dgm-twin measurement acquire', 'dgm-twin advance 2']:
-                        device.shell(command, timeout=2)
-                    read = json.loads(device.shell('dgm-twin measurement read', timeout=2))
+                        shell(command, timeout=2)
+                    read = json.loads(shell('dgm-twin measurement read', timeout=2))
                     with localcontext() as ctx:
                         ctx.prec = 40
                         expected = Decimal(power) - 10 - Decimal(str(loss)) - 20 + 10 * Decimal('.25').log10()
                     actual = read['meter']['values']['outputs']['measurement']['value']
                     self.assertAlmostEqual(actual, float(expected), places=9)
                     self.assertEqual(read['sensor'], self.fleet.observations()['devices']['sensor'])
-                device.shell('dgm-twin rf stop', timeout=2)
+                shell('dgm-twin rf stop', timeout=2)
         self.assertEqual(denied, [])
         self.assertTrue(connections)
 
