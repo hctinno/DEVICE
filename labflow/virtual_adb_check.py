@@ -5,9 +5,12 @@ import hashlib
 import importlib
 import importlib.metadata
 import json
+import math
 from pathlib import Path
+import re
 import sys
 import threading
+import traceback
 
 from .virtual_adb_host import SERIAL, VirtualAdbHost
 from .virtual_fleet.catalog import load_catalog
@@ -92,6 +95,44 @@ def _write(path, value):
         stream.write('\n')
 
 
+def _client_request_parameters(client, serial, timeout):
+    if (client.host != '127.0.0.1' or type(client.port) is not int
+            or not 1024 <= client.port <= 65535 or client.port == 5037):
+        raise ValueError('explicit owned loopback client endpoint is required')
+    if type(serial) is not str or re.fullmatch(r'[A-Za-z0-9_-]{1,64}', serial) is None:
+        raise ValueError('a bounded explicit virtual serial is required')
+    if type(timeout) not in (int, float) or not math.isfinite(timeout) or not .05 <= timeout <= 3:
+        raise ValueError('a bounded client timeout is required')
+
+
+def virtual_adb_shell(client, serial, command, *, timeout=2):
+    """Run one virtual shell request using the pinned client's public codec.
+
+    Ownership begins immediately after make_connection returns, before the
+    transport selection can fail. The original SDK exception/traceback passes
+    through the context unchanged, with the client connection already closed.
+    Use own_wire_only for accidental native fallback protection as in the CLI.
+    """
+    _client_request_parameters(client, serial, timeout)
+    if type(command) is not str or not command or len(command.encode('utf-8')) > 4090:
+        raise ValueError('a bounded explicit virtual shell command is required')
+    with client.make_connection(timeout=timeout) as connection:
+        connection.send_command('host:transport:' + serial)
+        connection.check_okay()
+        connection.send_command('shell:' + command)
+        connection.check_okay()
+        return connection.read_until_close(encoding='utf-8').rstrip()
+
+
+def virtual_adb_get_state(client, serial, *, timeout=2):
+    """Read synthetic state with the same immediate connection ownership."""
+    _client_request_parameters(client, serial, timeout)
+    with client.make_connection(timeout=timeout) as connection:
+        connection.send_command(f'host-serial:{serial}:get-state')
+        connection.check_okay()
+        return connection.read_string_block()
+
+
 def run_check(output, *, source_path, deps_path):
     """Create a new output folder; preserve incomplete outcomes; never retry."""
     output = Path(output)
@@ -119,8 +160,7 @@ def run_check(output, *, source_path, deps_path):
                 adbutils, versions = _pinned_client(source_path, deps_path)
                 result['dependency_versions'] = versions
                 client = adbutils.AdbClient(host=server.endpoint[0], port=server.endpoint[1], socket_timeout=2)
-                device = client.device(serial=SERIAL)
-                result['state'] = device.get_state()
+                result['state'] = virtual_adb_get_state(client, SERIAL)
                 source = {'frequency_hz': 2450000000, 'power_dbm': 16,
                           'bandwidth_hz': 20000000, 'duty_cycle': .25,
                           'modulation': 'DGM synthetic OFDM declaration', 'crest_factor_db': 3}
@@ -131,7 +171,7 @@ def run_check(output, *, source_path, deps_path):
                             'dgm-twin measurement read', 'dgm-twin rf stop',
                             'dgm-twin advance 2', 'dgm-twin rf status']
                 for command in commands:
-                    raw = device.shell(command, timeout=2)
+                    raw = virtual_adb_shell(client, SERIAL, command, timeout=2)
                     value = raw if command.startswith('getprop ') else json.loads(raw)
                     result['steps'].append({'command': command, 'response': value})
                 measured = result['steps'][6]['response']['meter']
@@ -143,7 +183,8 @@ def run_check(output, *, source_path, deps_path):
                     raise ValueError('wire run did not complete its declared synthetic scenario')
                 result['status'] = 'complete'
     except Exception as exc:
-        result['error'] = {'type': type(exc).__name__, 'message': str(exc)[:2000]}
+        result['error'] = {'type': type(exc).__name__, 'message': str(exc)[:2000],
+                           'traceback': traceback.format_exception(exc, limit=16)}
     finally:
         trace = server.trace() if server else []
         result['resources_after_close'] = server.resources() if server else None

@@ -43,10 +43,12 @@ python -m labflow.virtual_adb_check `
 host/port/serial에 명시한다. 다른 host/port를 받는 API는 없다.
 
 ```python
+from labflow.virtual_adb_check import own_wire_only, virtual_adb_shell
+
 with VirtualAdbHost(fleet, port=0) as server:
-    client = adbutils.AdbClient(host=server.endpoint[0], port=server.endpoint[1], socket_timeout=2)
-    device = client.device(serial=SERIAL)
-    value = device.shell('dgm-twin rf status', timeout=2)
+    with own_wire_only(server.endpoint, denied=[], connections=[]):
+        client = adbutils.AdbClient(host=server.endpoint[0], port=server.endpoint[1], socket_timeout=2)
+        value = virtual_adb_shell(client, SERIAL, 'dgm-twin rf status', timeout=2)
 ```
 
 직접 호출자는 CLI의 `own_wire_only` 경계도 함께 사용해야 한다. 서버 자체는
@@ -117,9 +119,13 @@ CLI의 정상 시나리오는 명시 stop까지 실행한다. 실패한 in-memor
 현재 작업은 같은 엔진에 대한 새 명시 transport일 뿐 모델 호출·방법 승인·규범 판정은 없다.
 
 고정 adbutils의 `.shell`/`open_transport`가 FAIL 과정에서 client socket을 닫지
-않는 경로는 원 소스 그대로 남겨 둔다. 음성 검증은 공개 connection context로
-명시 close하며, 서버는 상대 종료 여부와 관계없이 자기 timeout/close로 회수한다.
-이 한계를 SDK 수정이나 fake 응답으로 숨기지 않는다.
+않는 upstream 경로는 원 소스 그대로 남겨 둔다. 프로젝트의 `virtual_adb_shell`은
+`client.make_connection()` context를 생성 직후부터 소유하고, 그 안에서 공개
+`send_command`/`check_okay`로 transport와 shell을 선택한 뒤 `read_until_close`로
+읽는다. `virtual_adb_get_state`도 같은 즉시 소유 방식이다. CLI·예제·직접 검증은
+이 helper를 사용한다. transport 선택 자체가 실패해도 helper 반환/예외 전달 전에
+client가 닫히고 원 SDK 오류 객체/traceback은 그대로 전달된다. 서버의 자원 회수와
+client FD 회수는 별도로 확인한다. FAIL을 정상 응답으로 바꾸거나 SDK를 수정하지 않는다.
 
 ## source·의존성과 권리
 
@@ -136,7 +142,8 @@ CLI의 정상 시나리오는 명시 stop까지 실행한다. 실패한 in-memor
 참조한 실제 파일은 adbutils `adbutils/__init__.py`, `_adb.py`,
 `_device_base.py`, `_utils.py`, `_version.py`, `requirements.txt`, `LICENSE`와
 AOSP `docs/dev/overview.md`, `docs/dev/protocol.md`, `NOTICE`다. adbutils
-`AdbClient`/`device(serial)`/`get_state`/`shell`을 실제 import해 사용한다.
+`AdbClient`와 public connection codec을 실제 import해 사용한다. 기존 convenience
+API 검증 이력은 보존하며 현재 CLI는 위 connection 소유 helper를 사용한다.
 Python 패키지의 모든 `.py`를 경로순으로 `relative POSIX path + NUL + bytes + NUL`
 해시한 값은 `5445be5120cdc6195e6631c4767a67ff9196e034f34864eed3e2a5f2ecdd1935`이며
 CLI가 이 값을 검사한다. 배포판을 설치하지 않아 upstream `__version__`은 `0.0.0`이므로
@@ -167,7 +174,7 @@ python -W error::ResourceWarning -m unittest tests.test_virtual_adb_host -v
 python scripts/check_artifacts.py
 ```
 
-두 환경변수 없이 실행하면 genuine client 검증 세 개는 명시 skip된다. 표준
+두 환경변수 없이 실행하면 genuine client 검증 다섯 개는 명시 skip된다. 표준
 라이브러리 protocol client만의 PASS를 adbutils/SDK 성공으로 세지 않는다.
 같은 Fleet의 source power/path 변경을 독립 Decimal 기준과 비교하고 정지,
 author 단절의 operator 관측, 미지원 serial/서비스/명령, frame 오류,
