@@ -937,6 +937,12 @@ class ReservationLoopTests(unittest.TestCase):
         with patch.object(api,'_Journal',side_effect=AssertionError('JOURNAL_MUST_NOT_OPEN')) as writer:denied.capture_journal()
         self.assertFalse(writer.called);self.assertFalse((denied.directory/'operator-journal.jsonl').exists());self.assertIsNotNone(denied.first)
 
+    test_reservation_file_byte_equalities_and_no_double_count=reservation_file_byte_equalities_and_no_double_count
+    test_reservation_none_shape_caps_and_alias_isolation=reservation_none_shape_caps_and_alias_isolation
+    test_reservation_invalid_precedes_preflight_io=reservation_invalid_precedes_preflight_io
+    test_reservation_control_and_final_write_admission=reservation_control_and_final_write_admission
+    test_reservation_journal_exact_header_rows_before_creation=reservation_journal_exact_header_rows_before_creation
+
 
 if __name__ == '__main__':
     unittest.main()

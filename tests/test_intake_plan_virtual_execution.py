@@ -290,6 +290,10 @@ class ReservationAdapterTests(unittest.TestCase):
             with self.assertRaises(MemoryError) as got:self.invoke(evidence_reservation=dict(files=0,bytes=0))
         self.assertIs(got.exception,control);self.assertEqual(loop.call_count,1)
 
+    test_reservation_none_explicit_forward_and_alias_isolation=reservation_none_explicit_forward_and_alias_isolation
+    test_reservation_invalid_before_validation_or_io=reservation_invalid_before_validation_or_io
+    test_reservation_control_identity=reservation_control_identity
+
 
 if __name__ == '__main__':
     unittest.main()
