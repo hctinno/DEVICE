@@ -68,7 +68,7 @@ class ContinuationTests(RegistrationTests):
         receipt['lifecycle'].update(model_process_started=True,agent_messages=0,tool_items=0)
         receipt['attempts'].update(model_process_attempts=1)
         receipt['cleanup'].update(version_child_reaped=True,model_child_reaped=True,readers_joined=True,pipes_closed=True,artifacts_closed=True)
-        receipt['artifacts']['stdout_jsonl'].update(present=True,complete=True,overflow=False,bytes=len(wire),sha256=H(wire))
+        receipt['artifacts']['stdout_jsonl'].update(present=True,complete=True,extent='whole_file',overflow=False,bytes=len(wire),sha256=H(wire))
         receipt_pin=self.put(folder/'receipt.json',receipt)
         step=dict(index=1,producer=dict(receipt=receipt,receipt_sha256=H(C(receipt))),
             artifacts=dict(prompt=dict(sha256=H(b'AUTHORED-ORIGINAL-PROMPT'))),wire=None,
@@ -241,6 +241,83 @@ class ContinuationTests(RegistrationTests):
     def test_original_origin_binding_rejected(self):
         self._assert_original_declaration_rejected('origin_declaration','mock_subprocess')
 
+    def _terminal_prefix_events(self):
+        message="Invalid schema for response_format 'codex_output_schema': 'schema.properties.proposal.oneOf' is not permitted when strict is true."
+        inner=dict(type='error',error=dict(message=message,type='invalid_request_error',
+            param='text.format.schema',code='invalid_json_schema'),status=400)
+        encoded=json.dumps(inner,sort_keys=True,separators=(',',':'))
+        return [dict(type='thread.started',thread_id='AUTHORED-THREAD'),dict(type='turn.started'),
+            dict(type='error',message=encoded),dict(type='turn.failed',error=dict(message=encoded))]
+
+    def _set_terminal_prefix(self,events,*,wire=None,descriptor_changes=None,lifecycle_changes=None,cleanup_changes=None):
+        if wire is None:wire=b''.join(C(event)+b'\n' for event in events)
+        producer_path=self.evidence/'loop/calls/0001/producer/receipt.json'
+        execution_path=self.evidence/'execution-receipt.json'
+        changed=copy.deepcopy(self._terminal_base_execution)
+        receipt=changed['loop']['steps'][0]['producer']['receipt']
+        receipt['model']['cli_thread_id']='AUTHORED-THREAD'
+        receipt['lifecycle'].update(thread_started=1,turn_started=1,turn_completed=0,stdout_eof=False,stderr_eof=False)
+        receipt['lifecycle'].update(lifecycle_changes or {})
+        receipt['cleanup'].update(cleanup_changes or {})
+        receipt['artifacts']['stdout_jsonl'].update(present=True,complete=False,extent='prefix',overflow=False,
+            bytes=len(wire),sha256=H(wire))
+        receipt['artifacts']['stdout_jsonl'].update(descriptor_changes or {})
+        self.put(self.evidence/'loop/calls/0001/producer/stdout.jsonl',wire)
+        receipt_pin=self.put(producer_path,receipt)
+        changed['loop']['steps'][0]['producer']['receipt_sha256']=H(C(receipt))
+        row=copy.deepcopy(self.finished);row['producer_receipts']=[dict(index=1,**receipt_pin)]
+        row['execution_receipt']=self.put(execution_path,changed)
+        con=sqlite3.connect(self.journal)
+        try:
+            con.execute("UPDATE codex_conducted_workflow_history SET payload=? WHERE kind='finished'",(C(row).decode(),))
+            con.commit()
+        finally:con.close()
+        manual=copy.deepcopy(self._terminal_base_manual)
+        manual['original'].update(finished_sha256=H(C(row)),execution_receipt=row['execution_receipt'],
+            producer_receipts=row['producer_receipts'])
+        self.put(self.operator/api._RECORD,manual)
+
+    def test_terminal_schema400_prefix_reaches_one_guarded_entry(self):
+        self.fixture()
+        self._terminal_base_execution=json.loads((self.evidence/'execution-receipt.json').read_bytes())
+        self._terminal_base_manual=copy.deepcopy(self.manual)
+        self._set_terminal_prefix(self._terminal_prefix_events())
+        with patch.object(host,'_execute',side_effect=RuntimeError('DELIBERATE_ENTRY_STOP')) as execute:
+            result=self.attempt()
+        self.assertEqual(execute.call_count,1,result)
+        self.assertEqual(result['status'],'unknown',result)
+        self.assertEqual(execute.call_args.kwargs['model_process_limit'],7)
+        self.assertTrue((self.evidence/api._CLAIM).exists())
+
+    def test_terminal_prefix_unknown_or_truncated_variants_cannot_claim(self):
+        self.fixture()
+        self._terminal_base_execution=json.loads((self.evidence/'execution-receipt.json').read_bytes())
+        self._terminal_base_manual=copy.deepcopy(self.manual)
+        good=self._terminal_prefix_events()
+        cases=[]
+        cases.append(('missing_terminal',good[:3],None,None,None,None))
+        cases.append(('after_terminal',good+[dict(type='turn.started')],None,None,None,None))
+        cases.append(('wrong_order',[good[1],good[0],*good[2:]],None,None,None,None))
+        changed=copy.deepcopy(good);changed[3]['error']['message']='{}'
+        cases.append(('different_nested_error',changed,None,None,None,None))
+        changed=copy.deepcopy(good);inner=json.loads(changed[2]['message']);inner['status']=401
+        changed[2]['message']=changed[3]['error']['message']=json.dumps(inner,sort_keys=True,separators=(',',':'))
+        cases.append(('wrong_status',changed,None,None,None,None))
+        cases.append(('truncated_tail',good,b''.join(C(event)+b'\n' for event in good)[:-4],None,None,None))
+        cases.append(('cleanup_unknown',good,None,None,None,dict(model_child_reaped=None)))
+        cases.append(('mislabeled_whole',good,None,dict(complete=True,extent='prefix'),None,None))
+        with patch.object(host,'_execute',side_effect=AssertionError('EXECUTION_FORBIDDEN')) as execute:
+            for name,events,wire,descriptor,lifecycle,cleanup in cases:
+                with self.subTest(name=name):
+                    self._set_terminal_prefix(events,wire=wire,descriptor_changes=descriptor,
+                        lifecycle_changes=lifecycle,cleanup_changes=cleanup)
+                    result=self.attempt()
+                    self.assertEqual(result['status'],'not_run',result)
+                    self.assertEqual(result['phase'],'original_failure',result)
+                    self.assertFalse((self.evidence/api._CLAIM).exists())
+                    self.assertFalse((self.evidence/api._NAMESPACE).exists())
+        self.assertEqual(execute.call_count,0)
+
     def test_genuine_lowered_same_profile_mock_continuation_once(self):
         self.fixture()
         from test_codex_registered_conducted_workflow_host import CHILD
@@ -311,6 +388,8 @@ NAMES=['test_unknown_or_missing_authority_never_creates_state','test_budget_dedu
        'test_original_arbitrary_schema_binding_rejected','test_original_other_known_schema_binding_rejected',
        'test_original_catalog_binding_rejected','test_original_scenario_binding_rejected',
        'test_original_model_binding_rejected','test_original_origin_binding_rejected',
+       'test_terminal_schema400_prefix_reaches_one_guarded_entry',
+       'test_terminal_prefix_unknown_or_truncated_variants_cannot_claim',
        'test_genuine_lowered_same_profile_mock_continuation_once']
 
 def load_tests(loader,tests,pattern):
