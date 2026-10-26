@@ -123,7 +123,8 @@ def run_fixture_flow(output_dir, *, power_dbm=12.5, document_kind='text'):
 _CONDUCTED_RF_QUOTE = ('frequency: 2412 MHz; bandwidth: 20 MHz; on_average_power: 11 dBm; '
                        'duty_cycle: 50 %; modulation: OFDM; crest_factor: 4 dB')
 _CONDUCTED_MOCK_NAME = 'DGM-AUTHORED-SCRIPTED-MOCK-PDF'
-_CONDUCTED_SCHEMA_SHA = 'aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb'
+from .virtual_fleet.operator_response_schema import (current_response_schema_bytes,
+    is_current_response_schema_bytes)
 _CONDUCTED_SCENARIOS = ('normal', 'missing-duty-unit', 'invalid-citation',
                         'measurement-invalid', 'restored-disconnect', 'transport-error', 'recovery-failure')
 
@@ -597,9 +598,8 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         phase = 'compile_authored_mock'
         executable = _compile_conducted_mock(output, compiler, scenario=scenario)
         project = Path(__file__).resolve().parents[1]
-        contract = json.loads((project / 'docs/fcc/codex_first_decision_contract.json').read_bytes())
-        schema = contract['response_schema']['literal_utf8'].encode('utf-8')
-        if len(schema) != 3052 or sha256(schema).hexdigest() != _CONDUCTED_SCHEMA_SHA:
+        schema = current_response_schema_bytes()
+        if not is_current_response_schema_bytes(schema):
             raise ValueError('conducted_workflow_schema_unsupported')
         catalog = project / 'virtual_profiles/sm_a176u_unlicensed.json'
         phase = 'execute_same_plan'

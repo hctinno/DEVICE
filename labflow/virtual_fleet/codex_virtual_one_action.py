@@ -11,6 +11,7 @@ import time
 import uuid
 
 from ..codex_cli_response import CodexCliResponseError, produce_codex_cli_response as _produce, _client_versions_match
+from .operator_response_schema import is_current_response_schema_bytes as _current_schema
 from .catalog import load_catalog as _load
 from .evaluation import prepare_sensor_trial as _prepare
 from .harness import FleetHarness as _Harness
@@ -32,7 +33,6 @@ _EXCHANGE = re.compile(r'codex-cli-exchange:[a-f0-9]{32}\Z', re.ASCII)
 _MODELS = {'gpt-6.1-sol', 'gpt-6-astra'}
 _SCENARIOS = {'normal', 'restored_disconnect'}
 _PRODUCER = 'dgm-virtual-operator-v1'
-_SCHEMA_HASH = 'aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb'
 _BUDGETS = dict(decisions=1,logical_requests=1,ticks=1,wall_seconds=30,transport_retries=0)
 _DELEGATION = dict(scope='rf_sensor_proposal_v1', harness_budgets=_BUDGETS,
                    outer_limits=dict(wall_seconds=60, model_calls=8))
@@ -183,7 +183,7 @@ def _preflight(catalog_path, catalog_sha256, schema, executable, model, scenario
             or type(scenario) is not str or scenario not in _SCENARIOS
             or event is not None and type(event) is not threading.Event):
         _fail('invalid_input')
-    if len(schema)!=3052 or _H(schema)!=_SCHEMA_HASH: _fail('invalid_input')
+    if not _current_schema(schema): _fail('invalid_input')
     if event is not None and event.is_set(): _fail('cancelled')
     try:
         _chain(catalog_path,'invalid_input'); _chain(executable,'invalid_input'); _chain(directory.parent,'invalid_input')
@@ -496,7 +496,7 @@ class _Run:
         self.write(self.directory/'response-schema.json',self.schema,65536)
         sources={}
         for relative in ('codex_cli_response.py','virtual_fleet/codex_virtual_one_action.py',
-                'virtual_fleet/model_operator_boundary.py','virtual_fleet/harness.py','virtual_fleet/evaluation.py',
+                'virtual_fleet/operator_response_schema.py','virtual_fleet/model_operator_boundary.py','virtual_fleet/harness.py','virtual_fleet/evaluation.py',
                 'virtual_fleet/integration.py','virtual_fleet/catalog.py','virtual_fleet/core.py','virtual_fleet/rf.py',
                 'virtual_fleet/facility.py','virtual_fleet/instruments.py','virtual_fleet/journal.py'):
             path=Path(__file__).resolve().parents[1]/relative

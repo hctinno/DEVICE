@@ -1,5 +1,7 @@
 # Codex의 동일 가상 runtime 판단 루프
 
+2026-10-26 schema 호환/하향 한도: [현재·역사 프로필과 검증 범위](codex_operator_schema_compat_usage.md)를 따른다. 새 실행에는 current_response_schema_bytes()의 exact 3052B만 허용하며 역사 oneOf 프로필은 producer 전에 invalid_input으로 거절한다. 선택 keyword model_process_limit=8, wall_seconds_limit=180은 각각 native 정수1..8, 유한 native 숫자0<wall<=180의 더 작은 상한만 허용한다. 선언·하네스 decision/wall·remaining delegation·예약/admission·최종 elapsed 대조는 같은 값을 사용한다. 기존 기본 8/180, producer≤60/retry0과 원 소비 기록을 보존하며 권한을 발급하지 않는다.
+
 ## caller의 외부 증거 예약 — 2026-10-26
 
 공개 run_codex_virtual_loop는 optional evidence_reservation=None을 지원한다. None은 원 경로/한도/DTO와 추가 keyword0을 유지한다. explicit native dict exact2 files/bytes의 strict native int를 각각0~192/0~33554432에서 검증하고 새 복사본의 immutable tuple로 분리한다. 유효성 검사는 파일/런타임/producer 이전이며 bool·subclass·추가/누락·음수/초과는 invalid_input이다. caller alias 변경으로 이미 고정한 예약을 줄일 수 없다.
@@ -24,7 +26,8 @@ def run_codex_virtual_loop(
     executable: Path, requested_model: str, scenario: str,
     evidence_dir: Path, execution_origin: str, cancel_event=None,
     source_settings=None,
-    plan_binding=None, quantity=None,
+    plan_binding=None, quantity=None, evidence_reservation=None,
+    model_process_limit=8, wall_seconds_limit=180,
 ) -> dict:
     ...
 ```
