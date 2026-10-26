@@ -604,6 +604,95 @@ class WorkflowHostTests(unittest.TestCase):
             with self.assertRaises(MemoryError) as got:self.call()
         self.assertIs(got.exception,control);self.assertEqual(self.argv,[])
 
+    def failure_snapshot(self):
+        files={}
+        for path in self.store_root.rglob('*'):
+            if path.is_file():
+                info=path.stat(follow_symlinks=False)
+                files[str(path.relative_to(self.store_root))]=dict(bytes=info.st_size,sha256=H(path.read_bytes()),
+                    device=info.st_dev,inode=info.st_ino,mtime_ns=info.st_mtime_ns,nlink=info.st_nlink,
+                    attributes=info.st_file_attributes,reparse_tag=info.st_reparse_tag)
+        connection=sqlite3.connect((self.store_root/'lab.sqlite3').as_uri()+'?mode=ro',uri=True)
+        try:
+            connection.execute('PRAGMA query_only=ON')
+            jobs=connection.execute('SELECT job_id,state,worker_id,token,attempt,result_json FROM intake_jobs ORDER BY job_id').fetchall()
+            completed=connection.execute("SELECT count(*) FROM intake_jobs WHERE state='completed'").fetchone()[0]
+        finally:connection.close()
+        return dict(files=files,jobs=jobs,completed=completed,workflow_rows=self.rows())
+
+    def failure_invoke(self,first,late,*,ledger=False):
+        before=self.failure_snapshot();counts=dict(store_close=0,ledger_close=0)
+        opened=api.Store.open_existing;close_ledger=api._close_ledger;returned=raised=None
+        def lease(path):
+            store=opened(path);close_store=store.close
+            def closing_store():
+                counts['store_close']+=1;close_store()
+                if late is not None and not ledger:raise late
+            store.close=closing_store
+            return store
+        def closing(connection):
+            counts['ledger_close']+=1;close_ledger(connection)
+            if late is not None and ledger:raise late
+        try:
+            with patch.object(api.Store,'open_existing',side_effect=lease),patch.object(api,'_close_ledger',side_effect=closing):
+                if first is None:returned=self.call()
+                else:
+                    with patch.object(api,'prepare_registered_synthetic_context',side_effect=first):returned=self.call()
+            return returned
+        except BaseException as error:
+            raised=error;raise
+        finally:
+            after=self.failure_snapshot()
+            observation=dict(case=self._testMethodName,first=None if first is None else type(first).__name__,
+                late=None if late is None else type(late).__name__,late_phase='ledger_close' if ledger else 'store_close',
+                returned=returned,raised=None if raised is None else type(raised).__name__,
+                raised_is_first=raised is first and first is not None,raised_is_late=raised is late and late is not None,
+                counts=counts,source_before=before,source_after=after,source_unchanged=before==after,
+                genuine_runtime_calls=0,actual_model_processes=0,producer_argv=len(self.argv))
+            (self.folder/('first-failure-'+uuid.uuid4().hex[:8]+'.json')).write_bytes(C(observation))
+            self.assertEqual(before,after);self.assertEqual(counts,dict(store_close=1,ledger_close=1))
+            self.assertEqual(self.argv,[]);self.assertEqual(len(self.rows()),2)
+            self.assertFalse((self.profile/'workflow-claimed.json').exists());self.assertEqual(list(self.evidence.iterdir()),[])
+
+    def failure_first_ordinary_survives_late_store_controls(self):
+        first=ValueError('FIRST_ORDINARY');baseline=self.failure_invoke(first,None)
+        self.assertEqual(baseline[0],3);self.assertEqual(baseline[1]['status'],'not_run')
+        self.assertEqual(baseline[1]['errors'],[dict(phase='registration',code=api._PREFIX+'operation_failed')])
+        for control in (MemoryError,SystemExit,GeneratorExit,KeyboardInterrupt):
+            with self.subTest(late=control.__name__):
+                try:code,result=self.failure_invoke(first,control('LATER_STORE_CONTROL'))
+                except api._CONTROL as error:self.fail('Later '+type(error).__name__+' replaced the first ordinary failure DTO')
+                self.assertEqual((code,result['status'],result['phase']),(baseline[0],baseline[1]['status'],baseline[1]['phase']))
+                self.assertEqual(result['errors'][0],baseline[1]['errors'][0])
+                self.assertEqual(result['errors'][1],dict(phase='store_close',code=api._PREFIX+'interrupted'))
+                self.assertEqual(set(result),set(baseline[1]));self.assertIsNone(result['execution']);self.assertIsNone(result['finalization'])
+
+    def failure_first_ordinary_survives_late_ledger_control(self):
+        self.selection_v2();first=OSError('FIRST_NATIVE_OPERATION');baseline=self.failure_invoke(first,None)
+        try:code,result=self.failure_invoke(first,MemoryError('LATER_LEDGER_CONTROL'),ledger=True)
+        except api._CONTROL:self.fail('Later ledger CONTROL replaced the first ordinary failure DTO')
+        self.assertEqual((code,result['status'],result['phase']),(baseline[0],baseline[1]['status'],baseline[1]['phase']))
+        self.assertEqual(result['errors'][0],baseline[1]['errors'][0])
+        self.assertEqual(result['errors'][1],dict(phase='ledger_close',code=api._PREFIX+'interrupted'))
+
+    def failure_first_control_survives_late_ordinary(self):
+        first=MemoryError('FIRST_CONTROL')
+        with self.assertRaises(MemoryError) as got:self.failure_invoke(first,OSError('LATER_ORDINARY_CLOSE'))
+        self.assertIs(got.exception,first)
+
+    def failure_two_controls_keep_first_object(self):
+        self.selection_v2();first=SystemExit('FIRST_CONTROL')
+        with self.assertRaises(SystemExit) as got:self.failure_invoke(first,MemoryError('SECOND_CONTROL'))
+        self.assertIs(got.exception,first)
+
+    def failure_first_close_error_with_no_prior_failure(self):
+        code,result=self.failure_invoke(None,OSError('FIRST_BODY_CLOSE'))
+        self.assertEqual((code,result['status']),(3,'not_run'))
+        self.assertEqual(result['errors'],[dict(phase='registration',code=api._PREFIX+'operation_failed')])
+        self.selection_v2();first=MemoryError('FIRST_BODY_CLOSE_CONTROL')
+        with self.assertRaises(MemoryError) as got:self.failure_invoke(None,first)
+        self.assertIs(got.exception,first)
+
     def boundary_rollback_failure_still_attempts_owned_close_once(self):
         connect=api.sqlite3.connect;counts=dict(rollback=0,close=0)
         def wrap(*args,**kwargs):
@@ -619,7 +708,14 @@ class WorkflowHostTests(unittest.TestCase):
 
 
 if __name__=='__main__':
-    if '--selection-preflight' in sys.argv:
+    if '--first-failure' in sys.argv:
+        sys.argv.remove('--first-failure');LOCAL=ROOT/'.local/fhf'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.failure_first_ordinary_survives_late_store_controls',
+            'WorkflowHostTests.failure_first_ordinary_survives_late_ledger_control',
+            'WorkflowHostTests.failure_first_control_survives_late_ordinary',
+            'WorkflowHostTests.failure_two_controls_keep_first_object',
+            'WorkflowHostTests.failure_first_close_error_with_no_prior_failure'])
+    elif '--selection-preflight' in sys.argv:
         sys.argv.remove('--selection-preflight');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
         unittest.main(defaultTest=['WorkflowHostTests.selection_explicit_v2_prepares_exact13_without_dispatch'])
     elif '--selection-genuine' in sys.argv:

@@ -1,5 +1,20 @@
 # 등록 합성 conducted workflow의 native host
 
+## 최초 오류 보존 보완 — 2026-10-26
+
+DEV2-WORKFLOW-HOST-FIRST-FAILURE-FIX-001은 정확226 base의 별도 clone/branch에서 host/test/usage3만 수정한다. completed-current WIP는 다른 clone에 그대로 동결하며 이 수정에 포함하지 않는다. 기존 _run.error는 최초 ordinary 오류가 있어도 후행 CONTROL을 마지막에 전파해 이미 만든 최초 실패 DTO를 가리는 문제가 있다. ordinary/CONTROL 여부와 관계없이 첫 오류 원객체 하나를 보존하고, 그 객체가 CONTROL인 경우에만 마지막에 그대로 전파하는 최소 수정이다. receipt 필드·정상 v1/v2 dispatch/permit/anchor/원 실행 경로는 바꾸지 않는다.
+
+사전 고정 검사는 새 --first-failure의 다섯 논리다: v1 ordinary→후행 Store close CONTROL4종, v2 ordinary→후행 ledger close CONTROL, 최초 CONTROL→후행 ordinary, 서로 다른 CONTROL2개의 첫 객체, 선행 오류 없는 owned Store close ordinary/CONTROL. 원 ordinary의 오류 DTO·그 뒤 cleanup 오류 기록·known Store/ledger close 각각1회·미소비 baseline/permit2와 원 Store raw/native를 확인한다. 부모14/9·host7 등의 넓은 반복과 실제 loop/모델·프로필/permit 발급·원 운영17 변경은0이다. authored synthetic fixture의 setup과 제품의 미소비 경로를 구분한다.
+
+- [x] 최소 RED 원본 보존
+- [x] first-primary 최소 수정과 같은 좁은 다섯 논리 GREEN
+- [x] 원50 test method AST·범위 밖1989 파일 raw/native 보존
+- [ ] 정상 commit/push·원격 exact 뒤 root 독립 delta·회귀 수용
+
+실제 관측은 서로 구분한다. 첫 RED는5논리/1.075초/6 failure이며 실제 ordinary→후행 CONTROL 재현5와 관측 Proxy가 G3 exact Store 타입 검사에 걸린 준비/기대 오류1을 포함한다. 원 prefix를 보존하고 실제 Store 객체의 close만 관측하도록 고친 proper RED는5논리/1.388초/5 failure다. 첫 GREEN은 같은5논리/1.459초/exit0 PASS이며 같은 정상 검사를 다시 반복하지 않았다. 4개 CONTROL subtest를 별도5개 논리로 부풀리지 않는다.
+
+core는 초기 control→primary, nonlocal, 첫 객체 무조건 보존, 마지막 isinstance(primary, CONTROL)의 네 군데만 바꿨다. 새 테스트 메서드5+관측 helper2를 추가하고 원50개 메서드 AST는 동일하다. 세 raw namespace의 파일301/보존4,719,717바이트와 호출 관측32개는 재실행·준비 오류를 포함한 보존량이며 고유 통과 논리의 합계가 아니다. 각 호출에서 Store raw/native·업무 행·baseline/permit2 불변, known Store/ledger close 각1회, producer argv0을 관측했다. 최대 namespace는104파일/1,579,239바이트이며 OS 물리적 peak는 null이다. 실제 runtime/모델·OS KnownFolder 프로필/실제 permit·운영17 변경은0이다. private `.local/FHF-001/`에 첫 실패·proper RED·첫 GREEN·관측 원형과 source 보존 목록을 보존한다. 독립 검수·총괄 회귀·completed-current 구현은 이 통과 주장에 포함하지 않는다.
+
 ## 명시 측정 선택 workflow v2 — 2026-10-26
 
 DEV2-REGISTERED-WORKFLOW-SELECTION-HOST-001은 정확 공개 base30cd27bc47e70e93713d984b8ac545e801217b9c의 독립 clone에서 host/test/usage3만 수정한다. 불필요한 의존 cherry는 없다. 수용 [selector](conducted_measurement_selector_usage.md) e258과 [선택 finalizer](conducted_execution_result_finalizer_usage.md) 7226+15b의 원 API를 사용한다. 등록921+d2e·원 운영profile/ref17·원 proof는 변경하지 않는다. 이 host 후보의 독립 검수는 아직 대기다.
