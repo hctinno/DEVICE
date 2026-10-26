@@ -207,10 +207,20 @@ def _attach(result, value):
 def run_intake_plan_virtual_execution(context, analysis, plan_input, *, expected_revision,
         expected_context_sha256, expected_plan_input_sha256, catalog_path: Path, catalog_sha256: str,
         response_schema_bytes: bytes, executable: Path, requested_model: str, scenario: str,
-        evidence_dir: Path, execution_origin: str, cancel_event=None, quantity=None, evidence_reservation=None) -> dict:
+        evidence_dir: Path, execution_origin: str, cancel_event=None, quantity=None, evidence_reservation=None,
+        model_process_limit=8, wall_seconds_limit=180) -> dict:
     """Revalidate caller snapshots then enter one delegated synthetic loop; never grant authority."""
     result = _result(execution_origin)
     try:
+        if type(model_process_limit) is not int or not 1 <= model_process_limit <= 8:
+            _block('invalid_input')
+        try:
+            valid_wall = (type(wall_seconds_limit) in (int, float) and math.isfinite(wall_seconds_limit)
+                          and 0 < wall_seconds_limit <= 180)
+        except OverflowError:
+            valid_wall = False
+        if not valid_wall:
+            _block('invalid_input')
         reservation = _reservation(evidence_reservation)
         source = _validate(context, analysis, plan_input, expected_revision, expected_context_sha256,
                            expected_plan_input_sha256, execution_origin, result)
@@ -227,6 +237,7 @@ def run_intake_plan_virtual_execution(context, analysis, plan_input, *, expected
     result['execution'].update(loop_entered=True, trial_factory_calls=None, producer_calls_started=None)
     try:
         options={} if reservation is None else dict(evidence_reservation=reservation)
+        options.update(model_process_limit=model_process_limit, wall_seconds_limit=wall_seconds_limit)
         original = _run_loop(catalog_path=catalog_path, catalog_sha256=catalog_sha256,
             response_schema_bytes=response_schema_bytes, executable=executable, requested_model=requested_model,
             scenario=scenario, evidence_dir=evidence_dir, execution_origin=execution_origin,
