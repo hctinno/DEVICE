@@ -17,9 +17,10 @@ import uuid
 
 ROOT=Path(__file__).resolve().parents[1];sys.path[:0]=[str(ROOT),str(ROOT/'tests')]
 from labflow.active_intake import register_source,scan_source
-from labflow.intake_jobs import prepare_registered_synthetic_context
+from labflow.intake_jobs import prepare_registered_synthetic_context,claim_job,complete_job
 from labflow.intake_model_boundary import decode_analysis_response
 from labflow.intake_facts_to_conducted_plan import build_conducted_plan_from_intake_facts
+from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
 from labflow.store import Store,canonical
 from labflow import codex_registered_conducted_workflow_host as host
 try:api=importlib.import_module('labflow.codex_conducted_workflow_registration')
@@ -136,6 +137,153 @@ class RegistrationTests(unittest.TestCase):
         self.sequence+=1;options=dict(scenario_id='REG-CASE',requested_model='gpt-6-astra');options.update(changes)
         result=api.prepare_registered_conducted_workflow(**options)
         self.put(self.root/('result-'+str(self.sequence)+'.json'),result);return result
+
+    def make_completed_inputs(self):
+        """Genuine disposable completion; never make a completed row queued again."""
+        store=Store.open_existing(str(self.store_root))
+        try:
+            job=claim_job(store,'completed-registration-fixture',now=102)
+            # The same already-decoded authored response belongs to this job;
+            # a convenience text provider would omit its non-FIELDS RF line.
+            complete_job(store,job['job_id'],job['token'],self.analysis,now=103)
+        finally:store.close()
+        self.method=dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output')
+        current=read_current_conducted_plan_from_facts(self.store_root,job['intake_id'],method=self.method)
+        self.context=current['context'];self.analysis=current['analysis'];self.plan=current['facts_plan']['plan_input']
+        self.assertEqual(current['facts_plan']['status'],'ready_for_simulation')
+        self.meta['files']['analysis.json']=self.put(self.data/'analysis.json',self.analysis)
+        self.meta['files']['plan-input.json']=self.put(self.data/'plan-input.json',self.plan)
+        self.meta.update(schema_version=3,context_scope='completed_current_provided',measurement_ref=None,
+            measurement_selection_policy=dict(schema_version=1,kind='unique_same_run_sensor_acquisition'))
+        self.bind()
+
+    def completed_host_dependency(self,root,config,scenario,owned):
+        """Named _prepare dependency seam only; the native data gate stays real."""
+        self.assertEqual(scenario,'REG-CASE')
+        workflow=json.loads((root/'registered-workflow.json').read_bytes())
+        self.assertEqual(H(C(workflow)),config['workflow_sha256'])
+        owned['store']=Store.open_existing(config['store_root'])
+        current=read_current_conducted_plan_from_facts(owned['store'].root,self.context['intake_id'],method=self.method)
+        return workflow,current['context'],current['analysis'],current['facts_plan']['plan_input'],(root/'response-schema.json').read_bytes()
+
+    def test_completed_current_txt_is_verified_with_named_host_dependency(self):
+        self.make_completed_inputs()
+        originals={p:p.read_bytes() for p in [self.store_root/'lab.sqlite3',self.root/'i/b/r.txt']}
+        native={p:(p.stat().st_dev,p.stat().st_ino,p.stat().st_nlink,p.stat().st_size,p.stat().st_mtime_ns,p.stat().st_ctime_ns) for p in originals}
+        with patch.object(host,'_prepare',side_effect=self.completed_host_dependency) as prepared,patch.object(api,'prepare_registered_synthetic_context',side_effect=AssertionError('QUEUED_G3_FORBIDDEN')):
+            result=self.call()
+        self.assertEqual(result['status'],'prepared');self.assertEqual(prepared.call_count,1)
+        workflow=json.loads((self.target/'registered-workflow.json').read_bytes())
+        self.assertEqual(len(workflow),14);self.assertEqual(workflow['schema_version'],3)
+        self.assertEqual(workflow['context_scope'],'completed_current_provided');self.assertIsNone(workflow['measurement_ref'])
+        self.assertEqual(workflow['context_sha256'],H(C(self.context)));self.assertEqual(workflow['analysis_sha256'],H(C(self.analysis)))
+        self.assertEqual(workflow['plan_input_sha256'],H(C(self.plan)));self.assertEqual(len(self.meta),16)
+        self.assertEqual({p:p.read_bytes() for p in originals},originals)
+        self.assertEqual({p:(p.stat().st_dev,p.stat().st_ino,p.stat().st_nlink,p.stat().st_size,p.stat().st_mtime_ns,p.stat().st_ctime_ns) for p in originals},native)
+
+    def test_completed_foreign_source_root_is_rejected_before_staging(self):
+        self.make_completed_inputs();foreign=self.root/'foreign';foreign.mkdir();self.put(foreign/'r.txt',(self.root/'i/b/r.txt').read_bytes())
+        self.meta['registered_input_root']=str(foreign);self.bind()
+        with patch.object(host,'_prepare',side_effect=AssertionError('HOST_BEFORE_DATA_GATE')) as prepared:result=self.call()
+        self.assertEqual(result['status'],'not_prepared');self.assertEqual(prepared.call_count,0)
+        self.assertFalse(self.stage.exists());self.assertFalse(self.target.exists())
+        self.assertEqual(result['errors'][0]['code'],'codex_conducted_workflow_registration_binding_mismatch')
+
+    def test_completed_other_active_job_is_rejected_before_staging(self):
+        self.make_completed_inputs();bundle=self.root/'i/other';bundle.mkdir();self.put(bundle/'new.txt',b'product_type: lab_receiver\n')
+        store=Store.open_existing(str(self.store_root))
+        try:scan_source(store,'REG-SYN',now=110,synthetic_only=True);scan_source(store,'REG-SYN',now=111,synthetic_only=True)
+        finally:store.close()
+        with patch.object(host,'_prepare',side_effect=AssertionError('HOST_BEFORE_DATA_GATE')) as prepared:result=self.call()
+        self.assertEqual(result['status'],'not_prepared');self.assertEqual(prepared.call_count,0);self.assertFalse(self.stage.exists())
+        self.assertEqual(result['errors'][0]['code'],'codex_conducted_workflow_registration_store_not_dedicated')
+
+    def test_completed_canonical_bytes_cannot_replace_current_analysis(self):
+        self.make_completed_inputs();changed=copy.deepcopy(self.analysis);changed['producer']['name']='DIFFERENT-SUPPLIED-ANALYSIS'
+        self.meta['files']['analysis.json']=self.put(self.data/'analysis.json',changed);self.bind()
+        with patch.object(host,'_prepare',side_effect=AssertionError('HOST_BEFORE_DATA_GATE')) as prepared:result=self.call()
+        self.assertEqual(result['status'],'not_prepared');self.assertEqual(prepared.call_count,0);self.assertFalse(self.stage.exists())
+        self.assertEqual(result['errors'][0]['code'],'codex_conducted_workflow_registration_binding_mismatch')
+
+    def test_completed_scope_and_policy_are_closed_before_staging(self):
+        self.make_completed_inputs();self.meta['context_scope']='original_model_prompt';self.bind()
+        with patch.object(host,'_prepare',side_effect=AssertionError('HOST_BEFORE_DATA_GATE')) as prepared:result=self.call()
+        self.assertEqual(result['status'],'not_prepared');self.assertEqual(prepared.call_count,0);self.assertFalse(self.stage.exists())
+        self.assertEqual(result['errors'][0]['code'],'codex_conducted_workflow_registration_data_invalid')
+
+    def test_completed_host_return_cannot_hide_post_prepare_drift(self):
+        self.make_completed_inputs()
+        def drift(*args):
+            ready=self.completed_host_dependency(*args)
+            with sqlite3.connect(self.store_root/'lab.sqlite3') as con:con.execute('UPDATE intakes SET revision=revision+1 WHERE intake_id=?',(self.context['intake_id'],))
+            return ready
+        with patch.object(host,'_prepare',side_effect=drift) as prepared:result=self.call()
+        self.assertEqual(prepared.call_count,1);self.assertEqual(result['status'],'failed')
+        self.assertTrue((self.stage/'workflow-continuation.sqlite3').exists());self.assertFalse(self.target.exists())
+
+    def test_completed_first_current_control_survives_late_close(self):
+        self.make_completed_inputs();control=MemoryError('FIRST_CURRENT_CONTROL');close=api._IO.close_dirs
+        def late(obj):close(obj);raise OSError('LATE_DIRECTORY_CLOSE')
+        with patch('labflow.intake_current_facts_plan.read_current_conducted_plan_from_facts',side_effect=control),patch.object(api._IO,'close_dirs',late):
+            with self.assertRaises(MemoryError) as got:self.call()
+        self.assertIs(got.exception,control);self.assertFalse(self.stage.exists());self.assertFalse(self.target.exists())
+
+    def test_completed_unfinished_real_host_remains_dependency_pending(self):
+        self.make_completed_inputs();result=self.call()
+        self.assertEqual(result['status'],'failed');self.assertEqual(result['phase'],'current')
+        self.assertTrue(self.stage.exists());self.assertFalse(self.target.exists())
+
+    def test_completed_closed_metadata_rejects_ref_policy_extra_and_native_version(self):
+        self.make_completed_inputs();original=copy.deepcopy(self.meta)
+        changes=[dict(measurement_ref='event:17'),dict(measurement_selection_policy=None),
+            dict(measurement_selection_policy=dict(schema_version=True,kind='unique_same_run_sensor_acquisition')),
+            dict(schema_version=True),dict(context_scope=None),dict(extra=True)]
+        with patch.object(host,'_prepare',side_effect=AssertionError('HOST_BEFORE_DATA_GATE')) as prepared:
+            for change in changes:
+                with self.subTest(change=change):
+                    self.meta=copy.deepcopy(original);self.meta.update(change);self.bind();result=self.call()
+                    self.assertEqual(result['status'],'not_prepared');self.assertFalse(self.stage.exists())
+        self.assertEqual(prepared.call_count,0);self.assertFalse(self.target.exists())
+
+    def test_completed_old_context_sha_and_noncanonical_plan_reject_before_staging(self):
+        self.make_completed_inputs();original=copy.deepcopy(self.plan)
+        changed=copy.deepcopy(original);changed['binding']['context_sha256']='0'*64
+        for raw in (C(changed),C(original)+b'\n'):
+            with self.subTest(sha=H(raw)):
+                self.meta['files']['plan-input.json']=self.put(self.data/'plan-input.json',raw);self.bind()
+                with patch.object(host,'_prepare',side_effect=AssertionError('HOST_BEFORE_DATA_GATE')) as prepared:result=self.call()
+                self.assertEqual(result['status'],'not_prepared');self.assertFalse(self.stage.exists());self.assertEqual(prepared.call_count,0)
+
+    def test_completed_typed_host_wrong_tuple_cannot_publish(self):
+        self.make_completed_inputs()
+        def wrong(*args):
+            values=self.completed_host_dependency(*args);changed=copy.deepcopy(values[1]);changed['instructions']='CALLER-CONTEXT'
+            return values[0],changed,*values[2:]
+        with patch.object(host,'_prepare',side_effect=wrong):result=self.call()
+        self.assertEqual(result['status'],'failed');self.assertEqual(result['phase'],'current')
+        self.assertTrue(self.stage.exists());self.assertFalse(self.target.exists())
+
+    def test_completed_host_owned_store_must_be_the_registered_store(self):
+        self.make_completed_inputs();other=self.root/'copy-s'
+        for path in self.store_root.rglob('*'):
+            target=other/path.relative_to(self.store_root)
+            if path.is_dir():target.mkdir(parents=True,exist_ok=True)
+            else:target.parent.mkdir(parents=True,exist_ok=True);self.put(target,path.read_bytes())
+        def copied(*args):
+            values=self.completed_host_dependency(*args);owned=args[3]
+            owned['store'].close();owned['store']=Store.open_existing(str(other));return values
+        with patch.object(host,'_prepare',side_effect=copied):result=self.call()
+        self.assertEqual(result['status'],'failed');self.assertEqual(result['phase'],'current')
+        self.assertTrue(self.stage.exists());self.assertFalse(self.target.exists())
+
+    def test_completed_first_ordinary_current_failure_survives_late_control(self):
+        self.make_completed_inputs();close=api._IO.close_dirs
+        def late(obj):close(obj);raise KeyboardInterrupt('LATE_DIRECTORY_CONTROL')
+        with patch('labflow.intake_current_facts_plan.read_current_conducted_plan_from_facts',side_effect=ValueError('PRIVATE_CURRENT_ERROR')),patch.object(api._IO,'close_dirs',late):
+            result=self.call()
+        self.assertEqual(result['status'],'not_prepared');self.assertFalse(self.stage.exists())
+        self.assertEqual(result['errors'][0],dict(phase='operator',code='codex_conducted_workflow_registration_native_or_data_rejected'))
+        self.assertIn(dict(phase='directory_close',code='codex_conducted_workflow_registration_interrupted'),result['errors'])
 
     def test_pure_preflight_is_detached_and_not_authority(self):
         before=C([self.context,self.analysis,self.plan,self.q])
@@ -456,7 +604,10 @@ class RegistrationTests(unittest.TestCase):
 
 
 if __name__=='__main__':
-    if '--selection-preflight' in sys.argv:
+    if '--completed-current' in sys.argv:
+        sys.argv.remove('--completed-current');LOCAL=ROOT/'.local/ccr'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['RegistrationTests.'+name for name in RegistrationTests.__dict__ if name.startswith('test_completed_')])
+    elif '--selection-preflight' in sys.argv:
         sys.argv.remove('--selection-preflight');LOCAL=ROOT/'.local/wsr'/uuid.uuid4().hex[:8]
         unittest.main(defaultTest=['RegistrationTests.selection_preflight_v2_preserves_data_only_dto_and_legacy_pins',
             'RegistrationTests.selection_preflight_policy_requires_native_exact2_and_explicit_null_ref'])
