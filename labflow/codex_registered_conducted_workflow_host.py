@@ -248,12 +248,12 @@ def _run(scenario,model):
         requested_model=model,history=None,reservation=None,execution=None,finalization=None,errors=[],verification=dict(
             operator_scope='not_validated',execution_scope='one_registered_synthetic_conducted_workflow',origin_authenticated=False,
             remote_model_identity_verified=False,measurement='not_assessed',hardware_verified=False))
-    con=guard=control=cancel=None;consumed=entered=claimed=rollback_attempted=False;owned=dict(store=None)
+    con=guard=primary=cancel=None;consumed=entered=claimed=rollback_attempted=False;owned=dict(store=None)
     execution=finalized=None;execution_pin=finalizer_pin=None;actual=None;cleanup=False;pins=[]
     root=config=anchor=journal=evidence=None
     def error(exc,phase):
-        nonlocal control
-        if isinstance(exc,_CONTROL) and control is None:control=exc
+        nonlocal primary
+        if primary is None:primary=exc
         if type(exc) is _Failure:code=str(exc)
         elif isinstance(exc,(IntakePlanVirtualExecutionError,ConductedExecutionResultFinalizerError,StoreOpenError)):code=exc.code
         elif isinstance(exc,_native_host._Failure):
@@ -368,7 +368,7 @@ def _run(scenario,model):
         if guard is not None:
             try:guard.close()
             except BaseException as exc:error(exc,'ledger_guard_close')
-    if control is not None:raise control
+    if isinstance(primary,_CONTROL):raise primary
     return record
 
 
