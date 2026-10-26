@@ -1202,6 +1202,164 @@ class UncertaintyForwardTests(unittest.TestCase):
         self.observed.update(partial_bytes=19, attempts=1, parent_calls=1, original_failure=error.receipt)
 
 
+
+# Native read/close precedence checks are opt-in; original cohorts stay unchanged.
+READ_CLOSE_OBSERVATIONS = []
+
+
+class ReadCloseFirstErrorTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        value = os.environ.get('DGM_FINALIZER_READ_CLOSE_REPLAY_ROOT')
+        self.assertTrue(value, 'Provide pinned retained native evidence; no fresh execution')
+        self.evidence = Path(value)
+        self.execution = json.loads((self.evidence / 'execution-receipt.json').read_bytes())
+        self.original = C(self.execution)
+        self.temp = tempfile.TemporaryDirectory(prefix='native-read-close-')
+        self.addCleanup(self.temp.cleanup)
+        self.work = Path(self.temp.name)
+        self.observed = {}
+
+    def tearDown(self):
+        READ_CLOSE_OBSERVATIONS.append(dict(name=self._testMethodName, observations=self.observed,
+            execution_unchanged=C(self.execution) == self.original,
+            files=[dict(path=p.relative_to(self.work).as_posix(), bytes=p.stat().st_size, sha256=H(p.read_bytes()))
+                   for p in sorted(self.work.rglob('*')) if p.is_file()]))
+
+    def exercise(self, primary, cleanup, *, selected=False):
+        import errno
+        real_read = api._native._read_descriptor
+        real_close = api._native._WindowsIO.close
+        real_inputs = api._read_inputs
+        real_os_close = os.close
+        close_rows, read_rows, helper_errors, receipts = [], [], [], []
+        def read(descriptor, limit, code):
+            if primary is not None:
+                prefix = os.read(descriptor, 19)
+                (self.work / 'first-native-read-prefix.bin').write_bytes(prefix)
+                read_rows.append(dict(bytes=len(prefix), sha256=H(prefix), primary=type(primary).__name__))
+                raise primary
+            raw = real_read(descriptor, limit, code)
+            read_rows.append(dict(bytes=len(raw), sha256=H(raw), primary=None))
+            return raw
+        def close(backend):
+            held = list(backend.held)
+            closed = []
+            row = dict(held_before=held, held_unique=len(held) == len(set(held)), real_close_returned=False)
+            close_rows.append(row)
+            def close_descriptor(fd):
+                closed.append(fd)
+                return real_os_close(fd)
+            try:
+                with patch.object(os, 'close', side_effect=close_descriptor):
+                    real_close(backend)
+            except BaseException as error:
+                row['native_close_error_type'] = type(error).__name__
+                raise
+            row.update(real_close_returned=True, closed=closed, held_after=list(backend.held),
+                directories_empty=not backend.directories, closed_once_in_original_order=closed == list(reversed(held)))
+            # Check immediately, before opening proof files or doing further I/O.
+            bad = []
+            for descriptor in held:
+                try:
+                    os.fstat(descriptor)
+                except OSError as error:
+                    if error.errno != errno.EBADF:
+                        bad.append(dict(fd=descriptor, errno=error.errno))
+                else:
+                    bad.append(dict(fd=descriptor, still_open=True))
+            row.update(immediate_all_observed_FDs_EBADF=not bad, unexpected=bad,
+                injected_after_real_close=True, injected_type=type(cleanup).__name__)
+            raise cleanup
+        def witness(*args):
+            receipts.append(args[-1])
+            try:
+                return real_inputs(*args)
+            except BaseException as error:
+                helper_errors.append(error)
+                raise
+        options = dict(expected_execution_sha256=H(C(self.execution)), evidence_dir=self.evidence,
+            measurement_ref=None, workspace_root=self.work, artifact_name='never-published')
+        if selected:
+            options['measurement_selection_policy'] = dict(schema_version=1, kind='unique_same_run_sensor_acquisition')
+        observed = None
+        with patch.object(api._native, '_read_descriptor', side_effect=read), \
+                patch.object(api._native._WindowsIO, 'close', close), \
+                patch.object(api, '_read_inputs', side_effect=witness), \
+                patch.object(api, '_build_result', side_effect=AssertionError('builder must not run')) as build, \
+                patch.object(api, '_select_result', side_effect=AssertionError('selector must not run')) as select, \
+                patch.object(api, '_write_result', side_effect=AssertionError('writer must not run')) as write:
+            try:
+                api.finalize_conducted_execution_result(self.execution, **options)
+            except BaseException as error:
+                observed = error
+        self.observed.update(reads=read_rows, closes=close_rows, observed_type=type(observed).__name__,
+            helper_error_type=type(helper_errors[0]).__name__ if helper_errors else None,
+            helper_kept_first=bool(helper_errors and helper_errors[0] is primary),
+            public_kept_primary_control=observed is primary,
+            public_kept_cleanup_control=observed is cleanup,
+            receipt=copy.deepcopy(receipts[0]) if receipts else None,
+            builder_calls=build.call_count, selector_calls=select.call_count, writer_calls=write.call_count,
+            global_FD_state='unknown; only recorded backend-held CRT descriptors checked')
+        self.assertEqual(len(close_rows), 1)
+        audit = close_rows[0]
+        self.assertTrue(audit['held_before'])
+        self.assertTrue(audit['held_unique'])
+        self.assertTrue(audit['real_close_returned'])
+        self.assertTrue(audit['closed_once_in_original_order'])
+        self.assertEqual(audit['held_after'], [])
+        self.assertTrue(audit['directories_empty'])
+        self.assertTrue(audit['immediate_all_observed_FDs_EBADF'])
+        for boundary in (build, select, write):
+            self.assertEqual(boundary.call_count, 0)
+        self.assertFalse((self.work / '.local/conducted-result-artifacts').exists())
+        self.assertEqual(C(self.execution), self.original)
+        return observed, helper_errors[0], receipts[0]
+
+    def read_close_ordinary_read_then_memory_keeps_public_first_failure(self):
+        primary, cleanup = OSError('provided ordinary read failure'), MemoryError()
+        observed, helper_error, receipt = self.exercise(primary, cleanup)
+        self.assertIsInstance(observed, api.ConductedExecutionResultFinalizerError,
+            'An earlier ordinary native read failure must not be replaced by cleanup CONTROL')
+        self.assertIs(helper_error, primary)
+        self.assertEqual(observed.code, 'conducted_execution_result_finalizer_evidence_read_failed')
+        self.assertEqual(observed.stage, 'read')
+        self.assertEqual(receipt['failure'], dict(code=observed.code, stage='read'))
+        self.assertEqual(receipt['secondary_errors'],
+            [dict(code='conducted_execution_result_finalizer_evidence_close_failed', stage='read')])
+        self.assertEqual(len(receipt), 11)
+        self.assertEqual(receipt['status'], 'held')
+        self.assertIsNone(receipt['result'])
+        self.assertIsNone(receipt['artifact'])
+        prefix = (self.work / 'first-native-read-prefix.bin').read_bytes()
+        self.assertEqual(len(prefix), 19)
+        self.assertEqual(prefix, (self.evidence / 'caller-request.json').read_bytes()[:19])
+
+    def read_close_first_control_survives_later_control_selected_shape(self):
+        primary, cleanup = KeyboardInterrupt(), MemoryError()
+        observed, helper_error, receipt = self.exercise(primary, cleanup, selected=True)
+        self.assertIs(observed, primary)
+        self.assertIs(helper_error, primary)
+        self.assertEqual(len(receipt), 12)
+        self.assertIsNone(receipt['measurement_selection'])
+        self.assertEqual(receipt['secondary_errors'],
+            [dict(code='conducted_execution_result_finalizer_evidence_close_failed', stage='read')])
+        self.assertFalse(receipt['execution_authority'])
+
+    def read_close_without_earlier_error_propagates_cleanup_control(self):
+        cleanup = MemoryError()
+        observed, helper_error, receipt = self.exercise(None, cleanup)
+        self.assertIs(observed, cleanup)
+        self.assertIs(helper_error, cleanup)
+        self.assertEqual(len(receipt), 11)
+        self.assertEqual(len(receipt['input_files']), 5)
+        self.assertEqual(len(self.observed['reads']), 5)
+        self.assertEqual(receipt['secondary_errors'], [])
+        self.assertIsNone(receipt['result'])
+        self.assertFalse(receipt['verification']['evidence_snapshot_verified'])
+
+
+
 if __name__ == '__main__':
     if '--uncertainty-forward' in sys.argv:
         sys.argv.remove('--uncertainty-forward')

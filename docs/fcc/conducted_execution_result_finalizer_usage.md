@@ -1,5 +1,21 @@
 # 실행된 conducted 결과의 finalizer
 
+## 읽기/close 최초 오류 보존 수정 — 2026-10-26
+
+기존 `_read_inputs`의 정리 분기에서, 먼저 발생한 ordinary 읽기 오류를 후행 cleanup CONTROL로 바꾸던 상속 guard를 수정했다. 읽기 구간에 먼저 오류가 있으면 그 오류를 유지하고 후행 close 오류를 기존 `secondary_errors`의 `conducted_execution_result_finalizer_evidence_close_failed`로 남긴다. 최초 오류가 CONTROL이면 같은 객체를 전파한다. 앞 오류가 없을 때만 close ordinary는 기존 evidence_close_failed, close CONTROL은 같은 객체가 된다. CONTROL의 객체 동일성과 후행 오류의 우선순위는 별개다.
+
+이는 e44 부모와094e에 공통으로 있던 조건의 한 줄 수정이다. optional uncertainty 전달이 만든 회귀가 아니며, 원094e scoped10 PASS·부모 이력·기대값을 소급 변경하지 않는다. API/서명/원 exact11·선택 exact12·measurement selection/None·uncertainty 전달/한도·저장3·권한·DTO·규범값·다른 knownclose는 바꾸지 않는다.
+
+구현 전 고정 기대와 실제 재현 RED1 FAIL을 보존했다. 이미 보존된 같은 native5파일/원 execution6만 읽기 복사하고 source bytes·정수 native 핀의 전후 동일을 확인했다. 실제 native descriptor에서19 bytes를 읽은 뒤 OSError를 주입했고, 실제 WindowsIO.close 완료 후에만 MemoryError를 주입했다. 수정 전에는 helper/public 모두 후행 MemoryError가 되어 앞 읽기 오류와 secondary가 사라졌다. 이 원 실패와19-byte prefix를 성공으로 바꾸거나 지우지 않는다.
+
+최소 guard 뒤 새3 PASS와 직접 영향 기존 ordinary-read/ordinary-close1 PASS다. 새 경계는 ordinary→MemoryError의 evidence_read_failed/read/held·close secondary/11, 최초 KeyboardInterrupt→후행 MemoryError의 같은 최초 객체·선택12, 앞 오류 없는 native5 읽기→close MemoryError의 같은 cleanup 객체/11이다. builder/selector/writer/budget0, 새 RF/loop/model/CLI/SQL0·전체 positive workflow 반복0이다.
+
+각 신규 경계는 backend.held에 있던 CRT FD 목록을 기록하고 원 native close를1회 실행했다. 관측 FD들이 중복 없이 원 LIFO 순서로 각각1회 닫혔고, 추가 I/O 전에 fstat가 모두 EBADF였으며 held/directories가 비었음을 확인한 뒤 후행 오류를 주입했다. 이는 기록한 FD 범위의 closed 확인이다. 전역 descriptor·운영 세션·외부 상태는 unknown이며 전역 누수 부재나 실제 장비 정리를 입증하지 않는다. 원 자료·prefix·실패를 보존하며 재닫기·재시도·수선은 없다.
+
+이 opt-in `ReadCloseFirstErrorTests.read_close_*` cohort는 명시 retained 입력을 사용하며 기존 default cohort/CLI를 변경하지 않는다. 같은 source6 재사용은 새 가상 실행이나 실제 모델 실행이 아니다. 전체 실장비/현장·규범·업무 무인화는 여전히 미검증이며 독립 수용은 총괄 검토 뒤 별도다.
+
+
+
 ## 명시적 불확도 검토 입력 전달 — 2026-10-26
 
 최종화 API에 keyword-only `uncertainty_inputs=None`을 추가했다. 생략 또는 None이면 writer에 이 키를 전달하지 않고 기존 인자·반환 exact11/선택 모드 exact12·result JSON·DRAFT·manifest bytes와 budget 호출0을 유지한다. 값이 있을 때만 기존 native snapshot 한도(UTF-8 262144 bytes, depth32)를 적용한 후 원 result 객체를 [기존 artifact writer](conducted_result_artifact_usage.md)에 전달한다. 외부 객체/subclass hook, 순환, 비유한 수, 초과 입력은 evidence open 전에 input_invalid로 거절한다.
