@@ -237,10 +237,10 @@ python -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --documen
 | `invalid-citation` | 새 scripted MOCK 응답의 features 인용을 그 새 PDF와 불일치하도록 작성 | genuine strict의 `analysis_response_invalid`와 원 응답 prefix를 보존. 그 소유 claim만 fail_job, 분석 미완료·runtime0·결과/초안 not_run, exit1 |
 | `measurement-invalid` | 새 mock에서 DUT 안정화 전 acquire, 이후 read | 실제 invalid receipt/관측→genuine D3 measurement_invalid, 원 raw/corrected=null·result invalid·storage complete·DRAFT, exit1 |
 | `restored-disconnect` | 기존 public loop의 `restored_disconnect` | 실제 DUT.start의 disconnected와 sensor invalid를 기록. 고정 다섯 동작은 공개 복구 시각 전 종료하므로 복구 성공/복구 실패 검증으로 부르지 않음. 원 measurement_invalid/null·invalid·complete·DRAFT, exit1 |
-| `transport-error` | 공개 plan/loop에 일반 transport fault 주입 인자 없음 | unsupported·runtime0·Store/UI/결과/초안 not_run, 정확 public_seam 공백을 summary에 보존, exit1 |
-| `recovery-failure` | 같은 entry에 failed-restoration/persistent-disconnect 선택 인자 없음 | unsupported·runtime0·Store/UI/결과/초안 not_run. 기존 restored_disconnect를 복구 실패 주입으로 바꾸지 않음, exit1 |
+| `transport-error` | 기존 public `persistent_disconnect`, 5결정·4명령·2tick/ref17 | DUT link-state unavailable와 취득 뒤 원 무효 packet(측정 출력 부재)을 같은 journal에 남긴 뒤 `stop(blocked)`. 원 `incomplete/execution_incomplete`, corrected null·complete·DRAFT, fixture fail·exit1 |
+| `recovery-failure` | 같은 `persistent_disconnect`, 8결정·7명령·3tick/ref29 | 최초 무효 관측 뒤 `DUT.start` 재시작1·sensor 재취득1도 같은 fault에서 무효. native recover/transport 예외 주입이 아니며 원 `incomplete/execution_incomplete`, null·DRAFT·exit1 |
 
-측정 무효의 새 mock 정책만 `DUT.start → sensor.acquire → advance1 → sensor.read → stop`으로 작성한 뒤 컴파일한다. 정상과 RF 단절은 기존 정상 정책의 원 소스 bytes·동작 순서를 유지한다. 기존 원 응답·고객 파일·기존 출력·measurement_ref·수치·binding을 사후 수정하지 않는다. 실패 예시의 mock `completed` 주장은 원 정책의 주장으로 남으며 fixture 수용 성공·정상 측정·규범 PASS로 올리지 않는다.
+기존 `measurement-invalid` 정책은 `DUT.start → sensor.acquire → advance1 → sensor.read → stop`이며 정상과 `restored-disconnect`의 원 소스 bytes·동작 순서는 유지한다. 두 새 link-state 시나리오는 아래 통신·복구 절의 bounded blocked 정책만 추가한다. 기존 원 응답·고객 파일·기존 출력·measurement_ref·수치·binding을 사후 수정하지 않는다. 기존 실패 예시의 mock `completed` 주장과 새 `blocked` 주장은 각 원 정책으로 남으며 fixture 수용 성공·정상 측정·규범 PASS로 올리지 않는다.
 
 실행 전 오류·blocked에서도 새 폴더의 `public-summary.json`에 scenario·runtime_calls·result/storage/draft 상태와 null을 남긴다. 무효 측정에서도 원 `execution-original.json`, `finalizer-original.json`, 실제 D3 payload/manifest와 DRAFT를 보존한다. 이때 저장 complete와 결과 invalid는 별개다. 인용 거절은 원 `analysis-MOCK-original.json`과 `failure.json`의 strict prefix·phase를 먼저 보존하며 strict/plan/실행/초안 파일을 만들어 성공처럼 채우지 않는다. 명시 시나리오에서 예상한 그 strict 오류만 rejected로 반환해 실패한 Store의 읽기 화면을 열 수 있다. 다른 native 오류와 제어 예외는 기존 최초 오류 경로로 전파한다.
 
@@ -302,3 +302,15 @@ current None은 caller가 현재 facts를 제공할 수 없다는 명시 상태�
 원 독립 startup 검수12의 11 PASS/I1 FAIL1을 보존한다. 원 writer의 `with target.open('xb')` 본문에서 write `MemoryError` 뒤 close `OSError`가 최초 control을 대체하는 경로를 실제 xb19B·flush/fsync·fd close로 새 RED1에서 재현했다. `_conducted_write`는 write의 최초 `BaseException`을 본문 안에서 저장하고 기존 context exit/close를 한 번 시도한다. 최초 오류가 있으면 후행 close가 대체하지 않고, write가 성공한 뒤 close만 실패하면 그 원래 객체를 전파한다. 기존 xb·cap·부분 파일·충돌·parent 실패·serializer·export 입력계약은 같고 재시도/삭제/복구를 추가하지 않았다.
 
 새검사5+영향 기존5=10검사 PASS(failure/error/skip0), 같은 검사의 오류·성공 조합15행과 실제 파일24개를 보존했다. 원 RED19B 파일/로그/raw를 그대로 남겼으며 다시 만들어 통과시키지 않았다. 기존 old9/old11 전체 반복0이다. 범위는 실제 로컬 native 파일에 주입한 write/close 예외이며 전역 파일시스템 장애 보증이 아니다. RF·CLI·모델·auth·SQL·운영 Store·실장비 실행0이며 원 No와 이 후보의 독립 수락을 구분한다.
+
+### 2026-10-26 통신 단절·유계 복구 실패의 실제 저장 연결
+
+두 선택은 기존 `run_intake_plan_virtual_execution → run_codex_virtual_loop → prepare_sensor_trial(condition='persistent_disconnect')`에 연결된다. 기존 준비 factory가 한 SensorTrial/VirtualFleet의 DUT disconnect 상태를 만들며 policy에는 author_control/reset/recover를 새로 위임하지 않는다. `transport-error`는 실제 link-state unavailable이며 `RetryableTransportError`를 발생시켰다는 뜻이 아니다. 정상·measurement-invalid·restored-disconnect의 원 mock source/정책·기대와 export 입력계약은 같다.
+
+통신 순서는 `DUT.start → advance1 → sensor.acquire → advance1 → stop(blocked)`와 명시 ref17이다. 복구 실패는 `DUT.start → advance1 → sensor.acquire → advance1 → DUT.start → sensor.acquire → advance1 → stop(blocked)`와 명시 ref29다. 첫 무효 관측 뒤 재시작·재취득을 각 한 번 시도하며 새 runtime이나 latest ref를 만들지 않는다. 공개 builder는 completed stop만 완료 근거로 받으므로 이 blocked stop의 원 결과는 `incomplete/execution_incomplete`다. 원 raw packet/측정 부재·refs·gaps·null을 보존하고 recorded/measurement_invalid/PASS로 수선하지 않는다. 기존 parent/writer 실패는 first error/control·partial·held/null 그대로다.
+
+2026-10-26 검증 분모는 분리한다. 구현 전 RED2는 unsupported/runtime0로 FAIL2였다. 첫 genuine1은 관측기가 표준입력 `nul`을 막아 version spawn 전에 ERROR1(runtime1/도구0), recovery 미실행으로 원 bytes/receipt를 보존했다. 정확 `os.devnull` 허용 뒤 원 mock 소스·실행파일 불변의 별도 version probe는 exit0/RF0였다. 후행 genuine 원2는 통신 PASS1·복구 ERROR1이며 복구는 8동작/journal/ref29를 남겼으나 185.093초의 원 `cleanup_failed`로 저장 전 중단했다. 이 한도 초과를 준수나 성공으로 바꾸지 않는다.
+
+총괄이 허용한 별도 recovery1에서는 SQL connection이 열렸을 때만 관측기를 활성화하고 native close 뒤 해제하며 runtime 진입 전 해제를 확인했다. 같은 정책/ref29/한도에서 PASS1, 실제 DRAFT 저장·원 null·exit1과 SQL20/close20을 확인했다. 성공 통신은 재실행하지 않았다. 따라서 목표 두 사례의 성공 증거는 후행 원2의 통신1과 별도 recovery1이며, 원2 전체가 PASS라는 집계가 아니다. 좁은 기존 회귀4는 별도 PASS4이고 전체 새 가상 runtime 생성은 준비 실패까지 포함4다. 실제 모델·provider/auth·운영 Store·실장비/현장0이며 새 운영 profile은 없다.
+
+180초/8결정·8명령·8tick/transport retry0, producer≤min(60,remaining-6), compiler30초, 출력512파일/32MiB를 바꾸지 않았다. 원 증거는 유지하고 후속은 별도 namespace에서 같은 한도를 적용했다. 관측기 benchmark는 RF/SQL0의 국소 비교이며 과거185초 전체 원인을 인증하지 않는다. 알려진 SQL/host/artifact cleanup과 원 bytes 정합성은 전역 OS 자원·실장비·AI 진위 인증과 구별한다.

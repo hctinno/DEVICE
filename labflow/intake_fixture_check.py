@@ -126,10 +126,6 @@ _CONDUCTED_MOCK_NAME = 'DGM-AUTHORED-SCRIPTED-MOCK-PDF'
 _CONDUCTED_SCHEMA_SHA = 'aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb'
 _CONDUCTED_SCENARIOS = ('normal', 'missing-duty-unit', 'invalid-citation',
                         'measurement-invalid', 'restored-disconnect', 'transport-error', 'recovery-failure')
-_CONDUCTED_UNSUPPORTED = {
-    'transport-error': 'The public plan/loop entry has no transport-fault injection parameter; producer failure is not a device communication error.',
-    'recovery-failure': 'The public entry has no failed-restoration or persistent-disconnect selector; restored_disconnect alone does not establish recovery failure.',
-}
 
 # A new, local mock binary, never the installed CLI. It implements only the
 # public producer envelope and an explicitly authored five-action policy.
@@ -237,6 +233,22 @@ def _compile_conducted_mock(output, compiler, *, scenario='normal'):
             raise ValueError('conducted_workflow_mock_policy_invalid')
         source = source.replace(original, replacement)
         policy = ['dut.start', 'sensor.acquire', 'advance:1', 'sensor.read', 'stop:completed']
+    elif scenario == 'transport-error':
+        source = source.replace('"claim","completed"', '"claim","blocked"')
+        policy = ['dut.start', 'advance:1', 'sensor.acquire', 'advance:1', 'stop:blocked']
+    elif scenario == 'recovery-failure':
+        original = ('if(step==1) proposal=D("kind","execute","device_id","dut","action","start","parameters",D());\n'
+                    '      else if(step==2 || step==4) proposal=D("kind","advance","ticks",1);\n'
+                    '      else if(step==3) proposal=D("kind","execute","device_id","sensor","action","acquire","parameters",D());')
+        replacement = ('if(step==1 || step==5) proposal=D("kind","execute","device_id","dut","action","start","parameters",D());\n'
+                       '      else if(step==2 || step==4 || step==7) proposal=D("kind","advance","ticks",1);\n'
+                       '      else if(step==3 || step==6) proposal=D("kind","execute","device_id","sensor","action","acquire","parameters",D());')
+        if source.count(original) != 1 or source.count('if(step>5)') != 1:
+            raise ValueError('conducted_workflow_mock_policy_invalid')
+        source = source.replace(original, replacement).replace('if(step>5)', 'if(step>8)')
+        source = source.replace('"claim","completed"', '"claim","blocked"')
+        policy = ['dut.start', 'advance:1', 'sensor.acquire', 'advance:1',
+                  'dut.start', 'sensor.acquire', 'advance:1', 'stop:blocked']
     _conducted_write(output, 'm/authored-mock.cs', source)
     executable = output / 'm/codex.exe'
     compiled = subprocess.run([str(compiler), '/nologo', '/target:exe',
@@ -477,15 +489,9 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
     reason = ('conducted_workflow_pdf_required' if document_kind != 'pdf' else
               'conducted_workflow_measurement_ref_required' if not isinstance(measurement_ref, str) or not measurement_ref else
               'conducted_workflow_mock_model_required' if mock_model not in ('gpt-6.1-sol', 'gpt-6-astra') else
-              'conducted_workflow_windows_mock_compiler_required' if compiler is None else
-              'conducted_workflow_public_fault_seam_unavailable' if scenario in _CONDUCTED_UNSUPPORTED else None)
+              'conducted_workflow_windows_mock_compiler_required' if compiler is None else None)
     if reason:
         summary.update(status='unsupported', reason=reason)
-        if scenario in _CONDUCTED_UNSUPPORTED:
-            summary['public_seam'] = {'entry': 'run_intake_plan_virtual_execution / run_codex_virtual_loop',
-                'supported_scenarios': ['normal', 'restored_disconnect'],
-                'allowed_tools': ['dut.start', 'sensor.acquire', 'sensor.read', 'advance:1', 'bounded stop'],
-                'missing': _CONDUCTED_UNSUPPORTED[scenario]}
         _conducted_json(output, 'public-summary.json', summary)
         return {'summary': summary, 'workspace': None, 'output': output}
     phase = 'prepare_intake'
@@ -592,12 +598,14 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
             raise ValueError('conducted_workflow_schema_unsupported')
         catalog = project / 'virtual_profiles/sm_a176u_unlicensed.json'
         phase = 'execute_same_plan'
+        runtime_scenario = {'restored-disconnect': 'restored_disconnect',
+            'transport-error': 'persistent_disconnect', 'recovery-failure': 'persistent_disconnect'}.get(scenario, 'normal')
         execution = run_intake_plan_virtual_execution(context, analysis, plan,
             expected_revision=context['revision'], expected_context_sha256=context_pin,
             expected_plan_input_sha256=sha256(canonical(plan).encode('utf-8')).hexdigest(),
             catalog_path=catalog, catalog_sha256=sha256(catalog.read_bytes()).hexdigest(),
             response_schema_bytes=schema, executable=executable, requested_model=mock_model,
-            scenario='restored_disconnect' if scenario == 'restored-disconnect' else 'normal',
+            scenario=runtime_scenario,
             evidence_dir=output / 'x', execution_origin='mock_subprocess',
             quantity={'metric': 'on', 'reference_plane': 'sensor_input',
                       'loss_compensation_applied': False, 'loss_compensation_sign': 1})
@@ -624,7 +632,7 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         recorded = bool(result and result['status'] == 'recorded')
         summary.update(status='stored' if stored else 'held', runtime_calls=execution['execution']['trial_factory_calls'],
             producer_calls=execution['execution']['producer_calls_started'],
-            runtime_scenario='restored_disconnect' if scenario == 'restored-disconnect' else 'normal',
+            runtime_scenario=runtime_scenario,
             failure=finalized['failure'], gaps=result['gaps'] if result else None,
             draft_status=artifact['verification']['report_status'] if artifact else 'not_run',
             source_current=current_matches, result_status=result['status'] if result else None,

@@ -152,18 +152,18 @@ class ConductedFailureScenarioTests(unittest.TestCase):
             self.assertFalse((result['output'] / 'facts-plan-original.json').exists())
             self.assertFalse((result['output'] / 'x').exists())
 
-    def test_unavailable_fault_seams_are_unsupported_without_store_or_fake_device_result(self):
+    def test_link_state_scenarios_require_explicit_measurement_ref_before_store(self):
         from labflow.intake_fixture_check import run_conducted_flow
         with tempfile.TemporaryDirectory() as temporary:
             for scenario in ('transport-error', 'recovery-failure'):
                 with self.subTest(scenario=scenario):
-                    result = run_conducted_flow(Path(temporary) / scenario, measurement_ref='event:17',
+                    result = run_conducted_flow(Path(temporary) / scenario, measurement_ref=None,
                         mock_model='gpt-6.1-sol', scenario=scenario)
                     self.assertEqual(result['summary']['status'], 'unsupported')
+                    self.assertEqual(result['summary']['reason'], 'conducted_workflow_measurement_ref_required')
                     self.assertEqual(result['summary']['runtime_calls'], 0)
                     self.assertIsNone(result['workspace'])
                     self.assertEqual(result['summary']['draft_status'], 'not_run')
-                    self.assertIn('public_seam', result['summary'])
                     self.assertEqual(list(result['output'].iterdir()), [result['output'] / 'public-summary.json'])
 
     def test_unknown_scenario_is_rejected_before_output_creation(self):
@@ -923,6 +923,123 @@ class ConductedEvidenceFirstFailureTests(unittest.TestCase):
                 self.assertTrue(row['original_seed_unchanged'])
                 self.assertEqual(row['calls'],dict(open=int(existing),write=0,close=0,real_close=0))
                 self.assertIsNone(row['fd_closed'])
+
+
+
+TRANSPORT_RECOVERY_OBSERVATIONS = []
+
+
+class ConductedTransportRecoveryGenuineTests(unittest.TestCase):
+    """New link-state faults must reach one real runtime, journal and stored DRAFT."""
+    def exercise(self, scenario, ref, decisions, logical, ticks, expected_actions):
+        import io
+        from contextlib import redirect_stdout
+        from hashlib import sha256
+        from labflow import intake_fixture_check as module
+        from labflow.virtual_fleet import codex_virtual_loop as loop
+        from labflow.virtual_fleet.journal import read_operator_journal
+        original_prepare=loop._prepare;trials=[]
+        def prepare(*args,**kwargs):
+            trial=original_prepare(*args,**kwargs);trials.append(trial);return trial
+        with tempfile.TemporaryDirectory(prefix='ctr-') as temporary:
+            output=Path(temporary)/'flow';stdout=io.StringIO()
+            row=dict(case=scenario,ref=ref,origin='new native authored MOCK link-state flow; no real model',output=str(output))
+            first=None
+            try:
+                with patch.object(loop,'_prepare',side_effect=prepare),redirect_stdout(stdout):
+                    code=module.main(['--output',str(output),'--conducted-workflow','--document-kind','pdf',
+                        '--mock-model','gpt-6.1-sol','--measurement-ref',ref,'--conducted-scenario',scenario])
+                row.update(exit=code,stdout=stdout.getvalue(),actual_factory_calls=len(trials))
+                summary=json.loads((output/'public-summary.json').read_bytes());row['summary']=summary
+                self.assertEqual(summary['runtime_calls'],1)  # unsupported/exit1 is not a passing scenario.
+                self.assertEqual(len(trials),1);self.assertEqual(code,1);self.assertEqual(json.loads(stdout.getvalue()),summary)
+                self.assertEqual(summary['status'],'stored');self.assertEqual(summary['runtime_scenario'],'persistent_disconnect')
+                self.assertEqual(summary['result_status'],'incomplete');self.assertEqual(summary['fixture_acceptance'],'fail')
+                self.assertEqual(summary['storage_status'],'complete');self.assertEqual(summary['draft_status'],'DRAFT')
+                self.assertIsNone(summary['corrected']);self.assertIs(summary['ai_model_called'],False)
+                execution=json.loads((output/'execution-original.json').read_bytes());record=execution['loop']
+                final=json.loads((output/'finalizer-original.json').read_bytes());result=final['result'];artifact=final['artifact']
+                journal_path=output/'x/operator-journal.jsonl';stored=read_operator_journal(journal_path)
+                header=stored['header'];events=stored['events']
+                row.update(execution=execution,finalizer=final,journal_header=header,journal_integrity=stored['integrity'])
+                self.assertEqual(record['declaration']['scenario'],'persistent_disconnect')
+                self.assertEqual(record['status'],'stopped');self.assertEqual(record['termination']['reason'],'policy_stop')
+                self.assertEqual(record['termination']['policy_claim'],'blocked')
+                report=json.loads((output/'x/legacy-harness-report.json').read_bytes())
+                self.assertEqual(report['usage']['decisions'],decisions);self.assertEqual(report['usage']['logical_requests'],logical)
+                self.assertEqual(report['usage']['tick_delta'],ticks);self.assertEqual(report['usage']['transport_retries'],0)
+                self.assertEqual(record['budget']['producer_calls_started'],decisions);self.assertTrue(stored['complete'])
+                self.assertEqual(stored['unresolved_request_ids'],[])
+                for bound in (execution['binding'],result['binding'],artifact):
+                    self.assertEqual((bound['run_id'],bound['runtime_instance_id']),(header['run_id'],header['runtime_instance_id']))
+                self.assertEqual(trials[0].runtime_instance_id,header['runtime_instance_id'])
+                author=trials[0].author_record();row['author_state']=author
+                self.assertEqual(author['condition'],'persistent_disconnect');self.assertIsNone(author['release_tick'])
+                self.assertEqual([(x['device_id'],x['fault'],x['value']) for x in author['author_events']],[('dut','disconnect',True)])
+                intents=[x for x in events if x['type']=='intent']
+                actions=[('advance' if x['payload']['operation']=='advance' else
+                    x['payload']['body']['device_id']+'.'+x['payload']['body']['action']) for x in intents]
+                self.assertEqual(actions,expected_actions)
+                receipts={x['payload']['request_id']:x['payload']['result'] for x in events if x['type']=='receipt'}
+                starts=[x for x in intents if x['payload']['body'].get('device_id')=='dut']
+                self.assertEqual(len(starts),1 if scenario=='transport-error' else 2)
+                for intent in starts:
+                    receipt=receipts[intent['payload']['request_id']]
+                    self.assertEqual(receipt['status'],'disconnected');self.assertEqual(receipt['values']['reason'],'device_unavailable')
+                selected=next(x for x in events if x['event_id']==ref);row['selected_observation']=selected
+                self.assertEqual(selected['type'],'observation')
+                before_final=next(x for x in intents if x['payload']['request_id']==selected['payload']['cause_request_id'])
+                self.assertEqual(before_final['payload']['operation'],'advance')
+                sensor=selected['payload']['observation']['devices']['sensor'];row['invalid_sensor_packet']=sensor
+                self.assertEqual(sensor['status'],'invalid')
+                self.assertEqual(sensor['values']['outputs'],{})  # original absence, never a fabricated valid measurement.
+                if scenario=='recovery-failure':
+                    earlier=next(x for x in events if x['event_id']=='event:17')
+                    self.assertEqual(earlier['payload']['observation']['devices']['sensor']['status'],'invalid')
+                    self.assertLess(earlier['sequence'],starts[1]['sequence'])
+                    self.assertGreater(selected['sequence'],starts[1]['sequence'])
+                self.assertEqual(result['status'],'incomplete');self.assertEqual(result['failure']['code'],'execution_incomplete')
+                self.assertEqual(result['binding']['measurement_ref'],ref)
+                self.assertIsNone(result['raw_measurement']);self.assertIsNone(result['calculation']['corrected'])
+                self.assertIs(final['execution_authority'],False);self.assertIs(artifact['execution_authority'],False)
+                self.assertIs(result['verification']['execution_authority'],False)
+                self.assertEqual(result['binding']['journal_file_sha256'],sha256(journal_path.read_bytes()).hexdigest())
+                manifest_path=output/artifact['storage']['commit_marker'];manifest_raw=manifest_path.read_bytes();manifest=json.loads(manifest_raw)
+                self.assertEqual((len(manifest_raw),sha256(manifest_raw).hexdigest()),
+                    (artifact['storage']['bytes'],artifact['storage']['sha256']))
+                self.assertEqual(manifest['result_status'],'incomplete')
+                self.assertEqual((manifest['run_id'],manifest['runtime_instance_id']),(header['run_id'],header['runtime_instance_id']))
+                for item in manifest['files']:
+                    raw=(manifest_path.parent/item['path']).read_bytes()
+                    self.assertEqual((len(raw),sha256(raw).hexdigest()),(item['bytes'],item['sha256']))
+                actual_result=(manifest_path.parent/'result.json').read_bytes()
+                self.assertEqual(json.loads(actual_result),result);self.assertTrue(actual_result.endswith(b'\n'))
+                self.assertEqual(manifest['result_sha256'],sha256(actual_result[:-1]).hexdigest())
+                self.assertIn('DRAFT',(manifest_path.parent/'draft.md').read_text(encoding='utf-8').splitlines()[0])
+                startup=json.loads((output/'server-startup-original.json').read_bytes())['conducted_artifact_readback_inputs']
+                exported=json.loads((output/'readback-inputs.json').read_bytes())
+                self.assertEqual(exported,{key:value for key,value in startup.items() if key!='intake_id'})
+                self.assertEqual(startup['expected_manifest_sha256'],artifact['storage']['sha256'])
+                row.update(manifest=manifest,selection=startup,success_asserted=True)
+            except BaseException as error:
+                first=error;row.update(error_type=type(error).__name__,error=str(error),actual_factory_calls=len(trials),stdout=stdout.getvalue())
+            finally:
+                files={}
+                if output.exists():
+                    for path in output.rglob('*'):
+                        if path.is_file():
+                            data=path.read_bytes();info=path.stat()
+                            files[path.relative_to(output).as_posix()]=dict(bytes=len(data),sha256=sha256(data).hexdigest(),
+                                mtime_ns=info.st_mtime_ns,ino=info.st_ino)
+                row['files']=files;TRANSPORT_RECOVERY_OBSERVATIONS.append(row)
+            if first is not None:raise first
+
+    def test_1_transport_link_state_unavailable_reaches_native_journal_and_incomplete_draft(self):
+        self.exercise('transport-error','event:17',5,4,2,['dut.start','advance','sensor.acquire','advance'])
+
+    def test_2_one_restart_and_remeasurement_stay_invalid_in_same_runtime_and_stored_draft(self):
+        self.exercise('recovery-failure','event:29',8,7,3,
+            ['dut.start','advance','sensor.acquire','advance','dut.start','sensor.acquire','advance'])
 
 
 if __name__ == '__main__':
