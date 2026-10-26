@@ -1,5 +1,31 @@
 # 합성 접수에서 단일 가상 시험 결과까지
 
+## 선언 불확도 입력의 함수 연결 — 2026-10-26
+
+기존 함수 `run_conducted_flow`에 keyword-only `uncertainty_inputs=None`을 추가했다. 기존 product CLI `--conducted-workflow`의 인자·분기·종료·서버 동작은 그대로이며 새 flag·파일 입력 경로·기본 모델·수치·규범값을 추가하지 않는다. 옵션은 Python 함수 호출에서만 명시할 수 있다.
+
+```python
+result = run_conducted_flow(
+    new_output_dir,
+    document_kind="pdf",
+    measurement_ref=explicit_same_run_measurement_ref,
+    mock_model=explicit_authored_mock_label,
+    uncertainty_inputs={"components": declared_components, "policy": declared_policy},
+)
+```
+
+위 코드는 사용법이며 이번 단위의 전체 실행 증거가 아니다. 생략/None이면 새 snapshot 호출0이며 기존 finalizer 인자를 그대로 사용한다. non-None이면 기존 `_conducted_export_frame`으로 native graph를 분리하고 [finalizer](conducted_execution_result_finalizer_usage.md)의 기존 UTF-8 262144-byte 한도에 맞춰 그대로 전달한다. 성분·정책·근거를 만들거나 null을 숫자로 채우지 않는다. [기존 budget](conducted_uncertainty_budget_usage.md)의 지원 범위와 보류 판단, `result.calculation.conformity.uncertainty_db=None`·`applied_to_result=False`는 부모가 소유한다.
+
+기존 unsupported scenario 오류를 먼저 보존하고, foreign/subclass·순환·비유한 수·초과 native 입력은 output 생성과 compiler/Store/runtime 전에 거절한다. 공유 frame의 기존 고정 `conducted_workflow_readback_export_invalid` 코드를 재사용하며 새 오류 문법을 만들지 않는다. 이후 finalizer의 원 최초 오류·제어 예외 identity·부분 기록을 보존하고 재시도·정책 수선·DRAFT 승격을 하지 않는다.
+
+검증은 구현 전 봉인 기대와 실제 미지원 키워드 RED1 FAIL 뒤 새 typed4 PASS·기존 text unsupported 경계1 PASS다. 최초 None 비교는 복사 원본의 `__file__`에서 schema 경로를 잘못 구한 테스트 ERROR였으며 원본/실패/이전 test 파일을 보존했다. 테스트에서만 원 프로젝트 locator를 복원하고 이 비교1개만 다시 실행했다. 다른 통과 사례는 반복하지 않았고 제품·기대값은 바꾸지 않았다.
+
+새 typed 경계는 PDF/Store/analysis/plan/runtime/finalizer를 명시 제공한다. 생략·None의 원5 kwargs/summary 및 제공 finalizer가 쓴 result.json/draft.md/manifest.json3의 bytes 동일, native copy/원 실행 객체 전달, 조기 거절·hook0, 최초 오류/네 제어 객체·후행 오류·19-byte 부분 보존을 확인했다. 실제 RF·loop·model·SQL·CLI·finalizer·budget 실행은0이다. 이 제공3파일을 실제 writer의 성공·가상 전체 workflow 또는 물리 검증으로 세지 않는다. opt-in `WorkflowDeclaredUncertaintyTests.declared_*`는 명시 고정 원본 소스 위치를 제공한 테스트 loader로만 선택하며 기존 기본 cohort/제품 CLI를 변경하지 않는다.
+
+의존 후보094e의 독립 genuine retained-input 검수와 이 typed 연결 검증은 별개다. 실제 optional 전체 workflow는 후속이며, 호스트·등록·805·writer·프로필·공유/원본·실제 모델17/Vertex 상태는 변경하지 않았다. 요약의 원 task/conformity 미평가·DRAFT와 기존 최종3 manifest 계약을 유지하며 사용자 준비0이다.
+
+
+
 이 명령은 새 합성 의뢰를 만들어 접수·분석·위임·단일 센서 실행·결과 저장을 실제 구현으로 연결한다. 사용자 원본은 입력받지 않는다. PDF의 페이지 인용과 같은 접수 화면의 가상 기록을 확인하는 개발 수용 도구다.
 
 ## 실행
