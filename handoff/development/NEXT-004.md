@@ -6,10 +6,10 @@
 
 | 담당 / 실제 요청 ID | 현재 수용·독립 검수 | 실제 다음 코드·배타 소유 |
 |---|---|---|
-| 개발1 `ROOT-CODEX-WORKFLOW-READY-DATA-001` → G3 PDF 지원 | startupaae/입력9 저장873 기존3 동결·독립 검수. 실제17 근거 부족은 doc-only5e9에서 유지, 승인·실행 결과로 승격0 | 기존 정상 합성 원본을 readonly로 준비하되 queued/완료·PDF schema2/C1 차이를 숨기지 않음. 이어 G3 schema2/PDF 공개 지원을 intake_jobs/test/usage 기존3의 정확 소유·RED부터 구현. fixture_check3은 개발3으로 이관 |
-| 개발2 `DEV2-WORKFLOW-CURRENT-HANDOFF-001` | 선택 host87/등록226 각 기존3 동결·독립 검수, 원 v1/최초 오류/finite permit 보존 | 정식 workflow 원 context와 현재 readonly facts/analysis/revision/C1 인계의 가장 작은 코드 접점을 확정. 소유 최소3을 총괄과 고정 후 구현. queued를 완료로 꾸미거나 context 복사로 current를 만들지 않음; 운영profile/permit·실제AI0 |
-| 개발3 `DEV3-WORKFLOW-READBACK-EXPORT-001` | bridge499/CLI280+d7 수용, 새 root8/9 PASS. 원 독립12의 No2·구 CLI 오류는 보존 | 정확873 의존 별도 clone에서 이관받은 fixture_check core/test/usage3. caller 독립 current exact3+method+실제 artifact root를 원 workflow/finalizer DTO와 결합해 readback 입력을 export. None/blocked/실패 DRAFT·C1 차이를 보존하고 실제 권위/현재 사실을 생성하지 않음 |
-| 개발4 `DEV4-FRESH-CONDUCTED-OPERATOR-WALKTHROUGH-001` | 저장화면aac9 수용(root Node12/genuine6/typed26), keyboardbc49 독립 대기. freshoperator1c16은 담당 최초 CLI1→1440 DOM1 PASS 보고·독립 pending | browsercheck/usage 기존2만 소유. 새 공개 CLI→원 startup→같은 접수/계획/run/저장3/DRAFT·미평가·AI unknown을 한 실제 pointer 흐름으로 검증·게시. app/core/기존 mock·실모델0. 의존aae/873/bc49 수용 후 총괄 단일 fresh 시연 검수 |
+| 개발1 `DEV1-G3-PDF-CONTEXT-001` | READY-DATA는 원 completed/PDF·원/현재 C1 차이대로 blocked 인계. 원 current preflight만 validated이며 권한 아님; G3/not_ready·copiedStore0 | 정확 e3ee 새 독립 clone의 intake_jobs/test/usage 기존3. queued 합성 PDF/schema2의 공개 context/prompt·원문 인용 지원을 RED부터 구현. 원 상태/whole-job recheck·schema1·retain 한계 보존, native 등록 PDF 거절은 다음 별도 접점 |
+| 개발2 `DEV2-WORKFLOW-HOST-FIRST-FAILURE-FIX-001` | host87/등록226 동결·등록은 독립 순수/static qualified. host ordinary→후행 control의 별도 정적 I1과 원 observer/fixture 미완료 보존 | 정확226 별도 clone host core/test/usage3에서 최초 오류 최소 수정·검증/독립 delta. 이어 수용 fix만 정상 cherry하고 frozen current-handoff WIP의 schema3 completed_current_provided·원 current3 보존 파일을 구현; 등록/current/native PDF는 분리, 운영 profile/permit·실제AI0 |
+| 개발3 `DEV3-CONDUCTED-EVIDENCE-FIRST-FAILURE-FIX-001` | export5bc4 기존3 동결/담당 typed9·독립 검수. 선행873은 독립12 중11PASS/최초 MemoryError가 후행 close OSError로 대체되는 I1FAIL1 | 정확5bc4 새 clone의 fixture_check/test/usage3에서 writer 첫 BaseException·close once·xb/부분파일 보존 최소 수정. 원 export 계약 유지. 수용 뒤 같은 가상 runtime의 통신/장비 오류·복구 실패 두 미지원 시나리오를 다음 구현 |
+| 개발4 `DEV4-MINIMUM-EVIDENCE-QUESTIONS-001` | 저장aac9 수용·keyboardbc49/freshoperator1c16 독립 검수. 운영 문구c55 소유3 게시·정상390/1440 genuine2는 담당 관측이며 별도 인수 대기 | 정확c55 새 clone에서 기존 질문/예외큐의 실제 DTO·renderer를 확인하고 최소3 소유 고정 후 표시 구현. 조건 결합·명시 단위·해석 미지원·근거 누락을 구별해 필요한 확인만 표시, 원 gap/quote/locator 연결·unknown/null 유지. backend/parser/원17·새 모델/RF0 |
 | P01 `DEV-HCT-TWIN-CONDUCTED-METHOD-GAPS-001` | B085~B088 제한 ACK·metadata74/receiver90/원receipt16 후행 readonly 종료. collector192/corpus157/보존569·전체쪽수null·대상18/690 별도 | 수집1~8/관계3·metadata8·공백12·해소0 유지. 다음 새4단위 또는 실제 CMG 해소만 metadata1 인계. 닫힌 SOURCE/held본문0·N02 검색2of2 STOP·private only·규범/훈련 승인0 |
 
 
@@ -17,7 +17,7 @@
 
 현재 직접 시연은 [실행 안내](../../docs/fcc/intake_fixture_check_usage.md)의 `python -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --document-kind pdf --measurement-ref event:17 --mock-model gpt-6.1-sol --port 0`이다. 새 UUID/명시 새 output만 사용한다. PDF 원 인용→같은 계획/가상 runtime→결과 JSON·DRAFT·완료 manifest와 출력 loopback URL의 같은 계획/제공 결과를 확인한다. SOL/ASTRA는 이 시연에서 생성 MOCK의 논리 label이며 실제 AI0이다. 저장/recorded는 task/conformity not_assessed와 구별하고 Ctrl+C로 자기 서버만 닫는다. 기존 default TXT/PDF 경로는 유지한다. 실제 AI 도구 루프·규격 판정·실측/현장 전체 완료 시연은 아니다.
 
-저장 검수 카드 aac9는 이미 보존한3사례에서 genuine GET/DOM으로 수용했다. 위 공개 CLI가 생성한 새 startup에 이를 자동 구성하는 aae/873와 새 freshoperator1c16은 아직 독립 검수 중이며, 현재 게시 CLI만으로 저장 카드까지 자동 연결했다고 보고하지 않는다. 원 접수/계획/제공 결과와 파일 저장 시연은 유지한다.
+저장 검수 카드 aac9는 이미 보존한3사례에서 genuine GET/DOM으로 수용했다. 선행873의 최초 오류 I1은 기존 정상 시연을 취소하지 않고 별도 수정/검수하며, 수용 전 새 자동 연결 완료를 주장하지 않는다. 위 공개 CLI가 생성한 새 startup에 이를 자동 구성하는 aae/873와 새 freshoperator1c16은 아직 독립 검수 중이며, 현재 게시 CLI만으로 저장 카드까지 자동 연결했다고 보고하지 않는다. 원 접수/계획/제공 결과와 파일 저장 시연은 유지한다.
 
 이번 정식 Codex1은 등록 합성 입력·기존 이력16·최대60초·재시도0·permit1을 실제로 consume/finish했다. 새 재실행을 이 명령의 반복으로 유도하지 않는다. 별도 선봉인3 의미 PASS는 기존 once assessment를 덮지 않으며 비용null·전체 사용량 미확인·서버 모델 신원 미검증을 유지한다. 알려진 token metadata는 관측값이며 결제 검증이 아니다.
 

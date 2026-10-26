@@ -2,6 +2,8 @@
 
 2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `2d56a01b09363ca4fd785b3700d00615fe2fbd96` / 고정 source/runtime 검증 모집단332. 정상 push/원격 exact 대조는 private 게시 영수증으로 고정한다. 공유·사용자 원본/소유 작업/독립 기대·실패를 보존하며 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)와 [실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 갱신했다.
 
+후행 독립 검수에서 startup/입력9의 원12는11PASS/I1FAIL1이다. _conducted_write의 첫 write MemoryError가 후행 close OSError로 대체되며 실제19B 부분파일/닫힌 fd를 보존했다. 현재 해당 기존3 소유 개발3에게 최소 수정·별도 delta를 실제 배정했고 선행873/후속 export5bc4·freshoperator는 아직 수용하지 않았다. 별개 host87의 legacy ordinary→late control 정적 I1도 개발2의 정확226 별도 host3 수정으로 잇는다. 정상 schema/dispatch/finite permit은 유지하며 오류 보존 결함을 새 모드에서만 숨기지 않는다. 등록226 독립 검수는 예정12 중8진입/7일치·KI부분1/나머지4와 native 게시 미실행의 qualified 범위다. host87 원 genuine에서 audit가 기존 cached blob의 정상 xb 충돌 probe를 막아 operation_failed였으므로 C1 gate 완료로 세지 않는다. 독립 준비에서 직접 관측한 원 context/현재 context 불일치와 그 target 미완료를 구별한다.
+
 ## 고정 검증 모집단332 — 비교·이식 가능한 CLI·저장 검수 화면
 
 bridge499는 같은 현재 저장 결과 객체를 비교에 넘기며 reference/tolerance/lineage가 없으면 not_assessed·수치null을 유지한다. 독립 원12는10PASS/No2다. 원 G01은 다른 Python/pypdf profile에서 source_invalid로 genuine 비교까지 못 갔고 C02는 바깥 예외 문자열 기대와 not_assessed/input_limit 반환의 차이다. 두 원 관측을 소급 PASS로 고치지 않았다. 별도 root-venv genuine1은 같은 profile·matched→reference_missing/not_assessed를 확인했으며 원12와 합산하지 않는다. 총괄 새8 PASS, 실제 참조/물리 정확도 검증0이다.
