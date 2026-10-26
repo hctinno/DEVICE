@@ -1,5 +1,29 @@
 # Conducted workflow의 수동 operator 준비
 
+## 완료 current 제공 등록 v3 — 2026-10-26
+
+DEV1-COMPLETED-CURRENT-REGISTRATION-001은 공개512ba0fb65c8ca0510f4196388bc038e3b6c64a0의 독립 clone/전용 branch에서 기존 registration core/test/usage3만 확장한다. 아래 v1/v2 및 최초 오류 기록은 당시 이력이다. public API 두 개와 CLI 인자, 반환 exact11, 원 `_FILES`5, trusted 위임 exact8, control/anchor/permit/ledger 및 `_LIMITS`는 그대로다. 새 위임·전역 예산·자동 승인값을 만들지 않는다.
+
+prepared-inputs-v1.json은 schema3일 때만 원 schema2 exact15에 `context_scope: "completed_current_provided"`를 더한 exact16이다. 키는 schema_version/kind/scenario_id/requested_model/journal_id/permit_id/registered_input_root/store_root/executable/expires_at/quantity/allowed_tools/measurement_ref/files/measurement_selection_policy/context_scope다. measurement_ref는 null, 정책은 원 native exact2 `{schema_version: 1, kind: "unique_same_run_sensor_acquisition"}`여야 한다. bool/float version·추가/누락 키·다른 scope·ref 동시값·정책 None을 staging 전에 거절한다. schema1 exact14와 schema2 exact15는 기존 분기를 유지한다.
+
+생성 workflow schema3은 원 v2 exact13에 같은 context_scope만 더한 exact14다. 원 키는 schema_version/kind/scenario_id/context_sha256/analysis_sha256/plan_input_sha256/source_settings/quantity/allowed_tools/measurement_ref/catalog_sha256/schema_sha256/measurement_selection_policy다. 등록 파일은 기존 registered-intake-v1.json/analysis.json/plan-input.json/catalog.json/response-schema.json 5개이며 새 context 파일이나 수동 current payload를 받지 않는다. analysis/plan은 canonical LF0 원문, schema는 원 literal3052B/aa321 SHA를 유지한다.
+
+첫 v3 입력은 합성 TXT만 지원한다. 완료된 target job 정확1개, 현재 intake/revision/source와 revision fingerprint/files가 선택과 같은지, 해당 Store 전체의 다른 queued/running job이 없는지 readonly SQL로 확인한다. 실제 intake_sources.root와 intakes.bundle을 합친 native 디렉터리는 등록 input root와 같아야 한다. 같은 bytes를 복제한 다른 root로 대체할 수 없다. 선택 파일 전체와 fingerprint는 기존 native 등록 검증 및 pinned raw 재대조를 그대로 거친다. 기존 native PDF 거절을 해제하지 않는다.
+
+staging 전에 기존 `read_current_conducted_plan_from_facts`의 실제 exact3 context/analysis/facts_plan을 읽는다. 제공 plan에서 method_id/method_version/metric/reference_plane 네 값만 명시하고 expected_revision은 선택 revision, expected_context_sha256은 None으로 두어 현재 snapshot의 SHA를 부모가 계산하게 한다. 수동 source_settings/basis나 원 model prompt/C1을 current 읽기에 주입하지 않는다. 반환 analysis와 facts_plan.plan_input은 제공 analysis.json/plan-input.json과 canonical 동등해야 하며 원 context로 genuine preflight를 수행해 ready를 요구한다. 완료 job에 queued G3를 재호출하거나 claim/complete하지 않는다. original model prompt 복원이나 DB-current의 영구 승인이 아니다.
+
+완료 scope는 current 읽기 전후에 비교하고 staging 뒤 정식 `_host._prepare(root, config, scenario, owned)`를 한 번 호출한다. 원 반환 5tuple workflow/context/analysis/plan/schema와 등록된 store_root에 대한 owned의 exact native Store lease를 확인한 뒤 actual current와 scope를 다시 읽어 최초 값과 대조한다. 같은 DB bytes를 복제한 다른 Store나 dependency가 반환한 context만으로 이 검사를 대신할 수 없다. Store lease와 knownclose, 원 파일 pin/current 재검사, SQL/fsync/배타 게시 및 최초 primary 우선 규칙을 유지한다. scope 변경·다른 active·형상/bytes/C1 불일치는 게시하지 않으며 이미 만든 staging/SQL/failure prefix를 보존한다. 이 유한 전후 관측은 외부 writer 배제·ABA·영구 current lease나 동일 계정 임의 코드 방어를 보장하지 않는다.
+
+개발2 host의 schema3 구현은 별도 의존이다. 이 단위의 native 양성 검사는 같은 `_host._prepare` signature/5tuple의 명시 typed dependency seam과 genuine 완료 Store/current를 함께 사용한다. 실제 root 위임 검증 함수를 patch하지 않는다. 현재 public host가 schema3을 거절하는 경로도 staging을 보존하는 실패로 확인하며, 이 상태를 whole OS/profile 통합 성공으로 표시하지 않는다. 실제 host 후보 인수와 재검증은 총괄의 후속 통합 조건이다.
+
+```powershell
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --completed-current -v
+```
+
+새 검사는 실제 disposable TXT 등록/claim/strict 분석 완료를 준비한 뒤 readonly current를 사용한다. 생성 준비 실패와 schema3 미지원 RED를 각각 보존한다. 실제 KnownFolder/운영 profile·원17/새 실 permit·승인 발급·installed CLI·모델·runtime·장비/현장·수집 원본 접근은0이다. 아래 기존 host.main/version-child 및 전체 suite를 이 단위의 실행 분모로 더하지 않는다. 자체 구현 검증이며 독립 리뷰는 다른 검수자가 후속 수행한다.
+
+자체 최종 검증은 신규13(6.662s), 별도 기존 scoped10(1.945s), 최초 ordinary/control 기존4(1.228s)가 각각 PASS다. 최초 준비 실패1은 RF 문장을 생략하는 편의 제공자에 따른 blocked이고, 같은 job의 기존 genuine decoder 응답을 완료하도록 준비만 수정한 뒤 schema3 미지원 RED1을 확인했다. 복제된 다른 Store lease를 거절하는 후행 RED1도 보존했다. 원 실패를 지우거나 중간12/8·baseline을 최종 통과 수에 더하지 않는다. 신규 typed-host 양성은 원 source TXT/DB bytes와 inode/link/size/mtime/ctime 보존을 확인했고, 실제 public host의 v3 거절·prepublish drift·잘못된 반환 tuple은 prefix를 보존하는 예상 실패다. 기존 함수/class·상수·기존 test method의 AST56 대조와 문서 UTF-8/로컬 링크 검사는 기능·물리·실제 권한 검증과 분리한다.
+
 ## 명시 선택 정책의 등록 binding v2 — 2026-10-26
 
 DEV2-WORKFLOW-SELECTION-REGISTRATION-001은 정확87e343e3662fc186c420b4460063a0151c03c921의 새 독립 clone에서 registration core/test/usage3만 수정한다. 의존 [host87](codex_registered_conducted_workflow_host_usage.md)의 core26916B/SHA787620eb660dedc8f2b2cfe69da65aa567913385b7aa4336d4ccc73d304b2aa8을 바인딩했으며 독립 검수는 아직 pending이다. host/selector/finalizer/issuer/native helper를 수정하지 않는다. 이 등록 후보의 독립 검수도 별도 대기다.

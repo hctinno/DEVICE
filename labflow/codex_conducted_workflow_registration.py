@@ -7,6 +7,7 @@ import sys
 
 from . import control_packet_prepare as _native
 from . import codex_registered_conducted_workflow_host as _host
+from . import intake_current_facts_plan as _current
 from .intake_plan_virtual_execution import _snapshot
 from .intake_conducted_twin_plan import build_conducted_twin_plan_input
 from .intake_jobs import prepare_registered_synthetic_context
@@ -229,6 +230,65 @@ def _close_sql(con):
     _fail('sql_close_uncertain')
 
 
+def _completed_scope(store,selection,original):
+    """A finite read-only completed/same-source scope, not an external lease."""
+    if type(store) is not Store:_fail('binding_mismatch')
+    con=None;primary=None
+    try:
+        con=sqlite3.connect((store.root/'lab.sqlite3').as_uri()+'?mode=ro',uri=True,timeout=0)
+        con.row_factory=sqlite3.Row
+        con.execute('PRAGMA query_only=ON');con.execute('BEGIN')
+        row=con.execute('''SELECT i.source_id,i.bundle,i.revision,i.status,i.delegated,i.deferred,i.analysis_json,
+            s.root AS source_root,s.synthetic AS source_synthetic,r.fingerprint,r.files_json,r.synthetic,
+            j.job_id,j.intake_id AS job_intake_id,j.revision AS job_revision,j.state,j.result_json,
+            j.worker_id,j.token,j.lease_until,j.attempt,j.error_code
+            FROM intakes i JOIN intake_sources s ON s.source_id=i.source_id
+            JOIN intake_revisions r ON r.intake_id=i.intake_id AND r.revision=i.revision
+            JOIN intake_jobs j ON j.intake_id=i.intake_id AND j.revision=i.revision
+            WHERE i.intake_id=?''',(selection['intake_id'],)).fetchone()
+        if row is None:_fail('binding_mismatch')
+        scope=dict(row)
+        if (row['source_id']!=selection['source_id'] or row['revision']!=selection['revision']
+                or row['job_id']!=selection['job_id'] or row['job_intake_id']!=selection['intake_id']
+                or row['job_revision']!=selection['revision'] or row['state']!='completed'
+                or row['synthetic']!=1 or row['source_synthetic']!=1
+                or row['fingerprint']!=selection['revision_fingerprint']):_fail('binding_mismatch')
+        if con.execute("SELECT 1 FROM intake_jobs WHERE state IN ('queued','running') LIMIT 1").fetchone() is not None:
+            _fail('store_not_dedicated')
+        source,_=_host._native_host._path(row['source_root'],directory=True)
+        bundle=Path(row['bundle'])
+        if bundle.is_absolute() or '..' in bundle.parts:_fail('binding_mismatch')
+        actual,_=_host._native_host._path(source/bundle,directory=True)
+        if actual!=original:_fail('binding_mismatch')
+        for key,cap in [('files_json',262144),('analysis_json',8388608),('result_json',8388608)]:
+            if type(row[key]) is not str or len(row[key].encode('utf-8'))>cap:_fail('input_limit')
+        _same(_json(row['files_json'].encode('utf-8')),selection['files'])
+        return scope
+    except BaseException as error:primary=error;raise
+    finally:
+        if con is not None:
+            try:_close_sql(con)
+            except BaseException:
+                if primary is None:raise
+
+
+def _completed_snapshot(store,selection,original,analysis,plan):
+    before=_completed_scope(store,selection,original)
+    # Only the explicit method selects a current read. Supplied settings, basis
+    # and a model-prompt context hash are never injected into that read.
+    method={key:plan['plan'][key] for key in ('method_id','method_version','metric','reference_plane')}
+    current=_current.read_current_conducted_plan_from_facts(store.root,selection['intake_id'],
+        method=method,expected_revision=selection['revision'],expected_context_sha256=None)
+    _keys(current,'context analysis facts_plan')
+    context=current['context'];facts=current['facts_plan']
+    if (context['job_id']!=selection['job_id'] or context['intake_id']!=selection['intake_id']
+            or context['revision']!=selection['revision'] or context['synthetic'] is not True):_fail('binding_mismatch')
+    _same(current['analysis'],analysis);_same(facts['plan_input'],plan)
+    if facts['status']!='ready_for_simulation' or plan['status']!='ready_for_simulation':_fail('plan_not_ready')
+    _same(before,_completed_scope(store,selection,original))
+    return current,before
+
+
 def _authority(value):
     _keys(value,'schema_version kind authority_source manual_preparation_reference action scope prepared_manifest_sha256 inherited_history')
     if type(value['schema_version']) is not int or value['schema_version']!=1 or value['kind']!='codex_root_conducted_workflow_manual_preparation':_fail('delegation_invalid')
@@ -269,10 +329,13 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         if _H(meta_raw)!=source['prepared_manifest_sha256']:_fail('binding_mismatch')
         meta=_json(meta_raw)
         fields='schema_version kind scenario_id requested_model journal_id permit_id registered_input_root store_root executable expires_at quantity allowed_tools measurement_ref files'
-        if type(meta) is dict and type(meta.get('schema_version')) is int and meta['schema_version']==2:fields+=' measurement_selection_policy'
+        if type(meta) is dict and type(meta.get('schema_version')) is int:
+            if meta['schema_version'] in (2,3):fields+=' measurement_selection_policy'
+            if meta['schema_version']==3:fields+=' context_scope'
         _keys(meta,fields)
-        if type(meta['schema_version']) is not int or meta['schema_version'] not in (1,2) or meta['kind']!='codex_conducted_workflow_prepared_data':_fail('data_invalid')
-        if meta['schema_version']==2 and (meta['measurement_ref'] is not None or meta['measurement_selection_policy'] is None):_fail('data_invalid')
+        if type(meta['schema_version']) is not int or meta['schema_version'] not in (1,2,3) or meta['kind']!='codex_conducted_workflow_prepared_data':_fail('data_invalid')
+        if meta['schema_version'] in (2,3) and (meta['measurement_ref'] is not None or meta['measurement_selection_policy'] is None):_fail('data_invalid')
+        if meta['schema_version']==3 and meta['context_scope']!='completed_current_provided':_fail('data_invalid')
         _same((meta['scenario_id'],meta['requested_model']),(scenario_id,requested_model))
         for key in ('journal_id','permit_id'):_host._native_host._id(meta[key])
         _native._valid_segment(meta['permit_id'])
@@ -299,13 +362,22 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         selection=registration['registered_intake']
         if type(selection['files']) is not list or len(selection['files'])>192 or sum(row['bytes'] for row in selection['files'])>33554432:_fail('input_limit')
         check_config=dict(registration_sha256=_H(rawfiles['registered-intake-v1.json']),registered_input_root=str(original))
-        # Genuine G3 verifies the Store's synthetic registration before reading
-        # the original filesystem folder, rather than trusting manifest.synthetic.
-        store=Store.open_existing(str(state));_host._native_host._dedicated(store,selection['job_id'])
-        context=prepare_registered_synthetic_context(store,selection,producer_name=analysis['producer']['name'])
-        _host._native_host._dedicated(store,selection['job_id'])
+        # Legacy queued G3 and v3 completed-current validation remain separate;
+        # neither accepts manifest.synthetic as Store provenance by itself.
+        completed_scope=None
+        if meta['schema_version']==3:
+            _host._native_host._registration(operator/'prepared-data',check_config,scenario_id)
+            if any(Path(row['path']).suffix.lower()!='.txt' for row in selection['files']):_fail('unsupported_schema')
+        store=Store.open_existing(str(state))
+        if meta['schema_version']==3:
+            current,completed_scope=_completed_snapshot(store,selection,original,analysis,plan)
+            context=current['context']
+        else:
+            _host._native_host._dedicated(store,selection['job_id'])
+            context=prepare_registered_synthetic_context(store,selection,producer_name=analysis['producer']['name'])
+            _host._native_host._dedicated(store,selection['job_id'])
         selection_options={}
-        if meta['schema_version']==2:selection_options['measurement_selection_policy']=meta['measurement_selection_policy']
+        if meta['schema_version'] in (2,3):selection_options['measurement_selection_policy']=meta['measurement_selection_policy']
         preflight=preflight_conducted_workflow_inputs(context,analysis,plan,quantity=meta['quantity'],allowed_tools=meta['allowed_tools'],measurement_ref=meta['measurement_ref'],**selection_options)
         if preflight['status']!='validated':_fail('preflight_rejected')
         closing=store;store=None;closing.close()
@@ -317,7 +389,8 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         workflow=dict(schema_version=1,kind='codex_registered_conducted_workflow',scenario_id=scenario_id,context_sha256=preflight['pins']['context_sha256'],
             analysis_sha256=_H(rawfiles['analysis.json']),plan_input_sha256=_H(rawfiles['plan-input.json']),source_settings=plan['plan']['source_settings'],
             quantity=meta['quantity'],allowed_tools=meta['allowed_tools'],measurement_ref=meta['measurement_ref'],catalog_sha256=_H(rawfiles['catalog.json']),schema_sha256=_H(schema))
-        if meta['schema_version']==2:workflow.update(schema_version=2,measurement_selection_policy=meta['measurement_selection_policy'])
+        if meta['schema_version'] in (2,3):workflow.update(schema_version=meta['schema_version'],measurement_selection_policy=meta['measurement_selection_policy'])
+        if meta['schema_version']==3:workflow['context_scope']=meta['context_scope']
         config=dict(schema_version=1,kind='codex_registered_conducted_workflow_control',anchor_sha256=_H(_C(anchor)),journal_id=meta['journal_id'],permit_id=meta['permit_id'],
             registration_sha256=_H(rawfiles['registered-intake-v1.json']),workflow_sha256=_H(_C(workflow)),registered_input_root=str(original),store_root=str(state),executable=str(executable))
         baseline=dict(schema_version=1,kind='codex_conducted_workflow_continuation_baseline',journal_id=meta['journal_id'],anchor_sha256=config['anchor_sha256'],inherited_history=source['inherited_history'])
@@ -331,7 +404,16 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         result['phase']='sql';filepins['workflow-continuation.sqlite3']=io.database(stage/'workflow-continuation.sqlite3',baseline,permit,config,anchor)
         result['phase']='current'
         owned=dict(store=None)
-        try:_host._prepare(stage,config,scenario_id,owned)
+        try:
+            prepared=_host._prepare(stage,config,scenario_id,owned)
+            if meta['schema_version']==3:
+                if type(prepared) is not tuple or len(prepared)!=5:_fail('binding_mismatch')
+                if type(owned['store']) is not Store or owned['store'].root!=state:_fail('binding_mismatch')
+                checked,after=_completed_snapshot(owned['store'],selection,original,analysis,plan)
+                _same(completed_scope,after)
+                expected=(workflow,checked['context'],checked['analysis'],checked['facts_plan']['plan_input'])
+                _same(prepared[:4],expected)
+                if type(prepared[4]) is not bytes or prepared[4]!=schema:_fail('binding_mismatch')
         except BaseException:
             store=owned['store'];raise
         closing=owned['store'];closing.close()
