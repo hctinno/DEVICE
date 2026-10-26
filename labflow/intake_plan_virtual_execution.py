@@ -42,6 +42,15 @@ def _block(code, stage='input'):
     raise _Blocked(code, stage)
 
 
+def _reservation(value):
+    if value is None:return None
+    if type(value) is not dict:_block('invalid_input')
+    value=value.copy()
+    if (set(value)!={'files','bytes'} or type(value['files']) is not int or type(value['bytes']) is not int
+            or not 0<=value['files']<=192 or not 0<=value['bytes']<=33554432):_block('invalid_input')
+    return value
+
+
 def _C(value):
     return canonical(value).encode('utf-8')
 
@@ -198,10 +207,11 @@ def _attach(result, value):
 def run_intake_plan_virtual_execution(context, analysis, plan_input, *, expected_revision,
         expected_context_sha256, expected_plan_input_sha256, catalog_path: Path, catalog_sha256: str,
         response_schema_bytes: bytes, executable: Path, requested_model: str, scenario: str,
-        evidence_dir: Path, execution_origin: str, cancel_event=None, quantity=None) -> dict:
+        evidence_dir: Path, execution_origin: str, cancel_event=None, quantity=None, evidence_reservation=None) -> dict:
     """Revalidate caller snapshots then enter one delegated synthetic loop; never grant authority."""
     result = _result(execution_origin)
     try:
+        reservation = _reservation(evidence_reservation)
         source = _validate(context, analysis, plan_input, expected_revision, expected_context_sha256,
                            expected_plan_input_sha256, execution_origin, result)
     except _CONTROL:
@@ -216,11 +226,12 @@ def run_intake_plan_virtual_execution(context, analysis, plan_input, *, expected
         return _receipt(result)
     result['execution'].update(loop_entered=True, trial_factory_calls=None, producer_calls_started=None)
     try:
+        options={} if reservation is None else dict(evidence_reservation=reservation)
         original = _run_loop(catalog_path=catalog_path, catalog_sha256=catalog_sha256,
             response_schema_bytes=response_schema_bytes, executable=executable, requested_model=requested_model,
             scenario=scenario, evidence_dir=evidence_dir, execution_origin=execution_origin,
             cancel_event=cancel_event, source_settings=source, plan_binding=result['plan_input']['binding'],
-            quantity=quantity)
+            quantity=quantity,**options)
     except _CONTROL:
         raise
     except CodexVirtualLoopError as error:

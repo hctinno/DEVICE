@@ -1,5 +1,13 @@
 # 접수 plan과 동일 가상 runtime 실행 연결
 
+## 외부 증거 파일 예약 전달 — 2026-10-26
+
+DEV2-EVIDENCE-RESERVATION-SEAM-001은 정확77d69698636c1274bce917ab6f254db8b33b8cb0 별도 clone에서 adapter/loop source2·기존 test2·usage2만 수정한다. 공개 optional evidence_reservation=None을 추가한다. None/생략은 기존 경로·한도·DTO를 유지하며 loop에 새 keyword를 전달하지 않는다. explicit은 native dict exact2 {files,bytes}이며 두 값은 strict native int이고 각각0~192/0~33554432다. bool·int/dict subclass·float·누락/추가 키·음수·초과는 원 invalid_input으로 파일/producer/runtime 진입 전에 거절한다. adapter가 dict를 분리하고 loop가 immutable tuple로 고정하므로 caller가 뒤에 값을 줄여도 실행 중 예약은 줄어들지 않는다.
+
+예약은 loop known 집합 밖의 실제 host 후행 파일에만 해당한다. loop의 모든 space admission은 실제 known 파일·바이트+이번 write/producer 선예약+caller 외부 예약을 같은192파일/32MiB와 비교한다. 별도 예산 발급·환불·권위·global LIMITS 변경·새 receipt 필드는0이다. host는 전달 전에 handoff1의 serialized 최종 상계와 tail10/5505024B의 대상/제외 목록을 증명해야 한다. 이 seam의 타입/전달 검사만으로 host의 공동예산 준수를 완료했다고 주장하지 않는다.
+
+좁은 검증은 새 adapter3+loop5의 고유8논리와 별도 기존 signature 기대2다. API 미지원 원RED8/0.018초·subtest 포함34errors, journal framing RED1/0.061초를 보존했다. 첫 GREEN 시도8은7PASS/1실패0.158초이며 typed clock0가 지나간 close deadline을 만든 준비 오류를 원형 보존했다. 관측 clock만 현재 monotonic으로 고친 proper GREEN8/0.140초와 별도 signature2/0.130초가 통과했다. 실제 loop.run body·runtime factory·producer·CLI/model은0이고 넓은 부모 회귀는 실행하지 않았다. 원73 test method 중 signature2 기대만 optional/defaultNone에 맞추고 나머지71 AST는 보존한다. private `.local/ERS-001/`에 계약/원cap pin·원 No/C0I1M0·원wall257초>180 관측 한계·모든 실패/통과를 구별해 남긴다. current-host WIP·완료 TXT seed와 genuine0을 보존하며 독립 검수와 host 소비는 후속이다.
+
 2026-10-26 Asia/Seoul. DEV2-INTAKE-PLAN-VIRTUAL-EXECUTION-001. owner 구현 후보다. 선행 da52의 독립 qualified 수용과 이 연결의 독립 수용은 별개이며, 원 평가의 부분 관측·분모·goal-positive 미검증 한계를 승계한다.
 
 ## API와 소유
