@@ -41,6 +41,8 @@ ARCHIVE_CAP = 2 * 1024 * MIB
 EXTRACT_CAP = 12 * 1024 * MIB
 OWNER_FILE = 'dgm-runtime-owner.json'
 PROPERTIES = ('ro.kernel.qemu', 'ro.hardware', 'ro.product.model', 'sys.boot_completed')
+NATIVE_PATHS = ('platform-tools/adb.exe', 'emulator/emulator.exe',
+                'emulator/qemu/windows-x86_64/qemu-system-x86_64.exe')
 
 
 class BoundaryError(RuntimeError):
@@ -54,21 +56,46 @@ def now() -> str:
 
 
 def write_json(path: Path, value: object) -> None:
+    reject_links(path)
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
-def sha_file(path: Path, algorithm: str = 'sha256') -> str:
+def sha_file(path: Path, algorithm: str = 'sha256', deadline: float | None = None) -> str:
     digest = hashlib.new(algorithm)
     with path.open('rb') as stream:
         for block in iter(lambda: stream.read(MIB), b''):
+            if deadline is not None:
+                remaining(deadline, 'runtime_integrity_timeout')
             digest.update(block)
+    if deadline is not None:
+        remaining(deadline, 'runtime_integrity_timeout')
     return digest.hexdigest()
 
 
 def reject_links(path: Path) -> None:
     for part in (path, *path.parents):
-        if part.is_symlink() or (hasattr(part, 'is_junction') and part.is_junction()):
+        try:
+            attributes = getattr(part.lstat(), 'st_file_attributes', 0)
+        except FileNotFoundError:
+            attributes = 0
+        if (attributes & 0x400 or part.is_symlink()
+                or (hasattr(part, 'is_junction') and part.is_junction())):
             raise BoundaryError('linked_path', str(part))
+
+
+def reject_tree_links(root: Path) -> None:
+    """Walk only after rejecting each entry; never recurse into a reparse point."""
+    pending = [root]
+    while pending:
+        current = pending.pop()
+        reject_links(current)
+        if current.is_dir():
+            with os.scandir(current) as entries:
+                for entry in entries:
+                    child = Path(entry.path)
+                    reject_links(child)
+                    if entry.is_dir(follow_symlinks=False):
+                        pending.append(child)
 
 
 @dataclass(frozen=True)
@@ -194,6 +221,8 @@ class OfficialRedirect(urllib.request.HTTPRedirectHandler):
 
 def download(package: dict, target: Path, budget: DownloadBudget,
              total_timeout: float = 600) -> dict:
+    reject_links(target)
+    reject_links(target.with_suffix(target.suffix + '.partial'))
     size, url = package['size'], package['url']
     if (type(size) is not int or size <= 0 or size > ARCHIVE_CAP
             or size + budget.used > budget.limit or not official_url(url)):
@@ -238,6 +267,8 @@ def download(package: dict, target: Path, budget: DownloadBudget,
 
 
 def metadata(url: str, target: Path, budget: DownloadBudget) -> bytes:
+    reject_links(target)
+    reject_links(target.with_suffix(target.suffix + '.partial'))
     if not official_url(url):
         raise BoundaryError('metadata_url_invalid')
     opener = urllib.request.build_opener(OfficialRedirect())
@@ -307,30 +338,37 @@ def select_package(raw: bytes, name: str, source: str) -> dict:
     return max(choices, key=lambda c: c[0])[1]
 
 
+def archive_members(archive: zipfile.ZipFile, limit: int = EXTRACT_CAP) -> list:
+    infos = archive.infolist()
+    if sum(i.file_size for i in infos) > limit or len(infos) > 100000:
+        raise BoundaryError('extract_cap')
+    names = set()
+    for info in infos:
+        name = info.filename
+        # PurePosixPath/extractall collapse ./ and repeated separators. Reject
+        # those raw segments before deriving a path or creating any directory.
+        parts = name[:-1].split('/') if name.endswith('/') else name.split('/')
+        canonical = '/'.join(parts).casefold()
+        mode = info.external_attr >> 16
+        if (not name or name.startswith(('/', '\\')) or '\\' in name or ':' in name
+                or any(p in ('', '.', '..') or p.rstrip(' .') != p for p in parts)
+                or stat.S_ISLNK(mode) or (stat.S_IFMT(mode) not in (0, stat.S_IFREG, stat.S_IFDIR))
+                or info.flag_bits & 1 or canonical in names):
+            raise BoundaryError('archive_member_rejected', name)
+        if any(p.split('.')[0].upper() in {'CON', 'NUL', 'AUX', 'PRN',
+               *(f'COM{i}' for i in range(10)), *(f'LPT{i}' for i in range(10))} for p in parts):
+            raise BoundaryError('archive_member_rejected', name)
+        names.add(canonical)
+    return infos
+
+
 def safe_extract(source: bytes | Path, target: Path, limit: int = EXTRACT_CAP) -> int:
     reject_links(target)
     if target.exists():
         raise BoundaryError('extract_target_exists', str(target))
     with zipfile.ZipFile(io.BytesIO(source) if isinstance(source, bytes) else source) as archive:
-        infos = archive.infolist()
+        infos = archive_members(archive, limit)
         total = sum(i.file_size for i in infos)
-        if total > limit or len(infos) > 100000:
-            raise BoundaryError('extract_cap')
-        names = set()
-        for info in infos:
-            name = info.filename
-            parts = PurePosixPath(name).parts
-            mode = info.external_attr >> 16
-            if (not name or name.startswith(('/', '\\')) or '\\' in name or ':' in name
-                    or '..' in parts or any(p.rstrip(' .') != p for p in parts)
-                    or stat.S_ISLNK(mode) or (stat.S_IFMT(mode) not in (0, stat.S_IFREG, stat.S_IFDIR))
-                    or info.flag_bits & 1 or name.casefold() in names):
-                raise BoundaryError('archive_member_rejected', name)
-            # Windows reserved device names must not become special files.
-            if any(p.split('.')[0].upper() in {'CON', 'NUL', 'AUX', 'PRN',
-                   *(f'COM{i}' for i in range(10)), *(f'LPT{i}' for i in range(10))} for p in parts):
-                raise BoundaryError('archive_member_rejected', name)
-            names.add(name.casefold())
         target.mkdir(parents=True, exist_ok=False)
         archive.extractall(target)
     return total
@@ -545,43 +583,75 @@ def wire_services(endpoint: Endpoint, name: str) -> list[str]:
     return [f'host:transport:{endpoint.serial}', f'shell:getprop {name}']
 
 
-def _receive(stream: socket.socket, count: int) -> bytes:
+def remaining(deadline: float, code: str = 'adb_timeout') -> float:
+    left = deadline - time.monotonic()
+    if left <= 0:
+        raise BoundaryError(code)
+    return left
+
+
+def _receive(stream: socket.socket, count: int, deadline: float | None = None) -> bytes:
     result = b''
     while len(result) < count:
+        if deadline is not None:
+            stream.settimeout(remaining(deadline))
         chunk = stream.recv(count - len(result))
+        if deadline is not None:
+            remaining(deadline)
         if not chunk:
             raise BoundaryError('adb_short_response')
         result += chunk
     return result
 
 
-def adb_read(endpoint: Endpoint, name: str, server: OwnedProcess, timeout: float = 2) -> str:
-    if server.process.poll() is not None:
-        raise BoundaryError('owned_adb_server_exited')
+def adb_read(endpoint: Endpoint, name: str, server: OwnedProcess, timeout: float = 2,
+             deadline: float | None = None) -> str:
+    code = server.process.poll()
+    if code is not None:
+        raise BoundaryError('owned_adb_server_exited', f'pid={server.process.pid} exit_code={code}')
     services = wire_services(endpoint, name)
-    deadline = time.monotonic() + timeout
+    deadline = min(time.monotonic() + timeout, deadline) if deadline is not None else time.monotonic() + timeout
     # This is the only transport connect: one explicitly owned loopback endpoint.
-    with socket.create_connection(('127.0.0.1', endpoint.adb_port), timeout=timeout) as stream:
-        stream.settimeout(timeout)
-        for service in services:
-            encoded = service.encode('ascii')
-            stream.sendall(f'{len(encoded):04x}'.encode() + encoded)
-            status = _receive(stream, 4)
-            if status == b'FAIL':
-                length = int(_receive(stream, 4), 16)
-                reason = _receive(stream, min(length, 65536)).decode('utf-8', errors='replace')
-                raise BoundaryError('adb_service_failure', reason)
-            if status != b'OKAY':
-                raise BoundaryError('adb_invalid_status', repr(status))
-        if name == 'get-state':
-            return _receive(stream, int(_receive(stream, 4), 16)).decode().strip()
-        raw = bytearray()
-        while len(raw) < 65536 and time.monotonic() < deadline:
-            block = stream.recv(min(4096, 65536 - len(raw)))
-            if not block:
-                return raw.decode('utf-8', errors='replace').strip()
-            raw.extend(block)
-        raise BoundaryError('adb_response_limit')
+    try:
+        with socket.create_connection(('127.0.0.1', endpoint.adb_port), timeout=remaining(deadline)) as stream:
+            for service in services:
+                encoded = service.encode('ascii')
+                stream.settimeout(remaining(deadline))
+                stream.sendall(f'{len(encoded):04x}'.encode() + encoded)
+                remaining(deadline)
+                status = _receive(stream, 4, deadline)
+                if status == b'FAIL':
+                    length = int(_receive(stream, 4, deadline), 16)
+                    reason = _receive(stream, length, deadline).decode('utf-8', errors='replace')
+                    raise BoundaryError('adb_service_failure', reason)
+                if status != b'OKAY':
+                    raise BoundaryError('adb_invalid_status', repr(status))
+            if name == 'get-state':
+                return _receive(stream, int(_receive(stream, 4, deadline), 16), deadline).decode().strip()
+            raw = bytearray()
+            while len(raw) < 65536:
+                stream.settimeout(remaining(deadline))
+                block = stream.recv(min(4096, 65536 - len(raw)))
+                remaining(deadline)
+                if not block:
+                    return raw.decode('utf-8', errors='replace').strip()
+                raw.extend(block)
+            raise BoundaryError('adb_response_limit')
+    except (BoundaryError, OSError, ValueError) as exc:
+        code = server.process.poll()
+        if code is not None:
+            raise BoundaryError('owned_adb_server_exited',
+                f'pid={server.process.pid} exit_code={code}; wire_error={exc}') from exc
+        if isinstance(exc, TimeoutError):
+            raise BoundaryError('adb_timeout', f'{name}: absolute deadline reached') from exc
+        if isinstance(exc, ValueError):
+            raise BoundaryError('adb_invalid_length', str(exc)) from exc
+        raise
+
+
+def boot_retryable(exc: BoundaryError, endpoint: Endpoint) -> bool:
+    return exc.code == 'adb_service_failure' and str(exc) in (
+        f"device '{endpoint.serial}' not found", 'device offline')
 
 
 def cached_archive(spec: dict, target: Path, budget: DownloadBudget) -> dict:
@@ -624,6 +694,7 @@ def install_runtime(runtime: Path, report: Report, accept_license: bool,
     if not accept_license:
         raise BoundaryError('sdk_license_not_accepted', 'Pass --accept-sdk-license after reviewing official terms')
     reject_links(runtime)
+    reject_tree_links(runtime)
     if resume:
         marker = runtime / OWNER_FILE
         if not marker.is_file():
@@ -675,7 +746,13 @@ def install_runtime(runtime: Path, report: Report, accept_license: bool,
             if spec['license_id'] != 'android-sdk-license':
                 raise BoundaryError('new_license_review_required', spec['license_id'])
             license_path = sources / f"{spec['package'].replace(';', '-')}.license.txt"
-            license_path.write_text(spec['license_text'], encoding='utf-8')
+            reject_links(license_path)
+            if license_path.exists():
+                if license_path.read_text('utf-8') != spec['license_text']:
+                    raise BoundaryError('license_source_changed', str(license_path))
+            else:
+                with license_path.open('x', encoding='utf-8') as stream:
+                    stream.write(spec['license_text'])
         manifest['license_acceptance'] = dict(at=now(), scope='local development only',
             license_id='android-sdk-license', source=REPOSITORY,
             redistribution='not granted by this runner; keep binaries, images and terms outside Git')
@@ -707,9 +784,11 @@ def install_runtime(runtime: Path, report: Report, accept_license: bool,
                 publish_package(staging / 'x86_64', destination)
             manifest['extracted_bytes'] = extracted
             write_json(runtime / OWNER_FILE, manifest)
-        native_paths = ('platform-tools/adb.exe', 'emulator/emulator.exe',
-                        'emulator/qemu/windows-x86_64/qemu-system-x86_64.exe')
-        manifest['executables'] = {name: sha_file(sdk / name) for name in native_paths}
+        inventory, proof = archive_inventory(runtime, manifest, deadline)
+        validate_sdk_inventory(sdk, inventory, deadline)
+        manifest.update(file_inventory=inventory, inventory_version=2,
+                        inventory_source=proof)
+        manifest['executables'] = {name: inventory[name] for name in NATIVE_PATHS}
         manifest['completed'] = True
         manifest['finished_at'] = now()
         return manifest
@@ -720,23 +799,114 @@ def install_runtime(runtime: Path, report: Report, accept_license: bool,
         report.save()
 
 
+def archive_inventory(runtime: Path, manifest: dict, deadline: float) -> tuple[dict, dict]:
+    """Derive expected bytes from preserved official archives, never SDK bytes."""
+    reject_tree_links(runtime)
+    sources = runtime / 'sources'
+    repo = (sources / 'repository.xml').read_bytes()
+    images = (sources / 'aosp-images.xml').read_bytes()
+    specs = [select_package(repo, name, REPOSITORY)
+             for name in ('cmdline-tools;22.0', 'platform-tools', 'emulator')]
+    specs.append(select_package(images, IMAGE_PACKAGE, IMAGES))
+    if not specs[0]['url'].endswith('/commandlinetools-win-15859902_latest.zip'):
+        raise BoundaryError('pinned_cli_changed')
+    specs[0]['checksum_type'], specs[0]['checksum'] = 'sha256', CLI_SHA256
+    if [{k:v for k,v in s.items() if k != 'license_text'} for s in specs] != manifest.get('packages'):
+        raise BoundaryError('runtime_archive_metadata_changed')
+    recorded = {d['url']:d for d in manifest.get('downloads', [])}
+    roots = ('cmdline-tools', 'platform-tools', 'emulator', 'x86_64')
+    destinations = ('cmdline-tools/22.0', 'platform-tools', 'emulator',
+                    'system-images/android-36/default/x86_64')
+    inventory, proofs, expanded = {}, [], 0
+    for spec, prefix, destination in zip(specs, roots, destinations):
+        remaining(deadline, 'runtime_integrity_timeout')
+        archive_path = runtime / 'archives' / spec['url'].rsplit('/', 1)[-1]
+        reject_links(archive_path)
+        record = recorded.get(spec['url'], {})
+        if (not archive_path.is_file() or archive_path.stat().st_size != spec['size']
+                or record.get('bytes') != spec['size'] or not record.get('sha256')):
+            raise BoundaryError('runtime_archive_proof_missing', spec['package'])
+        digest = sha_file(archive_path, deadline=deadline)
+        if (digest != record['sha256'] or sha_file(archive_path, spec['checksum_type'], deadline) != spec['checksum']):
+            raise BoundaryError('runtime_archive_changed', spec['package'])
+        with zipfile.ZipFile(archive_path) as archive:
+            infos = archive_members(archive, EXTRACT_CAP - expanded)
+            expanded += sum(info.file_size for info in infos)
+            count = 0
+            for info in infos:
+                remaining(deadline, 'runtime_integrity_timeout')
+                parts = PurePosixPath(info.filename).parts
+                if not parts or parts[0] != prefix:
+                    raise BoundaryError('runtime_archive_layout', info.filename)
+                if info.is_dir():
+                    continue
+                name = '/'.join((destination, *parts[1:]))
+                if len(parts) < 2 or name in inventory:
+                    raise BoundaryError('runtime_archive_layout', info.filename)
+                expected = hashlib.sha256()
+                with archive.open(info) as incoming:
+                    for block in iter(lambda: incoming.read(MIB), b''):
+                        remaining(deadline, 'runtime_integrity_timeout')
+                        expected.update(block)
+                inventory[name] = expected.hexdigest()
+                count += 1
+        proofs.append(dict(package=spec['package'], url=spec['url'], sha256=digest,
+                           bytes=spec['size'], files=count))
+    return inventory, dict(kind='verified_preserved_archives', archives=proofs,
+        metadata_sha256={'repository.xml':hashlib.sha256(repo).hexdigest(),
+                         'aosp-images.xml':hashlib.sha256(images).hexdigest()},
+        expanded_bytes=expanded)
+
+
+def validate_sdk_inventory(sdk: Path, inventory: dict, deadline: float) -> None:
+    reject_tree_links(sdk)
+    if not isinstance(inventory, dict) or not inventory:
+        raise BoundaryError('runtime_inventory_missing')
+    for name, digest in inventory.items():
+        parts = PurePosixPath(name).parts
+        if (not parts or name != '/'.join(parts) or ':' in name or '\\' in name
+                or any(p in ('.', '..', '') for p in parts) or name.startswith('/')
+                or not isinstance(digest, str) or len(digest) != 64):
+            raise BoundaryError('runtime_inventory_invalid', name)
+    actual = {p.relative_to(sdk).as_posix() for p in sdk.rglob('*') if p.is_file()}
+    if actual != set(inventory):
+        raise BoundaryError('runtime_file_set_changed', str(sorted(actual ^ set(inventory))[:10]))
+    for name, digest in inventory.items():
+        remaining(deadline, 'runtime_integrity_timeout')
+        path = sdk / name
+        reject_links(path)
+        if sha_file(path, deadline=deadline) != digest:
+            raise BoundaryError('runtime_file_changed', name)
+
+
 def validate_runtime(runtime: Path) -> dict:
+    deadline = time.monotonic() + 600
     reject_links(runtime)
     if not runtime.exists():
         raise BoundaryError('runtime_missing', str(runtime))
     marker = runtime / OWNER_FILE
+    reject_links(marker)
     if not marker.is_file():
         raise BoundaryError('runtime_unowned', str(runtime))
     manifest = json.loads(marker.read_text('utf-8'))
     if manifest.get('runtime') != str(runtime) or not manifest.get('completed'):
         raise BoundaryError('runtime_incomplete', str(marker))
-    if not manifest.get('executables'):
+    if set(manifest.get('executables', {})) != set(NATIVE_PATHS):
         raise BoundaryError('runtime_inventory_missing')
     for name, digest in manifest['executables'].items():
         path = runtime / 'sdk' / name
         reject_links(path)
-        if not path.is_file() or sha_file(path) != digest:
+        if not path.is_file() or sha_file(path, deadline=deadline) != digest:
             raise BoundaryError('runtime_executable_changed', name)
+    if manifest.get('inventory_version') == 2 and manifest.get('file_inventory'):
+        inventory = manifest['file_inventory']
+    else:
+        # Legacy owner records remain untouched. The expected inventory is
+        # reconstructed only from archives matching the original download proof.
+        inventory, proof = archive_inventory(runtime, manifest, deadline)
+        manifest = dict(manifest, inventory_version=2, file_inventory=inventory,
+                        inventory_source=proof, integrity_owner_record_unchanged=True)
+    validate_sdk_inventory(runtime / 'sdk', inventory, deadline)
     return manifest
 
 
@@ -795,16 +965,19 @@ def boot_runtime(runtime: Path, report: Report, env: dict, endpoint: Endpoint,
         ready_deadline = time.monotonic() + 5
         while True:
             try:
-                adb_read(endpoint, 'get-state', server, 0.5)
+                adb_read(endpoint, 'get-state', server, 0.5, deadline=ready_deadline)
                 break
             except BoundaryError as exc:
-                if exc.code == 'adb_service_failure':
+                if boot_retryable(exc, endpoint):
                     break  # Own server is ready; emulator has not been launched.
                 raise
             except OSError:
-                if time.monotonic() >= ready_deadline or server.process.poll() is not None:
+                code = server.process.poll()
+                if code is not None:
+                    raise BoundaryError('owned_adb_server_exited', f'pid={server.process.pid} exit_code={code}')
+                if time.monotonic() >= ready_deadline:
                     raise BoundaryError('owned_adb_not_ready')
-                time.sleep(0.1)
+                time.sleep(min(0.1, remaining(ready_deadline)))
         # Check again immediately before the heavy process is allowed to run.
         gate = memory_gate(resources()['available_mib'])
         report.data['memory_gate_immediate'] = gate
@@ -820,8 +993,9 @@ def boot_runtime(runtime: Path, report: Report, env: dict, endpoint: Endpoint,
                 if resources()['available_mib'] < 512:
                     raise BoundaryError('memory_emergency_stop')
                 try:
-                    state = adb_read(endpoint, 'get-state', server)
-                    values = {key: adb_read(endpoint, key, server) for key in PROPERTIES} if state == 'device' else {}
+                    state = adb_read(endpoint, 'get-state', server, deadline=deadline)
+                    values = {key: adb_read(endpoint, key, server, deadline=deadline) for key in PROPERTIES} if state == 'device' else {}
+                    remaining(deadline, 'android_boot_timeout')
                     report.data['identity'] = dict(serial=endpoint.serial, state=state, properties=values)
                     report.save()
                     if (state == 'device' and values.get('ro.kernel.qemu') == '1'
@@ -830,27 +1004,33 @@ def boot_runtime(runtime: Path, report: Report, env: dict, endpoint: Endpoint,
                         report.data.update(android_os='booted', adb_verified=True, status='verified')
                         return
                 except (BoundaryError, OSError) as exc:
+                    fatal = not isinstance(exc, BoundaryError) or not boot_retryable(exc, endpoint)
+                    if fatal:
+                        report.fail(getattr(exc, 'code', 'adb_socket_error'), str(exc))
                     with (report.output / 'adb-observations.jsonl').open('a', encoding='utf-8') as stream:
                         stream.write(json.dumps(dict(at=now(), error=str(exc), code=getattr(exc, 'code', 'socket_error'))) + '\n')
+                    if fatal:
+                        raise
                 time.sleep(min(2, max(0, deadline - time.monotonic())))
             raise BoundaryError('android_boot_timeout', str(timeout))
 
 
 def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = False,
             resume_install: bool = False,
+            verify_only: bool = False,
             accept_sdk_license: bool = False, endpoint: Endpoint | None = None,
             boot_timeout: int = 180, acceleration: str = 'auto') -> dict:
     runtime, output = Path(runtime).absolute(), Path(output).absolute()
     reject_links(runtime)
     report = Report(output)
     endpoint = endpoint or Endpoint()
-    report.data.update(runtime=str(runtime), mode='boot' if boot else 'install' if install else 'preflight',
+    report.data.update(runtime=str(runtime), mode='verify-only' if verify_only else 'boot' if boot else 'install' if install else 'preflight',
         endpoint=dict(host='127.0.0.1', adb_port=endpoint.adb_port, serial=endpoint.serial,
                       console_port=endpoint.console_port, grpc_port=endpoint.grpc_port))
     try:
         if (type(boot_timeout) is not int or not 1 <= boot_timeout <= 180
                 or acceleration not in ('auto', 'off') or (install and boot)
-                or (resume_install and not install)):
+                or (resume_install and not install) or (verify_only and (install or boot))):
             raise BoundaryError('options_invalid')
         report.data['resources_before'] = resources()
         if runtime == output or output in runtime.parents:
@@ -863,6 +1043,11 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
         report.data['runtime_inventory'] = manifest
         if runtime in output.parents:
             raise BoundaryError('runtime_output_overlap')
+        write_json(report.output / 'runtime-integrity.json', manifest)
+        if verify_only:
+            report.data.update(status='runtime_integrity_verified',
+                               not_run_reason='Integrity-only; native tools and Android OS were not executed')
+            return report.data
         if os.name != 'nt' or platform.machine().lower() not in ('amd64', 'x86_64'):
             raise BoundaryError('unsupported_host', 'This installer is pinned to Windows x86_64')
         env = private_environment(runtime, output, endpoint)
@@ -917,6 +1102,8 @@ def parser() -> argparse.ArgumentParser:
     modes = cli.add_mutually_exclusive_group()
     modes.add_argument('--install', action='store_true', help='Download fixed official SDK packages into a new runtime')
     modes.add_argument('--boot', action='store_true', help='One lifetime headless OS attempt for this runtime')
+    modes.add_argument('--verify-only', action='store_true',
+                       help='Verify all SDK files against preserved official archives without native execution')
     cli.add_argument('--accept-sdk-license', action='store_true')
     cli.add_argument('--resume-install', action='store_true',
                      help='One explicit resume of incomplete owned runtime, preserving byte budget')
@@ -934,6 +1121,7 @@ def main(argv: list[str] | None = None) -> int:
         endpoint = Endpoint(args.adb_port, args.console_port, args.grpc_port)
         result = execute(args.runtime, args.output, install=args.install, boot=args.boot,
             resume_install=args.resume_install,
+            verify_only=args.verify_only,
             accept_sdk_license=args.accept_sdk_license, endpoint=endpoint,
             boot_timeout=args.boot_timeout, acceleration=args.acceleration)
     except BoundaryError as exc:
