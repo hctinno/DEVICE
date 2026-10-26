@@ -1,6 +1,20 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `2d56a01b09363ca4fd785b3700d00615fe2fbd96` / 고정 source/runtime 검증 모집단332. 정상 push/원격 exact 대조는 private 게시 영수증으로 고정한다. 공유·사용자 원본/소유 작업/독립 기대·실패를 보존하며 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)와 [실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 갱신했다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `052fb424016d600ed53a27843fe7aeb3e23e8c05` / 고정 source/runtime 검증 모집단332. 기존 소유·미커밋·원본·실패와 독립 기대를 보존해 정상 cherry로 통합했고 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. [PLAN 현황](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)·[실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 우선한다.
+
+## 고정 모집단332 — 수정 수용과 새 합성 시연 한 건
+
+workflow host d318과 evidence writer cac1은 각각 원 No/I1을 보존한 별도 독립 delta8·10 PASS 뒤 수용했다. 총괄은 host12(새 오류5/선택 경계4/genuine MOCK1/legacy1/version 거절1), 등록7(실제 disposable native publish→host prepare1 포함), startup/input/export/writer28의 각 관련 회귀를 통과했다. 새 운영 operator/profile/실permit·실제 AI0이며 테스트 전용 OS/native 경계와 구별한다. export 원12의49/66·IO guard 간섭/원 args·trace 미보존, 별도 selfcheck1+양성/충돌2의12/12를 합산하지 않는다.
+
+G3a052는 독립 원12(prepare10/strict2) PASS와 총괄15(PDF7·malformed 정책1·관련 legacy7)로 수용했다. schema2 PDF의 실제 준비/프롬프트·페이지 literal 인용, schema1/queued/전체 job 재대조·한도/첫 control을 유지한다. metadata/blob retention은 허용된 부작용으로 DB 전체 불변을 주장하지 않는다. 별도 native PDF gate/once 공통·운영 권위는 후속이다.
+
+keyboardbc49 독립6논리(동적5/negative 정적1), freshoperator1c16 정적8/Node구문1·동적0, 운영 문구c55 독립5논리·DOM390/1440 각1/52확인을 구별해 수용했다. c55의 기존 history503·console2와 SQL/global handle unknown은 보존한다. 새 대표상태/원값·AIunknown/DRAFT/새로고침을 앞에 두고 기술 상세는 닫힌 세부에 원문 그대로 유지한다.
+
+총괄은 합성 PDF를 새로 만든 공개 CLI1→원 startup을 직접 소비한 readonly host→1440 pointer 운영 흐름1을 ba44ac32에서 실제 실행했다. native MOCK producer5·가상 runtime1·새 실제 AI0이며, 제품/목적/시장/계획·같은 intake/run/runtime/event:17·원 raw와 correction·저장3/DRAFT를 확인했다. 원131파일 raw/native와 source332는 실행 전후 같았고 own server/thread/listener/child 종료·rebind를 확인했다. 직접 SQL close·전역 process census·CLI --port 경로는 미계측/미실행이다. 센서입력 −19.5 dBm에 선언 셋업10+0.5+20 dB를 더한11 dBm과 W 변환을 Decimal80/상대5e-15로 독립 대조했다. 이는 산술/상태·읽기 검증이며 물리 예측/실측/규범 승인 아니다.
+
+G3 수용 뒤 같은 새131파일에 공개 Python 비교 CLI1을 실행해 readback matched·reference/policy/lineage null→not_assessed/exit2를 확인했다. 원 observer가 reason 객체 목록을 문자열 목록으로 가정해 FAIL한 원 영수증/로그를 그대로 보존하고, 동일 raw의 code/field/detail을 재판독한 추가 qualification만 남겼다. CLI/API/RF 재호출0이며 실제 비교 참조/물리 정확도는 미검증이다.
+
+P01 B093~B096 새46PDF/198726542B·P01표기3175쪽(root독립null)의 제한 ACK·SOURCE metadata74 대비 receiver90/receipt16의 readonly 대조를 닫았다. B09510PDF·receiver21, copyfalse45/copytrue1·AES45/none1·producer 제한1페이지/safeidentity0/P01body0을 보존한다. collector200/corpus165/보존662PDF·2684576340B·known47745쪽 부분합/unknown1/wholepagesnull은 대상18/690·공식0/권리·전수 검수와 다르다. held실패3은 가산하지 않는다. CMG12미해소/N02 STOP·Un-licensed 우선·공유/원본 읽기전용·Codex17/동일 Vertex6/3072 소진·비용null·사용자 추가 준비0을 유지한다. 아래는 원 No와 당시 수용 이력이다.
 
 후행 독립 검수에서 startup/입력9의 원12는11PASS/I1FAIL1이다. _conducted_write의 첫 write MemoryError가 후행 close OSError로 대체되며 실제19B 부분파일/닫힌 fd를 보존했다. 현재 해당 기존3 소유 개발3에게 최소 수정·별도 delta를 실제 배정했고 선행873/후속 export5bc4·freshoperator는 아직 수용하지 않았다. 별개 host87의 legacy ordinary→late control 정적 I1도 개발2의 정확226 별도 host3 수정으로 잇는다. 정상 schema/dispatch/finite permit은 유지하며 오류 보존 결함을 새 모드에서만 숨기지 않는다. 등록226 독립 검수는 예정12 중8진입/7일치·KI부분1/나머지4와 native 게시 미실행의 qualified 범위다. host87 원 genuine에서 audit가 기존 cached blob의 정상 xb 충돌 probe를 막아 operation_failed였으므로 C1 gate 완료로 세지 않는다. 독립 준비에서 직접 관측한 원 context/현재 context 불일치와 그 target 미완료를 구별한다.
 
