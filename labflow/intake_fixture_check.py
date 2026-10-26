@@ -194,8 +194,18 @@ def _conducted_write(output, relative, raw):
     if len(files) + 1 > 512 or sum(item.stat().st_size for item in files) + len(raw) > 32 * 1024 * 1024:
         raise ValueError('conducted_workflow_evidence_limit')
     target.parent.mkdir(parents=True, exist_ok=True)
-    with target.open('xb') as stream:
-        stream.write(raw)
+    first = None
+    try:
+        with target.open('xb') as stream:
+            try:
+                stream.write(raw)
+            except BaseException as error:
+                first = error
+    except BaseException:
+        if first is None:
+            raise
+    if first is not None:
+        raise first
 
 
 def _conducted_json(output, relative, value):

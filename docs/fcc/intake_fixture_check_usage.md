@@ -296,3 +296,9 @@ current None은 caller가 현재 facts를 제공할 수 없다는 명시 상태�
 검증은 공개로 새 작성한 메모리 source facts의 순수 plan 조립과 명시 typed host/finalizer/artifact DTO만 사용한다. RF runtime·새 모델·Store/SQL·원자료 파일·운영 profile·원17은 실행/열람하지 않는다. 제공 값의 결합과 차단·pin/LF 역할·실패 DRAFT·배타 출력 검사를 물리/업무/권한 검증과 구별한다.
 
 2026-10-26 검증: 새 export 검사9개 PASS(failure/error/skip0), 같은 검사의 성공 결합3행을 보존했다. 명시 메모리 current facts/plan 조립과 typed host/finalizer/artifact 일관성이며 실제 host/RF/모델/Store·SQL 실행0이다. 파일512/32MiB 거절은 metadata projection, reparse는 native error seam으로 구분한다. 초기 runner 준비 오류와 모듈 부재 RED1, malformed 스키마·false 표식 보완 RED(failure2/error2), 보완 전9 PASS는 별도 이력으로 보존했다. 마지막 RED의 예상 밖 임시 출력 파일은 disposable test 자동 정리 전 raw 보존이 없어 로그만 남으며 raw 재생을 주장하지 않는다. 기존 wide/원proof와 합산하지 않는다.
+
+### 2026-10-26 evidence writer 최초 실패 보존 수정
+
+원 독립 startup 검수12의 11 PASS/I1 FAIL1을 보존한다. 원 writer의 `with target.open('xb')` 본문에서 write `MemoryError` 뒤 close `OSError`가 최초 control을 대체하는 경로를 실제 xb19B·flush/fsync·fd close로 새 RED1에서 재현했다. `_conducted_write`는 write의 최초 `BaseException`을 본문 안에서 저장하고 기존 context exit/close를 한 번 시도한다. 최초 오류가 있으면 후행 close가 대체하지 않고, write가 성공한 뒤 close만 실패하면 그 원래 객체를 전파한다. 기존 xb·cap·부분 파일·충돌·parent 실패·serializer·export 입력계약은 같고 재시도/삭제/복구를 추가하지 않았다.
+
+새검사5+영향 기존5=10검사 PASS(failure/error/skip0), 같은 검사의 오류·성공 조합15행과 실제 파일24개를 보존했다. 원 RED19B 파일/로그/raw를 그대로 남겼으며 다시 만들어 통과시키지 않았다. 기존 old9/old11 전체 반복0이다. 범위는 실제 로컬 native 파일에 주입한 write/close 예외이며 전역 파일시스템 장애 보증이 아니다. RF·CLI·모델·auth·SQL·운영 Store·실장비 실행0이며 원 No와 이 후보의 독립 수락을 구분한다.
