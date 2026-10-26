@@ -237,7 +237,7 @@ def _read_inputs(evidence_dir, artifacts, receipt):
             try:
                 backend.close()
             except BaseException as close_error:
-                if error is None or isinstance(close_error,_CONTROL) and not isinstance(error,_CONTROL):
+                if error is None:
                     error = close_error if isinstance(close_error,_CONTROL) else _Reject('evidence_close_failed')
                 else:
                     receipt['secondary_errors'].append(dict(code=_PREFIX+'evidence_close_failed',stage='read'))
