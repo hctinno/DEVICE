@@ -269,3 +269,30 @@ node frontend/intake_flow_browser_check.cjs
 ```
 
 이 UI 단위는 자기보존 2d의 다섯 Store/원 startup을 현재 코드의 보호 GET15·production DOM390/1440 10관측으로 재사용했다. 새 가상 실행·CLI·실제 모델·장비0이며 재생을 새 실행으로 세지 않는다. 별도 typed18은 fixture 공존/fixture-only·결과/부모 HTTP503·plan pending·C1 불일치·incomplete null·다른 접수·요약 렌더 실패다. 원 데이터의 정상·오류와 typed projection을 구분한다. 신규 Node10, 조회 host5의 종료·포트 재사용, 요약 내부의 실제 영역/scroll 폭도 확인했다. 원 RED10, null-prototype 객체를 clone과 비교한 검사자 가정 오류1, 대기 route 해제 순서의 검사기 오류, 모바일 내부 잘림 RED를 각각 보존했다. 문서의 예전 실행 수와 이 검증 수를 합산하지 않으며 기존183/168 전체는 반복하지 않았다. CLI/test/backend/read-model·D1/D2/D3·Store/schema는 이 단위에서 수정하지 않았다.
+
+## 정식 workflow의 제공 receipt를 readback 입력으로 export
+
+2026-10-26. DEV3-WORKFLOW-READBACK-EXPORT-001. 기존 module에 public opt-in 함수 하나만 추가한다. 정확 base873647b4의 선행 D1 aae/873은 독립 검수 pending 의존성이며 기존 동결 증거를 갱신하지 않는다. 기존 demo/default/run/summary/CLI/producer·Store·부모 함수 본문은 변경하지 않는다.
+
+```python
+export_conducted_workflow_readback_inputs(
+    output_dir, workflow_summary, finalizer_receipt, *,
+    current_facts_plan, method, artifact_workspace_root,
+) -> dict | None
+```
+
+output_dir은 caller가 명시한 기존 Windows 로컬 절대 디렉터리다. current_facts_plan은 caller가 artifact와 별개로 얻은 원 exact3 context/analysis/facts_plan이며 method도 명시한다. 함수는 기존 current native/hash/binding 검증을 재사용하고 현재 plan.binding의 revision/context SHA와 intake_id만 사용한다. 원 workflow.context_sha256·artifact.binding에서 current pin을 복사하거나 Store 완료·analysis 등록·계획·위임·권한을 만들지 않는다.
+
+workflow_summary는 원 host exact12, finalizer_receipt는 원 v1 exact11 또는 measurement_selection을 가진 v2 exact12다. host가 저장한 serializer는 store.canonical(value).encode('utf-8'): sorted keys·compact JSON·ensure_ascii=False·allow_nan=False·**LF0**다. host.finalization.receipt의 bytes/SHA는 그 전체 finalizer DTO와, host.execution.receipt는 finalizer.execution_receipt와 각각 대조한다. finalization5의 status/result_status/artifact/failure와 원 execution/result/artifact의 run/runtime/status/failure를 각 역할대로 대조한다. 원 result.json 파일 SHA는 canonical(result)+LF1이며 expected_result_sha256의 LF0 canonical SHA와 다르다. manifest SHA·고정 파일 path/bytes/SHA·media type도 제공 summary 안에서 대조한다.
+
+이는 **caller 제공 DTO와 pin의 일관성 검사**다. 원 finalizer/manifest/result 파일을 읽어 인증하거나 실제 AI·권한·장비·측정 진위를 확인하지 않는다. artifact_workspace_root는 caller가 실제 finalizer에 사용한 원 절대 경로를 명시한다. artifact 파일이나 profile을 탐색하지 않는다.
+
+선택은 기존 _conducted_artifact_startup으로 native10을 만들고 기존 _conducted_readback_inputs로 intake_id만 제외한 readback-inputs.json exact9를 배타 저장한다. 반환은 같은 native10 또는 None이다. UI는 반환10을 기존 startup 입력으로, CLI는 기존 exact9 파일과 별도 같은 workspace/intake_id를 사용한다. 기존 summary12/finalization5와 선택·실패 evidence·invalid/incomplete/null·DRAFT·권한 false는 고치지 않는다. host가 failed/unknown이어도 실제 제공 stored complete artifact가 있으면 읽기 선택을 만들 수 있다. 이는 host 완료나 측정 PASS가 아니다.
+
+current None은 caller가 현재 facts를 제공할 수 없다는 명시 상태이며, current blocked 또는 held/null/미저장 artifact와 함께 None/파일0으로 끝난다. 그 차단 경로는 나머지 미사용 DTO의 유효성이나 파일 진위를 인증하지 않는다. 현재 readonly 부모는 completed 분석을 요구하지만 정식 host의 등록 준비 C1은 queued일 수 있고 원 instructions도 다르다. 같은 host가 끝났다는 사실만으로 current 조회 가능·matched를 보장하지 않는다. 이후 unavailable/different_plan/stale는 그대로 보존해야 하며 export가 expected binding이나 원본을 수선하지 않는다.
+
+한도는 host frame69632B/finalizer2MiB/current8MiB/native depth32/node1M, 원 execution receipt256KiB/result1MiB, selection 및 파일64KiB와 기존 output512files/32MiB다. cap은 쓰기 전에 거절하며 truncate하지 않는다. source/current/finalizer 입력은 분리된 native 값으로 검증하고 caller 원값을 바꾸지 않는다. 선택이 생겼을 때만 명시 output 디렉터리를 native pin하고 기존 exclusive writer를 호출하며 알려진 handle을 닫는다. relative/UNC/reparse/경로 이탈·중복 파일·한도를 거절하고 덮어쓰기·partial 재시도·실패 파일 정리를 하지 않는다. 첫 오류/control은 후행 close 실패에서도 원 객체로 보존한다. 입력 일관성 거절은 고정 ValueError('conducted_workflow_readback_export_invalid')이며 실제 기존 startup/출력/native/close 오류는 원형으로 전파한다.
+
+검증은 공개로 새 작성한 메모리 source facts의 순수 plan 조립과 명시 typed host/finalizer/artifact DTO만 사용한다. RF runtime·새 모델·Store/SQL·원자료 파일·운영 profile·원17은 실행/열람하지 않는다. 제공 값의 결합과 차단·pin/LF 역할·실패 DRAFT·배타 출력 검사를 물리/업무/권한 검증과 구별한다.
+
+2026-10-26 검증: 새 export 검사9개 PASS(failure/error/skip0), 같은 검사의 성공 결합3행을 보존했다. 명시 메모리 current facts/plan 조립과 typed host/finalizer/artifact 일관성이며 실제 host/RF/모델/Store·SQL 실행0이다. 파일512/32MiB 거절은 metadata projection, reparse는 native error seam으로 구분한다. 초기 runner 준비 오류와 모듈 부재 RED1, malformed 스키마·false 표식 보완 RED(failure2/error2), 보완 전9 PASS는 별도 이력으로 보존했다. 마지막 RED의 예상 밖 임시 출력 파일은 disposable test 자동 정리 전 raw 보존이 없어 로그만 남으며 raw 재생을 주장하지 않는다. 기존 wide/원proof와 합산하지 않는다.

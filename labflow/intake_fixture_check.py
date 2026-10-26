@@ -311,6 +311,143 @@ def _conducted_readback_inputs(output, selection):
         _conducted_json(output,'readback-inputs.json',{key:value for key,value in selection.items() if key!='intake_id'})
 
 
+def _conducted_export_need(condition):
+    if not condition:
+        raise ValueError('conducted_workflow_readback_export_invalid')
+
+
+def _conducted_export_frame(value, cap):
+    """Detach provided native data; this does not open or authenticate its source."""
+    from . import intake_conducted_artifact_readback as readback
+    try:
+        raw = readback._raw(value, cap)
+    except readback.IntakeConductedArtifactReadbackError:
+        raise ValueError('conducted_workflow_readback_export_invalid') from None
+    return json.loads(raw), raw
+
+
+def _conducted_export_pin(value, raw):
+    _conducted_export_need(type(value) is dict and set(value) == {'bytes', 'sha256'}
+        and type(value['bytes']) is int and value['bytes'] == len(raw)
+        and type(value['sha256']) is str and value['sha256'] == sha256(raw).hexdigest())
+
+
+def export_conducted_workflow_readback_inputs(output_dir, workflow_summary, finalizer_receipt, *,
+        current_facts_plan, method, artifact_workspace_root):
+    """Export provided pin consistency only; never complete a job or repair current binding."""
+    from . import intake_conducted_artifact_readback as readback
+    from . import control_packet_prepare as native
+    from .virtual_fleet import conducted_twin_result as result_api
+    from .virtual_fleet import rf_signal_waveform_observation_read as cleanup
+    need = _conducted_export_need
+    host, _ = _conducted_export_frame(workflow_summary, 69632)
+    need(type(host) is dict and set(host) == set('schema_version kind status phase scenario_id requested_model history reservation execution finalization errors verification'.split())
+        and type(host['schema_version']) is int and host['schema_version'] == 1
+        and host['kind'] == 'codex_registered_conducted_workflow_host_receipt'
+        and type(host['status']) is str and host['status'] in ('completed', 'not_run', 'failed', 'unknown')
+        and type(host['verification']) is dict and all(host['verification'].get(key) is False
+            for key in ('hardware_verified', 'origin_authenticated', 'remote_model_identity_verified'))
+        and host['verification'].get('measurement') == 'not_assessed')
+    if current_facts_plan is None or finalizer_receipt is None or host['finalization'] is None:
+        return None
+    current, _ = _conducted_export_frame(current_facts_plan, 8 * 1024 * 1024)
+    need(type(current) is dict and type(current.get('context')) is dict
+        and type(current['context'].get('intake_id')) is str)
+    try:
+        readback._current_value(current, current['context']['intake_id'])
+    except readback.IntakeConductedArtifactReadbackError:
+        raise ValueError('conducted_workflow_readback_export_invalid') from None
+    if current['facts_plan']['status'] == 'blocked':
+        return None
+    method, _ = _conducted_export_frame(method, 65536)
+    need(type(method) is dict and set(method) == set('method_id method_version metric reference_plane'.split()))
+    plan = current['facts_plan']['plan_input']
+    need(canonical(method) == canonical({key: plan['plan'][key] for key in method}))
+    final, final_raw = _conducted_export_frame(finalizer_receipt, 2 * 1024 * 1024)
+    final_keys = set('schema_version kind status execution_receipt input_files result artifact failure secondary_errors verification execution_authority'.split())
+    need(type(final) is dict and set(final) in (final_keys, final_keys | {'measurement_selection'})
+        and type(final['schema_version']) is int and final['schema_version'] == 1
+        and final['kind'] == 'conducted_execution_result_finalizer'
+        and final['status'] in ('held', 'stored') and final['execution_authority'] is False
+        and type(final['verification']) is dict
+        and all(final['verification'].get(key) is False for key in ('hardware_verified', 'physical_verified', 'full_task_verified', 'execution_rerun'))
+        and final['verification'].get('method_approval') == 'not_assessed')
+    projected = host['finalization']
+    need(type(projected) is dict and set(projected) == set('status result_status artifact failure receipt'.split()))
+    _conducted_export_pin(projected['receipt'], final_raw)
+    need(canonical(projected['status']) == canonical(final['status'])
+        and canonical(projected['artifact']) == canonical(final['artifact'])
+        and canonical(projected['failure']) == canonical(final['failure']))
+    result, artifact = final['result'], final['artifact']
+    need(result is None or type(result) is dict)
+    need(canonical(projected['result_status']) == canonical(None if result is None else result.get('status')))
+    if final['status'] != 'stored' or result is None or artifact is None:
+        return None
+    need(type(artifact) is dict and type(artifact.get('storage')) is dict)
+    if artifact['storage'].get('status') != 'complete':
+        return None
+    result, result_raw = _conducted_export_frame(result, result_api.MAX_OUTPUT_BYTES)
+    need(type(result) is dict and set(result) == set(result_api._base())
+        and type(result['schema_version']) is int and result['schema_version'] == 1
+        and result['kind'] == 'conducted_twin_result' and result['status'] in ('recorded', 'invalid', 'incomplete')
+        and type(result['binding']) is dict and type(result['verification']) is dict
+        and all(result['verification'].get(key) is False for key in ('hardware_verified', 'physical_verified', 'execution_authority'))
+        and result['verification'].get('method_approval') == 'not_assessed')
+    execution, execution_raw = _conducted_export_frame(final['execution_receipt'], 262144)
+    need(type(execution) is dict and type(execution.get('binding')) is dict
+        and type(execution.get('schema_version')) is int and execution['schema_version'] == 1
+        and execution.get('kind') == 'intake_plan_virtual_execution_result')
+    observed = host['execution']
+    need(type(observed) is dict and set(observed) == set('run_id runtime_instance_id status failure receipt producer_receipts'.split()))
+    _conducted_export_pin(observed['receipt'], execution_raw)
+    need(canonical(observed['status']) == canonical(execution.get('status'))
+        and canonical(observed['failure']) == canonical(execution.get('failure')))
+    need(set(artifact) == set('schema_version kind artifact_name run_id runtime_instance_id result_status storage files verification execution_authority'.split())
+        and artifact['result_status'] == result['status'] and type(artifact['artifact_name']) is str and bool(artifact['artifact_name']))
+    for key in ('run_id', 'runtime_instance_id'):
+        need(type(artifact[key]) is str and bool(artifact[key])
+            and canonical(artifact[key]) == canonical(observed[key]) == canonical(execution['binding'].get(key)) == canonical(result['binding'].get(key)))
+    prefix = '.local/conducted-result-artifacts/' + artifact['artifact_name'] + '/'
+    files = artifact['files']
+    need(type(files) is list and len(files) == 2)
+    for row, name, media, cap in zip(files, ('result.json', 'draft.md'), ('application/json', 'text/markdown'), (1024 * 1024 + 1, 256 * 1024)):
+        need(type(row) is dict and set(row) == {'path', 'bytes', 'sha256', 'media_type'}
+            and row['path'] == prefix + name and row['media_type'] == media
+            and type(row['bytes']) is int and 1 <= row['bytes'] <= cap
+            and type(row['sha256']) is str and len(row['sha256']) == 64
+            and all(c in '0123456789abcdef' for c in row['sha256']))
+    need(files[0]['bytes'] == len(result_raw) + 1 and files[0]['sha256'] == sha256(result_raw + b'\n').hexdigest())
+    selection = _conducted_artifact_startup(plan, method, final, artifact_workspace_root)
+    if selection is None:
+        return None
+    _conducted_export_frame(selection, 65536)
+    file_raw = (canonical({key: value for key, value in selection.items() if key != 'intake_id'}) + '\n').encode('utf-8')
+    need(len(file_raw) <= 65536)
+    need(type(output_dir) in (str, type(Path())))
+    output = Path(output_dir)
+    need(output.is_absolute() and not str(output_dir).startswith(('\\\\', '//'))
+        and all(native._valid_segment(part) for part in output.parts[1:]))
+    output = native._local_path(output_dir)
+    backend = primary = None
+    try:
+        backend = native._WindowsIO()
+        native._Tree(output, backend)
+        _conducted_readback_inputs(output, selection)
+    except BaseException as error:
+        primary = error
+    finally:
+        if backend is not None:
+            try:
+                closing = cleanup._close(backend)
+            except BaseException as error:
+                closing = error
+            if primary is None and closing is not None:
+                primary = closing
+    if primary is not None:
+        raise primary
+    return selection
+
+
 def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None, mock_model=None, scenario='normal'):
     """Opt-in authored PDF -> current C1 -> genuine plan/execution/result/DRAFT."""
     if scenario not in _CONDUCTED_SCENARIOS:

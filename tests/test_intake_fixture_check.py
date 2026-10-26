@@ -562,5 +562,236 @@ class ConductedReadbackInputTests(unittest.TestCase):
         self.assertFalse((output/'public-summary.json').exists())
 
 
+
+
+from hashlib import sha256
+from labflow.store import canonical
+
+WORKFLOW_EXPORT_OBSERVATIONS = []
+
+
+class WorkflowReadbackExportTests(unittest.TestCase):
+    """Provided native DTO/pin consistency only: no RF runtime or source file authentication."""
+    @classmethod
+    def setUpClass(cls):
+        import importlib.util
+        import sys
+        from copy import deepcopy
+        from labflow.intake_facts_to_conducted_plan import build_conducted_plan_from_intake_facts
+        base=Path(__file__).parent
+        spec=importlib.util.spec_from_file_location("export_plan_fixture",base/"test_intake_conducted_twin_plan.py")
+        fixture=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixture)
+        authored_spec=importlib.util.spec_from_file_location("export_authored_facts",base/"test_intake_facts_to_conducted_plan.py")
+        authored=importlib.util.module_from_spec(authored_spec)
+        with patch.dict(sys.modules,{"test_intake_conducted_twin_plan":fixture}):
+            authored_spec.loader.exec_module(authored)
+        source_context,analysis,options=authored.authored()
+        cls.source_plan=build_conducted_plan_from_intake_facts(source_context,analysis,**options)["plan_input"]
+        context=deepcopy(source_context)
+        context["instructions"]="Independent caller current readonly snapshot; provided test data, no execution authority."
+        current_options={**options,"expected_context_sha256":sha256(canonical(context).encode()).hexdigest()}
+        cls.method=options["method"]
+        cls.current=dict(context=context,analysis=deepcopy(analysis),
+            facts_plan=build_conducted_plan_from_intake_facts(context,analysis,**current_options))
+        if cls.current["facts_plan"]["status"]!="ready_for_simulation":raise AssertionError("authored pure facts not ready")
+
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(prefix="workflow-export-");self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name)
+        from labflow import intake_fixture_check as module
+        self.module=module
+
+    def api(self):
+        self.assertTrue(hasattr(self.module,"export_conducted_workflow_readback_inputs"),"public workflow export absent")
+        return self.module.export_conducted_workflow_readback_inputs
+
+    def frames(self,status="invalid",host_status="failed",selection=False):
+        from copy import deepcopy
+        from labflow.virtual_fleet import conducted_twin_result as dto
+        from labflow.virtual_fleet.conducted_result_artifact import _verification
+        result=dto._base();result["status"]=status
+        result["binding"]=dict(run_id="provided-run",runtime_instance_id="provided-runtime",plan_input=deepcopy(self.source_plan))
+        result["failure"]=dict(code="measurement_invalid",field="raw_measurement") if status=="invalid" else None
+        result["gaps"]=[dict(code="provided-gap",field="raw_measurement",detail=None)]
+        raw=canonical(result).encode()
+        prefix=".local/conducted-result-artifacts/provided-draft/"
+        artifact=dict(schema_version=1,kind="conducted_result_artifact",artifact_name="provided-draft",
+            run_id="provided-run",runtime_instance_id="provided-runtime",result_status=status,
+            storage=dict(status="complete",commit_marker=prefix+"manifest.json",bytes=1000,sha256="b"*64),
+            files=[dict(path=prefix+"result.json",bytes=len(raw)+1,sha256=sha256(raw+b"\n").hexdigest(),media_type="application/json"),
+                   dict(path=prefix+"draft.md",bytes=77,sha256="c"*64,media_type="text/markdown")],
+            verification=_verification("full_bound"),execution_authority=False)
+        execution=dict(schema_version=1,kind="intake_plan_virtual_execution_result",status="stopped",failure=None,
+            binding=dict(run_id="provided-run",runtime_instance_id="provided-runtime"),plan_input=deepcopy(self.source_plan),
+            loop=None,execution=None,artifacts={},verification=dict(execution_authority=False))
+        final=dict(schema_version=1,kind="conducted_execution_result_finalizer",status="stored",execution_receipt=execution,
+            input_files={},result=result,artifact=artifact,failure=result["failure"],secondary_errors=[],
+            verification=dict(evidence_snapshot_verified=True,recording_mode="post_run_from_retained_events",origin_authenticated=False,
+                ai_model_called=None,execution_rerun=False,source_bytes_reopened=False,physical_verified=False,hardware_verified=False,
+                full_task_verified=False,method_approval="not_assessed"),
+            execution_authority=False)
+        if selection:final["measurement_selection"]=dict(schema_version=1,kind="conducted_measurement_selection",status="selected",result=deepcopy(result))
+        return self.summary(final,host_status),final
+
+    def summary(self,final,host_status="failed"):
+        from copy import deepcopy
+        def pin(value):
+            raw=canonical(value).encode("utf-8")
+            return dict(bytes=len(raw),sha256=sha256(raw).hexdigest())
+        execution=None if final is None else final["execution_receipt"]
+        return dict(schema_version=1,kind="codex_registered_conducted_workflow_host_receipt",status=host_status,
+            phase="finished",scenario_id="provided-scenario",requested_model="gpt-6.1-sol",history=None,reservation=None,
+            execution=None if execution is None else dict(run_id=execution["binding"]["run_id"],
+                runtime_instance_id=execution["binding"]["runtime_instance_id"],status=execution["status"],
+                failure=deepcopy(execution["failure"]),receipt=pin(execution),producer_receipts=[]),
+            finalization=None if final is None else dict(status=final["status"],
+                result_status=None if final["result"] is None else final["result"]["status"],
+                artifact=deepcopy(final["artifact"]),failure=deepcopy(final["failure"]),receipt=pin(final)),
+            errors=[dict(phase="finalizer",code="provided-original-failure")],
+            verification=dict(operator_scope="not_validated",execution_scope="one_registered_synthetic_conducted_workflow",
+                origin_authenticated=False,remote_model_identity_verified=False,measurement="not_assessed",hardware_verified=False))
+
+    def call(self,host=None,final=None,*,folder=None,current="default",method=None):
+        if host is None and final is None:host,final=self.frames()
+        return self.api()(self.root if folder is None else folder,host,final,
+            current_facts_plan=self.current if current=="default" else current,
+            method=self.method if method is None else method,artifact_workspace_root=str(self.root/"unread-artifact-root"))
+
+    def test_public_export_uses_independent_current_and_original_lf_roles(self):
+        from copy import deepcopy
+        host,final=self.frames();before=deepcopy((host,final,self.current,self.method))
+        startup=self.module._conducted_artifact_startup;write=self.module._conducted_readback_inputs;seen=[]
+        def selected(*args):
+            value=startup(*args);seen.append(value);return value
+        with patch.object(self.module,"_conducted_artifact_startup",side_effect=selected) as assemble,patch.object(
+                self.module,"_conducted_readback_inputs",wraps=write) as exported:
+            value=self.call(host,final)
+        self.assertEqual((assemble.call_count,exported.call_count),(1,1));self.assertIs(value,seen[0])
+        raw=(self.root/"readback-inputs.json").read_bytes();saved=json.loads(raw)
+        self.assertEqual(dict(saved,intake_id=value["intake_id"]),value)
+        self.assertEqual(raw,(canonical(saved)+"\n").encode())
+        self.assertEqual(value["expected_revision"],self.current["context"]["revision"])
+        self.assertEqual(value["expected_context_sha256"],sha256(canonical(self.current["context"]).encode()).hexdigest())
+        self.assertNotEqual(value["expected_context_sha256"],final["result"]["binding"]["plan_input"]["binding"]["context_sha256"])
+        self.assertEqual(value["expected_result_sha256"],sha256(canonical(final["result"]).encode()).hexdigest())
+        self.assertNotEqual(value["expected_result_sha256"],final["artifact"]["files"][0]["sha256"])
+        self.assertEqual((host,final,self.current,self.method),before)
+        self.assertEqual([p.name for p in self.root.iterdir()],["readback-inputs.json"])
+        WORKFLOW_EXPORT_OBSERVATIONS.append(dict(kind="provided native source/pin consistency",selection=value,host=host,finalizer=final,
+            current=self.current,export_hex=raw.hex(),inputs_unchanged=True,source_io=0,sql=0,rf=0,model=0))
+
+    def test_failed_unknown_stored_invalid_incomplete_and_selection_evidence_are_preserved(self):
+        from copy import deepcopy
+        for index,(status,host_status,selection) in enumerate((("invalid","failed",False),("incomplete","unknown",True))):
+            host,final=self.frames(status,host_status,selection);before=deepcopy((host,final))
+            folder=self.root/str(index);folder.mkdir();value=self.call(host,final,folder=folder)
+            self.assertIsNotNone(value);self.assertEqual((host,final),before)
+            self.assertEqual(host["status"],host_status);self.assertEqual(final["result"]["status"],status)
+            self.assertIsNone(final["result"]["calculation"]["corrected"]);self.assertIs(final["execution_authority"],False)
+            WORKFLOW_EXPORT_OBSERVATIONS.append(dict(kind="provided failed/unknown DRAFT, not real execution",host_status=host_status,result_status=status,
+                finalizer_selection_evidence=selection,selection=value,export_hex=(folder/"readback-inputs.json").read_bytes().hex(),inputs_unchanged=True))
+
+    def test_none_unavailable_blocked_held_or_null_create_no_file(self):
+        from copy import deepcopy
+        host,final=self.frames()
+        blocked=deepcopy(self.current);blocked["facts_plan"]["status"]="blocked";blocked["facts_plan"]["plan_input"]["status"]="blocked"
+        held=deepcopy(final);held.update(status="held",result=None,artifact=None)
+        cases=((host,final,None),(host,final,blocked),(self.summary(held),held,self.current),(self.summary(None,"not_run"),None,self.current))
+        with patch.object(self.module,"_conducted_readback_inputs",side_effect=AssertionError("None output0")):
+            for h,f,current in cases:
+                self.assertIsNone(self.call(h,f,current=current))
+        self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_wrong_serializer_pins_and_cross_source_contradictions_refuse_before_output(self):
+        from copy import deepcopy
+        for field in ("final_bytes","final_lf","exec_pin","execution_status","execution_failure","final_status","final_failure",
+                      "artifact_summary","result_binding","file_lf_role","manifest_path","current_hash","method",
+                      "result_scalar","artifact_name_type","result_authority","finalizer_physical"):
+            host,final=self.frames();current=deepcopy(self.current);method=deepcopy(self.method)
+            if field=="final_bytes":host["finalization"]["receipt"]["bytes"]+=1
+            elif field=="final_lf":host["finalization"]["receipt"]["sha256"]=sha256((canonical(final)+"\n").encode()).hexdigest()
+            elif field=="exec_pin":host["execution"]["receipt"]["sha256"]="0"*64
+            elif field=="execution_status":host["execution"]["status"]="failed"
+            elif field=="execution_failure":host["execution"]["failure"]=dict(code="other",stage="loop")
+            elif field=="final_status":host["finalization"]["result_status"]="incomplete"
+            elif field=="final_failure":host["finalization"]["failure"]=None
+            elif field=="artifact_summary":host["finalization"]["artifact"]["storage"]["sha256"]="0"*64
+            elif field=="result_binding":
+                final["result"]["binding"]["runtime_instance_id"]="other";host=self.summary(final)
+            elif field=="file_lf_role":
+                final["artifact"]["files"][0]["sha256"]=sha256(canonical(final["result"]).encode()).hexdigest();host=self.summary(final)
+            elif field=="manifest_path":
+                final["artifact"]["storage"]["commit_marker"]="other/manifest.json";host=self.summary(final)
+            elif field=="current_hash":current["facts_plan"]["plan_input"]["binding"]["context_sha256"]="d"*64
+            elif field=="method":method["method_version"]+=1
+            elif field=="result_scalar":
+                final["result"]=[];host["finalization"]["result_status"]=None
+                raw=canonical(final).encode();host["finalization"]["receipt"]=dict(bytes=len(raw),sha256=sha256(raw).hexdigest())
+            elif field=="artifact_name_type":final["artifact"]["artifact_name"]=7;host=self.summary(final)
+            elif field=="result_authority":
+                final["result"]["verification"]["execution_authority"]=True
+                raw=canonical(final["result"]).encode()
+                final["artifact"]["files"][0].update(bytes=len(raw)+1,sha256=sha256(raw+b"\n").hexdigest());host=self.summary(final)
+            else:final["verification"]["physical_verified"]=True;host=self.summary(final)
+            with self.subTest(field=field),self.assertRaises(ValueError):
+                self.call(host,final,current=current,method=method)
+            self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_native_caps_and_foreign_inputs_refuse_before_file(self):
+        from copy import deepcopy
+        for field in ("host","final","current","foreign"):
+            host,final=self.frames();current=deepcopy(self.current)
+            if field=="host":host["errors"]=[dict(code="x"*69633)]
+            elif field=="final":final["input_files"]["padding"]="x"*(2*1024*1024)
+            elif field=="current":current["analysis"]["padding"]="x"*(8*1024*1024)
+            else:current["analysis"]["foreign"]=object()
+            with self.subTest(field=field),self.assertRaises(ValueError):self.call(host,final,current=current)
+            self.assertEqual(list(self.root.iterdir()),[])
+        oversized=dict(intake_id="x",method=dict(padding="x"*65536))
+        with patch.object(self.module,"_conducted_artifact_startup",return_value=oversized),self.assertRaises(ValueError):self.call()
+        self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_output_directory_is_explicit_native_local_and_reparse_fault_has_no_write(self):
+        from labflow import control_packet_prepare as native
+        for folder in ("relative",r"\\server\share",str(self.root/".."/"alias"),str(self.root/"missing")):
+            with self.subTest(folder=folder),self.assertRaises((ValueError,OSError)):self.call(folder=folder)
+        error=native.ControlPacketPrepareError("packet_prepare_path_invalid")
+        with patch.object(native,"_Tree",side_effect=error),patch.object(
+                self.module,"_conducted_readback_inputs",side_effect=AssertionError("native rejection write0")) as exported:
+            with self.assertRaises(native.ControlPacketPrepareError) as caught:self.call()
+        self.assertIs(caught.exception,error);self.assertEqual(exported.call_count,0);self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_existing_partial_file_is_never_overwritten(self):
+        import os
+        target=self.root/"readback-inputs.json";target.write_bytes(b"original partial\x00\n")
+        before=target.stat()
+        with self.assertRaises(FileExistsError):self.call()
+        after=target.stat();self.assertEqual(target.read_bytes(),b"original partial\x00\n")
+        self.assertEqual((before.st_size,before.st_ino,before.st_mtime_ns),(after.st_size,after.st_ino,after.st_mtime_ns))
+
+    def test_partial_first_errors_and_controls_survive_cleanup_error_without_retry(self):
+        from labflow.virtual_fleet import rf_signal_waveform_observation_read as cleanup
+        opened=Path.open;close=cleanup._close
+        for index,error in enumerate((OSError("first"),KeyboardInterrupt(),MemoryError(),SystemExit(7),GeneratorExit())):
+            folder=self.root/str(index);folder.mkdir();target=folder/"readback-inputs.json";calls=[]
+            class Partial:
+                def __enter__(inner):inner.stream=opened(target,"xb");return inner
+                def __exit__(inner,*args):return inner.stream.__exit__(*args)
+                def write(inner,raw):calls.append(raw);inner.stream.write(raw[:17]);raise error
+            def opening(path,*args,**kwargs):return Partial() if path==target else opened(path,*args,**kwargs)
+            def closing(backend):close(backend);return RuntimeError("secondary")
+            with self.subTest(error=type(error).__name__),patch.object(Path,"open",opening),patch.object(cleanup,"_close",side_effect=closing):
+                with self.assertRaises(type(error)) as caught:self.call(folder=folder)
+            self.assertIs(caught.exception,error);self.assertEqual(len(calls),1);self.assertEqual(target.read_bytes(),calls[0][:17])
+
+    def test_existing_file_and_byte_budget_projection_refuses_before_write(self):
+        from types import SimpleNamespace
+        for count,size in ((512,0),(1,32*1024*1024)):
+            item=SimpleNamespace(is_file=lambda:True,stat=lambda:SimpleNamespace(st_size=size))
+            with patch.object(Path,"rglob",return_value=[item]*count):
+                with self.assertRaises(ValueError):self.call()
+            self.assertEqual(list(self.root.iterdir()),[])
+
+
 if __name__ == '__main__':
     unittest.main()
