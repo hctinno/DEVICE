@@ -68,6 +68,10 @@ proposal = wire["proposal"]
 
 builder 반환은 schema_version/kind/binding/expected_producer/messages 정확5다. binding은 opaque ID4/context_sha256/request_sha256 정확6, expected_producer는 kind=model/name 정확2다. system/user 메시지는 정확2다. decoder가 재구성한 prompt와 supplied prompt를 비교하므로 system·메시지 순서·user 내용·binding을 바꾼 응답 결합은 거절한다. user.content의 비정규 JSON 표현도 거절한다. dict 삽입 순서는 무관하다.
 
+2026-10-27 가상 pilot 실패에서 모델은 fresh sensor read 관측 후에도 불필요한 tick advance를 제안했고, 지정된 결정 한도에서 실행이 미완료로 끝났다. 새 builder의 고정 SYSTEM 프로필은 공개 goal·observations·last_receipt에 드러난 필수 센서, 최소 획득 tick, 현재 setup revision, 측정 유효성을 살펴 목표 충족이 관측되면 `stop/completed`를 제안하도록 설명한다. 유효한 read 후 예산 소진용 advance를 피하고, pending일 때만 정당한 advance를 제안하도록 안내한다. stale·invalid·sensor/setup 불일치·근거 부족이면 완료를 주장하지 않고 허용된 복구 제안 또는 `stop/blocked|failed`를 제안한다. 이는 모델에 주는 설명이며 host가 proposal을 교체하거나 목표 충족을 자동 판정하는 로직이 아니다. 예상 측정값, 정답 단계 수, private oracle은 프롬프트에 포함하지 않는다.
+
+새 builder는 현재 고정 SYSTEM만 생성한다. decoder는 현재 SYSTEM과 2026-10-25 원래의 정확한 SYSTEM literal만 known profile로 받아, 해당 프로필로 전체 prompt를 재구성해 결합을 검사한다. 이전에 보존한 prompt·response의 typed decode/readback을 유지하기 위한 것이며 임의의 SYSTEM 수정이나 결합 우회를 허용하지 않는다. logical request SHA-256은 SYSTEM이 아닌 공개 core5의 C1 해시이므로 동일 core에서는 이 변경 전후에 같다. 완성 prompt 해시와 길이는 변경된다. 기존 테스트의 구 프롬프트 literal·byte 경계 기대값은 새 builder에 그대로 적용할 수 없다.
+
 C1은 UTF-8의 json.dumps(ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(',', ':'))다. logical request hash는 공개 core5의 C1 SHA-256이다. 실제 user 메시지에도 해당 core와 해시가 들어간다. 완성 prompt의 해시나 실제 CLI/API 전송 bytes 해시와 구별한다. 후자의 요청은 이 API가 만들거나 전송하지 않는다.
 
 decoder 반환은 원 wire의 schema_version/kind/request_sha256/producer/proposal 정확5다. proposal은 독립 native 사본이다. 반환 객체의 수정은 prompt·원 bytes·다음 호출에 영향을 주지 않는다. 실행/authority/assessment flags를 추가하지 않는다.
@@ -96,6 +100,8 @@ decoder는 raw type/길이 → prompt 전체 재구성 → strict raw 파싱 →
 ModelOperatorBoundaryError의 code/str/args에는 model_operator_boundary_ 접두사와 고정 suffix만 남는다. suffix는 invalid_input, invalid_prompt, response_invalid, response_binding_mismatch, response_producer_mismatch, proposal_invalid, limit_exceeded, internal_error 정확8이다. 새 오류의 cause/context는 None이며 활성 caller except 안에서도 원 입력·예외 문자열을 chain에 넣지 않는다. KeyboardInterrupt/SystemExit/GeneratorExit는 원 객체를 그대로 전파한다. 이는 Python frame 전체를 격리하는 sandbox가 아니다.
 
 구현 전 사전 literal과 API 부재 RED를 보존했다. 신규 검사27은 고정 hash·native 사본·활성 caller/control·실제 raw/context/prompt/depth/node 경계를 확인한다. 원 response의 유효 wire는 고정된 얕은 구조이므로 raw byte cap 안에서 nodes200000의 유효 wire 성공 경계에 도달했다고 주장하지 않는다. U2의 실제 nodes200000/200001 및 depth32/33 경계와 구별한다. 관련 부모 회귀는 신규 검사와 별도 분모로 보고한다.
+
+2026-10-27 goal guidance 검사는 두 known SYSTEM의 typed decode, 새 builder의 안내와 불변 request binding, 미등록 SYSTEM·binding drift 거절, private budget 필드 거절을 확인한다. 이 검사는 작성된 wire에 대한 단위 검사다. 위 pilot의 실제 모델을 재호출하거나 가상 목표 종료가 개선됐음을 입증하지 않는다.
 
 기존 회귀 실행 환경에 설치된 tests 패키지가 저장소 namespace를 가릴 수 있다. 이때 원 import 실패를 보존하고 전용 검사 프로세스에서 로컬 tests namespace를 먼저 지정한다. 기존 tests/__init__.py나 부모 source를 수정하지 않는다.
 
