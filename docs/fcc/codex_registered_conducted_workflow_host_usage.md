@@ -1,5 +1,11 @@
 # 등록 합성 conducted workflow의 native host
 
+## MSIX 고정 경로의 등록·준비 연결 — 2026-10-26
+
+MSIX KnownFolder의 lexical 경로와 LocalCache 해석 경로가 달라도 원 native directory ID·부모관계·해석 일관성이 검증된 같은 객체만 등록기의 `_IO` claim/게시에서 허용한다. 정규화된 경로로 host authority를 교체하지 않는다. host core의 원 `_profile_root` → `_path`는 lexical 고정 경로를 그대로 사용하며 source/current/PDF/원파일 검증 계약을 유지한다. 상세 검증은 [등록기의 MSIX 항목](codex_conducted_workflow_registration_usage.md)을 따른다.
+
+`NativeNamespaceRegistrationTests`는 실제 배포 namespace의 새 자기 `.local` parent와 새 synthetic PDF/Store에서 등록 → native 게시 → actual stage/postpublish `_prepare` 5tuple을 확인한다. 이 양성에 resolve 대역은 없다. test-only `_control_root` 위치만 자기 parent로 지정하여 원 host의 profile 경로 도출·native `_path`도 확인한다. 실제 운영 KnownFolder 파일·권위·실패 staging/기존 permit은 열거나 수정하지 않고 runtime·실제 모델·추가8 소비0을 유지한다. root의 실제 실패와 원064f 이력은 보존한다.
+
 ## 완료 current PDF의 실제 등록 연결 — 2026-10-26
 
 DEV1-GOAL-COMPLETED-PDF-001은 명시 workflow schema3 `completed_current_provided`에 한해 기존 native 등록 원형 검사 뒤 TXT/PDF 허용 목록을 적용한다. 기준 b92af6eb2080d273bf98f50222a182d663a87c7b host에는 이 suffix guard가 없었으므로 추가했다. `.md` 등은 Store/current 읽기 전에 `unsupported_schema`로 거절한다. v1/v2와 authority/caps/provenance/ledger/모델 실행 계약은 변경하지 않는다.

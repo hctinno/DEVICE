@@ -31,22 +31,25 @@ except ModuleNotFoundError as error:
 C=lambda v:canonical(v).encode('utf-8')
 H=lambda raw:hashlib.sha256(raw).hexdigest()
 LOCAL=ROOT/'.local/reg'/uuid.uuid4().hex
+EXTRA_PROOF_ROOT=None
 REAL_POPEN=subprocess.Popen
 
 class Budget:
     def __init__(self):self.slots={};self.total=0;self.native=0
     def charge(self,path,size):
-        path=Path(os.path.abspath(path));assert path.is_relative_to(LOCAL)
+        path=Path(os.path.abspath(path))
+        assert path.is_relative_to(LOCAL) or (EXTRA_PROOF_ROOT is not None and path.is_relative_to(EXTRA_PROOF_ROOT))
         delta=max(0,size-self.slots.get(path,0))
         assert self.total+delta<=33554432 and len(self.slots)+self.native+(path not in self.slots)<=512,'PROOF_ADMISSION'
         self.slots[path]=max(size,self.slots.get(path,0));self.total+=delta
     def reserve(self):
         assert self.total+2097152<=33554432 and len(self.slots)+self.native+32<=512
         self.total+=2097152;self.native+=32
-    def settle(self,folder):
+    def settle(self,folder,additional=None):
         self.total-=2097152;self.native-=32
-        for path in folder.rglob('*'):
-            if path.is_file():self.charge(path,path.stat().st_size)
+        for root in (folder,) if additional is None else (folder,additional):
+            for path in root.rglob('*'):
+                if path.is_file():self.charge(path,path.stat().st_size)
 
 BUDGET=Budget()
 class Writer:
@@ -63,7 +66,7 @@ class RegistrationTests(unittest.TestCase):
     def setUp(self):
         self.assertIsNotNone(api,'Assigned operator registration API is absent')
         self.root=LOCAL/uuid.uuid4().hex[:8];self.root.mkdir(parents=True)
-        BUDGET.reserve();self.addCleanup(lambda:BUDGET.settle(self.root))
+        BUDGET.reserve();self.addCleanup(lambda:BUDGET.settle(self.root,getattr(self,'operator_parent_override',None)))
         original=Path.open
         def bounded(path,mode='r',*args,**kwargs):
             if any(x in mode for x in 'wax+'):
@@ -73,7 +76,7 @@ class RegistrationTests(unittest.TestCase):
         self.enterContext(patch.object(Path,'open',bounded))
         for name in ('socket.socket.connect','socket.getaddrinfo'):
             self.enterContext(patch(name,side_effect=AssertionError('REAL_NETWORK_FORBIDDEN')))
-        self.parent=self.root/'DGM';self.parent.mkdir()
+        self.parent=getattr(self,'operator_parent_override',self.root/'DGM');self.parent.mkdir()
         self.operator=self.parent/'codex-conducted-workflow-operator';self.operator.mkdir()
         self.data=self.operator/'prepared-data';self.data.mkdir()
         self.target=self.parent/'codex-conducted-workflow-host'
@@ -629,6 +632,57 @@ class RegistrationTests(unittest.TestCase):
 
     def first_failure_ordinary_sql_sync_survives_later_memory_error(self):
         self.first_failure_sql_sync_before_directory_control(MemoryError('AUTHORED_LATER_DIRECTORY_CONTROL'))
+
+
+class NativeNamespacePathTests(unittest.TestCase):
+    def setUp(self):
+        self.root=api._operator_parent().parent/'.local'/('dev1-native-path-test-'+uuid.uuid4().hex[:12])
+        self.root.mkdir(parents=True)
+        self.record=dict(test=self._testMethodName,root=str(self.root),resolved=str(self.root.resolve(strict=True)),models=0)
+        def preserve():
+            raw=C(self.record);self.assertLessEqual(len(raw),16384)
+            (self.root/'observation.json').write_bytes(raw)
+        self.addCleanup(preserve)
+
+    def io(self):
+        parent=self.root/'DGM';parent.mkdir();io=api._IO(parent)
+        self.addCleanup(io.close_dirs);self.addCleanup(io.close_files)
+        return io,parent,parent/api._STAGE,parent/api._TARGET
+
+    def test_reinterpreted_parent_with_a_different_native_id_is_rejected(self):
+        parent=self.root/'DGM';other=self.root/'different';parent.mkdir();other.mkdir()
+        original=Path.resolve
+        def resolve(path,*args,**kwargs):
+            return original(other,strict=True) if path==parent else original(path,*args,**kwargs)
+        self.assertNotEqual(api._native._identity(parent.lstat()),api._native._identity(other.lstat()))
+        with patch.object(Path,'resolve',resolve),self.assertRaisesRegex(ValueError,'codex_conducted_workflow_registration_path_invalid'):
+            api._IO(parent)
+        self.record.update(parent_id=api._native._identity(parent.lstat()),foreign_id=api._native._identity(other.lstat()),rejected=True)
+
+    def test_native_claim_cannot_publish_under_a_different_parent(self):
+        io,parent,stage,target=self.io();io.claim(stage);other=self.root/'outside';other.mkdir()
+        with self.assertRaisesRegex(ValueError,'codex_conducted_workflow_registration_path_invalid'):
+            io.publish(stage,other/target.name)
+        self.assertTrue(stage.exists());self.assertFalse(target.exists());self.assertFalse(io.publication_attempted)
+        self.record.update(stage_retained=True,publication_attempted=io.publication_attempted,rejected=True)
+
+    def test_changed_final_path_mapping_is_rejected_before_publication(self):
+        io,parent,stage,target=self.io();io.claim(stage);original=Path.resolve
+        def resolve(path,*args,**kwargs):
+            return self.root/'outside'/target.name if path==target else original(path,*args,**kwargs)
+        with patch.object(Path,'resolve',resolve),self.assertRaisesRegex(ValueError,'codex_conducted_workflow_registration_path_invalid'):
+            io.publish(stage,target)
+        self.assertTrue(stage.exists());self.assertFalse(target.exists());self.assertFalse(io.publication_attempted)
+        self.record.update(stage_retained=True,publication_attempted=io.publication_attempted,rejected=True)
+
+    def test_actual_junction_parent_remains_rejected(self):
+        parent=self.root/'junction';other=self.root/'actual';other.mkdir()
+        child=subprocess.run(['cmd.exe','/c','mklink','/J',str(parent),str(other)],capture_output=True,check=True)
+        self.assertTrue(parent.lstat().st_file_attributes&0x400)
+        with self.assertRaises(ValueError):api._IO(parent)
+        self.assertFalse((other/api._STAGE).exists())
+        self.record.update(junction_attributes=parent.lstat().st_file_attributes,junction_tag=parent.lstat().st_reparse_tag,
+            junction_command_stdout_sha256=H(child.stdout),rejected=True)
 
 
 class CompletedPdfRegistrationTests(unittest.TestCase):

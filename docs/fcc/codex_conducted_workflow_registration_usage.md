@@ -1,5 +1,18 @@
 # Conducted workflow의 수동 operator 준비
 
+## MSIX native 경로의 동일 객체 확인 — 2026-10-26
+
+완료 PDF 연결 후 실제 MSIX KnownFolder에서 lexical 경로와 `resolve()`의 LocalCache 경로가 달라 staging이 실패한 기록은 보존한다. 이 후속 수정은 고정 lexical authority root를 유지하며 `_IO`의 claim·publish에서 같은 객체를 검증한다. 기존 `_Tree`/Windows backend가 핸들로 고정한 디렉터리 ID와 lexical/해석 경로의 native ID가 모두 같아야 한다. 두 경로의 모든 조상은 기존 native 경로 검사로 reparse/junction을 거절한다. 최초 부모의 ID·해석 경로는 이후에도 같아야 하고, stage/target의 해석 부모관계와 pinned parent에서 name-relative 재개방한 자식 ID가 일치해야 한다. 게시 후에도 같은 target 객체를 다시 확인한다. 해석된 경로를 새 authority root로 바꾸지 않는다.
+
+실제 MSIX namespace의 자기 `AppData/Local/.local/dev1-*` 일회용 폴더에서 새 authored PDF의 실제 등록 API → native claim/게시 → actual host `_prepare` staging1/게시 후1의 5tuple을 확인했다. host의 원 `_profile_root` → `_path` 흐름도 고정 KnownFolder 반환값만 일회용 위치로 대체하여 확인했다. 원 운영 KnownFolder 파일·권위·실패 prefix를 변경하거나 신규 운영 permit을 발급하지 않았다. 같은 배포 namespace가 없는 환경에서는 이 검사가 재현 불가를 명시적으로 실패시키며 mock resolve로 양성 처리하거나 skip하지 않는다.
+
+`NativeNamespacePathTests`는 실제 junction, 다른 부모로 게시, 해석된 target 경로 이탈, 다른 디렉터리 ID를 거절한다. 마지막 두 해석 오류 주입은 test-only `Path.resolve` seam이며 실제 MSIX 양성에는 이 대역이 없다. 기존 TXT 양성·native 게시 충돌·최초 write control/후행 close 오류 회귀도 좁게 확인한다. 기존 PDF9 전체 suite를 반복하지 않는다. 새 임시 디렉터리 확인 핸들은 디렉터리용 once-only close를 사용하며 최초 예외와 실패 prefix를 보존한다. 계보·예산·실제 모델 호출0·위임 범위는 그대로다.
+
+```powershell
+python -B -X utf8 -m unittest discover -s tests -p test_codex_registered_conducted_workflow_host.py -k NativeNamespaceRegistrationTests -v
+python -B -X utf8 -m unittest discover -s tests -p test_codex_conducted_workflow_registration.py -k NativeNamespacePathTests -v
+```
+
 ## 완료 current PDF 연결 — 2026-10-26
 
 DEV1-GOAL-COMPLETED-PDF-001은 기준 b92af6eb2080d273bf98f50222a182d663a87c7b에서 명시 schema3 `completed_current_provided` 등록에 TXT와 PDF만 허용한다. 아래 최초 v3의 TXT 한정 설명은 당시 이력이다. schema1/2 분기, metadata exact16·workflow exact14, 권위·계보·원17/추가8·180초/60초/retry0·원 literal 응답 schema는 변경하지 않는다. `.md` 등 다른 형식이나 단순 확장자 검사 제거를 지원하지 않는다.

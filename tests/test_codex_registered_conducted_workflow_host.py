@@ -1032,6 +1032,7 @@ class RegistrationPrepareCompatibilityTests(unittest.TestCase):
         self.registrar=registrar if _REGISTRATION_COMPAT_API is None else _REGISTRATION_COMPAT_API
         self.fixture=RegistrationTests('test_pure_preflight_is_detached_and_not_authority')
         self.fixture.source_suffix=getattr(self,'source_suffix','.txt')
+        if hasattr(self,'operator_parent_override'):self.fixture.operator_parent_override=self.operator_parent_override
         self.fixture._testMethodName='actual_host_compat_'+self._testMethodName
         self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
         self.queued_context=json.loads(C(self.fixture.context));self.fixture.make_completed_inputs()
@@ -1130,6 +1131,36 @@ class RegistrationPdfPrepareCompatibilityTests(RegistrationPrepareCompatibilityT
                 self.assertEqual(con.execute("SELECT state FROM intake_jobs").fetchone()[0],'completed')
                 self.assertEqual(con.execute("SELECT delegated FROM intakes").fetchone()[0],1)
         finally:store.close()
+
+
+class NativeNamespaceRegistrationTests(unittest.TestCase):
+    def test_real_msix_native_claim_publish_and_actual_host_prepare(self):
+        import test_codex_conducted_workflow_registration as registration_tests
+        registrar=registration_tests.api;profile_root=api._profile_root
+        native=registrar._operator_parent().parent/'.local'/('dev1-native-registration-'+uuid.uuid4().hex[:12])
+        native.mkdir(parents=True)
+        # This test requires the real package namespace; no resolve mock can
+        # turn an ordinary path into evidence of the deployed MSIX behavior.
+        self.assertNotEqual(native,native.resolve(strict=True),'MSIX namespace reproduction unavailable')
+        self.enterContext(patch.object(registration_tests,'EXTRA_PROOF_ROOT',native))
+        compatibility=RegistrationPdfPrepareCompatibilityTests('test_registration_v3_native_publish_and_actual_prepare')
+        compatibility.operator_parent_override=native/'DGM'
+        compatibility.setUp();self.addCleanup(compatibility.doCleanups)
+        original=compatibility.invoke;observed={}
+        def invoke():
+            result=original();helper=compatibility.fixture
+            observed.update(result=result,lexical_parent=str(helper.parent),resolved_parent=str(helper.parent.resolve(strict=True)))
+            if result['status']=='prepared':
+                with patch.object(api._native_host,'_control_root',return_value=helper.parent/'codex-intake-host'):
+                    actual,_=api._path(profile_root(),directory=True)
+                self.assertEqual(actual,helper.target)
+                observed.update(actual_profile_path=str(actual),resolved_profile_path=str(actual.resolve(strict=True)))
+            helper.put(helper.root/'native-namespace-path-observation.json',observed)
+            return result
+        compatibility.invoke=invoke
+        compatibility.test_registration_v3_native_publish_and_actual_prepare()
+        self.assertEqual(observed['result']['status'],'prepared')
+        self.assertNotEqual(observed['actual_profile_path'],observed['resolved_profile_path'])
 
 
 class CurrentUnsupportedSourceTests(unittest.TestCase):
