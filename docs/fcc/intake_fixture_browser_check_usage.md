@@ -46,3 +46,26 @@ node frontend/intake_fixture_browser_check.cjs
 개발4의 짧은 자기 `.local` 출력에서 TXT 전용 실제 5개, TXT/PDF 실제 10개 통과를 확인했다. 기존 증거의 전체 bytes 보존, 경로/설정/결합 거절과 시작 실패 기록을 확인하는 도구 경계 5개도 통과했다. 이는 합성 fixture 수용 검사다. 실제 모델 호출·실장비·현장 업무·기관 적합성·FCC 합격·runtime 재개를 검증하지 않는다.
 
 독립 리뷰 후 Windows 대소문자 경로 무한 순회와 잘못된 source fallback을 RED로 재현해 수정했다. 해당 회귀를 포함한 경계 13개와 실제 TXT/PDF 10개를 다시 실행해 통과했다. 기존 실패·증거 폴더는 보존했다.
+
+## 기존 현재 질문의 390px 키보드 검사
+
+별도 도구 `frontend/intake_flow_browser_check.cjs`의 `current-questions-only` 모드는 기존 접수와 원 startup을 읽는다. 기본값은 꺼짐이다. 새 합성 의뢰·RF 실행·worker·모델 호출 없이 현재 질문을 관찰하며, 다른 브라우저 모드의 `VLAB_*_ONLY=1`과 함께 지정하면 거절한다.
+
+실행 입력 JSON은 외부에서 명시적으로 제공한다. `workspace`는 기존 Store 디렉터리, `intake_id`는 같은 접수 ID, `source_roots`는 workspace와 원 startup을 포함하는 보존 디렉터리 배열이다. `original_startup`에는 원 파일의 절대 `path`, 정수 `bytes`, 64자리 소문자 `sha256`을 넣는다. 입력과 startup은 각각 64 KiB 이내이며 파일·디렉터리 별칭을 거절한다. startup의 길이와 해시를 확인하고 파일 자체를 Python host에 전달한다. 추가 입력 필드는 실행 옵션이나 기대 결과로 사용하지 않으며 원본 bytes를 보존한다.
+
+```powershell
+$env:VLAB_CURRENT_QUESTIONS_ONLY = '1'
+$env:VLAB_CURRENT_QUESTIONS_INPUT = (Resolve-Path '.local/current-questions-execution.json').Path
+$env:VLAB_PYTHON = Join-Path (Get-Location) '.venv/Scripts/python.exe'
+New-Item -ItemType Directory -Force -Path '.local/current-questions-proof' | Out-Null
+$env:VLAB_FLOW_PROOF_ROOT = (Resolve-Path '.local/current-questions-proof').Path
+node frontend/intake_flow_browser_check.cjs
+```
+
+Playwright를 별도 설치했다면 기존처럼 `NODE_PATH`를 지정한다. 증거 위치는 이 checkout의 `.local` 안에 있어야 하고 보존 source 디렉터리 밖이어야 한다. 특정 PC의 의뢰·startup·기대 파일 경로를 도구에 넣지 않는다.
+
+host 1개와 390×900 브라우저 context 1개에서 원 API 응답을 먼저 보존하고 같은 접수·revision·current binding과 recheck를 확인한다. 현재 질문의 source는 `current_facts`여야 한다. Tab으로 질문과 원문, 기존 fixture 이력에 접근해 Enter·Space로 열고 닫으며 focus 표시와 Shift+Tab 복귀를 확인한다. 열린 질문의 원 질문 인덱스, 공백·provided/span, source facts·quote·locator와 전체 facts-plan을 관측한 응답과 대조한다. 해석 가능한 원 질문이 없는 입력은 성공으로 처리하지 않는다. 초기·열린 상세·최종 화면의 가로 넘침, 실제 AI `unknown`, 판정 `not_assessed`, 기존 fixture 이력의 별도 범위와 초기 닫힘도 관찰한다.
+
+실제 API 요청을 변조하지 않으며 GET 이외 요청과 외부 요청을 차단하고 실패로 남긴다. API GET은 총 12회, 현재 조회는 2회 이내다. 활성 검사는 150초에 중단하고 정리를 포함한 전체 한도는 180초다. 원 source의 bytes/hash와 정수 나노초 수정 시각을 전후 대조하며 알려진 host의 loop·listener 종료, 포트 재바인드와 child 종료를 확인한다. 개별 SQL 연결·요청 thread·전체 PC process는 직접 계측하지 않는다.
+
+새 출력 폴더에 원 입력·startup, API 응답, 화면 PNG·넘침 원인, 키보드 관측, host 원 출력과 `current-questions-results.json`을 남긴다. 파일 512개·32 MiB 한도를 유지한다. 종료 코드 0과 결과 `status: pass`를 함께 확인하며 첫 실패와 부분 관측도 보존한다. 관측하지 못한 항목은 통과로 간주하지 않는다. 이는 로컬 화면·읽기 경로 검사이며 실제 AI 업무, 규범 판정, 계측 정확도 또는 현장 무인화의 증거가 아니다.
