@@ -234,6 +234,8 @@ class EmulatorADBIdentity:
                 cleanup.update(child_reaped=reaped, stdout_closed=stream.closed)
                 cleanup['status'] = ('completed_with_errors' if secondary else 'completed') if (
                     reaped and stream.closed) else 'incomplete'
+        if primary is None and row['code'] is None and reaped and row['returncode'] != 0:
+            row['code'] = 'adb_nonzero_exit'
         if primary is None and row['code'] is None and secondary:
             primary = secondary[0]
         if primary is not None:

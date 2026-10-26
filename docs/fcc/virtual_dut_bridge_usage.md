@@ -65,6 +65,8 @@ child 종료와 pipe EOF를 별도로 다룬다. 종료 뒤 다른 writer가 pip
 
 각 transcript row의 `cleanup`에 child 회수·stdout 닫힘·reader 미생성·후행 오류의 operation/type을 기록한다. 정리 불가라면 `incomplete`를 명시하고 성공으로 처리하지 않는다. 원 wait/control 예외 객체는 그대로 전파하며 `virtual_dut_cleanup`, `virtual_dut_cleanup_errors`에서 정리 상태와 후행 예외를 구별할 수 있다. 최초 timeout/출력 초과 같은 반환 실패는 cleanup 오류로 덮지 않는다. 정상 수집 뒤 cleanup에서 처음 예외가 나면 그 최초 예외를 전파한다. nonblocking pipe를 제공하는 Python/OS가 필요하며, 이 단위는 Windows Python3.12의 표준 pipe에서 직접 검증했다.
 
+비정상 종료가 이미 관측됐다면 cleanup 예외를 primary로 승격하기 전에 `adb_nonzero_exit`를 원 실패로 고정한다. exit7 뒤 close 오류가 나도 returncode7·원 response·row와 cleanup의 후행 오류가 caller에게 남는다. exit0의 정상 수집 뒤 처음 발생한 cleanup 예외와 원 CONTROL 객체를 전파하는 정책은 유지한다.
+
 `devices`, `connect`, `tcpip`, forwarding, 설치, push/pull, 파일 쓰기, 임의 shell, 임의 getprop, RF configure/start/stop은 이 transport에 없다. native ADB 실행에는 해당 도구 자체의 서버·인증 동작이 따를 수 있으므로 실제 emulator 준비와 운전 권한은 다음 검증 단계에서 별도로 확인한다. 이 identity 객체는 RF bridge에 주입되지 않으며 Android 조회 성공을 합성 RF 설정의 원인으로 표시하지 않는다.
 
 ## 검증·남은 단계
