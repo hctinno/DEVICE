@@ -1,4 +1,5 @@
 """Pure prompt/response contracts; no provider, transport or operational authority."""
+import copy
 import hashlib
 import json
 import math
@@ -234,7 +235,7 @@ def _context(value):
             _fail('analysis_context_invalid')
         _contract(value['analysis_contract'], version, value.get('analysis_context_id'))
         return value, encoded, version
-    except _BoundaryError:
+    except (_BoundaryError, MemoryError):
         raise
     except Exception:
         raise _BoundaryError('analysis_context_invalid') from None
@@ -246,15 +247,18 @@ def _producer(name):
             _fail('analysis_producer_invalid')
         name.encode('utf-8')
         return {'kind': 'model', 'name': name}
-    except _BoundaryError:
+    except (_BoundaryError, MemoryError):
         raise
     except Exception:
         raise _BoundaryError('analysis_producer_invalid') from None
 
 
-def build_analysis_response_schema(*, producer_name) -> dict:
-    """Build a detached provider-neutral literal schema-1 wire contract."""
+def build_analysis_response_schema(*, producer_name, context=None) -> dict:
+    """Preserve default schema1; opt in to schema2 with a validated context."""
     producer = _producer(producer_name)
+    version = 1
+    if context is not None:
+        value, _, version = _context(context)
     evidence = {
         'type': 'object', 'additionalProperties': False,
         'properties': {
@@ -275,7 +279,7 @@ def build_analysis_response_schema(*, producer_name) -> dict:
         },
         'required': ['field', 'value', 'status', 'evidence'],
     }
-    return {
+    schema = {
         'type': 'object', 'additionalProperties': False,
         'properties': {
             'schema_version': {'type': 'integer', 'enum': [1]},
@@ -293,6 +297,21 @@ def build_analysis_response_schema(*, producer_name) -> dict:
         },
         'required': ['schema_version', 'producer', 'identity', 'missing_fields', 'facts'],
     }
+    if version == 2:
+        text = copy.deepcopy(evidence)
+        text['properties']['kind'] = {'type': 'string', 'enum': ['text_line']}
+        text['required'].append('kind')
+        pdf = copy.deepcopy(text)
+        pdf['properties'].update(
+            kind={'type': 'string', 'enum': ['pdf_page']},
+            extraction_id={'type': 'string'}, page_number={'type': 'integer', 'minimum': 1},
+            text_sha256={'type': 'string'})
+        pdf['required'].extend(['extraction_id', 'page_number', 'text_sha256'])
+        fact['properties']['evidence']['items'] = {'anyOf': [text, pdf]}
+        schema['properties']['schema_version']['enum'] = [2]
+        schema['properties']['context_id'] = {'type': 'string', 'enum': [value['analysis_context_id']]}
+        schema['required'].append('context_id')
+    return schema
 
 
 def build_analysis_prompt(context, *, producer_name):
@@ -330,7 +349,7 @@ def _response_text(response):
         if len(data) > _RESPONSE_LIMIT:
             _fail('analysis_response_limit')
         return data.decode('utf-8', errors='strict')
-    except _BoundaryError:
+    except (_BoundaryError, MemoryError):
         raise
     except Exception:
         raise _BoundaryError('analysis_response_invalid') from None
@@ -350,7 +369,7 @@ def decode_analysis_response(response, context, *, producer_name):
             _fail('analysis_response_invalid')
         validate_analysis(analysis, value['documents'], value['synthetic'], context_id=value.get('analysis_context_id'))
         return analysis
-    except _BoundaryError:
+    except (_BoundaryError, MemoryError):
         raise
     except Exception:
         raise _BoundaryError('analysis_response_invalid') from None

@@ -3,7 +3,7 @@ import copy
 import hashlib
 import json
 import io
-from contextlib import redirect_stderr, redirect_stdout
+from contextlib import ExitStack, redirect_stderr, redirect_stdout
 from pathlib import Path
 import tempfile
 import unittest
@@ -149,13 +149,13 @@ class OnceTests(unittest.TestCase):
         self.assertEqual(claim.call_args.kwargs, dict(synthetic_only=True, lease_seconds=3600))
         producer.assert_not_called()
 
-    def test_unsupported_schema_is_rejected_before_claim(self):
+    def test_inconsistent_schema_contract_is_rejected_before_claim(self):
         self.context['analysis_contract']['schema_version'] = 2
         with patch('labflow.codex_intake_once.claim_job') as claim, \
                 patch('labflow.codex_intake_once.produce_codex_cli_response') as producer:
             result = self.run_once()
         self.assertEqual(result['status'], 'failed')
-        self.assertEqual(result['errors'][0]['code'], 'codex_intake_once_unsupported_schema')
+        self.assertEqual(result['errors'][0]['code'], 'analysis_context_invalid')
         claim.assert_not_called()
         producer.assert_not_called()
 
@@ -243,17 +243,17 @@ class OnceTests(unittest.TestCase):
         self.assertEqual(preserved.read_bytes(), b'PRESERVE')
         claim.assert_not_called()
 
-    def test_full_public8_and_PDF_boundary_are_checked_before_claim(self):
+    def test_full_public8_and_malformed_PDF_shape_are_checked_before_claim(self):
         missing_id = copy.deepcopy(self.context)
         missing_id.pop('analysis_context_id')
         pdf = copy.deepcopy(self.context)
         pdf['documents'][0]['format'] = 'pdf'
-        for context, code in ((missing_id, 'invalid_input'), (pdf, 'unsupported_schema')):
+        for context, code in ((missing_id, 'codex_intake_once_invalid_input'), (pdf, 'analysis_context_invalid')):
             self.fresh_case()
             with self.subTest(code=code), patch('labflow.codex_intake_once.claim_job') as claim, \
                     patch('labflow.codex_intake_once.produce_codex_cli_response') as producer:
                 result = run_codex_intake_once(self.store, context, **self.kwargs)
-                self.assertEqual(result['errors'][0]['code'], 'codex_intake_once_' + code)
+                self.assertEqual(result['errors'][0]['code'], code)
                 claim.assert_not_called()
                 producer.assert_not_called()
         self.assertEqual(list(self.evidence.iterdir()), [])
@@ -598,6 +598,458 @@ class OnceTests(unittest.TestCase):
                             module._write_new(path, {'kind': 'fixture'})
                     self.assertIs(caught.exception, control)
                     self.assertEqual(stream.closes, 1)
+
+
+SCHEMA_TWO_ONCE_OBSERVATIONS = []
+
+
+class SchemaTwoOnceTests(unittest.TestCase):
+    """Fresh own queued files and real G3/claim/strict/complete; authored D2 only."""
+
+    def setUp(self):
+        from labflow import codex_intake_once
+        self.once = codex_intake_once
+        self.temp = tempfile.TemporaryDirectory(prefix='once-schema2-')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.cases = []
+        self.record = dict(case=self._testMethodName, actual_CLI=0, actual_models=0,
+                           producer='local authored receipt fixture; receipt attempts are declarations')
+        self.addCleanup(self.capture)
+
+    def capture(self):
+        files = {}
+        for path in self.root.rglob('*'):
+            if path.is_file() and ('inbox' in path.parts or 'blobs' in path.parts or
+                                  any(part.startswith('evidence') for part in path.parts)):
+                files[path.relative_to(self.root).as_posix()] = path.read_bytes()
+        self.assertLessEqual(len(files), 192)
+        self.assertLessEqual(sum(map(len, files.values())), 8 * 1024 * 1024)
+        SCHEMA_TWO_ONCE_OBSERVATIONS.append(dict(self.record, files=files))
+
+    def case(self, kind='mixed'):
+        from reportlab.pdfgen import canvas
+        from labflow.document_extract import ExtractionLimits
+        from labflow.intake_jobs import prepare_registered_synthetic_context
+        base = self.root / ('case-' + str(len(self.cases)))
+        bundle = base / 'inbox' / 'bundle'
+        bundle.mkdir(parents=True)
+        if kind == 'text':
+            (bundle/'request.TXT').write_text('product_type: industrial_sensor\nmodel: SYN-ONCE-PDF\n'
+                                             'market: EU\npurpose: development evaluation\n', encoding='utf-8')
+        elif kind == 'malformed':
+            (bundle/'REQUEST.PDF').write_bytes(b'%PDF-1.7\nauthored malformed PDF fixture\n')
+        else:
+            buffer = io.BytesIO()
+            pdf = canvas.Canvas(buffer, invariant=1)
+            for lines in (('product_type: industrial_sensor', 'model: SYN-ONCE-PDF'),
+                          ('market: EU', 'purpose: development evaluation')):
+                text = pdf.beginText(48, 790)
+                for line in lines:
+                    text.textLine(line)
+                pdf.drawText(text)
+                pdf.showPage()
+            pdf.save()
+            (bundle/'REQUEST.PDF').write_bytes(buffer.getvalue())
+            if kind == 'mixed':
+                (bundle/'attachment.TXT').write_text('purpose: development evaluation\n', encoding='utf-8')
+        initial = Store(base/'state')
+        register_source(initial, 'ONCE-SCHEMA2-SYN', bundle.parent, synthetic=True, settle_seconds=1)
+        scan_source(initial, 'ONCE-SCHEMA2-SYN', now=100, synthetic_only=True)
+        item = scan_source(initial, 'ONCE-SCHEMA2-SYN', now=101, synthetic_only=True)['accepted'][0]
+        with initial.connection() as con:
+            revision = con.execute('SELECT * FROM intake_revisions WHERE intake_id=? AND revision=?',
+                                   (item['intake_id'], item['revision'])).fetchone()
+        selection = dict(source_id='ONCE-SCHEMA2-SYN', intake_id=item['intake_id'], revision=item['revision'],
+                         job_id=item['job_id'], revision_fingerprint=revision['fingerprint'],
+                         files=json.loads(revision['files_json']))
+        initial.close()
+        store = Store.open_existing(str(base/'state'))
+        self.addCleanup(store.close)
+        with ExitStack() as stack:
+            if kind in ('limited', 'partial'):
+                limits = ExtractionLimits(max_page_content_bytes=1) if kind == 'limited' else ExtractionLimits(max_pages=1)
+                stack.enter_context(patch('labflow.intake_documents.EXTRACTION_LIMITS', limits))
+            context = prepare_registered_synthetic_context(store, selection, producer_name=NAME)
+        executable = base/'codex.exe'
+        executable.write_bytes(b'authored path fixture only; never a child')
+        evidence = base/'evidence'
+        evidence.mkdir()
+        case = dict(base=base, store=store, selection=selection, context=context, calls=[],
+                    kwargs=dict(worker_id='schema2-once-worker', producer_name=NAME, executable=executable,
+                                requested_model='gpt-6.1-sol', evidence_root=evidence,
+                                authorization_ref='ROOT-SYNTHETIC-SCHEMA2-ONCE'))
+        self.cases.append(case)
+        self.record.setdefault('original_G3_contexts', []).append(copy.deepcopy(context))
+        return case
+
+    def preflight(self, context):
+        function = getattr(self.once, 'preflight_codex_intake_once_inputs', None)
+        self.assertTrue(callable(function), 'pure public once request preflight is missing')
+        return function(context, producer_name=NAME)
+
+    def job(self, case):
+        with case['store'].connection() as con:
+            row = con.execute('SELECT state,attempt FROM intake_jobs WHERE job_id=?', (case['selection']['job_id'],)).fetchone()
+        return dict(row)
+
+    def response(self, context, producer):
+        from labflow.intake_analysis import FIELDS
+        facts = []
+        version = context['analysis_contract']['schema_version']
+        for document in context['documents']:
+            if document.get('format') == 'pdf':
+                sources = [(page['text'], dict(kind='pdf_page', extraction_id=document['extraction_id'],
+                            page_number=page['page_number'], text_sha256=page['text_sha256'])) for page in document['pages']]
+            else:
+                sources = [(document['text'], dict(kind='text_line') if version == 2 else {})]
+            for text, location in sources:
+                for number, line in enumerate(text.splitlines(), 1):
+                    field, separator, value = line.partition(':')
+                    if separator and field in ('product_type', 'model', 'market', 'purpose'):
+                        facts.append(dict(field=field, value=value.strip(), status='explicit', evidence=[dict(location,
+                            path=document['path'], sha256=document['sha256'], line_start=number, line_end=number,
+                            quote=line, role='request')]))
+        result = dict(schema_version=version, producer=copy.deepcopy(producer), identity='single', facts=facts,
+                      missing_fields=[field for field in FIELDS if field not in {fact['field'] for fact in facts}])
+        if version == 2:
+            result['context_id'] = context['analysis_context_id']
+        return result
+
+    def producer(self, case, mutate=None):
+        def authored(prompt_bytes, schema_bytes, **kwargs):
+            prompt = json.loads(prompt_bytes)
+            context = json.loads(prompt['messages'][1]['content'])
+            analysis = self.response(context, prompt['expected_producer'])
+            if mutate is not None:
+                mutate(analysis)
+            response = C(analysis)
+            directory = kwargs['evidence_dir']
+            directory.mkdir()
+            receipt = d2_receipt(kwargs['requested_model'], kwargs['timeout_seconds'],
+                                 'codex-cli-exchange:' + 'b' * 32, prompt['expected_producer'])
+            receipt.update(status='complete', failure=None)
+            contents = dict(prompt=prompt_bytes, response_schema=schema_bytes, invocation=b'{}',
+                            version_stdout=b'codex-cli 0.163.0-alpha.11.2\n', version_stderr=b'',
+                            stdout_jsonl=b'{"authored_fixture":true}\n', stderr=b'', final_text=response, last_message=response)
+            for key, payload in contents.items():
+                item = receipt['artifacts'][key]
+                (directory/item['path']).write_bytes(payload)
+                item.update(present=True, bytes=len(payload), sha256=H(payload), complete=True,
+                            overflow=False, extent='whole_file')
+            receipt['bindings'].update(prompt_sha256=H(prompt_bytes), schema_sha256=H(schema_bytes), invocation_sha256=H(b'{}'))
+            receipt['attempts'].update(version_process_attempts=1, model_process_attempts=1)
+            receipt['client']['observed_version'] = '0.163.0-alpha.11.2'
+            receipt['model']['cli_thread_id'] = 'authored-synthetic-thread'
+            receipt['lifecycle'].update(model_process_started=True, exit_code=0, thread_started=1, turn_started=1,
+                                         turn_completed=1, agent_messages=1, stdout_eof=True, stderr_eof=True)
+            receipt['cleanup'].update(version_child_reaped=True, model_child_reaped=True, readers_joined=True,
+                                       pipes_closed=True, artifacts_closed=True)
+            receipt['controls']['observed'].update(argv_submitted=True, argv_exit0=True, empty_cwd_at_spawn=True, tool_items=0)
+            receipt['verification']['wire_complete'] = True
+            receipt['cost']['kind'] = 'unknown'
+            (directory/'receipt.json').write_bytes(C(receipt))
+            case['calls'].append(dict(prompt=prompt, schema=json.loads(schema_bytes), analysis=analysis, receipt=copy.deepcopy(receipt)))
+            return response, copy.deepcopy(receipt)
+        return authored
+
+    def run_case(self, case, context=None, **changes):
+        result = run_codex_intake_once(case['store'], case['context'] if context is None else context,
+                                       **{**case['kwargs'], **changes})
+        self.record.setdefault('once_results', []).append(copy.deepcopy(result))
+        return result
+
+    def test_fresh_queued_uppercase_pdf_and_mixed_text_join_genuine_G3_strict_claim_complete(self):
+        from jsonschema import Draft202012Validator
+        from labflow.intake_model_boundary import decode_analysis_response
+        for kind in ('pdf', 'mixed'):
+            with self.subTest(kind=kind):
+                case = self.case(kind)
+                before = C(case['context'])
+                source = {p.name: p.read_bytes() for p in (case['base']/'inbox/bundle').iterdir()}
+                self.assertEqual(self.job(case), dict(state='queued', attempt=0))
+                with patch.object(self.once, 'claim_job', wraps=self.once.claim_job) as claim, \
+                        patch.object(self.once, 'complete_job', wraps=self.once.complete_job) as complete, \
+                        patch.object(self.once, 'produce_codex_cli_response', side_effect=self.producer(case)) as producer:
+                    result = self.run_case(case)
+                self.assertEqual(result['status'], 'completed')
+                self.assertEqual(result['strict_decode'], 'accepted')
+                self.assertEqual(set(result), TOP)
+                self.assertEqual(result['job']['attempt'], 1)
+                self.assertEqual(result['attempts']['automatic_retries'], 0)
+                self.assertEqual(self.job(case), dict(state='completed', attempt=1))
+                self.assertEqual((claim.call_count, producer.call_count, complete.call_count), (1, 1, 1))
+                call = case['calls'][0]
+                self.assertEqual(call['schema']['properties']['schema_version']['enum'], [2])
+                Draft202012Validator(call['schema']).validate(call['analysis'])
+                self.assertEqual(decode_analysis_response(C(call['analysis']), case['context'], producer_name=NAME), call['analysis'])
+                kinds = {fact['evidence'][0]['kind'] for fact in call['analysis']['facts']}
+                self.assertEqual(kinds, {'text_line', 'pdf_page'} if kind == 'mixed' else {'pdf_page'})
+                self.assertEqual(result['binding']['context_sha256'], H(before))
+                self.assertEqual(result['binding']['prompt_sha256'], H(C(call['prompt'])))
+                self.assertEqual(result['binding']['schema_sha256'], H(C(call['schema'])))
+                self.assertEqual(result['assessment']['verdict'], None)
+                self.assertIsNone(call['receipt']['cost']['amount'])
+                self.assertEqual(C(case['context']), before)
+                self.assertEqual(source, {p.name: p.read_bytes() for p in (case['base']/'inbox/bundle').iterdir()})
+                self.record.setdefault('successful_calls', []).append(call)
+
+    def test_pure_preflight_is_detached_pinned_and_grants_no_state_or_execution_authority(self):
+        case = self.case()
+        before = C(case['context'])
+        with ExitStack() as stack:
+            for name in ('builtins.open', 'pathlib.Path.open', 'sqlite3.connect', 'subprocess.Popen',
+                         'socket.create_connection', 'labflow.codex_intake_once.claim_job',
+                         'labflow.codex_intake_once.complete_job', 'labflow.codex_intake_once.produce_codex_cli_response'):
+                stack.enter_context(patch(name, side_effect=AssertionError('pure preflight I/O')))
+            prepared = self.preflight(case['context'])
+        self.assertEqual(set(prepared), {'schema_version', 'kind', 'status', 'context', 'prompt',
+                                        'response_schema', 'pins', 'failure', 'execution_authority'})
+        self.assertEqual(prepared['kind'], 'codex_intake_once_preflight')
+        self.assertEqual(prepared['schema_version'], 1)
+        self.assertEqual(prepared['status'], 'validated')
+        self.assertIs(prepared['execution_authority'], False)
+        self.assertIsNone(prepared['failure'])
+        self.assertEqual(prepared['pins'], dict(context_sha256=H(before), prompt_sha256=H(C(prepared['prompt'])),
+                                               schema_sha256=H(C(prepared['response_schema']))))
+        self.record['preflight'] = copy.deepcopy(prepared)
+        next(d for d in prepared['context']['documents'] if d.get('format') == 'pdf')['pages'].clear()
+        prepared['response_schema']['properties'].clear()
+        self.assertEqual(C(case['context']), before)
+        self.assertEqual(self.job(case), dict(state='queued', attempt=0))
+        self.assertEqual(list(case['kwargs']['evidence_root'].iterdir()), [])
+        for value, code in ((None, 'codex_intake_once_invalid_input'), ({'private': 'AUTHORED-CANARY'}, 'codex_intake_once_invalid_input')):
+            rejected = self.preflight(value)
+            self.assertEqual(rejected['status'], 'blocked')
+            self.assertEqual(rejected['failure'], code)
+            for key in ('context', 'prompt', 'response_schema', 'pins'):
+                self.assertIsNone(rejected[key])
+            self.assertIs(rejected['execution_authority'], False)
+            self.assertNotIn('AUTHORED-CANARY', C(rejected).decode())
+
+    def test_text_G3_preflight_keeps_original_schema_one_default_bytes(self):
+        from labflow.intake_model_boundary import build_analysis_response_schema
+        case = self.case('text')
+        result = self.preflight(case['context'])
+        self.assertEqual(result['status'], 'validated')
+        self.assertEqual(C(result['response_schema']), C(build_analysis_response_schema(producer_name=NAME)))
+        self.assertEqual(result['response_schema']['properties']['schema_version']['enum'], [1])
+        self.assertNotIn('context_id', result['response_schema']['properties'])
+        self.assertEqual(self.job(case), dict(state='queued', attempt=0))
+
+    def test_execution_quality_blocks_partial_missing_reordered_or_unread_pages_before_claim(self):
+        case = self.case()
+        original = C(case['context'])
+        cases = []
+        for changes in ({'parse_status': 'partial'}, {'complete': False}, {'issues': [{'code': 'authored_issue'}]},
+                        {'total_pages': None}, {'total_pages': 3}, {'processed_pages': 1}, {'pages': []}):
+            context = copy.deepcopy(case['context'])
+            next(d for d in context['documents'] if d.get('format') == 'pdf').update(changes)
+            cases.append(context)
+        context = copy.deepcopy(case['context'])
+        next(d for d in context['documents'] if d.get('format') == 'pdf')['pages'].reverse()
+        cases.append(context)
+        context = copy.deepcopy(case['context'])
+        next(d for d in context['documents'] if d.get('format') == 'pdf')['pages'][0]['status'] = 'truncated'
+        cases.append(context)
+        context = copy.deepcopy(case['context'])
+        text = next(d for d in context['documents'] if d.get('format') != 'pdf')
+        text.update(text=None, parse_status='requires_parser')
+        cases.append(context)
+        for changes in ({'format': 'unsupported'}, {'text': ' \n'}, {'issues': [{'code': 'authored_text_issue'}]}):
+            context = copy.deepcopy(case['context'])
+            next(d for d in context['documents'] if d.get('format') != 'pdf').update(changes)
+            cases.append(context)
+        context = copy.deepcopy(case['context'])
+        page = next(d for d in context['documents'] if d.get('format') == 'pdf')['pages'][0]
+        page.update(text=' \n', text_sha256=H(b' \n'), line_spans=[dict(line_number=1, start=0, end=1)])
+        cases.append(context)
+        for index, context in enumerate(cases):
+            with self.subTest(index=index), patch.object(self.once, 'claim_job') as claim, \
+                    patch.object(self.once, 'produce_codex_cli_response') as producer:
+                before = C(context)
+                prepared = self.preflight(context)
+                self.assertEqual(prepared['status'], 'blocked')
+                self.assertEqual(prepared['failure'], 'codex_intake_once_unsupported_schema')
+                result = self.run_case(case, context=context)
+                self.assertEqual(result['errors'][0]['code'], prepared['failure'])
+                claim.assert_not_called()
+                producer.assert_not_called()
+                self.assertEqual(C(context), before)
+                self.assertEqual(list(case['kwargs']['evidence_root'].iterdir()), [])
+        self.assertEqual(C(case['context']), original)
+        self.assertEqual(self.job(case), dict(state='queued', attempt=0))
+        self.record['authored_quality_mutations'] = cases
+
+    def test_genuine_G3_unread_malformed_and_partial_stay_visible_but_not_dispatchable(self):
+        for kind in ('malformed', 'limited', 'partial'):
+            with self.subTest(kind=kind):
+                case = self.case(kind)
+                before = C(case['context'])
+                pdf = case['context']['documents'][0]
+                self.assertEqual(case['context']['analysis_contract']['schema_version'], 2)
+                self.assertIsNone(pdf['text'])
+                self.assertNotEqual(pdf['parse_status'], 'ok')
+                prepared = self.preflight(case['context'])
+                self.assertEqual(prepared['status'], 'blocked')
+                self.assertEqual(prepared['failure'], 'codex_intake_once_unsupported_schema')
+                self.assertEqual(C(case['context']), before)
+                self.assertEqual(self.job(case), dict(state='queued', attempt=0))
+                self.record.setdefault('unread_preflights', []).append(prepared)
+
+    def test_original_strict_decoder_rejects_quote_context_page_schema_and_hash_mutations(self):
+        from labflow.intake_model_boundary import decode_analysis_response
+        case = self.case('pdf')
+        prepared = self.preflight(case['context'])
+        self.assertEqual(prepared['status'], 'validated')
+        analysis = self.response(case['context'], prepared['prompt']['expected_producer'])
+        original = C(analysis)
+        mutations = []
+        for changes in ({'quote': 'authored wrong quote'}, {'page_number': 99}, {'sha256': '0' * 64},
+                        {'text_sha256': '0' * 64}, {'extraction_id': '0' * 64}):
+            bad = copy.deepcopy(analysis)
+            bad['facts'][0]['evidence'][0].update(changes)
+            mutations.append(bad)
+        mutations.extend([{**copy.deepcopy(analysis), 'context_id': '0' * 64},
+                          {**copy.deepcopy(analysis), 'schema_version': 1}])
+        for index, bad in enumerate(mutations):
+            with self.subTest(index=index), self.assertRaisesRegex(ValueError, '^analysis_response_invalid$'):
+                decode_analysis_response(C(bad), case['context'], producer_name=NAME)
+        self.assertEqual(C(analysis), original)
+        self.assertEqual(self.job(case), dict(state='queued', attempt=0))
+        self.record['authored_rejected_responses'] = mutations
+
+    def test_pdf_wrong_quote_at_once_boundary_fails_once_without_completion_or_retry(self):
+        case = self.case('pdf')
+        def wrong(analysis):
+            analysis['facts'][0]['evidence'][0]['quote'] = 'authored wrong quote'
+        with patch.object(self.once, 'produce_codex_cli_response', side_effect=self.producer(case, wrong)) as producer, \
+                patch.object(self.once, 'complete_job') as complete, patch.object(self.once, 'fail_job', wraps=self.once.fail_job) as fail:
+            result = self.run_case(case)
+        self.assertEqual(result['status'], 'failed')
+        self.assertEqual(result['strict_decode'], 'rejected')
+        self.assertEqual(result['errors'][0]['code'], 'analysis_response_invalid')
+        self.assertEqual((producer.call_count, complete.call_count, fail.call_count), (1, 0, 1))
+        self.assertEqual(result['attempts']['automatic_retries'], 0)
+        self.assertEqual(self.job(case), dict(state='queued', attempt=1))
+
+    def test_post_claim_context_or_schema_change_rejects_before_producer_without_refund(self):
+        from labflow.intake_model_boundary import build_analysis_response_schema
+        for change in ('context', 'schema'):
+            case = self.case('pdf')
+            real_claim = self.once.claim_job
+            calls = []
+            def changed_claim(*args, **kwargs):
+                result = real_claim(*args, **kwargs)
+                if change == 'context':
+                    result['instructions'] += ' authored fresh scope mismatch'
+                return result
+            def changed_schema(**kwargs):
+                result = build_analysis_response_schema(**kwargs)
+                calls.append(True)
+                if change == 'schema' and len(calls) > 1:
+                    result['description'] = 'authored fresh schema mismatch'
+                return result
+            with self.subTest(change=change), patch.object(self.once, 'claim_job', side_effect=changed_claim) as claim, \
+                    patch.object(self.once, 'build_analysis_response_schema', side_effect=changed_schema), \
+                    patch.object(self.once, 'produce_codex_cli_response') as producer:
+                result = self.run_case(case)
+                self.assertEqual(result['errors'][0]['code'], 'codex_intake_once_scope_mismatch')
+                self.assertEqual(claim.call_count, 1)
+                producer.assert_not_called()
+                self.assertEqual(self.job(case), dict(state='queued', attempt=1))
+
+    def test_preflight_enforces_exact_utf8_prompt_and_schema_caps_without_authority(self):
+        case = self.case('pdf')
+        context = copy.deepcopy(case['context'])
+        context['instructions'] = ''
+        initial = self.preflight(context)
+        self.assertEqual(initial['status'], 'validated')
+        context['instructions'] = 'x' * (262144 - len(C(initial['prompt'])))
+        exact = self.preflight(context)
+        self.assertEqual(exact['status'], 'validated')
+        self.assertEqual(len(C(exact['prompt'])), 262144)
+        context['instructions'] += 'x'
+        above = self.preflight(context)
+        self.assertEqual(above['status'], 'blocked')
+        self.assertEqual(above['failure'], 'codex_intake_once_invalid_input')
+        schema = copy.deepcopy(initial['response_schema'])
+        schema['description'] = ''
+        schema['description'] = 'x' * (65536 - len(C(schema)))
+        with patch.object(self.once, 'build_analysis_response_schema', return_value=schema):
+            exact_schema = self.preflight(case['context'])
+            self.assertEqual(exact_schema['status'], 'validated')
+            self.assertEqual(len(C(exact_schema['response_schema'])), 65536)
+            schema['description'] += 'x'
+            above_schema = self.preflight(case['context'])
+            self.assertEqual(above_schema['status'], 'blocked')
+            self.assertEqual(above_schema['failure'], 'codex_intake_once_invalid_input')
+        self.assertEqual(self.job(case), dict(state='queued', attempt=0))
+        self.record['limit_results'] = dict(prompt_exact_bytes=262144, schema_exact_bytes=65536,
+                                            prompt_above=above, schema_above=above_schema)
+
+    def test_preflight_first_controls_escape_unchanged_before_claim_and_dispatch(self):
+        case = self.case('pdf')
+        for kind in (KeyboardInterrupt, SystemExit, GeneratorExit, MemoryError):
+            error = kind('authored first control')
+            with self.subTest(kind=kind.__name__), patch('labflow.intake_model_boundary._snapshot', side_effect=error), \
+                    patch.object(self.once, 'claim_job') as claim, patch.object(self.once, 'fail_job') as fail, \
+                    patch.object(self.once, 'produce_codex_cli_response') as producer:
+                with self.assertRaises(kind) as direct:
+                    self.preflight(case['context'])
+                self.assertIs(direct.exception, error)
+                with self.assertRaises(kind) as called:
+                    self.run_case(case)
+                self.assertIs(called.exception, error)
+                self.assertEqual(vars(error), {})
+                claim.assert_not_called()
+                fail.assert_not_called()
+                producer.assert_not_called()
+        self.assertEqual(list(case['kwargs']['evidence_root'].iterdir()), [])
+        self.assertEqual(self.job(case), dict(state='queued', attempt=0))
+
+    def test_pdf_strict_memory_control_survives_late_receipt_failure_without_DB_finalize(self):
+        case = self.case('pdf')
+        error = MemoryError('authored strict first control')
+        with patch.object(self.once, 'produce_codex_cli_response', side_effect=self.producer(case)) as producer, \
+                patch('labflow.intake_model_boundary.validate_analysis', side_effect=error), \
+                patch.object(self.once, '_finalize', side_effect=OSError('authored late receipt failure')), \
+                patch.object(self.once, 'fail_job') as fail, patch.object(self.once, 'complete_job') as complete:
+            with self.assertRaises(MemoryError) as observed:
+                self.run_case(case)
+        self.assertIs(observed.exception, error)
+        self.assertEqual(vars(error), {})
+        self.assertEqual(producer.call_count, 1)
+        fail.assert_not_called()
+        complete.assert_not_called()
+        self.assertEqual(self.job(case), dict(state='running', attempt=1))
+        self.assertTrue((case['kwargs']['evidence_root']/'attempt-intent.json').is_file())
+        self.assertTrue((case['kwargs']['evidence_root']/'exchange/receipt.json').is_file())
+        self.record['control'] = 'first strict MemoryError; late receipt OSError suppressed; job lease unchanged'
+
+    def test_completed_call_cannot_reuse_evidence_or_reclaim_or_regenerate_with_a_fresh_root(self):
+        from labflow.intake_jobs import prepare_registered_synthetic_context
+        case = self.case('pdf')
+        with patch.object(self.once, 'produce_codex_cli_response', side_effect=self.producer(case)) as producer:
+            self.assertEqual(self.run_case(case)['status'], 'completed')
+        self.assertEqual(producer.call_count, 1)
+        with patch.object(self.once, 'claim_job') as claim, patch.object(self.once, 'produce_codex_cli_response') as producer:
+            reused = self.run_case(case)
+            self.assertEqual(reused['errors'][0]['code'], 'codex_intake_once_invalid_input')
+            claim.assert_not_called()
+            producer.assert_not_called()
+        evidence = case['base']/'evidence-new'
+        evidence.mkdir()
+        with patch.object(self.once, 'claim_job', wraps=self.once.claim_job) as claim, \
+                patch.object(self.once, 'produce_codex_cli_response') as producer:
+            idle = self.run_case(case, evidence_root=evidence)
+            self.assertEqual(idle['status'], 'idle')
+            self.assertEqual(idle['attempts']['producer_invocations'], 0)
+            self.assertEqual(claim.call_count, 1)
+            producer.assert_not_called()
+        with self.assertRaisesRegex(ValueError, '^intake_preclaim_context_not_ready$'):
+            prepare_registered_synthetic_context(case['store'], case['selection'], producer_name=NAME)
+        self.assertEqual(self.job(case), dict(state='completed', attempt=1))
 
 
 if __name__ == '__main__':
