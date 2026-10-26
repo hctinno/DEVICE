@@ -477,6 +477,8 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         raise ValueError('conducted_workflow_scenario_unsupported')
     if uncertainty_inputs is not None:
         uncertainty_inputs = _conducted_export_frame(uncertainty_inputs, 262144)[0]
+        _conducted_export_need(type(uncertainty_inputs) is dict
+            and set(uncertainty_inputs) == {'components', 'policy'})
     output = Path(output_dir).resolve()
     if output.exists():
         raise ValueError('Output directory already exists')

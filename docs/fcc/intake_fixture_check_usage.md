@@ -18,6 +18,10 @@ result = run_conducted_flow(
 
 기존 unsupported scenario 오류를 먼저 보존하고, foreign/subclass·순환·비유한 수·초과 native 입력은 output 생성과 compiler/Store/runtime 전에 거절한다. 공유 frame의 기존 고정 `conducted_workflow_readback_export_invalid` 코드를 재사용하며 새 오류 문법을 만들지 않는다. 이후 finalizer의 원 최초 오류·제어 예외 identity·부분 기록을 보존하고 재시도·정책 수선·DRAFT 승격을 하지 않는다.
 
+2026-10-26 admission 후속은 non-None 입력을 기존 262144-byte native frame으로 사본화한 **뒤**, 정확한 native dict이면서 키가 `components`, `policy` 두 개뿐인지 검사한다. list/string/number/bool과 부족·추가 키 dict도 같은 고정 오류로 거절하며 출력 경로 해석·생성, compiler/Store/runtime/finalizer는 시작하지 않는다. scenario 오류는 이 검사보다 먼저이며, native graph 오류와 최초 CONTROL identity도 기존대로 보존한다. 생략/None은 frame 호출이나 새 finalizer kwargs 없이 기존 경로를 따른다.
+
+이 admission은 내부 성분·정책의 의미를 판단하지 않는다. exact2의 `components=None`, 미지원 상관 가정·근거 부족 등은 그대로 기존 budget 판단 경계로 전달하며 not_assessed/null을 수선하거나 승인값·수치 기본값·CLI flag를 만들지 않는다. 새 공개 자동발견 테스트3은 malformed12형상의 초기 거절·경계 호출0, exact2 내부 미확인3형상의 단일 전달·제공 최종값 미평가/null, 기존 출력보다 앞선 입력 오류·scenario 우선순위를 검사한다. 기존 `declared_*` opt-in4와는 별도 분모이며, 제공 downstream 경계를 사용한 검증을 실제 RF·whole workflow·실제 budget 계산으로 세지 않는다.
+
 검증은 구현 전 봉인 기대와 실제 미지원 키워드 RED1 FAIL 뒤 새 typed4 PASS·기존 text unsupported 경계1 PASS다. 최초 None 비교는 복사 원본의 `__file__`에서 schema 경로를 잘못 구한 테스트 ERROR였으며 원본/실패/이전 test 파일을 보존했다. 테스트에서만 원 프로젝트 locator를 복원하고 이 비교1개만 다시 실행했다. 다른 통과 사례는 반복하지 않았고 제품·기대값은 바꾸지 않았다.
 
 새 typed 경계는 PDF/Store/analysis/plan/runtime/finalizer를 명시 제공한다. 생략·None의 원5 kwargs/summary 및 제공 finalizer가 쓴 result.json/draft.md/manifest.json3의 bytes 동일, native copy/원 실행 객체 전달, 조기 거절·hook0, 최초 오류/네 제어 객체·후행 오류·19-byte 부분 보존을 확인했다. 실제 RF·loop·model·SQL·CLI·finalizer·budget 실행은0이다. 이 제공3파일을 실제 writer의 성공·가상 전체 workflow 또는 물리 검증으로 세지 않는다. opt-in `WorkflowDeclaredUncertaintyTests.declared_*`는 명시 고정 원본 소스 위치를 제공한 테스트 loader로만 선택하며 기존 기본 cohort/제품 CLI를 변경하지 않는다.

@@ -1303,5 +1303,83 @@ class WorkflowDeclaredUncertaintyTests(unittest.TestCase):
 
 
 
+class WorkflowUncertaintyAdmissionTests(WorkflowDeclaredUncertaintyTests):
+    """Top-shape admission only; downstream execution remains provided, not RF."""
+
+    def test_malformed_top_shapes_reject_before_output_resolution_and_boundaries(self):
+        module = self.module()
+        malformed = [[], ['components', 'policy'], '', 'native-but-not-a-budget',
+            0, 1.25, True, False, {}, {'components': None}, {'policy': None},
+            {'components': None, 'policy': None, 'extra': False}]
+        for index, value in enumerate(malformed):
+            with self.subTest(value=value):
+                output = self.root / ('invalid-top-' + str(index))
+                error = None
+                with patch.object(module, 'Path', wraps=Path) as path, \
+                        patch.object(module, '_conducted_mock_compiler', return_value=None) as compiler, \
+                        patch.object(module, '_compile_conducted_mock') as compile_mock, \
+                        patch.object(module, 'Store') as store, \
+                        patch('labflow.intake_plan_virtual_execution.run_intake_plan_virtual_execution') as runtime, \
+                        patch('labflow.conducted_execution_result_finalizer.finalize_conducted_execution_result') as finalizer:
+                    try:
+                        module.run_conducted_flow(output, uncertainty_inputs=value,
+                            measurement_ref='event:explicit', mock_model='gpt-6.1-sol')
+                    except ValueError as caught:
+                        error = caught
+                boundaries = dict(path=path.call_count, compiler=compiler.call_count,
+                    compile=compile_mock.call_count, Store=store.call_count,
+                    runtime=runtime.call_count, finalizer=finalizer.call_count)
+                self.observed.append(dict(input=value, boundaries=boundaries,
+                    output_exists=output.exists(), error=None if error is None else str(error)))
+                self.assertEqual(None if error is None else str(error),
+                    'conducted_workflow_readback_export_invalid')
+                self.assertFalse(output.exists())
+                self.assertEqual(boundaries, dict.fromkeys(boundaries, 0))
+
+    def test_exact_two_deep_inputs_forward_once_without_semantic_repair(self):
+        values = [dict(components=None, policy=None),
+            dict(components=None, policy=dict(correlation_assumption='unsupported')),
+            dict(components=[], policy=dict(correlation_assumption='correlated',
+                coverage_factor_evidence_refs=[], correlation_evidence_refs=[]))]
+        module = self.module()
+        for value in values:
+            with self.subTest(value=value):
+                original = self.copy(value)
+                with patch.object(module, '_conducted_export_frame', wraps=module._conducted_export_frame) as snapshot:
+                    result, passed, output = self.exercise(inputs=value)
+                self.assertEqual(snapshot.call_count, 1)
+                self.assertEqual(snapshot.call_args.args[1], 262144)
+                self.assertEqual(len(passed), 1)
+                self.assertEqual(passed[0]['uncertainty_inputs'], original)
+                self.assertIsNot(passed[0]['uncertainty_inputs'], value)
+                self.assertEqual(value, original)
+                saved = json.loads((output / 'finalizer-original.json').read_bytes())
+                self.assertEqual(saved['result']['calculation']['conformity']['status'], 'not_assessed')
+                self.assertIsNone(saved['result']['calculation']['conformity']['uncertainty_db'])
+                self.assertEqual(result['summary']['result_status'], 'incomplete')
+                self.assertEqual(result['summary']['fixture_acceptance'], 'fail')
+
+    def test_scenario_and_malformed_input_precede_existing_output_check(self):
+        module = self.module()
+        output = self.root / 'retained-existing'
+        output.mkdir()
+        marker = output / 'original.txt'
+        marker.write_bytes(b'original remains unchanged')
+        with patch.object(module, '_conducted_export_frame') as snapshot, \
+                patch.object(module, 'Path', wraps=Path) as path:
+            with self.assertRaisesRegex(ValueError, '^conducted_workflow_scenario_unsupported$'):
+                module.run_conducted_flow(output, scenario='unlisted', uncertainty_inputs=[])
+        self.assertEqual(snapshot.call_count, 0)
+        self.assertEqual(path.call_count, 0)
+        with patch.object(module, 'Path', wraps=Path) as path, \
+                patch.object(module, '_conducted_mock_compiler') as compiler:
+            with self.assertRaisesRegex(ValueError, '^conducted_workflow_readback_export_invalid$'):
+                module.run_conducted_flow(output, uncertainty_inputs=[])
+        self.assertEqual(path.call_count, 0)
+        self.assertEqual(compiler.call_count, 0)
+        self.assertEqual(marker.read_bytes(), b'original remains unchanged')
+        self.assertEqual(list(output.iterdir()), [marker])
+
+
 if __name__ == '__main__':
     unittest.main()
