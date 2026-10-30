@@ -1042,15 +1042,10 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
             resume_install: bool = False,
             verify_only: bool = False,
             accept_sdk_license: bool = False, endpoint: Endpoint | None = None,
-<<<<<<< HEAD
             boot_timeout: int = 180, acceleration: str = 'auto',
             rf_bridge_check: bool = False) -> dict:
-    runtime, output = Path(runtime).absolute(), Path(output).absolute()
-=======
-            boot_timeout: int = 180, acceleration: str = 'auto') -> dict:
     from .development_paths import reference_path
     runtime, output = reference_path(Path(runtime).absolute()), reference_path(Path(output).absolute())
->>>>>>> 733e00f4ab922f1aeec98c647f50cbff1802a1e9
     reject_links(runtime)
     report = Report(output)
     endpoint = endpoint or Endpoint()
