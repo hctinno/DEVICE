@@ -5,9 +5,9 @@ const {createHash} = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const {chromium} = require('playwright');
-const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
+const ROOT=require('./managed_paths.cjs').stage(path.resolve(__dirname,'..')),LOCAL=path.join(ROOT,'.local');
+const proof=require('./managed_paths.cjs').proof(ROOT,process.env.VLAB_FLOW_PROOF_ROOT);
 fs.mkdirSync(LOCAL,{recursive:true});
-const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
 const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY==='1'?'current-questions-typed-':process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?'current-questions-':process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?'public-cli-port-demo-':process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
@@ -22,9 +22,9 @@ function proofWrite(file,data){
 async function screenshot(page,file){proofWrite(file,await page.screenshot({fullPage:false}));}
 
 async function main() {
-  const root = path.resolve(__dirname, '..');
+  const root = require('./managed_paths.cjs').stage(path.resolve(__dirname, '..'));
   const output = OUTPUT;
-  const python = process.env.VLAB_PYTHON || path.join(root, process.platform === 'win32' ? '.venv/Scripts/python.exe' : '.venv/bin/python');
+  const python = process.env.VLAB_PYTHON || require('./managed_paths.cjs').python(root);
   // Copy only this public test helper's code, keeping its disposable stores in
   // native temp and closing it over stdin; never reuse its old fixed proof path.
   const helper=fs.readFileSync(path.join(root,'frontend/intake_flow_browser_fixture.py'),'utf8')
@@ -331,7 +331,7 @@ if __name__=='__main__':main()
 `;
 function startWorkflowHost(mode){
   const file=path.join(OUTPUT,'workflow_host.py');if(!fs.existsSync(file))proofWrite(file,workflowHost);
-  const python=process.env.VLAB_PYTHON||path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
+  const python=process.env.VLAB_PYTHON||require('./managed_paths.cjs').python(ROOT);
   const child=spawn(python,['-B','-X','utf8',file,ROOT,mode],{cwd:ROOT,windowsHide:true,stdio:['pipe','pipe','pipe']});
   let pending='',stderr='';const queue=[],waiters=[];
   child.stdout.on('data',b=>{pending+=b.toString();while(pending.includes('\n')){const i=pending.indexOf('\n'),line=pending.slice(0,i);pending=pending.slice(i+1);const item=JSON.parse(line);if(waiters.length)waiters.shift()(item);else queue.push(item);}});
@@ -483,7 +483,7 @@ function verifyPreviewAdapterSource(info){
 
 function startPreviewHost(mode,source=previewHost,fileName='preview_host.py'){
   const file=path.join(OUTPUT,fileName);if(!fs.existsSync(file))proofWrite(file,source);
-  const python=process.env.VLAB_PYTHON||path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
+  const python=process.env.VLAB_PYTHON||require('./managed_paths.cjs').python(ROOT);
   const child=spawn(python,['-B','-X','utf8',file,ROOT,mode],{cwd:ROOT,windowsHide:true,stdio:['pipe','pipe','pipe']});
   let buffer='',stderr='',exitCode=null;const queue=[],waiters=[];
   child.stderr.on('data',chunk=>{stderr+=chunk.toString();if(stderr.length>8192)child.kill();});

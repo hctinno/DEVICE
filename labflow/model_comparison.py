@@ -1150,9 +1150,16 @@ def _paths(adc,evidence,budget,approval,event):
 
 def _prepare_paths(adc,evidence,budget,approval,event):
     try:
-        _paths(adc,evidence,budget,approval,event)
+        from .development_paths import reference_path
+        for path in (adc,evidence,budget,approval):_path(path)
+        mapped=tuple(reference_path(path) for path in (adc,evidence,budget,approval))
+        _paths(*mapped,event)
+        return mapped
     except OSError:
         _fail("state_error")
+    except ValueError as error:
+        if isinstance(error,ModelComparisonError):raise
+        _fail()
 
 
 def _finish_record(path,approval,reservation,record,digest):
@@ -1170,7 +1177,7 @@ def run_vertex_comparison_row(matrix, row_index, prompt_bytes, response_schema_b
     m = _matrix(matrix,prompt_bytes,response_schema_bytes)
     if m['scenario_id'] in _OPERATOR_CASES and not is_current_response_schema_bytes(response_schema_bytes):
         _fail()
-    _prepare_paths(adc_path,evidence_dir,budget_path,approval_path,cancel_event)
+    adc_path,evidence_dir,budget_path,approval_path=_prepare_paths(adc_path,evidence_dir,budget_path,approval_path,cancel_event)
     row = _execute(m,row_index,prompt_bytes,response_schema_bytes,adc_path,evidence_dir,
                    budget_path,approval_path,cancel_event,begin)
     if row["budget"]["reservation_id"] is None:
@@ -1184,7 +1191,7 @@ def run_vertex_comparison_batch(matrix, prompt_bytes, response_schema_bytes, *,
     m = _matrix(matrix,prompt_bytes,response_schema_bytes)
     if m['scenario_id'] in _OPERATOR_CASES and not is_current_response_schema_bytes(response_schema_bytes):
         _fail()
-    _prepare_paths(adc_path,evidence_dir,budget_path,approval_path,cancel_event)
+    adc_path,evidence_dir,budget_path,approval_path=_prepare_paths(adc_path,evidence_dir,budget_path,approval_path,cancel_event)
     rows,stopped = [],None
     for i,slot in enumerate(m["rows"]):
         if i not in m["selection"]["row_indexes"]:

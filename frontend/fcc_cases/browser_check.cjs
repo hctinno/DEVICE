@@ -23,7 +23,7 @@ function createContractBundle(){
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const assert=require('node:assert/strict'),{createHash}=require('node:crypto'),{pathToFileURL}=require('node:url');
 const {reserveEvidence}=require('../intake_fixture_browser_check.cjs');
-const ROOT=fs.realpathSync(path.resolve(__dirname,'../..')),hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+const ROOT=path.resolve(__dirname,'../..'),hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const json=(file,value)=>fs.writeFileSync(file,JSON.stringify(value,null,2)+'\n',{flag:'wx'});
 const bounded=async(promise,code,ms=8000)=>{let timer;try{return await Promise.race([promise,new Promise((_,reject)=>timer=setTimeout(()=>reject(Error(code)),ms))]);}finally{clearTimeout(timer);}};
 function options(argv){

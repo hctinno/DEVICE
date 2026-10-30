@@ -1,3 +1,4 @@
+import managedPaths from '../managed_paths.cjs';
 //039 frozen typed contracts, 2026-10-24 Asia/Seoul.
 // Synthetic DTOs; named Python regressions also construct a genuine synthetic catalog.
 // No collected source, actual measurement, HTTP or operational authorization.
@@ -235,8 +236,7 @@ let pythonSourceCases;
 function genuineSourceCases() {
   if (pythonSourceCases) return pythonSourceCases;
   const root = fileURLToPath(new URL('../../', import.meta.url));
-  const python = process.env.FCC_CASE_CALCULATION_PYTHON || fileURLToPath(new URL(
-    process.platform === 'win32' ? '../../.venv/Scripts/python.exe' : '../../.venv/bin/python', import.meta.url));
+  const python = process.env.FCC_CASE_CALCULATION_PYTHON || managedPaths.python(root);
   const program = String.raw`
 from copy import deepcopy
 import json, sys, types
