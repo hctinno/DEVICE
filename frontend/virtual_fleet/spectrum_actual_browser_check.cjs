@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {spawnSync}=require('node:child_process'),{createHash}=require('node:crypto'),{pathToFileURL}=require('node:url');
 const {reserveEvidence,evidenceAncestors}=require('../intake_fixture_browser_check.cjs');
-const ROOT=fs.realpathSync(path.resolve(__dirname,'../..'));
+const ROOT=path.resolve(__dirname,'../..');
 const CASES=['normal','bandwidth-below','incomplete','axis-unrepresentable','density-rounded-eight'];
 const MAX_BYTES=1024*1024;
 const samePath=(a,b)=>path.relative(path.resolve(a),path.resolve(b))==='';
@@ -16,7 +16,7 @@ const writeJson=(file,value)=>write(file,JSON.stringify(value,null,2)+'\n');
 function readConfig(env=process.env,args=[]) {
   if(Object.keys(env).some(key=>key.startsWith('SPECTRUM_') && key!=='SPECTRUM_PYTHON')
     || args.some(arg=>arg!=='--self-test') || args.length>1) reject('invalid_configuration');
-  const python=env.SPECTRUM_PYTHON ?? path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
+  const python=env.SPECTRUM_PYTHON ?? require('../managed_paths.cjs').python(ROOT);
   if(typeof python!=='string' || !python.trim() || /[\r\n\0]/.test(python)) reject('invalid_configuration');
   return {python}; // No source or output override: actual source is always ROOT.
 }

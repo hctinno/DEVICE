@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const {spawn}=require('node:child_process'),{createHash}=require('node:crypto'),{pathToFileURL}=require('node:url');
 const {reserveEvidence}=require('../intake_fixture_browser_check.cjs');
 const {readPinned}=require('./route_browser_check.cjs');
-const ROOT=fs.realpathSync(path.resolve(__dirname,'../..'));
+const ROOT=path.resolve(__dirname,'../..');
 const hash=blob=>createHash('sha256').update(blob).digest('hex');
 const save=(folder,name,value)=>fs.writeFileSync(path.join(folder,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
 const wait=async(promise,ms=30000)=>{let timer;try{return await Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('calculation_check_timeout')),ms);})]);}finally{clearTimeout(timer);}};
@@ -207,7 +207,7 @@ finally:
 `;
 
 async function startCaller(options,evidence){
- const executable=process.env.FCC_CASE_CALCULATION_PYTHON||path.join(ROOT,'.venv',process.platform==='win32'?'Scripts/python.exe':'bin/python');
+ const executable=process.env.FCC_CASE_CALCULATION_PYTHON||require('../managed_paths.cjs').python(ROOT);
  assert(path.isAbsolute(executable)&&fs.statSync(executable).isFile(),'invalid_python_executable');
  const child=spawn(executable,['-X','utf8','-B','-c',PYTHON_BOOT],{cwd:ROOT,windowsHide:true,stdio:['pipe','pipe','pipe'],env:{...process.env,PYTHONUTF8:'1',PYTHONIOENCODING:'utf-8',PYTHONDONTWRITEBYTECODE:'1',PYTHONNOUSERSITE:'1',PYTHONPATH:ROOT}});
  const stdout=[],stderr=[];let outBytes=0,errBytes=0,ended=false,overflow=false,readyText='',resolved=false;

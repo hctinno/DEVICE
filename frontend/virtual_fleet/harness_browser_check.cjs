@@ -8,9 +8,9 @@ const {chromium} = require('playwright');
 
 async function main() {
   const root = path.resolve(__dirname, '../..');
-  const output = path.resolve(process.env.HARNESS_UI_EVIDENCE || path.join(root, '.local/VLAB-HARNESS-002/ui-evidence'));
+  const output = path.resolve(process.env.HARNESS_UI_EVIDENCE || require('../managed_paths.cjs').output(root,'fleet-harness'));
   fs.mkdirSync(output, {recursive: true});
-  const python = process.env.VLAB_PYTHON || path.join(root, process.platform === 'win32' ? '.venv/Scripts/python.exe' : '.venv/bin/python');
+  const python = process.env.VLAB_PYTHON || require('../managed_paths.cjs').python(root);
   const child = spawn(python, ['-m', 'frontend.virtual_fleet.harness_browser_fixture', '--port', '0'], {
     cwd: root, windowsHide: true, env: {...process.env, PYTHONUTF8: '1', PYTHONIOENCODING: 'utf-8'}, stdio: ['ignore', 'pipe', 'pipe'],
   });

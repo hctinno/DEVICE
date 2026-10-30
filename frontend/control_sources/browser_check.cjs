@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {spawn}=require('node:child_process'),{createHash}=require('node:crypto');
 const {reserveEvidence}=require('../intake_fixture_browser_check.cjs');
-const ROOT=fs.realpathSync(path.resolve(__dirname,'../..')),sha=value=>createHash('sha256').update(value).digest('hex');
+const ROOT=path.resolve(__dirname,'../..'),sha=value=>createHash('sha256').update(value).digest('hex');
 const write=(file,value)=>fs.writeFileSync(file,value,{flag:'wx'}),json=(file,value)=>write(file,JSON.stringify(value,null,2)+'\n');
 const same=(a,b)=>path.relative(path.resolve(a),path.resolve(b))==='';
 const bounded=async(promise,code,milliseconds=7000)=>{let timer;try{return await Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error(code)),milliseconds);})]);}finally{clearTimeout(timer);}};
@@ -47,7 +47,7 @@ function sourceHashes(){
 async function main(){
   if(process.argv.length>2 || Object.keys(process.env).some(key=>key.startsWith('CONTROL_CATALOG_') && key!=='CONTROL_CATALOG_PYTHON'))throw Error('invalid_configuration');
   if(!fs.existsSync(path.join(ROOT,'labflow/control_source_catalog.py')))throw Error('catalog_dependency_missing');
-  const python=process.env.CONTROL_CATALOG_PYTHON || path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
+  const python=process.env.CONTROL_CATALOG_PYTHON || require('../managed_paths.cjs').python(ROOT);
   if(!python.trim() || /[\r\n\0]/.test(python))throw Error('invalid_configuration');
   const evidence=reserveEvidence(ROOT),checks=[],navigationChecks=[],cleanup={browser_closed:false,producer_closed:false,server_closed:false};
   const result={kind:'control_source_actual_browser',contract_fixture:false,actual_catalog_connected:false,synthetic_workspace:true,intake_source_synthetic:true,

@@ -39,7 +39,7 @@ async function main() {
   const assert=require('node:assert/strict'), fs=require('node:fs'), path=require('node:path');
   const http=require('node:http'), {pathToFileURL}=require('node:url'), {createHash}=require('node:crypto');
   const {chromium}=require('playwright');
-  const own=path.resolve(__dirname,'../..'), local=path.join(own,'.local');
+  const own=require('../managed_paths.cjs').stage(path.resolve(__dirname,'../..')), local=path.join(own,'.local');
   if(!fs.existsSync(local)) fs.mkdirSync(local);
   assert(fs.lstatSync(local).isDirectory() && !fs.lstatSync(local).isSymbolicLink(),'Evidence .local must be a plain directory');
   const evidence=fs.mkdtempSync(path.join(local,'sv-'));

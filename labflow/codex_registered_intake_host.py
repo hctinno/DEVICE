@@ -3,7 +3,6 @@
 Authority comes from the fixed local operator source and existing delegation.
 The host never creates a journal, baseline, permit, Store, or global budget.
 """
-import ctypes
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -14,7 +13,6 @@ import re
 import sqlite3
 import stat
 import sys
-import uuid
 
 from .codex_intake_once import preflight_codex_intake_once_inputs, run_codex_intake_once
 from .intake_jobs import prepare_registered_synthetic_context
@@ -73,29 +71,13 @@ def _int(value, minimum=0, maximum=2**63-1):
 
 
 def _control_root():
-    # Windows resolves the current token, not argv/LOCALAPPDATA/USERPROFILE.
-    if os.name != 'nt':
-        _fail('unsupported_platform')
-    folder = (ctypes.c_ubyte * 16).from_buffer_copy(uuid.UUID('f1b32785-6fba-4fcf-9d55-7b8e7f157091').bytes_le)
-    result = ctypes.c_void_p()
-    shell = ctypes.WinDLL('shell32', use_last_error=True)
-    free = ctypes.WinDLL('ole32').CoTaskMemFree
-    free.argtypes, free.restype = [ctypes.c_void_p], None
-    shell.SHGetKnownFolderPath.argtypes = [ctypes.c_void_p, ctypes.c_uint32, ctypes.c_void_p, ctypes.POINTER(ctypes.c_void_p)]
-    shell.SHGetKnownFolderPath.restype = ctypes.c_long
-    failure=None
+    # Ordinary project control/history moves together. Missing layout never
+    # falls back to a fresh AppData profile, permit or budget.
+    from .development_paths import DevelopmentPathError, load_layout
     try:
-        if shell.SHGetKnownFolderPath(ctypes.byref(folder), 0, None, ctypes.byref(result)) != 0 or not result.value:
-            _fail('operator_unavailable')
-        return Path(ctypes.wstring_at(result.value)) / 'DGMAutoLab' / 'codex-intake-host'
-    except BaseException as error:
-        failure=error
-        raise
-    finally:
-        if result.value:
-            try:free(result)
-            except BaseException:
-                if failure is None:raise
+        return load_layout().control_root() / 'codex-intake-host'
+    except DevelopmentPathError:
+        _fail('operator_unavailable')
 
 
 def _path(value, *, directory):
@@ -106,6 +88,11 @@ def _path(value, *, directory):
     if (not re.fullmatch('[A-Za-z]:', value.drive) or any(
             part in ('.', '..') or part.endswith((' ', '.')) or any(c in '<>:"|?*' or ord(c)<32 for c in part)
             for part in value.parts[1:])):
+        _fail('invalid_path')
+    from .development_paths import DevelopmentPathError, reference_path
+    try:
+        value = reference_path(value)
+    except DevelopmentPathError:
         _fail('invalid_path')
     for parent in reversed(value.parents):
         info = parent.lstat()
@@ -205,8 +192,18 @@ def _anchor(value, root):
             _fail('invalid_history')
     _keys(boundary, 'operator_control_directory customer_input_argv_env_cannot_select_control_source native_operator_local_account_boundary '
           'protection_against_same_account_arbitrary_code_execution')
-    if (boundary['operator_control_directory'] != str(root) or boundary['customer_input_argv_env_cannot_select_control_source'] is not True or
+    if (type(boundary['operator_control_directory']) is not str or boundary['customer_input_argv_env_cannot_select_control_source'] is not True or
             boundary['native_operator_local_account_boundary'] is not True or boundary['protection_against_same_account_arbitrary_code_execution'] is not False):
+        _fail('invalid_policy')
+    # Keep the original canonical anchor/hash. Only its directory lookup may
+    # use an explicitly registered migration alias, with native path checks.
+    try:
+        bound, bound_info = _path(boundary['operator_control_directory'], directory=True)
+        actual, actual_info = _path(root, directory=True)
+    except (OSError, _Failure):
+        _fail('invalid_policy')
+    if (bound != actual or (bound_info.st_dev, bound_info.st_ino) !=
+            (actual_info.st_dev, actual_info.st_ino)):
         _fail('invalid_policy')
     admission = value['admission']
     _keys(admission, 'registered_input_root registration_manifest existing_store cumulative_journal reservation permitted_to_dispatch_now '
@@ -579,7 +576,8 @@ def _run(scenario, model):
         context=prepared['context']
         record['phase']='reserve'
         reserved=dict(permit_id=config['permit_id'],context_sha256=_H(_C(context)),registration_sha256=config['registration_sha256'],
-            store_root=str(store_root),requested_model=model,reserved_model_attempts=1)
+            # Preserve the canonical authority value; translate only IO paths.
+            store_root=config['store_root'],requested_model=model,reserved_model_attempts=1)
         record['history']=None
         attempted=True
         active_bytes=_C(reserved)

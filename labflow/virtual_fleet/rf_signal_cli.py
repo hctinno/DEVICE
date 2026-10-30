@@ -53,7 +53,7 @@ _HELP = ('가상 합성 RF 실행: one explicit authored synthetic scenario, nev
          'Scenarios: ' + ', '.join(_SCENARIOS) + '\n'
          'Seed: canonical ASCII 0..2147483647. NAME: ASCII alphanumeric start, '
          'then alphanumeric/_/-, at most 64 characters; no Windows reserved names.\n'
-         'Output: this clone/.local/rf-signal-runs/NAME; existing names are rejected.\n'
+         'Output: managed runs/rf-artifacts/.local/rf-signal-runs/NAME; existing names are rejected.\n'
          'No catalog, hardware, model, server, or retry options.\n'
          'Usage: python -B -m labflow.virtual_fleet.rf_signal_cli --help\n')
 
@@ -342,10 +342,6 @@ def main(argv=None) -> int:
         backend = _native._WindowsIO()
         phase = 'rf_signal_cli_output_invalid'
         tree = _native._Tree(root, backend)
-        namespace = root / '.local/rf-signal-runs'
-        output = namespace / name
-        tree.directory(namespace, missing_ok=True)
-        _absent(tree, output)
         phase = 'rf_signal_cli_unavailable'
         inputs = _inputs(tree)
         loaded = _catalog.load_catalog(root / _CATALOG_PATH, max_bytes=1048576)
@@ -356,8 +352,13 @@ def main(argv=None) -> int:
             _fail('input_changed')
         phase = 'rf_signal_cli_output_invalid'
         _identities(tree)
-        tree.directory(namespace, create=True)
-        _absent(tree, output)
+        from ..managed_artifact_workspace import artifact_local_root
+        local = artifact_local_root(backend=backend, create=True)
+        storage_tree = _native._Tree(local, backend)
+        namespace = local / 'rf-signal-runs'
+        output = namespace / name
+        storage_tree.directory(namespace, create=True)
+        _absent(storage_tree, output)
         phase = 'rf_signal_cli_unavailable'
         run_id, instance = str(uuid.uuid4()), str(uuid.uuid4())
         _require(run_id != instance)
@@ -372,14 +373,15 @@ def main(argv=None) -> int:
         complete, measurement = False, None
         if result['status'] == 'executed':
             phase = 'rf_signal_cli_output_failed'
-            measurement = _completed(tree, output, request, result, run_id, instance)
+            measurement = _completed(storage_tree, output, request, result, run_id, instance)
             complete = True
         phase = 'rf_signal_cli_input_changed'
         _identities(tree)
         if _inputs(tree) != inputs:
             _fail('input_changed')
+        _identities(storage_tree)
         phase = 'rf_signal_cli_output_failed'
-        raw = _summary(request, run_id, output.relative_to(root).as_posix(), result, measurement, complete)
+        raw = _summary(request, run_id, '.local/rf-signal-runs/' + name, result, measurement, complete)
         status = 0 if complete and result['assessment']['verdict'] == 'pass' else 1
         _write(sys.stdout, raw)
     except KeyboardInterrupt:

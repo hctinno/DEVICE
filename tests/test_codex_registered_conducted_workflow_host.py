@@ -1134,14 +1134,14 @@ class RegistrationPdfPrepareCompatibilityTests(RegistrationPrepareCompatibilityT
 
 
 class NativeNamespaceRegistrationTests(unittest.TestCase):
-    def test_real_msix_native_claim_publish_and_actual_host_prepare(self):
+    def test_managed_native_claim_publish_and_actual_host_prepare(self):
         import test_codex_conducted_workflow_registration as registration_tests
         registrar=registration_tests.api;profile_root=api._profile_root
         native=registrar._operator_parent().parent/'.local'/('dev1-native-registration-'+uuid.uuid4().hex[:12])
         native.mkdir(parents=True)
-        # This test requires the real package namespace; no resolve mock can
-        # turn an ordinary path into evidence of the deployed MSIX behavior.
-        self.assertNotEqual(native,native.resolve(strict=True),'MSIX namespace reproduction unavailable')
+        # Ordinary project state now has one managed native path. Historical
+        # MSIX namespace observations remain retained evidence, not a run gate.
+        self.assertEqual(native,native.resolve(strict=True))
         self.enterContext(patch.object(registration_tests,'EXTRA_PROOF_ROOT',native))
         compatibility=RegistrationPdfPrepareCompatibilityTests('test_registration_v3_native_publish_and_actual_prepare')
         compatibility.operator_parent_override=native/'DGM'
@@ -1160,7 +1160,7 @@ class NativeNamespaceRegistrationTests(unittest.TestCase):
         compatibility.invoke=invoke
         compatibility.test_registration_v3_native_publish_and_actual_prepare()
         self.assertEqual(observed['result']['status'],'prepared')
-        self.assertNotEqual(observed['actual_profile_path'],observed['resolved_profile_path'])
+        self.assertEqual(observed['actual_profile_path'],observed['resolved_profile_path'])
 
 
 class CurrentUnsupportedSourceTests(unittest.TestCase):

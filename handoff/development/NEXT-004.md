@@ -1,5 +1,20 @@
 # 후속 개발 인수 대장 004
 
+## 2026-10-31 경로 통합·고정 소유권
+
+| 역할 | 실제 공간·보존 기준 | 다음 수용 조건 |
+|---|---|---|
+| 총괄 | integration / codex/workspace-consolidation-20261031 / 원195182f9 | 보존 검증→중복 정리→공통 경로 회귀→푸시/원격 exact |
+| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 0248858 | 원 접수 소유 유지·새 cwd/guard ACK 후 후속 접수 연결 |
+| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / aedb381 | 원 독립 No 보존·출처 미확인 처리 수정/재검수 |
+| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 36619b9 | C1/C2 수정 보존·post-fix 독립 재검수 |
+| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / 9f8b53a | bool/float tick 잔여 No 보존·수정/재검수 |
+| 유지보수 | workspaces/migration-paths / codex/migration-runtime-paths-20261031 | 공통 도구 실제 이전·현재 참조 복구·증거 보존 후 회수 |
+| 내용 보존 | workspaces/migration-archive / codex/migration-content-archive-20261031 / 신규3 소유 | 153개 냉각 clone의 고유 바이트/ADS 보관 도구·fixture·독립 검수→실제 CAS 보존→회수 |
+| P01 | 기존 수집 루트·브랜치·사용자 M2 그대로 | 개발 관리 영역만 예외. 수집 원본/작업 재개·확대 없음 |
+
+이 표는 현재 소유권이며 과거 담당 clone은 고유 내용·Git 보존 후 중복 정리한다. 고정 담당에게 최종 경로·guard를 실제 전달하고 ACK를 인수한다. 정리 중 일반 기능 작업은 보존 대기, 정리 뒤 원 미완료 구현을 잇는다. 실제 모델 추가 한도는 만들지 않는다.
+
 ## GOAL-PREHARDWARE-001 — 2026-10-26 명시 재개
 
 사용자의 첨부 Goal 전체를 인수하고 실장비 연결 전 소프트웨어 개발·검증을 재개했다. root `codex/pipeline-dev-20261023-intake`의 기존 미푸시094e 전달과 재개 문서308e86e는 정상 push·원격 exact 대조했다. 추가 수용 기능은472의 `09f9c74`이며 독립 공개8(typed4/native4)·총괄 native 최초 read/후행 close CONTROL1 PASS와 새 사본6 불변을 확인했다. 담당 clone·원 실패·private 증거를 보존한다. 일반 개발 채팅/P01 도구는 현재 제공되지 않아 기존 개발1~4/P01의 최신 상태는 미확인이다. 기존 채팅을 재개했다고 주장하지 않고 아래 실제 하위 에이전트 배정을 대체 실행 경로로 사용한다. 원 담당의 중지된 파일은 수정하지 않는다.
@@ -16,10 +31,14 @@
 | `DEV3-GOAL-ANDROID-RUNTIME-001` / 인수 완료 | ce59ee7/d34bcdf를 독립9 Yes 뒤 dceb684/1dba2c6 수용. 공식 SDK4/native 조회12·WHPX usable | root retained archive 기반561파일 무결성1 PASS·새 native SDK 실행0. 원63증거 보존. OS/ADBserver0, RAM3097<3584MiB. 실제 OS guest RF 연결·OEM/AnyWay 미완료 |
 | `DEV1-GOAL-COMPLETED-PDF-001` / 표준 모델 독립 구현자 | 등록/host·검사2·usage2의6 소유를 실제 배정 | 064f046을 독립6 Yes 뒤fe125e9 수용. 실제 KnownFolder에서 staging path_invalid/model0·permit0, 원131파일/실패8파일/빈staging 보존. bc7ab6의 MSIX native 객체/부모 동일성 fix를 독립5 Yes 뒤983e0e9 수용. root 자체 실패8파일/2디렉터리 수동 보존 후 actual native 정식준비/readback 완료·profile10/원131불변·model0 |
 | `DEV3-GOAL-N1911A-DISPLAY-001` / 표준 모델 독립 구현자 | instruments/session·신규검사/관련검사·usage2의6 소유를 실제 배정 | UNIT-only에서 같은 취득을 표시 변환하고 새샘플/센서재시작0. 일반configure 무효 계약/원lineage·stop/stale 보존, 독립Decimal/같은Fleet2세션 확인. 원 No/P2를 안정식/원상태 보존b8a993f로 수정·독립5 Yes 뒤edb5a63/8bd416d 수용. root관련2/새전체합성회귀1 PASS·실측0 |
-| `ROOT-GOAL-ACTUAL-AI-001` / 총괄 | 원 native 준비/실패를 보존하고 실제1 실행: schema oneOf HTTP400, agent/tool0·failed/held·cleanup확정. 누적18/25·잔여7 | 독립 사전 기준392e2d3/실패 평가978abd7 보존. schema/하향 한도·수동 계속 결박 수정 수용, root 별도 MOCK1/producer5/runtime1·저장/DRAFT·재진입 거절/141파일 SHA PASS. 원 permit 자체 만료·최신 사용자 달력 제한 제거 지시의 source 경로bacdbb2 수용, 총괄 고정 source 작성 후 같은 case 재개; 추가 actual0 |
+| `ROOT-GOAL-ACTUAL-AI-001` / 총괄 | 원 failed1·preflight not_run 보존, 후속 실제7 strict/dispatch 정상·sensor raw−19.5/acqtick15/setup18·Decimal 일치. 누적25/25·잔여0·재시도0 | 마지막 advance로 decision_budget/bounded·finalizer held/execution_incomplete·result/DRAFT없음·가상 DUT tx상태. 독립 평가b590885·원profile35/SQL/u01의131파일 불변. 후속실제 호출0, fixture·재생 성공으로 원업무 실패 대체0 |
 | `DEV2-GOAL-OPERATOR-SCHEMA-COMPAT-001` / 인수 완료 | cd6acb/1e7992→f91f201/2c28ac8, 독립9 qualified Yes | old/current byte·hash 구별·oneOf→anyOf 논리 동치·기존8/180보다 낮은 한도만 허용. 실제 provider 수용은 후속 실제 호출에서 확인 |
 | `DEV1-GOAL-MANUAL-CONTINUATION-001` / 인수 및 후속 | 412dda/c21b57→3826e7b/92427b3, 원 No/I1 schema결박 수정·독립2 Yes | root 통합 MOCK1 PASS. 최신 직접 사용자 답변 e123의 달력 만료 제거만 검증하는21984c4 소유5를 독립6 Yes·총괄5 뒤bacdbb2에 수용했다. 예산/원permit/실패/SQL불변·실제source 작성은root만 |
-| `DEV3-GOAL-N9030A-SESSION-001` / 실제 배정 | 독립 clone codex/goal-n9030a-session-20261027, 정확92427b3 기반 신규 session/test/usage3 | 확보한 원문 페이지와 정확 N9030A signal_analyzer에 한해 같은 Fleet SCPI 상태·취득·완료·오류 연결. N9030B alias/가짜trace/실물 전환0·3dB 독립 계산/독립 리뷰 후 통합 |
+| `DEV3-GOAL-N9030A-SESSION-001` / 인수 완료 | 5b6faf/df4c0c→603614d/de2d766, 원 No/C1 center 음수창을 원자 검증으로 수정·독립2 Yes, 관련114 PASS | root 같은 첫 source6→정확 analyzer 취득·Decimal−0.75+11.75=11/invalid 상태 보존1 PASS. CHPower/TRACE·실물/옵션/FW 미지원·미검증. 검수자 신규 보고서1개의 공유 경로 오류는 hash동일로 개발 clone에 보존 이동·자기 신규 빈dir만 제거, 기존 공유 HANDOFF/PLAN·Git M 상태 불변 |
+| `DEV2-GOAL-TERMINATION-GUIDANCE-001` / 인수 완료 | 099f843→01c8d65, 소유4·독립5 qualified Yes·기존120 관련 PASS, 과거 actual0007 old SYSTEM decode1/원pins불변 | root 새 PDF/MOCK5/runtime1→측정/보정11/저장/DRAFT 회귀1 PASS. actual25/25·잔여0, 새지침의 실제 모델 행동 개선은 미검증·원taskfail/held를 소급 성공으로 바꾸지 않음 |
+| `DEV3-GOAL-ANDROID-GUEST-RF-001` / 구현·수정 | 독립 clone codex/goal-android-guest-rf-20261027의 b0c50d2 소유6 게시·관련150 fixture PASS | 실제 OS0. 독립 No/C1 선존재guest파일 삭제·C2 exact endpoint 미강제를 원형보존하고 담당 최소 수정 배정. 원SDK/메모리/프로세스 gate 불변·한 번의 실제boot cap 미소비 |
+| `DEV4-GOAL-OPERATOR-ATTEMPT-VIEW-001` / 실제 배정 | 새 독립 clone codex/goal-operator-attempt-view-20261027, typed builder/test/usage3+서버/프런트5의8 소유 | 현재 binding 재확인·readonly GET/cache·기존 MOCK 결과와 별도 actual bounded/held/행동·원참조 카드. 없음/불일치/stale를 성공대체0·실제실행/모델0 |
+| `DEV2-GOAL-OPERATOR-CONTEXT-PROJECTION-001` / 실제 배정 | 새 독립 clone codex/operator-context-projection-20261027, 새 projector/test/usage3+loop/test2의5 소유 | 원 full context8/64 상태 검증·보존 후 목적 DUT/sensor와 receipt의 모든 연결 폐쇄11노드/13edge를 prompt에 투영. 원 full _build 검증 선행·invalid 삭제 수락0·모호하면full동치 fallback, 실제 토큰/품질 개선은 미검증·실모델0 |
 | P01 / 단일 수집 창구 | 기존 보유 제어자료·성적서·DUT source를 읽기 전용 재사용 | N1911A 모델별 기존 metadata와 retained PDF를 재사용할 수 있어 재수집 불필요. N9030A/FSV40 적용성·실제 Keysight Mock/IDF 배포물의 잔여 공백만 좁힐 예정. 도구 부재로 신규 실제 전달0, 기존 수집 재개 여부 미확인 |
 
 공통 계약은 기존 source6/plan6/setup8/measurement_ref/같은 run·runtime·결과 계보를 유지한다. 신규 bridge는 가상 DUT 상태를 복제하지 않고 같은 VirtualLab public API로만 연결한다. 실제 ADB 통신, synthetic RF 제어, 실제 OEM/AnyWay RF 제어의 근거를 혼합하지 않는다. 원 수치·규범 한계·권한이 미확정이면 null/미평가로 유지한다.

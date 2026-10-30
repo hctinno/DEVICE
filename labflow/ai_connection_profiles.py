@@ -162,6 +162,10 @@ def _path(value):
     path = Path(os.path.abspath(path))
     if any(_unsafe_component(part) for part in path.parts if part != path.anchor):
         _fail('invalid_path')
+    from .development_paths import DevelopmentPathError, reference_path
+    try:path=reference_path(path)
+    except DevelopmentPathError:path=None
+    if path is None:_fail('invalid_path')
     for directory in reversed(path.parents):
         try:
             info = directory.lstat()
