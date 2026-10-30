@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {spawnSync}=require('node:child_process'),{createHash}=require('node:crypto'),{pathToFileURL}=require('node:url');
 const {reserveEvidence,evidenceAncestors}=require('../intake_fixture_browser_check.cjs');
-const ROOT=fs.realpathSync(path.resolve(__dirname,'../..'));
+const ROOT=path.resolve(__dirname,'../..');
 const CASES=['normal','bandwidth-below','incomplete','axis-unrepresentable','density-rounded-eight'];
 const MAX_BYTES=1024*1024;
 const samePath=(a,b)=>path.relative(path.resolve(a),path.resolve(b))==='';

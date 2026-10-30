@@ -30,7 +30,7 @@ async function main(argv=process.argv.slice(2)){
  const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
  const {createHash}=require('node:crypto'),{execFileSync}=require('node:child_process');
  assert.equal(argv.length,0,'invalid_configuration');
- const root=require('../managed_paths.cjs').stage(fs.realpathSync(path.resolve(__dirname,'../..'))),local=path.join(root,'.local');
+ const root=require('../managed_paths.cjs').stage(path.resolve(__dirname,'../..')),local=path.join(root,'.local');
  fs.mkdirSync(local,{recursive:true});const evidence=fs.mkdtempSync(path.join(local,'ir-'));
  const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
  const write=(name,value)=>fs.writeFileSync(path.join(evidence,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
@@ -218,7 +218,7 @@ async function main(argv=process.argv.slice(2)){
 async function frontendMain(){
  const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
  const {createHash}=require('node:crypto'),{execFileSync}=require('node:child_process');
- const root=require('../managed_paths.cjs').stage(fs.realpathSync(path.resolve(__dirname,'../..'))),hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+ const root=require('../managed_paths.cjs').stage(path.resolve(__dirname,'../..')),hash=bytes=>createHash('sha256').update(bytes).digest('hex');
  fs.mkdirSync(path.join(root,'.local'),{recursive:true});
  const evidence=fs.mkdtempSync(path.join(root,'.local/ir-f1-'));
  const save=(name,value)=>fs.writeFileSync(path.join(evidence,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
@@ -671,7 +671,7 @@ if __name__=='__main__':
 async function integratedMain(){
  const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
  const {createHash}=require('node:crypto'),{spawn,execFileSync}=require('node:child_process');
- const root=require('../managed_paths.cjs').stage(fs.realpathSync(path.resolve(__dirname,'../..'))),hash=b=>createHash('sha256').update(b).digest('hex');
+ const root=require('../managed_paths.cjs').stage(path.resolve(__dirname,'../..')),hash=b=>createHash('sha256').update(b).digest('hex');
  const local=path.join(root,'.local');fs.mkdirSync(local,{recursive:true});const evidence=fs.mkdtempSync(path.join(local,'ir-f2-'));
  const save=(n,v)=>fs.writeFileSync(path.join(evidence,n),JSON.stringify(v,null,2)+'\n',{flag:'wx'});
  const sourcePins=()=>Object.fromEntries(execFileSync('git',['ls-files','-z','--','labflow','frontend','tests'],{cwd:root}).toString('utf8').split('\0').filter(Boolean).sort().map(n=>[n,hash(fs.readFileSync(path.join(root,n)))]));

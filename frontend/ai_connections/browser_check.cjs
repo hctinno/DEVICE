@@ -2,8 +2,9 @@
 const fs=require('node:fs'),path=require('node:path'),{spawn}=require('node:child_process'),assert=require('node:assert/strict');
 const {chromium}=require('playwright');
 const http=require('node:http'),crypto=require('node:crypto');
-const ROOT=require('../managed_paths.cjs').stage(path.resolve(__dirname,'../..')),LOCAL=path.join(ROOT,'.local');fs.mkdirSync(LOCAL,{recursive:true});
-const proofParent=process.env.VERTEX_UI_PROOF_ROOT?fs.realpathSync(process.env.VERTEX_UI_PROOF_ROOT):LOCAL;
+const ROOT=require('../managed_paths.cjs').stage(path.resolve(__dirname,'../..')),LOCAL=path.join(ROOT,'.local');
+const proofParent=require('../managed_paths.cjs').proof(ROOT,process.env.VERTEX_UI_PROOF_ROOT);
+fs.mkdirSync(LOCAL,{recursive:true});
 assert.ok(proofParent===LOCAL||proofParent.startsWith(LOCAL+path.sep));
 const OUT=fs.mkdtempSync(path.join(proofParent,'vertex-ui-dom-')),PROOF=proofParent===LOCAL?OUT:proofParent;
 function proofWrite(file,data){

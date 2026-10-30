@@ -7,7 +7,7 @@ const {spawn} = require('node:child_process');
 const {createHash} = require('node:crypto');
 const {pathToFileURL} = require('node:url');
 const {reserveEvidence} = require('../intake_fixture_browser_check.cjs');
-const ROOT = fs.realpathSync(path.resolve(__dirname, '../..'));
+const ROOT = path.resolve(__dirname, '../..');
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const save = (folder, name, value) => fs.writeFileSync(path.join(folder, name), JSON.stringify(value, null, 2) + '\n', {flag: 'wx'});
 const wait = async (promise, ms = 30000) => {

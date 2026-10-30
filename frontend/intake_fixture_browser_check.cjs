@@ -38,14 +38,17 @@ function readConfig(env = process.env) {
 }
 
 function reserveEvidence(own, requested) {
-  own=require('./managed_paths.cjs').stage(path.resolve(own));
+  const managed=require('./managed_paths.cjs');
+  own=managed.stage(path.resolve(own));
   const local=path.join(own,'.local');
+  const output=requested ? managed.proof(own,requested) : null;
+  if(requested){
+    assert(within(local,output), 'Evidence must stay inside this checkout .local');
+    assert(!exists(output), 'Evidence output already exists; preserve it and choose a new folder');
+  }
   if (!exists(local)) fs.mkdirSync(local);
   assert(!fs.lstatSync(local).isSymbolicLink(), 'Evidence .local must be a plain directory');
   if (!requested) return fs.mkdtempSync(path.join(local,'ib-'));
-  const output=path.resolve(own,requested);
-  assert(within(local,output), 'Evidence must stay inside this checkout .local');
-  assert(!exists(output), 'Evidence output already exists; preserve it and choose a new folder');
   for (const parent of evidenceAncestors(output,own)) {
     if (exists(parent)) assert(!fs.lstatSync(parent).isSymbolicLink(), 'Linked evidence paths are forbidden');
   }

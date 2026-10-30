@@ -28,3 +28,69 @@ test('unmanaged or malformed layout does not fall back to .venv',()=>{
  fs.mkdirSync(development,{recursive:true});fs.writeFileSync(path.join(development,'layout.json'),'{}');
  assert.throws(()=>api.python(development));
 });
+
+function stageFixture(){
+ const temp=fs.mkdtempSync(path.join(evidence,'s-')),development=path.join(temp,'.local/development');
+ const runs=path.join(development,'runs'),outside=path.join(development,'workspaces/source');
+ fs.mkdirSync(runs,{recursive:true});fs.mkdirSync(outside,{recursive:true});
+ fs.writeFileSync(path.join(development,'layout.json'),JSON.stringify({schema_version:1,project_root_relative:'../..',
+  directories:{integration:'integration',workspaces:'workspaces',runs:'runs',toolchains:'toolchains',archive:'archive'},workspaces:[],path_aliases:[],control_root:'runs/control/DGMAutoLab'}));
+ return {development,runs,outside};
+}
+const api=require('./managed_paths.cjs'),{reserveEvidence}=require('./intake_fixture_browser_check.cjs');
+for(const boundary of ['runs','ancestor','stage','local'])test('rejects '+boundary+' junction before reserving evidence',()=>{
+ const {development,runs,outside}=stageFixture();
+ let stage=path.join(runs,'stage');
+ if(boundary==='runs'){
+  fs.renameSync(runs,path.join(development,'plain-runs'));
+  fs.mkdirSync(path.join(outside,'stage'));fs.symlinkSync(outside,runs,'junction');
+ }else if(boundary==='ancestor'){
+  fs.mkdirSync(path.join(outside,'stage'));fs.symlinkSync(outside,path.join(runs,'linked'),'junction');
+  stage=path.join(runs,'linked/stage');
+ }else if(boundary==='stage')fs.symlinkSync(outside,stage,'junction');
+ else{fs.mkdirSync(stage);fs.symlinkSync(outside,path.join(stage,'.local'),'junction');}
+ assert.throws(()=>reserveEvidence(stage),/managed_browser_.*(reparse|physical)/);
+ assert.deepEqual(fs.readdirSync(outside),boundary==='runs'||boundary==='ancestor'?['stage']:[]);
+ if(boundary==='runs'||boundary==='ancestor')assert.deepEqual(fs.readdirSync(path.join(outside,'stage')),[]);
+});
+test('rejects a stage junction even when its target is also inside runs',()=>{
+ const {runs}=stageFixture(),plain=path.join(runs,'plain'),linked=path.join(runs,'linked');
+ fs.mkdirSync(plain);fs.symlinkSync(plain,linked,'junction');
+ assert.throws(()=>reserveEvidence(linked),/managed_browser_.*reparse/);
+ assert.deepEqual(fs.readdirSync(plain),[]);
+});
+test('rejects a linked proof ancestor before creating any output leaf',()=>{
+ const {runs,outside}=stageFixture(),stage=path.join(runs,'stage'),local=path.join(stage,'.local');
+ fs.mkdirSync(local,{recursive:true});fs.symlinkSync(outside,path.join(local,'linked'),'junction');
+ assert.throws(()=>reserveEvidence(stage,'.local/linked/new'),/managed_browser_.*(reparse|physical)/);
+ assert.deepEqual(fs.readdirSync(outside),[]);
+});
+test('validates explicit proof root before creating stage .local',()=>{
+ const {runs,outside}=stageFixture(),stage=path.join(runs,'stage');fs.mkdirSync(stage);
+ assert.throws(()=>api.proof(stage,outside),/managed_browser_proof_required/);
+ assert.equal(fs.existsSync(path.join(stage,'.local')),false);
+ const local=path.join(stage,'.local');fs.mkdirSync(local);
+ fs.symlinkSync(outside,path.join(local,'linked'),'junction');
+ assert.throws(()=>api.proof(stage,path.join(local,'linked')),/managed_browser_.*(reparse|physical)/);
+ assert.deepEqual(fs.readdirSync(outside),[]);
+});
+test('ordinary runs stage accepts fresh and explicitly parented proof outputs',()=>{
+ const {runs}=stageFixture(),stage=path.join(runs,'stage');fs.mkdirSync(stage);
+ assert.equal(api.stage(stage),stage);
+ const fresh=reserveEvidence(stage);assert.equal(path.dirname(fresh),path.join(stage,'.local'));
+ const parent=path.join(stage,'.local/proof');fs.mkdirSync(parent);
+ assert.equal(api.proof(stage,parent),parent);
+ const leaf=reserveEvidence(stage,'.local/proof/new');
+ assert.equal(fs.realpathSync(leaf),leaf);
+ assert.throws(()=>reserveEvidence(stage,'.local/proof/new'),/already exists/);
+});
+test('an escaping requested output is rejected before creating .local',()=>{
+ const {runs}=stageFixture(),stage=path.join(runs,'stage');fs.mkdirSync(stage);
+ assert.throws(()=>reserveEvidence(stage,'../escape'),/managed_browser_proof_required/);
+ assert.equal(fs.existsSync(path.join(stage,'.local')),false);
+});
+test('default browser output rejects a linked runs output parent',()=>{
+ const {runs,outside}=stageFixture();fs.symlinkSync(outside,path.join(runs,'browser-checks'),'junction');
+ assert.throws(()=>api.output(outside,'browser'),/managed_browser_.*(reparse|physical)/);
+ assert.deepEqual(fs.readdirSync(outside),[]);
+});
