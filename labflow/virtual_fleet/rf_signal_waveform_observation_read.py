@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 
 from .. import control_packet_prepare as _native
+from .managed_reader_source_version import SOURCE_VERSION as _MANAGED_SOURCE_VERSION, SOURCE_PINS as _MANAGED_SOURCE_PINS
 
 __all__ = ["RfSignalWaveformObservationReadError", "read_rf_baseband_observation"]
 _PREFIX = "rf_signal_waveform_observation_read_"
@@ -240,7 +241,10 @@ def _bundle(value, summary, name):
     for k in ("window_seconds","observed_duty_cycle","time_mean_mw","peak_mw","energy_mw_s"): _number(metrics[k])
     for k in ("on_mean_mw","time_mean_dbm","on_mean_dbm","peak_dbm"):
         if metrics[k] is not None: _number(metrics[k])
-    p=value["provenance"]; _keys(p,"binding_scope reference_plane rf_manifest_sha256 source_snapshot_sha256 packet_sha256 dependency_pins")
+    p=value["provenance"]
+    named=type(p) is dict and 'dependency_source_version' in p
+    fields="binding_scope reference_plane rf_manifest_sha256 source_snapshot_sha256 packet_sha256 dependency_pins"
+    _keys(p,fields + (" dependency_source_version" if named else ""))
     _require(p["binding_scope"] == "declared_source_projection_only" and p["reference_plane"] == "declared_dut_output")
     _require(type(p["dependency_pins"]) is list and len(p["dependency_pins"]) == 4)
     pins=[]
@@ -248,7 +252,13 @@ def _bundle(value, summary, name):
         _keys(actual,"role lf_bytes lf_sha256")
         _require(type(actual["role"]) is str and type(actual["lf_bytes"]) is int and type(actual["lf_sha256"]) is str)
         pins.append((actual["role"],actual["lf_bytes"],actual["lf_sha256"]))
-    _require(tuple(pins) in (_PINS,_CURRENT_PINS))
+    if named:
+        _require(type(p['dependency_source_version']) is str and p['dependency_source_version']==_MANAGED_SOURCE_VERSION)
+        _require(tuple(pins)==tuple((role,size,digest) for role,path,size,digest in _MANAGED_SOURCE_PINS))
+    else:
+        # Both recorded versions remain historical input. A new tuple without
+        # its explicit version cannot masquerade as an old recorded producer.
+        _require(tuple(pins) in (_PINS,_CURRENT_PINS))
     expected_source=summary["source"]; expected_math=summary["math"]
     _require(req["run_name"] == expected_source["run_name"]
              and all(source["metadata"][k] == expected_source[k] for k in ("run_id","runtime_instance_id")))

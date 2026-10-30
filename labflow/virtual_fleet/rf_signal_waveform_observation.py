@@ -11,6 +11,7 @@ import stat
 
 from .. import control_packet_prepare as _native
 from . import rf_signal_read as _reader, rf_signal_scenario as _scenario, rf_signal_waveform as _waveform
+from .managed_reader_source_version import SOURCE_VERSION as _MANAGED_SOURCE_VERSION, SOURCE_PINS as _MANAGED_SOURCE_PINS
 
 
 _PREFIX = "rf_signal_waveform_observation_"
@@ -204,7 +205,7 @@ def _identities(tree):
 
 def _pin_sources(tree):
     result = []
-    for role, relative, size, digest in _PINS:
+    for role, relative, size, digest in _MANAGED_SOURCE_PINS:
         path = tree.root / relative
         before = _native._stamp(tree.file_stat(path))
         descriptor = tree.backend.open_read(path, pin=True)
@@ -376,8 +377,9 @@ def _bundle(request, source, declared, packet, analysis, recipe):
     provenance = dict(binding_scope="declared_source_projection_only", reference_plane="declared_dut_output",
                       rf_manifest_sha256=source["storage"]["manifest_sha256"],
                       source_snapshot_sha256=_sha(_canonical(source)), packet_sha256=_sha(_canonical(packet)),
+                      dependency_source_version=_MANAGED_SOURCE_VERSION,
                       dependency_pins=[dict(role=role, lf_bytes=size, lf_sha256=digest)
-                                       for role, path, size, digest in _PINS])
+                                       for role, path, size, digest in _MANAGED_SOURCE_PINS])
     value = dict(schema_version=1, kind="private_rf_baseband_math_observation", request=request,
                  source_snapshot=source, declared_setup=declared, recipe=recipe,
                  packet=packet, analysis=analysis, provenance=provenance)
