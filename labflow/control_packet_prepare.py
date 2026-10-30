@@ -89,7 +89,13 @@ def _local_path(value):
     path = Path(os.path.abspath(path))
     if not all(_valid_segment(part) for part in path.parts[1:]):
         _fail("packet_prepare_path_invalid")
-    return path
+    # Historical profile/SQLite strings remain unchanged; translate only the
+    # concrete IO path before the handle-relative backend pins its identity.
+    from .development_paths import DevelopmentPathError, reference_path
+    try:
+        return reference_path(path)
+    except DevelopmentPathError:
+        _fail("packet_prepare_path_invalid")
 
 
 class _WindowsIO:
