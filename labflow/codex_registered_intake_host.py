@@ -192,8 +192,18 @@ def _anchor(value, root):
             _fail('invalid_history')
     _keys(boundary, 'operator_control_directory customer_input_argv_env_cannot_select_control_source native_operator_local_account_boundary '
           'protection_against_same_account_arbitrary_code_execution')
-    if (boundary['operator_control_directory'] != str(root) or boundary['customer_input_argv_env_cannot_select_control_source'] is not True or
+    if (type(boundary['operator_control_directory']) is not str or boundary['customer_input_argv_env_cannot_select_control_source'] is not True or
             boundary['native_operator_local_account_boundary'] is not True or boundary['protection_against_same_account_arbitrary_code_execution'] is not False):
+        _fail('invalid_policy')
+    # Keep the original canonical anchor/hash. Only its directory lookup may
+    # use an explicitly registered migration alias, with native path checks.
+    try:
+        bound, bound_info = _path(boundary['operator_control_directory'], directory=True)
+        actual, actual_info = _path(root, directory=True)
+    except (OSError, _Failure):
+        _fail('invalid_policy')
+    if (bound != actual or (bound_info.st_dev, bound_info.st_ino) !=
+            (actual_info.st_dev, actual_info.st_ino)):
         _fail('invalid_policy')
     admission = value['admission']
     _keys(admission, 'registered_input_root registration_manifest existing_store cumulative_journal reservation permitted_to_dispatch_now '

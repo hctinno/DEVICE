@@ -184,6 +184,107 @@ class DevelopmentPathsTests(unittest.TestCase):
         self.assertEqual(helper.config['store_root'],old)
         self.assertEqual(helper.calls,['version','model'])  # Known Python transport double only.
 
+    def _typed_migrated_anchor(self):
+        from test_codex_registered_intake_host import RegisteredNativeHostTests
+        helper=RegisteredNativeHostTests('test_genuine_once_with_known_fake_child_extends_history_and_closes_store')
+        self.addCleanup(helper.doCleanups)
+        parent=self.root/'runs/a';parent.mkdir(parents=True)
+        temporary_directory=tempfile.TemporaryDirectory
+        def local_temp(*args,**kwargs):
+            kwargs.update(dir=parent,prefix='n')
+            return temporary_directory(*args,**kwargs)
+        with patch.object(tempfile,'TemporaryDirectory',side_effect=local_temp): helper.setUp()
+        old=str(Path('C:/Users/TypedFixture/AppData/Local/DGMAutoLab/codex-intake-host'))
+        self.layout['path_aliases'].append({'from':old,'to':'runs/a/'+helper.root.name+'/native-control'})
+        self.save_layout()
+        anchor=json.loads(json.dumps(helper.anchor))
+        anchor['trust_boundary']['operator_control_directory']=old
+        anchor['inherited_history']['actual_codex_model_processes']=25
+        anchor['inherited_history']['known_total_before_this_host']=25
+        return helper,anchor,old
+
+    def test_migrated_appdata_anchor_matches_only_registered_actual_control_without_rewrite(self):
+        helper,anchor,old=self._typed_migrated_anchor()
+        raw=json.dumps(anchor,sort_keys=True).encode();before=hashlib.sha256(raw).hexdigest()
+        with patch.object(paths,'load_layout',return_value=self.load()):
+            helper.api()._anchor(anchor,helper.control)
+        self.assertEqual(anchor['trust_boundary']['operator_control_directory'],old)
+        self.assertEqual(hashlib.sha256(json.dumps(anchor,sort_keys=True).encode()).hexdigest(),before)
+        self.assertFalse(anchor['admission']['permitted_to_dispatch_now'])
+        self.assertEqual(anchor['new_model_processes'],0)
+        self.assertFalse(anchor['new_budget_or_active_permit_issued'])
+
+    def test_migrated_anchor_rejects_a_different_existing_host_directory(self):
+        helper,anchor,_=self._typed_migrated_anchor()
+        wrong=helper.root/'codex-conducted-workflow-host';wrong.mkdir()
+        with patch.object(paths,'load_layout',return_value=self.load()):
+            with self.assertRaises(helper.api()._Failure): helper.api()._anchor(anchor,wrong)
+
+    def test_migrated_anchor_rejects_malformed_or_unregistered_boundary_references(self):
+        helper,anchor,old=self._typed_migrated_anchor()
+        for value in [old+'-other', 'C:/autolab-unregistered/control', old+'/../other',
+                '\\\\server\\share\\control', '\\\\?\\C:\\control', {'path':old}]:
+            body=json.loads(json.dumps(anchor));body['trust_boundary']['operator_control_directory']=value
+            with self.subTest(value=value), patch.object(paths,'load_layout',return_value=self.load()):
+                with self.assertRaises(helper.api()._Failure): helper.api()._anchor(body,helper.control)
+
+    def test_migrated_anchor_rejects_a_reparse_inserted_after_alias_registration(self):
+        helper,anchor,old=self._typed_migrated_anchor()
+        link=helper.root/'alias';other=helper.root/'other';other.mkdir()
+        self.layout['path_aliases'][-1]['to']='runs/a/'+helper.root.name+'/alias'
+        self.save_layout();layout=self.load()
+        if os.name=='nt':
+            command="New-Item -ItemType Junction -Path '%s' -Target '%s' | Out-Null"%(link,other)
+            subprocess.run(['powershell.exe','-NoProfile','-NonInteractive','-Command',command],check=True,capture_output=True)
+            self.addCleanup(lambda:os.rmdir(link) if link.exists() else None)
+        else: link.symlink_to(other,target_is_directory=True)
+        with patch.object(paths,'load_layout',return_value=layout):
+            with self.assertRaises(helper.api()._Failure): helper.api()._anchor(anchor,helper.control)
+
+    def test_migrated_anchor_rejects_same_path_with_changed_native_directory_identity(self):
+        helper,anchor,_=self._typed_migrated_anchor();api=helper.api();native_path=api._path;calls=[]
+        def swap_after_first(value,*,directory):
+            result=native_path(value,directory=directory);calls.append(result)
+            if len(calls)==1:
+                helper.control.rename(helper.root/'retained-control');helper.control.mkdir()
+            return result
+        with patch.object(paths,'load_layout',return_value=self.load()),patch.object(api,'_path',side_effect=swap_after_first):
+            with self.assertRaises(api._Failure): api._anchor(anchor,helper.control)
+        self.assertEqual(len(calls),2)
+
+    def test_typed_spent_migrated_anchor_reaches_history_guard_before_any_producer(self):
+        from labflow.store import canonical
+        helper,anchor,_=self._typed_migrated_anchor();helper.anchor=anchor
+        helper.put('root-continuation-anchor-20261026-v1.json',anchor)
+        anchor_sha=hashlib.sha256(canonical(anchor).encode()).hexdigest()
+        helper.config['anchor_sha256']=anchor_sha;helper.permit['anchor_sha256']=anchor_sha
+        helper.put('operator-control-v1.json',helper.config)
+        baseline=dict(schema_version=1,kind='codex_intake_continuation_baseline',journal_id=helper.config['journal_id'],
+            anchor_sha256=anchor_sha,inherited_history=anchor['inherited_history'])
+        permit_id=helper.config['permit_id']
+        reserved=dict(permit_id=permit_id,context_sha256='1'*64,registration_sha256=helper.config['registration_sha256'],
+            store_root=helper.config['store_root'],requested_model=helper.permit['requested_model'],reserved_model_attempts=1)
+        consumed=dict(permit_id=permit_id,reservation_sha256=hashlib.sha256(canonical(reserved).encode()).hexdigest())
+        finished=dict(permit_id=permit_id,status='unknown',local_model_processes=0,cleanup_confirmed=True,
+            producer_receipt=None,caller_receipt=None,once=None,errors=[])
+        with closing(sqlite3.connect(helper.journal)) as con:
+            con.execute('DELETE FROM codex_intake_history')
+            con.executemany('INSERT INTO codex_intake_history(kind,permit_id,payload) VALUES(?,?,?)',
+                [(k,None if k=='baseline' else permit_id,canonical(v)) for k,v in
+                    [('baseline',baseline),('permit',helper.permit),('reserved',reserved),('consumed',consumed),('finished',finished)]])
+            con.commit()
+        protected=[helper.journal,helper.control/'operator-control-v1.json',helper.control/'root-continuation-anchor-20261026-v1.json']
+        before={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in protected}
+        with patch.object(paths,'load_layout',return_value=self.load()): status,result,_,_=helper.invoke()
+        self.assertEqual((status,result['status']),(3,'not_run'),result)
+        self.assertEqual(result['phase'],'history')
+        self.assertEqual(result['errors'][0]['code'],'codex_registered_intake_host_history_unsettled')
+        self.assertEqual(result['history']['known_total_model_processes'],25)
+        self.assertEqual(helper.calls,[])
+        self.assertEqual([kind for kind,_,_ in helper.events()],['baseline','permit','reserved','consumed','finished'])
+        self.assertEqual({str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in protected},before)
+        self.assertFalse((helper.control/'active-run.json').exists())
+
     def test_cli_checks_actual_branch_without_pin_to_old_task_branch(self):
         subprocess.run(['git','init','-b','codex/new-task',str(self.repo)], check=True, capture_output=True)
         script = Path(__file__).parents[1]/'scripts/check_development_paths.py'
