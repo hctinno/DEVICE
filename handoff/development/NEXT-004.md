@@ -1,5 +1,20 @@
 # 후속 개발 인수 대장 004
 
+## 2026-10-31 경로 통합·고정 소유권
+
+| 역할 | 실제 공간·보존 기준 | 다음 수용 조건 |
+|---|---|---|
+| 총괄 | integration / codex/workspace-consolidation-20261031 / 원195182f9 | 보존 검증→중복 정리→공통 경로 회귀→푸시/원격 exact |
+| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 0248858 | 원 접수 소유 유지·새 cwd/guard ACK 후 후속 접수 연결 |
+| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / aedb381 | 원 독립 No 보존·출처 미확인 처리 수정/재검수 |
+| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 36619b9 | C1/C2 수정 보존·post-fix 독립 재검수 |
+| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / 9f8b53a | bool/float tick 잔여 No 보존·수정/재검수 |
+| 유지보수 | workspaces/migration-paths / codex/migration-runtime-paths-20261031 | 공통 도구 실제 이전·현재 참조 복구·증거 보존 후 회수 |
+| 내용 보존 | workspaces/migration-archive / codex/migration-content-archive-20261031 / 신규3 소유 | 153개 냉각 clone의 고유 바이트/ADS 보관 도구·fixture·독립 검수→실제 CAS 보존→회수 |
+| P01 | 기존 수집 루트·브랜치·사용자 M2 그대로 | 개발 관리 영역만 예외. 수집 원본/작업 재개·확대 없음 |
+
+이 표는 현재 소유권이며 과거 담당 clone은 고유 내용·Git 보존 후 중복 정리한다. 고정 담당에게 최종 경로·guard를 실제 전달하고 ACK를 인수한다. 정리 중 일반 기능 작업은 보존 대기, 정리 뒤 원 미완료 구현을 잇는다. 실제 모델 추가 한도는 만들지 않는다.
+
 ## GOAL-PREHARDWARE-001 — 2026-10-26 명시 재개
 
 사용자의 첨부 Goal 전체를 인수하고 실장비 연결 전 소프트웨어 개발·검증을 재개했다. root `codex/pipeline-dev-20261023-intake`의 기존 미푸시094e 전달과 재개 문서308e86e는 정상 push·원격 exact 대조했다. 추가 수용 기능은472의 `09f9c74`이며 독립 공개8(typed4/native4)·총괄 native 최초 read/후행 close CONTROL1 PASS와 새 사본6 불변을 확인했다. 담당 clone·원 실패·private 증거를 보존한다. 일반 개발 채팅/P01 도구는 현재 제공되지 않아 기존 개발1~4/P01의 최신 상태는 미확인이다. 기존 채팅을 재개했다고 주장하지 않고 아래 실제 하위 에이전트 배정을 대체 실행 경로로 사용한다. 원 담당의 중지된 파일은 수정하지 않는다.

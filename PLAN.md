@@ -1,5 +1,17 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+## 2026-10-31 개발 경로 통합 우선
+
+| 작업 | 현재 상태·다음 검증 | 담당 |
+|---|---|---|
+| 기준·고정 공간 이전 | integration/dev1~4 실제 이전·원 Git 상태 보존. 관리 루트는 `.local/development` | 총괄 |
+| 고유 자료 인수 | 160폴더 일반 파일520,024/51.52GB·ADS15/750B catalog 완료. Git158 refs/reflog/object 대조 통과. private bare 최종 검사와 실제 내용 보존 후에만 중복 삭제 | 보존·Git 담당/총괄 |
+| 실행 경로·상태 | ordinary AppData211개 전량 SHA/native identity 대조·이전. helper/guard·이력 alias 코드 독립 qualified Yes. 공통 Python/Android SDK 이전·현재 참조 수정 진행 | 경로 담당 |
+| 재발 방지 | AGENTS에 고정 공간·cwd/branch guard·runs/toolchains/archive·보존 후 정리 규칙 반영. 담당 실제 적용 ACK·새 경로 회귀·커밋/푸시·원격 대조가 남음 | 총괄 |
+| 원 Goal 복귀 | D2 목적별 prompt 투영 aedb381, D3 guest RF 36619b9, D4 실제 시도 조회 9f8b53a의 미통합 검수/수정. 정리 이후 진행 | 개발1~4/총괄 |
+
+원 실행·실패·permit·모델 회계는 불변이다. Codex25/25·Vertex6/3072 소진을 유지하고 실제 모델/실물 실행을 추가하지 않는다. 이전 전후 증거는 관리 루트의 `runs/migration-20261031`에 보관한다. 아래 계획·수집·기능 상태는 각 당시 이력이며 관리 경로는 최신 규칙이 우선한다.
+
 2026-10-25 [통합061](handoff/development/INTEGRATION-061.md): 개발2 단일 가상 행동 효과평가 0c7 신규3을 독립 qualified Yes 뒤 기능3f99c543/source288에 인수했다. 새 총괄 관련 Python124 PASS와 기존286 raw 불변을 확인했다. 독립 원42는 일치41·준비 형상 불일치1을 보존하며 별도 선봉인2 PASS와 합산하지 않는다. 메모리 증거의 일관성·관측효과만 평가하고 전체 task/권위/실물 검증은 미완료다. 담당 첫 준비의 임시 raw 미보존·traceback만 보존 한계도 남긴다. 개발1 G3·개발3 동일입력 비교·개발4 제공기록 화면의 실제 구현을 유지하고 개발2 저장기록 readonly 연결 계약을 다음 배정했다. P01 B052 혼합11 구조확인/known550쪽+raw보류1/쪽수null의 인수·후행대조를 닫아156/156·corpus121/121·보존142/전체쪽수null/known부분9741을 구별한다. 동일 Vertex6/3072 소진·무료크레딧 전용·새실모델0·사용자준비0이며 아래는 당시 기록이다.
 
 2026-10-25 [통합060](handoff/development/INTEGRATION-060.md): 개발3 가상작업자 동일입력 Codex/Vertex 비교 설계·계획2를 private 정적Yes·공개53필드 type/C1/본문규범2 독립Yes 뒤 게시했다. 정보부족 합성case1·기존API3/row15/batch8·후보형식/binding만 고정하고 과업/행동/effect/closedloop·등록8은 후속이다. 독립12논리 봉인은미실행이며5구체seam은첫관측전후행고정한다. source286/기능8b5d362b 불변, 새제품0이다. 개발1G3·개발2효과평가·개발4제공기록화면은정확SETUP/새봉인뒤CORE-GO를실제로받아담당구현을잇는다. P01B050 후행대조154/154·corpus119/119·보존118≠적격118/대상18·690쪽이다. 새실모델0/동일소진Vertex6/3072·무료크레딧전용/비용null·사용자준비0이며 아래는당시기록이다.
