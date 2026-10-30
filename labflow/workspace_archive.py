@@ -657,16 +657,124 @@ def _copy_metadata(source, destination, digest):
     _copy_verified(source, destination, value, digest)
 
 
+def _physical_boundary(path):
+    """Expand existing 8.3/case aliases without following a reparse leaf."""
+    try:
+        leaf_reparse = _reparse(os.lstat(_extended(path)))
+    except FileNotFoundError:
+        leaf_reparse = False
+    probe = path.parent if leaf_reparse else path
+    _no_reparse(probe, missing=True)
+    result = os.path.realpath(_extended(probe))
+    if os.name == "nt" and result.startswith("\\\\?\\"):
+        result = result[4:]
+    result = _absolute(result)
+    return result / path.name if leaf_reparse else result
+
+
+def _output_boundaries(output, *, allow_roots, protected_roots, source_mappings, archive_roots):
+    if archive_roots is not None and _key(output) not in {_key(_absolute(path)) for path in archive_roots}:
+        _fail("archive_destination_not_pinned")
+    _no_reparse(output, missing=True)
+    owned = [output / name for name in ("objects", "manifests", "receipts", "evidence")]
+    allowed = [_absolute(path) for path in allow_roots]
+    protected = [_absolute(path) for path in protected_roots]
+    mapped = [_absolute(value.get("to")) for value in source_mappings]
+    for physical in (False, True):
+        transform = _physical_boundary if physical else lambda value: value
+        destination = transform(output)
+        sources = [transform(path) for path in allowed]
+        boundaries = sources + [transform(path) for path in protected + mapped]
+        if any(_inside(destination, source) or _inside(source, destination) for source in sources):
+            _fail("archive_source_overlap")
+        if any(_inside(destination, source) for source in boundaries):
+            _fail("archive_protected_overlap")
+        for namespace in owned:
+            target = transform(namespace)
+            if any(_inside(target, source) or _inside(source, target) for source in boundaries):
+                _fail("archive_namespace_overlap")
+    for namespace in owned:
+        _no_reparse(namespace, missing=True)
+
+
+def _directory_state(plan, relative, *, initial=None):
+    actual = plan.actual(relative)
+    _no_reparse(actual)
+    before = _snapshot(actual)
+    _check_info(before, plan.directories[relative], directory=True,
+                mtime_exception=relative in plan.mtime_exceptions)
+    if initial is not None and _signature(before) != initial:
+        _fail("directory_changed_after_initial_observation")
+    logical = plan.root.joinpath(*validate_relative_path(relative, root=True))
+    removed = {mapping["from"].name for mapping in plan.mappings
+               if _key(mapping["from"].parent) == _key(logical)
+               and _key(mapping["to"]) != _key(actual / mapping["from"].name)}
+    with os.scandir(_extended(actual)) as items:
+        present = {entry.name for entry in items}
+    if present != plan.children.get(relative, set()) - removed:
+        _fail("current_directory_coverage")
+    if _signature(before) != _signature(_snapshot(actual)):
+        _fail("directory_unstable")
+    return before
+
+
+def _final_source_barrier(plan, base_manifest, output, directory_fingerprints):
+    """Rehash all baseline bytes, then recheck path/ADS/native fingerprints.
+
+    This is not a filesystem snapshot or a deletion permit. The coordinator
+    must keep cold sources quiescent throughout capture and later disposition.
+    """
+    for relative in plan.directories:
+        _directory_state(plan, relative, initial=directory_fingerprints[relative])
+    files = streams = byte_count = 0
+    for row in _rows(base_manifest, plan.spec["base_sha256"]):
+        if row.get("record") != "entry" or row["kind"] == "reparse":
+            continue
+        relative, actual = row["path"], plan.actual(row["path"])
+        expected_streams = sorted((stream["name"], stream["bytes"]) for stream in plan.streams.get(relative, []))
+        if _named_streams(actual) != expected_streams:
+            _fail("final_ads_coverage")
+        if row["kind"] == "file":
+            verified = _copy_verified(actual, output, row, row["sha256"], reference=True)
+            files += 1
+            byte_count += verified["bytes_verified"]
+        for stream in plan.streams.get(relative, []):
+            source = Path(str(actual) + stream["name"])
+            verified = _copy_verified(source, output, stream["opened_before"], stream["sha256"],
+                                      directory_stream=bool(_snapshot(source)["directory"]), reference=True)
+            streams += 1
+            byte_count += verified["bytes_verified"]
+    # No relocation-mtime exception may hide a change after the first scan.
+    for relative in plan.directories:
+        _directory_state(plan, relative, initial=directory_fingerprints[relative])
+    for row in _rows(base_manifest, plan.spec["base_sha256"]):
+        if row.get("record") != "entry" or row["kind"] == "reparse":
+            continue
+        relative, actual = row["path"], plan.actual(row["path"])
+        if row["kind"] == "file":
+            _no_reparse(actual)
+            _check_info(_snapshot(actual), row)
+        if _named_streams(actual) != sorted((s["name"], s["bytes"]) for s in plan.streams.get(relative, [])):
+            _fail("final_ads_changed")
+        for stream in plan.streams.get(relative, []):
+            path = Path(str(actual) + stream["name"])
+            _no_reparse(path)
+            if _signature(_snapshot(path)) != _signature(stream["opened_before"]):
+                _fail("final_ads_fingerprint")
+    return dict(files=files, ads_streams=streams, bytes_rehashed=byte_count,
+                directories=len(plan.directories), native_id_size_mtime_sha_verified=True)
+
+
 def archive_workspace(spec, archive_root, *, allow_roots, protected_roots=(), source_mappings=(),
-                      native_preserved_roots=(), git_evidence=None, scope_evidence=None):
+                      native_preserved_roots=(), git_evidence=None, scope_evidence=None, archive_roots=None):
     """Copy only one explicit source; returns evidence, never deletion permission."""
+    allow_roots, protected_roots, source_mappings = tuple(allow_roots), tuple(protected_roots), tuple(source_mappings)
+    native_preserved_roots = tuple(native_preserved_roots)
     plan = prepare_workspace(spec, allow_roots=allow_roots, protected_roots=protected_roots,
                              source_mappings=source_mappings, native_preserved_roots=native_preserved_roots)
     output = _absolute(archive_root)
-    actual_sources = [plan.root] + [m["to"] for m in plan.mappings if plan.paths.get(m["from"].relative_to(plan.root).as_posix()) != "reparse"]
-    if any(_inside(output, source) or _inside(source, output) for source in actual_sources):
-        _fail("archive_source_overlap")
-    _no_reparse(output, missing=True)
+    _output_boundaries(output, allow_roots=allow_roots, protected_roots=protected_roots,
+                       source_mappings=source_mappings, archive_roots=archive_roots)
     _mkdir(output)
     manifests = {kind: output / "manifests/sha256" / spec[kind + "_sha256"] for kind in ("base", "ads")}
     run_id = uuid.uuid4().hex
@@ -674,6 +782,7 @@ def archive_workspace(spec, archive_root, *, allow_roots, protected_roots=(), so
     _mkdir(journal.parent)
     distinct, native_refs = set(), 0
     files = ads_count = default_bytes = ads_bytes = native_bytes = 0
+    directory_fingerprints = {}
     receipt = dict(schema="workspace-cas-receipt-v1", root=str(plan.root), run_id=run_id,
                    base_sha256=spec["base_sha256"], ads_sha256=spec["ads_sha256"],
                    deletion_authorized=False, source_deleted=False, source_moved=False,
@@ -702,18 +811,8 @@ def archive_workspace(spec, archive_root, *, allow_roots, protected_roots=(), so
             for relative, expected in plan.directories.items():
                 context = dict(phase="directory", path=relative)
                 actual = plan.actual(relative)
-                _no_reparse(actual)
-                before = _snapshot(actual)
-                _check_info(before, expected, directory=True, mtime_exception=relative in plan.mtime_exceptions)
-                with os.scandir(_extended(actual)) as items:
-                    present = {entry.name for entry in items}
-                wanted = plan.children.get(relative, set())
-                removed = {m["from"].name for m in plan.mappings
-                           if m["from"].parent == plan.root.joinpath(*validate_relative_path(relative, root=True))}
-                if present - wanted or wanted - present - removed:
-                    _fail("current_directory_coverage")
-                if before != _snapshot(actual):
-                    _fail("directory_unstable")
+                before = _directory_state(plan, relative)
+                directory_fingerprints[relative] = _signature(before)
                 write(dict(record="directory", path=relative, actual_path=str(actual), native=before,
                            directory_mtime_exception=relative in plan.mtime_exceptions))
             for row in _rows(manifests["base"], spec["base_sha256"]):
@@ -754,11 +853,16 @@ def archive_workspace(spec, archive_root, *, allow_roots, protected_roots=(), so
                                bytes=stream["bytes"], storage="native-preserved" if reference else "cas", **verification))
                 if _named_streams(actual) != expected_streams:
                     _fail("ads_changed_during_copy")
+            context = dict(phase="final-source-barrier")
+            barrier = _final_source_barrier(plan, manifests["base"], output, directory_fingerprints)
+            if barrier["files"] != files or barrier["ads_streams"] != ads_count or barrier["bytes_rehashed"] != default_bytes + ads_bytes:
+                _fail("final_barrier_counts")
             receipt.update(files_verified=files, ads_streams_verified=ads_count, unique_data_blobs=len(distinct),
                            default_bytes_verified=default_bytes, ads_bytes_verified=ads_bytes,
                            native_reference_bytes=native_bytes,
                            native_reference_count=native_refs, unresolved_reparse=sorted(plan.unknown),
                            managed_development_required=native_refs > 0,
+                           final_source_barrier=barrier, source_atomic_snapshot=False, source_quiescence_required=True,
                            data_complete=not plan.unknown and native_refs == 0,
                            cas_self_contained=not plan.unknown and native_refs == 0,
                            executed=True, journal_relative=str(journal.relative_to(output)).replace("\\", "/"))

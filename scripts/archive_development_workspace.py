@@ -35,6 +35,9 @@ def main():
         if args.execute and args.scope_sha256 is None:
             raise ArchiveError("workspace_archive_scope_pin_required")
         scope = load_archive_document(args.scope, expected_sha256=args.scope_sha256)
+        archive_root = scope.get("archive_root")
+        if archive_root is None or str(Path(archive_root)).casefold() != str(args.archive).casefold():
+            raise ArchiveError("workspace_archive_archive_destination_not_pinned")
         sources = scope["sources"]
         selected = [row for row in sources if str(Path(row["root"])).casefold() == str(Path(args.root)).casefold()]
         if len(selected) != 1 or len({str(Path(row["root"])).casefold() for row in sources}) != len(sources):
@@ -46,7 +49,8 @@ def main():
         if args.execute:
             result = archive_workspace(selected[0], args.archive, **settings,
                                        git_evidence=load_archive_document(args.git_evidence) if args.git_evidence else None,
-                                       scope_evidence=dict(path=str(args.scope.absolute()), sha256=args.scope_sha256))
+                                       scope_evidence=dict(path=str(args.scope.absolute()), sha256=args.scope_sha256),
+                                       archive_roots=[archive_root])
         else:
             result = prepare_workspace(selected[0], **settings).summary()
         print(json.dumps(result, ensure_ascii=True, sort_keys=True))
