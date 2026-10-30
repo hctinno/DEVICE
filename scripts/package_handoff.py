@@ -5,9 +5,11 @@ from pathlib import Path
 import subprocess
 import sys
 from zipfile import ZIP_DEFLATED, ZipFile
+from uuid import uuid4
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 FILES = (
     ".gitignore",
     "AGENTS.md",
@@ -28,8 +30,9 @@ def main() -> int:
         if not (ROOT / name).is_file():
             raise FileNotFoundError(name)
 
-    destination = ROOT / "dist"
-    destination.mkdir(exist_ok=True)
+    from labflow.development_paths import load_layout
+    destination = load_layout().output('handoff/' + uuid4().hex)
+    destination.mkdir(parents=True, exist_ok=False)
     archive_path = destination / "dgm-autolab-cloud-handoff.zip"
     with ZipFile(archive_path, "w", compression=ZIP_DEFLATED) as archive:
         for name in FILES:

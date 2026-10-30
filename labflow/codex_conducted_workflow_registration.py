@@ -7,10 +7,12 @@ import sys
 
 from . import control_packet_prepare as _native
 from . import codex_registered_conducted_workflow_host as _host
+from . import intake_current_facts_plan as _current
 from .intake_plan_virtual_execution import _snapshot
 from .intake_conducted_twin_plan import build_conducted_twin_plan_input
 from .intake_jobs import prepare_registered_synthetic_context
 from .store import Store,canonical
+from .virtual_fleet.operator_response_schema import is_current_response_schema_bytes
 
 __all__=['preflight_conducted_workflow_inputs','prepare_registered_conducted_workflow','main']
 _PREFIX='codex_conducted_workflow_registration_'
@@ -46,15 +48,24 @@ def _text(value):
     if type(value) is not str or not value.strip() or len(value)>2048:_fail('delegation_invalid')
 
 
-def preflight_conducted_workflow_inputs(context,analysis,plan_input,*,quantity,allowed_tools,measurement_ref):
+def preflight_conducted_workflow_inputs(context,analysis,plan_input,*,quantity,allowed_tools,measurement_ref,measurement_selection_policy=None):
     result=dict(schema_version=1,kind='conducted_workflow_input_preflight',status='invalid',pins=None,gaps=[],failure=None,execution_authority=False)
     try:
-        context,analysis,plan,quantity,tools,ref=_snapshot([context,analysis,plan_input,quantity,allowed_tools,measurement_ref])
+        if measurement_selection_policy is None:
+            context,analysis,plan,quantity,tools,ref=_snapshot([context,analysis,plan_input,quantity,allowed_tools,measurement_ref])
+        else:
+            context,analysis,plan,quantity,tools,ref,policy=_snapshot([context,analysis,plan_input,quantity,allowed_tools,measurement_ref,measurement_selection_policy])
         if type(plan) is not dict or plan.get('status')!='ready_for_simulation':
             result['gaps']=plan.get('gaps',[]) if type(plan) is dict else [];_fail('plan_not_ready')
         _same(quantity,dict(metric='on',reference_plane='sensor_input',loss_compensation_applied=False,loss_compensation_sign=1))
         _same(tools,_host._TOOLS)
-        if type(ref) is not str or not 0<len(ref)<=200:_fail('reference_invalid')
+        if measurement_selection_policy is None:
+            if type(ref) is not str or not 0<len(ref)<=200:_fail('reference_invalid')
+        else:
+            if ref is not None:_fail('reference_invalid')
+            if (type(policy) is not dict or set(policy)!= {'schema_version','kind'}
+                    or type(policy['schema_version']) is not int or policy['schema_version']!=1
+                    or policy['kind']!='unique_same_run_sensor_acquisition'):_fail('input_invalid')
         method={key:plan['plan'][key] for key in ('method_id','method_version','metric','reference_plane')}
         _same(method,dict(method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
         rebuilt=build_conducted_twin_plan_input(context,analysis,expected_revision=context['revision'],expected_context_sha256=_H(_C(context)),
@@ -75,11 +86,40 @@ class _IO:
         self.backend=_native._WindowsIO();self.parent=parent
         self.files={};self.reads=[];self.close_errors=[];self.dir_attempted=set();self.output_files=0;self.output_bytes=0
         self.claimed=False;self.published=False;self.publication_attempted=False
-        try:self.tree=_native._Tree(parent,self.backend)
+        try:
+            self.tree=_native._Tree(parent,self.backend)
+            self.parent_binding=self.directory_binding(parent)
         except BaseException:
             try:self.close_dirs()
             except BaseException:pass
             raise
+    def directory_binding(self,path):
+        # Keep the caller's fixed lexical root. MSIX may report a different
+        # final path; it must still identify the directory pinned by _Tree.
+        self.tree.directory(path)
+        resolved=_native._local_path(path.resolve(strict=True))
+        _,lexical=_host._native_host._path(path,directory=True)
+        _,physical=_host._native_host._path(resolved,directory=True)
+        identity=_native._identity(self.backend.info(self.backend.directories[path],directory=True))
+        if _native._identity(lexical)!=identity or _native._identity(physical)!=identity:_fail('path_invalid')
+        if path!=self.parent:
+            token=self.adopt(self.backend._relative(self.backend.directories[path.parent],path.name,directory=True))
+            primary=None
+            try:
+                if _native._identity(self.backend.info(token['fd'],directory=True))!=identity:_fail('path_invalid')
+            except BaseException as error:primary=error;raise
+            finally:
+                token['attempted']=True
+                try:_close_directory(token['fd'])
+                except BaseException as error:
+                    self.close_errors.append(error)
+                    if primary is None:raise
+        return resolved,identity
+    def namespace(self,path,target=None):
+        if path.parent!=self.parent or self.directory_binding(self.parent)!=self.parent_binding:_fail('path_invalid')
+        resolved,_=self.directory_binding(path)
+        if resolved!=self.parent_binding[0]/path.name:_fail('path_invalid')
+        if target is not None and target.resolve(strict=False)!=self.parent_binding[0]/target.name:_fail('path_invalid')
     def adopt(self,fd):
         token=dict(fd=fd,attempted=False);self.files[fd]=token;return token
     def close_file(self,token):
@@ -129,7 +169,7 @@ class _IO:
         fd=self.backend._relative(self.backend.directories[self.parent],stage.name,directory=True,create=True,access=0x1100A1,share=3)
         self.backend.directories[stage]=fd;self.backend.held.append(fd);self.claimed=True
         self.tree.directory(stage)
-        if stage.resolve(strict=True)!=stage:_fail('path_invalid')
+        self.namespace(stage)
     def database(self,path,baseline,permit,config,anchor):
         self.reserve(2,2097152)  # New DB plus its bounded transient rollback journal.
         fd=self.backend._relative(self.backend.directories[path.parent],path.name,directory=False,create=True,access=0xC0100000,share=3)
@@ -169,7 +209,7 @@ class _IO:
         if first is not None:raise first
     def publish(self,stage,target):
         if stage.parent!=self.parent or target.parent!=self.parent or stage.name!=_STAGE or target.name!=_TARGET:_fail('path_invalid')
-        if stage.resolve(strict=True)!=stage or target.resolve(strict=False)!=target:_fail('path_invalid')
+        self.namespace(stage,target)
         if _native._destination_exists(self.tree,target):_fail('destination_exists')
         # Windows directory rename requires descendant directory handles closed.
         first=None
@@ -190,6 +230,7 @@ class _IO:
             if old.is_relative_to(stage):self.backend.directories[target/old.relative_to(stage)]=self.backend.directories.pop(old)
         for old in list(self.tree.directories):
             if old.is_relative_to(stage):self.tree.directories[target/old.relative_to(stage)]=self.tree.directories.pop(old)
+        self.namespace(target)
     def close_dirs(self):
         first=None
         for fd in reversed(self.backend.held):
@@ -218,6 +259,65 @@ def _close_sql(con):
     try:con.execute('SELECT 1')
     except sqlite3.ProgrammingError:return
     _fail('sql_close_uncertain')
+
+
+def _completed_scope(store,selection,original):
+    """A finite read-only completed/same-source scope, not an external lease."""
+    if type(store) is not Store:_fail('binding_mismatch')
+    con=None;primary=None
+    try:
+        con=sqlite3.connect((store.root/'lab.sqlite3').as_uri()+'?mode=ro',uri=True,timeout=0)
+        con.row_factory=sqlite3.Row
+        con.execute('PRAGMA query_only=ON');con.execute('BEGIN')
+        row=con.execute('''SELECT i.source_id,i.bundle,i.revision,i.status,i.delegated,i.deferred,i.analysis_json,
+            s.root AS source_root,s.synthetic AS source_synthetic,r.fingerprint,r.files_json,r.synthetic,
+            j.job_id,j.intake_id AS job_intake_id,j.revision AS job_revision,j.state,j.result_json,
+            j.worker_id,j.token,j.lease_until,j.attempt,j.error_code
+            FROM intakes i JOIN intake_sources s ON s.source_id=i.source_id
+            JOIN intake_revisions r ON r.intake_id=i.intake_id AND r.revision=i.revision
+            JOIN intake_jobs j ON j.intake_id=i.intake_id AND j.revision=i.revision
+            WHERE i.intake_id=?''',(selection['intake_id'],)).fetchone()
+        if row is None:_fail('binding_mismatch')
+        scope=dict(row)
+        if (row['source_id']!=selection['source_id'] or row['revision']!=selection['revision']
+                or row['job_id']!=selection['job_id'] or row['job_intake_id']!=selection['intake_id']
+                or row['job_revision']!=selection['revision'] or row['state']!='completed'
+                or row['synthetic']!=1 or row['source_synthetic']!=1
+                or row['fingerprint']!=selection['revision_fingerprint']):_fail('binding_mismatch')
+        if con.execute("SELECT 1 FROM intake_jobs WHERE state IN ('queued','running') LIMIT 1").fetchone() is not None:
+            _fail('store_not_dedicated')
+        source,_=_host._native_host._path(row['source_root'],directory=True)
+        bundle=Path(row['bundle'])
+        if bundle.is_absolute() or '..' in bundle.parts:_fail('binding_mismatch')
+        actual,_=_host._native_host._path(source/bundle,directory=True)
+        if actual!=original:_fail('binding_mismatch')
+        for key,cap in [('files_json',262144),('analysis_json',8388608),('result_json',8388608)]:
+            if type(row[key]) is not str or len(row[key].encode('utf-8'))>cap:_fail('input_limit')
+        _same(_json(row['files_json'].encode('utf-8')),selection['files'])
+        return scope
+    except BaseException as error:primary=error;raise
+    finally:
+        if con is not None:
+            try:_close_sql(con)
+            except BaseException:
+                if primary is None:raise
+
+
+def _completed_snapshot(store,selection,original,analysis,plan):
+    before=_completed_scope(store,selection,original)
+    # Only the explicit method selects a current read. Supplied settings, basis
+    # and a model-prompt context hash are never injected into that read.
+    method={key:plan['plan'][key] for key in ('method_id','method_version','metric','reference_plane')}
+    current=_current.read_current_conducted_plan_from_facts(store.root,selection['intake_id'],
+        method=method,expected_revision=selection['revision'],expected_context_sha256=None)
+    _keys(current,'context analysis facts_plan')
+    context=current['context'];facts=current['facts_plan']
+    if (context['job_id']!=selection['job_id'] or context['intake_id']!=selection['intake_id']
+            or context['revision']!=selection['revision'] or context['synthetic'] is not True):_fail('binding_mismatch')
+    _same(current['analysis'],analysis);_same(facts['plan_input'],plan)
+    if facts['status']!='ready_for_simulation' or plan['status']!='ready_for_simulation':_fail('plan_not_ready')
+    _same(before,_completed_scope(store,selection,original))
+    return current,before
 
 
 def _authority(value):
@@ -258,8 +358,15 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         result['operator_source']=_pin(source_raw)
         meta_raw=io.read(operator/'prepared-inputs-v1.json',65536)
         if _H(meta_raw)!=source['prepared_manifest_sha256']:_fail('binding_mismatch')
-        meta=_json(meta_raw);_keys(meta,'schema_version kind scenario_id requested_model journal_id permit_id registered_input_root store_root executable expires_at quantity allowed_tools measurement_ref files')
-        if type(meta['schema_version']) is not int or meta['schema_version']!=1 or meta['kind']!='codex_conducted_workflow_prepared_data':_fail('data_invalid')
+        meta=_json(meta_raw)
+        fields='schema_version kind scenario_id requested_model journal_id permit_id registered_input_root store_root executable expires_at quantity allowed_tools measurement_ref files'
+        if type(meta) is dict and type(meta.get('schema_version')) is int:
+            if meta['schema_version'] in (2,3):fields+=' measurement_selection_policy'
+            if meta['schema_version']==3:fields+=' context_scope'
+        _keys(meta,fields)
+        if type(meta['schema_version']) is not int or meta['schema_version'] not in (1,2,3) or meta['kind']!='codex_conducted_workflow_prepared_data':_fail('data_invalid')
+        if meta['schema_version'] in (2,3) and (meta['measurement_ref'] is not None or meta['measurement_selection_policy'] is None):_fail('data_invalid')
+        if meta['schema_version']==3 and meta['context_scope']!='completed_current_provided':_fail('data_invalid')
         _same((meta['scenario_id'],meta['requested_model']),(scenario_id,requested_model))
         for key in ('journal_id','permit_id'):_host._native_host._id(meta[key])
         _native._valid_segment(meta['permit_id'])
@@ -277,7 +384,7 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         analysis=_json(rawfiles['analysis.json']);plan=_json(rawfiles['plan-input.json'])
         if _C(analysis)!=rawfiles['analysis.json'] or _C(plan)!=rawfiles['plan-input.json']:_fail('canonical_required')
         schema=rawfiles['response-schema.json']
-        if len(schema)!=3052 or _H(schema)!=_host._SCHEMA_SHA:_fail('unsupported_schema')
+        if not is_current_response_schema_bytes(schema):_fail('unsupported_schema')
         registration=_json(rawfiles['registered-intake-v1.json'])
         _keys(registration,'schema_version kind scenario_id synthetic registered_intake')
         if (type(registration['schema_version']) is not int or registration['schema_version']!=1
@@ -286,12 +393,23 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         selection=registration['registered_intake']
         if type(selection['files']) is not list or len(selection['files'])>192 or sum(row['bytes'] for row in selection['files'])>33554432:_fail('input_limit')
         check_config=dict(registration_sha256=_H(rawfiles['registered-intake-v1.json']),registered_input_root=str(original))
-        # Genuine G3 verifies the Store's synthetic registration before reading
-        # the original filesystem folder, rather than trusting manifest.synthetic.
-        store=Store.open_existing(str(state));_host._native_host._dedicated(store,selection['job_id'])
-        context=prepare_registered_synthetic_context(store,selection,producer_name=analysis['producer']['name'])
-        _host._native_host._dedicated(store,selection['job_id'])
-        preflight=preflight_conducted_workflow_inputs(context,analysis,plan,quantity=meta['quantity'],allowed_tools=meta['allowed_tools'],measurement_ref=meta['measurement_ref'])
+        # Legacy queued G3 and v3 completed-current validation remain separate;
+        # neither accepts manifest.synthetic as Store provenance by itself.
+        completed_scope=None
+        if meta['schema_version']==3:
+            _host._native_host._registration(operator/'prepared-data',check_config,scenario_id)
+            if any(Path(row['path']).suffix.lower() not in ('.txt','.pdf') for row in selection['files']):_fail('unsupported_schema')
+        store=Store.open_existing(str(state))
+        if meta['schema_version']==3:
+            current,completed_scope=_completed_snapshot(store,selection,original,analysis,plan)
+            context=current['context']
+        else:
+            _host._native_host._dedicated(store,selection['job_id'])
+            context=prepare_registered_synthetic_context(store,selection,producer_name=analysis['producer']['name'])
+            _host._native_host._dedicated(store,selection['job_id'])
+        selection_options={}
+        if meta['schema_version'] in (2,3):selection_options['measurement_selection_policy']=meta['measurement_selection_policy']
+        preflight=preflight_conducted_workflow_inputs(context,analysis,plan,quantity=meta['quantity'],allowed_tools=meta['allowed_tools'],measurement_ref=meta['measurement_ref'],**selection_options)
         if preflight['status']!='validated':_fail('preflight_rejected')
         closing=store;store=None;closing.close()
         _host._native_host._registration(operator/'prepared-data',check_config,scenario_id)
@@ -302,6 +420,8 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         workflow=dict(schema_version=1,kind='codex_registered_conducted_workflow',scenario_id=scenario_id,context_sha256=preflight['pins']['context_sha256'],
             analysis_sha256=_H(rawfiles['analysis.json']),plan_input_sha256=_H(rawfiles['plan-input.json']),source_settings=plan['plan']['source_settings'],
             quantity=meta['quantity'],allowed_tools=meta['allowed_tools'],measurement_ref=meta['measurement_ref'],catalog_sha256=_H(rawfiles['catalog.json']),schema_sha256=_H(schema))
+        if meta['schema_version'] in (2,3):workflow.update(schema_version=meta['schema_version'],measurement_selection_policy=meta['measurement_selection_policy'])
+        if meta['schema_version']==3:workflow['context_scope']=meta['context_scope']
         config=dict(schema_version=1,kind='codex_registered_conducted_workflow_control',anchor_sha256=_H(_C(anchor)),journal_id=meta['journal_id'],permit_id=meta['permit_id'],
             registration_sha256=_H(rawfiles['registered-intake-v1.json']),workflow_sha256=_H(_C(workflow)),registered_input_root=str(original),store_root=str(state),executable=str(executable))
         baseline=dict(schema_version=1,kind='codex_conducted_workflow_continuation_baseline',journal_id=meta['journal_id'],anchor_sha256=config['anchor_sha256'],inherited_history=source['inherited_history'])
@@ -315,7 +435,16 @@ def prepare_registered_conducted_workflow(*,scenario_id,requested_model):
         result['phase']='sql';filepins['workflow-continuation.sqlite3']=io.database(stage/'workflow-continuation.sqlite3',baseline,permit,config,anchor)
         result['phase']='current'
         owned=dict(store=None)
-        try:_host._prepare(stage,config,scenario_id,owned)
+        try:
+            prepared=_host._prepare(stage,config,scenario_id,owned)
+            if meta['schema_version']==3:
+                if type(prepared) is not tuple or len(prepared)!=5:_fail('binding_mismatch')
+                if type(owned['store']) is not Store or owned['store'].root!=state:_fail('binding_mismatch')
+                checked,after=_completed_snapshot(owned['store'],selection,original,analysis,plan)
+                _same(completed_scope,after)
+                expected=(workflow,checked['context'],checked['analysis'],checked['facts_plan']['plan_input'])
+                _same(prepared[:4],expected)
+                if type(prepared[4]) is not bytes or prepared[4]!=schema:_fail('binding_mismatch')
         except BaseException:
             store=owned['store'];raise
         closing=owned['store'];closing.close()

@@ -118,6 +118,146 @@ class ReadModelError(Exception):
 
 
 
+_CURRENT_FACTS_PREFIX = 'intake_current_facts_plan_view_'
+_CURRENT_FACTS_BYTES = 8 * 1024 * 1024
+_CURRENT_FACTS_VIEW_BYTES = 9 * 1024 * 1024
+_CURRENT_FACTS_VERIFICATION = dict(scope='two_readonly_current_snapshots', current_completion='not_assessed',
+    permanent_current_approval=False, method_approval='not_assessed', regulatory='not_assessed',
+    physical_verified=False, execution_authority=False, rerun_authority=False, business_writes=False)
+
+
+def _current_facts_need(condition, code='current_invalid'):
+    if not condition:
+        raise ReadModelError(_CURRENT_FACTS_PREFIX + code)
+
+
+def _current_facts_json(value, cap):
+    """Native, finite, strict UTF-8 JSON; no truncation or numeric coercion."""
+    nodes = 0
+    def visit(item, depth=0):
+        nonlocal nodes
+        nodes += 1
+        _current_facts_need(nodes <= 400000 and depth <= 48, 'input_limit')
+        kind = type(item)
+        if kind is dict:
+            for key, child in item.items():
+                _current_facts_need(type(key) is str)
+                visit(key, depth + 1); visit(child, depth + 1)
+        elif kind is list:
+            for child in item: visit(child, depth + 1)
+        elif kind is str: item.encode('utf-8', 'strict')
+        else: _current_facts_need(item is None or kind in (bool, int) or kind is float and math.isfinite(item))
+    try:
+        visit(value)
+        raw = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'),
+                         allow_nan=False).encode('utf-8', 'strict')
+    except (ValueError, TypeError, UnicodeError, RecursionError, OverflowError):
+        raise ReadModelError(_CURRENT_FACTS_PREFIX + 'current_invalid') from None
+    _current_facts_need(len(raw) <= cap, 'input_limit')
+    return raw
+
+
+def _current_facts_keys(value, names):
+    _current_facts_need(type(value) is dict and set(value) == set(names.split()))
+
+
+def _current_facts_selection(intake_id, selection):
+    _current_facts_need(type(intake_id) is str and bool(_IDENTIFIER.fullmatch(intake_id)), 'invalid_request')
+    _current_facts_need(selection is not None, 'not_provided')
+    _current_facts_need(type(selection) is dict and set(selection) ==
+        set('intake_id revision source_settings basis method'.split()), 'selection_invalid')
+    _current_facts_need(selection['intake_id'] == intake_id, 'other_intake')
+    method = selection['method']
+    _current_facts_need(type(selection['revision']) is int and selection['revision'] > 0
+        and type(method) is dict and set(method) == set('method_id method_version metric reference_plane'.split())
+        and method['method_id'] == 'conducted_synthetic' and type(method['method_version']) is int
+        and method['method_version'] == 1 and method['metric'] in ('on', 'time', 'peak')
+        and method['reference_plane'] == 'source_output', 'selection_invalid')
+    _current_facts_json(selection, 65536)
+    return selection['revision'], method.copy()
+
+
+def _current_facts_pins(value, intake_id):
+    from .intake_conducted_twin_plan import _PUBLIC
+    _current_facts_keys(value, 'context analysis')
+    context, analysis = value['context'], value['analysis']
+    _current_facts_need(type(context) is dict and set(context) == _PUBLIC
+        and context['intake_id'] == intake_id and type(context['revision']) is int
+        and context['revision'] > 0 and context['synthetic'] is True
+        and type(context['job_id']) is str and bool(context['job_id'])
+        and type(context['analysis_context_id']) is str and bool(_HASH.fullmatch(context['analysis_context_id']))
+        and type(analysis) is dict)
+    return {key + '_sha256': hashlib.sha256(_current_facts_json(item, _CURRENT_FACTS_BYTES)).hexdigest()
+            for key, item in [('context', context), ('analysis', analysis)]}
+
+
+def _current_facts_snapshot(value, intake_id, revision, method):
+    _current_facts_json(value, _CURRENT_FACTS_BYTES)
+    _current_facts_keys(value, 'context analysis facts_plan')
+    pins = _current_facts_pins({key: value[key] for key in ('context', 'analysis')}, intake_id)
+    context, facts = value['context'], value['facts_plan']
+    _current_facts_need(context['revision'] == revision, 'revision_changed')
+    _current_facts_keys(facts, 'schema_version kind status plan_input assembly_gaps questions')
+    _current_facts_need(type(facts['schema_version']) is int and facts['schema_version'] == 1
+        and facts['kind'] == 'intake_facts_to_conducted_plan' and facts['status'] in ('ready_for_simulation', 'blocked'))
+    plan_input = facts['plan_input']
+    _current_facts_keys(plan_input, 'schema_version kind status binding intake plan gaps verification')
+    _current_facts_need(type(plan_input['schema_version']) is int and plan_input['schema_version'] == 1
+        and plan_input['kind'] == 'intake_conducted_twin_plan_input' and plan_input['status'] == facts['status'])
+    binding, plan = plan_input['binding'], plan_input['plan']
+    _current_facts_keys(binding, 'intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256')
+    expected = dict(intake_id=intake_id, revision=revision, analysis_context_id=context['analysis_context_id'],
+                    **pins, plan_sha256=hashlib.sha256(_current_facts_json(plan, _CURRENT_FACTS_BYTES)).hexdigest())
+    _current_facts_need(type(binding['revision']) is int and binding == expected)
+    _current_facts_keys(plan, 'schema_version method_id method_version metric reference_plane source_settings basis_refs numeric_limit_dbm uncertainty_db assessment')
+    _current_facts_need(type(plan['schema_version']) is int and plan['schema_version'] == 1
+        and type(plan['method_version']) is int and all(plan[key] == item for key, item in method.items())
+        and plan['numeric_limit_dbm'] is None and plan['uncertainty_db'] is None and plan['assessment'] == 'not_assessed')
+    fields = 'frequency_hz power_dbm bandwidth_hz duty_cycle modulation crest_factor_db'
+    _current_facts_keys(plan['source_settings'], fields); _current_facts_keys(plan['basis_refs'], fields)
+    _current_facts_keys(plan_input['intake'], 'facts source_facts missing_fields follow_up_missing_fields questions')
+    _current_facts_need(type(plan_input['intake']['facts']) is dict and all(type(plan_input['intake'][key]) is list
+        for key in ('source_facts', 'missing_fields', 'follow_up_missing_fields', 'questions')))
+    for gaps in (plan_input['gaps'], facts['assembly_gaps']):
+        _current_facts_need(type(gaps) is list)
+        for gap in gaps:
+            _current_facts_keys(gap, 'code field provided blocking')
+            _current_facts_need(type(gap['code']) is str and type(gap['field']) is str and type(gap['blocking']) is bool)
+    _current_facts_need(type(facts['questions']) is list)
+    for question in facts['questions']:
+        _current_facts_keys(question, 'key field reason message')
+        _current_facts_need(all(type(item) is str and bool(item.strip()) for item in question.values()))
+    verification = dict(evidence='validated_in_memory' if facts['status'] == 'ready_for_simulation' else 'not_validated',
+        current_version='caller_snapshot_only', source_bytes='not_reopened', regulatory='not_assessed',
+        measurement_prediction='not_assessed', execution_authority=False)
+    _current_facts_need(plan_input['verification'] == verification and
+        type(plan_input['verification'].get('execution_authority')) is bool)
+    _current_facts_need((facts['status'] == 'ready_for_simulation') ==
+        (not any(gap['blocking'] for gap in plan_input['gaps'])))
+    return pins
+
+
+def _current_facts_response(value, intake_id, selection):
+    raw = _current_facts_json(value, _CURRENT_FACTS_VIEW_BYTES)
+    revision, method = _current_facts_selection(intake_id, selection)
+    _current_facts_keys(value, 'schema_version kind status current recheck reasons verification')
+    _current_facts_need(type(value['schema_version']) is int and value['schema_version'] == 1
+        and value['kind'] == 'intake_current_facts_plan_view')
+    before = _current_facts_snapshot(value['current'], intake_id, revision, method)
+    recheck = value['recheck']; _current_facts_keys(recheck, 'status before after')
+    for key in ('before', 'after'):
+        _current_facts_keys(recheck[key], 'context_sha256 analysis_sha256')
+        _current_facts_need(all(type(pin) is str and bool(_HASH.fullmatch(pin)) for pin in recheck[key].values()))
+    changed = recheck['before'] != recheck['after']
+    _current_facts_need(recheck['before'] == before and recheck['status'] == ('changed' if changed else 'unchanged')
+        and value['status'] == ('stale' if changed else 'available')
+        and value['reasons'] == (['current_changed'] if changed else []))
+    _current_facts_keys(value['verification'], ' '.join(_CURRENT_FACTS_VERIFICATION))
+    _current_facts_need(all(type(value['verification'][key]) is type(expected) and value['verification'][key] == expected
+        for key, expected in _CURRENT_FACTS_VERIFICATION.items()))
+    return raw
+
+
 _RESULT_INVALID = set('acquisition_invalid evidence_context_missing input_limit invalid_evidence journal_header_invalid journal_integrity_invalid journal_invalid journal_limit journal_state_invalid measurement_invalid measurement_path_conflict measurement_stale native_input_invalid observation_clock_regression observation_invalid output_limit plan_basis_invalid plan_binding_invalid plan_binding_mismatch plan_hash_mismatch plan_intake_invalid plan_invalid plan_limit plan_method_invalid plan_verification_invalid receipt_advance_clock receipt_identity_or_clock receipt_invalid report_invalid run_binding_mismatch setup_advance_invalid setup_clock_mismatch setup_duplicate_request setup_hash_mismatch setup_identity_invalid setup_invalid setup_limit setup_receipt_invalid source_metadata_mismatch source_settings_mismatch topology_hash_mismatch topology_invalid'.split())
 _RESULT_INCOMPLETE = set('correction_overflow execution_incomplete journal_incomplete measurement_missing measurement_not_referenced measurement_reference_missing path_ambiguous path_configuration_invalid path_configuration_missing path_selection_missing plan_blocked post_setup_configuration setup_failed setup_missing setup_partial unit_conversion_failed unsupported_path_device'.split())
 _RESULT_GAP_ONLY = set('correction_basis_invalid correction_basis_missing metric_mismatch'.split())
@@ -435,6 +575,33 @@ class IntakeReadModel:
         return dict(schema_version=1,kind='intake_conducted_plan_preview',intake_id=intake_id,revision=context['revision'],
             context_sha256=context_sha,context_scope='current_provided_context',selection_status=status,plan_input=report)
 
+
+    def conducted_current_facts_view(self, intake_id, selection=None):
+        """Original facts and an actual second readonly snapshot, without artifacts.
+
+        None/foreign selections do not reach the parent. The HTTP factory owns
+        its serialization lock; this method grants no writer or future lease.
+        """
+        revision, method = _current_facts_selection(intake_id, selection)
+        from .intake_current_facts_plan import read_current_conducted_plan_from_facts
+        current = read_current_conducted_plan_from_facts(self.database.parent, intake_id,
+            method=method, expected_revision=revision, expected_context_sha256=None)
+        before = _current_facts_snapshot(current, intake_id, revision, method)
+        try:
+            post = self.current_conducted_plan_context(intake_id)
+            _current_facts_json(post, _CURRENT_FACTS_BYTES)
+            after = _current_facts_pins(post, intake_id)
+        except (MemoryError, KeyboardInterrupt, SystemExit, GeneratorExit):
+            raise
+        except Exception:
+            raise ReadModelError(_CURRENT_FACTS_PREFIX + 'recheck_failed') from None
+        changed = before != after
+        value = dict(schema_version=1, kind='intake_current_facts_plan_view',
+            status='stale' if changed else 'available', current=current,
+            recheck=dict(status='changed' if changed else 'unchanged', before=before, after=after),
+            reasons=['current_changed'] if changed else [], verification=_CURRENT_FACTS_VERIFICATION.copy())
+        _current_facts_response(value, intake_id, selection)
+        return value
 
     def conducted_result_view(self, intake_id, snapshot=None):
         if snapshot is None: raise ReadModelError('intake_conducted_result_missing')

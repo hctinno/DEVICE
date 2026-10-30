@@ -8,7 +8,7 @@
 
 ## 표시 범위
 
-업무 흐름 6단계의 **저장 사본 확인** 카드는 현재 계획 관측과 compound 응답을 함께 대조한다. 앞에는 **저장 사본 3파일 일치 / 현재 관계 확인·확인 불가 / 측정 무효·미완료·기록 관측 / 판정 미평가**를 표시한다. 실제 AI 호출의 unknown과 원 측정·보정 값·단위·기준면도 함께 표시하며 다시 계산하지 않는다. 현재 접수·버전·snapshot generation, 계획 C1, binding 6항목, 읽기 후 current context/analysis 재확인이 모두 일치할 때만 현재 관계를 확인한 관측으로 표시한다. 이 관계는 관측 당시의 대조이며 계속 현재임을 보장하는 승인이나 lease가 아니다.
+업무 흐름 6단계의 **저장 사본 확인** 카드는 현재 계획 관측과 compound 응답을 함께 대조한다. 앞에는 **저장 사본 3파일 일치 / 현재 의뢰 연결 확인 / 판정 미수행**을 짧게 표시한다. 연결이 불가하면 확인 불가·이전 관측·미확인을 그대로 표시한다. 측정 무효·미완료, 실제 AI 호출의 unknown과 원 측정·보정 값·단위·기준면도 보존하며 다시 계산하지 않는다. 현재 접수·버전·snapshot generation, 계획 C1, binding 6항목, 읽기 후 current context/analysis 재확인이 모두 일치할 때만 현재 관계를 확인한 관측으로 표시한다. 이 관계는 관측 당시의 대조이며 계속 현재임을 보장하는 승인이나 lease가 아니다.
 
 binding은 `intake_id`, `revision`, `analysis_context_id`, `context_sha256`, `analysis_sha256`, `plan_sha256`이다. 원 compound의 현재 context·analysis·facts-plan은 변환하거나 보충하지 않는다. 브라우저는 기존 현재 계획 관측의 C1과 binding을 사용하며 산출물의 binding으로 현재 기준을 만들어내지 않는다.
 
@@ -77,3 +77,77 @@ typed UI 조건은 reader 오류 뒤 이전 관측 보존, 알 수 없는 key, s
 저장소 루트에서 `node --test --test-name-pattern="artifact storage view|unified provided flow|result readonly|conducted preview" frontend/intake_flow_model.test.mjs`로 해당 검사만 실행할 수 있다. 문서 변경 후 `python scripts/check_artifacts.py`를 수행한다. 이 검사는 문서 무결성 검사이며 계측 정확도·시험소 기능·기관 적합성의 증거가 아니다.
 
 현재 화면의 원 workflow 설명은 [기존 fixture 사용법](intake_fixture_check_usage.md), 프로젝트 범위와 남은 작업은 [PLAN.md](../../PLAN.md), 설계 기준은 [IMPLEMENTATION.md](../../IMPLEMENTATION.md)에서 확인한다.
+
+## 후속 키보드 운영 경로
+
+2026-10-26 Asia/Seoul의 `DEV4-ARTIFACT-STORAGE-KEYBOARD-FLOW-001`은 정확 `aac9e2699dc5321b4c7dcb436723f318501f4a93`를 기준으로 한 별도 작업이다. 착수 당시 aac9의 독립 UI 인수는 pending이었으며, 이 키보드 관측으로 앞선 genuine 6개·typed 26개 또는 원 단위 검사 12개의 수용을 대신하지 않는다. 원 복제본과 봉인 proof에는 추가로 쓰지 않았다.
+
+정상·측정 무효의 보존 자료 두 사례에서 각각 데스크톱 1440 한 경로만 수행했다. Tab으로 접수 버튼에 도달하고 Enter로 선택하면 상세 제목에 포커스가 간다. 다시 Tab으로 저장 사본 카드에 도달한 뒤 원 DRAFT·manifest·facts-plan의 native summary를 Enter 또는 Space로 열고 닫는다. native details의 키보드 동작과 의미를 유지하며 별도 ARIA role·가짜 expanded 속성·새 단축키를 추가하지 않는다.
+
+첫 관측에서 native 펼침·접수 선택은 정상으로 확인했지만, 저장 사본 새로고침의 조회 오류 뒤와 실제 정상 응답 복귀 뒤에 버튼 포커스가 BODY로 사라졌다. 원 RED 두 흐름과 포커스 유실 네 관측·exit 1을 보존했다. 비동기 응답이 카드 노드를 교체하는 두 접점에서, 교체 직전에 새로고침 버튼이 포커스를 가진 경우에만 교체 후 같은 버튼에 `focus({preventScroll:true})`를 적용하도록 최소 수정했다. 이전·새 카드와 현재 선택 접수 ID가 같고, 새 버튼이 문서에 연결되어 실제 표시되며 native disabled가 아니고, 접수 보기가 활성인 경우에만 복원한다. 기존 aria-disabled 조회 중 표시는 유지한다. 카드 밖의 포커스를 가져오거나 parser·generation·측정·판정 상태를 바꾸지 않는다.
+
+수정 후 같은 두 흐름이 통과했다. 마우스 pointer 입력 0으로 조회 오류·이전 관측과 현재 접수 복귀 뒤에도 버튼 포커스가 유지됐다. 오류는 별도 typed HTTP 503이며 실제 reader가 실패했다고 해석하지 않는다. 복귀는 실제 보호 GET의 원 응답이다. 원 DRAFT·result, 정상 수치, 무효/null, 현재 관계, unknown·판정 미평가와 다른 사례의 접수 내용 제외를 대조했다. 이 검증은 native 키보드/Chromium 범위이며 스크린리더 음성·모바일 키보드 검증은 수행하지 않았다.
+
+첫 RED 두 흐름, 최소 복원 직후 GREEN 두 흐름, 접수·연결·표시 조건을 명시한 최종 guard 변경 후 GREEN 두 흐름은 별도 회차다. 최종 변경이 닿은 같은 두 경로만 확인했으며 이전 회차와 합산하지 않는다. 각 회차의 두 호스트가 child exit 0·serve thread/listener 종료·port 재사용을 확인했고, 동일한 원 두 자료의 각 130파일을 bytes·SHA-256·정수 mtime_ns로 전후 대조했다. 전체 여섯 호스트 관측을 성공 흐름 여섯 개로 합산하지 않는다. 개별 SQL close는 직접 계측하지 않았으며 전체 native handle 회수를 주장하지 않는다. 새 모델·RF·runtime·writer와 기존 wide 26개·순수 typed 12개 재실행은 없다.
+
+작은 수용 도구는 `VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY=1`, `VLAB_ARTIFACT_STORAGE_KEYBOARD_INDEX`의 명시 절대 경로를 사용한다. 기존 `explicit_own_saved_artifact_readback` index에서 `normal`, `measurement-invalid` 두 사례와 이미 수용된 backend·원 server_options만 전달한다. `VLAB_FLOW_PROOF_ROOT`는 이 작업의 새 `.local` 증거 폴더로 지정한다. 도구는 키보드 단계·포커스·원자료 불변·알려진 호스트 종료를 별도 결과로 기록하며 새 Store나 실행 자료를 만드는 fallback이 없다.
+
+## 새 합성 의뢰의 운영 흐름 점검
+
+2026-10-26 Asia/Seoul의 `DEV4-FRESH-CONDUCTED-OPERATOR-WALKTHROUGH-001`은 **생성 CLI 1회 → 생성한 원 startup을 사용하는 읽기 전용 UI** 경로다. CLI의 `--port` 분기를 실행·검증한 것이 아니다. 입력은 개발자가 작성한 합성 PDF와 새 로컬 MOCK이며 사용자 원문·실제 모델·실측 자료가 아니다. app·model·backend·profile을 추가하거나 수정하지 않았다.
+
+정확 base `bc49b85da3a73e7f8d43afb9127234f4cb596774`의 새 복제본에 D1의 `aae3d46033c80d3d5a1ee8a2bfebe3f00e93f8c1` → `873647b41b5d9998fb8a514043697a86588b4d52`를 기존 fixture 3파일만 일반 cherry-pick했다. 각 사전 파일과 변경 후 Git 바이트·다른 추적 파일의 native 수정 시각을 대조했다. 이 작업 시점에는 두 D1 변경과 bc49의 독립 인수가 pending이므로 의존성 사용과 독립 수용을 구분한다. 이전 복제본·원 실패·봉인 증거에는 추가로 쓰지 않았다.
+
+새 opt-in 모드는 `VLAB_FRESH_CONDUCTED_OPERATOR_ONLY=1`이며, 명시한 기존 root 가상환경 Python과 **아직 존재하지 않는 짧은 절대 output 경로**를 요구한다. 후보 checkout을 cwd와 `PYTHONPATH`로 고정해 다음 공개 CLI를 정확히 한 번 실행한다.
+
+```text
+<root 가상환경 Python> -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --document-kind pdf --measurement-ref event:17 --mock-model gpt-6.1-sol --output <새 짧은 절대 경로>
+```
+
+`gpt-6.1-sol`은 생성 MOCK의 명시 label이다. 실제 공급자·설치 Codex·auth·ADC로 fallback하지 않는다. 관측기의 생성 child 한도는 240초, stdout/stderr buffer 상한은 2 MiB다. 기존 loop 180초·producer 60초·retry 0과 native 파일 cap은 변경하지 않는다. child 종료 코드·signal·launch/timeout 오류·literal stdout/stderr를 결과 JSON 파싱 전에 보존한다. 기존 폴더·실패 partial을 덮거나 지우지 않으며 자동 재시도하지 않는다. 생성 CLI의 원 쓰기 cap은 output 단위 512파일/32 MiB이고, 관측기의 후속 쓰기는 새 proof와 생성 output의 합계도 같은 한도로 확인한다.
+
+실행 예시의 경로는 현재 저장소와 검증한 환경에 맞춰 명시한다. `VLAB_FLOW_PROOF_ROOT`는 이 작업만의 새 `.local` 증거 폴더로 준비하고, output은 만들지 않는다.
+
+```powershell
+$env:VLAB_FRESH_CONDUCTED_OPERATOR_ONLY = '1'
+$env:VLAB_FRESH_CONDUCTED_PYTHON = '<검증한 root 가상환경 Python 절대 경로>'
+$env:VLAB_PYTHON = $env:VLAB_FRESH_CONDUCTED_PYTHON
+$env:VLAB_FRESH_CONDUCTED_OUTPUT = Join-Path (Get-Location).Path '.local/fo/새이름'
+$env:VLAB_FLOW_PROOF_ROOT = '<새 증거 폴더 절대 경로>'
+node frontend/intake_flow_browser_check.cjs
+```
+
+생성한 `server-startup-original.json`은 Python readonly wrapper가 파일에서 직접 읽어 기존 서버에 전달한다. 원 native10 선택과 `readback-inputs.json` exact9를 대조하며, 현재 pin·방법·단위·artifact pin을 다시 조립하거나 수선하지 않는다. 새 child 서버는 기존 stdin `stop`·shutdown/join·server close·port 재사용으로 닫는다. 공유 콘솔 Ctrl+C나 다른 프로세스 kill은 사용하지 않았다.
+
+첫 단일 회차는 생성 CLI exit 0·signal null, 원 stdout과 `public-summary.json` 일치로 통과했다. 새 MOCK의 source/binary·compiler log·원 receipt를 보존했다. 별도의 Python 메타정보 조회는 생성 CLI 횟수와 구분한다.
+
+| 관측 분모 | 이 회차의 결과 |
+| --- | --- |
+| 생성 CLI | 1 child, 포트 옵션 없음, exit 0, 실제 모델 0 |
+| 생성 C# 프로그램 | source와 새 MOCK executable 각각 1개, 생성 경로의 compiler 호출 1회 |
+| 원 producer receipt | 5개. 각 version process 1 + model로 명명된 MOCK exec 1이므로 기록된 MOCK 시도는 version 5·exec 5다. application retry 0 |
+| 새 가상 runtime | 1개. 이 분모를 실제 모델·실물 실행이나 readonly 서버의 실행 수와 합치지 않는다. |
+| 읽기 전용 HTTP·화면 | 원 목록·계획·기존 제공 결과·저장 readback의 HTTP body 4개와 1440 pointer 운영 경로 1개 |
+| 원 접수·측정·저장 대조 | smartphone / SM-A176U / US / Wi-Fi 2.4 GHz engineering 목적 → 같은 현재 계획·run·runtime·event:17, 원 −19.5 dBm·보정 11 dBm, 저장 3파일·원 DRAFT·판정 미평가·실제 AI unknown |
+| 알려진 자원 | 생성 CLI 종료와 원 producer receipt의 자식 회수 표식, readonly host 1개의 thread/listener 종료·child exit 0·port 재사용. 생성 131파일의 bytes·SHA·정수 mtime_ns를 UI 읽기 전후 대조 |
+| 미실행·unknown | CLI `--port`, 개별 SQL close hook·전역 자손 프로세스/handle 전수 검사, 실제 AI·장비·현장·규범 검증. receipt의 descendants/remote/null 값은 유지 |
+
+환경 메타정보는 Python 3.12.4, Windows 11, pypdf 6.21.2, reportlab 4.5.1, Node v24.19.0, Chromium 151.0.7922.34다. 원 `version.stdout`의 `codex-cli 0.163.0-alpha.11.2`는 **생성 MOCK이 보고한 문자열**이며 설치 Codex 버전의 관측이 아니다. 원 실행의 `ai_model_called=null`과 summary·mock-origin의 실제 모델 0, 화면의 unknown은 각각 출처와 의미가 달라 합치지 않는다.
+
+이 단일 경로에서 app 결함은 발견하지 않았으며 app 수정 0이다. 새 typed 오류·기존 화면 6/26·키보드 2·순수 단위 검사 12개를 재실행하거나 합산하지 않았다. 원 DRAFT는 UTF-8 텍스트로 펼쳐 대조한 뒤 닫았으며, 성적서 발행·규범 PASS·실제 사용자 업무 완료로 승격하지 않는다.
+
+## 운영 상태 문구와 상세 배치
+
+2026-10-26 Asia/Seoul의 `DEV4-OPERATOR-RESULT-COPY-001`은 정확 `1c16d1322df11d101415dc7aec40e1b7637b777b`의 별도 복제본에서 app·browser 점검 도구·이 문서 3개만 변경했다. model 반환·backend·CSS·D1/D3 코드와 기존 원본·봉인 증거는 변경하지 않았다. 총괄이 aac9까지 공개 `e3ee72132d93ce498a3b8eb55060d85f6f5186ff`에 조건부 인수·게시한 상태와, 이 문구 정리의 소유 검증·독립 인수를 구분한다.
+
+운영자는 저장 카드에서 **저장 사본 3파일 일치 / 현재 의뢰 연결 확인 / 판정 미수행**, 원 측정·보정 값, 실제 AI **미확인(unknown)**을 먼저 읽는다. **DRAFT 보기**와 **저장 사본 새로고침**은 native details·기존 버튼을 사용한다. `판정 미수행`은 원 `not_assessed`의 표시 문구이며 원 판정·task 상태를 바꾸지 않는다. AI unknown을 false로 확정하거나 과거 writer 검증·적합성 보증을 추가하지 않는다.
+
+저장 카드의 **관측 출처·식별자·지문·검증 범위**는 기본적으로 닫혀 있다. 여기에 원 조회 시점·작성 결과·게시 순서의 미확인, 원 manifest/result/facts-plan/relation·false 권한·지문·원 오류를 그대로 모았다. 별도 **원 관측·출처·확인 범위**에는 기존 단계 6의 Snapshot·fixture 설명과 모델이 반환한 요약 원문을 보존한다. 원 정보의 참값·null·unknown을 삭제하거나 DTO를 보충하지 않는다. 다른 접수의 자료 제외·오류 뒤 이전 관측·세대 차단과 키보드 포커스 복원 함수는 유지했다. 새 경고·팝업·승인 절차는 없다.
+
+보존된 정상 합성 자료 하나로 390과 1440에서 genuine 화면을 각각 한 번 확인했다. 대표 문구·원 −19.5 dBm/11 dBm·같은 현재 연결·AI unknown·원 DRAFT를 대조하고, 기술 상세를 열어 원 DTO·해시·관측 한계가 그대로 있는지 확인했다. 두 기본 화면의 가로 넘침은 없었다. 별도 보존한 readback HTTP body는 폭별 1개씩 총 2개이며, 브라우저의 전체 GET 횟수와는 다르다. 호스트 1개의 thread/listener 종료·child exit 0·port 재사용, 원 130파일의 bytes·SHA-256·정수 mtime_ns 전후 불변을 관측했다. 개별 SQL close hook은 수행하지 않았다.
+
+workflow projection·저장 fetch의 current/generation/취소 경로·키보드 포커스 교체 함수는 기존 source와 정확히 대조했다. 이전 전체 12/6/26·키보드 2 검사를 반복하지 않았으며 이 정적 대조를 해당 동적 검사의 재통과로 보고하지 않는다. 새 생성 CLI·RF·runtime·실제 모델 실행은 0이다. 기존 점검 도구의 문구·중첩 details 선택자는 새 배치에 맞췄고, 이번 실행은 정상 두 화면만의 별도 분모다.
+
+좁은 점검 모드는 `VLAB_OPERATOR_RESULT_COPY_ONLY=1`과 `VLAB_OPERATOR_RESULT_COPY_INDEX`의 명시 절대 경로를 사용한다. index는 기존 `explicit_own_saved_artifact_readback`의 보존 정상 사례 하나와 원 서버 선택만 담으며 새 Store·출력·실행을 만들지 않는다. `VLAB_FLOW_PROOF_ROOT`는 이 작업만의 새 `.local` 증거 폴더다.
+
+후행 의존성 기록: 총괄은 D1 873의 독립 원 12개 중 11 PASS·I1 FAIL 1을 전달했다. writer의 후행 close가 최초 MemoryError를 덮는 공백이며 담당 소유 범위에서 수정 중이다. 원 fresh 운영 1회의 정상 관측을 취소하거나 소급 재실행하지 않았고 873의 독립 수용 미완료도 유지했다. 이 COPY 작업은 읽기 전용 표시를 정리했으며 해당 writer 코드를 수정하거나 오류 경로의 수용을 대신하지 않는다.

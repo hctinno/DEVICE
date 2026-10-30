@@ -458,7 +458,7 @@ def _content(name, files, stored, journal_invalid):
     return result
 
 
-def read_rf_signal_run(run_name) -> dict:
+def read_rf_signal_run(run_name, *, workspace_root=None) -> dict:
     """Return one stable, read-only storage view; never infer an unrecorded exit."""
     backend, result, code = None, None, None
     phase = 'unavailable'
@@ -469,12 +469,15 @@ def read_rf_signal_run(run_name) -> dict:
         root = _root()
         backend = _native._WindowsIO()
         phase = 'path_invalid'
-        tree = _native._Tree(root, backend)
-        folder = root / '.local/rf-signal-runs' / run_name
+        source_tree = _native._Tree(root, backend)
+        from ..managed_artifact_workspace import artifact_local_root
+        local = artifact_local_root(workspace_root=workspace_root)
         phase = 'not_found'
+        tree = _native._Tree(local, backend)
+        folder = local / 'rf-signal-runs' / run_name
         tree.directory(folder)
         phase = 'input_changed'
-        before = _sources(tree)
+        before = _sources(source_tree)
         phase = 'unavailable'
         files = _files(tree, folder)
         stored, journal_invalid, storage_error = None, False, False
@@ -491,9 +494,10 @@ def read_rf_signal_run(run_name) -> dict:
         result = _content(run_name, files, stored, journal_invalid)
         phase = 'input_changed'
         _unchanged(tree, folder, files)
-        if _sources(tree) != before:
+        if _sources(source_tree) != before:
             _fail('input_changed')
         _identities(tree)
+        _identities(source_tree)
         if storage_error:
             _fail('unavailable')
         if len(_json(result)) > 8192:

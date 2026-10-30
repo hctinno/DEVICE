@@ -258,7 +258,10 @@ def _existing_path(value):
             or not tail.startswith(('\\', '/'))
             or any(not _open_native._valid_segment(p) for p in re.split(r'[\\/]', tail) if p)):
         _open_fail('path_invalid')
-    return _open_native._local_path(value)
+    from .development_paths import DevelopmentPathError, reference_path
+    try:path=reference_path(value)
+    except DevelopmentPathError:_open_fail('path_invalid')
+    return _open_native._local_path(path)
 
 
 def _open_rows(con, statement, parameters=()):

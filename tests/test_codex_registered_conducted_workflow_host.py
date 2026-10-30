@@ -3,6 +3,7 @@ import copy
 from datetime import datetime, timedelta, timezone
 import hashlib
 import importlib
+import importlib.util
 import io
 import json
 import os
@@ -14,6 +15,7 @@ import time
 import unittest
 from unittest.mock import patch
 import uuid
+from contextlib import contextmanager
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT/'tests')]
@@ -331,6 +333,184 @@ class WorkflowHostTests(unittest.TestCase):
         self.assertTrue((self.profile/'workflow-claimed.json').is_file())
         self.assertEqual(result['errors'][-1]['phase'],'ledger_close')
 
+    def selection_bind_workflow(self,workflow):
+        self.config['workflow_sha256']=self.put('registered-workflow.json',workflow)
+        self.put('operator-control.json',self.config)
+        self.permit['workflow_sha256']=self.config['workflow_sha256']
+        con=sqlite3.connect(self.journal)
+        try:
+            con.execute("UPDATE codex_conducted_workflow_history SET payload=? WHERE kind='permit'",(C(self.permit).decode(),))
+            con.commit()
+        finally:con.close()
+
+    def selection_v2(self):
+        workflow=json.loads((self.profile/'registered-workflow.json').read_bytes())
+        self.assertEqual(workflow['schema_version'],1)
+        workflow.update(schema_version=2,measurement_ref=None,
+            measurement_selection_policy=dict(schema_version=1,kind='unique_same_run_sensor_acquisition'))
+        self.selection_bind_workflow(workflow)
+        return workflow
+
+    def selection_explicit_v2_prepares_exact13_without_dispatch(self):
+        workflow=self.selection_v2();before=(self.journal.read_bytes(),(self.profile/'registered-workflow.json').read_bytes())
+        owned=dict(store=None);prepared=None;rejected=None
+        try:
+            try:prepared=api._prepare(self.profile,self.config,'WFH-CASE',owned)
+            except api._Failure as error:rejected=str(error)
+        finally:
+            if owned['store'] is not None:owned['store'].close()
+        self.assertIsNone(rejected,'The explicit v2 workflow is rejected by the v1-only profile contract')
+        self.assertEqual(C(prepared[0]),C(workflow));self.assertEqual(len(prepared[0]),13)
+        self.assertEqual(C(prepared[3]),C(self.plan));self.assertEqual(self.argv,[])
+        self.assertEqual(before,(self.journal.read_bytes(),(self.profile/'registered-workflow.json').read_bytes()))
+        self.assertEqual(len(self.rows()),2);self.assertFalse((self.profile/'workflow-claimed.json').exists())
+        (self.folder/'v2-preflight.json').write_bytes(C(dict(status='validated',workflow=prepared[0],runtime_started=False,model_started=False)))
+
+    def selection_genuine_v2_mock5_preserves_selection_and_artifact_chain(self):
+        workflow=self.selection_v2();before_workflow=C(workflow);calls=[];finalize=api._finalize
+        def finalizing(execution,**options):
+            calls.append(copy.deepcopy(options))
+            return finalize(execution,**options)
+        with patch.object(api,'_finalize',side_effect=finalizing):code,record=self.call()
+        self.assertEqual((code,record['status']),(0,'completed'))
+        self.assertEqual(len(calls),1)
+        self.assertEqual(calls[0]['measurement_selection_policy'],workflow['measurement_selection_policy'])
+        self.assertIsNone(calls[0]['measurement_ref'])
+        finalized=json.loads((self.evidence/'finalizer-receipt.json').read_bytes())
+        self.assertEqual(len(record),12);self.assertEqual(len(record['finalization']),5);self.assertEqual(len(finalized),12)
+        selection=finalized['measurement_selection'];self.assertEqual(len(selection),9)
+        self.assertEqual(selection['status'],'selected');self.assertEqual(selection['verification']['builder_calls'],1)
+        self.assertEqual(selection['measurement_ref'],selection['candidate']['measurement_ref'])
+        self.assertEqual(selection['request_id'],selection['candidate']['request_id'])
+        self.assertEqual(C(selection['result']),C(finalized['result']))
+        self.assertEqual(finalized['result']['status'],'recorded')
+        self.assertEqual(finalized['result']['raw_measurement']['packet']['power_dbm'],-19.5)
+        self.assertEqual(finalized['result']['calculation']['corrected']['value'],11.0)
+        self.assertEqual(finalized['result']['calculation']['conformity']['status'],'not_assessed')
+        self.assertFalse(finalized['execution_authority']);self.assertFalse(finalized['verification']['physical_verified'])
+        for row in record['finalization']['artifact']['files']:
+            raw=(self.evidence/row['path']).read_bytes();self.assertEqual((len(raw),H(raw)),(row['bytes'],row['sha256']))
+        marker=self.evidence/record['finalization']['artifact']['storage']['commit_marker']
+        self.assertEqual(H(marker.read_bytes()),record['finalization']['artifact']['storage']['sha256'])
+        self.assertEqual([kind for kind,_ in self.rows()],['baseline','permit','reserved','consumed','finished'])
+        self.assertEqual(record['history']['inherited_model_processes'],17)
+        self.assertEqual(record['history']['local_model_processes'],5)
+        self.assertEqual(len([argv for argv in self.argv if '--model' in argv]),5)
+        self.assertEqual((self.profile/'registered-workflow.json').read_bytes(),before_workflow)
+        execution=json.loads((self.evidence/'execution-receipt.json').read_bytes())
+        self.assertEqual(execution['plan_input'],self.plan)
+        self.assertEqual(execution['loop']['budget']['limits']['model_calls'],8)
+        self.assertEqual(execution['loop']['budget']['application_retries'],0)
+        self.assertEqual(record['finalization']['receipt'],dict(bytes=(self.evidence/'finalizer-receipt.json').stat().st_size,sha256=H((self.evidence/'finalizer-receipt.json').read_bytes())))
+        (self.folder/'selected-chain-observation.json').write_bytes(C(dict(mock_model_processes=5,actual_model_processes=0,selection=selection,
+            execution_pin=record['execution']['receipt'],finalizer_pin=record['finalization']['receipt'],frame_status=record['status'])))
+        original_sql=self.journal.read_bytes();original_claim=(self.profile/'workflow-claimed.json').read_bytes();dispatches=len(self.argv)
+        retry_code,retry_record=self.call()
+        self.assertEqual((retry_code,retry_record['status']),(3,'not_run'));self.assertEqual(len(self.argv),dispatches)
+        self.assertEqual(self.journal.read_bytes(),original_sql)
+        self.assertEqual((self.profile/'workflow-claimed.json').read_bytes(),original_claim)
+        self.assertEqual((self.profile/'registered-workflow.json').read_bytes(),before_workflow)
+        (self.folder/'v2-reentry-observation.json').write_bytes(C(dict(new_dispatch=0,sql_bytes_unchanged=True,claim_bytes_unchanged=True,receipt=retry_record)))
+
+    def selection_closed_shapes_fail_before_permit_consumption(self):
+        original=json.loads((self.profile/'registered-workflow.json').read_bytes())
+        v2=copy.deepcopy(original);v2.update(schema_version=2,measurement_ref=None,
+            measurement_selection_policy=dict(schema_version=1,kind='unique_same_run_sensor_acquisition'))
+        cases=[]
+        def add(label,source,**changes):
+            value=copy.deepcopy(source);value.update(changes);cases.append((label,value))
+        add('v1-policy',original,measurement_selection_policy=v2['measurement_selection_policy'])
+        add('v1-null',original,measurement_ref=None)
+        value=copy.deepcopy(v2);value.pop('measurement_selection_policy');cases.append(('v2-missing-policy',value))
+        add('v2-ref-also-given',v2,measurement_ref='event:17')
+        add('v2-null-policy',v2,measurement_selection_policy=None)
+        add('v2-extra-field',v2,approved=True)
+        for version in (True,2.0,3):add('workflow-version-'+str(version),v2,schema_version=version)
+        for index,policy in enumerate(({},True,[],dict(schema_version=True,kind='unique_same_run_sensor_acquisition'),
+                dict(schema_version=1.0,kind='unique_same_run_sensor_acquisition'),dict(schema_version=1,kind='other'),
+                dict(schema_version=1,kind='unique_same_run_sensor_acquisition',approved=True))):
+            add('policy-'+str(index),v2,measurement_selection_policy=policy)
+        outcomes=[]
+        for label,value in cases:
+            with self.subTest(shape=label):
+                self.selection_bind_workflow(value)
+                code,record=self.call();self.assertEqual((code,record['status']),(3,'not_run'))
+                self.assertEqual(record['phase'],'registration');self.assertEqual(self.argv,[])
+                self.assertEqual(len(self.rows()),2);self.assertIsNone(record['reservation'])
+                self.assertFalse((self.profile/'workflow-claimed.json').exists())
+                outcomes.append(dict(label=label,workflow=value,receipt=record))
+        (self.folder/'rejected-shape-observations.json').write_bytes(C(outcomes))
+
+    def selection_v2_preserves_original_quantity_source_context_and_hash_checks(self):
+        original=self.selection_v2();outcomes=[]
+        cases=[]
+        for label,key,value in [('quantity-bool','quantity',dict(metric='on',reference_plane='sensor_input',loss_compensation_applied=False,loss_compensation_sign=True)),
+                ('source-changed','source_settings',{**original['source_settings'],'power_dbm':12}),
+                ('context-changed','context_sha256','0'*64),('tools-changed','allowed_tools',['sensor.acquire'])]:
+            workflow=copy.deepcopy(original);workflow[key]=value;cases.append((label,workflow))
+        for label,workflow in cases:
+            self.selection_bind_workflow(workflow)
+            code,record=self.call();self.assertEqual(code,3);self.assertEqual(record['status'],'not_run')
+            self.assertEqual(self.argv,[]);self.assertEqual(len(self.rows()),2)
+            outcomes.append(dict(label=label,workflow=workflow,receipt=record))
+        self.selection_bind_workflow(original)
+        self.put('registered-workflow.json',C(original)+b' ')
+        code,record=self.call();self.assertEqual(code,3);self.assertEqual(self.argv,[]);self.assertEqual(len(self.rows()),2)
+        self.assertTrue(record['errors'][0]['code'].endswith('binding_mismatch'))
+        outcomes.append(dict(label='raw-workflow-hash',receipt=record))
+        (self.folder/'binding-observations.json').write_bytes(C(outcomes))
+
+    def selection_bad_version_preserves_original_failure_and_blocked_evidence(self):
+        self.selection_v2();self.mode='bad_version';code,record=self.call()
+        self.assertEqual((code,record['status']),(4,'failed'))
+        self.assertEqual(len(self.argv),1);self.assertEqual(self.argv[0][1:],['--version'])
+        self.assertEqual(record['history']['local_model_processes'],0)
+        execution=json.loads((self.evidence/'execution-receipt.json').read_bytes())
+        finalizer=json.loads((self.evidence/'finalizer-receipt.json').read_bytes())
+        self.assertEqual(finalizer['failure'],execution['failure'])
+        self.assertEqual(finalizer['status'],'held');self.assertEqual(len(finalizer),12)
+        self.assertEqual(finalizer['measurement_selection']['status'],'blocked')
+        self.assertIsNone(finalizer['result']);self.assertIsNone(finalizer['artifact'])
+        self.assertIsNone(finalizer['measurement_selection']['result'])
+        self.assertEqual(finalizer['measurement_selection']['verification']['builder_calls'],0)
+        self.assertTrue(any(row['code']=='conducted_execution_result_finalizer_measurement_selection_blocked' for row in finalizer['secondary_errors']))
+        self.assertEqual([kind for kind,_ in self.rows()],['baseline','permit','reserved','consumed','finished'])
+        self.assertFalse((self.evidence/'.local/conducted-result-artifacts').exists())
+        self.assertTrue((self.profile/'workflow-claimed.json').is_file())
+        (self.folder/'blocked-observation.json').write_bytes(C(dict(mock_version_processes=1,mock_model_processes=0,actual_model_processes=0,receipt=record)))
+
+    def selection_v1_keeps_original_finalizer_keywords_and_receipt(self):
+        self.mode='bad_version';finalize=api._finalize;calls=[]
+        def finalizing(execution,**options):
+            calls.append(copy.deepcopy(options));return finalize(execution,**options)
+        with patch.object(api,'_finalize',side_effect=finalizing):code,record=self.call()
+        self.assertEqual(code,4);self.assertEqual(len(calls),1)
+        self.assertEqual(calls[0]['measurement_ref'],'event:17')
+        self.assertNotIn('measurement_selection_policy',calls[0])
+        finalizer=json.loads((self.evidence/'finalizer-receipt.json').read_bytes())
+        self.assertEqual(len(finalizer),11);self.assertNotIn('measurement_selection',finalizer)
+        self.assertEqual(finalizer['status'],'stored');self.assertEqual(record['history']['local_model_processes'],0)
+        self.assertEqual(len(record),12);self.assertEqual(len(record['finalization']),5)
+        self.assertEqual([kind for kind,_ in self.rows()],['baseline','permit','reserved','consumed','finished'])
+        (self.folder/'legacy-v1-observation.json').write_bytes(C(dict(finalizer_keyword_names=list(calls[0]),mock_version_processes=1,actual_model_processes=0,receipt=record)))
+
+    def selection_v2_first_control_survives_later_owned_store_close(self):
+        self.selection_v2();control=MemoryError('FIRST_V2_G3_CONTROL');opened=api.Store.open_existing
+        counts=dict(store_close=0)
+        def lease(path):
+            store=opened(path)
+            class Proxy:
+                def close(self):counts['store_close']+=1;store.close();raise OSError('LATER_OWNED_CLOSE')
+                def __getattr__(self,key):return getattr(store,key)
+            return Proxy()
+        with patch.object(api.Store,'open_existing',side_effect=lease), \
+                patch.object(api,'prepare_registered_synthetic_context',side_effect=control):
+            with self.assertRaises(MemoryError) as got:self.call()
+        self.assertIs(got.exception,control);self.assertEqual(counts,dict(store_close=1))
+        self.assertEqual(self.argv,[]);self.assertEqual(len(self.rows()),2)
+        self.assertFalse((self.profile/'workflow-claimed.json').exists())
+        (self.folder/'first-control-observation.json').write_bytes(C(dict(first_control_same_object=True,owned_store_close_attempts=1,dispatch0=True)))
+
     def boundary_missing_cancel_never_dispatches(self):
         read=api._read
         def missing(path,cap):
@@ -426,6 +606,95 @@ class WorkflowHostTests(unittest.TestCase):
             with self.assertRaises(MemoryError) as got:self.call()
         self.assertIs(got.exception,control);self.assertEqual(self.argv,[])
 
+    def failure_snapshot(self):
+        files={}
+        for path in self.store_root.rglob('*'):
+            if path.is_file():
+                info=path.stat(follow_symlinks=False)
+                files[str(path.relative_to(self.store_root))]=dict(bytes=info.st_size,sha256=H(path.read_bytes()),
+                    device=info.st_dev,inode=info.st_ino,mtime_ns=info.st_mtime_ns,nlink=info.st_nlink,
+                    attributes=info.st_file_attributes,reparse_tag=info.st_reparse_tag)
+        connection=sqlite3.connect((self.store_root/'lab.sqlite3').as_uri()+'?mode=ro',uri=True)
+        try:
+            connection.execute('PRAGMA query_only=ON')
+            jobs=connection.execute('SELECT job_id,state,worker_id,token,attempt,result_json FROM intake_jobs ORDER BY job_id').fetchall()
+            completed=connection.execute("SELECT count(*) FROM intake_jobs WHERE state='completed'").fetchone()[0]
+        finally:connection.close()
+        return dict(files=files,jobs=jobs,completed=completed,workflow_rows=self.rows())
+
+    def failure_invoke(self,first,late,*,ledger=False):
+        before=self.failure_snapshot();counts=dict(store_close=0,ledger_close=0)
+        opened=api.Store.open_existing;close_ledger=api._close_ledger;returned=raised=None
+        def lease(path):
+            store=opened(path);close_store=store.close
+            def closing_store():
+                counts['store_close']+=1;close_store()
+                if late is not None and not ledger:raise late
+            store.close=closing_store
+            return store
+        def closing(connection):
+            counts['ledger_close']+=1;close_ledger(connection)
+            if late is not None and ledger:raise late
+        try:
+            with patch.object(api.Store,'open_existing',side_effect=lease),patch.object(api,'_close_ledger',side_effect=closing):
+                if first is None:returned=self.call()
+                else:
+                    with patch.object(api,'prepare_registered_synthetic_context',side_effect=first):returned=self.call()
+            return returned
+        except BaseException as error:
+            raised=error;raise
+        finally:
+            after=self.failure_snapshot()
+            observation=dict(case=self._testMethodName,first=None if first is None else type(first).__name__,
+                late=None if late is None else type(late).__name__,late_phase='ledger_close' if ledger else 'store_close',
+                returned=returned,raised=None if raised is None else type(raised).__name__,
+                raised_is_first=raised is first and first is not None,raised_is_late=raised is late and late is not None,
+                counts=counts,source_before=before,source_after=after,source_unchanged=before==after,
+                genuine_runtime_calls=0,actual_model_processes=0,producer_argv=len(self.argv))
+            (self.folder/('first-failure-'+uuid.uuid4().hex[:8]+'.json')).write_bytes(C(observation))
+            self.assertEqual(before,after);self.assertEqual(counts,dict(store_close=1,ledger_close=1))
+            self.assertEqual(self.argv,[]);self.assertEqual(len(self.rows()),2)
+            self.assertFalse((self.profile/'workflow-claimed.json').exists());self.assertEqual(list(self.evidence.iterdir()),[])
+
+    def failure_first_ordinary_survives_late_store_controls(self):
+        first=ValueError('FIRST_ORDINARY');baseline=self.failure_invoke(first,None)
+        self.assertEqual(baseline[0],3);self.assertEqual(baseline[1]['status'],'not_run')
+        self.assertEqual(baseline[1]['errors'],[dict(phase='registration',code=api._PREFIX+'operation_failed')])
+        for control in (MemoryError,SystemExit,GeneratorExit,KeyboardInterrupt):
+            with self.subTest(late=control.__name__):
+                try:code,result=self.failure_invoke(first,control('LATER_STORE_CONTROL'))
+                except api._CONTROL as error:self.fail('Later '+type(error).__name__+' replaced the first ordinary failure DTO')
+                self.assertEqual((code,result['status'],result['phase']),(baseline[0],baseline[1]['status'],baseline[1]['phase']))
+                self.assertEqual(result['errors'][0],baseline[1]['errors'][0])
+                self.assertEqual(result['errors'][1],dict(phase='store_close',code=api._PREFIX+'interrupted'))
+                self.assertEqual(set(result),set(baseline[1]));self.assertIsNone(result['execution']);self.assertIsNone(result['finalization'])
+
+    def failure_first_ordinary_survives_late_ledger_control(self):
+        self.selection_v2();first=OSError('FIRST_NATIVE_OPERATION');baseline=self.failure_invoke(first,None)
+        try:code,result=self.failure_invoke(first,MemoryError('LATER_LEDGER_CONTROL'),ledger=True)
+        except api._CONTROL:self.fail('Later ledger CONTROL replaced the first ordinary failure DTO')
+        self.assertEqual((code,result['status'],result['phase']),(baseline[0],baseline[1]['status'],baseline[1]['phase']))
+        self.assertEqual(result['errors'][0],baseline[1]['errors'][0])
+        self.assertEqual(result['errors'][1],dict(phase='ledger_close',code=api._PREFIX+'interrupted'))
+
+    def failure_first_control_survives_late_ordinary(self):
+        first=MemoryError('FIRST_CONTROL')
+        with self.assertRaises(MemoryError) as got:self.failure_invoke(first,OSError('LATER_ORDINARY_CLOSE'))
+        self.assertIs(got.exception,first)
+
+    def failure_two_controls_keep_first_object(self):
+        self.selection_v2();first=SystemExit('FIRST_CONTROL')
+        with self.assertRaises(SystemExit) as got:self.failure_invoke(first,MemoryError('SECOND_CONTROL'))
+        self.assertIs(got.exception,first)
+
+    def failure_first_close_error_with_no_prior_failure(self):
+        code,result=self.failure_invoke(None,OSError('FIRST_BODY_CLOSE'))
+        self.assertEqual((code,result['status']),(3,'not_run'))
+        self.assertEqual(result['errors'],[dict(phase='registration',code=api._PREFIX+'operation_failed')])
+        self.selection_v2();first=MemoryError('FIRST_BODY_CLOSE_CONTROL')
+        with self.assertRaises(MemoryError) as got:self.failure_invoke(None,first)
+        self.assertIs(got.exception,first)
+
     def boundary_rollback_failure_still_attempts_owned_close_once(self):
         connect=api.sqlite3.connect;counts=dict(rollback=0,close=0)
         def wrap(*args,**kwargs):
@@ -440,8 +709,541 @@ class WorkflowHostTests(unittest.TestCase):
         self.assertEqual(code,3);self.assertEqual(counts,dict(rollback=1,close=1));self.assertEqual(self.argv,[])
 
 
+_CURRENT_SEED_FILE=None
+_CURRENT_SEED_INFO=None
+
+
+def _current_seed():
+    global _CURRENT_SEED_INFO
+    if _CURRENT_SEED_INFO is not None:return _CURRENT_SEED_INFO
+    if _CURRENT_SEED_FILE is not None:
+        path=Path(_CURRENT_SEED_FILE).absolute()
+        assert path.is_relative_to(ROOT/'.local/wch')
+        value=json.loads(path.read_bytes());assert value['kind']=='authored_public_completed_TXT_seed'
+        _CURRENT_SEED_INFO=value;return value
+    from labflow.intake_jobs import claim_job,complete_job,respond
+    from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
+    helper=WorkflowHostTests(next(name for name in WorkflowHostTests.__dict__ if name.startswith('test_')))
+    helper._testMethodName='current_public_completed_TXT_setup_once';helper.setUp()
+    try:
+        queued=helper.folder/'q'
+        for path in helper.store_root.rglob('*'):
+            if path.is_file():
+                dest=queued/path.relative_to(helper.store_root);dest.parent.mkdir(parents=True,exist_ok=True)
+                with dest.open('xb') as stream:stream.write(path.read_bytes())
+        store=Store.open_existing(str(helper.store_root))
+        try:
+            respond(store,'WCH-SETUP-PROCEED','proceed',intake_id=helper.context['intake_id'])
+            claimed=claim_job(store,'WCH-PUBLIC-SETUP',now=102,synthetic_only=True)
+            assert claimed is not None and claimed['job_id']==helper.context['job_id']
+            context={key:claimed[key] for key in ('job_id','intake_id','revision','synthetic','documents','analysis_context_id','analysis_contract','instructions')}
+            assert C(context)==C(helper.context)
+            analysis=decode_analysis_response(C(helper.analysis),context,producer_name='SCRIPTED-WFH-MOCK')
+            complete_job(store,claimed['job_id'],claimed['token'],analysis,now=103)
+        finally:store.close()
+        current=read_current_conducted_plan_from_facts(helper.store_root,context['intake_id'],method=dict(
+            method_id='conducted_synthetic',method_version=1,metric='on',reference_plane='source_output'))
+        assert current['facts_plan']['status']=='ready_for_simulation'
+        assert H(C(current['context']))!=H(C(context))
+        info=dict(kind='authored_public_completed_TXT_seed',folder=str(helper.folder),profile=str(helper.profile),
+            store_root=str(helper.store_root),queued_store=str(queued),script=str(helper.script),
+            queued_context=helper.context,queued_analysis=helper.analysis,queued_plan=helper.plan,
+            current=current,setup=dict(public_proceed=1,public_claim=1,claimed_strict_decode=1,public_complete=1,
+                genuine_runtime_calls=0,actual_models=0),seed_file=str(helper.folder/'seed.json'))
+        (helper.folder/'seed.json').write_bytes(C(info));_CURRENT_SEED_INFO=info;return info
+    finally:helper.doCleanups()
+
+
+class CurrentWorkflowTests(unittest.TestCase):
+    def setUp(self):
+        global LOCAL,BUDGET
+        previous=(LOCAL,BUDGET);LOCAL=LOCAL/uuid.uuid4().hex[:8];BUDGET=Budget()
+        def restore():
+            global LOCAL,BUDGET
+            LOCAL,BUDGET=previous
+        self.addCleanup(restore)
+
+    @contextmanager
+    def case(self,label,*,legacy=False,genuine=False):
+        seed=_current_seed();helper=WorkflowHostTests(next(name for name in WorkflowHostTests.__dict__ if name.startswith('test_')))
+        helper._testMethodName='current_'+label
+        def clone(owner):
+            def copy(source,target):
+                for path in Path(source).rglob('*'):
+                    if path.is_file():
+                        dest=target/path.relative_to(source);dest.parent.mkdir(parents=True,exist_ok=True)
+                        with dest.open('xb') as stream:stream.write(path.read_bytes())
+            copy(seed['profile'],owner.profile)
+            owner.journal=owner.profile/'workflow-continuation.sqlite3';owner.script=Path(seed['script'])
+            owner.config=json.loads((owner.profile/'operator-control.json').read_bytes())
+            owner.permit=json.loads(owner.rows()[1][1] if type(owner.rows()[1][1]) is str else C(owner.rows()[1][1]))
+            owner.permit['expires_at']=(datetime.now(timezone.utc)+timedelta(hours=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
+            if genuine:
+                owner.store_root=Path(seed['store_root'])
+            else:
+                owner.store_root=owner.folder/'s';copy(seed['queued_store'] if legacy else seed['store_root'],owner.store_root)
+                source=owner.folder/'i';copy(Path(seed['folder'])/'i',source)
+                connection=sqlite3.connect(owner.store_root/'lab.sqlite3')
+                try:connection.execute('UPDATE intake_sources SET root=?',(str(source),));connection.commit()
+                finally:connection.close()
+                owner.config['registered_input_root']=str(source/'case')
+            owner.config['store_root']=str(owner.store_root);owner.put('operator-control.json',owner.config)
+            owner.context=seed['queued_context'];owner.analysis=seed['queued_analysis'];owner.plan=seed['queued_plan']
+            if not legacy:
+                current=seed['current'];owner.context=current['context'];owner.analysis=current['analysis'];owner.plan=current['facts_plan']['plan_input']
+                workflow=json.loads((owner.profile/'registered-workflow.json').read_bytes())
+                workflow.update(schema_version=3,context_scope='completed_current_provided',measurement_ref=None,
+                    measurement_selection_policy=dict(schema_version=1,kind='unique_same_run_sensor_acquisition'),
+                    context_sha256=H(C(owner.context)),analysis_sha256=owner.put('analysis.json',owner.analysis),
+                    plan_input_sha256=owner.put('plan-input.json',owner.plan))
+                owner.selection_bind_workflow(workflow)
+        with patch.object(WorkflowHostTests,'make_profile',clone):helper.setUp()
+        try:yield helper
+        finally:helper.doCleanups()
+
+    def prepare(self,helper):
+        owned=dict(store=None)
+        try:return api._prepare(helper.profile,helper.config,'WFH-CASE',owned),owned.get('current_facts_plan')
+        finally:
+            if owned['store'] is not None:owned['store'].close()
+
+    def reject(self,helper):
+        before=helper.failure_snapshot()
+        with patch.object(api,'_execute',side_effect=AssertionError('NO_RUNTIME')) as execution:
+            code,result=helper.call()
+        self.assertEqual(code,3);self.assertEqual(result['status'],'not_run');self.assertFalse(execution.called)
+        self.assertEqual(helper.failure_snapshot(),before);self.assertEqual(helper.argv,[])
+        self.assertFalse((helper.profile/'workflow-claimed.json').exists());self.assertEqual(list(helper.evidence.iterdir()),[])
+        return result
+
+    def current_preflight_binds_completed_original_five_pins(self):
+        from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
+        with self.case('preflight') as helper:
+            before=helper.failure_snapshot()
+            with patch.object(api,'_current_facts',wraps=read_current_conducted_plan_from_facts,create=True) as reader, \
+                    patch.object(api._native_host,'_dedicated',side_effect=AssertionError('QUEUED_GATE_FORBIDDEN')), \
+                    patch.object(api,'prepare_registered_synthetic_context',side_effect=AssertionError('G3_FORBIDDEN')):
+                prepared,current=self.prepare(helper)
+            self.assertEqual(prepared[0]['schema_version'],3);self.assertEqual(len(prepared[0]),14)
+            self.assertEqual(C(current),C(_current_seed()['current']));self.assertEqual(C(prepared[1:4]),C([current['context'],current['analysis'],current['facts_plan']['plan_input']]))
+            self.assertEqual(reader.call_count,1);self.assertEqual(reader.call_args.kwargs['expected_context_sha256'],H(C(current['context'])))
+            self.assertEqual(helper.failure_snapshot(),before);self.assertEqual(helper.argv,[]);self.assertEqual(list(helper.evidence.iterdir()),[])
+
+    def current_legacy_queued_v1_v2_keep_original_preparation(self):
+        with self.case('legacy',legacy=True) as helper:
+            for version in (1,2):
+                if version==2:helper.selection_v2()
+                with patch.object(api,'_current_facts',side_effect=AssertionError('CURRENT_FORBIDDEN'),create=True):prepared,current=self.prepare(helper)
+                self.assertEqual(prepared[0]['schema_version'],version);self.assertEqual(C(prepared[1]),C(_current_seed()['queued_context']));self.assertIsNone(current)
+                self.assertEqual(len(helper.rows()),2);self.assertEqual(helper.argv,[])
+
+    def current_closed_shapes_reject_before_consumption(self):
+        def missing(v):v.pop('context_scope')
+        mutations=[missing,lambda v:v.update(context_scope='queued'),lambda v:v.update(schema_version=True),
+            lambda v:v.update(schema_version=3.0),lambda v:v.update(extra=1),lambda v:v.update(measurement_ref='last'),
+            lambda v:v.update(measurement_selection_policy=None),lambda v:v.update(schema_version=2)]
+        for index,mutate in enumerate(mutations):
+            with self.subTest(index=index),self.case('shape'+str(index)) as helper:
+                workflow=json.loads((helper.profile/'registered-workflow.json').read_bytes());mutate(workflow);helper.selection_bind_workflow(workflow);self.reject(helper)
+
+    def current_scope_failures_precede_current_read(self):
+        changes=[("UPDATE intake_jobs SET state='queued'",()),("UPDATE intake_jobs SET state='running'",()),
+            ("UPDATE intakes SET status='upload_incomplete'",()),("UPDATE intakes SET revision=2",()),
+            ("UPDATE intake_sources SET synthetic=0",()),("UPDATE intake_revisions SET synthetic=0",()),
+            ("UPDATE intakes SET bundle='other'",()),("UPDATE intake_sources SET root=root||'-other'",()),
+            ("UPDATE intake_revisions SET files_json='[]'",()),
+            ("INSERT INTO intakes(intake_id,source_id,bundle,revision,status) VALUES('OTHER','WFH-SYN','other',1,'queued')",()),
+            ("UPDATE intake_jobs SET state='failed'",())]
+        for index,(sql,args) in enumerate(changes):
+            with self.subTest(index=index),self.case('scope'+str(index)) as helper:
+                connection=sqlite3.connect(helper.store_root/'lab.sqlite3')
+                try:
+                    connection.execute(sql,args)
+                    if index==9:
+                        connection.execute("INSERT INTO intake_revisions VALUES('OTHER',1,?,'[]',1,101)",('0'*64,))
+                        connection.execute("INSERT INTO intake_jobs(job_id,intake_id,revision,state,created_at) VALUES('OTHER-JOB','OTHER',1,'queued',101)")
+                    connection.commit()
+                finally:connection.close()
+                with patch.object(api,'_current_facts',side_effect=AssertionError('SCOPE_MUST_REJECT_FIRST'),create=True) as reader:self.reject(helper)
+                self.assertFalse(reader.called)
+
+    def current_binding_and_original_file_drift_reject(self):
+        for field in ('context_sha256','analysis_sha256','plan_input_sha256','catalog_sha256','schema_sha256','analysis_other','original_file',
+                'selection_source_id','selection_intake_id','selection_job_id','selection_revision'):
+            with self.subTest(field=field),self.case(field) as helper:
+                workflow=json.loads((helper.profile/'registered-workflow.json').read_bytes())
+                if field=='analysis_other':
+                    analysis=json.loads(C(helper.analysis));analysis['producer']['name']='OTHER';workflow['analysis_sha256']=helper.put('analysis.json',analysis)
+                elif field=='original_file':(Path(helper.config['registered_input_root'])/'r.txt').write_bytes(b'CHANGED\n')
+                elif field.startswith('selection_'):
+                    manifest=json.loads((helper.profile/'registered-intake-v1.json').read_bytes());key=field.removeprefix('selection_')
+                    manifest['registered_intake'][key]=2 if key=='revision' else 'OTHER'
+                    helper.config['registration_sha256']=helper.put('registered-intake-v1.json',manifest)
+                    helper.permit['registration_sha256']=helper.config['registration_sha256']
+                else:workflow[field]='0'*64
+                helper.selection_bind_workflow(workflow);self.reject(helper)
+
+    def current_scope_drift_after_reader_rejects(self):
+        from labflow.intake_current_facts_plan import read_current_conducted_plan_from_facts
+        with self.case('read_drift') as helper:
+            def drift(*args,**kwargs):
+                value=read_current_conducted_plan_from_facts(*args,**kwargs)
+                connection=sqlite3.connect(helper.store_root/'lab.sqlite3')
+                try:connection.execute("UPDATE intakes SET status='upload_incomplete'");connection.commit()
+                finally:connection.close()
+                return value
+            with patch.object(api,'_current_facts',side_effect=drift,create=True),patch.object(api,'_execute',side_effect=AssertionError('NO_RUNTIME')) as execution:code,result=helper.call()
+            self.assertEqual((code,result['status']),(3,'not_run'));self.assertFalse(execution.called);self.assertEqual(len(helper.rows()),2)
+            self.assertEqual(list(helper.evidence.iterdir()),[])
+
+    def current_handoff_reservation_and_null_pins_finally(self):
+        with self.case('finally_null') as helper:
+            before=helper.failure_snapshot();reservations=[];reserve=api._OutputBudget.reserve
+            def reserved(owner,files,size):reservations.append((files,size));return reserve(owner,files,size)
+            def fail(*args,**kwargs):
+                self.assertTrue(reservations and reservations[0][0]==1)
+                self.assertEqual(kwargs['evidence_reservation'],dict(files=11,bytes=reservations[0][1]+5505024))
+                self.assertFalse((helper.evidence/'current-handoff.json').exists());raise ValueError('FIRST_EXECUTION')
+            with patch.object(api._OutputBudget,'reserve',reserved),patch.object(api,'_execute',side_effect=fail):code,result=helper.call()
+            self.assertEqual((code,result['status']),(5,'unknown'));packet=json.loads((helper.evidence/'current-handoff.json').read_bytes())
+            self.assertEqual(set(packet),set('schema_version kind workflow_sha256 current_facts_plan execution_receipt finalizer_receipt'.split()))
+            self.assertEqual(packet['kind'],'codex_conducted_workflow_current_handoff');self.assertIs(type(packet['schema_version']),int);self.assertEqual(packet['schema_version'],1)
+            self.assertEqual(C(packet['current_facts_plan']),C(_current_seed()['current']));self.assertIsNone(packet['execution_receipt']);self.assertIsNone(packet['finalizer_receipt'])
+            after=helper.failure_snapshot();self.assertEqual(before['files'],after['files']);self.assertEqual(before['jobs'],after['jobs']);self.assertEqual(len(after['workflow_rows']),5)
+            self.assertEqual(helper.argv,[]);self.assertEqual(len(result),12)
+
+    def current_handoff_capacity_rejects_before_consume(self):
+        with self.case('reservation_denied') as helper:
+            with patch.object(api._OutputBudget,'reserve',side_effect=api._Failure(api._PREFIX+'evidence_limit')):self.reject(helper)
+
+    def current_handoff_packet_limits_before_output(self):
+        original=_current_seed()['current'];raw=api._handoff_raw('a'*64,original,None,None)
+        self.assertEqual(len(json.loads(raw)),6);self.assertLessEqual(len(raw),8388608)
+        depth=None
+        for _ in range(25):depth=[depth]
+        for questions in (['x'*8388608],[None]*50001,depth,[float('nan')],[2**64]):
+            current=json.loads(C(original));current['facts_plan']['questions']=questions
+            with self.assertRaises(ValueError):api._handoff_raw('a'*64,current,None,None)
+
+    def current_reader_first_errors_before_consume(self):
+        for control_first in (False,True):
+            with self.subTest(control_first=control_first),self.case('reader_first'+str(control_first)) as helper:
+                first=MemoryError('FIRST_READ_CONTROL') if control_first else ValueError('FIRST_READ_ORDINARY')
+                late=OSError('LATER_CLOSE') if control_first else MemoryError('LATER_CLOSE_CONTROL')
+                opened=api.Store.open_existing;count=[];before=helper.failure_snapshot()
+                def lease(path):
+                    store=opened(path);close=store.close
+                    def closing():count.append(path);close();raise late
+                    store.close=closing;return store
+                with patch.object(api.Store,'open_existing',side_effect=lease),patch.object(api,'_current_facts',side_effect=first):
+                    if control_first:
+                        with self.assertRaises(MemoryError) as got:helper.call()
+                        self.assertIs(got.exception,first)
+                    else:
+                        code,result=helper.call();self.assertEqual((code,result['status']),(3,'not_run'))
+                        self.assertEqual(result['errors'],[dict(phase='registration',code=api._PREFIX+'operation_failed'),dict(phase='store_close',code=api._PREFIX+'interrupted')])
+                self.assertEqual(len(count),1);self.assertEqual(helper.failure_snapshot(),before);self.assertEqual(helper.argv,[])
+                self.assertEqual(list(helper.evidence.iterdir()),[])
+
+    def current_handoff_never_overwrites_existing_prefix(self):
+        with self.case('no_overwrite') as helper:
+            path=helper.evidence/'current-handoff.json';active=api._native_host._active_guard;attempts=[]
+            def execute(*args,**kwargs):path.write_bytes(b'EXISTING_PREFIX');raise ValueError('FIRST_EXECUTION')
+            def guard(target,raw):
+                if target==path:attempts.append(target)
+                return active(target,raw)
+            with patch.object(api,'_execute',side_effect=execute),patch.object(api._native_host,'_active_guard',side_effect=guard):code,result=helper.call()
+            self.assertEqual((code,result['status']),(5,'unknown'));self.assertEqual(result['errors'][0]['phase'],'execution')
+            self.assertEqual(result['errors'][1]['phase'],'current_handoff');self.assertEqual(path.read_bytes(),b'EXISTING_PREFIX');self.assertEqual(len(attempts),1)
+            self.assertEqual(helper.argv,[])
+
+    def current_first_errors_survive_partial_handoff_once(self):
+        for control_first in (False,True):
+            with self.subTest(control_first=control_first),self.case('first'+str(control_first)) as helper:
+                first=MemoryError('FIRST_CONTROL') if control_first else ValueError('FIRST_ORDINARY');late=OSError('LATE_WRITE') if control_first else MemoryError('LATE_CONTROL')
+                active=api._native_host._active_guard;attempts=[];before=helper.failure_snapshot()
+                def partial(path,raw):
+                    if path.name!='current-handoff.json':return active(path,raw)
+                    attempts.append(path)
+                    with path.open('xb') as stream:stream.write(b'{')
+                    raise late
+                with patch.object(api,'_execute',side_effect=first),patch.object(api._native_host,'_active_guard',side_effect=partial):
+                    if control_first:
+                        with self.assertRaises(MemoryError) as got:helper.call()
+                        self.assertIs(got.exception,first)
+                    else:
+                        code,result=helper.call();self.assertEqual((code,result['status']),(5,'unknown'));self.assertEqual(result['errors'][0]['phase'],'execution')
+                        self.assertEqual(result['errors'][1]['phase'],'current_handoff')
+                self.assertEqual(len(attempts),1);self.assertEqual((helper.evidence/'current-handoff.json').read_bytes(),b'{')
+                after=helper.failure_snapshot();self.assertEqual(before['files'],after['files']);self.assertEqual(before['jobs'],after['jobs']);self.assertEqual(helper.argv,[])
+
+    def current_genuine_completed_same_snapshot_mock_once(self):
+        seed=_current_seed();marker=Path(seed['folder'])/'genuine-loop-one-shot.json'
+        with marker.open('xb') as stream:stream.write(C(dict(genuine_loop_max=1,actual_models=0)))
+        with self.case('genuine',genuine=True) as helper:
+            before=helper.failure_snapshot()
+            with patch.object(api,'_execute',wraps=api._execute) as execute,patch.object(api,'_finalize',wraps=api._finalize) as finalize:
+                code,result=helper.call()
+            self.assertEqual((code,result['status']),(0,'completed'));self.assertEqual(execute.call_count,1);self.assertEqual(finalize.call_count,1)
+            self.assertEqual(C(execute.call_args.args),C([seed['current']['context'],seed['current']['analysis'],seed['current']['facts_plan']['plan_input']]))
+            raw=(helper.evidence/'current-handoff.json').read_bytes();packet=json.loads(raw)
+            self.assertEqual(C(packet['current_facts_plan']),C(seed['current']));self.assertEqual(packet['workflow_sha256'],helper.config['workflow_sha256'])
+            for name in ('execution','finalizer'):
+                value=(helper.evidence/(name+'-receipt.json')).read_bytes();self.assertEqual(packet[name+'_receipt'],dict(bytes=len(value),sha256=H(value)))
+            execution=json.loads((helper.evidence/'execution-receipt.json').read_bytes());finalizer=json.loads((helper.evidence/'finalizer-receipt.json').read_bytes())
+            self.assertEqual(C(execution['plan_input']),C(seed['current']['facts_plan']['plan_input']))
+            self.assertEqual(C(finalize.call_args.args[0]),C(execution))
+            maximum=api._handoff_raw(helper.config['workflow_sha256'],seed['current'],dict(bytes=262144,sha256='0'*64),dict(bytes=2097152,sha256='0'*64))
+            self.assertEqual(execute.call_args.kwargs['evidence_reservation'],dict(files=11,bytes=len(maximum)+5505024))
+            self.assertEqual(finalizer['status'],'stored');self.assertEqual(len(result),12);self.assertEqual(len(result['finalization']),5)
+            after=helper.failure_snapshot();self.assertEqual(before['files'],after['files']);self.assertEqual(before['jobs'],after['jobs'])
+            calls=len(helper.argv);rows=helper.rows();code,reentry=helper.call();self.assertEqual(code,3);self.assertEqual(helper.rows(),rows);self.assertEqual(len(helper.argv),calls)
+            self.assertEqual((helper.evidence/'current-handoff.json').read_bytes(),raw);self.assertEqual(result['history']['local_model_processes'],5)
+            self.assertEqual(execution['loop']['budget']['application_retries'],0);self.assertTrue(all(child.poll() is not None for child in helper.children))
+            files=[p for p in helper.evidence.rglob('*') if p.is_file()]
+            self.assertLessEqual(len(files),192);self.assertLessEqual(sum(p.stat().st_size for p in files),33554432)
+            proof=dict(source_before=before,source_after=after,execution_reservation=execute.call_args.kwargs['evidence_reservation'],
+                handoff_reserved_files=1,handoff_reserved_bytes=len(maximum),tail_files=10,tail_bytes=5505024,
+                actual_handoff_bytes=len(raw),handoff_pin=dict(bytes=len(raw),sha256=H(raw)),evidence_files=len(files),evidence_bytes=sum(p.stat().st_size for p in files),
+                mock_model_processes=sum('--model' in argv for argv in helper.argv),actual_models=0,genuine_loop_calls=1,reconsume_blocked=True,
+                finalization=finalizer['status'],C1_current=H(C(seed['current']['context'])),C1_queued=H(C(seed['queued_context'])))
+            (helper.folder/'genuine-observation.json').write_bytes(C(proof))
+
+    test_current_preflight_binds_completed_original_five_pins=current_preflight_binds_completed_original_five_pins
+    test_current_legacy_queued_v1_v2_keep_original_preparation=current_legacy_queued_v1_v2_keep_original_preparation
+    test_current_closed_shapes_reject_before_consumption=current_closed_shapes_reject_before_consumption
+    test_current_scope_failures_precede_current_read=current_scope_failures_precede_current_read
+    test_current_binding_and_original_file_drift_reject=current_binding_and_original_file_drift_reject
+    test_current_scope_drift_after_reader_rejects=current_scope_drift_after_reader_rejects
+    test_current_handoff_reservation_and_null_pins_finally=current_handoff_reservation_and_null_pins_finally
+    test_current_handoff_capacity_rejects_before_consume=current_handoff_capacity_rejects_before_consume
+    test_current_handoff_packet_limits_before_output=current_handoff_packet_limits_before_output
+    test_current_reader_first_errors_before_consume=current_reader_first_errors_before_consume
+    test_current_handoff_never_overwrites_existing_prefix=current_handoff_never_overwrites_existing_prefix
+    test_current_first_errors_survive_partial_handoff_once=current_first_errors_survive_partial_handoff_once
+
+
+_REGISTRATION_COMPAT_API=None
+
+
+class RegistrationPrepareCompatibilityTests(unittest.TestCase):
+    def setUp(self):
+        from test_codex_conducted_workflow_registration import RegistrationTests,api as registrar
+        self.registrar=registrar if _REGISTRATION_COMPAT_API is None else _REGISTRATION_COMPAT_API
+        self.fixture=RegistrationTests('test_pure_preflight_is_detached_and_not_authority')
+        self.fixture.source_suffix=getattr(self,'source_suffix','.txt')
+        if hasattr(self,'operator_parent_override'):self.fixture.operator_parent_override=self.operator_parent_override
+        self.fixture._testMethodName='actual_host_compat_'+self._testMethodName
+        self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
+        self.queued_context=json.loads(C(self.fixture.context));self.fixture.make_completed_inputs()
+        self.assertEqual(len(self.fixture.meta),16)
+        self.assertNotEqual(H(C(self.queued_context)),H(C(self.fixture.context)))
+
+    def snapshot(self):
+        helper=self.fixture;result={}
+        paths=[p for p in helper.store_root.rglob('*') if p.is_file()]+[helper.original]
+        for path in paths:
+            raw=path.read_bytes();s=path.stat(follow_symlinks=False)
+            result[path.relative_to(helper.root).as_posix()]=dict(bytes=len(raw),sha256=H(raw),device=s.st_dev,inode=s.st_ino,
+                nlink=s.st_nlink,mtime_ns=s.st_mtime_ns,ctime_ns=s.st_ctime_ns,attributes=s.st_file_attributes,reparse_tag=s.st_reparse_tag)
+        return result
+
+    def invoke(self):
+        helper=self.fixture
+        with patch.object(self.registrar,'_operator_parent',return_value=helper.parent):
+            return self.registrar.prepare_registered_conducted_workflow(scenario_id='REG-CASE',requested_model='gpt-6-astra')
+
+    def test_registration_v3_native_publish_and_actual_prepare(self):
+        helper=self.fixture;before=self.snapshot();original_prepare=api._prepare;original_close=Store.close;closed=[]
+        def close(store):closed.append(store);return original_close(store)
+        with patch.object(api,'_prepare',wraps=original_prepare) as stage_prepare,patch.object(Store,'close',close), \
+                patch.object(Store,'__init__',side_effect=AssertionError('NO_STORE_INITIALIZER_DURING_PREPARE')), \
+                patch.object(api,'_execute',side_effect=AssertionError('NO_RUNTIME')) as execute, \
+                patch.object(api,'_finalize',side_effect=AssertionError('NO_RF_FINALIZER')) as finalize, \
+                patch.object(subprocess,'Popen',side_effect=AssertionError('NO_CLI')) as child:
+            result=self.invoke();after_publish=self.snapshot()
+            helper.put(helper.root/'actual-registration-result.json',dict(result=result,source_before=before,source_after=after_publish,
+                class_scope='AUTHORED operator location; real native publisher and validators; no operating approval/profile',
+                host_prepare_calls=stage_prepare.call_count,target_exists=helper.target.exists(),stage_exists=helper.stage.exists()))
+            self.assertEqual(result['status'],'prepared','Actual prepared16/native publish/host5tuple dependency is not ready')
+            self.assertEqual(stage_prepare.call_count,1);stage_owned=stage_prepare.call_args.args[3]
+            self.assertIs(type(stage_owned['store']),Store);self.assertEqual(stage_owned['store'].root,helper.store_root)
+            self.assertEqual(sum(store is stage_owned['store'] for store in closed),1)
+            self.assertEqual(set(stage_owned['current_facts_plan']),{'context','analysis','facts_plan'})
+            config=json.loads((helper.target/'operator-control.json').read_bytes());workflow=json.loads((helper.target/'registered-workflow.json').read_bytes())
+            self.assertEqual((workflow['schema_version'],len(workflow),workflow['context_scope']),(3,14,'completed_current_provided'))
+            self.assertIsNone(workflow['measurement_ref']);self.assertEqual(workflow['measurement_selection_policy'],helper.meta['measurement_selection_policy'])
+            owned=dict(store=None)
+            try:
+                prepared=original_prepare(helper.target,config,'REG-CASE',owned)
+                self.assertIs(type(prepared),tuple);self.assertEqual(len(prepared),5)
+                self.assertEqual(C(prepared[:4]),C([workflow,helper.context,helper.analysis,helper.plan]))
+                self.assertEqual(prepared[4],(helper.target/'response-schema.json').read_bytes())
+                self.assertEqual(C(owned['current_facts_plan']),C(stage_owned['current_facts_plan']))
+                self.assertEqual(C(owned['completed_scope']),C(stage_owned['completed_scope']))
+                self.assertEqual((workflow['context_sha256'],workflow['analysis_sha256'],workflow['plan_input_sha256']),
+                    (H(C(helper.context)),H(C(helper.analysis)),H(C(helper.plan))))
+                post_store=owned['store'];self.assertIs(type(post_store),Store);self.assertEqual(post_store.root,helper.store_root)
+            finally:
+                if owned['store'] is not None:owned['store'].close()
+            self.assertEqual(sum(store is post_store for store in closed),1)
+            self.assertFalse(execute.called);self.assertFalse(finalize.called);self.assertFalse(child.called)
+        connection=sqlite3.connect((helper.target/'workflow-continuation.sqlite3').as_uri()+'?mode=ro',uri=True)
+        try:
+            connection.execute('PRAGMA query_only=ON');rows=connection.execute('SELECT kind,payload FROM codex_conducted_workflow_history ORDER BY seq').fetchall()
+        finally:connection.close()
+        self.assertEqual([row[0] for row in rows],['baseline','permit']);self.assertFalse((helper.target/'workflow-claimed.json').exists())
+        self.assertEqual(list((helper.target/'runs'/helper.meta['permit_id']).iterdir()),[]);self.assertFalse(helper.stage.exists())
+        self.assertEqual(self.snapshot(),before)
+        helper.put(helper.root/'actual-prepare-compat-observation.json',dict(prepared_metadata_fields=16,workflow_fields=14,
+            actual_staging_prepare_calls=1,actual_postpublish_prepare_calls=1,returned_tuple_fields=5,current_fields=['context','analysis','facts_plan'],
+            current_context_sha256=H(C(helper.context)),queued_context_sha256=H(C(self.queued_context)),source_before=before,source_after=self.snapshot(),
+            ledger_kinds=[row[0] for row in rows],known_staging_store_close=1,known_postpublish_store_close=1,
+            substituted_boundary='operator parent location only; native publication/authority-data validators and actual host prepare are real',
+            actual_loop_RF_models=0,operating_profiles_permits_17_changes=0))
+
+    def test_registration_v3_mismatched_data_stays_before_target(self):
+        helper=self.fixture;changed=json.loads(C(helper.analysis));changed['producer']['name']='DIFFERENT-SUPPLIED-ANALYSIS'
+        helper.meta['files']['analysis.json']=helper.put(helper.data/'analysis.json',changed);helper.bind();before=self.snapshot()
+        with patch.object(api,'_prepare',wraps=api._prepare) as prepared,patch.object(api,'_execute',side_effect=AssertionError('NO_RUNTIME')) as execute:
+            result=self.invoke()
+        self.assertEqual(result['status'],'not_prepared');self.assertFalse(prepared.called);self.assertFalse(execute.called)
+        self.assertFalse(helper.stage.exists());self.assertFalse(helper.target.exists());self.assertEqual(self.snapshot(),before)
+        helper.put(helper.root/'before-target-rejection.json',dict(result=result,source_before=before,source_after=self.snapshot(),
+            host_prepare_calls=0,native_target_created=False,actual_loop_RF_models=0))
+
+
+class RegistrationPdfPrepareCompatibilityTests(RegistrationPrepareCompatibilityTests):
+    source_suffix='.pdf'
+
+    def setUp(self):
+        super().setUp()
+        helper=self.fixture;document=helper.context['documents'][0]
+        self.assertEqual((document['format'],document['total_pages'],len(document['pages'])),('pdf',1,1))
+        self.assertEqual(helper.analysis['schema_version'],2)
+        self.assertEqual(helper.analysis['context_id'],helper.context['analysis_context_id'])
+        self.assertEqual(H(helper.original.read_bytes()),document['sha256'])
+        self.assertTrue(all(e['kind']=='pdf_page' for f in helper.analysis['facts'] for e in f['evidence']))
+        store=Store.open_existing(str(helper.store_root))
+        try:
+            with store.connection() as con:
+                self.assertEqual(con.execute("SELECT count(*) FROM intake_jobs WHERE state IN ('queued','running')").fetchone()[0],0)
+                self.assertEqual(con.execute("SELECT state FROM intake_jobs").fetchone()[0],'completed')
+                self.assertEqual(con.execute("SELECT delegated FROM intakes").fetchone()[0],1)
+        finally:store.close()
+
+
+class NativeNamespaceRegistrationTests(unittest.TestCase):
+    def test_managed_native_claim_publish_and_actual_host_prepare(self):
+        import test_codex_conducted_workflow_registration as registration_tests
+        registrar=registration_tests.api;profile_root=api._profile_root
+        native=registrar._operator_parent().parent/'.local'/('dev1-native-registration-'+uuid.uuid4().hex[:12])
+        native.mkdir(parents=True)
+        # Ordinary project state now has one managed native path. Historical
+        # MSIX namespace observations remain retained evidence, not a run gate.
+        self.assertEqual(native,native.resolve(strict=True))
+        self.enterContext(patch.object(registration_tests,'EXTRA_PROOF_ROOT',native))
+        compatibility=RegistrationPdfPrepareCompatibilityTests('test_registration_v3_native_publish_and_actual_prepare')
+        compatibility.operator_parent_override=native/'DGM'
+        compatibility.setUp();self.addCleanup(compatibility.doCleanups)
+        original=compatibility.invoke;observed={}
+        def invoke():
+            result=original();helper=compatibility.fixture
+            observed.update(result=result,lexical_parent=str(helper.parent),resolved_parent=str(helper.parent.resolve(strict=True)))
+            if result['status']=='prepared':
+                with patch.object(api._native_host,'_control_root',return_value=helper.parent/'codex-intake-host'):
+                    actual,_=api._path(profile_root(),directory=True)
+                self.assertEqual(actual,helper.target)
+                observed.update(actual_profile_path=str(actual),resolved_profile_path=str(actual.resolve(strict=True)))
+            helper.put(helper.root/'native-namespace-path-observation.json',observed)
+            return result
+        compatibility.invoke=invoke
+        compatibility.test_registration_v3_native_publish_and_actual_prepare()
+        self.assertEqual(observed['result']['status'],'prepared')
+        self.assertEqual(observed['actual_profile_path'],observed['resolved_profile_path'])
+
+
+class CurrentUnsupportedSourceTests(unittest.TestCase):
+    def test_completed_current_host_and_registrar_reject_markdown_before_current_read(self):
+        from test_codex_conducted_workflow_registration import RegistrationTests,api as registrar
+        helper=RegistrationTests('test_pure_preflight_is_detached_and_not_authority')
+        helper.source_suffix='.md';helper._testMethodName=self._testMethodName
+        helper.setUp();self.addCleanup(helper.doCleanups)
+        helper.meta.update(schema_version=3,context_scope='completed_current_provided',measurement_ref=None,
+            measurement_selection_policy=dict(schema_version=1,kind='unique_same_run_sensor_acquisition'))
+        helper.bind()
+        result=helper.call();self.assertEqual(result['status'],'not_prepared')
+        self.assertEqual(result['errors'][0]['code'],'codex_conducted_workflow_registration_unsupported_schema')
+        workflow=dict(schema_version=3,kind='codex_registered_conducted_workflow',scenario_id='REG-CASE',
+            context_scope='completed_current_provided',context_sha256=H(C(helper.context)),
+            analysis_sha256=H(C(helper.analysis)),plan_input_sha256=H(C(helper.plan)),source_settings=helper.plan['plan']['source_settings'],
+            quantity=helper.q,allowed_tools=helper.meta['allowed_tools'],measurement_ref=None,
+            measurement_selection_policy=helper.meta['measurement_selection_policy'],catalog_sha256=helper.meta['files']['catalog.json']['sha256'],
+            schema_sha256=helper.meta['files']['response-schema.json']['sha256'])
+        helper.put(helper.data/'registered-workflow.json',workflow)
+        config=dict(workflow_sha256=H(C(workflow)),registration_sha256=helper.meta['files']['registered-intake-v1.json']['sha256'],
+            registered_input_root=helper.meta['registered_input_root'],store_root=str(helper.store_root))
+        owned=dict(store=None)
+        try:
+            with self.assertRaisesRegex(ValueError,'codex_registered_conducted_workflow_host_unsupported_schema'):
+                api._prepare(helper.data,config,'REG-CASE',owned)
+            self.assertIsNone(owned['store'])
+        finally:
+            if owned['store'] is not None:owned['store'].close()
+        self.assertFalse(helper.stage.exists());self.assertFalse(helper.target.exists())
+
+
 if __name__=='__main__':
-    if '--boundary' in sys.argv:
+    if '--registration-parent-control' in sys.argv:
+        index=sys.argv.index('--registration-parent-control');control=Path(sys.argv[index+1]).absolute();del sys.argv[index:index+2]
+        if not control.is_relative_to(ROOT/'.local/CRPC-001'):raise ValueError('control source outside owner namespace')
+        spec=importlib.util.spec_from_file_location('labflow._crpc_parent_registration',control)
+        _REGISTRATION_COMPAT_API=importlib.util.module_from_spec(spec);spec.loader.exec_module(_REGISTRATION_COMPAT_API)
+        unittest.main(defaultTest=['RegistrationPrepareCompatibilityTests.test_registration_v3_native_publish_and_actual_prepare'])
+    if '--registration-compat' in sys.argv:
+        sys.argv.remove('--registration-compat');unittest.main(defaultTest=['RegistrationPrepareCompatibilityTests'])
+    if '--current-seed' in sys.argv:
+        index=sys.argv.index('--current-seed');_CURRENT_SEED_FILE=sys.argv[index+1];del sys.argv[index:index+2]
+    if '--current-seed-prepare' in sys.argv:
+        LOCAL=ROOT/'.local/wch'/uuid.uuid4().hex[:8];seed=_current_seed();print(json.dumps(dict(seed_file=seed['seed_file'],setup=seed['setup'])));raise SystemExit(0)
+    groups={'--current-preflight':['current_preflight_binds_completed_original_five_pins','current_legacy_queued_v1_v2_keep_original_preparation'],
+        '--current-shapes':['current_closed_shapes_reject_before_consumption'],
+        '--current-binding':['current_binding_and_original_file_drift_reject'],
+        '--current-scope':['current_scope_failures_precede_current_read','current_scope_drift_after_reader_rejects'],
+        '--current-handoff':['current_handoff_reservation_and_null_pins_finally','current_handoff_capacity_rejects_before_consume',
+            'current_handoff_packet_limits_before_output','current_reader_first_errors_before_consume',
+            'current_handoff_never_overwrites_existing_prefix','current_first_errors_survive_partial_handoff_once'],
+        '--current-genuine':['current_genuine_completed_same_snapshot_mock_once']}
+    group=next((key for key in groups if key in sys.argv),None)
+    if group is not None:
+        sys.argv.remove(group);LOCAL=ROOT/'.local/wch'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['CurrentWorkflowTests.'+name for name in groups[group]])
+    elif '--first-failure' in sys.argv:
+        sys.argv.remove('--first-failure');LOCAL=ROOT/'.local/fhf'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.failure_first_ordinary_survives_late_store_controls',
+            'WorkflowHostTests.failure_first_ordinary_survives_late_ledger_control',
+            'WorkflowHostTests.failure_first_control_survives_late_ordinary',
+            'WorkflowHostTests.failure_two_controls_keep_first_object',
+            'WorkflowHostTests.failure_first_close_error_with_no_prior_failure'])
+    elif '--selection-preflight' in sys.argv:
+        sys.argv.remove('--selection-preflight');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_explicit_v2_prepares_exact13_without_dispatch'])
+    elif '--selection-genuine' in sys.argv:
+        sys.argv.remove('--selection-genuine');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_genuine_v2_mock5_preserves_selection_and_artifact_chain'])
+    elif '--selection-boundary' in sys.argv:
+        sys.argv.remove('--selection-boundary');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_explicit_v2_prepares_exact13_without_dispatch',
+            'WorkflowHostTests.selection_closed_shapes_fail_before_permit_consumption',
+            'WorkflowHostTests.selection_v2_preserves_original_quantity_source_context_and_hash_checks',
+            'WorkflowHostTests.selection_v2_first_control_survives_later_owned_store_close'])
+    elif '--selection-blocked' in sys.argv:
+        sys.argv.remove('--selection-blocked');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_bad_version_preserves_original_failure_and_blocked_evidence'])
+    elif '--selection-legacy' in sys.argv:
+        sys.argv.remove('--selection-legacy');LOCAL=ROOT/'.local/wsh'/uuid.uuid4().hex[:8]
+        unittest.main(defaultTest=['WorkflowHostTests.selection_v1_keeps_original_finalizer_keywords_and_receipt'])
+    elif '--boundary' in sys.argv:
         sys.argv.remove('--boundary')
         names=['WorkflowHostTests.'+name for name in WorkflowHostTests.__dict__ if name.startswith('boundary_')]
         unittest.main(defaultTest=names)

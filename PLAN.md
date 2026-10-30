@@ -1,5 +1,17 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+## 2026-10-31 개발 경로 통합 우선
+
+| 작업 | 현재 상태·다음 검증 | 담당 |
+|---|---|---|
+| 기준·고정 공간 이전 | integration/dev1~4 실제 이전·원 Git 상태 보존. 관리 루트는 `.local/development` | 총괄 |
+| 고유 자료 인수 | 160폴더 일반 파일520,024/51.52GB·ADS15/750B catalog 완료. Git158 refs/reflog/object 대조 통과. private bare 최종 검사와 실제 내용 보존 후에만 중복 삭제 | 보존·Git 담당/총괄 |
+| 실행 경로·상태 | ordinary AppData211개 전량 SHA/native identity 대조·이전. helper/guard·이력 alias 코드 독립 qualified Yes. 공통 Python/Android SDK 이전·현재 참조 수정 진행 | 경로 담당 |
+| 재발 방지 | AGENTS에 고정 공간·cwd/branch guard·runs/toolchains/archive·보존 후 정리 규칙 반영. 담당 실제 적용 ACK·새 경로 회귀·커밋/푸시·원격 대조가 남음 | 총괄 |
+| 원 Goal 복귀 | D2 목적별 prompt 투영 aedb381, D3 guest RF 36619b9, D4 실제 시도 조회 9f8b53a의 미통합 검수/수정. 정리 이후 진행 | 개발1~4/총괄 |
+
+원 실행·실패·permit·모델 회계는 불변이다. Codex25/25·Vertex6/3072 소진을 유지하고 실제 모델/실물 실행을 추가하지 않는다. 이전 전후 증거는 관리 루트의 `runs/migration-20261031`에 보관한다. 아래 계획·수집·기능 상태는 각 당시 이력이며 관리 경로는 최신 규칙이 우선한다.
+
 2026-10-25 [통합061](handoff/development/INTEGRATION-061.md): 개발2 단일 가상 행동 효과평가 0c7 신규3을 독립 qualified Yes 뒤 기능3f99c543/source288에 인수했다. 새 총괄 관련 Python124 PASS와 기존286 raw 불변을 확인했다. 독립 원42는 일치41·준비 형상 불일치1을 보존하며 별도 선봉인2 PASS와 합산하지 않는다. 메모리 증거의 일관성·관측효과만 평가하고 전체 task/권위/실물 검증은 미완료다. 담당 첫 준비의 임시 raw 미보존·traceback만 보존 한계도 남긴다. 개발1 G3·개발3 동일입력 비교·개발4 제공기록 화면의 실제 구현을 유지하고 개발2 저장기록 readonly 연결 계약을 다음 배정했다. P01 B052 혼합11 구조확인/known550쪽+raw보류1/쪽수null의 인수·후행대조를 닫아156/156·corpus121/121·보존142/전체쪽수null/known부분9741을 구별한다. 동일 Vertex6/3072 소진·무료크레딧 전용·새실모델0·사용자준비0이며 아래는 당시 기록이다.
 
 2026-10-25 [통합060](handoff/development/INTEGRATION-060.md): 개발3 가상작업자 동일입력 Codex/Vertex 비교 설계·계획2를 private 정적Yes·공개53필드 type/C1/본문규범2 독립Yes 뒤 게시했다. 정보부족 합성case1·기존API3/row15/batch8·후보형식/binding만 고정하고 과업/행동/effect/closedloop·등록8은 후속이다. 독립12논리 봉인은미실행이며5구체seam은첫관측전후행고정한다. source286/기능8b5d362b 불변, 새제품0이다. 개발1G3·개발2효과평가·개발4제공기록화면은정확SETUP/새봉인뒤CORE-GO를실제로받아담당구현을잇는다. P01B050 후행대조154/154·corpus119/119·보존118≠적격118/대상18·690쪽이다. 새실모델0/동일소진Vertex6/3072·무료크레딧전용/비용null·사용자준비0이며 아래는당시기록이다.
@@ -198,19 +210,21 @@ P01 인수 색인 v1의 7개 packet·105개 inventory 파일·로컬 원본 22�
 
 ### 2026-10-25 디지털 트윈 목표와 첫 연결 현황
 
+2026-10-27 `GOAL-PREHARDWARE-001` 진행. schema HTTP400 원 실패1과 재개 preflight의 not_run을 보존하고 같은 합성 시험건에서 실제 Codex7회 정상 JSON/도구 dispatch를 관측했다. 원17+실패1+후속7=누적25/상한25·잔여0이다. 가상 DUT 시작·센서 취득/읽기로 raw−19.5dBm(acquisition tick15/setup18)을 얻었고 독립 Decimal과 일치했다. 그러나 마지막 결정은 stop 대신 advance여서 decision_budget/bounded, finalizer held/execution_incomplete·builder0·저장 결과/초안 없음이다. 실제 연결/형식 성공과 전체 업무 실패를 구별하며 독립 평가 b590885를 보존했다. 원/후속 loop 합산93.094초·회당 최대24.14초/60초·재시도0, 새7회 관측 usage 부분합 input379522/output843/reasoning159·전체비용/토큰상한 미확인이다. 원 profile35파일/SQL/실패 receipt와 u01의131파일은 불변이다. 사용자 지시에 따라 자체 달력 만료만 제거한 bacdbb2와 terminal prefix 호환9a14414는 독립 검수·실제 retained 기록 readback 뒤 수용했으며 원 permit/소모 이력을 바꾸지 않았다. 새 한도/프로필 우회·추가 Codex/Vertex 호출0이다. 정확 N9030A subset603614d/de2d766은 원 No/C1을 보존한 독립 재검수2 Yes 뒤 수용했고 같은 첫 source6의 analyzer through 경로−0.75+11.75=11dBm·invalid 설정 상태 보존을 총괄이 확인했다. Android 공식 SDK4/561파일 무결성은 확인했지만 OS/ADBserver0이며 최신 RAM1895<3584MiB다. 새 guest RF bridge 후보의 독립 No/C1·C2는 담당 수정 중이다. 종료 지침01c8d65를 독립5 qualified 뒤 수용했고 새 root PDF/MOCK5/runtime1→저장/DRAFT 회귀1을 통과했으나 실제 행동 개선은 미검증이다. 개발2는 전체 근거를 보존하는 목적 관련 prompt 투영, 개발4는 실제 시도/보류 조회 화면을 구현 중이다. 가상 MOCK 종단의 저장/초안 성공을 실제 AI 업무 성공으로 대체하지 않는다. 규격/방법 자동 판단·규범 판정·실측/현장/전체 시험소는 미완료다. 공유/원본 읽기전용·Un-licensed 우선·Licensed/raw 보류와 무료 크레딧 한도를 유지한다. P01 채팅 도구 부재로 신규 수집 전달0이며 기존 근거를 재사용한다. [현재 배정](handoff/development/NEXT-004.md#goal-prehardware-001--2026-10-26-명시-재개)을 따른다.
+
 최종 목표는 **디지털 트윈 기반 AI 무인시험소**다. 제품·의뢰 정보에서 목적·시장과 적용 범위를 이해하고, 근거 있는 방법·계획, DUT·장비·경로 실행, 원본 취득, 보정·계산·판정, 저장·성적서·독립 검토를 같은 시험건으로 연결한다. 정상 지원 범위에서는 사용자가 제품 분류·규격·조건·단계 진행을 반복 지정하지 않는다. 첫 실증의 물리 연결·교체·시료 배치는 사람이 수행하며 자동 물리 작업은 전체 목표의 후속 단계다.
 
-현재 갱신: 2026-10-26 통합066, 기능 `2d56a01b` / 고정 source/runtime 검증 모집단332. 첫 합성 종단·오류·현재 사실/저장 검수를 작은 단위로 수용했다. 각 실행·검수 분모를 전체 완성률로 환산하지 않는다. 총괄의 기존 전체 소스 목록 검사는 바이트 SHA 대조이며, 그 목록만으로 native 메타데이터까지 검증했다는 표현은 정정한다. 별도 원본·담당·저장 파일 native pin 검사의 실제 범위는 유지하고, 이후 전체 소스의 관측 native 보존은 별도 전후 목록으로 확인한다.
+현재 갱신: 2026-10-26 통합066, 기능 `b728f78b` / 고정 source/runtime 검증 모집단333. 신규 현재 질문 test1을 포함해 이전332에서 명시적으로 증가했다. 첫 합성 종단·오류·현재 사실/저장 검수를 작은 단위로 수용했다. 각 실행·검수 분모를 전체 완성률로 환산하지 않는다. 총괄의 기존 전체 소스 목록 검사는 바이트 SHA 대조이며, 그 목록만으로 native 메타데이터까지 검증했다는 표현은 정정한다. 별도 원본·담당·저장 파일 native pin 검사의 실제 범위는 유지하고, 이후 전체 소스의 관측 native 보존은 별도 전후 목록으로 확인한다.
 
 | 구분 | 현재 재사용 가능한 구현·증거 | 정확한 미완료 연결 / 다음 수용 조건 |
 |---|---|---|
-| 자료 확보 | Un-licensed·장비/DUT·공개 사본 private 색인. 보존569PDF와 대상18PDF/690쪽·전체쪽수null을 구별, B085~B088 새46PDF 제한 ACK/후행 readonly 대조 종료 | collector192/corpus157, known40615쪽은 부분합·unknown1. raw 보관과 본문·기관/발행일·모델·권리·전수 검수는 별도. 공유/원본 읽기전용·공식 FCC 대응0 |
+| 자료 확보 | 보존662PDF와 대상18PDF/690쪽·전체쪽수null을 구별. B093~B096 새46PDF 제한 ACK/후행 readonly 대조 종료 | collector200/corpus165·known47745쪽 부분합/unknown1. copytrue1도 권리·본문·규범·훈련 승인 아님. 공식 FCC 대응0·전수/기관/발행일/모델 검수 별도·공유/원본 읽기전용 |
 | 내용·근거 검수 | P01 첫 조건·N01/XML·6규칙 metadata, 방법 관계3/근거metadata8/미해결12를 private 인수/후행 종료 | 사례 peak/MCS6와 개발 on-average/MCS0·현행 KDB/ANSI·판본/plane/보정·동일 조건 IO/split/holdout 미확정. 반복 설정/PASS를 규범으로 승격하지 않음 |
-| 규격·방법 판단 | 명시 source6→조건 gate·문법002·TXT/PDF readonly facts·현재 자료 CLI·현재 Store gate를 수용 | 실제 Codex17 원문은 조건 결합/명시 duty 단위 두 질문으로 blocked이며 doc-only 재검수도 같은 부족을 확인. 규격·판본·한계 자동 확정 미완료. G3 등록의 PDF/schema2 지원과 queued/완료 C1 차이는 실제 연결 공백이며 개발1·2 다음 구현 |
-| 가상 모델·시험방법 | 같은 DUT/장비/경로·setup/취득·journal/report→result builder·native DRAFT writer·finalizer576 수용. 불확도805/root25는 명시 성분·상관/k 근거 없으면 hold/null | 합성 상태/산술 모델이며 실제 보정·물리 정확도 미검증. 명시 quantity/기준면/부호/이미보정 부족은 null. 불확도 DRAFT 부록17cf 검수 중. 유일 acquire/최초 완료 선택 cc72의 I1은 e258로 수정·독립8/총괄15 수용; 선택 finalizer7226+e258 qualified 수용: 총괄 원11PASS/분리 dependency1PASS, mixed first-import 준비 실패1 보존 |
-| AI 자율 실행 | 실제 Codex 접수17번째 strict/독립 의미3 PASS. 같은 runtime 도구/관측/종료 loop·provenance·정식 native permit host와 등록 최초 오류 우선 수용 | 실제 AI 전체 가상시험 종단 미실행. 명시 선택 host87/등록226은 각각 기존3파일 동결·독립 검수 중. queued 원 context와 completed readonly context는 다르고 host가 분석 job 완료를 보장하지 않음. 원17/동일 Vertex 소진·unknown 비용 초기화0 |
-| 전체 가상 업무 | opt-in 합성 PDF→원 facts/계획→native MOCK5→측정/보정→JSON/DRAFT→보호 API/화면. 저장 aac9는 총괄 Node12·보존 정상/무효/RF단절3의 genuine DOM6·별도 typed26, CLI280+d7는 새9 PASS | conducted_synthetic/on/source_output 한 조건·task/conformity not_assessed·AI unknown. transport/recovery-failure는 현 진입점 미지원. 새 CLI startupaae/입력9 저장873·keyboardbc49·freshoperator1c16은 독립 검수 중. 기존17의16PASS/자식관측1 오류6은 보존, 신규9로 소급 교체하지 않음. 실제 AI·규범/전체 인증 완료 아님 |
-| 실측 대조·보정 | 순수 비교/명시4파일 CLI와 현재 저장 결과→비교 bridge499(root8)·선택 CLI280를 수용. 독립 원12는10PASS/No2, 별도 올바른 root-venv genuine1은 matched→not_assessed/reference_missing | 같은 방법/조건/metric/plane·단위·명시 tolerance·lineage/split 없으면 수치null. 참조 진위·실측 정확도·허용 차이/불확도 권위·보정/독립검증 자료 분리·새 실측 대조 미실행 |
+| 규격·방법 판단 | source6 조건/문법 gate·TXT/PDF readonly facts·현재자료 CLI·현재 Store gate, G3 queued PDF/schema2 context/prompt/strict page 인용 수용(독립12/총괄15) | 실제 Codex17 원 조건 결합/명시 duty 단위 두 질문은 blocked 그대로. 규격·판본·시험방법/한계 자동 확정 미완료. common once/schema2 bdfa·계약7d567은 독립 원14PASS/관측기No2와 별도 새 완료2PASS·총괄19 뒤 수용. native PDF gate41·소비 전 실제 공통 preflight·최초 오류와 문구024를 독립12/총괄 신규·영향11 뒤 수용. 이는 memory OS/permit seam이며 실제 운영 권위 검증이 아님 |
+| 가상 모델·시험방법 | 동일 DUT/장비/경로·setup·취득·무효 전파·journal/report→결과/초안·명시 불확도 부록 재사용. N1911A SCPI/표시만 변환·실제 adbutils 자기 loopback→같은 Fleet 수용. 공식 Android SDK4와 archive 기반561파일 root 무결성1 PASS | Android OS 부팅/ADBserver0·OS guest RF 상태 연결 미완료(RAM3097<3584MiB). 정확 N9030A SCPI 신규3 실제 배정. 합성 모델/선언 산술이며 실물 보정·물리 정확도 미검증; quantity/plane/한계·불확도 근거 부족은 null/보류 유지 |
+| AI 자율 실행 | 실제 접수17과 이번 schema 실패1+후속7의 retained CLI 기록/동일 runtime 도구·관측 loop 재사용. 후속7 strict 응답/dispatch 정상·fresh sensor raw−19.5와 독립 산술 일치 | 후속은 stop 미선택/decision_budget으로 bounded, 저장/초안 held·업무 실패. 누적25/상한25·잔여0·추가 호출0. 종료 지침/정확 legacy decode는 개발2, 실제 시도·보류 읽기 화면은 개발4 구현 중. 실제 AI 전체 업무 재검증은 소프트웨어 수정 뒤 별도 잔여 조건, 규범/물리 정확도 미평가 |
+| 전체 가상 업무 | startupaae/입력9 저장873/export5bc4+writercac1·keyboardbc49·freshoperator1c16·운영문구c55 수용. 새 PDF→같은 계획→native MOCK5/가상runtime1→측정/보정→저장3→원 startup의 genuine1440 화면1, 독립 Decimal80 대조 | 개발용 conducted_synthetic/on/source_output 한 조건. 공개 --port 시연 도구222·strict URL ready 수정3bc도 수용: 원 genuine parent1/독립 typed4/총괄 Node구문1을 구별하고 최종 source의 새 genuine --port 실행은 미실행이다. 실제 AI unknown·task/conformity not_assessed·한계/u/verdict null. 원873 I1은 delta10PASS/root28 뒤 해결하되 원11PASS/FAIL1 보존. 통신/복구실패f507은 새 root 공개 CLI2의5/8결정·각runtime1·같은journal/fixed3에서 incomplete/execution_incomplete/null·저장complete를 확인. 실제 transport 예외·실물 복구는 미검증이다. 최소 질문22906·산출물 없는 현재 GET776은 총괄 Node8/Python13 뒤 수용. 독립 typed8/격리 app DOM3 및 genuine blocked GET1을 구별하며, current envelope→실제 최소 질문 UI994는 독립 typed10/원 DU GET1/full app1440 1·총괄 신규8/영향8 뒤 수용. configured 실패/stale는 과거 저장으로 대체하지 않으며390 keyboard 도구2는 후속 |
+| 실측 대조·보정 | 같은 새 저장사본에서 공개 Python 선택 비교 CLI1: readback matched·원본131/native·source332 불변, reference/policy/lineage null→not_assessed/exit2. 원 reason이 object인 관측기 문자열 가정 실패1은 보존·원 raw 재판독만 수행 | Decimal80은 산술 검증이며 허용차/불확도·실측 진위/물리 정확도 아님. 실제 참조·보정/독립 평가 split·새 실측 대조 미실행. 비교 수치·권위 근거가 없으면 null |
 | 현장 업무·물리 작업 | 시료 취급/배선/이동까지 전체 목표에 유지, 첫 실증은 사람이 물리 연결·교체·시료 배치 | 실장비·현장·자동 물리 작업 검증 미실행. 일부 가상/저장/API 성공을 전체 시험소 완료로 표시하지 않음 |
 
 
@@ -218,7 +232,7 @@ P01 인수 색인 v1의 7개 packet·105개 inventory 파일·로컬 원본 22�
 
 기존 프로필·원본·실패·소유 작업을 보존한다. 가상 계산/성적서 재생/새 실측, 연결 성공/의미 평가/작업 성공/물리 정확도를 구별한다. 모델에는 적용 범위·파라미터 근거·방법/모델 버전·검증 수준·한계·미확인을 남기고 보정용 자료와 독립 검증용 자료를 제품군/FCC ID/개정/분할/동일 데이터 그룹으로 분리한다. 고정 기대값 반환은 물리 예측 검증이 아니다.
 
-최신 실제 소유·후속은 [후속 대장](handoff/development/NEXT-004.md)의 FIRST-TWIN 배정표를 따른다. Un-licensed 우선·Licensed/raw 보류, 원본/복호문/암호/실측 비공개 경계, 무료 크레딧 전용·동일 소진 Vertex 6회/3072 예약 토큰과 기존 위임을 유지한다. Codex 실제 누적17/현재 단일 permit 소진·재시도0·사용량 부분 관측/비용null이다. 실제 API 연결·의미 평가·작업 성공·물리 정확도는 별도이며 새 승인값/예산 reset을 만들지 않는다. 현재 독립 가능한 구현에 필요한 새 사용자 결정·준비는 없다.
+최신 실제 소유·후속은 [후속 대장](handoff/development/NEXT-004.md)의 FIRST-TWIN 배정표를 따른다. Un-licensed 우선·Licensed/raw 보류, 원본/복호문/암호/실측 비공개 경계, 무료 크레딧 전용·동일 소진 Vertex 6회/3072 예약 토큰과 기존 위임을 유지한다. Codex 실제 누적25/원 permit과 수동 계속 한도 소진·재시도0·사용량 부분 관측/비용null이다. 실제 API 연결·의미 평가·작업 성공·물리 정확도는 별도이며 새 승인값/예산 reset을 만들지 않는다. 현재 독립 가능한 구현에 필요한 새 사용자 결정·준비는 없다.
 
 기존 RF·EMC 시험소에서 의뢰 접수, 제품·시료 확인, 적용 규격 판단, 시험방법 구성, 자원 배정, 시료 취급, 장비 제어, 원시 데이터 수집, 계산·판정, 성적서, 인증 신청 지원, 사후 품질 관리를 하나의 추적 가능한 자율 업무로 연결한다.
 

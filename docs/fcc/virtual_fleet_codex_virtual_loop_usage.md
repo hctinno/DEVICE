@@ -1,5 +1,17 @@
 # Codex의 동일 가상 runtime 판단 루프
 
+2026-10-26 schema 호환/하향 한도: [현재·역사 프로필과 검증 범위](codex_operator_schema_compat_usage.md)를 따른다. 새 실행에는 current_response_schema_bytes()의 exact 3052B만 허용하며 역사 oneOf 프로필은 producer 전에 invalid_input으로 거절한다. 선택 keyword model_process_limit=8, wall_seconds_limit=180은 각각 native 정수1..8, 유한 native 숫자0<wall<=180의 더 작은 상한만 허용한다. 선언·하네스 decision/wall·remaining delegation·예약/admission·최종 elapsed 대조는 같은 값을 사용한다. 기존 기본 8/180, producer≤60/retry0과 원 소비 기록을 보존하며 권한을 발급하지 않는다.
+
+## caller의 외부 증거 예약 — 2026-10-26
+
+공개 run_codex_virtual_loop는 optional evidence_reservation=None을 지원한다. None은 원 경로/한도/DTO와 추가 keyword0을 유지한다. explicit native dict exact2 files/bytes의 strict native int를 각각0~192/0~33554432에서 검증하고 새 복사본의 immutable tuple로 분리한다. 유효성 검사는 파일/런타임/producer 이전이며 bool·subclass·추가/누락·음수/초과는 invalid_input이다. caller alias 변경으로 이미 고정한 예약을 줄일 수 없다.
+
+loop known 안의 실제 파일과 known 밖의 caller 예약은 중복하지 않는다. 모든 write·producer 선예약·final=True receipt도 기존 space 한 곳에서 실제 known+이번 예약+caller 예약을 동일192파일/32MiB에 더해 거절한다. global _LIMITS·8decision/180초/producer60초/retry0·원 DTO의 closed shape는 바꾸지 않는다. 예산을 발급·초기화·환불하거나 권위를 부여하지 않는다. 기존 producer9 cap14159872B/decision 선예약16257024B·13파일/8회 독립합113278976B는 host 상계 증명으로 쓸 수 없어 원 근거와 한계를 보존한다.
+
+journal은 직접 writer 경로도 같은 admission을 지킨다. 기존 Journal의 순수 _header/_record를 읽기 전용으로 재사용해 실제 인메모리 provenance·header·retained event마다 canonical envelope·hash64·개행을 포함한 완전한 line bytes를 계산해 합산하고, 생성 전에 space(total,1)을 통과시킨 뒤 원 Journal을 한 번 생성한다. 실제 chain의 이전 hash와0*64는 모두64 hex 문자라 직렬화 길이가 같다. 원 writer·행·hash·검증/원천 Journal 모듈은 바꾸지 않는다. 9MiB 후행 읽기 cap이나 사후 파일 크기는 선예약의 근거가 아니다.
+
+독립 정적 원 No/C0I1M0의 journal header/framing closure 부재는 별도 보존했다. 새 동적 경계는 진짜 public Journal의 긴 provenance header+유효 termination1 참조 bytes를 기준으로 딱 맞는 잔여 bytes/파일1을 허용하고1byte 부족이면 생성 전에 차단한다. 실제 loop.run/producer는 실행하지 않는다. 새8논리 proper GREEN/0.140초와 별도 signature2/0.130초, API 미지원/별도 framing RED·첫 GREEN 준비 오류의 분모와 기록은 [adapter 문서](intake_plan_virtual_execution_usage.md)에 구별한다. 원wall257초>180 한계와 actual 모델/물리/완전 종단 미검증은 그대로이며 이 seam을 host 공동예산 수용으로 승격하지 않는다.
+
 2026-10-25, Asia/Seoul. DEV2-CODEX-PERSISTENT-VIRTUAL-LOOP-001.
 
 한 fresh SensorTrial을 만들고 관측→Codex 응답→strict wire→허용 가상 도구1회→같은 runtime의 다음 관측을 반복한다. 첫 지원 goal은 acquire_fresh_rf_sensor다. configure·RF 수치 판정·스마트폰 전체 FCC 업무·실물 운전의 완료를 뜻하지 않는다.
@@ -14,7 +26,8 @@ def run_codex_virtual_loop(
     executable: Path, requested_model: str, scenario: str,
     evidence_dir: Path, execution_origin: str, cancel_event=None,
     source_settings=None,
-    plan_binding=None, quantity=None,
+    plan_binding=None, quantity=None, evidence_reservation=None,
+    model_process_limit=8, wall_seconds_limit=180,
 ) -> dict:
     ...
 ```

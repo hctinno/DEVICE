@@ -1,5 +1,113 @@
 # Conducted workflow의 수동 operator 준비
 
+## current schema 신규 준비 — 2026-10-26
+
+DEV1-GOAL-MANUAL-CONTINUATION-001 후 새 initial 준비는 [schema helper](../../labflow/virtual_fleet/operator_response_schema.py)의 current exact3052/e045c19a만 수용한다. legacy aa321fa5가 남은 과거 profile은 host `_prepare`가 원 bytes/hash를 검증해 읽을 수 있지만 새 등록·initial 실행은 거절한다. 아래 aa321 기록은 당시 이력이며 자동 변환·profile 수선 지시가 아니다.
+
+원 소비된 단일 permit·baseline17을 새 profile로 다시 발급하지 않는다. 같은 첫 합성 시험건의 known schema400 실패 뒤 남은7은 [별도 명시 수동 계속 경로](codex_registered_workflow_continuation_usage.md)에서 원 사용자 grant·총괄의 좁은 해석 기록·원 failed/receipt pins를 native로 검증한다. 이 등록 API는 그 기록을 발급하지 않고 원 scope maximum_workflows1과 기존 publication 계약을 유지한다.
+
+## MSIX native 경로의 동일 객체 확인 — 2026-10-26
+
+완료 PDF 연결 후 실제 MSIX KnownFolder에서 lexical 경로와 `resolve()`의 LocalCache 경로가 달라 staging이 실패한 기록은 보존한다. 이 후속 수정은 고정 lexical authority root를 유지하며 `_IO`의 claim·publish에서 같은 객체를 검증한다. 기존 `_Tree`/Windows backend가 핸들로 고정한 디렉터리 ID와 lexical/해석 경로의 native ID가 모두 같아야 한다. 두 경로의 모든 조상은 기존 native 경로 검사로 reparse/junction을 거절한다. 최초 부모의 ID·해석 경로는 이후에도 같아야 하고, stage/target의 해석 부모관계와 pinned parent에서 name-relative 재개방한 자식 ID가 일치해야 한다. 게시 후에도 같은 target 객체를 다시 확인한다. 해석된 경로를 새 authority root로 바꾸지 않는다.
+
+실제 MSIX namespace의 자기 `AppData/Local/.local/dev1-*` 일회용 폴더에서 새 authored PDF의 실제 등록 API → native claim/게시 → actual host `_prepare` staging1/게시 후1의 5tuple을 확인했다. host의 원 `_profile_root` → `_path` 흐름도 고정 KnownFolder 반환값만 일회용 위치로 대체하여 확인했다. 원 운영 KnownFolder 파일·권위·실패 prefix를 변경하거나 신규 운영 permit을 발급하지 않았다. 같은 배포 namespace가 없는 환경에서는 이 검사가 재현 불가를 명시적으로 실패시키며 mock resolve로 양성 처리하거나 skip하지 않는다.
+
+`NativeNamespacePathTests`는 실제 junction, 다른 부모로 게시, 해석된 target 경로 이탈, 다른 디렉터리 ID를 거절한다. 마지막 두 해석 오류 주입은 test-only `Path.resolve` seam이며 실제 MSIX 양성에는 이 대역이 없다. 기존 TXT 양성·native 게시 충돌·최초 write control/후행 close 오류 회귀도 좁게 확인한다. 기존 PDF9 전체 suite를 반복하지 않는다. 새 임시 디렉터리 확인 핸들은 디렉터리용 once-only close를 사용하며 최초 예외와 실패 prefix를 보존한다. 계보·예산·실제 모델 호출0·위임 범위는 그대로다.
+
+```powershell
+python -B -X utf8 -m unittest discover -s tests -p test_codex_registered_conducted_workflow_host.py -k NativeNamespaceRegistrationTests -v
+python -B -X utf8 -m unittest discover -s tests -p test_codex_conducted_workflow_registration.py -k NativeNamespacePathTests -v
+```
+
+## 완료 current PDF 연결 — 2026-10-26
+
+DEV1-GOAL-COMPLETED-PDF-001은 기준 b92af6eb2080d273bf98f50222a182d663a87c7b에서 명시 schema3 `completed_current_provided` 등록에 TXT와 PDF만 허용한다. 아래 최초 v3의 TXT 한정 설명은 당시 이력이다. schema1/2 분기, metadata exact16·workflow exact14, 권위·계보·원17/추가8·180초/60초/retry0·원 literal 응답 schema는 변경하지 않는다. `.md` 등 다른 형식이나 단순 확장자 검사 제거를 지원하지 않는다.
+
+PDF는 원 파일과 SHA를 유지한 채 기존 native 등록 검증, 실제 PDF parser/retained extraction, schema2 page citation, current-context/analysis/facts-plan/source binding을 통과해야 한다. 동일 Store의 완료 job·현재 revision/source·ready plan과 active queued/running0을 요구하며 등록 전후 재대조도 유지한다. PDF를 TXT로 바꾸거나 preflight 성공만으로 host 준비를 대체하지 않는다. host에도 schema3의 TXT/PDF 허용 목록을 명시한다. 기준 host에는 별도 확장자 guard가 없었다.
+
+새 authored 한 페이지 PDF를 genuine scan → proceed → claim → strict schema2 decoder → complete로 준비했다. 공개 등록 API가 실제 native staging/게시를 수행하고 원 host `_prepare`를 staging과 게시 후 각각 한 번 호출해 5tuple을 확인한다. 원본 PDF·Store 전체 bytes/native metadata는 전후 동일하다. PDF 양성1·제공 분석 불일치1, 인용/분석 schema/원본 drift/완료 PDF의 legacy 분기 거절4, 다른 파일형식의 등록/host 거절1, 기존 TXT 회귀2가 통과했다. 등록기 TXT guard에 의한 양성 RED와 host 형식 guard 부재 RED를 보존했다.
+
+```powershell
+python -B -X utf8 -m unittest discover -s tests -p test_codex_registered_conducted_workflow_host.py -k RegistrationPdfPrepareCompatibilityTests -v
+python -B -X utf8 -m unittest discover -s tests -p test_codex_conducted_workflow_registration.py -k CompletedPdfRegistrationTests -v
+python -B -X utf8 -m unittest discover -s tests -p test_codex_registered_conducted_workflow_host.py -k CurrentUnsupportedSourceTests -v
+python -B -X utf8 -m unittest discover -s tests -p test_codex_registered_conducted_workflow_host.py -k RegistrationPrepareCompatibilityTests -v
+```
+
+운영자 위치와 위임 record는 일회용 test 경계다. 실제 KnownFolder·운영 permit·CLI/모델·실장비·고객 자료·원17 기록·사용량/token ledger는 읽거나 변경하지 않았다. 실제 모델 호출은0이며 이 검증은 운영 권한 발급·실측·실제 모델 능력의 증거가 아니다. 전체 suite는 이번 좁은 검증 분모에 포함하지 않는다.
+
+## 완료 current 제공 등록 v3 — 2026-10-26
+
+DEV1-COMPLETED-CURRENT-REGISTRATION-001은 공개512ba0fb65c8ca0510f4196388bc038e3b6c64a0의 독립 clone/전용 branch에서 기존 registration core/test/usage3만 확장한다. 아래 v1/v2 및 최초 오류 기록은 당시 이력이다. public API 두 개와 CLI 인자, 반환 exact11, 원 `_FILES`5, trusted 위임 exact8, control/anchor/permit/ledger 및 `_LIMITS`는 그대로다. 새 위임·전역 예산·자동 승인값을 만들지 않는다.
+
+prepared-inputs-v1.json은 schema3일 때만 원 schema2 exact15에 `context_scope: "completed_current_provided"`를 더한 exact16이다. 키는 schema_version/kind/scenario_id/requested_model/journal_id/permit_id/registered_input_root/store_root/executable/expires_at/quantity/allowed_tools/measurement_ref/files/measurement_selection_policy/context_scope다. measurement_ref는 null, 정책은 원 native exact2 `{schema_version: 1, kind: "unique_same_run_sensor_acquisition"}`여야 한다. bool/float version·추가/누락 키·다른 scope·ref 동시값·정책 None을 staging 전에 거절한다. schema1 exact14와 schema2 exact15는 기존 분기를 유지한다.
+
+생성 workflow schema3은 원 v2 exact13에 같은 context_scope만 더한 exact14다. 원 키는 schema_version/kind/scenario_id/context_sha256/analysis_sha256/plan_input_sha256/source_settings/quantity/allowed_tools/measurement_ref/catalog_sha256/schema_sha256/measurement_selection_policy다. 등록 파일은 기존 registered-intake-v1.json/analysis.json/plan-input.json/catalog.json/response-schema.json 5개이며 새 context 파일이나 수동 current payload를 받지 않는다. analysis/plan은 canonical LF0 원문, schema는 원 literal3052B/aa321 SHA를 유지한다.
+
+첫 v3 입력은 합성 TXT만 지원한다. 완료된 target job 정확1개, 현재 intake/revision/source와 revision fingerprint/files가 선택과 같은지, 해당 Store 전체의 다른 queued/running job이 없는지 readonly SQL로 확인한다. 실제 intake_sources.root와 intakes.bundle을 합친 native 디렉터리는 등록 input root와 같아야 한다. 같은 bytes를 복제한 다른 root로 대체할 수 없다. 선택 파일 전체와 fingerprint는 기존 native 등록 검증 및 pinned raw 재대조를 그대로 거친다. 기존 native PDF 거절을 해제하지 않는다.
+
+staging 전에 기존 `read_current_conducted_plan_from_facts`의 실제 exact3 context/analysis/facts_plan을 읽는다. 제공 plan에서 method_id/method_version/metric/reference_plane 네 값만 명시하고 expected_revision은 선택 revision, expected_context_sha256은 None으로 두어 현재 snapshot의 SHA를 부모가 계산하게 한다. 수동 source_settings/basis나 원 model prompt/C1을 current 읽기에 주입하지 않는다. 반환 analysis와 facts_plan.plan_input은 제공 analysis.json/plan-input.json과 canonical 동등해야 하며 원 context로 genuine preflight를 수행해 ready를 요구한다. 완료 job에 queued G3를 재호출하거나 claim/complete하지 않는다. original model prompt 복원이나 DB-current의 영구 승인이 아니다.
+
+완료 scope는 current 읽기 전후에 비교하고 staging 뒤 정식 `_host._prepare(root, config, scenario, owned)`를 한 번 호출한다. 원 반환 5tuple workflow/context/analysis/plan/schema와 등록된 store_root에 대한 owned의 exact native Store lease를 확인한 뒤 actual current와 scope를 다시 읽어 최초 값과 대조한다. 같은 DB bytes를 복제한 다른 Store나 dependency가 반환한 context만으로 이 검사를 대신할 수 없다. Store lease와 knownclose, 원 파일 pin/current 재검사, SQL/fsync/배타 게시 및 최초 primary 우선 규칙을 유지한다. scope 변경·다른 active·형상/bytes/C1 불일치는 게시하지 않으며 이미 만든 staging/SQL/failure prefix를 보존한다. 이 유한 전후 관측은 외부 writer 배제·ABA·영구 current lease나 동일 계정 임의 코드 방어를 보장하지 않는다.
+
+host 미지원 음성 검사는 `test_completed_unsupported_host_dependency_retains_staging`의 명시적인 unsupported-host seam으로 고정한다. 준비된 schema3을 `_host._prepare`에 전달한 뒤 의존성이 `NotImplementedError`를 내도록 하고, 실패·staging 보존·게시 없음이 실제 등록 API에서 유지되는지 검사한다. 현재 public host가 schema3을 지원하지 않는다고 가정하거나 실행 결과에 따라 skip하지 않는다. 기존 typed-host 양성은 같은 signature/5tuple의 공급 seam이며 실제 host 성공으로 표시하지 않는다.
+
+현재 host 지원은 별도 `RegistrationPrepareCompatibilityTests`가 genuine 완료 Store/current에서 실제 registration→native publish→원 `_prepare` 5tuple까지 확인한다. operator 위치만 일회용 경계로 대체하고 host `_prepare`는 원 함수를 호출한다. 원 source/Store bytes·native·현재 C1, known Store close와 baseline/permit 행을 확인하며 runtime/finalizer/CLI를 호출하지 않는다. 테스트용 수동 operator record는 실제 사람 위임이나 운영 profile 준비의 증거가 아니다. 아래 초기 후보의 schema3 미지원 실패와 당시 검증 기록은 역사로 보존한다.
+
+```powershell
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --completed-current -v
+python -B -X utf8 tests/test_codex_registered_conducted_workflow_host.py --registration-compat -v
+```
+
+새 검사는 실제 disposable TXT 등록/claim/strict 분석 완료를 준비한 뒤 readonly current를 사용한다. 생성 준비 실패와 schema3 미지원 RED를 각각 보존한다. 실제 KnownFolder/운영 profile·원17/새 실 permit·승인 발급·installed CLI·모델·runtime·장비/현장·수집 원본 접근은0이다. 아래 기존 host.main/version-child 및 전체 suite를 이 단위의 실행 분모로 더하지 않는다. 자체 구현 검증이며 독립 리뷰는 다른 검수자가 후속 수행한다.
+
+자체 최종 검증은 신규13(6.662s), 별도 기존 scoped10(1.945s), 최초 ordinary/control 기존4(1.228s)가 각각 PASS다. 최초 준비 실패1은 RF 문장을 생략하는 편의 제공자에 따른 blocked이고, 같은 job의 기존 genuine decoder 응답을 완료하도록 준비만 수정한 뒤 schema3 미지원 RED1을 확인했다. 복제된 다른 Store lease를 거절하는 후행 RED1도 보존했다. 원 실패를 지우거나 중간12/8·baseline을 최종 통과 수에 더하지 않는다. 신규 typed-host 양성은 원 source TXT/DB bytes와 inode/link/size/mtime/ctime 보존을 확인했고, 실제 public host의 v3 거절·prepublish drift·잘못된 반환 tuple은 prefix를 보존하는 예상 실패다. 기존 함수/class·상수·기존 test method의 AST56 대조와 문서 UTF-8/로컬 링크 검사는 기능·물리·실제 권한 검증과 분리한다.
+
+## 명시 선택 정책의 등록 binding v2 — 2026-10-26
+
+DEV2-WORKFLOW-SELECTION-REGISTRATION-001은 정확87e343e3662fc186c420b4460063a0151c03c921의 새 독립 clone에서 registration core/test/usage3만 수정한다. 의존 [host87](codex_registered_conducted_workflow_host_usage.md)의 core26916B/SHA787620eb660dedc8f2b2cfe69da65aa567913385b7aa4336d4ccc73d304b2aa8을 바인딩했으며 독립 검수는 아직 pending이다. host/selector/finalizer/issuer/native helper를 수정하지 않는다. 이 등록 후보의 독립 검수도 별도 대기다.
+
+preflight_conducted_workflow_inputs는 기존 required keyword measurement_ref를 유지하고 optional measurement_selection_policy=None만 추가했다. None이면 원6입력 snapshot·ref string1~200 검증·exact7 반환·pins exact5·execution_authority=false가 그대로다. 명시 policy일 때만 원 snapshot에 정책을 추가하여 ref=None과 native exact2 `{schema_version: 1, kind: "unique_same_run_sensor_acquisition"}`를 검증한다. bool/float 버전·subclass·추가/누락 키·다른 정책·ref 동시값을 거절한다. None ref와 None policy를 선택의 기본값으로 해석하지 않는다. 반환·pin에 새 권한이나 선택 결과를 추가하지 않는다.
+
+고정 prepared-inputs-v1.json의 파일명과 trusted root-delegation-v1.json exact8은 유지한다. metadata의 원 bytes SHA를 기존 prepared_manifest_sha256으로 결합하며, 다음 두 schema만 명시 분기한다.
+
+| metadata | 생성 workflow |
+| --- | --- |
+| schema1 exact14 | 기존 ref string을 가진 workflow schema1 exact12. policy 키가 있으면 거절, preflight 새 keyword0 |
+| schema2 exact15 | 기존14키+measurement_selection_policy. ref=null과 위 native exact2 정책을 검증한 뒤 workflow schema2 exact13에 원값을 그대로 작성 |
+
+schema1 정책 추가/schema2 정책 누락·None·추가 키·ref 동시값·metadata version bool/float/미지원값은 staging 전에 거절한다. policy는 유일 취득 기록을 고르는 데이터 계약이며 위임·실행 권한·추가 workflow/모델 한도를 발급하지 않는다. 기존 profile 이동·v1 자동변환·원 ref17 수정·권한 infer/fallback은 없다. root record/권위 scope/_LIMITS·원17 baseline·만료·model/quantity/tools·G3/current C1/source6/basis·SQL/marker/knownclose/fsync/NX 게시·최초primary 우선·반환 exact11을 바꾸지 않는다.
+
+- [x] exactbase/의존 pin·독립 pending·소유3/비소유 raw/native baseline 확인
+- [x] optional policy 부재 RED2와 metadata v2 거절 RED1 보존
+- [x] 명시 schema2 metadata→pure preflight→동일 원 policy/ref의 workflow2 연결
+- [x] 작은 pure2/native publish1/boundary4의 분리7논리 검증
+
+preflight RED2는0.261s에2FAIL/error0, publish RED1은0.148s에1FAIL/error0이었다. 최초 pure2(0.237s)/publish1(0.543s)/boundary4(1.906s) 통과 뒤 별도 metadata 결합 입력의 누락을 발견했다. schema2/ref string/policy=None은 pureAPI의 기존 None 경로를 거쳐 staging까지 진행해0.514s의 추가 RED1 FAIL로 재현했다. 원 실패SQL/prefix는 보존하고 metadata v2에서 ref=None/policy non-None을 먼저 강제하는 guard를 보완했다. 이 guard는 pureAPI의 optional None/legacy 경로를 바꾸지 않는다.
+
+최종 pure2는 기존0.237s PASS(해당 함수 후행 변경0), 후행 native publish1은0.595s PASS, 별도 boundary4는1.997s PASS이며 각 failure/error/skip0이다. 서로 다른7논리/분리3cohort이며 중간 통과나 기존8/9·host7을 더하지 않는다. 기본 discovery의 기존8/--boundary9와 최초오류 수정의 원 opt-in은 그대로 두고 이번 selection_ 검사만 명시 선택한다.
+
+pure2는 v1 호출·explicit policy=None·명시 v2의 원 DTO/pins 일치와 원 input 불변·false 권위, 잘못된 policy8/ref 조합2 및 최초 MemoryError 객체 전파를 확인했다. boundary4는 metadata 형상17개, 원 manifestSHA 무결성과 권위 scope9 확대 거절, v2 ordinary SQL fsync→후행 MemoryError와 v2 최초 SQL close MemoryError→후행 directory ordinary 오류를 검사했다. 최초오류의 SQL/prefix·failure marker는 남기며 durable 준비 성공으로 고치지 않는다.
+
+native publish1은 genuine source 등록/Store/G3/D1과 native 쓰기/fsync/SQL2/NX sibling 게시 뒤, 같은 complete marker의 prepared manifest pin/원10파일·workflow policy·config/permit SHA/원17 baseline을 대조했다. published profile의 원 파일을 보존한 채 pending host의 _prepare까지 다시 확인했고 그 전후 원 파일/SQL bytes가 같다. 빈 runs/permit은 소비하지 않았고 같은 target 재호출은 not_prepared다. host main/producer/새 runtime·모델은0이다. 테스트의 AUTHORED_TEST_ONLY 위임 record·일회용 OS parent를 실제 위임/운영profile로 해석하지 않는다.
+
+```python
+preflight = preflight_conducted_workflow_inputs(
+    context, analysis, plan_input, quantity=quantity, allowed_tools=allowed_tools,
+    measurement_ref=None,
+    measurement_selection_policy={"schema_version": 1,
+                                  "kind": "unique_same_run_sensor_acquisition"},
+)
+```
+
+```powershell
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --selection-preflight -v
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --selection-publish -v
+python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --selection-boundary -v
+```
+
+새 정책 검증은 원 snapshot 상한 안에서 수행하고 원 files/cap/IO32파일·8MiB·proof512파일·32MiB를 유지한다. 실제 KnownFolder·기존 profile·원17 장부·새 실 permit·추가 승인 record 자동 생성·실제 모델·ADC·Vertex·실장비와 peer/하위 agent는0이다. 원1 v1 기본8/경계9·host7의 일괄 실행은0이며 SQL 원장·물리/규범 정확도·실제 AI 종단 검증으로 이 준비 결과를 승격하지 않는다. 아래 d2e/921 기록은 각 당시 이력으로 보존한다.
+
 ## 최초 실패 보존 수정 — 2026-10-26
 
 DEV2-WORKFLOW-REGISTRATION-FIRST-FAILURE-FIX-001은 정확921bdca27249fb785c1cea12f9a177cfe9a3e256에서 시작한 별도 clone/branch의 core/test/usage3 수정이다. 기존921·7226·cc72와 원 증거는 동결 유지한다. root의 등록 원 dynamic12/12 통과 통지와 후행 Important1을 구별하며 원12를 재실행하거나 이번 분모에 더하지 않는다. 이 수정의 독립 검수는 아직 대기다.
@@ -34,6 +142,7 @@ python -B -X utf8 tests/test_codex_conducted_workflow_registration.py --first-co
 ```python
 preflight_conducted_workflow_inputs(
     context, analysis, plan_input, *, quantity, allowed_tools, measurement_ref,
+    measurement_selection_policy=None,
 ) -> dict
 
 prepare_registered_conducted_workflow(*, scenario_id, requested_model) -> dict
@@ -51,7 +160,7 @@ scope exact12는 allowed_models=[gpt-6.1-sol,gpt-6-astra], maximum_workflows=1, 
 
 inherited_history는735가 요구하는 원17 exact8 metadata다. actual_codex_model_processes/known_total_before_this_host=17, usage_complete=false, unknown_usage_components/cost=null, provenance_level=previous_verified_root_rollup_not_fresh_original_receipt_reaudit 및 원 source_rollup/published_source를 그대로 보존한다. 이 경로를 따라 운영17의 원 SQL/receipt를 열지 않는다. 0 seed·새 예산으로 바꾸지 않는다.
 
-prepared-inputs-v1.json exact14는 schema_version=1, kind=codex_conducted_workflow_prepared_data, scenario_id, requested_model, journal_id, permit_id, registered_input_root, store_root, executable, expires_at, quantity, allowed_tools, measurement_ref, files다. 이 파일의 원 bytes SHA가 위 trusted record의 prepared_manifest_sha256과 같아야 한다. 이것은 준비 데이터의 binding이며 이 metadata 자체가 권위 source는 아니다.
+prepared-inputs-v1.json의 schema1 exact14는 schema_version=1, kind=codex_conducted_workflow_prepared_data, scenario_id, requested_model, journal_id, permit_id, registered_input_root, store_root, executable, expires_at, quantity, allowed_tools, measurement_ref, files다. schema2 exact15는 위 명시 measurement_selection_policy를 추가하고 ref=null을 요구한다. 이 파일의 원 bytes SHA가 위 trusted record의 prepared_manifest_sha256과 같아야 한다. 이것은 준비 데이터의 binding이며 이 metadata 자체가 권위 source는 아니다.
 
 files exact5는 registered-intake-v1.json/analysis.json/plan-input.json/catalog.json/response-schema.json을 key로 가진 Pin{bytes,sha256}다. 실제 파일은 operator/prepared-data/의 같은 고정 leaf에서만 읽는다. arbitrary/nested raw ref 경로를 따라가지 않는다. manifest256KiB/analysis256KiB/plan256KiB/catalog1MiB/schema64KiB, metadata64KiB/위임64KiB를 상한으로 둔다. analysis/plan은 원 canonical JSON, schema는 승인 literal3052B/aa321 원 bytes다.
 

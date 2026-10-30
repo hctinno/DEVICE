@@ -33,19 +33,22 @@ function readConfig(env = process.env) {
   assert(['text','pdf','both'].includes(kind), 'Invalid document kind: use text, pdf or both');
   const power=env.FLOW_POWER_DBM === undefined ? -4 : Number(env.FLOW_POWER_DBM);
   assert((env.FLOW_POWER_DBM === undefined || String(env.FLOW_POWER_DBM).trim()) && Number.isFinite(power) && power >= -30 && power <= 20, 'Invalid power: use -30..20 dBm');
-  return {source:path.resolve(env.FLOW_SOURCE_ROOT || OWN), python:env.FLOW_PYTHON || path.join(OWN, process.platform === 'win32' ? '.venv/Scripts/python.exe' : '.venv/bin/python'),
+  return {source:path.resolve(env.FLOW_SOURCE_ROOT || OWN), python:env.FLOW_PYTHON || require('./managed_paths.cjs').python(OWN),
     kinds:kind === 'both' ? ['text','pdf'] : [kind], power, requested:env.FLOW_OUTPUT_ROOT};
 }
 
 function reserveEvidence(own, requested) {
-  own=path.resolve(own);
+  const managed=require('./managed_paths.cjs');
+  own=managed.stage(path.resolve(own));
   const local=path.join(own,'.local');
+  const output=requested ? managed.proof(own,requested) : null;
+  if(requested){
+    assert(within(local,output), 'Evidence must stay inside this checkout .local');
+    assert(!exists(output), 'Evidence output already exists; preserve it and choose a new folder');
+  }
   if (!exists(local)) fs.mkdirSync(local);
   assert(!fs.lstatSync(local).isSymbolicLink(), 'Evidence .local must be a plain directory');
   if (!requested) return fs.mkdtempSync(path.join(local,'ib-'));
-  const output=path.resolve(own,requested);
-  assert(within(local,output), 'Evidence must stay inside this checkout .local');
-  assert(!exists(output), 'Evidence output already exists; preserve it and choose a new folder');
   for (const parent of evidenceAncestors(output,own)) {
     if (exists(parent)) assert(!fs.lstatSync(parent).isSymbolicLink(), 'Linked evidence paths are forbidden');
   }

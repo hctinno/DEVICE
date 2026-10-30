@@ -11,7 +11,7 @@ from pathlib import Path
 import re
 import stat
 
-from .codex_cli_response import CodexCliResponseError, produce_codex_cli_response
+from .codex_cli_response import CodexCliResponseError, produce_codex_cli_response, _client_versions_match
 from .intake_jobs import claim_job, complete_job, fail_job
 from .intake_model_boundary import (
     build_analysis_prompt, build_analysis_response_schema, decode_analysis_response,
@@ -176,7 +176,8 @@ def _verify(response, receipt, prompt, schema, declaration, model, directory):
                 not _integer(attempts['model_process_attempts'], 1) or not _integer(attempts['application_retries'], 0) or
                 value['model']['requested'] != model or value['model']['resolved'] is not None or
                 value['model']['remote_request_id'] is not None or type(value['model']['cli_thread_id']) is not str or
-                not value['model']['cli_thread_id'] or value['client']['observed_version'] != '0.163.0-alpha.11.2'):
+                not value['model']['cli_thread_id'] or
+                not _client_versions_match(value['client']['supported_version'], value['client']['observed_version'])):
             _fail('receipt_binding_mismatch')
         life, cleanup, observed = value['lifecycle'], value['cleanup'], value['controls']['observed']
         if (any(not _integer(life[key], 1) for key in ('thread_started', 'turn_started', 'turn_completed', 'agent_messages')) or

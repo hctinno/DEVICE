@@ -7,7 +7,7 @@ const path = require('node:path');
 async function main() {
   const base = process.env.UI_DEMO_URL || 'http://127.0.0.1:8765';
   const emptyBase = process.env.UI_EMPTY_URL || 'http://127.0.0.1:8766';
-  const output = path.resolve('.local/dev4/evidence');
+  const output = require('./managed_paths.cjs').output(path.resolve(__dirname,'..'),'frontend');
   await fs.mkdir(output, {recursive: true});
   const browser = await chromium.launch({headless: true});
   const context = await browser.newContext({viewport: {width: 1440, height: 1000}});

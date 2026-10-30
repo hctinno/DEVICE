@@ -1,6 +1,58 @@
 # 통합066 — 첫 전도 출력 흐름의 실제 연결과 남은 경계
 
-2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `2d56a01b09363ca4fd785b3700d00615fe2fbd96` / 고정 source/runtime 검증 모집단332. 정상 push/원격 exact 대조는 private 게시 영수증으로 고정한다. 공유·사용자 원본/소유 작업/독립 기대·실패를 보존하며 [PLAN 한 장 표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)와 [실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 갱신했다.
+2026-10-26 Asia/Seoul. 개발 root `codex/pipeline-dev-20261023-intake`, 최신 기능 `b728f78bf36621ab8b1f90b298e53ff3299c5b31` / 고정 source/runtime 검증 모집단333. 기존 소유·미커밋·원본·실패와 독립 기대를 보존해 정상 cherry로 통합했고 정상 push/원격 exact 대조는 private 게시 영수증에 남긴다. [PLAN 현황](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)·[실제 후속](NEXT-004.md#first-twin--2026-10-25-실제-후속-배정)을 우선한다.
+
+## 후행 수용333 — 시연 프로세스 종료와 표준 회귀 발견성
+
+공개 --port browser 도구222의 strict URL 전 close가 ready Promise를 pending으로 두는 Important1/No를 보존하고 fix3bc를 별도 수용했다. 정확3줄 latch 수정은 독립 typed Child/fakeclock4 PASS로 valid URL/잘못된 prefix/no URL/기존 firstError 객체를 확인했고 argv/default-off/timer는 정적 불변이다. 총괄은222→3bc 정상 cherry와 정확 source hash·Node구문1을 확인했으며 source333 중 비소유332 raw/native는 같았다. 원 parent의 genuine child1/runtime1/DOM1440 1과 최종 delta의 typed4를 합쳐 최종 source 전체의 실제 --port 재실행으로 표시하지 않는다. 외부 PTY exit1·SQL/global cleanup 미확인은 유지한다.
+
+발견성851f는 class alias3+5만 추가하며 제거하면 원 전체 module AST와 직접87메서드가 같다. 독립 정적 Yes는 owner module/body/runtime를 실행하지 않고 표준 TestLoader 이름45→53·새8 각각 한 번을 확인했다. root는 후보 test2를 정상 cherry하고 표준 unittest가 선택하는 그8만 한 번 PASS, old45/wholeloop 재실행0을 확인했다. 이8은 수용 d0fa의 원 reservation8과 같은 논리이며 새로운 시험8로 합산하지 않는다. source333 중 비소유331 raw/native 불변이다. 첫 root metadata 관측기가 실제 verdict static Yes를 Yes와 비교해 멈춘 기록은 mutation/테스트0으로 남기고 원 intake를 재사용한 명시 판독 뒤 처음 테스트8을 실행했다.
+
+completed-current 등록b723은 임시 개발1의 공개 후보·기존3/owner444proof를 동결했고 다른 reviewer가 독립 PHASE1을 준비한다. 개발2 host3은 담당의 typed12/가상1 완료 보고와 별도 독립 PHASE1을 구별하며 아직 root 수용 전이다. 두 경로의 실제 등록→native publish→actual _prepare 결합은 개발2 다음 test/usage2에 배정했다. finalizer094e 독립 retained-input 검수와 개발3 optional workflow3·개발4 현재 질문390 도구2도 이어간다. P01 NETWORK HOLD/집계·미해결12와 추가 실제 모델0/기존17·6 소진/사용자 준비0을 유지한다. 아래는 이전 시점의 보존 이력이다.
+
+## 최신 수용333 — native PDF·현재 질문·출력 선예약·오류 저장
+
+native41과 문구024를 수용했다. 독립12/12와 총괄 신규·영향11 PASS는 실제 G3/common preflight→once/strict/complete 연결과 최초 오류 경계를 검사하되 memory OS/permit seam이다. 운영 권위·실제 모델 성공으로 승격하지 않는다. schema2 준비 contract exact scope를 명료화한 문구만 추가하고 v1/원본문·기존17은 바꾸지 않았다.
+
+현재 질문 UI994를 독립 typed10·원 DU genuine GET1·전체 app DOM1440 1과 총괄 신규8/영향8 PASS 뒤 수용했다. first-class current exact7과 후행 freshness를 유지하며 configured 실패/stale를 과거 storage로 조용히 대체하지 않는다. 질문1의 원 unit/span/quote·권위false와 fixture history 분리를 보존한다. 원 CRLF observer 준비 오류·SQL 부분 범위·390 미실행은 남긴다. public CLI --port 도구222는 실제 owner child1/가상runtime1/DOM1440의 증거가 있지만 strict URL 전 close의 Important1/No가 있어 아직 미수용이다. 최소 fix3bc의 독립 검수 뒤 연결한다. 원 outer PTY exit1과 child 정상 종료/rebind를 구별한다.
+
+공동 evidence reservation d0fa는 독립14/64 관측과 총괄 신규8·signature2·genuine virtual trial1의11 PASS 뒤 수용했다. 원 정적 No/C0I1·wall 초과·observer framing/AST 실수와 별도 genuine Journal1의1914B/1byte 부족 사전 차단을 보존한다. None 추가keyword0·명시 exact2 strict ints·같은192파일/32MiB에서 전 producer/final/journal의 선예약을 유지한다. root 첫 선택기가 test_*만 읽어 reservation_*8을 빠뜨린 준비 실패는 product0이며 새 명시11 검증으로만 보완했다. 표준 TestLoader가 신규8을 찾도록 한 alias851f test2는 별도 검수 중이다. host H+tail10/5505024B 사전 증명은 개발2의 다음3이며 seam만으로 whole-host 예산 준수를 주장하지 않는다.
+
+명시 불확도 DRAFT 부록17cf는 독립 원writer1+신규11/관측186과 총괄 신규10 PASS로 수용했다. 선언 성분/상관/k가 없거나 미지원이면 not_assessed/null이며 원 result SHA·uNone/appliedFalse·판정 미평가를 유지한다. DRAFT에만 부록을 넣고 원 fixed3 전체 hash를 바인딩한다. 운영 교정·물리 정확도·규범 판정이 아니다. finalizer optional 전달094e는 다음 독립 검수이며 API 노출은 별도 fixture3로 구현한다.
+
+단절/복구실패f507은 독립 원5의 observer No2/PASS2/사전조건 미실행1을 보존하고, retained causal 추가3/3·hash/sequence 검증 범위로 qualified 수용했다. 원 회복185.093초 cleanup_failed·새 recovery62.281초와 transport72.562초를 구별하며 cap 초과를 소급 성공 처리하지 않는다. 새 root missing-ref admission1 PASS 뒤 실제 공개 Python CLI2를 각 새 output에서 실행했다. 단절5/4/2와 복구실패8/7/3의 결정/관측/도구, 같은 persistent_disconnect·각runtime1/ref17·29/journal20·32/fixed3를 대조했고 incomplete/execution_incomplete/null/저장complete/DRAFT·예상 CLI exit1을 보존했다. authored MOCK이며 실제 AI0·네이티브 transport exception/실물복구0이다. 자식 reaped를 관측했으나 SQL 개별 close·전역 descendants/physical peak는 unknown이다.
+
+개발1 앱의 notLoaded/message 거절은 기존 대화/clone을 보존하고 중복 신규 세션을 만들지 않았다. 기존 reviewer 한 명을 임시 개발1 등록3 구현자로 전환했으며 해당 코드의 독립 리뷰는 다른 사람에게 맡긴다. 개발2 host3·개발3 optional workflow3·개발4 현재 질문390 도구2에 다음 실제 CORE-GO를 보냈다. P01 NETWORK HOLD/닫힌 SOURCE·기존200/165/보존662/대상18·690/미해결12·N02 STOP을 유지한다. 추가 실모델0·동일 Codex17/Vertex6 소진·비용null·사용자 준비0이다. 아래는 이전 시점의 보존 이력이다.
+
+## 고정 모집단333 — 공통 PDF 접수와 산출물 없는 현재 질문
+
+공통 bdfa는 schema1 기본 literal을 유지하며 명시 schema2의 닫힌 PDF/text 인용·context 결합, 실행 가능한 완전 readable 자료 preflight와 prompt256KiB/schema64KiB를 once claim 전후에 연결한다. 별도 기계 계약7d567의 문자열 leaf2만 수정해 문구 M1을 닫았다. 독립 원16=14PASS/관측기No2는 공개 lazy dependency allowlist 누락으로 complete 진입 뒤 running/완료 미관측이며 원 실패/두 lease를 수정·repair하지 않았다. 별도 새 namespace2는 TXT/schema1·PDF/schema2 각각 claim1→local typed producer1→strict1→complete/event1→실제 readonly 현재 snapshot1을 확인했다. 원16을 18PASS로 바꾸지 않는다. 총괄은 공개 AST 변경19를 한 번 선택해19PASS·source332 bytes/native 불변을 확인했다. 실제 AI/provider/권위·native PDF host/기존 firstfailure는 이 결과로 승격하지 않는다.
+
+최소 질문22906은 같은 현재 facts의 원 questions/gap/quote/locator를 보존해 단위·조건결합·unsupported·사실누락을 구별한다. 독립 typed8PASS 뒤 DOM 관측기 함수 brace 추출 누락의 첫 timeout/SyntaxError를 보존했고, 별도 append의 격리된 원 app 함수 DOM3만 통과했다. 선택 genuine HTTP0·전역 SQL unknown을 유지한다. 총괄 Node 신규8PASS이며 전체 app 수송 완료는 아니다.
+
+backend776은 기존 startup 선택 intake/revision/method만 사용해 산출물 없이 원 current exact3과 실제 후행2SHA를 읽고 고정7 envelope로 반환한다. 같은 factory RLock은 전역 writer lease/ABA 보증이 아니다. 독립 원11진입/79of80의 duty_cycle 축약 field 오기1·ready 미실행·lateclose partial을 재채점하지 않았다. genuine DU의 available/blocked·단위 질문/null·SHA 일치와 별도 typed stale/error를 구별하며 원15파일은 불변이다. 총괄 신규 model/HTTP13PASS, source는 새 test1 때문에332→333으로 증가하고 비소유 bytes/native는 불변이다. 이 endpoint→운영 질문 화면은 개발4 frontend3의 다음 실제 구현이다.
+
+개발1 native3·개발2 completed-current host3·개발3 단절/복구실패3·개발4 first-class current frontend3에 실제 CORE-GO를 보냈다. 원 WIP/No/부분파일/독립 봉인·P01 보존662/대상18·690·미해결12/STOP을 유지한다. Codex17·동일 Vertex6/3072 소진·새 실제 모델0·실측/현장0·사용자 추가 준비0이다. 아래332는 당시 수용 이력이다.
+
+후행 확인으로 backend776의 별도 ready appendix GET1/23of23을 인수했다. 원131파일 raw/native가 같고 source6의 단위·인용·독립 binding SHA·실제 후행2 snapshot을 확인했다. 원 CF04 미실행/79of80을 소급 변경하지 않으며 SQL 개별 close·전역 handles는 unknown이다.
+
+개발2 current-host는 고정 loop 한도를 끝난 뒤 host와 합치는 방식으로 사전 준수를 보증할 수 없음을 확인해 별도 shared reservation6을 실제 배정했다. 원 source producer9 상계14159872B·perdecision 선예약16257024B/13files를 보존한다. 독립 원 계약은 journal header+rows+framing 사전 상계 미입증으로 No/C0I1M0이고 제품 실행0·source2 raw/native 불변이다. 정적 관측 wall257.337초의180초 초과 한계도 보존한다. 담당은 허용된 loop의 기존 Journal 접점에서 pure header/record의 실제 직렬화 크기를 선계산해 space admission을 닫는 최소 수정·경계 RED를 진행한다. Journal 모듈 소유/수정·새 예산 발급0이며, host H+tail10/5505024B의 별도 사전 증명까지 완료했다고 세지 않는다. current WIP/seed1은 보존하고 실제 모델·genuine current loop는0이다.
+
+## 고정 모집단332 — 수정 수용과 새 합성 시연 한 건
+
+workflow host d318과 evidence writer cac1은 각각 원 No/I1을 보존한 별도 독립 delta8·10 PASS 뒤 수용했다. 총괄은 host12(새 오류5/선택 경계4/genuine MOCK1/legacy1/version 거절1), 등록7(실제 disposable native publish→host prepare1 포함), startup/input/export/writer28의 각 관련 회귀를 통과했다. 새 운영 operator/profile/실permit·실제 AI0이며 테스트 전용 OS/native 경계와 구별한다. export 원12의49/66·IO guard 간섭/원 args·trace 미보존, 별도 selfcheck1+양성/충돌2의12/12를 합산하지 않는다.
+
+G3a052는 독립 원12(prepare10/strict2) PASS와 총괄15(PDF7·malformed 정책1·관련 legacy7)로 수용했다. schema2 PDF의 실제 준비/프롬프트·페이지 literal 인용, schema1/queued/전체 job 재대조·한도/첫 control을 유지한다. metadata/blob retention은 허용된 부작용으로 DB 전체 불변을 주장하지 않는다. 별도 native PDF gate/once 공통·운영 권위는 후속이다.
+
+keyboardbc49 독립6논리(동적5/negative 정적1), freshoperator1c16 정적8/Node구문1·동적0, 운영 문구c55 독립5논리·DOM390/1440 각1/52확인을 구별해 수용했다. c55의 기존 history503·console2와 SQL/global handle unknown은 보존한다. 새 대표상태/원값·AIunknown/DRAFT/새로고침을 앞에 두고 기술 상세는 닫힌 세부에 원문 그대로 유지한다.
+
+총괄은 합성 PDF를 새로 만든 공개 CLI1→원 startup을 직접 소비한 readonly host→1440 pointer 운영 흐름1을 ba44ac32에서 실제 실행했다. native MOCK producer5·가상 runtime1·새 실제 AI0이며, 제품/목적/시장/계획·같은 intake/run/runtime/event:17·원 raw와 correction·저장3/DRAFT를 확인했다. 원131파일 raw/native와 source332는 실행 전후 같았고 own server/thread/listener/child 종료·rebind를 확인했다. 직접 SQL close·전역 process census·CLI --port 경로는 미계측/미실행이다. 센서입력 −19.5 dBm에 선언 셋업10+0.5+20 dB를 더한11 dBm과 W 변환을 Decimal80/상대5e-15로 독립 대조했다. 이는 산술/상태·읽기 검증이며 물리 예측/실측/규범 승인 아니다.
+
+G3 수용 뒤 같은 새131파일에 공개 Python 비교 CLI1을 실행해 readback matched·reference/policy/lineage null→not_assessed/exit2를 확인했다. 원 observer가 reason 객체 목록을 문자열 목록으로 가정해 FAIL한 원 영수증/로그를 그대로 보존하고, 동일 raw의 code/field/detail을 재판독한 추가 qualification만 남겼다. CLI/API/RF 재호출0이며 실제 비교 참조/물리 정확도는 미검증이다.
+
+P01 B093~B096 새46PDF/198726542B·P01표기3175쪽(root독립null)의 제한 ACK·SOURCE metadata74 대비 receiver90/receipt16의 readonly 대조를 닫았다. B09510PDF·receiver21, copyfalse45/copytrue1·AES45/none1·producer 제한1페이지/safeidentity0/P01body0을 보존한다. collector200/corpus165/보존662PDF·2684576340B·known47745쪽 부분합/unknown1/wholepagesnull은 대상18/690·공식0/권리·전수 검수와 다르다. held실패3은 가산하지 않는다. CMG12미해소/N02 STOP·Un-licensed 우선·공유/원본 읽기전용·Codex17/동일 Vertex6/3072 소진·비용null·사용자 추가 준비0을 유지한다. 아래는 원 No와 당시 수용 이력이다.
+
+후행 독립 검수에서 startup/입력9의 원12는11PASS/I1FAIL1이다. _conducted_write의 첫 write MemoryError가 후행 close OSError로 대체되며 실제19B 부분파일/닫힌 fd를 보존했다. 현재 해당 기존3 소유 개발3에게 최소 수정·별도 delta를 실제 배정했고 선행873/후속 export5bc4·freshoperator는 아직 수용하지 않았다. 별개 host87의 legacy ordinary→late control 정적 I1도 개발2의 정확226 별도 host3 수정으로 잇는다. 정상 schema/dispatch/finite permit은 유지하며 오류 보존 결함을 새 모드에서만 숨기지 않는다. 등록226 독립 검수는 예정12 중8진입/7일치·KI부분1/나머지4와 native 게시 미실행의 qualified 범위다. host87 원 genuine에서 audit가 기존 cached blob의 정상 xb 충돌 probe를 막아 operation_failed였으므로 C1 gate 완료로 세지 않는다. 독립 준비에서 직접 관측한 원 context/현재 context 불일치와 그 target 미완료를 구별한다.
 
 ## 고정 검증 모집단332 — 비교·이식 가능한 CLI·저장 검수 화면
 
@@ -10,7 +62,7 @@ bridge499는 같은 현재 저장 결과 객체를 비교에 넘기며 reference
 
 저장 aac9는 manifest/result/DRAFT 고정3의 읽기 일치·현재 binding과 recorded/incomplete/invalid·판정 미평가·AI unknown을 같은 접수 화면에 표시한다. 긴 핀/DTO는 닫힌 세부에 둔다. 독립12 슬롯은 실제11/10PASS·stream 관측 미완료1/foreign 실제 전환 미실행1이며 typed 범위와 구별한다. 총괄 Node12 PASS와 원 정상/측정무효/RF단절3의 genuine GET3·기존보호body12·390/1440 DOM6·별도 typed26을 확인했다. 자체 server/thread/listener 종료·child0/rebind와 원390파일/소스332 bytes·관측 native5 불변을 대조했다. 독립 SQL30 개별 close는 미확인이며 과거 closed 표기를 보정해 유지한다. keyboardbc49·새 생성 CLI startupaae/873·freshoperator1c16은 아직 별도 독립 검수 대상이다.
 
-P01 B085~B088 새46PDF/158083387B·P01표기3020쪽(root독립null)의 private raw/제한 metadata ACK와 source metadata74 대비 receiver90/원receipt16 readonly 후행 대조를 닫았다. collector192/corpus157/보존569PDF·2291007852B·known40615쪽 부분합/unknown1/전체쪽수null을 대상18PDF/690쪽·공식0과 구별한다. issuer/date/model/권리·본문·규범·훈련 승인0·CMG12미해소/N02 STOP를 유지한다.
+P01 B089~B092 새47PDF/194841946B·P01표기3955쪽(root독립null)의 private raw/제한 metadata ACK와 source metadata75 대비 receiver91/원receipt16 readonly 후행 대조를 닫았다. B092는 실제11PDF/receiver22이며 나머지12/23과 구별한다. collector196/corpus161/보존616PDF·2485849798B·known44570쪽 부분합/unknown1/전체쪽수null을 대상18PDF/690쪽·공식0과 구별한다. issuer/date/model/권리·본문·규범·훈련 승인0·CMG12미해소/N02 STOP를 유지한다.
 
 다음 실제 소유는 개발1 READY-DATA 후 G3 schema2/PDF 기존3, 개발2 정식 workflow 현재 사실 인계 최소3, 개발3 독립 current 입력의 readback export 기존3, 개발4 fresh CLI→저장카드 운영 시연 기존2다. 원 queued context와 completed readonly context의 C1가 다르고 G3가 현재 PDF를 거절하는 실제 공백을 코드로 잇되 기존 상태/권위값을 위조하지 않는다. 추가 실제 모델0·Codex17/동일 Vertex6/3072 소진·비용null·사용자 추가 준비0이며 아래330 기록은 당시 상태다.
 

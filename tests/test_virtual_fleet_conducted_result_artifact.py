@@ -397,3 +397,172 @@ class ConductedResultArtifactTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+class DraftUncertaintyTraceTests(unittest.TestCase):
+    def setUp(self):
+        self.case = ConductedResultArtifactTests()
+        self.case.setUp()
+        self.addCleanup(self.case.doCleanups)
+        self.api = self.case.module()
+        from labflow.virtual_fleet import conducted_uncertainty_budget
+        self.budget_api = conducted_uncertainty_budget
+        plan = self.case.result["binding"]["plan_input"]["plan"]
+        def component(identity, value):
+            return dict(component_id=identity, standard_uncertainty_db=value, unit="dB",
+                method={key: plan[key] for key in ("method_id", "method_version")},
+                metric="on", quantity="on_average", reference_plane="source_output",
+                evidence_refs=["authored:synthetic-component"])
+        self.inputs = dict(components=[component("u1", .3), component("u2", .4)],
+            policy=dict(policy_id="authored-policy", policy_version=1, coverage_factor=2,
+                coverage_factor_evidence_refs=["authored:explicit-k"], correlation_assumption="uncorrelated",
+                correlation_evidence_refs=["authored:assumption-only"]))
+
+    def call(self, **overrides):
+        return self.case.call(uncertainty_inputs=self.inputs, **overrides)
+
+    def appendix(self):
+        raw = (self.case.leaf / "draft.md").read_bytes()
+        heading = b"\n## Declared uncertainty review appendix\n"
+        self.assertEqual(raw.count(heading), 1)
+        body = raw.split(heading, 1)[1].split(b"```json\n", 1)[1].rsplit(b"\n```\n", 1)[0]
+        return raw, json.loads(body)
+
+    def test_declared_budget_called_once_with_same_result_and_saved_unmodified(self):
+        before = deepcopy((self.case.result, self.inputs))
+        with patch.object(self.budget_api, "build_conducted_uncertainty_budget",
+                          wraps=self.budget_api.build_conducted_uncertainty_budget) as parent:
+            summary = self.call()
+        self.assertEqual(parent.call_count, 1)
+        self.assertEqual(parent.call_args.args, (before[0],))
+        self.assertEqual(parent.call_args.kwargs, before[1])
+        draft, budget = self.appendix()
+        self.assertEqual(budget["status"], "calculated")
+        self.assertEqual(budget["budget"], dict(combined_standard_uncertainty_db=.5, expanded_uncertainty_db=1.0))
+        self.assertEqual(budget["bindings"]["result_sha256"], self.case.options["expected_result_sha256"])
+        self.assertEqual(budget["bindings"]["components_sha256"], sha(self.inputs["components"]))
+        self.assertEqual(budget["bindings"]["policy_sha256"], sha(self.inputs["policy"]))
+        self.assertIn(b"provided assumptions", draft)
+        self.assertIn(b"not actual calibration or method approval", draft)
+        self.assertEqual((self.case.leaf / "result.json").read_bytes(), self.case.original_bytes())
+        self.assertEqual((self.case.result, self.inputs), before)
+        self.assertIsNone(self.case.result["calculation"]["conformity"]["uncertainty_db"])
+        self.assertEqual(set(summary), {"schema_version", "kind", "artifact_name", "run_id", "runtime_instance_id",
+                                        "result_status", "storage", "files", "verification", "execution_authority"})
+        manifest_raw = (self.case.leaf / "manifest.json").read_bytes()
+        manifest = json.loads(manifest_raw)
+        self.assertEqual(set(manifest), {"schema_version", "kind", "artifact_name", "run_id", "runtime_instance_id",
+                                        "result_sha256", "result_status", "files", "verification", "execution_authority"})
+        self.assertEqual(len(manifest["files"]), 2)
+        for row in manifest["files"]:
+            raw = (self.case.leaf / row["path"]).read_bytes()
+            self.assertEqual((len(raw), hashlib.sha256(raw).hexdigest()), (row["bytes"], row["sha256"]))
+        self.assertEqual(summary["storage"]["sha256"], hashlib.sha256(manifest_raw).hexdigest())
+        self.assertEqual(sorted(path.name for path in self.case.leaf.iterdir()),
+                         ["draft.md", "draft.pending.md", "manifest.json", "manifest.pending.json", "result.json", "result.pending.json"])
+
+    def test_omitted_and_explicit_none_keep_exact_payload_manifest_summary(self):
+        with patch.object(self.budget_api, "build_conducted_uncertainty_budget", side_effect=AssertionError("default parent0")) as parent:
+            omitted = self.case.call()
+            original = {path.name: path.read_bytes() for path in self.case.leaf.iterdir()}
+            folder = tempfile.TemporaryDirectory()
+            self.addCleanup(folder.cleanup)
+            summary = self.case.call(workspace_root=Path(folder.name), uncertainty_inputs=None)
+            leaf = Path(folder.name) / ".local/conducted-result-artifacts" / self.case.name
+            self.assertEqual({path.name: path.read_bytes() for path in leaf.iterdir()}, original)
+            self.assertEqual(summary, omitted)
+        self.assertEqual(parent.call_count, 0)
+        self.assertNotIn(b"Declared uncertainty review appendix", original["draft.md"])
+
+    def test_unknown_and_null_components_preserve_parent_nulls_and_reasons(self):
+        self.inputs["components"] = None
+        self.inputs["policy"]["correlation_assumption"] = "unknown"
+        summary = self.call()
+        draft, budget = self.appendix()
+        self.assertEqual(budget["status"], "not_assessed")
+        self.assertTrue(all(value is None for value in budget["budget"].values()))
+        self.assertEqual(budget["reasons"][0]["code"], "components_missing")
+        self.assertEqual(summary["result_status"], "recorded")
+        self.assertIsNone(budget["conformity"]["verdict"])
+        self.assertEqual((self.case.leaf / "result.json").read_bytes(), self.case.original_bytes())
+
+    def test_report_ids_only_keeps_incomplete_and_unassessed_appendix(self):
+        value = self.case.early_result()
+        summary = self.call(value=value, expected_result_sha256=sha(value))
+        draft, budget = self.appendix()
+        self.assertEqual((summary["result_status"], summary["verification"]["binding_scope"]), ("incomplete", "report_ids_only"))
+        self.assertEqual(budget["status"], "not_assessed")
+        self.assertEqual(budget["reasons"][0]["code"], "result_incomplete")
+        self.assertEqual(json.loads((self.case.leaf / "result.json").read_bytes()), value)
+
+    def test_malformed_wrapper_and_bad_binding_reject_before_budget_or_native(self):
+        with patch.object(self.budget_api, "build_conducted_uncertainty_budget", side_effect=AssertionError("parent0")) as parent, patch.object(
+                native, "_WindowsIO", side_effect=AssertionError("native0")):
+            for value in ({}, [], {"components": []}, {**self.inputs, "extra": None}):
+                with self.subTest(value=repr(value)[:60]):
+                    self.case.reject("invalid_argument", uncertainty_inputs=value)
+            self.case.reject("result_hash_mismatch", uncertainty_inputs=self.inputs, expected_result_sha256="0" * 64)
+            bad = deepcopy(self.case.result)
+            bad["binding"]["report_sha256"] = "0" * 64
+            self.case.reject("result_input_invalid", bad, uncertainty_inputs=self.inputs, expected_result_sha256=sha(bad))
+        self.assertEqual(parent.call_count, 0)
+        self.assertFalse(self.case.leaf.exists())
+
+    def test_parent_control_identity_and_runtime_failure_before_claim(self):
+        for error in (KeyboardInterrupt(), MemoryError(), SystemExit(0), GeneratorExit(), RuntimeError("sensitive")):
+            with self.subTest(error=type(error).__name__), patch.object(
+                    self.budget_api, "build_conducted_uncertainty_budget", side_effect=error) as parent, patch.object(
+                    native, "_WindowsIO", side_effect=AssertionError("no native before budget")):
+                if type(error) is RuntimeError:
+                    self.case.reject("write_failed", uncertainty_inputs=self.inputs)
+                else:
+                    with self.assertRaises(type(error)) as caught:
+                        self.call()
+                    self.assertIs(caught.exception, error)
+                self.assertEqual(parent.call_count, 1)
+        self.assertFalse(self.case.leaf.exists())
+
+    def test_combined_draft_size_rejects_before_claim_with_existing_error(self):
+        original = self.api._draft(self.case.result, self.case.options["expected_result_sha256"],
+            self.case.options["run_id"], self.case.options["runtime_instance_id"], "full_bound")
+        with patch.object(self.api, "MAX_DRAFT_BYTES", len(original) + 1), patch.object(
+                native, "_WindowsIO", side_effect=AssertionError("draft cap before claim")):
+            self.case.reject("draft_too_large", uncertainty_inputs=self.inputs)
+        self.assertFalse(self.case.leaf.exists())
+
+    def test_parent_contract_and_result_hash_conflict_use_existing_error(self):
+        body = self.budget_api.build_conducted_uncertainty_budget(self.case.result, **self.inputs)
+        for key, value in (("kind", "other"), ("verification", {"execution_authority": True}),
+                           ("bindings", {**body["bindings"], "result_sha256": "0" * 64})):
+            wrong = deepcopy(body)
+            wrong[key] = value
+            with self.subTest(key=key), patch.object(self.budget_api, "build_conducted_uncertainty_budget", return_value=wrong), patch.object(
+                    native, "_WindowsIO", side_effect=AssertionError("bad contract before claim")):
+                self.case.reject("result_input_invalid", uncertainty_inputs=self.inputs)
+
+    def test_json_appendix_cannot_close_fence_through_provided_ref(self):
+        self.inputs["components"][0]["evidence_refs"] = ["authored:\n```\n# forged"]
+        self.call()
+        draft, budget = self.appendix()
+        self.assertEqual(budget["status"], "not_assessed")
+        self.assertEqual(budget["reasons"][0]["code"], "evidence_missing")
+        self.assertEqual(draft.count(b"\n```json\n"), 6)
+        self.assertEqual(draft.count(b"\n```\n"), 6)
+        self.assertNotIn(b"\n# forged", draft)
+
+    def test_first_native_write_error_not_replaced_or_budget_retried(self):
+        original = native._write_bytes
+        original_close = self.api._close_owned
+        def partial(tree, path, raw, code, **kwargs):
+            if path.name == "result.pending.json":
+                original(tree, path, raw[:11], code, **kwargs)
+                raise OSError("first write")
+            raise KeyboardInterrupt()
+        def close(backend):
+            original_close(backend)
+            raise KeyboardInterrupt()
+        with patch.object(native, "_write_bytes", side_effect=partial), patch.object(
+                self.api, "_close_owned", side_effect=close), patch.object(
+                self.budget_api, "build_conducted_uncertainty_budget", wraps=self.budget_api.build_conducted_uncertainty_budget) as parent:
+            self.case.reject("write_failed", uncertainty_inputs=self.inputs)
+        self.assertEqual(parent.call_count, 1)
+        self.assertEqual((self.case.leaf / "result.pending.json").read_bytes(), self.case.original_bytes()[:11])
+        self.assertFalse((self.case.leaf / "manifest.json").exists())

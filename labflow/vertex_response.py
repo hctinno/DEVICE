@@ -159,6 +159,9 @@ def _read(path,cap,code):
 
 def _credentials(path,settings):
     _path(path)
+    from .development_paths import DevelopmentPathError, reference_path
+    try:path=reference_path(path)
+    except DevelopmentPathError:_fail('credential_invalid')
     try:_chain(path,'credential_invalid')
     except OSError:_fail('credential_invalid')
     data=_read(path,65536,'credential_invalid')

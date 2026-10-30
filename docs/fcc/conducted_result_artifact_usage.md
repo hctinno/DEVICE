@@ -7,7 +7,7 @@
 ```python
 write_conducted_result_artifact(
     result, *, workspace_root, artifact_name,
-    expected_result_sha256, run_id, runtime_instance_id,
+    expected_result_sha256, run_id, runtime_instance_id, uncertainty_inputs=None,
 ) -> dict
 ```
 
@@ -48,3 +48,17 @@ ConductedResultArtifactError는 code, phase, publication_attempted를 제공한�
 관련 공통 native 최초 예외 검사11개는 통과했다. 함께 선택한 파형 관측12개는 read048의 고정 engine SHA와 현재 engine 소스가 달라 reader에서 중단됐고, 관측 writer 경계에 도달하지 못했다. 해당 실행 전체는23개/실패8/오류16(subtest 포함)/skip0이며 파형 관측 통과로 보고하지 않는다. 그 이전 import 준비 오류2 및 owner 밖 고정 임시 경로의 쓰기 차단 오류156도 원 로그에 남겼다. 공통 소스·부모 테스트·기대값·핀은 바꾸지 않았다. 부모284 전체는 이 작업에서 재실행하지 않았다.
 
 이 검증은 제공 합성 결과의 로컬 저장 계약에 한정한다. 문서 무결성 검사는 별도로 시행하며 실장비 정확도·기관 적합성·실제 D2 업무 검증을 대신하지 않는다.
+
+## 명시 선택 불확도 검토 부록
+
+2026-10-26 `DEV3-DRAFT-UNCERTAINTY-TRACE-001`. 공개 base `f5074a706a0394b21028f45bda5a5dffb84bdc66`에 자기 uncertainty `8059218721695468993ee753cad75d9c7d1121b0`만 정상 cherry한 의존성이다. `805`는 이 작업 시작 때 독립 수용 pending이며, 부록 연결 성공으로 부모 산술·물리 정확도·규범 승인을 승격하지 않는다. CLI·805 C/I를 우선 처리한다.
+
+`uncertainty_inputs=None`은 이전 저장 경로 그대로다. 부모 uncertainty API를 import하거나 호출하지 않으며 result.json·DRAFT·manifest·DTO·파일 수·오류·native 수명을 변경하지 않는다. 명시 제공 시 plain dict exact2 `{"components": components, "policy": policy}`만 받는다. 두 값은 [표준불확도 산술 API](conducted_uncertainty_budget_usage.md)의 입력이며, 해당 genuine API를 같은 원 result snapshot으로 한 번 호출한다. 기본 k·분포·상관·성분·누락 0은 만들지 않는다. 잘못된 wrapper는 기존 `invalid_argument`로 claim 전에 거절한다.
+
+부록은 원 DRAFT 뒤의 `Declared uncertainty review appendix` 절이며, 원 result hash와 제공 가정의 수학 합성·실제 calibration/method 권위 아님·검토 미완료 문구를 표시한다. 부모의 exact10 DTO 전체를 escaped JSON block으로 보존한다. component/policy 출처와 입력 hash, q/k·제곱항·Decimal·정밀도·원식, 미확인 flags와 구체 reason을 따라갈 수 있다. `not_assessed`도 원 null/reason 그대로 저장하며, result의 uncertainty_db·limit·conformity·측정·보정 숫자와 원 상태는 수정하지 않는다. 결과가 incomplete/invalid인 기존 저장도 그 상태를 유지한다.
+
+새 파일·manifest/result/summary schema·오류 code는 추가하지 않는다. 부록을 포함한 draft.md의 bytes/SHA와 이를 담는 기존 manifest/summary hash만 기존 계약에 따라 달라진다. 부모의 유효하지 않은 반환 형식·권위·result hash 상충은 기존 `result_input_invalid`, 전체 DRAFT 한도 256 KiB 초과는 기존 `draft_too_large`로 claim 전에 닫는다. 부모의 제어 예외는 같은 객체로 전파하고, 예상하지 못한 일반 오류는 기존 `write_failed` 규칙을 따른다. `None`의 기존 오류 동작에는 영향이 없다.
+
+원 native exclusive leaf, result/draft/manifest의 고정 최종3·pending 링크, manifest last completion marker, 최초 오류·부분 파일·기존 결과 보존과 no-overwrite/retry/repair/cleanup 정책을 유지한다. 부록을 다시 계산하거나 실패를 수정해 재게시하지 않는다. 기존 21개 default 검사는 이번 writer 변경에 필요한 회귀로 한 번만 실행하며, 새 부록 검사는 별도로 구분한다. 실제 성분·교정성적서·고객 원본·실측·현장 검증은 수행하지 않는다.
+
+이번 연결의 새 부록 검사 10개와 원 default 회귀 21개가 각각 통과했다. 원 21개는 한 번 실행했다. 별도 native probe는 한 합성 result로 편집 전 writer 사본·현재 명시 None·부록 제공의 3회 저장을 대조했다. 이전/현재 default의 result·DRAFT·manifest·pending bytes와 summary가 같고, 알려진 native 호출 수·close 수명도 같았다. 부모 API 호출은 0·0·1회이며, 부록 저장의 result bytes·원 DRAFT prefix는 그대로다. 최종 파일3과 원 pending 링크3, manifest 마지막 게시·알려진 descriptor 닫힘을 확인했다. 이 3회 probe를 10/21개 검사 분모에 합산하지 않으며, 전역 handle 누수·실물·규범 검증으로 승격하지 않는다.

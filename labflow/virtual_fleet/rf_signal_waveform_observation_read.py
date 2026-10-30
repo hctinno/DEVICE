@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 
 from .. import control_packet_prepare as _native
+from .managed_reader_source_version import SOURCE_VERSION as _MANAGED_SOURCE_VERSION, SOURCE_PINS as _MANAGED_SOURCE_PINS
 
 __all__ = ["RfSignalWaveformObservationReadError", "read_rf_baseband_observation"]
 _PREFIX = "rf_signal_waveform_observation_read_"
@@ -240,7 +241,10 @@ def _bundle(value, summary, name):
     for k in ("window_seconds","observed_duty_cycle","time_mean_mw","peak_mw","energy_mw_s"): _number(metrics[k])
     for k in ("on_mean_mw","time_mean_dbm","on_mean_dbm","peak_dbm"):
         if metrics[k] is not None: _number(metrics[k])
-    p=value["provenance"]; _keys(p,"binding_scope reference_plane rf_manifest_sha256 source_snapshot_sha256 packet_sha256 dependency_pins")
+    p=value["provenance"]
+    named=type(p) is dict and 'dependency_source_version' in p
+    fields="binding_scope reference_plane rf_manifest_sha256 source_snapshot_sha256 packet_sha256 dependency_pins"
+    _keys(p,fields + (" dependency_source_version" if named else ""))
     _require(p["binding_scope"] == "declared_source_projection_only" and p["reference_plane"] == "declared_dut_output")
     _require(type(p["dependency_pins"]) is list and len(p["dependency_pins"]) == 4)
     pins=[]
@@ -248,7 +252,13 @@ def _bundle(value, summary, name):
         _keys(actual,"role lf_bytes lf_sha256")
         _require(type(actual["role"]) is str and type(actual["lf_bytes"]) is int and type(actual["lf_sha256"]) is str)
         pins.append((actual["role"],actual["lf_bytes"],actual["lf_sha256"]))
-    _require(tuple(pins) in (_PINS,_CURRENT_PINS))
+    if named:
+        _require(type(p['dependency_source_version']) is str and p['dependency_source_version']==_MANAGED_SOURCE_VERSION)
+        _require(tuple(pins)==tuple((role,size,digest) for role,path,size,digest in _MANAGED_SOURCE_PINS))
+    else:
+        # Both recorded versions remain historical input. A new tuple without
+        # its explicit version cannot masquerade as an old recorded producer.
+        _require(tuple(pins) in (_PINS,_CURRENT_PINS))
     expected_source=summary["source"]; expected_math=summary["math"]
     _require(req["run_name"] == expected_source["run_name"]
              and all(source["metadata"][k] == expected_source[k] for k in ("run_id","runtime_instance_id")))
@@ -408,22 +418,25 @@ def _public(error,stage):
         suffix="input_changed" if stage == "post" else "path_invalid"
     return RfSignalWaveformObservationReadError(_PREFIX+suffix)
 
-def read_rf_baseband_observation(observation_name, *, expected_summary) -> dict:
+def read_rf_baseband_observation(observation_name, *, expected_summary, workspace_root=None) -> dict:
     """Read only an explicitly named stored version, bound to original summary."""
     backend=result=primary=None; stage="arguments"
     try:
         _name(observation_name,"invalid_argument")
         summary=_summary(expected_summary,observation_name)
         stage="environment"
-        root=_root(); backend=_native._WindowsIO(); tree=_native._Tree(root,backend)
-        helper=_open(tree,root/"labflow/control_packet_prepare.py")
+        root=_root(); backend=_native._WindowsIO(); source_tree=_native._Tree(root,backend)
+        helper=_open(source_tree,root/"labflow/control_packet_prepare.py")
         _require(helper is not None and helper["stamp"][2] <= 65536,"unavailable")
         helper_raw=_read(helper["fd"],65536,"unavailable")
         normalized=helper_raw.replace(b"\r\n",b"\n")
         _require((len(normalized),_sha(normalized)) == (_PINS[3][1],_PINS[3][2]),"unavailable")
         _require(_native._stamp(backend.info(helper["fd"],directory=False)) == helper["stamp"],"input_changed")
-        folder=root/".local/rf-waveform-observations"/observation_name
+        from ..managed_artifact_workspace import artifact_local_root
+        local=artifact_local_root(workspace_root=workspace_root)
         stage="storage"
+        tree=_native._Tree(local,backend)
+        folder=local/"rf-waveform-observations"/observation_name
         try: tree.directory(folder)
         except FileNotFoundError: _fail("not_found")
         marker=folder/"failure.json"
@@ -446,10 +459,11 @@ def read_rf_baseband_observation(observation_name, *, expected_summary) -> dict:
         _require(_read(final["fd"],_MAX_FILE,"input_changed") == raw,"input_changed")
         _require(_native._stamp(backend.info(final["fd"],directory=False)) == final["stamp"],"input_changed")
         _require(_open(tree,marker) is None,"input_changed")
-        _recheck(tree,helper)
+        _recheck(source_tree,helper)
         _require(_read(helper["fd"],65536,"input_changed") == helper_raw,"input_changed")
         _require(_native._stamp(backend.info(helper["fd"],directory=False)) == helper["stamp"],"input_changed")
         _directories(tree)
+        _directories(source_tree)
     except BaseException as error:
         primary=_public(error,stage)
     finally:

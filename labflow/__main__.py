@@ -17,7 +17,7 @@ def main():
     for stream in (sys.stdout,sys.stderr):
         if hasattr(stream,'reconfigure'):stream.reconfigure(encoding='utf-8')
     parser=argparse.ArgumentParser(description='Local FCC workflow core; reports are drafts')
-    parser.add_argument('--workspace',default='data/labflow')
+    parser.add_argument('--workspace')
     sub=parser.add_subparsers(dest='command',required=True)
     sub.add_parser('init');sub.add_parser('documents');sub.add_parser('mcp')
     for name in ['import-package','create-case','register-method']:
@@ -28,10 +28,10 @@ def main():
     plan=sub.add_parser('add-plan');plan.add_argument('case_id');plan.add_argument('file')
     run=sub.add_parser('record-run');run.add_argument('plan_id');run.add_argument('file');run.add_argument('--raw')
     for name in ['evaluate','status']:sub.add_parser(name).add_argument('id')
-    report=sub.add_parser('report');report.add_argument('case_id');report.add_argument('--out',default='exports/reports')
-    demo=sub.add_parser('demo');demo.add_argument('--out',default='exports/demo')
+    report=sub.add_parser('report');report.add_argument('case_id');report.add_argument('--out')
+    demo=sub.add_parser('demo');demo.add_argument('--out')
     virtual=sub.add_parser('virtual-check',help='Run synthetic RF bench scenarios; no real hardware or AI calls')
-    virtual.add_argument('--out',default='exports/virtual')
+    virtual.add_argument('--out')
     for name in ['review-document','review-method','review-run']:
         p=sub.add_parser(name);p.add_argument('id');p.add_argument('--reviewer',required=True);p.add_argument('--note',required=True)
     source=sub.add_parser('intake-add-source')
@@ -50,12 +50,19 @@ def main():
     sub.add_parser('intake-notifications')
     args=parser.parse_args()
     try:
+        from .development_paths import load_layout, reference_path
+        if hasattr(args,'out'):
+            relative={'report':'reports','demo':'demo','virtual-check':'virtual'}[args.command]
+            args.out=(reference_path(Path(args.out).absolute()) if args.out
+                      else load_layout().output('exports/'+relative))
         if args.command=='virtual-check':
             from .virtual_scenarios import run_virtual_scenarios
             result=run_virtual_scenarios(args.out)
             print(json.dumps(result,ensure_ascii=False,allow_nan=False,indent=2))
             return 1 if result['failed'] else 0
-        store=Store(args.workspace);cmd=args.command
+        workspace=(reference_path(Path(args.workspace).absolute()) if args.workspace
+                   else load_layout().output('state/labflow'))
+        store=Store(workspace);cmd=args.command
         def data():return json.loads(Path(args.file).read_text(encoding='utf-8-sig'))
         if cmd=='init':result={'workspace':str(store.root),'status':'initialized','hardware_connected':False,'official_release_available':False}
         elif cmd=='documents':result=store.documents()

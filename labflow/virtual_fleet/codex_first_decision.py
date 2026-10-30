@@ -10,7 +10,8 @@ import threading
 import time
 import uuid
 
-from ..codex_cli_response import CodexCliResponseError, produce_codex_cli_response as _produce
+from ..codex_cli_response import CodexCliResponseError, produce_codex_cli_response as _produce, _client_versions_match
+from .operator_response_schema import is_current_response_schema_bytes as _current_schema
 from .catalog import load_catalog as _load
 from .evaluation import prepare_sensor_trial as _prepare
 from .harness import FleetHarness as _Harness
@@ -32,7 +33,6 @@ _EXCHANGE = re.compile(r'codex-cli-exchange:[a-f0-9]{32}\Z', re.ASCII)
 _MODELS = {'gpt-6.1-sol', 'gpt-6-astra'}
 _SCENARIOS = {'normal', 'restored_disconnect'}
 _PRODUCER = 'dgm-virtual-operator-v1'
-_SCHEMA_HASH = 'aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb'
 _BUDGETS = dict(decisions=64, logical_requests=64, ticks=32, wall_seconds=30, transport_retries=2)
 _DELEGATION = dict(scope='rf_sensor_proposal_v1', harness_budgets=_BUDGETS,
                    outer_limits=dict(wall_seconds=60, model_calls=8))
@@ -182,7 +182,7 @@ def _preflight(catalog_path, catalog_sha256, schema, executable, models, scenari
     for values, allowed in ((models,_MODELS),(scenarios,_SCENARIOS)):
         if not 1 <= len(values) <= 2 or any(type(v) is not str or v not in allowed for v in values) or len(set(values)) != len(values):
             _fail('invalid_input')
-    if len(schema) != 3052 or _H(schema) != _SCHEMA_HASH:
+    if not _current_schema(schema):
         _fail('invalid_input')
     if event is not None and event.is_set(): _fail('cancelled')
     try:
@@ -216,7 +216,9 @@ def _complete_receipt(value, model, timeout):
         verification='wire_complete remote_identity_verified semantic_quality_verified external_data_authority_verified storage_authenticity_verified')
     for key,names in shapes.items():
         if type(value.get(key)) is not dict or set(value[key])!=set(names.split()): _fail('retention_failed')
-    constants=dict(client=dict(name='codex_cli',supported_version='0.163.0-alpha.11.2',observed_version='0.163.0-alpha.11.2',binary_content_sha256=None),
+    if not _client_versions_match(value['client']['supported_version'],value['client']['observed_version']): _fail('retention_failed')
+    version=value['client']['supported_version']
+    constants=dict(client=dict(name='codex_cli',supported_version=version,observed_version=version,binary_content_sha256=None),
         attempts=dict(version_process_attempts=1,model_process_attempts=1,application_retries=0,internal_network_requests=None,internal_network_retries=None),
         cost=dict(kind='unknown',amount=None,currency=None,price_version=None),
         controls=dict(requested=dict(ignore_user_config=True,ignore_rules=True,sandbox='read-only',ephemeral=True,empty_cwd=True,model_local_attempt_cap=1,automatic_retries=0),
@@ -486,7 +488,7 @@ class _Batch:
         except Exception: _fail('unsupported_source')
         actions=_actions()
         sources={}
-        for relative in ('codex_cli_response.py','virtual_fleet/codex_first_decision.py','virtual_fleet/model_operator_boundary.py','virtual_fleet/harness.py',
+        for relative in ('codex_cli_response.py','virtual_fleet/codex_first_decision.py','virtual_fleet/operator_response_schema.py','virtual_fleet/model_operator_boundary.py','virtual_fleet/harness.py',
                          'virtual_fleet/journal.py','virtual_fleet/evaluation.py','virtual_fleet/integration.py','virtual_fleet/catalog.py'):
             path=Path(__file__).resolve().parents[1]/relative
             data=_read(path,1048576,'unsupported_source',self)

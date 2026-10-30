@@ -1,5 +1,35 @@
 # 합성 접수에서 단일 가상 시험 결과까지
 
+## 선언 불확도 입력의 함수 연결 — 2026-10-26
+
+기존 함수 `run_conducted_flow`에 keyword-only `uncertainty_inputs=None`을 추가했다. 기존 product CLI `--conducted-workflow`의 인자·분기·종료·서버 동작은 그대로이며 새 flag·파일 입력 경로·기본 모델·수치·규범값을 추가하지 않는다. 옵션은 Python 함수 호출에서만 명시할 수 있다.
+
+```python
+result = run_conducted_flow(
+    new_output_dir,
+    document_kind="pdf",
+    measurement_ref=explicit_same_run_measurement_ref,
+    mock_model=explicit_authored_mock_label,
+    uncertainty_inputs={"components": declared_components, "policy": declared_policy},
+)
+```
+
+위 코드는 사용법이며 이번 단위의 전체 실행 증거가 아니다. 생략/None이면 새 snapshot 호출0이며 기존 finalizer 인자를 그대로 사용한다. non-None이면 기존 `_conducted_export_frame`으로 native graph를 분리하고 [finalizer](conducted_execution_result_finalizer_usage.md)의 기존 UTF-8 262144-byte 한도에 맞춰 그대로 전달한다. 성분·정책·근거를 만들거나 null을 숫자로 채우지 않는다. [기존 budget](conducted_uncertainty_budget_usage.md)의 지원 범위와 보류 판단, `result.calculation.conformity.uncertainty_db=None`·`applied_to_result=False`는 부모가 소유한다.
+
+기존 unsupported scenario 오류를 먼저 보존하고, foreign/subclass·순환·비유한 수·초과 native 입력은 output 생성과 compiler/Store/runtime 전에 거절한다. 공유 frame의 기존 고정 `conducted_workflow_readback_export_invalid` 코드를 재사용하며 새 오류 문법을 만들지 않는다. 이후 finalizer의 원 최초 오류·제어 예외 identity·부분 기록을 보존하고 재시도·정책 수선·DRAFT 승격을 하지 않는다.
+
+2026-10-26 admission 후속은 non-None 입력을 기존 262144-byte native frame으로 사본화한 **뒤**, 정확한 native dict이면서 키가 `components`, `policy` 두 개뿐인지 검사한다. list/string/number/bool과 부족·추가 키 dict도 같은 고정 오류로 거절하며 출력 경로 해석·생성, compiler/Store/runtime/finalizer는 시작하지 않는다. scenario 오류는 이 검사보다 먼저이며, native graph 오류와 최초 CONTROL identity도 기존대로 보존한다. 생략/None은 frame 호출이나 새 finalizer kwargs 없이 기존 경로를 따른다.
+
+이 admission은 내부 성분·정책의 의미를 판단하지 않는다. exact2의 `components=None`, 미지원 상관 가정·근거 부족 등은 그대로 기존 budget 판단 경계로 전달하며 not_assessed/null을 수선하거나 승인값·수치 기본값·CLI flag를 만들지 않는다. 새 공개 자동발견 테스트3은 malformed12형상의 초기 거절·경계 호출0, exact2 내부 미확인3형상의 단일 전달·제공 최종값 미평가/null, 기존 출력보다 앞선 입력 오류·scenario 우선순위를 검사한다. 기존 `declared_*` opt-in4와는 별도 분모이며, 제공 downstream 경계를 사용한 검증을 실제 RF·whole workflow·실제 budget 계산으로 세지 않는다.
+
+검증은 구현 전 봉인 기대와 실제 미지원 키워드 RED1 FAIL 뒤 새 typed4 PASS·기존 text unsupported 경계1 PASS다. 최초 None 비교는 복사 원본의 `__file__`에서 schema 경로를 잘못 구한 테스트 ERROR였으며 원본/실패/이전 test 파일을 보존했다. 테스트에서만 원 프로젝트 locator를 복원하고 이 비교1개만 다시 실행했다. 다른 통과 사례는 반복하지 않았고 제품·기대값은 바꾸지 않았다.
+
+새 typed 경계는 PDF/Store/analysis/plan/runtime/finalizer를 명시 제공한다. 생략·None의 원5 kwargs/summary 및 제공 finalizer가 쓴 result.json/draft.md/manifest.json3의 bytes 동일, native copy/원 실행 객체 전달, 조기 거절·hook0, 최초 오류/네 제어 객체·후행 오류·19-byte 부분 보존을 확인했다. 실제 RF·loop·model·SQL·CLI·finalizer·budget 실행은0이다. 이 제공3파일을 실제 writer의 성공·가상 전체 workflow 또는 물리 검증으로 세지 않는다. opt-in `WorkflowDeclaredUncertaintyTests.declared_*`는 명시 고정 원본 소스 위치를 제공한 테스트 loader로만 선택하며 기존 기본 cohort/제품 CLI를 변경하지 않는다.
+
+의존 후보094e의 독립 genuine retained-input 검수와 이 typed 연결 검증은 별개다. 실제 optional 전체 workflow는 후속이며, 호스트·등록·805·writer·프로필·공유/원본·실제 모델17/Vertex 상태는 변경하지 않았다. 요약의 원 task/conformity 미평가·DRAFT와 기존 최종3 manifest 계약을 유지하며 사용자 준비0이다.
+
+
+
 이 명령은 새 합성 의뢰를 만들어 접수·분석·위임·단일 센서 실행·결과 저장을 실제 구현으로 연결한다. 사용자 원본은 입력받지 않는다. PDF의 페이지 인용과 같은 접수 화면의 가상 기록을 확인하는 개발 수용 도구다.
 
 ## 실행
@@ -177,6 +207,51 @@ CLI는 원 summary와 실제 loopback URL을 출력한다. 새 폴더의 `public
 
 현재 authored 정상 조건은 raw −19.5 dBm·corrected 11 dBm, result recorded·storage complete·DRAFT·규범 not_assessed를 실제로 연결했다. 동일 현재 plan/expected binding/D3 원 결과를 보호 GET와 production DOM390/1440에서 대조했다. 이 수치는 고정 합성 전파의 결과이며 실제 SM-A176U 측정이나 물리 예측 성능이 아니다. 원 null verdict/limit/uncertainty·실제 AI unknown 표시를 유지한다. 첫 mock의 안정화 전 acquire는 invalid로 저장됐으며 그 원 실패를 보존하고 새 실행에서 동작 대기 순서만 수정했다. 기존 기본 TXT genuine1, 새 typed 진입/interrupt 정리3과 실제 새 opt-in 실행·HTTP/DOM은 별도 분모다. 기존183/168·다른 owner core/test/private proof·실제 모델·auth·원장·장비·Office는 이번 검증에 사용하지 않았다.
 
+### 생성한 artifact를 저장 읽기 GET에 연결
+
+2026-10-26 후속 startup 조립은 opt-in `--conducted-workflow`에만 적용한다. [보호 artifact GET](intake_artifact_readback_host_usage.md)의 trusted native10을 `run_conducted_flow`가 반환하는 `server_options.conducted_artifact_readback_inputs`와 `server-startup-original.json`에 함께 보존한다. main은 기존처럼 `server_options`를 그대로 `create_server`에 넘기며 새 CLI flag·환경변수·query/body 선택은 없다. 기본 TXT/PDF fixture, summary/URL 출력, 기존 preview/result snapshot과 종료 방식은 유지한다.
+
+현재 checkout은 root `5a68b7a` + GET `efc77fb` 정확3의 정상 cherry를 전제로 한다. GET 자체의 독립 phase2는 이 작업 시점에 진행 중이며, 아래의 새 작성자 연결 검증을 최종 구현 출시나 독립 인수로 표시하지 않는다. 부모 서버·Store·UI·finalizer·reader를 수정하지 않는다.
+
+| native10 값 | 유일한 원 출처 |
+| --- | --- |
+| `intake_id`, `expected_revision`, `expected_context_sha256` | 실행 전 현재 문맥에서 만든 **원 ready plan.binding** |
+| `method` | 같은 plan 조립에 명시한 원 method |
+| `artifact_workspace_root` | 실제 finalizer에 전달한 같은 로컬 절대 `output` Path |
+| `artifact_name`, `run_id`, `runtime_instance_id` | 실제 `finalized.artifact`의 원 writer summary |
+| `expected_manifest_sha256` | 실제 artifact summary의 `storage.sha256` |
+| `expected_result_sha256` | 원 `finalized.result`의 canonical UTF-8 JSON SHA-256, **LF 제외** |
+
+writer의 `files`에 있는 result.json SHA는 저장 파일의 LF까지 포함하므로 expected_result pin으로 쓰지 않는다. result/artifact binding에서 current pin을 복사하거나, 후행 현재 값으로 원 기대를 덮어써 일치를 만들지 않는다. root는 실제 finalizer에 넘긴 동일 객체로 전달하고 명시 로컬 절대 경로를 검증한다. 상대 경로나 artifact marker에서 root/name을 추정하거나 이전 폴더를 검색하지 않는다. marker는 반환된 이름의 고정 namespace와 일치하는지 확인할 뿐 선택 root를 도출하지 않는다.
+
+원 ready plan + finalizer `stored` + artifact `complete` + non-null 원 result가 있을 때만 선택을 추가한다. result의 recorded/incomplete/invalid는 그대로 둔다. **저장된 invalid/incomplete도 원 상태를 읽기 위한 선택**이며 fixture 통과·측정 유효·규범 승인으로 승격하지 않는다. invalid artifact와 현재 plan의 binding이 맞으면 GET 관계는 matched일 수 있지만 원 invalid/null과 fixture_acceptance fail은 유지된다.
+
+초기 blocked/unsupported/rejected, held·저장 실패, artifact 또는 result null에는 새 선택 key가 없다. complete를 주장하는 원형이 schema/kind·result status·false 권한·manifest pin/marker/byte 길이와 모순되면 `conducted_workflow_artifact_startup_invalid`로 실패하고 값을 채우지 않는다. parent native 한도와 기존 startup64KiB/깊이32 한도를 유지한다. 실패 증거 기록에 추가 오류나 중단이 나도 처음 flow 오류/control을 보존하고 재시도하지 않는다.
+
+`--port`가 없으면 startup 선택만 같은 결과와 함께 저장한다. port를 지정하면 새 configured GET host의 보호·요청 worker 종료 대기 정책을 사용한다. GET는 두 읽기 시점의 현재/저장 관계를 확인하며 미래 실행이나 영구 현재 승인이 아니다. 원 summary의 source_current/fixture_acceptance와 preview/result의 expected binding을 변경하지 않는다.
+
+새 검사는 조립·상태·오류7, 실제 새 정상/측정 무효 authored MOCK→finalizer→GET2, 기존 기본 TXT/CLI 회귀2를 별도 분모로 확인했다. 실제 두 흐름은 로컬 compiler2회와 생성된 MOCK의 metadata/proposal20회, 총22 Python Popen launch이며 WinAPI 이벤트22와 같은 호출을 중복 집계하지 않는다. 설치 Codex나 실제 모델 호출은0이다. 기존 TXT 회귀의 별도 native spawn1은 기존 SyntheticTextProvider 분석 worker 경로로 소스 확인했으며, 새 MOCK 실행 분모와 구별한다.
+
+두 실제 GET는 원 파일/Store metadata를 바꾸지 않고 원 result와 actual manifest/result pin을 전달했다. 측정 무효는 저장 complete/DRAFT와 invalid·보정 null·fixture 실패를 함께 유지했다. 원 입력·MOCK 원소스/binary/응답·실행·finalizer·startup·payload와 실패 기록을 작성자 증거로 보존했다. 전역 native handle 잔여와 관측 범위는 모두 닫힘으로 추정하지 않는다. 실제 AI·실측·규범 전수·전체 시험소 업무 검증은 미실행이다.
+
+## 같은 원 선택으로 저장 사본 검수하기
+
+2026-10-26 후속 `DEV1-CONDUCTED-DEMO-READBACK-INPUT-001`은 위 원 native10 선택이 생긴 경우, `server-startup-original.json`을 먼저 저장한 뒤 **같은 output의 `readback-inputs.json`**을 추가로 배타 저장한다. 내용은 검증된 원 선택에서 `intake_id`만 제외한 exact9다. current pin·방법·artifact pin을 다시 조립하거나 해시를 재산출하지 않는다. intake ID는 원 startup에서, workspace는 사용자가 명시한 같은 output의 `s`에서 별도로 전달한다. 원 startup10·summary DTO·기존 CLI 출력에는 새 표시 필드를 추가하지 않는다.
+
+다음은 사용자가 이미 생성한 새 output 하나를 명시해 실행하는 명령이다. [CLI 공개 수용30cd](https://github.com/hctinno/DEVICE/blob/30cd27bc47e70e93713d984b8ac545e801217b9c/docs/fcc/intake_conducted_artifact_readback_cli_usage.md)의 모듈이 있는 checkout에서 실행한다. 이 변경의 정확 base `aae3d46`에는 해당 CLI 모듈을 추가하지 않았으며, 원 startup 변경의 독립 인수는 이 작업 시점에 pending이다. 별도 수용 CLI를 확인한 연결 검증을 startup의 독립 인수나 확정 출시로 표시하지 않는다.
+
+```powershell
+$demoOutput = 'C:/disposable-demo/my-new-conducted-flow'
+$savedStartup = Get-Content -Raw -Encoding utf8 -LiteralPath "$demoOutput/server-startup-original.json" | ConvertFrom-Json
+python -B -X utf8 -m labflow.intake_conducted_artifact_readback_cli --workspace "$demoOutput/s" --intake-id $savedStartup.conducted_artifact_readback_inputs.intake_id --readback-json "$demoOutput/readback-inputs.json"
+```
+
+`$demoOutput`은 사용자가 선택한 실제 로컬 절대 경로로 바꾼다. 원 선택과 새 파일이 있는 경우에만 사용하며, output이나 과거 파일을 자동으로 찾지 않는다. blocked/unsupported/rejected·held·null 선택에는 새 파일이 없다. 기존 파일이나 실패 폴더를 덮어쓰지 않고 원 512파일/32MiB 한도를 쓰기 전에 확인한다. 새 파일 쓰기에 실패하면 원 startup과 이미 쓰인 partial을 보존하고 첫 오류/control을 그대로 전파한다. 데모가 명령을 생성·실행하거나 결과·현재 기대를 교정하지 않는다.
+
+이 단위는 신규 pure/typed7과 기존 출력·종료 관련2를 별도 검증했다. cap2 분기는 명시 metadata projection이며 실제 디스크 한계 도달 실험으로 세지 않는다. 공개 CLI는 root 수용 `30cd27bc47e70e93713d984b8ac545e801217b9c`의 원 모듈(10174B, GitLF SHA256 `598c3c351f78a0463152796db57c20c293560ebc338d89ae570dd5c452c88b5f`)을 사용해 실제 Python child1로 확인했다. 새 합성 측정 무효 흐름의 원 exact9 파일을 그대로 전달했고 exit0/matched에도 원 invalid·보정 null·fixture fail을 유지했다. stdout/stderr/exit는 파싱 전에 보존했고 출력·Store131파일의 raw/fstat/ns/Win32 정보는 조회 전후 동일했다. child 내부 SQL/handle은 계측하지 않았으며 프로세스 종료 관측과 구별한다.
+
+첫 합성 준비 후 작성자 소스 관측기가 writer의 pending/최종 hard-link 쌍에 nlink1을 요구해 CLI 전 중단한 기록을 보존했다. 제품 경계를 바꾸지 않고 알려진 artifact6이 nlink2인 실제 상태를 기록하여 별도 새 흐름에서 이어갔다. 준비 두 흐름의 compiler2·생성 MOCK20은 Python 조회 child1과 별도 분모이며 실제 모델·설치 Codex·RF 출력·물리 동작0이다. matched/exit0는 저장 읽기와 두 관측 시점의 결합 일치다. 실행 중 snapshot/generation 승인·저장 측정 PASS·실측 판정·전체 무인시험소 완료를 뜻하지 않는다.
+
 ## 명시 실패 시나리오
 
 `--conducted-scenario`는 `--conducted-workflow`에만 사용한다. 생략하면 기존 정상 정책이며, 각 명령은 새 authored PDF·mock·Store·출력 폴더를 만든다. 예를 들어 다음은 새 문서에서 듀티 단위만 누락한다.
@@ -192,10 +267,10 @@ python -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --documen
 | `invalid-citation` | 새 scripted MOCK 응답의 features 인용을 그 새 PDF와 불일치하도록 작성 | genuine strict의 `analysis_response_invalid`와 원 응답 prefix를 보존. 그 소유 claim만 fail_job, 분석 미완료·runtime0·결과/초안 not_run, exit1 |
 | `measurement-invalid` | 새 mock에서 DUT 안정화 전 acquire, 이후 read | 실제 invalid receipt/관측→genuine D3 measurement_invalid, 원 raw/corrected=null·result invalid·storage complete·DRAFT, exit1 |
 | `restored-disconnect` | 기존 public loop의 `restored_disconnect` | 실제 DUT.start의 disconnected와 sensor invalid를 기록. 고정 다섯 동작은 공개 복구 시각 전 종료하므로 복구 성공/복구 실패 검증으로 부르지 않음. 원 measurement_invalid/null·invalid·complete·DRAFT, exit1 |
-| `transport-error` | 공개 plan/loop에 일반 transport fault 주입 인자 없음 | unsupported·runtime0·Store/UI/결과/초안 not_run, 정확 public_seam 공백을 summary에 보존, exit1 |
-| `recovery-failure` | 같은 entry에 failed-restoration/persistent-disconnect 선택 인자 없음 | unsupported·runtime0·Store/UI/결과/초안 not_run. 기존 restored_disconnect를 복구 실패 주입으로 바꾸지 않음, exit1 |
+| `transport-error` | 기존 public `persistent_disconnect`, 5결정·4명령·2tick/ref17 | DUT link-state unavailable와 취득 뒤 원 무효 packet(측정 출력 부재)을 같은 journal에 남긴 뒤 `stop(blocked)`. 원 `incomplete/execution_incomplete`, corrected null·complete·DRAFT, fixture fail·exit1 |
+| `recovery-failure` | 같은 `persistent_disconnect`, 8결정·7명령·3tick/ref29 | 최초 무효 관측 뒤 `DUT.start` 재시작1·sensor 재취득1도 같은 fault에서 무효. native recover/transport 예외 주입이 아니며 원 `incomplete/execution_incomplete`, null·DRAFT·exit1 |
 
-측정 무효의 새 mock 정책만 `DUT.start → sensor.acquire → advance1 → sensor.read → stop`으로 작성한 뒤 컴파일한다. 정상과 RF 단절은 기존 정상 정책의 원 소스 bytes·동작 순서를 유지한다. 기존 원 응답·고객 파일·기존 출력·measurement_ref·수치·binding을 사후 수정하지 않는다. 실패 예시의 mock `completed` 주장은 원 정책의 주장으로 남으며 fixture 수용 성공·정상 측정·규범 PASS로 올리지 않는다.
+기존 `measurement-invalid` 정책은 `DUT.start → sensor.acquire → advance1 → sensor.read → stop`이며 정상과 `restored-disconnect`의 원 소스 bytes·동작 순서는 유지한다. 두 새 link-state 시나리오는 아래 통신·복구 절의 bounded blocked 정책만 추가한다. 기존 원 응답·고객 파일·기존 출력·measurement_ref·수치·binding을 사후 수정하지 않는다. 기존 실패 예시의 mock `completed` 주장과 새 `blocked` 주장은 각 원 정책으로 남으며 fixture 수용 성공·정상 측정·규범 PASS로 올리지 않는다.
 
 실행 전 오류·blocked에서도 새 폴더의 `public-summary.json`에 scenario·runtime_calls·result/storage/draft 상태와 null을 남긴다. 무효 측정에서도 원 `execution-original.json`, `finalizer-original.json`, 실제 D3 payload/manifest와 DRAFT를 보존한다. 이때 저장 complete와 결과 invalid는 별개다. 인용 거절은 원 `analysis-MOCK-original.json`과 `failure.json`의 strict prefix·phase를 먼저 보존하며 strict/plan/실행/초안 파일을 만들어 성공처럼 채우지 않는다. 명시 시나리오에서 예상한 그 strict 오류만 rejected로 반환해 실패한 Store의 읽기 화면을 열 수 있다. 다른 native 오류와 제어 예외는 기존 최초 오류 경로로 전파한다.
 
@@ -224,3 +299,48 @@ node frontend/intake_flow_browser_check.cjs
 ```
 
 이 UI 단위는 자기보존 2d의 다섯 Store/원 startup을 현재 코드의 보호 GET15·production DOM390/1440 10관측으로 재사용했다. 새 가상 실행·CLI·실제 모델·장비0이며 재생을 새 실행으로 세지 않는다. 별도 typed18은 fixture 공존/fixture-only·결과/부모 HTTP503·plan pending·C1 불일치·incomplete null·다른 접수·요약 렌더 실패다. 원 데이터의 정상·오류와 typed projection을 구분한다. 신규 Node10, 조회 host5의 종료·포트 재사용, 요약 내부의 실제 영역/scroll 폭도 확인했다. 원 RED10, null-prototype 객체를 clone과 비교한 검사자 가정 오류1, 대기 route 해제 순서의 검사기 오류, 모바일 내부 잘림 RED를 각각 보존했다. 문서의 예전 실행 수와 이 검증 수를 합산하지 않으며 기존183/168 전체는 반복하지 않았다. CLI/test/backend/read-model·D1/D2/D3·Store/schema는 이 단위에서 수정하지 않았다.
+
+## 정식 workflow의 제공 receipt를 readback 입력으로 export
+
+2026-10-26. DEV3-WORKFLOW-READBACK-EXPORT-001. 기존 module에 public opt-in 함수 하나만 추가한다. 정확 base873647b4의 선행 D1 aae/873은 독립 검수 pending 의존성이며 기존 동결 증거를 갱신하지 않는다. 기존 demo/default/run/summary/CLI/producer·Store·부모 함수 본문은 변경하지 않는다.
+
+```python
+export_conducted_workflow_readback_inputs(
+    output_dir, workflow_summary, finalizer_receipt, *,
+    current_facts_plan, method, artifact_workspace_root,
+) -> dict | None
+```
+
+output_dir은 caller가 명시한 기존 Windows 로컬 절대 디렉터리다. current_facts_plan은 caller가 artifact와 별개로 얻은 원 exact3 context/analysis/facts_plan이며 method도 명시한다. 함수는 기존 current native/hash/binding 검증을 재사용하고 현재 plan.binding의 revision/context SHA와 intake_id만 사용한다. 원 workflow.context_sha256·artifact.binding에서 current pin을 복사하거나 Store 완료·analysis 등록·계획·위임·권한을 만들지 않는다.
+
+workflow_summary는 원 host exact12, finalizer_receipt는 원 v1 exact11 또는 measurement_selection을 가진 v2 exact12다. host가 저장한 serializer는 store.canonical(value).encode('utf-8'): sorted keys·compact JSON·ensure_ascii=False·allow_nan=False·**LF0**다. host.finalization.receipt의 bytes/SHA는 그 전체 finalizer DTO와, host.execution.receipt는 finalizer.execution_receipt와 각각 대조한다. finalization5의 status/result_status/artifact/failure와 원 execution/result/artifact의 run/runtime/status/failure를 각 역할대로 대조한다. 원 result.json 파일 SHA는 canonical(result)+LF1이며 expected_result_sha256의 LF0 canonical SHA와 다르다. manifest SHA·고정 파일 path/bytes/SHA·media type도 제공 summary 안에서 대조한다.
+
+이는 **caller 제공 DTO와 pin의 일관성 검사**다. 원 finalizer/manifest/result 파일을 읽어 인증하거나 실제 AI·권한·장비·측정 진위를 확인하지 않는다. artifact_workspace_root는 caller가 실제 finalizer에 사용한 원 절대 경로를 명시한다. artifact 파일이나 profile을 탐색하지 않는다.
+
+선택은 기존 _conducted_artifact_startup으로 native10을 만들고 기존 _conducted_readback_inputs로 intake_id만 제외한 readback-inputs.json exact9를 배타 저장한다. 반환은 같은 native10 또는 None이다. UI는 반환10을 기존 startup 입력으로, CLI는 기존 exact9 파일과 별도 같은 workspace/intake_id를 사용한다. 기존 summary12/finalization5와 선택·실패 evidence·invalid/incomplete/null·DRAFT·권한 false는 고치지 않는다. host가 failed/unknown이어도 실제 제공 stored complete artifact가 있으면 읽기 선택을 만들 수 있다. 이는 host 완료나 측정 PASS가 아니다.
+
+current None은 caller가 현재 facts를 제공할 수 없다는 명시 상태이며, current blocked 또는 held/null/미저장 artifact와 함께 None/파일0으로 끝난다. 그 차단 경로는 나머지 미사용 DTO의 유효성이나 파일 진위를 인증하지 않는다. 현재 readonly 부모는 completed 분석을 요구하지만 정식 host의 등록 준비 C1은 queued일 수 있고 원 instructions도 다르다. 같은 host가 끝났다는 사실만으로 current 조회 가능·matched를 보장하지 않는다. 이후 unavailable/different_plan/stale는 그대로 보존해야 하며 export가 expected binding이나 원본을 수선하지 않는다.
+
+한도는 host frame69632B/finalizer2MiB/current8MiB/native depth32/node1M, 원 execution receipt256KiB/result1MiB, selection 및 파일64KiB와 기존 output512files/32MiB다. cap은 쓰기 전에 거절하며 truncate하지 않는다. source/current/finalizer 입력은 분리된 native 값으로 검증하고 caller 원값을 바꾸지 않는다. 선택이 생겼을 때만 명시 output 디렉터리를 native pin하고 기존 exclusive writer를 호출하며 알려진 handle을 닫는다. relative/UNC/reparse/경로 이탈·중복 파일·한도를 거절하고 덮어쓰기·partial 재시도·실패 파일 정리를 하지 않는다. 첫 오류/control은 후행 close 실패에서도 원 객체로 보존한다. 입력 일관성 거절은 고정 ValueError('conducted_workflow_readback_export_invalid')이며 실제 기존 startup/출력/native/close 오류는 원형으로 전파한다.
+
+검증은 공개로 새 작성한 메모리 source facts의 순수 plan 조립과 명시 typed host/finalizer/artifact DTO만 사용한다. RF runtime·새 모델·Store/SQL·원자료 파일·운영 profile·원17은 실행/열람하지 않는다. 제공 값의 결합과 차단·pin/LF 역할·실패 DRAFT·배타 출력 검사를 물리/업무/권한 검증과 구별한다.
+
+2026-10-26 검증: 새 export 검사9개 PASS(failure/error/skip0), 같은 검사의 성공 결합3행을 보존했다. 명시 메모리 current facts/plan 조립과 typed host/finalizer/artifact 일관성이며 실제 host/RF/모델/Store·SQL 실행0이다. 파일512/32MiB 거절은 metadata projection, reparse는 native error seam으로 구분한다. 초기 runner 준비 오류와 모듈 부재 RED1, malformed 스키마·false 표식 보완 RED(failure2/error2), 보완 전9 PASS는 별도 이력으로 보존했다. 마지막 RED의 예상 밖 임시 출력 파일은 disposable test 자동 정리 전 raw 보존이 없어 로그만 남으며 raw 재생을 주장하지 않는다. 기존 wide/원proof와 합산하지 않는다.
+
+### 2026-10-26 evidence writer 최초 실패 보존 수정
+
+원 독립 startup 검수12의 11 PASS/I1 FAIL1을 보존한다. 원 writer의 `with target.open('xb')` 본문에서 write `MemoryError` 뒤 close `OSError`가 최초 control을 대체하는 경로를 실제 xb19B·flush/fsync·fd close로 새 RED1에서 재현했다. `_conducted_write`는 write의 최초 `BaseException`을 본문 안에서 저장하고 기존 context exit/close를 한 번 시도한다. 최초 오류가 있으면 후행 close가 대체하지 않고, write가 성공한 뒤 close만 실패하면 그 원래 객체를 전파한다. 기존 xb·cap·부분 파일·충돌·parent 실패·serializer·export 입력계약은 같고 재시도/삭제/복구를 추가하지 않았다.
+
+새검사5+영향 기존5=10검사 PASS(failure/error/skip0), 같은 검사의 오류·성공 조합15행과 실제 파일24개를 보존했다. 원 RED19B 파일/로그/raw를 그대로 남겼으며 다시 만들어 통과시키지 않았다. 기존 old9/old11 전체 반복0이다. 범위는 실제 로컬 native 파일에 주입한 write/close 예외이며 전역 파일시스템 장애 보증이 아니다. RF·CLI·모델·auth·SQL·운영 Store·실장비 실행0이며 원 No와 이 후보의 독립 수락을 구분한다.
+
+### 2026-10-26 통신 단절·유계 복구 실패의 실제 저장 연결
+
+두 선택은 기존 `run_intake_plan_virtual_execution → run_codex_virtual_loop → prepare_sensor_trial(condition='persistent_disconnect')`에 연결된다. 기존 준비 factory가 한 SensorTrial/VirtualFleet의 DUT disconnect 상태를 만들며 policy에는 author_control/reset/recover를 새로 위임하지 않는다. `transport-error`는 실제 link-state unavailable이며 `RetryableTransportError`를 발생시켰다는 뜻이 아니다. 정상·measurement-invalid·restored-disconnect의 원 mock source/정책·기대와 export 입력계약은 같다.
+
+통신 순서는 `DUT.start → advance1 → sensor.acquire → advance1 → stop(blocked)`와 명시 ref17이다. 복구 실패는 `DUT.start → advance1 → sensor.acquire → advance1 → DUT.start → sensor.acquire → advance1 → stop(blocked)`와 명시 ref29다. 첫 무효 관측 뒤 재시작·재취득을 각 한 번 시도하며 새 runtime이나 latest ref를 만들지 않는다. 공개 builder는 completed stop만 완료 근거로 받으므로 이 blocked stop의 원 결과는 `incomplete/execution_incomplete`다. 원 raw packet/측정 부재·refs·gaps·null을 보존하고 recorded/measurement_invalid/PASS로 수선하지 않는다. 기존 parent/writer 실패는 first error/control·partial·held/null 그대로다.
+
+2026-10-26 검증 분모는 분리한다. 구현 전 RED2는 unsupported/runtime0로 FAIL2였다. 첫 genuine1은 관측기가 표준입력 `nul`을 막아 version spawn 전에 ERROR1(runtime1/도구0), recovery 미실행으로 원 bytes/receipt를 보존했다. 정확 `os.devnull` 허용 뒤 원 mock 소스·실행파일 불변의 별도 version probe는 exit0/RF0였다. 후행 genuine 원2는 통신 PASS1·복구 ERROR1이며 복구는 8동작/journal/ref29를 남겼으나 185.093초의 원 `cleanup_failed`로 저장 전 중단했다. 이 한도 초과를 준수나 성공으로 바꾸지 않는다.
+
+총괄이 허용한 별도 recovery1에서는 SQL connection이 열렸을 때만 관측기를 활성화하고 native close 뒤 해제하며 runtime 진입 전 해제를 확인했다. 같은 정책/ref29/한도에서 PASS1, 실제 DRAFT 저장·원 null·exit1과 SQL20/close20을 확인했다. 성공 통신은 재실행하지 않았다. 따라서 목표 두 사례의 성공 증거는 후행 원2의 통신1과 별도 recovery1이며, 원2 전체가 PASS라는 집계가 아니다. 좁은 기존 회귀4는 별도 PASS4이고 전체 새 가상 runtime 생성은 준비 실패까지 포함4다. 실제 모델·provider/auth·운영 Store·실장비/현장0이며 새 운영 profile은 없다.
+
+180초/8결정·8명령·8tick/transport retry0, producer≤min(60,remaining-6), compiler30초, 출력512파일/32MiB를 바꾸지 않았다. 원 증거는 유지하고 후속은 별도 namespace에서 같은 한도를 적용했다. 관측기 benchmark는 RF/SQL0의 국소 비교이며 과거185초 전체 원인을 인증하지 않는다. 알려진 SQL/host/artifact cleanup과 원 bytes 정합성은 전역 OS 자원·실장비·AI 진위 인증과 구별한다.

@@ -1,23 +1,72 @@
 # 후속 개발 인수 대장 004
 
+## 2026-10-31 경로 통합·고정 소유권
+
+| 역할 | 실제 공간·보존 기준 | 다음 수용 조건 |
+|---|---|---|
+| 총괄 | integration / codex/workspace-consolidation-20261031 / 원195182f9 | 보존 검증→중복 정리→공통 경로 회귀→푸시/원격 exact |
+| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 0248858 | 원 접수 소유 유지·새 cwd/guard ACK 후 후속 접수 연결 |
+| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / aedb381 | 원 독립 No 보존·출처 미확인 처리 수정/재검수 |
+| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 36619b9 | C1/C2 수정 보존·post-fix 독립 재검수 |
+| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / 9f8b53a | bool/float tick 잔여 No 보존·수정/재검수 |
+| 유지보수 | workspaces/migration-paths / codex/migration-runtime-paths-20261031 | 공통 도구 실제 이전·현재 참조 복구·증거 보존 후 회수 |
+| 내용 보존 | workspaces/migration-archive / codex/migration-content-archive-20261031 / 신규3 소유 | 153개 냉각 clone의 고유 바이트/ADS 보관 도구·fixture·독립 검수→실제 CAS 보존→회수 |
+| P01 | 기존 수집 루트·브랜치·사용자 M2 그대로 | 개발 관리 영역만 예외. 수집 원본/작업 재개·확대 없음 |
+
+이 표는 현재 소유권이며 과거 담당 clone은 고유 내용·Git 보존 후 중복 정리한다. 고정 담당에게 최종 경로·guard를 실제 전달하고 ACK를 인수한다. 정리 중 일반 기능 작업은 보존 대기, 정리 뒤 원 미완료 구현을 잇는다. 실제 모델 추가 한도는 만들지 않는다.
+
+## GOAL-PREHARDWARE-001 — 2026-10-26 명시 재개
+
+사용자의 첨부 Goal 전체를 인수하고 실장비 연결 전 소프트웨어 개발·검증을 재개했다. root `codex/pipeline-dev-20261023-intake`의 기존 미푸시094e 전달과 재개 문서308e86e는 정상 push·원격 exact 대조했다. 추가 수용 기능은472의 `09f9c74`이며 독립 공개8(typed4/native4)·총괄 native 최초 read/후행 close CONTROL1 PASS와 새 사본6 불변을 확인했다. 담당 clone·원 실패·private 증거를 보존한다. 일반 개발 채팅/P01 도구는 현재 제공되지 않아 기존 개발1~4/P01의 최신 상태는 미확인이다. 기존 채팅을 재개했다고 주장하지 않고 아래 실제 하위 에이전트 배정을 대체 실행 경로로 사용한다. 원 담당의 중지된 파일은 수정하지 않는다.
+
+| 요청 / 담당 경계 | 실제 배정과 배타 소유 | 수용 조건 / 상태 |
+|---|---|---|
+| `DEV12-GOAL-CURRENT-HOST-COMPAT-001` / 기존 접근 가능한 작업자 | 7b04·b723·a8f를 독립 clone에 보존 인수한 뒤 등록 test/usage2 수정 `ced90ea` 전용 branch 게시·원격 대조 | 원 RED를 보존하고 고유30 PASS. 미지원 음성은 명시 seam, 실제 등록→publish→현재 prepare 양성2는 실제 API. 독립7 Yes와 총괄 실제 호환2 PASS 뒤281799f/56a9568/189b107/9c4675d로 정상 통합. actual model0·권위 검증과 분리 |
+| `REVIEW-GOAL-UNCERTAINTY-001` → `DEV3-GOAL-UNCERTAINTY-ADMISSION-001` | 472는 독립 Yes/root09f9c74 수용. 원 f1d No(P2)는 보존하고 exact2 조기 거절2행의 `2da3ab5`를 독립 재검수4 Yes 뒤 정상 인수 | root d709d93/59a4893. 총괄 신규 admission3 PASS 및 새 합성 PDF→MOCK5/runtime1→native 결과/DRAFT/선언 불확도 부록→현재 artifact readback matched1 확인. 원 한계/null·실제 AI0 유지 |
+| `DEV3-GOAL-VIRTUAL-DUT-BRIDGE-001` → `REVIEW-GOAL-VIRTUAL-DUT-BRIDGE-001` | 신규 bridge3 `1a693fe` 게시·원격 대조, 작성자 신규19/관련53 PASS. 독립 검수에서 자식/reader/pipe 정리 P2 2건 확인 | 독립 Decimal80·동일 lab/경로/stop/stale는 별도 확인. 정리6f0852f의 원 No(P2 최초 exit 가림)를 보존하고2행 수정1625f5d를 게시했다. 독립 구버전1/수정본4 Yes·총괄 같은 lab 경로/stop/오래된 측정3 PASS 뒤b24adb7/b0a826b/7258742로 정상 통합. actual ADB0·OS0 |
+| `DEV3-GOAL-N1911A-FLEET-SCPI-001` / 신규 하위 구현자 다음 작업 | 정확 root09f9c74의 독립 clone에서 session/test/usage 신규3 `0008a4c` 구현·전용 branch 게시·원격 대조 | 작성자19/계측42/integration22 PASS, 같은 정확 N1911A/Fleet 상태·획득/단위/window/FIFO 연결. Edition21 PDF 재사용·재수집0. 독립 scoped Yes11·총괄 첫 계획→같은 Fleet/N1911A 취득/캐시/stop 무효1 PASS 뒤db7b992로 수용. 단위-only 캐시 무효 차이·연속/교정/옵션/미지원 명령은 잔여 공백 |
+| `DEV4-GOAL-CURRENT-QUESTIONS-RESPONSE-001` / 기존 작업자의 다음 작업 | a257 원 No·중지 fix clone을 보존하고 새 clone의 browser helper/usage2 수정 실제 배정 | d53의 독립 No(P2 첫 semantic 오류 가림·pending close 상한) 보존. eec7b10의 작성자 typed7/새 genuine3901과 독립 scoped 재검수 Yes를 받아bbd1bd9/1796df9/06f6df6로 정상 통합. 총괄 typed7/구문 PASS·추가 genuine0·실제 RF/모델0 |
+| `DEV3-GOAL-VIRTUAL-ADB-WIRE-001` / 독립 하위 구현자 | 신규 host/check/test/usage4의227378c 게시·원격 exact, pinned 실제 adbutils wire3 포함 소유11/Fleet111 PASS | 같은 Fleet와 자기 loopback만 사용. 원 독립 No/P2·SDK FAIL을 보존하고2875b53의 독립4 Yes 뒤5299808/f80270a 수용. root 실제 고정SDK CLI1·Decimal70/time_average·종료자원0. 첫 on_average 업무/Android OS/adbd/OEM/AnyWay/실물과 구별. source는 기존 보유 archive 재사용 |
+| `DEV2-GOAL-CODEX-CURRENT-CLIENT-001` / 새 독립 하위 구현자 | installed exact0.164와 legacy0.163의 명시 두 profile, producer/소비3/contract·usage/신규검사 배타7의ee288e9를 독립9 Yes/총괄6 뒤6d1dcef 수용. 새 PDF/MOCK5/runtime1/저장·초안 회귀1 PASS | schema/argv/receipt·예산·권위 유지, --version/help만 native 실행. 모델 JSONL·업무 품질/실제 AI 미검증, 한도 reset0 |
+| `DEV3-GOAL-ANDROID-RUNTIME-001` / 인수 완료 | ce59ee7/d34bcdf를 독립9 Yes 뒤 dceb684/1dba2c6 수용. 공식 SDK4/native 조회12·WHPX usable | root retained archive 기반561파일 무결성1 PASS·새 native SDK 실행0. 원63증거 보존. OS/ADBserver0, RAM3097<3584MiB. 실제 OS guest RF 연결·OEM/AnyWay 미완료 |
+| `DEV1-GOAL-COMPLETED-PDF-001` / 표준 모델 독립 구현자 | 등록/host·검사2·usage2의6 소유를 실제 배정 | 064f046을 독립6 Yes 뒤fe125e9 수용. 실제 KnownFolder에서 staging path_invalid/model0·permit0, 원131파일/실패8파일/빈staging 보존. bc7ab6의 MSIX native 객체/부모 동일성 fix를 독립5 Yes 뒤983e0e9 수용. root 자체 실패8파일/2디렉터리 수동 보존 후 actual native 정식준비/readback 완료·profile10/원131불변·model0 |
+| `DEV3-GOAL-N1911A-DISPLAY-001` / 표준 모델 독립 구현자 | instruments/session·신규검사/관련검사·usage2의6 소유를 실제 배정 | UNIT-only에서 같은 취득을 표시 변환하고 새샘플/센서재시작0. 일반configure 무효 계약/원lineage·stop/stale 보존, 독립Decimal/같은Fleet2세션 확인. 원 No/P2를 안정식/원상태 보존b8a993f로 수정·독립5 Yes 뒤edb5a63/8bd416d 수용. root관련2/새전체합성회귀1 PASS·실측0 |
+| `ROOT-GOAL-ACTUAL-AI-001` / 총괄 | 원 failed1·preflight not_run 보존, 후속 실제7 strict/dispatch 정상·sensor raw−19.5/acqtick15/setup18·Decimal 일치. 누적25/25·잔여0·재시도0 | 마지막 advance로 decision_budget/bounded·finalizer held/execution_incomplete·result/DRAFT없음·가상 DUT tx상태. 독립 평가b590885·원profile35/SQL/u01의131파일 불변. 후속실제 호출0, fixture·재생 성공으로 원업무 실패 대체0 |
+| `DEV2-GOAL-OPERATOR-SCHEMA-COMPAT-001` / 인수 완료 | cd6acb/1e7992→f91f201/2c28ac8, 독립9 qualified Yes | old/current byte·hash 구별·oneOf→anyOf 논리 동치·기존8/180보다 낮은 한도만 허용. 실제 provider 수용은 후속 실제 호출에서 확인 |
+| `DEV1-GOAL-MANUAL-CONTINUATION-001` / 인수 및 후속 | 412dda/c21b57→3826e7b/92427b3, 원 No/I1 schema결박 수정·독립2 Yes | root 통합 MOCK1 PASS. 최신 직접 사용자 답변 e123의 달력 만료 제거만 검증하는21984c4 소유5를 독립6 Yes·총괄5 뒤bacdbb2에 수용했다. 예산/원permit/실패/SQL불변·실제source 작성은root만 |
+| `DEV3-GOAL-N9030A-SESSION-001` / 인수 완료 | 5b6faf/df4c0c→603614d/de2d766, 원 No/C1 center 음수창을 원자 검증으로 수정·독립2 Yes, 관련114 PASS | root 같은 첫 source6→정확 analyzer 취득·Decimal−0.75+11.75=11/invalid 상태 보존1 PASS. CHPower/TRACE·실물/옵션/FW 미지원·미검증. 검수자 신규 보고서1개의 공유 경로 오류는 hash동일로 개발 clone에 보존 이동·자기 신규 빈dir만 제거, 기존 공유 HANDOFF/PLAN·Git M 상태 불변 |
+| `DEV2-GOAL-TERMINATION-GUIDANCE-001` / 인수 완료 | 099f843→01c8d65, 소유4·독립5 qualified Yes·기존120 관련 PASS, 과거 actual0007 old SYSTEM decode1/원pins불변 | root 새 PDF/MOCK5/runtime1→측정/보정11/저장/DRAFT 회귀1 PASS. actual25/25·잔여0, 새지침의 실제 모델 행동 개선은 미검증·원taskfail/held를 소급 성공으로 바꾸지 않음 |
+| `DEV3-GOAL-ANDROID-GUEST-RF-001` / 구현·수정 | 독립 clone codex/goal-android-guest-rf-20261027의 b0c50d2 소유6 게시·관련150 fixture PASS | 실제 OS0. 독립 No/C1 선존재guest파일 삭제·C2 exact endpoint 미강제를 원형보존하고 담당 최소 수정 배정. 원SDK/메모리/프로세스 gate 불변·한 번의 실제boot cap 미소비 |
+| `DEV4-GOAL-OPERATOR-ATTEMPT-VIEW-001` / 실제 배정 | 새 독립 clone codex/goal-operator-attempt-view-20261027, typed builder/test/usage3+서버/프런트5의8 소유 | 현재 binding 재확인·readonly GET/cache·기존 MOCK 결과와 별도 actual bounded/held/행동·원참조 카드. 없음/불일치/stale를 성공대체0·실제실행/모델0 |
+| `DEV2-GOAL-OPERATOR-CONTEXT-PROJECTION-001` / 실제 배정 | 새 독립 clone codex/operator-context-projection-20261027, 새 projector/test/usage3+loop/test2의5 소유 | 원 full context8/64 상태 검증·보존 후 목적 DUT/sensor와 receipt의 모든 연결 폐쇄11노드/13edge를 prompt에 투영. 원 full _build 검증 선행·invalid 삭제 수락0·모호하면full동치 fallback, 실제 토큰/품질 개선은 미검증·실모델0 |
+| P01 / 단일 수집 창구 | 기존 보유 제어자료·성적서·DUT source를 읽기 전용 재사용 | N1911A 모델별 기존 metadata와 retained PDF를 재사용할 수 있어 재수집 불필요. N9030A/FSV40 적용성·실제 Keysight Mock/IDF 배포물의 잔여 공백만 좁힐 예정. 도구 부재로 신규 실제 전달0, 기존 수집 재개 여부 미확인 |
+
+공통 계약은 기존 source6/plan6/setup8/measurement_ref/같은 run·runtime·결과 계보를 유지한다. 신규 bridge는 가상 DUT 상태를 복제하지 않고 같은 VirtualLab public API로만 연결한다. 실제 ADB 통신, synthetic RF 제어, 실제 OEM/AnyWay RF 제어의 근거를 혼합하지 않는다. 원 수치·규범 한계·권한이 미확정이면 null/미평가로 유지한다.
+
+통합59a4893의 새 전체 합성 검증1은 로컬 `.local/gp/u01`에 보존했다. scripted PDF 분석→MOCK producer5→동일 가상 runtime1→raw −19.5dBm/선언 손실30.5dB/보정11dBm→결과·DRAFT·완료 marker를 확인했다. 선언 성분0.3/0.4dB의 독립 Decimal80 RSS0.5·k2 확장1.0은 DRAFT 부록만 계산되며 원 result uncertainty=null/applied=false·conformity not_assessed다. 후속 실제 current/artifact 읽기는 matched이며 새 입력/출력131파일의 SHA가 전후 같았다. 이는 작성된 합성 입력/모의 AI의 코드·계산 통합 증거이고 실제 AI 계획·업무 품질·규범 판정·물리 정확도 증거가 아니다. 기존 R38/DU 원본을 재실행하거나 수정하지 않았다.
+
+사전 충돌 검토: 등록 test/usage2와 불확도 finalizer/workflow3, 신규 bridge3은 파일 소유가 겹치지 않는다. 7b04/b723/a8f는 정상 cherry 후 원 후보와 새 호환 delta를 구별한다. 불확도 검수자는 source 수정0이다. 병렬 구현을 금지하는 일반 스킬 문구보다 사용자의 명시 병렬·독립 clone 지시를 우선한다. 소진 예산을 총괄 판단으로 늘릴 수 있다는 일반 스킬 문구는 적용하지 않고 사용자 누적 한도를 유지한다. 변경 규모에 맞는 검증을 사용하고 새 봉인/검사 도구만 반복 개발하지 않는다.
+
+완료 증거는 사용자 Goal A~G를 따른다. 첫 전체 가상 업무와 공개 근거 기반 지원 확장을 병렬로 진행하며, 실제 AI 종단·규범 판정·실측 정확도·현장 업무는 각각의 증거 전까지 미완료다. 문서 검사는 기능·물리 정확도 증거가 아니다.
+
 ## FIRST-TWIN — 2026-10-25 실제 후속 배정
 
 [PLAN의 한 장 현황표](../../PLAN.md#2026-10-25-디지털-트윈-목표와-첫-연결-현황)를 현재 목표/공백 기준으로 삼는다. 아래 배정은 기존 후보·미커밋·독립 기대·실패·원본을 보존하고 현재 수정/수용 뒤 이어가는 **코드 구현**이다. 새 프로젝트 관리 문서를 만들지 않는다. 총괄은 소유 구현을 대신하지 않고 검수·통합·회귀·게시와 다음 배정을 담당한다.
 
 | 담당 / 실제 요청 ID | 현재 수용·독립 검수 | 실제 다음 코드·배타 소유 |
 |---|---|---|
-| 개발1 `ROOT-CODEX-WORKFLOW-READY-DATA-001` → G3 PDF 지원 | startupaae/입력9 저장873 기존3 동결·독립 검수. 실제17 근거 부족은 doc-only5e9에서 유지, 승인·실행 결과로 승격0 | 기존 정상 합성 원본을 readonly로 준비하되 queued/완료·PDF schema2/C1 차이를 숨기지 않음. 이어 G3 schema2/PDF 공개 지원을 intake_jobs/test/usage 기존3의 정확 소유·RED부터 구현. fixture_check3은 개발3으로 이관 |
-| 개발2 `DEV2-WORKFLOW-CURRENT-HANDOFF-001` | 선택 host87/등록226 각 기존3 동결·독립 검수, 원 v1/최초 오류/finite permit 보존 | 정식 workflow 원 context와 현재 readonly facts/analysis/revision/C1 인계의 가장 작은 코드 접점을 확정. 소유 최소3을 총괄과 고정 후 구현. queued를 완료로 꾸미거나 context 복사로 current를 만들지 않음; 운영profile/permit·실제AI0 |
-| 개발3 `DEV3-WORKFLOW-READBACK-EXPORT-001` | bridge499/CLI280+d7 수용, 새 root8/9 PASS. 원 독립12의 No2·구 CLI 오류는 보존 | 정확873 의존 별도 clone에서 이관받은 fixture_check core/test/usage3. caller 독립 current exact3+method+실제 artifact root를 원 workflow/finalizer DTO와 결합해 readback 입력을 export. None/blocked/실패 DRAFT·C1 차이를 보존하고 실제 권위/현재 사실을 생성하지 않음 |
-| 개발4 `DEV4-FRESH-CONDUCTED-OPERATOR-WALKTHROUGH-001` | 저장화면aac9 수용(root Node12/genuine6/typed26), keyboardbc49 독립 대기. freshoperator1c16은 담당 최초 CLI1→1440 DOM1 PASS 보고·독립 pending | browsercheck/usage 기존2만 소유. 새 공개 CLI→원 startup→같은 접수/계획/run/저장3/DRAFT·미평가·AI unknown을 한 실제 pointer 흐름으로 검증·게시. app/core/기존 mock·실모델0. 의존aae/873/bc49 수용 후 총괄 단일 fresh 시연 검수 |
-| P01 `DEV-HCT-TWIN-CONDUCTED-METHOD-GAPS-001` | B085~B088 제한 ACK·metadata74/receiver90/원receipt16 후행 readonly 종료. collector192/corpus157/보존569·전체쪽수null·대상18/690 별도 | 수집1~8/관계3·metadata8·공백12·해소0 유지. 다음 새4단위 또는 실제 CMG 해소만 metadata1 인계. 닫힌 SOURCE/held본문0·N02 검색2of2 STOP·private only·규범/훈련 승인0 |
+| 개발1 `DEV1-COMPLETED-CURRENT-REGISTRATION-001` | native41·문구024 독립12/총괄11 수용. 기존 개발1 앱은 notLoaded/message 거절이며 원 대화/clone 보존, 기존 reviewer1을 임시 구현자로 전환해 중복0 | 별도 clone·전용 branch에서 registration/test/usage3만 schema3 completed_current_provided·prepared exact16 구현 중. 실제 completed TXT/current exact3·single target/active0·source.root+bundle·전후 native Store 검증. real-host v3와 typed host seam·운영 권위를 구별, 등록3 자체 독립 검수는 다른 reviewer가 수행 |
+| 개발2 `DEV2-WORKFLOW-CURRENT-HANDOFF-001` → `DEV2-CURRENT-REGISTRATION-PREPARE-COMPAT-001` | d0fa 공동 reservation6 독립14/총괄11 수용, 원 No/I1 보존. 발견성 alias851f test2는 독립 정적 Yes/총괄 발견8 PASS 수용(원8 논리). 원 WIP/만료 seed·실패·completed TXT1 보존 | 보존 host/test/usage3에 수용 seam 정상 cherry 후 소비 전 exactH+tail10/5505024B를 같은192/32MiB로 증명하고 current-handoff exact6을 마지막에 xb1로 기록. 최초 오류/원핀|null/부분 보존. 새 authored test-only copy와 실제 운영 permit을 구별, genuine MOCK loop≤1·실제 모델0. registration3 수정0. 원 host후보 게시 뒤 같은 synthetic TXT의 실제 등록→publish→actual _prepare 결합을 host test/usage2에 잇는 다음 CORE-GO를 전달했다. 추가 RF/loop/model0, typed prepare를 실제 양성으로 가장하지 않음 |
+| 개발3 `DEV3-WORKFLOW-DECLARED-UNCERTAINTY-001` | f507 단절/복구실패 root 공개 CLI2 수용, old17cf DRAFT 부록 수용. finalizer optional 전달094e source3은 동결/독립 검수 중 | 정확13e5c9c3+필요094e 정상cherry의 새 clone에서 fixture_check/test/usage3만 optional uncertainty_inputs=None API 연결 CORE-GO. 명시 bounded native snapshot→기존 finalizer·None kwargs/summary/고정3 불변. CLI 새 flag0·숫자 기본값0·실제 새RF/loop/model0, retained-input 검수와 wholeworkflow 미실행을 구별 |
+| 개발4 `DEV4-CURRENT-QUESTIONS-RESPONSIVE-CHECK-001` | 현재 질문 UI994 독립12/총괄16 수용. public --port 도구222의 strict-ready I1을3bc가 수정해 원No 보존·독립 typed4/총괄구문1 뒤 수용 | 정확13e5c9c3+필요222/3bc 정상cherry의 새 clone에서 browser_check/전용usage2만 default-off current-questions-only 도구 CORE-GO. 원 DU startup·산출물0을 실제390 keyboard로 읽어 질문/원span/null·현재성·overflow/focus 검증. 서버≤1/currentGET≤2/ROAPI≤12/DOM390 1, 새RF/worker/model0. production CSS/app은 재현 근거 뒤 소유 추가 시만 변경 |
+| P01 `DEV-HCT-TWIN-CONDUCTED-METHOD-GAPS-001` | B093~B096 제한 ACK·metadata74/receiver90/원receipt16 readonly 종료. collector200/corpus165/보존662·전체쪽수null·대상18/690 별도 | 기존 수집1~8·관계3/metadata8/공백12·해소0·N02검색2of2 STOP 유지. 다음 실제 새4단위 또는 실제 방법공백 해소 metadata1만 인계. 닫힌 SOURCE/held본문 재열기0·copytrue도 신규 권리/본문/훈련/규범 승인 아님 |
 
 
 공통 source6은 `frequency_hz,power_dbm,bandwidth_hz,duty_cycle,modulation,crest_factor_db`다. plan binding6/C1→실제 setup8→같은 runtime journal/report→명시 measurement_ref→순수 결과→새 native artifact→readonly 화면을 잇는다. raw 제공값·source/기준면/이미 보정·실패 이력/null을 보존하며 실물·규범 승인을 만들지 않는다. journal은 retained events의 post-run 구성이지 실시간 durable acquisition 증거가 아니다. origin 문자열이나 fixture false를 실제 AI 인증으로 승격하지 않는다.
 
 현재 직접 시연은 [실행 안내](../../docs/fcc/intake_fixture_check_usage.md)의 `python -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --document-kind pdf --measurement-ref event:17 --mock-model gpt-6.1-sol --port 0`이다. 새 UUID/명시 새 output만 사용한다. PDF 원 인용→같은 계획/가상 runtime→결과 JSON·DRAFT·완료 manifest와 출력 loopback URL의 같은 계획/제공 결과를 확인한다. SOL/ASTRA는 이 시연에서 생성 MOCK의 논리 label이며 실제 AI0이다. 저장/recorded는 task/conformity not_assessed와 구별하고 Ctrl+C로 자기 서버만 닫는다. 기존 default TXT/PDF 경로는 유지한다. 실제 AI 도구 루프·규격 판정·실측/현장 전체 완료 시연은 아니다.
 
-저장 검수 카드 aac9는 이미 보존한3사례에서 genuine GET/DOM으로 수용했다. 위 공개 CLI가 생성한 새 startup에 이를 자동 구성하는 aae/873와 새 freshoperator1c16은 아직 독립 검수 중이며, 현재 게시 CLI만으로 저장 카드까지 자동 연결했다고 보고하지 않는다. 원 접수/계획/제공 결과와 파일 저장 시연은 유지한다.
+저장 카드 자동 전달 startupaae/873와 최초 오류 수정cac1을 수용했고, 위 CLI에서 port 옵션 없이 생성한 새 원 startup을 그대로 읽는 readonly host로 총괄 genuine1440 종단1을 확인했다. 제품 smartphone/SM-A176U·US·engineering 목적/현재 계획→같은 run/runtime/event:17·원 −19.5 dBm/보정11 dBm→저장3/DRAFT·판정 미평가·AI unknown을 연결했다. 이 root 분모에는 실제 CLI `--port` 운전이 없다. 별도 owner 원222의 genuine public child1/runtime1/DOM1440 1·self SIGINT/rebind를 인수했고 outer PTY exit1을 보존했다. 3bc 최종 source는 독립 typed4와 root 구문 검증이며 새 genuine --port 재실행은 미실행이다. 기존 입력9를 자동 보존하므로 별도 핀 수동 재조립은 필요 없다. 원 observer reason 문자열/객체 가정 오류는 CLI1 raw/exit2 보존·재판독으로만 정정했으며 새 model/RF 재호출0이다.
 
 이번 정식 Codex1은 등록 합성 입력·기존 이력16·최대60초·재시도0·permit1을 실제로 consume/finish했다. 새 재실행을 이 명령의 반복으로 유도하지 않는다. 별도 선봉인3 의미 PASS는 기존 once assessment를 덮지 않으며 비용null·전체 사용량 미확인·서버 모델 신원 미검증을 유지한다. 알려진 token metadata는 관측값이며 결제 검증이 아니다.
 

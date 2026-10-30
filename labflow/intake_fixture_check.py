@@ -123,13 +123,10 @@ def run_fixture_flow(output_dir, *, power_dbm=12.5, document_kind='text'):
 _CONDUCTED_RF_QUOTE = ('frequency: 2412 MHz; bandwidth: 20 MHz; on_average_power: 11 dBm; '
                        'duty_cycle: 50 %; modulation: OFDM; crest_factor: 4 dB')
 _CONDUCTED_MOCK_NAME = 'DGM-AUTHORED-SCRIPTED-MOCK-PDF'
-_CONDUCTED_SCHEMA_SHA = 'aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb'
+from .virtual_fleet.operator_response_schema import (current_response_schema_bytes,
+    is_current_response_schema_bytes)
 _CONDUCTED_SCENARIOS = ('normal', 'missing-duty-unit', 'invalid-citation',
                         'measurement-invalid', 'restored-disconnect', 'transport-error', 'recovery-failure')
-_CONDUCTED_UNSUPPORTED = {
-    'transport-error': 'The public plan/loop entry has no transport-fault injection parameter; producer failure is not a device communication error.',
-    'recovery-failure': 'The public entry has no failed-restoration or persistent-disconnect selector; restored_disconnect alone does not establish recovery failure.',
-}
 
 # A new, local mock binary, never the installed CLI. It implements only the
 # public producer envelope and an explicitly authored five-action policy.
@@ -194,8 +191,18 @@ def _conducted_write(output, relative, raw):
     if len(files) + 1 > 512 or sum(item.stat().st_size for item in files) + len(raw) > 32 * 1024 * 1024:
         raise ValueError('conducted_workflow_evidence_limit')
     target.parent.mkdir(parents=True, exist_ok=True)
-    with target.open('xb') as stream:
-        stream.write(raw)
+    first = None
+    try:
+        with target.open('xb') as stream:
+            try:
+                stream.write(raw)
+            except BaseException as error:
+                first = error
+    except BaseException:
+        if first is None:
+            raise
+    if first is not None:
+        raise first
 
 
 def _conducted_json(output, relative, value):
@@ -227,6 +234,22 @@ def _compile_conducted_mock(output, compiler, *, scenario='normal'):
             raise ValueError('conducted_workflow_mock_policy_invalid')
         source = source.replace(original, replacement)
         policy = ['dut.start', 'sensor.acquire', 'advance:1', 'sensor.read', 'stop:completed']
+    elif scenario == 'transport-error':
+        source = source.replace('"claim","completed"', '"claim","blocked"')
+        policy = ['dut.start', 'advance:1', 'sensor.acquire', 'advance:1', 'stop:blocked']
+    elif scenario == 'recovery-failure':
+        original = ('if(step==1) proposal=D("kind","execute","device_id","dut","action","start","parameters",D());\n'
+                    '      else if(step==2 || step==4) proposal=D("kind","advance","ticks",1);\n'
+                    '      else if(step==3) proposal=D("kind","execute","device_id","sensor","action","acquire","parameters",D());')
+        replacement = ('if(step==1 || step==5) proposal=D("kind","execute","device_id","dut","action","start","parameters",D());\n'
+                       '      else if(step==2 || step==4 || step==7) proposal=D("kind","advance","ticks",1);\n'
+                       '      else if(step==3 || step==6) proposal=D("kind","execute","device_id","sensor","action","acquire","parameters",D());')
+        if source.count(original) != 1 or source.count('if(step>5)') != 1:
+            raise ValueError('conducted_workflow_mock_policy_invalid')
+        source = source.replace(original, replacement).replace('if(step>5)', 'if(step>8)')
+        source = source.replace('"claim","completed"', '"claim","blocked"')
+        policy = ['dut.start', 'advance:1', 'sensor.acquire', 'advance:1',
+                  'dut.start', 'sensor.acquire', 'advance:1', 'stop:blocked']
     _conducted_write(output, 'm/authored-mock.cs', source)
     executable = output / 'm/codex.exe'
     compiled = subprocess.run([str(compiler), '/nologo', '/target:exe',
@@ -268,10 +291,195 @@ def _scripted_pdf_analysis(context, *, rf_quote=_CONDUCTED_RF_QUOTE, invalid_cit
         'identity': 'single', 'facts': facts, 'missing_fields': []}
 
 
-def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None, mock_model=None, scenario='normal'):
+def _conducted_artifact_startup(plan, method, finalized, artifact_root):
+    """Compose read selection from original current pins and committed artifact."""
+    failed=False;selection=None
+    try:
+        if type(plan) is not dict or type(finalized) is not dict:raise ValueError()
+        if plan.get('status')!='ready_for_simulation' or finalized.get('status')!='stored':return None
+        result,artifact=finalized.get('result'),finalized.get('artifact')
+        if result is None or artifact is None:return None
+        if type(artifact) is not dict or type(artifact.get('storage')) is not dict:raise ValueError()
+        if artifact['storage'].get('status')!='complete':return None
+        if (type(result) is not dict or type(result.get('schema_version')) is not int or result['schema_version']!=1
+                or result.get('kind')!='conducted_twin_result' or result.get('status') not in ('recorded','incomplete','invalid')
+                or type(artifact.get('schema_version')) is not int or artifact['schema_version']!=1
+                or artifact.get('kind')!='conducted_result_artifact' or artifact.get('result_status')!=result['status']
+                or artifact.get('execution_authority') is not False):raise ValueError()
+        from .virtual_fleet.conducted_result_artifact import _verification,MAX_MANIFEST_BYTES
+        if canonical(artifact.get('verification'))!=canonical(_verification('full_bound')):raise ValueError()
+        if type(artifact_root) not in (str,type(Path())) or not Path(artifact_root).is_absolute():raise ValueError()
+        root=Path(artifact_root);binding=plan['binding']
+        from .ui_server import _conducted_artifact_readback_selection
+        selection=json.loads(_conducted_artifact_readback_selection(dict(
+            intake_id=binding['intake_id'],method=method,expected_revision=binding['revision'],
+            expected_context_sha256=binding['context_sha256'],artifact_workspace_root=str(root),
+            artifact_name=artifact['artifact_name'],expected_manifest_sha256=artifact['storage']['sha256'],
+            expected_result_sha256=sha256(canonical(result).encode('utf-8')).hexdigest(),
+            run_id=artifact['run_id'],runtime_instance_id=artifact['runtime_instance_id'])))
+        if selection['artifact_workspace_root']!=str(root):raise ValueError()
+        marker='.local/conducted-result-artifacts/'+selection['artifact_name']+'/manifest.json'
+        if (type(artifact['storage'].get('commit_marker')) is not str or artifact['storage']['commit_marker']!=marker
+                or type(artifact['storage'].get('bytes')) is not int
+                or not 1<=artifact['storage']['bytes']<=MAX_MANIFEST_BYTES):raise ValueError()
+    except (KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError):raise
+    except Exception:failed=True
+    if failed:raise ValueError('conducted_workflow_artifact_startup_invalid') from None
+    return selection
+
+
+def _conducted_readback_inputs(output, selection):
+    """Save already validated startup pins for the optional readonly CLI."""
+    if selection is not None:
+        _conducted_json(output,'readback-inputs.json',{key:value for key,value in selection.items() if key!='intake_id'})
+
+
+def _conducted_export_need(condition):
+    if not condition:
+        raise ValueError('conducted_workflow_readback_export_invalid')
+
+
+def _conducted_export_frame(value, cap):
+    """Detach provided native data; this does not open or authenticate its source."""
+    from . import intake_conducted_artifact_readback as readback
+    try:
+        raw = readback._raw(value, cap)
+    except readback.IntakeConductedArtifactReadbackError:
+        raise ValueError('conducted_workflow_readback_export_invalid') from None
+    return json.loads(raw), raw
+
+
+def _conducted_export_pin(value, raw):
+    _conducted_export_need(type(value) is dict and set(value) == {'bytes', 'sha256'}
+        and type(value['bytes']) is int and value['bytes'] == len(raw)
+        and type(value['sha256']) is str and value['sha256'] == sha256(raw).hexdigest())
+
+
+def export_conducted_workflow_readback_inputs(output_dir, workflow_summary, finalizer_receipt, *,
+        current_facts_plan, method, artifact_workspace_root):
+    """Export provided pin consistency only; never complete a job or repair current binding."""
+    from . import intake_conducted_artifact_readback as readback
+    from . import control_packet_prepare as native
+    from .virtual_fleet import conducted_twin_result as result_api
+    from .virtual_fleet import rf_signal_waveform_observation_read as cleanup
+    need = _conducted_export_need
+    host, _ = _conducted_export_frame(workflow_summary, 69632)
+    need(type(host) is dict and set(host) == set('schema_version kind status phase scenario_id requested_model history reservation execution finalization errors verification'.split())
+        and type(host['schema_version']) is int and host['schema_version'] == 1
+        and host['kind'] == 'codex_registered_conducted_workflow_host_receipt'
+        and type(host['status']) is str and host['status'] in ('completed', 'not_run', 'failed', 'unknown')
+        and type(host['verification']) is dict and all(host['verification'].get(key) is False
+            for key in ('hardware_verified', 'origin_authenticated', 'remote_model_identity_verified'))
+        and host['verification'].get('measurement') == 'not_assessed')
+    if current_facts_plan is None or finalizer_receipt is None or host['finalization'] is None:
+        return None
+    current, _ = _conducted_export_frame(current_facts_plan, 8 * 1024 * 1024)
+    need(type(current) is dict and type(current.get('context')) is dict
+        and type(current['context'].get('intake_id')) is str)
+    try:
+        readback._current_value(current, current['context']['intake_id'])
+    except readback.IntakeConductedArtifactReadbackError:
+        raise ValueError('conducted_workflow_readback_export_invalid') from None
+    if current['facts_plan']['status'] == 'blocked':
+        return None
+    method, _ = _conducted_export_frame(method, 65536)
+    need(type(method) is dict and set(method) == set('method_id method_version metric reference_plane'.split()))
+    plan = current['facts_plan']['plan_input']
+    need(canonical(method) == canonical({key: plan['plan'][key] for key in method}))
+    final, final_raw = _conducted_export_frame(finalizer_receipt, 2 * 1024 * 1024)
+    final_keys = set('schema_version kind status execution_receipt input_files result artifact failure secondary_errors verification execution_authority'.split())
+    need(type(final) is dict and set(final) in (final_keys, final_keys | {'measurement_selection'})
+        and type(final['schema_version']) is int and final['schema_version'] == 1
+        and final['kind'] == 'conducted_execution_result_finalizer'
+        and final['status'] in ('held', 'stored') and final['execution_authority'] is False
+        and type(final['verification']) is dict
+        and all(final['verification'].get(key) is False for key in ('hardware_verified', 'physical_verified', 'full_task_verified', 'execution_rerun'))
+        and final['verification'].get('method_approval') == 'not_assessed')
+    projected = host['finalization']
+    need(type(projected) is dict and set(projected) == set('status result_status artifact failure receipt'.split()))
+    _conducted_export_pin(projected['receipt'], final_raw)
+    need(canonical(projected['status']) == canonical(final['status'])
+        and canonical(projected['artifact']) == canonical(final['artifact'])
+        and canonical(projected['failure']) == canonical(final['failure']))
+    result, artifact = final['result'], final['artifact']
+    need(result is None or type(result) is dict)
+    need(canonical(projected['result_status']) == canonical(None if result is None else result.get('status')))
+    if final['status'] != 'stored' or result is None or artifact is None:
+        return None
+    need(type(artifact) is dict and type(artifact.get('storage')) is dict)
+    if artifact['storage'].get('status') != 'complete':
+        return None
+    result, result_raw = _conducted_export_frame(result, result_api.MAX_OUTPUT_BYTES)
+    need(type(result) is dict and set(result) == set(result_api._base())
+        and type(result['schema_version']) is int and result['schema_version'] == 1
+        and result['kind'] == 'conducted_twin_result' and result['status'] in ('recorded', 'invalid', 'incomplete')
+        and type(result['binding']) is dict and type(result['verification']) is dict
+        and all(result['verification'].get(key) is False for key in ('hardware_verified', 'physical_verified', 'execution_authority'))
+        and result['verification'].get('method_approval') == 'not_assessed')
+    execution, execution_raw = _conducted_export_frame(final['execution_receipt'], 262144)
+    need(type(execution) is dict and type(execution.get('binding')) is dict
+        and type(execution.get('schema_version')) is int and execution['schema_version'] == 1
+        and execution.get('kind') == 'intake_plan_virtual_execution_result')
+    observed = host['execution']
+    need(type(observed) is dict and set(observed) == set('run_id runtime_instance_id status failure receipt producer_receipts'.split()))
+    _conducted_export_pin(observed['receipt'], execution_raw)
+    need(canonical(observed['status']) == canonical(execution.get('status'))
+        and canonical(observed['failure']) == canonical(execution.get('failure')))
+    need(set(artifact) == set('schema_version kind artifact_name run_id runtime_instance_id result_status storage files verification execution_authority'.split())
+        and artifact['result_status'] == result['status'] and type(artifact['artifact_name']) is str and bool(artifact['artifact_name']))
+    for key in ('run_id', 'runtime_instance_id'):
+        need(type(artifact[key]) is str and bool(artifact[key])
+            and canonical(artifact[key]) == canonical(observed[key]) == canonical(execution['binding'].get(key)) == canonical(result['binding'].get(key)))
+    prefix = '.local/conducted-result-artifacts/' + artifact['artifact_name'] + '/'
+    files = artifact['files']
+    need(type(files) is list and len(files) == 2)
+    for row, name, media, cap in zip(files, ('result.json', 'draft.md'), ('application/json', 'text/markdown'), (1024 * 1024 + 1, 256 * 1024)):
+        need(type(row) is dict and set(row) == {'path', 'bytes', 'sha256', 'media_type'}
+            and row['path'] == prefix + name and row['media_type'] == media
+            and type(row['bytes']) is int and 1 <= row['bytes'] <= cap
+            and type(row['sha256']) is str and len(row['sha256']) == 64
+            and all(c in '0123456789abcdef' for c in row['sha256']))
+    need(files[0]['bytes'] == len(result_raw) + 1 and files[0]['sha256'] == sha256(result_raw + b'\n').hexdigest())
+    selection = _conducted_artifact_startup(plan, method, final, artifact_workspace_root)
+    if selection is None:
+        return None
+    _conducted_export_frame(selection, 65536)
+    file_raw = (canonical({key: value for key, value in selection.items() if key != 'intake_id'}) + '\n').encode('utf-8')
+    need(len(file_raw) <= 65536)
+    need(type(output_dir) in (str, type(Path())))
+    output = Path(output_dir)
+    need(output.is_absolute() and not str(output_dir).startswith(('\\\\', '//'))
+        and all(native._valid_segment(part) for part in output.parts[1:]))
+    output = native._local_path(output_dir)
+    backend = primary = None
+    try:
+        backend = native._WindowsIO()
+        native._Tree(output, backend)
+        _conducted_readback_inputs(output, selection)
+    except BaseException as error:
+        primary = error
+    finally:
+        if backend is not None:
+            try:
+                closing = cleanup._close(backend)
+            except BaseException as error:
+                closing = error
+            if primary is None and closing is not None:
+                primary = closing
+    if primary is not None:
+        raise primary
+    return selection
+
+
+def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None, mock_model=None, scenario='normal',
+        uncertainty_inputs=None):
     """Opt-in authored PDF -> current C1 -> genuine plan/execution/result/DRAFT."""
     if scenario not in _CONDUCTED_SCENARIOS:
         raise ValueError('conducted_workflow_scenario_unsupported')
+    if uncertainty_inputs is not None:
+        uncertainty_inputs = _conducted_export_frame(uncertainty_inputs, 262144)[0]
+        _conducted_export_need(type(uncertainty_inputs) is dict
+            and set(uncertainty_inputs) == {'components', 'policy'})
     output = Path(output_dir).resolve()
     if output.exists():
         raise ValueError('Output directory already exists')
@@ -287,15 +495,9 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
     reason = ('conducted_workflow_pdf_required' if document_kind != 'pdf' else
               'conducted_workflow_measurement_ref_required' if not isinstance(measurement_ref, str) or not measurement_ref else
               'conducted_workflow_mock_model_required' if mock_model not in ('gpt-6.1-sol', 'gpt-6-astra') else
-              'conducted_workflow_windows_mock_compiler_required' if compiler is None else
-              'conducted_workflow_public_fault_seam_unavailable' if scenario in _CONDUCTED_UNSUPPORTED else None)
+              'conducted_workflow_windows_mock_compiler_required' if compiler is None else None)
     if reason:
         summary.update(status='unsupported', reason=reason)
-        if scenario in _CONDUCTED_UNSUPPORTED:
-            summary['public_seam'] = {'entry': 'run_intake_plan_virtual_execution / run_codex_virtual_loop',
-                'supported_scenarios': ['normal', 'restored_disconnect'],
-                'allowed_tools': ['dut.start', 'sensor.acquire', 'sensor.read', 'advance:1', 'bounded stop'],
-                'missing': _CONDUCTED_UNSUPPORTED[scenario]}
         _conducted_json(output, 'public-summary.json', summary)
         return {'summary': summary, 'workspace': None, 'output': output}
     phase = 'prepare_intake'
@@ -396,27 +598,30 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         phase = 'compile_authored_mock'
         executable = _compile_conducted_mock(output, compiler, scenario=scenario)
         project = Path(__file__).resolve().parents[1]
-        contract = json.loads((project / 'docs/fcc/codex_first_decision_contract.json').read_bytes())
-        schema = contract['response_schema']['literal_utf8'].encode('utf-8')
-        if len(schema) != 3052 or sha256(schema).hexdigest() != _CONDUCTED_SCHEMA_SHA:
+        schema = current_response_schema_bytes()
+        if not is_current_response_schema_bytes(schema):
             raise ValueError('conducted_workflow_schema_unsupported')
         catalog = project / 'virtual_profiles/sm_a176u_unlicensed.json'
         phase = 'execute_same_plan'
+        runtime_scenario = {'restored-disconnect': 'restored_disconnect',
+            'transport-error': 'persistent_disconnect', 'recovery-failure': 'persistent_disconnect'}.get(scenario, 'normal')
         execution = run_intake_plan_virtual_execution(context, analysis, plan,
             expected_revision=context['revision'], expected_context_sha256=context_pin,
             expected_plan_input_sha256=sha256(canonical(plan).encode('utf-8')).hexdigest(),
             catalog_path=catalog, catalog_sha256=sha256(catalog.read_bytes()).hexdigest(),
             response_schema_bytes=schema, executable=executable, requested_model=mock_model,
-            scenario='restored_disconnect' if scenario == 'restored-disconnect' else 'normal',
+            scenario=runtime_scenario,
             evidence_dir=output / 'x', execution_origin='mock_subprocess',
             quantity={'metric': 'on', 'reference_plane': 'sensor_input',
                       'loss_compensation_applied': False, 'loss_compensation_sign': 1})
         _conducted_json(output, 'execution-original.json', execution)
         phase = 'finalize_explicit_measurement'
+        artifact_root=output
+        uncertainty_options = {} if uncertainty_inputs is None else {'uncertainty_inputs': uncertainty_inputs}
         finalized = finalize_conducted_execution_result(execution,
             expected_execution_sha256=sha256(canonical(execution).encode('utf-8')).hexdigest(),
             evidence_dir=output / 'x', measurement_ref=measurement_ref,
-            workspace_root=output, artifact_name='draft-' + run_uuid[:12])
+            workspace_root=artifact_root, artifact_name='draft-' + run_uuid[:12], **uncertainty_options)
         _conducted_json(output, 'finalizer-original.json', finalized)
         result, artifact = finalized['result'], finalized['artifact']
         current_after = IntakeReadModel(store.root).current_conducted_plan_context(intake_id)
@@ -425,12 +630,15 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
         phase = 'bind_readonly_server'
         server_options['conducted_result_snapshot'] = {'intake_id': intake_id, 'revision': context['revision'],
             'expected_current_binding': plan['binding'], 'result': result}
+        selection=_conducted_artifact_startup(plan,method,finalized,artifact_root)
+        if selection is not None:server_options['conducted_artifact_readback_inputs']=selection
         _conducted_json(output, 'server-startup-original.json', server_options)
+        _conducted_readback_inputs(output,selection)
         stored = bool(finalized['status'] == 'stored' and artifact and artifact['storage']['status'] == 'complete')
         recorded = bool(result and result['status'] == 'recorded')
         summary.update(status='stored' if stored else 'held', runtime_calls=execution['execution']['trial_factory_calls'],
             producer_calls=execution['execution']['producer_calls_started'],
-            runtime_scenario='restored_disconnect' if scenario == 'restored-disconnect' else 'normal',
+            runtime_scenario=runtime_scenario,
             failure=finalized['failure'], gaps=result['gaps'] if result else None,
             draft_status=artifact['verification']['report_status'] if artifact else 'not_run',
             source_current=current_matches, result_status=result['status'] if result else None,
@@ -456,7 +664,7 @@ def run_conducted_flow(output_dir, *, document_kind='pdf', measurement_ref=None,
                 code = str(error)
             _conducted_json(output, 'failure.json', {'code': code or 'conducted_workflow_incomplete',
                 'phase': phase, 'synthetic': True, 'actual_model_calls': 0, 'hardware_verified': False})
-        except Exception:
+        except BaseException:
             pass
         raise
 
@@ -478,8 +686,11 @@ def main(argv=None):
         parser.error('--conducted-scenario requires --conducted-workflow')
     if args.port is not None and not 0 <= args.port <= 65535:
         parser.error('port must be between 0 and 65535')
-    output = args.output or Path('.local/cw' if args.conducted_workflow else '.local/intake-fixture-check') / uuid.uuid4().hex[:12 if args.conducted_workflow else 32]
     try:
+        from .development_paths import load_layout, reference_path
+        output = (reference_path(args.output.absolute()) if args.output else
+                  load_layout().output(('cw' if args.conducted_workflow else 'intake-fixture-check') + '/' +
+                  uuid.uuid4().hex[:12 if args.conducted_workflow else 32]))
         result = (run_conducted_flow(output, document_kind=args.document_kind,
                   measurement_ref=args.measurement_ref, mock_model=args.mock_model,
                   scenario=args.conducted_scenario or 'normal') if args.conducted_workflow

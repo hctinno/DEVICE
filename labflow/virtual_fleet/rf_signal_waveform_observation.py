@@ -11,6 +11,7 @@ import stat
 
 from .. import control_packet_prepare as _native
 from . import rf_signal_read as _reader, rf_signal_scenario as _scenario, rf_signal_waveform as _waveform
+from .managed_reader_source_version import SOURCE_VERSION as _MANAGED_SOURCE_VERSION, SOURCE_PINS as _MANAGED_SOURCE_PINS
 
 
 _PREFIX = "rf_signal_waveform_observation_"
@@ -204,7 +205,7 @@ def _identities(tree):
 
 def _pin_sources(tree):
     result = []
-    for role, relative, size, digest in _PINS:
+    for role, relative, size, digest in _MANAGED_SOURCE_PINS:
         path = tree.root / relative
         before = _native._stamp(tree.file_stat(path))
         descriptor = tree.backend.open_read(path, pin=True)
@@ -376,8 +377,9 @@ def _bundle(request, source, declared, packet, analysis, recipe):
     provenance = dict(binding_scope="declared_source_projection_only", reference_plane="declared_dut_output",
                       rf_manifest_sha256=source["storage"]["manifest_sha256"],
                       source_snapshot_sha256=_sha(_canonical(source)), packet_sha256=_sha(_canonical(packet)),
+                      dependency_source_version=_MANAGED_SOURCE_VERSION,
                       dependency_pins=[dict(role=role, lf_bytes=size, lf_sha256=digest)
-                                       for role, path, size, digest in _PINS])
+                                       for role, path, size, digest in _MANAGED_SOURCE_PINS])
     value = dict(schema_version=1, kind="private_rf_baseband_math_observation", request=request,
                  source_snapshot=source, declared_setup=declared, recipe=recipe,
                  packet=packet, analysis=analysis, provenance=provenance)
@@ -415,11 +417,11 @@ def _summary(bundle, raw, relative):
     return _snapshot(result, 8192, "math_unavailable")
 
 
-def _persist(tree, pins, bundle, state):
+def _persist(tree, pins, bundle, state, *, source_tree=None):
     raw = _canonical(bundle) + b"\n"
-    folder = tree.root / ".local/rf-waveform-observations" / bundle["request"]["observation_name"]
+    folder = tree.root / "rf-waveform-observations" / bundle["request"]["observation_name"]
     pending, final = folder / "observation.pending.json", folder / "observation.json"
-    result = _summary(bundle, raw, final.relative_to(tree.root).as_posix())
+    result = _summary(bundle, raw, '.local/' + final.relative_to(tree.root).as_posix())
     state.update(phase="claim_destination", operation="claim_destination")
     tree.directory(folder.parent, create=True)
     owned = tree.backend.directory(folder, create=True)
@@ -434,7 +436,7 @@ def _persist(tree, pins, bundle, state):
     pinned = tree.backend.open_read(pending, pin=True)
     _verify_file(tree, pending, pinned, stamp, raw)
     state["operation"] = "dependency_pin"
-    _check_sources(tree, pins)
+    _check_sources(source_tree if source_tree is not None else tree, pins)
     state.update(phase="publish", operation="publish")
     state["attempted"] = True
     tree.backend.link_receipt(pinned, final)
@@ -553,7 +555,11 @@ def record_rf_baseband_observation(request) -> dict:
         state["operation"] = "compute_math"
         packet, analysis = _math(recipe, request["seed"])
         bundle = _bundle(request, source, declared, packet, analysis, recipe)
-        result = _persist(tree, pins, bundle, state)
+        from ..managed_artifact_workspace import artifact_local_root
+        source_tree = tree
+        local = artifact_local_root(backend=backend, create=True)
+        tree = _native._Tree(local, backend)
+        result = _persist(tree, pins, bundle, state, source_tree=source_tree)
     except KeyboardInterrupt as error:
         primary = error
     except Exception as error:

@@ -1,19 +1,20 @@
-/* Pure read UI acceptance. SQL/readiness doubles, no queue or runtime execution. */
+/* UI acceptance modes. Fresh authored-MOCK generation requires explicit opt-in. */
 const assert = require('node:assert/strict');
-const {spawn} = require('node:child_process');
+const {spawn,spawnSync} = require('node:child_process');
 const {createHash} = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const {chromium} = require('playwright');
-const ROOT=path.resolve(__dirname,'..'),LOCAL=path.join(ROOT,'.local');
+const ROOT=require('./managed_paths.cjs').stage(path.resolve(__dirname,'..')),LOCAL=path.join(ROOT,'.local');
+const proof=require('./managed_paths.cjs').proof(ROOT,process.env.VLAB_FLOW_PROOF_ROOT);
 fs.mkdirSync(LOCAL,{recursive:true});
-const proof=process.env.VLAB_FLOW_PROOF_ROOT?fs.realpathSync(process.env.VLAB_FLOW_PROOF_ROOT):LOCAL;
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY==='1'?'current-questions-typed-':process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?'current-questions-':process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?'public-cli-port-demo-':process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
+const FRESH_OUTPUT_ROOTS=[];
 function proofWrite(file,data){
   const target=path.resolve(file);assert.ok(target.startsWith(PROOF+path.sep));const files=[];
-  const walk=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})){assert.equal(entry.isSymbolicLink(),false);const p=path.join(dir,entry.name);if(entry.isDirectory())walk(p);else if(entry.isFile())files.push(p);}};walk(PROOF);
+  const walk=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})){assert.equal(entry.isSymbolicLink(),false);const p=path.join(dir,entry.name);if(entry.isDirectory())walk(p);else if(entry.isFile())files.push(p);}};walk(PROOF);for(const root of FRESH_OUTPUT_ROOTS)if(fs.existsSync(root))walk(root);
   assert.ok(files.length+(fs.existsSync(target)?0:1)<=512);
   assert.ok(files.reduce((sum,p)=>sum+fs.statSync(p).size,0)-(fs.existsSync(target)?fs.statSync(target).size:0)+Buffer.byteLength(data)<=33554432);
   fs.writeFileSync(target,data);
@@ -21,9 +22,9 @@ function proofWrite(file,data){
 async function screenshot(page,file){proofWrite(file,await page.screenshot({fullPage:false}));}
 
 async function main() {
-  const root = path.resolve(__dirname, '..');
+  const root = require('./managed_paths.cjs').stage(path.resolve(__dirname, '..'));
   const output = OUTPUT;
-  const python = process.env.VLAB_PYTHON || path.join(root, process.platform === 'win32' ? '.venv/Scripts/python.exe' : '.venv/bin/python');
+  const python = process.env.VLAB_PYTHON || require('./managed_paths.cjs').python(root);
   // Copy only this public test helper's code, keeping its disposable stores in
   // native temp and closing it over stdin; never reuse its old fixed proof path.
   const helper=fs.readFileSync(path.join(root,'frontend/intake_flow_browser_fixture.py'),'utf8')
@@ -330,7 +331,7 @@ if __name__=='__main__':main()
 `;
 function startWorkflowHost(mode){
   const file=path.join(OUTPUT,'workflow_host.py');if(!fs.existsSync(file))proofWrite(file,workflowHost);
-  const python=process.env.VLAB_PYTHON||path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
+  const python=process.env.VLAB_PYTHON||require('./managed_paths.cjs').python(ROOT);
   const child=spawn(python,['-B','-X','utf8',file,ROOT,mode],{cwd:ROOT,windowsHide:true,stdio:['pipe','pipe','pipe']});
   let pending='',stderr='';const queue=[],waiters=[];
   child.stdout.on('data',b=>{pending+=b.toString();while(pending.includes('\n')){const i=pending.indexOf('\n'),line=pending.slice(0,i);pending=pending.slice(i+1);const item=JSON.parse(line);if(waiters.length)waiters.shift()(item);else queue.push(item);}});
@@ -482,7 +483,7 @@ function verifyPreviewAdapterSource(info){
 
 function startPreviewHost(mode,source=previewHost,fileName='preview_host.py'){
   const file=path.join(OUTPUT,fileName);if(!fs.existsSync(file))proofWrite(file,source);
-  const python=process.env.VLAB_PYTHON||path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
+  const python=process.env.VLAB_PYTHON||require('./managed_paths.cjs').python(ROOT);
   const child=spawn(python,['-B','-X','utf8',file,ROOT,mode],{cwd:ROOT,windowsHide:true,stdio:['pipe','pipe','pipe']});
   let buffer='',stderr='',exitCode=null;const queue=[],waiters=[];
   child.stderr.on('data',chunk=>{stderr+=chunk.toString();if(stderr.length>8192)child.kill();});
@@ -816,14 +817,14 @@ async function unifiedProvidedFlowMain(){
               assert.equal(bodies.result.status,200);assert.equal(bodies.result.value.relation.status,'matched');assert.deepEqual(bodies.result.value.result,original);
               assert.ok((await part('plan').innerText()).includes('ready_for_simulation'));assert.ok((await part('virtual').innerText()).includes(original.binding.run_id));assert.ok((await part('measurement').innerText()).includes('-19.5 / dBm'));assert.ok((await part('measurement').innerText()).includes('not_assessed'));
               assert.ok(!(await part('virtual').locator('[data-workflow-summary-label]').innerText()).includes('선택한 가상 기록 없음'));assert.ok(!(await part('measurement').locator('[data-workflow-summary-label]').innerText()).includes('게시된 측정 근거 미확인'));
-              const assessment=await part('assessment').innerText();assert.ok(assessment.includes('저장 완료 marker·DRAFT 검증 미확인')&&assessment.includes('실제 AI 호출 여부 unknown')&&assessment.includes('정리·독립평가 미확인'));assert.ok(!assessment.includes('ai_model_called=false'));
+              const assessment=await part('assessment').textContent();assert.ok(assessment.includes('저장 완료 marker·DRAFT 검증 미확인')&&assessment.includes('실제 AI 호출 여부 unknown')&&assessment.includes('정리·독립평가 미확인'));assert.ok(!assessment.includes('ai_model_called=false'));
               await part('virtual').scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'unified-normal-'+width+'.png'));
               const layout=await root.locator('[data-workflow-summary]').evaluateAll(nodes=>nodes.map(node=>({left:node.getBoundingClientRect().left,right:node.getBoundingClientRect().right,client:node.clientWidth,scroll:node.scrollWidth,viewport:innerWidth})));
               proofWrite(path.join(OUTPUT,'unified-layout-'+width+'.json'),JSON.stringify(layout));assert.ok(layout.every(box=>box.left>=-1&&box.right<=box.viewport+1&&box.scroll<=box.client+1),'summary must fit its mobile card without internal clipping');
 
               const fixture=unifiedTypedFixture(info.intake_id,summary.revision);model.validateFixtureRuns(fixture,{intake_id:info.intake_id,revision:summary.revision});proofWrite(path.join(OUTPUT,'typed-fixture-'+width+'.json'),JSON.stringify(fixture));
               await page.route(info.origin+'/api/intakes/'+info.intake_id+'/fixture-runs',route=>route.fulfill({contentType:'application/json',body:JSON.stringify(fixture)}));await refresh();await current();
-              assert.ok((await part('virtual').innerText()).includes('typed-fixture-run'));assert.ok((await part('virtual').innerText()).includes('기존 fixture: 실행 기록 저장'));assert.ok((await part('virtual').innerText()).includes(original.binding.run_id));assert.ok((await part('assessment').innerText()).includes('기존 fixture: 이 가상 실행의 실제 AI 호출 없음'));await part('virtual').scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'unified-typed-coexist-'+width+'.png'));recordFault({width,fault:'typed-fixture-coexist',scope:'typed fixture API projection alongside genuine saved provided snapshot; not another actual fixture execution'});
+              assert.ok((await part('virtual').innerText()).includes('typed-fixture-run'));assert.ok((await part('virtual').innerText()).includes('기존 fixture: 실행 기록 저장'));assert.ok((await part('virtual').innerText()).includes(original.binding.run_id));assert.ok((await part('assessment').textContent()).includes('기존 fixture: 이 가상 실행의 실제 AI 호출 없음'));await part('virtual').scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'unified-typed-coexist-'+width+'.png'));recordFault({width,fault:'typed-fixture-coexist',scope:'typed fixture API projection alongside genuine saved provided snapshot; not another actual fixture execution'});
               await page.route(resultURL,route=>route.fulfill({status:503,contentType:'application/json',body:'{"error":{"code":"intake_conducted_result_missing"}}'}));await refresh();assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok((await part('virtual').innerText()).includes('typed-fixture-run'));recordFault({width,fault:'typed-fixture-only-result-unavailable',scope:'typed HTTP availability; fixture identity retained independently'});await page.unroute(resultURL);await page.unroute(info.origin+'/api/intakes/'+info.intake_id+'/fixture-runs');await refresh();await current();
 
               await page.route(resultURL,route=>route.fulfill({status:503,contentType:'application/json',body:'{"error":{"code":"intake_conducted_result_missing"}}'}));await refresh();assert.notEqual(await root.getAttribute('data-provided-scope'),'current');assert.ok((await previous()).some(text=>text.includes(original.binding.measurement_ref)));recordFault({width,fault:'typed-result-HTTP503',scope:'last original provided observation kept in previous-only details'});await page.unroute(resultURL);await refresh();await current();
@@ -884,7 +885,8 @@ def snapshot():
 before=snapshot();before_pin=save(spec['native_prefix']+'-native-before.json',before)
 thread=server=None;port=None
 try:
- with create_server(Path(spec['workspace']),port=0,**spec['server_options']) as server:
+ options=json.loads(Path(spec['original_startup_file']).read_bytes()) if 'original_startup_file' in spec else spec['server_options']
+ with create_server(Path(spec['workspace']),port=0,**options) as server:
   port=server.server_port;thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
   print(json.dumps(dict(origin='http://127.0.0.1:'+str(port),intake_id=spec['intake_id'],before_pin=before_pin)),flush=True)
   try:
@@ -928,9 +930,9 @@ async function artifactStorageViewMain(){
             await page.goto(info.origin+'/#'+info.intake_id);await card.waitFor();await idle();assert.equal(await page.locator('[data-workflow-step]').count(),7);
             assert.equal(await card.getAttribute('data-current'),String(entry.expected_current));
             if(genuine?.artifact&&genuine.relation.artifact_binding.intake_id===intake.intake_id){assert.equal(await card.locator('[data-artifact-raw="draft"]').textContent(),genuine.artifact.draft);assert.equal(await card.getAttribute('data-result-status'),genuine.artifact.result.status);}
-            const judgement=card.locator('[data-artifact-judgement]'),decisionText=await judgement.innerText();assert.ok(decisionText.includes('현재 관계')&&decisionText.includes('판정')&&decisionText.includes('미평가(not_assessed)')&&decisionText.includes('미확인(unknown)'));
+            const judgement=card.locator('[data-artifact-judgement]'),decisionText=await judgement.innerText();assert.ok(decisionText.includes('현재 의뢰 연결')&&decisionText.includes('판정 미수행')&&decisionText.includes('미확인(unknown)'));assert.equal(await card.getAttribute('data-assessment'),'not_assessed');
             if(genuine?.artifact&&genuine.relation.artifact_binding.intake_id===intake.intake_id){assert.ok(decisionText.includes('3파일 일치'));assert.ok(!decisionText.includes(genuine.artifact.storage.manifest_sha256));assert.equal(await card.locator('[data-artifact-raw="draft"]').evaluate(node=>node.closest('details').open),false);if(genuine.artifact.result.status==='invalid')assert.ok(decisionText.includes('측정 무효'));}
-            assert.ok((await card.innerText()).includes('게시 순서'));assert.ok((await page.locator('[data-workflow-step="assessment"] [data-workflow-summary]').innerText()).includes('실제 AI 호출 여부 unknown'));
+            assert.ok((await card.locator('[data-artifact-technical]').textContent()).includes('게시 순서'));assert.ok((await page.locator('[data-workflow-step="assessment"] [data-workflow-summary]').textContent()).includes('실제 AI 호출 여부 unknown'));
             await card.scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,entry.name+'-'+width+'.png'));
             const layout=await card.evaluate(node=>({left:node.getBoundingClientRect().left,right:node.getBoundingClientRect().right,client:node.clientWidth,scroll:node.scrollWidth,viewport:innerWidth}));proofWrite(path.join(OUTPUT,entry.name+'-'+width+'-layout.json'),JSON.stringify(layout));assert.ok(layout.left>=-1&&layout.right<=width+1&&layout.scroll<=layout.client+1);
             observations.push({case:entry.name,width,HTTP:bodies.storage.status,relation:genuine?.status??null,current:entry.expected_current,scope:'genuine accepted D1 GET + production DOM; saved synthetic inputs, no new model/runtime/writer',overflow:false});
@@ -974,4 +976,528 @@ async function artifactStorageViewMain(){
   finally{if(browser)await browser.close();}
 }
 
-(process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+async function artifactStorageKeyboardMain(){
+  const indexFile=process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_INDEX;assert.ok(indexFile&&path.isAbsolute(indexFile),'explicit keyboard saved-input index required');
+  const index=JSON.parse(fs.readFileSync(indexFile,'utf8'));assert.equal(index.kind,'explicit_own_saved_artifact_readback');assert.equal(index.backend_accepted,true);assert.equal(index.new_runtime_calls,0);assert.deepEqual(index.cases.map(x=>x.name),['normal','measurement-invalid']);
+  const model=await import(require('node:url').pathToFileURL(path.join(ROOT,'frontend/intake_flow_model.mjs')).href),flows=[],resources=[];let browser;
+  const record=()=>proofWrite(path.join(OUTPUT,'keyboard-progress.json'),JSON.stringify({flows,resources},null,2));
+  try{
+    browser=await chromium.launch({headless:true});
+    for(const entry of index.cases){
+      const flow={case:entry.name,width:1440,scope:'genuine saved-input native keyboard flow; refresh failure alone is typed HTTP503',steps:[],issues:[]};flows.push(flow);
+      const specFile=path.join(OUTPUT,entry.name+'-host-spec.json');proofWrite(specFile,JSON.stringify({...entry,proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/'+entry.name}));
+      const host=startPreviewHost(specFile,artifactStorageHost,'keyboard_storage_host.py');let info,firstFailure=null;
+      try{
+        info=await host.next();const url=info.origin+'/api/intakes/'+encodeURIComponent(info.intake_id)+'/conducted-artifact-readback';
+        const direct=await fetch(url),raw=Buffer.from(await direct.arrayBuffer());proofWrite(path.join(OUTPUT,entry.name+'-genuine-storage.json'),raw);assert.equal(direct.status,200);
+        const packet=model.parseConductedArtifactReadback(raw.toString('utf8'),{intake_id:entry.intake_id,revision:entry.server_options.conducted_artifact_readback_inputs.expected_revision});assert.equal(packet.status,'matched');
+        const context=await browser.newContext({viewport:{width:1440,height:950}}),page=await context.newPage(),errors=[],external=[],methods=[];page.setDefaultTimeout(8000);let pointerEvents=0;
+        await page.addInitScript(()=>{window.__keyboardPointerEvents=0;addEventListener('pointerdown',()=>window.__keyboardPointerEvents++);});
+        page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(info.origin+'/'))external.push(r.url());if(r.url().includes('/api/'))methods.push(r.method());});
+        const card=page.locator('#conducted-artifact-storage'),idle=()=>page.waitForFunction(()=>!document.querySelector('#refresh').disabled&&document.querySelector('#conducted-artifact-storage')?.dataset.pending==='false'&&document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+        const tabTo=async(selector,reverse=false)=>{for(let tabs=0;tabs<180;tabs++){if(await page.evaluate(s=>document.activeElement?.matches(s),selector))return tabs;await page.keyboard.press(reverse?'Shift+Tab':'Tab');}throw Error('keyboard target unreachable: '+selector);};
+        const focused=()=>page.evaluate(()=>({tag:document.activeElement?.tagName,id:document.activeElement?.id,text:document.activeElement?.textContent?.slice(0,100),connected:document.activeElement?.isConnected}));
+        const saveStep=async(name,detail={})=>{flow.steps.push({name,focus:await focused(),...detail});record();};
+        const originalDraft=()=>card.locator('[data-artifact-raw="draft"]').textContent();
+        const originalResult=()=>card.locator('[data-artifact-raw="result"]').textContent();
+        try{
+          await page.goto(info.origin+'/');await idle();await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true');
+          const selectTabs=await tabTo('#intake-list button');await page.keyboard.press('Enter');assert.equal(await page.locator('#intake-list button[aria-current="true"]').count(),1);assert.equal((await focused()).id,'detail-title');await saveStep('keyboard-intake-selection',{tabs:selectTabs});
+          const cardTabs=await tabTo('#conducted-artifact-refresh');assert.equal(await page.locator('#conducted-artifact-refresh').getAttribute('aria-disabled'),'false');await saveStep('keyboard-storage-card',{tabs:cardTabs});
+          for(const [key,press]of [['draft','Enter'],['manifest','Space'],['facts-plan','Enter']]){
+            if(key!=='draft'){await tabTo('#conducted-artifact-storage [data-artifact-technical] > summary');if(!await card.locator('[data-artifact-technical]').evaluate(d=>d.open))await page.keyboard.press('Enter');}
+            const selector='#conducted-artifact-storage details:has(> [data-artifact-raw="'+key+'"]) > summary';await tabTo(selector);
+            await page.keyboard.press(press);assert.equal(await page.locator(selector).evaluate(s=>s.parentElement.open),true);assert.equal(await page.locator(selector).getAttribute('role'),null);assert.equal(await page.locator(selector).getAttribute('aria-expanded'),null);await saveStep('keyboard-open-'+key,{native_summary:true,key:press});
+            await page.keyboard.press(press);assert.equal(await page.locator(selector).evaluate(s=>s.parentElement.open),false);assert.equal(await page.locator(selector).evaluate(s=>document.activeElement===s),true);await saveStep('keyboard-close-'+key);
+          }
+          assert.equal(await originalDraft(),packet.artifact.draft);const beforeResult=await originalResult();
+          await tabTo('#conducted-artifact-refresh',true);await page.route(url,r=>r.fulfill({status:503,contentType:'application/json',body:JSON.stringify({error:{code:'conducted_result_artifact_read_input_changed'}})}));
+          await page.keyboard.press('Enter');await idle();assert.equal(await card.getAttribute('data-current'),'false');assert.equal(await originalDraft(),packet.artifact.draft);assert.equal(await originalResult(),beforeResult);assert.match(await card.locator('[data-artifact-relation-summary]').textContent(),/확인 불가/);
+          const failureFocus=await focused();if(failureFocus.id!=='conducted-artifact-refresh')flow.issues.push({code:'keyboard_refresh_focus_lost',observed:failureFocus,expected:'conducted-artifact-refresh'});await saveStep('typed-refresh-error-previous-observation',{scope:'typed503 only; original genuine values and native keyboard path unchanged'});await screenshot(page,path.join(OUTPUT,entry.name+'-keyboard-error.png'));await page.unroute(url);
+          const backTabs=await tabTo('#intake-list button',true);await page.keyboard.press('Enter');assert.equal((await focused()).id,'detail-title');await saveStep('keyboard-return-same-intake',{tabs:backTabs});
+          await tabTo('#conducted-artifact-refresh');await page.keyboard.press('Enter');await idle();await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true');
+          const recoveredFocus=await focused();if(recoveredFocus.id!=='conducted-artifact-refresh')flow.issues.push({code:'keyboard_recovery_focus_lost',observed:recoveredFocus,expected:'conducted-artifact-refresh'});
+          assert.equal(await originalDraft(),packet.artifact.draft);assert.equal(await originalResult(),beforeResult);assert.equal(await card.getAttribute('data-assessment'),'not_assessed');assert.match(await card.locator('[data-artifact-judgement]').innerText(),/판정 미수행/);assert.match(await card.locator('[data-artifact-judgement]').innerText(),/unknown/);assert.equal(await card.getAttribute('data-result-status'),packet.artifact.result.status);
+          if(entry.name==='measurement-invalid')assert.match(await card.locator('[data-artifact-judgement]').innerText(),/측정 무효[\s\S]*미제공\(null\)/);
+          for(const other of index.cases.filter(x=>x.intake_id!==entry.intake_id))assert.ok(!(await card.textContent()).includes(other.intake_id));
+          pointerEvents=await page.evaluate(()=>window.__keyboardPointerEvents);assert.equal(pointerEvents,0);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.ok(methods.every(x=>x==='GET'));
+          await saveStep('keyboard-recovery-current',{pointer_events:pointerEvents,source_intake:packet.current.context.intake_id,original_result_status:packet.artifact.result.status,raw_and_draft_preserved:true});await screenshot(page,path.join(OUTPUT,entry.name+'-keyboard-current.png'));
+          flow.status=flow.issues.length?'fail':'pass';flow.page_errors=errors;flow.pointer_events=pointerEvents;record();
+        }finally{await context.close();}
+      }catch(error){firstFailure=error;flow.status='error';flow.error=error.message;record();throw error;}finally{
+        try{if(info&&host.alive()){host.child.stdin.end('stop\n');const item=await host.next(),code=await host.exited;assert.equal(code,0,host.stderr());assert.equal(host.stderr(),'');assert.ok(item.resource.loop_stopped&&item.resource.listener_closed&&item.resource.port_rebind&&item.resource.source_unchanged);resources.push({case:entry.name,...item.resource,child_exit:code});}else{if(host.alive())host.child.kill();await host.exited;}record();}
+        catch(error){resources.push({case:entry.name,cleanup_verified:false,error:error.message,first_error_preserved:Boolean(firstFailure)});record();if(!firstFailure)throw error;}
+      }
+    }
+    const status=flows.every(x=>x.status==='pass')?'pass':'fail';proofWrite(path.join(OUTPUT,'keyboard-results.json'),JSON.stringify({status,flows,resources,new_model_RF_runtime_calls:0,wide26_or_puretyped12_repeated:0,SQL_close_directly_instrumented:false},null,2));assert.equal(status,'pass','native keyboard focus gaps recorded');console.log(JSON.stringify({status,keyboard_flows:flows.length,output:OUTPUT}));
+  }catch(error){proofWrite(path.join(OUTPUT,'keyboard-failure.json'),JSON.stringify({status:'fail',message:error.message,flows,resources},null,2));throw error;}
+  finally{if(browser)await browser.close();}
+}
+
+// Only the new explicit port mode requires an owned PTY. Keep stdin inherited
+// so Ctrl+C reaches the public Python server; capture its two output streams.
+function startPublicPortCLI(python,args,record){
+  assert.equal(process.stdin.isTTY,true,'public port demo requires its own PTY for graceful Ctrl+C');
+  let out=Buffer.alloc(0),err=Buffer.alloc(0),closed=false,controlCount=0,firstError=null,validURLReady=false,resolveReady,rejectReady;
+  const ready=new Promise((resolve,reject)=>{resolveReady=resolve;rejectReady=reject;});
+  const onControl=()=>{controlCount++;};process.on('SIGINT',onControl);
+  const child=spawn(python,args,{cwd:ROOT,windowsHide:true,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1',PYTHONPATH:ROOT},stdio:['inherit','pipe','pipe']});
+  Object.assign(record,{pid:child.pid??null,status:null,signal:null,exit_observed:false});
+  try{proofWrite(path.join(OUTPUT,'generation-running-child.json'),JSON.stringify(record,null,2));}catch(error){firstError??=error;rejectReady(firstError);}
+  const stopFailedOwnedChild=()=>{if(child.pid&&!closed&&!record.forced_owned_child_stop){record.forced_owned_child_stop=true;record.forced_owned_child_stop_result=child.kill('SIGTERM');}};
+  const timer=setTimeout(()=>{firstError??=Error('public CLI observer 240-second deadline exceeded');rejectReady(firstError);stopFailedOwnedChild();},240000);timer.unref();
+  const retain=(kind,chunk)=>{
+    if(kind==='stdout')out=Buffer.concat([out,chunk]);else err=Buffer.concat([err,chunk]);
+    try{
+      proofWrite(path.join(OUTPUT,'generation.live.'+kind+'.bin'),kind==='stdout'?out:err);
+      if(out.length+err.length>2097152){stopFailedOwnedChild();throw Error('public CLI raw output exceeds original 2MiB cap; observed streams retained as failure');}
+      if(kind==='stdout'){
+        const match=/^DGM synthetic intake fixture: (http:\/\/127\.0\.0\.1:\d+\/#[A-Za-z0-9_.-]+)\r?$/m.exec(out.toString('utf8'));
+        if(match){const url=new URL(match[1]);assert.equal(url.hostname,'127.0.0.1');assert.ok(Number(url.port)>0);validURLReady=true;resolveReady({url:url.href,origin:url.origin});}
+      }
+    }catch(error){firstError??=error;rejectReady(firstError);}
+  };
+  child.stdout.on('data',chunk=>retain('stdout',chunk));child.stderr.on('data',chunk=>retain('stderr',chunk));
+  const exited=new Promise(resolve=>{
+    child.on('error',error=>{firstError??=error;Object.assign(record,{error_code:error.code??'launch_error'});rejectReady(firstError);});
+    child.on('close',(code,signal)=>{
+      closed=true;clearTimeout(timer);Object.assign(record,{status:code,signal,exit_observed:true,own_PTY_SIGINT_observed:controlCount});
+      // Literal final bytes and exit/signal are retained before callers interpret them.
+      try{proofWrite(path.join(OUTPUT,'generation.stdout.bin'),out);proofWrite(path.join(OUTPUT,'generation.stderr.bin'),err);proofWrite(path.join(OUTPUT,'generation-child.json'),JSON.stringify(record,null,2));}catch(error){firstError??=error;}
+      if(!validURLReady)rejectReady(firstError||Error('public CLI exited before a loopback URL; original streams retained, no retry'));
+      resolve({code,signal,firstError,controlCount});
+    });
+  });
+  return {child,ready,exited,alive:()=>!closed,streams:()=>({stdout:out,stderr:err}),finish:()=>{clearTimeout(timer);process.removeListener('SIGINT',onControl);}};
+}
+function freshNativeSnapshot(root){
+  const rows=[];const walk=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true}).sort((a,b)=>a.name<b.name?-1:1)){assert.equal(entry.isSymbolicLink(),false);const file=path.join(dir,entry.name);if(entry.isDirectory())walk(file);else if(entry.isFile()){const st=fs.statSync(file,{bigint:true}),raw=fs.readFileSync(file);rows.push({path:path.relative(root,file),bytes:st.size,sha256:createHash('sha256').update(raw).digest('hex'),mtime_ns:st.mtimeNs});}}};walk(root);return rows;
+}
+function nativeIntegerJSON(value){
+  if(typeof value==='bigint')return String(value);if(Array.isArray(value))return '['+value.map(nativeIntegerJSON).join(',')+']';
+  if(value!==null&&typeof value==='object')return '{'+Object.entries(value).map(([key,child])=>JSON.stringify(key)+':'+nativeIntegerJSON(child)).join(',')+'}';
+  return JSON.stringify(value);
+}
+async function rebindPublicPort(origin){
+  const net=require('node:net'),port=Number(new URL(origin).port),probe=net.createServer();
+  await new Promise((resolve,reject)=>{probe.once('error',reject);probe.listen({host:'127.0.0.1',port,exclusive:true},resolve);});
+  await new Promise((resolve,reject)=>probe.close(error=>error?reject(error):resolve()));return true;
+}
+
+async function freshConductedOperatorMain(publicPort=false){
+  const python=publicPort?process.env.VLAB_PUBLIC_CLI_PORT_PYTHON:process.env.VLAB_FRESH_CONDUCTED_PYTHON,output=publicPort?process.env.VLAB_PUBLIC_CLI_PORT_OUTPUT:process.env.VLAB_FRESH_CONDUCTED_OUTPUT;
+  assert.ok(python&&path.isAbsolute(python)&&fs.existsSync(python),'explicit root Python required');assert.ok(output&&path.isAbsolute(output),'explicit new short absolute output required');
+  const saved=path.resolve(output);assert.ok(saved.startsWith(LOCAL+path.sep)&&!saved.startsWith(PROOF+path.sep)&&!PROOF.startsWith(saved+path.sep));assert.equal(fs.existsSync(saved),false,'never overwrite/reuse an output, including a failed one');FRESH_OUTPUT_ROOTS.push(saved);
+  const args=['-B','-X','utf8','-m','labflow.intake_fixture_check','--conducted-workflow','--document-kind','pdf','--measurement-ref','event:17','--mock-model','gpt-6.1-sol','--output',saved];
+  if(publicPort)args.splice(args.indexOf('--output'),0,'--port','0');
+  let browser,host,info,publicCLI,nativeBefore,firstFailure=null;const resources=[],observations=[];
+  const cliRecord={executable:python,argv:args,cwd:ROOT,with_port:publicPort,timeout_ms:240000,max_output_buffer_bytes:2097152,generation_attempts:1,known_authored_fixture:true,actual_model_calls:0};
+  try{
+    proofWrite(path.join(OUTPUT,'generation-intent.json'),JSON.stringify(cliRecord,null,2));
+    let summary;
+    if(publicPort){
+      publicCLI=startPublicPortCLI(python,args,cliRecord);info=await publicCLI.ready;
+      const streams=publicCLI.streams();proofWrite(path.join(OUTPUT,'generation.preparse.stdout.bin'),streams.stdout);proofWrite(path.join(OUTPUT,'generation.preparse.stderr.bin'),streams.stderr);
+      summary=JSON.parse(fs.readFileSync(path.join(saved,'public-summary.json'),'utf8'));
+      assert.deepEqual(JSON.parse(streams.stdout.toString('utf8').split(/\r?\n/)[0]),summary);
+      assert.equal(new URL(info.url).hash,'#'+summary.intake_id);assert.equal(new URL(info.url).pathname,'/');
+      nativeBefore=freshNativeSnapshot(saved);proofWrite(path.join(OUTPUT,'public-port-native-before.json'),nativeIntegerJSON(nativeBefore));
+      proofWrite(path.join(OUTPUT,'actual-public-CLI-URL.json'),JSON.stringify({...info,source:'literal public CLI stdout, captured before parse',CLI_exit:'pending while server is live'},null,2));
+    }else{
+    const child=spawnSync(python,args,{cwd:ROOT,windowsHide:true,timeout:240000,maxBuffer:2097152,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1',PYTHONPATH:ROOT}});
+    // Retain exit and literal streams before attempting to parse any CLI data.
+    proofWrite(path.join(OUTPUT,'generation.stdout.bin'),child.stdout||Buffer.alloc(0));proofWrite(path.join(OUTPUT,'generation.stderr.bin'),child.stderr||Buffer.alloc(0));
+    Object.assign(cliRecord,{pid:child.pid,status:child.status,signal:child.signal,error_code:child.error?.code??null});proofWrite(path.join(OUTPUT,'generation-child.json'),JSON.stringify(cliRecord,null,2));
+    assert.equal(child.error,undefined,'original CLI launch/timeout/buffer failure retained');assert.equal(child.status,0,'original CLI failed; partial output retained, no retry');assert.equal(child.signal,null);
+    summary=JSON.parse(fs.readFileSync(path.join(saved,'public-summary.json'),'utf8'));assert.deepEqual(JSON.parse(child.stdout.toString('utf8')),summary);
+    }
+    assert.equal(summary.kind,'conducted_intake_workflow_demo');assert.equal(summary.provider,'authored_scripted_mock');assert.equal(summary.synthetic,true);assert.equal(summary.ai_model_called,false);assert.equal(summary.hardware_verified,false);assert.equal(summary.physical_verified,false);
+    assert.equal(summary.runtime_calls,1);assert.equal(summary.producer_calls,5);assert.equal(summary.fixture_acceptance,'pass');assert.equal(summary.result_status,'recorded');assert.equal(summary.storage_status,'complete');assert.equal(summary.draft_status,'DRAFT');assert.equal(summary.task_outcome,'not_assessed');assert.equal(summary.conformity,'not_assessed');
+    const startupFile=path.join(saved,'server-startup-original.json'),startup=JSON.parse(fs.readFileSync(startupFile,'utf8')),readback=JSON.parse(fs.readFileSync(path.join(saved,'readback-inputs.json'),'utf8'));
+    const selection=startup.conducted_artifact_readback_inputs;assert.equal(Object.keys(selection).length,10);assert.equal(Object.keys(readback).length,9);const expected={...selection};delete expected.intake_id;assert.deepEqual(readback,expected);
+    assert.equal(selection.intake_id,summary.intake_id);assert.equal(selection.expected_revision,summary.revision);assert.equal(selection.expected_context_sha256,summary.context_sha256);assert.equal(selection.artifact_workspace_root,saved);assert.equal(selection.run_id,summary.run_id);assert.equal(selection.runtime_instance_id,summary.runtime_instance_id);
+    const original=JSON.parse(fs.readFileSync(path.join(saved,'finalizer-original.json'),'utf8')).result,facts=JSON.parse(fs.readFileSync(path.join(saved,'facts-plan-original.json'),'utf8')).plan_input.intake.facts;
+    const fileRoot=path.join(saved,'.local','conducted-result-artifacts',selection.artifact_name),draft=fs.readFileSync(path.join(fileRoot,'draft.md'),'utf8'),mock=JSON.parse(fs.readFileSync(path.join(saved,'m','mock-origin.json'),'utf8'));
+    const pins=Object.fromEntries(['public-summary.json','server-startup-original.json','readback-inputs.json','m/authored-mock.cs','m/codex.exe'].map(name=>{const raw=fs.readFileSync(path.join(saved,name));return [name,{bytes:raw.length,sha256:createHash('sha256').update(raw).digest('hex')}];}));
+    proofWrite(path.join(OUTPUT,'generated-source-pins.json'),JSON.stringify({pins,mock,readback_keys:Object.keys(readback),generation:cliRecord,versions:{node:process.version,playwright:require('playwright/package.json').version},source:'known author fixture and newly generated local MOCK; actual model0'},null,2));
+    if(!publicPort){const specFile=path.join(OUTPUT,'fresh-host-spec.json');proofWrite(specFile,JSON.stringify({name:'fresh',workspace:path.join(saved,'s'),intake_id:summary.intake_id,original_startup_file:startupFile,source_roots:[saved],proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/fresh'}));
+      host=startPreviewHost(specFile,artifactStorageHost,'fresh_original_startup_host.py');info=await host.next();}
+    const bodies={};for(const [name,suffix]of [['intakes','/api/intakes'],['plan','/api/intakes/'+summary.intake_id+'/conducted-plan-preview'],['provided','/api/intakes/'+summary.intake_id+'/conducted-result'],['storage','/api/intakes/'+summary.intake_id+'/conducted-artifact-readback'],...(publicPort?[['current','/api/intakes/'+summary.intake_id+'/conducted-current-facts']]:[])]){
+      const response=await fetch(info.origin+suffix),raw=Buffer.from(await response.arrayBuffer());proofWrite(path.join(OUTPUT,'fresh-'+name+'.json'),raw);assert.equal(response.status,200);bodies[name]=JSON.parse(raw.toString('utf8'));
+    }
+    assert.deepEqual(bodies.provided.result,original);assert.deepEqual(bodies.storage.artifact.result,original);assert.equal(bodies.storage.artifact.draft,draft);assert.equal(bodies.storage.status,'matched');assert.equal(bodies.storage.relation.recheck.status,'unchanged');assert.deepEqual(bodies.storage.relation.current_binding,bodies.plan.plan_input.binding);assert.deepEqual(bodies.storage.relation.artifact_binding,bodies.plan.plan_input.binding);assert.equal(bodies.storage.artifact.storage.verified_file_count,3);
+    if(publicPort){assert.equal(bodies.current.status,'available');assert.equal(bodies.current.current.facts_plan.status,'ready_for_simulation');assert.equal(bodies.current.current.facts_plan.questions.length,0);assert.equal(bodies.current.recheck.status,'unchanged');assert.deepEqual(bodies.current.recheck.before,bodies.current.recheck.after);assert.deepEqual(bodies.current.current.facts_plan.plan_input.binding,bodies.storage.relation.current_binding);}
+    browser=await chromium.launch({headless:true});const context=await browser.newContext({viewport:{width:1440,height:950}}),page=await context.newPage(),errors=[],external=[],methods=[];page.setDefaultTimeout(8000);
+    page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(info.origin+'/'))external.push(r.url());if(r.url().includes('/api/'))methods.push(r.method());});
+    try{
+      await page.goto(publicPort?info.url:info.origin+'/');await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true'&&document.querySelector('#conducted-plan-refresh')?.getAttribute('aria-disabled')==='false');
+      if(publicPort){await page.waitForFunction(()=>document.querySelector('#intake-gap-queue')?.dataset.minimumCurrent==='true'&&document.querySelector('#intake-gap-queue')?.dataset.minimumSource==='current_facts');assert.equal(await page.locator('[data-minimum-evidence-question][data-current="true"]:not([hidden])').count(),0);assert.match(await page.locator('#minimum-evidence-status').innerText(),/추가 확인 항목이 없습니다/);}
+      await page.locator('#intake-list button[aria-current="true"]').click();const workflow=page.locator('#intake-workflow'),part=id=>workflow.locator('[data-workflow-step="'+id+'"] [data-workflow-summary]');assert.equal(await workflow.getAttribute('data-intake-id'),summary.intake_id);
+      const intakeText=await part('intake').innerText();for(const field of ['product_type','market','purpose']){assert.ok(facts[field]?.value,'known author field absent');assert.ok(intakeText.includes(facts[field].value),'operator intake must show original '+field);}
+      assert.equal(await page.locator('#conducted-plan-preview').getAttribute('data-preview-current'),'true');assert.match(await part('plan').innerText(),/ready_for_simulation/);
+      const factSummary=page.locator('#conducted-plan-content summary').filter({hasText:'제품·목적·시장과 원 사실·질문'});await factSummary.click();assert.ok((await page.locator('#conducted-plan-content').innerText()).includes('SM-A176U'));await factSummary.click();
+      assert.ok((await part('virtual').innerText()).includes(summary.run_id));assert.ok((await part('virtual').innerText()).includes(summary.runtime_instance_id));const measurementText=await part('measurement').innerText();assert.ok(measurementText.includes(String(summary.raw_measurement.packet.value))&&measurementText.includes(summary.raw_measurement.packet.unit)&&measurementText.includes(String(summary.corrected.value)));
+      const card=page.locator('#conducted-artifact-storage');assert.equal(await card.getAttribute('data-current'),'true');const judgement=await card.locator('[data-artifact-judgement]').innerText();assert.match(judgement,/3파일 일치/);assert.match(judgement,/판정 미수행/);assert.equal(await card.getAttribute('data-assessment'),'not_assessed');assert.match(judgement,/unknown/);
+      const sourceSummary=card.locator('[data-artifact-technical] > summary');await sourceSummary.click();assert.ok((await card.innerText()).includes(summary.run_id));assert.ok((await card.innerText()).includes(selection.expected_manifest_sha256));
+      const draftSummary=card.locator('details:has([data-artifact-raw="draft"]) > summary');await draftSummary.click();assert.equal(await card.locator('[data-artifact-raw="draft"]').isVisible(),true);assert.equal(await card.locator('[data-artifact-raw="draft"]').textContent(),draft);await screenshot(page,path.join(OUTPUT,'fresh-operator-DRAFT-1440.png'));await draftSummary.click();await sourceSummary.click();
+      await card.scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'fresh-operator-summary-1440.png'));assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.ok(methods.every(x=>x==='GET'));
+      observations.push({width:1440,source:publicPort?'one actual public CLI --port0 -> literal CLI loopback URL -> production UI':'one generation CLI without port -> exact original startup readonly UI',known_author_fixture:true,intake_id:summary.intake_id,run_id:summary.run_id,runtime_instance_id:summary.runtime_instance_id,product_type:facts.product_type.value,purpose:facts.purpose.value,market:facts.market.value,original_raw:summary.raw_measurement,original_corrected:summary.corrected,storage_read:'fixed3 matched current relation observation',draft:'original UTF8 text',task:'not_assessed',conformity:'not_assessed',actual_AI_display:'unknown',typed_faults:0,versions:{node:process.version,chromium:browser.version()}});
+    }finally{await context.close();}
+  }catch(error){firstFailure=error;try{proofWrite(path.join(OUTPUT,'fresh-operator-failure.json'),JSON.stringify({status:'fail',message:error.message,cli:cliRecord,observations,resources,partial_output:saved,no_retry:true},null,2));}catch{console.error('fresh observer failure-receipt write also failed; first error retained');}throw error;}
+  finally{
+    let cleanupFailure=null;
+    if(publicCLI){
+      try{
+        if(browser){await browser.close();browser=null;}
+        if(publicCLI.alive())console.log(JSON.stringify({public_port_operator_ready_for_ctrl_c:true,pid:publicCLI.child.pid,origin:info?.origin??null,own_PTY_only:true,observations_complete:!firstFailure}));
+        const ended=await publicCLI.exited;
+        const after=freshNativeSnapshot(saved);proofWrite(path.join(OUTPUT,'public-port-native-after.json'),nativeIntegerJSON(after));
+        const same=nativeBefore?nativeIntegerJSON(nativeBefore)===nativeIntegerJSON(after):null;
+        const rebind=info?await rebindPublicPort(info.origin):null;
+        resources.push({public_CLI_pid:publicCLI.child.pid,child_exit:ended.code,child_signal:ended.signal,own_PTY_SIGINT_observed:ended.controlCount,listener_port_rebind:rebind,source_unchanged:same,source_files:after.length,native_times:'fs bigint / raw JSON integer, no Number roundtrip',CLI_main_loop:cliRecord.forced_owned_child_stop?'forced owned-child failure stop, cleanup not attested':'normal process exit after owned PTY Ctrl+C',thread_direct_hook:false,SQL_close_direct_hook:false,global_process_census:false,no_forced_process_kill:!cliRecord.forced_owned_child_stop});
+        assert.equal(ended.firstError,null);assert.equal(ended.code,0);assert.equal(ended.signal,null);assert.ok(ended.controlCount>0);assert.equal(same,true);assert.equal(rebind,true);
+      }catch(error){resources.push({public_port_cleanup_verified:false,message:error.message,first_error_preserved:Boolean(firstFailure)});cleanupFailure=error;}
+      finally{publicCLI.finish();}
+    }
+    try{if(host?.alive()){host.child.stdin.end('stop\n');const item=await host.next(),code=await host.exited;assert.ok(info,'startup was not observed');assert.equal(code,0,host.stderr());assert.equal(host.stderr(),'');assert.ok(item.resource.loop_stopped&&item.resource.listener_closed&&item.resource.port_rebind&&item.resource.source_unchanged);resources.push({...item.resource,child_exit:code});}else if(host){const code=await host.exited;resources.push({child_exit:code,cleanup_verified:false});}}
+    catch(error){resources.push({cleanup_verified:false,message:error.message,first_error_preserved:Boolean(firstFailure)});cleanupFailure=error;}
+    try{if(browser)await browser.close();}catch(error){resources.push({browser_close_verified:false,message:error.message});cleanupFailure??=error;}
+    try{proofWrite(path.join(OUTPUT,'fresh-operator-resources.json'),JSON.stringify(resources,null,2));}catch(error){cleanupFailure??=error;}
+    if(!firstFailure&&cleanupFailure)throw cleanupFailure;
+  }
+  proofWrite(path.join(OUTPUT,'fresh-operator-results.json'),JSON.stringify({status:'pass',generation_cli:cliRecord,observations,resources,generation_MOCK_flows:1,generation_virtual_runtime_calls:1,generation_producer_calls:5,actual_model_calls:0,readonly_server_new_runtime_calls:0,CLI_port_branch_tested:publicPort,SQL_close_directly_instrumented:false,prior_wide_or_unit_repeated:0},null,2));console.log(JSON.stringify({status:'pass',generation_CLI:1,genuine_DOM:1,...(publicPort?{CLI_port_branch_tested:true}:{}),output:OUTPUT,generated_output:saved}));
+}
+
+async function operatorResultCopyMain(){
+  const indexFile=process.env.VLAB_OPERATOR_RESULT_COPY_INDEX;assert.ok(indexFile&&path.isAbsolute(indexFile));const index=JSON.parse(fs.readFileSync(indexFile,'utf8'));assert.equal(index.kind,'explicit_own_saved_artifact_readback');assert.equal(index.backend_accepted,true);assert.equal(index.new_runtime_calls,0);assert.equal(index.cases.length,1);const entry=index.cases[0];assert.equal(entry.name,'normal');
+  const model=await import(require('node:url').pathToFileURL(path.join(ROOT,'frontend/intake_flow_model.mjs')).href),observations=[],resources=[];let browser,info,firstFailure=null;
+  const specFile=path.join(OUTPUT,'copy-host-spec.json');proofWrite(specFile,JSON.stringify({...entry,proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/copy'}));const host=startPreviewHost(specFile,artifactStorageHost,'copy_readonly_host.py');
+  try{
+    info=await host.next();browser=await chromium.launch({headless:true});
+    for(const width of [390,1440]){
+      const context=await browser.newContext({viewport:{width,height:950}}),page=await context.newPage(),errors=[],external=[],methods=[];page.setDefaultTimeout(8000);
+      page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(info.origin+'/'))external.push(r.url());if(r.url().includes('/api/'))methods.push(r.method());});
+      try{
+        const response=await context.request.get(info.origin+'/api/intakes/'+entry.intake_id+'/conducted-artifact-readback'),raw=await response.body();proofWrite(path.join(OUTPUT,'copy-'+width+'-storage.json'),raw);assert.equal(response.status(),200);const packet=model.parseConductedArtifactReadback(raw.toString('utf8'),{intake_id:entry.intake_id,revision:entry.server_options.conducted_artifact_readback_inputs.expected_revision});assert.equal(packet.status,'matched');
+        await page.goto(info.origin+'/#'+entry.intake_id);await page.waitForFunction(()=>document.querySelector('#conducted-artifact-storage')?.dataset.current==='true'&&document.querySelector('#conducted-artifact-storage')?.dataset.pending==='false'&&document.querySelector('#conducted-plan-preview')?.dataset.previewCurrent==='true');
+        const step=page.locator('[data-workflow-step="assessment"]'),card=page.locator('#conducted-artifact-storage'),front=card.locator('[data-artifact-judgement]'),technical=card.locator('[data-artifact-technical]'),source=step.locator('[data-workflow-observation-details]');
+        const text=await front.innerText();assert.match(text,/저장 사본 3파일 일치\s*\/\s*현재 의뢰 연결 확인\s*\/\s*판정 미수행/);assert.match(text,/미확인\(unknown\)/);assert.ok(text.includes(String(packet.artifact.result.raw_measurement.packet.value))&&text.includes(String(packet.artifact.result.calculation.corrected.value)));
+        assert.equal(await card.getAttribute('data-assessment'),'not_assessed');assert.equal(await card.getAttribute('data-actual-ai'),'unknown');assert.equal(await card.getAttribute('data-result-status'),packet.artifact.result.status);assert.equal(await technical.evaluate(n=>n.open),false);assert.equal(await source.evaluate(n=>n.open),false);assert.equal(await card.locator('#conducted-artifact-refresh').getAttribute('aria-disabled'),'false');
+        const visible=await step.innerText();assert.doesNotMatch(visible,/제공 snapshot|fixture|marker|DTO|게시 순서|영구 현재 승인/);assert.ok((await source.textContent()).includes('제공 snapshot'));assert.ok((await source.textContent()).includes('기존 fixture'));
+        await card.scrollIntoViewIfNeeded();await screenshot(page,path.join(OUTPUT,'operator-copy-summary-'+width+'.png'));const layout=await card.evaluate(n=>({left:n.getBoundingClientRect().left,right:n.getBoundingClientRect().right,client:n.clientWidth,scroll:n.scrollWidth,viewport:innerWidth}));assert.ok(layout.left>=-1&&layout.right<=width+1&&layout.scroll<=layout.client+1);
+        const draftSummary=card.locator('details:has(> [data-artifact-raw="draft"]) > summary');assert.equal(await draftSummary.innerText(),'DRAFT 보기');await draftSummary.click();assert.equal(await card.locator('[data-artifact-raw="draft"]').textContent(),packet.artifact.draft);assert.equal(await card.locator('[data-artifact-raw="draft"]').isVisible(),true);await draftSummary.click();
+        await technical.locator(':scope > summary').click();assert.ok((await technical.innerText()).includes('이 조회 시점')&&(await technical.innerText()).includes('게시 순서'));assert.ok((await technical.innerText()).includes(packet.artifact.storage.manifest_sha256));
+        for(const [key,value]of [['manifest',packet.artifact.manifest],['result',packet.artifact.result],['verification',packet.artifact.verification],['facts-plan',packet.current.facts_plan],['relation',packet.relation]])assert.equal(await technical.locator('[data-artifact-raw="'+key+'"]').textContent(),model.conductedPreviewValue(value));
+        await technical.locator(':scope > summary').click();await source.locator(':scope > summary').click();assert.match(await source.innerText(),/제공 snapshot/);await source.locator(':scope > summary').click();assert.equal(await source.evaluate(n=>n.open),false);
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);assert.ok(methods.every(x=>x==='GET'));observations.push({width,source:'saved genuine normal data, readonly current GET',intake_id:entry.intake_id,current:true,assessment:'not_assessed',actual_AI:'unknown',raw:packet.artifact.result.raw_measurement,corrected:packet.artifact.result.calculation.corrected,closed_details_originals_preserved:true,layout,typed_faults:0,new_generation_runtime_models:0});
+      }finally{await context.close();}
+    }
+  }catch(error){firstFailure=error;throw error;}finally{
+    try{if(host.alive()){host.child.stdin.end('stop\n');const item=await host.next(),code=await host.exited;assert.equal(code,0,host.stderr());assert.equal(host.stderr(),'');assert.ok(info&&item.resource.loop_stopped&&item.resource.listener_closed&&item.resource.port_rebind&&item.resource.source_unchanged);resources.push({...item.resource,child_exit:code});}else await host.exited;}
+    catch(error){resources.push({cleanup_verified:false,message:error.message});if(!firstFailure)firstFailure=error;}
+    try{if(browser)await browser.close();}catch(error){firstFailure??=error;}
+    try{proofWrite(path.join(OUTPUT,'operator-copy-results.json'),JSON.stringify({status:firstFailure?'fail':'pass',first_error:firstFailure?.message??null,observations,resources,new_generation_CLI_RF_models:0,prior_wide_keyboard_unit_repeated:0,SQL_close_directly_instrumented:false},null,2));}catch(error){firstFailure??=error;}
+    if(firstFailure)throw firstFailure;
+  }
+  console.log(JSON.stringify({status:'pass',genuine_normal_DOM:observations.length,output:OUTPUT}));
+}
+
+function loadCurrentQuestionsInput(file,io=fs,retain=()=>{}){
+  const canonical=(supplied,directory)=>{
+    assert.ok(typeof supplied==='string'&&path.isAbsolute(supplied),'current questions requires absolute external paths');
+    const resolved=path.resolve(supplied),stat=io.lstatSync(resolved),real=io.realpathSync(resolved);
+    const normalize=p=>process.platform==='win32'?p.toLowerCase():p;
+    assert.equal(stat.isSymbolicLink(),false);assert.equal(normalize(real),normalize(resolved),'source aliases are not accepted');
+    assert.equal(directory?stat.isDirectory():stat.isFile(),true);return resolved;
+  };
+  const read=(supplied,name)=>{
+    const p=canonical(supplied,false);assert.ok(io.lstatSync(p).size<=65536,'current questions input exceeds 64 KiB');
+    const raw=io.readFileSync(p);assert.ok(raw.length<=65536);retain(name,raw);
+    return {raw,pin:{bytes:raw.length,sha256:createHash('sha256').update(raw).digest('hex')}};
+  };
+  const input=read(file,'execution-input.raw.json'),value=JSON.parse(input.raw.toString('utf8'));
+  assert.ok(value&&typeof value==='object'&&!Array.isArray(value));
+  const workspace=canonical(value.workspace,true),original=value.original_startup;
+  assert.match(value.intake_id,/^[A-Za-z0-9_.-]{1,128}$/);
+  assert.ok(original&&Number.isSafeInteger(original.bytes)&&original.bytes>0&&original.bytes<=65536);
+  assert.match(original.sha256,/^[a-f0-9]{64}$/);
+  const startup=read(original.path,'startup-original.raw.json');assert.deepEqual(startup.pin,{bytes:original.bytes,sha256:original.sha256});
+  assert.ok(Array.isArray(value.source_roots)&&value.source_roots.length>0&&value.source_roots.length<=8);
+  const roots=value.source_roots.map(p=>canonical(p,true));
+  const contains=(root,p)=>{const relative=path.relative(root,p);return relative===''||(!relative.startsWith('..'+path.sep)&&relative!=='..'&&!path.isAbsolute(relative));};
+  for(const p of [workspace,path.resolve(original.path)])assert.ok(roots.some(root=>contains(root,p)),'original workspace/startup must be covered by source roots');
+  // Select only execution paths. Large native integers and supplied options/results
+  // remain in the literal input; the host reads the pinned original startup.
+  return {spec:{name:'current-questions',workspace,intake_id:value.intake_id,original_startup_file:path.resolve(original.path),source_roots:roots},input_pin:input.pin,startup_pin:startup.pin};
+}
+function validateCurrentQuestionsPacket(packet,intakeId){
+  assert.equal(packet.kind,'intake_current_facts_plan_view');assert.equal(packet.status,'available');
+  assert.equal(packet.recheck.status,'unchanged');assert.deepEqual(packet.recheck.before,packet.recheck.after);
+  const native=packet.current,f=native.facts_plan;
+  assert.equal(native.context.intake_id,intakeId);assert.equal(f.plan_input.binding.intake_id,intakeId);assert.equal(f.plan_input.binding.revision,native.context.revision);
+  return {packet,native,f};
+}
+function createCurrentQuestionsResponses({origin,intakeId,stage,retain,onFailure,timeoutMs=8000,currentLimit=16777216,otherLimit=262144}){
+  const current='/api/intakes/'+intakeId+'/conducted-current-facts',base='/api/intakes/'+intakeId;
+  const ancillary=new Set(['/api/intakes',base+'/fixture-runs',base+'/conducted-plan-preview',base+'/conducted-result',base+'/conducted-artifact-readback','/api/intake-references/'+intakeId+'/history']);
+  const rows=[],requests=new WeakMap(),responses=[];let firstFailure=null;
+  const safePath=p=>p===current||ancillary.has(p)?p:'[unrecognized-api-path]';
+  const signal=(row,reason)=>{const error=Error((row?.meta.required?'required current response ':'response observation ')+reason);firstFailure??=error;onFailure(error);};
+  const emit=(name,value)=>{try{retain(name,value);return true;}catch{signal(null,'evidence_write_failed');return false;}};
+  const snapshot=row=>({...row.meta,body_state:row.state,reason:row.reason,file:row.file,bytes:row.bytes});
+  function finish(row,state,reason=null){
+    if(row.done)return;row.done=true;clearTimeout(row.timer);row.state=state;row.reason=reason;
+    emit(row.name+'.body-observation.json',snapshot(row));
+    if(state==='failed')signal(row,reason);row.resolve();
+  }
+  function record(request,status=null){
+    if(requests.has(request))return requests.get(request);
+    if(rows.length>=12){signal(null,'response_limit');return null;}
+    let pathname='',sameOrigin=false,method='unknown';
+    try{const url=new URL(request.url());pathname=url.pathname;sameOrigin=url.origin===origin;const value=request.method();if(['GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS'].includes(value))method=value;}catch{}
+    const recognized=sameOrigin&&(pathname===current||ancillary.has(pathname)),index=rows.length+1;
+    const row={meta:{index,method,path:sameOrigin?safePath(pathname):'[outside-origin]',status:Number.isInteger(status)&&status>=100&&status<=599?status:null,stage:String(stage()).replace(/[^A-Za-z0-9 _-]/g,'?').slice(0,64),required:sameOrigin&&pathname===current},recognized,state:'pending',reason:null,file:null,bytes:null,done:false};
+    row.name='api-'+String(index).padStart(2,'0');row.settled=new Promise(resolve=>row.resolve=resolve);rows.push(row);requests.set(request,row);
+    if(!emit(row.name+'.metadata.json',snapshot(row)))finish(row,'failed','evidence_write_failed');
+    if(!recognized||method!=='GET')finish(row,'failed','unrecognized_readonly_response');
+    return row;
+  }
+  function response(response){
+    const row=record(response.request(),response.status());if(!row||row.done)return;
+    if(row.meta.required&&row.meta.status!==200){finish(row,'failed','http_status_invalid');return;}
+    row.timer=setTimeout(()=>finish(row,row.meta.required?'failed':'partial','body_timeout'),timeoutMs);
+    Promise.resolve().then(()=>row.done?null:response.body()).then(raw=>{
+      if(row.done)return;
+      if(!Buffer.isBuffer(raw)){finish(row,row.meta.required?'failed':'partial','body_type_unknown');return;}
+      row.bytes=raw.length;
+      if(raw.length>(row.meta.required?currentLimit:otherLimit)){finish(row,row.meta.required?'failed':'partial','body_too_large');return;}
+      row.file=row.name+'.raw.json';if(!emit(row.file,raw)){finish(row,'failed','evidence_write_failed');return;}
+      if(row.meta.required){
+        let value;
+        try{value=JSON.parse(new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(raw));if(!value||typeof value!=='object'||Array.isArray(value))throw Error();}
+        catch{finish(row,'failed','body_json_invalid');return;}
+        try{validateCurrentQuestionsPacket(value,intakeId);}catch{finish(row,'failed','current_semantics_invalid');return;}
+      }
+      responses.push({path:row.meta.path,status:row.meta.status,raw,file:row.file});finish(row,'saved');
+    }).catch(error=>{
+      const message=typeof error?.message==='string'?error.message:'';
+      const reason=/No data found|navigated away|Network.getResponseBody/.test(message)?'cdp_body_unavailable':'body_read_failed';
+      finish(row,row.meta.required?'failed':'partial',reason);
+    });
+  }
+  function requestFailed(request){
+    let pathname;try{pathname=new URL(request.url()).pathname;}catch{return;}
+    if(!pathname.startsWith('/api/'))return;
+    const row=record(request);if(!row)return;
+    if(row.done){if(!row.lateFailure){row.lateFailure=true;emit(row.name+'.late-failure.json',{...row.meta,reason:'request_failed_after_body'});if(row.meta.required)signal(row,'request_failed_after_body');}return;}
+    finish(row,row.meta.required?'failed':'partial','request_failed');
+  }
+  async function settle({requireCurrent=true}={}){
+    let size;do{size=rows.length;await Promise.all(rows.slice().map(row=>row.settled));}while(rows.length!==size);
+    if(requireCurrent&&!rows.some(row=>row.meta.required)){signal({meta:{required:true}},'not_observed');}
+    if(firstFailure)throw firstFailure;
+    if(rows.some(row=>row.meta.required&&row.state!=='saved'))throw Error('required current response incomplete');
+  }
+  return {response,requestFailed,settle,responses,safePath,metadata:()=>rows.map(snapshot)};
+}
+
+async function currentQuestionsResponseTypedMain(){
+  assert.equal(typeof createCurrentQuestionsResponses,'function','required response observer is not implemented');
+  const origin='http://127.0.0.1:12345',intakeId='I-authored',current='/api/intakes/'+intakeId+'/conducted-current-facts',valid=Buffer.from(JSON.stringify({kind:'intake_current_facts_plan_view',status:'available',recheck:{status:'unchanged',before:{revision:3},after:{revision:3}},current:{context:{intake_id:intakeId,revision:3},facts_plan:{plan_input:{binding:{intake_id:intakeId,revision:3}}}}})),checks=[];
+  const fixture=extra=>{const files=new Map(),failures=[];const observer=createCurrentQuestionsResponses({origin,intakeId,stage:()=> 'typed',retain:(name,value)=>files.set(name,value),onFailure:error=>failures.push(error),timeoutMs:30,...extra});return {observer,files,failures};};
+  const response=(pathname,body,status=200,method='GET')=>{const request={url:()=>origin+pathname,method:()=>method};return {url:request.url,request:()=>request,status:()=>status,body};};
+  {
+    const f=fixture({timeoutMs:1000});let resolve,advanced=false;const pending=new Promise(r=>resolve=r);
+    f.observer.response(response(current,()=>{assert.ok(f.files.has('api-01.metadata.json'));return pending;}));
+    const barrier=f.observer.settle().then(()=>advanced=true);await new Promise(setImmediate);assert.equal(advanced,false);
+    resolve(valid);await barrier;assert.equal(advanced,true);assert.equal(f.failures.length,0);assert.deepEqual(f.observer.responses[0].raw,valid);checks.push('required body retained before keyboard or close barrier');
+  }
+  {
+    const f=fixture();f.observer.response(response('/api/intakes?token=DO_NOT_RECORD',async()=>{throw Error('body unavailable token=DO_NOT_RECORD');}));f.observer.response(response(current,async()=>valid));
+    await f.observer.settle();assert.equal(f.failures.length,0);assert.equal(f.observer.metadata().filter(x=>x.body_state==='partial').length,1);assert.doesNotMatch(JSON.stringify([...f.files]),/DO_NOT_RECORD/);checks.push('confirmed ancillary body failure is sanitized partial');
+  }
+  {
+    const f=fixture();f.observer.response(response(current,async()=>{throw Error('No data found for resource token=DO_NOT_RECORD');}));f.observer.response(response(current,async()=>valid));
+    await assert.rejects(f.observer.settle(),/required/);assert.ok(f.failures.length>0);assert.doesNotMatch(JSON.stringify(f.observer.metadata()),/DO_NOT_RECORD/);checks.push('required failure cannot be replaced by another body');
+  }
+  {
+    for(const body of [async()=>undefined,async()=>Buffer.from('not-json'),async()=>Buffer.from([255])]){const f=fixture();f.observer.response(response(current,body));await assert.rejects(f.observer.settle(),/required/);assert.ok(f.failures.length>0);}
+    const status=fixture();status.observer.response(response(current,async()=>valid,503));await assert.rejects(status.observer.settle(),/required/);assert.equal(status.observer.metadata()[0].status,503);
+    const f=fixture();f.observer.response(response('/api/unknown/DO_NOT_RECORD',async()=>valid));await assert.rejects(f.observer.settle());assert.doesNotMatch(JSON.stringify(f.observer.metadata()),/DO_NOT_RECORD/);checks.push('unknown content or unrecognized path cannot pass');
+  }
+  {
+    const f=fixture({currentLimit:64});f.observer.response(response(current,async()=>Buffer.alloc(65)));await assert.rejects(f.observer.settle(),/required/);assert.equal(f.observer.responses.length,0);checks.push('oversize required body fails without truncation');
+  }
+  {
+    for(const mutate of [()=>({status:'unknown',current:null}),p=>({...p,kind:'unknown'}),p=>({...p,current:{...p.current,context:{intake_id:'I-other',revision:3}}}),p=>({...p,current:{...p.current,facts_plan:{plan_input:{binding:{intake_id:intakeId,revision:4}}}}}),p=>({...p,recheck:{status:'changed',before:{revision:2},after:{revision:3}}})]){
+      const f=fixture();f.observer.response(response(current,async()=>Buffer.from(JSON.stringify(mutate(JSON.parse(valid))))));f.observer.response(response(current,async()=>valid));
+      await assert.rejects(f.observer.settle(),/current_semantics_invalid/);assert.equal(f.observer.metadata()[0].body_state,'failed');assert.equal(f.observer.metadata()[1].body_state,'saved');assert.ok(f.files.has('api-01.raw.json'));assert.ok(f.failures.length>0);
+    }
+    checks.push('every required packet passes shared semantics; later valid cannot erase first failure');
+  }
+  {
+    const f=fixture(),r=response(current,()=>new Promise(()=>{}));f.observer.response(r);f.observer.requestFailed(r.request());await assert.rejects(f.observer.settle(),/required/);
+    const slow=fixture({timeoutMs:5});slow.observer.response(response(current,()=>new Promise(()=>{})));await assert.rejects(slow.observer.settle(),/required/);checks.push('cancellation and pending-body timeout settle before close');
+  }
+  proofWrite(path.join(OUTPUT,'current-questions-response-typed-results.json'),JSON.stringify({status:'pass',checks,genuine_browser_calls:0,models:0},null,2));console.log(JSON.stringify({status:'pass',typed:checks.length,output:OUTPUT}));
+}
+
+// The watchdog derives its target from its actual parent, never from user input.
+// It remains independent of the helper event loop and any pending browser/IO.
+function currentQuestionsWatchdogChild(){
+  const {spawn}=require('node:child_process');
+  const parent=process.ppid,lines=require('node:readline').createInterface({input:process.stdin});let timer;
+  lines.once('line',raw=>{
+    const deadline=Number(raw);
+    if(!Number.isSafeInteger(deadline)||deadline<=0)process.exit(2);
+    timer=setTimeout(()=>{
+      const killer=spawn('taskkill.exe',['/PID',String(parent),'/T','/F'],{windowsHide:true,stdio:'ignore',detached:true});
+      killer.on('error',()=>process.exit(3));killer.unref();
+      // taskkill includes this watchdog in the owned parent tree.
+    },Math.max(0,deadline-Date.now()));
+    lines.once('line',raw=>{if(raw==='done'){clearTimeout(timer);process.exit(0);}});
+  });
+  process.stdin.once('end',()=>{clearTimeout(timer);process.exit(0);});
+}
+function startCurrentQuestionsWatchdog(deadline){
+  assert.equal(process.platform,'win32','current questions hard process-tree deadline requires Windows taskkill');
+  const child=spawn(process.execPath,['-e','('+currentQuestionsWatchdogChild.toString()+')()'],{windowsHide:true,stdio:['pipe','ignore','ignore']});
+  const exited=new Promise(resolve=>{child.once('error',()=>resolve({code:null,signal:'spawn_error'}));child.once('exit',(code,signal)=>resolve({code,signal}));});
+  child.stdin.on('error',()=>{});child.stdin.write(String(deadline)+'\n');
+  return {pid:child.pid,ready:new Promise((resolve,reject)=>{child.once('spawn',resolve);child.once('error',reject);}),finish:async()=>{child.stdin.write('done\n');const result=await exited;assert.equal(result.code,0,'owned deadline watchdog did not disarm cleanly');}};
+}
+
+async function currentQuestionsMain(){
+  const started=Date.now(),observations={width:390,stages:[],questions:[],keyboard:[],api:[],page_errors:[],external_requests:[]};
+  const resources={servers_started:0,current_get:0,readonly_api:0,dom_contexts:0,new_rf:0,workers:0,models:0,hardware:0,individual_SQL_hooks:false,individual_request_thread_hooks:false,global_process_census:false};
+  let host,browser,context,page,info,responseObserver,watchdog,firstFailure=null,stopRequested=false,stage='input',hostRaw=[],hostErr=[];
+  const fail=error=>{firstFailure??=error;return error;};
+  const stopHost=()=>{if(host?.alive()&&!stopRequested){stopRequested=true;host.child.stdin.end('stop\n');}};
+  const timer=setTimeout(()=>{fail(Error('current questions active budget exceeded; cleanup required'));Promise.resolve().then(()=>responseObserver?.settle({requireCurrent:false})).catch(fail).finally(()=>{if(context)context.close().catch(fail);stopHost();});},90000);
+  const forcedStop=setTimeout(()=>{if(host?.alive()){resources.forced_owned_host_stop=true;fail(Error('current questions cleanup budget exceeded'));host.child.kill();}},110000);
+  const hardDeadline=setTimeout(()=>{
+    fail(Error('current questions overall 120-second hard deadline exceeded'));resources.hard_deadline_exceeded=true;
+    // Do not await locked IO or browser.close. The independent watchdog kills
+    // only this helper's process tree even if this callback cannot run.
+    fs.writeFile(path.join(OUTPUT,'current-questions-deadline.json'),JSON.stringify({status:'fail',reason:'overall_deadline',overall_ms:120000}),()=>{});
+  },Math.max(0,120000-(Date.now()-started)));
+  const checkpoint=label=>{stage=label;if(firstFailure)throw firstFailure;assert.ok(Date.now()-started<90000,'current questions active budget exceeded');};
+  const focus=locator=>locator.evaluate(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el);return {active:document.activeElement===el,focus_visible:el.matches(':focus-visible'),outline:s.outlineStyle,outline_width:s.outlineWidth,box_shadow:s.boxShadow,rect:{left:r.left,right:r.right,top:r.top,bottom:r.bottom},viewport:{width:innerWidth,height:innerHeight}};});
+  const active=()=>page.evaluate(()=>{const e=document.activeElement;return {tag:e?.tagName,id:e?.id??'',text:(e?.textContent??'').slice(0,160)};});
+  const tabTo=async(locator,label)=>{
+    let previous=null;
+    for(let i=0;i<140;i++){
+      checkpoint('keyboard '+label);
+      if(await locator.evaluate(el=>document.activeElement===el)){
+        const observed=await focus(locator);observations.keyboard.push({label,tabs:i,previous,focus:observed});
+        assert.equal(observed.active,true);assert.equal(observed.focus_visible,true);
+        assert.ok(observed.outline!=='none'&&parseFloat(observed.outline_width)>0||observed.box_shadow!=='none','keyboard focus indicator absent');
+        assert.ok(observed.rect.left>=0&&observed.rect.right<=observed.viewport.width&&observed.rect.top>=0&&observed.rect.bottom<=observed.viewport.height,'keyboard target is outside the viewport');
+        return previous;
+      }
+      previous=await active();await page.keyboard.press('Tab');
+    }
+    throw Error('keyboard target unreachable: '+label);
+  };
+  const capture=async label=>{
+    checkpoint(label);
+    const layout=await page.evaluate(()=>({width:innerWidth,scroll_width:document.documentElement.scrollWidth,body_scroll_width:document.body.scrollWidth,offenders:[...document.querySelectorAll('body *')].map(e=>{const r=e.getBoundingClientRect();return {tag:e.tagName,id:e.id,class:e.className,left:r.left,right:r.right,width:r.width};}).filter(r=>r.width>0&&(r.left<0||r.right>innerWidth)).slice(0,20)}));
+    observations.stages.push({label,layout});proofWrite(path.join(OUTPUT,label+'-layout.json'),JSON.stringify(layout,null,2));
+    await screenshot(page,path.join(OUTPUT,label+'-390.png'));return layout;
+  };
+  const noOverflow=layout=>assert.ok(layout.scroll_width<=layout.width,'horizontal document overflow: '+layout.scroll_width+' > '+layout.width);
+  try{
+    watchdog=startCurrentQuestionsWatchdog(started+120000);await watchdog.ready;resources.watchdog_pid=watchdog.pid;
+    proofWrite(path.join(OUTPUT,'current-questions-deadline.json'),JSON.stringify({status:'fail',reason:'completion_not_confirmed; fail-closed until watchdog disarmed',overall_ms:120000}));
+    assert.equal(process.env.VLAB_CURRENT_QUESTIONS_ONLY,'1');
+    for(const [key,value]of Object.entries(process.env))if(key.startsWith('VLAB_')&&key.endsWith('_ONLY')&&key!=='VLAB_CURRENT_QUESTIONS_ONLY')assert.notEqual(value,'1','select only one browser mode');
+    const selection=loadCurrentQuestionsInput(process.env.VLAB_CURRENT_QUESTIONS_INPUT,fs,(name,raw)=>proofWrite(path.join(OUTPUT,name),raw));
+    proofWrite(path.join(OUTPUT,'execution-selection.json'),JSON.stringify(selection,null,2));
+    for(const root of selection.spec.source_roots){const relative=path.relative(root,PROOF);assert.ok(relative==='..'||relative.startsWith('..'+path.sep)||path.isAbsolute(relative),'proof must be outside original source roots');}
+    const specFile=path.join(OUTPUT,'current-host-spec.json');proofWrite(specFile,JSON.stringify({...selection.spec,proof_root:PROOF,native_prefix:path.relative(PROOF,OUTPUT)+'/current'}));
+    checkpoint('host startup');resources.servers_started++;host=startPreviewHost(specFile,artifactStorageHost,'current_questions_host.py');
+    resources.host_pid=host.child.pid;proofWrite(path.join(OUTPUT,'known-host-started.json'),JSON.stringify({pid:host.child.pid,source:'one owned read-only startup host'},null,2));
+    host.child.stdout.on('data',chunk=>hostRaw.push(Buffer.from(chunk)));host.child.stderr.on('data',chunk=>hostErr.push(Buffer.from(chunk)));
+    info=await host.next();assert.match(info.origin,/^http:\/\/127\.0\.0\.1:[1-9][0-9]*$/);assert.equal(info.intake_id,selection.spec.intake_id);
+    browser=await chromium.launch({headless:true});context=await browser.newContext({viewport:{width:390,height:900}});resources.dom_contexts++;
+    page=await context.newPage();page.setDefaultTimeout(8000);
+    responseObserver=createCurrentQuestionsResponses({origin:info.origin,intakeId:selection.spec.intake_id,stage:()=>stage,retain:(name,value)=>proofWrite(path.join(OUTPUT,name),Buffer.isBuffer(value)?value:JSON.stringify(value,null,2)),onFailure:fail});
+    page.on('pageerror',()=>{observations.page_errors.push('page_script_error');fail(Error('page script error'));});
+    page.on('requestfailed',request=>responseObserver.requestFailed(request));
+    await context.route('**/*',async route=>{
+      const request=route.request(),url=new URL(request.url());
+      if(url.origin!==info.origin){observations.external_requests.push({reason:'outside_origin',stage});fail(Error('unexpected external request'));await route.abort();return;}
+      if(url.pathname.startsWith('/api/')){
+        resources.readonly_api++;if(url.pathname.endsWith('/conducted-current-facts'))resources.current_get++;
+        observations.api.push({method:request.method()==='GET'?'GET':'unsupported',path:responseObserver.safePath(url.pathname)});
+        if(request.method()!=='GET'||resources.readonly_api>12||resources.current_get>2){fail(Error('read-only API request budget or method exceeded'));await route.abort();return;}
+      }
+      await route.continue();
+    });
+    page.on('response',response=>{
+      try{if(new URL(response.url()).pathname.startsWith('/api/'))responseObserver.response(response);}
+      catch{fail(Error('response metadata unavailable'));}
+    });
+    checkpoint('load current questions');await page.goto(info.origin+'/#'+selection.spec.intake_id,{waitUntil:'networkidle',timeout:15000});
+    await page.waitForFunction(()=>{const q=document.querySelector('#intake-gap-queue');return q?.dataset.minimumCurrent==='true'&&q.dataset.minimumSource==='current_facts'&&q.dataset.pending==='false';},{},{timeout:12000});
+    await responseObserver.settle();checkpoint('native current packet');
+    const responses=responseObserver.responses;
+    const current=responses.filter(r=>r.path.endsWith('/conducted-current-facts'));assert.ok(current.length>0&&current.length<=2);assert.equal(current.at(-1).status,200);
+    const {packet,native,f}=validateCurrentQuestionsPacket(JSON.parse(current.at(-1).raw.toString('utf8')),selection.spec.intake_id);
+    observations.native={response_file:current.at(-1).file,intake_id:native.context.intake_id,revision:native.context.revision,status:f.status,questions:f.questions.length,recheck:packet.recheck};
+    const queue=page.locator('#intake-gap-queue'),questions=page.locator('[data-minimum-evidence-question][data-current="true"]:not([hidden])'),original=page.locator('[data-minimum-evidence-original]'),history=page.locator('[data-legacy-fixture-history]');
+    observations.initial={question_groups:await questions.count(),source:await queue.getAttribute('data-minimum-source'),revision:await queue.getAttribute('data-revision'),original_closed:!(await original.evaluate(e=>e.open)),history_closed:!(await history.evaluate(e=>e.open)),questions_closed:await questions.locator(':scope > details').evaluateAll(es=>es.every(e=>!e.open)),workflow_outside_history:await page.locator('#intake-workflow').evaluate(e=>e.closest('[data-legacy-fixture-history]')===null),actual_ai:await page.locator('#conducted-artifact-storage').getAttribute('data-actual-ai'),assessment:await page.locator('#conducted-artifact-storage').getAttribute('data-assessment'),judgement:await page.locator('[data-artifact-judgement]').innerText()};
+    const initial=await capture('initial-closed');
+    assert.ok(observations.initial.question_groups>0&&observations.initial.question_groups<=16);assert.equal(observations.initial.source,'current_facts');assert.equal(observations.initial.revision,String(native.context.revision));
+    assert.equal(await page.locator('#intake-workflow').getAttribute('data-intake-id'),selection.spec.intake_id);
+    for(const key of ['original_closed','history_closed','questions_closed','workflow_outside_history'])assert.equal(observations.initial[key],true,key);
+    assert.equal(observations.initial.actual_ai,'unknown');assert.equal(observations.initial.assessment,'not_assessed');assert.match(observations.initial.judgement,/unknown/);noOverflow(initial);
+    const observedIndexes=[];
+    for(let i=0;i<observations.initial.question_groups;i++){
+      const item=questions.nth(i),details=item.locator(':scope > details'),summary=details.locator(':scope > summary');
+      await tabTo(summary,'question-'+i);await page.keyboard.press('Enter');assert.equal(await details.evaluate(e=>e.open),true);
+      const layout=await capture('question-'+i+'-open'),cells=await details.locator(':scope > dl.metadata dd').allTextContents();assert.equal(cells.length,3);
+      const [origins,gaps,facts]=cells.map(text=>JSON.parse(text));observations.questions.push({origins,gaps,source_facts:facts});
+      assert.ok(origins.length>0&&gaps.length>0&&facts.length>0);
+      for(const row of origins){assert.deepEqual(row.raw_question,f.questions[row.question_index]);observedIndexes.push(row.question_index);}
+      for(const row of gaps)assert.deepEqual(row.raw,f.assembly_gaps[row.gap_index]);
+      for(const row of facts)assert.deepEqual(row.raw,f.plan_input.intake.source_facts[row.fact_index]);
+      noOverflow(layout);await page.keyboard.press('Enter');assert.equal(await details.evaluate(e=>e.open),false);assert.equal((await focus(summary)).active,true);
+    }
+    assert.deepEqual(observedIndexes.sort((a,b)=>a-b),f.questions.map((_,i)=>i),'every native question must remain linked once');
+    const originalSummary=original.locator(':scope > summary');await tabTo(originalSummary,'original');await page.keyboard.press('Space');assert.equal(await original.evaluate(e=>e.open),true);
+    const originalLayout=await capture('original-open'),originalCells=await original.locator(':scope > dl.metadata dd').allTextContents();assert.equal(originalCells.length,3);
+    const [scope,observation,originalFacts]=originalCells.map(text=>JSON.parse(text));observations.original={scope,observation,facts_plan:originalFacts};
+    assert.equal(scope.source,'current_facts');assert.deepEqual(observation.context,native.context);assert.deepEqual(observation.binding,f.plan_input.binding);assert.deepEqual(observation.recheck,packet.recheck);assert.deepEqual(observation.verification,packet.verification);assert.deepEqual(originalFacts,f);noOverflow(originalLayout);
+    await page.keyboard.press('Space');assert.equal(await original.evaluate(e=>e.open),false);
+    const historySummary=history.locator(':scope > summary'),previous=await tabTo(historySummary,'legacy-history');await page.keyboard.press('Enter');assert.equal(await history.evaluate(e=>e.open),true);
+    observations.history={copy:await history.innerText(),workflow_outside:await page.locator('#intake-workflow').evaluate(e=>e.closest('[data-legacy-fixture-history]')===null)};
+    const historyLayout=await capture('legacy-history-open');assert.match(observations.history.copy,/기존 fixture DB 범위/);assert.match(observations.history.copy,/별도로 조회/);assert.equal(observations.history.workflow_outside,true);noOverflow(historyLayout);
+    await page.keyboard.press('Enter');assert.equal(await history.evaluate(e=>e.open),false);assert.equal((await focus(historySummary)).active,true);
+    await page.keyboard.press('Shift+Tab');observations.reverse_tab={expected_previous:previous,actual:await active()};assert.deepEqual(observations.reverse_tab.actual,previous);
+    noOverflow(await capture('final-closed'));assert.deepEqual(observations.page_errors,[]);assert.deepEqual(observations.external_requests,[]);checkpoint('observations complete');
+  }catch(error){fail(error);observations.first_failure={stage,message:error.message};if(page&&!page.isClosed())try{await screenshot(page,path.join(OUTPUT,'first-failure-390.png'));}catch(captureError){observations.failure_capture_error=captureError.message;}}
+  finally{
+    if(responseObserver)try{await responseObserver.settle({requireCurrent:false});}catch(error){fail(error);}
+    if(browser)try{await browser.close();resources.browser_closed=true;}catch(error){resources.browser_closed=false;fail(error);}
+    if(host)try{
+      if(host.alive()){stopHost();const item=await host.next();resources.host=item.resource;}
+      resources.child_exit=await host.exited;resources.host_stderr=host.stderr();
+      assert.equal(resources.child_exit,0);assert.equal(resources.host_stderr,'');
+      assert.ok(resources.host?.loop_stopped&&resources.host.listener_closed&&resources.host.port_rebind&&resources.host.source_unchanged,'known host cleanup/native parity not fully observed');
+    }catch(error){resources.cleanup_failure=error.message;fail(error);}
+    if(responseObserver){try{await responseObserver.settle({requireCurrent:false});}catch(error){fail(error);}observations.response_metadata=responseObserver.metadata();}
+    clearTimeout(timer);clearTimeout(forcedStop);resources.elapsed_ms=Date.now()-started;
+    if(resources.elapsed_ms>=120000)fail(Error('current questions overall 120-second budget exceeded'));
+    proofWrite(path.join(OUTPUT,'host.stdout.raw'),Buffer.concat(hostRaw));proofWrite(path.join(OUTPUT,'host.stderr.raw'),Buffer.concat(hostErr));
+    proofWrite(path.join(OUTPUT,'current-questions-results.json'),JSON.stringify({status:firstFailure?'fail':'pass',first_failure:firstFailure?{stage:observations.first_failure?.stage??stage,message:firstFailure.message}:null,observations,resources,limits:{servers:1,current_get:2,readonly_api:12,dom390:1,overall_ms:120000},scope:'original external startup; actual loopback responses and keyboard; no fixture/result substitution'},null,2));
+    // Keep the native deadline armed through all awaited cleanup and evidence IO.
+    proofWrite(path.join(OUTPUT,'current-questions-deadline.json'),JSON.stringify({status:firstFailure?'fail':'disarmed',reason:firstFailure?'inspection_failed':'cleanup_and_evidence_complete',overall_ms:120000}));
+    if(watchdog)await watchdog.finish();
+    clearTimeout(hardDeadline);
+  }
+  if(firstFailure)throw firstFailure;
+  console.log(JSON.stringify({status:'pass',mode:'current-questions-only',output:OUTPUT,resources}));
+}
+
+(process.env.VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY==='1'?currentQuestionsResponseTypedMain():process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?currentQuestionsMain():process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?freshConductedOperatorMain(true):process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?operatorResultCopyMain():process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});

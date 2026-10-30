@@ -11,13 +11,15 @@ import time
 import uuid
 
 from ..codex_cli_response import CodexCliResponseError, produce_codex_cli_response as _produce
+from .operator_response_schema import is_current_response_schema_bytes as _current_schema
 from .catalog import load_catalog as _load
 from .evaluation import prepare_sensor_trial as _prepare, evaluate_sensor_run as _evaluate
 from .harness import FleetHarness as _Harness
 from .integration import get_role_actions as _actions
 from .model_operator_boundary import (ModelOperatorBoundaryError,
     build_operator_prompt as _build, decode_operator_response as _decode)
-from .journal import OperatorJournal as _Journal, read_operator_journal as _read_journal
+from .journal import (OperatorJournal as _Journal, read_operator_journal as _read_journal,
+    _header as _journal_header, _record as _journal_record)
 from .codex_virtual_one_action import (_copy as _native_copy,
     _complete_receipt as _producer_profile, _Fault as _ParentFault)
 
@@ -36,7 +38,6 @@ _MODELS = {'gpt-6.1-sol', 'gpt-6-astra'}
 _SCENARIOS = {'normal', 'persistent_disconnect', 'restored_disconnect'}
 _STATUSES = {'ok', 'pending', 'invalid', 'unsupported', 'error', 'disconnected'}
 _PRODUCER = 'dgm-virtual-operator-v1'
-_SCHEMA_SHA = 'aa321fa55e0d21af0c3992c5b6a91a78fd108d4a006e463a9bd3761ff21c0edb'
 _BUDGET = dict(decisions=8, logical_requests=8, ticks=8, wall_seconds=180, transport_retries=0)
 _LIMITS = dict(max_output_bytes=262144, max_steps=8, max_events=64, max_events_bytes=8388608,
     max_known_evidence_files=192, max_observed_evidence_bytes=33554432)
@@ -49,7 +50,8 @@ _PRODUCER_FILES = dict(prompt=('request.json',262144), response_schema=('respons
     final_text=('final-text.bin',2097152), last_message=('last-message.bin',2097152))
 _RECEIPT_KEYS = set('schema_version kind exchange_ref status failure bindings client model attempts lifecycle usage cost timing controls cleanup artifacts limits verification'.split())
 _SOURCE = ('codex_cli_response.py', 'virtual_fleet/codex_virtual_loop.py',
-    'virtual_fleet/codex_virtual_one_action.py', 'virtual_fleet/model_operator_boundary.py',
+    'virtual_fleet/codex_virtual_one_action.py', 'virtual_fleet/operator_response_schema.py',
+    'virtual_fleet/model_operator_boundary.py',
     'virtual_fleet/harness.py', 'virtual_fleet/evaluation.py', 'virtual_fleet/catalog.py',
     'virtual_fleet/integration.py', 'virtual_fleet/core.py', 'virtual_fleet/rf.py',
     'virtual_fleet/facility.py', 'virtual_fleet/instruments.py', 'virtual_fleet/journal.py')
@@ -74,6 +76,29 @@ def _fail(code):
 
 def _C(value):
     return json.dumps(value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
+
+
+def _lower_limits(model_process_limit, wall_seconds_limit):
+    # Exact native scalars only; validation precedes file/runtime admission.
+    if type(model_process_limit) is not int or not 1 <= model_process_limit <= 8:
+        _fail('invalid_input')
+    try:
+        valid = (type(wall_seconds_limit) in (int, float) and math.isfinite(wall_seconds_limit)
+                 and 0 < wall_seconds_limit <= 180)
+    except OverflowError:
+        valid = False
+    if not valid:
+        _fail('invalid_input')
+    return model_process_limit, wall_seconds_limit
+
+
+def _reservation(value):
+    if value is None:return None
+    if type(value) is not dict:_fail('invalid_input')
+    value=value.copy()
+    if (set(value)!={'files','bytes'} or type(value['files']) is not int or type(value['bytes']) is not int
+            or not 0<=value['files']<=192 or not 0<=value['bytes']<=33554432):_fail('invalid_input')
+    return value
 
 
 def _H(data):
@@ -220,7 +245,7 @@ def _preflight(catalog_path, catalog_sha, schema, executable, model, scenario, d
     for path in (catalog_path, executable, directory):
         _path(path)
     if (type(catalog_sha) is not str or not _SHA.fullmatch(catalog_sha) or type(schema) is not bytes
-            or len(schema) != 3052 or _H(schema) != _SCHEMA_SHA
+            or not _current_schema(schema)
             or type(model) is not str or model not in _MODELS or type(scenario) is not str or scenario not in _SCENARIOS
             or type(origin) is not str or origin not in {'actual_cli', 'mock_subprocess'}
             or event is not None and type(event) is not threading.Event):
@@ -245,12 +270,16 @@ def _absent(path):
 
 class _Loop:
     def __init__(self, catalog, catalog_sha, schema, executable, model, scenario, directory, origin, event,
-                 start, source_settings, plan_binding, quantity):
+                 start, source_settings, plan_binding, quantity, evidence_reservation=None,
+                 model_process_limit=8, wall_seconds_limit=180):
         self.catalog_path, self.catalog_sha, self.schema = catalog, catalog_sha, schema
         self.executable, self.model, self.scenario, self.directory = executable, model, scenario, directory
-        self.origin, self.event, self.start, self.deadline = origin, event, start, start + 180
+        self.origin, self.event, self.start, self.deadline = origin, event, start, start + wall_seconds_limit
+        self.model_process_limit, self.wall_seconds_limit = model_process_limit, wall_seconds_limit
+        self.harness_budgets = dict(_BUDGET, decisions=model_process_limit, wall_seconds=wall_seconds_limit)
         self.source_settings = source_settings
         self.plan_binding, self.quantity = plan_binding, quantity
+        self.evidence_reservation=(0,0) if evidence_reservation is None else (evidence_reservation['files'],evidence_reservation['bytes'])
         self.setup_records = self.setup_snapshot = self.host_topology = None
         self.source_pins = {}
         self.stage = 'setup'; self.first = self.control = None
@@ -263,7 +292,7 @@ class _Loop:
             declaration=dict(goal_kind='acquire_fresh_rf_sensor', scope='rf_sensor_proposal_v1', scenario=scenario,
                 requested_model=model, producer_name=_PRODUCER, catalog_sha256=catalog_sha, schema_sha256=_H(schema),
                 origin_declaration=origin),
-            budget=dict(limits=dict(model_calls=8,tool_intents=8,tick_delta=8,wall_seconds=180,producer_seconds=60,
+            budget=dict(limits=dict(model_calls=model_process_limit,tool_intents=8,tick_delta=8,wall_seconds=wall_seconds_limit,producer_seconds=60,
                                    transport_retries=0,data=dict(_LIMITS)),
                 reserved_model_calls=0, producer_calls_started=0, version_process_attempts=0, model_process_attempts=0,
                 elapsed_seconds=0.0, reservation_refunded=False, application_retries=0, new_budget_granted=False,
@@ -351,7 +380,8 @@ class _Loop:
             if not stat.S_ISREG(info.st_mode) or getattr(info,'st_file_attributes',0) & 1024:
                 _fail('retention_failed')
             count += 1; total += info.st_size
-        if count + reserve_files > _LIMITS['max_known_evidence_files'] or total + reserve > _LIMITS['max_observed_evidence_bytes']:
+        if (count + reserve_files + self.evidence_reservation[0] > _LIMITS['max_known_evidence_files']
+                or total + reserve + self.evidence_reservation[1] > _LIMITS['max_observed_evidence_bytes']):
             _fail('limit_exceeded')
 
     def write(self, path, data, cap, desc=None, *, final=False):
@@ -488,7 +518,11 @@ class _Loop:
         desc = self.r['artifacts']['operator_journal']
         journal = None; appended = closed = False
         try:
-            self.space(self.event_bytes + 1048576, 1)
+            header=_journal_header(self.r['run_id'],self.r['execution']['runtime_instance_id'],provenance)
+            # Fixed-width chain hashes have the same serialized size as zeros.
+            reserved=len(_journal_record('header',header,'0'*64)[1])
+            reserved+=sum(len(_journal_record('event',event,'0'*64)[1]) for event in self.events)
+            self.space(reserved, 1)
             self.known.add(path)
             journal = _Journal(path, run_id=self.r['run_id'],
                 runtime_instance_id=self.r['execution']['runtime_instance_id'], provenance=provenance)
@@ -600,7 +634,7 @@ class _Loop:
         try:
             self.check()
             index=len(self.r['steps'])+1
-            if index>8:
+            if index>self.model_process_limit:
                 _fail('budget_exhausted')
             step=dict(index=index,binding=None,before=None,after=None,
                 producer=dict(origin_declaration=self.origin,receipt=None,receipt_sha256=None,response=None),wire=None,
@@ -624,7 +658,7 @@ class _Loop:
             budgets=dict(decisions=remaining['decisions']+1,logical_requests=remaining['logical_requests'],
                          ticks=remaining['ticks'],wall_seconds=wall,transport_retries=0)
             delegation=dict(scope='rf_sensor_proposal_v1',harness_budgets=budgets,
-                            outer_limits=dict(model_calls=8-self.r['budget']['reserved_model_calls'],wall_seconds=wall))
+                            outer_limits=dict(model_calls=self.model_process_limit-self.r['budget']['reserved_model_calls'],wall_seconds=wall))
             ids=dict(run_id=self.r['run_id'],runtime_instance_id=self.trial.runtime_instance_id,
                      decision_id='operator-loop-decision:'+uuid.uuid4().hex,model_request_id='operator-loop-request:'+uuid.uuid4().hex)
             prompt=_build(public,producer_name=_PRODUCER,delegation=delegation,**ids)
@@ -633,7 +667,7 @@ class _Loop:
             prompt_raw=_C(prompt); self.artifact('prompt',prompt_raw,raw=True)
             self.phase('reserve'); self.source(); self.current()
             available=min(self.deadline-_now(),remaining['wall_seconds'])
-            if available<=6 or self.r['budget']['reserved_model_calls']>=8:
+            if available<=6 or self.r['budget']['reserved_model_calls']>=self.model_process_limit:
                 _fail('budget_exhausted')
             self.space(sum(cap for _,cap in _PRODUCER_FILES.values())+2097152,
                        len(_PRODUCER_FILES)+1+3)
@@ -778,9 +812,9 @@ class _Loop:
                 raise
         policy.policy_id='codex_persistent_virtual_loop'
         self.harness=_Harness(self.runtime,policy,goal=self.trial.goal,catalog=self.trial.catalog,
-            topology=self.trial.topology,role_actions=self.actions,budgets=dict(_BUDGET),run_id=self.r['run_id'],
+            topology=self.trial.topology,role_actions=self.actions,budgets=dict(self.harness_budgets),run_id=self.r['run_id'],
             runtime_instance_id=self.trial.runtime_instance_id,event_sink=self.event_sink,clock=clock)
-        for _ in range(9):
+        for _ in range(self.model_process_limit + 1):
             self.check()
             start=len(self.events); previous=len(self.r['steps'])
             self.harness.step()
@@ -843,7 +877,7 @@ class _Loop:
         self.r['failure']=_copy(self.first) if self.first else None
         self.r['status']='failed' if self.first else 'stopped' if self.r['termination']['reason']=='policy_stop' else 'bounded'
         self.r['budget']['elapsed_seconds']=max(0.0,_now()-self.start)
-        if self.r['budget']['elapsed_seconds']>=180:
+        if self.r['budget']['elapsed_seconds']>=self.wall_seconds_limit:
             self.error('timeout','finalize')
         self.stage='finalize'
         try:
@@ -857,15 +891,20 @@ class _Loop:
 
 def run_codex_virtual_loop(*, catalog_path: Path, catalog_sha256: str, response_schema_bytes: bytes,
         executable: Path, requested_model: str, scenario: str, evidence_dir: Path,
-        execution_origin: str, cancel_event=None, source_settings=None, plan_binding=None, quantity=None) -> dict:
+        execution_origin: str, cancel_event=None, source_settings=None, plan_binding=None, quantity=None, evidence_reservation=None,
+        model_process_limit=8, wall_seconds_limit=180) -> dict:
     """Run one explicitly delegated synthetic loop; provenance declarations grant no authority."""
     runner=None; receipt=None; code=None; control=None
     try:
+        _lower_limits(model_process_limit, wall_seconds_limit)
+        reservation=_reservation(evidence_reservation)
+        options={} if reservation is None else dict(evidence_reservation=reservation)
+        options.update(model_process_limit=model_process_limit, wall_seconds_limit=wall_seconds_limit)
         start=_now()
         source,binding,declared_quantity=_preflight(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
                           evidence_dir,execution_origin,cancel_event,source_settings,plan_binding,quantity)
         runner=_Loop(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,
-                     evidence_dir,execution_origin,cancel_event,start,source,binding,declared_quantity)
+                     evidence_dir,execution_origin,cancel_event,start,source,binding,declared_quantity,**options)
         try:
             runner.run()
         except BaseException as error:
