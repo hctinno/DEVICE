@@ -5,15 +5,17 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from tests.managed_fixture_paths import fixture_root, workspace_expectations
 
 REPO=Path(__file__).parents[1]
-FIXTURES=REPO.parents[1]/'runs/migration-20261031/toolchains/guard-tests'
+FIXTURES=fixture_root('guard-tests')
 SCRIPT=REPO/'scripts/check_development_paths.py'
 
 class ActualWorkspaceGuardTests(unittest.TestCase):
     def invoke(self,cwd,target):
+        role,branch=workspace_expectations(REPO)
         result=subprocess.run([sys.executable,'-X','utf8','-B',str(SCRIPT),'--cwd',str(target),
-            '--role','migration','--expected-branch','codex/migration-runtime-paths-20261031'],
+            '--role',role,'--expected-branch',branch],
             cwd=cwd,capture_output=True,text=True,encoding='utf-8',check=False)
         return result,json.loads(result.stdout)
 

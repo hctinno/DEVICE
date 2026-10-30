@@ -11,9 +11,10 @@ from labflow import control_packet_prepare as native,development_paths as paths
 from labflow.virtual_fleet import rf_signal_waveform_observation as writer
 from labflow.virtual_fleet import rf_signal_waveform_observation_read as reader
 from tests.test_virtual_fleet_rf_signal_waveform_observation_read import literal,canonical,summary_of,PINS,CURRENT_PINS
+from tests.managed_fixture_paths import fixture_root
 
 REPO=Path(__file__).parents[1]
-ROOT=REPO.parents[1]/'runs/migration-20261031/toolchains/reader-version-tests'
+ROOT=fixture_root('reader-version-tests')
 VERSION='read048-managed-storage-v1'
 NEW_PINS=[
     dict(role='read048',lf_bytes=26502,lf_sha256='f8c75251910a241bcc4557fe74c034c3e554726334f42f98cbab1d7ef0c6f77a'),
@@ -89,8 +90,12 @@ class ManagedReaderSourceVersionTests(unittest.TestCase):
         target=fixture/'labflow/virtual_fleet/rf_signal_read.py'
         good=target.read_bytes();target.write_bytes(good+b'\n')
         with self.assertRaises(writer.RfSignalWaveformObservationError):check()
-        old=REPO.parents[1]/'archive/toolchain-originals/20261031/source/labflow/virtual_fleet/rf_signal_read.py'
-        target.write_bytes(old.read_bytes())
+        # Exact Git 195182f9db2617f1cecdff1794702261f07ef3ef original source;
+        # checkout EOL conversion is normalized exactly as the production pin gate.
+        old=(REPO/'tests/fixtures/rf_signal_read_read048.py.txt').read_bytes().replace(b'\r\n',b'\n')
+        self.assertEqual(len(old),26249)
+        self.assertEqual(hashlib.sha256(old).hexdigest(),'8cf602b50aac2cb56f1df7b807b19dcfebfdeff588dfe0904cef16a943581472')
+        target.write_bytes(old)
         with self.assertRaises(writer.RfSignalWaveformObservationError):check()
 
     def test_restored_parent_read_boundary_precedes_original_engine_mismatch(self):

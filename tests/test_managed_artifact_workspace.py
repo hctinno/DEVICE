@@ -9,9 +9,10 @@ from contextlib import redirect_stderr,redirect_stdout
 from unittest.mock import patch
 from labflow import development_paths as paths
 from labflow import control_packet_prepare as native
+from tests.managed_fixture_paths import fixture_root
 
 REPO=Path(__file__).parents[1]
-FIXTURES=REPO.parents[1]/'runs/migration-20261031/toolchains/artifact-tests'
+FIXTURES=fixture_root('artifact-tests')
 
 class ManagedArtifactWorkspaceTests(unittest.TestCase):
     def setUp(self):

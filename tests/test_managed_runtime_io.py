@@ -12,9 +12,10 @@ import unittest
 from unittest.mock import patch
 
 from labflow import development_paths as paths
+from tests.managed_fixture_paths import fixture_root
 
 REPO=Path(__file__).parents[1]
-FIXTURES=REPO.parents[1]/'runs/migration-20261031/toolchains/tests'
+FIXTURES=fixture_root('tests')
 
 
 class ManagedRuntimeIOTests(unittest.TestCase):
@@ -94,7 +95,7 @@ class ManagedRuntimeIOTests(unittest.TestCase):
 
     def test_vertex_explicit_synthetic_credentials_resolve_alias_without_refresh(self):
         from labflow import vertex_response as vertex
-        from test_vertex_response import settings
+        from tests.test_vertex_response import settings
         target=self.root/'runs/i/vertex/adc.json';target.parent.mkdir(parents=True)
         raw=json.dumps(dict(type='authorized_user',client_id='typed-id',client_secret='typed-secret',
             refresh_token='typed-not-a-real-token',quota_project_id=settings()['quota_project_id'])).encode()

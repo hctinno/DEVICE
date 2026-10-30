@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),test=require('node:test');
-const evidence=path.resolve(__dirname,'../../../runs/migration-20261031/toolchains/frontend-tests');
+const evidence=require('./managed_paths.cjs').output(path.resolve(__dirname,'..'),'managed-path-tests');
 fs.mkdirSync(evidence,{recursive:true});
 test('managed defaults ignore a repository .venv and emit runs outputs',()=>{
  const api=require('./managed_paths.cjs');
@@ -93,4 +93,12 @@ test('default browser output rejects a linked runs output parent',()=>{
  const {runs,outside}=stageFixture();fs.symlinkSync(outside,path.join(runs,'browser-checks'),'junction');
  assert.throws(()=>api.output(outside,'browser'),/managed_browser_.*(reparse|physical)/);
  assert.deepEqual(fs.readdirSync(outside),[]);
+});
+test('integration and workspaces fixture sources both allocate under the declared runs',()=>{
+ const {development,runs}=stageFixture();
+ for(const relative of ['integration','workspaces/dev1']){
+  const source=path.join(development,relative);fs.mkdirSync(source,{recursive:true});
+  assert.equal(path.dirname(api.output(source,'portable-test')),path.join(runs,'browser-checks'));
+ }
+ assert.equal(fs.existsSync(path.join(path.dirname(development),'runs')),false);
 });

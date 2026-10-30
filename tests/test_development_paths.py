@@ -10,6 +10,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+from tests.managed_fixture_paths import fixture_root
 
 try:
     from labflow import development_paths as paths
@@ -17,7 +18,7 @@ except ImportError:
     paths = None
 
 
-TEST_ROOT = Path(__file__).parents[3] / 'runs' / 'migration-20261031' / 'runtime-paths-tests'
+TEST_ROOT = fixture_root('runtime-paths-tests')
 
 
 class DevelopmentPathsTests(unittest.TestCase):
@@ -162,7 +163,7 @@ class DevelopmentPathsTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256((target/'lab.sqlite3').read_bytes()).hexdigest(), before)
 
     def test_authored_native_reservation_retains_original_config_path_binding(self):
-        from test_codex_registered_intake_host import RegisteredNativeHostTests
+        from tests.test_codex_registered_intake_host import RegisteredNativeHostTests
         helper=RegisteredNativeHostTests('test_genuine_once_with_known_fake_child_extends_history_and_closes_store')
         self.addCleanup(helper.doCleanups)
         parent=self.root/'runs/t';parent.mkdir(parents=True)
@@ -185,7 +186,7 @@ class DevelopmentPathsTests(unittest.TestCase):
         self.assertEqual(helper.calls,['version','model'])  # Known Python transport double only.
 
     def _typed_migrated_anchor(self):
-        from test_codex_registered_intake_host import RegisteredNativeHostTests
+        from tests.test_codex_registered_intake_host import RegisteredNativeHostTests
         helper=RegisteredNativeHostTests('test_genuine_once_with_known_fake_child_extends_history_and_closes_store')
         self.addCleanup(helper.doCleanups)
         parent=self.root/'runs/a';parent.mkdir(parents=True)
@@ -289,13 +290,13 @@ class DevelopmentPathsTests(unittest.TestCase):
         subprocess.run(['git','init','-b','codex/new-task',str(self.repo)], check=True, capture_output=True)
         script = Path(__file__).parents[1]/'scripts/check_development_paths.py'
         env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1')
-        base = [sys.executable, '-B', str(script), '--cwd', str(self.repo), '--role', 'migration']
-        accepted = subprocess.run(base+['--expected-branch','codex/new-task'], cwd=self.repo, capture_output=True, text=True, env=env)
+        base = [sys.executable, '-X', 'utf8', '-B', str(script), '--cwd', str(self.repo), '--role', 'migration']
+        accepted = subprocess.run(base+['--expected-branch','codex/new-task'], cwd=self.repo, capture_output=True, text=True, encoding='utf-8', env=env)
         self.assertEqual(accepted.returncode, 0, accepted.stderr+accepted.stdout)
         result = json.loads(accepted.stdout)
         self.assertEqual(result['branch'], 'codex/new-task')
         self.assertFalse(result['execution_authority'])
-        rejected = subprocess.run(base+['--expected-branch','codex/old-task'], cwd=self.repo, capture_output=True, text=True, env=env)
+        rejected = subprocess.run(base+['--expected-branch','codex/old-task'], cwd=self.repo, capture_output=True, text=True, encoding='utf-8', env=env)
         self.assertNotEqual(rejected.returncode, 0)
 
 
