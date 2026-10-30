@@ -1,5 +1,7 @@
 # DEVICE — DGM AutoLab / FCC AI 시험소
 
+2026-10-31 개발 경로 정리: 현재 실행에는 [관리된 Python·Android·출력 경로 안내](docs/fcc/managed_runtime_paths_usage.md)를 따른다. 기존 toolchain·site-packages와 원본 기록을 보존하며 기본 산출물은 managed `runs`를 사용한다. 이 경로 변경은 모델 한도·실행 위임·실장비 권한을 새로 만들지 않는다. 아래 통합 내용은 당시 검증 이력이다.
+
 최신 [통합011](handoff/development/INTEGRATION-011.md): [DUT 읽기 화면](docs/fcc/dut_control_ui_usage.md)과 [선언 밀도의 연속3kHz 최대](docs/fcc/virtual_frequency_psd_max_usage.md)를 독립 Yes 후 인수했다. 새 전체 Python **1176 PASS·skip0**, Node **81 PASS**, DUT자료 화면12/장비·NAV17/접수10의 **39묶음**과 실제 source→최대6사례를 확인했다. [후속](handoff/development/NEXT-004.md)의 개발1prepare004/개발2stop013 소유 수정·개발3후속확보API015·개발4화면017은 계속한다. 실제 단말/RF/현장·실제 AI 검증은 남아 있으며 사용자 추가 준비0이다. 아래010/008 이하는 보존 이력이다.
 
 최신 개발 인수는 [통합008](handoff/development/INTEGRATION-008.md)의 지정 장비 제어자료·보존 분석 replay·명시 밀도 source·실제 계산 브라우저다. [자료 카탈로그](control_sources/README.md)와 [어댑터 계획](docs/fcc/control_adapter_roadmap.md)에 출처/지원 단계를 분리했으며 [개발1~4 후속](handoff/development/NEXT-004.md)과 P01 추가 수집을 병렬로 진행한다. 자료 검증·합성 기능 통과를 실장비/현장 업무 완료로 표시하지 않는다.

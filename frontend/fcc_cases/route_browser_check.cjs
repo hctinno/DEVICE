@@ -7,7 +7,7 @@ const {spawn} = require('node:child_process');
 const {createHash} = require('node:crypto');
 const {pathToFileURL} = require('node:url');
 const {reserveEvidence} = require('../intake_fixture_browser_check.cjs');
-const ROOT = fs.realpathSync(path.resolve(__dirname, '../..'));
+const ROOT = path.resolve(__dirname, '../..');
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const save = (folder, name, value) => fs.writeFileSync(path.join(folder, name), JSON.stringify(value, null, 2) + '\n', {flag: 'wx'});
 const wait = async (promise, ms = 30000) => {
@@ -388,7 +388,7 @@ finally:
 `;
 
 async function startCaller(options, evidence) {
-  const executable = process.env.FCC_CASE_ROUTE_PYTHON || path.join(ROOT, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
+  const executable = process.env.FCC_CASE_ROUTE_PYTHON || require('../managed_paths.cjs').python(ROOT);
   if (!path.isAbsolute(executable) || !fs.statSync(executable).isFile()) throw Error('invalid_python_executable');
   const child = spawn(executable, ['-X', 'utf8', '-B', '-c', PYTHON_BOOT], {
     cwd: ROOT, windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'],

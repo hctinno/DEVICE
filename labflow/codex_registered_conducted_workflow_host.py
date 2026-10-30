@@ -44,7 +44,7 @@ def _keys(value,keys):
 def _same(left,right):
     if _C(left)!=_C(right):_fail('binding_mismatch')
 def _profile_root():
-    # Resolve the token's KnownFolder only; never open the old intake profile.
+    # Sibling managed control; never create a replacement for historical state.
     return _native_host._control_root().with_name('codex-conducted-workflow-host')
 def _close_ledger(con):con.close()
 def _load(root,name,cap):return _json(_read(root/name,cap))
@@ -196,7 +196,11 @@ def _completed_scope(store,selection,config):
         if type(row['source_root']) is not str or type(row['bundle']) is not str:_fail('scope_mismatch')
         source,bundle=Path(row['source_root']),Path(row['bundle'])
         if (not source.is_absolute() or '..' in source.parts or bundle.anchor or len(bundle.parts)!=1
-                or row['bundle'] in ('.','..') or source/bundle!=Path(config['registered_input_root'])):_fail('scope_mismatch')
+                or row['bundle'] in ('.','..')):_fail('scope_mismatch')
+        # Compare concrete references, retaining raw row/config strings and all
+        # canonical payload/hash comparisons exactly as originally recorded.
+        if _path(source/bundle,directory=True)[0]!=_path(config['registered_input_root'],directory=True)[0]:
+            _fail('scope_mismatch')
         actual=dict(source_id=row['source_id'],intake_id=row['intake_id'],revision=row['revision'],job_id=row['job_id'],
             revision_fingerprint=row['fingerprint'],files=_json(row['files_json'].encode('utf-8')))
         _same(actual,selection)

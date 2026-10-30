@@ -686,8 +686,11 @@ def main(argv=None):
         parser.error('--conducted-scenario requires --conducted-workflow')
     if args.port is not None and not 0 <= args.port <= 65535:
         parser.error('port must be between 0 and 65535')
-    output = args.output or Path('.local/cw' if args.conducted_workflow else '.local/intake-fixture-check') / uuid.uuid4().hex[:12 if args.conducted_workflow else 32]
     try:
+        from .development_paths import load_layout, reference_path
+        output = (reference_path(args.output.absolute()) if args.output else
+                  load_layout().output(('cw' if args.conducted_workflow else 'intake-fixture-check') + '/' +
+                  uuid.uuid4().hex[:12 if args.conducted_workflow else 32]))
         result = (run_conducted_flow(output, document_kind=args.document_kind,
                   measurement_ref=args.measurement_ref, mock_model=args.mock_model,
                   scenario=args.conducted_scenario or 'normal') if args.conducted_workflow

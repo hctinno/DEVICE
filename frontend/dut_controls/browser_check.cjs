@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {spawn}=require('node:child_process'),{createHash}=require('node:crypto');
 const {reserveEvidence}=require('../intake_fixture_browser_check.cjs');
-const ROOT=fs.realpathSync(path.resolve(__dirname,'../..')),sha=value=>createHash('sha256').update(value).digest('hex');
+const ROOT=path.resolve(__dirname,'../..'),sha=value=>createHash('sha256').update(value).digest('hex');
 const write=(file,value)=>fs.writeFileSync(file,value,{flag:'wx'}),json=(file,value)=>write(file,JSON.stringify(value,null,2)+'\n');
 const same=(a,b)=>path.relative(path.resolve(a),path.resolve(b))==='';
 const bounded=async(promise,code,ms=7000)=>{let timer;try{return await Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error(code)),ms);})]);}finally{clearTimeout(timer);}};
@@ -46,7 +46,7 @@ async function main(){
   if(process.argv.length>2 || Object.keys(process.env).some(key=>key.startsWith('DUT_CATALOG_') && key!=='DUT_CATALOG_PYTHON'))throw Error('invalid_configuration');
   if(!fs.existsSync(path.join(ROOT,'labflow/dut_control_catalog.py')))throw Error('dut_catalog_dependency_missing');
   if(!fs.existsSync(path.join(ROOT,'labflow/dut_manufacturer_delta.py')))throw Error('dut_delta_dependency_missing');
-  const python=process.env.DUT_CATALOG_PYTHON ?? path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');if(!python.trim() || /[\r\n\0]/.test(python))throw Error('invalid_configuration');
+  const python=process.env.DUT_CATALOG_PYTHON ?? require('../managed_paths.cjs').python(ROOT);if(!python.trim() || /[\r\n\0]/.test(python))throw Error('invalid_configuration');
   const evidence=reserveEvidence(ROOT),checks=[],cleanup={producer_closed:false,browser_closed:false,server_closed:false};
   const result={schema_version:1,kind:'dut_control_actual_browser',contract_fixture:false,actual_dut_catalog_connected:false,actual_dut_delta_catalog_connected:false,synthetic_workspace:true,intake_source_synthetic:true,support_status:'not_assessed',hardware_verified:false,source_code_executed:false,automatic_fallback_enabled:false,source_reuse_publication_approved:false,checks,cleanup,passed:false};
   const before=sourceHashes();result.source_sha256=before;let child,browser,closed,stdout='',stderr='',failure,resolveReady,rejectReady,resolveExit;const errors=[],external=[],requests=[];

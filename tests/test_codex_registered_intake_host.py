@@ -388,31 +388,28 @@ class RegisteredNativeHostTests(unittest.TestCase):
         (self.control/'active-run.json').write_bytes(b'{partial-guard')
         self.refused();self.assertEqual(self.calls,[])
 
-    def test_known_folder_uses_current_token_and_frees_fake_native_memory(self):
-        api=self.api();buffer=ctypes.create_unicode_buffer(str(self.root/'fake-local-appdata'));freed=[];calls=[]
-        def folder(guid,flags,token,output):
-            calls.append((flags,token))
-            ctypes.cast(output,ctypes.POINTER(ctypes.c_void_p))[0]=ctypes.c_void_p(ctypes.addressof(buffer))
-            return 0
-        def free(pointer):freed.append(pointer.value)
-        def library(name,**kwargs):
-            return SimpleNamespace(SHGetKnownFolderPath=folder) if name=='shell32' else SimpleNamespace(CoTaskMemFree=free)
-        with patch.object(api.ctypes,'WinDLL',side_effect=library),patch.dict(os.environ,dict(LOCALAPPDATA='C:/wrong',USERPROFILE='C:/wrong')):
+    def test_managed_control_ignores_appdata_and_never_calls_knownfolder(self):
+        from labflow import development_paths
+        api=self.api();managed=self.root/'.local/development';managed.mkdir(parents=True)
+        layout=development_paths.DevelopmentPaths(managed,dict(schema_version=1,project_root_relative='../..',
+            directories={k:k for k in ('integration','workspaces','runs','toolchains','archive')},
+            workspaces=[],path_aliases=[],control_root='runs/control/DGMAutoLab'))
+        before=self.events()
+        with patch.object(development_paths,'load_layout',return_value=layout), \
+                patch.object(ctypes,'WinDLL',side_effect=AssertionError('KnownFolder must not be queried')), \
+                patch.dict(os.environ,dict(LOCALAPPDATA='C:/wrong',USERPROFILE='C:/wrong')):
             root=api._control_root()
-        self.assertEqual(root,self.root/'fake-local-appdata'/'DGMAutoLab'/'codex-intake-host')
-        self.assertEqual(calls,[(0,None)]);self.assertEqual(freed,[ctypes.addressof(buffer)])
+        self.assertEqual(root,managed/'runs/control/DGMAutoLab/codex-intake-host')
+        self.assertFalse(root.exists());self.assertEqual(self.events(),before)
 
-    def test_known_folder_keeps_original_control_when_memory_free_also_fails(self):
-        api=self.api();buffer=ctypes.create_unicode_buffer('C:/authored-only');control=KeyboardInterrupt('first native control')
-        def folder(guid,flags,token,output):
-            ctypes.cast(output,ctypes.POINTER(ctypes.c_void_p))[0]=ctypes.c_void_p(ctypes.addressof(buffer))
-            raise control
-        def free(pointer):raise OSError('secondary native free failure')
-        def library(name,**kwargs):
-            return SimpleNamespace(SHGetKnownFolderPath=folder) if name=='shell32' else SimpleNamespace(CoTaskMemFree=free)
-        with patch.object(api.ctypes,'WinDLL',side_effect=library):
-            with self.assertRaises(KeyboardInterrupt) as caught:api._control_root()
-        self.assertIs(caught.exception,control)
+    def test_missing_managed_layout_never_falls_back_to_appdata_or_new_permit(self):
+        from labflow import development_paths
+        api=self.api();before=self.events()
+        with patch.object(development_paths,'load_layout',side_effect=development_paths.DevelopmentPathError('layout_missing')), \
+                patch.object(ctypes,'WinDLL',side_effect=AssertionError('KnownFolder fallback forbidden')):
+            with self.assertRaises(api._Failure) as caught:api._control_root()
+        self.assertEqual(str(caught.exception),'codex_registered_intake_host_operator_unavailable')
+        self.assertEqual(self.events(),before);self.assertEqual(self.calls,[])
 
     def test_failure_after_reservation_keeps_it_without_refund_or_retry(self):
         api=self.api();append=api._append

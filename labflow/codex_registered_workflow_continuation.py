@@ -3,6 +3,7 @@ import math
 from datetime import datetime, timezone
 import os
 from pathlib import Path
+import re
 import sqlite3
 import sys
 import time
@@ -44,6 +45,41 @@ def _remaining_budget(count,elapsed,files,size):
 
 def _read(io,path,cap):return _host._json(io.read(path,cap))
 def _pin(raw):return _host._pin(raw)
+
+
+def _terminal_schema400_prefix(wire,receipt):
+    """Accept only a fully framed terminal provider error inside a retained prefix."""
+    lifecycle=receipt['lifecycle'];descriptor=receipt['artifacts']['stdout_jsonl']
+    if (descriptor['present'] is not True or descriptor['complete'] is not False
+            or descriptor['extent']!='prefix' or descriptor['overflow'] is not False
+            or lifecycle['stdout_eof'] is not False or lifecycle['stderr_eof'] is not False
+            or lifecycle['thread_started']!=1 or lifecycle['turn_started']!=1
+            or lifecycle['turn_completed']!=0 or lifecycle['reasoning_items']!=0
+            or not wire.endswith(b'\n')):_fail('original_failure_not_eligible')
+    lines=wire.split(b'\n')
+    if len(lines)!=5 or lines[-1]!=b'' or any(not line or b'\r' in line for line in lines[:-1]):
+        _fail('original_failure_not_eligible')
+    thread,started,error,terminal=(_host._json(line) for line in lines[:-1])
+    exact=lambda value,fields:type(value) is dict and set(value)==set(fields.split())
+    if (not exact(thread,'type thread_id') or thread['type']!='thread.started'
+            or type(thread['thread_id']) is not str
+            or re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}',thread['thread_id'],re.ASCII) is None
+            or receipt['model']['cli_thread_id']!=thread['thread_id']
+            or not exact(started,'type') or started['type']!='turn.started'
+            or not exact(error,'type message') or error['type']!='error'
+            or not exact(terminal,'type error') or terminal['type']!='turn.failed'
+            or not exact(terminal['error'],'message')
+            or type(error['message']) is not str or type(terminal['error']['message']) is not str
+            or error['message'].encode('utf-8')!=terminal['error']['message'].encode('utf-8')):
+        _fail('original_failure_not_eligible')
+    inner=_host._json(error['message'].encode('utf-8'))
+    expected="Invalid schema for response_format 'codex_output_schema': 'schema.properties.proposal.oneOf' is not permitted when strict is true."
+    if (not exact(inner,'type error status') or inner['type']!='error'
+            or type(inner['status']) is not int or inner['status']!=400
+            or not exact(inner['error'],'message type param code')
+            or inner['error']!=dict(message=expected,type='invalid_request_error',
+                param='text.format.schema',code='invalid_json_schema')):
+        _fail('original_schema_error_not_verified')
 
 
 def _history(io,root,anchor,config):
@@ -108,15 +144,20 @@ def _failed_execution(io,evidence,events,model,workflow,original_schema_sha):
     # Read the actual retained producer stdout, never a root boolean/error label.
     descriptor=receipt['artifacts']['stdout_jsonl']
     wire=io.read(evidence/'loop/calls/0001/producer/stdout.jsonl',8388608)
-    if (descriptor['complete'] is not True or descriptor['overflow'] is not False
-            or descriptor['bytes']!=len(wire) or descriptor['sha256']!=_H(wire)):_fail('original_failure_not_eligible')
-    errors=[]
-    for line in wire.splitlines():
-        event=_host._json(line)
-        if event.get('type') in ('error','turn.failed'):errors.append(event)
-        elif event.get('type') not in ('thread.started','turn.started'):_fail('original_failure_not_eligible')
-    if not errors or not any(all(word in canonical(event) for word in ('400','oneOf','schema')) for event in errors):
-        _fail('original_schema_error_not_verified')
+    if descriptor['overflow'] is not False or descriptor['bytes']!=len(wire) or descriptor['sha256']!=_H(wire):
+        _fail('original_failure_not_eligible')
+    if descriptor['complete'] is False:
+        _terminal_schema400_prefix(wire,receipt)
+    else:
+        if descriptor['complete'] is not True or descriptor['extent']!='whole_file':
+            _fail('original_failure_not_eligible')
+        errors=[]
+        for line in wire.splitlines():
+            event=_host._json(line)
+            if event.get('type') in ('error','turn.failed'):errors.append(event)
+            elif event.get('type') not in ('thread.started','turn.started'):_fail('original_failure_not_eligible')
+        if not errors or not any(all(word in canonical(event) for word in ('400','oneOf','schema')) for event in errors):
+            _fail('original_schema_error_not_verified')
     return execution,loop['budget']['elapsed_seconds']
 
 

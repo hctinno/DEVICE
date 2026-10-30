@@ -885,6 +885,10 @@ def validate_sdk_inventory(sdk: Path, inventory: dict, deadline: float) -> None:
 
 
 def validate_runtime(runtime: Path) -> dict:
+    from .development_paths import DevelopmentPathError, reference_path
+    try:runtime=reference_path(runtime)
+    except DevelopmentPathError as error:
+        raise BoundaryError('runtime_path_invalid') from error
     deadline = time.monotonic() + 600
     reject_links(runtime)
     if not runtime.exists():
@@ -894,7 +898,10 @@ def validate_runtime(runtime: Path) -> dict:
     if not marker.is_file():
         raise BoundaryError('runtime_unowned', str(runtime))
     manifest = json.loads(marker.read_text('utf-8'))
-    if manifest.get('runtime') != str(runtime) or not manifest.get('completed'):
+    try:recorded_runtime=reference_path(manifest.get('runtime'))
+    except DevelopmentPathError as error:
+        raise BoundaryError('runtime_incomplete', str(marker)) from error
+    if recorded_runtime != runtime or not manifest.get('completed'):
         raise BoundaryError('runtime_incomplete', str(marker))
     if set(manifest.get('executables', {})) != set(NATIVE_PATHS):
         raise BoundaryError('runtime_inventory_missing')
@@ -1035,9 +1042,15 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
             resume_install: bool = False,
             verify_only: bool = False,
             accept_sdk_license: bool = False, endpoint: Endpoint | None = None,
+<<<<<<< HEAD
             boot_timeout: int = 180, acceleration: str = 'auto',
             rf_bridge_check: bool = False) -> dict:
     runtime, output = Path(runtime).absolute(), Path(output).absolute()
+=======
+            boot_timeout: int = 180, acceleration: str = 'auto') -> dict:
+    from .development_paths import reference_path
+    runtime, output = reference_path(Path(runtime).absolute()), reference_path(Path(output).absolute())
+>>>>>>> 733e00f4ab922f1aeec98c647f50cbff1802a1e9
     reject_links(runtime)
     report = Report(output)
     endpoint = endpoint or Endpoint()
