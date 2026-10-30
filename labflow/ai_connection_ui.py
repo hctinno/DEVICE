@@ -144,6 +144,9 @@ def _module(name):
 
 def _private_path(value):
     _need(type(value) is type(Path()) and value.is_absolute() and '..' not in value.parts)
+    from .development_paths import DevelopmentPathError, reference_path
+    try:value=reference_path(value)
+    except DevelopmentPathError:_need(False)
     for part in (value, *value.parents):
         try: info = part.lstat()
         except FileNotFoundError: continue

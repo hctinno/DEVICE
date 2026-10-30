@@ -290,12 +290,12 @@ class DevelopmentPathsTests(unittest.TestCase):
         script = Path(__file__).parents[1]/'scripts/check_development_paths.py'
         env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1')
         base = [sys.executable, '-B', str(script), '--cwd', str(self.repo), '--role', 'migration']
-        accepted = subprocess.run(base+['--expected-branch','codex/new-task'], capture_output=True, text=True, env=env)
+        accepted = subprocess.run(base+['--expected-branch','codex/new-task'], cwd=self.repo, capture_output=True, text=True, env=env)
         self.assertEqual(accepted.returncode, 0, accepted.stderr+accepted.stdout)
         result = json.loads(accepted.stdout)
         self.assertEqual(result['branch'], 'codex/new-task')
         self.assertFalse(result['execution_authority'])
-        rejected = subprocess.run(base+['--expected-branch','codex/old-task'], capture_output=True, text=True, env=env)
+        rejected = subprocess.run(base+['--expected-branch','codex/old-task'], cwd=self.repo, capture_output=True, text=True, env=env)
         self.assertNotEqual(rejected.returncode, 0)
 
 

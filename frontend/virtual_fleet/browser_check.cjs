@@ -8,9 +8,9 @@ const {chromium} = require('playwright');
 
 async function main() {
   const root = path.resolve(__dirname, '../..');
-  const output = path.resolve(process.env.VLAB_EVIDENCE_DIR || path.join(root, '.local/dev4/virtual-fleet'));
+  const output = path.resolve(process.env.VLAB_EVIDENCE_DIR || require('../managed_paths.cjs').output(root,'virtual-fleet'));
   fs.mkdirSync(output, {recursive: true});
-  const python = process.env.VLAB_PYTHON || path.join(root, '.venv/Scripts/python.exe');
+  const python = process.env.VLAB_PYTHON || require('../managed_paths.cjs').python(root);
   const child = spawn(python, ['-m', 'labflow.virtual_fleet_server', '--demo', '--port', '0'], {
     cwd: root, windowsHide: true, env: {...process.env, PYTHONUTF8: '1', PYTHONIOENCODING: 'utf-8'}, stdio: ['ignore', 'pipe', 'pipe'],
   });

@@ -207,7 +207,7 @@ finally:
 `;
 
 async function startCaller(options,evidence){
- const executable=process.env.FCC_CASE_CALCULATION_PYTHON||path.join(ROOT,'.venv',process.platform==='win32'?'Scripts/python.exe':'bin/python');
+ const executable=process.env.FCC_CASE_CALCULATION_PYTHON||require('../managed_paths.cjs').python(ROOT);
  assert(path.isAbsolute(executable)&&fs.statSync(executable).isFile(),'invalid_python_executable');
  const child=spawn(executable,['-X','utf8','-B','-c',PYTHON_BOOT],{cwd:ROOT,windowsHide:true,stdio:['pipe','pipe','pipe'],env:{...process.env,PYTHONUTF8:'1',PYTHONIOENCODING:'utf-8',PYTHONDONTWRITEBYTECODE:'1',PYTHONNOUSERSITE:'1',PYTHONPATH:ROOT}});
  const stdout=[],stderr=[];let outBytes=0,errBytes=0,ended=false,overflow=false,readyText='',resolved=false;

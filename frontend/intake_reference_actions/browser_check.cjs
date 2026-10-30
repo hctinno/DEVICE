@@ -25,7 +25,7 @@ async function main(argv=process.argv.slice(2)){
  if(argv.length!==2||argv[0]!=='--mode'||argv[1]!=='component')throw Error('invalid_configuration');
  const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
  const {createHash}=require('node:crypto'),{execFileSync}=require('node:child_process');
- const root=fs.realpathSync(path.resolve(__dirname,'../..')),hash=b=>createHash('sha256').update(b).digest('hex');
+ const root=require('../managed_paths.cjs').stage(fs.realpathSync(path.resolve(__dirname,'../..'))),hash=b=>createHash('sha256').update(b).digest('hex');
  const local=path.join(root,'.local');fs.mkdirSync(local,{recursive:true});const evidence=fs.mkdtempSync(path.join(local,'ra052-'));
  const save=(name,value)=>fs.writeFileSync(path.join(evidence,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
  const pins=()=>{const names=execFileSync('git',['ls-files','-z','--','labflow','frontend','tests'],{cwd:root}).toString().split('\0');
@@ -478,7 +478,7 @@ if __name__=='__main__':
 async function integratedMain(){
  const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
  const {spawn,execFileSync}=require('node:child_process'),{createHash}=require('node:crypto');
- const root=fs.realpathSync(path.resolve(__dirname,'../..')),hash=b=>createHash('sha256').update(b).digest('hex');
+ const root=require('../managed_paths.cjs').stage(fs.realpathSync(path.resolve(__dirname,'../..'))),hash=b=>createHash('sha256').update(b).digest('hex');
  fs.mkdirSync(path.join(root,'.local'),{recursive:true});const evidence=fs.mkdtempSync(path.join(root,'.local/ra-c2-'));
  const save=(n,v)=>fs.writeFileSync(path.join(evidence,n),JSON.stringify(v,null,2)+'\n',{flag:'wx'});
  const pins=()=>Object.fromEntries(execFileSync('git',['ls-files','-z','--','labflow','frontend','tests'],{cwd:root}).toString('utf8').split('\0').filter(Boolean).sort().map(n=>[n,hash(fs.readFileSync(path.join(root,n)))]));
@@ -487,7 +487,7 @@ async function integratedMain(){
  const result={phase:'052 C2 genuine053 actual application composition',status:'fail',checks,phases:{},browser_closed:false,children_closed:false,source_unchanged:false,
   actual_model_customer_PDF_hardware_fullbackendPython_executed:false,retained_bytes_scope:'native bounded snapshot._blob subset; total bytes unknown'};
  save('source-pins-before.json',before);const helper=path.join(evidence,'supervisor.py');fs.writeFileSync(helper,INTEGRATED_SUPERVISOR,{flag:'wx'});
- const python=path.join(root,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python'),env={...process.env,PYTHONUTF8:'1',PYTHONDONTWRITEBYTECODE:'1'};delete env.PYTHONPATH;delete env.PYTHONHOME;
+ const python=require('../managed_paths.cjs').python(root),env={...process.env,PYTHONUTF8:'1',PYTHONDONTWRITEBYTECODE:'1'};delete env.PYTHONPATH;delete env.PYTHONHOME;
  function launch(args){
   const processChild=spawn(python,['-X','utf8','-B',helper,root,...args],{cwd:root,env,windowsHide:true,stdio:['pipe','pipe','pipe']});
   const lines=[],waiters=[];let buffer='',stderrBytes=0,exited=null;

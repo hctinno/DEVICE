@@ -33,12 +33,12 @@ function readConfig(env = process.env) {
   assert(['text','pdf','both'].includes(kind), 'Invalid document kind: use text, pdf or both');
   const power=env.FLOW_POWER_DBM === undefined ? -4 : Number(env.FLOW_POWER_DBM);
   assert((env.FLOW_POWER_DBM === undefined || String(env.FLOW_POWER_DBM).trim()) && Number.isFinite(power) && power >= -30 && power <= 20, 'Invalid power: use -30..20 dBm');
-  return {source:path.resolve(env.FLOW_SOURCE_ROOT || OWN), python:env.FLOW_PYTHON || path.join(OWN, process.platform === 'win32' ? '.venv/Scripts/python.exe' : '.venv/bin/python'),
+  return {source:path.resolve(env.FLOW_SOURCE_ROOT || OWN), python:env.FLOW_PYTHON || require('./managed_paths.cjs').python(OWN),
     kinds:kind === 'both' ? ['text','pdf'] : [kind], power, requested:env.FLOW_OUTPUT_ROOT};
 }
 
 function reserveEvidence(own, requested) {
-  own=path.resolve(own);
+  own=require('./managed_paths.cjs').stage(path.resolve(own));
   const local=path.join(own,'.local');
   if (!exists(local)) fs.mkdirSync(local);
   assert(!fs.lstatSync(local).isSymbolicLink(), 'Evidence .local must be a plain directory');

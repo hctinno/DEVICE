@@ -16,7 +16,7 @@ const writeJson=(file,value)=>write(file,JSON.stringify(value,null,2)+'\n');
 function readConfig(env=process.env,args=[]) {
   if(Object.keys(env).some(key=>key.startsWith('SPECTRUM_') && key!=='SPECTRUM_PYTHON')
     || args.some(arg=>arg!=='--self-test') || args.length>1) reject('invalid_configuration');
-  const python=env.SPECTRUM_PYTHON ?? path.join(ROOT,process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python');
+  const python=env.SPECTRUM_PYTHON ?? require('../managed_paths.cjs').python(ROOT);
   if(typeof python!=='string' || !python.trim() || /[\r\n\0]/.test(python)) reject('invalid_configuration');
   return {python}; // No source or output override: actual source is always ROOT.
 }

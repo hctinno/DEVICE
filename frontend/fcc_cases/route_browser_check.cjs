@@ -388,7 +388,7 @@ finally:
 `;
 
 async function startCaller(options, evidence) {
-  const executable = process.env.FCC_CASE_ROUTE_PYTHON || path.join(ROOT, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
+  const executable = process.env.FCC_CASE_ROUTE_PYTHON || require('../managed_paths.cjs').python(ROOT);
   if (!path.isAbsolute(executable) || !fs.statSync(executable).isFile()) throw Error('invalid_python_executable');
   const child = spawn(executable, ['-X', 'utf8', '-B', '-c', PYTHON_BOOT], {
     cwd: ROOT, windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'],

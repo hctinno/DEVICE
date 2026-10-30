@@ -167,10 +167,13 @@ class VirtualSession:
                 or re.fullmatch(r'(?i:CON|PRN|AUX|NUL|COM[0-9]|LPT[0-9])', session_id)):
             raise ValueError('session_id must be a safe 1..64 ASCII filename')
         _plain_path(_PRIVATE_ROOT)
-        root = Path(storage_root) if storage_root is not None else _PRIVATE_ROOT / 'virtual_sessions'
+        from .development_paths import load_layout, reference_path
+        allowed = reference_path(_PRIVATE_ROOT) if storage_root is not None else load_layout().directory('runs')
+        root = reference_path(Path(storage_root).absolute()) if storage_root is not None else allowed / 'virtual_sessions'
+        _plain_path(allowed)
         root = root.resolve()
-        if not root.is_relative_to(_PRIVATE_ROOT):
-            raise ValueError('storage_root must be inside this clone/.local')
+        if not root.is_relative_to(allowed):
+            raise ValueError('storage_root must be inside the selected private storage root')
         root.mkdir(parents=True, exist_ok=True)
         obj = cls.__new__(cls)
         obj._mutex = threading.RLock()

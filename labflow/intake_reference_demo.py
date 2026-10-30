@@ -127,10 +127,10 @@ def _dependencies():
 
 def _reserve(custom):
     if custom is None:
-        parent = Path.cwd()
-        _plain_directory(parent)
-        for name in ('.local', 'intake-reference-demo'):
-            parent = parent / name
+        from .development_paths import load_layout
+        _plain_directory(Path.cwd())
+        layout = load_layout()
+        for parent in (layout.directory('runs'), layout.output('intake-reference-demo')):
             try:
                 parent.mkdir(exist_ok=False)
             except FileExistsError:
@@ -298,8 +298,10 @@ def _execute(argv):
         if custom is not None:
             _new_leaf(custom)
         else:
+            from .development_paths import load_layout
             _plain_directory(Path.cwd())
-            for parent in (Path.cwd() / '.local', Path.cwd() / '.local' / 'intake-reference-demo'):
+            layout = load_layout()
+            for parent in (layout.directory('runs'), layout.output('intake-reference-demo')):
                 try:
                     parent.lstat()
                 except FileNotFoundError:

@@ -408,22 +408,25 @@ def _public(error,stage):
         suffix="input_changed" if stage == "post" else "path_invalid"
     return RfSignalWaveformObservationReadError(_PREFIX+suffix)
 
-def read_rf_baseband_observation(observation_name, *, expected_summary) -> dict:
+def read_rf_baseband_observation(observation_name, *, expected_summary, workspace_root=None) -> dict:
     """Read only an explicitly named stored version, bound to original summary."""
     backend=result=primary=None; stage="arguments"
     try:
         _name(observation_name,"invalid_argument")
         summary=_summary(expected_summary,observation_name)
         stage="environment"
-        root=_root(); backend=_native._WindowsIO(); tree=_native._Tree(root,backend)
-        helper=_open(tree,root/"labflow/control_packet_prepare.py")
+        root=_root(); backend=_native._WindowsIO(); source_tree=_native._Tree(root,backend)
+        helper=_open(source_tree,root/"labflow/control_packet_prepare.py")
         _require(helper is not None and helper["stamp"][2] <= 65536,"unavailable")
         helper_raw=_read(helper["fd"],65536,"unavailable")
         normalized=helper_raw.replace(b"\r\n",b"\n")
         _require((len(normalized),_sha(normalized)) == (_PINS[3][1],_PINS[3][2]),"unavailable")
         _require(_native._stamp(backend.info(helper["fd"],directory=False)) == helper["stamp"],"input_changed")
-        folder=root/".local/rf-waveform-observations"/observation_name
+        from ..managed_artifact_workspace import artifact_local_root
+        local=artifact_local_root(workspace_root=workspace_root)
         stage="storage"
+        tree=_native._Tree(local,backend)
+        folder=local/"rf-waveform-observations"/observation_name
         try: tree.directory(folder)
         except FileNotFoundError: _fail("not_found")
         marker=folder/"failure.json"
@@ -446,10 +449,11 @@ def read_rf_baseband_observation(observation_name, *, expected_summary) -> dict:
         _require(_read(final["fd"],_MAX_FILE,"input_changed") == raw,"input_changed")
         _require(_native._stamp(backend.info(final["fd"],directory=False)) == final["stamp"],"input_changed")
         _require(_open(tree,marker) is None,"input_changed")
-        _recheck(tree,helper)
+        _recheck(source_tree,helper)
         _require(_read(helper["fd"],65536,"input_changed") == helper_raw,"input_changed")
         _require(_native._stamp(backend.info(helper["fd"],directory=False)) == helper["stamp"],"input_changed")
         _directories(tree)
+        _directories(source_tree)
     except BaseException as error:
         primary=_public(error,stage)
     finally:
