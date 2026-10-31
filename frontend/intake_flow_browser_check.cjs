@@ -1513,26 +1513,39 @@ async function operatorAttemptMain(){
       model:{requested_model:'gpt-6.1-sol',remote_resolved_model:null,process_count:2,cli_tool_items:0,cumulative_processes:25,remaining_processes:0,token_usage:null,cost:null},
       steps:[{index:1,action:'dut.start',before_tick:13,after_tick:13,receipt_status:'pending',effect:'changed',cli_tool_items:0},{index:2,action:'sensor.read',before_tick:16,after_tick:16,receipt_status:'ok',effect:'unchanged',cli_tool_items:0}],
       verification:{origin_authenticated:false,remote_identity_verified:false,hardware_verified:false,execution_authority:false,result_created:false,draft_created:false},evidence:{evaluation:sha,execution:sha,finalizer:sha,finished:sha,handoff:sha}};
-    const endpoint=info.origin+'/api/intakes/'+info.intake_id+'/operator-attempt';let response={status:200,json:packet};
-    await page.route(endpoint,route=>route.fulfill(response));
-    await page.goto(info.origin+'/#'+info.intake_id);
-    const card=page.locator('#operator-attempt-view');await card.locator('[data-operator-step]').nth(1).waitFor();
-    assert.equal(await card.getAttribute('data-current'),'true');assert.equal(await card.getAttribute('data-run-id'),binding.run_id);
-    const text=await card.innerText();for(const fragment of ['실제 CLI 응답','업무 미완료','decision_budget','execution_incomplete','stop 선택 없음','sensor.read'])assert.ok(text.includes(fragment));
-    assert.doesNotMatch(text,/PASS|DRAFT 보기|보정 11/);
-    const result=page.locator('#conducted-result-view');await result.waitFor();
-    assert.notEqual(await result.getAttribute('data-source-kind'),'provided_actual_cli_record');
+    const endpoint=info.origin+'/api/intakes/'+info.intake_id+'/operator-attempt',originalPacket=JSON.stringify(packet),observations=[];
+    let response;const served=[];
+    await page.route(endpoint,route=>{if(response.status===200)served.push(createHash('sha256').update(response.body).digest('hex'));return route.fulfill(response);});
+    const card=page.locator('#operator-attempt-view');
+    for(const count of [7,8]){
+      const value=structuredClone(packet);value.model.process_count=count;
+      value.steps=Array.from({length:count},(_,index)=>({...packet.steps[index===0?0:1],index:index+1}));
+      const raw=JSON.stringify(value),pin=createHash('sha256').update(raw).digest('hex');
+      assert.ok(Object.values(value.verification).every(flag=>flag===false));
+      proofWrite(path.join(OUTPUT,'operator-authored-'+count+'.raw.json'),raw);
+      response={status:200,contentType:'application/json',body:raw};
+      if(count===7)await page.goto(info.origin+'/#'+info.intake_id);else await page.locator('#refresh').click();
+      await page.waitForFunction(expected=>document.querySelector('#operator-attempt-view')?.dataset.current==='true'&&document.querySelectorAll('#operator-attempt-view [data-operator-step]').length===expected,count);
+      assert.equal(await card.getAttribute('data-run-id'),binding.run_id);
+      const text=await card.innerText();for(const fragment of ['CLI 선언 기록','원격 실행·모델 신원 미확인','기록의 요청 모델','기록의 모델 프로세스','기록 기준 · tick','업무 미완료','bounded','held','decision_budget','execution_incomplete','결과·DRAFT 생성 없음','stop 선택 없음','sensor.read'])assert.ok(text.includes(fragment),fragment);
+      assert.doesNotMatch(text,/제공된 실제 CLI 시도|실제 CLI 응답|PASS|DRAFT 보기|보정 11/);
+      const result=page.locator('#conducted-result-view');await result.waitFor();assert.notEqual(await result.getAttribute('data-source-kind'),'provided_actual_cli_record');
+      assert.equal(JSON.stringify(value),raw);assert.equal(response.body,raw);assert.equal(served.at(-1),pin);
+      proofWrite(path.join(OUTPUT,'operator-declaration-'+count+'.png'),await card.screenshot());
+      observations.push({count,raw_sha256:pin,raw_unchanged:true,verification:value.verification,labels:'provided declaration, remote execution/model unverified',text});
+    }
+    assert.equal(JSON.stringify(packet),originalPacket);
     await page.locator('[data-view="notifications"]').click();
     assert.equal(await card.getAttribute('data-current'),'false');
     await page.locator('[data-view="intakes"]').click();
-    await card.locator('[data-operator-step]').nth(1).waitFor();
+    await card.locator('[data-operator-step]').nth(7).waitFor();
     assert.equal(await card.getAttribute('data-current'),'true');
     response={status:503,json:{error:{code:'operator_attempt_binding_mismatch'}}};
     await page.locator('#refresh').click();await page.locator('#operator-attempt-status').filter({hasText:'결박 불일치'}).waitFor();
     assert.equal(await card.getAttribute('data-current'),'false');assert.equal(await card.locator('[data-operator-step]').count(),0);
     assert.doesNotMatch(await card.innerText(),/operator-loop-run:authored/);assert.deepEqual(errors,[]);
-    proofWrite(path.join(OUTPUT,'operator-attempt-dom-results.json'),JSON.stringify({status:'pass',source:'authored intercepted DTO over one existing synthetic fixture host',checks:['held_card','separate_result','navigation_recheck','stale_removed'],actual_model_calls:0,hardware_calls:0},null,2));
-    console.log(JSON.stringify({status:'pass',operator_attempt_dom:4,output:OUTPUT}));
+    proofWrite(path.join(OUTPUT,'operator-attempt-dom-results.json'),JSON.stringify({status:'pass',source:'authored intercepted7/8 DTO over one existing synthetic fixture host',observations,checks:['declaration_labels7','declaration_labels8','raw_DTO_unchanged','separate_result','navigation_recheck','stale_removed'],actual_model_calls:0,hardware_calls:0},null,2));
+    console.log(JSON.stringify({status:'pass',operator_attempt_rows:[7,8],output:OUTPUT}));
     await context.close();
   }finally{
     if(browser)await browser.close();
