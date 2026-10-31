@@ -50,3 +50,5 @@ GET `/api/intakes/{intake_id}/operator-attempt`은 생성 시 검증·축소한 
 `hold_reasons`는 최종화 영수증과 독립 평가의 이유 배열이 정확히 일치할 때만 표시한다. 지원하는 현재 보류 형상이 아니면 생성자가 입력을 거절한다.
 
 `advance`의 평가·wire `ticks`와 평가의 `before_tick`/`after_tick`, 제공된 step `before.tick`/`after.tick`은 정확한 정수형이어야 한다. 값이 정수와 같아도 `true`/`false` 또는 `1.0`/`0.0` 같은 실수형은 `operator_attempt_invalid`로 거절하며 원 입력을 정수로 변환하거나 덮어쓰지 않는다. 기존 step snapshot 생략 형식은 유지한다. 거절된 입력을 `bounded`/`held` 기록이나 완료 결과로 대신 표시하지 않는다.
+
+화면 파서는 `process_count` 1~8 전체를 지원한다. 정확한 DTO의 값·키 노드 수는 고정 108개와 단계당 15개이므로 이 화면에만 최대 228개를 허용한다. 16 KiB 입력·깊이 9·정확한 필드·권위 false 검사는 유지하며, 9단계·초과 입력·알 수 없는 필드는 거절한다. 다른 미리보기의 한도는 바꾸지 않는다.
