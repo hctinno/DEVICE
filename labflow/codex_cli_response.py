@@ -18,7 +18,7 @@ _VERSION=_CLIENT_VERSIONS[0]
 _CLIENT_BANNERS={('codex-cli '+version+'\n').encode('ascii'):version for version in _CLIENT_VERSIONS}
 _PREFIX='codex_cli_response_'
 _CODES={'invalid_input','limit_exceeded','unsupported_client','evidence_error','spawn_failed',
-        'timeout','stream_invalid','process_failed','final_mismatch','cleanup_failed','internal_error'}
+        'timeout','stream_invalid','process_failed','final_mismatch','cleanup_failed','internal_error','cancelled'}
 _CONTROL=(KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError)
 _ID=re.compile(r'[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}\Z',re.ASCII)
 _LIMITS=dict(max_prompt_bytes=262144,max_schema_bytes=65536,max_stdout_bytes=8388608,
@@ -132,11 +132,12 @@ def _path_chain(path):
             _fail('invalid_input')
 
 
-def _preflight(prompt,schema,executable,model,directory,timeout):
+def _preflight(prompt,schema,executable,model,directory,timeout,cancel_event):
     if (type(prompt) is not bytes or type(schema) is not bytes or type(model) is not str or
         model not in {'gpt-6.1-sol','gpt-6-astra'} or type(timeout) not in (int,float) or
         not 0<timeout<=60 or not math.isfinite(timeout) or type(executable) is not type(Path()) or
-        type(directory) is not type(Path()) or not executable.is_absolute() or not directory.is_absolute()):
+        type(directory) is not type(Path()) or not executable.is_absolute() or not directory.is_absolute()
+        or cancel_event is not None and type(cancel_event) is not threading.Event):
         _fail('invalid_input')
     if len(prompt)>_LIMITS['max_prompt_bytes'] or len(schema)>_LIMITS['max_schema_bytes']:_fail('limit_exceeded')
     value=_json(prompt,'invalid_input');schema_value=_json(schema,'invalid_input')
@@ -272,11 +273,12 @@ class _Sink:
 
 
 class _Exchange:
-    def __init__(self,directory,executable,model,timeout,start,reference,declaration):
+    def __init__(self,directory,executable,model,timeout,start,reference,declaration,cancel_event=None):
         self.directory=directory;self.executable=executable;self.start=start;self.deadline=start+float(timeout)
         self.r=_receipt(model,timeout,reference,declaration);self.first=None;self.control=None;self.phase='evidence'
         self.protocol=_Protocol(self.r);self.line=bytearray();self.last_identity=None;self.last_size=0
         self.response=None;self.tag='codex-cli-response-'+reference[-8:]
+        self.cancel_event=cancel_event
 
     def error(self,code,phase=None):
         if self.first is None:self.first=dict(code=_PREFIX+code,phase=phase or self.phase)
@@ -292,7 +294,9 @@ class _Exchange:
             else:values[-1]='secondary_overflow'
 
     def check(self,deadline=None):
+        if self.cancel_event is not None:self.throw()
         if time.monotonic()>=(self.deadline if deadline is None else min(self.deadline,deadline)):_fail('timeout')
+        if self.cancel_event is not None and self.cancel_event.is_set():_fail('cancelled')
 
     def throw(self):
         if self.control is not None:raise self.control
@@ -571,15 +575,16 @@ class _Exchange:
 
 
 def produce_codex_cli_response(prompt_bytes: bytes,response_schema_bytes: bytes,*,executable: Path,
-        requested_model: str,evidence_dir: Path,timeout_seconds: int | float=60.0) -> tuple[bytes,dict]:
+        requested_model: str,evidence_dir: Path,timeout_seconds: int | float=60.0,cancel_event=None) -> tuple[bytes,dict]:
     """Return one immutable final text and a detached receipt, or one fixed error."""
     exchange=None;control=None;code='internal_error';receipt=None
     try:
-        declaration=_preflight(prompt_bytes,response_schema_bytes,executable,requested_model,evidence_dir,timeout_seconds)
+        declaration=_preflight(prompt_bytes,response_schema_bytes,executable,requested_model,evidence_dir,timeout_seconds,cancel_event)
+        if cancel_event is not None and cancel_event.is_set():_fail('cancelled')
         start=time.monotonic();reference='codex-cli-exchange:'+uuid.uuid4().hex
         try:evidence_dir.mkdir()
         except OSError:_fail('evidence_error')
-        exchange=_Exchange(evidence_dir,executable,requested_model,timeout_seconds,start,reference,declaration)
+        exchange=_Exchange(evidence_dir,executable,requested_model,timeout_seconds,start,reference,declaration,cancel_event)
         work=exchange.setup(prompt_bytes,response_schema_bytes)
         exchange.process('version',exchange.version_argv,b'',work)
         exchange.invocation(work)

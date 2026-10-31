@@ -687,8 +687,57 @@ class LoopTests(unittest.TestCase):
         e = self.failure('cancelled', cancel_event=event)
         self.assertEqual(e.receipt['budget']['producer_calls_started'], 1)
         self.assertEqual(e.receipt['budget']['harness_usage']['logical_requests'], 0)
-        self.assertEqual(e.receipt['execution'].get('cancellation'), dict(scope='between_stages_only',
+        self.assertEqual(e.receipt['execution'].get('cancellation'), dict(scope='between_stages_and_owned_producer_waits',
             requested=True, producer_inflight_cancelled=None, remote_hard_cancelled=None))
+
+    def test_inflight_cancel_forwards_event_and_never_dispatches_wire(self):
+        from labflow import codex_cli_response as producer
+        event=threading.Event();self.producer_mode='hang'
+        consume=producer._Exchange.stdout;produce=self.produce
+        def consumed(owner,data):consume(owner,data);event.set()
+        def forwarded(*args,**kwargs):
+            self.assertIs(kwargs.get('cancel_event'),event)
+            return produce(*args,**kwargs)
+        with patch.object(self,'produce',side_effect=forwarded),patch.object(producer._Exchange,'stdout',new=consumed):
+            error=self.failure('cancelled',cancel_event=event)
+        result=error.receipt;step=result['steps'][0];receipt=step['producer']['receipt']
+        self.assertEqual(receipt['failure']['code'],'codex_cli_response_cancelled')
+        self.assertEqual((result['budget']['reserved_model_calls'],result['budget']['producer_calls_started'],
+                          result['budget']['model_process_attempts']),(1,1,1))
+        self.assertEqual((step['dispatch']['runtime_call_attempts'],step['dispatch']['reserved_logical_requests']),(0,0))
+        self.assertIsNone(step['wire']);self.assertFalse(step['verification']['wire_accepted'])
+        self.assertEqual(result['execution']['cancellation'],dict(scope='between_stages_and_owned_producer_waits',
+            requested=True,producer_inflight_cancelled=True,remote_hard_cancelled=None))
+        self.assertIsNone(receipt['cleanup']['remote_cancelled'])
+
+    def test_inflight_cancel_unconfirmed_cleanup_and_cleared_event_stay_unknown(self):
+        from labflow import codex_cli_response as producer
+        event=threading.Event();self.producer_mode='hang';self.after_produce=event.clear
+        consume=producer._Exchange.stdout;spawn=self.driver.spawn;waits=[];produce=self.produce
+        def consumed(owner,data):consume(owner,data);event.set()
+        def forwarded(*args,**kwargs):
+            self.assertIs(kwargs.get('cancel_event'),event)
+            return produce(*args,**kwargs)
+        def started(argv,**kwargs):
+            child=spawn(argv,**kwargs)
+            if len(argv)>2:
+                wait=child.wait;waits.append((child,wait))
+                def unconfirmed(*args,**options):wait(*args,**options);raise OSError('FAKE_WAIT_SECRET')
+                child.wait=unconfirmed
+            return child
+        try:
+            with patch.object(self,'produce',side_effect=forwarded),patch.object(self.driver,'spawn',new=started),patch.object(producer._Exchange,'stdout',new=consumed):
+                error=self.failure('cancelled',cancel_event=event)
+        finally:
+            for child,wait in waits:child.wait=wait
+        self.assertFalse(event.is_set())
+        result=error.receipt;receipt=result['steps'][0]['producer']['receipt']
+        self.assertFalse(receipt['cleanup']['model_child_reaped'])
+        self.assertTrue(result['execution']['cancellation']['requested'])
+        self.assertIsNone(result['execution']['cancellation']['producer_inflight_cancelled'])
+        self.assertIsNone(result['execution']['cancellation']['remote_hard_cancelled'])
+        self.assertEqual(result['budget']['model_process_attempts'],1)
+        self.assertEqual(result['steps'][0]['dispatch']['runtime_call_attempts'],0)
 
     def test_original_schema_and_producer_artifacts(self):
         self.sequence = [dict(kind='stop', claim='blocked', reason='scope check')]

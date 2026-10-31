@@ -311,7 +311,7 @@ class _Loop:
                                      result=None,goal_observed=None,score=None),
             execution=dict(mode='persistent_virtual_rf_sensor_loop',runtime_instance_id=None,synthetic=True,
                 origin_declaration=origin,origin_authenticated=False,ai_model_called=None,
-                cancellation=dict(scope='between_stages_only',requested=False,
+                cancellation=dict(scope='between_stages_only' if event is None else 'between_stages_and_owned_producer_waits',requested=False,
                                   producer_inflight_cancelled=None,remote_hard_cancelled=None)),
             cleanup=dict(supervisor_stop_requested=False,terminal_report_observed=False,host_artifacts_closed=None,
                          runtime_references_released=False,virtual_outputs_disabled=None,remote_cancel_verified=False,secondary_errors=[]),
@@ -694,12 +694,24 @@ class _Loop:
             self.r['budget']['version_process_attempts']=self.r['budget']['model_process_attempts']=None
             self.phase('producer')
             try:
-                result=_produce(prompt_raw,self.schema,executable=self.executable,requested_model=self.model,
+                options=dict(executable=self.executable,requested_model=self.model,
                     evidence_dir=folder/'producer',timeout_seconds=timeout)
+                if self.event is not None:options['cancel_event']=self.event
+                result=_produce(prompt_raw,self.schema,**options)
             except CodexCliResponseError as error:
-                self.error(error.code)
+                cancelled=error.code=='codex_cli_response_cancelled'
+                self.error('cancelled' if cancelled else error.code)
+                if cancelled:self.r['execution']['cancellation']['requested']=True
                 try:
-                    self.attach(error.receipt)
+                    partial=self.attach(error.receipt)
+                    if cancelled and partial is not None:
+                        attempts=partial.get('attempts',{});cleanup=partial.get('cleanup',{})
+                        pair=[attempts.get(kind+'_process_attempts') for kind in ('version','model')]
+                        if (all(type(n) is int and n in (0,1) for n in pair) and any(pair)
+                                and all(cleanup.get(kind+'_child_reaped') is True
+                                        for kind,n in zip(('version','model'),pair) if n)
+                                and all(cleanup.get(key) is True for key in ('readers_joined','pipes_closed','artifacts_closed'))):
+                            self.r['execution']['cancellation']['producer_inflight_cancelled']=True
                 except BaseException as later:
                     self.observe(later); self.secondary('partial_receipt_unavailable')
                 self.throw()
@@ -851,7 +863,8 @@ class _Loop:
             return
         self.finished=True
         self.stage='cleanup'
-        self.r['execution']['cancellation']['requested']=bool(self.event is not None and self.event.is_set())
+        cancellation=self.r['execution']['cancellation']
+        cancellation['requested']=cancellation['requested'] or bool(self.event is not None and self.event.is_set())
         report=events=None
         if self.plan_binding is not None and self.setup_snapshot is None:
             try:
