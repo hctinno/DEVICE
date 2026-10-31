@@ -470,4 +470,126 @@ class IsolatedWorkerTests(unittest.TestCase):
         self.assertEqual(json.loads((args['run_root']/'inner-reference.json').read_bytes())['ocr']['original_text'],False)
 
 
+class ReviewBoundaryTests(unittest.TestCase):
+    """Original review counterexamples; no OCR or large allocations."""
+    def setUp(self):
+        parent=Path(os.environ.get('DGM_LOCAL_OCR_TEST_ROOT',str(load_layout().output('t/oiw-review'))))
+        parent.mkdir(parents=True,exist_ok=True);self.base=Path(tempfile.mkdtemp(prefix='rv-',dir=parent))
+
+    def execute_fault(self,target,first,*,late_close=None,overflow=False):
+        script=self.base/'fake.py'
+        script.write_text("import sys,time,os\nsys.stdin.buffer.read()\n"+
+            ("os.write(1,b'x'*(2*1024*1024+8192))\n" if overflow else '')+"time.sleep(5)\n",encoding='utf-8')
+        evidence=self.base/'e';evidence.mkdir();real=subprocess.Popen;children=[]
+        class Pipe:
+            def __init__(self,pipe,name):self.pipe=pipe;self.name=name;self.raised=False;self.late=False
+            def __getattr__(self,name):return getattr(self.pipe,name)
+            def read(self,*args):
+                if target==self.name+'.read' and not self.raised:self.raised=True;raise first
+                return self.pipe.read(*args)
+            def write(self,*args):
+                if target==self.name+'.write' and not self.raised:self.raised=True;raise first
+                return self.pipe.write(*args)
+            def flush(self):
+                if target==self.name+'.flush' and not self.raised:self.raised=True;raise first
+                return self.pipe.flush()
+            def close(self):
+                self.pipe.close()
+                if target==self.name+'.close' and not self.raised:self.raised=True;raise first
+                if self.name=='stderr' and late_close is not None and not self.late:self.late=True;raise late_close
+        class Child:
+            def __init__(self,child):
+                self.child=child;self.stdout=Pipe(child.stdout,'stdout');self.stderr=Pipe(child.stderr,'stderr');self.stdin=Pipe(child.stdin,'stdin')
+            def __getattr__(self,name):return getattr(self.child,name)
+        command=[sys.executable,'-I','-S','-B',str(script),'--ocr-worker-v1']
+        def spawn(argv,**kwargs):
+            self.assertEqual(argv,command);self.assertTrue(kwargs['creationflags']&0x4);self.assertFalse(kwargs['shell'])
+            child=real(argv,**kwargs);children.append(child);return Child(child)
+        with patch.object(api,'_worker_command',return_value=command),patch.object(api.subprocess,'Popen',side_effect=spawn):
+            wire,state,primary=api._execute_worker(b'{}',evidence)
+        self.assertEqual(len(children),1);self.assertIsNotNone(children[0].poll())
+        for name in ('job_closed','child_reaped','readers_joined','writer_joined','pipes_closed'):self.assertTrue(state[name],(name,state))
+        OBSERVATIONS.append(dict(test=self._testMethodName,target=target,primary_type=type(primary).__name__,
+            primary_code=getattr(primary,'code',None),same_object=primary is first,state=state,root=str(self.base)))
+        return primary,state
+
+    def test_stdout_reader_first_control_identity_survives_synthetic_overflow(self):
+        marker=MemoryError('authored first stdout control');primary,_=self.execute_fault('stdout.read',marker)
+        self.assertIs(primary,marker)
+
+    def test_stderr_reader_first_control_identity_survives_synthetic_overflow(self):
+        marker=MemoryError('authored first stderr control');primary,_=self.execute_fault('stderr.read',marker)
+        self.assertIs(primary,marker)
+
+    def test_writer_write_flush_close_first_control_identity(self):
+        for operation in ('write','flush','close'):
+            with self.subTest(operation=operation):
+                self.base=self.base/operation;self.base.mkdir()
+                marker=MemoryError('authored first writer control');primary,_=self.execute_fault('stdin.'+operation,marker)
+                self.assertIs(primary,marker)
+
+    def test_first_ordinary_reader_IO_is_not_replaced_by_overflow_or_late_control(self):
+        marker=OSError('authored first reader IO');primary,_=self.execute_fault('stdout.read',marker,late_close=MemoryError('late close'))
+        self.assertIs(primary,marker)
+
+    def test_first_writer_IO_and_first_reader_control_survive_late_close(self):
+        marker=OSError('authored first writer IO');primary,_=self.execute_fault('stdin.write',marker,late_close=MemoryError('late close'))
+        self.assertIs(primary,marker)
+        self.base=self.base/'second';self.base.mkdir()
+        marker=MemoryError('authored first reader control');primary,_=self.execute_fault('stdout.read',marker,late_close=OSError('late close'))
+        self.assertIs(primary,marker)
+
+    def test_real_byte_overflow_remains_output_limit_despite_late_control(self):
+        primary,state=self.execute_fault(None,None,late_close=MemoryError('late close'),overflow=True)
+        self.assertIsInstance(primary,api.IntakePdfOcrReferenceError)
+        self.assertEqual(primary.code,'intake_pdf_ocr_reference_worker_output_limit')
+        self.assertEqual(state['stdout_bytes'],2*1024*1024+64)
+
+    def variant(self,status,outcome):
+        root=os.environ.get('DGM_OCR_REVIEW_REPLAY_ROOT')
+        if root is None:self.skipTest('explicit original positive frame metadata absent')
+        root=Path(root);request=json.loads((root/'request.json').read_bytes())
+        wire=(root/'worker-stdout.bin').read_bytes();reply=json.loads(wire.split(b'\n',1)[1])
+        reply['outcome']=outcome
+        reply['failure']=None if outcome=='returned' else dict(code='intake_pdf_ocr_reference_worker_control' if outcome=='control' else 'intake_pdf_ocr_reference_storage_error',control='memory_error' if outcome=='control' else None)
+        if status=='ocr_required':
+            reply['reference'].update(status=status,ocr=None,tools=None,errors=['intake_pdf_ocr_reference_tools_unavailable'])
+        return request,reply
+
+    def frame(self,reply):
+        def encoded(value):return json.dumps(value,ensure_ascii=False,sort_keys=True,allow_nan=False,separators=(',',':')).encode('utf-8')
+        ref=reply['reference'];ref.pop('reference_id',None);ref['reference_id']=H(encoded(ref))
+        raw=encoded(ref);reply['inner_receipt']=dict(filename='inner-reference.json',bytes=len(raw),sha256=H(raw))
+        payload=encoded(reply);return b'DGM-OCR-WORKER/1 '+str(len(payload)).encode()+b'\n'+payload
+
+    def test_original_positive_and_required_frames_remain_valid_all_outcomes(self):
+        for status in ('ocr_observed','ocr_required'):
+            for outcome in ('returned','error','control'):
+                with self.subTest(status=status,outcome=outcome):
+                    request,reply=self.variant(status,outcome);decoded=api._decode_worker_reply(self.frame(reply),request)
+                    self.assertEqual(decoded,reply)
+
+    def test_provenance_promotions_rejected_for_every_reference_status_outcome(self):
+        for status in ('ocr_observed','ocr_required'):
+            for outcome in ('returned','error','control'):
+                for key,value in (('original_text',True),('origin_authenticated',True),('same_account_arbitrary_code_defense',True),('image_text_equivalence','verified'),('execution_authority',True)):
+                    with self.subTest(status=status,outcome=outcome,key=key):
+                        request,reply=self.variant(status,outcome);reply['reference']['provenance'][key]=value
+                        wire=self.frame(reply)
+                        with self.assertRaises(api.IntakePdfOcrReferenceError) as caught:api._decode_worker_reply(wire,request)
+                        self.assertEqual(caught.exception.code,'intake_pdf_ocr_reference_worker_protocol')
+
+    def test_provenance_exact_dict_keys_and_boolean_identity_are_closed(self):
+        base=dict(original_text=False,origin_authenticated=False,execution_authority=False,
+            same_account_arbitrary_code_defense=False,image_text_equivalence='not_verified')
+        cases=[None,[],dict(base,extra=False)]
+        cases += [{key:value for key,value in base.items() if key!=missing} for missing in base]
+        cases += [dict(base,**{key:0}) for key in ('original_text','origin_authenticated','execution_authority','same_account_arbitrary_code_defense')]
+        for index,provenance in enumerate(cases):
+            with self.subTest(index=index):
+                request,reply=self.variant('ocr_required','returned');reply['reference']['provenance']=provenance
+                with self.assertRaises(api.IntakePdfOcrReferenceError) as caught:api._decode_worker_reply(self.frame(reply),request)
+                self.assertEqual(caught.exception.code,'intake_pdf_ocr_reference_worker_protocol')
+
+
 if __name__=='__main__':unittest.main()

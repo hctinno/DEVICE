@@ -414,25 +414,29 @@ def _request(store,intake_id,document_path,revision,sha,tools,run_root):
 def _execute_worker(raw,evidence):
     """Only fixed trusted worker code; deadline and one bounded cleanup budget."""
     process=job=None;readers=[];writer=None;buffers=[bytearray(),bytearray()]
-    overflow=threading.Event();thread_errors=[];primary=None;assigned=job_closed=False
+    overflow=threading.Event();first_errors=[];first_lock=threading.Lock();primary=None;assigned=job_closed=False
     started=time.monotonic();deadline=started+_WORKER_SECONDS;peak=None;reaped=joined=written=closed=False
     configured_memory=None;job_flags=None
+    def remember(error):
+        with first_lock:
+            if not first_errors:first_errors.append(error)
+            return first_errors[0]
     def read(pipe,index,cap):
         try:
             while True:
                 block=pipe.read(4096)
                 if not block:break
                 left=cap-len(buffers[index]);buffers[index].extend(block[:left])
-                if len(block)>left:overflow.set();break
-        except BaseException as error:thread_errors.append(error);overflow.set()
+                if len(block)>left:remember(IntakePdfOcrReferenceError('worker_output_limit'));overflow.set();break
+        except BaseException as error:remember(error);overflow.set()
     def write():
         try:
             for offset in range(0,len(raw),4096):process.stdin.write(raw[offset:offset+4096])
             process.stdin.flush()
-        except BaseException as error:thread_errors.append(error)
+        except BaseException as error:remember(error)
         finally:
             try:process.stdin.close()
-            except BaseException as error:thread_errors.append(error)
+            except BaseException as error:remember(error)
     try:
         if os.name!='nt':_fail('worker_unavailable')
         job=_WindowsJob(_WORKER_MEMORY_MIB)
@@ -449,22 +453,21 @@ def _execute_worker(raw,evidence):
             readers.append(thread);thread.start()
         writer=threading.Thread(target=write,daemon=True);writer.start()
         while process.poll() is None:
+            if first_errors:raise first_errors[0]
             if overflow.is_set():_fail('worker_output_limit')
-            if thread_errors:raise thread_errors[0]
             if time.monotonic()>=deadline:_fail('worker_timeout')
             overflow.wait(min(0.01,max(0,deadline-time.monotonic())))
-    except BaseException as error:primary=error
+    except BaseException as error:primary=remember(error)
     finally:
         cleanup_started=time.monotonic();cleanup_deadline=cleanup_started+_CLEANUP_SECONDS
         def cleanup(action):
             nonlocal primary
             try:action()
-            except BaseException as error:
-                if primary is None:primary=error
+            except BaseException as error:primary=remember(error)
         if job is not None:
             try:peak=job.snapshot()['peak_committed_mib']
             except BaseException as caught:
-                if isinstance(caught,_CONTROL) and primary is None:primary=caught
+                if isinstance(caught,_CONTROL):primary=remember(caught)
             def close_job():
                 if job.handle:
                     if not job.kernel.CloseHandle(job.handle):_fail('cleanup_unknown')
@@ -482,9 +485,9 @@ def _execute_worker(raw,evidence):
                 if index>=len(readers) or not readers[index].is_alive():cleanup(pipe.close)
             if writer is None or not writer.is_alive():cleanup(process.stdin.close)
             closed=all(pipe.closed for pipe in (process.stdin,process.stdout,process.stderr))
-        if primary is None and thread_errors:primary=thread_errors[0]
-        if primary is None and overflow.is_set():primary=IntakePdfOcrReferenceError('worker_output_limit')
-        if primary is None and not (assigned and job_closed and reaped and joined and written and closed):primary=IntakePdfOcrReferenceError('cleanup_unknown')
+        if first_errors:primary=first_errors[0]
+        if primary is None and overflow.is_set():primary=remember(IntakePdfOcrReferenceError('worker_output_limit'))
+        if primary is None and not (assigned and job_closed and reaped and joined and written and closed):primary=remember(IntakePdfOcrReferenceError('cleanup_unknown'))
         state=dict(job_assigned_before_resume=assigned,job_closed=job_closed,child_reaped=reaped,
             readers_joined=joined,writer_joined=written,pipes_closed=closed,tree_memory_mib=_WORKER_MEMORY_MIB,
             peak_committed_mib=peak,deadline_seconds=_WORKER_SECONDS,cleanup_seconds=_CLEANUP_SECONDS,
@@ -513,11 +516,14 @@ def _decode_worker_reply(raw,request):
         reference=reply['reference']
         if reference is not None:
             if type(reference) is not dict or set(reference)!=set('schema_version kind status binding baseline ocr tools errors complete native_once_eligible provenance limits reference_id'.split()):_fail('worker_protocol')
+            provenance=reference['provenance']
+            if (type(provenance) is not dict or set(provenance)!=set('original_text origin_authenticated execution_authority same_account_arbitrary_code_defense image_text_equivalence'.split())
+                    or any(provenance[key] is not False for key in ('original_text','origin_authenticated','execution_authority','same_account_arbitrary_code_defense'))
+                    or provenance['image_text_equivalence']!='not_verified'):_fail('worker_protocol')
             unsigned={key:value for key,value in reference.items() if key!='reference_id'}
             if (reference['reference_id']!=_hash(_bytes(unsigned)) or type(reference['schema_version']) is not int
                     or reference['schema_version']!=1 or reference['kind']!='intake_pdf_ocr_reference'
                     or reference['complete'] is not False or reference['native_once_eligible'] is not False
-                    or reference['provenance']['execution_authority'] is not False
                     or reference['status'] not in ('ocr_observed','ocr_required')):_fail('worker_protocol')
             binding=reference['binding'];document=binding['document']
             if (type(binding) is not dict or set(binding)!=set('source_id intake_id revision revision_fingerprint document'.split())

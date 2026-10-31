@@ -69,6 +69,8 @@ worker가 현재 revision·manifest fingerprint·선택 문서 hash·합성 출�
 
 응답은 `DGM-OCR-WORKER/1 <길이>\n`과 정확한 canonical JSON bytes 하나다. schema/kind/id/outcome/reference/failure/inner_receipt exact7이며, 중복 키·비유한 수·과다/부분·후속 bytes·id/형상/hash/원문 false 경계 불일치를 거절한다. worker가 `returned`를 선언하는 것만으로 부모가 성공을 채택하지 않는다. 부모는 응답·inner pin·false flags·종료코드·Job/pipe 정리·borrowed Store 메타데이터까지 확인한다.
 
+reference가 있으면 모든 status/outcome에서 `provenance`는 정확히 5개 키를 가진 dict여야 한다. `original_text`, `origin_authenticated`, `execution_authority`, `same_account_arbitrary_code_defense`는 각각 bool `False`, `image_text_equivalence`는 `not_verified`만 허용한다. 추가·누락·다른 타입·승격값은 hash가 일치해도 `worker_protocol`로 거절하며 값을 고쳐 채택하지 않는다.
+
 | `isolation.outcome` | 의미 |
 |---|---|
 | `completed` | 완전한 worker 반환과 부모 검증/정리가 완료됨. 내부 `ocr_required`도 가능하며 분석·시험 완료가 아님 |
@@ -79,7 +81,7 @@ worker의 `inner-reference.json` 원 bytes/hash는 부모가 덮어쓰지 않는
 
 최종 부모 판정은 public 파일 발행 시도 뒤의 `parent-outcome.json`이다. 발행 충돌·실패는 기존 bytes와 inner를 유지하고 `unknown`으로 남긴다. sidecar가 없거나 부분이면 완료된 부모 판정이 아니며, 다중 파일을 하나의 원자 transaction으로 보장하지 않는다. 인용 helper의 순수 데이터 일관성 검사가 파일 발행·발급자 인증을 대신하지 않는다.
 
-부모의 첫 제어 예외는 정리 뒤 같은 객체로 재전달한다. worker의 제어 예외는 고정 class label만 전달하며 프로세스 사이 객체 동일성이나 임의 예외 복원을 주장하지 않는다. 요청·응답 prefix·process/parent 판정은 대상 run의 형제 `ocr-worker-<id>` 디렉터리에도 남고 `isolation.evidence_root`에서 찾는다. 초기 거절로 대상 run이 만들어지지 않아도 이 sidecar를 보존한다.
+부모가 처음 관측한 I/O 오류·실제 출력 제한·제어 예외를 보존한다. reader/writer의 깨움 신호와 후속 정리 오류가 이를 바꾸지 않으며, 처음 관측한 원인이 제어 예외이면 정리 뒤 같은 객체로 재전달한다. worker의 제어 예외는 고정 class label만 전달하며 프로세스 사이 객체 동일성이나 임의 예외 복원을 주장하지 않는다. 요청·응답 prefix·process/parent 판정은 대상 run의 형제 `ocr-worker-<id>` 디렉터리에도 남고 `isolation.evidence_root`에서 찾는다. 초기 거절로 대상 run이 만들어지지 않아도 이 sidecar를 보존한다.
 
 ## 기존 공용 설치 재사용의 후속 외부 예외 — 2026-10-31
 
