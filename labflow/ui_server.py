@@ -31,6 +31,9 @@ ASSETS = {
     '/control-sources/styles.css': ('control_sources/styles.css', 'text/css; charset=utf-8'),
     '/control-sources/app.js': ('control_sources/app.js', 'text/javascript; charset=utf-8'),
     '/control-sources/model.mjs': ('control_sources/model.mjs', 'text/javascript; charset=utf-8'),
+    '/virtual-support': ('virtual_support/index.html', 'text/html; charset=utf-8'),
+    '/virtual-support/app.js': ('virtual_support/app.js', 'text/javascript; charset=utf-8'),
+    '/virtual-support/model.mjs': ('virtual_support/model.mjs', 'text/javascript; charset=utf-8'),
     '/dut-controls': ('dut_controls/index.html', 'text/html; charset=utf-8'),
     '/dut-controls/': ('dut_controls/index.html', 'text/html; charset=utf-8'),
     '/dut-controls/styles.css': ('dut_controls/styles.css', 'text/css; charset=utf-8'),
@@ -1676,6 +1679,8 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
     current_facts_lock = threading.RLock()
     catalog_instance = None
     catalog_lock = threading.Lock()
+    virtual_support_lock = threading.Lock()
+    virtual_support_cache = None
     dut_instance = None
     dut_lock = threading.Lock()
     delta_instance = None
@@ -1697,6 +1702,18 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
                 module = importlib.import_module('.dut_control_catalog', __package__)
                 dut_instance = module.DutControlCatalog()
             return dut_instance
+
+    def virtual_support():
+        nonlocal virtual_support_cache
+        with virtual_support_lock:
+            if virtual_support_cache is None:
+                module = importlib.import_module('.virtual_support_view', __package__)
+                payload = module.build_virtual_support_view(catalog())
+                raw = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')
+                if len(raw) > module.MAX_RESPONSE_BYTES:
+                    raise ValueError('virtual_support_unavailable')
+                virtual_support_cache = raw
+            return virtual_support_cache
 
     def delta_catalog():
         nonlocal delta_instance
@@ -1801,6 +1818,16 @@ def create_server(workspace, host='127.0.0.1', port=8765, *, fcc_case_catalog=No
             fcc_target = (path == '/fcc-cases' or path.startswith('/fcc-cases/')
                           or path == '/api/fcc-cases' or path.startswith('/api/fcc-cases/'))
             raw_target = self.requestline.split()[1]
+            support_target = (path == '/virtual-support' or path.startswith('/virtual-support/')
+                              or path == '/api/virtual-support' or path.startswith('/api/virtual-support/'))
+            if support_target and raw_target != path:
+                return self.error(404, 'route_not_found')
+            if path == '/api/virtual-support':
+                try:
+                    raw = virtual_support()
+                except Exception:
+                    return self.error(503, 'virtual_support_unavailable')
+                return self.send_payload(200, raw)
             if fcc_target and (('?' in raw_target and path != '/api/fcc-cases/lookup') or '#' in raw_target or '//' in parsed.path
                                or raw_target.startswith('//') or '\\' in path
                                or re.search(r'%(?:2f|5c)', parsed.path, re.IGNORECASE)):
