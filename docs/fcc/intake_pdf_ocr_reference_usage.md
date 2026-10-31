@@ -46,13 +46,15 @@ finally:
 | raster | 긴 변 1600, 2.56 MP, PNG 8 MiB |
 | OCR UTF-8 출력 | 16 KiB, 초과 시 중단·prefix 보존 |
 | 각 child stderr | 8 KiB, 초과 시 중단·prefix 보존 |
-| child / 전체 wall | 5초 / 15초 |
-| Windows Job 메모리 | 각 실행 트리 256 MiB |
+| child / API deadline 검사 예산 | 5초 / 15초, 절대 wall 상한 아님 |
+| Windows Job 메모리 | 외부 child 실행 트리 256 MiB, 부모 Python 전체 메모리 상한 아님 |
 | 실행 근거 | 16 MiB, 자동 retry 0 |
 
 알 수 없는 형식·여러 쪽·깨진 PDF·빈 OCR·초과·timeout·불확정 정리는 OCR 성공이 아니다. source의 revision/hash/합성 여부가 바뀌면 관측 텍스트를 채택하지 않는다. 잘못된 인수·Store·선택은 고정 `intake_pdf_ocr_reference_*` 오류로 거절한다. 원 제어 예외는 재전달하고 이미 생성한 실패 근거는 남긴다.
 
 공통 Windows Job 제어만 재사용하며 Android SDK·설치·boot 경로는 호출하지 않는다. 자식을 suspended 상태로 만들고 Job에 귀속한 뒤 실행한다. 종료 때 Job 전체를 닫으므로 Windows Python venv 실행기의 하위 프로세스도 함께 정리한다. 실제 source descriptor 종료까지 확인한 뒤에만 `ocr_observed` 영수증을 저장한다.
+
+현재 5초/15초와 반환 `limits.per_process_seconds`·`total_wall_seconds`는 monotonic 단계/child poll에서 검사하는 deadline 예산이다. 동기식 기존 `extract_document`, 파일 hash·DLL 버전·source I/O 전체를 별도 OS watchdog으로 선점하지 않으며 정리 시간이 추가될 수 있다. 공격적 압축 PDF·부모 host OOM·모든 입력의 절대 wall 상한은 검증하지 않았다. 이번 수용 범위는 명시한 trusted local 도구와 합성 1쪽 입력의 OCR·출처·원본 불변·자기 child 정리이며, 전체 worker 격리는 후속 구현이다.
 
 ## 기존 공용 설치 재사용의 후속 외부 예외 — 2026-10-31
 

@@ -9,8 +9,8 @@
 | 경계·예외 | outer 수집 branch/HEAD/index·사용자 M2 불변, 허용 AGENTS만 추가 M/unstaged. AppData211 이동, Python5520·Android1519 공통 재사용, 원본 Python 운영16은 별도 원바이트 보존. 공유 OS/앱 런타임·인증/필수 캐시만 외부 예외 | 총괄 |
 | 코드·담당 인수 | 경로 코드/reader계약/재parse 차단/CAS원자 게시 독립 검수. 고정4 common733 merge·원tip/후보/AST 보존·push/원격 exact, 새 actual cwd/branch guard5 ready | 개발1~4/총괄 |
 | 삭제 후 검증 | managed28/Node13 PASS. 새 PDF/MOCK5→가상 취득·보정11dBm·저장/DRAFT·Decimal·HTTP5/Chromium/조회 불변 PASS. 첫 UI probe 관측/준비 오류는 별도 보존 | 총괄 |
-| 원 Goal 수용 | 개발1 WIP7 고유 미반영0. 개발2 fallback 독립48/MOCK1·총괄43 PASS. 개발3 계획 source 연결f035 독립13·총괄61 PASS. 개발4 시도 화면·cap 및 정식CLI1c9 독립 qualified Yes·총괄CLI26/실제 Store→CLI/API7단계200·기존Chromium7행 PASS. 기존 reference-history 미설정503/console1 별도 보존 | 개발1~4/총괄 |
-| 다음 구현 | 개발1 OCR 후보746ab3f와 개발2 producer 취소 후보774ff02 독립 검수, 개발3 계획 wrapper의 owned runtime/CLI 연결, 개발4 제공 CLI 선언/원격 미인증의 화면 구분을 각 고정 공간/소유 파일에서 이어간다. RAM2039<3584로 AOSP 부팅0, 실제 AI 업무·시험방법 완결·규범 판단·실측/현장은 미완료 | 개발1~4/총괄 |
+| 원 Goal 수용 | 개발1 OCR746 독립11/Poppler timeout1·총괄고유15(초기7skip→명시pin7PASS) qualified 수용. 개발2 fallback과 취소774 독립10·총괄12 수용. 개발3 계획source f035 독립13·총괄61. 개발4 CLI1c9·선언표시742 수용·총괄CLI26/실제 Store/API/Chromium7행. 기존 reference-history503/console1 별도 보존 | 개발1~4/총괄 |
+| 다음 구현 | 개발1 OCR 전체worker 격리, 개발2 상위접수실행→최종화 취소/held 연결, 개발3 계획 wrapper의 owned runtime/CLI 연결을 각 고정 공간/소유 파일에서 이어간다. OCR15초는현재cooperative deadline검사이며hardwall/부모OOM미검증. RAM2039<3584로 AOSP0·실제 AI업무/시험방법완결/규범/실측·현장미완료 | 개발1~4/총괄 |
 
 경로 정리를 Goal 완료로 처리하지 않는다. Codex25/25·Vertex6/3072 소진·원 permit/실패/인증·Un-licensed 우선/Licensed·raw 보류를 유지하며 이번 추가 실제 모델·실물0이다. 소스 정지에 의존한 비원자 검증이며 current 전체 source payload 재해시·OS handle census로 승격하지 않는다. ADSunknown12와 native SDK 의존성은 원객체 보존 상태다. 실제 증거는 `.local/development/runs/migration-20261031`, 실행 명령은 [관리 경로](docs/fcc/managed_runtime_paths_usage.md)를 따른다. 아래는 당시 계획이다.
 
