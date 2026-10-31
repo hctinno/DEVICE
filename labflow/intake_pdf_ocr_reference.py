@@ -1,11 +1,21 @@
 """Local, revision-bound OCR observations; never original text or execution authority."""
+import sys
+from pathlib import Path
+
+if __name__=='__main__' and __package__ is None:
+    # -I -S: use only this trusted checkout and the existing interpreter's venv
+    # packages, without PYTHONPATH/user site/.pth/sitecustomize execution.
+    sys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(sys.executable).parent.parent/'Lib/site-packages')]
+    __package__='labflow'
+
 import ctypes
-from contextlib import ExitStack
+from contextlib import ExitStack, contextmanager
 from dataclasses import dataclass
 import hashlib
+import json
 import os
-from pathlib import Path
 import re
+import secrets
 import stat
 import subprocess
 import threading
@@ -21,6 +31,8 @@ _PREFIX='intake_pdf_ocr_reference_'
 _CONTROL=(KeyboardInterrupt,SystemExit,GeneratorExit,MemoryError)
 _SHA=re.compile(r'[a-f0-9]{64}\Z',re.ASCII)
 _PDF_BYTES=2097152;_TEXT_BYTES=16384;_RASTER_BYTES=8388608;_WORK_BYTES=16777216
+_WORKER_SECONDS=15;_CLEANUP_SECONDS=3;_WORKER_MEMORY_MIB=512
+_REQUEST_BYTES=16384;_REPLY_BYTES=2097152;_FRAME=b'DGM-OCR-WORKER/1 '
 
 
 class IntakePdfOcrReferenceError(ValueError):
@@ -229,7 +241,7 @@ def _observe(payload,work,config,baseline,binding,deadline,source_check):
     except Exception:result['errors']=[_PREFIX+'storage_error']
     if result['status']!='ocr_observed':result['ocr']=None
     result['reference_id']=_hash(_bytes(result))
-    try:_save(work/'reference.json',_bytes(result))
+    try:_save(work/'inner-reference.json',_bytes(result))
     except BaseException as error:
         if primary is None:primary=error
     if primary is not None:raise primary
@@ -243,7 +255,7 @@ def _synthetic(store,selected,sha):
     if row is None or row['synthetic']!=1 or not store.evidence_is_synthetic(sha):_fail('synthetic_required')
 
 
-def read_intake_pdf_ocr_reference(store,intake_id,document_path,*,expected_revision,expected_sha256,tools=None,run_root):
+def _read_inner_reference(store,intake_id,document_path,*,expected_revision,expected_sha256,tools=None,run_root):
     """Observe one selected synthetic image PDF; never mutate its intake or default context."""
     started=time.monotonic();binding=store.__dict__.get('_existing_binding') if type(store) is Store else None
     if type(binding) is not _ExistingBinding or binding.state!='open':_fail('store_invalid')
@@ -296,7 +308,8 @@ def ocr_page_citation(reference,line_start,line_end):
         unsigned={key:value for key,value in reference.items() if key!='reference_id'}
         if (_hash(_bytes(unsigned))!=reference['reference_id'] or reference['kind']!='intake_pdf_ocr_reference'
                 or reference['status']!='ocr_observed' or reference['complete'] is not False
-                or reference['native_once_eligible'] is not False):_fail('invalid_reference')
+                or reference['native_once_eligible'] is not False
+                or ('isolation' in reference and reference['isolation']['outcome']!='completed')):_fail('invalid_reference')
         ocr=reference['ocr'];text=ocr['text'];lines=text.splitlines()
         if (type(line_start) is not int or type(line_end) is not int or not 1<=line_start<=line_end<=len(lines)
                 or ocr['page_number']!=1 or ocr['method']!='tesseract_local' or ocr['original_text'] is not False
@@ -308,3 +321,370 @@ def ocr_page_citation(reference,line_start,line_end):
             original_text=False,image_text_equivalence='not_verified',native_once_eligible=False)
     except IntakePdfOcrReferenceError:raise
     except (KeyError,TypeError,ValueError,AttributeError):_fail('invalid_reference')
+
+
+def _strict_json(raw,cap):
+    if type(raw) is not bytes or not 0<len(raw)<=cap:_fail('worker_protocol')
+    def pairs(items):
+        result={}
+        for key,value in items:
+            if key in result:_fail('worker_protocol')
+            result[key]=value
+        return result
+    try:
+        result=json.loads(raw.decode('utf-8'),object_pairs_hook=pairs,
+            parse_constant=lambda value:_fail('worker_protocol'))
+        pending=[(result,0)];count=0
+        while pending:
+            value,depth=pending.pop();count+=1
+            if depth>32 or count>65536:_fail('worker_protocol')
+            if type(value) is dict:pending.extend((item,depth+1) for item in value.values())
+            elif type(value) is list:pending.extend((item,depth+1) for item in value)
+        if _bytes(result)!=raw:_fail('worker_protocol')
+        return result
+    except IntakePdfOcrReferenceError:raise
+    except (UnicodeError,ValueError,RecursionError,TypeError):_fail('worker_protocol')
+
+
+def _borrowed(store):
+    binding=store.__dict__.get('_existing_binding') if type(store) is Store else None
+    if (type(binding) is not _ExistingBinding or binding.state!='open'
+            or store.root!=binding.root or store.db!=binding.db):_fail('store_invalid')
+    return binding,store.root,store.db
+
+
+def _worker_command():
+    return [sys.executable,'-I','-S','-B',str(Path(__file__).absolute()),'--ocr-worker-v1']
+
+
+def _validate_request(request):
+    fields='schema_version kind request_id store_root intake_id document_path expected_revision expected_sha256 tools run_root'.split()
+    try:
+        if (type(request) is not dict or set(request)!=set(fields) or type(request['schema_version']) is not int
+                or request['schema_version']!=1 or request['kind']!='intake_pdf_ocr_worker_request'
+                or type(request['request_id']) is not str or re.fullmatch(r'[a-f0-9]{32}',request['request_id']) is None
+                or type(request['intake_id']) is not str or not _source._path(request['document_path'])
+                or not request['document_path'].lower().endswith('.pdf') or len(request['document_path'].encode('utf-8'))>1024
+                or type(request['expected_revision']) is not int or request['expected_revision']<1
+                or type(request['expected_sha256']) is not str or _SHA.fullmatch(request['expected_sha256']) is None):_fail('worker_protocol')
+        identifier(request['intake_id'])
+        for name in ('store_root','run_root'):
+            value=request[name]
+            if (type(value) is not str or len(value.encode('utf-8'))>4096 or any(ord(char)<32 for char in value)
+                    or not Path(value).is_absolute() or re.fullmatch(r'[A-Za-z]:',Path(value).drive) is None
+                    or '..' in Path(value).parts):_fail('worker_protocol')
+        config=request['tools']
+        if config is not None and (type(config) is not dict or set(config)!=set(LocalOcrTools.__dataclass_fields__)
+                or any(type(value) is not str or len(value.encode('utf-8'))>4096 for value in config.values())):_fail('worker_protocol')
+    except IntakePdfOcrReferenceError:raise
+    except (UnicodeError,ValueError,TypeError,KeyError):_fail('worker_protocol')
+
+
+def _request(store,intake_id,document_path,revision,sha,tools,run_root):
+    loan=_borrowed(store)
+    try:
+        identifier(intake_id)
+        if (type(intake_id) is not str or type(document_path) is not str or len(document_path)>1024
+                or not _source._path(document_path) or not document_path.lower().endswith('.pdf')
+                or len(document_path.encode('utf-8'))>1024 or type(revision) is not int or revision<1
+                or type(sha) is not str or _SHA.fullmatch(sha) is None
+                or type(run_root) not in (str,type(Path())) or len(os.fspath(run_root))>4096 or not Path(run_root).is_absolute()
+                or '..' in Path(run_root).parts or any(ord(char)<32 for char in os.fspath(run_root))):_fail('invalid_argument')
+        if tools is not None and type(tools) is not LocalOcrTools:_fail('invalid_argument')
+        # Validate primitive fields before serialization; dataclass asdict would
+        # deepcopy an arbitrary non-string value in the parent before admission.
+        config={name:getattr(tools,name) for name in LocalOcrTools.__dataclass_fields__} if tools is not None else None
+        if config is not None and any(type(value) is not str or len(value)>4096 or len(value.encode('utf-8'))>4096 for value in config.values()):_fail('invalid_argument')
+        layout=load_layout();target=layout.reference(str(run_root));runs=layout.directory('runs');control=layout.control_root()
+        if (target==runs or not target.is_relative_to(runs) or target==control or target.is_relative_to(control)
+                or target.exists()):_fail('run_unavailable')
+        request=dict(schema_version=1,kind='intake_pdf_ocr_worker_request',request_id=secrets.token_hex(16),
+            store_root=str(loan[1]),intake_id=intake_id,document_path=document_path,expected_revision=revision,
+            expected_sha256=sha,tools=config,run_root=str(target))
+        _validate_request(request)
+        raw=_bytes(request)
+        if len(raw)>_REQUEST_BYTES:_fail('invalid_argument')
+        evidence=target.parent/('ocr-worker-'+request['request_id'][:16]);evidence.mkdir(parents=True,exist_ok=False)
+        return request,raw,evidence,loan
+    except IntakePdfOcrReferenceError:raise
+    except (UnicodeError,ValueError,TypeError):_fail('invalid_argument')
+    except OSError:_fail('run_unavailable')
+
+
+def _execute_worker(raw,evidence):
+    """Only fixed trusted worker code; deadline and one bounded cleanup budget."""
+    process=job=None;readers=[];writer=None;buffers=[bytearray(),bytearray()]
+    overflow=threading.Event();thread_errors=[];primary=None;assigned=job_closed=False
+    started=time.monotonic();deadline=started+_WORKER_SECONDS;peak=None;reaped=joined=written=closed=False
+    configured_memory=None;job_flags=None
+    def read(pipe,index,cap):
+        try:
+            while True:
+                block=pipe.read(4096)
+                if not block:break
+                left=cap-len(buffers[index]);buffers[index].extend(block[:left])
+                if len(block)>left:overflow.set();break
+        except BaseException as error:thread_errors.append(error);overflow.set()
+    def write():
+        try:
+            for offset in range(0,len(raw),4096):process.stdin.write(raw[offset:offset+4096])
+            process.stdin.flush()
+        except BaseException as error:thread_errors.append(error)
+        finally:
+            try:process.stdin.close()
+            except BaseException as error:thread_errors.append(error)
+    try:
+        if os.name!='nt':_fail('worker_unavailable')
+        job=_WindowsJob(_WORKER_MEMORY_MIB)
+        configured=job.extended()
+        if not job.kernel.QueryInformationJobObject(job.handle,9,ctypes.byref(configured),ctypes.sizeof(configured),None):_fail('worker_unavailable')
+        configured_memory=int(configured.job_memory);job_flags=int(configured.basic.flags)
+        if configured_memory!=_WORKER_MEMORY_MIB*1024*1024 or not job_flags&0x200:_fail('worker_unavailable')
+        environment=dict(os.environ,TMP=str(evidence),TEMP=str(evidence))
+        process=subprocess.Popen(_worker_command(),cwd=evidence,env=environment,stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,stderr=subprocess.PIPE,shell=False,creationflags=0x4|getattr(subprocess,'CREATE_NO_WINDOW',0))
+        job.assign_resume(process);assigned=True
+        for index,pipe in enumerate((process.stdout,process.stderr)):
+            thread=threading.Thread(target=read,args=(pipe,index,_REPLY_BYTES+64 if index==0 else 8192),daemon=True)
+            readers.append(thread);thread.start()
+        writer=threading.Thread(target=write,daemon=True);writer.start()
+        while process.poll() is None:
+            if overflow.is_set():_fail('worker_output_limit')
+            if thread_errors:raise thread_errors[0]
+            if time.monotonic()>=deadline:_fail('worker_timeout')
+            overflow.wait(min(0.01,max(0,deadline-time.monotonic())))
+    except BaseException as error:primary=error
+    finally:
+        cleanup_started=time.monotonic();cleanup_deadline=cleanup_started+_CLEANUP_SECONDS
+        def cleanup(action):
+            nonlocal primary
+            try:action()
+            except BaseException as error:
+                if primary is None:primary=error
+        if job is not None:
+            try:peak=job.snapshot()['peak_committed_mib']
+            except BaseException as caught:
+                if isinstance(caught,_CONTROL) and primary is None:primary=caught
+            def close_job():
+                if job.handle:
+                    if not job.kernel.CloseHandle(job.handle):_fail('cleanup_unknown')
+                    job.handle=None
+            cleanup(close_job);job_closed=job.handle is None
+        if process is not None:
+            if process.poll() is None:cleanup(process.kill)
+            cleanup(lambda:process.wait(timeout=max(0.001,cleanup_deadline-time.monotonic())))
+            reaped=process.poll() is not None
+            for thread in [*readers,*([writer] if writer else [])]:
+                cleanup(lambda thread=thread:thread.join(timeout=max(0,cleanup_deadline-time.monotonic())))
+            joined=all(not thread.is_alive() for thread in readers)
+            written=writer is not None and not writer.is_alive()
+            for index,pipe in enumerate((process.stdout,process.stderr)):
+                if index>=len(readers) or not readers[index].is_alive():cleanup(pipe.close)
+            if writer is None or not writer.is_alive():cleanup(process.stdin.close)
+            closed=all(pipe.closed for pipe in (process.stdin,process.stdout,process.stderr))
+        if primary is None and thread_errors:primary=thread_errors[0]
+        if primary is None and overflow.is_set():primary=IntakePdfOcrReferenceError('worker_output_limit')
+        if primary is None and not (assigned and job_closed and reaped and joined and written and closed):primary=IntakePdfOcrReferenceError('cleanup_unknown')
+        state=dict(job_assigned_before_resume=assigned,job_closed=job_closed,child_reaped=reaped,
+            readers_joined=joined,writer_joined=written,pipes_closed=closed,tree_memory_mib=_WORKER_MEMORY_MIB,
+            peak_committed_mib=peak,deadline_seconds=_WORKER_SECONDS,cleanup_seconds=_CLEANUP_SECONDS,
+            configured_job_memory_bytes=configured_memory,job_limit_flags=job_flags,
+            elapsed_seconds=round(time.monotonic()-started,6),cleanup_elapsed_seconds=round(time.monotonic()-cleanup_started,6),
+            returncode=process.returncode if process else None,stdout_bytes=len(buffers[0]),stderr_bytes=len(buffers[1]),
+            failure=primary.code if isinstance(primary,IntakePdfOcrReferenceError) else 'parent_control_or_storage_error' if primary else None)
+        for suffix,data in (('stdout.bin',bytes(buffers[0])),('stderr.bin',bytes(buffers[1])),('process.json',_bytes(state))):
+            cleanup(lambda suffix=suffix,data=data:_save(evidence/('worker-'+suffix),data))
+    return bytes(buffers[0]),state,primary
+
+
+def _decode_worker_reply(raw,request):
+    try:
+        end=raw.index(b'\n')
+        if end>63 or not raw.startswith(_FRAME):_fail('worker_protocol')
+        length=raw[len(_FRAME):end]
+        if not re.fullmatch(rb'[1-9][0-9]{0,6}',length):_fail('worker_protocol')
+        size=int(length);payload=raw[end+1:]
+        if size!=len(payload) or size>_REPLY_BYTES:_fail('worker_protocol')
+        reply=_strict_json(payload,_REPLY_BYTES)
+        if (type(reply) is not dict or set(reply)!=set('schema_version kind request_id outcome reference failure inner_receipt'.split())
+                or type(reply['schema_version']) is not int or reply['schema_version']!=1
+                or reply['kind']!='intake_pdf_ocr_worker_reply' or reply['request_id']!=request['request_id']
+                or reply['outcome'] not in ('returned','error','control')):_fail('worker_protocol')
+        reference=reply['reference']
+        if reference is not None:
+            if type(reference) is not dict or set(reference)!=set('schema_version kind status binding baseline ocr tools errors complete native_once_eligible provenance limits reference_id'.split()):_fail('worker_protocol')
+            unsigned={key:value for key,value in reference.items() if key!='reference_id'}
+            if (reference['reference_id']!=_hash(_bytes(unsigned)) or type(reference['schema_version']) is not int
+                    or reference['schema_version']!=1 or reference['kind']!='intake_pdf_ocr_reference'
+                    or reference['complete'] is not False or reference['native_once_eligible'] is not False
+                    or reference['provenance']['execution_authority'] is not False
+                    or reference['status'] not in ('ocr_observed','ocr_required')):_fail('worker_protocol')
+            binding=reference['binding'];document=binding['document']
+            if (type(binding) is not dict or set(binding)!=set('source_id intake_id revision revision_fingerprint document'.split())
+                    or type(document) is not dict or set(document)!=set(('path','sha256','bytes'))
+                    or type(binding['revision']) is not int or binding['intake_id']!=request['intake_id'] or binding['revision']!=request['expected_revision']
+                    or type(document['bytes']) is not int or not 0<=document['bytes']<=_PDF_BYTES
+                    or document['path']!=request['document_path'] or document['sha256']!=request['expected_sha256']):_fail('worker_protocol')
+            if reference['status']=='ocr_observed':
+                ocr=reference['ocr'];tools=reference['tools'];config=request['tools']
+                if (config is None or type(ocr) is not dict or set(ocr)!=set('page_number method text text_sha256 raster_sha256 raster_width raster_height image_text_equivalence original_text'.split())
+                        or type(ocr['page_number']) is not int or ocr['page_number']!=1 or ocr['method']!='tesseract_local'
+                        or ocr['original_text'] is not False or ocr['image_text_equivalence']!='not_verified'
+                        or type(ocr['text']) is not str or not ocr['text'].strip() or len(ocr['text'].encode('utf-8'))>_TEXT_BYTES
+                        or _hash(ocr['text'].encode('utf-8'))!=ocr['text_sha256'] or reference['errors']!=[]
+                        or not _eligible(reference['baseline']) or tools['language']!='eng'
+                        or tools['tesseract_version_source']!='installed_dll_TessVersion'
+                        or tools['renderer_version_source']!='actual_version_child'
+                        or tools['tesseract_version']!=config['expected_tesseract_version']
+                        or tools['renderer_version']!=config['expected_renderer_version']):_fail('worker_protocol')
+                for section,key in (('tesseract','tesseract_sha256'),('renderer','renderer_sha256'),('dll','dll_sha256'),('language_data','language_sha256')):
+                    if tools[section]['sha256']!=config[key]:_fail('worker_protocol')
+                if (Path(tools['tesseract']['path'])!=Path(config['tesseract_executable'])
+                        or Path(tools['renderer']['path'])!=Path(config['renderer_executable'])):_fail('worker_protocol')
+            elif reference['ocr'] is not None:_fail('worker_protocol')
+            expected=dict(filename='inner-reference.json',bytes=len(_bytes(reference)),sha256=_hash(_bytes(reference)))
+            if reply['inner_receipt']!=expected:_fail('worker_protocol')
+        elif reply['inner_receipt'] is not None:_fail('worker_protocol')
+        if reply['outcome']=='returned':
+            if reference is None or reply['failure'] is not None:_fail('worker_protocol')
+        else:
+            failure=reply['failure']
+            if (type(failure) is not dict or set(failure)!=set(('code','control'))
+                    or type(failure['code']) is not str or not re.fullmatch(_PREFIX+r'[a-z_]{1,80}',failure['code'])
+                    or failure['control'] not in (None,'memory_error','keyboard_interrupt','system_exit','generator_exit')):_fail('worker_protocol')
+            if (reply['outcome']=='control')!=(failure['control'] is not None):_fail('worker_protocol')
+        return reply
+    except IntakePdfOcrReferenceError:raise
+    except (ValueError,KeyError,TypeError,AttributeError,UnicodeError):_fail('worker_protocol')
+
+
+def _public_reference(request,reply,state,evidence,outcome,error):
+    inner=reply['reference'] if reply else None
+    if inner is not None:result=dict(inner)
+    else:
+        result=dict(schema_version=1,kind='intake_pdf_ocr_reference',status='ocr_required',
+            binding=dict(source_id=None,intake_id=request['intake_id'],revision=request['expected_revision'],revision_fingerprint=None,
+                document=dict(path=request['document_path'],sha256=request['expected_sha256'],bytes=None)),
+            baseline=None,ocr=None,tools=None,errors=[],complete=False,native_once_eligible=False,
+            provenance=dict(original_text=False,image_text_equivalence='not_verified',execution_authority=False,
+                origin_authenticated=False,same_account_arbitrary_code_defense=False),limits=None)
+    result.pop('reference_id',None)
+    if outcome!='completed':result.update(status='ocr_required',ocr=None,errors=[error])
+    result['isolation']=dict(state,outcome=outcome,request_id=request['request_id'],evidence_root=str(evidence),
+        inner_receipt=reply['inner_receipt'] if reply else None,inner_reference_id=inner['reference_id'] if inner else None)
+    result['reference_id']=_hash(_bytes(result))
+    return result
+
+
+def read_intake_pdf_ocr_reference(store,intake_id,document_path,*,expected_revision,expected_sha256,tools=None,run_root):
+    """Keep the borrowed Store; isolate all synchronous OCR work in an owned worker."""
+    request,raw,evidence,loan=_request(store,intake_id,document_path,expected_revision,expected_sha256,tools,run_root)
+    _save(evidence/'request.json',raw)
+    wire,state,primary=_execute_worker(raw,evidence);reply=None;outcome='unknown';error=_PREFIX+'worker_unknown'
+    rejection=None
+    try:
+        if primary is not None:raise primary
+        reply=_decode_worker_reply(wire,request)
+        if reply['outcome']=='error':
+            error=reply['failure']['code']
+            if reply['reference'] is None or reply['reference']['status']!='ocr_observed':
+                outcome='failed';rejection=IntakePdfOcrReferenceError(error)
+        elif reply['outcome']=='control':error=_PREFIX+'worker_control'
+        elif state['returncode']!=0:error=_PREFIX+'worker_exit'
+        elif _borrowed(store)!=loan:error=_PREFIX+'store_invalid'
+        else:outcome='completed';error=None
+    except BaseException as caught:
+        if primary is None:primary=caught
+        error=caught.code if isinstance(caught,IntakePdfOcrReferenceError) else _PREFIX+'parent_control' if isinstance(caught,_CONTROL) else _PREFIX+'worker_protocol'
+    try:result=_public_reference(request,reply,state,evidence,outcome,error)
+    except BaseException:
+        if isinstance(primary,_CONTROL):raise primary
+        raise
+    try:
+        target=Path(request['run_root'])
+        if target.is_dir():_save(target/'reference.json',_bytes(result))
+    except BaseException as caught:
+        if primary is None:primary=caught;error=_PREFIX+'parent_publish_failed'
+        outcome='unknown'
+        try:result=_public_reference(request,reply,state,evidence,outcome,error)
+        except BaseException:
+            if primary is not None:raise primary
+            raise
+    # The sidecar is the final parent outcome, after public-file publication.
+    # A missing/partial sidecar is not a committed completed parent outcome.
+    try:_save(evidence/'parent-outcome.json',_bytes(result))
+    except BaseException as caught:
+        if primary is None:primary=caught
+        raise primary
+    if isinstance(primary,_CONTROL):raise primary
+    if rejection is not None:raise rejection
+    return result
+
+
+def _worker_main():
+    """Private strict-data entrypoint; no caller-provided operation or command."""
+    request=None;store=None;reference=None;primary=None
+    try:
+        request=_strict_json(sys.stdin.buffer.read(_REQUEST_BYTES+1),_REQUEST_BYTES)
+        _validate_request(request)
+        config=request['tools']
+        if config is not None:
+            if type(config) is not dict or set(config)!=set(LocalOcrTools.__dataclass_fields__):_fail('worker_protocol')
+            config=LocalOcrTools(**config)
+        target=Path(request['run_root']);allowed=(target,target.parent/('ocr-worker-'+request['request_id'][:16]))
+        def local(path):
+            value=Path(os.path.abspath(os.fspath(path)))
+            return any(value==root or value.is_relative_to(root) for root in allowed)
+        def audit(event,args):
+            if event in ('socket.connect','socket.getaddrinfo','socket.bind','socket.sendto','os.system') or event.startswith(('os.exec','os.spawn')):
+                raise PermissionError('isolated_worker_network_or_shell_forbidden')
+            if event=='subprocess.Popen':
+                executable,argv,cwd,environment=args;allowed_commands=() if config is None else (config.tesseract_executable,config.renderer_executable)
+                actual=str(executable) if executable else argv[0] if type(argv) is list and argv else None
+                if actual is None and type(argv) is str:
+                    actual=next((path for path in allowed_commands if argv.casefold().startswith(('"'+path+'"').casefold()) or argv.casefold().startswith(path.casefold()+' ')),None)
+                if actual is None or all(Path(actual)!=Path(path) for path in allowed_commands):raise PermissionError('isolated_worker_command_forbidden')
+            if event=='open' and type(args[0]) is not int:
+                path,mode,flags=args
+                if os.fspath(path).casefold()!=os.devnull.casefold() and flags&(os.O_WRONLY|os.O_RDWR|os.O_CREAT|os.O_TRUNC|os.O_APPEND) and not local(path):
+                    raise PermissionError('isolated_worker_original_write_forbidden')
+            if event in ('os.mkdir','os.remove','os.rmdir','os.chmod','os.utime') and not local(args[0]):
+                raise PermissionError('isolated_worker_original_write_forbidden')
+            if event in ('os.rename','os.replace') and (not local(args[0]) or not local(args[1])):raise PermissionError('isolated_worker_original_write_forbidden')
+        sys.addaudithook(audit)
+        store=Store.open_existing(request['store_root']);connection=store.connection
+        @contextmanager
+        def readonly():
+            with connection() as con:
+                con.execute('PRAGMA query_only=ON');yield con
+        store.connection=readonly
+        reference=_read_inner_reference(store,request['intake_id'],request['document_path'],
+            expected_revision=request['expected_revision'],expected_sha256=request['expected_sha256'],tools=config,run_root=request['run_root'])
+    except BaseException as caught:primary=caught
+    finally:
+        if store is not None:
+            try:store.close()
+            except BaseException as caught:
+                if primary is None:primary=caught
+    if primary is not None and reference is None and request is not None:
+        try:
+            inner=Path(request['run_root'])/'inner-reference.json'
+            if inner.stat().st_size<=_REPLY_BYTES:reference=_strict_json(inner.read_bytes(),_REPLY_BYTES)
+        except BaseException:pass  # Retain the first failure and any partial raw file.
+    control={MemoryError:'memory_error',KeyboardInterrupt:'keyboard_interrupt',SystemExit:'system_exit',GeneratorExit:'generator_exit'}
+    if isinstance(primary,_CONTROL):outcome='control';failure=dict(code=_PREFIX+'worker_control',control=next(label for kind,label in control.items() if isinstance(primary,kind)))
+    elif primary is not None:
+        outcome='error';failure=dict(code=primary.code if isinstance(primary,IntakePdfOcrReferenceError) else _PREFIX+'storage_error',control=None)
+    else:outcome='returned';failure=None
+    pin=dict(filename='inner-reference.json',bytes=len(_bytes(reference)),sha256=_hash(_bytes(reference))) if reference is not None else None
+    reply=dict(schema_version=1,kind='intake_pdf_ocr_worker_reply',request_id=request.get('request_id') if type(request) is dict else None,
+        outcome=outcome,reference=reference,failure=failure,inner_receipt=pin)
+    payload=_bytes(reply)
+    if len(payload)>_REPLY_BYTES:return 2
+    sys.stdout.buffer.write(_FRAME+str(len(payload)).encode('ascii')+b'\n'+payload);sys.stdout.buffer.flush()
+    return 1 if outcome=='control' else 0
+
+
+if __name__=='__main__':
+    if sys.argv[1:]!=['--ocr-worker-v1']:raise SystemExit(2)
+    raise SystemExit(_worker_main())
