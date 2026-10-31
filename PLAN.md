@@ -1,16 +1,17 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
-## 2026-10-31 개발 경로 통합 우선
+## 2026-10-31 개발 경로 통합 완료·원 Goal 후속
 
-| 작업 | 현재 상태·다음 검증 | 담당 |
+| 구간 | 실제 완료·잔여 | 담당 |
 |---|---|---|
-| 기준·고정 공간 이전 | integration/dev1~4 실제 이전·원 Git 상태 보존. 관리 루트는 `.local/development` | 총괄 |
-| 고유 자료 인수 | 160폴더 일반 파일520,024/51.52GB·ADS15/750B catalog 완료. Git158 refs/reflog/object 대조 통과. private bare 최종 검사와 실제 내용 보존 후에만 중복 삭제 | 보존·Git 담당/총괄 |
-| 실행 경로·상태 | ordinary AppData211개 전량 SHA/native identity 대조·이전. helper/guard·이력 alias 코드 독립 qualified Yes. 공통 Python/Android SDK 이전·현재 참조 수정 진행 | 경로 담당 |
-| 재발 방지 | AGENTS에 고정 공간·cwd/branch guard·runs/toolchains/archive·보존 후 정리 규칙 반영. 담당 실제 적용 ACK·새 경로 회귀·커밋/푸시·원격 대조가 남음 | 총괄 |
-| 원 Goal 복귀 | D2 목적별 prompt 투영 aedb381, D3 guest RF 36619b9, D4 실제 시도 조회 9f8b53a의 미통합 검수/수정. 정리 이후 진행 | 개발1~4/총괄 |
+| 고정 공간 | integration/dev1~4 실제 이전·원 후보/WIP 보존. 운영 workspace5, C루트 autolab0, 임시2 보존 후 회수·등록 해제 | 총괄/개발1~4 |
+| 보존·정리 | 원160폴더 catalog와 Git158/fsck·유지보수 고유tip 보존. 냉각153의449703파일/45.77GB 실보관·최종 원본 대조 후 삭제153/보류0. 삭제 직전 CAS51790/9.83GB 전량 SHA, SDK1519/9.32GB와 원 링크11 유지 | 총괄/독립 검수 |
+| 경계·예외 | outer 수집 branch/HEAD/index·사용자 M2 불변, 허용 AGENTS만 추가 M/unstaged. AppData211 이동, Python5520·Android1519 공통 재사용, 원본 Python 운영16은 별도 원바이트 보존. 공유 OS/앱 런타임·인증/필수 캐시만 외부 예외 | 총괄 |
+| 코드·담당 인수 | 경로 코드/reader계약/재parse 차단/CAS원자 게시 독립 검수. 고정4 common733 merge·원tip/후보/AST 보존·push/원격 exact, 새 actual cwd/branch guard5 ready | 개발1~4/총괄 |
+| 삭제 후 검증 | managed28/Node13 PASS. 새 PDF/MOCK5→가상 취득·보정11dBm·저장/DRAFT·Decimal·HTTP5/Chromium/조회 불변 PASS. 첫 UI probe 관측/준비 오류는 별도 보존 | 총괄 |
+| 원 Goal 잔여 | 개발1 WIP 의미 비교·접수 소유 유지, 개발2 미확인 출처 No 수정, 개발3 guest RF bridge post-fix 독립 평가, 개발4 잘못된 tick No 수정. 실제 AI 업무·규범 판단·실측/현장은 미완료 | 개발1~4/총괄 |
 
-원 실행·실패·permit·모델 회계는 불변이다. Codex25/25·Vertex6/3072 소진을 유지하고 실제 모델/실물 실행을 추가하지 않는다. 이전 전후 증거는 관리 루트의 `runs/migration-20261031`에 보관한다. 아래 계획·수집·기능 상태는 각 당시 이력이며 관리 경로는 최신 규칙이 우선한다.
+경로 정리를 Goal 완료로 처리하지 않는다. Codex25/25·Vertex6/3072 소진·원 permit/실패/인증·Un-licensed 우선/Licensed·raw 보류를 유지하며 이번 추가 실제 모델·실물0이다. 소스 정지에 의존한 비원자 검증이며 current 전체 source payload 재해시·OS handle census로 승격하지 않는다. ADSunknown12와 native SDK 의존성은 원객체 보존 상태다. 실제 증거는 `.local/development/runs/migration-20261031`, 실행 명령은 [관리 경로](docs/fcc/managed_runtime_paths_usage.md)를 따른다. 아래는 당시 계획이다.
 
 2026-10-25 [통합061](handoff/development/INTEGRATION-061.md): 개발2 단일 가상 행동 효과평가 0c7 신규3을 독립 qualified Yes 뒤 기능3f99c543/source288에 인수했다. 새 총괄 관련 Python124 PASS와 기존286 raw 불변을 확인했다. 독립 원42는 일치41·준비 형상 불일치1을 보존하며 별도 선봉인2 PASS와 합산하지 않는다. 메모리 증거의 일관성·관측효과만 평가하고 전체 task/권위/실물 검증은 미완료다. 담당 첫 준비의 임시 raw 미보존·traceback만 보존 한계도 남긴다. 개발1 G3·개발3 동일입력 비교·개발4 제공기록 화면의 실제 구현을 유지하고 개발2 저장기록 readonly 연결 계약을 다음 배정했다. P01 B052 혼합11 구조확인/known550쪽+raw보류1/쪽수null의 인수·후행대조를 닫아156/156·corpus121/121·보존142/전체쪽수null/known부분9741을 구별한다. 동일 Vertex6/3072 소진·무료크레딧 전용·새실모델0·사용자준비0이며 아래는 당시 기록이다.
 

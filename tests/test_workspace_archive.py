@@ -10,7 +10,9 @@ import subprocess
 import sys
 import tempfile
 import shutil
+import threading
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from unittest.mock import patch
 
 try:
@@ -361,6 +363,243 @@ class WorkspaceArchiveTests(unittest.TestCase):
         result = self.execute(spec)
         self.assertTrue(result["data_complete"])
         self.assertTrue(all(path.exists() for path in pending))
+
+    @unittest.skipUnless(os.name == "nt", "concurrent no-replace publication is supported on Windows")
+    def test_two_first_publishers_never_expose_a_transient_hardlink(self):
+        # Both genuine producers finish; B holds its real native snapshot while A
+        # finishes publication. The old link/unlink sequence changes B's nlink.
+        payload = b"concurrent synthetic first publication\n" * 128
+        digest = hashlib.sha256(payload).hexdigest()
+        final = self.destination / "objects/sha256" / digest[:2] / digest
+        b_produced, a_open, b_open, a_done = [threading.Event() for _ in range(4)]
+        local = threading.local()
+        reader = archive._reader
+        observed = {}
+
+        def wait(event):
+            if not event.wait(10):
+                raise TimeoutError("synthetic publication scheduling barrier")
+
+        @contextmanager
+        def scheduled_reader(path, **kwargs):
+            with reader(path, **kwargs) as value:
+                label = getattr(local, "label", None)
+                if Path(path) == final and label not in observed:
+                    observed[label] = value[2]["nlink"]
+                    if label == "A":
+                        a_open.set()
+                        wait(b_open)
+                    elif label == "B":
+                        b_open.set()
+                        wait(a_done)
+                yield value
+
+        def worker(label):
+            local.label = label
+            def producer(output):
+                self.assertIsNotNone(output, "both writers must produce a new pending file")
+                output.write(payload)
+                if label == "A":
+                    wait(b_produced)
+                else:
+                    b_produced.set()
+                    wait(a_open)
+            try:
+                archive._publish(final, producer, digest, len(payload))
+                return None
+            except Exception as error:
+                return type(error).__name__ + ":" + str(error)
+            finally:
+                if label == "A":
+                    a_done.set()
+
+        with patch.object(archive, "_reader", scheduled_reader), ThreadPoolExecutor(max_workers=2) as executor:
+            futures = [executor.submit(worker, label) for label in ("A", "B")]
+            failures = [future.result(timeout=20) for future in futures]
+        self.assertEqual(failures, [None, None])
+        self.assertEqual(observed, {"A": 1, "B": 1})
+        self.assertEqual(final.read_bytes(), payload)
+        self.assertEqual(final.stat().st_nlink, 1)
+        self.assertFalse(list(self.destination.rglob("*.pending")))
+
+    def test_publication_collision_never_overwrites_existing_bytes(self):
+        payload = b"synthetic publisher bytes"
+        digest = hashlib.sha256(payload).hexdigest()
+        final = self.destination / "objects/sha256" / digest[:2] / digest
+        sentinel = b"other publisher incompatible bytes"
+        def producer(output):
+            output.write(payload)
+            # A competing publisher wins after the initial absent-path check.
+            with open(final, "xb") as winner:
+                winner.write(sentinel)
+                winner.flush()
+                os.fsync(winner.fileno())
+        with self.assertRaisesRegex(archive.ArchiveError, "blob_corrupt"):
+            archive._publish(final, producer, digest, len(payload))
+        self.assertEqual(final.read_bytes(), sentinel)
+        self.assertEqual(final.stat().st_nlink, 1)
+        self.assertTrue(list(self.destination.rglob("*.pending")))
+
+    def parallel_archive_fixture(self, label, *, shared=True):
+        home = self.home / label
+        home.mkdir()
+        source = home / "source"
+        shutil.copytree(self.source, source)
+        if not shared:
+            (source / "WIP.py").write_bytes(("unique synthetic WIP " + label).encode("ascii"))
+        helper = WorkspaceArchiveTests()
+        helper.home, helper.source = home, source
+        return source, helper.catalog()
+
+    def source_fingerprint(self, source):
+        return {str(path.relative_to(source)): (path.stat().st_dev, path.stat().st_ino,
+                    path.stat().st_mtime_ns, path.stat().st_size, sha(path) if path.is_file() else None)
+                for path in (source, *source.rglob("*"))}
+
+    @unittest.skipUnless(os.name == "nt", "concurrent no-replace publication is supported on Windows")
+    def test_two_archives_share_first_data_and_scope_evidence(self):
+        for namespace in ("objects", "evidence"):
+            with self.subTest(namespace=namespace):
+                roots, specs = zip(*(self.parallel_archive_fixture(namespace + label,
+                                        shared=namespace == "objects") for label in ("A", "B")))
+                snapshots = [self.source_fingerprint(root) for root in roots]
+                destination = self.home / ("cas-" + namespace)
+                scope = self.home / (namespace + "-scope.json")
+                scope.write_text(json.dumps(dict(synthetic=True, allow_roots=list(map(str, roots)))), encoding="utf-8")
+                digest = sha(roots[0] / "WIP.py") if namespace == "objects" else sha(scope)
+                final = (destination / "objects/sha256" / digest[:2] / digest if namespace == "objects"
+                         else destination / "evidence/sha256" / digest)
+                b_produced, a_open, b_open, a_done = [threading.Event() for _ in range(4)]
+                local, observed = threading.local(), {}
+                publish, reader = archive._publish, archive._reader
+
+                def wait(event):
+                    if not event.wait(10):
+                        raise TimeoutError("synthetic full archive scheduling barrier")
+
+                def scheduled_publish(path, producer, digest, size):
+                    if Path(path) != final or getattr(local, "scheduled", False):
+                        return publish(path, producer, digest, size)
+                    local.scheduled = True
+                    def delayed(output):
+                        self.assertIsNotNone(output)
+                        producer(output)
+                        if local.label == "A":
+                            wait(b_produced)
+                        else:
+                            b_produced.set()
+                            wait(a_open)
+                    return publish(path, delayed, digest, size)
+
+                @contextmanager
+                def scheduled_reader(path, **kwargs):
+                    with reader(path, **kwargs) as value:
+                        label = local.label
+                        if Path(path) == final and label not in observed:
+                            observed[label] = value[2]["nlink"]
+                            if label == "A":
+                                a_open.set()
+                                wait(b_open)
+                            else:
+                                b_open.set()
+                                wait(a_done)
+                        yield value
+
+                def worker(index):
+                    local.label = ("A", "B")[index]
+                    try:
+                        return archive.archive_workspace(specs[index], destination, allow_roots=roots,
+                            protected_roots=[self.source], archive_roots=[destination],
+                            scope_evidence=dict(path=str(scope), sha256=sha(scope)))
+                    finally:
+                        if index == 0:
+                            a_done.set()
+
+                with patch.object(archive, "_publish", scheduled_publish), patch.object(archive, "_reader", scheduled_reader):
+                    with ThreadPoolExecutor(max_workers=2) as executor:
+                        futures = [executor.submit(worker, index) for index in range(2)]
+                        results = [future.result(timeout=30) for future in futures]
+                self.assertTrue(all(result["data_complete"] for result in results))
+                self.assertEqual(observed, {"A": 1, "B": 1})
+                receipts = list((destination / "receipts").glob("*.jsonl"))
+                self.assertEqual(len(receipts), 2)
+                for root, snapshot in zip(roots, snapshots):
+                    self.assertEqual(self.source_fingerprint(root), snapshot)
+                    value = archive.lookup_archive(destination, root / "WIP.py")
+                    self.assertEqual(value["sha"], sha(root / "WIP.py"))
+                    self.assertFalse(value["execution_authority"])
+                self.assertEqual(sha(final), digest)
+                self.assertEqual(final.stat().st_nlink, 1)
+                self.assertFalse(list(destination.rglob("*.pending")))
+
+    @unittest.skipUnless(os.name == "nt", "native publication failure fixtures require Windows")
+    def test_one_writer_corruption_fsync_or_native_publish_failure_is_isolated(self):
+        for mode in ("corrupt", "fsync", "publish"):
+            with self.subTest(mode=mode):
+                roots, specs = zip(*(self.parallel_archive_fixture(mode + label, shared=False) for label in ("A", "B")))
+                snapshots = [self.source_fingerprint(root) for root in roots]
+                destination = self.home / ("cas-" + mode)
+                digest = sha(roots[0] / "WIP.py")
+                final = destination / "objects/sha256" / digest[:2] / digest
+                if mode == "corrupt":
+                    final.parent.mkdir(parents=True)
+                    final.write_bytes(b"incompatible synthetic existing blob")
+                publish, fsync = archive._publish, os.fsync
+                local = threading.local()
+                held = []
+
+                def scoped_publish(path, producer, digest, size):
+                    previous = getattr(local, "object", False)
+                    local.object = "objects" in Path(path).parts
+                    try:
+                        if mode == "publish" and local.index == 0 and Path(path) == final:
+                            def blocked(output):
+                                producer(output)
+                                handle = archive._kernel.CreateFileW(str(output.name), 0x80000000, 3, None, 3, 0, None)
+                                self.assertNotEqual(handle, ctypes.c_void_p(-1).value)
+                                held.append(handle)  # Genuine handle denies DELETE sharing to MoveFileExW.
+                            return publish(path, blocked, digest, size)
+                        return publish(path, producer, digest, size)
+                    finally:
+                        local.object = previous
+
+                def failing_fsync(descriptor):
+                    if mode == "fsync" and local.index == 0 and getattr(local, "object", False):
+                        raise OSError("synthetic writer A object fsync failure")
+                    return fsync(descriptor)
+
+                def worker(index):
+                    local.index = index
+                    try:
+                        return archive.archive_workspace(specs[index], destination, allow_roots=roots,
+                            protected_roots=[self.source], archive_roots=[destination])
+                    except archive.ArchiveError as error:
+                        return error
+
+                try:
+                    with patch.object(archive, "_publish", scoped_publish), patch.object(archive.os, "fsync", failing_fsync):
+                        with ThreadPoolExecutor(max_workers=2) as executor:
+                            futures = [executor.submit(worker, index) for index in range(2)]
+                            results = [future.result(timeout=30) for future in futures]
+                finally:
+                    for handle in held:
+                        archive._kernel.CloseHandle(handle)
+                self.assertIsInstance(results[0], archive.ArchiveError)
+                self.assertTrue(results[1]["data_complete"])
+                with self.assertRaisesRegex(archive.ArchiveError, "lookup_not_found"):
+                    archive.lookup_archive(destination, roots[0] / "WIP.py")
+                self.assertEqual(archive.lookup_archive(destination, roots[1] / "WIP.py")["sha"], sha(roots[1] / "WIP.py"))
+                receipts = list((destination / "receipts").glob("*.jsonl"))
+                self.assertEqual(len(receipts), 2)
+                last = [json.loads(path.read_text(encoding="utf-8").splitlines()[-1]) for path in receipts]
+                self.assertEqual(sorted(row["record"] for row in last), ["failure", "footer"])
+                for root, snapshot in zip(roots, snapshots):
+                    self.assertEqual(self.source_fingerprint(root), snapshot)
+                if mode == "corrupt":
+                    self.assertEqual(final.read_bytes(), b"incompatible synthetic existing blob")
+                else:
+                    self.assertTrue(list(destination.rglob("*.pending")))
+                    self.assertFalse(final.exists())
 
     def test_untracked_current_files_and_ads_are_not_silently_lost(self):
         spec = self.catalog()

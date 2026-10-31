@@ -2,18 +2,17 @@
 
 ## 2026-10-31 경로 통합·고정 소유권
 
-| 역할 | 실제 공간·보존 기준 | 다음 수용 조건 |
+| 역할 | 실제 고정 공간·인수/게시 기준 | 원 Goal의 다음 단위 |
 |---|---|---|
-| 총괄 | integration / codex/workspace-consolidation-20261031 / 원195182f9 | 보존 검증→중복 정리→공통 경로 회귀→푸시/원격 exact |
-| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 0248858 | 원 접수 소유 유지·새 cwd/guard ACK 후 후속 접수 연결 |
-| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / aedb381 | 원 독립 No 보존·출처 미확인 처리 수정/재검수 |
-| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 36619b9 | C1/C2 수정 보존·post-fix 독립 재검수 |
-| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / 9f8b53a | bool/float tick 잔여 No 보존·수정/재검수 |
-| 유지보수 | workspaces/migration-paths / codex/migration-runtime-paths-20261031 | 공통 도구 실제 이전·현재 참조 복구·증거 보존 후 회수 |
-| 내용 보존 | workspaces/migration-archive / codex/migration-content-archive-20261031 / 신규3 소유 | 153개 냉각 clone의 고유 바이트/ADS 보관 도구·fixture·독립 검수→실제 CAS 보존→회수 |
-| P01 | 기존 수집 루트·브랜치·사용자 M2 그대로 | 개발 관리 영역만 예외. 수집 원본/작업 재개·확대 없음 |
+| 총괄 | integration / codex/workspace-consolidation-20261031 / 원195182f9·경로 코드 ceea50c 원격 exact | 최종 정리 기록 게시→후보 수정/독립 리뷰→관련 통합/회귀 |
+| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 04c4776 원격 exact | 원 접수 소유 유지·보존 WIP 의미 비교/중복과 고유 변경 구별 |
+| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / 7d680b1 원격 exact | 원 No를 보존해 미확인 출처 참조 처리 최소 수정/재검수 |
+| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 87457b8 원격 exact | C1/C2 post-fix bridge 독립 평가·원999 중간 실패 별도 유지 |
+| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / 8fbf292 원격 exact | bool/float tick 형식 No 최소 수정/재검수 |
+| 유지보수 회수 | 임시 migration-paths/migration-archive 둘 다 실제 파일/refs 보존 후 삭제·layout 해제 | 새 C루트 clone 금지, 필요 검수는 workspaces 안에 목적/회수 조건 등록 |
+| P01 | 기존 수집 루트/branch/index/사용자 M2 보존, 개발 예외는 development/AGENTS만 | 기존 인계·소유 유지, 추가 수집은 실제 공백만 총괄 한 창구로 요청 |
 
-이 표는 현재 소유권이며 과거 담당 clone은 고유 내용·Git 보존 후 중복 정리한다. 고정 담당에게 최종 경로·guard를 실제 전달하고 ACK를 인수한다. 정리 중 일반 기능 작업은 보존 대기, 정리 뒤 원 미완료 구현을 잇는다. 실제 모델 추가 한도는 만들지 않는다.
+냉각 clone153은 actual fullcopy/finalSHA·전 고유 CAS 해시/metadata·WIP9·SDK/RP 대조 후 native PS로 정리했다. 고정4의 원tip/common733/후보와 현재5 guard ready·담당 ACK를 인수했다. 각 담당의 정확 파일 소유권을 유지하고 기존 미통합 원No를 검수 성공으로 승격하지 않는다. 정리 뒤 다음 구현/평가는 총괄의 실제 메시지 배정과 산출물로 추적한다. 모델25/25·Vertex6/3072·원 permit/실패·한도는 유지하며 추가 호출/실물 위임은 없다.
 
 ## GOAL-PREHARDWARE-001 — 2026-10-26 명시 재개
 
