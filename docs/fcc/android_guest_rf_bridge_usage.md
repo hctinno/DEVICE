@@ -64,12 +64,28 @@ bundle = dict(context=context, analysis=analysis, plan_input=plan_input,
     expected_plan_input_sha256=expected_plan_input_sha256)
 ```
 
-`validate_intake_plan_bundle(bundle)`은 위 wrapper에서 추출한 공통 순수 검증이다. wrapper와 runtime 준비가 같은 public builder 전체 재생성·비교를 사용한다. 선언된 `synthetic=True`와 일치하는 해시는 원문 진위·현 Store revision·실행 권한을 인증하지 않는다. 전체 시험방법 수행이나 metric 계산·판정 완료도 이 연결의 결과가 아니다.
+`validate_intake_plan_bundle(bundle)`은 위 wrapper에서 추출한 공통 순수 검증이다. wrapper와 runtime 준비가 같은 public builder 전체 재생성·비교를 사용한다. 선언된 `synthetic=True`와 일치하는 해시는 원문 진위·현 Store revision·실행 권한을 인증하지 않는다. 전체 시험방법 수행·적합 판정은 이 연결의 결과가 아니며, 아래 첫 ON 계산의 지원 범위를 별도로 따른다.
 
 runtime은 명시한 로컬 절대 경로의 일반 파일을 한 번만 bounded read한다. raw 최대8MiB, UTF-8 strict JSON이며 BOM·중복 키(중첩 포함)·nonfinite·잘못된 surrogate·추가/누락 키·잘못된 type을 거절한다. 공통 snapshot 한도는 깊이32/100000노드/canonical UTF-8 8MiB다. UNC/device/ADS·모든 component의 DOS 예약장치명·부모 순회·NUL/잘못된 Unicode 경로와 reparse 경로는 거절하고 디렉터리 탐색·자동 파일 선택은 하지 않는다. 읽기 전후 파일 identity/size/mtime을 대조하며 결과의 `intake_plan_bundle`에 raw bytes 수·raw SHA-256·canonical snapshot SHA·plan input SHA·source SHA를 남긴다.
 
 짝 옵션·RF endpoint와 bundle 전체 검증은 SDK inventory/native 조회·boot claim·guest 요청 **이전**에 끝난다. 검증 후에는 canonical bytes의 불변 메모리 snapshot을 같은 owned lifetime으로 전달한다. boot 진입 시와 정확한 guest identity 확인 뒤에도 같은 순수 검증을 재사용하며 원 파일을 다시 읽지 않는다. 이후 파일이 바뀌어도 이번 CONFIG/source SHA/Fleet 설정은 최초 snapshot에 결박된다. 상위 원문은 재개봉하지 않고 `caller_snapshot_only`/`not_reopened`/`execution_authority=false`를 유지한다.
 
 3584MiB 메모리 문턱·직전 재검사·정확 endpoint·한 번의 `boot-attempt.json`·기존 C1/C2/최초 오류/정리를 유지한다. 이미 소비한 claim은 `boot_attempt_already_used`로 거절하며 reset/재발급하지 않는다. 2026-10-31 10:13:47 KST Root의 별도 RAM2039.38MiB 관측은 여전히 문턱 미만이며 이번 구현에서 실제 SDK/nativeADB/AOSP 부팅은0이다. 새 검증의 정상 흐름은 실제 public builder→FAKE SDK/owned process·guest 서비스→실제 VirtualFleet의 범위다. 원 Windows Job/SDK inventory helper는 변경하지 않는다.
+
+## 첫 ON 계획 측정과 기존 보정 계산
+
+재검증된 bundle의 `conducted_synthetic` v1 / `metric=on` / `reference_plane=source_output`만 첫 ON 계산을 연결한다. 계획 wrapper가 같은 frozen bundle을 `run_guest_rf_check(..., measurement_bundle=bundle)`에 전달하며 이 내부 연결에서도 같은 public 검증을 다시 사용한다. bundle 또는 계획 없이 source만 전달하는 기존 진단은 새 Harness·Journal·측정 결과를 만들지 않는다. `time`·`peak`는 source-state 진단을 유지하면서 첫 ON 결과를 `unsupported`, assessment를 `not_assessed`, `result/selection`을 `null`로 남긴다. 다른 reference plane은 기존 계획 builder의 거절을 유지한다.
+
+초기화·guest CONFIG 확인 뒤 실제 DUT configure, 센서 triggered 설정, DUT stop까지 기존 setup call recorder로 수집한다. 기록은 최대32개이며 마지막 실제 호출은 DUT stop이다. 이후 같은 Fleet의 DUT start, 모든 advance, sensor/analyzer/meter 취득·조회, STOP와 무효 조회는 실제 `FleetHarness.step`으로 실행한다. 동일 Fleet를 직접 바꾸는 후속 execute/advance를 숨기지 않는다. 새 report 출력 폴더의 `first-on.jsonl`에 실제 이벤트를 즉시 기록하고 기존 `read_operator_journal`과 `select_conducted_measurement`를 재사용한다. 스크립트 바이트·guest protocol·원 SDK/부팅/메모리/claim 코드는 유지한다.
+
+`rf_bridge.first_on_measurement`의 형식은 `kind=owned_guest_first_on_measurement`, `source_kind=owned_guest_fleet_harness`다. source SHA·계획 SHA·이번 실제 Harness의 run/instance ID·guest nonce/script SHA를 실제 Journal provenance와 대조한다. ID는 로컬 추적 식별자이며 외부 진위나 실행 권위의 증거가 아니다. `setup_snapshot`, `journal_file/journal_read`, 실제 `run_report`, 원 selector의 `selection`을 보존한다. 유일한 sensor acquire의 첫 completion을 선택하며 후행 정상 관측으로 대체하지 않는다. acquisition receipt와 event ref·tick·setup revision을 raw packet에 결합한다.
+
+선택과 계산이 성공하면 `status=recorded`, `result=selection.result`다. 이 값은 기존 `conducted_twin_result` DTO 그대로다. raw sensor packet을 수정하지 않고 기존 result builder가 같은 topology의 configure/select_path 기록에서 선언된 attenuator/switch/coupler 보정 ledger를 만든다. 기존 `calculate("rf_power")`가 단위를 변환하며 DUT 목표 전력·숨겨진 정답으로 raw나 보정을 역산하지 않는다. 새 합성 예시의 −37.5dBm raw에 선언 손실 10+0.5+20dB를 더하면 source_output의 −7dBm이며, 이는 모델의 보정 계산이다. 실제 교정·물리 예측·규범 적합의 검증으로 표시하지 않는다. 한계/불확도가 없으면 기존 conformity의 `status=not_assessed`, verdict/numeric_limit/uncertainty는 `null`이다.
+
+취득 당시 유효한 과거 packet과 STOP 이후 현재 무효인 `current_after_stop`을 별도로 보존한다. 실제 guest STOP·정리까지 정상인 local 절차의 `policy_stop(completed)`는 그 고정 절차의 claim이다. `ai_model_called=false`, `task_outcome=not_assessed`, hardware/physical/authority false를 유지한다. 원 selector가 먼저 terminal report를 요구하므로, 후행 선택·계산이 거절되어도 실제 local report를 사후 수정하지 않는다. 이때 첫 ON은 `invalid/incomplete`, 공개 계산 `result=null`이며 최초 측정 오류는 `first_failure`에 남긴다. `selection` 안의 원 실패 DTO·부분 raw는 검토 근거로 보존한다. 기존 `rf_bridge.valid`는 guest/source-state 진단이며 첫 ON 성공·AI·전체 업무 성공을 뜻하지 않는다.
+
+local control 중단·unknown receipt/state·취소·정리 실패는 완료 claim 없이 실제 Harness stop으로 닫는다. 원 `rf_bridge.first_error`와 부분 Journal을 보존하고 termination/close/read/binding/selection 오류는 `secondary_errors`로 구별한다. selection 중 취소도 증거 정리 뒤 전파하며 기존 첫 오류를 가리지 않는다. stale·invalid·다른 run/source SHA·wrong revision/receipt, 중복 취득은 `recorded`가 되지 않는다.
+
+계산 기록과 저장도 구별한다. 제품 경로는 항상 `storage_status=not_run`, `artifact_created=false`이며 DRAFT나 AI execution/finalizer 기록을 자동 생성하지 않는다. 동일 정상 DTO를 기존 `write_conducted_result_artifact`가 소비하는 호환성은 새 합성 runs fixture에서만 검증했다. 이 저장 호환성도 시험 적합 판정이 아니다. 이번 작성자 검증은 source2의 독립 Decimal oracle과 정상/실패/취소/미지원 등 첫 ON16개이며 실제 SDK·ADB·AOSP·모델·장비 실행은0이다. 앞의 source 연결59개는 이전 단계의 보존 기록이다.
 
 별도 앱 설치나 Java, 외부 자료 다운로드, 고객 데이터, 삼성/OEM/AnyWay 명령은 사용하지 않는다. RF 수치의 물리 정확도·실제 안테나 출력·FCC 측정 적합성은 이 결과로 검증되지 않는다. [Android runtime 설치·부팅 확인](android_emulator_check_usage.md)의 기존 OS 신원 증거와 이 guest 컨트롤러의 상태 증거를 구별한다.

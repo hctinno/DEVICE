@@ -1,8 +1,10 @@
 """Fixture-only guest controller and existing Fleet bridge; no SDK or OS run."""
 import base64
 import copy
+from decimal import Decimal, localcontext
 import hashlib
 import inspect
+import json
 from pathlib import Path
 import socket
 import tempfile
@@ -586,6 +588,385 @@ class IntakePlanGuestBridgeTests(unittest.TestCase):
             self.run_plan(guest)
         self.assertEqual(error.exception.code, 'rf_bridge_endpoint_invalid')
         self.assertEqual(guest.calls, [])
+
+
+class FirstOnPlanMeasurementTests(unittest.TestCase):
+    """Genuine plan/Fleet/journal/calculation; only the owned guest is FAKE."""
+
+    setUp = IntakePlanGuestBridgeTests.setUp
+    run_plan = IntakePlanGuestBridgeTests.run_plan
+
+    def first_on(self, result):
+        self.assertTrue('first_on_measurement' in result,
+                        'plan metric has no connected first-ON measurement result')
+        return result['first_on_measurement']
+
+    def new_report(self, name):
+        identity = copy.deepcopy(self.report.data['identity'])
+        self.report = check.Report(Path(self.tmp.name) / name)
+        self.report.data.update(android_os='booted', adb_verified=True, identity=identity)
+
+    def test_two_sources_use_original_packet_and_declared_ledger_decimal_oracle(self):
+        # Catches dropped selector/math connection, expected-power substitution,
+        # or conflation of a historical acquisition with current validity/storage.
+        for index, (frequency, power, reading) in enumerate(((2412, -7, '-37.5'),
+                                                            (2450, 4, '-26.5'))):
+            with self.subTest(frequency=frequency):
+                self.context, self.analysis, self.plan, self.options = authored_plan(frequency, power)
+                self.new_report('first-on-'+str(index))
+                result = self.run_plan(FakeGuest())
+                first = self.first_on(result)
+                self.assertEqual(first['kind'], 'owned_guest_first_on_measurement')
+                self.assertEqual(first['source_kind'], 'owned_guest_fleet_harness')
+                self.assertEqual(first['status'], 'recorded')
+                self.assertEqual(first['storage_status'], 'not_run')
+                self.assertIs(first['artifact_created'], False)
+                selected = first['selection']
+                self.assertEqual(selected['status'], 'selected')
+                self.assertIs(selected['verification']['fallback_attempted'], False)
+                native = selected['result']
+                self.assertIs(first['result'], native)
+                self.assertIsNone(first['first_failure'])
+                self.assertEqual(set(native), set('schema_version kind status binding raw_measurement '
+                    'setup_provenance calculation gaps failure verification'.split()))
+                self.assertEqual(native['kind'], 'conducted_twin_result')
+                self.assertEqual(native['status'], 'recorded')
+                raw = native['raw_measurement']['packet']
+                self.assertEqual(raw['value'], float(reading))
+                self.assertIs(raw['valid'], True)
+                self.assertEqual(raw, result['host_rf_model']['sensor_on_average'])
+                math = native['calculation']
+                self.assertEqual([row['loss_db'] for row in math['correction_ledger']], [10, .5, 20])
+                for row in math['correction_ledger']:
+                    setup = native['setup_provenance']['records'][row['record_index']]
+                    self.assertEqual(setup['request_id'], row['request_id'])
+                    self.assertEqual(setup['parameters'][row['setting']], row['loss_db'])
+                    self.assertIs(row['already_applied'], False)
+                with localcontext() as context:
+                    context.prec = 50
+                    corrected = Decimal(reading)+Decimal('10')+Decimal('0.5')+Decimal('20')
+                    watts = Decimal(10)**((corrected-Decimal(30))/Decimal(10))
+                    raw_watts = Decimal(10)**((Decimal(reading)-Decimal(30))/Decimal(10))
+                self.assertEqual(Decimal(str(math['corrected']['value'])), corrected)
+                self.assertAlmostEqual(math['corrected']['power_w']/float(watts), 1, places=12)
+                self.assertAlmostEqual(math['raw_power_w']['value']/float(raw_watts), 1, places=12)
+                self.assertEqual(math['conformity'], dict(status='not_assessed', verdict=None,
+                    numeric_limit_dbm=None, uncertainty_db=None))
+                self.assertEqual(math['target_reference_plane'], 'source_output')
+                self.assertIs(native['verification']['execution_authority'], False)
+                self.assertIs(native['verification']['physical_verified'], False)
+                self.assertEqual(first['current_after_stop']['sensor']['status'], 'invalid')
+                self.assertEqual(first['current_after_stop']['analyzer']['status'], 'invalid')
+                self.assertEqual(first['binding']['source_sha256'], result['host_rf_model']['source_sha256'])
+                self.assertEqual(first['binding']['acquisition_tick'], raw['acquisition_tick'])
+                self.assertEqual(first['binding']['setup_revision'], raw['acquisition_setup_revision'])
+
+    def test_every_post_setup_effect_has_same_live_harness_intent_receipt_and_first_completion(self):
+        # Catches a bypass through the direct Fleet, omitted auxiliary/STOP calls,
+        # fabricated reports/journals, or selection of a later successful reference.
+        calls = []
+        factory = bridge.create_conducted_example
+        class ObservedFleet:
+            def __init__(self, fleet): self.fleet = fleet
+            def execute(self, request, device, action, parameters=None):
+                calls.append(('execute', request, device, action, copy.deepcopy(parameters)))
+                return self.fleet.execute(request, device, action, parameters)
+            def advance(self, request, ticks):
+                calls.append(('advance', request, ticks))
+                return self.fleet.advance(request, ticks)
+            def observations(self): return self.fleet.observations()
+        def observed_factory(*args, **kwargs):
+            fleet, topology, setup = factory(*args, **kwargs)
+            return ObservedFleet(fleet), topology, setup
+        with mock.patch.object(bridge, 'create_conducted_example', side_effect=observed_factory):
+            result = self.run_plan(FakeGuest())
+        first = self.first_on(result)
+        self.assertEqual(first['status'], 'recorded')
+        from labflow.virtual_fleet.journal import read_operator_journal
+        stored = read_operator_journal(self.report.output / first['journal_file'])
+        self.assertEqual(stored, first['journal_read'])
+        self.assertIs(stored['complete'], True)
+        report = first['run_report']
+        self.assertEqual(report['termination'], dict(reason='policy_stop', policy_claim='completed'))
+        self.assertEqual(report['task_outcome'], 'not_assessed')
+        self.assertIs(report['ai_model_called'], False)
+        self.assertEqual(report['policy']['kind'], 'fixture')
+        for key in ('run_id', 'runtime_instance_id'):
+            self.assertEqual(first['binding'][key], stored['header'][key])
+            self.assertEqual(report[key], stored['header'][key])
+            self.assertEqual(first['selection']['result']['binding'][key], report[key])
+        setup = first['setup_snapshot']
+        self.assertLessEqual(len(setup), 32)
+        self.assertEqual((setup[-1]['device_id'], setup[-1]['action']), ('dut', 'stop'))
+        setup_ids = {row['request_id'] for row in setup}
+        effects = [row for row in calls if row[1] not in setup_ids]
+        intents = [event for event in stored['events'] if event['type'] == 'intent']
+        receipts = [event for event in stored['events'] if event['type'] == 'receipt']
+        self.assertEqual([row[1] for row in effects], [e['payload']['request_id'] for e in intents])
+        self.assertEqual([e['payload']['request_id'] for e in receipts], [row[1] for row in effects])
+        acquires = [e for e in intents if e['payload']['body'].get('device_id') == 'sensor'
+                    and e['payload']['body'].get('action') == 'acquire']
+        self.assertEqual(len(acquires), 1)
+        self.assertEqual(first['selection']['request_id'], acquires[0]['payload']['request_id'])
+        selected = first['selection']['candidate']
+        acquired = next(e for e in receipts if e['event_id'] == selected['receipt_ref'])
+        self.assertEqual(first['acquisition_receipt'], acquired['payload']['result'])
+        completions = [e for e in stored['events'] if e['type'] == 'observation'
+            and e['sequence'] > acquired['sequence']
+            and e['payload']['observation']['devices']['sensor']['values'].get('state') != 'acquiring']
+        self.assertEqual(selected['measurement_ref'], completions[0]['event_id'])
+        self.assertEqual(stored['header']['provenance']['source_sha256'], first['binding']['source_sha256'])
+        for device, action in (('meter', 'fetch'), ('analyzer', 'fetch'), ('dut', 'stop'), ('sensor', 'read')):
+            self.assertTrue(any(e['payload']['body'].get('device_id') == device
+                and e['payload']['body'].get('action') == action for e in intents))
+
+    def test_default_source_state_diagnostic_does_not_start_measurement_recorder(self):
+        with (mock.patch.object(bridge, 'FleetHarness', create=True, side_effect=AssertionError('unexpected recorder')),
+              mock.patch.object(bridge, 'OperatorJournal', create=True, side_effect=AssertionError('unexpected journal'))):
+            with mock.patch.object(bridge, '_exchange', side_effect=FakeGuest()):
+                result = bridge.run_guest_rf_check(self.endpoint, self.server, self.report,
+                    deadline=time.monotonic()+30, emulator_process=self.emulator)
+        self.assertTrue(result['valid'])
+        self.assertNotIn('first_on_measurement', result)
+        self.assertFalse((self.report.output / 'first-on.jsonl').exists())
+
+    def test_time_and_peak_remain_unsupported_without_on_result_or_journal(self):
+        for metric in ('time', 'peak'):
+            with self.subTest(metric=metric):
+                self.context, self.analysis, old, self.options = authored_plan()
+                self.plan = build_conducted_twin_plan_input(self.context, self.analysis,
+                    expected_revision=1, expected_context_sha256=self.options['expected_context_sha256'],
+                    source_settings=old['plan']['source_settings'], basis=old['plan']['basis_refs'],
+                    method=dict(method_id='conducted_synthetic', method_version=1,
+                                metric=metric, reference_plane='source_output'))
+                self.assertEqual(self.plan['status'], 'ready_for_simulation')
+                self.options['expected_plan_input_sha256'] = value_sha256(self.plan)
+                self.new_report('unsupported-'+metric)
+                result = self.run_plan(FakeGuest())
+                self.assertTrue(result['valid'])
+                first = self.first_on(result)
+                self.assertEqual(first['metric'], metric)
+                self.assertEqual(first['status'], 'unsupported')
+                self.assertIsNone(first['selection'])
+                self.assertIsNone(first['result'])
+                self.assertIsNone(first['run_report'])
+                self.assertEqual(first['verification']['assessment'], 'not_assessed')
+                self.assertFalse((self.report.output / 'first-on.jsonl').exists())
+
+    def test_other_reference_plane_keeps_original_pre_io_rejection(self):
+        self.plan['plan']['reference_plane'] = 'sensor_input'
+        self.options['expected_plan_input_sha256'] = value_sha256(self.plan)
+        guest = FakeGuest()
+        with self.assertRaises(check.BoundaryError): self.run_plan(guest)
+        self.assertEqual(guest.calls, [])
+        self.assertFalse((self.report.output / 'first-on.jsonl').exists())
+
+    def fault_factory(self, mode):
+        factory = bridge.create_conducted_example
+        class FaultObservationFleet:
+            def __init__(self, fleet): self.fleet, self.active, self.changed = fleet, False, False
+            def corrupt(self, packet):
+                if mode in ('invalid', 'first_invalid'):
+                    packet.update(status='invalid', valid=False)
+                elif mode == 'stale': packet['acquisition_tick'] = 0
+                elif mode == 'revision': packet['acquisition_setup_revision'] = 0
+                elif mode == 'source': packet['source_id'] = 'analyzer'
+                elif mode == 'frequency': packet['frequency_hz'] = 5800000000
+            def execute(self, request, device, action, parameters=None):
+                value = self.fleet.execute(request, device, action, parameters)
+                if device == 'sensor' and action == 'acquire':
+                    self.active = True
+                    if mode == 'receipt': value['device_id'] = 'analyzer'
+                if self.active and device == 'sensor' and action == 'read' and mode not in ('first_invalid', 'receipt'):
+                    packet = value['values'].get('outputs', {}).get('measurement')
+                    if type(packet) is dict: self.corrupt(packet)
+                return value
+            def advance(self, request, ticks): return self.fleet.advance(request, ticks)
+            def observations(self):
+                value = self.fleet.observations()
+                sensor = value['devices']['sensor']
+                packet = sensor['values'].get('outputs', {}).get('measurement')
+                if self.active and type(packet) is dict and packet.get('valid') is True:
+                    if mode != 'first_invalid' or not self.changed:
+                        self.corrupt(packet);self.changed = True
+                return value
+        def create(*args, **kwargs):
+            fleet, topology, setup = factory(*args, **kwargs)
+            return FaultObservationFleet(fleet), topology, setup
+        return create
+
+    def test_invalid_stale_revision_source_and_typed_receipt_never_record(self):
+        for mode in ('invalid', 'stale', 'revision', 'source', 'frequency', 'receipt'):
+            with self.subTest(mode=mode):
+                self.new_report('fault-'+mode)
+                with mock.patch.object(bridge, 'create_conducted_example', side_effect=self.fault_factory(mode)):
+                    try: result = self.run_plan(FakeGuest())
+                    except check.BoundaryError: result = self.report.data['rf_bridge']
+                first = self.first_on(result)
+                self.assertNotEqual(first['status'], 'recorded')
+                self.assertIs(first['artifact_created'], False)
+                self.assertTrue((self.report.output / first['journal_file']).is_file())
+                self.assertIsNotNone(first['journal_read'])
+                if first['selection'] and first['selection']['result']:
+                    self.assertIsNone(first['selection']['result']['calculation']['corrected'])
+
+    def test_first_invalid_completion_has_no_fallback_to_later_valid_packet(self):
+        with mock.patch.object(bridge, 'create_conducted_example', side_effect=self.fault_factory('first_invalid')):
+            result = self.run_plan(FakeGuest())
+        first = self.first_on(result)
+        self.assertNotEqual(first['status'], 'recorded')
+        self.assertEqual(first['selection']['status'], 'blocked')
+        self.assertIs(first['selection']['verification']['fallback_attempted'], False)
+        candidate = first['selection']['result']['raw_measurement']['packet']
+        self.assertIs(candidate['valid'], False)
+        self.assertIs(result['host_rf_model']['sensor_on_average']['valid'], True)
+        self.assertIsNone(first['selection']['result']['calculation']['corrected'])
+
+    def test_second_actual_acquire_is_ambiguous_without_later_success_fallback(self):
+        action = bridge._fleet_action
+        def twice(fleet, result, request, device, operation, parameters=None):
+            receipt = action(fleet, result, request, device, operation, parameters)
+            if request == 'sensor-read':
+                fleet.execute('fixture-second-acquire', 'sensor', 'acquire')
+                fleet.advance('fixture-second-wait', 3)
+            return receipt
+        with mock.patch.object(bridge, '_fleet_action', side_effect=twice): result = self.run_plan(FakeGuest())
+        first = self.first_on(result)
+        self.assertNotEqual(first['status'], 'recorded')
+        self.assertEqual(first['selection']['status'], 'blocked')
+        self.assertIs(first['selection']['verification']['fallback_attempted'], False)
+
+    def test_different_actual_run_report_cannot_be_selected(self):
+        other = self.first_on(self.run_plan(FakeGuest()))['run_report']
+        self.new_report('other-run')
+        from labflow.virtual_fleet.conducted_measurement_selector import select_conducted_measurement
+        def swapped(plan, setup, stored, report):
+            self.assertNotEqual(report['run_id'], other['run_id'])
+            return select_conducted_measurement(plan, setup, stored, other)
+        with mock.patch.object(bridge, 'select_conducted_measurement', create=True, side_effect=swapped):
+            result = self.run_plan(FakeGuest())
+        first = self.first_on(result)
+        self.assertNotEqual(first['status'], 'recorded')
+        self.assertEqual(first['selection']['status'], 'blocked')
+
+    def test_control_unknown_cancel_and_failed_cleanup_keep_original_error_and_partial_journal(self):
+        for mode in ('start', 'stop', 'cleanup', 'cancel', 'source_hash', 'receipt'):
+            with self.subTest(mode=mode):
+                self.new_report('control-'+mode)
+                guest = FakeGuest(fail_start=mode == 'start', bad_status=mode == 'stop',
+                    fail_cleanup=mode in ('start', 'cleanup'),
+                    tamper=mode if mode in ('source_hash', 'receipt') else None)
+                cancelled = KeyboardInterrupt('authored cancellation')
+                def transport(*args):
+                    if mode == 'cancel' and ' START ' in args[2]: raise cancelled
+                    return guest(*args)
+                with mock.patch.object(bridge, '_exchange', side_effect=transport):
+                    with self.assertRaises((check.BoundaryError, KeyboardInterrupt)) as error:
+                        bridge.run_intake_plan_guest_rf_check(self.context, self.analysis, self.plan,
+                            self.endpoint, self.server, self.report, deadline=time.monotonic()+30,
+                            emulator_process=self.emulator, **self.options)
+                result = self.report.data['rf_bridge'];first = self.first_on(result)
+                self.assertNotEqual(first['status'], 'recorded')
+                self.assertIs(result['valid'], False)
+                if mode == 'start': self.assertEqual(result['first_error']['code'], 'adb_timeout')
+                if mode == 'cancel': self.assertIs(error.exception, cancelled)
+                if first['run_report']:
+                    self.assertNotEqual(first['run_report']['termination']['reason'], 'policy_stop')
+                    self.assertIsNone(first['run_report']['termination']['policy_claim'])
+                if mode in ('stop', 'cleanup'):
+                    self.assertTrue(any(e['type'] == 'observation' and
+                        e['payload']['observation']['devices']['sensor']['values'].get('outputs', {})
+                        .get('measurement', {}).get('valid') is True for e in first['journal_read']['events']))
+
+    def test_selection_failure_is_secondary_to_original_control_and_recovery_failure(self):
+        with mock.patch.object(bridge, 'select_conducted_measurement', create=True,
+                               side_effect=RuntimeError('authored selector failure')):
+            with self.assertRaises(check.BoundaryError) as error:
+                self.run_plan(FakeGuest(fail_start=True, fail_cleanup=True))
+        self.assertEqual(error.exception.code, 'adb_timeout')
+        result = self.report.data['rf_bridge'];first = self.first_on(result)
+        self.assertEqual(result['first_error']['code'], 'adb_timeout')
+        self.assertEqual(first['status'], 'incomplete')
+        self.assertEqual([row['phase'] for row in first['secondary_errors']], ['selection'])
+        self.assertEqual(first['run_report']['termination']['policy_claim'], None)
+
+    def test_changed_genuine_journal_source_sha_is_not_attributed_to_the_plan(self):
+        # The original parent knows the plan/setup source, but the new outer
+        # source SHA is this bridge's contract and must also be checked.
+        from labflow.virtual_fleet.journal import OperatorJournal
+        def wrong_source(*args, **kwargs):
+            kwargs['provenance'] = copy.deepcopy(kwargs['provenance'])
+            kwargs['provenance']['source_sha256'] = '0'*64
+            return OperatorJournal(*args, **kwargs)
+        with mock.patch.object(bridge, 'OperatorJournal', create=True, side_effect=wrong_source):
+            result = self.run_plan(FakeGuest())
+        first = self.first_on(result)
+        self.assertNotEqual(first['status'], 'recorded')
+        self.assertIsNone(first['selection'])
+        self.assertEqual(first['journal_read']['header']['provenance']['source_sha256'], '0'*64)
+        self.assertTrue(any(row['phase'] == 'binding' for row in first['secondary_errors']))
+
+    def test_journal_read_and_close_errors_are_secondary_without_masking_first_control_error(self):
+        from labflow.virtual_fleet.journal import OperatorJournal
+        close = OperatorJournal.close
+        def bad_close(writer):
+            close(writer)
+            raise OSError('authored close uncertainty')
+        for phase in ('journal_read', 'journal_close'):
+            with self.subTest(phase=phase):
+                self.new_report('secondary-'+phase)
+                patch = (mock.patch.object(bridge, 'read_operator_journal', create=True,
+                            side_effect=OSError('authored read failure')) if phase == 'journal_read'
+                         else mock.patch.object(OperatorJournal, 'close', bad_close))
+                with patch:
+                    with self.assertRaises(check.BoundaryError) as error:
+                        self.run_plan(FakeGuest(fail_start=True, fail_cleanup=True))
+                self.assertEqual(error.exception.code, 'adb_timeout')
+                result = self.report.data['rf_bridge'];first = self.first_on(result)
+                self.assertEqual(result['first_error']['code'], 'adb_timeout')
+                self.assertEqual(first['status'], 'incomplete')
+                self.assertTrue(any(row['phase'] == phase for row in first['secondary_errors']))
+
+    def test_cancellation_during_selection_is_preserved_after_evidence_cleanup(self):
+        interrupted = KeyboardInterrupt('authored selection cancellation')
+        with mock.patch.object(bridge, 'select_conducted_measurement', create=True, side_effect=interrupted):
+            with self.assertRaises(KeyboardInterrupt) as error: self.run_plan(FakeGuest())
+        self.assertIs(error.exception, interrupted)
+        result = self.report.data['rf_bridge'];first = self.first_on(result)
+        self.assertEqual(first['status'], 'incomplete')
+        self.assertIs(result['valid'], False)
+        self.assertEqual(result['first_error']['code'], 'interrupted')
+        self.assertEqual(first['secondary_errors'][0]['phase'], 'selection')
+
+    def test_rejected_selection_exposes_no_result_and_keeps_first_measurement_failure(self):
+        with mock.patch.object(bridge, 'create_conducted_example', side_effect=self.fault_factory('first_invalid')):
+            result = self.run_plan(FakeGuest())
+        first = self.first_on(result)
+        self.assertIn('result', first)
+        self.assertIsNone(first['result'])
+        self.assertEqual(first['first_failure']['phase'], 'selection')
+        self.assertTrue(first['first_failure']['code'])
+        self.assertEqual(first['run_report']['termination']['policy_claim'], 'completed')
+        self.assertTrue(result['valid'])  # Local control diagnostic only.
+        self.assertIn(first['status'], ('invalid', 'incomplete'))
+        self.assertEqual(first['storage_status'], 'not_run')
+
+    def test_existing_draft_writer_consumes_exact_genuine_result_only_in_fixture(self):
+        first = self.first_on(self.run_plan(FakeGuest()))
+        self.assertEqual(first['status'], 'recorded')
+        native = first['selection']['result']
+        from labflow.virtual_fleet.conducted_result_artifact import write_conducted_result_artifact
+        root = Path(self.tmp.name) / 'draft-fixture';root.mkdir()
+        artifact = write_conducted_result_artifact(native, workspace_root=root, artifact_name='first-on',
+            expected_result_sha256=value_sha256(native), run_id=native['binding']['run_id'],
+            runtime_instance_id=native['binding']['runtime_instance_id'])
+        self.assertEqual(artifact['storage']['status'], 'complete')
+        result_file = next(root / row['path'] for row in artifact['files'] if row['path'].endswith('/result.json'))
+        self.assertEqual(json.loads(result_file.read_text(encoding='utf-8')), native)
+        draft = next(root / row['path'] for row in artifact['files'] if row['path'].endswith('/draft.md'))
+        self.assertIn('DRAFT', draft.read_text(encoding='utf-8'))
+        self.assertEqual(first['storage_status'], 'not_run')
+        self.assertIs(first['artifact_created'], False)
 
 
 if __name__ == '__main__':

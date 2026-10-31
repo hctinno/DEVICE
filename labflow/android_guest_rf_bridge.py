@@ -18,7 +18,11 @@ from . import android_emulator_check as check
 from .intake_conducted_twin_plan import build_conducted_twin_plan_input
 from .store import canonical
 from .virtual_fleet.catalog import load_catalog
-from .virtual_fleet.integration import create_conducted_example
+from .virtual_fleet.conducted_measurement_selector import select_conducted_measurement
+from .virtual_fleet.harness import FleetHarness
+from .virtual_fleet.integration import (create_conducted_example, get_role_actions,
+                                       _begin_setup_record, _finish_setup_record)
+from .virtual_fleet.journal import OperatorJournal, read_operator_journal
 
 
 SOURCE_SETTINGS = {'frequency_hz': 2.45e9, 'power_dbm': 12.5,
@@ -270,8 +274,193 @@ def _measurement(receipt, device, revision, after_tick):
     return value
 
 
+def _snapshot_sha256(value):
+    return hashlib.sha256(canonical(value).encode('utf-8')).hexdigest()
+
+
+def _first_on_result(trace):
+    plan = trace['plan_input']['plan']
+    supported = (plan['method_id'] == 'conducted_synthetic' and plan['method_version'] == 1
+                 and plan['metric'] == 'on' and plan['reference_plane'] == 'source_output')
+    return dict(schema_version=1, kind='owned_guest_first_on_measurement',
+        source_kind='owned_guest_fleet_harness', status='incomplete' if supported else 'unsupported',
+        metric=plan['metric'], reference_plane=plan['reference_plane'],
+        storage_status='not_run', artifact_created=False,
+        binding=dict(source_sha256=trace['source_sha256'], plan_input_sha256=trace['plan_input_sha256']),
+        setup_snapshot=[], journal_file=None, journal_read=None, run_report=None,
+        acquisition_receipt=None, current_after_stop=None, selection=None, result=None,
+        first_failure=None, secondary_errors=[],
+        verification=dict(synthetic=True, ai_model_called=False, hardware_verified=False,
+                          physical_verified=False, execution_authority=False,
+                          assessment='not_assessed', identity_scope='local_provenance_only'))
+
+
+class _FirstOnFleet:
+    """Record actual setup calls, then dispatch every same-Fleet effect via Harness.
+
+    The queued policy describes the existing local procedure. It is never an AI
+    execution, a report reconstruction, or a physical measurement authority.
+    """
+    policy_id = 'owned_guest_first_on_local_v1'
+
+    def __init__(self, fleet, catalog, topology, records, trace, result, report, deadline):
+        self.fleet, self.catalog, self.topology = fleet, catalog, topology
+        self.records, self.trace, self.output = records, trace, result['first_on_measurement']
+        self.output['setup_snapshot'] = records
+        self.path = report.output / 'first-on.jsonl'
+        self.deadline = deadline
+        self.run_id, self.instance_id = 'guest-rf:'+uuid.uuid4().hex, 'fleet:'+uuid.uuid4().hex
+        self.output['binding'].update(run_id=self.run_id, runtime_instance_id=self.instance_id,
+            guest_nonce=result['guest_controller']['nonce'], script_sha256=_SCRIPT_SHA256)
+        self.harness = self.journal = None
+        self.setup_closed = False
+        self.proposal = self.last_receipt = None
+        self.receipt_count = 0
+        self.control_error = None
+
+    def __call__(self, context):
+        if self.proposal is None:
+            raise ValueError('no local procedure decision')
+        return self.proposal
+
+    def _sink(self, event):
+        self.journal(event)
+        if event['type'] == 'receipt':
+            self.last_receipt = event['payload']['result']
+            self.receipt_count += 1
+
+    def begin(self):
+        self.setup_closed = True
+        provenance = dict(runtime_origin='preinitialized', catalog_sha256=_snapshot_sha256(self.catalog),
+            topology_sha256=_snapshot_sha256(self.topology), topology=self.topology,
+            engine_sha256=hashlib.sha256((Path(__file__).parent / 'virtual_fleet/rf.py').read_bytes()).hexdigest(),
+            plan_binding=self.trace['plan_input']['binding'], setup_sha256=_snapshot_sha256(self.records),
+            source_sha256=self.trace['source_sha256'],
+            guest_nonce=self.output['binding']['guest_nonce'], script_sha256=_SCRIPT_SHA256,
+            quantity=dict(metric='on', reference_plane='sensor_input',
+                          loss_compensation_applied=False, loss_compensation_sign=1))
+        check.reject_links(self.path)
+        self.provenance = _plan_snapshot(provenance)
+        self.journal = OperatorJournal(self.path, run_id=self.run_id,
+                                      runtime_instance_id=self.instance_id, provenance=_plan_snapshot(provenance))
+        self.output['journal_file'] = self.path.name
+        self.harness = FleetHarness(self.fleet, self, goal=dict(kind='owned_guest_first_on_local_procedure'),
+            catalog=self.catalog, topology=self.topology, role_actions=get_role_actions(),
+            budgets=dict(wall_seconds=min(30, check.remaining(self.deadline, 'guest_bridge_timeout'))),
+            event_sink=self._sink, run_id=self.run_id, runtime_instance_id=self.instance_id)
+
+    def _step(self, proposal):
+        if self.harness is None:
+            raise check.BoundaryError('guest_first_on_recorder_unavailable')
+        self.proposal = proposal
+        try:
+            return self.harness.step()
+        finally:
+            self.proposal = None
+
+    def _dispatch(self, proposal):
+        before = self.receipt_count
+        state = self._step(proposal)
+        if state['state'] != 'running' or self.receipt_count != before + 1:
+            raise check.BoundaryError('guest_first_on_runtime_incomplete')
+        return self.last_receipt
+
+    def execute(self, request, device, action, parameters=None):
+        if not self.setup_closed:
+            row = _begin_setup_record(self.records, request, 'execute', device, action, parameters)
+            response = self.fleet.execute(request, device, action, parameters)
+            _finish_setup_record(row, response)
+            return response
+        return self._dispatch(dict(kind='execute', device_id=device, action=action,
+                                   parameters={} if parameters is None else parameters))
+
+    def advance(self, request, ticks):
+        # Harness's public advance proposal is one tick. Return the last actual
+        # receipt, never an invented receipt aggregating several real calls.
+        response = None
+        for _ in range(ticks):
+            response = self._dispatch(dict(kind='advance', ticks=1))
+        return response
+
+    def observations(self):
+        return self.fleet.observations()
+
+    def _secondary(self, phase, exc):
+        failure = dict(phase=phase, code='guest_first_on_'+phase+'_failed', error_type=type(exc).__name__)
+        self.output['secondary_errors'].append(failure)
+        if self.output['first_failure'] is None:
+            self.output['first_failure'] = failure
+        if isinstance(exc, (KeyboardInterrupt, SystemExit)) and self.control_error is None:
+            self.control_error = exc
+
+    def finish(self, completed, result):
+        """Preserve actual termination/journal, then reuse the original selector."""
+        stops = result['host_rf_model'].get('stop_observations')
+        if stops is not None:
+            self.output['current_after_stop'] = dict(sensor=stops[0], analyzer=stops[1])
+        try:
+            if self.harness is not None:
+                if completed:
+                    self._step(dict(kind='stop', claim='completed',
+                                    reason='owned guest local procedure STOP and cleanup confirmed'))
+                else:
+                    self.harness.stop()
+                    self.harness.step()
+                self.output['run_report'] = self.harness.result()
+        except BaseException as exc:
+            self._secondary('termination', exc)
+        finally:
+            if self.journal is not None:
+                try:
+                    self.journal.close()
+                except BaseException as exc:
+                    self._secondary('journal_close', exc)
+        if self.output['journal_file'] is None:
+            return
+        try:
+            stored = read_operator_journal(self.path)
+            self.output['journal_read'] = stored
+        except BaseException as exc:
+            self._secondary('journal_read', exc)
+            return
+        # These are the new source-kind bindings. The original parent owns its
+        # existing plan/setup/packet checks, but cannot know this live bridge's
+        # allocated IDs or guest source-SHA provenance.
+        header = stored['header']
+        if (header['run_id'] != self.run_id or header['runtime_instance_id'] != self.instance_id
+                or canonical(header['provenance']) != canonical(self.provenance)):
+            self.output['status'] = 'invalid'
+            self._secondary('binding', ValueError('local provenance mismatch'))
+            return
+        try:
+            selected = select_conducted_measurement(self.trace['plan_input'], self.records,
+                                                   stored, self.output['run_report'])
+            self.output['selection'] = selected
+            native = selected['result']
+            if (completed and not self.output['secondary_errors'] and selected['status'] == 'selected'
+                    and native is not None and native['status'] == 'recorded'):
+                candidate = selected['candidate']
+                receipt = next(e for e in stored['events'] if e['event_id'] == candidate['receipt_ref'])
+                self.output['acquisition_receipt'] = receipt['payload']['result']
+                packet = native['raw_measurement']['packet']
+                self.output['binding'].update(request_id=selected['request_id'],
+                    receipt_ref=candidate['receipt_ref'], measurement_ref=selected['measurement_ref'],
+                    acquisition_tick=packet['acquisition_tick'], setup_revision=packet['acquisition_setup_revision'])
+                self.output.update(status='recorded', result=native)
+            else:
+                self.output['status'] = 'invalid' if native is not None and native['status'] == 'invalid' else 'incomplete'
+                if selected['status'] != 'selected' and self.output['first_failure'] is None:
+                    failure = (native.get('failure') if native is not None else None) or selected['reasons'][0]
+                    phase = 'calculation' if failure.get('field') == 'calculation' else 'selection'
+                    self.output['first_failure'] = dict(phase=phase, **failure)
+        except BaseException as exc:
+            self.output['status'] = 'incomplete'
+            self.output['result'] = None
+            self._secondary('selection', exc)
+
+
 def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process,
-                       source_settings=None):
+                       source_settings=None, measurement_bundle=None):
     """Run owned guest control and same-Fleet RF using one detached exact-six input.
 
     None retains the original fixed diagnostic. A caller declaration is synthetic
@@ -284,6 +473,9 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process,
     source = dict(SOURCE_SETTINGS if source_settings is None else source_settings)
     tokens = _source_tokens(source)
     source_hash = source_sha256(source)
+    trace = None if measurement_bundle is None else validate_intake_plan_bundle(measurement_bundle)
+    if trace is not None and (trace['source_settings'] != source or trace['source_sha256'] != source_hash):
+        raise check.BoundaryError('guest_plan_source_mismatch')
     nonce = uuid.uuid4().hex
     result = {'schema_version': 1, 'valid': False,
               'guest_controller': {'kind': 'aosp_shell_state_controller', 'nonce': nonce,
@@ -294,10 +486,13 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process,
                                 'source_sha256': source_hash, 'action_receipts': []},
               'first_error': None, 'cleanup_errors': [], 'oem_rf': 'not_assessed',
               'physical_rf': 'not_assessed'}
+    if trace is not None:
+        result['first_on_measurement'] = _first_on_result(trace)
     report.data['rf_bridge'] = result
     report.data['rf_model'] = 'synthetic_guest_bridge_attempted'
     report.save()
     fleet = None
+    recorder = None
     failure = None
     install_attempted = False
     install_confirmed = False
@@ -330,8 +525,14 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process,
 
     try:
         catalog = load_catalog(_CATALOG)
-        fleet, _, setup = create_conducted_example(catalog, seed=13,
-                                                    source_settings=dict(source))
+        kwargs = dict(seed=13, source_settings=dict(source))
+        if trace is not None and result['first_on_measurement']['status'] != 'unsupported':
+            kwargs['setup_records'] = []
+        fleet, topology, setup = create_conducted_example(catalog, **kwargs)
+        if 'setup_records' in kwargs:
+            recorder = _FirstOnFleet(fleet, catalog, topology, kwargs['setup_records'],
+                                     trace, result, report, deadline)
+            fleet = recorder
         result['host_rf_model']['setup_receipts'] = setup
         _fleet_action(fleet, result, 'initial-stop', 'dut', 'stop')
         guard_owned()
@@ -347,6 +548,11 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process,
         config_confirmed = True
         guest('STATUS', 2, 'CONFIGURED', 1)
         _fleet_action(fleet, result, 'configure', 'dut', 'configure', dict(source))
+        if recorder is not None:
+            _fleet_action(fleet, result, 'sensor-triggered', 'sensor', 'configure',
+                          dict(calibration_valid=True, acquisition_policy='triggered'))
+            _fleet_action(fleet, result, 'setup-stop', 'dut', 'stop')
+            recorder.begin()
         guest('START', 3, 'STARTED', 2)
         guest('STATUS', 4, 'STARTED', 2)
         started = _fleet_action(fleet, result, 'start', 'dut', 'start')
@@ -431,6 +637,12 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process,
         elif getattr(failure, 'code', None) == 'memory_emergency_stop':
             result['guest_controller']['cleanup'] = 'unknown'
         result['valid'] = failure is None and result['guest_controller']['cleanup'] == 'confirmed'
+        if recorder is not None:
+            recorder.finish(result['valid'], result)
+            if failure is None and recorder.control_error is not None:
+                failure = recorder.control_error
+                result['valid'] = False
+                result['first_error'] = dict(code='interrupted', detail=type(failure).__name__)
         report.data['rf_model'] = ('synthetic_guest_bridge_verified' if result['valid']
                                    else 'synthetic_guest_bridge_invalid')
         report.save()
@@ -513,15 +725,16 @@ def run_intake_plan_guest_rf_check(context, analysis, plan_input, endpoint, serv
     runtime bundle preparation share one pure validation algorithm.
     """
     check._require_rf_bridge_endpoint(endpoint)
-    trace = validate_intake_plan_bundle(dict(context=context, analysis=analysis, plan_input=plan_input,
+    bundle = _plan_snapshot(dict(context=context, analysis=analysis, plan_input=plan_input,
         expected_revision=expected_revision, expected_context_sha256=expected_context_sha256,
         expected_plan_input_sha256=expected_plan_input_sha256))
+    trace = validate_intake_plan_bundle(bundle)
     # Save before guest I/O, so the original lifecycle failure still has its
     # caller-only plan lineage without a new finally/save masking that error.
     report.data['intake_plan'] = _plan_snapshot(trace)
     report.save()
     result = run_guest_rf_check(endpoint, server, report, deadline=deadline,
-        emulator_process=emulator_process, source_settings=trace['source_settings'])
+        emulator_process=emulator_process, source_settings=trace['source_settings'], measurement_bundle=bundle)
     result['intake_plan'] = trace
     report.save()
     return result
