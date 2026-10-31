@@ -1,6 +1,9 @@
 """Boundary fixtures and benign child processes; these are not Android OS proof."""
 
 import hashlib
+import copy
+from contextlib import ExitStack, contextmanager
+import inspect
 import io
 import json
 import os
@@ -17,6 +20,8 @@ from unittest import mock
 import zipfile
 
 from labflow import android_emulator_check as check
+from labflow import android_guest_rf_bridge as guest_bridge
+from test_android_guest_rf_bridge import authored_plan, FakeGuest, value_sha256
 
 
 class RuntimeBoundaries(unittest.TestCase):
@@ -550,6 +555,285 @@ class ReviewFixes(unittest.TestCase):
         with self.assertRaises(check.BoundaryError):
             check.safe_extract(raw.getvalue(), target)
         self.assertFalse(target.exists())
+
+
+class OwnedRuntimePlanBundleTests(unittest.TestCase):
+    """Only authored JSON, genuine builder/Fleet, and fake owned processes/services."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.base = Path(self.tmp.name)
+        self.runtime = self.base / 'rt'
+        self.runtime.mkdir()
+        context, analysis, plan, options = authored_plan()
+        self.bundle = dict(context=context, analysis=analysis, plan_input=plan, **options)
+        self.raw = json.dumps(self.bundle, ensure_ascii=False).encode('utf-8')
+        self.path = self.base / 'plan.json'
+        self.path.write_bytes(self.raw)
+        self.index = 0
+        resources = mock.patch.object(check, 'resources', return_value={'available_mib': 8192})
+        resources.start()
+        self.addCleanup(resources.stop)
+
+    def require_api(self):
+        self.assertIn('intake_plan_bundle', inspect.signature(check.execute).parameters,
+                      'owned runtime plan bundle option is absent')
+
+    def execute(self, **kwargs):
+        self.require_api()
+        self.index += 1
+        options = dict(boot=True, rf_bridge_check=True, intake_plan_bundle=self.path)
+        options.update(kwargs)
+        return check.execute(self.runtime, self.base / ('o'+str(self.index)), **options)
+
+    def rejected(self, **kwargs):
+        events = []
+        def forbidden(label):
+            def fail(*args, **options):
+                events.append(label)
+                raise AssertionError(label+' boundary entered')
+            return fail
+        with ExitStack() as stack:
+            for name in ('validate_runtime', 'native', 'claim_attempt', 'OwnedProcess'):
+                stack.enter_context(mock.patch.object(check, name, side_effect=forbidden(name)))
+            stack.enter_context(mock.patch.object(guest_bridge, '_exchange', side_effect=forbidden('guest')))
+            result = self.execute(**kwargs)
+        self.assertEqual(events, [])
+        self.assertIsNotNone(result['first_failure'])
+        self.assertNotEqual(result['first_failure']['code'], 'unexpected_error')
+        self.assertEqual(result['android_os'], 'not_run')
+        self.assertFalse(result['adb_verified'])
+        self.assertFalse((self.runtime / 'boot-attempt.json').exists())
+        return result
+
+    @contextmanager
+    def fake_boot(self, *, mutate_file=False):
+        events, owners, reads = [], [], []
+        guest = FakeGuest()
+        original_open = Path.open
+        original_builder = guest_bridge.build_conducted_twin_plan_input
+        help_text = '-no-window -no-audio -no-snapshot -memory -port -grpc -gpu'
+        def read_once(path, *args, **kwargs):
+            mode = args[0] if args else kwargs.get('mode', 'r')
+            if path == self.path and mode == 'rb':
+                reads.append(str(path))
+            return original_open(path, *args, **kwargs)
+        def builder(*args, **kwargs):
+            events.append('builder')
+            return original_builder(*args, **kwargs)
+        def sdk(*args, **kwargs):
+            events.append('sdk-fixture')
+            if mutate_file:
+                self.path.write_bytes(b'changed after the validated read')
+            return {'fixture': True}
+        def native(*args, **kwargs):
+            events.append('native-fixture')
+            return help_text
+        class Owner:
+            def __init__(self, *args, **kwargs):
+                self.process = mock.Mock()
+                self.process.poll.return_value = None
+                self.process.pid = 70000+len(owners)
+                self.active = False
+                owners.append(self)
+            def __enter__(self):
+                self.active = True
+                events.append('owner-enter')
+                return self
+            def sample(self):
+                pass
+            def __exit__(self, *args):
+                self.active = False
+                events.append('owner-exit')
+                return False
+        def exchange(endpoint, server, service, deadline):
+            self.assertEqual(len(owners), 2)
+            self.assertTrue(all(owner.active for owner in owners))
+            events.append('guest')
+            return guest(endpoint, server, service, deadline)
+        with ExitStack() as stack:
+            stack.enter_context(mock.patch.object(Path, 'open', read_once))
+            stack.enter_context(mock.patch.object(guest_bridge, 'build_conducted_twin_plan_input', side_effect=builder))
+            stack.enter_context(mock.patch.object(check, 'validate_runtime', side_effect=sdk))
+            stack.enter_context(mock.patch.object(check, 'native', side_effect=native))
+            stack.enter_context(mock.patch.object(check, 'assert_ports_free'))
+            stack.enter_context(mock.patch.object(check, 'create_avd', return_value=self.base/'avd'))
+            stack.enter_context(mock.patch.object(check, 'OwnedProcess', Owner))
+            stack.enter_context(mock.patch.object(check, 'adb_read',
+                side_effect=['device', 'device', '1', 'ranchu', 'AOSP fixture', '1']))
+            stack.enter_context(mock.patch.object(guest_bridge, '_exchange', side_effect=exchange))
+            yield dict(events=events, owners=owners, reads=reads, guest=guest)
+
+    def test_strict_json_encoding_duplicate_nonfinite_and_surrogate_are_pre_sdk(self):
+        duplicate = self.raw.replace(b'"expected_revision": 1', b'"expected_revision": 1, "expected_revision": 2', 1)
+        nested = self.raw.replace(b'"synthetic": true', b'"synthetic": true, "synthetic": false', 1)
+        surrogate = self.raw.replace(b'Authored synthetic snapshot; no execution authority.', b'\\ud800', 1)
+        bad = [b'\xff', b'\xef\xbb\xbf'+self.raw, duplicate, nested, surrogate]
+        bad += [self.raw.replace(b'"power_dbm": -7', b'"power_dbm": '+token, 1)
+                for token in (b'NaN', b'Infinity', b'-Infinity', b'1e9999')]
+        for index, raw in enumerate(bad):
+            with self.subTest(case=index):
+                self.assertNotEqual(raw, self.raw)
+                self.path.write_bytes(raw)
+                self.rejected()
+
+    def test_exact_shape_types_depth_and_size_are_pre_sdk(self):
+        variants = [[], None, {**self.bundle, 'ready': True},
+                    {k:v for k,v in self.bundle.items() if k!='analysis'},
+                    {**self.bundle, 'context': []}, {**self.bundle, 'analysis': True},
+                    {**self.bundle, 'expected_revision': True},
+                    {**self.bundle, 'expected_plan_input_sha256': 123}]
+        deep = []
+        for _ in range(40):
+            deep = [deep]
+        variants.append({**self.bundle, 'context': deep})
+        for index, value in enumerate(variants):
+            with self.subTest(case=index):
+                self.path.write_text(json.dumps(value), encoding='utf-8')
+                self.rejected()
+        self.path.write_bytes(b' '*(8*1024*1024+1))
+        self.assertEqual(self.rejected()['first_failure']['code'], 'intake_plan_bundle_too_large')
+
+    def test_binding_non_synthetic_information_and_method_are_pre_sdk(self):
+        for field in ('context_hash', 'plan_hash', 'synthetic', 'information', 'source', 'method'):
+            with self.subTest(field=field):
+                value = copy.deepcopy(self.bundle)
+                if field == 'context_hash':value['expected_context_sha256'] = '0'*64
+                elif field == 'plan_hash':value['expected_plan_input_sha256'] = '0'*64
+                elif field == 'synthetic':value['context']['synthetic'] = False
+                elif field == 'information':value['analysis']['facts'] = value['analysis']['facts'][:2]
+                elif field == 'source':value['plan_input']['plan']['source_settings']['power_dbm'] = 99
+                else:value['plan_input']['plan']['method_id'] = 'unsupported'
+                if field in ('source', 'method'):
+                    value['expected_plan_input_sha256'] = value_sha256(value['plan_input'])
+                self.path.write_text(json.dumps(value), encoding='utf-8')
+                self.rejected()
+
+    def test_paired_flags_relative_path_and_other_endpoint_are_pre_sdk(self):
+        for options in ({'boot': False, 'rf_bridge_check': False}, {'rf_bridge_check': False},
+                        {'boot': False}, {'verify_only': True}, {'install': True},
+                        {'intake_plan_bundle': Path('relative.json')},
+                        {'endpoint': check.Endpoint(15038, 5678, 18554)}):
+            with self.subTest(options=options):
+                self.rejected(**options)
+
+    def test_valid_file_is_read_once_frozen_before_sdk_and_reaches_same_fleet(self):
+        with self.fake_boot(mutate_file=True) as observed:
+            result = self.execute()
+        self.assertIsNone(result['first_failure'])
+        self.assertEqual(result['status'], 'rf_bridge_verified')
+        self.assertEqual(len(observed['reads']), 1)
+        self.assertLess(observed['events'].index('builder'), observed['events'].index('sdk-fixture'))
+        self.assertFalse(any(owner.active for owner in observed['owners']))
+        self.assertEqual(result['intake_plan_bundle']['raw_sha256'], hashlib.sha256(self.raw).hexdigest())
+        host = result['rf_bridge']['host_rf_model']
+        self.assertEqual(host['source_settings']['frequency_hz'], 2412000000)
+        self.assertEqual(host['sensor_on_average']['value'], -37.5)
+        self.assertEqual(host['analyzer_on_average']['value'], -18.75)
+        self.assertEqual(host['source_sha256'], result['intake_plan_bundle']['source_sha256'])
+        self.assertEqual(result['rf_bridge']['intake_plan']['plan_input'], self.bundle['plan_input'])
+        self.assertIn('2412000000 -7 20000000 0.5 OFDM 4',
+                      next(s for s in observed['guest'].calls if ' CONFIG ' in s))
+        self.assertEqual(result['intake_plan']['verification']['current_version'], 'caller_snapshot_only')
+
+    def test_reserved_dos_components_never_reach_filesystem_for_str_or_path(self):
+        # First five are the independent 6da248a No, kept as literal inputs.
+        paths = [r'C:\NUL', r'C:\x\NUL.txt', r'C:\x\CON', r'C:\x\AUX', r'C:\x\COM1',
+                 r'C:\x\nUl.JsOn', r'C:\x\NUL .json', r'C:\x\NUL. ', r'C:\x\NUL..json',
+                 r'C:\x\PRN.txt', r'C:\x\COM9.backup', r'C:\x\LPT1.json',
+                 r'C:\x\COM¹.txt', r'C:\x\LPT².json', r'C:\x\CONIN$.json', r'C:\x\CONOUT$',
+                 r'C:\NUL\normal.json', r'C:\aux.txt\normal.json', r'C:\x\CoM1. \normal.json']
+        for text in paths:
+            for supplied in (text, Path(text)):
+                with self.subTest(path=text, kind=type(supplied).__name__):
+                    probes = []
+                    def forbidden(*args):
+                        probes.append('filesystem probe')
+                        raise AssertionError('reserved device entered filesystem boundary')
+                    with mock.patch.object(check, 'reject_links', side_effect=forbidden):
+                        with self.assertRaises(check.BoundaryError) as error:
+                            check._read_intake_plan_bundle(supplied)
+                    self.assertEqual(error.exception.code, 'intake_plan_bundle_path_invalid')
+                    self.assertEqual(probes, [])
+
+    def test_nonreserved_dos_lookalikes_remain_eligible_for_regular_file_read(self):
+        paths = [r'C:\x\NULx.json', r'C:\x\xNUL', r'C:\x\CONsole.json', r'C:\x\AUXiliary.json',
+                 r'C:\x\COM0.json', r'C:\x\COM10.json', r'C:\x\LPT0.json', r'C:\x\LPT10.json',
+                 r'C:\x\.NUL', r'C:\NULx\normal.json']
+        class EligibleForProbe(Exception):
+            pass
+        for text in paths:
+            for supplied in (text, Path(text)):
+                with self.subTest(path=text, kind=type(supplied).__name__):
+                    with mock.patch.object(check, 'reject_links', side_effect=EligibleForProbe):
+                        with self.assertRaises(EligibleForProbe):
+                            check._read_intake_plan_bundle(supplied)
+
+    def test_remote_device_and_ads_paths_are_rejected_without_filesystem_probe(self):
+        original = check.reject_links
+        probes = []
+        def local_only(path):
+            if (str(path).startswith('\\\\') or ':' in path.name or '\x00' in str(path)
+                    or any(0xD800 <= ord(char) <= 0xDFFF for char in str(path))):
+                probes.append(str(path))
+                raise AssertionError('nonlocal/special path probe forbidden')
+            return original(path)
+        paths = [Path('\\\\remote.invalid\\share\\plan.json'), Path('\\\\.\\pipe\\plan'),
+                 Path(str(self.path)+':stream'), Path(str(self.path)+'\x00'), Path(str(self.path)+'\ud800')]
+        with mock.patch.object(check, 'reject_links', side_effect=local_only):
+            for path in paths:
+                with self.subTest(path=path):
+                    self.assertEqual(self.rejected(intake_plan_bundle=path)['first_failure']['code'],
+                                     'intake_plan_bundle_path_invalid')
+        self.assertEqual(probes, [])
+
+    def test_exact_raw_limit_accepts_valid_whitespace_without_new_plan_read(self):
+        self.path.write_bytes(self.raw+b' '*(8*1024*1024-len(self.raw)))
+        with self.fake_boot() as observed:
+            result = self.execute()
+        self.assertIsNone(result['first_failure'])
+        self.assertEqual(result['intake_plan_bundle']['bytes'], 8*1024*1024)
+        self.assertEqual(len(observed['reads']), 1)
+
+    def test_existing_claim_is_never_reset_or_replaced(self):
+        claim = self.runtime/'boot-attempt.json'
+        original = b'{"fixture":"already consumed"}\n'
+        claim.write_bytes(original)
+        with self.fake_boot() as observed:
+            result = self.execute()
+        self.assertEqual(result['first_failure']['code'], 'boot_attempt_already_used')
+        self.assertEqual(claim.read_bytes(), original)
+        self.assertEqual(observed['owners'], [])
+        self.assertEqual(observed['guest'].calls, [])
+
+    def test_cli_selects_plan_and_flag_absence_keeps_original_fixed_source(self):
+        self.assertIn('--intake-plan-bundle', check.parser()._option_string_actions,
+                      'CLI intake plan bundle flag is absent')
+        with self.fake_boot() as observed, mock.patch('sys.stdout', new=io.StringIO()):
+            code = check.main(['--runtime', str(self.runtime), '--output', str(self.base/'cli'),
+                               '--boot', '--rf-bridge-check', '--intake-plan-bundle', str(self.path)])
+        self.assertEqual(code, 0)
+        self.assertEqual(len(observed['reads']), 1)
+        self.runtime = self.base/'rt-default'
+        self.runtime.mkdir()
+        with self.fake_boot() as observed:
+            result = self.execute(intake_plan_bundle=None)
+        self.assertIsNone(result['first_failure'])
+        self.assertNotIn('intake_plan_bundle', result)
+        self.assertEqual(result['rf_bridge']['host_rf_model']['source_settings'], guest_bridge.SOURCE_SETTINGS)
+        self.assertNotIn('intake_plan', result['rf_bridge'])
+        self.assertEqual(observed['reads'], [])
+
+    def test_direct_boot_invalid_snapshot_is_rejected_before_claim_or_process(self):
+        self.assertIn('intake_plan_snapshot', inspect.signature(check.boot_runtime).parameters,
+                      'immutable plan snapshot hook is absent')
+        report = check.Report(self.base/'direct')
+        with (mock.patch.object(check, 'claim_attempt', side_effect=AssertionError('claim')),
+              mock.patch.object(check, 'OwnedProcess', side_effect=AssertionError('process'))):
+            with self.assertRaises(check.BoundaryError):
+                check.boot_runtime(self.runtime, report, {}, check.Endpoint(), 1, 'auto', '',
+                                   rf_bridge_check=True, intake_plan_snapshot=b'{"ready":true}')
 
 
 if __name__ == '__main__':

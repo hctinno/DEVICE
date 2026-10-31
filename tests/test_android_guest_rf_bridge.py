@@ -408,6 +408,22 @@ class IntakePlanGuestBridgeTests(unittest.TestCase):
     def rehash_plan(self):
         self.options['expected_plan_input_sha256'] = value_sha256(self.plan)
 
+    def test_shared_bundle_validator_is_pure_and_detached(self):
+        validate = getattr(bridge, 'validate_intake_plan_bundle', None)
+        self.assertTrue(callable(validate), 'shared pure plan bundle validation is absent')
+        bundle = dict(context=self.context, analysis=self.analysis, plan_input=self.plan, **self.options)
+        original = copy.deepcopy(bundle)
+        guest = FakeGuest()
+        with mock.patch.object(bridge, '_exchange', side_effect=guest):
+            trace = validate(bundle)
+        self.assertEqual(bundle, original)
+        self.assertEqual(guest.calls, [])
+        self.plan['plan']['source_settings']['power_dbm'] = 99
+        self.context['synthetic'] = False
+        self.assertEqual(trace['source_settings']['power_dbm'], -7)
+        self.assertEqual(trace['plan_input'], original['plan_input'])
+        self.assertIs(trace['verification']['execution_authority'], False)
+
     def rejected(self):
         guest = FakeGuest()
         with self.assertRaises(check.BoundaryError) as error:
