@@ -23,7 +23,9 @@ except ModuleNotFoundError as error:
     api = None
 
 ROOT = Path(__file__).resolve().parents[1]
-LOCAL = ROOT / '.local' / 'codex-virtual-loop-fixtures' / ('run-' + uuid.uuid4().hex)
+_MANAGED_ROOT = next((p for p in ROOT.parents if p.name == 'development' and p.parent.name == '.local'),
+                     ROOT / '.local' / 'development')
+LOCAL = _MANAGED_ROOT / 'runs' / 'dev2' / 'codex-virtual-loop-fixtures' / ('run-' + uuid.uuid4().hex)
 PROOF = LOCAL / 'DEV2-CONDUCTED-EXECUTION-PROVENANCE-001'
 SCHEMA = json.loads((ROOT / 'docs/fcc/codex_first_decision_contract.json').read_text(encoding='utf-8'))['response_schema']['literal_utf8'].encode('utf-8')
 
@@ -332,7 +334,8 @@ class LoopTests(unittest.TestCase):
     def test_public_signature_and_exports(self):
         self.assertEqual(api.__all__, ['run_codex_virtual_loop', 'CodexVirtualLoopError'])
         signature = inspect.signature(api.run_codex_virtual_loop)
-        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings', 'plan_binding', 'quantity', 'evidence_reservation', 'model_process_limit', 'wall_seconds_limit'])
+        self.assertEqual(list(signature.parameters), ['catalog_path', 'catalog_sha256', 'response_schema_bytes', 'executable', 'requested_model', 'scenario', 'evidence_dir', 'execution_origin', 'cancel_event', 'source_settings', 'plan_binding', 'quantity', 'evidence_reservation', 'model_process_limit', 'wall_seconds_limit', 'recovery_policy'])
+        self.assertIsNone(signature.parameters['recovery_policy'].default)
         self.assertIsNone(signature.parameters['source_settings'].default)
         self.assertIsNone(signature.parameters['plan_binding'].default)
         self.assertIsNone(signature.parameters['quantity'].default)
@@ -358,6 +361,7 @@ class LoopTests(unittest.TestCase):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         self.assertNotEqual(module.LOCAL, LOCAL)
+        self.assertTrue(module.LOCAL.is_relative_to(_MANAGED_ROOT / 'runs'))
 
     def test_proof_write_accounting_and_native_reservation(self):
         budget = _proof_budget()
@@ -890,6 +894,118 @@ class LoopTests(unittest.TestCase):
         self.assertEqual(e.receipt['budget']['producer_calls_started'], 1)
         self.assertIsNone(e.receipt['steps'][0]['after'])
         self.assertEqual(e.receipt['steps'][0]['dispatch']['effect'], 'unknown')
+
+
+    def test_recovery_normal_uses_no_additional_waits(self):
+        result = self.call(recovery_policy=RECOVERY)
+        self.assertTrue(result['evidence_assessment']['goal_observed'])
+        self.assertEqual(len(result['steps']), 5)
+        meta = result['execution']['recovery']
+        self.assertEqual((meta['wait_advances_used'], meta['reobservations_confirmed']), (0, 0))
+        self.assertEqual(result['declaration']['scope'], 'rf_sensor_observed_recovery_v1')
+
+    def test_recovery_third_wait_has_no_intent_or_dispatch(self):
+        self.sequence = [dict(kind='advance', ticks=1)]
+        result = self.failure('budget_exhausted', scenario='persistent_disconnect', recovery_policy=RECOVERY).receipt
+        self.assertEqual(len(self.trials), 1)
+        self.assertEqual(len(result['steps']), 3)
+        self.assertEqual(result['budget']['reserved_model_calls'], 3)
+        self.assertEqual(sum(s['dispatch']['runtime_call_attempts'] for s in result['steps']), 2)
+        self.assertFalse(result['steps'][-1]['dispatch']['intent_seen'])
+        self.assertEqual(result['steps'][-1]['dispatch']['reserved_logical_requests'], 0)
+        self.assertFalse(result['evidence_assessment']['goal_observed'])
+        meta = result['execution']['recovery']
+        self.assertEqual((meta['wait_advances_used'], meta['reobservations_confirmed']), (2, 2))
+        self.assertFalse(result['budget']['reservation_refunded'])
+
+
+RECOVERY = dict(schema_version=1, kind='bounded_observed_wait', max_wait_advances=2)
+
+
+def recovery_context():
+    """Authored public DTO; no trial, hidden schedule, or recovery success evidence."""
+    def node(identity, role):
+        return dict(device_id=identity, profile_id=identity+'-p', role=role, tick=10,
+            setup_revision=3, synthetic=True, hardware_verified=False,
+            status='disconnected' if identity=='dut' else 'invalid',
+            values=dict(configured=True, state='unavailable', outputs={},
+                reason='device_unavailable' if identity=='dut' else 'invalid_rf_input'))
+    return dict(goal=dict(kind='acquire_fresh_rf_sensor', dut_id='dut', sensor_id='sensor', minimum_acquisition_tick=10),
+        catalog=dict(profiles=[dict(profile_id='dut-p', role='dut'), dict(profile_id='sensor-p', role='power_sensor')]),
+        topology=dict(devices=[dict(id='dut', profile_id='dut-p'), dict(id='sensor', profile_id='sensor-p')]),
+        observations=dict(tick=10, setup_revision=3, synthetic=True, hardware_verified=False,
+            devices=dict(dut=node('dut', 'dut'), sensor=node('sensor', 'power_sensor'))))
+
+
+class ObservedRecoveryGateTests(unittest.TestCase):
+    def runner(self):
+        return api._Loop(Path('catalog'), 'a'*64, b'{}', Path('fake'), 'gpt-6.1-sol', 'normal',
+            Path('unused'), 'mock_subprocess', None, api._now(), None, None, None, recovery_policy=RECOVERY)
+
+    def test_typed_public_transition_requires_fresh_measurement(self):
+        runner = self.runner(); public = recovery_context()
+        view = api._recovery_observation(public)
+        runner.recovery_gate(dict(kind='advance', ticks=1), view, dict(decisions=7, logical_requests=8, ticks=8))
+        public['observations']['devices']['dut'].update(status='ok', values=dict(configured=True, state='idle', outputs={}))
+        view = api._recovery_observation(public)
+        self.assertFalse(view['recoverable']); self.assertFalse(view['fresh'])
+        with self.assertRaises(api._Fault):
+            runner.recovery_gate(dict(kind='stop', claim='completed', reason='state changed'), view, dict(decisions=6, logical_requests=7, ticks=7))
+        sensor = public['observations']['devices']['sensor']
+        sensor.update(status='ok', values=dict(configured=True, state='complete', outputs=dict(measurement=dict(
+            valid=True, status='ok', source_id='sensor', unit='dBm', value=-37.5, power_dbm=-37.5,
+            acquisition_tick=10, acquisition_setup_revision=3))))
+        view = api._recovery_observation(public)
+        runner.recovery_gate(dict(kind='stop', claim='completed', reason='fresh same goal observed'), view, dict(decisions=6, logical_requests=7, ticks=7))
+        self.assertEqual(runner.r['execution']['recovery']['wait_advances_used'], 1)
+
+    def test_closed_observation_rejects_missing_nan_wrong_source_stale_and_ambiguous(self):
+        variants = []
+        for path, value in [(('dut','tick'), 9), (('sensor','setup_revision'), 2),
+                (('dut','device_id'), 'other'), (('dut','profile_id'), 'other-p'),
+                (('dut','status'), 'invalid'), (('sensor','status'), 'error')]:
+            out = recovery_context(); out['observations']['devices'][path[0]][path[1]] = value; variants.append(out)
+        out = recovery_context(); del out['observations']['devices']['dut']['values']['outputs']; variants.append(out)
+        out = recovery_context(); out['observations']['devices']['sensor']['values']['reason'] = 'unknown'; variants.append(out)
+        out = recovery_context(); out['observations']['devices']['dut']['values']['power'] = float('nan'); variants.append(out)
+        for source, tick, revision in [('other', 10, 3), ('sensor', 9, 3), ('sensor', 10, 2)]:
+            out = recovery_context(); out['observations']['devices']['sensor'].update(status='ok',
+                values=dict(configured=True, state='complete', outputs=dict(measurement=dict(valid=True,
+                status='ok', source_id=source, unit='dBm', value=-37.5, power_dbm=-37.5,
+                acquisition_tick=tick, acquisition_setup_revision=revision)))); variants.append(out)
+        for out in variants:
+            with self.subTest(public=repr(out)[:80]), self.assertRaises(api._Fault):
+                api._recovery_observation(out)
+
+    def test_run_total_wait_reservation_never_resets_or_refunds(self):
+        runner = self.runner(); view = api._recovery_observation(recovery_context())
+        remaining = dict(decisions=7, logical_requests=8, ticks=8)
+        for _ in range(2):runner.recovery_gate(dict(kind='advance', ticks=1), view, remaining)
+        runner.error('cancelled', 'gate')
+        with self.assertRaises(api._Fault) as got:
+            runner.recovery_gate(dict(kind='advance', ticks=1), view, remaining)
+        self.assertEqual(got.exception.code, 'operator_virtual_loop_budget_exhausted')
+        self.assertEqual(runner.r['execution']['recovery']['wait_advances_used'], 2)
+        self.assertEqual(runner.first['code'], 'operator_virtual_loop_cancelled')
+
+    def test_global_limits_and_terminal_reserve_are_not_new_budgets(self):
+        for key in ('decisions', 'logical_requests', 'ticks'):
+            runner = self.runner(); remaining = dict(decisions=7, logical_requests=8, ticks=8); remaining[key] = 0
+            with self.subTest(key=key), self.assertRaises(api._Fault):
+                runner.recovery_gate(dict(kind='advance', ticks=1), api._recovery_observation(recovery_context()), remaining)
+            self.assertEqual(runner.r['execution']['recovery']['wait_advances_used'], 0)
+
+    def test_invalid_policy_never_admits_file_runtime_or_producer(self):
+        variants = [False, {}, dict(RECOVERY, max_wait_advances=True), dict(RECOVERY, max_wait_advances=0),
+            dict(RECOVERY, max_wait_advances=3), dict(RECOVERY, schema_version=True), dict(RECOVERY, extra=0)]
+        for policy in variants:
+            with self.subTest(policy=policy), patch.object(api, '_preflight') as preflight, patch.object(api, '_Loop') as runtime:
+                with self.assertRaises(api.CodexVirtualLoopError) as got:
+                    api.run_codex_virtual_loop(catalog_path=Path('absent'), catalog_sha256='a'*64, response_schema_bytes=b'{}',
+                        executable=Path('absent'), requested_model='gpt-6.1-sol', scenario='normal', evidence_dir=Path('absent'),
+                        execution_origin='mock_subprocess', recovery_policy=policy)
+                self.assertEqual(got.exception.code, 'operator_virtual_loop_invalid_input')
+                self.assertIsNone(got.exception.receipt); preflight.assert_not_called(); runtime.assert_not_called()
 
 
 class ReservationLoopTests(unittest.TestCase):

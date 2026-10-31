@@ -84,3 +84,17 @@ CodexVirtualLoopError는 고정 code/str/args, cause/context=None와 가능한 d
 owner 단계는 실제 Codex·원격 모델·auth/ADC·운영 DB/Store·고객 원본·실장비0이다. 정상 fresh 관측 루프, 부족한 관측·known 거절/단선·복구 미완료, malformed binding·producer/auth 모의 실패, deadline/cancel/cap/cleanup을 genuine core와 mock subprocess로 검증한다. 공개 evidence evaluator의 합성 판정과 실제 RF 수치·모델 업무 품질·전체 시험소 완료는 별도다.
 
 새 루프의 owner 회귀는 저장소 루트에서 `python -m unittest discover -s tests -p test_virtual_fleet_codex_virtual_loop.py -v`로 실행한다. 이 검사는 알려진 Python child와 합성 runtime을 사용하며 실제 Codex 호출을 실행하지 않는다.
+
+## 2026-10-31 bounded observed recovery 선택 인자
+
+마지막 keyword-only 인자 `recovery_policy=None`을 추가했다. 생략/None은 기존 scope/SYSTEM/DTO와 하위 호출 형태를 유지한다. 선택값은 다음 native dict이며 추가 키·bool 정수·다른 kind/version·한도 밖 값은 파일/runtime/producer 입장 전에 거절한다. `max_wait_advances`는1..2만 허용한다.
+
+```python
+recovery_policy={"schema_version": 1, "kind": "bounded_observed_wait", "max_wait_advances": 2}
+```
+
+상한2의 근거는 기존8 결정에서 정상 scripted 흐름5와 종료 결정1을 뺀 값이다. 숨은 복구 일정에 맞춘 값이 아니다. [별도 scope 계약](virtual_fleet_model_operator_boundary_usage.md)의 닫힌 현재 공개 관측 쌍에서만 nonpending advance1을 추가 허용한다. 알려진 정상 pending advance는 추가 대기 한도에 넣지 않지만 기존 결정·logical request·tick·시간 예산을 계속 사용한다. 추가 대기도 같은 기존 예산을 사용하고 다음 종료용 결정/model call이 남아야 한다. 세 번째 추가 대기는 기존 `operator_virtual_loop_budget_exhausted`로 proposal 반환 전에 막아 intent/dispatch를 만들지 않는다. 연결 끊긴 DUT.start를 reconnect로 대신하지 않는다.
+
+선택 모드의 `execution.recovery`에는 원 policy, `wait_advances_used`, `reobservations_confirmed`, `outcome`을 보존한다. 사용량은 host gate 통과 시 예약하며 상태 변화·취소·예산 오류로 초기화하거나 환급하지 않는다. 확인 재관측은 같은 runtime의 실제 advance receipt와 원인 연결된 after observation이 확인된 경우만 센다. 기존 무결성 확인용 read와 구별한다. 공개 delegation에는 한도·사용·잔여·확인 수를 hash에 결속해 전달한다. source/관측 오류와 취소의 첫 오류는 기존 경로로 보존한다.
+
+선택 모드 normal은5 결정/추가 대기0으로 fresh 측정과 DRAFT 저장을 확인했다. persistent_disconnect와 restored_disconnect는 같은 공개 정책으로 각각 대기2+blocked 종료1 후 selector가 held로 유지했다. 기대 일치3/3과 업무 목표 충족1/3을 구별하며 두 장애의 실제 복구 성공은 관측하지 못했다. 별도 typed public transition 검사는 상태 변화만으로 완료할 수 없음을 검증한다. 실제 AI/실장비 검증과 합산하지 않는다.
