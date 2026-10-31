@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+유계 복구대기 aae4cdb의9도 독립 qualified Yes 뒤 통합했다. 총괄 선택15 PASS·기본 None/v1·9 Gitblob/원바이트 불변, 별도 독립 합성1wait 복귀→fresh 측정/DRAFT1·counter 유지와 원 실패/첫 검수 harness 오기를 구별한다. 실제 AI·실물 복구 품질은 미검증이다. 개발1 수정08f182a A/B 재검수, 개발2 기존 합성 CLI의 명시 opt-in 연결3, 개발3 첫ON3, 개발4 제공근거12를 [후속 대장](NEXT-004.md)에 따라 잇는다.
+
 OCR worker6e35은 독립 No2로 인수 보류다. 재해시된 provenance 승격4와 첫 부모 reader control의 출력한도 오류 치환을 총괄이 실제 소스·최소 관측으로 확인해 개발1 기존3의 수정으로 이어갔다. 원 No/실제 OCR1·선택6와 fake1·미검증은 보존하며 A/B가 읽기를 끝낸 뒤 수정 GO했다. 개발4는 기존 지원뷰와 분리된 N1914A DBM 실행 근거의 명시 제공/조회12를 실제 구현한다. 각 담당의 [후속 대장](NEXT-004.md)과 고정 공간·소유권·소진 예산을 유지한다.
 
 가상 지원 범위 e783f9f도 독립검수 뒤 수용했다. 새 `/virtual-support`는 고정64프로필 자료후보와 역할 선언, 별도 N1914A 제한12명령, 이 화면에 연결된 검수 근거 미확인을 구별한다. 총괄 Python41/Node8 PASS이며 실제 GET·기존 Chromium/PNG 증거를 별도로 대조했다. [조회 안내](../../docs/fcc/virtual_support_view_usage.md)를 따르며 가동대수·완성률·실측·실행 권한으로 승격하지 않는다.
