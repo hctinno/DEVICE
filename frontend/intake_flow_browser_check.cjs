@@ -9,7 +9,7 @@ const ROOT=require('./managed_paths.cjs').stage(path.resolve(__dirname,'..')),LO
 const proof=require('./managed_paths.cjs').proof(ROOT,process.env.VLAB_FLOW_PROOF_ROOT);
 fs.mkdirSync(LOCAL,{recursive:true});
 assert.ok(proof===LOCAL||proof.startsWith(LOCAL+path.sep));
-const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY==='1'?'current-questions-typed-':process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?'current-questions-':process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?'public-cli-port-demo-':process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
+const OUTPUT=fs.mkdtempSync(path.join(proof,process.env.VLAB_OPERATOR_ATTEMPT_VIEW_ONLY==='1'?'operator-attempt-browser-':process.env.VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY==='1'?'current-questions-typed-':process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?'current-questions-':process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?'public-cli-port-demo-':process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?'operator-result-copy-':process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?'fresh-conducted-operator-':process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?'artifact-storage-keyboard-':process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?'artifact-storage-browser-':process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?'unified-provided-browser-':process.env.VLAB_GAP_QUEUE_ONLY==='1'?'gap-queue-browser-':process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?'conducted-result-browser-':process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?'conducted-preview-browser-':'first-twin-browser-'));
 const PROOF=proof===LOCAL?OUTPUT:proof;
 const FRESH_OUTPUT_ROOTS=[];
 function proofWrite(file,data){
@@ -1500,4 +1500,58 @@ async function currentQuestionsMain(){
   console.log(JSON.stringify({status:'pass',mode:'current-questions-only',output:OUTPUT,resources}));
 }
 
-(process.env.VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY==='1'?currentQuestionsResponseTypedMain():process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?currentQuestionsMain():process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?freshConductedOperatorMain(true):process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?operatorResultCopyMain():process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});
+async function operatorAttemptMain(){
+  const host=startPreviewHost('recorded',resultHost,'operator_attempt_fixture.py');let browser,info;
+  try{
+    info=await host.next();browser=await chromium.launch({headless:true,
+      ...(process.env.VLAB_CHROMIUM_EXECUTABLE?{executablePath:process.env.VLAB_CHROMIUM_EXECUTABLE}:{})});
+    const context=await browser.newContext({viewport:{width:1280,height:900}}),page=await context.newPage(),errors=[];
+    page.on('pageerror',error=>errors.push(error.message));
+    const sha='a'.repeat(64),binding={intake_id:info.intake_id,revision:1,analysis_context_id:sha,context_sha256:sha,analysis_sha256:sha,plan_sha256:sha,plan_input_sha256:sha,run_id:'operator-loop-run:authored',runtime_instance_id:'runtime-authored',job_id:'J-authored'};
+    const packet={schema_version:1,kind:'operator_attempt_view',status:'bounded',finalization:'held',storage:'not_created',termination_reason:'decision_budget',hold_reason:'execution_incomplete',hold_reasons:[{code:'execution_incomplete',field:'journal/report',detail:null}],virtual_dut_final_state:'transmitting',source_kind:'provided_actual_cli_record',declared_mode:'synthetic_only',binding,
+      method:{method_id:'conducted_synthetic',method_version:1,metric:'on',reference_plane:'source_output'},
+      model:{requested_model:'gpt-6.1-sol',remote_resolved_model:null,process_count:2,cli_tool_items:0,cumulative_processes:25,remaining_processes:0,token_usage:null,cost:null},
+      steps:[{index:1,action:'dut.start',before_tick:13,after_tick:13,receipt_status:'pending',effect:'changed',cli_tool_items:0},{index:2,action:'sensor.read',before_tick:16,after_tick:16,receipt_status:'ok',effect:'unchanged',cli_tool_items:0}],
+      verification:{origin_authenticated:false,remote_identity_verified:false,hardware_verified:false,execution_authority:false,result_created:false,draft_created:false},evidence:{evaluation:sha,execution:sha,finalizer:sha,finished:sha,handoff:sha}};
+    const endpoint=info.origin+'/api/intakes/'+info.intake_id+'/operator-attempt',originalPacket=JSON.stringify(packet),observations=[];
+    let response;const served=[];
+    await page.route(endpoint,route=>{if(response.status===200)served.push(createHash('sha256').update(response.body).digest('hex'));return route.fulfill(response);});
+    const card=page.locator('#operator-attempt-view');
+    for(const count of [7,8]){
+      const value=structuredClone(packet);value.model.process_count=count;
+      value.steps=Array.from({length:count},(_,index)=>({...packet.steps[index===0?0:1],index:index+1}));
+      const raw=JSON.stringify(value),pin=createHash('sha256').update(raw).digest('hex');
+      assert.ok(Object.values(value.verification).every(flag=>flag===false));
+      proofWrite(path.join(OUTPUT,'operator-authored-'+count+'.raw.json'),raw);
+      response={status:200,contentType:'application/json',body:raw};
+      if(count===7)await page.goto(info.origin+'/#'+info.intake_id);else await page.locator('#refresh').click();
+      await page.waitForFunction(expected=>document.querySelector('#operator-attempt-view')?.dataset.current==='true'&&document.querySelectorAll('#operator-attempt-view [data-operator-step]').length===expected,count);
+      assert.equal(await card.getAttribute('data-run-id'),binding.run_id);
+      const text=await card.innerText();for(const fragment of ['CLI 선언 기록','원격 실행·모델 신원 미확인','기록의 요청 모델','기록의 모델 프로세스','기록 기준 · tick','업무 미완료','bounded','held','decision_budget','execution_incomplete','결과·DRAFT 생성 없음','stop 선택 없음','sensor.read'])assert.ok(text.includes(fragment),fragment);
+      assert.doesNotMatch(text,/제공된 실제 CLI 시도|실제 CLI 응답|PASS|DRAFT 보기|보정 11/);
+      const result=page.locator('#conducted-result-view');await result.waitFor();assert.notEqual(await result.getAttribute('data-source-kind'),'provided_actual_cli_record');
+      assert.equal(JSON.stringify(value),raw);assert.equal(response.body,raw);assert.equal(served.at(-1),pin);
+      proofWrite(path.join(OUTPUT,'operator-declaration-'+count+'.png'),await card.screenshot());
+      observations.push({count,raw_sha256:pin,raw_unchanged:true,verification:value.verification,labels:'provided declaration, remote execution/model unverified',text});
+    }
+    assert.equal(JSON.stringify(packet),originalPacket);
+    await page.locator('[data-view="notifications"]').click();
+    assert.equal(await card.getAttribute('data-current'),'false');
+    await page.locator('[data-view="intakes"]').click();
+    await card.locator('[data-operator-step]').nth(7).waitFor();
+    assert.equal(await card.getAttribute('data-current'),'true');
+    response={status:503,json:{error:{code:'operator_attempt_binding_mismatch'}}};
+    await page.locator('#refresh').click();await page.locator('#operator-attempt-status').filter({hasText:'결박 불일치'}).waitFor();
+    assert.equal(await card.getAttribute('data-current'),'false');assert.equal(await card.locator('[data-operator-step]').count(),0);
+    assert.doesNotMatch(await card.innerText(),/operator-loop-run:authored/);assert.deepEqual(errors,[]);
+    proofWrite(path.join(OUTPUT,'operator-attempt-dom-results.json'),JSON.stringify({status:'pass',source:'authored intercepted7/8 DTO over one existing synthetic fixture host',observations,checks:['declaration_labels7','declaration_labels8','raw_DTO_unchanged','separate_result','navigation_recheck','stale_removed'],actual_model_calls:0,hardware_calls:0},null,2));
+    console.log(JSON.stringify({status:'pass',operator_attempt_rows:[7,8],output:OUTPUT}));
+    await context.close();
+  }finally{
+    if(browser)await browser.close();
+    host.child.stdin.end('stop\n');const stopped=await host.next(),code=await host.exited;
+    assert.equal(code,0,host.stderr());assert.ok(stopped.resource?.listener_closed);
+  }
+}
+
+(process.env.VLAB_OPERATOR_ATTEMPT_VIEW_ONLY==='1'?operatorAttemptMain():process.env.VLAB_CURRENT_QUESTIONS_RESPONSES_TYPED_ONLY==='1'?currentQuestionsResponseTypedMain():process.env.VLAB_CURRENT_QUESTIONS_ONLY==='1'?currentQuestionsMain():process.env.VLAB_PUBLIC_CLI_PORT_DEMO_ONLY==='1'?freshConductedOperatorMain(true):process.env.VLAB_OPERATOR_RESULT_COPY_ONLY==='1'?operatorResultCopyMain():process.env.VLAB_FRESH_CONDUCTED_OPERATOR_ONLY==='1'?freshConductedOperatorMain():process.env.VLAB_ARTIFACT_STORAGE_KEYBOARD_ONLY==='1'?artifactStorageKeyboardMain():process.env.VLAB_ARTIFACT_STORAGE_VIEW_ONLY==='1'?artifactStorageViewMain():process.env.VLAB_UNIFIED_PROVIDED_FLOW_ONLY==='1'?unifiedProvidedFlowMain():process.env.VLAB_GAP_QUEUE_ONLY==='1'?gapQueueMain():process.env.VLAB_CONDUCTED_RESULT_ONLY==='1'?conductedResultMain():process.env.VLAB_CONDUCTED_PREVIEW_ONLY==='1'?conductedPreviewMain():process.env.VLAB_WORKFLOW_ONLY==='1'?workflowMain():main()).catch(error=>{console.error(error);process.exitCode=1;});

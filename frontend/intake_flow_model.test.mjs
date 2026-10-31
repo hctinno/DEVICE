@@ -1,7 +1,114 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+import {createRequire} from 'node:module';
+import {fileURLToPath} from 'node:url';
 import {validateFixtureRuns, describeFixtureRecord, requireStableFixtureRecords, createFixtureReadGate} from './intake_flow_model.mjs';
 import * as workflowAPI from './intake_flow_model.mjs';
+
+function operatorAttemptLiteral(processCount=1){
+  const sha='a'.repeat(64),binding={intake_id:'I-authored',revision:2,analysis_context_id:sha,
+    context_sha256:sha,analysis_sha256:sha,plan_sha256:sha,plan_input_sha256:sha,
+    run_id:'operator-loop-run:authored',runtime_instance_id:'runtime-authored',job_id:'J-authored'};
+  const step={index:1,action:'sensor.read',before_tick:16,after_tick:16,
+    receipt_status:'ok',effect:'unchanged',cli_tool_items:0};
+  const value={schema_version:1,kind:'operator_attempt_view',status:'bounded',finalization:'held',
+    storage:'not_created',termination_reason:'decision_budget',hold_reason:'execution_incomplete',
+    hold_reasons:[{code:'execution_incomplete',field:'journal/report',detail:null}],virtual_dut_final_state:'transmitting',
+    source_kind:'provided_actual_cli_record',declared_mode:'synthetic_only',binding,
+    method:{method_id:'conducted_synthetic',method_version:1,metric:'on',reference_plane:'source_output'},
+    model:{requested_model:'gpt-6.1-sol',remote_resolved_model:null,process_count:1,cli_tool_items:0,
+      cumulative_processes:25,remaining_processes:0,token_usage:null,cost:null},steps:[step],
+    verification:{origin_authenticated:false,remote_identity_verified:false,hardware_verified:false,
+      execution_authority:false,result_created:false,draft_created:false},
+    evidence:{evaluation:sha,execution:sha,finalizer:sha,finished:sha,handoff:sha}};
+  value.model.process_count=processCount;
+  value.steps=Array.from({length:processCount},(_,index)=>({...step,index:index+1}));
+  return value;
+}
+const parseOperatorLiteral=value=>workflowAPI.parseOperatorAttemptView(JSON.stringify(value),{intake_id:'I-authored',revision:2});
+
+test('operator attempt parser accepts held provenance but rejects extra and mismatched fields',()=>{
+  const value=operatorAttemptLiteral(),parse=parseOperatorLiteral;
+  assert.equal(parse(value).steps[0].action,'sensor.read');
+  assert.equal(parse(value).hold_reasons[0].code,'execution_incomplete');
+  assert.equal(parse(value).hold_reasons[0].field,'journal/report');
+  assert.equal(parse(value).hold_reasons[0].detail,null);
+  for(const mutate of [x=>x.secret='private',x=>x.binding.intake_id='OTHER',x=>x.model.remote_resolved_model='claimed',
+    x=>x.verification.hardware_verified=true,x=>x.model.process_count=2,x=>x.steps[0].action='<script>',
+    x=>x.steps[0].effect='unknown',x=>x.hold_reasons[0].code='measurement_missing']){
+    const broken=structuredClone(value);mutate(broken);assert.throws(()=>parse(broken));
+  }
+  assert.throws(()=>workflowAPI.parseOperatorAttemptView(JSON.stringify(value).replace('"process_count":1','"process_count":NaN'),{intake_id:'I-authored',revision:2}));
+});
+
+function jsonValuesAndKeys(value){
+  if(Array.isArray(value))return 1+value.reduce((sum,item)=>sum+jsonValuesAndKeys(item),0);
+  if(value!==null&&typeof value==='object')return 1+Object.keys(value).length+Object.values(value).reduce((sum,item)=>sum+jsonValuesAndKeys(item),0);
+  return 1;
+}
+test('operator attempt schema uses 108 fixed nodes plus 15 per supported step',()=>{
+  for(const count of [1,2,3,4,5,6,7,8])assert.equal(jsonValuesAndKeys(operatorAttemptLiteral(count)),108+15*count);
+  assert.equal(jsonValuesAndKeys(operatorAttemptLiteral(8)),228);
+});
+for(const count of [5,6,7,8])test('operator attempt accepts supported literal process count '+count,()=>{
+  const value=operatorAttemptLiteral(count),raw=JSON.stringify(value),parsed=parseOperatorLiteral(value);
+  assert.equal(parsed.steps.length,count);assert.equal(parsed.model.process_count,count);
+  assert.equal(parsed.status,'bounded');assert.equal(parsed.finalization,'held');assert.equal(parsed.verification.execution_authority,false);
+  assert.equal(JSON.stringify(value),raw);
+});
+
+test('operator attempt actual builder outputs 1 through 8 pass the actual parser',()=>{
+  const repo=fileURLToPath(new URL('../',import.meta.url));
+  const python=process.env.VLAB_PYTHON||createRequire(import.meta.url)('./managed_paths.cjs').python(repo);
+  const script=String.raw`
+import copy,json
+from tests.test_operator_attempt_view import supplied
+from labflow.operator_attempt_view import prepare_operator_attempt,OperatorAttemptViewError
+def authored(count):
+    source=supplied();execution=source['execution'];loop=execution['loop']
+    original_call=source['evaluation']['model_calls'][0];original_step=loop['steps'][0]
+    calls=[];steps=[]
+    for index in range(count):
+        call=copy.deepcopy(original_call);step=copy.deepcopy(original_step)
+        call.update(index=index+1,before_tick=index,after_tick=index+1)
+        step.update(index=index+1,before={'tick':index},after={'tick':index+1},wire={'proposal':copy.deepcopy(call['proposal'])})
+        calls.append(call);steps.append(step)
+    source['evaluation']['model_calls']=calls;loop['steps']=steps
+    execution['execution']['producer_calls_started']=count
+    source['finished']['local_model_processes']=count
+    for key in ('producer_calls_started','model_process_attempts','version_process_attempts','reserved_model_calls'):loop['budget'][key]=count
+    loop['budget']['harness_usage']['decisions']=count;loop['budget']['limits']['model_calls']=count
+    return source
+raws=[prepare_operator_attempt(authored(count)).decode('utf-8') for count in range(1,9)]
+try:prepare_operator_attempt(authored(9))
+except OperatorAttemptViewError as error:rejected9=str(error)
+else:raise AssertionError('unsupported9 accepted by builder')
+print(json.dumps({'raws':raws,'rejected9':rejected9}))
+`;
+  const child=spawnSync(python,['-B','-X','utf8','-c',script],{cwd:repo,encoding:'utf8',timeout:15000,maxBuffer:1048576,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}});
+  assert.equal(child.error,undefined);assert.equal(child.status,0,child.stderr);assert.equal(child.signal,null);
+  const built=JSON.parse(child.stdout);assert.equal(built.raws.length,8);assert.equal(built.rejected9,'operator_attempt_invalid');
+  for(const [index,raw]of built.raws.entries()){
+    assert.ok(Buffer.byteLength(raw,'utf8')<=16384);
+    const count=index+1,value=workflowAPI.parseOperatorAttemptView(raw,{intake_id:'I-authored',revision:2});
+    assert.equal(value.model.process_count,count);assert.equal(value.steps.length,count);assert.equal(jsonValuesAndKeys(value),108+15*count);
+    assert.equal(value.storage,'not_created');assert.equal(value.verification.execution_authority,false);
+  }
+});
+
+test('operator attempt still rejects unsupported counts, oversized wire and invalid typed fields',()=>{
+  assert.throws(()=>parseOperatorLiteral(operatorAttemptLiteral(9)),/operator_attempt_invalid/);
+  for(const mutate of [v=>v.model.process_count=9,v=>v.steps[0].before_tick=false,
+    v=>v.steps[0].after_tick=16.5,v=>v.verification.execution_authority=true,v=>v.unknown='rejected',
+    v=>v.unknown=[[[[[[[[[[null]]]]]]]]]]]){
+    const value=operatorAttemptLiteral();mutate(value);assert.throws(()=>parseOperatorLiteral(value),/operator_attempt_invalid/);
+  }
+  const raw=JSON.stringify(operatorAttemptLiteral(8)),context={intake_id:'I-authored',revision:2};
+  assert.ok(Buffer.byteLength(raw)<16384);
+  assert.equal(workflowAPI.parseOperatorAttemptView(raw+' '.repeat(16384-Buffer.byteLength(raw)),context).steps.length,8);
+  assert.throws(()=>workflowAPI.parseOperatorAttemptView(raw+' '.repeat(16385-Buffer.byteLength(raw)),context),/operator_attempt_invalid/);
+});
 
 export function fixture() {
   const report = {schema_version: 1, kind: 'virtual_fleet_harness_result', run_id: 'run:ui-1', runtime_instance_id: 'instance:ui-1',

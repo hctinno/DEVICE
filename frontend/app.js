@@ -1,5 +1,5 @@
 import {FIELDS, FACT_LABELS, JOB_LABELS, describeState, factSources, filterIntakes, noticeContext, seoulTime, bytes, validateSnapshot, docxReferenceMatchesRecord} from './model.mjs';
-import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue, parseConductedResultView, describeIntakeGapQueue, parseConductedArtifactReadback, describeConductedArtifactStorage, CONDUCTED_ARTIFACT_HTTP_BYTES, parseConductedCurrentFacts, CONDUCTED_CURRENT_FACTS_HTTP_BYTES} from './intake_flow_model.mjs';
+import {validateFixtureRuns, describeFixtureRecord, describeIntakeWorkflow, requireStableFixtureRecords, createFixtureReadGate, parseConductedPlanPreview, conductedPreviewValue, parseConductedResultView, describeIntakeGapQueue, parseConductedArtifactReadback, describeConductedArtifactStorage, CONDUCTED_ARTIFACT_HTTP_BYTES, parseConductedCurrentFacts, CONDUCTED_CURRENT_FACTS_HTTP_BYTES, parseOperatorAttemptView} from './intake_flow_model.mjs';
 import {validateIntakeReferenceContext,parseIntakeReferenceHistoryJson,parseIntakeReferenceCurrentJson} from './intake-references/model.mjs';
 import {createIntakeReferenceReview} from './intake-references/view.mjs';
 import {createIntakeReferenceTransport} from './intake-references/transport.mjs';
@@ -13,6 +13,7 @@ const conducted={gate:createFixtureReadGate(),context:null,value:null,controller
 const resultView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'전도 결과 제공 기록 조회 대기',errorCode:null};
 const storageView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,status:'산출물 저장 읽기 미관측',errorCode:null};
 const currentFactsView={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,stale:true,errorCode:null};
+const operatorAttempt={gate:createFixtureReadGate(),context:null,value:null,controller:null,pending:false,parentPending:true,status:'작업자 시도 조회 대기'};
 const gapQueueState={intakeStale:true,parentPending:true,intakeCode:null};
 const referenceTransport = createIntakeReferenceTransport();
 const docx={context:null,hintContext:null,visible:false,allowed:false,busy:false,good:null,
@@ -500,6 +501,67 @@ function syncFixtureContext() {
 function conductedContext(view=state){
   const record=view.records.find(item=>item.intake_id===view.selected);
   return record&&view.view==='intakes'?{intake_id:record.intake_id,revision:record.revision,generation:view.snapshotGeneration||0,request_id:''}:null;
+}
+function buildOperatorAttempt(record,snapshot=state,current=operatorAttempt){
+  const context=conductedContext(snapshot),matched=sameFixtureSource(context,current.context),fresh=Boolean(matched&&current.context.generation===context.generation&&!current.pending&&!current.parentPending&&current.value);
+  const area=el('section','section-rule');area.id='operator-attempt-view';area.dataset.current=String(fresh);
+  area.append(el('h4','','CLI 선언 기록 · 제공 자료'));
+  const status=el('p','inline-note',matched?current.status:'작업자 시도 조회 대기');status.id='operator-attempt-status';status.setAttribute('role','status');area.append(status);
+  if(!fresh)return area;
+  const v=current.value,b=v.binding,m=v.model;
+  area.dataset.runId=b.run_id;area.dataset.runtimeId=b.runtime_instance_id;
+  area.append(badge('원격 실행·모델 신원 미확인 · 업무 미완료','warning'),el('p','inline-note','제공 기록의 actual_cli 라벨은 자체 선언입니다. 원격 실행·모델 신원·실행 권한·실장비 검증은 확인되지 않았습니다. 기존 MOCK 결과·DRAFT와 별도 제공 기록입니다.'),
+    metadata([['기록의 접수 / 작업 / revision',`${b.intake_id} / ${b.job_id} / ${b.revision}`],
+      ['기록의 run / runtime',`${b.run_id} / ${b.runtime_instance_id}`],
+      ['source / 선언 모드',`${v.source_kind} / ${v.declared_mode}`],
+      ['기록의 요청 모델 / 원격 신원',`${m.requested_model} / 미확인(null)`],
+      ['기록의 모델 프로세스 / 누적 / 잔여',`${m.process_count} / ${m.cumulative_processes} / ${m.remaining_processes}`],
+      ['기록의 CLI 도구 항목 / 토큰·비용',`${m.cli_tool_items} / 미확인(null)`],
+      ['기록의 종료 / 최종화',`${v.status} · ${v.termination_reason} / ${v.finalization}`],
+      ['저장 보류 이유',`${v.hold_reasons.map(reason=>`${reason.code} (${reason.field})`).join(', ')} · 기록상 결과·DRAFT 생성 없음`],
+      ['기록의 최종 가상 DUT',`${v.virtual_dut_final_state} · stop 선택 없음`]]));
+  const list=el('ol','question-list');list.dataset.operatorSteps='';
+  for(const step of v.steps){const row=el('li','question');row.dataset.operatorStep=String(step.index);row.append(el('strong','',`${step.index}. ${step.action}`),el('p','inline-note',`기록 기준 · tick ${step.before_tick} → ${step.after_tick} · receipt ${step.receipt_status} · effect ${step.effect} · CLI 도구 ${step.cli_tool_items}`));list.append(row);}area.append(list);
+  const proof=el('details');proof.append(el('summary','','원 제공 기록 SHA-256 참조'),metadata(Object.entries(v.evidence).map(([name,sha])=>[name,sha])));area.append(proof);
+  return area;
+}
+function publishOperatorAttempt(next){
+  const record=state.records.find(item=>item.intake_id===state.selected),target=$('#operator-attempt-view');
+  if(!record||!target)return false;
+  target.replaceWith(buildOperatorAttempt(record,state,next));Object.assign(operatorAttempt,next);return true;
+}
+function retireOperatorAttempt(){
+  operatorAttempt.gate.invalidate();operatorAttempt.controller?.abort();
+  Object.assign(operatorAttempt,{value:null,controller:null,pending:false,parentPending:true,status:'현재 관계 미확인 · 재조회 대기'});
+  const record=state.records.find(item=>item.intake_id===state.selected),node=$('#operator-attempt-view');
+  if(record&&node)node.replaceWith(buildOperatorAttempt(record));
+}
+async function refreshOperatorAttempt(){
+  const context=conductedContext();if(!context||operatorAttempt.pending||operatorAttempt.parentPending||referenceDestroyed||referenceSuspended)return;
+  const ticket=operatorAttempt.gate.begin(context);operatorAttempt.controller?.abort();const controller=new AbortController();operatorAttempt.controller=controller;
+  const current=()=>operatorAttempt.gate.isCurrent(ticket,conductedContext()||{})&&!referenceDestroyed&&!referenceSuspended;
+  const timer=setTimeout(()=>controller.abort(),10000);
+  try{
+    publishOperatorAttempt({...operatorAttempt,context,value:null,pending:true,status:'작업자 시도 조회 중'});
+    const response=await fetch(`/api/intakes/${encodeURIComponent(context.intake_id)}/operator-attempt`,{signal:controller.signal,cache:'no-store'});
+    if(!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(response.headers.get('content-type')||''))throw Error();
+    const length=response.headers.get('content-length');if(length!==null&&(!/^\d+$/.test(length)||Number(length)>16384))throw Error();
+    const reader=response.body.getReader(),decoder=new TextDecoder('utf-8',{fatal:true});let raw='',size=0;
+    try{while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>16384){await reader.cancel();throw Error();}raw+=decoder.decode(part.value,{stream:true});}raw+=decoder.decode();}finally{reader.releaseLock();}
+    if(!current())return;
+    if(!response.ok){const code=JSON.parse(raw)?.error?.code;if(!['operator_attempt_not_provided','operator_attempt_binding_mismatch'].includes(code))throw Error();throw Error(code);}
+    const value=parseOperatorAttemptView(raw,context);
+    if(current())publishOperatorAttempt({...operatorAttempt,context,value,pending:false,status:'제공된 CLI 선언 기록 · bounded / held · 업무 미완료'});
+  }catch(error){if(current()){const status=error.message==='operator_attempt_not_provided'?'시도 기록 미제공':error.message==='operator_attempt_binding_mismatch'?'현재 접수·계획 결박 불일치 · 표시 보류':'시도 기록 조회 실패 · 표시 보류';publishOperatorAttempt({...operatorAttempt,context,value:null,pending:false,status});}}
+  finally{clearTimeout(timer);if(current()){operatorAttempt.pending=false;operatorAttempt.controller=null;}}
+}
+function syncOperatorAttempt(){
+  const context=conductedContext();if(context&&operatorAttempt.context&&sameFixtureSource(context,operatorAttempt.context)&&context.generation===operatorAttempt.context.generation)return;
+  operatorAttempt.gate.invalidate();operatorAttempt.controller?.abort();
+  Object.assign(operatorAttempt,{context,value:null,controller:null,pending:false,parentPending:!context,status:'작업자 시도 조회 대기'});
+  const record=state.records.find(item=>item.intake_id===state.selected),node=$('#operator-attempt-view');
+  if(record&&node)node.replaceWith(buildOperatorAttempt(record));
+  if(context)void refreshOperatorAttempt();
 }
 function buildConductedPlanPreview(record,snapshot=state,current=conducted){
   const context=conductedContext(snapshot),matched=sameFixtureSource(context,current.context);
@@ -1080,7 +1142,7 @@ function buildDetail(view,docxNext=docx) {
   ]));
   const intent = (view.intentReviews || []).find(value=>value.input_binding.intake_id===record.intake_id&&value.input_binding.revision===record.revision);
   if (intent) body.append(renderTestIntentReview(record, intent));
-  body.append(renderFacts(record), renderQuestions(record), buildFixturePanel(record, view), renderJobs(record), renderFiles(record));
+  body.append(renderFacts(record), renderQuestions(record), buildFixturePanel(record, view), buildOperatorAttempt(record,view), renderJobs(record), renderFiles(record));
   const notices = section('이 접수의 알림 기록', '전송·읽음 상태 미제공');
   const related = view.notices.filter(notice => notice.intake_id === record.intake_id);
   if (!related.length) notices.append(el('p', 'muted', '저장된 알림이 없습니다.'));
@@ -1139,6 +1201,8 @@ function publishView(prepared) {
     syncArtifactStorage();
     currentFactsView.parentPending=false;
     syncCurrentFacts();
+    operatorAttempt.parentPending=false;
+    syncOperatorAttempt();
     refreshGapQueue();
   } finally { if (!referenceDestroyed) referenceGuard = false; }
 }
@@ -1163,6 +1227,7 @@ function changeView(view) {
   syncResultView();
   syncArtifactStorage();
   syncCurrentFacts();
+  syncOperatorAttempt();
   refreshGapQueue();
 }
 
@@ -1173,6 +1238,7 @@ async function refresh() {
   retireResultView();
   retireArtifactStorage();
   retireCurrentFacts();
+  retireOperatorAttempt();
   const request = ++state.request;
   if (!setReferencePending(true)) return;
   state.controller?.abort();
@@ -1235,6 +1301,7 @@ addEventListener('pagehide', event => {
   retireResultView();
   retireArtifactStorage();
   retireCurrentFacts();
+  retireOperatorAttempt();
   if (event.persisted) {
     if (!referenceCanChange()) return;
     referenceSuspended = true;
