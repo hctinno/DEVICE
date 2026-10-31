@@ -147,6 +147,99 @@ class OperatorContextProjectionTests(unittest.TestCase):
             self.project(full)
         self.assertIn("remaining_budget", full)
 
+    def test_missing_source_reference_keeps_detached_full_context(self):
+        full = context()
+        full["observations"]["devices"]["sensor"]["values"]["source_id"] = "missing-device"
+        before = deepcopy(full)
+        out = self.project(full)
+        self.assertEqual(out, before)
+        self.assertIsNot(out, full)
+        self.assertEqual(len(out["topology"]["devices"]), 5)
+        out["observations"]["devices"]["sensor"]["values"]["source_id"] = "changed"
+        self.assertEqual(full, before)
+
+    def test_unknown_explicit_reference_in_selected_payload_keeps_full_context(self):
+        fields = ("device_id", "source_id", "input_source_id", "reference_source_id")
+        for location in ("sensor", "receipt", "profile", "action"):
+            for field in fields:
+                with self.subTest(location=location, field=field):
+                    full = context()
+                    if location == "sensor":
+                        payload = full["observations"]["devices"][location]["values"]
+                    elif location == "receipt":
+                        payload = full["last_receipt"]["values"]
+                    elif location == "profile":
+                        payload = {}
+                        full["catalog"]["profiles"][2]["context"] = {"nested": [payload]}
+                    else:
+                        payload = {}
+                        full["role_actions"]["dut"]["read"]["parameters"] = {"nested": [payload]}
+                    payload[field] = "missing-device"
+                    before = deepcopy(full)
+                    out = self.project(full)
+                    self.assertEqual(out, before)
+                    self.assertIsNot(out, full)
+                    self.assertIsNot(out["observations"]["devices"], full["observations"]["devices"])
+                    self.assertEqual(full, before)
+
+    def test_unselected_unknown_reference_does_not_prevent_compaction(self):
+        for field in ("device_id", "source_id", "input_source_id", "reference_source_id"):
+            for identity in ("missing-device", None):
+                with self.subTest(field=field, identity=identity):
+                    full = context()
+                    full["observations"]["devices"]["spare"]["values"][field] = identity
+                    full["catalog"]["profiles"][4]["context"] = {field: identity}
+                    full["role_actions"]["spare"]["read"]["parameters"] = {field: identity}
+                    before = deepcopy(full)
+                    out = self.project(full)
+                    self.assertEqual(len(out["topology"]["devices"]), 4)
+                    self.assertNotIn("spare", out["observations"]["devices"])
+                    self.assertEqual(full, before)
+
+    def test_reference_added_to_closure_is_checked_before_pruning(self):
+        full = context()
+        extra = profile("extra", "extra")
+        full["catalog"]["profiles"].append(extra)
+        full["topology"]["devices"].append({"id": "extra", "profile_id": "profile:extra"})
+        full["observations"]["devices"]["extra"] = {
+            "device_id": "extra", "profile_id": "profile:extra", "role": "extra",
+            "status": "ok", "values": {}}
+        full["role_actions"]["extra"] = {"read": {"kind": "read"}}
+        full["observations"]["devices"]["sensor"]["values"]["source_id"] = "spare"
+        full["observations"]["devices"]["spare"]["values"]["source_id"] = "missing-device"
+        out = self.project(full)
+        self.assertEqual(len(out["topology"]["devices"]), 6)
+        self.assertEqual(out, full)
+        self.assertIsNot(out, full)
+
+    def test_unresolved_source_value_types_keep_full_context(self):
+        for field in ("source_id", "input_source_id", "reference_source_id"):
+            for identity in (None, False, 0, "", [], {}):
+                with self.subTest(field=field, identity=identity):
+                    full = context()
+                    full["observations"]["devices"]["sensor"]["values"][field] = identity
+                    self.assertEqual(self.project(full), full)
+
+    def test_known_explicit_references_keep_closure_and_normal_compaction(self):
+        for field in ("device_id", "source_id", "input_source_id", "reference_source_id"):
+            for identity, count in (("dut", 4), ("spare", 5)):
+                with self.subTest(field=field, identity=identity):
+                    full = context()
+                    full["observations"]["devices"]["sensor"]["values"][field] = identity
+                    out = self.project(full)
+                    self.assertEqual(len(out["topology"]["devices"]), count)
+                    self.assertEqual(out["observations"]["devices"]["sensor"],
+                                     full["observations"]["devices"]["sensor"])
+
+    def test_unrelated_text_and_other_id_domains_still_compact(self):
+        full = context()
+        full["catalog"]["profiles"][2]["context"] = {
+            "description": "missing-device", "source": "missing-device",
+            "profile_id": "external-profile", "reference": "missing-device"}
+        out = self.project(full)
+        self.assertEqual(len(out["topology"]["devices"]), 4)
+        self.assertEqual(out["catalog"]["profiles"][2], full["catalog"]["profiles"][2])
+
     def test_original_host_prompt_cap_is_checked_before_compaction(self):
         full = context()
         full["catalog"]["profiles"][-1]["capability_scope"] = "x" * 270000

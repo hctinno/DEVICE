@@ -4,6 +4,20 @@ from .model_operator_boundary import _CONTEXT_BYTES, _context, _snapshot
 
 __all__ = ["project_operator_context"]
 
+_DEVICE_REFERENCES = frozenset(("device_id", "source_id", "input_source_id", "reference_source_id"))
+
+
+def _unresolved_reference(value, known):
+    if type(value) is dict:
+        for key, item in value.items():
+            if key in _DEVICE_REFERENCES and (type(item) is not str or item not in known):
+                return True
+            if _unresolved_reference(item, known):
+                return True
+    elif type(value) is list:
+        return any(_unresolved_reference(item, known) for item in value)
+    return False
+
 
 def _references(value, known):
     """Find explicit values naming topology nodes without interpreting unknown IDs."""
@@ -62,6 +76,8 @@ def _compact(value):
         return None
     receipt = value["last_receipt"]
     if receipt is not None:
+        if _unresolved_reference(receipt, known):
+            return None
         if any(key in receipt for key in ("device_id", "profile_id", "role")):
             if type(receipt.get("device_id")) is not str or receipt["device_id"] not in known:
                 return None
@@ -129,12 +145,13 @@ def _compact(value):
                     pending.append(neighbor)
         chosen_profiles = {by_node[identity]["profile_id"] for identity in selected}
         chosen_roles = {by_profile[identity]["role"] for identity in chosen_profiles}
-        for identity in tuple(selected):
-            selected.update(_references(observations[identity], known))
-        for profile_id in chosen_profiles:
-            selected.update(_references(by_profile[profile_id], known))
-        for role in chosen_roles:
-            selected.update(_references(actions[role], known))
+        payloads = [observations[identity] for identity in selected]
+        payloads.extend(by_profile[profile_id] for profile_id in chosen_profiles)
+        payloads.extend(actions[role] for role in chosen_roles)
+        for payload in payloads:
+            if _unresolved_reference(payload, known):
+                return None
+            selected.update(_references(payload, known))
         if len(selected) == before:
             break
     chosen_profiles = {by_node[identity]["profile_id"] for identity in selected}
