@@ -4,45 +4,21 @@
 
 ## 명시 제공과 조회
 
-호스트 시작 전에 승인된 평가 JSON 1개와 같은 시도의 `execution-receipt.json`, `finalizer-receipt.json`, `finished-v1.json`, `current-handoff.json`을 **읽기 전용**으로 제공한다. 아래 환경 변수는 운영자가 허용된 정확한 파일/디렉터리와 현재 Store 루트로 지정한다. 이 명령은 보존 기록의 재생 없는 읽기 화면 시작이며 모델 호출, 장비 제어, 결과 계산, 저장, 포털 제출을 하지 않는다. 같은 접수의 현재 Store가 없는 경우 시도 GET은 503으로 보류된다.
+호스트 시작 전에 승인된 평가 JSON 1개와 같은 시도의 `execution-receipt.json`, `finalizer-receipt.json`, `finished-v1.json`, `current-handoff.json`을 **읽기 전용**으로 제공한다. 정식 `labflow.intake_serve`에 허용된 절대 파일·디렉터리와 기존 Store 루트를 지정한다. 이 명령은 보존 기록의 재생 없는 읽기 화면 시작이며 모델 호출, 장비 제어, 결과 계산, 저장, 포털 제출을 하지 않는다. 같은 접수의 현재 Store가 없는 경우 시도 GET은 503으로 보류된다.
 
 ```powershell
-$env:DGM_ATTEMPT_EVALUATION_JSON = '<approved evaluation JSON absolute path>'
-$env:DGM_ATTEMPT_RECEIPT_DIR = '<approved four receipt files directory>'
-$env:DGM_INTAKE_WORKSPACE = '<current intake Store root absolute path>'
-@'
-import hashlib, json, os
-from pathlib import Path
-from labflow.ui_server import create_server
-
-paths = {
-    'evaluation': Path(os.environ['DGM_ATTEMPT_EVALUATION_JSON']),
-    **{key: Path(os.environ['DGM_ATTEMPT_RECEIPT_DIR']) / name for key, name in {
-        'execution': 'execution-receipt.json',
-        'finalizer': 'finalizer-receipt.json',
-        'finished': 'finished-v1.json',
-        'handoff': 'current-handoff.json',
-    }.items()},
-}
-def retained_bytes(path):
-    with path.open('rb') as stream:
-        data = stream.read(1_048_577)
-    if len(data) > 1_048_576:
-        raise ValueError('supplied receipt too large')
-    return data
-
-blobs = {key: retained_bytes(path) for key, path in paths.items()}
-source = {key: json.loads(data) for key, data in blobs.items()}
-source['source_pins'] = {key: hashlib.sha256(data).hexdigest() for key, data in blobs.items()}
-server = create_server(Path(os.environ['DGM_INTAKE_WORKSPACE']), host='127.0.0.1', port=0,
-                       operator_attempt_inputs=(source,))
-print(f'http://127.0.0.1:{server.server_port}/', flush=True)
-try:
-    server.serve_forever()
-finally:
-    server.server_close()
-'@ | python -
+python -B -m labflow.intake_serve `
+  --workspace '<existing Store absolute directory>' --port 0 `
+  --read-scope intakes --intake-id '<same record intake ID>' `
+  --operator-attempt-evaluation '<approved evaluation absolute file>' `
+  --operator-attempt-receipts '<approved four-receipt absolute directory>'
 ```
+
+두 제공 옵션은 각각 정확히 한 번씩 함께 지정한다. `metadata` scope에서는 파일을 읽기 전에 거절하고, `intakes`에서는 기록의 접수가 허용 ID에 포함돼야 한다. 기존 `workspace` scope도 사용할 수 있다. 옵션이 없으면 기존 동작과 source 파일 읽기 0을 유지하며 새 Store/DB를 생성하지 않는다.
+
+평가 파일과 고정 네 파일만 각각 최대 1 MiB 읽으며 디렉터리를 검색하지 않는다. UTF-8 JSON 객체만 받고 중복 키·비유한 수·잘못된 인코딩/Unicode를 거절한다. 원 바이트 SHA-256에는 공백·줄바꿈도 포함한다. builder가 다섯 기록의 결박을 검증한 뒤 기존 서버가 불변 캐시를 준비하며, 현재 Store 재검사는 기존 GET 경로에서 수행한다.
+
+편측·중복·비절대 옵션이나 잘못된 제공 파일은 종료 2와 고정 `intake_reference_server_invalid_argument` 오류로 거절한다. 기존 Store/호스트/출력 오류와 자원 정리 규칙은 유지한다. stdout의 기존 ready JSON과 stderr의 고정 오류 JSON에는 원문·파일 경로·예외·비밀을 넣지 않는다.
 
 GET `/api/intakes/{intake_id}/operator-attempt`은 생성 시 검증·축소한 불변 JSON 캐시만 돌려준다. 매 GET에서 현재 접수/작업 ID, revision, 문맥·분석·계획·계획 입력 SHA를 이중 읽기로 재검사한다. 미제공은 `operator_attempt_not_provided`, 결박 불일치는 `operator_attempt_binding_mismatch`(503)이다. 요청에 파일명, 경로, 명령 또는 새 실행 인자를 넣는 API는 없다. HEAD/POST는 거절한다. source pin SHA는 제공 파일 bytes의 식별자이며 원본 진위의 외부 인증은 아니다.
 
