@@ -505,23 +505,23 @@ function conductedContext(view=state){
 function buildOperatorAttempt(record,snapshot=state,current=operatorAttempt){
   const context=conductedContext(snapshot),matched=sameFixtureSource(context,current.context),fresh=Boolean(matched&&current.context.generation===context.generation&&!current.pending&&!current.parentPending&&current.value);
   const area=el('section','section-rule');area.id='operator-attempt-view';area.dataset.current=String(fresh);
-  area.append(el('h4','','AI 작업자 시도 · 제공 기록'));
+  area.append(el('h4','','CLI 선언 기록 · 제공 자료'));
   const status=el('p','inline-note',matched?current.status:'작업자 시도 조회 대기');status.id='operator-attempt-status';status.setAttribute('role','status');area.append(status);
   if(!fresh)return area;
   const v=current.value,b=v.binding,m=v.model;
   area.dataset.runId=b.run_id;area.dataset.runtimeId=b.runtime_instance_id;
-  area.append(badge('실제 CLI 응답 · 업무 미완료','warning'),el('p','inline-note','제공 기록의 actual_cli 라벨은 자체 선언입니다. 원격 모델 신원·실행 권한·실장비 검증은 확인되지 않았습니다. 기존 MOCK 결과·DRAFT와 별도 실행입니다.'),
-    metadata([['접수 / 작업 / revision',`${b.intake_id} / ${b.job_id} / ${b.revision}`],
-      ['원 run / runtime',`${b.run_id} / ${b.runtime_instance_id}`],
+  area.append(badge('원격 실행·모델 신원 미확인 · 업무 미완료','warning'),el('p','inline-note','제공 기록의 actual_cli 라벨은 자체 선언입니다. 원격 실행·모델 신원·실행 권한·실장비 검증은 확인되지 않았습니다. 기존 MOCK 결과·DRAFT와 별도 제공 기록입니다.'),
+    metadata([['기록의 접수 / 작업 / revision',`${b.intake_id} / ${b.job_id} / ${b.revision}`],
+      ['기록의 run / runtime',`${b.run_id} / ${b.runtime_instance_id}`],
       ['source / 선언 모드',`${v.source_kind} / ${v.declared_mode}`],
-      ['요청 모델 / 원격 resolved',`${m.requested_model} / 미확인(null)`],
-      ['새 모델 프로세스 / 누적 / 잔여',`${m.process_count} / ${m.cumulative_processes} / ${m.remaining_processes}`],
-      ['CLI 도구 항목 / 토큰·비용',`${m.cli_tool_items} / 미확인(null)`],
-      ['종료 / 최종화',`${v.status} · ${v.termination_reason} / ${v.finalization}`],
-      ['저장 보류 이유',`${v.hold_reasons.map(reason=>`${reason.code} (${reason.field})`).join(', ')} · 결과·DRAFT 생성 없음`],
-      ['최종 가상 DUT',`${v.virtual_dut_final_state} · stop 선택 없음`]]));
+      ['기록의 요청 모델 / 원격 신원',`${m.requested_model} / 미확인(null)`],
+      ['기록의 모델 프로세스 / 누적 / 잔여',`${m.process_count} / ${m.cumulative_processes} / ${m.remaining_processes}`],
+      ['기록의 CLI 도구 항목 / 토큰·비용',`${m.cli_tool_items} / 미확인(null)`],
+      ['기록의 종료 / 최종화',`${v.status} · ${v.termination_reason} / ${v.finalization}`],
+      ['저장 보류 이유',`${v.hold_reasons.map(reason=>`${reason.code} (${reason.field})`).join(', ')} · 기록상 결과·DRAFT 생성 없음`],
+      ['기록의 최종 가상 DUT',`${v.virtual_dut_final_state} · stop 선택 없음`]]));
   const list=el('ol','question-list');list.dataset.operatorSteps='';
-  for(const step of v.steps){const row=el('li','question');row.dataset.operatorStep=String(step.index);row.append(el('strong','',`${step.index}. ${step.action}`),el('p','inline-note',`tick ${step.before_tick} → ${step.after_tick} · receipt ${step.receipt_status} · effect ${step.effect} · CLI 도구 ${step.cli_tool_items}`));list.append(row);}area.append(list);
+  for(const step of v.steps){const row=el('li','question');row.dataset.operatorStep=String(step.index);row.append(el('strong','',`${step.index}. ${step.action}`),el('p','inline-note',`기록 기준 · tick ${step.before_tick} → ${step.after_tick} · receipt ${step.receipt_status} · effect ${step.effect} · CLI 도구 ${step.cli_tool_items}`));list.append(row);}area.append(list);
   const proof=el('details');proof.append(el('summary','','원 제공 기록 SHA-256 참조'),metadata(Object.entries(v.evidence).map(([name,sha])=>[name,sha])));area.append(proof);
   return area;
 }
@@ -551,7 +551,7 @@ async function refreshOperatorAttempt(){
     if(!current())return;
     if(!response.ok){const code=JSON.parse(raw)?.error?.code;if(!['operator_attempt_not_provided','operator_attempt_binding_mismatch'].includes(code))throw Error();throw Error(code);}
     const value=parseOperatorAttemptView(raw,context);
-    if(current())publishOperatorAttempt({...operatorAttempt,context,value,pending:false,status:'제공된 실제 CLI 시도 · bounded / held · 업무 미완료'});
+    if(current())publishOperatorAttempt({...operatorAttempt,context,value,pending:false,status:'제공된 CLI 선언 기록 · bounded / held · 업무 미완료'});
   }catch(error){if(current()){const status=error.message==='operator_attempt_not_provided'?'시도 기록 미제공':error.message==='operator_attempt_binding_mismatch'?'현재 접수·계획 결박 불일치 · 표시 보류':'시도 기록 조회 실패 · 표시 보류';publishOperatorAttempt({...operatorAttempt,context,value:null,pending:false,status});}}
   finally{clearTimeout(timer);if(current()){operatorAttempt.pending=false;operatorAttempt.controller=null;}}
 }
