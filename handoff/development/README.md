@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+계획 source→guest/Fleet 후속f0356f0도 독립13·총괄61로 수용했다. 총괄61에는 자기 loopback wire와 합성 Store→계획이 각각1 포함되며 실제 Android 부팅은 RAM2039<3584로0이다. CLI/runtime의 명시 plan-bundle 선택 연결은 다음 구현이며, 현재 API의 caller snapshot 검증을 전체 시험방법·AI 업무·실물 성공으로 바꾸지 않는다.
+
 2026-10-31 원 Goal의 구현·검수·통합을 재개했다. guest RF bridge 독립23·총괄17/관리경로12, context fallback 독립48/MOCK1·총괄43, 시도 화면 전체8 독립 qualified Yes·총괄 Python10/Node8·실제 Store/API/Chromium 합성7행을 수용했다. 실제 AOSP/ADB·AI 업무 성공·물리 검증으로 확대하지 않으며 기존 reference-history 미설정503/console1은 보존했다. 개발1 로컬 PDF OCR 근거, 개발2 producer 대기 중 취소, 개발3 합성 계획 source 연결, 개발4 정식 CLI 제공기록 연결을 [후속 대장](NEXT-004.md)의 고정 공간/소유 범위에서 이어간다. 모델·부팅·물리 권한이나 소진 한도를 새로 만들지 않는다.
 
 2026-10-31 경로 통합 완료. 프로젝트 `.local/development/integration`과 `workspaces/dev1`~`dev4`의 고정5만 재사용한다. 원 C루트160폴더 중 고정5/비Git2를 실제 이전하고, 냉각153과 임시2는 실제 바이트·Git 보존/해시 대조 후 회수해 C루트 autolab0·등록5를 확인했다. 담당4의 common733 인수/후보 보존·각 branch push/원격 exact·새 cwd/branch guard를 인수했다. 삭제 후 managed28/Node13·새 합성 PDF/MOCK→가상 측정·계산·저장/DRAFT·HTTP5/실제 Chromium 조회가 통과했고 실제 모델/실물0이다. 결과·실패는 runs, 공통 도구는 toolchains, 고유 보존은 archive로 둔다. 원 이력 바이트·Codex25/25·Vertex6/3072·승인·실패·unknown은 유지한다. 경로 정리를 원 Goal 완료로 보지 않고 [후속 대장](NEXT-004.md)의 원 후보 수정·독립 검수·통합을 이어간다. 실행은 [관리 경로 안내](../../docs/fcc/managed_runtime_paths_usage.md)를 따른다.
