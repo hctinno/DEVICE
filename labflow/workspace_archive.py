@@ -475,6 +475,8 @@ if os.name == "nt":
     _kernel.FindNextStreamW.restype = wintypes.BOOL
     _kernel.FindClose.argtypes = [wintypes.HANDLE]
     _kernel.FindClose.restype = wintypes.BOOL
+    _kernel.MoveFileExW.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.DWORD]
+    _kernel.MoveFileExW.restype = wintypes.BOOL
 
 
 def _handle_info(handle):
@@ -595,7 +597,13 @@ def _durable_file(path):
 
 
 def _publish(path, producer, digest, size):
-    """Create-only publication; orphaned pending files remain diagnosable."""
+    """Create-only publication; orphaned pending files remain diagnosable.
+
+    Concurrent writers are verified on local Windows NTFS. Its same-directory
+    WRITE_THROUGH rename has no REPLACE_EXISTING or COPY_ALLOWED flag and does
+    not expose the link/unlink nlink transition to another verifier. Other
+    platforms retain hardlink publication and require sequential archivers.
+    """
     _mkdir(path.parent)
     if os.path.lexists(_extended(path)):
         producer(None)
@@ -608,13 +616,24 @@ def _publish(path, producer, digest, size):
         output.flush()
         os.fsync(output.fileno())
     _verify_blob(pending, digest, size)
+    moved = False
     try:
-        os.link(_extended(pending), _extended(path), follow_symlinks=False)
+        if os.name == "nt":
+            # Same parent/volume; never replace, copy-delete or defer to reboot.
+            if not _kernel.MoveFileExW(_extended(pending), _extended(path), 0x8):
+                error = ctypes.get_last_error()
+                if error in (80, 183):  # ERROR_FILE_EXISTS / ERROR_ALREADY_EXISTS
+                    raise FileExistsError(error, "archive publication destination exists", str(path))
+                raise ctypes.WinError(error)
+            moved = True
+        else:
+            os.link(_extended(pending), _extended(path), follow_symlinks=False)
     except FileExistsError:
         _verify_blob(path, digest, size)
     _verify_blob(path, digest, size)
     _durable_file(path)
-    os.unlink(_extended(pending))
+    if not moved:
+        os.unlink(_extended(pending))
     if os.name != "nt":
         descriptor = os.open(path.parent, os.O_RDONLY)
         try:
