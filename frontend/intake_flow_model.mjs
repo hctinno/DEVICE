@@ -214,6 +214,35 @@ const RESULT_REASONS='provided_revision_changed expected_current_binding_missing
 export function parseConductedResultView(raw,context){
   return validateConductedResultPacket(previewJSON(raw,1048576,true),context);
 }
+
+export function parseOperatorAttemptView(raw,context){
+  const need=x=>{if(!x)throw Error('operator_attempt_invalid');};
+  const keys=(x,names)=>{const fields=names.split(' ');need(x!==null&&typeof x==='object'&&!Array.isArray(x)&&Object.keys(x).length===fields.length&&fields.every(k=>Object.hasOwn(x,k)));};
+  const sha=x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x),id=x=>typeof x==='string'&&/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,149}$/.test(x),integer=x=>Number.isSafeInteger(x);
+  try{
+    // Exact DTO: 108 fixed value/key nodes plus 15 per step, with at most 8 steps.
+    const v=previewJSON(raw,16384,true,{maxDepth:9,maxNodes:108+15*8});
+    keys(v,'schema_version kind status finalization storage termination_reason hold_reason hold_reasons virtual_dut_final_state source_kind declared_mode binding method model steps verification evidence');
+    need(v.schema_version===1&&v.kind==='operator_attempt_view'&&v.status==='bounded'&&v.finalization==='held'&&v.storage==='not_created'&&v.termination_reason==='decision_budget'&&v.hold_reason==='execution_incomplete'&&v.virtual_dut_final_state==='transmitting'&&v.source_kind==='provided_actual_cli_record'&&v.declared_mode==='synthetic_only');
+    need(Array.isArray(v.hold_reasons)&&v.hold_reasons.length===1);keys(v.hold_reasons[0],'code field detail');
+    need(v.hold_reasons[0].code===v.hold_reason&&v.hold_reasons[0].field==='journal/report'&&v.hold_reasons[0].detail===null);
+    const b=v.binding;keys(b,'intake_id revision analysis_context_id context_sha256 analysis_sha256 plan_sha256 plan_input_sha256 run_id runtime_instance_id job_id');
+    need(b.intake_id===context.intake_id&&b.revision===context.revision&&integer(b.revision)&&b.revision>0&&id(b.intake_id)&&id(b.job_id)&&id(b.run_id)&&id(b.runtime_instance_id));
+    for(const key of ['analysis_context_id','context_sha256','analysis_sha256','plan_sha256','plan_input_sha256'])need(sha(b[key]));
+    keys(v.method,'method_id method_version metric reference_plane');need(v.method.method_id==='conducted_synthetic'&&v.method.method_version===1&&['on','time','peak'].includes(v.method.metric)&&v.method.reference_plane==='source_output');
+    const m=v.model;keys(m,'requested_model remote_resolved_model process_count cli_tool_items cumulative_processes remaining_processes token_usage cost');
+    need(typeof m.requested_model==='string'&&/^[a-z0-9][a-z0-9.-]{0,63}$/.test(m.requested_model)&&m.remote_resolved_model===null&&integer(m.process_count)&&m.process_count>0&&m.process_count<=8&&m.cli_tool_items===0&&integer(m.cumulative_processes)&&m.cumulative_processes>=m.process_count&&m.remaining_processes===0&&m.token_usage===null&&m.cost===null);
+    need(Array.isArray(v.steps)&&v.steps.length===m.process_count);
+    for(const [index,s] of v.steps.entries()){
+      keys(s,'index action before_tick after_tick receipt_status effect cli_tool_items');
+      need(s.index===index+1&&['advance','dut.start','sensor.acquire','sensor.read'].includes(s.action)&&integer(s.before_tick)&&integer(s.after_tick)&&s.before_tick>=0&&s.after_tick>=s.before_tick&&s.after_tick<=100000&&['pending','ok'].includes(s.receipt_status)&&['changed','unchanged'].includes(s.effect)&&s.cli_tool_items===0);
+    }
+    keys(v.verification,'origin_authenticated remote_identity_verified hardware_verified execution_authority result_created draft_created');
+    need(Object.values(v.verification).every(value=>value===false));
+    keys(v.evidence,'evaluation execution finalizer finished handoff');need(Object.values(v.evidence).every(sha));
+    return v;
+  }catch{throw Error('operator_attempt_invalid');}
+}
 function validateConductedResultPacket(v,context){
   const need=x=>{if(!x)throw Error('intake_conducted_result_invalid');};
   const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
