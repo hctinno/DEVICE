@@ -18,6 +18,7 @@ from .harness import FleetHarness as _Harness
 from .integration import get_role_actions as _actions
 from .model_operator_boundary import (ModelOperatorBoundaryError,
     build_operator_prompt as _build, decode_operator_response as _decode)
+from .operator_context_projection import project_operator_context as _project
 from .journal import (OperatorJournal as _Journal, read_operator_journal as _read_journal,
     _header as _journal_header, _record as _journal_record)
 from .codex_virtual_one_action import (_copy as _native_copy,
@@ -52,6 +53,7 @@ _RECEIPT_KEYS = set('schema_version kind exchange_ref status failure bindings cl
 _SOURCE = ('codex_cli_response.py', 'virtual_fleet/codex_virtual_loop.py',
     'virtual_fleet/codex_virtual_one_action.py', 'virtual_fleet/operator_response_schema.py',
     'virtual_fleet/model_operator_boundary.py',
+    'virtual_fleet/operator_context_projection.py',
     'virtual_fleet/harness.py', 'virtual_fleet/evaluation.py', 'virtual_fleet/catalog.py',
     'virtual_fleet/integration.py', 'virtual_fleet/core.py', 'virtual_fleet/rf.py',
     'virtual_fleet/facility.py', 'virtual_fleet/instruments.py', 'virtual_fleet/journal.py')
@@ -110,6 +112,13 @@ def _copy(value, cap=262144, code='retention_failed'):
         return _native_copy(value, cap)
     except _ParentFault:
         _fail(code)
+
+
+def _validate_full_prompt(*, public, producer_name, delegation, ids):
+    """Preserve the original host prompt cap without retaining or dispatching it."""
+    prompt = _build(public, producer_name=producer_name, delegation=delegation, **ids)
+    if len(_C(prompt)) > _FILES['prompt'][1]:
+        _fail('limit_exceeded')
 
 
 def _now():
@@ -652,7 +661,6 @@ class _Loop:
             self.before=self.observation('before',snapshot['observations']); self.current()
             self.artifact('context8',snapshot)
             public=_copy(snapshot,1048576); remaining=public.pop('remaining_budget')
-            self.artifact('context7',public)
             self.phase('prompt')
             wall=min(self.deadline-_now(),remaining['wall_seconds'])
             budgets=dict(decisions=remaining['decisions']+1,logical_requests=remaining['logical_requests'],
@@ -661,6 +669,11 @@ class _Loop:
                             outer_limits=dict(model_calls=self.model_process_limit-self.r['budget']['reserved_model_calls'],wall_seconds=wall))
             ids=dict(run_id=self.r['run_id'],runtime_instance_id=self.trial.runtime_instance_id,
                      decision_id='operator-loop-decision:'+uuid.uuid4().hex,model_request_id='operator-loop-request:'+uuid.uuid4().hex)
+            # Validate the entire original public request with the unchanged boundary.
+            # This transient prompt is neither retained nor sent to the producer.
+            _validate_full_prompt(public=public,producer_name=_PRODUCER,delegation=delegation,ids=ids)
+            public=_project(public)
+            self.artifact('context7',public)
             prompt=_build(public,producer_name=_PRODUCER,delegation=delegation,**ids)
             step['binding']=_copy(prompt['binding'])
             self.artifact('binding',dict(binding=prompt['binding'],delegation=delegation,remaining_budget=remaining))

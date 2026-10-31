@@ -598,9 +598,27 @@ class LoopTests(unittest.TestCase):
         ids = [p['binding']['runtime_instance_id'] for p in self.prompts]
         self.assertEqual(set(ids), {self.trials[0].runtime_instance_id})
         self.assertEqual(len({p['binding']['model_request_id'] for p in self.prompts}), len(self.prompts))
-        for previous, prompt in zip(r['steps'], self.prompts[1:]):
-            obs = json.loads(prompt['messages'][1]['content'])['request']['user_input']['public_context']['observations']
-            self.assertEqual(H(C(obs)), previous['after']['sha256'])
+        folder = self.driver.root / 'run-1/calls'
+        for step, prompt in zip(r['steps'], self.prompts):
+            step_folder = folder / f'{step["index"]:04d}'
+            full = json.loads((step_folder / 'context8.json').read_bytes())
+            compact = json.loads((step_folder / 'public-context7.json').read_bytes())
+            user = json.loads(prompt['messages'][1]['content'])['request']['user_input']
+            self.assertEqual(len(full['topology']['devices']), 64)
+            self.assertEqual(len(full['catalog']['profiles']), 64)
+            self.assertIn('remaining_budget', full)
+            self.assertNotIn('remaining_budget', compact)
+            self.assertEqual(len(compact['topology']['devices']), 11)
+            self.assertEqual(len(compact['topology']['connections']), 13)
+            self.assertEqual(len(compact['catalog']['profiles']), 11)
+            self.assertEqual(len(compact['observations']['devices']), 11)
+            self.assertEqual(user['public_context'], compact)
+            self.assertEqual(prompt['binding']['context_sha256'], H(C(compact)))
+            self.assertEqual(user['delegation']['scope'], 'rf_sensor_proposal_v1')
+            self.assertEqual(H(C(full['observations'])), step['before']['sha256'])
+        for previous, next_step in zip(r['steps'], r['steps'][1:]):
+            full = json.loads((folder / f'{next_step["index"]:04d}' / 'context8.json').read_bytes())
+            self.assertEqual(H(C(full['observations'])), previous['after']['sha256'])
 
     def test_completed_claim_without_measurement_is_not_goal(self):
         self.sequence = [dict(kind='stop', claim='completed', reason='claim only')]
