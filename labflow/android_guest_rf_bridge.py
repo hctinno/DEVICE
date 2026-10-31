@@ -15,6 +15,8 @@ import time
 import uuid
 
 from . import android_emulator_check as check
+from .intake_conducted_twin_plan import build_conducted_twin_plan_input
+from .store import canonical
 from .virtual_fleet.catalog import load_catalog
 from .virtual_fleet.integration import create_conducted_example
 
@@ -268,11 +270,18 @@ def _measurement(receipt, device, revision, after_tick):
     return value
 
 
-def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process):
-    """Run one fixed guest control lifecycle and one same-Fleet RF observation."""
+def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process,
+                       source_settings=None):
+    """Run owned guest control and same-Fleet RF using one detached exact-six input.
+
+    None retains the original fixed diagnostic. A caller declaration is synthetic
+    input only; it does not authenticate intake evidence or grant an OS boot.
+    """
     check._require_rf_bridge_endpoint(endpoint)
     _owned_identity(report, endpoint, server)
-    source = dict(SOURCE_SETTINGS)
+    if source_settings is not None and type(source_settings) is not dict:
+        raise check.BoundaryError('source_six_required')
+    source = dict(SOURCE_SETTINGS if source_settings is None else source_settings)
     tokens = _source_tokens(source)
     source_hash = source_sha256(source)
     nonce = uuid.uuid4().hex
@@ -427,4 +436,82 @@ def run_guest_rf_check(endpoint, server, report, *, deadline, emulator_process):
         report.save()
     if failure is not None:
         raise failure
+    return result
+
+
+def _plan_snapshot(value):
+    """Detach bounded native JSON data before checking or executing a plan."""
+    ancestors, nodes = set(), 0
+    def copy(item, depth=0):
+        nonlocal nodes
+        nodes += 1
+        if nodes > 100000 or depth > 32:
+            raise ValueError('input_limit')
+        if item is None or type(item) in (str, bool, int):
+            return item
+        if type(item) is float and math.isfinite(item):
+            return item
+        if type(item) not in (dict, list) or id(item) in ancestors:
+            raise ValueError('native_input_required')
+        ancestors.add(id(item))
+        try:
+            if type(item) is dict:
+                if any(type(key) is not str for key in item):
+                    raise ValueError('native_keys_required')
+                return {key: copy(child, depth+1) for key, child in item.items()}
+            return [copy(child, depth+1) for child in item]
+        finally:
+            ancestors.remove(id(item))
+    try:
+        detached = copy(value)
+        if len(canonical(detached).encode('utf-8')) > 8*1024*1024:
+            raise ValueError('input_limit')
+        return detached
+    except MemoryError:
+        raise
+    except Exception as exc:
+        raise check.BoundaryError('guest_plan_input_invalid') from exc
+
+
+def run_intake_plan_guest_rf_check(context, analysis, plan_input, endpoint, server, report, *,
+        expected_revision, expected_context_sha256, expected_plan_input_sha256,
+        deadline, emulator_process):
+    """Rebuild a pinned synthetic caller plan, then use the existing owned lifecycle.
+
+    Store current state and original document bytes are not reopened. Caller
+    ready/approval fields never substitute for genuine public builder validation.
+    Existing identity, endpoint, process, cleanup and boot-claim ownership stay
+    with the caller's already-owned lifecycle; this function starts no process.
+    """
+    check._require_rf_bridge_endpoint(endpoint)
+    context, analysis, supplied, revision, context_hash, plan_hash = _plan_snapshot(
+        [context, analysis, plan_input, expected_revision,
+         expected_context_sha256, expected_plan_input_sha256])
+    if type(context) is not dict or context.get('synthetic') is not True:
+        raise check.BoundaryError('guest_plan_non_synthetic')
+    if (type(plan_hash) is not str or _HEX.fullmatch(plan_hash) is None
+            or hashlib.sha256(canonical(supplied).encode('utf-8')).hexdigest() != plan_hash):
+        raise check.BoundaryError('guest_plan_binding_mismatch')
+    if type(supplied) is not dict or type(supplied.get('plan')) is not dict:
+        raise check.BoundaryError('guest_plan_input_invalid')
+    plan = supplied['plan']
+    rebuilt = build_conducted_twin_plan_input(context, analysis,
+        expected_revision=revision, expected_context_sha256=context_hash,
+        source_settings=plan.get('source_settings'), basis=plan.get('basis_refs'),
+        method={key: plan.get(key) for key in ('method_id', 'method_version', 'metric', 'reference_plane')})
+    if rebuilt['status'] != 'ready_for_simulation' or canonical(rebuilt) != canonical(supplied):
+        raise check.BoundaryError('guest_plan_revalidation_failed')
+    source = dict(rebuilt['plan']['source_settings'])
+    source_hash = source_sha256(source)
+    trace = dict(plan_input=rebuilt, plan_input_sha256=plan_hash,
+                 source_settings=dict(source), source_sha256=source_hash,
+                 verification=dict(rebuilt['verification']))
+    # Save before guest I/O, so the original lifecycle failure still has its
+    # caller-only plan lineage without a new finally/save masking that error.
+    report.data['intake_plan'] = _plan_snapshot(trace)
+    report.save()
+    result = run_guest_rf_check(endpoint, server, report, deadline=deadline,
+        emulator_process=emulator_process, source_settings=source)
+    result['intake_plan'] = trace
+    report.save()
     return result
