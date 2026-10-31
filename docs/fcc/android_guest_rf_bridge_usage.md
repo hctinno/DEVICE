@@ -3,10 +3,14 @@
 `--boot --rf-bridge-check`는 공식 Android emulator의 **동일한 자기 ADB server·정확한 serial**에서 OS 신원을 확인한 직후 실행하는 좁은 가상 실증이다. guest의 작은 셸 컨트롤러가 CONFIG/START/STOP/STATUS를 받고 자기 상태 파일을 실제로 갱신·재조회한다. RF 신호·경로 손실·센서·전력계·분석기 계산은 기존 `VirtualFleet`의 합성 모델에서만 나온다. Android guest 상태 변화를 스마트폰 무선 칩, 삼성 펌웨어, AnyWay, 실장비 또는 실제 RF 출력 제어로 표시하지 않는다.
 
 ```powershell
-python -m labflow.android_emulator_check --runtime .local/android-runtime --output .local/android-guest-rf-01 --boot --rf-bridge-check --boot-timeout 180 --adb-port 15037 --console-port 5680 --grpc-port 18554
+$dev = 'C:/무인시험소/.local/development'
+$output = Join-Path $dev ('runs/android-guest-rf/' + [Guid]::NewGuid().ToString('N'))
+& "$dev/toolchains/python/Scripts/python.exe" -B -m labflow.android_emulator_check --runtime "$dev/toolchains/android" --output $output --boot --rf-bridge-check --boot-timeout 180 --adb-port 15037 --console-port 5680 --grpc-port 18554
 ```
 
 이 명령은 명시적인 **1회 heavy OS 부팅**을 소비한다. 준비된 runtime의 `boot-attempt.json`, SDK 파일 inventory, 설치 상태, 3584 MiB 가용 메모리 문턱과 재검사, WHPX, port, 자기 프로세스 정리를 기존 부팅 코드가 그대로 적용한다. 실행 output은 신규 경로여야 한다. 본 개발에서는 실제 SDK·Android OS·native ADB·외부 단말을 실행하지 않았고, 최종 1회 부팅은 개발총괄이 수행한다. `--rf-bridge-check` 단독 사용은 `options_invalid`다.
+
+위 예시는 기존 부팅 위임과 원 claim을 재사용하며 새 한도나 재시도를 발급하지 않는다. 2026-10-31 09:28 KST 가용 RAM 관측은 2194.39 MiB로 문턱보다 낮았다. 이번 인수는 FAKE transport·VirtualFleet 독립 23개와 총괄 통합 17개/관리 경로 12개 검사 범위다. 실제 AOSP 셸·ADB·guest 실행은 미검증이며 `valid=true` 실제 결과를 확보한 것으로 표시하지 않는다. 공통 runtime을 복제하거나 원 boot claim·이력·예산을 초기화하지 않는다.
 
 ## 컨트롤러 계약
 
