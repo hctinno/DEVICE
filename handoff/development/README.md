@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+OCR worker6e35은 독립 No2로 인수 보류다. 재해시된 provenance 승격4와 첫 부모 reader control의 출력한도 오류 치환을 총괄이 실제 소스·최소 관측으로 확인해 개발1 기존3의 수정으로 이어갔다. 원 No/실제 OCR1·선택6와 fake1·미검증은 보존하며 A/B가 읽기를 끝낸 뒤 수정 GO했다. 개발4는 기존 지원뷰와 분리된 N1914A DBM 실행 근거의 명시 제공/조회12를 실제 구현한다. 각 담당의 [후속 대장](NEXT-004.md)과 고정 공간·소유권·소진 예산을 유지한다.
+
 가상 지원 범위 e783f9f도 독립검수 뒤 수용했다. 새 `/virtual-support`는 고정64프로필 자료후보와 역할 선언, 별도 N1914A 제한12명령, 이 화면에 연결된 검수 근거 미확인을 구별한다. 총괄 Python41/Node8 PASS이며 실제 GET·기존 Chromium/PNG 증거를 별도로 대조했다. [조회 안내](../../docs/fcc/virtual_support_view_usage.md)를 따르며 가동대수·완성률·실측·실행 권한으로 승격하지 않는다.
 
 정식 runtime 계획 bundle63313db 전체6도 독립9 qualified Yes 뒤 수용했다. 총괄 기능81은 모두 통과했으며 원79 실행기의 마지막 고정 집계 실패는 별도 audit로 남겼다. SDK/claim 전 명시 입력 재검증과 같은 snapshot의 owned lifecycle/CONFIG/Fleet 전달은 FAKE 범위이며, 실제 AOSP·실장비·모델 호출은0이다. 원 No·실패·claim·소진한도는 유지한다.

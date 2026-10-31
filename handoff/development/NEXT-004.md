@@ -5,10 +5,10 @@
 | 역할 | 실제 고정 공간·인수/게시 기준 | 원 Goal의 다음 단위 |
 |---|---|---|
 | 총괄 | integration / codex/workspace-consolidation-20261031 / 경로 정리1106793·기능 공통1dff8a1 원격 exact | guest/context/시도 화면의 수정·독립 검수·관련 통합/회귀·게시와 다음 소유 배정을 잇는다 |
-| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 746ab3f 수용 | 로컬OCR3 독립11+timeout1·총괄고유15 qualified 수용. C1 deadline 문구 보완·전체worker 격리 후속. 원198s No/원blob/profile/G3차단 유지 |
+| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 746ab3f 수용·worker6e35 No보존 | worker 독립 A/B의 provenance4 승격·첫 부모 reader control 가림 No2를 기존3 최소 수정 GO. A 실제OCR1/선택6·B fake1과 미검증 분리. 원198s/peak801 No·원blob/profile/G3차단 유지 |
 | 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / 774ff02 수용 | 상위취소→held fresh1·행렬기대3/3≠업무목표1/3. 신규opt-in bounded observed wait9 GO, 기존v1/None/SYSTEM·예산/기록 유지·실제모델0 |
 | 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 63313db 수용·원6daNo보존 | 첫ON/source_output local Harness·Journal→기존 selector/result/math 연결의 기존3 GO. 실제 setup/unique first completion·STOP historical/current 분리, 원계약/기본진단 유지·제품자동저장/AI흉내0. AOSP/RAM/claim 보존 |
-| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / e783f9f 수용 | support12 독립44/49/UI4·총괄41/8 PASS, 실제GET/기존Chromium PNG 검수. 다음 한정된 가상계약의 code-pinned 검수 근거를 실제 조회에 연결하는 최소범위를 확정. 권위/완성률0 |
+| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / e783f9f 수용·common7973 정상 인수 | support12 수용 후 실제 N1914A DBM fixture→고정2파일/code3 pin→명시 제공 근거 별도GET/화면12 GO. 기존v1/None·read scope 불변, 실제 관측 명령과 W/ABOR 미검사를 구별. 권위/완성률0 |
 | 유지보수 회수 | 임시 migration-paths/migration-archive 둘 다 실제 파일/refs 보존 후 삭제·layout 해제 | 새 C루트 clone 금지, 필요 검수는 workspaces 안에 목적/회수 조건 등록 |
 | P01 | 기존 수집 루트/branch/index/사용자 M2 보존, 개발 예외는 development/AGENTS만 | 기존 인계·소유 유지, 추가 수집은 실제 공백만 총괄 한 창구로 요청 |
 
