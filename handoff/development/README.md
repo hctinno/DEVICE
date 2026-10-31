@@ -1,6 +1,6 @@
 # 개발1~4 운영·연결 확인
 
-2026-10-31 원 Goal의 구현·검수·통합을 재개했다. guest RF bridge C1/C2의 독립23 Yes 뒤 총괄17/관리경로12 PASS로 통합했으며 실제 AOSP/ADB·물리 검증은 미실행이다. 개발1 보존 WIP7 고유 미반영0, 개발2 detached full fallback 후보 독립 검수, 개발4 지원5~8단계 프런트 cap No 수정을 [후속 대장](NEXT-004.md)에 이어간다. 모델·부팅·물리 권한이나 소진 한도를 새로 만들지 않는다.
+2026-10-31 원 Goal의 구현·검수·통합을 재개했다. guest RF bridge C1/C2의 독립23 Yes 뒤 총괄17/관리경로12 PASS로 통합했으며 실제 AOSP/ADB·물리 검증은 미실행이다. 개발1 보존 WIP7 고유 미반영0·로컬 OCR 접수 연결, 개발2 detached full fallback 독립48/MOCK1·총괄43 PASS 수용, 개발3 합성 계획 source 연결, 개발4 지원5~8단계 cap 후보 독립 재검수를 [후속 대장](NEXT-004.md)에 이어간다. 모델·부팅·물리 권한이나 소진 한도를 새로 만들지 않는다.
 
 2026-10-31 경로 통합 완료. 프로젝트 `.local/development/integration`과 `workspaces/dev1`~`dev4`의 고정5만 재사용한다. 원 C루트160폴더 중 고정5/비Git2를 실제 이전하고, 냉각153과 임시2는 실제 바이트·Git 보존/해시 대조 후 회수해 C루트 autolab0·등록5를 확인했다. 담당4의 common733 인수/후보 보존·각 branch push/원격 exact·새 cwd/branch guard를 인수했다. 삭제 후 managed28/Node13·새 합성 PDF/MOCK→가상 측정·계산·저장/DRAFT·HTTP5/실제 Chromium 조회가 통과했고 실제 모델/실물0이다. 결과·실패는 runs, 공통 도구는 toolchains, 고유 보존은 archive로 둔다. 원 이력 바이트·Codex25/25·Vertex6/3072·승인·실패·unknown은 유지한다. 경로 정리를 원 Goal 완료로 보지 않고 [후속 대장](NEXT-004.md)의 원 후보 수정·독립 검수·통합을 이어간다. 실행은 [관리 경로 안내](../../docs/fcc/managed_runtime_paths_usage.md)를 따른다.
 

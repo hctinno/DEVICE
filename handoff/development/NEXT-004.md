@@ -5,10 +5,10 @@
 | 역할 | 실제 고정 공간·인수/게시 기준 | 원 Goal의 다음 단위 |
 |---|---|---|
 | 총괄 | integration / codex/workspace-consolidation-20261031 / 원195182f9·경로 코드 ceea50c 원격 exact | 최종 정리 기록 게시→후보 수정/독립 리뷰→관련 통합/회귀 |
-| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 공통110 인수49175c1 | 원 접수 소유 유지·보존 WIP7 의미 비교를 실제 재개. code 조회는 절대 archive 경로 사용 |
-| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / 공통110 인수678f393 | typed unknown source_id는 원 full boundary 유효 시 detached full-copy fallback. 일반 문자열은 참조로 확대하지 않고 원형 검사·full prompt 한도 유지 |
-| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 공통110 인수49714f2 원격 exact | C1/C2 전체6 독립23 Yes·총괄17/관리경로12 PASS 후 통합. 원999·AOSP 미실행·RAM 제약 유지. 기존 체크를 첫 계획/가상 흐름에 재사용하는 다음 단위 확정 |
-| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / tick 수정8b689b5 원격 exact | tick I1 해결은 독립 확인. 전체8의 프런트 maxNodes180이 지원5~8단계를 거절하는 새 No 재현·소유자 최소 수정 실제 배정, 총괄 미수용 |
+| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 49175c1 원격 exact | WIP7 고유 미반영0 확인·기존 로컬 OCR 엔진으로 합성 image-only PDF→page/method 근거의 신규3 구현 실제 배정 |
+| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / d7ba026 원격 exact | detached full-copy fallback 독립48/MOCK1·총괄43 PASS 수용. full-boundary/크기/예산 선검사 유지, known-ID 보수 과잉 포함 한계와 실제 AI 미검증을 구별 |
+| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 15e6eaf 공통 인수 | C1/C2 전체6 독립23 Yes·총괄17/관리경로12 PASS 수용 후 검증된 합성 계획 source6→동일 guest/Fleet의 기존3 후속 구현 실제 배정. AOSP/RAM 제약·claim 유지 |
+| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / f4bae40 원격 exact | tick I1 해결. 원8b 지원5~8단계 cap No 보존, 228-node 후보 전체8의 후속 독립 검수 실제 배정·아직 미수용 |
 | 유지보수 회수 | 임시 migration-paths/migration-archive 둘 다 실제 파일/refs 보존 후 삭제·layout 해제 | 새 C루트 clone 금지, 필요 검수는 workspaces 안에 목적/회수 조건 등록 |
 | P01 | 기존 수집 루트/branch/index/사용자 M2 보존, 개발 예외는 development/AGENTS만 | 기존 인계·소유 유지, 추가 수집은 실제 공백만 총괄 한 창구로 요청 |
 
