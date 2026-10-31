@@ -15,11 +15,42 @@ $output = Join-Path $dev ('runs/android-guest-rf/' + [Guid]::NewGuid().ToString(
 ## 컨트롤러 계약
 
 - RF 브리지 옵션은 console `5680`, ADB `127.0.0.1:15037`, gRPC `18554`의 정확한 `emulator-5680`만 허용한다. CLI와 직접 API 호출 모두 SDK 검사·부팅 claim·guest 요청 전에 다른 endpoint를 `rf_bridge_endpoint_invalid`로 거절한다. 일반 `--boot`의 기존 가변 포트 지원은 유지한다. default 5037, USB, 다른 serial, `devices`, native adb client, 포트 탐색, 임의 shell/API 입력은 사용하지 않는다.
-- 호스트가 소유한 고정 스크립트를 AOSP guest의 `/data/local/tmp/dgm-rf-v1.sh`에 설치하고 guest `sha256sum` 및 HELLO로 바이트 해시를 확인한다. 스크립트는 정확한 nonce(32자리 hex), 증가 sequence, revision, 여섯 합성 source 필드의 정규화 해시를 검사한다. 설정값 여섯 개는 2.45 GHz, 12.5 dBm, 20 MHz, duty 0.25, `OFDM`, crest 3 dB의 **선언 합성 입력**이다.
+- 호스트가 소유한 고정 스크립트를 AOSP guest의 `/data/local/tmp/dgm-rf-v1.sh`에 설치하고 guest `sha256sum` 및 HELLO로 바이트 해시를 확인한다. 스크립트는 정확한 nonce(32자리 hex), 증가 sequence, revision, 여섯 합성 source 필드의 정규화 해시를 검사한다. source 입력을 생략한 기존 CLI·직접 API의 진단값은 2.45 GHz, 12.5 dBm, 20 MHz, duty 0.25, `OFDM`, crest 3 dB다. 아래 계획 wrapper는 재검증된 여섯 **선언 합성 입력**을 사용한다.
 - `CONFIG → STATUS → START → STATUS → STOP → STATUS`를 각각 별도 guest 셸 호출로 실행한다. CONFIG는 strict nonce에서 만든 `/data/local/tmp/dgm-rf-<nonce>.d`를 배타적으로 생성하고 그 안의 `state`와 `tmp`에만 필드와 상태를 저장한다. 선존재 디렉터리가 있으면 CONFIG를 거절한다. STATUS 호출은 상태 파일을 다시 읽어 검사한다. 각 응답은 nonce, sequence, state, revision, source SHA-256와 응답 SHA-256를 갖는 단일 typed receipt다. 중복·누락·다른 응답·해시 불일치·기한 초과는 성공으로 처리하지 않는다.
 - guest CONFIG/START 확인 뒤 호스트는 같은 Fleet의 DUT `configure`/`start`를 실행한다. 기존 예제 초기화의 관측은 먼저 `stop`으로 무효화한다. 시작 뒤 fresh `power_sensor.acquire/read`의 ON 평균 입력 전력, `signal_analyzer.acquire/fetch`의 합성 ON 평균, `power_meter.acquire/fetch`의 별도 시간 평균을 기록한다. STOP 뒤 센서와 분석기의 과거 관측이 무효인지 같은 Fleet에서 확인한다.
 - `result.json`의 `rf_bridge.guest_controller`는 실제 guest 요청·receipt·상태 재조회·스크립트 해시·정리 상태를, `rf_bridge.host_rf_model`은 Fleet 설정/동작 영수증·합성 관측·seed/원본 출처를 별도로 담는다. `valid=true`는 두 경로의 계약과 정확한 guest 파일 정리가 모두 확인된 **가상 통합**만 뜻한다. `rf_model=synthetic_guest_bridge_verified`, `oem_rf/physical_rf=not_assessed`를 유지한다.
 - ACK 또는 상태가 불명확하면 `valid=false`와 첫 오류·마지막 수락 동작·정리 오류를 보존한다. 같은 Fleet DUT를 중단한다. 설치 응답에서 스크립트 SHA-256가 확인된 이번 실행 소유 파일에만 정확 경로 정리를 시도한다. nonce 상태 디렉터리는 CONFIG receipt가 확인된 뒤에만 정확한 `state`·`tmp` 파일과 `rmdir`로 정리한다. CONFIG 실패·timeout·응답 불명확 때는 상태 디렉터리를 삭제하지 않고 `cleanup=unknown`을 남긴다. 선존재 스크립트로 설치가 거절되거나 설치 timeout·해시 불일치로 효과가 불명확하면 guest 파일 삭제를 보내지 않고 `cleanup=unknown`이다. 설치 시도 전 실패는 `not_attempted`로 구별한다. 기존 owned emulator/ADB 수명은 종료되어 자기 프로세스만 정리된다.
 - guest 단계에서도 기존 owned process 두 개의 RSS를 표본 확인하고 가용 RAM 512 MiB 미만이면 즉시 `memory_emergency_stop`으로 중단한다. 이 경우 guest 파일 정리는 `unknown`으로 기록하고 우선 자기 emulator/ADB job을 종료한다.
 
-별도 앱 설치나 Java, 외부 자료 다운로드, 고객 데이터, 삼성/OEM/AnyWay 명령은 사용하지 않는다. RF 수치의 물리 정확도·실제 안테나 출력·FCC 측정 적합성은 이 결과로 검증되지 않는다. `[Android runtime 설치·부팅 확인](android_emulator_check_usage.md)`의 기존 OS 신원 증거와 이 guest 컨트롤러의 상태 증거를 구별한다.
+## 합성 접수 계획의 같은 source 연결
+
+기존 `run_guest_rf_check(..., source_settings=None)`는 선택적으로 정확한 여섯 필드를 받는다. `frequency_hz`, `power_dbm`, `bandwidth_hz`, `duty_cycle`, `modulation`, `crest_factor_db` 이외의 키나 누락, bool·NaN·무한대·잘못된 RF 범위와 셸 문자가 섞인 modulation은 guest 요청 전에 거절한다. 숫자는 유한한 int/float이며 modulation은 ASCII 대문자로 시작하는 영문 대문자·숫자·밑줄·하이픈의 1~32자다. 입력을 복사한 뒤 같은 snapshot을 CONFIG의 정규화 토큰·source SHA-256·Fleet 초기화와 DUT configure에 사용한다. 이 직접 API는 접수 근거 검증을 대신하지 않는다.
+
+계획 연결에는 `run_intake_plan_guest_rf_check`를 사용한다. 상위 caller가 이미 보유한 `context`, `analysis`, public [계획 builder](../../labflow/intake_conducted_twin_plan.py)의 `plan_input`, 원 expected revision/context SHA/전체 plan input SHA를 전달한다. 전체 plan input SHA는 `SHA-256(canonical(plan_input).encode('utf-8'))`이며 상위 caller가 고정한 값을 사용한다. 이 wrapper는 SDK·ADB server·부팅을 시작하지 않고 이미 소유한 endpoint/server/emulator/report/deadline을 받는다.
+
+```python
+from labflow.android_guest_rf_bridge import run_intake_plan_guest_rf_check
+
+result = run_intake_plan_guest_rf_check(
+    context, analysis, plan_input, endpoint, owned_server, report,
+    expected_revision=expected_revision,
+    expected_context_sha256=expected_context_sha256,
+    expected_plan_input_sha256=expected_plan_input_sha256,
+    deadline=owned_deadline, emulator_process=owned_emulator,
+)
+```
+
+한 실행에 새 report를 사용한다. wrapper는 native JSON caller snapshot을 분리한다(최대 깊이32/100000노드/UTF-8 canonical 8MiB). `synthetic is True`와 고정 SHA를 확인하고 **실제 `build_conducted_twin_plan_input`**에 revision/context SHA·source 설정·basis·method를 다시 전달한다. 재생성 결과가 `ready_for_simulation`이며 제공 계획 전체와 canonical byte가 같아야 기존 owned lifecycle을 호출한다. caller가 제공한 ready/승인값은 실행 근거가 아니다. 미확인·변경 근거, 누락 정보, non-synthetic, 잘못된 pin·수치, builder 미지원 방법은 guest write 0으로 거절한다. `guest_plan_input_invalid`, `guest_plan_binding_mismatch`, `guest_plan_non_synthetic`, `guest_plan_revalidation_failed`를 `BoundaryError`로 구분한다. Store·원문을 열어 current 여부를 확인하는 단계는 포함하지 않는다.
+
+`result.intake_plan`과 `result.json`의 `intake_plan`은 재검증한 전체 계획, `binding`, 전체 plan input SHA, 여섯 source 설정과 guest 정규화 source SHA를 추적한다. `verification.current_version=caller_snapshot_only`, `source_bytes=not_reopened`, `execution_authority=false`를 유지한다. guest I/O 전에 이 추적을 저장하므로 lifecycle 실패 때도 원 `rf_bridge.first_error`·cleanup과 함께 남는다. 계획의 방법·근거 결합과 RF 상태/관측 연결 범위이며 적용 규격 판정이나 전체 시험 완료를 뜻하지 않는다.
+
+2026-10-31 작성자 FAKE 실증은 실제 public builder·VirtualFleet를 사용했다. guest transport만 상태 있는 FAKE이며 실제 AOSP/SDK/ADB·socket·장비·모델은 실행하지 않았다. 합성 경로의 sensor는 DUT에서 10+0.5+20dB 손실, analyzer는 10+0.5+1.25dB 손실을 적용한 새 ON 평균이다. meter는 sensor 값에 duty 0.5의 시간 평균을 별도로 적용한다.
+
+| 선언 합성 입력 | sensor ON 평균 | analyzer ON 평균 | meter 시간 평균 |
+|---|---:|---:|---:|
+| 2412MHz / −7dBm / 20MHz / duty0.5 / OFDM / crest4dB | −37.5dBm | −18.75dBm | 약 −40.5103dBm |
+| 2450MHz / 4dBm / 나머지 동일 | −26.5dBm | −7.75dBm | 약 −29.5103dBm |
+
+위 두 CONFIG의 typed receipt/source SHA와 같은 Fleet의 fresh 값·입력 snapshot 불변을 확인했다. 새 계약13개와 기존 FAKE13개, 순수 public builder33개의 영향 회귀는 59 PASS다. 원 실제 socket fixture1개와 별도 Store 접수 fixture1개는 이번 네트워크·Store0 범위에서 미실행이다. RED 원 로그는 테스트12개/하위 assertion 실패17개·오류0이며 최초 집계기의 하위 사례 수 오류도 별도 보존했다. 정상 계획의 승인값·binding만 변조한 집중 회귀는 전체 재생성 비교를 제거한 메모리 내 변형에서 RED3, 원 코드에서 GREEN1을 확인했다. 실제 AOSP/OEM·물리 예측 성공의 증거로 사용하지 않는다.
+
+별도 앱 설치나 Java, 외부 자료 다운로드, 고객 데이터, 삼성/OEM/AnyWay 명령은 사용하지 않는다. RF 수치의 물리 정확도·실제 안테나 출력·FCC 측정 적합성은 이 결과로 검증되지 않는다. [Android runtime 설치·부팅 확인](android_emulator_check_usage.md)의 기존 OS 신원 증거와 이 guest 컨트롤러의 상태 증거를 구별한다.
