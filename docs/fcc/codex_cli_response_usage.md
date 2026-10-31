@@ -15,6 +15,7 @@ produce_codex_cli_response(
     requested_model: str,
     evidence_dir: Path,
     timeout_seconds: int | float = 60.0,
+    cancel_event=None,
 ) -> tuple[bytes, dict]
 ```
 
@@ -23,6 +24,16 @@ produce_codex_cli_response(
 prompt는 canonical UTF-8 JSON object·최대256KiB다. canonical은 ensure_ascii=False/sort_keys=True/allow_nan=False/구분자 comma·colon이며 끝 newline이 없다. schema는 UTF-8 JSON object·최대64KiB로 서식·공백을 포함한 literal bytes를 보존한다. 중복 키·비유한 수·surrogate·depth32/node200000·signed64 밖 정수는 거절한다. 업무 context 검증이나 JSON Schema 의미 검증을 다시 구현하지 않는다.
 
 잘못된 사전 입력에서는 증거 폴더·process를 생성하지 않는다. prompt의 expected_producer가 정확 `{kind:"model", name:비어있지 않은 문자열<=200자}`이면 미검증 host 선언으로 receipt에 복사하고, 없거나 형상이 다르면 null이다. 이 선언을 실제 모델 identity로 보충하지 않는다.
+
+## 로컬 실행 중 취소 — 2026-10-31
+
+`cancel_event`는 `None` 또는 정확한 `threading.Event`만 허용한다. 기본 `None`은 기존 호출·성공 tuple2·receipt 필드·제한을 유지한다. 정상 사전 검증 뒤 이미 set이면 증거 폴더와 version/model child를 만들기 전에 `codex_cli_response_cancelled`로 반환하며 receipt는 null이다. event는 CLI argv·prompt·receipt에 직렬화하지 않는다.
+
+version/model의 기존 짧은 wait checkpoint에서 event를 확인한다. 이미 확인한 첫 operating failure·원 control exception identity가 우선이며, 같은 checkpoint에서 이미 만료된 deadline은 timeout으로 처리한 뒤 새 취소를 처리한다. 뒤늦은 취소는 확인된 timeout·stream·cleanup 원오류를 바꾸지 않는다. 취소를 먼저 확인했다면 후행 cleanup 오류는 기존 secondary 오류와 확인되지 않은 회수 상태로 남긴다. 기존 자기 process handle에만 terminate/wait2초→kill/wait2초, reader·pipe·artifact cleanup2초를 적용한다. 반복 wait는 최대 50ms 단위로 확인하지만 blocking native IO·OS scheduling을 포함한 hard realtime 중단을 보장하지 않는다.
+
+실행 중 취소는 기존 failed receipt에 새 고정 코드와 partial raw·해시·관측 attempt를 보존한다. 모델 요청을 시도했다면 attempt와 `cost.kind="unknown"`을 되돌리지 않는다. 자기 child 회수와 원격 요청·청구 중단은 구별한다. `descendants_reaped`·`remote_cancelled`는 null, `remote_hard_cancel`·`remote_billing_stopped`는 기존 unknown으로 유지한다.
+
+가상 loop는 non-null event만 같은 객체로 producer에 전달한다. producer 취소는 기존 host cancelled 오류/failed 결과와 상위 held 경로로 이어지고 wire decode·dispatch를 하지 않는다. loop 예약·process 소모는 환불하지 않는다. event 사용 시 cancellation scope는 `between_stages_and_owned_producer_waits`이며, `producer_inflight_cancelled`는 시도한 자기 child와 IO 회수가 receipt에서 전량 확인될 때만 true, 나머지는 null이다. `requested=true` 관측은 event가 뒤에 clear돼도 보존한다. 기존 `None` 경로는 새 keyword를 보내지 않으며 scope도 `between_stages_only`를 유지한다. 실모델·원 profile/permit/ledger·SDK·실물 검증은 수행하지 않는다.
 
 ## 실행과 통제 관측
 
@@ -72,7 +83,7 @@ usage가 있으면 input_tokens/cached_input_tokens/cache_write_input_tokens/out
 
 descriptor는 path/present/bytes/sha256/complete/overflow/extent 정확7키다. absent와 실제 빈 파일을 구별하고, prefix SHA는 수집한 선두 bytes만의 hash다. 성공 artifact9는 모두 present·complete·whole_file이며 overflow=false다. receipt.json은 마지막에 배타 기록하고 자기 hash를 넣지 않는다. 반환 뒤 producer는 증거를 수정하지 않는다. stdout·stderr·원 text·절대 경로가 담긴 private 파일은 host가 비공개로 관리한다.
 
-CodexCliResponseError의 code/str/args는 고정 문자열이고 cause/context는 None이다. prefix codex_cli_response_ 뒤 suffix11은 invalid_input, limit_exceeded, unsupported_client, evidence_error, spawn_failed, timeout, stream_invalid, process_failed, final_mismatch, cleanup_failed, internal_error다. raw stderr·예외·절대 경로·header를 공개 오류에 넣지 않는다. receipt는 증거 초기화 전 실패면 null, 이후에는 가능한 failed 사본이다. receipt 저장이 실패하면 in-memory partial만 제공될 수 있다.
+CodexCliResponseError의 code/str/args는 고정 문자열이고 cause/context는 None이다. prefix codex_cli_response_ 뒤 suffix12는 invalid_input, limit_exceeded, unsupported_client, evidence_error, spawn_failed, timeout, stream_invalid, process_failed, final_mismatch, cleanup_failed, internal_error, cancelled다. raw stderr·예외·절대 경로·header를 공개 오류에 넣지 않는다. receipt는 증거 초기화 전 실패면 null, 이후에는 가능한 failed 사본이다. receipt 저장이 실패하면 in-memory partial만 제공될 수 있다.
 
 첫 운영 오류와 phase를 유지하고 cleanup.secondary_errors에 후속 정리 오류를 고유 순서·최대8개로 기록한다. KeyboardInterrupt/SystemExit/GeneratorExit/MemoryError는 파일 I/O와 close가 함께 실패해도 bounded cleanup 뒤 원 객체를 전파한다. 제어 예외에 receipt 보장용 속성을 붙이지 않는다. 원 응답·부분 파일·실패는 보존한다.
 

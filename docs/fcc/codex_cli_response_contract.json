@@ -82,7 +82,8 @@
         "codex_cli_response_process_failed",
         "codex_cli_response_final_mismatch",
         "codex_cli_response_cleanup_failed",
-        "codex_cli_response_internal_error"
+        "codex_cli_response_internal_error",
+        "codex_cli_response_cancelled"
       ],
       "context": null,
       "control_exceptions_original_identity": [
@@ -481,7 +482,8 @@
         "executable",
         "requested_model",
         "evidence_dir",
-        "timeout_seconds"
+        "timeout_seconds",
+        "cancel_event"
       ],
       "name": "produce_codex_cli_response",
       "positional": [
@@ -492,9 +494,10 @@
         "gpt-6.1-sol",
         "gpt-6-astra"
       ],
-      "signature": "produce_codex_cli_response(prompt_bytes: bytes, response_schema_bytes: bytes, *, executable: Path, requested_model: str, evidence_dir: Path, timeout_seconds: int | float = 60.0) -> tuple[bytes, dict]",
+      "signature": "produce_codex_cli_response(prompt_bytes: bytes, response_schema_bytes: bytes, *, executable: Path, requested_model: str, evidence_dir: Path, timeout_seconds: int | float = 60.0, cancel_event=None) -> tuple[bytes, dict]",
       "success": "exact tuple2 immutable bytes and detached primitive receipt; no other success shape",
-      "timeout_range": "finite native int/float, bool rejected; 0 < value <= 60"
+      "timeout_range": "finite native int/float, bool rejected; 0 < value <= 60",
+      "cancel_event": "None (legacy default) or exact threading.Event; subclasses/duck types rejected; caller retains ownership"
     },
     "receipt": {
       "additionalProperties": false,
@@ -1852,7 +1855,8 @@
                     "codex_cli_response_process_failed",
                     "codex_cli_response_final_mismatch",
                     "codex_cli_response_cleanup_failed",
-                    "codex_cli_response_internal_error"
+                    "codex_cli_response_internal_error",
+                    "codex_cli_response_cancelled"
                   ]
                 },
                 "phase": {
@@ -2265,6 +2269,20 @@
         "version_stdout_literal_utf8": "codex-cli 0.164.0-alpha.11.1\n",
         "version_stdout_sha256": "230c7fb4eaba503976290892b76e256e03f47a421b784363888ac852cceeb4cf"
       }
-    ]
+    ],
+    "cancellation": {
+      "pre_set": "after normal preflight validation, before evidence initialization: fixed cancelled, receipt null, version/model spawn0",
+      "checkpoints": "version and model bounded wait/IO checkpoints; polling loops use at most 50ms waits; not a hard realtime guarantee for blocking native IO or OS scheduling",
+      "priority": [
+        "confirmed first operating failure or original control exception identity",
+        "already expired observed deadline -> timeout",
+        "new event observation -> cancelled"
+      ],
+      "cleanup": "same owned child terminate/wait2 then kill/wait2, reader/pipe/artifact cleanup2; no descendant or remote cancellation guarantee",
+      "receipt": "existing exact shape and limits; status failed/failure cancelled; retain partial raw and observed attempts; model attempted -> cost unknown; no refund",
+      "unknown": "descendants_reaped/remote_cancelled remain null; remote_hard_cancel and remote_billing_stopped remain unknown",
+      "loop": "nonNone event forwarded unchanged; cancelled -> existing host cancelled/failed and held consumer path; no wire decode/dispatch; reservation/process counts not refunded",
+      "loop_observation": "scope between_stages_and_owned_producer_waits when event supplied; requested preserves historical observation; producer_inflight_cancelled True only with attempted owned children and all child/IO cleanup confirmed, otherwise null"
+    }
   }
 }

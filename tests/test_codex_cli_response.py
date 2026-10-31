@@ -172,9 +172,137 @@ class ProducerTests(unittest.TestCase):
 
     def test_public_signature_exact(self):
         sig=inspect.signature(api.produce_codex_cli_response)
-        self.assertEqual(list(sig.parameters),['prompt_bytes','response_schema_bytes','executable','requested_model','evidence_dir','timeout_seconds'])
+        self.assertEqual(list(sig.parameters),['prompt_bytes','response_schema_bytes','executable','requested_model','evidence_dir','timeout_seconds','cancel_event'])
         for name in list(sig.parameters)[2:]:self.assertEqual(sig.parameters[name].kind,inspect.Parameter.KEYWORD_ONLY)
         self.assertEqual(sig.parameters['timeout_seconds'].default,60.0)
+        self.assertIsNone(sig.parameters['cancel_event'].default)
+
+    def test_cancel_native_types_and_preset_have_no_owned_side_effects(self):
+        class Derived(threading.Event):pass
+        for value in (True,False,object(),Derived(),{'is_set':True}):
+            with self.subTest(value=type(value).__name__):
+                error=self.failure('normal','invalid_input',cancel_event=value)
+                self.assertIsNone(error.receipt);self.assertFalse(self.evidence.exists())
+        event=threading.Event();event.set()
+        error=self.failure('normal','cancelled',cancel_event=event)
+        self.assertIsNone(error.receipt);self.assertFalse(self.evidence.exists());self.assertEqual(self.calls,[])
+
+    def test_cancel_version_wait_never_starts_model(self):
+        event=threading.Event();spawn=self.spawn
+        def started(argv,**kwargs):
+            child=spawn(argv,**kwargs);event.set();return child
+        with patch.object(self,'spawn',new=started):
+            error=self.failure('version_hang','cancelled',cancel_event=event)
+        receipt=error.receipt
+        self.assertEqual([receipt['attempts'][k] for k in ('version_process_attempts','model_process_attempts')],[1,0])
+        self.assertTrue(receipt['cleanup']['version_child_reaped'])
+        self.assertIsNone(receipt['cleanup']['model_child_reaped'])
+        self.assertEqual(receipt['cost']['kind'],'not_applicable')
+        self.assertEqual(len(self.calls),1)
+
+    def test_cancel_model_wait_keeps_partial_and_only_reaps_owned_child(self):
+        event=threading.Event();consume=api._Exchange.stdout
+        foreign=REAL_POPEN([sys.executable,'-B','-c','import time; time.sleep(30)'],
+            stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,
+            creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+        def consumed(owner,data):
+            consume(owner,data);event.set()
+        try:
+            with patch.object(api._Exchange,'stdout',new=consumed):
+                error=self.failure('hang','cancelled',cancel_event=event)
+            self.assertIsNone(foreign.poll())
+        finally:
+            foreign.terminate();foreign.wait(timeout=3)
+        receipt=error.receipt;raw=(self.evidence/'stdout.jsonl').read_bytes()
+        self.assertEqual(raw,b'{"type":')
+        self.assertEqual(receipt['artifacts']['stdout_jsonl']['bytes'],len(raw))
+        self.assertEqual(receipt['artifacts']['stdout_jsonl']['sha256'],hashlib.sha256(raw).hexdigest())
+        self.assertEqual(receipt['attempts']['model_process_attempts'],1)
+        self.assertEqual(receipt['cost']['kind'],'unknown')
+        self.assertTrue(receipt['cleanup']['model_child_reaped'])
+        self.assertIsNone(receipt['cleanup']['descendants_reaped']);self.assertIsNone(receipt['cleanup']['remote_cancelled'])
+        self.assertEqual(receipt['controls']['unknown'],CONTRACT['controls_unknown_exact16'])
+        self.shape(receipt,CONTRACT['receipt'])
+
+    def test_cancel_stdin_wait_does_not_refund_attempt(self):
+        event=threading.Event();spawn=self.spawn
+        def started(argv,**kwargs):
+            child=spawn(argv,**kwargs)
+            if len(argv)>2:event.set()
+            return child
+        prompt=json.dumps({'body':'x'*200000},sort_keys=True,separators=(',',':')).encode()
+        start=time.monotonic()
+        with patch.object(self,'spawn',new=started):
+            error=self.failure('stdin_stall','cancelled',cancel_event=event,prompt=prompt)
+        self.assertLess(time.monotonic()-start,4)
+        self.assertEqual(error.receipt['attempts']['model_process_attempts'],1)
+        self.assertTrue(error.receipt['cleanup']['model_child_reaped'])
+
+    def test_cancel_between_version_and_model_preserves_zero_model_attempts(self):
+        event=threading.Event();invoke=api._Exchange.invocation
+        def invocation(owner,work):event.set();return invoke(owner,work)
+        with patch.object(api._Exchange,'invocation',new=invocation):
+            error=self.failure('normal','cancelled',cancel_event=event)
+        self.assertEqual(len(self.calls),1)
+        self.assertEqual(error.receipt['attempts']['model_process_attempts'],0)
+        self.assertTrue(error.receipt['cleanup']['version_child_reaped'])
+
+    def test_cancel_cleanup_failure_remains_secondary_and_unconfirmed(self):
+        event=threading.Event();consume=api._Exchange.stdout;spawn=self.spawn;original_waits=[]
+        def consumed(owner,data):consume(owner,data);event.set()
+        def started(argv,**kwargs):
+            child=spawn(argv,**kwargs)
+            if len(argv)>2:
+                wait=child.wait;original_waits.append((child,wait))
+                def unconfirmed(*args,**options):wait(*args,**options);raise OSError('FAKE_WAIT_SECRET')
+                child.wait=unconfirmed
+            return child
+        try:
+            with patch.object(self,'spawn',new=started),patch.object(api._Exchange,'stdout',new=consumed):
+                error=self.failure('hang','cancelled',cancel_event=event)
+        finally:
+            for child,wait in original_waits:child.wait=wait
+        self.assertFalse(error.receipt['cleanup']['model_child_reaped'])
+        self.assertIn('wait_failed',error.receipt['cleanup']['secondary_errors'])
+        self.assertEqual(error.receipt['attempts']['model_process_attempts'],1)
+
+    def test_cancel_checkpoint_priority_first_failure_then_deadline_then_event(self):
+        for code in ('stream_invalid','timeout','cleanup_failed'):
+            with self.subTest(code=code):
+                event=threading.Event();event.set()
+                owner=api._Exchange(self.root,self.exe,'gpt-6.1-sol',3,time.monotonic(),'typed',None,cancel_event=event)
+                owner.error(code)
+                with self.assertRaises(api._Failure) as caught:owner.check()
+                self.assertEqual(caught.exception.code,code)
+        for expired,code in ((True,'timeout'),(False,'cancelled')):
+            event=threading.Event();event.set()
+            owner=api._Exchange(self.root,self.exe,'gpt-6.1-sol',3,time.monotonic(),'typed',None,cancel_event=event)
+            if expired:owner.deadline=time.monotonic()-1
+            with self.assertRaises(api._Failure) as caught:owner.check()
+            self.assertEqual(caught.exception.code,code)
+
+    def test_late_cancel_during_cleanup_preserves_stream_or_cleanup_error(self):
+        original_open=Path.open
+        for mode,code in (('malformed','stream_invalid'),('normal','cleanup_failed')):
+            event=threading.Event()
+            class Broken:
+                def __init__(self,stream):self.stream=stream
+                def __getattr__(self,name):return getattr(self.stream,name)
+                def close(self):self.stream.close();event.set();raise OSError('FAKE_CLOSE_SECRET')
+            def opened(path,*args,**kwargs):
+                stream=original_open(path,*args,**kwargs)
+                return Broken(stream) if path.name=='stdout.jsonl' and args and args[0]=='xb' else stream
+            with patch.object(Path,'open',new=opened):
+                error=self.failure(mode,code,cancel_event=event)
+            self.assertTrue(event.is_set());self.assertIn('artifact_close_failed',error.receipt['cleanup']['secondary_errors'])
+
+    def test_cancel_none_preserves_complete_receipt_consumers(self):
+        from labflow.virtual_fleet.codex_virtual_one_action import _complete_receipt
+        for options in ({},{'cancel_event':None}):
+            response,receipt=self.call(**options)
+            self.assertEqual(response,RAW);self.assertEqual(receipt['status'],'complete')
+            self.assertEqual(receipt['attempts']['model_process_attempts'],1)
+            self.shape(receipt,CONTRACT['receipt']);_complete_receipt(receipt,'gpt-6.1-sol',3)
 
     def test_success_tuple_receipt_and_original_artifacts(self):
         result=self.call();self.assertIs(type(result),tuple);self.assertEqual(len(result),2)
