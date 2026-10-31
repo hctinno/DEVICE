@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+시도 기록의 정식 intake_serve 연결1c9b384도 독립63/HTTP8 뒤 수용했다. 총괄CLI26 및 Reader 대역 없는 실제 Store→CLI→동일 SHA의7단계 API200, 다른접수503/경로query400·기존DB와입력불변·host정상종료를 확인했다. [실행 옵션](../../docs/fcc/operator_attempt_view_usage.md)은 명시5기록/기존Store/read-scope를 요구하며 새모델/권위/예산을 발급하지 않는다.
+
 계획 source→guest/Fleet 후속f0356f0도 독립13·총괄61로 수용했다. 총괄61에는 자기 loopback wire와 합성 Store→계획이 각각1 포함되며 실제 Android 부팅은 RAM2039<3584로0이다. CLI/runtime의 명시 plan-bundle 선택 연결은 다음 구현이며, 현재 API의 caller snapshot 검증을 전체 시험방법·AI 업무·실물 성공으로 바꾸지 않는다.
 
 2026-10-31 원 Goal의 구현·검수·통합을 재개했다. guest RF bridge 독립23·총괄17/관리경로12, context fallback 독립48/MOCK1·총괄43, 시도 화면 전체8 독립 qualified Yes·총괄 Python10/Node8·실제 Store/API/Chromium 합성7행을 수용했다. 실제 AOSP/ADB·AI 업무 성공·물리 검증으로 확대하지 않으며 기존 reference-history 미설정503/console1은 보존했다. 개발1 로컬 PDF OCR 근거, 개발2 producer 대기 중 취소, 개발3 합성 계획 source 연결, 개발4 정식 CLI 제공기록 연결을 [후속 대장](NEXT-004.md)의 고정 공간/소유 범위에서 이어간다. 모델·부팅·물리 권한이나 소진 한도를 새로 만들지 않는다.

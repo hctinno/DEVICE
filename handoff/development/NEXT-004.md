@@ -5,10 +5,10 @@
 | 역할 | 실제 고정 공간·인수/게시 기준 | 원 Goal의 다음 단위 |
 |---|---|---|
 | 총괄 | integration / codex/workspace-consolidation-20261031 / 경로 정리1106793·기능 공통1dff8a1 원격 exact | guest/context/시도 화면의 수정·독립 검수·관련 통합/회귀·게시와 다음 소유 배정을 잇는다 |
-| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 49175c1 원격 exact | WIP7 고유 미반영0 확인·기존 로컬 OCR 엔진으로 합성 image-only PDF→page/method 근거의 신규3 구현 실제 배정 |
-| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / d7ba026 수용·공통1dff8a1 인수 | fallback 독립48/MOCK1·총괄43 PASS. 기존 cancel_event를 bounded 자기 producer wait까지 전달하는 D2-CANCEL-INFLIGHT-001 소유6 실제 배정·구현 중. 원 첫 오류/소모/remote unknown 유지 |
+| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 746ab3f 후보 원격 exact | WIP7 고유 미반영0. 실제 로컬 OCR 근거3·Windows Job 보강의 독립 검수 실제 배정. 원198s No/자체child 회수·원blob/profile/G3 차단 보존 |
+| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / 774ff02 후보 원격 exact | fallback 수용. producer 호출 중 취소 신규6의 독립 검수 실제 배정. 작성자46·원RED/firsterror/소모/remote unknown 유지 |
 | 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / f0356f0 원격 exact·수용 | 계획 source6→동일 guest/Fleet 소유3 독립13·총괄61 PASS. 정식 owned runtime/CLI가 계획 wrapper를 선택하는 연결을 다음 단위로 확정. AOSP/RAM 제약·claim 유지 |
-| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / f4 수용·1c9b384 후보 원격 exact | 전체8 독립 qualified Yes·총괄10/8·실제 Store/API/Chromium 합성7행 PASS. 정식 intake_serve 명시5기록 소유3 후속은 독립 검수 실제 배정. 원No·source 불변 |
+| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / 1c9b384 원격 exact·수용 | 시도 화면·정식CLI 독립 qualified Yes·총괄CLI26/실제 Store→CLI/API7단계PASS. 다음은 제공 CLI 자체선언/원격미인증의 명확한 화면 표시. 원No·source 불변 |
 | 유지보수 회수 | 임시 migration-paths/migration-archive 둘 다 실제 파일/refs 보존 후 삭제·layout 해제 | 새 C루트 clone 금지, 필요 검수는 workspaces 안에 목적/회수 조건 등록 |
 | P01 | 기존 수집 루트/branch/index/사용자 M2 보존, 개발 예외는 development/AGENTS만 | 기존 인계·소유 유지, 추가 수집은 실제 공백만 총괄 한 창구로 요청 |
 
