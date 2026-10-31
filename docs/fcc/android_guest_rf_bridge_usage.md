@@ -53,4 +53,23 @@ result = run_intake_plan_guest_rf_check(
 
 위 두 CONFIG의 typed receipt/source SHA와 같은 Fleet의 fresh 값·입력 snapshot 불변을 확인했다. 새 계약13개와 기존 FAKE13개, 순수 public builder33개의 영향 회귀는 59 PASS다. 원 실제 socket fixture1개와 별도 Store 접수 fixture1개는 이번 네트워크·Store0 범위에서 미실행이다. RED 원 로그는 테스트12개/하위 assertion 실패17개·오류0이며 최초 집계기의 하위 사례 수 오류도 별도 보존했다. 정상 계획의 승인값·binding만 변조한 집중 회귀는 전체 재생성 비교를 제거한 메모리 내 변형에서 RED3, 원 코드에서 GREEN1을 확인했다. 실제 AOSP/OEM·물리 예측 성공의 증거로 사용하지 않는다.
 
+## 정식 owned runtime의 계획 bundle
+
+정식 [runtime/CLI](android_emulator_check_usage.md)는 선택적인 `--intake-plan-bundle ABS_JSON`을 `--boot --rf-bridge-check`와 함께 받는다. flag가 없으면 위의 기존 fixed-source 진단 경로다. bundle은 이미 상위 caller가 고정한 다음 native 값 여섯 개만 포함한다.
+
+```python
+bundle = dict(context=context, analysis=analysis, plan_input=plan_input,
+    expected_revision=expected_revision,
+    expected_context_sha256=expected_context_sha256,
+    expected_plan_input_sha256=expected_plan_input_sha256)
+```
+
+`validate_intake_plan_bundle(bundle)`은 위 wrapper에서 추출한 공통 순수 검증이다. wrapper와 runtime 준비가 같은 public builder 전체 재생성·비교를 사용한다. 선언된 `synthetic=True`와 일치하는 해시는 원문 진위·현 Store revision·실행 권한을 인증하지 않는다. 전체 시험방법 수행이나 metric 계산·판정 완료도 이 연결의 결과가 아니다.
+
+runtime은 명시한 로컬 절대 경로의 일반 파일을 한 번만 bounded read한다. raw 최대8MiB, UTF-8 strict JSON이며 BOM·중복 키(중첩 포함)·nonfinite·잘못된 surrogate·추가/누락 키·잘못된 type을 거절한다. 공통 snapshot 한도는 깊이32/100000노드/canonical UTF-8 8MiB다. UNC/device/ADS·부모 순회·NUL/잘못된 Unicode 경로와 reparse 경로는 거절하고 디렉터리 탐색·자동 파일 선택은 하지 않는다. 읽기 전후 파일 identity/size/mtime을 대조하며 결과의 `intake_plan_bundle`에 raw bytes 수·raw SHA-256·canonical snapshot SHA·plan input SHA·source SHA를 남긴다.
+
+짝 옵션·RF endpoint와 bundle 전체 검증은 SDK inventory/native 조회·boot claim·guest 요청 **이전**에 끝난다. 검증 후에는 canonical bytes의 불변 메모리 snapshot을 같은 owned lifetime으로 전달한다. boot 진입 시와 정확한 guest identity 확인 뒤에도 같은 순수 검증을 재사용하며 원 파일을 다시 읽지 않는다. 이후 파일이 바뀌어도 이번 CONFIG/source SHA/Fleet 설정은 최초 snapshot에 결박된다. 상위 원문은 재개봉하지 않고 `caller_snapshot_only`/`not_reopened`/`execution_authority=false`를 유지한다.
+
+3584MiB 메모리 문턱·직전 재검사·정확 endpoint·한 번의 `boot-attempt.json`·기존 C1/C2/최초 오류/정리를 유지한다. 이미 소비한 claim은 `boot_attempt_already_used`로 거절하며 reset/재발급하지 않는다. 2026-10-31 10:13:47 KST Root의 별도 RAM2039.38MiB 관측은 여전히 문턱 미만이며 이번 구현에서 실제 SDK/nativeADB/AOSP 부팅은0이다. 새 검증의 정상 흐름은 실제 public builder→FAKE SDK/owned process·guest 서비스→실제 VirtualFleet의 범위다. 원 Windows Job/SDK inventory helper는 변경하지 않는다.
+
 별도 앱 설치나 Java, 외부 자료 다운로드, 고객 데이터, 삼성/OEM/AnyWay 명령은 사용하지 않는다. RF 수치의 물리 정확도·실제 안테나 출력·FCC 측정 적합성은 이 결과로 검증되지 않는다. [Android runtime 설치·부팅 확인](android_emulator_check_usage.md)의 기존 OS 신원 증거와 이 guest 컨트롤러의 상태 증거를 구별한다.

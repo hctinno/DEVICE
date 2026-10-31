@@ -473,20 +473,16 @@ def _plan_snapshot(value):
         raise check.BoundaryError('guest_plan_input_invalid') from exc
 
 
-def run_intake_plan_guest_rf_check(context, analysis, plan_input, endpoint, server, report, *,
-        expected_revision, expected_context_sha256, expected_plan_input_sha256,
-        deadline, emulator_process):
-    """Rebuild a pinned synthetic caller plan, then use the existing owned lifecycle.
-
-    Store current state and original document bytes are not reopened. Caller
-    ready/approval fields never substitute for genuine public builder validation.
-    Existing identity, endpoint, process, cleanup and boot-claim ownership stay
-    with the caller's already-owned lifecycle; this function starts no process.
-    """
-    check._require_rf_bridge_endpoint(endpoint)
-    context, analysis, supplied, revision, context_hash, plan_hash = _plan_snapshot(
-        [context, analysis, plan_input, expected_revision,
-         expected_context_sha256, expected_plan_input_sha256])
+def validate_intake_plan_bundle(bundle):
+    """Pure shared validation; detached caller evidence is never an execution grant."""
+    bundle = _plan_snapshot(bundle)
+    fields = {'context', 'analysis', 'plan_input', 'expected_revision',
+              'expected_context_sha256', 'expected_plan_input_sha256'}
+    if type(bundle) is not dict or set(bundle) != fields:
+        raise check.BoundaryError('guest_plan_input_invalid')
+    context, analysis, supplied = (bundle[key] for key in ('context', 'analysis', 'plan_input'))
+    revision, context_hash, plan_hash = (bundle[key] for key in
+        ('expected_revision', 'expected_context_sha256', 'expected_plan_input_sha256'))
     if type(context) is not dict or context.get('synthetic') is not True:
         raise check.BoundaryError('guest_plan_non_synthetic')
     if (type(plan_hash) is not str or _HEX.fullmatch(plan_hash) is None
@@ -503,15 +499,29 @@ def run_intake_plan_guest_rf_check(context, analysis, plan_input, endpoint, serv
         raise check.BoundaryError('guest_plan_revalidation_failed')
     source = dict(rebuilt['plan']['source_settings'])
     source_hash = source_sha256(source)
-    trace = dict(plan_input=rebuilt, plan_input_sha256=plan_hash,
-                 source_settings=dict(source), source_sha256=source_hash,
-                 verification=dict(rebuilt['verification']))
+    return dict(plan_input=rebuilt, plan_input_sha256=plan_hash,
+                source_settings=dict(source), source_sha256=source_hash,
+                verification=dict(rebuilt['verification']))
+
+
+def run_intake_plan_guest_rf_check(context, analysis, plan_input, endpoint, server, report, *,
+        expected_revision, expected_context_sha256, expected_plan_input_sha256,
+        deadline, emulator_process):
+    """Revalidate caller snapshots and use the already-owned guest/Fleet lifecycle.
+
+    Store current state and source bytes remain caller-only. This wrapper and
+    runtime bundle preparation share one pure validation algorithm.
+    """
+    check._require_rf_bridge_endpoint(endpoint)
+    trace = validate_intake_plan_bundle(dict(context=context, analysis=analysis, plan_input=plan_input,
+        expected_revision=expected_revision, expected_context_sha256=expected_context_sha256,
+        expected_plan_input_sha256=expected_plan_input_sha256))
     # Save before guest I/O, so the original lifecycle failure still has its
     # caller-only plan lineage without a new finally/save masking that error.
     report.data['intake_plan'] = _plan_snapshot(trace)
     report.save()
     result = run_guest_rf_check(endpoint, server, report, deadline=deadline,
-        emulator_process=emulator_process, source_settings=source)
+        emulator_process=emulator_process, source_settings=trace['source_settings'])
     result['intake_plan'] = trace
     report.save()
     return result
