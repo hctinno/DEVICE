@@ -398,5 +398,68 @@ class OperatorBoundaryTests(unittest.TestCase):
                                           "ModelOperatorBoundaryError"})
 
 
+class RecoveryBoundaryTests(unittest.TestCase):
+    build = OperatorBoundaryTests.build
+    error = OperatorBoundaryTests.error
+
+    @staticmethod
+    def recovery(used=0, confirmed=0):
+        out = delegation()
+        out['scope'] = 'rf_sensor_observed_recovery_v1'
+        out['recovery_budget'] = dict(max_wait_advances=2, wait_advances_used=used,
+            wait_advances_remaining=2-used, reobservations_confirmed=confirmed)
+        return out
+
+    @staticmethod
+    def wire(prompt):
+        return response(request_sha256=prompt['binding']['request_sha256'])
+
+    def test_opt_in_scope_hash_wire_and_exact_system(self):
+        prompt = self.build(delegation=self.recovery())
+        self.assertNotEqual(prompt['messages'][0]['content'], SYSTEM)
+        self.assertIn('rf_sensor_observed_recovery_v1', prompt['messages'][0]['content'])
+        self.assertIn('device_unavailable', prompt['messages'][0]['content'])
+        self.assertEqual(set(json.loads(prompt['messages'][1]['content'])['request']['user_input']['public_context']), set(context()))
+        self.assertEqual(api.decode_operator_response(self.wire(prompt), prompt)['schema_version'], 1)
+        changed = self.build(delegation=self.recovery(1, 1))
+        self.assertNotEqual(prompt['binding']['request_sha256'], changed['binding']['request_sha256'])
+        self.error('response_binding_mismatch', lambda: api.decode_operator_response(self.wire(prompt), changed))
+
+    def test_scope_system_and_hash_tampering_are_independent(self):
+        prompt = self.build(delegation=self.recovery())
+        old = self.build()
+        variants = []
+        for system in (SYSTEM, OLD_SYSTEM):
+            out = deepcopy(prompt); out['messages'][0]['content'] = system; variants.append(out)
+        out = deepcopy(old); out['messages'][0]['content'] = prompt['messages'][0]['content']; variants.append(out)
+        out = deepcopy(prompt); user = json.loads(out['messages'][1]['content'])
+        user['request']['user_input']['delegation']['scope'] = 'rf_sensor_proposal_v1'
+        out['messages'][1]['content'] = C(user).decode(); variants.append(out)
+        out = deepcopy(prompt); out['binding']['request_sha256'] = 'f' * 64; variants.append(out)
+        out = deepcopy(prompt); user = json.loads(out['messages'][1]['content'])
+        user['request']['user_input']['delegation']['recovery_budget'].update(wait_advances_used=1, wait_advances_remaining=1)
+        out['messages'][1]['content'] = C(user).decode(); variants.append(out)
+        for out in variants:
+            with self.subTest(profile=out['messages'][0]['content'][:30]):
+                self.error('invalid_prompt', lambda: api.decode_operator_response(self.wire(prompt), out))
+
+    def test_closed_counter_and_v1_delegation_keys(self):
+        variants = []
+        for key, value in [('max_wait_advances', 3), ('max_wait_advances', 0),
+                ('wait_advances_used', True), ('wait_advances_used', -1),
+                ('wait_advances_remaining', 1), ('reobservations_confirmed', 1)]:
+            out = self.recovery(); out['recovery_budget'][key] = value; variants.append(out)
+        out = self.recovery(); out['recovery_budget']['extra'] = 0; variants.append(out)
+        out = self.recovery(); out['scope'] = 'rf_sensor_proposal_v1'; variants.append(out)
+        out = self.recovery(); del out['recovery_budget']; variants.append(out)
+        for out in variants:
+            with self.subTest(delegation=out):
+                self.error('invalid_input', lambda: self.build(delegation=out))
+
+    def test_opt_in_keeps_private_context_rejection(self):
+        value = context(); value['observations']['fault'] = 'PRIVATE'
+        self.error('invalid_input', lambda: self.build(value, delegation=self.recovery()))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -83,9 +83,10 @@ class IntakePlanExecutionTests(unittest.TestCase):
     def test_public_signature_and_exports(self):
         self.assertEqual(api.__all__, ['run_intake_plan_virtual_execution', 'IntakePlanVirtualExecutionError'])
         signature = inspect.signature(api.run_intake_plan_virtual_execution)
-        expected = 'context analysis plan_input expected_revision expected_context_sha256 expected_plan_input_sha256 catalog_path catalog_sha256 response_schema_bytes executable requested_model scenario evidence_dir execution_origin cancel_event quantity evidence_reservation model_process_limit wall_seconds_limit'.split()
+        expected = 'context analysis plan_input expected_revision expected_context_sha256 expected_plan_input_sha256 catalog_path catalog_sha256 response_schema_bytes executable requested_model scenario evidence_dir execution_origin cancel_event quantity evidence_reservation model_process_limit wall_seconds_limit recovery_policy'.split()
         self.assertEqual(list(signature.parameters), expected)
         self.assertIsNone(signature.parameters['evidence_reservation'].default)
+        self.assertIsNone(signature.parameters['recovery_policy'].default)
         self.assertTrue(all(p.kind == inspect.Parameter.KEYWORD_ONLY for p in list(signature.parameters.values())[3:]))
         self.assertTrue(issubclass(api.IntakePlanVirtualExecutionError, RuntimeError))
 
@@ -242,6 +243,23 @@ class IntakePlanExecutionTests(unittest.TestCase):
         journal = read_operator_journal(path)
         self.assertNotIn('quantity', journal['header']['provenance'])
         self.assertIsNone(result['loop']['execution']['host_evidence']['quantity'])
+
+
+    def test_opt_in_recovery_policy_and_counters_survive_upper_adapter(self):
+        policy = dict(schema_version=1, kind='bounded_observed_wait', max_wait_advances=2)
+        self.driver.sequence = [dict(kind='advance', ticks=1), dict(kind='advance', ticks=1),
+            dict(kind='stop', claim='blocked', reason='bounded public wait exhausted')]
+        result = self.call(scenario='persistent_disconnect', recovery_policy=policy)
+        self.assertEqual(self.loop.call_args.kwargs['recovery_policy'], policy)
+        meta = result['loop']['execution']['recovery']
+        self.assertEqual((meta['wait_advances_used'], meta['reobservations_confirmed']), (2, 2))
+        self.assertEqual(C(result['loop']), C(self.loop_results[0]))
+        self.assertFalse(result['loop']['evidence_assessment']['goal_observed'])
+
+    def test_default_and_none_keep_legacy_loop_call_shape(self):
+        self.call(recovery_policy=None)
+        self.assertNotIn('recovery_policy', self.loop.call_args.kwargs)
+        self.assertNotIn('recovery', self.loop_results[0]['execution'])
 
 
 class ReservationAdapterTests(unittest.TestCase):

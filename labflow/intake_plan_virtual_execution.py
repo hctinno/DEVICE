@@ -7,7 +7,7 @@ import re
 from .intake_conducted_twin_plan import build_conducted_twin_plan_input
 from .store import canonical
 from .virtual_fleet.codex_virtual_loop import (
-    CodexVirtualLoopError, run_codex_virtual_loop as _run_loop)
+    CodexVirtualLoopError, run_codex_virtual_loop as _run_loop, _recovery_policy as _loop_recovery_policy)
 
 __all__ = ['run_intake_plan_virtual_execution', 'IntakePlanVirtualExecutionError']
 
@@ -208,7 +208,7 @@ def run_intake_plan_virtual_execution(context, analysis, plan_input, *, expected
         expected_context_sha256, expected_plan_input_sha256, catalog_path: Path, catalog_sha256: str,
         response_schema_bytes: bytes, executable: Path, requested_model: str, scenario: str,
         evidence_dir: Path, execution_origin: str, cancel_event=None, quantity=None, evidence_reservation=None,
-        model_process_limit=8, wall_seconds_limit=180) -> dict:
+        model_process_limit=8, wall_seconds_limit=180, recovery_policy=None) -> dict:
     """Revalidate caller snapshots then enter one delegated synthetic loop; never grant authority."""
     result = _result(execution_origin)
     try:
@@ -222,6 +222,7 @@ def run_intake_plan_virtual_execution(context, analysis, plan_input, *, expected
         if not valid_wall:
             _block('invalid_input')
         reservation = _reservation(evidence_reservation)
+        recovery = _loop_recovery_policy(recovery_policy)
         source = _validate(context, analysis, plan_input, expected_revision, expected_context_sha256,
                            expected_plan_input_sha256, execution_origin, result)
     except _CONTROL:
@@ -237,6 +238,7 @@ def run_intake_plan_virtual_execution(context, analysis, plan_input, *, expected
     result['execution'].update(loop_entered=True, trial_factory_calls=None, producer_calls_started=None)
     try:
         options={} if reservation is None else dict(evidence_reservation=reservation)
+        if recovery is not None:options['recovery_policy']=recovery
         options.update(model_process_limit=model_process_limit, wall_seconds_limit=wall_seconds_limit)
         original = _run_loop(catalog_path=catalog_path, catalog_sha256=catalog_sha256,
             response_schema_bytes=response_schema_bytes, executable=executable, requested_model=requested_model,

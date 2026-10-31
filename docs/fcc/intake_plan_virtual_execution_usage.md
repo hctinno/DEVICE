@@ -66,3 +66,11 @@ loop가 [genuine OperatorJournal/read_operator_journal](../../labflow/virtual_fl
 첫 source6 seam은 API 부재 RED→genuine factory/원 loop와 알려진 Python child의 가상 검증으로 확인한다. adapter의 blocked/stale/tamper/non-synthetic/unsupported gate는 factory·loop·producer가 호출되면 실패하는 검사로 먼저 고정한다. 실제 모델·설치 CLI 확인·auth/ADC·Vertex ledger·새 Store·고객 원본·실장비·현장망은0이다. 독립 심층 평가 본문과 다른 owner proof를 읽지 않고 총괄과만 소통한다.
 
 `python -m unittest discover -s tests -p test_intake_plan_virtual_execution.py -v`로 소유 검사를 실행한다. 증거는 테스트 실행별 고유 namespace에 남기며 원문·실패·quota를 지우거나 운영 예산을 초기화하지 않는다. 메모리 결합 검사와 상시 접수 host/실제 AI/실측 검증은 구별한다.
+
+## 2026-10-31 선택형 복구 정책 전달
+
+마지막 keyword-only 인자 `recovery_policy=None`은 [공개 loop의 bounded observed recovery](virtual_fleet_codex_virtual_loop_usage.md)를 선택적으로 전달한다. native policy의 version/kind와1..2 상한을 검증하고, non-None일 때만 같은 loop에 전달한다. None에서는 새 keyword를 하위 호출에 추가하지 않는다. 기존 source settings·plan binding·quantity 검증은 계속 적용한다.
+
+adapter는 loop의 `execution.recovery`를 포함한 전체 native 영수증을 보존한다. 추가 대기 사용량이나 확인 재관측을 생략·재설정하지 않는다. native loop 오류의 첫 code/receipt와 기존 예산 소비도 그대로 전달한다. 실제 fresh 상위 진입에서 genuine plan 재검증, 동일 trial/runtime, strict producer 검증을 거쳐 현재 `unique_same_run_sensor_acquisition` selector/finalizer가 전체 실행 영수증과 counter를 보존함을 확인했다. finalizer와 결과 builder의 검증을 우회하거나 그 소스를 바꾸지 않았다.
+
+알려진 Python child만 대체한3개 실행 중 normal은 신선한 측정과 독립 Decimal 계산을 거쳐 DRAFT1건을 저장했다. 두 연결 장애는 각각 추가 대기2회 뒤 fresh 측정이 없어 held, result/artifact=None, writer0이었다. 기본 None/v1 회귀와 이 선택 모드 분모를 구별한다. 실제 모델 추가 호출, 수집/실물 운전 권한, 새 예산을 부여하지 않는다.

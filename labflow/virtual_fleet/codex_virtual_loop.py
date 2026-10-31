@@ -94,6 +94,85 @@ def _lower_limits(model_process_limit, wall_seconds_limit):
     return model_process_limit, wall_seconds_limit
 
 
+def _recovery_policy(value):
+    if value is None:return None
+    if type(value) is not dict:_fail('invalid_input')
+    value = _copy(value, 1024, 'invalid_input')
+    if (set(value) != {'schema_version', 'kind', 'max_wait_advances'}
+            or type(value['schema_version']) is not int or value['schema_version'] != 1
+            or value['kind'] != 'bounded_observed_wait'
+            or type(value['max_wait_advances']) is not int or not 1 <= value['max_wait_advances'] <= 2):
+        _fail('invalid_input')
+    return value
+
+
+def _recovery_observation(public):
+    """Closed current public states only; never consult trial, scenario or schedule."""
+    public = _copy(public, 1048576, 'capture_failed')
+    try:
+        obs, goal = public['observations'], public['goal']
+        for key in ('tick', 'setup_revision'):
+            if type(obs[key]) is not int or obs[key] < 0:_fail('capture_failed')
+        if (obs['synthetic'] is not True or obs['hardware_verified'] is not False
+                or type(goal['minimum_acquisition_tick']) is not int or goal['minimum_acquisition_tick'] < 0):
+            _fail('capture_failed')
+        devices = []
+        for identity, role in ((goal['dut_id'], 'dut'), (goal['sensor_id'], 'power_sensor')):
+            device = obs['devices'][identity]
+            nodes = [n for n in public['topology']['devices'] if n.get('id') == identity]
+            profiles = [p for p in public['catalog']['profiles'] if p.get('profile_id') == device['profile_id']]
+            if (len(nodes) != 1 or len(profiles) != 1 or nodes[0]['profile_id'] != device['profile_id']
+                    or profiles[0]['role'] != role or device['device_id'] != identity or device['role'] != role
+                    or device['synthetic'] is not True or device['hardware_verified'] is not False):
+                _fail('capture_failed')
+            for key in ('tick', 'setup_revision'):
+                if type(device[key]) is not int or device[key] != obs[key]:_fail('capture_failed')
+            values = device['values']
+            if (type(values) is not dict or values['configured'] is not True
+                    or type(values['outputs']) is not dict or type(values['state']) is not str):
+                _fail('capture_failed')
+            devices.append(device)
+        dut, sensor = devices
+        dv, sv = dut['values'], sensor['values']
+        disconnected = (dut['status'] == 'disconnected' and dv['state'] == 'unavailable'
+                        and dv.get('reason') == 'device_unavailable' and dv['outputs'] == {})
+        idle = dut['status'] == 'ok' and dv['state'] == 'idle' and dv['outputs'] == {}
+        settling = (dut['status'] == 'pending' and dv['state'] == 'settling'
+                    and dv.get('reason') == 'transmitter_starting' and dv['outputs'] == {})
+        transmitting = dut['status'] == 'ok' and dv['state'] == 'transmitting'
+        if transmitting:
+            rf = dv['outputs']['rf']
+            if (set(dv['outputs']) != {'rf'} or rf['valid'] is not True or rf['status'] != 'ok'
+                    or rf['source_id'] != goal['dut_id']):_fail('capture_failed')
+            for key in ('power_dbm', 'frequency_hz', 'bandwidth_hz', 'duty_cycle', 'crest_factor_db'):
+                if type(rf[key]) not in (int, float) or not math.isfinite(rf[key]):_fail('capture_failed')
+            if rf['frequency_hz'] <= 0 or rf['bandwidth_hz'] <= 0 or not 0 < rf['duty_cycle'] <= 1 or rf['crest_factor_db'] < 0:
+                _fail('capture_failed')
+        if not (disconnected or idle or settling or transmitting):_fail('capture_failed')
+        unavailable = sensor['status'] == 'invalid' and sv['state'] == 'unavailable' and sv['outputs'] == {}
+        input_absent = unavailable and sv.get('reason') == 'invalid_rf_input' and (disconnected or idle or settling)
+        acquire_required = unavailable and sv.get('reason') == 'acquisition_required' and transmitting
+        acquiring = sensor['status'] == 'pending' and sv['state'] == 'acquiring' and sv['outputs'] == {} and transmitting
+        fresh = False
+        if sensor['status'] == 'ok' and sv['state'] == 'complete' and not disconnected:
+            measurement = sv['outputs']['measurement']
+            if (set(sv['outputs']) != {'measurement'} or measurement['valid'] is not True
+                    or measurement['status'] != 'ok' or measurement['source_id'] != goal['sensor_id']
+                    or measurement['unit'] != 'dBm'):_fail('capture_failed')
+            for key in ('value', 'power_dbm'):
+                if type(measurement[key]) not in (int, float) or not math.isfinite(measurement[key]):_fail('capture_failed')
+            if (measurement['value'] != measurement['power_dbm']
+                    or type(measurement['acquisition_tick']) is not int
+                    or not goal['minimum_acquisition_tick'] <= measurement['acquisition_tick'] <= obs['tick']
+                    or type(measurement['acquisition_setup_revision']) is not int
+                    or measurement['acquisition_setup_revision'] != obs['setup_revision']):_fail('capture_failed')
+            fresh = True
+        if not (input_absent or acquire_required or acquiring or fresh):_fail('capture_failed')
+        return dict(recoverable=disconnected and input_absent, pending=settling or acquiring, fresh=fresh)
+    except (KeyError, TypeError, ValueError, OverflowError):
+        _fail('capture_failed')
+
+
 def _reservation(value):
     if value is None:return None
     if type(value) is not dict:_fail('invalid_input')
@@ -280,7 +359,7 @@ def _absent(path):
 class _Loop:
     def __init__(self, catalog, catalog_sha, schema, executable, model, scenario, directory, origin, event,
                  start, source_settings, plan_binding, quantity, evidence_reservation=None,
-                 model_process_limit=8, wall_seconds_limit=180):
+                 model_process_limit=8, wall_seconds_limit=180, recovery_policy=None):
         self.catalog_path, self.catalog_sha, self.schema = catalog, catalog_sha, schema
         self.executable, self.model, self.scenario, self.directory = executable, model, scenario, directory
         self.origin, self.event, self.start, self.deadline = origin, event, start, start + wall_seconds_limit
@@ -296,6 +375,8 @@ class _Loop:
         self.step = None; self.before = None; self.sources = {}; self.events = []; self.event_bytes = 0
         self.attempts = []; self.known = set(); self.finished = False
         self.guards = []
+        self.recovery_policy = _recovery_policy(recovery_policy)
+        self.recovery_wait_indices, self.recovery_confirmed_indices = set(), set()
         self.r = dict(schema_version=1, kind='codex_virtual_loop_result', run_id='operator-loop-run:' + uuid.uuid4().hex,
             status='failed', failure=None,
             declaration=dict(goal_kind='acquire_fresh_rf_sensor', scope='rf_sensor_proposal_v1', scenario=scenario,
@@ -322,6 +403,10 @@ class _Loop:
                 root_authority_verified=False,remote_identity_verified=False,actual_wall_time_verified=False,
                 model_quality_verified=False,hardware_verified=False,physical_cleanup_verified=False,
                 full_task_verified=False,storage_authenticity_verified=False))
+        if self.recovery_policy is not None:
+            self.r['declaration']['scope'] = 'rf_sensor_observed_recovery_v1'
+            self.r['execution']['recovery'] = dict(policy=_copy(self.recovery_policy),
+                wait_advances_used=0, reobservations_confirmed=0, outcome='not_required')
         if plan_binding is not None:
             self.r['artifacts'].update(setup_snapshot=_absent('setup-snapshot.json'),
                                        operator_journal=_absent('operator-journal.jsonl'))
@@ -639,6 +724,27 @@ class _Loop:
         self.step['producer']['response']=dict(present=True,bytes=len(response),sha256=_H(response))
         self.space(); self.throw()
 
+    def recovery_gate(self, proposal, view, remaining):
+        if self.recovery_policy is None:return
+        meta = self.r['execution']['recovery']
+        if proposal['kind'] == 'stop':
+            if proposal['claim'] == 'completed' and not view['fresh']:
+                _fail('model_operator_boundary_proposal_invalid')
+            meta['outcome'] = 'fresh_measurement_observed' if view['fresh'] else 'stopped_without_fresh_measurement'
+        elif view['fresh'] or (view['recoverable'] and proposal['kind'] != 'advance'):
+            _fail('model_operator_boundary_proposal_invalid')
+        elif proposal['kind'] == 'advance' and not view['pending']:
+            if not view['recoverable']:_fail('model_operator_boundary_proposal_invalid')
+            if (meta['wait_advances_used'] >= self.recovery_policy['max_wait_advances']
+                    or any(remaining[key] < 1 for key in ('decisions', 'logical_requests', 'ticks'))
+                    or self.model_process_limit - self.r['budget']['reserved_model_calls'] < 1):
+                meta['outcome'] = 'wait_budget_exhausted'
+                _fail('budget_exhausted')
+            # Reserve before returning to FleetHarness; never refund on later failures.
+            meta['wait_advances_used'] += 1
+            meta['outcome'] = 'wait_admitted'
+            if self.step is not None:self.recovery_wait_indices.add(self.step['index'])
+
     def policy(self, context):
         try:
             self.check()
@@ -667,11 +773,20 @@ class _Loop:
                          ticks=remaining['ticks'],wall_seconds=wall,transport_retries=0)
             delegation=dict(scope='rf_sensor_proposal_v1',harness_budgets=budgets,
                             outer_limits=dict(model_calls=self.model_process_limit-self.r['budget']['reserved_model_calls'],wall_seconds=wall))
+            view = None
+            if self.recovery_policy is not None:
+                meta = self.r['execution']['recovery']
+                delegation.update(scope='rf_sensor_observed_recovery_v1', recovery_budget=dict(
+                    max_wait_advances=self.recovery_policy['max_wait_advances'],
+                    wait_advances_used=meta['wait_advances_used'],
+                    wait_advances_remaining=self.recovery_policy['max_wait_advances']-meta['wait_advances_used'],
+                    reobservations_confirmed=meta['reobservations_confirmed']))
             ids=dict(run_id=self.r['run_id'],runtime_instance_id=self.trial.runtime_instance_id,
                      decision_id='operator-loop-decision:'+uuid.uuid4().hex,model_request_id='operator-loop-request:'+uuid.uuid4().hex)
             # Validate the entire original public request with the unchanged boundary.
             # This transient prompt is neither retained nor sent to the producer.
             _validate_full_prompt(public=public,producer_name=_PRODUCER,delegation=delegation,ids=ids)
+            if self.recovery_policy is not None:view = _recovery_observation(public)
             public=_project(public)
             self.artifact('context7',public)
             prompt=_build(public,producer_name=_PRODUCER,delegation=delegation,**ids)
@@ -726,6 +841,7 @@ class _Loop:
             step['wire']=_copy(wire,65536); step['verification']['wire_accepted']=True
             self.artifact('wire',wire)
             self.phase('gate'); self.source(); self.current(); self.check()
+            self.recovery_gate(wire['proposal'], view, remaining)
             self.phase('dispatch')
             return _copy(wire['proposal'],65536)
         except BaseException as error:
@@ -761,6 +877,10 @@ class _Loop:
             d.update(confirmed_receipts=1,runtime_call_attempts=1,receipt_status=receipt['status'],
                      effect='unchanged' if _C(after)==_C(self.before) else 'changed')
             step['verification']['causal_after_observed']=True
+            if step['index'] in self.recovery_wait_indices and step['index'] not in self.recovery_confirmed_indices:
+                if d['operation'] != 'advance':_fail('runtime_uncertain')
+                self.recovery_confirmed_indices.add(step['index'])
+                self.r['execution']['recovery']['reobservations_confirmed'] += 1
             if step['failure'] is None:
                 step['status']='observed' if receipt['status'] in {'ok','pending'} else 'rejected'
                 step['stage']='observe'
@@ -918,13 +1038,15 @@ class _Loop:
 def run_codex_virtual_loop(*, catalog_path: Path, catalog_sha256: str, response_schema_bytes: bytes,
         executable: Path, requested_model: str, scenario: str, evidence_dir: Path,
         execution_origin: str, cancel_event=None, source_settings=None, plan_binding=None, quantity=None, evidence_reservation=None,
-        model_process_limit=8, wall_seconds_limit=180) -> dict:
+        model_process_limit=8, wall_seconds_limit=180, recovery_policy=None) -> dict:
     """Run one explicitly delegated synthetic loop; provenance declarations grant no authority."""
     runner=None; receipt=None; code=None; control=None
     try:
         _lower_limits(model_process_limit, wall_seconds_limit)
         reservation=_reservation(evidence_reservation)
+        recovery=_recovery_policy(recovery_policy)
         options={} if reservation is None else dict(evidence_reservation=reservation)
+        if recovery is not None:options['recovery_policy']=recovery
         options.update(model_process_limit=model_process_limit, wall_seconds_limit=wall_seconds_limit)
         start=_now()
         source,binding,declared_quantity=_preflight(catalog_path,catalog_sha256,response_schema_bytes,executable,requested_model,scenario,

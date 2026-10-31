@@ -106,3 +106,11 @@ ModelOperatorBoundaryError의 code/str/args에는 model_operator_boundary_ 접�
 기존 회귀 실행 환경에 설치된 tests 패키지가 저장소 namespace를 가릴 수 있다. 이때 원 import 실패를 보존하고 전용 검사 프로세스에서 로컬 tests namespace를 먼저 지정한다. 기존 tests/__init__.py나 부모 source를 수정하지 않는다.
 
 D2 concrete producer 입력·성공/실패 DTO·고정 오류·artifact refs를 빌리는 실제 private host driver는 후행 OPEN이다. 원문/ACK/readback·첫 callback 오류·case/input/expected/run/runtime 연결·deadline/감독 중단/미결 dispatch·독립 과제 평가·실제 CLI 가상 pilot을 이번 pure 단위의 완료에 합산하지 않는다. 실제 모델·품질 점수·실장비·현장·기관 적합성 검증은 미실행이다.
+
+## 2026-10-31 선택형 공개 관측 복구 계약
+
+기본 `rf_sensor_proposal_v1` delegation의 exact3 키, legacy/current SYSTEM 바이트, context7, wire schema1은 유지한다. `build_operator_prompt`의 인자도 그대로다. host가 명시적으로 `rf_sensor_observed_recovery_v1`을 선택할 때만 해당 scope의 별도 SYSTEM과 exact4 delegation을 사용한다. 추가 키 `recovery_budget`은 `max_wait_advances`, `wait_advances_used`, `wait_advances_remaining`, `reobservations_confirmed` 정확4 키다. 모두 native int이며 한도1..2, 사용·잔여 합=한도, 확인 재관측≤사용을 요구한다. scope와 counter는 기존 request SHA에 들어간다. decode는 scope에 맞는 정확한 SYSTEM까지 다시 검증하므로 다른 프로필을 붙이거나 counter/hash만 바꾸면 거절한다. 이 결속은 모델 실행·권한 인증이 아니다.
+
+추가 대기는 현재 goal DUT의 `disconnected/unavailable/device_unavailable/empty outputs`와 goal sensor의 `invalid/unavailable/invalid_rf_input/empty outputs`가 함께 관측될 때만 허용한다. 두 장치의 identity/profile/role/tick/setup_revision과 synthetic=true, hardware_verified=false, configured=true가 맞아야 한다. 일반 invalid 전체를 복구 대상으로 확장하지 않는다. 정상 idle/settling/transmitting/acquiring/complete 흐름은 별도로 검증하며, 누락·NaN·다른 source·오래된 acquisition/revision·모호한 상태는 중단한다.
+
+모델 안내와 별개로 [공개 loop](../../labflow/virtual_fleet/codex_virtual_loop.py)가 dispatch 전에 한도를 강제한다. 대기나 상태 변화만으로 completed를 허용하지 않으며, 같은 goal sensor의 valid packet, minimum acquisition tick, 현재 setup revision이 필요하다. 최종 계산·저장 성공은 후행 selector/finalizer 증거로 따로 확인한다. 이번 typed/public DTO와 fake native producer 검증은 실제 모델의 복구 능력을 입증하지 않는다.
