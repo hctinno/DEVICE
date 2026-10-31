@@ -1,6 +1,7 @@
 """047 CLI boundaries; lifecycle doubles are distinct from genuine HTTP children."""
 import importlib
 import importlib.util
+import copy
 import hashlib
 import http.client
 import io
@@ -15,6 +16,7 @@ import sys
 import tempfile
 import threading
 import time
+import uuid
 from types import SimpleNamespace
 import unittest
 from unittest import mock
@@ -22,6 +24,13 @@ from urllib.parse import urlsplit
 
 from labflow.store import Store, StoreOpenError
 from test_ui_server import ReferenceFixture
+from labflow.development_paths import load_layout
+from tests.test_operator_attempt_view import supplied
+
+
+_RUNS = load_layout(Path(__file__).resolve().parents[1]).directory('runs')
+_TEST_ROOT = Path(os.environ.get('DGM_INTAKE_SERVE_TEST_ROOT', str(_RUNS/'intake-serve-tests'/uuid.uuid4().hex))).resolve()
+_TEST_ROOT.relative_to(_RUNS.resolve())
 
 
 class IntakeServeTests(unittest.TestCase):
@@ -30,7 +39,7 @@ class IntakeServeTests(unittest.TestCase):
 
     def state(self):
         if not hasattr(self, '_state'):
-            local=Path(__file__).resolve().parents[1]/'.local';local.mkdir(exist_ok=True)
+            local=_TEST_ROOT/'fixtures';local.mkdir(parents=True,exist_ok=True)
             temporary = tempfile.TemporaryDirectory(prefix='serve047-', dir=local)
             self.addCleanup(temporary.cleanup); self.fixture = ReferenceFixture(temporary.name)
             self._state = Store.open_existing(str(self.fixture.legacy.root)); self.addCleanup(self._state.close)
@@ -58,6 +67,147 @@ class IntakeServeTests(unittest.TestCase):
                 mock.patch.object(sys, 'stdout', stdout), mock.patch.object(sys, 'stderr', stderr):
             status = api.main(arguments)
         return status, stdout, stderr, opened, factory, server, events
+
+    def attempt_files(self, *, evaluation_suffix=b' \n'):
+        """Five authored records with exact byte references; never operational input."""
+        _TEST_ROOT.mkdir(parents=True,exist_ok=True)
+        temp=tempfile.TemporaryDirectory(prefix='attempt-',dir=_TEST_ROOT);self.addCleanup(temp.cleanup)
+        folder=Path(temp.name);receipts=folder/'receipts';receipts.mkdir()
+        source=supplied();blobs={}
+        encode=lambda value:json.dumps(value,ensure_ascii=False,indent=1).encode('utf-8')+b' \n'
+        blobs['execution']=encode(source['execution']);execution=hashlib.sha256(blobs['execution']).hexdigest()
+        blobs['finalizer']=encode(source['finalizer']);finalizer=hashlib.sha256(blobs['finalizer']).hexdigest()
+        for name in ('finished','handoff'):
+            source[name]['execution_receipt']['sha256']=execution
+            source[name]['finalizer_receipt']['sha256']=finalizer
+            blobs[name]=encode(source[name])
+        blobs['evaluation']=json.dumps(source['evaluation'],ensure_ascii=False,indent=1).encode('utf-8')+evaluation_suffix
+        paths={'evaluation':folder/'selected-evaluation.json',**{key:receipts/name for key,name in {
+            'execution':'execution-receipt.json','finalizer':'finalizer-receipt.json',
+            'finished':'finished-v1.json','handoff':'current-handoff.json'}.items()}}
+        for key,path in paths.items():path.write_bytes(blobs[key])
+        source['source_pins']={key:hashlib.sha256(raw).hexdigest() for key,raw in blobs.items()}
+        flags=['--operator-attempt-evaluation',str(paths['evaluation']),'--operator-attempt-receipts',str(receipts)]
+        return flags,paths,blobs,source
+
+    def test_operator_pair_forwards_exact_five_records_and_raw_sha_without_new_authority(self):
+        for mode,ids in [('workspace',()),('intakes',('I-authored',))]:
+            with self.subTest(mode=mode):
+                flags,paths,blobs,source=self.attempt_files();state=self.state();opened_paths=[]
+                if state._existing_binding.state != 'open':
+                    self._state=Store.open_existing(str(self.fixture.legacy.root));self.addCleanup(self._state.close)
+                original=Path.open
+                def opened(path,*args,**kwargs):
+                    opened_paths.append(path);return original(path,*args,**kwargs)
+                with mock.patch.object(Path,'open',opened):
+                    status,out,err,store_open,factory,server,_=self.invoke(self.argv(mode,ids)+flags)
+                self.assertEqual(status,0);self.assertEqual(err.getvalue(),'')
+                self.assertEqual(opened_paths,list(paths.values()))
+                self.assertEqual(factory.call_args.kwargs['operator_attempt_inputs'],(source,))
+                self.assertEqual(factory.call_args.kwargs['intake_reference_read_scope'],'workspace' if mode=='workspace' else ids)
+                self.assertEqual(set(json.loads(out.getvalue())),{'schema_version','kind','url','store_mode'})
+                server.server_close.assert_called_once();store_open.assert_called_once()
+
+    def test_operator_flags_reject_partial_duplicate_relative_and_metadata_before_io(self):
+        api=self.api();flags,_,_,_=self.attempt_files();valid=self.argv('workspace')
+        rows=[valid+flags[:2],valid+flags[2:],valid+flags+flags[:2],valid+flags+flags[2:],
+              valid+[flags[0],'relative.json',*flags[2:]],valid+[*flags[:3],'relative'],
+              self.argv('metadata')+flags,valid+[flags[0],'https://private.invalid/SECRET',*flags[2:]]]
+        with mock.patch.object(Store,'open_existing') as store, mock.patch.object(api._ui,'create_server') as host, \
+                mock.patch.object(Path,'open',side_effect=AssertionError('operator source opened')) as read:
+            for args in rows:
+                out,err=io.StringIO(),io.StringIO()
+                with mock.patch.object(sys,'stdout',out),mock.patch.object(sys,'stderr',err):
+                    self.assertEqual(api.main(args),2)
+                self.assertEqual(out.getvalue(),'');self.assertEqual(json.loads(err.getvalue()),{'error':{'code':'intake_reference_server_invalid_argument'}})
+        store.assert_not_called();host.assert_not_called();read.assert_not_called()
+
+    def test_operator_default_has_no_source_reads_or_new_factory_kwargs(self):
+        self.state()
+        with mock.patch.object(Path,'open',side_effect=AssertionError('operator source opened')) as read:
+            status,_,err,_,factory,_,_=self.invoke(self.argv())
+        self.assertEqual(status,0);self.assertEqual(err.getvalue(),'');read.assert_not_called()
+        self.assertNotIn('operator_attempt_inputs',factory.call_args.kwargs)
+
+    def test_operator_files_and_strict_json_fail_without_leaking_or_starting_host(self):
+        cases=[('missing',key) for key in ('evaluation','execution','finalizer','finished','handoff')]
+        cases += [('oversize',key) for key in ('evaluation','execution','finalizer','finished','handoff')]
+        cases += [(kind,'evaluation') for kind in ('malformed','duplicate','nan','overflow','surrogate','utf16')]
+        cases += [('other_record','handoff')]
+        for kind,key in cases:
+            with self.subTest(kind=kind,key=key):
+                flags,paths,blobs,_=self.attempt_files();path=paths[key]
+                if kind=='missing':path.unlink()
+                elif kind=='other_record':
+                    bad=json.loads(blobs[key]);bad['current_facts_plan']['context']['intake_id']='OTHER'
+                    path.write_bytes(json.dumps(bad).encode('utf-8'))
+                else:
+                    bad={'oversize':b' '*1048577,'malformed':b'{PRIVATE SECRET',
+                         'duplicate':blobs[key].rstrip()[:-1]+b',"unused":1,"unused":2}',
+                         'nan':blobs[key].rstrip()[:-1]+b',"unused":NaN}',
+                         'overflow':blobs[key].rstrip()[:-1]+b',"unused":1e999}',
+                         'surrogate':blobs[key].rstrip()[:-1]+b',"unused":"\\ud800"}',
+                         'utf16':blobs[key].decode('utf-8').encode('utf-16')}[kind]
+                    path.write_bytes(bad)
+                status,out,err,opened,host,_,events=self.invoke(self.argv('workspace')+flags)
+                self.assertEqual(status,2);self.assertEqual(out.getvalue(),'');opened.assert_called_once();host.assert_not_called()
+                self.assertEqual(json.loads(err.getvalue()),{'error':{'code':'intake_reference_server_invalid_argument'}})
+                self.assertEqual(events,['store.close']);self.assertNotIn('PRIVATE',err.getvalue());self.assertNotIn(str(path),err.getvalue())
+
+    def test_operator_byte_cap_is_inclusive_and_extra_directory_files_are_not_read(self):
+        flags,paths,blobs,_=self.attempt_files();raw=blobs['evaluation'];paths['evaluation'].write_bytes(raw+b' '*(1048576-len(raw)))
+        (paths['execution'].parent/'PRIVATE-unrelated.json').write_bytes(b'not a record')
+        status,_,err,_,factory,_,_=self.invoke(self.argv('workspace')+flags)
+        self.assertEqual(status,0);self.assertEqual(err.getvalue(),'')
+        self.assertEqual(factory.call_args.kwargs['operator_attempt_inputs'][0]['source_pins']['evaluation'],hashlib.sha256(paths['evaluation'].read_bytes()).hexdigest())
+
+    def test_operator_intake_scope_rejects_other_record_and_keeps_all100_ids(self):
+        flags,_,_,_=self.attempt_files()
+        status,out,err,_,host,_,_=self.invoke(self.argv('intakes',('OTHER',))+flags)
+        self.assertEqual(status,2);self.assertEqual(out.getvalue(),'');host.assert_not_called()
+        self.assertEqual(json.loads(err.getvalue())['error']['code'],'intake_reference_server_invalid_argument')
+        ids=('I-authored',)+tuple('ID'+str(index) for index in range(99))
+        status,_,err,_,host,_,_=self.invoke(self.argv('intakes',ids)+flags)
+        self.assertEqual(status,0);self.assertEqual(err.getvalue(),'');self.assertEqual(host.call_args.kwargs['intake_reference_read_scope'],ids)
+
+    def test_operator_cli_real_http_uses_authored_current_and_blocks_drift(self):
+        api=self.api();flags,paths,blobs,source=self.attempt_files();state=self.state()
+        current=dict(status='available',recheck={'status':'unchanged'},current=copy.deepcopy(source['handoff']['current_facts_plan']))
+        observed=[];servers=[];threads=[];original_factory=api._ui.create_server
+        db_before=hashlib.sha256(self.fixture.legacy.db.read_bytes()).hexdigest()
+        class AuthoredReader:
+            def __init__(self, workspace):pass
+            def conducted_current_facts_view(self,intake_id,selection):
+                observed.append((intake_id,selection));return current
+        def factory(*args,**kwargs):
+            server=original_factory(*args,**kwargs);servers.append(server);original_serve=server.serve_forever
+            def serve():
+                thread=threading.Thread(target=original_serve,kwargs={'poll_interval':.01},daemon=True);threads.append(thread);thread.start()
+                def get(method='GET',route='/api/intakes/I-authored/operator-attempt'):
+                    conn=http.client.HTTPConnection(*server.server_address,timeout=4)
+                    try:
+                        conn.request(method,route);response=conn.getresponse();return response.status,dict(response.getheaders()),response.read()
+                    finally:conn.close()
+                try:
+                    status,headers,body=get();self.assertEqual(status,200);payload=json.loads(body)
+                    self.assertEqual((payload['status'],payload['finalization'],payload['storage']),('bounded','held','not_created'))
+                    self.assertTrue(all(value is False for value in payload['verification'].values()))
+                    self.assertEqual(headers['Cache-Control'],'no-store')
+                    self.assertEqual(get('HEAD')[0],405);self.assertEqual(get('POST')[0],405)
+                    self.assertEqual(get(route='/api/intakes/OTHER/operator-attempt')[0],503)
+                    current['current']['context']['job_id']='J-changed'
+                    status,_,body=get();self.assertEqual((status,json.loads(body)['error']['code']),(503,'operator_attempt_binding_mismatch'))
+                finally:server.shutdown();thread.join(3)
+            server.serve_forever=serve;return server
+        with mock.patch.object(api._ui,'IntakeReadModel',AuthoredReader):
+            status,out,err,opened,_,_,_=self.invoke(self.argv('intakes',('I-authored',))+flags,host_error=factory)
+        self.assertEqual(status,0);self.assertEqual(err.getvalue(),'');opened.assert_called_once()
+        self.assertEqual(set(json.loads(out.getvalue())),{'schema_version','kind','url','store_mode'})
+        self.assertEqual(len(observed),2);self.assertEqual(len(servers),1);self.assertEqual(servers[0].socket.fileno(),-1)
+        self.assertTrue(all(not thread.is_alive() for thread in threads))
+        self.assertEqual(hashlib.sha256(self.fixture.legacy.db.read_bytes()).hexdigest(),db_before)
+        self.assertTrue(all(path.read_bytes()==blobs[key] for key,path in paths.items()))
+        with socket.socket() as probe:probe.bind(servers[0].server_address)
 
     def test_module_and_main_exist(self):
         self.assertIsNotNone(importlib.util.find_spec('labflow.intake_serve'))
@@ -194,8 +344,8 @@ class IntakeServeTests(unittest.TestCase):
 
     def test_missing_real_workspace_is_not_created(self):
         api=self.api()
-        (Path.cwd()/'.local').mkdir(exist_ok=True)
-        with tempfile.TemporaryDirectory(prefix='serve047-missing-',dir=Path.cwd()/'.local') as temporary:
+        _TEST_ROOT.mkdir(parents=True,exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix='serve047-missing-',dir=_TEST_ROOT) as temporary:
             target=Path(temporary)/'absent';args=['--workspace',str(target),'--port','0','--read-scope','metadata'];out,err=io.StringIO(),io.StringIO()
             with mock.patch.object(sys,'stdout',out),mock.patch.object(sys,'stderr',err):status=api.main(args)
             self.assertEqual(status,1);self.assertFalse(target.exists());self.assertEqual(out.getvalue(),'')
@@ -314,8 +464,8 @@ runpy.run_module('labflow.intake_serve',run_name='__main__')
 class IntakeServeChildTests(unittest.TestCase):
     def fixture_child(self, scope, *, mode='normal', block=False):
         root=Path(__file__).resolve().parents[1]
-        (root/'.local').mkdir(exist_ok=True)
-        temporary=tempfile.TemporaryDirectory(prefix='serve047-real-',dir=root/'.local');self.addCleanup(temporary.cleanup)
+        _TEST_ROOT.mkdir(parents=True,exist_ok=True)
+        temporary=tempfile.TemporaryDirectory(prefix='serve047-real-',dir=_TEST_ROOT);self.addCleanup(temporary.cleanup)
         folder=Path(temporary.name);fixture=ReferenceFixture(folder/'input');control=folder/'control';control.mkdir()
         script=folder/'child.py';script.write_text(_CHILD,encoding='utf-8')
         args=['--workspace',str(fixture.legacy.root),'--port','0','--read-scope',scope]
@@ -323,7 +473,7 @@ class IntakeServeChildTests(unittest.TestCase):
         if block:(control/'block').write_text('1',encoding='ascii')
         before=self.snapshot(fixture.root)
         def preserve():
-            archive=root/'.local/INTAKE-SERVE-047/child-evidence'/folder.name
+            archive=_TEST_ROOT/'child-evidence'/folder.name
             archive.mkdir(parents=True,exist_ok=False)
             shutil.copytree(fixture.root,archive/'input');shutil.copytree(control,archive/'control');shutil.copy2(script,archive/'child.py')
             (archive/'before.json').write_text(json.dumps(before),encoding='utf-8')
@@ -374,7 +524,7 @@ class IntakeServeChildTests(unittest.TestCase):
 
     def moves(self, fixture, blocked):
         paths=[fixture.legacy.db,fixture.legacy.root/'blobs',fixture.legacy.root,fixture.root]
-        allowed=Path(__file__).resolve().parents[1]/'.local';count=0
+        allowed=_TEST_ROOT;count=0
         for path in paths:
             target=path.with_name(path.name+'.moved')
             self.assertTrue(path.resolve().is_relative_to(allowed.resolve()));self.assertTrue(target.resolve().is_relative_to(allowed.resolve()))

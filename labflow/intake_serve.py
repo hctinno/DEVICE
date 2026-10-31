@@ -1,4 +1,5 @@
 """Explicit existing-Store intake reference CLI; no creation or source auto-read."""
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -16,12 +17,18 @@ _STORE_CODES = frozenset('store_open_' + suffix for suffix in
     ('invalid_argument', 'path_invalid', 'unavailable', 'schema_mismatch', 'input_changed',
      'integrity_invalid', 'closed', 'backend_unavailable', 'mode_unsupported'))
 _ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,149}\Z', re.ASCII)
+_ATTEMPT_OPTIONS = frozenset({'--operator-attempt-evaluation', '--operator-attempt-receipts'})
+_ATTEMPT_FILES = (('execution', 'execution-receipt.json'), ('finalizer', 'finalizer-receipt.json'),
+                  ('finished', 'finished-v1.json'), ('handoff', 'current-handoff.json'))
 _HELP = ('Start an existing intake reference workspace on 127.0.0.1.\n'
     'Usage: python -B -m labflow.intake_serve --workspace ABS_DIR --port PORT '
     '--read-scope metadata|workspace|intakes [--intake-id ID ...]\n'
+    'Optional paired singletons: --operator-attempt-evaluation ABS_FILE '
+    '--operator-attempt-receipts ABS_DIR\n'
     'All three singleton options are required exactly once, with separate values.\n'
     'PORT is canonical ASCII 0..65535. Use 0 for an owned ephemeral port.\n'
     'metadata denies retained reads; intakes requires 1..100 unique ASCII IDs.\n'
+    'Operator records require workspace/intakes scope; only the fixed five JSON records are read.\n'
     'No Store/DB creation, source scan, model, hardware, or automatic current read.\n')
 
 
@@ -34,7 +41,7 @@ def _fail(suffix):
 
 
 def _arguments(argv):
-    if type(argv) not in (list, tuple) or not 6 <= len(argv) <= 206 or len(argv) % 2:
+    if type(argv) not in (list, tuple) or not 6 <= len(argv) <= 210 or len(argv) % 2:
         _fail('invalid_argument')
     try:
         if any(type(value) is not str for value in argv) or any(len(value) > 32768 for value in argv):
@@ -49,11 +56,12 @@ def _arguments(argv):
     for option, value in zip(argv[::2], argv[1::2]):
         if option == '--intake-id':
             ids.append(value)
-        elif option in ('--workspace', '--port', '--read-scope') and option not in values:
+        elif option in {'--workspace', '--port', '--read-scope'} | _ATTEMPT_OPTIONS and option not in values:
             values[option] = value
         else:
             _fail('invalid_argument')
-    if set(values) != {'--workspace', '--port', '--read-scope'}:
+    required = {'--workspace', '--port', '--read-scope'}
+    if not required <= set(values) or set(values) - required not in (set(), _ATTEMPT_OPTIONS):
         _fail('invalid_argument')
     workspace, port, mode = values['--workspace'], values['--port'], values['--read-scope']
     if (not workspace or not Path(workspace).is_absolute()
@@ -67,7 +75,46 @@ def _arguments(argv):
     else:
         if ids: _fail('invalid_argument')
         scope = () if mode == 'metadata' else 'workspace'
-    return workspace, int(port), scope
+    attempt_paths = None
+    if _ATTEMPT_OPTIONS <= set(values):
+        evaluation, receipts = (values[key] for key in ('--operator-attempt-evaluation', '--operator-attempt-receipts'))
+        if scope == () or not evaluation or not receipts or not Path(evaluation).is_absolute() or not Path(receipts).is_absolute():
+            _fail('invalid_argument')
+        attempt_paths = (evaluation, receipts)
+    return workspace, int(port), scope, attempt_paths
+
+
+def _operator_attempt_inputs(paths, scope):
+    """Read only the explicitly supplied five records; never expose their bytes/errors."""
+    def pairs(items):
+        value = {}
+        for key, child in items:
+            if key in value: _fail('invalid_argument')
+            value[key] = child
+        return value
+    def constant(_): _fail('invalid_argument')
+    try:
+        evaluation, receipts = paths
+        files = (('evaluation', Path(evaluation)),) + tuple((key, Path(receipts) / name) for key, name in _ATTEMPT_FILES)
+        source, pins = {}, {}
+        for key, path in files:
+            if not path.is_file(): _fail('invalid_argument')
+            with path.open('rb') as stream: raw = stream.read(1048577)
+            if len(raw) > 1048576: _fail('invalid_argument')
+            value = json.loads(raw.decode('utf-8', errors='strict'), object_pairs_hook=pairs, parse_constant=constant)
+            if type(value) is not dict: _fail('invalid_argument')
+            _json(value)  # Validate finite numbers and Unicode without changing the source or its raw pin.
+            source[key] = value; pins[key] = hashlib.sha256(raw).hexdigest()
+        source['source_pins'] = pins
+        from .operator_attempt_view import prepare_operator_attempt
+        prepared = json.loads(prepare_operator_attempt(source))
+        if scope != 'workspace' and prepared['binding']['intake_id'] not in scope:
+            _fail('invalid_argument')
+        return (source,)
+    except _Failure:
+        raise
+    except Exception:
+        _fail('invalid_argument')
 
 
 def _json(value):
@@ -138,14 +185,18 @@ def main(argv=None) -> int:
         if (type(arguments) in (list, tuple) and len(arguments) == 1
                 and type(arguments[0]) is str and arguments[0] == '--help'):
             phase = _PREFIX + 'output_failed'; _write(sys.stdout, _HELP.encode('utf-8')); return 0
-        workspace, port, scope = _arguments(arguments)
+        workspace, port, scope, attempt_paths = _arguments(arguments)
         phase = _PREFIX + 'unavailable'
         store = Store.open_existing(workspace)
         if type(store) is not Store:
             store = None; _fail('host_unavailable')
+        options = {}
+        if attempt_paths is not None:
+            phase = _PREFIX + 'invalid_argument'
+            options['operator_attempt_inputs'] = _operator_attempt_inputs(attempt_paths, scope)
         phase = _PREFIX + 'host_unavailable'
         server = _ui.create_server(store.root, host='127.0.0.1', port=port,
-            intake_reference_store=store, intake_reference_read_scope=scope)
+            intake_reference_store=store, intake_reference_read_scope=scope, **options)
         phase = _PREFIX + 'output_failed'; _write(sys.stdout, _ready(server))
         phase = _PREFIX + 'unavailable'; server.serve_forever()
     except KeyboardInterrupt:
