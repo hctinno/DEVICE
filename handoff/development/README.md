@@ -1,5 +1,7 @@
 # 개발1~4 운영·연결 확인
 
+정식 runtime 계획 bundle63313db 전체6도 독립9 qualified Yes 뒤 수용했다. 총괄 기능81은 모두 통과했으며 원79 실행기의 마지막 고정 집계 실패는 별도 audit로 남겼다. SDK/claim 전 명시 입력 재검증과 같은 snapshot의 owned lifecycle/CONFIG/Fleet 전달은 FAKE 범위이며, 실제 AOSP·실장비·모델 호출은0이다. 원 No·실패·claim·소진한도는 유지한다.
+
 로컬 OCR746과 producer 취소774도 독립검수 뒤 통합했다. 총괄OCR 고유15(초기8 PASS/7skip보존→명시도구pin7 PASS), 취소12 PASS다. [OCR 범위](../../docs/fcc/intake_pdf_ocr_reference_usage.md)는trusted local/합성1쪽·deadline검사이며전체wall강제보장아님, source/DB/profile불변·native once차단을유지한다. 호출중취소는자기child/IO 확인과wire0만뜻하며remote/billing/descendants미확인이다. CLI선언표시742는기록자체선언/원격미확인으로명확히했고새권위·예산을만들지않았다.
 
 시도 기록의 정식 intake_serve 연결1c9b384도 독립63/HTTP8 뒤 수용했다. 총괄CLI26 및 Reader 대역 없는 실제 Store→CLI→동일 SHA의7단계 API200, 다른접수503/경로query400·기존DB와입력불변·host정상종료를 확인했다. [실행 옵션](../../docs/fcc/operator_attempt_view_usage.md)은 명시5기록/기존Store/read-scope를 요구하며 새모델/권위/예산을 발급하지 않는다.
