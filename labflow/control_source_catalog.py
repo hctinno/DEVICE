@@ -293,6 +293,11 @@ class ControlSourceCatalog:
         self._records, self._items, self._search = records, items, search
         self._profiles_by_item, self._profile_items, self._notes = profiles_by_item, profile_items, notes
         self._equipment, self._ids, self._summary = equipment, sorted(research), summary
+        self._profile_metadata = copy.deepcopy(data['overlay']['profile_crosswalk']['profiles'])
+
+    def profiles(self):
+        """Return validated text crosswalk metadata; never an installed binding."""
+        return copy.deepcopy(self._profile_metadata)
 
     def summary(self):
         return copy.deepcopy(self._summary)
