@@ -6,9 +6,9 @@
 |---|---|---|
 | 총괄 | integration / codex/workspace-consolidation-20261031 / 경로 정리1106793·기능 공통1dff8a1 원격 exact | guest/context/시도 화면의 수정·독립 검수·관련 통합/회귀·게시와 다음 소유 배정을 잇는다 |
 | 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 746ab3f 수용 | 로컬OCR3 독립11+timeout1·총괄고유15 qualified 수용. C1 deadline 문구 보완·전체worker 격리 후속. 원198s No/원blob/profile/G3차단 유지 |
-| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / 774ff02 수용 | 취소6 독립10·총괄12 PASS. 상위접수실행→최종화 fresh cancelled/held·materialize0 연결을다음검증/구현으로잇는다. 원firsterror/소모/remote unknown 유지 |
-| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / f035 수용·6da248a 후보No | 계획source 독립13·총괄61 수용. 새runtime6은예약DOSdevice5 pre-probe P2 No 고정·최소수정실제배정, 나머지미검수. AOSP/RAM/claim 보존 |
-| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / 7421316 수용 | 자료확보/가상role선언/별도N1914A제한계약/검증미확인을구별하는 support뷰 정확12 GO. catalog detached getter만예약·실제GET/Chromium연결·새권위/완성률0 |
+| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / 774ff02 수용·후속tree685동일 | 취소6 독립10·총괄12 수용. 상위접수→typedcancel→현v2/v3 selector/held·materialize0 담당fresh1 인수·제품변경0. 다음기존 normal/persistent/restored 세조건 합성전체흐름행렬 실제배정 |
+| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 63313db 수용·원6daNo보존 | 전체6 독립9·총괄81 기능PASS. 고정79 집계assert 실패는 별도audit/재실행0. 다음 첫ON metric/refplane의 관측선택·기존보정 연결범위를 확정. AOSP/RAM/claim 보존 |
+| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / e783f9f 후보 원격 exact | support뷰 승인12 구현·실제catalog/GET/Chromium 작성자검증을인수해독립검수실제배정. role/protocol/material/검수미확인·N1911/N1914분리·권위/완성률0 |
 | 유지보수 회수 | 임시 migration-paths/migration-archive 둘 다 실제 파일/refs 보존 후 삭제·layout 해제 | 새 C루트 clone 금지, 필요 검수는 workspaces 안에 목적/회수 조건 등록 |
 | P01 | 기존 수집 루트/branch/index/사용자 M2 보존, 개발 예외는 development/AGENTS만 | 기존 인계·소유 유지, 추가 수집은 실제 공백만 총괄 한 창구로 요청 |
 

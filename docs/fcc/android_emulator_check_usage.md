@@ -62,6 +62,25 @@ connect/send/각 recv/status·length·body/get-state/getprop 전체에 같은 qu
 
 ## 결과와 확인 범위
 
+### 선택 합성 접수 계획 bundle
+
+`--intake-plan-bundle ABS_JSON`은 `--boot --rf-bridge-check`와 함께만 허용한다. API는 `execute(..., intake_plan_bundle=absolute_path)`다. flag를 생략한 기존 fixed-source 진단과 기본 preflight/verify-only 동작은 유지한다. bundle의 정확한 여섯 키는 `context`, `analysis`, `plan_input`, `expected_revision`, `expected_context_sha256`, `expected_plan_input_sha256`이며 [guest 계획 연결](android_guest_rf_bridge_usage.md)의 기존 caller snapshot과 pins를 사용한다.
+
+```powershell
+$dev = 'C:/무인시험소/.local/development'
+$plan = Join-Path $dev 'runs/authored-plan/plan-bundle.json'
+$output = Join-Path $dev ('runs/android-guest-rf/' + [Guid]::NewGuid().ToString('N'))
+& "$dev/toolchains/python/Scripts/python.exe" -B -m labflow.android_emulator_check --runtime "$dev/toolchains/android" --output $output --boot --rf-bridge-check --intake-plan-bundle $plan
+```
+
+이는 준비된 bundle과 기존 부팅 위임이 있는 caller용 명령 예시다. 이번 개발에서 실행하지 않았다. packet 준비는 원 boot cap이나 추가 실행 허가를 만들지 않으며 RAM2039.38<3584MiB의 보류 관측을 바꾸지 않는다.
+
+로컬 절대 경로의 일반 파일만 한 번 읽는다. raw8MiB·strict UTF-8 JSON, 중복/nonfinite/surrogate 거절, exact shape/type와 깊이32/100000노드/canonical8MiB 한도를 적용한다. UNC/device/ADS·모든 component의 DOS 예약장치명·부모 순회·잘못된 경로와 reparse를 거절하며 원 파일을 찾는 디렉터리 탐색은 없다. DOS 이름은 현재 공통 Python3.12.4 표준 `PureWindowsPath.is_reserved()`를 component별로 적용해 case·확장자·말단 공백 등을 같은 규칙으로 거절한다. `validate_intake_plan_bundle` 공통 순수 helper가 실제 public builder로 synthetic/pins/근거·방법/계획 전체를 다시 검증한다. 이 단계는 SDK/native/claim/guest 접근 전에 완료된다.
+
+`result.json.intake_plan_bundle`은 path·raw bytes/SHA·snapshot SHA·plan input SHA·source SHA를 남긴다. 유효한 불변 bytes를 `boot_runtime(..., intake_plan_snapshot=...)`에 전달하고, 정확 guest identity 이후 public 계획 wrapper가 같은 메모리 내용으로 CONFIG·Fleet 실행을 수행한다. 파일 재읽기·임의 shell·새 claim은 없다. 잘못된 옵션/endpoint/packet은 SDK·claim·guest0으로 거절한다. 유효한 packet이어도 기존 자원/무결성/한 번의 claim이 실행을 막을 수 있다. 선소비 claim을 덮거나 삭제하지 않는다.
+
+`intake_plan_bundle_path_invalid`, `intake_plan_bundle_file_required/unreadable/changed/too_large/json_invalid`와 기존 `guest_plan_*` 오류를 구분한다. raw 파일이 정상적으로 읽힌 뒤 JSON/계획이 거절되면 관측한 raw SHA를 유지한다. 원문 진위·Store current·새 권한은 검증하지 않으며 source 설정/상태 연결을 전체 시험방법·metric 계산·판정 완료로 확대하지 않는다. 실제 AOSP/OEM/물리 예측은 미검증이다.
+
 `output/result.json`에 단계 결과·최초 오류·자원 전후·명령·소유 PID/종료 상태를 저장한다. `runtime/dgm-runtime-owner.json`에 URL·byte·checksum·SHA-256·license·설치 상태를, `runtime/sources`에 metadata/약관을, `runtime/archives`에 원 archive를 보존한다. 실패 원문은 각 output에 남으며 새 성공 output이 과거 실패를 대체하지 않는다. 경로/옵션을 받아들이기 전 거절한 CLI 오류는 stdout 또는 argparse stderr와 종료 코드 2로 알린다.
 
 2026-10-26 작성자 환경의 실제 확인과 fixture를 구별한다.

@@ -17,7 +17,7 @@ import hashlib
 import io
 import json
 import os
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import platform
 import shutil
 import signal
@@ -43,6 +43,7 @@ OWNER_FILE = 'dgm-runtime-owner.json'
 PROPERTIES = ('ro.kernel.qemu', 'ro.hardware', 'ro.product.model', 'sys.boot_completed')
 NATIVE_PATHS = ('platform-tools/adb.exe', 'emulator/emulator.exe',
                 'emulator/qemu/windows-x86_64/qemu-system-x86_64.exe')
+PLAN_BUNDLE_CAP = 8 * MIB
 
 
 class BoundaryError(RuntimeError):
@@ -941,11 +942,83 @@ def create_avd(runtime: Path, output: Path):
     return data
 
 
+def _read_intake_plan_bundle(value):
+    """Read one explicitly named regular JSON file once, retaining its raw pin."""
+    if not (type(value) is str or type(value) is type(Path())):
+        raise BoundaryError('intake_plan_bundle_path_invalid')
+    path = Path(value)
+    try:
+        str(path).encode('utf-8')
+    except UnicodeError as exc:
+        raise BoundaryError('intake_plan_bundle_path_invalid') from exc
+    if (not path.is_absolute() or path.anchor.startswith('\\')
+            or '\x00' in str(path) or '..' in path.parts or any(':' in part for part in path.parts[1:])
+            or any(PureWindowsPath(part).is_reserved() for part in path.parts)):
+        raise BoundaryError('intake_plan_bundle_path_invalid')
+    def identity(info):
+        return info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns
+    try:
+        reject_links(path)
+        before = path.lstat()
+        if not stat.S_ISREG(before.st_mode):
+            raise BoundaryError('intake_plan_bundle_file_required')
+        if before.st_size > PLAN_BUNDLE_CAP:
+            raise BoundaryError('intake_plan_bundle_too_large')
+        with path.open('rb') as stream:
+            if identity(os.fstat(stream.fileno())) != identity(before):
+                raise BoundaryError('intake_plan_bundle_changed')
+            raw = stream.read(PLAN_BUNDLE_CAP+1)
+            after = os.fstat(stream.fileno())
+        reject_links(path)
+        if identity(before) != identity(after) or identity(before) != identity(path.lstat()):
+            raise BoundaryError('intake_plan_bundle_changed')
+    except (OSError, ValueError) as exc:
+        raise BoundaryError('intake_plan_bundle_unreadable') from exc
+    if len(raw) > PLAN_BUNDLE_CAP:
+        raise BoundaryError('intake_plan_bundle_too_large')
+    if len(raw) != before.st_size:
+        raise BoundaryError('intake_plan_bundle_changed')
+    return raw, dict(path=str(path), bytes=len(raw), raw_sha256=hashlib.sha256(raw).hexdigest(),
+                     current_version='caller_snapshot_only', source_bytes='not_reopened',
+                     execution_authority=False)
+
+
+def _prepare_intake_plan_snapshot(raw):
+    """Strict JSON plus the shared public validator; return immutable memory bytes."""
+    from .android_guest_rf_bridge import validate_intake_plan_bundle
+    from .store import canonical
+    if type(raw) is not bytes:
+        raise BoundaryError('intake_plan_bundle_json_invalid')
+    if len(raw) > PLAN_BUNDLE_CAP:
+        raise BoundaryError('intake_plan_bundle_too_large')
+    def pairs(items):
+        value = {}
+        for key, item in items:
+            if key in value:
+                raise ValueError('duplicate_key')
+            value[key] = item
+        return value
+    def nonfinite(value):
+        raise ValueError('nonfinite')
+    try:
+        bundle = json.loads(raw.decode('utf-8'), object_pairs_hook=pairs, parse_constant=nonfinite)
+    except (UnicodeError, ValueError, RecursionError) as exc:
+        raise BoundaryError('intake_plan_bundle_json_invalid') from exc
+    trace = validate_intake_plan_bundle(bundle)
+    snapshot = canonical(bundle).encode('utf-8')
+    return snapshot, bundle, trace
+
+
 def boot_runtime(runtime: Path, report: Report, env: dict, endpoint: Endpoint,
                  timeout: int, acceleration: str, help_text: str,
-                 rf_bridge_check: bool = False):
+                 rf_bridge_check: bool = False, intake_plan_snapshot: bytes | None = None):
+    if intake_plan_snapshot is not None and rf_bridge_check is not True:
+        raise BoundaryError('options_invalid')
     if rf_bridge_check:
         _require_rf_bridge_endpoint(endpoint)
+    bundle = plan_trace = None
+    if intake_plan_snapshot is not None:
+        _, bundle, plan_trace = _prepare_intake_plan_snapshot(intake_plan_snapshot)
     if acceleration not in ('auto', 'off'):
         raise BoundaryError('acceleration_invalid')
     if acceleration == 'off':
@@ -1019,10 +1092,21 @@ def boot_runtime(runtime: Path, report: Report, env: dict, endpoint: Endpoint,
                         report.data.update(android_os='booted', adb_verified=True, status='verified')
                         report.save()
                         if rf_bridge_check:
-                            from .android_guest_rf_bridge import run_guest_rf_check
-                            run_guest_rf_check(endpoint, server, report,
-                                               deadline=time.monotonic() + 30,
-                                               emulator_process=emulator_process)
+                            if bundle is None:
+                                from .android_guest_rf_bridge import run_guest_rf_check
+                                run_guest_rf_check(endpoint, server, report,
+                                                   deadline=time.monotonic() + 30,
+                                                   emulator_process=emulator_process)
+                            else:
+                                from .android_guest_rf_bridge import run_intake_plan_guest_rf_check
+                                result = run_intake_plan_guest_rf_check(bundle['context'], bundle['analysis'],
+                                    bundle['plan_input'], endpoint, server, report,
+                                    expected_revision=bundle['expected_revision'],
+                                    expected_context_sha256=bundle['expected_context_sha256'],
+                                    expected_plan_input_sha256=bundle['expected_plan_input_sha256'],
+                                    deadline=time.monotonic()+30, emulator_process=emulator_process)
+                                if result['host_rf_model']['source_sha256'] != plan_trace['source_sha256']:
+                                    raise BoundaryError('intake_plan_source_mismatch')
                             report.data['status'] = 'rf_bridge_verified'
                             report.save()
                         return
@@ -1043,7 +1127,7 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
             verify_only: bool = False,
             accept_sdk_license: bool = False, endpoint: Endpoint | None = None,
             boot_timeout: int = 180, acceleration: str = 'auto',
-            rf_bridge_check: bool = False) -> dict:
+            rf_bridge_check: bool = False, intake_plan_bundle: Path | None = None) -> dict:
     from .development_paths import reference_path
     runtime, output = reference_path(Path(runtime).absolute()), reference_path(Path(output).absolute())
     reject_links(runtime)
@@ -1056,10 +1140,19 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
         if (type(boot_timeout) is not int or not 1 <= boot_timeout <= 180
                 or acceleration not in ('auto', 'off') or (install and boot)
                 or (resume_install and not install) or (verify_only and (install or boot))
-                or type(rf_bridge_check) is not bool or (rf_bridge_check and not boot)):
+                or type(rf_bridge_check) is not bool or (rf_bridge_check and not boot)
+                or (intake_plan_bundle is not None and (boot is not True or rf_bridge_check is not True))):
             raise BoundaryError('options_invalid')
         if rf_bridge_check:
             _require_rf_bridge_endpoint(endpoint)
+        plan_snapshot = None
+        if intake_plan_bundle is not None:
+            raw, metadata = _read_intake_plan_bundle(intake_plan_bundle)
+            report.data['intake_plan_bundle'] = metadata
+            plan_snapshot, _, trace = _prepare_intake_plan_snapshot(raw)
+            metadata.update(snapshot_sha256=hashlib.sha256(plan_snapshot).hexdigest(),
+                            plan_input_sha256=trace['plan_input_sha256'], source_sha256=trace['source_sha256'])
+            report.save()
         report.data['resources_before'] = resources()
         if runtime == output or output in runtime.parents:
             raise BoundaryError('runtime_output_overlap')
@@ -1098,7 +1191,8 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
         report.save()
         if boot:
             boot_runtime(runtime, report, env, endpoint, boot_timeout, acceleration,
-                         outputs['emulator-help'], rf_bridge_check=rf_bridge_check)
+                         outputs['emulator-help'], rf_bridge_check=rf_bridge_check,
+                         **({'intake_plan_snapshot': plan_snapshot} if plan_snapshot is not None else {}))
         else:
             report.data['not_run_reason'] = 'OS boot requires explicit --boot; preflight is not Android OS proof'
     except KeyboardInterrupt:
@@ -1142,6 +1236,8 @@ def parser() -> argparse.ArgumentParser:
     cli.add_argument('--boot-timeout', type=_boot_seconds, default=180)
     cli.add_argument('--rf-bridge-check', action='store_true',
                      help='Run fixed AOSP guest state and synthetic Fleet check during the same owned boot')
+    cli.add_argument('--intake-plan-bundle', type=Path, metavar='ABS_JSON',
+                     help='Pinned synthetic plan JSON; requires --boot --rf-bridge-check')
     cli.add_argument('--acceleration', choices=('auto', 'off'), default='auto')
     return cli
 
@@ -1155,7 +1251,7 @@ def main(argv: list[str] | None = None) -> int:
             verify_only=args.verify_only,
             accept_sdk_license=args.accept_sdk_license, endpoint=endpoint,
             boot_timeout=args.boot_timeout, acceleration=args.acceleration,
-            rf_bridge_check=args.rf_bridge_check)
+            rf_bridge_check=args.rf_bridge_check, intake_plan_bundle=args.intake_plan_bundle)
     except BoundaryError as exc:
         print(json.dumps(dict(status='not_run', code=exc.code, detail=str(exc)), ensure_ascii=False))
         return 2
