@@ -2,6 +2,17 @@
 
 현재 source가 포함된 `.local/development/layout.json`의 명시 경로를 사용한다. layout이 없거나 옛 autolab 경로가 등록되지 않았으면 새 상태·예산·프로필을 만들기 위한 fallback으로 처리하지 않는다.
 
+이 PC의 통합본에서 시작하는 PowerShell 명령은 다음과 같다. 다른 안내의 `.venv` 예시는 이 관리 구조에서는 아래 공통 Python으로 실행한다.
+
+```powershell
+Set-Location 'C:/무인시험소/.local/development/integration'
+$python = '../toolchains/python/Scripts/python.exe'
+& $python -B -X utf8 scripts/check_development_paths.py --cwd $PWD.Path --role integration --expected-branch codex/workspace-consolidation-20261031
+& $python -B -X utf8 -m labflow.intake_fixture_check --conducted-workflow --document-kind pdf --measurement-ref event:17 --mock-model gpt-6.1-sol --port 0
+```
+
+두 번째 명령은 새 `runs/cw` 하위에 합성 PDF·작성된 MOCK·가상 취득·계산·저장·DRAFT를 만든다. 표시한 loopback 주소를 브라우저로 열어 조회하고 Ctrl+C로 종료한다. `--mock-model`은 모의 응답의 이름표이며 실제 모델 호출이 아니다. 정상 예시의 raw −19.5dBm과 선언 손실 30.5dB는 보정 11dBm으로 이어진다. 규범 판정·실측 정확도는 미평가이며 실제 AI 업무 성공을 입증하지 않는다.
+
 - Python은 `toolchains/python`의 기존 site-packages를 재사용한다. 해당 `Scripts/python.exe -m …` 방식이 기본이며 기존 `integration/.venv` 실행 경로는 사용하지 않는다. OS base Python의 home/executable은 이 환경의 native 의존성이다.
 - Android runtime은 `toolchains/android`이며 SDK는 그 아래 `sdk`다. 공식 archive·owner·실패한 추출 이력도 함께 보존한다. owner의 역사 runtime 문자열은 바꾸지 않고 명시 alias로 현재 IO 경로만 대조한다. 무결성 검사는 native SDK 실행·ADB/server·OS boot 검증과 다르다.
 - 기본 core 상태는 `runs/state/labflow`, report/demo/virtual 출력은 `runs/exports` 아래다. 접수 fixture·conducted mock·fleet harness·reference demo·VirtualSession·handoff ZIP의 기본 출력도 `runs`를 사용한다. 새 ZIP과 fixture leaf는 기존 산출물을 덮지 않는다.
