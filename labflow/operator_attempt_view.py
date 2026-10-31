@@ -141,7 +141,7 @@ def prepare_operator_attempt(provided):
         public_steps = []
         for index, (call, step) in enumerate(zip(calls, steps), 1):
             proposal = call['proposal']; wire = step['wire']['proposal']
-            _need(type(proposal) is dict and proposal == wire
+            _need(type(proposal) is dict and type(wire) is dict and proposal == wire
                   and _integer(call['index'], index, index) and _integer(step['index'], index, index)
                   and step['binding']['run_id'] == b['run_id']
                   and step['binding']['runtime_instance_id'] == b['runtime_instance_id']
@@ -164,8 +164,8 @@ def prepare_operator_attempt(provided):
                   and receipt['model']['requested'] == requested
                   and receipt['model']['resolved'] is None)
             if proposal.get('kind') == 'advance':
-                _need(set(proposal) == {'kind', 'ticks'} and type(proposal['ticks']) is int
-                      and 1 <= proposal['ticks'] <= 8)
+                _need(set(proposal) == {'kind', 'ticks'}
+                      and _integer(proposal['ticks'], 1, 8) and _integer(wire['ticks'], 1, 8))
                 action = 'advance'
             else:
                 _need(set(proposal) == {'kind', 'device_id', 'action', 'parameters'}
@@ -173,10 +173,12 @@ def prepare_operator_attempt(provided):
                       and (proposal['device_id'], proposal['action']) in
                           {('dut', 'start'), ('sensor', 'acquire'), ('sensor', 'read')})
                 action = proposal['device_id'] + '.' + proposal['action']
-            _need(type(call['before_tick']) is int and type(call['after_tick']) is int
+            before = step.get('before', {}); after = step.get('after', {})
+            _need(type(before) is dict and type(after) is dict
+                  and type(call['before_tick']) is int and type(call['after_tick']) is int
                   and 0 <= call['before_tick'] <= call['after_tick'] <= 100000
-                  and step.get('before', {}).get('tick', call['before_tick']) == call['before_tick']
-                  and step.get('after', {}).get('tick', call['after_tick']) == call['after_tick'])
+                  and _integer(before.get('tick', call['before_tick']), call['before_tick'], call['before_tick'])
+                  and _integer(after.get('tick', call['after_tick']), call['after_tick'], call['after_tick']))
             public_steps.append(dict(index=index, action=action, before_tick=call['before_tick'],
                                      after_tick=call['after_tick'], receipt_status=call['receipt_status'],
                                      effect=step['dispatch']['effect'], cli_tool_items=0))

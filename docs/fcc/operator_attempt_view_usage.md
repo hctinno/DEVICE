@@ -48,3 +48,5 @@ GET `/api/intakes/{intake_id}/operator-attempt`은 생성 시 검증·축소한 
 
 `actual_cli`는 보존 기록의 자체 origin 선언이다. 요청 모델명은 원격에서 실제 해결된 모델 신원과 다르며 그 값은 `null`이다. 토큰·비용 전체값도 `null`; 원격 신원, 실장비, 실행 권위는 모두 미확인/거짓이다. 화면의 가상 센서 행동·영수증은 실측·규격 판정 증거가 아니다. 이번 `decision_budget` 종료는 `execution_incomplete` 때문에 최종 결과와 저장 초안이 없다.
 `hold_reasons`는 최종화 영수증과 독립 평가의 이유 배열이 정확히 일치할 때만 표시한다. 지원하는 현재 보류 형상이 아니면 생성자가 입력을 거절한다.
+
+`advance`의 평가·wire `ticks`와 평가의 `before_tick`/`after_tick`, 제공된 step `before.tick`/`after.tick`은 정확한 정수형이어야 한다. 값이 정수와 같아도 `true`/`false` 또는 `1.0`/`0.0` 같은 실수형은 `operator_attempt_invalid`로 거절하며 원 입력을 정수로 변환하거나 덮어쓰지 않는다. 기존 step snapshot 생략 형식은 유지한다. 거절된 입력을 `bounded`/`held` 기록이나 완료 결과로 대신 표시하지 않는다.

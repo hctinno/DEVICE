@@ -91,7 +91,50 @@ def supplied():
                 finished=finished, handoff=handoff, source_pins=pins)
 
 
+def supplied_with_explicit_tick_receipts():
+    """Authored integer receipts; detach wire copies so mutations stay independent."""
+    packet = supplied()
+    for call, step, (before, after) in zip(packet['evaluation']['model_calls'],
+                                         packet['execution']['loop']['steps'], ((0, 1), (1, 2))):
+        call['before_tick'] = before
+        call['after_tick'] = after
+        step['wire']['proposal'] = copy.deepcopy(call['proposal'])
+        step['before'] = {'tick': before}
+        step['after'] = {'tick': after}
+    return packet
+
+
 class OperatorAttemptViewTests(unittest.TestCase):
+    def test_rejects_wire_and_step_ticks_that_only_compare_equal_to_integers(self):
+        from labflow.operator_attempt_view import OperatorAttemptViewError, prepare_operator_attempt
+        for location, value in (('wire', True), ('wire', 1.0), ('before', False),
+                                ('before', 0.0), ('after', True), ('after', 1.0)):
+            with self.subTest(location=location, value=value, value_type=type(value).__name__):
+                packet = supplied_with_explicit_tick_receipts()
+                step = packet['execution']['loop']['steps'][0]
+                target, key = (step['wire']['proposal'], 'ticks') if location == 'wire' else (step[location], 'tick')
+                target[key] = value
+                original = canonical(packet)
+                with self.assertRaisesRegex(OperatorAttemptViewError, '^operator_attempt_invalid$'):
+                    prepare_operator_attempt(packet)
+                self.assertEqual(canonical(packet), original)
+                self.assertIs(type(target[key]), type(value))
+
+    def test_keeps_exact_tick_integers_and_legacy_omitted_snapshots(self):
+        from labflow.operator_attempt_view import prepare_operator_attempt
+        for source in (supplied, supplied_with_explicit_tick_receipts):
+            with self.subTest(source=source.__name__):
+                packet = source()
+                original = canonical(packet)
+                payload = json.loads(prepare_operator_attempt(packet))
+                self.assertEqual((payload['status'], payload['finalization'], payload['storage']),
+                                 ('bounded', 'held', 'not_created'))
+                self.assertEqual([(step['before_tick'], step['after_tick']) for step in payload['steps']],
+                                 [(call['before_tick'], call['after_tick']) for call in packet['evaluation']['model_calls']])
+                self.assertTrue(all(type(step[key]) is int for step in payload['steps']
+                                    for key in ('before_tick', 'after_tick')))
+                self.assertEqual(canonical(packet), original)
+
     def test_rejects_python_equal_but_type_different_receipt_copies(self):
         from labflow.operator_attempt_view import OperatorAttemptViewError, prepare_operator_attempt
         def embedded(packet):
