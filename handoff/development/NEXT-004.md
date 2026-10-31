@@ -5,14 +5,16 @@
 | 역할 | 실제 고정 공간·인수/게시 기준 | 원 Goal의 다음 단위 |
 |---|---|---|
 | 총괄 | integration / codex/workspace-consolidation-20261031 / 원195182f9·경로 코드 ceea50c 원격 exact | 최종 정리 기록 게시→후보 수정/독립 리뷰→관련 통합/회귀 |
-| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 04c4776 원격 exact | 원 접수 소유 유지·보존 WIP 의미 비교/중복과 고유 변경 구별 |
-| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / 7d680b1 원격 exact | 원 No를 보존해 미확인 출처 참조 처리 최소 수정/재검수 |
-| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 87457b8 원격 exact | C1/C2 post-fix bridge 독립 평가·원999 중간 실패 별도 유지 |
-| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / 8fbf292 원격 exact | bool/float tick 형식 No 최소 수정/재검수 |
+| 개발1 | workspaces/dev1 / codex/dev1-native-input-scope-docsync-20261026 / 공통110 인수49175c1 | 원 접수 소유 유지·보존 WIP7 의미 비교를 실제 재개. code 조회는 절대 archive 경로 사용 |
+| 개발2 | workspaces/dev2 / codex/operator-context-projection-20261027 / 공통110 인수678f393 | typed unknown source_id는 원 full boundary 유효 시 detached full-copy fallback. 일반 문자열은 참조로 확대하지 않고 원형 검사·full prompt 한도 유지 |
+| 개발3 | workspaces/dev3 / codex/goal-android-guest-rf-20261027 / 공통110 인수49714f2 원격 exact | C1/C2 post-fix 전체6 고정·독립 기능 검수 실제 배정. 원999·AOSP 미실행·RAM 제약은 별도 보존 |
+| 개발4 | workspaces/dev4 / codex/goal-operator-attempt-view-20261027 / tick 수정8b689b5 원격 exact | 원No·literal6 RED 보존, 작성자 Python10/Node parser1. 미통합 전체8 독립 재검수 진행·총괄 미수용 |
 | 유지보수 회수 | 임시 migration-paths/migration-archive 둘 다 실제 파일/refs 보존 후 삭제·layout 해제 | 새 C루트 clone 금지, 필요 검수는 workspaces 안에 목적/회수 조건 등록 |
 | P01 | 기존 수집 루트/branch/index/사용자 M2 보존, 개발 예외는 development/AGENTS만 | 기존 인계·소유 유지, 추가 수집은 실제 공백만 총괄 한 창구로 요청 |
 
 냉각 clone153은 actual fullcopy/finalSHA·전 고유 CAS 해시/metadata·WIP9·SDK/RP 대조 후 native PS로 정리했다. 고정4의 원tip/common733/후보와 현재5 guard ready·담당 ACK를 인수했다. 각 담당의 정확 파일 소유권을 유지하고 기존 미통합 원No를 검수 성공으로 승격하지 않는다. 정리 뒤 다음 구현/평가는 총괄의 실제 메시지 배정과 산출물로 추적한다. 모델25/25·Vertex6/3072·원 permit/실패·한도는 유지하며 추가 호출/실물 위임은 없다.
+
+2026-10-31 재개 배정과 ACK를 실제 인수했다. 개발2에 보냈던 unknown reference 거절 예시는 원 No의 full-copy fallback 계약으로 정정했고, 정정 전 코드/RED 실행0 및 계획·관측 보존을 확인했다. 개발3/4 독립 검수는 고정 후보를 읽기 전용으로 사용하며 실제 모델·SDK·ADB·실장비 없이 수행한다. 새 판단기만 추가하기보다 기존 체크를 실행 경로에 재사용하고 독립 No의 수정·재검수·통합을 먼저 닫는다.
 
 ## GOAL-PREHARDWARE-001 — 2026-10-26 명시 재개
 
