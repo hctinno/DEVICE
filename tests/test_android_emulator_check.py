@@ -737,6 +737,39 @@ class OwnedRuntimePlanBundleTests(unittest.TestCase):
                       next(s for s in observed['guest'].calls if ' CONFIG ' in s))
         self.assertEqual(result['intake_plan']['verification']['current_version'], 'caller_snapshot_only')
 
+    def test_reserved_dos_components_never_reach_filesystem_for_str_or_path(self):
+        # First five are the independent 6da248a No, kept as literal inputs.
+        paths = [r'C:\NUL', r'C:\x\NUL.txt', r'C:\x\CON', r'C:\x\AUX', r'C:\x\COM1',
+                 r'C:\x\nUl.JsOn', r'C:\x\NUL .json', r'C:\x\NUL. ', r'C:\x\NUL..json',
+                 r'C:\x\PRN.txt', r'C:\x\COM9.backup', r'C:\x\LPT1.json',
+                 r'C:\x\COM¹.txt', r'C:\x\LPT².json', r'C:\x\CONIN$.json', r'C:\x\CONOUT$',
+                 r'C:\NUL\normal.json', r'C:\aux.txt\normal.json', r'C:\x\CoM1. \normal.json']
+        for text in paths:
+            for supplied in (text, Path(text)):
+                with self.subTest(path=text, kind=type(supplied).__name__):
+                    probes = []
+                    def forbidden(*args):
+                        probes.append('filesystem probe')
+                        raise AssertionError('reserved device entered filesystem boundary')
+                    with mock.patch.object(check, 'reject_links', side_effect=forbidden):
+                        with self.assertRaises(check.BoundaryError) as error:
+                            check._read_intake_plan_bundle(supplied)
+                    self.assertEqual(error.exception.code, 'intake_plan_bundle_path_invalid')
+                    self.assertEqual(probes, [])
+
+    def test_nonreserved_dos_lookalikes_remain_eligible_for_regular_file_read(self):
+        paths = [r'C:\x\NULx.json', r'C:\x\xNUL', r'C:\x\CONsole.json', r'C:\x\AUXiliary.json',
+                 r'C:\x\COM0.json', r'C:\x\COM10.json', r'C:\x\LPT0.json', r'C:\x\LPT10.json',
+                 r'C:\x\.NUL', r'C:\NULx\normal.json']
+        class EligibleForProbe(Exception):
+            pass
+        for text in paths:
+            for supplied in (text, Path(text)):
+                with self.subTest(path=text, kind=type(supplied).__name__):
+                    with mock.patch.object(check, 'reject_links', side_effect=EligibleForProbe):
+                        with self.assertRaises(EligibleForProbe):
+                            check._read_intake_plan_bundle(supplied)
+
     def test_remote_device_and_ads_paths_are_rejected_without_filesystem_probe(self):
         original = check.reject_links
         probes = []

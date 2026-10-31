@@ -75,7 +75,7 @@ $output = Join-Path $dev ('runs/android-guest-rf/' + [Guid]::NewGuid().ToString(
 
 이는 준비된 bundle과 기존 부팅 위임이 있는 caller용 명령 예시다. 이번 개발에서 실행하지 않았다. packet 준비는 원 boot cap이나 추가 실행 허가를 만들지 않으며 RAM2039.38<3584MiB의 보류 관측을 바꾸지 않는다.
 
-로컬 절대 경로의 일반 파일만 한 번 읽는다. raw8MiB·strict UTF-8 JSON, 중복/nonfinite/surrogate 거절, exact shape/type와 깊이32/100000노드/canonical8MiB 한도를 적용한다. UNC/device/ADS·부모 순회·잘못된 경로와 reparse를 거절하며 원 파일을 찾는 디렉터리 탐색은 없다. `validate_intake_plan_bundle` 공통 순수 helper가 실제 public builder로 synthetic/pins/근거·방법/계획 전체를 다시 검증한다. 이 단계는 SDK/native/claim/guest 접근 전에 완료된다.
+로컬 절대 경로의 일반 파일만 한 번 읽는다. raw8MiB·strict UTF-8 JSON, 중복/nonfinite/surrogate 거절, exact shape/type와 깊이32/100000노드/canonical8MiB 한도를 적용한다. UNC/device/ADS·모든 component의 DOS 예약장치명·부모 순회·잘못된 경로와 reparse를 거절하며 원 파일을 찾는 디렉터리 탐색은 없다. DOS 이름은 현재 공통 Python3.12.4 표준 `PureWindowsPath.is_reserved()`를 component별로 적용해 case·확장자·말단 공백 등을 같은 규칙으로 거절한다. `validate_intake_plan_bundle` 공통 순수 helper가 실제 public builder로 synthetic/pins/근거·방법/계획 전체를 다시 검증한다. 이 단계는 SDK/native/claim/guest 접근 전에 완료된다.
 
 `result.json.intake_plan_bundle`은 path·raw bytes/SHA·snapshot SHA·plan input SHA·source SHA를 남긴다. 유효한 불변 bytes를 `boot_runtime(..., intake_plan_snapshot=...)`에 전달하고, 정확 guest identity 이후 public 계획 wrapper가 같은 메모리 내용으로 CONFIG·Fleet 실행을 수행한다. 파일 재읽기·임의 shell·새 claim은 없다. 잘못된 옵션/endpoint/packet은 SDK·claim·guest0으로 거절한다. 유효한 packet이어도 기존 자원/무결성/한 번의 claim이 실행을 막을 수 있다. 선소비 claim을 덮거나 삭제하지 않는다.
 

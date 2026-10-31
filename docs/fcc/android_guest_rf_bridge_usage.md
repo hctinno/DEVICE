@@ -66,7 +66,7 @@ bundle = dict(context=context, analysis=analysis, plan_input=plan_input,
 
 `validate_intake_plan_bundle(bundle)`은 위 wrapper에서 추출한 공통 순수 검증이다. wrapper와 runtime 준비가 같은 public builder 전체 재생성·비교를 사용한다. 선언된 `synthetic=True`와 일치하는 해시는 원문 진위·현 Store revision·실행 권한을 인증하지 않는다. 전체 시험방법 수행이나 metric 계산·판정 완료도 이 연결의 결과가 아니다.
 
-runtime은 명시한 로컬 절대 경로의 일반 파일을 한 번만 bounded read한다. raw 최대8MiB, UTF-8 strict JSON이며 BOM·중복 키(중첩 포함)·nonfinite·잘못된 surrogate·추가/누락 키·잘못된 type을 거절한다. 공통 snapshot 한도는 깊이32/100000노드/canonical UTF-8 8MiB다. UNC/device/ADS·부모 순회·NUL/잘못된 Unicode 경로와 reparse 경로는 거절하고 디렉터리 탐색·자동 파일 선택은 하지 않는다. 읽기 전후 파일 identity/size/mtime을 대조하며 결과의 `intake_plan_bundle`에 raw bytes 수·raw SHA-256·canonical snapshot SHA·plan input SHA·source SHA를 남긴다.
+runtime은 명시한 로컬 절대 경로의 일반 파일을 한 번만 bounded read한다. raw 최대8MiB, UTF-8 strict JSON이며 BOM·중복 키(중첩 포함)·nonfinite·잘못된 surrogate·추가/누락 키·잘못된 type을 거절한다. 공통 snapshot 한도는 깊이32/100000노드/canonical UTF-8 8MiB다. UNC/device/ADS·모든 component의 DOS 예약장치명·부모 순회·NUL/잘못된 Unicode 경로와 reparse 경로는 거절하고 디렉터리 탐색·자동 파일 선택은 하지 않는다. 읽기 전후 파일 identity/size/mtime을 대조하며 결과의 `intake_plan_bundle`에 raw bytes 수·raw SHA-256·canonical snapshot SHA·plan input SHA·source SHA를 남긴다.
 
 짝 옵션·RF endpoint와 bundle 전체 검증은 SDK inventory/native 조회·boot claim·guest 요청 **이전**에 끝난다. 검증 후에는 canonical bytes의 불변 메모리 snapshot을 같은 owned lifetime으로 전달한다. boot 진입 시와 정확한 guest identity 확인 뒤에도 같은 순수 검증을 재사용하며 원 파일을 다시 읽지 않는다. 이후 파일이 바뀌어도 이번 CONFIG/source SHA/Fleet 설정은 최초 snapshot에 결박된다. 상위 원문은 재개봉하지 않고 `caller_snapshot_only`/`not_reopened`/`execution_authority=false`를 유지한다.
 

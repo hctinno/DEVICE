@@ -17,7 +17,7 @@ import hashlib
 import io
 import json
 import os
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import platform
 import shutil
 import signal
@@ -952,7 +952,8 @@ def _read_intake_plan_bundle(value):
     except UnicodeError as exc:
         raise BoundaryError('intake_plan_bundle_path_invalid') from exc
     if (not path.is_absolute() or path.anchor.startswith('\\')
-            or '\x00' in str(path) or '..' in path.parts or any(':' in part for part in path.parts[1:])):
+            or '\x00' in str(path) or '..' in path.parts or any(':' in part for part in path.parts[1:])
+            or any(PureWindowsPath(part).is_reserved() for part in path.parts)):
         raise BoundaryError('intake_plan_bundle_path_invalid')
     def identity(info):
         return info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns
