@@ -122,6 +122,11 @@ class Endpoint:
         return f'tcp:127.0.0.1:{self.adb_port}'
 
 
+def _require_rf_bridge_endpoint(endpoint: Endpoint):
+    if type(endpoint) is not Endpoint or endpoint != Endpoint(15037, 5680, 18554):
+        raise BoundaryError('rf_bridge_endpoint_invalid')
+
+
 def private_environment(runtime: Path, output: Path, endpoint: Endpoint,
                         base: dict | None = None) -> dict:
     env = dict(os.environ if base is None else base)
@@ -937,7 +942,10 @@ def create_avd(runtime: Path, output: Path):
 
 
 def boot_runtime(runtime: Path, report: Report, env: dict, endpoint: Endpoint,
-                 timeout: int, acceleration: str, help_text: str):
+                 timeout: int, acceleration: str, help_text: str,
+                 rf_bridge_check: bool = False):
+    if rf_bridge_check:
+        _require_rf_bridge_endpoint(endpoint)
     if acceleration not in ('auto', 'off'):
         raise BoundaryError('acceleration_invalid')
     if acceleration == 'off':
@@ -1009,6 +1017,14 @@ def boot_runtime(runtime: Path, report: Report, env: dict, endpoint: Endpoint,
                             and values.get('ro.hardware') in ('ranchu', 'goldfish')
                             and values.get('ro.product.model') and values.get('sys.boot_completed') == '1'):
                         report.data.update(android_os='booted', adb_verified=True, status='verified')
+                        report.save()
+                        if rf_bridge_check:
+                            from .android_guest_rf_bridge import run_guest_rf_check
+                            run_guest_rf_check(endpoint, server, report,
+                                               deadline=time.monotonic() + 30,
+                                               emulator_process=emulator_process)
+                            report.data['status'] = 'rf_bridge_verified'
+                            report.save()
                         return
                 except (BoundaryError, OSError) as exc:
                     fatal = not isinstance(exc, BoundaryError) or not boot_retryable(exc, endpoint)
@@ -1026,7 +1042,8 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
             resume_install: bool = False,
             verify_only: bool = False,
             accept_sdk_license: bool = False, endpoint: Endpoint | None = None,
-            boot_timeout: int = 180, acceleration: str = 'auto') -> dict:
+            boot_timeout: int = 180, acceleration: str = 'auto',
+            rf_bridge_check: bool = False) -> dict:
     from .development_paths import reference_path
     runtime, output = reference_path(Path(runtime).absolute()), reference_path(Path(output).absolute())
     reject_links(runtime)
@@ -1038,8 +1055,11 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
     try:
         if (type(boot_timeout) is not int or not 1 <= boot_timeout <= 180
                 or acceleration not in ('auto', 'off') or (install and boot)
-                or (resume_install and not install) or (verify_only and (install or boot))):
+                or (resume_install and not install) or (verify_only and (install or boot))
+                or type(rf_bridge_check) is not bool or (rf_bridge_check and not boot)):
             raise BoundaryError('options_invalid')
+        if rf_bridge_check:
+            _require_rf_bridge_endpoint(endpoint)
         report.data['resources_before'] = resources()
         if runtime == output or output in runtime.parents:
             raise BoundaryError('runtime_output_overlap')
@@ -1077,7 +1097,8 @@ def execute(runtime: Path, output: Path, *, install: bool = False, boot: bool = 
         report.data['status'] = 'runtime_ready'
         report.save()
         if boot:
-            boot_runtime(runtime, report, env, endpoint, boot_timeout, acceleration, outputs['emulator-help'])
+            boot_runtime(runtime, report, env, endpoint, boot_timeout, acceleration,
+                         outputs['emulator-help'], rf_bridge_check=rf_bridge_check)
         else:
             report.data['not_run_reason'] = 'OS boot requires explicit --boot; preflight is not Android OS proof'
     except KeyboardInterrupt:
@@ -1119,6 +1140,8 @@ def parser() -> argparse.ArgumentParser:
     cli.add_argument('--console-port', type=int, default=5680)
     cli.add_argument('--grpc-port', type=int, default=18554)
     cli.add_argument('--boot-timeout', type=_boot_seconds, default=180)
+    cli.add_argument('--rf-bridge-check', action='store_true',
+                     help='Run fixed AOSP guest state and synthetic Fleet check during the same owned boot')
     cli.add_argument('--acceleration', choices=('auto', 'off'), default='auto')
     return cli
 
@@ -1131,7 +1154,8 @@ def main(argv: list[str] | None = None) -> int:
             resume_install=args.resume_install,
             verify_only=args.verify_only,
             accept_sdk_license=args.accept_sdk_license, endpoint=endpoint,
-            boot_timeout=args.boot_timeout, acceleration=args.acceleration)
+            boot_timeout=args.boot_timeout, acceleration=args.acceleration,
+            rf_bridge_check=args.rf_bridge_check)
     except BoundaryError as exc:
         print(json.dumps(dict(status='not_run', code=exc.code, detail=str(exc)), ensure_ascii=False))
         return 2
