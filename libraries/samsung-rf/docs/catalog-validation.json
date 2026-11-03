@@ -1,0 +1,13 @@
+{
+  "total": 220,
+  "by_radio": {
+    "wlan": 46,
+    "bluetooth": 79,
+    "cellular": 10,
+    "nfc": 39,
+    "uwb": 46
+  },
+  "device_verified": 0,
+  "apk_hashes": "NOT_CHECKED_SNAPSHOT_MODE",
+  "snapshot_hashes": "PASS"
+}

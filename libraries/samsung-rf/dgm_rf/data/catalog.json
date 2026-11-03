@@ -1,0 +1,6971 @@
+{
+  "schema_version": 1,
+  "product": "DGM RF Command Library",
+  "checked_date": "2026-11-04",
+  "complete_for_all_samsung": false,
+  "device_verified": false,
+  "sources": [
+    {
+      "file": "WlanTest-API37-20260422.apk",
+      "upload_date": "2026-04-22",
+      "api": 37,
+      "sha256": "5439cba58bfbc8bd69b3728307fe068833abf8cfd697658a28904a52d4f6ae66",
+      "url": "https://www.apkmirror.com/apk/samsung-electronics-co-ltd/wlantest/wlantest-1-1-0-2-release/wlantest-1-1-0-13-android-apk-download/"
+    },
+    {
+      "file": "FacAtFunction-API36-20251016.apk",
+      "upload_date": "2025-10-16",
+      "api": 36,
+      "sha256": "77ebdedee412c1f318104968d2bcb34db17f51e784aa13cf99854b9a0f547991",
+      "url": "https://www.apkmirror.com/apk/samsung-electronics-co-ltd/facatfunction/facatfunction-16-release/facatfunction-16-4-android-apk-download/"
+    },
+    {
+      "file": "UwbTest-API36-20250920.apk",
+      "sha256": "300ce18a1300b1b4d4f2a6e8554225c9bac1751f0732269a92ef257c1f59fff4",
+      "upload_date": "2025-09-20",
+      "api": 36,
+      "url": "https://www.apkmirror.com/apk/samsung-electronics-co-ltd/uwbtest/uwbtest-1-0-0-release/uwbtest-1-0-0-8-android-apk-download/"
+    },
+    {
+      "file": "UserOpenCommand.java",
+      "url": "https://github.com/488315/android_samsung_frameworks_base/blob/d7c13fe69a1ad46f8dff0254f1abd32596fef5cd/src/com/samsung/android/service/ProtectedATCommand/list/UserOpenCommand.java",
+      "build": "S936USQU5ZYHB",
+      "kind": "policy_registration"
+    },
+    {
+      "file": "UwbUci-S918NKSU1AWC8.apk",
+      "sha256": "3ecf5ac64dbda502b8b7808dcead766cde1bfee3898dfb4733bc3d958bc496d0",
+      "build": "S918NKSU1AWC8",
+      "url": "https://github.com/RandomPush/samsung_dm3q_dump/blob/081499d451cb31058152c8efda2db51ffe449133/system/system/app/UwbUci/UwbUci.apk"
+    },
+    {
+      "file": "FacAtFunction-S918NKSU1AWC8.apk",
+      "sha256": "079b2c2392b69beb89c8053e0090f65ef10eb0357016a6eab84eb5f1395eaccd",
+      "build": "S918NKSU1AWC8",
+      "url": "https://github.com/RandomPush/samsung_dm3q_dump/blob/081499d451cb31058152c8efda2db51ffe449133/system/system/priv-app/FacAtFunction/FacAtFunction.apk"
+    },
+    {
+      "file": "SamsungNfc16-20251119.apk",
+      "sha256": "f764238466a817a5984f33eb204d543f3b36deca86e553078562eb44869f60c2",
+      "api": 36,
+      "upload_date": "2025-11-19",
+      "url": "https://www.apkmirror.com/apk/samsung-electronics-co-ltd/nfc-3/nfc-16-release/nfc-16-5-android-apk-download/"
+    }
+  ],
+  "commands": [
+    {
+      "id": "wifitest_3_8_0_0",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=3,8,0,0",
+      "fixed_args": [
+        "3",
+        "8",
+        "0",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,8,0,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 31
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "wifitest_3_8_0_1",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=3,8,0,1",
+      "fixed_args": [
+        "3",
+        "8",
+        "0",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,8,0,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 35
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "wifitest_3_8_0_2",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=3,8,0,2",
+      "fixed_args": [
+        "3",
+        "8",
+        "0",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,8,0,2",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 39
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "wifitest_0_1_0",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,1,0,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "0"
+          ]
+        }
+      },
+      "name": "DUT 닫기",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 46
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 1,
+      "dut_name": "CD"
+    },
+    {
+      "id": "wifitest_0_1_1",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,1,1,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "0"
+          ]
+        }
+      },
+      "name": "DUT 열기 / 시험 FW",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "open",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 50
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 0,
+      "dut_name": "OD"
+    },
+    {
+      "id": "wifitest_0_1_2",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,1,2,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,2",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 60
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 19,
+      "dut_name": "NU"
+    },
+    {
+      "id": "wifitest_0_1_3",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,1,3,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,3",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 63
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 18,
+      "dut_name": "NF"
+    },
+    {
+      "id": "wifitest_0_1_5",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,1,5,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "5"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "0",
+            "1"
+          ]
+        }
+      },
+      "name": "Channel Encoding",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 66
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 26,
+      "dut_name": "CE"
+    },
+    {
+      "id": "wifitest_0_1_6",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,1,6,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "6"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,6",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 69
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 28,
+      "dut_name": "BC"
+    },
+    {
+      "id": "wifitest_0_1_7",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,1,7,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "7"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,7",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 72
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 42,
+      "dut_name": "RO"
+    },
+    {
+      "id": "wifitest_0_1_8",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,1,8,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "8"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,8",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 75
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 40,
+      "dut_name": "SC"
+    },
+    {
+      "id": "wifitest_0_1_9",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,1,9,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "9"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,9",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 78
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 39,
+      "dut_name": "GC"
+    },
+    {
+      "id": "wifitest_0_0_0",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,0,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "채널 전달값",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 81
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 6,
+      "dut_name": "CH"
+    },
+    {
+      "id": "wifitest_0_0_1",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,1,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30"
+          ]
+        }
+      },
+      "name": "Data rate / MCS 코드",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 84
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 2,
+      "dut_name": "DR"
+    },
+    {
+      "id": "wifitest_0_0_2",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,2,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        }
+      },
+      "name": "Preamble / GI",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 87
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 5,
+      "dut_name": "SP"
+    },
+    {
+      "id": "wifitest_0_0_3",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,3,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "number",
+          "domain": null
+        }
+      },
+      "name": "출력 설정값",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 90
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 7,
+      "dut_name": "TG"
+    },
+    {
+      "id": "wifitest_0_0_4",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,4,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "4"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "Payload length",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 93
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 9,
+      "dut_name": "PL"
+    },
+    {
+      "id": "wifitest_0_0_5",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,5,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "5"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "Burst interval",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 96
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 8,
+      "dut_name": "BI"
+    },
+    {
+      "id": "wifitest_0_0_6",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,6,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "6"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      },
+      "name": "Band 선택",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 99
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 16,
+      "dut_name": "SB"
+    },
+    {
+      "id": "wifitest_0_0_7",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,7,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "7"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25"
+          ]
+        }
+      },
+      "name": "대역폭/PHY",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 102
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 17,
+      "dut_name": "BW"
+    },
+    {
+      "id": "wifitest_0_0_9",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,9,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "9"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,9",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 105
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 27,
+      "dut_name": "RU"
+    },
+    {
+      "id": "wifitest_0_0_10",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,0,10,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "10"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,10",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 108
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 49,
+      "dut_name": "MRU_OFDMA"
+    },
+    {
+      "id": "wifitest_0_2_0",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,2,0,{value}",
+      "fixed_args": [
+        "0",
+        "2",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "0"
+          ]
+        }
+      },
+      "name": "TX 정지",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 111
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 11,
+      "dut_name": "TP"
+    },
+    {
+      "id": "wifitest_0_2_1",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,2,1,{value}",
+      "fixed_args": [
+        "0",
+        "2",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "1",
+            "2"
+          ]
+        }
+      },
+      "name": "TX 시작: 1 변조 / 2 무변조",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 114
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "wifitest_0_2_0",
+        "wifitest_0_1_0"
+      ],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 10,
+      "dut_name": "TS"
+    },
+    {
+      "id": "wifitest_0_2_2",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,2,2,{value}",
+      "fixed_args": [
+        "0",
+        "2",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,2,2",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 117
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 47,
+      "dut_name": "TSL"
+    },
+    {
+      "id": "wifitest_0_3_0",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,3,0,{value}",
+      "fixed_args": [
+        "0",
+        "3",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "0"
+          ]
+        }
+      },
+      "name": "RX 정지",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 120
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 13,
+      "dut_name": "RP"
+    },
+    {
+      "id": "wifitest_0_3_1",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,3,1,{value}",
+      "fixed_args": [
+        "0",
+        "3",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "RX 시작",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 123
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "wifitest_0_3_0",
+        "wifitest_0_1_0"
+      ],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 12,
+      "dut_name": "RS"
+    },
+    {
+      "id": "wifitest_0_3_3",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,3,3,{value}",
+      "fixed_args": [
+        "0",
+        "3",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,3,3",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 126
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 48,
+      "dut_name": "RSL"
+    },
+    {
+      "id": "wifitest_0_4_0",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,4,0,{value}",
+      "fixed_args": [
+        "0",
+        "4",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "RX 오류 프레임",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 129
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 14,
+      "dut_name": "RE"
+    },
+    {
+      "id": "wifitest_0_4_1",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,4,1,{value}",
+      "fixed_args": [
+        "0",
+        "4",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "RX 정상 프레임",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 132
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 15,
+      "dut_name": "RG"
+    },
+    {
+      "id": "wifitest_0_4_2",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,4,2,{value}",
+      "fixed_args": [
+        "0",
+        "4",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "RSSI",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 135
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 23,
+      "dut_name": "GR"
+    },
+    {
+      "id": "wifitest_0_4_3",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,4,3,{value}",
+      "fixed_args": [
+        "0",
+        "4",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,4,3",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 138
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 25,
+      "dut_name": "RD"
+    },
+    {
+      "id": "wifitest_0_4_4",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,4,4,{value}",
+      "fixed_args": [
+        "0",
+        "4",
+        "4"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,4,4",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 141
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 43,
+      "dut_name": "RC"
+    },
+    {
+      "id": "wifitest_0_4_5",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,4,5,{value}",
+      "fixed_args": [
+        "0",
+        "4",
+        "5"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "11ax TX 오류",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 144
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 44,
+      "dut_name": "RT"
+    },
+    {
+      "id": "wifitest_0_6_0",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,6,0,{value}",
+      "fixed_args": [
+        "0",
+        "6",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,6,0",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 147
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 20,
+      "dut_name": "JN"
+    },
+    {
+      "id": "wifitest_0_6_1",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,6,1,{value}",
+      "fixed_args": [
+        "0",
+        "6",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,6,1",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 150
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 21,
+      "dut_name": "JN2G"
+    },
+    {
+      "id": "wifitest_0_6_2",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,6,2,{value}",
+      "fixed_args": [
+        "0",
+        "6",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,6,2",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 153
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 22,
+      "dut_name": "JN5G"
+    },
+    {
+      "id": "wifitest_0_7_0",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,7,0,{value}",
+      "fixed_args": [
+        "0",
+        "7",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "0",
+            "1",
+            "2"
+          ]
+        }
+      },
+      "name": "안테나",
+      "evidence": "both_parsers",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 157
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 4,
+      "dut_name": "SA"
+    },
+    {
+      "id": "wifitest_0_9_9",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=0,9,9,{value}",
+      "fixed_args": [
+        "0",
+        "9",
+        "9"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,9,9",
+      "evidence": "fac_only",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 160
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 24,
+      "dut_name": "ALL"
+    },
+    {
+      "id": "wifitest_1_0_0",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=1,0,0,{value}",
+      "fixed_args": [
+        "1",
+        "0",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "모듈 벤더",
+      "evidence": "both_parsers",
+      "status": "needs_profile",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 170
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [],
+      "dut_id": 41,
+      "dut_name": "MV"
+    },
+    {
+      "id": "wifitest_4_1_4",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=4,1,4,{value}",
+      "fixed_args": [
+        "4",
+        "1",
+        "4"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 4,1,4",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 173
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 51,
+      "dut_name": "RCS"
+    },
+    {
+      "id": "wifitest_4_1_8",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=4,1,8,{value}",
+      "fixed_args": [
+        "4",
+        "1",
+        "8"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 4,1,8",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 176
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 52,
+      "dut_name": "GFC"
+    },
+    {
+      "id": "wifitest_4_0_3",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=4,0,3,{value}",
+      "fixed_args": [
+        "4",
+        "0",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 4,0,3",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 179
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 53,
+      "dut_name": "WCT"
+    },
+    {
+      "id": "wifitest_4_0_4",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=4,0,4,{value}",
+      "fixed_args": [
+        "4",
+        "0",
+        "4"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 4,0,4",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 182
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 54,
+      "dut_name": "RCT"
+    },
+    {
+      "id": "wifitest_5_0_1",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=5,0,1,{value}",
+      "fixed_args": [
+        "5",
+        "0",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 5,0,1",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 185
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 45,
+      "dut_name": "GRI"
+    },
+    {
+      "id": "wifitest_9_9_9",
+      "family": "WIFITEST",
+      "radio": "wlan",
+      "template": "AT+WIFITEST=9,9,9,{value}",
+      "fixed_args": [
+        "9",
+        "9",
+        "9"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 9,9,9",
+      "evidence": "both_parsers",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtWifitest.java",
+        "line": 188
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ],
+      "dut_id": 46,
+      "dut_name": "BCT"
+    },
+    {
+      "id": "fcbttest_0_0_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,0,0",
+      "fixed_args": [
+        "0",
+        "0",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "Bluetooth 활성화",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "open",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 25
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "fcbttest_0_0_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,0,1",
+      "fixed_args": [
+        "0",
+        "0",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btSearchStart",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 28
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_1_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,1,1",
+      "fixed_args": [
+        "0",
+        "1",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btSearchStartWithAck",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 31
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_1_2",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,1,2",
+      "fixed_args": [
+        "0",
+        "1",
+        "2"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btSearchStop",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 34
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_1_3",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,1,3",
+      "fixed_args": [
+        "0",
+        "1",
+        "3"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "bleSearchStartWithAckOn10s",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 37
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_1_1_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=1,1,0",
+      "fixed_args": [
+        "1",
+        "1",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btREDRxRSSIRead",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 40
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_1_1_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=1,1,1",
+      "fixed_args": [
+        "1",
+        "1",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btREDTxCalResultRead",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 43
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_2_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,2,0",
+      "fixed_args": [
+        "0",
+        "2",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "Bluetooth 비활성화",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 46
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "fcbttest_0_3_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,3,0",
+      "fixed_args": [
+        "0",
+        "3",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "BT RF 시험 앱 시작: 연속 TX 명령으로 간주하지 않음",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "menu",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 49
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "fcbttest_0_2_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,2,1",
+      "fixed_args": [
+        "0",
+        "2",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "BT RF 시험 종료",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 52
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "fcbttest_0_4_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,4,0",
+      "fixed_args": [
+        "0",
+        "4",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btAudioTestStart",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 56
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_2_2",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,2,2",
+      "fixed_args": [
+        "0",
+        "2",
+        "2"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btAudioTestStop",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 59
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_5_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,5,0",
+      "fixed_args": [
+        "0",
+        "5",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxOutputChLow",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 62
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_5_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,5,1",
+      "fixed_args": [
+        "0",
+        "5",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxOutputChMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 65
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_5_2",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,5,2",
+      "fixed_args": [
+        "0",
+        "5",
+        "2"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxOutputChHigh",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 68
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_5_3",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,5,3",
+      "fixed_args": [
+        "0",
+        "5",
+        "3"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxModChLow",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 71
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_5_4",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,5,4",
+      "fixed_args": [
+        "0",
+        "5",
+        "4"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxModChMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 74
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_5_5",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,5,5",
+      "fixed_args": [
+        "0",
+        "5",
+        "5"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxModChHigh",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 77
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_5_6",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,5,6",
+      "fixed_args": [
+        "0",
+        "5",
+        "6"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxModChLowAA",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 80
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_5_7",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,5,7",
+      "fixed_args": [
+        "0",
+        "5",
+        "7"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxModChMidAA",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 83
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_5_8",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,5,8",
+      "fixed_args": [
+        "0",
+        "5",
+        "8"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxModChHighAA",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 86
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,0",
+      "fixed_args": [
+        "0",
+        "6",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxCarrierChLow",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 89
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,1",
+      "fixed_args": [
+        "0",
+        "6",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxCarrierChMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 92
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_2",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,2",
+      "fixed_args": [
+        "0",
+        "6",
+        "2"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxCarrierChHigh",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 95
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_3",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,3",
+      "fixed_args": [
+        "0",
+        "6",
+        "3"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxInBandChLow",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 98
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_4",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,4",
+      "fixed_args": [
+        "0",
+        "6",
+        "4"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxInBandChMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 101
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_5",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,5",
+      "fixed_args": [
+        "0",
+        "6",
+        "5"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTxInBandChHigh",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 104
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_6",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,6",
+      "fixed_args": [
+        "0",
+        "6",
+        "6"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeRxLow",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 107
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_7",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,7",
+      "fixed_args": [
+        "0",
+        "6",
+        "7"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeRxMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 110
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_8",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,8",
+      "fixed_args": [
+        "0",
+        "6",
+        "8"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeRxHigh",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 113
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_6_9"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_6_9",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,6,9",
+      "fixed_args": [
+        "0",
+        "6",
+        "9"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "BLE 시험 종료",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 116
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "fcbttest_0_7_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,7,0",
+      "fixed_args": [
+        "0",
+        "7",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btEdrTxLow",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 119
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_7_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,7,1",
+      "fixed_args": [
+        "0",
+        "7",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btEdrTxMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 122
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_7_2",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,7,2",
+      "fixed_args": [
+        "0",
+        "7",
+        "2"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btEdrTxHigh",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 125
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_7_3",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,7,3",
+      "fixed_args": [
+        "0",
+        "7",
+        "3"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btAntSwitchEdrTxMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 128
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_8_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,8,0",
+      "fixed_args": [
+        "0",
+        "8",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btEdrRxLow",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 131
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_8_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,8,1",
+      "fixed_args": [
+        "0",
+        "8",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btEdrRxMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 134
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_8_2",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,8,2",
+      "fixed_args": [
+        "0",
+        "8",
+        "2"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btEdrRxHigh",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 137
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_8_3",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,8,3",
+      "fixed_args": [
+        "0",
+        "8",
+        "3"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "BR/EDR 시험 종료",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 140
+      },
+      "downstream_action": 36,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "fcbttest_0_9_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,9,0",
+      "fixed_args": [
+        "0",
+        "9",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btHpmLowPath",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 145
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_0_9_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=0,9,1",
+      "fixed_args": [
+        "0",
+        "9",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btHpmHighPath",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 148
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_1_9_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=1,9,0",
+      "fixed_args": [
+        "1",
+        "9",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btHpmReadPath",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 151
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_1_9_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=1,9,1",
+      "fixed_args": [
+        "1",
+        "9",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btLeTestRead",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 154
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_3_0_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=3,0,0",
+      "fixed_args": [
+        "3",
+        "0",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btBrTxLow",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 157
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_3_0_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=3,0,1",
+      "fixed_args": [
+        "3",
+        "0",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btBrTxMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 160
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_3_0_2",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=3,0,2",
+      "fixed_args": [
+        "3",
+        "0",
+        "2"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btBrTxHigh",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 163
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_3_1_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=3,1,0",
+      "fixed_args": [
+        "3",
+        "1",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btBrRxLow",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 166
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_3_1_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=3,1,1",
+      "fixed_args": [
+        "3",
+        "1",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btBrRxMid",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 169
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_3_1_2",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=3,1,2",
+      "fixed_args": [
+        "3",
+        "1",
+        "2"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "btBrRxHigh",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "rx",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 172
+      },
+      "downstream_action": null,
+      "stop_ids": [
+        "fcbttest_0_8_3"
+      ],
+      "device_verified": false,
+      "notes": [
+        "Low/Mid/High의 실제 채널·출력·패킷은 하위 BT 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "fcbttest_3_1_3",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=3,1,3",
+      "fixed_args": [
+        "3",
+        "1",
+        "3"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "BR/EDR 시험 종료",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 175
+      },
+      "downstream_action": 36,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "fcbttest_3_4_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=3,4,0",
+      "fixed_args": [
+        "3",
+        "4",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "BLE PHY 1M",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 180
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "fcbttest_3_4_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=3,4,1",
+      "fixed_args": [
+        "3",
+        "4",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "BLE PHY 2M",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 184
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "fcbttest_4_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,0,{value}",
+      "fixed_args": [
+        "4",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtSignalSelect",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 185
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_1",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,1,{value}",
+      "fixed_args": [
+        "4",
+        "1"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtCoreSelect",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 197
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_2",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,2,{value}",
+      "fixed_args": [
+        "4",
+        "2"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtChannel",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 209
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_3",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,3,{value}",
+      "fixed_args": [
+        "4",
+        "3"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtDataRate",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 221
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_4",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,4,{value}",
+      "fixed_args": [
+        "4",
+        "4"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtTxPower",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 233
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_5",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,5,{value}",
+      "fixed_args": [
+        "4",
+        "5"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtPaMode",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 245
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_6",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,6,{value}",
+      "fixed_args": [
+        "4",
+        "6"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtPacketType",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 257
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_7",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,7,{value}",
+      "fixed_args": [
+        "4",
+        "7"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtAclFrame",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 269
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_8",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,8,{value}",
+      "fixed_args": [
+        "4",
+        "8"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtTxStartStop",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 281
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_9",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,9,{value}",
+      "fixed_args": [
+        "4",
+        "9"
+      ],
+      "arg_count": 3,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "dualBtRxStartStop",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 293
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "fcbttest_4_10_0",
+      "family": "FCBTTEST",
+      "radio": "bluetooth",
+      "template": "AT+FCBTTEST=4,10,0",
+      "fixed_args": [
+        "4",
+        "10",
+        "0"
+      ],
+      "arg_count": 3,
+      "parameters": {},
+      "name": "dualBtRxGoodpacket",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtFcbttest.java",
+        "line": 305
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "btletest_0_0_0",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,0,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "TX output channel",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 26
+      },
+      "downstream_action": 60,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_1",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,1,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "TX modulation 0F channel",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 32
+      },
+      "downstream_action": 61,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_2",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,2,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "TX modulation AA channel",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 38
+      },
+      "downstream_action": 62,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_3",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,3,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "TX carrier channel",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 44
+      },
+      "downstream_action": 63,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_4",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,4,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "4"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "TX in-band channel",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 50
+      },
+      "downstream_action": 64,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_5",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,5,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "5"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "RX channel",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 56
+      },
+      "downstream_action": 65,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_6",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,6,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "6"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "RX PHY code",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 62
+      },
+      "downstream_action": 66,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_7",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,7,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "7"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "RX modulation-index code",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 68
+      },
+      "downstream_action": 67,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_8",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,8,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "8"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "TX modulation PHY code",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 74
+      },
+      "downstream_action": 68,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_9",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,9,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "9"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "TX modulation channel",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 80
+      },
+      "downstream_action": 69,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_10",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,10,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "10"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "BLE channel start",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "unknown_start",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 86
+      },
+      "downstream_action": 83,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수.",
+        "TX/RX 구분과 종료 경로를 하위 서비스에서 검증해야 합니다."
+      ]
+    },
+    {
+      "id": "btletest_0_0_11_0",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,11,0",
+      "fixed_args": [
+        "0",
+        "0",
+        "11",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "BLE stop 경로 (0_0_11_0)",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 92
+      },
+      "downstream_action": 84,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "두 stop 경로의 차이는 미확인."
+      ]
+    },
+    {
+      "id": "btletest_0_0_12_0",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,12,0",
+      "fixed_args": [
+        "0",
+        "0",
+        "12",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "BLE stop 경로 (0_0_12_0)",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 97
+      },
+      "downstream_action": 85,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "두 stop 경로의 차이는 미확인."
+      ]
+    },
+    {
+      "id": "btletest_0_0_13",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,13,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "13"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "BLE TX power code",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 102
+      },
+      "downstream_action": 86,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_0_0_14",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=0,0,14,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "14"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "BLE TX payload length",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 109
+      },
+      "downstream_action": 87,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "btletest_1_0_0",
+      "family": "BTLETEST",
+      "radio": "bluetooth",
+      "template": "AT+BTLETEST=1,0,0,{value}",
+      "fixed_args": [
+        "1",
+        "0",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null
+        }
+      },
+      "name": "btLeRxTestResult",
+      "evidence": "parser_branch",
+      "status": "needs_profile",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtBtletest.java",
+        "line": 110
+      },
+      "downstream_action": 82,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "정수 인수의 칩셋별 의미/단위/범위 미확인. 대상 프로파일의 허용값 필수."
+      ]
+    },
+    {
+      "id": "nfcmtest_1_1",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,1",
+      "fixed_args": [
+        "1",
+        "1"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "NFC Tag ID 읽기",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 268
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "nfcmtest_1_2",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,2",
+      "fixed_args": [
+        "1",
+        "2"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "NFC 검출 로그 읽기",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 275
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "nfcmtest_1_3",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,3",
+      "fixed_args": [
+        "1",
+        "3"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 1,3",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 290
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_5",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,5",
+      "fixed_args": [
+        "0",
+        "5"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,5",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 295
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_A",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,A",
+      "fixed_args": [
+        "0",
+        "A"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,A",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 304
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_B",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,B",
+      "fixed_args": [
+        "0",
+        "B"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,B",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 309
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_C",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,C",
+      "fixed_args": [
+        "0",
+        "C"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,C",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 314
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_E",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,E",
+      "fixed_args": [
+        "0",
+        "E"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,E",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 319
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_7",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=7,{value}",
+      "fixed_args": [
+        "7"
+      ],
+      "arg_count": 2,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 7",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 324
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_D",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,D",
+      "fixed_args": [
+        "0",
+        "D"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,D",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 334
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_9",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=9,{value}",
+      "fixed_args": [
+        "9"
+      ],
+      "arg_count": 2,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 9",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 339
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_0_8",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,8",
+      "fixed_args": [
+        "0",
+        "8"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,8",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 363
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_9",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,9",
+      "fixed_args": [
+        "0",
+        "9"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,9",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 368
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_0_0",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,0",
+      "fixed_args": [
+        "0",
+        "0"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "NFC 종료/비활성화 경로",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 374
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "Factory binary와 일반 binary의 경로가 다릅니다. RF field-off 실측 필요."
+      ]
+    },
+    {
+      "id": "nfcmtest_0_1",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,1",
+      "fixed_args": [
+        "0",
+        "1"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 382
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_2",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,2",
+      "fixed_args": [
+        "0",
+        "2"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "isSupportSWP",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 386
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_3",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,3",
+      "fixed_args": [
+        "0",
+        "3"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "NFC 활성화 경로",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "open",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 393
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "nfcmtest_0_4",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,4",
+      "fixed_args": [
+        "0",
+        "4"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,4",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 402
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_6",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,6",
+      "fixed_args": [
+        "0",
+        "6"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,6",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 409
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_0_7",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=0,7",
+      "fixed_args": [
+        "0",
+        "7"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,7",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 411
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_1_0",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,0",
+      "fixed_args": [
+        "1",
+        "0"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 1,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 418
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_1_4",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,4",
+      "fixed_args": [
+        "1",
+        "4"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 1,4",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 421
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_1_5",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,5",
+      "fixed_args": [
+        "1",
+        "5"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 1,5",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 426
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_1_6",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,6",
+      "fixed_args": [
+        "1",
+        "6"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "Secure Element 식별",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 443
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "nfcmtest_1_7",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,7",
+      "fixed_args": [
+        "1",
+        "7"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "NFC 부트로더 버전",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 446
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "nfcmtest_1_8",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,8",
+      "fixed_args": [
+        "1",
+        "8"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "NFC 칩 이름",
+      "evidence": "parser_branch",
+      "status": "static_ready",
+      "effect": "read",
+      "response": "data",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 449
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": []
+    },
+    {
+      "id": "nfcmtest_1_9",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,9",
+      "fixed_args": [
+        "1",
+        "9"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 1,9",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 453
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_1_A",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,A",
+      "fixed_args": [
+        "1",
+        "A"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 1,A",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 456
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_1_B",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=1,B",
+      "fixed_args": [
+        "1",
+        "B"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 1,B",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 459
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "nfcmtest_2",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=2,{value}",
+      "fixed_args": [
+        "2"
+      ],
+      "arg_count": 2,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 2",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 462
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_3_0",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=3,0",
+      "fixed_args": [
+        "3",
+        "0"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,0",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 472
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_3_1",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=3,1",
+      "fixed_args": [
+        "3",
+        "1"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,1",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 476
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_3_2",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=3,2",
+      "fixed_args": [
+        "3",
+        "2"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,2",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 480
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_3_3",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=3,3",
+      "fixed_args": [
+        "3",
+        "3"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,3",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 484
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_3_4",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=3,4",
+      "fixed_args": [
+        "3",
+        "4"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,4",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 488
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_3_5",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=3,5",
+      "fixed_args": [
+        "3",
+        "5"
+      ],
+      "arg_count": 2,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,5",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 492
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_4",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=4,{value}",
+      "fixed_args": [
+        "4"
+      ],
+      "arg_count": 2,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 4",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 503
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_5",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=5,{value}",
+      "fixed_args": [
+        "5"
+      ],
+      "arg_count": 2,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 5",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 506
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "nfcmtest_6",
+      "family": "NFCMTEST",
+      "radio": "nfc",
+      "template": "AT+NFCMTEST=6,{value}",
+      "fixed_args": [
+        "6"
+      ],
+      "arg_count": 2,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "launchSemFactoryActivity",
+      "evidence": "parser_branch",
+      "status": "blocked",
+      "effect": "persistent_write",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtNfcmtest.java",
+        "line": 509
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "저장 데이터/NV 변경 경로. RF 자동화 기본 실행 대상에서 제외."
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,0,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 19
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_1",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,1,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 43
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_2",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,2,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,2",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 46
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_3",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,3,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,3",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 49
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_4",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,4,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "4"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,4",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 52
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_5",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,5,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "5"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,5",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 55
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_6",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,6,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "6"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,6",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 58
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_7",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,7,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "7"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,7",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 61
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_8",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,8,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "8"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,8",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 64
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_0_9",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,9,{value}",
+      "fixed_args": [
+        "0",
+        "0",
+        "9"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,0,9",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 67
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_1_1",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,1,1,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 70
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_1_2_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,1,2,0",
+      "fixed_args": [
+        "0",
+        "1",
+        "2",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,1,2,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 73
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_1_3",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,1,3,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,3",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 76
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_1_4_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,1,4,0",
+      "fixed_args": [
+        "0",
+        "1",
+        "4",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,1,4,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 79
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_1_4_1",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,1,4,1",
+      "fixed_args": [
+        "0",
+        "1",
+        "4",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,1,4,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 82
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_1_5",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,1,5,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "5"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,5",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 85
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_1_6",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,1,6,{value}",
+      "fixed_args": [
+        "0",
+        "1",
+        "6"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,1,6",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 88
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_2_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,2,0,{value}",
+      "fixed_args": [
+        "0",
+        "2",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,2,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 91
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_2_1",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,2,1,{value}",
+      "fixed_args": [
+        "0",
+        "2",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,2,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 94
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_2_2",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,2,2,{value}",
+      "fixed_args": [
+        "0",
+        "2",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,2,2",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 97
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_2_3",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,2,3,{value}",
+      "fixed_args": [
+        "0",
+        "2",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,2,3",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 100
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_2_4",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,2,4,{value}",
+      "fixed_args": [
+        "0",
+        "2",
+        "4"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,2,4",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 103
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_2_5_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,2,5,0",
+      "fixed_args": [
+        "0",
+        "2",
+        "5",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,2,5,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 106
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_3_0_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,3,0,0",
+      "fixed_args": [
+        "0",
+        "3",
+        "0",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,3,0,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 109
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_3_0_1",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,3,0,1",
+      "fixed_args": [
+        "0",
+        "3",
+        "0",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,3,0,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 112
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_3_0_2",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,3,0,2",
+      "fixed_args": [
+        "0",
+        "3",
+        "0",
+        "2"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,3,0,2",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 115
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_3_0_3",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,3,0,3",
+      "fixed_args": [
+        "0",
+        "3",
+        "0",
+        "3"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 0,3,0,3",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 118
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_4_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,4,0,{value}",
+      "fixed_args": [
+        "0",
+        "4",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,4,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 121
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_4_1",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,4,1,{value}",
+      "fixed_args": [
+        "0",
+        "4",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,4,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 124
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_6_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,6,0,{value}",
+      "fixed_args": [
+        "0",
+        "6",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,6,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 127
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_0_7_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,7,0,{value}",
+      "fixed_args": [
+        "0",
+        "7",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 0,7,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 130
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_1_0_0_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=1,0,0,0",
+      "fixed_args": [
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 1,0,0,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 133
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_3_0_0_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=3,0,0,0",
+      "fixed_args": [
+        "3",
+        "0",
+        "0",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,0,0,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 136
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_3_0_0_1",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=3,0,0,1",
+      "fixed_args": [
+        "3",
+        "0",
+        "0",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "기능 의미 미확인: 3,0,0,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 139
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_3_1_0",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=3,1,0,{value}",
+      "fixed_args": [
+        "3",
+        "1",
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 3,1,0",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 143
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwbdtest_3_1_1",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=3,1,1,{value}",
+      "fixed_args": [
+        "3",
+        "1",
+        "1"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": null
+        }
+      },
+      "name": "기능 의미 미확인: 3,1,1",
+      "evidence": "parser_branch",
+      "status": "reference_only",
+      "effect": "unknown",
+      "response": "status",
+      "source": {
+        "file": "evidence/AtUwbdtest.java",
+        "line": 144
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "동일 모델·빌드의 하위 서비스 동작과 인수 유효범위 확인 필요"
+      ]
+    },
+    {
+      "id": "uwb_loopback",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,9,5",
+      "fixed_args": [
+        "0",
+        "0",
+        "9",
+        "5"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "UWB RF loopback 자체 시험",
+      "evidence": "parser_and_ui_constant",
+      "status": "static_ready",
+      "effect": "self_test",
+      "response": "status",
+      "source": {
+        "file": "evidence/UwbCsTest.java",
+        "line": 19
+      },
+      "downstream_action": null,
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "연속 TX 또는 FCC 측정 모드가 아닙니다."
+      ]
+    },
+    {
+      "id": "cellular_mitsrfts",
+      "family": "MITSRFTS",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+MITSRFTS=*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "MITSRFTS 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 238
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "cellular_prxdrxck",
+      "family": "PRXDRXCK",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+PRXDRXCK=*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "PRXDRXCK 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 372
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "cellular_rfbkoffc",
+      "family": "RFBKOFFC",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+RFBKOFFC=*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "RFBKOFFC 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 553
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "cellular_rfbycode",
+      "family": "RFBYCODE",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+RFBYCODE=*",
+        "AT+RFBYCODE=0,*",
+        "AT+RFBYCODE=1,*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "RFBYCODE 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 557
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "cellular_rfevtait",
+      "family": "RFEVTAIT",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+RFEVTAIT=*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "RFEVTAIT 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 369
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "cellular_rfmipitt",
+      "family": "RFMIPITT",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+RFMIPITT=*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "RFMIPITT 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 604
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "cellular_rfnvchks",
+      "family": "RFNVCHKS",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+RFNVCHKS=*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "RFNVCHKS 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 556
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "cellular_rfsaronoff",
+      "family": "RFSARONOFF",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+RFSARONOFF=1,*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "RFSARONOFF 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 705
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "cellular_secnrssi",
+      "family": "SECNRSSI",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+SECNRSSI=*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "SECNRSSI 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 554
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "cellular_svcbandb",
+      "family": "SVCBANDB",
+      "radio": "cellular",
+      "template": null,
+      "registered_patterns": [
+        "AT+SVCBANDB=*"
+      ],
+      "parameters": {},
+      "fixed_args": [],
+      "arg_count": null,
+      "name": "SVCBANDB 정책 등록만 확인",
+      "evidence": "policy_name_only",
+      "status": "blocked",
+      "effect": "unknown",
+      "response": "unknown",
+      "source": {
+        "file": "evidence/UserOpenCommand.java",
+        "line": 548
+      },
+      "stop_ids": [],
+      "device_verified": false,
+      "notes": [
+        "LTE/NR RF 인수·허용 범위·TX 정지·응답 미확인. 다른 제조사 AT 명령을 대입하지 않습니다."
+      ]
+    },
+    {
+      "id": "s23_uwb_off",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,0,0",
+      "fixed_args": [
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "UWB 어댑터 비활성화 / TX 종료",
+      "evidence": "same_build_parser_to_service",
+      "status": "static_ready",
+      "effect": "stop",
+      "response": "status",
+      "device_verified": false,
+      "device_scope": {
+        "model": "SM-S918N",
+        "build": "S918NKSU1AWC8"
+      },
+      "source": {
+        "file": "evidence/AtUwbdtest-S23.java",
+        "line": 66
+      },
+      "downstream_sources": [
+        {
+          "file": "evidence/UwbFactoryManager.java",
+          "line": 286
+        }
+      ],
+      "stop_ids": [],
+      "notes": [
+        "Android 13 S918NKSU1AWC8 전용. 최신 기종 호환 미검증.",
+        "OFF는 어댑터 disable 경로입니다. RF 소멸 실측 필요. 출력 코드를 dBm으로 환산하지 않습니다."
+      ]
+    },
+    {
+      "id": "s23_uwb_on",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,0,1",
+      "fixed_args": [
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "UWB 시험 세션 열기",
+      "evidence": "same_build_parser_to_service",
+      "status": "static_ready",
+      "effect": "open",
+      "response": "status",
+      "device_verified": false,
+      "device_scope": {
+        "model": "SM-S918N",
+        "build": "S918NKSU1AWC8"
+      },
+      "source": {
+        "file": "evidence/AtUwbdtest-S23.java",
+        "line": 68
+      },
+      "downstream_sources": [
+        {
+          "file": "evidence/UwbFactoryManager.java",
+          "line": 298
+        }
+      ],
+      "stop_ids": [
+        "s23_uwb_off"
+      ],
+      "notes": [
+        "Android 13 S918NKSU1AWC8 전용. 최신 기종 호환 미검증.",
+        "OFF는 어댑터 disable 경로입니다. RF 소멸 실측 필요. 출력 코드를 dBm으로 환산하지 않습니다."
+      ]
+    },
+    {
+      "id": "s23_uwb_channel",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,3,{value}",
+      "fixed_args": [
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": [
+            "5",
+            "9"
+          ],
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "name": "UWB 채널 번호",
+      "evidence": "same_build_parser_to_service",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "device_verified": false,
+      "device_scope": {
+        "model": "SM-S918N",
+        "build": "S918NKSU1AWC8"
+      },
+      "source": {
+        "file": "evidence/AtUwbdtest-S23.java",
+        "line": 93
+      },
+      "downstream_sources": [
+        {
+          "file": "evidence/UwbFactoryManager.java",
+          "line": 583
+        }
+      ],
+      "stop_ids": [],
+      "notes": [
+        "Android 13 S918NKSU1AWC8 전용. 최신 기종 호환 미검증.",
+        "OFF는 어댑터 disable 경로입니다. RF 소멸 실측 필요. 출력 코드를 dBm으로 환산하지 않습니다."
+      ]
+    },
+    {
+      "id": "s23_uwb_antenna",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,1,{value}",
+      "fixed_args": [
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "token",
+          "domain": [
+            "TX_ANT_0",
+            "TX_ANT_1"
+          ],
+          "minimum": null,
+          "maximum": null
+        }
+      },
+      "name": "TX_ANT_0 → 내부 1 / TX_ANT_1 → 내부 2",
+      "evidence": "same_build_parser_to_service",
+      "status": "static_ready",
+      "effect": "configure",
+      "response": "status",
+      "device_verified": false,
+      "device_scope": {
+        "model": "SM-S918N",
+        "build": "S918NKSU1AWC8"
+      },
+      "source": {
+        "file": "evidence/AtUwbdtest-S23.java",
+        "line": 87
+      },
+      "downstream_sources": [
+        {
+          "file": "evidence/UwbFactoryManager.java",
+          "line": 528
+        }
+      ],
+      "stop_ids": [],
+      "notes": [
+        "Android 13 S918NKSU1AWC8 전용. 최신 기종 호환 미검증.",
+        "OFF는 어댑터 disable 경로입니다. RF 소멸 실측 필요. 출력 코드를 dBm으로 환산하지 않습니다."
+      ]
+    },
+    {
+      "id": "s23_uwb_timing",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,4,{gap}_{window}_{packets}",
+      "fixed_args": [
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "gap": {
+          "type": "int",
+          "domain": null,
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "window": {
+          "type": "int",
+          "domain": null,
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "packets": {
+          "type": "int",
+          "domain": null,
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "name": "TGap_TWin_NumOfPkts: 세 정수, 밑줄 구분",
+      "evidence": "same_build_parser_to_service",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "device_verified": false,
+      "device_scope": {
+        "model": "SM-S918N",
+        "build": "S918NKSU1AWC8"
+      },
+      "source": {
+        "file": "evidence/AtUwbdtest-S23.java",
+        "line": 96
+      },
+      "downstream_sources": [
+        {
+          "file": "evidence/UwbFactoryManager.java",
+          "line": 600
+        }
+      ],
+      "stop_ids": [],
+      "notes": [
+        "Android 13 S918NKSU1AWC8 전용. 최신 기종 호환 미검증.",
+        "OFF는 어댑터 disable 경로입니다. RF 소멸 실측 필요. 출력 코드를 dBm으로 환산하지 않습니다."
+      ]
+    },
+    {
+      "id": "s23_uwb_preamble",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,6,{value}",
+      "fixed_args": [
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null,
+          "minimum": 0,
+          "maximum": 127
+        }
+      },
+      "name": "Preamble code index",
+      "evidence": "same_build_parser_to_service",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "device_verified": false,
+      "device_scope": {
+        "model": "SM-S918N",
+        "build": "S918NKSU1AWC8"
+      },
+      "source": {
+        "file": "evidence/AtUwbdtest-S23.java",
+        "line": 102
+      },
+      "downstream_sources": [
+        {
+          "file": "evidence/UwbFactoryManager.java",
+          "line": 642
+        }
+      ],
+      "stop_ids": [],
+      "notes": [
+        "Android 13 S918NKSU1AWC8 전용. 최신 기종 호환 미검증.",
+        "OFF는 어댑터 disable 경로입니다. RF 소멸 실측 필요. 출력 코드를 dBm으로 환산하지 않습니다."
+      ]
+    },
+    {
+      "id": "s23_uwb_sts",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,0,8,{value}",
+      "fixed_args": [
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null,
+          "minimum": 0,
+          "maximum": 127
+        }
+      },
+      "name": "RFRAME_CONFIG 값 (STS packet type)",
+      "evidence": "same_build_parser_to_service",
+      "status": "needs_profile",
+      "effect": "configure",
+      "response": "status",
+      "device_verified": false,
+      "device_scope": {
+        "model": "SM-S918N",
+        "build": "S918NKSU1AWC8"
+      },
+      "source": {
+        "file": "evidence/AtUwbdtest-S23.java",
+        "line": 108
+      },
+      "downstream_sources": [
+        {
+          "file": "evidence/UwbFactoryManager.java",
+          "line": 685
+        }
+      ],
+      "stop_ids": [],
+      "notes": [
+        "Android 13 S918NKSU1AWC8 전용. 최신 기종 호환 미검증.",
+        "OFF는 어댑터 disable 경로입니다. RF 소멸 실측 필요. 출력 코드를 dBm으로 환산하지 않습니다."
+      ]
+    },
+    {
+      "id": "s23_uwb_tx",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,1,1,{value}",
+      "fixed_args": [
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {
+        "value": {
+          "type": "int",
+          "domain": null,
+          "minimum": -128,
+          "maximum": 127
+        }
+      },
+      "name": "출력 코드 설정 후 periodic TX 시작",
+      "evidence": "same_build_parser_to_service",
+      "status": "needs_profile",
+      "effect": "tx",
+      "response": "status",
+      "device_verified": false,
+      "device_scope": {
+        "model": "SM-S918N",
+        "build": "S918NKSU1AWC8"
+      },
+      "source": {
+        "file": "evidence/AtUwbdtest-S23.java",
+        "line": 114
+      },
+      "downstream_sources": [
+        {
+          "file": "evidence/UwbFactoryManager.java",
+          "line": 835
+        },
+        {
+          "file": "evidence/SamsungUwbTestManager.java",
+          "line": 103
+        }
+      ],
+      "stop_ids": [
+        "s23_uwb_off"
+      ],
+      "notes": [
+        "Android 13 S918NKSU1AWC8 전용. 최신 기종 호환 미검증.",
+        "OFF는 어댑터 disable 경로입니다. RF 소멸 실측 필요. 출력 코드를 dBm으로 환산하지 않습니다.",
+        "setCalibration 호출 뒤 startTestModeSession(0, ABCDABCD). 별도 EFS 쓰기 명령과 구분됩니다.",
+        "periodic TX이며 무한 CW가 아닙니다. 패킷 수 설정에 따라 종료될 수 있습니다."
+      ]
+    },
+    {
+      "id": "s23_uwb_tx_calibrated",
+      "family": "UWBDTEST",
+      "radio": "uwb",
+      "template": "AT+UWBDTEST=0,1,2,0",
+      "fixed_args": [
+        "0"
+      ],
+      "arg_count": 4,
+      "parameters": {},
+      "name": "EFS 보정 출력 읽기 후 periodic TX 시작",
+      "evidence": "same_build_parser_to_service",
+      "status": "static_ready",
+      "effect": "tx",
+      "response": "status",
+      "device_verified": false,
+      "device_scope": {
+        "model": "SM-S918N",
+        "build": "S918NKSU1AWC8"
+      },
+      "source": {
+        "file": "evidence/AtUwbdtest-S23.java",
+        "line": 117
+      },
+      "downstream_sources": [
+        {
+          "file": "evidence/UwbFactoryManager.java",
+          "line": 906
+        },
+        {
+          "file": "evidence/SamsungUwbTestManager.java",
+          "line": 103
+        }
+      ],
+      "stop_ids": [
+        "s23_uwb_off"
+      ],
+      "notes": [
+        "Android 13 S918NKSU1AWC8 전용. 최신 기종 호환 미검증.",
+        "OFF는 어댑터 disable 경로입니다. RF 소멸 실측 필요. 출력 코드를 dBm으로 환산하지 않습니다.",
+        "setCalibration 호출 뒤 startTestModeSession(0, ABCDABCD). 별도 EFS 쓰기 명령과 구분됩니다.",
+        "periodic TX이며 무한 CW가 아닙니다. 패킷 수 설정에 따라 종료될 수 있습니다."
+      ]
+    }
+  ]
+}

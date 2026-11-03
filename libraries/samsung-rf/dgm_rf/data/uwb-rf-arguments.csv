@@ -1,0 +1,10 @@
+﻿id,template,parameters,stop_ids,device_scope
+s23_uwb_off,"AT+UWBDTEST=0,0,0,0",{},[],"{""model"": ""SM-S918N"", ""build"": ""S918NKSU1AWC8""}"
+s23_uwb_on,"AT+UWBDTEST=0,0,0,1",{},"[""s23_uwb_off""]","{""model"": ""SM-S918N"", ""build"": ""S918NKSU1AWC8""}"
+s23_uwb_channel,"AT+UWBDTEST=0,0,3,{value}","{""value"": {""type"": ""int"", ""domain"": [""5"", ""9""], ""minimum"": null, ""maximum"": null}}",[],"{""model"": ""SM-S918N"", ""build"": ""S918NKSU1AWC8""}"
+s23_uwb_antenna,"AT+UWBDTEST=0,0,1,{value}","{""value"": {""type"": ""token"", ""domain"": [""TX_ANT_0"", ""TX_ANT_1""], ""minimum"": null, ""maximum"": null}}",[],"{""model"": ""SM-S918N"", ""build"": ""S918NKSU1AWC8""}"
+s23_uwb_timing,"AT+UWBDTEST=0,0,4,{gap}_{window}_{packets}","{""gap"": {""type"": ""int"", ""domain"": null, ""minimum"": 1, ""maximum"": 2147483647}, ""window"": {""type"": ""int"", ""domain"": null, ""minimum"": 1, ""maximum"": 2147483647}, ""packets"": {""type"": ""int"", ""domain"": null, ""minimum"": 1, ""maximum"": 2147483647}}",[],"{""model"": ""SM-S918N"", ""build"": ""S918NKSU1AWC8""}"
+s23_uwb_preamble,"AT+UWBDTEST=0,0,6,{value}","{""value"": {""type"": ""int"", ""domain"": null, ""minimum"": 0, ""maximum"": 127}}",[],"{""model"": ""SM-S918N"", ""build"": ""S918NKSU1AWC8""}"
+s23_uwb_sts,"AT+UWBDTEST=0,0,8,{value}","{""value"": {""type"": ""int"", ""domain"": null, ""minimum"": 0, ""maximum"": 127}}",[],"{""model"": ""SM-S918N"", ""build"": ""S918NKSU1AWC8""}"
+s23_uwb_tx,"AT+UWBDTEST=0,1,1,{value}","{""value"": {""type"": ""int"", ""domain"": null, ""minimum"": -128, ""maximum"": 127}}","[""s23_uwb_off""]","{""model"": ""SM-S918N"", ""build"": ""S918NKSU1AWC8""}"
+s23_uwb_tx_calibrated,"AT+UWBDTEST=0,1,2,0",{},"[""s23_uwb_off""]","{""model"": ""SM-S918N"", ""build"": ""S918NKSU1AWC8""}"

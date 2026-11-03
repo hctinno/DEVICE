@@ -5,3 +5,7 @@ __pycache__/
 .env
 .env.*
 !.env.example
+build/
+*.egg-info/
+libraries/samsung-rf/bluetooth-example-log.json
+libraries/samsung-rf/demo-log.json

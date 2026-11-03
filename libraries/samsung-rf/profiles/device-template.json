@@ -1,0 +1,8 @@
+{
+  "model": "",
+  "build": "",
+  "simulation_only": true,
+  "evidence_notes": "대상 단말의 모델·빌드·CSC·원본 해시·명령 응답·실측 조건을 확인한 후 작성합니다.",
+  "allowed_commands": [],
+  "argument_domains": {}
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "service": "com.samsung.android.nfc",
+  "apk_sha256": "f764238466a817a5984f33eb204d543f3b36deca86e553078562eb44869f60c2",
+  "protocol": "android_protected_broadcast",
+  "action": "com.samsung.android.nfc.test.action.REQUEST",
+  "permission": "com.samsung.permission.NFC_SYSTEM_PROTECTION",
+  "extra_prefix": "com.samsung.android.nfc.test.extra.",
+  "device_verified": false,
+  "commands": [
+    {
+      "id": "nfc_prbs_start",
+      "request_id": 31,
+      "effect": "tx",
+      "parameters": {
+        "TECH": [
+          0,
+          1,
+          2
+        ],
+        "RATE": [
+          0,
+          1,
+          2
+        ]
+      },
+      "nci_payload": "21 01 (TECH+1) (RATE+1)",
+      "stop_id": "nfc_prbs_stop",
+      "source": {
+        "file": "evidence/NfcTestManager.java",
+        "line": 390
+      }
+    },
+    {
+      "id": "nfc_prbs_stop",
+      "request_id": 32,
+      "effect": "stop",
+      "parameters": {},
+      "nci_payload": "21 00",
+      "source": {
+        "file": "evidence/NfcTestManager.java",
+        "line": 393
+      }
+    }
+  ],
+  "numeric_mapping": {
+    "TECH": {
+      "0": 1,
+      "1": 2,
+      "2": 3
+    },
+    "RATE": {
+      "0": 1,
+      "1": 2,
+      "2": 3
+    }
+  },
+  "notes": [
+    "TECH와 RATE의 숫자 변환만 확인. A/B/F 및 kbps 이름의 대응은 미확인.",
+    "서비스 코드에 PRBS 동작 완료 응답 방송이 없습니다. Broadcast completed를 RF 성공으로 판정하면 안 됩니다.",
+    "일반 ADB shell 권한으로 보호된 수신기에 전달된다고 보장하지 않습니다.",
+    "시작 시 NFC가 켜져 있으면 disable(false) 후 always-on mode 2를 사용합니다. 종료는 PRBS 정지와 mode 0입니다."
+  ]
+}

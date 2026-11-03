@@ -15,6 +15,9 @@ LINK_PATTERN = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 def main() -> int:
     errors: list[str] = []
     files = sorted(ROOT.glob("*.md"))
+    library = ROOT / 'libraries/samsung-rf'
+    files += sorted(path for path in library.rglob('*.md')
+                    if not {'build','dist','.venv','__pycache__'}.intersection(path.relative_to(library).parts))
     for name in REQUIRED:
         if not (ROOT / name).is_file():
             errors.append(f"Missing document: {name}")

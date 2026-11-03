@@ -1,0 +1,256 @@
+[
+  {
+    "id": "s23_uwb_off",
+    "template": "AT+UWBDTEST=0,0,0,0",
+    "parameters": {},
+    "source": {
+      "file": "evidence/AtUwbdtest-S23.java",
+      "line": 66
+    },
+    "downstream_sources": [
+      {
+        "file": "evidence/UwbFactoryManager.java",
+        "line": 286
+      }
+    ],
+    "stop_ids": [],
+    "device_scope": {
+      "model": "SM-S918N",
+      "build": "S918NKSU1AWC8"
+    }
+  },
+  {
+    "id": "s23_uwb_on",
+    "template": "AT+UWBDTEST=0,0,0,1",
+    "parameters": {},
+    "source": {
+      "file": "evidence/AtUwbdtest-S23.java",
+      "line": 68
+    },
+    "downstream_sources": [
+      {
+        "file": "evidence/UwbFactoryManager.java",
+        "line": 298
+      }
+    ],
+    "stop_ids": [
+      "s23_uwb_off"
+    ],
+    "device_scope": {
+      "model": "SM-S918N",
+      "build": "S918NKSU1AWC8"
+    }
+  },
+  {
+    "id": "s23_uwb_channel",
+    "template": "AT+UWBDTEST=0,0,3,{value}",
+    "parameters": {
+      "value": {
+        "type": "int",
+        "domain": [
+          "5",
+          "9"
+        ],
+        "minimum": null,
+        "maximum": null
+      }
+    },
+    "source": {
+      "file": "evidence/AtUwbdtest-S23.java",
+      "line": 93
+    },
+    "downstream_sources": [
+      {
+        "file": "evidence/UwbFactoryManager.java",
+        "line": 583
+      }
+    ],
+    "stop_ids": [],
+    "device_scope": {
+      "model": "SM-S918N",
+      "build": "S918NKSU1AWC8"
+    }
+  },
+  {
+    "id": "s23_uwb_antenna",
+    "template": "AT+UWBDTEST=0,0,1,{value}",
+    "parameters": {
+      "value": {
+        "type": "token",
+        "domain": [
+          "TX_ANT_0",
+          "TX_ANT_1"
+        ],
+        "minimum": null,
+        "maximum": null
+      }
+    },
+    "source": {
+      "file": "evidence/AtUwbdtest-S23.java",
+      "line": 87
+    },
+    "downstream_sources": [
+      {
+        "file": "evidence/UwbFactoryManager.java",
+        "line": 528
+      }
+    ],
+    "stop_ids": [],
+    "device_scope": {
+      "model": "SM-S918N",
+      "build": "S918NKSU1AWC8"
+    }
+  },
+  {
+    "id": "s23_uwb_timing",
+    "template": "AT+UWBDTEST=0,0,4,{gap}_{window}_{packets}",
+    "parameters": {
+      "gap": {
+        "type": "int",
+        "domain": null,
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "window": {
+        "type": "int",
+        "domain": null,
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "packets": {
+        "type": "int",
+        "domain": null,
+        "minimum": 1,
+        "maximum": 2147483647
+      }
+    },
+    "source": {
+      "file": "evidence/AtUwbdtest-S23.java",
+      "line": 96
+    },
+    "downstream_sources": [
+      {
+        "file": "evidence/UwbFactoryManager.java",
+        "line": 600
+      }
+    ],
+    "stop_ids": [],
+    "device_scope": {
+      "model": "SM-S918N",
+      "build": "S918NKSU1AWC8"
+    }
+  },
+  {
+    "id": "s23_uwb_preamble",
+    "template": "AT+UWBDTEST=0,0,6,{value}",
+    "parameters": {
+      "value": {
+        "type": "int",
+        "domain": null,
+        "minimum": 0,
+        "maximum": 127
+      }
+    },
+    "source": {
+      "file": "evidence/AtUwbdtest-S23.java",
+      "line": 102
+    },
+    "downstream_sources": [
+      {
+        "file": "evidence/UwbFactoryManager.java",
+        "line": 642
+      }
+    ],
+    "stop_ids": [],
+    "device_scope": {
+      "model": "SM-S918N",
+      "build": "S918NKSU1AWC8"
+    }
+  },
+  {
+    "id": "s23_uwb_sts",
+    "template": "AT+UWBDTEST=0,0,8,{value}",
+    "parameters": {
+      "value": {
+        "type": "int",
+        "domain": null,
+        "minimum": 0,
+        "maximum": 127
+      }
+    },
+    "source": {
+      "file": "evidence/AtUwbdtest-S23.java",
+      "line": 108
+    },
+    "downstream_sources": [
+      {
+        "file": "evidence/UwbFactoryManager.java",
+        "line": 685
+      }
+    ],
+    "stop_ids": [],
+    "device_scope": {
+      "model": "SM-S918N",
+      "build": "S918NKSU1AWC8"
+    }
+  },
+  {
+    "id": "s23_uwb_tx",
+    "template": "AT+UWBDTEST=0,1,1,{value}",
+    "parameters": {
+      "value": {
+        "type": "int",
+        "domain": null,
+        "minimum": -128,
+        "maximum": 127
+      }
+    },
+    "source": {
+      "file": "evidence/AtUwbdtest-S23.java",
+      "line": 114
+    },
+    "downstream_sources": [
+      {
+        "file": "evidence/UwbFactoryManager.java",
+        "line": 835
+      },
+      {
+        "file": "evidence/SamsungUwbTestManager.java",
+        "line": 103
+      }
+    ],
+    "stop_ids": [
+      "s23_uwb_off"
+    ],
+    "device_scope": {
+      "model": "SM-S918N",
+      "build": "S918NKSU1AWC8"
+    }
+  },
+  {
+    "id": "s23_uwb_tx_calibrated",
+    "template": "AT+UWBDTEST=0,1,2,0",
+    "parameters": {},
+    "source": {
+      "file": "evidence/AtUwbdtest-S23.java",
+      "line": 117
+    },
+    "downstream_sources": [
+      {
+        "file": "evidence/UwbFactoryManager.java",
+        "line": 906
+      },
+      {
+        "file": "evidence/SamsungUwbTestManager.java",
+        "line": 103
+      }
+    ],
+    "stop_ids": [
+      "s23_uwb_off"
+    ],
+    "device_scope": {
+      "model": "SM-S918N",
+      "build": "S918NKSU1AWC8"
+    }
+  }
+]

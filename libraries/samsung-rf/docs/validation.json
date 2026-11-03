@@ -1,0 +1,64 @@
+{
+  "unit_tests_run": 38,
+  "unit_failures": 0,
+  "unit_errors": 0,
+  "cli_checks": [
+    {
+      "command": [
+        "-m",
+        "dgm_rf",
+        "demo",
+        "--log",
+        "docs/demo-log.json"
+      ],
+      "returncode": 0,
+      "stdout": "SIMULATION: WLAN 6 GHz HE160 TX acknowledged; no phone or RF measurement.\nSIMULATION: cleanup acknowledged; 14 events; docs/demo-log.json\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "-m",
+        "examples.bluetooth"
+      ],
+      "returncode": 0,
+      "stdout": "SIMULATION: BLE 2M / Low preset; exact RF parameters require device validation\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "-m",
+        "examples.uwb_nfc"
+      ],
+      "returncode": 0,
+      "stdout": "SIM: AT+UWBDTEST=0,0,0,0\nSIM: AT+UWBDTEST=0,0,0,1\nSIM: AT+UWBDTEST=0,0,3,9\nSIM: AT+UWBDTEST=0,0,1,TX_ANT_0\nSIM: AT+UWBDTEST=0,0,4,2000_750_1000\nSIM: AT+UWBDTEST=0,1,1,0\nSIM: AT+UWBDTEST=0,0,0,0\nNFC simulated IDs: [31, 32]\nNFC payloads: 21010101 2100\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "-m",
+        "dgm_rf",
+        "render",
+        "wifitest_0_0_7",
+        "--value",
+        "9"
+      ],
+      "returncode": 0,
+      "stdout": "AT+WIFITEST=0,0,7,9\n",
+      "stderr": ""
+    }
+  ],
+  "utf8_files_checked": 47,
+  "encoding_errors": [],
+  "catalog_count": 220,
+  "catalog_states": {
+    "reference_only": 93,
+    "static_ready": 77,
+    "needs_profile": 28,
+    "blocked": 22
+  },
+  "physical_phone_test": "NOT_RUN",
+  "serial_hardware_test": "NOT_RUN",
+  "instrument_measurement": "NOT_RUN",
+  "fcc_compliance_validation": "NOT_IMPLEMENTED",
+  "status": "PASS_SOFTWARE_ONLY"
+}

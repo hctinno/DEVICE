@@ -1,0 +1,2482 @@
+{
+  "checked_date": "2026-11-04",
+  "evidence": "static_analysis_cross_version_apks",
+  "official_command_manual": false,
+  "same_firmware_pair_verified": false,
+  "device_verified": false,
+  "execution_enabled": false,
+  "sources": [
+    {
+      "file": "WlanTest-API37-20260422.apk",
+      "upload_date": "2026-04-22",
+      "api": 37,
+      "sha256": "5439cba58bfbc8bd69b3728307fe068833abf8cfd697658a28904a52d4f6ae66",
+      "url": "https://www.apkmirror.com/apk/samsung-electronics-co-ltd/wlantest/wlantest-1-1-0-2-release/wlantest-1-1-0-13-android-apk-download/"
+    },
+    {
+      "file": "FacAtFunction-API36-20251016.apk",
+      "upload_date": "2025-10-16",
+      "api": 36,
+      "sha256": "77ebdedee412c1f318104968d2bcb34db17f51e784aa13cf99854b9a0f547991",
+      "url": "https://www.apkmirror.com/apk/samsung-electronics-co-ltd/facatfunction/facatfunction-16-release/facatfunction-16-4-android-apk-download/"
+    }
+  ],
+  "prefixes": [
+    {
+      "at_prefix": "AT+WIFITEST=0,0,0",
+      "dut_id": 6,
+      "fac_line": 81,
+      "wlan_line": 2908,
+      "dut_name": "CH",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,0,1",
+      "dut_id": 2,
+      "fac_line": 84,
+      "wlan_line": 2899,
+      "dut_name": "DR",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,0,10",
+      "dut_id": 49,
+      "fac_line": 108,
+      "wlan_line": 3004,
+      "dut_name": "MRU_OFDMA",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,0,2",
+      "dut_id": 5,
+      "fac_line": 87,
+      "wlan_line": 2905,
+      "dut_name": "SP",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,0,3",
+      "dut_id": 7,
+      "fac_line": 90,
+      "wlan_line": 2911,
+      "dut_name": "TG",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,0,4",
+      "dut_id": 9,
+      "fac_line": 93,
+      "wlan_line": 2917,
+      "dut_name": "PL",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,0,5",
+      "dut_id": 8,
+      "fac_line": 96,
+      "wlan_line": 2914,
+      "dut_name": "BI",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,0,6",
+      "dut_id": 16,
+      "fac_line": 99,
+      "wlan_line": 2938,
+      "dut_name": "SB",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,0,7",
+      "dut_id": 17,
+      "fac_line": 102,
+      "wlan_line": 2941,
+      "dut_name": "BW",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,0,9",
+      "dut_id": 27,
+      "fac_line": 105,
+      "wlan_line": 2968,
+      "dut_name": "RU",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,1,0",
+      "dut_id": 1,
+      "fac_line": 46,
+      "wlan_line": 2896,
+      "dut_name": "CD",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,1,1",
+      "dut_id": 0,
+      "fac_line": 50,
+      "wlan_line": 2893,
+      "dut_name": "OD",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,1,2",
+      "dut_id": 19,
+      "fac_line": 60,
+      "wlan_line": 2947,
+      "dut_name": "NU",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,1,3",
+      "dut_id": 18,
+      "fac_line": 63,
+      "wlan_line": 2944,
+      "dut_name": "NF",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,1,5",
+      "dut_id": 26,
+      "fac_line": 66,
+      "wlan_line": 2965,
+      "dut_name": "CE",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,1,6",
+      "dut_id": 28,
+      "fac_line": 69,
+      "wlan_line": 2971,
+      "dut_name": "BC",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,1,7",
+      "dut_id": 42,
+      "fac_line": 72,
+      "wlan_line": 2983,
+      "dut_name": "RO",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,1,8",
+      "dut_id": 40,
+      "fac_line": 75,
+      "wlan_line": 2977,
+      "dut_name": "SC",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,1,9",
+      "dut_id": 39,
+      "fac_line": 78,
+      "wlan_line": 2974,
+      "dut_name": "GC",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,2,0",
+      "dut_id": 11,
+      "fac_line": 111,
+      "wlan_line": 2923,
+      "dut_name": "TP",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,2,1",
+      "dut_id": 10,
+      "fac_line": 114,
+      "wlan_line": 2920,
+      "dut_name": "TS",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,2,2",
+      "dut_id": 47,
+      "fac_line": 117,
+      "wlan_line": 2998,
+      "dut_name": "TSL",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,3,0",
+      "dut_id": 13,
+      "fac_line": 120,
+      "wlan_line": 2929,
+      "dut_name": "RP",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,3,1",
+      "dut_id": 12,
+      "fac_line": 123,
+      "wlan_line": 2926,
+      "dut_name": "RS",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,3,3",
+      "dut_id": 48,
+      "fac_line": 126,
+      "wlan_line": 3001,
+      "dut_name": "RSL",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,4,0",
+      "dut_id": 14,
+      "fac_line": 129,
+      "wlan_line": 2932,
+      "dut_name": "RE",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,4,1",
+      "dut_id": 15,
+      "fac_line": 132,
+      "wlan_line": 2935,
+      "dut_name": "RG",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,4,2",
+      "dut_id": 23,
+      "fac_line": 135,
+      "wlan_line": 2959,
+      "dut_name": "GR",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,4,3",
+      "dut_id": 25,
+      "fac_line": 138,
+      "wlan_line": 2962,
+      "dut_name": "RD",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,4,4",
+      "dut_id": 43,
+      "fac_line": 141,
+      "wlan_line": 2986,
+      "dut_name": "RC",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,4,5",
+      "dut_id": 44,
+      "fac_line": 144,
+      "wlan_line": 2989,
+      "dut_name": "RT",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,6,0",
+      "dut_id": 20,
+      "fac_line": 147,
+      "wlan_line": 2950,
+      "dut_name": "JN",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,6,1",
+      "dut_id": 21,
+      "fac_line": 150,
+      "wlan_line": 2953,
+      "dut_name": "JN2G",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,6,2",
+      "dut_id": 22,
+      "fac_line": 153,
+      "wlan_line": 2956,
+      "dut_name": "JN5G",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,6,5",
+      "dut_id": 56,
+      "wlan_line": 3019,
+      "dut_name": "ACS5G",
+      "evidence": "wlan_local_only",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,7,0",
+      "dut_id": 4,
+      "fac_line": 157,
+      "wlan_line": 2902,
+      "dut_name": "SA",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=0,9,9",
+      "dut_id": 24,
+      "fac_line": 160,
+      "dut_name": "ALL",
+      "evidence": "fac_only",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=1,0,0",
+      "dut_id": 41,
+      "fac_line": 170,
+      "wlan_line": 2980,
+      "dut_name": "MV",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=4,0,3",
+      "dut_id": 53,
+      "fac_line": 179,
+      "wlan_line": 3013,
+      "dut_name": "WCT",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=4,0,4",
+      "dut_id": 54,
+      "fac_line": 182,
+      "wlan_line": 3016,
+      "dut_name": "RCT",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=4,1,4",
+      "dut_id": 51,
+      "fac_line": 173,
+      "wlan_line": 3007,
+      "dut_name": "RCS",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=4,1,8",
+      "dut_id": 52,
+      "fac_line": 176,
+      "wlan_line": 3010,
+      "dut_name": "GFC",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=5,0,1",
+      "dut_id": 45,
+      "fac_line": 185,
+      "wlan_line": 2992,
+      "dut_name": "GRI",
+      "evidence": "both_parsers",
+      "device_verified": false
+    },
+    {
+      "at_prefix": "AT+WIFITEST=9,9,9",
+      "dut_id": 46,
+      "fac_line": 188,
+      "wlan_line": 2995,
+      "dut_name": "BCT",
+      "evidence": "both_parsers",
+      "device_verified": false
+    }
+  ],
+  "numeric_arguments": [
+    {
+      "group": "band",
+      "label": "2.4GHz",
+      "value": "1",
+      "command": "AT+WIFITEST=0,0,6,1",
+      "resource": "bandTx6G",
+      "device_verified": false
+    },
+    {
+      "group": "band",
+      "label": "5GHz",
+      "value": "2",
+      "command": "AT+WIFITEST=0,0,6,2",
+      "resource": "bandTx6G",
+      "device_verified": false
+    },
+    {
+      "group": "band",
+      "label": "6GHz",
+      "value": "3",
+      "command": "AT+WIFITEST=0,0,6,3",
+      "resource": "bandTx6G",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "20Mhz",
+      "value": "1",
+      "command": "AT+WIFITEST=0,0,7,1",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "40Mhz",
+      "value": "2",
+      "command": "AT+WIFITEST=0,0,7,2",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "VHT80",
+      "value": "3",
+      "command": "AT+WIFITEST=0,0,7,3",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "VHT20",
+      "value": "4",
+      "command": "AT+WIFITEST=0,0,7,4",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "VHT40",
+      "value": "5",
+      "command": "AT+WIFITEST=0,0,7,5",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "HE20",
+      "value": "6",
+      "command": "AT+WIFITEST=0,0,7,6",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "HE40",
+      "value": "7",
+      "command": "AT+WIFITEST=0,0,7,7",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "HE80",
+      "value": "8",
+      "command": "AT+WIFITEST=0,0,7,8",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "HE160",
+      "value": "9",
+      "command": "AT+WIFITEST=0,0,7,9",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "VHT160",
+      "value": "10",
+      "command": "AT+WIFITEST=0,0,7,10",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "HE160 (80L)",
+      "value": "11",
+      "command": "AT+WIFITEST=0,0,7,11",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "HE160 (80U)",
+      "value": "12",
+      "command": "AT+WIFITEST=0,0,7,12",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT20",
+      "value": "13",
+      "command": "AT+WIFITEST=0,0,7,13",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT40",
+      "value": "14",
+      "command": "AT+WIFITEST=0,0,7,14",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT80",
+      "value": "15",
+      "command": "AT+WIFITEST=0,0,7,15",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT160",
+      "value": "16",
+      "command": "AT+WIFITEST=0,0,7,16",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT160 (80L)",
+      "value": "17",
+      "command": "AT+WIFITEST=0,0,7,17",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT160 (80U)",
+      "value": "18",
+      "command": "AT+WIFITEST=0,0,7,18",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT320",
+      "value": "19",
+      "command": "AT+WIFITEST=0,0,7,19",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT320 (160L)",
+      "value": "20",
+      "command": "AT+WIFITEST=0,0,7,20",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT320 (160U)",
+      "value": "21",
+      "command": "AT+WIFITEST=0,0,7,21",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT320 (80LL)",
+      "value": "22",
+      "command": "AT+WIFITEST=0,0,7,22",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT320 (80LM)",
+      "value": "23",
+      "command": "AT+WIFITEST=0,0,7,23",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT320 (80MH)",
+      "value": "24",
+      "command": "AT+WIFITEST=0,0,7,24",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "bandwidth",
+      "label": "EHT320 (80HH)",
+      "value": "25",
+      "command": "AT+WIFITEST=0,0,7,25",
+      "resource": "bandwidth_be",
+      "device_verified": false
+    },
+    {
+      "group": "antenna",
+      "label": "ALL",
+      "value": "0",
+      "command": "AT+WIFITEST=0,7,0,0",
+      "resource": "antenna",
+      "device_verified": false
+    },
+    {
+      "group": "antenna",
+      "label": "ANT_1",
+      "value": "1",
+      "command": "AT+WIFITEST=0,7,0,1",
+      "resource": "antenna",
+      "device_verified": false
+    },
+    {
+      "group": "antenna",
+      "label": "ANT_2",
+      "value": "2",
+      "command": "AT+WIFITEST=0,7,0,2",
+      "resource": "antenna",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "6M",
+      "value": "4",
+      "command": "AT+WIFITEST=0,0,1,4",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "9M",
+      "value": "5",
+      "command": "AT+WIFITEST=0,0,1,5",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "11M",
+      "value": "6",
+      "command": "AT+WIFITEST=0,0,1,6",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "12M",
+      "value": "7",
+      "command": "AT+WIFITEST=0,0,1,7",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "18M",
+      "value": "8",
+      "command": "AT+WIFITEST=0,0,1,8",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "22M",
+      "value": "9",
+      "command": "AT+WIFITEST=0,0,1,9",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "24M",
+      "value": "10",
+      "command": "AT+WIFITEST=0,0,1,10",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "33M",
+      "value": "11",
+      "command": "AT+WIFITEST=0,0,1,11",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "36M",
+      "value": "12",
+      "command": "AT+WIFITEST=0,0,1,12",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "48M",
+      "value": "13",
+      "command": "AT+WIFITEST=0,0,1,13",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "54M",
+      "value": "14",
+      "command": "AT+WIFITEST=0,0,1,14",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS0",
+      "value": "15",
+      "command": "AT+WIFITEST=0,0,1,15",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS1",
+      "value": "16",
+      "command": "AT+WIFITEST=0,0,1,16",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS2",
+      "value": "17",
+      "command": "AT+WIFITEST=0,0,1,17",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS3",
+      "value": "18",
+      "command": "AT+WIFITEST=0,0,1,18",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS4",
+      "value": "19",
+      "command": "AT+WIFITEST=0,0,1,19",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS5",
+      "value": "20",
+      "command": "AT+WIFITEST=0,0,1,20",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS6",
+      "value": "21",
+      "command": "AT+WIFITEST=0,0,1,21",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS7",
+      "value": "22",
+      "command": "AT+WIFITEST=0,0,1,22",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS8",
+      "value": "23",
+      "command": "AT+WIFITEST=0,0,1,23",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS9",
+      "value": "24",
+      "command": "AT+WIFITEST=0,0,1,24",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS10",
+      "value": "25",
+      "command": "AT+WIFITEST=0,0,1,25",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS11",
+      "value": "26",
+      "command": "AT+WIFITEST=0,0,1,26",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS12",
+      "value": "27",
+      "command": "AT+WIFITEST=0,0,1,27",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS13",
+      "value": "28",
+      "command": "AT+WIFITEST=0,0,1,28",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS14",
+      "value": "29",
+      "command": "AT+WIFITEST=0,0,1,29",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "rate_6ghz",
+      "label": "MCS15",
+      "value": "30",
+      "command": "AT+WIFITEST=0,0,1,30",
+      "resource": "txRate5G_be",
+      "device_verified": false
+    },
+    {
+      "group": "gi_preamble",
+      "label": "1: Short Preamble",
+      "value": "1",
+      "command": "AT+WIFITEST=0,0,2,1",
+      "resource": "preamble",
+      "device_verified": false
+    },
+    {
+      "group": "gi_preamble",
+      "label": "2: Long Preamble",
+      "value": "2",
+      "command": "AT+WIFITEST=0,0,2,2",
+      "resource": "preamble",
+      "device_verified": false
+    },
+    {
+      "group": "gi_preamble",
+      "label": "3: Short Guart Interval",
+      "value": "3",
+      "command": "AT+WIFITEST=0,0,2,3",
+      "resource": "preamble",
+      "device_verified": false
+    },
+    {
+      "group": "gi_preamble",
+      "label": "4: Long Guart Interval",
+      "value": "4",
+      "command": "AT+WIFITEST=0,0,2,4",
+      "resource": "preamble",
+      "device_verified": false
+    },
+    {
+      "group": "gi_preamble",
+      "label": "5: GI 0.8us",
+      "value": "5",
+      "command": "AT+WIFITEST=0,0,2,5",
+      "resource": "preamble",
+      "device_verified": false
+    },
+    {
+      "group": "gi_preamble",
+      "label": "6: GI 1.6us",
+      "value": "6",
+      "command": "AT+WIFITEST=0,0,2,6",
+      "resource": "preamble",
+      "device_verified": false
+    },
+    {
+      "group": "gi_preamble",
+      "label": "7: GI 3.2us",
+      "value": "7",
+      "command": "AT+WIFITEST=0,0,2,7",
+      "resource": "preamble",
+      "device_verified": false
+    },
+    {
+      "group": "tx_mode",
+      "label": "Cont. Tx with Modulation",
+      "value": "1",
+      "command": "AT+WIFITEST=0,2,1,1",
+      "resource": "packetTx",
+      "device_verified": false
+    },
+    {
+      "group": "tx_mode",
+      "label": "Cont. Tx without Modulation",
+      "value": "2",
+      "command": "AT+WIFITEST=0,2,1,2",
+      "resource": "packetTx",
+      "device_verified": false
+    },
+    {
+      "group": "channel_encoding",
+      "label": "off",
+      "value": "0",
+      "command": "AT+WIFITEST=0,1,5,0",
+      "resource": "channelencoding",
+      "device_verified": false
+    },
+    {
+      "group": "channel_encoding",
+      "label": "on",
+      "value": "1",
+      "command": "AT+WIFITEST=0,1,5,1",
+      "resource": "channelencoding",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-10",
+      "value": "-10.0",
+      "command": "AT+WIFITEST=0,0,3,-10.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-9.5",
+      "value": "-9.5",
+      "command": "AT+WIFITEST=0,0,3,-9.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-9",
+      "value": "-9.0",
+      "command": "AT+WIFITEST=0,0,3,-9.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-8.5",
+      "value": "-8.5",
+      "command": "AT+WIFITEST=0,0,3,-8.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-8",
+      "value": "-8.0",
+      "command": "AT+WIFITEST=0,0,3,-8.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-7.5",
+      "value": "-7.5",
+      "command": "AT+WIFITEST=0,0,3,-7.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-7",
+      "value": "-7.0",
+      "command": "AT+WIFITEST=0,0,3,-7.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-6.5",
+      "value": "-6.5",
+      "command": "AT+WIFITEST=0,0,3,-6.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-6",
+      "value": "-6.0",
+      "command": "AT+WIFITEST=0,0,3,-6.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-5.5",
+      "value": "-5.5",
+      "command": "AT+WIFITEST=0,0,3,-5.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-5",
+      "value": "-5.0",
+      "command": "AT+WIFITEST=0,0,3,-5.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-4.5",
+      "value": "-4.5",
+      "command": "AT+WIFITEST=0,0,3,-4.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-4",
+      "value": "-4.0",
+      "command": "AT+WIFITEST=0,0,3,-4.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-3.5",
+      "value": "-3.5",
+      "command": "AT+WIFITEST=0,0,3,-3.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-3",
+      "value": "-3.0",
+      "command": "AT+WIFITEST=0,0,3,-3.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-2.5",
+      "value": "-2.5",
+      "command": "AT+WIFITEST=0,0,3,-2.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-2",
+      "value": "-2.0",
+      "command": "AT+WIFITEST=0,0,3,-2.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-1.5",
+      "value": "-1.5",
+      "command": "AT+WIFITEST=0,0,3,-1.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-1",
+      "value": "-1.0",
+      "command": "AT+WIFITEST=0,0,3,-1.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "-0.5",
+      "value": "-0.5",
+      "command": "AT+WIFITEST=0,0,3,-0.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "0",
+      "value": "0.0",
+      "command": "AT+WIFITEST=0,0,3,0.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "0.5",
+      "value": "0.5",
+      "command": "AT+WIFITEST=0,0,3,0.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "1",
+      "value": "1.0",
+      "command": "AT+WIFITEST=0,0,3,1.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "1.5",
+      "value": "1.5",
+      "command": "AT+WIFITEST=0,0,3,1.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "2",
+      "value": "2.0",
+      "command": "AT+WIFITEST=0,0,3,2.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "2.5",
+      "value": "2.5",
+      "command": "AT+WIFITEST=0,0,3,2.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "3",
+      "value": "3.0",
+      "command": "AT+WIFITEST=0,0,3,3.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "3.5",
+      "value": "3.5",
+      "command": "AT+WIFITEST=0,0,3,3.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "4",
+      "value": "4.0",
+      "command": "AT+WIFITEST=0,0,3,4.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "4.5",
+      "value": "4.5",
+      "command": "AT+WIFITEST=0,0,3,4.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "5",
+      "value": "5.0",
+      "command": "AT+WIFITEST=0,0,3,5.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "5.5",
+      "value": "5.5",
+      "command": "AT+WIFITEST=0,0,3,5.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "6",
+      "value": "6.0",
+      "command": "AT+WIFITEST=0,0,3,6.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "6.5",
+      "value": "6.5",
+      "command": "AT+WIFITEST=0,0,3,6.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "7",
+      "value": "7.0",
+      "command": "AT+WIFITEST=0,0,3,7.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "7.5",
+      "value": "7.5",
+      "command": "AT+WIFITEST=0,0,3,7.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "8",
+      "value": "8.0",
+      "command": "AT+WIFITEST=0,0,3,8.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "8.5",
+      "value": "8.5",
+      "command": "AT+WIFITEST=0,0,3,8.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "9",
+      "value": "9.0",
+      "command": "AT+WIFITEST=0,0,3,9.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "9.5",
+      "value": "9.5",
+      "command": "AT+WIFITEST=0,0,3,9.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "10",
+      "value": "10.0",
+      "command": "AT+WIFITEST=0,0,3,10.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "10.5",
+      "value": "10.5",
+      "command": "AT+WIFITEST=0,0,3,10.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "11",
+      "value": "11.0",
+      "command": "AT+WIFITEST=0,0,3,11.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "11.5",
+      "value": "11.5",
+      "command": "AT+WIFITEST=0,0,3,11.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "12",
+      "value": "12.0",
+      "command": "AT+WIFITEST=0,0,3,12.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "12.5",
+      "value": "12.5",
+      "command": "AT+WIFITEST=0,0,3,12.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "13",
+      "value": "13.0",
+      "command": "AT+WIFITEST=0,0,3,13.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "13.5",
+      "value": "13.5",
+      "command": "AT+WIFITEST=0,0,3,13.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "14",
+      "value": "14.0",
+      "command": "AT+WIFITEST=0,0,3,14.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "14.5",
+      "value": "14.5",
+      "command": "AT+WIFITEST=0,0,3,14.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "15",
+      "value": "15.0",
+      "command": "AT+WIFITEST=0,0,3,15.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "15.5",
+      "value": "15.5",
+      "command": "AT+WIFITEST=0,0,3,15.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "16",
+      "value": "16.0",
+      "command": "AT+WIFITEST=0,0,3,16.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "16.5",
+      "value": "16.5",
+      "command": "AT+WIFITEST=0,0,3,16.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "17",
+      "value": "17.0",
+      "command": "AT+WIFITEST=0,0,3,17.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "17.5",
+      "value": "17.5",
+      "command": "AT+WIFITEST=0,0,3,17.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "18",
+      "value": "18.0",
+      "command": "AT+WIFITEST=0,0,3,18.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "18.5",
+      "value": "18.5",
+      "command": "AT+WIFITEST=0,0,3,18.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "19",
+      "value": "19.0",
+      "command": "AT+WIFITEST=0,0,3,19.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "19.5",
+      "value": "19.5",
+      "command": "AT+WIFITEST=0,0,3,19.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "20",
+      "value": "20.0",
+      "command": "AT+WIFITEST=0,0,3,20.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "20.5",
+      "value": "20.5",
+      "command": "AT+WIFITEST=0,0,3,20.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "21",
+      "value": "21.0",
+      "command": "AT+WIFITEST=0,0,3,21.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "21.5",
+      "value": "21.5",
+      "command": "AT+WIFITEST=0,0,3,21.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "22",
+      "value": "22.0",
+      "command": "AT+WIFITEST=0,0,3,22.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "22.5",
+      "value": "22.5",
+      "command": "AT+WIFITEST=0,0,3,22.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "23",
+      "value": "23.0",
+      "command": "AT+WIFITEST=0,0,3,23.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "23.5",
+      "value": "23.5",
+      "command": "AT+WIFITEST=0,0,3,23.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "24",
+      "value": "24.0",
+      "command": "AT+WIFITEST=0,0,3,24.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "24.5",
+      "value": "24.5",
+      "command": "AT+WIFITEST=0,0,3,24.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "25",
+      "value": "25.0",
+      "command": "AT+WIFITEST=0,0,3,25.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "25.5",
+      "value": "25.5",
+      "command": "AT+WIFITEST=0,0,3,25.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "26",
+      "value": "26.0",
+      "command": "AT+WIFITEST=0,0,3,26.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "26.5",
+      "value": "26.5",
+      "command": "AT+WIFITEST=0,0,3,26.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "27",
+      "value": "27.0",
+      "command": "AT+WIFITEST=0,0,3,27.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "27.5",
+      "value": "27.5",
+      "command": "AT+WIFITEST=0,0,3,27.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "28",
+      "value": "28.0",
+      "command": "AT+WIFITEST=0,0,3,28.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "28.5",
+      "value": "28.5",
+      "command": "AT+WIFITEST=0,0,3,28.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "29",
+      "value": "29.0",
+      "command": "AT+WIFITEST=0,0,3,29.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "29.5",
+      "value": "29.5",
+      "command": "AT+WIFITEST=0,0,3,29.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "30",
+      "value": "30.0",
+      "command": "AT+WIFITEST=0,0,3,30.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "30.5",
+      "value": "30.5",
+      "command": "AT+WIFITEST=0,0,3,30.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "31",
+      "value": "31.0",
+      "command": "AT+WIFITEST=0,0,3,31.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "31.5",
+      "value": "31.5",
+      "command": "AT+WIFITEST=0,0,3,31.5",
+      "resource": "power_11ax",
+      "device_verified": false
+    },
+    {
+      "group": "power_ui",
+      "label": "32",
+      "value": "32.0",
+      "command": "AT+WIFITEST=0,0,3,32.0",
+      "resource": "power_11ax",
+      "device_verified": false
+    }
+  ],
+  "channel_6ghz_ui_mapping": [
+    {
+      "ui_label": "2(5935)Mhz",
+      "driver_argument": "2",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,2",
+      "device_verified": false
+    },
+    {
+      "ui_label": "1(5955)Mhz",
+      "driver_argument": "1",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,1",
+      "device_verified": false
+    },
+    {
+      "ui_label": "3(5965)Mhz",
+      "driver_argument": "5",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,5",
+      "device_verified": false
+    },
+    {
+      "ui_label": "5(5975)Mhz",
+      "driver_argument": "5",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,5",
+      "device_verified": false
+    },
+    {
+      "ui_label": "7(5985)Mhz",
+      "driver_argument": "9",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,9",
+      "device_verified": false
+    },
+    {
+      "ui_label": "9(5995)Mhz",
+      "driver_argument": "9",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,9",
+      "device_verified": false
+    },
+    {
+      "ui_label": "11(6005)Mhz",
+      "driver_argument": "13",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,13",
+      "device_verified": false
+    },
+    {
+      "ui_label": "13(6015)Mhz",
+      "driver_argument": "13",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,13",
+      "device_verified": false
+    },
+    {
+      "ui_label": "15(6025)Mhz",
+      "driver_argument": "17",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,17",
+      "device_verified": false
+    },
+    {
+      "ui_label": "17(6035)Mhz",
+      "driver_argument": "17",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,17",
+      "device_verified": false
+    },
+    {
+      "ui_label": "19(6045)Mhz",
+      "driver_argument": "21",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,21",
+      "device_verified": false
+    },
+    {
+      "ui_label": "21(6055)Mhz",
+      "driver_argument": "21",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,21",
+      "device_verified": false
+    },
+    {
+      "ui_label": "23(6065)Mhz",
+      "driver_argument": "25",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,25",
+      "device_verified": false
+    },
+    {
+      "ui_label": "25(6075)Mhz",
+      "driver_argument": "25",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,25",
+      "device_verified": false
+    },
+    {
+      "ui_label": "27(6085)Mhz",
+      "driver_argument": "29",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,29",
+      "device_verified": false
+    },
+    {
+      "ui_label": "29(6095)Mhz",
+      "driver_argument": "29",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,29",
+      "device_verified": false
+    },
+    {
+      "ui_label": "31(6105)Mhz",
+      "driver_argument": "33",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,33",
+      "device_verified": false
+    },
+    {
+      "ui_label": "33(6115)Mhz",
+      "driver_argument": "33",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,33",
+      "device_verified": false
+    },
+    {
+      "ui_label": "35(6125)Mhz",
+      "driver_argument": "37",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,37",
+      "device_verified": false
+    },
+    {
+      "ui_label": "37(6135)Mhz",
+      "driver_argument": "37",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,37",
+      "device_verified": false
+    },
+    {
+      "ui_label": "39(6145)Mhz",
+      "driver_argument": "41",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,41",
+      "device_verified": false
+    },
+    {
+      "ui_label": "41(6155)Mhz",
+      "driver_argument": "41",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,41",
+      "device_verified": false
+    },
+    {
+      "ui_label": "43(6165)Mhz",
+      "driver_argument": "45",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,45",
+      "device_verified": false
+    },
+    {
+      "ui_label": "45(6175)Mhz",
+      "driver_argument": "45",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,45",
+      "device_verified": false
+    },
+    {
+      "ui_label": "47(6185)Mhz",
+      "driver_argument": "49",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,49",
+      "device_verified": false
+    },
+    {
+      "ui_label": "49(6195)Mhz",
+      "driver_argument": "49",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,49",
+      "device_verified": false
+    },
+    {
+      "ui_label": "51(6205)Mhz",
+      "driver_argument": "53",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,53",
+      "device_verified": false
+    },
+    {
+      "ui_label": "53(6215)Mhz",
+      "driver_argument": "53",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,53",
+      "device_verified": false
+    },
+    {
+      "ui_label": "55(6225)Mhz",
+      "driver_argument": "57",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,57",
+      "device_verified": false
+    },
+    {
+      "ui_label": "57(6235)Mhz",
+      "driver_argument": "57",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,57",
+      "device_verified": false
+    },
+    {
+      "ui_label": "59(6245)Mhz",
+      "driver_argument": "61",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,61",
+      "device_verified": false
+    },
+    {
+      "ui_label": "61(6255)Mhz",
+      "driver_argument": "61",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,61",
+      "device_verified": false
+    },
+    {
+      "ui_label": "63(6265)Mhz",
+      "driver_argument": "65",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,65",
+      "device_verified": false
+    },
+    {
+      "ui_label": "65(6275)Mhz",
+      "driver_argument": "65",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,65",
+      "device_verified": false
+    },
+    {
+      "ui_label": "67(6285)Mhz",
+      "driver_argument": "69",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,69",
+      "device_verified": false
+    },
+    {
+      "ui_label": "69(6295)Mhz",
+      "driver_argument": "69",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,69",
+      "device_verified": false
+    },
+    {
+      "ui_label": "71(6305)Mhz",
+      "driver_argument": "73",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,73",
+      "device_verified": false
+    },
+    {
+      "ui_label": "73(6315)Mhz",
+      "driver_argument": "73",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,73",
+      "device_verified": false
+    },
+    {
+      "ui_label": "75(6325)Mhz",
+      "driver_argument": "77",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,77",
+      "device_verified": false
+    },
+    {
+      "ui_label": "77(6335)Mhz",
+      "driver_argument": "77",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,77",
+      "device_verified": false
+    },
+    {
+      "ui_label": "79(6345)Mhz",
+      "driver_argument": "81",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,81",
+      "device_verified": false
+    },
+    {
+      "ui_label": "81(6355)Mhz",
+      "driver_argument": "81",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,81",
+      "device_verified": false
+    },
+    {
+      "ui_label": "83(6365)Mhz",
+      "driver_argument": "85",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,85",
+      "device_verified": false
+    },
+    {
+      "ui_label": "85(6375)Mhz",
+      "driver_argument": "85",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,85",
+      "device_verified": false
+    },
+    {
+      "ui_label": "87(6385)Mhz",
+      "driver_argument": "89",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,89",
+      "device_verified": false
+    },
+    {
+      "ui_label": "89(6395)Mhz",
+      "driver_argument": "89",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,89",
+      "device_verified": false
+    },
+    {
+      "ui_label": "91(6405)Mhz",
+      "driver_argument": "93",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,93",
+      "device_verified": false
+    },
+    {
+      "ui_label": "93(6415)Mhz",
+      "driver_argument": "93",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,93",
+      "device_verified": false
+    },
+    {
+      "ui_label": "95(6425)Mhz",
+      "driver_argument": "97",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,97",
+      "device_verified": false
+    },
+    {
+      "ui_label": "97(6435)Mhz",
+      "driver_argument": "97",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,97",
+      "device_verified": false
+    },
+    {
+      "ui_label": "99(6445)Mhz",
+      "driver_argument": "101",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,101",
+      "device_verified": false
+    },
+    {
+      "ui_label": "101(6455)Mhz",
+      "driver_argument": "101",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,101",
+      "device_verified": false
+    },
+    {
+      "ui_label": "103(6465)Mhz",
+      "driver_argument": "105",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,105",
+      "device_verified": false
+    },
+    {
+      "ui_label": "105(6475)Mhz",
+      "driver_argument": "105",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,105",
+      "device_verified": false
+    },
+    {
+      "ui_label": "107(6485)Mhz",
+      "driver_argument": "109",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,109",
+      "device_verified": false
+    },
+    {
+      "ui_label": "109(6495)Mhz",
+      "driver_argument": "109",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,109",
+      "device_verified": false
+    },
+    {
+      "ui_label": "111(6505)Mhz",
+      "driver_argument": "113",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,113",
+      "device_verified": false
+    },
+    {
+      "ui_label": "113(6515)Mhz",
+      "driver_argument": "113",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,113",
+      "device_verified": false
+    },
+    {
+      "ui_label": "115(6525)Mhz",
+      "driver_argument": "117",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,117",
+      "device_verified": false
+    },
+    {
+      "ui_label": "117(6535)Mhz",
+      "driver_argument": "117",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,117",
+      "device_verified": false
+    },
+    {
+      "ui_label": "119(6545)Mhz",
+      "driver_argument": "121",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,121",
+      "device_verified": false
+    },
+    {
+      "ui_label": "121(6555)Mhz",
+      "driver_argument": "121",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,121",
+      "device_verified": false
+    },
+    {
+      "ui_label": "123(6565)Mhz",
+      "driver_argument": "125",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,125",
+      "device_verified": false
+    },
+    {
+      "ui_label": "125(6575)Mhz",
+      "driver_argument": "125",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,125",
+      "device_verified": false
+    },
+    {
+      "ui_label": "127(6585)Mhz",
+      "driver_argument": "129",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,129",
+      "device_verified": false
+    },
+    {
+      "ui_label": "129(6595)Mhz",
+      "driver_argument": "129",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,129",
+      "device_verified": false
+    },
+    {
+      "ui_label": "131(6605)Mhz",
+      "driver_argument": "133",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,133",
+      "device_verified": false
+    },
+    {
+      "ui_label": "133(6615)Mhz",
+      "driver_argument": "133",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,133",
+      "device_verified": false
+    },
+    {
+      "ui_label": "135(6625)Mhz",
+      "driver_argument": "137",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,137",
+      "device_verified": false
+    },
+    {
+      "ui_label": "137(6635)Mhz",
+      "driver_argument": "137",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,137",
+      "device_verified": false
+    },
+    {
+      "ui_label": "139(6645)Mhz",
+      "driver_argument": "141",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,141",
+      "device_verified": false
+    },
+    {
+      "ui_label": "141(6655)Mhz",
+      "driver_argument": "141",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,141",
+      "device_verified": false
+    },
+    {
+      "ui_label": "143(6665)Mhz",
+      "driver_argument": "145",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,145",
+      "device_verified": false
+    },
+    {
+      "ui_label": "145(6675)Mhz",
+      "driver_argument": "145",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,145",
+      "device_verified": false
+    },
+    {
+      "ui_label": "147(6685)Mhz",
+      "driver_argument": "149",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,149",
+      "device_verified": false
+    },
+    {
+      "ui_label": "149(6695)Mhz",
+      "driver_argument": "149",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,149",
+      "device_verified": false
+    },
+    {
+      "ui_label": "151(6705)Mhz",
+      "driver_argument": "153",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,153",
+      "device_verified": false
+    },
+    {
+      "ui_label": "153(6715)Mhz",
+      "driver_argument": "153",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,153",
+      "device_verified": false
+    },
+    {
+      "ui_label": "155(6725)Mhz",
+      "driver_argument": "157",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,157",
+      "device_verified": false
+    },
+    {
+      "ui_label": "157(6735)Mhz",
+      "driver_argument": "157",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,157",
+      "device_verified": false
+    },
+    {
+      "ui_label": "159(6745)Mhz",
+      "driver_argument": "161",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,161",
+      "device_verified": false
+    },
+    {
+      "ui_label": "161(6755)Mhz",
+      "driver_argument": "161",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,161",
+      "device_verified": false
+    },
+    {
+      "ui_label": "163(6765)Mhz",
+      "driver_argument": "165",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,165",
+      "device_verified": false
+    },
+    {
+      "ui_label": "165(6775)Mhz",
+      "driver_argument": "165",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,165",
+      "device_verified": false
+    },
+    {
+      "ui_label": "167(6785)Mhz",
+      "driver_argument": "169",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,169",
+      "device_verified": false
+    },
+    {
+      "ui_label": "169(6795)Mhz",
+      "driver_argument": "169",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,169",
+      "device_verified": false
+    },
+    {
+      "ui_label": "171(6805)Mhz",
+      "driver_argument": "173",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,173",
+      "device_verified": false
+    },
+    {
+      "ui_label": "173(6815)Mhz",
+      "driver_argument": "173",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,173",
+      "device_verified": false
+    },
+    {
+      "ui_label": "175(6825)Mhz",
+      "driver_argument": "177",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,177",
+      "device_verified": false
+    },
+    {
+      "ui_label": "177(6835)Mhz",
+      "driver_argument": "177",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,177",
+      "device_verified": false
+    },
+    {
+      "ui_label": "179(6845)Mhz",
+      "driver_argument": "181",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,181",
+      "device_verified": false
+    },
+    {
+      "ui_label": "181(6855)Mhz",
+      "driver_argument": "181",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,181",
+      "device_verified": false
+    },
+    {
+      "ui_label": "183(6865)Mhz",
+      "driver_argument": "185",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,185",
+      "device_verified": false
+    },
+    {
+      "ui_label": "185(6875)Mhz",
+      "driver_argument": "185",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,185",
+      "device_verified": false
+    },
+    {
+      "ui_label": "187(6885)Mhz",
+      "driver_argument": "189",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,189",
+      "device_verified": false
+    },
+    {
+      "ui_label": "189(6895)Mhz",
+      "driver_argument": "189",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,189",
+      "device_verified": false
+    },
+    {
+      "ui_label": "191(6905)Mhz",
+      "driver_argument": "193",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,193",
+      "device_verified": false
+    },
+    {
+      "ui_label": "193(6915)Mhz",
+      "driver_argument": "193",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,193",
+      "device_verified": false
+    },
+    {
+      "ui_label": "195(6925)Mhz",
+      "driver_argument": "197",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,197",
+      "device_verified": false
+    },
+    {
+      "ui_label": "197(6935)Mhz",
+      "driver_argument": "197",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,197",
+      "device_verified": false
+    },
+    {
+      "ui_label": "199(6945)Mhz",
+      "driver_argument": "201",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,201",
+      "device_verified": false
+    },
+    {
+      "ui_label": "201(6955)Mhz",
+      "driver_argument": "201",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,201",
+      "device_verified": false
+    },
+    {
+      "ui_label": "203(6965)Mhz",
+      "driver_argument": "205",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,205",
+      "device_verified": false
+    },
+    {
+      "ui_label": "205(6975)Mhz",
+      "driver_argument": "205",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,205",
+      "device_verified": false
+    },
+    {
+      "ui_label": "207(6985)Mhz",
+      "driver_argument": "209",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,209",
+      "device_verified": false
+    },
+    {
+      "ui_label": "209(6995)Mhz",
+      "driver_argument": "209",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,209",
+      "device_verified": false
+    },
+    {
+      "ui_label": "211(7005)Mhz",
+      "driver_argument": "213",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,213",
+      "device_verified": false
+    },
+    {
+      "ui_label": "213(7015)Mhz",
+      "driver_argument": "213",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,213",
+      "device_verified": false
+    },
+    {
+      "ui_label": "215(7025)Mhz",
+      "driver_argument": "217",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,217",
+      "device_verified": false
+    },
+    {
+      "ui_label": "217(7035)Mhz",
+      "driver_argument": "217",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,217",
+      "device_verified": false
+    },
+    {
+      "ui_label": "219(7045)Mhz",
+      "driver_argument": "221",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,221",
+      "device_verified": false
+    },
+    {
+      "ui_label": "221(7055)Mhz",
+      "driver_argument": "221",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,221",
+      "device_verified": false
+    },
+    {
+      "ui_label": "223(7065)Mhz",
+      "driver_argument": "225",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,225",
+      "device_verified": false
+    },
+    {
+      "ui_label": "225(7075)Mhz",
+      "driver_argument": "225",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,225",
+      "device_verified": false
+    },
+    {
+      "ui_label": "227(7085)Mhz",
+      "driver_argument": "229",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,229",
+      "device_verified": false
+    },
+    {
+      "ui_label": "229(7095)Mhz",
+      "driver_argument": "229",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,229",
+      "device_verified": false
+    },
+    {
+      "ui_label": "231(7105)Mhz",
+      "driver_argument": "233",
+      "same_as_displayed_channel": false,
+      "command": "AT+WIFITEST=0,0,0,233",
+      "device_verified": false
+    },
+    {
+      "ui_label": "233(7115)Mhz",
+      "driver_argument": "233",
+      "same_as_displayed_channel": true,
+      "command": "AT+WIFITEST=0,0,0,233",
+      "device_verified": false
+    }
+  ]
+}
