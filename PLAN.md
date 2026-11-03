@@ -3,6 +3,8 @@
 작성일: 2026-10-23, Asia/Seoul  
 상태: 전체 구축 계획 초안. 삼성 DUT RF 라이브러리 구현·소프트웨어 검수 추가(2026-11-04). 장비 연결·현장 검증은 미착수.
 
+2026-11-04 추가 산출물: [최신 폴더블 FCC 시험 재현 준비](libraries/samsung-rf/docs/FCC_LATEST_MODELS.md). 56 PDF, 32개 시험 묶음, 183개 선정 물리 조건, LTE SCPI 계획 생성. 전체 무인시험소 구축률 또는 실물 제어 완료로 계산하지 않습니다.
+
 작업 환경 결정: 여러 PC에서 이어서 작업하기 위해 개발을 클라우드 세션 중심으로 전환한다. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 기준 브랜치는 `main`이다. 현재 상태는 [HANDOFF.md](HANDOFF.md), 클라우드 연결 절차는 [CLOUD-START.md](CLOUD-START.md)를 따른다. 클라우드 환경 생성·실행은 아직 확인하지 않았다.
 
 ## 1. 목표 계약

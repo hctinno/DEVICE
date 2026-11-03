@@ -10,6 +10,8 @@
 
 ## 현재 상태
 
+2026-11-04 최신 FCC 조사 추가: [Fold8·iPhone Duo 분석](libraries/samsung-rf/docs/FCC_LATEST_MODELS.md), 56 PDF/3,372페이지/32 시험 묶음/183 선정 조건, LTE CMW 오프라인 SCPI 생성기를 추가했습니다. 삼성 6GHz 161페이지·Apple 6GHz conducted 778페이지는 분할본 연속성 검수 대상입니다. PDF는 로컬 `.fcc-cache`에만 있으며 재확보 스크립트·URL·해시는 커밋합니다. 최신 두 단말의 실제 제어는 제조사 test package·모델 프로파일·RF ON/OFF 검증이 없어 차단 상태입니다. Apple UWB RF 원문과 일부 부속 보고서는 미확보입니다. 기존 S23 명령을 최신 모델에 자동 승격하지 않습니다.
+
 2026-11-04 갱신: [삼성 RF 라이브러리](libraries/samsung-rf/README.md)를 추가했습니다. AT 220개 카탈로그, 별도 NFC PRBS ID 31/32, UWB 특정 S23 빌드의 TX 시작·종료와 숫자 인수를 담았습니다. 무인시험소 전체 또는 실폰 운전 완료가 아닙니다. 셀룰러 TX는 여전히 미확인입니다. 다음 세션은 `python scripts/check_samsung_rf.py`로 소프트웨어 검수부터 재현합니다. 원본 APK/JADX 도구는 포함하지 않았으며 출처·해시와 필요한 정적 분석 근거를 보존했습니다.
 
 - 완료: 계획·기술 설계·시각 규칙·작업 규칙 초안, UTF-8 및 내부 링크 검증 스크립트. 이번 인계에서 클라우드 시작 안내와 전송용 패키징을 추가했다.

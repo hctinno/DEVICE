@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "pdf_files": 56,
+  "pdf_pages": 3372,
+  "pdf_bytes": 250580484,
+  "groups": 32,
+  "cases": 183,
+  "local_pdf_bytes_verified": true,
+  "complete_reports": {
+    "fold8_6ghz": {
+      "expected_pages": 161,
+      "verified_pages": 161,
+      "complete": true
+    },
+    "duo_6ghz_conducted": {
+      "expected_pages": 778,
+      "verified_pages": 778,
+      "complete": true
+    }
+  },
+  "hardware_tests": 0
+}

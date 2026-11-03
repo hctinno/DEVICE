@@ -1,5 +1,5 @@
 {
-  "unit_tests_run": 38,
+  "unit_tests_run": 46,
   "unit_failures": 0,
   "unit_errors": 0,
   "cli_checks": [
@@ -36,6 +36,15 @@
     {
       "command": [
         "-m",
+        "examples.fcc_plan"
+      ],
+      "returncode": 0,
+      "stdout": "FCC: 32 groups; Fold8 UWB: 18 cases\nOFFLINE SCPI ONLY; not commissioned for DUT/hardware\nCONFIGURE\nSOURce:LTE:SIGNaling1:CELL:STATe OFF\nCONFigure:LTE:SIGNaling1:PCC:DMODe FDD\nCONFigure:LTE:SIGNaling1:PCC:BAND OB25\nCONFigure:LTE:SIGNaling1:CELL:BANDwidth:PCC:DL B100\nCONFigure:LTE:SIGNaling1:RFSettings:PCC:CHANnel:UL 26140\nCONFigure:LTE:SIGNaling1:CONNection:PCC:STYPe RMC\nCONFigure:LTE:SIGNaling1:CONNection:PCC:RMC:UL N1,QPSK,KEEP\nCONFigure:LTE:SIGNaling1:CONNection:PCC:RMC:RBPosition:UL LOW\nCONFigure:LTE:SIGNaling1:UL:PCC:PUSCh:TPC:SET MAXPower\nSTART\nSOURce:LTE:SIGNaling1:CELL:STATe ON\nCALL:LTE:SIGNaling1:PSWitched:ACTion CONNect\nCLEANUP\nCALL:LTE:SIGNaling1:PSWitched:ACTion DISConnect\nSOURce:LTE:SIGNaling1:CELL:STATe OFF\nState checkpoints, RF verification and site commissioning are required; nothing was transmitted.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "-m",
         "dgm_rf",
         "render",
         "wifitest_0_0_7",
@@ -47,7 +56,7 @@
       "stderr": ""
     }
   ],
-  "utf8_files_checked": 47,
+  "utf8_files_checked": 64,
   "encoding_errors": [],
   "catalog_count": 220,
   "catalog_states": {

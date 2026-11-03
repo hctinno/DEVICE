@@ -1,0 +1,222 @@
+[
+  {
+    "sourceDataVersion": "20261103_052006",
+    "generatedAt": "2026-11-02T20:45:58.130899+00:00",
+    "population": "certification_records",
+    "appliedFilters": {
+      "identifier": "A3LSMF971U",
+      "source": "FCC"
+    },
+    "rowCount": 1,
+    "total": 1,
+    "exactMatch": true,
+    "records": [
+      {
+        "source": "FCC",
+        "cert_date": "2026-06-15",
+        "cert_id": "A3LSMF971U",
+        "manufacturer_name": "Samsung Electronics Co Ltd",
+        "applicant_name": "GSM,WCDMA,LTE,5G NR Phone, BT,BLE, DTS,UNII a.b.g.n.ac.ax.be, NFC, WPT, UWB and NB NTN",
+        "model_name": "GSM,WCDMA,LTE,5G NR Phone, BT,BLE, DTS,UNII a.b.g.n.ac.ax.be, NFC, WPT, UWB and NB NTN",
+        "product": "GSM,WCDMA,LTE,5G NR Phone, BT,BLE, DTS,UNII a.b.g.n.ac.ax.be, NFC, WPT, UWB and NB NTN",
+        "technology": "NII - Unlicensed National Information Infrastructure TX",
+        "lab_name": "UL Korea",
+        "country": "United States",
+        "status": "Original Equipment",
+        "product_signal": "strategic",
+        "sourceRecordHash": "bdf861a64215bfc37a99fcf51777a359285a5b58a4f9c8100f61aad80e1f6f63",
+        "sourceUrl": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=bl1I0lD1awkqBlC1FYR1Cg%3D%3D&fcc_id=A3LSMF971U",
+        "lineageSourceDataVersion": "20260723_041045",
+        "lineageRuleVersion": "data-quality-lineage-v1.0.0",
+        "qualityTier": "confirmed",
+        "reviewRequired": 0,
+        "officialEvidenceAvailable": 1,
+        "evidence": {
+          "source": "FCC",
+          "cert_date": "2026-06-15",
+          "fcc_id": "A3LSMF971U",
+          "fcc_id_url": "https://apps.fcc.gov/tcb/GetTcb731Report.do?applicationId=bl1I0lD1awkqBlC1FYR1Cg%3D%3D&fcc_id=A3LSMF971U",
+          "application_id": "bl1I0lD1awkqBlC1FYR1Cg==",
+          "oet_exhibits_list_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=bl1I0lD1awkqBlC1FYR1Cg%3D%3D&fcc_id=A3LSMF971U",
+          "attachment_link_type": "oet_exhibits",
+          "attachment_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=bl1I0lD1awkqBlC1FYR1Cg%3D%3D&fcc_id=A3LSMF971U",
+          "natural_key": "09e93c1cf9a3e16fdee60e53",
+          "row_hash": "bdf861a64215bfc37a99fcf51777a359285a5b58a4f9c8100f61aad80e1f6f63",
+          "manufacturer_name": "Samsung Electronics Co Ltd",
+          "manufacturer_country": "United States",
+          "application": "GSM,WCDMA,LTE,5G NR Phone, BT,BLE, DTS,UNII a.b.g.n.ac.ax.be, NFC, WPT, UWB and NB NTN",
+          "product": "GSM,WCDMA,LTE,5G NR Phone, BT,BLE, DTS,UNII a.b.g.n.ac.ax.be, NFC, WPT, UWB and NB NTN",
+          "equipment_class": "NII - Unlicensed National Information Infrastructure TX",
+          "cert_type": "Original Equipment",
+          "lab_name": "UL Korea",
+          "lab_country": "South Korea",
+          "year": "2026",
+          "month": "2026-06",
+          "high_value_flag": true,
+          "high_value_keyword": "LTE",
+          "high_value_priority": 1,
+          "high_value_source": "FCC",
+          "product_signal_type": "strategic",
+          "product_signal_label": "strategic",
+          "product_signal_category": "Cellular / IoT",
+          "product_signal_tier": 1,
+          "matched_rule_id": "FCC_CELLULAR_001",
+          "matched_keyword": "LTE",
+          "matched_field": "application",
+          "match_confidence": 0.94,
+          "product_signal_review_required": false,
+          "product_signal_reason": "Cellular, IoT, telematics, base-station, or repeater product language.",
+          "source_record_hash": "bdf861a64215bfc37a99fcf51777a359285a5b58a4f9c8100f61aad80e1f6f63",
+          "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=bl1I0lD1awkqBlC1FYR1Cg%3D%3D&fcc_id=A3LSMF971U",
+          "lineage_source_data_version": "20260723_041045",
+          "lineage_rule_version": "data-quality-lineage-v1.0.0"
+        }
+      }
+    ],
+    "coverageComplete": true,
+    "populationType": "certification_records",
+    "populationDefinition": "public FCC/KC certification records under the explicit filters",
+    "recordGrain": "one exact current certification evidence row",
+    "totalMatchedCount": 1,
+    "returnedRowCount": 1,
+    "coverageRatio": 1,
+    "appliedEntityResolution": {
+      "applied": false,
+      "scope": null
+    },
+    "appliedPeriod": {
+      "from": null,
+      "to": null,
+      "basis": "not_applicable_exact_identifier",
+      "requestedFrom": null,
+      "requestedTo": null,
+      "applied": false
+    },
+    "sourceWatermark": {
+      "FCC": {
+        "from": "2020-01-01",
+        "to": "2026-11-02"
+      },
+      "KC": {
+        "from": "2019-10-23",
+        "to": "2026-11-02"
+      }
+    },
+    "metrics": {
+      "rowCount": 1,
+      "total": 1
+    },
+    "qualitySummary": {},
+    "warnings": []
+  },
+  {
+    "sourceDataVersion": "20261103_052006",
+    "generatedAt": "2026-11-02T20:45:58.130899+00:00",
+    "population": "certification_records",
+    "appliedFilters": {
+      "identifier": "BCG-E9188A",
+      "source": "FCC"
+    },
+    "rowCount": 1,
+    "total": 1,
+    "exactMatch": true,
+    "records": [
+      {
+        "source": "FCC",
+        "cert_date": "2026-09-09",
+        "cert_id": "BCG-E9188A",
+        "manufacturer_name": "Apple Inc.",
+        "applicant_name": "Smartphone",
+        "model_name": "Smartphone",
+        "product": "Smartphone",
+        "technology": "6VL - 15E 6 GHZ Very Low Power Device",
+        "lab_name": "UL Verification Services Inc.",
+        "country": "United States",
+        "status": "Original Equipment",
+        "product_signal": "strategic",
+        "sourceRecordHash": "fd02c3e6e6d778fcf0867ea50c13f397b31269d5dca312c07eb847d200109d26",
+        "sourceUrl": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=NZl9QhB0FVB7Y1NkxTBgDA%3D%3D&fcc_id=BCG-E9188A",
+        "lineageSourceDataVersion": "20260911_050025",
+        "lineageRuleVersion": "data-quality-lineage-v1.0.0",
+        "qualityTier": "confirmed",
+        "reviewRequired": 0,
+        "officialEvidenceAvailable": 1,
+        "evidence": {
+          "source": "FCC",
+          "cert_date": "2026-09-09",
+          "fcc_id": "BCG-E9188A",
+          "fcc_id_url": "https://apps.fcc.gov/tcb/GetTcb731Report.do?applicationId=NZl9QhB0FVB7Y1NkxTBgDA%3D%3D&fcc_id=BCG-E9188A",
+          "application_id": "NZl9QhB0FVB7Y1NkxTBgDA==",
+          "oet_exhibits_list_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=NZl9QhB0FVB7Y1NkxTBgDA%3D%3D&fcc_id=BCG-E9188A",
+          "attachment_link_type": "oet_exhibits",
+          "attachment_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=NZl9QhB0FVB7Y1NkxTBgDA%3D%3D&fcc_id=BCG-E9188A",
+          "natural_key": "",
+          "row_hash": "fd02c3e6e6d778fcf0867ea50c13f397b31269d5dca312c07eb847d200109d26",
+          "manufacturer_name": "Apple Inc.",
+          "manufacturer_country": "United States",
+          "application": "Smartphone",
+          "product": "Smartphone",
+          "equipment_class": "6VL - 15E 6 GHZ Very Low Power Device",
+          "cert_type": "Original Equipment",
+          "lab_name": "UL Verification Services Inc.",
+          "lab_country": "United States",
+          "year": "2026",
+          "month": "2026-09",
+          "high_value_flag": true,
+          "high_value_keyword": "Smartphone",
+          "high_value_priority": 2,
+          "high_value_source": "FCC",
+          "product_signal_type": "strategic",
+          "product_signal_label": "strategic",
+          "product_signal_category": "Mobile / Computing",
+          "product_signal_tier": 2,
+          "matched_rule_id": "FCC_MOBILE_COMPUTING_001",
+          "matched_keyword": "Smartphone",
+          "matched_field": "application",
+          "match_confidence": 0.82,
+          "product_signal_review_required": false,
+          "product_signal_reason": "Mobile, handheld, tablet, or notebook product signal.",
+          "source_record_hash": "fd02c3e6e6d778fcf0867ea50c13f397b31269d5dca312c07eb847d200109d26",
+          "source_url": "https://apps.fcc.gov/oetcf/eas/reports/ViewExhibitReport.cfm?mode=Exhibits&RequestTimeout=500&calledFromFrame=N&application_id=NZl9QhB0FVB7Y1NkxTBgDA%3D%3D&fcc_id=BCG-E9188A",
+          "lineage_source_data_version": "20260911_050025",
+          "lineage_rule_version": "data-quality-lineage-v1.0.0"
+        }
+      }
+    ],
+    "coverageComplete": true,
+    "populationType": "certification_records",
+    "populationDefinition": "public FCC/KC certification records under the explicit filters",
+    "recordGrain": "one exact current certification evidence row",
+    "totalMatchedCount": 1,
+    "returnedRowCount": 1,
+    "coverageRatio": 1,
+    "appliedEntityResolution": {
+      "applied": false,
+      "scope": null
+    },
+    "appliedPeriod": {
+      "from": null,
+      "to": null,
+      "basis": "not_applicable_exact_identifier",
+      "requestedFrom": null,
+      "requestedTo": null,
+      "applied": false
+    },
+    "sourceWatermark": {
+      "FCC": {
+        "from": "2020-01-01",
+        "to": "2026-11-02"
+      },
+      "KC": {
+        "from": "2019-10-23",
+        "to": "2026-11-02"
+      }
+    },
+    "metrics": {
+      "rowCount": 1,
+      "total": 1
+    },
+    "qualitySummary": {},
+    "warnings": []
+  }
+]

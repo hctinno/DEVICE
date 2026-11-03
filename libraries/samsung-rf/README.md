@@ -2,7 +2,7 @@
 
 삼성 스마트폰을 제어하는 시험 자동화 프로그램용 Python 라이브러리와 명령 카탈로그입니다. WLAN·Bluetooth·셀룰러·NFC·UWB를 한 스키마로 조회합니다.
 
-**현재 상태: v0.2.0, 정적 분석·모의 통신 검수. 실폰/계측기 검증 0건.** UWB S23 특정 빌드의 RF AT 9개와 NFC 16 PRBS 서비스 시작/종료 API를 추가했습니다. 셀룰러 TX 숫자 인수는 여전히 미확인입니다. [추가된 실제 명령·숫자표·코드 사용법](docs/RF_EXTENSION.md)을 확인하십시오.
+**현재 상태: v0.3.0, 정적 분석·모의 통신 검수. 실폰/계측기 검증 0건.** [Fold8·iPhone Duo 최신 FCC 분석](docs/FCC_LATEST_MODELS.md)에 PDF 56개·3,372페이지, 32개 시험 묶음·183개 선정 조건과 LTE CMW SCPI 계획 생성기를 추가했습니다. 최신 모델의 비공개 FTM/AT 시작·종료는 미검증입니다. 기존 UWB S23 특정 빌드 RF AT와 NFC 16 PRBS API는 [실제 명령·숫자표·사용법](docs/RF_EXTENSION.md)에 유지합니다.
 
 ## 바로 실행
 

@@ -14,6 +14,7 @@ for command in [
     [sys.executable,'-m','dgm_rf','demo','--log','docs/demo-log.json'],
     [sys.executable,'-m','examples.bluetooth'],
     [sys.executable,'-m','examples.uwb_nfc'],
+    [sys.executable,'-m','examples.fcc_plan'],
     [sys.executable,'-m','dgm_rf','render','wifitest_0_0_7','--value','9']
 ]:
     run=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,encoding='utf-8')
@@ -22,7 +23,7 @@ bad=['???','\ufffd','\u6fe1','\u6e72','\u907a','\u5a9b','\uf9e1']
 encoding_errors=[]
 checked=0
 for path in ROOT.rglob('*'):
-    if path.suffix not in {'.md','.json','.csv','.py','.toml'} or any(x in path.parts for x in ['build','dist','.venv','__pycache__']):
+    if path.suffix not in {'.md','.json','.csv','.py','.toml'} or any(x in path.parts for x in ['build','dist','.venv','__pycache__','.fcc-cache']):
         continue
     text=path.read_text(encoding='utf-8-sig')
     checked+=1
