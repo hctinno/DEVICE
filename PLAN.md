@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-11-04 후속 기획: [명령 라이브러리 이후 실행 계획](NEXT_MEASUREMENT_PLAN.md). 단말/현장 프로파일, 보고서 기반 recipe, 시험 엔진, 모션·측정·원본/성적서 연결의 5개 개발 묶음과 WLAN 6GHz HE160 1차 실증을 제안합니다. 신규 기능 구현 완료나 실제 장비 운전 승인을 의미하지 않습니다.
+
 2026-11-04 추가: [공개 프로토콜 개발 자료 계획](libraries/lab-control/DEVELOPER_ENABLEMENT_PLAN.md), [다른 에이전트 개발 시작](libraries/lab-control/AGENT_START_HERE.md). v0.3.0에 OdaEx/Cmu200Cw와 capability/오프라인 검사/모의 실행을 추가합니다. 전체 시험소나 실장비 준비 완료와 구별합니다.
 
 2026-11-04 추가: [HCT 2026 설비 확장 계획](libraries/lab-control/HCT_2026_PLAN.md). HCT 발행일을 확인한 12개 보고서의 150개 장비 그룹을 [목록](libraries/lab-control/docs/HCT_2026_EQUIPMENT.md)과 [실제 제어 API](libraries/lab-control/docs/HCT_CONTROL.md)에 연결합니다. 모션·2축 탐색·경로·계측 소프트웨어 검증과 현장 commissioning을 구분합니다.

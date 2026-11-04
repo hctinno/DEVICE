@@ -10,6 +10,8 @@
 
 ## 현재 상태
 
+후속 요청은 **추가로 필요한 일을 기획해 달라는 요청**입니다. [NEXT_MEASUREMENT_PLAN.md](NEXT_MEASUREMENT_PLAN.md)에 5개 개발 묶음·완료 기준·현장 의존성·조건부 작업량을 정리했습니다. 다음 구현 추천은 공통 프로파일/recipe schema와 WLAN 6GHz HE160의 모의 전체 실행입니다. 이번 기획에서 실제 구현·단말/장비 접속은 하지 않았습니다.
+
 2026-11-04 chipset WLAN 추가: Samsung RF v0.4.0의 [칩셋 터미널 제어](libraries/samsung-rf/docs/CHIPSET_TERMINAL_CONTROL.md)와 [숫자표](libraries/samsung-rf/docs/CHIPSET_COMMANDS.md)를 먼저 확인합니다. 공식 Qualcomm 2026 payload의 SHA-512 대조, ARM64 glibc runtime 확인, 94개 헤더 enum 사실과 `wl` 포함 29개 명령 레코드를 보존했습니다. `python -m dgm_rf chipset-demo`는 오프라인입니다. HE160=16/EHT20=30은 pinned header 사실이며 `--txMode` CLI mapping과 최신 Android TX 시작·종료는 미확인입니다. `wl` TX/RX packet engine 생성과 cleanup, 6GHz/160 driver-encoding 후보, 조회용 ADB argv 11개를 제공합니다. 실폰은 연결하지 않았습니다. vendor binary/header/PDF는 Git에 포함하지 않습니다.
 
 v0.4.0 검수: Samsung RF 전체 58 단위검사(신규 chipset 12개 포함), 7 CLI, wheel import/data 검사 통과. 칩셋 source 5개 로컬 hash 대조. 아래 46개는 이전 v0.3.0 검수 수치입니다. 설비 드라이버는 이번 변경에서 수정하지 않았으며 기존 99검사를 다시 실행한 결과로 세지 않습니다.
