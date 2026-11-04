@@ -73,7 +73,7 @@ def main():
             "Cmu200Cw": "통신 테스터 CW 발생 기능", "PhoneAt": "프로파일 기반 단말 AT 제어"
         }.get(descriptor["id"], "단말 제어 인터페이스")
         descriptor["manufacturers"] = sorted({row["manufacturer"] for row in descriptor.get("models", []) + descriptor.get("report_models", [])})
-    payload = {"schema_version": 1, "sdk_version": "0.3.0", "devices": descriptors, "hardware_templates": templates, "simulation_templates": simulation}
+    payload = {"schema_version": 1, "sdk_version": "0.4.0", "devices": descriptors, "hardware_templates": templates, "simulation_templates": simulation}
     target = ROOT / "dgm_control/data/catalog.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

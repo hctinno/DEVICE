@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-11-04 최신 요청: WLAN 실장비 실행 CLI·결과 저장·실패/취소 시 단말 로그 보존을 구현합니다. [실행 계약](libraries/device-control/HARDWARE_RUN_PLAN.md)과 [사용법](libraries/device-control/HARDWARE_RUN.md)을 따릅니다. SDK v0.4.0이며 기존 RF 명령과 현장 지원 범위는 변경하지 않습니다. 소프트웨어 구현과 실장비 commissioning을 구분합니다.
+
 2026-11-04 README 인계 개선: 다른 PC에서 README만으로 설치·가상시험·실장비 연결 준비를 수행하도록 절차와 미구현 표를 보강합니다. 완료 기준은 새 venv 설치, README 가상 예제/CLI 정상·오류 재현, hardware 예제 구문·프로필 오프라인 검사, 문서/명칭 검사와 main 반영입니다. `scripts/check_readme.py`로 재현하며 실제 장비 운전은 범위에 포함하지 않습니다.
 
 위 인계 검수 완료: 새 Windows/Python 3.12.6 venv 설치, 15개 실행 검사, Python 예제 3개 구문 검사 통과. 상세는 [README_VALIDATION.json](README_VALIDATION.json). 실장비와 다른 OS 실행은 미검증이며 전체 현장 구축률을 변경하지 않습니다.

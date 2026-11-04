@@ -106,6 +106,9 @@ def open_device(profile, *, log=None):
         from dgm_rf.core import SerialTransport
         phone_profile = _phone_profile(config, mode)
         io = ScriptedTransport() if mode == "simulation" else SerialTransport(config["transport"]["port"], config["transport"]["baudrate"])
+        if log is not None:
+            from .phone_logging import PhoneTraffic
+            io = PhoneTraffic(io, log)
         session = DeviceSession(descriptor, Controller(io, phone_profile), simulated=mode == "simulation")
         try:
             yield session

@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-04T06:31:19.821209+00:00",
+  "utc": "2026-11-04T12:51:00.920976+00:00",
   "passed": true,
   "physical_tests": 0,
   "phone_rf_tests": 0,
@@ -9,10 +9,10 @@
     "Phone firmware and RF ON/OFF",
     "FCC measurement/conformity"
   ],
-  "unit_tests": 58,
+  "unit_tests": 79,
   "failures": 0,
   "errors": 0,
-  "utf8_source_files": 33,
+  "utf8_source_files": 38,
   "wheels_built_installed": 3,
   "installed_cli_checks": [
     {
@@ -41,14 +41,14 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\simulation.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\simulation.json"
       ],
       "exit_code": 0
     },
@@ -59,7 +59,7 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\simulation.json"
       ],
       "exit_code": 2
     },
@@ -68,14 +68,14 @@
         "init",
         "Co3000",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\hardware.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\hardware.json"
       ],
       "exit_code": 2
     },
@@ -83,7 +83,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\success"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\success"
       ],
       "exit_code": 0
     },
@@ -91,7 +91,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\failure",
         "--inject-failure"
       ],
       "exit_code": 2
@@ -101,7 +101,7 @@
         "init",
         "AppleRF",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\apple.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\apple.json"
       ],
       "exit_code": 2
     },
@@ -115,7 +115,7 @@
       "args": [
         "virtual-run",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\virtual"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\virtual"
       ],
       "exit_code": 0
     },
@@ -123,18 +123,42 @@
       "args": [
         "virtual-run",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\virtual-failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\virtual-failure",
         "--fault",
         "analyzer-timeout"
       ],
       "exit_code": 2
+    },
+    {
+      "args": [
+        "hardware-check",
+        "--profiles-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\test-only-site",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\test-only-plan.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "hardware-run",
+        "--profiles-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\test-only-site",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\test-only-plan.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\hardware-cancelled",
+        "--cancel-file",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\cancel"
+      ],
+      "exit_code": 130
     }
   ],
   "installed_import_origin_verified": true,
   "three_device_demo": {
     "schema_version": 1,
-    "run_id": "db1752b4-1435-4dea-8f75-ccac0fe19e10",
-    "started_utc": "2026-11-04T06:32:14.536303+00:00",
+    "run_id": "bd09697e-41cb-4ab8-b537-0010d940ae8f",
+    "started_utc": "2026-11-04T12:52:50.375889+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "completed",
@@ -183,7 +207,7 @@
       {
         "value": 4.99,
         "unit": "V",
-        "utc": "2026-11-04T06:32:14.547342+00:00",
+        "utc": "2026-11-04T12:52:50.385887+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -196,7 +220,7 @@
       {
         "value": 0.8,
         "unit": "A",
-        "utc": "2026-11-04T06:32:14.547342+00:00",
+        "utc": "2026-11-04T12:52:50.385887+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -229,12 +253,12 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T06:32:15.559666+00:00"
+    "finished_utc": "2026-11-04T12:52:51.414743+00:00"
   },
   "injected_failure_demo": {
     "schema_version": 1,
-    "run_id": "fd5fd169-7ed0-4e31-8cfd-5c747168a8ba",
-    "started_utc": "2026-11-04T06:32:15.964417+00:00",
+    "run_id": "ba825d46-c384-46dc-99b4-05037eadc4c3",
+    "started_utc": "2026-11-04T12:52:51.954035+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "failed",
@@ -293,14 +317,14 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T06:32:16.980275+00:00"
+    "finished_utc": "2026-11-04T12:52:52.989282+00:00"
   },
   "vendor_cache_excluded": true,
   "integrated_virtual_run": {
-    "run_id": "6d92b76b-36f8-4de9-bf99-fe044d5919e6",
+    "run_id": "3f27e9b5-45d4-4961-a07e-6188fb08a276",
     "status": "completed",
     "simulated": true,
-    "result": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\virtual\\result.json",
+    "result": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-6g19et3k\\virtual\\result.json",
     "samples": 12,
     "peak": {
       "height_cm": 200.0,
@@ -350,5 +374,5 @@
     }
   },
   "integrated_failure_status": "failed",
-  "elapsed_seconds": 71.47
+  "elapsed_seconds": 127.5
 }

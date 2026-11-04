@@ -6,8 +6,10 @@ from .errors import error_details
 from .virtual_lab import VirtualLab, HardwareLab
 from .virtual_world import Scenario, Fault
 from .virtual_recipe import WlanScan, measure_wlan
+from .hardware_run import run_hardware, check_hardware, load_hardware_inputs, plan_from_dict
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 __all__ = ["devices", "describe", "profile_template", "doctor", "load_profile", "check_profile",
            "open_device", "DeviceSession", "ProfileError", "UnsupportedDevice", "SessionError", "error_details",
-           "VirtualLab", "HardwareLab", "Scenario", "Fault", "WlanScan", "measure_wlan"]
+           "VirtualLab", "HardwareLab", "Scenario", "Fault", "WlanScan", "measure_wlan",
+           "run_hardware", "check_hardware", "load_hardware_inputs", "plan_from_dict"]

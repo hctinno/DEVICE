@@ -8,6 +8,6 @@
 4. **검수**: 정상, 잘못된 인수/응답, timeout, 취소, 시작 실패, cleanup 실패, 재접속/이전 세션 사용 거절, wheel 설치를 확인합니다. 모의 peer는 가정과 지원 범위를 명시하고 미구현 명령에 자동 OK를 반환하지 않습니다.
 5. **현장 승격**: 실제 asset/build/firmware/options/배선/보정, 요청/실제 상태, raw 응답, RF/위치/출력 실측과 시험 담당 확인을 연결합니다. 문서 해시 또는 단위검사만으로 physical_verified를 바꾸지 않습니다.
 
-호환성: public function/프로파일 구조를 변경하면 schema/version을 올리고 migration 안내를 씁니다. 현재 SDK 0.3.0은 `dgm_lab 0.4.0`, `dgm_rf 0.5.0` 조합을 검수합니다. schema v1 구조는 유지하지만 단말 ID는 `PhoneAt`, helper는 `phone_serial`, 목록 scope는 `report-2026`으로 전환했습니다. 이전 단말 프로파일은 새 템플릿에 현장 값을 옮겨 검증합니다. backend 변경 시 격리 설치 및 기존 회귀 검사를 다시 수행합니다. `source_ids`는 공개 성적서 목록 밖의 구현 모델까지 원문으로 연결해야 합니다.
+호환성: public function/프로파일 구조를 변경하면 schema/version을 올리고 migration 안내를 씁니다. 현재 SDK 0.4.0은 `dgm_lab 0.4.0`, `dgm_rf 0.5.0` 조합을 검수합니다. schema v1 구조는 유지하지만 단말 ID는 `PhoneAt`, helper는 `phone_serial`, 목록 scope는 `report-2026`으로 전환했습니다. 이전 단말 프로파일은 새 템플릿에 현장 값을 옮겨 검증합니다. backend 변경 시 격리 설치 및 기존 회귀 검사를 다시 수행합니다. `source_ids`는 공개 성적서 목록 밖의 구현 모델까지 원문으로 연결해야 합니다.
 
 통합 peer를 추가할 때 `VIRTUAL_MODELS`, manifest renderer의 integrated_virtual_model, 인과관계·종료·미구현 명령 테스트와 VIRTUAL_LAB.md 지원표를 함께 갱신합니다. 단순 ACK fixture를 RF 물리 모형으로 소개하지 않습니다.

@@ -37,6 +37,7 @@ def main():
         shutil.copyfile(SDK / "scripts/install_sdk.py", bundle / "install.py")
         shutil.copyfile(SDK / "OFFLINE_INSTALL.md", bundle / "README.md")
         shutil.copyfile(SDK / "VIRTUAL_LAB.md", bundle / "VIRTUAL_LAB.md")
+        shutil.copyfile(SDK / "HARDWARE_RUN.md", bundle / "HARDWARE_RUN.md")
         # Exercise the bundle's real installer in an isolated virtual environment.
         environment = temp / "venv"
         run([sys.executable, "-m", "venv", str(environment)], temp)

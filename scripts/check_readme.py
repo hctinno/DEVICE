@@ -67,7 +67,7 @@ def main():
         example.write_text(examples["virtual"], encoding="utf-8")
 
         diagnosed = json.loads(cli("doctor"))
-        expected_versions = {"dgm-device-control": "0.3.0", "dgm-lab-control": "0.4.0",
+        expected_versions = {"dgm-device-control": "0.4.0", "dgm-lab-control": "0.4.0",
                              "dgm-rf-command-library": "0.5.0"}
         if diagnosed["packages"] != expected_versions or not diagnosed["supported_python"]:
             raise ValueError(f"Install README package versions first: {diagnosed['packages']}")

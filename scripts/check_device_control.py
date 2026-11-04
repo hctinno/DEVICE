@@ -62,7 +62,7 @@ def main():
                     if archive.testzip() is not None: raise RuntimeError("Damaged wheel")
                     if any(".manual-cache" in name or ".fcc-cache" in name for name in archive.namelist()):
                         raise RuntimeError("Vendor cache leaked into wheel")
-            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.3.0"], cwd=temp)
+            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.4.0"], cwd=temp)
             env = dict(os.environ, PYTHONPATH=str(installed), PYTHONIOENCODING="utf-8")
             base = [sys.executable, "-s", "-m", "dgm_control"]
             checks = []
@@ -75,7 +75,7 @@ def main():
             detail = json.loads(command("show", "Co3000").stdout)
             if not detail["sources"]: raise RuntimeError("Installed provenance missing")
             diagnosed = json.loads(command("doctor").stdout)
-            if diagnosed["packages"]["dgm-device-control"] != "0.3.0": raise RuntimeError("Installed SDK version mismatch")
+            if diagnosed["packages"]["dgm-device-control"] != "0.4.0": raise RuntimeError("Installed SDK version mismatch")
             profile = temp / "simulation.json"
             command("init", "OdaEx", "--mode", "simulation", "--output", str(profile))
             command("check", str(profile))
@@ -103,6 +103,25 @@ def main():
             failed_virtual = json.loads((temp / "virtual-failure/failure.json").read_text(encoding="utf-8"))
             if (temp / "virtual-failure/result.json").exists() or failed_virtual["final_simulated_state"]["phone"]["tx"]:
                 raise RuntimeError("Virtual failed run evidence/cleanup incorrect")
+            # Test-only complete profiles; pre-cancelled installed CLI must never connect.
+            from test_hardware_run import profiles_fixture, QUICK
+            from dataclasses import asdict
+            site = temp / "test-only-site"
+            site.mkdir()
+            for name, site_profile in profiles_fixture().items():
+                (site / f"{name}.json").write_text(json.dumps(site_profile), encoding="utf-8")
+            plan_file = temp / "test-only-plan.json"
+            plan_file.write_text(json.dumps(asdict(QUICK)), encoding="utf-8")
+            cancel_file = temp / "cancel"
+            cancel_file.touch()
+            preflight = json.loads(command("hardware-check", "--profiles-dir", str(site), "--plan", str(plan_file)).stdout)
+            if not preflight["valid"] or preflight["connection_attempted"]:
+                raise RuntimeError("Installed hardware preflight is not offline")
+            cancelled_run = json.loads(command("hardware-run", "--profiles-dir", str(site), "--plan", str(plan_file),
+                "--output-dir", str(temp / "hardware-cancelled"), "--cancel-file", str(cancel_file), expected=130).stdout)
+            if cancelled_run["status"] != "cancelled": raise RuntimeError("Installed cancellation was not preserved")
+            cancelled_report = json.loads((temp / "hardware-cancelled/failure.json").read_text(encoding="utf-8"))
+            if cancelled_report["connection_attempted"]: raise RuntimeError("Pre-cancelled hardware run tried I/O")
             # Verify actual imported modules originate in the isolated target directory.
             proof = run([sys.executable, "-s", "-c", "import dgm_control,dgm_lab,dgm_rf,json; print(json.dumps([dgm_control.__file__,dgm_lab.__file__,dgm_rf.__file__]))"], cwd=temp, env=env)
             if not all(Path(name).resolve().is_relative_to(installed.resolve()) for name in json.loads(proof.stdout)):

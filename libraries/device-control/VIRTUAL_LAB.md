@@ -1,6 +1,6 @@
 # DGM VirtualLab — 가상 시험환경
 
-장비 없이 자동화 코드를 개발하는 Python 환경입니다. **스마트폰 설정 → 송신 → RF 경로 → 위치 탐색 → 분석기·파워센서 측정 → TX OFF·정지**가 하나의 공유 상태에서 동작합니다. `dgm-device-control 0.3.0`에 포함됩니다. GUI·외부 서버 없이 로컬에서 실행합니다.
+장비 없이 자동화 코드를 개발하는 Python 환경입니다. **스마트폰 설정 → 송신 → RF 경로 → 위치 탐색 → 분석기·파워센서 측정 → TX OFF·정지**가 하나의 공유 상태에서 동작합니다. `dgm-device-control 0.4.0`에 포함됩니다. GUI·외부 서버 없이 로컬에서 실행합니다.
 
 ## 바로 실행
 
@@ -97,6 +97,8 @@ timeout·disconnect는 해당 transport를 사용할 수 없는 상태로 만듭
 channel_argument=17→6.035GHz, 49→6.195GHz 및 전원 의존성은 명시적 fixture 가정입니다. 실폰의 범용 채널표·배터리 모델·교정값이 아닙니다. 반사·다중경로·안테나 팩터·실제 OFDM·규제 검파·측정불확도·FCC limit을 구현하지 않습니다. 따라서 이 결과로 실제 RF 성능이나 적합성을 판정할 수 없습니다.
 
 ## 실물로 전환할 때
+
+v0.4.0에서는 [실장비 CLI와 지속 기록](HARDWARE_RUN.md)을 사용합니다. hardware-check로 오프라인 검사 후 hardware-run을 실행하면 부분 표본·단말 오류·취소 로그까지 저장합니다. 아래는 같은 provider API의 내부 연결 예시입니다.
 
 시험 함수 `measure_wlan(lab, plan)`는 그대로 두고 provider를 `HardwareLab`으로 바꿉니다. 각 실제 장비 프로파일은 `init ... --mode hardware`에서 생성한 뒤 현장 모델/주소/옵션/상한/배선에 맞춰 완성합니다. 단말은 정확한 모델·build·허용 명령·인수표를 갖춰야 합니다. hardware 프로파일을 받지 못하면 자동으로 가상 모드로 대체하지 않습니다.
 

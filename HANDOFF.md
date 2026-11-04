@@ -10,9 +10,13 @@
 
 ## 현재 상태
 
+2026-11-04 최신 구현: SDK v0.4.0의 [실장비 WLAN 실행/기록](libraries/device-control/HARDWARE_RUN.md). `hardware-check --profiles-dir private-site --plan private-site/wlan-plan.json`은 I/O 없는 검증, `hardware-run`은 명시적 출력 폴더와 현장 프로필로 실제 전원·TX·모션을 수행합니다. 입력 스냅샷·부분 표본·장비/단말 원문 통신·종료 후 native 단말 로그·식별·성공/실패 결과를 저장합니다. Ctrl+C/SIGTERM/취소 파일은 cleanup으로 연결하고, 기록 오류도 성공 처리하지 않습니다. phone-traffic.jsonl은 송신 전 attempted부터 fsync하며 로그는 AT 제어 통신 범위입니다. 강제 kill·전원 차단·디스크 쓰기 불능의 완전한 보존/정지는 보장하지 않습니다. 아래 README 인계/명칭 전환 수치는 이전 버전 기록입니다.
+
+검수: SDK 79개 + 설비 99개 + 단말 58개 = 236개 통과. 신규 21개는 hardware 경계에 가상 protocol peer를 주입한 검사이며 실제 장비 접속은 0건입니다. 최신 설치 CLI·배포·README 검수는 [SDK validation](libraries/device-control/docs/validation.json), [배포 validation](libraries/device-control/docs/distribution-validation.json), [README validation](README_VALIDATION.json)을 확인합니다. 단말 native 명령/숫자표와 설비 native 드라이버는 변경하지 않았습니다. 아직 전체 FCC recipe·교정·물리 인터록·현장 commissioning은 미완료입니다.
+
 2026-11-04 README 단독 인계 보강: [루트 README](README.md)에 Windows/Linux 설치, 기본/오류 가상시험, 결과 판독, TCP/VISA/serial 준비, 분석기 첫 연결 코드, 단말·설비별 현장 필드, HardwareLab 사전검사, recipe 고정 제한과 미구현 표를 정리했습니다. 새 Windows/Python 3.12.6 venv에서 3개 소스 패키지 설치와 `scripts/check_readme.py`의 15개 실행·Python 예제 3개 구문 검사가 통과했습니다. [검수 기록](README_VALIDATION.json). 실장비 코드는 실행하지 않았습니다. `.gitignore`에 private-site/와 runs/를 추가해 현장 주소·실행 로그가 일반 커밋에 포함되지 않도록 했습니다. 초기 검수 도구의 isolated Python 출력 인코딩 오류는 명시적 `-X utf8`로 수정하고 재검사했습니다. 이번 변경은 문서/인계 검사이며 기존 드라이버 215개 전체 검사를 다시 수행한 결과로 세지 않습니다.
 
-현재 명칭 정책: 일반 문서·CLI·공개 API·파일 경로는 장비 종류/제조사/모델/지원 기능 기준으로 표시합니다. 실제 명령 문자열과 원문 출처만 근거 영역에 그대로 보존합니다. SDK v0.3.0, LabControl v0.4.0, RF Command Library v0.5.0입니다. 설치 경로는 `libraries/phone-rf`, 단말 ID는 `PhoneAt`, 성적서 목록 scope는 `report-2026`, 단말 연결 helper는 `phone_serial`입니다. 기존 단말 프로파일은 새 템플릿을 생성한 뒤 검증된 현장 값을 옮깁니다. [지원표](SUPPORTED_EQUIPMENT.md)와 `scripts/check_public_naming.py`를 기준으로 검사합니다. 아래 버전·ZIP 해시는 과거 검수 기록입니다.
+현재 명칭 정책: 일반 문서·CLI·공개 API·파일 경로는 장비 종류/제조사/모델/지원 기능 기준으로 표시합니다. 실제 명령 문자열과 원문 출처만 근거 영역에 그대로 보존합니다. SDK v0.4.0, LabControl v0.4.0, RF Command Library v0.5.0입니다. 설치 경로는 `libraries/phone-rf`, 단말 ID는 `PhoneAt`, 성적서 목록 scope는 `report-2026`, 단말 연결 helper는 `phone_serial`입니다. 기존 단말 프로파일은 새 템플릿을 생성한 뒤 검증된 현장 값을 옮깁니다. [지원표](SUPPORTED_EQUIPMENT.md)와 `scripts/check_public_naming.py`를 기준으로 검사합니다. 아래 버전·ZIP 해시는 과거 검수 기록입니다.
 
 명칭 전환 검수: SDK 58 + 설비 99 + RF 58 = 215개 검사, SDK 격리 설치 CLI 14건, 설비 설치 CLI 8건, RF CLI 7건 통과. 원문 스냅샷 28개 해시를 확인했고 기존 숫자표 설명문의 원본은 별도 근거 파일과 기존 해시로 보존했습니다. 일반 문서 54개·장비 표시 필드 검사 통과. SDK v0.3.0 배포 ZIP 265298 bytes, SHA-256 `002c175b1d9a01b85ebe6b0010e0ecbc9c9ded0ccbbf580aa208226103f5ec85`; 새 venv 설치와 12점 가상시험을 확인했습니다. 실제 장비·원본 APK 재분석은 미실행입니다.
 

@@ -1,12 +1,14 @@
 # 구현 계약
 
+v0.4.0: [실장비 실행 계약](HARDWARE_RUN_PLAN.md), [운영 절차](HARDWARE_RUN.md). hardware_run.py는 입력 검사·실행 폴더·원자적 결과·즉시 JSONL 저장·신호/파일 취소를 담당합니다. phone_logging.py는 기존 단말 transport를 감싸 실제 교환 전후·오류·긴급 전송을 기록합니다. native Controller/명령 인수는 바꾸지 않고 종료 뒤 세션의 의미 로그도 저장합니다. 저장 오류는 상태를 실패로 만들되 cleanup 전송을 막지 않습니다. physical_verified와 physical_shutdown_verified는 false를 유지합니다.
+
 v0.2.0 추가: [가상 시험환경](VIRTUAL_LAB.md), [완료 기준](VIRTUAL_LAB_PLAN.md). `virtual_world.py`는 상태·결정론적 RF 계산·고장 규칙, `virtual_peers.py`는 검토된 native driver 명령의 엄격한 응답 peer, `virtual_lab.py`는 독점 연결과 provider, `virtual_recipe.py`는 provider에 독립적인 측정 절차·실행별 증거 저장을 담당합니다. 기존 native 드라이버는 수정하지 않습니다.
 
 `VirtualLab.open(id)`은 7종 한정 모델을 하나의 World에 연결합니다. `HardwareLab(profiles).open(id)`은 완성된 hardware 프로파일만 받으며 명시적으로 호출할 때 실제 I/O를 엽니다. 자동 fallback은 없습니다. 기존 독립 `open_device` API·profile schema v1은 그대로 유지합니다. simulation_available(기존 독립 3종)와 integrated_virtual_model(통합 7종)을 분리합니다.
 
 `measure_wlan`은 요청/채널 대응 사전 확인, TX 전 파워, H/V×높이×각도 순회, 측정 전후 위치 일치, 표본 최대 복귀, TX OFF 후 파워, 모든 cleanup 완료를 수행합니다. RF 발생기는 같은 World에서 독립 CW 시나리오로 사용할 수 있습니다. output folder는 새로 생성하고 원문 로그·부분 표본·획득 시점 모형 상태를 보존합니다. 성공 JSON은 모든 종료 후 작성합니다. 환경 내부 상태를 관측 ACK 또는 물리 RF 검증으로 표시하지 않습니다.
 
-`dgm_control` v0.3.0은 `dgm_lab==0.4.0`, `dgm_rf==0.5.0` 위의 얇은 공통 진입점입니다. 기존 wire protocol·숫자표를 복제하지 않습니다. `devices()`, `describe(id)`, `profile_template(id, mode)`, `check_profile(profile)`, `doctor()`, `open_device(profile)`를 제공합니다.
+`dgm_control` v0.4.0은 `dgm_lab==0.4.0`, `dgm_rf==0.5.0` 위의 얇은 공통 진입점입니다. 기존 wire protocol·숫자표를 복제하지 않습니다. `devices()`, `describe(id)`, `profile_template(id, mode)`, `check_profile(profile)`, `doctor()`, `open_device(profile)`를 제공합니다.
 
 프로파일 schema v1은 `schema_version`, `device_id`, `mode`, `config`를 포함합니다. mode는 `simulation` 또는 `hardware`를 명시하며 자동 전환하지 않습니다. 템플릿은 현장 기본값이 아닙니다. 불완전한 프로파일은 통신을 열기 전에 거절합니다. source 근거와 physical_verified는 별개 필드입니다.
 

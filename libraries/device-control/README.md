@@ -1,12 +1,14 @@
 # DGM DeviceControl
 
-**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.3.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
+**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.4.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
 
 [제조사·모델·장비 종류·지원 기능 표](../../SUPPORTED_EQUIPMENT.md)를 먼저 확인합니다. 단말 식별자는 `PhoneAt`, 설치 경로는 `libraries/phone-rf`입니다. 이전 버전의 단말 프로파일은 `python -m dgm_control init PhoneAt --output phone-site-new.json`으로 새 템플릿을 만든 뒤 검증된 현장 값을 옮기십시오. 기존 주소/허용 명령을 자동 승격하지 않습니다.
 
 **가상 시험환경:** [DGM VirtualLab 사용법](VIRTUAL_LAB.md). 스마트폰·분석기·파워센서·RF 발생기·전원·RF 경로·턴테이블/마스트 7종이 연결됩니다. WLAN 6GHz HE160의 12점 스캔, 표본 최대 복귀, 종료·오류를 실장비 없이 개발합니다. 합성 계측값이며 실제 RF/FCC 검증은 아닙니다.
 
 현재 설비 드라이버 16개와 OEM AT backend 1개를 공통 진입점으로 연결했습니다. QualcommMyftm/BroadcomWl은 참조 전용, AppleRF/NfcProtectedService는 이 SDK에서 직접 실행 차단입니다. 지원 설명 21개를 지원 스마트폰 21종으로 세지 않습니다. **실폰·실장비 검증 0건**입니다. [검수 결과](docs/validation.json), [구현 계약](IMPLEMENTATION.md), [스키마](dgm_control/data/profile.schema.json), [기계 판독 목록](dgm_control/data/catalog.json)을 함께 제공합니다.
+
+**실장비 실행·기록:** [hardware-check / hardware-run](HARDWARE_RUN.md). 6개 현장 프로필과 명시적 WLAN plan으로 실행하며, 부분 표본·AT 시도/응답·실패·취소·종료 로그를 실행별로 저장합니다. 실제 RF/모션 검증은 별도입니다.
 
 ## 1. 설치하고 장비 없이 확인
 

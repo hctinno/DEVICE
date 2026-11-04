@@ -2,7 +2,7 @@
 
 **다른 PC의 에이전트는 이 문서 순서대로 설치 → 가상 WLAN 시험 → 자동화 개발 → 실장비 프로필 작성 → 첫 연결을 진행합니다.** 공유 기준은 `main`입니다. 모든 명령은 복제한 저장소 루트에서 실행합니다.
 
-현재 버전: `dgm-device-control 0.3.0`, `dgm-lab-control 0.4.0`, `dgm-rf-command-library 0.5.0`. Python 3.11 이상, 검수 환경은 Windows / Python 3.12.6입니다. Linux/macOS 실행은 미검증입니다.
+현재 버전: `dgm-device-control 0.4.0`, `dgm-lab-control 0.4.0`, `dgm-rf-command-library 0.5.0`. Python 3.11 이상, 검수 환경은 Windows / Python 3.12.6입니다. Linux/macOS 실행은 미검증입니다.
 
 제조사 자료와 공개 근거를 연결한 **DGM 자체 SDK**이며 제조사 발행·인증 SDK가 아닙니다. **실장비 검증 0건**입니다. 목표는 RF·EMC 시험소 무인화이며, 현재 구현은 제어 라이브러리와 개발용 가상 시험환경입니다. 연결만으로 모든 FCC 시험을 완성하지는 않습니다.
 
@@ -36,7 +36,7 @@ python3 -m venv .venv
 
 기존 checkout은 로컬 변경을 보존한 뒤 `git switch main`, `git pull --ff-only origin main`을 실행하고 **3개 로컬 패키지 설치 명령을 다시 실행**합니다. 소스만 갱신하면 설치 패키지는 바뀌지 않습니다. PyPI에 배포됐다고 가정하고 패키지명만으로 설치하지 않습니다.
 
-오프라인 PC: 온라인 개발 PC에서 `python -m pip install "setuptools>=68" wheel` 후 `python -X utf8 scripts/package_device_control.py`로 만든 `libraries/device-control/dist/dgm-device-control-0.3.0-offline.zip`을 전달합니다. 압축 해제 폴더에서 `python -m venv .venv`, `.venv\Scripts\python install.py`를 실행합니다. ZIP은 Git에 없으며 기본 3개 wheel만 담습니다. VISA/serial 패키지·제조사 런타임은 별도 준비합니다. [상세 안내](libraries/device-control/OFFLINE_INSTALL.md)
+오프라인 PC: 온라인 개발 PC에서 `python -m pip install "setuptools>=68" wheel` 후 `python -X utf8 scripts/package_device_control.py`로 만든 `libraries/device-control/dist/dgm-device-control-0.4.0-offline.zip`을 전달합니다. 압축 해제 폴더에서 `python -m venv .venv`, `.venv\Scripts\python install.py`를 실행합니다. ZIP은 Git에 없으며 기본 3개 wheel만 담습니다. VISA/serial 패키지·제조사 런타임은 별도 준비합니다. [상세 안내](libraries/device-control/OFFLINE_INSTALL.md)
 
 ## 2. 가상 시험 실행과 결과 확인
 
@@ -208,7 +208,7 @@ AT 목록은 `.venv\Scripts\python -m dgm_rf --help`와 [숫자 인수표](libra
 
 ```python
 # readme-example: prepare-hardware
-from dgm_control import HardwareLab, load_profile, WlanScan, measure_wlan
+from dgm_control import check_hardware, load_profile, WlanScan
 from dgm_rf import WlanTxConfig
 
 names = ("OdaEx", "Co3000", "OspSwitch", "PhoneAt",
@@ -225,18 +225,25 @@ if set(values["tx"]) != tx_fields:
     raise ValueError("Supply every commissioned TX field")
 plan = WlanScan(**{**values, "tx": WlanTxConfig(**values["tx"])})
 plan.validate()
-site = HardwareLab(profiles)
-site.validate_wlan(plan)
+check_hardware(profiles, plan)
 print("Offline preflight passed; no hardware connection attempted")
-# Actual output and motion start only when the caller runs:
-# result = measure_wlan(site, plan)
+# Use hardware-run below for REAL execution with persistent evidence.
 ```
 
-`.venv\Scripts\python prepare_hardware.py`는 연결하지 않습니다. 현장 단독 동작·종료 검증 후, 위 마지막 `measure_wlan(site, plan)` 호출의 주석을 해제하면 실제 출력·이동·측정을 시작합니다. 기본 recipe는 MA1/DT1·ODA 전원·OSP `dut` 경로에 맞춰져 있으므로 다른 구성은 recipe도 수정해야 합니다.
+`.venv\Scripts\python prepare_hardware.py`는 연결하지 않습니다. 실제 출력·이동·측정과 기록 저장은 아래 hardware-run을 사용합니다. 기본 recipe는 MA1/DT1·ODA 전원·OSP `dut` 경로에 맞춰져 있으므로 다른 구성은 recipe도 수정해야 합니다.
 
 **현재 recipe의 코드 제한:** 중심주파수 120MHz–8.28GHz, 전압 0–5V, 전류 0–1A, 높이 100–400cm, 각도 0–360°, 위치 분해능 0.1cm/degree, 편파 H/V, 최대 500표본입니다. 분석기는 중심 ±120MHz, RBW/VBW 1MHz, 101점, 기준 레벨 10dBm, 감쇠 10dB, sweep 0.01초로 고정됩니다. 이는 범용 FCC 시험 조건이 아닙니다. 현장 요구가 다르면 프로필만 바꾸지 말고 `measure_wlan`/`WlanScan`을 수정·검증하십시오.
 
-현장 실행기에는 `HardwareLab(profiles, log=...)`의 장비 통신 로그, `on_sample`의 즉시 표본 저장, 정상 결과의 `phone_log`, 오류·취소 기록을 연결합니다. **`virtual-run` 자동 파일 저장은 가상시험 전용**입니다. 실장비 실행 CLI·완성된 현장 결과 저장기와 실패 시 단말 로그 지속 저장은 추가 구현 대상입니다. 단말 로그는 공통 transport log 콜백과 별도입니다.
+**SDK v0.4.0의 실장비 실행 CLI와 결과 저장기가 구현되어 있습니다.** 위 프로필과 전체 필드를 채운 wlan-plan.json으로 다음을 실행합니다. 첫 명령은 오프라인 검사, 두 번째는 실제 출력·송신·이동입니다.
+
+```powershell
+.venv\Scripts\python -m dgm_control hardware-check --profiles-dir private-site --plan private-site/wlan-plan.json
+.venv\Scripts\python -m dgm_control hardware-run --profiles-dir private-site --plan private-site/wlan-plan.json --output-dir runs/site-001 --cancel-file private-site/stop.request
+```
+
+Ctrl+C 또는 다른 터미널의 `New-Item -ItemType File private-site/stop.request`로 취소합니다. 다음 체크포인트에서 cleanup을 수행하며 진행 중인 통신을 즉시 끊지는 않습니다. exit 0=완료, 2=실패, 130=취소이고 취소와 종료 오류가 함께 있으면 2입니다. 기존 출력 폴더는 덮어쓰지 않습니다.
+
+`runs/site-001/`에 입력 프로필·조건, 부분 표본 `samples.jsonl`, 원문 `traffic.jsonl`, 스마트폰 시도/응답/오류 `phone-traffic.jsonl`, 종료 후 `phone-log.json`, `identity.json`, 최종 `result.json` 또는 `failure.json`을 저장합니다. JSONL은 줄마다 flush/fsync하며 실패·취소 시에도 이미 기록한 표본과 AT 로그를 보존합니다. 로그는 AT 제어 통신이며 Android logcat은 아닙니다. `run.json`은 시작 기록으로 running을 유지하므로 최종 파일이 없으면 결과 미확정입니다. 디스크 고장·강제 종료·전원 차단 시 최종 저장과 물리 정지는 보장하지 않습니다. [입력 JSON 형식·API·복구 기준](libraries/device-control/HARDWARE_RUN.md)
 
 `with open_device(...)`는 연결 수명만 관리합니다. 출력·TX·이동·RF 경로는 `with device.active(...):` 안에서 처리해야 종료 명령과 짝이 맞습니다. 통신 끊김 뒤 OFF·정지를 보장할 수 없으므로 불명 상태와 종료 오류를 남깁니다. 물리 인터록과 독립 정지는 현장 검증 대상입니다.
 
@@ -248,7 +255,7 @@ print("Offline preflight passed; no hardware connection attempted")
 | 가상시험 | 7종 공유 상태, WLAN 12점 스캔·최대 복귀·고장/종료 처리 | Bluetooth·셀룰러·NFC·UWB 통합 RF 모사, 나머지 장비 모사, 실제 파형·EVM·검파·교정 |
 | 단말 | AT 카탈로그 220개 및 출처 한정 실행 기능 | 최신 단말 공통 TX 지원 없음. 셀룰러 직접 TX 숫자·종료 쌍 미확보. UWB는 특정 모델/build 근거, NFC는 보호 서비스 조건 필요 |
 | 특수 backend | QualcommMyftm/BroadcomWl은 reference-only, AppleRF/NfcProtectedService는 공통 SDK에서 blocked | 최신 단말 권한·실행 경로·호환성 검증과 공통 실행기. 별도 명령 생성 자료는 실폰 실행 완료가 아님 |
-| 전체 시험소 | 프로토콜·가상 개발·명시적 실장비 연결 API | 현장 실행 CLI·실패 시 단말 로그 보존·교정/불확도/규격 판정·전체 FCC recipe·성적서 발행·물리 인터록·시료 취급·로봇·전체 무인 업무 |
+| 전체 시험소 | 제어 API·가상 개발·WLAN 실장비 CLI·실행별 결과/단말 오류 로그 저장 | 교정/불확도/규격 판정·전체 FCC recipe·성적서 발행·물리 인터록·시료 취급·로봇·전체 무인 업무 |
 
 지원 설명 21개는 지원 스마트폰 수가 아닙니다. [지원표](SUPPORTED_EQUIPMENT.md)의 조건부 항목·컨트롤러 구성품은 독립 제어 장비로 세지 않습니다. vendor PDF/binary·일부 연구 cache는 Git에 없지만 기본 설치·가상 실행에는 필요하지 않습니다. 실제 프로토콜 식별자·원문 URL은 근거 영역에 보존합니다.
 
@@ -262,9 +269,9 @@ print("Offline preflight passed; no hardware connection attempted")
 
 `check_readme.py`는 **설치된 패키지**로 README 가상 코드·CLI 정상/오류 실행·프로필 템플릿·예시 JSON을 검사합니다. 실장비 코드 블록은 구문만 검사하고 연결하지 않습니다. 다른 두 검사는 UTF-8·로컬 링크·일반 명칭을 검사합니다.
 
-2026-11-04 새 Windows venv에 소스 설치 후 **15개 실행 검사와 Python 예제 3개 구문 검사**가 통과했습니다. [실행별 검수 기록](README_VALIDATION.json). 실장비·VISA/serial 런타임·Linux/macOS 실행은 이번에 검사하지 않았습니다. 검수 명령은 `runs/readme-check-시각/validation.json`과 명령별 로그를 남깁니다.
+2026-11-04 Windows/Python 3.12.6에서 SDK v0.4.0 설치 후 **15개 README 실행 검사와 Python 예제 3개 구문 검사**를 재현합니다. [실행별 검수 기록](README_VALIDATION.json)의 passed와 버전으로 결과를 확인합니다. 별도 새 venv의 오프라인 설치·가상시험도 검증합니다. 실장비·VISA/serial 런타임·Linux/macOS 실행은 미검증입니다. 검수 명령은 `runs/readme-check-시각/validation.json`과 명령별 로그를 남깁니다.
 
-SDK/드라이버를 바꿨다면 개발 환경에 `setuptools>=68`, `wheel`을 설치한 뒤 `python -X utf8 scripts/check_device_control.py`, `python -X utf8 scripts/check_lab_control.py`, `python -X utf8 scripts/check_phone_rf.py`를 실행합니다. 이전 전체 검수는 215개 테스트이며 이번 결과는 실제 명령 출력과 검수 기록으로 확인합니다. 가상 검사 통과를 실측 검증으로 표시하지 않습니다.
+SDK/드라이버를 바꿨다면 개발 환경에 `setuptools>=68`, `wheel`을 설치한 뒤 `python -X utf8 scripts/check_device_control.py`, `python -X utf8 scripts/check_lab_control.py`, `python -X utf8 scripts/check_phone_rf.py`를 실행합니다. v0.4.0 검수는 SDK 79개 + 설비 99개 + 단말 58개 = **236개 검사 통과**이며 SDK 격리 설치 CLI 16건도 확인했습니다. [검수 범위](libraries/device-control/docs/VALIDATION.md). 가상 검사 통과를 실측 검증으로 표시하지 않습니다.
 
 ### 문제 해결
 

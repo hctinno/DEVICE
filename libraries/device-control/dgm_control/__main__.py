@@ -26,6 +26,13 @@ def main():
     virtual.add_argument("--scenario", help="JSON Scenario fields; synthetic model parameters only")
     virtual.add_argument("--fault", choices=["analyzer-timeout", "malformed", "stuck-motion", "phone-stop"], help="Inject a reproducible failure")
     actions.add_parser("virtual-info", help="Integrated virtual device models and limitations")
+    for name in ("hardware-check", "hardware-run"):
+        hardware = actions.add_parser(name, help="Offline WLAN preflight" if name == "hardware-check" else "REAL WLAN output and motion using explicit site profiles")
+        hardware.add_argument("--profiles-dir", required=True, help="Directory with six device-ID.json hardware profiles")
+        hardware.add_argument("--plan", required=True, help="Fully specified commissioned WLAN plan JSON")
+        if name == "hardware-run":
+            hardware.add_argument("--output-dir", required=True, help="New private run directory; never overwritten")
+            hardware.add_argument("--cancel-file", help="Stop at the next checkpoint when this file exists")
     args = parser.parse_args()
     try:
         exit_code = 0
@@ -58,12 +65,23 @@ def main():
                       "phone-stop": Fault("PhoneAt", "AT+WIFITEST=0,2,0,0")}
             scenario = Scenario(**load_profile(args.scenario)) if args.scenario else None
             output = run_virtual(args.output_dir, scenario=scenario, fault=faults.get(args.fault))
+        elif args.action in ("hardware-check", "hardware-run"):
+            import threading
+            from .hardware_run import load_hardware_inputs, check_hardware, run_hardware, cancellation_signals
+            profiles, plan = load_hardware_inputs(args.profiles_dir, args.plan)
+            if args.action == "hardware-check":
+                output = check_hardware(profiles, plan)
+            else:
+                event = threading.Event()
+                with cancellation_signals(event):
+                    output = run_hardware(profiles, plan, args.output_dir, cancelled=event, cancel_file=args.cancel_file)
+                exit_code = {"completed": 0, "failed": 2, "cancelled": 130}[output["status"]]
         else:
             from .demo import run_demo
             output = run_demo(args.output_dir, inject_failure=args.inject_failure)
         print(json.dumps(output, ensure_ascii=False, indent=2))
         return exit_code
-    except Exception as exc:
+    except (Exception, BaseExceptionGroup) as exc:
         parser.exit(2, json.dumps(error_details(exc), ensure_ascii=False) + "\n")
 
 
