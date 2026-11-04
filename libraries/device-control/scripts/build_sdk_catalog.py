@@ -60,7 +60,11 @@ def main():
     }.items():
         simulation[device_id] = {"schema_version": 1, "device_id": device_id, "mode": "simulation",
             "config": {"driver": device_id, "parameters": parameters, "transport": {"kind": "simulation"}, "notes": "SIMULATION ONLY. Values are fixture data, not a site configuration."}}
-    payload = {"schema_version": 1, "sdk_version": "0.1.0", "devices": descriptors, "hardware_templates": templates, "simulation_templates": simulation}
+    virtual_models = {"SamsungAt": "6GHz HE20/40/80/160 fixture", "SpectrumAnalyzer": "N9030B", "UsbPowerSensor": "NRP18S",
+                      "SignalGenerator": "SMW200A", "OdaEx": "EX60-40", "OspSwitch": "OSP120 + OSP-B102", "Co3000": "MA1 + DT1"}
+    for descriptor in descriptors:
+        descriptor["integrated_virtual_model"] = virtual_models.get(descriptor["id"])
+    payload = {"schema_version": 1, "sdk_version": "0.2.0", "devices": descriptors, "hardware_templates": templates, "simulation_templates": simulation}
     target = ROOT / "dgm_control/data/catalog.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

@@ -1,13 +1,14 @@
 {
-  "file": "dgm-device-control-0.1.0-offline.zip",
-  "bytes": 221818,
-  "sha256": "e344a2a1f8b19ed874911a458693b1c88cbbc420bf11b1700cfc83fdf8247da9",
+  "file": "dgm-device-control-0.2.0-offline.zip",
+  "bytes": 239160,
+  "sha256": "54cbe624d6adf4f74ffa036e6fdeecf2db4ef4e67d97a4b6d9fa148d4ad19bac",
   "wheels": [
-    "dgm_device_control-0.1.0-py3-none-any.whl",
+    "dgm_device_control-0.2.0-py3-none-any.whl",
     "dgm_lab_control-0.3.0-py3-none-any.whl",
     "dgm_rf_command_library-0.4.0-py3-none-any.whl"
   ],
   "offline_installer_tested": true,
   "fresh_venv_demo_passed": true,
+  "fresh_venv_virtual_lab_passed": true,
   "hardware_tests": 0
 }

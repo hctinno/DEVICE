@@ -5,7 +5,7 @@ VM TEST
 
 기존 RF·EMC 시험소를 무인화하기 위한 설계와 클라우드 개발 인계 자료입니다.
 
-**현재 우선순위: [DGM DeviceControl 공통 제어 SDK](libraries/device-control/README.md).** 누구나 같은 설치·지원 조회·프로파일·연결·시작/종료 방식으로 기존 라이브러리를 사용할 수 있도록 정식 API 계약을 제공합니다. 설비 driver 16개+Samsung AT backend, profile 17개, 전원/모션/폰 3종 모의 실행. 제조사 발행 SDK나 실장비 검증 완료라는 뜻은 아닙니다. [오프라인 배포](libraries/device-control/OFFLINE_INSTALL.md)와 [검수](libraries/device-control/docs/validation.json)를 확인합니다.
+**현재 개발 환경: [DGM VirtualLab](libraries/device-control/VIRTUAL_LAB.md), SDK v0.2.0.** 스마트폰·계측기·전원·RF 경로·턴테이블/마스트 7종을 연결해 WLAN 6GHz HE160 자동 스캔과 오류·종료 동작을 장비 없이 개발합니다. [공통 제어 SDK](libraries/device-control/README.md)는 설비 driver 16개+Samsung AT backend, hardware profile 17개도 제공합니다. 제조사 발행 SDK나 실장비 검증 완료라는 뜻은 아닙니다. [오프라인 배포](libraries/device-control/OFFLINE_INSTALL.md)와 [검수](libraries/device-control/docs/validation.json)를 확인합니다.
 
 규격·시험방법·장비·시료·실측·로우데이터·판정·성적서·인증 업무와 물리 자동화를 전체 목표로 합니다. 전체 시스템은 설계 단계이며, 2026-11-04 삼성 DUT RF 명령 조사와 Python 설비 제어 라이브러리를 추가했습니다. AI 실행, 실장비 연결과 현장 검증은 미착수입니다.
 

@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+최신 사용자 요청(2026-11-04): **가상 시험환경에서 자동화 프로그램을 개발한 뒤 실제 장비와 연동**합니다. SDK v0.2.0의 [가상 시험환경 계약](libraries/device-control/VIRTUAL_LAB_PLAN.md)에 따라 7종 장비와 WLAN RF 상태를 연결합니다. [사용법과 미구현 범위](libraries/device-control/VIRTUAL_LAB.md), 최신 [소프트웨어 검수](libraries/device-control/docs/validation.json)를 기준으로 판단합니다. 실물 시험소 구축 진척과 구별합니다.
+
 현재 사용자 우선순위(2026-11-04): 개별 시험 자동화보다 먼저 **누구나 직접 사용하는 표준 제어 라이브러리**를 구축합니다. [DGM DeviceControl 계획](libraries/device-control/PLAN.md)과 [공통 API](libraries/device-control/README.md)에 설치·프로파일·지원/출처·연결·수명주기·모의 실행·검수를 묶습니다. 아래 실증/시험 엔진 기획은 이후 단계입니다.
 
 2026-11-04 후속 기획: [명령 라이브러리 이후 실행 계획](NEXT_MEASUREMENT_PLAN.md). 단말/현장 프로파일, 보고서 기반 recipe, 시험 엔진, 모션·측정·원본/성적서 연결의 5개 개발 묶음과 WLAN 6GHz HE160 1차 실증을 제안합니다. 신규 기능 구현 완료나 실제 장비 운전 승인을 의미하지 않습니다.

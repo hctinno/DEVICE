@@ -21,6 +21,11 @@ def main():
     demo = actions.add_parser("demo", help="Hardware-free power + motion + smartphone demo")
     demo.add_argument("--output-dir", required=True)
     demo.add_argument("--inject-failure", action="store_true")
+    virtual = actions.add_parser("virtual-run", help="Coupled virtual WLAN lab; never opens hardware")
+    virtual.add_argument("--output-dir", required=True)
+    virtual.add_argument("--scenario", help="JSON Scenario fields; synthetic model parameters only")
+    virtual.add_argument("--fault", choices=["analyzer-timeout", "malformed", "stuck-motion", "phone-stop"], help="Inject a reproducible failure")
+    actions.add_parser("virtual-info", help="Integrated virtual device models and limitations")
     args = parser.parse_args()
     try:
         exit_code = 0
@@ -39,6 +44,20 @@ def main():
         elif args.action == "check":
             output = check_profile(load_profile(args.profile))
             exit_code = 0 if output["valid"] else 2
+        elif args.action == "virtual-info":
+            from .virtual_lab import VIRTUAL_MODELS
+            output = {"models": VIRTUAL_MODELS, "model": "dgm-behavioral-rf-v1", "simulated": True,
+                      "physical_verified": False, "radios": ["WLAN 6GHz HE20/40/80/160"],
+                      "not_implemented": ["Bluetooth", "cellular", "NFC", "UWB", "waveform physics", "FCC conformity"]}
+        elif args.action == "virtual-run":
+            from .virtual_recipe import run_virtual
+            from .virtual_world import Scenario, Fault
+            faults = {"analyzer-timeout": Fault("SpectrumAnalyzer", "TRAC:DATA? TRACE1"),
+                      "malformed": Fault("UsbPowerSensor", "FETC?", "malformed", 2),
+                      "stuck-motion": Fault("Co3000", "GO", "stuck"),
+                      "phone-stop": Fault("SamsungAt", "AT+WIFITEST=0,2,0,0")}
+            scenario = Scenario(**load_profile(args.scenario)) if args.scenario else None
+            output = run_virtual(args.output_dir, scenario=scenario, fault=faults.get(args.fault))
         else:
             from .demo import run_demo
             output = run_demo(args.output_dir, inject_failure=args.inject_failure)

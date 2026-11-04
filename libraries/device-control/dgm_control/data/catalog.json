@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "sdk_version": "0.1.0",
+  "sdk_version": "0.2.0",
   "devices": [
     {
       "profile": "spectrum",
@@ -252,7 +252,8 @@
           "status": "implemented_uncommissioned"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": "N9030B"
     },
     {
       "profile": "receiver",
@@ -395,7 +396,8 @@
           "status": "implemented_uncommissioned"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "profile": "rf-source",
@@ -620,7 +622,8 @@
           "status": "implemented_uncommissioned"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": "SMW200A"
     },
     {
       "profile": "power-supply",
@@ -766,7 +769,8 @@
           "status": "implemented_uncommissioned"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "profile": "power-meter",
@@ -842,7 +846,8 @@
           "status": "implemented_uncommissioned"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "profile": "usb-sensor",
@@ -970,7 +975,8 @@
           "status": "implemented_uncommissioned"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": "NRP18S"
     },
     {
       "profile": "vna",
@@ -1101,7 +1107,8 @@
           "status": "implemented_uncommissioned"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "profile": "cmw-lte",
@@ -1181,7 +1188,8 @@
           "status": "conditional"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "profile": "thermotron",
@@ -1254,7 +1262,8 @@
           "status": "conditional"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "profile": "espec",
@@ -1335,7 +1344,8 @@
           "status": "conditional"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "profile": "hp437b",
@@ -1410,7 +1420,8 @@
           "status": "implemented_uncommissioned"
         }
       ],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "profile": "co3000",
@@ -1523,7 +1534,8 @@
         }
       ],
       "models": [],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": "MA1 + DT1"
     },
     {
       "profile": "osp",
@@ -1600,7 +1612,8 @@
         }
       ],
       "models": [],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": "OSP120 + OSP-B102"
     },
     {
       "profile": "epm",
@@ -1670,7 +1683,8 @@
         }
       ],
       "models": [],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "profile": "oda-ex",
@@ -1754,7 +1768,8 @@
         }
       ],
       "models": [],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": "EX60-40"
     },
     {
       "profile": "cmu200-cw",
@@ -1833,7 +1848,8 @@
         }
       ],
       "models": [],
-      "sdk_is_manufacturer_endorsed": false
+      "sdk_is_manufacturer_endorsed": false,
+      "integrated_virtual_model": null
     },
     {
       "id": "SamsungAt",
@@ -1869,7 +1885,8 @@
         "NFC protected-service transport",
         "Qualcomm/Broadcom shell execution",
         "cellular TX without verified commands"
-      ]
+      ],
+      "integrated_virtual_model": "6GHz HE20/40/80/160 fixture"
     },
     {
       "id": "QualcommMyftm",
@@ -1902,7 +1919,8 @@
       ],
       "excludes": [
         "live control"
-      ]
+      ],
+      "integrated_virtual_model": null
     },
     {
       "id": "BroadcomWl",
@@ -1952,7 +1970,8 @@
       ],
       "excludes": [
         "live control"
-      ]
+      ],
+      "integrated_virtual_model": null
     },
     {
       "id": "AppleRF",
@@ -1972,7 +1991,8 @@
       ],
       "excludes": [
         "live control"
-      ]
+      ],
+      "integrated_virtual_model": null
     },
     {
       "id": "NfcProtectedService",
@@ -1992,7 +2012,8 @@
       ],
       "excludes": [
         "live control"
-      ]
+      ],
+      "integrated_virtual_model": null
     }
   ],
   "hardware_templates": {

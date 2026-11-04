@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-04T05:27:59.608152+00:00",
+  "utc": "2026-11-04T06:00:56.638031+00:00",
   "passed": true,
   "physical_tests": 0,
   "phone_rf_tests": 0,
@@ -9,10 +9,10 @@
     "Phone firmware and RF ON/OFF",
     "FCC measurement/conformity"
   ],
-  "unit_tests": 33,
+  "unit_tests": 58,
   "failures": 0,
   "errors": 0,
-  "utf8_source_files": 21,
+  "utf8_source_files": 30,
   "wheels_built_installed": 3,
   "installed_cli_checks": [
     {
@@ -41,14 +41,14 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\simulation.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\simulation.json"
       ],
       "exit_code": 0
     },
@@ -59,7 +59,7 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\simulation.json"
       ],
       "exit_code": 2
     },
@@ -68,14 +68,14 @@
         "init",
         "Co3000",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\hardware.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\hardware.json"
       ],
       "exit_code": 2
     },
@@ -83,7 +83,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\success"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\success"
       ],
       "exit_code": 0
     },
@@ -91,7 +91,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\failure",
         "--inject-failure"
       ],
       "exit_code": 2
@@ -101,7 +101,31 @@
         "init",
         "AppleRF",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\apple.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\apple.json"
+      ],
+      "exit_code": 2
+    },
+    {
+      "args": [
+        "virtual-info"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "virtual-run",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\virtual"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "virtual-run",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\virtual-failure",
+        "--fault",
+        "analyzer-timeout"
       ],
       "exit_code": 2
     }
@@ -109,8 +133,8 @@
   "installed_import_origin_verified": true,
   "three_device_demo": {
     "schema_version": 1,
-    "run_id": "a43383be-fea6-4f1b-b321-7fa9e0d26c46",
-    "started_utc": "2026-11-04T05:28:43.537778+00:00",
+    "run_id": "31933a5f-a86b-4cc3-8671-c9a1abfda841",
+    "started_utc": "2026-11-04T06:01:47.676022+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "completed",
@@ -159,7 +183,7 @@
       {
         "value": 4.99,
         "unit": "V",
-        "utc": "2026-11-04T05:28:43.564289+00:00",
+        "utc": "2026-11-04T06:01:47.683530+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -172,7 +196,7 @@
       {
         "value": 0.8,
         "unit": "A",
-        "utc": "2026-11-04T05:28:43.564289+00:00",
+        "utc": "2026-11-04T06:01:47.683530+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -205,12 +229,12 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T05:28:44.591669+00:00"
+    "finished_utc": "2026-11-04T06:01:48.690766+00:00"
   },
   "injected_failure_demo": {
     "schema_version": 1,
-    "run_id": "0c639bf4-705f-4e7e-81d8-c13501464638",
-    "started_utc": "2026-11-04T05:28:44.968666+00:00",
+    "run_id": "85d5e1ba-7e36-4ba7-bb38-9fd03db9edba",
+    "started_utc": "2026-11-04T06:01:49.070576+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "failed",
@@ -269,8 +293,62 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T05:28:46.015350+00:00"
+    "finished_utc": "2026-11-04T06:01:50.104436+00:00"
   },
   "vendor_cache_excluded": true,
-  "elapsed_seconds": 47.27
+  "integrated_virtual_run": {
+    "run_id": "8da33084-9eee-48ca-ba4c-4d2328065e35",
+    "status": "completed",
+    "simulated": true,
+    "result": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-05a9jk13\\virtual\\result.json",
+    "samples": 12,
+    "peak": {
+      "height_cm": 200.0,
+      "angle_deg": 90.0,
+      "polarization": "V",
+      "power_dbm": -19.999999956570548
+    },
+    "final_simulated_state": {
+      "simulated": true,
+      "physical_verified": false,
+      "revision": 62,
+      "phone": {
+        "test_mode": false,
+        "tx": false,
+        "settings": {
+          "band": "3",
+          "channel": "17",
+          "antenna": "1",
+          "rate": "15",
+          "gi": "5",
+          "burst": "1000",
+          "payload": "1000",
+          "bandwidth": "9",
+          "encoding": "1",
+          "power": "0.0"
+        }
+      },
+      "supply": {
+        "output": false,
+        "voltage": 5.0,
+        "current": 1.0
+      },
+      "generator": {
+        "output": false,
+        "frequency_hz": 6035000000.0,
+        "power_dbm": -20.0
+      },
+      "motion": {
+        "positions": [
+          200.0,
+          90.0
+        ],
+        "polarization": "PV",
+        "moving": false
+      },
+      "route": "isolated"
+    }
+  },
+  "integrated_failure_status": "failed",
+  "elapsed_seconds": 67.64
 }

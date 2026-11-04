@@ -36,6 +36,7 @@ def main():
         if len(list(wheels.glob("*.whl"))) != 3: raise RuntimeError("Expected three wheels")
         shutil.copyfile(SDK / "scripts/install_sdk.py", bundle / "install.py")
         shutil.copyfile(SDK / "OFFLINE_INSTALL.md", bundle / "README.md")
+        shutil.copyfile(SDK / "VIRTUAL_LAB.md", bundle / "VIRTUAL_LAB.md")
         # Exercise the bundle's real installer in an isolated virtual environment.
         environment = temp / "venv"
         run([sys.executable, "-m", "venv", str(environment)], temp)
@@ -47,6 +48,9 @@ def main():
         result = json.loads(run([str(python), "-m", "dgm_control", "demo", "--output-dir", str(temp / "demo")], temp, clean_env))
         if not result["simulated"] or not all(result["fixture_cleanup"].values()):
             raise RuntimeError("Offline bundle demo failed")
+        virtual = json.loads(run([str(python), "-m", "dgm_control", "virtual-run", "--output-dir", str(temp / "virtual")], temp, clean_env))
+        if virtual["samples"] != 12 or virtual["final_simulated_state"]["phone"]["tx"]:
+            raise RuntimeError("Offline virtual lab failed")
         version = tomllib.loads((SDK / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
         archive = target / f"dgm-device-control-{version}-offline.zip"
         with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as output:
@@ -56,7 +60,7 @@ def main():
             if check.testzip() is not None: raise RuntimeError("ZIP integrity check failed")
         report = {"file": archive.name, "bytes": archive.stat().st_size, "sha256": hashlib.sha256(archive.read_bytes()).hexdigest(),
                   "wheels": [path.name for path in sorted(wheels.glob("*.whl"))], "offline_installer_tested": True,
-                  "fresh_venv_demo_passed": True, "hardware_tests": 0}
+                  "fresh_venv_demo_passed": True, "fresh_venv_virtual_lab_passed": True, "hardware_tests": 0}
         (target / "manifest.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         (SDK / "docs/distribution-validation.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(report))

@@ -13,3 +13,4 @@ libraries/samsung-rf/demo-log.json
 .manual-cache/
 site-*.json
 libraries/lab-control/runs/
+libraries/device-control/runs/

@@ -60,7 +60,7 @@ def main():
                     if archive.testzip() is not None: raise RuntimeError("Damaged wheel")
                     if any(".manual-cache" in name or ".fcc-cache" in name for name in archive.namelist()):
                         raise RuntimeError("Vendor cache leaked into wheel")
-            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.1.0"], cwd=temp)
+            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.2.0"], cwd=temp)
             env = dict(os.environ, PYTHONPATH=str(installed), PYTHONIOENCODING="utf-8")
             base = [sys.executable, "-s", "-m", "dgm_control"]
             checks = []
@@ -73,7 +73,7 @@ def main():
             detail = json.loads(command("show", "Co3000").stdout)
             if not detail["sources"]: raise RuntimeError("Installed provenance missing")
             diagnosed = json.loads(command("doctor").stdout)
-            if diagnosed["packages"]["dgm-device-control"] != "0.1.0": raise RuntimeError("Installed SDK version mismatch")
+            if diagnosed["packages"]["dgm-device-control"] != "0.2.0": raise RuntimeError("Installed SDK version mismatch")
             profile = temp / "simulation.json"
             command("init", "OdaEx", "--mode", "simulation", "--output", str(profile))
             command("check", str(profile))
@@ -92,12 +92,22 @@ def main():
             if (failed / "result.json").exists() or not all(failure["fixture_cleanup"].values()): raise RuntimeError("Installed failure cleanup invalid")
             command("init", "AppleRF", "--output", str(temp / "apple.json"), expected=2)
             if (temp / "apple.json").exists(): raise RuntimeError("Blocked backend wrote a profile")
+            virtual_info = json.loads(command("virtual-info").stdout)
+            if len(virtual_info["models"]) != 7: raise RuntimeError("Virtual model manifest missing")
+            virtual = json.loads(command("virtual-run", "--output-dir", str(temp / "virtual")).stdout)
+            if virtual["samples"] != 12 or virtual["peak"]["angle_deg"] != 90 or virtual["peak"]["height_cm"] != 200 or virtual["peak"]["polarization"] != "V":
+                raise RuntimeError("Installed virtual scan peak disagrees with known fixture")
+            command("virtual-run", "--output-dir", str(temp / "virtual-failure"), "--fault", "analyzer-timeout", expected=2)
+            failed_virtual = json.loads((temp / "virtual-failure/failure.json").read_text(encoding="utf-8"))
+            if (temp / "virtual-failure/result.json").exists() or failed_virtual["final_simulated_state"]["phone"]["tx"]:
+                raise RuntimeError("Virtual failed run evidence/cleanup incorrect")
             # Verify actual imported modules originate in the isolated target directory.
             proof = run([sys.executable, "-s", "-c", "import dgm_control,dgm_lab,dgm_rf,json; print(json.dumps([dgm_control.__file__,dgm_lab.__file__,dgm_rf.__file__]))"], cwd=temp, env=env)
             if not all(Path(name).resolve().is_relative_to(installed.resolve()) for name in json.loads(proof.stdout)):
                 raise RuntimeError("Imports escaped isolated installation")
             report.update(wheels_built_installed=3, installed_cli_checks=checks, installed_import_origin_verified=True,
-                          three_device_demo=passed, injected_failure_demo=failure, vendor_cache_excluded=True)
+                          three_device_demo=passed, injected_failure_demo=failure, vendor_cache_excluded=True,
+                          integrated_virtual_run=virtual, integrated_failure_status=failed_virtual["status"])
         report["passed"] = True
     except BaseException as exc:
         report["error"] = f"{type(exc).__name__}: {exc}"
