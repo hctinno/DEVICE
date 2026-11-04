@@ -28,7 +28,7 @@ python -m dgm_control virtual-run --output-dir virtual-failed-001 --fault analyz
 
 위 모델 이름은 peer가 흉내 내는 **한정 명령 방언**을 뜻합니다. 모델 전체 기능·모든 설치 옵션을 재현한다는 뜻이 아닙니다. 기존 `open_device(profile)`의 독립 simulator 3개는 유지합니다. 서로 연결된 시험은 반드시 **같은 `VirtualLab` 인스턴스의 `open()`**으로 연결합니다. `describe(id).integrated_virtual_model`과 `virtual-info`에서 별도로 확인합니다.
 
-Bluetooth·셀룰러·NFC·UWB 송수신, 콜박스·VNA·EMI 수신기·온도 챔버의 통합 모사는 아직 없습니다. 기존 실장비 제어 드라이버 목록과 이 7종 통합 지원 목록을 혼동하지 않습니다. iPhone·최신 갤럭시의 OEM 시험 펌웨어/명령 확보 여부도 바뀌지 않습니다.
+SDK 0.5.0의 Bluetooth·셀룰러·NFC·UWB 가상시험은 별도 [radio-run](MULTIRADIO.md)으로 제공합니다. source/분석기 합성 trace와 LTE 콜박스 상태를 연결하며 이 WLAN 7종 모션 recipe와는 별도입니다. VNA·EMI 수신기·온도 챔버의 통합 모사는 없습니다. 실제 파형·최신 단말 공통 명령 지원을 뜻하지 않습니다.
 
 ## 자동화 프로그램 작성
 

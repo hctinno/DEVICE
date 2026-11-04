@@ -1,12 +1,14 @@
 # DGM DeviceControl
 
-**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.4.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
+**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.5.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
+
+Bluetooth·셀룰러·NFC·UWB는 [다중 무선 실행 안내](MULTIRADIO.md)의 `radio-init` → `radio-check` → `radio-run`을 사용합니다. 네 기술의 가상 source/분석기 측정과 조건부 실장비 경로, 부분 결과·원문 제어·실패/취소 로그를 제공합니다. 전체 FCC 시험·미확인 명령·실물 검증은 포함하지 않습니다.
 
 [제조사·모델·장비 종류·지원 기능 표](../../SUPPORTED_EQUIPMENT.md)를 먼저 확인합니다. 단말 식별자는 `PhoneAt`, 설치 경로는 `libraries/phone-rf`입니다. 이전 버전의 단말 프로파일은 `python -m dgm_control init PhoneAt --output phone-site-new.json`으로 새 템플릿을 만든 뒤 검증된 현장 값을 옮기십시오. 기존 주소/허용 명령을 자동 승격하지 않습니다.
 
 **가상 시험환경:** [DGM VirtualLab 사용법](VIRTUAL_LAB.md). 스마트폰·분석기·파워센서·RF 발생기·전원·RF 경로·턴테이블/마스트 7종이 연결됩니다. WLAN 6GHz HE160의 12점 스캔, 표본 최대 복귀, 종료·오류를 실장비 없이 개발합니다. 합성 계측값이며 실제 RF/FCC 검증은 아닙니다.
 
-현재 설비 드라이버 16개와 OEM AT backend 1개를 공통 진입점으로 연결했습니다. QualcommMyftm/BroadcomWl은 참조 전용, AppleRF/NfcProtectedService는 이 SDK에서 직접 실행 차단입니다. 지원 설명 21개를 지원 스마트폰 21종으로 세지 않습니다. **실폰·실장비 검증 0건**입니다. [검수 결과](docs/validation.json), [구현 계약](IMPLEMENTATION.md), [스키마](dgm_control/data/profile.schema.json), [기계 판독 목록](dgm_control/data/catalog.json)을 함께 제공합니다.
+현재 설비 드라이버 16개와 OEM AT backend 1개를 공통 진입점으로 연결했습니다. QualcommMyftm/BroadcomWl은 참조 전용, AppleRF와 일반 NfcProtectedService open_device는 실행 차단입니다. NFC 전용 radio-run은 별도 검증 조건을 충족해야 실행합니다. 지원 설명 21개를 지원 스마트폰 21종으로 세지 않습니다. **실폰·실장비 검증 0건**입니다. [검수 결과](docs/validation.json), [구현 계약](IMPLEMENTATION.md), [스키마](dgm_control/data/profile.schema.json), [기계 판독 목록](dgm_control/data/catalog.json)을 함께 제공합니다.
 
 **실장비 실행·기록:** [hardware-check / hardware-run](HARDWARE_RUN.md). 6개 현장 프로필과 명시적 WLAN plan으로 실행하며, 부분 표본·AT 시도/응답·실패·취소·종료 로그를 실행별로 저장합니다. 실제 RF/모션 검증은 별도입니다.
 
@@ -120,7 +122,7 @@ except Exception as error:
 
 ## 지원 상태와 개발자 인계
 
-설비는 기존 [모델별 출처/지원 범위](../lab-control/AGENT_START_HERE.md)를 재사용합니다. 독립 `open_device` simulator는 전원·모션·PhoneAt 3종이며, 공유 상태를 사용하는 `VirtualLab.open`은 [7종 한정 모델](VIRTUAL_LAB.md)을 지원합니다. 나머지는 미구현입니다. Qualcomm/Broadcom은 [숫자표와 실행 전제](../phone-rf/docs/CHIPSET_TERMINAL_CONTROL.md)를 참고하는 별도 항목입니다. 입력한 프로파일만으로 `physical_verified=true`로 승격하지 않습니다.
+설비는 기존 [모델별 출처/지원 범위](../lab-control/AGENT_START_HERE.md)를 재사용합니다. 독립 `open_device` simulator는 전원·모션·PhoneAt 3종이며, `VirtualLab.open`은 [WLAN 7종 모델](VIRTUAL_LAB.md), `radio-run`은 [4개 radio source/분석기 모델](MULTIRADIO.md)을 지원합니다. 그 외 모델은 미구현입니다. Qualcomm/Broadcom은 [숫자표와 실행 전제](../phone-rf/docs/CHIPSET_TERMINAL_CONTROL.md)를 참고하는 별도 항목입니다. 입력한 프로파일만으로 `physical_verified=true`로 승격하지 않습니다.
 
 다른 에이전트는 `describe(id)`의 sources/methods/site_requirements/excludes와 프로파일 schema를 먼저 읽고 공통 API를 사용합니다. 제조사 신규 모델 추가 시 기존 이름이 유사하다는 이유로 자동 지원하지 않습니다. 공식 근거→프로파일→드라이버→정상/실패 fixture→실장비 검증 순서로 등록합니다. 세부 절차는 [기여 가이드](CONTRIBUTING.md)를 따릅니다.
 

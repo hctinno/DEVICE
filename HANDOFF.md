@@ -10,6 +10,10 @@
 
 ## 현재 상태
 
+2026-11-04 SDK 0.5.0: [Bluetooth·셀룰러·NFC·UWB](libraries/device-control/MULTIRADIO.md)의 가상 source/trace, 조건부 실장비 CLI, 부분 결과·원문 제어·취소/종료 오류 저장을 추가했습니다. 진입점은 radio-list/init/check/run이며 기존 WLAN 명령은 유지합니다. BLE 프리셋·LTE FDD RMC 콜박스·보호 NFC PRBS·특정 모델/build UWB만 지원합니다. 직접 셀룰러 TX/NR 등 미확인 backend는 연결 전에 차단합니다. 실제 RF·기종 호환성 검증은 수행하지 않았습니다. 최신 검수 수치는 SDK/배포/README validation JSON이 기준이며 아래 v0.4.0 기록은 이전 작업입니다.
+
+0.5.0 최종 검수: 253개 회귀, 격리 설치 CLI 33건, README 실행 28건과 Python 구문 3개 통과. 새 venv 오프라인 설치와 네 radio 실행도 통과했습니다. 초기 NFC 가상 1초 제한 초과는 15초로 조정하고 다시 검증했습니다. ZIP 290723 bytes, SHA-256 `0b8efa8121c4426d4cb7185639cc46a47573f3ed777200b750042d4f42665956`; ZIP은 Git에 없으며 배포 스크립트로 생성합니다. 실제 장비 접속은 0건입니다.
+
 2026-11-04 최신 구현: SDK v0.4.0의 [실장비 WLAN 실행/기록](libraries/device-control/HARDWARE_RUN.md). `hardware-check --profiles-dir private-site --plan private-site/wlan-plan.json`은 I/O 없는 검증, `hardware-run`은 명시적 출력 폴더와 현장 프로필로 실제 전원·TX·모션을 수행합니다. 입력 스냅샷·부분 표본·장비/단말 원문 통신·종료 후 native 단말 로그·식별·성공/실패 결과를 저장합니다. Ctrl+C/SIGTERM/취소 파일은 cleanup으로 연결하고, 기록 오류도 성공 처리하지 않습니다. phone-traffic.jsonl은 송신 전 attempted부터 fsync하며 로그는 AT 제어 통신 범위입니다. 강제 kill·전원 차단·디스크 쓰기 불능의 완전한 보존/정지는 보장하지 않습니다. 아래 README 인계/명칭 전환 수치는 이전 버전 기록입니다.
 
 검수: SDK 79개 + 설비 99개 + 단말 58개 = 236개 통과. 신규 21개는 hardware 경계에 가상 protocol peer를 주입한 검사이며 실제 장비 접속은 0건입니다. 최신 설치 CLI·배포·README 검수는 [SDK validation](libraries/device-control/docs/validation.json), [배포 validation](libraries/device-control/docs/distribution-validation.json), [README validation](README_VALIDATION.json)을 확인합니다. 단말 native 명령/숫자표와 설비 native 드라이버는 변경하지 않았습니다. 아직 전체 FCC recipe·교정·물리 인터록·현장 commissioning은 미완료입니다.

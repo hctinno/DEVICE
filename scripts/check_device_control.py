@@ -62,7 +62,7 @@ def main():
                     if archive.testzip() is not None: raise RuntimeError("Damaged wheel")
                     if any(".manual-cache" in name or ".fcc-cache" in name for name in archive.namelist()):
                         raise RuntimeError("Vendor cache leaked into wheel")
-            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.4.0"], cwd=temp)
+            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.5.0"], cwd=temp)
             env = dict(os.environ, PYTHONPATH=str(installed), PYTHONIOENCODING="utf-8")
             base = [sys.executable, "-s", "-m", "dgm_control"]
             checks = []
@@ -75,7 +75,7 @@ def main():
             detail = json.loads(command("show", "Co3000").stdout)
             if not detail["sources"]: raise RuntimeError("Installed provenance missing")
             diagnosed = json.loads(command("doctor").stdout)
-            if diagnosed["packages"]["dgm-device-control"] != "0.4.0": raise RuntimeError("Installed SDK version mismatch")
+            if diagnosed["packages"]["dgm-device-control"] != "0.5.0": raise RuntimeError("Installed SDK version mismatch")
             profile = temp / "simulation.json"
             command("init", "OdaEx", "--mode", "simulation", "--output", str(profile))
             command("check", str(profile))
@@ -122,6 +122,35 @@ def main():
             if cancelled_run["status"] != "cancelled": raise RuntimeError("Installed cancellation was not preserved")
             cancelled_report = json.loads((temp / "hardware-cancelled/failure.json").read_text(encoding="utf-8"))
             if cancelled_report["connection_attempted"]: raise RuntimeError("Pre-cancelled hardware run tried I/O")
+            radios = json.loads(command("radio-list").stdout)
+            if len(radios) != 4: raise RuntimeError("Installed radio catalog missing")
+            radio_runs = []
+            for radio in ("bluetooth", "cellular", "nfc", "uwb"):
+                radio_plan = temp / f"{radio}-plan.json"
+                command("radio-init", radio, "--output", str(radio_plan))
+                command("radio-check", "--mode", "simulation", "--plan", str(radio_plan))
+                destination = temp / f"radio-{radio}"
+                answer = json.loads(command("radio-run", "--mode", "simulation", "--plan", str(radio_plan), "--output-dir", str(destination)).stdout)
+                if answer["status"] != "completed" or answer["samples"] != 3 or not answer["simulated"]:
+                    raise RuntimeError("Installed radio run invalid")
+                for filename in ("phone-log.json", "phone-traffic.jsonl", "observations.jsonl", "samples.jsonl"):
+                    if not (destination / filename).stat().st_size: raise RuntimeError("Radio evidence missing")
+                radio_runs.append(answer)
+            command("radio-run", "--mode", "simulation", "--plan", str(temp / "bluetooth-plan.json"),
+                    "--output-dir", str(temp / "radio-stop-failure"), "--fault", "stop-timeout", expected=2)
+            command("radio-run", "--mode", "simulation", "--plan", str(temp / "uwb-plan.json"),
+                    "--output-dir", str(temp / "radio-cancel"), "--fault", "cancel-after-sample", expected=130)
+            blocked_plan = json.loads((temp / "cellular-plan.json").read_text(encoding="utf-8"))
+            blocked_plan.update(backend="direct_modem_tx", simulation_only=False, simulation=None)
+            blocked_path = temp / "blocked-plan.json"
+            blocked_path.write_text(json.dumps(blocked_plan), encoding="utf-8")
+            command("radio-run", "--mode", "hardware", "--plan", str(blocked_path),
+                    "--output-dir", str(temp / "radio-blocked"), expected=2)
+            blocked_report = json.loads((temp / "radio-blocked/failure.json").read_text(encoding="utf-8"))
+            if blocked_report["status"] != "blocked" or blocked_report["connection_attempted"]:
+                raise RuntimeError("Unsupported radio attempted I/O")
+            command("radio-profile", "nfc", "--output", str(temp / "nfc-profile.json"))
+            report["radio_runs"] = radio_runs
             # Verify actual imported modules originate in the isolated target directory.
             proof = run([sys.executable, "-s", "-c", "import dgm_control,dgm_lab,dgm_rf,json; print(json.dumps([dgm_control.__file__,dgm_lab.__file__,dgm_rf.__file__]))"], cwd=temp, env=env)
             if not all(Path(name).resolve().is_relative_to(installed.resolve()) for name in json.loads(proof.stdout)):

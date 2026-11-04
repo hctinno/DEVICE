@@ -1,6 +1,6 @@
 # DGM DeviceControl 구축 계약
 
-현재 확장: SDK v0.2.0의 [통합 가상 시험환경 계약](VIRTUAL_LAB_PLAN.md). 아래 33개 검사·3종 simulator 수치는 v0.1.0 완료 기록입니다. 최신 검사 수치는 [validation.json](docs/validation.json), 사용 범위는 [VirtualLab](VIRTUAL_LAB.md)을 따릅니다.
+현재 확장: SDK v0.5.0의 [다중 무선 실행 계약](MULTIRADIO_PLAN.md), [사용법/미확인 범위](MULTIRADIO.md). 기존 WLAN 가상/실장비 경로는 유지합니다. 아래 33개 검사·3종 simulator 수치는 v0.1.0 완료 기록입니다. 최신 검사 수치는 [validation.json](docs/validation.json)을 따릅니다.
 
 목표: 다른 개발자와 사용자가 같은 설치·조회·프로파일·연결·수명주기 방식으로 장비, 모션/시설, 스마트폰 제어를 사용할 수 있는 재사용 SDK를 만듭니다. 제조사 공식 매뉴얼 기반 구현과 DGM 자체 API를 구별합니다. 제조사가 인증한 SDK라고 표시하지 않습니다.
 

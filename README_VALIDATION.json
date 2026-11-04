@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "utc": "20261104T125512024014Z",
+  "utc": "20261104T132947964822Z",
   "python": "3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]",
   "commands": [
     {
@@ -153,6 +153,175 @@
     },
     {
       "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-list"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-init",
+        "bluetooth",
+        "--output",
+        "<run-dir>\\bluetooth-plan.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "<run-dir>\\bluetooth-plan.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "<run-dir>\\bluetooth-plan.json",
+        "--output-dir",
+        "<run-dir>\\radio-bluetooth"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-init",
+        "cellular",
+        "--output",
+        "<run-dir>\\cellular-plan.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "<run-dir>\\cellular-plan.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "<run-dir>\\cellular-plan.json",
+        "--output-dir",
+        "<run-dir>\\radio-cellular"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-init",
+        "nfc",
+        "--output",
+        "<run-dir>\\nfc-plan.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "<run-dir>\\nfc-plan.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "<run-dir>\\nfc-plan.json",
+        "--output-dir",
+        "<run-dir>\\radio-nfc"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-init",
+        "uwb",
+        "--output",
+        "<run-dir>\\uwb-plan.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "<run-dir>\\uwb-plan.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "<run-dir>\\uwb-plan.json",
+        "--output-dir",
+        "<run-dir>\\radio-uwb"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
         "<run-dir>\\virtual_example.py"
       ],
       "exit_code": 0,
@@ -172,7 +341,7 @@
     "virtual"
   ],
   "packages": {
-    "dgm-device-control": "0.4.0",
+    "dgm-device-control": "0.5.0",
     "dgm-lab-control": "0.4.0",
     "dgm-rf-command-library": "0.5.0"
   }

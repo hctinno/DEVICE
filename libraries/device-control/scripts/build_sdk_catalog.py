@@ -46,12 +46,14 @@ def main():
         ("QualcommMyftm", ["qualcomm-myftm"], "Linux/glibc package; Android build and complete TX/RX CLI mapping missing"),
         ("BroadcomWl", ["infineon-an225347", "infineon-wl-cli", "android-bcm4389-chanspec"], "CLI fragments and driver encoding only; no commissioned phone executor"),
         ("AppleRF", [], "OEM test SDK/firmware and RF start/stop interface missing"),
-        ("NfcProtectedService", [], "Source-scoped protected Android service; no generic serial executor")]:
+        ("NfcProtectedService", [], "No generic serial executor; use conditional radio-run nfc_prbs with commissioned NfcPrbs profile")]:
         descriptors.append({"id": name, "kind": "smartphone", "backend": None, "status": "reference_only" if source_ids else "blocked",
                             "simulation_available": False, "physical_verified": False, "sdk_is_manufacturer_endorsed": False,
                             "operations": [], "methods": {}, "lifecycle": None, "source_ids": source_ids,
                             "sources": [{"id": key, **chipset["sources"][key]} for key in source_ids],
                             "site_requirements": [reason], "excludes": ["live control"]})
+        if name == "NfcProtectedService":
+            descriptors[-1]["excludes"] = ["generic serial control; conditional protected-service path is separate in radio-run"]
     simulation = {}
     for device_id, parameters in {
         "OdaEx": {"model": "EX60-40", "expected_serial": "SIMULATION-ONLY", "expected_firmware": "SIMULATION", "max_voltage": 5, "max_current": 1, "installed_model_confirmed": True},
@@ -73,7 +75,7 @@ def main():
             "Cmu200Cw": "통신 테스터 CW 발생 기능", "PhoneAt": "프로파일 기반 단말 AT 제어"
         }.get(descriptor["id"], "단말 제어 인터페이스")
         descriptor["manufacturers"] = sorted({row["manufacturer"] for row in descriptor.get("models", []) + descriptor.get("report_models", [])})
-    payload = {"schema_version": 1, "sdk_version": "0.4.0", "devices": descriptors, "hardware_templates": templates, "simulation_templates": simulation}
+    payload = {"schema_version": 1, "sdk_version": "0.5.0", "devices": descriptors, "hardware_templates": templates, "simulation_templates": simulation}
     target = ROOT / "dgm_control/data/catalog.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

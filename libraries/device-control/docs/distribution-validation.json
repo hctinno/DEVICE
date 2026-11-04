@@ -1,14 +1,20 @@
 {
-  "file": "dgm-device-control-0.4.0-offline.zip",
-  "bytes": 274204,
-  "sha256": "fa9aa88e586ea809284300a15c489544fbea8b5dd3bf25a3852f125411173252",
+  "file": "dgm-device-control-0.5.0-offline.zip",
+  "bytes": 290723,
+  "sha256": "0b8efa8121c4426d4cb7185639cc46a47573f3ed777200b750042d4f42665956",
   "wheels": [
-    "dgm_device_control-0.4.0-py3-none-any.whl",
+    "dgm_device_control-0.5.0-py3-none-any.whl",
     "dgm_lab_control-0.4.0-py3-none-any.whl",
     "dgm_rf_command_library-0.5.0-py3-none-any.whl"
   ],
   "offline_installer_tested": true,
   "fresh_venv_demo_passed": true,
   "fresh_venv_virtual_lab_passed": true,
+  "fresh_venv_radios_passed": [
+    "bluetooth",
+    "cellular",
+    "nfc",
+    "uwb"
+  ],
   "hardware_tests": 0
 }

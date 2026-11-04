@@ -67,7 +67,7 @@ def main():
         example.write_text(examples["virtual"], encoding="utf-8")
 
         diagnosed = json.loads(cli("doctor"))
-        expected_versions = {"dgm-device-control": "0.4.0", "dgm-lab-control": "0.4.0",
+        expected_versions = {"dgm-device-control": "0.5.0", "dgm-lab-control": "0.4.0",
                              "dgm-rf-command-library": "0.5.0"}
         if diagnosed["packages"] != expected_versions or not diagnosed["supported_python"]:
             raise ValueError(f"Install README package versions first: {diagnosed['packages']}")
@@ -117,6 +117,15 @@ def main():
         failure = json.loads((failed / "failure.json").read_text(encoding="utf-8"))
         assert failure["status"] == "failed" and not (failed / "result.json").exists()
         assert (failed / "traffic.jsonl").stat().st_size > 0
+        assert len(json.loads(cli("radio-list"))) == 4
+        for radio in ("bluetooth", "cellular", "nfc", "uwb"):
+            plan_path = target / f"{radio}-plan.json"
+            cli("radio-init", radio, "--output", str(plan_path))
+            assert json.loads(cli("radio-check", "--mode", "simulation", "--plan", str(plan_path)))["valid"]
+            destination = target / f"radio-{radio}"
+            answer = json.loads(cli("radio-run", "--mode", "simulation", "--plan", str(plan_path), "--output-dir", str(destination)))
+            assert answer["status"] == "completed" and answer["samples"] == 3 and answer["simulated"]
+            assert (destination / "phone-traffic.jsonl").stat().st_size > 0
         run([str(example)])
         report["passed"] = True
         print(f"PASS: {len(report['commands'])} installed-package commands; 3 compiled README examples; no hardware I/O")

@@ -83,8 +83,9 @@ def atomic_json(path, value):
 
 class RunEvidence:
     """Recording failures stop the workflow, but never block cleanup wire writes."""
-    def __init__(self, target, run_id):
+    def __init__(self, target, run_id, *, simulated=False):
         self.target, self.run_id = target, run_id
+        self.simulated = simulated
         self.errors, self.handles = [], {}
         self.sample_count = 0
         self.lock = threading.RLock()
@@ -102,7 +103,7 @@ class RunEvidence:
             try:
                 handle = self.handles[filename]
                 handle.write(json.dumps({**value, "run_id": self.run_id,
-                                         "simulated": False, "recorded_utc": utc()},
+                                         "simulated": self.simulated, "recorded_utc": utc()},
                                         ensure_ascii=False, allow_nan=False) + "\n")
                 handle.flush()
                 os.fsync(handle.fileno())
@@ -111,7 +112,7 @@ class RunEvidence:
 
     def traffic(self, record):
         self.write("traffic.jsonl", record)
-        if record.get("device_id") == "PhoneAt":
+        if record.get("device_id") in {"PhoneAt", "NfcPrbs", "CmwLte"}:
             self.write("phone-traffic.jsonl", record)
 
     def sample(self, row):

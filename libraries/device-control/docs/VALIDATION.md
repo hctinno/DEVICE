@@ -1,6 +1,14 @@
-# SDK v0.4.0 검수 범위
+# SDK v0.5.0 검수 범위
 
-실장비 실행 CLI 확장 검수: SDK 79개(신규 실행/기록 21개 포함), 기존 설비 99개·단말 RF 58개 = 236개 회귀 검사 통과. [validation.json](validation.json)의 passed와 설치 CLI 목록이 최신 실행 증거입니다. 신규 검사는 실제 접속 없이 native 드라이버/AT Controller와 protocol peer를 사용하며 정상·부분 실패·취소·시작/종료 timeout·AT 거절·저장 실패·원래 오류 보존·신호 처리·출력 폴더 보호를 확인합니다. 실장비 검증은 0건입니다.
+2026-11-04 Windows/Python 3.12.6: SDK 96개 + 설비 99개 + 단말 58개 = **253개 검사 통과**. 신규 radio 검사 17개는 네 기술별 가상 TX/trace 연동, native hardware adapter에 대한 모의 transport, 시작·측정·종료 실패, 부분 표본, 취소, 저장 실패와 cleanup, 미확인 backend 접속 차단, UWB build 제한, NFC 권한/hash/전환 상한 및 ACK와 RF 확인의 차이를 검증합니다. 실물 접속은 0건입니다. 패키지/CLI 최종 결과는 [validation.json](validation.json), [배포 기록](distribution-validation.json), 루트 README_VALIDATION.json을 확인합니다.
+
+v0.5.0 격리 설치: wheel 3개를 별도 경로에 설치하고 CLI 33건을 통과했습니다. 네 radio의 plan 생성/검사/실행, 설치된 패키지의 실패/취소/차단 및 증거 파일을 확인했습니다. 임시 설치 경로 밖에서 원래 소스를 가져오지 않는지도 검사했습니다.
+
+README 검수 중 초기 NFC 가상 템플릿의 1초 확인 제한이 내구성 로그 저장을 포함한 실행에서 초과되어 시작/종료 미확인으로 기록됐습니다. 가상 템플릿을 15초로 조정했습니다. 실제 모드의 시간 제한·실패 판정은 완화하지 않았으며, 최종 설치/배포/README 기록은 수정 후 재검사 결과입니다.
+
+아래 v0.4.0 수치는 이전 버전 기록입니다.
+
+실장비 실행 CLI 확장 검수: SDK 79개(신규 실행/기록 21개 포함), 기존 설비 99개·단말 RF 58개 = 236개 회귀 검사 통과. 신규 검사는 실제 접속 없이 native 드라이버/AT Controller와 protocol peer를 사용하며 정상·부분 실패·취소·시작/종료 timeout·AT 거절·저장 실패·원래 오류 보존·신호 처리·출력 폴더 보호를 확인합니다. 실장비 검증은 0건입니다.
 
 아래는 v0.3.0 및 이전 버전의 검수 기록입니다. 현재 실행 수에 중복 합산하지 않습니다.
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "sdk_version": "0.4.0",
+  "sdk_version": "0.5.0",
   "devices": [
     {
       "profile": "spectrum",
@@ -2085,10 +2085,10 @@
       "source_ids": [],
       "sources": [],
       "site_requirements": [
-        "Source-scoped protected Android service; no generic serial executor"
+        "No generic serial executor; use conditional radio-run nfc_prbs with commissioned NfcPrbs profile"
       ],
       "excludes": [
-        "live control"
+        "generic serial control; conditional protected-service path is separate in radio-run"
       ],
       "integrated_virtual_model": null,
       "equipment_type": "단말 제어 인터페이스",

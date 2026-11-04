@@ -2,7 +2,7 @@
 
 **다른 PC의 에이전트는 이 문서 순서대로 설치 → 가상 WLAN 시험 → 자동화 개발 → 실장비 프로필 작성 → 첫 연결을 진행합니다.** 공유 기준은 `main`입니다. 모든 명령은 복제한 저장소 루트에서 실행합니다.
 
-현재 버전: `dgm-device-control 0.4.0`, `dgm-lab-control 0.4.0`, `dgm-rf-command-library 0.5.0`. Python 3.11 이상, 검수 환경은 Windows / Python 3.12.6입니다. Linux/macOS 실행은 미검증입니다.
+현재 버전: `dgm-device-control 0.5.0`, `dgm-lab-control 0.4.0`, `dgm-rf-command-library 0.5.0`. Python 3.11 이상, 검수 환경은 Windows / Python 3.12.6입니다. Linux/macOS 실행은 미검증입니다.
 
 제조사 자료와 공개 근거를 연결한 **DGM 자체 SDK**이며 제조사 발행·인증 SDK가 아닙니다. **실장비 검증 0건**입니다. 목표는 RF·EMC 시험소 무인화이며, 현재 구현은 제어 라이브러리와 개발용 가상 시험환경입니다. 연결만으로 모든 FCC 시험을 완성하지는 않습니다.
 
@@ -36,7 +36,7 @@ python3 -m venv .venv
 
 기존 checkout은 로컬 변경을 보존한 뒤 `git switch main`, `git pull --ff-only origin main`을 실행하고 **3개 로컬 패키지 설치 명령을 다시 실행**합니다. 소스만 갱신하면 설치 패키지는 바뀌지 않습니다. PyPI에 배포됐다고 가정하고 패키지명만으로 설치하지 않습니다.
 
-오프라인 PC: 온라인 개발 PC에서 `python -m pip install "setuptools>=68" wheel` 후 `python -X utf8 scripts/package_device_control.py`로 만든 `libraries/device-control/dist/dgm-device-control-0.4.0-offline.zip`을 전달합니다. 압축 해제 폴더에서 `python -m venv .venv`, `.venv\Scripts\python install.py`를 실행합니다. ZIP은 Git에 없으며 기본 3개 wheel만 담습니다. VISA/serial 패키지·제조사 런타임은 별도 준비합니다. [상세 안내](libraries/device-control/OFFLINE_INSTALL.md)
+오프라인 PC: 온라인 개발 PC에서 `python -m pip install "setuptools>=68" wheel` 후 `python -X utf8 scripts/package_device_control.py`로 만든 `libraries/device-control/dist/dgm-device-control-0.5.0-offline.zip`을 전달합니다. 압축 해제 폴더에서 `python -m venv .venv`, `.venv\Scripts\python install.py`를 실행합니다. ZIP은 Git에 없으며 기본 3개 wheel만 담습니다. VISA/serial 패키지·제조사 런타임은 별도 준비합니다. [상세 안내](libraries/device-control/OFFLINE_INSTALL.md)
 
 ## 2. 가상 시험 실행과 결과 확인
 
@@ -247,15 +247,44 @@ Ctrl+C 또는 다른 터미널의 `New-Item -ItemType File private-site/stop.req
 
 `with open_device(...)`는 연결 수명만 관리합니다. 출력·TX·이동·RF 경로는 `with device.active(...):` 안에서 처리해야 종료 명령과 짝이 맞습니다. 통신 끊김 뒤 OFF·정지를 보장할 수 없으므로 불명 상태와 종료 오류를 남깁니다. 물리 인터록과 독립 정지는 현장 검증 대상입니다.
 
-## 5. 미구현 범위와 검수
+## 5. Bluetooth·셀룰러·NFC·UWB
+
+SDK 0.5.0은 네 기술의 가상시험·조건부 실장비 실행·부분 결과/오류/취소 로그를 같은 `radio-run` 경로로 제공합니다. 고정 RF 배선에서 source와 분석기의 trace를 측정하며, 모션 스캔·파형 분석·전체 FCC 판정은 포함하지 않습니다.
+
+```powershell
+.venv\Scripts\python -m dgm_control radio-list
+.venv\Scripts\python -m dgm_control radio-init bluetooth --output bluetooth-plan.json
+.venv\Scripts\python -m dgm_control radio-check --mode simulation --plan bluetooth-plan.json
+.venv\Scripts\python -m dgm_control radio-run --mode simulation --plan bluetooth-plan.json --output-dir runs/ble-001
+```
+
+다른 기술은 `bluetooth`를 `cellular`, `nfc`, `uwb`로 바꾸고 파일·폴더 이름을 새로 지정합니다. 생성된 숫자는 **합성 모형 전용**입니다. 성공은 result.json, 실패·취소는 failure.json, 표본은 samples.jsonl, 원문 제어 로그는 phone-traffic.jsonl, 종료 후 의미 로그는 phone-log.json에 저장합니다. LTE 로그는 콜박스 경유 기록이며 스마트폰 모뎀 진단 로그가 아닙니다.
+
+| 기술 | 실제 실행 경로 | 미확인·미지원 |
+| --- | --- | --- |
+| Bluetooth | BLE 1M/2M low/mid/high AT 프리셋 | 프리셋의 RF 채널·출력·패킷 매핑, BR/EDR·coded PHY recipe |
+| 셀룰러 | CMW500 LTE FDD PCC RMC signaling | 직접 모뎀 TX/종료 인수, 5G NR·CA/ENDC |
+| NFC | 보호 서비스 PRBS request 31/32 + RF envelope 시작·안정 종료 검사 | 일반 NFC AT/CW, TECH/RATE 물리 의미; APK·권한·전환 상한의 현장 근거 필수 |
+| UWB | SM-S918N / S918NKSU1AWC8 근거 한정 periodic TX | 타 빌드, power code→dBm, timing 단위, ranging |
+
+실장비는 별도 plan에 `simulation_only=false`, `simulation=null`과 현장 조건을 입력합니다. 프로필 폴더에는 `SpectrumAnalyzer.json`과 BLE/UWB의 `PhoneAt.json`, LTE의 `CmwLte.json`, NFC의 `NfcPrbs.json` 중 하나가 필요합니다. 기존 `init`으로 일반 프로필을 만들며 NFC는 `radio-profile nfc --output private-site/NfcPrbs.json`을 사용합니다. 미완성 프로필과 미확인 backend는 접속 전에 거절됩니다.
+
+```powershell
+.venv\Scripts\python -m dgm_control radio-check --mode hardware --plan private-site/ble-plan.json --profiles-dir private-site
+.venv\Scripts\python -m dgm_control radio-run --mode hardware --plan private-site/ble-plan.json --profiles-dir private-site --output-dir runs/ble-hardware-001 --cancel-file private-site/STOP
+```
+
+첫 명령은 오프라인 검사, 두 번째는 실제 송신·측정입니다. 종료 코드는 성공 0, 실패/차단 2, 취소 130입니다. Ctrl+C·SIGTERM·취소 파일은 종료 명령을 시도하며, 물리 RF OFF는 별도 현장 검증이 필요합니다. [전체 인수·시작/종료·NFC 조건·로그·고장 주입 사용법](libraries/device-control/MULTIRADIO.md)을 실장비 실행 전에 확인합니다.
+
+## 6. 미구현 범위와 검수
 
 | 영역 | 현재 구현 | 남은 작업 |
 | --- | --- | --- |
 | 공통 SDK | 설비 driver 16개 + PhoneAt, hardware 템플릿 17개 | 전 장비 실물 검증, 모델·옵션·펌웨어별 commissioning |
-| 가상시험 | 7종 공유 상태, WLAN 12점 스캔·최대 복귀·고장/종료 처리 | Bluetooth·셀룰러·NFC·UWB 통합 RF 모사, 나머지 장비 모사, 실제 파형·EVM·검파·교정 |
+| 가상시험 | WLAN 7종 공유 상태·12점 스캔, 4개 radio의 source/분석기 합성 trace·고장/종료 처리 | 나머지 장비 모사, 실제 파형·EVM·검파·교정 |
 | 단말 | AT 카탈로그 220개 및 출처 한정 실행 기능 | 최신 단말 공통 TX 지원 없음. 셀룰러 직접 TX 숫자·종료 쌍 미확보. UWB는 특정 모델/build 근거, NFC는 보호 서비스 조건 필요 |
-| 특수 backend | QualcommMyftm/BroadcomWl은 reference-only, AppleRF/NfcProtectedService는 공통 SDK에서 blocked | 최신 단말 권한·실행 경로·호환성 검증과 공통 실행기. 별도 명령 생성 자료는 실폰 실행 완료가 아님 |
-| 전체 시험소 | 제어 API·가상 개발·WLAN 실장비 CLI·실행별 결과/단말 오류 로그 저장 | 교정/불확도/규격 판정·전체 FCC recipe·성적서 발행·물리 인터록·시료 취급·로봇·전체 무인 업무 |
+| 특수 backend | QualcommMyftm/BroadcomWl은 reference-only, AppleRF와 일반 NfcProtectedService open_device는 blocked; NFC 전용 radio-run 경로는 조건부 | 최신 단말 권한·호환성 검증. 별도 명령 생성 자료는 실폰 실행 완료가 아님 |
+| 전체 시험소 | 제어 API·가상 개발·WLAN 및 4개 radio의 조건부 실장비 CLI·실행별 결과/제어 오류 로그 저장 | 교정/불확도/규격 판정·전체 FCC recipe·성적서 발행·물리 인터록·시료 취급·로봇·전체 무인 업무 |
 
 지원 설명 21개는 지원 스마트폰 수가 아닙니다. [지원표](SUPPORTED_EQUIPMENT.md)의 조건부 항목·컨트롤러 구성품은 독립 제어 장비로 세지 않습니다. vendor PDF/binary·일부 연구 cache는 Git에 없지만 기본 설치·가상 실행에는 필요하지 않습니다. 실제 프로토콜 식별자·원문 URL은 근거 영역에 보존합니다.
 
@@ -269,9 +298,9 @@ Ctrl+C 또는 다른 터미널의 `New-Item -ItemType File private-site/stop.req
 
 `check_readme.py`는 **설치된 패키지**로 README 가상 코드·CLI 정상/오류 실행·프로필 템플릿·예시 JSON을 검사합니다. 실장비 코드 블록은 구문만 검사하고 연결하지 않습니다. 다른 두 검사는 UTF-8·로컬 링크·일반 명칭을 검사합니다.
 
-2026-11-04 Windows/Python 3.12.6에서 SDK v0.4.0 설치 후 **15개 README 실행 검사와 Python 예제 3개 구문 검사**를 재현합니다. [실행별 검수 기록](README_VALIDATION.json)의 passed와 버전으로 결과를 확인합니다. 별도 새 venv의 오프라인 설치·가상시험도 검증합니다. 실장비·VISA/serial 런타임·Linux/macOS 실행은 미검증입니다. 검수 명령은 `runs/readme-check-시각/validation.json`과 명령별 로그를 남깁니다.
+2026-11-04 Windows/Python 3.12.6에서 SDK v0.5.0 설치 후 **README 실행 28건과 Python 예제 3개 구문 검사**를 통과했습니다. 네 radio의 생성·사전검사·가상 실행도 포함합니다. [실행별 검수 기록](README_VALIDATION.json)의 passed와 버전으로 결과를 확인합니다. 실장비·VISA/serial 런타임·Linux/macOS 실행은 미검증입니다. 검수 명령은 `runs/readme-check-시각/validation.json`과 명령별 로그를 남깁니다.
 
-SDK/드라이버를 바꿨다면 개발 환경에 `setuptools>=68`, `wheel`을 설치한 뒤 `python -X utf8 scripts/check_device_control.py`, `python -X utf8 scripts/check_lab_control.py`, `python -X utf8 scripts/check_phone_rf.py`를 실행합니다. v0.4.0 검수는 SDK 79개 + 설비 99개 + 단말 58개 = **236개 검사 통과**이며 SDK 격리 설치 CLI 16건도 확인했습니다. [검수 범위](libraries/device-control/docs/VALIDATION.md). 가상 검사 통과를 실측 검증으로 표시하지 않습니다.
+SDK/드라이버를 바꿨다면 개발 환경에 `setuptools>=68`, `wheel`을 설치한 뒤 `python -X utf8 scripts/check_device_control.py`, `python -X utf8 scripts/check_lab_control.py`, `python -X utf8 scripts/check_phone_rf.py`를 실행합니다. v0.5.0 회귀 검수는 SDK 96개 + 설비 99개 + 단말 58개 = **253개 검사 통과**입니다. SDK 격리 설치 CLI는 [검수 기록](libraries/device-control/docs/validation.json), 범위는 [검수 안내](libraries/device-control/docs/VALIDATION.md)를 확인합니다. 가상 검사 통과를 실측 검증으로 표시하지 않습니다.
 
 ### 문제 해결
 

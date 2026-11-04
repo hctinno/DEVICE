@@ -10,7 +10,7 @@ def main():
     wheelhouse = Path(__file__).resolve().parent / "wheels"
     if not wheelhouse.is_dir():
         raise SystemExit("Missing adjacent wheels directory; extract the complete offline ZIP")
-    subprocess.run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheelhouse), "dgm-device-control==0.4.0"], check=True)
+    subprocess.run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheelhouse), "dgm-device-control==0.5.0"], check=True)
 
 
 if __name__ == "__main__":
