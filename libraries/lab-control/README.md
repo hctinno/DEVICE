@@ -1,6 +1,6 @@
 # DGM LabControl
 
-**v0.2.0 — HCT 2026 성적서 기준 확장.** [HCT 장비·설비 150그룹](docs/HCT_2026_EQUIPMENT.md), [모션·계측 실행 방법과 숫자 명령표](docs/HCT_CONTROL.md), [CSV](docs/hct-2026-equipment.csv)를 먼저 확인합니다. CO3000 마스트·턴테이블·H/V 편파, OSP 경로, 추가 분석기·수신기·전원·전력계·VNA·RF 발생기와 2축 표본 최대점 복귀를 포함합니다. 14개 driver class이며 지원은 모델별 명시 기능에 한정됩니다.
+**v0.3.0 — [다른 에이전트의 개발 시작점](AGENT_START_HERE.md).** [HCT 장비·설비 150그룹](docs/HCT_2026_EQUIPMENT.md), [모션·계측 명령표](docs/HCT_CONTROL.md), [ODA·CMU 신규 프로토콜](docs/PROTOCOL_ADDITIONS.md), [공개 코드 검토](docs/OPEN_SOURCE_REVIEW.md)를 연결했습니다. 16개 driver class, 기계 판독 capability, 통신 없는 profile 검사, 설치 패키지의 모의 실행을 제공합니다. 지원은 모델별 명시 기능에 한정되며 실장비 검증은 0건입니다.
 
 FCC 성적서 장비 목록에서 출발한 Python 설비 제어 라이브러리입니다. 실제 TCP·VISA·serial 통신, 모델 식별, 설정 재조회, 측정 수집, 출력 종료를 제공합니다. **소프트웨어 검수와 실장비 commissioning은 구분합니다. 물리적으로 연결하면 모든 장비·스마트폰이 즉시 동작하는 상태는 아닙니다.**
 

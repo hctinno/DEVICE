@@ -9,6 +9,8 @@ VM TEST
 
 ## 설비 제어 라이브러리
 
+**[측정자동화 개발 시작 — 에이전트 인계](libraries/lab-control/AGENT_START_HERE.md)**: v0.3.0, 16개 드라이버의 실제 API·현장 조건·제조사 근거·공개 코드 pin/라이선스·모의 실행·검사 명령을 제공합니다. HCT 2026 목록은 12개 보고서/150개 모델 그룹이며 아래 이전 조사 목록과 합산하지 않습니다. 최신 작업은 `codex/samsung-rf-research-20261104` 브랜치를 확인합니다.
+
 [DGM LabControl 설치·실행](libraries/lab-control/README.md), [장비 지원표](libraries/lab-control/docs/EQUIPMENT_COVERAGE.md), [숫자 인수·시작·종료 명령](libraries/lab-control/docs/OPERATIONS.md)을 제공합니다. 확보 성적서 장비표 1,332행을 234개 제조사/모델 그룹으로 정리했습니다. 27개 모델의 명시된 기능을 구현하고 4개를 컨트롤러·앱 확인 조건부로 연결했습니다. 수동 부품·지원 장비·미구현 전용 SDK 항목도 별도 표시합니다.
 
 TCP/VISA/serial, 분석기·수신기·RF 발생기·전원·전력계·VNA·챔버·CMW LTE executor와 기존 Samsung 제어 bridge가 포함됩니다. 최신 Fold8/iPhone Duo 직접 TX와 전체 FCC 시험은 아직 실행 불가입니다. 실장비 검증은 0건입니다.

@@ -2,12 +2,12 @@ from contextlib import contextmanager
 from importlib.resources import files
 import json
 from . import (SpectrumAnalyzer, EmiReceiver, SignalGenerator, PowerSupply, PSeriesPowerMeter,
-               UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter)
+               UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter, OdaEx, Cmu200Cw)
 from .transport import SocketTransport, VisaTransport, SerialTransport
 from .core import UnsupportedInstrument
 
 DRIVERS = {c.__name__: c for c in (SpectrumAnalyzer, EmiReceiver, SignalGenerator, PowerSupply,
-           PSeriesPowerMeter, UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter)}
+           PSeriesPowerMeter, UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter, OdaEx, Cmu200Cw)}
 
 
 def inventory(query='', *, scope='legacy'):
@@ -33,7 +33,13 @@ def open_transport(config, log=None):
 
 @contextmanager
 def connect(profile, *, log=None):
-    """Connect + identify only. Use device.emitting()/powering()/connected() for outputs."""
+    """Connect + identify. Remote entry may affect state (notably CMU200).
+
+    Use device.emitting()/powering()/connected() for owned outputs.
+    Closing the transport alone never promises output shutdown.
+    """
+    from .capabilities import validate_profile
+    validate_profile(profile)
     name=profile.get('driver')
     if name not in DRIVERS:
         raise UnsupportedInstrument(f'No implemented driver {name!r}; review equipment-coverage.csv')

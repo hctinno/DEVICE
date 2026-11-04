@@ -31,7 +31,7 @@ def main():
                 skipped=['Physical VISA/USB/GPIB/serial devices','Actual phone TX and RF-off verification',
                          'Measurement accuracy/calibration/uncertainty','Physical motion/SAR/NR/DFS test workflows'])
     try:
-        for script in ('build_inventory.py','build_hct_inventory.py','build_reference.py','build_profiles.py','build_workflows.py'):
+        for script in ('build_inventory.py','build_hct_inventory.py','build_reference.py','build_profiles.py','build_workflows.py','build_developer_index.py'):
             print(run([sys.executable,'-X','utf8',str(LIB/'scripts'/script)]).strip(),flush=True)
         checked=0
         for path in LIB.rglob('*'):
@@ -87,8 +87,14 @@ def main():
                 raise RuntimeError('Installed HCT catalog missing')
             for example in ('spectrum.py','outputs.py','phone_spectrum.py','hct_radiated.py'):
                 run([sys.executable,str(LIB/'examples'/example),'--help'],cwd=temp,env=env)
+            output=run([sys.executable,'-m','dgm_lab','capabilities','OdaEx'],cwd=temp,env=env)
+            if json.loads(output)[0]['driver']!='OdaEx': raise RuntimeError('Installed capabilities missing')
+            output=run([sys.executable,'-m','dgm_lab','demo','--output-dir',str(temp/'demo')],cwd=temp,env=env)
+            demo=json.loads(output)
+            if not demo['simulated'] or not demo['simulated_output_off'] or len(demo['measurements'])!=2:
+                raise RuntimeError('Installed package demo failed')
             report['wheels_built_and_installed']=len(built)
-            report['installed_package_cli_and_example_help_checks']=6
+            report['installed_package_cli_and_example_help_checks']=8
         report['inventory']=json.loads((LIB/'research/inventory-validation.json').read_text(encoding='utf-8'))
         report['hct_inventory']=json.loads((LIB/'research/hct-validation.json').read_text(encoding='utf-8'))
         report['passed']=True

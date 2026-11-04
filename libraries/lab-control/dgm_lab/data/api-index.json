@@ -316,6 +316,111 @@
     ]
   },
   {
+    "driver": "Cmu200Cw",
+    "file": "dgm_lab/cmu.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, secondary_address=0, output_port=0, max_frequency_hz=0, max_power_dbm=None, expected_firmware='', site_profile_confirmed=False)",
+        "line": 27,
+        "command_fragments": []
+      },
+      {
+        "name": "identify",
+        "signature": "(self)",
+        "line": 42,
+        "command_fragments": []
+      },
+      {
+        "name": "_ready",
+        "signature": "(self)",
+        "line": 56,
+        "command_fragments": []
+      },
+      {
+        "name": "_query",
+        "signature": "(self, command)",
+        "line": 60,
+        "command_fragments": []
+      },
+      {
+        "name": "_write",
+        "signature": "(self, command)",
+        "line": 63,
+        "command_fragments": []
+      },
+      {
+        "name": "_errors",
+        "signature": "(self)",
+        "line": 66,
+        "command_fragments": []
+      },
+      {
+        "name": "status",
+        "signature": "(self)",
+        "line": 69,
+        "command_fragments": [
+          "FETC:RFG:TX:STAT?"
+        ]
+      },
+      {
+        "name": "_verify_settings",
+        "signature": "(self, frequency_hz, power_dbm)",
+        "line": 76,
+        "command_fragments": [
+          "FHOP:STAT?",
+          "PULS:STAT?",
+          "SOUR:RFG:TX:FREQ?",
+          "SOUR:RFG:TX:LEV?",
+          "OUTP:TX?",
+          "SOUR:CORR:LOSS:OUTP",
+          "SOUR:RFG:MOD?",
+          "SOUR:RFG:"
+        ]
+      },
+      {
+        "name": "configure",
+        "signature": "(self, *, frequency_hz, power_dbm)",
+        "line": 88,
+        "command_fragments": [
+          "SOUR:RFG:MOD OFF",
+          "SOUR:RFG:FHOP:STAT OFF",
+          "SOUR:RFG:PULS:STAT OFF",
+          "f'SOUR:RFG:TX:FREQ {fmt(frequency_hz)}'",
+          "OUTP:TX RF",
+          "SOUR:CORR:LOSS:OUTP",
+          "SOUR:RFG:TX:FREQ ",
+          "SOUR:RFG:TX:LEV ",
+          "*OPC?"
+        ]
+      },
+      {
+        "name": "start",
+        "signature": "(self)",
+        "line": 110,
+        "command_fragments": [
+          "INIT:RFG:TX",
+          "*OPC?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 124,
+        "command_fragments": [
+          "ABOR:RFG:TX",
+          "*OPC?"
+        ]
+      },
+      {
+        "name": "emitting",
+        "signature": "(self)",
+        "line": 133,
+        "command_fragments": []
+      }
+    ]
+  },
+  {
     "driver": "EpmPowerMeter",
     "file": "dgm_lab/epm.py",
     "methods": [
@@ -633,6 +738,93 @@
         "name": "polarize",
         "signature": "(self, axis, orientation, *, timeout=60, cancelled=None)",
         "line": 187,
+        "command_fragments": []
+      }
+    ]
+  },
+  {
+    "driver": "OdaEx",
+    "file": "dgm_lab/oda.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model='EX60-40', expected_serial='', expected_firmware='', max_voltage=0, max_current=0, installed_model_confirmed=False)",
+        "line": 13,
+        "command_fragments": []
+      },
+      {
+        "name": "identify",
+        "signature": "(self)",
+        "line": 27,
+        "command_fragments": [
+          "*IDN?"
+        ]
+      },
+      {
+        "name": "ready",
+        "signature": "(self)",
+        "line": 41,
+        "command_fragments": []
+      },
+      {
+        "name": "errors",
+        "signature": "(self)",
+        "line": 45,
+        "command_fragments": []
+      },
+      {
+        "name": "_trips",
+        "signature": "(self)",
+        "line": 48,
+        "command_fragments": [
+          "VOLT:OVP:TRIP?",
+          "CURR:OCP:TRIP?"
+        ]
+      },
+      {
+        "name": "_readback",
+        "signature": "(self, voltage, current)",
+        "line": 52,
+        "command_fragments": []
+      },
+      {
+        "name": "configure",
+        "signature": "(self, *, voltage, current)",
+        "line": 56,
+        "command_fragments": []
+      },
+      {
+        "name": "start",
+        "signature": "(self)",
+        "line": 80,
+        "command_fragments": []
+      },
+      {
+        "name": "read_voltage",
+        "signature": "(self)",
+        "line": 96,
+        "command_fragments": [
+          "MEAS:VOLT?"
+        ]
+      },
+      {
+        "name": "read_current",
+        "signature": "(self)",
+        "line": 99,
+        "command_fragments": [
+          "MEAS:CURR?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 102,
+        "command_fragments": []
+      },
+      {
+        "name": "powering",
+        "signature": "(self)",
+        "line": 111,
         "command_fragments": []
       }
     ]

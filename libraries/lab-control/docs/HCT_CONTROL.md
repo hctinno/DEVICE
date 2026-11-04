@@ -4,6 +4,8 @@
 
 [전체 장비 목록](HCT_2026_EQUIPMENT.md) · [CSV](hct-2026-equipment.csv) · [원문 행/페이지/해시](../research/hct-equipment-rows.json) · [소프트웨어 검증](validation.json)
 
+v0.3.0 추가: [에이전트 개발 시작](../AGENT_START_HERE.md), [ODA EX60-40·CMU200 CW 숫자/시작/종료 명령](PROTOCOL_ADDITIONS.md), [공개 코드 재사용 검토](OPEN_SOURCE_REVIEW.md).
+
 ## 누락 정정과 실제 설비
 
 앞선 Fold8/iPhone Duo 중심 목록에서 모션 설비를 특정하지 못한 결과를 전체 성적서의 부재로 확대하면 안 됩니다. 다음 HCT 원문에는 실제로 명시되어 있습니다. TESCOM TC-3000C는 Bluetooth tester이며 모션 컨트롤러가 아닙니다.
@@ -84,8 +86,8 @@ python libraries/lab-control/examples/hct_radiated.py libraries/lab-control/exam
 | --- | --- |
 | T&M FBSM/FMSR/FBSR/TMX 스위치·필터 | 모델/원문 행은 확보. 공개 제조사 자료실에서 해당 통신 명령표·포트 맵·ACK는 찾지 못함. 모델별 프로토콜과 연결도 필요 |
 | TESCOM TC-3000C | 제조사 매뉴얼의 공개 인덱스에 RS232 `EXEC:STOP`과 DLL 방식은 확인. PDF 취득 `522` 실패. 설치 버전과 명령/응답 전체를 확보하기 전 실행 드라이버 미등록 |
-| Anritsu MT8820C/MT8821C/MT8000A, CMU200/CBT/E5515C, E7515B/CMX500 | 본체만으로 앱·옵션·세션 명령 확정 불가. 설치 프로그램 가이드, license, RF route, cell/connection/stop 예제 필요. 기존 CMW500 LTE executor만 조건부 지원 |
-| PWR800L / ODA EX60-40 / NY-THR18750 | PWR800L은 PIA4810/4830/4850+TP-BUS 구성; PWR-01 SCPI와 다름. 나머지는 정확한 controller/interface 매뉴얼 필요 |
+| Anritsu MT8820C/MT8821C/MT8000A, CBT/E5515C, E7515B/CMX500 | 본체만으로 앱·옵션·세션 명령 확정 불가. MT8000A 제3자 chapter 사본은 확보했으나 transport/identity/cleanup 검토 미완료. CMW500 LTE executor는 조건부 지원, CMU200 신규 코드는 CW 발생기만 지원 |
+| PWR800L / ODA EX60-40 / NY-THR18750 | PWR800L은 PIA4810/4830/4850+TP-BUS 구성. ODA는 명판/serial/firmware 확인 조건부 드라이버 추가. NY-THR18750은 정확한 controller/interface 매뉴얼 필요 |
 | SPEAG·Staubli SAR / HCT 시험 SW / ADLINK DFS | 설치 DASY/robot/DAQ SDK, 버전·라이선스·시작/중지/결과 API, 시험 레시피 필요. VNA/전력계 제어만으로 SAR 측정을 완료했다고 하지 않음 |
 
 ETS-Lindgren 턴테이블 한 항목은 모델이 N/A입니다. 인접 장비 CO3000과 연결됐다고 추정하지 않습니다. SU-642는 P300/SCP220 장착 확인 전 조건부입니다. 안테나·케이블·LISN·수동 필터 등에는 존재하지 않는 원격 명령을 만들지 않고 교정·연결·배치 정보를 관리합니다.
@@ -94,7 +96,7 @@ ETS-Lindgren 턴테이블 한 항목은 모델이 N/A입니다. 인접 장비 CO
 
 **원문 불일치도 보존합니다.** DFS 장비표는 3025C/3035C 제조사를 ADLINK로 적었지만 [VIAVI 공식 DFS 자료](https://www.viavisolutions.com/en-us/literature/dfs-radar-simulator-and-analyzer-test-suite-discontinued-data-sheets-en.pdf)는 동명 PXI 모듈과 별도 드라이버·DFS 앱을 설명합니다. 보고서 제조사 칸을 몰래 바꾸거나 ADLINK generic API를 적용하지 않습니다. CBT 제조사 매뉴얼의 공개 보관본 다운로드는 `403 Forbidden`으로 실패했으며, 인덱스에서 확인한 기능별 GPIB secondary address만으로 측정 드라이버를 등록하지 않았습니다.
 
-현재 21개 모델 그룹에 명시된 실행 기능, 7개 컨트롤러 연결 구성품, 2개 조건부, 2개 호스트 구성품을 분류했습니다. 나머지 상태는 전체 목록에 공개합니다. **실장비 제어 검증 0건, 완전한 FCC 시험 workflow 검증 0건입니다.**
+현재 22개 모델 그룹에 명시된 실행 기능, 7개 컨트롤러 연결 구성품, 3개 조건부, 2개 호스트 구성품을 분류했습니다. 나머지 상태는 전체 목록에 공개합니다. **실장비 제어 검증 0건, 완전한 FCC 시험 workflow 검증 0건입니다.**
 
 ## 재현 검사
 

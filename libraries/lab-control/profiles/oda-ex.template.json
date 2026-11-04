@@ -1,0 +1,22 @@
+{
+  "driver": "OdaEx",
+  "parameters": {
+    "model": "EX60-40",
+    "expected_serial": "",
+    "expected_firmware": "",
+    "max_voltage": 0,
+    "max_current": 0,
+    "installed_model_confirmed": false
+  },
+  "transport": {
+    "kind": "serial",
+    "port": "",
+    "baudrate": 9600,
+    "parity": "N",
+    "bytesize": 8,
+    "stopbits": 1,
+    "timeout": 5,
+    "termination": "\n"
+  },
+  "notes": "Template only. Confirm installed model/controller, limits, options, address and termination before use."
+}

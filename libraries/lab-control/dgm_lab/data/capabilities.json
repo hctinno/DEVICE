@@ -1,0 +1,740 @@
+[
+  {
+    "profile": "spectrum",
+    "category": "spectrum",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "lifecycle": "managed_run(lambda: None, device.stop)",
+    "protocol": "SCPI ASCII trace",
+    "site_requirements": [
+      "exact model and installed max frequency",
+      "RBW/VBW/detector/input protection",
+      "path calibration and sweep timeout"
+    ],
+    "excludes": [
+      "zero span",
+      "DFS waveform execution",
+      "automatic FCC verdict"
+    ],
+    "driver": "SpectrumAnalyzer",
+    "constructor": "(transport, *, model, max_frequency_hz)",
+    "source_file": "dgm_lab/analyzers.py",
+    "profile_path": "profiles/spectrum.template.json",
+    "methods": {
+      "acquire": "(self, config: dgm_lab.analyzers.Sweep)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "N9020A",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "N9030A",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "N9030B",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "FSV40",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "FSW67",
+        "status": "implemented_uncommissioned"
+      }
+    ],
+    "source_ids": [
+      "keysight-xsa-a",
+      "keysight-xsa-b",
+      "rs-fsv",
+      "rs-fsw"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "receiver",
+    "category": "emi",
+    "operations": [
+      "read_level",
+      "stop"
+    ],
+    "lifecycle": "managed_run(lambda: None, device.stop)",
+    "protocol": "SCPI single-frequency receiver",
+    "site_requirements": [
+      "installed max frequency",
+      "detector and dwell",
+      "antenna/cable/LISN corrections"
+    ],
+    "excludes": [
+      "full EMI scan recipe",
+      "automatic FCC verdict"
+    ],
+    "driver": "EmiReceiver",
+    "constructor": "(transport, *, model, max_frequency_hz)",
+    "source_file": "dgm_lab/analyzers.py",
+    "profile_path": "profiles/receiver.template.json",
+    "methods": {
+      "read_level": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "EPL1000",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "ESR7",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "ESW44",
+        "status": "implemented_uncommissioned"
+      }
+    ],
+    "source_ids": [
+      "rs-epl",
+      "rs-esr",
+      "rs-esw"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "rf-source",
+    "category": "rf-source",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "lifecycle": "emitting",
+    "protocol": "model-scoped SCPI CW",
+    "site_requirements": [
+      "frequency/power caps",
+      "RF port and path",
+      "load and attenuation"
+    ],
+    "excludes": [
+      "arbitrary modulation",
+      "DFS radar waveforms",
+      "phone TX control"
+    ],
+    "driver": "SignalGenerator",
+    "constructor": "(transport, *, model, max_frequency_hz, max_power_dbm)",
+    "source_file": "dgm_lab/sources.py",
+    "profile_path": "profiles/rf-source.template.json",
+    "methods": {
+      "configure_cw": "(self, *, frequency_hz, power_dbm)",
+      "start": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "E4421B",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "E4433B",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "E8267D",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "SMB100A",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "SMW200A",
+        "status": "implemented_uncommissioned"
+      }
+    ],
+    "source_ids": [
+      "keysight-esg-b",
+      "keysight-psg",
+      "rs-smb100a",
+      "rs-smw200a"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "power-supply",
+    "category": "dc-source",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "lifecycle": "powering",
+    "protocol": "model-scoped SCPI",
+    "site_requirements": [
+      "voltage/current/range limits",
+      "wiring/sense/polarity"
+    ],
+    "excludes": [
+      "electronic load",
+      "all SCPI power supplies"
+    ],
+    "driver": "PowerSupply",
+    "constructor": "(transport, *, model, max_voltage, max_current)",
+    "source_file": "dgm_lab/sources.py",
+    "profile_path": "profiles/power-supply.template.json",
+    "methods": {
+      "configure": "(self, *, voltage, current_limit, range_name=None)",
+      "read_voltage": "(self)",
+      "read_current": "(self)",
+      "start": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "6674A",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "E3632A",
+        "status": "implemented_uncommissioned"
+      }
+    ],
+    "source_ids": [
+      "keysight-6674a",
+      "keysight-e3632a"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "power-meter",
+    "category": "power-meter",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "lifecycle": "managed_run(lambda: None, device.stop)",
+    "protocol": "SCPI average power",
+    "site_requirements": [
+      "sensor/input/frequency",
+      "sensor calibration and input limits"
+    ],
+    "excludes": [
+      "peak pulse characterization"
+    ],
+    "driver": "PSeriesPowerMeter",
+    "constructor": "(transport, *, model)",
+    "source_file": "dgm_lab/meters.py",
+    "profile_path": "profiles/power-meter.template.json",
+    "methods": {
+      "configure_average": "(self, *, frequency_hz, channel=1)",
+      "read_power": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "N1911A",
+        "status": "implemented_uncommissioned"
+      }
+    ],
+    "source_ids": [
+      "keysight-power"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "usb-sensor",
+    "category": "power-sensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "lifecycle": "managed_run(lambda: None, device.stop)",
+    "protocol": "model-scoped sensor SCPI via VISA",
+    "site_requirements": [
+      "vendor sensor driver/VISA resource",
+      "sensor frequency and input limit"
+    ],
+    "excludes": [
+      "raw USB without vendor stack"
+    ],
+    "driver": "UsbPowerSensor",
+    "constructor": "(transport, *, model)",
+    "source_file": "dgm_lab/meters.py",
+    "profile_path": "profiles/usb-sensor.template.json",
+    "methods": {
+      "configure_average": "(self, *, frequency_hz)",
+      "read_power": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [],
+    "source_ids": [],
+    "physical_verified": false
+  },
+  {
+    "profile": "vna",
+    "category": "vna",
+    "operations": [
+      "acquire_s11",
+      "stop"
+    ],
+    "lifecycle": "managed_run(lambda: None, device.stop)",
+    "protocol": "SCPI S11 complex trace",
+    "site_requirements": [
+      "exact port-count IDN",
+      "existing calibration",
+      "frequency/power limits"
+    ],
+    "excludes": [
+      "automatic calibration",
+      "all S-parameters"
+    ],
+    "driver": "VectorNetworkAnalyzer",
+    "constructor": "(transport, *, model, max_frequency_hz, max_power_dbm)",
+    "source_file": "dgm_lab/vna.py",
+    "profile_path": "profiles/vna.template.json",
+    "methods": {
+      "acquire_s11": "(self, *, start_hz, stop_hz, points, if_bandwidth_hz, power_dbm, require_correction=True)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "ZNB20",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "ZNB8",
+        "status": "implemented_uncommissioned"
+      }
+    ],
+    "source_ids": [
+      "rs-znb"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "cmw-lte",
+    "category": "cellular-callbox",
+    "operations": [
+      "configure",
+      "start",
+      "stop"
+    ],
+    "lifecycle": "connected",
+    "protocol": "R&S CMW LTE FDD RMC SCPI",
+    "site_requirements": [
+      "LTE signalling options and routing",
+      "test SIM/UE attachment",
+      "band/channel/RMC and path loss"
+    ],
+    "excludes": [
+      "NR",
+      "Samsung private AT control",
+      "universal cellular TX"
+    ],
+    "driver": "CmwLte",
+    "constructor": "(transport, *, site_profile_confirmed=False)",
+    "source_file": "dgm_lab/callbox.py",
+    "profile_path": "profiles/cmw-lte.template.json",
+    "methods": {
+      "configure": "(self, config)",
+      "start": "(self, *, timeout=60, cancelled=None)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "CMW500",
+        "status": "conditional"
+      }
+    ],
+    "source_ids": [
+      "rs-cmw-lte"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "thermotron",
+    "category": "chamber",
+    "operations": [
+      "setpoint",
+      "read_process",
+      "start",
+      "stop"
+    ],
+    "lifecycle": "running",
+    "protocol": "8800 native ASCII, CR, site ACK mode",
+    "site_requirements": [
+      "installed 8800 controller",
+      "channel and min/max",
+      "ACK mode and thermal limits"
+    ],
+    "excludes": [
+      "SCPI",
+      "thermal stabilization criterion"
+    ],
+    "driver": "Thermotron8800",
+    "constructor": "(transport, *, channel, minimum, maximum, acknowledgement, installed_controller_confirmed=False)",
+    "source_file": "dgm_lab/chambers.py",
+    "profile_path": "profiles/thermotron.template.json",
+    "methods": {
+      "setpoint": "(self, value)",
+      "read_process": "(self)",
+      "start": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [],
+    "source_ids": [],
+    "physical_verified": false
+  },
+  {
+    "profile": "espec",
+    "category": "chamber",
+    "operations": [
+      "configure",
+      "temperature",
+      "start",
+      "stop"
+    ],
+    "lifecycle": "running",
+    "protocol": "P300/SCP220 native ASCII CRLF",
+    "site_requirements": [
+      "installed controller and ROM",
+      "min/max and connection framing"
+    ],
+    "excludes": [
+      "all ESPEC controllers",
+      "humidity/program editor",
+      "thermal stabilization criterion"
+    ],
+    "driver": "EspecController",
+    "constructor": "(transport, *, expected_rom, minimum_c, maximum_c, installed_controller_confirmed=False)",
+    "source_file": "dgm_lab/chambers.py",
+    "profile_path": "profiles/espec.template.json",
+    "methods": {
+      "configure": "(self, *, temperature_c)",
+      "temperature": "(self)",
+      "start": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "ESPEC",
+        "model": "SU-642",
+        "status": "conditional"
+      }
+    ],
+    "source_ids": [
+      "espec-chamberconnect"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "hp437b",
+    "category": "power-meter",
+    "operations": [
+      "configure",
+      "read_power",
+      "stop"
+    ],
+    "lifecycle": "managed_run(lambda: None, device.stop)",
+    "protocol": "HP native GPIB TR2/status; not generic SCPI",
+    "site_requirements": [
+      "existing sensor table 0..9",
+      "frequency on 100 kHz grid",
+      "GPIB talk/listen support"
+    ],
+    "excludes": [
+      "fresh stop readback",
+      "automatic sensor calibration"
+    ],
+    "driver": "Hp437B",
+    "constructor": "(transport)",
+    "source_file": "dgm_lab/legacy.py",
+    "profile_path": "profiles/hp437b.template.json",
+    "methods": {
+      "configure": "(self, *, frequency_hz, sensor_table)",
+      "read_power": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [],
+    "source_ids": [],
+    "physical_verified": false
+  },
+  {
+    "profile": "co3000",
+    "category": "motion",
+    "operations": [
+      "position",
+      "limits",
+      "speed",
+      "move",
+      "polarize",
+      "stop_all"
+    ],
+    "lifecycle": "scan_radiated_grid or managed_run(lambda: None, device.stop_all)",
+    "protocol": "CO3000 ASCII ACK, TCP 5025 LF",
+    "site_requirements": [
+      "firmware >=1.02.60",
+      "actual OPT axis mapping",
+      "travel/rotation envelope and motion_enabled",
+      "mast/table/controller wiring"
+    ],
+    "excludes": [
+      "unknown turntable controllers",
+      "collision geometry",
+      "safety PLC replacement"
+    ],
+    "driver": "Co3000",
+    "constructor": "(transport, *, axes, motion_enabled=False, poll_seconds=0.2)",
+    "source_file": "dgm_lab/motion.py",
+    "profile_path": "profiles/co3000.template.json",
+    "methods": {
+      "position": "(self, axis)",
+      "limits": "(self, axis)",
+      "speed": "(self, axis, level)",
+      "move": "(self, axis, value, *, timeout=60, tolerance=0.1, cancelled=None)",
+      "polarize": "(self, axis, orientation, *, timeout=60, cancelled=None)",
+      "stop_all": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Innco systems",
+        "model": "CO3000",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Innco systems",
+        "model": "DS1500-S-1T",
+        "status": "controller_component"
+      },
+      {
+        "manufacturer": "Innco systems",
+        "model": "DS2000-S",
+        "status": "controller_component"
+      },
+      {
+        "manufacturer": "Innco systems",
+        "model": "DS2000-S-1T",
+        "status": "controller_component"
+      },
+      {
+        "manufacturer": "Innco systems",
+        "model": "MA4640",
+        "status": "controller_component"
+      },
+      {
+        "manufacturer": "Innco systems",
+        "model": "MA4640-XP-ET",
+        "status": "controller_component"
+      },
+      {
+        "manufacturer": "Innco systems",
+        "model": "MA4640/800-XP-EP",
+        "status": "controller_component"
+      }
+    ],
+    "source_ids": [
+      "innco-co3000"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "osp",
+    "category": "rf-switch",
+    "operations": [
+      "select",
+      "matches",
+      "stop"
+    ],
+    "lifecycle": "routed",
+    "protocol": "OSP120/130 B101/B102 SCPI; OSP150 CAN extension",
+    "site_requirements": [
+      "slot/module/channel map",
+      "named relay states and safe_path",
+      "RF OFF before switching if required"
+    ],
+    "excludes": [
+      "unreviewed OSP modules",
+      "direct OSP150 LAN"
+    ],
+    "driver": "OspSwitch",
+    "constructor": "(transport, *, model, modules, paths, safe_path, switching_enabled=False)",
+    "source_file": "dgm_lab/switching.py",
+    "profile_path": "profiles/osp.template.json",
+    "methods": {
+      "select": "(self, name)",
+      "matches": "(self, name)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "OSP 120",
+        "status": "implemented_uncommissioned"
+      },
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "OSP 150",
+        "status": "controller_component"
+      }
+    ],
+    "source_ids": [
+      "rs-osp"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "epm",
+    "category": "power-meter",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "lifecycle": "managed_run(lambda: None, device.stop)",
+    "protocol": "E4419B SCPI A/B average power",
+    "site_requirements": [
+      "8480 sensor existing correction table",
+      "input A/B and frequency"
+    ],
+    "excludes": [
+      "automatic calibration table creation"
+    ],
+    "driver": "EpmPowerMeter",
+    "constructor": "(transport, *, model='E4419B')",
+    "source_file": "dgm_lab/epm.py",
+    "profile_path": "profiles/epm.template.json",
+    "methods": {
+      "configure_average": "(self, *, frequency_hz, calibration_table, channel=1)",
+      "read_power": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Keysight/Agilent/HP",
+        "model": "E4419B",
+        "status": "implemented_uncommissioned"
+      }
+    ],
+    "source_ids": [
+      "keysight-e4419b"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "oda-ex",
+    "category": "dc-source",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "lifecycle": "powering",
+    "protocol": "EX ASCII, three-field IDN plus SN, no OPC",
+    "site_requirements": [
+      "EX60-40 nameplate bound to serial/firmware",
+      "site max <=60 V/40 A",
+      "point-to-point serial or commissioned optional TCP",
+      "USB manufacturer driver if applicable"
+    ],
+    "excludes": [
+      "RS485 multidrop",
+      "automatic protection clearing",
+      "all ODA models"
+    ],
+    "driver": "OdaEx",
+    "constructor": "(transport, *, model='EX60-40', expected_serial='', expected_firmware='', max_voltage=0, max_current=0, installed_model_confirmed=False)",
+    "source_file": "dgm_lab/oda.py",
+    "profile_path": "profiles/oda-ex.template.json",
+    "methods": {
+      "configure": "(self, *, voltage, current)",
+      "read_voltage": "(self)",
+      "read_current": "(self)",
+      "start": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "ODA",
+        "model": "EX60-40",
+        "status": "conditional"
+      }
+    ],
+    "source_ids": [
+      "oda-ex"
+    ],
+    "physical_verified": false
+  },
+  {
+    "profile": "cmu200-cw",
+    "category": "rf-source",
+    "operations": [
+      "configure",
+      "status",
+      "start",
+      "stop"
+    ],
+    "lifecycle": "emitting",
+    "protocol": "CMU logical secondary-address SCPI over GPIB/RS232",
+    "site_requirements": [
+      "RF_NSig secondary address 1..29",
+      "RF1/2/3 port and power limits",
+      "firmware string and logical addressing support",
+      "other generator/function groups OFF; exclusive instrument ownership",
+      "remote entry can interrupt calls"
+    ],
+    "excludes": [
+      "LTE/NR/BT signalling",
+      "phone TX",
+      "AuxTx/list mode",
+      "generic LAN SCPI socket"
+    ],
+    "driver": "Cmu200Cw",
+    "constructor": "(transport, *, secondary_address=0, output_port=0, max_frequency_hz=0, max_power_dbm=None, expected_firmware='', site_profile_confirmed=False)",
+    "source_file": "dgm_lab/cmu.py",
+    "profile_path": "profiles/cmu200-cw.template.json",
+    "methods": {
+      "configure": "(self, *, frequency_hz, power_dbm)",
+      "status": "(self)",
+      "start": "(self)",
+      "stop": "(self)"
+    },
+    "hct_models": [
+      {
+        "manufacturer": "Rohde & Schwarz",
+        "model": "CMU200",
+        "status": "implemented_uncommissioned"
+      }
+    ],
+    "source_ids": [
+      "rs-cmu-base"
+    ],
+    "physical_verified": false
+  }
+]

@@ -1,4 +1,20 @@
 [
+  {
+    "id": "oda-ex60-40-spec",
+    "url": "https://rndtech.synology.me/Instrument/Datasheet/ODA/EX60-40.pdf",
+    "kind": "manufacturer_specification_distributor_mirror"
+  },
+  {
+    "id": "rs-cmu-base",
+    "url": "https://valuetronics.com/cdn/shop/files/Rohde_and_Schwarz_CMU_200_CMU_300_Operating_Manual.pdf?v=17694835289362519049",
+    "kind": "manufacturer_manual_distributor_mirror"
+  },
+  {
+    "id": "anritsu-mx800010a-ch4",
+    "url": "https://raw.githubusercontent.com/d1658999/mt8000_lib/575305621a9c585d576cd89a0b41d79c73daf56e/mx800010a-ef1006_228_CH4.pdf",
+    "kind": "manufacturer_chapter_third_party_copy_unverified_edition"
+  },
+  {"id":"oda-ex","url":"https://kusami.vn/Uploaded/2018_10_03/Manual%20Ex%20Series.pdf","kind":"manufacturer_manual_distributor_copy","publisher":"ODA Technologies"},
   {"id":"rs-cbt","url":"https://www.metrologymanuals.com/pdf/sha-423127c099dad8befd6fa9684e8735395ac63203e7b09afd37ff888e3c523d31/","kind":"manufacturer_manual_archive_copy","publisher":"Rohde & Schwarz"},
   {"id":"keysight-psg","url":"https://www.keysight.com/cm/en/assets/9018-04965/programming-guides/9018-04965.pdf","kind":"manufacturer_manual"},
   {"id":"keysight-esg-b","url":"https://www.keysight.com/ca/en/assets/9018-40176/programming-guides/9018-40176.pdf","kind":"manufacturer_manual"},

@@ -64,6 +64,20 @@ SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermo
 | `stop(self)` | `MODE?` |
 | `running(self)` | 하위 메서드 호출; 실행 코드 참조 |
 
+## Cmu200Cw
+
+[실행 코드](../dgm_lab/cmu.py)
+
+| API | 실제 명령/템플릿 조각 |
+| --- | --- |
+| `__init__(self, transport, *, secondary_address=0, output_port=0, max_frequency_hz=0, max_power_dbm=None, expected_firmware='', site_profile_confirmed=False)` | 하위 메서드 호출; 실행 코드 참조 |
+| `identify(self)` | 하위 메서드 호출; 실행 코드 참조 |
+| `status(self)` | `FETC:RFG:TX:STAT?` |
+| `configure(self, *, frequency_hz, power_dbm)` | `SOUR:RFG:MOD OFF`; `SOUR:RFG:FHOP:STAT OFF`; `SOUR:RFG:PULS:STAT OFF`; `f'SOUR:RFG:TX:FREQ {fmt(frequency_hz)}'`; `OUTP:TX RF`; `SOUR:CORR:LOSS:OUTP`; `SOUR:RFG:TX:FREQ `; `SOUR:RFG:TX:LEV `; `*OPC?` |
+| `start(self)` | `INIT:RFG:TX`; `*OPC?` |
+| `stop(self)` | `ABOR:RFG:TX`; `*OPC?` |
+| `emitting(self)` | 하위 메서드 호출; 실행 코드 참조 |
+
 ## EpmPowerMeter
 
 [실행 코드](../dgm_lab/epm.py)
@@ -125,6 +139,23 @@ SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermo
 | `wait(self, axis, *, target=None, polarization=None, timeout=60, tolerance=0.1, cancelled=None)` | 하위 메서드 호출; 실행 코드 참조 |
 | `move(self, axis, value, *, timeout=60, tolerance=0.1, cancelled=None)` | 하위 메서드 호출; 실행 코드 참조 |
 | `polarize(self, axis, orientation, *, timeout=60, cancelled=None)` | 하위 메서드 호출; 실행 코드 참조 |
+
+## OdaEx
+
+[실행 코드](../dgm_lab/oda.py)
+
+| API | 실제 명령/템플릿 조각 |
+| --- | --- |
+| `__init__(self, transport, *, model='EX60-40', expected_serial='', expected_firmware='', max_voltage=0, max_current=0, installed_model_confirmed=False)` | 하위 메서드 호출; 실행 코드 참조 |
+| `identify(self)` | `*IDN?` |
+| `ready(self)` | 하위 메서드 호출; 실행 코드 참조 |
+| `errors(self)` | 하위 메서드 호출; 실행 코드 참조 |
+| `configure(self, *, voltage, current)` | 하위 메서드 호출; 실행 코드 참조 |
+| `start(self)` | 하위 메서드 호출; 실행 코드 참조 |
+| `read_voltage(self)` | `MEAS:VOLT?` |
+| `read_current(self)` | `MEAS:CURR?` |
+| `stop(self)` | 하위 메서드 호출; 실행 코드 참조 |
+| `powering(self)` | 하위 메서드 호출; 실행 코드 참조 |
 
 ## SignalGenerator
 

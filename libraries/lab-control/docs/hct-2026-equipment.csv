@@ -68,12 +68,12 @@ Mini-Circuits,ZUDC6-0283-S+,Directional Coupler,passive_or_fixture,,연결·보�
 NANGYEAL,NY-THR18750,Temperature and Humidity Chamber,pending_protocol,,정확한 통신 옵션·프로그램 명령과 설치 설정 확인 필요,HCT-RF-2602-FC007 PDF p.16; HCT-RF-2604-FC036 PDF p.15
 NARDA,4226-10,Directional Coupler,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,HCT-SR-2604-FC008 PDF p.15
 NARDA,4456-4,4 WAY POWER DIVIDER / 4 Way Power Divider,passive_or_fixture,,RF 경로·전원·교정 데이터 관리. 독립 원격 명령은 확인하지 않음,HCT-RF-2604-FC056 PDF p.19; HCT-RF-2609-FC006 PDF p.136
-ODA,EX60-40,DC Power Supply,pending_protocol,,장비표 확인. 해당 모델의 프로그래밍/SDK·설치 옵션과 명령 검토 필요,HCT-RF-2604-FC036 PDF p.15
+ODA,EX60-40,DC Power Supply,conditional,OdaEx,EX family 3필드 IDN + serial/firmware 결합·명판 확인 후 전압/전류·ON/OFF·측정. 범용 EX 문서와 EX60-40 사양 대조; 실물 미검증,HCT-RF-2604-FC036 PDF p.15
 RF COREA,ATTENUATOR (30DB),Attenuator (30dB),passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,HCT-SR-2604-FC008 PDF p.15
 RFTECH,EP-DN980BWE,Data Cable,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,HCT-EM-2604-FC002 PDF p.7
 Rohde & Schwarz,18N-20DB,Attenuator,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,HCT-RF-2604-FC057 PDF p.50; HCT-RF-2609-FC006 PDF p.136
 Rohde & Schwarz,CBT,Bluetooth Tester,pending_protocol,,전체 매뉴얼 PDF 취득 403. GPIB secondary address별 기능 그룹 분리; 설치 버전/주소와 명령 검토 필요,HCT-RF-2604-FC054 PDF p.46; HCT-RF-2604-FC055 PDF p.50; HCT-RF-2604-FC057 PDF p.50; HCT-RF-2604-FC059-R1 PDF p.73; HCT-RF-2609-FC006 PDF p.136
-Rohde & Schwarz,CMU200,Universal Radio Communication Tester / Universal radio communication tester,pending_protocol,,정확한 통신 옵션·프로그램 명령과 설치 설정 확인 필요,HCT-EM-2604-FC002 PDF p.14; HCT-EM-2604-FC002 PDF p.15
+Rohde & Schwarz,CMU200,Universal Radio Communication Tester / Universal radio communication tester,implemented_uncommissioned,Cmu200Cw,RF_NSig CW 발생기만: secondary 1–29 검증·RF1/2/3·100kHz–2.7GHz·INIT/ABOR·상태조회. 셀룰러/BT signalling 미구현,HCT-EM-2604-FC002 PDF p.14; HCT-EM-2604-FC002 PDF p.15
 Rohde & Schwarz,CMW500,Wideband Radio Communication Tester / Wireless Communication Test Set,conditional,CmwLte,LTE FDD RMC 셀/연결·상태 대기·해제. 시험 SIM/라우팅/라이선스 필요,HCT-EM-2604-FC002 PDF p.14; HCT-EM-2604-FC002 PDF p.15; HCT-SR-2604-FC008 PDF p.15
 Rohde & Schwarz,CMX500,Radio Communication Tester,pending_protocol,,모델/앱/버전에 맞는 명령 또는 SDK 연결 검증 미완료. 실행 드라이버를 제공하지 않음,HCT-RF-2609-FC006 PDF p.136
 Rohde & Schwarz,ELEKTRA,Software,support_or_software,,지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요,HCT-RF-2609-FC006 PDF p.136

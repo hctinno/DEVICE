@@ -10,7 +10,9 @@
 
 ## 현재 상태
 
-최신 검수: `python -X utf8 scripts/check_lab_control.py` 79검사, localhost TCP 7건, wheel 2개 격리 설치·CLI/help 6건 통과. `python -X utf8 scripts/check_samsung_rf.py` 46검사 통과. 아래 v0.1.0 수치는 이전 조사 범위이며 HCT 2026 목록과 합산하지 않습니다. 현재 실장비 검증은 여전히 0건입니다.
+설비 자동화 개발은 **[AGENT_START_HERE](libraries/lab-control/AGENT_START_HERE.md)**부터 시작합니다. v0.3.0: OdaEx/CMU200 CW를 추가해 16개 driver class, capability JSON, 통신 없는 profile 검사, 설치 패키지의 성공/실패 모의 실행을 제공합니다. 제조사 문서와 공개 저장소 6개의 commit·라이선스·재사용 결정을 연결했습니다. CMU200 CW는 셀룰러 TX가 아니며 MT8000A chapter 후보는 실행 드라이버가 아닙니다.
+
+최신 검수: `python -X utf8 scripts/check_lab_control.py` 99검사, localhost TCP 7건, wheel 2개 격리 설치·CLI/help/모의 실행 8건 통과. 제조사 PDF 39개·HCT PDF 16개 local SHA-256 대조. 삼성 RF 기존 검수는 `python -X utf8 scripts/check_samsung_rf.py` 46검사이며 이번 설비 확장에서 DUT 코드는 변경하지 않았습니다. 아래 v0.1.0/v0.2.0 수치는 이전 상태이며 HCT 2026 목록과 합산하지 않습니다. 현재 HCT 모델 그룹은 22개 한정 기능 구현·미commissioning, 3개 조건부, 7개 컨트롤러 구성품입니다. 실장비 검증은 여전히 0건입니다.
 
 2026-11-04 HCT 기준 재조사: **앞선 모션 모델 미확보 판단은 기존 조사 범위에 한정됩니다.** HCT Korea 2026 발행 성적서 12건/16 PDF에서 장비표 418행·제조사/모델 150그룹을 확보했습니다. CO3000, MA4640, DS2000/DS1500이 실제로 기재되어 있습니다. [HCT 목록](libraries/lab-control/docs/HCT_2026_EQUIPMENT.md), [명령·실행](libraries/lab-control/docs/HCT_CONTROL.md), [계획·남은 범위](libraries/lab-control/HCT_2026_PLAN.md)를 기준으로 이어갑니다. LabControl v0.2.0은 14개 driver class, CO3000 이동/높이/각도/편파/속도/정지, 2축 grid/최대점 복귀, OSP 호스트 경로, E4419B와 추가 계측 모델을 구현했습니다. HCT 150그룹 중 21개는 한정 기능 구현·미commissioning, 7개는 컨트롤러 구성품입니다. 실장비·전체 FCC workflow 검증은 0건입니다. TESCOM MTP300A/TC-3000C는 Bluetooth Tester, TA-018S-16은 RF Switching Unit이며 모션 장비로 바꾸지 않습니다.
 

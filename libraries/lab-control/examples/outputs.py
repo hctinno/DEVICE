@@ -3,7 +3,7 @@ import argparse
 import json
 from pathlib import Path
 import time
-from dgm_lab import SignalGenerator, PowerSupply, JsonlLog
+from dgm_lab import SignalGenerator, PowerSupply, OdaEx, Cmu200Cw, JsonlLog
 from dgm_lab.core import number
 from dgm_lab.registry import connect
 
@@ -22,12 +22,19 @@ def main():
     try:
         with connect(profile,log=log) as device:
             if a.mode=='cw':
-                if not isinstance(device,SignalGenerator): raise ValueError('CW requires SignalGenerator profile')
-                device.configure_cw(frequency_hz=a.frequency_hz,power_dbm=a.power_dbm)
+                if isinstance(device,Cmu200Cw):
+                    device.configure(frequency_hz=a.frequency_hz,power_dbm=a.power_dbm)
+                elif isinstance(device,SignalGenerator):
+                    device.configure_cw(frequency_hz=a.frequency_hz,power_dbm=a.power_dbm)
+                else: raise ValueError('CW requires SignalGenerator or Cmu200Cw profile')
                 with device.emitting(): time.sleep(a.seconds)
             else:
-                if not isinstance(device,PowerSupply): raise ValueError('DC requires PowerSupply profile')
-                device.configure(voltage=a.voltage,current_limit=a.current_limit,range_name=a.range_name)
+                if isinstance(device,OdaEx):
+                    if a.range_name is not None: raise ValueError('ODA does not accept range-name')
+                    device.configure(voltage=a.voltage,current=a.current_limit)
+                elif isinstance(device,PowerSupply):
+                    device.configure(voltage=a.voltage,current_limit=a.current_limit,range_name=a.range_name)
+                else: raise ValueError('DC requires PowerSupply or OdaEx profile')
                 with device.powering():
                     print(device.read_voltage());print(device.read_current())
                     time.sleep(a.seconds)

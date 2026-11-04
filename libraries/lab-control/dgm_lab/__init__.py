@@ -11,5 +11,7 @@ from .legacy import Hp437B
 from .motion import Co3000, Position, scan_positions, scan_radiated_grid
 from .switching import OspSwitch
 from .epm import EpmPowerMeter
+from .oda import OdaEx
+from .cmu import Cmu200Cw
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'

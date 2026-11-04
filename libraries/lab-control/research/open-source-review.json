@@ -1,0 +1,54 @@
+[
+  {
+    "id":"pyvisa", "repository":"pyvisa/pyvisa", "commit":"a5b56ab857115e44e59f240f99207b305f77c459",
+    "license":"MIT", "license_file":"LICENSE", "license_blob":"3315003662a2f0a91fa11baeaff5ec57847eb092",
+    "files_reviewed":["LICENSE"], "role":"VISA transport dependency; dgm_lab.transport.VisaTransport integration already implemented",
+    "decision":"dependency", "review_depth":"license and existing local adapter integration; upstream implementation not audited",
+    "model_scope":"Transport only; does not establish any instrument command compatibility",
+    "cautions":["VISA implementation and GPIB/USBTMC vendor drivers must be installed separately as appropriate.","Review pin is not the pip dependency lock. Capture deployed pip freeze and VISA backend version."]
+  },
+  {
+    "id":"rsinstrument", "repository":"Rohde-Schwarz/RsInstrument", "commit":"4d7e7421345c845539f38334765bdddeb394ee4d",
+    "license":"MIT", "license_file":"LICENSE", "license_blob":"ad0e3d5ff05883eed944fce6727b3e3ad32fe02a",
+    "files_reviewed":["LICENSE","README.rst"], "role":"Manufacturer SCPI/VISA I/O, OPC, logging and binary transfers",
+    "decision":"optional_alternative_not_integrated", "review_depth":"manufacturer README and license",
+    "model_scope":"R&S I/O framework; not proof of a model/option command set",
+    "cautions":["README hello-world uses reset=True. Do not copy into a state-preserving connection; use reset=False after inspecting initialization behavior.","Do not suppress instrument errors or retry timed-out output/motion commands in the test runner.","Existing dgm_lab uses PyVISA directly; RsInstrument is not required."]
+  },
+  {
+    "id":"pymeasure", "repository":"pymeasure/pymeasure", "commit":"e4bdd4a1138d892dcbc52940c42129ac78c242d4",
+    "license":"MIT", "license_file":"LICENSE.txt", "license_blob":"ff6ae34696821a7cbfcee5e432eb10409ca42251",
+    "files_reviewed":["LICENSE.txt","pymeasure/instruments/rohdeschwarz/fsseries.py","pymeasure/instruments/keysight/keysightE364xA.py"],
+    "role":"Higher-level instrument APIs and experiment UI building blocks",
+    "decision":"reference_not_vendored", "review_depth":"two instrument files read; no upstream execution or hardware validation",
+    "model_scope":"FSSeries/FSW family; E3640A exact class. No claim for all FSV/FSW options or E3632A from E3631A/E36312A classes",
+    "cautions":["E364xA constructor writes the voltage range; construction is not read-only and can change output settings.","FSSeries marker construction activates the marker.","Keep dgm_lab identity checks, installed limits, error evidence and lifecycle cleanup when integrating another API."]
+  },
+  {
+    "id":"espec-chamberconnect", "repository":"EspecNorthAmerica/ChamberConnectLibrary", "commit":"1d2deb8b2629e47a45a838e89419ffe1d066cecd",
+    "license":"MIT", "license_file":"LICENSE.md", "license_blob":"13e7a8ccf6fb8369418860dabf69ead009dd23d8",
+    "files_reviewed":["LICENSE.md","README.md","chamberconnectlibrary/p300.py","chamberconnectlibrary/scp220.py","chamberconnectlibrary/especinteract.py"],
+    "role":"Manufacturer controller protocol reference; existing independent EspecController implementation",
+    "decision":"protocol_reference_independent_implementation", "review_depth":"README/license rechecked; protocol files reviewed in initial library research with blob hashes in sources.json",
+    "model_scope":"P300/SCP220 controller only for current dgm_lab; SU-642 chamber controller must be identified",
+    "cautions":["README requires Python 2.7.x; not a drop-in Python 3 dependency.","Manufacturer model name of chamber does not identify its installed controller.","Do not send generic SCPI to this protocol."]
+  },
+  {
+    "id":"community-cmu200", "repository":"Stefanhg/CMU200-python-driver", "commit":"bdcc4ead030aa706568df1e28fdd17fc6119983a",
+    "license":"MIT", "license_file":"LICENSE", "license_blob":"054fbc63f1f784c9f8f4b436025e48ff63386bc7",
+    "files_reviewed":["LICENSE","drivers/generator.py","drivers/communication.py"],
+    "role":"Community CMU200 command discovery lead",
+    "decision":"do_not_use_as_runtime", "review_depth":"static code review; no upstream execution",
+    "model_scope":"RF generator reference only. dgm_lab.Cmu200Cw independently uses manufacturer manual rs-cmu-base",
+    "cautions":["generator.set_modulation calls list with multiple positional arguments and raises a string; both fail in Python.","communication.query_write performs a query then falls through to writing command plus None, without returning the query result.","Do not copy this implementation into unattended output control."]
+  },
+  {
+    "id":"community-mt8000", "repository":"d1658999/mt8000_lib", "commit":"575305621a9c585d576cd89a0b41d79c73daf56e",
+    "license":"NOASSERTION", "license_file":null, "license_blob":null,
+    "files_reviewed":["README.md","mx800010a-ef1006_228_CH4.pdf"],
+    "role":"Publicly visible command/manual discovery lead, not licensed open source",
+    "decision":"no_code_reuse_no_runtime_driver", "review_depth":"README says no license; selected pages of third-party manual chapter reviewed",
+    "model_scope":"MT8000A MX800010A and MT8821C LTE anchor examples; installed version/transport/identity unverified",
+    "cautions":["No repository license; do not vendor code or add as a dependency.","Repository license cannot grant redistribution of manufacturer PDFs; store URL/hash/review pages only.","Chapter examples do not establish complete measurement validity, cleanup or smartphone test-mode access."]
+  }
+]

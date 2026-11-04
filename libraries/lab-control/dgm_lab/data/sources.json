@@ -729,6 +729,93 @@
     "hardware_validated": false
   },
   {
+    "id": "oda-ex",
+    "url": "https://kusami.vn/Uploaded/2018_10_03/Manual%20Ex%20Series.pdf",
+    "kind": "manufacturer_manual_distributor_copy",
+    "publisher": "ODA Technologies",
+    "status": "acquired",
+    "sha256": "aee08b608a33067c39d90473f8d13800cfc907965c5e1acddffbc02136f5047d",
+    "pages": 94,
+    "review": {
+      "pdf_pages": [
+        40,
+        41,
+        44,
+        45,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        84,
+        85
+      ],
+      "scope": "Manufacturer EX family manual, distributor copy. Three-field FAMILY IDN plus SN; no OPC command in command list. EX60-40 mapping conditional on nameplate/serial/firmware. Configure/output/readback/trip queries only. RS232 point-to-point; USB needs manufacturer driver, not presumed CDC; optional TCP port is configurable (5000 is manual example)."
+    },
+    "hardware_validated": false
+  },
+  {
+    "id": "rs-cmu-base",
+    "url": "https://valuetronics.com/cdn/shop/files/Rohde_and_Schwarz_CMU_200_CMU_300_Operating_Manual.pdf?v=17694835289362519049",
+    "kind": "manufacturer_manual_distributor_mirror",
+    "status": "acquired",
+    "sha256": "fd99f0a67503dddc79339ccbbac39f05020ab0916bc0ec6bed4288b9c323d707",
+    "pages": 529,
+    "review": {
+      "pdf_pages": [
+        128,
+        253,
+        307,
+        310,
+        316,
+        348,
+        349,
+        351,
+        352,
+        359
+      ],
+      "scope": "CMU200/300 base manual 1100.4903.12 E-3, manufacturer-authored distributor mirror. CMU200 RF_NSig CW only. Logical secondary prefix, mapping query (never remap), port-dependent nominal power with loss correction zero, INIT/ABOR/status. Site confirms firmware and other generators OFF. Remote entry may interrupt calls. Not a cellular TX driver."
+    },
+    "hardware_validated": false
+  },
+  {
+    "id": "anritsu-mx800010a-ch4",
+    "url": "https://raw.githubusercontent.com/d1658999/mt8000_lib/575305621a9c585d576cd89a0b41d79c73daf56e/mx800010a-ef1006_228_CH4.pdf",
+    "kind": "manufacturer_chapter_third_party_copy_unverified_edition",
+    "status": "acquired",
+    "sha256": "79777e017c471dcce957771ae0ee13ef5cbece8710c11436bc3cc8821321ac92",
+    "pages": 1056,
+    "review": {
+      "pdf_pages": [
+        88,
+        99,
+        125,
+        128,
+        129
+      ],
+      "scope": "1056-page Chapter 4 third-party pinned copy; edition/full-document authenticity not confirmed. REM_DEST 8821C/8000A, LTE BAND/BANDWIDTH, CALLSA/CALLSO/CALLSTAT examples found. Transport/IDN/options and complete start-to-stop semantics not yet reviewed; NO runnable driver enabled. Hosting repository has no license; no code copied."
+    },
+    "hardware_validated": false
+  },
+  {
+    "id": "oda-ex60-40-spec",
+    "url": "https://rndtech.synology.me/Instrument/Datasheet/ODA/EX60-40.pdf",
+    "kind": "manufacturer_specification_distributor_mirror",
+    "status": "acquired",
+    "sha256": "e100a2f9de3e126dd3b7f7c9187cc61ea399792c2512d7a030d683169f150947",
+    "pages": 1,
+    "review": {
+      "pdf_pages": [
+        1
+      ],
+      "scope": "EX60-40 model-specific specification from distributor mirror: nominal 0–60 V/0–40 A. Library caps at nominal rating, not over-range 63 V/42 A. 0.01 V/A command grid is deliberately conservative, not a claim of native DAC resolution."
+    },
+    "hardware_validated": false
+  },
+  {
     "id": "espec-chamberconnect",
     "kind": "manufacturer_open_source",
     "status": "reviewed",

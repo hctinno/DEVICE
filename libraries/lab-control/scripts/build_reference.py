@@ -34,7 +34,7 @@ def main():
     (ROOT/'dgm_lab/data/sources.json').write_text(json.dumps(sources,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     index=[]
     for path in sorted((ROOT/'dgm_lab').glob('*.py')):
-        if path.stem not in ('analyzers','sources','meters','vna','chambers','callbox','legacy','motion','switching','epm'):
+        if path.stem not in ('analyzers','sources','meters','vna','chambers','callbox','legacy','motion','switching','epm','oda','cmu'):
             continue
         tree=ast.parse(path.read_text(encoding='utf-8'))
         for cls in (n for n in tree.body if isinstance(n,ast.ClassDef) and n.name in DRIVERS):
@@ -67,11 +67,11 @@ def main():
     (ROOT/'docs/API_INDEX.md').write_text('\n'.join(lines),encoding='utf-8')
     lines=['# 공식 제어 근거','',
            'PDF 페이지는 파일 첫 페이지를 1로 센 번호입니다. 전체 매뉴얼은 재배포하지 않으며 URL·SHA-256·검토 위치를 보존합니다. 현재 설치 펌웨어와 대조해야 합니다. 문서 확보와 장비 동작 검증은 별개입니다.', '',
-           '| ID | 공식 자료 | 확보/검토 | 페이지·범위 |','| --- | --- | --- | --- |']
+           '| ID | 자료 URL / 종류 | 확보/검토 | 페이지·범위 |','| --- | --- | --- | --- |']
     for r in sources:
         review=r.get('review',{})
         pages=', '.join(map(str,review.get('pdf_pages',[]))) or '명령 장/소스 파일'
-        lines.append(f"| {r['id']} | [제조사 원문]({r['url']}) | {r['status']} | {pages}: {review.get('scope',r.get('error',''))} |")
+        lines.append(f"| {r['id']} | [자료]({r['url']}) / {r.get('kind','reference')} | {r['status']} | {pages}: {review.get('scope',r.get('error',''))} |")
     lines += ['', '[해시·다운로드 경로](../dgm_lab/data/sources.json) · [확보 스크립트](../scripts/acquire_manuals.py)', '']
     (ROOT/'docs/SOURCES.md').write_text('\n'.join(lines),encoding='utf-8')
     print(f'{len(sources)} source records; {len(index)} driver API indexes')

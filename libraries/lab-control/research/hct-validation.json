@@ -5,12 +5,12 @@
   "manufacturer_model_groups": 150,
   "status_counts": {
     "passive_or_fixture": 56,
-    "pending_protocol": 18,
+    "pending_protocol": 16,
     "vendor_required": 36,
     "support_or_software": 6,
-    "conditional": 2,
+    "conditional": 3,
     "model_required": 1,
-    "implemented_uncommissioned": 21,
+    "implemented_uncommissioned": 22,
     "controller_component": 7,
     "controller_required": 1,
     "host_component": 2

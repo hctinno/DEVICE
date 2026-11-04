@@ -27,6 +27,10 @@ def canonical(maker, model):
 
 def support(maker, model, descriptions):
     text=' '.join(descriptions).lower()
+    if maker=='ODA' and model=='EX60-40':
+        return 'conditional','OdaEx','EX family 3필드 IDN + serial/firmware 결합·명판 확인 후 전압/전류·ON/OFF·측정. 범용 EX 문서와 EX60-40 사양 대조; 실물 미검증','oda-ex'
+    if maker=='Rohde & Schwarz' and model=='CMU200':
+        return 'implemented_uncommissioned','Cmu200Cw','RF_NSig CW 발생기만: secondary 1–29 검증·RF1/2/3·100kHz–2.7GHz·INIT/ABOR·상태조회. 셀룰러/BT signalling 미구현','rs-cmu-base'
     if maker=='Keysight/Agilent/HP' and model in ('E8267D','E4421B','E4433B'):
         return 'implemented_uncommissioned','SignalGenerator','CW 주파수·고정 출력·변조 OFF·RF ON/OFF와 재조회; 임의 변조/DFS 파형은 미구현','keysight-psg' if model=='E8267D' else 'keysight-esg-b'
     if model in ('OSP 120','OSP 150'):

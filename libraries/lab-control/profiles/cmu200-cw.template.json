@@ -1,0 +1,17 @@
+{
+  "driver": "Cmu200Cw",
+  "parameters": {
+    "secondary_address": 0,
+    "output_port": 0,
+    "max_frequency_hz": 0,
+    "max_power_dbm": null,
+    "expected_firmware": "",
+    "site_profile_confirmed": false
+  },
+  "transport": {
+    "kind": "visa",
+    "resource": "REPLACE_WITH_INSTALLED_VISA_RESOURCE",
+    "timeout": 30
+  },
+  "notes": "Template only. Confirm installed model/controller, limits, options, address and termination before use."
+}
