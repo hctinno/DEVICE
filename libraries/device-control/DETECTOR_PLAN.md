@@ -7,11 +7,13 @@
 | 20 | 장비별 검파 의미·명령·시간/필터 근거 확인 | 완료: 공식 6개 매뉴얼 URL/hash/page |
 | 40 | 검증된 수신기 주파수 점 측정·보정/판정·CLI | 구현: ESW8/44·ESR3/7, 모든 5개 workflow |
 | 30 | native 모의 장비·상태 불일치·회귀·설치 검수 | SDK 149 + 설비 103 + 단말 58 = 310, 격리 CLI 89 통과 |
-| 10 | 지원/미확인 표·README·오프라인·main 반영 | README 34명령/3 Python, ZIP 새 venv 5무선 검수 완료; main 게시 대기 |
+| 10 | 지원/미확인 표·README·오프라인·main 반영 | 완료: README 34명령/3 Python, ZIP 새 venv 5무선, main push 및 원격 SHA 일치 |
 
 초기 약 10%, 예상 90–150분. 주요 위험: RMS를 전압 평균으로 오인, 평균과 CISPR 평균 혼동, 설정 명령 ACK만으로 검파 성공 처리, QP 측정 시간 부족, RBW/필터 차이, 측정 단위 이중 환산, 이전 표본/다른 검파기의 판정 재사용입니다.
 
 소프트웨어·배포 검수 완료: SDK 0.8.0 / LabControl 0.5.0 / RF 0.5.0. 최종 근거는 docs/validation.json, docs/distribution-validation.json, 루트 README_VALIDATION.json입니다. 테스트 310개와 격리 CLI 89개를 통과했습니다. 실장비/물리 검파/현장 교정 검증은 범위 밖이며 0건입니다. 상태 분리와 남은 미구현은 DETECTORS.md에 기록했습니다.
+
+가중 단계 100% 완료. 구현 커밋 `8b69539f6be99939461f8fc16b88757cfadfd7aa`를 main에 fast-forward/push했고 `git ls-remote origin refs/heads/main`의 같은 SHA를 확인했습니다. 이 완료 기록은 후속 문서 커밋으로 보존합니다. 실장비 전체 자동화나 FCC 적합성 완료를 뜻하지 않습니다.
 
 설계: 기존 스펙트럼 스캔·source 확인은 유지하고 별도 measurement JSON으로 EmiReceiver의 명시적 주파수 목록을 최종 위치별 측정에 연결합니다. baseline/NFC RF ON/OFF 확인은 기존 분석기가 맡으며 평균/QP 지연으로 종료 판단을 바꾸지 않습니다. 실제 수신기 모델·주파수 한계·단일 검파기·필터·RBW·dwell·attenuation·단위를 확인한 결과만 판정에 사용합니다. 수신기 dBµV 원시값과 비교용 50Ω 환산값을 함께 보존합니다. 평균은 LINEAR_AVER와 CISPR_AVER로 구분합니다. 다른 장비의 문서상 기능과 이번 드라이버 실행 지원은 별도로 표시합니다.
 
