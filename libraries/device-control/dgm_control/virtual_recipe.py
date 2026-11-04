@@ -75,7 +75,7 @@ def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None):
     sweep = Sweep(plan.center_hz - 120e6, plan.center_hz + 120e6, 1e6, 1e6, 10, 10, points=101, sweep_seconds=0.01)
     with ExitStack() as stack:
         sessions = {name: stack.enter_context(lab.open(name)) for name in
-                    ("OdaEx", "Co3000", "OspSwitch", "SamsungAt", "SpectrumAnalyzer", "UsbPowerSensor")}
+                    ("OdaEx", "Co3000", "OspSwitch", "PhoneAt", "SpectrumAnalyzer", "UsbPowerSensor")}
         power, motion, route, phone, analyzer, sensor = sessions.values()
         power.call("configure", voltage=plan.voltage, current=plan.current)
         sensor.call("configure_average", frequency_hz=plan.center_hz)

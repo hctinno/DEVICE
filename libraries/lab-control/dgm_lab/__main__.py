@@ -9,7 +9,7 @@ def main():
     parser=argparse.ArgumentParser(description='DGM LabControl: offline discovery; explicit probe enters remote mode and may affect state')
     sub=parser.add_subparsers(dest='action', required=True)
     search=sub.add_parser('inventory');search.add_argument('query',nargs='?',default='')
-    search.add_argument('--scope',choices=('legacy','hct-2026'),default='legacy')
+    search.add_argument('--scope',choices=('legacy','report-2026'),default='legacy')
     probe=sub.add_parser('probe');probe.add_argument('profile',help='JSON with explicit driver/parameters/transport')
     caps=sub.add_parser('capabilities');caps.add_argument('driver',nargs='?')
     check=sub.add_parser('check-profile');check.add_argument('profile')

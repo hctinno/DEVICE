@@ -1,0 +1,4065 @@
+[
+  {
+    "source_id": "report-a276-emc",
+    "report": "HCT-EM-2604-FC002",
+    "issue_date": "April 20, 2026",
+    "pdf_page": 7,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Device Type",
+        "Model Name",
+        "Serial Number",
+        "Manufacturer",
+        "NOTE"
+      ],
+      [
+        "Mobile Phone (EUT)",
+        "SM-A276B/DS",
+        "-",
+        "SAMSUNG Electronics Co., Ltd.",
+        ""
+      ],
+      [
+        "TA",
+        "EP-T2510",
+        "-",
+        "DONGYANG E&P",
+        "a)"
+      ],
+      [
+        "Data Cable",
+        "EP-DN980BWE",
+        "-",
+        "RFTECH",
+        ""
+      ],
+      [
+        "Earphone",
+        "EO-IC100",
+        "-",
+        "CRESYN",
+        ""
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/HCT-EM-2604-FC002-SAMSUNG-SM-A276B-DS-FCC-EMC-Report-9265512.pdf",
+    "source_sha256": "59ae8d8d75161ac0baad8852d05c709a355a3d5493148c4db716d963f5a339da"
+  },
+  {
+    "source_id": "report-a276-emc",
+    "report": "HCT-EM-2604-FC002",
+    "issue_date": "April 20, 2026",
+    "pdf_page": 14,
+    "table": 0,
+    "header_row": 2,
+    "cells": [
+      [
+        "",
+        "",
+        "",
+        "Report",
+        "No.",
+        "HCT-EM-2604-FC002"
+      ],
+      [
+        "5. MEASURING",
+        "INSTRUMENT",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Type",
+        "Model Name",
+        "Manufacturer",
+        "Serial Number",
+        "Cal. Cycle",
+        "Next Cal. Date (yy.mm.dd)"
+      ],
+      [
+        "Conducted emission",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "EMI Test Receiver",
+        "ESR7",
+        "Rohde&Schwarz",
+        "101910",
+        "1 year",
+        "2026.08.20"
+      ],
+      [
+        "LISN",
+        "ENV216",
+        "Rohde&Schwarz",
+        "102245",
+        "1 year",
+        "2026.07.15"
+      ],
+      [
+        "Software",
+        "EMC32",
+        "Rohde & Schwarz",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Radio communication analyzer",
+        "MT8821C",
+        "ANRITSU",
+        "6262192376",
+        "1 year",
+        "2026.09.30"
+      ],
+      [
+        "Radio Communication Test Station",
+        "MT8000A",
+        "Anritsu",
+        "6262208294",
+        "1 year",
+        "2026.09.30"
+      ],
+      [
+        "Antenna (for Communication)",
+        "HyperLOG7060",
+        "Aaronia",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Antenna (for Communication)",
+        "HyperLOG7060",
+        "Aaronia",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Radiated emission up to 1",
+        "㎓",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "EMI Test Receiver",
+        "ESW44",
+        "ROHDE&SCHWARZ",
+        "101946",
+        "1 year",
+        "2026.11.04"
+      ],
+      [
+        "Bilog Antenna",
+        "VULB9168",
+        "Schwarzbeck",
+        "255",
+        "2 year",
+        "2027.02.27"
+      ],
+      [
+        "Antenna master",
+        "MA4640-XP-ET",
+        "INNCO SYSTEM",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Antenna master / Turn Table controller",
+        "CO3000",
+        "INNCO SYSTEM",
+        "CO3000/870 /35990515/L",
+        "N/A",
+        "-"
+      ],
+      [
+        "Turn Table",
+        "DS2000-S",
+        "INNCO SYSTEM",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Software",
+        "EMC32",
+        "ROHDE&SCHWARZ",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Universal Radio Communication Tester",
+        "CMU200",
+        "Rohde&Schwarz",
+        "107488",
+        "1 year",
+        "2026.10.14"
+      ],
+      [
+        "Wideband Radio Communication Tester",
+        "CMW500",
+        "Rohde&Schwarz",
+        "103246",
+        "1 year",
+        "2026.09.08"
+      ],
+      [
+        "Radio Communication Analyzer",
+        "MT8820C",
+        "Anritsu",
+        "6201181706",
+        "1 year",
+        "2027.03.23"
+      ],
+      [
+        "Radio communication analyzer",
+        "MT8821C",
+        "ANRITSU",
+        "6262192376",
+        "1 year",
+        "2026.09.30"
+      ],
+      [
+        "Radio communication analyzer",
+        "MT8000A",
+        "ANRITSU",
+        "6262208294",
+        "1 year",
+        "2026.09.30"
+      ],
+      [
+        "Antenna (for Communication)",
+        "HyperLOG7060",
+        "Aaronia",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(Rev. 06)",
+        "",
+        "",
+        "",
+        "",
+        "Page 14"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/HCT-EM-2604-FC002-SAMSUNG-SM-A276B-DS-FCC-EMC-Report-9265512.pdf",
+    "source_sha256": "59ae8d8d75161ac0baad8852d05c709a355a3d5493148c4db716d963f5a339da"
+  },
+  {
+    "source_id": "report-a276-emc",
+    "report": "HCT-EM-2604-FC002",
+    "issue_date": "April 20, 2026",
+    "pdf_page": 15,
+    "table": 0,
+    "header_row": 2,
+    "cells": [
+      [
+        "",
+        "",
+        "",
+        "Report",
+        "No.",
+        "HCT-EM-2604-FC002"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Type",
+        "Model Name",
+        "Manufacturer",
+        "Serial Number",
+        "Cal. Cycle",
+        "Next Cal. Date (yy.mm.dd)"
+      ],
+      [
+        "Antenna (for Communication)",
+        "HyperLOG7060",
+        "Aaronia",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Radiated emission above",
+        "1 ㎓",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "EMI Test Receiver",
+        "ESW44",
+        "ROHDE&SCHWARZ",
+        "101946",
+        "1 year",
+        "2026.11.04"
+      ],
+      [
+        "Antenna master",
+        "MA4640-XP-ET",
+        "INNCO SYSTEM",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Antenna master / Turn Table controller",
+        "CO3000",
+        "INNCO SYSTEM",
+        "CO3000/870/ 35990515/L",
+        "N/A",
+        "-"
+      ],
+      [
+        "Turn Table",
+        "DS2000-S",
+        "INNCO SYSTEM",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Low Noise Amplifier",
+        "TK-PA18H",
+        "TESTEK",
+        "170034-L",
+        "1 year",
+        "2026.10.02"
+      ],
+      [
+        "Low Noise Amplifier",
+        "TK-PA1840H",
+        "TESTEK",
+        "170030-L",
+        "1 year",
+        "2026.10.27"
+      ],
+      [
+        "Horn Antenna",
+        "HF907",
+        "Rohde & Schwarz",
+        "103160",
+        "1 year",
+        "2026.10.14"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9170",
+        "Schwarzbeck",
+        "BBHA9170 #786",
+        "1 year",
+        "2026.10.27"
+      ],
+      [
+        "Software",
+        "EMC32",
+        "Rohde & Schwarz",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "Universal radio communication tester",
+        "CMU200",
+        "Rohde & Schwarz",
+        "107488",
+        "1 year",
+        "2026.10.14"
+      ],
+      [
+        "Wideband Radio Communication Tester",
+        "CMW500",
+        "Rohde & Schwarz",
+        "103246",
+        "1 year",
+        "2026.09.08"
+      ],
+      [
+        "Radio Communication Analyzer",
+        "MT8820C",
+        "Anritsu",
+        "6201181706",
+        "1 year",
+        "2027.03.23"
+      ],
+      [
+        "Radio communication analyzer",
+        "MT8821C",
+        "ANRITSU",
+        "6262192376",
+        "1 year",
+        "2026.09.30"
+      ],
+      [
+        "Radio communication analyzer",
+        "MT8000A",
+        "ANRITSU",
+        "6262208294",
+        "1 year",
+        "2026.09.30"
+      ],
+      [
+        "Antenna (for Communication)",
+        "HyperLOG7060",
+        "Aaronia",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "Antenna (for Communication)",
+        "HyperLOG7060",
+        "Aaronia",
+        "-",
+        "N/A",
+        "-"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(Rev. 06)",
+        "",
+        "",
+        "",
+        "",
+        "Page 15"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/HCT-EM-2604-FC002-SAMSUNG-SM-A276B-DS-FCC-EMC-Report-9265512.pdf",
+    "source_sha256": "59ae8d8d75161ac0baad8852d05c709a355a3d5493148c4db716d963f5a339da"
+  },
+  {
+    "source_id": "report-a276-ble",
+    "report": "HCT-RF-2604-FC054",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 46,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "LISN",
+        "ENV216",
+        "Rohde & Schwarz",
+        "102245",
+        "07/15/2026",
+        "Annual"
+      ],
+      [
+        "EMI Test Receiver",
+        "ESR7",
+        "Rohde & Schwarz",
+        "101910",
+        "08/20/2026",
+        "Annual"
+      ],
+      [
+        "Chamber",
+        "SU-642",
+        "ESPEC",
+        "93008124",
+        "02/04/2027",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Agilent",
+        "MY49431210",
+        "11/28/2026",
+        "Annual"
+      ],
+      [
+        "Open Switch and Control Platform",
+        "OSP 120",
+        "Rohde & Schwarz",
+        "100935",
+        "07/24/2026",
+        "Annual"
+      ],
+      [
+        "Power Meter",
+        "N1911A",
+        "Agilent",
+        "MY45100523",
+        "02/13/2027",
+        "Annual"
+      ],
+      [
+        "WIDEBAND POWER SENSOR",
+        "N1921A",
+        "Keysight",
+        "MY57820067",
+        "01/26/2027",
+        "Annual"
+      ],
+      [
+        "Directional Coupler",
+        "87300B",
+        "Agilent",
+        "3116A03621",
+        "10/14/2026",
+        "Annual"
+      ],
+      [
+        "Power Splitter",
+        "11667B",
+        "Hewlett Packard",
+        "10545",
+        "01/15/2027",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "E3632A",
+        "Hewlett Packard",
+        "KR75303243",
+        "04/13/2027",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "8493C-010",
+        "Keysight",
+        "07560",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "Software",
+        "EMC32",
+        "Rohde & Schwarz",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Bluetooth Tester",
+        "CBT",
+        "Rohde & Schwarz",
+        "100752",
+        "12/22/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Automation Software",
+        "FCC Bluetooth Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-BT-LE-5-1-FCC-Test-Report-9265710.pdf",
+    "source_sha256": "548c5c0960fb3c5b2e9cd92525e65d49aaf982c9841641abc343ae49e4f05c9b"
+  },
+  {
+    "source_id": "report-a276-ble",
+    "report": "HCT-RF-2604-FC054",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 47,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "Antenna Mast Controller",
+        "CO3000",
+        "Innco systems GmbH",
+        "CO3000/1032/41190717/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Antenna Mast",
+        "MA4640/800-XP-EP",
+        "Innco systems GmbH",
+        "S1AM",
+        "07/25/2026",
+        "Annual"
+      ],
+      [
+        "Turn Table",
+        "DS2000-S-1t",
+        "Innco systems GmbH",
+        "DS2000/572/54610422/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Amp & Filter Bank Switch Controller",
+        "FBSM-01B",
+        "T&M system",
+        "TM19050002",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Loop Antenna",
+        "FMZB 1513",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "1513-175",
+        "06/24/2027",
+        "Biennial"
+      ],
+      [
+        "Hybrid Antenna",
+        "VULB 9168",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9168-0895",
+        "08/28/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120 D",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9120D-1300",
+        "12/22/2027",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120 D",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9120D-2296",
+        "05/16/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9170",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "BBHA9170342",
+        "09/20/2026",
+        "Biennial"
+      ],
+      [
+        "Signal Analyzer",
+        "FSV40",
+        "Rohde & Schwarz",
+        "101055",
+        "05/07/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV2400/2483.5- 2370/2520-60/12SS",
+        "Wainwright Instruments GmbH",
+        "2",
+        "12/11/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900-5100-5900- 6100-50SS",
+        "Wainwright Instruments GmbH",
+        "5",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900-5100-5900- 6100-50SS",
+        "Wainwright Instruments GmbH",
+        "6",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "High Pass Filter",
+        "WHKX10-7150-8000-18000- 50SS",
+        "Wainwright Instruments GmbH",
+        "1",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL18265035",
+        "CERNEX",
+        "22966",
+        "10/21/2026",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL26405040",
+        "CERNEX",
+        "25956",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Bluetooth Tester",
+        "TC-3000C",
+        "TESCOM",
+        "3000C000175",
+        "03/03/2027",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (3G HPF+LNA)",
+        "T&M system",
+        "S1L1",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (10dB ATT+LNA)",
+        "T&M system",
+        "S1L2",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (3dB ATT+LNA)",
+        "T&M system",
+        "S1L3",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (LNA)",
+        "T&M system",
+        "S1L4",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (7G HPF+LNA)",
+        "T&M system",
+        "S1L5",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (Thru)",
+        "T&M system",
+        "S1L6",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Radiated",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Attenuator",
+        "18B-03",
+        "API Technologies",
+        "1",
+        "04/13/2027",
+        "Annual"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-BT-LE-5-1-FCC-Test-Report-9265710.pdf",
+    "source_sha256": "548c5c0960fb3c5b2e9cd92525e65d49aaf982c9841641abc343ae49e4f05c9b"
+  },
+  {
+    "source_id": "report-a276-nfc",
+    "report": "HCT-RF-2604-FC058",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 27,
+    "table": 0,
+    "header_row": 2,
+    "cells": [
+      [
+        "",
+        "",
+        "",
+        "",
+        "Report No.",
+        "HCT-RF-2604-FC058"
+      ],
+      [
+        "",
+        "QUIPMENT",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "LISN",
+        "ENV216",
+        "Rohde & Schwarz",
+        "102245",
+        "07/15/2026",
+        "Annual"
+      ],
+      [
+        "EMI Test Receiver",
+        "ESR7",
+        "Rohde & Schwarz",
+        "101910",
+        "08/20/2026",
+        "Annual"
+      ],
+      [
+        "Chamber",
+        "SU-642",
+        "ESPEC",
+        "0093008124",
+        "02/04/2027",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Agilent",
+        "MY49431210",
+        "11/28/2026",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "E3632A",
+        "HEWLETT PACKARD",
+        "KR75303243",
+        "04/13/2027",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "8493C-010",
+        "HEWLETT PACKARD",
+        "08285",
+        "05/19/2026",
+        "Annual"
+      ],
+      [
+        "Software",
+        "EMC32",
+        "Rohde & Schwarz",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Note: 1. Equipment whose cali previous due date and t All reported measureme 2. Especially, all antenna C63.5-2017.",
+        "bration due date wa he update. nts were performed for measurement is",
+        "s updated during t using equipment w calibrated in accor",
+        "he test period was n ithin valid calibrati dance with the req",
+        "ot used betwee on. uirements of AN",
+        "n the SI"
+      ],
+      [
+        "F-TP22-03 (Rev. 06)",
+        "",
+        "",
+        "",
+        "",
+        "Page 27 of"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-NFC-FCC-Test-Report-9265548.pdf",
+    "source_sha256": "912f5d973fa7b9fc33413bbb49cc5505abc909ec8370d60c206c6ea4f7bafdb4"
+  },
+  {
+    "source_id": "report-a276-nfc",
+    "report": "HCT-RF-2604-FC058",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 28,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "Antenna Mast Controller",
+        "CO3000",
+        "Innco systems GmbH",
+        "CO3000/1032/41190717/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Antenna Mast",
+        "MA4640/800-XP-EP",
+        "Innco systems GmbH",
+        "S1AM",
+        "07/25/2026",
+        "Annual"
+      ],
+      [
+        "Turn Table",
+        "DS2000-S-1t",
+        "Innco systems GmbH",
+        "DS2000/572/54610422/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Loop Antenna",
+        "FMZB 1513",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "1513-175",
+        "01/06/2027",
+        "Biennial"
+      ],
+      [
+        "Hybrid Antenna",
+        "VULB 9168",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9168-0895",
+        "08/28/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120 D",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9120D-1300",
+        "12/22/2027",
+        "Biennial"
+      ],
+      [
+        "Signal Analyzer",
+        "FSV40",
+        "Rohde & Schwarz",
+        "101055",
+        "05/07/2026",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Agilent",
+        "MY49431210",
+        "11/28/2026",
+        "Annual"
+      ],
+      [
+        "Power Amplifier",
+        "310N",
+        "SONOMA INSTRUMENT",
+        "186169",
+        "01/23/2027",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL18265035",
+        "CERNEX",
+        "22966",
+        "10/21/2026",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL26405040",
+        "CERNEX",
+        "25956",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Chamber",
+        "SU-642",
+        "ESPEC",
+        "93008124",
+        "02/04/2027",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Agilent",
+        "MY49432108",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "E3632A",
+        "HEWLETT PACKARD",
+        "KR75303243",
+        "04/13/2027",
+        "Annual"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-NFC-FCC-Test-Report-9265548.pdf",
+    "source_sha256": "912f5d973fa7b9fc33413bbb49cc5505abc909ec8370d60c206c6ea4f7bafdb4"
+  },
+  {
+    "source_id": "report-a276-unii",
+    "report": "HCT-RF-2604-FC059-R1",
+    "issue_date": "May 15, 2026",
+    "pdf_page": 73,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "LISN",
+        "ENV216",
+        "Rohde & Schwarz",
+        "102245",
+        "07/15/2026",
+        "Annual"
+      ],
+      [
+        "EMI Test Receiver",
+        "ESR7",
+        "Rohde & Schwarz",
+        "101910",
+        "08/20/2026",
+        "Annual"
+      ],
+      [
+        "Chamber",
+        "SU-642",
+        "ESPEC",
+        "93008124",
+        "02/04/2027",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Agilent",
+        "MY49431210",
+        "11/28/2026",
+        "Annual"
+      ],
+      [
+        "Open Switch and Control Platform",
+        "OSP 120",
+        "Rohde & Schwarz",
+        "100935",
+        "07/24/2026",
+        "Annual"
+      ],
+      [
+        "Power Meter",
+        "N1911A",
+        "Agilent",
+        "MY45100523",
+        "02/13/2027",
+        "Annual"
+      ],
+      [
+        "WIDEBAND POWER SENSOR",
+        "N1921A",
+        "Keysight",
+        "MY57820067",
+        "01/26/2027",
+        "Annual"
+      ],
+      [
+        "Directional Coupler",
+        "87300B",
+        "Agilent",
+        "3116A03621",
+        "10/14/2026",
+        "Annual"
+      ],
+      [
+        "Power Splitter",
+        "11667B",
+        "Hewlett Packard",
+        "10545",
+        "01/15/2027",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "E3632A",
+        "Hewlett Packard",
+        "KR75303243",
+        "04/16/2026",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "8493C-010",
+        "Keysight",
+        "07560",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "Software",
+        "EMC32",
+        "Rohde & Schwarz",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Bluetooth Tester",
+        "CBT",
+        "Rohde & Schwarz",
+        "100752",
+        "12/22/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Automation Software",
+        "FCC Bluetooth Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-UNII-FCC-Test-Report-R1-9323331.pdf",
+    "source_sha256": "6481e629ec22fea6d058ad00198461445a4968bb875a5751099514955b33e98c"
+  },
+  {
+    "source_id": "report-a276-unii",
+    "report": "HCT-RF-2604-FC059-R1",
+    "issue_date": "May 15, 2026",
+    "pdf_page": 74,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "Antenna Mast Controller",
+        "CO3000",
+        "Innco systems GmbH",
+        "CO3000/1032/41190717/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Antenna Mast",
+        "MA4640/800-XP-EP",
+        "Innco systems GmbH",
+        "S1AM",
+        "07/25/2026",
+        "Annual"
+      ],
+      [
+        "Turn Table",
+        "DS2000-S-1t",
+        "Innco systems GmbH",
+        "DS2000/572/54610422/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Amp & Filter Bank Switch Controller",
+        "FBSM-01B",
+        "T&M system",
+        "TM19050002",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Loop Antenna",
+        "FMZB 1513",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "1513-175",
+        "06/24/2027",
+        "Biennial"
+      ],
+      [
+        "Hybrid Antenna",
+        "VULB 9168",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9168-0895",
+        "08/28/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120 D",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9120D-1300",
+        "12/22/2027",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120 D",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9120D-2296",
+        "05/16/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9170",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "BBHA9170342",
+        "09/20/2026",
+        "Biennial"
+      ],
+      [
+        "Signal Analyzer",
+        "FSV40",
+        "Rohde & Schwarz",
+        "101055",
+        "05/07/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV2400/2483.5- 2370/2520-60/12SS",
+        "Wainwright Instruments GmbH",
+        "2",
+        "12/11/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900-5100-5900- 6100-50SS",
+        "Wainwright Instruments GmbH",
+        "5",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900-5100-5900- 6100-50SS",
+        "Wainwright Instruments GmbH",
+        "6",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "High Pass Filter",
+        "WHKX10-7150-8000-18000- 50SS",
+        "Wainwright Instruments GmbH",
+        "1",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL18265035",
+        "CERNEX",
+        "22966",
+        "10/21/2026",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL26405040",
+        "CERNEX",
+        "25956",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Bluetooth Tester",
+        "TC-3000C",
+        "TESCOM",
+        "3000C000175",
+        "03/03/2027",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (3G HPF+LNA)",
+        "T&M system",
+        "S1L1",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (10dB ATT+LNA)",
+        "T&M system",
+        "S1L2",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (3dB ATT+LNA)",
+        "T&M system",
+        "S1L3",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (LNA)",
+        "T&M system",
+        "S1L4",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (7G HPF+LNA)",
+        "T&M system",
+        "S1L5",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (Thru)",
+        "T&M system",
+        "S1L6",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Radiated",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Attenuator",
+        "18B-03",
+        "API Technologies",
+        "1",
+        "04/13/2027",
+        "Annual"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-UNII-FCC-Test-Report-R1-9323331.pdf",
+    "source_sha256": "6481e629ec22fea6d058ad00198461445a4968bb875a5751099514955b33e98c"
+  },
+  {
+    "source_id": "report-wave-n48",
+    "report": "HCT-RF-2602-FC007",
+    "issue_date": "February 23, 2026",
+    "pdf_page": 16,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "",
+        "",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Keysight",
+        "",
+        "",
+        "MY49431434",
+        "07/10/2026",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030B",
+        "Keysight",
+        "",
+        "",
+        "MY55480110",
+        "01/13/2027",
+        "Annual"
+      ],
+      [
+        "RF Switch System",
+        "TMX0108",
+        "TNM System",
+        "",
+        "",
+        "TM21100001",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "20 dB Attenuator",
+        "FAS-23-20",
+        "MCLI",
+        "",
+        "",
+        "103756",
+        "12/16/2026",
+        "Annual"
+      ],
+      [
+        "#30 dB Attenuator",
+        "67-30-33",
+        "API Weinschel, Inc.",
+        "",
+        "",
+        "CL4338",
+        "04/29/2026",
+        "Annual"
+      ],
+      [
+        "#50Ω Termination",
+        "908A",
+        "H.P.",
+        "",
+        "",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "#20 dB Fixed Attenuator",
+        "8493C",
+        "",
+        "Keysight",
+        "",
+        "90544",
+        "08/07/2026",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "PWR800L",
+        "KIKUSUI",
+        "",
+        "",
+        "RE001149",
+        "03/11/2026",
+        "Annual"
+      ],
+      [
+        "Temperature and Humidity Chamber",
+        "NY-THR18750",
+        "NANGYEAL",
+        "",
+        "",
+        "NY-200912201A",
+        "12/16/2026",
+        "Annual"
+      ],
+      [
+        "Amp & Filter Bank Switch Controller",
+        "FBSM-01B",
+        "TNM system",
+        "",
+        "",
+        "TM20090002",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Controller(Antenna Mast & Turn Table)",
+        "CO3000",
+        "Innco system",
+        "",
+        "",
+        "CO3000/1251/48920320/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Antenna Mast",
+        "MA4640",
+        "Innco system",
+        "",
+        "",
+        "S4AM",
+        "08/01/2026",
+        "Annual"
+      ],
+      [
+        "Turn Table",
+        "N/A",
+        "Ets",
+        "",
+        "",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Loop Antenna",
+        "FMZB 1513",
+        "Rohde & Schwarz",
+        "",
+        "",
+        "1513-333",
+        "06/23/2027",
+        "Biennial"
+      ],
+      [
+        "Hybrid Antenna",
+        "VULB 9168",
+        "Schwarzbeck",
+        "",
+        "",
+        "9168-0895",
+        "08/28/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120D",
+        "Schwarzbeck",
+        "",
+        "",
+        "9120D-937",
+        "02/07/2027",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA9170",
+        "Schwarzbeck",
+        "",
+        "",
+        "BBHA9170342",
+        "09/20/2026",
+        "Biennial"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (10 dB ATT + LNA)",
+        "TNM system",
+        "",
+        "",
+        "S4L2",
+        "03/12/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (3 dB ATT + LNA)",
+        "TNM system",
+        "",
+        "",
+        "S4L3",
+        "03/12/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (LNA)",
+        "TNM system",
+        "",
+        "",
+        "S4L4",
+        "03/12/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (7 GHz HPF + LNA)",
+        "TNM system",
+        "",
+        "",
+        "S4L5",
+        "03/12/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (Thru)",
+        "TNM system",
+        "",
+        "",
+        "S4L6",
+        "03/12/2026",
+        "Annual"
+      ],
+      [
+        "LOW NOISE AMPLIFIER",
+        "TK-PA1840H",
+        "TESTEK",
+        "",
+        "",
+        "170011-L",
+        "09/29/2026",
+        "Annual"
+      ]
+    ],
+    "source_url": "https://fccid.io/m/3b8fd10926943f892cc61186a9d5062815668c0a5bbed0a11a37adbbbb438796.pdf",
+    "source_sha256": "3b8fd10926943f892cc61186a9d5062815668c0a5bbed0a11a37adbbbb438796"
+  },
+  {
+    "source_id": "report-mt6433",
+    "report": "HCT-RF-2604-FC036",
+    "issue_date": "April 23, 2026",
+    "pdf_page": 15,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Keysight",
+        "MY49431434",
+        "07/10/2026",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Keysight",
+        "MY55410714",
+        "12/09/2026",
+        "Annual"
+      ],
+      [
+        "RF Switch System",
+        "TMX0132C",
+        "TNM System",
+        "TM20010001",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "RF Switch System",
+        "TMX0132C",
+        "TNM System",
+        "TM20010002",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "20 dB Attenuator",
+        "FAS-23-20",
+        "MCLI",
+        "103756",
+        "12/16/2026",
+        "Annual"
+      ],
+      [
+        "#30 dB Attenuator",
+        "5930 SMA-50-010 _",
+        "HUBER SUHNER",
+        "33",
+        "09/16/2026",
+        "Annual"
+      ],
+      [
+        "#50Ω Termination",
+        "908A",
+        "H.P.",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "DC Power Supply",
+        "6674A",
+        "Agillent",
+        "MY41003340",
+        "06/20/2026",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "EX 60-40",
+        "ODA",
+        "ODA-02-0923-01606",
+        "02/05/2027",
+        "Annual"
+      ],
+      [
+        "Temperature and Humidity Chamber",
+        "NY-THR18750",
+        "NANGYEAL",
+        "NY-200912201A",
+        "12/16/2026",
+        "Annual"
+      ],
+      [
+        "Amp & Filter Bank Switch Controller",
+        "FBSM-01B",
+        "TNM system",
+        "TM20090002",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Controller (Antenna Mast & Turn Table)",
+        "CO3000",
+        "Innco system",
+        "CO3000/1251/48920320/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Antenna Mast",
+        "MA4640",
+        "Innco system",
+        "S4AM",
+        "08/01/2026",
+        "Annual"
+      ],
+      [
+        "Turn Table",
+        "N/A",
+        "Ets",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Loop Antenna",
+        "FMZB 1513",
+        "Schwarzbeck",
+        "1513-333",
+        "06/23/2027",
+        "Biennial"
+      ],
+      [
+        "Trilog Broadband Antenna",
+        "VULB 9168",
+        "Schwarzbeck",
+        "9168-0895",
+        "08/28/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120D",
+        "Schwarzbeck",
+        "9120D-937",
+        "02/07/2027",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA9170",
+        "Schwarzbeck",
+        "BBHA9170124",
+        "03/23/2027",
+        "Biennial"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (10 dB ATT + LNA)",
+        "TNM system",
+        "S4L2",
+        "03/04/2027",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (3 dB ATT + LNA)",
+        "TNM system",
+        "S4L3",
+        "03/04/2027",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (LNA)",
+        "TNM system",
+        "S4L4",
+        "03/04/2027",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (7 GHz HPF + LNA)",
+        "TNM system",
+        "S4L5",
+        "03/04/2027",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-04C (Thru)",
+        "TNM system",
+        "S4L6",
+        "03/04/2027",
+        "Annual"
+      ],
+      [
+        "LOW NOISE AMPLIFIER",
+        "TK-PA1840H",
+        "TESTEK",
+        "170011-L",
+        "09/29/2026",
+        "Annual"
+      ]
+    ],
+    "source_url": "https://fccid.io/m/e2bfc5f57feaad6cdb509bd4d7d4dbfa5a9acd004bf79e8510ec1317009c5c89.pdf",
+    "source_sha256": "e2bfc5f57feaad6cdb509bd4d7d4dbfa5a9acd004bf79e8510ec1317009c5c89"
+  },
+  {
+    "source_id": "report-a276-nr",
+    "report": "HCT-RF-2604-FC051",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 20,
+    "table": 0,
+    "header_row": 2,
+    "cells": [
+      [
+        "",
+        "",
+        "",
+        "Report No.",
+        "HCT-RF-2604-FC051",
+        ""
+      ],
+      [
+        "4. LIST OF TEST EQUIPMENT",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Equipment",
+        "Model",
+        "Manufacture",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "Dipole Antenna",
+        "UHAP",
+        "Schwarzbeck",
+        "01273",
+        "03/05/2028",
+        "Biennial"
+      ],
+      [
+        "Dipole Antenna",
+        "UHAP",
+        "Schwarzbeck",
+        "01274",
+        "03/05/2028",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120D",
+        "Schwarzbeck",
+        "02289",
+        "02/10/2028",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120D",
+        "Schwarzbeck",
+        "9120D-1299",
+        "04/17/2027",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9170",
+        "Schwarzbeck",
+        "BBHA9170342",
+        "09/20/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9170",
+        "Schwarzbeck",
+        "BBHA9170124",
+        "03/23/2027",
+        "Biennial"
+      ],
+      [
+        "Loop Antenna",
+        "FMZB1513",
+        "Schwarzbeck",
+        "1513-175",
+        "06/24/2027",
+        "Biennial"
+      ],
+      [
+        "Bilog Antenna",
+        "VULB9160",
+        "Schwarzbeck",
+        "3150",
+        "03/05/2027",
+        "Biennial"
+      ],
+      [
+        "Hybrid Antenna",
+        "VULB9168",
+        "Schwarzbeck",
+        "760",
+        "02/17/2027",
+        "Biennial"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-06B (1G HPF + LNA)",
+        "T&M SYSTEM",
+        "F3L1",
+        "05/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-06B (3G HPF + LNA)",
+        "T&M SYSTEM",
+        "F3L2",
+        "05/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-06B (6G HPF + LNA)",
+        "T&M SYSTEM",
+        "F3L3",
+        "05/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-06B (LNA)",
+        "T&M SYSTEM",
+        "F3L4",
+        "05/08/2026",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL18265035",
+        "CERNEX",
+        "22966",
+        "10/21/2026",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL26405040",
+        "CERNEX",
+        "25956",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "E3632A",
+        "Hewlett Packard",
+        "MY40004427",
+        "08/11/2026",
+        "Annual"
+      ],
+      [
+        "Power Splitter",
+        "11667B",
+        "Hewlett Packard",
+        "11275",
+        "01/26/2027",
+        "Annual"
+      ],
+      [
+        "Chamber",
+        "SU-642",
+        "ESPEC",
+        "93008124",
+        "02/04/2027",
+        "Annual"
+      ],
+      [
+        "Signal Analyzer",
+        "N9020A",
+        "Agilent",
+        "MY51110063",
+        "04/01/2027",
+        "Annual"
+      ],
+      [
+        "20dB ATTENUATOR",
+        "8493C",
+        "Hewlett Packard",
+        "15233",
+        "12/10/2026",
+        "Annual"
+      ],
+      [
+        "Signal Analyzer",
+        "FSV40",
+        "ROHDE & SCHWARZ",
+        "101436",
+        "01/29/2027",
+        "Annual"
+      ],
+      [
+        "Signal & Spectrum Analyzer",
+        "FSW67",
+        "ROHDE & SCHWARZ",
+        "101736",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "Wireless Communications Set",
+        "E5515C",
+        "Agilent",
+        "MY48360800",
+        "07/29/2026",
+        "Annual"
+      ],
+      [
+        "Radio Communication Analyzer",
+        "MT8821C",
+        "Anritsu Corp.",
+        "6262287701",
+        "05/14/2026",
+        "Annual"
+      ],
+      [
+        "Radio Communication Test Station",
+        "MT8000A",
+        "Anritsu Corp.",
+        "6262302511",
+        "05/08/2026",
+        "Annual"
+      ],
+      [
+        "Signal Analyzer",
+        "N9030B",
+        "KEYSIGHT",
+        "MY55480167",
+        "05/14/2026",
+        "Annual"
+      ],
+      [
+        "UXM 5G Wireless Test Platform",
+        "E7515B",
+        "KEYSIGHT",
+        "MY60101126",
+        "01/29/2027",
+        "Annual"
+      ],
+      [
+        "Power Divider",
+        "ZC4PD-K1844+",
+        "Mini-Circuits",
+        "942907",
+        "09/05/2026",
+        "Annual"
+      ],
+      [
+        "SIGNAL GENERATOR",
+        "SMB100A",
+        "ROHDE & SCHWARZ",
+        "177633",
+        "07/22/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC 2G/3G/4G Conducted",
+        "HCT CO., LTD",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "Automation Software",
+        "FCC NR Conducted",
+        "HCT CO., LTD",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "Automation Software",
+        "FCC LTE Radiated",
+        "HCT CO., LTD",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "Automation Software",
+        "FCC NR Radiated",
+        "HCT CO., LTD",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "",
+        "on due date was updated durin orted measurements were perf easurement is calibrated in ac",
+        "g the test period w ormed using equip cordance with the",
+        "as not used betwee ment within valid c requirements of ANS",
+        "n the previous alibration. I C63.5-2017.",
+        ""
+      ],
+      [
+        "F-TP22-03 (Rev. 06)",
+        "",
+        "",
+        "",
+        "Page",
+        "20 of 371"
+      ]
+    ],
+    "source_url": "https://fccid.io/m/9a0e9935dc22cd40ff2162143413ef5546c325c6c0e360d49b0befdcc536dae4.pdf",
+    "source_sha256": "9a0e9935dc22cd40ff2162143413ef5546c325c6c0e360d49b0befdcc536dae4"
+  },
+  {
+    "source_id": "report-a276-bt",
+    "report": "HCT-RF-2604-FC055",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 50,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "LISN",
+        "ENV216",
+        "Rohde & Schwarz",
+        "102245",
+        "07/15/2026",
+        "Annual"
+      ],
+      [
+        "EMI Test Receiver",
+        "ESR7",
+        "Rohde & Schwarz",
+        "101910",
+        "08/20/2026",
+        "Annual"
+      ],
+      [
+        "Chamber",
+        "SU-642",
+        "ESPEC",
+        "93008124",
+        "02/04/2027",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Agilent",
+        "MY49431210",
+        "11/28/2026",
+        "Annual"
+      ],
+      [
+        "Open Switch and Control Platform",
+        "OSP 120",
+        "Rohde & Schwarz",
+        "100935",
+        "07/24/2026",
+        "Annual"
+      ],
+      [
+        "Power Meter",
+        "N1911A",
+        "Agilent",
+        "MY45100523",
+        "02/13/2027",
+        "Annual"
+      ],
+      [
+        "WIDEBAND POWER SENSOR",
+        "N1921A",
+        "Keysight",
+        "MY57820067",
+        "01/26/2027",
+        "Annual"
+      ],
+      [
+        "Directional Coupler",
+        "87300B",
+        "Agilent",
+        "3116A03621",
+        "10/14/2026",
+        "Annual"
+      ],
+      [
+        "Power Splitter",
+        "11667B",
+        "Hewlett Packard",
+        "10545",
+        "01/15/2027",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "E3632A",
+        "Hewlett Packard",
+        "KR75303243",
+        "04/13/2027",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "8493C-010",
+        "Keysight",
+        "07560",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "Software",
+        "EMC32",
+        "Rohde & Schwarz",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Bluetooth Tester",
+        "CBT",
+        "Rohde & Schwarz",
+        "100752",
+        "12/22/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Automation Software",
+        "FCC Bluetooth Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-BT-FCC-Test-Report-9265660.pdf",
+    "source_sha256": "ef960f64333f9533c5ae02525fd8bd168aaafe46d6a84917897810fda1c2a491"
+  },
+  {
+    "source_id": "report-a276-bt",
+    "report": "HCT-RF-2604-FC055",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 51,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "Antenna Mast Controller",
+        "CO3000",
+        "Innco systems GmbH",
+        "CO3000/1032/41190717/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Antenna Mast",
+        "MA4640/800-XP-EP",
+        "Innco systems GmbH",
+        "S1AM",
+        "07/25/2026",
+        "Annual"
+      ],
+      [
+        "Turn Table",
+        "DS2000-S-1t",
+        "Innco systems GmbH",
+        "DS2000/572/54610422/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Amp & Filter Bank Switch Controller",
+        "FBSM-01B",
+        "T&M system",
+        "TM19050002",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Loop Antenna",
+        "FMZB 1513",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "1513-175",
+        "06/24/2027",
+        "Biennial"
+      ],
+      [
+        "Hybrid Antenna",
+        "VULB 9168",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9168-0895",
+        "08/28/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120 D",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9120D-1300",
+        "12/22/2027",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120 D",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9120D-2296",
+        "05/16/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9170",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "BBHA9170342",
+        "09/20/2026",
+        "Biennial"
+      ],
+      [
+        "Signal Analyzer",
+        "FSV40",
+        "Rohde & Schwarz",
+        "101055",
+        "05/07/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV2400/2483.5- 2370/2520-60/12SS",
+        "Wainwright Instruments GmbH",
+        "2",
+        "12/11/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900-5100-5900- 6100-50SS",
+        "Wainwright Instruments GmbH",
+        "5",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900-5100-5900- 6100-50SS",
+        "Wainwright Instruments GmbH",
+        "6",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "High Pass Filter",
+        "WHKX10-7150-8000-18000- 50SS",
+        "Wainwright Instruments GmbH",
+        "1",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL18265035",
+        "CERNEX",
+        "22966",
+        "10/21/2026",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL26405040",
+        "CERNEX",
+        "25956",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Bluetooth Tester",
+        "TC-3000C",
+        "TESCOM",
+        "3000C000175",
+        "03/03/2027",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (3G HPF+LNA)",
+        "T&M system",
+        "S1L1",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (10dB ATT+LNA)",
+        "T&M system",
+        "S1L2",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (3dB ATT+LNA)",
+        "T&M system",
+        "S1L3",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (LNA)",
+        "T&M system",
+        "S1L4",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (7G HPF+LNA)",
+        "T&M system",
+        "S1L5",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (Thru)",
+        "T&M system",
+        "S1L6",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Radiated",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Attenuator",
+        "18B-03",
+        "API Technologies",
+        "1",
+        "04/13/2027",
+        "Annual"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-BT-FCC-Test-Report-9265660.pdf",
+    "source_sha256": "ef960f64333f9533c5ae02525fd8bd168aaafe46d6a84917897810fda1c2a491"
+  },
+  {
+    "source_id": "report-a276-dfs",
+    "report": "HCT-RF-2604-FC056",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 19,
+    "table": 0,
+    "header_row": 2,
+    "cells": [
+      [
+        "",
+        "",
+        "",
+        "Report",
+        "No.",
+        "HCT-RF-2604-FC056"
+      ],
+      [
+        "7. LIST OF TEST",
+        "EQUIPMENT",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "Router",
+        "GT-AXE11000",
+        "ASUS",
+        "M6IAJF201782",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "PXI",
+        "3025C",
+        "ADLINK",
+        "302581/735",
+        "01/26/2027",
+        "Annual"
+      ],
+      [
+        "PXI",
+        "3035C",
+        "ADLINK",
+        "303582/113",
+        "01/26/2027",
+        "Annual"
+      ],
+      [
+        "4 Way Power Divider",
+        "4456-4",
+        "NARDA",
+        "01640",
+        "04/13/2027",
+        "Annual"
+      ],
+      [
+        "Step Attenuator",
+        "8495B",
+        "Agilent",
+        "MY41110293",
+        "07/25/2026",
+        "Annual"
+      ],
+      [
+        "Step Attenuator",
+        "8494B",
+        "HP",
+        "2812A19007",
+        "07/25/2026",
+        "Annual"
+      ],
+      [
+        "Step Attenuator",
+        "8310-202-F",
+        "Aeroflex/Weinschel",
+        "1070",
+        "03/17/2027",
+        "Annual"
+      ],
+      [
+        "Signal Analyzer",
+        "N9030B",
+        "Keysight",
+        "MY56320554",
+        "01/26/2027",
+        "Annual"
+      ],
+      [
+        "Note: 1. Equipment whose the previous due dat All reported measure 2. Especially, all ante C63.5-2017. 3. The Router (Model regulations under FC",
+        "calibration due date w e and the update. ments were performe nna for measurement : GT-AXE11000), manuf C ID: MSQ-RTAXJF00.",
+        "as updated during d using equipment is calibrated in acc actured by ASUS, i",
+        "the test period was n within valid calibrati ordance with the req s a certified device co",
+        "ot used betw on. uirements of A nforming to F",
+        "een NSI CC"
+      ],
+      [
+        "F-TP22-03 (Rev. 06)",
+        "",
+        "",
+        "",
+        "",
+        "Page 19 of 20"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-DFS-FCC-Test-Report-9265768.pdf",
+    "source_sha256": "858156150373da31982d959e8100facf79af3e536bb6f5ffec7779a726c0f2a1"
+  },
+  {
+    "source_id": "report-a276-dts",
+    "report": "HCT-RF-2604-FC057",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 50,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "LISN",
+        "ENV216",
+        "Rohde & Schwarz",
+        "102245",
+        "07/15/2026",
+        "Annual"
+      ],
+      [
+        "EMI Test Receiver",
+        "ESR7",
+        "Rohde & Schwarz",
+        "101910",
+        "08/20/2026",
+        "Annual"
+      ],
+      [
+        "Chamber",
+        "SU-642",
+        "ESPEC",
+        "93008124",
+        "02/04/2027",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Agilent",
+        "MY49431210",
+        "11/28/2026",
+        "Annual"
+      ],
+      [
+        "Open Switch and Control Platform",
+        "OSP 120",
+        "Rohde & Schwarz",
+        "100935",
+        "07/24/2026",
+        "Annual"
+      ],
+      [
+        "Power Meter",
+        "N1911A",
+        "Agilent",
+        "MY45100523",
+        "02/13/2027",
+        "Annual"
+      ],
+      [
+        "WIDEBAND POWER SENSOR",
+        "N1921A",
+        "Keysight",
+        "MY57820067",
+        "01/26/2027",
+        "Annual"
+      ],
+      [
+        "Directional Coupler",
+        "87300B",
+        "Agilent",
+        "3116A03621",
+        "10/14/2026",
+        "Annual"
+      ],
+      [
+        "Power Splitter",
+        "11667B",
+        "Hewlett Packard",
+        "10545",
+        "01/15/2027",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "E3632A",
+        "Hewlett Packard",
+        "KR75303243",
+        "04/13/2027",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "8493C-010",
+        "Keysight",
+        "07560",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "8493C-010",
+        "HP",
+        "08285",
+        "05/19/2026",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "18N-20dB",
+        "Rohde & Schwarz",
+        "8",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Software",
+        "EMC32",
+        "Rohde & Schwarz",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Bluetooth Tester",
+        "CBT",
+        "Rohde & Schwarz",
+        "100752",
+        "12/22/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Automation Software",
+        "FCC Bluetooth Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-DTS-FCC-Test-Report-9265711.pdf",
+    "source_sha256": "e7f80986f926c06d5565feb25a65822c5b76770f7fa8a6ef3740452bbcc90251"
+  },
+  {
+    "source_id": "report-a276-dts",
+    "report": "HCT-RF-2604-FC057",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 51,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "Antenna Mast Controller",
+        "CO3000",
+        "Innco systems GmbH",
+        "CO3000/1032/41190717/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Antenna Mast",
+        "MA4640/800-XP-EP",
+        "Innco systems GmbH",
+        "S1AM",
+        "07/25/2026",
+        "Annual"
+      ],
+      [
+        "Turn Table",
+        "DS2000-S-1t",
+        "Innco systems GmbH",
+        "DS2000/572/54610422/P",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Amp & Filter Bank Switch Controller",
+        "FBSM-01B",
+        "T&M system",
+        "TM19050002",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Loop Antenna",
+        "FMZB 1513",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "1513-175",
+        "06/24/2027",
+        "Biennial"
+      ],
+      [
+        "Hybrid Antenna",
+        "VULB 9168",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9168-0895",
+        "08/28/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120 D",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9120D-1300",
+        "12/22/2027",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120 D",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "9120D-2296",
+        "05/16/2026",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9170",
+        "Schwarzbeck Mess- Elektronik OHG",
+        "BBHA9170342",
+        "09/20/2026",
+        "Biennial"
+      ],
+      [
+        "Signal Analyzer",
+        "FSV40",
+        "Rohde & Schwarz",
+        "101055",
+        "05/07/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV2400/2483.5- 2370/2520-60/12SS",
+        "Wainwright Instruments GmbH",
+        "2",
+        "12/11/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900-5100-5900- 6100-50SS",
+        "Wainwright Instruments GmbH",
+        "5",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900-5100-5900- 6100-50SS",
+        "Wainwright Instruments GmbH",
+        "6",
+        "05/27/2026",
+        "Annual"
+      ],
+      [
+        "High Pass Filter",
+        "WHKX10-7150-8000-18000- 50SS",
+        "Wainwright Instruments GmbH",
+        "1",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL18265035",
+        "CERNEX",
+        "22966",
+        "10/21/2026",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL26405040",
+        "CERNEX",
+        "25956",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Bluetooth Tester",
+        "TC-3000C",
+        "TESCOM",
+        "3000C000175",
+        "03/03/2027",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (3G HPF+LNA)",
+        "T&M system",
+        "S1L1",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (10dB ATT+LNA)",
+        "T&M system",
+        "S1L2",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (3dB ATT+LNA)",
+        "T&M system",
+        "S1L3",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (LNA)",
+        "T&M system",
+        "S1L4",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (7G HPF+LNA)",
+        "T&M system",
+        "S1L5",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FMSR-05B (Thru)",
+        "T&M system",
+        "S1L6",
+        "12/08/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Radiated",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Attenuator",
+        "18B-03",
+        "API Technologies",
+        "1",
+        "04/13/2027",
+        "Annual"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-DTS-FCC-Test-Report-9265711.pdf",
+    "source_sha256": "e7f80986f926c06d5565feb25a65822c5b76770f7fa8a6ef3740452bbcc90251"
+  },
+  {
+    "source_id": "report-a276-sar",
+    "report": "HCT-SR-2604-FC008",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 15,
+    "table": 0,
+    "header_row": 2,
+    "cells": [
+      [
+        "",
+        "",
+        "",
+        "",
+        "Report No.",
+        "HCT-SR-2604-FC008"
+      ],
+      [
+        "5.",
+        "Equipment List",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Manufacturer",
+        "Type / Model",
+        "S/N",
+        "Calib. Date",
+        "Calib.Interval",
+        "Calib.Due"
+      ],
+      [
+        "SPEAG",
+        "SAM Phantom",
+        "-",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "SPEAG",
+        "ELI Phantom",
+        "-",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "HP",
+        "SAR System Control PC",
+        "-",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Staubli",
+        "CS8Cspeag-TX90",
+        "F17/59CHA1/C/01",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Staubli",
+        "TX90 XLspeag",
+        "F17/59CHA1/A/01",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Staubli",
+        "D21142606B",
+        "10963",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "TESTO",
+        "175-H1/Thermometer",
+        "40331915309",
+        "12/18/2025",
+        "Annual",
+        "12/18/2026"
+      ],
+      [
+        "Staubli",
+        "CS8Cspeag-TX90",
+        "F17/59RAA1/C/01",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Staubli",
+        "TX90 XLspeag",
+        "F17/59RAA1/A/01",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Staubli",
+        "D21142606B",
+        "11578",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "TESTO",
+        "175-H1/Thermometer",
+        "40331922309",
+        "12/18/2025",
+        "Annual",
+        "12/18/2026"
+      ],
+      [
+        "Staubli",
+        "CS8Cspeag-TX90",
+        "F08/5AJ0A1/C/01",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Staubli",
+        "TX90 XLspeag",
+        "F08/5AJ0A1/A/01",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Staubli",
+        "D21143300",
+        "S-0008",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "TESTO",
+        "175-H1/Thermometer",
+        "40331949309",
+        "12/26/2025",
+        "Annual",
+        "12/26/2026"
+      ],
+      [
+        "SPEAG",
+        "DAE4",
+        "1225",
+        "09/25/2025",
+        "Annual",
+        "09/25/2026"
+      ],
+      [
+        "SPEAG",
+        "DAE4",
+        "780",
+        "06/04/2025",
+        "Annual",
+        "06/04/2026"
+      ],
+      [
+        "SPEAG",
+        "DAE4",
+        "1254",
+        "05/21/2025",
+        "Annual",
+        "05/21/2026"
+      ],
+      [
+        "SPEAG",
+        "E-Field Probe EX3DV4",
+        "3903",
+        "07/23/2025",
+        "Annual",
+        "07/23/2026"
+      ],
+      [
+        "SPEAG",
+        "E-Field Probe EX3DV4",
+        "7732",
+        "06/25/2025",
+        "Annual",
+        "06/25/2026"
+      ],
+      [
+        "SPEAG",
+        "E-Field Probe EX3DV4",
+        "7681",
+        "11/21/2025",
+        "Annual",
+        "11/21/2026"
+      ],
+      [
+        "SPEAG",
+        "Dipole D750V3",
+        "1014",
+        "05/20/2025",
+        "Annual",
+        "05/20/2026"
+      ],
+      [
+        "SPEAG",
+        "Dipole D835V2",
+        "4d165",
+        "04/14/2025",
+        "Annual",
+        "04/14/2026"
+      ],
+      [
+        "SPEAG",
+        "Dipole D1800V2",
+        "2d007",
+        "03/12/2026",
+        "Annual",
+        "03/12/2027"
+      ],
+      [
+        "SPEAG",
+        "Dipole D1900V2",
+        "5d032",
+        "01/28/2026",
+        "Annual",
+        "01/28/2027"
+      ],
+      [
+        "SPEAG",
+        "Dipole D2600V2",
+        "1043",
+        "05/22/2025",
+        "Annual",
+        "05/22/2026"
+      ],
+      [
+        "SPEAG",
+        "Dipole D3500V2.",
+        "1132",
+        "01/28/2026",
+        "Annual",
+        "01/28/2027"
+      ],
+      [
+        "SPEAG",
+        "Dipole D3700V2",
+        "1066",
+        "09/15/2025",
+        "Annual",
+        "09/15/2026"
+      ],
+      [
+        "SPEAG",
+        "Dipole D3900V2",
+        "1019",
+        "05/21/2025",
+        "Annual",
+        "05/21/2026"
+      ],
+      [
+        "Agilent",
+        "Power Meter / E4419B",
+        "MY41291386",
+        "09/13/2025",
+        "Annual",
+        "09/13/2026"
+      ],
+      [
+        "Agilent",
+        "Power Meter / E4419B",
+        "MY40330223",
+        "09/15/2025",
+        "Annual",
+        "09/15/2026"
+      ],
+      [
+        "Agilent",
+        "Power Meter / N1911A",
+        "MY45101406",
+        "05/19/2025",
+        "Annual",
+        "05/19/2026"
+      ],
+      [
+        "Agilent",
+        "Power Sensor / 8481A",
+        "SG1091286",
+        "09/09/2025",
+        "Annual",
+        "09/09/2026"
+      ],
+      [
+        "Agilent",
+        "Power Sensor / 8481A",
+        "MY41090873",
+        "01/06/2026",
+        "Annual",
+        "01/06/2027"
+      ],
+      [
+        "Keysight",
+        "Power Sensor / N1921A",
+        "MY55220026",
+        "08/07/2025",
+        "Annual",
+        "08/07/2026"
+      ],
+      [
+        "SPEAG",
+        "DAK-3.5",
+        "1377",
+        "09/08/2025",
+        "Annual",
+        "09/08/2026"
+      ],
+      [
+        "SPEAG",
+        "DAKS-12",
+        "1048",
+        "06/10/2025",
+        "Annual",
+        "06/10/2026"
+      ],
+      [
+        "R&S",
+        "VECTOR NETWORK ANALYZER / ZNB 20",
+        "102279",
+        "07/07/2025",
+        "Annual",
+        "07/07/2026"
+      ],
+      [
+        "R&S",
+        "VECTOR NETWORK ANALYZER / ZNB 8",
+        "103719",
+        "03/31/2026",
+        "Annual",
+        "03/31/2027"
+      ],
+      [
+        "Agilent",
+        "SIGNAL GENERATOR / E8267D",
+        "MY50350097",
+        "02/26/2026",
+        "Annual",
+        "02/26/2027"
+      ],
+      [
+        "Agilent",
+        "SIGNAL GENERATOR/E4421B",
+        "MY41000790",
+        "10/21/2025",
+        "Annual",
+        "10/21/2026"
+      ],
+      [
+        "Agilent",
+        "SIGNAL GENERATOR / E4433B",
+        "US40052109",
+        "01/08/2026",
+        "Annual",
+        "01/08/2027"
+      ],
+      [
+        "MICRO LAB",
+        "LP Filter / LA-15N",
+        "10453",
+        "09/15/2025",
+        "Annual",
+        "09/15/2026"
+      ],
+      [
+        "MICRO LAB",
+        "LP Filter / LA-30N",
+        "-",
+        "09/15/2025",
+        "Annual",
+        "09/15/2026"
+      ],
+      [
+        "MICRO LAB",
+        "LP Filter / LA-60N",
+        "32011",
+        "09/15/2025",
+        "Annual",
+        "09/15/2026"
+      ],
+      [
+        "Agilent",
+        "Attenuator (3dB) / 8693B",
+        "MY39260298",
+        "08/18/2025",
+        "Annual",
+        "08/18/2026"
+      ],
+      [
+        "RF COREA",
+        "Attenuator (30dB)",
+        "A-0830",
+        "06/24/2025",
+        "Annual",
+        "06/24/2026"
+      ],
+      [
+        "NARDA",
+        "Directional Coupler / 4226-10",
+        "7083",
+        "01/16/2026",
+        "Annual",
+        "01/16/2027"
+      ],
+      [
+        "Agilent",
+        "Directional Bridge / 86205A",
+        "3140A04581",
+        "04/18/2025",
+        "Annual",
+        "04/18/2026"
+      ],
+      [
+        "Agilent",
+        "Directional Bridge / 86205A",
+        "3140A04581",
+        "04/07/2026",
+        "Annual",
+        "04/07/2027"
+      ],
+      [
+        "R&S",
+        "Wireless Communication Test Set / CMW500",
+        "139333",
+        "12/02/2025",
+        "Annual",
+        "12/02/2026"
+      ],
+      [
+        "Anritsu",
+        "Radio Communication Tester / MT8820C",
+        "6201041449",
+        "12/17/2025",
+        "Annual",
+        "12/17/2026"
+      ],
+      [
+        "Anritsu",
+        "Radio Communication Tester / MT8820C",
+        "6201144485",
+        "07/14/2025",
+        "Annual",
+        "07/14/2026"
+      ],
+      [
+        "Anritsu",
+        "Radio Communication Tester / MT8821C",
+        "6201664725",
+        "01/06/2026",
+        "Annual",
+        "01/06/2027"
+      ],
+      [
+        "Anritsu",
+        "Radio Communication Tester / MT8821C",
+        "6201664727",
+        "12/02/2025",
+        "Annual",
+        "12/02/2026"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "(Rev. 06)",
+        "",
+        "",
+        "",
+        "",
+        "Page 15"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/RF-Exposure-Info/A3LSMA276B-FCC-SAR-Part-0-Report-9265779.pdf",
+    "source_sha256": "829e050071917d5a04d94a149e4dd638464fb5573132196d35e4696a92a55c41"
+  },
+  {
+    "source_id": "report-a276-sar",
+    "report": "HCT-SR-2604-FC008",
+    "issue_date": "April 27, 2026",
+    "pdf_page": 16,
+    "table": 0,
+    "header_row": 2,
+    "cells": [
+      [
+        "",
+        "",
+        "",
+        "",
+        "Report No.",
+        "HCT-SR-2604-FC008"
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Manufacturer",
+        "Type / Model",
+        "S/N",
+        "Calib. Date",
+        "Calib.Interval",
+        "Calib.Due"
+      ],
+      [
+        "Anritsu",
+        "Radio Communication Test Station / MT8000A",
+        "6262148305",
+        "12/18/2025",
+        "Annual",
+        "12/18/2026"
+      ],
+      [
+        "Anritsu",
+        "Radio Communication Test Station / MT8000A",
+        "6261987928",
+        "01/07/2026",
+        "Annual",
+        "01/07/2027"
+      ],
+      [
+        "Agilent",
+        "WIRELESS COMMUNICATION / E5515C",
+        "MY50260992",
+        "05/20/2025",
+        "Annual",
+        "05/20/2026"
+      ],
+      [
+        "Agilent",
+        "WIRELESS COMMUNICATION / E5515C",
+        "GB42230619",
+        "05/20/2025",
+        "Annual",
+        "05/20/2026"
+      ],
+      [
+        "Agilent",
+        "Power Divider / 11636B",
+        "58698",
+        "01/09/2026",
+        "Annual",
+        "01/09/2027"
+      ],
+      [
+        "EMPOWER",
+        "RF Power Amplifier / 2135DEFAAXLXX",
+        "1084",
+        "05/20/2025",
+        "Annual",
+        "05/20/2026"
+      ],
+      [
+        "EMPOWER",
+        "RF Power Amplifier / 2001-BBS3Q7EBK",
+        "1041D/C0508",
+        "05/20/2025",
+        "Annual",
+        "05/20/2026"
+      ],
+      [
+        "EMPOWER",
+        "RF Power Amplifier / BBS5K8CAJ",
+        "1011",
+        "09/15/2025",
+        "Annual",
+        "09/15/2026"
+      ],
+      [
+        "Note: All me * The E-field Verification material is c (dielectric c",
+        "asurements were performed within the v probe was calibrated by SPEAG, by the w measurement is performed by HCT Lab. b alibrated by HCT using the DAKS 3.5 to de onstant) of the brain/body-equivalent ma",
+        "alid calibration p aveguide techni efore each test. termine the con terial.",
+        "eriod of the que proced The brain/b ductivity an",
+        "specific equi ure. Dipole ody simulatin d permittivit",
+        "pment. g y"
+      ],
+      [
+        "(Rev. 06)",
+        "",
+        "",
+        "",
+        "",
+        "Page 16"
+      ]
+    ],
+    "source_url": "https://fccid.io/A3LSMA276B/RF-Exposure-Info/A3LSMA276B-FCC-SAR-Part-0-Report-9265779.pdf",
+    "source_sha256": "829e050071917d5a04d94a149e4dd638464fb5573132196d35e4696a92a55c41"
+  },
+  {
+    "source_id": "report-lg-6g",
+    "report": "HCT-RF-2609-FC006",
+    "issue_date": "September 04, 2026",
+    "pdf_page": 136,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "LISN",
+        "ENV216",
+        "Rohde & Schwarz",
+        "102245",
+        "07/10/2027",
+        "Annual"
+      ],
+      [
+        "EMI Test Receiver",
+        "EPL1000",
+        "Rohde & Schwarz",
+        "101127",
+        "05/15/2027",
+        "Annual"
+      ],
+      [
+        "Chamber",
+        "SU-642",
+        "ESPEC",
+        "93008124",
+        "06/17/2027",
+        "Annual"
+      ],
+      [
+        "PXA Signal Analyzer",
+        "N9030A",
+        "Agilent",
+        "MY49432108",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Open Switch and Control Platform",
+        "OSP 150",
+        "Rohde & Schwarz",
+        "100894",
+        "05/06/2027",
+        "Annual"
+      ],
+      [
+        "Power Meter",
+        "N1911A",
+        "Agilent",
+        "MY45100523",
+        "02/13/2027",
+        "Annual"
+      ],
+      [
+        "WIDEBAND POWER SENSOR",
+        "N1921A",
+        "Keysight",
+        "MY57820067",
+        "01/26/2027",
+        "Annual"
+      ],
+      [
+        "Directional Coupler",
+        "87300B",
+        "Agilent",
+        "3116A03621",
+        "10/14/2026",
+        "Annual"
+      ],
+      [
+        "Power Splitter",
+        "11667B",
+        "Hewlett Packard",
+        "10545",
+        "01/15/2027",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "E3632A",
+        "Hewlett Packard",
+        "KR40010370",
+        "12/12/2026",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "8493C-010",
+        "Keysight",
+        "07560",
+        "04/29/2027",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "8493C-010",
+        "HP",
+        "08285",
+        "05/08/2027",
+        "Annual"
+      ],
+      [
+        "Attenuator",
+        "18N-20dB",
+        "Rohde & Schwarz",
+        "8",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Software",
+        "ELEKTRA",
+        "Rohde & Schwarz",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Bluetooth Tester",
+        "CBT",
+        "Rohde & Schwarz",
+        "100752",
+        "12/22/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Automation Software",
+        "FCC Bluetooth Conducted",
+        "HCT CO., LTD",
+        "N/A",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Radio Communication Tester",
+        "CMX500",
+        "Rohde&Schwarz",
+        "100325",
+        "09/29/2026",
+        "Annual"
+      ],
+      [
+        "Step Attenuator",
+        "8310-202-F",
+        "Aeroflex/Weinschel",
+        "1070",
+        "03/18/2027",
+        "Annual"
+      ],
+      [
+        "Directional Coupler",
+        "ZUDC6-0283- S+",
+        "Mini-Circuits",
+        "Y893712438 2 _",
+        "03/10/2027",
+        "Annual"
+      ],
+      [
+        "Signal Generator",
+        "SMW-200A",
+        "Rohde&Schwarz",
+        "109695",
+        "05/28/2027",
+        "Annual"
+      ],
+      [
+        "4 WAY POWER DIVIDER",
+        "4456-4",
+        "Narda",
+        "01640",
+        "04/13/2027",
+        "Annual"
+      ]
+    ],
+    "source_url": "https://fccid.io/2BO3LLGSWCAX71/Test-Report/LGSWCAX71-UNII-6G-FCC-Test-Report-9639141.pdf",
+    "source_sha256": "02f278e51dd578b68280c70e19d57085120afe7e84ed724ec1d1eb61ff889623"
+  },
+  {
+    "source_id": "report-lg-6g",
+    "report": "HCT-RF-2609-FC006",
+    "issue_date": "September 04, 2026",
+    "pdf_page": 137,
+    "table": 0,
+    "header_row": 0,
+    "cells": [
+      [
+        "Equipment",
+        "Model",
+        "Manufacturer",
+        "Serial No.",
+        "Due to Calibration",
+        "Calibration Interval"
+      ],
+      [
+        "Antenna Mast Controller",
+        "CO3000",
+        "Innco system GmbH",
+        "CO3000/842/ 35030115/L",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Antenna Mast",
+        "MA4640-XP-ET",
+        "Innco system GmbH",
+        "S3AM",
+        "07/01/2027",
+        "Annual"
+      ],
+      [
+        "Turn Table",
+        "DS1500-S-1t",
+        "Innco system GmbH",
+        "6290425",
+        "N/A",
+        "N/A"
+      ],
+      [
+        "Loop Antenna",
+        "FMZB 1513",
+        "Schwarzbeck Mess-Elektronik OHG",
+        "1513-175",
+        "06/24/2027",
+        "Biennial"
+      ],
+      [
+        "Trillog Broadband Antenna",
+        "VULB 9168",
+        "Schwarzbeck Mess-Elektronik OHG",
+        "9168-1135",
+        "08/12/2028",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9120D",
+        "Schwarzbeck Mess-Elektronik OHG",
+        "9120D-1191",
+        "10/21/2027",
+        "Biennial"
+      ],
+      [
+        "Horn Antenna",
+        "BBHA 9170",
+        "Schwarzbeck Mess-Elektronik OHG",
+        "BBHA9170124",
+        "03/23/2027",
+        "Biennial"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV2400/2483.5- 2370/2520-60/12SS",
+        "Wainwright Instruments GmbH",
+        "2",
+        "12/11/2026",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900- 5100-5900-6100- 50SS",
+        "Wainwright Instruments GmbH",
+        "5",
+        "03/19/2027",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV12-4900- 5100-5900-6100- 50SS",
+        "Wainwright Instruments GmbH",
+        "6",
+        "03/19/2027",
+        "Annual"
+      ],
+      [
+        "Band Reject Filter",
+        "WRCJV5100/5850- 40/50-8EEK",
+        "Wainwright Instruments GmbH",
+        "1",
+        "01/07/2027",
+        "Annual"
+      ],
+      [
+        "High Pass Filter",
+        "WHKX10-7150- 8000-18000-50SS",
+        "Wainwright Instruments GmbH",
+        "1",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-03A (3G HPF+LNA)",
+        "T&M SYSTEM",
+        "S3L1",
+        "10/20/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-03A (10dB ATT+LNA)",
+        "T&M SYSTEM",
+        "S3L2",
+        "10/20/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-03A (7G HPF+LNA)",
+        "T&M SYSTEM",
+        "S3L3",
+        "10/20/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-03A (3dB ATT+LNA)",
+        "T&M SYSTEM",
+        "S3L4",
+        "10/20/2026",
+        "Annual"
+      ],
+      [
+        "RF Switching System",
+        "FBSR-03A (Thru)",
+        "T&M SYSTEM",
+        "S3L5",
+        "10/20/2026",
+        "Annual"
+      ],
+      [
+        "DC Power Supply",
+        "E3632A",
+        "Hewlett Packard",
+        "KR75305528",
+        "12/12/2026",
+        "Annual"
+      ],
+      [
+        "Automation Software",
+        "FCC WLAN Radiated",
+        "HCT CO., LTD.",
+        "-",
+        "-",
+        "-"
+      ],
+      [
+        "Broadband LNA",
+        "CBL18265035",
+        "CERNEX",
+        "22966",
+        "10/21/2026",
+        "Annual"
+      ],
+      [
+        "Broadband LNA",
+        "CBL26405040",
+        "CERNEX",
+        "25956",
+        "02/09/2027",
+        "Annual"
+      ],
+      [
+        "Bluetooth Tester",
+        "TC-3000C",
+        "TESCOM",
+        "3000C000175",
+        "03/03/2027",
+        "Annual"
+      ],
+      [
+        "Spectrum Analyzer",
+        "FSV40",
+        "Rohde & Schwarz",
+        "100900",
+        "04/14/2027",
+        "Annual"
+      ]
+    ],
+    "source_url": "https://fccid.io/2BO3LLGSWCAX71/Test-Report/LGSWCAX71-UNII-6G-FCC-Test-Report-9639141.pdf",
+    "source_sha256": "02f278e51dd578b68280c70e19d57085120afe7e84ed724ec1d1eb61ff889623"
+  }
+]

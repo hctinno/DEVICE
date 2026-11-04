@@ -18,7 +18,7 @@ class ExampleTests(unittest.TestCase):
         for failed in (False,True):
             with self.subTest(failed=failed),tempfile.TemporaryDirectory() as temporary:
                 path=Path(temporary)
-                profile=Profile.load(ROOT.parent/'samsung-rf/profiles/simulation.json')
+                profile=Profile.load(ROOT.parent/'phone-rf/profiles/simulation.json')
                 phone=Controller(ScriptedTransport(),profile)
                 io=fixture('N9030B',**{'FREQ:STAR?':'1e9','FREQ:STOP?':'2e9','BAND:RES?':'1e6',
                     'BAND:VID?':'3e6','SWE:POIN?':'101','SWE:TIME?':'1','POW:ATT?':'10',
@@ -37,7 +37,7 @@ class ExampleTests(unittest.TestCase):
                 args=['example','--analyzer-profile',str(path/'analyzer.json'),'--phone-profile','fixture.json',
                       '--phone-port','COM_FIXTURE','--baudrate','115200','--wlan-config',str(path/'wlan.json'),
                       '--sweep-config',str(path/'sweep.json'),'--output',str(output)]
-                with patch.object(example,'connect',analyzer_context),patch.object(example,'samsung_serial',phone_context),patch('sys.argv',args):
+                with patch.object(example,'connect',analyzer_context),patch.object(example,'phone_serial',phone_context),patch('sys.argv',args):
                     if failed:
                         with self.assertRaises(Exception): example.main()
                     else: example.main()

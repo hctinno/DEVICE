@@ -15,7 +15,7 @@ class Scenario:
     peak_angle_deg: float = 90.0
     peak_height_cm: float = 200.0
     cross_polar_loss_db: float = 6.0
-    # Explicit fixture association, NOT a universal Samsung channel argument table.
+    # Explicit fixture association, NOT a universal OEM channel argument table.
     channels_hz: dict = field(default_factory=lambda: {"17": 6.035e9, "49": 6.195e9})
 
     def __post_init__(self):

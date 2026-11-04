@@ -261,7 +261,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "A.R.A.",
@@ -411,7 +412,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "AC BEL",
@@ -446,7 +448,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "AMPLICAL",
@@ -714,7 +717,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "AMPLICAL",
@@ -749,7 +753,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "AMPLICAL",
@@ -881,7 +886,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -916,7 +922,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -970,7 +977,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1043,7 +1051,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1078,7 +1087,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1113,7 +1123,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1186,7 +1197,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1297,7 +1309,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1351,7 +1364,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1424,7 +1438,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1478,7 +1493,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1532,7 +1548,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1605,7 +1622,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1679,7 +1697,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1714,7 +1733,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1749,7 +1769,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -1784,7 +1805,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -2237,7 +2259,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -2272,7 +2295,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "APPLE",
@@ -2327,7 +2351,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "ASUS",
@@ -2401,7 +2426,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "ASUS",
@@ -2436,7 +2462,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "B&Z TECHNOLOGIES, LLC",
@@ -2661,7 +2688,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "B&Z TECHNOLOGIES, LLC",
@@ -2829,7 +2857,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "BOONTON ELECTRONICS",
@@ -2959,7 +2988,8 @@
     "scope_ko": "모델/앱/버전에 맞는 명령 또는 SDK 연결 검증 미완료. 실행 드라이버를 제공하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "CINCINNATI SUB ZERO",
@@ -3013,7 +3043,8 @@
     "scope_ko": "설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "CMI, INC.",
@@ -3048,7 +3079,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "CMI, INC.",
@@ -3083,7 +3115,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "CMI, INC.",
@@ -3118,7 +3151,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "CMI, INC.",
@@ -3153,7 +3187,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "CMI, INC.",
@@ -3188,7 +3223,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "COBHAM",
@@ -3470,7 +3506,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "COPPER MOUNTAIN TECHNOLOGIES",
@@ -3529,7 +3566,8 @@
     "scope_ko": "RVNA 21.3.1+ PC TCP 서버·S11 복소 trace·RF ON/OFF",
     "source_id": "cmt-rvna",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "CRESYN",
@@ -3564,7 +3602,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "D-LINK",
@@ -3618,7 +3657,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "DELL",
@@ -3672,7 +3712,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "DELL",
@@ -3706,7 +3747,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "DELL",
@@ -3760,7 +3802,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "ESPEC",
@@ -3928,7 +3971,8 @@
     "scope_ko": "P300/SCP220 장착 확인 후 온도 설정·CONSTANT/STANDBY. SH-642의 컨트롤러는 성적서로 확정 불가",
     "source_id": "espec-chamberconnect",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "ETS-Lindgren",
@@ -4210,7 +4254,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "ETS-Lindgren",
@@ -4606,7 +4651,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "ETS-Lindgren",
@@ -4850,7 +4896,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "ETS-Lindgren",
@@ -6386,7 +6433,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "ETS-Lindgren",
@@ -6516,7 +6564,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Electro-Metrics",
@@ -6761,7 +6810,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Electro-Metrics",
@@ -7008,7 +7058,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "FISHER SCIENTIFIC",
@@ -7087,7 +7138,8 @@
     "scope_ko": "행 원문과 설치 장비의 역할/제어 인터페이스 추가 확인 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Fischer Custom Communications",
@@ -7122,7 +7174,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Fischer Custom Communications",
@@ -7291,7 +7344,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "KBEST",
@@ -7326,7 +7380,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "KIKUSUI",
@@ -7418,7 +7473,8 @@
     "scope_ko": "전압·전류 제한·출력 ON/OFF·전압/전류 읽기",
     "source_id": "kikusui-pwr",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "KRYTAR",
@@ -7472,7 +7528,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "KRYTAR",
@@ -7545,7 +7602,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "KRYTAR",
@@ -7580,7 +7638,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -7638,7 +7697,8 @@
     "scope_ko": "HP 고유 명령 FR/SE/LG·TR2 측정·TR0 대기. 센서 교정표 확인 필요",
     "source_id": "hp-437b",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -7696,7 +7756,8 @@
     "scope_ko": "전력계 본체를 통해 제어하는 센서. 독립 SCPI 주소 없음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -7731,7 +7792,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -7785,7 +7847,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -7858,7 +7921,8 @@
     "scope_ko": "전압·전류 제한·출력 ON/OFF·전압/전류 읽기",
     "source_id": "keysight-e3640",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -7912,7 +7976,8 @@
     "scope_ko": "주파수 스윕·RBW/VBW·검파기·단일 측정·trace 수집·정지",
     "source_id": "keysight-psa",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -8043,7 +8108,8 @@
     "scope_ko": "모델/앱/버전에 맞는 명령 또는 SDK 연결 검증 미완료. 실행 드라이버를 제공하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -8077,7 +8143,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -8131,7 +8198,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -8345,7 +8413,8 @@
     "scope_ko": "채널 A/B·보정 주파수·평균 전력·정지",
     "source_id": "keysight-power",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -8400,7 +8469,8 @@
     "scope_ko": "채널 A/B·보정 주파수·평균 전력·정지",
     "source_id": "keysight-power",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -8785,7 +8855,8 @@
     "scope_ko": "전력계 본체를 통해 제어하는 센서. 독립 SCPI 주소 없음",
     "source_id": "keysight-power",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -8822,7 +8893,8 @@
     "scope_ko": "CW 주파수·출력·RF ON/OFF·설정 재조회",
     "source_id": "keysight-mxg-a",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -8897,7 +8969,8 @@
     "scope_ko": "CW 주파수·출력·RF ON/OFF·설정 재조회",
     "source_id": "keysight-mxg-b",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -8952,7 +9025,8 @@
     "scope_ko": "호스트 신호발생기/분석기의 확장 모듈. 별도 보정·고조파/LO 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -9026,7 +9100,8 @@
     "scope_ko": "주파수 스윕·RBW/VBW·검파기·단일 측정·trace 수집·정지",
     "source_id": "keysight-xsa-a",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -9980,7 +10055,8 @@
     "scope_ko": "주파수 스윕·RBW/VBW·검파기·단일 측정·trace 수집·정지",
     "source_id": "keysight-xsa-a",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -10476,7 +10552,8 @@
     "scope_ko": "주파수 스윕·RBW/VBW·검파기·단일 측정·trace 수집·정지",
     "source_id": "keysight-xsa-b",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -10511,7 +10588,8 @@
     "scope_ko": "주파수 스윕·RBW/VBW·검파기·단일 측정·trace 수집·정지",
     "source_id": "keysight-xsa-b",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Keysight/Agilent/HP",
@@ -10755,7 +10833,8 @@
     "scope_ko": "보정 주파수·평균 전력·측정 시작/정지",
     "source_id": "keysight-u2000",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "LENOVO",
@@ -10790,7 +10869,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "LENOVO",
@@ -10825,7 +10905,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "LG",
@@ -10860,7 +10941,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "LG",
@@ -10895,7 +10977,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "LITEON TECHNOLOGY",
@@ -10987,7 +11070,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "LITEON TECHNOLOGY",
@@ -11022,7 +11106,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11057,7 +11142,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11149,7 +11235,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11279,7 +11366,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11371,7 +11459,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11463,7 +11552,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11498,7 +11588,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11590,7 +11681,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11720,7 +11812,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11869,7 +11962,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -11904,7 +11998,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -12110,7 +12205,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -12202,7 +12298,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -12332,7 +12429,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -12443,7 +12541,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MICRO-TRONICS",
@@ -12573,7 +12672,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "MITEQ",
@@ -12836,7 +12936,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Mini-Circuits",
@@ -13080,7 +13181,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Mini-Circuits",
@@ -13117,7 +13219,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Mini-Circuits",
@@ -13175,7 +13278,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "N/A",
@@ -13267,7 +13371,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "N/A",
@@ -13302,7 +13407,8 @@
     "scope_ko": "행 원문과 설치 장비의 역할/제어 인터페이스 추가 확인 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "POLAROID",
@@ -13356,7 +13462,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Pasternack",
@@ -13448,7 +13555,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Pasternack",
@@ -13506,7 +13614,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Pasternack",
@@ -13579,7 +13688,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Pasternack",
@@ -13614,7 +13724,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Pasternack",
@@ -13801,7 +13912,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Pasternack",
@@ -13836,7 +13948,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Pasternack",
@@ -14594,7 +14707,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Pasternack",
@@ -14724,7 +14838,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "RFTECH",
@@ -14759,7 +14874,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -15246,7 +15362,8 @@
     "scope_ko": "LTE FDD RMC 셀/연결·상태 대기·해제. 시험 SIM/라우팅/라이선스 필요",
     "source_id": "rs-cmw-lte",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -15300,7 +15417,8 @@
     "scope_ko": "모델/앱/버전에 맞는 명령 또는 SDK 연결 검증 미완료. 실행 드라이버를 제공하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -15358,7 +15476,8 @@
     "scope_ko": "모델/앱/버전에 맞는 명령 또는 SDK 연결 검증 미완료. 실행 드라이버를 제공하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -15662,7 +15781,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -15793,7 +15913,8 @@
     "scope_ko": "주파수 스윕·RBW/VBW·검파기·단일 측정·trace 수집·정지",
     "source_id": "rs-esci",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -15848,7 +15969,8 @@
     "scope_ko": "모델/앱/버전에 맞는 명령 또는 SDK 연결 검증 미완료. 실행 드라이버를 제공하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -15980,7 +16102,8 @@
     "scope_ko": "단일 주파수·RBW·검파기·측정시간·dBuV 결과·정지",
     "source_id": "rs-esr",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -16589,7 +16712,8 @@
     "scope_ko": "주파수 스윕·RBW/VBW·검파기·단일 측정·trace 수집·정지",
     "source_id": "rs-esu",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -16626,7 +16750,8 @@
     "scope_ko": "주파수 스윕·RBW/VBW·검파기·단일 측정·trace 수집·정지",
     "source_id": "rs-esu",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18054,7 +18179,8 @@
     "scope_ko": "단일 주파수·RBW·검파기·측정시간·dBuV 결과·정지",
     "source_id": "rs-esw",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18168,7 +18294,8 @@
     "scope_ko": "단일 주파수·RBW·검파기·측정시간·dBuV 결과·정지",
     "source_id": "rs-esw",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18223,7 +18350,8 @@
     "scope_ko": "주파수 스윕·RBW/VBW·검파기·단일 측정·trace 수집·정지",
     "source_id": "rs-fsw",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18260,7 +18388,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18523,7 +18652,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18581,7 +18711,8 @@
     "scope_ko": "보정 주파수·평균 전력·측정 시작/정지",
     "source_id": "rs-nrpa",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18635,7 +18766,8 @@
     "scope_ko": "보정 주파수·평균 전력·측정 시작/정지",
     "source_id": "rs-nrps",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18884,7 +19016,8 @@
     "scope_ko": "보정 주파수·평균 전력·측정 시작/정지",
     "source_id": "rs-nrps",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18921,7 +19054,8 @@
     "scope_ko": "모델/앱/버전에 맞는 명령 또는 SDK 연결 검증 미완료. 실행 드라이버를 제공하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -18958,7 +19092,8 @@
     "scope_ko": "모델/앱/버전에 맞는 명령 또는 SDK 연결 검증 미완료. 실행 드라이버를 제공하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -19037,7 +19172,8 @@
     "scope_ko": "CW 주파수·출력·RF ON/OFF·설정 재조회",
     "source_id": "rs-smb100a",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -19095,7 +19231,8 @@
     "scope_ko": "CW 주파수·출력·RF ON/OFF·설정 재조회",
     "source_id": "rs-smb100b",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -19150,7 +19287,8 @@
     "scope_ko": "CW 주파수·출력·RF ON/OFF·설정 재조회",
     "source_id": "rs-smw200a",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Rohde & Schwarz",
@@ -19187,10 +19325,11 @@
     "scope_ko": "S11 복소 trace·RF ON/OFF. 기존 교정 상태 확인",
     "source_id": "rs-znle",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
-    "manufacturer": "SAMSUNG",
+    "manufacturer": "단말 OEM",
     "model": "AA-SM7PCPB",
     "descriptions": [
       "Mouse"
@@ -19222,10 +19361,11 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": true
   },
   {
-    "manufacturer": "SAMSUNG",
+    "manufacturer": "단말 OEM",
     "model": "EP-DN980",
     "descriptions": [
       "Data Cable"
@@ -19409,10 +19549,11 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": true
   },
   {
-    "manufacturer": "SAMSUNG",
+    "manufacturer": "단말 OEM",
     "model": "EP-T2510",
     "descriptions": [
       "Charger"
@@ -19596,10 +19737,11 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": true
   },
   {
-    "manufacturer": "SAMSUNG",
+    "manufacturer": "단말 OEM",
     "model": "NT550XDA-KC58G",
     "descriptions": [
       "Laptop (SAS – WINNForum Test Harness)"
@@ -19630,10 +19772,11 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": true
   },
   {
-    "manufacturer": "SAMSUNG",
+    "manufacturer": "단말 OEM",
     "model": "SM-F971U",
     "descriptions": [
       "Mobile Phone"
@@ -19665,10 +19808,11 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": true
   },
   {
-    "manufacturer": "SAMSUNG",
+    "manufacturer": "단말 OEM",
     "model": "SMH-210UB",
     "descriptions": [
       "Mouse"
@@ -19700,7 +19844,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": true
   },
   {
     "manufacturer": "SCHWARZBECK",
@@ -20267,7 +20412,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SOLUM",
@@ -20302,7 +20448,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20339,7 +20486,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20376,7 +20524,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20430,7 +20579,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20488,7 +20638,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20567,7 +20718,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20646,7 +20798,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20681,7 +20834,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20760,7 +20914,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20837,7 +20992,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -20916,7 +21072,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -21016,7 +21173,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -21095,7 +21253,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -21174,7 +21333,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -21209,7 +21369,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -21288,7 +21449,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -21346,7 +21508,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -21425,7 +21588,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -21502,7 +21666,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -21560,7 +21725,8 @@
     "scope_ko": "교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -22185,7 +22351,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -22516,7 +22683,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -22616,7 +22784,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -22653,7 +22822,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -22690,7 +22860,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -22770,7 +22941,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -22828,7 +23000,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -22907,7 +23080,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -23868,7 +24042,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "SPEAG",
@@ -23968,7 +24143,8 @@
     "scope_ko": "DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음",
     "source_id": "speag-dasy8",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "STEATITE",
@@ -24003,7 +24179,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "STEATITE",
@@ -24038,7 +24215,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "STEATITE",
@@ -24075,7 +24253,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Sonoma",
@@ -24167,7 +24346,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Sonoma",
@@ -24722,7 +24902,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Sorensen",
@@ -24780,7 +24961,8 @@
     "scope_ko": "설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Sorensen",
@@ -24817,7 +24999,8 @@
     "scope_ko": "설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Sunol",
@@ -24852,7 +25035,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "Sunol",
@@ -25080,7 +25264,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "TA ENGINEERING",
@@ -25210,7 +25395,8 @@
     "scope_ko": "RF Switching Unit: 포트/릴레이 맵·경로 선택·상태 조회 프로토콜 필요. 모션 장비 아님",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "TE",
@@ -25321,7 +25507,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "TEKBOX",
@@ -25413,7 +25600,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "TESCOM",
@@ -25448,7 +25636,8 @@
     "scope_ko": "Bluetooth 시험기: 설치 SDK·RF 설정/측정·시험 시작/종료 프로토콜 필요. 모션 장비 아님",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "TESCOM",
@@ -25483,7 +25672,8 @@
     "scope_ko": "Bluetooth 시험기: 설치 SDK·RF 설정/측정·시험 시작/종료 프로토콜 필요. 모션 장비 아님",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "TESEQ",
@@ -25541,7 +25731,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "THERMOTRON INDUSTRIES",
@@ -25576,7 +25767,8 @@
     "scope_ko": "8800 장착/개별 장비 매뉴얼 확인 후 SETP/PVAR·RUNM/STOP. SM-16C 컨트롤러 미확정",
     "source_id": "thermotron-8800",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "TOYO",
@@ -25613,7 +25805,8 @@
     "scope_ko": "지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL",
@@ -25683,7 +25876,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL",
@@ -25789,7 +25983,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL",
@@ -26244,7 +26439,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL",
@@ -26356,7 +26552,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL",
@@ -26480,7 +26677,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL",
@@ -27201,7 +27399,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL",
@@ -27307,7 +27506,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -27437,7 +27637,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -27645,7 +27846,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -27737,7 +27939,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -27830,7 +28033,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -27865,7 +28069,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -27900,7 +28105,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -27935,7 +28141,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -27970,7 +28177,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28005,7 +28213,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28078,7 +28287,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28113,7 +28323,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28205,7 +28416,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28297,7 +28509,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28332,7 +28545,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28386,7 +28600,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28440,7 +28655,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28551,7 +28767,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28605,7 +28822,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28697,7 +28915,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28732,7 +28951,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28843,7 +29063,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "UL-FR1",
@@ -28878,7 +29099,8 @@
     "scope_ko": "UL 자체 소프트웨어·RF 스위치/필터박스: 포트 맵, 명령/SDK, 상태 응답 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "VDI",
@@ -28913,7 +29135,8 @@
     "scope_ko": "호스트 신호발생기/분석기의 확장 모듈. 별도 보정·고조파/LO 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "VDI",
@@ -28948,7 +29171,8 @@
     "scope_ko": "호스트 신호발생기/분석기의 확장 모듈. 별도 보정·고조파/LO 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "VDI",
@@ -28983,7 +29207,8 @@
     "scope_ko": "호스트 신호발생기/분석기의 확장 모듈. 별도 보정·고조파/LO 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "VDI",
@@ -29018,7 +29243,8 @@
     "scope_ko": "호스트 신호발생기/분석기의 확장 모듈. 별도 보정·고조파/LO 설정 필요",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "WAINWRIGHT INSTRUMENTS GMBH",
@@ -29053,7 +29279,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "WAINWRIGHT INSTRUMENTS GMBH",
@@ -29088,7 +29315,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "WAINWRIGHT INSTRUMENTS GMBH",
@@ -29123,7 +29351,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "WAINWRIGHT INSTRUMENTS GMBH",
@@ -29158,7 +29387,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "WEINSCHEL",
@@ -29231,7 +29461,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "WEINSCHEL",
@@ -29342,7 +29573,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "WEINSCHEL",
@@ -29415,7 +29647,8 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   },
   {
     "manufacturer": "WERLATONE",
@@ -29452,6 +29685,7 @@
     "scope_ko": "연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음",
     "source_id": "",
     "hardware_validated": false,
-    "report_calibration_is_current_site_evidence": false
+    "report_calibration_is_current_site_evidence": false,
+    "manufacturer_display_redacted": false
   }
 ]

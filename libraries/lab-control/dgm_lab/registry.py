@@ -11,9 +11,9 @@ DRIVERS = {c.__name__: c for c in (SpectrumAnalyzer, EmiReceiver, SignalGenerato
 
 
 def inventory(query='', *, scope='legacy'):
-    if scope not in ('legacy','hct-2026'):
-        raise ValueError('scope must be legacy or hct-2026')
-    filename='hct-2026-instruments.json' if scope=='hct-2026' else 'instruments.json'
+    if scope not in ('legacy','report-2026'):
+        raise ValueError('scope must be legacy or report-2026')
+    filename='report-2026-instruments.json' if scope=='report-2026' else 'instruments.json'
     data=json.loads(files('dgm_lab').joinpath('data/'+filename).read_text(encoding='utf-8'))
     key=query.casefold()
     return [r for r in data if key in (r['manufacturer']+' '+r['model']+' '+r['status']+' '+r['driver']).casefold()]

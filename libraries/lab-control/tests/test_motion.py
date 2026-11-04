@@ -169,7 +169,7 @@ class SwitchingTests(unittest.TestCase):
 class HctInventoryTests(unittest.TestCase):
     def test_no_date_or_table_column_shift(self):
         root=Path(__file__).resolve().parents[1]
-        data=json.loads((root/'dgm_lab/data/hct-2026-instruments.json').read_text(encoding='utf-8'))
+        data=json.loads((root/'dgm_lab/data/report-2026-instruments.json').read_text(encoding='utf-8'))
         self.assertTrue(all(o['issue_date'].endswith('2026') for r in data for o in r['occurrences']))
         self.assertFalse(any('DUE DATE' in r['model'] for r in data))
         co=next(r for r in data if r['model']=='CO3000')

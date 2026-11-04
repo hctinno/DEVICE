@@ -2,7 +2,7 @@
 
 **모든 장비 제어가 완성됐다는 의미로 읽지 않습니다.** [지원표](EQUIPMENT_COVERAGE.md)의 `implemented_uncommissioned`는 명시된 API만 구현한 상태입니다. `conditional`은 하위 컨트롤러·앱·설치 조건이 추가로 필요합니다. `pending_protocol`/`vendor_required`에는 실행 드라이버가 없으며 SCPI를 추측해 전송하지 않습니다.
 
-HCT 2026 범위는 별도 [150그룹 목록](HCT_2026_EQUIPMENT.md), [실행·숫자 명령](HCT_CONTROL.md), [장비별 필요한 자료 JSON](../research/hct-protocol-gaps.json)을 사용합니다. 아래 기존 보고서 모델과 HCT 모델을 혼합해 지원 수를 합산하지 않습니다.
+공개 성적서 2026 범위는 별도 [150그룹 목록](REPORT_EQUIPMENT.md), [실행·숫자 명령](FACILITY_CONTROL.md), [장비별 필요한 자료 JSON](../research/report-protocol-gaps.json)을 사용합니다. 아래 기존 보고서 모델과 공개 성적서 모델을 혼합해 지원 수를 합산하지 않습니다.
 
 | 제조사·모델 | 확보·분석한 내용 | 연결을 완성하는 데 필요한 구체적 항목 |
 | --- | --- | --- |
@@ -21,13 +21,13 @@ HCT 2026 범위는 별도 [150그룹 목록](HCT_2026_EQUIPMENT.md), [실행·�
 | Cincinnati Sub Zero / Sorensen XT15-4, XT20-3 | 성적서 모델 추출. 본체 모델만으로 통신옵션 확정 불가 | CSZ controller 모델/프로토콜; Sorensen 설치 MRA/MGA 등 옵션명과 해당 interface manual·pinout·terminator. 다른 Sorensen SCPI 문법 자동 적용 금지 |
 | TESCOM MTP300A/TC-3000C | 성적서상 Bluetooth Tester. 턴테이블·마스트가 아님 | 설치 SDK·통신 인터페이스, RF channel/power/modulation 설정, 시험 시작/종료·측정 결과·오류 응답 |
 | TA Engineering TA-018S-16 | 성적서상 RF Switching Unit. 모션 장비가 아님 | 컨트롤러 프로토콜, RF 포트/릴레이 맵, 경로 선택·상태 조회·busy/error·기본 경로 규칙 |
-| Innco 턴테이블·안테나 마스트·CO3000 | HCT 2026 원문에서 CO3000·MA4640·DS2000/DS1500 계열 확인. 이동/위치/편파/속도/전체 ES 정지와 2축 표본 최대점 복귀 구현 | 실제 *OPT? 축 맵, 현장 cm/degree 한계, firmware, 설치 연결과 기계 정지 검증. [숫자 명령·실행](HCT_CONTROL.md). ETS 턴테이블 N/A 한 항목은 여전히 모델/제어기 필요 |
+| Innco 턴테이블·안테나 마스트·CO3000 | 공개 성적서 2026 원문에서 CO3000·MA4640·DS2000/DS1500 계열 확인. 이동/위치/편파/속도/전체 ES 정지와 2축 표본 최대점 복귀 구현 | 실제 *OPT? 축 맵, 현장 cm/degree 한계, firmware, 설치 연결과 기계 정지 검증. [숫자 명령·실행](FACILITY_CONTROL.md). ETS 턴테이블 N/A 한 항목은 여전히 모델/제어기 필요 |
 | R&S OSP120/150 | OSP120/130 호스트+B101/B102 경로 제어·조회·현장 안전 경로 복귀 구현. OSP150은 CAN 확장 | 실제 모듈·relay/state·RF 연결도, safe_path. 미지원 옵션에 일반 명령을 추측 적용하지 않음 |
-| T&M/TNM FBSM/FMSR/FBSR/TMX | HCT 장비표 모델과 원문 보존; 제조사 공개 자료실에서 해당 protocol 미확보 | 모델별 command/ACK, 포트·필터 맵, 상태 조회·기본 경로·fault 처리 |
+| T&M/TNM FBSM/FMSR/FBSR/TMX | 공개 성적서 장비표 모델과 원문 보존; 제조사 공개 자료실에서 해당 protocol 미확보 | 모델별 command/ACK, 포트·필터 맵, 상태 조회·기본 경로·fault 처리 |
 | Kikusui PWR800L / ODA EX60-40 / NY-THR18750 | PWR800L 원문은 PIA4810/4830/4850+TP-BUS 구성; PWR-01과 구분 | 설치 제어기/통신옵션/프로그래밍 매뉴얼. ODA 공개 사이트 403 접근 실패 |
 | SPEAG DASY/cSAR/DAK, DAE, EX3, EUmmW | 공개 DASY8 R&D 문서·custom scan 구조 확인 | 설치 제품·버전·licensed SDK, robot/DAE/probe 통합 API, scan start/stop/position/results, probe calibration 및 tissue/system-check. R&D API를 SAR 적합성 자동화 API로 간주하지 않음 |
 | UL / UL-FR1 자체 RF switch·filterbox·시험 소프트웨어 | 자산/모델 원문과 해당 PDF 페이지 보존 | 설치실의 내부 프로토콜/SDK·port map·relay readback·filter selection·busy/error/stop/reset 규칙. 제조사 일반 매뉴얼로 대체 불가 |
-| Samsung SM-F971U / Apple A3447 | FCC 조건·기술 목록, 기존 Samsung source-scoped bridge | 정확한 시험용 빌드, OEM test app/SDK와 사용 권한, 각 radio/antenna/chain/RU/BW/power/duty 숫자표, TX ON/OFF·readback·실측. 최신 단말 직접 제어는 아직 차단 |
+| OEM SM-F971U / Apple A3447 | FCC 조건·기술 목록, 기존 OEM source-scoped bridge | 정확한 시험용 빌드, OEM test app/SDK와 사용 권한, 각 radio/antenna/chain/RU/BW/power/duty 숫자표, TX ON/OFF·readback·실측. 최신 단말 직접 제어는 아직 차단 |
 
 수동 안테나·케이블·필터·attenuator·LISN·지그는 전부 독립 원격 제어 장비가 아닙니다. 필요한 것은 asset ID, 교정계수, 연결 방향/포트, 주파수별 손실, 배치입니다. 전원이 있는 프리앰프도 원격 API가 확인되지 않으면 제어 가능 장비로 승격하지 않습니다. PC/충전기/헤드셋 등 지원 장비는 별도 OS·앱 설정 대상입니다.
 

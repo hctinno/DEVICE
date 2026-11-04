@@ -15,11 +15,11 @@ from .virtual_world import World, Scenario, Fault
 from .virtual_peers import SupplyPeer, PositionerPeer, PhonePeer, ScpiPeer
 
 
-VIRTUAL_MODELS = {"SamsungAt": "6GHz HE20/40/80/160 fixture", "SpectrumAnalyzer": "N9030B",
+VIRTUAL_MODELS = {"PhoneAt": "6GHz HE20/40/80/160 fixture", "SpectrumAnalyzer": "N9030B",
                   "UsbPowerSensor": "NRP18S", "SignalGenerator": "SMW200A", "OdaEx": "EX60-40",
                   "OspSwitch": "OSP120 + OSP-B102", "Co3000": "MA1 + DT1"}
 
-WLAN_DEVICES = ("OdaEx", "Co3000", "OspSwitch", "SamsungAt", "SpectrumAnalyzer", "UsbPowerSensor")
+WLAN_DEVICES = ("OdaEx", "Co3000", "OspSwitch", "PhoneAt", "SpectrumAnalyzer", "UsbPowerSensor")
 
 
 def _check_phone_plan(profile, config):
@@ -67,7 +67,7 @@ class VirtualLab:
             raise ValueError("Fault requires an implemented virtual device")
         if fault.kind == "stuck" and (fault.device != "Co3000" or fault.command != "GO"):
             raise ValueError("stuck is defined only for Co3000 GO")
-        if fault.kind == "malformed" and "?" not in fault.command and fault.device != "SamsungAt":
+        if fault.kind == "malformed" and "?" not in fault.command and fault.device != "PhoneAt":
             raise ValueError("malformed requires a query or phone exchange")
         with self._world.lock:
             self._world.faults.append(deepcopy(fault))
@@ -76,9 +76,9 @@ class VirtualLab:
         """Immutable-by-copy fixture parameters. Never convert these into site evidence."""
         if device_id not in VIRTUAL_MODELS:
             raise UnsupportedDevice(f"No integrated virtual peer for {device_id}")
-        if device_id in {"SamsungAt", "OdaEx", "Co3000"}:
+        if device_id in {"PhoneAt", "OdaEx", "Co3000"}:
             parameters = profile_template(device_id, "simulation")["config"]["parameters"]
-            if device_id == "SamsungAt":
+            if device_id == "PhoneAt":
                 domains = parameters["profile"]["argument_domains"]
                 domains["wifitest_0_0_0"]["value"] = list(self._world.scenario.channels_hz)
                 domains["wifitest_0_0_3"]["value"] = ["-10.0", "0.0", "10.0"]
@@ -94,7 +94,7 @@ class VirtualLab:
                           for name, state in [("isolated", 1), ("dut", 2), ("generator", 3)]}, "safe_path": "isolated"}
 
     def validate_wlan(self, plan):
-        parameters = self.configuration("SamsungAt")
+        parameters = self.configuration("PhoneAt")
         profile = _phone_profile({"parameters": parameters, "transport": {"kind": "simulation"}}, "simulation")
         _check_phone_plan(profile, plan.tx)
         if plan.tx.band != 3 or plan.tx.bandwidth not in (6, 7, 8, 9) or plan.tx.tx_mode != 1:
@@ -113,7 +113,7 @@ class VirtualLab:
         io, session = None, None
         try:
             descriptor = describe(device_id)
-            if device_id == "SamsungAt":
+            if device_id == "PhoneAt":
                 profile = _phone_profile({"parameters": parameters, "transport": {"kind": "simulation"}}, "simulation")
                 io = PhonePeer(self._world, self._log)
                 driver = Controller(io, profile)
@@ -163,7 +163,7 @@ class HardwareLab:
         missing = set(WLAN_DEVICES) - set(self._profiles)
         if missing:
             raise ValueError(f"Missing hardware profiles: {sorted(missing)}")
-        profile = _phone_profile(self._profiles["SamsungAt"]["config"], "hardware")
+        profile = _phone_profile(self._profiles["PhoneAt"]["config"], "hardware")
         _check_phone_plan(profile, plan.tx)
 
     @contextmanager

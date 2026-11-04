@@ -39,7 +39,7 @@ class CatalogTests(unittest.TestCase):
                     with connect(profile): self.fail('An unfilled template must never connect')
 
     def test_every_selected_fcc_group_mapped_without_ready_claim(self):
-        original=json.loads((ROOT.parent/'samsung-rf/dgm_rf/data/fcc-2026.json').read_text(encoding='utf-8'))['groups']
+        original=json.loads((ROOT.parent/'phone-rf/dgm_rf/data/fcc-2026.json').read_text(encoding='utf-8'))['groups']
         mapped=json.loads((ROOT/'dgm_lab/data/fcc-workflows.json').read_text(encoding='utf-8'))
         self.assertEqual({g['id'] for g in original},{g['group_id'] for g in mapped})
         for g in mapped:

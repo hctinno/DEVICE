@@ -1,0 +1,744 @@
+[
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "E4440A",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N9010A",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N9030A",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N9030B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N9040B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESCI7",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESU40",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESU8",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW50",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N9020A",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSV40",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW67",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESR3",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_level",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESW44",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_level",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESW8",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_level",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "EPL1000",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_level",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESR7",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_level",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N5181A",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N5182B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SMB100A",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SMB100B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "SMW200A",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "E4421B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "E4433B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "E8267D",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "KIKUSUI",
+    "model": "PWR2001ML",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "E3640A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "6674A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "E3632A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N1911A",
+    "equipment_type": "전력계",
+    "driver": "PSeriesPowerMeter",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N1912A",
+    "equipment_type": "전력계",
+    "driver": "PSeriesPowerMeter",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "U2000A",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP18A",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP18S",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP8S",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "COPPER MOUNTAIN TECHNOLOGIES",
+    "model": "PLANAR R140",
+    "equipment_type": "벡터 네트워크 분석기",
+    "driver": "VectorNetworkAnalyzer",
+    "operations": [
+      "acquire_s11",
+      "stop"
+    ],
+    "status": "conditional",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ZNLE6",
+    "equipment_type": "벡터 네트워크 분석기",
+    "driver": "VectorNetworkAnalyzer",
+    "operations": [
+      "acquire_s11",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ZNB20",
+    "equipment_type": "벡터 네트워크 분석기",
+    "driver": "VectorNetworkAnalyzer",
+    "operations": [
+      "acquire_s11",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ZNB8",
+    "equipment_type": "벡터 네트워크 분석기",
+    "driver": "VectorNetworkAnalyzer",
+    "operations": [
+      "acquire_s11",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "CMW500",
+    "equipment_type": "통신 테스트 장비",
+    "driver": "CmwLte",
+    "operations": [
+      "configure",
+      "start",
+      "stop"
+    ],
+    "status": "conditional",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "THERMOTRON INDUSTRIES",
+    "model": "SM-16C MINI-MAX",
+    "equipment_type": "환경 챔버 제어기",
+    "driver": "Thermotron8800",
+    "operations": [
+      "setpoint",
+      "read_process",
+      "start",
+      "stop"
+    ],
+    "status": "conditional",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "ESPEC",
+    "model": "SH-642",
+    "equipment_type": "환경 챔버 제어기",
+    "driver": "EspecController",
+    "operations": [
+      "configure",
+      "temperature",
+      "start",
+      "stop"
+    ],
+    "status": "conditional",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "ESPEC",
+    "model": "SU-642",
+    "equipment_type": "환경 챔버 제어기",
+    "driver": "EspecController",
+    "operations": [
+      "configure",
+      "temperature",
+      "start",
+      "stop"
+    ],
+    "status": "conditional",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "437B",
+    "equipment_type": "전력계",
+    "driver": "Hp437B",
+    "operations": [
+      "configure",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Innco systems",
+    "model": "CO3000",
+    "equipment_type": "모션 제어기",
+    "driver": "Co3000",
+    "operations": [
+      "position",
+      "limits",
+      "speed",
+      "move",
+      "polarize",
+      "stop_all"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Innco systems",
+    "model": "DS1500-S-1T",
+    "equipment_type": "턴테이블",
+    "driver": "Co3000",
+    "operations": [
+      "position",
+      "limits",
+      "speed",
+      "move",
+      "polarize",
+      "stop_all"
+    ],
+    "status": "controller_component",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Innco systems",
+    "model": "DS2000-S",
+    "equipment_type": "턴테이블",
+    "driver": "Co3000",
+    "operations": [
+      "position",
+      "limits",
+      "speed",
+      "move",
+      "polarize",
+      "stop_all"
+    ],
+    "status": "controller_component",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Innco systems",
+    "model": "DS2000-S-1T",
+    "equipment_type": "턴테이블",
+    "driver": "Co3000",
+    "operations": [
+      "position",
+      "limits",
+      "speed",
+      "move",
+      "polarize",
+      "stop_all"
+    ],
+    "status": "controller_component",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Innco systems",
+    "model": "MA4640",
+    "equipment_type": "안테나 마스트",
+    "driver": "Co3000",
+    "operations": [
+      "position",
+      "limits",
+      "speed",
+      "move",
+      "polarize",
+      "stop_all"
+    ],
+    "status": "controller_component",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Innco systems",
+    "model": "MA4640-XP-ET",
+    "equipment_type": "안테나 마스트",
+    "driver": "Co3000",
+    "operations": [
+      "position",
+      "limits",
+      "speed",
+      "move",
+      "polarize",
+      "stop_all"
+    ],
+    "status": "controller_component",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Innco systems",
+    "model": "MA4640/800-XP-EP",
+    "equipment_type": "안테나 마스트",
+    "driver": "Co3000",
+    "operations": [
+      "position",
+      "limits",
+      "speed",
+      "move",
+      "polarize",
+      "stop_all"
+    ],
+    "status": "controller_component",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "OSP 120",
+    "equipment_type": "RF 스위치 제어기",
+    "driver": "OspSwitch",
+    "operations": [
+      "select",
+      "matches",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "OSP 150",
+    "equipment_type": "RF 스위치 제어기",
+    "driver": "OspSwitch",
+    "operations": [
+      "select",
+      "matches",
+      "stop"
+    ],
+    "status": "controller_component",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "E4419B",
+    "equipment_type": "전력계",
+    "driver": "EpmPowerMeter",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "ODA",
+    "model": "EX60-40",
+    "equipment_type": "DC 전원공급기",
+    "driver": "OdaEx",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "conditional",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "CMU200",
+    "equipment_type": "통신 테스터 CW 발생 기능",
+    "driver": "Cmu200Cw",
+    "operations": [
+      "configure",
+      "status",
+      "start",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  }
+]

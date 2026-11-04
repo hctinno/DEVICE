@@ -96,7 +96,7 @@ def require_profile(profile):
             raise UnsupportedDevice(f"No simulator for {entry['id']}")
         if config["transport"] != {"kind": "simulation"}:
             raise ProfileError("Simulation requires exactly transport={kind: simulation}; no real address")
-    if entry["id"] == "SamsungAt":
+    if entry["id"] == "PhoneAt":
         _phone_profile(config, mode)
     else:
         from dgm_lab.registry import DRIVERS

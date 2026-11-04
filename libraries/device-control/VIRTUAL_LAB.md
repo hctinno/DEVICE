@@ -1,6 +1,6 @@
 # DGM VirtualLab — 가상 시험환경
 
-장비 없이 자동화 코드를 개발하는 Python 환경입니다. **스마트폰 설정 → 송신 → RF 경로 → 위치 탐색 → 분석기·파워센서 측정 → TX OFF·정지**가 하나의 공유 상태에서 동작합니다. `dgm-device-control 0.2.0`에 포함됩니다. GUI·외부 서버 없이 로컬에서 실행합니다.
+장비 없이 자동화 코드를 개발하는 Python 환경입니다. **스마트폰 설정 → 송신 → RF 경로 → 위치 탐색 → 분석기·파워센서 측정 → TX OFF·정지**가 하나의 공유 상태에서 동작합니다. `dgm-device-control 0.3.0`에 포함됩니다. GUI·외부 서버 없이 로컬에서 실행합니다.
 
 ## 바로 실행
 
@@ -18,7 +18,7 @@ python -m dgm_control virtual-run --output-dir virtual-failed-001 --fault analyz
 
 | 장비 API | 가상 모델·범위 | 다른 장비에 미치는 영향 |
 | --- | --- | --- |
-| SamsungAt | 6GHz HE20/40/80/160, packet TX mode 1, 설정·TX ON/OFF | 송신 채널·총출력·폭·송신 상태가 RF 값에 반영 |
+| PhoneAt | 6GHz HE20/40/80/160, packet TX mode 1, 설정·TX ON/OFF | 송신 채널·총출력·폭·송신 상태가 RF 값에 반영 |
 | SpectrumAnalyzer | N9030B, swept spectrum, 101개 기본 점 | 현재 RF 상태를 RBW별 합성 dBm trace로 획득 |
 | UsbPowerSensor | NRP18S, average, W 원문 응답 | 현재 경로의 합성 총전력 측정; 주파수 설정은 튜닝이 아닌 보정 주파수 |
 | SignalGenerator | SMW200A, CW 설정·ON/OFF | generator 경로에 합성 CW 신호 인가 |
@@ -98,13 +98,13 @@ channel_argument=17→6.035GHz, 49→6.195GHz 및 전원 의존성은 명시적 
 
 ## 실물로 전환할 때
 
-시험 함수 `measure_wlan(lab, plan)`는 그대로 두고 provider를 `HardwareLab`으로 바꿉니다. 각 실제 장비 프로파일은 `init ... --mode hardware`에서 생성한 뒤 현장 모델/주소/옵션/상한/배선에 맞춰 완성합니다. 삼성은 정확한 모델·build·허용 명령·인수표를 갖춰야 합니다. hardware 프로파일을 받지 못하면 자동으로 가상 모드로 대체하지 않습니다.
+시험 함수 `measure_wlan(lab, plan)`는 그대로 두고 provider를 `HardwareLab`으로 바꿉니다. 각 실제 장비 프로파일은 `init ... --mode hardware`에서 생성한 뒤 현장 모델/주소/옵션/상한/배선에 맞춰 완성합니다. 단말은 정확한 모델·build·허용 명령·인수표를 갖춰야 합니다. hardware 프로파일을 받지 못하면 자동으로 가상 모드로 대체하지 않습니다.
 
 ```python
 # 실제 I/O 예시. 가상 환경에서는 실행하지 않습니다.
 from dgm_control import HardwareLab, load_profile, measure_wlan
 
-names = ("OdaEx", "Co3000", "OspSwitch", "SamsungAt", "SpectrumAnalyzer", "UsbPowerSensor")
+names = ("OdaEx", "Co3000", "OspSwitch", "PhoneAt", "SpectrumAnalyzer", "UsbPowerSensor")
 profiles = {name: load_profile(f"private-site/{name}.json") for name in names}
 site = HardwareLab(profiles)  # 검증만 수행. 여기까지는 연결하지 않음
 # measure_wlan(site, commissioned_plan)  # 명시적으로 호출할 때 실장비 연결·출력·이동

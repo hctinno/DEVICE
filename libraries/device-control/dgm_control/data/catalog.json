@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "sdk_version": "0.2.0",
+  "sdk_version": "0.3.0",
   "devices": [
     {
       "profile": "spectrum",
@@ -29,7 +29,7 @@
         "acquire": "(self, config: dgm_lab.analyzers.Sweep)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Keysight/Agilent/HP",
           "model": "N9020A",
@@ -253,7 +253,12 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": "N9030B"
+      "integrated_virtual_model": "N9030B",
+      "equipment_type": "스펙트럼 분석기",
+      "manufacturers": [
+        "Keysight/Agilent/HP",
+        "Rohde & Schwarz"
+      ]
     },
     {
       "profile": "receiver",
@@ -281,7 +286,7 @@
         "read_level": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Rohde & Schwarz",
           "model": "EPL1000",
@@ -397,7 +402,11 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "EMI 수신기",
+      "manufacturers": [
+        "Rohde & Schwarz"
+      ]
     },
     {
       "profile": "rf-source",
@@ -428,7 +437,7 @@
         "start": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Keysight/Agilent/HP",
           "model": "E4421B",
@@ -623,7 +632,12 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": "SMW200A"
+      "integrated_virtual_model": "SMW200A",
+      "equipment_type": "RF 신호발생기",
+      "manufacturers": [
+        "Keysight/Agilent/HP",
+        "Rohde & Schwarz"
+      ]
     },
     {
       "profile": "power-supply",
@@ -656,7 +670,7 @@
         "start": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Keysight/Agilent/HP",
           "model": "6674A",
@@ -770,7 +784,12 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "DC 전원공급기",
+      "manufacturers": [
+        "KIKUSUI",
+        "Keysight/Agilent/HP"
+      ]
     },
     {
       "profile": "power-meter",
@@ -798,7 +817,7 @@
         "read_power": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Keysight/Agilent/HP",
           "model": "N1911A",
@@ -847,7 +866,11 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "전력계",
+      "manufacturers": [
+        "Keysight/Agilent/HP"
+      ]
     },
     {
       "profile": "usb-sensor",
@@ -875,7 +898,7 @@
         "read_power": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [],
+      "report_models": [],
       "source_ids": [
         "keysight-u2000",
         "rs-nrpa",
@@ -976,7 +999,12 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": "NRP18S"
+      "integrated_virtual_model": "NRP18S",
+      "equipment_type": "USB 파워센서",
+      "manufacturers": [
+        "Keysight/Agilent/HP",
+        "Rohde & Schwarz"
+      ]
     },
     {
       "profile": "vna",
@@ -1004,7 +1032,7 @@
         "acquire_s11": "(self, *, start_hz, stop_hz, points, if_bandwidth_hz, power_dbm, require_correction=True)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Rohde & Schwarz",
           "model": "ZNB20",
@@ -1108,7 +1136,12 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "벡터 네트워크 분석기",
+      "manufacturers": [
+        "COPPER MOUNTAIN TECHNOLOGIES",
+        "Rohde & Schwarz"
+      ]
     },
     {
       "profile": "cmw-lte",
@@ -1127,7 +1160,7 @@
       ],
       "excludes": [
         "NR",
-        "Samsung private AT control",
+        "OEM private AT control",
         "universal cellular TX"
       ],
       "driver": "CmwLte",
@@ -1139,7 +1172,7 @@
         "start": "(self, *, timeout=60, cancelled=None)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Rohde & Schwarz",
           "model": "CMW500",
@@ -1189,7 +1222,11 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "통신 테스트 장비",
+      "manufacturers": [
+        "Rohde & Schwarz"
+      ]
     },
     {
       "profile": "thermotron",
@@ -1221,7 +1258,7 @@
         "start": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [],
+      "report_models": [],
       "source_ids": [
         "thermotron-8800"
       ],
@@ -1263,7 +1300,11 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "환경 챔버 제어기",
+      "manufacturers": [
+        "THERMOTRON INDUSTRIES"
+      ]
     },
     {
       "profile": "espec",
@@ -1295,7 +1336,7 @@
         "start": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "ESPEC",
           "model": "SU-642",
@@ -1345,7 +1386,11 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "환경 챔버 제어기",
+      "manufacturers": [
+        "ESPEC"
+      ]
     },
     {
       "profile": "hp437b",
@@ -1375,7 +1420,7 @@
         "read_power": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [],
+      "report_models": [],
       "source_ids": [
         "hp-437b"
       ],
@@ -1421,7 +1466,11 @@
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "전력계",
+      "manufacturers": [
+        "Keysight/Agilent/HP"
+      ]
     },
     {
       "profile": "co3000",
@@ -1459,7 +1508,7 @@
         "polarize": "(self, axis, orientation, *, timeout=60, cancelled=None)",
         "stop_all": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Innco systems",
           "model": "CO3000",
@@ -1535,7 +1584,11 @@
       ],
       "models": [],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": "MA1 + DT1"
+      "integrated_virtual_model": "MA1 + DT1",
+      "equipment_type": "턴테이블·안테나 마스트 제어기",
+      "manufacturers": [
+        "Innco systems"
+      ]
     },
     {
       "profile": "osp",
@@ -1565,7 +1618,7 @@
         "matches": "(self, name)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Rohde & Schwarz",
           "model": "OSP 120",
@@ -1613,7 +1666,11 @@
       ],
       "models": [],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": "OSP120 + OSP-B102"
+      "integrated_virtual_model": "OSP120 + OSP-B102",
+      "equipment_type": "RF 스위치 제어기",
+      "manufacturers": [
+        "Rohde & Schwarz"
+      ]
     },
     {
       "profile": "epm",
@@ -1641,7 +1698,7 @@
         "read_power": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Keysight/Agilent/HP",
           "model": "E4419B",
@@ -1684,7 +1741,11 @@
       ],
       "models": [],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "전력계",
+      "manufacturers": [
+        "Keysight/Agilent/HP"
+      ]
     },
     {
       "profile": "oda-ex",
@@ -1720,7 +1781,7 @@
         "start": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "ODA",
           "model": "EX60-40",
@@ -1769,7 +1830,11 @@
       ],
       "models": [],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": "EX60-40"
+      "integrated_virtual_model": "EX60-40",
+      "equipment_type": "DC 전원공급기",
+      "manufacturers": [
+        "ODA"
+      ]
     },
     {
       "profile": "cmu200-cw",
@@ -1805,7 +1870,7 @@
         "start": "(self)",
         "stop": "(self)"
       },
-      "hct_models": [
+      "report_models": [
         {
           "manufacturer": "Rohde & Schwarz",
           "model": "CMU200",
@@ -1849,11 +1914,15 @@
       ],
       "models": [],
       "sdk_is_manufacturer_endorsed": false,
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "통신 테스터 CW 발생 기능",
+      "manufacturers": [
+        "Rohde & Schwarz"
+      ]
     },
     {
-      "id": "SamsungAt",
-      "driver": "SamsungAt",
+      "id": "PhoneAt",
+      "driver": "PhoneAt",
       "kind": "smartphone",
       "backend": "dgm_rf",
       "status": "implemented_uncommissioned",
@@ -1864,13 +1933,13 @@
       "methods": {},
       "lifecycle": "active(config=WlanTxConfig) or active(setup=..., cleanup=...)",
       "source_ids": [
-        "samsung-static-catalog"
+        "phone-static-catalog"
       ],
       "sources": [
         {
-          "id": "samsung-static-catalog",
+          "id": "phone-static-catalog",
           "kind": "static_analysis_not_official_sdk",
-          "url": "https://github.com/hctinno/DEVICE/blob/codex/samsung-rf-research-20261104/libraries/samsung-rf/README.md"
+          "url": "https://github.com/hctinno/DEVICE/blob/main/libraries/phone-rf/README.md"
         }
       ],
       "site_requirements": [
@@ -1880,13 +1949,15 @@
         "measured RF ON/OFF"
       ],
       "excludes": [
-        "latest Samsung blanket support",
+        "latest OEM blanket support",
         "iPhone",
         "NFC protected-service transport",
         "Qualcomm/Broadcom shell execution",
         "cellular TX without verified commands"
       ],
-      "integrated_virtual_model": "6GHz HE20/40/80/160 fixture"
+      "integrated_virtual_model": "6GHz HE20/40/80/160 fixture",
+      "equipment_type": "프로파일 기반 단말 AT 제어",
+      "manufacturers": []
     },
     {
       "id": "QualcommMyftm",
@@ -1920,7 +1991,9 @@
       "excludes": [
         "live control"
       ],
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "단말 제어 인터페이스",
+      "manufacturers": []
     },
     {
       "id": "BroadcomWl",
@@ -1971,7 +2044,9 @@
       "excludes": [
         "live control"
       ],
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "단말 제어 인터페이스",
+      "manufacturers": []
     },
     {
       "id": "AppleRF",
@@ -1992,7 +2067,9 @@
       "excludes": [
         "live control"
       ],
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "단말 제어 인터페이스",
+      "manufacturers": []
     },
     {
       "id": "NfcProtectedService",
@@ -2013,7 +2090,9 @@
       "excludes": [
         "live control"
       ],
-      "integrated_virtual_model": null
+      "integrated_virtual_model": null,
+      "equipment_type": "단말 제어 인터페이스",
+      "manufacturers": []
     }
   ],
   "hardware_templates": {
@@ -2328,12 +2407,12 @@
         "notes": "Template only. Confirm installed model/controller, limits, options, address and termination before use."
       }
     },
-    "SamsungAt": {
+    "PhoneAt": {
       "schema_version": 1,
-      "device_id": "SamsungAt",
+      "device_id": "PhoneAt",
       "mode": "hardware",
       "config": {
-        "driver": "SamsungAt",
+        "driver": "PhoneAt",
         "parameters": {
           "profile": {
             "model": "",
@@ -2402,12 +2481,12 @@
         "notes": "SIMULATION ONLY. Values are fixture data, not a site configuration."
       }
     },
-    "SamsungAt": {
+    "PhoneAt": {
       "schema_version": 1,
-      "device_id": "SamsungAt",
+      "device_id": "PhoneAt",
       "mode": "simulation",
       "config": {
-        "driver": "SamsungAt",
+        "driver": "PhoneAt",
         "parameters": {
           "profile": {
             "model": "SIMULATION",

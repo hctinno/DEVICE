@@ -1,0 +1,156 @@
+[
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_1_1",
+    "command": "AT+WIFITEST=0,1,1,0",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_0_6",
+    "command": "AT+WIFITEST=0,0,6,3",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_0_0",
+    "command": "AT+WIFITEST=0,0,0,17",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_7_0",
+    "command": "AT+WIFITEST=0,7,0,1",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_0_1",
+    "command": "AT+WIFITEST=0,0,1,15",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_0_2",
+    "command": "AT+WIFITEST=0,0,2,5",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_0_5",
+    "command": "AT+WIFITEST=0,0,5,1000",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_0_4",
+    "command": "AT+WIFITEST=0,0,4,1000",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_0_7",
+    "command": "AT+WIFITEST=0,0,7,9",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_1_5",
+    "command": "AT+WIFITEST=0,1,5,1",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_0_3",
+    "command": "AT+WIFITEST=0,0,3,0.0",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_2_1",
+    "command": "AT+WIFITEST=0,2,1,1",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_2_0",
+    "command": "AT+WIFITEST=0,2,0,0",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  },
+  {
+    "run_id": "76283a21-86c8-480f-9fba-68e67cb1d61a",
+    "command_id": "wifitest_0_1_0",
+    "command": "AT+WIFITEST=0,1,0,0",
+    "timestamp": 1793773547.1622705,
+    "simulated": true,
+    "status": "acknowledged",
+    "raw_response": "\r\n+WIFITEST:0,OK\r\n\r\nOK\r\n",
+    "value": "OK",
+    "rf_measured": false
+  }
+]

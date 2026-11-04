@@ -70,4 +70,4 @@ GPIB 또는 RS232. 모든 wire 명령 앞에 `<secondary>;`를 붙입니다. BAS
 | 128 | `CALLSTAT?`: LTE 예제 1=Idle, 2=Idle(Regist), 6=Connected; `CALLSA` | timeout·오류·UE attach 선행조건, NR 상태와 구별 |
 | 129 | LTE `CALLSO`, `CALLSTAT?`로 Idle 확인 | call 종료와 모든 RF 출력 OFF의 차이, NR 종료까지 포함한 전체 절차 |
 
-일부 예제에는 PRESET 등 상태 초기화가 포함됩니다. 그대로 자동 실행하지 않습니다. `*IDN?` 형식·통신 frame·session ownership·measurement validity·확실한 RF OFF까지 검토되기 전에는 이 표를 runnable 명령 라이브러리로 승격하지 않습니다. [미확보 계약](../research/hct-protocol-gaps.json)에 후속 작업을 남겼습니다.
+일부 예제에는 PRESET 등 상태 초기화가 포함됩니다. 그대로 자동 실행하지 않습니다. `*IDN?` 형식·통신 frame·session ownership·measurement validity·확실한 RF OFF까지 검토되기 전에는 이 표를 runnable 명령 라이브러리로 승격하지 않습니다. [미확보 계약](../research/report-protocol-gaps.json)에 후속 작업을 남겼습니다.

@@ -11,13 +11,13 @@ def read(path):
 
 
 def main():
-    lab, rf = LIBRARIES / "lab-control", LIBRARIES / "samsung-rf"
+    lab, rf = LIBRARIES / "lab-control", LIBRARIES / "phone-rf"
     sources = {s["id"]: s for s in read(lab / "dgm_lab/data/sources.json")}
     legacy = read(lab / "dgm_lab/data/instruments.json")
     descriptors, templates = [], {}
     for item in read(lab / "dgm_lab/data/capabilities.json"):
         device_id = item["driver"]
-        # HCT-only metadata misses implemented drivers from the earlier inventory.
+        # Report-only metadata misses implemented drivers from the earlier inventory.
         matches = [row for row in legacy if row["driver"] == device_id]
         source_ids = sorted(set(item["source_ids"]) | {row["source_id"] for row in matches if row["source_id"]})
         if not source_ids:
@@ -30,16 +30,16 @@ def main():
                             "sdk_is_manufacturer_endorsed": False})
         templates[device_id] = {"schema_version": 1, "device_id": device_id, "mode": "hardware",
                                 "config": read(lab / item["profile_path"])}
-    descriptors.append({"id": "SamsungAt", "driver": "SamsungAt", "kind": "smartphone", "backend": "dgm_rf",
+    descriptors.append({"id": "PhoneAt", "driver": "PhoneAt", "kind": "smartphone", "backend": "dgm_rf",
                         "status": "implemented_uncommissioned", "simulation_available": True, "physical_verified": False,
                         "sdk_is_manufacturer_endorsed": False,
                         "operations": [], "methods": {}, "lifecycle": "active(config=WlanTxConfig) or active(setup=..., cleanup=...)",
-                        "source_ids": ["samsung-static-catalog"],
-                        "sources": [{"id": "samsung-static-catalog", "kind": "static_analysis_not_official_sdk", "url": "https://github.com/hctinno/DEVICE/blob/codex/samsung-rf-research-20261104/libraries/samsung-rf/README.md"}],
+                        "source_ids": ["phone-static-catalog"],
+                        "sources": [{"id": "phone-static-catalog", "kind": "static_analysis_not_official_sdk", "url": "https://github.com/hctinno/DEVICE/blob/main/libraries/phone-rf/README.md"}],
                         "site_requirements": ["exact model/build and OEM test environment", "validated AT serial port", "per-command allowlist and argument domains", "measured RF ON/OFF"],
-                        "excludes": ["latest Samsung blanket support", "iPhone", "NFC protected-service transport", "Qualcomm/Broadcom shell execution", "cellular TX without verified commands"]})
-    templates["SamsungAt"] = {"schema_version": 1, "device_id": "SamsungAt", "mode": "hardware",
-        "config": {"driver": "SamsungAt", "parameters": {"profile": read(rf / "profiles/device-template.json")},
+                        "excludes": ["latest OEM blanket support", "iPhone", "NFC protected-service transport", "Qualcomm/Broadcom shell execution", "cellular TX without verified commands"]})
+    templates["PhoneAt"] = {"schema_version": 1, "device_id": "PhoneAt", "mode": "hardware",
+        "config": {"driver": "PhoneAt", "parameters": {"profile": read(rf / "profiles/device-template.json")},
                    "transport": {"kind": "serial", "port": "", "baudrate": 0}, "notes": "Hardware template is intentionally incomplete."}}
     chipset = read(rf / "dgm_rf/data/chipset-commands.json")
     for name, source_ids, reason in [
@@ -56,15 +56,24 @@ def main():
     for device_id, parameters in {
         "OdaEx": {"model": "EX60-40", "expected_serial": "SIMULATION-ONLY", "expected_firmware": "SIMULATION", "max_voltage": 5, "max_current": 1, "installed_model_confirmed": True},
         "Co3000": {"axes": {"MA1": {"unit": "CM", "min": 100, "max": 400}, "DT1": {"unit": "DG", "min": 0, "max": 360}}, "motion_enabled": True, "poll_seconds": 0.01},
-        "SamsungAt": {"profile": read(rf / "profiles/simulation.json")},
+        "PhoneAt": {"profile": read(rf / "profiles/simulation.json")},
     }.items():
         simulation[device_id] = {"schema_version": 1, "device_id": device_id, "mode": "simulation",
             "config": {"driver": device_id, "parameters": parameters, "transport": {"kind": "simulation"}, "notes": "SIMULATION ONLY. Values are fixture data, not a site configuration."}}
-    virtual_models = {"SamsungAt": "6GHz HE20/40/80/160 fixture", "SpectrumAnalyzer": "N9030B", "UsbPowerSensor": "NRP18S",
+    virtual_models = {"PhoneAt": "6GHz HE20/40/80/160 fixture", "SpectrumAnalyzer": "N9030B", "UsbPowerSensor": "NRP18S",
                       "SignalGenerator": "SMW200A", "OdaEx": "EX60-40", "OspSwitch": "OSP120 + OSP-B102", "Co3000": "MA1 + DT1"}
     for descriptor in descriptors:
         descriptor["integrated_virtual_model"] = virtual_models.get(descriptor["id"])
-    payload = {"schema_version": 1, "sdk_version": "0.2.0", "devices": descriptors, "hardware_templates": templates, "simulation_templates": simulation}
+        descriptor["equipment_type"] = {
+            "SpectrumAnalyzer": "스펙트럼 분석기", "EmiReceiver": "EMI 수신기", "SignalGenerator": "RF 신호발생기",
+            "PowerSupply": "DC 전원공급기", "OdaEx": "DC 전원공급기", "PSeriesPowerMeter": "전력계",
+            "UsbPowerSensor": "USB 파워센서", "VectorNetworkAnalyzer": "벡터 네트워크 분석기", "CmwLte": "통신 테스트 장비",
+            "Thermotron8800": "환경 챔버 제어기", "EspecController": "환경 챔버 제어기", "Hp437B": "전력계",
+            "Co3000": "턴테이블·안테나 마스트 제어기", "OspSwitch": "RF 스위치 제어기", "EpmPowerMeter": "전력계",
+            "Cmu200Cw": "통신 테스터 CW 발생 기능", "PhoneAt": "프로파일 기반 단말 AT 제어"
+        }.get(descriptor["id"], "단말 제어 인터페이스")
+        descriptor["manufacturers"] = sorted({row["manufacturer"] for row in descriptor.get("models", []) + descriptor.get("report_models", [])})
+    payload = {"schema_version": 1, "sdk_version": "0.3.0", "devices": descriptors, "hardware_templates": templates, "simulation_templates": simulation}
     target = ROOT / "dgm_control/data/catalog.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

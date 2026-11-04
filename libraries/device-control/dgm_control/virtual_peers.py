@@ -71,7 +71,7 @@ class PhonePeer(ScriptedTransport):
 
     def _record(self, direction, payload):
         if self.log:
-            self.log({"resource": "simulation://SamsungAt", "direction": direction, "payload": payload,
+            self.log({"resource": "simulation://PhoneAt", "direction": direction, "payload": payload,
                       "revision": self.world.revision, "simulated": True})
 
     def exchange(self, wire, timeout):
@@ -81,7 +81,7 @@ class PhonePeer(ScriptedTransport):
             self.sent.append(wire)
             self._record("tx", wire)
             try:
-                fault = self.world.fault("SamsungAt", wire)
+                fault = self.world.fault("PhoneAt", wire)
             except Exception:
                 self.desynchronized = True
                 raise

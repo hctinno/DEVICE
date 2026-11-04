@@ -15,4 +15,4 @@ Linux/macOS는 `.venv/bin/python`을 사용합니다. `install.py`는 옆의 whe
 
 온라인 환경에서 선택 의존성 추가 예: `python -m pip install pyvisa pyserial`. 실제 설치 버전과 제조사 런타임은 각 장비 환경에서 검증합니다. 패키지 발견을 장비 연결 성공으로 해석하지 않습니다.
 
-배포물을 만드는 개발자는 저장소 루트에서 `python -X utf8 scripts/package_device_control.py`를 실행합니다. 출력은 `libraries/device-control/dist/dgm-device-control-0.2.0-offline.zip`과 SHA-256 manifest입니다. ZIP의 VIRTUAL_LAB.md에 통합 7종 모형·오류 주입·개발 API·미지원 범위를 설명합니다. Git에는 소스·renderer·검수 결과를 저장하고 vendor 원문 cache는 넣지 않습니다.
+배포물을 만드는 개발자는 저장소 루트에서 `python -X utf8 scripts/package_device_control.py`를 실행합니다. 출력은 `libraries/device-control/dist/dgm-device-control-0.3.0-offline.zip`과 SHA-256 manifest입니다. ZIP의 VIRTUAL_LAB.md에 통합 7종 모형·오류 주입·개발 API·미지원 범위를 설명합니다. Git에는 소스·renderer·검수 결과를 저장하고 vendor 원문 cache는 넣지 않습니다.

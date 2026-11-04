@@ -27,7 +27,7 @@ def run_demo(output_dir, *, inject_failure=False):
             with motion.active():
                 measurements.append(asdict(motion.call("move", axis="DT1", value=90, timeout=2)))
                 measurements.append(asdict(motion.call("polarize", axis="MA1", orientation="V", timeout=2)))
-        with open_device(profile_template("SamsungAt", "simulation")) as phone:
+        with open_device(profile_template("PhoneAt", "simulation")) as phone:
             report["devices"].append(phone.info)
             config = WlanTxConfig(3, 9, 17, 15, 1, 5, 1, "0.0", 1000, 1000)
             with phone.active(config=config):

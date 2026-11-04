@@ -68,7 +68,7 @@ class DeviceSession:
             if self._active:
                 raise SessionError("Nested active scopes are not supported")
             device_id = self._descriptor["id"]
-            if device_id == "SamsungAt":
+            if device_id == "PhoneAt":
                 name = "wlan_tx" if "config" in kwargs else "session"
                 method = getattr(self._driver, name)
                 inspect.signature(method).bind(**kwargs)
@@ -101,7 +101,7 @@ def open_device(profile, *, log=None):
     descriptor = require_profile(profile)
     config, mode = profile["config"], profile["mode"]
     device_id = descriptor["id"]
-    if device_id == "SamsungAt":
+    if device_id == "PhoneAt":
         from dgm_rf import Controller, ScriptedTransport
         from dgm_rf.core import SerialTransport
         phone_profile = _phone_profile(config, mode)

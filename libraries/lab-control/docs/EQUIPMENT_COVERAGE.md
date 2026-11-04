@@ -147,12 +147,12 @@
 | Rohde & Schwarz | SMB100B | implemented_uncommissioned | SignalGenerator | CW 주파수·출력·RF ON/OFF·설정 재조회 |
 | Rohde & Schwarz | SMW200A | implemented_uncommissioned | SignalGenerator | CW 주파수·출력·RF ON/OFF·설정 재조회 |
 | Rohde & Schwarz | ZNLE6 | implemented_uncommissioned | VectorNetworkAnalyzer | S11 복소 trace·RF ON/OFF. 기존 교정 상태 확인 |
-| SAMSUNG | AA-SM7PCPB | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
-| SAMSUNG | EP-DN980 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
-| SAMSUNG | EP-T2510 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
-| SAMSUNG | NT550XDA-KC58G | support_or_software |  | 지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요 |
-| SAMSUNG | SM-F971U | support_or_software |  | 지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요 |
-| SAMSUNG | SMH-210UB | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
+| 단말 OEM | AA-SM7PCPB | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
+| 단말 OEM | EP-DN980 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
+| 단말 OEM | EP-T2510 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
+| 단말 OEM | NT550XDA-KC58G | support_or_software |  | 지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요 |
+| 단말 OEM | SM-F971U | support_or_software |  | 지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요 |
+| 단말 OEM | SMH-210UB | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
 | SCHWARZBECK | VULB 9163 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
 | SOLUM | EP-T4511 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
 | SPEAG | 10 GHZ | passive_or_fixture |  | 교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상 |

@@ -31,7 +31,7 @@ def main():
         bundle = temp / "bundle"
         wheels = bundle / "wheels"
         wheels.mkdir(parents=True)
-        for package in [ROOT / "libraries/samsung-rf", ROOT / "libraries/lab-control", SDK]:
+        for package in [ROOT / "libraries/phone-rf", ROOT / "libraries/lab-control", SDK]:
             run([sys.executable, "-m", "pip", "--disable-pip-version-check", "wheel", "--no-deps", "--no-build-isolation", "--wheel-dir", str(wheels), str(package)], ROOT)
         if len(list(wheels.glob("*.whl"))) != 3: raise RuntimeError("Expected three wheels")
         shutil.copyfile(SDK / "scripts/install_sdk.py", bundle / "install.py")

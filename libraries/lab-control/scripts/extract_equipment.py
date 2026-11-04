@@ -6,7 +6,7 @@ import fitz
 import argparse
 
 ROOT=Path(__file__).resolve().parents[1]
-RF=ROOT.parent/'samsung-rf'
+RF=ROOT.parent/'phone-rf'
 
 def clean(value): return re.sub(r'\s+',' ',value or '').strip()
 

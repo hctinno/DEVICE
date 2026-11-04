@@ -7,8 +7,8 @@ __pycache__/
 !.env.example
 build/
 *.egg-info/
-libraries/samsung-rf/bluetooth-example-log.json
-libraries/samsung-rf/demo-log.json
+libraries/phone-rf/bluetooth-example-log.json
+libraries/phone-rf/demo-log.json
 .fcc-cache/
 .manual-cache/
 site-*.json

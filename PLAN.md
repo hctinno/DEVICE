@@ -8,12 +8,12 @@
 
 2026-11-04 추가: [공개 프로토콜 개발 자료 계획](libraries/lab-control/DEVELOPER_ENABLEMENT_PLAN.md), [다른 에이전트 개발 시작](libraries/lab-control/AGENT_START_HERE.md). v0.3.0에 OdaEx/Cmu200Cw와 capability/오프라인 검사/모의 실행을 추가합니다. 전체 시험소나 실장비 준비 완료와 구별합니다.
 
-2026-11-04 추가: [HCT 2026 설비 확장 계획](libraries/lab-control/HCT_2026_PLAN.md). HCT 발행일을 확인한 12개 보고서의 150개 장비 그룹을 [목록](libraries/lab-control/docs/HCT_2026_EQUIPMENT.md)과 [실제 제어 API](libraries/lab-control/docs/HCT_CONTROL.md)에 연결합니다. 모션·2축 탐색·경로·계측 소프트웨어 검증과 현장 commissioning을 구분합니다.
+2026-11-04 추가: [공개 성적서 2026 설비 확장 계획](libraries/lab-control/EQUIPMENT_PLAN.md). 공개 성적서 발행일을 확인한 12개 보고서의 150개 장비 그룹을 [목록](libraries/lab-control/docs/REPORT_EQUIPMENT.md)과 [실제 제어 API](libraries/lab-control/docs/FACILITY_CONTROL.md)에 연결합니다. 모션·2축 탐색·경로·계측 소프트웨어 검증과 현장 commissioning을 구분합니다.
 
 작성일: 2026-10-23, Asia/Seoul  
-상태: 전체 구축 계획 초안. 삼성 DUT RF 라이브러리 구현·소프트웨어 검수 추가(2026-11-04). 장비 연결·현장 검증은 미착수.
+상태: 전체 구축 계획 초안. 단말 DUT RF 라이브러리 구현·소프트웨어 검수 추가(2026-11-04). 장비 연결·현장 검증은 미착수.
 
-2026-11-04 추가 산출물: [최신 폴더블 FCC 시험 재현 준비](libraries/samsung-rf/docs/FCC_LATEST_MODELS.md). 56 PDF, 32개 시험 묶음, 183개 선정 물리 조건, LTE SCPI 계획 생성. 전체 무인시험소 구축률 또는 실물 제어 완료로 계산하지 않습니다.
+2026-11-04 추가 산출물: [최신 폴더블 FCC 시험 재현 준비](libraries/phone-rf/docs/FCC_LATEST_MODELS.md). 56 PDF, 32개 시험 묶음, 183개 선정 물리 조건, LTE SCPI 계획 생성. 전체 무인시험소 구축률 또는 실물 제어 완료로 계산하지 않습니다.
 
 작업 환경 결정: 여러 PC에서 이어서 작업하기 위해 개발을 클라우드 세션 중심으로 전환한다. 공유 저장소는 [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 기준 브랜치는 `main`이다. 현재 상태는 [HANDOFF.md](HANDOFF.md), 클라우드 연결 절차는 [CLOUD-START.md](CLOUD-START.md)를 따른다. 클라우드 환경 생성·실행은 아직 확인하지 않았다.
 
@@ -87,7 +87,7 @@
 
 ## 7. 다음 실행
 
-2026-11-04 조사 반영: [삼성 RF 라이브러리](libraries/samsung-rf/README.md)를 현장 DUT 어댑터 후보로 추가했습니다. 원본 연구 결과를 보존하면서 PC 경로 없이 재생성·검수할 수 있도록 구성합니다. 완료 기준은 근거 해시 일치, 220개 AT 및 NFC 서비스 2개 재생성, 단위검사·모의 실행 통과, 작업 브랜치 커밋과 원격 SHA 확인입니다. 모델별 실측 검수와 셀룰러 TX 규격 확보는 별도 미완료 항목이며 전체 구축 진척률에 실장비 완료로 반영하지 않습니다.
+2026-11-04 조사 반영: [단말 RF 라이브러리](libraries/phone-rf/README.md)를 현장 DUT 어댑터 후보로 추가했습니다. 원본 연구 결과를 보존하면서 PC 경로 없이 재생성·검수할 수 있도록 구성합니다. 완료 기준은 근거 해시 일치, 220개 AT 및 NFC 서비스 2개 재생성, 단위검사·모의 실행 통과, 작업 브랜치 커밋과 원격 SHA 확인입니다. 모델별 실측 검수와 셀룰러 TX 규격 확보는 별도 미완료 항목이며 전체 구축 진척률에 실장비 완료로 반영하지 않습니다.
 
 장비리스트를 받아 기계판독 가능한 자산 대장 초안을 만들고, 지원 인터페이스와 누락 정보를 표시한다. 이후 실제 시험건 1건으로 업무 흐름을 복원한다. 장비 명령 실행이나 대외 제출은 이번 계획 작성에서 수행하지 않았다.
 

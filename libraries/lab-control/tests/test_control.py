@@ -11,7 +11,7 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-sys.path.insert(0,str(ROOT.parent/'samsung-rf'))
+sys.path.insert(0,str(ROOT.parent/'phone-rf'))
 from dgm_lab import *
 from dgm_lab.core import Scpi, scalar, switch
 from dgm_lab.transport import Transport
@@ -291,7 +291,7 @@ class DriverTests(unittest.TestCase):
 
     def test_phone_cleanup_wraps_measurement_failure(self):
         from dgm_rf import Controller, Profile, ScriptedTransport, WlanTxConfig
-        profile=Profile.load(ROOT.parent/'samsung-rf/profiles/simulation.json')
+        profile=Profile.load(ROOT.parent/'phone-rf/profiles/simulation.json')
         phone=Controller(ScriptedTransport(),profile)
         config=WlanTxConfig(band=3,bandwidth=9,channel_argument=17,rate=15,antenna=1,gi=5,encoding=1,power='0.0',burst=1000,payload=1000)
         with self.assertRaisesRegex(ValueError,'measurement failed'):

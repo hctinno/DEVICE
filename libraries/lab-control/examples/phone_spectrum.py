@@ -1,11 +1,11 @@
-"""Use only an independently commissioned Samsung model/build profile. No latest-model defaults."""
+"""Use only an independently commissioned OEM model/build profile. No latest-model defaults."""
 import argparse
 from dataclasses import asdict
 import json
 from pathlib import Path
 from dgm_lab import SpectrumAnalyzer, Sweep, JsonlLog, managed_run
 from dgm_lab.registry import connect
-from dgm_lab.phone import samsung_serial, measure_during_phone_tx
+from dgm_lab.phone import phone_serial, measure_during_phone_tx
 from dgm_rf import WlanTxConfig
 
 
@@ -24,7 +24,7 @@ def main():
     try:
         with connect(profile,log=log) as analyzer:
             if not isinstance(analyzer,SpectrumAnalyzer): raise ValueError('SpectrumAnalyzer required')
-            with samsung_serial(port=a.phone_port,baudrate=a.baudrate,profile_path=a.phone_profile) as phone:
+            with phone_serial(port=a.phone_port,baudrate=a.baudrate,profile_path=a.phone_profile) as phone:
                 try:
                     with managed_run(lambda:None,analyzer.stop):
                         trace=measure_during_phone_tx(phone=phone,config=wlan,acquire=lambda:analyzer.acquire(sweep))

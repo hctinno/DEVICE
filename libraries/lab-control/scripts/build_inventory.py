@@ -3,6 +3,7 @@ import csv
 import json
 import re
 import sys
+from copy import deepcopy
 from collections import Counter
 from pathlib import Path
 
@@ -11,6 +12,7 @@ sys.path.insert(0, str(ROOT))
 from dgm_lab.analyzers import SpectrumAnalyzer, EmiReceiver
 from dgm_lab.sources import SignalGenerator, PowerSupply
 from dgm_lab.meters import UsbPowerSensor
+from dgm_lab.presentation import label
 
 
 def maker_name(value):
@@ -118,14 +120,20 @@ def main():
                    hardware_validated=False,report_calibration_is_current_site_evidence=False)
         inventory.append(row)
     out=ROOT/'dgm_lab/data';out.mkdir(parents=True,exist_ok=True)
-    (out/'instruments.json').write_text(json.dumps(inventory,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    public_inventory = deepcopy(inventory)
+    for row in public_inventory:
+        row['manufacturer_display_redacted'] = label(row['manufacturer']) != row['manufacturer']
+        row['manufacturer'] = label(row['manufacturer'])
+        row['descriptions'] = [label(value) for value in row['descriptions']]
+        row['scope_ko'] = label(row['scope_ko'])
+    (out/'instruments.json').write_text(json.dumps(public_inventory,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (ROOT/'research/rows-needing-review.json').write_text(json.dumps(review,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     docs=ROOT/'docs';docs.mkdir(exist_ok=True)
     with (docs/'equipment-coverage.csv').open('w',encoding='utf-8-sig',newline='') as f:
         writer=csv.writer(f);writer.writerow(['제조사','모델','상태','드라이버','구현 범위/필요 정보','성적서 근거','실물 검증'])
         for r in inventory:
             refs='; '.join(sorted({f"{x['exhibit_id']}:PDF p.{x['pdf_page']}" for x in r['source_rows']}))
-            writer.writerow([r['manufacturer'],r['model'],r['status'],r['driver'],r['scope_ko'],refs,'미실행'])
+            writer.writerow([label(r['manufacturer']),r['model'],r['status'],r['driver'],label(r['scope_ko']),refs,'미실행'])
     counts=Counter(r['status'] for r in inventory)
     summary=dict(extracted_rows=len(rows),classified_rows=sum(len(r['source_rows']) for r in inventory),
                  review_rows=len(review),model_groups=len(inventory),statuses=dict(counts),
@@ -136,7 +144,7 @@ def main():
            '자동 추출은 Manufacturer/Model 텍스트 표를 대상으로 합니다. 이미지 표·불완전한 셀·지원장비 본문은 추가 검토가 필요합니다. 원본 행과 PDF 페이지/URL/SHA-256을 JSON에 보존했습니다.', '',
            '| 제조사 | 모델 | 상태 | 드라이버 | 범위/조건 |','| --- | --- | --- | --- | --- |']
     for r in inventory:
-        lines.append('| '+' | '.join(str(r[k]).replace('|','/') for k in ['manufacturer','model','status','driver','scope_ko'])+' |')
+        lines.append('| '+' | '.join(label(r[k]).replace('|','/') for k in ['manufacturer','model','status','driver','scope_ko'])+' |')
     lines += ['', '[기계 판독 목록](../dgm_lab/data/instruments.json) · [CSV](equipment-coverage.csv) · [검토 대기 원문](../research/rows-needing-review.json)', '']
     (docs/'EQUIPMENT_COVERAGE.md').write_text('\n'.join(lines),encoding='utf-8')
     print(json.dumps(summary))

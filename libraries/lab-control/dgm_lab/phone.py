@@ -1,10 +1,10 @@
-"""Reuse source-scoped Samsung AT profiles; do not grant unverified latest-phone support."""
+"""Reuse source-scoped OEM AT profiles; do not grant unverified latest-phone support."""
 from contextlib import contextmanager
 from .core import UnsupportedInstrument
 
 
 @contextmanager
-def samsung_serial(*, port, baudrate, profile_path):
+def phone_serial(*, port, baudrate, profile_path):
     from dgm_rf import Controller, Profile
     from dgm_rf.core import SerialTransport
     profile = Profile.load(profile_path)

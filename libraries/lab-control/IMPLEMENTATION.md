@@ -12,7 +12,7 @@
 
 ## v0.3.0 개발자 계약 추가
 
-`research/capability-contracts.json`의 역할·필수 설치값·제외 기능과 실제 registry/signature/HCT catalog/profile을 `scripts/build_developer_index.py`가 결합합니다. 결과 `dgm_lab/data/capabilities.json`은 wheel에도 포함합니다. 새 driver를 등록하면 contract 누락·잘못된 method/profile/source ID는 생성 단계에서 실패합니다. 공개 코드 검토는 pin·license evidence를 별도 JSON으로 보존하며 runtime에 자동 설치/실행하지 않습니다.
+`research/capability-contracts.json`의 역할·필수 설치값·제외 기능과 실제 registry/signature/공개 성적서 catalog/profile을 `scripts/build_developer_index.py`가 결합합니다. 결과 `dgm_lab/data/capabilities.json`은 wheel에도 포함합니다. 새 driver를 등록하면 contract 누락·잘못된 method/profile/source ID는 생성 단계에서 실패합니다. 공개 코드 검토는 pin·license evidence를 별도 JSON으로 보존하며 runtime에 자동 설치/실행하지 않습니다.
 
 `validate_profile`은 생성자·transport 인수만 검사하며 I/O가 없습니다. `connect`도 동일 검사를 먼저 사용합니다. CMU는 BASE=0/RF_NSig 논리 주소를 분리하고 모든 요청에 prefix를 붙입니다. ODA는 generic Scpi 상속 없이 3필드 family identity와 별도 serial을 묶고 OPC 대신 실제 설정/출력 재조회를 사용합니다. 두 장비 모두 시작 문맥 종료 시 stop을 시도하며 이전 설정은 재설정 실패 후 재사용하지 않습니다.
 

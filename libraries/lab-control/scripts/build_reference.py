@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-sys.path.insert(0,str(ROOT.parent/'samsung-rf'))
+sys.path.insert(0,str(ROOT.parent/'phone-rf'))
 from dgm_lab.registry import DRIVERS
 from dgm_rf.cmw_lte import SOURCES as CMW_SOURCES
 
@@ -55,8 +55,8 @@ def main():
             index.append(dict(driver=cls.name,file=str(path.relative_to(ROOT)).replace('\\','/'),methods=methods))
     (ROOT/'dgm_lab/data/api-index.json').write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     lines=['# 구현 API·명령 색인','',
-           '이 문서는 실제 Python 구현에서 재생성합니다. 숫자 인수·단위·시작/종료 순서는 [운전 명령표](OPERATIONS.md)와 [HCT 모션·계측](HCT_CONTROL.md)을 우선합니다. 문자열 조각은 분기·f-string을 포함하므로 그대로 복사 실행하지 않습니다.', '',
-           'SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermotron은 해당 고유 프로토콜을 사용합니다. CMW 전체 명령은 [원본 생성기](../../samsung-rf/dgm_rf/cmw_lte.py)에 있습니다.', '']
+           '이 문서는 실제 Python 구현에서 재생성합니다. 숫자 인수·단위·시작/종료 순서는 [운전 명령표](OPERATIONS.md)와 [설비 모션·계측](FACILITY_CONTROL.md)을 우선합니다. 문자열 조각은 분기·f-string을 포함하므로 그대로 복사 실행하지 않습니다.', '',
+           'SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermotron은 해당 고유 프로토콜을 사용합니다. CMW 전체 명령은 [원본 생성기](../../phone-rf/dgm_rf/cmw_lte.py)에 있습니다.', '']
     for row in index:
         lines += [f"## {row['driver']}",'',f"[실행 코드](../{row['file']})",'', '| API | 실제 명령/템플릿 조각 |','| --- | --- |']
         for method in row['methods']:

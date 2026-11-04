@@ -138,12 +138,12 @@ Rohde & Schwarz,SMB100A,implemented_uncommissioned,SignalGenerator,CW 주파수�
 Rohde & Schwarz,SMB100B,implemented_uncommissioned,SignalGenerator,CW 주파수·출력·RF ON/OFF·설정 재조회,9563684:PDF p.18,미실행
 Rohde & Schwarz,SMW200A,implemented_uncommissioned,SignalGenerator,CW 주파수·출력·RF ON/OFF·설정 재조회,9312879:PDF p.21; 9312885:PDF p.11,미실행
 Rohde & Schwarz,ZNLE6,implemented_uncommissioned,VectorNetworkAnalyzer,S11 복소 trace·RF ON/OFF. 기존 교정 상태 확인,9563684:PDF p.18,미실행
-SAMSUNG,AA-SM7PCPB,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9307552:PDF p.4,미실행
-SAMSUNG,EP-DN980,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9268526:PDF p.9; 9269168:PDF p.9; 9269173:PDF p.9; 9299612:PDF p.10; 9299613:PDF p.11; 9299648:PDF p.12; 9299650:PDF p.13; 9299684:PDF p.17; 9312879:PDF p.18,미실행
-SAMSUNG,EP-T2510,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9268526:PDF p.9; 9269168:PDF p.9; 9269173:PDF p.9; 9299612:PDF p.10; 9299613:PDF p.11; 9299648:PDF p.12; 9299650:PDF p.13; 9299684:PDF p.17; 9312879:PDF p.18,미실행
-SAMSUNG,NT550XDA-KC58G,support_or_software,,지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요,9268870:PDF p.17,미실행
-SAMSUNG,SM-F971U,support_or_software,,지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요,9307552:PDF p.4,미실행
-SAMSUNG,SMH-210UB,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9307552:PDF p.4,미실행
+단말 OEM,AA-SM7PCPB,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9307552:PDF p.4,미실행
+단말 OEM,EP-DN980,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9268526:PDF p.9; 9269168:PDF p.9; 9269173:PDF p.9; 9299612:PDF p.10; 9299613:PDF p.11; 9299648:PDF p.12; 9299650:PDF p.13; 9299684:PDF p.17; 9312879:PDF p.18,미실행
+단말 OEM,EP-T2510,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9268526:PDF p.9; 9269168:PDF p.9; 9269173:PDF p.9; 9299612:PDF p.10; 9299613:PDF p.11; 9299648:PDF p.12; 9299650:PDF p.13; 9299684:PDF p.17; 9312879:PDF p.18,미실행
+단말 OEM,NT550XDA-KC58G,support_or_software,,지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요,9268870:PDF p.17,미실행
+단말 OEM,SM-F971U,support_or_software,,지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요,9307552:PDF p.4,미실행
+단말 OEM,SMH-210UB,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9307552:PDF p.4,미실행
 SCHWARZBECK,VULB 9163,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9268526:PDF p.12; 9268954:PDF p.18; 9269019:PDF p.12; 9269056:PDF p.18; 9269163:PDF p.10; 9269168:PDF p.10; 9269173:PDF p.11; 9299612:PDF p.12; 9299613:PDF p.13; 9299648:PDF p.15; 9299650:PDF p.16; 9299684:PDF p.19; 9299744:PDF p.25; 9299749:PDF p.43; 9312879:PDF p.21,미실행
 SOLUM,EP-T4511,passive_or_fixture,,연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음,9307552:PDF p.4,미실행
 SPEAG,10 GHZ,passive_or_fixture,,교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상,9563684:PDF p.17,미실행

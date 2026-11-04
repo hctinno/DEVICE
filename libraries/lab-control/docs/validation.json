@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-04T03:47:00.793654+00:00",
+  "utc": "2026-11-04T06:29:29.232451+00:00",
   "python": "3.12.6",
   "passed": true,
   "physical_equipment_tests": 0,
@@ -13,10 +13,10 @@
     "Measurement accuracy/calibration/uncertainty",
     "Physical motion/SAR/NR/DFS test workflows"
   ],
-  "utf8_source_artifacts": 106,
+  "utf8_source_artifacts": 107,
   "local_manual_sha256_verified": 39,
   "manual_pdf_cache_present": true,
-  "local_hct_pdf_sha256_verified": 16,
+  "local_report_pdf_sha256_verified": 0,
   "tests_run": 99,
   "test_failures": 0,
   "test_errors": 0,
@@ -42,7 +42,7 @@
     "physical_equipment_tests": 0,
     "extraction_scope": "Manufacturer/Model text-table candidates; not an exhaustive OCR audit"
   },
-  "hct_inventory": {
+  "report_inventory": {
     "qualified_pdf_parts": 16,
     "distinct_reports": 12,
     "equipment_rows": 418,
@@ -60,9 +60,9 @@
       "host_component": 2
     },
     "physical_tests": 0,
-    "exhaustive_hct_2026_population": false,
+    "exhaustive_report_2026_population": false,
     "nr_report_incomplete": false,
     "nr_printed_pages_verified": 371
   },
-  "elapsed_seconds": 61.109
+  "elapsed_seconds": 65.563
 }

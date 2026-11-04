@@ -58,7 +58,7 @@ class CatalogTests(unittest.TestCase):
 
 class ProfileTests(unittest.TestCase):
     def test_all_three_simulation_profiles_validate(self):
-        for name in ("OdaEx", "Co3000", "SamsungAt"):
+        for name in ("OdaEx", "Co3000", "PhoneAt"):
             report = check_profile(profile_template(name, "simulation"))
             self.assertTrue(report["valid"], report)
             self.assertFalse(report["connection_attempted"])
@@ -94,10 +94,10 @@ class ProfileTests(unittest.TestCase):
         with self.assertRaises(UnsupportedDevice): profile_template("SpectrumAnalyzer", "simulation")
 
     def test_phone_modes_and_allowlist_are_checked(self):
-        profile = profile_template("SamsungAt", "simulation")
+        profile = profile_template("PhoneAt", "simulation")
         profile["config"]["parameters"]["profile"]["simulation_only"] = "true"
         self.assertFalse(check_profile(profile)["valid"])
-        profile = profile_template("SamsungAt", "simulation")
+        profile = profile_template("PhoneAt", "simulation")
         profile["config"]["parameters"]["profile"]["allowed_commands"] = ["invented_tx"]
         self.assertFalse(check_profile(profile)["valid"])
 
@@ -109,7 +109,7 @@ class ProfileTests(unittest.TestCase):
 
     def test_phone_argument_domains_reject_nonfinite_and_delimiters(self):
         for value in [float("nan"), "1,2", "1\rAT", True]:
-            profile = profile_template("SamsungAt", "simulation")
+            profile = profile_template("PhoneAt", "simulation")
             profile["config"]["parameters"]["profile"]["argument_domains"]["wifitest_0_0_3"] = {"value": [value]}
             self.assertFalse(check_profile(profile)["valid"])
 
@@ -198,7 +198,7 @@ class LifecycleTests(unittest.TestCase):
             self.assertEqual(session._driver.io.events[-1], "ES")
 
     def test_phone_cleanup_on_failure(self):
-        with open_device(profile_template("SamsungAt", "simulation")) as session:
+        with open_device(profile_template("PhoneAt", "simulation")) as session:
             self.assertEqual(session.info["identity_source"], "profile_declared_not_readback")
             with self.assertRaisesRegex(RuntimeError, "body failed"):
                 with session.active(config=WlanTxConfig(3, 9, 17, 15, 1, 5, 1, "0.0", 1000, 1000)):
@@ -207,7 +207,7 @@ class LifecycleTests(unittest.TestCase):
             self.assertTrue(all(row["status"] == "acknowledged" for row in session.phone_log[-2:]))
 
     def test_phone_requires_explicit_cleanup_before_commands(self):
-        with open_device(profile_template("SamsungAt", "simulation")) as session:
+        with open_device(profile_template("PhoneAt", "simulation")) as session:
             with self.assertRaises(Exception):
                 with session.active(setup=[], cleanup=[]): pass
             self.assertEqual(session.phone_log, [])

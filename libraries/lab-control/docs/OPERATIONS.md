@@ -49,8 +49,8 @@ ESPEC SH-642 / Thermotron SM-16C라는 챔버 모델만으로 컨트롤러를 �
 
 | API | 숫자·선택 인수 | 시작·종료 |
 | --- | --- | --- |
-| `CmwLte.configure(LteRmcConfig(...))` | instance 정수 1..4; FDD PCC band는 [원본 FDD_BANDS](../../samsung-rf/dgm_rf/cmw_lte.py); UL EARFCN 정수 0..262143(밴드별 대응 현장 검증); BW 1.4/3/5/10/15/20 MHz → B014/B030/B050/B100/B150/B200, RB capacity 6/15/25/50/75/100; RB 정수는 원본 RB_ALLOWED 안의 값; QPSK/Q16/Q64/Q256; RB 위치 LOW/MID/HIGH | 설정 뒤 `SOURce:LTE:SIGNaling1:CELL:STATe ON` → ON,ADJ → ATT → `CALL:LTE:SIGNaling1:PSWitched:ACTion CONNect` → CEST. 종료는 DISConnect와 CELL OFF를 모두 시도하고 OFF,ADJ 대기 |
-| `samsung_serial(...); measure_during_phone_tx(...)` | 모델·빌드·허용 명령·숫자 도메인·출처를 채운 [기존 DUT 프로파일](../../samsung-rf/README.md) 필요 | 기존 Controller의 `wlan_tx()` / `session(setup,cleanup)`를 사용. 측정 콜백 실패 시 TX 종료 시도 |
+| `CmwLte.configure(LteRmcConfig(...))` | instance 정수 1..4; FDD PCC band는 [원본 FDD_BANDS](../../phone-rf/dgm_rf/cmw_lte.py); UL EARFCN 정수 0..262143(밴드별 대응 현장 검증); BW 1.4/3/5/10/15/20 MHz → B014/B030/B050/B100/B150/B200, RB capacity 6/15/25/50/75/100; RB 정수는 원본 RB_ALLOWED 안의 값; QPSK/Q16/Q64/Q256; RB 위치 LOW/MID/HIGH | 설정 뒤 `SOURce:LTE:SIGNaling1:CELL:STATe ON` → ON,ADJ → ATT → `CALL:LTE:SIGNaling1:PSWitched:ACTion CONNect` → CEST. 종료는 DISConnect와 CELL OFF를 모두 시도하고 OFF,ADJ 대기 |
+| `phone_serial(...); measure_during_phone_tx(...)` | 모델·빌드·허용 명령·숫자 도메인·출처를 채운 [기존 DUT 프로파일](../../phone-rf/README.md) 필요 | 기존 Controller의 `wlan_tx()` / `session(setup,cleanup)`를 사용. 측정 콜백 실패 시 TX 종료 시도 |
 
 CMW 설정에는 `TPC:SET MAXPower`가 포함됩니다. DUT 최대출력 시험 경로·손실·시험 SIM/PLMN·라이선스·안테나와 출력 수준을 현장에서 확인해야 합니다. `site_profile_confirmed=True`는 확인 결과를 전달하는 계약이며 자동 설치 검사나 허가 획득이 아닙니다. CELL OFF는 콜박스 상태이며 DUT RF 소멸은 별도 계측 확인이 필요합니다. 각 CMW 상태 대기 시간은 기본 60초(0.001..3600초), 최악의 지연에는 진행 중인 I/O timeout 한 번이 추가됩니다.
 

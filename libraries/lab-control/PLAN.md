@@ -1,6 +1,6 @@
 # DGM LabControl 구축 계약
 
-2026-11-04. 대상은 `../samsung-rf/research/fcc-2026/manifest.json`의 확보 성적서입니다. 실물 주소·RF 경로·교정값은 사용자가 후속 제공하며 이번 작업은 라이브러리 구축입니다.
+2026-11-04. 대상은 `../phone-rf/research/fcc-2026/manifest.json`의 확보 성적서입니다. 실물 주소·RF 경로·교정값은 사용자가 후속 제공하며 이번 작업은 라이브러리 구축입니다.
 
 ## 완료 기준
 

@@ -1,6 +1,8 @@
 # DGM LabControl
 
-**v0.3.0 — [다른 에이전트의 개발 시작점](AGENT_START_HERE.md).** [HCT 장비·설비 150그룹](docs/HCT_2026_EQUIPMENT.md), [모션·계측 명령표](docs/HCT_CONTROL.md), [ODA·CMU 신규 프로토콜](docs/PROTOCOL_ADDITIONS.md), [공개 코드 검토](docs/OPEN_SOURCE_REVIEW.md)를 연결했습니다. 16개 driver class, 기계 판독 capability, 통신 없는 profile 검사, 설치 패키지의 모의 실행을 제공합니다. 지원은 모델별 명시 기능에 한정되며 실장비 검증은 0건입니다.
+현재 v0.4.0은 [제조사·모델별 지원표](../../SUPPORTED_EQUIPMENT.md)를 공통 시작점으로 사용합니다. 목록 scope는 `report-2026`, 단말 연결 helper는 `phone_serial`입니다. 제조사 표시를 생략한 전용 제품은 `manufacturer_display_redacted=true`로 구별하며 원문 값은 `source_rows` 또는 `occurrences`의 근거에 보존합니다. 아래 v0.3.0은 기존 기능 추가 기록입니다.
+
+**v0.3.0 — [다른 에이전트의 개발 시작점](AGENT_START_HERE.md).** [공개 성적서 장비·설비 150그룹](docs/REPORT_EQUIPMENT.md), [모션·계측 명령표](docs/FACILITY_CONTROL.md), [ODA·CMU 신규 프로토콜](docs/PROTOCOL_ADDITIONS.md), [공개 코드 검토](docs/OPEN_SOURCE_REVIEW.md)를 연결했습니다. 16개 driver class, 기계 판독 capability, 통신 없는 profile 검사, 설치 패키지의 모의 실행을 제공합니다. 지원은 모델별 명시 기능에 한정되며 실장비 검증은 0건입니다.
 
 FCC 성적서 장비 목록에서 출발한 Python 설비 제어 라이브러리입니다. 실제 TCP·VISA·serial 통신, 모델 식별, 설정 재조회, 측정 수집, 출력 종료를 제공합니다. **소프트웨어 검수와 실장비 commissioning은 구분합니다. 물리적으로 연결하면 모든 장비·스마트폰이 즉시 동작하는 상태는 아닙니다.**
 
@@ -12,9 +14,9 @@ FCC 성적서 장비 목록에서 출발한 Python 설비 제어 라이브러리
 
 ```powershell
 python -m venv .venv
-.venv\Scripts\python -m pip install "./libraries/lab-control[visa,serial]" "./libraries/samsung-rf[serial]"
+.venv\Scripts\python -m pip install "./libraries/lab-control[visa,serial]" "./libraries/phone-rf[serial]"
 .venv\Scripts\python -m dgm_lab inventory N9030B
-.venv\Scripts\python -m dgm_lab inventory --scope hct-2026 CO3000
+.venv\Scripts\python -m dgm_lab inventory --scope report-2026 CO3000
 Copy-Item libraries/lab-control/profiles/spectrum.template.json site-analyzer.json
 ```
 
@@ -55,10 +57,10 @@ with connect(profile) as source:
 
 ```powershell
 python -X utf8 scripts/check_lab_control.py
-python -X utf8 scripts/check_samsung_rf.py
+python -X utf8 scripts/check_phone_rf.py
 python -X utf8 scripts/check_artifacts.py
 ```
 
 첫 검사는 드라이버·오류 처리·실제 localhost TCP·목록/출처·패키지 빌드/설치/CLI를 검증합니다. localhost 서버와 응답 fixture는 실장비가 아닙니다. 실제 계측 정확도·USB/GPIB 하드웨어·폰 TX·기구 이동·SAR·FCC 적합성 검사는 미실행입니다. 최신 결과는 [validation.json](docs/validation.json)에 기록합니다.
 
-기존 `legacy` 목록은 56개 성적서 PDF에서 추출했고, 별도 `hct-2026` 목록은 HCT 2026년 발행 보고서 12건/16 PDF 분할본에서 추출했습니다. 두 목록의 합계를 중복 제거한 전체 자산 수로 사용하지 않습니다. 이미지 표 전체 OCR과 모든 부속 보고서 확보를 완료했다는 뜻은 아닙니다. 원문 행·페이지·URL·SHA-256은 [기존 행](research/equipment-rows.json), [HCT 행](research/hct-equipment-rows.json)에 보존합니다.
+기존 `legacy` 목록은 56개 성적서 PDF에서 추출했고, 별도 `report-2026` 목록은 공개 성적서 2026년 발행 보고서 12건/16 PDF 분할본에서 추출했습니다. 두 목록의 합계를 중복 제거한 전체 자산 수로 사용하지 않습니다. 이미지 표 전체 OCR과 모든 부속 보고서 확보를 완료했다는 뜻은 아닙니다. 원문 행·페이지·URL·SHA-256은 [기존 행](research/equipment-rows.json), [공개 성적서 행](research/report-equipment-rows.json)에 보존합니다.

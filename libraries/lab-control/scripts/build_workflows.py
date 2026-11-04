@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-source=ROOT.parent/'samsung-rf/dgm_rf/data/fcc-2026.json'
+source=ROOT.parent/'phone-rf/dgm_rf/data/fcc-2026.json'
 groups=json.loads(source.read_text(encoding='utf-8'))['groups']
 result=[]
 for g in groups:
@@ -39,6 +39,6 @@ lines=['# FCC 항목과 설비 API 연결','',
        '| 성적서 묶음 | 항목 | 사용 가능한 구현 요소 | 주요 미완성 조건 |','| --- | --- | --- | --- |']
 for r in result:
     lines.append('| '+' | '.join([r['group_id'],', '.join(r['test_items']),'; '.join(r['available_building_blocks']),'; '.join(r['missing'])]).replace('\n',' ')+' |')
-lines += ['', '[근거 페이지를 포함한 JSON](../dgm_lab/data/fcc-workflows.json) · [성적서 원래 조건](../../samsung-rf/docs/FCC_LATEST_MODELS.md) · [장비별 지원표](EQUIPMENT_COVERAGE.md)', '']
+lines += ['', '[근거 페이지를 포함한 JSON](../dgm_lab/data/fcc-workflows.json) · [성적서 원래 조건](../../phone-rf/docs/FCC_LATEST_MODELS.md) · [장비별 지원표](EQUIPMENT_COVERAGE.md)', '']
 (ROOT/'docs/FCC_WORKFLOWS.md').write_text('\n'.join(lines),encoding='utf-8')
 print(f'{len(result)} workflow groups mapped; fully executable FCC workflows: 0')

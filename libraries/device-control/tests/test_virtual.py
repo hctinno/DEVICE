@@ -22,13 +22,13 @@ SWEEP = Sweep(5.9e9, 6.3e9, 1e6, 1e6, 10, 10, points=101, sweep_seconds=.01)
 def connected(lab, *, tx=True, config=None):
     with ExitStack() as stack:
         devices = {name: stack.enter_context(lab.open(name)) for name in
-                   ("OdaEx", "SamsungAt", "OspSwitch", "UsbPowerSensor", "SpectrumAnalyzer")}
+                   ("OdaEx", "PhoneAt", "OspSwitch", "UsbPowerSensor", "SpectrumAnalyzer")}
         devices["OdaEx"].call("configure", voltage=5, current=1)
         stack.enter_context(devices["OdaEx"].active())
         stack.enter_context(devices["OspSwitch"].active(name="dut"))
         devices["UsbPowerSensor"].call("configure_average", frequency_hz=6.035e9)
         if tx:
-            stack.enter_context(devices["SamsungAt"].active(config=config or QUICK.tx))
+            stack.enter_context(devices["PhoneAt"].active(config=config or QUICK.tx))
         yield devices
 
 
@@ -54,7 +54,7 @@ class VirtualLabTests(unittest.TestCase):
                 with lab.open(name) as device:
                     self.assertTrue(device.info["simulated"])
                     self.assertFalse(device.info["physical_verified"])
-                    if name != "SamsungAt":
+                    if name != "PhoneAt":
                         self.assertIsNotNone(device.info["identity"])
                 self.assertTrue(device.closed)
         self.assert_stopped(lab)
@@ -64,7 +64,7 @@ class VirtualLabTests(unittest.TestCase):
         with connected(lab, tx=False) as devices:
             sensor = devices["UsbPowerSensor"]
             self.assertAlmostEqual(watts_dbm(sensor), -100)
-            with devices["SamsungAt"].active(config=QUICK.tx):
+            with devices["PhoneAt"].active(config=QUICK.tx):
                 # Fixture at 0deg/100cm/H: 20 cable + 6 azimuth + 2 height + 6 polarization.
                 self.assertAlmostEqual(watts_dbm(sensor), -34, places=4)
                 devices["OspSwitch"].call("select", name="isolated")
@@ -88,7 +88,7 @@ class VirtualLabTests(unittest.TestCase):
         spectra = []
         with connected(lab, tx=False) as devices:
             for channel in (17, 49):
-                with devices["SamsungAt"].active(config=replace(QUICK.tx, channel_argument=channel)):
+                with devices["PhoneAt"].active(config=replace(QUICK.tx, channel_argument=channel)):
                     trace = devices["SpectrumAnalyzer"].call("acquire", config=SWEEP)
                     occupied = [hz for hz, dbm in zip(trace.frequencies_hz, trace.values_dbm) if dbm > -90]
                     spectra.append(sum(occupied) / len(occupied))
@@ -214,7 +214,7 @@ class VirtualLabTests(unittest.TestCase):
         lab = VirtualLab()
         with self.assertRaises(Exception):
             with connected(lab):
-                lab.inject(Fault("SamsungAt", "AT+WIFITEST=0,2,0,0"))
+                lab.inject(Fault("PhoneAt", "AT+WIFITEST=0,2,0,0"))
         self.assertTrue(lab.state["phone"]["tx"])  # model's retained command state; delivery unconfirmed
         self.assertFalse(lab.state["supply"]["output"])
         self.assertEqual(lab.state["route"], "isolated")

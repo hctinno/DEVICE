@@ -30,7 +30,7 @@ def main():
     try:
         exit_code = 0
         if args.action == "list":
-            output = [{key: row[key] for key in ("id", "kind", "status", "simulation_available", "physical_verified")} for row in devices(args.kind)]
+            output = [{key: row[key] for key in ("id", "kind", "equipment_type", "manufacturers", "status", "simulation_available", "integrated_virtual_model", "physical_verified")} for row in devices(args.kind)]
         elif args.action == "show":
             output = describe(args.device_id)
         elif args.action == "doctor":
@@ -55,7 +55,7 @@ def main():
             faults = {"analyzer-timeout": Fault("SpectrumAnalyzer", "TRAC:DATA? TRACE1"),
                       "malformed": Fault("UsbPowerSensor", "FETC?", "malformed", 2),
                       "stuck-motion": Fault("Co3000", "GO", "stuck"),
-                      "phone-stop": Fault("SamsungAt", "AT+WIFITEST=0,2,0,0")}
+                      "phone-stop": Fault("PhoneAt", "AT+WIFITEST=0,2,0,0")}
             scenario = Scenario(**load_profile(args.scenario)) if args.scenario else None
             output = run_virtual(args.output_dir, scenario=scenario, fault=faults.get(args.fault))
         else:

@@ -26,7 +26,7 @@
       "acquire": "(self, config: dgm_lab.analyzers.Sweep)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Keysight/Agilent/HP",
         "model": "N9020A",
@@ -87,7 +87,7 @@
       "read_level": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Rohde & Schwarz",
         "model": "EPL1000",
@@ -140,7 +140,7 @@
       "start": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Keysight/Agilent/HP",
         "model": "E4421B",
@@ -206,7 +206,7 @@
       "start": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Keysight/Agilent/HP",
         "model": "6674A",
@@ -250,7 +250,7 @@
       "read_power": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Keysight/Agilent/HP",
         "model": "N1911A",
@@ -288,7 +288,7 @@
       "read_power": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [],
+    "report_models": [],
     "source_ids": [],
     "physical_verified": false
   },
@@ -318,7 +318,7 @@
       "acquire_s11": "(self, *, start_hz, stop_hz, points, if_bandwidth_hz, power_dbm, require_correction=True)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Rohde & Schwarz",
         "model": "ZNB20",
@@ -352,7 +352,7 @@
     ],
     "excludes": [
       "NR",
-      "Samsung private AT control",
+      "OEM private AT control",
       "universal cellular TX"
     ],
     "driver": "CmwLte",
@@ -364,7 +364,7 @@
       "start": "(self, *, timeout=60, cancelled=None)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Rohde & Schwarz",
         "model": "CMW500",
@@ -406,7 +406,7 @@
       "start": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [],
+    "report_models": [],
     "source_ids": [],
     "physical_verified": false
   },
@@ -440,7 +440,7 @@
       "start": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "ESPEC",
         "model": "SU-642",
@@ -480,7 +480,7 @@
       "read_power": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [],
+    "report_models": [],
     "source_ids": [],
     "physical_verified": false
   },
@@ -520,7 +520,7 @@
       "polarize": "(self, axis, orientation, *, timeout=60, cancelled=None)",
       "stop_all": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Innco systems",
         "model": "CO3000",
@@ -590,7 +590,7 @@
       "matches": "(self, name)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Rohde & Schwarz",
         "model": "OSP 120",
@@ -633,7 +633,7 @@
       "read_power": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Keysight/Agilent/HP",
         "model": "E4419B",
@@ -679,7 +679,7 @@
       "start": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "ODA",
         "model": "EX60-40",
@@ -725,7 +725,7 @@
       "start": "(self)",
       "stop": "(self)"
     },
-    "hct_models": [
+    "report_models": [
       {
         "manufacturer": "Rohde & Schwarz",
         "model": "CMU200",

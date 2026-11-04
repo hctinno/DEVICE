@@ -1,0 +1,11 @@
+{
+  "review_date": "2026-11-04",
+  "method": "PDF page rendered locally with PyMuPDF and visually compared with extracted columns",
+  "pages": [
+    {"source_id":"report-a276-ble","pdf_page":47,"finding":"CO3000, MA4640/800-XP-EP, DS2000-S-1t equipment roles confirmed"},
+    {"source_id":"report-a276-emc","pdf_page":14,"finding":"Type/Model/Manufacturer/SN columns aligned; CO3000, MA4640-XP-ET, DS2000-S explicitly listed"},
+    {"source_id":"report-a276-nr","pdf_page":20,"finding":"Model precedes manufacturer; full equipment table including laboratory-specific software retained"},
+    {"source_id":"report-a276-sar","pdf_page":15,"finding":"Combined Type/Model column splits separately; Staubli/SPEAG and E4419B/ZNB/generator models retained"}
+  ],
+  "scope": "Selected extraction-risk pages only. Not a visual audit of every report page or every setup photo."
+}

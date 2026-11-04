@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-04T06:10:32.832280+00:00",
+  "utc": "2026-11-04T06:31:19.821209+00:00",
   "passed": true,
   "physical_tests": 0,
   "phone_rf_tests": 0,
@@ -12,7 +12,7 @@
   "unit_tests": 58,
   "failures": 0,
   "errors": 0,
-  "utf8_source_files": 32,
+  "utf8_source_files": 33,
   "wheels_built_installed": 3,
   "installed_cli_checks": [
     {
@@ -41,14 +41,14 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\simulation.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\simulation.json"
       ],
       "exit_code": 0
     },
@@ -59,7 +59,7 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\simulation.json"
       ],
       "exit_code": 2
     },
@@ -68,14 +68,14 @@
         "init",
         "Co3000",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\hardware.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\hardware.json"
       ],
       "exit_code": 2
     },
@@ -83,7 +83,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\success"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\success"
       ],
       "exit_code": 0
     },
@@ -91,7 +91,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\failure",
         "--inject-failure"
       ],
       "exit_code": 2
@@ -101,7 +101,7 @@
         "init",
         "AppleRF",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\apple.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\apple.json"
       ],
       "exit_code": 2
     },
@@ -115,7 +115,7 @@
       "args": [
         "virtual-run",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\virtual"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\virtual"
       ],
       "exit_code": 0
     },
@@ -123,7 +123,7 @@
       "args": [
         "virtual-run",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\virtual-failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\virtual-failure",
         "--fault",
         "analyzer-timeout"
       ],
@@ -133,8 +133,8 @@
   "installed_import_origin_verified": true,
   "three_device_demo": {
     "schema_version": 1,
-    "run_id": "6a044e69-a7c9-4c2b-aa4e-0144f17a5d6e",
-    "started_utc": "2026-11-04T06:11:27.550753+00:00",
+    "run_id": "db1752b4-1435-4dea-8f75-ccac0fe19e10",
+    "started_utc": "2026-11-04T06:32:14.536303+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "completed",
@@ -170,7 +170,7 @@
         "active": false
       },
       {
-        "device_id": "SamsungAt",
+        "device_id": "PhoneAt",
         "simulated": true,
         "physical_verified": false,
         "identity": null,
@@ -183,7 +183,7 @@
       {
         "value": 4.99,
         "unit": "V",
-        "utc": "2026-11-04T06:11:27.561270+00:00",
+        "utc": "2026-11-04T06:32:14.547342+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -196,7 +196,7 @@
       {
         "value": 0.8,
         "unit": "A",
-        "utc": "2026-11-04T06:11:27.561270+00:00",
+        "utc": "2026-11-04T06:32:14.547342+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -229,12 +229,12 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T06:11:28.568251+00:00"
+    "finished_utc": "2026-11-04T06:32:15.559666+00:00"
   },
   "injected_failure_demo": {
     "schema_version": 1,
-    "run_id": "3d140411-661e-4669-afa4-d19d4e2c4893",
-    "started_utc": "2026-11-04T06:11:28.955333+00:00",
+    "run_id": "fd5fd169-7ed0-4e31-8cfd-5c747168a8ba",
+    "started_utc": "2026-11-04T06:32:15.964417+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "failed",
@@ -270,7 +270,7 @@
         "active": false
       },
       {
-        "device_id": "SamsungAt",
+        "device_id": "PhoneAt",
         "simulated": true,
         "physical_verified": false,
         "identity": null,
@@ -293,14 +293,14 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T06:11:29.980184+00:00"
+    "finished_utc": "2026-11-04T06:32:16.980275+00:00"
   },
   "vendor_cache_excluded": true,
   "integrated_virtual_run": {
-    "run_id": "6bfc17ef-8d54-4636-afca-44d1f1568234",
+    "run_id": "6d92b76b-36f8-4de9-bf99-fe044d5919e6",
     "status": "completed",
     "simulated": true,
-    "result": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-u5lw9xro\\virtual\\result.json",
+    "result": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-xyp9umkm\\virtual\\result.json",
     "samples": 12,
     "peak": {
       "height_cm": 200.0,
@@ -350,5 +350,5 @@
     }
   },
   "integrated_failure_status": "failed",
-  "elapsed_seconds": 71.28
+  "elapsed_seconds": 71.47
 }

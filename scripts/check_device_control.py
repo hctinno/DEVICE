@@ -15,7 +15,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SDK = ROOT / "libraries/device-control"
-PACKAGES = [ROOT / "libraries/samsung-rf", ROOT / "libraries/lab-control", SDK]
+PACKAGES = [ROOT / "libraries/phone-rf", ROOT / "libraries/lab-control", SDK]
 
 
 def run(argv, *, cwd=ROOT, env=None, expected=0):
@@ -31,6 +31,8 @@ def main():
               "skipped": ["Real TCP/VISA/serial instruments", "Physical motion and independent stopping", "Phone firmware and RF ON/OFF", "FCC measurement/conformity"]}
     try:
         print(run([sys.executable, str(SDK / "scripts/build_sdk_catalog.py")]).stdout.strip(), flush=True)
+        print(run([sys.executable, str(ROOT / "scripts/render_supported_equipment.py")]).stdout.strip(), flush=True)
+        print(run([sys.executable, str(ROOT / "scripts/check_public_naming.py")]).stdout.strip(), flush=True)
         paths = [str(path) for path in PACKAGES]
         sys.path[:0] = paths
         suite = unittest.defaultTestLoader.discover(str(SDK / "tests"))
@@ -60,7 +62,7 @@ def main():
                     if archive.testzip() is not None: raise RuntimeError("Damaged wheel")
                     if any(".manual-cache" in name or ".fcc-cache" in name for name in archive.namelist()):
                         raise RuntimeError("Vendor cache leaked into wheel")
-            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.2.0"], cwd=temp)
+            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.3.0"], cwd=temp)
             env = dict(os.environ, PYTHONPATH=str(installed), PYTHONIOENCODING="utf-8")
             base = [sys.executable, "-s", "-m", "dgm_control"]
             checks = []
@@ -73,7 +75,7 @@ def main():
             detail = json.loads(command("show", "Co3000").stdout)
             if not detail["sources"]: raise RuntimeError("Installed provenance missing")
             diagnosed = json.loads(command("doctor").stdout)
-            if diagnosed["packages"]["dgm-device-control"] != "0.2.0": raise RuntimeError("Installed SDK version mismatch")
+            if diagnosed["packages"]["dgm-device-control"] != "0.3.0": raise RuntimeError("Installed SDK version mismatch")
             profile = temp / "simulation.json"
             command("init", "OdaEx", "--mode", "simulation", "--output", str(profile))
             command("check", str(profile))

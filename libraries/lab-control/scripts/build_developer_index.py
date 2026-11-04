@@ -1,4 +1,4 @@
-"""Deterministically join real APIs, HCT equipment, profiles and reviewed sources."""
+"""Deterministically join real APIs, report equipment, profiles and reviewed sources."""
 import inspect
 import json
 import re
@@ -6,14 +6,14 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path[:0] = [str(ROOT), str(ROOT.parent/'samsung-rf')]
+sys.path[:0] = [str(ROOT), str(ROOT.parent/'phone-rf')]
 from dgm_lab.registry import DRIVERS
 
 
 def main():
     read = lambda p: json.loads((ROOT/p).read_text(encoding='utf-8'))
     contracts = read('research/capability-contracts.json')
-    inventory = read('dgm_lab/data/hct-2026-instruments.json')
+    inventory = read('dgm_lab/data/report-2026-instruments.json')
     sources = {r['id']:r for r in read('dgm_lab/data/sources.json')}
     if set(contracts) != set(DRIVERS):
         raise ValueError('Every registered driver must have exactly one capability contract')
@@ -32,7 +32,7 @@ def main():
             raise ValueError('Unknown manufacturer source: ' + name)
         capabilities.append(dict(contract, driver=name, constructor=str(inspect.signature(driver)),
             source_file='dgm_lab/' + driver.__module__.split('.')[-1] + '.py', profile_path=profile_path,
-            methods=methods, hct_models=[dict(manufacturer=r['manufacturer'],model=r['model'],status=r['status']) for r in matches],
+            methods=methods, report_models=[dict(manufacturer=r['manufacturer'],model=r['model'],status=r['status']) for r in matches],
             source_ids=source_ids, physical_verified=False))
     (ROOT/'dgm_lab/data/capabilities.json').write_text(json.dumps(capabilities,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     upstream = read('research/open-source-review.json')
