@@ -1,5 +1,7 @@
 # DGM LabControl — 측정자동화 개발 시작
 
+공통 설치·프로파일·연결 API를 원하는 사용자/에이전트는 [DGM DeviceControl](../device-control/README.md)에서 시작합니다. 이 문서는 backend의 모델별 상세 근거와 API입니다. 두 계층 모두 실물 검증 완료를 뜻하지 않습니다.
+
 **이 문서가 설비 제어 개발의 시작점입니다.** Python 3.11 이상, 현재 저장소 루트에서 실행합니다. Windows 전용 E: 경로나 제조사 PDF 캐시가 없어도 모의 실행과 단위 검사는 가능합니다. 현장 서비스가 장비에 연결하며, 클라우드 에이전트가 시험장 네트워크에 접근할 수 있다고 가정하지 않습니다.
 
 현재 작업 브랜치: `codex/samsung-rf-research-20261104`, 저장소 [hctinno/DEVICE](https://github.com/hctinno/DEVICE). `main`에 병합됐다고 가정하지 마십시오. 최초 체크아웃은 다음과 같습니다. 이미 작업 중인 디렉터리를 덮어쓰거나 강제로 브랜치를 바꾸지 않습니다.

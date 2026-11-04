@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+현재 사용자 우선순위(2026-11-04): 개별 시험 자동화보다 먼저 **누구나 직접 사용하는 표준 제어 라이브러리**를 구축합니다. [DGM DeviceControl 계획](libraries/device-control/PLAN.md)과 [공통 API](libraries/device-control/README.md)에 설치·프로파일·지원/출처·연결·수명주기·모의 실행·검수를 묶습니다. 아래 실증/시험 엔진 기획은 이후 단계입니다.
+
 2026-11-04 후속 기획: [명령 라이브러리 이후 실행 계획](NEXT_MEASUREMENT_PLAN.md). 단말/현장 프로파일, 보고서 기반 recipe, 시험 엔진, 모션·측정·원본/성적서 연결의 5개 개발 묶음과 WLAN 6GHz HE160 1차 실증을 제안합니다. 신규 기능 구현 완료나 실제 장비 운전 승인을 의미하지 않습니다.
 
 2026-11-04 추가: [공개 프로토콜 개발 자료 계획](libraries/lab-control/DEVELOPER_ENABLEMENT_PLAN.md), [다른 에이전트 개발 시작](libraries/lab-control/AGENT_START_HERE.md). v0.3.0에 OdaEx/Cmu200Cw와 capability/오프라인 검사/모의 실행을 추가합니다. 전체 시험소나 실장비 준비 완료와 구별합니다.

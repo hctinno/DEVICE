@@ -1,0 +1,276 @@
+{
+  "utc": "2026-11-04T05:27:59.608152+00:00",
+  "passed": true,
+  "physical_tests": 0,
+  "phone_rf_tests": 0,
+  "skipped": [
+    "Real TCP/VISA/serial instruments",
+    "Physical motion and independent stopping",
+    "Phone firmware and RF ON/OFF",
+    "FCC measurement/conformity"
+  ],
+  "unit_tests": 33,
+  "failures": 0,
+  "errors": 0,
+  "utf8_source_files": 21,
+  "wheels_built_installed": 3,
+  "installed_cli_checks": [
+    {
+      "args": [
+        "list"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "show",
+        "Co3000"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "doctor"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "init",
+        "OdaEx",
+        "--mode",
+        "simulation",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\simulation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "check",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\simulation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "init",
+        "OdaEx",
+        "--mode",
+        "simulation",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\simulation.json"
+      ],
+      "exit_code": 2
+    },
+    {
+      "args": [
+        "init",
+        "Co3000",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\hardware.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "check",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\hardware.json"
+      ],
+      "exit_code": 2
+    },
+    {
+      "args": [
+        "demo",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\success"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "demo",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\failure",
+        "--inject-failure"
+      ],
+      "exit_code": 2
+    },
+    {
+      "args": [
+        "init",
+        "AppleRF",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-_i10ftwe\\apple.json"
+      ],
+      "exit_code": 2
+    }
+  ],
+  "installed_import_origin_verified": true,
+  "three_device_demo": {
+    "schema_version": 1,
+    "run_id": "a43383be-fea6-4f1b-b321-7fa9e0d26c46",
+    "started_utc": "2026-11-04T05:28:43.537778+00:00",
+    "simulated": true,
+    "physical_verified": false,
+    "status": "completed",
+    "devices": [
+      {
+        "device_id": "OdaEx",
+        "simulated": true,
+        "physical_verified": false,
+        "identity": {
+          "manufacturer": "ODA Technologies",
+          "model": "EX-Series",
+          "serial": "SIMULATION-ONLY",
+          "firmware": "SIMULATION",
+          "raw": "ODA Technologies,EX-Series,SIMULATION"
+        },
+        "identity_source": "instrument_response",
+        "connected": true,
+        "active": false
+      },
+      {
+        "device_id": "Co3000",
+        "simulated": true,
+        "physical_verified": false,
+        "identity": {
+          "manufacturer": "innco systems",
+          "model": "CO3000",
+          "serial": "SIMULATION",
+          "firmware": "1.02.60",
+          "raw": "inncoCO3000/SIMULATION/v1.02.60"
+        },
+        "identity_source": "instrument_response",
+        "connected": true,
+        "active": false
+      },
+      {
+        "device_id": "SamsungAt",
+        "simulated": true,
+        "physical_verified": false,
+        "identity": null,
+        "identity_source": "profile_declared_not_readback",
+        "connected": true,
+        "active": false
+      }
+    ],
+    "measurements": [
+      {
+        "value": 4.99,
+        "unit": "V",
+        "utc": "2026-11-04T05:28:43.564289+00:00",
+        "identity": {
+          "manufacturer": "ODA Technologies",
+          "model": "EX-Series",
+          "serial": "SIMULATION-ONLY",
+          "firmware": "SIMULATION",
+          "raw": "ODA Technologies,EX-Series,SIMULATION"
+        },
+        "raw": "4.99"
+      },
+      {
+        "value": 0.8,
+        "unit": "A",
+        "utc": "2026-11-04T05:28:43.564289+00:00",
+        "identity": {
+          "manufacturer": "ODA Technologies",
+          "model": "EX-Series",
+          "serial": "SIMULATION-ONLY",
+          "firmware": "SIMULATION",
+          "raw": "ODA Technologies,EX-Series,SIMULATION"
+        },
+        "raw": "0.8"
+      },
+      {
+        "axis": "DT1",
+        "busy": false,
+        "value": 90.0,
+        "unit": "DG",
+        "polarization": null,
+        "raw": "DT1,0,90.0 DG"
+      },
+      {
+        "axis": "MA1",
+        "busy": false,
+        "value": 100.0,
+        "unit": "CM",
+        "polarization": "PV",
+        "raw": "MA1,0,100.0 CM,PV"
+      }
+    ],
+    "fixture_cleanup": {
+      "power_output_off": true,
+      "motion_es_last": true,
+      "phone_cleanup_acknowledged": true,
+      "connections_closed": true
+    },
+    "finished_utc": "2026-11-04T05:28:44.591669+00:00"
+  },
+  "injected_failure_demo": {
+    "schema_version": 1,
+    "run_id": "0c639bf4-705f-4e7e-81d8-c13501464638",
+    "started_utc": "2026-11-04T05:28:44.968666+00:00",
+    "simulated": true,
+    "physical_verified": false,
+    "status": "failed",
+    "devices": [
+      {
+        "device_id": "OdaEx",
+        "simulated": true,
+        "physical_verified": false,
+        "identity": {
+          "manufacturer": "ODA Technologies",
+          "model": "EX-Series",
+          "serial": "SIMULATION-ONLY",
+          "firmware": "SIMULATION",
+          "raw": "ODA Technologies,EX-Series,SIMULATION"
+        },
+        "identity_source": "instrument_response",
+        "connected": true,
+        "active": false
+      },
+      {
+        "device_id": "Co3000",
+        "simulated": true,
+        "physical_verified": false,
+        "identity": {
+          "manufacturer": "innco systems",
+          "model": "CO3000",
+          "serial": "SIMULATION",
+          "firmware": "1.02.60",
+          "raw": "inncoCO3000/SIMULATION/v1.02.60"
+        },
+        "identity_source": "instrument_response",
+        "connected": true,
+        "active": false
+      },
+      {
+        "device_id": "SamsungAt",
+        "simulated": true,
+        "physical_verified": false,
+        "identity": null,
+        "identity_source": "profile_declared_not_readback",
+        "connected": true,
+        "active": false
+      }
+    ],
+    "error": "RuntimeError: Injected application failure while simulated phone TX is active",
+    "error_details": {
+      "code": "APPLICATION",
+      "type": "RuntimeError",
+      "message": "Injected application failure while simulated phone TX is active",
+      "automatic_retry": false
+    },
+    "measurements": [],
+    "fixture_cleanup": {
+      "power_output_off": true,
+      "motion_es_last": true,
+      "phone_cleanup_acknowledged": true,
+      "connections_closed": true
+    },
+    "finished_utc": "2026-11-04T05:28:46.015350+00:00"
+  },
+  "vendor_cache_excluded": true,
+  "elapsed_seconds": 47.27
+}

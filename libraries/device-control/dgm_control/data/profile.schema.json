@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:dgm:device-control:profile:1",
+  "title": "DGM DeviceControl profile v1",
+  "description": "Structural schema only. check_profile performs driver-specific validation; neither proves hardware readiness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "device_id", "mode", "config"],
+  "properties": {
+    "schema_version": {"const": 1, "type": "integer"},
+    "device_id": {"type": "string", "minLength": 1},
+    "mode": {"enum": ["simulation", "hardware"]},
+    "config": {
+      "type": "object", "additionalProperties": false,
+      "required": ["driver", "parameters", "transport"],
+      "properties": {
+        "driver": {"type": "string", "minLength": 1},
+        "parameters": {"type": "object"},
+        "transport": {"type": "object", "required": ["kind"], "properties": {"kind": {"enum": ["simulation", "serial", "tcp", "visa"]}}},
+        "notes": {"type": "string"}
+      }
+    }
+  }
+}

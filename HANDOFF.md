@@ -10,7 +10,9 @@
 
 ## 현재 상태
 
-후속 요청은 **추가로 필요한 일을 기획해 달라는 요청**입니다. [NEXT_MEASUREMENT_PLAN.md](NEXT_MEASUREMENT_PLAN.md)에 5개 개발 묶음·완료 기준·현장 의존성·조건부 작업량을 정리했습니다. 다음 구현 추천은 공통 프로파일/recipe schema와 WLAN 6GHz HE160의 모의 전체 실행입니다. 이번 기획에서 실제 구현·단말/장비 접속은 하지 않았습니다.
+최신 사용자 지시는 **시험 엔진보다 먼저 누구나 직접 쓰는 표준 장비·설비·스마트폰 제어 라이브러리 구축**입니다. [DGM DeviceControl](libraries/device-control/README.md) v0.1.0은 기존 backend를 공통 설치/목록/프로파일/연결/수명주기로 묶습니다. 제조사 공식 자료 기반과 DGM 자체 SDK를 구별하고 실물 검증은 0건으로 유지합니다. 다음 세션은 SDK README와 [검수 결과](libraries/device-control/docs/validation.json)를 먼저 확인합니다. [NEXT_MEASUREMENT_PLAN.md](NEXT_MEASUREMENT_PLAN.md)의 시험 엔진/실증 기획은 이후 단계로 유지합니다.
+
+공통 SDK 구성: 실행 backend는 기존 설비 16개+SamsungAt 1개, 전체 지원 설명 21개(참조/차단 4개 포함), hardware template 17개, simulation 3개입니다. 공통 API `devices/describe/profile_template/check_profile/doctor/open_device`, session `call/active`와 구조화된 오류를 제공합니다. SDK 33개 단위검사, 기존 설비 99개·삼성 58개 회귀, wheel 3개 격리 설치·CLI 11건이 통과했습니다. 재현은 `python -X utf8 scripts/check_device_control.py`, 배포는 `python -X utf8 scripts/package_device_control.py`입니다. 실제 연결은 mode=hardware 프로파일을 별도 준비해야 하며 latest phone 기능을 자동 승격하지 않습니다.
 
 2026-11-04 chipset WLAN 추가: Samsung RF v0.4.0의 [칩셋 터미널 제어](libraries/samsung-rf/docs/CHIPSET_TERMINAL_CONTROL.md)와 [숫자표](libraries/samsung-rf/docs/CHIPSET_COMMANDS.md)를 먼저 확인합니다. 공식 Qualcomm 2026 payload의 SHA-512 대조, ARM64 glibc runtime 확인, 94개 헤더 enum 사실과 `wl` 포함 29개 명령 레코드를 보존했습니다. `python -m dgm_rf chipset-demo`는 오프라인입니다. HE160=16/EHT20=30은 pinned header 사실이며 `--txMode` CLI mapping과 최신 Android TX 시작·종료는 미확인입니다. `wl` TX/RX packet engine 생성과 cleanup, 6GHz/160 driver-encoding 후보, 조회용 ADB argv 11개를 제공합니다. 실폰은 연결하지 않았습니다. vendor binary/header/PDF는 Git에 포함하지 않습니다.
 
