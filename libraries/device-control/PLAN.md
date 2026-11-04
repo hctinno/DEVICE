@@ -1,5 +1,7 @@
 # DGM DeviceControl 구축 계약
 
+2026-11-05 최신 확장: SDK 0.8.0 [검파기별 실행 계약](DETECTOR_PLAN.md), [모델별 지원·사용법·제한](DETECTORS.md). QP/선형 평균/CISPR 평균을 별도 수신기 grid로 측정해 보정·기준 비교·최대 복귀·부분 오류 기록에 연결합니다. 아래 항목은 버전별 과거 기록입니다.
+
 최신 확장: SDK 0.7.0 [보정·기준 비교 계약](CORRECTION_PLAN.md), [입력/실행/제한](CORRECTIONS.md). 아래 수치는 버전별 과거 기록이며 최신 검수는 docs/validation.json을 따릅니다.
 
 최신 확장: SDK 0.6.0의 [다중 무선 설비 스캔 계약](RADIO_SCAN_PLAN.md). 네 radio의 모션/RF 경로/최대 복귀와 가상·조건부 실장비 실행을 제공합니다. 아래 0.5.0 기록은 고정 경로 단계입니다.

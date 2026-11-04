@@ -1,10 +1,10 @@
 {
-  "file": "dgm-device-control-0.7.0-offline.zip",
-  "bytes": 313400,
-  "sha256": "e8aa0809770512f047e37141b9777e0af9b861d706f96c369fa5bdb66ece292a",
+  "file": "dgm-device-control-0.8.0-offline.zip",
+  "bytes": 331049,
+  "sha256": "950ed5d5341a9ac215f0cb1cfaf0df5b8759d75cde770fd27ee71d087abbcf27",
   "wheels": [
-    "dgm_device_control-0.7.0-py3-none-any.whl",
-    "dgm_lab_control-0.4.0-py3-none-any.whl",
+    "dgm_device_control-0.8.0-py3-none-any.whl",
+    "dgm_lab_control-0.5.0-py3-none-any.whl",
     "dgm_rf_command_library-0.5.0-py3-none-any.whl"
   ],
   "offline_installer_tested": true,
@@ -23,5 +23,37 @@
     "cellular",
     "nfc",
     "uwb"
+  ],
+  "fresh_venv_receiver_comparisons": [
+    {
+      "radio": "wlan",
+      "detector": "LINEAR_AVER",
+      "samples": 12,
+      "verdict": "PASS"
+    },
+    {
+      "radio": "bluetooth",
+      "detector": "CISPR_AVER",
+      "samples": 12,
+      "verdict": "PASS"
+    },
+    {
+      "radio": "cellular",
+      "detector": "LINEAR_AVER",
+      "samples": 12,
+      "verdict": "PASS"
+    },
+    {
+      "radio": "nfc",
+      "detector": "QP",
+      "samples": 12,
+      "verdict": "PASS"
+    },
+    {
+      "radio": "uwb",
+      "detector": "CISPR_AVER",
+      "samples": 12,
+      "verdict": "PASS"
+    }
   ]
 }

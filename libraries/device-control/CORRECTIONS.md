@@ -1,4 +1,6 @@
-# 보정 전계강도·선언 기준 비교 — SDK 0.7.0
+# 보정 전계강도·선언 기준 비교 — SDK 0.8.0
+
+QP/선형 평균/CISPR 평균은 [검파기별 수신기 경로](DETECTORS.md)의 measurement schema 1 + evaluation schema 2를 사용합니다. 아래 기본 예제와 minimum_sweep_seconds는 기존 swept POS/evaluation schema 1 계약입니다. 수신기 경로의 검파기·필터·시간 readback은 자동 확인하지만, 내부 보정·RF 입력·overload·실제 교정 적합성은 현장 확인 사항입니다.
 
 WLAN 및 Bluetooth/LTE/NFC/UWB의 설비 스캔에 `--evaluation`을 추가합니다. 주파수마다 안테나 팩터·케이블 손실·RF 스위치 손실·선택 외부 전치증폭기 이득을 적용하고 **보정 전계강도가 가장 큰 표본 위치로 복귀**합니다. 가장 큰 전계강도와 **기준 대비 최악 여유 위치**는 별도로 저장합니다. 입력한 기준과의 비교이며 전체 FCC 적합성 판정은 아닙니다. 기존 명령을 옵션 없이 실행하면 기존 원시 최대값 방식을 유지합니다.
 
@@ -51,7 +53,7 @@ python -m dgm_control virtual-run --evaluation wlan-evaluation.json --output-dir
 | simple | E ≤ L | E > L | 없음 |
 | guarded (확장불확도 U) | E + U ≤ L | E − U > L | 두 조건 사이 |
 
-전체 스캔의 조건과 기준 범위가 유효하면 하나라도 FAIL일 때 FAIL, 그 외 INDETERMINATE가 있으면 INDETERMINATE, 모두 PASS면 PASS입니다. 검파기·RBW·VBW·거리·최소 sweep 시간이 맞지 않으면 `NOT_EVALUATED`입니다. 현재 POS만 비교 가능하며 QP/AVER/RMS 등을 넣어도 FCC 평균·준첨두 측정으로 간주하지 않습니다. 드라이버 AVER는 일부 장비에서 RMS 설정이므로 판정 지원 대상에서 제외했습니다.
+전체 스캔의 조건과 기준 범위가 유효하면 하나라도 FAIL일 때 FAIL, 그 외 INDETERMINATE가 있으면 INDETERMINATE, 모두 PASS면 PASS입니다. 검파기·RBW·VBW·거리·최소 sweep 시간이 맞지 않으면 `NOT_EVALUATED`입니다. 기존 swept 경로는 POS만 비교하며 QP/AVER/RMS 등을 넣어도 평균·준첨두 측정으로 간주하지 않습니다. QP/명시적 평균은 별도 수신기 schema 2에서만 비교합니다. 드라이버 AVER는 일부 장비에서 RMS 설정이므로 평균 판정 지원 대상에서 제외했습니다.
 
 최대값은 **획득한 위치/주파수 표본 중 최대**입니다. 연속 회전·전 대역 전역 최대나 기기의 모든 방출을 찾았다는 뜻이 아닙니다. 비교 PASS도 source 설정·교정·시료·방법·스캔 범위의 규제 적합성을 보장하지 않습니다. `scope=declared_limit_comparison`, `regulatory_certification=false`, `fcc_verdict=null`, `physical_verified=false`를 유지합니다.
 
@@ -95,4 +97,4 @@ check의 exit 0은 구조 검사 완료입니다. `evaluation.assessment_ready=f
 | [ISED RSS-Gen issue 6, Annex A.3](https://www.ised-isde.canada.ca/site/spectrum-management-telecommunications/en/devices-and-equipment/radio-equipment-standards/radio-standards-specifications-rss/rss-gen-general-requirements-compliance-radio-apparatus) | 전계 계산의 AF/손실 더하기·외부 증폭기 빼기와 E/H 구분. 캐나다 자료는 수식 근거이며 미국 시험 한계 근거가 아닙니다. |
 | [47 CFR 15.35](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.35), [15.209](https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.209) | 검파기·대역폭·거리·해당 조항 확인이 필요하다는 근거. 모든 radio에 공통 한계값이나 단일 peak 판정을 자동 적용하지 않습니다. |
 
-실장비 RF/교정 검증 0건. 자체 검수는 [계약](CORRECTION_PLAN.md), [수치·연동 검사](tests/test_evaluation.py), [설치 검사 기록](docs/validation.json)을 확인합니다. 전체 FCC recipe, 평균/준첨두 방법, 규격 자동 선택, 불확도 예산 산출, 자기장 시험과 현장 commissioning은 남아 있습니다.
+실장비 RF/교정 검증 0건. 자체 검수는 [계약](CORRECTION_PLAN.md), [수치·연동 검사](tests/test_evaluation.py), [설치 검사 기록](docs/validation.json)을 확인합니다. 전체 FCC recipe, 미통합 모델의 검파기 실행, 규격 자동 선택, 불확도 예산 산출, 자기장 시험과 현장 commissioning은 남아 있습니다.

@@ -1,5 +1,6 @@
 """Source-neutral facility scan; rank acquired samples and confirm peak-position return."""
 from dataclasses import asdict
+from contextlib import ExitStack
 from dgm_lab.core import InstrumentError
 from .radio_adapters import checkpoint, pause
 
@@ -12,10 +13,13 @@ def position_matches(states, pose):
 def measure_radio_scan(lab, token, event, fault=None, evaluation=None):
     plan, evidence = lab.plan, lab.evidence
     scan = plan["scan"]
-    if evaluation is not None: evaluation.bind(plan, lab.simulated)
+    config = lab.measurement_config
+    if evaluation is not None: evaluation.bind(plan, lab.simulated, config)
     reference = {"height_cm": scan["heights_cm"][0], "angle_deg": scan["angles_deg"][0], "polarization": scan["polarizations"][0]}
     samples, baselines = [], []
-    with lab.open("Co3000") as motion, lab.open("OspSwitch") as route, lab.open("SpectrumAnalyzer") as analyzer:
+    with ExitStack() as stack, lab.open("Co3000") as motion, lab.open("OspSwitch") as route, lab.open("SpectrumAnalyzer") as analyzer:
+        receiver = stack.enter_context(lab.open("EmiReceiver")) if config is not None else None
+        if receiver is not None: stack.enter_context(receiver.active())
         def positions(): return [motion.call("position", axis=axis) for axis in ("MA1", "DT1")]
 
         def observe(phase, pose, path, *, fail=True):
@@ -65,7 +69,15 @@ def measure_radio_scan(lab, token, event, fault=None, evaluation=None):
                                     for repeat in range(plan["sample_count"]):
                                         checkpoint(token)
                                         pre, _ = observe("before-sample", pose, path)
-                                        row = lab.acquire(analyzer, "sample")
+                                        if receiver is None:
+                                            row = lab.acquire(analyzer, "sample")
+                                        else:
+                                            from .receiver_measurement import acquire_grid
+                                            def save_point(point):
+                                                evidence.write("observations.jsonl", {**point, **pose, "rf_path": path, "repeat": repeat, "sample_index": len(samples)})
+                                                evidence.require_healthy()
+                                            trace = acquire_grid(receiver, config, lambda: checkpoint(token), save_point)
+                                            row = {"phase": "sample", "trace": trace, "peak_dbm": max(trace["values_dbm"]), "simulated": lab.simulated}
                                         post, _ = observe("after-sample", pose, path)
                                         checkpoint(token)
                                         row.update(index=len(samples), repeat=repeat, radio=plan["radio"], backend=plan["backend"],

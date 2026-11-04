@@ -34,12 +34,13 @@ def _check_phone_plan(profile, config):
 class VirtualLab:
     simulated = True
 
-    def __init__(self, scenario=None, *, log=None):
+    def __init__(self, scenario=None, *, log=None, measurement_config=None):
         if scenario is not None and not isinstance(scenario, Scenario):
             raise TypeError("scenario must be Scenario")
         self._world = World(scenario)
         self._log = log
         self._leased = set()
+        self.measurement_config = deepcopy(measurement_config)
 
     @property
     def scenario(self):
@@ -63,7 +64,7 @@ class VirtualLab:
             return sorted(self._leased)
 
     def inject(self, fault):
-        if not isinstance(fault, Fault) or fault.device not in VIRTUAL_MODELS:
+        if not isinstance(fault, Fault) or fault.device not in set(VIRTUAL_MODELS) | ({"EmiReceiver"} if self.measurement_config else set()):
             raise ValueError("Fault requires an implemented virtual device")
         if fault.kind == "stuck" and (fault.device != "Co3000" or fault.command != "GO"):
             raise ValueError("stuck is defined only for Co3000 GO")
@@ -74,6 +75,10 @@ class VirtualLab:
 
     def configuration(self, device_id):
         """Immutable-by-copy fixture parameters. Never convert these into site evidence."""
+        if device_id == "EmiReceiver" and self.measurement_config is not None:
+            from dgm_lab.detectors import RECEIVER_RANGES
+            model = self.measurement_config["model"]
+            return {"model": model, "max_frequency_hz": RECEIVER_RANGES[model]}
         if device_id not in VIRTUAL_MODELS:
             raise UnsupportedDevice(f"No integrated virtual peer for {device_id}")
         if device_id in {"PhoneAt", "OdaEx", "Co3000"}:
@@ -122,6 +127,9 @@ class VirtualLab:
                     io = SupplyPeer(self._world, self._log)
                 elif device_id == "Co3000":
                     io = PositionerPeer(self._world, self._log)
+                elif device_id == "EmiReceiver":
+                    from .receiver_peer import ReceiverPeer
+                    io = ReceiverPeer(self._world, parameters["model"], self._log)
                 else:
                     io = ScpiPeer(device_id, self._world, self._log)
                 driver = DRIVERS[device_id](io, **parameters)

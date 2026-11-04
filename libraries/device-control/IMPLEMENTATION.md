@@ -1,5 +1,7 @@
 # 구현 계약
 
+v0.8.0: [검파기별 계약](DETECTORS.md). 별도 measurement schema 1로 EmiReceiver의 명시적 주파수 grid를 선택합니다. dgm_lab.read_verified_level은 ESW8/44·ESR3/7의 단일 bargraph를 설정하고 전후 query를 검증합니다. receiver_measurement.py는 사전 범위/모델/시간/경로 검사, 개별 점의 원문·readback 즉시 기록, dBµV 보존과 50Ω dBm 정규화를 담당합니다. evaluation schema 2는 acquisition/filter/detector/RBW/minimum_dwell을 비교하고 원시 dBµV에 보정을 적용합니다. 기존 schema 1/POS 경로는 유지합니다. receiver_peer는 native parser용 합성 정상상태 모형이며 검파기 물리 응답을 모사하지 않습니다. 실장비 commissioning은 미실행입니다.
+
 v0.7.0: [보정·기준 비교](CORRECTIONS.md). evaluation.py는 별도 schema 1 교정/기준 계약, trace-bin 보간·50Ω 변환·판정·최대/최악 여유 집계를 담당합니다. 기존 radio plan schema 1/2는 유지하며 평가를 쓸 때만 schema 2가 필요합니다. WLAN/radio recipe는 측정 직후 보정하고 저장하며 보정 최대 위치를 선택합니다. wrapper는 cleanup/증거 저장 완료 후 최종 assessment를 발행합니다. 입력 전체와 canonical SHA-256으로 값·판정 추적을 보존합니다. failure는 NOT_EVALUATED로 재집계합니다. raw 동작은 옵션 없이 유지합니다. 세부 수학/오류/실장비 경계는 tests/test_evaluation.py로 검증합니다.
 
 v0.6.0: [설비 스캔 계약](RADIO_SCAN_PLAN.md), [운영 안내](RADIO_SCAN.md). schema 2 plan은 scan을 명시하고 기존 schema 1을 유지합니다. radio_scan_contracts는 격자·주파수 경로·현장 한계, radio_scan은 native Co3000/OspSwitch 수명주기와 기존 radio source를 조합합니다. 측정 전후 위치/경로를 검증한 유효 표본만 최대 검색에 사용하고, 모든 source 종료 후 최대 위치·경로 복귀를 확인한 뒤 안전 경로와 ES를 검증합니다. RadioWorld의 geometry/경로 손실은 합성 가정입니다. NFC callback은 기준 위치·경로를 확인하며 다른 위치의 quiet 값을 OFF 성공으로 처리하지 않습니다.

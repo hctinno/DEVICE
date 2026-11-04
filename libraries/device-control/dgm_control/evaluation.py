@@ -34,57 +34,78 @@ def interpolate(x, x0, y0, x1, y1, method):
     return y0 + (y1-y0) * (x-x0) / (x1-x0)
 
 
-def context(plan):
+def context(plan, measurement=None):
     """Return sweep, paths, polarizations without connecting to a device."""
     if isinstance(plan, dict):
         from .radio_contracts import validate_plan
         sweep = validate_plan(plan)
         if plan["schema_version"] != 2: raise ValueError("Evaluation requires a schema-2 facility scan")
-        return asdict(sweep), plan["scan"]["rf_paths"], plan["scan"]["polarizations"]
-    plan.validate()
-    return asdict(Sweep(plan.center_hz-120e6, plan.center_hz+120e6, 1e6, 1e6, 10, 10,
-                        points=101, sweep_seconds=.01)), ["dut"], list(plan.polarizations)
+        result = asdict(sweep), plan["scan"]["rf_paths"], plan["scan"]["polarizations"]
+    else:
+        plan.validate()
+        result = asdict(Sweep(plan.center_hz-120e6, plan.center_hz+120e6, 1e6, 1e6, 10, 10,
+                             points=101, sweep_seconds=.01)), ["dut"], list(plan.polarizations)
+    if measurement is not None:
+        from .receiver_measurement import measurement_settings
+        return measurement_settings(measurement), result[1], result[2]
+    return result
 
 
-def evaluation_template(plan):
+def evaluation_template(plan, measurement=None):
     """Synthetic teaching data; neither a calibration certificate nor an FCC limit."""
-    sweep, paths, pols = context(plan)
+    if measurement is not None:
+        from .receiver_measurement import validate_measurement
+        validate_measurement(measurement, plan, simulated=True)
+    sweep, paths, pols = context(plan, measurement)
     lo, hi = sweep["start_hz"], sweep["stop_hz"]
     def table(kind):
         value = {"antenna_factor": 20, "cable_loss": 2, "switch_loss": 1, "preamp_gain": 0}[kind]
         return {"unit": COMPONENTS[kind], "interpolation": "linear_hz", "points": [[lo, value], [hi, value]],
                 "asset_id": "SYNTHETIC-"+kind, "source": "Synthetic fixture, not a certificate",
                 "source_sha256": "0"*64, "provenance": "synthetic", "valid_from": "2000-01-01", "valid_until": "2099-12-31"}
-    return {"schema_version": 1, "simulation_only": True,
+    result = {"schema_version": 2 if measurement is not None else 1, "simulation_only": True,
             "setup": {"quantity": "electric_field", "unit": "dBuV/m", "impedance_ohm": 50,
                       "distance_m": 3, "receiver_reference": "input", "receiver_corrections_disabled": True,
                       "site_verified": False, "evidence_notes": "Synthetic setup only"},
             "paths": {p: {pol: {k: table(k) for k in COMPONENTS} for pol in pols} for p in paths},
             "criterion": {"id": "SYNTHETIC-DEMO", "source": "Synthetic demonstration, NOT a regulatory limit",
                           "edition": "demo-1", "clause": "demo-only", "provenance": "synthetic",
-                          "unit": "dBuV/m", "distance_m": 3, "detector": "POS",
+                          "unit": "dBuV/m", "distance_m": 3, "detector": sweep["detector"],
                           "rbw_hz": sweep["rbw_hz"], "vbw_hz": sweep["vbw_hz"],
-                          "minimum_sweep_seconds": sweep["sweep_seconds"],
+                          "minimum_sweep_seconds": sweep.get("sweep_seconds", 0),
                           "segments": [{"start_hz": lo, "stop_hz": hi, "start_dbuv_m": 120,
                                         "stop_dbuv_m": 120, "interpolation": "constant"}]},
             "decision": {"rule": "simple", "expanded_uncertainty_db": 0, "coverage_factor": 2,
                          "source": "Synthetic uncertainty; simple rule ignores uncertainty"}}
+    if measurement is not None:
+        result["criterion"].pop("minimum_sweep_seconds")
+        result["criterion"].update(acquisition="receiver_grid", filter_type="CISPR",
+                                   minimum_dwell_seconds=sweep["dwell_seconds"])
+    return result
 
 
 class Evaluation:
-    def __init__(self, config, plan, *, simulated):
+    def __init__(self, config, plan, *, simulated, measurement=None):
         self.config = deepcopy(config)
         self.simulated = simulated
-        self.sweep, self.paths, self.pols = context(plan)
+        self.measurement = deepcopy(measurement)
+        if measurement is not None:
+            from .receiver_measurement import validate_measurement
+            validate_measurement(measurement, plan, simulated=simulated)
+        self.sweep, self.paths, self.pols = context(plan, measurement)
         self.reasons, self.rows = [], []
         self._validate()
         self.sha256 = hashlib.sha256(json.dumps(self.config, sort_keys=True, separators=(",", ":"),
                                                ensure_ascii=False, allow_nan=False).encode("utf-8")).hexdigest()
+        self.measurement_sha256 = hashlib.sha256(json.dumps(self.measurement, sort_keys=True, separators=(",", ":"),
+                                               ensure_ascii=False, allow_nan=False).encode("utf-8")).hexdigest() if self.measurement is not None else None
 
     def _validate(self):
         c = self.config
         exact(c, ("schema_version", "simulation_only", "setup", "paths", "criterion", "decision"), "evaluation")
-        if type(c["schema_version"]) is not int or c["schema_version"] != 1: raise ValueError("Evaluation schema_version must be 1")
+        version = 2 if self.measurement is not None else 1
+        if type(c["schema_version"]) is not int or c["schema_version"] != version:
+            raise ValueError("Evaluation schema_version must match acquisition: " + str(version))
         if type(c["simulation_only"]) is not bool: raise ValueError("simulation_only must be boolean")
         if not self.simulated and c["simulation_only"]: raise ValueError("Synthetic evaluation forbidden on hardware")
         s = c["setup"]
@@ -107,19 +128,31 @@ class Evaluation:
                     if kind == "preamp_gain" and table is None: continue
                     self._table(table, kind)
         limit = c["criterion"]
-        exact(limit, ("id", "source", "edition", "clause", "provenance", "unit", "distance_m", "detector", "rbw_hz", "vbw_hz", "minimum_sweep_seconds", "segments"), "criterion")
+        timing = {"acquisition", "filter_type", "minimum_dwell_seconds"} if version == 2 else {"minimum_sweep_seconds"}
+        exact(limit, {"id", "source", "edition", "clause", "provenance", "unit", "distance_m", "detector", "rbw_hz", "vbw_hz", "segments"} | timing, "criterion")
         for key in ("id", "source", "edition", "clause"): text(limit[key], key)
         self._provenance(limit, "declared_standard")
         if limit["unit"] != "dBuV/m": raise ValueError("Only dBuV/m limits supported; no H-field conversion")
-        for key in ("distance_m", "rbw_hz", "vbw_hz"): finite(limit[key], key, .001)
-        finite(limit["minimum_sweep_seconds"], "minimum sweep time", 0)
-        if limit["detector"] not in ("POS", "QP", "AVER", "RMS", "SAMP", "NEG"): raise ValueError("Unknown criterion detector")
-        if limit["detector"] != "POS" or self.sweep["detector"] != "POS":
-            self.reasons.append("Only POS declared-limit comparisons implemented; QP/average/RMS not verified")
+        for key in ("distance_m", "rbw_hz"): finite(limit[key], key, .001)
+        if version == 2:
+            finite(limit["minimum_dwell_seconds"], "minimum dwell time", .001)
+            if limit["vbw_hz"] is not None: raise ValueError("Receiver-grid VBW must be null (not applicable)")
+            if limit["acquisition"] != "receiver_grid" or limit["filter_type"] != "CISPR":
+                self.reasons.append("Receiver acquisition/filter criterion mismatch")
+            if limit["detector"] not in ("POS", "QP", "LINEAR_AVER", "CISPR_AVER", "AVER", "RMS", "SAMP", "NEG"):
+                raise ValueError("Unknown criterion detector")
+            if limit["detector"] != self.sweep["detector"]: self.reasons.append("Receiver detector criterion mismatch")
+            if self.sweep["dwell_seconds"] < limit["minimum_dwell_seconds"]: self.reasons.append("dwell time below criterion")
+        else:
+            finite(limit["vbw_hz"], "vbw_hz", .001)
+            finite(limit["minimum_sweep_seconds"], "minimum sweep time", 0)
+            if limit["detector"] not in ("POS", "QP", "AVER", "RMS", "SAMP", "NEG"): raise ValueError("Unknown criterion detector")
+            if limit["detector"] != "POS" or self.sweep["detector"] != "POS":
+                self.reasons.append("Swept workflow supports POS comparisons only; use verified receiver-grid for QP/average")
+            if self.sweep["sweep_seconds"] < limit["minimum_sweep_seconds"]: self.reasons.append("sweep time below criterion")
         for key in ("rbw_hz", "vbw_hz"):
             if limit[key] != self.sweep[key]: self.reasons.append(key+" mismatch")
         if limit["distance_m"] != s["distance_m"]: self.reasons.append("distance mismatch; no automatic conversion")
-        if self.sweep["sweep_seconds"] < limit["minimum_sweep_seconds"]: self.reasons.append("sweep time below criterion")
         segments = limit["segments"]
         if not isinstance(segments, list) or not segments: raise ValueError("Nonempty limit segments required")
         previous = None
@@ -174,10 +207,11 @@ class Evaluation:
 
     def preflight(self):
         return {"config_sha256": self.sha256, "assessment_ready": not self.reasons, "reasons": self.reasons,
+                "measurement_sha256": self.measurement_sha256,
                 "scope": "declared_limit_comparison", "regulatory_certification": False, "simulated": self.simulated}
 
-    def bind(self, plan, simulated):
-        if self.rows or context(plan) != (self.sweep, self.paths, self.pols) or simulated != self.simulated:
+    def bind(self, plan, simulated, measurement=None):
+        if self.rows or measurement != self.measurement or context(plan, measurement) != (self.sweep, self.paths, self.pols) or simulated != self.simulated:
             raise ValueError("Evaluation must be fresh and match the scan plan and execution mode")
 
     def _correction(self, table, hz):
@@ -193,6 +227,9 @@ class Evaluation:
 
     def correct(self, sample):
         trace = sample["trace"]
+        if self.measurement is not None:
+            from .receiver_measurement import validate_trace
+            validate_trace(trace, self.measurement)
         if trace["settings"] != self.sweep: raise ValueError("Returned trace settings mismatch")
         frequencies, values = trace["frequencies_hz"], trace["values_dbm"]
         if len(frequencies) != self.sweep["points"] or len(frequencies) != len(values): raise ValueError("Trace length mismatch")
@@ -201,16 +238,23 @@ class Evaluation:
         day = timestamp.astimezone(timezone.utc).date()
         path = sample.get("rf_path", "dut")
         tables = self.config["paths"][path][sample["polarization"]]
+        days = [day]
+        if self.measurement is not None:
+            for point in trace["receiver_points"]:
+                timestamp = datetime.fromisoformat(point["utc"].replace("Z", "+00:00"))
+                if timestamp.tzinfo is None: raise ValueError("Receiver point timestamp must have timezone")
+                days.append(timestamp.astimezone(timezone.utc).date())
         for table in tables.values():
-            if table and not date.fromisoformat(table["valid_from"]) <= day <= date.fromisoformat(table["valid_until"]):
+            if table and any(not date.fromisoformat(table["valid_from"]) <= d <= date.fromisoformat(table["valid_until"]) for d in days):
                 raise ValueError("Calibration invalid at acquisition time")
         bins = []
         for i, (hz, raw) in enumerate(zip(frequencies, values)):
             finite(hz, "trace frequency", .001); finite(raw, "raw dBm")
-            expected = self.sweep["start_hz"] + i*(self.sweep["stop_hz"]-self.sweep["start_hz"])/(len(values)-1)
+            expected = self.measurement["frequencies_hz"][i] if self.measurement is not None else self.sweep["start_hz"] + i*(self.sweep["stop_hz"]-self.sweep["start_hz"])/(len(values)-1)
             if not math.isclose(hz, expected, rel_tol=1e-12, abs_tol=1e-5): raise ValueError("Trace frequency grid mismatch")
             terms = {k: self._correction(t, hz) for k, t in tables.items()}
-            corrected = raw + CONVERSION_50_OHM + terms["antenna_factor"] + terms["cable_loss"] + terms["switch_loss"] - terms["preamp_gain"]
+            voltage = trace["values_dbuv"][i] if self.measurement is not None else raw + CONVERSION_50_OHM
+            corrected = voltage + terms["antenna_factor"] + terms["cable_loss"] + terms["switch_loss"] - terms["preamp_gain"]
             finite(corrected, "corrected field")
             limit = self._limit(hz)
             if limit is not None: finite(limit, "interpolated limit")
@@ -220,6 +264,7 @@ class Evaluation:
                 uncertainty = self.config["decision"]["expanded_uncertainty_db"] if self.config["decision"]["rule"] == "guarded" else 0
                 verdict = "PASS" if margin >= uncertainty else "FAIL" if margin < -uncertainty else "INDETERMINATE"
             bins.append({"bin": i, "frequency_hz": hz, "raw_dbm": raw, "conversion_db": CONVERSION_50_OHM,
+                         "input_dbuv": voltage, "input_unit": "dBuV" if self.measurement is not None else "dBm",
                          "components": terms, "field_dbuv_m": corrected, "limit_dbuv_m": limit,
                          "margin_db": margin, "verdict": verdict})
         peak = max(bins, key=lambda b: b["field_dbuv_m"])

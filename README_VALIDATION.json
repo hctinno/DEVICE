@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "utc": "20261104T145407408727Z",
+  "utc": "20261104T155158609018Z",
   "python": "3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]",
   "commands": [
     {
@@ -173,6 +173,60 @@
         "wlan-evaluation.json",
         "--output-dir",
         "wlan-corrected-001"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "detector-list"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "measurement-init",
+        "--workflow",
+        "wlan",
+        "--detector",
+        "CISPR_AVER",
+        "--output",
+        "wlan-receiver.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "evaluation-init",
+        "--workflow",
+        "wlan",
+        "--measurement",
+        "wlan-receiver.json",
+        "--output",
+        "wlan-receiver-evaluation.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "virtual-run",
+        "--measurement",
+        "wlan-receiver.json",
+        "--evaluation",
+        "wlan-receiver-evaluation.json",
+        "--output-dir",
+        "wlan-receiver-001"
       ],
       "exit_code": 0,
       "expected": 0
@@ -371,8 +425,8 @@
     "virtual"
   ],
   "packages": {
-    "dgm-device-control": "0.7.0",
-    "dgm-lab-control": "0.4.0",
+    "dgm-device-control": "0.8.0",
+    "dgm-lab-control": "0.5.0",
     "dgm-rf-command-library": "0.5.0"
   }
 }

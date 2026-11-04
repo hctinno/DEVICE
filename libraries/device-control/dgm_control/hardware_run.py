@@ -33,21 +33,27 @@ def plan_from_dict(values):
     return plan
 
 
-def load_hardware_inputs(profiles_dir, plan_file):
+def load_hardware_inputs(profiles_dir, plan_file, measurement_config=None):
     root = Path(profiles_dir)
-    return ({name: load_profile(root / f"{name}.json") for name in WLAN_DEVICES},
+    names = list(WLAN_DEVICES) + (["EmiReceiver"] if measurement_config is not None else [])
+    return ({name: load_profile(root / f"{name}.json") for name in names},
             plan_from_dict(load_profile(plan_file)))
 
 
-def check_hardware(profiles, plan):
+def check_hardware(profiles, plan, measurement_config=None):
     """Validate the current recipe and site limits without opening transports."""
     if not isinstance(plan, WlanScan):
         raise TypeError("Explicit WlanScan required")
-    if not isinstance(profiles, dict) or set(profiles) != set(WLAN_DEVICES):
-        raise ValueError("Exactly six WLAN hardware profiles required: " + ", ".join(WLAN_DEVICES))
+    names = list(WLAN_DEVICES) + (["EmiReceiver"] if measurement_config is not None else [])
+    if not isinstance(profiles, dict) or set(profiles) != set(names):
+        raise ValueError("Exactly matching WLAN hardware profiles required: " + ", ".join(names))
     plan.validate()
     site = HardwareLab(profiles)
     site.validate_wlan(plan)
+    receiver_check = None
+    if measurement_config is not None:
+        from .receiver_measurement import validate_measurement
+        receiver_check = validate_measurement(measurement_config, plan, simulated=False, profile=profiles["EmiReceiver"])
     parameters = {key: value["config"]["parameters"] for key, value in profiles.items()}
     motion = parameters["Co3000"]
     if motion.get("motion_enabled") is not True:
@@ -67,7 +73,7 @@ def check_hardware(profiles, plan):
     if plan.center_hz + 120e6 > parameters["SpectrumAnalyzer"]["max_frequency_hz"]:
         raise ValueError("Sweep exceeds installed analyzer frequency range")
     return {"valid": True, "connection_attempted": False, "physical_verified": False,
-            "devices": list(WLAN_DEVICES), "plan": asdict(plan),
+            "devices": names, "plan": asdict(plan), "receiver_measurement": receiver_check,
             "remaining": ["Model/build and RF channel mapping", "Wiring and physical interlocks",
                           "Calibration, RF ON/OFF and independent stopping"]}
 
@@ -182,7 +188,7 @@ class ObservedHardware:
             yield session
 
 
-def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None, evaluation=None):
+def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None, evaluation=None, measurement_config=None):
     """Execute only explicit hardware profiles. Never substitute a simulator.
 
     Returns a summary after a durable result or failure. CLI maps failed to 2 and
@@ -191,6 +197,7 @@ def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None
     """
     profiles, plan = deepcopy(profiles), deepcopy(plan)
     evaluation = deepcopy(evaluation)
+    measurement_config = deepcopy(measurement_config)
     target = Path(output_dir).resolve()
     target.mkdir(parents=True, exist_ok=False)
     run_id = str(uuid.uuid4())
@@ -207,14 +214,19 @@ def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None
         report["assessment"] = {"verdict": "NOT_EVALUATED", "reasons": ["Preflight or execution incomplete"]}
     try:
         evidence.open()
-        check_hardware(profiles, plan)
-        atomic_json(target / "inputs.json", {"run_id": run_id, "profiles": profiles, "plan": asdict(plan), "evaluation": evaluation})
-        if evaluation is not None: evaluator = Evaluation(evaluation, plan, simulated=False)
+        evidence.handles["receiver-points.jsonl"] = (target / "receiver-points.jsonl").open("x", encoding="utf-8")
+        atomic_json(target / "inputs.json", {"run_id": run_id, "profiles": profiles, "plan": asdict(plan), "evaluation": evaluation, "receiver_measurement": measurement_config})
+        check_hardware(profiles, plan, measurement_config)
+        if evaluation is not None: evaluator = Evaluation(evaluation, plan, simulated=False, measurement=measurement_config)
         if token.is_set():
             raise InterruptedError("Hardware run cancelled before connection")
         site = HardwareLab(profiles, log=evidence.traffic)
         observed = ObservedHardware(site, sessions, report)
-        measurement = measure_wlan(observed, plan, cancelled=token, on_sample=evidence.sample, evaluation=evaluator)
+        def save_point(row):
+            evidence.write("receiver-points.jsonl", row)
+            evidence.require_healthy()
+        measurement = measure_wlan(observed, plan, cancelled=token, on_sample=evidence.sample, evaluation=evaluator,
+                                   measurement_config=measurement_config, on_observation=save_point)
         report["cleanup_scope_succeeded"] = True
         evidence.require_healthy()
         if token.is_set():

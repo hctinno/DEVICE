@@ -1,5 +1,7 @@
 # DGM LabControl
 
+v0.5.0: ESW8/44·ESR3/7의 `EmiReceiver.read_verified_level`을 추가했습니다. POS/QP/선형 평균/CISPR 평균, CISPR 필터, 시간·감쇠·단위의 전후 readback을 검증합니다. 기존 read_level은 호환 목적으로 유지하며 최종 QP/평균 평가에는 새 API를 사용합니다. [SDK 통합·모델별 제한](../device-control/DETECTORS.md)을 확인합니다. 실장비 검증은 미수행입니다. 아래 버전 표기는 과거 기록입니다.
+
 현재 v0.4.0은 [제조사·모델별 지원표](../../SUPPORTED_EQUIPMENT.md)를 공통 시작점으로 사용합니다. 목록 scope는 `report-2026`, 단말 연결 helper는 `phone_serial`입니다. 제조사 표시를 생략한 전용 제품은 `manufacturer_display_redacted=true`로 구별하며 원문 값은 `source_rows` 또는 `occurrences`의 근거에 보존합니다. 아래 v0.3.0은 기존 기능 추가 기록입니다.
 
 **v0.3.0 — [다른 에이전트의 개발 시작점](AGENT_START_HERE.md).** [공개 성적서 장비·설비 150그룹](docs/REPORT_EQUIPMENT.md), [모션·계측 명령표](docs/FACILITY_CONTROL.md), [ODA·CMU 신규 프로토콜](docs/PROTOCOL_ADDITIONS.md), [공개 코드 검토](docs/OPEN_SOURCE_REVIEW.md)를 연결했습니다. 16개 driver class, 기계 판독 capability, 통신 없는 profile 검사, 설치 패키지의 모의 실행을 제공합니다. 지원은 모델별 명시 기능에 한정되며 실장비 검증은 0건입니다.

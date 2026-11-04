@@ -1,4 +1,10 @@
-# SDK v0.7.0 검수 범위
+# SDK v0.8.0 검수 범위
+
+최종 배포 검수: ZIP 331049 bytes, SHA-256 `950ed5d5341a9ac215f0cb1cfaf0df5b8759d75cde770fd27ee71d087abbcf27`. 새 venv 설치에서 WLAN 및 네 radio 각각 12점의 QP/평균 보정 비교를 통과했습니다. 최종 ZIP을 별도 폴더에 풀어 다시 설치한 README 검수는 **34개 명령·3개 Python 구문 검사** 통과입니다. 원격 장비 접속은 0건입니다.
+
+2026-11-05 Windows/Python 3.12.6: SDK **149개** + 설비 **103개** + 단말 **58개** = **310개** 회귀 검사, 격리 설치 CLI **89건** 통과. 수신기 native 검사는 4개 모델 × 4개 검파기 및 전후 설정 drift·다중 응답·NaN·범위/시간 사전 차단을 포함합니다. SDK 검사는 다섯 무선 × QP/선형 평균/CISPR 평균, 모의 실장비 어댑터, 비균등 주파수/복수 경로, 보정 최대와 최악 여유, 중간 실패/취소와 raw point 보존, 기준 불일치의 NOT_EVALUATED를 검증합니다.
+
+[지원 범위](../DETECTORS.md), [SDK 검사](../tests/test_receivers.py), [native 검사](../../lab-control/tests/test_detectors.py), [설치 결과](validation.json)를 확인합니다. 실장비 연결·물리 검파 가중 응답·현장 RF/교정 검증은 수행하지 않았습니다. 아래 0.7.0 이하는 당시 기록이며 최신 ZIP/README 재현 결과는 distribution-validation.json 및 루트 README_VALIDATION.json을 따릅니다.
 
 2026-11-04 Windows/Python 3.12.6: SDK **138개**, 설비 **99개**, 단말 **58개**, 총 **295개** 회귀 검사 통과. 신규 27개는 50Ω 환산/부호, Hz/log-Hz 보간, 보정으로 달라지는 최대 주파수·편파·경로, 최악 여유와 최대 전계 분리, simple/guarded 경계, 한계 구간 경계·빈 구간, 조건 불일치, 유효기간/단위/외삽 거절, 모드·hash, native 모의 실장비, 오류/취소/최종 저장 실패를 검증합니다. [구현 범위](../CORRECTIONS.md), [검사 코드](../tests/test_evaluation.py).
 

@@ -49,7 +49,7 @@ class LoggedNfc:
 
 
 class RadioLab:
-    def __init__(self, plan, profiles, evidence, world=None):
+    def __init__(self, plan, profiles, evidence, world=None, measurement_config=None):
         self.plan, self.profiles, self.evidence, self.world = plan, profiles, evidence, world
         self.simulated = world is not None
         self.sessions, self.nfc = {}, None
@@ -58,6 +58,7 @@ class RadioLab:
         self.verification_guard = None
         self.current_path = None
         self.phone_sessions, self.nfc_sessions = [], []
+        self.measurement_config = measurement_config
 
     def facility_parameters(self, name):
         if self.simulated:
@@ -86,6 +87,13 @@ class RadioLab:
         elif name == "SpectrumAnalyzer":
             io = ScpiPeer(name, self.world, logger)
             driver = SpectrumAnalyzer(io, model="N9030B", max_frequency_hz=50e9)
+        elif name == "EmiReceiver":
+            from dgm_lab.analyzers import EmiReceiver
+            from dgm_lab.detectors import RECEIVER_RANGES
+            from .receiver_peer import ReceiverPeer
+            model = self.measurement_config["model"]
+            io = ReceiverPeer(self.world, model, logger)
+            driver = EmiReceiver(io, model=model, max_frequency_hz=RECEIVER_RANGES[model])
         elif name in {"Co3000", "OspSwitch"}:
             from dgm_lab.registry import DRIVERS
             io = PositionerPeer(self.world, logger) if name == "Co3000" else ScpiPeer(name, self.world, logger)

@@ -67,7 +67,7 @@ def main():
         example.write_text(examples["virtual"], encoding="utf-8")
 
         diagnosed = json.loads(cli("doctor"))
-        expected_versions = {"dgm-device-control": "0.7.0", "dgm-lab-control": "0.4.0",
+        expected_versions = {"dgm-device-control": "0.8.0", "dgm-lab-control": "0.5.0",
                              "dgm-rf-command-library": "0.5.0"}
         if diagnosed["packages"] != expected_versions or not diagnosed["supported_python"]:
             raise ValueError(f"Install README package versions first: {diagnosed['packages']}")
@@ -118,6 +118,13 @@ def main():
         assert corrected["assessment"]["verdict"] == "PASS"
         corrected_saved = json.loads((target / "wlan-corrected-001/result.json").read_text(encoding="utf-8"))
         assert corrected_saved["assessment"]["maximum_field"] and corrected_saved["assessment"]["worst_margin"]
+        assert len(json.loads(cli("detector-list"))["sources"]["manuals"]) == 6
+        cli("measurement-init", "--workflow", "wlan", "--detector", "CISPR_AVER", "--output", "wlan-receiver.json")
+        cli("evaluation-init", "--workflow", "wlan", "--measurement", "wlan-receiver.json", "--output", "wlan-receiver-evaluation.json")
+        receiver = json.loads(cli("virtual-run", "--measurement", "wlan-receiver.json", "--evaluation", "wlan-receiver-evaluation.json", "--output-dir", "wlan-receiver-001"))
+        assert receiver["assessment"]["verdict"] == "PASS"
+        saved_points = (target / "wlan-receiver-001/receiver-points.jsonl").read_text(encoding="utf-8").splitlines()
+        assert len(saved_points) == 36 and json.loads(saved_points[0])["receiver"]["unit"] == "dBuV"
         failed = target / "failed-001"
         failure = json.loads((failed / "failure.json").read_text(encoding="utf-8"))
         assert failure["status"] == "failed" and not (failed / "result.json").exists()

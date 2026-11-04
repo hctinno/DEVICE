@@ -39,12 +39,12 @@
 | 통신 테스트 장비 | Rohde & Schwarz | CMW500 | CmwLte | configure, start, stop | conditional |
 | EMI 수신기 | Rohde & Schwarz | EPL1000 | EmiReceiver | read_level, stop | implemented_uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | ESCI7 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
-| EMI 수신기 | Rohde & Schwarz | ESR3 | EmiReceiver | read_level, stop | implemented_uncommissioned |
-| EMI 수신기 | Rohde & Schwarz | ESR7 | EmiReceiver | read_level, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | ESR3 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | ESR7 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | ESU40 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | ESU8 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
-| EMI 수신기 | Rohde & Schwarz | ESW44 | EmiReceiver | read_level, stop | implemented_uncommissioned |
-| EMI 수신기 | Rohde & Schwarz | ESW8 | EmiReceiver | read_level, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | ESW44 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | ESW8 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | FSV40 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | FSW50 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | FSW67 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
@@ -69,4 +69,4 @@
 
 `implemented_uncommissioned`: 명시한 기능 구현·현장 미검증. `conditional`: 설치 옵션/컨트롤러 확인 후 사용. `controller_component`: 독립 접속 대상이 아닌 제어기에 연결된 구성품입니다.
 
-[설치·공통 API](libraries/device-control/README.md) · [가상 시험환경](libraries/device-control/VIRTUAL_LAB.md) · [모델별 상세 조건](libraries/lab-control/docs/EQUIPMENT_COVERAGE.md) · [기계 판독 목록](libraries/device-control/dgm_control/data/supported-equipment.json)
+[설치·공통 API](libraries/device-control/README.md) · [가상 시험환경](libraries/device-control/VIRTUAL_LAB.md) · [모델별 상세 조건](libraries/lab-control/docs/EQUIPMENT_COVERAGE.md) · [QP·평균 검파 지원/미확인](libraries/device-control/DETECTORS.md) · [기계 판독 목록](libraries/device-control/dgm_control/data/supported-equipment.json)

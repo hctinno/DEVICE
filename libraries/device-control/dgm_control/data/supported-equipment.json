@@ -150,6 +150,7 @@
     "driver": "EmiReceiver",
     "operations": [
       "read_level",
+      "read_verified_level",
       "stop"
     ],
     "status": "implemented_uncommissioned",
@@ -162,6 +163,7 @@
     "driver": "EmiReceiver",
     "operations": [
       "read_level",
+      "read_verified_level",
       "stop"
     ],
     "status": "implemented_uncommissioned",
@@ -174,6 +176,7 @@
     "driver": "EmiReceiver",
     "operations": [
       "read_level",
+      "read_verified_level",
       "stop"
     ],
     "status": "implemented_uncommissioned",
@@ -198,6 +201,7 @@
     "driver": "EmiReceiver",
     "operations": [
       "read_level",
+      "read_verified_level",
       "stop"
     ],
     "status": "implemented_uncommissioned",

@@ -1,8 +1,8 @@
 # DGM DeviceControl
 
-0.7.0 추가: [전계 보정·기준 비교](CORRECTIONS.md). WLAN/네 radio 스캔에 --evaluation을 지정하면 모든 trace bin의 보정값·기준 여유·판정을 저장하고 보정 최대 위치로 복귀합니다. 가상 입력과 실제 교정/기준을 구별하며, 전체 FCC 인증 판정은 제공하지 않습니다.
+0.8.0 추가: [QP·선형 평균·CISPR 평균](DETECTORS.md). `detector-list`로 모델별 상태를 확인하고 `--measurement`에 ESW8/44·ESR3/7 수신기 grid를 지정합니다. WLAN/네 radio의 [보정·기준 비교](CORRECTIONS.md), 최대 복귀·오류 기록에 연결됩니다. 미통합 모델·미확인 옵션은 구분하며 실제 장비/FCC 적합성 검증은 수행하지 않았습니다.
 
-**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.7.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
+**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.8.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
 
 **설비 스캔:** [radio-init --scan / radio-run](RADIO_SCAN.md)은 Bluetooth·셀룰러·NFC·UWB source와 CO3000 마스트/턴테이블, OSP RF 경로를 연결합니다. 측정 전후 위치·경로 확인, 표본 최대 선택과 복귀, RF OFF·안전 경로·ES 종료 및 부분 오류 기록을 수행합니다. schema 1 plan/WLAN CLI는 유지합니다.
 

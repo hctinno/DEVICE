@@ -113,9 +113,34 @@
         ]
       },
       {
+        "name": "read_verified_level",
+        "signature": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
+        "line": 168,
+        "command_fragments": [
+          "INIT1:IMM",
+          "ABOR",
+          "INST:SEL REC",
+          "INIT1:CONT OFF",
+          "CALC:UNIT:POW DBUV",
+          "DISP:BARG:TCO OFF",
+          "DISP:BARG:PHOL OFF",
+          "f'FREQ:CENT {fmt(frequency_hz)}'",
+          "f'DET:REC {DETECTORS[detector]}'",
+          "BAND:TYPE CISPR",
+          "BAND:AUTO OFF",
+          "f'BAND {fmt(rbw_hz)}'",
+          "INP:ATT:AUTO OFF",
+          "f'SWE:TIME {fmt(dwell_seconds)}'",
+          "FREQ:CENT ",
+          "DET:REC ",
+          "INP:ATT ",
+          "SWE:TIME "
+        ]
+      },
+      {
         "name": "stop",
         "signature": "(self)",
-        "line": 168,
+        "line": 199,
         "command_fragments": [
           "ABOR",
           "INIT1:CONT OFF"

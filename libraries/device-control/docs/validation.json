@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-04T14:43:00.213462+00:00",
+  "utc": "2026-11-04T15:34:21.633750+00:00",
   "passed": true,
   "physical_tests": 0,
   "phone_rf_tests": 0,
@@ -9,50 +9,50 @@
     "Phone firmware and RF ON/OFF",
     "FCC measurement/conformity"
   ],
-  "unit_tests": 138,
+  "unit_tests": 149,
   "failures": 0,
   "errors": 0,
-  "utf8_source_files": 54,
+  "utf8_source_files": 61,
   "radio_runs": [
     {
-      "run_id": "b25b180f-652f-4729-a6b1-7ff78f6e3bd8",
+      "run_id": "5b1b2b5a-ced0-4a7d-bd5f-db09cff16632",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-bluetooth\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-bluetooth\\result.json",
       "samples": 3,
       "physical_verified": false
     },
     {
-      "run_id": "e9d32d6f-b018-4205-8a89-7d86673bf39e",
+      "run_id": "5744ed26-ef79-4277-99f4-292ea0f49428",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-cellular\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-cellular\\result.json",
       "samples": 3,
       "physical_verified": false
     },
     {
-      "run_id": "ce6d295c-8f91-4a4d-9cbf-c83ace45d4b5",
+      "run_id": "a5709418-c118-4f7b-bac4-25117df2540d",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-nfc\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-nfc\\result.json",
       "samples": 3,
       "physical_verified": false
     },
     {
-      "run_id": "6ea3990d-2e8c-4fb2-8d2d-25bd7f7216f8",
+      "run_id": "68439d3e-c7f6-4d3e-894a-1fad2a53c03d",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-uwb\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-uwb\\result.json",
       "samples": 3,
       "physical_verified": false
     }
   ],
   "radio_scan_runs": [
     {
-      "run_id": "b7c4e516-0a03-47fd-bcb0-4964dc119711",
+      "run_id": "160e1553-fc2e-4234-be8f-37cf68822188",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -66,10 +66,10 @@
       }
     },
     {
-      "run_id": "a38f7613-eb5d-4e92-9c27-794c2856a486",
+      "run_id": "a029bf22-6aaa-49f1-815f-134e183ef353",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -83,10 +83,10 @@
       }
     },
     {
-      "run_id": "e2767e83-4ad1-4407-ac7c-1faa4d598b44",
+      "run_id": "1e2aac2d-8f95-4dc6-a89c-8198df3c09d2",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -100,10 +100,10 @@
       }
     },
     {
-      "run_id": "f9326b6c-3dcb-4728-958a-4f5579042216",
+      "run_id": "2461d69c-f6dc-4d1c-84ce-8a8bec299d3b",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -119,10 +119,10 @@
   ],
   "evaluated_runs": [
     {
-      "run_id": "6d866cf8-e66f-433d-ab60-8b9b1bd8f299",
+      "run_id": "04c58ab6-f924-409d-9d58-de7371da3bd8",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-corrected\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-corrected\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -138,6 +138,7 @@
         "config_sha256": "4cd03d6af7721546955f63c9aa1bf8f0ddf7c295c952ea9106f012d8dbedf2d0",
         "assessment_ready": true,
         "reasons": [],
+        "measurement_sha256": null,
         "scope": "declared_limit_comparison",
         "regulatory_certification": false,
         "simulated": true,
@@ -181,6 +182,8 @@
           "frequency_hz": 2439000000.0,
           "raw_dbm": -23.0102998698,
           "conversion_db": 106.98970004336019,
+          "input_dbuv": 83.97940017356018,
+          "input_unit": "dBm",
           "components": {
             "antenna_factor": 20.0,
             "cable_loss": 2.0,
@@ -202,6 +205,8 @@
           "frequency_hz": 2439000000.0,
           "raw_dbm": -23.0102998698,
           "conversion_db": 106.98970004336019,
+          "input_dbuv": 83.97940017356018,
+          "input_unit": "dBm",
           "components": {
             "antenna_factor": 20.0,
             "cable_loss": 2.0,
@@ -216,10 +221,10 @@
       }
     },
     {
-      "run_id": "e6129d6c-ba3c-490c-9706-8ae7dcc41413",
+      "run_id": "ba26997a-7662-4e06-9fa4-bc68ea395aea",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-corrected\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-corrected\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -235,6 +240,7 @@
         "config_sha256": "dfcefc7beee670e82366524b52226335c8ce4620b6ceda1f6c977dc24bb83eb0",
         "assessment_ready": true,
         "reasons": [],
+        "measurement_sha256": null,
         "scope": "declared_limit_comparison",
         "regulatory_certification": false,
         "simulated": true,
@@ -278,6 +284,8 @@
           "frequency_hz": 1940000000.0,
           "raw_dbm": -33.0102990881,
           "conversion_db": 106.98970004336019,
+          "input_dbuv": 73.97940095526019,
+          "input_unit": "dBm",
           "components": {
             "antenna_factor": 20.0,
             "cable_loss": 2.0,
@@ -299,6 +307,8 @@
           "frequency_hz": 1940000000.0,
           "raw_dbm": -33.0102990881,
           "conversion_db": 106.98970004336019,
+          "input_dbuv": 73.97940095526019,
+          "input_unit": "dBm",
           "components": {
             "antenna_factor": 20.0,
             "cable_loss": 2.0,
@@ -313,10 +323,10 @@
       }
     },
     {
-      "run_id": "f4310c44-6902-43c6-b65a-7b1038e0220c",
+      "run_id": "3d8503c7-c705-4649-bbdc-bff2c5abed2b",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-corrected\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-corrected\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -332,6 +342,7 @@
         "config_sha256": "f4a96a4c763161f7e94ba6aeeea25d22e0ff3b6d7bcf65745ff269aa925b7587",
         "assessment_ready": true,
         "reasons": [],
+        "measurement_sha256": null,
         "scope": "declared_limit_comparison",
         "regulatory_certification": false,
         "simulated": true,
@@ -375,6 +386,8 @@
           "frequency_hz": 13060000.0,
           "raw_dbm": -19.9999999566,
           "conversion_db": 106.98970004336019,
+          "input_dbuv": 86.9897000867602,
+          "input_unit": "dBm",
           "components": {
             "antenna_factor": 20.0,
             "cable_loss": 2.0,
@@ -396,6 +409,8 @@
           "frequency_hz": 13060000.0,
           "raw_dbm": -19.9999999566,
           "conversion_db": 106.98970004336019,
+          "input_dbuv": 86.9897000867602,
+          "input_unit": "dBm",
           "components": {
             "antenna_factor": 20.0,
             "cable_loss": 2.0,
@@ -410,10 +425,10 @@
       }
     },
     {
-      "run_id": "373b83af-0cf2-4daf-a130-e413267d4425",
+      "run_id": "71f76b9b-91fd-4a38-a6b9-bb645196c817",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-corrected\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-corrected\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -429,6 +444,7 @@
         "config_sha256": "dcbda385829c1bef41e489cbae4d0dbe5b78311b4eefbbc1c8563d0ea5cf14d6",
         "assessment_ready": true,
         "reasons": [],
+        "measurement_sha256": null,
         "scope": "declared_limit_comparison",
         "regulatory_certification": false,
         "simulated": true,
@@ -472,6 +488,8 @@
           "frequency_hz": 7750000000.0,
           "raw_dbm": -46.9896783287,
           "conversion_db": 106.98970004336019,
+          "input_dbuv": 60.000021714660186,
+          "input_unit": "dBm",
           "components": {
             "antenna_factor": 20.0,
             "cable_loss": 2.0,
@@ -493,6 +511,8 @@
           "frequency_hz": 7750000000.0,
           "raw_dbm": -46.9896783287,
           "conversion_db": 106.98970004336019,
+          "input_dbuv": 60.000021714660186,
+          "input_unit": "dBm",
           "components": {
             "antenna_factor": 20.0,
             "cable_loss": 2.0,
@@ -505,6 +525,33 @@
           "verdict": "PASS"
         }
       }
+    }
+  ],
+  "receiver_runs": [
+    {
+      "radio": "wlan",
+      "detector": "LINEAR_AVER",
+      "verdict": "PASS"
+    },
+    {
+      "radio": "bluetooth",
+      "detector": "CISPR_AVER",
+      "verdict": "PASS"
+    },
+    {
+      "radio": "cellular",
+      "detector": "LINEAR_AVER",
+      "verdict": "PASS"
+    },
+    {
+      "radio": "nfc",
+      "detector": "QP",
+      "verdict": "PASS"
+    },
+    {
+      "radio": "uwb",
+      "detector": "CISPR_AVER",
+      "verdict": "PASS"
     }
   ],
   "wheels_built_installed": 3,
@@ -535,14 +582,14 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\simulation.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\simulation.json"
       ],
       "exit_code": 0
     },
@@ -553,7 +600,7 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\simulation.json"
       ],
       "exit_code": 2
     },
@@ -562,14 +609,14 @@
         "init",
         "Co3000",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\hardware.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\hardware.json"
       ],
       "exit_code": 2
     },
@@ -577,7 +624,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\success"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\success"
       ],
       "exit_code": 0
     },
@@ -585,7 +632,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\failure",
         "--inject-failure"
       ],
       "exit_code": 2
@@ -595,7 +642,7 @@
         "init",
         "AppleRF",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\apple.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\apple.json"
       ],
       "exit_code": 2
     },
@@ -609,7 +656,7 @@
       "args": [
         "virtual-run",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\virtual"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\virtual"
       ],
       "exit_code": 0
     },
@@ -617,7 +664,7 @@
       "args": [
         "virtual-run",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\virtual-failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\virtual-failure",
         "--fault",
         "analyzer-timeout"
       ],
@@ -627,9 +674,9 @@
       "args": [
         "hardware-check",
         "--profiles-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\test-only-site",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\test-only-site",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\test-only-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\test-only-plan.json"
       ],
       "exit_code": 0
     },
@@ -637,13 +684,13 @@
       "args": [
         "hardware-run",
         "--profiles-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\test-only-site",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\test-only-site",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\test-only-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\test-only-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware-cancelled",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\hardware-cancelled",
         "--cancel-file",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cancel"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cancel"
       ],
       "exit_code": 130
     },
@@ -658,7 +705,7 @@
         "radio-init",
         "bluetooth",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-plan.json"
       ],
       "exit_code": 0
     },
@@ -668,7 +715,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-plan.json"
       ],
       "exit_code": 0
     },
@@ -678,9 +725,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-bluetooth"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-bluetooth"
       ],
       "exit_code": 0
     },
@@ -689,7 +736,7 @@
         "radio-init",
         "cellular",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-plan.json"
       ],
       "exit_code": 0
     },
@@ -699,7 +746,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-plan.json"
       ],
       "exit_code": 0
     },
@@ -709,9 +756,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-cellular"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-cellular"
       ],
       "exit_code": 0
     },
@@ -720,7 +767,7 @@
         "radio-init",
         "nfc",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-plan.json"
       ],
       "exit_code": 0
     },
@@ -730,7 +777,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-plan.json"
       ],
       "exit_code": 0
     },
@@ -740,9 +787,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-nfc"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-nfc"
       ],
       "exit_code": 0
     },
@@ -751,7 +798,7 @@
         "radio-init",
         "uwb",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-plan.json"
       ],
       "exit_code": 0
     },
@@ -761,7 +808,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-plan.json"
       ],
       "exit_code": 0
     },
@@ -771,9 +818,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-uwb"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-uwb"
       ],
       "exit_code": 0
     },
@@ -783,9 +830,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-stop-failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-stop-failure",
         "--fault",
         "stop-timeout"
       ],
@@ -797,9 +844,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-cancel",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-cancel",
         "--fault",
         "cancel-after-sample"
       ],
@@ -811,9 +858,9 @@
         "--mode",
         "hardware",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\blocked-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\blocked-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-blocked"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\radio-blocked"
       ],
       "exit_code": 2
     },
@@ -822,7 +869,7 @@
         "radio-profile",
         "nfc",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-profile.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-profile.json"
       ],
       "exit_code": 0
     },
@@ -832,7 +879,7 @@
         "bluetooth",
         "--scan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json"
       ],
       "exit_code": 0
     },
@@ -842,7 +889,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json"
       ],
       "exit_code": 0
     },
@@ -852,9 +899,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan"
       ],
       "exit_code": 0
     },
@@ -864,7 +911,7 @@
         "cellular",
         "--scan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json"
       ],
       "exit_code": 0
     },
@@ -874,7 +921,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json"
       ],
       "exit_code": 0
     },
@@ -884,9 +931,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan"
       ],
       "exit_code": 0
     },
@@ -896,7 +943,7 @@
         "nfc",
         "--scan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json"
       ],
       "exit_code": 0
     },
@@ -906,7 +953,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json"
       ],
       "exit_code": 0
     },
@@ -916,9 +963,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan"
       ],
       "exit_code": 0
     },
@@ -928,7 +975,7 @@
         "uwb",
         "--scan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json"
       ],
       "exit_code": 0
     },
@@ -938,7 +985,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json"
       ],
       "exit_code": 0
     },
@@ -948,9 +995,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan"
       ],
       "exit_code": 0
     },
@@ -960,9 +1007,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\scan-switch-failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\scan-switch-failure",
         "--fault",
         "switch-timeout"
       ],
@@ -974,9 +1021,9 @@
         "--mode",
         "hardware",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\hardware-scan.json",
         "--profiles-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\scan-site"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\scan-site"
       ],
       "exit_code": 0
     },
@@ -986,13 +1033,13 @@
         "--mode",
         "hardware",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\hardware-scan.json",
         "--profiles-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\scan-site",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\scan-site",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware-scan-cancel",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\hardware-scan-cancel",
         "--cancel-file",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cancel"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cancel"
       ],
       "exit_code": 130
     },
@@ -1002,9 +1049,9 @@
         "--workflow",
         "radio",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-evaluation.json"
       ],
       "exit_code": 0
     },
@@ -1014,9 +1061,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-evaluation.json"
       ],
       "exit_code": 0
     },
@@ -1026,11 +1073,11 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-evaluation.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-evaluation.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-corrected"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-corrected"
       ],
       "exit_code": 0
     },
@@ -1040,9 +1087,9 @@
         "--workflow",
         "radio",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-evaluation.json"
       ],
       "exit_code": 0
     },
@@ -1052,9 +1099,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-evaluation.json"
       ],
       "exit_code": 0
     },
@@ -1064,11 +1111,11 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-evaluation.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-evaluation.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-corrected"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-corrected"
       ],
       "exit_code": 0
     },
@@ -1078,9 +1125,9 @@
         "--workflow",
         "radio",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-evaluation.json"
       ],
       "exit_code": 0
     },
@@ -1090,9 +1137,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-evaluation.json"
       ],
       "exit_code": 0
     },
@@ -1102,11 +1149,11 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-evaluation.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-evaluation.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-corrected"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-corrected"
       ],
       "exit_code": 0
     },
@@ -1116,9 +1163,9 @@
         "--workflow",
         "radio",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-evaluation.json"
       ],
       "exit_code": 0
     },
@@ -1128,9 +1175,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-evaluation.json"
       ],
       "exit_code": 0
     },
@@ -1140,11 +1187,11 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-evaluation.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-evaluation.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-corrected"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-corrected"
       ],
       "exit_code": 0
     },
@@ -1154,7 +1201,7 @@
         "--workflow",
         "wlan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-evaluation.json"
       ],
       "exit_code": 0
     },
@@ -1164,7 +1211,7 @@
         "--workflow",
         "wlan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-evaluation.json"
       ],
       "exit_code": 2
     },
@@ -1172,9 +1219,9 @@
       "args": [
         "virtual-run",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-evaluation.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-corrected"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-corrected"
       ],
       "exit_code": 0
     },
@@ -1182,9 +1229,9 @@
       "args": [
         "virtual-run",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-evaluation.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-limit-fail"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-limit-fail"
       ],
       "exit_code": 4
     },
@@ -1192,9 +1239,9 @@
       "args": [
         "virtual-run",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-evaluation.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-indeterminate"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-indeterminate"
       ],
       "exit_code": 5
     },
@@ -1202,9 +1249,9 @@
       "args": [
         "virtual-run",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-evaluation.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-not-evaluated"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-not-evaluated"
       ],
       "exit_code": 3
     },
@@ -1212,20 +1259,326 @@
       "args": [
         "virtual-run",
         "--evaluation",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-evaluation.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\corrected-failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\corrected-failure",
         "--fault",
         "phone-stop"
       ],
       "exit_code": 2
+    },
+    {
+      "args": [
+        "detector-list"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "measurement-init",
+        "--workflow",
+        "wlan",
+        "--detector",
+        "LINEAR_AVER",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "wlan",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver.json",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "virtual-run",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver-eval.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "measurement-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json",
+        "--detector",
+        "CISPR_AVER",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-receiver.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-receiver.json",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-receiver-eval.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\bluetooth-receiver"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "measurement-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json",
+        "--detector",
+        "LINEAR_AVER",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-receiver.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-receiver.json",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-receiver-eval.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cellular-receiver"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "measurement-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json",
+        "--detector",
+        "QP",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-receiver.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-receiver.json",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-receiver-eval.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\nfc-receiver"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "measurement-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json",
+        "--detector",
+        "CISPR_AVER",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-receiver.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-receiver.json",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-scan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-receiver-eval.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\uwb-receiver"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "hardware-check",
+        "--profiles-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\test-only-site",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\test-only-plan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver-eval.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "hardware-run",
+        "--profiles-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\test-only-site",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\test-only-plan.json",
+        "--measurement",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\wlan-receiver-eval.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\receiver-pre-cancel",
+        "--cancel-file",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\cancel"
+      ],
+      "exit_code": 130
     }
   ],
   "installed_import_origin_verified": true,
   "three_device_demo": {
     "schema_version": 1,
-    "run_id": "59767c9b-3f14-4b32-a6ef-cc595f1383b0",
-    "started_utc": "2026-11-04T14:47:08.177538+00:00",
+    "run_id": "7ae6a89c-3fbb-44f0-be9d-fd8d87111111",
+    "started_utc": "2026-11-04T15:40:08.888399+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "completed",
@@ -1274,7 +1627,7 @@
       {
         "value": 4.99,
         "unit": "V",
-        "utc": "2026-11-04T14:47:08.186486+00:00",
+        "utc": "2026-11-04T15:40:08.897398+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -1287,7 +1640,7 @@
       {
         "value": 0.8,
         "unit": "A",
-        "utc": "2026-11-04T14:47:08.186486+00:00",
+        "utc": "2026-11-04T15:40:08.897398+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -1320,12 +1673,12 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T14:47:09.200543+00:00"
+    "finished_utc": "2026-11-04T15:40:09.913967+00:00"
   },
   "injected_failure_demo": {
     "schema_version": 1,
-    "run_id": "3274b4a6-62ce-46af-b544-7ab3a4f53573",
-    "started_utc": "2026-11-04T14:47:09.638938+00:00",
+    "run_id": "547dfa7a-96bc-41cd-b187-98c8cd14c43a",
+    "started_utc": "2026-11-04T15:40:10.370406+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "failed",
@@ -1384,14 +1737,14 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T14:47:10.673959+00:00"
+    "finished_utc": "2026-11-04T15:40:11.395743+00:00"
   },
   "vendor_cache_excluded": true,
   "integrated_virtual_run": {
-    "run_id": "d85cb22e-c913-4f3b-9acc-644916b4ff01",
+    "run_id": "d837a1f9-a390-40e4-9018-505befece24c",
     "status": "completed",
     "simulated": true,
-    "result": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\virtual\\result.json",
+    "result": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-25_5m_26\\virtual\\result.json",
     "samples": 12,
     "peak": {
       "height_cm": 200.0,
@@ -1441,5 +1794,5 @@
     }
   },
   "integrated_failure_status": "failed",
-  "elapsed_seconds": 431.88
+  "elapsed_seconds": 607.36
 }

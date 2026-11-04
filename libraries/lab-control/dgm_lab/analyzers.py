@@ -165,6 +165,37 @@ class EmiReceiver(Scpi):
             self.opc()
             return self.measure('TRAC? SINGLE', 'dBuV')
 
+    def read_verified_level(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db):
+        """Single bargraph, explicit CISPR filter and before/after configuration proof.
+
+        ESW manual ed.18 pp.473-485,557-562; ESR ed.13 pp.607-615,637-640.
+        External corrections must be disabled and RF input/path commissioned on site.
+        Call within managed_run/DeviceSession.active so abort is attempted on any failure.
+        """
+        from .detectors import DETECTORS, ReceiverLevel, validate_receiver, verify_readbacks, READBACK_QUERIES
+        settings = dict(frequency_hz=frequency_hz, rbw_hz=rbw_hz, detector=detector,
+                        dwell_seconds=dwell_seconds, attenuation_db=attenuation_db, filter_type='CISPR')
+        validate_receiver(self.expected_model, self.max_hz, **{k: v for k, v in settings.items() if k != 'filter_type'})
+        if dwell_seconds >= self.io.timeout: raise ValueError('timeout must exceed dwell duration plus margin')
+        self.ready()
+        with self.io.transaction():
+            self.apply(['ABOR', 'INST:SEL REC', 'INIT1:CONT OFF', 'FORM ASC',
+                        'CALC:UNIT:POW DBUV', 'DISP:BARG:TCO OFF', 'DISP:BARG:PHOL OFF',
+                        f'FREQ:CENT {fmt(frequency_hz)}', f'DET:REC {DETECTORS[detector]}',
+                        'BAND:TYPE CISPR', 'BAND:AUTO OFF', f'BAND {fmt(rbw_hz)}',
+                        'INP:ATT:AUTO OFF', f'INP:ATT {fmt(attenuation_db)}', f'SWE:TIME {fmt(dwell_seconds)}'])
+            before = {q: self.io.query(q) for q in READBACK_QUERIES}
+            verify_readbacks(before, settings)
+            self.errors()
+            self.io.write('INIT1:IMM')
+            self.opc()
+            result = self.measure('TRAC? SINGLE', 'dBuV')  # scalar rejects multiple bargraphs and overrange
+            after = {q: self.io.query(q) for q in READBACK_QUERIES}
+            verify_readbacks(after, settings)
+            self.errors()
+            return ReceiverLevel(result.value, result.unit, result.utc, result.identity, result.raw,
+                                 settings, dict(before=before, after=after))
+
     def stop(self):
         self.ready()
         with self.io.transaction():

@@ -31,6 +31,7 @@ def main():
               "skipped": ["Real TCP/VISA/serial instruments", "Physical motion and independent stopping", "Phone firmware and RF ON/OFF", "FCC measurement/conformity"]}
     try:
         print(run([sys.executable, str(SDK / "scripts/build_sdk_catalog.py")]).stdout.strip(), flush=True)
+        print(run([sys.executable, str(SDK / "scripts/build_detector_reference.py")]).stdout.strip(), flush=True)
         print(run([sys.executable, str(ROOT / "scripts/render_supported_equipment.py")]).stdout.strip(), flush=True)
         print(run([sys.executable, str(ROOT / "scripts/check_public_naming.py")]).stdout.strip(), flush=True)
         paths = [str(path) for path in PACKAGES]
@@ -62,7 +63,7 @@ def main():
                     if archive.testzip() is not None: raise RuntimeError("Damaged wheel")
                     if any(".manual-cache" in name or ".fcc-cache" in name for name in archive.namelist()):
                         raise RuntimeError("Vendor cache leaked into wheel")
-            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.7.0"], cwd=temp)
+            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.8.0"], cwd=temp)
             env = dict(os.environ, PYTHONPATH=str(installed), PYTHONIOENCODING="utf-8")
             base = [sys.executable, "-s", "-m", "dgm_control"]
             checks = []
@@ -75,7 +76,7 @@ def main():
             detail = json.loads(command("show", "Co3000").stdout)
             if not detail["sources"]: raise RuntimeError("Installed provenance missing")
             diagnosed = json.loads(command("doctor").stdout)
-            if diagnosed["packages"]["dgm-device-control"] != "0.7.0": raise RuntimeError("Installed SDK version mismatch")
+            if diagnosed["packages"]["dgm-device-control"] != "0.8.0": raise RuntimeError("Installed SDK version mismatch")
             profile = temp / "simulation.json"
             command("init", "OdaEx", "--mode", "simulation", "--output", str(profile))
             command("check", str(profile))
@@ -207,6 +208,38 @@ def main():
             failed = json.loads((temp / "corrected-failure/failure.json").read_text(encoding="utf-8"))
             if failed["assessment"]["verdict"] != "NOT_EVALUATED": raise RuntimeError("Failure leaked final pass")
             report["evaluated_runs"] = evaluated_runs
+            catalog = json.loads(command("detector-list").stdout)
+            if len(catalog["sources"]["manuals"]) != 6: raise RuntimeError("Installed detector provenance missing")
+            receiver_runs = []
+            for radio, detector in (("wlan", "LINEAR_AVER"), ("bluetooth", "CISPR_AVER"), ("cellular", "LINEAR_AVER"), ("nfc", "QP"), ("uwb", "CISPR_AVER")):
+                workflow = "wlan" if radio == "wlan" else "radio"
+                plan_args = [] if radio == "wlan" else ["--plan", str(temp / f"{radio}-scan.json")]
+                mpath, epath = temp / f"{radio}-receiver.json", temp / f"{radio}-receiver-eval.json"
+                command("measurement-init", "--workflow", workflow, *plan_args, "--detector", detector, "--output", str(mpath))
+                command("evaluation-init", "--workflow", workflow, *plan_args, "--measurement", str(mpath), "--output", str(epath))
+                run_args = ["--measurement", str(mpath), "--evaluation", str(epath), "--output-dir", str(temp / f"{radio}-receiver")]
+                if radio == "wlan": answer = json.loads(command("virtual-run", *run_args).stdout)
+                else:
+                    command("radio-check", "--mode", "simulation", *plan_args, "--measurement", str(mpath), "--evaluation", str(epath))
+                    answer = json.loads(command("radio-run", "--mode", "simulation", *plan_args, *run_args).stdout)
+                if answer["assessment"]["verdict"] != "PASS": raise RuntimeError("Installed receiver comparison failed")
+                receiver_runs.append({"radio": radio, "detector": detector, "verdict": answer["assessment"]["verdict"]})
+            # Real CLI preflight and pre-cancel: no transport may open.
+            from test_receivers import receiver_profile, commissioned_measurement
+            from test_evaluation import commissioned_fixture
+            mpath, epath = temp / "wlan-receiver.json", temp / "wlan-receiver-eval.json"
+            mpath.write_text(json.dumps(commissioned_measurement(json.loads(mpath.read_text()))), encoding="utf-8")
+            from dgm_control.evaluation import evaluation_template
+            template_measurement = json.loads(mpath.read_text()) | {"simulation_only": True}
+            epath.write_text(json.dumps(commissioned_fixture(evaluation_template(QUICK, template_measurement))), encoding="utf-8")
+            (site / "EmiReceiver.json").write_text(json.dumps(receiver_profile()), encoding="utf-8")
+            command("hardware-check", "--profiles-dir", str(site), "--plan", str(plan_file), "--measurement", str(mpath), "--evaluation", str(epath))
+            answer = json.loads(command("hardware-run", "--profiles-dir", str(site), "--plan", str(plan_file), "--measurement", str(mpath),
+                "--evaluation", str(epath), "--output-dir", str(temp / "receiver-pre-cancel"), "--cancel-file", str(cancel_file), expected=130).stdout)
+            cancelled_report = json.loads(Path(answer["report"]).read_text())
+            if cancelled_report["connection_attempted"] or answer["assessment"]["verdict"] != "NOT_EVALUATED":
+                raise RuntimeError("Receiver pre-cancel attempted hardware or reported pass")
+            report["receiver_runs"] = receiver_runs
             # Verify actual imported modules originate in the isolated target directory.
             proof = run([sys.executable, "-s", "-c", "import dgm_control,dgm_lab,dgm_rf,json; print(json.dumps([dgm_control.__file__,dgm_lab.__file__,dgm_rf.__file__]))"], cwd=temp, env=env)
             if not all(Path(name).resolve().is_relative_to(installed.resolve()) for name in json.loads(proof.stdout)):

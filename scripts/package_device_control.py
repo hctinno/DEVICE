@@ -45,6 +45,9 @@ def main():
         shutil.copyfile(SDK / "MULTIRADIO.md", bundle / "MULTIRADIO.md")
         shutil.copyfile(SDK / "RADIO_SCAN.md", bundle / "RADIO_SCAN.md")
         shutil.copyfile(SDK / "CORRECTIONS.md", bundle / "CORRECTIONS.md")
+        shutil.copyfile(SDK / "DETECTORS.md", bundle / "DETECTORS.md")
+        (bundle / "dgm_control/data").mkdir(parents=True)
+        shutil.copyfile(SDK / "dgm_control/data/detector-sources.json", bundle / "dgm_control/data/detector-sources.json")
         # Exercise the bundle's real installer in an isolated virtual environment.
         environment = temp / "venv"
         run([sys.executable, "-m", "venv", str(environment)], temp)
@@ -71,6 +74,19 @@ def main():
             if answer["samples"] != 12 or answer["peak"]["angle_deg"] != 90 or answer["peak"]["height_cm"] != 200 or answer["peak"]["polarization"] != "V":
                 raise RuntimeError("Offline facility scan peak failed")
             radio_runs.append(radio)
+        receiver_runs = []
+        for radio, detector in (("wlan", "LINEAR_AVER"), ("bluetooth", "CISPR_AVER"), ("cellular", "LINEAR_AVER"), ("nfc", "QP"), ("uwb", "CISPR_AVER")):
+            base = [str(python), "-m", "dgm_control"]
+            args = ["--workflow", "wlan"] if radio == "wlan" else ["--workflow", "radio", "--plan", str(temp / f"{radio}.json")]
+            mpath, epath = temp / f"{radio}-receiver.json", temp / f"{radio}-receiver-eval.json"
+            run([*base, "measurement-init", *args, "--detector", detector, "--output", str(mpath)], temp, clean_env)
+            run([*base, "evaluation-init", *args, "--measurement", str(mpath), "--output", str(epath)], temp, clean_env)
+            command = ["virtual-run"] if radio == "wlan" else ["radio-run", "--mode", "simulation", "--plan", str(temp / f"{radio}.json")]
+            answer = json.loads(run([*base, *command, "--measurement", str(mpath), "--evaluation", str(epath),
+                                     "--output-dir", str(temp / f"{radio}-receiver")], temp, clean_env))
+            if answer["status"] != "completed" or answer["assessment"]["verdict"] != "PASS":
+                raise RuntimeError("Offline receiver-grid comparison failed")
+            receiver_runs.append(dict(radio=radio, detector=detector, samples=answer["samples"], verdict="PASS"))
         archive = target / f"dgm-device-control-{version}-offline.zip"
         with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as output:
             for path in sorted(bundle.rglob("*")):
@@ -82,6 +98,7 @@ def main():
                   "fresh_venv_demo_passed": True, "fresh_venv_virtual_lab_passed": True,
                   "fresh_venv_radio_scans_passed": radio_runs, "radio_scan_samples_each": 12, "hardware_tests": 0}
         report["fresh_venv_corrected_radio_comparisons_passed"] = radio_runs
+        report["fresh_venv_receiver_comparisons"] = receiver_runs
         (target / "manifest.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         (SDK / "docs/distribution-validation.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(report))

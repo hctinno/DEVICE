@@ -145,11 +145,12 @@ def radio_template(radio, *, scan=False):
     return plan
 
 
-def radio_devices(plan):
+def radio_devices(plan, measurement_config=None):
     required = {"SpectrumAnalyzer", RADIOS[plan["radio"]]["source_device"]}
     if plan["schema_version"] == 2:
         from .radio_scan_contracts import FACILITIES
         required |= FACILITIES
+    if measurement_config is not None: required.add("EmiReceiver")
     return required
 
 
@@ -175,12 +176,17 @@ def validate_nfc_profile(profile):
     AdbNfcTransport(c["serial"], NfcProfile(c["model"], c["build"], c["apk_sha256"], c["sender_permission_verified"]))
 
 
-def check_radio(plan, mode, profiles=None):
+def check_radio(plan, mode, profiles=None, measurement_config=None):
     sweep = validate_plan(plan)
     if mode not in ("simulation", "hardware") or plan["simulation_only"] != (mode == "simulation"):
         raise ValueError("Explicit execution mode must match simulation_only")
     source = RADIOS[plan["radio"]]["source_device"]
-    required = radio_devices(plan)
+    required = radio_devices(plan, measurement_config)
+    receiver_check = None
+    if measurement_config is not None:
+        from .receiver_measurement import validate_measurement
+        receiver_check = validate_measurement(measurement_config, plan, simulated=mode == "simulation",
+            profile=profiles.get("EmiReceiver") if isinstance(profiles, dict) and mode == "hardware" else None)
     if mode == "simulation":
         if profiles:
             raise ValueError("Simulation must not accept site profiles")
@@ -213,4 +219,4 @@ def check_radio(plan, mode, profiles=None):
             check_scan_site(plan, profiles)
     return {"valid": True, "radio": plan["radio"], "backend": plan["backend"], "mode": mode,
             "connection_attempted": False, "physical_verified": False, "required_profiles": sorted(required),
-            "scope": deepcopy(RADIOS[plan["radio"]])}
+            "scope": deepcopy(RADIOS[plan["radio"]]), "receiver_measurement": receiver_check}

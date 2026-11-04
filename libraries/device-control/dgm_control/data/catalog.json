@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "sdk_version": "0.7.0",
+  "sdk_version": "0.8.0",
   "devices": [
     {
       "profile": "spectrum",
@@ -265,18 +265,29 @@
       "category": "emi",
       "operations": [
         "read_level",
+        "read_verified_level",
         "stop"
       ],
+      "operation_models": {
+        "read_verified_level": [
+          "ESW8",
+          "ESW44",
+          "ESR3",
+          "ESR7"
+        ]
+      },
       "lifecycle": "managed_run(lambda: None, device.stop)",
-      "protocol": "SCPI single-frequency receiver",
+      "protocol": "SCPI single-frequency receiver; verified ESW8/44 ESR3/7 bargraph subset",
       "site_requirements": [
         "installed max frequency",
         "detector and dwell",
-        "antenna/cable/LISN corrections"
+        "antenna/cable/LISN corrections",
+        "disabled internal corrections and commissioned RF path"
       ],
       "excludes": [
-        "full EMI scan recipe",
-        "automatic FCC verdict"
+        "automatic FCC verdict",
+        "verified EPL receiver-grid integration",
+        "QP above 1 GHz in verified wrapper"
       ],
       "driver": "EmiReceiver",
       "constructor": "(transport, *, model, max_frequency_hz)",
@@ -284,6 +295,7 @@
       "profile_path": "profiles/receiver.template.json",
       "methods": {
         "read_level": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
+        "read_verified_level": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
         "stop": "(self)"
       },
       "report_models": [

@@ -57,7 +57,7 @@ def _dbm(measurement):
     raise InstrumentError(f"Unsupported power result: {measurement}")
 
 
-def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None, evaluation=None):
+def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None, evaluation=None, measurement_config=None, on_observation=None):
     """Identical operation sequence for VirtualLab and HardwareLab.
 
     Caller owns hardware permits, profile validation, RF/position limits and logs.
@@ -67,7 +67,10 @@ def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None, evaluation=N
     plan = plan or WlanScan()
     plan.validate()
     lab.validate_wlan(plan)
-    if evaluation is not None: evaluation.bind(plan, lab.simulated)
+    if measurement_config is not None:
+        from .receiver_measurement import validate_measurement
+        validate_measurement(measurement_config, plan, simulated=lab.simulated)
+    if evaluation is not None: evaluation.bind(plan, lab.simulated, measurement_config)
     check = cancelled.is_set if cancelled is not None else lambda: False
     def checkpoint():
         if check():
@@ -79,6 +82,11 @@ def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None, evaluation=N
         sessions = {name: stack.enter_context(lab.open(name)) for name in
                     ("OdaEx", "Co3000", "OspSwitch", "PhoneAt", "SpectrumAnalyzer", "UsbPowerSensor")}
         power, motion, route, phone, analyzer, sensor = sessions.values()
+        receiver = None
+        if measurement_config is not None:
+            receiver = stack.enter_context(lab.open("EmiReceiver"))
+            sessions["EmiReceiver"] = receiver
+            stack.enter_context(receiver.active())
         power.call("configure", voltage=plan.voltage, current=plan.current)
         sensor.call("configure_average", frequency_hz=plan.center_hz)
         for session in (power, motion, analyzer, sensor):
@@ -94,7 +102,15 @@ def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None, evaluation=N
                         checkpoint()
                         motion.call("move", axis="DT1", value=angle, timeout=plan.motion_timeout, cancelled=check)
                         before = [motion.call("position", axis=axis) for axis in ("MA1", "DT1")]
-                        trace = analyzer.call("acquire", config=sweep)
+                        if receiver is None:
+                            trace = asdict(analyzer.call("acquire", config=sweep))
+                        else:
+                            from .receiver_measurement import acquire_grid
+                            def save_point(point):
+                                if on_observation:
+                                    on_observation({**point, "sample_index": len(samples), "height_cm": height,
+                                                    "angle_deg": angle, "polarization": polarization, "rf_path": "dut"})
+                            trace = acquire_grid(receiver, measurement_config, checkpoint, save_point)
                         measured = sensor.call("read_power")
                         after = [motion.call("position", axis=axis) for axis in ("MA1", "DT1")]
                         checkpoint()
@@ -104,12 +120,13 @@ def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None, evaluation=N
                                 raise InstrumentError("Position changed or disagrees with requested sample")
                         sample = {"index": len(samples), "height_cm": after[0].value, "angle_deg": after[1].value,
                                   "polarization": polarization, "sensor": asdict(measured), "power_dbm": _dbm(measured),
-                                  "trace": asdict(trace), "simulated": lab.simulated}
+                                  "trace": trace, "simulated": lab.simulated}
                         if evaluation is not None: evaluation.correct(sample)
                         samples.append(sample)
                         if on_sample:
                             on_sample(deepcopy(sample))
-            peak = max(samples, key=lambda sample: sample["evaluation"]["peak"]["field_dbuv_m"] if evaluation is not None else sample["power_dbm"])
+            peak = max(samples, key=lambda sample: sample["evaluation"]["peak"]["field_dbuv_m"] if evaluation is not None else
+                       max(sample["trace"]["values_dbm"]) if receiver is not None else sample["power_dbm"])
             motion.call("polarize", axis="MA1", orientation=peak["polarization"], timeout=plan.motion_timeout, cancelled=check)
             motion.call("move", axis="MA1", value=peak["height_cm"], timeout=plan.motion_timeout, cancelled=check)
             motion.call("move", axis="DT1", value=peak["angle_deg"], timeout=plan.motion_timeout, cancelled=check)
@@ -120,7 +137,7 @@ def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None, evaluation=N
                 or abs(returned[1].value-peak["angle_deg"]) > .1 or returned[0].polarization != "P"+peak["polarization"]):
             raise InstrumentError("Peak return readback mismatch")
         result = {"simulated": lab.simulated, "physical_verified": False, "fcc_verdict": None,
-                  "ranking": "corrected_field_dbuv_m" if evaluation is not None else "raw_sensor_dbm",
+                  "ranking": "corrected_field_dbuv_m" if evaluation is not None else "raw_receiver_dbm" if receiver is not None else "raw_sensor_dbm",
                   "peak_return_readback": [asdict(s) for s in returned],
                   "plan": asdict(plan), "samples": samples, "sampled_peak_index": peak["index"],
                   "returned_to_sampled_peak": True, "off_before": asdict(off_before), "off_after": asdict(off_after),
@@ -129,10 +146,11 @@ def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None, evaluation=N
     return result  # only after every cleanup scope succeeds
 
 
-def run_virtual(output_dir, *, scenario=None, plan=None, fault=None, cancelled=None, evaluation=None):
+def run_virtual(output_dir, *, scenario=None, plan=None, fault=None, cancelled=None, evaluation=None, measurement_config=None):
     """Persist one new simulation run; failures keep partial raw data, never a result.json."""
     plan = plan or WlanScan()
     evaluation = deepcopy(evaluation)
+    measurement_config = deepcopy(measurement_config)
     plan.validate()
     if scenario is not None and not isinstance(scenario, Scenario):
         raise TypeError("scenario must be Scenario")
@@ -147,19 +165,26 @@ def run_virtual(output_dir, *, scenario=None, plan=None, fault=None, cancelled=N
     with closing(JsonlLog(target / "traffic.jsonl")) as logger:
         def log(record):
             logger({"run_id": report["run_id"], "simulated": True, **record})
-        lab = VirtualLab(scenario, log=log)
+        lab = VirtualLab(scenario, log=log, measurement_config=measurement_config)
         report["scenario"] = lab.scenario
         try:
+            report["receiver_measurement_input"] = measurement_config
             if evaluation is not None:
                 report["evaluation_input"] = deepcopy(evaluation)
-                evaluator = Evaluation(evaluation, plan, simulated=True)
+                evaluator = Evaluation(evaluation, plan, simulated=True, measurement=measurement_config)
             if fault:
                 lab.inject(fault)
-            with (target / "samples.jsonl").open("x", encoding="utf-8") as samples:
+            with (target / "samples.jsonl").open("x", encoding="utf-8") as samples, (target / "receiver-points.jsonl").open("x", encoding="utf-8") as points:
+                def save_point(row):
+                    import os
+                    points.write(json.dumps({"run_id": report["run_id"], "simulated": True, **row}, allow_nan=False) + "\n")
+                    points.flush()
+                    os.fsync(points.fileno())
                 def save_sample(row):
                     samples.write(json.dumps({"run_id": report["run_id"], **row}) + "\n")
                     samples.flush()
-                report["measurement"] = measure_wlan(lab, plan, cancelled=cancelled, on_sample=save_sample, evaluation=evaluator)
+                report["measurement"] = measure_wlan(lab, plan, cancelled=cancelled, on_sample=save_sample, evaluation=evaluator,
+                                                     measurement_config=measurement_config, on_observation=save_point)
             report["status"] = "completed"
         except BaseException as exc:
             report["status"] = "failed"

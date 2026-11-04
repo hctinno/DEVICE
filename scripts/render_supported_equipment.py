@@ -19,7 +19,10 @@ def main():
                                   '턴테이블' if model['model'].startswith('DS') else '모션 제어기')
             records[key] = {'manufacturer': model['manufacturer'], 'model': model['model'],
                             'equipment_type': equipment_type, 'driver': item['id'],
-                            'operations': item['operations'], 'status': model['status'], 'physical_verified': False}
+                            'operations': [operation for operation in item['operations']
+                                if operation not in item.get('operation_models', {})
+                                or model['model'] in item['operation_models'][operation]],
+                            'status': model['status'], 'physical_verified': False}
     lines = ['# 제어 라이브러리 장비·설비 지원 목록', '',
              '제조사·모델·장비 종류·구현 API를 기준으로 정리합니다. 특정 기관의 보유 자산 목록이 아닙니다. '
              '지원은 명시한 기능과 모델/옵션 범위에 한정하며 실장비 검증은 미실행입니다.', '',
@@ -36,6 +39,7 @@ def main():
               '`controller_component`: 독립 접속 대상이 아닌 제어기에 연결된 구성품입니다.', '',
               '[설치·공통 API](libraries/device-control/README.md) · [가상 시험환경](libraries/device-control/VIRTUAL_LAB.md) · '
               '[모델별 상세 조건](libraries/lab-control/docs/EQUIPMENT_COVERAGE.md) · '
+              '[QP·평균 검파 지원/미확인](libraries/device-control/DETECTORS.md) · '
               '[기계 판독 목록](libraries/device-control/dgm_control/data/supported-equipment.json)', '']
     (ROOT / 'SUPPORTED_EQUIPMENT.md').write_text('\n'.join(lines), encoding='utf-8')
     target = ROOT / 'libraries/device-control/dgm_control/data/supported-equipment.json'

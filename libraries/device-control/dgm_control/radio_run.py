@@ -16,19 +16,20 @@ from .evaluation import Evaluation
 FAULTS = ("start-timeout", "measure-timeout", "stop-timeout", "cancel-after-sample") + SCAN_FAULTS
 
 
-def load_radio_profiles(plan, directory):
+def load_radio_profiles(plan, directory, measurement_config=None):
     validate_plan(plan)
     if directory is None:
         raise ValueError("Hardware requires an explicit profiles directory")
-    names = sorted(radio_devices(plan))
+    names = sorted(radio_devices(plan, measurement_config))
     return {name: load_profile(Path(directory) / (name + ".json")) for name in names}
 
 
-def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cancelled=None, cancel_file=None, fault=None, evaluation=None):
+def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cancelled=None, cancel_file=None, fault=None, evaluation=None, measurement_config=None):
     if mode not in ("simulation", "hardware"):
         raise ValueError("Explicit simulation/hardware mode required")
     plan, profiles = deepcopy(plan), deepcopy(profiles)
     evaluation = deepcopy(evaluation)
+    measurement_config = deepcopy(measurement_config)
     simulated = mode == "simulation"
     target = Path(output_dir).resolve()
     target.mkdir(parents=True, exist_ok=False)
@@ -51,11 +52,11 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
         if profiles_dir is not None:
             if profiles is not None or simulated:
                 raise ValueError("profiles_dir is exclusive to hardware and explicit profile objects")
-            profiles = load_radio_profiles(plan, profiles_dir)
-        atomic_json(target / "inputs.json", {"run_id": report["run_id"], "plan": plan, "profiles": profiles, "evaluation": evaluation})
-        report["preflight"] = check_radio(plan, mode, profiles)
+            profiles = load_radio_profiles(plan, profiles_dir, measurement_config)
+        atomic_json(target / "inputs.json", {"run_id": report["run_id"], "plan": plan, "profiles": profiles, "evaluation": evaluation, "receiver_measurement": measurement_config})
+        report["preflight"] = check_radio(plan, mode, profiles, measurement_config)
         if evaluation is not None:
-            evaluator = Evaluation(evaluation, plan, simulated=simulated)
+            evaluator = Evaluation(evaluation, plan, simulated=simulated, measurement=measurement_config)
             report["evaluation_preflight"] = evaluator.preflight()
         if fault is not None and (not simulated or fault not in FAULTS):
             raise ValueError("Fault injection requires a supported simulation-only fault")
@@ -64,7 +65,7 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
         checkpoint(token)
         world = RadioWorld(plan) if simulated else None
         if world is not None: world.inject(fault)
-        lab = RadioLab(plan, profiles, evidence, world)
+        lab = RadioLab(plan, profiles, evidence, world, measurement_config=measurement_config)
         if plan["schema_version"] == 2:
             from .radio_scan import measure_radio_scan
             measurement = measure_radio_scan(lab, token, event, fault, evaluator)

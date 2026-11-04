@@ -1,0 +1,96 @@
+{
+  "reviewed_date": "2026-11-05",
+  "manuals": [
+    {
+      "source_id": "rs-esw",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+      "sha256": "76359d49da27d04e6c79ff81bc42806a35493bdad1584beb006c8e39da25f146",
+      "reviewed_pdf_pages": [
+        473,
+        474,
+        478,
+        484,
+        485,
+        557,
+        558,
+        561,
+        562
+      ],
+      "scope": "Verified single-bargraph receiver commands and readbacks",
+      "physical_verified": false
+    },
+    {
+      "source_id": "rs-esr",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESR_UserManual_en_13.pdf",
+      "sha256": "4f648da036a0e541619fd4a5c589b325dad27f3617e9579b3630bbd26be46c69",
+      "reviewed_pdf_pages": [
+        607,
+        608,
+        609,
+        610,
+        612,
+        615,
+        637,
+        638,
+        639,
+        640
+      ],
+      "scope": "Verified single-bargraph receiver commands and readbacks",
+      "physical_verified": false
+    },
+    {
+      "source_id": "rs-epl",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_5876_01/EPL_UserManual_en_07.pdf",
+      "sha256": "16e1c53563ab6765a08a4bb9927bcdbc0b710a41bceef76198a5872b82dae1d8",
+      "reviewed_pdf_pages": [
+        407,
+        408,
+        464
+      ],
+      "scope": "Detector/filter documented; verified receiver-grid workflow NOT integrated",
+      "physical_verified": false
+    },
+    {
+      "source_id": "rs-fsw",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+      "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283",
+      "reviewed_pdf_pages": [
+        1097,
+        1262,
+        1263
+      ],
+      "scope": "QP/CISPR-average requires K54 and CISPR filter; final-measurement workflow NOT integrated",
+      "physical_verified": false
+    },
+    {
+      "source_id": "rs-esu",
+      "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESU_OperatingManual_en_04.pdf",
+      "sha256": "cbb0cb6bcb410951e4d40669c4e37a494c41f96a30ce900d2193fdc0e2873e89",
+      "reviewed_pdf_pages": [
+        53,
+        54,
+        56,
+        621
+      ],
+      "scope": "Receiver/trace detectors documented; verified-grid workflow NOT integrated",
+      "physical_verified": false
+    },
+    {
+      "source_id": "keysight-xsa-b",
+      "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+      "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2",
+      "reviewed_pdf_pages": [
+        401,
+        402,
+        403,
+        554,
+        555,
+        556
+      ],
+      "scope": "Scalar voltage averaging differs from RMS; QPE/EAV support/options not integrated",
+      "physical_verified": false
+    }
+  ],
+  "receiver_range_reference": "https://www.rohde-schwarz.com/de/produkte/messtechnik/funkstoermessempfaenger/rs-esr-funkstoermessempfaenger_63493-17877.html",
+  "note": "Page numbers count the PDF cover as page 1; original PDFs are not redistributed"
+}

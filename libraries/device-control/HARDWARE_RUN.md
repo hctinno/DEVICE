@@ -1,6 +1,6 @@
 # 실장비 WLAN 실행과 증거 저장
 
-SDK 0.7.0 추가: [보정·선언 기준 비교](CORRECTIONS.md)의 --evaluation 옵션을 지원합니다. 아래 기본 흐름은 옵션 없는 원시값 실행이며, 전체 FCC 적합성 판정은 제공하지 않습니다.
+SDK 0.8.0은 [검파기별 수신기 제어](DETECTORS.md)의 --measurement와 [보정·선언 기준 비교](CORRECTIONS.md)의 --evaluation을 지원합니다. QP/평균에는 추가 EmiReceiver 프로필과 evaluation schema 2가 필요합니다. 아래 기본 흐름은 옵션 없는 원시값 실행이며, 전체 FCC 적합성 판정은 제공하지 않습니다.
 
 SDK v0.4.0. **hardware-check는 오프라인 검사, hardware-run은 실제 전원·RF 송신·기계 이동을 수행합니다.** 현재 6개 장비의 WLAN recipe만 제공합니다. 전체 FCC 시험·교정·판정 또는 모든 단말 지원을 뜻하지 않습니다. 실장비 검증은 0건입니다.
 

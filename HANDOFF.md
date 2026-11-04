@@ -10,6 +10,10 @@
 
 ## 현재 상태
 
+0.8.0 최종 소프트웨어 검수: SDK 149 + 설비 103 + 단말 58 = **310개**, 격리 CLI **89건**, 최종 ZIP을 별도 새 venv에 설치한 README **34개 명령·3개 Python 구문 검사** 통과. ZIP의 다섯 무선 수신기 12점 스캔/보정/판정도 통과했습니다. ZIP 331049 bytes, SHA-256 `950ed5d5341a9ac215f0cb1cfaf0df5b8759d75cde770fd27ee71d087abbcf27`; Git에는 ZIP 대신 생성기와 검수 manifest를 저장합니다. 실장비 접속 0건. 시작은 `python -m dgm_control detector-list`와 README의 QP·평균 예제입니다.
+
+2026-11-05 SDK 0.8.0 / LabControl 0.5.0: [검파기별 실행](libraries/device-control/DETECTORS.md), [작업 체크리스트](libraries/device-control/DETECTOR_PLAN.md). ESW8/44·ESR3/7의 POS/QP/선형 평균/CISPR 평균을 `--measurement` 수신기 grid와 evaluation schema 2로 연결했습니다. 기존 source·설비·POS 경로는 유지하며 RF source 제한도 바뀌지 않았습니다. 모델별 미통합·미확인 목록, native 전후 readback, 단위/시간/필터 비교, 개별 주파수 원시값과 부분 오류 기록을 추가했습니다. QP 구현 상한 1 GHz, 물리 검파 응답·내부 보정/overload 자동 확인·현장 RF 검증은 제외입니다. 아래 0.7.0 이하 검사 수와 해시는 과거 기록이며 최신 검수 JSON을 확인합니다.
+
 0.7.0 최종 소프트웨어 검수: SDK 138 + 설비 99 + 단말 58 = **295개**, 격리 설치 CLI **67건**, README **30개 실행·Python 구문 3개** 통과. 새 venv 오프라인 설치에서 네 radio의 보정 비교도 확인했습니다. ZIP 313400 bytes, SHA-256 `e8aa0809770512f047e37141b9777e0af9b861d706f96c369fa5bdb66ece292a`; ZIP은 Git에 없고 생성기/manifest를 저장합니다. 설치기와 카탈로그의 0.6.0 잔여 고정값을 수정하고 실제 배포물로 재검증했습니다. 실제 장비 접속은 0건입니다.
 
 2026-11-04 SDK 0.7.0: [보정·선언 기준 비교](libraries/device-control/CORRECTIONS.md)를 추가했습니다. WLAN과 네 radio schema 2 설비 스캔은 --evaluation으로 주파수/경로/편파별 AF·케이블/스위치 손실·외부 증폭기 이득을 적용합니다. 보정 전계 최대 위치 복귀와 최악 기준 여유 위치를 분리하고, 원시 trace·보정항·한계·부분 비교·최종 assessment·입력 스냅샷/hash를 저장합니다. simulation-only 템플릿은 실제 교정 자료가 아니며 hardware에서는 차단합니다. 검파기·RBW/VBW·거리·최소 sweep 조건이 맞는 POS 전계 비교만 지원합니다. 오류/중단/cleanup/저장 실패는 최종 NOT_EVALUATED입니다. 전체 FCC 적합성, 자기장 변환, QP/평균, 자동 규격 선정·불확도 예산, 실장비 검증은 미완료입니다. 아래 0.6.0 이하는 과거 기록이며 최신 검사 수는 validation JSON을 따릅니다.
