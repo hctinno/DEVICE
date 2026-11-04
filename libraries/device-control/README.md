@@ -8,7 +8,7 @@
 
 ## 1. 설치하고 장비 없이 확인
 
-GitHub의 `codex/samsung-rf-research-20261104` 브랜치를 받습니다. 저장소 루트에서 실행합니다.
+GitHub의 `main` 브랜치를 받습니다. 저장소 루트에서 실행합니다. 새 PC에서 복제하는 순서는 [저장소 시작 안내](../../README.md)를 따릅니다.
 
 ```powershell
 python -m venv .venv

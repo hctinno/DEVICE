@@ -10,6 +10,8 @@
 
 ## 현재 상태
 
+2026-11-04 사용자 결정: 개발 브랜치의 RF 조사·설비 제어·공통 SDK·가상 시험환경을 **`main`으로 통합**합니다. 이후 다른 PC의 시작점은 `main`과 [루트 README 설치 절차](README.md)입니다. `codex/samsung-rf-research-20261104`는 개발 이력으로 보존합니다. 기존 문서의 해당 브랜치 언급은 과거 전달 기록이며 최신 설치 브랜치를 의미하지 않습니다. 원격 반영 여부는 실제 GitHub main SHA로 확인합니다.
+
 최신 추가 요청은 **가상 시험환경에서 자동화 프로그램을 개발한 뒤 실물과 연동**하는 것입니다. SDK v0.2.0 [VirtualLab](libraries/device-control/VIRTUAL_LAB.md)을 먼저 읽습니다. shared World·엄격한 native protocol peer·7종 연결·재사용 `measure_wlan`·HardwareLab provider·WLAN 6GHz HE160 12점 스캔·표본 최대 복귀·고장 주입·실행별 증거 저장을 구현했습니다. 최신 검수 수치는 [validation.json](libraries/device-control/docs/validation.json)과 [배포 검수](libraries/device-control/docs/distribution-validation.json)를 확인합니다. 아래 v0.1.0 기록은 이전 SDK 기반 작업입니다.
 
 v0.2.0 검수 완료: SDK 58개 테스트(통합 신규 25개 포함), wheel 3개 격리 설치·CLI 14건, 새 venv에서 오프라인 installer·기존 demo·통합 12점 스캔 통과. ZIP `dgm-device-control-0.2.0-offline.zip`, 239160 bytes, SHA-256 `54cbe624d6adf4f74ffa036e6fdeecf2db4ef4e67d97a4b6d9fa148d4ad19bac`. ZIP은 Git에 넣지 않고 `scripts/package_device_control.py`로 재생성합니다. 원본 native backend는 수정하지 않았고 이전 backend 검사 99+58을 이번 실행 수에 합산하지 않습니다.
