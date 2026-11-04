@@ -228,7 +228,7 @@ class DriverTests(unittest.TestCase):
                 with self.assertRaisesRegex(InstrumentError,'count'): d.acquire(config)
 
     def test_receiver_single_detector_returns_dbuv(self):
-        for model in EmiReceiver.MODELS:
+        for model in ('ESW8', 'ESW44', 'ESR3', 'ESR7', 'EPL1000'):
             io=fixture(model,'Rohde&Schwarz',**{'FREQ:CENT?':'1e6','BAND?':'9000','TRAC? SINGLE':'36.5'})
             d=EmiReceiver(io,model=model,max_frequency_hz=3e9);d.identify()
             value=d.read_level(frequency_hz=1e6,rbw_hz=9000,detector='QPE',dwell_seconds=1,attenuation_db=10)

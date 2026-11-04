@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "sdk_version": "0.8.0",
+  "sdk_version": "0.9.0",
   "devices": [
     {
       "profile": "spectrum",
@@ -65,6 +65,7 @@
         "rs-fsv",
         "rs-fsw"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "SpectrumAnalyzer",
       "kind": "instrument",
@@ -269,24 +270,45 @@
         "stop"
       ],
       "operation_models": {
+        "read_level": [
+          "ESW8",
+          "ESW44",
+          "ESR3",
+          "ESR7",
+          "EPL1000"
+        ],
         "read_verified_level": [
           "ESW8",
           "ESW44",
           "ESR3",
-          "ESR7"
+          "ESR7",
+          "EPL1000",
+          "ESU8",
+          "ESU40",
+          "FSW50",
+          "FSW67",
+          "N9010A",
+          "N9020A",
+          "N9030A",
+          "N9030B",
+          "N9040B"
         ]
       },
       "lifecycle": "managed_run(lambda: None, device.stop)",
-      "protocol": "SCPI single-frequency receiver; verified ESW8/44 ESR3/7 bargraph subset",
+      "protocol": "SCPI final single-frequency detector role; bargraph, FSW final marker or X-Series Measure-at-Marker",
       "site_requirements": [
         "installed max frequency",
         "detector and dwell",
+        "K54/EMC where required and commissioned firmware",
+        "dedicated instrument distinct from baseline SpectrumAnalyzer",
         "antenna/cable/LISN corrections",
         "disabled internal corrections and commissioned RF path"
       ],
       "excludes": [
         "automatic FCC verdict",
-        "verified EPL receiver-grid integration",
+        "physical validation",
+        "new analyzer workflows above 1 GHz",
+        "EPL1000 above 30 MHz",
         "QP above 1 GHz in verified wrapper"
       ],
       "driver": "EmiReceiver",
@@ -316,9 +338,99 @@
         }
       ],
       "source_ids": [
+        "keysight-xsa-a",
+        "keysight-xsa-b",
         "rs-epl",
         "rs-esr",
-        "rs-esw"
+        "rs-esu",
+        "rs-esw",
+        "rs-fsw"
+      ],
+      "role_models": [
+        {
+          "model": "ESW8",
+          "manufacturer": "Rohde & Schwarz",
+          "status": "implemented-uncommissioned",
+          "source_id": "rs-esw"
+        },
+        {
+          "model": "ESW44",
+          "manufacturer": "Rohde & Schwarz",
+          "status": "implemented-uncommissioned",
+          "source_id": "rs-esw"
+        },
+        {
+          "model": "ESR3",
+          "manufacturer": "Rohde & Schwarz",
+          "status": "implemented-uncommissioned",
+          "source_id": "rs-esr"
+        },
+        {
+          "model": "ESR7",
+          "manufacturer": "Rohde & Schwarz",
+          "status": "implemented-uncommissioned",
+          "source_id": "rs-esr"
+        },
+        {
+          "model": "EPL1000",
+          "manufacturer": "Rohde & Schwarz",
+          "status": "implemented-uncommissioned",
+          "source_id": "rs-epl"
+        },
+        {
+          "model": "ESU8",
+          "manufacturer": "Rohde & Schwarz",
+          "status": "implemented-uncommissioned",
+          "source_id": "rs-esu"
+        },
+        {
+          "model": "ESU40",
+          "manufacturer": "Rohde & Schwarz",
+          "status": "implemented-uncommissioned",
+          "source_id": "rs-esu"
+        },
+        {
+          "model": "FSW50",
+          "manufacturer": "Rohde & Schwarz",
+          "status": "implemented-uncommissioned",
+          "source_id": "rs-fsw"
+        },
+        {
+          "model": "FSW67",
+          "manufacturer": "Rohde & Schwarz",
+          "status": "implemented-uncommissioned",
+          "source_id": "rs-fsw"
+        },
+        {
+          "model": "N9010A",
+          "manufacturer": "Keysight/Agilent",
+          "status": "implemented-uncommissioned",
+          "source_id": "keysight-xsa-a"
+        },
+        {
+          "model": "N9020A",
+          "manufacturer": "Keysight/Agilent",
+          "status": "implemented-uncommissioned",
+          "source_id": "keysight-xsa-a"
+        },
+        {
+          "model": "N9030A",
+          "manufacturer": "Keysight/Agilent",
+          "status": "implemented-uncommissioned",
+          "source_id": "keysight-xsa-a"
+        },
+        {
+          "model": "N9030B",
+          "manufacturer": "Keysight/Agilent",
+          "status": "implemented-uncommissioned",
+          "source_id": "keysight-xsa-b"
+        },
+        {
+          "model": "N9040B",
+          "manufacturer": "Keysight/Agilent",
+          "status": "implemented-uncommissioned",
+          "source_id": "keysight-xsa-b"
+        }
       ],
       "physical_verified": false,
       "id": "EmiReceiver",
@@ -327,6 +439,45 @@
       "status": "implemented_uncommissioned",
       "simulation_available": false,
       "sources": [
+        {
+          "id": "keysight-xsa-a",
+          "url": "https://www.keysight.com/us/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+          "kind": "manufacturer_manual",
+          "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/user-manuals/9018-06099.pdf",
+          "status": "acquired",
+          "sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+          "pages": 3307,
+          "review": {
+            "pdf_pages": [
+              594,
+              987,
+              988
+            ],
+            "scope": "X-Series A swept-SA measurement selection and trace mode; SCPI command reference"
+          },
+          "hardware_validated": false
+        },
+        {
+          "id": "keysight-xsa-b",
+          "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+          "kind": "manufacturer_manual",
+          "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/user-manuals/9018-04666.pdf",
+          "status": "acquired",
+          "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2",
+          "pages": 3048,
+          "review": {
+            "pdf_pages": [
+              187,
+              189,
+              310,
+              311,
+              2952,
+              2954
+            ],
+            "scope": "X-Series B swept-SA selection, linear axis, ASCII trace export and format"
+          },
+          "hardware_validated": false
+        },
         {
           "id": "rs-epl",
           "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_5876_01/EPL_UserManual_en_07.pdf",
@@ -370,6 +521,27 @@
           "hardware_validated": false
         },
         {
+          "id": "rs-esu",
+          "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESU_OperatingManual_en_04.pdf",
+          "kind": "manufacturer_manual",
+          "status": "acquired",
+          "sha256": "cbb0cb6bcb410951e4d40669c4e37a494c41f96a30ce900d2193fdc0e2873e89",
+          "pages": 870,
+          "review": {
+            "pdf_pages": [
+              456,
+              567,
+              578,
+              579,
+              580,
+              698,
+              702
+            ],
+            "scope": "Spectrum mode, format, trigger, trace and abort"
+          },
+          "hardware_validated": false
+        },
+        {
           "id": "rs-esw",
           "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
           "kind": "manufacturer_manual",
@@ -394,6 +566,24 @@
             "scope": "Receiver single-frequency bargraph, detector, timing, data format and RF settings"
           },
           "hardware_validated": false
+        },
+        {
+          "id": "rs-fsw",
+          "landing_url": "https://www.rohde-schwarz.com/in/manual/fsw-user-manual_78701-29088.html",
+          "kind": "manufacturer_manual",
+          "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+          "status": "acquired",
+          "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283",
+          "pages": 1632,
+          "review": {
+            "pdf_pages": [
+              913,
+              1207,
+              1224
+            ],
+            "scope": "Spectrum application, linear frequency axis, power units; command chapter"
+          },
+          "hardware_validated": false
         }
       ],
       "models": [
@@ -411,12 +601,68 @@
           "manufacturer": "Rohde & Schwarz",
           "model": "ESW8",
           "status": "implemented_uncommissioned"
+        },
+        {
+          "manufacturer": "Rohde & Schwarz",
+          "model": "ESR7",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Rohde & Schwarz",
+          "model": "EPL1000",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Rohde & Schwarz",
+          "model": "ESU8",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Rohde & Schwarz",
+          "model": "ESU40",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Rohde & Schwarz",
+          "model": "FSW50",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Rohde & Schwarz",
+          "model": "FSW67",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Keysight/Agilent",
+          "model": "N9010A",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Keysight/Agilent",
+          "model": "N9020A",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Keysight/Agilent",
+          "model": "N9030A",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Keysight/Agilent",
+          "model": "N9030B",
+          "status": "implemented-uncommissioned"
+        },
+        {
+          "manufacturer": "Keysight/Agilent",
+          "model": "N9040B",
+          "status": "implemented-uncommissioned"
         }
       ],
       "sdk_is_manufacturer_endorsed": false,
       "integrated_virtual_model": null,
       "equipment_type": "EMI 수신기",
       "manufacturers": [
+        "Keysight/Agilent",
         "Rohde & Schwarz"
       ]
     },
@@ -485,6 +731,7 @@
         "rs-smb100b",
         "rs-smw200a"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "SignalGenerator",
       "kind": "instrument",
@@ -700,6 +947,7 @@
         "keysight-e3640",
         "kikusui-pwr"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "PowerSupply",
       "kind": "instrument",
@@ -839,6 +1087,7 @@
       "source_ids": [
         "keysight-power"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "PSeriesPowerMeter",
       "kind": "instrument",
@@ -916,6 +1165,7 @@
         "rs-nrpa",
         "rs-nrps"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "UsbPowerSensor",
       "kind": "instrument",
@@ -1061,6 +1311,7 @@
         "rs-znb",
         "rs-znle"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "VectorNetworkAnalyzer",
       "kind": "instrument",
@@ -1194,6 +1445,7 @@
       "source_ids": [
         "rs-cmw-lte"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "CmwLte",
       "kind": "instrument",
@@ -1274,6 +1526,7 @@
       "source_ids": [
         "thermotron-8800"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "Thermotron8800",
       "kind": "facility",
@@ -1358,6 +1611,7 @@
       "source_ids": [
         "espec-chamberconnect"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "EspecController",
       "kind": "facility",
@@ -1436,6 +1690,7 @@
       "source_ids": [
         "hp-437b"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "Hp437B",
       "kind": "instrument",
@@ -1560,6 +1815,7 @@
       "source_ids": [
         "innco-co3000"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "Co3000",
       "kind": "facility",
@@ -1645,6 +1901,7 @@
       "source_ids": [
         "rs-osp"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "OspSwitch",
       "kind": "facility",
@@ -1720,6 +1977,7 @@
       "source_ids": [
         "keysight-e4419b"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "EpmPowerMeter",
       "kind": "instrument",
@@ -1803,6 +2061,7 @@
       "source_ids": [
         "oda-ex"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "OdaEx",
       "kind": "instrument",
@@ -1892,6 +2151,7 @@
       "source_ids": [
         "rs-cmu-base"
       ],
+      "role_models": [],
       "physical_verified": false,
       "id": "Cmu200Cw",
       "kind": "instrument",

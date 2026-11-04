@@ -130,21 +130,26 @@ class SpectrumAnalyzer(Scpi):
 
 
 class EmiReceiver(Scpi):
-    """ESW/ESR receiver bargraph; single detector avoids model-specific result order.
+    """Dedicated final-detector role: receiver bargraph or FSW/X-Series final marker.
 
     Takes individual conducted/radiated amplitude readings. Antenna factor, cable loss,
     LISN, height/azimuth search and regulatory verdict are separate site responsibilities.
     """
-    MODELS = {'ESW8': 'rs-esw', 'ESW44': 'rs-esw', 'ESR3': 'rs-esr', 'ESR7': 'rs-esr', 'EPL1000': 'rs-epl'}
+    MODELS = {'ESW8': 'rs-esw', 'ESW44': 'rs-esw', 'ESR3': 'rs-esr', 'ESR7': 'rs-esr', 'EPL1000': 'rs-epl',
+              'ESU8': 'rs-esu', 'ESU40': 'rs-esu', 'FSW50': 'rs-fsw', 'FSW67': 'rs-fsw',
+              'N9010A': 'keysight-xsa-a', 'N9020A': 'keysight-xsa-a', 'N9030A': 'keysight-xsa-a',
+              'N9030B': 'keysight-xsa-b', 'N9040B': 'keysight-xsa-b'}
 
     def __init__(self, transport, *, model, max_frequency_hz):
         if model not in self.MODELS:
             raise UnsupportedInstrument(f'No reviewed receiver dialect for {model}')
-        super().__init__(transport, model=model, manufacturers=RS)
+        super().__init__(transport, model=model, manufacturers=KEYSIGHT if model.startswith('N') else RS)
         self.source_id = self.MODELS[model]
         self.max_hz = number(max_frequency_hz, 'installed maximum frequency', 1, 1e12)
 
     def read_level(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db):
+        if self.expected_model not in {'ESW8', 'ESW44', 'ESR3', 'ESR7', 'EPL1000'}:
+            raise UnsupportedInstrument('Use read_verified_level for the final detector role')
         number(frequency_hz, 'frequency_hz', 1, self.max_hz)
         number(rbw_hz, 'rbw_hz', 1, 1e7)
         number(dwell_seconds, 'dwell_seconds', 0.001, 100)
@@ -173,6 +178,11 @@ class EmiReceiver(Scpi):
         Call within managed_run/DeviceSession.active so abort is attempted on any failure.
         """
         from .detectors import DETECTORS, ReceiverLevel, validate_receiver, verify_readbacks, READBACK_QUERIES
+        from .detectors import EXTENDED_RANGES
+        if self.expected_model in EXTENDED_RANGES:
+            from .extended_detectors import read_level
+            return read_level(self, frequency_hz=frequency_hz, rbw_hz=rbw_hz, detector=detector,
+                              dwell_seconds=dwell_seconds, attenuation_db=attenuation_db)
         settings = dict(frequency_hz=frequency_hz, rbw_hz=rbw_hz, detector=detector,
                         dwell_seconds=dwell_seconds, attenuation_db=attenuation_db, filter_type='CISPR')
         validate_receiver(self.expected_model, self.max_hz, **{k: v for k, v in settings.items() if k != 'filter_type'})
@@ -201,5 +211,7 @@ class EmiReceiver(Scpi):
         with self.io.transaction():
             self.io.write('ABOR')
             self.io.write('INIT1:CONT OFF')
+            if self.expected_model.startswith('FSW'):
+                self.io.write('CALC:MARK:FUNC:FME:STAT OFF')
             self.opc()
             self.errors()

@@ -67,7 +67,7 @@ def main():
         example.write_text(examples["virtual"], encoding="utf-8")
 
         diagnosed = json.loads(cli("doctor"))
-        expected_versions = {"dgm-device-control": "0.8.0", "dgm-lab-control": "0.5.0",
+        expected_versions = {"dgm-device-control": "0.9.0", "dgm-lab-control": "0.6.0",
                              "dgm-rf-command-library": "0.5.0"}
         if diagnosed["packages"] != expected_versions or not diagnosed["supported_python"]:
             raise ValueError(f"Install README package versions first: {diagnosed['packages']}")
@@ -118,7 +118,13 @@ def main():
         assert corrected["assessment"]["verdict"] == "PASS"
         corrected_saved = json.loads((target / "wlan-corrected-001/result.json").read_text(encoding="utf-8"))
         assert corrected_saved["assessment"]["maximum_field"] and corrected_saved["assessment"]["worst_margin"]
-        assert len(json.loads(cli("detector-list"))["sources"]["manuals"]) == 6
+        assert len(json.loads(cli("detector-list"))["sources"]["manuals"]) == 7
+        cli('measurement-init', '--workflow', 'wlan', '--model', 'FSW50', '--detector', 'QP', '--output', 'fsw-qp.json')
+        cli('evaluation-init', '--workflow', 'wlan', '--measurement', 'fsw-qp.json', '--output', 'fsw-evaluation.json')
+        fsw = json.loads(cli('virtual-run', '--measurement', 'fsw-qp.json', '--evaluation', 'fsw-evaluation.json', '--output-dir', 'fsw-qp-001'))
+        assert fsw['status'] == 'completed' and fsw['assessment']['verdict'] == 'PASS'
+        fsw_saved = json.loads((target/'fsw-qp-001/result.json').read_text(encoding='utf-8'))
+        assert fsw_saved['measurement']['returned_to_sampled_peak']
         cli("measurement-init", "--workflow", "wlan", "--detector", "CISPR_AVER", "--output", "wlan-receiver.json")
         cli("evaluation-init", "--workflow", "wlan", "--measurement", "wlan-receiver.json", "--output", "wlan-receiver-evaluation.json")
         receiver = json.loads(cli("virtual-run", "--measurement", "wlan-receiver.json", "--evaluation", "wlan-receiver-evaluation.json", "--output-dir", "wlan-receiver-001"))

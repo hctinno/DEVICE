@@ -43,11 +43,21 @@
       "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_5876_01/EPL_UserManual_en_07.pdf",
       "sha256": "16e1c53563ab6765a08a4bb9927bcdbc0b710a41bceef76198a5872b82dae1d8",
       "reviewed_pdf_pages": [
+        387,
+        388,
+        395,
+        396,
+        397,
+        398,
+        401,
+        404,
         407,
         408,
+        459,
+        460,
         464
       ],
-      "scope": "Detector/filter documented; verified receiver-grid workflow NOT integrated",
+      "scope": "Single bargraph, standard EMI functionality, EPL1000 <=30 MHz",
       "physical_verified": false
     },
     {
@@ -55,11 +65,26 @@
       "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
       "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283",
       "reviewed_pdf_pages": [
+        339,
+        340,
+        344,
+        348,
+        618,
+        905,
+        906,
+        1096,
         1097,
-        1262,
-        1263
+        1098,
+        1100,
+        1101,
+        1102,
+        1103,
+        1216,
+        1289,
+        1290,
+        1291
       ],
-      "scope": "QP/CISPR-average requires K54 and CISPR filter; final-measurement workflow NOT integrated",
+      "scope": "K54-gated final marker; not ordinary spectrum trace",
       "physical_verified": false
     },
     {
@@ -69,10 +94,43 @@
       "reviewed_pdf_pages": [
         53,
         54,
+        55,
         56,
-        621
+        557,
+        578,
+        579,
+        580,
+        581,
+        590,
+        610,
+        611,
+        622,
+        698,
+        699,
+        702
       ],
-      "scope": "Receiver/trace detectors documented; verified-grid workflow NOT integrated",
+      "scope": "Single receiver bargraph; AVER voltage envelope (not spectrum mode average power)",
+      "physical_verified": false
+    },
+    {
+      "source_id": "keysight-xsa-a",
+      "url": "https://www.keysight.com/us/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+      "sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+      "reviewed_pdf_pages": [
+        414,
+        638,
+        709,
+        710,
+        711,
+        712,
+        713,
+        714,
+        715,
+        716,
+        717,
+        754
+      ],
+      "scope": "EMC-gated Measure-at-Marker A.02.00+; scalar voltage average",
       "physical_verified": false
     },
     {
@@ -80,17 +138,25 @@
       "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
       "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2",
       "reviewed_pdf_pages": [
+        378,
+        379,
+        380,
+        384,
+        385,
+        386,
         401,
         402,
         403,
-        554,
-        555,
-        556
+        452,
+        523,
+        524,
+        2942
       ],
-      "scope": "Scalar voltage averaging differs from RMS; QPE/EAV support/options not integrated",
+      "scope": "EMC-gated Measure-at-Marker; zero span avoids zoom; QPE/EAV/AVER+SCAL",
       "physical_verified": false
     }
   ],
+  "epl_range_reference": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/specifications/3683_7819_22/EPL_specs_en_3683-7819-22_v0800.pdf",
   "receiver_range_reference": "https://www.rohde-schwarz.com/de/produkte/messtechnik/funkstoermessempfaenger/rs-esr-funkstoermessempfaenger_63493-17877.html",
   "note": "Page numbers count the PDF cover as page 1; original PDFs are not redistributed"
 }

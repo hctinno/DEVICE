@@ -1,5 +1,7 @@
 # DGM LabControl
 
+v0.6.0: 전용 최종 검파 역할 `EmiReceiver.read_verified_level`에 EPL1000·ESU8/40·FSW50/67·X-Series A/B 10개 모델을 추가했습니다. 모델별 native 측정, K54/EMC 옵션, 전후 readback과 원시 결과를 검증합니다. 설정/버전·지원 범위는 [검파기 안내](../device-control/DETECTORS.md)를 따르며 실물 검증은 수행하지 않았습니다.
+
 v0.5.0: ESW8/44·ESR3/7의 `EmiReceiver.read_verified_level`을 추가했습니다. POS/QP/선형 평균/CISPR 평균, CISPR 필터, 시간·감쇠·단위의 전후 readback을 검증합니다. 기존 read_level은 호환 목적으로 유지하며 최종 QP/평균 평가에는 새 API를 사용합니다. [SDK 통합·모델별 제한](../device-control/DETECTORS.md)을 확인합니다. 실장비 검증은 미수행입니다. 아래 버전 표기는 과거 기록입니다.
 
 현재 v0.4.0은 [제조사·모델별 지원표](../../SUPPORTED_EQUIPMENT.md)를 공통 시작점으로 사용합니다. 목록 scope는 `report-2026`, 단말 연결 helper는 `phone_serial`입니다. 제조사 표시를 생략한 전용 제품은 `manufacturer_display_redacted=true`로 구별하며 원문 값은 `source_rows` 또는 `occurrences`의 근거에 보존합니다. 아래 v0.3.0은 기존 기능 추가 기록입니다.

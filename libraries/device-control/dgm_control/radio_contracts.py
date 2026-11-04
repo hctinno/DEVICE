@@ -192,6 +192,9 @@ def check_radio(plan, mode, profiles=None, measurement_config=None):
             raise ValueError("Simulation must not accept site profiles")
     else:
         exact(profiles, required, "site profiles")
+        if measurement_config is not None:
+            from .receiver_measurement import require_dedicated_receiver
+            require_dedicated_receiver(profiles)
         for name, profile in profiles.items():
             if name == "NfcPrbs":
                 validate_nfc_profile(profile)

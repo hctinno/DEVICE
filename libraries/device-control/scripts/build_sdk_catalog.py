@@ -20,6 +20,8 @@ def main():
         device_id = item["driver"]
         # Report-only metadata misses implemented drivers from the earlier inventory.
         matches = [row for row in legacy if row["driver"] == device_id]
+        known = {row['model'] for row in matches}
+        matches += [row for row in item.get('role_models', []) if row['model'] not in known]
         source_ids = sorted(set(item["source_ids"]) | {row["source_id"] for row in matches if row["source_id"]})
         if not source_ids:
             raise ValueError(f"Missing driver provenance: {device_id}")

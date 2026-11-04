@@ -6,7 +6,7 @@ import math
 
 from dgm_lab.analyzers import EmiReceiver, SpectrumAnalyzer
 from dgm_lab.core import number, normalized, scalar
-from dgm_lab.detectors import DETECTORS, RECEIVER_RANGES, validate_receiver, verify_readbacks
+from dgm_lab.detectors import DETECTORS, RECEIVER_RANGES, EXTENDED_RANGES, validate_receiver, verify_readbacks
 
 CONVERSION = 90 + 10 * math.log10(50)
 CONFIG_KEYS = {'schema_version', 'device_id', 'model', 'simulation_only', 'site_verified', 'evidence_notes',
@@ -18,42 +18,54 @@ def detector_catalog():
     rows = []
     for model, source in EmiReceiver.MODELS.items():
         ready = model in RECEIVER_RANGES
-        rows.append(dict(device_id='EmiReceiver', manufacturer='Rohde & Schwarz', model=model,
+        from dgm_lab.extended_detectors import family, required_option
+        rows.append(dict(device_id='EmiReceiver', manufacturer='Keysight/Agilent' if model.startswith('N') else 'Rohde & Schwarz', model=model,
                          status='implemented-uncommissioned' if ready else 'reference-only',
                          detectors=list(DETECTORS) if ready else [], source_id=source,
+                         wire_detectors={**DETECTORS, 'CISPR_AVER': 'EAV' if model.startswith('N') else 'CAV'},
                          physical_verified=False, acquisition='receiver_grid' if ready else None,
-                         maximum_hz=RECEIVER_RANGES.get(model), qp_workflow_maximum_hz=1e9 if ready else None,
-                         reason='Single bargraph with settings readback; site commissioning required' if ready else
+                         minimum_hz=9000 if ready else None, maximum_hz=RECEIVER_RANGES.get(model),
+                         qp_workflow_maximum_hz=min(1e9, RECEIVER_RANGES[model]) if ready else None,
+                         dialect=family(model) if model in EXTENDED_RANGES else 'receiver-bargraph',
+                         required_option=required_option(model) if model in EXTENDED_RANGES else None,
+                         firmware_status='site-validation-required',
+                         minimum_documented_firmware='A.02.00' if model in {'N9010A', 'N9020A', 'N9030A'} else None,
+                         dwell_seconds={d: [1, 60] if model in EXTENDED_RANGES else [1 if d == 'QP' else .02, 100] for d in DETECTORS},
+                         attenuation={'minimum_db': 20, 'maximum_db': 50 if model in EXTENDED_RANGES else 70,
+                                      'step_db': 10 if model in EXTENDED_RANGES else None},
+                         reason='Final single-frequency level with settings readback; site commissioning required' if ready else
                                 'Detector commands documented; verified-grid integration not implemented'))
     for model, (source, _) in SpectrumAnalyzer.MODELS.items():
-        documented = model in {'FSW50', 'FSW67', 'ESU8', 'ESU40', 'N9030B', 'N9040B'}
+        documented = model in EXTENDED_RANGES
         rows.append(dict(device_id='SpectrumAnalyzer', model=model, source_id=source,
                          manufacturer='Keysight/Agilent' if source.startswith('keysight') else 'Rohde & Schwarz',
-                         status='reference-only' if documented else 'unconfirmed', physical_verified=False,
+                         status='separate-final-detector-role' if model in EXTENDED_RANGES else 'unconfirmed', physical_verified=False,
                          detectors=['POS'], acquisition='swept_spectrum',
-                         reason='QP/EMI-average options or final measurement documented; not integrated into this swept workflow'
+                         reason='Use EmiReceiver role / read_verified_level for QP and average; swept acquire remains unchanged'
                          if documented else 'QP/average final-measurement dialect/options not reviewed for this workflow',
                          legacy_average='AVER/RMS is not eligible for QP or voltage-average judgment'))
     sources = json.loads(files('dgm_control').joinpath('data/detector-sources.json').read_text(encoding='utf-8'))
     return {'models': rows, 'detectors': dict(DETECTORS), 'physical_verified': False, 'sources': sources,
+            'detector_wire_scope': 'Top-level aliases are bargraph defaults; use per-model wire_detectors and native adapter',
             'unsupported_by_workflow': ['QP above 1 GHz', 'ambiguous AVER or RMS as voltage-average criterion',
-                                        'EPL/FSW/ESU/X-Series verified receiver-grid execution', 'automatic FCC certification'],
+                                        'new analyzer final-detector workflows above 1 GHz', 'automatic FCC certification'],
             'scope': 'Wrapper support is distinct from physical instrument capability; unknown models are rejected'}
 
 
-def measurement_template(plan, detector):
+def measurement_template(plan, detector, model='ESW44'):
     from .evaluation import context
     sweep, paths, _ = context(plan)
     lo, hi = sweep['start_hz'], sweep['stop_hz']
-    if detector == 'QP' and hi > 1e9:
+    if model not in RECEIVER_RANGES: raise ValueError('Unknown detector model')
+    if hi > RECEIVER_RANGES[model] or (detector == 'QP' and hi > 1e9):
         # Explicit low-frequency synthetic fixture; no claim that this is a real emission.
-        lo, hi = 30e6, 31e6
+        lo, hi = (13.55e6, 13.57e6) if model == 'EPL1000' else (30e6, 31e6)
     rbw = 200 if hi < 150e3 else 9000 if hi < 30e6 else 120000 if hi <= 1e9 else 1000000
-    result = dict(schema_version=1, device_id='EmiReceiver', model='ESW44', simulation_only=True,
+    result = dict(schema_version=1, device_id='EmiReceiver', model=model, simulation_only=True,
                   site_verified=False, evidence_notes='Synthetic frequency grid, not a test standard or site profile',
                   frequencies_hz=[lo, (lo+hi)/2, hi], detector=detector, rbw_hz=rbw,
                   dwell_seconds=1, attenuation_db=20, filter_type='CISPR',
-                  path_frequency_limits_hz={p: [9000, 44e9] for p in paths})
+                  path_frequency_limits_hz={p: [9000, RECEIVER_RANGES[model]] for p in paths})
     validate_measurement(result, plan, simulated=True)
     return result
 
@@ -97,6 +109,8 @@ def validate_measurement(config, plan, *, simulated, profile=None):
         p = profile['config']['parameters']
         if p['model'] != config['model'] or frequencies[-1] > p['max_frequency_hz']:
             raise ValueError('Receiver model/range differs from site profile')
+        for hz in frequencies:
+            validate_receiver(config['model'], p['max_frequency_hz'], frequency_hz=hz, **point_arguments(config))
         if config['dwell_seconds'] >= profile['config']['transport'].get('timeout', 10):
             raise ValueError('Receiver transport timeout must exceed dwell duration plus settling margin')
     return {'valid': True, 'model': config['model'], 'detector': config['detector'], 'points': len(frequencies),
@@ -106,6 +120,22 @@ def validate_measurement(config, plan, *, simulated, profile=None):
 
 def point_arguments(config):
     return {k: config[k] for k in ('rbw_hz', 'detector', 'dwell_seconds', 'attenuation_db')}
+
+
+def require_dedicated_receiver(profiles):
+    """Reject explicit duplicate resources without DNS resolution or device discovery.
+
+    Site commissioning must also exclude aliases/multiple interfaces of one chassis.
+    """
+    def endpoint(profile):
+        t = profile.get('config', {}).get('transport', {})
+        if t.get('kind') == 'tcp': return ('tcp', str(t.get('host', '')).strip().lower(), t.get('port'))
+        if t.get('kind') == 'visa': return ('visa', str(t.get('resource', '')).strip().upper())
+        if t.get('kind') == 'serial': return ('serial', str(t.get('port', '')).strip().upper())
+        return None
+    receiver = endpoint(profiles['EmiReceiver'])
+    if receiver and any(endpoint(p) == receiver for name, p in profiles.items() if name != 'EmiReceiver'):
+        raise ValueError('EmiReceiver must be a dedicated instrument, distinct from all other workflow roles')
 
 
 def measurement_settings(config):
@@ -142,7 +172,16 @@ def validate_trace(trace, config):
         expected = dict(frequency_hz=hz, **point_arguments(config), filter_type='CISPR')
         if point['settings'] != expected or point['unit'] != 'dBuV' or normalized(point['identity']['model']) != normalized(config['model']):
             raise ValueError('Receiver settings/identity/unit proof mismatch')
-        for phase in ('before', 'after'): verify_readbacks(point['readbacks'][phase], expected)
-        value = scalar(point['raw'])
+        for phase in ('before', 'after'): verify_readbacks(point['readbacks'][phase], expected, config['model'])
+        if config['model'] in EXTENDED_RANGES:
+            from types import SimpleNamespace
+            from dgm_lab.extended_detectors import parse_result, verify_capability
+            verify_capability(config['model'], point['readbacks']['capability'], SimpleNamespace(**point['identity']))
+            if config['model'].startswith('FSW') and point['readbacks']['before']['SWE:TIME?'] != point['readbacks']['after']['SWE:TIME?']:
+                if not math.isclose(scalar(point['readbacks']['before']['SWE:TIME?']), scalar(point['readbacks']['after']['SWE:TIME?']), rel_tol=1e-8, abs_tol=1e-6):
+                    raise ValueError('FSW initial sweep time changed during acquisition')
+            value = parse_result(config['model'], point['raw'], expected)
+        else:
+            value = scalar(point['raw'])
         if value != point['value'] or value != trace['values_dbuv'][index] or not math.isclose(value-CONVERSION, trace['values_dbm'][index], abs_tol=1e-9):
             raise ValueError('Receiver raw/normalized value mismatch')

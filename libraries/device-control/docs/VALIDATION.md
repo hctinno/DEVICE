@@ -1,4 +1,8 @@
-# SDK v0.8.0 검수 범위
+# SDK v0.9.0 검수 범위
+
+2026-11-05 전체 회귀: SDK 155개 + 설비 109개 + 단말 58개 = **322개 통과**, 격리 설치 CLI **90건 통과**. 추가 검사는 10개 모델 × 4개 검파기, 4개 계열 × 5개 무선, 모의 실장비 어댑터 5종, 누락 옵션/불명 펌웨어/설정 drift/부분 실패/취소/중복 endpoint를 포함합니다. 전체 회귀 이후 X-Series A 계열 목록 설명을 수정하고 해당 회귀 검사와 새 설치본의 9개 분석기 안내 검사를 통과했습니다. [SDK 추가 검사](../tests/test_extended_receivers.py), [native 추가 검사](../../lab-control/tests/test_extended_detectors.py), [전체 결과](validation.json)를 확인합니다. 실장비 검사는 0건입니다.
+
+0.9.0 최종 배포 검수: ZIP **340348 bytes**, SHA-256 `802a588860874a0da1e908b361237ff66f7fecb6ca3b544c16331b412e18700c`. 새 venv 설치에서 다섯 무선 각각 12점의 수신기 보정·기준 비교를 통과했습니다. 별도 새 venv에서 **README 37개 명령·3개 Python 구문 검사**가 통과했고 설치 입력의 wheel 3개·설치기는 최종 ZIP과 hash가 일치합니다. [배포 manifest](distribution-validation.json)와 [README 결과](../../../README_VALIDATION.json)를 확인합니다. 아래 0.8.0 이하는 이전 완료 기록입니다.
 
 최종 배포 검수: ZIP 331049 bytes, SHA-256 `950ed5d5341a9ac215f0cb1cfaf0df5b8759d75cde770fd27ee71d087abbcf27`. 새 venv 설치에서 WLAN 및 네 radio 각각 12점의 QP/평균 보정 비교를 통과했습니다. 최종 ZIP을 별도 폴더에 풀어 다시 설치한 README 검수는 **34개 명령·3개 Python 구문 검사** 통과입니다. 원격 장비 접속은 0건입니다.
 

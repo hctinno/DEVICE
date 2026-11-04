@@ -15,6 +15,11 @@
 | 안테나 마스트 | Innco systems | MA4640-XP-ET | Co3000 | position, limits, speed, move, polarize, stop_all | controller_component |
 | 안테나 마스트 | Innco systems | MA4640/800-XP-EP | Co3000 | position, limits, speed, move, polarize, stop_all | controller_component |
 | DC 전원공급기 | KIKUSUI | PWR2001ML | PowerSupply | configure, read_voltage, read_current, start, stop | implemented_uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9010A | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9020A | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9030A | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9030B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9040B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | 전력계 | Keysight/Agilent/HP | 437B | Hp437B | configure, read_power, stop | implemented_uncommissioned |
 | DC 전원공급기 | Keysight/Agilent/HP | 6674A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented_uncommissioned |
 | DC 전원공급기 | Keysight/Agilent/HP | E3632A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented_uncommissioned |
@@ -37,16 +42,20 @@
 | DC 전원공급기 | ODA | EX60-40 | OdaEx | configure, read_voltage, read_current, start, stop | conditional |
 | 통신 테스터 CW 발생 기능 | Rohde & Schwarz | CMU200 | Cmu200Cw | configure, status, start, stop | implemented_uncommissioned |
 | 통신 테스트 장비 | Rohde & Schwarz | CMW500 | CmwLte | configure, start, stop | conditional |
-| EMI 수신기 | Rohde & Schwarz | EPL1000 | EmiReceiver | read_level, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | EPL1000 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | ESCI7 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESR3 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESR7 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | ESU40 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | ESU40 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | ESU8 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | ESU8 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESW44 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESW8 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | FSV40 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | FSW50 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | FSW50 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | FSW67 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | FSW67 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
 | USB 파워센서 | Rohde & Schwarz | NRP18A | UsbPowerSensor | configure_average, read_power, stop | implemented_uncommissioned |
 | USB 파워센서 | Rohde & Schwarz | NRP18S | UsbPowerSensor | configure_average, read_power, stop | implemented_uncommissioned |

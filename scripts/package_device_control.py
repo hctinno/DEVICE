@@ -75,18 +75,18 @@ def main():
                 raise RuntimeError("Offline facility scan peak failed")
             radio_runs.append(radio)
         receiver_runs = []
-        for radio, detector in (("wlan", "LINEAR_AVER"), ("bluetooth", "CISPR_AVER"), ("cellular", "LINEAR_AVER"), ("nfc", "QP"), ("uwb", "CISPR_AVER")):
+        for radio, detector, model in (("wlan", "LINEAR_AVER", "FSW50"), ("bluetooth", "CISPR_AVER", "ESU8"), ("cellular", "LINEAR_AVER", "N9010A"), ("nfc", "QP", "EPL1000"), ("uwb", "CISPR_AVER", "N9030B")):
             base = [str(python), "-m", "dgm_control"]
             args = ["--workflow", "wlan"] if radio == "wlan" else ["--workflow", "radio", "--plan", str(temp / f"{radio}.json")]
             mpath, epath = temp / f"{radio}-receiver.json", temp / f"{radio}-receiver-eval.json"
-            run([*base, "measurement-init", *args, "--detector", detector, "--output", str(mpath)], temp, clean_env)
+            run([*base, "measurement-init", *args, "--model", model, "--detector", detector, "--output", str(mpath)], temp, clean_env)
             run([*base, "evaluation-init", *args, "--measurement", str(mpath), "--output", str(epath)], temp, clean_env)
             command = ["virtual-run"] if radio == "wlan" else ["radio-run", "--mode", "simulation", "--plan", str(temp / f"{radio}.json")]
             answer = json.loads(run([*base, *command, "--measurement", str(mpath), "--evaluation", str(epath),
                                      "--output-dir", str(temp / f"{radio}-receiver")], temp, clean_env))
             if answer["status"] != "completed" or answer["assessment"]["verdict"] != "PASS":
                 raise RuntimeError("Offline receiver-grid comparison failed")
-            receiver_runs.append(dict(radio=radio, detector=detector, samples=answer["samples"], verdict="PASS"))
+            receiver_runs.append(dict(radio=radio, model=model, detector=detector, samples=answer["samples"], verdict="PASS"))
         archive = target / f"dgm-device-control-{version}-offline.zip"
         with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as output:
             for path in sorted(bundle.rglob("*")):

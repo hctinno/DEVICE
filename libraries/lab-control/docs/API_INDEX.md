@@ -23,7 +23,7 @@ SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermo
 | `__init__(self, transport, *, model, max_frequency_hz)` | 하위 메서드 호출; 실행 코드 참조 |
 | `read_level(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)` | `INIT1:IMM`; `ABOR`; `INST:SEL REC`; `INIT1:CONT OFF`; `CALC:UNIT:POW DBUV`; `f'FREQ:CENT {fmt(frequency_hz)}'`; `BAND:AUTO OFF`; `f'BAND {fmt(rbw_hz)}'`; `INP:ATT:AUTO OFF`; `f'DET:REC {detector}'`; `f'SWE:TIME {fmt(dwell_seconds)}'`; `FREQ:CENT `; `INP:ATT `; `DET:REC `; `SWE:TIME `; `FREQ:CENT?` |
 | `read_verified_level(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)` | `INIT1:IMM`; `ABOR`; `INST:SEL REC`; `INIT1:CONT OFF`; `CALC:UNIT:POW DBUV`; `DISP:BARG:TCO OFF`; `DISP:BARG:PHOL OFF`; `f'FREQ:CENT {fmt(frequency_hz)}'`; `f'DET:REC {DETECTORS[detector]}'`; `BAND:TYPE CISPR`; `BAND:AUTO OFF`; `f'BAND {fmt(rbw_hz)}'`; `INP:ATT:AUTO OFF`; `f'SWE:TIME {fmt(dwell_seconds)}'`; `FREQ:CENT `; `DET:REC `; `INP:ATT `; `SWE:TIME ` |
-| `stop(self)` | `ABOR`; `INIT1:CONT OFF` |
+| `stop(self)` | `ABOR`; `INIT1:CONT OFF`; `CALC:MARK:FUNC:FME:STAT OFF` |
 
 ## CmwLte
 

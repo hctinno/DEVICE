@@ -28,12 +28,17 @@ def main():
             methods[method] = str(inspect.signature(getattr(driver, method)))
         matches = [r for r in inventory if r['driver'] == name]
         source_ids = sorted({r['source_id'] for r in matches if r['source_id']})
+        role_models = []
+        if name == 'EmiReceiver':
+            source_ids = sorted(set(source_ids) | set(driver.MODELS.values()))
+            role_models = [dict(model=model, manufacturer='Keysight/Agilent' if source.startswith('keysight') else 'Rohde & Schwarz',
+                                status='implemented-uncommissioned', source_id=source) for model, source in driver.MODELS.items()]
         if any(s not in sources for s in source_ids):
             raise ValueError('Unknown manufacturer source: ' + name)
         capabilities.append(dict(contract, driver=name, constructor=str(inspect.signature(driver)),
             source_file='dgm_lab/' + driver.__module__.split('.')[-1] + '.py', profile_path=profile_path,
             methods=methods, report_models=[dict(manufacturer=r['manufacturer'],model=r['model'],status=r['status']) for r in matches],
-            source_ids=source_ids, physical_verified=False))
+            source_ids=source_ids, role_models=role_models, physical_verified=False))
     (ROOT/'dgm_lab/data/capabilities.json').write_text(json.dumps(capabilities,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     upstream = read('research/open-source-review.json')
     for r in upstream:

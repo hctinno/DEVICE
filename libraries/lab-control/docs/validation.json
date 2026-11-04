@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-04T15:32:32.978329+00:00",
+  "utc": "2026-11-04T16:37:24.518829+00:00",
   "python": "3.12.6",
   "passed": true,
   "physical_equipment_tests": 0,
@@ -13,11 +13,11 @@
     "Measurement accuracy/calibration/uncertainty",
     "Physical motion/SAR/NR/DFS test workflows"
   ],
-  "utf8_source_artifacts": 109,
+  "utf8_source_artifacts": 111,
   "local_manual_sha256_verified": 39,
   "manual_pdf_cache_present": true,
   "local_report_pdf_sha256_verified": 0,
-  "tests_run": 103,
+  "tests_run": 109,
   "test_failures": 0,
   "test_errors": 0,
   "localhost_tcp_tests": 7,
@@ -64,5 +64,5 @@
     "nr_report_incomplete": false,
     "nr_printed_pages_verified": 371
   },
-  "elapsed_seconds": 60.813
+  "elapsed_seconds": 57.672
 }

@@ -1,5 +1,7 @@
 # 구현 계약
 
+v0.9.0: 추가 모델은 `dgm_lab.extended_detectors`의 모델별 final detector 어댑터를 사용합니다. EmiReceiver는 장비 종류뿐 아니라 전용 최종 검파 역할을 뜻하며 FSW/X-Series에서는 실제 spectrum application을 제어합니다. 같은 기존 SpectrumAnalyzer 세션을 재사용하지 않습니다. `receiver_measurement.validate_trace`가 모델별 readback·옵션/펌웨어·원시 1/4필드 결과를 다시 확인하고 기존 evaluation schema 2에 연결합니다. FSW K54/X-Series EMC는 runtime 조회로 확인하고 A 계열 A.02.00 도입 하한을 검사합니다. 실측 정확도/설치 펌웨어 commissioning과 구분합니다. 범위·누락 옵션·미완료 결과·중복 endpoint는 실패이며 자동 fallback은 없습니다.
+
 v0.8.0: [검파기별 계약](DETECTORS.md). 별도 measurement schema 1로 EmiReceiver의 명시적 주파수 grid를 선택합니다. dgm_lab.read_verified_level은 ESW8/44·ESR3/7의 단일 bargraph를 설정하고 전후 query를 검증합니다. receiver_measurement.py는 사전 범위/모델/시간/경로 검사, 개별 점의 원문·readback 즉시 기록, dBµV 보존과 50Ω dBm 정규화를 담당합니다. evaluation schema 2는 acquisition/filter/detector/RBW/minimum_dwell을 비교하고 원시 dBµV에 보정을 적용합니다. 기존 schema 1/POS 경로는 유지합니다. receiver_peer는 native parser용 합성 정상상태 모형이며 검파기 물리 응답을 모사하지 않습니다. 실장비 commissioning은 미실행입니다.
 
 v0.7.0: [보정·기준 비교](CORRECTIONS.md). evaluation.py는 별도 schema 1 교정/기준 계약, trace-bin 보간·50Ω 변환·판정·최대/최악 여유 집계를 담당합니다. 기존 radio plan schema 1/2는 유지하며 평가를 쓸 때만 schema 2가 필요합니다. WLAN/radio recipe는 측정 직후 보정하고 저장하며 보정 최대 위치를 선택합니다. wrapper는 cleanup/증거 저장 완료 후 최종 assessment를 발행합니다. 입력 전체와 canonical SHA-256으로 값·판정 추적을 보존합니다. failure는 NOT_EVALUATED로 재집계합니다. raw 동작은 옵션 없이 유지합니다. 세부 수학/오류/실장비 경계는 tests/test_evaluation.py로 검증합니다.

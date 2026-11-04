@@ -59,6 +59,7 @@
       "rs-fsv",
       "rs-fsw"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -70,24 +71,45 @@
       "stop"
     ],
     "operation_models": {
+      "read_level": [
+        "ESW8",
+        "ESW44",
+        "ESR3",
+        "ESR7",
+        "EPL1000"
+      ],
       "read_verified_level": [
         "ESW8",
         "ESW44",
         "ESR3",
-        "ESR7"
+        "ESR7",
+        "EPL1000",
+        "ESU8",
+        "ESU40",
+        "FSW50",
+        "FSW67",
+        "N9010A",
+        "N9020A",
+        "N9030A",
+        "N9030B",
+        "N9040B"
       ]
     },
     "lifecycle": "managed_run(lambda: None, device.stop)",
-    "protocol": "SCPI single-frequency receiver; verified ESW8/44 ESR3/7 bargraph subset",
+    "protocol": "SCPI final single-frequency detector role; bargraph, FSW final marker or X-Series Measure-at-Marker",
     "site_requirements": [
       "installed max frequency",
       "detector and dwell",
+      "K54/EMC where required and commissioned firmware",
+      "dedicated instrument distinct from baseline SpectrumAnalyzer",
       "antenna/cable/LISN corrections",
       "disabled internal corrections and commissioned RF path"
     ],
     "excludes": [
       "automatic FCC verdict",
-      "verified EPL receiver-grid integration",
+      "physical validation",
+      "new analyzer workflows above 1 GHz",
+      "EPL1000 above 30 MHz",
       "QP above 1 GHz in verified wrapper"
     ],
     "driver": "EmiReceiver",
@@ -117,9 +139,99 @@
       }
     ],
     "source_ids": [
+      "keysight-xsa-a",
+      "keysight-xsa-b",
       "rs-epl",
       "rs-esr",
-      "rs-esw"
+      "rs-esu",
+      "rs-esw",
+      "rs-fsw"
+    ],
+    "role_models": [
+      {
+        "model": "ESW8",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esw"
+      },
+      {
+        "model": "ESW44",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esw"
+      },
+      {
+        "model": "ESR3",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esr"
+      },
+      {
+        "model": "ESR7",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esr"
+      },
+      {
+        "model": "EPL1000",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-epl"
+      },
+      {
+        "model": "ESU8",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esu"
+      },
+      {
+        "model": "ESU40",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esu"
+      },
+      {
+        "model": "FSW50",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsw"
+      },
+      {
+        "model": "FSW67",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsw"
+      },
+      {
+        "model": "N9010A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-a"
+      },
+      {
+        "model": "N9020A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-a"
+      },
+      {
+        "model": "N9030A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-a"
+      },
+      {
+        "model": "N9030B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "N9040B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      }
     ],
     "physical_verified": false
   },
@@ -185,6 +297,7 @@
       "rs-smb100a",
       "rs-smw200a"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -234,6 +347,7 @@
       "keysight-6674a",
       "keysight-e3632a"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -272,6 +386,7 @@
     "source_ids": [
       "keysight-power"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -302,6 +417,7 @@
     },
     "report_models": [],
     "source_ids": [],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -345,6 +461,7 @@
     "source_ids": [
       "rs-znb"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -386,6 +503,7 @@
     "source_ids": [
       "rs-cmw-lte"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -420,6 +538,7 @@
     },
     "report_models": [],
     "source_ids": [],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -462,6 +581,7 @@
     "source_ids": [
       "espec-chamberconnect"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -494,6 +614,7 @@
     },
     "report_models": [],
     "source_ids": [],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -572,6 +693,7 @@
     "source_ids": [
       "innco-co3000"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -617,6 +739,7 @@
     "source_ids": [
       "rs-osp"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -655,6 +778,7 @@
     "source_ids": [
       "keysight-e4419b"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -701,6 +825,7 @@
     "source_ids": [
       "oda-ex"
     ],
+    "role_models": [],
     "physical_verified": false
   },
   {
@@ -747,6 +872,7 @@
     "source_ids": [
       "rs-cmu-base"
     ],
+    "role_models": [],
     "physical_verified": false
   }
 ]

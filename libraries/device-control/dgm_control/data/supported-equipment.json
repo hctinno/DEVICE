@@ -184,18 +184,6 @@
   },
   {
     "manufacturer": "Rohde & Schwarz",
-    "model": "EPL1000",
-    "equipment_type": "EMI 수신기",
-    "driver": "EmiReceiver",
-    "operations": [
-      "read_level",
-      "stop"
-    ],
-    "status": "implemented_uncommissioned",
-    "physical_verified": false
-  },
-  {
-    "manufacturer": "Rohde & Schwarz",
     "model": "ESR7",
     "equipment_type": "EMI 수신기",
     "driver": "EmiReceiver",
@@ -205,6 +193,127 @@
       "stop"
     ],
     "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "EPL1000",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_level",
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESU8",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESU40",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW50",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW67",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9010A",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9020A",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9030A",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9030B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9040B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
     "physical_verified": false
   },
   {

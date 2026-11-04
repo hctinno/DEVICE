@@ -54,6 +54,8 @@ def check_hardware(profiles, plan, measurement_config=None):
     if measurement_config is not None:
         from .receiver_measurement import validate_measurement
         receiver_check = validate_measurement(measurement_config, plan, simulated=False, profile=profiles["EmiReceiver"])
+        from .receiver_measurement import require_dedicated_receiver
+        require_dedicated_receiver(profiles)
     parameters = {key: value["config"]["parameters"] for key, value in profiles.items()}
     motion = parameters["Co3000"]
     if motion.get("motion_enabled") is not True:

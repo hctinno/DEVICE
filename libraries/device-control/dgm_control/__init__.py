@@ -12,7 +12,7 @@ from .radio_run import run_radio, load_radio_profiles
 from .evaluation import Evaluation, evaluation_template
 from .receiver_measurement import detector_catalog, measurement_template, validate_measurement
 
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 __all__ = ["devices", "describe", "profile_template", "doctor", "load_profile", "check_profile",
            "open_device", "DeviceSession", "ProfileError", "UnsupportedDevice", "SessionError", "error_details",
            "VirtualLab", "HardwareLab", "Scenario", "Fault", "WlanScan", "measure_wlan",

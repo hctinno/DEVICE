@@ -86,13 +86,13 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model, max_frequency_hz)",
-        "line": 140,
+        "line": 143,
         "command_fragments": []
       },
       {
         "name": "read_level",
         "signature": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
-        "line": 147,
+        "line": 150,
         "command_fragments": [
           "INIT1:IMM",
           "ABOR",
@@ -115,7 +115,7 @@
       {
         "name": "read_verified_level",
         "signature": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
-        "line": 168,
+        "line": 173,
         "command_fragments": [
           "INIT1:IMM",
           "ABOR",
@@ -140,10 +140,11 @@
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 199,
+        "line": 209,
         "command_fragments": [
           "ABOR",
-          "INIT1:CONT OFF"
+          "INIT1:CONT OFF",
+          "CALC:MARK:FUNC:FME:STAT OFF"
         ]
       }
     ]

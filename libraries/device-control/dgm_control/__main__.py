@@ -35,6 +35,8 @@ def main():
     measurement_init.add_argument("--plan", help="Required for radio; optional WLAN plan")
     measurement_init.add_argument("--detector", required=True, choices=["POS", "QP", "LINEAR_AVER", "CISPR_AVER"])
     measurement_init.add_argument("--output", required=True)
+    from dgm_lab.detectors import RECEIVER_RANGES
+    measurement_init.add_argument("--model", choices=sorted(RECEIVER_RANGES), default="ESW44")
     for action in (virtual, evaluation_init):
         action.add_argument("--measurement", help="Explicit receiver-grid measurement JSON; adds EmiReceiver")
     virtual.add_argument("--fault", choices=["analyzer-timeout", "malformed", "stuck-motion", "phone-stop"], help="Inject a reproducible failure")
@@ -85,7 +87,7 @@ def main():
             if args.workflow == "wlan": plan = plan_from_dict(plan) if plan else WlanScan()
             if args.action == "measurement-init":
                 from .receiver_measurement import measurement_template
-                value = measurement_template(plan, args.detector)
+                value = measurement_template(plan, args.detector, args.model)
             else:
                 value = evaluation_template(plan, measurement_config)
             with Path(args.output).open("x", encoding="utf-8") as handle:

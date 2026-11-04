@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-11-05 추가 요청: FSW·ESU·X-Series·EPL의 QP·평균을 공식 매뉴얼 기반으로 추가합니다. [SDK 0.9.0 작업 계약](libraries/device-control/EXTENDED_DETECTOR_PLAN.md), [모델·옵션·범위](libraries/device-control/DETECTORS.md). 아래의 최신 요청 표기는 이전 단계 기록입니다.
+
 2026-11-05 최신 요청: 모델별 QP·평균 검파 제어를 보정·판정·저장까지 연결합니다. SDK 0.8.0의 [작업 계약](libraries/device-control/DETECTOR_PLAN.md)과 [지원·실행 안내](libraries/device-control/DETECTORS.md)를 따릅니다. ESW/ESR의 검증된 명령 경로와 문서만 확인된 다른 모델을 구분하고, 실장비 검증은 수행하지 않습니다. 아래 최신 요청 표기는 당시의 과거 기록입니다.
 
 2026-11-04 최신 요청: Bluetooth·셀룰러·NFC·UWB에도 턴테이블·마스트·RF 스위치를 연동해 표본 최대 검색/복귀를 구현합니다. SDK 0.6.0의 [실행 계약](libraries/device-control/RADIO_SCAN_PLAN.md)을 따르며 기존 source 제한과 물리 미검증 상태를 유지합니다.

@@ -206,7 +206,7 @@ class ReceiverWorkflowTests(unittest.TestCase):
 
     def test_preflight_unknown_models_ranges_dwell_and_hardware_profile(self):
         m = measurement_template(QUICK, 'QP')
-        for change in ({'model': 'EPL1000'}, {'model': 'N9030B'}, {'detector': 'AVER'}, {'dwell_seconds': .99},
+        for change in ({'model': 'EPL1000'}, {'model': 'UNREVIEWED'}, {'detector': 'AVER'}, {'dwell_seconds': .99},
                        {'frequencies_hz': [1e9, 2e9]}, {'frequencies_hz': [30e6, 30e6]}, {'filter_type': 'NORM'},
                        {'path_frequency_limits_hz': {'dut': [1, 2]}}):
             with self.assertRaises(Exception): validate_measurement(m | change, QUICK, simulated=True)
@@ -220,7 +220,7 @@ class ReceiverWorkflowTests(unittest.TestCase):
         with self.assertRaises(ValueError): check_hardware(altered, QUICK, real)
         with self.assertRaises(ValueError): check_hardware(profiles, QUICK, m)
         catalog = detector_catalog()['models']
-        self.assertEqual(sum(r['status'] == 'implemented-uncommissioned' for r in catalog), 4)
+        self.assertEqual(sum(r['status'] == 'implemented-uncommissioned' for r in catalog), 14)
         self.assertTrue(any(r['status'] == 'unconfirmed' for r in catalog))
 
 

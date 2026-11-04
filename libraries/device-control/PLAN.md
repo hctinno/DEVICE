@@ -1,5 +1,7 @@
 # DGM DeviceControl 구축 계약
 
+2026-11-05 추가 확장: SDK 0.9.0 [FSW·ESU·X-Series·EPL 구현 계약](EXTENDED_DETECTOR_PLAN.md). 기존 보정/판정/로그 계약을 유지하고 모델별 최종 검파 명령과 옵션 검증을 추가합니다. 아래 0.8.0 이하는 이전 완료 기록입니다.
+
 2026-11-05 최신 확장: SDK 0.8.0 [검파기별 실행 계약](DETECTOR_PLAN.md), [모델별 지원·사용법·제한](DETECTORS.md). QP/선형 평균/CISPR 평균을 별도 수신기 grid로 측정해 보정·기준 비교·최대 복귀·부분 오류 기록에 연결합니다. 아래 항목은 버전별 과거 기록입니다.
 
 최신 확장: SDK 0.7.0 [보정·기준 비교 계약](CORRECTION_PLAN.md), [입력/실행/제한](CORRECTIONS.md). 아래 수치는 버전별 과거 기록이며 최신 검수는 docs/validation.json을 따릅니다.

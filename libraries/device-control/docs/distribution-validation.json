@@ -1,10 +1,10 @@
 {
-  "file": "dgm-device-control-0.8.0-offline.zip",
-  "bytes": 331049,
-  "sha256": "950ed5d5341a9ac215f0cb1cfaf0df5b8759d75cde770fd27ee71d087abbcf27",
+  "file": "dgm-device-control-0.9.0-offline.zip",
+  "bytes": 340348,
+  "sha256": "802a588860874a0da1e908b361237ff66f7fecb6ca3b544c16331b412e18700c",
   "wheels": [
-    "dgm_device_control-0.8.0-py3-none-any.whl",
-    "dgm_lab_control-0.5.0-py3-none-any.whl",
+    "dgm_device_control-0.9.0-py3-none-any.whl",
+    "dgm_lab_control-0.6.0-py3-none-any.whl",
     "dgm_rf_command_library-0.5.0-py3-none-any.whl"
   ],
   "offline_installer_tested": true,
@@ -27,30 +27,35 @@
   "fresh_venv_receiver_comparisons": [
     {
       "radio": "wlan",
+      "model": "FSW50",
       "detector": "LINEAR_AVER",
       "samples": 12,
       "verdict": "PASS"
     },
     {
       "radio": "bluetooth",
+      "model": "ESU8",
       "detector": "CISPR_AVER",
       "samples": 12,
       "verdict": "PASS"
     },
     {
       "radio": "cellular",
+      "model": "N9010A",
       "detector": "LINEAR_AVER",
       "samples": 12,
       "verdict": "PASS"
     },
     {
       "radio": "nfc",
+      "model": "EPL1000",
       "detector": "QP",
       "samples": 12,
       "verdict": "PASS"
     },
     {
       "radio": "uwb",
+      "model": "N9030B",
       "detector": "CISPR_AVER",
       "samples": 12,
       "verdict": "PASS"

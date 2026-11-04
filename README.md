@@ -2,7 +2,7 @@
 
 **다른 PC의 에이전트는 이 문서 순서대로 설치 → 가상 WLAN 시험 → 자동화 개발 → 실장비 프로필 작성 → 첫 연결을 진행합니다.** 공유 기준은 `main`입니다. 모든 명령은 복제한 저장소 루트에서 실행합니다.
 
-현재 버전: `dgm-device-control 0.8.0`, `dgm-lab-control 0.5.0`, `dgm-rf-command-library 0.5.0`. Python 3.11 이상, 검수 환경은 Windows / Python 3.12.6입니다. Linux/macOS 실행은 미검증입니다.
+현재 버전: `dgm-device-control 0.9.0`, `dgm-lab-control 0.6.0`, `dgm-rf-command-library 0.5.0`. Python 3.11 이상, 검수 환경은 Windows / Python 3.12.6입니다. Linux/macOS 실행은 미검증입니다.
 
 제조사 자료와 공개 근거를 연결한 **DGM 자체 SDK**이며 제조사 발행·인증 SDK가 아닙니다. **실장비 검증 0건**입니다. 목표는 RF·EMC 시험소 무인화이며, 현재 구현은 제어 라이브러리와 개발용 가상 시험환경입니다. 연결만으로 모든 FCC 시험을 완성하지는 않습니다.
 
@@ -36,7 +36,7 @@ python3 -m venv .venv
 
 기존 checkout은 로컬 변경을 보존한 뒤 `git switch main`, `git pull --ff-only origin main`을 실행하고 **3개 로컬 패키지 설치 명령을 다시 실행**합니다. 소스만 갱신하면 설치 패키지는 바뀌지 않습니다. PyPI에 배포됐다고 가정하고 패키지명만으로 설치하지 않습니다.
 
-오프라인 PC: 온라인 개발 PC에서 `python -m pip install "setuptools>=68" wheel` 후 `python -X utf8 scripts/package_device_control.py`로 만든 `libraries/device-control/dist/dgm-device-control-0.8.0-offline.zip`을 전달합니다. 압축 해제 폴더에서 `python -m venv .venv`, `.venv\Scripts\python install.py`를 실행합니다. ZIP은 Git에 없으며 기본 3개 wheel만 담습니다. VISA/serial 패키지·제조사 런타임은 별도 준비합니다. [상세 안내](libraries/device-control/OFFLINE_INSTALL.md)
+오프라인 PC: 온라인 개발 PC에서 `python -m pip install "setuptools>=68" wheel` 후 `python -X utf8 scripts/package_device_control.py`로 만든 `libraries/device-control/dist/dgm-device-control-0.9.0-offline.zip`을 전달합니다. 압축 해제 폴더에서 `python -m venv .venv`, `.venv\Scripts\python install.py`를 실행합니다. ZIP은 Git에 없으며 기본 3개 wheel만 담습니다. VISA/serial 패키지·제조사 런타임은 별도 준비합니다. [상세 안내](libraries/device-control/OFFLINE_INSTALL.md)
 
 ## 2. 가상 시험 실행과 결과 확인
 
@@ -90,7 +90,17 @@ SDK 0.7.0은 WLAN과 네 radio 설비 스캔의 모든 trace 점에 안테나 �
 
 ### QP·평균 검파 추가
 
-SDK 0.8.0은 Rohde & Schwarz **ESW8·ESW44·ESR3·ESR7** 수신기의 POS/QP/선형 평균/CISPR 평균을 지원합니다. 설정을 측정 전후 읽어 확인하며 보정·기준 비교·최대 복귀·부분 오류 로그에 연결합니다. 실제 장비 검증은 미수행입니다. 다른 모델의 문서상 기능·미구현·미확인과 실장비 프로필 준비는 [검파기 안내](libraries/device-control/DETECTORS.md)에 구분했습니다.
+FSW 최종 QP 측정 예제입니다. `--model`을 `ESU8`, `EPL1000`, `N9030B` 등 지원 모델로 바꿀 수 있습니다.
+
+```powershell
+python -m dgm_control measurement-init --workflow wlan --model FSW50 --detector QP --output fsw-qp.json
+python -m dgm_control evaluation-init --workflow wlan --measurement fsw-qp.json --output fsw-evaluation.json
+python -m dgm_control virtual-run --measurement fsw-qp.json --evaluation fsw-evaluation.json --output-dir runs/fsw-qp-001
+```
+
+추가 모델의 구현 범위는 9 kHz–1 GHz, EPL1000은 30 MHz까지입니다. 이 범위 밖의 6 GHz 평균 측정은 기존 ESW44/ESR7 경로를 사용하며 새 FSW/X-Series 경로에서는 아직 차단합니다. 생성 템플릿은 합성 주파수·교정·기준입니다. 실장비는 별도 전용 측정 장비의 `EmiReceiver.json`과 현장 입력을 준비해야 합니다. 같은 실물을 baseline `SpectrumAnalyzer`와 두 세션으로 제어하지 않습니다.
+
+SDK 0.9.0은 기존 **ESW8·ESW44·ESR3·ESR7**에 **EPL1000·ESU8/40·FSW50/67·N9010A/N9020A/N9030A/N9030B/N9040B**를 추가했습니다. POS/QP/선형 평균/CISPR 평균을 보정·기준 비교·최대 복귀·부분 오류 로그까지 연결합니다. FSW는 K54 옵션과 final marker, X-Series는 EMC 옵션과 Measure-at-Marker를 사용합니다. 모든 모델의 실제 장비 검증은 미수행이며 [명령·범위·옵션·펌웨어 안내](libraries/device-control/DETECTORS.md)를 확인합니다.
 
 ```powershell
 .venv\Scripts\python -m dgm_control detector-list
@@ -348,9 +358,9 @@ schema 2 plan의 scan에는 heights_cm/angles_deg/polarizations/rf_paths/motion_
 
 `check_readme.py`는 **설치된 패키지**로 README 가상 코드·CLI 정상/오류 실행·프로필 템플릿·예시 JSON을 검사합니다. 실장비 코드 블록은 구문만 검사하고 연결하지 않습니다. 다른 두 검사는 UTF-8·로컬 링크·일반 명칭을 검사합니다.
 
-SDK v0.8.0의 **README 실행 34건·Python 예제 3개 구문 검사**를 통과했습니다. WLAN 수신기/CISPR 평균·보정 비교와 네 radio의 schema 2 생성·사전검사·12점 설비 스캔·최대 복귀를 포함합니다. 최종 ZIP을 새 venv에 설치한 뒤 재현했습니다. [실행별 검수 기록](README_VALIDATION.json)의 passed와 버전으로 결과를 확인합니다. 실장비·VISA/serial 런타임·Linux/macOS 실행은 미검증입니다. 검수 명령은 `runs/readme-check-시각/validation.json`과 명령별 로그를 남깁니다.
+SDK v0.9.0의 **README 실행 37건·Python 예제 3개 구문 검사**를 통과했습니다. FSW QP 및 기존 WLAN 수신기/CISPR 평균·보정 비교와 네 radio의 schema 2 생성·사전검사·12점 설비 스캔·최대 복귀를 포함합니다. 오프라인 배포본을 새 venv에 설치한 뒤 재현했습니다. [실행별 검수 기록](README_VALIDATION.json)의 passed와 버전으로 결과를 확인합니다. 실장비·VISA/serial 런타임·Linux/macOS 실행은 미검증입니다. 검수 명령은 `runs/readme-check-시각/validation.json`과 명령별 로그를 남깁니다.
 
-SDK/드라이버를 바꿨다면 개발 환경에 `setuptools>=68`, `wheel`을 설치한 뒤 `python -X utf8 scripts/check_device_control.py`, `python -X utf8 scripts/check_lab_control.py`, `python -X utf8 scripts/check_phone_rf.py`를 실행합니다. v0.8.0 회귀 검수는 SDK 149개 + 설비 103개 + 단말 58개 = **310개 검사 통과**, SDK 격리 설치 CLI **89건 통과**입니다. [검수 기록](libraries/device-control/docs/validation.json)과 [검수 범위](libraries/device-control/docs/VALIDATION.md)를 확인합니다. 가상 검사 통과를 실측 검증으로 표시하지 않습니다.
+SDK/드라이버를 바꿨다면 개발 환경에 `setuptools>=68`, `wheel`을 설치한 뒤 `python -X utf8 scripts/check_device_control.py`, `python -X utf8 scripts/check_lab_control.py`, `python -X utf8 scripts/check_phone_rf.py`를 실행합니다. v0.9.0 회귀 검수는 SDK 155개 + 설비 109개 + 단말 58개 = **322개 검사 통과**, SDK 격리 설치 CLI **90건 통과**입니다. [검수 기록](libraries/device-control/docs/validation.json)과 [검수 범위](libraries/device-control/docs/VALIDATION.md)를 확인합니다. 가상 검사 통과를 실측 검증으로 표시하지 않습니다.
 
 ### 문제 해결
 
