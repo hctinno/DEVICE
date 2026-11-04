@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dgm-device-control"
-version = "0.9.0"
+version = "0.10.0"
 description = "Evidence-indexed common entry point for instruments, facilities and smartphone RF control"
 requires-python = ">=3.11"
-dependencies = ["dgm-lab-control==0.6.0", "dgm-rf-command-library==0.5.0"]
+dependencies = ["dgm-lab-control==0.7.0", "dgm-rf-command-library==0.5.0"]
 
 [project.optional-dependencies]
 visa = ["pyvisa>=1.14,<2"]

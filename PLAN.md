@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-11-05 장비 범위 확대: [작업 계약](libraries/device-control/EQUIPMENT_EXPANSION_PLAN.md), [공통 장비 제어](libraries/device-control/EQUIPMENT_CONTROL.md), [확장 공식 근거](libraries/lab-control/docs/MODEL_EXPANSION.md). SDK 0.10.0은 native 모델 확대·Truevolt DMM·명시적 장비 job·읽기 전용 식별·가상 실행·부분 오류 로그를 제공합니다. 아래 이전 확장 기록은 당시 범위입니다.
+
 2026-11-05 추가 요청: FSW·ESU·X-Series·EPL의 QP·평균을 공식 매뉴얼 기반으로 추가합니다. [SDK 0.9.0 작업 계약](libraries/device-control/EXTENDED_DETECTOR_PLAN.md), [모델·옵션·범위](libraries/device-control/DETECTORS.md). 아래의 최신 요청 표기는 이전 단계 기록입니다.
 
 2026-11-05 최신 요청: 모델별 QP·평균 검파 제어를 보정·판정·저장까지 연결합니다. SDK 0.8.0의 [작업 계약](libraries/device-control/DETECTOR_PLAN.md)과 [지원·실행 안내](libraries/device-control/DETECTORS.md)를 따릅니다. ESW/ESR의 검증된 명령 경로와 문서만 확인된 다른 모델을 구분하고, 실장비 검증은 수행하지 않습니다. 아래 최신 요청 표기는 당시의 과거 기록입니다.

@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT.parent/'phone-rf')]
 from dgm_lab.registry import DRIVERS
+from dgm_lab.model_scope import extra_models, model_rows
 
 
 def main():
@@ -33,8 +34,21 @@ def main():
             source_ids = sorted(set(source_ids) | set(driver.MODELS.values()))
             role_models = [dict(model=model, manufacturer='Keysight/Agilent' if source.startswith('keysight') else 'Rohde & Schwarz',
                                 status='implemented-uncommissioned', source_id=source) for model, source in driver.MODELS.items()]
+        else:
+            role_models = [r for r in model_rows() if r['driver'] == name]
+            source_ids = sorted(set(source_ids) | {r['source_id'] for r in role_models})
+        registered = getattr(driver,'MODELS',None)
+        if isinstance(registered,dict):
+            known = {r['model'] for r in role_models}
+            for model,value in registered.items():
+                if model in known: continue
+                source = value[0] if isinstance(value,tuple) else value
+                maker = 'Keysight/Agilent' if source.startswith('keysight') else 'KIKUSUI' if source.startswith('kikusui') else 'Rohde & Schwarz'
+                role_models.append(dict(model=model,manufacturer=maker,status='implemented-uncommissioned',source_id=source))
+                source_ids = sorted(set(source_ids) | {source})
         if any(s not in sources for s in source_ids):
             raise ValueError('Unknown manufacturer source: ' + name)
+        if name=='UsbPowerSensor': source_ids=sorted(set(source_ids)|{'rs-nrp-range'})
         capabilities.append(dict(contract, driver=name, constructor=str(inspect.signature(driver)),
             source_file='dgm_lab/' + driver.__module__.split('.')[-1] + '.py', profile_path=profile_path,
             methods=methods, report_models=[dict(manufacturer=r['manufacturer'],model=r['model'],status=r['status']) for r in matches],

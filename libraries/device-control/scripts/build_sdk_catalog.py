@@ -27,7 +27,7 @@ def main():
             raise ValueError(f"Missing driver provenance: {device_id}")
         kind = "facility" if device_id in {"Co3000", "OspSwitch", "EspecController", "Thermotron8800"} else "instrument"
         descriptors.append({**item, "id": device_id, "kind": kind, "backend": "dgm_lab", "status": "implemented_uncommissioned",
-                            "simulation_available": device_id in {"OdaEx", "Co3000"},
+                            "simulation_available": device_id in {"OdaEx", "Co3000", "SpectrumAnalyzer", "EmiReceiver", "SignalGenerator", "PowerSupply", "UsbPowerSensor", "DigitalMultimeter"},
                             "source_ids": source_ids, "sources": [sources[key] for key in source_ids],
                             "models": [{key: row[key] for key in ("manufacturer", "model", "status")} for row in matches],
                             "sdk_is_manufacturer_endorsed": False})
@@ -67,6 +67,16 @@ def main():
             "config": {"driver": device_id, "parameters": parameters, "transport": {"kind": "simulation"}, "notes": "SIMULATION ONLY. Values are fixture data, not a site configuration."}}
     virtual_models = {"PhoneAt": "6GHz HE20/40/80/160 fixture", "SpectrumAnalyzer": "N9030B", "UsbPowerSensor": "NRP18S",
                       "SignalGenerator": "SMW200A", "OdaEx": "EX60-40", "OspSwitch": "OSP120 + OSP-B102", "Co3000": "MA1 + DT1"}
+    for device_id, parameters in {
+        'SpectrumAnalyzer': dict(model='FSW8',max_frequency_hz=1e9),
+        'EmiReceiver': dict(model='ESW26',max_frequency_hz=1e9),
+        'SignalGenerator': dict(model='N5181B',max_frequency_hz=1e9,max_power_dbm=-20),
+        'PowerSupply': dict(model='E3641A',max_voltage=5,max_current=.1),
+        'UsbPowerSensor': dict(model='NRP33S'),
+        'DigitalMultimeter': dict(model='34461A',max_voltage=10),
+    }.items():
+        simulation[device_id] = dict(schema_version=1,device_id=device_id,mode='simulation',
+            config=dict(driver=device_id,parameters=parameters,transport=dict(kind='simulation'),notes='Synthetic equipment peer; not physical measurement physics'))
     for descriptor in descriptors:
         descriptor["integrated_virtual_model"] = virtual_models.get(descriptor["id"])
         descriptor["equipment_type"] = {
@@ -76,6 +86,7 @@ def main():
             "Thermotron8800": "환경 챔버 제어기", "EspecController": "환경 챔버 제어기", "Hp437B": "전력계",
             "Co3000": "턴테이블·안테나 마스트 제어기", "OspSwitch": "RF 스위치 제어기", "EpmPowerMeter": "전력계",
             "Cmu200Cw": "통신 테스터 CW 발생 기능", "PhoneAt": "프로파일 기반 단말 AT 제어"
+            ,"DigitalMultimeter": "디지털 멀티미터"
         }.get(descriptor["id"], "단말 제어 인터페이스")
         descriptor["manufacturers"] = sorted({row["manufacturer"] for row in descriptor.get("models", []) + descriptor.get("report_models", [])})
     version = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]

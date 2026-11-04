@@ -1,4 +1,6 @@
-# QP·평균 검파 측정 — SDK 0.9.0
+# QP·평균 검파 측정 — SDK 0.10.0
+
+0.10.0 확장: [추가 공식 모델 목록](../lab-control/docs/MODEL_EXPANSION.md)의 FSW8/13/26/43/85·ESU26·ESW26·N9000A·X-Series B 8종을 같은 최종 검파 역할에 추가했습니다. 기존 14종과 합계 30종입니다. 확장 모델은 1 GHz까지이며 필수 옵션·설정 readback·설치 firmware 미검증 상태를 유지합니다. ESW26의 이번 wrapper 상한도 1 GHz입니다.
 
 `python -m dgm_control detector-list`로 모델별 실행 지원과 제조사 근거를 조회합니다. 기존 POS 스펙트럼 경로는 유지합니다. `--measurement`를 지정하면 별도 EMI 수신기로 명시한 주파수들을 측정하고, `--evaluation`을 함께 지정하면 보정 전계 최대 위치 복귀·기준 비교·최종 판정 저장까지 실행합니다. WLAN·Bluetooth·LTE·NFC·UWB 설비 스캔에 같은 경로를 사용합니다.
 
@@ -14,7 +16,7 @@
 | 분석기 / Keysight·Agilent N9010A·N9020A·N9030A·N9030B·N9040B | 네 검파기; Measure-at-Marker | implemented-uncommissioned. 9 kHz–1 GHz. `*OPT?`의 `EMC` 필요. A 계열은 매뉴얼의 초기 버전 A.02.00 이상 형식 확인; 그 외 펌웨어/설치 옵션은 현장 검수 필요 |
 | 분석기 / Keysight·Agilent E4440A, Rohde & Schwarz FSV40·ESCI7 | 기존 swept POS 경로 | unconfirmed. 추가 최종 검파 명령·옵션은 미통합. E4440A는 X-Series가 아닌 PSA |
 
-모델의 **물리 기능 부재**와 **SDK 미구현/미확인**을 구분합니다. 알 수 없는 모델이나 구현 범위를 넘는 조건은 사전 거절합니다. 모든 모델의 `physical_verified=false`입니다. 독립 `open_device` 모의 프로필은 기존 3종만 유지하며, EMI 수신기는 `--measurement`를 사용하는 통합 가상 시험에서 추가됩니다.
+모델의 **물리 기능 부재**와 **SDK 미구현/미확인**을 구분합니다. 알 수 없는 모델이나 구현 범위를 넘는 조건은 거절합니다. 모든 모델의 `physical_verified=false`입니다. 독립 open_device simulator는 9종이며 수신기 단독 실행은 equipment-init/equipment-run, 다중 무선 통합 실행은 --measurement를 사용합니다.
 
 ## 검파기와 단위
 

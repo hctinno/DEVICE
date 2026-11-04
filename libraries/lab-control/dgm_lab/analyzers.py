@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from .core import Scpi, UnsupportedInstrument, InstrumentError, number, integer, fmt, scalar, close_enough
+from .model_scope import extra_models, frequency_scope
 
 KEYSIGHT = ('Keysight Technologies', 'Agilent Technologies', 'Hewlett-Packard')
 RS = ('Rohde&Schwarz', 'Rohde-Schwarz', 'Rohde & Schwarz')
@@ -56,6 +57,8 @@ class SpectrumAnalyzer(Scpi):
         'ESU40': ('rs-esu', 'legacy-rs'), 'ESCI7': ('rs-esci', 'legacy-rs'),
     }
 
+    MODELS.update(extra_models('SpectrumAnalyzer', dialect=True))
+
     def __init__(self, transport, *, model, max_frequency_hz):
         if model not in self.MODELS:
             raise UnsupportedInstrument(f'No reviewed spectrum dialect for {model}')
@@ -65,6 +68,8 @@ class SpectrumAnalyzer(Scpi):
 
     def acquire(self, config: Sweep):
         config.validate(self.max_hz)  # validate ALL values before even checking error queues
+        frequency_scope('SpectrumAnalyzer', self.expected_model, config.start_hz)
+        frequency_scope('SpectrumAnalyzer', self.expected_model, config.stop_hz)
         self.ready()
         if config.sweep_seconds >= self.io.timeout:
             raise ValueError('Transport timeout must exceed sweep duration plus settling margin')
@@ -139,6 +144,7 @@ class EmiReceiver(Scpi):
               'ESU8': 'rs-esu', 'ESU40': 'rs-esu', 'FSW50': 'rs-fsw', 'FSW67': 'rs-fsw',
               'N9010A': 'keysight-xsa-a', 'N9020A': 'keysight-xsa-a', 'N9030A': 'keysight-xsa-a',
               'N9030B': 'keysight-xsa-b', 'N9040B': 'keysight-xsa-b'}
+    MODELS.update(extra_models('EmiReceiver'))
 
     def __init__(self, transport, *, model, max_frequency_hz):
         if model not in self.MODELS:

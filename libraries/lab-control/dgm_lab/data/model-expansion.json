@@ -1,0 +1,1646 @@
+[
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSW8",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSW13",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSW26",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSW43",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSW85",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "ESU26",
+    "source_id": "rs-esu",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "5.74",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESU_OperatingManual_en_04.pdf",
+    "sha256": "cbb0cb6bcb410951e4d40669c4e37a494c41f96a30ce900d2193fdc0e2873e89"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSV3",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSV4",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSV7",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSV13",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSV30",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSVA4",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSVA7",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSVA13",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSVA30",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "FSVA40",
+    "source_id": "rs-fsv",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "3.30",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "N9000A",
+    "source_id": "keysight-xsa-a",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+    "sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "N9000B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "N9010B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "N9020B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "N9021B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "N9032B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "N9041B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "N9042B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "SpectrumAnalyzer",
+    "model": "N9048B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "FSW8",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2,
+      1096,
+      1097,
+      1098,
+      1100,
+      1101,
+      1102,
+      1103
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "FSW13",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2,
+      1096,
+      1097,
+      1098,
+      1100,
+      1101,
+      1102,
+      1103
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "FSW26",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2,
+      1096,
+      1097,
+      1098,
+      1100,
+      1101,
+      1102,
+      1103
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "FSW43",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2,
+      1096,
+      1097,
+      1098,
+      1100,
+      1101,
+      1102,
+      1103
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "FSW85",
+    "source_id": "rs-fsw",
+    "reviewed_pdf_pages": [
+      2,
+      1096,
+      1097,
+      1098,
+      1100,
+      1101,
+      1102,
+      1103
+    ],
+    "documented_firmware": "6.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "ESU26",
+    "source_id": "rs-esu",
+    "reviewed_pdf_pages": [
+      2,
+      54,
+      55,
+      56,
+      610,
+      611,
+      622,
+      698,
+      702
+    ],
+    "documented_firmware": "5.74",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESU_OperatingManual_en_04.pdf",
+    "sha256": "cbb0cb6bcb410951e4d40669c4e37a494c41f96a30ce900d2193fdc0e2873e89"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "ESW26",
+    "source_id": "rs-esw",
+    "reviewed_pdf_pages": [
+      2,
+      473,
+      478,
+      484,
+      485,
+      557,
+      562
+    ],
+    "documented_firmware": "3.20",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+    "sha256": "76359d49da27d04e6c79ff81bc42806a35493bdad1584beb006c8e39da25f146"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "N9000A",
+    "source_id": "keysight-xsa-a",
+    "reviewed_pdf_pages": [
+      1,
+      709,
+      710,
+      714,
+      718,
+      754
+    ],
+    "documented_firmware": "A.02.00",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://www.keysight.com/us/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+    "sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "N9000B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1,
+      378,
+      379,
+      384,
+      385,
+      386,
+      401,
+      402,
+      403
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "N9010B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1,
+      378,
+      379,
+      384,
+      385,
+      386,
+      401,
+      402,
+      403
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "N9020B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1,
+      378,
+      379,
+      384,
+      385,
+      386,
+      401,
+      402,
+      403
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "N9021B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1,
+      378,
+      379,
+      384,
+      385,
+      386,
+      401,
+      402,
+      403
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "N9032B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1,
+      378,
+      379,
+      384,
+      385,
+      386,
+      401,
+      402,
+      403
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "N9041B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1,
+      378,
+      379,
+      384,
+      385,
+      386,
+      401,
+      402,
+      403
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "N9042B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1,
+      378,
+      379,
+      384,
+      385,
+      386,
+      401,
+      402,
+      403
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "EmiReceiver",
+    "model": "N9048B",
+    "source_id": "keysight-xsa-b",
+    "reviewed_pdf_pages": [
+      1,
+      378,
+      379,
+      384,
+      385,
+      386,
+      401,
+      402,
+      403
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "9 kHz..1 GHz final detector; QP <=1 GHz",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5161A",
+    "source_id": "keysight-mxg-a",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-06044/reference-guides/9018-06044.pdf",
+    "sha256": "8345dc1e074cdeb6d8b5fe012731f4e0eb9424ade0d7240eae54311e2f94a608"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5162A",
+    "source_id": "keysight-mxg-a",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-06044/reference-guides/9018-06044.pdf",
+    "sha256": "8345dc1e074cdeb6d8b5fe012731f4e0eb9424ade0d7240eae54311e2f94a608"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5182A",
+    "source_id": "keysight-mxg-a",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-06044/reference-guides/9018-06044.pdf",
+    "sha256": "8345dc1e074cdeb6d8b5fe012731f4e0eb9424ade0d7240eae54311e2f94a608"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5183A",
+    "source_id": "keysight-mxg-a",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-06044/reference-guides/9018-06044.pdf",
+    "sha256": "8345dc1e074cdeb6d8b5fe012731f4e0eb9424ade0d7240eae54311e2f94a608"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5166B",
+    "source_id": "keysight-mxg-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-03690/programming-guides/9018-03690.pdf",
+    "sha256": "0ad20dfa4fbb3694104a48436926beb9cdc63283555349f62365b1adbb7b5e1b"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5171B",
+    "source_id": "keysight-mxg-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-03690/programming-guides/9018-03690.pdf",
+    "sha256": "0ad20dfa4fbb3694104a48436926beb9cdc63283555349f62365b1adbb7b5e1b"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5172B",
+    "source_id": "keysight-mxg-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-03690/programming-guides/9018-03690.pdf",
+    "sha256": "0ad20dfa4fbb3694104a48436926beb9cdc63283555349f62365b1adbb7b5e1b"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5173B",
+    "source_id": "keysight-mxg-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-03690/programming-guides/9018-03690.pdf",
+    "sha256": "0ad20dfa4fbb3694104a48436926beb9cdc63283555349f62365b1adbb7b5e1b"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5181B",
+    "source_id": "keysight-mxg-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-03690/programming-guides/9018-03690.pdf",
+    "sha256": "0ad20dfa4fbb3694104a48436926beb9cdc63283555349f62365b1adbb7b5e1b"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "N5183B",
+    "source_id": "keysight-mxg-b",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-03690/programming-guides/9018-03690.pdf",
+    "sha256": "0ad20dfa4fbb3694104a48436926beb9cdc63283555349f62365b1adbb7b5e1b"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "E8257D",
+    "source_id": "keysight-psg",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/cm/en/assets/9018-04965/programming-guides/9018-04965.pdf",
+    "sha256": "bb5b17cd51a865d82562b143a03fe9e8d27bf834bf57f0c1d22ce8e95feb502f"
+  },
+  {
+    "driver": "SignalGenerator",
+    "model": "E8663D",
+    "source_id": "keysight-psg",
+    "reviewed_pdf_pages": [
+      1
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/cm/en/assets/9018-04965/programming-guides/9018-04965.pdf",
+    "sha256": "bb5b17cd51a865d82562b143a03fe9e8d27bf834bf57f0c1d22ce8e95feb502f"
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP8SN",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP18SN",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP33S",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP33SN",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP40S",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "50 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP40SN",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "50 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP50S",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "50 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP50SN",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "50 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP67S",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "50 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP67SN",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "50 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP90S",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "50 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP90SN",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "50 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP33SN-V",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "NRP67SN-V",
+    "source_id": "rs-nrps",
+    "reviewed_pdf_pages": [
+      2
+    ],
+    "documented_firmware": "03.40",
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Rohde & Schwarz",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "50 MHz..1 GHz reviewed wrapper",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "range_source_id": "rs-nrp-range",
+    "range_url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "range_sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "range_reviewed_pdf_pages": [
+      11,
+      30,
+      32
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "U2001A",
+    "source_id": "keysight-u2000",
+    "reviewed_pdf_pages": [
+      259
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c"
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "U2002A",
+    "source_id": "keysight-u2000",
+    "reviewed_pdf_pages": [
+      259
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c"
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "U2004A",
+    "source_id": "keysight-u2000",
+    "reviewed_pdf_pages": [
+      259
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c"
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "U2000H",
+    "source_id": "keysight-u2000",
+    "reviewed_pdf_pages": [
+      259
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c"
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "U2001H",
+    "source_id": "keysight-u2000",
+    "reviewed_pdf_pages": [
+      259
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c"
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "U2002H",
+    "source_id": "keysight-u2000",
+    "reviewed_pdf_pages": [
+      259
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c"
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "U2000B",
+    "source_id": "keysight-u2000",
+    "reviewed_pdf_pages": [
+      259
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c"
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "U2001B",
+    "source_id": "keysight-u2000",
+    "reviewed_pdf_pages": [
+      259
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c"
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "model": "U2002B",
+    "source_id": "keysight-u2000",
+    "reviewed_pdf_pages": [
+      259
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "10 MHz..1 GHz reviewed wrapper",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c"
+  },
+  {
+    "driver": "PowerSupply",
+    "model": "E3641A",
+    "source_id": "keysight-e3640",
+    "reviewed_pdf_pages": [
+      24,
+      102,
+      103
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "Explicit model/range and site voltage/current limits",
+    "url": "https://literature.cdn.keysight.com/litweb/pdf/E3640-90001.pdf",
+    "sha256": "9238314e5cc64b8734423eab60d9994660e7e50d6dd52d635c33704532e007ad"
+  },
+  {
+    "driver": "PowerSupply",
+    "model": "E3642A",
+    "source_id": "keysight-e3640",
+    "reviewed_pdf_pages": [
+      24,
+      102,
+      103
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "Explicit model/range and site voltage/current limits",
+    "url": "https://literature.cdn.keysight.com/litweb/pdf/E3640-90001.pdf",
+    "sha256": "9238314e5cc64b8734423eab60d9994660e7e50d6dd52d635c33704532e007ad"
+  },
+  {
+    "driver": "PowerSupply",
+    "model": "E3643A",
+    "source_id": "keysight-e3640",
+    "reviewed_pdf_pages": [
+      24,
+      102,
+      103
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "Explicit model/range and site voltage/current limits",
+    "url": "https://literature.cdn.keysight.com/litweb/pdf/E3640-90001.pdf",
+    "sha256": "9238314e5cc64b8734423eab60d9994660e7e50d6dd52d635c33704532e007ad"
+  },
+  {
+    "driver": "PowerSupply",
+    "model": "E3644A",
+    "source_id": "keysight-e3640",
+    "reviewed_pdf_pages": [
+      24,
+      102,
+      103
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "Explicit model/range and site voltage/current limits",
+    "url": "https://literature.cdn.keysight.com/litweb/pdf/E3640-90001.pdf",
+    "sha256": "9238314e5cc64b8734423eab60d9994660e7e50d6dd52d635c33704532e007ad"
+  },
+  {
+    "driver": "PowerSupply",
+    "model": "E3645A",
+    "source_id": "keysight-e3640",
+    "reviewed_pdf_pages": [
+      24,
+      102,
+      103
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "Explicit model/range and site voltage/current limits",
+    "url": "https://literature.cdn.keysight.com/litweb/pdf/E3640-90001.pdf",
+    "sha256": "9238314e5cc64b8734423eab60d9994660e7e50d6dd52d635c33704532e007ad"
+  },
+  {
+    "driver": "DigitalMultimeter",
+    "model": "34460A",
+    "source_id": "keysight-truevolt",
+    "reviewed_pdf_pages": [
+      201,
+      202,
+      239,
+      240,
+      241,
+      246,
+      248,
+      350,
+      370,
+      374,
+      379,
+      382
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "DC/AC voltage <=10 V; 2-wire resistance <=1 Mohm",
+    "url": "https://www.keysight.com/us/en/assets/9018-03876/service-manuals/9018-03876.pdf",
+    "sha256": "837f727ea1be86ee84910e462904957cc55d80fde7cf27b106b0eeacd645bcca"
+  },
+  {
+    "driver": "DigitalMultimeter",
+    "model": "34461A",
+    "source_id": "keysight-truevolt",
+    "reviewed_pdf_pages": [
+      201,
+      202,
+      239,
+      240,
+      241,
+      246,
+      248,
+      350,
+      370,
+      374,
+      379,
+      382
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "DC/AC voltage <=10 V; 2-wire resistance <=1 Mohm",
+    "url": "https://www.keysight.com/us/en/assets/9018-03876/service-manuals/9018-03876.pdf",
+    "sha256": "837f727ea1be86ee84910e462904957cc55d80fde7cf27b106b0eeacd645bcca"
+  },
+  {
+    "driver": "DigitalMultimeter",
+    "model": "34465A",
+    "source_id": "keysight-truevolt",
+    "reviewed_pdf_pages": [
+      201,
+      202,
+      239,
+      240,
+      241,
+      246,
+      248,
+      350,
+      370,
+      374,
+      379,
+      382
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "DC/AC voltage <=10 V; 2-wire resistance <=1 Mohm",
+    "url": "https://www.keysight.com/us/en/assets/9018-03876/service-manuals/9018-03876.pdf",
+    "sha256": "837f727ea1be86ee84910e462904957cc55d80fde7cf27b106b0eeacd645bcca"
+  },
+  {
+    "driver": "DigitalMultimeter",
+    "model": "34470A",
+    "source_id": "keysight-truevolt",
+    "reviewed_pdf_pages": [
+      201,
+      202,
+      239,
+      240,
+      241,
+      246,
+      248,
+      350,
+      370,
+      374,
+      379,
+      382
+    ],
+    "documented_firmware": null,
+    "firmware_status": "site-validation-required",
+    "manufacturer": "Keysight/Agilent",
+    "status": "implemented-uncommissioned",
+    "physical_verified": false,
+    "scope": "DC/AC voltage <=10 V; 2-wire resistance <=1 Mohm",
+    "url": "https://www.keysight.com/us/en/assets/9018-03876/service-manuals/9018-03876.pdf",
+    "sha256": "837f727ea1be86ee84910e462904957cc55d80fde7cf27b106b0eeacd645bcca"
+  }
+]

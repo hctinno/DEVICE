@@ -6,13 +6,13 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model, max_frequency_hz)",
-        "line": 59,
+        "line": 62,
         "command_fragments": []
       },
       {
         "name": "acquire",
         "signature": "(self, config: dgm_lab.analyzers.Sweep)",
-        "line": 66,
+        "line": 69,
         "command_fragments": [
           "ABOR",
           "INIT:CONT OFF",
@@ -71,7 +71,7 @@
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 122,
+        "line": 127,
         "command_fragments": [
           "ABOR",
           "INIT:CONT OFF"
@@ -86,13 +86,13 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model, max_frequency_hz)",
-        "line": 143,
+        "line": 149,
         "command_fragments": []
       },
       {
         "name": "read_level",
         "signature": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
-        "line": 150,
+        "line": 156,
         "command_fragments": [
           "INIT1:IMM",
           "ABOR",
@@ -115,7 +115,7 @@
       {
         "name": "read_verified_level",
         "signature": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
-        "line": 173,
+        "line": 179,
         "command_fragments": [
           "INIT1:IMM",
           "ABOR",
@@ -140,7 +140,7 @@
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 209,
+        "line": 215,
         "command_fragments": [
           "ABOR",
           "INIT1:CONT OFF",
@@ -447,6 +447,58 @@
     ]
   },
   {
+    "driver": "DigitalMultimeter",
+    "file": "dgm_lab/dmm.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model, max_voltage)",
+        "line": 15,
+        "command_fragments": []
+      },
+      {
+        "name": "configure",
+        "signature": "(self, *, function, range_value)",
+        "line": 22,
+        "command_fragments": [
+          "VOLT:DC",
+          "VOLT:AC",
+          "f'CONF:{self.mnemonic} {fmt(range_value)}'",
+          "TRIG:SOUR IMM",
+          "SAMP:COUN 1",
+          "TRIG:COUN 1"
+        ]
+      },
+      {
+        "name": "_verify",
+        "signature": "(self)",
+        "line": 38,
+        "command_fragments": [
+          "SAMP:COUN?",
+          "TRIG:COUN?",
+          "VOLT:AC",
+          "TRIG:SOUR?"
+        ]
+      },
+      {
+        "name": "read",
+        "signature": "(self)",
+        "line": 53,
+        "command_fragments": [
+          "READ?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 65,
+        "command_fragments": [
+          "ABOR"
+        ]
+      }
+    ]
+  },
+  {
     "driver": "EpmPowerMeter",
     "file": "dgm_lab/epm.py",
     "methods": [
@@ -560,13 +612,13 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model)",
-        "line": 9,
+        "line": 10,
         "command_fragments": []
       },
       {
         "name": "configure_average",
         "signature": "(self, *, frequency_hz, channel=1)",
-        "line": 16,
+        "line": 17,
         "command_fragments": [
           "f'INIT{channel}:CONT OFF'",
           "f'CONF1:POW:AC DEF,DEF,(@{channel})'",
@@ -582,7 +634,7 @@
       {
         "name": "read_power",
         "signature": "(self)",
-        "line": 32,
+        "line": 33,
         "command_fragments": [
           "READ1?"
         ]
@@ -590,7 +642,7 @@
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 37,
+        "line": 38,
         "command_fragments": [
           "ABOR",
           "f'INIT{channel}:CONT OFF'",
@@ -606,13 +658,13 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model)",
-        "line": 50,
+        "line": 52,
         "command_fragments": []
       },
       {
         "name": "configure_average",
         "signature": "(self, *, frequency_hz)",
-        "line": 57,
+        "line": 59,
         "command_fragments": [
           "ABOR",
           "SENS:DET:FUNC AVER",
@@ -634,7 +686,7 @@
       {
         "name": "read_power",
         "signature": "(self)",
-        "line": 74,
+        "line": 77,
         "command_fragments": [
           "INIT",
           "FETC?",
@@ -644,7 +696,7 @@
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 84,
+        "line": 87,
         "command_fragments": [
           "ABOR",
           "INIT:CONT OFF"
@@ -862,13 +914,13 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model, max_frequency_hz, max_power_dbm)",
-        "line": 12,
+        "line": 14,
         "command_fragments": []
       },
       {
         "name": "configure_cw",
         "signature": "(self, *, frequency_hz, power_dbm)",
-        "line": 21,
+        "line": 23,
         "command_fragments": [
           "OUTP:MOD OFF",
           "SOUR:MOD:ALL:STAT OFF",
@@ -885,19 +937,19 @@
       {
         "name": "start",
         "signature": "(self)",
-        "line": 37,
+        "line": 40,
         "command_fragments": []
       },
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 46,
+        "line": 49,
         "command_fragments": []
       },
       {
         "name": "emitting",
         "signature": "(self)",
-        "line": 55,
+        "line": 58,
         "command_fragments": []
       }
     ]
@@ -909,42 +961,43 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model, max_voltage, max_current)",
-        "line": 62,
+        "line": 66,
         "command_fragments": []
       },
       {
         "name": "configure",
         "signature": "(self, *, voltage, current_limit, range_name=None)",
-        "line": 74,
+        "line": 81,
         "command_fragments": [
           "f'VOLT:RANG {range_name}'",
           "VOLT:RANG ",
           "f'CURR {fmt(current_limit)}'",
-          "f'VOLT {fmt(voltage)}'"
+          "f'VOLT {fmt(voltage)}'",
+          "VOLT:RANG?"
         ]
       },
       {
         "name": "start",
         "signature": "(self)",
-        "line": 102,
+        "line": 111,
         "command_fragments": []
       },
       {
         "name": "_wait_output",
         "signature": "(self, expected)",
-        "line": 110,
+        "line": 119,
         "command_fragments": []
       },
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 120,
+        "line": 129,
         "command_fragments": []
       },
       {
         "name": "read_voltage",
         "signature": "(self)",
-        "line": 128,
+        "line": 137,
         "command_fragments": [
           "MEAS:VOLT?"
         ]
@@ -952,7 +1005,7 @@
       {
         "name": "read_current",
         "signature": "(self)",
-        "line": 131,
+        "line": 140,
         "command_fragments": [
           "MEAS:CURR?"
         ]
@@ -960,7 +1013,7 @@
       {
         "name": "powering",
         "signature": "(self)",
-        "line": 134,
+        "line": 143,
         "command_fragments": []
       }
     ]

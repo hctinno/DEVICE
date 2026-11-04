@@ -1,5 +1,7 @@
 # 구현 계약
 
+v0.10.0: [장비 공통 실행 계약](EQUIPMENT_CONTROL.md). dgm_lab.model_scope가 공식 적용 모델과 wrapper 한계를 선언하고 build_model_expansion.py가 pin된 근거 표를 생성합니다. DigitalMultimeter는 Truevolt native 설정/검증/측정을 구현합니다. equipment.py는 JSON 함수 결합, lifecycle, 취소, 부분 결과·로그를 담당합니다. EquipmentPeer의 고정 whitelist와 기존 ReceiverPeer는 native 드라이버를 실행하며 물리 모형과 구별합니다. probe는 기본 SCPI identify만 허용해 custom remote-entry를 사전 차단합니다. 로그 오류와 전송 오류를 분리하고 실패 시 정리를 시도합니다.
+
 v0.9.0: 추가 모델은 `dgm_lab.extended_detectors`의 모델별 final detector 어댑터를 사용합니다. EmiReceiver는 장비 종류뿐 아니라 전용 최종 검파 역할을 뜻하며 FSW/X-Series에서는 실제 spectrum application을 제어합니다. 같은 기존 SpectrumAnalyzer 세션을 재사용하지 않습니다. `receiver_measurement.validate_trace`가 모델별 readback·옵션/펌웨어·원시 1/4필드 결과를 다시 확인하고 기존 evaluation schema 2에 연결합니다. FSW K54/X-Series EMC는 runtime 조회로 확인하고 A 계열 A.02.00 도입 하한을 검사합니다. 실측 정확도/설치 펌웨어 commissioning과 구분합니다. 범위·누락 옵션·미완료 결과·중복 endpoint는 실패이며 자동 fallback은 없습니다.
 
 v0.8.0: [검파기별 계약](DETECTORS.md). 별도 measurement schema 1로 EmiReceiver의 명시적 주파수 grid를 선택합니다. dgm_lab.read_verified_level은 ESW8/44·ESR3/7의 단일 bargraph를 설정하고 전후 query를 검증합니다. receiver_measurement.py는 사전 범위/모델/시간/경로 검사, 개별 점의 원문·readback 즉시 기록, dBµV 보존과 50Ω dBm 정규화를 담당합니다. evaluation schema 2는 acquisition/filter/detector/RBW/minimum_dwell을 비교하고 원시 dBµV에 보정을 적용합니다. 기존 schema 1/POS 경로는 유지합니다. receiver_peer는 native parser용 합성 정상상태 모형이며 검파기 물리 응답을 모사하지 않습니다. 실장비 commissioning은 미실행입니다.

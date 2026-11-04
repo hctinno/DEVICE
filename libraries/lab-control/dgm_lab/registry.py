@@ -2,12 +2,12 @@ from contextlib import contextmanager
 from importlib.resources import files
 import json
 from . import (SpectrumAnalyzer, EmiReceiver, SignalGenerator, PowerSupply, PSeriesPowerMeter,
-               UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter, OdaEx, Cmu200Cw)
+               UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter, OdaEx, Cmu200Cw, DigitalMultimeter)
 from .transport import SocketTransport, VisaTransport, SerialTransport
 from .core import UnsupportedInstrument
 
 DRIVERS = {c.__name__: c for c in (SpectrumAnalyzer, EmiReceiver, SignalGenerator, PowerSupply,
-           PSeriesPowerMeter, UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter, OdaEx, Cmu200Cw)}
+           PSeriesPowerMeter, UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter, OdaEx, Cmu200Cw, DigitalMultimeter)}
 
 
 def inventory(query='', *, scope='legacy'):

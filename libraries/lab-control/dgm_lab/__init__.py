@@ -13,5 +13,6 @@ from .switching import OspSwitch
 from .epm import EpmPowerMeter
 from .oda import OdaEx
 from .cmu import Cmu200Cw
+from .dmm import DigitalMultimeter
 
-__version__ = '0.6.0'
+__version__ = '0.7.0'

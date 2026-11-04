@@ -9,6 +9,8 @@ import sys
 import tempfile
 import tomllib
 import zipfile
+import re
+from urllib.parse import urljoin
 
 ROOT = Path(__file__).resolve().parents[1]
 SDK = ROOT / "libraries/device-control"
@@ -46,6 +48,10 @@ def main():
         shutil.copyfile(SDK / "RADIO_SCAN.md", bundle / "RADIO_SCAN.md")
         shutil.copyfile(SDK / "CORRECTIONS.md", bundle / "CORRECTIONS.md")
         shutil.copyfile(SDK / "DETECTORS.md", bundle / "DETECTORS.md")
+        equipment_doc=(SDK/'EQUIPMENT_CONTROL.md').read_text(encoding='utf-8')
+        equipment_doc=re.sub(r'\]\((?!https?://)([^)]+)\)',
+            lambda match: ']('+urljoin('https://github.com/hctinno/DEVICE/blob/main/libraries/device-control/',match[1])+')',equipment_doc)
+        (bundle/'EQUIPMENT_CONTROL.md').write_text(equipment_doc,encoding='utf-8')
         (bundle / "dgm_control/data").mkdir(parents=True)
         shutil.copyfile(SDK / "dgm_control/data/detector-sources.json", bundle / "dgm_control/data/detector-sources.json")
         # Exercise the bundle's real installer in an isolated virtual environment.
@@ -88,6 +94,8 @@ def main():
                 raise RuntimeError("Offline receiver-grid comparison failed")
             receiver_runs.append(dict(radio=radio, model=model, detector=detector, samples=answer["samples"], verdict="PASS"))
         archive = target / f"dgm-device-control-{version}-offline.zip"
+        matrix=json.loads(run([str(python),str(SDK/'scripts/check_equipment_models.py')],temp,clean_env))
+        if not matrix['passed'] or matrix['role_model_count']<120: raise RuntimeError('Offline equipment matrix failed')
         with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as output:
             for path in sorted(bundle.rglob("*")):
                 if path.is_file(): output.write(path, path.relative_to(bundle))
@@ -99,6 +107,7 @@ def main():
                   "fresh_venv_radio_scans_passed": radio_runs, "radio_scan_samples_each": 12, "hardware_tests": 0}
         report["fresh_venv_corrected_radio_comparisons_passed"] = radio_runs
         report["fresh_venv_receiver_comparisons"] = receiver_runs
+        report['fresh_venv_equipment_matrix']={k:v for k,v in matrix.items() if k!='rows'}
         (target / "manifest.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         (SDK / "docs/distribution-validation.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(report))

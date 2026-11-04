@@ -35,7 +35,7 @@ def main():
               '`PhoneAt`은 단말의 정확한 모델·build·허용 명령·숫자 인수를 담은 프로파일을 요구합니다. '
               '브랜드명을 제거해도 단말 호환 범위가 확대되지 않습니다. 모든 단말에 적용되는 범용 AT 표로 해석하지 않습니다.', '',
               '## 상태의 의미', '',
-              '`implemented_uncommissioned`: 명시한 기능 구현·현장 미검증. `conditional`: 설치 옵션/컨트롤러 확인 후 사용. '
+              '`implemented_uncommissioned` 또는 `implemented-uncommissioned`: 명시한 기능 구현·현장 미검증. `conditional`: 설치 옵션/컨트롤러 확인 후 사용. '
               '`controller_component`: 독립 접속 대상이 아닌 제어기에 연결된 구성품입니다.', '',
               '[설치·공통 API](libraries/device-control/README.md) · [가상 시험환경](libraries/device-control/VIRTUAL_LAB.md) · '
               '[모델별 상세 조건](libraries/lab-control/docs/EQUIPMENT_COVERAGE.md) · '

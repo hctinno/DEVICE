@@ -11,11 +11,13 @@ from .radio_contracts import radio_catalog, radio_template, check_radio, nfc_pro
 from .radio_run import run_radio, load_radio_profiles
 from .evaluation import Evaluation, evaluation_template
 from .receiver_measurement import detector_catalog, measurement_template, validate_measurement
+from .equipment import equipment_catalog, equipment_template, check_equipment, run_equipment, probe_equipment
 
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 __all__ = ["devices", "describe", "profile_template", "doctor", "load_profile", "check_profile",
            "open_device", "DeviceSession", "ProfileError", "UnsupportedDevice", "SessionError", "error_details",
            "VirtualLab", "HardwareLab", "Scenario", "Fault", "WlanScan", "measure_wlan",
            "run_hardware", "check_hardware", "load_hardware_inputs", "plan_from_dict",
            "radio_catalog", "radio_template", "check_radio", "nfc_profile_template", "run_radio", "load_radio_profiles",
-           "Evaluation", "evaluation_template", "detector_catalog", "measurement_template", "validate_measurement"]
+           "Evaluation", "evaluation_template", "detector_catalog", "measurement_template", "validate_measurement",
+           "equipment_catalog", "equipment_template", "check_equipment", "run_equipment", "probe_equipment"]

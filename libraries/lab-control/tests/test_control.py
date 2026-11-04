@@ -17,6 +17,7 @@ from dgm_lab.core import Scpi, scalar, switch
 from dgm_lab.transport import Transport
 from dgm_lab.registry import connect
 from dgm_lab.phone import measure_during_phone_tx, latest_phone_support
+from dgm_lab.model_scope import is_extension
 
 
 class Scripted(Transport):
@@ -135,6 +136,7 @@ class DriverTests(unittest.TestCase):
 
     def test_all_rf_sources_on_off(self):
         for model in SignalGenerator.MODELS:
+            if is_extension('SignalGenerator',model): continue  # separate extension fixtures use the reviewed frequency scope
             with self.subTest(model=model):
                 io,d=source_fixture(model)
                 d.configure_cw(frequency_hz=2.412e9,power_dbm=-20)
@@ -174,6 +176,7 @@ class DriverTests(unittest.TestCase):
 
     def test_supplies_voltage_current_and_off(self):
         for model in PowerSupply.MODELS:
+            if is_extension('PowerSupply',model): continue
             maker='KIKUSUI' if model=='PWR2001ML' else 'Agilent Technologies'
             io=fixture(model,maker,**{'OUTP?':['0','1','0'],'VOLT?':'4.2','CURR?':'1.2','MEAS:VOLT?':'4.199','MEAS:CURR?':'0.4'})
             d=PowerSupply(io,model=model,max_voltage=5,max_current=2);d.identify()
@@ -201,6 +204,7 @@ class DriverTests(unittest.TestCase):
 
     def test_usb_sensor_units_and_measurement(self):
         for model in UsbPowerSensor.MODELS:
+            if is_extension('UsbPowerSensor',model): continue
             key=model=='U2000A'
             io=fixture(model,'Agilent Technologies' if key else 'Rohde&Schwarz',
                        **{'SENS:FREQ?':'2.4e9','READ?':'-20','FETC?':'1e-5','UNIT:POW?':'DBM' if key else 'W'})
@@ -214,6 +218,7 @@ class DriverTests(unittest.TestCase):
     def test_all_spectrum_dialects_return_new_trace(self):
         config=Sweep(1e9,2e9,1e6,3e6,-10,10,101,'POS',.01)
         for model,(_,dialect) in SpectrumAnalyzer.MODELS.items():
+            if is_extension('SpectrumAnalyzer',model): continue
             with self.subTest(model=model):
                 io=fixture(model,'Keysight Technologies' if dialect in ('keysight','psa') else 'Rohde&Schwarz',**{
                     'FREQ:STAR?':'1e9','FREQ:STOP?':'2e9','BAND:RES?':'1e6','BAND:VID?':'3e6',

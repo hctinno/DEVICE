@@ -133,7 +133,17 @@ def open_device(profile, *, log=None):
         from .simulation import MotionPeer
         io = MotionPeer(log=log)
     else:
-        raise UnsupportedDevice(f"No simulator for {device_id}")
+        from .equipment_peer import EquipmentPeer, SIMULATED_DRIVERS
+        if device_id not in SIMULATED_DRIVERS: raise UnsupportedDevice(f"No simulator for {device_id}")
+        model = config['parameters']['model']
+        if device_id == 'EmiReceiver':
+            from types import SimpleNamespace
+            from .receiver_peer import ReceiverPeer
+            world = SimpleNamespace(lock=threading.RLock(), fault=lambda *a: None,
+                                    power=lambda *a: -60, observation=lambda *a: None)
+            io = ReceiverPeer(world, model, log=log)
+        else:
+            io = EquipmentPeer(device_id, model, log=log)
     with io:
         driver = DRIVERS[device_id](io, **config["parameters"])
         driver.identify()

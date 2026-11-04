@@ -15,11 +15,65 @@
 | 안테나 마스트 | Innco systems | MA4640-XP-ET | Co3000 | position, limits, speed, move, polarize, stop_all | controller_component |
 | 안테나 마스트 | Innco systems | MA4640/800-XP-EP | Co3000 | position, limits, speed, move, polarize, stop_all | controller_component |
 | DC 전원공급기 | KIKUSUI | PWR2001ML | PowerSupply | configure, read_voltage, read_current, start, stop | implemented_uncommissioned |
+| 디지털 멀티미터 | Keysight/Agilent | 34460A | DigitalMultimeter | configure, read, stop | implemented-uncommissioned |
+| 디지털 멀티미터 | Keysight/Agilent | 34461A | DigitalMultimeter | configure, read, stop | implemented-uncommissioned |
+| 디지털 멀티미터 | Keysight/Agilent | 34465A | DigitalMultimeter | configure, read, stop | implemented-uncommissioned |
+| 디지털 멀티미터 | Keysight/Agilent | 34470A | DigitalMultimeter | configure, read, stop | implemented-uncommissioned |
+| DC 전원공급기 | Keysight/Agilent | 6674A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented-uncommissioned |
+| DC 전원공급기 | Keysight/Agilent | E3632A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented-uncommissioned |
+| DC 전원공급기 | Keysight/Agilent | E3641A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented-uncommissioned |
+| DC 전원공급기 | Keysight/Agilent | E3642A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented-uncommissioned |
+| DC 전원공급기 | Keysight/Agilent | E3643A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented-uncommissioned |
+| DC 전원공급기 | Keysight/Agilent | E3644A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented-uncommissioned |
+| DC 전원공급기 | Keysight/Agilent | E3645A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | E4421B | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | E4433B | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | E8257D | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | E8267D | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | E8663D | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5161A | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5162A | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5166B | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5171B | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5172B | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5173B | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5181B | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5182A | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5183A | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| RF 신호발생기 | Keysight/Agilent | N5183B | SignalGenerator | configure_cw, start, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9000A | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9000A | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9000B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9000B | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
 | EMI 수신기 | Keysight/Agilent | N9010A | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9010B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9010B | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
 | EMI 수신기 | Keysight/Agilent | N9020A | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9020A | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9020B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9020B | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9021B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9021B | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
 | EMI 수신기 | Keysight/Agilent | N9030A | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | EMI 수신기 | Keysight/Agilent | N9030B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9032B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9032B | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
 | EMI 수신기 | Keysight/Agilent | N9040B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9041B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9041B | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9042B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9042B | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| EMI 수신기 | Keysight/Agilent | N9048B | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Keysight/Agilent | N9048B | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| USB 파워센서 | Keysight/Agilent | U2000B | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Keysight/Agilent | U2000H | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Keysight/Agilent | U2001A | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Keysight/Agilent | U2001B | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Keysight/Agilent | U2001H | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Keysight/Agilent | U2002A | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Keysight/Agilent | U2002B | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Keysight/Agilent | U2002H | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Keysight/Agilent | U2004A | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
 | 전력계 | Keysight/Agilent/HP | 437B | Hp437B | configure, read_power, stop | implemented_uncommissioned |
 | DC 전원공급기 | Keysight/Agilent/HP | 6674A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented_uncommissioned |
 | DC 전원공급기 | Keysight/Agilent/HP | E3632A | PowerSupply | configure, read_voltage, read_current, start, stop | implemented_uncommissioned |
@@ -46,20 +100,57 @@
 | 스펙트럼 분석기 | Rohde & Schwarz | ESCI7 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESR3 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESR7 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | ESU26 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | ESU26 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESU40 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | ESU40 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESU8 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | ESU8 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | ESW26 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESW44 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | ESW8 | EmiReceiver | read_level, read_verified_level, stop | implemented_uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSV13 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSV3 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSV30 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSV4 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | FSV40 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSV7 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSVA13 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSVA30 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSVA4 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSVA40 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSVA7 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | FSW13 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSW13 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | FSW26 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSW26 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | FSW43 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSW43 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | FSW50 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | FSW50 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
 | EMI 수신기 | Rohde & Schwarz | FSW67 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
 | 스펙트럼 분석기 | Rohde & Schwarz | FSW67 | SpectrumAnalyzer | acquire, stop | implemented_uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | FSW8 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSW8 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
+| EMI 수신기 | Rohde & Schwarz | FSW85 | EmiReceiver | read_verified_level, stop | implemented-uncommissioned |
+| 스펙트럼 분석기 | Rohde & Schwarz | FSW85 | SpectrumAnalyzer | acquire, stop | implemented-uncommissioned |
 | USB 파워센서 | Rohde & Schwarz | NRP18A | UsbPowerSensor | configure_average, read_power, stop | implemented_uncommissioned |
 | USB 파워센서 | Rohde & Schwarz | NRP18S | UsbPowerSensor | configure_average, read_power, stop | implemented_uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP18SN | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP33S | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP33SN | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP33SN-V | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP40S | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP40SN | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP50S | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP50SN | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP67S | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP67SN | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP67SN-V | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
 | USB 파워센서 | Rohde & Schwarz | NRP8S | UsbPowerSensor | configure_average, read_power, stop | implemented_uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP8SN | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP90S | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
+| USB 파워센서 | Rohde & Schwarz | NRP90SN | UsbPowerSensor | configure_average, read_power, stop | implemented-uncommissioned |
 | RF 스위치 제어기 | Rohde & Schwarz | OSP 120 | OspSwitch | select, matches, stop | implemented_uncommissioned |
 | RF 스위치 제어기 | Rohde & Schwarz | OSP 150 | OspSwitch | select, matches, stop | controller_component |
 | RF 신호발생기 | Rohde & Schwarz | SMB100A | SignalGenerator | configure_cw, start, stop | implemented_uncommissioned |
@@ -76,6 +167,6 @@
 
 ## 상태의 의미
 
-`implemented_uncommissioned`: 명시한 기능 구현·현장 미검증. `conditional`: 설치 옵션/컨트롤러 확인 후 사용. `controller_component`: 독립 접속 대상이 아닌 제어기에 연결된 구성품입니다.
+`implemented_uncommissioned` 또는 `implemented-uncommissioned`: 명시한 기능 구현·현장 미검증. `conditional`: 설치 옵션/컨트롤러 확인 후 사용. `controller_component`: 독립 접속 대상이 아닌 제어기에 연결된 구성품입니다.
 
 [설치·공통 API](libraries/device-control/README.md) · [가상 시험환경](libraries/device-control/VIRTUAL_LAB.md) · [모델별 상세 조건](libraries/lab-control/docs/EQUIPMENT_COVERAGE.md) · [QP·평균 검파 지원/미확인](libraries/device-control/DETECTORS.md) · [기계 판독 목록](libraries/device-control/dgm_control/data/supported-equipment.json)

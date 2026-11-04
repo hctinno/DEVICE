@@ -2,7 +2,17 @@
 
 **다른 PC의 에이전트는 이 문서 순서대로 설치 → 가상 WLAN 시험 → 자동화 개발 → 실장비 프로필 작성 → 첫 연결을 진행합니다.** 공유 기준은 `main`입니다. 모든 명령은 복제한 저장소 루트에서 실행합니다.
 
-현재 버전: `dgm-device-control 0.9.0`, `dgm-lab-control 0.6.0`, `dgm-rf-command-library 0.5.0`. Python 3.11 이상, 검수 환경은 Windows / Python 3.12.6입니다. Linux/macOS 실행은 미검증입니다.
+현재 버전: `dgm-device-control 0.10.0`, `dgm-lab-control 0.7.0`, `dgm-rf-command-library 0.5.0`. Python 3.11 이상, 검수 환경은 Windows / Python 3.12.6입니다. Linux/macOS 실행은 미검증입니다.
+
+**장비 제어 확대:** [공통 장비 CLI](libraries/device-control/EQUIPMENT_CONTROL.md)로 모델 선택 → 가상 실행 → 실장비 job 작성 → 식별 점검 → native 제어·로그 저장을 진행합니다. `equipment-list`에 모델·출처·인수·제한을 공개하며 [확장 근거표](libraries/lab-control/docs/MODEL_EXPANSION.md)는 70개 고유 모델명·85개 역할/모델 조합입니다. 모든 장비가 모든 시험법을 지원한다는 뜻은 아닙니다.
+
+아래 예제는 1절의 설치를 마친 가상환경에서 실행합니다.
+
+```powershell
+python -m dgm_control equipment-init DigitalMultimeter --model 34461A --output dmm-job.json
+python -m dgm_control equipment-check --job dmm-job.json
+python -m dgm_control equipment-run --job dmm-job.json --output-dir runs/dmm-001
+```
 
 제조사 자료와 공개 근거를 연결한 **DGM 자체 SDK**이며 제조사 발행·인증 SDK가 아닙니다. **실장비 검증 0건**입니다. 목표는 RF·EMC 시험소 무인화이며, 현재 구현은 제어 라이브러리와 개발용 가상 시험환경입니다. 연결만으로 모든 FCC 시험을 완성하지는 않습니다.
 
@@ -36,7 +46,7 @@ python3 -m venv .venv
 
 기존 checkout은 로컬 변경을 보존한 뒤 `git switch main`, `git pull --ff-only origin main`을 실행하고 **3개 로컬 패키지 설치 명령을 다시 실행**합니다. 소스만 갱신하면 설치 패키지는 바뀌지 않습니다. PyPI에 배포됐다고 가정하고 패키지명만으로 설치하지 않습니다.
 
-오프라인 PC: 온라인 개발 PC에서 `python -m pip install "setuptools>=68" wheel` 후 `python -X utf8 scripts/package_device_control.py`로 만든 `libraries/device-control/dist/dgm-device-control-0.9.0-offline.zip`을 전달합니다. 압축 해제 폴더에서 `python -m venv .venv`, `.venv\Scripts\python install.py`를 실행합니다. ZIP은 Git에 없으며 기본 3개 wheel만 담습니다. VISA/serial 패키지·제조사 런타임은 별도 준비합니다. [상세 안내](libraries/device-control/OFFLINE_INSTALL.md)
+오프라인 PC: 온라인 개발 PC에서 `python -m pip install "setuptools>=68" wheel` 후 `python -X utf8 scripts/package_device_control.py`로 만든 `libraries/device-control/dist/dgm-device-control-0.10.0-offline.zip`을 전달합니다. 압축 해제 폴더에서 `python -m venv .venv`, `.venv\Scripts\python install.py`를 실행합니다. ZIP은 Git에 없으며 기본 3개 wheel만 담습니다. VISA/serial 패키지·제조사 런타임은 별도 준비합니다. [상세 안내](libraries/device-control/OFFLINE_INSTALL.md)
 
 ## 2. 가상 시험 실행과 결과 확인
 
@@ -358,9 +368,9 @@ schema 2 plan의 scan에는 heights_cm/angles_deg/polarizations/rf_paths/motion_
 
 `check_readme.py`는 **설치된 패키지**로 README 가상 코드·CLI 정상/오류 실행·프로필 템플릿·예시 JSON을 검사합니다. 실장비 코드 블록은 구문만 검사하고 연결하지 않습니다. 다른 두 검사는 UTF-8·로컬 링크·일반 명칭을 검사합니다.
 
-SDK v0.9.0의 **README 실행 37건·Python 예제 3개 구문 검사**를 통과했습니다. FSW QP 및 기존 WLAN 수신기/CISPR 평균·보정 비교와 네 radio의 schema 2 생성·사전검사·12점 설비 스캔·최대 복귀를 포함합니다. 오프라인 배포본을 새 venv에 설치한 뒤 재현했습니다. [실행별 검수 기록](README_VALIDATION.json)의 passed와 버전으로 결과를 확인합니다. 실장비·VISA/serial 런타임·Linux/macOS 실행은 미검증입니다. 검수 명령은 `runs/readme-check-시각/validation.json`과 명령별 로그를 남깁니다.
+SDK v0.10.0의 **README 실행 41건·Python 예제 3개 구문 검사**를 통과했습니다. 공통 장비 목록·DMM 생성/검사/실행, 설치본 NRP 범위 근거, FSW QP·WLAN 수신기 평균/보정과 네 radio의 12점 스캔·최대 복귀를 확인했습니다. 오프라인 배포본과 hash가 같은 wheel을 새 venv에 설치해 재현했습니다. [실행별 기록](README_VALIDATION.json)을 확인합니다. 실장비·VISA/serial 런타임·Linux/macOS는 미검증이며 실행별 로그는 runs/readme-check-시각에 남습니다.
 
-SDK/드라이버를 바꿨다면 개발 환경에 `setuptools>=68`, `wheel`을 설치한 뒤 `python -X utf8 scripts/check_device_control.py`, `python -X utf8 scripts/check_lab_control.py`, `python -X utf8 scripts/check_phone_rf.py`를 실행합니다. v0.9.0 회귀 검수는 SDK 155개 + 설비 109개 + 단말 58개 = **322개 검사 통과**, SDK 격리 설치 CLI **90건 통과**입니다. [검수 기록](libraries/device-control/docs/validation.json)과 [검수 범위](libraries/device-control/docs/VALIDATION.md)를 확인합니다. 가상 검사 통과를 실측 검증으로 표시하지 않습니다.
+SDK/드라이버를 바꿨다면 개발 환경에 setuptools>=68과 wheel을 설치한 뒤 `python -X utf8 scripts/check_device_control.py`, `python -X utf8 scripts/check_lab_control.py`, `python -X utf8 scripts/check_phone_rf.py`를 실행합니다. v0.10.0 검수는 SDK 165개 + 설비 117개 + 단말 58개 = **340개 통과**, 격리 설치 CLI **112건 통과**입니다. NRP 범위 보완 후 native·runner 재검수와 최종 wheel 검사를 수행했습니다. [검수 기록](libraries/device-control/docs/validation.json), [범위·추가 검수](libraries/device-control/docs/VALIDATION.md), [모델별 가상 결과](libraries/device-control/docs/equipment-model-validation.json)를 확인합니다. 가상 검사를 실측 검증으로 표시하지 않습니다.
 
 ### 문제 해결
 

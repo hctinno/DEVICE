@@ -1,6 +1,7 @@
 """Reviewed receiver subset. Limits here describe this implementation, not all instrument options."""
 from dataclasses import dataclass
 from .core import InstrumentError, UnsupportedInstrument, number, scalar, close_enough, switch
+from .model_scope import extra_models
 
 DETECTORS = {'POS': 'POS', 'QP': 'QPE', 'LINEAR_AVER': 'AVER', 'CISPR_AVER': 'CAV'}
 RECEIVER_RANGES = {'ESW8': 8e9, 'ESW44': 44e9, 'ESR3': 3.6e9, 'ESR7': 7e9}
@@ -9,6 +10,9 @@ EXTENDED_RANGES = {'EPL1000': 30e6, 'ESU8': 1e9, 'ESU40': 1e9,
                    'FSW50': 1e9, 'FSW67': 1e9, 'N9010A': 1e9, 'N9020A': 1e9,
                    'N9030A': 1e9, 'N9030B': 1e9, 'N9040B': 1e9}
 RECEIVER_RANGES.update(EXTENDED_RANGES)
+EXTENDED_RANGES.update({m: 1e9 for m in extra_models('EmiReceiver') if m != 'ESW26'})
+RECEIVER_RANGES.update(EXTENDED_RANGES)
+RECEIVER_RANGES['ESW26'] = 1e9
 ALIASES = {'POS': 'POS', 'POSITIVE': 'POS', 'QPE': 'QP', 'QPEAK': 'QP',
            'AVER': 'LINEAR_AVER', 'AVERAGE': 'LINEAR_AVER', 'CAV': 'CISPR_AVER', 'CAVERAGE': 'CISPR_AVER'}
 

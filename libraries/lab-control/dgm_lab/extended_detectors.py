@@ -32,7 +32,7 @@ def verify_capability(model, capability, identity):
         if not isinstance(raw, str): raise UnsupportedInstrument('Missing option response')
         tokens = {v.strip().strip('"').strip().upper() for v in raw.strip().strip('"').split(',')}
         if option not in tokens: raise UnsupportedInstrument('Required installed option not confirmed: ' + option)
-    if model in {'N9010A', 'N9020A', 'N9030A'}:
+    if model in {'N9000A', 'N9010A', 'N9020A', 'N9030A'}:
         match = re.fullmatch(r'A\.(\d+)\.(\d+)(?:\.\d+)?', identity.firmware.strip())
         if not match or int(match[1]) < 2:
             raise UnsupportedInstrument('X-Series A Measure-at-Marker requires documented A.02.00+ firmware format')

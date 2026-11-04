@@ -31,7 +31,7 @@ def main():
                 skipped=['Physical VISA/USB/GPIB/serial devices','Actual phone TX and RF-off verification',
                          'Measurement accuracy/calibration/uncertainty','Physical motion/SAR/NR/DFS test workflows'])
     try:
-        for script in ('build_inventory.py','build_report_inventory.py','build_reference.py','build_profiles.py','build_workflows.py','build_developer_index.py'):
+        for script in ('build_inventory.py','build_report_inventory.py','build_reference.py','build_model_expansion.py','build_profiles.py','build_workflows.py','build_developer_index.py'):
             print(run([sys.executable,'-X','utf8',str(LIB/'scripts'/script)]).strip(),flush=True)
         checked=0
         for path in LIB.rglob('*'):

@@ -1,4 +1,6 @@
 [
+  {"id":"rs-nrp-range","url":"https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf","kind":"manufacturer_product_brochure"},
+  {"id":"keysight-truevolt","url":"https://www.keysight.com/us/en/assets/9018-03876/service-manuals/9018-03876.pdf","kind":"manufacturer_manual"},
   {
     "id": "oda-ex60-40-spec",
     "url": "https://rndtech.synology.me/Instrument/Datasheet/ODA/EX60-40.pdf",

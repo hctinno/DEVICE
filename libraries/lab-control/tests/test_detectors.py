@@ -25,7 +25,7 @@ class ReceiverDetectorTests(unittest.TestCase):
     def test_all_verified_models_and_detectors_use_single_bargraph_and_proof(self):
         from dgm_lab.capabilities import capabilities
         self.assertEqual(set(capabilities('EmiReceiver')[0]['operation_models']['read_verified_level']), set(RECEIVER_RANGES))
-        for model in ('ESW8', 'ESW44', 'ESR3', 'ESR7'):
+        for model in ('ESW8', 'ESW44', 'ESR3', 'ESR7', 'ESW26'):
             for detector, wire in DETECTORS.items():
                 with self.subTest(model=model, detector=detector):
                     driver, io = self.setup_driver(model, detector)

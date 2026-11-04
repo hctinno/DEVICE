@@ -79,6 +79,17 @@ SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermo
 | `stop(self)` | `ABOR:RFG:TX`; `*OPC?` |
 | `emitting(self)` | 하위 메서드 호출; 실행 코드 참조 |
 
+## DigitalMultimeter
+
+[실행 코드](../dgm_lab/dmm.py)
+
+| API | 실제 명령/템플릿 조각 |
+| --- | --- |
+| `__init__(self, transport, *, model, max_voltage)` | 하위 메서드 호출; 실행 코드 참조 |
+| `configure(self, *, function, range_value)` | `VOLT:DC`; `VOLT:AC`; `f'CONF:{self.mnemonic} {fmt(range_value)}'`; `TRIG:SOUR IMM`; `SAMP:COUN 1`; `TRIG:COUN 1` |
+| `read(self)` | `READ?` |
+| `stop(self)` | `ABOR` |
+
 ## EpmPowerMeter
 
 [실행 코드](../dgm_lab/epm.py)
@@ -177,7 +188,7 @@ SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermo
 | API | 실제 명령/템플릿 조각 |
 | --- | --- |
 | `__init__(self, transport, *, model, max_voltage, max_current)` | 하위 메서드 호출; 실행 코드 참조 |
-| `configure(self, *, voltage, current_limit, range_name=None)` | `f'VOLT:RANG {range_name}'`; `VOLT:RANG `; `f'CURR {fmt(current_limit)}'`; `f'VOLT {fmt(voltage)}'` |
+| `configure(self, *, voltage, current_limit, range_name=None)` | `f'VOLT:RANG {range_name}'`; `VOLT:RANG `; `f'CURR {fmt(current_limit)}'`; `f'VOLT {fmt(voltage)}'`; `VOLT:RANG?` |
 | `start(self)` | 하위 메서드 호출; 실행 코드 참조 |
 | `stop(self)` | 하위 메서드 호출; 실행 코드 참조 |
 | `read_voltage(self)` | `MEAS:VOLT?` |

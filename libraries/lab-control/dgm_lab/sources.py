@@ -2,12 +2,14 @@
 import time
 from .core import Scpi, UnsupportedInstrument, InstrumentError, number, fmt, scalar, switch, close_enough, managed_run
 from .analyzers import KEYSIGHT, RS
+from .model_scope import extra_models, frequency_scope, SUPPLY_RANGES
 
 
 class SignalGenerator(Scpi):
     MODELS = {'N5181A': 'keysight-mxg-a', 'N5182B': 'keysight-mxg-b', 'SMB100A': 'rs-smb100a',
               'SMB100B': 'rs-smb100b', 'SMW200A': 'rs-smw200a',
               'E8267D': 'keysight-psg', 'E4421B': 'keysight-esg-b', 'E4433B': 'keysight-esg-b'}
+    MODELS.update(extra_models('SignalGenerator'))
 
     def __init__(self, transport, *, model, max_frequency_hz, max_power_dbm):
         if model not in self.MODELS:
@@ -20,6 +22,7 @@ class SignalGenerator(Scpi):
 
     def configure_cw(self, *, frequency_hz, power_dbm):
         number(frequency_hz, 'frequency_hz', 1, self.max_hz)
+        frequency_scope('SignalGenerator', self.expected_model, frequency_hz)
         number(power_dbm, 'power_dbm', -140, self.max_dbm)
         self.ready()
         self.configured = False
@@ -58,6 +61,7 @@ class SignalGenerator(Scpi):
 
 class PowerSupply(Scpi):
     MODELS = {'PWR2001ML': 'kikusui-pwr', 'E3640A': 'keysight-e3640', 'E3632A': 'keysight-e3632a', '6674A': 'keysight-6674a'}
+    MODELS.update(extra_models('PowerSupply'))
 
     def __init__(self, transport, *, model, max_voltage, max_current):
         if model not in self.MODELS:
@@ -66,6 +70,9 @@ class PowerSupply(Scpi):
         self.source_id = self.MODELS[model]
         self.max_v = number(max_voltage, 'site voltage limit', 0.001, 1000)
         self.max_a = number(max_current, 'site current limit', 0.001, 1000)
+        if model in extra_models('PowerSupply'):
+            number(max_voltage, 'model rated voltage', .001, max(v for v,a in SUPPLY_RANGES[model].values()))
+            number(max_current, 'model rated current', .001, max(a for v,a in SUPPLY_RANGES[model].values()))
         if model == '6674A':
             number(max_voltage, '6674A rated voltage limit', 0.001, 60)
             number(max_current, '6674A rated current limit', 0.001, 35)
@@ -74,10 +81,10 @@ class PowerSupply(Scpi):
     def configure(self, *, voltage, current_limit, range_name=None):
         number(voltage, 'voltage', 0, self.max_v)
         number(current_limit, 'current_limit', 0, self.max_a)
-        if self.expected_model == 'E3640A':
-            if range_name not in ('P8V', 'P20V'):
-                raise ValueError('E3640A requires explicit P8V or P20V range')
-            vmax, imax = (8, 3) if range_name=='P8V' else (20, 1.5)
+        if self.expected_model in SUPPLY_RANGES:
+            if range_name not in SUPPLY_RANGES[self.expected_model]:
+                raise ValueError('Explicit model-compatible output range required')
+            vmax, imax = SUPPLY_RANGES[self.expected_model][range_name]
             number(voltage, 'selected range voltage', 0, vmax)
             number(current_limit, 'selected range current', 0, imax)
         elif self.expected_model == 'E3632A':
@@ -87,13 +94,15 @@ class PowerSupply(Scpi):
             number(voltage, 'selected range voltage', 0, vmax)
             number(current_limit, 'selected range current', 0, imax)
         elif range_name is not None:
-            raise ValueError('range_name only applies to E3640A/E3632A')
+            raise ValueError('range_name only applies to E364xA/E3632A')
         self.ready()
         self.configured = False
         with self.io.transaction():
             self.stop()
             commands = [f'VOLT:RANG {range_name}'] if range_name else []
             self.apply(commands + [f'CURR {fmt(current_limit)}', f'VOLT {fmt(voltage)}'])
+            if self.expected_model in extra_models('PowerSupply') and self.io.query('VOLT:RANG?').strip().upper() != range_name:
+                raise InstrumentError('Supply output range readback mismatch')
             close_enough(scalar(self.io.query('VOLT?')), voltage, abs_tol=0.005)
             close_enough(scalar(self.io.query('CURR?')), current_limit, abs_tol=0.001)
             self.errors()

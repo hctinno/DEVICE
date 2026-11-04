@@ -1,5 +1,57 @@
 [
   {
+    "manufacturer": "Keysight/Agilent",
+    "model": "34460A",
+    "equipment_type": "디지털 멀티미터",
+    "driver": "DigitalMultimeter",
+    "operations": [
+      "configure",
+      "read",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "34461A",
+    "equipment_type": "디지털 멀티미터",
+    "driver": "DigitalMultimeter",
+    "operations": [
+      "configure",
+      "read",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "34465A",
+    "equipment_type": "디지털 멀티미터",
+    "driver": "DigitalMultimeter",
+    "operations": [
+      "configure",
+      "read",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "34470A",
+    "equipment_type": "디지털 멀티미터",
+    "driver": "DigitalMultimeter",
+    "operations": [
+      "configure",
+      "read",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
     "manufacturer": "Keysight/Agilent/HP",
     "model": "E4440A",
     "equipment_type": "스펙트럼 분석기",
@@ -108,8 +160,320 @@
     "physical_verified": false
   },
   {
-    "manufacturer": "Keysight/Agilent/HP",
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW8",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW13",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW26",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW43",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW85",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESU26",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSV3",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSV4",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSV7",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSV13",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSV30",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSVA4",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSVA7",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSVA13",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSVA30",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSVA40",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9000A",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9000B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9010B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9020B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9021B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9032B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9041B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9042B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9048B",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
     "model": "N9020A",
+    "equipment_type": "스펙트럼 분석기",
+    "driver": "SpectrumAnalyzer",
+    "operations": [
+      "acquire",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW67",
     "equipment_type": "스펙트럼 분석기",
     "driver": "SpectrumAnalyzer",
     "operations": [
@@ -132,8 +496,8 @@
     "physical_verified": false
   },
   {
-    "manufacturer": "Rohde & Schwarz",
-    "model": "FSW67",
+    "manufacturer": "Keysight/Agilent/HP",
+    "model": "N9020A",
     "equipment_type": "스펙트럼 분석기",
     "driver": "SpectrumAnalyzer",
     "operations": [
@@ -317,6 +681,198 @@
     "physical_verified": false
   },
   {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW8",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW13",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW26",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW43",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "FSW85",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESU26",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "ESW26",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9000A",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9000B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9010B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9020B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9021B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9032B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9041B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9042B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N9048B",
+    "equipment_type": "EMI 수신기",
+    "driver": "EmiReceiver",
+    "operations": [
+      "read_verified_level",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
     "manufacturer": "Keysight/Agilent/HP",
     "model": "N5181A",
     "equipment_type": "RF 신호발생기",
@@ -379,6 +935,201 @@
       "stop"
     ],
     "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5161A",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5162A",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5182A",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5183A",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5166B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5171B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5172B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5173B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5181B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "N5183B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E8257D",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E8663D",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E8267D",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E4421B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E4433B",
+    "equipment_type": "RF 신호발생기",
+    "driver": "SignalGenerator",
+    "operations": [
+      "configure_cw",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
     "physical_verified": false
   },
   {
@@ -448,6 +1199,111 @@
       "stop"
     ],
     "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E3641A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E3642A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E3643A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E3644A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E3645A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "E3632A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "6674A",
+    "equipment_type": "DC 전원공급기",
+    "driver": "PowerSupply",
+    "operations": [
+      "configure",
+      "read_voltage",
+      "read_current",
+      "start",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
     "physical_verified": false
   },
   {
@@ -556,6 +1412,305 @@
       "stop"
     ],
     "status": "implemented_uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP8SN",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP18SN",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP33S",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP33SN",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP40S",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP40SN",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP50S",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP50SN",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP67S",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP67SN",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP90S",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP90SN",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP33SN-V",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Rohde & Schwarz",
+    "model": "NRP67SN-V",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "U2001A",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "U2002A",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "U2004A",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "U2000H",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "U2001H",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "U2002H",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "U2000B",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "U2001B",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
+    "physical_verified": false
+  },
+  {
+    "manufacturer": "Keysight/Agilent",
+    "model": "U2002B",
+    "equipment_type": "USB 파워센서",
+    "driver": "UsbPowerSensor",
+    "operations": [
+      "configure_average",
+      "read_power",
+      "stop"
+    ],
+    "status": "implemented-uncommissioned",
     "physical_verified": false
   },
   {

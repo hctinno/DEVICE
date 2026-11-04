@@ -17,10 +17,10 @@ from dgm_rf import WlanTxConfig
 class CatalogTests(unittest.TestCase):
     def test_all_descriptors_have_honest_status(self):
         rows = devices()
-        self.assertEqual(len(rows), 21)
-        self.assertEqual(len({row["id"] for row in rows}), 21)
+        self.assertEqual(len(rows), 22)
+        self.assertEqual(len({row["id"] for row in rows}), 22)
         self.assertTrue(all(row["physical_verified"] is False and row["sdk_is_manufacturer_endorsed"] is False for row in rows))
-        self.assertEqual(sum(row["simulation_available"] for row in rows), 3)
+        self.assertEqual(sum(row["simulation_available"] for row in rows), 9)
 
     def test_instrument_contracts_match_actual_drivers(self):
         from dgm_lab.registry import DRIVERS
@@ -91,7 +91,7 @@ class ProfileTests(unittest.TestCase):
         self.assertFalse(check_profile(profile)["valid"])
 
     def test_unsupported_simulator_does_not_fake_success(self):
-        with self.assertRaises(UnsupportedDevice): profile_template("SpectrumAnalyzer", "simulation")
+        with self.assertRaises(UnsupportedDevice): profile_template("VectorNetworkAnalyzer", "simulation")
 
     def test_phone_modes_and_allowlist_are_checked(self):
         profile = profile_template("PhoneAt", "simulation")

@@ -1,8 +1,10 @@
 # DGM DeviceControl
 
+0.10.0: [공통 장비 실행·식별·로그 CLI](EQUIPMENT_CONTROL.md), [확장 모델 공식 근거표](../lab-control/docs/MODEL_EXPANSION.md). standalone 가상 backend는 9종이며 여섯 SCPI 역할은 모델별 job 자동 생성을 지원합니다. 신규 일반 분석/발생/센서 모델은 10 MHz–1 GHz 검토 범위이고 실제 장비/펌웨어 검증은 수행하지 않았습니다. 아래 0.9.0 기록은 이전 확장입니다.
+
 0.9.0 추가: [QP·선형 평균·CISPR 평균](DETECTORS.md)에 EPL1000·ESU8/40·FSW50/67·X-Series A/B를 연결했습니다. `measurement-init --model FSW50 --workflow wlan --detector QP --output fsw.json`으로 합성 입력을 생성합니다. FSW K54·X-Series EMC 옵션을 조회하고 모델별 최종 측정값을 WLAN/네 radio의 보정·최대 복귀·판정·오류 기록에 사용합니다. 실제 장비·펌웨어/FCC 적합성 검증은 수행하지 않았습니다.
 
-**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.9.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
+**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.10.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
 
 **설비 스캔:** [radio-init --scan / radio-run](RADIO_SCAN.md)은 Bluetooth·셀룰러·NFC·UWB source와 CO3000 마스트/턴테이블, OSP RF 경로를 연결합니다. 측정 전후 위치·경로 확인, 표본 최대 선택과 복귀, RF OFF·안전 경로·ES 종료 및 부분 오류 기록을 수행합니다. schema 1 plan/WLAN CLI는 유지합니다.
 
@@ -126,7 +128,7 @@ except Exception as error:
 
 ## 지원 상태와 개발자 인계
 
-설비는 기존 [모델별 출처/지원 범위](../lab-control/AGENT_START_HERE.md)를 재사용합니다. 독립 `open_device` simulator는 전원·모션·PhoneAt 3종이며, `VirtualLab.open`은 [WLAN 7종 모델](VIRTUAL_LAB.md), `radio-run`은 [4개 radio source/분석기 모델](MULTIRADIO.md)을 지원합니다. 그 외 모델은 미구현입니다. Qualcomm/Broadcom은 [숫자표와 실행 전제](../phone-rf/docs/CHIPSET_TERMINAL_CONTROL.md)를 참고하는 별도 항목입니다. 입력한 프로파일만으로 `physical_verified=true`로 승격하지 않습니다.
+설비는 기존 [모델별 출처/지원 범위](../lab-control/AGENT_START_HERE.md)를 재사용합니다. 독립 open_device simulator는 기존 전원·모션·PhoneAt에 여섯 SCPI 역할을 더한 9종입니다. 모델 범위는 [공통 장비 안내](EQUIPMENT_CONTROL.md)를 확인합니다. VirtualLab.open의 [WLAN 7종 모형](VIRTUAL_LAB.md)과 radio-run의 [네 radio source/분석기](MULTIRADIO.md)는 별도 범위입니다. Qualcomm/Broadcom은 [숫자표·실행 전제](../phone-rf/docs/CHIPSET_TERMINAL_CONTROL.md)를 참고합니다. 입력한 프로파일만으로 physical_verified=true로 승격하지 않습니다.
 
 다른 에이전트는 `describe(id)`의 sources/methods/site_requirements/excludes와 프로파일 schema를 먼저 읽고 공통 API를 사용합니다. 제조사 신규 모델 추가 시 기존 이름이 유사하다는 이유로 자동 지원하지 않습니다. 공식 근거→프로파일→드라이버→정상/실패 fixture→실장비 검증 순서로 등록합니다. 세부 절차는 [기여 가이드](CONTRIBUTING.md)를 따릅니다.
 

@@ -63,7 +63,7 @@ def main():
                     if archive.testzip() is not None: raise RuntimeError("Damaged wheel")
                     if any(".manual-cache" in name or ".fcc-cache" in name for name in archive.namelist()):
                         raise RuntimeError("Vendor cache leaked into wheel")
-            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.9.0"], cwd=temp)
+            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.10.0"], cwd=temp)
             env = dict(os.environ, PYTHONPATH=str(installed), PYTHONIOENCODING="utf-8")
             base = [sys.executable, "-s", "-m", "dgm_control"]
             checks = []
@@ -72,11 +72,26 @@ def main():
                 checks.append({"args": list(args), "exit_code": answer.returncode})
                 return answer
             listed = json.loads(command("list").stdout)
-            if len(listed) != 21: raise RuntimeError("Installed catalog missing")
+            if len(listed) != 22: raise RuntimeError("Installed catalog missing")
             detail = json.loads(command("show", "Co3000").stdout)
             if not detail["sources"]: raise RuntimeError("Installed provenance missing")
             diagnosed = json.loads(command("doctor").stdout)
-            if diagnosed["packages"]["dgm-device-control"] != "0.9.0": raise RuntimeError("Installed SDK version mismatch")
+            if diagnosed["packages"]["dgm-device-control"] != "0.10.0": raise RuntimeError("Installed SDK version mismatch")
+            model_matrix=json.loads(run([sys.executable,str(SDK/'scripts/check_equipment_models.py')],cwd=temp,env=env).stdout)
+            if not model_matrix['passed'] or model_matrix['role_model_count']<120: raise RuntimeError('Installed equipment model matrix failed')
+            report['installed_equipment_matrix']={k:v for k,v in model_matrix.items() if k!='rows'}
+            if len(json.loads(command('equipment-list').stdout)['devices'])!=17: raise RuntimeError('Equipment families missing')
+            for driver,model in [('SpectrumAnalyzer','FSVA13'),('EmiReceiver','FSW8'),('SignalGenerator','N5183B'),('PowerSupply','E3645A'),('UsbPowerSensor','NRP67SN'),('DigitalMultimeter','34470A')]:
+                job=temp/(driver+'-job.json')
+                command('equipment-init',driver,'--model',model,'--output',str(job))
+                command('equipment-check','--job',str(job))
+                value=json.loads(command('equipment-run','--job',str(job),'--output-dir',str(temp/(driver+'-run'))).stdout)
+                if value['status']!='completed' or not value['cleanup_scope_succeeded']: raise RuntimeError('Installed equipment run failed')
+            probe_profile=temp/'probe-profile.json'
+            command('init','DigitalMultimeter','--mode','simulation','--output',str(probe_profile))
+            value=json.loads(command('equipment-probe','--profile',str(probe_profile),'--output-dir',str(temp/'equipment-probe')).stdout)
+            if value['status']!='identified' or value['commissioned']: raise RuntimeError('Probe scope incorrect')
+            command('equipment-init','DigitalMultimeter','--model','UNREVIEWED','--output',str(temp/'invalid-equipment.json'),expected=2)
             profile = temp / "simulation.json"
             command("init", "OdaEx", "--mode", "simulation", "--output", str(profile))
             command("check", str(profile))

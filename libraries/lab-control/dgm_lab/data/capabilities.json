@@ -1,5 +1,99 @@
 [
   {
+    "profile": "dmm",
+    "category": "dmm",
+    "operations": [
+      "configure",
+      "read",
+      "stop"
+    ],
+    "lifecycle": "managed_run(lambda: None, device.stop)",
+    "protocol": "Truevolt SCPI DCV/ACV/2-wire resistance",
+    "site_requirements": [
+      "exact model and commissioned firmware",
+      "input terminals and unpowered DUT for resistance",
+      "site voltage limit <=10 V",
+      "calibration and settling"
+    ],
+    "excludes": [
+      "current measurement",
+      "mains and high voltage",
+      "scanner and physical validation"
+    ],
+    "driver": "DigitalMultimeter",
+    "constructor": "(transport, *, model, max_voltage)",
+    "source_file": "dgm_lab/dmm.py",
+    "profile_path": "profiles/dmm.template.json",
+    "methods": {
+      "configure": "(self, *, function, range_value)",
+      "read": "(self)",
+      "stop": "(self)"
+    },
+    "report_models": [],
+    "source_ids": [
+      "keysight-truevolt"
+    ],
+    "role_models": [
+      {
+        "driver": "DigitalMultimeter",
+        "model": "34460A",
+        "source_id": "keysight-truevolt",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "DC/AC voltage <=10 V; 2-wire resistance <=1 Mohm"
+      },
+      {
+        "driver": "DigitalMultimeter",
+        "model": "34461A",
+        "source_id": "keysight-truevolt",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "DC/AC voltage <=10 V; 2-wire resistance <=1 Mohm"
+      },
+      {
+        "driver": "DigitalMultimeter",
+        "model": "34465A",
+        "source_id": "keysight-truevolt",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "DC/AC voltage <=10 V; 2-wire resistance <=1 Mohm"
+      },
+      {
+        "driver": "DigitalMultimeter",
+        "model": "34470A",
+        "source_id": "keysight-truevolt",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "DC/AC voltage <=10 V; 2-wire resistance <=1 Mohm"
+      }
+    ],
+    "physical_verified": false
+  },
+  {
     "profile": "spectrum",
     "category": "spectrum",
     "operations": [
@@ -54,12 +148,438 @@
       }
     ],
     "source_ids": [
+      "keysight-psa",
       "keysight-xsa-a",
       "keysight-xsa-b",
+      "rs-esci",
+      "rs-esu",
       "rs-fsv",
       "rs-fsw"
     ],
-    "role_models": [],
+    "role_models": [
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSW8",
+        "source_id": "rs-fsw",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "6.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSW13",
+        "source_id": "rs-fsw",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "6.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSW26",
+        "source_id": "rs-fsw",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "6.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSW43",
+        "source_id": "rs-fsw",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "6.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSW85",
+        "source_id": "rs-fsw",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "6.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "ESU26",
+        "source_id": "rs-esu",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "5.74",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSV3",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSV4",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSV7",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSV13",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSV30",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSVA4",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSVA7",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSVA13",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSVA30",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "FSVA40",
+        "source_id": "rs-fsv",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "3.30",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "N9000A",
+        "source_id": "keysight-xsa-a",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "N9000B",
+        "source_id": "keysight-xsa-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "N9010B",
+        "source_id": "keysight-xsa-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "N9020B",
+        "source_id": "keysight-xsa-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "N9021B",
+        "source_id": "keysight-xsa-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "N9032B",
+        "source_id": "keysight-xsa-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "N9041B",
+        "source_id": "keysight-xsa-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "N9042B",
+        "source_id": "keysight-xsa-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SpectrumAnalyzer",
+        "model": "N9048B",
+        "source_id": "keysight-xsa-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "model": "N9010A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-a"
+      },
+      {
+        "model": "N9030A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-a"
+      },
+      {
+        "model": "N9020A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-a"
+      },
+      {
+        "model": "N9030B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "N9040B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "E4440A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-psa"
+      },
+      {
+        "model": "FSW50",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsw"
+      },
+      {
+        "model": "ESU8",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esu"
+      },
+      {
+        "model": "FSW67",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsw"
+      },
+      {
+        "model": "FSV40",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsv"
+      },
+      {
+        "model": "ESU40",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esu"
+      },
+      {
+        "model": "ESCI7",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esci"
+      }
+    ],
     "physical_verified": false
   },
   {
@@ -92,7 +612,23 @@
         "N9020A",
         "N9030A",
         "N9030B",
-        "N9040B"
+        "N9040B",
+        "FSW8",
+        "FSW13",
+        "FSW26",
+        "FSW43",
+        "FSW85",
+        "ESU26",
+        "N9000A",
+        "N9000B",
+        "N9010B",
+        "N9020B",
+        "N9021B",
+        "N9032B",
+        "N9041B",
+        "N9042B",
+        "N9048B",
+        "ESW26"
       ]
     },
     "lifecycle": "managed_run(lambda: None, device.stop)",
@@ -231,6 +767,102 @@
         "manufacturer": "Keysight/Agilent",
         "status": "implemented-uncommissioned",
         "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "FSW8",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsw"
+      },
+      {
+        "model": "FSW13",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsw"
+      },
+      {
+        "model": "FSW26",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsw"
+      },
+      {
+        "model": "FSW43",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsw"
+      },
+      {
+        "model": "FSW85",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-fsw"
+      },
+      {
+        "model": "ESU26",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esu"
+      },
+      {
+        "model": "ESW26",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-esw"
+      },
+      {
+        "model": "N9000A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-a"
+      },
+      {
+        "model": "N9000B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "N9010B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "N9020B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "N9021B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "N9032B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "N9041B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "N9042B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
+      },
+      {
+        "model": "N9048B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-xsa-b"
       }
     ],
     "physical_verified": false
@@ -293,11 +925,231 @@
     ],
     "source_ids": [
       "keysight-esg-b",
+      "keysight-mxg-a",
+      "keysight-mxg-b",
       "keysight-psg",
       "rs-smb100a",
+      "rs-smb100b",
       "rs-smw200a"
     ],
-    "role_models": [],
+    "role_models": [
+      {
+        "driver": "SignalGenerator",
+        "model": "N5161A",
+        "source_id": "keysight-mxg-a",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "N5162A",
+        "source_id": "keysight-mxg-a",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "N5182A",
+        "source_id": "keysight-mxg-a",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "N5183A",
+        "source_id": "keysight-mxg-a",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "N5166B",
+        "source_id": "keysight-mxg-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "N5171B",
+        "source_id": "keysight-mxg-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "N5172B",
+        "source_id": "keysight-mxg-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "N5173B",
+        "source_id": "keysight-mxg-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "N5181B",
+        "source_id": "keysight-mxg-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "N5183B",
+        "source_id": "keysight-mxg-b",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "E8257D",
+        "source_id": "keysight-psg",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "SignalGenerator",
+        "model": "E8663D",
+        "source_id": "keysight-psg",
+        "reviewed_pdf_pages": [
+          1
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "model": "N5181A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-mxg-a"
+      },
+      {
+        "model": "N5182B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-mxg-b"
+      },
+      {
+        "model": "SMB100A",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-smb100a"
+      },
+      {
+        "model": "SMB100B",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-smb100b"
+      },
+      {
+        "model": "SMW200A",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-smw200a"
+      },
+      {
+        "model": "E8267D",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-psg"
+      },
+      {
+        "model": "E4421B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-esg-b"
+      },
+      {
+        "model": "E4433B",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-esg-b"
+      }
+    ],
     "physical_verified": false
   },
   {
@@ -345,9 +1197,116 @@
     ],
     "source_ids": [
       "keysight-6674a",
-      "keysight-e3632a"
+      "keysight-e3632a",
+      "keysight-e3640",
+      "kikusui-pwr"
     ],
-    "role_models": [],
+    "role_models": [
+      {
+        "driver": "PowerSupply",
+        "model": "E3641A",
+        "source_id": "keysight-e3640",
+        "reviewed_pdf_pages": [
+          24,
+          102,
+          103
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "Explicit model/range and site voltage/current limits"
+      },
+      {
+        "driver": "PowerSupply",
+        "model": "E3642A",
+        "source_id": "keysight-e3640",
+        "reviewed_pdf_pages": [
+          24,
+          102,
+          103
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "Explicit model/range and site voltage/current limits"
+      },
+      {
+        "driver": "PowerSupply",
+        "model": "E3643A",
+        "source_id": "keysight-e3640",
+        "reviewed_pdf_pages": [
+          24,
+          102,
+          103
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "Explicit model/range and site voltage/current limits"
+      },
+      {
+        "driver": "PowerSupply",
+        "model": "E3644A",
+        "source_id": "keysight-e3640",
+        "reviewed_pdf_pages": [
+          24,
+          102,
+          103
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "Explicit model/range and site voltage/current limits"
+      },
+      {
+        "driver": "PowerSupply",
+        "model": "E3645A",
+        "source_id": "keysight-e3640",
+        "reviewed_pdf_pages": [
+          24,
+          102,
+          103
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "Explicit model/range and site voltage/current limits"
+      },
+      {
+        "model": "PWR2001ML",
+        "manufacturer": "KIKUSUI",
+        "status": "implemented-uncommissioned",
+        "source_id": "kikusui-pwr"
+      },
+      {
+        "model": "E3640A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-e3640"
+      },
+      {
+        "model": "E3632A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-e3632a"
+      },
+      {
+        "model": "6674A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-6674a"
+      }
+    ],
     "physical_verified": false
   },
   {
@@ -416,8 +1375,360 @@
       "stop": "(self)"
     },
     "report_models": [],
-    "source_ids": [],
-    "role_models": [],
+    "source_ids": [
+      "keysight-u2000",
+      "rs-nrp-range",
+      "rs-nrpa",
+      "rs-nrps"
+    ],
+    "role_models": [
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP8SN",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP18SN",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP33S",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP33SN",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP40S",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "50 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP40SN",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "50 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP50S",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "50 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP50SN",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "50 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP67S",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "50 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP67SN",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "50 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP90S",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "50 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP90SN",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "50 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP33SN-V",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "NRP67SN-V",
+        "source_id": "rs-nrps",
+        "reviewed_pdf_pages": [
+          2
+        ],
+        "documented_firmware": "03.40",
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "50 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "U2001A",
+        "source_id": "keysight-u2000",
+        "reviewed_pdf_pages": [
+          259
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "U2002A",
+        "source_id": "keysight-u2000",
+        "reviewed_pdf_pages": [
+          259
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "U2004A",
+        "source_id": "keysight-u2000",
+        "reviewed_pdf_pages": [
+          259
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "U2000H",
+        "source_id": "keysight-u2000",
+        "reviewed_pdf_pages": [
+          259
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "U2001H",
+        "source_id": "keysight-u2000",
+        "reviewed_pdf_pages": [
+          259
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "U2002H",
+        "source_id": "keysight-u2000",
+        "reviewed_pdf_pages": [
+          259
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "U2000B",
+        "source_id": "keysight-u2000",
+        "reviewed_pdf_pages": [
+          259
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "U2001B",
+        "source_id": "keysight-u2000",
+        "reviewed_pdf_pages": [
+          259
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "driver": "UsbPowerSensor",
+        "model": "U2002B",
+        "source_id": "keysight-u2000",
+        "reviewed_pdf_pages": [
+          259
+        ],
+        "documented_firmware": null,
+        "firmware_status": "site-validation-required",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "physical_verified": false,
+        "scope": "10 MHz..1 GHz reviewed wrapper"
+      },
+      {
+        "model": "U2000A",
+        "manufacturer": "Keysight/Agilent",
+        "status": "implemented-uncommissioned",
+        "source_id": "keysight-u2000"
+      },
+      {
+        "model": "NRP8S",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-nrps"
+      },
+      {
+        "model": "NRP18S",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-nrps"
+      },
+      {
+        "model": "NRP18A",
+        "manufacturer": "Rohde & Schwarz",
+        "status": "implemented-uncommissioned",
+        "source_id": "rs-nrpa"
+      }
+    ],
     "physical_verified": false
   },
   {

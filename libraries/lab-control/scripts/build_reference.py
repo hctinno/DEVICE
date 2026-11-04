@@ -34,7 +34,7 @@ def main():
     (ROOT/'dgm_lab/data/sources.json').write_text(json.dumps(sources,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     index=[]
     for path in sorted((ROOT/'dgm_lab').glob('*.py')):
-        if path.stem not in ('analyzers','sources','meters','vna','chambers','callbox','legacy','motion','switching','epm','oda','cmu'):
+        if path.stem not in ('analyzers','sources','meters','vna','chambers','callbox','legacy','motion','switching','epm','oda','cmu','dmm'):
             continue
         tree=ast.parse(path.read_text(encoding='utf-8'))
         for cls in (n for n in tree.body if isinstance(n,ast.ClassDef) and n.name in DRIVERS):

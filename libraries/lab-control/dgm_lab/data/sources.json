@@ -816,6 +816,27 @@
     "hardware_validated": false
   },
   {
+    "id": "keysight-truevolt",
+    "url": "https://www.keysight.com/us/en/assets/9018-03876/service-manuals/9018-03876.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/service-manuals/9018-03876.pdf",
+    "status": "acquired",
+    "sha256": "837f727ea1be86ee84910e462904957cc55d80fde7cf27b106b0eeacd645bcca",
+    "pages": 1193,
+    "review": {},
+    "hardware_validated": false
+  },
+  {
+    "id": "rs-nrp-range",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_brochures_and_datasheets/product_brochure/5213_5539_12/NRP-Power-Meter-Family_bro_en_5213-5539-12_v1800.pdf",
+    "kind": "manufacturer_product_brochure",
+    "status": "acquired",
+    "sha256": "a8417d04d5c627afd719f07f87a737dc28fa5b5e6eec3380b44626e72c549731",
+    "pages": 44,
+    "review": {},
+    "hardware_validated": false
+  },
+  {
     "id": "espec-chamberconnect",
     "kind": "manufacturer_open_source",
     "status": "reviewed",

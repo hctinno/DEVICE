@@ -1,0 +1,898 @@
+{
+  "passed": true,
+  "role_model_count": 127,
+  "distinct_model_names": 103,
+  "simulated": true,
+  "physical_tests": 0,
+  "rows": [
+    {
+      "driver": "DigitalMultimeter",
+      "model": "34460A",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "DigitalMultimeter",
+      "model": "34461A",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "DigitalMultimeter",
+      "model": "34465A",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "DigitalMultimeter",
+      "model": "34470A",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "E4440A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "ESCI7",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "ESU26",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "ESU40",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "ESU8",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSV13",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSV3",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSV30",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSV4",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSV40",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSV7",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSVA13",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSVA30",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSVA4",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSVA40",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSVA7",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSW13",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSW26",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSW43",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSW50",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSW67",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSW8",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "FSW85",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9000A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9000B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9010A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9010B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9020A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9020B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9021B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9030A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9030B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9032B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9040B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9041B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9042B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SpectrumAnalyzer",
+      "model": "N9048B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "EPL1000",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "ESR3",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "ESR7",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "ESU26",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "ESU40",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "ESU8",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "ESW26",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "ESW44",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "ESW8",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "FSW13",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "FSW26",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "FSW43",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "FSW50",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "FSW67",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "FSW8",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "FSW85",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9000A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9000B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9010A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9010B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9020A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9020B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9021B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9030A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9030B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9032B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9040B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9041B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9042B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "EmiReceiver",
+      "model": "N9048B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "E4421B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "E4433B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "E8257D",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "E8267D",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "E8663D",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5161A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5162A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5166B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5171B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5172B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5173B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5181A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5181B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5182A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5182B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5183A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "N5183B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "SMB100A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "SMB100B",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "SignalGenerator",
+      "model": "SMW200A",
+      "status": "completed",
+      "operations_completed": 1,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "PowerSupply",
+      "model": "6674A",
+      "status": "completed",
+      "operations_completed": 3,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "PowerSupply",
+      "model": "E3632A",
+      "status": "completed",
+      "operations_completed": 3,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "PowerSupply",
+      "model": "E3640A",
+      "status": "completed",
+      "operations_completed": 3,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "PowerSupply",
+      "model": "E3641A",
+      "status": "completed",
+      "operations_completed": 3,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "PowerSupply",
+      "model": "E3642A",
+      "status": "completed",
+      "operations_completed": 3,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "PowerSupply",
+      "model": "E3643A",
+      "status": "completed",
+      "operations_completed": 3,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "PowerSupply",
+      "model": "E3644A",
+      "status": "completed",
+      "operations_completed": 3,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "PowerSupply",
+      "model": "E3645A",
+      "status": "completed",
+      "operations_completed": 3,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "PowerSupply",
+      "model": "PWR2001ML",
+      "status": "completed",
+      "operations_completed": 3,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP18A",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP18S",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP18SN",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP33S",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP33SN",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP33SN-V",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP40S",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP40SN",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP50S",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP50SN",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP67S",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP67SN",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP67SN-V",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP8S",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP8SN",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP90S",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "NRP90SN",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2000A",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2000B",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2000H",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2001A",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2001B",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2001H",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2002A",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2002B",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2002H",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    },
+    {
+      "driver": "UsbPowerSensor",
+      "model": "U2004A",
+      "status": "completed",
+      "operations_completed": 2,
+      "cleanup_scope_succeeded": true
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "utc": "20261104T165902833926Z",
+  "utc": "20261104T175503041046Z",
   "python": "3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]",
   "commands": [
     {
@@ -17,6 +17,53 @@
         "-m",
         "dgm_control",
         "list"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "equipment-list"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "equipment-init",
+        "DigitalMultimeter",
+        "--model",
+        "34461A",
+        "--output",
+        "dmm-job.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "equipment-check",
+        "--job",
+        "dmm-job.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "equipment-run",
+        "--job",
+        "dmm-job.json",
+        "--output-dir",
+        "dmm-001"
       ],
       "exit_code": 0,
       "expected": 0
@@ -472,8 +519,8 @@
     "virtual"
   ],
   "packages": {
-    "dgm-device-control": "0.9.0",
-    "dgm-lab-control": "0.6.0",
+    "dgm-device-control": "0.10.0",
+    "dgm-lab-control": "0.7.0",
     "dgm-rf-command-library": "0.5.0"
   }
 }

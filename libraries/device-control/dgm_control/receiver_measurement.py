@@ -29,7 +29,7 @@ def detector_catalog():
                          dialect=family(model) if model in EXTENDED_RANGES else 'receiver-bargraph',
                          required_option=required_option(model) if model in EXTENDED_RANGES else None,
                          firmware_status='site-validation-required',
-                         minimum_documented_firmware='A.02.00' if model in {'N9010A', 'N9020A', 'N9030A'} else None,
+                         minimum_documented_firmware='A.02.00' if model in {'N9000A', 'N9010A', 'N9020A', 'N9030A'} else None,
                          dwell_seconds={d: [1, 60] if model in EXTENDED_RANGES else [1 if d == 'QP' else .02, 100] for d in DETECTORS},
                          attenuation={'minimum_db': 20, 'maximum_db': 50 if model in EXTENDED_RANGES else 70,
                                       'step_db': 10 if model in EXTENDED_RANGES else None},

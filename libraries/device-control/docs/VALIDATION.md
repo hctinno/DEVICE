@@ -1,4 +1,8 @@
-# SDK v0.9.0 검수 범위
+# SDK v0.10.0 검수 범위
+
+2026-11-05 장비 확장 검수: SDK **165개** + 설비 **117개** + 단말 **58개** = **340개**, SDK 격리 설치 CLI **112건** 통과. 추가 native 검사는 모델별 분석기/발생기/센서/전원/DMM과 잘못된 범위·응답·설정 drift를 포함합니다. 공통 runner 10개 검사는 확장 85개 역할/모델 조합, 추가 수신기 네 검파기, 부분 오류·취소·정리 실패·로그 저장 실패를 검증합니다. [native 검사](../../lab-control/tests/test_model_expansion.py), [runner 검사](../tests/test_equipment.py)를 확인합니다.
+
+SDK 전체 검수 뒤 NRP40/50/67/90의 50 MHz 하한 자료·manifest를 보완했습니다. 수정 후 설비 전체 117개와 runner 10개·모델 matrix를 다시 통과했고 최종 설치 wheel에서 낮은 주파수 거절과 범위 근거의 일치를 확인했습니다. 추가로 확장 85개 역할/모델의 잘못된 IDN 거절과 제어 미전송을 포함한 native 8개 검사를 재실행했습니다. 최종 ZIP **362668 bytes**, SHA-256 `525a230ba5e51c4a25bcf18c7946c92b33df5c3d1487c0c0ecf93a75aceca7a5`. 새 venv에서 standalone **103개 고유 모델명·127개 역할/모델 조합**과 기존 다섯 무선의 스캔·보정·판정을 통과했습니다. [모델별 결과](equipment-model-validation.json), [배포 manifest](distribution-validation.json), [README 41개 실행·3개 구문 검사](../../../README_VALIDATION.json)를 확인합니다. README 환경의 설치기·wheel 3개는 최종 ZIP과 hash가 일치합니다. 실제 장비·RF·기계·교정·firmware·Linux/macOS 검증은 미수행입니다. 아래 0.9.0 이하는 이전 완료 기록입니다.
 
 2026-11-05 전체 회귀: SDK 155개 + 설비 109개 + 단말 58개 = **322개 통과**, 격리 설치 CLI **90건 통과**. 추가 검사는 10개 모델 × 4개 검파기, 4개 계열 × 5개 무선, 모의 실장비 어댑터 5종, 누락 옵션/불명 펌웨어/설정 drift/부분 실패/취소/중복 endpoint를 포함합니다. 전체 회귀 이후 X-Series A 계열 목록 설명을 수정하고 해당 회귀 검사와 새 설치본의 9개 분석기 안내 검사를 통과했습니다. [SDK 추가 검사](../tests/test_extended_receivers.py), [native 추가 검사](../../lab-control/tests/test_extended_detectors.py), [전체 결과](validation.json)를 확인합니다. 실장비 검사는 0건입니다.
 

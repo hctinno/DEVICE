@@ -7,6 +7,21 @@ from . import devices, describe, profile_template, check_profile, load_profile, 
 def main():
     parser = argparse.ArgumentParser(prog="dgm-control", description="DGM DeviceControl: explicit support, offline setup, reviewed lifecycle")
     actions = parser.add_subparsers(dest="action", required=True)
+    actions.add_parser('equipment-list',help='Reviewed native equipment families/models, sources and operation signatures; no I/O')
+    equipment_init = actions.add_parser('equipment-init',help='NEW bounded equipment job, including explicit profile and lifecycle')
+    equipment_init.add_argument('device_id')
+    equipment_init.add_argument('--model')
+    equipment_init.add_argument('--mode',choices=['simulation','hardware'],default='simulation')
+    equipment_init.add_argument('--output',required=True)
+    equipment_check = actions.add_parser('equipment-check',help='Offline equipment job structure and method binding')
+    equipment_check.add_argument('--job',required=True)
+    equipment_run = actions.add_parser('equipment-run',help='Explicit simulated/REAL native equipment operations with evidence')
+    equipment_run.add_argument('--job',required=True)
+    equipment_run.add_argument('--output-dir',required=True)
+    equipment_run.add_argument('--cancel-file')
+    equipment_probe = actions.add_parser('equipment-probe',help='Explicit IDN/required-option query only; no automatic device discovery')
+    equipment_probe.add_argument('--profile',required=True)
+    equipment_probe.add_argument('--output-dir',required=True)
     listing = actions.add_parser("list", help="List SDK families and support states; no I/O")
     listing.add_argument("--kind", choices=["instrument", "facility", "smartphone"])
     show = actions.add_parser("show", help="Methods, source URLs and remaining site requirements")
@@ -76,7 +91,27 @@ def main():
         from .evaluation import Evaluation, evaluation_template, assessment_exit
         evaluation = load_profile(args.evaluation) if getattr(args, "evaluation", None) else None
         measurement_config = load_profile(args.measurement) if getattr(args, "measurement", None) else None
-        if args.action == "detector-list":
+        if args.action.startswith('equipment-'):
+            from .equipment import equipment_catalog, equipment_template, check_equipment, run_equipment, probe_equipment
+            if args.action == 'equipment-list': output = equipment_catalog()
+            elif args.action == 'equipment-init':
+                value = equipment_template(args.device_id,args.model,mode=args.mode)
+                with Path(args.output).open('x',encoding='utf-8') as handle:
+                    json.dump(value,handle,ensure_ascii=False,indent=2,allow_nan=False)
+                    handle.write('\n')
+                output = dict(written=args.output,connection_attempted=False)
+            elif args.action == 'equipment-check': output = check_equipment(load_profile(args.job))
+            elif args.action == 'equipment-probe':
+                output = probe_equipment(load_profile(args.profile),args.output_dir)
+                exit_code = 0 if output['status']=='identified' else 2
+            else:
+                import threading
+                from .hardware_run import cancellation_signals
+                event = threading.Event()
+                with cancellation_signals(event):
+                    output = run_equipment(load_profile(args.job),args.output_dir,cancelled=event,cancel_file=args.cancel_file)
+                exit_code = 0 if output['status']=='completed' else 130 if output['status']=='cancelled' else 2
+        elif args.action == "detector-list":
             from .receiver_measurement import detector_catalog
             output = detector_catalog()
         elif args.action in ("evaluation-init", "measurement-init"):

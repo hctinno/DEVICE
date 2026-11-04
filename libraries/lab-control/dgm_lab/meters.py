@@ -1,6 +1,7 @@
 """Power-meter measurements are scoped to specified window/channel and units."""
 from .core import Scpi, UnsupportedInstrument, InstrumentError, number, integer, fmt, scalar, close_enough
 from .analyzers import KEYSIGHT, RS
+from .model_scope import extra_models, frequency_scope
 
 
 class PSeriesPowerMeter(Scpi):
@@ -46,18 +47,20 @@ class PSeriesPowerMeter(Scpi):
 
 class UsbPowerSensor(Scpi):
     MODELS = {'U2000A': 'keysight-u2000', 'NRP8S': 'rs-nrps', 'NRP18S': 'rs-nrps', 'NRP18A': 'rs-nrpa'}
+    MODELS.update(extra_models('UsbPowerSensor'))
 
     def __init__(self, transport, *, model):
         if model not in self.MODELS:
             raise UnsupportedInstrument(f'No reviewed sensor dialect for {model}')
-        super().__init__(transport, model=model, manufacturers=KEYSIGHT if model=='U2000A' else RS)
+        super().__init__(transport, model=model, manufacturers=KEYSIGHT if model.startswith('U200') else RS)
         self.source_id = self.MODELS[model]
         self.configured = False
 
     def configure_average(self, *, frequency_hz):
         number(frequency_hz, 'sensor correction frequency', 1, 1e12)
+        frequency_scope('UsbPowerSensor', self.expected_model, frequency_hz)
         self.configured = False
-        if self.expected_model == 'U2000A':
+        if self.expected_model.startswith('U200'):
             commands = ['ABOR', 'CONF', 'SENS:DET:FUNC AVER', 'INIT:CONT OFF', 'UNIT:POW DBM']
         else:
             commands = ['ABOR', 'INIT:CONT OFF', 'SENS:FUNC "POW:AVG"', 'CALC:FEED "POW:AVER"',
@@ -65,7 +68,7 @@ class UsbPowerSensor(Scpi):
         with self.io.transaction():
             self.apply(commands + [f'SENS:FREQ {fmt(frequency_hz)}', 'TRIG:SOUR IMM'])
             close_enough(scalar(self.io.query('SENS:FREQ?')), frequency_hz, abs_tol=0.1)
-            expected_unit = 'DBM' if self.expected_model == 'U2000A' else 'W'
+            expected_unit = 'DBM' if self.expected_model.startswith('U200') else 'W'
             if self.io.query('UNIT:POW?').strip().upper() != expected_unit:
                 raise InstrumentError('Power sensor unit readback mismatch')
             self.errors()
@@ -75,7 +78,7 @@ class UsbPowerSensor(Scpi):
         if not self.configured:
             raise InstrumentError('configure_average() must succeed first')
         with self.io.transaction():
-            if self.expected_model == 'U2000A':
+            if self.expected_model.startswith('U200'):
                 return self.measure('READ?', 'dBm')
             self.io.write('INIT')
             self.opc()

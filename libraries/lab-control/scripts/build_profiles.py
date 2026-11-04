@@ -5,6 +5,7 @@ import json
 ROOT=Path(__file__).resolve().parents[1]
 visa=dict(kind='visa',resource='REPLACE_WITH_INSTALLED_VISA_RESOURCE',timeout=30)
 templates={
+    'dmm':('DigitalMultimeter',dict(model='34461A',max_voltage=0),visa),
     'oda-ex':('OdaEx',dict(model='EX60-40',expected_serial='',expected_firmware='',max_voltage=0,max_current=0,installed_model_confirmed=False),dict(kind='serial',port='',baudrate=9600,parity='N',bytesize=8,stopbits=1,timeout=5,termination='\n')),
     'cmu200-cw':('Cmu200Cw',dict(secondary_address=0,output_port=0,max_frequency_hz=0,max_power_dbm=None,expected_firmware='',site_profile_confirmed=False),visa),
     'co3000':('Co3000',dict(axes={},motion_enabled=False),dict(kind='tcp',host='',port=5025,timeout=5,termination='\n')),

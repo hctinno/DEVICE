@@ -220,7 +220,7 @@ class ReceiverWorkflowTests(unittest.TestCase):
         with self.assertRaises(ValueError): check_hardware(altered, QUICK, real)
         with self.assertRaises(ValueError): check_hardware(profiles, QUICK, m)
         catalog = detector_catalog()['models']
-        self.assertEqual(sum(r['status'] == 'implemented-uncommissioned' for r in catalog), 14)
+        self.assertEqual(sum(r['status'] == 'implemented-uncommissioned' for r in catalog), 30)
         self.assertTrue(any(r['status'] == 'unconfirmed' for r in catalog))
 
 

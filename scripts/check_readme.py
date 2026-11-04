@@ -67,12 +67,20 @@ def main():
         example.write_text(examples["virtual"], encoding="utf-8")
 
         diagnosed = json.loads(cli("doctor"))
-        expected_versions = {"dgm-device-control": "0.9.0", "dgm-lab-control": "0.6.0",
+        expected_versions = {"dgm-device-control": "0.10.0", "dgm-lab-control": "0.7.0",
                              "dgm-rf-command-library": "0.5.0"}
         if diagnosed["packages"] != expected_versions or not diagnosed["supported_python"]:
             raise ValueError(f"Install README package versions first: {diagnosed['packages']}")
         report["packages"] = diagnosed["packages"]
-        assert len(json.loads(cli("list"))) == 21
+        assert len(json.loads(cli("list"))) == 22
+        equipment_catalogue=json.loads(cli('equipment-list'))
+        assert len(equipment_catalogue['devices']) == 17
+        nrp90=next(r for r in equipment_catalogue['extensions'] if r['model']=='NRP90S')
+        assert '50 MHz' in nrp90['scope'] and nrp90['range_source_id']=='rs-nrp-range'
+        cli('equipment-init','DigitalMultimeter','--model','34461A','--output','dmm-job.json')
+        assert json.loads(cli('equipment-check','--job','dmm-job.json'))['valid']
+        equipment=json.loads(cli('equipment-run','--job','dmm-job.json','--output-dir','dmm-001'))
+        assert equipment['status']=='completed' and equipment['cleanup_scope_succeeded'] and equipment['simulated']
         for name in ("SpectrumAnalyzer", "Co3000", "PhoneAt"):
             assert json.loads(cli("show", name))["id"] == name
         assert len(json.loads(cli("virtual-info"))["models"]) == 7
