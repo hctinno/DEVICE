@@ -7,18 +7,19 @@ import uuid
 from .hardware_run import RunEvidence, Cancellation, atomic_json, only_cancellation, utc
 from .errors import error_details
 from .profiles import load_profile
-from .radio_contracts import RADIOS, RadioBlocked, check_radio, validate_plan
+from .radio_contracts import RADIOS, RadioBlocked, check_radio, validate_plan, radio_devices
+from .radio_scan_contracts import SCAN_FAULTS
 from .radio_simulation import RadioWorld
 from .radio_adapters import RadioLab, checkpoint, pause
 
-FAULTS = ("start-timeout", "measure-timeout", "stop-timeout", "cancel-after-sample")
+FAULTS = ("start-timeout", "measure-timeout", "stop-timeout", "cancel-after-sample") + SCAN_FAULTS
 
 
 def load_radio_profiles(plan, directory):
     validate_plan(plan)
     if directory is None:
         raise ValueError("Hardware requires an explicit profiles directory")
-    names = ("SpectrumAnalyzer", RADIOS[plan["radio"]]["source_device"])
+    names = sorted(radio_devices(plan))
     return {name: load_profile(Path(directory) / (name + ".json")) for name in names}
 
 
@@ -50,31 +51,17 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
         report["preflight"] = check_radio(plan, mode, profiles)
         if fault is not None and (not simulated or fault not in FAULTS):
             raise ValueError("Fault injection requires a supported simulation-only fault")
+        if fault in SCAN_FAULTS and plan["schema_version"] != 2:
+            raise ValueError("Facility faults require a schema-2 scan plan")
         checkpoint(token)
         world = RadioWorld(plan) if simulated else None
         if world is not None: world.inject(fault)
         lab = RadioLab(plan, profiles, evidence, world)
-        peaks = []
-        with lab.open("SpectrumAnalyzer") as analyzer, analyzer.active():
-            before = lab.acquire(analyzer, "before-source")
-            evidence.require_healthy()
-            if plan["radio"] == "nfc" and before["peak_dbm"] > plan["verification"]["off_threshold_dbm"]:
-                raise RuntimeError("NFC baseline is not quiet; cannot attribute PRBS start")
-            with lab.active_source(analyzer, token):
-                pause(plan["settle_seconds"], token)
-                for index in range(plan["sample_count"]):
-                    checkpoint(token)
-                    row = lab.acquire(analyzer, "sample")
-                    row.update(index=index, radio=plan["radio"], backend=plan["backend"])
-                    evidence.sample(row)
-                    peaks.append(row["peak_dbm"])
-                    if fault == "cancel-after-sample": event.set()
-                    checkpoint(token)
-            after = lab.acquire(analyzer, "after-source")
-            checkpoint(token)
-            measurement = {"radio": plan["radio"], "backend": plan["backend"], "sample_count": len(peaks),
-                           "peak_trace_dbm": max(peaks), "before": before, "after": after,
-                           "note": "Raw swept-spectrum levels; no correction, modulation verification or conformity verdict"}
+        if plan["schema_version"] == 2:
+            from .radio_scan import measure_radio_scan
+            measurement = measure_radio_scan(lab, token, event, fault)
+        else:
+            measurement = measure_fixed(lab, token, event, fault)
         report["cleanup_scope_succeeded"] = True
         evidence.require_healthy()
         checkpoint(token)
@@ -117,4 +104,31 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
             raise ExceptionGroup("Result and failure report storage failed", [error, fallback]) from None
     return {"run_id": report["run_id"], "status": report["status"], "simulated": simulated,
             "report": str(target / filename), "samples": evidence.sample_count, "physical_verified": False,
+            **({"peak": measurement["sampled_peak"]} if report["status"] == "completed" and measurement and "sampled_peak" in measurement else {}),
             **({"error": report["error"]} if "error" in report else {})}
+
+
+def measure_fixed(lab, token, event, fault):
+    plan, evidence = lab.plan, lab.evidence
+    peaks = []
+    with lab.open("SpectrumAnalyzer") as analyzer, analyzer.active():
+        before = lab.acquire(analyzer, "before-source")
+        evidence.require_healthy()
+        if plan["radio"] == "nfc" and before["peak_dbm"] > plan["verification"]["off_threshold_dbm"]:
+            raise RuntimeError("NFC baseline is not quiet; cannot attribute PRBS start")
+        with lab.active_source(analyzer, token):
+            pause(plan["settle_seconds"], token)
+            for index in range(plan["sample_count"]):
+                checkpoint(token)
+                row = lab.acquire(analyzer, "sample")
+                row.update(index=index, radio=plan["radio"], backend=plan["backend"])
+                evidence.sample(row)
+                peaks.append(row["peak_dbm"])
+                if fault == "cancel-after-sample": event.set()
+                checkpoint(token)
+        after = lab.acquire(analyzer, "after-source")
+        checkpoint(token)
+        measurement = {"radio": plan["radio"], "backend": plan["backend"], "sample_count": len(peaks),
+                       "peak_trace_dbm": max(peaks), "before": before, "after": after,
+                       "note": "Raw swept-spectrum levels; no correction, modulation verification or conformity verdict"}
+    return measurement

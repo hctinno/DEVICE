@@ -1,5 +1,7 @@
 # 구현 계약
 
+v0.6.0: [설비 스캔 계약](RADIO_SCAN_PLAN.md), [운영 안내](RADIO_SCAN.md). schema 2 plan은 scan을 명시하고 기존 schema 1을 유지합니다. radio_scan_contracts는 격자·주파수 경로·현장 한계, radio_scan은 native Co3000/OspSwitch 수명주기와 기존 radio source를 조합합니다. 측정 전후 위치/경로를 검증한 유효 표본만 최대 검색에 사용하고, 모든 source 종료 후 최대 위치·경로 복귀를 확인한 뒤 안전 경로와 ES를 검증합니다. RadioWorld의 geometry/경로 손실은 합성 가정입니다. NFC callback은 기준 위치·경로를 확인하며 다른 위치의 quiet 값을 OFF 성공으로 처리하지 않습니다.
+
 v0.5.0: [다중 무선 계약](MULTIRADIO_PLAN.md), [실행/미확인 범위](MULTIRADIO.md). radio_contracts는 strict plan·현장 profile·근거 범위, radio_simulation은 native protocol peer와 합성 source, radio_adapters는 기존 드라이버와 NFC RF-envelope 확인, radio_run은 결과·부분 표본·취소·오류 기록을 담당합니다. 직접 모뎀 TX/NR/미확인 backend는 접속 전 blocked로 기록합니다. NFC는 범용 open_device 대신 보호 서비스 전용 profile을 검증합니다. LTE 단말 로그는 콜박스 경유 제어이며 모뎀 진단 로그와 구별합니다.
 
 v0.4.0: [실장비 실행 계약](HARDWARE_RUN_PLAN.md), [운영 절차](HARDWARE_RUN.md). hardware_run.py는 입력 검사·실행 폴더·원자적 결과·즉시 JSONL 저장·신호/파일 취소를 담당합니다. phone_logging.py는 기존 단말 transport를 감싸 실제 교환 전후·오류·긴급 전송을 기록합니다. native Controller/명령 인수는 바꾸지 않고 종료 뒤 세션의 의미 로그도 저장합니다. 저장 오류는 상태를 실패로 만들되 cleanup 전송을 막지 않습니다. physical_verified와 physical_shutdown_verified는 false를 유지합니다.

@@ -10,6 +10,12 @@
 
 ## 현재 상태
 
+2026-11-04 SDK 0.6.0: [다중 무선 설비 스캔](libraries/device-control/RADIO_SCAN.md)을 추가했습니다. radio-init --scan은 schema 2, 기존 --scan 없는 plan은 schema 1입니다. source+SpectrumAnalyzer+Co3000+OspSwitch 네 프로필로 경로/편파/높이/각도/반복을 측정하고 최대 표본 위치로 복귀한 뒤 안전 경로·ES를 확인합니다. 실제 source 명령과 모델/build 제한은 바꾸지 않았습니다. NFC는 동일 기준 위치/경로에서만 RF OFF 확인하며, 다른 위치의 오류/취소에서는 추가 이동을 강행하지 않고 stop 미확인을 기록합니다. 검수 결과는 최신 validation JSON을 확인합니다. 아래 0.5.0 이하는 과거 기록입니다.
+
+0.6.0 검수: SDK 111 + 설비 99 + 단말 58 = 268개 회귀, 격리 설치 CLI 48건 통과. 새 venv 오프라인 설치 후 네 radio 모두 12점 스캔·200cm/90°/V 최대 복귀를 확인했습니다. 여러 경로의 단말 로그를 누적하고 경로/세션으로 구분합니다. ZIP 300625 bytes, SHA-256 `0b3309cb5e816bae3dc3d6aedf7511cf332cc37ecfd1154d04be2f47881f8502`; Git에는 생성기와 검수 manifest를 저장합니다. 실제 장비 운전은 0건입니다.
+
+0.6.0 배포 wheel 설치 후 README 28개 실행·Python 예제 3개 구문 검사도 통과했습니다. README 검사는 네 radio의 schema 2 기본 12점 스캔·최대 복귀 readback·안전 경로 기록을 확인하며 저장소 source가 아닌 설치된 패키지를 사용합니다.
+
 2026-11-04 SDK 0.5.0: [Bluetooth·셀룰러·NFC·UWB](libraries/device-control/MULTIRADIO.md)의 가상 source/trace, 조건부 실장비 CLI, 부분 결과·원문 제어·취소/종료 오류 저장을 추가했습니다. 진입점은 radio-list/init/check/run이며 기존 WLAN 명령은 유지합니다. BLE 프리셋·LTE FDD RMC 콜박스·보호 NFC PRBS·특정 모델/build UWB만 지원합니다. 직접 셀룰러 TX/NR 등 미확인 backend는 연결 전에 차단합니다. 실제 RF·기종 호환성 검증은 수행하지 않았습니다. 최신 검수 수치는 SDK/배포/README validation JSON이 기준이며 아래 v0.4.0 기록은 이전 작업입니다.
 
 0.5.0 최종 검수: 253개 회귀, 격리 설치 CLI 33건, README 실행 28건과 Python 구문 3개 통과. 새 venv 오프라인 설치와 네 radio 실행도 통과했습니다. 초기 NFC 가상 1초 제한 초과는 15초로 조정하고 다시 검증했습니다. ZIP 290723 bytes, SHA-256 `0b8efa8121c4426d4cb7185639cc46a47573f3ed777200b750042d4f42665956`; ZIP은 Git에 없으며 배포 스크립트로 생성합니다. 실제 장비 접속은 0건입니다.

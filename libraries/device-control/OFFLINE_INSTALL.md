@@ -9,7 +9,7 @@ python -m venv .venv
 .venv\Scripts\python -m dgm_control doctor
 .venv\Scripts\python -m dgm_control demo --output-dir demo-001
 .venv\Scripts\python -m dgm_control virtual-run --output-dir virtual-001
-.venv\Scripts\python -m dgm_control radio-init bluetooth --output ble-plan.json
+.venv\Scripts\python -m dgm_control radio-init bluetooth --scan --output ble-plan.json
 .venv\Scripts\python -m dgm_control radio-run --mode simulation --plan ble-plan.json --output-dir ble-001
 ```
 
@@ -17,4 +17,4 @@ Linux/macOS는 `.venv/bin/python`을 사용합니다. `install.py`는 옆의 whe
 
 온라인 환경에서 선택 의존성 추가 예: `python -m pip install pyvisa pyserial`. 실제 설치 버전과 제조사 런타임은 각 장비 환경에서 검증합니다. 패키지 발견을 장비 연결 성공으로 해석하지 않습니다.
 
-배포물을 만드는 개발자는 저장소 루트에서 `python -X utf8 scripts/package_device_control.py`를 실행합니다. 출력은 `libraries/device-control/dist/dgm-device-control-0.5.0-offline.zip`과 SHA-256 manifest입니다. ZIP의 VIRTUAL_LAB.md는 WLAN 7종 모형, MULTIRADIO.md는 Bluetooth·셀룰러·NFC·UWB의 가상/조건부 실장비·오류 기록·미확인 범위를 설명합니다. Git에는 소스·renderer·검수 결과를 저장하고 vendor 원문 cache는 넣지 않습니다.
+배포물을 만드는 개발자는 저장소 루트에서 `python -X utf8 scripts/package_device_control.py`를 실행합니다. 출력은 `libraries/device-control/dist/dgm-device-control-0.6.0-offline.zip`과 SHA-256 manifest입니다. ZIP의 VIRTUAL_LAB.md는 WLAN 7종 모형, MULTIRADIO.md는 무선별 제어/미확인 범위, RADIO_SCAN.md는 네 기술의 턴테이블·마스트·RF 경로 스캔과 최대 복귀를 설명합니다. Git에는 소스·renderer·검수 결과를 저장하고 vendor 원문 cache는 넣지 않습니다.

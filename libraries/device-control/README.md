@@ -1,6 +1,8 @@
 # DGM DeviceControl
 
-**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.5.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
+**장비·설비·스마트폰을 같은 설치·조회·설정 파일·연결 방식으로 사용하는 Python 제어 SDK입니다.** `v0.6.0`, Python 3.11 이상. 제조사 공식 매뉴얼과 공개 분석 근거를 연결한 **DGM 표준 API**이며 제조사가 발행·인증한 SDK는 아닙니다.
+
+**설비 스캔:** [radio-init --scan / radio-run](RADIO_SCAN.md)은 Bluetooth·셀룰러·NFC·UWB source와 CO3000 마스트/턴테이블, OSP RF 경로를 연결합니다. 측정 전후 위치·경로 확인, 표본 최대 선택과 복귀, RF OFF·안전 경로·ES 종료 및 부분 오류 기록을 수행합니다. schema 1 plan/WLAN CLI는 유지합니다.
 
 Bluetooth·셀룰러·NFC·UWB는 [다중 무선 실행 안내](MULTIRADIO.md)의 `radio-init` → `radio-check` → `radio-run`을 사용합니다. 네 기술의 가상 source/분석기 측정과 조건부 실장비 경로, 부분 결과·원문 제어·실패/취소 로그를 제공합니다. 전체 FCC 시험·미확인 명령·실물 검증은 포함하지 않습니다.
 

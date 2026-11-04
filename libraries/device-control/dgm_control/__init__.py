@@ -10,7 +10,7 @@ from .hardware_run import run_hardware, check_hardware, load_hardware_inputs, pl
 from .radio_contracts import radio_catalog, radio_template, check_radio, nfc_profile_template
 from .radio_run import run_radio, load_radio_profiles
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 __all__ = ["devices", "describe", "profile_template", "doctor", "load_profile", "check_profile",
            "open_device", "DeviceSession", "ProfileError", "UnsupportedDevice", "SessionError", "error_details",
            "VirtualLab", "HardwareLab", "Scenario", "Fault", "WlanScan", "measure_wlan",

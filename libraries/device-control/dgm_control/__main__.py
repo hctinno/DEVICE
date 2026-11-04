@@ -30,6 +30,7 @@ def main():
     radio_init = actions.add_parser("radio-init", help="Create a simulation-only radio plan, never a site configuration")
     radio_init.add_argument("radio", choices=["bluetooth", "cellular", "nfc", "uwb"])
     radio_init.add_argument("--output", required=True)
+    radio_init.add_argument("--scan", action="store_true", help="Create schema-2 turntable/mast/RF-path scan plan")
     nfc_profile = actions.add_parser("radio-profile", help="Create incomplete protected NFC hardware profile")
     nfc_profile.add_argument("radio", choices=["nfc"])
     nfc_profile.add_argument("--output", required=True)
@@ -41,7 +42,8 @@ def main():
         if name == "radio-run":
             action.add_argument("--output-dir", required=True)
             action.add_argument("--cancel-file")
-            action.add_argument("--fault", choices=["start-timeout", "measure-timeout", "stop-timeout", "cancel-after-sample"])
+            from .radio_run import FAULTS
+            action.add_argument("--fault", choices=FAULTS)
     for name in ("hardware-check", "hardware-run"):
         hardware = actions.add_parser(name, help="Offline WLAN preflight" if name == "hardware-check" else "REAL WLAN output and motion using explicit site profiles")
         hardware.add_argument("--profiles-dir", required=True, help="Directory with six device-ID.json hardware profiles")
@@ -59,7 +61,7 @@ def main():
             from .hardware_run import cancellation_signals
             if args.action == "radio-list": output = radio_catalog()
             elif args.action in ("radio-init", "radio-profile"):
-                value = radio_template(args.radio) if args.action == "radio-init" else nfc_profile_template()
+                value = radio_template(args.radio, scan=args.scan) if args.action == "radio-init" else nfc_profile_template()
                 with Path(args.output).open("x", encoding="utf-8") as handle:
                     json.dump(value, handle, ensure_ascii=False, indent=2)
                     handle.write("\n")

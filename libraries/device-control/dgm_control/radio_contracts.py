@@ -37,7 +37,7 @@ RADIOS = {
 def radio_catalog():
     return [{"radio": key, **deepcopy(value), "simulation_available": True,
              "hardware_status": "conditional_uncommissioned", "physical_verified": False,
-             "measurement": "fixed-route repeated swept spectrum; no FCC verdict"} for key, value in RADIOS.items()]
+             "measurement": "fixed-route or schema-2 motion/path scan with sampled-peak return; no FCC verdict"} for key, value in RADIOS.items()]
 
 
 def exact(value, names, label):
@@ -68,10 +68,11 @@ def simulation_phone_profile(plan):
 
 
 def validate_plan(plan):
+    if not isinstance(plan, dict): raise ValueError("Radio plan must be an object")
+    version = plan.get("schema_version")
+    if type(version) is not int or version not in (1, 2): raise ValueError("Radio schema_version must be integer 1 or 2")
     exact(plan, {"schema_version", "radio", "backend", "simulation_only", "tx", "sweep", "sample_count",
-                 "settle_seconds", "state_timeout", "verification", "simulation"}, "radio plan")
-    if type(plan["schema_version"]) is not int or plan["schema_version"] != 1:
-        raise ValueError("radio schema_version must be integer 1")
+                 "settle_seconds", "state_timeout", "verification", "simulation"} | ({"scan"} if version == 2 else set()), "radio plan")
     radio = plan["radio"]
     if radio not in RADIOS or plan["backend"] != RADIOS[radio]["backend"]:
         raise RadioBlocked("Unsupported radio/backend: no verified start/stop implementation")
@@ -116,10 +117,13 @@ def validate_plan(plan):
             raise ValueError("Synthetic source center must lie inside sweep")
     elif plan["simulation"] is not None:
         raise ValueError("Hardware plan must remove synthetic model (simulation=null)")
+    if version == 2:
+        from .radio_scan_contracts import validate_scan
+        validate_scan(plan)
     return sweep
 
 
-def radio_template(radio):
+def radio_template(radio, *, scan=False):
     if radio not in RADIOS:
         raise RadioBlocked("Unknown radio")
     tx = {"bluetooth": {"phy": "2m", "preset": "low"},
@@ -129,12 +133,24 @@ def radio_template(radio):
     center, width = {"bluetooth": (2.44e9, 2e6), "cellular": (1.95e9, 20e6),
                      "nfc": (13.56e6, 1e6), "uwb": (8e9, 500e6)}[radio]
     span = width * 2
-    return {"schema_version": 1, "radio": radio, "backend": RADIOS[radio]["backend"], "simulation_only": True,
+    plan = {"schema_version": 1, "radio": radio, "backend": RADIOS[radio]["backend"], "simulation_only": True,
             "tx": tx, "sweep": asdict(Sweep(center-span/2, center+span/2, 1e6, 1e6, 10, 10, points=101, sweep_seconds=.01)),
             # Verification includes durable per-command logging; slow disks need margin.
             "sample_count": 3, "settle_seconds": .01, "state_timeout": 15,
             "verification": {"on_threshold_dbm": -70, "off_threshold_dbm": -90, "quiet_seconds": .02, "poll_seconds": .01} if radio == "nfc" else None,
             "simulation": {"center_hz": center, "bandwidth_hz": width, "tx_dbm": 0, "path_loss_db": 20, "noise_dbm": -100}}
+    if scan:
+        from .radio_scan_contracts import scan_template
+        plan.update(schema_version=2, sample_count=1, scan=scan_template())
+    return plan
+
+
+def radio_devices(plan):
+    required = {"SpectrumAnalyzer", RADIOS[plan["radio"]]["source_device"]}
+    if plan["schema_version"] == 2:
+        from .radio_scan_contracts import FACILITIES
+        required |= FACILITIES
+    return required
 
 
 def nfc_profile_template():
@@ -164,7 +180,7 @@ def check_radio(plan, mode, profiles=None):
     if mode not in ("simulation", "hardware") or plan["simulation_only"] != (mode == "simulation"):
         raise ValueError("Explicit execution mode must match simulation_only")
     source = RADIOS[plan["radio"]]["source_device"]
-    required = {"SpectrumAnalyzer", source}
+    required = radio_devices(plan)
     if mode == "simulation":
         if profiles:
             raise ValueError("Simulation must not accept site profiles")
@@ -192,6 +208,9 @@ def check_radio(plan, mode, profiles=None):
                        + analyzer["transport"].get("timeout", 10))
             if plan["state_timeout"] <= minimum:
                 raise ValueError("NFC timeout must exceed transition bound + quiet window + analyzer I/O timeout")
+        if plan["schema_version"] == 2:
+            from .radio_scan_contracts import check_scan_site
+            check_scan_site(plan, profiles)
     return {"valid": True, "radio": plan["radio"], "backend": plan["backend"], "mode": mode,
             "connection_attempted": False, "physical_verified": False, "required_profiles": sorted(required),
             "scope": deepcopy(RADIOS[plan["radio"]])}

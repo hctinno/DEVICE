@@ -62,7 +62,7 @@ def main():
                     if archive.testzip() is not None: raise RuntimeError("Damaged wheel")
                     if any(".manual-cache" in name or ".fcc-cache" in name for name in archive.namelist()):
                         raise RuntimeError("Vendor cache leaked into wheel")
-            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.5.0"], cwd=temp)
+            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.6.0"], cwd=temp)
             env = dict(os.environ, PYTHONPATH=str(installed), PYTHONIOENCODING="utf-8")
             base = [sys.executable, "-s", "-m", "dgm_control"]
             checks = []
@@ -75,7 +75,7 @@ def main():
             detail = json.loads(command("show", "Co3000").stdout)
             if not detail["sources"]: raise RuntimeError("Installed provenance missing")
             diagnosed = json.loads(command("doctor").stdout)
-            if diagnosed["packages"]["dgm-device-control"] != "0.5.0": raise RuntimeError("Installed SDK version mismatch")
+            if diagnosed["packages"]["dgm-device-control"] != "0.6.0": raise RuntimeError("Installed SDK version mismatch")
             profile = temp / "simulation.json"
             command("init", "OdaEx", "--mode", "simulation", "--output", str(profile))
             command("check", str(profile))
@@ -151,6 +151,30 @@ def main():
                 raise RuntimeError("Unsupported radio attempted I/O")
             command("radio-profile", "nfc", "--output", str(temp / "nfc-profile.json"))
             report["radio_runs"] = radio_runs
+            scan_runs = []
+            for radio in ("bluetooth", "cellular", "nfc", "uwb"):
+                plan_path, destination = temp / f"{radio}-scan.json", temp / f"{radio}-scan"
+                command("radio-init", radio, "--scan", "--output", str(plan_path))
+                command("radio-check", "--mode", "simulation", "--plan", str(plan_path))
+                answer = json.loads(command("radio-run", "--mode", "simulation", "--plan", str(plan_path), "--output-dir", str(destination)).stdout)
+                if answer["samples"] != 12 or (answer["peak"]["height_cm"], answer["peak"]["angle_deg"], answer["peak"]["polarization"]) != (200, 90, "V"):
+                    raise RuntimeError("Installed facility scan maximum incorrect")
+                result = json.loads((destination / "result.json").read_text(encoding="utf-8"))
+                if not result["measurement"]["returned_to_sampled_peak"] or not result["measurement"]["final_facility_readback"]["route_matches"]:
+                    raise RuntimeError("Installed scan return/safe route missing")
+                scan_runs.append(answer)
+            command("radio-run", "--mode", "simulation", "--plan", str(temp / "bluetooth-scan.json"),
+                    "--output-dir", str(temp / "scan-switch-failure"), "--fault", "switch-timeout", expected=2)
+            from test_radio_scan import scan_hardware
+            hardware_scan, scan_profiles, _ = scan_hardware("bluetooth")
+            scan_site = temp / "scan-site"; scan_site.mkdir()
+            for name, value in scan_profiles.items(): (scan_site / f"{name}.json").write_text(json.dumps(value), encoding="utf-8")
+            scan_path = temp / "hardware-scan.json"; scan_path.write_text(json.dumps(hardware_scan), encoding="utf-8")
+            command("radio-check", "--mode", "hardware", "--plan", str(scan_path), "--profiles-dir", str(scan_site))
+            answer = json.loads(command("radio-run", "--mode", "hardware", "--plan", str(scan_path), "--profiles-dir", str(scan_site),
+                    "--output-dir", str(temp / "hardware-scan-cancel"), "--cancel-file", str(cancel_file), expected=130).stdout)
+            if answer["status"] != "cancelled": raise RuntimeError("Installed hardware scan pre-cancel failed")
+            report["radio_scan_runs"] = scan_runs
             # Verify actual imported modules originate in the isolated target directory.
             proof = run([sys.executable, "-s", "-c", "import dgm_control,dgm_lab,dgm_rf,json; print(json.dumps([dgm_control.__file__,dgm_lab.__file__,dgm_rf.__file__]))"], cwd=temp, env=env)
             if not all(Path(name).resolve().is_relative_to(installed.resolve()) for name in json.loads(proof.stdout)):

@@ -1,4 +1,12 @@
-# SDK v0.5.0 검수 범위
+# SDK v0.6.0 검수 범위
+
+2026-11-04 Windows/Python 3.12.6: SDK **111개**, 설비 **99개**, 단말 **58개**, 총 **268개** 회귀 검사 통과. 추가 설비 스캔 검사 15개는 네 radio 가상/모의 실장비 경계, geometry·경로 손실, 여러 경로의 최대 선택, 송신 종료 후 경로 전환, 위치·relay drift, 최대 복귀 실패, 모션/스위치 timeout, 부분 기록, 동시 cleanup 오류, 취소·사전 취소·저장 실패, 경로별 단말 로그 누적을 포함합니다.
+
+실장비 어댑터 검사는 native driver/parser에 in-process peer를 연결했으며 실제 장비 접속은 0건입니다. NFC가 기준 위치 밖에서 취소되면 stop 시도와 RF OFF 미확인을 함께 기록하는 경로도 확인했습니다. 최신 설치/ZIP/README 실행 결과는 validation.json, distribution-validation.json, 루트 README_VALIDATION.json을 확인합니다. 실제 RF·모션·교정·인터록·현장 정격·Linux/macOS는 미검증입니다.
+
+격리 설치 wheel 3개·CLI **48건** 통과. schema 1 기존 경로, 네 기술 schema 2의 12점 최대 복귀, 스위치 실패, 오프라인 hardware scan 검사와 접속 없는 사전 취소를 포함합니다. 오프라인 ZIP을 새 venv에 설치해 WLAN 및 네 기술의 12점 설비 스캔도 통과했습니다. ZIP 300625 bytes, SHA-256 `0b3309cb5e816bae3dc3d6aedf7511cf332cc37ecfd1154d04be2f47881f8502`입니다.
+
+아래는 v0.5.0 및 이전 단계 기록입니다.
 
 2026-11-04 Windows/Python 3.12.6: SDK 96개 + 설비 99개 + 단말 58개 = **253개 검사 통과**. 신규 radio 검사 17개는 네 기술별 가상 TX/trace 연동, native hardware adapter에 대한 모의 transport, 시작·측정·종료 실패, 부분 표본, 취소, 저장 실패와 cleanup, 미확인 backend 접속 차단, UWB build 제한, NFC 권한/hash/전환 상한 및 ACK와 RF 확인의 차이를 검증합니다. 실물 접속은 0건입니다. 패키지/CLI 최종 결과는 [validation.json](validation.json), [배포 기록](distribution-validation.json), 루트 README_VALIDATION.json을 확인합니다.
 

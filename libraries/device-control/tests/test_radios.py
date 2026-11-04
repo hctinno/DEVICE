@@ -12,7 +12,7 @@ from unittest.mock import patch
 from dgm_control import radio_template, check_radio, run_radio, nfc_profile_template
 from dgm_control.radio_contracts import RADIOS, RadioBlocked, at_steps, simulation_phone_profile
 from dgm_control.radio_simulation import RadioWorld, RadioAtPeer, RadioLtePeer, RadioNfcPeer
-from dgm_control.virtual_peers import ScpiPeer
+from dgm_control.virtual_peers import ScpiPeer, PositionerPeer
 from dgm_control.virtual_world import Fault
 from dgm_control.hardware_run import RunEvidence
 from dgm_control.__main__ import main
@@ -60,7 +60,8 @@ def hardware_peers(synthetic, fault=None):
     def instrument(config, log=None):
         name = config["host"].split(".")[0]
         opened.append(name)
-        return ScpiPeer(name, world, log) if name == "SpectrumAnalyzer" else RadioLtePeer(world, log)
+        if name == "Co3000": return PositionerPeer(world, log)
+        return ScpiPeer(name, world, log) if name in {"SpectrumAnalyzer", "OspSwitch"} else RadioLtePeer(world, log)
     def phone(*args):
         opened.append("PhoneAt")
         peer = RadioAtPeer(world); peer.simulated = False

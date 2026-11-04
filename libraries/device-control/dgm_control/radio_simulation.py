@@ -1,5 +1,6 @@
 """Coupled synthetic source and analyzer peers; not waveform or conformance physics."""
 from copy import deepcopy
+import math
 
 from dgm_lab.transport import Transport
 from dgm_lab.core import InstrumentError
@@ -17,13 +18,31 @@ class RadioWorld(World):
 
     def signals(self):
         m = self.plan["simulation"]
-        return [(m["center_hz"], m["tx_dbm"]-m["path_loss_db"], m["bandwidth_hz"])] if self.source["tx"] else []
+        if not self.source["tx"]: return []
+        loss = m["path_loss_db"]
+        if self.plan["schema_version"] == 2:
+            model = self.plan["scan"]["simulation"]
+            if self.route not in model["route_loss_db"]: return []
+            loss += model["route_loss_db"][self.route]
+            loss += 6 * (1-math.cos(math.radians(self.motion["positions"][1]-model["peak_angle_deg"])))
+            loss += .02 * abs(self.motion["positions"][0]-model["peak_height_cm"])
+            if self.motion["polarization"] != "P"+model["peak_polarization"]:
+                loss += model["cross_polar_loss_db"]
+        return [(m["center_hz"], m["tx_dbm"]-loss, m["bandwidth_hz"])]
 
     def snapshot(self):
         return deepcopy({"simulated": True, "physical_verified": False, "source": self.source,
-                         "revision": self.revision, "synthetic_assumptions": self.plan["simulation"]})
+                         "revision": self.revision, "synthetic_assumptions": self.plan["simulation"],
+                         "motion": self.motion, "route": self.route, "scan_assumptions": self.plan.get("scan", {}).get("simulation")})
 
     def inject(self, name):
+        facilities = {"motion-timeout": Fault("Co3000", "GO", "stuck"),
+                      "motion-stop-timeout": Fault("Co3000", "ES"),
+                      "switch-timeout": Fault("OspSwitch", "ROUT:CLOS (@F01A11(0201))"),
+                      "switch-stop-timeout": Fault("OspSwitch", "ROUT:CLOS (@F01A11(0101))")}
+        if name in facilities:
+            self.faults.append(facilities[name])
+            return
         if name == "measure-timeout":
             self.faults.append(Fault("SpectrumAnalyzer", "TRAC:DATA? TRACE1", occurrence=2))
             return
