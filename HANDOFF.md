@@ -10,13 +10,17 @@
 
 ## 현재 상태
 
+2026-11-04 설비 제어 추가: [DGM LabControl](libraries/lab-control/README.md) v0.1.0. 성적서 장비표 1,332행 → 234개 제조사/모델 그룹, 모델 추출 검토 대기 2행. 27개 모델의 한정된 기능 구현, 4개 조건부(콜박스/컨트롤러/앱), 7개 프로토콜 검토 대기, 47개 전용 SDK/현장 자료 필요. 11개 driver class, TCP/VISA/serial, 공식 PDF 24개 해시 검증, 출처 레코드 27개. 시험 묶음 32개에 구현 요소/미완성 조건을 매핑했습니다. 전체 FCC workflow 준비 완료는 0개입니다. `python -X utf8 scripts/check_lab_control.py`가 목록/문서 재생성·단위/localhost 통신·패키지 격리 설치를 검증합니다. 최신 숫자는 [validation.json](libraries/lab-control/docs/validation.json)을 기준으로 합니다. 현장 실물·폰 RF·기구·SAR·규격 적합성 검수는 모두 미실행입니다.
+
+이번 라이브러리 작업 위치는 `E:\CODEX\projects\DEVICE-rf-research-20261104`, 공유 브랜치는 `codex/samsung-rf-research-20261104`입니다. 코드/문서가 준비됐다는 것과 최신 폰/OEM·UL/SPEAG 등 전용 제어가 확보됐다는 것을 혼동하지 않습니다. 다음 단계는 [추가 확보 목록](libraries/lab-control/docs/VENDOR_GAPS.md)의 실제 주소·옵션·SDK·기구 컨트롤러를 받고 드라이버별 commissioning을 수행하는 것입니다.
+
 2026-11-04 최신 FCC 조사 추가: [Fold8·iPhone Duo 분석](libraries/samsung-rf/docs/FCC_LATEST_MODELS.md), 56 PDF/3,372페이지/32 시험 묶음/183 선정 조건, LTE CMW 오프라인 SCPI 생성기를 추가했습니다. 삼성 6GHz 161페이지·Apple 6GHz conducted 778페이지는 분할본 연속성 검수 대상입니다. PDF는 로컬 `.fcc-cache`에만 있으며 재확보 스크립트·URL·해시는 커밋합니다. 최신 두 단말의 실제 제어는 제조사 test package·모델 프로파일·RF ON/OFF 검증이 없어 차단 상태입니다. Apple UWB RF 원문과 일부 부속 보고서는 미확보입니다. 기존 S23 명령을 최신 모델에 자동 승격하지 않습니다.
 
 2026-11-04 갱신: [삼성 RF 라이브러리](libraries/samsung-rf/README.md)를 추가했습니다. AT 220개 카탈로그, 별도 NFC PRBS ID 31/32, UWB 특정 S23 빌드의 TX 시작·종료와 숫자 인수를 담았습니다. 무인시험소 전체 또는 실폰 운전 완료가 아닙니다. 셀룰러 TX는 여전히 미확인입니다. 다음 세션은 `python scripts/check_samsung_rf.py`로 소프트웨어 검수부터 재현합니다. 원본 APK/JADX 도구는 포함하지 않았으며 출처·해시와 필요한 정적 분석 근거를 보존했습니다.
 
 - 완료: 계획·기술 설계·시각 규칙·작업 규칙 초안, UTF-8 및 내부 링크 검증 스크립트. 이번 인계에서 클라우드 시작 안내와 전송용 패키징을 추가했다.
 - 구현·모의 검수: 삼성 DUT RF 제어 라이브러리. 미착수: 전체 애플리케이션, AI 실행, 실장비 연결, 로봇·시설 연동, 실제 성적서 발행, 인증 신청.
-- 자료 미확보: 장비리스트, 기존 시험 소프트웨어, 실제 완료 시험건, 현장 배치와 수작업 목록.
+- 자료 미확보: 실제 보유 자산·옵션·주소 목록, 기존 시험 소프트웨어/전용 SDK, 실제 완료 시험건, 현장 배치와 수작업 목록. 성적서에 기재된 장비 목록은 위 라이브러리에 확보했습니다.
 - 로컬 원본: `E:\CODEX\projects\dgm-autolab`. 클라우드에서는 현재 체크아웃된 저장소 루트를 사용한다. E: 드라이브를 찾거나 재생성할 필요가 없다.
 - 공유 저장소: [hctinno/DEVICE](https://github.com/hctinno/DEVICE), 기준 브랜치 `main`. 클라우드 환경 생성·선택·실행은 아직 확인하지 않았다. 먼저 저장소의 파일과 검증 스크립트를 확인한다.
 

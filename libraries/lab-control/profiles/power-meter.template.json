@@ -1,0 +1,12 @@
+{
+  "driver": "PSeriesPowerMeter",
+  "parameters": {
+    "model": "N1912A"
+  },
+  "transport": {
+    "kind": "visa",
+    "resource": "REPLACE_WITH_INSTALLED_VISA_RESOURCE",
+    "timeout": 30
+  },
+  "notes": "Template only. Confirm installed model/controller, limits, options, address and termination before use."
+}

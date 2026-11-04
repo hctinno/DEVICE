@@ -1,0 +1,42 @@
+[
+  {
+    "row_index": 789,
+    "reason": "숫자 자산번호/표 열 혼입 의심; 모델 추정 금지",
+    "description": "Antenna, Horn 1-18GHz",
+    "manufacturer_raw": "ETS Lindgren",
+    "model_raw": "84797",
+    "extra": [
+      "Antenna, Horn 1-18GHz",
+      "ETS Lindgren",
+      "84797",
+      "80402",
+      "10/31/2026"
+    ],
+    "exhibit_id": "9563482",
+    "pdf_page": 19,
+    "table": 0,
+    "row": 18,
+    "source_sha256": "1396489ceb5b1892cdef9af94da442acb8356f9e2d6d4dba4079ecbade61f5b3",
+    "source_url": "https://fccid.io/BCG-E9188A/Test-Report/16064952-E31V2-FCC-Part-27-96-B77-Report-Part1-9563482.pdf"
+  },
+  {
+    "row_index": 792,
+    "reason": "숫자 자산번호/표 열 혼입 의심; 모델 추정 금지",
+    "description": "Antenna, Horn 1-18GHz",
+    "manufacturer_raw": "ETS Lindgren",
+    "model_raw": "84797",
+    "extra": [
+      "Antenna, Horn 1-18GHz",
+      "ETS Lindgren",
+      "84797",
+      "200897",
+      "5/31/2028"
+    ],
+    "exhibit_id": "9563482",
+    "pdf_page": 19,
+    "table": 0,
+    "row": 21,
+    "source_sha256": "1396489ceb5b1892cdef9af94da442acb8356f9e2d6d4dba4079ecbade61f5b3",
+    "source_url": "https://fccid.io/BCG-E9188A/Test-Report/16064952-E31V2-FCC-Part-27-96-B77-Report-Part1-9563482.pdf"
+  }
+]

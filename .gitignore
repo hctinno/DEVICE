@@ -10,3 +10,6 @@ build/
 libraries/samsung-rf/bluetooth-example-log.json
 libraries/samsung-rf/demo-log.json
 .fcc-cache/
+.manual-cache/
+site-*.json
+libraries/lab-control/runs/

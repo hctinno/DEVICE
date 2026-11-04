@@ -1,0 +1,17 @@
+{
+  "driver": "EspecController",
+  "parameters": {
+    "expected_rom": "",
+    "minimum_c": null,
+    "maximum_c": null,
+    "installed_controller_confirmed": false
+  },
+  "transport": {
+    "kind": "tcp",
+    "host": "",
+    "port": 10001,
+    "timeout": 10,
+    "termination": "\r\n"
+  },
+  "notes": "Template only. Confirm installed model/controller, limits, options, address and termination before use."
+}

@@ -1,0 +1,359 @@
+A.R.A | MWH-1826/B | Antenna, Horn 18-26.5GHz | 9563436:22
+A.R.A | MWH-2640/B | Antenna, Horn 26.5-40GHz | 9563438:14
+A.R.A. | MWH-1826/B | Antenna, Horn 18 to 26.5GHz | 9563439:17
+A.R.A. | MWH-2640/B | Antenna, Horn 26.5 to 40GHz | 9563436:22
+AC BEL | ADD011 LPS | AC Adapter (Companion) | 9564211:16
+AMPLICAL | AMP18G26.5-60 | *Link File, RF Amplifier Assembly, 18-26.5GHz, 60dB Gain | 9563482:19
+AMPLICAL | AMP18G26.5-60 | Amplifier Assembly, 18-26.5GHz, 60dB Gain | 9588701:15
+AMPLICAL | AMP18G26.5-60 | RF Amplifier Assembly, 18-26.5GHz, 60dB Gain | 9588682:14
+AMPLICAL | AMP18G26.5-60 | RF Device, Active, Amplifier | 9563439:17
+AMPLICAL | AMP26G40-60 | RF Device, Active, Amplifier | 9563439:17
+AMPLICAL | AMP26G40-65 | Link File, RF Amplifier Assembly, 26-40GHz, 65dB Gain | 9563436:22
+ASUS | GT-AXE11000 | Wireless Access Point | 9299684:94
+ASUS | RT-BE92U | Wireless Access Point | 9312885:11
+ASUS Computer International | GT-AXE11000 | WiFi 6e Gaming Router (Companion) | 9563437:15
+Agilent | N1921A | Pow er Meter | 9563684:18
+Agilent | N1921A | Pow er Sensor | 9563684:18
+Agilent | N1921A | Power Sensor | 9563684:19
+Agilent | N5181A | Signal Generator | 9563684:18
+Agilent | N9030A | Spectrum Analyzer | 9312885:11
+Agilent (Keysight) Technologies | N9010A | Spectrum Analyzer, EXA | 9268870:17
+Agilent / HP | E3640A | DC Power Supply | 9268870:17
+Agilent / HP | N5182B | Vector Signal Generator, 6GHz | 9299684:93
+Agilent / HP | N9010A | Spectrum Analyzer, 7 GHz | 9269168:10
+Agilent / HP | N9030A | Spectrum Analyzer, 44 GHz | 9268870:17
+Agilent / HP | U2000A | Average Power Sensor | 9299612:12
+Amplical | AMP18G26.5-60 | Link File, RF Amplifier Assembly, 18- 26.5GHz, 60dB Gain | 9563438:14
+Amplical | AMP18G26.5-60 | Link File, RF Amplifier Assembly, 18-26.5GHz, 60dB Gain | 9563436:22
+Amplical | AMP26G40-65 | *Link File, RF Amplifier Assembly, 26.5-40GHz, 65dB Gain | 9563482:19
+Amplical | AMP26G40-65 | Link File, RF Amplifier Assembly, 26.5- 40GHz, 65dB Gain | 9563438:14
+Apple | 920-10664-04 | Airpod Development System (Companion) | 9564211:15
+Apple | A1521 | 802.11a/b/g/n/ac Wireless Router (Master Device 1) | 9563437:16
+Apple | A1555 P | AC/DC adapter | 9563482:17
+Apple | A1706 | MacBook Pro | 9559817:10
+Apple | A1708 | Notebook PC (Peer Console) | 9563437:18
+Apple | A1718 | AC/DC adapter | 9563482:17
+Apple | A1720 | EUT AC/DC adapter | 9563436:18
+Apple | A1842 | Apple TV (Peer Slave Device) | 9563437:16
+Apple | A2130 | AC/DC adapter | 9563482:17
+Apple | A2166 | 96W USB-C Power Adapter | 9559817:10
+Apple | A2305 | 20W USB-C Power Adapter | 9559817:10
+Apple | A2338 | Notebook PC (Controller/Server) | 9563437:15
+Apple | A2779 | Notebook PC 1 (EUT Controller/Console) | 9564211:15
+Apple | A2779 | Notebook PC 2 (Companion Host) | 9564211:15
+Apple | A2992 | Macbook Pro | 9588682:10
+Apple | MNHF2AM/A | Headset | 9564211:15
+Apple | MacBook Pro | Laptop | 9563482:17
+Apple | Macbook | Laptop | 9563439:14
+Apple | Macbook Pro | Laptop | 9563436:18
+Apple | N/A | EUT AC/DC adapter | 9563439:14
+Apple | N/A | Laptop AC/DC adapter | 9563439:14
+Apple | iPhone | Companion Device | 9564181:27
+B&Z Technologies, LLC | BZR-01001800-231040-181515 | Preamplifier, 18 GHz | 9268526:12
+B&Z Technologies, LLC | BZR-01001800-231040-182020 | Preamplifier, 18 GHz | 9268526:12
+Boonton Electronics | RTP5008 | Power Sensor, Real-Time Peak, 50MHz to 8GHz | 9563436:22
+CMI, Inc. | HO04R | Antenna | 9269056:18
+CMI, Inc. | HO06R | Antenna | 9269056:18
+CMI, Inc. | HO10R | Antenna | 9269056:18
+CMI, Inc. | HO15R | Antenna | 9269056:18
+CMI, Inc. | HO22R | Antenna | 9269056:18
+CRESYN | EO-IC100 | Headset | 9307552:4
+Cincinnati Sub Zero | ZPHS-8-3.5-SCT/WC | *Chamber, Environmental | 9563482:19
+Cobham | FPA3-0.8-6.0R/1329 | Directional Antenna | 9268870:17
+Copper Mountain Technologies | Planar R140 | Vector Reflecometer | 9563684:18
+Copper Mountain Technologies | Planar R140 | Vector Reflectometer | 9563684:19
+D-Link | DIR-806A | Router | 9307552:4
+DELL | Latitude 5520 | Laptop for n48 CBSD connection | 9268870:17
+Dell | LA65NM130 | Laptop AC Adapter | 9307552:4
+Dell | Latitude5580 | Laptop Computer | 9307552:4
+ELECTRO METRICS | EM-6871 | Antenna, Passive Loop 30Hz - 1MHz | 9590464:12
+ELECTRO METRICS | EM-6872 | Antenna, Passive Loop 100KHz - 30MHz | 9590464:12
+ELECTRO-METRICS | EM-6871 | Antenna, Passive Loop 30Hz - 1MHz | 9559817:14
+ELECTRO-METRICS | EM-6872 | Antenna, Passive Loop 100KHz - 30MHz | 9559817:14
+ELECTRO-METRICS | EM-6872 | Antenna, Passive Loop 100kHz - 30MHz | 9588701:15
+ELECTRO-METRICS | EM-6872 | Antenna, Passive Loop 100kHz to 30MHz | 9563439:17
+ESPEC | SH-642 | Temperature Chamber | 9268870:17
+ESW44 | Rohde & Schwarz | EMI TEST RECEIVER | 9563436:22
+ETS | 3115 | Antenna, Horn, 18 GHz | 9268526:12
+ETS | 3116C | Antenna, Horn, 40 GHz | 9268526:12
+ETS | 3116C-PA | Preamplifier | 9268526:12
+ETS | 3117 | Antenna, Horn, 18 GHz | 9268526:12
+ETS | 3121D DB-4 | Antenna, Tuned Dipole 400~1000 MHz | 9268870:17
+ETS Lindgren | 3117 | Antenna, Horn 1-18GHz | 9563439:17
+ETS Lindgren | 84797 | Antenna, Horn 1-18GHz | 9563482:19
+ETS-Lindgren | 3117 | Antenna, Horn 1-18GHz | 9563436:21
+ETS-Lindgren (Cedar Park, | 3117 | Antenna, Horn 1-18GHz | 9563436:21
+ETS-Lindgren (Cedar Park, Texas) | 3117 | Antenna, Horn 1-18GHz | 9563436:22
+Electro-Metrics | EM-6871 | Antenna, Passive Loop, 30Hz - 1MHz | 9563438:14
+Electro-Metrics | EM-6872 | Antenna, Passive Loop, 100kHz to 30MHz | 9563438:14
+Fischer Custom Communications | FCC-LISN- 50/250-25-2-01- 480V | LISN | 9559817:14
+Fischer Custom Communications | FCC-LISN-50/250- 25-2-01-480V | LISN for Conducted Emissions CISPR-16 | 9588701:16
+Fischer Custom Communications | FCC-LISN-50/250-25-2- 01-480V | LISN | 9588682:14
+Fischer Custom Communications, Inc | FCC-LISN-50/250-25- 2-01-480V | LISN | 9563439:17
+Fischer Custom Communications, Inc. | FCC-LISN-50/25 25-2-01-480V | LISN | 9564181:33
+Fischer Custom Communications, Inc. | FCC-LISN-50/250-25- 2-01-480V | LISN | 9564212:19
+Fischer Custom Communications, Inc. | FCC-LISN-50/250-25-2-01- 480V | LISN | 9563438:14
+Fischer Custom Communications, Inc. | FCC-LISN-50/250-25-2-01-480V | LISN | 9563436:22
+Fisher Scientific | Traceable | Thermometer | 9563684:18
+HP | 437B | Pow er Meter | 9563684:18
+HP | 8481A | Pow er Sensor | 9563684:18
+HP | 8495B | Step Attenuator 70dB | 9564181:33
+HP | HP EliteBook 830 G5 | Laptop for n48 CBSD connection | 9268870:17
+HP | HP EliteDesk 800 G1 TWR | Notebook PC (Controller/Server) | 9299684:94
+KBEST | CDP01 | DP Cable | 9307552:4
+KEYSIGHT | E7515B | UXM 5G Wireless Test Platform | 9268870:17
+KEYSIGHT | N9030A | Spectrum Analyzer, 44 GHz | 9269168:10
+KEYSIGHT | N9030B | Spectrum Analyzer, 44 GHz | 9268870:17
+KEYSIGHT | N9040B | Signal Analyzer, 50 GHz | 9269056:18
+KIKUSUI | PWR2001ML | DC Power Supply | 9268954:18
+KRYTAR | 101040010K | Directional Coupler | 9563482:19
+KRYTAR | 152610 | Directional Coupler | 9563482:19
+KRYTAR | 1850 | Directional Coupler | 9268870:17
+Keysight | 8494B | Step Attenuator | 9268870:17
+Keysight | E7515B UXM 5G | Wideband Radio Communication Tester | 9563707:63
+Keysight | N1911A | Pow er Meter | 9563684:18
+Keysight | N1921A | Power Meter | 9563684:19
+Keysight | N5182B | Signal Generator, MXG X-Series RF Vector | 9563437:14
+Keysight | N5182BX | Frequency Extender | 9563437:14
+Keysight | N9030A | Spectrum Analyzer, PXA, 3Hz to 8.4GHz | 9563437:14
+Keysight | N9030B | Spectrum Analyzer | 9312885:11
+Keysight Technologies Inc | E4440A | Spectrum Analyzer, PXA, 3Hz to 44GHz | 9559817:14
+Keysight Technologies Inc | N1911A | P-Series Power Meter | 9588682:14
+Keysight Technologies Inc | N1911A | Power Meter, P-series single channel | 9563439:17
+Keysight Technologies Inc | N1912A | Power Sensor, P - series, 50MHz to 18GHz, Wideband | 9588704:13
+Keysight Technologies Inc | N1912A-CFG003 | P-Series Power Meter | 9588682:14
+Keysight Technologies Inc | N1921A | Power Sensor, P - series, 50MHz to 18GHz, Wideband | 9563439:17
+Keysight Technologies Inc | N1921A | Power Sensor, P-series, 50MHz to 18GHz, Wideband | 9588701:15
+Keysight Technologies Inc | N9030A | Spectrum Analyzer, PXA, 3Hz to 44GHz | 9563436:21
+Keysight Technologies Inc | N9030A | Spectrum Analyzer, PXA, 3Hz-44GHz | 9588682:14
+Keysight Technologies Inc | N9030A-544 | Spectrum Analyzer, PXA, 3Hz to 44GHz | 9563436:21
+Keysight Technologies Inc | N9030B | PXA Signal Analyzer | 9563436:21
+Keysight Technologies Inc | N9030B | PXA Signal Analyzer 2Hz to 44GHz | 9588682:14
+Keysight Technologies Inc | N9030B | Spectrum Analyzer, PXA, 2Hz to 44GHz | 9563439:17
+Keysight Technologies Inc | N9030B-526 | PXA, Signal Analyzer | 9563436:21
+LG | 27UD88 | Monitor | 9307552:4
+LG | LCAP31 | Monitor AC Adapter | 9307552:4
+Lenovo | ADLX65NLC2A | AC Adapter (Companion Host) | 9564211:16
+Lenovo | Type 20B7- S0A200 | Notebook PC (Companion Host) | 9564211:16
+Liteon Technology | A1424 | Laptop AC/DC adapter | 9563436:18
+Liteon Technology | A2452 | Laptop AC/DC adapter | 9588704:10
+MICRO-TRONICS | BRC50705-02 | Notch Filter | 9268954:18
+MICRO-TRONICS | BRM50702-02 | Notch Filter | 9268954:18
+MICRO-TRONICS | BRM50707-02 | Notch Filter | 9268954:18
+MICRO-TRONICS | BRM50709-02 | Notch Filter | 9268954:18
+MICRO-TRONICS | BRM50713-02 | Notch Filter | 9268954:18
+MICRO-TRONICS | BRM50716-2 | Notch Filter | 9268954:18
+MINI-CIRCUITS | WA1534 | Power Splitter | 9268870:17
+Micro-Tronics | BRC20553 | Filter, BRF 2305-2315 | 9563482:19
+Micro-Tronics | BRM50702-02 | Notch Filter | 9299684:19
+Micro-Tronics | BRM50711 | Filter, BRF 3400-3800MHz, 18GHz max | 9563482:19
+Micro-Tronics | BRM50716-2 | Notch Filter | 9299684:19
+Micro-Tronics | HPM17543 | High Pass Filter 3GHz | 9269056:18
+Micro-Tronics | HPM50107 | High Pass Filter 7.2 GHz | 9312879:21
+Micro-Tronics | HPM50108-02 | High Pass Filter 1.2GHz | 9268954:18
+Micro-Tronics | HPM50111-02 | High Pass Filter 2.8GHz | 9269163:10
+Micro-Tronics | HPM50118-02 | High Pass Filter 4GHz | 9268870:17
+Micro-Tronics | HPS17542 | High Pass Filter 6GHz | 9299612:12
+Micro-Tronics | LPS17541 | Low Pass Filter 5GHz | 9299612:12
+Mini-circuits | ZUDC10-83-S+ | Directional Coupler | 9563684:18
+MiniCircuits | ZUDC10-183+ | Coupler | 9563684:18
+Miteq | AFS42-00101800-25-S-42 | Preamplifier, 18 GHz | 9268526:12
+N/A | CSB | Conducted Switch Box | 9563482:19
+N/A | N/A | Tag | 9559817:10
+N9030A | Keysight Technologies Inc | Spectrum Analyzer, PXA, 3Hz to 44GHz | 9563438:14
+PASTERNACK | PE2243-20 | Directional Coupler | 9563684:18
+PASTERNACK | PE7004-10 | Attenuator | 9268526:12
+PASTERNACK | PE7087-10 | Attenuator | 9268526:12
+PASTERNACK | PE7395-10 | Attenuator | 9268870:17
+Pasternack | PE360-12 | SMA-SMA cable(.3meter) | 9564181:33
+Pasternack | PE360-24 | SMA-SMA cable(.6meter) | 9564181:33
+Pasternack Enterprises | PE2204-6 | Directional Coupler | 9564181:33
+Pasternack Enterprises | PE7024-10 | 10dB Fixed Attenuator | 9588682:14
+Pasternack Enterprises | PE7087-10 | 10dB Fixed Attenuator | 9588682:10
+Polaroid | TLX-01511C | 15" LCD TV (Video Display) | 9563437:16
+R & S | CMW 500 | Base Station Simulator | 9563684:19
+R & S | NRP18A | Pow er Sensor | 9563684:18
+R & S | NRP8S | Pow er Sensor | 9563684:18
+R & S | SMB 100A | Signal Generator | 9563684:18
+R & S | SMB100A03 | Signal Generator | 9563684:18
+R & S | ZNLE6 | Vector Network Analyzer | 9563684:18
+R&S | CMW500 | Communications Test Set | 9268870:17
+R&S | CMW500 | LTE Communicator | 9307552:12
+R&S | CMW500 | Wideband Radio Communication Tester | 9563707:63
+R&S | CMX500 | Radio Communication Tester | 9563707:63
+R&S | EMC32 | Test software | 9307552:12
+R&S | ENV216 | LISN | 9268526:12
+R&S | ENV216 | Two-Line V-Network | 9307552:12
+R&S | ESR 3 | EMI Test Receive, 3 GHz | 9299613:13
+R&S | ESR 3 | EMI Test Receiver, 3 GHz | 9269168:10
+R&S | ESU40 | EMI Test Receive, 40 GHz | 9268526:12
+R&S | ESU40 | EMI Test Receiver | 9307552:19
+R&S | ESU40 | EMI Test Receiver, 40 GHz | 9269168:10
+R&S | ESU8 | EMI Test Receiver | 9307552:19
+R&S | ESW 8 | EMI Test Receive | 9269163:10
+R&S | ESW44 | EMI Test Receiver | 9307552:19
+R&S | ESW8 | EMI Test Receiver | 9307552:12
+R&S | FSW 50 | Signal Analyzer, 44 GHz | 9269056:18
+R&S | FSW50 | Spectrum Analyzer | 9268526:12
+R&S | HF907 | Horn Antenna | 9307552:19
+R&S | HFH2-Z2E | Antenna, Loop, 9kHz-30MHz | 9268526:12
+R&S | NRP18S | Power Sensor | 9563707:63
+R&S | NRP8S | Power Sensor | 9563707:63
+R&S | SCU-18 | Signal Conditioning Unit | 9307552:19
+R&S | SCU-40A | Signal Conditioning Unit | 9307552:19
+R&S | SMB100B | Signal Generator | 9563684:18
+R&S | SMW200A | Vector SG | 9312879:21
+R&S | SMW200A | Vector Signal Generator | 9312885:11
+R&S GmbH & Co. | CMW500 | Wideband Communication Test Set, Call Box | 9563482:19
+RFTECH | EP-DN980 | Data Link Cable | 9307552:4
+Rohde & Schwarz | CMW500 | Wideband Communication Call Box | 9563482:19
+Rohde & Schwarz | ESCI 7 | EMI Test Receiver | 9563436:22
+Rohde & Schwarz | ESCI7 | EMI TEST RECEIVER | 9559817:14
+Rohde & Schwarz | ESR | EMI Test Receiver 9kHz-3.6GHz | 9588704:14
+Rohde & Schwarz | ESR | EMI Test Receiver 9kHz-7GHz | 9588701:16
+Rohde & Schwarz | ESR3 | EMI TEST RECEIVER 9kHz - 3.6GHz | 9563439:17
+Rohde & Schwarz | ESW44 | EMI TEST RECEIVER | 9559817:14
+Rohde & Schwarz | ESW44 | EMI TEST RECEIVER, with B8 option | 9563436:21
+Rohde & Schwarz | ESW44 | EMI Test Receiver | 9564181:32
+Rohde & Schwarz (Koeln) GmbH & Co. KG | CMX500 | Radio Communication Tester | 9564181:33
+SAMSUNG | AA-SM7PCPB | Mouse | 9307552:4
+SAMSUNG | EP-DN980 | Data Cable | 9268526:9
+SAMSUNG | EP-T2510 | Charger | 9268526:9
+SAMSUNG | NT550XDA-KC58G | Laptop (SAS – WINNForum Test Harness) | 9268870:17
+SAMSUNG | SM-F971U | Mobile Phone | 9307552:4
+SAMSUNG | SMH-210UB | Mouse | 9307552:4
+SCHWARZBECK | VULB 9163 | Antenna, Bilog, 30MHz-1GHz | 9268526:12
+SONOMA | 310N | Preamplifier | 9307552:19
+SONOMA INSTRUMENT | 310 | Amplifier, 9KHz to 1GHz, 32dB | 9563438:14
+SONOMA INSTRUMENT | 310N | *Amplifier 9 kHz - 1 GHz | 9590465:15
+SONOMA INSTRUMENT | 310N | Amplifier 9 KHz - 1 GHz | 9559817:14
+SONOMA INSTRUMENT | 310N | Amplifier 9 kHz - 1 GHz | 9563482:19
+SPEAG | 10 GHz | 5G Verification Source | 9563684:17
+SPEAG | CLA13 SN: 1008 | System Validation Dipole | 9563684:17
+SPEAG | D1640V2 SN: 324 | System Validation Dipole | 9563684:17
+SPEAG | D1640V2 SN: 360 | System Validation Dipole | 9563684:17
+SPEAG | D1750V2 SN: 1050 | System Validation Dipole | 9563684:17
+SPEAG | D1750V2 SN: 1053 | System Validation Dipole | 9563684:17
+SPEAG | D1750V2 SN: 1220 | System Validation Dipole | 9563684:17
+SPEAG | D1900V2 SN: 5d140 | System Validation Dipole | 9563684:17
+SPEAG | D1900V2 SN: 5d163 | System Validation Dipole | 9563684:17
+SPEAG | D1900V2 SN: 5d260 | System Validation Dipole | 9563684:17
+SPEAG | D1950V3 | System Validation Dipole | 9563707:63
+SPEAG | D2300V2 SN: 1002 | System Validation Dipole | 9563684:17
+SPEAG | D2300V2 SN: 1051 | System Validation Dipole | 9563684:19
+SPEAG | D2300V2 SN: 1058 | System Validation Dipole | 9563684:17
+SPEAG | D2450V2 | System Validation Dipole | 9563707:63
+SPEAG | D2450V2 SN: 706 | System Validation Dipole | 9563684:17
+SPEAG | D2450V2 SN: 748 | System Validation Dipole | 9563684:17
+SPEAG | D2600V2 SN: 1006 | System Validation Dipole | 9563684:17
+SPEAG | D2600V2 SN: 1036 | System Validation Dipole | 9563684:17
+SPEAG | D2600V2 SN: 1183 | System Validation Dipole | 9563684:19
+SPEAG | D3500V2 SN: 1011 | System Validation Dipole | 9563684:17
+SPEAG | D3500V2 SN: 1038 | System Validation Dipole | 9563684:19
+SPEAG | D3500V2 SN: 1060 | System Validation Dipole | 9563684:17
+SPEAG | D3500V2 SN: 1182 | System Validation Dipole | 9563684:17
+SPEAG | D3700V2 SN: 1039 | System Validation Dipole | 9563684:17
+SPEAG | D3700V2 SN: 1099 | System Validation Dipole | 9563684:19
+SPEAG | D3700V2 SN: 1131 | System Validation Dipole | 9563684:17
+SPEAG | D3900V2 SN: 1053 | System Validation Dipole | 9563684:19
+SPEAG | D3900V2 SN: 1102 | System Validation Dipole | 9563684:17
+SPEAG | D3900V2 SN: 1115 | System Validation Dipole | 9563684:17
+SPEAG | D5GHz | System Validation Dipole | 9563707:63
+SPEAG | D5GHzV2 SN: 1003 | System Validation Dipole | 9563684:17
+SPEAG | D5GHzV2 SN: 1138 | System Validation Dipole | 9563684:17
+SPEAG | D5GHzV2 SN: 1168 | System Validation Dipole | 9563684:17
+SPEAG | D6.5GHzV2 SN: 1032 | System Validation Dipole | 9563684:17
+SPEAG | D6.5GHzV2 SN: 1033 | System Validation Dipole | 9563684:17
+SPEAG | D750V3 SN: 1019 | System Validation Dipole | 9563684:17
+SPEAG | D750V3 SN: 1071 | System Validation Dipole | 9563684:17
+SPEAG | D750V3 SN: 1257 | System Validation Dipole | 9563684:17
+SPEAG | D835V2 | System Validation Dipole | 9563707:63
+SPEAG | D835V2 SN: 4d002 | System Validation Dipole | 9563684:17
+SPEAG | D835V2 SN: 4d117 | System Validation Dipole | 9563684:17
+SPEAG | D900V2 SN: 1d083 | System Validation Dipole | 9563684:19
+SPEAG | D900V2 SN: 1d143 | System Validation Dipole | 9563684:17
+SPEAG | DAE4 | Data Acquisition Electronics(DAE) | 9563684:16
+SPEAG | DAE4ip | Data Acquisition Electronics(DAE) | 9563684:16
+SPEAG | DAEip | Data Acquisition Electronics(DAE) | 9563684:19
+SPEAG | DAK-12 Probe | Dielectric Probe kit | 9563684:18
+SPEAG | DAK-12 Short | Shorting Block | 9563684:18
+SPEAG | DAK-3.5 Probe | Dieelctric Probe Kit | 9563684:19
+SPEAG | DAK-3.5 Probe | Dielectric Probe kit | 9563684:18
+SPEAG | DAK-3.5 Short | Shorting Block | 9563684:18
+SPEAG | EUmmWV4 | E-Field Probe | 9563684:15
+SPEAG | EX3DV4 | E-Field Probe | 9563684:15
+SPEAG | POWERSOURCE1 | Portable System Check | 9563684:18
+SPEAG | cSARDV2-FHSL | Fast SAR Measurement Platform - Flat | 9563707:63
+STEATITE | QMS-00225 | Antenna, Horn, 18-26 GHz | 9269056:18
+STEATITE | QMS-00238 | Antenna, Horn, 26-40 GHz | 9269056:18
+STEATITE | QMS-00880 | WideBand Horn Antenna | 9307552:19
+Solum | EP-T4511 | Travel Adapter | 9307552:4
+Sonoma | 310N | Preamplifier, 1000 MHz | 9268526:12
+Sorensen | XT 15-4 | DC Pow er Supply | 9563684:18
+Sorensen - Ametek | XT 20-3 | Pow er Supply | 9563684:18
+Sunol Sciences Corp. | JB1 | Antenna, Broadband Hybrid, 30MHz to 2000MHz | 9559817:14
+Sunol Sciences Corp. | JB3 | Antenna, BroadBand Hybrid, 30MHz to 3GHz | 9590464:12
+Sunol Sciences Corp. | JB3 | Antenna, Broadband Hybrid 30 MHz - 2 or 3 GHz | 9564181:32
+Sunol Sciences Corp. | JB3 | Antenna, Broadband Hybrid, 30MHz to 3GHz | 9563438:14
+Sunol Sciences Corp. | JB3 | Antenna, Broadband Hybrid, 30MHz-3GHz | 9563436:22
+TA Engineering | TA-018S-16 | RF Switching Unit | 9299612:12
+TE | TBFL1 | Transient Limiter | 9559817:14
+TESCOM | MTP300A | Bluetooth Tester | 9299613:13
+TESCOM | TC-3000C | Bluetooth Tester | 9299613:13
+TESEQ | CBL6112D | BiLog Antenna | 9307552:19
+TOYO | EP7RE | Test software | 9307552:19
+Tekbox | TBFL1 | Transient Limiter / Attenuator | 9563436:22
+Thermotron Industries | SM-16C Mini-Max | Environmental Chamber | 9559817:14
+UL | Antenna Port | Conducted Software | 9563482:19
+UL | CLT | Antenna port test software | 9268870:17
+UL | CSB | Conducted Switch Box | 9564181:27
+UL | CSB | RF Device, Switch | 9563436:21
+UL | CSB | RF Device, Switch (Conducted Switch Box) | 9563439:17
+UL | N/A | Conducted Switch Box | 9563436:18
+UL | Station Tool | Conducted Software | 9563438:14
+UL | UL EMC | AC Line Conducted Software | 9563438:14
+UL | UL EMC | AC Line Conducted software | 9268526:12
+UL | UL EMC | Conducted Software | 9588701:16
+UL | UL EMC | Radiated Software | 9563438:14
+UL | UL EMC | Radiated software | 9268526:12
+UL | UL iM | Antenna port test software (5G NR FR1) | 9268870:17
+UL | n/a | Conducted Switch Box | 9564212:14
+UL | n/a | RF Device, Switch (Conducted Switch Box) | 9588704:10
+UL-FR1 | CSB | Conducted Switch Box | 9563438:14
+UL-FR1 | Frankenstein | RF Filter Box, 1-18GHz | 9588701:15
+UL-FR1 | Frankenstein | RF Filter Box, 1-18GHz, 12 Port | 9563439:17
+UL-FR1 | Frankenstein | RF Filter Box, 1-18GHz, 12 Port. | 9563438:14
+UL-FR1 | Frankenstein, 1 Amp, 12 | Filter Box | 9563436:21
+UL-FR1 | Frankenstein, 1 Amp, 12 Port | Filter Box | 9563436:22
+UL-FR1 | Frankenstein, 1 Amp, 12 Port | RF Filter Box, 1-18GHz | 9588704:13
+UL-FR1 | Frankenstein, 2 Amp, 12 | Filter Box | 9563436:21
+UL-FR1 | Frankenstein, 2 Amp, 12 Port | RF Filter Box, 1-18GHz | 9588704:13
+UL-FR1 | Port 0 Factors | Link File, @3m, 9kHz-1000MHz Hybrid Path Loss | 9564181:32
+UL-FR1 | R102, 1 Amp, 12 Port | Filter Box | 9563436:21
+UL-FR1 | R103 2Amp 12Port | Filter Box | 9563436:21
+UL-FR1 | R103, 2 Amp, 12 Port | Filter Box | 9563436:22
+UL-FR1 | R103, 2 Amp, 12 Port, 40GHz | Filter Box | 9563436:21
+UL-FR1 | RATS 1.0 | RF Filter Box, 1-18GHz, 12 Port | 9563438:14
+UL-FR1 | RATS 1.0, 2 Amp, 6 Port | Filter Box | 9563436:21
+UL-FR1 | RATS 1.0, 2 Amp, 8 Port | Filter Box | 9563436:22
+UL-FR1 | RATS 2 | *RF Filter Box, 1-18GHz, 17 Port | 9563482:19
+UL-FR1 | RATS 2.0, 1 Amp, 17 Port | Filter Box | 9563436:21
+UL-FR1 | RATS 3.0, 3 Amp, 7 Port | Filter Box | 9563436:21
+UL-FR1 | Rats 2.0 | RF Filter Box, 1-18GHz, 17 Port | 9588701:15
+UL-FR1 | UL Frankenstein | RF Filter Box, 1-18GHz | 9564181:32
+UL-FR1 | UL RATS 1.0 | RF Filter Box, 1-18GHz | 9564181:32
+UL-FR1 | UL RATS 2.0 | RF Filter Box, 1-18GHz | 9564181:32
+UL-FR1 | UL RATS 3.0 | RF Filter Box, 1-18GHz | 9564181:32
+VDI | N9029AV04 | SA Extension Module | 9269056:18
+VDI | N9029AV06 | SA Extension Module | 9269056:18
+VDI | N9029AV10 | SA Extension Module | 9269056:18
+VDI | N9029AV15 | SA Extension Module | 9269056:18
+WEINSCHEL | M1406A | Termination | 9299613:13
+WEINSCHEL | WA1534 | Combiner | 9299684:93
+WEINSCHEL | WA76-30-21 | Attenuator | 9299684:19
+Wainwright Instruments GmbH | WHW2-7100-10000-18000-40CD | High Pass Filter | 9268526:12
+Wainwright Instruments GmbH | WHW2-8165-11500-21000-40CD | High Pass Filter | 9268526:12
+Wainwright Instruments GmbH | WLKX10-6400-7424-18000-60ST | Low Pass Filter | 9268526:12
+Wainwright Instruments GmbH | WLKX12-5400-5940-18000-60ST | Low Pass Filter | 9268526:12
+Werlatone | C8060-102 | Coupler | 9563684:18
+1332 rows; 358 distinct description/manufacturer/model tuples

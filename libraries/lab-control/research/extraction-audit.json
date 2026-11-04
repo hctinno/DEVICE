@@ -1,0 +1,578 @@
+[
+  {
+    "exhibit_id": "9268526",
+    "page": 9,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9268526",
+    "page": 12,
+    "table": 0,
+    "extracted_rows": 31
+  },
+  {
+    "exhibit_id": "9268870",
+    "page": 17,
+    "table": 0,
+    "extracted_rows": 39
+  },
+  {
+    "exhibit_id": "9268954",
+    "page": 18,
+    "table": 0,
+    "extracted_rows": 44
+  },
+  {
+    "exhibit_id": "9269019",
+    "page": 12,
+    "table": 0,
+    "extracted_rows": 42
+  },
+  {
+    "exhibit_id": "9269056",
+    "page": 18,
+    "table": 0,
+    "extracted_rows": 22
+  },
+  {
+    "exhibit_id": "9269163",
+    "page": 10,
+    "table": 0,
+    "extracted_rows": 35
+  },
+  {
+    "exhibit_id": "9269168",
+    "page": 9,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9269168",
+    "page": 10,
+    "table": 0,
+    "extracted_rows": 16
+  },
+  {
+    "exhibit_id": "9269173",
+    "page": 9,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9269173",
+    "page": 11,
+    "table": 0,
+    "extracted_rows": 16
+  },
+  {
+    "exhibit_id": "9299612",
+    "page": 10,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9299612",
+    "page": 12,
+    "table": 0,
+    "extracted_rows": 23
+  },
+  {
+    "exhibit_id": "9299613",
+    "page": 11,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9299613",
+    "page": 13,
+    "table": 0,
+    "extracted_rows": 34
+  },
+  {
+    "exhibit_id": "9299648",
+    "page": 12,
+    "table": 1,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9299648",
+    "page": 15,
+    "table": 0,
+    "extracted_rows": 23
+  },
+  {
+    "exhibit_id": "9299650",
+    "page": 13,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9299650",
+    "page": 16,
+    "table": 0,
+    "extracted_rows": 23
+  },
+  {
+    "exhibit_id": "9299684",
+    "page": 17,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9299684",
+    "page": 19,
+    "table": 0,
+    "extracted_rows": 31
+  },
+  {
+    "exhibit_id": "9299684",
+    "page": 93,
+    "table": 0,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9299684",
+    "page": 94,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9299744",
+    "page": 25,
+    "table": 0,
+    "extracted_rows": 44
+  },
+  {
+    "exhibit_id": "9299749",
+    "page": 43,
+    "table": 0,
+    "extracted_rows": 48
+  },
+  {
+    "exhibit_id": "9307552",
+    "page": 4,
+    "table": 1,
+    "extracted_rows": 15
+  },
+  {
+    "exhibit_id": "9307552",
+    "page": 12,
+    "table": 2,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9307552",
+    "page": 19,
+    "table": 1,
+    "extracted_rows": 13
+  },
+  {
+    "exhibit_id": "9312879",
+    "page": 18,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9312879",
+    "page": 21,
+    "table": 0,
+    "extracted_rows": 32
+  },
+  {
+    "exhibit_id": "9312885",
+    "page": 11,
+    "table": 0,
+    "extracted_rows": 9
+  },
+  {
+    "exhibit_id": "9312885",
+    "page": 11,
+    "table": 1,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9559817",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9559817",
+    "page": 10,
+    "table": 0,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9559817",
+    "page": 14,
+    "table": 0,
+    "extracted_rows": 8
+  },
+  {
+    "exhibit_id": "9559817",
+    "page": 14,
+    "table": 1,
+    "extracted_rows": 3
+  },
+  {
+    "exhibit_id": "9563436",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9563436",
+    "page": 18,
+    "table": 0,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9563436",
+    "page": 21,
+    "table": 0,
+    "extracted_rows": 53
+  },
+  {
+    "exhibit_id": "9563436",
+    "page": 22,
+    "table": 0,
+    "extracted_rows": 33
+  },
+  {
+    "exhibit_id": "9563436",
+    "page": 22,
+    "table": 1,
+    "extracted_rows": 3
+  },
+  {
+    "exhibit_id": "9563437",
+    "page": 14,
+    "table": 0,
+    "extracted_rows": 3
+  },
+  {
+    "exhibit_id": "9563437",
+    "page": 15,
+    "table": 0,
+    "extracted_rows": 2
+  },
+  {
+    "exhibit_id": "9563437",
+    "page": 16,
+    "table": 0,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9563437",
+    "page": 18,
+    "table": 0,
+    "extracted_rows": 5
+  },
+  {
+    "exhibit_id": "9563438",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9563438",
+    "page": 14,
+    "table": 0,
+    "extracted_rows": 34
+  },
+  {
+    "exhibit_id": "9563439",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9563439",
+    "page": 14,
+    "table": 0,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9563439",
+    "page": 17,
+    "table": 0,
+    "extracted_rows": 34
+  },
+  {
+    "exhibit_id": "9563482",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9563482",
+    "page": 17,
+    "table": 0,
+    "extracted_rows": 9
+  },
+  {
+    "exhibit_id": "9563482",
+    "page": 19,
+    "table": 0,
+    "extracted_rows": 39
+  },
+  {
+    "exhibit_id": "9563684",
+    "page": 8,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9563684",
+    "page": 15,
+    "table": 0,
+    "extracted_rows": 44
+  },
+  {
+    "exhibit_id": "9563684",
+    "page": 16,
+    "table": 0,
+    "extracted_rows": 44
+  },
+  {
+    "exhibit_id": "9563684",
+    "page": 17,
+    "table": 0,
+    "extracted_rows": 34
+  },
+  {
+    "exhibit_id": "9563684",
+    "page": 18,
+    "table": 0,
+    "extracted_rows": 42
+  },
+  {
+    "exhibit_id": "9563684",
+    "page": 19,
+    "table": 0,
+    "extracted_rows": 12
+  },
+  {
+    "exhibit_id": "9563684",
+    "page": 19,
+    "table": 1,
+    "extracted_rows": 18
+  },
+  {
+    "exhibit_id": "9563707",
+    "page": 63,
+    "table": 0,
+    "extracted_rows": 6
+  },
+  {
+    "exhibit_id": "9563707",
+    "page": 63,
+    "table": 1,
+    "extracted_rows": 18
+  },
+  {
+    "exhibit_id": "9564181",
+    "page": 7,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9564181",
+    "page": 27,
+    "table": 0,
+    "extracted_rows": 5
+  },
+  {
+    "exhibit_id": "9564181",
+    "page": 32,
+    "table": 0,
+    "extracted_rows": 57
+  },
+  {
+    "exhibit_id": "9564181",
+    "page": 33,
+    "table": 0,
+    "extracted_rows": 3
+  },
+  {
+    "exhibit_id": "9564181",
+    "page": 33,
+    "table": 1,
+    "extracted_rows": 3
+  },
+  {
+    "exhibit_id": "9564181",
+    "page": 33,
+    "table": 3,
+    "extracted_rows": 10
+  },
+  {
+    "exhibit_id": "9564181",
+    "page": 33,
+    "table": 4,
+    "extracted_rows": 3
+  },
+  {
+    "exhibit_id": "9564211",
+    "page": 13,
+    "table": 0,
+    "extracted_rows": 3
+  },
+  {
+    "exhibit_id": "9564211",
+    "page": 15,
+    "table": 0,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9564211",
+    "page": 16,
+    "table": 0,
+    "extracted_rows": 5
+  },
+  {
+    "exhibit_id": "9564212",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9564212",
+    "page": 14,
+    "table": 0,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9564212",
+    "page": 18,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9564212",
+    "page": 18,
+    "table": 1,
+    "extracted_rows": 30
+  },
+  {
+    "exhibit_id": "9564212",
+    "page": 19,
+    "table": 0,
+    "extracted_rows": 7
+  },
+  {
+    "exhibit_id": "9564212",
+    "page": 19,
+    "table": 1,
+    "extracted_rows": 3
+  },
+  {
+    "exhibit_id": "9588682",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9588682",
+    "page": 10,
+    "table": 0,
+    "extracted_rows": 5
+  },
+  {
+    "exhibit_id": "9588682",
+    "page": 14,
+    "table": 0,
+    "extracted_rows": 26
+  },
+  {
+    "exhibit_id": "9588682",
+    "page": 14,
+    "table": 1,
+    "extracted_rows": 3
+  },
+  {
+    "exhibit_id": "9588701",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9588701",
+    "page": 12,
+    "table": 0,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9588701",
+    "page": 15,
+    "table": 0,
+    "extracted_rows": 27
+  },
+  {
+    "exhibit_id": "9588701",
+    "page": 16,
+    "table": 0,
+    "extracted_rows": 6
+  },
+  {
+    "exhibit_id": "9588704",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9588704",
+    "page": 10,
+    "table": 0,
+    "extracted_rows": 4
+  },
+  {
+    "exhibit_id": "9588704",
+    "page": 13,
+    "table": 0,
+    "extracted_rows": 21
+  },
+  {
+    "exhibit_id": "9588704",
+    "page": 14,
+    "table": 0,
+    "extracted_rows": 6
+  },
+  {
+    "exhibit_id": "9590464",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9590464",
+    "page": 10,
+    "table": 2,
+    "extracted_rows": 9
+  },
+  {
+    "exhibit_id": "9590464",
+    "page": 12,
+    "table": 0,
+    "extracted_rows": 15
+  },
+  {
+    "exhibit_id": "9590465",
+    "page": 5,
+    "table": 0,
+    "extracted_rows": 0
+  },
+  {
+    "exhibit_id": "9590465",
+    "page": 13,
+    "table": 0,
+    "extracted_rows": 9
+  },
+  {
+    "exhibit_id": "9590465",
+    "page": 15,
+    "table": 0,
+    "extracted_rows": 30
+  }
+]

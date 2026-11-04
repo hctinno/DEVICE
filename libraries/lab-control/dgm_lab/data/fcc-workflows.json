@@ -1,0 +1,1296 @@
+[
+  {
+    "group_id": "fold8-6g",
+    "radio": "wlan",
+    "device": "fold8",
+    "test_items": [
+      "26dB 대역폭",
+      "전도출력",
+      "EIRP/PSD",
+      "대역내 방출",
+      "대역경계/불요방사",
+      "CBP",
+      "AC 전도"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9312879",
+        "pdf_pages": [
+          8,
+          15,
+          16,
+          17,
+          18,
+          22,
+          24,
+          52
+        ],
+        "sha256": "3b84ee290833110658678275bf889f38b333df454c5db1b5c1c79508c08aee73",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E13V4-FCC-Report-UNII-6GHz-Part1-9312879.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9312879"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "RU/MRU·전력등급·체인·출력 단위 매핑",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-6g",
+    "radio": "wlan",
+    "device": "duo",
+    "test_items": [
+      "99%/26dB 대역폭",
+      "전도출력",
+      "EIRP/PSD",
+      "대역내 방출",
+      "대역경계/불요방사",
+      "TPC",
+      "AC 전도"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9564181",
+        "pdf_pages": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          22,
+          23,
+          27
+        ],
+        "sha256": "402a54631e0d2c2c6583e2f0a9861f71b6b8c88e9e36d6ccab8f27e0a94f916f",
+        "pdf_url": "https://fccid.io/BCG-E9203A/Test-Report/16064952-E12V3-Sec-1-9-7-6G-Conducted-Report-9564181.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9564181"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "안테나 포트 표기 대조",
+      "TPC 동반기·가변감쇠기",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-uwb",
+    "radio": "uwb",
+    "device": "fold8",
+    "test_items": [
+      "10dB 대역폭",
+      "평균/피크 EIRP",
+      "송신중단",
+      "불요방사",
+      "AC 전도"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9268526",
+        "pdf_pages": [
+          7,
+          8,
+          9,
+          11
+        ],
+        "sha256": "6f5d1cb8d6a42effd9652ef43734f6da9a0c6a58500597ac797b128d143632d2",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E16V1-FCC-Report-UWB-9268526.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9268526"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "EmiReceiver.read_level"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "HPRF·packet length·SP 설정 매핑",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "펄스/루프/장측정·상대기·기술별 trigger/integration 설정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-uwb",
+    "radio": "uwb",
+    "device": "duo",
+    "test_items": [
+      "UWB RF 세부 시험 원문 추가 확보"
+    ],
+    "report_evidence": [],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "EmiReceiver.read_level"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 모델 UWB RF 성적서",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "펄스/루프/장측정·상대기·기술별 trigger/integration 설정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-nfc",
+    "radio": "nfc",
+    "device": "fold8",
+    "test_items": [
+      "20dB 대역폭",
+      "기본파/불요방사",
+      "주파수 안정도",
+      "AC 전도"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9269168",
+        "pdf_pages": [
+          8,
+          9,
+          11
+        ],
+        "sha256": "5a57050c3402aad8ddb98e807373f85c44b53feeb98696278c52bc6e4da9fb4b",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E14V2-FCC-Report-NFC-9269168.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9269168"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "EmiReceiver.read_level"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "태그 유무 지그",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "펄스/루프/장측정·상대기·기술별 trigger/integration 설정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-nfc",
+    "radio": "nfc",
+    "device": "duo",
+    "test_items": [
+      "점유대역폭",
+      "기본파/불요방사",
+      "주파수 안정도",
+      "AC 전도"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9559817",
+        "pdf_pages": [
+          8,
+          9,
+          10,
+          124,
+          125
+        ],
+        "sha256": "30076f563fa4c4f823aea612cad09b0ffe77d09f8fb7ff147b1f4e9e5a09ce4b",
+        "pdf_url": "https://fccid.io/BCG-E9188A/Test-Report/16064952-E18V2R-FCC-IC-NFC-Report-Appendix-9559817.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9559817"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "EmiReceiver.read_level"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "펄스/루프/장측정·상대기·기술별 trigger/integration 설정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-ble",
+    "radio": "bluetooth",
+    "device": "fold8",
+    "test_items": [
+      "출력",
+      "PSD",
+      "6dB 대역폭",
+      "대역경계/불요방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9299650",
+        "pdf_pages": [
+          8
+        ],
+        "sha256": "d4d5fe8a1bd66394a340c97f7284a595cb409abe04db32b6e82775361e4e1dd9",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E9V1-FCC-Report-BLE-9299650.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9299650"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "CS_SYNC 전용 인수",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-cs",
+    "radio": "bluetooth",
+    "device": "fold8",
+    "test_items": [
+      "Channel Sounding ASK 출력/대역폭/불요방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9299612",
+        "pdf_pages": [
+          8,
+          10
+        ],
+        "sha256": "23b009482c99d046a89a4842698787972c695acc36c835c19364af337f806b96",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E10V1-FCC-Report-BLE-ASK-9299612.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9299612"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "tone/ASK 시작·종료 프로토콜",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-bt",
+    "radio": "bluetooth",
+    "device": "fold8",
+    "test_items": [
+      "BR/EDR 출력",
+      "호핑/대역폭",
+      "대역경계/불요방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9299613",
+        "pdf_pages": [
+          11
+        ],
+        "sha256": "a7df73aa941610a554d61efe8392f4b8b296f6ed39da7847aafd1dd485138e7c",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E11V1-FCC-Report-BT-Part1-9299613.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9299613"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "BT tester 설정·응답",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-bt",
+    "radio": "bluetooth",
+    "device": "duo",
+    "test_items": [
+      "HDR RF 시험"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9588682",
+        "pdf_pages": [
+          8,
+          10
+        ],
+        "sha256": "a2aedd0e506a0867186192fa9a57029bb761e142b2e9d6e483bda60e67e0dd04",
+        "pdf_url": "https://fccid.io/BCG-E9203A/Test-Report/16064952-E3V2-FCC-IC-HDR-Report-Appendix-Part1-9588682.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9588682"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "BR/EDR/BLE별 성적서·조건 추가 추출",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-wlan24",
+    "radio": "wlan",
+    "device": "fold8",
+    "test_items": [
+      "2.4GHz DTS 출력·PSD·대역폭·방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9299648",
+        "pdf_pages": [
+          1
+        ],
+        "sha256": "d8da12f0ba4aa8b2d0b082b039bb4f65203b781a4fe419718288be896abc4fff",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E8V1-FCC-Report-DTS-b-g-n-be-WLAN-Part1-9299648.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9299648"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-wlan5",
+    "radio": "wlan",
+    "device": "fold8",
+    "test_items": [
+      "5GHz UNII 출력·PSD·대역폭·방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9299684",
+        "pdf_pages": [
+          1
+        ],
+        "sha256": "3a05c2c3fc302eda2ee7fe2823451260b5a052c881de2fb2dad504ff182e5e70",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E12V3-FCC-Report-UNII-5GHz-WLAN-9299684.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9299684"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-wlan24",
+    "radio": "wlan",
+    "device": "duo",
+    "test_items": [
+      "2.4GHz DTS RF"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9588701",
+        "pdf_pages": [
+          1
+        ],
+        "sha256": "6fded1ffa137ba442d0e56531833d80fdcaa63da2f2151ed74150d8282cc1892",
+        "pdf_url": "https://fccid.io/BCG-E9203A/Test-Report/16064952-E4V2R-FCC-IC-DTS-Report-Appendix-Part1-9588701.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9588701"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-wlan5",
+    "radio": "wlan",
+    "device": "duo",
+    "test_items": [
+      "5GHz UNII conducted RF"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9563436",
+        "pdf_pages": [
+          1
+        ],
+        "sha256": "5850ee27333800ef582b37b4e2e5d89e56f1207542f6456aae20bcb1b1be2e75",
+        "pdf_url": "https://fccid.io/BCG-E9188A/Test-Report/16064952-E10V2-FCC-UNII-5G-Conducted-Report-Appendix-9563436.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9563436"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-wwan",
+    "radio": "cellular",
+    "device": "fold8",
+    "test_items": [
+      "출력",
+      "점유대역폭",
+      "불요방사",
+      "대역경계"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9299749",
+        "pdf_pages": [
+          40,
+          41,
+          43,
+          45
+        ],
+        "sha256": "0bdac6e3d7fe44099fe3319549c0dd9f00b2aac7d47c733e689266c8719fcbe0",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E4V2-FCC-Report-WWAN-Part-27-Part1-9299749.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9299749"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "CmwLte.connected (LTE FDD RMC만)",
+      "SignalGenerator.configure_cw",
+      "EspecController.running (조건부)"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "NR/FR2/NTN/CA 및 CMX/UXM 전용 SDK·파형·connection recipe"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-cbrs",
+    "radio": "cellular",
+    "device": "fold8",
+    "test_items": [
+      "B48/n48 출력·방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9268870",
+        "pdf_pages": [
+          13,
+          14
+        ],
+        "sha256": "fb60b7711ae5bc470fcfca7d0f56f99e2d02c2d2b4895cdc702c1c131008f0a4",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E5V2-FCC-Report-WWAN-CBRS-B48-n48-Part1-9268870.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9268870"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "CmwLte.connected (LTE FDD RMC만)",
+      "SignalGenerator.configure_cw",
+      "EspecController.running (조건부)"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "NR/FR2/NTN/CA 및 CMX/UXM 전용 SDK·파형·connection recipe"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-mmw",
+    "radio": "cellular",
+    "device": "fold8",
+    "test_items": [
+      "Part30 mmWave 출력·방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9269056",
+        "pdf_pages": [
+          9,
+          15
+        ],
+        "sha256": "ee369d08ac684afee2b1ed5325189207c998d5603e2785d847aec6011a0785d8",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E7V3-FCC-Report-Part-30-mmW-Part1-9269056.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9269056"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "CmwLte.connected (LTE FDD RMC만)",
+      "SignalGenerator.configure_cw",
+      "EspecController.running (조건부)"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "NR/FR2/NTN/CA 및 CMX/UXM 전용 SDK·파형·connection recipe"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-scs",
+    "radio": "cellular",
+    "device": "fold8",
+    "test_items": [
+      "Part25 SCS"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9268953",
+        "pdf_pages": [
+          1
+        ],
+        "sha256": "864b44e87e149a136cee06646f1cebf589c59b8271ad1002faf4a6116171fab2",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E17V1-FCC-Report-WWAN-Part-25-SCS-9268953.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9268953"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "CmwLte.connected (LTE FDD RMC만)",
+      "SignalGenerator.configure_cw",
+      "EspecController.running (조건부)"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "NR/FR2/NTN/CA 및 CMX/UXM 전용 SDK·파형·connection recipe"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-wpt",
+    "radio": "wpt",
+    "device": "fold8",
+    "test_items": [
+      "무선전력전송 방사",
+      "AC 전도"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9269173",
+        "pdf_pages": [
+          7,
+          8
+        ],
+        "sha256": "fd8e7c62257176b0659123fdf92ead3c400c230e5ef41ac18c7d68ce2bdaccb1",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E15V1-FCC-Report-WPT-9269173.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9269173"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "EmiReceiver.read_level"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "펄스/루프/장측정·상대기·기술별 trigger/integration 설정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-emc",
+    "radio": "emc",
+    "device": "fold8",
+    "test_items": [
+      "Part15B 비의도성 방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9269163",
+        "pdf_pages": [
+          1
+        ],
+        "sha256": "1dc05f006928ab8cb08b43ab07e2974a318642b805868c6bd1ec58f489d245f2",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E1V2-FCC-Report-Part-15B-CXX-9269163.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9269163"
+      }
+    ],
+    "available_building_blocks": [
+      "EmiReceiver.read_level",
+      "SpectrumAnalyzer.acquire"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "LISN/line selector·CISPR filter·scan/최대값 탐색·QP 재측정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-dfs",
+    "radio": "wlan",
+    "device": "duo",
+    "test_items": [
+      "DFS"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9563437",
+        "pdf_pages": [
+          1
+        ],
+        "sha256": "12f292cf80e4c6f6452edc9c599dbd4c85c3f56744186a6cecd9aeaa64cb0d69",
+        "pdf_url": "https://fccid.io/BCG-E9188A/Test-Report/16064952-E16V3-FCC-IC-DFS-REPORT-9563437.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9563437"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-cbp",
+    "radio": "wlan",
+    "device": "duo",
+    "test_items": [
+      "Contention Based Protocol"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9564211",
+        "pdf_pages": [
+          1
+        ],
+        "sha256": "4d9506aaed2eb65ac263265200b810c676d14c90b64f91529e0eb2b9b8b6f722",
+        "pdf_url": "https://fccid.io/BCG-E9203A/Test-Report/16064952-E17V3R-FCC-IC-CBP-REPORT-9564211.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9564211"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "SignalGenerator.configure_cw"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "DFS/CBP/TPC 전용 파형·타이밍/동반기·측정 알고리즘; CW로 대체 불가"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-154",
+    "radio": "ieee802154",
+    "device": "duo",
+    "test_items": [
+      "802.15.4 RF"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9588704",
+        "pdf_pages": [
+          8
+        ],
+        "sha256": "67a0aa6882ca30dc7794cfa1309794d01fdc84c44c2f5968c3a82b68be6bf2a1",
+        "pdf_url": "https://fccid.io/BCG-E9203A/Test-Report/16064952-E5V2-FCC-IC-802-15-4-Report-Appendix-9588704.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9588704"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "EmiReceiver.read_level"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "펄스/루프/장측정·상대기·기술별 trigger/integration 설정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-154ab",
+    "radio": "ieee802154",
+    "device": "duo",
+    "test_items": [
+      "802.15.4ab UNII-3"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9563438",
+        "pdf_pages": [
+          9
+        ],
+        "sha256": "68f63e9c6da514be3147e30a118c9406af98be66c71f5827f4a0cec74b5b192c",
+        "pdf_url": "https://fccid.io/BCG-E9188A/Test-Report/16064952-E6V2-FCC-IC-802-15-4ab-UNII-3-Report-Appendix-9563438.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9563438"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "EmiReceiver.read_level"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "펄스/루프/장측정·상대기·기술별 trigger/integration 설정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-nb",
+    "radio": "narrowband",
+    "device": "duo",
+    "test_items": [
+      "Narrowband UNII-1/3"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9563439",
+        "pdf_pages": [
+          9
+        ],
+        "sha256": "1dbf198f7213c15a2b6b30aa4467bce7c32adbb2642dbb84acf06331688b71ce",
+        "pdf_url": "https://fccid.io/BCG-E9188A/Test-Report/16064952-E7V2-FCC-NB-UNII-1-UNII-3-Report-Appendix-9563439.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9563439"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "EmiReceiver.read_level"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "펄스/루프/장측정·상대기·기술별 trigger/integration 설정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-nb6",
+    "radio": "narrowband",
+    "device": "duo",
+    "test_items": [
+      "Narrowband UNII-5"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9564212",
+        "pdf_pages": [
+          9
+        ],
+        "sha256": "646738a3e250e30a533fd4356c76095dfb79a6c0201d7f54a9f161808ea2b5bc",
+        "pdf_url": "https://fccid.io/BCG-E9203A/Test-Report/16064952-E9V2R-FCC-IC-NB-UNII-5-Report-Final-Appendix-Part1-9564212.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9564212"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "EmiReceiver.read_level"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "펄스/루프/장측정·상대기·기술별 trigger/integration 설정"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-mss",
+    "radio": "cellular",
+    "device": "duo",
+    "test_items": [
+      "Part25 MSS L-band"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9590464",
+        "pdf_pages": [
+          9
+        ],
+        "sha256": "1b4f068e287f45a74c464dda60b0367534b8108b92e6a042462a083a124264a8",
+        "pdf_url": "https://fccid.io/BCG-E9203A/Test-Report/16064952-E24V2-Part-25-MSS-L-Band-Appendix-9590464.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9590464"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "CmwLte.connected (LTE FDD RMC만)",
+      "SignalGenerator.configure_cw",
+      "EspecController.running (조건부)"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "NR/FR2/NTN/CA 및 CMX/UXM 전용 SDK·파형·connection recipe"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-b53",
+    "radio": "cellular",
+    "device": "duo",
+    "test_items": [
+      "Part25 band53 2.4GHz"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9590465",
+        "pdf_pages": [
+          12
+        ],
+        "sha256": "ca9cb30e11a350116c64e3ec9eba6fc99a72ad3e82f2c88be2f5adcb206a7cbd",
+        "pdf_url": "https://fccid.io/BCG-E9203A/Test-Report/16064952-E25V2-Part-25-B53-2-4G-Report-9590465.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9590465"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "CmwLte.connected (LTE FDD RMC만)",
+      "SignalGenerator.configure_cw",
+      "EspecController.running (조건부)"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "NR/FR2/NTN/CA 및 CMX/UXM 전용 SDK·파형·connection recipe"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-sar-pd",
+    "radio": "exposure",
+    "device": "duo",
+    "test_items": [
+      "SAR",
+      "PD",
+      "동시송신 RF 노출"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9563684",
+        "pdf_pages": [
+          1
+        ],
+        "sha256": "5cd5ba44d161249e01e4d334eac6fbec3f7c23a4888fd3889ad622c3858c600e",
+        "pdf_url": "https://fccid.io/BCG-E9188A/RF-Exposure-Info/16064952-S1V3-FCC-Report-SAR-with-PD-1-of-2-9563684.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9563684"
+      }
+    ],
+    "available_building_blocks": [
+      "VectorNetworkAnalyzer.acquire_s11",
+      "PSeriesPowerMeter.read_power"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "SPEAG licensed SAR/PD/TAS SDK·robot/probe/DAE·실제 scan/results"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-tas",
+    "radio": "exposure",
+    "device": "duo",
+    "test_items": [
+      "시간평균 출력/SAR 알고리즘 검증"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9563707",
+        "pdf_pages": [
+          19,
+          22,
+          23,
+          62,
+          63
+        ],
+        "sha256": "6ab4f2729d69ba719f8cb0ed91c4b45ae63c8c544ef7b281f2dfbfb53af99c2c",
+        "pdf_url": "https://fccid.io/BCG-E9188A/RF-Exposure-Info/16064952-S5V2-FCC-TAS-Validation-Report-9563707.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9563707"
+      }
+    ],
+    "available_building_blocks": [
+      "VectorNetworkAnalyzer.acquire_s11",
+      "PSeriesPowerMeter.read_power"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "해당 시험법 계측기·옵션·SOP",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "SPEAG licensed SAR/PD/TAS SDK·robot/probe/DAE·실제 scan/results"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "fold8-ntn",
+    "radio": "cellular",
+    "device": "fold8",
+    "test_items": [
+      "NB-NTN 출력",
+      "점유대역폭",
+      "불요방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9269019",
+        "pdf_pages": [
+          8,
+          10,
+          14,
+          15
+        ],
+        "sha256": "4d94de57b56c89958e88ca012e9abe20e051b84da7faf1373d3242e6f7b9bdc1",
+        "pdf_url": "https://fccid.io/A3LSMF971U/Test-Report/S-4792147575-E6V2-FCC-Report-WWAN-Part-25-NTN-9269019.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9269019"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "CmwLte.connected (LTE FDD RMC만)",
+      "SignalGenerator.configure_cw",
+      "EspecController.running (조건부)"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "subcarrier offset·SCS 명령 인코딩",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "NR/FR2/NTN/CA 및 CMX/UXM 전용 SDK·파형·connection recipe"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  },
+  {
+    "group_id": "duo-n77",
+    "radio": "cellular",
+    "device": "duo",
+    "test_items": [
+      "NR n77 출력",
+      "점유대역폭",
+      "대역경계",
+      "불요방사"
+    ],
+    "report_evidence": [
+      {
+        "exhibit_id": "9563482",
+        "pdf_pages": [
+          14,
+          16,
+          21
+        ],
+        "sha256": "1396489ceb5b1892cdef9af94da442acb8356f9e2d6d4dba4079ecbade61f5b3",
+        "pdf_url": "https://fccid.io/BCG-E9188A/Test-Report/16064952-E31V2-FCC-Part-27-96-B77-Report-Part1-9563482.pdf",
+        "official_url": "https://apps.fcc.gov/eas/GetApplicationAttachment.html?id=9563482"
+      }
+    ],
+    "available_building_blocks": [
+      "SpectrumAnalyzer.acquire",
+      "PSeriesPowerMeter.read_power",
+      "UsbPowerSensor.read_power",
+      "CmwLte.connected (LTE FDD RMC만)",
+      "SignalGenerator.configure_cw",
+      "EspecController.running (조건부)"
+    ],
+    "missing": [
+      "모델·빌드가 일치하는 제조사 시험 앱/프로토콜",
+      "설정 인코딩·시작·종료·응답",
+      "실측 ON/OFF 검증",
+      "NR 계측기 드라이버·SCS 확인",
+      "모델/빌드별 DUT 시험모드·숫자 인수·TX ON/OFF",
+      "현장 경로/안테나/손실/교정과 시험별 설정·후처리·판정",
+      "기구 위치/회전/높이 제어와 독립 종료 검증",
+      "NR/FR2/NTN/CA 및 CMX/UXM 전용 SDK·파형·connection recipe"
+    ],
+    "end_to_end_ready": false,
+    "hardware_validated": false,
+    "note": "Building-block mapping only; does not assign a particular report asset to a site address."
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "driver": "SignalGenerator",
+  "parameters": {
+    "model": "N5182B",
+    "max_frequency_hz": 0,
+    "max_power_dbm": null
+  },
+  "transport": {
+    "kind": "visa",
+    "resource": "REPLACE_WITH_INSTALLED_VISA_RESOURCE",
+    "timeout": 30
+  },
+  "notes": "Template only. Confirm installed model/controller, limits, options, address and termination before use."
+}

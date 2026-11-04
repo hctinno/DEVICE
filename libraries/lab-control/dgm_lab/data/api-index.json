@@ -1,0 +1,644 @@
+[
+  {
+    "driver": "SpectrumAnalyzer",
+    "file": "dgm_lab/analyzers.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model, max_frequency_hz)",
+        "line": 57,
+        "command_fragments": []
+      },
+      {
+        "name": "acquire",
+        "signature": "(self, config: dgm_lab.analyzers.Sweep)",
+        "line": 64,
+        "command_fragments": [
+          "ABOR",
+          "INIT:CONT OFF",
+          "FORM:DATA ASC",
+          "f'FREQ:STAR {fmt(config.start_hz)}'",
+          "f'FREQ:STOP {fmt(config.stop_hz)}'",
+          "BAND:RES:AUTO OFF",
+          "f'BAND:RES {fmt(config.rbw_hz)}'",
+          "BAND:VID:AUTO OFF",
+          "f'BAND:VID {fmt(config.vbw_hz)}'",
+          "f'{('POW:ATT' if key else 'INP:ATT')} {fmt(config.attenuation_db)}'",
+          "f'DISP:WIND:TRAC:Y:RLEV {fmt(config.reference_dbm)}'",
+          "f'SWE:POIN {config.points}'",
+          "SWE:TIME:AUTO OFF",
+          "f'SWE:TIME {fmt(config.sweep_seconds)}'",
+          "f'DET {('AVER' if key and config.detector == 'RMS' else config.detector)}'",
+          "TRIG:SOUR IMM",
+          "INST:SEL SA",
+          "INST:SEL SAN",
+          "CALC:UNIT:POW DBM",
+          "UNIT:POW DBM",
+          "FREQ:STAR ",
+          "FREQ:STOP ",
+          "BAND:RES ",
+          "BAND:VID ",
+          "POW:ATT:AUTO OFF",
+          "INP:ATT:AUTO OFF",
+          "DISP:WIND:TRAC:Y:RLEV ",
+          "SWE:POIN ",
+          "SWE:TIME ",
+          "DISP:WIND:TRAC1:MODE WRIT",
+          "CONF:SAN",
+          "TRAC1:UPD ON",
+          "TRAC1:DISP ON",
+          "DISP:WIND:TRAC:X:SPAC LIN",
+          "CALC:UNIT:POW?",
+          "UNIT:POW?",
+          "INIT:IMM",
+          "TRAC:DATA? TRACE1",
+          "TRAC1:MODE WRIT",
+          "TRAC1:TYPE WRIT",
+          "AVER:TYPE RMS",
+          "FREQ:STAR?",
+          "FREQ:STOP?",
+          "BAND:RES?",
+          "BAND:VID?",
+          "SWE:POIN?",
+          "SWE:TIME?",
+          "POW:ATT",
+          "INP:ATT",
+          "DISP:WIND:TRAC:Y:RLEV?",
+          "POW:ATT?",
+          "INP:ATT?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 120,
+        "command_fragments": [
+          "ABOR",
+          "INIT:CONT OFF"
+        ]
+      }
+    ]
+  },
+  {
+    "driver": "EmiReceiver",
+    "file": "dgm_lab/analyzers.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model, max_frequency_hz)",
+        "line": 138,
+        "command_fragments": []
+      },
+      {
+        "name": "read_level",
+        "signature": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
+        "line": 145,
+        "command_fragments": [
+          "INIT1:IMM",
+          "ABOR",
+          "INST:SEL REC",
+          "INIT1:CONT OFF",
+          "CALC:UNIT:POW DBUV",
+          "f'FREQ:CENT {fmt(frequency_hz)}'",
+          "BAND:AUTO OFF",
+          "f'BAND {fmt(rbw_hz)}'",
+          "INP:ATT:AUTO OFF",
+          "f'DET:REC {detector}'",
+          "f'SWE:TIME {fmt(dwell_seconds)}'",
+          "FREQ:CENT ",
+          "INP:ATT ",
+          "DET:REC ",
+          "SWE:TIME ",
+          "FREQ:CENT?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 166,
+        "command_fragments": [
+          "ABOR",
+          "INIT1:CONT OFF"
+        ]
+      }
+    ]
+  },
+  {
+    "driver": "CmwLte",
+    "file": "dgm_lab/callbox.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, site_profile_confirmed=False)",
+        "line": 10,
+        "command_fragments": []
+      },
+      {
+        "name": "configure",
+        "signature": "(self, config)",
+        "line": 18,
+        "command_fragments": []
+      },
+      {
+        "name": "_wait",
+        "signature": "(self, query, expected, *, timeout, cancelled=None)",
+        "line": 31,
+        "command_fragments": []
+      },
+      {
+        "name": "start",
+        "signature": "(self, *, timeout=60, cancelled=None)",
+        "line": 44,
+        "command_fragments": []
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 58,
+        "command_fragments": []
+      },
+      {
+        "name": "connected",
+        "signature": "(self, *, timeout=60, cancelled=None)",
+        "line": 78,
+        "command_fragments": []
+      }
+    ]
+  },
+  {
+    "driver": "Thermotron8800",
+    "file": "dgm_lab/chambers.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, channel, minimum, maximum, acknowledgement, installed_controller_confirmed=False)",
+        "line": 8,
+        "command_fragments": []
+      },
+      {
+        "name": "identify",
+        "signature": "(self)",
+        "line": 21,
+        "command_fragments": [
+          "IDEN?"
+        ]
+      },
+      {
+        "name": "_ready",
+        "signature": "(self)",
+        "line": 29,
+        "command_fragments": []
+      },
+      {
+        "name": "_command",
+        "signature": "(self, command)",
+        "line": 33,
+        "command_fragments": []
+      },
+      {
+        "name": "_errors",
+        "signature": "(self)",
+        "line": 42,
+        "command_fragments": [
+          "IERR?"
+        ]
+      },
+      {
+        "name": "start",
+        "signature": "(self)",
+        "line": 57,
+        "command_fragments": [
+          "RUNM",
+          "STAT?"
+        ]
+      },
+      {
+        "name": "setpoint",
+        "signature": "(self, value)",
+        "line": 67,
+        "command_fragments": [
+          "f'SETP{self.channel},{fmt(value)}'",
+          "STAT?",
+          "f'SETP{self.channel}?'"
+        ]
+      },
+      {
+        "name": "read_process",
+        "signature": "(self)",
+        "line": 77,
+        "command_fragments": [
+          "f'PVAR{self.channel}?'"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 81,
+        "command_fragments": [
+          "STOP",
+          "STAT?"
+        ]
+      },
+      {
+        "name": "running",
+        "signature": "(self)",
+        "line": 90,
+        "command_fragments": []
+      }
+    ]
+  },
+  {
+    "driver": "EspecController",
+    "file": "dgm_lab/chambers.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, expected_rom, minimum_c, maximum_c, installed_controller_confirmed=False)",
+        "line": 102,
+        "command_fragments": []
+      },
+      {
+        "name": "_exchange",
+        "signature": "(self, command)",
+        "line": 113,
+        "command_fragments": []
+      },
+      {
+        "name": "identify",
+        "signature": "(self)",
+        "line": 119,
+        "command_fragments": [
+          "ROM?"
+        ]
+      },
+      {
+        "name": "_ready",
+        "signature": "(self)",
+        "line": 128,
+        "command_fragments": []
+      },
+      {
+        "name": "temperature",
+        "signature": "(self)",
+        "line": 132,
+        "command_fragments": [
+          "TEMP?"
+        ]
+      },
+      {
+        "name": "configure",
+        "signature": "(self, *, temperature_c)",
+        "line": 140,
+        "command_fragments": []
+      },
+      {
+        "name": "start",
+        "signature": "(self)",
+        "line": 152,
+        "command_fragments": [
+          "MODE?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 161,
+        "command_fragments": [
+          "MODE?"
+        ]
+      },
+      {
+        "name": "running",
+        "signature": "(self)",
+        "line": 168,
+        "command_fragments": []
+      }
+    ]
+  },
+  {
+    "driver": "Hp437B",
+    "file": "dgm_lab/legacy.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport)",
+        "line": 12,
+        "command_fragments": []
+      },
+      {
+        "name": "identify",
+        "signature": "(self)",
+        "line": 17,
+        "command_fragments": [
+          "*IDN?"
+        ]
+      },
+      {
+        "name": "_ready",
+        "signature": "(self)",
+        "line": 26,
+        "command_fragments": []
+      },
+      {
+        "name": "_error",
+        "signature": "(self)",
+        "line": 30,
+        "command_fragments": [
+          "ERR?"
+        ]
+      },
+      {
+        "name": "configure",
+        "signature": "(self, *, frequency_hz, sensor_table)",
+        "line": 36,
+        "command_fragments": [
+          "TR0"
+        ]
+      },
+      {
+        "name": "read_power",
+        "signature": "(self)",
+        "line": 49,
+        "command_fragments": [
+          "TR2",
+          "SM"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 65,
+        "command_fragments": [
+          "TR0"
+        ]
+      }
+    ]
+  },
+  {
+    "driver": "PSeriesPowerMeter",
+    "file": "dgm_lab/meters.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model)",
+        "line": 9,
+        "command_fragments": []
+      },
+      {
+        "name": "configure_average",
+        "signature": "(self, *, frequency_hz, channel=1)",
+        "line": 16,
+        "command_fragments": [
+          "f'INIT{channel}:CONT OFF'",
+          "f'CONF1:POW:AC DEF,DEF,(@{channel})'",
+          "f'SENS{channel}:FREQ {fmt(frequency_hz)}'",
+          "UNIT1:POW DBM",
+          "f'TRIG{channel}:SOUR IMM'",
+          "INIT",
+          "CONF1:POW:AC DEF,DEF,(@",
+          "f'SENS{channel}:FREQ?'",
+          "UNIT1:POW?"
+        ]
+      },
+      {
+        "name": "read_power",
+        "signature": "(self)",
+        "line": 32,
+        "command_fragments": [
+          "READ1?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 37,
+        "command_fragments": [
+          "ABOR",
+          "f'INIT{channel}:CONT OFF'",
+          "INIT"
+        ]
+      }
+    ]
+  },
+  {
+    "driver": "UsbPowerSensor",
+    "file": "dgm_lab/meters.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model)",
+        "line": 50,
+        "command_fragments": []
+      },
+      {
+        "name": "configure_average",
+        "signature": "(self, *, frequency_hz)",
+        "line": 57,
+        "command_fragments": [
+          "ABOR",
+          "SENS:DET:FUNC AVER",
+          "INIT:CONT OFF",
+          "UNIT:POW DBM",
+          "SENS:FUNC \"POW:AVG\"",
+          "CALC:FEED \"POW:AVER\"",
+          "UNIT:POW W",
+          "FORM:DATA ASC",
+          "BUFF:STAT OFF",
+          "TRIG:COUN 1",
+          "f'SENS:FREQ {fmt(frequency_hz)}'",
+          "TRIG:SOUR IMM",
+          "SENS:FREQ?",
+          "SENS:FREQ ",
+          "UNIT:POW?"
+        ]
+      },
+      {
+        "name": "read_power",
+        "signature": "(self)",
+        "line": 74,
+        "command_fragments": [
+          "INIT",
+          "FETC?",
+          "READ?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 84,
+        "command_fragments": [
+          "ABOR",
+          "INIT:CONT OFF"
+        ]
+      }
+    ]
+  },
+  {
+    "driver": "SignalGenerator",
+    "file": "dgm_lab/sources.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model, max_frequency_hz, max_power_dbm)",
+        "line": 11,
+        "command_fragments": []
+      },
+      {
+        "name": "configure_cw",
+        "signature": "(self, *, frequency_hz, power_dbm)",
+        "line": 20,
+        "command_fragments": [
+          "OUTP:MOD OFF",
+          "SOUR:MOD:ALL:STAT OFF",
+          "SOUR:FREQ:MODE CW",
+          "SOUR:POW:MODE FIX",
+          "f'SOUR:FREQ:CW {fmt(frequency_hz)}'",
+          "f'SOUR:POW {fmt(power_dbm)}DBM'",
+          "SOUR:FREQ:CW ",
+          "SOUR:POW ",
+          "SOUR:FREQ:CW?",
+          "SOUR:POW?"
+        ]
+      },
+      {
+        "name": "start",
+        "signature": "(self)",
+        "line": 36,
+        "command_fragments": []
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 45,
+        "command_fragments": []
+      },
+      {
+        "name": "emitting",
+        "signature": "(self)",
+        "line": 54,
+        "command_fragments": []
+      }
+    ]
+  },
+  {
+    "driver": "PowerSupply",
+    "file": "dgm_lab/sources.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model, max_voltage, max_current)",
+        "line": 61,
+        "command_fragments": []
+      },
+      {
+        "name": "configure",
+        "signature": "(self, *, voltage, current_limit, range_name=None)",
+        "line": 70,
+        "command_fragments": [
+          "f'VOLT:RANG {range_name}'",
+          "VOLT:RANG ",
+          "f'CURR {fmt(current_limit)}'",
+          "f'VOLT {fmt(voltage)}'"
+        ]
+      },
+      {
+        "name": "start",
+        "signature": "(self)",
+        "line": 92,
+        "command_fragments": []
+      },
+      {
+        "name": "_wait_output",
+        "signature": "(self, expected)",
+        "line": 100,
+        "command_fragments": []
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 110,
+        "command_fragments": []
+      },
+      {
+        "name": "read_voltage",
+        "signature": "(self)",
+        "line": 118,
+        "command_fragments": [
+          "MEAS:VOLT?"
+        ]
+      },
+      {
+        "name": "read_current",
+        "signature": "(self)",
+        "line": 121,
+        "command_fragments": [
+          "MEAS:CURR?"
+        ]
+      },
+      {
+        "name": "powering",
+        "signature": "(self)",
+        "line": 124,
+        "command_fragments": []
+      }
+    ]
+  },
+  {
+    "driver": "VectorNetworkAnalyzer",
+    "file": "dgm_lab/vna.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model, max_frequency_hz, max_power_dbm)",
+        "line": 19,
+        "command_fragments": []
+      },
+      {
+        "name": "acquire_s11",
+        "signature": "(self, *, start_hz, stop_hz, points, if_bandwidth_hz, power_dbm, require_correction=True)",
+        "line": 27,
+        "command_fragments": [
+          "CALC1:PAR1:DEF S11",
+          "CALC1:PAR1:SEL",
+          "CALC1:PAR:SDEF 'DGM_S11','S11'",
+          "CALC1:PAR:SEL 'DGM_S11'",
+          "SENS1:FREQ:STAR?",
+          "SENS1:FREQ:STOP?",
+          "SENS1:SWE:POIN?",
+          "SOUR1:POW?",
+          "SENS1:CORR:STAT?",
+          "TRIG:SING",
+          "INIT1:IMM",
+          "CALC1:DATA:SDAT?",
+          "CALC1:DATA? SDAT",
+          "FORM:DATA ASC",
+          "SENS1:SWE:TYPE LIN",
+          "f'SENS1:FREQ:STAR {fmt(start_hz)}'",
+          "f'SENS1:FREQ:STOP {fmt(stop_hz)}'",
+          "f'SENS1:SWE:POIN {points}'",
+          "f'SENS1:BAND {fmt(if_bandwidth_hz)}'",
+          "f'SOUR1:POW {fmt(power_dbm)}'",
+          "SENS1:FREQ:STAR ",
+          "SENS1:FREQ:STOP ",
+          "SENS1:SWE:POIN ",
+          "SENS1:BAND ",
+          "SOUR1:POW ",
+          "TRIG:SOUR BUS",
+          "TRIG1:SEQ:SOUR IMM",
+          "INIT1:CONT ON",
+          "INIT1:CONT OFF",
+          "SENS1:FREQ:DATA?",
+          "CALC1:DATA:STIM?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 74,
+        "command_fragments": [
+          "INIT1:CONT OFF"
+        ]
+      }
+    ]
+  }
+]

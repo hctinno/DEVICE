@@ -1,0 +1,14 @@
+{
+  "driver": "PowerSupply",
+  "parameters": {
+    "model": "E3640A",
+    "max_voltage": 0,
+    "max_current": 0
+  },
+  "transport": {
+    "kind": "visa",
+    "resource": "REPLACE_WITH_INSTALLED_VISA_RESOURCE",
+    "timeout": 30
+  },
+  "notes": "Template only. Confirm installed model/controller, limits, options, address and termination before use."
+}

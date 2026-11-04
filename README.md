@@ -5,7 +5,19 @@ VM TEST
 
 기존 RF·EMC 시험소를 무인화하기 위한 설계와 클라우드 개발 인계 자료입니다.
 
-규격·시험방법·장비·시료·실측·로우데이터·판정·성적서·인증 업무와 물리 자동화를 전체 목표로 합니다. 전체 시스템은 설계 단계이며, 2026-11-04 삼성 DUT RF 명령 조사와 Python 제어 라이브러리를 추가했습니다. AI 실행, 실장비 연결과 현장 검증은 미착수입니다.
+규격·시험방법·장비·시료·실측·로우데이터·판정·성적서·인증 업무와 물리 자동화를 전체 목표로 합니다. 전체 시스템은 설계 단계이며, 2026-11-04 삼성 DUT RF 명령 조사와 Python 설비 제어 라이브러리를 추가했습니다. AI 실행, 실장비 연결과 현장 검증은 미착수입니다.
+
+## 설비 제어 라이브러리
+
+[DGM LabControl 설치·실행](libraries/lab-control/README.md), [장비 지원표](libraries/lab-control/docs/EQUIPMENT_COVERAGE.md), [숫자 인수·시작·종료 명령](libraries/lab-control/docs/OPERATIONS.md)을 제공합니다. 확보 성적서 장비표 1,332행을 234개 제조사/모델 그룹으로 정리했습니다. 27개 모델의 명시된 기능을 구현하고 4개를 컨트롤러·앱 확인 조건부로 연결했습니다. 수동 부품·지원 장비·미구현 전용 SDK 항목도 별도 표시합니다.
+
+TCP/VISA/serial, 분석기·수신기·RF 발생기·전원·전력계·VNA·챔버·CMW LTE executor와 기존 Samsung 제어 bridge가 포함됩니다. 최신 Fold8/iPhone Duo 직접 TX와 전체 FCC 시험은 아직 실행 불가입니다. 실장비 검증은 0건입니다.
+
+```sh
+python -X utf8 scripts/check_lab_control.py
+```
+
+[공식 출처](libraries/lab-control/docs/SOURCES.md), [재현 검증 결과](libraries/lab-control/docs/validation.json), [추가 확보할 SDK·현장 정보](libraries/lab-control/docs/VENDOR_GAPS.md)를 확인합니다.
 
 ## 삼성 스마트폰 RF 조사·라이브러리
 
@@ -35,6 +47,6 @@ Windows에서는 설치 환경에 따라 `python`을 사용합니다. 외부 Pyt
 
 ## 다음 작업
 
-기존 장비리스트가 제공되면 원본을 보존하고 자산 대장, 지원 인터페이스, 누락정보를 정리합니다. 아직 제공되지 않은 모델·옵션·실험실 상태를 가정하지 않습니다.
+성적서 장비 목록은 정리했습니다. 사용자가 실제 보유 장비·옵션·통신 주소·RF 경로·교정값을 제공하면 해당 조합을 commissioning합니다. 성적서 장비와 현장 보유 자산이 같다고 가정하지 않습니다.
 
 검증 스크립트는 문서 무결성만 검사합니다. 이 저장소의 문서나 스크립트만으로 시험소 무인 운전 또는 공식 성적서 발행이 구현되었다고 판단하지 않습니다.

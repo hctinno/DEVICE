@@ -1,0 +1,222 @@
+[
+  {
+    "id": "rs-esu",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESU_OperatingManual_en_04.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "cbb0cb6bcb410951e4d40669c4e37a494c41f96a30ce900d2193fdc0e2873e89",
+    "pages": 870
+  },
+  {
+    "id": "rs-esw",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6298_01/ESW_UserManual_en_18.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "76359d49da27d04e6c79ff81bc42806a35493bdad1584beb006c8e39da25f146",
+    "pages": 837
+  },
+  {
+    "id": "rs-esci",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESCI_OperatingManual_en_03.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "5f7d4ed8611ff2d694b0c8b628276ca7373babae2f723461bbc566486f3d348c",
+    "pages": 804
+  },
+  {
+    "id": "rs-fsw",
+    "landing_url": "https://www.rohde-schwarz.com/in/manual/fsw-user-manual_78701-29088.html",
+    "kind": "manufacturer_manual",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9411_01/FSW_UserManual_en_57.pdf",
+    "status": "acquired",
+    "sha256": "d86104510facb8fbc6ccd029b12ab5f0499731cee48ba34c61335f2869bca283",
+    "pages": 1632
+  },
+  {
+    "id": "keysight-power",
+    "url": "https://www.keysight.com/us/en/assets/9018-05085/programming-guides/9018-05085.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/programming-guides/9018-05085.pdf",
+    "status": "acquired",
+    "sha256": "c66464fa16689b8af26ad6fc9922d41334f11971bb012ded3eee8e620019e12f",
+    "pages": 757
+  },
+  {
+    "id": "keysight-xsa",
+    "url": "https://www.keysight.com/us/en/assets/9018-05631/user-manuals/9018-05631.pdf",
+    "kind": "manufacturer_manual",
+    "status": "failed",
+    "error": "Not a PDF"
+  },
+  {
+    "id": "kikusui-pwr",
+    "url": "https://www.kikusui.cn/resources/001/pdf/pwr-01_interface_manual.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "4edf1868749c4bd1803a3b41ed94db67660d7b26886793beb88da20f77b73d20",
+    "pages": 240
+  },
+  {
+    "id": "boonton-rtp",
+    "url": "https://boonton.com/Portals/0/Products/Real%20Time%20Power%20Sensors/RTP5000/RTP%20Series%20API%20Programming%20Reference%20June%202019.pdf",
+    "kind": "manufacturer_manual",
+    "status": "failed",
+    "error": "403 Client Error: Forbidden for url: https://maurymw.com/boonton/"
+  },
+  {
+    "id": "thermotron-8800",
+    "url": "https://thermotron.com/wp-content/uploads/2020/01/8800-Display-Module-Instruction-Manual-Revision-21-generic.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "af82c3e23219a4645b1f792380bda249087e23364f53f8f1d617d478b3ebf8b5",
+    "pages": 160
+  },
+  {
+    "id": "speag-dasy8",
+    "url": "https://speag.swiss/assets/downloads/products/dasy/linked_download/RD/V1-0/DASY8_RD_20230302.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "902dc515b7d3bc50ab1297a9dddc62a12c91419a7b9411fc0125090218864c6c",
+    "pages": 124
+  },
+  {
+    "id": "keysight-xsa-a",
+    "url": "https://www.keysight.com/us/en/assets/9018-06099/user-manuals/9018-06099.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/user-manuals/9018-06099.pdf",
+    "status": "acquired",
+    "sha256": "2429ceb7a23fd09391c414790764d0e08fe567d6181107fe975ce5b866369401",
+    "pages": 3307
+  },
+  {
+    "id": "keysight-xsa-b",
+    "url": "https://www.keysight.com/us/en/assets/9018-04666/user-manuals/9018-04666.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/user-manuals/9018-04666.pdf",
+    "status": "acquired",
+    "sha256": "e5eabc2ebbabdb440ad66cd8134192ae8f6912a2c50d3ba393e4f556fa2952c2",
+    "pages": 3048
+  },
+  {
+    "id": "keysight-mxg-b",
+    "url": "https://www.keysight.com/us/en/assets/9018-03690/programming-guides/9018-03690.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/programming-guides/9018-03690.pdf",
+    "status": "acquired",
+    "sha256": "0ad20dfa4fbb3694104a48436926beb9cdc63283555349f62365b1adbb7b5e1b",
+    "pages": 581
+  },
+  {
+    "id": "keysight-e3640",
+    "url": "https://literature.cdn.keysight.com/litweb/pdf/E3640-90001.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/user-manuals/9018-01165.pdf",
+    "status": "acquired",
+    "sha256": "9238314e5cc64b8734423eab60d9994660e7e50d6dd52d635c33704532e007ad",
+    "pages": 237
+  },
+  {
+    "id": "rs-smb100a",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/SMB100A_OperatingManual_en_23.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "e76aaa40784d8fd76be15b63aa348b172094bef64d1832189074b49d22d732f1",
+    "pages": 532
+  },
+  {
+    "id": "rs-smw200a",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1175_6632_01/SMW200A_UserManual_en_43.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "662e6972b72eed7549e7311bd58f60b2ac7d05d8302558fa2aedc39becf4c375",
+    "pages": 1478
+  },
+  {
+    "id": "rs-smb100b",
+    "landing_url": "https://www.rohde-schwarz.com/ca/manual/rs-smb100b-user-manual_78701-538432.html",
+    "kind": "manufacturer_manual",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1178_3711_01/SMB100B_UserManual_en_11.pdf",
+    "status": "acquired",
+    "sha256": "06ba4979cacb179b74f88e405aabd034a7369a54b0abd0ae964c7e9d51c7a702",
+    "pages": 690
+  },
+  {
+    "id": "rs-esr",
+    "landing_url": "https://www.rohde-schwarz.com/es/manual/manual-de-usuario-de-rs-esr_78701-28851.html",
+    "kind": "manufacturer_manual",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESR_UserManual_en_13.pdf",
+    "status": "acquired",
+    "sha256": "4f648da036a0e541619fd4a5c589b325dad27f3617e9579b3630bbd26be46c69",
+    "pages": 1081
+  },
+  {
+    "id": "rs-znle",
+    "landing_url": "https://www.rohde-schwarz.com/tw/manual/rs-znl-znle-user-manual_78701-481538.html",
+    "kind": "manufacturer_manual",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1178_5966_01/ZNL_ZNLE_UserManual_en_23.pdf",
+    "status": "acquired",
+    "sha256": "633a25936835bfea889eb977a8fc06bcc65238925c788a85d23068e2d59515eb",
+    "pages": 1205
+  },
+  {
+    "id": "keysight-u2000",
+    "url": "https://www.keysight.com/us/en/assets/9018-01701/programming-guides/9018-01701.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/programming-guides/9018-01701.pdf",
+    "status": "acquired",
+    "sha256": "03819c1c5f018319725bb1648ce9f742d4bdf8103cceba620df52647e6d8977c",
+    "pages": 399
+  },
+  {
+    "id": "cmt-rvna",
+    "url": "https://coppermountaintech.com/wp-content/uploads/2021/09/RVNA-and-RNVNA-SCPI-Programming-Manual-1.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "55babdca9ae04e68fc84261a17b1c412f8d11ee0fa6e0ea6ecc9f7eccea15e43",
+    "pages": 287
+  },
+  {
+    "id": "rs-nrps",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_5079_01/NRPxSN_UserManual_en_26.pdf",
+    "kind": "manufacturer_manual",
+    "landing_url": "https://www.rohde-schwarz.com/uk/manual/rs-nrpxs-n-power-sensors-user-manual_78701-99657.html",
+    "status": "acquired",
+    "sha256": "af0d11dd5444a6b63feb43c95be14fd2357278db33fde5826e4cb224151e1d77",
+    "pages": 195
+  },
+  {
+    "id": "keysight-psa",
+    "url": "https://www.keysight.com/us/en/assets/9018-01328/user-manuals/9018-01328.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/user-manuals/9018-01328.pdf",
+    "status": "acquired",
+    "sha256": "c1407206c2db34d680e544fec97a7e9aee630887758d39950e545ed73da341e2",
+    "pages": 430
+  },
+  {
+    "id": "keysight-mxg-a",
+    "url": "https://www.keysight.com/us/en/assets/9018-06044/reference-guides/9018-06044.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/reference-guides/9018-06044.pdf",
+    "status": "acquired",
+    "sha256": "8345dc1e074cdeb6d8b5fe012731f4e0eb9424ade0d7240eae54311e2f94a608",
+    "pages": 760
+  },
+  {
+    "id": "hp-437b",
+    "url": "https://www.keysight.com/us/en/assets/9018-40507/user-manuals/9018-40507.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/user-manuals/9018-40507.pdf",
+    "status": "acquired",
+    "sha256": "d9ec00559e5c98cc7bc84d60e0379205fd5fc32a53d2f3dc90dd3563235d1bac",
+    "pages": 157
+  },
+  {
+    "id": "rs-nrpa",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1177_6017_01/NRPxAN_UserManual_en_18.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "d7e8407c660b97b14e7e29fddcdc68b93661bcdc8234add9ca88a5e18335c4d8",
+    "pages": 178
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "extracted_rows": 1332,
+  "classified_rows": 1330,
+  "review_rows": 2,
+  "model_groups": 234,
+  "statuses": {
+    "passive_or_fixture": 119,
+    "support_or_software": 21,
+    "pending_protocol": 7,
+    "vendor_required": 47,
+    "conditional": 4,
+    "review_required": 2,
+    "implemented_uncommissioned": 27,
+    "host_component": 7
+  },
+  "physical_equipment_tests": 0,
+  "extraction_scope": "Manufacturer/Model text-table candidates; not an exhaustive OCR audit"
+}

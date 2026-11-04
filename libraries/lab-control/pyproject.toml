@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dgm-lab-control"
+version = "0.1.0"
+description = "Source-scoped FCC laboratory instrument control"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+visa = ["pyvisa>=1.14,<2"]
+serial = ["pyserial>=3.5,<4"]
+research = ["requests>=2.31", "pymupdf>=1.24"]
+
+[project.scripts]
+dgm-lab = "dgm_lab.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["dgm_lab*"]
+
+[tool.setuptools.package-data]
+dgm_lab = ["data/*.json"]
