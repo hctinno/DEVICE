@@ -10,6 +10,10 @@
 
 ## 현재 상태
 
+2026-11-04 chipset WLAN 추가: Samsung RF v0.4.0의 [칩셋 터미널 제어](libraries/samsung-rf/docs/CHIPSET_TERMINAL_CONTROL.md)와 [숫자표](libraries/samsung-rf/docs/CHIPSET_COMMANDS.md)를 먼저 확인합니다. 공식 Qualcomm 2026 payload의 SHA-512 대조, ARM64 glibc runtime 확인, 94개 헤더 enum 사실과 `wl` 포함 29개 명령 레코드를 보존했습니다. `python -m dgm_rf chipset-demo`는 오프라인입니다. HE160=16/EHT20=30은 pinned header 사실이며 `--txMode` CLI mapping과 최신 Android TX 시작·종료는 미확인입니다. `wl` TX/RX packet engine 생성과 cleanup, 6GHz/160 driver-encoding 후보, 조회용 ADB argv 11개를 제공합니다. 실폰은 연결하지 않았습니다. vendor binary/header/PDF는 Git에 포함하지 않습니다.
+
+v0.4.0 검수: Samsung RF 전체 58 단위검사(신규 chipset 12개 포함), 7 CLI, wheel import/data 검사 통과. 칩셋 source 5개 로컬 hash 대조. 아래 46개는 이전 v0.3.0 검수 수치입니다. 설비 드라이버는 이번 변경에서 수정하지 않았으며 기존 99검사를 다시 실행한 결과로 세지 않습니다.
+
 설비 자동화 개발은 **[AGENT_START_HERE](libraries/lab-control/AGENT_START_HERE.md)**부터 시작합니다. v0.3.0: OdaEx/CMU200 CW를 추가해 16개 driver class, capability JSON, 통신 없는 profile 검사, 설치 패키지의 성공/실패 모의 실행을 제공합니다. 제조사 문서와 공개 저장소 6개의 commit·라이선스·재사용 결정을 연결했습니다. CMU200 CW는 셀룰러 TX가 아니며 MT8000A chapter 후보는 실행 드라이버가 아닙니다.
 
 최신 검수: `python -X utf8 scripts/check_lab_control.py` 99검사, localhost TCP 7건, wheel 2개 격리 설치·CLI/help/모의 실행 8건 통과. 제조사 PDF 39개·HCT PDF 16개 local SHA-256 대조. 삼성 RF 기존 검수는 `python -X utf8 scripts/check_samsung_rf.py` 46검사이며 이번 설비 확장에서 DUT 코드는 변경하지 않았습니다. 아래 v0.1.0/v0.2.0 수치는 이전 상태이며 HCT 2026 목록과 합산하지 않습니다. 현재 HCT 모델 그룹은 22개 한정 기능 구현·미commissioning, 3개 조건부, 7개 컨트롤러 구성품입니다. 실장비 검증은 여전히 0건입니다.

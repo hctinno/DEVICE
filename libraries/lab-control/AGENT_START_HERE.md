@@ -22,6 +22,8 @@ python -m dgm_lab demo --output-dir demo-failure-001 --inject-failure
 
 ## 개발자가 사용할 계약
 
+스마트폰 칩셋 경로는 [Qualcomm·Broadcom/Infineon WLAN 터미널 조사](../samsung-rf/docs/CHIPSET_TERMINAL_CONTROL.md)와 `dgm_rf.chipset`를 확인합니다. `chipset-demo`는 문법/헤더 기반 오프라인 후보이며 실폰 executor가 아닙니다. 기존 Samsung AT bridge에 `myftm`/`wl` 문자열을 보내지 않습니다.
+
 | 찾아야 할 내용 | 저장소 경로 / API |
 | --- | --- |
 | HCT 2026 보고서의 모델·장비 역할·지원 범위 | [150그룹 원문 추적 목록](docs/HCT_2026_EQUIPMENT.md), [행별 출처](research/hct-equipment-rows.json) |

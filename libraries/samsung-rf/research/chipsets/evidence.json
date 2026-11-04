@@ -1,0 +1,617 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-11-04",
+  "sources": {
+    "qualcomm-myftm": {
+      "url": "https://qartifactory-edge.qualcomm.com/artifactory/qsc_releases/software/chip/component/wlan-service.qclinux.0.0/260825/prebuilt_resolute/ath6kl-utils_1.0.0_arm64.tar.gz",
+      "file": "ath6kl-utils_1.0.0_arm64.tar.gz",
+      "sha512": "386332a7e794167f73dc85c62a211b7997c9b3ee0e7ee431fc5ab4c589b74ad5c5ee4d94413ecef1ebb4d84c68a1a116cbcbc63657f404280a65e937ecb50070",
+      "pin": "https://github.com/qualcomm-linux/pkg-rpm-myftm/blob/57d7155316f41d5bdd508dc1f0ad808ce2b8bac5/sources",
+      "status": "acquired",
+      "bytes": 256578,
+      "sha256": "62568accc57f60a4a46d7093485af5c697866b067c5e2e7cc57a47b63d48ede2"
+    },
+    "infineon-an225347": {
+      "url": "https://community.infineon.com/gfawx74859/attachments/gfawx74859/cnwifimcu/299/1/Infineon-AN225347_-_Infineon_Wi-Fi_CLM_regulatory_manual-ApplicationNotes-v03_00-EN.pdf",
+      "file": "AN225347.pdf",
+      "status": "acquired",
+      "bytes": 1990913,
+      "sha256": "b36b031ad91a4b3e18fa839c7c00d091ce046005daeb6c7204d52d6c437466eb"
+    },
+    "infineon-wl-cli": {
+      "url": "https://community.infineon.com/gfawx74859/attachments/gfawx74859/twwifibtcombo/869/1/wl_002-23156.pdf",
+      "file": "wl_002-23156.pdf",
+      "status": "acquired",
+      "bytes": 407570,
+      "sha256": "55d97738339c2d40cbc403acef1dbc4fb7096b050163e518460b69f31700cbab"
+    },
+    "android-bcm4389-chanspec": {
+      "url": "https://android.googlesource.com/kernel/google-modules/wlan/bcmdhd/bcm4389/+/f4f47d23121928735adfe73a133a7c93542fe11f/bcmwifi_channels.c?format=TEXT",
+      "file": "bcmwifi_channels.c",
+      "encoding": "base64",
+      "status": "acquired",
+      "bytes": 93276,
+      "sha256": "2d1f1eb8382cddeab2da0bdbb5f42c2e3b42cf085ab32d15236d6903d9a103ba"
+    },
+    "android-bcm4389-channel-limits": {
+      "url": "https://android.googlesource.com/kernel/google-modules/wlan/bcmdhd/bcm4389/+/f4f47d23121928735adfe73a133a7c93542fe11f/include/bcmwifi_channels.h?format=TEXT",
+      "file": "bcmwifi_channels.h",
+      "encoding": "base64",
+      "status": "acquired",
+      "bytes": 37226,
+      "sha256": "cbf6c772c495ef90fbd1e0cb17506f7cbc55a2ce2d48ef43d3510b6f6653964e"
+    }
+  },
+  "qualcomm_members": [
+    {
+      "member": "data/ath6kl-utils/arm64/usr/bin/myftm",
+      "bytes": 327784,
+      "sha256": "7ce3411c003a47a28bbe14def9b62e85884aadd05d3c7fd7e10ee38fadf2f930"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/include/ath6kl-utils/art_utf_common.h",
+      "bytes": 6451,
+      "sha256": "6cb778d399d45d6a4c0c226f13c13f8c1daa46247390fd0964240b60ebfa130e"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/include/ath6kl-utils/libtcmd.h",
+      "bytes": 2277,
+      "sha256": "9a0f37cb53cd6ed20f3c8960405710d84a51eedff44e6b78f21de8672e5dce39"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/include/ath6kl-utils/tcmdHostInternal.h",
+      "bytes": 4500,
+      "sha256": "a3a66c8612f2ff908173d9c81e847e3dbbded5b76b03695cbaef5a16a11c5b46"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/include/ath6kl-utils/testcmd.h",
+      "bytes": 7836,
+      "sha256": "f3e403d5a0f8b9e08947cdea94757fcea74a0e2e0403d2188b5c706cb5a2f4e9"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/include/ath6kl-utils/testcmd6174.h",
+      "bytes": 13786,
+      "sha256": "e78718f700ac6d8926e9248c7ad6db7d2f727bdfc9700040098ad574f543ccce"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/lib/aarch64-linux-gnu/libtcmd.a",
+      "bytes": 23182,
+      "sha256": "4a41d2899e252cf4e45b45d9ffefd8e3d6f8252e0a966ce5562333edf94c7230"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/lib/aarch64-linux-gnu/libtestcmd6174.a",
+      "bytes": 238526,
+      "sha256": "da79f24c882eb9c9deb8e149a99d21c4eb6ec424298df7039c9a89c9443270d0"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/lib/aarch64-linux-gnu/libtlv2.a",
+      "bytes": 315612,
+      "sha256": "43f2a97cca0dc4693e2e939ce458e9d3105a5c76b42011c8ccd988e21855c3a0"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/lib/aarch64-linux-gnu/libtlvutil.a",
+      "bytes": 109248,
+      "sha256": "062d747a53819929c32d16cb9a61e089432f9fe9f6fd832cdc07ce58edd03905"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/lib/aarch64-linux-gnu/pkgconfig/ath6kl-utils.pc",
+      "bytes": 225,
+      "sha256": "a3365ef791eb984b7f834dfb9a7e0e02e6c2ca2a6e492d79c9fb44f4e62a381e"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/share/doc/ath6kl-utils/changelog.gz",
+      "bytes": 155,
+      "sha256": "5d4fb7d81b9e0376eeb03d835be0907912058f43ddef61a4711fe0afb96c5869"
+    },
+    {
+      "member": "data/ath6kl-utils/arm64/usr/share/doc/ath6kl-utils/copyright",
+      "bytes": 2804,
+      "sha256": "b7eccca0a0c6467a00e8dd126fdfcabf036ba4097b6c206314209f883a06814c"
+    },
+    {
+      "member": "data/NOTICE",
+      "bytes": 4037,
+      "sha256": "606c9ef5f4366cd7e7676e3a5d8c3aa04bb3413d643badb2c91e16ca08713c4e"
+    },
+    {
+      "member": "data/LICENSE.qcom-2",
+      "bytes": 14417,
+      "sha256": "8401a2253b19272c59537567194d0b264e7ef466379334ff6cea0beec7b8165d"
+    }
+  ],
+  "qualcomm_enums": {
+    "TCMD_CONT_TX_MODE": [
+      {
+        "symbol": "TCMD_CONT_TX_OFF",
+        "value": 0,
+        "line": 55
+      },
+      {
+        "symbol": "TCMD_CONT_TX_SINE",
+        "value": 1,
+        "line": 56
+      },
+      {
+        "symbol": "TCMD_CONT_TX_FRAME",
+        "value": 2,
+        "line": 57
+      },
+      {
+        "symbol": "TCMD_CONT_TX_TX99",
+        "value": 3,
+        "line": 58
+      },
+      {
+        "symbol": "TCMD_CONT_TX_TX100",
+        "value": 4,
+        "line": 59
+      },
+      {
+        "symbol": "TCMD_CONT_TX_OFFSETTONE",
+        "value": 5,
+        "line": 60
+      },
+      {
+        "symbol": "TCMD_CONT_TX_PSAT_CAL",
+        "value": 6,
+        "line": 61
+      },
+      {
+        "symbol": "TCMD_CONT_TX_CWTONE",
+        "value": 7,
+        "line": 62
+      },
+      {
+        "symbol": "TCMD_CONT_TX_CLPCPKT",
+        "value": 8,
+        "line": 63
+      }
+    ],
+    "TCMD_CONT_RX_ACT": [
+      {
+        "symbol": "TCMD_CONT_RX_PROMIS",
+        "value": 0,
+        "line": 120
+      },
+      {
+        "symbol": "TCMD_CONT_RX_FILTER",
+        "value": 1,
+        "line": 121
+      },
+      {
+        "symbol": "TCMD_CONT_RX_REPORT",
+        "value": 2,
+        "line": 122
+      },
+      {
+        "symbol": "TCMD_CONT_RX_SETMAC",
+        "value": 3,
+        "line": 123
+      },
+      {
+        "symbol": "TCMD_CONT_RX_SET_ANT_SWITCH_TABLE",
+        "value": 4,
+        "line": 124
+      },
+      {
+        "symbol": "TC_CMD_RESP",
+        "value": 5,
+        "line": 126
+      },
+      {
+        "symbol": "TCMD_CONT_RX_GETMAC",
+        "value": 6,
+        "line": 127
+      }
+    ],
+    "PHY_RF_MODE": [
+      {
+        "symbol": "PHY_RF_MODE_NON_DBS_PHY0",
+        "value": 0,
+        "line": 131
+      },
+      {
+        "symbol": "PHY_RF_MODE_DBS_PHY0_PHY1",
+        "value": 1,
+        "line": 132
+      },
+      {
+        "symbol": "PHY_RF_MODE_SBS_PHY0_PHY1",
+        "value": 2,
+        "line": 133
+      },
+      {
+        "symbol": "PHY_RF_MODE_NON_DBS_PHY1",
+        "value": 3,
+        "line": 134
+      },
+      {
+        "symbol": "PHY_RF_MODE_DBS_DBS",
+        "value": 4,
+        "line": 135
+      },
+      {
+        "symbol": "PHY_RF_MODE_DBS_OR_SBS",
+        "value": 5,
+        "line": 136
+      },
+      {
+        "symbol": "PHY_RF_MODE_DBS_PHY1_PHY0",
+        "value": 6,
+        "line": 137
+      },
+      {
+        "symbol": "PHY_RF_MODE_SINGLE_PHY_EMLSR",
+        "value": 7,
+        "line": 138
+      },
+      {
+        "symbol": "PHY_RF_MODE_SPLIT_PHY_EMLSR",
+        "value": 8,
+        "line": 139
+      }
+    ],
+    "PHY_RF_SUBMODE": [
+      {
+        "symbol": "PHY_RF_SUBMODE_AUTO",
+        "value": 0,
+        "line": 143
+      },
+      {
+        "symbol": "PHY_RF_SUBMODE_DBS",
+        "value": 1,
+        "line": 144
+      },
+      {
+        "symbol": "PHY_RF_SUBMODE_SBS",
+        "value": 2,
+        "line": 145
+      }
+    ],
+    "TCMD_RATEBW": [
+      {
+        "symbol": "TCMD_RATEBW_CW",
+        "value": -1,
+        "line": 149
+      },
+      {
+        "symbol": "TCMD_RATEBW_CCK",
+        "value": 0,
+        "line": 150
+      },
+      {
+        "symbol": "TCMD_RATEBW_LEGACY_OFDM",
+        "value": 1,
+        "line": 151
+      },
+      {
+        "symbol": "TCMD_RATEBW_HT20",
+        "value": 2,
+        "line": 152
+      },
+      {
+        "symbol": "TCMD_RATEBW_HT40",
+        "value": 3,
+        "line": 153
+      },
+      {
+        "symbol": "TCMD_RATEBW_VHT20",
+        "value": 4,
+        "line": 154
+      },
+      {
+        "symbol": "TCMD_RATEBW_VHT40",
+        "value": 5,
+        "line": 155
+      },
+      {
+        "symbol": "TCMD_RATEBW_VHT80",
+        "value": 6,
+        "line": 156
+      },
+      {
+        "symbol": "TCMD_RATEBW_VHT80P80",
+        "value": 7,
+        "line": 157
+      },
+      {
+        "symbol": "TCMD_RATEBW_HE20",
+        "value": 8,
+        "line": 158
+      },
+      {
+        "symbol": "TCMD_RATEBW_HE40",
+        "value": 9,
+        "line": 159
+      },
+      {
+        "symbol": "TCMD_RATEBW_HE80",
+        "value": 10,
+        "line": 160
+      },
+      {
+        "symbol": "TCMD_RATEBW_HE80P80",
+        "value": 11,
+        "line": 161
+      },
+      {
+        "symbol": "TCMD_RATEBW_OFDMA_HE20",
+        "value": 12,
+        "line": 162
+      },
+      {
+        "symbol": "TCMD_RATEBW_OFDMA_HE40",
+        "value": 13,
+        "line": 163
+      },
+      {
+        "symbol": "TCMD_RATEBW_OFDMA_HE80",
+        "value": 14,
+        "line": 164
+      },
+      {
+        "symbol": "TCMD_RATEBW_OFDMA_HE80P80",
+        "value": 15,
+        "line": 165
+      },
+      {
+        "symbol": "TCMD_RATEBW_HE160",
+        "value": 16,
+        "line": 166
+      },
+      {
+        "symbol": "TCMD_RATEBW_OFDMA_HE160",
+        "value": 17,
+        "line": 167
+      },
+      {
+        "symbol": "TCMD_RATEBW_HE165",
+        "value": 18,
+        "line": 168
+      },
+      {
+        "symbol": "TCMD_RATEBW_OFDMA_HE165",
+        "value": 19,
+        "line": 169
+      },
+      {
+        "symbol": "TCMD_RATEBW_VHT160",
+        "value": 20,
+        "line": 170
+      },
+      {
+        "symbol": "TCMD_RATEBW_VHT165",
+        "value": 21,
+        "line": 171
+      },
+      {
+        "symbol": "TCMD_RATEBW_11AX_HE320",
+        "value": 22,
+        "line": 173
+      },
+      {
+        "symbol": "TCMD_RATEBW_11AX_OFDMA_HE320",
+        "value": 23,
+        "line": 174
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_EHT20",
+        "value": 30,
+        "line": 175
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_EHT40",
+        "value": 31,
+        "line": 176
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_EHT80",
+        "value": 32,
+        "line": 177
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_EHT160",
+        "value": 33,
+        "line": 178
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_EHT320",
+        "value": 34,
+        "line": 179
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_OFDMA_EHT20",
+        "value": 35,
+        "line": 180
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_OFDMA_EHT40",
+        "value": 36,
+        "line": 181
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_OFDMA_EHT80",
+        "value": 37,
+        "line": 182
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_OFDMA_EHT160",
+        "value": 38,
+        "line": 183
+      },
+      {
+        "symbol": "TCMD_RATEBW_11BE_OFDMA_EHT320",
+        "value": 39,
+        "line": 184
+      },
+      {
+        "symbol": "TCMD_RATEBW_NON_HT_DUP40",
+        "value": 50,
+        "line": 185
+      },
+      {
+        "symbol": "TCMD_RATEBW_NON_HT_DUP80",
+        "value": 51,
+        "line": 186
+      },
+      {
+        "symbol": "TCMD_RATEBW_NON_HT_DUP160",
+        "value": 52,
+        "line": 187
+      },
+      {
+        "symbol": "TCMD_RATEBW_NON_HT_DUP320",
+        "value": 53,
+        "line": 188
+      },
+      {
+        "symbol": "TCMD_RATEBW_INVALID",
+        "value": 54,
+        "line": 189
+      }
+    ],
+    "TCMD_GI": [
+      {
+        "symbol": "TCMD_GI_0",
+        "value": 0,
+        "line": 193
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE0_GI_400",
+        "value": 1,
+        "line": 194
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE0_GI_800",
+        "value": 2,
+        "line": 195
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE0_GI_1600",
+        "value": 3,
+        "line": 196
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE0_GI_3200",
+        "value": 4,
+        "line": 197
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE1_GI_400",
+        "value": 17,
+        "line": 198
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE1_GI_800",
+        "value": 18,
+        "line": 199
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE1_GI_1600",
+        "value": 19,
+        "line": 200
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE1_GI_3200",
+        "value": 20,
+        "line": 201
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE2_GI_400",
+        "value": 33,
+        "line": 202
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE2_GI_800",
+        "value": 34,
+        "line": 203
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE2_GI_1600",
+        "value": 35,
+        "line": 204
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE2_GI_3200",
+        "value": 36,
+        "line": 205
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE4_GI_400",
+        "value": 49,
+        "line": 206
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE4_GI_800",
+        "value": 50,
+        "line": 207
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE4_GI_1600",
+        "value": 51,
+        "line": 208
+      },
+      {
+        "symbol": "TCMD_GI_LTF_MODE4_GI_3200",
+        "value": 52,
+        "line": 209
+      }
+    ],
+    "TCMD_PPDU_TYPE": [
+      {
+        "symbol": "TCMD_PPDU_SINGLEUSER",
+        "value": 0,
+        "line": 213
+      },
+      {
+        "symbol": "TCMD_PPDU_MULTIPLEUSERS",
+        "value": 1,
+        "line": 214
+      },
+      {
+        "symbol": "TCMD_PPDU_EXTRANGESINGLEUSER",
+        "value": 2,
+        "line": 215
+      },
+      {
+        "symbol": "TCMD_PPDU_TRIGGER",
+        "value": 3,
+        "line": 216
+      },
+      {
+        "symbol": "TCMD_PPDU_INVALID",
+        "value": 4,
+        "line": 217
+      }
+    ],
+    "TCMD_LINK_DIR": [
+      {
+        "symbol": "TCMD_DIR_UP",
+        "value": 0,
+        "line": 221
+      },
+      {
+        "symbol": "TCMD_DIR_DOWN",
+        "value": 1,
+        "line": 222
+      },
+      {
+        "symbol": "TCMD_DIR_DIRECT",
+        "value": 2,
+        "line": 223
+      },
+      {
+        "symbol": "TCMD_DIR_INVALID",
+        "value": 3,
+        "line": 224
+      }
+    ]
+  },
+  "qualcomm_help_offset": "0x23c78",
+  "runtime": {
+    "magic": "7f454c46",
+    "elf_class": 2,
+    "endianness": 1,
+    "machine": 183
+  }
+}

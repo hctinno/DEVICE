@@ -1,5 +1,5 @@
 {
-  "unit_tests_run": 46,
+  "unit_tests_run": 58,
   "unit_failures": 0,
   "unit_errors": 0,
   "cli_checks": [
@@ -46,6 +46,28 @@
       "command": [
         "-m",
         "dgm_rf",
+        "chipset-demo"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"mode\": \"OFFLINE_ONLY\",\n  \"physical_phone_verified\": false,\n  \"wl_channel_rate_candidate\": {\n    \"evidence_level\": \"cross_source_candidate\",\n    \"commands\": [\n      [\n        \"wl\",\n        \"chanspec\",\n        \"6g1/160\"\n      ],\n      [\n        \"wl\",\n        \"6g_rate\",\n        \"-e\",\n        \"0x1\"\n      ]\n    ],\n    \"cleanup\": [],\n    \"missing\": [\n      \"same-device wl chanspec and HE bandwidth acceptance\",\n      \"MFG firmware\",\n      \"power/chain/setup/TX procedure\",\n      \"channel readback and RF bandwidth measurement\"\n    ],\n    \"sources\": [\n      \"android-bcm4389-chanspec:713-857\",\n      \"android-bcm4389-channel-limits:48-55\",\n      \"infineon-an225347:p35\"\n    ],\n    \"executable\": false,\n    \"physical_phone_verified\": false\n  },\n  \"wl_tx_fragment\": {\n    \"evidence_level\": \"documented_cli\",\n    \"commands\": [\n      [\n        \"wl\",\n        \"pkteng_start\",\n        \"00:11:22:33:44:55\",\n        \"tx\",\n        \"40\",\n        \"1000\",\n        \"0\"\n      ]\n    ],\n    \"cleanup\": [\n      [\n        \"wl\",\n        \"pkteng_stop\",\n        \"tx\"\n      ]\n    ],\n    \"missing\": [\n      \"matched wl/driver/MFG firmware\",\n      \"channel/rate/power/chain setup\",\n      \"device-specific argument limits\",\n      \"RF ON/OFF measurement\"\n    ],\n    \"sources\": [\n      \"infineon-wl-cli:p78-79\"\n    ],\n    \"executable\": false,\n    \"physical_phone_verified\": false\n  },\n  \"wl_rx_fragment\": {\n    \"evidence_level\": \"documented_cli\",\n    \"commands\": [\n      [\n        \"wl\",\n        \"pkteng_start\",\n        \"00:11:22:33:44:55\",\n        \"rx\",\n        \"sync\",\n        \"100\",\n        \"1000\"\n      ]\n    ],\n    \"cleanup\": [\n      [\n        \"wl\",\n        \"pkteng_stop\",\n        \"rx\"\n      ]\n    ],\n    \"missing\": [\n      \"matched wl/driver/MFG firmware\",\n      \"channel/rate/RX setup\",\n      \"response parser and measured RX counts\"\n    ],\n    \"sources\": [\n      \"infineon-wl-cli:p78-79\"\n    ],\n    \"executable\": false,\n    \"physical_phone_verified\": false\n  },\n  \"qualcomm_fields\": {\n    \"dialect\": \"qclinux-ath6kl-utils-1.0.0-260825-sha512-pinned\",\n    \"evidence_level\": \"header_and_help_mapping_candidate\",\n    \"fields\": {\n      \"rateBw\": 16,\n      \"gI\": 52,\n      \"nss\": 1\n    },\n    \"argument_fragment\": [\n      \"--rateBw\",\n      \"16\",\n      \"--gI\",\n      \"52\",\n      \"--nss\",\n      \"1\"\n    ],\n    \"start\": null,\n    \"stop\": null,\n    \"executable\": false,\n    \"physical_phone_verified\": false,\n    \"missing\": [\n      \"CLI parser mapping\",\n      \"complete TX/RX start/stop sequence\",\n      \"HE GI/LTF combination validity\",\n      \"Android-compatible build and OEM test firmware\"\n    ]\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "-m",
+        "dgm_rf",
+        "chipset-discovery",
+        "--serial",
+        "OFFLINE_EXAMPLE"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"executed\": false,\n  \"argv\": [\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"getprop\",\n      \"ro.product.model\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"getprop\",\n      \"ro.build.fingerprint\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"getprop\",\n      \"ro.product.cpu.abi\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"getprop\",\n      \"ro.board.platform\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"getprop\",\n      \"ro.hardware\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"getprop\",\n      \"ro.build.type\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"id\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"getenforce\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"ls\",\n      \"/sys/class/net\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"ls\",\n      \"/vendor/bin/wl\",\n      \"/vendor/bin/myftm\",\n      \"/vendor/bin/ftmdaemon\"\n    ],\n    [\n      \"adb\",\n      \"-s\",\n      \"OFFLINE_EXAMPLE\",\n      \"shell\",\n      \"readlink\",\n      \"/sys/class/net/wlan0/device/driver\"\n    ]\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "-m",
+        "dgm_rf",
         "render",
         "wifitest_0_0_7",
         "--value",
@@ -56,7 +78,7 @@
       "stderr": ""
     }
   ],
-  "utf8_files_checked": 64,
+  "utf8_files_checked": 75,
   "encoding_errors": [],
   "catalog_count": 220,
   "catalog_states": {
@@ -69,5 +91,12 @@
   "serial_hardware_test": "NOT_RUN",
   "instrument_measurement": "NOT_RUN",
   "fcc_compliance_validation": "NOT_IMPLEMENTED",
-  "status": "PASS_SOFTWARE_ONLY"
+  "status": "PASS_SOFTWARE_ONLY",
+  "chipset_research": {
+    "command_records": 29,
+    "enum_facts": 94,
+    "source_records": 5,
+    "executor_implemented": false,
+    "physical_tests": 0
+  }
 }

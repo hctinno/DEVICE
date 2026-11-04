@@ -15,6 +15,8 @@ for command in [
     [sys.executable,'-m','examples.bluetooth'],
     [sys.executable,'-m','examples.uwb_nfc'],
     [sys.executable,'-m','examples.fcc_plan'],
+    [sys.executable,'-m','dgm_rf','chipset-demo'],
+    [sys.executable,'-m','dgm_rf','chipset-discovery','--serial','OFFLINE_EXAMPLE'],
     [sys.executable,'-m','dgm_rf','render','wifitest_0_0_7','--value','9']
 ]:
     run=subprocess.run(command,cwd=ROOT,capture_output=True,text=True,encoding='utf-8')
@@ -23,7 +25,7 @@ bad=['???','\ufffd','\u6fe1','\u6e72','\u907a','\u5a9b','\uf9e1']
 encoding_errors=[]
 checked=0
 for path in ROOT.rglob('*'):
-    if path.suffix not in {'.md','.json','.csv','.py','.toml'} or any(x in path.parts for x in ['build','dist','.venv','__pycache__','.fcc-cache']):
+    if path.suffix not in {'.md','.json','.csv','.py','.toml'} or any(x in path.parts for x in ['build','dist','.venv','__pycache__','.fcc-cache','.manual-cache']):
         continue
     text=path.read_text(encoding='utf-8-sig')
     checked+=1
@@ -39,6 +41,11 @@ report={'unit_tests_run':result.testsRun,'unit_failures':len(result.failures),'u
         'catalog_count':len(catalog['commands']),'catalog_states':states,'physical_phone_test':'NOT_RUN',
         'serial_hardware_test':'NOT_RUN','instrument_measurement':'NOT_RUN','fcc_compliance_validation':'NOT_IMPLEMENTED'}
 report['status']='PASS_SOFTWARE_ONLY' if result.wasSuccessful() and not encoding_errors and all(x['returncode']==0 for x in checks) else 'FAIL'
+from dgm_rf.chipset import catalog as chipset_catalog
+chipsets=chipset_catalog()
+report['chipset_research']={'command_records':len(chipsets['commands']),
+    'enum_facts':sum(len(rows) for rows in chipsets['qualcomm_enums'].values()),
+    'source_records':len(chipsets['sources']),'executor_implemented':False,'physical_tests':0}
 (ROOT/'docs/validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(json.dumps(report,ensure_ascii=True))
 sys.exit(0 if report['status']=='PASS_SOFTWARE_ONLY' else 1)

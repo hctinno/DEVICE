@@ -2,7 +2,9 @@
 
 삼성 스마트폰을 제어하는 시험 자동화 프로그램용 Python 라이브러리와 명령 카탈로그입니다. WLAN·Bluetooth·셀룰러·NFC·UWB를 한 스키마로 조회합니다.
 
-**현재 상태: v0.3.0, 정적 분석·모의 통신 검수. 실폰/계측기 검증 0건.** [Fold8·iPhone Duo 최신 FCC 분석](docs/FCC_LATEST_MODELS.md)에 PDF 56개·3,372페이지, 32개 시험 묶음·183개 선정 조건과 LTE CMW SCPI 계획 생성기를 추가했습니다. 최신 모델의 비공개 FTM/AT 시작·종료는 미검증입니다. 기존 UWB S23 특정 빌드 RF AT와 NFC 16 PRBS API는 [실제 명령·숫자표·사용법](docs/RF_EXTENSION.md)에 유지합니다.
+**v0.4.0 추가: [Qualcomm·Broadcom/Infineon 터미널 제어 조사](docs/CHIPSET_TERMINAL_CONTROL.md).** 2026 Qualcomm 공식 payload의 hash·헤더·도움말과 Infineon 매뉴얼/Android 드라이버를 대조했습니다. [29개 명령 레코드·94개 enum 사실](docs/CHIPSET_COMMANDS.md), 패킷 TX/RX 오프라인 생성, 6GHz HE 후보, 조회용 ADB argv를 제공합니다. `python -m dgm_rf chipset-demo`로 확인합니다. 실제 최신 스마트폰용 실행기·FTM firmware·RF 검증은 미확보이며 아래 v0.3.0 FCC 분석을 승격한 결과가 아닙니다.
+
+**현재 상태: v0.4.0, 정적 분석·모의 통신 검수. 실폰/계측기 검증 0건.** [Fold8·iPhone Duo 최신 FCC 분석](docs/FCC_LATEST_MODELS.md)에 PDF 56개·3,372페이지, 32개 시험 묶음·183개 선정 조건과 LTE CMW SCPI 계획 생성기를 추가했습니다. 최신 모델의 비공개 FTM/AT 시작·종료는 미검증입니다. 기존 UWB S23 특정 빌드 RF AT와 NFC 16 PRBS API는 [실제 명령·숫자표·사용법](docs/RF_EXTENSION.md)에 유지합니다.
 
 ## 바로 실행
 

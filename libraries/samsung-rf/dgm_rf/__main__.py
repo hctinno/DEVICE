@@ -20,10 +20,28 @@ def main():
     demo.add_argument("--log", default="demo-log.json")
     export = sub.add_parser("export")
     export.add_argument("path")
+    sub.add_parser("chipset-catalog", help="Offline chipset evidence catalog; no device I/O")
+    sub.add_parser("chipset-demo", help="Print uncommissioned command fragments; no device I/O")
+    discovery = sub.add_parser("chipset-discovery", help="Print read-only ADB identification argv; do not execute")
+    discovery.add_argument("--serial", required=True)
     args = parser.parse_args()
     catalog = Catalog()
     try:
-        if args.action == "list":
+        if args.action.startswith("chipset-"):
+            from .chipset import catalog as chipset_catalog, android_discovery
+            from .chipset import wl_6g_he_candidate, wl_tx_packets, wl_rx_packets, qualcomm_he_fields
+            if args.action == "chipset-catalog":
+                output = chipset_catalog()
+            elif args.action == "chipset-discovery":
+                output = {"executed": False, "argv": android_discovery(args.serial)}
+            else:
+                output = {"mode": "OFFLINE_ONLY", "physical_phone_verified": False,
+                          "wl_channel_rate_candidate": wl_6g_he_candidate(1, 160, 0, 1).to_dict(),
+                          "wl_tx_fragment": wl_tx_packets("00:11:22:33:44:55", gap_us=40, frame_bytes=1000, frame_count=0).to_dict(),
+                          "wl_rx_fragment": wl_rx_packets("00:11:22:33:44:55", expected_packets=100, timeout_ms=1000).to_dict(),
+                          "qualcomm_fields": qualcomm_he_fields(160, "TCMD_GI_LTF_MODE4_GI_3200", 1)}
+            print(json.dumps(output, ensure_ascii=False, indent=2))
+        elif args.action == "list":
             for row in catalog.search(args.query, args.radio):
                 print(f"{row['id']}\t{row['status']}\t{row['template'] or '-'}\t{row['name']}")
         elif args.action == "show":

@@ -2,14 +2,16 @@ from pathlib import Path
 import hashlib
 import json
 import zipfile
+import tomllib
 
 root=Path(__file__).resolve().parents[1]
 validation=json.loads((root/'docs/validation.json').read_text(encoding='utf-8'))
 assert validation['status']=='PASS_SOFTWARE_ONLY'
 target=root/'dist'
 target.mkdir(exist_ok=True)
-archive=target/'dgm-rf-command-library-0.2.0.zip'
-excluded={'dist','build','__pycache__','.venv','.git'}
+version=tomllib.loads((root/'pyproject.toml').read_text(encoding='utf-8'))['project']['version']
+archive=target/f'dgm-rf-command-library-{version}.zip'
+excluded={'dist','build','__pycache__','.venv','.git','.manual-cache','.fcc-cache'}
 bad=[chr(63)*3,chr(0xfffd),chr(0x6fe1),chr(0x6e72),chr(0x907a),chr(0x5a9b),chr(0xf9e1)]
 checked=0
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as output:

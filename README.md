@@ -23,6 +23,8 @@ python -X utf8 scripts/check_lab_control.py
 
 ## 삼성 스마트폰 RF 조사·라이브러리
 
+**v0.4.0 [칩셋 터미널 제어](libraries/samsung-rf/docs/CHIPSET_TERMINAL_CONTROL.md)**: Qualcomm 2026 `myftm` 공개 배포물과 Broadcom/Infineon `wl`의 29개 명령 레코드·94개 enum 사실을 추가했습니다. 문법/후보와 실폰 검증을 분리하고 `python -m dgm_rf chipset-demo`로 오프라인 인수를 생성합니다. Qualcomm HE160 헤더 값은 16이며 완전한 CLI TX 시작·종료는 미확인입니다.
+
 [라이브러리 사용법](libraries/samsung-rf/README.md), [추가된 NFC·UWB 숫자 명령](libraries/samsung-rf/docs/RF_EXTENSION.md), [전체 지원 범위](libraries/samsung-rf/docs/COVERAGE.md)를 확인합니다.
 
 AT 카탈로그 220개와 별도 NFC 서비스 명령 2개를 포함합니다. 전체 항목이 실행 가능한 것은 아닙니다. UWB RF는 SM-S918N/S918NKSU1AWC8 전용 근거이며 NFC 16 PRBS는 보호 서비스 방송입니다. 셀룰러 TX 인수·종료 쌍은 미확보입니다. 실측 검증은 0건입니다.
