@@ -1,5 +1,9 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-11-04 README 인계 개선: 다른 PC에서 README만으로 설치·가상시험·실장비 연결 준비를 수행하도록 절차와 미구현 표를 보강합니다. 완료 기준은 새 venv 설치, README 가상 예제/CLI 정상·오류 재현, hardware 예제 구문·프로필 오프라인 검사, 문서/명칭 검사와 main 반영입니다. `scripts/check_readme.py`로 재현하며 실제 장비 운전은 범위에 포함하지 않습니다.
+
+위 인계 검수 완료: 새 Windows/Python 3.12.6 venv 설치, 15개 실행 검사, Python 예제 3개 구문 검사 통과. 상세는 [README_VALIDATION.json](README_VALIDATION.json). 실장비와 다른 OS 실행은 미검증이며 전체 현장 구축률을 변경하지 않습니다.
+
 최신 사용자 요청(2026-11-04): **가상 시험환경에서 자동화 프로그램을 개발한 뒤 실제 장비와 연동**합니다. SDK v0.2.0의 [가상 시험환경 계약](libraries/device-control/VIRTUAL_LAB_PLAN.md)에 따라 7종 장비와 WLAN RF 상태를 연결합니다. [사용법과 미구현 범위](libraries/device-control/VIRTUAL_LAB.md), 최신 [소프트웨어 검수](libraries/device-control/docs/validation.json)를 기준으로 판단합니다. 실물 시험소 구축 진척과 구별합니다.
 
 현재 사용자 우선순위(2026-11-04): 개별 시험 자동화보다 먼저 **누구나 직접 사용하는 표준 제어 라이브러리**를 구축합니다. [DGM DeviceControl 계획](libraries/device-control/PLAN.md)과 [공통 API](libraries/device-control/README.md)에 설치·프로파일·지원/출처·연결·수명주기·모의 실행·검수를 묶습니다. 아래 실증/시험 엔진 기획은 이후 단계입니다.

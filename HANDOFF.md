@@ -10,6 +10,8 @@
 
 ## 현재 상태
 
+2026-11-04 README 단독 인계 보강: [루트 README](README.md)에 Windows/Linux 설치, 기본/오류 가상시험, 결과 판독, TCP/VISA/serial 준비, 분석기 첫 연결 코드, 단말·설비별 현장 필드, HardwareLab 사전검사, recipe 고정 제한과 미구현 표를 정리했습니다. 새 Windows/Python 3.12.6 venv에서 3개 소스 패키지 설치와 `scripts/check_readme.py`의 15개 실행·Python 예제 3개 구문 검사가 통과했습니다. [검수 기록](README_VALIDATION.json). 실장비 코드는 실행하지 않았습니다. `.gitignore`에 private-site/와 runs/를 추가해 현장 주소·실행 로그가 일반 커밋에 포함되지 않도록 했습니다. 초기 검수 도구의 isolated Python 출력 인코딩 오류는 명시적 `-X utf8`로 수정하고 재검사했습니다. 이번 변경은 문서/인계 검사이며 기존 드라이버 215개 전체 검사를 다시 수행한 결과로 세지 않습니다.
+
 현재 명칭 정책: 일반 문서·CLI·공개 API·파일 경로는 장비 종류/제조사/모델/지원 기능 기준으로 표시합니다. 실제 명령 문자열과 원문 출처만 근거 영역에 그대로 보존합니다. SDK v0.3.0, LabControl v0.4.0, RF Command Library v0.5.0입니다. 설치 경로는 `libraries/phone-rf`, 단말 ID는 `PhoneAt`, 성적서 목록 scope는 `report-2026`, 단말 연결 helper는 `phone_serial`입니다. 기존 단말 프로파일은 새 템플릿을 생성한 뒤 검증된 현장 값을 옮깁니다. [지원표](SUPPORTED_EQUIPMENT.md)와 `scripts/check_public_naming.py`를 기준으로 검사합니다. 아래 버전·ZIP 해시는 과거 검수 기록입니다.
 
 명칭 전환 검수: SDK 58 + 설비 99 + RF 58 = 215개 검사, SDK 격리 설치 CLI 14건, 설비 설치 CLI 8건, RF CLI 7건 통과. 원문 스냅샷 28개 해시를 확인했고 기존 숫자표 설명문의 원본은 별도 근거 파일과 기존 해시로 보존했습니다. 일반 문서 54개·장비 표시 필드 검사 통과. SDK v0.3.0 배포 ZIP 265298 bytes, SHA-256 `002c175b1d9a01b85ebe6b0010e0ecbc9c9ded0ccbbf580aa208226103f5ec85`; 새 venv 설치와 12점 가상시험을 확인했습니다. 실제 장비·원본 APK 재분석은 미실행입니다.
