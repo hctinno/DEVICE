@@ -48,9 +48,11 @@ class SpectrumAnalyzer(Scpi):
     """X-Series A/B, FSW and legacy ESU/ESCI spectrum applications only."""
     MODELS = {
         'N9010A': ('keysight-xsa-a', 'keysight'), 'N9030A': ('keysight-xsa-a', 'keysight'),
+        'N9020A': ('keysight-xsa-a', 'keysight'),
         'N9030B': ('keysight-xsa-b', 'keysight'), 'N9040B': ('keysight-xsa-b', 'keysight'),
         'E4440A': ('keysight-psa', 'psa'),
         'FSW50': ('rs-fsw', 'rs'), 'ESU8': ('rs-esu', 'legacy-rs'),
+        'FSW67': ('rs-fsw', 'rs'), 'FSV40': ('rs-fsv', 'legacy-rs'),
         'ESU40': ('rs-esu', 'legacy-rs'), 'ESCI7': ('rs-esci', 'legacy-rs'),
     }
 
@@ -133,7 +135,7 @@ class EmiReceiver(Scpi):
     Takes individual conducted/radiated amplitude readings. Antenna factor, cable loss,
     LISN, height/azimuth search and regulatory verdict are separate site responsibilities.
     """
-    MODELS = {'ESW8': 'rs-esw', 'ESW44': 'rs-esw', 'ESR3': 'rs-esr'}
+    MODELS = {'ESW8': 'rs-esw', 'ESW44': 'rs-esw', 'ESR3': 'rs-esr', 'ESR7': 'rs-esr', 'EPL1000': 'rs-epl'}
 
     def __init__(self, transport, *, model, max_frequency_hz):
         if model not in self.MODELS:

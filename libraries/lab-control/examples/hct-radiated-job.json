@@ -1,0 +1,23 @@
+{
+  "notes": "Blocked template. The numeric grid is an example, not an FCC recipe. Fill installed axis map, site limits, addresses and detector settings. DUT TX/shutdown is separately owned.",
+  "external_dut_tx_and_shutdown_owner_confirmed": false,
+  "motion": {
+    "driver": "Co3000",
+    "parameters": {"axes": {}, "motion_enabled": false},
+    "transport": {"kind": "tcp", "host": "", "port": 5025, "timeout": 5, "termination": "\n"}
+  },
+  "receiver": {
+    "driver": "EmiReceiver",
+    "parameters": {"model": "EPL1000", "max_frequency_hz": 0},
+    "transport": {"kind": "visa", "resource": "REPLACE_WITH_INSTALLED_VISA_RESOURCE", "timeout": 30}
+  },
+  "grid": {
+    "mast_axis": "MA1", "table_axis": "DT1",
+    "heights_cm": [100, 200], "angles_deg": [0, 90], "polarizations": ["H", "V"],
+    "timeout": 60, "return_to_peak": true
+  },
+  "measurement": {
+    "frequency_hz": 1000000000, "rbw_hz": 1000000,
+    "detector": "POS", "dwell_seconds": 1, "attenuation_db": 10
+  }
+}

@@ -1,0 +1,23 @@
+[
+  {"id":"hct-a276-nr-p2","url":"https://fccid.io/A3LSMA276B/Test-Report/SAMSUNG-SM-A276BDS-RF-Test-Report-Sub6-n66-Part2-9265588.pdf","exhibit_id":9265588},
+  {"id":"hct-a276-nr-p3","url":"https://fccid.io/A3LSMA276B/Test-Report/SAMSUNG-SM-A276BDS-RF-Test-Report-Sub6-n66-Part3-9265589.pdf","exhibit_id":9265589},
+  {"id":"hct-a276-nr-p4","url":"https://fccid.io/A3LSMA276B/Test-Report/SAMSUNG-SM-A276BDS-RF-Test-Report-Sub6-n66-Part4-9265590.pdf","exhibit_id":9265590},
+  {"id":"hct-a276-bt","url":"https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-BT-FCC-Test-Report-9265660.pdf","exhibit_id":9265660},
+  {"id":"hct-a276-dfs","url":"https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-DFS-FCC-Test-Report-9265768.pdf","exhibit_id":9265768},
+  {"id":"hct-a276-dts","url":"https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-DTS-FCC-Test-Report-9265711.pdf","exhibit_id":9265711},
+  {"id":"hct-a276-nr-last","url":"https://fccid.io/A3LSMA276B/Test-Report/SAMSUNG-SM-A276BDS-RF-Test-Report-Sub6-n66-Part5-9265591.pdf","exhibit_id":9265591},
+  {"id":"hct-a276-sar","url":"https://fccid.io/A3LSMA276B/RF-Exposure-Info/A3LSMA276B-FCC-SAR-Part-0-Report-9265779.pdf","exhibit_id":9265779},
+  {"id":"hct-lg-6g","url":"https://fccid.io/2BO3LLGSWCAX71/Test-Report/LGSWCAX71-UNII-6G-FCC-Test-Report-9639141.pdf","exhibit_id":9639141},
+  {"id":"hct-a276-emc","url":"https://fccid.io/A3LSMA276B/Test-Report/HCT-EM-2604-FC002-SAMSUNG-SM-A276B-DS-FCC-EMC-Report-9265512.pdf","exhibit_id":"9265512"},
+  {"id":"hct-a276-ble","url":"https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-BT-LE-5-1-FCC-Test-Report-9265710.pdf","exhibit_id":"9265710"},
+  {"id":"hct-a276-nfc","url":"https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-NFC-FCC-Test-Report-9265548.pdf","exhibit_id":"9265548"},
+  {"id":"hct-a276-unii","url":"https://fccid.io/A3LSMA276B/Test-Report/SM-A276BDS-UNII-FCC-Test-Report-R1-9323331.pdf","exhibit_id":"9323331"},
+  {"id":"hct-wave-n48","url":"https://fccid.io/m/3b8fd10926943f892cc61186a9d5062815668c0a5bbed0a11a37adbbbb438796.pdf"},
+  {"id":"hct-mt6433","url":"https://fccid.io/m/e2bfc5f57feaad6cdb509bd4d7d4dbfa5a9acd004bf79e8510ec1317009c5c89.pdf"},
+  {"id":"hct-a276-nr","url":"https://fccid.io/m/9a0e9935dc22cd40ff2162143413ef5546c325c6c0e360d49b0befdcc536dae4.pdf"},
+  {"id":"hct-wsp-mc460","url":"https://manuals.plus/m/23e81310d351d4b156e2a49e489765b77fa30e4313c08b7aad849fe7e7d19cc1.pdf"},
+  {"id":"hct-2512-fc002","url":"https://fccid.io/m/252ce9efb6e443aedee5b7cbda435255f12b8bec6c1432e8a4c55a6db946da55.pdf"},
+  {"id":"hct-2512-fc038","url":"https://manuals.plus/m/30a0dbc00f954c2a0f40266dcffb46fb15ce3d9547cd130279a21324bc151b53.pdf"},
+  {"id":"hct-2606-emc","url":"https://device.report/m/68fdf0bcb160f772f250b47e543ab96d7fbe8aa93c17e526e19622419b24bb2a.pdf"},
+  {"id":"hct-2607-lg","url":"https://device.report/m/9ed9dbd97264203507bcb7cc87b64de35695f58e6442b74caef4c22631ee5df0.pdf"}
+]

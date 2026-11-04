@@ -6,13 +6,13 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model, max_frequency_hz)",
-        "line": 57,
+        "line": 59,
         "command_fragments": []
       },
       {
         "name": "acquire",
         "signature": "(self, config: dgm_lab.analyzers.Sweep)",
-        "line": 64,
+        "line": 66,
         "command_fragments": [
           "ABOR",
           "INIT:CONT OFF",
@@ -71,7 +71,7 @@
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 120,
+        "line": 122,
         "command_fragments": [
           "ABOR",
           "INIT:CONT OFF"
@@ -86,13 +86,13 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model, max_frequency_hz)",
-        "line": 138,
+        "line": 140,
         "command_fragments": []
       },
       {
         "name": "read_level",
         "signature": "(self, *, frequency_hz, rbw_hz, detector, dwell_seconds, attenuation_db)",
-        "line": 145,
+        "line": 147,
         "command_fragments": [
           "INIT1:IMM",
           "ABOR",
@@ -115,7 +115,7 @@
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 166,
+        "line": 168,
         "command_fragments": [
           "ABOR",
           "INIT1:CONT OFF"
@@ -316,6 +316,54 @@
     ]
   },
   {
+    "driver": "EpmPowerMeter",
+    "file": "dgm_lab/epm.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model='E4419B')",
+        "line": 9,
+        "command_fragments": []
+      },
+      {
+        "name": "configure_average",
+        "signature": "(self, *, frequency_hz, calibration_table, channel=1)",
+        "line": 15,
+        "command_fragments": [
+          "INIT1:CONT OFF",
+          "f'CONF1:POW:AC DEF,DEF,(@{channel})'",
+          "f'SENS{channel}:CORR:CSET1:SEL \"{calibration_table}\"'",
+          "f'SENS{channel}:CORR:CSET1:STAT ON'",
+          "f'SENS{channel}:FREQ {fmt(frequency_hz)}'",
+          "UNIT1:POW DBM",
+          "TRIG1:SOUR IMM",
+          "CONF1:POW:AC DEF,DEF,(@",
+          "f'SENS{channel}:FREQ?'",
+          "f'SENS{channel}:CORR:CSET1:STAT?'",
+          "f'SENS{channel}:CORR:CSET1:SEL?'",
+          "UNIT1:POW?"
+        ]
+      },
+      {
+        "name": "read_power",
+        "signature": "(self)",
+        "line": 33,
+        "command_fragments": [
+          "READ1?"
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 38,
+        "command_fragments": [
+          "INIT1:CONT OFF",
+          "INIT2:CONT OFF"
+        ]
+      }
+    ]
+  },
+  {
     "driver": "Hp437B",
     "file": "dgm_lab/legacy.py",
     "methods": [
@@ -474,19 +522,135 @@
     ]
   },
   {
+    "driver": "Co3000",
+    "file": "dgm_lab/motion.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, axes, motion_enabled=False, poll_seconds=0.2)",
+        "line": 25,
+        "command_fragments": []
+      },
+      {
+        "name": "_query",
+        "signature": "(self, command)",
+        "line": 48,
+        "command_fragments": []
+      },
+      {
+        "name": "_ack",
+        "signature": "(self, command, expected='1')",
+        "line": 56,
+        "command_fragments": []
+      },
+      {
+        "name": "identify",
+        "signature": "(self)",
+        "line": 61,
+        "command_fragments": [
+          "*IDN?",
+          "*OPT?"
+        ]
+      },
+      {
+        "name": "_ready",
+        "signature": "(self, axis=None, movement=False)",
+        "line": 80,
+        "command_fragments": []
+      },
+      {
+        "name": "_select",
+        "signature": "(self, axis)",
+        "line": 88,
+        "command_fragments": [
+          "f'LD {index} DV'"
+        ]
+      },
+      {
+        "name": "position",
+        "signature": "(self, axis)",
+        "line": 94,
+        "command_fragments": [
+          "f'STATUS {axis} ?'"
+        ]
+      },
+      {
+        "name": "limits",
+        "signature": "(self, axis)",
+        "line": 102,
+        "command_fragments": [
+          "LL",
+          "UL",
+          "CL",
+          "WL"
+        ]
+      },
+      {
+        "name": "_target",
+        "signature": "(self, axis, value)",
+        "line": 111,
+        "command_fragments": []
+      },
+      {
+        "name": "start",
+        "signature": "(self, axis, value)",
+        "line": 119,
+        "command_fragments": [
+          "f'LD {value:.1f} {self.axes[axis]['unit']} NP'",
+          "GO"
+        ]
+      },
+      {
+        "name": "stop_all",
+        "signature": "(self)",
+        "line": 130,
+        "command_fragments": [
+          "ES"
+        ]
+      },
+      {
+        "name": "speed",
+        "signature": "(self, axis, level)",
+        "line": 139,
+        "command_fragments": [
+          "f'LD {level} SP'",
+          "SP"
+        ]
+      },
+      {
+        "name": "wait",
+        "signature": "(self, axis, *, target=None, polarization=None, timeout=60, tolerance=0.1, cancelled=None)",
+        "line": 147,
+        "command_fragments": []
+      },
+      {
+        "name": "move",
+        "signature": "(self, axis, value, *, timeout=60, tolerance=0.1, cancelled=None)",
+        "line": 176,
+        "command_fragments": []
+      },
+      {
+        "name": "polarize",
+        "signature": "(self, axis, orientation, *, timeout=60, cancelled=None)",
+        "line": 187,
+        "command_fragments": []
+      }
+    ]
+  },
+  {
     "driver": "SignalGenerator",
     "file": "dgm_lab/sources.py",
     "methods": [
       {
         "name": "__init__",
         "signature": "(self, transport, *, model, max_frequency_hz, max_power_dbm)",
-        "line": 11,
+        "line": 12,
         "command_fragments": []
       },
       {
         "name": "configure_cw",
         "signature": "(self, *, frequency_hz, power_dbm)",
-        "line": 20,
+        "line": 21,
         "command_fragments": [
           "OUTP:MOD OFF",
           "SOUR:MOD:ALL:STAT OFF",
@@ -503,19 +667,19 @@
       {
         "name": "start",
         "signature": "(self)",
-        "line": 36,
+        "line": 37,
         "command_fragments": []
       },
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 45,
+        "line": 46,
         "command_fragments": []
       },
       {
         "name": "emitting",
         "signature": "(self)",
-        "line": 54,
+        "line": 55,
         "command_fragments": []
       }
     ]
@@ -527,13 +691,13 @@
       {
         "name": "__init__",
         "signature": "(self, transport, *, model, max_voltage, max_current)",
-        "line": 61,
+        "line": 62,
         "command_fragments": []
       },
       {
         "name": "configure",
         "signature": "(self, *, voltage, current_limit, range_name=None)",
-        "line": 70,
+        "line": 74,
         "command_fragments": [
           "f'VOLT:RANG {range_name}'",
           "VOLT:RANG ",
@@ -544,25 +708,25 @@
       {
         "name": "start",
         "signature": "(self)",
-        "line": 92,
+        "line": 102,
         "command_fragments": []
       },
       {
         "name": "_wait_output",
         "signature": "(self, expected)",
-        "line": 100,
+        "line": 110,
         "command_fragments": []
       },
       {
         "name": "stop",
         "signature": "(self)",
-        "line": 110,
+        "line": 120,
         "command_fragments": []
       },
       {
         "name": "read_voltage",
         "signature": "(self)",
-        "line": 118,
+        "line": 128,
         "command_fragments": [
           "MEAS:VOLT?"
         ]
@@ -570,7 +734,7 @@
       {
         "name": "read_current",
         "signature": "(self)",
-        "line": 121,
+        "line": 131,
         "command_fragments": [
           "MEAS:CURR?"
         ]
@@ -578,7 +742,63 @@
       {
         "name": "powering",
         "signature": "(self)",
-        "line": 124,
+        "line": 134,
+        "command_fragments": []
+      }
+    ]
+  },
+  {
+    "driver": "OspSwitch",
+    "file": "dgm_lab/switching.py",
+    "methods": [
+      {
+        "name": "__init__",
+        "signature": "(self, transport, *, model, modules, paths, safe_path, switching_enabled=False)",
+        "line": 14,
+        "command_fragments": []
+      },
+      {
+        "name": "identify",
+        "signature": "(self)",
+        "line": 53,
+        "command_fragments": [
+          "ROUT:MOD:CAT?"
+        ]
+      },
+      {
+        "name": "_path",
+        "signature": "(self, name)",
+        "line": 66,
+        "command_fragments": []
+      },
+      {
+        "name": "matches",
+        "signature": "(self, name)",
+        "line": 71,
+        "command_fragments": [
+          "ROUT:CLOS? "
+        ]
+      },
+      {
+        "name": "select",
+        "signature": "(self, name)",
+        "line": 80,
+        "command_fragments": [
+          "ROUT:CLOS "
+        ]
+      },
+      {
+        "name": "stop",
+        "signature": "(self)",
+        "line": 91,
+        "command_fragments": [
+          "ROUT:CLOS "
+        ]
+      },
+      {
+        "name": "routed",
+        "signature": "(self, name)",
+        "line": 105,
         "command_fragments": []
       }
     ]

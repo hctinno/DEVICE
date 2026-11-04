@@ -17,10 +17,10 @@ class NetworkTrace:
 
 class VectorNetworkAnalyzer(Scpi):
     def __init__(self, transport, *, model, max_frequency_hz, max_power_dbm):
-        if model not in ('ZNLE6', 'Planar R140'):
+        if model not in ('ZNLE6', 'ZNB8', 'ZNB20', 'ZNB8-2Port', 'ZNB8-4Port', 'ZNB20-2Port', 'ZNB20-4Port', 'Planar R140'):
             raise UnsupportedInstrument(f'No reviewed VNA dialect for {model}')
-        super().__init__(transport, model=model, manufacturers=RS if model=='ZNLE6' else ('Copper Mountain Technologies',))
-        self.source_id = 'rs-znle' if model=='ZNLE6' else 'cmt-rvna'
+        super().__init__(transport, model=model, manufacturers=RS if model!='Planar R140' else ('Copper Mountain Technologies',))
+        self.source_id = 'rs-znb' if model.startswith('ZNB') else ('rs-znle' if model=='ZNLE6' else 'cmt-rvna')
         self.max_hz = number(max_frequency_hz, 'installed maximum frequency', 1, 1e12)
         self.max_dbm = number(max_power_dbm, 'site maximum power', -100, 30)
 

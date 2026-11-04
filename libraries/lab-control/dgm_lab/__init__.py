@@ -8,5 +8,8 @@ from .vna import VectorNetworkAnalyzer
 from .chambers import Thermotron8800, EspecController
 from .callbox import CmwLte
 from .legacy import Hp437B
+from .motion import Co3000, Position, scan_positions, scan_radiated_grid
+from .switching import OspSwitch
+from .epm import EpmPowerMeter
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'

@@ -1,0 +1,16 @@
+{
+  "driver": "OspSwitch",
+  "parameters": {
+    "model": "OSP120",
+    "modules": {},
+    "paths": {},
+    "safe_path": "safe",
+    "switching_enabled": false
+  },
+  "transport": {
+    "kind": "visa",
+    "resource": "REPLACE_WITH_INSTALLED_VISA_RESOURCE",
+    "timeout": 30
+  },
+  "notes": "Template only. Confirm installed model/controller, limits, options, address and termination before use."
+}

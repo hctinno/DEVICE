@@ -29,9 +29,9 @@ def main():
                 physical_equipment_tests=0,phone_rf_tests=0,mechanical_motion_tests=0,
                 regulatory_conformity_tests=0,external_deployments=0,
                 skipped=['Physical VISA/USB/GPIB/serial devices','Actual phone TX and RF-off verification',
-                         'Measurement accuracy/calibration/uncertainty','Motion/SAR/NR/DFS test workflows'])
+                         'Measurement accuracy/calibration/uncertainty','Physical motion/SAR/NR/DFS test workflows'])
     try:
-        for script in ('build_inventory.py','build_reference.py','build_profiles.py','build_workflows.py'):
+        for script in ('build_inventory.py','build_hct_inventory.py','build_reference.py','build_profiles.py','build_workflows.py'):
             print(run([sys.executable,'-X','utf8',str(LIB/'scripts'/script)]).strip(),flush=True)
         checked=0
         for path in LIB.rglob('*'):
@@ -53,11 +53,20 @@ def main():
                 verified+=1
         report['local_manual_sha256_verified']=verified
         report['manual_pdf_cache_present']=bool(verified)
+        hct_sources=json.loads((LIB/'research/hct-report-review.json').read_text(encoding='utf-8'))
+        hct_verified=0
+        for source in hct_sources:
+            pdf=LIB/'.fcc-cache/hct-2026'/f"{source['id']}.pdf"
+            if source['included'] and pdf.exists():
+                if hashlib.sha256(pdf.read_bytes()).hexdigest()!=source['sha256']:
+                    raise ValueError(f"HCT report hash mismatch: {source['id']}")
+                hct_verified+=1
+        report['local_hct_pdf_sha256_verified']=hct_verified
         sys.path[:0]=[str(LIB),str(LIB/'tests'),str(ROOT/'libraries/samsung-rf')]
         suite=unittest.defaultTestLoader.discover(str(LIB/'tests'))
         result=unittest.TextTestRunner(verbosity=1).run(suite)
         report.update(tests_run=result.testsRun,test_failures=len(result.failures),test_errors=len(result.errors),
-                      localhost_tcp_tests=5,visa_serial_adapter_fixture_tests=4)
+                      localhost_tcp_tests=7,visa_serial_adapter_fixture_tests=4)
         if not result.wasSuccessful(): raise RuntimeError('Library tests failed')
         with tempfile.TemporaryDirectory(prefix='dgm-lab-check-') as temporary:
             temp=Path(temporary);wheels=temp/'wheels';target=temp/'installed'
@@ -72,11 +81,16 @@ def main():
             output=run([sys.executable,'-m','dgm_lab','inventory','N9030B'],cwd=temp,env=env)
             row=json.loads(output.strip())
             if row['driver']!='SpectrumAnalyzer': raise RuntimeError('Installed package catalog missing')
-            for example in ('spectrum.py','outputs.py','phone_spectrum.py'):
+            output=run([sys.executable,'-m','dgm_lab','inventory','--scope','hct-2026','CO3000'],cwd=temp,env=env)
+            hits=[json.loads(line) for line in output.splitlines() if line.strip()]
+            if not any(r['model']=='CO3000' and r['driver']=='Co3000' for r in hits):
+                raise RuntimeError('Installed HCT catalog missing')
+            for example in ('spectrum.py','outputs.py','phone_spectrum.py','hct_radiated.py'):
                 run([sys.executable,str(LIB/'examples'/example),'--help'],cwd=temp,env=env)
             report['wheels_built_and_installed']=len(built)
-            report['installed_package_cli_and_example_help_checks']=4
+            report['installed_package_cli_and_example_help_checks']=6
         report['inventory']=json.loads((LIB/'research/inventory-validation.json').read_text(encoding='utf-8'))
+        report['hct_inventory']=json.loads((LIB/'research/hct-validation.json').read_text(encoding='utf-8'))
         report['passed']=True
     except BaseException as exc:
         report['error']=f'{type(exc).__name__}: {exc}'

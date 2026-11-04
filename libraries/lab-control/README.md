@@ -1,5 +1,7 @@
 # DGM LabControl
 
+**v0.2.0 — HCT 2026 성적서 기준 확장.** [HCT 장비·설비 150그룹](docs/HCT_2026_EQUIPMENT.md), [모션·계측 실행 방법과 숫자 명령표](docs/HCT_CONTROL.md), [CSV](docs/hct-2026-equipment.csv)를 먼저 확인합니다. CO3000 마스트·턴테이블·H/V 편파, OSP 경로, 추가 분석기·수신기·전원·전력계·VNA·RF 발생기와 2축 표본 최대점 복귀를 포함합니다. 14개 driver class이며 지원은 모델별 명시 기능에 한정됩니다.
+
 FCC 성적서 장비 목록에서 출발한 Python 설비 제어 라이브러리입니다. 실제 TCP·VISA·serial 통신, 모델 식별, 설정 재조회, 측정 수집, 출력 종료를 제공합니다. **소프트웨어 검수와 실장비 commissioning은 구분합니다. 물리적으로 연결하면 모든 장비·스마트폰이 즉시 동작하는 상태는 아닙니다.**
 
 먼저 [장비 지원표](docs/EQUIPMENT_COVERAGE.md)에서 모델을 찾고 [운전 명령·숫자 인수](docs/OPERATIONS.md)를 확인합니다. [실제 API 색인](docs/API_INDEX.md), [공식 매뉴얼·출처](docs/SOURCES.md), [추가 확보 항목](docs/VENDOR_GAPS.md), [FCC 시험 연결 범위](docs/FCC_WORKFLOWS.md)를 함께 제공합니다.
@@ -12,6 +14,7 @@ FCC 성적서 장비 목록에서 출발한 Python 설비 제어 라이브러리
 python -m venv .venv
 .venv\Scripts\python -m pip install "./libraries/lab-control[visa,serial]" "./libraries/samsung-rf[serial]"
 .venv\Scripts\python -m dgm_lab inventory N9030B
+.venv\Scripts\python -m dgm_lab inventory --scope hct-2026 CO3000
 Copy-Item libraries/lab-control/profiles/spectrum.template.json site-analyzer.json
 ```
 
@@ -21,7 +24,7 @@ Copy-Item libraries/lab-control/profiles/spectrum.template.json site-analyzer.js
 .venv\Scripts\python -m dgm_lab probe site-analyzer.json
 ```
 
-probe는 식별 명령만 전송합니다. 출력 ON·reset·네트워크 검색은 하지 않습니다. `*IDN?`에 모델이 맞아도 펌웨어·옵션·교정·입력 한계는 현장 확인 대상입니다.
+probe는 식별·연결 구성 조회만 전송합니다. CO3000은 `*IDN?`/`*OPT?`, OSP는 IDN/모듈 목록을 읽습니다. 출력 ON·reset·네트워크 검색은 하지 않습니다. `*IDN?`에 모델이 맞아도 펌웨어·옵션·교정·입력 한계는 현장 확인 대상입니다.
 
 ## 측정 실행
 
@@ -58,4 +61,4 @@ python -X utf8 scripts/check_artifacts.py
 
 첫 검사는 드라이버·오류 처리·실제 localhost TCP·목록/출처·패키지 빌드/설치/CLI를 검증합니다. localhost 서버와 응답 fixture는 실장비가 아닙니다. 실제 계측 정확도·USB/GPIB 하드웨어·폰 TX·기구 이동·SAR·FCC 적합성 검사는 미실행입니다. 최신 결과는 [validation.json](docs/validation.json)에 기록합니다.
 
-장비 목록은 확보한 56개 성적서 PDF의 텍스트 장비표에서 추출했습니다. 이미지 표 전체 OCR과 모든 부속 보고서 확보를 완료했다는 뜻은 아닙니다. 원문 행·페이지·URL·SHA-256은 [equipment-rows.json](research/equipment-rows.json)에 보존합니다. 추가 자료를 받으면 드라이버와 현장 프로파일을 같은 검사 체계에 편입합니다.
+기존 `legacy` 목록은 56개 성적서 PDF에서 추출했고, 별도 `hct-2026` 목록은 HCT 2026년 발행 보고서 12건/16 PDF 분할본에서 추출했습니다. 두 목록의 합계를 중복 제거한 전체 자산 수로 사용하지 않습니다. 이미지 표 전체 OCR과 모든 부속 보고서 확보를 완료했다는 뜻은 아닙니다. 원문 행·페이지·URL·SHA-256은 [기존 행](research/equipment-rows.json), [HCT 행](research/hct-equipment-rows.json)에 보존합니다.

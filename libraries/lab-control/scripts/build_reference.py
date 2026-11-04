@@ -34,7 +34,7 @@ def main():
     (ROOT/'dgm_lab/data/sources.json').write_text(json.dumps(sources,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     index=[]
     for path in sorted((ROOT/'dgm_lab').glob('*.py')):
-        if path.stem not in ('analyzers','sources','meters','vna','chambers','callbox','legacy'):
+        if path.stem not in ('analyzers','sources','meters','vna','chambers','callbox','legacy','motion','switching','epm'):
             continue
         tree=ast.parse(path.read_text(encoding='utf-8'))
         for cls in (n for n in tree.body if isinstance(n,ast.ClassDef) and n.name in DRIVERS):
@@ -47,15 +47,15 @@ def main():
                     if isinstance(n,ast.Constant) and isinstance(n.value,str): value=n.value
                     if isinstance(n,ast.JoinedStr): value=ast.unparse(n)
                     if value and (re.match(r'^(?:[A-Z]{2,}[0-9]*(?::[A-Za-z0-9_?]+)+|\*(?:IDN|OPC))',value)
-                                  or value in {'ABOR','INIT','FETC?','READ?','READ1?','TR2','TR0','SM','ERR?','RUNM','STOP','IDEN?','IERR?','STAT?','ROM?','MODE?','TEMP?'}
-                                  or value.startswith(('f\'','f"')) and any(x in value for x in ('SENS','FREQ','SETP','BAND','POW','CONF','INIT','TRIG','VOLT','CURR','DET','SWE','PVAR','DISP'))):
+                                  or value in {'ABOR','INIT','FETC?','READ?','READ1?','TR2','TR0','SM','ERR?','RUNM','STOP','IDEN?','IERR?','STAT?','ROM?','MODE?','TEMP?','*OPT?','ES','GO','LL','UL','CL','WL','SP'}
+                                  or value.startswith(('f\'','f"')) and any(x in value for x in ('SENS','FREQ','SETP','BAND','POW','CONF','INIT','TRIG','VOLT','CURR','DET','SWE','PVAR','DISP','STATUS','LD '))):
                         if value not in commands: commands.append(value)
                 signature=str(inspect.signature(getattr(DRIVERS[cls.name],method.name)))
                 methods.append(dict(name=method.name,signature=signature,line=method.lineno,command_fragments=commands))
             index.append(dict(driver=cls.name,file=str(path.relative_to(ROOT)).replace('\\','/'),methods=methods))
     (ROOT/'dgm_lab/data/api-index.json').write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     lines=['# 구현 API·명령 색인','',
-           '이 문서는 실제 Python 구현에서 재생성합니다. 숫자 인수·단위·시작/종료 순서는 [운전 명령표](OPERATIONS.md)를 우선합니다. 문자열 조각은 분기·f-string을 포함하므로 그대로 복사 실행하지 않습니다.', '',
+           '이 문서는 실제 Python 구현에서 재생성합니다. 숫자 인수·단위·시작/종료 순서는 [운전 명령표](OPERATIONS.md)와 [HCT 모션·계측](HCT_CONTROL.md)을 우선합니다. 문자열 조각은 분기·f-string을 포함하므로 그대로 복사 실행하지 않습니다.', '',
            'SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermotron은 해당 고유 프로토콜을 사용합니다. CMW 전체 명령은 [원본 생성기](../../samsung-rf/dgm_rf/cmw_lte.py)에 있습니다.', '']
     for row in index:
         lines += [f"## {row['driver']}",'',f"[실행 코드](../{row['file']})",'', '| API | 실제 명령/템플릿 조각 |','| --- | --- |']

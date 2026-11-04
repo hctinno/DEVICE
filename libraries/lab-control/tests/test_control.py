@@ -48,7 +48,7 @@ def fixture(model, maker='Keysight Technologies', **responses):
 
 
 def source_fixture(model='N5182B'):
-    maker='Keysight Technologies' if model.startswith('N') else 'Rohde&Schwarz'
+    maker='Keysight Technologies' if model.startswith(('N','E')) else 'Rohde&Schwarz'
     io=fixture(model,maker,**{'OUTP?':['0','1','0'], 'SOUR:FREQ:CW?':'2.412E9','SOUR:POW?':'-20'})
     driver=SignalGenerator(io,model=model,max_frequency_hz=6e9,max_power_dbm=-10)
     driver.identify()
@@ -177,7 +177,7 @@ class DriverTests(unittest.TestCase):
             maker='KIKUSUI' if model=='PWR2001ML' else 'Agilent Technologies'
             io=fixture(model,maker,**{'OUTP?':['0','1','0'],'VOLT?':'4.2','CURR?':'1.2','MEAS:VOLT?':'4.199','MEAS:CURR?':'0.4'})
             d=PowerSupply(io,model=model,max_voltage=5,max_current=2);d.identify()
-            d.configure(voltage=4.2,current_limit=1.2,range_name='P8V' if model=='E3640A' else None)
+            d.configure(voltage=4.2,current_limit=1.2,range_name={'E3640A':'P8V','E3632A':'P15V'}.get(model))
             with d.powering():
                 self.assertEqual(d.read_voltage().unit,'V');self.assertEqual(d.read_current().value,.4)
             self.assertNotIn('*RST',io.events)
@@ -278,7 +278,7 @@ class DriverTests(unittest.TestCase):
         self.assertIn(d.plan['cleanup'][1],io.events)
 
     def test_vna_both_dialects_complex_data_and_off(self):
-        for model in ('ZNLE6','Planar R140'):
+        for model in ('ZNLE6','ZNB8-2Port','ZNB8-4Port','ZNB20-2Port','ZNB20-4Port','Planar R140'):
             cmt=model=='Planar R140'
             io=fixture(model,'Copper Mountain Technologies' if cmt else 'Rohde&Schwarz',**{
                 'OUTP?':['0','0'],'SENS1:FREQ:STAR?':'1e9','SENS1:FREQ:STOP?':'2e9','SENS1:SWE:POIN?':'2',

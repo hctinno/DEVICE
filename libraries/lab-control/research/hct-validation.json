@@ -1,0 +1,22 @@
+{
+  "qualified_pdf_parts": 16,
+  "distinct_reports": 12,
+  "equipment_rows": 418,
+  "manufacturer_model_groups": 150,
+  "status_counts": {
+    "passive_or_fixture": 56,
+    "pending_protocol": 18,
+    "vendor_required": 36,
+    "support_or_software": 6,
+    "conditional": 2,
+    "model_required": 1,
+    "implemented_uncommissioned": 21,
+    "controller_component": 7,
+    "controller_required": 1,
+    "host_component": 2
+  },
+  "physical_tests": 0,
+  "exhaustive_hct_2026_population": false,
+  "nr_report_incomplete": false,
+  "nr_printed_pages_verified": 371
+}

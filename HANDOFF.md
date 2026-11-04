@@ -10,7 +10,9 @@
 
 ## 현재 상태
 
-2026-11-04 모션 범위 확인: 현재 추출 장비표에 턴테이블·안테나 마스트의 특정 모델은 없으며 해당 이동/위치/정지 드라이버도 없습니다. TESCOM MTP300A/TC-3000C는 Bluetooth Tester, TA Engineering TA-018S-16은 RF Switching Unit입니다. 이 모델들에 모션 명령 확보 항목을 연결했던 VENDOR_GAPS.md 오류를 수정했습니다. 모델 미추출은 원본 성적서 전체에 장비가 없다는 결론이 아닙니다.
+최신 검수: `python -X utf8 scripts/check_lab_control.py` 79검사, localhost TCP 7건, wheel 2개 격리 설치·CLI/help 6건 통과. `python -X utf8 scripts/check_samsung_rf.py` 46검사 통과. 아래 v0.1.0 수치는 이전 조사 범위이며 HCT 2026 목록과 합산하지 않습니다. 현재 실장비 검증은 여전히 0건입니다.
+
+2026-11-04 HCT 기준 재조사: **앞선 모션 모델 미확보 판단은 기존 조사 범위에 한정됩니다.** HCT Korea 2026 발행 성적서 12건/16 PDF에서 장비표 418행·제조사/모델 150그룹을 확보했습니다. CO3000, MA4640, DS2000/DS1500이 실제로 기재되어 있습니다. [HCT 목록](libraries/lab-control/docs/HCT_2026_EQUIPMENT.md), [명령·실행](libraries/lab-control/docs/HCT_CONTROL.md), [계획·남은 범위](libraries/lab-control/HCT_2026_PLAN.md)를 기준으로 이어갑니다. LabControl v0.2.0은 14개 driver class, CO3000 이동/높이/각도/편파/속도/정지, 2축 grid/최대점 복귀, OSP 호스트 경로, E4419B와 추가 계측 모델을 구현했습니다. HCT 150그룹 중 21개는 한정 기능 구현·미commissioning, 7개는 컨트롤러 구성품입니다. 실장비·전체 FCC workflow 검증은 0건입니다. TESCOM MTP300A/TC-3000C는 Bluetooth Tester, TA-018S-16은 RF Switching Unit이며 모션 장비로 바꾸지 않습니다.
 
 2026-11-04 설비 제어 추가: [DGM LabControl](libraries/lab-control/README.md) v0.1.0. 성적서 장비표 1,332행 → 234개 제조사/모델 그룹, 모델 추출 검토 대기 2행. 27개 모델의 한정된 기능 구현, 4개 조건부(콜박스/컨트롤러/앱), 7개 프로토콜 검토 대기, 47개 전용 SDK/현장 자료 필요. 11개 driver class, TCP/VISA/serial, 공식 PDF 24개 해시 검증, 출처 레코드 27개. 시험 묶음 32개에 구현 요소/미완성 조건을 매핑했습니다. 전체 FCC workflow 준비 완료는 0개입니다. `python -X utf8 scripts/check_lab_control.py`가 목록/문서 재생성·단위/localhost 통신·패키지 격리 설치를 검증합니다. 최신 숫자는 [validation.json](libraries/lab-control/docs/validation.json)을 기준으로 합니다. 현장 실물·폰 RF·기구·SAR·규격 적합성 검수는 모두 미실행입니다.
 

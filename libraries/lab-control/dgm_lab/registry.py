@@ -2,16 +2,19 @@ from contextlib import contextmanager
 from importlib.resources import files
 import json
 from . import (SpectrumAnalyzer, EmiReceiver, SignalGenerator, PowerSupply, PSeriesPowerMeter,
-               UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B)
+               UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter)
 from .transport import SocketTransport, VisaTransport, SerialTransport
 from .core import UnsupportedInstrument
 
 DRIVERS = {c.__name__: c for c in (SpectrumAnalyzer, EmiReceiver, SignalGenerator, PowerSupply,
-           PSeriesPowerMeter, UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B)}
+           PSeriesPowerMeter, UsbPowerSensor, VectorNetworkAnalyzer, CmwLte, Thermotron8800, EspecController, Hp437B, Co3000, OspSwitch, EpmPowerMeter)}
 
 
-def inventory(query=''):
-    data=json.loads(files('dgm_lab').joinpath('data/instruments.json').read_text(encoding='utf-8'))
+def inventory(query='', *, scope='legacy'):
+    if scope not in ('legacy','hct-2026'):
+        raise ValueError('scope must be legacy or hct-2026')
+    filename='hct-2026-instruments.json' if scope=='hct-2026' else 'instruments.json'
+    data=json.loads(files('dgm_lab').joinpath('data/'+filename).read_text(encoding='utf-8'))
     key=query.casefold()
     return [r for r in data if key in (r['manufacturer']+' '+r['model']+' '+r['status']+' '+r['driver']).casefold()]
 

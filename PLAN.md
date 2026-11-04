@@ -1,5 +1,7 @@
 # DGM AutoLab — 기존 RF·EMC 시험소 무인화 계획
 
+2026-11-04 추가: [HCT 2026 설비 확장 계획](libraries/lab-control/HCT_2026_PLAN.md). HCT 발행일을 확인한 12개 보고서의 150개 장비 그룹을 [목록](libraries/lab-control/docs/HCT_2026_EQUIPMENT.md)과 [실제 제어 API](libraries/lab-control/docs/HCT_CONTROL.md)에 연결합니다. 모션·2축 탐색·경로·계측 소프트웨어 검증과 현장 commissioning을 구분합니다.
+
 작성일: 2026-10-23, Asia/Seoul  
 상태: 전체 구축 계획 초안. 삼성 DUT RF 라이브러리 구현·소프트웨어 검수 추가(2026-11-04). 장비 연결·현장 검증은 미착수.
 

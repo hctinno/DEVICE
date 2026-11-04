@@ -1,6 +1,6 @@
 # 구현 API·명령 색인
 
-이 문서는 실제 Python 구현에서 재생성합니다. 숫자 인수·단위·시작/종료 순서는 [운전 명령표](OPERATIONS.md)를 우선합니다. 문자열 조각은 분기·f-string을 포함하므로 그대로 복사 실행하지 않습니다.
+이 문서는 실제 Python 구현에서 재생성합니다. 숫자 인수·단위·시작/종료 순서는 [운전 명령표](OPERATIONS.md)와 [HCT 모션·계측](HCT_CONTROL.md)을 우선합니다. 문자열 조각은 분기·f-string을 포함하므로 그대로 복사 실행하지 않습니다.
 
 SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermotron은 해당 고유 프로토콜을 사용합니다. CMW 전체 명령은 [원본 생성기](../../samsung-rf/dgm_rf/cmw_lte.py)에 있습니다.
 
@@ -64,6 +64,17 @@ SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermo
 | `stop(self)` | `MODE?` |
 | `running(self)` | 하위 메서드 호출; 실행 코드 참조 |
 
+## EpmPowerMeter
+
+[실행 코드](../dgm_lab/epm.py)
+
+| API | 실제 명령/템플릿 조각 |
+| --- | --- |
+| `__init__(self, transport, *, model='E4419B')` | 하위 메서드 호출; 실행 코드 참조 |
+| `configure_average(self, *, frequency_hz, calibration_table, channel=1)` | `INIT1:CONT OFF`; `f'CONF1:POW:AC DEF,DEF,(@{channel})'`; `f'SENS{channel}:CORR:CSET1:SEL "{calibration_table}"'`; `f'SENS{channel}:CORR:CSET1:STAT ON'`; `f'SENS{channel}:FREQ {fmt(frequency_hz)}'`; `UNIT1:POW DBM`; `TRIG1:SOUR IMM`; `CONF1:POW:AC DEF,DEF,(@`; `f'SENS{channel}:FREQ?'`; `f'SENS{channel}:CORR:CSET1:STAT?'`; `f'SENS{channel}:CORR:CSET1:SEL?'`; `UNIT1:POW?` |
+| `read_power(self)` | `READ1?` |
+| `stop(self)` | `INIT1:CONT OFF`; `INIT2:CONT OFF` |
+
 ## Hp437B
 
 [실행 코드](../dgm_lab/legacy.py)
@@ -98,6 +109,23 @@ SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermo
 | `read_power(self)` | `INIT`; `FETC?`; `READ?` |
 | `stop(self)` | `ABOR`; `INIT:CONT OFF` |
 
+## Co3000
+
+[실행 코드](../dgm_lab/motion.py)
+
+| API | 실제 명령/템플릿 조각 |
+| --- | --- |
+| `__init__(self, transport, *, axes, motion_enabled=False, poll_seconds=0.2)` | 하위 메서드 호출; 실행 코드 참조 |
+| `identify(self)` | `*IDN?`; `*OPT?` |
+| `position(self, axis)` | `f'STATUS {axis} ?'` |
+| `limits(self, axis)` | `LL`; `UL`; `CL`; `WL` |
+| `start(self, axis, value)` | `f'LD {value:.1f} {self.axes[axis]['unit']} NP'`; `GO` |
+| `stop_all(self)` | `ES` |
+| `speed(self, axis, level)` | `f'LD {level} SP'`; `SP` |
+| `wait(self, axis, *, target=None, polarization=None, timeout=60, tolerance=0.1, cancelled=None)` | 하위 메서드 호출; 실행 코드 참조 |
+| `move(self, axis, value, *, timeout=60, tolerance=0.1, cancelled=None)` | 하위 메서드 호출; 실행 코드 참조 |
+| `polarize(self, axis, orientation, *, timeout=60, cancelled=None)` | 하위 메서드 호출; 실행 코드 참조 |
+
 ## SignalGenerator
 
 [실행 코드](../dgm_lab/sources.py)
@@ -123,6 +151,19 @@ SCPI 공통: 식별 `*IDN?`, 완료 `*OPC?`, 오류 `SYST:ERR?`. HP/ESPEC/Thermo
 | `read_voltage(self)` | `MEAS:VOLT?` |
 | `read_current(self)` | `MEAS:CURR?` |
 | `powering(self)` | 하위 메서드 호출; 실행 코드 참조 |
+
+## OspSwitch
+
+[실행 코드](../dgm_lab/switching.py)
+
+| API | 실제 명령/템플릿 조각 |
+| --- | --- |
+| `__init__(self, transport, *, model, modules, paths, safe_path, switching_enabled=False)` | 하위 메서드 호출; 실행 코드 참조 |
+| `identify(self)` | `ROUT:MOD:CAT?` |
+| `matches(self, name)` | `ROUT:CLOS? ` |
+| `select(self, name)` | `ROUT:CLOS ` |
+| `stop(self)` | `ROUT:CLOS ` |
+| `routed(self, name)` | 하위 메서드 호출; 실행 코드 참조 |
 
 ## VectorNetworkAnalyzer
 

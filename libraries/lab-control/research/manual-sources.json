@@ -1,4 +1,23 @@
 [
+  {"id":"rs-cbt","url":"https://www.metrologymanuals.com/pdf/sha-423127c099dad8befd6fa9684e8735395ac63203e7b09afd37ff888e3c523d31/","kind":"manufacturer_manual_archive_copy","publisher":"Rohde & Schwarz"},
+  {"id":"keysight-psg","url":"https://www.keysight.com/cm/en/assets/9018-04965/programming-guides/9018-04965.pdf","kind":"manufacturer_manual"},
+  {"id":"keysight-esg-b","url":"https://www.keysight.com/ca/en/assets/9018-40176/programming-guides/9018-40176.pdf","kind":"manufacturer_manual"},
+  {"id":"keysight-6674a","url":"https://www.keysight.com/nl/en/assets/7018-09132/technical-overviews/5964-8269.pdf","kind":"manufacturer_manual"},
+  {"id":"rs-epl","url":"https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_5876_01/EPL_UserManual_en_07.pdf","kind":"manufacturer_manual"},
+  {"id":"keysight-e4419b","url":"https://www.keysight.com/us/en/assets/9018-01176/programming-guides/9018-01176.pdf","kind":"manufacturer_manual"},
+  {"id":"rs-znb","url":"https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9163_01/ZNB_UserManual_en_74.pdf","kind":"manufacturer_manual"},
+  {"id":"kikusui-pwr-legacy","url":"https://kikusui-korea.co.kr/files/PDF/PWR_M.pdf","kind":"manufacturer_manual"},
+  {"id":"rs-osp","url":"https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/OSP_OperatingManual_en_17.pdf","kind":"manufacturer_manual"},
+  {"id":"tescom-tc3000c","url":"https://mcs-testequipment.com/content/files/TC-3000C-Manual.pdf","kind":"manufacturer_manual_distributor_copy","publisher":"TESCOM"},
+  {"id":"rs-fsv","url":"https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf","kind":"manufacturer_manual"},
+  {"id":"keysight-e3632a","url":"https://www.keysight.com/us/en/assets/9018-01309/user-manuals/9018-01309.pdf","kind":"manufacturer_manual"},
+  {
+    "id": "innco-co3000",
+    "url": "https://www.reliantemc.com/download/innco-systems/innco-systems_CO3000_and_CT0500_Controller_Operating_Instructions.pdf",
+    "kind": "manufacturer_manual_distributor_copy",
+    "publisher": "innco systems GmbH",
+    "product_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714"
+  },
   {
     "id": "rs-esu",
     "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/ESU_OperatingManual_en_04.pdf",

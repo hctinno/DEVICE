@@ -6,12 +6,13 @@ from .analyzers import KEYSIGHT, RS
 
 class SignalGenerator(Scpi):
     MODELS = {'N5181A': 'keysight-mxg-a', 'N5182B': 'keysight-mxg-b', 'SMB100A': 'rs-smb100a',
-              'SMB100B': 'rs-smb100b', 'SMW200A': 'rs-smw200a'}
+              'SMB100B': 'rs-smb100b', 'SMW200A': 'rs-smw200a',
+              'E8267D': 'keysight-psg', 'E4421B': 'keysight-esg-b', 'E4433B': 'keysight-esg-b'}
 
     def __init__(self, transport, *, model, max_frequency_hz, max_power_dbm):
         if model not in self.MODELS:
             raise UnsupportedInstrument(f'No reviewed RF source dialect for {model}')
-        super().__init__(transport, model=model, manufacturers=KEYSIGHT if model.startswith('N') else RS)
+        super().__init__(transport, model=model, manufacturers=KEYSIGHT if model.startswith(('N','E')) else RS)
         self.source_id = self.MODELS[model]
         self.max_hz = number(max_frequency_hz, 'installed maximum frequency', 1, 1e12)
         self.max_dbm = number(max_power_dbm, 'site maximum power', -140, 40)
@@ -25,7 +26,7 @@ class SignalGenerator(Scpi):
         with self.io.transaction():
             self.stop()
             # RF path 1 only. Disables modulation, selects fixed frequency AND power.
-            modulation_off = 'OUTP:MOD OFF' if self.expected_model.startswith('N') else 'SOUR:MOD:ALL:STAT OFF'
+            modulation_off = 'OUTP:MOD OFF' if self.expected_model.startswith(('N','E')) else 'SOUR:MOD:ALL:STAT OFF'
             self.apply([modulation_off, 'SOUR:FREQ:MODE CW', 'SOUR:POW:MODE FIX',
                         f'SOUR:FREQ:CW {fmt(frequency_hz)}', f'SOUR:POW {fmt(power_dbm)}DBM'])
             close_enough(scalar(self.io.query('SOUR:FREQ:CW?')), frequency_hz, abs_tol=0.1)
@@ -56,7 +57,7 @@ class SignalGenerator(Scpi):
 
 
 class PowerSupply(Scpi):
-    MODELS = {'PWR2001ML': 'kikusui-pwr', 'E3640A': 'keysight-e3640'}
+    MODELS = {'PWR2001ML': 'kikusui-pwr', 'E3640A': 'keysight-e3640', 'E3632A': 'keysight-e3632a', '6674A': 'keysight-6674a'}
 
     def __init__(self, transport, *, model, max_voltage, max_current):
         if model not in self.MODELS:
@@ -65,6 +66,9 @@ class PowerSupply(Scpi):
         self.source_id = self.MODELS[model]
         self.max_v = number(max_voltage, 'site voltage limit', 0.001, 1000)
         self.max_a = number(max_current, 'site current limit', 0.001, 1000)
+        if model == '6674A':
+            number(max_voltage, '6674A rated voltage limit', 0.001, 60)
+            number(max_current, '6674A rated current limit', 0.001, 35)
         self.configured = False
 
     def configure(self, *, voltage, current_limit, range_name=None):
@@ -76,8 +80,14 @@ class PowerSupply(Scpi):
             vmax, imax = (8, 3) if range_name=='P8V' else (20, 1.5)
             number(voltage, 'selected range voltage', 0, vmax)
             number(current_limit, 'selected range current', 0, imax)
+        elif self.expected_model == 'E3632A':
+            if range_name not in ('P15V', 'P30V'):
+                raise ValueError('E3632A requires explicit P15V or P30V range')
+            vmax, imax = (15, 7) if range_name=='P15V' else (30, 4)
+            number(voltage, 'selected range voltage', 0, vmax)
+            number(current_limit, 'selected range current', 0, imax)
         elif range_name is not None:
-            raise ValueError('range_name only applies to E3640A')
+            raise ValueError('range_name only applies to E3640A/E3632A')
         self.ready()
         self.configured = False
         with self.io.transaction():

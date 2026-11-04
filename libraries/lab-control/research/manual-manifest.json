@@ -218,5 +218,115 @@
     "status": "acquired",
     "sha256": "d7e8407c660b97b14e7e29fddcdc68b93661bcdc8234add9ca88a5e18335c4d8",
     "pages": 178
+  },
+  {
+    "id": "innco-co3000",
+    "url": "https://www.reliantemc.com/download/innco-systems/innco-systems_CO3000_and_CT0500_Controller_Operating_Instructions.pdf",
+    "kind": "manufacturer_manual_distributor_copy",
+    "publisher": "innco systems GmbH",
+    "product_url": "https://www.innco-systems.de/en/products/controllers/controller-kopie-234/articles/714",
+    "status": "acquired",
+    "sha256": "b2bceb3ef0eb0aa11ee68585ece8a6974f4b68a378fa34e7efb671316da1b2e2",
+    "pages": 86
+  },
+  {
+    "id": "rs-fsv",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/FSVA_FSV_UserManual_en_13.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "b30e35b18a119f8007aa0b9b77b4785fccb00773bf7408f4de7daaf7865cd1a5",
+    "pages": 1095
+  },
+  {
+    "id": "keysight-e3632a",
+    "url": "https://www.keysight.com/us/en/assets/9018-01309/user-manuals/9018-01309.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/user-manuals/9018-01309.pdf",
+    "status": "acquired",
+    "sha256": "776ea5e97c9a82e174a5c496c419bb3b27dda934d47068f7fdb217babc2b3583",
+    "pages": 181
+  },
+  {
+    "id": "tescom-tc3000c",
+    "url": "https://mcs-testequipment.com/content/files/TC-3000C-Manual.pdf",
+    "kind": "manufacturer_manual_distributor_copy",
+    "publisher": "TESCOM",
+    "status": "failed",
+    "error": "522 Server Error: <none> for url: https://mcs-testequipment.com/content/files/TC-3000C-Manual.pdf"
+  },
+  {
+    "id": "rs-osp",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/OSP_OperatingManual_en_17.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "8f5f1419879f4f03e6ce7b66c891fa7f5d557cd0369a1599b80da4c431dfa8cd",
+    "pages": 231
+  },
+  {
+    "id": "keysight-e4419b",
+    "url": "https://www.keysight.com/us/en/assets/9018-01176/programming-guides/9018-01176.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/programming-guides/9018-01176.pdf",
+    "status": "acquired",
+    "sha256": "77340137efc10101515507e4bf78798dd5829f863479832801ef8a178b11ea2c",
+    "pages": 486
+  },
+  {
+    "id": "rs-znb",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1173_9163_01/ZNB_UserManual_en_74.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "874901ee4e880dbca9a606406df448494f610233f0cd3b6a61244464b19fdccd",
+    "pages": 1786
+  },
+  {
+    "id": "kikusui-pwr-legacy",
+    "url": "https://kikusui-korea.co.kr/files/PDF/PWR_M.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "9c559085e1b3da3b4816b335efe8463e356e08cd3b7bf18a3021fd543ff44418",
+    "pages": 128
+  },
+  {
+    "id": "rs-epl",
+    "url": "https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/pdm/cl_manuals/user_manual/1179_5876_01/EPL_UserManual_en_07.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "16e1c53563ab6765a08a4bb9927bcdbc0b710a41bceef76198a5872b82dae1d8",
+    "pages": 701
+  },
+  {
+    "id": "keysight-6674a",
+    "url": "https://www.keysight.com/nl/en/assets/7018-09132/technical-overviews/5964-8269.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/ungate/technical-overviews/5964-8269.pdf",
+    "status": "acquired",
+    "sha256": "5a76ab08b32de282e3456c89ab50a4d170a47a6e2d34704ecc29431249e919c3",
+    "pages": 72
+  },
+  {
+    "id": "keysight-psg",
+    "url": "https://www.keysight.com/cm/en/assets/9018-04965/programming-guides/9018-04965.pdf",
+    "kind": "manufacturer_manual",
+    "status": "acquired",
+    "sha256": "bb5b17cd51a865d82562b143a03fe9e8d27bf834bf57f0c1d22ce8e95feb502f",
+    "pages": 526
+  },
+  {
+    "id": "keysight-esg-b",
+    "url": "https://www.keysight.com/ca/en/assets/9018-40176/programming-guides/9018-40176.pdf",
+    "kind": "manufacturer_manual",
+    "resolved_url": "https://www.keysight.com/content/dam/keysight/en/doc/gate/programming-guides/9018-40176.pdf",
+    "status": "acquired",
+    "sha256": "9dc0185ff2847e3943f1b47e9b2a457fc305cdf1fa9f1c335aeb73b9aa5b2718",
+    "pages": 259
+  },
+  {
+    "id": "rs-cbt",
+    "url": "https://www.metrologymanuals.com/pdf/sha-423127c099dad8befd6fa9684e8735395ac63203e7b09afd37ff888e3c523d31/",
+    "kind": "manufacturer_manual_archive_copy",
+    "publisher": "Rohde & Schwarz",
+    "status": "failed",
+    "error": "403 Client Error: Forbidden for url: https://www.metrologymanuals.com/pdf/sha-423127c099dad8befd6fa9684e8735395ac63203e7b09afd37ff888e3c523d31/"
   }
 ]

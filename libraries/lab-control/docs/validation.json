@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-04T02:08:46.518249+00:00",
+  "utc": "2026-11-04T03:13:47.335317+00:00",
   "python": "3.12.6",
   "passed": true,
   "physical_equipment_tests": 0,
@@ -11,18 +11,19 @@
     "Physical VISA/USB/GPIB/serial devices",
     "Actual phone TX and RF-off verification",
     "Measurement accuracy/calibration/uncertainty",
-    "Motion/SAR/NR/DFS test workflows"
+    "Physical motion/SAR/NR/DFS test workflows"
   ],
-  "utf8_source_artifacts": 62,
-  "local_manual_sha256_verified": 24,
+  "utf8_source_artifacts": 90,
+  "local_manual_sha256_verified": 35,
   "manual_pdf_cache_present": true,
-  "tests_run": 49,
+  "local_hct_pdf_sha256_verified": 16,
+  "tests_run": 79,
   "test_failures": 0,
   "test_errors": 0,
-  "localhost_tcp_tests": 5,
+  "localhost_tcp_tests": 7,
   "visa_serial_adapter_fixture_tests": 4,
   "wheels_built_and_installed": 2,
-  "installed_package_cli_and_example_help_checks": 4,
+  "installed_package_cli_and_example_help_checks": 6,
   "inventory": {
     "extracted_rows": 1332,
     "classified_rows": 1330,
@@ -41,5 +42,27 @@
     "physical_equipment_tests": 0,
     "extraction_scope": "Manufacturer/Model text-table candidates; not an exhaustive OCR audit"
   },
-  "elapsed_seconds": 31.11
+  "hct_inventory": {
+    "qualified_pdf_parts": 16,
+    "distinct_reports": 12,
+    "equipment_rows": 418,
+    "manufacturer_model_groups": 150,
+    "status_counts": {
+      "passive_or_fixture": 56,
+      "pending_protocol": 18,
+      "vendor_required": 36,
+      "support_or_software": 6,
+      "conditional": 2,
+      "model_required": 1,
+      "implemented_uncommissioned": 21,
+      "controller_component": 7,
+      "controller_required": 1,
+      "host_component": 2
+    },
+    "physical_tests": 0,
+    "exhaustive_hct_2026_population": false,
+    "nr_report_incomplete": false,
+    "nr_printed_pages_verified": 371
+  },
+  "elapsed_seconds": 48.891
 }
