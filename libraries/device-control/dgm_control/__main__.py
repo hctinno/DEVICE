@@ -24,6 +24,11 @@ def main():
     virtual = actions.add_parser("virtual-run", help="Coupled virtual WLAN lab; never opens hardware")
     virtual.add_argument("--output-dir", required=True)
     virtual.add_argument("--scenario", help="JSON Scenario fields; synthetic model parameters only")
+    virtual.add_argument("--evaluation", help="Explicit correction tables and declared criterion JSON")
+    evaluation_init = actions.add_parser("evaluation-init", help="Write NEW synthetic correction/limit fixture, not a regulatory criterion")
+    evaluation_init.add_argument("--workflow", required=True, choices=["radio", "wlan"])
+    evaluation_init.add_argument("--plan", help="Required for radio; optional explicit WLAN plan")
+    evaluation_init.add_argument("--output", required=True)
     virtual.add_argument("--fault", choices=["analyzer-timeout", "malformed", "stuck-motion", "phone-stop"], help="Inject a reproducible failure")
     actions.add_parser("virtual-info", help="Integrated virtual device models and limitations")
     actions.add_parser("radio-list", help="Radio backends, source scopes and unconfirmed commands")
@@ -39,6 +44,7 @@ def main():
         action.add_argument("--mode", required=True, choices=["simulation", "hardware"])
         action.add_argument("--plan", required=True)
         action.add_argument("--profiles-dir")
+        action.add_argument("--evaluation", help="Explicit correction tables and declared criterion JSON")
         if name == "radio-run":
             action.add_argument("--output-dir", required=True)
             action.add_argument("--cancel-file")
@@ -48,13 +54,27 @@ def main():
         hardware = actions.add_parser(name, help="Offline WLAN preflight" if name == "hardware-check" else "REAL WLAN output and motion using explicit site profiles")
         hardware.add_argument("--profiles-dir", required=True, help="Directory with six device-ID.json hardware profiles")
         hardware.add_argument("--plan", required=True, help="Fully specified commissioned WLAN plan JSON")
+        hardware.add_argument("--evaluation", help="Explicit correction tables and declared criterion JSON")
         if name == "hardware-run":
             hardware.add_argument("--output-dir", required=True, help="New private run directory; never overwritten")
             hardware.add_argument("--cancel-file", help="Stop at the next checkpoint when this file exists")
     args = parser.parse_args()
     try:
         exit_code = 0
-        if args.action.startswith("radio-"):
+        from .evaluation import Evaluation, evaluation_template, assessment_exit
+        evaluation = load_profile(args.evaluation) if getattr(args, "evaluation", None) else None
+        if args.action == "evaluation-init":
+            from .virtual_recipe import WlanScan
+            from .hardware_run import plan_from_dict
+            if args.workflow == "radio" and not args.plan: raise ValueError("Radio evaluation-init requires --plan")
+            plan = load_profile(args.plan) if args.plan else None
+            if args.workflow == "wlan": plan = plan_from_dict(plan) if plan else WlanScan()
+            value = evaluation_template(plan)
+            with Path(args.output).open("x", encoding="utf-8") as handle:
+                json.dump(value, handle, ensure_ascii=False, indent=2, allow_nan=False)
+                handle.write("\n")
+            output = {"written": args.output, "simulation_only": True, "connection_attempted": False}
+        elif args.action.startswith("radio-"):
             import threading
             from .radio_contracts import radio_catalog, radio_template, nfc_profile_template, check_radio
             from .radio_run import load_radio_profiles, run_radio
@@ -73,12 +93,13 @@ def main():
                 if args.action == "radio-check":
                     profiles = load_radio_profiles(plan, args.profiles_dir) if args.mode == "hardware" else None
                     output = check_radio(plan, args.mode, profiles)
+                    if evaluation is not None: output["evaluation"] = Evaluation(evaluation, plan, simulated=args.mode == "simulation").preflight()
                 else:
                     event = threading.Event()
                     with cancellation_signals(event):
                         output = run_radio(plan, args.mode, args.output_dir, profiles_dir=args.profiles_dir,
-                                           cancelled=event, cancel_file=args.cancel_file, fault=args.fault)
-                    exit_code = {"completed": 0, "failed": 2, "blocked": 2, "cancelled": 130}[output["status"]]
+                                           cancelled=event, cancel_file=args.cancel_file, fault=args.fault, evaluation=evaluation)
+                    exit_code = assessment_exit(output)
         elif args.action == "list":
             output = [{key: row[key] for key in ("id", "kind", "equipment_type", "manufacturers", "status", "simulation_available", "integrated_virtual_model", "physical_verified")} for row in devices(args.kind)]
         elif args.action == "show":
@@ -109,18 +130,20 @@ def main():
                       "stuck-motion": Fault("Co3000", "GO", "stuck"),
                       "phone-stop": Fault("PhoneAt", "AT+WIFITEST=0,2,0,0")}
             scenario = Scenario(**load_profile(args.scenario)) if args.scenario else None
-            output = run_virtual(args.output_dir, scenario=scenario, fault=faults.get(args.fault))
+            output = run_virtual(args.output_dir, scenario=scenario, fault=faults.get(args.fault), evaluation=evaluation)
+            exit_code = assessment_exit(output)
         elif args.action in ("hardware-check", "hardware-run"):
             import threading
             from .hardware_run import load_hardware_inputs, check_hardware, run_hardware, cancellation_signals
             profiles, plan = load_hardware_inputs(args.profiles_dir, args.plan)
             if args.action == "hardware-check":
                 output = check_hardware(profiles, plan)
+                if evaluation is not None: output["evaluation"] = Evaluation(evaluation, plan, simulated=False).preflight()
             else:
                 event = threading.Event()
                 with cancellation_signals(event):
-                    output = run_hardware(profiles, plan, args.output_dir, cancelled=event, cancel_file=args.cancel_file)
-                exit_code = {"completed": 0, "failed": 2, "cancelled": 130}[output["status"]]
+                    output = run_hardware(profiles, plan, args.output_dir, cancelled=event, cancel_file=args.cancel_file, evaluation=evaluation)
+                exit_code = assessment_exit(output)
         else:
             from .demo import run_demo
             output = run_demo(args.output_dir, inject_failure=args.inject_failure)

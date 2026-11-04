@@ -62,7 +62,7 @@ def main():
                     if archive.testzip() is not None: raise RuntimeError("Damaged wheel")
                     if any(".manual-cache" in name or ".fcc-cache" in name for name in archive.namelist()):
                         raise RuntimeError("Vendor cache leaked into wheel")
-            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.6.0"], cwd=temp)
+            run([sys.executable, "-m", "pip", "--disable-pip-version-check", "install", "--no-index", "--find-links", str(wheels), "--target", str(installed), "dgm-device-control==0.7.0"], cwd=temp)
             env = dict(os.environ, PYTHONPATH=str(installed), PYTHONIOENCODING="utf-8")
             base = [sys.executable, "-s", "-m", "dgm_control"]
             checks = []
@@ -75,7 +75,7 @@ def main():
             detail = json.loads(command("show", "Co3000").stdout)
             if not detail["sources"]: raise RuntimeError("Installed provenance missing")
             diagnosed = json.loads(command("doctor").stdout)
-            if diagnosed["packages"]["dgm-device-control"] != "0.6.0": raise RuntimeError("Installed SDK version mismatch")
+            if diagnosed["packages"]["dgm-device-control"] != "0.7.0": raise RuntimeError("Installed SDK version mismatch")
             profile = temp / "simulation.json"
             command("init", "OdaEx", "--mode", "simulation", "--output", str(profile))
             command("check", str(profile))
@@ -175,6 +175,38 @@ def main():
                     "--output-dir", str(temp / "hardware-scan-cancel"), "--cancel-file", str(cancel_file), expected=130).stdout)
             if answer["status"] != "cancelled": raise RuntimeError("Installed hardware scan pre-cancel failed")
             report["radio_scan_runs"] = scan_runs
+            evaluated_runs = []
+            for radio in ("bluetooth", "cellular", "nfc", "uwb"):
+                plan_path = temp / f"{radio}-scan.json"
+                eval_path = temp / f"{radio}-evaluation.json"
+                command("evaluation-init", "--workflow", "radio", "--plan", str(plan_path), "--output", str(eval_path))
+                command("radio-check", "--mode", "simulation", "--plan", str(plan_path), "--evaluation", str(eval_path))
+                answer = json.loads(command("radio-run", "--mode", "simulation", "--plan", str(plan_path), "--evaluation", str(eval_path),
+                                             "--output-dir", str(temp / f"{radio}-corrected")).stdout)
+                if answer["assessment"]["verdict"] != "PASS": raise RuntimeError("Installed synthetic comparison failed")
+                evaluated_runs.append(answer)
+            evaluation_path = temp / "wlan-evaluation.json"
+            command("evaluation-init", "--workflow", "wlan", "--output", str(evaluation_path))
+            before = evaluation_path.read_bytes()
+            command("evaluation-init", "--workflow", "wlan", "--output", str(evaluation_path), expected=2)
+            if evaluation_path.read_bytes() != before: raise RuntimeError("Evaluation overwritten")
+            command("virtual-run", "--evaluation", str(evaluation_path), "--output-dir", str(temp / "wlan-corrected"))
+            # Verdict exits differ from acquisition errors and preserve complete result.json.
+            value = json.loads(evaluation_path.read_text(encoding="utf-8"))
+            value["criterion"]["segments"][0].update(start_dbuv_m=-100, stop_dbuv_m=-100)
+            evaluation_path.write_text(json.dumps(value), encoding="utf-8")
+            command("virtual-run", "--evaluation", str(evaluation_path), "--output-dir", str(temp / "wlan-limit-fail"), expected=4)
+            value["decision"].update(rule="guarded", expanded_uncertainty_db=1000)
+            evaluation_path.write_text(json.dumps(value), encoding="utf-8")
+            command("virtual-run", "--evaluation", str(evaluation_path), "--output-dir", str(temp / "wlan-indeterminate"), expected=5)
+            value["criterion"]["detector"] = "QP"
+            evaluation_path.write_text(json.dumps(value), encoding="utf-8")
+            command("virtual-run", "--evaluation", str(evaluation_path), "--output-dir", str(temp / "wlan-not-evaluated"), expected=3)
+            command("virtual-run", "--evaluation", str(evaluation_path), "--output-dir", str(temp / "corrected-failure"),
+                    "--fault", "phone-stop", expected=2)
+            failed = json.loads((temp / "corrected-failure/failure.json").read_text(encoding="utf-8"))
+            if failed["assessment"]["verdict"] != "NOT_EVALUATED": raise RuntimeError("Failure leaked final pass")
+            report["evaluated_runs"] = evaluated_runs
             # Verify actual imported modules originate in the isolated target directory.
             proof = run([sys.executable, "-s", "-c", "import dgm_control,dgm_lab,dgm_rf,json; print(json.dumps([dgm_control.__file__,dgm_lab.__file__,dgm_rf.__file__]))"], cwd=temp, env=env)
             if not all(Path(name).resolve().is_relative_to(installed.resolve()) for name in json.loads(proof.stdout)):

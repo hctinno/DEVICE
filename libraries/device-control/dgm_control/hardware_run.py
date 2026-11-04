@@ -15,6 +15,7 @@ from .errors import error_details
 from .profiles import load_profile
 from .virtual_lab import HardwareLab, WLAN_DEVICES
 from .virtual_recipe import WlanScan, measure_wlan
+from .evaluation import Evaluation
 
 
 def utc():
@@ -181,7 +182,7 @@ class ObservedHardware:
             yield session
 
 
-def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None):
+def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None, evaluation=None):
     """Execute only explicit hardware profiles. Never substitute a simulator.
 
     Returns a summary after a durable result or failure. CLI maps failed to 2 and
@@ -189,6 +190,7 @@ def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None
     Kill/power loss may leave run.json=running; it is never a success marker.
     """
     profiles, plan = deepcopy(profiles), deepcopy(plan)
+    evaluation = deepcopy(evaluation)
     target = Path(output_dir).resolve()
     target.mkdir(parents=True, exist_ok=False)
     run_id = str(uuid.uuid4())
@@ -200,15 +202,19 @@ def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None
     evidence = RunEvidence(target, run_id)
     token = Cancellation(cancelled, cancel_file, evidence)
     sessions, measurement, errors = {}, None, []
+    evaluator = None
+    if evaluation is not None:
+        report["assessment"] = {"verdict": "NOT_EVALUATED", "reasons": ["Preflight or execution incomplete"]}
     try:
         evidence.open()
         check_hardware(profiles, plan)
-        atomic_json(target / "inputs.json", {"run_id": run_id, "profiles": profiles, "plan": asdict(plan)})
+        atomic_json(target / "inputs.json", {"run_id": run_id, "profiles": profiles, "plan": asdict(plan), "evaluation": evaluation})
+        if evaluation is not None: evaluator = Evaluation(evaluation, plan, simulated=False)
         if token.is_set():
             raise InterruptedError("Hardware run cancelled before connection")
         site = HardwareLab(profiles, log=evidence.traffic)
         observed = ObservedHardware(site, sessions, report)
-        measurement = measure_wlan(observed, plan, cancelled=token, on_sample=evidence.sample)
+        measurement = measure_wlan(observed, plan, cancelled=token, on_sample=evidence.sample, evaluation=evaluator)
         report["cleanup_scope_succeeded"] = True
         evidence.require_healthy()
         if token.is_set():
@@ -240,6 +246,7 @@ def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None
     else:
         report.update(status="completed", measurement=measurement)
         filename = "result.json"
+    if evaluator is not None: report["assessment"] = evaluator.summary(completed=not errors)
     # If final persistence fails, no successful result is published. Incremental files remain.
     try:
         atomic_json(target / filename, report)
@@ -248,6 +255,7 @@ def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None
             raise BaseExceptionGroup("Run failed and failure report could not be persisted", [*errors, error]) from None
         report.pop("measurement", None)
         report.update(status="failed", error=error_details(error))
+        if evaluator is not None: report["assessment"] = evaluator.summary(completed=False)
         filename = "failure.json"
         try:
             atomic_json(target / filename, report)
@@ -256,4 +264,5 @@ def run_hardware(profiles, plan, output_dir, *, cancelled=None, cancel_file=None
     return {"run_id": run_id, "status": report["status"], "simulated": False,
             "physical_verified": False, "report": str(target / filename),
             "samples": evidence.sample_count,
+            **({"assessment": report["assessment"]} if "assessment" in report else {}),
             **({"error": report["error"]} if "error" in report else {})}

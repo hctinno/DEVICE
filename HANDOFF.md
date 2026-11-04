@@ -10,6 +10,10 @@
 
 ## 현재 상태
 
+0.7.0 최종 소프트웨어 검수: SDK 138 + 설비 99 + 단말 58 = **295개**, 격리 설치 CLI **67건**, README **30개 실행·Python 구문 3개** 통과. 새 venv 오프라인 설치에서 네 radio의 보정 비교도 확인했습니다. ZIP 313400 bytes, SHA-256 `e8aa0809770512f047e37141b9777e0af9b861d706f96c369fa5bdb66ece292a`; ZIP은 Git에 없고 생성기/manifest를 저장합니다. 설치기와 카탈로그의 0.6.0 잔여 고정값을 수정하고 실제 배포물로 재검증했습니다. 실제 장비 접속은 0건입니다.
+
+2026-11-04 SDK 0.7.0: [보정·선언 기준 비교](libraries/device-control/CORRECTIONS.md)를 추가했습니다. WLAN과 네 radio schema 2 설비 스캔은 --evaluation으로 주파수/경로/편파별 AF·케이블/스위치 손실·외부 증폭기 이득을 적용합니다. 보정 전계 최대 위치 복귀와 최악 기준 여유 위치를 분리하고, 원시 trace·보정항·한계·부분 비교·최종 assessment·입력 스냅샷/hash를 저장합니다. simulation-only 템플릿은 실제 교정 자료가 아니며 hardware에서는 차단합니다. 검파기·RBW/VBW·거리·최소 sweep 조건이 맞는 POS 전계 비교만 지원합니다. 오류/중단/cleanup/저장 실패는 최종 NOT_EVALUATED입니다. 전체 FCC 적합성, 자기장 변환, QP/평균, 자동 규격 선정·불확도 예산, 실장비 검증은 미완료입니다. 아래 0.6.0 이하는 과거 기록이며 최신 검사 수는 validation JSON을 따릅니다.
+
 2026-11-04 SDK 0.6.0: [다중 무선 설비 스캔](libraries/device-control/RADIO_SCAN.md)을 추가했습니다. radio-init --scan은 schema 2, 기존 --scan 없는 plan은 schema 1입니다. source+SpectrumAnalyzer+Co3000+OspSwitch 네 프로필로 경로/편파/높이/각도/반복을 측정하고 최대 표본 위치로 복귀한 뒤 안전 경로·ES를 확인합니다. 실제 source 명령과 모델/build 제한은 바꾸지 않았습니다. NFC는 동일 기준 위치/경로에서만 RF OFF 확인하며, 다른 위치의 오류/취소에서는 추가 이동을 강행하지 않고 stop 미확인을 기록합니다. 검수 결과는 최신 validation JSON을 확인합니다. 아래 0.5.0 이하는 과거 기록입니다.
 
 0.6.0 검수: SDK 111 + 설비 99 + 단말 58 = 268개 회귀, 격리 설치 CLI 48건 통과. 새 venv 오프라인 설치 후 네 radio 모두 12점 스캔·200cm/90°/V 최대 복귀를 확인했습니다. 여러 경로의 단말 로그를 누적하고 경로/세션으로 구분합니다. ZIP 300625 bytes, SHA-256 `0b3309cb5e816bae3dc3d6aedf7511cf332cc37ecfd1154d04be2f47881f8502`; Git에는 생성기와 검수 manifest를 저장합니다. 실제 장비 운전은 0건입니다.

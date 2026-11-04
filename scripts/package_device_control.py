@@ -24,6 +24,7 @@ def run(argv, cwd, env=None):
 def main():
     validation = json.loads((SDK / "docs/validation.json").read_text(encoding="utf-8"))
     if not validation["passed"]: raise RuntimeError("Run check_device_control.py successfully first")
+    version = tomllib.loads((SDK / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
     target = SDK / "dist"
     target.mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="dgm-sdk-package-") as temporary:
@@ -34,12 +35,16 @@ def main():
         for package in [ROOT / "libraries/phone-rf", ROOT / "libraries/lab-control", SDK]:
             run([sys.executable, "-m", "pip", "--disable-pip-version-check", "wheel", "--no-deps", "--no-build-isolation", "--wheel-dir", str(wheels), str(package)], ROOT)
         if len(list(wheels.glob("*.whl"))) != 3: raise RuntimeError("Expected three wheels")
+        with zipfile.ZipFile(next(wheels.glob("dgm_device_control-*.whl"))) as wheel:
+            if json.loads(wheel.read("dgm_control/data/catalog.json"))["sdk_version"] != version:
+                raise RuntimeError("Wheel catalog and package versions disagree")
         shutil.copyfile(SDK / "scripts/install_sdk.py", bundle / "install.py")
         shutil.copyfile(SDK / "OFFLINE_INSTALL.md", bundle / "README.md")
         shutil.copyfile(SDK / "VIRTUAL_LAB.md", bundle / "VIRTUAL_LAB.md")
         shutil.copyfile(SDK / "HARDWARE_RUN.md", bundle / "HARDWARE_RUN.md")
         shutil.copyfile(SDK / "MULTIRADIO.md", bundle / "MULTIRADIO.md")
         shutil.copyfile(SDK / "RADIO_SCAN.md", bundle / "RADIO_SCAN.md")
+        shutil.copyfile(SDK / "CORRECTIONS.md", bundle / "CORRECTIONS.md")
         # Exercise the bundle's real installer in an isolated virtual environment.
         environment = temp / "venv"
         run([sys.executable, "-m", "venv", str(environment)], temp)
@@ -58,12 +63,14 @@ def main():
         for radio in ("bluetooth", "cellular", "nfc", "uwb"):
             plan = temp / f"{radio}.json"
             run([str(python), "-m", "dgm_control", "radio-init", radio, "--scan", "--output", str(plan)], temp, clean_env)
-            answer = json.loads(run([str(python), "-m", "dgm_control", "radio-run", "--mode", "simulation", "--plan", str(plan), "--output-dir", str(temp / radio)], temp, clean_env))
+            evaluation = temp / f"{radio}-evaluation.json"
+            run([str(python), "-m", "dgm_control", "evaluation-init", "--workflow", "radio", "--plan", str(plan), "--output", str(evaluation)], temp, clean_env)
+            answer = json.loads(run([str(python), "-m", "dgm_control", "radio-run", "--mode", "simulation", "--plan", str(plan), "--evaluation", str(evaluation), "--output-dir", str(temp / radio)], temp, clean_env))
             if answer["status"] != "completed" or not answer["simulated"]: raise RuntimeError("Offline radio run failed")
+            if answer["assessment"]["verdict"] != "PASS": raise RuntimeError("Offline corrected comparison failed")
             if answer["samples"] != 12 or answer["peak"]["angle_deg"] != 90 or answer["peak"]["height_cm"] != 200 or answer["peak"]["polarization"] != "V":
                 raise RuntimeError("Offline facility scan peak failed")
             radio_runs.append(radio)
-        version = tomllib.loads((SDK / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
         archive = target / f"dgm-device-control-{version}-offline.zip"
         with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as output:
             for path in sorted(bundle.rglob("*")):
@@ -74,6 +81,7 @@ def main():
                   "wheels": [path.name for path in sorted(wheels.glob("*.whl"))], "offline_installer_tested": True,
                   "fresh_venv_demo_passed": True, "fresh_venv_virtual_lab_passed": True,
                   "fresh_venv_radio_scans_passed": radio_runs, "radio_scan_samples_each": 12, "hardware_tests": 0}
+        report["fresh_venv_corrected_radio_comparisons_passed"] = radio_runs
         (target / "manifest.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         (SDK / "docs/distribution-validation.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         print(json.dumps(report))

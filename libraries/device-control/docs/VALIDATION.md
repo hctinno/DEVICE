@@ -1,4 +1,12 @@
-# SDK v0.6.0 검수 범위
+# SDK v0.7.0 검수 범위
+
+2026-11-04 Windows/Python 3.12.6: SDK **138개**, 설비 **99개**, 단말 **58개**, 총 **295개** 회귀 검사 통과. 신규 27개는 50Ω 환산/부호, Hz/log-Hz 보간, 보정으로 달라지는 최대 주파수·편파·경로, 최악 여유와 최대 전계 분리, simple/guarded 경계, 한계 구간 경계·빈 구간, 조건 불일치, 유효기간/단위/외삽 거절, 모드·hash, native 모의 실장비, 오류/취소/최종 저장 실패를 검증합니다. [구현 범위](../CORRECTIONS.md), [검사 코드](../tests/test_evaluation.py).
+
+실장비 어댑터 검사는 native protocol peer를 연결한 소프트웨어 검사입니다. 실제 장비 연결·교정·검파기 readback·거리·현장 RF 비교·FCC 적합성은 수행하지 않았습니다. 설치 CLI, ZIP, README의 최신 실행 수·버전·hash는 validation.json, distribution-validation.json, 루트 README_VALIDATION.json을 따릅니다.
+
+v0.7.0 배포 검수: 격리 설치 CLI **67건**, 배포 ZIP의 새 venv 설치 및 네 radio의 12점 보정 비교, README **30개 실행·3개 Python 구문 검사** 통과. 설치기 0.6.0 고정값과 카탈로그 버전 불일치를 수정한 뒤 최종 ZIP을 재생성했습니다. wheel 내부 카탈로그/패키지 버전을 검사하며 별도 설치본에서도 0.7.0 일치를 확인했습니다. ZIP 313400 bytes, SHA-256 `e8aa0809770512f047e37141b9777e0af9b861d706f96c369fa5bdb66ece292a`입니다.
+
+아래 v0.6.0 이하는 과거 검수 기록입니다.
 
 2026-11-04 Windows/Python 3.12.6: SDK **111개**, 설비 **99개**, 단말 **58개**, 총 **268개** 회귀 검사 통과. 추가 설비 스캔 검사 15개는 네 radio 가상/모의 실장비 경계, geometry·경로 손실, 여러 경로의 최대 선택, 송신 종료 후 경로 전환, 위치·relay drift, 최대 복귀 실패, 모션/스위치 timeout, 부분 기록, 동시 cleanup 오류, 취소·사전 취소·저장 실패, 경로별 단말 로그 누적을 포함합니다.
 

@@ -9,9 +9,10 @@ def position_matches(states, pose):
             and abs(states[1].value-pose["angle_deg"]) <= .1 and states[0].polarization == "P"+pose["polarization"])
 
 
-def measure_radio_scan(lab, token, event, fault=None):
+def measure_radio_scan(lab, token, event, fault=None, evaluation=None):
     plan, evidence = lab.plan, lab.evidence
     scan = plan["scan"]
+    if evaluation is not None: evaluation.bind(plan, lab.simulated)
     reference = {"height_cm": scan["heights_cm"][0], "angle_deg": scan["angles_deg"][0], "polarization": scan["polarizations"][0]}
     samples, baselines = [], []
     with lab.open("Co3000") as motion, lab.open("OspSwitch") as route, lab.open("SpectrumAnalyzer") as analyzer:
@@ -69,6 +70,7 @@ def measure_radio_scan(lab, token, event, fault=None):
                                         checkpoint(token)
                                         row.update(index=len(samples), repeat=repeat, radio=plan["radio"], backend=plan["backend"],
                                                    rf_path=path, **pose, position_before=pre, position_after=post)
+                                        if evaluation is not None: evaluation.correct(row)
                                         evidence.sample(row)
                                         samples.append(row)
                                         if fault == "cancel-after-sample": event.set()
@@ -81,7 +83,7 @@ def measure_radio_scan(lab, token, event, fault=None):
                 after = lab.acquire(analyzer, "after-source")
                 baselines.append({"rf_path": path, "before": before, "after": after})
                 checkpoint(token)
-            peak = max(samples, key=lambda row: row["peak_dbm"])
+            peak = max(samples, key=lambda row: row["evaluation"]["peak"]["field_dbuv_m"] if evaluation is not None else row["peak_dbm"])
             # Source is already stopped; switch and move to the best acquired point.
             checkpoint(token)
             lab.current_path = peak["rf_path"]
@@ -100,4 +102,5 @@ def measure_radio_scan(lab, token, event, fault=None):
                 "sampled_peak": {key: peak[key] for key in ("index", "repeat", "rf_path", "height_cm", "angle_deg", "polarization", "peak_dbm")},
                 "returned_to_sampled_peak": True, "peak_return_readback": returned, "final_facility_readback": final,
                 "peak_trace_dbm": peak["peak_dbm"], "path_baselines": baselines,
-                "note": "Maximum raw trace bin among acquired samples; not a continuous/global/FCC maximum. Final RF route is safe_path."}
+                "ranking": "corrected_field_dbuv_m" if evaluation is not None else "raw_trace_dbm",
+                "note": "Maximum among acquired samples only; not a continuous/global/FCC maximum. Final RF route is safe_path."}

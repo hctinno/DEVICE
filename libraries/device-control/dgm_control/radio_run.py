@@ -11,6 +11,7 @@ from .radio_contracts import RADIOS, RadioBlocked, check_radio, validate_plan, r
 from .radio_scan_contracts import SCAN_FAULTS
 from .radio_simulation import RadioWorld
 from .radio_adapters import RadioLab, checkpoint, pause
+from .evaluation import Evaluation
 
 FAULTS = ("start-timeout", "measure-timeout", "stop-timeout", "cancel-after-sample") + SCAN_FAULTS
 
@@ -23,10 +24,11 @@ def load_radio_profiles(plan, directory):
     return {name: load_profile(Path(directory) / (name + ".json")) for name in names}
 
 
-def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cancelled=None, cancel_file=None, fault=None):
+def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cancelled=None, cancel_file=None, fault=None, evaluation=None):
     if mode not in ("simulation", "hardware"):
         raise ValueError("Explicit simulation/hardware mode required")
     plan, profiles = deepcopy(plan), deepcopy(profiles)
+    evaluation = deepcopy(evaluation)
     simulated = mode == "simulation"
     target = Path(output_dir).resolve()
     target.mkdir(parents=True, exist_ok=False)
@@ -39,6 +41,9 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
     event = cancelled if cancelled is not None else threading.Event()
     token = Cancellation(event, cancel_file, evidence)
     world, lab, measurement, errors = None, None, None, []
+    evaluator = None
+    if evaluation is not None:
+        report["assessment"] = {"verdict": "NOT_EVALUATED", "reasons": ["Preflight or execution incomplete"]}
     try:
         evidence.open()
         evidence.handles["observations.jsonl"] = (target / "observations.jsonl").open("x", encoding="utf-8")
@@ -47,8 +52,11 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
             if profiles is not None or simulated:
                 raise ValueError("profiles_dir is exclusive to hardware and explicit profile objects")
             profiles = load_radio_profiles(plan, profiles_dir)
-        atomic_json(target / "inputs.json", {"run_id": report["run_id"], "plan": plan, "profiles": profiles})
+        atomic_json(target / "inputs.json", {"run_id": report["run_id"], "plan": plan, "profiles": profiles, "evaluation": evaluation})
         report["preflight"] = check_radio(plan, mode, profiles)
+        if evaluation is not None:
+            evaluator = Evaluation(evaluation, plan, simulated=simulated)
+            report["evaluation_preflight"] = evaluator.preflight()
         if fault is not None and (not simulated or fault not in FAULTS):
             raise ValueError("Fault injection requires a supported simulation-only fault")
         if fault in SCAN_FAULTS and plan["schema_version"] != 2:
@@ -59,7 +67,7 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
         lab = RadioLab(plan, profiles, evidence, world)
         if plan["schema_version"] == 2:
             from .radio_scan import measure_radio_scan
-            measurement = measure_radio_scan(lab, token, event, fault)
+            measurement = measure_radio_scan(lab, token, event, fault, evaluator)
         else:
             measurement = measure_fixed(lab, token, event, fault)
         report["cleanup_scope_succeeded"] = True
@@ -91,6 +99,7 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
     else:
         report.update(status="completed", measurement=measurement)
         filename = "result.json"
+    if evaluator is not None: report["assessment"] = evaluator.summary(completed=not errors)
     try:
         atomic_json(target / filename, report)
     except Exception as error:
@@ -98,6 +107,7 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
             raise BaseExceptionGroup("Radio failed and final report could not be saved", [*errors, error]) from None
         report.pop("measurement", None)
         report.update(status="failed", error=error_details(error))
+        if evaluator is not None: report["assessment"] = evaluator.summary(completed=False)
         filename = "failure.json"
         try: atomic_json(target / filename, report)
         except Exception as fallback:
@@ -105,6 +115,7 @@ def run_radio(plan, mode, output_dir, *, profiles=None, profiles_dir=None, cance
     return {"run_id": report["run_id"], "status": report["status"], "simulated": simulated,
             "report": str(target / filename), "samples": evidence.sample_count, "physical_verified": False,
             **({"peak": measurement["sampled_peak"]} if report["status"] == "completed" and measurement and "sampled_peak" in measurement else {}),
+            **({"assessment": report["assessment"]} if "assessment" in report else {}),
             **({"error": report["error"]} if "error" in report else {})}
 
 

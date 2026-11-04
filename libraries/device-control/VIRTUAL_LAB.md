@@ -1,5 +1,7 @@
 # DGM VirtualLab — 가상 시험환경
 
+SDK 0.7.0 추가: [보정·선언 기준 비교](CORRECTIONS.md). virtual-run --evaluation은 가상 교정표로 모든 trace bin을 보정하고 판정을 저장합니다. 물리 전파/교정 모형이나 실제 인증 검증은 아닙니다.
+
 장비 없이 자동화 코드를 개발하는 Python 환경입니다. **스마트폰 설정 → 송신 → RF 경로 → 위치 탐색 → 분석기·파워센서 측정 → TX OFF·정지**가 하나의 공유 상태에서 동작합니다. `dgm-device-control 0.4.0`에 포함됩니다. GUI·외부 서버 없이 로컬에서 실행합니다.
 
 ## 바로 실행

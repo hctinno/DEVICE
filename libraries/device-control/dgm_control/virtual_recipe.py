@@ -16,6 +16,7 @@ from dgm_rf.core import wlan_tx_plan
 from .errors import error_details
 from .virtual_lab import VirtualLab
 from .virtual_world import Scenario, Fault
+from .evaluation import Evaluation
 
 
 @dataclass(frozen=True)
@@ -56,16 +57,17 @@ def _dbm(measurement):
     raise InstrumentError(f"Unsupported power result: {measurement}")
 
 
-def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None):
+def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None, evaluation=None):
     """Identical operation sequence for VirtualLab and HardwareLab.
 
     Caller owns hardware permits, profile validation, RF/position limits and logs.
-    Values are raw instrument readings. No antenna correction or FCC verdict.
+    Optional Evaluation corrects trace bins; raw sensor and trace remain intact.
     on_sample runs inside cleanup scopes: an exception stops this run.
     """
     plan = plan or WlanScan()
     plan.validate()
     lab.validate_wlan(plan)
+    if evaluation is not None: evaluation.bind(plan, lab.simulated)
     check = cancelled.is_set if cancelled is not None else lambda: False
     def checkpoint():
         if check():
@@ -103,25 +105,34 @@ def measure_wlan(lab, plan=None, *, cancelled=None, on_sample=None):
                         sample = {"index": len(samples), "height_cm": after[0].value, "angle_deg": after[1].value,
                                   "polarization": polarization, "sensor": asdict(measured), "power_dbm": _dbm(measured),
                                   "trace": asdict(trace), "simulated": lab.simulated}
+                        if evaluation is not None: evaluation.correct(sample)
                         samples.append(sample)
                         if on_sample:
                             on_sample(deepcopy(sample))
-            peak = max(samples, key=lambda sample: sample["power_dbm"])
+            peak = max(samples, key=lambda sample: sample["evaluation"]["peak"]["field_dbuv_m"] if evaluation is not None else sample["power_dbm"])
             motion.call("polarize", axis="MA1", orientation=peak["polarization"], timeout=plan.motion_timeout, cancelled=check)
             motion.call("move", axis="MA1", value=peak["height_cm"], timeout=plan.motion_timeout, cancelled=check)
             motion.call("move", axis="DT1", value=peak["angle_deg"], timeout=plan.motion_timeout, cancelled=check)
         off_after = sensor.call("read_power")
         checkpoint()
+        returned = [motion.call("position", axis=axis) for axis in ("MA1", "DT1")]
+        if (any(s.busy for s in returned) or abs(returned[0].value-peak["height_cm"]) > .1
+                or abs(returned[1].value-peak["angle_deg"]) > .1 or returned[0].polarization != "P"+peak["polarization"]):
+            raise InstrumentError("Peak return readback mismatch")
         result = {"simulated": lab.simulated, "physical_verified": False, "fcc_verdict": None,
+                  "ranking": "corrected_field_dbuv_m" if evaluation is not None else "raw_sensor_dbm",
+                  "peak_return_readback": [asdict(s) for s in returned],
                   "plan": asdict(plan), "samples": samples, "sampled_peak_index": peak["index"],
                   "returned_to_sampled_peak": True, "off_before": asdict(off_before), "off_after": asdict(off_after),
                   "phone_log": phone.phone_log, "identities": {key: value.info for key, value in sessions.items()}}
+    checkpoint()
     return result  # only after every cleanup scope succeeds
 
 
-def run_virtual(output_dir, *, scenario=None, plan=None, fault=None, cancelled=None):
+def run_virtual(output_dir, *, scenario=None, plan=None, fault=None, cancelled=None, evaluation=None):
     """Persist one new simulation run; failures keep partial raw data, never a result.json."""
     plan = plan or WlanScan()
+    evaluation = deepcopy(evaluation)
     plan.validate()
     if scenario is not None and not isinstance(scenario, Scenario):
         raise TypeError("scenario must be Scenario")
@@ -130,19 +141,25 @@ def run_virtual(output_dir, *, scenario=None, plan=None, fault=None, cancelled=N
     report = {"schema_version": 1, "run_id": str(uuid.uuid4()), "status": "running", "simulated": True,
               "physical_verified": False, "fcc_verdict": None, "requested": asdict(plan),
               "started_utc": datetime.now(timezone.utc).isoformat(), "model": "dgm-behavioral-rf-v1"}
+    evaluator = None
+    if evaluation is not None:
+        report["assessment"] = {"verdict": "NOT_EVALUATED", "reasons": ["Preflight or execution incomplete"]}
     with closing(JsonlLog(target / "traffic.jsonl")) as logger:
         def log(record):
             logger({"run_id": report["run_id"], "simulated": True, **record})
         lab = VirtualLab(scenario, log=log)
         report["scenario"] = lab.scenario
         try:
+            if evaluation is not None:
+                report["evaluation_input"] = deepcopy(evaluation)
+                evaluator = Evaluation(evaluation, plan, simulated=True)
             if fault:
                 lab.inject(fault)
             with (target / "samples.jsonl").open("x", encoding="utf-8") as samples:
                 def save_sample(row):
                     samples.write(json.dumps({"run_id": report["run_id"], **row}) + "\n")
                     samples.flush()
-                report["measurement"] = measure_wlan(lab, plan, cancelled=cancelled, on_sample=save_sample)
+                report["measurement"] = measure_wlan(lab, plan, cancelled=cancelled, on_sample=save_sample, evaluation=evaluator)
             report["status"] = "completed"
         except BaseException as exc:
             report["status"] = "failed"
@@ -154,12 +171,24 @@ def run_virtual(output_dir, *, scenario=None, plan=None, fault=None, cancelled=N
             report["remaining_connections"] = lab.connections
             # Internal model truth and driver acknowledgements are different evidence.
             report["cleanup_scope_succeeded"] = report["status"] == "completed"
-            filename = "result.json" if report["status"] == "completed" else "failure.json"
-            (target / filename).write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-            (target / "observations.json").write_text(json.dumps({"run_id": report["run_id"], "simulated": True,
-                "observations": lab.observations, "events": lab.events}, indent=2) + "\n", encoding="utf-8")
+            if evaluator is not None: report["assessment"] = evaluator.summary(completed=report["status"] == "completed")
+            from .hardware_run import atomic_json
+            try:
+                logger.close()  # evidence must close successfully before publishing a verdict
+                atomic_json(target / "observations.json", {"run_id": report["run_id"], "simulated": True,
+                            "observations": lab.observations, "events": lab.events})
+                filename = "result.json" if report["status"] == "completed" else "failure.json"
+                atomic_json(target / filename, report)
+            except Exception as error:
+                report.update(status="failed", recording_error=error_details(error))
+                if "error" not in report: report["error"] = error_details(error)
+                report.pop("measurement", None)
+                if evaluator is not None: report["assessment"] = evaluator.summary(completed=False)
+                atomic_json(target / "failure.json", report)
+                raise
     return {"run_id": report["run_id"], "status": report["status"], "simulated": True,
             "result": str((target / "result.json").resolve()), "samples": len(report["measurement"]["samples"]),
+            **({"assessment": report["assessment"]} if "assessment" in report else {}),
             "peak": {key: report["measurement"]["samples"][report["measurement"]["sampled_peak_index"]][key]
                      for key in ("height_cm", "angle_deg", "polarization", "power_dbm")},
             "final_simulated_state": lab.state}

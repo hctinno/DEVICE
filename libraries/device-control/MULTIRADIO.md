@@ -1,5 +1,7 @@
 # Bluetooth·셀룰러·NFC·UWB 실행
 
+SDK 0.7.0의 schema 2 스캔에는 [전계 보정·선언 기준 비교](CORRECTIONS.md)를 추가했습니다. 아래 schema 1 고정 경로 설명의 원시값 범위는 유지합니다.
+
 SDK 0.6.0, Python 3.11 이상. 이 문서는 schema 1의 **고정 RF 경로에서 송신 source + 스펙트럼 분석기 반복 trace**와 무선별 근거 범위를 설명합니다. **턴테이블·마스트·RF 스위치 연동과 최대 위치 복귀는 [schema 2 설비 스캔](RADIO_SCAN.md)**을 사용합니다. 기존 WLAN hardware-run/virtual-run도 유지합니다. 교정, 적합 판정, 실제 변조/EVM 분석은 포함하지 않습니다.
 
 ## 1. 설치 후 가상시험

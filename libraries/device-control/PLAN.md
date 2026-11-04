@@ -1,5 +1,7 @@
 # DGM DeviceControl 구축 계약
 
+최신 확장: SDK 0.7.0 [보정·기준 비교 계약](CORRECTION_PLAN.md), [입력/실행/제한](CORRECTIONS.md). 아래 수치는 버전별 과거 기록이며 최신 검수는 docs/validation.json을 따릅니다.
+
 최신 확장: SDK 0.6.0의 [다중 무선 설비 스캔 계약](RADIO_SCAN_PLAN.md). 네 radio의 모션/RF 경로/최대 복귀와 가상·조건부 실장비 실행을 제공합니다. 아래 0.5.0 기록은 고정 경로 단계입니다.
 
 현재 확장: SDK v0.5.0의 [다중 무선 실행 계약](MULTIRADIO_PLAN.md), [사용법/미확인 범위](MULTIRADIO.md). 기존 WLAN 가상/실장비 경로는 유지합니다. 아래 33개 검사·3종 simulator 수치는 v0.1.0 완료 기록입니다. 최신 검사 수치는 [validation.json](docs/validation.json)을 따릅니다.

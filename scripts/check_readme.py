@@ -67,7 +67,7 @@ def main():
         example.write_text(examples["virtual"], encoding="utf-8")
 
         diagnosed = json.loads(cli("doctor"))
-        expected_versions = {"dgm-device-control": "0.6.0", "dgm-lab-control": "0.4.0",
+        expected_versions = {"dgm-device-control": "0.7.0", "dgm-lab-control": "0.4.0",
                              "dgm-rf-command-library": "0.5.0"}
         if diagnosed["packages"] != expected_versions or not diagnosed["supported_python"]:
             raise ValueError(f"Install README package versions first: {diagnosed['packages']}")
@@ -113,6 +113,11 @@ def main():
             assert (success / filename).stat().st_size > 0
         cli("virtual-run", "--output-dir", "virtual-001", expected=2)
         cli("virtual-run", "--output-dir", "failed-001", "--fault", "analyzer-timeout", expected=2)
+        cli("evaluation-init", "--workflow", "wlan", "--output", "wlan-evaluation.json")
+        corrected = json.loads(cli("virtual-run", "--evaluation", "wlan-evaluation.json", "--output-dir", "wlan-corrected-001"))
+        assert corrected["assessment"]["verdict"] == "PASS"
+        corrected_saved = json.loads((target / "wlan-corrected-001/result.json").read_text(encoding="utf-8"))
+        assert corrected_saved["assessment"]["maximum_field"] and corrected_saved["assessment"]["worst_margin"]
         failed = target / "failed-001"
         failure = json.loads((failed / "failure.json").read_text(encoding="utf-8"))
         assert failure["status"] == "failed" and not (failed / "result.json").exists()

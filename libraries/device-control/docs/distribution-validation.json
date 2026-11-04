@@ -1,9 +1,9 @@
 {
-  "file": "dgm-device-control-0.6.0-offline.zip",
-  "bytes": 300625,
-  "sha256": "0b3309cb5e816bae3dc3d6aedf7511cf332cc37ecfd1154d04be2f47881f8502",
+  "file": "dgm-device-control-0.7.0-offline.zip",
+  "bytes": 313400,
+  "sha256": "e8aa0809770512f047e37141b9777e0af9b861d706f96c369fa5bdb66ece292a",
   "wheels": [
-    "dgm_device_control-0.6.0-py3-none-any.whl",
+    "dgm_device_control-0.7.0-py3-none-any.whl",
     "dgm_lab_control-0.4.0-py3-none-any.whl",
     "dgm_rf_command_library-0.5.0-py3-none-any.whl"
   ],
@@ -17,5 +17,11 @@
     "uwb"
   ],
   "radio_scan_samples_each": 12,
-  "hardware_tests": 0
+  "hardware_tests": 0,
+  "fresh_venv_corrected_radio_comparisons_passed": [
+    "bluetooth",
+    "cellular",
+    "nfc",
+    "uwb"
+  ]
 }

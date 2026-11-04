@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "utc": "20261104T140622735141Z",
+  "utc": "20261104T145407408727Z",
   "python": "3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]",
   "commands": [
     {
@@ -150,6 +150,32 @@
       ],
       "exit_code": 2,
       "expected": 2
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "evaluation-init",
+        "--workflow",
+        "wlan",
+        "--output",
+        "wlan-evaluation.json"
+      ],
+      "exit_code": 0,
+      "expected": 0
+    },
+    {
+      "arguments": [
+        "-m",
+        "dgm_control",
+        "virtual-run",
+        "--evaluation",
+        "wlan-evaluation.json",
+        "--output-dir",
+        "wlan-corrected-001"
+      ],
+      "exit_code": 0,
+      "expected": 0
     },
     {
       "arguments": [
@@ -345,7 +371,7 @@
     "virtual"
   ],
   "packages": {
-    "dgm-device-control": "0.6.0",
+    "dgm-device-control": "0.7.0",
     "dgm-lab-control": "0.4.0",
     "dgm-rf-command-library": "0.5.0"
   }

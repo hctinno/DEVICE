@@ -1,5 +1,7 @@
 # 구현 계약
 
+v0.7.0: [보정·기준 비교](CORRECTIONS.md). evaluation.py는 별도 schema 1 교정/기준 계약, trace-bin 보간·50Ω 변환·판정·최대/최악 여유 집계를 담당합니다. 기존 radio plan schema 1/2는 유지하며 평가를 쓸 때만 schema 2가 필요합니다. WLAN/radio recipe는 측정 직후 보정하고 저장하며 보정 최대 위치를 선택합니다. wrapper는 cleanup/증거 저장 완료 후 최종 assessment를 발행합니다. 입력 전체와 canonical SHA-256으로 값·판정 추적을 보존합니다. failure는 NOT_EVALUATED로 재집계합니다. raw 동작은 옵션 없이 유지합니다. 세부 수학/오류/실장비 경계는 tests/test_evaluation.py로 검증합니다.
+
 v0.6.0: [설비 스캔 계약](RADIO_SCAN_PLAN.md), [운영 안내](RADIO_SCAN.md). schema 2 plan은 scan을 명시하고 기존 schema 1을 유지합니다. radio_scan_contracts는 격자·주파수 경로·현장 한계, radio_scan은 native Co3000/OspSwitch 수명주기와 기존 radio source를 조합합니다. 측정 전후 위치/경로를 검증한 유효 표본만 최대 검색에 사용하고, 모든 source 종료 후 최대 위치·경로 복귀를 확인한 뒤 안전 경로와 ES를 검증합니다. RadioWorld의 geometry/경로 손실은 합성 가정입니다. NFC callback은 기준 위치·경로를 확인하며 다른 위치의 quiet 값을 OFF 성공으로 처리하지 않습니다.
 
 v0.5.0: [다중 무선 계약](MULTIRADIO_PLAN.md), [실행/미확인 범위](MULTIRADIO.md). radio_contracts는 strict plan·현장 profile·근거 범위, radio_simulation은 native protocol peer와 합성 source, radio_adapters는 기존 드라이버와 NFC RF-envelope 확인, radio_run은 결과·부분 표본·취소·오류 기록을 담당합니다. 직접 모뎀 TX/NR/미확인 backend는 접속 전 blocked로 기록합니다. NFC는 범용 open_device 대신 보호 서비스 전용 profile을 검증합니다. LTE 단말 로그는 콜박스 경유 제어이며 모뎀 진단 로그와 구별합니다.

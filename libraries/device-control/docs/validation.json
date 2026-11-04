@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-04T13:57:38.490137+00:00",
+  "utc": "2026-11-04T14:43:00.213462+00:00",
   "passed": true,
   "physical_tests": 0,
   "phone_rf_tests": 0,
@@ -9,50 +9,50 @@
     "Phone firmware and RF ON/OFF",
     "FCC measurement/conformity"
   ],
-  "unit_tests": 111,
+  "unit_tests": 138,
   "failures": 0,
   "errors": 0,
-  "utf8_source_files": 50,
+  "utf8_source_files": 54,
   "radio_runs": [
     {
-      "run_id": "4708d6bd-fd1f-40c8-b525-a0f329e863b3",
+      "run_id": "b25b180f-652f-4729-a6b1-7ff78f6e3bd8",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-bluetooth\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-bluetooth\\result.json",
       "samples": 3,
       "physical_verified": false
     },
     {
-      "run_id": "f585d359-67d7-437e-aa7c-b49b171c8bdb",
+      "run_id": "e9d32d6f-b018-4205-8a89-7d86673bf39e",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-cellular\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-cellular\\result.json",
       "samples": 3,
       "physical_verified": false
     },
     {
-      "run_id": "088f0b88-b4fb-4045-8f2a-bedb17d2636d",
+      "run_id": "ce6d295c-8f91-4a4d-9cbf-c83ace45d4b5",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-nfc\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-nfc\\result.json",
       "samples": 3,
       "physical_verified": false
     },
     {
-      "run_id": "9302afdd-cda5-4168-9857-254d2c6790fd",
+      "run_id": "6ea3990d-2e8c-4fb2-8d2d-25bd7f7216f8",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-uwb\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-uwb\\result.json",
       "samples": 3,
       "physical_verified": false
     }
   ],
   "radio_scan_runs": [
     {
-      "run_id": "7bb2fd6d-d5fa-4c78-a020-9baa74db2ff2",
+      "run_id": "b7c4e516-0a03-47fd-bcb0-4964dc119711",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-scan\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -66,10 +66,10 @@
       }
     },
     {
-      "run_id": "5c97f882-86a1-45fb-93e7-2ecae34997e0",
+      "run_id": "a38f7613-eb5d-4e92-9c27-794c2856a486",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cellular-scan\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -83,10 +83,10 @@
       }
     },
     {
-      "run_id": "b24b07f5-9a75-42fd-9a43-a1ba8d5bd982",
+      "run_id": "e2767e83-4ad1-4407-ac7c-1faa4d598b44",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\nfc-scan\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -100,10 +100,10 @@
       }
     },
     {
-      "run_id": "b413a900-b19e-465d-925b-e0ece5f2a902",
+      "run_id": "f9326b6c-3dcb-4728-958a-4f5579042216",
       "status": "completed",
       "simulated": true,
-      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\uwb-scan\\result.json",
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan\\result.json",
       "samples": 12,
       "physical_verified": false,
       "peak": {
@@ -114,6 +114,396 @@
         "angle_deg": 90,
         "polarization": "V",
         "peak_dbm": -46.9896783287
+      }
+    }
+  ],
+  "evaluated_runs": [
+    {
+      "run_id": "6d866cf8-e66f-433d-ab60-8b9b1bd8f299",
+      "status": "completed",
+      "simulated": true,
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-corrected\\result.json",
+      "samples": 12,
+      "physical_verified": false,
+      "peak": {
+        "index": 10,
+        "repeat": 0,
+        "rf_path": "dut",
+        "height_cm": 200,
+        "angle_deg": 90,
+        "polarization": "V",
+        "peak_dbm": -23.0102998698
+      },
+      "assessment": {
+        "config_sha256": "4cd03d6af7721546955f63c9aa1bf8f0ddf7c295c952ea9106f012d8dbedf2d0",
+        "assessment_ready": true,
+        "reasons": [],
+        "scope": "declared_limit_comparison",
+        "regulatory_certification": false,
+        "simulated": true,
+        "verdict": "PASS",
+        "samples": 12,
+        "criterion": {
+          "id": "SYNTHETIC-DEMO",
+          "source": "Synthetic demonstration, NOT a regulatory limit",
+          "edition": "demo-1",
+          "clause": "demo-only",
+          "provenance": "synthetic",
+          "unit": "dBuV/m",
+          "distance_m": 3,
+          "detector": "POS",
+          "rbw_hz": 1000000.0,
+          "vbw_hz": 1000000.0,
+          "minimum_sweep_seconds": 0.01,
+          "segments": [
+            {
+              "start_hz": 2438000000.0,
+              "stop_hz": 2442000000.0,
+              "start_dbuv_m": 120,
+              "stop_dbuv_m": 120,
+              "interpolation": "constant"
+            }
+          ]
+        },
+        "decision": {
+          "rule": "simple",
+          "expanded_uncertainty_db": 0,
+          "coverage_factor": 2,
+          "source": "Synthetic uncertainty; simple rule ignores uncertainty"
+        },
+        "maximum_field": {
+          "index": 10,
+          "height_cm": 200,
+          "angle_deg": 90,
+          "polarization": "V",
+          "rf_path": "dut",
+          "bin": 25,
+          "frequency_hz": 2439000000.0,
+          "raw_dbm": -23.0102998698,
+          "conversion_db": 106.98970004336019,
+          "components": {
+            "antenna_factor": 20.0,
+            "cable_loss": 2.0,
+            "switch_loss": 1.0,
+            "preamp_gain": 0.0
+          },
+          "field_dbuv_m": 106.97940017356018,
+          "limit_dbuv_m": 120,
+          "margin_db": 13.02059982643982,
+          "verdict": "PASS"
+        },
+        "worst_margin": {
+          "index": 10,
+          "height_cm": 200,
+          "angle_deg": 90,
+          "polarization": "V",
+          "rf_path": "dut",
+          "bin": 25,
+          "frequency_hz": 2439000000.0,
+          "raw_dbm": -23.0102998698,
+          "conversion_db": 106.98970004336019,
+          "components": {
+            "antenna_factor": 20.0,
+            "cable_loss": 2.0,
+            "switch_loss": 1.0,
+            "preamp_gain": 0.0
+          },
+          "field_dbuv_m": 106.97940017356018,
+          "limit_dbuv_m": 120,
+          "margin_db": 13.02059982643982,
+          "verdict": "PASS"
+        }
+      }
+    },
+    {
+      "run_id": "e6129d6c-ba3c-490c-9706-8ae7dcc41413",
+      "status": "completed",
+      "simulated": true,
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-corrected\\result.json",
+      "samples": 12,
+      "physical_verified": false,
+      "peak": {
+        "index": 10,
+        "repeat": 0,
+        "rf_path": "dut",
+        "height_cm": 200,
+        "angle_deg": 90,
+        "polarization": "V",
+        "peak_dbm": -33.0102990881
+      },
+      "assessment": {
+        "config_sha256": "dfcefc7beee670e82366524b52226335c8ce4620b6ceda1f6c977dc24bb83eb0",
+        "assessment_ready": true,
+        "reasons": [],
+        "scope": "declared_limit_comparison",
+        "regulatory_certification": false,
+        "simulated": true,
+        "verdict": "PASS",
+        "samples": 12,
+        "criterion": {
+          "id": "SYNTHETIC-DEMO",
+          "source": "Synthetic demonstration, NOT a regulatory limit",
+          "edition": "demo-1",
+          "clause": "demo-only",
+          "provenance": "synthetic",
+          "unit": "dBuV/m",
+          "distance_m": 3,
+          "detector": "POS",
+          "rbw_hz": 1000000.0,
+          "vbw_hz": 1000000.0,
+          "minimum_sweep_seconds": 0.01,
+          "segments": [
+            {
+              "start_hz": 1930000000.0,
+              "stop_hz": 1970000000.0,
+              "start_dbuv_m": 120,
+              "stop_dbuv_m": 120,
+              "interpolation": "constant"
+            }
+          ]
+        },
+        "decision": {
+          "rule": "simple",
+          "expanded_uncertainty_db": 0,
+          "coverage_factor": 2,
+          "source": "Synthetic uncertainty; simple rule ignores uncertainty"
+        },
+        "maximum_field": {
+          "index": 10,
+          "height_cm": 200,
+          "angle_deg": 90,
+          "polarization": "V",
+          "rf_path": "dut",
+          "bin": 25,
+          "frequency_hz": 1940000000.0,
+          "raw_dbm": -33.0102990881,
+          "conversion_db": 106.98970004336019,
+          "components": {
+            "antenna_factor": 20.0,
+            "cable_loss": 2.0,
+            "switch_loss": 1.0,
+            "preamp_gain": 0.0
+          },
+          "field_dbuv_m": 96.97940095526019,
+          "limit_dbuv_m": 120,
+          "margin_db": 23.02059904473981,
+          "verdict": "PASS"
+        },
+        "worst_margin": {
+          "index": 10,
+          "height_cm": 200,
+          "angle_deg": 90,
+          "polarization": "V",
+          "rf_path": "dut",
+          "bin": 25,
+          "frequency_hz": 1940000000.0,
+          "raw_dbm": -33.0102990881,
+          "conversion_db": 106.98970004336019,
+          "components": {
+            "antenna_factor": 20.0,
+            "cable_loss": 2.0,
+            "switch_loss": 1.0,
+            "preamp_gain": 0.0
+          },
+          "field_dbuv_m": 96.97940095526019,
+          "limit_dbuv_m": 120,
+          "margin_db": 23.02059904473981,
+          "verdict": "PASS"
+        }
+      }
+    },
+    {
+      "run_id": "f4310c44-6902-43c6-b65a-7b1038e0220c",
+      "status": "completed",
+      "simulated": true,
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-corrected\\result.json",
+      "samples": 12,
+      "physical_verified": false,
+      "peak": {
+        "index": 10,
+        "repeat": 0,
+        "rf_path": "dut",
+        "height_cm": 200,
+        "angle_deg": 90,
+        "polarization": "V",
+        "peak_dbm": -19.9999999566
+      },
+      "assessment": {
+        "config_sha256": "f4a96a4c763161f7e94ba6aeeea25d22e0ff3b6d7bcf65745ff269aa925b7587",
+        "assessment_ready": true,
+        "reasons": [],
+        "scope": "declared_limit_comparison",
+        "regulatory_certification": false,
+        "simulated": true,
+        "verdict": "PASS",
+        "samples": 12,
+        "criterion": {
+          "id": "SYNTHETIC-DEMO",
+          "source": "Synthetic demonstration, NOT a regulatory limit",
+          "edition": "demo-1",
+          "clause": "demo-only",
+          "provenance": "synthetic",
+          "unit": "dBuV/m",
+          "distance_m": 3,
+          "detector": "POS",
+          "rbw_hz": 1000000.0,
+          "vbw_hz": 1000000.0,
+          "minimum_sweep_seconds": 0.01,
+          "segments": [
+            {
+              "start_hz": 12560000.0,
+              "stop_hz": 14560000.0,
+              "start_dbuv_m": 120,
+              "stop_dbuv_m": 120,
+              "interpolation": "constant"
+            }
+          ]
+        },
+        "decision": {
+          "rule": "simple",
+          "expanded_uncertainty_db": 0,
+          "coverage_factor": 2,
+          "source": "Synthetic uncertainty; simple rule ignores uncertainty"
+        },
+        "maximum_field": {
+          "index": 10,
+          "height_cm": 200,
+          "angle_deg": 90,
+          "polarization": "V",
+          "rf_path": "dut",
+          "bin": 25,
+          "frequency_hz": 13060000.0,
+          "raw_dbm": -19.9999999566,
+          "conversion_db": 106.98970004336019,
+          "components": {
+            "antenna_factor": 20.0,
+            "cable_loss": 2.0,
+            "switch_loss": 1.0,
+            "preamp_gain": 0.0
+          },
+          "field_dbuv_m": 109.9897000867602,
+          "limit_dbuv_m": 120,
+          "margin_db": 10.010299913239805,
+          "verdict": "PASS"
+        },
+        "worst_margin": {
+          "index": 10,
+          "height_cm": 200,
+          "angle_deg": 90,
+          "polarization": "V",
+          "rf_path": "dut",
+          "bin": 25,
+          "frequency_hz": 13060000.0,
+          "raw_dbm": -19.9999999566,
+          "conversion_db": 106.98970004336019,
+          "components": {
+            "antenna_factor": 20.0,
+            "cable_loss": 2.0,
+            "switch_loss": 1.0,
+            "preamp_gain": 0.0
+          },
+          "field_dbuv_m": 109.9897000867602,
+          "limit_dbuv_m": 120,
+          "margin_db": 10.010299913239805,
+          "verdict": "PASS"
+        }
+      }
+    },
+    {
+      "run_id": "373b83af-0cf2-4daf-a130-e413267d4425",
+      "status": "completed",
+      "simulated": true,
+      "report": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-corrected\\result.json",
+      "samples": 12,
+      "physical_verified": false,
+      "peak": {
+        "index": 10,
+        "repeat": 0,
+        "rf_path": "dut",
+        "height_cm": 200,
+        "angle_deg": 90,
+        "polarization": "V",
+        "peak_dbm": -46.9896783287
+      },
+      "assessment": {
+        "config_sha256": "dcbda385829c1bef41e489cbae4d0dbe5b78311b4eefbbc1c8563d0ea5cf14d6",
+        "assessment_ready": true,
+        "reasons": [],
+        "scope": "declared_limit_comparison",
+        "regulatory_certification": false,
+        "simulated": true,
+        "verdict": "PASS",
+        "samples": 12,
+        "criterion": {
+          "id": "SYNTHETIC-DEMO",
+          "source": "Synthetic demonstration, NOT a regulatory limit",
+          "edition": "demo-1",
+          "clause": "demo-only",
+          "provenance": "synthetic",
+          "unit": "dBuV/m",
+          "distance_m": 3,
+          "detector": "POS",
+          "rbw_hz": 1000000.0,
+          "vbw_hz": 1000000.0,
+          "minimum_sweep_seconds": 0.01,
+          "segments": [
+            {
+              "start_hz": 7500000000.0,
+              "stop_hz": 8500000000.0,
+              "start_dbuv_m": 120,
+              "stop_dbuv_m": 120,
+              "interpolation": "constant"
+            }
+          ]
+        },
+        "decision": {
+          "rule": "simple",
+          "expanded_uncertainty_db": 0,
+          "coverage_factor": 2,
+          "source": "Synthetic uncertainty; simple rule ignores uncertainty"
+        },
+        "maximum_field": {
+          "index": 10,
+          "height_cm": 200,
+          "angle_deg": 90,
+          "polarization": "V",
+          "rf_path": "dut",
+          "bin": 25,
+          "frequency_hz": 7750000000.0,
+          "raw_dbm": -46.9896783287,
+          "conversion_db": 106.98970004336019,
+          "components": {
+            "antenna_factor": 20.0,
+            "cable_loss": 2.0,
+            "switch_loss": 1.0,
+            "preamp_gain": 0.0
+          },
+          "field_dbuv_m": 83.00002171466019,
+          "limit_dbuv_m": 120,
+          "margin_db": 36.99997828533981,
+          "verdict": "PASS"
+        },
+        "worst_margin": {
+          "index": 10,
+          "height_cm": 200,
+          "angle_deg": 90,
+          "polarization": "V",
+          "rf_path": "dut",
+          "bin": 25,
+          "frequency_hz": 7750000000.0,
+          "raw_dbm": -46.9896783287,
+          "conversion_db": 106.98970004336019,
+          "components": {
+            "antenna_factor": 20.0,
+            "cable_loss": 2.0,
+            "switch_loss": 1.0,
+            "preamp_gain": 0.0
+          },
+          "field_dbuv_m": 83.00002171466019,
+          "limit_dbuv_m": 120,
+          "margin_db": 36.99997828533981,
+          "verdict": "PASS"
+        }
       }
     }
   ],
@@ -145,14 +535,14 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\simulation.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\simulation.json"
       ],
       "exit_code": 0
     },
@@ -163,7 +553,7 @@
         "--mode",
         "simulation",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\simulation.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\simulation.json"
       ],
       "exit_code": 2
     },
@@ -172,14 +562,14 @@
         "init",
         "Co3000",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware.json"
       ],
       "exit_code": 0
     },
     {
       "args": [
         "check",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\hardware.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware.json"
       ],
       "exit_code": 2
     },
@@ -187,7 +577,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\success"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\success"
       ],
       "exit_code": 0
     },
@@ -195,7 +585,7 @@
       "args": [
         "demo",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\failure",
         "--inject-failure"
       ],
       "exit_code": 2
@@ -205,7 +595,7 @@
         "init",
         "AppleRF",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\apple.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\apple.json"
       ],
       "exit_code": 2
     },
@@ -219,7 +609,7 @@
       "args": [
         "virtual-run",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\virtual"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\virtual"
       ],
       "exit_code": 0
     },
@@ -227,7 +617,7 @@
       "args": [
         "virtual-run",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\virtual-failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\virtual-failure",
         "--fault",
         "analyzer-timeout"
       ],
@@ -237,9 +627,9 @@
       "args": [
         "hardware-check",
         "--profiles-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\test-only-site",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\test-only-site",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\test-only-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\test-only-plan.json"
       ],
       "exit_code": 0
     },
@@ -247,13 +637,13 @@
       "args": [
         "hardware-run",
         "--profiles-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\test-only-site",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\test-only-site",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\test-only-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\test-only-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\hardware-cancelled",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware-cancelled",
         "--cancel-file",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cancel"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cancel"
       ],
       "exit_code": 130
     },
@@ -268,7 +658,7 @@
         "radio-init",
         "bluetooth",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-plan.json"
       ],
       "exit_code": 0
     },
@@ -278,7 +668,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-plan.json"
       ],
       "exit_code": 0
     },
@@ -288,9 +678,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-bluetooth"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-bluetooth"
       ],
       "exit_code": 0
     },
@@ -299,7 +689,7 @@
         "radio-init",
         "cellular",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cellular-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-plan.json"
       ],
       "exit_code": 0
     },
@@ -309,7 +699,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cellular-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-plan.json"
       ],
       "exit_code": 0
     },
@@ -319,9 +709,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cellular-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-cellular"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-cellular"
       ],
       "exit_code": 0
     },
@@ -330,7 +720,7 @@
         "radio-init",
         "nfc",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\nfc-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-plan.json"
       ],
       "exit_code": 0
     },
@@ -340,7 +730,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\nfc-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-plan.json"
       ],
       "exit_code": 0
     },
@@ -350,9 +740,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\nfc-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-nfc"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-nfc"
       ],
       "exit_code": 0
     },
@@ -361,7 +751,7 @@
         "radio-init",
         "uwb",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\uwb-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-plan.json"
       ],
       "exit_code": 0
     },
@@ -371,7 +761,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\uwb-plan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-plan.json"
       ],
       "exit_code": 0
     },
@@ -381,9 +771,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\uwb-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-uwb"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-uwb"
       ],
       "exit_code": 0
     },
@@ -393,9 +783,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-stop-failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-stop-failure",
         "--fault",
         "stop-timeout"
       ],
@@ -407,9 +797,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\uwb-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-cancel",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-cancel",
         "--fault",
         "cancel-after-sample"
       ],
@@ -421,9 +811,9 @@
         "--mode",
         "hardware",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\blocked-plan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\blocked-plan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\radio-blocked"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\radio-blocked"
       ],
       "exit_code": 2
     },
@@ -432,7 +822,7 @@
         "radio-profile",
         "nfc",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\nfc-profile.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-profile.json"
       ],
       "exit_code": 0
     },
@@ -442,7 +832,7 @@
         "bluetooth",
         "--scan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json"
       ],
       "exit_code": 0
     },
@@ -452,7 +842,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json"
       ],
       "exit_code": 0
     },
@@ -462,9 +852,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-scan"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan"
       ],
       "exit_code": 0
     },
@@ -474,7 +864,7 @@
         "cellular",
         "--scan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cellular-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json"
       ],
       "exit_code": 0
     },
@@ -484,7 +874,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cellular-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json"
       ],
       "exit_code": 0
     },
@@ -494,9 +884,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cellular-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cellular-scan"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan"
       ],
       "exit_code": 0
     },
@@ -506,7 +896,7 @@
         "nfc",
         "--scan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\nfc-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json"
       ],
       "exit_code": 0
     },
@@ -516,7 +906,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\nfc-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json"
       ],
       "exit_code": 0
     },
@@ -526,9 +916,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\nfc-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\nfc-scan"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan"
       ],
       "exit_code": 0
     },
@@ -538,7 +928,7 @@
         "uwb",
         "--scan",
         "--output",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\uwb-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json"
       ],
       "exit_code": 0
     },
@@ -548,7 +938,7 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\uwb-scan.json"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json"
       ],
       "exit_code": 0
     },
@@ -558,9 +948,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\uwb-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\uwb-scan"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan"
       ],
       "exit_code": 0
     },
@@ -570,9 +960,9 @@
         "--mode",
         "simulation",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\bluetooth-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\scan-switch-failure",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\scan-switch-failure",
         "--fault",
         "switch-timeout"
       ],
@@ -584,9 +974,9 @@
         "--mode",
         "hardware",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\hardware-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware-scan.json",
         "--profiles-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\scan-site"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\scan-site"
       ],
       "exit_code": 0
     },
@@ -596,22 +986,246 @@
         "--mode",
         "hardware",
         "--plan",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\hardware-scan.json",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware-scan.json",
         "--profiles-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\scan-site",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\scan-site",
         "--output-dir",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\hardware-scan-cancel",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\hardware-scan-cancel",
         "--cancel-file",
-        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\cancel"
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cancel"
       ],
       "exit_code": 130
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-evaluation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-evaluation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-scan.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-evaluation.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\bluetooth-corrected"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-evaluation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-evaluation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-scan.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-evaluation.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\cellular-corrected"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-evaluation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-evaluation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-scan.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-evaluation.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\nfc-corrected"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "radio",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-evaluation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-check",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-evaluation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "radio-run",
+        "--mode",
+        "simulation",
+        "--plan",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-scan.json",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-evaluation.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\uwb-corrected"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "wlan",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "evaluation-init",
+        "--workflow",
+        "wlan",
+        "--output",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json"
+      ],
+      "exit_code": 2
+    },
+    {
+      "args": [
+        "virtual-run",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-corrected"
+      ],
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "virtual-run",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-limit-fail"
+      ],
+      "exit_code": 4
+    },
+    {
+      "args": [
+        "virtual-run",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-indeterminate"
+      ],
+      "exit_code": 5
+    },
+    {
+      "args": [
+        "virtual-run",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-not-evaluated"
+      ],
+      "exit_code": 3
+    },
+    {
+      "args": [
+        "virtual-run",
+        "--evaluation",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\wlan-evaluation.json",
+        "--output-dir",
+        "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\corrected-failure",
+        "--fault",
+        "phone-stop"
+      ],
+      "exit_code": 2
     }
   ],
   "installed_import_origin_verified": true,
   "three_device_demo": {
     "schema_version": 1,
-    "run_id": "aef1fe8f-9cba-415d-8a78-6eb45de08e99",
-    "started_utc": "2026-11-04T14:00:24.304127+00:00",
+    "run_id": "59767c9b-3f14-4b32-a6ef-cc595f1383b0",
+    "started_utc": "2026-11-04T14:47:08.177538+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "completed",
@@ -660,7 +1274,7 @@
       {
         "value": 4.99,
         "unit": "V",
-        "utc": "2026-11-04T14:00:24.313129+00:00",
+        "utc": "2026-11-04T14:47:08.186486+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -673,7 +1287,7 @@
       {
         "value": 0.8,
         "unit": "A",
-        "utc": "2026-11-04T14:00:24.313129+00:00",
+        "utc": "2026-11-04T14:47:08.186486+00:00",
         "identity": {
           "manufacturer": "ODA Technologies",
           "model": "EX-Series",
@@ -706,12 +1320,12 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T14:00:25.329731+00:00"
+    "finished_utc": "2026-11-04T14:47:09.200543+00:00"
   },
   "injected_failure_demo": {
     "schema_version": 1,
-    "run_id": "d31c5ea1-e9cd-4f52-8c3d-2e7ebba3464c",
-    "started_utc": "2026-11-04T14:00:25.710641+00:00",
+    "run_id": "3274b4a6-62ce-46af-b544-7ab3a4f53573",
+    "started_utc": "2026-11-04T14:47:09.638938+00:00",
     "simulated": true,
     "physical_verified": false,
     "status": "failed",
@@ -770,14 +1384,14 @@
       "phone_cleanup_acknowledged": true,
       "connections_closed": true
     },
-    "finished_utc": "2026-11-04T14:00:26.741296+00:00"
+    "finished_utc": "2026-11-04T14:47:10.673959+00:00"
   },
   "vendor_cache_excluded": true,
   "integrated_virtual_run": {
-    "run_id": "cb2707bb-9bb6-4d5c-b95a-f5ef1b2f7ee1",
+    "run_id": "d85cb22e-c913-4f3b-9acc-644916b4ff01",
     "status": "completed",
     "simulated": true,
-    "result": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-qiucu6ve\\virtual\\result.json",
+    "result": "C:\\Users\\Cho\\AppData\\Local\\Temp\\dgm-sdk-check-j_xlfowy\\virtual\\result.json",
     "samples": 12,
     "peak": {
       "height_cm": 200.0,
@@ -827,5 +1441,5 @@
     }
   },
   "integrated_failure_status": "failed",
-  "elapsed_seconds": 240.91
+  "elapsed_seconds": 431.88
 }
