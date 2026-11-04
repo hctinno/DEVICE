@@ -17,7 +17,9 @@
 | ESPEC SH-642 | 제조사 [ChamberConnectLibrary](https://github.com/EspecNorthAmerica/ChamberConnectLibrary)의 P300/SCP220 wire protocol 구현 | 장착 controller명, 실제 ROM? 결과, socket/serial 설정·termination, 온도 단위/범위·습도 사용 여부·interlock. SH-642에서 해당 controller라는 증거 필요 |
 | Thermotron SM-16C | 8800 공식 generic protocol 구현 | 실제 8800 장착 확인, 장비별 운전 매뉴얼, ACK on/off·채널·단위, 시작 전 기존 manual setpoint, door/airflow/interlock |
 | Cincinnati Sub Zero / Sorensen XT15-4, XT20-3 | 성적서 모델 추출. 본체 모델만으로 통신옵션 확정 불가 | CSZ controller 모델/프로토콜; Sorensen 설치 MRA/MGA 등 옵션명과 해당 interface manual·pinout·terminator. 다른 Sorensen SCPI 문법 자동 적용 금지 |
-| TESCOM MTP300A/TC3000C, TA Engineering TA018S16 | 성적서 모델/설명 보존 | 실제 controller·SDK·명령표·축 이름/단위·원점·limit·home/move/position/stop 응답, 연결 port 및 interlock. 이동 API는 아직 없음 |
+| TESCOM MTP300A/TC-3000C | 성적서상 Bluetooth Tester. 턴테이블·마스트가 아님 | 설치 SDK·통신 인터페이스, RF channel/power/modulation 설정, 시험 시작/종료·측정 결과·오류 응답 |
+| TA Engineering TA-018S-16 | 성적서상 RF Switching Unit. 모션 장비가 아님 | 컨트롤러 프로토콜, RF 포트/릴레이 맵, 경로 선택·상태 조회·busy/error·기본 경로 규칙 |
+| 턴테이블·안테나 마스트 | 현재 추출한 장비표에서 제조사/모델을 특정하지 못함. 실행 드라이버 없음 | 실제 본체·컨트롤러 제조사/모델·프로그래밍 매뉴얼, 각도/높이/편파 단위, home/move/position/busy/stop 명령, limit/interlock. 실물 또는 추가 성적서 근거로 특정 필요 |
 | SPEAG DASY/cSAR/DAK, DAE, EX3, EUmmW | 공개 DASY8 R&D 문서·custom scan 구조 확인 | 설치 제품·버전·licensed SDK, robot/DAE/probe 통합 API, scan start/stop/position/results, probe calibration 및 tissue/system-check. R&D API를 SAR 적합성 자동화 API로 간주하지 않음 |
 | UL / UL-FR1 자체 RF switch·filterbox·시험 소프트웨어 | 자산/모델 원문과 해당 PDF 페이지 보존 | 설치실의 내부 프로토콜/SDK·port map·relay readback·filter selection·busy/error/stop/reset 규칙. 제조사 일반 매뉴얼로 대체 불가 |
 | Samsung SM-F971U / Apple A3447 | FCC 조건·기술 목록, 기존 Samsung source-scoped bridge | 정확한 시험용 빌드, OEM test app/SDK와 사용 권한, 각 radio/antenna/chain/RU/BW/power/duty 숫자표, TX ON/OFF·readback·실측. 최신 단말 직접 제어는 아직 차단 |

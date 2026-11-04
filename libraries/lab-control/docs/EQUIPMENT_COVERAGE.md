@@ -193,11 +193,11 @@
 | Sorensen | XT 20-3 | vendor_required |  | 설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요 |
 | Sunol | JB1 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
 | Sunol | JB3 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
-| TA ENGINEERING | TA-018S-16 | vendor_required |  | 설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요 |
+| TA ENGINEERING | TA-018S-16 | vendor_required |  | RF Switching Unit: 포트/릴레이 맵·경로 선택·상태 조회 프로토콜 필요. 모션 장비 아님 |
 | TE | TBFL1 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
 | TEKBOX | TBFL1 | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
-| TESCOM | MTP300A | vendor_required |  | 설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요 |
-| TESCOM | TC-3000C | vendor_required |  | 설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요 |
+| TESCOM | MTP300A | vendor_required |  | Bluetooth 시험기: 설치 SDK·RF 설정/측정·시험 시작/종료 프로토콜 필요. 모션 장비 아님 |
+| TESCOM | TC-3000C | vendor_required |  | Bluetooth 시험기: 설치 SDK·RF 설정/측정·시험 시작/종료 프로토콜 필요. 모션 장비 아님 |
 | TESEQ | CBL6112D | passive_or_fixture |  | 연결·보정·전원/상태 확인 대상. 독립 원격 명령은 확인하지 않음 |
 | THERMOTRON INDUSTRIES | SM-16C MINI-MAX | conditional | Thermotron8800 | 8800 장착/개별 장비 매뉴얼 확인 후 SETP/PVAR·RUNM/STOP. SM-16C 컨트롤러 미확정 |
 | TOYO | EP7RE | support_or_software |  | 지원 PC/통신 상대/소프트웨어. 별도 운영체제·앱·네트워크 설정 필요 |

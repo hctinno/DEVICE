@@ -75,7 +75,11 @@ def capability(maker, model, descriptions):
         if any(w in model for w in ('DAE','EX3','EUMMW','CSAR','DAK','POWERSOURCE')):
             return 'vendor_required','','DASY/cSAR/DAK 본체·설치 SDK/라이선스 필요. R&D API와 SAR 적합성 모듈을 혼동하지 않음','speag-dasy8'
         return 'passive_or_fixture','','교정용 다이폴/지그: 교정값·배치·연결 정보 관리 대상',''
-    if maker in ('TESCOM','TA ENGINEERING','CINCINNATI SUB ZERO','Sorensen'):
+    if maker=='TESCOM':
+        return 'vendor_required','','Bluetooth 시험기: 설치 SDK·RF 설정/측정·시험 시작/종료 프로토콜 필요. 모션 장비 아님',''
+    if maker=='TA ENGINEERING':
+        return 'vendor_required','','RF Switching Unit: 포트/릴레이 맵·경로 선택·상태 조회 프로토콜 필요. 모션 장비 아님',''
+    if maker in ('CINCINNATI SUB ZERO','Sorensen'):
         return 'vendor_required','','설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요',''
     if model in ('CMX500','E7515B','EMC32','SCU-18','SCU-40A','RTP5008','NRP18A','437B','N5181A','E4440A','ESR'):
         return 'pending_protocol','','모델/앱/버전에 맞는 명령 또는 SDK 연결 검증 미완료. 실행 드라이버를 제공하지 않음',''

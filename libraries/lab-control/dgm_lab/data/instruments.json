@@ -25207,7 +25207,7 @@
     "normalization_notes": [],
     "status": "vendor_required",
     "driver": "",
-    "scope_ko": "설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요",
+    "scope_ko": "RF Switching Unit: 포트/릴레이 맵·경로 선택·상태 조회 프로토콜 필요. 모션 장비 아님",
     "source_id": "",
     "hardware_validated": false,
     "report_calibration_is_current_site_evidence": false
@@ -25445,7 +25445,7 @@
     "normalization_notes": [],
     "status": "vendor_required",
     "driver": "",
-    "scope_ko": "설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요",
+    "scope_ko": "Bluetooth 시험기: 설치 SDK·RF 설정/측정·시험 시작/종료 프로토콜 필요. 모션 장비 아님",
     "source_id": "",
     "hardware_validated": false,
     "report_calibration_is_current_site_evidence": false
@@ -25480,7 +25480,7 @@
     "normalization_notes": [],
     "status": "vendor_required",
     "driver": "",
-    "scope_ko": "설치 통신 옵션·컨트롤러·제조사 프로그래밍 문서 필요",
+    "scope_ko": "Bluetooth 시험기: 설치 SDK·RF 설정/측정·시험 시작/종료 프로토콜 필요. 모션 장비 아님",
     "source_id": "",
     "hardware_validated": false,
     "report_calibration_is_current_site_evidence": false

@@ -10,6 +10,8 @@
 
 ## 현재 상태
 
+2026-11-04 모션 범위 확인: 현재 추출 장비표에 턴테이블·안테나 마스트의 특정 모델은 없으며 해당 이동/위치/정지 드라이버도 없습니다. TESCOM MTP300A/TC-3000C는 Bluetooth Tester, TA Engineering TA-018S-16은 RF Switching Unit입니다. 이 모델들에 모션 명령 확보 항목을 연결했던 VENDOR_GAPS.md 오류를 수정했습니다. 모델 미추출은 원본 성적서 전체에 장비가 없다는 결론이 아닙니다.
+
 2026-11-04 설비 제어 추가: [DGM LabControl](libraries/lab-control/README.md) v0.1.0. 성적서 장비표 1,332행 → 234개 제조사/모델 그룹, 모델 추출 검토 대기 2행. 27개 모델의 한정된 기능 구현, 4개 조건부(콜박스/컨트롤러/앱), 7개 프로토콜 검토 대기, 47개 전용 SDK/현장 자료 필요. 11개 driver class, TCP/VISA/serial, 공식 PDF 24개 해시 검증, 출처 레코드 27개. 시험 묶음 32개에 구현 요소/미완성 조건을 매핑했습니다. 전체 FCC workflow 준비 완료는 0개입니다. `python -X utf8 scripts/check_lab_control.py`가 목록/문서 재생성·단위/localhost 통신·패키지 격리 설치를 검증합니다. 최신 숫자는 [validation.json](libraries/lab-control/docs/validation.json)을 기준으로 합니다. 현장 실물·폰 RF·기구·SAR·규격 적합성 검수는 모두 미실행입니다.
 
 이번 라이브러리 작업 위치는 `E:\CODEX\projects\DEVICE-rf-research-20261104`, 공유 브랜치는 `codex/samsung-rf-research-20261104`입니다. 코드/문서가 준비됐다는 것과 최신 폰/OEM·UL/SPEAG 등 전용 제어가 확보됐다는 것을 혼동하지 않습니다. 다음 단계는 [추가 확보 목록](libraries/lab-control/docs/VENDOR_GAPS.md)의 실제 주소·옵션·SDK·기구 컨트롤러를 받고 드라이버별 commissioning을 수행하는 것입니다.
