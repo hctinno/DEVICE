@@ -250,6 +250,17 @@ WLAN 흐름에는 `OdaEx`, `Co3000`, `OspSwitch`, `PhoneAt`, `SpectrumAnalyzer`,
 
 AT 목록은 `.venv\Scripts\python -m dgm_rf --help`와 [숫자 인수표](libraries/phone-rf/dgm_rf/data/NUMERIC_ARGUMENTS.md)에서 확인합니다. 일부 명령은 특정 모델/build로 제한됩니다. 최신 단말의 펌웨어·권한·TX 시작/종료 근거가 없으면 해당 단계는 미확인으로 남기고 가상 개발을 계속합니다.
 
+**AT 입력 경로를 먼저 구분합니다.** 현재 `PhoneAt`의 실물 경로는 PC의 USB 직렬 AT 포트입니다. `dgm_rf render`와 `demo`는 실폰으로 전송하지 않습니다. 휴대폰의 시험 메뉴를 찾아 `AT Commands Test` 입력창을 조작하는 어댑터와, 연결 직후 준비 상태를 자동 판별하는 기능은 미구현입니다. 시험 메뉴에 수동 진입해야 하는지는 실제 단말에서 확인합니다.
+
+| 입력 경로 | BW20 설정 표현 — 확보한 분석본 기준 |
+| --- | --- |
+| PC 직렬 AT 채널 | `AT+WIFITEST=0,0,7,1` |
+| 휴대폰 시험 앱의 `AT Commands Test` 입력창 | `0071` |
+
+입력창은 첫 세 글자를 각각 명령 인수로, 나머지를 값으로 분리합니다. 이 표는 [WlanTest 입력 처리](libraries/phone-rf/evidence/WlanTest.java)와 [공장 AT 처리](libraries/phone-rf/evidence/AtWifitest.java)의 정적 분석 근거이며 실제 단말 검증 결과가 아닙니다. 공장 AT 처리에는 시험 앱을 자동 실행하는 분기도 있지만, 현장 단말에서 사용 가능한 경로인지는 미확인입니다. 기본 `AT` 응답 성공만으로 WLAN RF 명령 지원을 인정하지 않습니다.
+
+현장 검수 순서는 입력 경로 확인 → 필요한 경우 사용자의 시험 모드 진입 → 해당 RF 명령의 응답 확인 → 분석기로 TX ON/OFF 확인 → 측정 결과·원문 로그 대조입니다. 실폰 연결 검수는 사용자가 나중에 수행할 예정입니다. 현재 통합 WLAN 가상시험은 6GHz HE20/40/80/160 전용이며, 2.4GHz 802.11b·채널 1·1Mbps·BW20 조건은 통합 가상시험에 미구현입니다. PLS 5와 기존 `power`/TXGain 인수의 대응도 미확인입니다. 메뉴 진입·권한·RF 송신을 검증 완료로 표시하지 않습니다.
+
 아래는 `prepare_hardware.py`로 저장하는 **연결 전 검사**입니다. `private-site/wlan-plan.json`에 아래 required 필드를 모두 넣습니다. 주파수는 Hz, 높이는 cm, 각도는 degree, 전압은 V, 전류는 A, timeout은 초입니다. tx 숫자는 해당 단말의 확인된 인수이고 power는 문자열입니다. 현장값이 없으므로 범용 실장비 기본값을 제공하지 않습니다.
 
 ```python
